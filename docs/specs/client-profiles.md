@@ -6,6 +6,7 @@ Client profile bundles select the runtime cache and API epoch exposed by wow-ui-
 
 - [x] TOC game-type headers and file annotations use case-insensitive space/comma-separated tokens and ignore unknown tokens. Zero masks impose no restriction; nonzero allow masks require overlap and exclude masks reject overlap. Game-type header values retain brackets verbatim rather than evaluating them as file conditions.
 - [x] Retail recognizes the 70688 token table; PTR and Forever additionally recognize `camelot` and `forever` as the same bit. Forever's modeled active mask is mainline plus camelot; Retail/PTR retain mainline plus standard. Native basis and unknown client masks are recorded in [TOC game-type tokens](../wiki/reference/toc-game-type-tokens.md#native-game-type-masks).
+- [x] `OnlyBetaAndPTR: 1` is independent of TOC layout. R26 verifies PTR 70668 build class 0 passes, while Forever 70707 and Retail 70688 build class 2 are normal builds and reject the addon; among supported profiles, only PTR passes.
 
 - [x] The public `client-retail` bundle selects the retail profile and current retail 12.1.5 API epoch (`120105`), selected for installed Retail 12.1.5.70448.
 - [x] Retail API epoch features remain cumulative, so 12.1.5 includes the modeled 12.0.0, 12.0.5, 12.0.7, and 12.1.0 surfaces.
@@ -71,6 +72,7 @@ The [historical failing Wrath startup inventory](../baselines/README.md#wrath-lu
 
 - `Cargo.toml` — cumulative retail epoch features and public client bundles; `retail-12-1-5` extends `retail-12-1-0` for PTR.
 - `src/client_profile.rs` — active profile/epoch selection and interface constants.
+- `src/toc/mod.rs` — maps `OnlyBetaAndPTR` to the active PTR build classification.
 - `src/asset_resolver_config.rs` — profile-to-CASC-product mapping (`client-ptr` uses `wowxptr`; Forever uses `wowf`).
 - `data/blizzard-ui-files/wowforever.txt` — Forever manifest generated from `/home/osso/.cache/wow-ui-sim/wow-ui-source/forever`; source branch `forever` and runtime cache profile `wowforever` are intentionally distinct.
 - `src/blizzard_ui_sync/pinned.rs` — reads the pinned PTR version/build identity.
@@ -83,7 +85,8 @@ The [historical failing Wrath startup inventory](../baselines/README.md#wrath-lu
 ## Tests asserting this spec
 
 - `src/client_profile.rs` — current retail, historical retail, PTR, and interface-version contracts.
-- `tests/wowforever_profile.rs` — Forever identity, manifest/cache isolation, game-type filters, source TOC substitution, and Carbonite-shaped provider/dependent loading through the interface gate.
+- `tests/wowforever_profile.rs` — Forever identity, manifest/cache isolation, game-type and PTR-only filters, source TOC substitution, and Carbonite-shaped provider/dependent loading through the interface gate.
+- `tests/blizzard_ptr_feedback_loads.rs` and `tests/blizzard_ptr_feedback_glue_loads.rs` — PTR/normal build filtering for the original Reporter TOCs.
 - `src/loader/tests/toc_discovery.rs` — separator/case priority, foreign/unknown exclusion, folder identity, retained family aliases, and named Mists compatibility variants.
 - `src/paths.rs` and `src/asset_resolver_config.rs` — Forever install-root and CASC product selection.
 - `src/loader/tests/wow_api_globals/startup_globals.rs` — post-startup strict-removal contract, including PTR-only `C_RecruitAFriend.IsEnabled` removal.
