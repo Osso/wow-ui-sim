@@ -508,6 +508,62 @@ fn ptr_default_shop_settings_hide_game_menu_store_button() {
 }
 
 post_wrath_ui_fixture! {
+#[cfg(feature = "client-ptr")]
+#[test]
+fn ptr_store_status_change_rebuilds_menu_shop_button() {
+    test_timeout! {
+        let env = setup_game_menu_env();
+        {
+            let state = env.state();
+            let state = state.borrow();
+            state.cvars.set_imported("bpayStoreEnable", "0");
+            state.cvars.set_imported("shop2Enabled", "1");
+        }
+        env.exec("GameMenuFrame:Show()").unwrap();
+        let initially_visible: bool = env
+            .eval(&menu_button_chunk(r#"
+                for button in menu_buttons() do
+                    if button:GetText() == BLIZZARD_STORE then return true end
+                end
+                return false
+            "#))
+            .unwrap();
+        assert!(!initially_visible);
+
+        env.state()
+            .borrow()
+            .cvars
+            .set_imported("bpayStoreEnable", "1");
+        env.fire_event("STORE_STATUS_CHANGED").unwrap();
+        let enabled_visible: bool = env
+            .eval(&menu_button_chunk(r#"
+                for button in menu_buttons() do
+                    if button:GetText() == BLIZZARD_STORE then return true end
+                end
+                return false
+            "#))
+            .unwrap();
+        assert!(enabled_visible);
+
+        env.state()
+            .borrow()
+            .cvars
+            .set_imported("bpayStoreEnable", "0");
+        env.fire_event("STORE_STATUS_CHANGED").unwrap();
+        let disabled_visible: bool = env
+            .eval(&menu_button_chunk(r#"
+                for button in menu_buttons() do
+                    if button:GetText() == BLIZZARD_STORE then return true end
+                end
+                return false
+            "#))
+            .unwrap();
+        assert!(!disabled_visible);
+    }
+}
+}
+
+post_wrath_ui_fixture! {
 #[test]
 fn test_legacy_store_toggle_reopens_game_menu_after_store_closes() {
     test_timeout! {
