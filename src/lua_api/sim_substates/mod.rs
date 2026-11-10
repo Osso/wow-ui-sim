@@ -843,9 +843,9 @@ impl Keybindings {
     }
 }
 
-/// Character-boost / trial service state.  Drives
+/// Character-boost / trial service state. Drives
 /// `C_CharacterServices.GetActiveCharacterUpgradeBoostType` and
-/// `C_CharacterServices.GetActiveClassTrialBoostType`.  Both default to
+/// `C_CharacterServices.GetActiveClassTrialBoostType`. Both default to
 /// `None` (no active service).
 #[derive(Debug, Default, Clone)]
 pub struct CharacterServicesState {

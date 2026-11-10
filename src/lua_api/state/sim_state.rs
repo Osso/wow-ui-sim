@@ -921,6 +921,8 @@ pub struct SimState {
     pub wow_token: WowTokenState,
     pub mythic_plus: MythicPlusState,
     pub character_services: CharacterServicesState,
+    pub shared_character_services:
+        crate::c_api::c_shared_character_services::SharedCharacterServicesState,
     pub scenario: ScenarioState,
     pub death_recaps: Vec<DeathRecapEntry>,
     pub chat_bubbles: Vec<ChatBubble>,

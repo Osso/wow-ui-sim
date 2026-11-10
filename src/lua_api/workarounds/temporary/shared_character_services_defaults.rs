@@ -16,18 +16,6 @@ end
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(SHARED_CHARACTER_SERVICES_DEFAULTS_LUA)?;
-    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
-        // Account promotional-upgrade state is not modeled yet.
-        lua.exec(
-            r#"
-            if rawget(C_SharedCharacterServices, "HasFreePromotionalUpgrade") == nil then
-                function C_SharedCharacterServices.HasFreePromotionalUpgrade()
-                    return false
-                end
-            end
-        "#,
-        )?;
-    }
     Ok(())
 }
 

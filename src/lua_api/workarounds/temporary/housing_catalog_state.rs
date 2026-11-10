@@ -27,13 +27,28 @@ mod tests {
     #[test]
     fn installs_housing_catalog_surface() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
+        if matches!(
+            crate::client_profile::ACTIVE,
+            crate::client_profile::ClientProfile::Retail
+                | crate::client_profile::ClientProfile::Ptr
+        ) {
+            env.set_server_mirrored_cvar("shop2Enabled", "1")
+                .expect("Shop2 default input should be accepted");
+        }
+
+        let shop2_enabled: bool = env
+            .eval("return C_CatalogShop.IsShop2Enabled()")
+            .expect("shop2 setting should be queryable");
+        let expected_shop2_enabled = matches!(
+            crate::client_profile::ACTIVE,
+            crate::client_profile::ClientProfile::Retail
+                | crate::client_profile::ClientProfile::Ptr
+        );
+        assert_eq!(shop2_enabled, expected_shop2_enabled);
 
         let result: String = env
             .eval(
                 r#"
-                if C_CatalogShop.IsShop2Enabled() ~= false then
-                    return "bad_shop_flag"
-                end
                 local productIDs = C_CatalogShop.GetProductIDsForCategory(
                     Constants.HousingCatalogConsts.HOUSING_CATALOG_ALL_CATEGORY_ID)
                 if type(productIDs) ~= "table" or #productIDs == 0 then

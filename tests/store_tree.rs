@@ -642,15 +642,102 @@ fn store_frame_subtree_has_no_cycles_in_full_game_ui(env: &WowLuaEnv) {
 }
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 #[test]
 fn store_free_upgrade_check_handles_account_without_upgrade() {
     let env = load_store_ui_tree();
-    env.exec(r#"
+    env.exec(
+        r#"
         assert(type(__secureenv.StoreFrame_CheckForFree) == 'function')
         assert(C_SharedCharacterServices.HasFreePromotionalUpgrade() == false)
         local frame = {}
         __secureenv.StoreFrame_CheckForFree(frame, 'VARIABLES_LOADED')
         __secureenv.StoreFrame_CheckForFree(frame, 'PRODUCT_DISTRIBUTIONS_UPDATED')
         assert(frame.variablesLoaded and frame.distributionsUpdated)
-    "#).expect("store free upgrade check should accept an account without an upgrade");
+    "#,
+    )
+    .expect("store free upgrade check should accept an account without an upgrade");
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn promotional_upgrade_queries_use_supplied_state_and_seen_popup_cvar() {
+    let env = load_store_ui_tree();
+    env.state()
+        .borrow()
+        .cvars
+        .set_imported("seenAsiaCharacterUpgradePopup", "0");
+    let defaults: (bool, bool) = env
+        .eval("return C_SharedCharacterServices.HasFreePromotionalUpgrade(), C_SharedCharacterServices.HasSeenFreePromotionalUpgradePopup()")
+        .expect("promotional-upgrade queries should return booleans");
+    assert_eq!(defaults, (false, false));
+
+    env.state()
+        .borrow_mut()
+        .shared_character_services
+        .has_free_promotional_upgrade = true;
+    let available: bool = env
+        .eval("return C_SharedCharacterServices.HasFreePromotionalUpgrade()")
+        .expect("supplied promotional-upgrade state should be queryable");
+    assert!(available);
+
+    let setter_returns: i64 = env
+        .eval("return select('#', C_SharedCharacterServices.SetPromotionalPopupSeen(true, 'ignored'))")
+        .expect("promotional-popup setter should accept its boolean input");
+    assert_eq!(setter_returns, 0);
+    let seen: bool = env
+        .eval("return C_SharedCharacterServices.HasSeenFreePromotionalUpgradePopup()")
+        .expect("seen-popup CVar should be queryable");
+    assert!(seen);
+
+    env.exec("C_SharedCharacterServices.SetPromotionalPopupSeen(false)")
+        .expect("seen-popup CVar should be clearable");
+    let seen: bool = env
+        .eval("return C_SharedCharacterServices.HasSeenFreePromotionalUpgradePopup()")
+        .expect("cleared seen-popup CVar should be queryable");
+    assert!(!seen);
+
+    assert!(
+        env.exec("C_SharedCharacterServices.SetPromotionalPopupSeen('true')")
+            .is_err()
+    );
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn server_mirror_event_fires_only_when_store_enable_changes() {
+    let env = WowLuaEnv::new().expect("Lua environment should initialize");
+    env.set_server_mirrored_cvar("bpayStoreEnable", "0")
+        .expect("store enable should accept false input");
+    env.set_server_mirrored_cvar("shop2Enabled", "1")
+        .expect("Shop2 should accept true input");
+    env.exec(
+        r#"
+        __storeStatusCount = 0
+        local observer = CreateFrame("Frame")
+        observer:RegisterEvent("STORE_STATUS_CHANGED")
+        observer:SetScript("OnEvent", function()
+            __storeStatusCount = __storeStatusCount + 1
+        end)
+        "#,
+    )
+    .expect("event observer should register");
+
+    env.set_server_mirrored_cvar("shop2Enabled", "0")
+        .expect("Shop2 should accept false input");
+    let count: i64 = env
+        .eval("return __storeStatusCount")
+        .expect("Shop2 changes should not fire a store event");
+    assert_eq!(count, 0);
+
+    env.set_server_mirrored_cvar("bpayStoreEnable", "1")
+        .expect("store enable should accept true input");
+    env.set_server_mirrored_cvar("bpayStoreEnable", "1")
+        .expect("repeated store enable value should be accepted");
+    env.set_server_mirrored_cvar("bpayStoreEnable", "0")
+        .expect("store enable should accept false input");
+    let count: i64 = env
+        .eval("return __storeStatusCount")
+        .expect("changed store enable inputs should fire events");
+    assert_eq!(count, 2);
 }

@@ -258,6 +258,7 @@ impl Default for CVarStorage {
 
 fn parse_default_cvars() -> (HashMap<String, String>, HashMap<String, String>) {
     let (mut defaults, mut original_names) = parse_cvar_yaml(include_str!("cvars.yaml"));
+    insert_store_mirror_cvars(&mut defaults, &mut original_names);
     insert_collected_journal_cvar(&mut defaults, &mut original_names);
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
         // Forever 1.60.1.70707 WM77b native registration.
@@ -289,6 +290,24 @@ fn parse_default_cvars() -> (HashMap<String, String>, HashMap<String, String>) {
     insert_profile_cvars(&mut defaults, &mut original_names);
     remove_profile_cvars(&mut defaults, &mut original_names);
     (defaults, original_names)
+}
+
+/// Retail/PTR server-mirrored store flags, with defaults verified by R20.
+fn insert_store_mirror_cvars(
+    defaults: &mut HashMap<String, String>,
+    original_names: &mut HashMap<String, String>,
+) {
+    if !matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+    ) {
+        return;
+    }
+    for (name, value) in [("bpayStoreEnable", "0"), ("shop2Enabled", "1")] {
+        let key = name.to_lowercase();
+        defaults.insert(key.clone(), value.to_owned());
+        original_names.insert(key, name.to_owned());
+    }
 }
 
 /// Collections journal CVar shipped by the PTR and WowForever pins only.

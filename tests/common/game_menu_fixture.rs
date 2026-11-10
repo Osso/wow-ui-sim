@@ -74,6 +74,22 @@ pub fn setup_game_menu_env() -> WowLuaEnv {
     } else if !super::load_classic_game_startup_inventory(&env) {
         let ui = blizzard_ui_dir();
         for addon_name in BLIZZARD_ADDONS {
+            if *addon_name == "Blizzard_StoreUI"
+                && matches!(
+                    wow_ui_sim::client_profile::ACTIVE,
+                    wow_ui_sim::client_profile::ClientProfile::Retail
+                        | wow_ui_sim::client_profile::ClientProfile::Ptr
+                )
+            {
+                // The PTR/Retail shop button enters CatalogShop, not legacy StoreFrame.
+                for catalog_addon in [
+                    "Blizzard_CatalogShopSharedUtil",
+                    "Blizzard_CatalogShopSharedTemplates",
+                    "Blizzard_CatalogShop",
+                ] {
+                    super::load_required_blizzard_addon(&env, &ui, catalog_addon);
+                }
+            }
             super::load_required_blizzard_addon(&env, &ui, addon_name);
         }
     }

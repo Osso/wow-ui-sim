@@ -756,6 +756,8 @@ macro_rules! build_empty_sim_state {
             wow_token: WowTokenState::default(),
             mythic_plus: MythicPlusState::default(),
             character_services: CharacterServicesState::default(),
+            shared_character_services:
+                crate::c_api::c_shared_character_services::SharedCharacterServicesState::default(),
             scenario: ScenarioState::default(),
             death_recaps: Vec::new(),
             // Cached FrameXMLBase/Constants.lua: MAX_TOTEMS = 4.
