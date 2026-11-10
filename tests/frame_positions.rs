@@ -238,9 +238,10 @@ fn expected_position(test: TestCase) -> TestCase {
         (ClientProfile::Mists, "right_managed_container") => {
             // UIParentPanelManager.lua:780-787 gives height1200-165-100;
             // EditModeUtil.lua:51-54 and Classic preset :12 give TOPRIGHT(-5,-192).
-            // The UIWidget below-minimap child is 1x1 with an empty widget set:
-            // UIWidgetManager.xml:18,63; Shared/LayoutFrame.lua:486-526.
-            (name, frame, 1594.0, 192.0, 1.0, 935.0, 1.0)
+            // Mists' selected Wrath/WatchFrame.xml:343-350 puts a 204-wide
+            // WatchFrame in the stack; the below-minimap widget contributes1.
+            // The 204-wide WatchFrame determines the right container's width.
+            (name, frame, 1391.0, 192.0, 204.0, 935.0, 1.0)
         }
         (ClientProfile::Mists, "chat_frame") => {
             // Classic/EditModePresetLayouts.lua:398-409 anchors BOTTOMLEFT
@@ -559,20 +560,19 @@ fn assert_mists_residual_inputs(env: &WowLuaEnv, test: &str) {
             r#"
             assert(not MultiBarLeft:IsShown() and not MultiBarRight:IsShown())
             local managed = UIParentRightManagedFrameContainer:GetLayoutChildren()
-            local names = {}
+            local watchFrameManaged = false
             for _, child in ipairs(managed) do
-                names[#names + 1] = child:GetName() or "<unnamed>"
+                if child == WatchFrame then
+                    watchFrameManaged = true
+                end
             end
-            assert(#managed == 1, "eligible right-managed children: " .. table.concat(names, ","))
-            local managedName = managed[1]:GetName() or "<unnamed>"
-            assert(
-                managed[1] == UIWidgetBelowMinimapContainerFrame,
-                "native managed child identity: " .. managedName
-            )
-            assert(UIWidgetBelowMinimapContainerFrame:GetParent() == UIParentRightManagedFrameContainer, "below-minimap managed parent")
+            assert(watchFrameManaged, "native WatchFrame participates in the right stack")
+            assert(WatchFrame:GetParent() == UIParentRightManagedFrameContainer)
+            assert(WatchFrame:IsShown() and not WatchFrame.collapsed)
+            assert(WatchFrame:GetWidth() == 204, "native WatchFrame width")
             assert(UIWidgetBelowMinimapContainerFrame:GetNumWidgetsShowing() == 0, "empty widget-set fixture")
-            assert(UIWidgetBelowMinimapContainerFrame:GetWidth() == 1, "empty resize layout width")
-            assert(UIWidgetBelowMinimapContainerFrame:GetHeight() == 1, "empty resize layout height")
+            assert(not DurabilityFrame:IsShown(), "no fixture durability alerts")
+            assert(not QuestTimerFrame:IsShown() and not VehicleSeatIndicator:IsShown())
             assert(MinimapCluster:GetHeight() == 165)
             local point, relative, relativePoint, x, y = UIParentRightManagedFrameContainer:GetPoint(1)
             assert(point == "TOPRIGHT" and relative == UIParent and relativePoint == "TOPRIGHT")
