@@ -40,8 +40,8 @@ This change fixes texture colours, gradients and slice rendering in the renderer
 ## Out of scope
 
 - No invented gamepad input dispatch. No simulator button-event source is established.
-- No native claim for destination bounds smaller than opposing margins, invalid/negative margins or slice/UI-scale behavior. Small destinations remain unsliced.
-- Custom UV crops and status-bar fills combined with manual slicing remain unmodeled. Atlas metadata uses its logical entry dimensions; native parity for uncommon atlas/margin combinations is unverified.
+- INFERRED: pinned docs do not define behavior for invalid/negative margins or a source/destination with no positive center. The simulator leaves these cases on the normal texture-rendering path; native behavior remains a decomp question.
+- Explicit custom UV crops, rotated UVs, invalid slice modes, and status-bar fills combined with manual slicing remain unmodeled. Atlas metadata uses its logical entry dimensions; native parity for uncommon atlas/margin combinations and UI-scale behavior is unverified.
 - No vendor changes or performance-driven changes to Blizzard Lua.
 
 ## Pinned evidence

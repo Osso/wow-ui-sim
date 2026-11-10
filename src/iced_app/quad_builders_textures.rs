@@ -246,7 +246,7 @@ fn emit_explicit_texture_slice(
         return false;
     }
     let margins = frame.texture_slice_margins;
-    if margins == (0.0, 0.0, 0.0, 0.0) {
+    if margins == (0.0, 0.0, 0.0, 0.0) || !slice_margins_supported(margins) {
         return false;
     }
     let Some((width, height, uvs)) = explicit_slice_source(frame) else {
@@ -272,15 +272,22 @@ fn emit_explicit_texture_slice(
     )
 }
 
+fn slice_margins_supported((left, right, top, bottom): (f32, f32, f32, f32)) -> bool {
+    [left, right, top, bottom]
+        .into_iter()
+        .all(|margin| margin.is_finite() && margin >= 0.0)
+}
+
 fn slice_dimensions_fit(
     bounds: Rectangle,
     (left_px, right_px, top_px, bottom_px): (f32, f32, f32, f32),
     (width, height): (f32, f32),
 ) -> bool {
     let source_is_valid = width > 0.0 && height > 0.0;
+    let source_has_center = width > left_px + right_px && height > top_px + bottom_px;
     let destination_has_center =
         bounds.width > left_px + right_px && bounds.height > top_px + bottom_px;
-    source_is_valid && destination_has_center
+    source_is_valid && source_has_center && destination_has_center
 }
 
 fn explicit_slice_source(frame: &crate::widget::Frame) -> Option<(f32, f32, TextureUvs)> {
