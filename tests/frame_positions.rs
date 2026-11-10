@@ -564,7 +564,11 @@ fn assert_mists_residual_inputs(env: &WowLuaEnv, test: &str) {
                 names[#names + 1] = child:GetName() or "<unnamed>"
             end
             assert(#managed == 1, "eligible right-managed children: " .. table.concat(names, ","))
-            assert(managed[1] == UIWidgetBelowMinimapContainerFrame, "native managed child identity")
+            local managedName = managed[1]:GetName() or "<unnamed>"
+            assert(
+                managed[1] == UIWidgetBelowMinimapContainerFrame,
+                "native managed child identity: " .. managedName
+            )
             assert(UIWidgetBelowMinimapContainerFrame:GetParent() == UIParentRightManagedFrameContainer, "below-minimap managed parent")
             assert(UIWidgetBelowMinimapContainerFrame:GetNumWidgetsShowing() == 0, "empty widget-set fixture")
             assert(UIWidgetBelowMinimapContainerFrame:GetWidth() == 1, "empty resize layout width")
