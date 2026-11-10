@@ -2,6 +2,16 @@
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+/// Mirrors the `C_DurationUtil.CreateDurationTextBinding` registration gate.
+fn duration_text_binding_available() -> bool {
+    use wow_ui_sim::client_profile::{ACTIVE, ACTIVE_INTERFACE_VERSION, ClientProfile};
+    match ACTIVE {
+        ClientProfile::WowForever => true,
+        ClientProfile::Retail | ClientProfile::Ptr => ACTIVE_INTERFACE_VERSION >= 120007,
+        _ => false,
+    }
+}
+
 fn lockdown_environment() -> WowLuaEnv {
     let env = WowLuaEnv::new().unwrap();
     let directory = tempfile::tempdir().unwrap();
@@ -60,14 +70,21 @@ fn full_lockdown_scope_false_restores_and_parent_inheritance_wins() {
 #[test]
 fn full_lockdown_rejects_measured_font_string_apis_for_secure_and_tainted_callers() {
     let env = lockdown_environment();
+    env.exec(&format!(
+        "HasDurationTextBinding = {}",
+        duration_text_binding_available()
+    ))
+    .unwrap();
     env.exec(
         r#"
         local function probe(label)
             for _, method in ipairs({'CanWordWrap', 'CanNonSpaceWrap', 'ClearAlphaGradient'}) do
                 AssertFullLockRefused(label[method], label)
             end
-            local binding = C_DurationUtil.CreateDurationTextBinding()
-            AssertFullLockRefused(binding.SetFontString, binding, label)
+            if HasDurationTextBinding then
+                local binding = C_DurationUtil.CreateDurationTextBinding()
+                AssertFullLockRefused(binding.SetFontString, binding, label)
+            end
         end
         assert(issecure())
         probe(FullLockText)
@@ -107,6 +124,11 @@ fn full_lockdown_create_font_string_rejects_before_creating_a_child() {
 #[test]
 fn full_lockdown_set_forbidden_alone_keeps_secure_font_string_access() {
     let env = WowLuaEnv::new().unwrap();
+    env.exec(&format!(
+        "HasDurationTextBinding = {}",
+        duration_text_binding_available()
+    ))
+    .unwrap();
     env.exec(
         r#"
         FullLockParent = CreateFrame('Frame')
@@ -117,8 +139,10 @@ fn full_lockdown_set_forbidden_alone_keeps_secure_font_string_access() {
         assert(type(FullLockLabel:CanWordWrap()) == 'boolean')
         assert(type(FullLockLabel:CanNonSpaceWrap()) == 'boolean')
         FullLockLabel:ClearAlphaGradient()
-        FullLockBinding = C_DurationUtil.CreateDurationTextBinding()
-        FullLockBinding:SetFontString(FullLockLabel)
+        if HasDurationTextBinding then
+            FullLockBinding = C_DurationUtil.CreateDurationTextBinding()
+            FullLockBinding:SetFontString(FullLockLabel)
+        end
         "#,
     )
     .expect("SetForbidden alone must leave the secure FontString usable");

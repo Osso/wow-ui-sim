@@ -3,6 +3,16 @@ use crate::common;
 use common::blizzard_addon_harness::with_blizzard_addon_smoke_shape;
 use common::panel_fixtures::{clear_recorded_lua_errors, recorded_lua_errors};
 
+/// Mirrors the `C_DurationUtil.CreateDurationTextBinding` registration gate.
+fn duration_text_binding_available() -> bool {
+    use wow_ui_sim::client_profile::{ACTIVE, ACTIVE_INTERFACE_VERSION, ClientProfile};
+    match ACTIVE {
+        ClientProfile::WowForever => true,
+        ClientProfile::Retail | ClientProfile::Ptr => ACTIVE_INTERFACE_VERSION >= 120007,
+        _ => false,
+    }
+}
+
 const ROOT: &str = "Blizzard_AuthChallengeUI";
 const LOCKDOWN_PROBE_LUA: &str = r#"
 local child = CreateFrame("Frame", nil, AuthChallengeFrame)
@@ -13,9 +23,11 @@ for _, method in ipairs({'CanWordWrap', 'CanNonSpaceWrap', 'ClearAlphaGradient'}
     local ok, message = pcall(label[method], label)
     assert(not ok and string.find(message, 'Attempt to access fully locked-down object.', 1, true), tostring(message))
 end
-local binding = C_DurationUtil.CreateDurationTextBinding()
-local ok, message = pcall(binding.SetFontString, binding, label)
-assert(not ok and string.find(message, 'Attempt to access fully locked-down object.', 1, true), tostring(message))
+if HasDurationTextBinding then
+    local binding = C_DurationUtil.CreateDurationTextBinding()
+    local ok, message = pcall(binding.SetFontString, binding, label)
+    assert(not ok and string.find(message, 'Attempt to access fully locked-down object.', 1, true), tostring(message))
+end
 return AuthChallengeFrame:IsForbidden(), child:IsForbidden()
 "#;
 
@@ -32,6 +44,11 @@ fn auth_challenge_ui_full_lockdown_is_reported_and_inherited() {
                     .expect("C_AddOns.LoadAddOn should return");
                 assert!(loaded, "`{ROOT}` should load: {reason:?}");
 
+                env.exec(&format!(
+                    "HasDurationTextBinding = {}",
+                    duration_text_binding_available()
+                ))
+                .expect("binding availability flag should be set");
                 let (parent_forbidden, child_forbidden): (bool, bool) = env
                     .eval(LOCKDOWN_PROBE_LUA)
                     .expect("AuthChallengeUI lockdown probe should run");
