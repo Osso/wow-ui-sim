@@ -151,6 +151,13 @@ fn apply_image_gradient(
     if bounds.width <= 0.0 || bounds.height <= 0.0 {
         return;
     }
+    let (start, end) = if gradient.vertical {
+        (gradient.max_color, gradient.min_color)
+    } else {
+        (gradient.min_color, gradient.max_color)
+    };
+    let start = [start.r, start.g, start.b, start.a];
+    let end = [end.r, end.g, end.b, end.a];
     for vertex in &mut batch.vertices[vertex_start..] {
         let horizontal = ((vertex.position[0] - bounds.x) / bounds.width).clamp(0.0, 1.0);
         let vertical = ((vertex.position[1] - bounds.y) / bounds.height).clamp(0.0, 1.0);
@@ -159,14 +166,7 @@ fn apply_image_gradient(
         } else {
             horizontal
         };
-        let (start, end) = if gradient.vertical {
-            (gradient.max_color, gradient.min_color)
-        } else {
-            (gradient.min_color, gradient.max_color)
-        };
-        let stop = [start.r, start.g, start.b, start.a];
-        let end = [end.r, end.g, end.b, end.a];
-        for (channel, (from, to)) in vertex.color.iter_mut().zip(stop.into_iter().zip(end)) {
+        for (channel, (from, to)) in vertex.color.iter_mut().zip(start.into_iter().zip(end)) {
             *channel *= from + (to - from) * fraction;
         }
     }
@@ -239,30 +239,16 @@ fn emit_explicit_texture_slice(
     tex_path: &str,
     tint: [f32; 4],
 ) -> bool {
-    if bar_fill.is_some() || frame.tex_coords_quad.is_some() {
+    if bar_fill.is_some() {
         return false;
     }
     let (left_px, right_px, top_px, bottom_px) = frame.texture_slice_margins;
-    if left_px == 0.0 && right_px == 0.0 && top_px == 0.0 && bottom_px == 0.0 {
+    let margins_are_empty = left_px == 0.0 && right_px == 0.0 && top_px == 0.0 && bottom_px == 0.0;
+    if margins_are_empty {
         return false;
     }
-    let (width, height, uvs) = if let Some(atlas_name) = frame.atlas.as_deref() {
-        if frame.tex_coords != frame.atlas_tex_coords {
-            return false;
-        }
-        let Some(lookup) = crate::atlas::get_render_atlas_info(atlas_name) else {
-            return false;
-        };
-        let uvs = frame.atlas_tex_coords.unwrap_or((0.0, 1.0, 0.0, 1.0));
-        (lookup.width() as f32, lookup.height() as f32, uvs)
-    } else {
-        if frame.tex_coords.is_some() {
-            return false;
-        }
-        let Some((width, height)) = frame.texture_source_dimensions else {
-            return false;
-        };
-        (width as f32, height as f32, (0.0, 1.0, 0.0, 1.0))
+    let Some((width, height, uvs)) = explicit_slice_source(frame) else {
+        return false;
     };
     if width <= 0.0
         || height <= 0.0
@@ -277,36 +263,78 @@ fn emit_explicit_texture_slice(
         tint,
         blend: frame.blend_mode,
     };
-    match frame.texture_slice_mode {
-        0 => emit_stretch_slice_atlas(
-            batch,
-            StretchSliceRender {
-                bounds,
-                texture,
-                left_px,
-                top_px,
-                right_px,
-                bottom_px,
-                atlas_width_px: width,
-                atlas_height_px: height,
-            },
-        ),
-        1 => emit_tile_slice_atlas(
-            batch,
-            TileSliceRender {
-                bounds,
-                texture,
-                left_px,
-                top_px,
-                right_px,
-                bottom_px,
-                atlas_width_px: width,
-                atlas_height_px: height,
-            },
-        ),
-        _ => return false,
+    emit_explicit_texture_slice_mode(
+        batch,
+        frame.texture_slice_mode,
+        bounds,
+        texture,
+        (left_px, right_px, top_px, bottom_px),
+        (width, height),
+    )
+}
+
+fn explicit_slice_source(frame: &crate::widget::Frame) -> Option<(f32, f32, TextureUvs)> {
+    if frame.tex_coords_quad.is_some() {
+        return None;
     }
-    true
+    if let Some(atlas_name) = frame.atlas.as_deref() {
+        if frame.tex_coords != frame.atlas_tex_coords {
+            return None;
+        }
+        let lookup = crate::atlas::get_render_atlas_info(atlas_name)?;
+        let uvs = frame.atlas_tex_coords.unwrap_or((0.0, 1.0, 0.0, 1.0));
+        return Some((lookup.width() as f32, lookup.height() as f32, uvs));
+    }
+    if frame.tex_coords.is_some() {
+        return None;
+    }
+    let (width, height) = frame.texture_source_dimensions?;
+    Some((width as f32, height as f32, (0.0, 1.0, 0.0, 1.0)))
+}
+
+fn emit_explicit_texture_slice_mode(
+    batch: &mut QuadBatch,
+    mode: i32,
+    bounds: Rectangle,
+    texture: TexturedSlice<'_>,
+    (left_px, right_px, top_px, bottom_px): (f32, f32, f32, f32),
+    (width, height): (f32, f32),
+) -> bool {
+    match mode {
+        0 => {
+            emit_stretch_slice_atlas(
+                batch,
+                StretchSliceRender {
+                    bounds,
+                    texture,
+                    left_px,
+                    top_px,
+                    right_px,
+                    bottom_px,
+                    atlas_width_px: width,
+                    atlas_height_px: height,
+                },
+            );
+            true
+        }
+        1 => {
+            emit_tile_slice_atlas(
+                batch,
+                TileSliceRender {
+                    bounds,
+                    texture,
+                    left_px,
+                    top_px,
+                    right_px,
+                    bottom_px,
+                    atlas_width_px: width,
+                    atlas_height_px: height,
+                },
+            );
+            true
+        }
+        _ => false,
+    }
 }
 
 /// Explicit 8-arg SetTexCoord values describe one quad (TL, TR, BR, BL),
