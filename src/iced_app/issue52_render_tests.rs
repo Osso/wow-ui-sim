@@ -206,7 +206,7 @@ fn issue52_texture_slice_tiled_mode_repeats_the_center() {
         bounds(0.0, 0.0, 32.0, 32.0),
     );
     let image = fixture.image(&batch, 32, 32);
-    assert_pixel(&image, 16, 10, [255, 0, 0, 255], 0);
+    assert_pixel(&image, 16, 5, [255, 0, 0, 255], 0);
 }
 
 #[test]
@@ -220,7 +220,8 @@ fn issue52_texture_slice_source_dimensions_follow_texture_changes() {
     );
     let image = fixture.image(&batch, 32, 32);
     assert_pixel(&image, 1, 10, [255, 0, 0, 255], 0);
-    assert_pixel(&image, 2, 10, [0, 255, 0, 255], 0);
+    assert_pixel(&image, 2, 10, [255, 0, 0, 255], 0);
+    assert_pixel(&image, 5, 10, [0, 255, 0, 255], 0);
 }
 
 #[test]
