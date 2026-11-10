@@ -221,7 +221,7 @@ fn issue52_texture_slice_tiled_mode_repeats_the_center() {
     let image = fixture.image(&batch, 32, 32);
     assert_pixel(&image, 16, 1, [255, 0, 0, 255], 0);
     assert_pixel(&image, 16, 5, [255, 0, 0, 255], 0);
-    assert_pixel(&image, 1, 16, [255, 0, 0, 255], 0);
+    assert_pixel(&image, 1, 8, [255, 0, 0, 255], 0);
 }
 
 #[test]
