@@ -1,28 +1,51 @@
-# Issue 52 texture rendering
+# Issue #52 texture rendering compatibility
 
-## Contract
+This change fixes texture colours, gradients and slice rendering in the renderer, and accepts evidenced gamepad button scripts. See the [rendering pipeline](../rendering-pipeline.md) for the broader renderer contract.
 
-- Lua solid colours and vertex colours use display RGB values: opaque 0.5 reads back as 128; (0.235,0.14,0.08) reads back as (60,36,20). White-modulated image bytes remain unchanged. Image tints multiply display values, with no second encoding.
-- SetGradient multiplies image texels and vertex tint. Vertical min is bottom and max is top; horizontal min is left and max is right, as in the existing solid gradient path.
-- SetTextureSliceMargins(left,top,right,bottom) enables nine-slice rendering with fixed pixel corners. SetTextureSliceMode selects stretched (0, default) or tiled (1) centre/sides. ClearTextureSlice disables it.
-- Gamepad button up/down handlers register on Frame and Button in profiles whose pinned UI.xsd declares them, matching pinned consumers. Other widget registrations stay unsupported until evidence confirms them. Registration alone creates no input source.
+## What it must do
 
-## Evidence and design
+- [ ] Follow the exact RGB and image-tint contract in [shader colour output](shader-colour-roundtrip.md).
+- [ ] `SetGradient` multiplies image texels and vertex tint. Vertical min is bottom/max is top; horizontal min is left/max is right.
+- [ ] `SetTextureSliceMargins(left, top, right, bottom)` uses fixed pixel-size corners. Slice mode 0 stretches sides and centre; mode 1 tiles them. `ClearTextureSlice` restores single-quad rendering.
+- [ ] `SetTextureSliceMode` values follow `UITextureSliceMode`: Stretched is 0, Tiled is 1. The default is Stretched.
+- [ ] `OnGamePadButtonDown` and `OnGamePadButtonUp` register on Frame and Button for profiles whose pinned UI.xsd declares them. Registration does not create a gamepad input source.
 
-VERIFIED: pinned Retail and Forever `Blizzard_APIDocumentationGenerated/SimpleTextureBaseAPIDocumentation.lua:622-644` describes pixel margins in L,T,R,B order and stretched/tiled sides and centre. `UITextureConstantsDocumentation.lua:13-14` gives the enum. Both `Blizzard_SharedXML/UI.xsd:677-688` declare the XML fields. Existing storage incorrectly names arguments L,R,T,B, so the setter must be corrected while retaining its internal tuple order.
+## How it works
 
-VERIFIED: pinned Retail/Forever `Blizzard_SharedXML/UI.xsd:444-446` declares both handlers in `ScriptsType`; the cached PTR/Mists/Era/Anniversary schemas also declare them, while the cached Wrath schema does not. Retail `Blizzard_FrameXML/Shared/CinematicFrame.xml:88` binds the down handler on a Frame; Retail `Blizzard_SharedXML/CustomBindingButtonTemplate.xml:20-21` binds both on a Button; Forever `Blizzard_Gamepad/UI/CinematicMovie.lua:32-42` sets both on a button. These are the evidenced widget types; other widget types remain unproven. No simulator gamepad button input source has been established; dispatch is excluded.
+- [Rendering pipeline](../rendering-pipeline.md)
+- [Shader colour output](shader-colour-roundtrip.md)
 
-Design: keep sRGB image atlas sampling and output attachment formats. Recover encoded image RGB after sampling, multiply encoded UI colour values, quantize to the nearest display byte, then decode for sRGB attachment output. Select decoding only for sRGB targets. Keep premultiplied alpha/additive blending unchanged; native blend-space parity is not claimed. Use the existing stretch/tile slice emitters for file textures and atlas entries. Read file dimensions only when margins are enabled; use the atlas entry's logical dimensions for atlas-backed textures. Apply gradients across emitted image vertices using positions in the complete region, including slices.
+## Implementation inventory
 
-INFERRED / decomp questions: margin behaviour for a destination smaller than opposing margins, invalid/negative margins, explicit custom UVs or rotated UVs combined with slicing, non-atlas cropped paths, and pixel-vs-UI-unit behaviour under non-unit frame scale are not specified in these documents. Bar-fill plus slicing is also not modeled. Do not claim native parity for them.
+- `src/render/shader/quad.wgsl` — applies UI display RGB and image tint in the sRGB-target path.
+- `src/render/shader/pipeline.rs` — selects color transfer from the output texture format.
+- `src/render/headless_colour_tests.rs` — checks production GPU byte readback.
+- `src/iced_app/quad_builders_textures.rs` — applies image gradients and emits manual nine-slice quads.
+- `src/widget/frame.rs`, `src/widget/frame_defaults.rs` — store image dimensions for enabled file-texture slicing.
+- `src/lua_api/frame/methods/widgets/texture/atlas.rs`, `coords.rs`, `color.rs` — source-dimension cache and slice state.
+- `src/lua_api/frame/methods/text_attribute_event/events.rs`, `src/lua_api/script_helpers.rs` — supported gamepad handler registration and name lookup.
 
-## Acceptance tests
+## Tests asserting this spec
 
-- `issue52_headless_colour_bytes_match_lua_inputs_and_image_tints`
-- `issue52_headless_image_gradient_multiplies_texture_and_vertex_colour`
-- `issue52_texture_slice_corners_keep_pixel_size_as_frame_grows`
-- `issue52_texture_slice_tiled_mode_repeats_the_center`
-- `issue52_texture_slice_source_dimensions_follow_texture_changes`
-- `issue52_clear_texture_slice_restores_single_quad_rendering`
-- `issue52_gamepad_button_scripts_register_on_evidenced_frame_and_button_types`
+- `src/iced_app/issue52_render_tests.rs` — colour, image-gradient, slice-corner, tiled-edge/centre, changed-source-dimension and clear-slice headless PNG cases.
+- `src/render/headless_colour_tests.rs` — solid, image, half-alpha and additive GPU readback.
+- `tests/gamepad_buttons.rs` — `SetScript`, `GetScript` and `HasScript` for Frame and Button, plus unsupported object types.
+- `tests/texture_methods_port.rs`, `tests/methods_texture/nine_slice.rs` — slice margin order, defaults, modes and clear behavior.
+
+## Known gaps (current cycle)
+
+- [ ] Run the new and updated tests on Retail and Forever, including the extra slice cases.
+- [ ] Complete the requested profile, integration-baseline and manifest checks; then mark the verified contract bullets complete.
+
+## Out of scope
+
+- No invented gamepad input dispatch. No simulator button-event source is established.
+- No native claim for destination bounds smaller than opposing margins, invalid/negative margins or slice/UI-scale behavior. Small destinations remain unsliced.
+- Custom UV crops and status-bar fills combined with manual slicing remain unmodeled. Atlas metadata uses its logical entry dimensions; native parity for uncommon atlas/margin combinations is unverified.
+- No vendor changes or performance-driven changes to Blizzard Lua.
+
+## Pinned evidence
+
+VERIFIED: pinned Retail and Forever `Blizzard_APIDocumentationGenerated/SimpleTextureBaseAPIDocumentation.lua:622-644` describes margin order as left, top, right, bottom in pixels, and describes stretched/tiled sides and centre. `UITextureConstantsDocumentation.lua:13-14` gives values 0 and 1. `Blizzard_SharedXML/UI.xsd:677-688` declares the XML fields. Exact RGB and image sampling behavior is specified in [shader colour output](shader-colour-roundtrip.md).
+
+VERIFIED: pinned Retail/Forever `Blizzard_SharedXML/UI.xsd:444-446` declares both gamepad handlers; PTR, Mists, Era and Anniversary pins also declare them, while the cached Wrath pin does not. Retail `Blizzard_FrameXML/Shared/CinematicFrame.xml:88` binds the down handler on a Frame; Retail `Blizzard_SharedXML/CustomBindingButtonTemplate.xml:20-21` binds both on a Button; Forever `Blizzard_Kiosk/BlizzCon2026/ColdSwap.lua:66,69-70` sets both on a `CreateFrame("Frame")`, and `Blizzard_Gamepad/UI/CinematicMovie.lua:32-42` sets both on a button. These consumer types ground registration. `FrameScriptDocumentation.lua` has no gamepad-handler entry in the pinned Forever file. VERIFIED: no simulator event producer for gamepad buttons exists in `src/`; `src/lua_api/frame/methods/misc/gamepad.rs` only stores per-frame enable flags, so registration only is implemented.

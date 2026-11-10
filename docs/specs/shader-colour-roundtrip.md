@@ -1,26 +1,37 @@
 # Shader colour output
 
-UI RGB inputs and image texels represent display-byte values on an sRGB output target. See the [rendering pipeline](../rendering-pipeline.md).
+WoW UI RGB values must preserve their display-byte meaning on sRGB render targets. See the [rendering pipeline](../rendering-pipeline.md).
 
 ## What it must do
 
-- Preserve opaque sRGB image bytes through white modulation.
-- Map UI RGB input 0.5 to byte 128 and `(0.235, 0.14, 0.08)` to `(60, 36, 20)` for solid colours and vertex tints.
-- Multiply image texels and UI tints once in display-value space. Do not double-encode image texels.
-- Retain premultiplied-alpha and additive blend behavior after conversion to the target's linear color space.
-- Leave non-sRGB targets on the existing linear-input path.
+- [ ] Map opaque UI RGB input `0.5` to byte 128.
+- [ ] Map `(0.235, 0.14, 0.08)` to `(60, 36, 20)` for solid colours and vertex tints.
+- [ ] Preserve opaque image bytes through white modulation and apply image tint once, without double-encoding.
+- [ ] Retain premultiplied-alpha and additive blending after conversion to target-linear RGB.
+- [ ] Leave non-sRGB targets on the existing linear-input path.
 
 ## How it works
 
+- [Issue #52 rendering contract](issue52-texture-rendering.md)
 - [Rendering pipeline](../rendering-pipeline.md)
 
-On an sRGB target, image samples are decoded by texture sampling. The shader recovers their display values, multiplies by UI color/tint, rounds the resulting display RGB to the nearest byte, then decodes it for linear blending and the sRGB attachment. Solid and tint values use the same path. The target transfer function is selected from its format; image bytes are not modified in the atlas.
+## Implementation inventory
+
+- `src/render/shader/quad.wgsl` — converts display RGB and image modulation for sRGB outputs.
+- `src/render/shader/pipeline.rs` — selects color transfer from the output format.
+- `src/render/headless_colour_tests.rs` — production shader pixel readback.
+- `src/iced_app/issue52_render_tests.rs` — Lua texture state through headless PNG rendering.
 
 ## Tests asserting this spec
 
-- `iced_app::issue52_render_tests::issue52_headless_colour_bytes_match_lua_inputs_and_image_tints` checks Lua solid colors, vertex tints and opaque/colored images through headless PNG readback.
-- `render::headless::colour_tests::colour_readback_uses_display_byte_rgb_values` checks production shader swatches, including opaque images, solids, half-alpha and additive blending. Run its documented ignored-test filter explicitly.
+- `src/iced_app/issue52_render_tests.rs::issue52_headless_colour_bytes_match_lua_inputs_and_image_tints`
+- `src/render/headless_colour_tests.rs::colour_readback_uses_display_byte_rgb_values` (opt-in GPU readback)
 
-## Evidence limits
+## Known gaps (current cycle)
 
-The input-byte results follow issue #52's reported client values. This spec does not establish WoW parity for every blend mode, non-sRGB target, or HDR output.
+- [ ] Verify exact color and image output on Retail and Forever, then mark the requirements above complete.
+
+## Out of scope
+
+- No claim that every WoW blend mode, non-sRGB target, or HDR target matches the game client.
+- No vendor changes or performance-driven changes to Blizzard Lua.

@@ -343,9 +343,13 @@ pub(super) fn set_texture_slice_margins(state: &mut LuaState) -> LuaResult<u32> 
     let top = opt_f32(state, 3).unwrap_or(0.0);
     let right = opt_f32(state, 4).unwrap_or(0.0);
     let bottom = opt_f32(state, 5).unwrap_or(0.0);
-    let texture_source_dimensions = (left != 0.0 || top != 0.0 || right != 0.0 || bottom != 0.0)
-        .then(|| super::atlas::load_texture_source_dimensions(state, id))
-        .flatten();
+    let margins = (left, right, top, bottom);
+    let has_margins = margins != (0.0, 0.0, 0.0, 0.0);
+    let texture_source_dimensions = if has_margins {
+        super::atlas::load_texture_source_dimensions(state, id)
+    } else {
+        None
+    };
     let mut sim = borrow_state_mut(state)?;
     if let Some(frame) = sim.widgets.get_mut_visual(id) {
         frame.texture_slice_margins = (left, right, top, bottom);

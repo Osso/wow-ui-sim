@@ -95,6 +95,8 @@ fn vs_main(in: VertexInput) -> VertexOutput {
 // Blend mode constants
 const BLEND_ALPHA: u32 = 0u;
 const BLEND_ADDITIVE: u32 = 1u;
+const DISPLAY_RGB_MAX_BYTE: f32 = 255.0;
+const DISPLAY_RGB_ROUNDING_HALF: f32 = 0.5;
 
 fn srgb_to_linear(color: vec3<f32>) -> vec3<f32> {
     let low = color / 12.92;
@@ -103,7 +105,9 @@ fn srgb_to_linear(color: vec3<f32>) -> vec3<f32> {
 }
 
 fn quantize_display_rgb(color: vec3<f32>) -> vec3<f32> {
-    return floor(color * 255.0 + 0.5) / 255.0;
+    // Keep UI float values aligned with the 8-bit display-byte screenshot.
+    return floor(color * DISPLAY_RGB_MAX_BYTE + DISPLAY_RGB_ROUNDING_HALF)
+        / DISPLAY_RGB_MAX_BYTE;
 }
 
 fn linear_to_srgb(color: vec3<f32>) -> vec3<f32> {

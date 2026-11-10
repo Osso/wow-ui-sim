@@ -311,10 +311,10 @@ pub(super) fn set_texture(state: &mut LuaState) -> LuaResult<u32> {
     let (success, texture_source_dimensions) = {
         let sim = borrow_state(state)?;
         let success = texture_source_resolves(path.as_deref(), file_data_id, &sim);
-        let slice_is_enabled = sim.widgets.get(id).is_some_and(|frame| {
-            let (left, right, top, bottom) = frame.texture_slice_margins;
-            left != 0.0 || right != 0.0 || top != 0.0 || bottom != 0.0
-        });
+        let slice_is_enabled = sim
+            .widgets
+            .get(id)
+            .is_some_and(|frame| frame.texture_slice_margins != (0.0, 0.0, 0.0, 0.0));
         let dimensions = if slice_is_enabled {
             path.as_deref()
                 .and_then(|path| load_texture_dimensions_from_source(&sim, path))

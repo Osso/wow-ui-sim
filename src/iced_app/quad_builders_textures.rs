@@ -11,6 +11,9 @@ use super::super::slice_render::{
 use super::super::statusbar::StatusBarFill;
 use super::super::tiling::{emit_tiled_texture, has_uv_repeat};
 
+const TEXTURE_SLICE_MODE_STRETCHED: i32 = 0;
+const TEXTURE_SLICE_MODE_TILED: i32 = 1;
+
 /// Build quads for a Texture widget, optionally clipped by a StatusBar fill.
 pub(crate) fn build_texture_quads(
     batch: &mut QuadBatch,
@@ -242,21 +245,17 @@ fn emit_explicit_texture_slice(
     if bar_fill.is_some() {
         return false;
     }
-    let (left_px, right_px, top_px, bottom_px) = frame.texture_slice_margins;
-    let margins_are_empty = left_px == 0.0 && right_px == 0.0 && top_px == 0.0 && bottom_px == 0.0;
-    if margins_are_empty {
+    let margins = frame.texture_slice_margins;
+    if margins == (0.0, 0.0, 0.0, 0.0) {
         return false;
     }
     let Some((width, height, uvs)) = explicit_slice_source(frame) else {
         return false;
     };
-    if width <= 0.0
-        || height <= 0.0
-        || bounds.width <= left_px + right_px
-        || bounds.height <= top_px + bottom_px
-    {
+    if !slice_dimensions_fit(bounds, margins, (width, height)) {
         return false;
     }
+    let (left_px, right_px, top_px, bottom_px) = margins;
     let texture = TexturedSlice {
         path: tex_path,
         uvs,
@@ -271,6 +270,17 @@ fn emit_explicit_texture_slice(
         (left_px, right_px, top_px, bottom_px),
         (width, height),
     )
+}
+
+fn slice_dimensions_fit(
+    bounds: Rectangle,
+    (left_px, right_px, top_px, bottom_px): (f32, f32, f32, f32),
+    (width, height): (f32, f32),
+) -> bool {
+    let source_is_valid = width > 0.0 && height > 0.0;
+    let destination_has_center =
+        bounds.width > left_px + right_px && bounds.height > top_px + bottom_px;
+    source_is_valid && destination_has_center
 }
 
 fn explicit_slice_source(frame: &crate::widget::Frame) -> Option<(f32, f32, TextureUvs)> {
@@ -301,7 +311,7 @@ fn emit_explicit_texture_slice_mode(
     (width, height): (f32, f32),
 ) -> bool {
     match mode {
-        0 => {
+        TEXTURE_SLICE_MODE_STRETCHED => {
             emit_stretch_slice_atlas(
                 batch,
                 StretchSliceRender {
@@ -317,7 +327,7 @@ fn emit_explicit_texture_slice_mode(
             );
             true
         }
-        1 => {
+        TEXTURE_SLICE_MODE_TILED => {
             emit_tile_slice_atlas(
                 batch,
                 TileSliceRender {

@@ -472,7 +472,7 @@ impl shader::Pipeline for WowUiPipeline {
     }
 }
 
-/// Create uniform buffer, bind group layout, and bind group for the projection matrix.
+/// Create the projection and color-space uniform resources.
 fn create_uniform_resources(
     device: &wgpu::Device,
     output_is_srgb: bool,
