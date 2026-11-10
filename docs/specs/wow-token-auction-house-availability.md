@@ -4,8 +4,8 @@ VERIFIED: PTR 12.1.7 declares `C_WowTokenUI.ShouldDisplayInAuctionHouse()` with 
 
 ## What it must do
 
-- [ ] On PTR, the original auction-house category-list consumer can call `C_WowTokenUI.ShouldDisplayInAuctionHouse()` without an argument.
-- [ ] The query returns a non-nil true boolean, so the WoW Token category remains available to the consumer.
+- [x] On PTR, the original auction-house category-list consumer can call `C_WowTokenUI.ShouldDisplayInAuctionHouse()` without an argument.
+- [x] The query returns a non-nil true boolean, so the WoW Token category remains available to the consumer.
 
 ## How it works
 
@@ -23,7 +23,7 @@ VERIFIED: PTR 12.1.7 declares `C_WowTokenUI.ShouldDisplayInAuctionHouse()` with 
 
 ## Known gaps (current cycle)
 
-- [ ] The targeted PTR integration test must pass after the producer change.
+No in-scope gaps remain.
 
 ## Out of scope
 
