@@ -3,7 +3,7 @@
 use crate::c_api::helpers::ensure_namespace;
 use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::methods::{borrow_state, borrow_state_mut};
-use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
+use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
@@ -56,7 +56,9 @@ fn has_seen_free_promotional_upgrade_popup(state: &mut LuaState) -> LuaResult<u3
 }
 
 fn set_promotional_popup_seen(state: &mut LuaState) -> LuaResult<u32> {
-    let seen = bool::from_stack(state, 1)?;
+    let Val::Bool(seen) = stack_val(state, 1) else {
+        return Err(rilua::runtime_error("seen must be a boolean"));
+    };
     borrow_state_mut(state)?.cvars.set(
         "seenAsiaCharacterUpgradePopup",
         if seen { "1" } else { "0" },
