@@ -238,7 +238,9 @@ fn expected_position(test: TestCase) -> TestCase {
         (ClientProfile::Mists, "right_managed_container") => {
             // UIParentPanelManager.lua:780-787 gives height1200-165-100;
             // EditModeUtil.lua:51-54 and Classic preset :12 give TOPRIGHT(-5,-192).
-            (name, frame, 1595.0, 192.0, 0.0, 935.0, 1.0)
+            // The UIWidget below-minimap child is 1x1 with an empty widget set:
+            // UIWidgetManager.xml:18,63; Shared/LayoutFrame.lua:486-526.
+            (name, frame, 1594.0, 192.0, 1.0, 935.0, 1.0)
         }
         (ClientProfile::Mists, "chat_frame") => {
             // Classic/EditModePresetLayouts.lua:398-409 anchors BOTTOMLEFT
@@ -556,7 +558,11 @@ fn assert_mists_residual_inputs(env: &WowLuaEnv, test: &str) {
         "right_managed_container" => {
             r#"
             assert(not MultiBarLeft:IsShown() and not MultiBarRight:IsShown())
-            assert(#UIParentRightManagedFrameContainer:GetLayoutChildren() == 0, "empty native right stack")
+            local managed = UIParentRightManagedFrameContainer:GetLayoutChildren()
+            assert(#managed == 1 and managed[1] == UIWidgetBelowMinimapContainerFrame)
+            assert(UIWidgetBelowMinimapContainerFrame:GetParent() == UIParentRightManagedFrameContainer)
+            assert(UIWidgetBelowMinimapContainerFrame:GetNumWidgetsShowing() == 0)
+            assert(UIWidgetBelowMinimapContainerFrame:GetWidth() == 1 and UIWidgetBelowMinimapContainerFrame:GetHeight() == 1)
             assert(MinimapCluster:GetHeight() == 165)
             local point, relative, relativePoint, x, y = UIParentRightManagedFrameContainer:GetPoint(1)
             assert(point == "TOPRIGHT" and relative == UIParent and relativePoint == "TOPRIGHT")
