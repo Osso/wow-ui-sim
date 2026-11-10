@@ -311,16 +311,7 @@ pub(super) fn set_texture(state: &mut LuaState) -> LuaResult<u32> {
     let (success, texture_source_dimensions) = {
         let sim = borrow_state(state)?;
         let success = texture_source_resolves(path.as_deref(), file_data_id, &sim);
-        let slice_is_enabled = sim
-            .widgets
-            .get(id)
-            .is_some_and(|frame| frame.texture_slice_margins != (0.0, 0.0, 0.0, 0.0));
-        let dimensions = if slice_is_enabled {
-            path.as_deref()
-                .and_then(|path| load_texture_dimensions_from_source(&sim, path))
-        } else {
-            None
-        };
+        let dimensions = load_texture_dimensions_for_slice_assignment(&sim, id, path.as_deref());
         (success, dimensions)
     };
     let horiz_tile = opt_bool(state, 3);
@@ -367,6 +358,18 @@ pub(super) fn load_texture_source_dimensions(
     let sim = borrow_state(state).ok()?;
     let path = sim.widgets.get(frame_id)?.texture.as_deref()?;
     load_texture_dimensions_from_source(&sim, path)
+}
+
+fn load_texture_dimensions_for_slice_assignment(
+    sim: &crate::lua_api::state::SimState,
+    frame_id: u64,
+    path: Option<&str>,
+) -> Option<(u32, u32)> {
+    let frame = sim.widgets.get(frame_id)?;
+    if frame.texture_slice_margins == (0.0, 0.0, 0.0, 0.0) {
+        return None;
+    }
+    load_texture_dimensions_from_source(sim, path?)
 }
 
 fn load_texture_dimensions_from_source(
