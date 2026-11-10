@@ -99,8 +99,11 @@ const BLEND_ADDITIVE: u32 = 1u;
 fn srgb_to_linear(color: vec3<f32>) -> vec3<f32> {
     let low = color / 12.92;
     let high = pow(max((color + 0.055) / 1.055, vec3<f32>(0.0)), vec3<f32>(2.4));
-    // Keep exact 8-bit midpoint inputs on the upper byte after f32 power roundoff.
-    return select(high, low, color <= vec3<f32>(0.04045)) + vec3<f32>(1e-7);
+    return select(high, low, color <= vec3<f32>(0.04045));
+}
+
+fn quantize_display_rgb(color: vec3<f32>) -> vec3<f32> {
+    return floor(color * 255.0 + 0.5) / 255.0;
 }
 
 fn linear_to_srgb(color: vec3<f32>) -> vec3<f32> {
@@ -111,7 +114,7 @@ fn linear_to_srgb(color: vec3<f32>) -> vec3<f32> {
 
 fn modulate_texture(tex_color: vec4<f32>, tint: vec4<f32>) -> vec4<f32> {
     if uniforms.color_space.x != 0u {
-        let display_color = linear_to_srgb(tex_color.rgb) * tint.rgb;
+        let display_color = quantize_display_rgb(linear_to_srgb(tex_color.rgb) * tint.rgb);
         return vec4<f32>(srgb_to_linear(display_color), tex_color.a * tint.a);
     }
     return tex_color * tint;
@@ -119,7 +122,7 @@ fn modulate_texture(tex_color: vec4<f32>, tint: vec4<f32>) -> vec4<f32> {
 
 fn prepare_solid_color(color: vec4<f32>) -> vec4<f32> {
     if uniforms.color_space.x != 0u {
-        return vec4<f32>(srgb_to_linear(color.rgb), color.a);
+        return vec4<f32>(srgb_to_linear(quantize_display_rgb(color.rgb)), color.a);
     }
     return color;
 }
