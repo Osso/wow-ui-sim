@@ -6,6 +6,16 @@ use common::panel_fixtures::{clear_recorded_lua_errors, recorded_lua_errors};
 const ROOT: &str = "Blizzard_AuthChallengeUI";
 const LOCKDOWN_PROBE_LUA: &str = r#"
 local child = CreateFrame("Frame", nil, AuthChallengeFrame)
+assert(issecure())
+local label = AuthChallengeFrame.InputFrame.Prompt
+assert(label:IsForbidden())
+for _, method in ipairs({'CanWordWrap', 'CanNonSpaceWrap', 'ClearAlphaGradient'}) do
+    local ok, message = pcall(label[method], label)
+    assert(not ok and string.find(message, 'Attempt to access fully locked-down object.', 1, true), tostring(message))
+end
+local binding = C_DurationUtil.CreateDurationTextBinding()
+local ok, message = pcall(binding.SetFontString, binding, label)
+assert(not ok and string.find(message, 'Attempt to access fully locked-down object.', 1, true), tostring(message))
 return AuthChallengeFrame:IsForbidden(), child:IsForbidden()
 "#;
 
