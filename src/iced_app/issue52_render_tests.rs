@@ -44,11 +44,9 @@ impl Fixture {
             .exec("Issue52Texture = UIParent:CreateTexture('Issue52Texture')")
             .unwrap();
         self.env.exec(script).unwrap();
-        let frame = {
-            let state = self.env.state().borrow();
-            let id = state.widgets.get_id_by_name("Issue52Texture").unwrap();
-            state.widgets.get(id).unwrap().clone()
-        };
+        let state = self.env.state().borrow();
+        let id = state.widgets.get_id_by_name("Issue52Texture").unwrap();
+        let frame = state.widgets.get(id).unwrap();
         build_texture_quads(batch, bounds, &frame, None, 1.0);
     }
 
@@ -138,7 +136,7 @@ fn issue52_headless_image_gradient_multiplies_texture_and_vertex_colour() {
         (48, 7, 1.0 - 7.5 / 32.0),
         (48, 23, 1.0 - 23.5 / 32.0),
     ] {
-        let expected = [100.0 * fraction, 100.0 * fraction, 50.0 * fraction];
+        let expected: [f32; 3] = [100.0 * fraction, 100.0 * fraction, 50.0 * fraction];
         assert_pixel(
             &image,
             x,
