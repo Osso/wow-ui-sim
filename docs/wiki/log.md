@@ -1,6 +1,6 @@
-## [2026-11-10] investigation | Mists R21 Classic API contracts
+## [2026-11-10] implementation | Mists R21 Classic API contracts
 
-[Mists R21 Classic API behavior](investigations/mists-r21-classic-apis.md) records verified Mists reputation-list indexing and undefined hidden-tail order, the native false engraving-mode default and setter event, and the four-slot backpack-currency API. **VERIFIED:** Nine targeted Mists tests and 2,027 Mists library tests pass; the `spell` and `frame_position` failure-name sets match base `origin/master` `93125f591`. Remaining profile builds and Era/Anniversary library tests are pending. Era and Anniversary native behavior remain UNKNOWN.
+[Mists R21 Classic API behavior](investigations/mists-r21-classic-apis.md) now includes the watched-faction request: the same 1-based backing positions map to a supplied signed reputation slot, while index 0 and indices at least `N+2` request -1. **VERIFIED:** the new direct watched-slot regression passes, and the nine existing reputation, TokenUI and bag tests plus engraving tests pass. All six profile builds have zero warnings and all six library suites pass; Mists `spell` and `frame_position` failure-name sets match base `origin/master` `93125f591`. `N+1`, native player/connection gating, current-slot deduplication and Era/Anniversary native behavior remain UNKNOWN or unmodeled.
 
 ## [2026-11-09] correction | PTR 12.1.7 FrameXML removed-symbol runtime rows
 
