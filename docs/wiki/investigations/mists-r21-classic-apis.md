@@ -39,7 +39,7 @@ The simulator rewrites the shared `__wow_reputation_state.factions` table into o
 
 ### Verification status
 
-The post-change reputation tests, profile matrix, and final handoff are pending. The currency and engraving results above are targeted-test evidence from the current lane, not final acceptance of the complete R21 goal.
+**VERIFIED:** After commits `a1d754e85` and `788a1fef2`, all three exact Mists reputation tests, both currency tests, and all four engraving tests passed. The original ReputationFrame, TokenUI and bag consumers were runtime-selected, and every run preserved the source CVar file under the O_NOATIME guard. **VERIFIED:** The Mists all-target build completed with zero compiler warnings or errors. The Mists/Era/Anniversary library gates, remaining profile builds, Mists `spell`/`frame_position` comparisons, and final handoff remain pending.
 
 ## Sources
 

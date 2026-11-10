@@ -4,13 +4,13 @@ The Mists Classic legacy reputation globals project the shared faction scenario 
 
 ## What it must do
 
-- [ ] Keep one sorted backing array with visible rows first and collapsed children after them. `GetNumFactions()` returns the visible-prefix length; ordinary populated lists show the next header at index 2 after `CollapseFactionHeader(1)` (INFERRED from native sort behavior).
-- [ ] `GetFactionInfo(index)` reads the full sorted array, including hidden rows above the visible count, and returns 16 values for a normal row, 14 for a header and 13 for a missing row.
-- [ ] Sort headers with the special header first, then the native numeric header field descending, then by name; record-backed headers precede synthetic headers when earlier keys tie. The field's identity as Expansion is INFERRED. The simulator treats a nonzero `factionID` as record-backed (INFERRED mapping). The scenario input name `headerSortValue` is simulator metadata, not a claim about the native field name.
-- [ ] Sort same-group rows with the header first, then named faction records ascending. Missing records compare equal. Different hidden groups compare equal in an unstable sort; tests must not assert hidden-row order.
-- [ ] A missing row returns `nil, nil, 1, 0, 0, 0, nil, nil, nil, nil, nil, nil, nil`.
-- [ ] `ExpandFactionHeader` and `CollapseFactionHeader` use the same one-based backing-array positions as `GetFactionInfo`; an invalid or non-header index expands or collapses all headers.
-- [ ] Selection follows the selected faction ID when visible row indices change; no visible selection returns index 0.
+- [x] Keep one sorted backing array with visible rows first and collapsed children after them. `GetNumFactions()` returns the visible-prefix length; ordinary populated lists show the next header at index 2 after `CollapseFactionHeader(1)` (INFERRED from native sort behavior).
+- [x] `GetFactionInfo(index)` reads the full sorted array, including hidden rows above the visible count, and returns 16 values for a normal row, 14 for a header and 13 for a missing row.
+- [x] Sort headers with the special header first, then the native numeric header field descending, then by name; record-backed headers precede synthetic headers when earlier keys tie. The field's identity as Expansion is INFERRED. The simulator treats a nonzero `factionID` as record-backed (INFERRED mapping). The scenario input name `headerSortValue` is simulator metadata, not a claim about the native field name.
+- [x] Sort same-group rows with the header first, then named faction records ascending. Missing records compare equal. Different hidden groups compare equal in an unstable sort; tests must not assert hidden-row order.
+- [x] A missing row returns `nil, nil, 1, 0, 0, 0, nil, nil, nil, nil, nil, nil, nil`.
+- [x] `ExpandFactionHeader` and `CollapseFactionHeader` use the same one-based backing-array positions as `GetFactionInfo`; an invalid or non-header index expands or collapses all headers.
+- [x] Selection follows the selected faction ID when visible row indices change; no visible selection returns index 0.
 
 ## How it works
 
@@ -29,7 +29,7 @@ The Mists Classic legacy reputation globals project the shared faction scenario 
 
 ## Known gaps (current cycle)
 
-- [ ] The focused Mists reputation tests must pass against the original selected consumer and must not assert hidden-tail order.
+None.
 
 ## Out of scope
 
