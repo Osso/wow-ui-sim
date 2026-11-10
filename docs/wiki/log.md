@@ -1,6 +1,9 @@
 ## [2026-11-09] correction | PTR 12.1.7 FrameXML removed-symbol runtime rows
 
 Corrected the [Patch 12.1 FrameXML symbol inventory](investigations/patch-12-1-framexml-symbol-inventory.md): the full-load PTR 12.1.7 probe found 93 of 99 historical removed-symbol paths not callable, four `RaidNotice_*` aliases still published by `Blizzard_DeprecatedRaidWarning`, and `getglobal`/`setglobal` as Lua built-ins. These are simulator-runtime observations, not proof of native absence; the acceptance test now checks only the four current source publishers.
+## [2026-11-09] implementation | Forever frame-position residuals
+
+[Frame-position baseline drift](investigations/frame-position-baseline-drift.md#forever-residual-derivation--2026-11-09) now uses source-derived Camelot fixture geometry for BagsBar `(1088,1153,315×45)`, StatusTrackingBarManager `(204,1183,1192×17)`, and RightManagedFrameContainer `(1335,260,260×844)`. New input checks preserve bag-registration, manager-anchor and managed-child preconditions. The acceptance RED at 5c06b7ca7 confirmed only these three old Retail expectations fail; final gates are pending.
 
 ## [2026-11-08] investigation | GUI CASC cache preparation
 ## [2026-11-09] fix | Mists unit-frame Edit Mode replay ordering

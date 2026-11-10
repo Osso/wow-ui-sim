@@ -12,6 +12,7 @@
 - [x] Assert Mists player/target/focus Edit Mode anchor inputs and source-derived Party, CompactParty and PaladinPowerBar rectangles.
 - [x] Derive Mists ChatFrame1's managed bottom anchor from the selected Edit Mode anchor and visible managed-frame inputs.
 - [x] Keep Retail clean and reduce failure names on PTR, Forever, Mists, Era and Anniversary relative to master `3ca96ba58`.
+- [x] Reconcile Forever bag, status-manager and managed-right geometry from pinned Camelot inputs; assert bag registration/dimensions/preset, keyboard-manager anchor, and the visible managed-child width bound before geometry. Do not treat the status manager as its Edit Mode child bars.
 
 ## How it works
 
