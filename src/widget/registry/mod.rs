@@ -185,7 +185,8 @@ impl WidgetRegistry {
         let Some(parent) = widget.parent_id.and_then(|id| self.widgets.get(&id)) else {
             return;
         };
-        widget.full_lockdown |= parent.full_lockdown;
+        widget.full_lockdown |= parent.is_fully_locked_down();
+        widget.access_allowed &= parent.access_allowed;
 
         // Native SetToDefaults is implied by every nonempty forbidden mask.
         const SET_TO_DEFAULTS: u64 = 1;

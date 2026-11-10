@@ -20,6 +20,7 @@ use super::state::SimState;
 pub(crate) enum GeneratedChunkArg {
     String(String),
     Number(f64),
+    FontStringCreator,
 }
 
 pub struct LoaderEnv<'a> {
@@ -258,17 +259,33 @@ impl<'a> LoaderEnv<'a> {
 fn create_generated_args_table(state: &mut LuaState, args: &[GeneratedChunkArg]) -> Result<Val> {
     let table_ref = state
         .gc
-        .alloc_table(rilua::vm::table::Table::with_sizes(args.len(), 0));
-    for (index, arg) in args.iter().enumerate() {
+        .alloc_table(rilua::vm::table::Table::with_sizes(args.len(), 1));
+    let mut positional_index = 0;
+    for arg in args {
         let value = match arg {
             GeneratedChunkArg::String(text) => create_string(state, text),
             GeneratedChunkArg::Number(number) => Val::Num(*number),
+            GeneratedChunkArg::FontStringCreator => {
+                table_set_rust_fn_static(
+                    state,
+                    table_ref,
+                    "__createFontString",
+                    crate::lua_api::frame::methods::button_anchor_hierarchy::create_font_string_for_xml,
+                )
+                .map_err(|error| crate::Error::Other(error.to_string()))?;
+                continue;
+            }
         };
+        positional_index += 1;
         let table = state.gc.tables.get_mut(table_ref).ok_or_else(|| {
             crate::Error::Other("generated XML arguments table is invalid".into())
         })?;
         table
-            .raw_set(Val::Num((index + 1) as f64), value, &state.gc.string_arena)
+            .raw_set(
+                Val::Num(positional_index as f64),
+                value,
+                &state.gc.string_arena,
+            )
             .map_err(|error| crate::Error::Other(error.to_string()))?;
     }
     state.gc.barrier_back(table_ref);

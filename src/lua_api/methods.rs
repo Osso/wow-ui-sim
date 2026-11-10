@@ -39,6 +39,28 @@ pub fn frame_id_from_stack(state: &LuaState, index: i32) -> LuaResult<u64> {
     Ok(id)
 }
 
+/// Resolve an object through the measured APIs that reject full lockdown.
+pub(crate) fn frame_id_from_stack_reject_fully_locked_down(
+    state: &LuaState,
+    index: i32,
+) -> LuaResult<u64> {
+    let id = frame_id_from_stack_unrestricted(state, index)?;
+    ensure_not_fully_locked_down(state, id)?;
+    crate::c_api::unit_aura_access::ensure_script_object_accessible(state, id)?;
+    Ok(id)
+}
+
+pub(crate) fn ensure_not_fully_locked_down(state: &LuaState, id: u64) -> LuaResult<()> {
+    let fully_locked_down = borrow_state(state)?
+        .widgets
+        .get(id)
+        .is_some_and(|frame| frame.is_fully_locked_down());
+    if fully_locked_down {
+        return Err(runtime_error("Attempt to access fully locked-down object."));
+    }
+    Ok(())
+}
+
 /// Resolve a frame without access-restriction enforcement, for the queries
 /// that report access state to any caller (`IsForbidden`,
 /// `CanBeAccessedInContext`, `HasAccessConstraints`, ...).
