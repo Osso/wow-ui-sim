@@ -1,3 +1,7 @@
+## [2026-11-10] verification | Classic frame-position residuals
+
+[Frame-position baseline drift](investigations/frame-position-baseline-drift.md#verified-residual-results--2026-11-10) records source-derived Era/Anniversary expectations, Mists/Era/Anniversary ObjectiveTracker absence, and the final six-profile failure-name matrix. Era/Anniversary library tests pass; all six profile all-target checks and Wrath compile have zero warnings and compile `wow_ui_sim` with `fresh:false`. The checked-in patch-manifest test passes.
+
 ## [2026-11-08] investigation | GUI CASC cache preparation
 
 Recorded that the selected Era encoding key was absent from the inspected supported-format local indices. The [investigation](investigations/gui-casc-cache-preparation.md) separates that install observation from resolver behavior and records deterministic fixture coverage plus the `optional-tests` live smoke.

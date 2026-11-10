@@ -1,5 +1,9 @@
 > Proof receipts live untracked under `~/.local/state/wow-ui-sim`. The `data/patch-api/evidence` and `data/test-perf/evidence` trees were removed on 2026-11-08; historical links below are records, not live paths. Recover a file with `git show c011c1d95:<path>`.
 
+## [2026-11-10] verification | Classic frame-position residuals
+
+[Frame-position baseline drift](investigations/frame-position-baseline-drift.md#verified-residual-results--2026-11-10) records the final six-profile matrix: Retail/PTR 28/28, Era/Anniversary 26/28 with only bags/chat open, and source-backed ObjectiveTracker absence for Mists/Era/Anniversary. Six profile all-target checks and Wrath compile are warning-free; the manifest test passes.
+
 ## [2026-11-08] investigation | GUI CASC cache preparation
 
 [GUI CASC cache preparation](investigations/gui-casc-cache-preparation.md) records the absent selected Era encoding key, supported local index headers, bounded consistency finding, and decision to use synthetic inputs in the required regression while retaining an `optional-tests` live smoke.

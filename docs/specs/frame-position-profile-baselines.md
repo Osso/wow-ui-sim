@@ -8,6 +8,7 @@
 - [x] Use profile-native minimap dimensions, header extents and preset anchors, not the Retail rectangle for every profile.
 - [x] Assert the default minimap parent, dimensions, scale and anchors before comparing rectangles.
 - [x] Use native frame names and test absence when the selected profile source excludes a frame.
+- [x] Assert native absence of `ObjectiveTrackerFrame` on Mists, Era and Anniversary instead of seeding the placeholder.
 - [x] Change a baseline only with a native XML/Lua derivation; retain failures caused by missing or incorrect simulator inputs.
 - [x] Keep Retail clean and reduce failure names on PTR, Forever, Mists, Era and Anniversary relative to the lane's `origin/master` baseline.
 

@@ -76,6 +76,14 @@ VERIFIED: the two selected caches have byte-identical copies of the 22 XML/Lua i
 
 Acceptance commit `bf39a768c` preserves the stale rectangle assertions while checking the supported consumer inputs and asserting Era/Anniversary tracker absence. Its Era RED run has exactly the original eleven failure names; the seven input groups pass before their stale rectangle assertions fail. The follow-up Mists absence test is committed in `0a0ef1d95`; its RED run preserves the existing 17 failure names and fails `objective_tracker` because the simulator creates a placeholder. Proofs are in the untracked lane handoff.
 
+### Verified residual results — 2026-11-10
+
+VERIFIED: the final `frame_positions` run executed all 28 named cases on each profile. Failure counts are Retail 0, PTR 0, Forever 3, Mists 16, Era 2, and Anniversary 2. Era and Anniversary retain only `bags_bar` and `chat_frame`; their original eleven-name sets are strict supersets. Mists no longer fails `objective_tracker` because the selected-source absence assertion passes.
+
+INFERRED: the final six-profile names add no failure relative to master `ee24c141d`. The prior source-matched profile result is from ancestor `c2705daba`; `ee24c141d` descends from it and its intervening diff changes none of the frame-position test, built-in-frame placeholder, or misc-frame-default modules.
+
+VERIFIED: Era and Anniversary library tests each pass 1984 tests, with one ignored. `cargo check --all-targets` passes for Retail, PTR, Forever, Mists, Era, Anniversary and Wrath with zero compiler warnings; each records `wow_ui_sim fresh:false`. The checked-in patch-manifest bin test passes 1/1.
+
 ## Edges and exclusions
 
 The profile-reconciliation cycle changed no simulator layout primitive or Blizzard code. The Classic residual implementation removes only the excluded tracker placeholder for Mists/Era/Anniversary; it does not alter Blizzard consumers. The Retail table, 28 case names, ±1 geometry tolerance, ±0.02 alpha tolerance and custom failure-name parser remain. Expected rectangles come from profile source, presets, or source-defined relationships; none is copied from observed simulator output. Unknown `C_EditMode` default-state outputs are questions in the lane report, not guessed coordinates. All profile source caches and Cargo dependency files remain unchanged.
