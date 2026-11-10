@@ -2,7 +2,7 @@
 //!
 //! Explicit opt-in invocation (requires the `gui` feature):
 //! ```text
-//! cargo test --lib render::headless::colour_tests::colour_readback_has_no_artificial_brightness_lift -- --ignored --exact --nocapture
+//! cargo test --lib render::headless::colour_tests::colour_readback_uses_display_byte_rgb_values -- --ignored --exact --nocapture
 //! ```
 //! Hardware and CPU/software adapters both exercise the production wgpu shader
 //! path and are valid for functional readback. The adapter is logged; absence
