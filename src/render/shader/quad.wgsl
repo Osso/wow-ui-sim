@@ -99,7 +99,8 @@ const BLEND_ADDITIVE: u32 = 1u;
 fn srgb_to_linear(color: vec3<f32>) -> vec3<f32> {
     let low = color / 12.92;
     let high = pow(max((color + 0.055) / 1.055, vec3<f32>(0.0)), vec3<f32>(2.4));
-    return select(high, low, color <= vec3<f32>(0.04045));
+    // Keep exact 8-bit midpoint inputs on the upper byte after f32 power roundoff.
+    return select(high, low, color <= vec3<f32>(0.04045)) + vec3<f32>(1e-7);
 }
 
 fn linear_to_srgb(color: vec3<f32>) -> vec3<f32> {
