@@ -604,6 +604,7 @@ mod ssp1 {
     #[test]
     fn missing_and_no_state_secret_selectors_preserve_existing_empty_results() {
         let env = fixture(false);
+        let r17 = cfg!(feature = "retail-12-1-5");
         {
             let mut state = env.state().borrow_mut();
             state.spell_cooldowns.clear();
@@ -633,15 +634,34 @@ mod ssp1 {
                         &format!("C_Spell.GetSpellCooldownDuration({selector})"),
                         tainted,
                     );
-                    assert_duration(&env, [0.0, 0.0, 0.0, 1.0, 0.0]);
-                    for api in [
-                        "GetSpellChargeDuration",
-                        "GetSpellLossOfControlCooldownInfo",
-                    ] {
-                        capture(&env, &format!("C_Spell.{api}({selector})"), tainted);
+                    // R17 separates valid unknown identifiers from supported inactive spells.
+                    if !r17 || matches!(selector, "19750" | "Ssp1Selector") {
+                        assert_duration(&env, [0.0, 0.0, 0.0, 1.0, 0.0]);
+                    } else {
+                        env.exec("assert(Ssp1Count == 0 and Ssp1Result == nil)")
+                            .unwrap();
+                    }
+
+                    capture(
+                        &env,
+                        &format!("C_Spell.GetSpellChargeDuration({selector})"),
+                        tainted,
+                    );
+                    if r17 {
+                        env.exec("assert(Ssp1Count == 0 and Ssp1Result == nil)")
+                            .unwrap();
+                    } else {
                         env.exec("assert(Ssp1Count == 1 and Ssp1Result == nil)")
                             .unwrap();
                     }
+
+                    capture(
+                        &env,
+                        &format!("C_Spell.GetSpellLossOfControlCooldownInfo({selector})"),
+                        tainted,
+                    );
+                    env.exec("assert(Ssp1Count == 1 and Ssp1Result == nil)")
+                        .unwrap();
                     capture(
                         &env,
                         &format!("C_Spell.GetSpellLossOfControlCooldownDuration({selector})"),
