@@ -100,7 +100,11 @@ pub(super) fn init_lua_state(
         crate::wrath::compat_bootstrap::init_wrath_only_proxies(lua)?;
     }
     #[cfg(feature = "client-mists")]
-    crate::mists::compat_bootstrap::init(lua)?;
+    {
+        crate::mists::compat_bootstrap::init(lua)?;
+        crate::c_api::mists_reputation_list::register(lua.state_mut())?;
+        crate::c_api::item_spell::register_mists_legacy_globals(lua.state_mut())?;
+    }
     #[cfg(any(feature = "client-era", feature = "client-anniversary"))]
     crate::era::compat_bootstrap::init(lua)?;
     #[cfg(feature = "retail-12-1-0")]

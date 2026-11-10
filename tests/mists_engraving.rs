@@ -21,7 +21,7 @@ fn supplied_rune() -> EngravingData {
 fn supplied_inputs() -> EngravingInputs {
     let mut inputs = EngravingInputs {
         enabled: Some(true),
-        mode_enabled: Some(true),
+        mode_enabled: true,
         current_rune: Some(None),
         ..EngravingInputs::default()
     };
@@ -95,7 +95,7 @@ fn original_bag_rune_icons_follow_supplied_mode_availability_and_slots() {
     "#,
     )
     .unwrap();
-    env.state().borrow_mut().engraving.mode_enabled = Some(false);
+    env.state().borrow_mut().engraving.mode_enabled = false;
     env.exec(
         r#"
         ContainerFrame_RefreshRuneIcons(ContainerFrame1, C_Engraving.GetEngravingModeEnabled())
@@ -110,7 +110,7 @@ fn original_bag_rune_icons_follow_supplied_mode_availability_and_slots() {
     assert_eq!(env.state().borrow().engraving.refresh_requests, 1);
     {
         let mut state = env.state().borrow_mut();
-        state.engraving.mode_enabled = Some(true);
+        state.engraving.mode_enabled = true;
         state.engraving.inventory_eligibility.insert((0, 1), false);
     }
     env.exec(
@@ -213,7 +213,7 @@ fn direct_engraving_queries_project_records_and_reject_unsupplied_inputs() {
     {
         let mut state = env.state().borrow_mut();
         state.engraving.enabled = Some(false);
-        state.engraving.mode_enabled = Some(true);
+        state.engraving.mode_enabled = true;
         state.engraving.current_rune = Some(Some(supplied_rune()));
         state
             .engraving
@@ -248,7 +248,7 @@ fn direct_engraving_queries_project_records_and_reject_unsupplied_inputs() {
     )
     .unwrap();
     assert_eq!(env.state().borrow().engraving.refresh_requests, 2);
-    env.state().borrow_mut().engraving.mode_enabled = Some(false);
+    env.state().borrow_mut().engraving.mode_enabled = false;
     assert!(
         !env.eval::<bool>("return C_Engraving.GetEngravingModeEnabled()")
             .unwrap()
@@ -266,13 +266,4 @@ fn direct_engraving_queries_project_records_and_reject_unsupplied_inputs() {
             .eval::<bool>("return C_Engraving.GetCurrentRuneCast() == nil")
             .unwrap()
     );
-    env.state().borrow_mut().engraving.mode_enabled = None;
-    env.exec(
-        r#"
-        local ok, message = pcall(C_Engraving.GetEngravingModeEnabled)
-        assert(not ok and message:find("GetEngravingModeEnabled", 1, true), tostring(message))
-        assert(message:find("unsupplied", 1, true), message)
-    "#,
-    )
-    .unwrap();
 }

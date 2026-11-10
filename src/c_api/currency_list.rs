@@ -1,4 +1,4 @@
-//! Retail currency display projection. Catalog positions identify headers; Lua indices do not.
+//! Currency display-list state. Catalog positions identify headers; Lua indices do not.
 use std::collections::{HashMap, HashSet};
 
 use crate::lua_api::globals::currency_data::{self, CurrencyEntry};

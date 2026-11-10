@@ -3,6 +3,7 @@
 use super::engraving_inputs::EngravingData;
 use super::helpers::set_table_array;
 use crate::client_profile::{ACTIVE, ClientProfile};
+use crate::lua_api::globals::state_backed_queries::dispatch_event_now;
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, create_string, create_table, table_set,
 };
@@ -24,6 +25,7 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         return Ok(());
     }
     table_set_rust_fn_static(state, ns, "GetEngravingModeEnabled", get_mode_enabled)?;
+    table_set_rust_fn_static(state, ns, "SetEngravingModeEnabled", set_mode_enabled)?;
     table_set_rust_fn_static(state, ns, "GetCurrentRuneCast", get_current_rune)?;
     table_set_rust_fn_static(state, ns, "IsInventorySlotEngravable", is_slot_engravable)?;
     table_set_rust_fn_static(state, ns, "GetRuneForInventorySlot", get_slot_rune)?;
@@ -53,10 +55,15 @@ fn is_engraving_enabled(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn get_mode_enabled(state: &mut LuaState) -> LuaResult<u32> {
-    let input = borrow_state(state)?.engraving.mode_enabled;
-    let enabled = require_supplied(input, "GetEngravingModeEnabled")?;
-    state.push(Val::Bool(enabled));
+    state.push(Val::Bool(borrow_state(state)?.engraving.mode_enabled));
     Ok(1)
+}
+
+fn set_mode_enabled(state: &mut LuaState) -> LuaResult<u32> {
+    let enabled = bool::from_stack(state, 1)?;
+    borrow_state_mut(state)?.engraving.mode_enabled = enabled;
+    dispatch_event_now(state, "ENGRAVING_MODE_CHANGED", &[Val::Bool(enabled)])?;
+    Ok(0)
 }
 
 fn get_current_rune(state: &mut LuaState) -> LuaResult<u32> {

@@ -18,9 +18,8 @@ pub struct EngravingData {
 #[derive(Default)]
 pub struct EngravingInputs {
     pub enabled: Option<bool>,
-    /// Mists engraving mode. Native default false: the pinned UI calls
-    /// `SetEngravingModeEnabled` only from Blizzard_EngravingUI OnShow/OnHide.
-    pub mode_enabled: Option<bool>,
+    /// Mists engraving mode; native client default is false.
+    pub mode_enabled: bool,
     pub current_rune: Option<Option<EngravingData>>,
     pub inventory_eligibility: HashMap<(i32, i32), bool>,
     pub inventory_runes: HashMap<(i32, i32), Option<EngravingData>>,
@@ -30,14 +29,12 @@ pub struct EngravingInputs {
 }
 
 impl EngravingInputs {
-    /// INFERRED Mists native startup state; see docs/specs/mists-engraving-inputs.md.
-    /// Availability has no setter, the only mode producer is the LoadOnDemand
-    /// engraving UI, and the feature is seasonal content. Mists is neither, so
-    /// the flow sees false/false/nil until the host supplies other values.
+    /// Mists startup defaults. Availability false and no current rune are
+    /// inferred; the native engraving-mode default is false.
     pub fn mists_native_defaults() -> Self {
         Self {
             enabled: Some(false),
-            mode_enabled: Some(false),
+            mode_enabled: false,
             current_rune: Some(None),
             ..Self::default()
         }

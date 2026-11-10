@@ -480,10 +480,13 @@ fn c_currency_get_list_info(state: &mut LuaState) -> LuaResult<u32> {
     );
     write_currency_row_display_fields(state, info, &display);
     write_currency_list_status_fields(state, info, &entry);
-    #[cfg(feature = "client-retail")]
+    #[cfg(any(feature = "client-retail", feature = "client-mists"))]
     {
         let watched = borrow_state(state)?.currency_list.is_watched(&entry);
         table_set_static(state, info, "isShowInBackpack", Val::Bool(watched));
+    }
+    #[cfg(feature = "client-retail")]
+    {
         table_set_static(
             state,
             info,
@@ -685,6 +688,85 @@ fn set_currency_backpack(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
+#[cfg(feature = "client-mists")]
+pub(crate) fn register_mists_legacy_globals(state: &mut LuaState) -> LuaResult<()> {
+    table_set_rust_fn_static(
+        state,
+        state.global,
+        "GetBackpackCurrencyInfo",
+        get_mists_backpack_currency_info,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        state.global,
+        "SetCurrencyBackpack",
+        set_mists_currency_backpack,
+    )
+}
+
+#[cfg(feature = "client-mists")]
+fn read_mists_numeric_argument(state: &LuaState, index: i32, api: &str) -> LuaResult<f64> {
+    let value = stack_val(state, index);
+    let number = match value {
+        Val::Num(number) => Some(number),
+        Val::Str(_) => val_to_string(state, value).and_then(|text| text.trim().parse().ok()),
+        _ => None,
+    }
+    .filter(|number: &f64| number.is_finite())
+    .ok_or_else(|| rilua::runtime_error(format!("{api} expects a numeric argument")))?;
+    Ok(number)
+}
+
+#[cfg(feature = "client-mists")]
+fn read_mists_currency_index(state: &LuaState, api: &str) -> LuaResult<i32> {
+    let number = read_mists_numeric_argument(state, 1, api)?;
+    if number < i32::MIN as f64 || number > i32::MAX as f64 {
+        return Err(rilua::runtime_error(format!("{api} index is out of range")));
+    }
+    Ok(number as i32)
+}
+
+#[cfg(feature = "client-mists")]
+fn set_mists_currency_backpack(state: &mut LuaState) -> LuaResult<u32> {
+    let index = read_mists_currency_index(state, "SetCurrencyBackpack")?;
+    let enabled = read_mists_numeric_argument(state, 2, "SetCurrencyBackpack")? != 0.0;
+    if let Some(entry) = read_currency_list_entry(state, index)? {
+        if !entry.is_header {
+            update_currency_watch(state, entry.currency_id, enabled)?;
+        }
+    }
+    Ok(0)
+}
+
+#[cfg(feature = "client-mists")]
+fn get_mists_backpack_currency_info(state: &mut LuaState) -> LuaResult<u32> {
+    let index = read_mists_currency_index(state, "GetBackpackCurrencyInfo")?;
+    let Some(entry) = read_backpack_currency_entry(state, index)? else {
+        return Ok(push_empty_backpack_currency_info(state));
+    };
+    let display = borrow_state(state)?
+        .currency_info
+        .get(&entry.currency_id)
+        .cloned();
+    let Some(display) = display else {
+        return Ok(push_empty_backpack_currency_info(state));
+    };
+    let name = create_string(state, &display.name);
+    state.push(name);
+    state.push(Val::Num(display.quantity as f64));
+    state.push(Val::Num(f64::from(display.icon_file_id)));
+    state.push(Val::Num(f64::from(entry.currency_id)));
+    Ok(4)
+}
+
+#[cfg(feature = "client-mists")]
+fn push_empty_backpack_currency_info(state: &mut LuaState) -> u32 {
+    for _ in 0..4 {
+        state.push(Val::Nil);
+    }
+    4
+}
+
 #[cfg(feature = "client-retail")]
 fn set_currency_backpack_by_id(state: &mut LuaState) -> LuaResult<u32> {
     let currency_id = i32::from_stack(state, 1)?;
@@ -693,7 +775,7 @@ fn set_currency_backpack_by_id(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
-#[cfg(feature = "client-retail")]
+#[cfg(any(feature = "client-retail", feature = "client-mists"))]
 fn update_currency_watch(state: &LuaState, currency_id: i32, watched: bool) -> LuaResult<()> {
     if currency_data::get_currency_by_id(currency_id).is_none() {
         return Ok(());
@@ -711,7 +793,7 @@ fn read_backpack_currency_entry(
     state: &LuaState,
     index: i32,
 ) -> LuaResult<Option<&'static currency_data::CurrencyEntry>> {
-    #[cfg(feature = "client-retail")]
+    #[cfg(any(feature = "client-retail", feature = "client-mists"))]
     {
         let sim = borrow_state(state)?;
         let offset = match usize::try_from(index.saturating_sub(1)) {
@@ -723,7 +805,7 @@ fn read_backpack_currency_entry(
             .filter(|entry| !entry.is_header && sim.currency_list.is_watched(entry))
             .nth(offset))
     }
-    #[cfg(not(feature = "client-retail"))]
+    #[cfg(not(any(feature = "client-retail", feature = "client-mists")))]
     {
         let _ = state;
         Ok(currency_data::backpack_currencies().nth(index.saturating_sub(1) as usize))
