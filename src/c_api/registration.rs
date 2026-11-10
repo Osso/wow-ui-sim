@@ -86,6 +86,8 @@ pub(crate) fn register_interaction_tables(state: &mut LuaState) -> LuaResult<()>
     super::c_quest_offer::register(state)?;
     super::c_store_secure::register(state)?;
     super::store_public_eligibility::register(state)?;
+    super::store_state::register(state)?;
+    super::c_shared_character_services::register(state)?;
     super::c_voice_chat_activity::register(state)?;
     super::c_voice_chat_settings::register(state)?;
     super::c_voice_chat_devices::register(state)?;

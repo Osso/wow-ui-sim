@@ -172,8 +172,16 @@ fn test_startup_service_namespaces_exist() {
         token_secure_ty,
         price_lock_duration,
         token_count,
-    ): (String, bool, String, bool, String, i64, i64) = env
-        .eval(
+    ): (String, bool, String, bool, String, i64, i64) = {
+        if matches!(
+            crate::client_profile::ACTIVE,
+            crate::client_profile::ClientProfile::Retail
+                | crate::client_profile::ClientProfile::Ptr
+        ) {
+            env.set_server_mirrored_cvar("shop2Enabled", "1")
+                .expect("Shop2 mirror should accept true input");
+        }
+        env.eval(
             r#"
             return type(C_CatalogShop.IsShop2Enabled),
                 C_CatalogShop.IsShop2Enabled(),
@@ -184,10 +192,18 @@ fn test_startup_service_namespaces_exist() {
                 C_WowTokenSecure.GetTokenCount()
             "#,
         )
-        .unwrap();
+        .unwrap()
+    };
 
     assert_eq!(shop_ty, "function");
-    assert!(!shop_enabled);
+    assert_eq!(
+        shop_enabled,
+        matches!(
+            crate::client_profile::ACTIVE,
+            crate::client_profile::ClientProfile::Retail
+                | crate::client_profile::ClientProfile::Ptr
+        )
+    );
     assert_eq!(has_new_products_ty, "function");
     assert!(!has_new_products);
     assert_eq!(token_secure_ty, "function");

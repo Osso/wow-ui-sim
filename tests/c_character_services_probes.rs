@@ -32,7 +32,6 @@ fn get_active_character_upgrade_boost_type_reflects_seeded_value() {
     env.state().borrow_mut().character_services = CharacterServicesState {
         active_upgrade_boost_type: Some(5),
         active_class_trial_boost_type: None,
-        has_free_promotional_upgrade: false,
     };
     let boost_type: f64 = env
         .eval("return C_CharacterServices.GetActiveCharacterUpgradeBoostType()")
@@ -46,7 +45,6 @@ fn get_active_class_trial_boost_type_reflects_seeded_value() {
     env.state().borrow_mut().character_services = CharacterServicesState {
         active_upgrade_boost_type: None,
         active_class_trial_boost_type: Some(7),
-        has_free_promotional_upgrade: false,
     };
     let trial_type: f64 = env
         .eval("return C_CharacterServices.GetActiveClassTrialBoostType()")

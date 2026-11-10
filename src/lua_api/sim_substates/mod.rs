@@ -843,9 +843,10 @@ impl Keybindings {
     }
 }
 
-/// Character-service inputs used by the C_CharacterServices APIs.
-/// Active boost and trial values default to `None`; the promotional-upgrade
-/// observation defaults to false until the host supplies an available upgrade.
+/// Character-boost / trial service state. Drives
+/// `C_CharacterServices.GetActiveCharacterUpgradeBoostType` and
+/// `C_CharacterServices.GetActiveClassTrialBoostType`. Both default to
+/// `None` (no active service).
 #[derive(Debug, Default, Clone)]
 pub struct CharacterServicesState {
     /// Active character-upgrade boost type id, or `None` when no boost
@@ -854,6 +855,4 @@ pub struct CharacterServicesState {
     /// Active class-trial boost type id, or `None` when no trial is
     /// running.
     pub active_class_trial_boost_type: Option<i32>,
-    /// Whether supplied upgrade data contains a qualifying free promotion.
-    pub has_free_promotional_upgrade: bool,
 }

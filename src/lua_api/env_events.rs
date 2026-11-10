@@ -236,6 +236,31 @@ impl WowLuaEnv {
         self.fire_event("ACCOUNT_CHARACTER_CURRENCY_DATA_RECEIVED")
     }
 
+    /// Set a server-mirrored CVar for this simulated client.
+    ///
+    /// A changed `bpayStoreEnable` value emits `STORE_STATUS_CHANGED` on Retail/PTR.
+    /// `shop2Enabled` has no confirmed change event.
+    pub fn set_server_mirrored_cvar(&self, name: &str, value: &str) -> Result<()> {
+        let store_status_changed = {
+            let state = self.state();
+            let state = state.borrow();
+            let previous_enabled = state.cvars.get_bool("bpayStoreEnable");
+            state.cvars.set_imported(name, value);
+            let is_store_enable = name.eq_ignore_ascii_case("bpayStoreEnable");
+            let retail_or_ptr = matches!(
+                crate::client_profile::ACTIVE,
+                crate::client_profile::ClientProfile::Retail
+                    | crate::client_profile::ClientProfile::Ptr
+            );
+            is_store_enable && retail_or_ptr && previous_enabled != (value == "1")
+        };
+
+        if store_status_changed {
+            self.fire_event("STORE_STATUS_CHANGED")?;
+        }
+        Ok(())
+    }
+
     /// Fire an event to all registered frames.
     pub fn fire_event(&self, event: &str) -> Result<()> {
         self.fire_event_with_args(event, &[])

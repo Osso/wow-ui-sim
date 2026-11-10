@@ -227,6 +227,8 @@ fn env() -> WowLuaEnv {
 #[test]
 fn store_apis_report_enabled_and_available() {
     let env = env();
+    env.set_server_mirrored_cvar("bpayStoreEnable", "1")
+        .expect("store mirror should accept the enabled input");
     let (store_public_enabled, store_secure_available, has_purchase_list, has_product_list, has_distribution_list): (
         bool,
         bool,

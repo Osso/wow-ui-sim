@@ -56,6 +56,14 @@ mod tests {
     #[test]
     fn installs_store_public_defaults() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
+        if matches!(
+            crate::client_profile::ACTIVE,
+            crate::client_profile::ClientProfile::Retail
+                | crate::client_profile::ClientProfile::Ptr
+        ) {
+            env.set_server_mirrored_cvar("bpayStoreEnable", "0")
+                .expect("store default input should be accepted");
+        }
 
         let result: (bool, bool, String) = env
             .eval(
@@ -68,7 +76,12 @@ mod tests {
             )
             .expect("C_StorePublic defaults should run");
 
-        assert_eq!(result, (true, true, "services".to_string()));
+        let expected_enabled = !matches!(
+            crate::client_profile::ACTIVE,
+            crate::client_profile::ClientProfile::Retail
+                | crate::client_profile::ClientProfile::Ptr
+        );
+        assert_eq!(result, (expected_enabled, true, "services".to_string()));
         if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Wrath {
             env.exec("assert(rawget(C_StorePublic, 'DoesGroupHavePurchaseableProducts') == nil)")
                 .expect("no declaration-backed Wrath query");

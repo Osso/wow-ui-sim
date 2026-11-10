@@ -424,10 +424,10 @@ fn test_game_menu_shop_button_opens_store_and_menu_can_reopen_after_store_closes
     test_timeout! {
         let env = setup_game_menu_env();
         if cfg!(any(feature = "client-ptr", feature = "client-retail")) {
-            let state = env.state();
-            let state = state.borrow();
-            state.cvars.set_imported("bpayStoreEnable", "1");
-            state.cvars.set_imported("shop2Enabled", "1");
+            env.set_server_mirrored_cvar("bpayStoreEnable", "1")
+                .unwrap();
+            env.set_server_mirrored_cvar("shop2Enabled", "1")
+                .unwrap();
         }
 
         let result: String = env
@@ -456,13 +456,13 @@ fn test_game_menu_shop_button_opens_store_and_menu_can_reopen_after_store_closes
                     return "onclick-error:" .. tostring(err)
                 end
 
-                if not StoreFrame:IsShown() then
-                    return "store-not-shown action=" .. tostring(StoreFrame:GetAttribute("action"))
+                if not CatalogShopInboundInterface.IsShown() then
+                    return "catalog-shop-not-shown action=" .. tostring(CatalogShopFrame:GetAttribute("action"))
                 end
 
-                StoreFrame_SetShown(false, G_GameMenuFrameContextKey)
-                if StoreFrame:IsShown() then
-                    return "store-still-shown-after-close"
+                CatalogShopInboundInterface.SetShown(false, G_GameMenuFrameContextKey)
+                if CatalogShopInboundInterface.IsShown() then
+                    return "catalog-shop-still-shown-after-close"
                 end
 
                 if not GameMenuFrame:IsShown() then
@@ -488,6 +488,10 @@ post_wrath_ui_fixture! {
 fn ptr_default_shop_settings_hide_game_menu_store_button() {
     test_timeout! {
         let env = setup_game_menu_env();
+        env.set_server_mirrored_cvar("bpayStoreEnable", "0")
+            .unwrap();
+        env.set_server_mirrored_cvar("shop2Enabled", "1")
+            .unwrap();
         let result: (bool, bool, bool) = env
             .eval(&menu_button_chunk(r#"
                 GameMenuFrame:Show()
@@ -513,12 +517,10 @@ post_wrath_ui_fixture! {
 fn ptr_store_status_change_rebuilds_menu_shop_button() {
     test_timeout! {
         let env = setup_game_menu_env();
-        {
-            let state = env.state();
-            let state = state.borrow();
-            state.cvars.set_imported("bpayStoreEnable", "0");
-            state.cvars.set_imported("shop2Enabled", "1");
-        }
+        env.set_server_mirrored_cvar("bpayStoreEnable", "0")
+            .unwrap();
+        env.set_server_mirrored_cvar("shop2Enabled", "1")
+            .unwrap();
         env.exec("GameMenuFrame:Show()").unwrap();
         let initially_visible: bool = env
             .eval(&menu_button_chunk(r#"
@@ -530,11 +532,8 @@ fn ptr_store_status_change_rebuilds_menu_shop_button() {
             .unwrap();
         assert!(!initially_visible);
 
-        env.state()
-            .borrow()
-            .cvars
-            .set_imported("bpayStoreEnable", "1");
-        env.fire_event("STORE_STATUS_CHANGED").unwrap();
+        env.set_server_mirrored_cvar("bpayStoreEnable", "1")
+            .unwrap();
         let enabled_visible: bool = env
             .eval(&menu_button_chunk(r#"
                 for button in menu_buttons() do
@@ -545,11 +544,8 @@ fn ptr_store_status_change_rebuilds_menu_shop_button() {
             .unwrap();
         assert!(enabled_visible);
 
-        env.state()
-            .borrow()
-            .cvars
-            .set_imported("bpayStoreEnable", "0");
-        env.fire_event("STORE_STATUS_CHANGED").unwrap();
+        env.set_server_mirrored_cvar("bpayStoreEnable", "0")
+            .unwrap();
         let disabled_visible: bool = env
             .eval(&menu_button_chunk(r#"
                 for button in menu_buttons() do
@@ -569,10 +565,10 @@ fn test_legacy_store_toggle_reopens_game_menu_after_store_closes() {
     test_timeout! {
         let env = setup_game_menu_env();
         if cfg!(any(feature = "client-ptr", feature = "client-retail")) {
-            let state = env.state();
-            let state = state.borrow();
-            state.cvars.set_imported("bpayStoreEnable", "1");
-            state.cvars.set_imported("shop2Enabled", "0");
+            env.set_server_mirrored_cvar("bpayStoreEnable", "1")
+                .unwrap();
+            env.set_server_mirrored_cvar("shop2Enabled", "0")
+                .unwrap();
         }
 
         let result: String = env
