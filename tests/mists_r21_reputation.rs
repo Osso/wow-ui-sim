@@ -7,10 +7,10 @@ fn supply_rows(env: &WowLuaEnv) {
     env.exec(r#"
         local state = __wow_reputation_state
         state.factions = {
-            { name = 'Pandaria', factionID = 0, reaction = 4, isHeader = true },
-            { name = 'Golden Lotus', factionID = 1269, reaction = 5, bottom = 0, top = 6000, standing = 1250 },
+            { name = 'Pandaria', factionID = 0, reaction = 4, isHeader = true, headerSortValue = 5 },
             { name = 'Shado-Pan', factionID = 1270, reaction = 6, bottom = 0, top = 12000, standing = 3300 },
-            { name = 'Alliance', factionID = 0, reaction = 4, isHeader = true },
+            { name = 'Golden Lotus', factionID = 1269, reaction = 5, bottom = 0, top = 6000, standing = 1250 },
+            { name = 'Alliance', factionID = 0, reaction = 4, isHeader = true, headerSortValue = 4 },
             { name = 'Stormwind', factionID = 72, reaction = 7, bottom = 0, top = 21000, standing = 9400 },
         }
     "#).unwrap();
@@ -37,7 +37,14 @@ fn mists_r21_reputation_original_frame_tracks_header_visibility() {
             assert(ReputationBar2FactionName:GetText() == 'Alliance', 'second visible header')
             assert(ReputationBar3FactionName:GetText() == 'Stormwind', 'remaining visible faction')
             assert(not ReputationBar4:IsShown(), 'hidden rows must not remain in the frame')
-            assert(GetFactionInfo(4) ~= nil, 'getter accepts backing rows above visible count')
+            local hiddenRows = {}
+            for index = 4, 5 do
+                hiddenRows[GetFactionInfo(index)] = true
+            end
+            assert(hiddenRows['Golden Lotus'] and hiddenRows['Shado-Pan'],
+                'hidden rows remain reachable without an order guarantee')
+            assert(C_Reputation.GetFactionDataByIndex(2).name == 'Alliance',
+                'C_Reputation shares the visible prefix')
             ExpandFactionHeader(999)
             ReputationFrame_Update()
             assert(GetNumFactions() == 5 and ReputationBar5:IsShown(), 'invalid expand means all')
@@ -50,6 +57,27 @@ fn mists_r21_reputation_original_frame_tracks_header_visibility() {
             assert(GetNumFactions() == 5, 'zero expands all')
         "#).unwrap();
     });
+}
+
+#[test]
+fn mists_r21_reputation_headers_follow_native_sort_keys() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(r#"
+        __wow_reputation_state.factions = {
+            { name = 'Zulu', factionID = 0, isHeader = true, headerSortValue = 7 },
+            { name = 'Zulu', factionID = 82, isHeader = true, headerSortValue = 7 },
+            { name = 'Alpha', factionID = 0, isHeader = true, headerSortValue = 7 },
+            { name = 'Previous Expansion', factionID = 0, isHeader = true, headerSortValue = 6 },
+            { name = 'Special', factionID = 0, isHeader = true, headerSortValue = 0, isSpecialHeader = true },
+        }
+        assert(GetNumFactions() == 5)
+        assert(GetFactionInfo(1) == 'Special', 'special header sorts first')
+        assert(GetFactionInfo(2) == 'Alpha', 'numeric header field sorts descending')
+        assert(GetFactionInfo(3) == 'Zulu' and select(14, GetFactionInfo(3)) == 82,
+            'same-value headers sort by name, then record-backed first')
+        assert(GetFactionInfo(4) == 'Zulu' and select(14, GetFactionInfo(4)) == 0)
+        assert(GetFactionInfo(5) == 'Previous Expansion')
+    "#).unwrap();
 }
 
 #[test]

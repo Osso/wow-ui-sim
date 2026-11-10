@@ -4,10 +4,12 @@ The Mists Classic legacy reputation globals project the shared faction scenario 
 
 ## What it must do
 
-- [ ] `GetNumFactions()` returns visible rows; collapsing a header removes its descendants from that count.
-- [ ] `GetFactionInfo(index)` reads the full backing list, including rows above the visible count, and returns 16 values for a normal row, 14 for a header and 13 for a missing row.
+- [ ] Keep one sorted backing array with visible rows first and collapsed children after them. `GetNumFactions()` returns the visible-prefix length; ordinary populated lists show the next header at index 2 after `CollapseFactionHeader(1)` (INFERRED from native sort behavior).
+- [ ] `GetFactionInfo(index)` reads the full sorted array, including hidden rows above the visible count, and returns 16 values for a normal row, 14 for a header and 13 for a missing row.
+- [ ] Sort headers with the special header first, then the native numeric header field descending, then by name; record-backed headers precede synthetic headers when earlier keys tie. The field's identity as Expansion is INFERRED. The simulator treats a nonzero `factionID` as record-backed (INFERRED mapping). The scenario input name `headerSortValue` is simulator metadata, not a claim about the native field name.
+- [ ] Sort same-group rows with the header first, then named faction records ascending. Missing records compare equal. Different hidden groups compare equal in an unstable sort; tests must not assert hidden-row order.
 - [ ] A missing row returns `nil, nil, 1, 0, 0, 0, nil, nil, nil, nil, nil, nil, nil`.
-- [ ] `ExpandFactionHeader` and `CollapseFactionHeader` expand or collapse all headers when the index is invalid or does not select a header.
+- [ ] `ExpandFactionHeader` and `CollapseFactionHeader` use the same one-based backing-array positions as `GetFactionInfo`; an invalid or non-header index expands or collapses all headers.
 - [ ] Selection follows the selected faction ID when visible row indices change; no visible selection returns index 0.
 
 ## How it works
@@ -17,7 +19,7 @@ The Mists Classic legacy reputation globals project the shared faction scenario 
 
 ## Implementation inventory
 
-- `src/c_api/mists_reputation_list.rs` — Mists legacy list globals over the shared scenario rows.
+- `src/c_api/mists_reputation_list.rs` — Mists legacy list globals over the shared scenario rows; one sorted array carries the visible prefix and hidden tail.
 - `src/lua_api/workarounds/temporary/reputation_state.rs` — existing seeded `C_Reputation` scenario rows.
 - `src/lua_api/env_init/mod.rs` — registers the Mists globals after profile bootstrap.
 
@@ -27,7 +29,7 @@ The Mists Classic legacy reputation globals project the shared faction scenario 
 
 ## Known gaps (current cycle)
 
-- [ ] The focused Mists reputation tests must pass against the original selected consumer.
+- [ ] The focused Mists reputation tests must pass against the original selected consumer and must not assert hidden-tail order.
 
 ## Out of scope
 

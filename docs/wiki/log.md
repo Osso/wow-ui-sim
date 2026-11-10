@@ -1,3 +1,7 @@
+## [2026-11-10] investigation | Mists R21 Classic API contracts
+
+[Mists R21 Classic API behavior](investigations/mists-r21-classic-apis.md) records verified Mists reputation-list indexing and undefined hidden-tail order, the native false engraving-mode default and setter event, and the four-slot backpack-currency API. Era and Anniversary remain UNKNOWN; post-change reputation tests are pending.
+
 ## [2026-11-09] correction | PTR 12.1.7 FrameXML removed-symbol runtime rows
 
 Corrected the [Patch 12.1 FrameXML symbol inventory](investigations/patch-12-1-framexml-symbol-inventory.md): the full-load PTR 12.1.7 probe found 93 of 99 historical removed-symbol paths not callable, four `RaidNotice_*` aliases still published by `Blizzard_DeprecatedRaidWarning`, and `getglobal`/`setglobal` as Lua built-ins. These are simulator-runtime observations, not proof of native absence; the acceptance test now checks only the four current source publishers.
@@ -44,7 +48,7 @@ Recorded the [XML parent identity failure](investigations/mists-spellbook-size.m
 [SetForbidden restriction](../specs/set-forbidden-restriction.md) extends the tainted-call no-op gate to `client-wowforever`: the pinned WowForever `1.60.1.70707` `SimpleFrameScriptObjectAPIDocumentation.lua` is byte-identical to the Retail and PTR copies (`:287-295`, `HasRestrictions = true`), and its `Blizzard_RestrictedAddOnEnvironment/RestrictedExecution.lua:397-400` reaches `MakeForbidden` only under `issecure()`. No native WowForever probe covers the method (`handoff/native-evidence-70707`), so the case stays INFERRED. The existing `protected_frame_enforcement` case failed on Forever before the change and passes after it.
 ## [2026-11-07] investigation | Mists engraving mode native default
 
-[Mists engraving inputs](investigations/mists-engraving-inputs.md#supplied-input-boundary) records the INFERRED native defaults for the bag flow: availability false, engraving mode false and current rune nil. The declarations have no availability setter; the only mode producer is `Blizzard_EngravingUI` OnShow/OnHide; its TOC says the feature is for seasonal content, which Mists is not. `SimState::seed_default_game_state` seeds these three values under `client-mists`; the getters keep the named unsupplied-input errors and supplied state overrides. The unchanged bank and mail storage-flow tests now reach original `ContainerFrame_Shared.lua:315` without a Lua error. Other engraving members keep the explicit missing-input contract.
+The November 7 [engraving-input investigation](investigations/mists-engraving-inputs.md#supplied-input-boundary) treated all three bag-flow defaults as inferred. **VERIFIED** Mists R21 evidence now establishes mode=false and the synchronous setter event; **INFERRED** defaults for availability=false and current rune=nil remain open. See [Mists R21 Classic API behavior](investigations/mists-r21-classic-apis.md). The unchanged bank and mail storage-flow tests still reach original `ContainerFrame_Shared.lua:315` without a Lua error.
 
 ## [2026-11-07] investigation | Forever C_Scenario.ShouldShowCriteria
 

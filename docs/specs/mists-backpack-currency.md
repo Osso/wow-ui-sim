@@ -4,10 +4,10 @@ The Mists legacy backpack-currency globals share watched flags with `C_CurrencyI
 
 ## What it must do
 
-- [ ] `SetCurrencyBackpack(currencyListIndex, enable)` uses a 1-based currency-list index and treats numeric zero as disabled and nonzero as enabled.
-- [ ] `GetBackpackCurrencyInfo(index)` accepts a numeric or numeric-convertible 1-based index and returns `name, count, icon, currencyID` for a watched slot, or four nils for an empty or out-of-range slot.
-- [ ] The getter reflects `SetCurrencyBackpack` changes and has no native three-slot cap.
-- [ ] The selected Mists TokenUI continues to display only its first three watched slots while the API can return a fourth.
+- [x] `SetCurrencyBackpack(currencyListIndex, enable)` uses a 1-based currency-list index and treats numeric zero as disabled and nonzero as enabled.
+- [x] `GetBackpackCurrencyInfo(index)` accepts a numeric or numeric-convertible 1-based index and returns `name, count, icon, currencyID` for a watched slot, or four nils for an empty or out-of-range slot.
+- [x] The getter reflects `SetCurrencyBackpack` changes and has no native three-slot cap.
+- [x] The selected Mists TokenUI continues to display only its first three watched slots while the API can return a fourth.
 
 ## How it works
 
@@ -26,7 +26,7 @@ The Mists legacy backpack-currency globals share watched flags with `C_CurrencyI
 
 ## Known gaps (current cycle)
 
-- [ ] The focused Mists currency tests must pass against the original selected consumer.
+None.
 
 ## Out of scope
 

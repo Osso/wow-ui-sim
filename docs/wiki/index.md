@@ -1,5 +1,9 @@
 > Proof receipts live untracked under `~/.local/state/wow-ui-sim`. The `data/patch-api/evidence` and `data/test-perf/evidence` trees were removed on 2026-11-08; historical links below are records, not live paths. Recover a file with `git show c011c1d95:<path>`.
 
+## [2026-11-10] investigation | Mists R21 Classic API contracts
+
+[Mists R21 Classic API behavior](investigations/mists-r21-classic-apis.md) records verified Mists reputation-list indexing and undefined hidden-tail order, the native false engraving-mode default and setter event, and the four-slot backpack-currency API. Era and Anniversary remain UNKNOWN; post-change reputation tests are pending.
+
 ## [2026-11-09] investigation | Reconcile profile frame-position baselines
 
 [Frame-position baseline drift](investigations/frame-position-baseline-drift.md#verified-lane-result--2026-11-09) records source-derived PTR, Forever and Classic expectations, profile-specific absent-frame checks, six-profile failure matrices, and unresolved model/input divergences. Its Mists follow-up records source-asserted Edit Mode unit-frame anchors, StanceBar replay ordering, and the managed ChatFrame position; 11 Mists frame-position residuals remain. The Forever bag, status-manager and managed-right residuals use Camelot source-derived fixture geometry, and Forever passes all 28 cases.
