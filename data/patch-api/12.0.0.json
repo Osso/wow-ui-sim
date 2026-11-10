@@ -5531,13 +5531,13 @@
           "kind": "source",
           "reference": "src/lua_api/state.rs",
           "summary": "Empty-map initialization; absent-key zero is simulator policy, not native-default proof.",
-          "source_hash": "9c96877fabb7615bb6464664bbc385fe5c486c5b0ba660ab92754c5a7ad1f276"
+          "source_hash": "0909a75eb40092b4e6691ea822c209bfc3192c18f9ae056b5f45cac6b44f9ad8"
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state/sim_state.rs",
           "summary": "SimState owns an independent HashMap<(i32, i32), f64> for format-setting pairs per environment.",
-          "source_hash": "08ccaf03b3be183f410cfdb1d05b9e817c89b89170f7fa5c2b045e4ff26caad8"
+          "source_hash": "0021ecb8f0497001762f6d2e21456e223ee97907c23b9b5d1184af599bf5524d"
         },
         {
           "kind": "test",
@@ -5618,13 +5618,13 @@
         {
           "kind": "source",
           "reference": "src/lua_api/state.rs",
-          "source_hash": "9c96877fabb7615bb6464664bbc385fe5c486c5b0ba660ab92754c5a7ad1f276",
+          "source_hash": "0909a75eb40092b4e6691ea822c209bfc3192c18f9ae056b5f45cac6b44f9ad8",
           "summary": "Empty-state construction initializes speaker speed to 0.0 as simulator policy, not a native-default assertion."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state/sim_state.rs",
-          "source_hash": "08ccaf03b3be183f410cfdb1d05b9e817c89b89170f7fa5c2b045e4ff26caad8",
+          "source_hash": "0021ecb8f0497001762f6d2e21456e223ee97907c23b9b5d1184af599bf5524d",
           "summary": "SimState owns the numeric speaker-speed field independently per environment; no persistence or CVar identity is established."
         },
         {
@@ -5687,13 +5687,13 @@
         {
           "kind": "source",
           "reference": "src/lua_api/state.rs",
-          "source_hash": "9c96877fabb7615bb6464664bbc385fe5c486c5b0ba660ab92754c5a7ad1f276",
+          "source_hash": "0909a75eb40092b4e6691ea822c209bfc3192c18f9ae056b5f45cac6b44f9ad8",
           "summary": "Empty-state construction initializes speaker volume to 100.0 as simulator policy, not a native-default assertion."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state/sim_state.rs",
-          "source_hash": "08ccaf03b3be183f410cfdb1d05b9e817c89b89170f7fa5c2b045e4ff26caad8",
+          "source_hash": "0021ecb8f0497001762f6d2e21456e223ee97907c23b9b5d1184af599bf5524d",
           "summary": "SimState owns the numeric speaker-volume field independently per environment; no persistence or CVar identity is established."
         },
         {
@@ -5844,13 +5844,13 @@
           "kind": "source",
           "reference": "src/lua_api/state.rs",
           "summary": "Empty-map initialization; absent-key zero is simulator policy, not native-default proof.",
-          "source_hash": "9c96877fabb7615bb6464664bbc385fe5c486c5b0ba660ab92754c5a7ad1f276"
+          "source_hash": "0909a75eb40092b4e6691ea822c209bfc3192c18f9ae056b5f45cac6b44f9ad8"
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state/sim_state.rs",
           "summary": "SimState owns an independent HashMap<(i32, i32), f64> for format-setting pairs per environment.",
-          "source_hash": "08ccaf03b3be183f410cfdb1d05b9e817c89b89170f7fa5c2b045e4ff26caad8"
+          "source_hash": "0021ecb8f0497001762f6d2e21456e223ee97907c23b9b5d1184af599bf5524d"
         },
         {
           "kind": "test",
@@ -5931,13 +5931,13 @@
         {
           "kind": "source",
           "reference": "src/lua_api/state.rs",
-          "source_hash": "9c96877fabb7615bb6464664bbc385fe5c486c5b0ba660ab92754c5a7ad1f276",
+          "source_hash": "0909a75eb40092b4e6691ea822c209bfc3192c18f9ae056b5f45cac6b44f9ad8",
           "summary": "Empty-state construction initializes speaker speed to 0.0 as simulator policy, not a native-default assertion."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state/sim_state.rs",
-          "source_hash": "08ccaf03b3be183f410cfdb1d05b9e817c89b89170f7fa5c2b045e4ff26caad8",
+          "source_hash": "0021ecb8f0497001762f6d2e21456e223ee97907c23b9b5d1184af599bf5524d",
           "summary": "SimState owns the numeric speaker-speed field independently per environment; no persistence or CVar identity is established."
         },
         {
@@ -6000,13 +6000,13 @@
         {
           "kind": "source",
           "reference": "src/lua_api/state.rs",
-          "source_hash": "9c96877fabb7615bb6464664bbc385fe5c486c5b0ba660ab92754c5a7ad1f276",
+          "source_hash": "0909a75eb40092b4e6691ea822c209bfc3192c18f9ae056b5f45cac6b44f9ad8",
           "summary": "Empty-state construction initializes speaker volume to 100.0 as simulator policy, not a native-default assertion."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state/sim_state.rs",
-          "source_hash": "08ccaf03b3be183f410cfdb1d05b9e817c89b89170f7fa5c2b045e4ff26caad8",
+          "source_hash": "0021ecb8f0497001762f6d2e21456e223ee97907c23b9b5d1184af599bf5524d",
           "summary": "SimState owns the numeric speaker-volume field independently per environment; no persistence or CVar identity is established."
         },
         {
@@ -19224,7 +19224,7 @@
           "kind": "source",
           "reference": "src/c_api/c_spell.rs",
           "summary": "Clean current `src/c_api/c_spell.rs` registers no matching 12.0.0 duration method; duration-object lifecycle and semantics are not modeled or focused-tested.",
-          "source_hash": "550391bdac3c60f9b53d34ec7f27ad3bcf3ef1365b1a82e9059a1f440e1ce648"
+          "source_hash": "662542cead336ac6255896a12bed599ad5370ebab2542d5ab2488f9082e06928"
         }
       ],
       "tests": [],
@@ -19253,7 +19253,7 @@
           "kind": "source",
           "reference": "src/c_api/c_spell.rs",
           "summary": "Registers the modeled duration producer for retail 12.0.0+, sharing identifier resolution with GetSpellIDForSpellIdentifier and using existing spell/GCD interval selection.",
-          "source_hash": "550391bdac3c60f9b53d34ec7f27ad3bcf3ef1365b1a82e9059a1f440e1ce648"
+          "source_hash": "662542cead336ac6255896a12bed599ad5370ebab2542d5ab2488f9082e06928"
         },
         {
           "kind": "source",
@@ -19317,7 +19317,7 @@
           "kind": "source",
           "reference": "src/c_api/c_spell.rs",
           "summary": "Clean current `src/c_api/c_spell.rs` registers no matching 12.0.0 display-count method; spell metadata/display semantics are not modeled or focused-tested.",
-          "source_hash": "550391bdac3c60f9b53d34ec7f27ad3bcf3ef1365b1a82e9059a1f440e1ce648"
+          "source_hash": "662542cead336ac6255896a12bed599ad5370ebab2542d5ab2488f9082e06928"
         }
       ],
       "tests": [],
@@ -19346,7 +19346,7 @@
           "kind": "source",
           "reference": "src/c_api/c_spell.rs",
           "summary": "Clean current `src/c_api/c_spell.rs` registers no matching 12.0.0 duration method; duration-object lifecycle and semantics are not modeled or focused-tested.",
-          "source_hash": "550391bdac3c60f9b53d34ec7f27ad3bcf3ef1365b1a82e9059a1f440e1ce648"
+          "source_hash": "662542cead336ac6255896a12bed599ad5370ebab2542d5ab2488f9082e06928"
         }
       ],
       "tests": [],
@@ -19375,7 +19375,7 @@
           "kind": "source",
           "reference": "src/c_api/c_spell.rs",
           "summary": "Clean current `src/c_api/c_spell.rs` registers no matching 12.0.0 metadata method; spell metadata semantics are not modeled or focused-tested.",
-          "source_hash": "550391bdac3c60f9b53d34ec7f27ad3bcf3ef1365b1a82e9059a1f440e1ce648"
+          "source_hash": "662542cead336ac6255896a12bed599ad5370ebab2542d5ab2488f9082e06928"
         }
       ],
       "tests": [],
@@ -19404,7 +19404,7 @@
           "kind": "source",
           "reference": "src/c_api/c_spell.rs",
           "summary": "Clean current `src/c_api/c_spell.rs` registers no matching 12.0.0 metadata method; spell metadata semantics are not modeled or focused-tested.",
-          "source_hash": "550391bdac3c60f9b53d34ec7f27ad3bcf3ef1365b1a82e9059a1f440e1ce648"
+          "source_hash": "662542cead336ac6255896a12bed599ad5370ebab2542d5ab2488f9082e06928"
         }
       ],
       "tests": [],
@@ -19433,7 +19433,7 @@
           "kind": "source",
           "reference": "src/c_api/c_spell.rs",
           "summary": "Clean current `src/c_api/c_spell.rs` registers no matching 12.0.0 boolean method; boolean semantics are not modeled or focused-tested.",
-          "source_hash": "550391bdac3c60f9b53d34ec7f27ad3bcf3ef1365b1a82e9059a1f440e1ce648"
+          "source_hash": "662542cead336ac6255896a12bed599ad5370ebab2542d5ab2488f9082e06928"
         }
       ],
       "tests": [],
@@ -19462,7 +19462,7 @@
           "kind": "source",
           "reference": "src/c_api/c_spell.rs",
           "summary": "Clean current `src/c_api/c_spell.rs` registers no matching 12.0.0 boolean method; boolean semantics are not modeled or focused-tested.",
-          "source_hash": "550391bdac3c60f9b53d34ec7f27ad3bcf3ef1365b1a82e9059a1f440e1ce648"
+          "source_hash": "662542cead336ac6255896a12bed599ad5370ebab2542d5ab2488f9082e06928"
         }
       ],
       "tests": [],
@@ -19491,7 +19491,7 @@
           "kind": "source",
           "reference": "src/c_api/c_spell.rs",
           "summary": "Clean current `src/c_api/c_spell.rs` registers no matching 12.0.0 boolean method; boolean semantics are not modeled or focused-tested.",
-          "source_hash": "550391bdac3c60f9b53d34ec7f27ad3bcf3ef1365b1a82e9059a1f440e1ce648"
+          "source_hash": "662542cead336ac6255896a12bed599ad5370ebab2542d5ab2488f9082e06928"
         }
       ],
       "tests": [],
@@ -19520,7 +19520,7 @@
           "kind": "source",
           "reference": "src/c_api/c_spell.rs",
           "summary": "Registered namespace classifier returns whether spell metadata implicit_target is 1; three direct fixtures exercise seeded self-target, enemy-target, and unknown IDs. This does not establish the native hasSelfEffectsOnly contract.",
-          "source_hash": "550391bdac3c60f9b53d34ec7f27ad3bcf3ef1365b1a82e9059a1f440e1ce648"
+          "source_hash": "662542cead336ac6255896a12bed599ad5370ebab2542d5ab2488f9082e06928"
         },
         {
           "kind": "test",
@@ -19571,7 +19571,7 @@
           "kind": "source",
           "reference": "src/c_api/c_spell.rs",
           "summary": "Clean current `src/c_api/c_spell.rs` registers no matching 12.0.0 boolean method; boolean semantics are not modeled or focused-tested.",
-          "source_hash": "550391bdac3c60f9b53d34ec7f27ad3bcf3ef1365b1a82e9059a1f440e1ce648"
+          "source_hash": "662542cead336ac6255896a12bed599ad5370ebab2542d5ab2488f9082e06928"
         }
       ],
       "tests": [],
@@ -19600,7 +19600,7 @@
           "kind": "source",
           "reference": "src/c_api/c_spell.rs",
           "summary": "Clean current `src/c_api/c_spell.rs` registers no matching 12.0.0 boolean method; boolean semantics are not modeled or focused-tested.",
-          "source_hash": "550391bdac3c60f9b53d34ec7f27ad3bcf3ef1365b1a82e9059a1f440e1ce648"
+          "source_hash": "662542cead336ac6255896a12bed599ad5370ebab2542d5ab2488f9082e06928"
         }
       ],
       "tests": [],
@@ -91251,7 +91251,7 @@
         {
           "kind": "source",
           "reference": "src/widget/registry/mod.rs",
-          "source_hash": "45f8ee469414d6e173845de2c61e0d83d8a0266e754cad32c442037ff2fb08ef",
+          "source_hash": "04d1831868ab4443b543f51eb95af87059eaee1e867c33a17771e27a46c581d5",
           "summary": "Current registry stores event listeners and returns registered listener IDs, but does not prove producer transitions, dispatch payloads, ordering, or lifecycle for this event."
         },
         {
@@ -91304,7 +91304,7 @@
         {
           "kind": "source",
           "reference": "src/widget/registry/mod.rs",
-          "source_hash": "45f8ee469414d6e173845de2c61e0d83d8a0266e754cad32c442037ff2fb08ef",
+          "source_hash": "04d1831868ab4443b543f51eb95af87059eaee1e867c33a17771e27a46c581d5",
           "summary": "Current registry stores event listeners and returns registered listener IDs, but does not prove producer transitions, dispatch payloads, ordering, or lifecycle for this event."
         },
         {
@@ -91386,7 +91386,7 @@
         {
           "kind": "source",
           "reference": "src/widget/registry/mod.rs",
-          "source_hash": "45f8ee469414d6e173845de2c61e0d83d8a0266e754cad32c442037ff2fb08ef",
+          "source_hash": "04d1831868ab4443b543f51eb95af87059eaee1e867c33a17771e27a46c581d5",
           "summary": "Current registry stores event listeners and returns registered listener IDs, but does not prove producer transitions, dispatch payloads, ordering, or lifecycle for this event."
         },
         {
@@ -91887,7 +91887,7 @@
         {
           "kind": "source",
           "reference": "src/widget/registry/mod.rs",
-          "source_hash": "45f8ee469414d6e173845de2c61e0d83d8a0266e754cad32c442037ff2fb08ef",
+          "source_hash": "04d1831868ab4443b543f51eb95af87059eaee1e867c33a17771e27a46c581d5",
           "summary": "Current registry stores event listeners and returns registered listener IDs, but does not prove producer transitions, dispatch payloads, ordering, or lifecycle for this event."
         },
         {
@@ -91940,7 +91940,7 @@
         {
           "kind": "source",
           "reference": "src/widget/registry/mod.rs",
-          "source_hash": "45f8ee469414d6e173845de2c61e0d83d8a0266e754cad32c442037ff2fb08ef",
+          "source_hash": "04d1831868ab4443b543f51eb95af87059eaee1e867c33a17771e27a46c581d5",
           "summary": "Current registry stores event listeners and returns registered listener IDs, but does not prove producer transitions, dispatch payloads, ordering, or lifecycle for this event."
         },
         {
@@ -91993,7 +91993,7 @@
         {
           "kind": "source",
           "reference": "src/widget/registry/mod.rs",
-          "source_hash": "45f8ee469414d6e173845de2c61e0d83d8a0266e754cad32c442037ff2fb08ef",
+          "source_hash": "04d1831868ab4443b543f51eb95af87059eaee1e867c33a17771e27a46c581d5",
           "summary": "Current registry stores event listeners and returns registered listener IDs, but does not prove producer transitions, dispatch payloads, ordering, or lifecycle for this event."
         },
         {
@@ -92046,7 +92046,7 @@
         {
           "kind": "source",
           "reference": "src/widget/registry/mod.rs",
-          "source_hash": "45f8ee469414d6e173845de2c61e0d83d8a0266e754cad32c442037ff2fb08ef",
+          "source_hash": "04d1831868ab4443b543f51eb95af87059eaee1e867c33a17771e27a46c581d5",
           "summary": "Current registry stores event listeners and returns registered listener IDs, but does not prove producer transitions, dispatch payloads, ordering, or lifecycle for this event."
         },
         {
@@ -92099,7 +92099,7 @@
         {
           "kind": "source",
           "reference": "src/widget/registry/mod.rs",
-          "source_hash": "45f8ee469414d6e173845de2c61e0d83d8a0266e754cad32c442037ff2fb08ef",
+          "source_hash": "04d1831868ab4443b543f51eb95af87059eaee1e867c33a17771e27a46c581d5",
           "summary": "Current registry stores event listeners and returns registered listener IDs, but does not prove producer transitions, dispatch payloads, ordering, or lifecycle for this event."
         },
         {
@@ -92152,7 +92152,7 @@
         {
           "kind": "source",
           "reference": "src/widget/registry/mod.rs",
-          "source_hash": "45f8ee469414d6e173845de2c61e0d83d8a0266e754cad32c442037ff2fb08ef",
+          "source_hash": "04d1831868ab4443b543f51eb95af87059eaee1e867c33a17771e27a46c581d5",
           "summary": "Current registry stores event listeners and returns registered listener IDs, but does not prove producer transitions, dispatch payloads, ordering, or lifecycle for this event."
         },
         {
@@ -92743,7 +92743,7 @@
           "kind": "source",
           "reference": "src/c_api/c_spell.rs",
           "summary": "Current implementation does not provide authoritative focused proof for SpellCooldownInfo.isOnGCD; the field is absent, nil-only, or generic/placeholder-backed.",
-          "source_hash": "550391bdac3c60f9b53d34ec7f27ad3bcf3ef1365b1a82e9059a1f440e1ce648"
+          "source_hash": "662542cead336ac6255896a12bed599ad5370ebab2542d5ab2488f9082e06928"
         }
       ],
       "tests": [],
@@ -92772,7 +92772,7 @@
           "kind": "source",
           "reference": "src/c_api/c_spell.rs",
           "summary": "Current implementation does not provide authoritative focused proof for SpellCooldownInfo.timeUntilEndOfStartRecovery; the field is absent, nil-only, or generic/placeholder-backed.",
-          "source_hash": "550391bdac3c60f9b53d34ec7f27ad3bcf3ef1365b1a82e9059a1f440e1ce648"
+          "source_hash": "662542cead336ac6255896a12bed599ad5370ebab2542d5ab2488f9082e06928"
         }
       ],
       "tests": [],
@@ -93021,7 +93021,7 @@
         {
           "kind": "source",
           "reference": "src/widget/registry/mod.rs",
-          "source_hash": "45f8ee469414d6e173845de2c61e0d83d8a0266e754cad32c442037ff2fb08ef",
+          "source_hash": "04d1831868ab4443b543f51eb95af87059eaee1e867c33a17771e27a46c581d5",
           "summary": "Current registry stores event listeners and returns registered listener IDs, but does not prove producer transitions, dispatch payloads, ordering, or lifecycle for this event."
         },
         {
@@ -93074,7 +93074,7 @@
         {
           "kind": "source",
           "reference": "src/widget/registry/mod.rs",
-          "source_hash": "45f8ee469414d6e173845de2c61e0d83d8a0266e754cad32c442037ff2fb08ef",
+          "source_hash": "04d1831868ab4443b543f51eb95af87059eaee1e867c33a17771e27a46c581d5",
           "summary": "Current registry stores event listeners and returns registered listener IDs, but does not prove producer transitions, dispatch payloads, ordering, or lifecycle for this event."
         },
         {
@@ -93127,7 +93127,7 @@
         {
           "kind": "source",
           "reference": "src/widget/registry/mod.rs",
-          "source_hash": "45f8ee469414d6e173845de2c61e0d83d8a0266e754cad32c442037ff2fb08ef",
+          "source_hash": "04d1831868ab4443b543f51eb95af87059eaee1e867c33a17771e27a46c581d5",
           "summary": "Current registry stores event listeners and returns registered listener IDs, but does not prove producer transitions, dispatch payloads, ordering, or lifecycle for this event."
         },
         {
@@ -93180,7 +93180,7 @@
         {
           "kind": "source",
           "reference": "src/widget/registry/mod.rs",
-          "source_hash": "45f8ee469414d6e173845de2c61e0d83d8a0266e754cad32c442037ff2fb08ef",
+          "source_hash": "04d1831868ab4443b543f51eb95af87059eaee1e867c33a17771e27a46c581d5",
           "summary": "Current registry stores event listeners and returns registered listener IDs, but does not prove producer transitions, dispatch payloads, ordering, or lifecycle for this event."
         },
         {
@@ -93233,7 +93233,7 @@
         {
           "kind": "source",
           "reference": "src/widget/registry/mod.rs",
-          "source_hash": "45f8ee469414d6e173845de2c61e0d83d8a0266e754cad32c442037ff2fb08ef",
+          "source_hash": "04d1831868ab4443b543f51eb95af87059eaee1e867c33a17771e27a46c581d5",
           "summary": "Current registry stores event listeners and returns registered listener IDs, but does not prove producer transitions, dispatch payloads, ordering, or lifecycle for this event."
         },
         {
@@ -93520,7 +93520,7 @@
         {
           "kind": "source",
           "reference": "src/widget/registry/mod.rs",
-          "source_hash": "45f8ee469414d6e173845de2c61e0d83d8a0266e754cad32c442037ff2fb08ef",
+          "source_hash": "04d1831868ab4443b543f51eb95af87059eaee1e867c33a17771e27a46c581d5",
           "summary": "Current registry stores event listeners and returns registered listener IDs, but does not prove producer transitions, dispatch payloads, ordering, or lifecycle for this event."
         },
         {
@@ -93573,7 +93573,7 @@
         {
           "kind": "source",
           "reference": "src/widget/registry/mod.rs",
-          "source_hash": "45f8ee469414d6e173845de2c61e0d83d8a0266e754cad32c442037ff2fb08ef",
+          "source_hash": "04d1831868ab4443b543f51eb95af87059eaee1e867c33a17771e27a46c581d5",
           "summary": "Current registry stores event listeners and returns registered listener IDs, but does not prove producer transitions, dispatch payloads, ordering, or lifecycle for this event."
         },
         {
@@ -93626,7 +93626,7 @@
         {
           "kind": "source",
           "reference": "src/widget/registry/mod.rs",
-          "source_hash": "45f8ee469414d6e173845de2c61e0d83d8a0266e754cad32c442037ff2fb08ef",
+          "source_hash": "04d1831868ab4443b543f51eb95af87059eaee1e867c33a17771e27a46c581d5",
           "summary": "Current registry stores event listeners and returns registered listener IDs, but does not prove producer transitions, dispatch payloads, ordering, or lifecycle for this event."
         },
         {
@@ -93679,7 +93679,7 @@
         {
           "kind": "source",
           "reference": "src/widget/registry/mod.rs",
-          "source_hash": "45f8ee469414d6e173845de2c61e0d83d8a0266e754cad32c442037ff2fb08ef",
+          "source_hash": "04d1831868ab4443b543f51eb95af87059eaee1e867c33a17771e27a46c581d5",
           "summary": "Current registry stores event listeners and returns registered listener IDs, but does not prove producer transitions, dispatch payloads, ordering, or lifecycle for this event."
         },
         {
@@ -112839,7 +112839,7 @@
         {
           "kind": "source",
           "reference": "src/widget/frame.rs",
-          "source_hash": "2c3f62a0ddeb8b5f9e2f234b004653ed9596a8d55122bec6ee904b12c1505225",
+          "source_hash": "761fbd27dc0ab5024059e44d5a93e1227833bad7f3d98a65c42e448c2d295b9e",
           "summary": "Frame.statusbar_fill_style is numeric u8 state (0..3); getter reads this instance state. This does not establish rendering or initial-default semantics."
         },
         {
@@ -112886,7 +112886,7 @@
         {
           "kind": "source",
           "reference": "src/widget/frame.rs",
-          "source_hash": "2c3f62a0ddeb8b5f9e2f234b004653ed9596a8d55122bec6ee904b12c1505225",
+          "source_hash": "761fbd27dc0ab5024059e44d5a93e1227833bad7f3d98a65c42e448c2d295b9e",
           "summary": "Frame.statusbar_fill_style is numeric u8 state (0..3); getter reads this instance state. This does not establish rendering or initial-default semantics."
         },
         {
