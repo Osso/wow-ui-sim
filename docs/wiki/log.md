@@ -3551,3 +3551,11 @@ Updated [rendering pipeline](systems/rendering-pipeline.md#deferred-text-and-nes
 with the lower-text/opaque-modal regression, same-level hoisting boundary,
 single emission of nested wrapper regions, and Lua-to-GPU image coverage.
 Render bucket tests also cover modal hide/show and cache repair.
+
+## 2026-11-09 — PTR 12.1 evidence reconciliation
+
+VERIFIED (full explicit PTR runtime plus source-token scan): 171 of 175 historical added candidates are callable and source-spelled; exact addon owners are UNVERIFIED. Four candidates remain unpublished, which does not establish native source absence.
+
+VERIFIED (full-LoD runtime): 93 of 99 removed names previously marked vendor-present are non-callable, four RaidNotice aliases are callable, and `getglobal`/`setglobal` are Lua compatibility functions. The 93 runtime misses do not establish native absence.
+
+VERIFIED (strict lifecycle probe): global CVar wrapper identities were unchanged at `BAG_UPDATE_DELAYED`. UNVERIFIED: the strict-removal timing requirement remains open; the separate native-absence test does not prove lifecycle timing.
