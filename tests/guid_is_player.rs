@@ -1,5 +1,9 @@
 //! Exact current-model GUID player classification and unchanged ObjectAPI consumers.
-#![cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#![cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
 
 use wow_ui_sim::loader::{discover_blizzard_addon_closure_for_screen, load_addon};
 use wow_ui_sim::lua_api::WowLuaEnv;

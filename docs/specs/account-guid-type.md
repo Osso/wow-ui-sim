@@ -1,6 +1,6 @@
 # Battle.net account GUID type
 
-`C_AccountInfo.IsGUIDBattleNetAccountType` classifies a GUID for the selected Retail/PTR PlayerLocation consumer. Pinned `AccountInfoDocumentation.lua:26–37` declares the WOWGUID argument and boolean result. Native evidence WM80 describes the permissive 70688 BNetAccount parser and argument policy.
+`C_AccountInfo.IsGUIDBattleNetAccountType` classifies a GUID for the Retail, PTR, and Forever `PlayerLocation` consumer. The cached Forever `AccountInfoDocumentation.lua:1–40` declares `Environment = "All"`, the WOWGUID argument, and boolean result. Native evidence WM80 describes the permissive 70688 BNetAccount parser and argument policy.
 
 ## What it must do
 
