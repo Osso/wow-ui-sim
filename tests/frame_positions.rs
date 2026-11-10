@@ -272,6 +272,8 @@ fn expects_missing_frame(test: &str) -> bool {
     use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
 
     match test {
+        // The Mists cache selects WatchFrame, not Blizzard_ObjectiveTracker.
+        "objective_tracker" => ACTIVE == ClientProfile::Mists,
         "paladin_power_bar" => matches!(
             ACTIVE,
             ClientProfile::WowForever | ClientProfile::Era | ClientProfile::Anniversary
@@ -449,6 +451,98 @@ fn assert_mists_chat_frame_position_inputs(env: &WowLuaEnv) {
     .expect("native Mists chat position inputs");
 }
 
+/// Pinned Mists Classic/Mists TOCs select these original layout consumers.
+/// The source arithmetic is recorded in frame-position-baseline-drift.md.
+fn assert_mists_residual_inputs(env: &WowLuaEnv, test: &str) {
+    let assertion = match test {
+        "bags_bar" => {
+            r#"
+            assert(BagsBar:GetScale() == 1 and BagsBar.initialHeight == 37)
+            assert(BagsBar.hideExpandToggle and BagsBar.bagPadding == 2)
+            assert(BagsBar:IsHorizontal() and BagsBar:IsDirectionLeft())
+            local count = 0
+            for _, button in MainMenuBarBagManager:EnumerateBagButtons() do
+                count = count + 1
+                assert(button:GetWidth() == 30, "Mists bag button width")
+            end
+            assert(count == 5, "Mists backpack and four bag slots")
+            local point, relative, relativePoint, x, y = BagsBar:GetPoint(1)
+            assert(point == "BOTTOMRIGHT" and relative == MainMenuBarArtFrame and relativePoint == "BOTTOMRIGHT")
+            assert(x == -4 and y == 2)
+        "#
+        }
+        "micro_menu" | "micro_menu_container" => {
+            r#"
+            assert(MicroMenu:GetParent() == MicroMenuContainer)
+            assert(MicroMenu:GetScale() == 1 and MicroMenu.childXPadding == -4)
+            assert(MicroMenu.isHorizontal and MicroMenu.numButtons == 13)
+            assert(QueueStatusButton == nil, "Classic uses the minimap queue button")
+            assert(SocialsMicroButton:IsShown() ~= GuildMicroButton:IsShown(), "one guild UI button")
+            local children = MicroMenu:GetLayoutChildren()
+            for _, button in ipairs(children) do
+                assert(button:GetWidth() == 29 and button:GetHeight() == 37)
+            end
+            assert(#children == 11, "configured Mists micro button visibility")
+            local point, relative, relativePoint, x, y = MicroMenuContainer:GetPoint(1)
+            assert(point == "BOTTOMLEFT" and relative == MainMenuBarArtFrame and relativePoint == "BOTTOM")
+            assert(x == 36 and y == 2)
+        "#
+        }
+        "buff_frame" | "debuff_frame" => {
+            r#"
+            assert(BUFF_MAX_DISPLAY == 32 and DEBUFF_MAX_DISPLAY == 16)
+            assert(BuffFrame.maxAuras == 32 and DebuffFrame.maxAuras == 16)
+            assert(BuffFrame.CollapseAndExpandButton:GetWidth() == 15)
+            for _, frame in ipairs({BuffFrame, DebuffFrame}) do
+                assert(frame:GetScale() == 1 and frame.AuraContainer.iconScale == 1)
+                assert(frame.AuraContainer.iconPadding == 5)
+            end
+            assert(BuffFrame.AuraContainer.iconStride == 11 and DebuffFrame.AuraContainer.iconStride == 8)
+            local point, relative, relativePoint, x, y = BuffFrame:GetPoint(1)
+            assert(point == "TOPRIGHT" and relative == UIParent and relativePoint == "TOPRIGHT")
+            assert(x == -187 and y == -13)
+            point, relative, relativePoint, x, y = DebuffFrame:GetPoint(1)
+            assert(point == "TOPRIGHT" and relative == UIParent and relativePoint == "TOPRIGHT")
+            assert(x == -202 and y == -152)
+        "#
+        }
+        "main_action_bar" | "action_button_1_position" => {
+            r#"
+            assert(MainMenuBar:GetWidth() == 1024 and MainMenuBar:GetHeight() == 53)
+            assert(MainActionBar:GetScale() == 1 and MainActionBar.numRows == 1)
+            assert(MainActionBar.buttonPadding == 6 and #MainActionBar.shownButtonContainers == 12)
+            assert(ActionButton1:GetWidth() == 36 and ActionButton1:GetHeight() == 36)
+            local point, relative, relativePoint, x, y = MainActionBar:GetPoint(1)
+            assert(point == "BOTTOMLEFT" and relative == MainMenuBarArtFrame and relativePoint == "BOTTOMLEFT")
+            assert(x == 8 and y == 4)
+        "#
+        }
+        "status_tracking_bar" => {
+            r#"
+            assert(ClassicExpansionAtLeast(LE_EXPANSION_WRATH_OF_THE_LICH_KING))
+            assert(StatusTrackingBarManager:GetWidth() == 1024 and StatusTrackingBarManager:GetHeight() == 23)
+            assert(math.abs(StatusTrackingBarManager:GetScale() - 1.015) < 0.0001)
+            local point, relative, relativePoint, x, y = StatusTrackingBarManager:GetPoint(1)
+            assert(point == "BOTTOM" and relative == MainMenuBar and relativePoint == "TOP")
+            assert(x == 0 and y == -13)
+        "#
+        }
+        "right_managed_container" => {
+            r#"
+            assert(not MultiBarLeft:IsShown() and not MultiBarRight:IsShown())
+            assert(#UIParentRightManagedFrameContainer:GetLayoutChildren() == 0, "empty native right stack")
+            assert(MinimapCluster:GetHeight() == 165)
+            local point, relative, relativePoint, x, y = UIParentRightManagedFrameContainer:GetPoint(1)
+            assert(point == "TOPRIGHT" and relative == UIParent and relativePoint == "TOPRIGHT")
+            assert(x == -5 and y == -192)
+        "#
+        }
+        _ => return,
+    };
+    env.exec(assertion)
+        .unwrap_or_else(|error| panic!("{test} Mists native source inputs: {error}"));
+}
+
 fn assert_layout_state(env: &WowLuaEnv, test: &str) {
     use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
 
@@ -457,6 +551,7 @@ fn assert_layout_state(env: &WowLuaEnv, test: &str) {
     }
     if ACTIVE == ClientProfile::Mists {
         assert_mists_unit_frame_anchor(env, test);
+        assert_mists_residual_inputs(env, test);
         if test == "chat_frame" {
             assert_mists_chat_frame_position_inputs(env);
         }
@@ -581,6 +676,9 @@ fn run_tests(env: &WowLuaEnv) -> (usize, usize) {
         _ => 519.0,
     };
     let result = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+        if wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::Mists {
+            assert_mists_residual_inputs(env, "action_button_1_position");
+        }
         check_action_button(env, expected_action_button_x);
     }));
     report_result(
