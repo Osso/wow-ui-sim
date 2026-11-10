@@ -48,7 +48,11 @@ pub(crate) fn build_texture_quads(
         emit_bar_fill_fallback(batch, bar_fill, bounds, alpha);
         return;
     };
+    let vertex_start = batch.vertices.len();
     emit_textured_quad(batch, bounds, f, bar_fill, tex_path.as_ref(), tint, alpha);
+    if let Some(gradient) = &f.gradient {
+        apply_image_gradient(batch, vertex_start, bounds, gradient);
+    }
 }
 
 fn resolve_texture_path(f: &crate::widget::Frame) -> Option<Cow<'_, str>> {
@@ -135,6 +139,37 @@ fn tinted_gradient_color(
         base.b * stop.b * tint[2],
         base.a * stop.a * tint[3],
     ]
+}
+
+/// Multiply an image texture's tint by a gradient over the original region bounds.
+fn apply_image_gradient(
+    batch: &mut QuadBatch,
+    vertex_start: usize,
+    bounds: Rectangle,
+    gradient: &crate::widget::Gradient,
+) {
+    if bounds.width <= 0.0 || bounds.height <= 0.0 {
+        return;
+    }
+    for vertex in &mut batch.vertices[vertex_start..] {
+        let horizontal = ((vertex.position[0] - bounds.x) / bounds.width).clamp(0.0, 1.0);
+        let vertical = ((vertex.position[1] - bounds.y) / bounds.height).clamp(0.0, 1.0);
+        let fraction = if gradient.vertical {
+            vertical
+        } else {
+            horizontal
+        };
+        let (start, end) = if gradient.vertical {
+            (gradient.max_color, gradient.min_color)
+        } else {
+            (gradient.min_color, gradient.max_color)
+        };
+        let stop = [start.r, start.g, start.b, start.a];
+        let end = [end.r, end.g, end.b, end.a];
+        for (channel, (from, to)) in vertex.color.iter_mut().zip(stop.into_iter().zip(end)) {
+            *channel *= from + (to - from) * fraction;
+        }
+    }
 }
 
 /// Emit a textured quad with atlas cropping, three-slice, tiling, rotation, desaturation.
