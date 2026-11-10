@@ -250,6 +250,7 @@ fn expects_missing_frame(test: &str) -> bool {
     use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
 
     match test {
+        "objective_tracker" => matches!(ACTIVE, ClientProfile::Era | ClientProfile::Anniversary),
         "paladin_power_bar" => matches!(
             ACTIVE,
             ClientProfile::WowForever | ClientProfile::Era | ClientProfile::Anniversary
@@ -369,9 +370,100 @@ fn assert_chat_dock_layout(env: &WowLuaEnv) {
     );
 }
 
+fn assert_classic_residual_inputs(env: &WowLuaEnv, test: &str) {
+    use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
+
+    if !matches!(ACTIVE, ClientProfile::Era | ClientProfile::Anniversary) {
+        return;
+    }
+    let assertion = match test {
+        "micro_menu" | "micro_menu_container" => {
+            r#"
+            assert(MicroMenu:GetParent() == MicroMenuContainer)
+            assert(MicroMenu:GetScale() == 1 and MicroMenuContainer:GetScale() == 1)
+            assert(MicroMenu.isHorizontal and MicroMenu.childXPadding == -3)
+            assert(QueueStatusButton == nil, "Classic menu has no queue-status extension")
+            assert(SocialsMicroButton:IsShown() ~= GuildMicroButton:IsShown())
+            local count = 0
+            for _, child in ipairs({MicroMenu:GetChildren()}) do
+                if child.layoutIndex and child:IsShown() and not child.ignoreInLayout then
+                    assert(child:GetWidth() == 29 and child:GetHeight() == 37)
+                    count = count + 1
+                end
+            end
+            assert(count == 8, "eight visible native micro buttons")
+            local point, relative, relativePoint, x, y = MicroMenuContainer:GetPoint(1)
+            assert(point == "BOTTOMLEFT" and relative == MainMenuBarArtFrame and relativePoint == "BOTTOM")
+            assert(x == 40 and y == 2)
+        "#
+        }
+        "buff_frame" | "debuff_frame" => {
+            r#"
+            local buff = BuffFrame.AuraContainer
+            local debuff = DebuffFrame.AuraContainer
+            assert(buff.isHorizontal and debuff.isHorizontal)
+            assert(buff.iconStride == 11 and debuff.iconStride == 8)
+            assert(buff.iconScale == 1 and debuff.iconScale == 1)
+            assert(buff.iconPadding == 5 and debuff.iconPadding == 5)
+            assert(BuffFrame.maxAuras == 32 and DebuffFrame.maxAuras == 16)
+            assert(not BuffFrame.ignoreDisabledAurasForSize and not DebuffFrame.ignoreDisabledAurasForSize)
+            assert(BuffFrame.CollapseAndExpandButton:GetWidth() == 15)
+            local point, relative, relativePoint, x, y = BuffFrame:GetPoint(1)
+            assert(point == "TOPRIGHT" and relative == UIParent and relativePoint == "TOPRIGHT")
+            assert(x == -187 and y == -13)
+            point, relative, relativePoint, x, y = DebuffFrame:GetPoint(1)
+            assert(point == "TOPRIGHT" and relative == UIParent and relativePoint == "TOPRIGHT")
+            assert(x == -202 and y == -152)
+        "#
+        }
+        "main_action_bar" | "action_button_1_position" => {
+            r#"
+            assert(MainMenuBar:GetWidth() == 1024 and MainMenuBar:GetHeight() == 53)
+            assert(MainMenuBar:GetScale() == 1)
+            local point, relative, relativePoint, x, y = MainMenuBar:GetPoint(1)
+            assert(point == "BOTTOM" and relative == UIParent and relativePoint == "BOTTOM")
+            assert(x == 0 and y == 0)
+            point, relative, relativePoint, x, y = MainActionBar:GetPoint(1)
+            assert(point == "BOTTOMLEFT" and relative == MainMenuBarArtFrame and relativePoint == "BOTTOMLEFT")
+            assert(x == 8 and y == 4)
+            assert(MainActionBar.isHorizontal and MainActionBar.numRows == 1)
+            assert(MainActionBar.buttonPadding == 6 and #MainActionBar.shownButtonContainers == 12)
+            for _, container in ipairs(MainActionBar.shownButtonContainers) do
+                assert(container:GetWidth() == 36 and container:GetHeight() == 36 and container:GetScale() == 1)
+            end
+            assert(ActionButton1:GetParent() == MainActionBar.shownButtonContainers[1])
+        "#
+        }
+        "status_tracking_bar" => {
+            r#"
+            assert(MainMenuBar:GetWidth() == 1024 and MainMenuBar:GetHeight() == 53)
+            local point, relative, relativePoint, x, y = StatusTrackingBarManager:GetPoint(1)
+            assert(point == "BOTTOM" and relative == MainMenuBar and relativePoint == "TOP")
+            assert(x == 0 and y == -13)
+            assert(StatusTrackingBarManager:GetWidth() == 1024 and StatusTrackingBarManager:GetHeight() == 23)
+        "#
+        }
+        "right_managed_container" => {
+            r#"
+            assert(MinimapCluster:GetHeight() == 165)
+            assert(EditModeUtil:GetRightActionBarWidth() == 0)
+            assert(#UIParentRightManagedFrameContainer:GetLayoutChildren() == 0, "empty native managed-right layout")
+            assert(UIParentRightManagedFrameContainer.fixedHeight == 1200 - 165 - 100)
+            local point, relative, relativePoint, x, y = UIParentRightManagedFrameContainer:GetPoint(1)
+            assert(point == "TOPRIGHT" and relative == UIParent and relativePoint == "TOPRIGHT")
+            assert(x == -5 and y == -192)
+        "#
+        }
+        _ => return,
+    };
+    env.exec(assertion)
+        .unwrap_or_else(|error| panic!("{test} native Classic inputs: {error}"));
+}
+
 fn assert_layout_state(env: &WowLuaEnv, test: &str) {
     use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
 
+    assert_classic_residual_inputs(env, test);
     if matches!(test, "minimap" | "minimap_cluster") {
         assert_native_minimap_inputs(env);
     }
@@ -495,6 +587,7 @@ fn run_tests(env: &WowLuaEnv) -> (usize, usize) {
         _ => 519.0,
     };
     let result = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+        assert_classic_residual_inputs(env, "action_button_1_position");
         check_action_button(env, expected_action_button_x);
     }));
     report_result(
