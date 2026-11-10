@@ -43,20 +43,13 @@ TOC parsing strips `#` comments, applies the [modeled text-locale rule](../../ad
 
 ### Screen-qualified dependency declarations
 
-A TOC dependency metadata line can carry a trailing `[AllowLoad Game]` or `[AllowLoad Glue]`
-annotation, for example `## Dep: Blizzard_GlueXML [AllowLoad glue]` in
-`Blizzard_UnitPopupShared.toc`. The runtime resolver applies that annotation to the dependency
-itself: outside the annotated screen the dependency is skipped, the same way an optional
-dependency is skipped when its addon is not loadable. An unannotated required dependency still
-blocks the load on every screen when its addon is unavailable.
-`TocFile::dependencies_for_screen` / `optional_deps_for_screen` expose the screen-filtered lists.
-Static screen discovery needs no extra filter because it already removes addons outside that
-screen's TOC set before ordering dependencies.
+VERIFIED (native R13, Retail 12.1.5.70688; the screen-mismatch result and `Both` mask are also verified on Forever 1.60.1.70707 and PTR 12.1.7.70668): an unannotated required dependency whose target is restricted to the other screen fails with `DEP_WRONG_ACTIVE_INTERFACE`. Loading that target directly on the wrong screen fails with `WRONG_ACTIVE_INTERFACE`. A `Both` target passes its own screen check and remains required; other dependency checks still apply.
 
-The rule is derived from shipped Blizzard TOCs, not a native-client trace. PTR and Forever
-`Blizzard_UnitPopupShared` declare `## AllowLoad: both` and reach Glue-only `Blizzard_GlueXML`
-through a glue-annotated `## Dep:` line; Retail declares the same link as `## OptionalDeps:`.
-The general `[AllowLoad]` grammar is the one already used for addon headers and file entries.
+VERIFIED (native R13, Retail 70688): a trailing `[AllowLoad glue]`, `[AllowLoad game]`, or `[AllowLoad both]` is a condition on the whole TOC header line. The client checks it before dispatching the directive or splitting dependency names. A rejected line contributes no dependencies; an accepted line has the bracket removed. Values are exact and case-insensitive: an unknown value or `glue game` has an empty mask and rejects the line. Names split only on ASCII spaces and commas. Use separate lines for different conditions. The line condition does not change the target addon's own `AllowLoad` mask. Forever's complete bracket grammar is partial evidence; PTR's is unknown.
+
+VERIFIED (native R13, Retail 70688): `GetAddOnInfo` and `IsAddOnLoadable` skip active-screen checks. INFERRED: when other checks pass, these queries can report an addon loadable while `LoadAddOn` rejects its required dependency. Optional dependencies are not recursively validated, and their load failures are ignored. In insecure TOC mode, `AllowLoad` is ignored and the addon keeps the Game default.
+
+The simulator stores dependency declarations by header line. `TocFile::dependencies_for_screen` and `optional_deps_for_screen` filter whole lines before returning names; runtime loading maps the two wrong-screen errors above, and startup discovery uses the same line filter. It checks the required dependency chain before startup files run. Query APIs retain their separate screen-agnostic loadability path.
 
 `[Bootstrap]` never reorders files within an eager TOC: `Before.lua → Bootstrap.lua [Bootstrap] → Normal.lua` stays literal. Under the cumulative `retail-12-1-0` startup path (retail 12.1 and PTR), eligible Blizzard LoadOnDemand TOCs with annotated files enter the same dependency-ordered startup stream as `BootstrapOnly` nodes; this is not a global pre-pass. They execute only their annotated entries and return to not-loaded state. The first later full load skips already-executed bootstrap files; later full loads remain idempotent. Classic profiles retain their existing startup selection. Bootstrap files referenced by an active profile's manifest or TOC must be represented in that profile's required-entry set so stale completed caches are rejected when the file is missing. Retail and PTR both require `Blizzard_CooldownBroadcaster_Bootstrap.lua` for the current 12.1 manifest; stale PTR-only filtering previously let retail accept an incomplete cache.
 
@@ -194,9 +187,12 @@ Nested runtime-addon loads finalize failures, nil observations, and missing requ
 
 - [addon-loading-pipeline.md](../../addon-loading-pipeline.md) — TOC parsing, load flow, XML handlers, SavedVariables, load order
 - [addon_loading.rs](../../../src/bin/wow_sim/addon_loading.rs) — Blizzard eager load, third-party addon discovery, metadata pre-registration, enable-state application, and load loop
-- [toc/mod.rs](../../../src/toc/mod.rs) — TOC metadata, normal file list, `[Bootstrap]` parsing, path resolution
+- [startup_addons.rs](../../../src/loader/startup_addons.rs) and [addon_order.rs](../../../src/loader/addon_order.rs) — screen-filtered startup dependencies, validation, and ordering
+- [toc/mod.rs](../../../src/toc/mod.rs) and [sim-toc](../../../crates/sim-toc/src/lib.rs) — TOC metadata, whole-line dependency conditions, normal file list, `[Bootstrap]` parsing, path resolution
+- [runtime dependency tests](../../../tests/addon_runtime_dependencies.rs) and [C_AddOns tests](../../../src/c_api/c_addons_runtime_tests.rs) — runtime, startup, and query behavior
+- Native R13 evidence: `/home/osso/.local/state/wow-ui-sim/handoff/pr46-49-decomp-answers.md#r13` — Retail 70688 answer and Forever/PTR cross-check boundaries
 - [loader/addon.rs](../../../src/loader/addon.rs) — normal addon file execution, inline `[Bootstrap]` entries, load transactions, warning finalization, and the secure replay allowlist
-- [c_addons_runtime.rs](../../../src/c_api/c_addons_runtime.rs) — runtime addon loading, typed top-level diagnostic retention, exactly-once nested forwarding, and the scoped `Blizzard_TransmogShared` compatibility window
+- [c_addons.rs](../../../src/c_api/c_addons.rs), [c_addons_runtime.rs](../../../src/c_api/c_addons_runtime.rs), and [loader errors](../../../src/loader/error.rs) — screen-agnostic loadability queries, screen-checked runtime loads, native R13 failure reasons, and typed diagnostic retention
 - [runtime.rs](../../../src/lua_api/state_types/runtime.rs) — typed diagnostic records and public/secure attribution fields
 - [runtime surface bootstrap](../../../src/lua_api/env_init/runtime_surface_bootstrap.lua) — `_G.__index` diagnostic gate, nil-returning `C_*` diagnostic lookup, and raw namespace restoration
 - [secure environment](../../../src/lua_api/globals/security/secure_env.rs) — separate secure environment and secure publication recording

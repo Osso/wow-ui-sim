@@ -624,6 +624,7 @@ pub struct SimState {
     pub executing_addon_index: Option<u16>,
     pub loading_nil_symbol_environment: Option<NilSymbolEnvironment>,
     pub loading_forbidden: bool,
+    pub loading_full_lockdown: bool,
     pub loading_scoped_script_env: Option<rilua::Val>,
     pub loading_add_to_secure_env: bool,
     pub loading_hide_from_global_env: bool,

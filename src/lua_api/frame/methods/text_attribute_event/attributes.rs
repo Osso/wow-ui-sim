@@ -550,7 +550,10 @@ pub(super) fn has_access_constraints(state: &mut LuaState) -> LuaResult<u32> {
 pub(super) fn is_forbidden(state: &mut LuaState) -> LuaResult<u32> {
     let id = crate::lua_api::methods::frame_id_from_stack_unrestricted(state, 1)?;
     let sim = borrow_state(state)?;
-    let val = sim.widgets.get(id).map(|f| f.forbidden).unwrap_or(false);
+    let val = sim
+        .widgets
+        .get(id)
+        .is_some_and(|frame| frame.forbidden || frame.full_lockdown);
     drop(sim);
     state.push(Val::Bool(val));
     Ok(1)

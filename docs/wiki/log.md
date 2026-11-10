@@ -2,6 +2,15 @@
 
 Updated the [frame-position investigation](investigations/frame-position-baseline-drift.md#mists-frame-residuals--2026-11-10) and [profile contract](../specs/frame-position-profile-baselines.md) with pinned-source Mists bag, aura, action-bar, status-bar and WatchFrame-managed right-container geometry. The simulator no longer synthesizes ObjectiveTrackerFrame on Mists, where the selected Blizzard UI has no producer; the test asserts absence. VERIFIED at `3c36dab15`: Mists `frame_positions` passes 25/28; `micro_menu`, `micro_menu_container` and `casting_bar` remain open.
 
+## [2026-11-09] correction | PTR 12.1.7 FrameXML removed-symbol runtime rows
+
+Corrected the [Patch 12.1 FrameXML symbol inventory](investigations/patch-12-1-framexml-symbol-inventory.md): the full-load PTR 12.1.7 probe found 93 of 99 historical removed-symbol paths not callable, four `RaidNotice_*` aliases still published by `Blizzard_DeprecatedRaidWarning`, and `getglobal`/`setglobal` as Lua built-ins. These are simulator-runtime observations, not proof of native absence; the acceptance test now checks only the four current source publishers.
+## [2026-11-09] implementation | Forever frame-position residuals
+
+[Frame-position baseline drift](investigations/frame-position-baseline-drift.md#forever-residual-derivation--2026-11-09) now uses source-derived Camelot fixture geometry for BagsBar `(1088,1153,315×45)`, StatusTrackingBarManager `(204,1183,1192×17)`, and RightManagedFrameContainer `(1335,260,260×844)`. New input checks preserve bag-registration, manager-anchor and managed-child preconditions. The acceptance RED at 5c06b7ca7 confirmed only these three old Retail expectations fail; final gates are pending.
+
+## [2026-11-08] investigation | GUI CASC cache preparation
+
 ## [2026-11-09] fix | Mists unit-frame Edit Mode replay ordering
 
 Updated the [frame-position investigation](investigations/frame-position-baseline-drift.md#mists-unit-frame-startup-replay--2026-11-09) and its [profile contract](../specs/frame-position-profile-baselines.md): the startup action-bar replay now initializes the native StanceBar state before the Classic dynamic-background-art refresh that reads it. The Mists `frame_positions` run passes all six unit-frame cases and ChatFrame1 at its source-derived managed position; 11 residual names remain from 17 RED. Native C layout-event timing remains UNKNOWN; see the lane report for proof and remaining gates.
@@ -27,6 +36,10 @@ Recorded the [classic fixture design](design/classic-consumer-applicability.md),
 
 Recorded the [XML parent identity failure](investigations/mists-spellbook-size.md) and its parser and consumer coverage.
 
+## [2026-11-08] correction | Native R13 addon dependency semantics
+
+[Addon loading](systems/addon-loading.md#screen-qualified-dependency-declarations) now records the native result: unannotated required cross-screen dependencies fail with `DEP_WRONG_ACTIVE_INTERFACE`; `[AllowLoad ...]` filters a whole header line before dependency splitting; Both targets remain required; optional failures are ignored; and loadability queries skip screen checks. The 2026-11-06 TOC-only inference is superseded. Evidence boundaries distinguish Retail 70688 from partial Forever and unknown PTR annotation grammar.
+
 ## [2026-11-08] process | Evidence trees removed from the repository
 
 `data/patch-api/evidence` and `data/test-perf/evidence` are removed and ignored. They were agent proof receipts, not product data. Proof receipts now live untracked under `~/.local/state/wow-ui-sim`. A patch-audit manifest that must cite a removed receipt uses a `git:<commit>:<path>` reference, which `wow-cli audit-api` resolves from Git history. The factory tests keep their minimal fixtures under `tests/data/patch-factory/`. The receipt re-checking Python validators were retired with the trees.
@@ -48,7 +61,7 @@ Created [Collections collected-only journal tabs](systems/collections-collected-
 
 ## [2026-11-06] investigation | Screen-qualified TOC dependency lines
 
-[Addon loading](systems/addon-loading.md#screen-qualified-dependency-declarations) records that runtime dependency resolution applies a dependency line's `[AllowLoad Game]`/`[AllowLoad Glue]` annotation. PTR and Forever `Blizzard_UnitPopupShared` reach Glue-only `Blizzard_GlueXML` through `## Dep: Blizzard_GlueXML [AllowLoad glue]` while declaring `## AllowLoad: both`; the runtime resolver previously failed the whole `Blizzard_MailFrame` load. Unannotated required dependencies still block. Evidence is shipped TOCs, not a native-client trace.
+The 2026-11-06 entry recorded a shipped-TOC inference, not native dependency behavior. The 2026-11-08 [R13 correction](systems/addon-loading.md#screen-qualified-dependency-declarations) below records the superseding client evidence and contract.
 
 ## [2026-11-05] maintenance | Agent skills location and single instruction file
 
@@ -3568,3 +3581,11 @@ Updated [rendering pipeline](systems/rendering-pipeline.md#deferred-text-and-nes
 with the lower-text/opaque-modal regression, same-level hoisting boundary,
 single emission of nested wrapper regions, and Lua-to-GPU image coverage.
 Render bucket tests also cover modal hide/show and cache repair.
+
+## 2026-11-09 — PTR 12.1 evidence reconciliation
+
+VERIFIED (full explicit PTR runtime plus source-token scan): 171 of 175 historical added candidates are callable and source-spelled; exact addon owners are UNVERIFIED. Four candidates remain unpublished, which does not establish native source absence.
+
+VERIFIED (full-LoD runtime): 93 of 99 removed names previously marked vendor-present are non-callable, four RaidNotice aliases are callable, and `getglobal`/`setglobal` are Lua compatibility functions. The 93 runtime misses do not establish native absence.
+
+VERIFIED (strict lifecycle probe): global CVar wrapper identities were unchanged at `BAG_UPDATE_DELAYED`. UNVERIFIED: the strict-removal timing requirement remains open; the separate native-absence test does not prove lifecycle timing.

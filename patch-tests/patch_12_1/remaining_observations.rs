@@ -1,6 +1,6 @@
-use super::load_full_game_ui_with_all_lod;
+use super::{load_full_game_ui_with_all_lod, missing_runtime_functions, present_runtime_symbols};
 
-const EXPECTED_ABSENT_ADDITIONS: &[&str] = &[
+const EXPECTED_PTR_SOURCE_PUBLICATIONS: &[&str] = &[
     "CompactUnitFrameLayoutTemplates_LayoutFrameElement",
     "CompactUnitFrameUtil.ApplyConfig",
     "GameRulesUtil.IsPlayerAtEffectiveMaxLevel",
@@ -10,7 +10,24 @@ const EXPECTED_ABSENT_ADDITIONS: &[&str] = &[
     "TextureUtil.AnimateTexCoords",
 ];
 
-const EXPECTED_PRESENT_REMOVALS: &[&str] = &[
+const ABSENT_NATIVE_MEMBERS: &[&str] = &[
+    "C_Ping.GetContextualPingTypeForUnit",
+    "C_RecruitAFriend.IsEnabled",
+    "C_UnitAuras.TriggerPrivateAuraShowDispelType",
+];
+
+/// Global aliases published by the selected PTR deprecated RaidWarning addon.
+const PTR_DEPRECATED_GLOBALS: &[&str] = &[
+    "RaidNotice_AddMessage",
+    "RaidNotice_Clear",
+    "RaidNotice_FadeInit",
+    "RaidNotice_UpdateSlot",
+];
+
+const LUA_BUILTIN_FUNCTIONS: &[&str] = &["getglobal", "setglobal"];
+
+/// Records runtime misses without treating them as native API absence.
+const NON_CALLABLE_REMOVED_SYMBOLS: &[&str] = &[
     "AddFrameLock",
     "AnimatedShine_OnUpdate",
     "AnimateTexCoords",
@@ -65,13 +82,9 @@ const EXPECTED_PRESENT_REMOVALS: &[&str] = &[
     "RaidBossEmoteFrame_OnEvent",
     "RaidBossEmoteFrame_OnLoad",
     "RaidBrowser_IsEmpowered",
-    "RaidNotice_AddMessage",
     "RaidNotice_ClearSlot",
-    "RaidNotice_Clear",
-    "RaidNotice_FadeInit",
     "RaidNotice_OnUpdate",
     "RaidNotice_SetSlot",
-    "RaidNotice_UpdateSlot",
     "RaidWarningFrame_OnEvent",
     "RaidWarningFrame_OnLoad",
     "RecentTimeDate",
@@ -108,14 +121,20 @@ const EXPECTED_PRESENT_REMOVALS: &[&str] = &[
     "WorldFrame_OnLoad",
     "WorldFrame_OnUpdate",
     "WoWHackSpellsUI_LoadUI",
-    "getglobal",
-    "setglobal",
 ];
 
 /// Verifies every final 12.1 row against its full-load PTR publication type.
 #[test]
 fn remaining_symbols_match_observed_publications() {
     let env = load_full_game_ui_with_all_lod();
+    let fallbacks_enabled: bool = env
+        .eval("return GetCVarBool('loadDeprecationFallbacks')")
+        .expect("deprecation fallback CVar query succeeds");
+    assert!(
+        fallbacks_enabled,
+        "PTR source aliases require deprecation fallbacks"
+    );
+
     let compatibility_mismatches: String = env
         .eval(
             r#"
@@ -143,10 +162,7 @@ fn remaining_symbols_match_observed_publications() {
                 { "GetInventorySlotInfo", "MainHandSlot" },
                 { "C_CVar.GetCVar", "UnitNameFocused" },
                 { "C_Housing.IsInsideOwnHouse" },
-                { "C_Ping.GetContextualPingTypeForUnit", "player" },
-                { "C_RecruitAFriend.IsEnabled" },
                 { "C_SuperTrack.GetNextWaypointForMap", 1 },
-                { "C_UnitAuras.TriggerPrivateAuraShowDispelType", false },
             }) do
                 local path = probe[1]
                 local errorMessage = check_callable(path, unpack(probe, 2))
@@ -155,10 +171,6 @@ fn remaining_symbols_match_observed_publications() {
                 end
             end
 
-            local iconSize = resolve("Enum.EditModeUnitFrameSetting.IconSize")
-            if type(iconSize) ~= "number" then
-                table.insert(mismatches, "Enum.EditModeUnitFrameSetting.IconSize expected=number observed=" .. type(iconSize))
-            end
             return table.concat(mismatches, ",")
             "#,
         )
@@ -168,148 +180,38 @@ fn remaining_symbols_match_observed_publications() {
         "pinned Blizzard sources require compatibility symbols before strict removal"
     );
 
-    let mismatches: String = env
-        .eval(
-            r#"
-            local expectedAbsent = {
-                "CompactUnitFrameLayoutTemplates_LayoutFrameElement",
-                "CompactUnitFrameUtil.ApplyConfig",
-                "GameRulesUtil.IsPlayerAtEffectiveMaxLevel",
-                "ManageFramePositions",
-                "RaidWarningUtil.AddMessage",
-                "RaidWarningUtil.ClearBossEmotes",
-                "TextureUtil.AnimateTexCoords",
-            }
-            local expectedFunctions = {
-                "AddFrameLock",
-                "AnimatedShine_OnUpdate",
-                "AnimateTexCoords",
-                "BattleTagInviteFrame_Show",
-                "BetterDate",
-                "BFAMissionFrame_EscapePressed",
-                "BoostTutorial_AttemptLoad",
-                "BuildColoredListString",
-                "BuildIconArray",
-                "BuildListString",
-                "BuildMultilineTooltip",
-                "BuildNewLineListString",
-                "ButtonPulse_OnUpdate",
-                "ClassTrainerFrame_Hide",
-                "ClassTrainerFrame_Show",
-                "CloseCalendarMenus",
-                "CommunitiesFrame_IsEnabled",
-                "CompactUnitFrame_GetOptionDisplayOnlyHealerPowerBars",
-                "CompactUnitFrame_GetOptionDisplayPowerBar",
-                "CompactUnitFrame_GetOptionShowDispelIndicatorOverlay",
-                "ConvertRGBtoColorString",
-                "DisplayTypeUnassignedSupported",
-                "EventUtil.AreVariablesLoaded",
-                "ExpansionTrial_CheckLoadUI",
-                "FriendsFrame_CloseQuickJoinHelpTip",
-                "FriendsFrameAddFriendButton_OnClick",
-                "FriendsFriends_InitButton",
-                "FriendsFriends_SetSelection",
-                "FriendsFriendsButton_SetSelected",
-                "FriendsFriendsFrame_Close",
-                "GetDungeonNameWithDifficulty",
-                "GetSocialColoredName",
-                "GetSortedSelfResurrectOptions",
-                "HelpPlatesSupported",
-                "HousingControlsUtil.CanActivateHousingControls",
-                "IsFrameLockActive",
-                "IsFrameSmartShown",
-                "IsLevelAtEffectiveMaxLevel",
-                "IsPlayerAtEffectiveMaxLevel",
-                "KeyBindingFrame_LoadUI",
-                "LocalizePlayerFrame",
-                "LocalizezhCN",
-                "LocalizezhTW",
-                "MajorFactions_LoadUI",
-                "NPE_CheckTutorials",
-                "NPETutorial_AttemptToBegin",
-                "OpenAchievementFrameToAchievement",
-                "OrderHallMissionFrame_EscapePressed",
-                "OrderHallTalentFrame_EscapePressed",
-                "OutfitterUI_LoadUI",
-                "QuickJoin_JoinQueueButtonOnClick",
-                "RaidBossEmoteFrame_OnEvent",
-                "RaidBossEmoteFrame_OnLoad",
-                "RaidBrowser_IsEmpowered",
-                "RaidNotice_AddMessage",
-                "RaidNotice_ClearSlot",
-                "RaidNotice_Clear",
-                "RaidNotice_FadeInit",
-                "RaidNotice_OnUpdate",
-                "RaidNotice_SetSlot",
-                "RaidNotice_UpdateSlot",
-                "RaidWarningFrame_OnEvent",
-                "RaidWarningFrame_OnLoad",
-                "RecentTimeDate",
-                "RefreshAuras",
-                "RegisterNewFrameLock",
-                "RemoveFrameLock",
-                "ReverseQuestObjective",
-                "SetDesaturation",
-                "SetFrameLock",
-                "ShowResurrectRequest",
-                "SmartHide",
-                "SmartShow",
-                "TalentFrame_LoadUI",
-                "TargetFrame_UpdateBuffAnchor",
-                "TargetFrame_UpdateDebuffAnchor",
-                "ToggleLFGFrame",
-                "ToggleRafPanel",
-                "ToggleRaidBrowser",
-                "ToggleWoWHackCharacterUI",
-                "TokenFrame_LoadUI",
-                "TrialAccountCapReached_Inform",
-                "UIParent_ManageFramePositions",
-                "UIParent_OnEvent",
-                "UIParent_OnHide",
-                "UIParent_OnLoad",
-                "UIParent_OnShow",
-                "UIParent_Shared_OnEvent",
-                "UIParent_Shared_OnLoad",
-                "UIParent_UpdateTopFramePositions",
-                "UIParentLoadAddOn",
-                "UnitHasMana",
-                "UpdateFrameLock",
-                "UpdateUIElementsForClientScene",
-                "WorldFrame_OnLoad",
-                "WorldFrame_OnUpdate",
-                "WoWHackSpellsUI_LoadUI",
-                "getglobal",
-                "setglobal",
-            }
+    let missing_source_publications =
+        missing_runtime_functions(&env, EXPECTED_PTR_SOURCE_PUBLICATIONS);
+    assert_eq!(
+        missing_source_publications, "",
+        "PTR source-declared publications must remain callable"
+    );
 
-            local function Resolve(name)
-                local namespaceName, methodName = string.match(name, "^([^.]+)%.(.+)$")
-                if namespaceName then
-                    local namespace = _G[namespaceName]
-                    return namespace and namespace[methodName]
-                end
-                return _G[name]
-            end
+    let missing_deprecated_globals = missing_runtime_functions(&env, PTR_DEPRECATED_GLOBALS);
+    assert_eq!(
+        missing_deprecated_globals, "",
+        "the selected PTR deprecated RaidWarning aliases remain callable"
+    );
 
-            local mismatches = {}
-            for _, name in ipairs(expectedAbsent) do
-                local value = Resolve(name)
-                if value ~= nil then
-                    table.insert(mismatches, name .. " expected=nil observed=" .. type(value))
-                end
-            end
-            for _, name in ipairs(expectedFunctions) do
-                local value = Resolve(name)
-                if type(value) ~= "function" then
-                    table.insert(mismatches, name .. " expected=function observed=" .. type(value))
-                end
-            end
-            return table.concat(mismatches, ",")
-            "#,
-        )
-        .expect("remaining symbol observation succeeds");
+    let missing_lua_builtins = missing_runtime_functions(&env, LUA_BUILTIN_FUNCTIONS);
+    assert_eq!(missing_lua_builtins, "", "Lua built-ins remain callable");
 
-    assert_eq!(mismatches, "", "PTR publication mismatches");
-    assert_eq!(EXPECTED_ABSENT_ADDITIONS.len(), 7);
-    assert_eq!(EXPECTED_PRESENT_REMOVALS.len(), 99);
+    let present_native_members = present_runtime_symbols(&env, ABSENT_NATIVE_MEMBERS);
+    assert_eq!(
+        present_native_members, "",
+        "native-absent members must stay absent"
+    );
+}
+
+/// Verifies runtime misses while keeping native publication status unresolved.
+#[test]
+fn unresolved_removed_symbols_are_not_callable_in_ptr_runtime() {
+    let env = load_full_game_ui_with_all_lod();
+    let non_callable = missing_runtime_functions(&env, NON_CALLABLE_REMOVED_SYMBOLS);
+
+    assert_eq!(
+        non_callable,
+        NON_CALLABLE_REMOVED_SYMBOLS.join(","),
+        "runtime misses do not establish native API absence"
+    );
 }

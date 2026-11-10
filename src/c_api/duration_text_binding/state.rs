@@ -112,23 +112,62 @@ pub(super) fn validate_duration(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
+#[cfg(any(
+    feature = "retail-12-0-5",
+    feature = "client-wowforever",
+    feature = "numeric-rule-formatters"
+))]
+pub(super) fn validate_formatter(state: &mut LuaState) -> LuaResult<u32> {
+    let value = stack_val(state, 1);
+    #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
+    let is_seconds_formatter = crate::c_api::seconds_formatter::is_formatter(state, value)?;
+    #[cfg(not(any(feature = "retail-12-0-5", feature = "client-wowforever")))]
+    let is_seconds_formatter = false;
+    #[cfg(feature = "numeric-rule-formatters")]
+    let is_numeric_rule_formatter =
+        crate::c_api::numeric_rule_formatter::is_formatter(state, value);
+    #[cfg(not(feature = "numeric-rule-formatters"))]
+    let is_numeric_rule_formatter = false;
+    if !is_seconds_formatter && !is_numeric_rule_formatter {
+        return Err(runtime_error("NumericFormatter expected"));
+    }
+    Ok(0)
+}
+
+#[cfg(not(any(
+    feature = "retail-12-0-5",
+    feature = "client-wowforever",
+    feature = "numeric-rule-formatters"
+)))]
+pub(super) fn validate_formatter(_state: &mut LuaState) -> LuaResult<u32> {
+    Err(runtime_error("NumericFormatter expected"))
+}
+
 pub(super) fn validate_font_string(state: &mut LuaState) -> LuaResult<u32> {
     use crate::lua_api::methods::{borrow_state, native_frame_id_from_val};
     use crate::widget::WidgetType;
 
     let value = stack_val(state, 1);
     #[cfg(feature = "forbidden-aspects")]
-    let value = {
-        let public = crate::lua_api::script_object_transfer::project_public(state, value);
-        if public != value && !rilua::api::state_is_secure(state) {
-            return Err(runtime_error(
-                "Attempt to access forbidden object from code tainted by an AddOn - Usage: self:SetFontString(fontString)",
-            ));
-        }
-        public
-    };
-    let id = native_frame_id_from_val(state, value)
+    let public = crate::lua_api::script_object_transfer::project_public(state, value);
+    #[cfg(not(feature = "forbidden-aspects"))]
+    let public = value;
+    let id = native_frame_id_from_val(state, public)
+        .or_else(|| native_frame_id_from_val(state, value))
         .ok_or_else(|| runtime_error("FontString expected"))?;
+    let fully_locked_down = borrow_state(state)?
+        .widgets
+        .get(id)
+        .is_some_and(|frame| frame.full_lockdown);
+    if fully_locked_down {
+        return Err(runtime_error("Attempt to access fully locked-down object."));
+    }
+    #[cfg(feature = "forbidden-aspects")]
+    if public != value && !rilua::api::state_is_secure(state) {
+        return Err(runtime_error(
+            "Attempt to access forbidden object from code tainted by an AddOn - Usage: self:SetFontString(fontString)",
+        ));
+    }
     crate::c_api::unit_aura_access::ensure_script_object_accessible(state, id)?;
     let sim = borrow_state(state)?;
     let frame = sim

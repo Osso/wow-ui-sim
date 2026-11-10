@@ -1,6 +1,7 @@
 use super::{
     assert_ptr_source_omits_qualified_methods, assert_ptr_source_omits_qualified_symbols,
-    assert_ptr_source_omits_tokens, load_full_game_ui_with_all_lod, ptr_source_files,
+    contains_ascii, load_full_game_ui_with_all_lod, missing_runtime_functions,
+    present_runtime_symbols, ptr_source_files,
 };
 
 include!("strict_removals.rs");
@@ -131,6 +132,180 @@ const SNAPSHOT_ONLY_SYMBOLS: &[&str] = &[
     "SettingsPanel_EscapePressed",
     "SetUIPanelLayoutAttribute",
     "ShouldDisplaySpellCooldown",
+    "ShowAchievementFrameForAchievement",
+    "ShowAdventureMapFrameForFollowerType",
+    "ShowArtifactFrame",
+    "ShowArtifactRelicForgeFrame",
+    "ShowAuctionHouseFrame",
+    "ShowBarberShopFrame",
+    "ShowBlackMarketFrame",
+    "ShowChallengesKeystoneFrame",
+    "ShowFlightMapFrame",
+    "ShowGarrisonCapacitiveDisplayFrame",
+    "ShowGarrisonMissionFrameForFollowerType",
+    "ShowGarrisonRecruiterFrame",
+    "ShowGarrisonShipyardFrame",
+    "ShowGuildBankFrame",
+    "ShowHeirloomsJournalToClosestUpgradeablePage",
+    "ShowInstanceBootDialog",
+    "ShowInstanceLockDialog",
+    "ShowItemSocketingFrame",
+    "ShowItemUpgradeFrame",
+    "ShowMatchCelebrationPartyPoseFrame",
+    "ShowPendingPlayerChoiceResponseUI",
+    "ShowPerksProgramFrame",
+    "ShowProfessionEquipmentHelpTip",
+    "ShowProfessionsCustomerOrdersFrame",
+    "ShowProfessionsFrame",
+    "ShowQuestSessionGroupInviteConfirmation",
+    "ShowQuestSessionGroupInviteReceivedConfirmation",
+    "ShowRemixArtifactFrame",
+    "ShowRuneforgeFrame",
+    "ShowSummonConfirmationDialog",
+    "ShowTaxiMapFrame",
+    "SimpleCheckout_EscapePressed",
+    "SocialUIContactsFrameInitializeAADC",
+    "SoulbindViewer_LoadUI",
+    "SpellFlyout_EscapePressed",
+    "SplashFrame_EscapePressed",
+    "StoreEscapePressed",
+    "StringUtil.JoinAlternatingConditionalColor",
+    "ToggleRAFPanel",
+    "ToggleSocialUI",
+    "TryShowAnimaDiversionFrame",
+    "TryShowCovenantPreviewFrame",
+    "UnitPopupSharedUtil.IsFriendshipUpgrade",
+    "UpdateQuestAcceptLogFullDialog",
+    "VisualAlert_GetTypeTemplate",
+    "VisualAlert_GetTypeText",
+    "VisualAlertData_ForEach",
+    "VisualAlerts_RegisterAll",
+    "WarfrontsPartyPoseFrame_TryShow",
+    "WowSurveyStatusFrame_OnSurveyDelivered",
+];
+
+const PUBLISHED_SNAPSHOT_SYMBOLS: &[&str] = &[
+    "AddBehavioralMessagingTrayToStatusFrames",
+    "AddFriendFrame_Show",
+    "AddGMChatStatusFrameToStatusFrames",
+    "AddTicketStatusFrameToStatusFrames",
+    "AddWowSurveyStatusFrameToStatusFrames",
+    "AlliedRacesFrame_TryShow",
+    "AnchorUtil.ApplyFlowLayout",
+    "ApplySecureDelegatesToTable",
+    "ArchaeologyFrame_ToggleUI",
+    "ArcheologyDigsiteProgressBar_OnSurveyCast",
+    "ArdenwealdGardening_LoadUI",
+    "ArtifactFrame_OnTraitsRefunded",
+    "AuraUtil.GetAuraBorderColor",
+    "AzeriteEmpoweredItemUI_LoadUI",
+    "AzeriteEssenceUI_LoadUI",
+    "BattlefieldMap_ToggleUI",
+    "BehavioralMessaging_LoadUI",
+    "BehavioralMessagingTray_OnNotification",
+    "Blizzard_HousingCatalogUtil.AddDecorEntryTooltipTrackingText",
+    "Blizzard_HousingCatalogUtil.TrackHousingDecorID",
+    "BNet_GetBattleTagComponents",
+    "BNet_GetBattleTagSelf",
+    "BNet_GetBroadcastTextSelf",
+    "BNet_GetFriendLevelRank",
+    "BNet_IsFriendLevelEqualOrHigher",
+    "BoostTutorial_LoadUI",
+    "ChallengeModeCompleteBanner_OnChallengeModeCompleted",
+    "ChatAdditionalColor_OpenColorPicker",
+    "CheckActiveStoreForFree",
+    "CombatText_LoadUI",
+    "CompactUnitFrame_GetOptionDispelIndicatorOverlayAnimation",
+    "CompactUnitFrame_GetOptionDispelIndicatorOverlayType",
+    "CompactUnitFrameUtil.GenerateNewConfig",
+    "ConfirmDisenchantRollDialog_Show",
+    "ConfirmLootRollDialog_Show",
+    "ConfirmTalentWipeDialog_Show",
+    "ContributionCollectionFrame_LoadUI",
+    "CooldownViewer_MarkAuraCacheDirty",
+    "CooldownViewerContextMenu_AddAlertEntryButton",
+    "CooldownViewerContextMenu_AddNewAlertButton",
+    "CooldownViewerDraggedItem_Clear",
+    "CooldownViewerDraggedItem_Pickup",
+    "CooldownViewerDraggedItem_SetIsLegalTarget",
+    "CovenantCallings_LoadUI",
+    "DebugTools_LoadUI",
+    "EditModeManagerFrame_EscapePressed",
+    "EventTrace_LoadUI",
+    "ExpansionTrial_LoadUI",
+    "FadingFrame_CopyTextScalingTime",
+    "FadingFrame_GetTextScalingMinHeight",
+    "FadingFrame_InitSlot",
+    "FadingFrame_SetTextScaling",
+    "FadingFrame_StartTextScaling",
+    "FadingFrame_StopTextScaling",
+    "FadingFrame_UpdateTextScaling",
+    "GameMenuFrame_EscapePressed",
+    "GameMenuFrame_IsShown",
+    "GameMenuFrame_Show",
+    "GetBottomManagedFrameContainer",
+    "GetChatAdditionalColor",
+    "GetDiscordUserCommunityLink",
+    "GetDiscordUserLink",
+    "GetGarrisonMissionFrameNameForFollowerType",
+    "GetGarrisonTypeForFollowerType",
+    "GetPlayerBottomManagedFrameContainer",
+    "GetRightManagedFrameContainer",
+    "GetUIPanelLayoutAttribute",
+    "GetUIPanelLayoutFrame",
+    "GMChatFrame_OnWhisperFromGM",
+    "GossipConfirmDialog_Show",
+    "GuildControlDiscord_Loaded_OnEvent",
+    "GuildControlDiscord_Loaded_OnLoad",
+    "GuildControlDiscord_SetGuildSettingsCheckboxes",
+    "GuildControlRankDiscord_OnLoad",
+    "HandleQuestSessionInviteToPartyConfirmation",
+    "HelpFrame_EscapePressed",
+    "HideBarberShopFrame",
+    "HideGossipFrame",
+    "HideInstanceBootDialog",
+    "HideInstanceLockDialog",
+    "HideSummonConfirmationDialogs",
+    "HouseFinderFrame_LoadUI",
+    "HousingBulletinBoardFrame_LoadUI",
+    "HousingControls_LoadUI",
+    "HybridMinimap_LoadUI",
+    "InputBoxInstructions_OnEnter",
+    "InputBoxInstructions_OnLeave",
+    "InputBoxInstructions_ShowTooltipIfTruncated",
+    "IslandsPartyPoseFrame_TryShow",
+    "IsMouseoverCastSupported",
+    "IsSummonConfirmationDialogVisible",
+    "IsTypeAdditionalChatColor",
+    "Kiosk_LoadUI",
+    "LandingSoulbinds_LoadUI",
+    "LFGListApplicationViewer_OpenEditMode",
+    "LFGListApplicationViewerRemoveEntryButton_OnClick",
+    "LocaleUtil.GetLocaleDisplayName",
+    "LocalizePlayerFrame_zhCN",
+    "LocalizePlayerFrame_zhTW",
+    "LootFrame_EscapePressed",
+    "MenuUtil.CreateHighlightButton",
+    "MovePad_LoadUI",
+    "NPE_InitializeIfLoaded",
+    "OpacityFrame_EscapePressed",
+    "OpenEncounterJournalToJourney",
+    "OpenOrderHallTalentUI",
+    "OpenPlayerSpellsToGlyphTarget",
+    "PhotoSharingFrame_EscapePressed",
+    "PlayerChoiceFrame_TryShow",
+    "PVPUI_LoadUI",
+    "RaidWarningUtil.UpdateCenterScreenAnchors",
+    "RecentAlliesUtil.GetBestSocialUIPresenceTypeForStateData",
+    "RegisterGameMenuEscHandler",
+    "RegisterPlayerInteraction",
+    "ReportFrame_EscapePressed",
+    "ResetDiscordSettings",
+    "RestoreGMChatFrameSession",
+    "SetGhostFrameShown",
+    "SetPlayerInteractionConditions",
+    "SettingsPanel_EscapePressed",
+    "SetUIPanelLayoutAttribute",
     "ShowAchievementFrameForAchievement",
     "ShowAdventureMapFrameForFollowerType",
     "ShowArtifactFrame",
@@ -379,13 +554,53 @@ const SNAPSHOT_ONLY_RUNTIME_PROBE: &str = r#"
             "#;
 
 #[test]
-fn source_absent_additions_remain_absent() {
-    assert_ptr_source_omits_tokens(SNAPSHOT_ONLY_SYMBOLS);
-
+fn snapshot_symbols_published_by_ptr_have_source_evidence() {
     let env = load_full_game_ui_with_all_lod();
     let published_symbols: String = env
         .eval(SNAPSHOT_ONLY_RUNTIME_PROBE)
-        .expect("source-absent runtime probe succeeds");
+        .expect("PTR source publication probe succeeds");
 
-    assert_eq!(published_symbols, "", "unexpected PTR publications");
+    for symbol in published_symbols
+        .split(',')
+        .filter(|symbol| !symbol.is_empty())
+    {
+        assert!(
+            SNAPSHOT_ONLY_SYMBOLS.contains(&symbol),
+            "runtime publication {symbol} is outside the audited snapshot candidates"
+        );
+        let token = symbol.split_once('.').map_or(symbol, |(_, method)| method);
+        assert!(
+            ptr_source_files()
+                .iter()
+                .any(|(_, source)| contains_ascii(source, token)),
+            "runtime publication {symbol} has no spelling in the pinned PTR source"
+        );
+    }
+}
+
+#[test]
+fn snapshot_candidate_publications_remain_callable() {
+    let env = load_full_game_ui_with_all_lod();
+    let missing = missing_runtime_functions(&env, PUBLISHED_SNAPSHOT_SYMBOLS);
+
+    assert_eq!(
+        missing, "",
+        "current PTR snapshot candidates must remain callable"
+    );
+}
+
+#[test]
+fn snapshot_candidates_remain_unpublished_after_full_load() {
+    let env = load_full_game_ui_with_all_lod();
+    let unpublished_candidates = SNAPSHOT_ONLY_SYMBOLS
+        .iter()
+        .copied()
+        .filter(|symbol| !PUBLISHED_SNAPSHOT_SYMBOLS.contains(symbol))
+        .collect::<Vec<_>>();
+    let unexpected_publications = present_runtime_symbols(&env, &unpublished_candidates);
+
+    assert_eq!(
+        unexpected_publications, "",
+        "remaining snapshot candidates must stay unpublished in the PTR runtime"
+    );
 }

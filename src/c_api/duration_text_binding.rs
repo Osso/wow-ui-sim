@@ -17,7 +17,7 @@ const SCHEDULER_KEY: &str = "__duration_text_binding_scheduler";
 const DURATION_TEXT_BINDING_LUA: &str = r#"
 do
     local isPatch121, hasSecretInput, readSecretInput, wrapSecretOutput, reportUpdateError = ...
-    local isPatch1207, createSettings, readSetting, writeSetting, authenticateArguments, validateDuration, sampleRemaining, durationIsZero, durationHasExpired, validateFontString = select(6, ...)
+    local isPatch1207, createSettings, readSetting, writeSetting, authenticateArguments, validateDuration, sampleRemaining, durationIsZero, durationHasExpired, validateFontString, validateFormatter = select(6, ...)
     local scalarFields = {enabled = true, updateInterval = true, timeModifier = true}
     local unpackArguments = unpack
     -- Capture host bootstrap functions, not later addon replacements.
@@ -122,7 +122,7 @@ do
         local metatable = getmetatable(binding)
         local schedule = {dirty = true, elapsed = 0}
         local settings = createSettings()
-        if not isPatch1207 and duration == nil then configuration.duration = create_duration_value(0) end
+        if not isPatch1207 and not isPatch121 and duration == nil then configuration.duration = create_duration_value(0) end
         metatable.__index = function(_, key)
             if scalarFields[key] then return readSetting(settings, key) end
             return configuration[key]
@@ -158,8 +158,12 @@ do
             return text
         end
         local function can_format(binding)
-            -- INFERRED: fallback text suffices for unconfigured/zero/expired state;
-            -- a nonzero active duration requires a configured NumericFormatter.
+            if isPatch121 then
+                return binding.duration ~= nil
+                    and type(binding.textFormat) == "string"
+                    and binding.textFormat ~= ""
+            end
+            -- INFERRED: legacy readiness accepts zero/expired fallback text.
             local duration = binding.duration
             if duration == nil then return has_text(binding.zeroDurationText) end
             if hasSecretInput(duration) then duration = readSecretInput(duration) end
@@ -168,7 +172,7 @@ do
             return type(binding.formatter) == "userdata" and type(binding.formatter.FormatNumber) == "function"
         end
         function binding:CanFormatText()
-            if isPatch1207 then return can_format(self) end
+            if isPatch1207 or isPatch121 then return can_format(self) end
             return true
         end
         function binding:CanUpdateFontString()
@@ -181,6 +185,30 @@ do
         function binding:GetExpiredText() return self.expiredText end
         function binding:GetFontString() return self.fontString end
         function binding:GetFormattedText()
+            if isPatch121 then
+                local duration = self.duration
+                if duration == nil then return self.zeroDurationText or "" end
+                local secret = hasSecretInput(duration)
+                if secret then duration = readSecretInput(duration) end
+                if durationIsZero(duration) then return protect_text(self.zeroDurationText or "", secret) end
+                if durationHasExpired(duration) and has_text(self.expiredText) then
+                    return protect_text(self.expiredText, secret)
+                end
+                if not can_format(self) then return protect_text("", secret) end
+                local value = sampleRemaining(settings, duration)
+                if secret then value = wrapSecretOutput(value) end
+                local text = self.formatter and self.formatter:FormatNumber(value) or value
+                local decodedText = text
+                if hasSecretInput(text) then decodedText = readSecretInput(text) end
+                if secretType(decodedText) == "number" then text = secretToString(text)
+                elseif secretType(decodedText) ~= "string" then
+                    error("DurationTextBinding formatter must return string", 2)
+                end
+                if self.textFormat ~= nil and self.textFormat ~= "" and self.textFormat ~= "{}" then
+                    text = secretStringFormat(self.textFormat, text)
+                end
+                return protect_text(text, secret)
+            end
             if isPatch1207 then
                 if not can_format(self) then error("DurationTextBinding is not configured for formatting", 2) end
                 local duration = self.duration
@@ -228,13 +256,19 @@ do
         function binding:IsEnabled() return self.enabled end
         function binding:SetClock(clock) self.clock = clock end
         function binding:SetDuration(value)
-            if isPatch1207 then validateDuration(value) end
+            if isPatch1207 or isPatch121 then validateDuration(value) end
             self.duration = value ~= nil and value or create_duration_value(0)
         end
         function binding:SetEnabled(value) self.enabled = not not value end
         function binding:SetExpiredText(text) self.expiredText = text end
         function binding:SetFontString(value) self.fontString = value end
-        function binding:SetFormatter(formatter) self.formatter = formatter end
+        function binding:SetFormatter(formatter)
+            self.formatter = formatter
+            if isPatch121 then
+                self.textFormat = "{}"
+                self.textFormatComponents = nil
+            end
+        end
         function binding:SetTextFormat(format, components)
             self.textFormat = format
             self.textFormatComponents = components
@@ -243,8 +277,8 @@ do
         function binding:SetToDefaults()
             -- INFERRED: cleared default fields are not authenticated for build 68182.
             self.duration = nil
-            if not isPatch1207 then self.duration = create_duration_value(0) end
-            if isPatch1207 then self.fontString = nil end
+            if not isPatch1207 and not isPatch121 then self.duration = create_duration_value(0) end
+            if isPatch1207 or isPatch121 then self.fontString = nil end
             self.enabled = true
             self.updateInterval = 1
             self.timeModifier = 0
@@ -277,8 +311,8 @@ do
                 self.textColorProperty = property
             end
         end
-        if isPatch1207 then
-            -- INFERRED: strict noncoercing validation; scalar/reference wrappers normalize,
+        if isPatch1207 or isPatch121 then
+            -- Native 12.1/Forever setters validate before changing binding state.
             -- while text wrappers remain opaque. Native coercion/identity policy is unproven.
             local setters = {"SetDuration", "SetFontString", "SetExpiredText", "SetZeroDurationText",
                 "SetTimeModifier", "SetUpdateInterval", "SetEnabled", "SetFormatter", "SetClock", "Assign"}
@@ -304,7 +338,11 @@ do
                     elseif name == "SetFontString" then
                         validateFontString(value)
                     elseif name == "SetFormatter" then
-                        if type(value) ~= "userdata" or type(value.FormatNumber) ~= "function" then error("NumericFormatter expected", 2) end
+                        if isPatch121 then
+                            validateFormatter(value)
+                        elseif type(value) ~= "userdata" or type(value.FormatNumber) ~= "function" then
+                            error("NumericFormatter expected", 2)
+                        end
                     end
                     return original(unpackArguments(decoded, 1, count))
                 end
@@ -391,6 +429,11 @@ pub(crate) fn register(lua: &mut rilua::Lua) -> crate::Result<()> {
             state,
             "DurationBinding.ValidateFontString",
             self::state::validate_font_string,
+        ),
+        secret_callback(
+            state,
+            "DurationBinding.ValidateFormatter",
+            self::state::validate_formatter,
         ),
     ];
     let callback = lua.call_function(&bootstrap, &arguments)?;

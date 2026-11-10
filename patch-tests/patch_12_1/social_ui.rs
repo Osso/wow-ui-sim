@@ -1,56 +1,48 @@
-use super::{assert_ptr_source_omits_qualified_methods, load_game_ui_without_player_choice};
+use super::{
+    assert_ptr_source_omits_qualified_methods, load_full_game_ui_with_all_lod,
+    missing_runtime_functions,
+};
 
-const SNAPSHOT_ONLY_METHODS: &[&str] = &[
-    "AddSeparatorToTooltip",
-    "GetBattleNetFriendTagInterestsUIOrder",
-    "GetBattleNetFriendTagRoleUIOrder",
-    "GetBlockedName",
-    "GetIconForPresenceType",
-    "GetLabelForBattleNetFriendTag",
-    "GetLabelForPresenceType",
-    "GetPresenceTypeForBattleNetAccountInfo",
-    "GetPresenceTypeSelf",
-    "InitializeUserScaledDropdownButton",
-    "InitializeUserScaledDropdownMainTitle",
-    "InitializeUserScaledDropdownTitle",
-    "SetBattleNetPresenceFromSocialUIPresence",
+const PTR_METHODS: &[&str] = &[
+    "SocialUIUtil.AddSeparatorToTooltip",
+    "SocialUIUtil.GetBlockedName",
+    "SocialUIUtil.GetIconForPresenceType",
+    "SocialUIUtil.GetLabelForBattleNetFriendTag",
+    "SocialUIUtil.GetLabelForPresenceType",
+    "SocialUIUtil.GetPresenceTypeForBattleNetAccountInfo",
+    "SocialUIUtil.GetPresenceTypeSelf",
+    "SocialUIUtil.GetSupportedBattleNetFriendTagInterestsForCurrentGameType",
+    "SocialUIUtil.GetSupportedBattleNetFriendTagRolesForCurrentGameType",
+    "SocialUIUtil.InitializeUserScaledDropdownButton",
+    "SocialUIUtil.InitializeUserScaledDropdownMainTitle",
+    "SocialUIUtil.InitializeUserScaledDropdownTitle",
+    "SocialUIUtil.SetBattleNetPresenceFromSocialUIPresence",
 ];
 
-/// Proves all proposed SocialUIUtil additions are absent from PTR source and runtime.
-#[test]
-fn snapshot_only_social_ui_methods_remain_absent() {
-    assert_ptr_source_omits_qualified_methods("SocialUIUtil", SNAPSHOT_ONLY_METHODS);
+const REPLACED_ORDER_GETTERS: &[&str] = &[
+    "GetBattleNetFriendTagInterestsUIOrder",
+    "GetBattleNetFriendTagRoleUIOrder",
+];
 
-    let env = load_game_ui_without_player_choice();
-    let (namespace_type, absent_count): (String, i32) = env
+/// Proves PTR publishes the current tag-order accessors, not the former names.
+#[test]
+fn ptr_social_ui_uses_current_tag_order_accessors() {
+    assert_ptr_source_omits_qualified_methods("SocialUIUtil", REPLACED_ORDER_GETTERS);
+
+    let env = load_full_game_ui_with_all_lod();
+    let missing = missing_runtime_functions(&env, PTR_METHODS);
+    assert_eq!(
+        missing, "",
+        "pinned PTR SocialUIUtil methods must remain published"
+    );
+
+    let old_getters_present: bool = env
         .eval(
             r#"
-            local names = {
-                "AddSeparatorToTooltip",
-                "GetBattleNetFriendTagInterestsUIOrder",
-                "GetBattleNetFriendTagRoleUIOrder",
-                "GetBlockedName",
-                "GetIconForPresenceType",
-                "GetLabelForBattleNetFriendTag",
-                "GetLabelForPresenceType",
-                "GetPresenceTypeForBattleNetAccountInfo",
-                "GetPresenceTypeSelf",
-                "InitializeUserScaledDropdownButton",
-                "InitializeUserScaledDropdownMainTitle",
-                "InitializeUserScaledDropdownTitle",
-                "SetBattleNetPresenceFromSocialUIPresence",
-            }
-            local absentCount = 0
-            for _, name in ipairs(names) do
-                if SocialUIUtil == nil or SocialUIUtil[name] == nil then
-                    absentCount = absentCount + 1
-                end
-            end
-            return type(SocialUIUtil), absentCount
+            return SocialUIUtil.GetBattleNetFriendTagInterestsUIOrder ~= nil
+                or SocialUIUtil.GetBattleNetFriendTagRoleUIOrder ~= nil
             "#,
         )
-        .expect("SocialUIUtil runtime probe succeeds");
-
-    assert_eq!(namespace_type, "nil");
-    assert_eq!(absent_count, SNAPSHOT_ONLY_METHODS.len() as i32);
+        .expect("previous tag-order getter probe succeeds");
+    assert!(!old_getters_present);
 }

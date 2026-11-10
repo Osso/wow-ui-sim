@@ -214,6 +214,9 @@ pub(super) fn create_font_string(state: &mut LuaState) -> LuaResult<u32> {
     let child_id = fontstring.id;
     {
         let mut sim = borrow_state_mut(state)?;
+        let parent = sim.widgets.get(parent_id);
+        fontstring.full_lockdown = sim.loading_full_lockdown;
+        fontstring.forbidden = sim.loading_forbidden || parent.is_some_and(|frame| frame.forbidden);
         sim.widgets.register(fontstring);
         sim.widgets.add_child(parent_id, child_id);
         sim.invalidate_strata_buckets();

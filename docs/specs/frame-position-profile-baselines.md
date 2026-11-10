@@ -13,6 +13,7 @@
 - [x] Derive Mists ChatFrame1's managed bottom anchor from the selected Edit Mode anchor and visible managed-frame inputs.
 - [x] Derive Mists bags, aura, action-bar, status-bar and right-container rectangles from selected Blizzard source; assert ObjectiveTrackerFrame absence where its addon is not selected.
 - [x] Keep Retail clean and reduce failure names on PTR, Forever, Mists, Era and Anniversary relative to master `3ca96ba58`.
+- [x] Reconcile Forever bag, status-manager and managed-right geometry from pinned Camelot inputs; assert bag registration/dimensions/preset, keyboard-manager anchor, and the visible managed-child width bound before geometry. Do not treat the status manager as its Edit Mode child bars.
 
 ## How it works
 

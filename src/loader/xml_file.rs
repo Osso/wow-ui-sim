@@ -300,6 +300,7 @@ fn process_scoped_modifier(
 
 struct SavedScopedModifier {
     forbidden: bool,
+    full_lockdown: bool,
     script_env: Option<Val>,
     add_to_secure_env: bool,
     hide_from_global_env: bool,
@@ -315,14 +316,18 @@ fn enter_scoped_modifier(
     let mut state = env.state().borrow_mut();
     let saved = SavedScopedModifier {
         forbidden: state.loading_forbidden,
+        full_lockdown: state.loading_full_lockdown,
         script_env: state.loading_scoped_script_env,
         add_to_secure_env: state.loading_add_to_secure_env,
         hide_from_global_env: state.loading_hide_from_global_env,
         use_forbidden_object_table: state.loading_use_forbidden_object_table,
         allow_untainted_creation: state.loading_allow_untainted_creation,
     };
-    if scoped.forbidden.unwrap_or(false) || scoped.full_lockdown.unwrap_or(false) {
+    if scoped.forbidden.unwrap_or(false) {
         state.loading_forbidden = true;
+    }
+    if scoped.full_lockdown.unwrap_or(false) {
+        state.loading_full_lockdown = true;
     }
     if let Some(scoped_env) = scoped_env {
         state.loading_scoped_script_env = Some(scoped_env);
@@ -343,6 +348,7 @@ fn enter_scoped_modifier(
 fn restore_scoped_modifier(env: &LoaderEnv<'_>, saved: SavedScopedModifier) {
     let mut state = env.state().borrow_mut();
     state.loading_forbidden = saved.forbidden;
+    state.loading_full_lockdown = saved.full_lockdown;
     state.loading_scoped_script_env = saved.script_env;
     state.loading_add_to_secure_env = saved.add_to_secure_env;
     state.loading_hide_from_global_env = saved.hide_from_global_env;

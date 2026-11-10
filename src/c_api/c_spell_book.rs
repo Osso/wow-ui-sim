@@ -136,7 +136,8 @@ fn register_spell_book_item_visual_queries(
         "GetSpellBookItemCooldownDuration",
         c_spell_book_get_spell_book_item_cooldown_duration,
     )?;
-    #[cfg(feature = "retail-12-0-5")]
+    // Forever SpellBookDocumentation.lua:198; registered in Game (R17).
+    #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
     table_set_rust_fn_static(
         state,
         table_ref,
@@ -441,7 +442,7 @@ fn c_spell_book_get_spell_book_item_type(state: &mut LuaState) -> LuaResult<u32>
     Ok(3)
 }
 
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 fn read_duration_spellbook_entry(state: &LuaState) -> Option<u32> {
     use crate::lua_bridge::stack_val;
 
@@ -548,10 +549,39 @@ fn c_spell_book_get_spell_book_item_charges(state: &mut LuaState) -> LuaResult<u
     super::charge_state::push_charge_info(state, spell_id)
 }
 
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 fn c_spell_book_get_spell_book_item_charge_duration(state: &mut LuaState) -> LuaResult<u32> {
-    let spell_id = read_duration_spellbook_entry(state);
+    let spell_id = if super::c_spell::uses_r17_duration_behavior() {
+        read_forever_duration_spellbook_entry(state)?
+    } else {
+        read_duration_spellbook_entry(state)
+    };
     super::charge_state::push_charge_duration(state, spell_id)
+}
+
+#[cfg(any(feature = "client-wowforever", feature = "retail-12-0-5"))]
+fn read_forever_duration_spellbook_entry(state: &LuaState) -> LuaResult<Option<u32>> {
+    let slot = rilua::table_security::unwrap_secret(state, stack_val(state, 1))?;
+    let bank = rilua::table_security::unwrap_secret(state, stack_val(state, 2))?;
+    let (Val::Num(slot), Val::Num(bank)) = (slot, bank) else {
+        return Err(rilua::runtime_error(
+            "spellbook slot and bank must be numbers",
+        ));
+    };
+    if !slot.is_finite() || !(0.0..=u32::MAX as f64).contains(&slot) {
+        return Err(rilua::runtime_error("spellbook slot is out of range"));
+    }
+    if !bank.is_finite() || bank.fract() != 0.0 || !matches!(bank, 0.0 | 1.0) {
+        return Err(rilua::runtime_error("invalid spellbook bank"));
+    }
+    let slot = slot.trunc() as u32;
+    if slot == 0 || bank == 1.0 || slot > i32::MAX as u32 {
+        return Ok(None);
+    }
+    Ok(resolve_player_spellbook_entry(
+        Val::Num(slot as f64),
+        Val::Num(bank),
+    ))
 }
 
 #[cfg(feature = "retail-12-0-0")]

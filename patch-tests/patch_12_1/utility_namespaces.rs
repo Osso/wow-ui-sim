@@ -1,9 +1,6 @@
-use super::{
-    assert_ptr_source_contains, assert_ptr_source_omits_qualified_symbols,
-    load_game_ui_without_player_choice,
-};
+use super::{load_full_game_ui_with_all_lod, missing_runtime_functions};
 
-const SNAPSHOT_ONLY_SYMBOLS: &[&str] = &[
+const PTR_METHODS: &[&str] = &[
     "ChatFrameUtil.DiscordNameColorize",
     "ChatFrameUtil.FormatDiscordMessage",
     "ChatFrameUtil.GetNameForDiscordMessage",
@@ -35,103 +32,32 @@ const SNAPSHOT_ONLY_SYMBOLS: &[&str] = &[
     "UIModeUtil.SetModeActive",
 ];
 
-/// Proves proposed utility methods do not exist in current PTR source or runtime.
+/// Proves current PTR utility methods are available after their LoD owners load.
 #[test]
-fn snapshot_only_utility_methods_remain_absent() {
-    assert_ptr_source_omits_qualified_symbols(SNAPSHOT_ONLY_SYMBOLS);
-
-    let env = load_game_ui_without_player_choice();
-    let published_symbols: String = env
-        .eval(
-            r#"
-            local names = {
-                "ChatFrameUtil.DiscordNameColorize",
-                "ChatFrameUtil.FormatDiscordMessage",
-                "ChatFrameUtil.GetNameForDiscordMessage",
-                "CooldownViewerUtil.AddSoundAlertRadio",
-                "CooldownViewerUtil.BuildSoundMenus",
-                "CooldownViewerUtil.GetSoundTypeSoundKit",
-                "CooldownViewerUtil.GetSoundTypeText",
-                "HousingFramesUtil.IsBlueprintCollectionAvailable",
-                "HousingFramesUtil.IsBlueprintOperationInProgress",
-                "HousingFramesUtil.ShowBlueprintExport",
-                "HousingFramesUtil.ShowBlueprintImport",
-                "HousingFramesUtil.ShowBlueprintRoomExport",
-                "HousingFramesUtil.TryOpenBlueprintCollection",
-                "ItemUtil.DisplayEquipSlotTooltip",
-                "ItemUtil.GetEmptyEquipSlotTooltipForSlotName",
-                "ItemUtil.GetEmptyEquipSlotTooltip",
-                "ItemUtil.GetEquipSlotTexture",
-                "ItemUtil.GetValidatedItemLocation",
-                "PingUtil.SendMacroPing",
-                "PingUtil.TogglePingTarget",
-                "RegionUtil.GetTopLeftMost",
-                "RegionUtil.SortByTopLeft",
-                "TimeUtil.BetterDate",
-                "TimeUtil.GetRecentTimeDate",
-                "UIModeUtil.CreateExtendedBlocklist",
-                "UIModeUtil.CreateModifiedBlocklist",
-                "UIModeUtil.IsModeActive",
-                "UIModeUtil.RegisterMode",
-                "UIModeUtil.SetModeActive",
-            }
-            local published = {}
-            for _, name in ipairs(names) do
-                local namespaceName, methodName = string.match(name, "^([^.]+)%.(.+)$")
-                local namespace = _G[namespaceName]
-                if namespace ~= nil and namespace[methodName] ~= nil then
-                    table.insert(published, name)
-                end
-            end
-            return table.concat(published, ",")
-            "#,
-        )
-        .expect("utility namespace runtime probe succeeds");
-
-    assert_eq!(published_symbols, "", "unexpected PTR publications");
+fn ptr_utility_methods_are_published_by_the_loaded_owners() {
+    let env = load_full_game_ui_with_all_lod();
+    let missing = missing_runtime_functions(&env, PTR_METHODS);
+    assert_eq!(
+        missing, "",
+        "pinned PTR utility methods must remain published"
+    );
 }
 
-/// Proves the proposed PingUtil removal is reversed and still delegates to C_Ping.
+/// Proves the native-absent contextual ping member is not callable on PTR.
 #[test]
-fn contextual_ping_helper_remains_vendor_present() {
-    assert_ptr_source_contains("function PingUtil:GetContextualPingTypeForUnit");
-
-    let env = load_game_ui_without_player_choice();
-    let (helper_type, normal_call_succeeds, normal_result_type, forwarded_guid, result): (
-        String,
-        bool,
-        String,
-        String,
-        i32,
-    ) = env
+fn contextual_ping_helpers_are_absent_on_ptr() {
+    let env = load_full_game_ui_with_all_lod();
+    let absent: bool = env
         .eval(
             r#"
-            local normalCallSucceeds, normalResult = pcall(
-                PingUtil.GetContextualPingTypeForUnit,
-                PingUtil,
-                "Player-1-NORMAL"
-            )
-
-            local forwardedGUID
-            local original = C_Ping.GetContextualPingTypeForUnit
-            C_Ping.GetContextualPingTypeForUnit = function(guid)
-                forwardedGUID = guid
-                return 17
-            end
-            local result = PingUtil:GetContextualPingTypeForUnit("Player-1-TEST")
-            C_Ping.GetContextualPingTypeForUnit = original
-            return type(PingUtil.GetContextualPingTypeForUnit),
-                normalCallSucceeds,
-                type(normalResult),
-                forwardedGUID,
-                result
+            return C_Ping.GetContextualPingTypeForUnit == nil
+                and (PingUtil == nil or PingUtil.GetContextualPingTypeForUnit == nil)
+                and not pcall(function()
+                    return C_Ping.GetContextualPingTypeForUnit("player")
+                end)
             "#,
         )
-        .expect("contextual ping helper behavior probe succeeds");
+        .expect("contextual ping absence probe succeeds");
 
-    assert_eq!(helper_type, "function");
-    assert!(normal_call_succeeds);
-    assert_eq!(normal_result_type, "nil");
-    assert_eq!(forwarded_guid, "Player-1-TEST");
-    assert_eq!(result, 17);
+    assert!(absent);
 }
