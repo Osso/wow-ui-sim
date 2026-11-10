@@ -70,7 +70,7 @@ const ACTION_BAR_ADDONS: &[&str] = &[
     "Blizzard_SharedMapDataProviders",
     "Blizzard_WorldMap",
     "Blizzard_PingUI",
-    #[cfg(any(feature = "client-ptr", feature = "client-wowforever"))]
+    #[cfg(feature = "client-ptr")]
     "Blizzard_SpellTypeIconOverlay",
     "Blizzard_ActionBar",
 ];
