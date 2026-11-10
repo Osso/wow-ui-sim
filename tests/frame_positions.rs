@@ -412,6 +412,62 @@ fn assert_layout_state(env: &WowLuaEnv, test: &str) {
             assert(x == 0 and y == 12)
             "#
         }
+        (ClientProfile::WowForever, "bags_bar") => {
+            // Camelot/MainMenuBarBagButtons.xml:9,53-63,78-94; Shared/BagsBar.lua:43-70.
+            r#"
+            assert(BagsBar:GetParent() == UIParent and BagsBar:GetScale() == 1)
+            assert(BagsBar:IsHorizontal() and BagsBar:IsDirectionLeft())
+            assert(not BagsBar:ShouldShowExpandToggle() and BagsBar.bagPadding == 2)
+            local expected = {
+                MainMenuBarBackpackButton, CharacterBag0Slot, CharacterBag1Slot,
+                CharacterBag2Slot, CharacterBag3Slot, CharacterReagentBag0Slot, KeyRingButton,
+            }
+            local count = 0
+            for index, button in MainMenuBarBagManager:EnumerateBagButtons() do
+                count = count + 1
+                assert(button == expected[index], "native bag-button registration order")
+                assert(button:GetWidth() == (button == KeyRingButton and 33 or 45))
+                assert(button:GetHeight() == 45)
+            end
+            assert(count == 7 and BagsBar.initialHeight == 45)
+            local point, relative, relativePoint, x, y = BagsBar:GetPoint(1)
+            assert(point == "BOTTOMLEFT" and relative == MicroMenuContainer and relativePoint == "BOTTOMRIGHT")
+            assert(x == 7 and y == -4, "Camelot bag preset anchor")
+            "#
+        }
+        (ClientProfile::WowForever, "status_tracking_bar") => {
+            // Camelot/StatusTrackingBarConstants.lua:1-7; Mainline/StatusTrackingBar.xml:35-39.
+            r#"
+            assert(not InputUtil.IsGamepadUIEnabled(), "keyboard/mouse fixture")
+            assert(StatusTrackingBarManager:GetParent() == UIParent)
+            assert(StatusTrackingBarManager:GetScale() == 1)
+            assert(STATUS_BAR_MANAGER_WIDTH == 1192 and STATUS_BAR_MANAGER_HEIGHT == 17)
+            local point, relative, relativePoint, x, y = StatusTrackingBarManager:GetPoint(1)
+            assert(point == "BOTTOM" and relative == UIParent and relativePoint == "BOTTOM")
+            assert(x == 0 and y == 0, "native manager anchor, not a child-bar preset")
+            "#
+        }
+        (ClientProfile::WowForever, "right_managed_container") => {
+            // UIParentPanelManager.lua:822-830; SharedXML/LayoutFrame.lua:244-252,277-312.
+            r#"
+            assert(RightManagedFrameContainer:GetParent() == UIParent)
+            assert(RightManagedFrameContainer:GetScale() == 1)
+            assert(MinimapCluster:GetHeight() == 256)
+            assert(EditModeUtil:GetRightActionBarWidth() == 0)
+            assert(RightManagedFrameContainer.fixedHeight == UIParent:GetHeight() - 256 - 100)
+            assert(ObjectiveTrackerFrame:GetParent() == RightManagedFrameContainer)
+            assert(ObjectiveTrackerFrame:IsShown() and ObjectiveTrackerFrame:GetWidth() == 260)
+            local includesTracker = false
+            for _, child in ipairs(RightManagedFrameContainer:GetLayoutChildren()) do
+                assert(child:GetWidth() * child:GetScale() <= 260, "no wider managed child")
+                includesTracker = includesTracker or child == ObjectiveTrackerFrame
+            end
+            assert(includesTracker, "tracker participates in native container width")
+            local point, relative, relativePoint, x, y = RightManagedFrameContainer:GetPoint(1)
+            assert(point == "TOPRIGHT" and relative == UIParent and relativePoint == "TOPRIGHT")
+            assert(x == -5 and y == -260, "native managed-right anchor")
+            "#
+        }
         (ClientProfile::Mists, "paladin_power_bar") => {
             r#"
             assert(PaladinPowerBar:GetParent() == PlayerFrame)
