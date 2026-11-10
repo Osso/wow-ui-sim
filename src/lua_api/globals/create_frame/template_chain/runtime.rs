@@ -697,5 +697,8 @@ fn call_handler_with_frame(state: &mut LuaState, handler: Val, frame: Val) -> Lu
     let result =
         crate::lua_api::script_helpers::protected_lua_pcall_state(state, handler, &[frame]);
     crate::lua_api::taint::restore_active_stack_taint(state, saved_taints);
-    result.map(|_| ()).map_err(rilua::runtime_error)
+    if let Err(error) = result {
+        crate::lua_api::script_helpers::call_error_handler_state(state, &error.to_string());
+    }
+    Ok(())
 }
