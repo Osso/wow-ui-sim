@@ -13,6 +13,9 @@
 pub mod frame_collect;
 pub mod layout;
 
+#[cfg(all(test, feature = "gui"))]
+mod issue52_render_tests;
+
 // GUI-only submodules
 #[cfg(feature = "gui")]
 mod app;
