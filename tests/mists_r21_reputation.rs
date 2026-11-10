@@ -111,3 +111,12 @@ fn mists_r21_reputation_tuple_counts_fallback_and_selection() {
     )
     .unwrap();
 }
+
+#[test]
+fn mists_r21_watched_faction_setter_is_published() {
+    let env = WowLuaEnv::new().unwrap();
+    let available: bool = env
+        .eval("return type(SetWatchedFactionIndex) == 'function'")
+        .unwrap();
+    assert!(available, "Mists must publish SetWatchedFactionIndex");
+}
