@@ -241,7 +241,7 @@ fn issue52_texture_slice_source_dimensions_follow_texture_changes() {
 
 #[test]
 fn issue52_clear_texture_slice_restores_single_quad_rendering() {
-    let mut fixture = Fixture::new();
+    let fixture = Fixture::new();
     let mut batch = QuadBatch::new();
     fixture.append(
         &mut batch,
