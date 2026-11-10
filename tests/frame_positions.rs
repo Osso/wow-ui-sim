@@ -241,7 +241,15 @@ fn expected_position(test: TestCase) -> TestCase {
             // Mists' selected Wrath/WatchFrame.xml:343-350 puts a 204-wide
             // WatchFrame in the stack; the below-minimap widget contributes1.
             // The 204-wide WatchFrame determines the right container's width.
-            (name, frame, 1391.0, 192.0, 204.0, 935.0, 1.0)
+            (
+                name,
+                "UIParentRightManagedFrameContainer",
+                1391.0,
+                192.0,
+                204.0,
+                935.0,
+                1.0,
+            )
         }
         (ClientProfile::Mists, "chat_frame") => {
             // Classic/EditModePresetLayouts.lua:398-409 anchors BOTTOMLEFT
