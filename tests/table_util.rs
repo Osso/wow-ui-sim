@@ -113,30 +113,19 @@ fn table_count_counts_all_non_nil_entries() {
         .unwrap();
     assert_eq!(
         counts,
-        (
-            4,
-            if cfg!(feature = "retail-12-1-5") {
-                1
-            } else {
-                3
-            }
-        ),
-        "table.count should return the number of entries and the epoch-specific arity"
+        (4, 1),
+        "R28: table.count returns one number across Forever, Retail, and PTR"
     );
 }
 
 #[test]
-fn table_count_handles_non_tables_by_epoch() {
+fn table_count_rejects_non_tables() {
     let env = env();
-    let (ok, count): (bool, Option<i32>) = env
-        .eval("local ok, result = pcall(table.count, 'not-table'); return ok, ok and result or nil")
-        .unwrap();
-    if cfg!(feature = "retail-12-1-5") {
-        assert!(!ok, "12.1.5 rejects non-table inputs");
-    } else {
-        assert!(ok, "earlier epochs accept non-table inputs");
-        assert_eq!(count, None);
-    }
+    let ok: bool = env.eval("return pcall(table.count, 'not-table')").unwrap();
+    assert!(
+        !ok,
+        "R28: table.count requires a table on Forever, Retail, and PTR"
+    );
 }
 
 #[test]
