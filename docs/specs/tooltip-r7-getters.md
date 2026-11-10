@@ -30,7 +30,7 @@ The Round 7 `C_TooltipInfo` getters use native argument readers and tooltip buil
 
 ## Known gaps (current cycle)
 
-- [ ] Essence rank-to-spell tooltip blocks, LFG reward stores, possession spell/context, quest special-item object relation, quest-party progress tree, recipe rank chain, selected item-interaction descriptors and slotted-keystone GUID state are not modeled; these getters therefore return no values.
+- [ ] Azerite state supplies current essence ranks and active slots, but the rank-to-spell tooltip catalogue is absent; the getters return no values after resolving only the modeled selection. LFG reward stores, possession spell/context, quest special-item object relation, quest-party progress tree, recipe rank chain, selected item-interaction descriptors and slotted-keystone GUID state are also not modeled; these getters return no values.
 - [ ] Runeforge power/modifier lookup and non-bag GUID object resolution are not modeled; those inputs do not produce a guessed tooltip.
 - [ ] The native secret-result enable byte and mode are UNKNOWN. Do not claim that the socket count is always public or always secret.
 - [ ] The VM does not expose Round 7's full secret-access mode selector. It supports the current untainted-access check; exact behavior for the other native mode messages is not modeled.
