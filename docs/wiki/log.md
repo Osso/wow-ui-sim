@@ -1,3 +1,7 @@
+## [2026-11-10] fix | Mists frame-position residuals
+
+Updated the [frame-position investigation](investigations/frame-position-baseline-drift.md#mists-frame-residuals--2026-11-10) and [profile contract](../specs/frame-position-profile-baselines.md) with pinned-source Mists bag, aura, action-bar, status-bar and WatchFrame-managed right-container geometry. The simulator no longer synthesizes ObjectiveTrackerFrame on Mists, where the selected Blizzard UI has no producer; the test asserts absence. VERIFIED at `3c36dab15`: Mists `frame_positions` passes 25/28; `micro_menu`, `micro_menu_container` and `casting_bar` remain open.
+
 ## [2026-11-09] correction | PTR 12.1.7 FrameXML removed-symbol runtime rows
 
 Corrected the [Patch 12.1 FrameXML symbol inventory](investigations/patch-12-1-framexml-symbol-inventory.md): the full-load PTR 12.1.7 probe found 93 of 99 historical removed-symbol paths not callable, four `RaidNotice_*` aliases still published by `Blizzard_DeprecatedRaidWarning`, and `getglobal`/`setglobal` as Lua built-ins. These are simulator-runtime observations, not proof of native absence; the acceptance test now checks only the four current source publishers.
@@ -9,6 +13,7 @@ Corrected the [Patch 12.1 FrameXML symbol inventory](investigations/patch-12-1-f
 [Frame-position baseline drift](investigations/frame-position-baseline-drift.md#verified-residual-results--2026-11-10) records source-derived Era/Anniversary expectations, Mists/Era/Anniversary ObjectiveTracker absence, and the final six-profile failure-name matrix. Era/Anniversary library tests pass; all six profile all-target checks and Wrath compile have zero warnings and compile `wow_ui_sim` with `fresh:false`. The checked-in patch-manifest test passes.
 
 ## [2026-11-08] investigation | GUI CASC cache preparation
+
 ## [2026-11-09] fix | Mists unit-frame Edit Mode replay ordering
 
 Updated the [frame-position investigation](investigations/frame-position-baseline-drift.md#mists-unit-frame-startup-replay--2026-11-09) and its [profile contract](../specs/frame-position-profile-baselines.md): the startup action-bar replay now initializes the native StanceBar state before the Classic dynamic-background-art refresh that reads it. The Mists `frame_positions` run passes all six unit-frame cases and ChatFrame1 at its source-derived managed position; 11 residual names remain from 17 RED. Native C layout-event timing remains UNKNOWN; see the lane report for proof and remaining gates.

@@ -241,6 +241,51 @@ fn expected_position(test: TestCase) -> TestCase {
             // x = 268 + 232/2 + 25 - 136/2; y = 850 + 100 - 35.
             (name, "PaladinPowerBar", 341.0, 915.0, 136.0, 39.0, 1.0)
         }
+        (ClientProfile::Mists, "bags_bar") => {
+            // Mists/MainMenuBarBagButtonsConsts.lua:2-5 sets five buttons
+            // to width30; Shared/BagsBar.lua:41-68 adds four 2-unit gaps.
+            // Classic preset:440-454 anchors BOTTOMRIGHT at(-4,2).
+            (name, frame, 1150.0, 1161.0, 158.0, 37.0, 1.0)
+        }
+        (ClientProfile::Mists, "buff_frame") => {
+            // Classic preset:362-377 sets 11 icons,100% scale,padding5,
+            // TOPRIGHT(-187,-13); BuffFrame.lua:2-3,132-144,257-279 gives
+            // 32 icons at30x40 plus the 15px collapse button.
+            (name, frame, 1013.0, 13.0, 400.0, 135.0, 1.0)
+        }
+        (ClientProfile::Mists, "debuff_frame") => {
+            // Classic preset:379-394 sets 8 icons,100% scale,padding5,
+            // TOPRIGHT(-202,-152); BuffFrame.lua:2-3,132-144,257-279 gives
+            // 16 icons at30x40 without a collapse button.
+            (name, frame, 1118.0, 152.0, 280.0, 90.0, 1.0)
+        }
+        (ClientProfile::Mists, "main_action_bar") => {
+            // Classic preset:17-34 gives 12 icons, one row, padding6,
+            // 100% scale and BOTTOMLEFT(8,4). ActionButtonTemplate.xml:20
+            // sets36x36, so width=12*36+11*6=498.
+            (name, frame, 296.0, 1160.0, 498.0, 36.0, 1.0)
+        }
+        (ClientProfile::Mists, "status_tracking_bar") => {
+            // Classic/StatusTrackingBar.xml:144-153 gives1024x23 and
+            // BOTTOM to MainMenuBar.TOP(0,-13). The manager selects scale1.015.
+            (name, frame, 280.32, 1136.85, 1039.36, 23.345, 1.0)
+        }
+        (ClientProfile::Mists, "right_managed_container") => {
+            // UIParentPanelManager.lua:780-787 gives height1200-165-100;
+            // EditModeUtil.lua:51-54 and Classic preset :12 give TOPRIGHT(-5,-192).
+            // Mists' selected Wrath/WatchFrame.xml:343-350 puts a 204-wide
+            // WatchFrame in the stack; the below-minimap widget contributes1.
+            // The 204-wide WatchFrame determines the right container's width.
+            (
+                name,
+                "UIParentRightManagedFrameContainer",
+                1391.0,
+                192.0,
+                204.0,
+                935.0,
+                1.0,
+            )
+        }
         (ClientProfile::Mists, "chat_frame") => {
             // Classic/EditModePresetLayouts.lua:398-409 anchors BOTTOMLEFT
             // at (35,110). UIParentPanelManagerOverrides.lua:141-168:
@@ -288,15 +333,6 @@ fn expected_position(test: TestCase) -> TestCase {
         | (ClientProfile::Anniversary, "raid_boss_emote_anchor") => {
             (name, "RaidBossEmoteFrame", 544.0, 252.0, 512.0, 80.0, 1.0)
         }
-        (ClientProfile::Mists, "right_managed_container") => (
-            name,
-            "UIParentRightManagedFrameContainer",
-            test.2,
-            test.3,
-            test.4,
-            test.5,
-            test.6,
-        ),
         _ => test,
     }
 }
@@ -305,6 +341,7 @@ fn expects_missing_frame(test: &str) -> bool {
     use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
 
     match test {
+        // The selected Classic UI has no ObjectiveTrackerFrame producer.
         "objective_tracker" => matches!(
             ACTIVE,
             ClientProfile::Mists | ClientProfile::Era | ClientProfile::Anniversary
@@ -486,6 +523,105 @@ fn assert_mists_chat_frame_position_inputs(env: &WowLuaEnv) {
     .expect("native Mists chat position inputs");
 }
 
+/// Pinned Mists Classic/Mists TOCs select these original layout consumers.
+/// The source arithmetic is recorded in frame-position-baseline-drift.md.
+fn assert_mists_residual_inputs(env: &WowLuaEnv, test: &str) {
+    let assertion = match test {
+        "bags_bar" => {
+            r#"
+            assert(BagsBar:GetScale() == 1 and BagsBar.initialHeight == 37)
+            assert(BagsBar.hideExpandToggle and BagsBar.bagPadding == 2)
+            assert(BagsBar:IsHorizontal() and BagsBar:IsDirectionLeft())
+            local count = 0
+            for _, button in MainMenuBarBagManager:EnumerateBagButtons() do
+                count = count + 1
+                assert(button:GetWidth() == 30, "Mists bag button width")
+            end
+            assert(count == 5, "Mists backpack and four bag slots")
+            local point, relative, relativePoint, x, y = BagsBar:GetPoint(1)
+            assert(point == "BOTTOMRIGHT" and relative == MainMenuBarArtFrame and relativePoint == "BOTTOMRIGHT")
+            assert(x == -4 and y == 2)
+        "#
+        }
+        "micro_menu" | "micro_menu_container" => {
+            r#"
+            assert(MicroMenu:GetParent() == MicroMenuContainer)
+            assert(MicroMenu:GetScale() == 1 and MicroMenu.childXPadding == -4)
+            assert(MicroMenu.isHorizontal and MicroMenu.numButtons == 13)
+            local point, relative, relativePoint, x, y = MicroMenuContainer:GetPoint(1)
+            assert(point == "BOTTOMLEFT" and relative == MainMenuBarArtFrame and relativePoint == "BOTTOM")
+            assert(x == 36 and y == 2)
+        "#
+        }
+        "buff_frame" | "debuff_frame" => {
+            r#"
+            assert(BUFF_MAX_DISPLAY == 32 and DEBUFF_MAX_DISPLAY == 16)
+            assert(BuffFrame.maxAuras == 32 and DebuffFrame.maxAuras == 16)
+            assert(BuffFrame.CollapseAndExpandButton:GetWidth() == 15)
+            for _, frame in ipairs({BuffFrame, DebuffFrame}) do
+                assert(frame:GetScale() == 1 and frame.AuraContainer.iconScale == 1)
+                assert(frame.AuraContainer.iconPadding == 5)
+            end
+            assert(BuffFrame.AuraContainer.iconStride == 11 and DebuffFrame.AuraContainer.iconStride == 8)
+            local point, relative, relativePoint, x, y = BuffFrame:GetPoint(1)
+            assert(point == "TOPRIGHT" and relative == UIParent and relativePoint == "TOPRIGHT")
+            assert(x == -187 and y == -13)
+            point, relative, relativePoint, x, y = DebuffFrame:GetPoint(1)
+            assert(point == "TOPRIGHT" and relative == UIParent and relativePoint == "TOPRIGHT")
+            assert(x == -202 and y == -152)
+        "#
+        }
+        "main_action_bar" | "action_button_1_position" => {
+            r#"
+            assert(MainMenuBar:GetWidth() == 1024 and MainMenuBar:GetHeight() == 53)
+            assert(MainActionBar:GetScale() == 1 and MainActionBar.numRows == 1)
+            assert(MainActionBar.buttonPadding == 6 and #MainActionBar.shownButtonContainers == 12)
+            assert(ActionButton1:GetWidth() == 36 and ActionButton1:GetHeight() == 36)
+            local point, relative, relativePoint, x, y = MainActionBar:GetPoint(1)
+            assert(point == "BOTTOMLEFT" and relative == MainMenuBarArtFrame and relativePoint == "BOTTOMLEFT")
+            assert(x == 8 and y == 4)
+        "#
+        }
+        "status_tracking_bar" => {
+            r#"
+            assert(ClassicExpansionAtLeast(LE_EXPANSION_WRATH_OF_THE_LICH_KING))
+            assert(StatusTrackingBarManager:GetWidth() == 1024 and StatusTrackingBarManager:GetHeight() == 23)
+            assert(math.abs(StatusTrackingBarManager:GetScale() - 1.015) < 0.0001)
+            local point, relative, relativePoint, x, y = StatusTrackingBarManager:GetPoint(1)
+            assert(point == "BOTTOM" and relative == MainMenuBar and relativePoint == "TOP")
+            assert(x == 0 and y == -13)
+        "#
+        }
+        "right_managed_container" => {
+            r#"
+            assert(not MultiBarLeft:IsShown() and not MultiBarRight:IsShown())
+            local managed = UIParentRightManagedFrameContainer:GetLayoutChildren()
+            local watchFrameManaged = false
+            for _, child in ipairs(managed) do
+                if child == WatchFrame then
+                    watchFrameManaged = true
+                end
+            end
+            assert(watchFrameManaged, "native WatchFrame participates in the right stack")
+            assert(WatchFrame:GetParent() == UIParentRightManagedFrameContainer)
+            assert(WatchFrame:IsShown() and not WatchFrame.collapsed)
+            assert(WatchFrame:GetWidth() == 204, "native WatchFrame width")
+            assert(UIWidgetBelowMinimapContainerFrame:GetNumWidgetsShowing() == 0, "empty widget-set fixture")
+            assert(not DurabilityFrame:IsShown(), "no fixture durability alerts")
+            assert(not QuestTimerFrame:IsShown() and not VehicleSeatIndicator:IsShown())
+            assert(MinimapCluster:GetHeight() == 165)
+            local point, relative, relativePoint, x, y = UIParentRightManagedFrameContainer:GetPoint(1)
+            assert(point == "TOPRIGHT" and relative == UIParent and relativePoint == "TOPRIGHT")
+            assert(x == -5 and y == -192)
+        "#
+        }
+        _ => return,
+    };
+    env.exec(assertion)
+        .unwrap_or_else(|error| panic!("{test} Mists native source inputs: {error}"));
+}
+
+/// Era and Anniversary Classic inputs; source derivations are in the frame-position investigation.
 fn assert_classic_residual_inputs(env: &WowLuaEnv, test: &str) {
     use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
 
@@ -585,6 +721,7 @@ fn assert_layout_state(env: &WowLuaEnv, test: &str) {
     }
     if ACTIVE == ClientProfile::Mists {
         assert_mists_unit_frame_anchor(env, test);
+        assert_mists_residual_inputs(env, test);
         if test == "chat_frame" {
             assert_mists_chat_frame_position_inputs(env);
         }
@@ -762,12 +899,22 @@ fn run_tests(env: &WowLuaEnv) -> (usize, usize) {
 
     let expected_action_button_x = match wow_ui_sim::client_profile::ACTIVE {
         wow_ui_sim::client_profile::ClientProfile::WowForever => 185.5,
-        wow_ui_sim::client_profile::ClientProfile::Era
+        wow_ui_sim::client_profile::ClientProfile::Mists
+        | wow_ui_sim::client_profile::ClientProfile::Era
         | wow_ui_sim::client_profile::ClientProfile::Anniversary => 296.0,
         _ => 519.0,
     };
     let result = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
-        assert_classic_residual_inputs(env, "action_button_1_position");
+        match wow_ui_sim::client_profile::ACTIVE {
+            wow_ui_sim::client_profile::ClientProfile::Mists => {
+                assert_mists_residual_inputs(env, "action_button_1_position");
+            }
+            wow_ui_sim::client_profile::ClientProfile::Era
+            | wow_ui_sim::client_profile::ClientProfile::Anniversary => {
+                assert_classic_residual_inputs(env, "action_button_1_position");
+            }
+            _ => {}
+        }
         check_action_button(env, expected_action_button_x);
     }));
     report_result(
