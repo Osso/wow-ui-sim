@@ -26,6 +26,7 @@ The Round 7 `C_TooltipInfo` getters use native argument readers and tooltip buil
 ## Tests asserting this spec
 
 - `tests/tooltip_round7.rs` — registration, argument conversion, usage errors, original accessor miss paths, secret rejection and populated owned runeforge item instances.
+- `src/c_api/c_tooltip_info_round7.rs::tests::populated_azerite_selection_misses_without_rank_spell_data` — the existing current-rank/active-slot state is populated, while the missing rank-to-spell producer retains the no-values result.
 - `tests/c_item_probes.rs` — existing socket counts and integer miss result.
 
 ## Known gaps (current cycle)

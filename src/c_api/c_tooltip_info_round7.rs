@@ -246,3 +246,60 @@ fn item_for_owned_guid(state: &LuaState, guid: &str) -> Option<(u32, &'static It
 fn no_values() -> LuaResult<u32> {
     crate::c_api::tooltip_data::unknown_getter_failure()
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::lua_api::state_types::{AzeriteEssenceInfo, AzeriteEssenceMilestoneInfo};
+
+    #[test]
+    fn populated_azerite_selection_misses_without_rank_spell_data() {
+        if !matches!(
+            ACTIVE,
+            ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
+        ) {
+            return;
+        }
+        let env = crate::lua_api::WowLuaEnv::new().unwrap();
+        {
+            let mut sim = env.state().borrow_mut();
+            sim.azerite_essence.essences.insert(
+                241,
+                AzeriteEssenceInfo {
+                    id: 241,
+                    name: "Round Seven Essence".to_string(),
+                    rank: 3,
+                    icon: 1,
+                    unlocked: true,
+                    valid: true,
+                    access_rank: 3,
+                    has_never_activated: false,
+                },
+            );
+            sim.azerite_essence
+                .milestones
+                .push(AzeriteEssenceMilestoneInfo {
+                    id: 1,
+                    required_level: 1,
+                    slot: Some(0),
+                    unlocked: true,
+                    can_unlock: false,
+                    is_major_slot: true,
+                    swirl_scale: 1.0,
+                    requires_only_aura: false,
+                    spell_id: 1,
+                    rank: None,
+                    active_essence_id: Some(241),
+                });
+        }
+        env.exec(
+            r#"
+                assert(C_AzeriteEssence.GetEssenceInfo(241).rank == 3)
+                assert(C_AzeriteEssence.GetMilestoneEssence(1) == 241)
+                assert(select('#', C_TooltipInfo.GetAzeriteEssence(241)) == 0)
+                assert(select('#', C_TooltipInfo.GetAzeriteEssenceSlot(0)) == 0)
+            "#,
+        )
+        .unwrap();
+    }
+}
