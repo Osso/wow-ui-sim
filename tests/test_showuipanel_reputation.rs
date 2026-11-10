@@ -68,11 +68,13 @@ fn setup_env() -> WowLuaEnv {
         return env;
     }
 
-    let ui = blizzard_ui_dir();
-    for addon_name in PANEL_ADDONS {
-        common::load_required_blizzard_addon(&env, &ui, addon_name);
-        if *addon_name == "Blizzard_UIParentPanelManager" {
-            load_ui_parent_panel_manager_global_pass(&env, &ui);
+    if !common::load_classic_game_startup_inventory(&env) {
+        let ui = blizzard_ui_dir();
+        for addon_name in PANEL_ADDONS {
+            common::load_required_blizzard_addon(&env, &ui, addon_name);
+            if *addon_name == "Blizzard_UIParentPanelManager" {
+                load_ui_parent_panel_manager_global_pass(&env, &ui);
+            }
         }
     }
 
@@ -110,6 +112,9 @@ fn fire_startup_events(env: &WowLuaEnv) {
     }
 }
 
+// Era/Anniversary select `Blizzard_CharacterFrame/Vanilla/CharacterFrame.lua`,
+// which does not define the Retail/Cata `CharacterFrame:RefreshDisplay` method.
+#[cfg(not(any(feature = "client-era", feature = "client-anniversary")))]
 #[test]
 fn show_ui_panel_locks_reputation_frame_layout() {
     test_timeout! {
@@ -333,7 +338,8 @@ fn show_ui_panel_locks_reputation_frame_layout() {
     }
 }
 
-post_wrath_ui_fixture! {
+// The filter dropdown is only in the Mainline/Camelot ReputationFrame consumer.
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn reputation_filter_dropdown_mouse_down_materializes_menu_rows() {
     test_timeout! {

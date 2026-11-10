@@ -6,7 +6,7 @@ use wow_ui_sim::paths::default_blizzard_ui_addons_path;
 #[path = "token_ui_fixtures.rs"]
 mod token_ui_fixtures;
 
-use token_ui_fixtures::load_token_ui;
+pub(crate) use token_ui_fixtures::load_token_ui;
 
 pub(crate) const BLIZZARD_ADDONS: &[&str] = &[
     "Blizzard_SharedXMLBase",
@@ -69,8 +69,10 @@ pub(crate) fn setup_env() -> WowLuaEnv {
     }
 
     let ui = blizzard_ui_dir();
-    for addon_name in BLIZZARD_ADDONS {
-        crate::common::load_required_blizzard_addon(&env, &ui, addon_name);
+    if !crate::common::load_classic_game_startup_inventory(&env) {
+        for addon_name in BLIZZARD_ADDONS {
+            crate::common::load_required_blizzard_addon(&env, &ui, addon_name);
+        }
     }
     // PTR ships this startup addon (AllowLoad: Both); Mainline QuestMapFrame calls its globals.
     #[cfg(feature = "client-ptr")]

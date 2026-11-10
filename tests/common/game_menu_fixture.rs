@@ -71,7 +71,7 @@ pub fn setup_game_menu_env() -> WowLuaEnv {
 
     if cfg!(feature = "client-wrath") {
         super::load_profile_framexml(&env);
-    } else {
+    } else if !super::load_classic_game_startup_inventory(&env) {
         let ui = blizzard_ui_dir();
         for addon_name in BLIZZARD_ADDONS {
             super::load_required_blizzard_addon(&env, &ui, addon_name);

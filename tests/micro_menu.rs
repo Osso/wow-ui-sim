@@ -87,18 +87,19 @@ fn setup_env() -> WowLuaEnv {
         return env;
     }
 
-    // Load base Blizzard addons
-    let ui = blizzard_ui_dir();
-    for name in BLIZZARD_ADDONS {
-        let addon_dir = ui.join(name);
-        let toc_path = find_toc_file(&addon_dir)
-            .unwrap_or_else(|| panic!("active retail TOC for {name} must resolve"));
-        load_addon(&env.loader_env(), &toc_path)
-            .unwrap_or_else(|error| panic!("[load {name}] FAILED: {error}"));
-    }
+    if !common::load_classic_game_startup_inventory(&env) {
+        let ui = blizzard_ui_dir();
+        for name in BLIZZARD_ADDONS {
+            let addon_dir = ui.join(name);
+            let toc_path = find_toc_file(&addon_dir)
+                .unwrap_or_else(|| panic!("active retail TOC for {name} must resolve"));
+            load_addon(&env.loader_env(), &toc_path)
+                .unwrap_or_else(|error| panic!("[load {name}] FAILED: {error}"));
+        }
 
-    install_professions_book_bootstrap(&env, &ui);
-    install_encounter_journal_bootstrap(&env, &ui);
+        install_professions_book_bootstrap(&env, &ui);
+        install_encounter_journal_bootstrap(&env, &ui);
+    }
     env.apply_post_load_workarounds();
     install_fixture_globals(&env);
     fire_startup_events(&env);

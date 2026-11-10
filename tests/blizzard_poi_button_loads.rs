@@ -68,7 +68,7 @@ fn load_full_game_ui() -> WowLuaEnv {
     env
 }
 
-// Literal cached inputs absent from Wrath manifest1-382/cache; behavior cases stay enabled.
+// Classic caches have zero Blizzard_POIButton files; TOC and discovery checks use only shipped profiles.
 retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_poi_button_find_toc_resolves_bare_variant() {
@@ -257,7 +257,7 @@ fn blizzard_poi_button_toc_lists_six_files_in_canonical_order() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_poi_button_appears_in_game_screen_eager_discovery() {
     let addons = discover_blizzard_addons_for_screen(&blizzard_ui_dir(), ScreenKind::Game);
@@ -272,6 +272,7 @@ fn blizzard_poi_button_appears_in_game_screen_eager_discovery() {
 }
 }
 
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_poi_button_does_not_appear_in_glue_screen_eager_discovery() {
     let ui = blizzard_ui_dir();
@@ -292,8 +293,9 @@ fn blizzard_poi_button_does_not_appear_in_glue_screen_eager_discovery() {
         );
     }
 }
+}
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_poi_button_appears_in_full_addon_inventory() {
     let inventory = discover_all_blizzard_addons(&blizzard_ui_dir());

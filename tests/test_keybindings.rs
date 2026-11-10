@@ -116,6 +116,9 @@ fn load_base_blizzard_addons(env: &WowLuaEnv) {
         common::panel_fixtures::load_wrath_panel_core(env);
         return;
     }
+    if common::load_classic_game_startup_inventory(env) {
+        return;
+    }
     let ui = blizzard_ui_dir();
     for name in BLIZZARD_ADDONS {
         common::load_required_blizzard_addon(env, &ui, name);
@@ -647,7 +650,11 @@ fn item_button_corruption_uses_supplied_identity() {
     .expect("original item overlay uses supplied corruption");
 }
 
-#[cfg(any(feature = "client-retail", feature = "client-ptr", feature = "client-wowforever"))]
+#[cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
 #[test]
 fn paper_doll_azerite_overlay_uses_supplied_location() {
     use wow_ui_sim::lua_api::{AzeriteItemState, ItemLocationData};

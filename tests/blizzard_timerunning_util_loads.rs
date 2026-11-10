@@ -192,7 +192,8 @@ fn body_resolves_to_a_single_lua_file() {
 }
 }
 
-post_wrath_ui_fixture! {
+// Classic caches contain two files for this addon, but its TOC is mainline-only.
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn present_in_every_screen_eager_discovery() {
     for screen in ALL_FOUR_SCREENS {
@@ -210,7 +211,8 @@ fn present_in_every_screen_eager_discovery() {
 }
 }
 
-post_wrath_ui_fixture! {
+// The five hard dependencies describe only the Mainline UI tree.
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn five_mainline_addons_declare_timerunning_util_as_dependency() {
     let mut declarers: Vec<String> = Vec::new();
