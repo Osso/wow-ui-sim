@@ -456,13 +456,24 @@ fn test_game_menu_shop_button_opens_store_and_menu_can_reopen_after_store_closes
                     return "onclick-error:" .. tostring(err)
                 end
 
-                if not CatalogShopInboundInterface.IsShown() then
-                    return "catalog-shop-not-shown action=" .. tostring(CatalogShopFrame:GetAttribute("action"))
-                end
+                if C_CatalogShop.IsShop2Enabled() then
+                    if not CatalogShopInboundInterface.IsShown() then
+                        return "catalog-shop-not-shown"
+                    end
 
-                CatalogShopInboundInterface.SetShown(false, G_GameMenuFrameContextKey)
-                if CatalogShopInboundInterface.IsShown() then
-                    return "catalog-shop-still-shown-after-close"
+                    CatalogShopInboundInterface.SetShown(false, G_GameMenuFrameContextKey)
+                    if CatalogShopInboundInterface.IsShown() then
+                        return "catalog-shop-still-shown-after-close"
+                    end
+                else
+                    if not StoreFrame:IsShown() then
+                        return "store-not-shown action=" .. tostring(StoreFrame:GetAttribute("action"))
+                    end
+
+                    StoreFrame_SetShown(false, G_GameMenuFrameContextKey)
+                    if StoreFrame:IsShown() then
+                        return "store-still-shown-after-close"
+                    end
                 end
 
                 if not GameMenuFrame:IsShown() then
