@@ -62,7 +62,7 @@ if type(gameMenu) == "table" then
     ensure_game_menu_button_pool(gameMenu)
 end
 
-local objective = ensure_named_frame("Frame", "ObjectiveTrackerFrame", UIParent)
+local objective = rawget(_G, "ObjectiveTrackerFrame")
 if objective ~= nil and rawget(objective, "OnAdded") == nil then
     function objective:OnAdded(backgroundAlpha)
         if not self.init then
@@ -115,6 +115,7 @@ mod tests {
                     if buttonCount == 0 then return "buttons" end
                 end
 
+                if ObjectiveTrackerFrame == nil then return "objective_absent" end
                 if type(ObjectiveTrackerFrame) ~= "table" then return "objective" end
                 if type(ObjectiveTrackerFrame.Header) ~= "table" then return "header" end
                 if type(ObjectiveTrackerFrame.Header.MinimizeButton) ~= "table" then return "minimize" end
@@ -123,7 +124,18 @@ mod tests {
             )
             .expect("misc global frame defaults probe should run");
 
-        assert_eq!(result, "ok");
+        let expects_tracker = !matches!(
+            crate::client_profile::ACTIVE,
+            crate::client_profile::ClientProfile::Mists
+                | crate::client_profile::ClientProfile::Era
+                | crate::client_profile::ClientProfile::Anniversary
+        );
+        let expected_result = if expects_tracker {
+            "ok"
+        } else {
+            "objective_absent"
+        };
+        assert_eq!(result, expected_result);
     }
 
     #[test]
@@ -131,6 +143,8 @@ mod tests {
         let env = WowLuaEnv::new().expect("lua env should initialize");
         env.exec(
             r#"
+            ObjectiveTrackerFrame = ObjectiveTrackerFrame or CreateFrame("Frame", "ObjectiveTrackerFrame", UIParent)
+            ObjectiveTrackerFrame.Header = ObjectiveTrackerFrame.Header or CreateFrame("Frame", nil, ObjectiveTrackerFrame)
             ObjectiveTrackerFrame.OnAdded = nil
             ObjectiveTrackerFrame.init = nil
             ObjectiveTrackerFrame.headerText = "Tracked"

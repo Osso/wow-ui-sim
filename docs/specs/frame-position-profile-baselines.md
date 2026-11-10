@@ -7,7 +7,8 @@
 - [x] Keep all 28 case names and the one-pixel geometry and 0.02 alpha tolerances.
 - [x] Use profile-native minimap dimensions, header extents and preset anchors, not the Retail rectangle for every profile.
 - [x] Assert the default minimap parent, dimensions, scale and anchors before comparing rectangles.
-- [x] Use native frame names and test absence when a profile's selected TOC excludes the Retail-only frame.
+- [x] Use native frame names and test absence when the selected profile source excludes a frame.
+- [x] Assert native absence of `ObjectiveTrackerFrame` on Mists, Era and Anniversary instead of seeding the placeholder.
 - [x] Change a baseline only with a native XML/Lua derivation; retain failures caused by missing or incorrect simulator inputs.
 - [x] Assert Mists player/target/focus Edit Mode anchor inputs and source-derived Party, CompactParty and PaladinPowerBar rectangles.
 - [x] Derive Mists ChatFrame1's managed bottom anchor from the selected Edit Mode anchor and visible managed-frame inputs.
@@ -30,7 +31,8 @@
 
 - [x] Reconcile source-proven stale expectations without accepting zero-anchor or placeholder geometry as native output.
 - [x] Record residual per-profile failures and native-input questions in the untracked lane report.
+- [ ] Keep Classic bags and chat rectangles failing until native startup inputs are established; do not use simulator-observed rectangles.
 
 ## Out of scope
 
-Wrath, tolerance increases, vendor edits, unrelated integration failures and claims of whole-client native parity.
+Wrath, tolerance increases, vendor edits, guessed Classic startup inputs, unrelated integration failures and claims of whole-client native parity.
