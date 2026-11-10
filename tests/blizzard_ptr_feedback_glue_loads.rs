@@ -62,16 +62,16 @@ fn blizzard_ptr_feedback_glue_toc_marks_addon_as_ptr_and_beta_only() {
 
     assert!(
         toc.metadata.get("OnlyBetaAndPTR").map(String::as_str) == Some("1"),
-        "TOC must declare `## OnlyBetaAndPTR: 1` — same PTR/beta gate as the Game-side \
-         Blizzard_PTRFeedback variant. The Glue counterpart inherits the same release \
-         restriction so the bug-report tooling never reaches live realms"
+        "TOC must declare `## OnlyBetaAndPTR: 1`. R26 establishes that this gate checks \
+         client build classification, not realms; the same directive on the Glue addon \
+         excludes normal builds and admits PTR/beta builds"
     );
     assert_eq!(
         toc.is_ptr_only(),
-        !toc_layout::unified_toc_tree(),
-        "`is_ptr_only()` gates the addon out of eager discovery on profiles that do not \
-         permit PTR-only addons; the PTR and Forever profiles admit them, so the gate is \
-         inactive there (src/toc/mod.rs permits_ptr_only)"
+        wow_ui_sim::client_profile::ACTIVE != wow_ui_sim::client_profile::ClientProfile::Ptr,
+        "R26: OnlyBetaAndPTR is a build-classification gate. PTR passes it; Forever 70707 \
+         and Retail 70688 are normal builds and remove the addon. Unified TOC layout does \
+         not affect `is_ptr_only()`"
     );
 }
 }
@@ -280,7 +280,7 @@ fn blizzard_ptr_feedback_glue_lists_five_files_with_cross_addon_parent_paths() {
 }
 
 #[test]
-fn blizzard_ptr_feedback_glue_does_not_appear_in_eager_discovery() {
+fn blizzard_ptr_feedback_glue_appears_only_on_ptr_glue_discovery() {
     let ui = blizzard_ui_dir();
 
     for screen in [
@@ -293,15 +293,14 @@ fn blizzard_ptr_feedback_glue_does_not_appear_in_eager_discovery() {
         let found = addons
             .iter()
             .any(|(name, _)| name == "Blizzard_PTRFeedbackGlue");
-        assert!(
-            !found,
-            "Blizzard_PTRFeedbackGlue must NOT appear in eager discovery for \
-             {screen:?} — even though `## AllowLoad: Glue` would otherwise route \
-             this addon to the 3 glue screens, the loader filter at \
-             src/loader/mod.rs:527 also rejects PTR-only addons. The two gates \
-             stack: the addon is hidden from BOTH the eager pool AND the LOD pool \
-             on every screen of a live client. Asymmetric exposure: \
-             `discover_all_blizzard_addons` does not apply this filter"
+        let is_glue_screen = screen != ScreenKind::Game;
+        let expected = is_glue_screen
+            && wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::Ptr;
+        assert_eq!(
+            found, expected,
+            "R26: PTR build classification passes OnlyBetaAndPTR on Glue screens; \
+             normal builds including Forever are filtered, and AllowLoad: Glue excludes \
+             the Game screen"
         );
     }
 }

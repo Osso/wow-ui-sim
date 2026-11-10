@@ -128,15 +128,15 @@ fn blizzard_ptr_feedback_toc_marks_addon_as_ptr_and_beta_only() {
 
     assert!(
         toc.metadata.get("OnlyBetaAndPTR").map(String::as_str) == Some("1"),
-        "TOC must declare `## OnlyBetaAndPTR: 1`. The PTR Issue Reporter is a developer tool \
-         that ships with the live client tree but is gated to PTR / beta realms only"
+        "TOC must declare `## OnlyBetaAndPTR: 1`. R26 establishes that this Boolean is \
+         checked against the client build classification, not realms, portals, or CVars"
     );
     assert_eq!(
         toc.is_ptr_only(),
-        !toc_layout::unified_toc_tree(),
-        "`is_ptr_only()` gates the addon out of eager discovery on profiles that do not \
-         permit PTR-only addons; the PTR and Forever profiles admit them, so the gate is \
-         inactive there (src/toc/mod.rs permits_ptr_only)"
+        wow_ui_sim::client_profile::ACTIVE != wow_ui_sim::client_profile::ClientProfile::Ptr,
+        "R26: OnlyBetaAndPTR is a build-classification gate. PTR passes it; Forever 70707 \
+         and Retail 70688 are normal builds and remove the addon. Unified TOC layout does \
+         not affect `is_ptr_only()`"
     );
 }
 }
@@ -307,7 +307,7 @@ fn blizzard_ptr_feedback_toc_lists_six_files_in_canonical_order() {
 }
 
 #[test]
-fn blizzard_ptr_feedback_does_not_appear_in_eager_discovery() {
+fn blizzard_ptr_feedback_appears_only_on_ptr_game_discovery() {
     let ui = blizzard_ui_dir();
 
     for screen in [
@@ -320,14 +320,13 @@ fn blizzard_ptr_feedback_does_not_appear_in_eager_discovery() {
         let found = addons
             .iter()
             .any(|(name, _)| name == "Blizzard_PTRFeedback");
-        assert!(
-            !found,
-            "Blizzard_PTRFeedback must NOT appear in eager discovery for {screen:?} \
-             — `## OnlyBetaAndPTR: 1` causes `is_ptr_only()` to flip true at \
-             src/toc.rs:285-290, and the loader filters PTR-only addons out of \
-             both the eager pool AND the LOD pool at src/loader/mod.rs:527 \
-             regardless of LoadOnDemand status. The simulator emulates a live \
-             client by default — PTR-only addons stay dormant"
+        let expected = screen == ScreenKind::Game
+            && wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::Ptr;
+        assert_eq!(
+            found, expected,
+            "R26: PTR build classification passes OnlyBetaAndPTR on the Game screen; \
+             normal builds including Forever are filtered, and AllowLoad defaults to \
+             Game-only for every other screen"
         );
     }
 }
