@@ -200,6 +200,31 @@ fn expected_position(test: TestCase) -> TestCase {
         (ClientProfile::WowForever, "main_action_bar") => {
             (name, frame, 185.5, 1153.0, 562.0, 45.0, 1.0)
         }
+        (ClientProfile::Era | ClientProfile::Anniversary, "micro_menu")
+        | (ClientProfile::Era | ClientProfile::Anniversary, "micro_menu_container") => {
+            (name, frame, 840.0, 1161.0, 211.0, 37.0, 1.0)
+        }
+        (ClientProfile::Era | ClientProfile::Anniversary, "buff_frame") => {
+            (name, frame, 1013.0, 13.0, 400.0, 135.0, 1.0)
+        }
+        (ClientProfile::Era | ClientProfile::Anniversary, "debuff_frame") => {
+            (name, frame, 1118.0, 152.0, 280.0, 90.0, 1.0)
+        }
+        (ClientProfile::Era | ClientProfile::Anniversary, "main_action_bar") => {
+            (name, frame, 296.0, 1160.0, 498.0, 36.0, 1.0)
+        }
+        (ClientProfile::Era | ClientProfile::Anniversary, "status_tracking_bar") => {
+            (name, frame, 288.0, 1137.0, 1024.0, 23.0, 1.0)
+        }
+        (ClientProfile::Era | ClientProfile::Anniversary, "right_managed_container") => (
+            name,
+            "UIParentRightManagedFrameContainer",
+            1595.0,
+            192.0,
+            0.0,
+            935.0,
+            1.0,
+        ),
         (ClientProfile::Mists, "paladin_power_bar") => {
             (name, "PaladinPowerBar", 341.0, 815.0, 136.0, 39.0, 1.0)
         }
@@ -231,9 +256,7 @@ fn expected_position(test: TestCase) -> TestCase {
         | (ClientProfile::Anniversary, "raid_boss_emote_anchor") => {
             (name, "RaidBossEmoteFrame", 544.0, 252.0, 512.0, 80.0, 1.0)
         }
-        (ClientProfile::Mists, "right_managed_container")
-        | (ClientProfile::Era, "right_managed_container")
-        | (ClientProfile::Anniversary, "right_managed_container") => (
+        (ClientProfile::Mists, "right_managed_container") => (
             name,
             "UIParentRightManagedFrameContainer",
             test.2,
@@ -584,6 +607,8 @@ fn run_tests(env: &WowLuaEnv) -> (usize, usize) {
 
     let expected_action_button_x = match wow_ui_sim::client_profile::ACTIVE {
         wow_ui_sim::client_profile::ClientProfile::WowForever => 185.5,
+        wow_ui_sim::client_profile::ClientProfile::Era
+        | wow_ui_sim::client_profile::ClientProfile::Anniversary => 296.0,
         _ => 519.0,
     };
     let result = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
