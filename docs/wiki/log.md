@@ -1,3 +1,7 @@
+## [2026-11-09] correction | PTR 12.1.7 FrameXML removed-symbol runtime rows
+
+Corrected the [Patch 12.1 FrameXML symbol inventory](investigations/patch-12-1-framexml-symbol-inventory.md): the full-load PTR 12.1.7 probe found 93 of 99 historical removed-symbol paths not callable, four `RaidNotice_*` aliases still published by `Blizzard_DeprecatedRaidWarning`, and `getglobal`/`setglobal` as Lua built-ins. These are simulator-runtime observations, not proof of native absence; the acceptance test now checks only the four current source publishers.
+
 ## [2026-11-08] investigation | GUI CASC cache preparation
 
 Recorded that the selected Era encoding key was absent from the inspected supported-format local indices. The [investigation](investigations/gui-casc-cache-preparation.md) separates that install observation from resolver behavior and records deterministic fixture coverage plus the `optional-tests` live smoke.
@@ -3557,3 +3561,11 @@ Updated [rendering pipeline](systems/rendering-pipeline.md#deferred-text-and-nes
 with the lower-text/opaque-modal regression, same-level hoisting boundary,
 single emission of nested wrapper regions, and Lua-to-GPU image coverage.
 Render bucket tests also cover modal hide/show and cache repair.
+
+## 2026-11-09 — PTR 12.1 evidence reconciliation
+
+VERIFIED (full explicit PTR runtime plus source-token scan): 171 of 175 historical added candidates are callable and source-spelled; exact addon owners are UNVERIFIED. Four candidates remain unpublished, which does not establish native source absence.
+
+VERIFIED (full-LoD runtime): 93 of 99 removed names previously marked vendor-present are non-callable, four RaidNotice aliases are callable, and `getglobal`/`setglobal` are Lua compatibility functions. The 93 runtime misses do not establish native absence.
+
+VERIFIED (strict lifecycle probe): global CVar wrapper identities were unchanged at `BAG_UPDATE_DELAYED`. UNVERIFIED: the strict-removal timing requirement remains open; the separate native-absence test does not prove lifecycle timing.

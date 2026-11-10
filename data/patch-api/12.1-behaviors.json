@@ -671,7 +671,7 @@
           "kind": "test",
           "reference": "patch-tests/patch_12_1/aura_container.rs::aura_container_group_assigns_and_releases_frames_by_aura_instance",
           "summary": "Aura groups assign aura data to frames by auraInstanceID and preserve retained frame ownership while removed frames are released.",
-          "source_hash": "169ed21b32b483984efeb944b0595dcd59e204be55b96908bf0d434cdbd9538e"
+          "source_hash": "3305711b1e51c8c9d70c5dcc6a8db0f77e8f2afb8fee1e9fae21d7a60bd0aa6d"
         }
       ],
       "tests": [
@@ -695,7 +695,7 @@
           "kind": "test",
           "reference": "patch-tests/patch_12_1/aura_container.rs::aura_container_filters_helpful_harmful_and_player_auras",
           "summary": "Aura groups select HELPFUL, HARMFUL, and PLAYER aura subsets through compatible filter combinations.",
-          "source_hash": "169ed21b32b483984efeb944b0595dcd59e204be55b96908bf0d434cdbd9538e"
+          "source_hash": "3305711b1e51c8c9d70c5dcc6a8db0f77e8f2afb8fee1e9fae21d7a60bd0aa6d"
         }
       ],
       "tests": [
@@ -719,7 +719,7 @@
           "kind": "test",
           "reference": "patch-tests/patch_12_1/aura_container.rs::aura_container_honors_configured_sort_order",
           "summary": "Aura groups honor a configured comparator ordering; this does not claim the retail default comparator.",
-          "source_hash": "169ed21b32b483984efeb944b0595dcd59e204be55b96908bf0d434cdbd9538e"
+          "source_hash": "3305711b1e51c8c9d70c5dcc6a8db0f77e8f2afb8fee1e9fae21d7a60bd0aa6d"
         }
       ],
       "tests": [
@@ -743,7 +743,7 @@
           "kind": "test",
           "reference": "patch-tests/patch_12_1/aura_container.rs::aura_container_selects_public_private_and_edit_mode_partitions",
           "summary": "Aura containers select public-only, public-and-private, and edit-mode aura source partitions compatibly.",
-          "source_hash": "169ed21b32b483984efeb944b0595dcd59e204be55b96908bf0d434cdbd9538e"
+          "source_hash": "3305711b1e51c8c9d70c5dcc6a8db0f77e8f2afb8fee1e9fae21d7a60bd0aa6d"
         }
       ],
       "tests": [
@@ -767,7 +767,7 @@
           "kind": "test",
           "reference": "patch-tests/patch_12_1/aura_container.rs::aura_container_group_assigns_and_releases_frames_by_aura_instance",
           "summary": "Aura groups acquire, release, and reacquire frames as auraInstanceID entries are removed and re-added.",
-          "source_hash": "169ed21b32b483984efeb944b0595dcd59e204be55b96908bf0d434cdbd9538e"
+          "source_hash": "3305711b1e51c8c9d70c5dcc6a8db0f77e8f2afb8fee1e9fae21d7a60bd0aa6d"
         }
       ],
       "tests": [
@@ -815,7 +815,7 @@
           "kind": "source",
           "reference": "patch-tests/patch_12_1/aura_container.rs",
           "summary": "Public/private/EditMode mechanics are covered; secret exposure, taint, and error behavior are unknown.",
-          "source_hash": "169ed21b32b483984efeb944b0595dcd59e204be55b96908bf0d434cdbd9538e"
+          "source_hash": "3305711b1e51c8c9d70c5dcc6a8db0f77e8f2afb8fee1e9fae21d7a60bd0aa6d"
         }
       ],
       "tests": [],
@@ -1469,43 +1469,41 @@
       "id": "changed:Patch12_1.StrictRemoval.PreStartupVisibility",
       "symbol": "Patch12_1.StrictRemoval.PreStartupVisibility",
       "change": "changed",
-      "status": "best-effort",
-      "resolution": "behavioral",
+      "status": "evidence-required",
+      "resolution": "unsafe",
       "owner": "Strict removal timing",
       "load_addon": null,
       "evidence": [
         {
-          "kind": "test",
-          "reference": "patch-tests/patch_12_1/strict_removal_timing.rs::strict_removal_timing_retires_after_world_handlers_without_rewrapping",
-          "summary": "Simulator policy: existing compatibility publications and CVar callable identities survive actual addon loading and all first PLAYER_ENTERING_WORLD handlers; retirement precedes later startup events and does not rewrap on repeated cleanup/world entry. BATTLETAG_INVITE_SHOW retains its distinct Blizzard-loader-only registration exception. Synthetic addon fixture exercises the real loader/dispatcher, not full Blizzard UI or native retirement timing.",
-          "source_hash": "902af53ad54fd1670a36288dacea270519878fc7bc2843ac9b879769f756bb41"
+          "kind": "source",
+          "reference": "src/startup.rs",
+          "summary": "The startup sequence fires BAG_UPDATE_DELAYED before its final post-event workaround step; this source does not prove CVar wrapper identities change at that event.",
+          "source_hash": "ce964bacdaeb4a33bd7f281f404317b6dc90e6977bfacb92ddd328caebed5a8e"
         },
         {
           "kind": "source",
           "reference": "docs/specs/strict-removal-timing.md",
-          "summary": "Simulator policy: existing compatibility publications and CVar callable identities survive actual addon loading and all first PLAYER_ENTERING_WORLD handlers; retirement precedes later startup events and does not rewrap on repeated cleanup/world entry. BATTLETAG_INVITE_SHOW retains its distinct Blizzard-loader-only registration exception. Synthetic addon fixture exercises the real loader/dispatcher, not full Blizzard UI or native retirement timing.",
+          "summary": "The tracked spec states the intended simulator timing policy; the current merged-HEAD lifecycle probe does not establish it.",
           "source_hash": "75086bde97c5d5e80c857dd852e3c7da2ced41d451ce0716068ed36f274c9557"
         },
         {
           "kind": "source",
           "reference": "src/lua_api/env_events.rs",
-          "summary": "Simulator policy: existing compatibility publications and CVar callable identities survive actual addon loading and all first PLAYER_ENTERING_WORLD handlers; retirement precedes later startup events and does not rewrap on repeated cleanup/world entry. BATTLETAG_INVITE_SHOW retains its distinct Blizzard-loader-only registration exception. Synthetic addon fixture exercises the real loader/dispatcher, not full Blizzard UI or native retirement timing.",
+          "summary": "The dispatcher applies post-event workarounds after PLAYER_ENTERING_WORLD listeners; this call alone does not prove CVar wrapper retirement.",
           "source_hash": "c49d561881d9d3af2d35424abab70c0b613d2c97e1cfd5413a40a0fafcda1982"
         },
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "summary": "Simulator policy: existing compatibility publications and CVar callable identities survive actual addon loading and all first PLAYER_ENTERING_WORLD handlers; retirement precedes later startup events and does not rewrap on repeated cleanup/world entry. BATTLETAG_INVITE_SHOW retains its distinct Blizzard-loader-only registration exception. Synthetic addon fixture exercises the real loader/dispatcher, not full Blizzard UI or native retirement timing.",
+          "summary": "The PTR post-load bootstrap restores compatibility globals and enum data; no wrapper-retirement trigger is established here.",
           "source_hash": "68779a4d9701a65a6acfe3652836889d16b8b965854cd5d732ce360d03437956"
         }
       ],
-      "tests": [
-        "patch-tests/patch_12_1/strict_removal_timing.rs::strict_removal_timing_retires_after_world_handlers_without_rewrapping"
-      ],
+      "tests": [],
       "assertions": [],
       "commit": "960877d1c",
       "approval_id": null,
-      "notes": "Simulator policy: existing compatibility publications and CVar callable identities survive actual addon loading and all first PLAYER_ENTERING_WORLD handlers; retirement precedes later startup events and does not rewrap on repeated cleanup/world entry. BATTLETAG_INVITE_SHOW retains its distinct Blizzard-loader-only registration exception. Synthetic addon fixture exercises the real loader/dispatcher, not full Blizzard UI or native retirement timing."
+      "notes": "Needs a passing runtime proof: the lifecycle probe observed global CVar wrapper identities unchanged at BAG_UPDATE_DELAYED. The native-absence test does not prove this lifecycle policy; no simulator behavior change is made."
     },
     {
       "id": "changed:Patch12_1.StrictRemoval.BlizzardLoadCompatibility",
@@ -1519,8 +1517,8 @@
         {
           "kind": "test",
           "reference": "patch-tests/patch_12_1/remaining_observations.rs::remaining_symbols_match_observed_publications",
-          "summary": "The existing all-LoD PTR load leaves representative compatibility functions callable and enum fields available before strict-removal activation.",
-          "source_hash": "ea7558c745974bbcdf70b92fa3991f79eb2f98be0806cb522a8d53acf1de4091"
+          "summary": "Full-LoD PTR loading confirms representative compatibility functions in this probe are callable before startup events. This test does not prove enum-field availability or post-event retirement.",
+          "source_hash": "0966b8bfd5f93196e25827b94b5953deefeb897303ffdfb7085ef5dc20494c6b"
         }
       ],
       "tests": [
@@ -1529,7 +1527,7 @@
       "assertions": [],
       "commit": "9fa01d4f1",
       "approval_id": null,
-      "notes": "The complete pinned PTR addon closure loads while representative removed compatibility functions and enum fields remain callable before the post-event strict-removal boundary."
+      "notes": "Full-LoD PTR loading confirms representative compatibility functions in this probe are callable before startup events. This test does not prove enum-field availability or post-event retirement."
     },
     {
       "id": "changed:Patch12_1.StrictRemoval.PostStartupHiding",
@@ -1559,43 +1557,41 @@
       "id": "changed:Patch12_1.StrictRemoval.WrapperTiming",
       "symbol": "Patch12_1.StrictRemoval.WrapperTiming",
       "change": "changed",
-      "status": "best-effort",
-      "resolution": "behavioral",
+      "status": "evidence-required",
+      "resolution": "unsafe",
       "owner": "Strict removal timing",
       "load_addon": null,
       "evidence": [
         {
-          "kind": "test",
-          "reference": "patch-tests/patch_12_1/strict_removal_timing.rs::strict_removal_timing_retires_after_world_handlers_without_rewrapping",
-          "summary": "Simulator policy: existing compatibility publications and CVar callable identities survive actual addon loading and all first PLAYER_ENTERING_WORLD handlers; retirement precedes later startup events and does not rewrap on repeated cleanup/world entry. BATTLETAG_INVITE_SHOW retains its distinct Blizzard-loader-only registration exception. Synthetic addon fixture exercises the real loader/dispatcher, not full Blizzard UI or native retirement timing.",
-          "source_hash": "902af53ad54fd1670a36288dacea270519878fc7bc2843ac9b879769f756bb41"
+          "kind": "source",
+          "reference": "src/startup.rs",
+          "summary": "The startup sequence fires BAG_UPDATE_DELAYED before its final post-event workaround step; this source does not prove CVar wrapper identities change at that event.",
+          "source_hash": "ce964bacdaeb4a33bd7f281f404317b6dc90e6977bfacb92ddd328caebed5a8e"
         },
         {
           "kind": "source",
           "reference": "docs/specs/strict-removal-timing.md",
-          "summary": "Simulator policy: existing compatibility publications and CVar callable identities survive actual addon loading and all first PLAYER_ENTERING_WORLD handlers; retirement precedes later startup events and does not rewrap on repeated cleanup/world entry. BATTLETAG_INVITE_SHOW retains its distinct Blizzard-loader-only registration exception. Synthetic addon fixture exercises the real loader/dispatcher, not full Blizzard UI or native retirement timing.",
+          "summary": "The tracked spec states the intended simulator timing policy; the current merged-HEAD lifecycle probe does not establish it.",
           "source_hash": "75086bde97c5d5e80c857dd852e3c7da2ced41d451ce0716068ed36f274c9557"
         },
         {
           "kind": "source",
           "reference": "src/lua_api/env_events.rs",
-          "summary": "Simulator policy: existing compatibility publications and CVar callable identities survive actual addon loading and all first PLAYER_ENTERING_WORLD handlers; retirement precedes later startup events and does not rewrap on repeated cleanup/world entry. BATTLETAG_INVITE_SHOW retains its distinct Blizzard-loader-only registration exception. Synthetic addon fixture exercises the real loader/dispatcher, not full Blizzard UI or native retirement timing.",
+          "summary": "The dispatcher applies post-event workarounds after PLAYER_ENTERING_WORLD listeners; this call alone does not prove CVar wrapper retirement.",
           "source_hash": "c49d561881d9d3af2d35424abab70c0b613d2c97e1cfd5413a40a0fafcda1982"
         },
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "summary": "Simulator policy: existing compatibility publications and CVar callable identities survive actual addon loading and all first PLAYER_ENTERING_WORLD handlers; retirement precedes later startup events and does not rewrap on repeated cleanup/world entry. BATTLETAG_INVITE_SHOW retains its distinct Blizzard-loader-only registration exception. Synthetic addon fixture exercises the real loader/dispatcher, not full Blizzard UI or native retirement timing.",
+          "summary": "The PTR post-load bootstrap restores compatibility globals and enum data; no wrapper-retirement trigger is established here.",
           "source_hash": "68779a4d9701a65a6acfe3652836889d16b8b965854cd5d732ce360d03437956"
         }
       ],
-      "tests": [
-        "patch-tests/patch_12_1/strict_removal_timing.rs::strict_removal_timing_retires_after_world_handlers_without_rewrapping"
-      ],
+      "tests": [],
       "assertions": [],
       "commit": "960877d1c",
       "approval_id": null,
-      "notes": "Simulator policy: existing compatibility publications and CVar callable identities survive actual addon loading and all first PLAYER_ENTERING_WORLD handlers; retirement precedes later startup events and does not rewrap on repeated cleanup/world entry. BATTLETAG_INVITE_SHOW retains its distinct Blizzard-loader-only registration exception. Synthetic addon fixture exercises the real loader/dispatcher, not full Blizzard UI or native retirement timing."
+      "notes": "Needs a passing runtime proof: the lifecycle probe observed global CVar wrapper identities unchanged at BAG_UPDATE_DELAYED. The native-absence test does not prove this lifecycle policy; no simulator behavior change is made."
     }
   ]
 }
