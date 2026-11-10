@@ -17,7 +17,7 @@ The Mists legacy backpack-currency globals share watched flags with `C_CurrencyI
 ## Implementation inventory
 
 - `src/c_api/item_spell/c_currency.rs` — Mists watch-flag mutation, list projection and four-value legacy getter.
-- `src/c_api/currency_list.rs` — watched overrides shared with the currency-list projection.
+- `src/lua_api/state_types/collections.rs` — per-currency `is_show_in_backpack` state projected by the currency API.
 - `src/lua_api/env_init/mod.rs` — registers the Mists legacy globals after profile bootstrap.
 
 ## Tests asserting this spec

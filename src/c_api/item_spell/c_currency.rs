@@ -480,11 +480,18 @@ fn c_currency_get_list_info(state: &mut LuaState) -> LuaResult<u32> {
     );
     write_currency_row_display_fields(state, info, &display);
     write_currency_list_status_fields(state, info, &entry);
-    #[cfg(any(feature = "client-retail", feature = "client-mists"))]
+    #[cfg(feature = "client-retail")]
     {
         let watched = borrow_state(state)?.currency_list.is_watched(&entry);
         table_set_static(state, info, "isShowInBackpack", Val::Bool(watched));
     }
+    #[cfg(feature = "client-mists")]
+    table_set_static(
+        state,
+        info,
+        "isShowInBackpack",
+        Val::Bool(display.is_show_in_backpack),
+    );
     #[cfg(feature = "client-retail")]
     {
         table_set_static(
@@ -785,6 +792,7 @@ fn update_currency_watch(state: &LuaState, currency_id: i32, watched: bool) -> L
         return Ok(());
     };
     info.is_show_in_backpack = watched;
+    #[cfg(feature = "client-retail")]
     sim.currency_list.set_watched(currency_id, watched);
     Ok(())
 }
@@ -793,7 +801,7 @@ fn read_backpack_currency_entry(
     state: &LuaState,
     index: i32,
 ) -> LuaResult<Option<&'static currency_data::CurrencyEntry>> {
-    #[cfg(any(feature = "client-retail", feature = "client-mists"))]
+    #[cfg(feature = "client-retail")]
     {
         let sim = borrow_state(state)?;
         let offset = match usize::try_from(index.saturating_sub(1)) {
@@ -803,6 +811,24 @@ fn read_backpack_currency_entry(
         Ok((1..=currency_data::currency_list_size())
             .filter_map(currency_data::get_currency_list_entry)
             .filter(|entry| !entry.is_header && sim.currency_list.is_watched(entry))
+            .nth(offset))
+    }
+    #[cfg(feature = "client-mists")]
+    {
+        let sim = borrow_state(state)?;
+        let offset = match usize::try_from(index.saturating_sub(1)) {
+            Ok(offset) if index > 0 => offset,
+            _ => return Ok(None),
+        };
+        Ok((1..=currency_data::currency_list_size())
+            .filter_map(currency_data::get_currency_list_entry)
+            .filter(|entry| {
+                !entry.is_header
+                    && sim
+                        .currency_info
+                        .get(&entry.currency_id)
+                        .is_some_and(|info| info.is_show_in_backpack)
+            })
             .nth(offset))
     }
     #[cfg(not(any(feature = "client-retail", feature = "client-mists")))]

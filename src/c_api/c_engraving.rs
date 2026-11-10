@@ -55,7 +55,8 @@ fn is_engraving_enabled(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn get_mode_enabled(state: &mut LuaState) -> LuaResult<u32> {
-    state.push(Val::Bool(borrow_state(state)?.engraving.mode_enabled));
+    let enabled = borrow_state(state)?.engraving.mode_enabled;
+    state.push(Val::Bool(enabled));
     Ok(1)
 }
 

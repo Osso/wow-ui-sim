@@ -153,22 +153,19 @@ fn push_faction_info(state: &mut LuaState, row: Val) -> u32 {
         4.0
     };
     state.push(Val::Num(standing_id));
-    state.push(Val::Num(
-        number_field(state, row, "currentReactionThreshold")
-            .or_else(|| number_field(state, row, "bottom"))
-            .unwrap_or(0.0),
-    ));
-    state.push(Val::Num(
-        number_field(state, row, "nextReactionThreshold")
-            .or_else(|| number_field(state, row, "topValue"))
-            .or_else(|| number_field(state, row, "top"))
-            .unwrap_or(0.0),
-    ));
-    state.push(Val::Num(
-        number_field(state, row, "currentStanding")
-            .or_else(|| number_field(state, row, "standing"))
-            .unwrap_or(0.0),
-    ));
+    let bar_min = number_field(state, row, "currentReactionThreshold")
+        .or_else(|| number_field(state, row, "bottom"))
+        .unwrap_or(0.0);
+    let bar_max = number_field(state, row, "nextReactionThreshold")
+        .or_else(|| number_field(state, row, "topValue"))
+        .or_else(|| number_field(state, row, "top"))
+        .unwrap_or(0.0);
+    let bar_value = number_field(state, row, "currentStanding")
+        .or_else(|| number_field(state, row, "standing"))
+        .unwrap_or(0.0);
+    state.push(Val::Num(bar_min));
+    state.push(Val::Num(bar_max));
+    state.push(Val::Num(bar_value));
 
     let is_header = is_header(state, row);
     let at_war = boolean_field(state, row, "atWarWith");
