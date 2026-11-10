@@ -4,11 +4,11 @@ This change fixes texture colours, gradients and slice rendering in the renderer
 
 ## What it must do
 
-- [ ] Follow the exact RGB and image-tint contract in [shader colour output](shader-colour-roundtrip.md).
-- [ ] `SetGradient` multiplies image texels and vertex tint. Vertical min is bottom/max is top; horizontal min is left/max is right.
-- [ ] `SetTextureSliceMargins(left, top, right, bottom)` uses fixed pixel-size corners. Slice mode 0 stretches sides and centre; mode 1 tiles them. `ClearTextureSlice` restores single-quad rendering.
-- [ ] `SetTextureSliceMode` values follow `UITextureSliceMode`: Stretched is 0, Tiled is 1. The default is Stretched.
-- [ ] `OnGamePadButtonDown` and `OnGamePadButtonUp` register on Frame and Button for profiles whose pinned UI.xsd declares them. Registration does not create a gamepad input source.
+- [x] Follow the exact RGB and image-tint contract in [shader colour output](shader-colour-roundtrip.md).
+- [x] `SetGradient` multiplies image texels and vertex tint. Vertical min is bottom/max is top; horizontal min is left/max is right.
+- [x] `SetTextureSliceMargins(left, top, right, bottom)` uses fixed pixel-size corners. Slice mode 0 stretches sides and centre; mode 1 tiles them. `ClearTextureSlice` restores single-quad rendering.
+- [x] `SetTextureSliceMode` values follow `UITextureSliceMode`: Stretched is 0, Tiled is 1. The default is Stretched.
+- [x] `OnGamePadButtonDown` and `OnGamePadButtonUp` register on Frame and Button for profiles whose pinned UI.xsd declares them. Registration does not create a gamepad input source.
 
 ## How it works
 
@@ -17,7 +17,7 @@ This change fixes texture colours, gradients and slice rendering in the renderer
 
 ## Implementation inventory
 
-- `src/render/shader/quad.wgsl` — applies UI display RGB and image tint in the sRGB-target path.
+- `src/render/shader/quad.wgsl` — applies UI display RGB and image tint in the sRGB-target path, including unorm glyph samples.
 - `src/render/shader/pipeline.rs` — selects color transfer from the output texture format.
 - `src/render/headless_colour_tests.rs` — checks production GPU byte readback.
 - `src/iced_app/quad_builders_textures.rs` — applies image gradients and emits manual nine-slice quads.
@@ -34,8 +34,8 @@ This change fixes texture colours, gradients and slice rendering in the renderer
 
 ## Known gaps (current cycle)
 
-- [ ] Run the new and updated tests on Retail and Forever, including the extra slice cases.
-- [ ] Complete the requested profile, integration-baseline and manifest checks; then mark the verified contract bullets complete.
+- [x] Run the new and updated tests on Retail and Forever, including the extra slice cases and glyph RGB/alpha readback.
+- [x] Complete the requested profile, integration-baseline and manifest checks; the failure-name deltas match master.
 
 ## Out of scope
 
