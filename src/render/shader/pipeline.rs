@@ -13,10 +13,12 @@ use wgpu::util::DeviceExt;
 struct Uniforms {
     /// Projection matrix (orthographic, screen coords to clip space).
     projection: [[f32; 4]; 4],
+    /// Target color transfer mode and uniform-layout padding.
+    color_space: [u32; 4],
 }
 
 impl Uniforms {
-    fn new(width: f32, height: f32) -> Self {
+    fn new(width: f32, height: f32, output_is_srgb: bool) -> Self {
         // Orthographic projection: (0,0) top-left, (width,height) bottom-right
         // Maps to clip space (-1,-1) to (1,1), with Y flipped
         let projection = [
@@ -25,7 +27,10 @@ impl Uniforms {
             [0.0, 0.0, 1.0, 0.0],
             [-1.0, 1.0, 0.0, 1.0],
         ];
-        Self { projection }
+        Self {
+            projection,
+            color_space: [u32::from(output_is_srgb), 0, 0, 0],
+        }
     }
 }
 
@@ -55,8 +60,8 @@ pub struct WowUiPipeline {
     uniform_bind_group: wgpu::BindGroup,
     /// Per-strata GPU buffers (9 strata + 1 overlay).
     strata_buffers: Vec<StrataGpuBuffer>,
-    /// Texture format (stored for potential pipeline recreation).
-    _format: wgpu::TextureFormat,
+    /// Whether UI RGB values need conversion for this output target.
+    output_is_srgb: bool,
     /// Current viewport size.
     viewport_size: (u32, u32),
     /// GPU texture atlas for texture storage.
@@ -211,7 +216,7 @@ impl WowUiPipeline {
         let height = bounds.height as u32;
         if self.viewport_size != (width, height) {
             self.viewport_size = (width, height);
-            let uniforms = Uniforms::new(bounds.width, bounds.height);
+            let uniforms = Uniforms::new(bounds.width, bounds.height, self.output_is_srgb);
             queue.write_buffer(&self.uniform_buffer, 0, bytemuck::cast_slice(&[uniforms]));
         }
     }
@@ -440,8 +445,9 @@ impl shader::Pipeline for WowUiPipeline {
     fn new(device: &wgpu::Device, _queue: &wgpu::Queue, format: wgpu::TextureFormat) -> Self {
         let texture_atlas = GpuTextureAtlas::new(device);
 
+        let output_is_srgb = format.is_srgb();
         let (uniform_buffer, uniform_bind_group_layout, uniform_bind_group) =
-            create_uniform_resources(device);
+            create_uniform_resources(device, output_is_srgb);
 
         let pipeline = Self::create_pipeline(
             device,
@@ -459,7 +465,7 @@ impl shader::Pipeline for WowUiPipeline {
             uniform_buffer,
             uniform_bind_group,
             strata_buffers,
-            _format: format,
+            output_is_srgb,
             viewport_size: (0, 0),
             texture_atlas,
         }
@@ -469,8 +475,9 @@ impl shader::Pipeline for WowUiPipeline {
 /// Create uniform buffer, bind group layout, and bind group for the projection matrix.
 fn create_uniform_resources(
     device: &wgpu::Device,
+    output_is_srgb: bool,
 ) -> (wgpu::Buffer, wgpu::BindGroupLayout, wgpu::BindGroup) {
-    let uniforms = Uniforms::new(1920.0, 1080.0);
+    let uniforms = Uniforms::new(1920.0, 1080.0, output_is_srgb);
     let uniform_buffer = device.create_buffer_init(&wgpu::util::BufferInitDescriptor {
         label: Some("WoW UI Uniform Buffer"),
         contents: bytemuck::cast_slice(&[uniforms]),
@@ -481,7 +488,7 @@ fn create_uniform_resources(
         label: Some("WoW UI Uniform Bind Group Layout"),
         entries: &[wgpu::BindGroupLayoutEntry {
             binding: 0,
-            visibility: wgpu::ShaderStages::VERTEX,
+            visibility: wgpu::ShaderStages::VERTEX_FRAGMENT,
             ty: wgpu::BindingType::Buffer {
                 ty: wgpu::BufferBindingType::Uniform,
                 has_dynamic_offset: false,

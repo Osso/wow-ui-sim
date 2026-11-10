@@ -10,6 +10,7 @@
 // Uniforms (group 0)
 struct Uniforms {
     projection: mat4x4<f32>,
+    color_space: vec4<u32>,
 }
 
 @group(0) @binding(0)
@@ -95,6 +96,33 @@ fn vs_main(in: VertexInput) -> VertexOutput {
 const BLEND_ALPHA: u32 = 0u;
 const BLEND_ADDITIVE: u32 = 1u;
 
+fn srgb_to_linear(color: vec3<f32>) -> vec3<f32> {
+    let low = color / 12.92;
+    let high = pow(max((color + 0.055) / 1.055, vec3<f32>(0.0)), vec3<f32>(2.4));
+    return select(high, low, color <= vec3<f32>(0.04045));
+}
+
+fn linear_to_srgb(color: vec3<f32>) -> vec3<f32> {
+    let low = color * 12.92;
+    let high = 1.055 * pow(max(color, vec3<f32>(0.0)), vec3<f32>(1.0 / 2.4)) - 0.055;
+    return select(high, low, color <= vec3<f32>(0.0031308));
+}
+
+fn modulate_texture(tex_color: vec4<f32>, tint: vec4<f32>) -> vec4<f32> {
+    if uniforms.color_space.x != 0u {
+        let display_color = linear_to_srgb(tex_color.rgb) * tint.rgb;
+        return vec4<f32>(srgb_to_linear(display_color), tex_color.a * tint.a);
+    }
+    return tex_color * tint;
+}
+
+fn prepare_solid_color(color: vec4<f32>) -> vec4<f32> {
+    if uniforms.color_space.x != 0u {
+        return vec4<f32>(srgb_to_linear(color.rgb), color.a);
+    }
+    return color;
+}
+
 // Sample from the appropriate tier based on tex_index
 // tex_index 0-4: tiered RGBA atlases, 5: glyph atlas, 6: BC1 atlas, 7: BC3 atlas
 // UV coordinates are already transformed to the correct sub-region
@@ -141,20 +169,20 @@ fn fs_main(in: VertexOutput) -> @location(0) vec4<f32> {
 
     if (in.flags & FLAG_COOLDOWN_SWIPE) != 0u {
         if in.tex_index < 0 {
-            color = in.color;
+            color = prepare_solid_color(in.color);
         } else {
             // Cooldown swipes use mask_tex_coords as sample UVs because tex_coords.x
             // is reserved for the radial progress value.
             let tex_color = sample_tiered_texture(in.tex_index, in.mask_tex_coords);
-            color = tex_color * in.color;
+            color = modulate_texture(tex_color, in.color);
         }
     } else if in.tex_index < 0 {
         // Solid color or pending texture (-1 = solid, -2 = pending)
-        color = in.color;
+        color = prepare_solid_color(in.color);
     } else {
         // Textured quad - sample from the appropriate tier atlas
         let tex_color = sample_tiered_texture(in.tex_index, in.tex_coords);
-        color = tex_color * in.color;
+        color = modulate_texture(tex_color, in.color);
     }
 
     let blend_mode = in.flags & 0xFFu;
