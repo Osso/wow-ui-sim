@@ -571,6 +571,7 @@ fn ptr_store_status_change_rebuilds_menu_shop_button() {
 }
 
 post_wrath_ui_fixture! {
+#[cfg(any(feature = "client-ptr", feature = "client-retail"))]
 #[test]
 fn test_legacy_store_toggle_reopens_game_menu_after_store_closes() {
     test_timeout! {
