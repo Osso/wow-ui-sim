@@ -144,7 +144,7 @@ pub(crate) fn register_interaction_tables(state: &mut LuaState) -> LuaResult<()>
     ) {
         super::c_log::register_error_sink(state)?;
     }
-    #[cfg(feature = "retail-12-0-5")]
+    #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
     super::c_scenario_info::register(state)?;
     #[cfg(feature = "client-retail")]
     super::c_scenario_bonus::register(state)?;

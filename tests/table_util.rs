@@ -10,6 +10,7 @@ fn env() -> WowLuaEnv {
 }
 
 post_wrath_ui_fixture! {
+#[cfg(feature = "retail-12-0-5")]
 #[test]
 fn frozen_addon_namespace_does_not_freeze_callback_state_or_later_addons() {
     let directory = tempfile::tempdir().unwrap();

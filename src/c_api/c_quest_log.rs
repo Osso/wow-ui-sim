@@ -45,18 +45,20 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
         "GetQuestAdditionalHighlights",
         additional_highlights,
     )?;
+    // Retail/PTR/Forever QuestLogDocumentation.lua declares this query; user-approved default.
+    #[cfg(any(
+        feature = "client-retail",
+        feature = "client-ptr",
+        feature = "client-wowforever"
+    ))]
+    table_set_rust_fn_static(state, namespace, "IsAccountQuest", is_account_quest)?;
     #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
-    {
-        let namespace = ensure_namespace(state, "C_QuestLog")?;
-        // QuestLogDocumentation.lua:701 Retail, :719 PTR; user-approved default.
-        table_set_rust_fn_static(state, namespace, "IsAccountQuest", is_account_quest)?;
-        table_set_rust_fn_static(
-            state,
-            namespace,
-            "QuestCanHaveWarModeBonus",
-            quest_can_have_war_mode_bonus,
-        )?;
-    }
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "QuestCanHaveWarModeBonus",
+        quest_can_have_war_mode_bonus,
+    )?;
     // Retail/PTR/Forever QuestLogDocumentation.lua:380-392 declares this query.
     if matches!(
         ACTIVE,
@@ -124,7 +126,11 @@ fn register_forever_queries(state: &mut LuaState) -> LuaResult<()> {
     Ok(())
 }
 
-#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
 fn is_account_quest(state: &mut LuaState) -> LuaResult<u32> {
     let id = validate_supplied_relation_id(stack_val(state, 1), "questID must be a number")?;
     // User-approved default, not native evidence; supplied quest data takes precedence.
