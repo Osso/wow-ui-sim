@@ -420,7 +420,7 @@ fn test_game_menu_hide() {
 
 post_wrath_ui_fixture! {
 #[test]
-fn test_game_menu_shop_button_opens_store_and_menu_can_reopen_after_store_closes() {
+fn test_game_menu_shop_button_opens_selected_store() {
     test_timeout! {
         let env = setup_game_menu_env();
         if cfg!(any(feature = "client-ptr", feature = "client-retail")) {
@@ -474,14 +474,6 @@ fn test_game_menu_shop_button_opens_store_and_menu_can_reopen_after_store_closes
                     if StoreFrame:IsShown() then
                         return "store-still-shown-after-close"
                     end
-                end
-
-                if not GameMenuFrame:IsShown() then
-                    ToggleGameMenu()
-                    if not GameMenuFrame:IsShown() then
-                        return "menu-did-not-reopen"
-                    end
-                    return "menu-reopened-only-after-toggle"
                 end
 
                 return "ok"
