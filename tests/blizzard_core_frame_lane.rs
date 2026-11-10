@@ -172,32 +172,52 @@ fn lane_dep_edges_pin_canonical_chain() {
     );
 
     let frame_xml_deps = frame_xml.dependencies();
-    let expected_frame_xml_deps = [
-        "Blizzard_ObjectAPI",
-        "Blizzard_FrameXMLBase",
-        "Blizzard_UIErrorsFrame",
-        "Blizzard_UIParentPanelManager",
-        "Blizzard_SettingsDefinitions_Frame",
-        "Blizzard_ItemButton",
-        "Blizzard_FrameXMLUtil",
-        "Blizzard_RaidWarning",
-        "Blizzard_UIPanelTemplates",
-        "Blizzard_GameTooltip",
-        "Blizzard_MoneyFrame",
-        "Blizzard_Colors",
-        "Blizzard_TransmogShared",
-        "Blizzard_LFGUtil",
-        "Blizzard_ManagedFrameSystem",
-    ];
+    let expected_frame_xml_deps: &[&str] = if cfg!(feature = "client-wowforever") {
+        // Forever's FrameXML TOC line 19 admits the mainline soft cursor dependency.
+        &[
+            "Blizzard_ObjectAPI",
+            "Blizzard_FrameXMLBase",
+            "Blizzard_UIErrorsFrame",
+            "Blizzard_UIParentPanelManager",
+            "Blizzard_SettingsDefinitions_Frame",
+            "Blizzard_ItemButton",
+            "Blizzard_FrameXMLUtil",
+            "Blizzard_RaidWarning",
+            "Blizzard_UIPanelTemplates",
+            "Blizzard_GameTooltip",
+            "Blizzard_MoneyFrame",
+            "Blizzard_Colors",
+            "Blizzard_TransmogShared",
+            "Blizzard_LFGUtil",
+            "Blizzard_ManagedFrameSystem",
+            "Blizzard_GamepadSoftCursor",
+        ]
+    } else {
+        &[
+            "Blizzard_ObjectAPI",
+            "Blizzard_FrameXMLBase",
+            "Blizzard_UIErrorsFrame",
+            "Blizzard_UIParentPanelManager",
+            "Blizzard_SettingsDefinitions_Frame",
+            "Blizzard_ItemButton",
+            "Blizzard_FrameXMLUtil",
+            "Blizzard_RaidWarning",
+            "Blizzard_UIPanelTemplates",
+            "Blizzard_GameTooltip",
+            "Blizzard_MoneyFrame",
+            "Blizzard_Colors",
+            "Blizzard_TransmogShared",
+            "Blizzard_LFGUtil",
+            "Blizzard_ManagedFrameSystem",
+        ]
+    };
     assert_eq!(
         frame_xml_deps,
         expected_frame_xml_deps
             .iter()
-            .map(|s| s.to_string())
+            .map(|dependency| dependency.to_string())
             .collect::<Vec<_>>(),
-        "FrameXML must preserve its 15 Retail-applicable dependencies in TOC order. \
-         Classic-only Blizzard_UnitPopup and Blizzard_MirrorTimer declarations are \
-         excluded by their AllowLoadGameType annotations. Got: {frame_xml_deps:?}"
+        "FrameXML dependency order must match the selected profile TOC. Got: {frame_xml_deps:?}"
     );
 }
 
