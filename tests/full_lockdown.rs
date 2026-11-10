@@ -122,23 +122,46 @@ fn full_lockdown_set_forbidden_alone_keeps_secure_font_string_access() {
         "#,
     )
     .expect("SetForbidden alone must leave the secure FontString usable");
+}
+
+#[test]
+fn missing_access_allowed_flag_locks_parent_and_xml_created_children() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec("AccessLostParent = CreateFrame('Frame', 'AccessLostParent', UIParent)")
+        .unwrap();
+    let parent_id = env
+        .state()
+        .borrow()
+        .widgets
+        .get_id_by_name("AccessLostParent")
+        .unwrap();
+    env.state()
+        .borrow_mut()
+        .widgets
+        .get_mut(parent_id)
+        .unwrap()
+        .access_allowed = false;
+
+    let directory = tempfile::tempdir().unwrap();
+    let toc = directory.path().join("AccessLostFixture.toc");
+    std::fs::write(&toc, "## Title: AccessLostFixture\nfixture.xml\n").unwrap();
+    std::fs::write(
+        directory.path().join("fixture.xml"),
+        r#"<Ui><Frame name="AccessLostChild" parent="AccessLostParent">
+            <Layers><Layer><FontString name="$parentText" parentKey="Text"/></Layer></Layers>
+        </Frame></Ui>"#,
+    )
+    .unwrap();
+    let loaded = wow_ui_sim::loader::load_addon(&env.loader_env(), &toc).unwrap();
+    assert!(loaded.warnings.is_empty(), "{:?}", loaded.warnings);
     env.exec(
         r#"
-        FullLockParent:SetForbidden()
-        FullLockChild = FullLockParent:CreateFontString()
-        assert(FullLockChild:IsForbidden())
-        FullLockBinding:SetFontString(FullLockChild)
-        local forbiddenLabel = GetForbiddenObjectTable(FullLockLabel)
-        local forbiddenParent = GetForbiddenObjectTable(FullLockParent)
-        local function addon()
-            local ok, message = pcall(FullLockBinding.SetFontString, FullLockBinding, forbiddenLabel)
-            assert(not ok and string.find(message, 'Attempt to access forbidden object from code tainted by an AddOn', 1, true), tostring(message))
-            ok, message = pcall(forbiddenParent.CreateFontString, forbiddenParent)
-            assert(not ok and string.find(message, 'Attempt to access forbidden object from code tainted by an AddOn', 1, true), tostring(message))
-        end
-        debug.setobjecttaint(addon, 'OrdinaryForbiddenFixture')
-        addon()
+        assert(AccessLostParent:IsForbidden())
+        assert(AccessLostChild:IsForbidden())
+        assert(AccessLostChildText:IsForbidden())
+        local ok, message = pcall(AccessLostChildText.CanWordWrap, AccessLostChildText)
+        assert(not ok and message == 'Attempt to access fully locked-down object.', tostring(message))
         "#,
     )
-    .expect("ordinary forbidden proxy access must remain separate from full lockdown");
+    .expect("a child created from a parent without access-allowed state is fully locked down");
 }
