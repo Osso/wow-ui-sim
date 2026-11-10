@@ -1,5 +1,5 @@
 //! Mists legacy reputation globals over the shared C_Reputation scenario rows.
-use crate::lua_api::methods::{create_string, table_get, table_get_static, table_set_static};
+use crate::lua_api::methods::{create_string, table_get_static, table_set_static};
 use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
@@ -55,13 +55,25 @@ fn faction_rows(state: &mut LuaState) -> Vec<Val> {
     let mut result = Vec::new();
     let mut index = 1;
     loop {
-        let row = table_get(state, rows, &index.to_string());
+        let row = integer_table_value(state, rows, index);
         if row == Val::Nil {
             return result;
         }
         result.push(row);
         index += 1;
     }
+}
+
+fn integer_table_value(state: &LuaState, table: Val, index: i32) -> Val {
+    let Val::Table(table_ref) = table else {
+        return Val::Nil;
+    };
+    state
+        .gc
+        .tables
+        .get(table_ref)
+        .map(|table| table.get_int(i64::from(index)))
+        .unwrap_or(Val::Nil)
 }
 
 fn visible_faction_rows(state: &mut LuaState, rows: &[Val]) -> Vec<Val> {
