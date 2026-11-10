@@ -2,7 +2,7 @@
 
 ## [2026-11-09] investigation | Reconcile profile frame-position baselines
 
-[Frame-position baseline drift](investigations/frame-position-baseline-drift.md#verified-lane-result--2026-11-09) records source-derived PTR, Forever and Classic expectations, profile-specific absent-frame checks and unresolved model/input divergences. Its Mists follow-up records source-asserted Edit Mode unit-frame anchors, StanceBar replay ordering, and the managed ChatFrame position; 11 frame-position residuals remain.
+[Frame-position baseline drift](investigations/frame-position-baseline-drift.md#verified-lane-result--2026-11-09) records source-derived PTR, Forever and Classic expectations, profile-specific absent-frame checks and unresolved model/input divergences. Its Mists follow-ups record source-asserted unit-frame anchors, StanceBar replay ordering, managed ChatFrame position, seven more source-derived frame contracts, and ObjectiveTracker absence.
 
 ## [2026-11-08] investigation | GUI CASC cache preparation
 

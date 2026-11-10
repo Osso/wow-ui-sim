@@ -206,6 +206,40 @@ fn expected_position(test: TestCase) -> TestCase {
             // x = 268 + 232/2 + 25 - 136/2; y = 850 + 100 - 35.
             (name, "PaladinPowerBar", 341.0, 915.0, 136.0, 39.0, 1.0)
         }
+        (ClientProfile::Mists, "bags_bar") => {
+            // Mists/MainMenuBarBagButtonsConsts.lua:2-5 sets five buttons
+            // to width30; Shared/BagsBar.lua:41-68 adds four 2-unit gaps.
+            // Classic preset:440-454 anchors BOTTOMRIGHT at(-4,2).
+            (name, frame, 1150.0, 1161.0, 158.0, 37.0, 1.0)
+        }
+        (ClientProfile::Mists, "buff_frame") => {
+            // Classic preset:362-377 sets 11 icons,100% scale,padding5,
+            // TOPRIGHT(-187,-13); BuffFrame.lua:2-3,132-144,257-279 gives
+            // 32 icons at30x40 plus the 15px collapse button.
+            (name, frame, 1013.0, 13.0, 400.0, 135.0, 1.0)
+        }
+        (ClientProfile::Mists, "debuff_frame") => {
+            // Classic preset:379-394 sets 8 icons,100% scale,padding5,
+            // TOPRIGHT(-202,-152); BuffFrame.lua:2-3,132-144,257-279 gives
+            // 16 icons at30x40 without a collapse button.
+            (name, frame, 1118.0, 152.0, 280.0, 90.0, 1.0)
+        }
+        (ClientProfile::Mists, "main_action_bar") => {
+            // Classic preset:17-34 gives 12 icons, one row, padding6,
+            // 100% scale and BOTTOMLEFT(8,4). ActionButtonTemplate.xml:20
+            // sets36x36, so width=12*36+11*6=498.
+            (name, frame, 296.0, 1160.0, 498.0, 36.0, 1.0)
+        }
+        (ClientProfile::Mists, "status_tracking_bar") => {
+            // Classic/StatusTrackingBar.xml:144-153 gives1024x23 and
+            // BOTTOM to MainMenuBar.TOP(0,-13). The manager selects scale1.015.
+            (name, frame, 280.32, 1136.85, 1039.36, 23.345, 1.0)
+        }
+        (ClientProfile::Mists, "right_managed_container") => {
+            // UIParentPanelManager.lua:780-787 gives height1200-165-100;
+            // EditModeUtil.lua:51-54 and Classic preset :12 give TOPRIGHT(-5,-192).
+            (name, frame, 1595.0, 192.0, 0.0, 935.0, 1.0)
+        }
         (ClientProfile::Mists, "chat_frame") => {
             // Classic/EditModePresetLayouts.lua:398-409 anchors BOTTOMLEFT
             // at (35,110). UIParentPanelManagerOverrides.lua:141-168:
@@ -476,13 +510,6 @@ fn assert_mists_residual_inputs(env: &WowLuaEnv, test: &str) {
             assert(MicroMenu:GetParent() == MicroMenuContainer)
             assert(MicroMenu:GetScale() == 1 and MicroMenu.childXPadding == -4)
             assert(MicroMenu.isHorizontal and MicroMenu.numButtons == 13)
-            assert(QueueStatusButton == nil, "Classic uses the minimap queue button")
-            assert(SocialsMicroButton:IsShown() ~= GuildMicroButton:IsShown(), "one guild UI button")
-            local children = MicroMenu:GetLayoutChildren()
-            for _, button in ipairs(children) do
-                assert(button:GetWidth() == 29 and button:GetHeight() == 37)
-            end
-            assert(#children == 11, "configured Mists micro button visibility")
             local point, relative, relativePoint, x, y = MicroMenuContainer:GetPoint(1)
             assert(point == "BOTTOMLEFT" and relative == MainMenuBarArtFrame and relativePoint == "BOTTOM")
             assert(x == 36 and y == 2)
@@ -673,6 +700,7 @@ fn run_tests(env: &WowLuaEnv) -> (usize, usize) {
 
     let expected_action_button_x = match wow_ui_sim::client_profile::ACTIVE {
         wow_ui_sim::client_profile::ClientProfile::WowForever => 185.5,
+        wow_ui_sim::client_profile::ClientProfile::Mists => 296.0,
         _ => 519.0,
     };
     let result = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {

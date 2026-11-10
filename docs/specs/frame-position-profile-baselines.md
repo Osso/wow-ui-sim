@@ -11,6 +11,7 @@
 - [x] Change a baseline only with a native XML/Lua derivation; retain failures caused by missing or incorrect simulator inputs.
 - [x] Assert Mists player/target/focus Edit Mode anchor inputs and source-derived Party, CompactParty and PaladinPowerBar rectangles.
 - [x] Derive Mists ChatFrame1's managed bottom anchor from the selected Edit Mode anchor and visible managed-frame inputs.
+- [x] Derive Mists bags, aura, action-bar, status-bar and empty right-container rectangles from selected Blizzard source; assert ObjectiveTrackerFrame absence where its addon is not selected.
 - [x] Keep Retail clean and reduce failure names on PTR, Forever, Mists, Era and Anniversary relative to master `3ca96ba58`.
 
 ## How it works

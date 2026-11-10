@@ -1,3 +1,7 @@
+## [2026-11-10] fix | Mists frame-position residuals
+
+Updated the [frame-position investigation](investigations/frame-position-baseline-drift.md#mists-frame-residuals--2026-11-10) and [profile contract](../specs/frame-position-profile-baselines.md) with pinned-source Mists bag, aura, action-bar, status-bar and empty right-container geometry. The simulator no longer synthesizes ObjectiveTrackerFrame on Mists, where the selected Blizzard UI has no producer; the test asserts absence. MicroMenu default visibility and the managed casting-bar rectangle remain open.
+
 ## [2026-11-09] fix | Mists unit-frame Edit Mode replay ordering
 
 Updated the [frame-position investigation](investigations/frame-position-baseline-drift.md#mists-unit-frame-startup-replay--2026-11-09) and its [profile contract](../specs/frame-position-profile-baselines.md): the startup action-bar replay now initializes the native StanceBar state before the Classic dynamic-background-art refresh that reads it. The Mists `frame_positions` run passes all six unit-frame cases and ChatFrame1 at its source-derived managed position; 11 residual names remain from 17 RED. Native C layout-event timing remains UNKNOWN; see the lane report for proof and remaining gates.

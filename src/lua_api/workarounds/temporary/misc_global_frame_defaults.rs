@@ -18,19 +18,6 @@ local function ensure_named_frame(widgetType, name, parent)
     return frame
 end
 
-local function ensure_child_frame(parent, key)
-    if type(parent) ~= "table" then
-        return nil
-    end
-    local child = rawget(parent, key)
-    if child ~= nil then
-        return child
-    end
-    child = CreateFrame("Frame", nil, parent)
-    rawset(parent, key, child)
-    return child
-end
-
 local function ensure_game_menu_button_pool(gameMenu)
     if gameMenu == nil
         or gameMenu.buttonPool ~= nil
@@ -62,6 +49,35 @@ if type(gameMenu) == "table" then
     ensure_game_menu_button_pool(gameMenu)
 end
 
+"#;
+
+const OBJECTIVE_TRACKER_DEFAULTS_LUA: &str = r#"
+local function ensure_named_frame(widgetType, name, parent)
+    local existing = rawget(_G, name)
+    if existing ~= nil then
+        return existing
+    end
+    if type(CreateFrame) ~= "function" then
+        return nil
+    end
+    local frame = CreateFrame(widgetType or "Frame", name, parent)
+    rawset(_G, name, frame)
+    return frame
+end
+
+local function ensure_child_frame(parent, key)
+    if type(parent) ~= "table" then
+        return nil
+    end
+    local child = rawget(parent, key)
+    if child ~= nil then
+        return child
+    end
+    child = CreateFrame("Frame", nil, parent)
+    rawset(parent, key, child)
+    return child
+end
+
 local objective = ensure_named_frame("Frame", "ObjectiveTrackerFrame", UIParent)
 if objective ~= nil and rawget(objective, "OnAdded") == nil then
     function objective:OnAdded(backgroundAlpha)
@@ -85,6 +101,9 @@ ensure_child_frame(objectiveHeader, "MinimizeButton")
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(MISC_GLOBAL_FRAME_DEFAULTS_LUA)?;
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Mists {
+        lua.exec(OBJECTIVE_TRACKER_DEFAULTS_LUA)?;
+    }
     Ok(())
 }
 
@@ -115,6 +134,7 @@ mod tests {
                     if buttonCount == 0 then return "buttons" end
                 end
 
+                if ObjectiveTrackerFrame == nil then return "objective_absent" end
                 if type(ObjectiveTrackerFrame) ~= "table" then return "objective" end
                 if type(ObjectiveTrackerFrame.Header) ~= "table" then return "header" end
                 if type(ObjectiveTrackerFrame.Header.MinimizeButton) ~= "table" then return "minimize" end
@@ -123,12 +143,25 @@ mod tests {
             )
             .expect("misc global frame defaults probe should run");
 
-        assert_eq!(result, "ok");
+        let expected =
+            if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Mists {
+                "objective_absent"
+            } else {
+                "ok"
+            };
+        assert_eq!(result, expected);
     }
 
     #[test]
     fn installs_objective_tracker_on_added_default() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
+        if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Mists {
+            let absent: bool = env
+                .eval("return ObjectiveTrackerFrame == nil")
+                .expect("read selected Mists objective-tracker surface");
+            assert!(absent, "Mists has no native ObjectiveTrackerFrame");
+            return;
+        }
         env.exec(
             r#"
             ObjectiveTrackerFrame.OnAdded = nil
