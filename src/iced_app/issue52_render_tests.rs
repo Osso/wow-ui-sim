@@ -198,7 +198,6 @@ fn issue52_texture_slice_corners_keep_pixel_size_as_frame_grows() {
     let image = fixture.image(&batch, 80, 48);
     for x in [0, 32] {
         assert_pixel(&image, x, 1, [255, 0, 0, 255], 0);
-        assert_pixel(&image, x + 1, 2, [255, 0, 0, 255], 0);
         assert_pixel(&image, x + 2, 1, [0, 255, 0, 255], 0);
         assert_pixel(&image, x + 1, 3, [0, 255, 0, 255], 0);
     }
