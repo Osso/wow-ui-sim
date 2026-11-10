@@ -46,7 +46,7 @@ tooltip_selection_getters_fixture! {
                 {'GetQuestLogSpecialItem', {1}, 'questIndex', 1, 1, {1}},
                 {'GetQuestPartyProgress', {1}, 'questID [, omitTitle, ignoreActivePlayer]', 1, 3, {1}},
                 {'GetRecipeRankInfo', {1, 1}, 'recipeID, rank', 2, 2, {1, 2}},
-                {'GetRuneforgeResultItem', {'Opaque-1', 40}, 'itemGUID, itemLevel [, powerID, modifiers]', 2, 4, {2}}, 
+                {'GetRuneforgeResultItem', {'Opaque-1', 40}, 'itemGUID, itemLevel [, powerID, modifiers]', 2, 4, {2}},
             }) do cases[#cases + 1] = case end
         end
     "#;
