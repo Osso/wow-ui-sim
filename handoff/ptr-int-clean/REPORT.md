@@ -1,0 +1,166 @@
+# PTR integration cleanup
+
+## Active goal
+
+Reduce the 69 PTR integration failures at `aa33b409c` with no new failure names. Scope: source-backed PTR fixtures and simulator root causes exposed by these failures. Preserve Retail and all other profile behavior. Exclude vendor edits, placeholder APIs, Cargo manifest/lock changes, push and rebase. Required verification: user-requested per-profile all-target builds and immediate tests, PTR full integration/lib, touched-file filters on Retail/Forever/Mists, Retail lib, Era/Anniversary builds, Wrath compile and manifest bin test; zero warnings. Test runs stay below 9 GiB.
+
+## Baseline and method
+
+VERIFIED: `/var/tmp/osso/prship/m29c-p-int-all.log` ends with 10,573 passed, 69 failed and 17 ignored. Names below use regex `^    ([A-Za-z0-9_:]+)$` after its last `\nfailures:\n`. Failure count is not root-cause count. Original per-test panic output is retained outside git in `~/.local/state/wow-ui-sim/handoff/ptr-int-clean/errors.json`. Classifications identify the next evidence/action, not claims that all causes are already proven.
+
+## Cluster table (before implementation)
+
+| Cluster | Names | Decision | Evidence and next action |
+|---|---:|---|---|
+| Pinned source expectations | 34 | (b) | TOC bodies, dependencies, selected variants and Lua wrappers differ from the Retail/older-PTR assertions. Correct only with the exact citations below; preserve other profiles. |
+| Action-bar startup and presentation | 7 | (a) | Original ActionButton.lua:808 calls missing overlay Attach; ActionBar.lua:373 calls missing UpdateActionBarLayout. Trace first load errors before treating atlas/layout symptoms as geometry bugs. |
+| Bag-frame revision and fixture selection | 4 | (b) | Seven real container frames observed rather than six; bag-slot template moved. Check selected ContainerFrame source and retain rectangle checks against the new named consumer. |
+| Auction-house token namespace | 4 | (c) | First error is C_WowTokenUI nil in Shared/Blizzard_AuctionHouseCategoriesList.lua:19. Need native namespace/member behavior before adding a producer. |
+| Profile publication expectations | 3 | (c) | Hardcore publication, loot-style enum and global mouse-event registration differ. Check current producer and pinned declarations; ask native questions only for unresolved contracts. |
+| Profession startup and geometry | 3 | (a) | Blacksmithing book button absent; ProfessionsFrame width 1; crafting ValidateControls transaction nil. Trace selected profession model/input before geometry changes. |
+| Game-menu source/API revision | 2 | (b) | Shared/GameMenuFrame.lua is selected by Blizzard_GameMenu.toc:7-9. Older GameMenuFrameMixin and shop-button assumptions need selected-source citations. |
+| LOD shard 10 errors | 2 | (a) | Both names fail shard 10 baseline. Read the complete emitted load/error entries and repair the original producer; do not raise baseline allowance. |
+| Achievement comparison fixture | 2 | (b) | Original Mainline/Blizzard_AchievementUI.lua:418 now calls SetShown on a fixture child. Supply current original-consumer collaborators, retaining completed/incomplete assertions. |
+| Modified-click mutation | 2 | (c) | SetModifiedClick/GetModifiedClick returns NONE instead of ALT. Need PTR native security/context semantics before changing runtime or assertion. |
+| Combo-frame consumer selection | 1 | (b) | Test assumes global ComboFrame although current selected unit-frame consumer differs; trace Blizzard_UnitFrame.toc and Mainline consumer before retargeting. |
+| Missing cooldown duration policy | 1 | (c) | Existing no-state duration assertion fails. Need original API behavior on absent unit/action state if current source does not determine the return. |
+| PTR eager load-order snapshot | 1 | (b) | Observed eager order differs from Retail-only snapshot. Generate a separate pinned PTR expectation from selected TOCs, not a shared snapshot replacement. |
+| Quest tracker block count | 1 | (a) | Expected at least three visible blocks; observed two. Trace seeded quest and original tracker filtering before changing count. |
+| Spellbook geometry | 1 | (a) | Observed book_bg_gap=1612. Trace named background, parent and selected template before changing lock. |
+| Store free upgrade API | 1 | (c) | C_StoreSecure.HasFreePromotionalUpgrade nil. Need current PTR registration/replacement and no-upgrade result. |
+
+## Pinned-source citations
+
+All paths below are relative to `~/.cache/wow-ui-sim/blizzard-ui/ptr/AddOns/`; no cache file is modified.
+
+- VERIFIED: `Blizzard_MacroUI/Blizzard_MacroUI.toc:4-11` lists eight selected files, including explicit Lua before XML. `Blizzard_PTRFeedbackGlue/Blizzard_PTRFeedbackGlue.toc:8-14` adds `Blizzard_PTRFeedback_Gamepad.lua`. `Blizzard_PTRFeedback/Blizzard_PTRFeedback.toc:2,8-14` is PTR-only and has seven files.
+- VERIFIED: `Blizzard_SharedXMLBase/Blizzard_SharedXMLBase.toc:4-45` lists 42 entries. `Blizzard_StableUI/Blizzard_StableUI.toc:4-6` lists shared Lua, game Lua and game XML. `Blizzard_StaticPopup/Blizzard_StaticPopup.toc:4-7` includes `StaticPopupGamepad.lua`.
+- VERIFIED: `Blizzard_StaticPopup_Game/Blizzard_StaticPopup_Game.toc:2` adds `Blizzard_GamepadSharedUtility`; `:9-13` selects `GameDialog.xml` and Mainline `StaticPopupSpecial.xml`. `Blizzard_FrameXML/Blizzard_FrameXML.toc:19` adds `Blizzard_GamepadSoftCursor`. `Blizzard_SharedTalentUI/Blizzard_SharedTalentUI.toc:3` adds `Blizzard_SpellTypeIconOverlay`.
+- VERIFIED: `Blizzard_SubscriptionInterstitialUI/Blizzard_SubscriptionInterstitialUI.toc:3-6` explicitly lists bootstrap/Lua/XML. `Blizzard_TrainerUI/Blizzard_TrainerUI.toc:5-9` explicitly lists bootstrap/Mainline Lua/Mainline XML/localization. `Blizzard_TokenUI/Blizzard_TokenUI.toc:4-11` uses Mainline TokenUI paths for PTR.
+- VERIFIED: `Blizzard_UIParent/Blizzard_UIParent.toc:1-3` is a unified TOC and selects only UIParent.lua. `Blizzard_UnitPopup/Blizzard_UnitPopup.toc:11,14` selects Mainline buttons/menus through `[Family]`, not Standard through `[Game]`. `Blizzard_Settings_Shared/Blizzard_Settings_Shared.toc:38` adds Mainline LanguagesOverrides.lua.
+- VERIFIED: Lua defines the wrappers previously asserted absent: `Blizzard_AuctionHouseUI/Shared/Blizzard_AuctionHouseUI_Bootstrap.lua:13`, `Blizzard_GuildBankUI/Blizzard_GuildBankUI_Bootstrap.lua:16`, `Blizzard_ProfessionsCustomerOrders/Blizzard_ProfessionsCustomerOrders_Bootstrap.lua:13`, `Blizzard_GarrisonUI/Mainline/Blizzard_GarrisonUI_Bootstrap.lua:44`, `Blizzard_BlackMarketUI/Blizzard_BlackMarketUI_Bootstrap.lua:13`.
+
+Further fixture changes require citations at the point of change; the initial table alone does not authorize weaker checks.
+
+## Exact name coverage
+
+### Pinned source expectations
+
+- `blizzard_auction_house_show_hide::ptr_auction_house_does_not_publish_snapshot_only_hide_wrapper`
+- `blizzard_black_market_ui_loads::ptr_black_market_does_not_publish_reversed_hide_wrapper`
+- `blizzard_core_frame_lane::lane_dep_edges_pin_canonical_chain`
+- `blizzard_garrison_ui_loads::ptr_garrison_ui_does_not_publish_snapshot_only_hide_wrappers`
+- `blizzard_guild_bank_ui_loads::ptr_guild_bank_does_not_publish_snapshot_only_hide_wrapper`
+- `blizzard_interaction_lane::popup_cluster_dep_edges_pin_load_floor_for_popup_flow`
+- `blizzard_macro_ui_loads::blizzard_macro_ui_directory_holds_nine_entries_with_bootstrap`
+- `blizzard_macro_ui_loads::ptr_macro_save_placeholder_is_replaced_by_lod_delegate`
+- `blizzard_professions_customer_orders_loads::ptr_customer_orders_does_not_publish_snapshot_only_hide_wrapper`
+- `blizzard_progression_lane::each_lane_addon_directory_exists_on_disk`
+- `blizzard_progression_lane::lane_dep_edges_classify_each_addons_load_floor`
+- `blizzard_ptr_feedback_glue_loads::blizzard_ptr_feedback_glue_does_not_appear_in_eager_discovery`
+- `blizzard_ptr_feedback_glue_loads::blizzard_ptr_feedback_glue_lists_five_files_with_cross_addon_parent_paths`
+- `blizzard_ptr_feedback_loads::blizzard_ptr_feedback_does_not_appear_in_eager_discovery`
+- `blizzard_raid_ui_loads::blizzard_raid_ui_xml_pulls_lua_via_script_directive`
+- `blizzard_reforging_ui_loads::classic_subdirectory_holds_bootstrap_lua_xml_and_localization`
+- `blizzard_reforging_ui_loads::is_game_type_restricted_returns_true_for_classic_only_addon`
+- `blizzard_settings_shared_loads::family_placeholder_resolves_to_mainline_subdir_in_three_entries`
+- `blizzard_shared_xml_base_loads::body_count_matches_filesystem_layout`
+- `blizzard_shared_xml_loads::ptr_smooth_progress_helper_is_global_not_interpolator_method`
+- `blizzard_stable_ui_loads::body_lists_lua_before_xml_for_mixin_resolution`
+- `blizzard_static_popup_game_loads::dependencies_chain_pulls_six_blizzard_addons_via_plural_dependencies_key`
+- `blizzard_static_popup_game_loads::xml_registers_three_virtual_templates`
+- `blizzard_static_popup_loads::body_lists_three_lua_files_in_dependency_order`
+- `blizzard_subscription_interstitial_ui_loads::body_resolves_bootstrap_then_xml_entry`
+- `blizzard_subscription_interstitial_ui_loads::xml_chains_lua_via_script_file_directive`
+- `blizzard_talent_ui_loads::allow_load_absent_restricts_to_game_screen_only`
+- `blizzard_talent_ui_loads::body_resolves_two_bootstraps_and_five_entries_with_normalized_slashes`
+- `blizzard_talent_ui_loads::flavor_subdirs_present_classic_subdir_absent`
+- `blizzard_token_ui_loads::body_resolves_to_five_entries_in_declared_order`
+- `blizzard_trainer_ui_loads::body_resolves_to_bootstrap_mainline_xml_and_localization_lua`
+- `blizzard_ui_parent_loads::ptr_mainline_excludes_mists_time_string_helper`
+- `blizzard_unit_frame_loads::classic_companion_is_restricted_on_mainline_build`
+- `blizzard_unit_popup_loads::game_placeholder_resolves_to_standard_directory`
+
+### Action-bar startup and presentation
+
+- `action_bar::test_bag_bar_layout_locked`
+- `action_bar::test_main_action_bar_end_caps_visible_after_startup`
+- `action_bar::test_status_tracking_xp_and_reputation_bars_layout_locked`
+- `action_bar_drag::action_button_drag_round_trip_keeps_spell_visible`
+- `action_bar_tree::main_action_bar_layout_is_locked`
+- `blizzard_ui_blizzard_actionbar::behavior_main_bar_endcaps::main_bar_endcaps_follow_hide_bar_art_setting`
+- `blizzard_ui_blizzard_actionbar::behavior_spell_flyout::spell_flyout_toggle_shows_populates_and_hides_from_same_button`
+
+### Bag-frame revision and fixture selection
+
+- `bags::test_container_frames_array_contains_only_real_container_frames`
+- `bags::test_container_frames_registered`
+- `path_control_point::path_actual_cached_smooth_xml_configures_points_and_restores_playback`
+- `workarounds_bags::bag_frame_rect_queries_match_render_layout_rects`
+
+### Auction-house token namespace
+
+- `blizzard_auction_house_categories_list::auction_house_categories_list_refresh_count_matches_categories`
+- `blizzard_auction_house_event_registrations::auction_house_frame_registers_runtime_events_after_show`
+- `blizzard_auction_house_show_hide::auction_house_show_hide_round_trip_has_no_lua_errors`
+- `blizzard_auction_house_tab_switch::auction_house_tabs_and_token_modes_show_matching_subframes`
+
+### Profile publication expectations
+
+- `game_rules::game_rules_hardcore_flag_defaults_to_false`
+- `party_loot_method::loot_method_style_is_mainline_across_method_changes`
+- `startup_api_events::forever_known_startup_names_preserve_other_profile_registration_policy`
+
+### Profession startup and geometry
+
+- `micro_menu::micro_menu_professions_button_loads_and_opens_panel`
+- `workarounds_professions::casting_blacksmithing_opens_professions_frame`
+- `workarounds_professions::clicking_blacksmithing_button_in_professions_book_opens_panel`
+
+### Game-menu source/API revision
+
+- `ace3::test_load_game_menu`
+- `game_menu::test_game_menu_shop_button_opens_store_and_menu_can_reopen_after_store_closes`
+
+### LOD shard 10 errors
+
+- `addon_coverage_lod::load_on_demand_blizzard_addons_shard_10_stays_within_known_error_baseline_after_startup`
+- `addon_coverage_lod::shard_14_runtime_load_survives_prior_runtime_shards_in_process`
+
+### Achievement comparison fixture
+
+- `blizzard_ui_blizzard_achievementui::behavior_comparison_friend_completed::comparison_template_init_completed_writes_format_short_date_and_saturates_friend_card`
+- `blizzard_ui_blizzard_achievementui::behavior_comparison_friend_completed::comparison_template_init_incomplete_writes_incomplete_token_and_short_circuits_on_repeat_id`
+
+### Modified-click mutation
+
+- `keybindings::modified_clicks_round_trip_through_runtime_surface`
+- `startup_api_stubs::startup_client_time_camera_and_channel_globals_are_callable`
+
+### Combo-frame consumer selection
+
+- `click_targeting::click_targeting_forever_regressions::blizzard_player_world_entry_updates_combo_frame_from_target_power`
+
+### Missing cooldown duration policy
+
+- `cooldown_restriction::ssp1::missing_and_no_state_secret_selectors_preserve_existing_empty_results`
+
+### PTR eager load-order snapshot
+
+- `load_order::test_blizzard_addon_load_order_snapshot`
+
+### Quest tracker block count
+
+- `objective_tracker_tree::objective_tracker_frame_layout_is_locked`
+
+### Spellbook geometry
+
+- `spellbook_layout::spellbook_layout_stays_locked`
+
+### Store free upgrade API
+
+- `store_tree::store_free_upgrade_check_handles_account_without_upgrade`
+
+## Native questions for parent
+
+UNVERIFIED pending native evidence: Is C_WowTokenUI registered on PTR 12.1.7, and what are the arguments/results/state gates of IsAuctionHouseEnabled? Is C_StoreSecure.HasFreePromotionalUpgrade registered or replaced, and what is the no-upgrade result? Does PTR SetModifiedClick immediately affect GetModifiedClick, or is mutation context/security-gated? Further questions will state exact unresolved behavior after producer inspection.
