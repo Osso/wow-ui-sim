@@ -73,11 +73,11 @@ fn reputation_state(state: &mut LuaState) -> Val {
     table_get_static(state, Val::Table(state.global), "__wow_reputation_state")
 }
 
-fn faction_list(state: &mut LuaState) -> ReputationList {
+fn rebuild_faction_list(state: &mut LuaState) -> ReputationList {
     let state_table = reputation_state(state);
     let rows_table = table_get_static(state, state_table, "factions");
-    let input_rows = faction_rows(state, rows_table);
-    let (leading_rows, mut groups) = group_factions(state, input_rows);
+    let input_rows = read_faction_rows(state, rows_table);
+    let (leading_rows, mut groups) = assign_faction_groups(state, input_rows);
     groups.sort_unstable_by(compare_reputation_groups);
 
     let mut visible_rows: Vec<Val> = leading_rows.iter().map(|row| row.value).collect();
@@ -105,7 +105,7 @@ fn faction_list(state: &mut LuaState) -> ReputationList {
     }
 }
 
-fn faction_rows(state: &LuaState, rows: Val) -> Vec<Val> {
+fn read_faction_rows(state: &LuaState, rows: Val) -> Vec<Val> {
     let mut result = Vec::new();
     let mut index = 1;
     loop {
@@ -130,57 +130,70 @@ fn integer_table_value(state: &LuaState, table: Val, index: i32) -> Val {
         .unwrap_or(Val::Nil)
 }
 
-fn group_factions(
+fn assign_faction_groups(
     state: &mut LuaState,
     rows: Vec<Val>,
 ) -> (Vec<ReputationRow>, Vec<ReputationGroup>) {
     let mut leading_rows = Vec::new();
-    let mut groups: Vec<ReputationGroup> = Vec::new();
+    let mut groups = Vec::new();
     let mut current_group = None;
 
     for row in rows {
         if is_header(state, row) {
-            groups.push(ReputationGroup {
-                header: reputation_row(state, row),
-                is_special: boolean_field(state, row, "isSpecialHeader"),
-                // The native numeric field is sorted descending; Expansion is inferred.
-                // `headerSortValue` is simulator fixture metadata, not a claimed native name.
-                sort_value: number_or(state, row, "headerSortValue", DEFAULT_HEADER_SORT_VALUE),
-                collapsed: is_collapsed(state, row),
-                rows: Vec::new(),
-            });
+            groups.push(read_reputation_group(state, row));
             current_group = Some(groups.len() - 1);
             continue;
         }
-
-        let faction = reputation_row(state, row);
-        let existing_header = table_get_static(state, row, LEGACY_HEADER_GROUP_KEY);
-        let group_index = groups
-            .iter()
-            .position(|group| group.header.value == existing_header)
-            .or(current_group);
-        if let Some(group_index) = group_index {
-            let header = groups[group_index].header.value;
-            table_set_static(state, row, LEGACY_HEADER_GROUP_KEY, header);
-            groups[group_index].rows.push(faction);
-        } else {
-            leading_rows.push(faction);
-        }
+        assign_reputation_row(state, row, &mut groups, current_group, &mut leading_rows);
     }
 
     (leading_rows, groups)
 }
 
-fn reputation_row(state: &mut LuaState, row: Val) -> ReputationRow {
+fn read_reputation_group(state: &mut LuaState, row: Val) -> ReputationGroup {
+    ReputationGroup {
+        header: read_reputation_row(state, row),
+        is_special: boolean_field(state, row, "isSpecialHeader"),
+        // The native numeric field is sorted descending; Expansion is inferred.
+        // `headerSortValue` is simulator fixture metadata, not a claimed native name.
+        sort_value: number_or(state, row, "headerSortValue", DEFAULT_HEADER_SORT_VALUE),
+        collapsed: is_collapsed(state, row),
+        rows: Vec::new(),
+    }
+}
+
+fn assign_reputation_row(
+    state: &mut LuaState,
+    row: Val,
+    groups: &mut [ReputationGroup],
+    current_group: Option<usize>,
+    leading_rows: &mut Vec<ReputationRow>,
+) {
+    let faction = read_reputation_row(state, row);
+    let existing_header = table_get_static(state, row, LEGACY_HEADER_GROUP_KEY);
+    let group_index = groups
+        .iter()
+        .position(|group| group.header.value == existing_header)
+        .or(current_group);
+    if let Some(group_index) = group_index {
+        let header = groups[group_index].header.value;
+        table_set_static(state, row, LEGACY_HEADER_GROUP_KEY, header);
+        groups[group_index].rows.push(faction);
+    } else {
+        leading_rows.push(faction);
+    }
+}
+
+fn read_reputation_row(state: &mut LuaState, row: Val) -> ReputationRow {
     ReputationRow {
         value: row,
-        name: string_field(state, row, "name"),
+        name: read_string_field(state, row, "name"),
         // A nonzero scenario factionID marks a record-backed row (INFERRED mapping).
         has_record: number_field(state, row, "factionID").is_some_and(|id| id != 0.0),
     }
 }
 
-fn string_field(state: &mut LuaState, row: Val, key: &'static str) -> Option<Vec<u8>> {
+fn read_string_field(state: &mut LuaState, row: Val, key: &'static str) -> Option<Vec<u8>> {
     let Val::Str(reference) = table_get_static(state, row, key) else {
         return None;
     };
@@ -233,14 +246,14 @@ fn boolean_field(state: &mut LuaState, row: Val, key: &'static str) -> bool {
 }
 
 fn get_num_factions(state: &mut LuaState) -> LuaResult<u32> {
-    let list = faction_list(state);
+    let list = rebuild_faction_list(state);
     state.push(Val::Num(list.visible_count as f64));
     Ok(1)
 }
 
 fn get_faction_info(state: &mut LuaState) -> LuaResult<u32> {
     let index = i32::from_stack(state, 1)?;
-    let list = faction_list(state);
+    let list = rebuild_faction_list(state);
     let row = index
         .checked_sub(1)
         .and_then(|offset| usize::try_from(offset).ok())
@@ -333,7 +346,7 @@ fn expand_faction_header(state: &mut LuaState) -> LuaResult<u32> {
 
 fn set_faction_header_collapsed(state: &mut LuaState, collapsed: bool) -> LuaResult<u32> {
     let index = i32::from_stack(state, 1)?;
-    let list = faction_list(state);
+    let list = rebuild_faction_list(state);
     let selected = index
         .checked_sub(1)
         .and_then(|offset| usize::try_from(offset).ok())
@@ -344,21 +357,21 @@ fn set_faction_header_collapsed(state: &mut LuaState, collapsed: bool) -> LuaRes
     } else {
         set_all_headers_collapsed(state, &list.rows, collapsed);
     }
-    faction_list(state);
+    rebuild_faction_list(state);
     Ok(0)
 }
 
 fn collapse_all_faction_headers(state: &mut LuaState) -> LuaResult<u32> {
-    let list = faction_list(state);
+    let list = rebuild_faction_list(state);
     set_all_headers_collapsed(state, &list.rows, true);
-    faction_list(state);
+    rebuild_faction_list(state);
     Ok(0)
 }
 
 fn expand_all_faction_headers(state: &mut LuaState) -> LuaResult<u32> {
-    let list = faction_list(state);
+    let list = rebuild_faction_list(state);
     set_all_headers_collapsed(state, &list.rows, false);
-    faction_list(state);
+    rebuild_faction_list(state);
     Ok(0)
 }
 
@@ -371,7 +384,7 @@ fn set_all_headers_collapsed(state: &mut LuaState, rows: &[Val], collapsed: bool
 }
 
 fn get_selected_faction(state: &mut LuaState) -> LuaResult<u32> {
-    let list = faction_list(state);
+    let list = rebuild_faction_list(state);
     let reputation_state = reputation_state(state);
     let selected_id = number_or(state, reputation_state, "legacySelectedFactionID", 0.0);
     if selected_id == 0.0 {
@@ -396,7 +409,7 @@ fn get_selected_faction(state: &mut LuaState) -> LuaResult<u32> {
 
 fn set_selected_faction(state: &mut LuaState) -> LuaResult<u32> {
     let index = i32::from_stack(state, 1)?;
-    let list = faction_list(state);
+    let list = rebuild_faction_list(state);
     let selected_row = index
         .checked_sub(1)
         .and_then(|offset| usize::try_from(offset).ok())
