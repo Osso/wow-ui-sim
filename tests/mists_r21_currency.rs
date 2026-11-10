@@ -48,10 +48,15 @@ fn mists_r21_currency_original_backpack_ui_observes_watch_changes() {
         &["Blizzard_UIPanels_Game", "Blizzard_TokenUI"],
         &[],
         |env, _| {
-            env.exec(WATCH_FOUR).unwrap();
-            env.exec(r#"
+            env.exec(
+                r#"
                 local source = debug.getinfo(BackpackTokenFrame_Update, 'S').source:gsub('\\', '/')
                 assert(source:find('Blizzard_TokenUI/Cata/Blizzard_TokenUI.lua', 1, true), source)
+            "#,
+            )
+            .unwrap();
+            env.exec(WATCH_FOUR).unwrap();
+            env.exec(r#"
                 BackpackTokenFrame_Update()
                 assert(MAX_WATCHED_TOKENS == 3 and GetBackpackCurrencyInfo(4) ~= nil)
                 for i = 1, 3 do
