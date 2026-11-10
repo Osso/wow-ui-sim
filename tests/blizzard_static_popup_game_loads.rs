@@ -833,6 +833,70 @@ fn xml_registers_three_virtual_templates() {
     xml_registers_three_virtual_templates::run(&env);
 }
 
+#[cfg(feature = "client-ptr")]
+#[test]
+fn create_frame_onload_error_reports_and_preserves_partial_template() {
+    let env = load_full_ui_for(ScreenKind::Game);
+    let result: String = env
+        .eval(
+            r#"
+            local errors = {}
+            local previousErrorHandler = geterrorhandler()
+            seterrorhandler(function(message)
+                table.insert(errors, tostring(message))
+            end)
+
+            local created, frame = pcall(function()
+                return CreateFrame("Frame", "PTRStaticPopupBaseProbe", UIParent, "StaticPopupBaseTemplate")
+            end)
+
+            local originalOnLoad = GameDialogBaseMixin.OnLoad
+            local onShowCalls = 0
+            GameDialogBaseMixin.OnLoad = function(self, ...)
+                self.beforeGamepadError = true
+                self:SetScript("OnShow", function(shownFrame)
+                    onShowCalls = onShowCalls + 1
+                    shownFrame.onShowAfterError = true
+                end)
+                originalOnLoad(self, ...)
+                self.afterGamepadError = true
+            end
+            local optionsCreated, visibleFrame = pcall(function()
+                return CreateFrameWithOptions({
+                    frameType = "Frame",
+                    name = "PTRStaticPopupBaseOptionsProbe",
+                    parent = UIParent,
+                    inherits = { "StaticPopupBaseTemplate" },
+                    hidden = false,
+                })
+            end)
+
+            GameDialogBaseMixin.OnLoad = originalOnLoad
+            seterrorhandler(previousErrorHandler)
+
+            assert(created and frame ~= nil, "CreateFrame propagated the template OnLoad error")
+            assert(frame.BG ~= nil and frame.CloseButton ~= nil, "parentKey children must survive the error")
+            assert(frame.BG.Top:GetAtlas() == GameDialogBackgroundTop, "OnLoad mutations before the error must persist")
+            local captured = false
+            for _, message in ipairs(errors) do
+                if string.find(message, "GamepadSequence", 1, true) then
+                    captured = true
+                end
+            end
+            assert(captured, "GamepadSequence error did not reach the installed error handler")
+            assert(optionsCreated and visibleFrame ~= nil, "visible options creation should return a frame")
+            assert(visibleFrame:IsShown(), "initial visibility should run after failed OnLoad")
+            assert(visibleFrame.BG ~= nil and visibleFrame.CloseButton ~= nil, "options frame keeps parentKey children")
+            assert(visibleFrame.beforeGamepadError and visibleFrame.afterGamepadError == nil,
+                   "OnLoad statements before the error persist and later statements do not run")
+            assert(visibleFrame.onShowAfterError and onShowCalls == 1, "initial OnShow should run after failed OnLoad")
+            return "ok"
+            "#,
+        )
+        .expect("CreateFrame OnLoad error probe should run");
+    assert_eq!(result, "ok");
+}
+
 prefork_full_ui_case! {
 fn four_named_dialog_slots_materialize_as_hidden_dialogs(env: &WowLuaEnv) {
 
