@@ -126,7 +126,8 @@ mod tests {
 
         let expects_tracker = !matches!(
             crate::client_profile::ACTIVE,
-            crate::client_profile::ClientProfile::Era
+            crate::client_profile::ClientProfile::Mists
+                | crate::client_profile::ClientProfile::Era
                 | crate::client_profile::ClientProfile::Anniversary
         );
         let expected_result = if expects_tracker {

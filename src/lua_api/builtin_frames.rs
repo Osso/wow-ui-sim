@@ -320,10 +320,11 @@ fn create_debuff_frame(widgets: &mut WidgetRegistry, ui_parent_id: u64, o: u16) 
 
 fn create_stub_frames(widgets: &mut WidgetRegistry, ui_parent_id: u64, o: u16) {
     register_stub_frame_specs(widgets, ui_parent_id, o, VISIBLE_STUB_FRAMES, true);
-    // The selected Vanilla UI has no ObjectiveTrackerFrame producer.
+    // These Classic profile sources have no ObjectiveTrackerFrame producer.
     if !matches!(
         crate::client_profile::ACTIVE,
-        crate::client_profile::ClientProfile::Era
+        crate::client_profile::ClientProfile::Mists
+            | crate::client_profile::ClientProfile::Era
             | crate::client_profile::ClientProfile::Anniversary
     ) {
         register_stub_frame_specs(
