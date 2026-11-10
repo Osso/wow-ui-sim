@@ -8,6 +8,9 @@ Corrected the [Patch 12.1 FrameXML symbol inventory](investigations/patch-12-1-f
 ## [2026-11-09] implementation | Forever frame-position residuals
 
 [Frame-position baseline drift](investigations/frame-position-baseline-drift.md#forever-residual-derivation--2026-11-09) now uses source-derived Camelot fixture geometry for BagsBar `(1088,1153,315×45)`, StatusTrackingBarManager `(204,1183,1192×17)`, and RightManagedFrameContainer `(1335,260,260×844)`. New input checks preserve bag-registration, manager-anchor and managed-child preconditions. The acceptance RED at 5c06b7ca7 confirmed only these three old Retail expectations fail; final gates are pending.
+## [2026-11-10] verification | Classic frame-position residuals
+
+[Frame-position baseline drift](investigations/frame-position-baseline-drift.md#verified-residual-results--2026-11-10) records source-derived Era/Anniversary expectations, Mists/Era/Anniversary ObjectiveTracker absence, and the final six-profile failure-name matrix. Era/Anniversary library tests pass; all six profile all-target checks and Wrath compile have zero warnings and compile `wow_ui_sim` with `fresh:false`. The checked-in patch-manifest test passes.
 
 ## [2026-11-08] investigation | GUI CASC cache preparation
 
@@ -15,6 +18,7 @@ Corrected the [Patch 12.1 FrameXML symbol inventory](investigations/patch-12-1-f
 
 Updated the [frame-position investigation](investigations/frame-position-baseline-drift.md#mists-unit-frame-startup-replay--2026-11-09) and its [profile contract](../specs/frame-position-profile-baselines.md): the startup action-bar replay now initializes the native StanceBar state before the Classic dynamic-background-art refresh that reads it. The Mists `frame_positions` run passes all six unit-frame cases and ChatFrame1 at its source-derived managed position; 11 residual names remain from 17 RED. Native C layout-event timing remains UNKNOWN; see the lane report for proof and remaining gates.
 
+Updated [frame-position baseline drift](investigations/frame-position-baseline-drift.md) and its [contract](../specs/frame-position-profile-baselines.md) with source-derived Era/Anniversary micro-menu, aura, action-bar, status-bar and empty managed-container rectangles. The selected Mists/Era/Anniversary sources omit ObjectiveTrackerFrame, so the simulator no longer creates its generic placeholder in those profiles and the harness asserts absence. Bags and chat remain unresolved until native startup inputs are established.
 ## [2026-11-09] update | Classic consumer fixture applicability
 
 Updated the [classic fixture design](design/classic-consumer-applicability.md) with per-profile Blizzard file counts, narrowly gated Mainline TimerunningUtil/POIButton discovery assertions, the selected UIPanels_Game dependency check and the unresolved `GetNumFactions` native-evidence gap. Fresh 75038d409 name sets are available; final profile comparisons remain open.

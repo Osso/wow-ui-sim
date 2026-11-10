@@ -319,21 +319,20 @@ fn create_debuff_frame(widgets: &mut WidgetRegistry, ui_parent_id: u64, o: u16) 
 // ---------------------------------------------------------------------------
 
 fn create_stub_frames(widgets: &mut WidgetRegistry, ui_parent_id: u64, o: u16) {
-    for (name, size) in VISIBLE_STUB_FRAMES {
-        if *name == "ObjectiveTrackerFrame"
-            && crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Mists
-        {
-            continue;
-        }
-        register_builtin_frame(
+    register_stub_frame_specs(widgets, ui_parent_id, o, VISIBLE_STUB_FRAMES, true);
+    // These Classic profile sources have no ObjectiveTrackerFrame producer.
+    if !matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Mists
+            | crate::client_profile::ClientProfile::Era
+            | crate::client_profile::ClientProfile::Anniversary
+    ) {
+        register_stub_frame_specs(
             widgets,
-            WidgetType::Frame,
-            name,
-            Some(ui_parent_id),
-            *size,
+            ui_parent_id,
             o,
+            &[("ObjectiveTrackerFrame", Some((248.0, 600.0)))],
             true,
-            None,
         );
     }
     // Forever Blizzard_GroupFinder.toc:10 excludes camelot; no synthetic
@@ -344,7 +343,6 @@ fn create_stub_frames(widgets: &mut WidgetRegistry, ui_parent_id: u64, o: u16) {
 }
 
 const VISIBLE_STUB_FRAMES: &[(&str, Option<(f32, f32)>)] = &[
-    ("ObjectiveTrackerFrame", Some((248.0, 600.0))),
     ("ScenarioObjectiveTracker", None),
     ("LFGEventFrame", None),
     ("NamePlateDriverFrame", None),

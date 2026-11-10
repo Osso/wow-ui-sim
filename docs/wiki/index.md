@@ -4,10 +4,15 @@
 
 [Frame-position baseline drift](investigations/frame-position-baseline-drift.md#verified-lane-result--2026-11-09) records source-derived PTR, Forever and Classic expectations, profile-specific absent-frame checks, six-profile failure matrices, and unresolved model/input divergences. Its Mists follow-ups record source-asserted Edit Mode unit-frame anchors, StanceBar replay ordering, managed ChatFrame position, seven more source-derived frame contracts, the WatchFrame-managed right container, and ObjectiveTracker absence; the three unresolved Mists cases remain open. Forever bag, status-manager and managed-right residuals use Camelot source-derived fixture geometry, and Forever passes all 28 cases.
 
+## [2026-11-10] verification | Classic frame-position residuals
+
+[Frame-position baseline drift](investigations/frame-position-baseline-drift.md#verified-residual-results--2026-11-10) records the final six-profile matrix: Retail/PTR 28/28, Era/Anniversary 26/28 with only bags/chat open, and source-backed ObjectiveTracker absence for Mists/Era/Anniversary. Six profile all-target checks and Wrath compile are warning-free; the manifest test passes.
+
 ## [2026-11-08] investigation | GUI CASC cache preparation
 
 [GUI CASC cache preparation](investigations/gui-casc-cache-preparation.md) records the absent selected Era encoding key, supported local index headers, bounded consistency finding, and decision to use synthetic inputs in the required regression while retaining an `optional-tests` live smoke.
 
+[Frame-position baseline drift](investigations/frame-position-baseline-drift.md#verified-lane-result--2026-11-09) records source-derived profile expectations, Classic absent-frame checks and the explicit boundary between native geometry and unresolved inputs. Retail and PTR pass 28/28; remaining profile residuals are not treated as native geometry.
 ## [2026-11-08] design | Classic consumer fixture applicability
 
 [Classic consumer fixture applicability](design/classic-consumer-applicability.md) ranks the Era first-error clusters and separates native classic fixture selection from absent Retail features. Fresh 75038d409 failure-name sets are saved for Era, Anniversary, and Mists; changed-source comparisons and final profile checks remain pending.

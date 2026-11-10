@@ -8,8 +8,7 @@ use serde_json::{Value, json};
 use std::collections::BTreeMap;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
-const INVENTORY: &str =
-    include_str!("data/patch-factory/3.4.1-factory-2026-10-09/inventory.json");
+const INVENTORY: &str = include_str!("data/patch-factory/3.4.1-factory-2026-10-09/inventory.json");
 const SPEC: SweepSpec = SweepSpec {
     register: INVENTORY,
     known_gaps: include_str!("data/patch-factory/3.4.1-factory-2026-10-09/known-gaps.json"),
