@@ -42,6 +42,7 @@ pub(super) fn set_atlas(state: &mut LuaState) -> LuaResult<u32> {
         if let Some(frame) = sim.widgets.get_mut_visual(id) {
             frame.atlas = Some(atlas_name);
             frame.texture = None;
+            frame.texture_source_dimensions = None;
             frame.tex_coords = None;
             frame.atlas_tex_coords = None;
         }
@@ -75,6 +76,7 @@ fn clear_atlas_texture(widgets: &mut crate::widget::WidgetRegistry, id: u64) {
     if let Some(frame) = widgets.get_mut_visual(id) {
         frame.atlas = None;
         frame.texture = None;
+        frame.texture_source_dimensions = None;
         frame.tex_coords = None;
         frame.atlas_tex_coords = None;
     }
@@ -159,6 +161,7 @@ pub(crate) fn apply_atlas_to_frame(
     let info = lookup.info;
     frame.atlas = Some(atlas_name.to_string());
     frame.texture = Some(info.file.to_string());
+    frame.texture_source_dimensions = None;
     frame.tex_coords = Some(tex_coords);
     frame.atlas_tex_coords = Some(tex_coords);
     frame.horiz_tile = info.tiles_horizontally;
@@ -305,9 +308,11 @@ pub(super) fn set_texture(state: &mut LuaState) -> LuaResult<u32> {
         state.push(Val::Bool(false));
         return Ok(1);
     };
-    let success = {
+    let (success, texture_source_dimensions) = {
         let sim = borrow_state(state)?;
-        texture_source_resolves(path.as_deref(), file_data_id, &sim)
+        let success = texture_source_resolves(path.as_deref(), file_data_id, &sim);
+        let dimensions = load_texture_dimensions_for_slice_assignment(&sim, id, path.as_deref());
+        (success, dimensions)
     };
     let horiz_tile = opt_bool(state, 3);
     let vert_tile = opt_bool(state, 4);
@@ -318,8 +323,10 @@ pub(super) fn set_texture(state: &mut LuaState) -> LuaResult<u32> {
         let had_render_source = texture_has_render_source(frame);
         let has_render_source = path.is_some() || file_data_id.is_some();
         changed = texture_assignment_changed(frame, &path, file_data_id, horiz_tile, vert_tile)
-            || frame.secret_texture != secret;
+            || frame.secret_texture != secret
+            || frame.texture_source_dimensions != texture_source_dimensions;
         frame.texture = path;
+        frame.texture_source_dimensions = texture_source_dimensions;
         frame.texture_file_data_id = file_data_id;
         frame.secret_texture = secret;
         frame.color_texture = None;
@@ -342,6 +349,36 @@ pub(super) fn set_texture(state: &mut LuaState) -> LuaResult<u32> {
     drop(sim);
     state.push(Val::Bool(success));
     Ok(1)
+}
+
+pub(super) fn load_texture_source_dimensions(
+    state: &LuaState,
+    frame_id: u64,
+) -> Option<(u32, u32)> {
+    let sim = borrow_state(state).ok()?;
+    let path = sim.widgets.get(frame_id)?.texture.as_deref()?;
+    load_texture_dimensions_from_source(&sim, path)
+}
+
+fn load_texture_dimensions_for_slice_assignment(
+    sim: &crate::lua_api::state::SimState,
+    frame_id: u64,
+    path: Option<&str>,
+) -> Option<(u32, u32)> {
+    let frame = sim.widgets.get(frame_id)?;
+    if frame.texture_slice_margins == (0.0, 0.0, 0.0, 0.0) {
+        return None;
+    }
+    load_texture_dimensions_from_source(sim, path?)
+}
+
+fn load_texture_dimensions_from_source(
+    sim: &crate::lua_api::state::SimState,
+    path: &str,
+) -> Option<(u32, u32)> {
+    let manager = sim.texture_manager();
+    let dimensions = manager.borrow_mut().get_or_load_texture_size(path);
+    dimensions
 }
 
 fn texture_source_resolves(

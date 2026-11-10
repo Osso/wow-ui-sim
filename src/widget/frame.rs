@@ -145,6 +145,8 @@ pub struct Frame {
     pub propagate_keyboard_input: bool,
     /// Texture path (for Texture widgets).
     pub texture: Option<String>,
+    /// Decoded source image dimensions in pixels, used by explicit texture slicing.
+    pub texture_source_dimensions: Option<(u32, u32)>,
     pub texture_file_data_id: Option<i64>,
     /// Solid color texture (from SetColorTexture).
     pub color_texture: Option<Color>,

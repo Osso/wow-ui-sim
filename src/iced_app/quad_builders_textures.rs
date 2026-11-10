@@ -11,6 +11,9 @@ use super::super::slice_render::{
 use super::super::statusbar::StatusBarFill;
 use super::super::tiling::{emit_tiled_texture, has_uv_repeat};
 
+const TEXTURE_SLICE_MODE_STRETCHED: i32 = 0;
+const TEXTURE_SLICE_MODE_TILED: i32 = 1;
+
 /// Build quads for a Texture widget, optionally clipped by a StatusBar fill.
 pub(crate) fn build_texture_quads(
     batch: &mut QuadBatch,
@@ -48,7 +51,11 @@ pub(crate) fn build_texture_quads(
         emit_bar_fill_fallback(batch, bar_fill, bounds, alpha);
         return;
     };
+    let vertex_start = batch.vertices.len();
     emit_textured_quad(batch, bounds, f, bar_fill, tex_path.as_ref(), tint, alpha);
+    if let Some(gradient) = &f.gradient {
+        apply_image_gradient(batch, vertex_start, bounds, gradient);
+    }
 }
 
 fn resolve_texture_path(f: &crate::widget::Frame) -> Option<Cow<'_, str>> {
@@ -137,6 +144,37 @@ fn tinted_gradient_color(
     ]
 }
 
+/// Multiply an image texture's tint by a gradient over the original region bounds.
+fn apply_image_gradient(
+    batch: &mut QuadBatch,
+    vertex_start: usize,
+    bounds: Rectangle,
+    gradient: &crate::widget::Gradient,
+) {
+    if bounds.width <= 0.0 || bounds.height <= 0.0 {
+        return;
+    }
+    let (start, end) = if gradient.vertical {
+        (gradient.max_color, gradient.min_color)
+    } else {
+        (gradient.min_color, gradient.max_color)
+    };
+    let start = [start.r, start.g, start.b, start.a];
+    let end = [end.r, end.g, end.b, end.a];
+    for vertex in &mut batch.vertices[vertex_start..] {
+        let horizontal = ((vertex.position[0] - bounds.x) / bounds.width).clamp(0.0, 1.0);
+        let vertical = ((vertex.position[1] - bounds.y) / bounds.height).clamp(0.0, 1.0);
+        let fraction = if gradient.vertical {
+            vertical
+        } else {
+            horizontal
+        };
+        for (channel, (from, to)) in vertex.color.iter_mut().zip(start.into_iter().zip(end)) {
+            *channel *= from + (to - from) * fraction;
+        }
+    }
+}
+
 /// Emit a textured quad with atlas cropping, three-slice, tiling, rotation, desaturation.
 fn emit_textured_quad(
     batch: &mut QuadBatch,
@@ -147,6 +185,9 @@ fn emit_textured_quad(
     tint: [f32; 4],
     alpha: f32,
 ) {
+    if emit_explicit_texture_slice(batch, bounds, f, bar_fill, tex_path, tint) {
+        return;
+    }
     if let Some(fill) = bar_fill
         && let Some(uv4) = rotated_quad_uvs(f)
     {
@@ -191,6 +232,126 @@ fn emit_textured_quad(
         alpha,
     );
     finalize_textured_quad(batch, vert_before, f);
+}
+
+fn emit_explicit_texture_slice(
+    batch: &mut QuadBatch,
+    bounds: Rectangle,
+    frame: &crate::widget::Frame,
+    bar_fill: Option<&StatusBarFill>,
+    tex_path: &str,
+    tint: [f32; 4],
+) -> bool {
+    if bar_fill.is_some() {
+        return false;
+    }
+    let margins = frame.texture_slice_margins;
+    if margins == (0.0, 0.0, 0.0, 0.0) || !slice_margins_supported(margins) {
+        return false;
+    }
+    let Some((width, height, uvs)) = explicit_slice_source(frame) else {
+        return false;
+    };
+    if !slice_dimensions_fit(bounds, margins, (width, height)) {
+        return false;
+    }
+    let (left_px, right_px, top_px, bottom_px) = margins;
+    let texture = TexturedSlice {
+        path: tex_path,
+        uvs,
+        tint,
+        blend: frame.blend_mode,
+    };
+    emit_explicit_texture_slice_mode(
+        batch,
+        frame.texture_slice_mode,
+        bounds,
+        texture,
+        (left_px, right_px, top_px, bottom_px),
+        (width, height),
+    )
+}
+
+fn slice_margins_supported((left, right, top, bottom): (f32, f32, f32, f32)) -> bool {
+    [left, right, top, bottom]
+        .into_iter()
+        .all(|margin| margin.is_finite() && margin >= 0.0)
+}
+
+fn slice_dimensions_fit(
+    bounds: Rectangle,
+    (left_px, right_px, top_px, bottom_px): (f32, f32, f32, f32),
+    (width, height): (f32, f32),
+) -> bool {
+    let source_is_valid = width > 0.0 && height > 0.0;
+    let source_has_center = width > left_px + right_px && height > top_px + bottom_px;
+    let destination_has_center =
+        bounds.width > left_px + right_px && bounds.height > top_px + bottom_px;
+    source_is_valid && source_has_center && destination_has_center
+}
+
+fn explicit_slice_source(frame: &crate::widget::Frame) -> Option<(f32, f32, TextureUvs)> {
+    if frame.tex_coords_quad.is_some() {
+        return None;
+    }
+    if let Some(atlas_name) = frame.atlas.as_deref() {
+        if frame.tex_coords != frame.atlas_tex_coords {
+            return None;
+        }
+        let lookup = crate::atlas::get_render_atlas_info(atlas_name)?;
+        let uvs = frame.atlas_tex_coords.unwrap_or((0.0, 1.0, 0.0, 1.0));
+        return Some((lookup.width() as f32, lookup.height() as f32, uvs));
+    }
+    if frame.tex_coords.is_some() {
+        return None;
+    }
+    let (width, height) = frame.texture_source_dimensions?;
+    Some((width as f32, height as f32, (0.0, 1.0, 0.0, 1.0)))
+}
+
+fn emit_explicit_texture_slice_mode(
+    batch: &mut QuadBatch,
+    mode: i32,
+    bounds: Rectangle,
+    texture: TexturedSlice<'_>,
+    (left_px, right_px, top_px, bottom_px): (f32, f32, f32, f32),
+    (width, height): (f32, f32),
+) -> bool {
+    match mode {
+        TEXTURE_SLICE_MODE_STRETCHED => {
+            emit_stretch_slice_atlas(
+                batch,
+                StretchSliceRender {
+                    bounds,
+                    texture,
+                    left_px,
+                    top_px,
+                    right_px,
+                    bottom_px,
+                    atlas_width_px: width,
+                    atlas_height_px: height,
+                },
+            );
+            true
+        }
+        TEXTURE_SLICE_MODE_TILED => {
+            emit_tile_slice_atlas(
+                batch,
+                TileSliceRender {
+                    bounds,
+                    texture,
+                    left_px,
+                    top_px,
+                    right_px,
+                    bottom_px,
+                    atlas_width_px: width,
+                    atlas_height_px: height,
+                },
+            );
+            true
+        }
+        _ => false,
+    }
 }
 
 /// Explicit 8-arg SetTexCoord values describe one quad (TL, TR, BR, BL),

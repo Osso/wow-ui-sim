@@ -73,6 +73,7 @@ macro_rules! frame_defaults {
             keyboard_enabled: false,
             propagate_keyboard_input: false,
             texture: None,
+            texture_source_dimensions: None,
             texture_file_data_id: None,
             color_texture: None,
             vertex_color: None,

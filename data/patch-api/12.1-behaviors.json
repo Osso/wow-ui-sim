@@ -390,7 +390,7 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/text_attribute_event/events.rs",
           "summary": "Simulator policy: EventRegistrations rejects the eight annotated Lua registration/query mutations from addon-tainted callers before membership, callback, unit-filter, all-event or hlist changes, while secure Blizzard callers are exempt (AuraContainer intrinsic registers under EventRegistrations). Existing listeners and callbacks keep delivering; native security, error wording, and engine-internal behavior remain unverified.",
-          "source_hash": "ca46f18c491e47ed6cae9ea1bf89570ad2cd842489d538a55a5eaaeb2b1c7f64"
+          "source_hash": "7f4cb3e7b732cf109d5d246c0a19efd1bd04f8feccf30e40c8905aed2718067c"
         },
         {
           "kind": "source",
@@ -467,7 +467,7 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/text_attribute_event/events.rs",
           "summary": "Simulator policy: AlwaysPropagateInput makes effective keyboard propagation true, including inherited and handler-added masks; disabling errors without state change. The existing post-handler parent OnKeyDown routing uses that effective state. Native routing, caller authority, other input paths, and security remain unverified.",
-          "source_hash": "ca46f18c491e47ed6cae9ea1bf89570ad2cd842489d538a55a5eaaeb2b1c7f64"
+          "source_hash": "7f4cb3e7b732cf109d5d246c0a19efd1bd04f8feccf30e40c8905aed2718067c"
         },
         {
           "kind": "source",

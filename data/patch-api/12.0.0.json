@@ -86577,7 +86577,7 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/text_attribute_event/events.rs",
           "summary": "Current Frame RegisterEventCallback registers a callback-capable event in the widget and rilua dispatch indexes.",
-          "source_hash": "ca46f18c491e47ed6cae9ea1bf89570ad2cd842489d538a55a5eaaeb2b1c7f64"
+          "source_hash": "7f4cb3e7b732cf109d5d246c0a19efd1bd04f8feccf30e40c8905aed2718067c"
         },
         {
           "kind": "test",
@@ -86614,7 +86614,7 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/text_attribute_event/events.rs",
           "summary": "Current Frame RegisterUnitEventCallback stores a frame-owned callback with an optional unit filter and dispatches through the event listener index.",
-          "source_hash": "ca46f18c491e47ed6cae9ea1bf89570ad2cd842489d538a55a5eaaeb2b1c7f64"
+          "source_hash": "7f4cb3e7b732cf109d5d246c0a19efd1bd04f8feccf30e40c8905aed2718067c"
         },
         {
           "kind": "test",
@@ -88592,7 +88592,7 @@
         {
           "kind": "runtime",
           "reference": "src/lua_api/frame/methods/widgets/texture/color.rs",
-          "source_hash": "6597576d92332ba5994f5d0186d8b020dd6581d66e914b785f04c5c605b747c2",
+          "source_hash": "0af375b2b15c10438537dacdf66e93d72e7ec25ff5dc5c4d6a459ee6ecc9e92a",
           "summary": "Selects ordinary boolean RGBA into existing vertex_color state; no rendering or native-validation claim."
         },
         {
@@ -91500,7 +91500,7 @@
         {
           "kind": "runtime",
           "reference": "src/lua_api/frame/methods/widgets/texture/color.rs",
-          "source_hash": "6597576d92332ba5994f5d0186d8b020dd6581d66e914b785f04c5c605b747c2",
+          "source_hash": "0af375b2b15c10438537dacdf66e93d72e7ec25ff5dc5c4d6a459ee6ecc9e92a",
           "summary": "Pre-fix observation, superseded by runtime 7677086b5 and bounded ordinary-state proof: Retail declares the LayeredRegion method through docs metadata; checked-in Texture color support does not establish boolean branch selection, resulting vertex state, propagation, rendering, or edge semantics."
         },
         {
@@ -91582,7 +91582,7 @@
         {
           "kind": "runtime",
           "reference": "src/lua_api/frame/methods/text_attribute_event/events.rs",
-          "source_hash": "ca46f18c491e47ed6cae9ea1bf89570ad2cd842489d538a55a5eaaeb2b1c7f64",
+          "source_hash": "7f4cb3e7b732cf109d5d246c0a19efd1bd04f8feccf30e40c8905aed2718067c",
           "summary": "Frame callback storage and event classification remain separate from the modeled free-global lifecycle; native eligibility and unit callback variants remain uncredited."
         },
         {
@@ -91728,7 +91728,7 @@
         {
           "kind": "runtime",
           "reference": "src/lua_api/frame/methods/text_attribute_event/events.rs",
-          "source_hash": "ca46f18c491e47ed6cae9ea1bf89570ad2cd842489d538a55a5eaaeb2b1c7f64",
+          "source_hash": "7f4cb3e7b732cf109d5d246c0a19efd1bd04f8feccf30e40c8905aed2718067c",
           "summary": "Frame callback storage and event classification remain separate from the modeled free-global lifecycle; native eligibility and aliases remain uncredited."
         },
         {
@@ -93269,13 +93269,13 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/widgets/texture/coords.rs",
           "summary": "Current TextureBase ResetTexCoord restores the texture coordinates to the active default or atlas coordinates and clears custom quad coordinates.",
-          "source_hash": "6f3c61f3ddb0440ed6aadf646f7b65a4d203688efcfff8bf126e7a060e8cf823"
+          "source_hash": "2c091e08b1998b32ded2eb59ce2a9a8eca848560f3abdab92eaba2c909c48765"
         },
         {
           "kind": "test",
           "reference": "tests/texture_methods_port.rs",
           "summary": "Focused texture test verifies SetTexCoord followed by ResetTexCoord returns the default eight-corner coordinates (0,0, 0,1, 1,0, 1,1); commit 090af1ec8 corrected the stale four-value assertion.",
-          "source_hash": "78d231a6ca97d40f13ec76517b46b31f991be7b8bffa4ef875b50c444b1f7598"
+          "source_hash": "34f054bf204469ac5dda1ad18a5bbdf7c72cbdbf61bfc04604703c83decf67c3"
         }
       ],
       "tests": [
@@ -93312,13 +93312,13 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/widgets/texture/coords.rs",
           "summary": "Shared rectangular SetTexCoord mutation path handles coordinate state and atlas remapping.",
-          "source_hash": "6f3c61f3ddb0440ed6aadf646f7b65a4d203688efcfff8bf126e7a060e8cf823"
+          "source_hash": "2c091e08b1998b32ded2eb59ce2a9a8eca848560f3abdab92eaba2c909c48765"
         },
         {
           "kind": "test",
           "reference": "tests/texture_methods_port.rs",
           "summary": "Exact eight UVs for square/nonsquare grids, replacement, zero returns, invalid-input atomicity and explicit optional-dimension rejection.",
-          "source_hash": "78d231a6ca97d40f13ec76517b46b31f991be7b8bffa4ef875b50c444b1f7598"
+          "source_hash": "34f054bf204469ac5dda1ad18a5bbdf7c72cbdbf61bfc04604703c83decf67c3"
         },
         {
           "kind": "test",
@@ -95865,7 +95865,7 @@
         {
           "kind": "runtime",
           "reference": "src/lua_api/frame/methods/text_attribute_event/events.rs",
-          "source_hash": "ca46f18c491e47ed6cae9ea1bf89570ad2cd842489d538a55a5eaaeb2b1c7f64",
+          "source_hash": "7f4cb3e7b732cf109d5d246c0a19efd1bd04f8feccf30e40c8905aed2718067c",
           "summary": "Frame callback storage and event classification remain separate from the modeled free-global lifecycle; native eligibility and unit callback variants remain uncredited."
         },
         {
@@ -96005,7 +96005,7 @@
         {
           "kind": "runtime",
           "reference": "src/lua_api/frame/methods/text_attribute_event/events.rs",
-          "source_hash": "ca46f18c491e47ed6cae9ea1bf89570ad2cd842489d538a55a5eaaeb2b1c7f64",
+          "source_hash": "7f4cb3e7b732cf109d5d246c0a19efd1bd04f8feccf30e40c8905aed2718067c",
           "summary": "Frame callback storage and event classification remain separate from the modeled free-global lifecycle; native eligibility and aliases remain uncredited."
         },
         {
@@ -112839,7 +112839,7 @@
         {
           "kind": "source",
           "reference": "src/widget/frame.rs",
-          "source_hash": "761fbd27dc0ab5024059e44d5a93e1227833bad7f3d98a65c42e448c2d295b9e",
+          "source_hash": "e777690603e457bf6e4f0288b426403e560f626f7ee8cf38fd40745e804470e7",
           "summary": "Frame.statusbar_fill_style is numeric u8 state (0..3); getter reads this instance state. This does not establish rendering or initial-default semantics."
         },
         {
@@ -112886,7 +112886,7 @@
         {
           "kind": "source",
           "reference": "src/widget/frame.rs",
-          "source_hash": "761fbd27dc0ab5024059e44d5a93e1227833bad7f3d98a65c42e448c2d295b9e",
+          "source_hash": "e777690603e457bf6e4f0288b426403e560f626f7ee8cf38fd40745e804470e7",
           "summary": "Frame.statusbar_fill_style is numeric u8 state (0..3); getter reads this instance state. This does not establish rendering or initial-default semantics."
         },
         {
@@ -113054,7 +113054,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/frame/methods/widgets/texture/coords.rs",
-          "source_hash": "6f3c61f3ddb0440ed6aadf646f7b65a4d203688efcfff8bf126e7a060e8cf823",
+          "source_hash": "2c091e08b1998b32ded2eb59ce2a9a8eca848560f3abdab92eaba2c909c48765",
           "summary": "Current TextureBase GetTexCoord returns full corner coordinates, while SetTexCoord remaps rectangular coordinates through an active atlas sub-region."
         },
         {
@@ -113092,7 +113092,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/frame/methods/widgets/texture/atlas.rs",
-          "source_hash": "e47ca5c99493aeb54bc191b160a7c360c0dc644beb7bfe991e8ba32e9260cf32",
+          "source_hash": "bf1b5302a7ac5c28ae747041407c387d1fb0ab33ec860aa379d62f33dad1ba90",
           "summary": "Current TextureBase SetAtlas handles known and unknown atlas names, direct atlas slices, atlas tiling flags, flag clearing, and render-preferred texture paths."
         },
         {
