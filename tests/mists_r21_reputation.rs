@@ -24,7 +24,12 @@ fn mists_r21_reputation_original_frame_tracks_header_visibility() {
             local source = debug.getinfo(ReputationFrame_Update, 'S').source:gsub('\\', '/')
             assert(source:find('Blizzard_UIPanels_Game/Classic/ReputationFrame.lua', 1, true), source)
             ReputationFrame_Update()
-            assert(GetNumFactions() == 5, 'supplied full list')
+            local factionCount = GetNumFactions()
+            assert(factionCount == 5,
+                'supplied full list: legacy=' .. tostring(factionCount) ..
+                ' model=' .. tostring(C_Reputation.GetNumFactions()) ..
+                ' rows=' .. tostring(#__wow_reputation_state.factions) ..
+                ' source=' .. debug.getinfo(GetNumFactions, 'S').source)
             assert(ReputationBar2FactionName:GetText() == 'Golden Lotus', 'first supplied faction')
             CollapseFactionHeader(1)
             ReputationFrame_Update()
