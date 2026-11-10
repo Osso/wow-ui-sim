@@ -7,6 +7,7 @@ WoW UI RGB values must preserve their display-byte meaning on sRGB render target
 - [ ] Map opaque UI RGB input `0.5` to byte 128.
 - [ ] Map `(0.235, 0.14, 0.08)` to `(60, 36, 20)` for solid colours and vertex tints.
 - [ ] Preserve opaque image bytes through white modulation and apply image tint once, without double-encoding.
+- [ ] Treat colored glyph RGB bytes as display values on sRGB targets while preserving sampled glyph alpha coverage.
 - [ ] Retain premultiplied-alpha and additive blending after conversion to target-linear RGB.
 - [ ] Leave non-sRGB targets on the existing linear-input path.
 

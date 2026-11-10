@@ -9,12 +9,13 @@
 //! fails the test instead of silently skipping it.
 
 use super::{create_render_target, read_back_pixels};
-use crate::render::shader::{BlendMode, QuadBatch, WowUiPipeline};
+use crate::render::shader::{BlendMode, GLYPH_ATLAS_TEX_INDEX, QuadBatch, WowUiPipeline};
 use iced::widget::shader::Pipeline;
 use iced::{Point, Rectangle, Size};
 
-const WIDTH: u32 = 32;
+const WIDTH: u32 = 48;
 const HEIGHT: u32 = 8;
+const GLYPH_ATLAS_SIZE: u32 = 2048;
 const FORMAT: wgpu::TextureFormat = wgpu::TextureFormat::Rgba8UnormSrgb;
 
 fn request_colour_test_device() -> (wgpu::Device, wgpu::Queue) {
@@ -46,6 +47,7 @@ fn upload_colour_swatches(pipeline: &mut WowUiPipeline, queue: &wgpu::Queue) -> 
         .texture_atlas_mut()
         .upload(queue, "colour-regression-srgb", 4, 4, &texels)
         .expect("constant sRGB texture upload");
+    upload_glyph_colour_pixels(pipeline, queue);
     let mut batch = QuadBatch::new();
     batch.push_solid(swatch_bounds(0), [0.2, 0.4, 0.6, 1.0]);
     batch.push_textured_uv(
@@ -63,7 +65,36 @@ fn upload_colour_swatches(pipeline: &mut WowUiPipeline, queue: &wgpu::Queue) -> 
         [0.2, 0.4, 0.6, 1.0],
         BlendMode::Additive,
     );
+    batch.push_textured_uv(
+        swatch_bounds(4),
+        Rectangle::new(Point::ORIGIN, Size::new(1.0, 0.4)),
+        GLYPH_ATLAS_TEX_INDEX,
+        [1.0; 4],
+        BlendMode::Alpha,
+    );
+    batch.push_textured_uv(
+        swatch_bounds(5),
+        Rectangle::new(Point::new(0.0, 0.6), Size::new(1.0, 0.4)),
+        GLYPH_ATLAS_TEX_INDEX,
+        [0.5, 1.0, 1.0, 1.0],
+        BlendMode::Alpha,
+    );
     batch
+}
+
+fn upload_glyph_colour_pixels(pipeline: &mut WowUiPipeline, queue: &wgpu::Queue) {
+    let mut glyph_pixels =
+        [51, 102, 153, 255].repeat((GLYPH_ATLAS_SIZE * GLYPH_ATLAS_SIZE) as usize);
+    let first_translucent_pixel = (GLYPH_ATLAS_SIZE * GLYPH_ATLAS_SIZE / 2) as usize;
+    for pixel in glyph_pixels
+        .chunks_exact_mut(4)
+        .skip(first_translucent_pixel)
+    {
+        pixel[3] = 128;
+    }
+    pipeline
+        .texture_atlas_mut()
+        .upload_glyph_atlas(queue, &glyph_pixels, GLYPH_ATLAS_SIZE);
 }
 
 #[test]
@@ -94,6 +125,8 @@ fn colour_readback_uses_display_byte_rgb_values() {
         ("texture-srgb-roundtrip", 12, [51, 102, 153, 255]),
         ("solid-half-alpha-over-black", 20, [35, 73, 111, 255]),
         ("additive-display-bytes", 28, [51, 102, 153, 255]),
+        ("glyph-unorm-display-bytes", 36, [51, 102, 153, 255]),
+        ("glyph-unorm-tint-and-alpha", 44, [16, 73, 111, 255]),
     ];
     for (name, x, expected) in &cases {
         eprintln!(
