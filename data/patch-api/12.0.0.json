@@ -86410,7 +86410,7 @@
         },
         {
           "kind": "runtime",
-          "reference": "src/lua_api/frame/methods/text_attribute_event/text/style.rs",
+          "reference": "git:93125f591108a45dac8b124dee1cc59a9524fa2b:src/lua_api/frame/methods/text_attribute_event/text/style.rs",
           "source_hash": "a2ef31d9912c3cb1bee04d3f4757b246784f221f9aef9b93233ab3152b6f22cd",
           "summary": "Bounded best-effort: explicitly-set numeric FontSize=0/Vertex=1 roundtrips, getter one numeric return, setter zero returns, and per-FontString instance isolation. Independent 12.0.0/12.0.5/12.0.7 proof passes 4/4 each at 3b3877603; fmt/check/build/startup/readability passed. Native behavior, defaults, invalid inputs/validation/coercion, animation, layout, rendering, earlier-profile availability, and secret enforcement remain unproven."
         },
@@ -86480,7 +86480,7 @@
         },
         {
           "kind": "runtime",
-          "reference": "src/lua_api/frame/methods/text_attribute_event/text/style.rs",
+          "reference": "git:93125f591108a45dac8b124dee1cc59a9524fa2b:src/lua_api/frame/methods/text_attribute_event/text/style.rs",
           "source_hash": "a2ef31d9912c3cb1bee04d3f4757b246784f221f9aef9b93233ab3152b6f22cd",
           "summary": "Bounded best-effort: explicitly-set numeric FontSize=0/Vertex=1 roundtrips, getter one numeric return, setter zero returns, and per-FontString instance isolation. Independent 12.0.0/12.0.5/12.0.7 proof passes 4/4 each at 3b3877603; fmt/check/build/startup/readability passed. Native behavior, defaults, invalid inputs/validation/coercion, animation, layout, rendering, earlier-profile availability, and secret enforcement remain unproven."
         },
