@@ -17,14 +17,14 @@ VERIFIED: `/var/tmp/osso/prship/m29c-p-int-all.log` ends with 10,573 passed, 69 
 | Action-bar startup and presentation | 7 | (a) | Original ActionButton.lua:808 calls missing overlay Attach; ActionBar.lua:373 calls missing UpdateActionBarLayout. Trace first load errors before treating atlas/layout symptoms as geometry bugs. |
 | Bag-frame revision and fixture selection | 4 | (b) | Seven real container frames observed rather than six; bag-slot template moved. Check selected ContainerFrame source and retain rectangle checks against the new named consumer. |
 | Auction-house token namespace | 4 | (a) | R22 confirms the pinned consumer calls C_WowTokenUI.ShouldDisplayInAuctionHouse(); model this PTR-only getter as always true and test through AuctionHouseCategoriesList.lua:19. |
-| Profile publication expectations | 1 | (c) | What does PTR 12.1.7 C_PartyInfo.GetLootMethodStyle return initially and after SetLootMethod values 0, 1, 2, and 3? APIDoc declares the enum shape, not the runtime selection rule. |
+| Profile publication expectations | 1 | (a) | R23 confirms `GetLootMethodStyle()` reads game rule 157 with default 0 and is independent of group and loot-method state; replace the constant with a live game-rule lookup. |
 | Profession startup and geometry | 3 | (a) | Blacksmithing book button absent; ProfessionsFrame width 1; crafting ValidateControls transaction nil. Trace selected profession model/input before geometry changes. |
 | Game-menu source/API revision | 2 | (b) | PTR GameMenu.toc:7-9 selects shared GameMenuFrame.lua; resolve the current TOC and supply the enabled Shop 2 scenario required by its source gate. |
 | LOD shard 10 errors | 2 | (a) | Both names fail shard 10 baseline. Read the complete emitted load/error entries and repair the original producer; do not raise baseline allowance. |
 | Achievement comparison fixture | 2 | (b) | Original Mainline/Blizzard_AchievementUI.lua:418 now calls SetShown on a fixture child. Supply current original-consumer collaborators, retaining completed/incomplete assertions. |
 | Modified-click mutation | 2 | (a) | R22 proves immediate read-after-write for accepted mutations and says not to model the undocumented PTR context checks; trace simulator state and preserve Retail behavior. |
 | Combo-frame consumer selection | 1 | (b) | Test assumes global ComboFrame although current selected unit-frame consumer differs; trace Blizzard_UnitFrame.toc and Mainline consumer before retargeting. |
-| Missing cooldown duration policy | 1 | (c) | Existing no-state duration assertion fails. Need original API behavior on absent unit/action state if current source does not determine the return. |
+| Missing cooldown duration policy | 1 | (a) | R17 and R23 distinguish an unknown spell (zero Lua results) from a known spell without active cooldown (zero `LuaDurationObject`); verify the original failure at this exact consumer and preserve profile-specific behavior. |
 | PTR eager load-order snapshot | 1 | (b) | PTR 12.1.7 selected-addon order differs from the 12.1.5 fixture; retain a separate source-bound PTR snapshot. |
 | Quest tracker block count | 1 | (a) | Expected at least three visible blocks; observed two. Trace seeded quest and original tracker filtering before changing count. |
 | Spellbook geometry | 1 | (a) | Observed book_bg_gap=1612. Trace named background, parent and selected template before changing lock. |
@@ -118,7 +118,8 @@ Further fixture changes require citations at the point of change; the initial ta
 
 ### Profile publication expectations
 
-- `party_loot_method::loot_method_style_is_mainline_across_method_changes`
+- `party_loot_method::loot_method_style_reads_rule_157_and_ignores_loot_method`
+- `party_loot_method::ptr_loot_method_style_rereads_rule_157_on_game_rules_changed`
 
 ### Profession startup and geometry
 
@@ -178,4 +179,12 @@ VERIFIED (PTR and Retail; same answer as R20): `C_StoreSecure.HasFreePromotional
 
 VERIFIED (PTR): accepted `SetModifiedClick(action, binding)` updates the next `GetModifiedClick(action)` immediately. Known unbound actions return `NONE`, unknown actions return nil, and the setter rejects bad action/binding inputs. INFERRED (PTR): the native setter silently does nothing when any of three additional PTR context checks fail; their meanings are UNKNOWN, so do not model them. Retail has no extra PTR checks.
 
-Two native questions remain from the refined triage: the no-state `C_Spell.GetSpellCooldownDuration` result, and `C_PartyInfo.GetLootMethodStyle` across supplied loot methods. They were sent to the parent for R23 evidence. Runtime implementation remains queued behind the larger stale-source cluster.
+## R23 evidence and implementation decisions
+
+VERIFIED (PTR 12.1.7.70668, native evidence in `pr46-49-decomp-answers.md#r23`): `C_PartyInfo.GetLootMethodStyle()` reads game rule 157 (`LootMethodStyle`) with default 0. It does not read group membership, the selected loot method, or a CVar. R23 also verifies the same expression on Retail 12.1.5.70688. The simulator getter must read the live game-rule value on each call and return 0 when the rule is absent. `SetLootMethod` must not change this value.
+
+VERIFIED (PTR shipped Lua): `GAME_RULES_CHANGED` is synchronous and carries no payload when the game-rule collection is replaced. INFERRED: a consumer that displays loot style must re-read `GetLootMethodStyle()` on that event; there is no style-specific event. Do not make `A_Admin.SetGameRule` synthesize collection-replacement events.
+
+VERIFIED (R17 parsers on Forever 1.60.1.70707 and Retail 12.1.5.70688; PTR 12.1.7.70668 matches per R23): the spell identifier is required and accepts number/string forms; invalid or missing identifiers error. INFERRED (R17/R23 normal results): a valid unknown identifier returns zero Lua values, while a supported spell without an active cooldown returns one zero `LuaDurationObject`, including with `ignoreGCD=true`. Keep cooldown/GCD timing selection unchanged unless another pinned answer requires it.
+
+Design note: implement the loot-style getter from `SimState.game_rules.rules["LootMethodStyle"].as_int`, defaulting to 0, without caching or changing loot-method mutation. Apply R17 `GetSpellCooldownDuration` parser/result behavior only where `uses_r17_duration_behavior()` is true; preserve earlier-profile behavior. Acceptance tests were committed as `56ff76723`.
