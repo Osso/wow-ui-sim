@@ -18699,7 +18699,7 @@
         },
         {
           "kind": "source",
-          "reference": "src/widget/frame_defaults.rs",
+          "reference": "git:93125f591108a45dac8b124dee1cc59a9524fa2b:src/widget/frame_defaults.rs",
           "source_hash": "01e5f7dc30248300c5c33747e9ee107647e932b552a667e86efd152dd6732618",
           "summary": "Cooldown frame defaults initialize threshold storage to numeric 0 in the simulator; this is simulator state, not a native-default claim."
         },
@@ -18742,7 +18742,7 @@
         },
         {
           "kind": "source",
-          "reference": "src/widget/frame_defaults.rs",
+          "reference": "git:93125f591108a45dac8b124dee1cc59a9524fa2b:src/widget/frame_defaults.rs",
           "source_hash": "01e5f7dc30248300c5c33747e9ee107647e932b552a667e86efd152dd6732618",
           "summary": "Cooldown frame defaults initialize threshold storage to numeric 0 in the simulator; this is simulator state, not a native-default claim."
         },
@@ -19093,7 +19093,7 @@
         },
         {
           "kind": "source",
-          "reference": "src/widget/frame_defaults.rs",
+          "reference": "git:93125f591108a45dac8b124dee1cc59a9524fa2b:src/widget/frame_defaults.rs",
           "source_hash": "01e5f7dc30248300c5c33747e9ee107647e932b552a667e86efd152dd6732618",
           "summary": "Cooldown frame defaults initialize threshold storage to numeric 0 in the simulator; this is simulator state, not a native-default claim."
         },
@@ -20236,7 +20236,7 @@
         },
         {
           "kind": "source",
-          "reference": "src/loader/xml_file.rs",
+          "reference": "git:93125f591108a45dac8b124dee1cc59a9524fa2b:src/loader/xml_file.rs",
           "summary": "XML loading registers top-level virtual animation declarations through the shared template registry without creating runtime instances.",
           "source_hash": "eb38b1d3208e693794bb80f2bc8c19fc9897407f9d088d3b47ccc3230060d7b1"
         },

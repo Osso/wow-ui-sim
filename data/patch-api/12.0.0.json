@@ -91250,7 +91250,7 @@
         },
         {
           "kind": "source",
-          "reference": "src/widget/registry/mod.rs",
+          "reference": "git:93125f591108a45dac8b124dee1cc59a9524fa2b:src/widget/registry/mod.rs",
           "source_hash": "04d1831868ab4443b543f51eb95af87059eaee1e867c33a17771e27a46c581d5",
           "summary": "Current registry stores event listeners and returns registered listener IDs, but does not prove producer transitions, dispatch payloads, ordering, or lifecycle for this event."
         },
@@ -91303,7 +91303,7 @@
         },
         {
           "kind": "source",
-          "reference": "src/widget/registry/mod.rs",
+          "reference": "git:93125f591108a45dac8b124dee1cc59a9524fa2b:src/widget/registry/mod.rs",
           "source_hash": "04d1831868ab4443b543f51eb95af87059eaee1e867c33a17771e27a46c581d5",
           "summary": "Current registry stores event listeners and returns registered listener IDs, but does not prove producer transitions, dispatch payloads, ordering, or lifecycle for this event."
         },
@@ -91385,7 +91385,7 @@
         },
         {
           "kind": "source",
-          "reference": "src/widget/registry/mod.rs",
+          "reference": "git:93125f591108a45dac8b124dee1cc59a9524fa2b:src/widget/registry/mod.rs",
           "source_hash": "04d1831868ab4443b543f51eb95af87059eaee1e867c33a17771e27a46c581d5",
           "summary": "Current registry stores event listeners and returns registered listener IDs, but does not prove producer transitions, dispatch payloads, ordering, or lifecycle for this event."
         },
@@ -91886,7 +91886,7 @@
         },
         {
           "kind": "source",
-          "reference": "src/widget/registry/mod.rs",
+          "reference": "git:93125f591108a45dac8b124dee1cc59a9524fa2b:src/widget/registry/mod.rs",
           "source_hash": "04d1831868ab4443b543f51eb95af87059eaee1e867c33a17771e27a46c581d5",
           "summary": "Current registry stores event listeners and returns registered listener IDs, but does not prove producer transitions, dispatch payloads, ordering, or lifecycle for this event."
         },
@@ -91939,7 +91939,7 @@
         },
         {
           "kind": "source",
-          "reference": "src/widget/registry/mod.rs",
+          "reference": "git:93125f591108a45dac8b124dee1cc59a9524fa2b:src/widget/registry/mod.rs",
           "source_hash": "04d1831868ab4443b543f51eb95af87059eaee1e867c33a17771e27a46c581d5",
           "summary": "Current registry stores event listeners and returns registered listener IDs, but does not prove producer transitions, dispatch payloads, ordering, or lifecycle for this event."
         },
@@ -91992,7 +91992,7 @@
         },
         {
           "kind": "source",
-          "reference": "src/widget/registry/mod.rs",
+          "reference": "git:93125f591108a45dac8b124dee1cc59a9524fa2b:src/widget/registry/mod.rs",
           "source_hash": "04d1831868ab4443b543f51eb95af87059eaee1e867c33a17771e27a46c581d5",
           "summary": "Current registry stores event listeners and returns registered listener IDs, but does not prove producer transitions, dispatch payloads, ordering, or lifecycle for this event."
         },
@@ -92045,7 +92045,7 @@
         },
         {
           "kind": "source",
-          "reference": "src/widget/registry/mod.rs",
+          "reference": "git:93125f591108a45dac8b124dee1cc59a9524fa2b:src/widget/registry/mod.rs",
           "source_hash": "04d1831868ab4443b543f51eb95af87059eaee1e867c33a17771e27a46c581d5",
           "summary": "Current registry stores event listeners and returns registered listener IDs, but does not prove producer transitions, dispatch payloads, ordering, or lifecycle for this event."
         },
@@ -92098,7 +92098,7 @@
         },
         {
           "kind": "source",
-          "reference": "src/widget/registry/mod.rs",
+          "reference": "git:93125f591108a45dac8b124dee1cc59a9524fa2b:src/widget/registry/mod.rs",
           "source_hash": "04d1831868ab4443b543f51eb95af87059eaee1e867c33a17771e27a46c581d5",
           "summary": "Current registry stores event listeners and returns registered listener IDs, but does not prove producer transitions, dispatch payloads, ordering, or lifecycle for this event."
         },
@@ -92151,7 +92151,7 @@
         },
         {
           "kind": "source",
-          "reference": "src/widget/registry/mod.rs",
+          "reference": "git:93125f591108a45dac8b124dee1cc59a9524fa2b:src/widget/registry/mod.rs",
           "source_hash": "04d1831868ab4443b543f51eb95af87059eaee1e867c33a17771e27a46c581d5",
           "summary": "Current registry stores event listeners and returns registered listener IDs, but does not prove producer transitions, dispatch payloads, ordering, or lifecycle for this event."
         },
@@ -93020,7 +93020,7 @@
         },
         {
           "kind": "source",
-          "reference": "src/widget/registry/mod.rs",
+          "reference": "git:93125f591108a45dac8b124dee1cc59a9524fa2b:src/widget/registry/mod.rs",
           "source_hash": "04d1831868ab4443b543f51eb95af87059eaee1e867c33a17771e27a46c581d5",
           "summary": "Current registry stores event listeners and returns registered listener IDs, but does not prove producer transitions, dispatch payloads, ordering, or lifecycle for this event."
         },
@@ -93073,7 +93073,7 @@
         },
         {
           "kind": "source",
-          "reference": "src/widget/registry/mod.rs",
+          "reference": "git:93125f591108a45dac8b124dee1cc59a9524fa2b:src/widget/registry/mod.rs",
           "source_hash": "04d1831868ab4443b543f51eb95af87059eaee1e867c33a17771e27a46c581d5",
           "summary": "Current registry stores event listeners and returns registered listener IDs, but does not prove producer transitions, dispatch payloads, ordering, or lifecycle for this event."
         },
@@ -93126,7 +93126,7 @@
         },
         {
           "kind": "source",
-          "reference": "src/widget/registry/mod.rs",
+          "reference": "git:93125f591108a45dac8b124dee1cc59a9524fa2b:src/widget/registry/mod.rs",
           "source_hash": "04d1831868ab4443b543f51eb95af87059eaee1e867c33a17771e27a46c581d5",
           "summary": "Current registry stores event listeners and returns registered listener IDs, but does not prove producer transitions, dispatch payloads, ordering, or lifecycle for this event."
         },
@@ -93179,7 +93179,7 @@
         },
         {
           "kind": "source",
-          "reference": "src/widget/registry/mod.rs",
+          "reference": "git:93125f591108a45dac8b124dee1cc59a9524fa2b:src/widget/registry/mod.rs",
           "source_hash": "04d1831868ab4443b543f51eb95af87059eaee1e867c33a17771e27a46c581d5",
           "summary": "Current registry stores event listeners and returns registered listener IDs, but does not prove producer transitions, dispatch payloads, ordering, or lifecycle for this event."
         },
@@ -93232,7 +93232,7 @@
         },
         {
           "kind": "source",
-          "reference": "src/widget/registry/mod.rs",
+          "reference": "git:93125f591108a45dac8b124dee1cc59a9524fa2b:src/widget/registry/mod.rs",
           "source_hash": "04d1831868ab4443b543f51eb95af87059eaee1e867c33a17771e27a46c581d5",
           "summary": "Current registry stores event listeners and returns registered listener IDs, but does not prove producer transitions, dispatch payloads, ordering, or lifecycle for this event."
         },
@@ -93519,7 +93519,7 @@
         },
         {
           "kind": "source",
-          "reference": "src/widget/registry/mod.rs",
+          "reference": "git:93125f591108a45dac8b124dee1cc59a9524fa2b:src/widget/registry/mod.rs",
           "source_hash": "04d1831868ab4443b543f51eb95af87059eaee1e867c33a17771e27a46c581d5",
           "summary": "Current registry stores event listeners and returns registered listener IDs, but does not prove producer transitions, dispatch payloads, ordering, or lifecycle for this event."
         },
@@ -93572,7 +93572,7 @@
         },
         {
           "kind": "source",
-          "reference": "src/widget/registry/mod.rs",
+          "reference": "git:93125f591108a45dac8b124dee1cc59a9524fa2b:src/widget/registry/mod.rs",
           "source_hash": "04d1831868ab4443b543f51eb95af87059eaee1e867c33a17771e27a46c581d5",
           "summary": "Current registry stores event listeners and returns registered listener IDs, but does not prove producer transitions, dispatch payloads, ordering, or lifecycle for this event."
         },
@@ -93625,7 +93625,7 @@
         },
         {
           "kind": "source",
-          "reference": "src/widget/registry/mod.rs",
+          "reference": "git:93125f591108a45dac8b124dee1cc59a9524fa2b:src/widget/registry/mod.rs",
           "source_hash": "04d1831868ab4443b543f51eb95af87059eaee1e867c33a17771e27a46c581d5",
           "summary": "Current registry stores event listeners and returns registered listener IDs, but does not prove producer transitions, dispatch payloads, ordering, or lifecycle for this event."
         },
@@ -93678,7 +93678,7 @@
         },
         {
           "kind": "source",
-          "reference": "src/widget/registry/mod.rs",
+          "reference": "git:93125f591108a45dac8b124dee1cc59a9524fa2b:src/widget/registry/mod.rs",
           "source_hash": "04d1831868ab4443b543f51eb95af87059eaee1e867c33a17771e27a46c581d5",
           "summary": "Current registry stores event listeners and returns registered listener IDs, but does not prove producer transitions, dispatch payloads, ordering, or lifecycle for this event."
         },
@@ -103312,7 +103312,7 @@
         },
         {
           "kind": "source",
-          "reference": "src/lua_api/loader_env.rs",
+          "reference": "git:93125f591108a45dac8b124dee1cc59a9524fa2b:src/lua_api/loader_env.rs",
           "summary": "Generic event dispatch forwards supplied arguments but does not prove combat-log producer behavior.",
           "source_hash": "d18fd6fd83be0b247a3089cb8a3aff626dca36dc7606c8b5578787acf455395e"
         },
@@ -112838,7 +112838,7 @@
         },
         {
           "kind": "source",
-          "reference": "src/widget/frame.rs",
+          "reference": "git:93125f591108a45dac8b124dee1cc59a9524fa2b:src/widget/frame.rs",
           "source_hash": "761fbd27dc0ab5024059e44d5a93e1227833bad7f3d98a65c42e448c2d295b9e",
           "summary": "Frame.statusbar_fill_style is numeric u8 state (0..3); getter reads this instance state. This does not establish rendering or initial-default semantics."
         },
@@ -112885,7 +112885,7 @@
         },
         {
           "kind": "source",
-          "reference": "src/widget/frame.rs",
+          "reference": "git:93125f591108a45dac8b124dee1cc59a9524fa2b:src/widget/frame.rs",
           "source_hash": "761fbd27dc0ab5024059e44d5a93e1227833bad7f3d98a65c42e448c2d295b9e",
           "summary": "Frame.statusbar_fill_style is numeric u8 state (0..3); getter reads this instance state. This does not establish rendering or initial-default semantics."
         },

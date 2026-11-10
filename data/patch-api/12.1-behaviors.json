@@ -961,7 +961,7 @@
         },
         {
           "kind": "source",
-          "reference": "docs/specs/duration-text-binding.md",
+          "reference": "git:93125f591108a45dac8b124dee1cc59a9524fa2b:docs/specs/duration-text-binding.md",
           "summary": "Modeled userdata binding identity, raw table-access rejection, independent copied configuration, and retained duration/clock/formatter/font-string/curve references through collection. Native metatable, finalization, ownership/invalidation, GC timing, and secrecy equivalence remain unverified.",
           "source_hash": "553e526609e7644b12d5d543b12e036f7eb326d0e875612a03c305e0a82886f9"
         },
