@@ -559,9 +559,13 @@ fn assert_mists_residual_inputs(env: &WowLuaEnv, test: &str) {
             r#"
             assert(not MultiBarLeft:IsShown() and not MultiBarRight:IsShown())
             local managed = UIParentRightManagedFrameContainer:GetLayoutChildren()
-            assert(#managed == 1, "only the below-minimap widget frame is eligible")
+            local names = {}
+            for _, child in ipairs(managed) do
+                names[#names + 1] = child:GetName() or "<unnamed>"
+            end
+            assert(#managed == 1, "eligible right-managed children: " .. table.concat(names, ","))
             assert(managed[1] == UIWidgetBelowMinimapContainerFrame, "native managed child identity")
-            assert(UIWidgetBelowMinimapContainerFrame:GetParent() == UIParentRightManagedFrameContainer)
+            assert(UIWidgetBelowMinimapContainerFrame:GetParent() == UIParentRightManagedFrameContainer, "below-minimap managed parent")
             assert(UIWidgetBelowMinimapContainerFrame:GetNumWidgetsShowing() == 0, "empty widget-set fixture")
             assert(UIWidgetBelowMinimapContainerFrame:GetWidth() == 1, "empty resize layout width")
             assert(UIWidgetBelowMinimapContainerFrame:GetHeight() == 1, "empty resize layout height")
