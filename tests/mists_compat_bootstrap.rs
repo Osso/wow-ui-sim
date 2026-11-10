@@ -686,7 +686,7 @@ fn mists_bootstrap_supplies_settings_label_globals() {
 
     assert_eq!(
         result,
-        ("Show aggro percentages".to_string(), "Healing".to_string()),
+        ("Show Aggro Percentages".to_string(), "Healing".to_string()),
         "Mists settings variables should not register nil display names"
     );
 }

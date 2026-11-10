@@ -64,8 +64,10 @@ fn build_action_bar_env() -> WowLuaEnv {
         state.addon_base_paths = vec![blizzard_ui_dir()];
     }
 
-    for addon_name in ACTION_BAR_ADDONS {
-        common::load_required_blizzard_addon(&env, &blizzard_ui_dir(), addon_name);
+    if !common::load_classic_game_startup_inventory(&env) {
+        for addon_name in ACTION_BAR_ADDONS {
+            common::load_required_blizzard_addon(&env, &blizzard_ui_dir(), addon_name);
+        }
     }
 
     env.apply_post_load_workarounds();

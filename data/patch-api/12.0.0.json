@@ -87989,7 +87989,7 @@
         {
           "kind": "source",
           "reference": "src/mists/compat_bootstrap.lua",
-          "source_hash": "df16edde02e50717987d8f2e39e927ea5b7f06084d046cf51c3131c9f32e9ebb",
+          "source_hash": "1e715f67140d73d3e0c937351dee4ee3d6a87e464af37e4cde3802b6b36d30ff",
           "summary": "Mists-only compatibility shim returns false and does not establish Retail behavior."
         },
         {
@@ -112020,7 +112020,7 @@
         {
           "kind": "source",
           "reference": "src/mists/compat_bootstrap.lua",
-          "source_hash": "df16edde02e50717987d8f2e39e927ea5b7f06084d046cf51c3131c9f32e9ebb",
+          "source_hash": "1e715f67140d73d3e0c937351dee4ee3d6a87e464af37e4cde3802b6b36d30ff",
           "summary": "Current non-retail compatibility code supplies a constant-false IsRaidMarkerActive fallback; no retail shared raid-marker state or producer is modeled."
         },
         {

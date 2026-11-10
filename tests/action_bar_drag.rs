@@ -58,8 +58,10 @@ fn blizzard_ui_dir() -> PathBuf {
 fn load_action_bar_addons(env: &WowLuaEnv) {
     let ui = blizzard_ui_dir();
     env.state().borrow_mut().addon_base_paths = vec![ui.clone()];
-    for addon_name in ACTION_BAR_ADDONS {
-        common::load_required_blizzard_addon(env, &ui, addon_name);
+    if !common::load_classic_game_startup_inventory(env) {
+        for addon_name in ACTION_BAR_ADDONS {
+            common::load_required_blizzard_addon(env, &ui, addon_name);
+        }
     }
 }
 

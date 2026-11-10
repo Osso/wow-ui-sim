@@ -95,9 +95,11 @@ fn load_guild_ui(env: WowLuaEnv) -> WowLuaEnv {
         return env;
     }
 
-    let ui = blizzard_ui_dir();
-    for addon_name in GUILD_ADDONS {
-        common::load_required_blizzard_addon(&env, &ui, addon_name);
+    if !common::load_classic_game_startup_inventory(&env) {
+        let ui = blizzard_ui_dir();
+        for addon_name in GUILD_ADDONS {
+            common::load_required_blizzard_addon(&env, &ui, addon_name);
+        }
     }
 
     env.apply_post_load_workarounds();

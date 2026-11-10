@@ -441,7 +441,7 @@ fn dep_directories_exist_on_disk() {
         }
         return;
     }
-    for dep in TOC_DEPENDENCIES {
+    for dep in toc_dependencies() {
         let dir = blizzard_ui_dir().join(dep);
         assert!(
             dir.is_dir(),

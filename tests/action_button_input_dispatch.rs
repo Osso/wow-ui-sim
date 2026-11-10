@@ -58,9 +58,11 @@ fn build_action_bar_env() -> WowLuaEnv {
         let mut state = env.state().borrow_mut();
         state.addon_base_paths = vec![blizzard_ui_dir()];
     }
-    let ui = blizzard_ui_dir();
-    for addon_name in ACTION_BAR_ADDONS {
-        common::load_required_blizzard_addon(&env, &ui, addon_name);
+    if !common::load_classic_game_startup_inventory(&env) {
+        let ui = blizzard_ui_dir();
+        for addon_name in ACTION_BAR_ADDONS {
+            common::load_required_blizzard_addon(&env, &ui, addon_name);
+        }
     }
     env.apply_post_load_workarounds();
     fire_startup_events(&env);

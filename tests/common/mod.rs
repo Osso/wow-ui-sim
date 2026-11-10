@@ -13,9 +13,9 @@ pub mod auction_fixtures;
 pub mod aura_container_harness;
 pub mod blizzard_addon_harness;
 pub mod blizzard_addon_manifest;
-pub mod grouped_fixture;
 mod event_helpers;
 pub mod game_menu_fixture;
+pub mod grouped_fixture;
 pub mod panel_fixtures;
 #[cfg(target_os = "linux")]
 pub(crate) mod prefork_process;
@@ -274,12 +274,7 @@ pub fn load_blizzard_addon_bootstrap(
 /// and loads in TOC order. A name the active profile's TOC does not declare is not
 /// loaded, so profile-specific producers (`[Family]`/`[Game]` variants) resolve without
 /// per-profile test code; the files a test depends on still fail loudly when missing.
-pub fn load_blizzard_addon_lua_files(
-    env: &WowLuaEnv,
-    ui: &Path,
-    addon_name: &str,
-    files: &[&str],
-) {
+pub fn load_blizzard_addon_lua_files(env: &WowLuaEnv, ui: &Path, addon_name: &str, files: &[&str]) {
     let addon_dir = ui.join(addon_name);
     let toc_path = find_toc_file(&addon_dir).unwrap_or_else(|| {
         panic!(
@@ -314,12 +309,7 @@ fn create_addon_table(env: &WowLuaEnv, addon_name: &str) -> rilua::Val {
         .unwrap_or_else(|error| panic!("failed to create addon table for {addon_name}: {error}"))
 }
 
-fn exec_addon_lua_file(
-    env: &WowLuaEnv,
-    addon_name: &str,
-    addon_table: rilua::Val,
-    path: &Path,
-) {
+fn exec_addon_lua_file(env: &WowLuaEnv, addon_name: &str, addon_table: rilua::Val, path: &Path) {
     let source = std::fs::read_to_string(path)
         .unwrap_or_else(|error| panic!("failed to read {}: {error}", path.display()));
     let chunk_name = path.display().to_string();
@@ -373,10 +363,9 @@ pub fn load_game_startup_inventory(env: &WowLuaEnv) {
     let ui = blizzard_ui_dir();
     env.set_screen_mode(wow_ui_sim::screen::ScreenKind::Game);
     load_profile_framexml(env);
-    for addon in discover_blizzard_startup_addons_for_screen(
-        &ui,
-        wow_ui_sim::screen::ScreenKind::Game,
-    ) {
+    for addon in
+        discover_blizzard_startup_addons_for_screen(&ui, wow_ui_sim::screen::ScreenKind::Game)
+    {
         load_startup_addon(&env.loader_env(), &addon.toc_path, addon.kind, None)
             .unwrap_or_else(|error| panic!("load startup {}: {error}", addon.name));
         if addon.name == "Blizzard_EnvironmentCleanup" {
@@ -384,6 +373,25 @@ pub fn load_game_startup_inventory(env: &WowLuaEnv) {
         }
     }
     env.sync_string_metatable_to_global_string();
+}
+
+pub fn is_classic_ui_profile() -> bool {
+    matches!(
+        wow_ui_sim::client_profile::ACTIVE,
+        wow_ui_sim::client_profile::ClientProfile::Mists
+            | wow_ui_sim::client_profile::ClientProfile::Era
+            | wow_ui_sim::client_profile::ClientProfile::Anniversary
+    )
+}
+
+/// Use production's selected startup TOCs for the three Classic profiles.
+/// Return true when the fixture no longer needs a hand-written addon list.
+pub fn load_classic_game_startup_inventory(env: &WowLuaEnv) -> bool {
+    if !is_classic_ui_profile() {
+        return false;
+    }
+    load_game_startup_inventory(env);
+    true
 }
 
 /// Load the active profile's native panel templates, not a synthetic replacement.
