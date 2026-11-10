@@ -1,6 +1,9 @@
 ## [2026-11-10] fix | Mists frame-position residuals
 
 Updated the [frame-position investigation](investigations/frame-position-baseline-drift.md#mists-frame-residuals--2026-11-10) and [profile contract](../specs/frame-position-profile-baselines.md) with pinned-source Mists bag, aura, action-bar, status-bar and WatchFrame-managed right-container geometry. The simulator no longer synthesizes ObjectiveTrackerFrame on Mists, where the selected Blizzard UI has no producer; the test asserts absence. VERIFIED at `3c36dab15`: Mists `frame_positions` passes 25/28; `micro_menu`, `micro_menu_container` and `casting_bar` remain open.
+## [2026-11-10] system | ScriptObject full lockdown
+
+Created [ScriptObject full lockdown](systems/script-object-full-lockdown.md) and its contract. R18's full-lock predicate, scoped XML default, creation-time inheritance, `IsForbidden` union and five measured API consumers are separate from ordinary forbidden, aura restrictions and combat protection. Retail and Forever integration filters pass 7/7 each; six-profile all-target checks plus Wrath, Retail/Forever library suites, Retail filters and manifest bin tests pass with zero compiler warnings. The [lane report](../../handoff/full-lockdown-model/REPORT.md) records proofs and UNKNOWN edges.
 
 ## [2026-11-09] correction | PTR 12.1.7 FrameXML removed-symbol runtime rows
 

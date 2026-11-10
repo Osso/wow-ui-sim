@@ -1,5 +1,9 @@
 > Proof receipts live untracked under `~/.local/state/wow-ui-sim`. The `data/patch-api/evidence` and `data/test-perf/evidence` trees were removed on 2026-11-08; historical links below are records, not live paths. Recover a file with `git show c011c1d95:<path>`.
 
+## [2026-11-10] system | ScriptObject full lockdown
+
+[ScriptObject full lockdown](systems/script-object-full-lockdown.md) links the R18 model and its contract: distinct full-lock and forbidden states, access-allowed absence, scoped XML defaults, parent inheritance, and five measured secure/tainted resolver consumers. Retail and Forever native-consumer integration filters pass 7/7 each; six-profile all-target checks plus Wrath, both library suites, and the manifest bin tests pass with zero compiler warnings. See the [lane report](../../handoff/full-lockdown-model/REPORT.md) for exact outputs and UNKNOWNs.
+
 ## [2026-11-09] investigation | Reconcile profile frame-position baselines
 
 [Frame-position baseline drift](investigations/frame-position-baseline-drift.md#verified-lane-result--2026-11-09) records source-derived PTR, Forever and Classic expectations, profile-specific absent-frame checks, six-profile failure matrices, and unresolved model/input divergences. Its Mists follow-ups record source-asserted Edit Mode unit-frame anchors, StanceBar replay ordering, managed ChatFrame position, seven more source-derived frame contracts, the WatchFrame-managed right container, and ObjectiveTracker absence; the three unresolved Mists cases remain open. Forever bag, status-manager and managed-right residuals use Camelot source-derived fixture geometry, and Forever passes all 28 cases.

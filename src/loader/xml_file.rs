@@ -326,8 +326,8 @@ fn enter_scoped_modifier(
     if scoped.forbidden.unwrap_or(false) {
         state.loading_forbidden = true;
     }
-    if scoped.full_lockdown.unwrap_or(false) {
-        state.loading_full_lockdown = true;
+    if let Some(full_lockdown) = scoped.full_lockdown {
+        state.loading_full_lockdown = full_lockdown;
     }
     if let Some(scoped_env) = scoped_env {
         state.loading_scoped_script_env = Some(scoped_env);

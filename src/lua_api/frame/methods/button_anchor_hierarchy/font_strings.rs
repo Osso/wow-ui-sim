@@ -1,7 +1,8 @@
 //! FontString methods: GetFontString, SetFontString, CreateFontString.
 
 use crate::lua_api::methods::{
-    borrow_state, borrow_state_mut, extract_frame_id, frame_id_from_stack, frame_ref,
+    borrow_state, borrow_state_mut, extract_frame_id, frame_id_from_stack,
+    frame_id_from_stack_reject_fully_locked_down, frame_id_from_stack_unrestricted, frame_ref,
     registry_table_or_create, sync_child_to_rilua, table_get, table_get_static, table_set,
     val_to_string,
 };
@@ -196,8 +197,27 @@ fn attach_font_string_to_button(state: &mut LuaState, id: u64, fs_id: u64) -> Lu
 
 /// CreateFontString([name [, layer [, inherits]]]) -> fontstring
 pub(super) fn create_font_string(state: &mut LuaState) -> LuaResult<u32> {
+    let parent_id = frame_id_from_stack_reject_fully_locked_down(state, 1)?;
+    let parent_forbidden = borrow_state(state)?
+        .widgets
+        .get(parent_id)
+        .is_some_and(|frame| frame.forbidden);
+    if parent_forbidden && !rilua::api::state_is_secure(state) {
+        return Err(rilua::runtime_error(
+            "Attempt to access forbidden object from code tainted by an AddOn",
+        ));
+    }
+    create_font_string_for_parent(state, parent_id)
+}
+
+/// XML loading creates regions through its native construction path, not the Lua resolver.
+pub(crate) fn create_font_string_for_xml(state: &mut LuaState) -> LuaResult<u32> {
+    let parent_id = frame_id_from_stack_unrestricted(state, 1)?;
+    create_font_string_for_parent(state, parent_id)
+}
+
+fn create_font_string_for_parent(state: &mut LuaState, parent_id: u64) -> LuaResult<u32> {
     use crate::widget::{DrawLayer, Frame, WidgetType};
-    let parent_id = frame_id_from_stack(state, 1)?;
     let name_raw: Option<String> = Option::<String>::from_stack(state, 2)?;
     let layer = opt_string(state, 3);
     let inherits = opt_string(state, 4);
