@@ -62,15 +62,15 @@ fn mists_r21_currency_original_backpack_ui_observes_watch_changes() {
                 for i = 1, 3 do
                     local button = _G['BackpackTokenFrameToken' .. i]
                     local name, count, icon, id = GetBackpackCurrencyInfo(i)
-                    assert(name and button:IsShown() and button.currencyID == id)
+                    assert(name and button:IsShown() and button.itemID == id)
                     assert(button.icon:GetTexture() == icon)
                     assert(button.count:GetText() == (count <= 99999 and tostring(count) or '*'))
                 end
-                local oldFirst = BackpackTokenFrameToken1.currencyID
+                local oldFirst = BackpackTokenFrameToken1.itemID
                 SetCurrencyBackpack(R21CurrencyRows[1], 0)
                 BackpackTokenFrame_Update()
-                assert(BackpackTokenFrameToken1.currencyID ~= oldFirst, 'UI updates after unwatch')
-                assert(BackpackTokenFrameToken3.currencyID == select(12, GetCurrencyListInfo(R21CurrencyRows[4])))
+                assert(BackpackTokenFrameToken1.itemID ~= oldFirst, 'UI updates after unwatch')
+                assert(BackpackTokenFrameToken3.itemID == select(12, GetCurrencyListInfo(R21CurrencyRows[4])))
             "#).unwrap();
         },
     );
