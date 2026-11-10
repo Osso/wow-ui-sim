@@ -159,6 +159,40 @@ fn original_bag_targeting_projects_supplied_current_cast_eligibility() {
 }
 
 #[test]
+fn mists_r21_engraving_setter_dispatches_repeated_values_to_original_bag() {
+    let env = supplied_env();
+    env.exec(r#"
+        local source = debug.getinfo(ContainerFrame_OnEvent, 'S').source:gsub('\\', '/')
+        assert(source:find('Blizzard_UIPanels_Game/Classic/ContainerFrame_Shared.lua', 1, true), source)
+        local observations = {}
+        local observer = CreateFrame('Frame')
+        observer:RegisterEvent('ENGRAVING_MODE_CHANGED')
+        observer:SetScript('OnEvent', function(_, event, enabled, ...)
+            assert(event == 'ENGRAVING_MODE_CHANGED' and select('#', ...) == 0)
+            assert(C_Engraving.GetEngravingModeEnabled() == enabled, 'flag is set before event')
+            observations[#observations + 1] = enabled
+        end)
+        C_Engraving.SetEngravingModeEnabled(false)
+        assert(#observations == 1 and observations[1] == false, 'synchronous false event')
+        assert(not EngravingBagButtons[1].subicon:IsShown(), 'original event consumer hides rune')
+        C_Engraving.SetEngravingModeEnabled(true)
+        assert(#observations == 2 and observations[2] == true)
+        assert(EngravingBagButtons[1].subicon:IsShown(), 'original event consumer shows rune')
+        C_Engraving.SetEngravingModeEnabled(true)
+        assert(#observations == 3 and observations[3] == true, 'unchanged flag still fires')
+        C_Engraving.SetEngravingModeEnabled(false)
+        assert(#observations == 4 and observations[4] == false)
+        assert(not EngravingBagButtons[1].subicon:IsShown())
+    "#).unwrap();
+    let other = WowLuaEnv::new().unwrap();
+    assert!(
+        !other
+            .eval::<bool>("return C_Engraving.GetEngravingModeEnabled()")
+            .unwrap()
+    );
+}
+
+#[test]
 fn direct_engraving_queries_project_records_and_reject_unsupplied_inputs() {
     // Native mode default is false: the only pinned producer is
     // Blizzard_EngravingUI OnShow/OnHide, which sets true/false.
@@ -215,18 +249,23 @@ fn direct_engraving_queries_project_records_and_reject_unsupplied_inputs() {
     .unwrap();
     assert_eq!(env.state().borrow().engraving.refresh_requests, 2);
     env.state().borrow_mut().engraving.mode_enabled = Some(false);
-    assert!(!env
-        .eval::<bool>("return C_Engraving.GetEngravingModeEnabled()")
-        .unwrap());
+    assert!(
+        !env.eval::<bool>("return C_Engraving.GetEngravingModeEnabled()")
+            .unwrap()
+    );
     let other = WowLuaEnv::new().unwrap();
     assert_eq!(other.state().borrow().engraving.enabled, Some(false));
     assert_eq!(other.state().borrow().engraving.refresh_requests, 0);
-    assert!(!other
-        .eval::<bool>("return C_Engraving.GetEngravingModeEnabled()")
-        .unwrap());
-    assert!(other
-        .eval::<bool>("return C_Engraving.GetCurrentRuneCast() == nil")
-        .unwrap());
+    assert!(
+        !other
+            .eval::<bool>("return C_Engraving.GetEngravingModeEnabled()")
+            .unwrap()
+    );
+    assert!(
+        other
+            .eval::<bool>("return C_Engraving.GetCurrentRuneCast() == nil")
+            .unwrap()
+    );
     env.state().borrow_mut().engraving.mode_enabled = None;
     env.exec(
         r#"
