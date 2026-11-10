@@ -178,29 +178,63 @@ fn body_resolves_bootstrap_then_xml_entry() {
         .map(|p| p.to_string_lossy().to_string())
         .collect();
 
-    assert_eq!(
-        body,
+    let expected = if cfg!(feature = "client-wowforever") {
+        // Forever's TOC lists the shared Lua and [Game] Camelot Lua before
+        // XML (Blizzard_SubscriptionInterstitialUI.toc:3-6).
+        vec![
+            "Blizzard_SubscriptionInterstitialUI_Bootstrap.lua".to_string(),
+            "Blizzard_SubscriptionInterstitialUI.lua".to_string(),
+            "Camelot/Blizzard_SubscriptionInterstitialUI.lua".to_string(),
+            "Blizzard_SubscriptionInterstitialUI.xml".to_string(),
+        ]
+    } else {
         vec![
             "Blizzard_SubscriptionInterstitialUI_Bootstrap.lua".to_string(),
             "Blizzard_SubscriptionInterstitialUI.xml".to_string(),
-        ],
-        "Bootstrap loads before the XML, which chains the matching .lua via <Script file=...>. \
-         Got: {body:?}"
-    );
+        ]
+    };
+    assert_eq!(body, expected, "active-profile TOC body: {body:?}");
 }
 }
 
 post_wrath_ui_fixture! {
 #[test]
-fn xml_chains_lua_via_script_file_directive() {
+fn subscription_lua_loads_before_xml_for_active_profile() {
+    if cfg!(feature = "client-wowforever") {
+        // The Forever TOC lists both Lua entries directly before XML
+        // (Blizzard_SubscriptionInterstitialUI.toc:3-6).
+        let toc = TocFile::from_file(&subscription_interstitial_toc()).expect("TOC parses");
+        let body: Vec<String> = toc
+            .files
+            .iter()
+            .map(|path| path.to_string_lossy().to_string())
+            .collect();
+        let xml_index = body
+            .iter()
+            .position(|path| path == "Blizzard_SubscriptionInterstitialUI.xml")
+            .expect("TOC lists the XML consumer");
+        let lua_positions: Vec<usize> = body
+            .iter()
+            .enumerate()
+            .filter_map(|(index, path)| {
+                path.ends_with("Blizzard_SubscriptionInterstitialUI.lua")
+                    .then_some(index)
+            })
+            .collect();
+
+        assert_eq!(lua_positions.len(), 2, "Forever Lua entries: {body:?}");
+        assert!(
+            lua_positions.iter().all(|index| index < &xml_index),
+            "Forever Lua implementations must load before XML: {body:?}"
+        );
+        return;
+    }
+
     let xml_path = subscription_interstitial_dir().join("Blizzard_SubscriptionInterstitialUI.xml");
     let raw = std::fs::read_to_string(&xml_path).expect("XML reads");
-
     assert!(
         raw.contains("<Script file=\"Blizzard_SubscriptionInterstitialUI.lua\""),
-        "XML must `<Script file=\"Blizzard_SubscriptionInterstitialUI.lua\"/>` \
-         — drives the 5-mixin publication chain since the .lua is NOT \
-         listed in the TOC body directly"
+        "active-profile XML must load its Lua consumer with a Script directive"
     );
 }
 }
