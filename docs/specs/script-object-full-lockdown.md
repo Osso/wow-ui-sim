@@ -4,12 +4,12 @@ VERIFIED R18 predicates distinguish ScriptObject full lockdown from ordinary for
 
 ## What it must do
 
-- [ ] Model full lockdown as true when the explicit full-lockdown flag is set or the access-allowed flag is absent. New objects start with access allowed.
-- [ ] At child creation, inherit full lockdown from a fully locked parent and inherit its missing access-allowed state. Do not infer propagation to existing children or reparent transitions.
-- [ ] Apply `ScopedModifier fullLockdown="true"` to the creation default; `false` clears that default for the scope. Restore the prior default when the scope exits.
-- [ ] Make `IsForbidden()` true for ordinary forbidden state or full lockdown. `SetForbidden()` must not set full lockdown or clear access-allowed state.
-- [ ] Reject these measured locked-down-disallowed APIs for secure and tainted callers with `Attempt to access fully locked-down object.`: `DurationTextBinding:SetFontString`, `FontString:CanWordWrap`, `FontString:CanNonSpaceWrap`, `FontString:ClearAlphaGradient`, and `Frame:CreateFontString` on a fully locked receiver.
-- [ ] Keep full lockdown independent from aura access restrictions, `IsProtected()`, and `InCombatLockdown()`.
+- [x] Model full lockdown as true when the explicit full-lockdown flag is set or the access-allowed flag is absent. New objects start with access allowed.
+- [x] At child creation, inherit full lockdown from a fully locked parent and inherit its missing access-allowed state. Do not infer propagation to existing children or reparent transitions.
+- [x] Apply `ScopedModifier fullLockdown="true"` to the creation default; `false` clears that default for the scope. Restore the prior default when the scope exits.
+- [x] Make `IsForbidden()` true for ordinary forbidden state or full lockdown. `SetForbidden()` must not set full lockdown or clear access-allowed state.
+- [x] Reject these measured locked-down-disallowed APIs for secure and tainted callers with `Attempt to access fully locked-down object.`: `DurationTextBinding:SetFontString`, `FontString:CanWordWrap`, `FontString:CanNonSpaceWrap`, `FontString:ClearAlphaGradient`, and `Frame:CreateFontString` on a fully locked receiver.
+- [x] Keep full lockdown independent from aura access restrictions, `IsProtected()`, and `InCombatLockdown()`.
 
 ## How it works
 
@@ -34,7 +34,7 @@ VERIFIED R18 predicates distinguish ScriptObject full lockdown from ordinary for
 
 ## Known gaps (current cycle)
 
-- [ ] Run the requested Retail, Forever, profile-build, and filtered integration gates; keep these items unchecked until their results are recorded.
+All requested gates passed. See the [lane report](../../handoff/full-lockdown-model/REPORT.md) for commands, counts, warning totals, and source limits.
 
 ## Out of scope
 

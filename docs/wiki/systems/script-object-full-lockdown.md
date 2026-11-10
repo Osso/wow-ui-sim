@@ -24,6 +24,10 @@ VERIFIED R18 lists these APIs as using the locked-down-disallowed resolver:
 
 INFERRED completed Lua outcome: each rejects a fully locked object for secure and tainted callers with `Attempt to access fully locked-down object.`. A tainted caller is also rejected by the ordinary forbidden check where the API applies that separate check. The XML loader uses a private constructor passed only to its generated chunk; it does not call the public `Frame:CreateFontString` resolver when it creates a FontString inside a full-lockdown scope.
 
+## Verification
+
+The bounded Retail and WowForever integration runs passed 7/7 each, including the original AuthChallengeUI and DurationTextBinding consumers. Six profile all-target checks, the Wrath compile, both library suites, the Retail filtered suites, and the manifest tests passed with zero compiler warnings. See the [lane report](../../../handoff/full-lockdown-model/REPORT.md) for exact results and receipts.
+
 ## Evidence limits
 
 UNKNOWN: live native reproduction; whether arbitrary AddOns may use `fullLockdown`; the engine's masking policy; complete writer and API inventories; the source of a missing access-allowed flag; teardown behavior; propagation to existing children; and reparent behavior. R18 found no Lua mutator, but that search does not prove none exists. R18's cached Forever XML example was itself marked unverified for build identity.

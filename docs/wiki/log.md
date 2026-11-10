@@ -1,6 +1,6 @@
 ## [2026-11-10] system | ScriptObject full lockdown
 
-Created [ScriptObject full lockdown](systems/script-object-full-lockdown.md) and its contract. R18's full-lock predicate, scoped XML default, creation-time inheritance, `IsForbidden` union and five measured API consumers are separated from ordinary forbidden, aura restrictions and combat protection. Static evidence limits and UNKNOWN lifecycle/API edges stay explicit; integration gates remain pending.
+Created [ScriptObject full lockdown](systems/script-object-full-lockdown.md) and its contract. R18's full-lock predicate, scoped XML default, creation-time inheritance, `IsForbidden` union and five measured API consumers are separate from ordinary forbidden, aura restrictions and combat protection. Retail and Forever integration filters pass 7/7 each; six-profile all-target checks plus Wrath, Retail/Forever library suites, Retail filters and manifest bin tests pass with zero compiler warnings. The [lane report](../../handoff/full-lockdown-model/REPORT.md) records proofs and UNKNOWN edges.
 
 ## [2026-11-09] correction | PTR 12.1.7 FrameXML removed-symbol runtime rows
 
