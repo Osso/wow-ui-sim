@@ -838,17 +838,26 @@ fn test_is_all_template_versions() {
 fn test_allows_screen_modes() {
     use crate::screen::ScreenKind;
 
-    let both = TocFile::parse(Path::new("/addons/Both"), "## AllowLoad: Both\nCore.lua");
+    let both = TocFile::parse(
+        Path::new("/addons/Blizzard_Both"),
+        "## AllowLoad: Both\nCore.lua",
+    );
     assert!(both.allows_screen(ScreenKind::Game));
     assert!(both.allows_screen(ScreenKind::Login));
     assert!(both.allows_screen(ScreenKind::CharacterSelect));
 
-    let game = TocFile::parse(Path::new("/addons/Game"), "## AllowLoad: Game\nCore.lua");
+    let game = TocFile::parse(
+        Path::new("/addons/Blizzard_Game"),
+        "## AllowLoad: Game\nCore.lua",
+    );
     assert!(game.allows_screen(ScreenKind::Game));
     assert!(!game.allows_screen(ScreenKind::Login));
     assert!(!game.allows_screen(ScreenKind::CharacterSelect));
 
-    let glue = TocFile::parse(Path::new("/addons/Glue"), "## AllowLoad: Glue\nCore.lua");
+    let glue = TocFile::parse(
+        Path::new("/addons/Blizzard_Glue"),
+        "## AllowLoad: Glue\nCore.lua",
+    );
     assert!(!glue.allows_screen(ScreenKind::Game));
     assert!(glue.allows_screen(ScreenKind::Login));
     assert!(glue.allows_screen(ScreenKind::CharacterSelect));

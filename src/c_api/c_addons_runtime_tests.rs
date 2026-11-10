@@ -240,16 +240,16 @@ impl ScreenDependencyFixture {
         )
         .unwrap();
 
-        let glue_only = root.path().join("GlueOnlyProbe");
+        let glue_only = root.path().join("Blizzard_GlueOnlyProbe");
         fs::create_dir(&glue_only).unwrap();
         fs::write(
-            glue_only.join("GlueOnlyProbe.toc"),
-            "## Title: GlueOnlyProbe\n## AllowLoad: Glue\nGlueOnlyProbe.lua\n",
+            glue_only.join("Blizzard_GlueOnlyProbe.toc"),
+            "## Title: Blizzard_GlueOnlyProbe\n## AllowLoad: Glue\nBlizzard_GlueOnlyProbe.lua\n",
         )
         .unwrap();
         fs::write(
-            glue_only.join("GlueOnlyProbe.lua"),
-            "GlueOnlyProbeRan = true",
+            glue_only.join("Blizzard_GlueOnlyProbe.lua"),
+            "Blizzard_GlueOnlyProbeRan = true",
         )
         .unwrap();
 
@@ -271,27 +271,29 @@ impl ScreenDependencyFixture {
     }
 
     fn glue_only_loaded(&self) -> bool {
-        self.env.eval("return GlueOnlyProbeRan == true").unwrap()
+        self.env
+            .eval("return Blizzard_GlueOnlyProbeRan == true")
+            .unwrap()
     }
 }
 
 #[test]
 fn runtime_required_dependency_for_another_screen_still_blocks_load() {
-    let fixture = ScreenDependencyFixture::new("## Dependencies: GlueOnlyProbe");
+    let fixture = ScreenDependencyFixture::new("## Dependencies: Blizzard_GlueOnlyProbe");
     let (loaded, reason) = fixture.load();
     assert!(
         !loaded,
         "a required Glue-only dependency must still block a Game-screen runtime load"
     );
-    let reason = reason.expect("a blocked load should report the dependency addon");
-    assert!(reason.contains("GlueOnlyProbe"), "{reason}");
+    let reason = reason.expect("a blocked load should report a reason");
+    assert_eq!(reason, "DEP_WRONG_ACTIVE_INTERFACE");
     assert!(!fixture.probe_ran(), "blocked addon files must not run");
     assert!(!fixture.glue_only_loaded());
 }
 
 #[test]
 fn runtime_optional_dependency_for_another_screen_is_skipped() {
-    let fixture = ScreenDependencyFixture::new("## OptionalDeps: GlueOnlyProbe");
+    let fixture = ScreenDependencyFixture::new("## OptionalDeps: Blizzard_GlueOnlyProbe");
     assert_eq!(fixture.load(), (true, None));
     assert!(fixture.probe_ran());
     assert!(!fixture.glue_only_loaded());
@@ -299,7 +301,7 @@ fn runtime_optional_dependency_for_another_screen_is_skipped() {
 
 #[test]
 fn runtime_screen_annotated_dependency_is_skipped_outside_its_screen() {
-    let fixture = ScreenDependencyFixture::new("## Dep: GlueOnlyProbe [AllowLoad glue]");
+    let fixture = ScreenDependencyFixture::new("## Dep: Blizzard_GlueOnlyProbe [AllowLoad glue]");
     assert_eq!(fixture.load(), (true, None));
     assert!(fixture.probe_ran());
     assert!(!fixture.glue_only_loaded());

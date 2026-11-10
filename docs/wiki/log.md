@@ -20,6 +20,10 @@ Recorded the [classic fixture design](design/classic-consumer-applicability.md),
 
 Recorded the [XML parent identity failure](investigations/mists-spellbook-size.md) and its parser and consumer coverage.
 
+## [2026-11-08] correction | Native R13 addon dependency semantics
+
+[Addon loading](systems/addon-loading.md#screen-qualified-dependency-declarations) now records the native result: unannotated required cross-screen dependencies fail with `DEP_WRONG_ACTIVE_INTERFACE`; `[AllowLoad ...]` filters a whole header line before dependency splitting; Both targets remain required; optional failures are ignored; and loadability queries skip screen checks. The 2026-11-06 TOC-only inference is superseded. Evidence boundaries distinguish Retail 70688 from partial Forever and unknown PTR annotation grammar.
+
 ## [2026-11-08] process | Evidence trees removed from the repository
 
 `data/patch-api/evidence` and `data/test-perf/evidence` are removed and ignored. They were agent proof receipts, not product data. Proof receipts now live untracked under `~/.local/state/wow-ui-sim`. A patch-audit manifest that must cite a removed receipt uses a `git:<commit>:<path>` reference, which `wow-cli audit-api` resolves from Git history. The factory tests keep their minimal fixtures under `tests/data/patch-factory/`. The receipt re-checking Python validators were retired with the trees.
@@ -41,7 +45,7 @@ Created [Collections collected-only journal tabs](systems/collections-collected-
 
 ## [2026-11-06] investigation | Screen-qualified TOC dependency lines
 
-[Addon loading](systems/addon-loading.md#screen-qualified-dependency-declarations) records that runtime dependency resolution applies a dependency line's `[AllowLoad Game]`/`[AllowLoad Glue]` annotation. PTR and Forever `Blizzard_UnitPopupShared` reach Glue-only `Blizzard_GlueXML` through `## Dep: Blizzard_GlueXML [AllowLoad glue]` while declaring `## AllowLoad: both`; the runtime resolver previously failed the whole `Blizzard_MailFrame` load. Unannotated required dependencies still block. Evidence is shipped TOCs, not a native-client trace.
+The 2026-11-06 entry recorded a shipped-TOC inference, not native dependency behavior. The 2026-11-08 [R13 correction](systems/addon-loading.md#screen-qualified-dependency-declarations) below records the superseding client evidence and contract.
 
 ## [2026-11-05] maintenance | Agent skills location and single instruction file
 
