@@ -3,18 +3,26 @@
 Corrected the [Patch 12.1 FrameXML symbol inventory](investigations/patch-12-1-framexml-symbol-inventory.md): the full-load PTR 12.1.7 probe found 93 of 99 historical removed-symbol paths not callable, four `RaidNotice_*` aliases still published by `Blizzard_DeprecatedRaidWarning`, and `getglobal`/`setglobal` as Lua built-ins. These are simulator-runtime observations, not proof of native absence; the acceptance test now checks only the four current source publishers.
 
 ## [2026-11-08] investigation | GUI CASC cache preparation
+## [2026-11-09] fix | Mists unit-frame Edit Mode replay ordering
 
-Recorded that the selected Era encoding key was absent from the inspected supported-format local indices. The [investigation](investigations/gui-casc-cache-preparation.md) separates that install observation from resolver behavior and records deterministic fixture coverage plus the `optional-tests` live smoke.
-## [2026-11-09] investigation | Reconcile profile frame-position baselines
+Updated the [frame-position investigation](investigations/frame-position-baseline-drift.md#mists-unit-frame-startup-replay--2026-11-09) and its [profile contract](../specs/frame-position-profile-baselines.md): the startup action-bar replay now initializes the native StanceBar state before the Classic dynamic-background-art refresh that reads it. The Mists `frame_positions` run passes all six unit-frame cases and ChatFrame1 at its source-derived managed position; 11 residual names remain from 17 RED. Native C layout-event timing remains UNKNOWN; see the lane report for proof and remaining gates.
 
-Updated [frame-position baseline drift](investigations/frame-position-baseline-drift.md) and its [contract](../specs/frame-position-profile-baselines.md) with profile-native minimap, Classic party/cast/raid/chat, PTR/Forever dock and micro-menu expectations, source-absent frame tests, and PTR/Forever ObjectiveTracker top padding. Final targeted runs preserve Retail 28/28 and reduce every non-Retail failure-name set below master; unresolved simulator/input cases and native questions remain explicit in the lane report. No production layout code changed.
 ## [2026-11-09] update | Classic consumer fixture applicability
 
 Updated the [classic fixture design](design/classic-consumer-applicability.md) with per-profile Blizzard file counts, narrowly gated Mainline TimerunningUtil/POIButton discovery assertions, the selected UIPanels_Game dependency check and the unresolved `GetNumFactions` native-evidence gap. Fresh 75038d409 name sets are available; final profile comparisons remain open.
 
+## [2026-11-09] investigation | Reconcile profile frame-position baselines
+
+Updated [frame-position baseline drift](investigations/frame-position-baseline-drift.md) and its [contract](../specs/frame-position-profile-baselines.md) with profile-native minimap, Classic party/cast/raid/chat, PTR/Forever dock and micro-menu expectations, source-absent frame tests, and PTR/Forever ObjectiveTracker top padding. Final targeted runs preserve Retail 28/28 and reduce every non-Retail failure-name set below master; unresolved simulator/input cases and native questions remain explicit in the lane report. No production layout code changed.
+
+## [2026-11-08] investigation | GUI CASC cache preparation
+
+Recorded that the selected Era encoding key was absent from the inspected supported-format local indices. The [investigation](investigations/gui-casc-cache-preparation.md) separates that install observation from resolver behavior and records deterministic fixture coverage plus the `optional-tests` live smoke.
+
 ## [2026-11-08] design | Classic consumer fixture applicability
 
 Recorded the [classic fixture design](design/classic-consumer-applicability.md), historical first-error ranking, pinned TOC evidence and pre-implementation acceptance cases. No GREEN or fresh-baseline claim is made.
+
 
 ## [2026-11-08] investigation | Mists spellbook button size
 
