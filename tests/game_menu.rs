@@ -423,22 +423,11 @@ post_wrath_ui_fixture! {
 fn test_game_menu_shop_button_opens_store_and_menu_can_reopen_after_store_closes() {
     test_timeout! {
         let env = setup_game_menu_env();
-
-        if cfg!(feature = "client-ptr") {
-            let has_shop_button: bool = env
-                .eval(&menu_button_chunk(r#"
-                    GameMenuFrame:Show()
-                    for button in menu_buttons() do
-                        if button:GetText() == BLIZZARD_STORE then
-                            return true
-                        end
-                    end
-                    return false
-                "#))
-                .unwrap();
-            // PTR GameMenuFrame.lua:198-204 adds Store only when both shops are enabled.
-            assert!(!has_shop_button, "PTR's disabled-Shop2 fixture must not add the shop button");
-            return;
+        if cfg!(any(feature = "client-ptr", feature = "client-retail")) {
+            let state = env.state();
+            let state = state.borrow();
+            state.cvars.set_imported("bpayStoreEnable", "1");
+            state.cvars.set_imported("shop2Enabled", "1");
         }
 
         let result: String = env
@@ -494,10 +483,41 @@ fn test_game_menu_shop_button_opens_store_and_menu_can_reopen_after_store_closes
 }
 
 post_wrath_ui_fixture! {
+#[cfg(feature = "client-ptr")]
+#[test]
+fn ptr_default_shop_settings_hide_game_menu_store_button() {
+    test_timeout! {
+        let env = setup_game_menu_env();
+        let result: (bool, bool, bool) = env
+            .eval(&menu_button_chunk(r#"
+                GameMenuFrame:Show()
+                local hasShopButton = false
+                for button in menu_buttons() do
+                    if button:GetText() == BLIZZARD_STORE then
+                        hasShopButton = true
+                    end
+                end
+                return C_StorePublic.IsEnabled(), C_CatalogShop.IsShop2Enabled(), hasShopButton
+            "#))
+            .unwrap();
+
+        // PTR GameMenuFrame.lua:198-204 requires both store flags.
+        assert_eq!(result, (false, true, false));
+    }
+}
+}
+
+post_wrath_ui_fixture! {
 #[test]
 fn test_legacy_store_toggle_reopens_game_menu_after_store_closes() {
     test_timeout! {
         let env = setup_game_menu_env();
+        if cfg!(any(feature = "client-ptr", feature = "client-retail")) {
+            let state = env.state();
+            let state = state.borrow();
+            state.cvars.set_imported("bpayStoreEnable", "1");
+            state.cvars.set_imported("shop2Enabled", "0");
+        }
 
         let result: String = env
             .eval(r#"

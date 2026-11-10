@@ -642,15 +642,59 @@ fn store_frame_subtree_has_no_cycles_in_full_game_ui(env: &WowLuaEnv) {
 }
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 #[test]
 fn store_free_upgrade_check_handles_account_without_upgrade() {
     let env = load_store_ui_tree();
-    env.exec(r#"
+    env.exec(
+        r#"
         assert(type(__secureenv.StoreFrame_CheckForFree) == 'function')
         assert(C_SharedCharacterServices.HasFreePromotionalUpgrade() == false)
         local frame = {}
         __secureenv.StoreFrame_CheckForFree(frame, 'VARIABLES_LOADED')
         __secureenv.StoreFrame_CheckForFree(frame, 'PRODUCT_DISTRIBUTIONS_UPDATED')
         assert(frame.variablesLoaded and frame.distributionsUpdated)
-    "#).expect("store free upgrade check should accept an account without an upgrade");
+    "#,
+    )
+    .expect("store free upgrade check should accept an account without an upgrade");
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn promotional_upgrade_queries_use_supplied_state_and_seen_popup_cvar() {
+    let env = load_store_ui_tree();
+    let defaults: (bool, bool) = env
+        .eval("return C_SharedCharacterServices.HasFreePromotionalUpgrade(), C_SharedCharacterServices.HasSeenFreePromotionalUpgradePopup()")
+        .expect("promotional-upgrade queries should return booleans");
+    assert_eq!(defaults, (false, false));
+
+    env.state()
+        .borrow_mut()
+        .character_services
+        .has_free_promotional_upgrade = true;
+    let available: bool = env
+        .eval("return C_SharedCharacterServices.HasFreePromotionalUpgrade()")
+        .expect("supplied promotional-upgrade state should be queryable");
+    assert!(available);
+
+    let setter_returns: i64 = env
+        .eval("return select('#', C_SharedCharacterServices.SetPromotionalPopupSeen(true, 'ignored'))")
+        .expect("promotional-popup setter should accept its boolean input");
+    assert_eq!(setter_returns, 0);
+    let seen: bool = env
+        .eval("return C_SharedCharacterServices.HasSeenFreePromotionalUpgradePopup()")
+        .expect("seen-popup CVar should be queryable");
+    assert!(seen);
+
+    env.exec("C_SharedCharacterServices.SetPromotionalPopupSeen(false)")
+        .expect("seen-popup CVar should be clearable");
+    let seen: bool = env
+        .eval("return C_SharedCharacterServices.HasSeenFreePromotionalUpgradePopup()")
+        .expect("cleared seen-popup CVar should be queryable");
+    assert!(!seen);
+
+    assert!(
+        env.exec("C_SharedCharacterServices.SetPromotionalPopupSeen('true')")
+            .is_err()
+    );
 }
