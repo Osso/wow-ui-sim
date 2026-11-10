@@ -74,10 +74,7 @@ const REMOVED_PING_SECURE_METHODS: &[&str] = &[
     "GetDefaultPingOptions",
     "GetTextureKitForType",
 ];
-const REMOVED_PLAYER_INFO_METHODS: &[&str] = &[
-    "CanPlayerUseEventScheduler",
-    "IsExpansionLandingPageUnlockedForPlayer",
-];
+const REMOVED_PLAYER_INFO_METHODS: &[&str] = &["CanPlayerUseEventScheduler"];
 const REMOVED_PVP_METHODS: &[&str] = &[
     "CanDisplayDamage",
     "CanDisplayHealing",
@@ -93,7 +90,7 @@ fn assert_removed_method_source_absent(
     namespace: &str,
     method: &str,
     path: &std::path::Path,
-    source: &str,
+    source: &[u8],
 ) {
     let patterns = [
         format!("{namespace}.{method} ="),
@@ -107,7 +104,7 @@ fn assert_removed_method_source_absent(
 
     for pattern in patterns {
         assert!(
-            !source.contains(&pattern),
+            !super::contains_ascii(source, &pattern),
             "removed API publication {pattern} appears in {}",
             path.display(),
         );
@@ -158,7 +155,7 @@ fn assert_nameplate_source_omits_table_and_dynamic_publications() {
                 .chain(dynamic_name_patterns.iter())
             {
                 assert!(
-                    !source.contains(pattern),
+                    !super::contains_ascii(source, pattern),
                     "removed NamePlate method {method} appears in table/dynamic source pattern {pattern} in {}",
                     path.display(),
                 );
@@ -166,9 +163,9 @@ fn assert_nameplate_source_omits_table_and_dynamic_publications() {
         }
 
         assert!(
-            !source
-                .lines()
-                .any(|line| { line.contains("C_NamePlate[") && line.contains("] =") }),
+            !source.split(|byte| *byte == b'\n').any(|line| {
+                super::contains_ascii(line, "C_NamePlate[") && super::contains_ascii(line, "] =")
+            }),
             "dynamic C_NamePlate publication appears in {}",
             path.display(),
         );
@@ -384,7 +381,6 @@ fn removed_remaining_runtime_apis_are_absent_after_full_lod_load() {
                 {"C_PingSecure", "GetDefaultPingOptions"},
                 {"C_PingSecure", "GetTextureKitForType"},
                 {"C_PlayerInfo", "CanPlayerUseEventScheduler"},
-                {"C_PlayerInfo", "IsExpansionLandingPageUnlockedForPlayer"},
                 {"C_PvP", "CanDisplayDamage"},
                 {"C_PvP", "CanDisplayHealing"},
                 {"C_PvP", "CanDisplayKillingBlows"},
@@ -398,6 +394,7 @@ fn removed_remaining_runtime_apis_are_absent_after_full_lod_load() {
                 {"C_CatalogShop", "IsShop2Enabled"},
                 {"C_PingSecure", "CreateFrame"},
                 {"C_PlayerInfo", "GetAlternateFormInfo"},
+                {"C_PlayerInfo", "IsExpansionLandingPageUnlockedForPlayer"},
                 {"C_StorePublic", "IsEnabled"},
             }
             local removedPublished = {}

@@ -21,6 +21,15 @@ fn quest_timer_toc() -> PathBuf {
     quest_timer_dir().join("Blizzard_QuestTimer.toc")
 }
 
+fn quest_timer_xml() -> PathBuf {
+    let relative_path = if toc_layout::unified_toc_tree() {
+        "Mainline/Blizzard_QuestTimer.xml"
+    } else {
+        "Blizzard_QuestTimer.xml"
+    };
+    quest_timer_dir().join(relative_path)
+}
+
 const TOC_FILES: &[&str] = &["Blizzard_QuestTimer.lua", "Blizzard_QuestTimer.xml"];
 
 // The unified PTR TOC lists the family overrides and the shared button
@@ -242,34 +251,36 @@ fn blizzard_quest_timer_appears_in_full_addon_inventory() {
 
 post_wrath_ui_fixture! {
 #[test]
-fn blizzard_quest_timer_xml_declares_twenty_five_named_buttons() {
-    let xml_path = quest_timer_dir().join("Blizzard_QuestTimer.xml");
-    let raw = std::fs::read_to_string(&xml_path).expect("XML reads utf-8");
+fn quest_timer_xml_matches_profile_button_creation() {
+    let raw = std::fs::read_to_string(quest_timer_xml()).expect("XML reads utf-8");
 
-    for index in 1..=25 {
-        let needle = format!("name=\"QuestTimer{index}\"");
-        assert!(
-            raw.contains(&needle),
-            "QuestTimerFrame XML must declare button `QuestTimer{index}` — the \
-             addon hardcodes 25 numbered buttons (QuestTimer1..QuestTimer25) \
-             that `QuestTimerMixin:UpdateQuestTimers` indexes via the \
-             classic-era global lookup `_G[\"QuestTimer\" .. i]`. The hard \
-             upper bound matches the legacy `MAX_QUESTS = 25` constant — \
-             classic clients capped a player's quest log at 25 entries; the \
-             addon allocates exactly that many timer slots up-front and \
-             toggles their visibility in the per-tick UpdateQuestTimers loop"
-        );
+    if toc_layout::unified_toc_tree() {
+        assert!(raw.contains("name=\"QuestTimerFrame\""));
+        assert!(raw.contains("mixin=\"QuestTimerMixin\""));
+        for index in 1..=25 {
+            assert!(
+                !raw.contains(&format!("name=\"QuestTimer{index}\"")),
+                "unified PTR/Forever QuestTimer XML must not declare static row {index}"
+            );
+        }
+
+        let template = std::fs::read_to_string(
+            quest_timer_dir().join("QuestTimerButtonTemplate.xml"),
+        )
+        .expect("shared button template reads");
+        assert!(template.contains("name=\"QuestTimerButtonTemplate\""));
+        assert!(template.contains("mixin=\"QuestTimerButtonMixin\""));
+
+    } else {
+        for index in 1..=25 {
+            assert!(
+                raw.contains(&format!("name=\"QuestTimer{index}\"")),
+                "flavor TOC QuestTimer XML must declare static row {index}"
+            );
+        }
+        assert!(raw.contains("QuestTimerButtonTemplate"));
+        assert!(raw.contains("QuestTimerMixin"));
+        assert!(raw.contains("QuestTimerButtonMixin"));
     }
-
-    assert!(
-        raw.contains("QuestTimerButtonTemplate"),
-        "XML must declare the QuestTimerButtonTemplate virtual button — the \
-         template carries the GameTooltip OnEnter / OnLeave scripts and the \
-         OnClick handler that opens the quest log via ShowUIPanel(QuestLogFrame)"
-    );
-    assert!(
-        raw.contains("QuestTimerMixin") && raw.contains("QuestTimerButtonMixin"),
-        "XML must reference both Lua-defined mixins via `mixin=...` attributes"
-    );
 }
 }

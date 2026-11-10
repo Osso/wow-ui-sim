@@ -111,7 +111,7 @@ fn formatter(state: &LuaState, object: Val) -> LuaResult<&NumericRuleFormatter> 
 }
 
 /// Test actual host-owned identity, not the public FormatNumber property.
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 pub(crate) fn is_formatter(state: &LuaState, object: Val) -> bool {
     formatter(state, object).is_ok()
 }

@@ -119,7 +119,7 @@ fn test_patch_12_0_7_duration_objects_and_text_binding() {
             if binding:CanUpdateFontString() ~= false then return "DurationTextBinding.CanUpdateFontString default" end
             if binding:GetExpiredText() ~= nil then return "DurationTextBinding.GetExpiredText default" end
             if binding:GetFontString() ~= nil then return "DurationTextBinding.GetFontString default" end
-            if pcall(binding.GetFormattedText, binding) then return "DurationTextBinding.GetFormattedText unconfigured" end
+            if binding:GetFormattedText() ~= "" then return "DurationTextBinding.GetFormattedText unconfigured" end
             if binding:GetTimeModifier() ~= 0 then return "DurationTextBinding.GetTimeModifier default" end
             if binding:GetUpdateInterval() ~= 1 then return "DurationTextBinding.GetUpdateInterval default" end
             if binding:GetZeroDurationText() ~= nil then return "DurationTextBinding.GetZeroDurationText default" end

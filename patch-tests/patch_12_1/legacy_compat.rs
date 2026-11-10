@@ -1,7 +1,43 @@
+use wow_ui_sim::c_api::c_pvp::catalog::BattlegroundInfo;
+
 /// Proves simulator compatibility globals preserve their tested behavior.
 #[test]
 fn simulator_legacy_compat_globals_preserve_tested_behavior() {
     let env = load_full_game_ui_with_all_lod();
+    env.state().borrow_mut().pvp_catalog.battlegrounds = vec![
+        BattlegroundInfo {
+            name: "Wintergrasp".into(),
+            icon: Some(0),
+            game_type: "wintergrasp".into(),
+            short_description: "short".into(),
+            long_description: "long".into(),
+            map_description: "map".into(),
+            max_players: 40,
+            battleground_id: Some(571),
+            lfg_dungeon_id: Some(117),
+            map_id: Some(571),
+            is_holiday: false,
+            is_random: false,
+            can_enter: true,
+            is_training_ground: false,
+        },
+        BattlegroundInfo {
+            name: "Arena".into(),
+            icon: Some(1300),
+            game_type: "arena".into(),
+            short_description: "arena-short".into(),
+            long_description: "arena-long".into(),
+            map_description: "arena-map".into(),
+            max_players: 10,
+            battleground_id: Some(559),
+            lfg_dungeon_id: Some(120),
+            map_id: Some(559),
+            is_holiday: true,
+            is_random: true,
+            can_enter: false,
+            is_training_ground: true,
+        },
+    ];
     let result: String = env
         .eval(
             r#"
@@ -9,9 +45,7 @@ fn simulator_legacy_compat_globals_preserve_tested_behavior() {
                 "FindBaseSpellByID",
                 "FindFlyoutSlotBySpellID",
                 "FindSpellOverrideByID",
-                "GetBattlegroundInfo",
                 "PlaySound",
-                "SetPortraitToTexture",
                 "strtrim",
             }
             for _, name in ipairs(required) do
@@ -56,25 +90,44 @@ fn simulator_legacy_compat_globals_preserve_tested_behavior() {
                 return "override-wrapper"
             end
 
-            local name, canEnter, isHoliday, isRandom, bgID, description, mapID, maxPlayers = GetBattlegroundInfo(1)
-            if name ~= "Wintergrasp" or canEnter ~= true or isRandom ~= false or bgID ~= 571 or mapID ~= 571 or maxPlayers ~= 40 then
+            if GetBattlegroundInfo ~= nil then return "battleground-global" end
+            local first = C_PvP.GetBattlegroundInfo("1.9")
+            if type(first) ~= "table" or first.name ~= "Wintergrasp" or first.icon ~= nil
+                or first.gameType ~= "wintergrasp" or first.shortDescription ~= "short"
+                or first.longDescription ~= "long" or first.mapDescription ~= "map"
+                or first.maxPlayers ~= 40 or first.battlegroundID ~= 571
+                or first.lfgDungeonID ~= 117 or first.mapID ~= 571
+                or first.isHoliday ~= false or first.isRandom ~= false
+                or first.canEnter ~= true or first.isTrainingGround ~= false then
                 return "battleground-row"
             end
-            if GetBattlegroundInfo(999) ~= nil then
-                return "battleground-unknown"
+            local zeroFraction = C_PvP.GetBattlegroundInfo("0.5")
+            if type(zeroFraction) ~= "table" or zeroFraction.name ~= "Wintergrasp" then
+                return "battleground-zero-fraction-index"
+            end
+            local second = C_PvP.GetBattlegroundInfo(2.9)
+            if type(second) ~= "table" or second.name ~= "Arena" or second.icon ~= 1300 then
+                return "battleground-fractional-index"
+            end
+            if C_PvP.GetBattlegroundInfo(0) ~= nil or C_PvP.GetBattlegroundInfo(999) ~= nil then
+                return "battleground-miss"
+            end
+            local upperBoundOK, upperBound = pcall(C_PvP.GetBattlegroundInfo, 4294967295)
+            if not upperBoundOK or upperBound ~= nil then
+                return "battleground-upper-bound"
+            end
+            if pcall(C_PvP.GetBattlegroundInfo) or pcall(C_PvP.GetBattlegroundInfo, nil) then
+                return "battleground-missing-index"
+            end
+            for _, invalid in ipairs({ false, {}, "not numeric", -1, 4294967296 }) do
+                if pcall(C_PvP.GetBattlegroundInfo, invalid) then
+                    return "battleground-invalid-index"
+                end
             end
 
             local soundOK = pcall(PlaySound, 861)
             if not soundOK then
                 return "play-sound"
-            end
-
-            local frame = CreateFrame("Frame", "LegacyCompatPortraitFrame", UIParent)
-            local texture = frame:CreateTexture("LegacyCompatPortraitTexture", "BORDER")
-            SetPortraitToTexture(texture, "Interface\\Icons\\Ability_Mount_RidingHorse")
-            SetPortraitToTexture(texture, "Interface\\Icons\\INV_Misc_QuestionMark")
-            if texture:GetNumMaskTextures() ~= 1 then
-                return "portrait-mask"
             end
 
             if strtrim("  hello \t") ~= "hello" or strtrim("--hello--", "-") ~= "hello" then

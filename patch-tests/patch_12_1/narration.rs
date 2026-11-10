@@ -1,58 +1,26 @@
-use super::{assert_ptr_source_omits_qualified_methods, load_game_ui_without_player_choice};
+use super::{load_full_game_ui_with_all_lod, missing_runtime_functions};
 
-const SNAPSHOT_ONLY_METHODS: &[&str] = &[
-    "CreateNarrationInfo",
-    "GetCheckboxContext",
-    "MakeIndexInfo",
-    "MakeNarrationStringForMoney",
-    "MakeNarrationStringFromIndexInfo",
-    "MakeNarrationStringFromInfo",
-    "MakeNarrationString",
-    "NarrateCurrentScreen",
-    "RegionToNarrationInfo",
-    "ResolveForwardedRegion",
-    "SetStaticDescription",
-    "SetStaticName",
-    "ShouldBeEnabled",
-    "ShouldRegionNavigationSkipTooltips",
+const PTR_METHODS: &[&str] = &[
+    "NarrationUtil.CreateNarrationInfo",
+    "NarrationUtil.GetCheckboxContext",
+    "NarrationUtil.MakeIndexInfo",
+    "NarrationUtil.MakeNarrationStringForMoney",
+    "NarrationUtil.MakeNarrationStringFromIndexInfo",
+    "NarrationUtil.MakeNarrationStringFromInfo",
+    "NarrationUtil.MakeNarrationString",
+    "NarrationUtil.NarrateCurrentScreen",
+    "NarrationUtil.RegionToNarrationInfo",
+    "NarrationUtil.ResolveForwardedRegion",
+    "NarrationUtil.SetStaticDescription",
+    "NarrationUtil.SetStaticName",
+    "NarrationUtil.ShouldBeEnabled",
+    "NarrationUtil.ShouldRegionNavigationSkipTooltips",
 ];
 
-/// Proves all proposed NarrationUtil additions are absent from PTR source and runtime.
+/// Proves the pinned PTR NarrationUtil methods are published after their LoD owners load.
 #[test]
-fn snapshot_only_narration_methods_remain_absent() {
-    assert_ptr_source_omits_qualified_methods("NarrationUtil", SNAPSHOT_ONLY_METHODS);
-
-    let env = load_game_ui_without_player_choice();
-    let (namespace_type, absent_count): (String, i32) = env
-        .eval(
-            r#"
-            local names = {
-                "CreateNarrationInfo",
-                "GetCheckboxContext",
-                "MakeIndexInfo",
-                "MakeNarrationStringForMoney",
-                "MakeNarrationStringFromIndexInfo",
-                "MakeNarrationStringFromInfo",
-                "MakeNarrationString",
-                "NarrateCurrentScreen",
-                "RegionToNarrationInfo",
-                "ResolveForwardedRegion",
-                "SetStaticDescription",
-                "SetStaticName",
-                "ShouldBeEnabled",
-                "ShouldRegionNavigationSkipTooltips",
-            }
-            local absentCount = 0
-            for _, name in ipairs(names) do
-                if NarrationUtil == nil or NarrationUtil[name] == nil then
-                    absentCount = absentCount + 1
-                end
-            end
-            return type(NarrationUtil), absentCount
-            "#,
-        )
-        .expect("NarrationUtil runtime probe succeeds");
-
-    assert_eq!(namespace_type, "nil");
-    assert_eq!(absent_count, SNAPSHOT_ONLY_METHODS.len() as i32);
+fn ptr_narration_methods_are_published_by_the_loaded_owner() {
+    let env = load_full_game_ui_with_all_lod();
+    let missing = missing_runtime_functions(&env, PTR_METHODS);
+    assert_eq!(missing, "", "pinned PTR methods must remain published");
 }

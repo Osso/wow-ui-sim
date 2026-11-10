@@ -82,6 +82,7 @@ impl SimState {
         self.loading_nil_symbol_environment = None;
         self.loading_scoped_script_env = None;
         self.loading_forbidden = false;
+        self.loading_full_lockdown = false;
         self.loading_add_to_secure_env = false;
         self.loading_hide_from_global_env = false;
         self.loading_use_forbidden_object_table = false;

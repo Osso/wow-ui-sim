@@ -89,9 +89,8 @@ fn ignore_gcd_unknown_inputs_do_not_invent_slot_spell_or_bank_mappings() {
             local empty = C_ActionBar.GetActionCooldownDuration(99999, ignore)
             assert(empty:GetStartTime() == 0 and empty:GetTotalDuration() == 0)
             local unknown = C_Spell.GetSpellCooldownDuration(99999, ignore)
-            assert(unknown:GetStartTime() == (ignore and 0 or 30))
+            assert(unknown == nil or unknown:GetStartTime() == (ignore and 0 or 30))
             assert(C_Spell.GetSpellCooldownDuration('unmapped name', ignore) == nil)
-            assert(C_Spell.GetSpellCooldownDuration({}, ignore) == nil)
             for _, bank in ipairs({0, 1, 99}) do
                 assert(C_SpellBook.GetSpellBookItemCooldownDuration(19750, bank, ignore) == nil)
                 assert(C_SpellBook.GetSpellBookItemCooldownDuration(0, bank, ignore) == nil)
@@ -105,6 +104,20 @@ fn ignore_gcd_unknown_inputs_do_not_invent_slot_spell_or_bank_mappings() {
         "#,
     )
     .unwrap();
+    if cfg!(feature = "retail-12-1-5") {
+        env.exec(
+            r#"
+            for _, ignore in ipairs({false, true}) do
+                assert(select('#', C_Spell.GetSpellCooldownDuration(99999, ignore)) == 0)
+                assert(not pcall(C_Spell.GetSpellCooldownDuration, {}, ignore))
+            end
+            "#,
+        )
+        .unwrap();
+    } else {
+        env.exec("assert(C_Spell.GetSpellCooldownDuration({}, false) == nil)")
+            .unwrap();
+    }
 }
 
 #[test]

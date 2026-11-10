@@ -1,3 +1,4 @@
+use crate::screen::ScreenKind;
 use crate::toc::TocFile;
 use std::cmp::Ordering;
 use std::collections::{HashMap, HashSet};
@@ -57,8 +58,24 @@ pub(super) fn topological_sort_addons(
 }
 
 pub(super) fn topological_sort_addons_with_extra_dependencies(
+    addons: HashMap<String, (PathBuf, TocFile)>,
+    extra_dependencies: &HashMap<String, Vec<String>>,
+) -> Vec<(String, PathBuf)> {
+    topological_sort_addons_with_screen(addons, extra_dependencies, None)
+}
+
+pub(super) fn topological_sort_addons_with_extra_dependencies_for_screen(
+    addons: HashMap<String, (PathBuf, TocFile)>,
+    extra_dependencies: &HashMap<String, Vec<String>>,
+    screen: ScreenKind,
+) -> Vec<(String, PathBuf)> {
+    topological_sort_addons_with_screen(addons, extra_dependencies, Some(screen))
+}
+
+fn topological_sort_addons_with_screen(
     mut addons: HashMap<String, (PathBuf, TocFile)>,
     extra_dependencies: &HashMap<String, Vec<String>>,
+    screen: Option<ScreenKind>,
 ) -> Vec<(String, PathBuf)> {
     let load_with_map = build_load_with_map(&addons);
     let mut result = Vec::with_capacity(addons.len());
@@ -69,6 +86,7 @@ pub(super) fn topological_sort_addons_with_extra_dependencies(
         &mut addons,
         &load_with_map,
         extra_dependencies,
+        screen,
         &mut result,
         &mut loaded,
         &mut visiting,
@@ -77,6 +95,7 @@ pub(super) fn topological_sort_addons_with_extra_dependencies(
         &mut addons,
         &load_with_map,
         extra_dependencies,
+        screen,
         &mut result,
         &mut loaded,
         &mut visiting,
@@ -88,6 +107,7 @@ fn emit_early_addons(
     addons: &mut HashMap<String, (PathBuf, TocFile)>,
     load_with_map: &HashMap<String, Vec<String>>,
     extra_dependencies: &HashMap<String, Vec<String>>,
+    screen: Option<ScreenKind>,
     result: &mut Vec<(String, PathBuf)>,
     loaded: &mut HashSet<String>,
     visiting: &mut HashSet<String>,
@@ -105,6 +125,7 @@ fn emit_early_addons(
             addons,
             load_with_map,
             extra_dependencies,
+            screen,
             result,
             loaded,
             visiting,
@@ -116,6 +137,7 @@ fn emit_remaining_addons(
     addons: &mut HashMap<String, (PathBuf, TocFile)>,
     load_with_map: &HashMap<String, Vec<String>>,
     extra_dependencies: &HashMap<String, Vec<String>>,
+    screen: Option<ScreenKind>,
     result: &mut Vec<(String, PathBuf)>,
     loaded: &mut HashSet<String>,
     visiting: &mut HashSet<String>,
@@ -128,6 +150,7 @@ fn emit_remaining_addons(
             addons,
             load_with_map,
             extra_dependencies,
+            screen,
             result,
             loaded,
             visiting,
@@ -140,6 +163,7 @@ fn emit_addon_recursive(
     addons: &mut HashMap<String, (PathBuf, TocFile)>,
     load_with_map: &HashMap<String, Vec<String>>,
     extra_dependencies: &HashMap<String, Vec<String>>,
+    screen: Option<ScreenKind>,
     result: &mut Vec<(String, PathBuf)>,
     loaded: &mut HashSet<String>,
     visiting: &mut HashSet<String>,
@@ -151,13 +175,14 @@ fn emit_addon_recursive(
         return;
     }
 
-    let deps = collect_emit_dependencies(name, addons, extra_dependencies);
+    let deps = collect_emit_dependencies(name, addons, extra_dependencies, screen);
     for dep in deps {
         emit_addon_recursive(
             &dep,
             addons,
             load_with_map,
             extra_dependencies,
+            screen,
             result,
             loaded,
             visiting,
@@ -177,6 +202,7 @@ fn collect_emit_dependencies(
     name: &str,
     addons: &HashMap<String, (PathBuf, TocFile)>,
     extra_dependencies: &HashMap<String, Vec<String>>,
+    screen: Option<ScreenKind>,
 ) -> Vec<String> {
     let Some((_, toc)) = addons.get(name) else {
         return Vec::new();
@@ -184,8 +210,16 @@ fn collect_emit_dependencies(
 
     let mut seen = HashSet::new();
     let mut deps = Vec::new();
-    append_emit_dependencies(&mut deps, &mut seen, toc.dependencies(), addons);
-    append_emit_dependencies(&mut deps, &mut seen, toc.optional_deps(), addons);
+    let required = screen.map_or_else(
+        || toc.dependencies(),
+        |screen| toc.dependencies_for_screen(screen),
+    );
+    let optional = screen.map_or_else(
+        || toc.optional_deps(),
+        |screen| toc.optional_deps_for_screen(screen),
+    );
+    append_emit_dependencies(&mut deps, &mut seen, required, addons);
+    append_emit_dependencies(&mut deps, &mut seen, optional, addons);
     append_emit_dependencies(
         &mut deps,
         &mut seen,

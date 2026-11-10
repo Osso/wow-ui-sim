@@ -1,88 +1,41 @@
-use super::{assert_ptr_source_omits_qualified_methods, load_game_ui_without_player_choice};
+use super::{load_full_game_ui_with_all_lod, missing_runtime_functions};
 
-const SNAPSHOT_ONLY_METHODS: &[&str] = &[
-    "BuildCharacterClassDisplayText",
-    "BuildCharacterLevelDisplayText",
-    "BuildCharacterNameDisplayText",
-    "BuildFriendNameDisplayText",
-    "BuildLocationDisplayText",
-    "BuildTooltipBroadcastText",
-    "GameStateUsesFactions",
-    "GetBattleNetFriendGameAccountInfoIfExactlyOneDirectInviteTargetExists",
-    "GetBattleNetFriendInviteInfo",
-    "GetBattleNetFriendInviteTypeLabel",
-    "GetBattleNetFriendPartyInviteRestrictionText",
-    "GetBattleNetFriendPartyInviteRestriction",
-    "GetFormattedCharacterName",
-    "GetFriendAccountNameText",
-    "GetFriendNameColorForFriendType",
-    "GetFriendNameDisplayColor",
-    "GetFriendNameOfflineDisplayColor",
-    "GetGameAccountPartyInviteRestriction",
-    "GetLastOnlineText",
-    "GetRegionName",
-    "GetRelativeTimeText",
-    "HasMultipleGameAccounts",
-    "InviteOrRequestToJoin",
-    "IsPlayingDifferentWoWProject",
-    "IsPlayingSameWoWProject",
-    "IsPlayingWoW",
-    "IsRequestInviteType",
-    "IsTitleFriend",
-    "ShouldShowRichPresenceOnly",
+const PTR_METHODS: &[&str] = &[
+    "FriendsListUtil.BuildCharacterClassDisplayText",
+    "FriendsListUtil.BuildCharacterLevelDisplayText",
+    "FriendsListUtil.BuildCharacterNameDisplayText",
+    "FriendsListUtil.BuildFriendNameDisplayText",
+    "FriendsListUtil.BuildLocationDisplayText",
+    "FriendsListUtil.BuildTooltipBroadcastText",
+    "FriendsListUtil.GameStateUsesFactions",
+    "FriendsListUtil.GetBattleNetFriendGameAccountInfoIfExactlyOneDirectInviteTargetExists",
+    "FriendsListUtil.GetBattleNetFriendInviteInfo",
+    "FriendsListUtil.GetBattleNetFriendInviteTypeLabel",
+    "FriendsListUtil.GetBattleNetFriendPartyInviteRestrictionText",
+    "FriendsListUtil.GetBattleNetFriendPartyInviteRestriction",
+    "FriendsListUtil.GetFormattedCharacterName",
+    "FriendsListUtil.GetFriendAccountNameText",
+    "FriendsListUtil.GetFriendNameColorForFriendType",
+    "FriendsListUtil.GetFriendNameDisplayColor",
+    "FriendsListUtil.GetFriendNameOfflineDisplayColor",
+    "FriendsListUtil.GetGameAccountPartyInviteRestriction",
+    "FriendsListUtil.GetLastOnlineText",
+    "FriendsListUtil.GetRegionName",
+    "FriendsListUtil.GetRelativeTimeText",
+    "FriendsListUtil.HasMultipleGameAccounts",
+    "FriendsListUtil.InviteOrRequestToJoin",
+    "FriendsListUtil.IsPlayingDifferentWoWProject",
+    "FriendsListUtil.IsPlayingSameWoWProject",
+    "FriendsListUtil.IsPlayingWoW",
+    "FriendsListUtil.IsRequestInviteType",
+    "FriendsListUtil.IsTitleFriend",
+    "FriendsListUtil.ShouldShowRichPresenceOnly",
 ];
 
-/// Proves all proposed FriendsListUtil additions are absent from PTR source and runtime.
+/// Proves the pinned PTR FriendsListUtil methods are published after their LoD owners load.
 #[test]
-fn snapshot_only_friends_list_methods_remain_absent() {
-    assert_ptr_source_omits_qualified_methods("FriendsListUtil", SNAPSHOT_ONLY_METHODS);
-
-    let env = load_game_ui_without_player_choice();
-    let (namespace_type, absent_count): (String, i32) = env
-        .eval(
-            r#"
-            local names = {
-                "BuildCharacterClassDisplayText",
-                "BuildCharacterLevelDisplayText",
-                "BuildCharacterNameDisplayText",
-                "BuildFriendNameDisplayText",
-                "BuildLocationDisplayText",
-                "BuildTooltipBroadcastText",
-                "GameStateUsesFactions",
-                "GetBattleNetFriendGameAccountInfoIfExactlyOneDirectInviteTargetExists",
-                "GetBattleNetFriendInviteInfo",
-                "GetBattleNetFriendInviteTypeLabel",
-                "GetBattleNetFriendPartyInviteRestrictionText",
-                "GetBattleNetFriendPartyInviteRestriction",
-                "GetFormattedCharacterName",
-                "GetFriendAccountNameText",
-                "GetFriendNameColorForFriendType",
-                "GetFriendNameDisplayColor",
-                "GetFriendNameOfflineDisplayColor",
-                "GetGameAccountPartyInviteRestriction",
-                "GetLastOnlineText",
-                "GetRegionName",
-                "GetRelativeTimeText",
-                "HasMultipleGameAccounts",
-                "InviteOrRequestToJoin",
-                "IsPlayingDifferentWoWProject",
-                "IsPlayingSameWoWProject",
-                "IsPlayingWoW",
-                "IsRequestInviteType",
-                "IsTitleFriend",
-                "ShouldShowRichPresenceOnly",
-            }
-            local absentCount = 0
-            for _, name in ipairs(names) do
-                if FriendsListUtil == nil or FriendsListUtil[name] == nil then
-                    absentCount = absentCount + 1
-                end
-            end
-            return type(FriendsListUtil), absentCount
-            "#,
-        )
-        .expect("FriendsListUtil runtime probe succeeds");
-
-    assert_eq!(namespace_type, "nil");
-    assert_eq!(absent_count, SNAPSHOT_ONLY_METHODS.len() as i32);
+fn ptr_friends_list_methods_are_published_by_the_loaded_owner() {
+    let env = load_full_game_ui_with_all_lod();
+    let missing = missing_runtime_functions(&env, PTR_METHODS);
+    assert_eq!(missing, "", "pinned PTR methods must remain published");
 }

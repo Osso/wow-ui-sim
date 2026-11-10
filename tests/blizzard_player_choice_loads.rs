@@ -84,9 +84,9 @@ fn player_choice_toc_files() -> &'static [&'static str] {
 }
 
 const REQUIRED_DEPS: &[&str] = &[
+    "Blizzard_UIWidgets",
     "Blizzard_Colors",
     "Blizzard_GameMenuEsc",
-    "Blizzard_UIWidgets",
 ];
 
 const PUBLIC_MIXINS: &[&str] = &[
@@ -244,9 +244,8 @@ fn blizzard_player_choice_toc_declares_load_on_demand_with_split_dependency_keys
     assert_eq!(
         toc.dependencies(),
         REQUIRED_DEPS,
-        "TOC ships both `## Dependencies: Blizzard_Colors` and `## RequiredDeps: \
-         Blizzard_UIWidgets`. The parser merges complementary dependency-key \
-         variants and returns both hard dependencies in canonical parser order"
+        "R13 makes `## RequiredDeps` and `## Dependencies` feed one required list. \
+         This TOC declares `RequiredDeps` first, so the parser keeps that header order"
     );
 
     assert!(

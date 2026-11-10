@@ -48,7 +48,7 @@
 48. [best-effort] `changed:Patch12_1.Service.PlayerChoice.Payloads` — behavioral
 49. [best-effort] `changed:Patch12_1.Service.TieredEntrance.Payloads` — behavioral
 50. [evidence-required] `changed:Patch12_1.Service.PrivateAura.Payloads` — unsafe
-51. [best-effort] `changed:Patch12_1.StrictRemoval.PreStartupVisibility` — behavioral
+51. [evidence-required] `changed:Patch12_1.StrictRemoval.PreStartupVisibility` — unsafe
 52. [best-effort] `changed:Patch12_1.StrictRemoval.BlizzardLoadCompatibility` — behavioral
 53. [best-effort] `changed:Patch12_1.StrictRemoval.PostStartupHiding` — behavioral
-54. [best-effort] `changed:Patch12_1.StrictRemoval.WrapperTiming` — behavioral
+54. [evidence-required] `changed:Patch12_1.StrictRemoval.WrapperTiming` — unsafe

@@ -46,7 +46,9 @@ use std::time::Duration;
 
 pub(crate) use addon::{append_pending_nested_addon_diagnostics, begin_addon_load};
 pub use addon_order::sort_addons_by_dependencies;
-use addon_order::{topological_sort_addons, topological_sort_addons_with_extra_dependencies};
+use addon_order::{
+    topological_sort_addons, topological_sort_addons_with_extra_dependencies_for_screen,
+};
 pub use error::LoadError;
 pub(crate) use load_addon_trace::{
     LoadAddonTraceOrigin, enter_xml_load_addon_context, runtime_load_addon_origin, trace_load_addon,
@@ -482,16 +484,51 @@ fn load_addon_path(
     );
     let toc = TocFile::from_file(toc_path)?;
     #[cfg(feature = "client-mists")]
-    if let Ok(Some(result)) =
-        crate::mists::character_frame_preload::ensure_before_addon(env, &toc, toc_path)
-    {
-        trace_load_result_diagnostics(LoadAddonTraceOrigin::Toc, &result.name, &result);
-    }
+    trace_mists_preload(env, &toc, toc_path);
+    load_addon_path_from_toc(env, addon_name, &toc, saved_vars_mgr)
+}
+
+pub(super) fn load_addon_path_with_toc(
+    env: &LoaderEnv<'_>,
+    toc_path: &Path,
+    toc: &TocFile,
+    saved_vars_mgr: Option<&mut SavedVariablesManager>,
+) -> Result<LoadResult, LoadError> {
+    let addon_name = toc_path
+        .parent()
+        .and_then(|dir| dir.file_name())
+        .and_then(|name| name.to_str())
+        .unwrap_or("Unknown");
+    trace_load_addon(LoadAddonTraceOrigin::Toc, format!("begin {addon_name}"));
+    trace_load_addon(
+        LoadAddonTraceOrigin::Toc,
+        format!("toc {}", toc_path.display()),
+    );
+    #[cfg(feature = "client-mists")]
+    trace_mists_preload(env, toc, toc_path);
+    load_addon_path_from_toc(env, addon_name, toc, saved_vars_mgr)
+}
+
+fn load_addon_path_from_toc(
+    env: &LoaderEnv<'_>,
+    addon_name: &str,
+    toc: &TocFile,
+    saved_vars_mgr: Option<&mut SavedVariablesManager>,
+) -> Result<LoadResult, LoadError> {
     trace_load_addon(LoadAddonTraceOrigin::Toc, format!("files {addon_name}"));
-    let result = addon::load_addon_internal(env, &toc, saved_vars_mgr)?;
+    let result = addon::load_addon_internal(env, toc, saved_vars_mgr)?;
     trace_load_result_diagnostics(LoadAddonTraceOrigin::Toc, addon_name, &result);
     trace_load_addon(LoadAddonTraceOrigin::Toc, format!("loaded {addon_name}"));
     Ok(result)
+}
+
+#[cfg(feature = "client-mists")]
+fn trace_mists_preload(env: &LoaderEnv<'_>, toc: &TocFile, toc_path: &Path) {
+    if let Ok(Some(result)) =
+        crate::mists::character_frame_preload::ensure_before_addon(env, toc, toc_path)
+    {
+        trace_load_result_diagnostics(LoadAddonTraceOrigin::Toc, &result.name, &result);
+    }
 }
 
 pub(crate) fn trace_load_result_diagnostics(
@@ -603,10 +640,10 @@ pub fn discover_blizzard_addons_for_screen(
 
     let extra_dependencies = implicit_blizzard_startup_dependencies();
     // Pull LOD addons that are required by non-LOD addons or implicit startup deps.
-    pull_required_dependency_addons(&mut addons, &mut lod_pool, &extra_dependencies);
+    pull_required_dependency_addons(&mut addons, &mut lod_pool, &extra_dependencies, screen);
 
     promote_foundational_addons_to_load_first(&mut addons);
-    topological_sort_addons_with_extra_dependencies(addons, &extra_dependencies)
+    topological_sort_addons_with_extra_dependencies_for_screen(addons, &extra_dependencies, screen)
 }
 
 /// Discover the explicit dependency closure for one or more Blizzard addons.
@@ -626,12 +663,12 @@ pub fn discover_blizzard_addon_closure_for_screen(
         return Vec::new();
     };
     let toc_map: HashMap<String, (PathBuf, TocFile)> = addons.into_iter().chain(lod_pool).collect();
-    let wanted = collect_declared_dependency_closure(&toc_map, roots);
+    let wanted = collect_declared_dependency_closure_for_screen(&toc_map, roots, screen);
     let filtered: HashMap<String, (PathBuf, TocFile)> = toc_map
         .into_iter()
         .filter(|(name, _)| wanted.contains(name))
         .collect();
-    topological_sort_addons(filtered)
+    topological_sort_addons_with_extra_dependencies_for_screen(filtered, &HashMap::new(), screen)
 }
 
 /// Per-addon override entry for Blizzard addon closure discovery.
@@ -659,28 +696,43 @@ pub fn discover_blizzard_addon_closure_for_screen_with_overrides(
     };
     let toc_map: HashMap<String, (PathBuf, TocFile)> = addons.into_iter().chain(lod_pool).collect();
     let extra_roots_by_addon = build_extra_roots_map(overrides);
-    let wanted =
-        collect_declared_dependency_closure_with_overrides(&toc_map, roots, &extra_roots_by_addon);
+    let wanted = collect_declared_dependency_closure_with_overrides(
+        &toc_map,
+        roots,
+        &extra_roots_by_addon,
+        Some(screen),
+    );
     let extra_dependencies = build_extra_dependency_map(overrides);
     let filtered: HashMap<String, (PathBuf, TocFile)> = toc_map
         .into_iter()
         .filter(|(name, _)| wanted.contains(name))
         .collect();
-    topological_sort_addons_with_extra_dependencies(filtered, &extra_dependencies)
+    topological_sort_addons_with_extra_dependencies_for_screen(
+        filtered,
+        &extra_dependencies,
+        screen,
+    )
 }
 
-pub(crate) fn collect_declared_dependency_closure(
+pub(crate) fn collect_declared_dependency_closure_for_screen(
     toc_map: &HashMap<String, (PathBuf, TocFile)>,
     roots: &[&str],
+    screen: ScreenKind,
 ) -> HashSet<String> {
     let extra_roots_by_addon: HashMap<&str, Vec<&str>> = HashMap::new();
-    collect_declared_dependency_closure_with_overrides(toc_map, roots, &extra_roots_by_addon)
+    collect_declared_dependency_closure_with_overrides(
+        toc_map,
+        roots,
+        &extra_roots_by_addon,
+        Some(screen),
+    )
 }
 
 fn collect_declared_dependency_closure_with_overrides(
     toc_map: &HashMap<String, (PathBuf, TocFile)>,
     roots: &[&str],
     extra_roots_by_addon: &HashMap<&str, Vec<&str>>,
+    screen: Option<ScreenKind>,
 ) -> HashSet<String> {
     let mut wanted = HashSet::new();
     let mut pending: Vec<String> = roots.iter().map(|name| (*name).to_string()).collect();
@@ -690,25 +742,48 @@ fn collect_declared_dependency_closure_with_overrides(
         if !wanted.insert(name.clone()) {
             continue;
         }
+        queue_declared_dependency_roots(
+            &name,
+            toc_map,
+            extra_roots_by_addon,
+            screen,
+            &mut pending,
+            &mut queued,
+        );
+    }
+    wanted
+}
 
-        if let Some(extra_roots) = extra_roots_by_addon.get(name.as_str()) {
-            for extra_root in extra_roots {
-                queue_pending_addon((*extra_root).to_string(), &mut pending, &mut queued);
-            }
-        }
-
-        let Some((_, toc)) = toc_map.get(&name) else {
-            continue;
-        };
-
-        for dep in toc.dependencies().into_iter().chain(toc.optional_deps()) {
-            if toc_map.contains_key(&dep) {
-                queue_pending_addon(dep, &mut pending, &mut queued);
-            }
+fn queue_declared_dependency_roots(
+    name: &str,
+    toc_map: &HashMap<String, (PathBuf, TocFile)>,
+    extra_roots_by_addon: &HashMap<&str, Vec<&str>>,
+    screen: Option<ScreenKind>,
+    pending: &mut Vec<String>,
+    queued: &mut HashSet<String>,
+) {
+    if let Some(extra_roots) = extra_roots_by_addon.get(name) {
+        for extra_root in extra_roots {
+            queue_pending_addon((*extra_root).to_string(), pending, queued);
         }
     }
 
-    wanted
+    let Some((_, toc)) = toc_map.get(name) else {
+        return;
+    };
+    let required = screen.map_or_else(
+        || toc.dependencies(),
+        |screen| toc.dependencies_for_screen(screen),
+    );
+    let optional = screen.map_or_else(
+        || toc.optional_deps(),
+        |screen| toc.optional_deps_for_screen(screen),
+    );
+    for dependency in required.into_iter().chain(optional) {
+        if toc_map.contains_key(&dependency) {
+            queue_pending_addon(dependency, pending, queued);
+        }
+    }
 }
 
 fn queue_pending_addon(name: String, pending: &mut Vec<String>, queued: &mut HashSet<String>) {
@@ -865,10 +940,23 @@ fn pull_required_dependency_addons(
     addons: &mut HashMap<String, (PathBuf, TocFile)>,
     lod_pool: &mut HashMap<String, (PathBuf, TocFile)>,
     extra_dependencies: &HashMap<String, Vec<String>>,
+    screen: ScreenKind,
 ) {
-    let mut needed: Vec<String> = addons
+    let mut needed = collect_required_addon_names(addons, lod_pool, extra_dependencies, screen);
+    while let Some(name) = needed.pop() {
+        pull_required_dependency_addon(&name, addons, lod_pool, &mut needed, screen);
+    }
+}
+
+fn collect_required_addon_names(
+    addons: &HashMap<String, (PathBuf, TocFile)>,
+    lod_pool: &HashMap<String, (PathBuf, TocFile)>,
+    extra_dependencies: &HashMap<String, Vec<String>>,
+    screen: ScreenKind,
+) -> Vec<String> {
+    addons
         .values()
-        .flat_map(|(_, toc)| toc.dependencies())
+        .flat_map(|(_, toc)| toc.dependencies_for_screen(screen))
         .chain(
             addons
                 .keys()
@@ -880,23 +968,29 @@ fn pull_required_dependency_addons(
                 .filter(|name| lod_pool.contains_key(*name))
                 .cloned(),
         )
-        .filter(|dep| lod_pool.contains_key(dep))
-        .collect();
+        .filter(|dependency| lod_pool.contains_key(dependency))
+        .collect()
+}
 
-    while let Some(name) = needed.pop() {
-        if addons.contains_key(&name) {
-            continue;
-        }
-        if let Some((toc_path, toc)) = lod_pool.remove(&name) {
-            // This LOD addon may itself depend on other LOD addons
-            for dep in toc.dependencies() {
-                if lod_pool.contains_key(&dep) {
-                    needed.push(dep);
-                }
-            }
-            addons.insert(name, (toc_path, toc));
+fn pull_required_dependency_addon(
+    name: &str,
+    addons: &mut HashMap<String, (PathBuf, TocFile)>,
+    lod_pool: &mut HashMap<String, (PathBuf, TocFile)>,
+    needed: &mut Vec<String>,
+    screen: ScreenKind,
+) {
+    if addons.contains_key(name) {
+        return;
+    }
+    let Some((toc_path, toc)) = lod_pool.remove(name) else {
+        return;
+    };
+    for dependency in toc.dependencies_for_screen(screen) {
+        if lod_pool.contains_key(&dependency) {
+            needed.push(dependency);
         }
     }
+    addons.insert(name.to_string(), (toc_path, toc));
 }
 
 #[cfg(test)]

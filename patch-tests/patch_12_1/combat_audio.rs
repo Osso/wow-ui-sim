@@ -1,53 +1,22 @@
-use super::{assert_ptr_source_omits_qualified_methods, load_game_ui_without_player_choice};
+use super::{load_full_game_ui_with_all_lod, missing_runtime_functions};
 
-const SNAPSHOT_ONLY_METHODS: &[&str] = &[
-    "EnumerateInterruptCastInfo",
-    "EnumerateInterruptCastSuccessInfo",
-    "EnumerateSayCombatEndInfo",
-    "EnumerateSayCombatStartInfo",
-    "EnumeratetWhenTargetDiesInfo",
-    "GetInterruptCastInfo",
-    "GetInterruptCastSuccessInfo",
-    "GetSayCombatEndInfo",
-    "GetSayCombatStartInfo",
-    "GetWhenTargetDiesInfo",
+const PTR_METHODS: &[&str] = &[
+    "CombatAudioAlertUtil.EnumerateInterruptCastInfo",
+    "CombatAudioAlertUtil.EnumerateInterruptCastSuccessInfo",
+    "CombatAudioAlertUtil.EnumerateSayCombatEndInfo",
+    "CombatAudioAlertUtil.EnumerateSayCombatStartInfo",
+    "CombatAudioAlertUtil.EnumeratetWhenTargetDiesInfo",
+    "CombatAudioAlertUtil.GetInterruptCastInfo",
+    "CombatAudioAlertUtil.GetInterruptCastSuccessInfo",
+    "CombatAudioAlertUtil.GetSayCombatEndInfo",
+    "CombatAudioAlertUtil.GetSayCombatStartInfo",
+    "CombatAudioAlertUtil.GetWhenTargetDiesInfo",
 ];
 
-/// Proves the ten proposed methods are absent from both PTR source and runtime.
+/// Proves the pinned PTR CombatAudioAlertUtil methods are published after their LoD owners load.
 #[test]
-fn snapshot_only_combat_audio_methods_remain_absent() {
-    assert_ptr_source_omits_qualified_methods("CombatAudioAlertUtil", SNAPSHOT_ONLY_METHODS);
-
-    let env = load_game_ui_without_player_choice();
-    let (namespace_type, active_method_type, absent_count): (String, String, i32) = env
-        .eval(
-            r#"
-            local names = {
-                "EnumerateInterruptCastInfo",
-                "EnumerateInterruptCastSuccessInfo",
-                "EnumerateSayCombatEndInfo",
-                "EnumerateSayCombatStartInfo",
-                "EnumeratetWhenTargetDiesInfo",
-                "GetInterruptCastInfo",
-                "GetInterruptCastSuccessInfo",
-                "GetSayCombatEndInfo",
-                "GetSayCombatStartInfo",
-                "GetWhenTargetDiesInfo",
-            }
-            local absentCount = 0
-            for _, name in ipairs(names) do
-                if CombatAudioAlertUtil[name] == nil then
-                    absentCount = absentCount + 1
-                end
-            end
-            return type(CombatAudioAlertUtil),
-                type(CombatAudioAlertUtil.EnumeratePercentInfo),
-                absentCount
-            "#,
-        )
-        .expect("CombatAudioAlertUtil runtime probe succeeds");
-
-    assert_eq!(namespace_type, "table");
-    assert_eq!(active_method_type, "function");
-    assert_eq!(absent_count, SNAPSHOT_ONLY_METHODS.len() as i32);
+fn ptr_combat_audio_methods_are_published_by_the_loaded_owner() {
+    let env = load_full_game_ui_with_all_lod();
+    let missing = missing_runtime_functions(&env, PTR_METHODS);
+    assert_eq!(missing, "", "pinned PTR methods must remain published");
 }

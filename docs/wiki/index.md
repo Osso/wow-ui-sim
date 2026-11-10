@@ -1,14 +1,17 @@
 > Proof receipts live untracked under `~/.local/state/wow-ui-sim`. The `data/patch-api/evidence` and `data/test-perf/evidence` trees were removed on 2026-11-08; historical links below are records, not live paths. Recover a file with `git show c011c1d95:<path>`.
 
+## [2026-11-09] investigation | Reconcile profile frame-position baselines
+
+[Frame-position baseline drift](investigations/frame-position-baseline-drift.md#verified-lane-result--2026-11-09) records source-derived PTR, Forever and Classic expectations, profile-specific absent-frame checks, six-profile failure matrices, and unresolved model/input divergences. Its Mists follow-up records source-asserted Edit Mode unit-frame anchors, StanceBar replay ordering, and the managed ChatFrame position; 11 Mists frame-position residuals remain. The Forever bag, status-manager and managed-right residuals use Camelot source-derived fixture geometry, and Forever passes all 28 cases.
+
 ## [2026-11-08] investigation | GUI CASC cache preparation
 
 [GUI CASC cache preparation](investigations/gui-casc-cache-preparation.md) records the absent selected Era encoding key, supported local index headers, bounded consistency finding, and decision to use synthetic inputs in the required regression while retaining an `optional-tests` live smoke.
-## [2026-11-09] investigation | Reconcile profile frame-position baselines
 
-[Frame-position baseline drift](investigations/frame-position-baseline-drift.md#verified-lane-result--2026-11-09) records source-derived PTR, Forever and Classic expectations, profile-specific absent-frame checks, the final six-profile failure matrix, and unresolved model/input divergences. Retail and PTR pass 28/28; other profile residuals are not treated as native geometry.
 ## [2026-11-08] design | Classic consumer fixture applicability
 
 [Classic consumer fixture applicability](design/classic-consumer-applicability.md) ranks the Era first-error clusters and separates native classic fixture selection from absent Retail features. Fresh 75038d409 failure-name sets are saved for Era, Anniversary, and Mists; changed-source comparisons and final profile checks remain pending.
+
 
 ## [2026-11-08] investigation | Mists spellbook button size
 
@@ -17,6 +20,10 @@
 ## [2026-11-08] investigation | Mists encounter-journal summary parser
 
 [Mists encounter-journal summary parser](investigations/mists-ej-summary-parser.md) records that the triage's encounter-journal failure was a test-helper false positive, already fixed on master by `fe05a05f4` and `224474adf`. The native `EncounterJournal_SetBullets` `$bullet;` parser is correct; the seven cluster-A tests pass and none of the 40 `mists_` failures is caused by this defect.
+
+## [2026-11-08] correction | Native R13 addon dependency semantics
+
+[Addon loading](systems/addon-loading.md#screen-qualified-dependency-declarations) now records the native result: unannotated required cross-screen dependencies fail with `DEP_WRONG_ACTIVE_INTERFACE`; `[AllowLoad ...]` filters a whole header line before dependency splitting; Both targets remain required; optional failures are ignored; and loadability queries skip screen checks. The 2026-11-06 TOC-only inference is superseded. Evidence boundaries distinguish Retail 70688 from partial Forever and unknown PTR annotation grammar.
 
 ## [2026-11-07] fix | Forever 1.60.1.70707 residuals
 
@@ -4172,7 +4179,7 @@ The sixteen retail 12.0.0 `Enum.EditModeDamageMeterSetting.*` and `Enum.EditMode
 | [[lua-api]] | WowLuaEnv, FrameHandle userdata, 300+ frame methods, model-family compatibility surface, texture fileDataID/path identity, C_* namespaces including the bounded C_ProfSpecs specialization fixture, timers, animation system |
 | [[event-system]] | EventQueue, 36+ script handler types, dispatch flow, OnUpdate tick, startup event sequence, XML script setup |
 | [[xml-template-system]] | XML parsing, template registry/inheritance, same-object engine-root reuse, inline scripts/events and bounded callback late-binding proof |
-| [[addon-loading]] | TOC parsing, root-and-transitive-hard-dependency Blizzard discovery without eager-loading unrelated cache directories, inline `[Bootstrap]` semantics, typed nil-symbol observations and missing `C_*` requirements separated from runtime failures, public/secure same-addon publication reconciliation, exactly-once nested diagnostic forwarding with top-level runtime diagnostic retention and draining, VM-scoped lookup provenance, hidden publication-recorder boundary, stable addon-index ownership, single SimState-owned RAII load transactions, explicit secure replay allowlist, SavedVariables, startup sequence |
+| [[addon-loading]] | Native R13 whole-line screen dependency rules, TOC parsing, root-and-transitive-hard-dependency Blizzard discovery without eager-loading unrelated cache directories, inline `[Bootstrap]` semantics, typed nil-symbol observations and missing `C_*` requirements separated from runtime failures, public/secure same-addon publication reconciliation, exactly-once nested diagnostic forwarding with top-level runtime diagnostic retention and draining, VM-scoped lookup provenance, hidden publication-recorder boundary, stable addon-index ownership, single SimState-owned RAII load transactions, explicit secure replay allowlist, SavedVariables, startup sequence |
 | [[addon-module-imports]] | Forever completed-module `require`; [import checkpoint](systems/addon-module-imports.md#forever-import-binding--2026-10-15): historical completed-table/missing-binding RED; current bounded binding/control execution observed, independent acceptance pending; reused simulator policy, native parity UNKNOWN |
 | [[server-snapshot-action-bars]] | Imports captured action bars and carried bags from local ServerSnapshot SavedVariables before Blizzard UI loading; source-matching 0.3.0 install, July 5 no-bag snapshot, final fixture-failure boundary, and pending fresh capture recorded |
 | [[client-profiles]] | Seven mutually-exclusive client profiles, including distinct Forever `16001` / `wow_classic_beta` / `wowforever` cache from source branch `forever`; `5e26960b6` routes its `[Family]` files to `Mainline` while retaining Camelot and annotation filters; [running report](../wowforever-1.60.1.md) separates the historical 422-record baseline from current proof |
@@ -4205,9 +4212,9 @@ The sixteen retail 12.0.0 `Enum.EditModeDamageMeterSetting.*` and `Enum.EditMode
 | [[patch-12-0-7-api-audit]] | 12.0.7 occurrence audit: 131 named rows classified as 29 implemented, 101 best-effort, and one repository-scope-authorized impossible 3D-model exception; explicit simulator-only `ENCOUNTER_END` status input has fourteen 12.0.7 admin cases and twelve 12.0.5 controls passing, while restricted unit-token, taint, native payload, and widget secret/aspect limits remain documented per row |
 | [[tooltip-money-line]] | Loaded Blizzard ownership of `GameTooltip_AddMoneyLine`; removed prefix-text bootstrap shim and pending focused mail/tooltip consumer proof |
 | [[patch-12-0-7-occurrence-inventory]] | 131-row 12.0.7 register: 29 implemented, 101 best-effort, 1 repository-scope-authorized impossible exception-requested row, 0 untriaged; crawler-omitted CVar names remain explicit metadata |
-| [[patch-12-1-api-audit]] | 12.1 audit split: 432-row FrameXML register complete; separate 54-row broader behavior register has 33 best-effort and 21 evidence-required rows |
-| [[patch-12-1-framexml-symbol-inventory]] | Exhaustive 320-added/112-removed local FrameXML snapshot: 1 implemented, 431 best-effort, 0 exception-requested, 0 untriaged; includes explicit PTR source and LoD runtime proof for mismatches (430 distinct names; two duplicates) |
-| [[patch-12-1-behavior-inventory]] | 54 non-FrameXML behavior boundaries: 0 implemented, 33 best-effort, 21 evidence-required, 0 exception-requested, 0 untriaged; candidate split is 33 behavioral, 21 unsafe, and 0 impossible |
+| [[patch-12-1-api-audit]] | VERIFIED from the manifests: 432 FrameXML rows and 54 broader behavior rows (40 best-effort, 14 evidence-required) |
+| [[patch-12-1-framexml-symbol-inventory]] | VERIFIED (PTR runtime): 171/175 snapshot candidates callable, four unpublished; 93/99 previously vendor-present removals non-callable, four RaidNotice aliases callable, and two Lua built-ins. UNVERIFIED: native absence for runtime misses and exact source owners |
+| [[patch-12-1-behavior-inventory]] | VERIFIED from manifest: 54 behavior boundaries, 40 best-effort and 14 evidence-required (40 behavioral, 14 unsafe). UNVERIFIED: strict-removal lifecycle timing |
 | [[retail-ptr-full-startup-lua-errors]] | Full GUI startup logs caught PVPUI, PTR cursor, and Store micro-button errors missed by `lua-errors`; fixes added backed PVP/cursor surfaces and guarded the Store inbound fallback |
 | [[lib-test-failure-sweep-2026-06]] | Nine accumulated lib-test failures: ScriptErrors missing from runtime foundations inverted the SharedXMLBase load order; `hooksecurefunc(C_AddOns, "LoadAddOn")` is silently refused so post-load repairs must use `apply_blizzard_post_load_patches`; two more pieces of code lost in the classic rebase; duplicated `== nil`-guarded Lua installers drifting; tests stale against deliberate semantic changes |
 | [[test-runtime-optimization]] | Commit `e1f9b210b` verifies an ordered `BlizzardAddonOverride` closure for `Blizzard_SharedMapDataProviders`: 18/18 tests, 85–86% wall-time reduction, lower RSS, and fresh mutable `WowLuaEnv` isolation |

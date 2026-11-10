@@ -20,7 +20,7 @@ use rilua::{LuaResult, Val};
 
 pub(crate) fn register_c_death_recap_surface(state: &mut LuaState) -> LuaResult<()> {
     let table_ref = ensure_namespace(state, "C_DeathRecap")?;
-    if ACTIVE == ClientProfile::Retail {
+    if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr) {
         table_set_rust_fn_static(state, table_ref, "GetRecapEvents", get_recap_events)?;
         table_set_rust_fn_static(state, table_ref, "HasRecapEvents", has_recap_events)?;
         table_set_rust_fn_static(state, table_ref, "GetRecapLink", get_recap_link)?;

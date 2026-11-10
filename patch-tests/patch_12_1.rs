@@ -17,6 +17,8 @@ mod aura_container;
 mod aura_tooltip;
 #[path = "patch_12_1/combat_audio.rs"]
 mod combat_audio;
+#[path = "patch_12_1/death_recap.rs"]
+mod death_recap;
 #[path = "patch_12_1/friends_list.rs"]
 mod friends_list;
 #[path = "patch_12_1/guild_control.rs"]
@@ -55,51 +57,64 @@ fn blizzard_ui_dir() -> PathBuf {
         .expect("Blizzard UI cache should be available")
 }
 
-fn ptr_source_files() -> &'static Vec<(PathBuf, String)> {
-    static FILES: OnceLock<Vec<(PathBuf, String)>> = OnceLock::new();
-    FILES.get_or_init(|| {
-        fn collect(path: &Path, files: &mut Vec<(PathBuf, String)>) {
-            for entry in fs::read_dir(path).expect("PTR AddOns directory should be readable") {
-                let entry = entry.expect("PTR source entry should be readable");
-                let path = entry.path();
-                if path.is_dir() {
-                    collect(&path, files);
-                    continue;
-                }
-
-                let extension = path.extension().and_then(|value| value.to_str());
-                if matches!(extension, Some("lua" | "xml" | "toc")) {
-                    let source =
-                        fs::read_to_string(&path).expect("PTR source file should be UTF-8 text");
-                    files.push((path, source));
-                }
-            }
+fn collect_ptr_source_files(path: &Path, files: &mut Vec<(PathBuf, Vec<u8>)>) {
+    for entry in fs::read_dir(path).expect("PTR AddOns directory should be readable") {
+        let entry = entry.expect("PTR source entry should be readable");
+        let path = entry.path();
+        if path.is_dir() {
+            collect_ptr_source_files(&path, files);
+            continue;
         }
 
+        let extension = path.extension().and_then(|value| value.to_str());
+        if matches!(extension, Some("lua" | "xml" | "toc")) {
+            let source = fs::read(&path).expect("PTR source file should be readable");
+            files.push((path, source));
+        }
+    }
+}
+
+#[test]
+fn source_symbol_scan_accepts_non_utf8_comments() {
+    let directory = tempfile::tempdir().expect("create source fixture");
+    fs::write(
+        directory.path().join("Fixture.lua"),
+        b"BeforeComment = function() end\n-- player\x92s note\nAfterComment = function() end\n",
+    )
+    .expect("write byte-exact Lua fixture");
+    let mut files = Vec::new();
+    collect_ptr_source_files(directory.path(), &mut files);
+    assert_eq!(files.len(), 1);
+    assert!(contains_ascii(&files[0].1, "BeforeComment"));
+    assert!(contains_ascii(&files[0].1, "AfterComment"));
+    assert!(!contains_ascii(&files[0].1, "AbsentSymbol"));
+}
+
+fn ptr_source_files() -> &'static Vec<(PathBuf, Vec<u8>)> {
+    static FILES: OnceLock<Vec<(PathBuf, Vec<u8>)>> = OnceLock::new();
+    FILES.get_or_init(|| {
         let mut files = Vec::new();
-        collect(&blizzard_ui_dir(), &mut files);
+        collect_ptr_source_files(&blizzard_ui_dir(), &mut files);
         files
     })
+}
+
+fn contains_ascii(source: &[u8], symbol: &str) -> bool {
+    source
+        .windows(symbol.len())
+        .any(|window| window == symbol.as_bytes())
 }
 
 fn assert_ptr_source_omits_symbols(symbols: &[&str]) {
     for (path, source) in ptr_source_files() {
         for symbol in symbols {
             assert!(
-                !source.contains(symbol),
+                !contains_ascii(source, symbol),
                 "snapshot-only symbol {symbol} unexpectedly appears in {}",
                 path.display(),
             );
         }
     }
-}
-
-fn assert_ptr_source_omits_tokens(symbols: &[&str]) {
-    let tokens = symbols
-        .iter()
-        .map(|symbol| symbol.split_once('.').map_or(*symbol, |(_, method)| method))
-        .collect::<Vec<_>>();
-    assert_ptr_source_omits_symbols(&tokens);
 }
 
 fn assert_ptr_source_omits_qualified_symbols(symbols: &[&str]) {
@@ -129,13 +144,47 @@ fn assert_ptr_source_omits_qualified_methods(namespace: &str, methods: &[&str]) 
     assert_ptr_source_omits_symbols(&publications);
 }
 
-fn assert_ptr_source_contains(symbol: &str) {
-    assert!(
-        ptr_source_files()
-            .iter()
-            .any(|(_, source)| source.contains(symbol)),
-        "expected PTR source publication {symbol} was not found",
+fn missing_runtime_functions(env: &WowLuaEnv, symbols: &[&str]) -> String {
+    runtime_functions_matching(env, symbols, false)
+}
+
+fn present_runtime_symbols(env: &WowLuaEnv, symbols: &[&str]) -> String {
+    runtime_functions_matching(env, symbols, true)
+}
+
+fn runtime_functions_matching(env: &WowLuaEnv, symbols: &[&str], present: bool) -> String {
+    let symbols = symbols
+        .iter()
+        .map(|symbol| format!("\"{symbol}\""))
+        .collect::<Vec<_>>()
+        .join(",");
+    let matches_value = if present {
+        "value ~= nil"
+    } else {
+        "type(value) ~= \"function\""
+    };
+    let probe = format!(
+        r#"
+        local matchingSymbols = {{}}
+        for _, symbol in ipairs({{{symbols}}}) do
+            local namespaceName, methodName = string.match(symbol, "^([^.]+)%.(.+)$")
+            local value
+            if namespaceName then
+                local namespace = rawget(_G, namespaceName)
+                value = type(namespace) == "table" and rawget(namespace, methodName) or nil
+            else
+                value = rawget(_G, symbol)
+            end
+            local matches = {matches_value}
+            if matches then
+                table.insert(matchingSymbols, symbol)
+            end
+        end
+        return table.concat(matchingSymbols, ",")
+        "#
     );
+    env.eval(&probe)
+        .expect("runtime publication probe succeeds")
 }
 
 fn player_choice_toc() -> PathBuf {
