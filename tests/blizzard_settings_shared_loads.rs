@@ -526,24 +526,24 @@ fn family_placeholder_resolves_to_mainline_subdir_in_three_entries() {
             }
         })
         .collect();
-    assert_eq!(
-        mainline_files.len(),
-        4,
-        "Exactly 4 body entries must resolve under `Mainline/` after the TOC \
-         parser at src/toc.rs:147 normalizes backslash to forward slash: \
-         Mainline/NewDefinitions.lua, \
-         Mainline/Blizzard_SettingsPanelTemplates.xml, \
-         Mainline/GraphicsOverrides.lua, Mainline/AudioOverrides.lua. The \
-         settings_shared TOC uses literal `Mainline\\` rather than `[Family]\\` \
-         placeholder (no resolution step needed). Got: {mainline_files:?}"
-    );
-
-    for expected in [
+    let mut expected = vec![
         "Mainline/NewDefinitions.lua",
         "Mainline/Blizzard_SettingsPanelTemplates.xml",
         "Mainline/GraphicsOverrides.lua",
         "Mainline/AudioOverrides.lua",
-    ] {
+    ];
+    if toc_layout::ptr() {
+        // PTR 12.1.7 Blizzard_Settings_Shared.toc:38 adds the Mainline language override.
+        expected.push("Mainline/LanguagesOverrides.lua");
+    }
+    assert_eq!(
+        mainline_files.len(),
+        expected.len(),
+        "Mainline body entries must match the active Settings_Shared TOC. PTR \
+         Blizzard_Settings_Shared.toc:38 adds LanguagesOverrides.lua. Got: {mainline_files:?}"
+    );
+
+    for expected in expected {
         assert!(
             mainline_files.iter().any(|f| f == expected),
             "Mainline body entry {expected} must be present after normalization"

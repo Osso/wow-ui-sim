@@ -423,6 +423,11 @@ post_wrath_ui_fixture! {
 fn test_game_menu_shop_button_opens_store_and_menu_can_reopen_after_store_closes() {
     test_timeout! {
         let env = setup_game_menu_env();
+        // PTR GameMenuFrame.lua:198-205 adds the store button only when both
+        // public-store and Shop 2 availability inputs are true. The shared
+        // housing fixture defaults Shop 2 to false, so provide the enabled case.
+        env.exec("C_CatalogShop.IsShop2Enabled = function() return true end")
+            .expect("seed the enabled Shop 2 scenario");
 
         let result: String = env
             .eval(&menu_button_chunk(r#"

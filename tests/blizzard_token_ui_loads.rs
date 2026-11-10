@@ -265,11 +265,17 @@ fn body_resolves_to_five_entries_in_declared_order() {
         .map(|p| p.to_string_lossy().to_string())
         .collect();
 
+    let token_files = if toc_layout::unified_toc_tree() {
+        // PTR/Forever TokenUI.toc:6-7 selects Mainline subdirectory files.
+        ["Mainline/Blizzard_TokenUI.lua", "Mainline/Blizzard_TokenUI.xml"]
+    } else {
+        ["Blizzard_TokenUI.lua", "Blizzard_TokenUI.xml"]
+    };
     let expected = vec![
         "Blizzard_CurrencyTransfer.lua".to_string(),
         "Blizzard_CurrencyTransfer.xml".to_string(),
-        "Blizzard_TokenUI.lua".to_string(),
-        "Blizzard_TokenUI.xml".to_string(),
+        token_files[0].to_string(),
+        token_files[1].to_string(),
         "Localization.lua".to_string(),
     ];
 

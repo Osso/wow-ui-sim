@@ -645,6 +645,30 @@ fn blizzard_raid_ui_registers_extra_events_on_raid_frame(env: &WowLuaEnv) {
 
 #[test]
 fn blizzard_raid_ui_xml_pulls_lua_via_script_directive() {
+    if toc_layout::classic_cache() {
+        // Mists Blizzard_RaidUI.toc:8-9 selects the Mists XML, not Mainline XML.
+        return;
+    }
+    if toc_layout::unified_toc_tree() {
+        // PTR/Forever Blizzard_RaidUI.toc:5-6 lists Mainline Lua before XML.
+        let body: Vec<String> = TocFile::from_file(&raid_ui_toc())
+            .expect("RaidUI TOC parses")
+            .files
+            .iter()
+            .map(|path| path.to_string_lossy().replace('\\', "/"))
+            .collect();
+        let lua = body
+            .iter()
+            .position(|path| path == "Mainline/Blizzard_RaidUI.lua")
+            .expect("TOC lists Mainline Lua directly");
+        let xml = body
+            .iter()
+            .position(|path| path == "Mainline/Blizzard_RaidUI.xml")
+            .expect("TOC lists Mainline XML directly");
+        assert!(lua < xml, "PTR/Forever TOC must load Lua before XML: {body:?}");
+        return;
+    }
+
     let xml_path = raid_ui_dir().join(if cfg!(feature = "client-wrath") {
         "Blizzard_RaidUI.xml"
     } else {
@@ -653,12 +677,6 @@ fn blizzard_raid_ui_xml_pulls_lua_via_script_directive() {
     let xml = std::fs::read_to_string(&xml_path).expect("XML reads utf-8");
     assert!(
         xml.contains(r#"<Script file="Blizzard_RaidUI.lua"/>"#),
-        "Blizzard_RaidUI.xml must include `<Script file=\"Blizzard_RaidUI.lua\"/>` \
-         at the top — the modern XML-driven Lua-loading pattern. The \
-         companion .lua file is NOT listed in the TOC body directly; it is \
-         loaded transitively when the XML parser hits the Script directive. \
-         Distinct from the older-style sibling Blizzard_RaidFrame which \
-         lists Mainline/RaidFrame.lua AND Mainline/RaidFrame.xml \
-         explicitly in the TOC body"
+        "Retail XML loads its companion Lua through a Script directive"
     );
 }

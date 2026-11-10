@@ -216,15 +216,24 @@ fn body_resolves_to_bootstrap_mainline_xml_and_localization_lua() {
         .map(|p| p.to_string_lossy().to_string())
         .collect();
 
-    assert_eq!(
-        body,
+    let expected = if toc_layout::unified_toc_tree() {
+        // PTR/Forever TrainerUI.toc:5-9 lists the family Mainline Lua and XML.
+        vec![
+            "Blizzard_TrainerUI_Bootstrap.lua".to_string(),
+            "Mainline/Blizzard_TrainerUI.lua".to_string(),
+            "Mainline/Blizzard_TrainerUI.xml".to_string(),
+            "Localization.lua".to_string(),
+        ]
+    } else if toc_layout::classic_cache() {
+        vec!["Blizzard_TrainerUI.xml".to_string(), "Localization.lua".to_string()]
+    } else {
         vec![
             "Blizzard_TrainerUI_Bootstrap.lua".to_string(),
             "Mainline/Blizzard_TrainerUI.xml".to_string(),
             "Localization.lua".to_string(),
-        ],
-        "Retail 12.1 body must retain the bootstrap, Mainline XML, and localization trailer in order. Got: {body:?}"
-    );
+        ]
+    };
+    assert_eq!(body, expected, "TrainerUI body must match the active pinned TOC: {body:?}");
 }
 
 #[test]

@@ -6,6 +6,9 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -275,18 +278,23 @@ fn body_lists_three_lua_files_in_dependency_order() {
         .map(|p| p.to_string_lossy().to_string())
         .collect();
 
-    let expected = [
-        "StaticPopup.lua",
-        "SharedTemplates.lua",
-        "SharedDialogDefs.lua",
-    ];
+    let expected: &[&str] = if toc_layout::unified_toc_tree() {
+        // PTR/Forever StaticPopup.toc:4-7 adds StaticPopupGamepad.lua.
+        &[
+            "StaticPopup.lua",
+            "SharedTemplates.lua",
+            "SharedDialogDefs.lua",
+            "StaticPopupGamepad.lua",
+        ]
+    } else {
+        &["StaticPopup.lua", "SharedTemplates.lua", "SharedDialogDefs.lua"]
+    };
 
     assert_eq!(
         body.len(),
         expected.len(),
-        "Body must contain exactly 3 entries — the addon ships three \
-         pure-Lua files (no XML, all dialog frames are constructed in \
-         downstream consumer XML). Got: {body:?}"
+        "Body must match the active StaticPopup TOC. PTR/Forever \
+         Blizzard_StaticPopup.toc:4-7 adds StaticPopupGamepad.lua. Got: {body:?}"
     );
 
     for (i, want) in expected.iter().enumerate() {
@@ -299,8 +307,8 @@ fn body_lists_three_lua_files_in_dependency_order() {
 
     assert!(
         body.iter().all(|f| f.ends_with(".lua")),
-        "All three body entries MUST be .lua — StaticPopup ships zero \
-         XML because it is a pure dispatcher library: \
+        "All body entries MUST be .lua — StaticPopup ships zero XML \
+         because it is a pure dispatcher library: \
          StaticPopup.lua publishes the dispatcher, SharedTemplates.lua \
          publishes the editbox/element mixins consumed by downstream \
          XML, and SharedDialogDefs.lua seeds the GENERIC_CONFIRMATION \

@@ -25,6 +25,12 @@ pub fn forever() -> bool {
     ACTIVE == ClientProfile::WowForever
 }
 
+/// True only for the PTR profile; PTR and Forever share a unified TOC layout
+/// but their pinned source contents are not always identical.
+pub fn ptr() -> bool {
+    ACTIVE == ClientProfile::Ptr
+}
+
 /// True for the profiles whose pinned cache stores the 218-addon classic set
 /// (`data/blizzard-ui-files/{mists,era,anniversary}.txt`), plus Wrath's
 /// 23-addon set. Those caches ship flavor-suffixed TOCs such as

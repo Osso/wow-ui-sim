@@ -182,23 +182,39 @@ post_wrath_ui_fixture! {
 fn dependencies_chain_pulls_six_blizzard_addons_via_plural_dependencies_key() {
     let toc = TocFile::from_file(&static_popup_game_toc()).expect("TOC parses");
 
-    let expected_deps = vec![
-        "Blizzard_StaticPopup".to_string(),
-        "Blizzard_ItemButton".to_string(),
-        "Blizzard_AutoComplete".to_string(),
-        "Blizzard_MoneyFrame".to_string(),
-        "Blizzard_AccessibilityTemplates".to_string(),
-        "Blizzard_GameMenuEsc".to_string(),
-    ];
+    let expected_deps: Vec<String> = if toc_layout::classic_cache() {
+        [
+            "Blizzard_StaticPopup",
+            "Blizzard_ItemButton",
+            "Blizzard_AutoComplete",
+            "Blizzard_MoneyFrame",
+            "Blizzard_AccessibilityTemplates",
+        ]
+        .iter()
+        .map(|dependency| dependency.to_string())
+        .collect()
+    } else {
+        let mut dependencies = vec![
+            "Blizzard_StaticPopup".to_string(),
+            "Blizzard_ItemButton".to_string(),
+            "Blizzard_AutoComplete".to_string(),
+            "Blizzard_MoneyFrame".to_string(),
+            "Blizzard_AccessibilityTemplates".to_string(),
+            "Blizzard_GameMenuEsc".to_string(),
+        ];
+        if toc_layout::unified_toc_tree() {
+            // PTR/Forever Blizzard_StaticPopup_Game.toc:2 adds gamepad support.
+            dependencies.push("Blizzard_GamepadSharedUtility".to_string());
+        }
+        dependencies
+    };
 
     assert_eq!(
         toc.dependencies(),
         expected_deps,
-        "Plural `## Dependencies:` parsed at toc.rs:210-217. Order: \
-         StaticPopup (dispatcher), ItemButton (SetItemButtonTexture/Quality), \
-         AutoComplete (EditBox template), MoneyFrame (Money templates), \
-         AccessibilityTemplates (UserScaledFrameTemplate), GameMenuEsc \
-         (escape-menu integration). Got: {:?}",
+        "Plural `## Dependencies:` must match the active pinned TOC. Order is StaticPopup, \
+         ItemButton, AutoComplete, MoneyFrame, AccessibilityTemplates and GameMenuEsc; PTR/Forever \
+         Blizzard_StaticPopup_Game.toc:2 also adds GamepadSharedUtility. Got: {:?}",
         toc.dependencies()
     );
 }
@@ -259,19 +275,18 @@ post_wrath_ui_fixture! {
 fn toc_raw_bytes_pin_three_metadata_directives() {
     let raw = std::fs::read_to_string(static_popup_game_toc()).expect("TOC reads utf-8");
 
-    let expected_directives: &[&str] = if toc_layout::classic_cache() {
-        &[
-            "## Title: Blizzard_StaticPopup_Game",
-            "## Dependencies: Blizzard_StaticPopup, Blizzard_ItemButton, Blizzard_AutoComplete, Blizzard_MoneyFrame, Blizzard_AccessibilityTemplates",
-            "## AllowLoad: game",
-        ]
+    let expected_dependencies = if toc_layout::classic_cache() {
+        "## Dependencies: Blizzard_StaticPopup, Blizzard_ItemButton, Blizzard_AutoComplete, Blizzard_MoneyFrame, Blizzard_AccessibilityTemplates"
+    } else if toc_layout::unified_toc_tree() {
+        "## Dependencies: Blizzard_StaticPopup, Blizzard_ItemButton, Blizzard_AutoComplete, Blizzard_MoneyFrame, Blizzard_AccessibilityTemplates, Blizzard_GameMenuEsc, Blizzard_GamepadSharedUtility"
     } else {
-        &[
-            "## Title: Blizzard_StaticPopup_Game",
-            "## Dependencies: Blizzard_StaticPopup, Blizzard_ItemButton, Blizzard_AutoComplete, Blizzard_MoneyFrame, Blizzard_AccessibilityTemplates, Blizzard_GameMenuEsc",
-            "## AllowLoad: game",
-        ]
+        "## Dependencies: Blizzard_StaticPopup, Blizzard_ItemButton, Blizzard_AutoComplete, Blizzard_MoneyFrame, Blizzard_AccessibilityTemplates, Blizzard_GameMenuEsc"
     };
+    let expected_directives = [
+        "## Title: Blizzard_StaticPopup_Game",
+        expected_dependencies,
+        "## AllowLoad: game",
+    ];
 
     for directive in expected_directives {
         assert!(

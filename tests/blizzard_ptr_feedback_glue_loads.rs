@@ -26,6 +26,7 @@ fn ptr_feedback_glue_toc() -> PathBuf {
 const PTR_FEEDBACK_GLUE_TOC_FILES: &[&str] = &[
     "../Blizzard_PTRFeedback/Blizzard_PTRFeedback.lua",
     "../Blizzard_PTRFeedback/Blizzard_PTRFeedback_Frames.lua",
+    "../Blizzard_PTRFeedback/Blizzard_PTRFeedback_Gamepad.lua",
     "../Blizzard_PTRFeedback/Blizzard_Reports.lua",
     "Blizzard_Reports_Glue.lua",
     "Blizzard_PTRFeedback_Events_Glue.lua",
@@ -156,7 +157,7 @@ fn blizzard_ptr_feedback_glue_toc_declares_eager_no_lod_no_deps() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_ptr_feedback_glue_shares_saved_variable_with_game_variant() {
     let toc =
@@ -246,7 +247,7 @@ fn blizzard_ptr_feedback_glue_toc_declares_metadata_in_raw_bytes() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_ptr_feedback_glue_lists_five_files_with_cross_addon_parent_paths() {
     let toc =
@@ -258,13 +259,15 @@ fn blizzard_ptr_feedback_glue_lists_five_files_with_cross_addon_parent_paths() {
         .collect();
     assert_eq!(
         listed, PTR_FEEDBACK_GLUE_TOC_FILES,
-        "TOC must list exactly 5 files in canonical order (paths normalized to \
-         forward slashes by src/toc.rs:147 — raw bytes use `\\`). The first 3 use \
+        "TOC must list exactly 6 files in canonical order; PTR/Forever \
+         Blizzard_PTRFeedbackGlue.toc:8-14 adds the Gamepad source. Paths normalize to \
+         forward slashes by src/toc.rs:147 — raw bytes use `\\`. The first 4 use \
          `../Blizzard_PTRFeedback/` parent-directory paths to import sibling \
          Lua files from the Game-side addon directory: \
          Blizzard_PTRFeedback.lua (declares the PTR_IssueReporter root frame + \
          .Data/.Assets/.DataCollectorTypes namespaces), \
          Blizzard_PTRFeedback_Frames.lua (the survey-frame UI logic), \
+         Blizzard_PTRFeedback_Gamepad.lua (gamepad input), and \
          Blizzard_Reports.lua (the report-survey definitions). The last 2 are \
          local Glue-suffixed files: Blizzard_Reports_Glue.lua (glue-specific \
          survey definitions for character creation / customization), \
@@ -293,15 +296,12 @@ fn blizzard_ptr_feedback_glue_does_not_appear_in_eager_discovery() {
         let found = addons
             .iter()
             .any(|(name, _)| name == "Blizzard_PTRFeedbackGlue");
-        assert!(
-            !found,
-            "Blizzard_PTRFeedbackGlue must NOT appear in eager discovery for \
-             {screen:?} — even though `## AllowLoad: Glue` would otherwise route \
-             this addon to the 3 glue screens, the loader filter at \
-             src/loader/mod.rs:527 also rejects PTR-only addons. The two gates \
-             stack: the addon is hidden from BOTH the eager pool AND the LOD pool \
-             on every screen of a live client. Asymmetric exposure: \
-             `discover_all_blizzard_addons` does not apply this filter"
+        let expected = toc_layout::unified_toc_tree() && screen != ScreenKind::Game;
+        assert_eq!(
+            found, expected,
+            "PTR/Forever Blizzard_PTRFeedbackGlue.toc:2,4,8-14 permits beta/PTR glue \
+             screens and declares AllowLoad: Glue; it must not enter Game discovery. \
+             Other profile caches do not include this PTR-only addon. Screen: {screen:?}"
         );
     }
 }
@@ -313,18 +313,17 @@ fn blizzard_ptr_feedback_glue_appears_in_full_addon_inventory() {
     let found = inventory
         .iter()
         .any(|(name, _)| name == "Blizzard_PTRFeedbackGlue");
-    assert!(
+    assert_eq!(
         found,
-        "Blizzard_PTRFeedbackGlue MUST appear in `discover_all_blizzard_addons` \
-         even though it is PTR-only and glue-only — the full-inventory accessor at \
-         src/loader/mod.rs:309-343 does NOT apply the `is_ptr_only()` or screen \
-         filters, so tests can still load the addon explicitly via `load_addon` \
-         for coverage"
+        !toc_layout::classic_cache(),
+        "The PTR/Forever/Retail source inventory contains this add-on, and \
+         discover_all_blizzard_addons includes it without applying screen filters; \
+         the Mists/Era/Anniversary caches omit the glue add-on"
     );
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_ptr_feedback_glue_loads_explicitly_on_glue_screen() {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");

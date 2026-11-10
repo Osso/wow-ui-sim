@@ -7,6 +7,9 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -167,7 +170,7 @@ fn toc_raw_bytes_pin_metadata_and_bootstrap_xml_body() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn body_resolves_bootstrap_then_xml_entry() {
     let toc = TocFile::from_file(&subscription_interstitial_toc()).expect("TOC parses");
@@ -178,30 +181,46 @@ fn body_resolves_bootstrap_then_xml_entry() {
         .map(|p| p.to_string_lossy().to_string())
         .collect();
 
-    assert_eq!(
-        body,
+    let expected = if toc_layout::ptr() {
+        // PTR TOC:3-4 lists the bootstrap and mainline Lua; :6 then lists XML.
+        vec![
+            "Blizzard_SubscriptionInterstitialUI_Bootstrap.lua".to_string(),
+            "Blizzard_SubscriptionInterstitialUI.lua".to_string(),
+            "Blizzard_SubscriptionInterstitialUI.xml".to_string(),
+        ]
+    } else if toc_layout::forever() {
+        // Forever also admits the Camelot [Game] Lua entry at TOC:5.
+        vec![
+            "Blizzard_SubscriptionInterstitialUI_Bootstrap.lua".to_string(),
+            "Blizzard_SubscriptionInterstitialUI.lua".to_string(),
+            "Camelot/Blizzard_SubscriptionInterstitialUI.lua".to_string(),
+            "Blizzard_SubscriptionInterstitialUI.xml".to_string(),
+        ]
+    } else {
         vec![
             "Blizzard_SubscriptionInterstitialUI_Bootstrap.lua".to_string(),
             "Blizzard_SubscriptionInterstitialUI.xml".to_string(),
-        ],
-        "Bootstrap loads before the XML, which chains the matching .lua via <Script file=...>. \
-         Got: {body:?}"
-    );
+        ]
+    };
+    assert_eq!(body, expected, "Subscription Interstitial body must match the active pinned TOC");
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn xml_chains_lua_via_script_file_directive() {
     let xml_path = subscription_interstitial_dir().join("Blizzard_SubscriptionInterstitialUI.xml");
     let raw = std::fs::read_to_string(&xml_path).expect("XML reads");
 
-    assert!(
-        raw.contains("<Script file=\"Blizzard_SubscriptionInterstitialUI.lua\""),
-        "XML must `<Script file=\"Blizzard_SubscriptionInterstitialUI.lua\"/>` \
-         — drives the 5-mixin publication chain since the .lua is NOT \
-         listed in the TOC body directly"
-    );
+    if toc_layout::unified_toc_tree() {
+        // PTR/Forever TOC:4-5 lists Lua directly; XML does not own loading it.
+        assert!(!raw.contains("<Script file=\"Blizzard_SubscriptionInterstitialUI.lua\""));
+    } else {
+        assert!(
+            raw.contains("<Script file=\"Blizzard_SubscriptionInterstitialUI.lua\""),
+            "Retail XML loads the Lua because Retail TOC:4 lists only bootstrap/XML"
+        );
+    }
 }
 }
 

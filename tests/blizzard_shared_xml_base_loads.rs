@@ -5,6 +5,9 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -215,22 +218,33 @@ fn body_count_matches_filesystem_layout() {
         .filter(|f| f.extension().is_some_and(|ext| ext == "xml"))
         .count();
 
+    let (expected_files, expected_lua, expected_xml) = if toc_layout::unified_toc_tree() {
+        // PTR/Forever SharedXMLBase.toc:44-45 adds FocusEffects.lua and
+        // FocusEffectTemplates.xml relative to Retail.
+        (42, 38, 4)
+    } else if toc_layout::classic_cache() {
+        (39, 37, 2)
+    } else {
+        (40, 37, 3)
+    };
     assert_eq!(
         toc.files.len(),
-        40,
-        "Retail 12.1.5.70575 TOC body lists exactly 40 entries — the foundational \
-         primitive surface for the entire UI codebase. Got {} entries",
+        expected_files,
+        "Pinned SharedXMLBase TOC body lists {expected_files} entries. PTR/Forever \
+         SharedXMLBase.toc:44-45 adds FocusEffects.lua and FocusEffectTemplates.xml. \
+         Got {} entries",
         toc.files.len()
     );
     assert_eq!(
-        lua_count, 37,
-        "Retail 12.1.5.70575 TOC body lists exactly 37 .lua files, ending with \
-         CurveConstants.lua and TimerUtil.lua. Got {lua_count}"
+        lua_count, expected_lua,
+        "Pinned SharedXMLBase TOC body lists {expected_lua} .lua files. PTR/Forever \
+         SharedXMLBase.toc:44 adds FocusEffects.lua relative to Retail. Got {lua_count}"
     );
     assert_eq!(
-        xml_count, 3,
-        "TOC body must list exactly 3 .xml files: CallbackRegistrant.xml, \
-         ColorSwatch.xml, and ForbiddenAspectTemplates.xml. Got {xml_count}"
+        xml_count, expected_xml,
+        "Pinned SharedXMLBase TOC body lists {expected_xml} .xml files. PTR/Forever \
+         SharedXMLBase.toc:45 adds FocusEffectTemplates.xml; classic caches list \
+         two XML entries. Got {xml_count}"
     );
 }
 

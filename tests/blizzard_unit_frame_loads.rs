@@ -403,6 +403,14 @@ fn allow_load_game_type_mainline_is_not_restricted() {
 post_wrath_ui_fixture! {
 #[test]
 fn classic_companion_is_restricted_on_mainline_build() {
+    if toc_layout::unified_toc_tree() {
+        assert!(
+            !unit_frame_classic_toc().exists(),
+            "PTR/Forever Blizzard_UnitFrame.toc:1-20 is the unified TOC; the cache has no \
+             separate Blizzard_UnitFrame_Classic.toc"
+        );
+        return;
+    }
     let classic = TocFile::from_file(&unit_frame_classic_toc()).expect("Classic TOC parses");
 
     assert!(

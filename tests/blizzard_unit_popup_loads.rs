@@ -366,18 +366,47 @@ fn family_placeholder_resolves_to_mainline_directory() {
 post_wrath_ui_fixture! {
 #[test]
 fn game_placeholder_resolves_to_standard_directory() {
+    let toc = TocFile::from_file(&unit_popup_toc()).expect("UnitPopup TOC parses");
+    let body: Vec<String> = toc
+        .files
+        .iter()
+        .map(|path| path.to_string_lossy().replace('\\', "/"))
+        .collect();
+
+    if toc_layout::ptr() {
+        // PTR TOC:11,14 selects Family/Mainline files; :12,15 filter the
+        // Standard-only Game files out of the active mainline body.
+        for relative in ["Mainline/UnitPopupButtons.lua", "Mainline/UnitPopupMenus.lua"] {
+            assert!(unit_popup_dir().join(relative).is_file(), "missing {relative}");
+            assert!(body.iter().any(|entry| entry == relative));
+        }
+        assert!(!body.iter().any(|entry| entry.starts_with("Standard/")));
+        return;
+    }
+
+    if toc_layout::forever() {
+        // Forever keeps Mainline buttons and resolves its Camelot game menu separately.
+        for relative in [
+            "Mainline/UnitPopupButtons.lua",
+            "Mainline/UnitPopupMenus.lua",
+            "Camelot/UnitPopupMenus.lua",
+        ] {
+            assert!(unit_popup_dir().join(relative).is_file(), "missing {relative}");
+        }
+        return;
+    }
+
+    if toc_layout::classic_cache() {
+        assert!(!body.iter().any(|entry| entry.starts_with("Standard/")));
+        return;
+    }
+
     for relative in GAME_PLACEHOLDER_RESOLVED_RELATIVES {
         let resolved = unit_popup_dir().join(relative);
         assert!(
             resolved.is_file(),
-            "`[Game]` placeholder must resolve to existing Standard\\ \
-             body file at {resolved:?}. toc.rs:146 substitutes \
-             `[Game]` → `Standard` literally; the Standard subdir holds \
-             the cross-build button/menu definitions used by retail \
-             mainline AND plunderstorm/wowhack flavors. The \
-             WoWLabs/WoWHack subdirs each carry their own copies but \
-             those `[AllowLoadGameType ...]` filters are written so \
-             only Standard variants load on a mainline build"
+            "Retail UnitPopup.toc:11,13 selects Standard\\ files through [Game]; \
+             expected `{resolved:?}`"
         );
     }
 }

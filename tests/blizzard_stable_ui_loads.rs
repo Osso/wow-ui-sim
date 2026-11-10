@@ -6,6 +6,9 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -104,7 +107,12 @@ const VIRTUAL_TEMPLATES: &[&str] = &[
     "StablePetAbilityTemplate",
 ];
 
-const EXPECTED_BODY: &[&str] = &["Blizzard_StableUI.lua", "Blizzard_StableUI.xml"];
+const RETAIL_EXPECTED_BODY: &[&str] = &["Blizzard_StableUI.lua", "Blizzard_StableUI.xml"];
+const UNIFIED_EXPECTED_BODY: &[&str] = &[
+    "Shared/Blizzard_StableUI_Shared.lua",
+    "Standard/Blizzard_StableUI.lua",
+    "Standard/Blizzard_StableUI.xml",
+];
 
 fn load_full_game_ui() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
@@ -267,15 +275,20 @@ fn body_lists_lua_before_xml_for_mixin_resolution() {
         .map(|p| p.to_string_lossy().to_string())
         .collect();
 
+    let expected_body = if toc_layout::unified_toc_tree() {
+        // PTR/Forever StableUI.toc:4-6 selects shared Lua then Standard Lua/XML.
+        UNIFIED_EXPECTED_BODY
+    } else {
+        RETAIL_EXPECTED_BODY
+    };
     assert_eq!(
         body.len(),
-        EXPECTED_BODY.len(),
-        "Body must contain exactly 2 entries — one .lua holding all 20 \
-         mixin tables and one .xml registering the 4 virtual templates + \
-         the named StableFrame instance. Got: {body:?}"
+        expected_body.len(),
+        "StableUI body must match the active TOC: Retail lists two files; PTR/Forever \
+         StableUI.toc:4-6 lists shared Lua plus Standard Lua/XML. Got: {body:?}"
     );
 
-    for (i, want) in EXPECTED_BODY.iter().enumerate() {
+    for (i, want) in expected_body.iter().enumerate() {
         assert_eq!(
             &body[i], want,
             "Body entry {i}: expected {want}, got {}",
@@ -284,7 +297,8 @@ fn body_lists_lua_before_xml_for_mixin_resolution() {
     }
 
     assert!(
-        body[0].ends_with(".lua") && body[1].ends_with(".xml"),
+        body.iter().position(|entry| entry.ends_with(".lua"))
+            < body.iter().position(|entry| entry.ends_with(".xml")),
         "Blizzard_StableUI.lua MUST load BEFORE the .xml — the XML's \
          mixin attributes (StableFrameMixin on the named StableFrame, \
          plus 4 virtual-template mixin bindings) resolve mixin tables at \

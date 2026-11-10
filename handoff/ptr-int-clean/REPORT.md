@@ -8,26 +8,27 @@ Reduce the 69 PTR integration failures at `aa33b409c` with no new failure names.
 
 VERIFIED: `/var/tmp/osso/prship/m29c-p-int-all.log` ends with 10,573 passed, 69 failed and 17 ignored. Names below use regex `^    ([A-Za-z0-9_:]+)$` after its last `\nfailures:\n`. Failure count is not root-cause count. Original per-test panic output is retained outside git in `~/.local/state/wow-ui-sim/handoff/ptr-int-clean/errors.json`. Classifications identify the next evidence/action, not claims that all causes are already proven.
 
-## Cluster table (before implementation)
+## Cluster table (initial triage, refined after pinned-source inspection)
 
 | Cluster | Names | Decision | Evidence and next action |
 |---|---:|---|---|
-| Pinned source expectations | 34 | (b) | TOC bodies, dependencies, selected variants and Lua wrappers differ from the Retail/older-PTR assertions. Correct only with the exact citations below; preserve other profiles. |
+| Pinned source expectations | 35 | (b) | PTR 12.1.7 TOCs, selected variants, declarations and Lua wrappers contradict old expectations; corrections retain other profile expectations. |
+| StaticPopup virtual-template materialization | 1 | (a) | The pinned GameDialog.xml declares all three expected virtual templates, but CreateFrame cannot materialize them after the selected TOC loads it. Trace XML/template registration; do not weaken the source assertion. |
 | Action-bar startup and presentation | 7 | (a) | Original ActionButton.lua:808 calls missing overlay Attach; ActionBar.lua:373 calls missing UpdateActionBarLayout. Trace first load errors before treating atlas/layout symptoms as geometry bugs. |
 | Bag-frame revision and fixture selection | 4 | (b) | Seven real container frames observed rather than six; bag-slot template moved. Check selected ContainerFrame source and retain rectangle checks against the new named consumer. |
-| Auction-house token namespace | 4 | (c) | First error is C_WowTokenUI nil in Shared/Blizzard_AuctionHouseCategoriesList.lua:19. Need native namespace/member behavior before adding a producer. |
-| Profile publication expectations | 3 | (c) | Hardcore publication, loot-style enum and global mouse-event registration differ. Check current producer and pinned declarations; ask native questions only for unresolved contracts. |
+| Auction-house token namespace | 4 | (a) | R22 confirms the pinned consumer calls C_WowTokenUI.ShouldDisplayInAuctionHouse(); model this PTR-only getter as always true and test through AuctionHouseCategoriesList.lua:19. |
+| Profile publication expectations | 1 | (c) | What does PTR 12.1.7 C_PartyInfo.GetLootMethodStyle return initially and after SetLootMethod values 0, 1, 2, and 3? APIDoc declares the enum shape, not the runtime selection rule. |
 | Profession startup and geometry | 3 | (a) | Blacksmithing book button absent; ProfessionsFrame width 1; crafting ValidateControls transaction nil. Trace selected profession model/input before geometry changes. |
-| Game-menu source/API revision | 2 | (b) | Shared/GameMenuFrame.lua is selected by Blizzard_GameMenu.toc:7-9. Older GameMenuFrameMixin and shop-button assumptions need selected-source citations. |
+| Game-menu source/API revision | 2 | (b) | PTR GameMenu.toc:7-9 selects shared GameMenuFrame.lua; resolve the current TOC and supply the enabled Shop 2 scenario required by its source gate. |
 | LOD shard 10 errors | 2 | (a) | Both names fail shard 10 baseline. Read the complete emitted load/error entries and repair the original producer; do not raise baseline allowance. |
 | Achievement comparison fixture | 2 | (b) | Original Mainline/Blizzard_AchievementUI.lua:418 now calls SetShown on a fixture child. Supply current original-consumer collaborators, retaining completed/incomplete assertions. |
-| Modified-click mutation | 2 | (c) | SetModifiedClick/GetModifiedClick returns NONE instead of ALT. Need PTR native security/context semantics before changing runtime or assertion. |
+| Modified-click mutation | 2 | (a) | R22 proves immediate read-after-write for accepted mutations and says not to model the undocumented PTR context checks; trace simulator state and preserve Retail behavior. |
 | Combo-frame consumer selection | 1 | (b) | Test assumes global ComboFrame although current selected unit-frame consumer differs; trace Blizzard_UnitFrame.toc and Mainline consumer before retargeting. |
 | Missing cooldown duration policy | 1 | (c) | Existing no-state duration assertion fails. Need original API behavior on absent unit/action state if current source does not determine the return. |
-| PTR eager load-order snapshot | 1 | (b) | Observed eager order differs from Retail-only snapshot. Generate a separate pinned PTR expectation from selected TOCs, not a shared snapshot replacement. |
+| PTR eager load-order snapshot | 1 | (b) | PTR 12.1.7 selected-addon order differs from the 12.1.5 fixture; retain a separate source-bound PTR snapshot. |
 | Quest tracker block count | 1 | (a) | Expected at least three visible blocks; observed two. Trace seeded quest and original tracker filtering before changing count. |
 | Spellbook geometry | 1 | (a) | Observed book_bg_gap=1612. Trace named background, parent and selected template before changing lock. |
-| Store free upgrade API | 1 | (c) | C_StoreSecure.HasFreePromotionalUpgrade nil. Need current PTR registration/replacement and no-upgrade result. |
+| Store free upgrade API | 1 | (b) | R22 proves C_StoreSecure.HasFreePromotionalUpgrade is nil in PTR and Retail; the function exists under C_SharedCharacterServices and returns false without a promotion. Correct the test namespace and keep C_StoreSecure intact. |
 
 ## Pinned-source citations
 
@@ -37,14 +38,19 @@ All paths below are relative to `~/.cache/wow-ui-sim/blizzard-ui/ptr/AddOns/`; n
 - VERIFIED: `Blizzard_SharedXMLBase/Blizzard_SharedXMLBase.toc:4-45` lists 42 entries. `Blizzard_StableUI/Blizzard_StableUI.toc:4-6` lists shared Lua, game Lua and game XML. `Blizzard_StaticPopup/Blizzard_StaticPopup.toc:4-7` includes `StaticPopupGamepad.lua`.
 - VERIFIED: `Blizzard_StaticPopup_Game/Blizzard_StaticPopup_Game.toc:2` adds `Blizzard_GamepadSharedUtility`; `:9-13` selects `GameDialog.xml` and Mainline `StaticPopupSpecial.xml`. `Blizzard_FrameXML/Blizzard_FrameXML.toc:19` adds `Blizzard_GamepadSoftCursor`. `Blizzard_SharedTalentUI/Blizzard_SharedTalentUI.toc:3` adds `Blizzard_SpellTypeIconOverlay`.
 - VERIFIED: `Blizzard_SubscriptionInterstitialUI/Blizzard_SubscriptionInterstitialUI.toc:3-6` explicitly lists bootstrap/Lua/XML. `Blizzard_TrainerUI/Blizzard_TrainerUI.toc:5-9` explicitly lists bootstrap/Mainline Lua/Mainline XML/localization. `Blizzard_TokenUI/Blizzard_TokenUI.toc:4-11` uses Mainline TokenUI paths for PTR.
-- VERIFIED: `Blizzard_UIParent/Blizzard_UIParent.toc:1-3` is a unified TOC and selects only UIParent.lua. `Blizzard_UnitPopup/Blizzard_UnitPopup.toc:11,14` selects Mainline buttons/menus through `[Family]`, not Standard through `[Game]`. `Blizzard_Settings_Shared/Blizzard_Settings_Shared.toc:38` adds Mainline LanguagesOverrides.lua.
+- VERIFIED: `Blizzard_UIParent/Blizzard_UIParent.toc:1-3` is a unified TOC and selects only UIParent.lua. `Blizzard_UnitPopup/Blizzard_UnitPopup.toc:11,14` selects Mainline buttons/menus through `[Family]`; `:12,15` filter other `[Game]` flavors. `Blizzard_Settings_Shared/Blizzard_Settings_Shared.toc:38` adds Mainline LanguagesOverrides.lua.
+- VERIFIED: PTR `Blizzard_APIDocumentationGenerated/GameRulesDocumentation.lua:276-281` declares `C_GameRules.IsHardcoreActive` as a non-nil boolean function; the test's PTR absence assertion is stale. PTR `SystemDocumentation.lua:85-90`, `PvpInfoDocumentation.lua:1385-1390`, `SocialRestrictionsDocumentation.lua:120-125`, and `VoiceChatDocumentation.lua:918-923,1397-1402` declare the tested Forever-known events.
 - VERIFIED: Lua defines the wrappers previously asserted absent: `Blizzard_AuctionHouseUI/Shared/Blizzard_AuctionHouseUI_Bootstrap.lua:13`, `Blizzard_GuildBankUI/Blizzard_GuildBankUI_Bootstrap.lua:16`, `Blizzard_ProfessionsCustomerOrders/Blizzard_ProfessionsCustomerOrders_Bootstrap.lua:13`, `Blizzard_GarrisonUI/Mainline/Blizzard_GarrisonUI_Bootstrap.lua:44`, `Blizzard_BlackMarketUI/Blizzard_BlackMarketUI_Bootstrap.lua:13`.
+- VERIFIED: `Blizzard_StaticPopup_Game/GameDialog.xml:3,51,78` declares `StaticPopupButtonTemplate`, `StaticPopupBaseTemplate`, and `StaticPopupTemplate` as virtual templates. The PTR TOC selects `GameDialog.xml` at `Blizzard_StaticPopup_Game.toc:11`; the remaining failure is simulator-side registration, not a stale expectation.
+- VERIFIED: `Blizzard_RaidUI.toc:5-6` lists Mainline Lua before XML on PTR; the Mists TOC selects Mists XML at `Blizzard_RaidUI.toc:8-9`.
+- VERIFIED: `Blizzard_GameMenu/Shared/GameMenuFrame.lua:198-205` adds the Store button only when `C_StorePublic.IsEnabled()` and `C_CatalogShop.IsShop2Enabled()` are true; the test fixture's Shop 2 default is false.
+- VERIFIED: R22 native evidence is in `~/.local/state/wow-ui-sim/handoff/pr46-49-decomp-answers.md#r22`: PTR publishes `C_WowTokenUI.ShouldDisplayInAuctionHouse`, the `C_StoreSecure` member is absent, and accepted modified-click changes are immediately readable.
 
 Further fixture changes require citations at the point of change; the initial table alone does not authorize weaker checks.
 
 ## Exact name coverage
 
-### Pinned source expectations
+### Pinned source expectations (35 stale assertions)
 
 - `blizzard_auction_house_show_hide::ptr_auction_house_does_not_publish_snapshot_only_hide_wrapper`
 - `blizzard_black_market_ui_loads::ptr_black_market_does_not_publish_reversed_hide_wrapper`
@@ -68,7 +74,6 @@ Further fixture changes require citations at the point of change; the initial ta
 - `blizzard_shared_xml_loads::ptr_smooth_progress_helper_is_global_not_interpolator_method`
 - `blizzard_stable_ui_loads::body_lists_lua_before_xml_for_mixin_resolution`
 - `blizzard_static_popup_game_loads::dependencies_chain_pulls_six_blizzard_addons_via_plural_dependencies_key`
-- `blizzard_static_popup_game_loads::xml_registers_three_virtual_templates`
 - `blizzard_static_popup_loads::body_lists_three_lua_files_in_dependency_order`
 - `blizzard_subscription_interstitial_ui_loads::body_resolves_bootstrap_then_xml_entry`
 - `blizzard_subscription_interstitial_ui_loads::xml_chains_lua_via_script_file_directive`
@@ -79,7 +84,13 @@ Further fixture changes require citations at the point of change; the initial ta
 - `blizzard_trainer_ui_loads::body_resolves_to_bootstrap_mainline_xml_and_localization_lua`
 - `blizzard_ui_parent_loads::ptr_mainline_excludes_mists_time_string_helper`
 - `blizzard_unit_frame_loads::classic_companion_is_restricted_on_mainline_build`
+- `game_rules::game_rules_hardcore_flag_defaults_to_false`
+- `startup_api_events::forever_known_startup_names_preserve_other_profile_registration_policy`
 - `blizzard_unit_popup_loads::game_placeholder_resolves_to_standard_directory`
+
+### StaticPopup virtual-template materialization
+
+- `blizzard_static_popup_game_loads::xml_registers_three_virtual_templates`
 
 ### Action-bar startup and presentation
 
@@ -107,9 +118,7 @@ Further fixture changes require citations at the point of change; the initial ta
 
 ### Profile publication expectations
 
-- `game_rules::game_rules_hardcore_flag_defaults_to_false`
 - `party_loot_method::loot_method_style_is_mainline_across_method_changes`
-- `startup_api_events::forever_known_startup_names_preserve_other_profile_registration_policy`
 
 ### Profession startup and geometry
 
@@ -161,6 +170,12 @@ Further fixture changes require citations at the point of change; the initial ta
 
 - `store_tree::store_free_upgrade_check_handles_account_without_upgrade`
 
-## Native questions for parent
+## R22 evidence received
 
-UNVERIFIED pending native evidence: Is C_WowTokenUI registered on PTR 12.1.7, and what are the arguments/results/state gates of IsAuctionHouseEnabled? Is C_StoreSecure.HasFreePromotionalUpgrade registered or replaced, and what is the no-upgrade result? Does PTR SetModifiedClick immediately affect GetModifiedClick, or is mutation context/security-gated? Further questions will state exact unresolved behavior after producer inspection.
+VERIFIED (PTR 12.1.7.70668; reconstructed native behavior in `pr46-49-decomp-answers.md#r22`): `C_WowTokenUI` has `ShouldDisplayInAuctionHouse()` and `StartTokenSell`; the consumer calls the zero-argument boolean getter, whose result is always true in this build. Retail 12.1.5.70688 does not publish the getter.
+
+VERIFIED (PTR and Retail; same answer as R20): `C_StoreSecure.HasFreePromotionalUpgrade` is nil; the function exists only as `C_SharedCharacterServices.HasFreePromotionalUpgrade()` and returns false without a qualifying promotion.
+
+VERIFIED (PTR): accepted `SetModifiedClick(action, binding)` updates the next `GetModifiedClick(action)` immediately. Known unbound actions return `NONE`, unknown actions return nil, and the setter rejects bad action/binding inputs. INFERRED (PTR): the native setter silently does nothing when any of three additional PTR context checks fail; their meanings are UNKNOWN, so do not model them. Retail has no extra PTR checks.
+
+Two native questions remain from the refined triage: the no-state `C_Spell.GetSpellCooldownDuration` result, and `C_PartyInfo.GetLootMethodStyle` across supplied loot methods. They were sent to the parent for R23 evidence. Runtime implementation remains queued behind the larger stale-source cluster.

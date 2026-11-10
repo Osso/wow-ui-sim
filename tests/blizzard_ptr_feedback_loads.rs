@@ -320,14 +320,12 @@ fn blizzard_ptr_feedback_does_not_appear_in_eager_discovery() {
         let found = addons
             .iter()
             .any(|(name, _)| name == "Blizzard_PTRFeedback");
-        assert!(
-            !found,
-            "Blizzard_PTRFeedback must NOT appear in eager discovery for {screen:?} \
-             — `## OnlyBetaAndPTR: 1` causes `is_ptr_only()` to flip true at \
-             src/toc.rs:285-290, and the loader filters PTR-only addons out of \
-             both the eager pool AND the LOD pool at src/loader/mod.rs:527 \
-             regardless of LoadOnDemand status. The simulator emulates a live \
-             client by default — PTR-only addons stay dormant"
+        let expected = toc_layout::unified_toc_tree() && screen == ScreenKind::Game;
+        assert_eq!(
+            found, expected,
+            "PTR/Forever Blizzard_PTRFeedback.toc:2,4-14 permits the PTR-only Game \
+             addon; its implicit screen gate excludes glue. Other profile caches either \
+             omit the addon or reject its OnlyBetaAndPTR declaration. Screen: {screen:?}"
         );
     }
 }
