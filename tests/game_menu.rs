@@ -424,6 +424,23 @@ fn test_game_menu_shop_button_opens_store_and_menu_can_reopen_after_store_closes
     test_timeout! {
         let env = setup_game_menu_env();
 
+        if cfg!(feature = "client-ptr") {
+            let has_shop_button: bool = env
+                .eval(&menu_button_chunk(r#"
+                    GameMenuFrame:Show()
+                    for button in menu_buttons() do
+                        if button:GetText() == BLIZZARD_STORE then
+                            return true
+                        end
+                    end
+                    return false
+                "#))
+                .unwrap();
+            // PTR GameMenuFrame.lua:198-204 adds Store only when both shops are enabled.
+            assert!(!has_shop_button, "PTR's disabled-Shop2 fixture must not add the shop button");
+            return;
+        }
+
         let result: String = env
             .eval(&menu_button_chunk(r#"
                 GameMenuFrame:Show()
@@ -472,6 +489,31 @@ fn test_game_menu_shop_button_opens_store_and_menu_can_reopen_after_store_closes
             .unwrap();
 
         assert_eq!(result, "ok");
+    }
+}
+}
+
+post_wrath_ui_fixture! {
+#[test]
+fn test_legacy_store_toggle_reopens_game_menu_after_store_closes() {
+    test_timeout! {
+        let env = setup_game_menu_env();
+
+        let result: String = env
+            .eval(r#"
+                GameMenuFrame:Show()
+                ToggleStoreUI(G_GameMenuFrameContextKey)
+                if not StoreFrame:IsShown() then
+                    return "store-not-shown"
+                end
+
+                StoreFrame_SetShown(false, G_GameMenuFrameContextKey)
+                return StoreFrame:IsShown() and "store-still-shown"
+                    or (GameMenuFrame:IsShown() and "menu-reopened" or "menu-stayed-hidden")
+            "#)
+            .unwrap();
+
+        assert_eq!(result, "menu-reopened");
     }
 }
 }
