@@ -62,9 +62,17 @@ fn mists_r21_currency_original_backpack_ui_observes_watch_changes() {
                 for i = 1, 3 do
                     local button = _G['BackpackTokenFrameToken' .. i]
                     local name, count, icon, id = GetBackpackCurrencyInfo(i)
-                    assert(name and button:IsShown() and button.itemID == id)
-                    assert(button.icon:GetTexture() == icon)
-                    assert(button.count:GetText() == (count <= 99999 and tostring(count) or '*'))
+                    assert(
+                        name and button:IsShown() and button.itemID == id,
+                        'slot ' .. i .. ': name=' .. tostring(name) ..
+                            ' shown=' .. tostring(button:IsShown()) ..
+                            ' itemID=' .. tostring(button.itemID) .. ' id=' .. tostring(id),
+                    )
+                    assert(button.icon:GetTexture() == icon, 'slot ' .. i .. ' icon mismatch')
+                    assert(
+                        button.count:GetText() == (count <= 99999 and tostring(count) or '*'),
+                        'slot ' .. i .. ' count mismatch',
+                    )
                 end
                 local oldFirst = BackpackTokenFrameToken1.itemID
                 SetCurrencyBackpack(R21CurrencyRows[1], 0)
