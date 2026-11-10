@@ -2,7 +2,7 @@
 
 ## [2026-11-10] investigation | Mists R21 Classic API contracts
 
-[Mists R21 Classic API behavior](investigations/mists-r21-classic-apis.md) records verified Mists reputation-list indexing and undefined hidden-tail order, the native false engraving-mode default and setter event, and the four-slot backpack-currency API. **VERIFIED:** Nine targeted Mists tests pass; the library and profile matrix gates remain pending. Era and Anniversary native behavior remain UNKNOWN.
+[Mists R21 Classic API behavior](investigations/mists-r21-classic-apis.md) records verified Mists reputation-list indexing and undefined hidden-tail order, the native false engraving-mode default and setter event, and the four-slot backpack-currency API. **VERIFIED:** Nine targeted Mists tests and 2,027 Mists library tests pass; the `spell` and `frame_position` failure-name sets match base `origin/master` `93125f591`. Remaining profile builds and Era/Anniversary library tests are pending. Era and Anniversary native behavior remain UNKNOWN.
 
 ## [2026-11-09] investigation | Reconcile profile frame-position baselines
 

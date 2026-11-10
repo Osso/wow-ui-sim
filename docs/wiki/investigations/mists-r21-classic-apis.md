@@ -39,7 +39,7 @@ The simulator rewrites the shared `__wow_reputation_state.factions` table into o
 
 ### Verification status
 
-**VERIFIED:** After commits `a1d754e85` and `788a1fef2`, all three exact Mists reputation tests, both currency tests, and all four engraving tests passed. The original ReputationFrame, TokenUI and bag consumers were runtime-selected, and every run preserved the source CVar file under the O_NOATIME guard. **VERIFIED:** The Mists all-target build completed with zero compiler warnings or errors. The Mists/Era/Anniversary library gates, remaining profile builds, Mists `spell`/`frame_position` comparisons, and final handoff remain pending.
+**VERIFIED:** After commits `a1d754e85` and `788a1fef2`, all three exact Mists reputation tests, both currency tests, and all four engraving tests passed. The original ReputationFrame, TokenUI and bag consumers were runtime-selected, and every run preserved the source CVar file under the O_NOATIME guard. **VERIFIED:** The Mists all-target build completed with zero compiler warnings or errors, and Mists library tests passed (2,027 passed, 1 ignored). **VERIFIED against origin/master `93125f591`:** the Mists `spell` filter had 38 failures on both sides with no added or removed names; the `frame_position` filter had one identical failure, `spellbook_layout::spellbook_frame_positions`, on both sides. Both comparisons preserved the source CVar file. **VERIFIED:** the generated manifest test `manifest_interface_data::tests::test_manifest_count` passed (1/1). Remaining profile builds, Era/Anniversary library tests, and final handoff remain pending.
 
 ## Sources
 
