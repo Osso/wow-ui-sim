@@ -273,7 +273,10 @@ fn expects_missing_frame(test: &str) -> bool {
     use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
 
     match test {
-        "objective_tracker" => matches!(ACTIVE, ClientProfile::Era | ClientProfile::Anniversary),
+        "objective_tracker" => matches!(
+            ACTIVE,
+            ClientProfile::Mists | ClientProfile::Era | ClientProfile::Anniversary
+        ),
         "paladin_power_bar" => matches!(
             ACTIVE,
             ClientProfile::WowForever | ClientProfile::Era | ClientProfile::Anniversary
