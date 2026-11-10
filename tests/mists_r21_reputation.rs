@@ -113,10 +113,45 @@ fn mists_r21_reputation_tuple_counts_fallback_and_selection() {
 }
 
 #[test]
-fn mists_r21_watched_faction_setter_is_published() {
+fn mists_r21_watched_faction_setter_uses_backing_row_slots() {
     let env = WowLuaEnv::new().unwrap();
-    let available: bool = env
-        .eval("return type(SetWatchedFactionIndex) == 'function'")
-        .unwrap();
-    assert!(available, "Mists must publish SetWatchedFactionIndex");
+    env.exec(
+        r#"
+        __wow_reputation_state.factions = {
+            { name = 'Pandaria', factionID = 0, isHeader = true, headerSortValue = 5 },
+            { name = 'Shado-Pan', factionID = 1270, reputationIndex = 413, isChild = true },
+            { name = 'Golden Lotus', factionID = 1269, reputationIndex = 412, isChild = true },
+            { name = 'Alliance', factionID = 0, isHeader = true, headerSortValue = 4 },
+            { name = 'Stormwind', factionID = 72, reputationIndex = 92, isChild = true },
+        }
+        CollapseFactionHeader(1)
+        assert(GetNumFactions() == 3)
+        "#,
+    )
+    .unwrap();
+
+    for index in [3, 4, 5] {
+        let expected_slot: i32 = env
+            .eval(&format!(
+                "return __wow_reputation_state.factions[{index}].reputationIndex"
+            ))
+            .unwrap();
+        env.exec(&format!("SetWatchedFactionIndex({index})"))
+            .unwrap();
+        assert_eq!(
+            env.state().borrow().last_watched_reputation_slot_request,
+            Some(expected_slot as i16),
+            "backing-list index {index} must request its row's reputation slot"
+        );
+    }
+
+    for index in [0, 7] {
+        env.exec(&format!("SetWatchedFactionIndex({index})"))
+            .unwrap();
+        assert_eq!(
+            env.state().borrow().last_watched_reputation_slot_request,
+            Some(-1),
+            "index {index} must clear the watched reputation"
+        );
+    }
 }

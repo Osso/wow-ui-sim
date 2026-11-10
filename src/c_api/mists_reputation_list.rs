@@ -1,6 +1,8 @@
 //! Mists legacy reputation globals over the shared C_Reputation scenario rows.
 use super::helpers::set_table_array;
-use crate::lua_api::methods::{create_string, table_get_static, table_set_static};
+use crate::lua_api::methods::{
+    borrow_state_mut, create_string, table_get_static, table_set_static,
+};
 use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
@@ -44,6 +46,12 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         state.global,
         "SetSelectedFaction",
         set_selected_faction,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        state.global,
+        "SetWatchedFactionIndex",
+        set_watched_faction_index,
     )
 }
 
@@ -427,5 +435,26 @@ fn set_selected_faction(state: &mut LuaState) -> LuaResult<u32> {
         "legacySelectedFactionID",
         Val::Num(selected_id),
     );
+    Ok(0)
+}
+
+fn set_watched_faction_index(state: &mut LuaState) -> LuaResult<u32> {
+    let index = i32::from_stack(state, 1)?;
+    let list = rebuild_faction_list(state);
+    let row_count = list.rows.len() as i64;
+    let reputation_slot = if index == 0 || i64::from(index) >= row_count + 2 {
+        Some(-1)
+    } else {
+        index
+            .checked_sub(1)
+            .and_then(|offset| usize::try_from(offset).ok())
+            .and_then(|offset| list.rows.get(offset).copied())
+            .and_then(|row| number_field(state, row, "reputationIndex"))
+            .map(|slot| slot as i16)
+    };
+
+    if let Some(slot) = reputation_slot {
+        borrow_state_mut(state)?.last_watched_reputation_slot_request = Some(slot);
+    }
     Ok(0)
 }
