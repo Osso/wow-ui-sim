@@ -198,8 +198,8 @@ fn issue52_texture_slice_corners_keep_pixel_size_as_frame_grows() {
     let image = fixture.image(&batch, 80, 48);
     for x in [0, 32] {
         assert_pixel(&image, x, 1, [255, 0, 0, 255], 0);
-        assert_pixel(&image, x + 2, 1, [0, 255, 0, 255], 0);
-        assert_pixel(&image, x + 1, 3, [0, 255, 0, 255], 0);
+        assert_pixel(&image, x + 3, 1, [0, 255, 0, 255], 0);
+        assert_pixel(&image, x + 1, 4, [0, 255, 0, 255], 0);
     }
     // Geometry is part of the renderer contract: asymmetric documented L,T,R,B margins.
     let quads = batch.vertices.chunks_exact(4).collect::<Vec<_>>();
@@ -227,7 +227,7 @@ fn issue52_texture_slice_tiled_mode_repeats_the_center() {
     let image = fixture.image(&batch, 32, 32);
     assert_pixel(&image, 16, 1, [255, 0, 0, 255], 0);
     assert_pixel(&image, 16, 5, [255, 0, 0, 255], 0);
-    assert_pixel(&image, 1, 8, [255, 0, 0, 255], 0);
+    assert_pixel(&image, 1, 10, [255, 0, 0, 255], 0);
 }
 
 #[test]
