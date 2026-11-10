@@ -5,7 +5,7 @@ use crate::c_api::tooltip_getter_args;
 use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::items::{self, ItemInfo};
 use crate::lua_api::globals::missing_surface::tooltip_info::tooltip_for_item_context;
-use crate::lua_api::methods::{borrow_state, table_set};
+use crate::lua_api::methods::{borrow_state, create_string, table_set};
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
@@ -188,6 +188,8 @@ fn get_runeforge_result_item(state: &mut LuaState) -> LuaResult<u32> {
         displayed_item.item_level = item_level;
     }
     let data = tooltip_for_item_context(state, item_id, Some(&displayed_item));
+    let guid = create_string(state, &guid);
+    table_set(state, data, "guid", guid);
     if level != 0 {
         table_set(state, data, "overrideItemLevel", Val::Num(f64::from(level)));
     }
