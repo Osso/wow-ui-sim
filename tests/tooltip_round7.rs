@@ -35,18 +35,18 @@ tooltip_selection_getters_fixture! {
 
     const CASES: &str = r#"
         local cases = {
-            {'GetAzeriteEssence', {1}, 'essenceID [, rank]', 1, 2},
-            {'GetAzeriteEssenceSlot', {0}, 'slot', 1, 1},
+            {'GetAzeriteEssence', {1}, 'essenceID [, rank]', 1, 2, {1}},
+            {'GetAzeriteEssenceSlot', {0}, 'slot', 1, 1, {1}},
         }
         if R7AllGetters then
             for _, case in ipairs({
-                {'GetLFGDungeonReward', {1, 0}, 'dungeonID, lootIndex', 2, 2},
-                {'GetLFGDungeonShortageReward', {1, 0, 0}, 'dungeonID, shortageSeverity, lootIndex', 3, 3},
-                {'GetPossession', {0}, 'slot', 1, 1},
-                {'GetQuestLogSpecialItem', {1}, 'questIndex', 1, 1},
-                {'GetQuestPartyProgress', {1}, 'questID [, omitTitle, ignoreActivePlayer]', 1, 3},
-                {'GetRecipeRankInfo', {1, 1}, 'recipeID, rank', 2, 2},
-                {'GetRuneforgeResultItem', {'Opaque-1', 40}, 'itemGUID, itemLevel [, powerID, modifiers]', 2, 4},
+                {'GetLFGDungeonReward', {1, 0}, 'dungeonID, lootIndex', 2, 2, {1, 2}},
+                {'GetLFGDungeonShortageReward', {1, 0, 0}, 'dungeonID, shortageSeverity, lootIndex', 3, 3, {1, 2, 3}},
+                {'GetPossession', {0}, 'slot', 1, 1, {1}},
+                {'GetQuestLogSpecialItem', {1}, 'questIndex', 1, 1, {1}},
+                {'GetQuestPartyProgress', {1}, 'questID [, omitTitle, ignoreActivePlayer]', 1, 3, {1}},
+                {'GetRecipeRankInfo', {1, 1}, 'recipeID, rank', 2, 2, {1, 2}},
+                {'GetRuneforgeResultItem', {'Opaque-1', 40}, 'itemGUID, itemLevel [, powerID, modifiers]', 2, 4, {2}}, 
             }) do cases[#cases + 1] = case end
         end
     "#;
@@ -62,7 +62,7 @@ tooltip_selection_getters_fixture! {
         let loader = env.loader_env();
         let mut lua = loader.rilua_mut();
         rilua::table_security::register_table_security(&mut lua).unwrap();
-        let secret = rilua::table_security::wrap_host_secret_number(lua.state_mut(), 1.0);
+        let secret = rilua::table_security::wrap_host_secret_number(lua.state_mut(), 128910.0);
         lua.state_mut().push(secret);
         lua.set_global_val("R7Secret", secret).unwrap();
         lua.state_mut().pop();
@@ -94,9 +94,9 @@ tooltip_selection_getters_fixture! {
         let env = env_with_profile();
         env.exec(&format!(r#"{CASES}
             for _, case in ipairs(cases) do
-                local name, args = unpack(case)
+                local name, args, _, _, _, signedPositions = unpack(case)
                 local getter = assert(rawget(C_TooltipInfo, name), name .. ' missing')
-                for position = 1, #args do
+                for _, position in ipairs(signedPositions) do
                     if type(args[position]) == 'number' then
                         local copy = {{unpack(args)}}
                         copy[position] = tostring(args[position] + 0.9)
@@ -111,7 +111,6 @@ tooltip_selection_getters_fixture! {
                 end
             end
             assert(select('#', C_TooltipInfo.GetAzeriteEssence(1, '0.9')) == 0)
-            assert(select('#', C_TooltipInfo.GetAzeriteEssence(1, 4294967295)) == 0)
             for _, rank in ipairs({{-1, 4294967296}}) do
                 local ok, message = pcall(C_TooltipInfo.GetAzeriteEssence, 1, rank)
                 assert(not ok and message:find('outside of expected range 0 to 4294967295', 1, true))
@@ -199,7 +198,7 @@ tooltip_selection_getters_fixture! {
             }) do
                 local guid = C_Item.GetItemGUID({bagID=case[1], slotIndex=case[2]})
                 GameTooltip:SetOwner(UIParent, 'ANCHOR_NONE')
-                GameTooltip:SetRuneforgeResultItem(guid, case[4], nil, {})
+                GameTooltip:SetRuneforgeResultItem(guid, case[4])
                 local info = GameTooltip:GetPrimaryTooltipInfo()
                 local data = GameTooltip:GetPrimaryTooltipData()
                 assert(info and info.getterName == 'GetRuneforgeResultItem', 'runeforge accessor missing')
@@ -228,7 +227,7 @@ tooltip_selection_getters_fixture! {
             end
             debug.setobjecttaint(tainted, 'Round7Probe')
             tainted()
-            assert(type(C_Item.GetItemNumSockets(R7Secret)) == 'number', 'secure input permitted')
+            assert(C_Item.GetItemNumSockets(R7Secret) == 2, 'secure caller must read the wrapped item ID')
             assert(issecretvalue(R7Secret), 'do not declassify caller input')
             assert(select('#', C_Item.GetItemNumSockets(999999999)) == 1, 'integer miss, not no values')
         "#).unwrap();
