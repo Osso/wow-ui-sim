@@ -63,10 +63,10 @@ fn mists_r21_currency_original_backpack_ui_observes_watch_changes() {
                     local button = _G['BackpackTokenFrameToken' .. i]
                     local name, count, icon, id = GetBackpackCurrencyInfo(i)
                     assert(
-                        name and button:IsShown() and button.itemID == id,
+                        name and button:IsShown() and button.currencyID == id,
                         'slot ' .. i .. ': name=' .. tostring(name) ..
                             ' shown=' .. tostring(button:IsShown()) ..
-                            ' itemID=' .. tostring(button.itemID) .. ' id=' .. tostring(id)
+                            ' currencyID=' .. tostring(button.currencyID) .. ' id=' .. tostring(id)
                     )
                     assert(button.icon:GetTexture() == icon, 'slot ' .. i .. ' icon mismatch')
                     assert(
@@ -74,11 +74,11 @@ fn mists_r21_currency_original_backpack_ui_observes_watch_changes() {
                         'slot ' .. i .. ' count mismatch'
                     )
                 end
-                local oldFirst = BackpackTokenFrameToken1.itemID
+                local oldFirst = BackpackTokenFrameToken1.currencyID
                 SetCurrencyBackpack(R21CurrencyRows[1], 0)
                 BackpackTokenFrame_Update()
-                assert(BackpackTokenFrameToken1.itemID ~= oldFirst, 'UI updates after unwatch')
-                assert(BackpackTokenFrameToken3.itemID == select(12, GetCurrencyListInfo(R21CurrencyRows[4])))
+                assert(BackpackTokenFrameToken1.currencyID ~= oldFirst, 'UI updates after unwatch')
+                assert(BackpackTokenFrameToken3.currencyID == select(12, GetCurrencyListInfo(R21CurrencyRows[4])))
             "#).unwrap();
         },
     );
