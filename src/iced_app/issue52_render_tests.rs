@@ -30,6 +30,23 @@ impl Fixture {
             }
         }
         sliced.save(addon.join("sliced.png")).unwrap();
+        let mut tiled = RgbaImage::from_pixel(12, 12, Rgba([0, 255, 0, 255]));
+        for y in 3..11 {
+            for x in 2..6 {
+                tiled.put_pixel(x, y, Rgba([255, 0, 0, 255]));
+            }
+            for x in 6..8 {
+                tiled.put_pixel(x, y, Rgba([0, 0, 255, 255]));
+            }
+        }
+        tiled.save(addon.join("tiled.png")).unwrap();
+        let mut wide = RgbaImage::from_pixel(24, 24, Rgba([0, 255, 0, 255]));
+        for y in 0..24 {
+            for x in 0..4 {
+                wide.put_pixel(x, y, Rgba([255, 0, 0, 255]));
+            }
+        }
+        wide.save(addon.join("wide.png")).unwrap();
         let env = WowLuaEnv::new().unwrap();
         env.state().borrow_mut().addon_base_paths = vec![directory.path().to_path_buf()];
         Self {
@@ -177,4 +194,49 @@ fn issue52_texture_slice_corners_keep_pixel_size_as_frame_grows() {
             .unwrap();
         assert_eq!(corner[2].position, [origin + 2.0, 3.0]);
     }
+}
+
+#[test]
+fn issue52_texture_slice_tiled_mode_repeats_the_center() {
+    let mut fixture = Fixture::new();
+    let mut batch = QuadBatch::new();
+    fixture.append(
+        &mut batch,
+        "Issue52Texture:SetTexture('Interface/AddOns/Issue52/tiled.png'); Issue52Texture:SetTextureSliceMargins(2,3,4,1); Issue52Texture:SetTextureSliceMode(1)",
+        bounds(0.0, 0.0, 32.0, 32.0),
+    );
+    let image = fixture.image(&batch, 32, 32);
+    assert_pixel(&image, 16, 10, [255, 0, 0, 255], 0);
+}
+
+#[test]
+fn issue52_texture_slice_source_dimensions_follow_texture_changes() {
+    let mut fixture = Fixture::new();
+    let mut batch = QuadBatch::new();
+    fixture.append(
+        &mut batch,
+        "Issue52Texture:SetTexture('Interface/AddOns/Issue52/sliced.png'); Issue52Texture:SetTextureSliceMargins(2,3,4,1); Issue52Texture:SetTexture('Interface/AddOns/Issue52/wide.png')",
+        bounds(0.0, 0.0, 32.0, 32.0),
+    );
+    let image = fixture.image(&batch, 32, 32);
+    assert_pixel(&image, 1, 10, [255, 0, 0, 255], 0);
+    assert_pixel(&image, 2, 10, [0, 255, 0, 255], 0);
+}
+
+#[test]
+fn issue52_clear_texture_slice_restores_single_quad_rendering() {
+    let mut fixture = Fixture::new();
+    let mut batch = QuadBatch::new();
+    fixture.append(
+        &mut batch,
+        "Issue52Texture:SetTexture('Interface/AddOns/Issue52/sliced.png'); Issue52Texture:SetTextureSliceMargins(2,3,4,1); Issue52Texture:SetTextureSliceMode(1); Issue52Texture:ClearTextureSlice()",
+        bounds(0.0, 0.0, 24.0, 24.0),
+    );
+    let state = fixture.env.state();
+    let sim = state.borrow();
+    let id = sim.widgets.get_id_by_name("Issue52Texture").unwrap();
+    let frame = sim.widgets.get(id).unwrap();
+    assert_eq!(frame.texture_slice_margins, (0.0, 0.0, 0.0, 0.0));
+    assert_eq!(frame.texture_slice_mode, 0);
+    assert_eq!(batch.vertices.len(), 4);
 }
