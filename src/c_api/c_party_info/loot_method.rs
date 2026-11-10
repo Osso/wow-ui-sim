@@ -11,6 +11,9 @@ use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
 use rilua::{LuaResult, Val, runtime_error};
 
+const LOOT_METHOD_STYLE_RULE: &str = "LootMethodStyle";
+const DEFAULT_LOOT_METHOD_STYLE: i64 = 0;
+
 // Numeric Enum.LootMethod assignments from missing_enums.lua, not availability order.
 const TOKENS: [&str; 6] = [
     "freeforall",
@@ -36,8 +39,8 @@ fn get_loot_method_style(state: &mut LuaState) -> LuaResult<u32> {
     let style = borrow_state(state)?
         .game_rules
         .rules
-        .get("LootMethodStyle")
-        .map_or(0, |rule| rule.as_int);
+        .get(LOOT_METHOD_STYLE_RULE)
+        .map_or(DEFAULT_LOOT_METHOD_STYLE, |rule| rule.as_int);
     state.push(Val::Num(style as f64));
     Ok(1)
 }
