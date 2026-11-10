@@ -333,16 +333,6 @@ fn expected_position(test: TestCase) -> TestCase {
         | (ClientProfile::Anniversary, "raid_boss_emote_anchor") => {
             (name, "RaidBossEmoteFrame", 544.0, 252.0, 512.0, 80.0, 1.0)
         }
-        (ClientProfile::Era, "right_managed_container")
-        | (ClientProfile::Anniversary, "right_managed_container") => (
-            name,
-            "UIParentRightManagedFrameContainer",
-            test.2,
-            test.3,
-            test.4,
-            test.5,
-            test.6,
-        ),
         _ => test,
     }
 }
