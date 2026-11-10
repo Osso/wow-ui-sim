@@ -12,13 +12,16 @@ fn secure_xml_delegate_preserves_callback_and_caller_taint() {
         local child = CreateFrame('Cooldown', nil, frame)
         local private = GetForbiddenObjectTable(frame)
         local privateChild = GetForbiddenObjectTable(child)
+        -- R12: secretwrap ignores Lua taint and follows global secret marking.
+        local secretMarkingEnabled = issecretvalue(secretwrap(17))
         local observedCallback = false
         local function delegate(self, argument, callback, trailing)
             assert(issecure(), 'native delegate must enter without caller taint')
             assert(self == private and argument == privateChild)
             assert(trailing == nil)
             local wrapped = secretwrap(17)
-            assert(issecretvalue(wrapped), 'native delegate must retain secret wrapping authority')
+            assert(issecretvalue(wrapped) == secretMarkingEnabled,
+                'native delegate must follow global secret marking state')
             securecallfunction(callback)
             assert(issecure(), 'callback taint must not leak into native delegate')
             return 'native-result', nil, 17
@@ -38,10 +41,14 @@ fn secure_xml_delegate_preserves_callback_and_caller_taint() {
             assert(observedCallback)
             assert(not issecure() and debug.getstacktaint() == 'DelegateProbe',
                 'native delegate must restore caller taint')
-            local allowed = pcall(secretwrap, 17)
-            assert(not allowed, 'direct tainted secret wrapping must still reject')
-            local ordinary = pcall(frame.Ordinary, frame, child, callback, nil)
+            local allowed, wrapped = pcall(secretwrap, 17)
+            assert(allowed, 'tainted secretwrap must succeed (R12)')
+            assert(issecretvalue(wrapped) == secretMarkingEnabled,
+                'tainted secretwrap must follow global secret marking state')
+            local ordinary, err = pcall(frame.Ordinary, frame, child, callback, nil)
             assert(not ordinary, 'receiver-only delegate must not gain a secure boundary')
+            assert(tostring(err):find('native delegate must enter without caller taint', 1, true),
+                'receiver-only delegate must fail at the issecure entry assert')
         end
         debug.setobjecttaint(caller, 'DelegateProbe')
         caller()

@@ -50,11 +50,10 @@ macro_rules! post_wrath_ui_fixture {
     };
 }
 
-/// Addons that only the Retail, PTR and Forever caches ship. Their TOC
-/// fixtures pin Retail-era bytes, and the classic caches (218 addons each for
-/// Mists/Era/Anniversary, 23 for Wrath) do not contain the addon directory at
-/// all. The companion `classic_cache_absent_toc_fixture` asserts that absence
-/// so the gap is recorded instead of silently skipped.
+/// Select a Retail/Mainline TOC fixture. Use this when the addon is absent
+/// from classic caches or when a shared addon has no Mainline consumer branch
+/// selected by the classic profile. Use `classic_cache_absent_toc_fixture` only
+/// when the addon's directory is absent from that cache.
 #[macro_export]
 macro_rules! retail_ptr_forever_toc_fixture {
     ($($item:item)*) => {

@@ -17,6 +17,34 @@ fn loaded_env() -> WowLuaEnv {
     }
     env.apply_post_load_workarounds();
     fire_startup_events_for_screen(&env, ScreenKind::Game);
+    env.exec(
+        r#"
+        function __test_register_blocked_action_observer(callback)
+            if type(GameEvent) == 'table'
+                and type(GameEvent.HandleActionBlocked) == 'function' then
+                hooksecurefunc(GameEvent, 'HandleActionBlocked', function(_, event, owner)
+                    if event == 'ADDON_ACTION_BLOCKED' then callback(owner) end
+                end)
+                return
+            end
+
+            local pending_owner
+            local on_event = assert(UIParent:GetScript('OnEvent'), 'UIParent OnEvent must exist')
+            UIParent:SetScript('OnEvent', function(self, event, ...)
+                if event == 'ADDON_ACTION_BLOCKED' then
+                    pending_owner = select(1, ...)
+                end
+                return on_event(self, event, ...)
+            end)
+            hooksecurefunc('DisplayInterfaceActionBlockedMessage', function()
+                local owner = pending_owner
+                pending_owner = nil
+                if owner then callback(owner) end
+            end)
+        end
+        "#,
+    )
+    .expect("install original blocked-action consumer observer");
     env
 }
 
@@ -25,11 +53,8 @@ fn protected_method_set_id_routes_blocked_event_and_allows_trusted_calls() {
     crate::common::grouped_fixture::with_env("protected_method_coverage", loaded_env, |env| {
         env.exec(
             r#"
-            assert(type(GameEvent.HandleActionBlocked) == 'function')
             local routed
-            hooksecurefunc(GameEvent, 'HandleActionBlocked', function(_, event, owner)
-                if event == 'ADDON_ACTION_BLOCKED' then routed = owner end
-            end)
+            __test_register_blocked_action_observer(function(owner) routed = owner end)
             local frame = CreateFrame('Frame', 'ProtectedMethodId', UIParent)
             local events = {}
             local listener = CreateFrame('Frame')
@@ -64,11 +89,8 @@ fn assert_protected_input_method(method: &str, getter: &str) {
     crate::common::grouped_fixture::with_env("protected_method_coverage", loaded_env, |env| {
         env.exec(&format!(
             r#"
-            assert(type(GameEvent.HandleActionBlocked) == 'function')
             local routed
-            hooksecurefunc(GameEvent, 'HandleActionBlocked', function(_, event, owner)
-                if event == 'ADDON_ACTION_BLOCKED' then routed = owner end
-            end)
+            __test_register_blocked_action_observer(function(owner) routed = owner end)
             local frame = CreateFrame('Frame', 'ProtectedInputMethod', UIParent)
             local events = {{}}
             local listener = CreateFrame('Frame')
@@ -204,9 +226,7 @@ fn assert_protected_transition(
             {setup}
             local events = {{}}
             local routed
-            hooksecurefunc(GameEvent, 'HandleActionBlocked', function(_, event, owner)
-                if event == 'ADDON_ACTION_BLOCKED' then routed = owner end
-            end)
+            __test_register_blocked_action_observer(function(owner) routed = owner end)
             local listener = CreateFrame('Frame')
             listener:RegisterEvent('ADDON_ACTION_BLOCKED')
             listener:SetScript('OnEvent', function(_, _, owner, action)
@@ -636,9 +656,7 @@ fn assert_protected_registration(
         RegistrationFrame = CreateFrame('Button', 'ProtectedRegistration', UIParent)
         RegistrationEvents = {}
         RegistrationRouted = nil
-        hooksecurefunc(GameEvent, 'HandleActionBlocked', function(_, event, owner)
-            if event == 'ADDON_ACTION_BLOCKED' then RegistrationRouted = owner end
-        end)
+        __test_register_blocked_action_observer(function(owner) RegistrationRouted = owner end)
         local listener = CreateFrame('Frame')
         listener:RegisterEvent('ADDON_ACTION_BLOCKED')
         listener:SetScript('OnEvent', function(_, _, owner, action)
@@ -727,9 +745,7 @@ fn protected_lower_preserves_hit_order_in_combat() {
         target:Raise()
         LowerEvents = {}
         LowerRouted = nil
-        hooksecurefunc(GameEvent, 'HandleActionBlocked', function(_, event, owner)
-            if event == 'ADDON_ACTION_BLOCKED' then LowerRouted = owner end
-        end)
+        __test_register_blocked_action_observer(function(owner) LowerRouted = owner end)
         local listener = CreateFrame('Frame')
         listener:RegisterEvent('ADDON_ACTION_BLOCKED')
         listener:SetScript('OnEvent', function(_, _, owner, action)

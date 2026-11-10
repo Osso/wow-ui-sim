@@ -26,13 +26,17 @@ fn setup_env_with_bootstrap_loaded_token_ui() -> WowLuaEnv {
         state.addon_base_paths = vec![blizzard_ui_dir()];
     }
 
-    let ui = blizzard_ui_dir();
-    for addon_name in BLIZZARD_ADDONS
-        .iter()
-        .copied()
-        .chain(std::iter::once(BLIZZARD_TOKEN_UI_ADDON))
-    {
-        common::load_required_blizzard_addon(&env, &ui, addon_name);
+    if common::load_classic_game_startup_inventory(&env) {
+        keybinding_panel_fixtures::load_token_ui(&env);
+    } else {
+        let ui = blizzard_ui_dir();
+        for addon_name in BLIZZARD_ADDONS
+            .iter()
+            .copied()
+            .chain(std::iter::once(BLIZZARD_TOKEN_UI_ADDON))
+        {
+            common::load_required_blizzard_addon(&env, &ui, addon_name);
+        }
     }
 
     env.apply_post_load_workarounds();
@@ -49,6 +53,19 @@ fn drain_test_errors(env: &WowLuaEnv) -> Vec<String> {
 
 fn clear_recorded_lua_errors(env: &WowLuaEnv) {
     common::panel_fixtures::clear_recorded_lua_errors(env);
+}
+
+fn disable_combined_bags(env: &WowLuaEnv) {
+    if common::is_classic_ui_profile() {
+        return;
+    }
+    env.exec(
+        r#"
+        assert(ContainerFrameSettingsManager, "ContainerFrameSettingsManager should exist")
+        ContainerFrameSettingsManager:SetUsingCombinedBags(false)
+        "#,
+    )
+    .expect("individual bag layout should be selectable");
 }
 
 #[cfg(not(feature = "client-wrath"))]
@@ -254,7 +271,9 @@ fn assert_backpack_item_count(env: &WowLuaEnv, expected: i32) {
     );
 }
 
-#[cfg(not(feature = "client-wrath"))]
+// The Mainline ContainerFrame branch owns the token tracker; Classic selects
+// the legacy container branch without ContainerFrameSettingsManager.
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn test_bag_env_loads_real_backpack_token_tracker() {
     let env = setup_env();
@@ -276,6 +295,7 @@ fn test_bag_env_loads_real_backpack_token_tracker() {
     assert!(tracker_is_real_frame);
     assert!(tracker_matches_backpack_frame);
     assert!(addon_loaded);
+}
 }
 
 #[test]
@@ -337,13 +357,7 @@ fn test_container_frame_1_item_1_icon_matches_first_bag_slot_item() {
     install_test_error_handler(&env);
     clear_recorded_lua_errors(&env);
 
-    env.exec(
-        r#"
-        assert(ContainerFrameSettingsManager, "ContainerFrameSettingsManager should exist")
-        ContainerFrameSettingsManager:SetUsingCombinedBags(false)
-        "#,
-    )
-    .unwrap();
+    disable_combined_bags(&env);
 
     open_all_bags(&env);
     assert_no_bag_open_errors(&env, "ToggleAllBags individual-bag open");
@@ -429,14 +443,8 @@ fn test_new_bag_item_button_icon_matches_its_slot_after_refresh() {
     install_test_error_handler(&env);
     clear_recorded_lua_errors(&env);
 
-    env.exec(
-        r#"
-        assert(ContainerFrameSettingsManager, "ContainerFrameSettingsManager should exist")
-        ContainerFrameSettingsManager:SetUsingCombinedBags(false)
-        A_Admin.AddBagItem(0, 5, 2852, 1)
-        "#,
-    )
-    .unwrap();
+    disable_combined_bags(&env);
+    env.exec("A_Admin.AddBagItem(0, 5, 2852, 1)").unwrap();
 
     open_all_bags(&env);
     assert_no_bag_open_errors(&env, "ToggleAllBags after adding Copper Chain Pants");
@@ -543,19 +551,6 @@ fn test_toggle_backpack_bootstrap_token_ui_does_not_nil_error() {
         recorded_errors.is_empty(),
         "ToggleBackpack should not emit recorded Lua errors; got:\n{}",
         recorded_errors.join("\n"),
-    );
-
-    let has_token_tracker: bool = env
-        .eval(
-            r#"
-            return type(ContainerFrameSettingsManager) == "table"
-                and ContainerFrameSettingsManager.TokenTracker ~= nil
-            "#,
-        )
-        .unwrap();
-    assert!(
-        has_token_tracker,
-        "ContainerFrameSettingsManager.TokenTracker should be initialized",
     );
 }
 
@@ -676,7 +671,9 @@ fn test_backpack_bg_regions_have_color_fill() {
     );
 }
 
-#[cfg(not(feature = "client-wrath"))]
+// This probe uses Mainline-only `ContainerFrame1:EnumerateValidItems`; the
+// Classic and Mists container files do not define that method.
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn test_item_search_marks_container_buttons_by_item_name() {
     let env = setup_env();
@@ -721,4 +718,5 @@ fn test_item_search_marks_container_buttons_by_item_name() {
         "clearing the search should relight every item: {cleared}"
     );
     assert_no_bag_open_errors(&env, "item search");
+}
 }

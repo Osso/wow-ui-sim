@@ -3,6 +3,12 @@
 ## [2026-11-08] investigation | GUI CASC cache preparation
 
 [GUI CASC cache preparation](investigations/gui-casc-cache-preparation.md) records the absent selected Era encoding key, supported local index headers, bounded consistency finding, and decision to use synthetic inputs in the required regression while retaining an `optional-tests` live smoke.
+## [2026-11-09] investigation | Reconcile profile frame-position baselines
+
+[Frame-position baseline drift](investigations/frame-position-baseline-drift.md#verified-lane-result--2026-11-09) records source-derived PTR, Forever and Classic expectations, profile-specific absent-frame checks, the final six-profile failure matrix, and unresolved model/input divergences. Retail and PTR pass 28/28; other profile residuals are not treated as native geometry.
+## [2026-11-08] design | Classic consumer fixture applicability
+
+[Classic consumer fixture applicability](design/classic-consumer-applicability.md) ranks the Era first-error clusters and separates native classic fixture selection from absent Retail features. Fresh 75038d409 failure-name sets are saved for Era, Anniversary, and Mists; changed-source comparisons and final profile checks remain pending.
 
 ## [2026-11-08] investigation | Mists spellbook button size
 
