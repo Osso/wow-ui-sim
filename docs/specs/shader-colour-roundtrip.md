@@ -1,28 +1,26 @@
-# Shader colour roundtrip
+# Shader colour output
 
-Rendering must not apply a brightness workaround to compensate for the missing 3D world. See the [rendering pipeline](../rendering-pipeline.md).
+UI RGB inputs and image texels represent display-byte values on an sRGB output target. See the [rendering pipeline](../rendering-pipeline.md).
 
 ## What it must do
 
-- [x] Preserve opaque sRGB texture bytes through white modulation into an sRGB output target; do not apply an artificial RGB power lift.
-- [x] Retain the existing linear solid-input, sRGB attachment, premultiplied-alpha and additive blending paths.
-- [x] Verify production shader readback for opaque textures, solids, half-alpha and additive controls on runtime source136 (not the unbuilt current import revision).
+- Preserve opaque sRGB image bytes through white modulation.
+- Map UI RGB input 0.5 to byte 128 and `(0.235, 0.14, 0.08)` to `(60, 36, 20)` for solid colours and vertex tints.
+- Multiply image texels and UI tints once in display-value space. Do not double-encode image texels.
+- Retain premultiplied-alpha and additive blend behavior after conversion to the target's linear color space.
+- Leave non-sRGB targets on the existing linear-input path.
 
 ## How it works
 
 - [Rendering pipeline](../rendering-pipeline.md)
 
-## Implementation inventory
-
-- `src/render/shader/quad.wgsl`: no post-modulation brightness lift.
-- `src/render/headless_colour_tests.rs`: opt-in production wgpu readback regression; hardware and software adapters are valid functional backends.
+On an sRGB target, image samples are decoded by texture sampling. The shader recovers their display values, multiplies by UI color/tint, decodes the result for linear blending and the sRGB attachment. Solid and tint values are decoded before the same blending path. The target transfer function is selected from its format; image bytes are not modified in the atlas.
 
 ## Tests asserting this spec
 
-`render::headless::colour_tests::colour_readback_has_no_artificial_brightness_lift` checks concrete swatch bytes. Run its documented ignored-test filter explicitly.
+- `iced_app::issue52_render_tests::issue52_headless_colour_bytes_match_lua_inputs_and_image_tints` checks Lua solid colors, vertex tints and opaque/colored images through headless PNG readback.
+- `render::headless::colour_tests::colour_readback_has_no_artificial_brightness_lift` checks production shader swatches, including opaque images, solids, half-alpha and additive blending. Run its documented ignored-test filter explicitly.
 
-Pre-fix standalone production rendering of an opaque RGB128 texture produced RGB162. A separate solid input of 0.5 produced RGB208. The texture result demonstrates the lift independently of Lua solid-colour interpretation. Post-fix production readback PASS; the [central receipt](../baselines/README.md#verified-scoped-receipts--2026-10-15) owns exact controls, adapter and source scope.
+## Evidence limits
 
-## Out of scope
-
-No attachment/atlas format changes, extra transfer functions, vendor edits, or native WoW colour-space parity claim. A solid input of 0.5 is not assumed to mean encoded RGB128 under the existing linear-input contract. The feedback's alleged second encoding remains unestablished.
+The input-byte results follow issue #52's reported client values. This spec does not establish WoW parity for every blend mode, non-sRGB target, or HDR output.

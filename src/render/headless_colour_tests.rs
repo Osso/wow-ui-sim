@@ -1,5 +1,4 @@
-//! Opt-in readback regression for the existing linear shader/sRGB target contract.
-//! This is not a native WoW color-space assertion.
+//! Opt-in readback regression for WoW UI display-byte colours on the production sRGB target.
 //!
 //! Explicit opt-in invocation (requires the `gui` feature):
 //! ```text
@@ -92,10 +91,10 @@ fn colour_readback_has_no_artificial_brightness_lift() {
     // first decode from sRGB; opaque white modulation must roundtrip those bytes.
     // Half-alpha blends in linear space over black, before attachment encoding.
     let cases = [
-        ("solid-linear", 4, [124, 170, 203, 255]),
+        ("solid-display-bytes", 4, [51, 102, 153, 255]),
         ("texture-srgb-roundtrip", 12, [51, 102, 153, 255]),
-        ("solid-half-alpha-over-black", 20, [89, 124, 149, 255]),
-        ("additive-control", 28, [124, 170, 203, 255]),
+        ("solid-half-alpha-over-black", 20, [35, 73, 111, 255]),
+        ("additive-display-bytes", 28, [51, 102, 153, 255]),
     ];
     for (name, x, expected) in &cases {
         eprintln!(
