@@ -68,7 +68,7 @@ fn upload_colour_swatches(pipeline: &mut WowUiPipeline, queue: &wgpu::Queue) -> 
 
 #[test]
 #[ignore = "opt-in production wgpu readback; use the documented exact test filter"]
-fn colour_readback_has_no_artificial_brightness_lift() {
+fn colour_readback_uses_display_byte_rgb_values() {
     let _gpu = crate::render::headless::lock_gpu_device_lifetime();
     let (device, queue) = request_colour_test_device();
     let mut pipeline = WowUiPipeline::new(&device, &queue, FORMAT);
@@ -87,9 +87,8 @@ fn colour_readback_has_no_artificial_brightness_lift() {
     pipeline.render_clear(&mut encoder, &view, &clip, [0.0, 0.0, 0.0, 1.0]);
     let image = read_back_pixels(&device, &queue, encoder, &target, WIDTH, HEIGHT);
 
-    // Linear shader values are encoded by the sRGB attachment. Texture samples
-    // first decode from sRGB; opaque white modulation must roundtrip those bytes.
-    // Half-alpha blends in linear space over black, before attachment encoding.
+    // UI and image RGB values are display bytes. Half-alpha blending still occurs
+    // in linear space before the sRGB attachment encodes the result.
     let cases = [
         ("solid-display-bytes", 4, [51, 102, 153, 255]),
         ("texture-srgb-roundtrip", 12, [51, 102, 153, 255]),

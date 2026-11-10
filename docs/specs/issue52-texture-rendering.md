@@ -13,13 +13,16 @@ VERIFIED: pinned Retail and Forever `Blizzard_APIDocumentationGenerated/SimpleTe
 
 VERIFIED: pinned Retail/Forever `Blizzard_SharedXML/UI.xsd:444-446` declares both handlers in `ScriptsType`; the cached PTR/Mists/Era/Anniversary schemas also declare them, while the cached Wrath schema does not. Retail `Blizzard_FrameXML/Shared/CinematicFrame.xml:88` binds the down handler on a Frame; Retail `Blizzard_SharedXML/CustomBindingButtonTemplate.xml:20-21` binds both on a Button; Forever `Blizzard_Gamepad/UI/CinematicMovie.lua:32-42` sets both on a button. These are the evidenced widget types; other widget types remain unproven. No simulator gamepad button input source has been established; dispatch is excluded.
 
-Design: keep sRGB image atlas sampling and output attachment formats. Recover encoded image RGB after sampling, multiply encoded UI colour values, then decode the result for sRGB attachment output. Select decoding only for sRGB targets. Keep premultiplied alpha/additive blending unchanged; native blend-space parity is not claimed. Use the existing stretch/tile slice emitters; cache source dimensions through the environment texture manager when margins or source change. Apply gradients across emitted image vertices using their positions in the complete region, including slices.
+Design: keep sRGB image atlas sampling and output attachment formats. Recover encoded image RGB after sampling, multiply encoded UI colour values, quantize to the nearest display byte, then decode for sRGB attachment output. Select decoding only for sRGB targets. Keep premultiplied alpha/additive blending unchanged; native blend-space parity is not claimed. Use the existing stretch/tile slice emitters for file textures and atlas entries. Read file dimensions only when margins are enabled; use the atlas entry's logical dimensions for atlas-backed textures. Apply gradients across emitted image vertices using positions in the complete region, including slices.
 
-INFERRED / decomp questions: margin behaviour for a destination smaller than opposing margins, invalid/negative margins, rotated/cropped UVs combined with slicing, and pixel-vs-UI-unit behaviour under non-unit frame scale are not specified in these documents. Do not claim native parity for them.
+INFERRED / decomp questions: margin behaviour for a destination smaller than opposing margins, invalid/negative margins, explicit custom UVs or rotated UVs combined with slicing, non-atlas cropped paths, and pixel-vs-UI-unit behaviour under non-unit frame scale are not specified in these documents. Bar-fill plus slicing is also not modeled. Do not claim native parity for them.
 
 ## Acceptance tests
 
 - `issue52_headless_colour_bytes_match_lua_inputs_and_image_tints`
 - `issue52_headless_image_gradient_multiplies_texture_and_vertex_colour`
 - `issue52_texture_slice_corners_keep_pixel_size_as_frame_grows`
+- `issue52_texture_slice_tiled_mode_repeats_the_center`
+- `issue52_texture_slice_source_dimensions_follow_texture_changes`
+- `issue52_clear_texture_slice_restores_single_quad_rendering`
 - `issue52_gamepad_button_scripts_register_on_evidenced_frame_and_button_types`

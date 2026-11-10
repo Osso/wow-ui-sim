@@ -14,12 +14,12 @@ UI RGB inputs and image texels represent display-byte values on an sRGB output t
 
 - [Rendering pipeline](../rendering-pipeline.md)
 
-On an sRGB target, image samples are decoded by texture sampling. The shader recovers their display values, multiplies by UI color/tint, decodes the result for linear blending and the sRGB attachment. Solid and tint values are decoded before the same blending path. The target transfer function is selected from its format; image bytes are not modified in the atlas.
+On an sRGB target, image samples are decoded by texture sampling. The shader recovers their display values, multiplies by UI color/tint, rounds the resulting display RGB to the nearest byte, then decodes it for linear blending and the sRGB attachment. Solid and tint values use the same path. The target transfer function is selected from its format; image bytes are not modified in the atlas.
 
 ## Tests asserting this spec
 
 - `iced_app::issue52_render_tests::issue52_headless_colour_bytes_match_lua_inputs_and_image_tints` checks Lua solid colors, vertex tints and opaque/colored images through headless PNG readback.
-- `render::headless::colour_tests::colour_readback_has_no_artificial_brightness_lift` checks production shader swatches, including opaque images, solids, half-alpha and additive blending. Run its documented ignored-test filter explicitly.
+- `render::headless::colour_tests::colour_readback_uses_display_byte_rgb_values` checks production shader swatches, including opaque images, solids, half-alpha and additive blending. Run its documented ignored-test filter explicitly.
 
 ## Evidence limits
 

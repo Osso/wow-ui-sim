@@ -42,7 +42,7 @@ fn set_texture_empty_string_clears_texture_path() {
 #[test]
 fn test_set_texture_slice_margins_roundtrip() {
     let env = env();
-    let (l, r, t, b): (f64, f64, f64, f64) = env
+    let (left, top, right, bottom): (f64, f64, f64, f64) = env
         .eval(
             r#"
             local tex = CreateFrame("Frame"):CreateTexture()
@@ -51,16 +51,16 @@ fn test_set_texture_slice_margins_roundtrip() {
             "#,
         )
         .unwrap();
-    assert_eq!(l, 4.0);
-    assert_eq!(r, 8.0);
-    assert_eq!(t, 12.0);
-    assert_eq!(b, 16.0);
+    assert_eq!(left, 4.0);
+    assert_eq!(top, 8.0);
+    assert_eq!(right, 12.0);
+    assert_eq!(bottom, 16.0);
 }
 
 #[test]
 fn test_get_texture_slice_margins_default() {
     let env = env();
-    let (l, r, t, b): (f64, f64, f64, f64) = env
+    let (left, top, right, bottom): (f64, f64, f64, f64) = env
         .eval(
             r#"
             local tex = CreateFrame("Frame"):CreateTexture()
@@ -68,7 +68,7 @@ fn test_get_texture_slice_margins_default() {
             "#,
         )
         .unwrap();
-    assert_eq!((l, r, t, b), (0.0, 0.0, 0.0, 0.0));
+    assert_eq!((left, top, right, bottom), (0.0, 0.0, 0.0, 0.0));
 }
 
 // ---------------------------------------------------------------------------
@@ -111,20 +111,20 @@ fn test_get_texture_slice_mode_default() {
 #[test]
 fn test_clear_texture_slice_resets_margins_and_mode() {
     let env = env();
-    let (l, r, t, b, mode): (f64, f64, f64, f64, i64) = env
+    let (left, top, right, bottom, mode): (f64, f64, f64, f64, i64) = env
         .eval(
             r#"
             local tex = CreateFrame("Frame"):CreateTexture()
             tex:SetTextureSliceMargins(4, 8, 12, 16)
             tex:SetTextureSliceMode(2)
             tex:ClearTextureSlice()
-            local l, r, t, b = tex:GetTextureSliceMargins()
+            local left, top, right, bottom = tex:GetTextureSliceMargins()
             local m = tex:GetTextureSliceMode()
-            return l, r, t, b, m
+            return left, top, right, bottom, m
             "#,
         )
         .unwrap();
-    assert_eq!((l, r, t, b), (0.0, 0.0, 0.0, 0.0));
+    assert_eq!((left, top, right, bottom), (0.0, 0.0, 0.0, 0.0));
     assert_eq!(mode, 0);
 }
 
