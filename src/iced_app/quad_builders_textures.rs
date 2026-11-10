@@ -182,6 +182,9 @@ fn emit_textured_quad(
     tint: [f32; 4],
     alpha: f32,
 ) {
+    if emit_explicit_texture_slice(batch, bounds, f, bar_fill, tex_path, tint) {
+        return;
+    }
     if let Some(fill) = bar_fill
         && let Some(uv4) = rotated_quad_uvs(f)
     {
@@ -226,6 +229,84 @@ fn emit_textured_quad(
         alpha,
     );
     finalize_textured_quad(batch, vert_before, f);
+}
+
+fn emit_explicit_texture_slice(
+    batch: &mut QuadBatch,
+    bounds: Rectangle,
+    frame: &crate::widget::Frame,
+    bar_fill: Option<&StatusBarFill>,
+    tex_path: &str,
+    tint: [f32; 4],
+) -> bool {
+    if bar_fill.is_some() || frame.tex_coords_quad.is_some() {
+        return false;
+    }
+    let (left_px, right_px, top_px, bottom_px) = frame.texture_slice_margins;
+    if left_px == 0.0 && right_px == 0.0 && top_px == 0.0 && bottom_px == 0.0 {
+        return false;
+    }
+    let (width, height, uvs) = if let Some(atlas_name) = frame.atlas.as_deref() {
+        if frame.tex_coords != frame.atlas_tex_coords {
+            return false;
+        }
+        let Some(lookup) = crate::atlas::get_render_atlas_info(atlas_name) else {
+            return false;
+        };
+        let uvs = frame.atlas_tex_coords.unwrap_or((0.0, 1.0, 0.0, 1.0));
+        (lookup.width() as f32, lookup.height() as f32, uvs)
+    } else {
+        if frame.tex_coords.is_some() {
+            return false;
+        }
+        let Some((width, height)) = frame.texture_source_dimensions else {
+            return false;
+        };
+        (width as f32, height as f32, (0.0, 1.0, 0.0, 1.0))
+    };
+    if width <= 0.0
+        || height <= 0.0
+        || bounds.width <= left_px + right_px
+        || bounds.height <= top_px + bottom_px
+    {
+        return false;
+    }
+    let texture = TexturedSlice {
+        path: tex_path,
+        uvs,
+        tint,
+        blend: frame.blend_mode,
+    };
+    match frame.texture_slice_mode {
+        0 => emit_stretch_slice_atlas(
+            batch,
+            StretchSliceRender {
+                bounds,
+                texture,
+                left_px,
+                top_px,
+                right_px,
+                bottom_px,
+                atlas_width_px: width,
+                atlas_height_px: height,
+            },
+        ),
+        1 => emit_tile_slice_atlas(
+            batch,
+            TileSliceRender {
+                bounds,
+                texture,
+                left_px,
+                top_px,
+                right_px,
+                bottom_px,
+                atlas_width_px: width,
+                atlas_height_px: height,
+            },
+        ),
+        _ => return false,
+    }
+    true
 }
 
 /// Explicit 8-arg SetTexCoord values describe one quad (TL, TR, BR, BL),
