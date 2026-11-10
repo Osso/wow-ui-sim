@@ -29,7 +29,9 @@ WoW UI RGB values must preserve their display-byte meaning on sRGB render target
 
 ## Known gaps (current cycle)
 
-- [ ] Verify exact color and image output on Retail and Forever, then mark the requirements above complete.
+- [ ] Verify the color and image output on Retail and Forever, then mark the requirements above complete.
+
+UNVERIFIED: native rounding for a white image texel multiplied by a `0.5` vertex tint is not measured. The test allows `(127, 128)` for that case; issue #52's exact `128` observation applies to `SetColorTexture`.
 
 ## Out of scope
 

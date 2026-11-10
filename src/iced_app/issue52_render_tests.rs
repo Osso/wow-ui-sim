@@ -108,33 +108,40 @@ fn issue52_headless_colour_bytes_match_lua_inputs_and_image_tints() {
         (
             "Issue52Texture:SetColorTexture(0.5,0.5,0.5,1)",
             [128, 128, 128, 255],
+            0,
         ),
         (
             "Issue52Texture:SetColorTexture(0.235,0.14,0.08,1)",
             [60, 36, 20, 255],
+            0,
         ),
         (
             "Issue52Texture:SetColorTexture(1,1,1,1); Issue52Texture:SetVertexColor(0.235,0.14,0.08,1)",
             [60, 36, 20, 255],
+            0,
         ),
         (
             "Issue52Texture:SetTexture('Interface/AddOns/Issue52/white.png'); Issue52Texture:SetVertexColor(0.5,0.5,0.5,1)",
             [128, 128, 128, 255],
+            1,
         ),
         (
             "Issue52Texture:SetTexture('Interface/AddOns/Issue52/white.png'); Issue52Texture:SetVertexColor(0.235,0.14,0.08,1)",
             [60, 36, 20, 255],
+            0,
         ),
         (
             "Issue52Texture:SetTexture('Interface/AddOns/Issue52/colour.png')",
             [200, 100, 50, 255],
+            0,
         ),
         (
             "Issue52Texture:SetTexture('Interface/AddOns/Issue52/colour.png'); Issue52Texture:SetVertexColor(0.5,0.5,0.5,1)",
             [100, 50, 25, 255],
+            0,
         ),
     ];
-    for (index, (script, _)) in cases.iter().enumerate() {
+    for (index, (script, _, _)) in cases.iter().enumerate() {
         fixture.append(
             &mut batch,
             script,
@@ -142,8 +149,8 @@ fn issue52_headless_colour_bytes_match_lua_inputs_and_image_tints() {
         );
     }
     let image = fixture.image(&batch, 112, 16);
-    for (index, (_, expected)) in cases.iter().enumerate() {
-        assert_pixel(&image, index as u32 * 16 + 8, 8, *expected, 0);
+    for (index, (_, expected, tolerance)) in cases.iter().enumerate() {
+        assert_pixel(&image, index as u32 * 16 + 8, 8, *expected, *tolerance);
     }
 }
 
