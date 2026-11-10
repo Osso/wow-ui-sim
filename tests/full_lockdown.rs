@@ -119,19 +119,26 @@ fn full_lockdown_set_forbidden_alone_keeps_secure_font_string_access() {
         label:ClearAlphaGradient()
         local binding = C_DurationUtil.CreateDurationTextBinding()
         binding:SetFontString(label)
+        "#,
+    )
+    .expect("SetForbidden alone must leave the secure FontString usable");
+    env.exec(
+        r#"
         parent:SetForbidden()
         local child = parent:CreateFontString()
         assert(child:IsForbidden())
         binding:SetFontString(child)
+        local forbiddenLabel = GetForbiddenObjectTable(label)
+        local forbiddenParent = GetForbiddenObjectTable(parent)
         local function addon()
-            local ok, message = pcall(binding.SetFontString, binding, label)
+            local ok, message = pcall(binding.SetFontString, binding, forbiddenLabel)
             assert(not ok and string.find(message, 'Attempt to access forbidden object from code tainted by an AddOn', 1, true), tostring(message))
-            ok, message = pcall(parent.CreateFontString, parent)
+            ok, message = pcall(forbiddenParent.CreateFontString, forbiddenParent)
             assert(not ok and string.find(message, 'Attempt to access forbidden object from code tainted by an AddOn', 1, true), tostring(message))
         end
         debug.setobjecttaint(addon, 'OrdinaryForbiddenFixture')
         addon()
         "#,
     )
-    .unwrap();
+    .expect("ordinary forbidden proxy access must remain separate from full lockdown");
 }
