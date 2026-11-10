@@ -193,6 +193,16 @@ fn expected_position(test: TestCase) -> TestCase {
         (ClientProfile::WowForever, "minimap_cluster") => {
             (name, frame, 1365.0, 0.0, 235.0, 256.0, 1.0)
         }
+        // Camelot bag buttons/preset: source derivation in frame-position-baseline-drift.md.
+        (ClientProfile::WowForever, "bags_bar") => (name, frame, 1088.0, 1153.0, 315.0, 45.0, 1.0),
+        // The status-bar preset anchors child containers; the manager stays UIParent-bottom.
+        (ClientProfile::WowForever, "status_tracking_bar") => {
+            (name, frame, 204.0, 1183.0, 1192.0, 17.0, 1.0)
+        }
+        // Camelot's right managed container is sized from visible managed children.
+        (ClientProfile::WowForever, "right_managed_container") => {
+            (name, frame, 1335.0, 260.0, 260.0, 844.0, 1.0)
+        }
         (ClientProfile::WowForever, "micro_menu")
         | (ClientProfile::WowForever, "micro_menu_container") => {
             (name, frame, 752.0, 1154.0, 329.0, 40.0, 1.0)

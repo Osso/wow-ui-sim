@@ -10,7 +10,7 @@
 - [x] Use native frame names and test absence when a profile's selected TOC excludes the Retail-only frame.
 - [x] Change a baseline only with a native XML/Lua derivation; retain failures caused by missing or incorrect simulator inputs.
 - [x] Keep Retail clean and reduce failure names on PTR, Forever, Mists, Era and Anniversary relative to master `3ca96ba58`.
-- [ ] Reconcile Forever bag, status-manager and managed-right geometry from pinned Camelot inputs; assert bag registration/dimensions/preset, keyboard-manager anchor, and the visible managed-child width bound before geometry. Do not treat the status manager as its Edit Mode child bars.
+- [x] Reconcile Forever bag, status-manager and managed-right geometry from pinned Camelot inputs; assert bag registration/dimensions/preset, keyboard-manager anchor, and the visible managed-child width bound before geometry. Do not treat the status manager as its Edit Mode child bars.
 
 ## How it works
 

@@ -1,3 +1,7 @@
+## [2026-11-09] implementation | Forever frame-position residuals
+
+[Frame-position baseline drift](investigations/frame-position-baseline-drift.md#forever-residual-derivation--2026-11-09) now uses source-derived Camelot fixture geometry for BagsBar `(1088,1153,315×45)`, StatusTrackingBarManager `(204,1183,1192×17)`, and RightManagedFrameContainer `(1335,260,260×844)`. New input checks preserve bag-registration, manager-anchor and managed-child preconditions. The acceptance RED at 5c06b7ca7 confirmed only these three old Retail expectations fail; final gates are pending.
+
 ## [2026-11-08] investigation | GUI CASC cache preparation
 
 Recorded that the selected Era encoding key was absent from the inspected supported-format local indices. The [investigation](investigations/gui-casc-cache-preparation.md) separates that install observation from resolver behavior and records deterministic fixture coverage plus the `optional-tests` live smoke.
