@@ -53,6 +53,16 @@ type SpellScriptFn = fn(&mut LuaState) -> LuaResult<u32>;
 const SPELL_INFO_HASH_FIELDS: usize = 7;
 const SPELL_COOLDOWN_HASH_FIELDS: usize = 5;
 
+pub(crate) fn uses_r17_duration_behavior() -> bool {
+    use crate::client_profile::ClientProfile;
+
+    match crate::client_profile::ACTIVE {
+        ClientProfile::WowForever => true,
+        ClientProfile::Retail | ClientProfile::Ptr => cfg!(feature = "retail-12-1-5"),
+        _ => false,
+    }
+}
+
 pub(crate) fn register_c_spell_surface(state: &mut LuaState) -> LuaResult<()> {
     let ns = ensure_namespace(state, "C_Spell")?;
     // Retail SpellDocumentation.lua:879-892; Forever :948-961.
@@ -134,9 +144,10 @@ const SPELL_QUERY_METHODS: &[(&str, SpellScriptFn)] = &[
         "GetSpellMaxCumulativeAuraApplications",
         super::c_spell_counts::get_spell_max_cumulative_aura_applications,
     ),
-    #[cfg(feature = "retail-12-0-5")]
+    // Forever SpellDocumentation.lua:274,327; registered in Game (R17).
+    #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
     ("GetSpellChargeDuration", get_spell_charge_duration),
-    #[cfg(feature = "retail-12-0-0")]
+    #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
     ("GetSpellCooldownDuration", get_spell_cooldown_duration),
     ("GetMountFromSpell", get_mount_from_spell),
     ("GetSpellTradeSkillLink", get_spell_trade_skill_link),
@@ -726,7 +737,7 @@ fn inspect_modeled_spell_selector<T>(
     Ok(None)
 }
 
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 fn read_modeled_cooldown_identifier(state: &LuaState) -> LuaResult<Option<u32>> {
     if let Some(spell_id) = inspect_modeled_spell_selector(state, |number| {
         read_spell_identifier_value(state, Val::Num(number))
@@ -734,6 +745,43 @@ fn read_modeled_cooldown_identifier(state: &LuaState) -> LuaResult<Option<u32>> 
         return Ok(spell_id);
     }
     read_spell_identifier(state)
+}
+
+/// R17 confirms duration queries parse number/string identifiers and reject other values.
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
+fn read_duration_spell_identifier(state: &LuaState) -> LuaResult<Option<u32>> {
+    if !uses_r17_duration_behavior() {
+        return read_modeled_cooldown_identifier(state);
+    }
+    if let Some(spell_id) = inspect_modeled_spell_selector(state, |number| {
+        read_spell_identifier_value(state, Val::Num(number))
+    })? {
+        return Ok(spell_id);
+    }
+
+    match stack_val(state, 1) {
+        Val::Num(number) if number.is_finite() => {
+            read_spell_identifier_value(state, Val::Num(number))
+        }
+        Val::Str(_) => {
+            let value = stack_val(state, 1);
+            if let Some(spell_id) = read_spell_identifier_value(state, value)? {
+                return Ok(Some(spell_id));
+            }
+            let text = val_to_string(state, value)
+                .ok_or_else(|| rilua::runtime_error("spellIdentifier must be a string"))?;
+            let spell_id = text
+                .parse::<i32>()
+                .ok()
+                .map(|number| number as u32)
+                .or_else(|| parse_prefixed_id(&text, "spell"))
+                .or_else(|| spell_id_by_name(&text, None));
+            Ok(spell_id)
+        }
+        _ => Err(rilua::runtime_error(
+            "spellIdentifier must be a number or string",
+        )),
+    }
 }
 
 fn read_modeled_numeric_spell_id(state: &LuaState) -> LuaResult<Option<u32>> {
@@ -760,19 +808,46 @@ fn read_modeled_u32_spell_id(state: &LuaState) -> LuaResult<u32> {
     u32::from_stack(state, 1)
 }
 
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 fn get_spell_charge_duration(state: &mut LuaState) -> LuaResult<u32> {
-    let spell_id = read_modeled_cooldown_identifier(state)?;
+    let spell_id = read_duration_spell_identifier(state)?;
+    if uses_r17_duration_behavior()
+        && let Some(spell_id) = spell_id
+    {
+        let known = {
+            let sim = borrow_state(state)?;
+            spells::get_spell(spell_id).is_some() || sim.spell_charges.contains_key(&spell_id)
+        };
+        if !known {
+            return Ok(0);
+        }
+    }
     super::charge_state::push_charge_duration(state, spell_id)
 }
 
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 fn get_spell_cooldown_duration(state: &mut LuaState) -> LuaResult<u32> {
-    let Some(spell_id) = read_modeled_cooldown_identifier(state)? else {
-        state.push(Val::Nil);
-        return Ok(1);
+    let Some(spell_id) = read_duration_spell_identifier(state)? else {
+        return Ok(0);
     };
-    let ignore_gcd = super::cooldown_duration::read_ignore_gcd(state, 2);
+    let ignore_gcd = if uses_r17_duration_behavior() {
+        match stack_val(state, 2) {
+            Val::Nil => false,
+            Val::Bool(value) => value,
+            _ => return Err(rilua::runtime_error("ignoreGCD must be a boolean or nil")),
+        }
+    } else {
+        super::cooldown_duration::read_ignore_gcd(state, 2)
+    };
+    if uses_r17_duration_behavior() {
+        let known = {
+            let sim = borrow_state(state)?;
+            spells::get_spell(spell_id).is_some() || sim.spell_cooldowns.contains_key(&spell_id)
+        };
+        if !known {
+            return Ok(0);
+        }
+    }
     let (start, seconds) = {
         let sim = borrow_state(state)?;
         let now = sim.clock_elapsed().as_secs_f64();

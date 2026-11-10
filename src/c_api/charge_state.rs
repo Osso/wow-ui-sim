@@ -90,7 +90,8 @@ fn charge_is_active(charge: SpellChargeState) -> bool {
 }
 
 fn select_recharge_times(charge: SpellChargeState, now: f64) -> Option<(f64, f64, f64)> {
-    let active = if cfg!(feature = "retail-12-0-5") {
+    let active = if cfg!(feature = "retail-12-0-5") || super::c_spell::uses_r17_duration_behavior()
+    {
         charge_is_active(charge)
     } else {
         charge.current_charges < charge.max_charges
@@ -102,8 +103,13 @@ fn select_recharge_times(charge: SpellChargeState, now: f64) -> Option<(f64, f64
             charge.charge_mod_rate,
         ));
     }
-    // 12.0.5 specifies zero-span at max; earlier active-only behavior is inferred.
-    cfg!(feature = "retail-12-0-5").then_some((now, 0.0, charge.charge_mod_rate))
+    // Forever SpellDocumentation.lua:274 and SpellBookDocumentation.lua:198;
+    // R17 confirms supported inactive charge systems return a zero duration object.
+    (cfg!(feature = "retail-12-0-5") || super::c_spell::uses_r17_duration_behavior()).then_some((
+        now,
+        0.0,
+        charge.charge_mod_rate,
+    ))
 }
 
 pub(crate) fn push_charge_duration(state: &mut LuaState, spell_id: Option<u32>) -> LuaResult<u32> {
@@ -113,6 +119,9 @@ pub(crate) fn push_charge_duration(state: &mut LuaState, spell_id: Option<u32>) 
         read_charge_input(&sim, spell_id).and_then(|charge| select_recharge_times(charge, now))
     };
     let Some((start, seconds, rate)) = timing else {
+        if super::c_spell::uses_r17_duration_behavior() {
+            return Ok(0);
+        }
         state.push(Val::Nil);
         return Ok(1);
     };

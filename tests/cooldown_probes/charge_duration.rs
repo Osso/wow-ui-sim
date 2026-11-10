@@ -7,6 +7,15 @@ use super::{SpellCooldownState, WowLuaEnv, env};
 use std::time::{Duration, Instant};
 use wow_ui_sim::c_api::charge_state::SpellChargeState;
 
+fn assert_invalid_spellbook_bank(env: &WowLuaEnv) {
+    let assertion = if cfg!(feature = "retail-12-1-5") {
+        "assert(not pcall(C_SpellBook.GetSpellBookItemChargeDuration, 5, 99))"
+    } else {
+        "assert(C_SpellBook.GetSpellBookItemChargeDuration(5, 99) == nil)"
+    };
+    env.exec(assertion).unwrap();
+}
+
 fn seed_noncharge_spell_with_cooldown(env: &WowLuaEnv) {
     let mut state = env.state().borrow_mut();
     state.start_time = Instant::now() - Duration::from_secs(20);
@@ -71,11 +80,10 @@ fn charge_duration_empty_action_and_unresolved_book_have_no_recharge() {
             'unresolved book slot must not fabricate recharge')
         assert(C_SpellBook.GetSpellBookItemChargeDuration(5, 1) == nil,
             'player slot must not resolve through the pet bank')
-        assert(C_SpellBook.GetSpellBookItemChargeDuration(5, 99) == nil,
-            'unresolved bank must not fabricate recharge')
         "#,
     )
     .expect("empty action and unresolved spellbook identity have no charge duration");
+    assert_invalid_spellbook_bank(&env);
 }
 
 #[test]
@@ -196,11 +204,11 @@ fn charge_duration_active_recharge_uses_shared_interval_rate_and_runtime_clock()
             assert(remaining >= 32 - after - 1e-6 and remaining <= 32 - before + 1e-6)
         end
         assert(C_SpellBook.GetSpellBookItemChargeDuration(5, 1) == nil)
-        assert(C_SpellBook.GetSpellBookItemChargeDuration(5, 99) == nil)
         assert(C_ActionBar.GetActionChargeDuration(99) == nil)
         "#,
     )
     .expect("all producers use explicit charge interval and existing duration rate semantics");
+    assert_invalid_spellbook_bank(&env);
 }
 
 #[test]
