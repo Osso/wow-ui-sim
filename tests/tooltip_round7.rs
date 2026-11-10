@@ -125,6 +125,50 @@ tooltip_selection_getters_fixture! {
     }
 
     #[test]
+    fn tooltip_round7_azerite_uses_supplied_essence_state_before_missing_spell_data() {
+        let env = env_with_profile();
+        {
+            let mut sim = env.state().borrow_mut();
+            sim.azerite_essence.essences.insert(
+                241,
+                wow_ui_sim::lua_api::state_types::AzeriteEssenceInfo {
+                    id: 241,
+                    name: "Round Seven Essence".to_string(),
+                    rank: 3,
+                    icon: 1,
+                    unlocked: true,
+                    valid: true,
+                    access_rank: 3,
+                    has_never_activated: false,
+                },
+            );
+            sim.azerite_essence
+                .milestones
+                .push(wow_ui_sim::lua_api::state_types::AzeriteEssenceMilestoneInfo {
+                    id: 1,
+                    required_level: 1,
+                    slot: Some(0),
+                    unlocked: true,
+                    can_unlock: false,
+                    is_major_slot: true,
+                    swirl_scale: 1.0,
+                    requires_only_aura: false,
+                    spell_id: 1,
+                    rank: None,
+                    active_essence_id: Some(241),
+                });
+        }
+        env.exec(r#"
+            assert(C_AzeriteEssence.GetEssenceInfo(241).rank == 3, 'test state is populated')
+            assert(C_AzeriteEssence.GetMilestoneEssence(1) == 241, 'active slot is populated')
+            assert(select('#', C_TooltipInfo.GetAzeriteEssence(241)) == 0,
+                'missing rank-to-spell tooltip data keeps the native miss shape')
+            assert(select('#', C_TooltipInfo.GetAzeriteEssenceSlot(0)) == 0,
+                'selected essence still needs its rank-to-spell tooltip data')
+        "#).unwrap();
+    }
+
+    #[test]
     fn tooltip_round7_misses_return_no_values_through_selected_original_accessors() {
         let env = tooltip_full_env_helpers::load_full_env_without_post_load();
         env.exec(&format!("R7AllGetters = {}", ACTIVE != ClientProfile::Ptr)).unwrap();
