@@ -25,6 +25,7 @@ pub(crate) mod c_tooltip_info_merchant_cost;
 // PTR and Forever; the supplied-brawl model is compiled for the same profiles.
 #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 pub(crate) mod c_tooltip_info_pvp_brawl;
+pub(crate) mod c_tooltip_info_round7;
 pub(crate) mod c_tooltip_info_totem;
 pub(crate) mod c_tooltip_info_weekly;
 pub(crate) mod class_catalog;

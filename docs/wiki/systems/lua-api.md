@@ -19,6 +19,10 @@ an explicit zero-return simulator policy, not asserted native arity.
 wrapping-clock/rate pipeline, with one named nearest-even emulation seam and
 native-duration unit thresholds. They do not use spell tooltip composition.
 
+[Round 7 tooltip getters](../../specs/tooltip-r7-getters.md) record Retail 70688 and Forever 70707 registration for all eleven names, with PTR 70668 registration only for the two Azerite Essence getters. VERIFIED: those getter readers use the Round 7 signed, optional unsigned, byte-slot, GUID and party-flag rules; unavailable backing data returns no Lua values instead of an invented DTO. VERIFIED within simulator coverage: an owned bag-item GUID with no runeforge power/modifier arguments uses the shared item builder and publishes its supplied displayed level. The other selected state stores and specialized tooltip producers are not modeled, so these getters remain no-value misses.
+
+For `C_Item.GetItemNumSockets`, VERIFIED: Retail/PTR/Forever reject a secret input from tainted execution and can read it from an untainted caller. UNKNOWN: the native publication helper's enable byte and mode do not establish whether the returned count receives a secret tag; the simulator does not claim that policy.
+
 Retail/PTR supplied loot and buyback slots feed the existing item tooltip builder.
 [The getter contract](../../specs/tooltip-loot-buyback.md) records the emulated
 missing-slot seam and strict-index limitation.
