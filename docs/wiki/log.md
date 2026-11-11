@@ -1,6 +1,6 @@
 ## [2026-11-11] investigation | Lua rectangle-query validity
 
-VERIFIED (R48): geometry validity follows anchor targets, not containment ancestry. VERIFIED (simulator commits): the Lua-only implementation is in `f255ed881` and resolved-size handling is in `20cbd611a`; `IsRectValid` remains unchanged. VERIFIED (work status): runtime profile and PTR full-suite proof remain pending.
+VERIFIED (R48/R59 native evidence): geometry queries follow anchor targets, and PTR 12.1.7.70668 and Retail 12.1.5.70688 share the dirty/clean target-use gate. VERIFIED (simulator commits): `faf99f277` adds cached validity, `edf70955b` skips clean-target layout resolution, and `45fae8c13` resolves dirty anchor dependencies before dependents; `IsRectValid` reads only cached validity. INFERRED: ancestor/dependency propagation maps to effective target dirtiness in the simulator. UNKNOWN: full mixed-anchor fallback, callbacks, cycles and exact return-list arity. UNVERIFIED: profile selectors and PTR full-suite proof remain pending.
 
 ## [2026-11-11] implementation | PTR/Retail Store API availability
 
