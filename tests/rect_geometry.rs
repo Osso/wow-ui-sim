@@ -118,13 +118,13 @@ fn rect_queries_return_nothing_for_unanchored_frame() {
         f64, f64, f64, f64, f64, bool,
     ) = env
         .eval(
-            r#"
+            r##"
             local f = CreateFrame("Frame", "UnanchoredProbe", UIParent)
             f:SetSize(100, 50)
             local rect_values = select("#", f:GetRect())
             local size_width, size_height = f:GetSize()
             return rect_values, f:GetWidth(), f:GetHeight(), size_width, size_height, f:IsRectValid()
-            "#,
+            "##,
         )
         .expect("eval should succeed");
 
@@ -140,7 +140,14 @@ fn rect_queries_return_nothing_for_unanchored_frame() {
 fn valid_anchored_size_queries_use_resolved_dimensions() {
     let env = env();
     let (width, height, size_width, size_height, left, bottom, rect_width, rect_height): (
-        f64, f64, f64, f64, f64, f64, f64, f64,
+        f64,
+        f64,
+        f64,
+        f64,
+        f64,
+        f64,
+        f64,
+        f64,
     ) = env
         .eval(
             r#"
@@ -178,7 +185,7 @@ fn child_anchored_to_unanchored_parent_has_no_queryable_rect() {
     let env = env();
     let result: f64 = env
         .eval(
-            r#"
+            r##"
             local parent = CreateFrame("Frame", "UnanchoredParentProbe", UIParent)
             parent:SetSize(100, 100)
 
@@ -187,7 +194,7 @@ fn child_anchored_to_unanchored_parent_has_no_queryable_rect() {
             child:SetPoint("CENTER", parent, "CENTER", 0, 0)
 
             return select("#", child:GetRect())
-            "#,
+            "##,
         )
         .expect("eval should succeed");
     assert_eq!(result, 0.0);
@@ -212,10 +219,23 @@ fn child_rect_queries_follow_anchor_targets_not_unanchored_parent() {
         child_width,
         child_height,
     ): (
-        f64, f64, f64, f64, f64, f64, f64, f64, f64, f64, f64, f64, f64, f64,
+        f64,
+        f64,
+        f64,
+        f64,
+        f64,
+        f64,
+        f64,
+        f64,
+        f64,
+        f64,
+        f64,
+        f64,
+        f64,
+        f64,
     ) = env
         .eval(
-            r#"
+            r##"
             local parent = CreateFrame("Frame", "AnchorGroupParent", UIParent)
             parent:SetSize(100, 80)
             local target = CreateFrame("Frame", "AnchorGroupTarget", UIParent)
@@ -236,7 +256,7 @@ fn child_rect_queries_follow_anchor_targets_not_unanchored_parent() {
             return parent_rect_values, parent_width, parent_height, child_rect_values,
                    left, bottom, width, height, scaled_rect_values, center_values,
                    center_x, center_y, child_width, child_height
-            "#,
+            "##,
         )
         .expect("eval should succeed");
 
