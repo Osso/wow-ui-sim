@@ -304,7 +304,13 @@ always-true AllowChatFramesToShow in FloatingChatFrameGame.lua, selected only by
 The Forever plain-login regression loads original addons with no post-load,
 post-event, or settling fixtures and verifies the original GlueParent function
 source, false policy, shown AccountLogin, and hidden ChatFrame1. It passes.
-PTR runtime verification awaits the authorized complete cache.
+The complete authorized PTR cache is now verified. Its unassisted test also
+passes every chat-policy/source/visibility assertion, but the final zero-Lua-error
+guard fails on unrelated plain-load GetCurrentGameModeDisplayInfo and
+AreHighResTexturesAvailable calls. These are reported for coordinator ownership
+or native contracts; the test does not apply post-load workarounds to mask them.
+At 72037ef24, the PTR glue run is 130 passed/3 failed with zero compiler warnings:
+the two other failures are PTR feedback discovery/file-list expectations.
 
 Retail 70575 instead defines the always-true function in the unfiltered shared
 FloatingChatFrame.lua:40, replacing GlueParent.lua:909's screen-aware policy.
