@@ -1,3 +1,7 @@
+## [2026-11-11] implementation | Shared Glue game-mode display
+
+Updated [Forever login startup](investigations/forever-login-startup.md#r60-display-and-capability-replacement-2026-11-11) and the [login contract](../specs/glue-login-flow.md) with R60 shared CVar/host-row selection, bounded override lifecycle, display callback, and read-only PTR/Forever texture capability. Corrected the retracted Retail chat pin diagnosis; native visibility remains pending R62. Profile regression counts and remaining native/bootstrap gaps are recorded without an acceptance claim.
+
 ## [2026-11-10] fix | Mists frame-position residuals
 
 Updated the [frame-position investigation](investigations/frame-position-baseline-drift.md#mists-frame-residuals--2026-11-10) and [profile contract](../specs/frame-position-profile-baselines.md) with pinned-source Mists bag, aura, action-bar, status-bar and WatchFrame-managed right-container geometry. The simulator no longer synthesizes ObjectiveTrackerFrame on Mists, where the selected Blizzard UI has no producer; the test asserts absence. VERIFIED at `3c36dab15`: Mists `frame_positions` passes 25/28; `micro_menu`, `micro_menu_container` and `casting_bar` remain open.

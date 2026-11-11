@@ -149,6 +149,32 @@ Credits displayed real text and two catalog entries: `World of Warcraft`, then
 This visual check did not measure native Lua-error counts or API return values.
 Fully disconnected operation was not verified.
 
+## R60 display and capability replacement (2026-11-11)
+
+The shared [GameMode display model](../../../src/c_api/game_mode_display.rs)
+replaces the Forever nil-display placeholder. Both getters select the bounded
+host override or the real currentGameMode CVar; rows are empty-by-default host
+inputs. CVar callbacks clear the override and notify the original backdrop
+consumer. The display-only record0 exclusion is separate from the screen-name
+getter. No selected-realm data or native DB rows are invented.
+
+[High-resolution availability](../../../src/c_api/video_texture_capability.rs)
+replaces the mutable Forever fixture: PTR and Forever expose a read-only
+capability-byte projection in Game and Glue; Retail does not publish it.
+The zero byte is verified image data, while the completed false result is an
+inference. Tests check publication and Boolean type, not fixed false.
+
+At 380e9c1a2, Retail glue is 261 passed/1 failed and Forever is 148 passed/11
+failed, with zero compiler warnings. The adapted Forever graphics consumer
+passes. PTR's refined shared-state tests pass 2/2; its earlier full R60 run is
+134/3. PTR's plain-login chat source/policy/visibility checks pass, but its final
+all-errors guard exposes GetCreditsDisplayInfo and IsPBRWaterSupported, reported
+for native contracts. The two other PTR failures are confirmed baseline.
+Retail chat remains UNKNOWN pending R62: the earlier stale-pin explanation was
+retracted because the installed 70783 root also lacks the split Game-only file.
+No forced hiding, override, or replay is added. Forever failures remain the
+baseline eight plus three submissions blocked by coordinator-owned APIs.
+
 ## Sources
 
 - [Login contract](../../specs/glue-login-flow.md) — native evidence, offline policy and remaining unknowns.
