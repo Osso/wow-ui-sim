@@ -53,9 +53,9 @@ fn loot_specialization_original_popup_does_not_fabricate_a_server_response() {
     env.fire_on_update(0.0).unwrap();
     env.exec(
         r#"
-        assert(GetLootSpecialization() == 0)
-        assert(not UnitPopupLootSpecialization2ButtonMixin:IsChecked({}))
-        assert(loot_spec_events() == 0)
+        assert(GetLootSpecialization() == 0, 'OnUpdate must not apply a fabricated server value')
+        assert(not UnitPopupLootSpecialization2ButtonMixin:IsChecked({}), 'the pending choice stays unchecked')
+        assert(loot_spec_events() == 0, 'the setter must not fire the server-update event')
     "#,
     )
     .expect("popup response");
