@@ -325,7 +325,7 @@ fn parse_merchant_index(state: &mut LuaState) -> LuaResult<Option<i32>> {
     let Val::Num(number) = stack_val(state, 1) else {
         return Ok(None);
     };
-    if !number.is_finite() || number < f64::from(i32::MIN) || number > f64::from(i32::MAX) {
+    if !(f64::from(i32::MIN)..=f64::from(i32::MAX)).contains(&number) {
         return Err(rilua::runtime_error(format!(
             "integer overflow attempting to store {number:.6}"
         )));
