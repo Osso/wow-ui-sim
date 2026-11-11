@@ -88,6 +88,7 @@ Swapping an owned item with a bag or equipment slot places the displaced item th
 
 - `Blizzard_MainMenuBarBagButtons/Shared/MainMenuBarBagManager.lua` reads `CURSOR_CHANGED`'s new cursor type and expands the bag bar for Item, Merchant and GuildBank cursors.
 - `Blizzard_ActionBar/Shared/ActionBar.lua` (`ActionBarMixin`) shows and hides all action buttons on `ACTIONBAR_SHOWGRID` and `ACTIONBAR_HIDEGRID`.
+- PTR `ActionButton.lua` checks `C_ActionBar.SpellMatchesActionSpellTypeRestriction` before `PlaceAction`; see the [action spell restriction contract](action-spell-type-restriction.md).
 
 ## Implementation inventory
 

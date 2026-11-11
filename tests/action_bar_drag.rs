@@ -526,31 +526,94 @@ fn ptr_action_spell_restriction_matches_native_mode_and_slot_rules() {
         (restricted, unrestricted, zero_spell_unrestricted, other_restricted),
         (false, true, false, false)
     );
+
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.spell_labels
+            .insert(853, std::collections::HashSet::from([6590]));
+        sim.spell_labels
+            .insert(642, std::collections::HashSet::from([6595]));
+        sim.spell_labels
+            .insert(19750, std::collections::HashSet::from([6609]));
+    }
+    let (
+        offensive_first,
+        offensive_last,
+        defensive_first,
+        defensive_last,
+        ultimate_first,
+        ultimate_last,
+        wrong_label,
+        fractional_match,
+    ): (bool, bool, bool, bool, bool, bool, bool, bool) = env
+        .eval(
+            r#"
+            return C_ActionBar.SpellMatchesActionSpellTypeRestriction(853, 1),
+                C_ActionBar.SpellMatchesActionSpellTypeRestriction(853, 168),
+                C_ActionBar.SpellMatchesActionSpellTypeRestriction(642, 61),
+                C_ActionBar.SpellMatchesActionSpellTypeRestriction(642, 72),
+                C_ActionBar.SpellMatchesActionSpellTypeRestriction(19750, 145),
+                C_ActionBar.SpellMatchesActionSpellTypeRestriction(19750, 156),
+                C_ActionBar.SpellMatchesActionSpellTypeRestriction(642, 1),
+                C_ActionBar.SpellMatchesActionSpellTypeRestriction('853.9', '1.9')
+            "#,
+        )
+        .unwrap();
+    assert_eq!(
+        (
+            offensive_first,
+            offensive_last,
+            defensive_first,
+            defensive_last,
+            ultimate_first,
+            ultimate_last,
+            wrong_label,
+            fractional_match,
+        ),
+        (true, true, true, true, true, true, false, true)
+    );
 }
 
 #[cfg(feature = "client-ptr")]
 #[test]
 fn ptr_action_spell_restriction_reports_native_argument_errors() {
     let env = WowLuaEnv::new().unwrap();
-    let (missing_spell, missing_action, invalid_spell, invalid_action):
-        (String, String, String, String) = env
+    let (
+        missing_spell,
+        missing_action,
+        invalid_spell,
+        invalid_low_spell,
+        invalid_action,
+        invalid_high_action,
+        nonnumeric_spell,
+        nonfinite_action,
+    ): (String, String, String, String, String, String, String, String) = env
         .eval(
             r#"
             local _, missingSpell = pcall(C_ActionBar.SpellMatchesActionSpellTypeRestriction, nil, 1)
             local _, missingAction = pcall(C_ActionBar.SpellMatchesActionSpellTypeRestriction, 1, nil)
             local _, invalidSpell = pcall(C_ActionBar.SpellMatchesActionSpellTypeRestriction, 2147483648, 1)
-            local _, invalidAction = pcall(C_ActionBar.SpellMatchesActionSpellTypeRestriction, 1, 4294967296)
-            return missingSpell, missingAction, invalidSpell, invalidAction
+            local _, invalidLowSpell = pcall(C_ActionBar.SpellMatchesActionSpellTypeRestriction, -2147483649, 1)
+            local _, invalidAction = pcall(C_ActionBar.SpellMatchesActionSpellTypeRestriction, 1, -1)
+            local _, invalidHighAction = pcall(C_ActionBar.SpellMatchesActionSpellTypeRestriction, 1, 4294967296)
+            local _, nonnumericSpell = pcall(C_ActionBar.SpellMatchesActionSpellTypeRestriction, true, 1)
+            local _, nonfiniteAction = pcall(C_ActionBar.SpellMatchesActionSpellTypeRestriction, 1, math.huge)
+            return missingSpell, missingAction, invalidSpell, invalidLowSpell,
+                invalidAction, invalidHighAction, nonnumericSpell, nonfiniteAction
             "#,
         )
         .unwrap();
     let usage = "Usage: local actionMatchesSpellTypeRestriction = C_ActionBar.SpellMatchesActionSpellTypeRestriction(spellID, actionID)";
     assert!(missing_spell.contains("bad argument #1") && missing_spell.contains(usage));
     assert!(missing_action.contains("bad argument #2") && missing_action.contains(usage));
-    assert!(invalid_spell.contains("outside of expected range -2147483648 to 2147483647 - "));
-    assert!(invalid_spell.contains(usage));
-    assert!(invalid_action.contains("outside of expected range 0 to 4294967295 - "));
-    assert!(invalid_action.contains(usage));
+    for error in [&invalid_spell, &invalid_low_spell, &nonnumeric_spell] {
+        assert!(error.contains("outside of expected range -2147483648 to 2147483647 - "));
+        assert!(error.contains(usage));
+    }
+    for error in [&invalid_action, &invalid_high_action, &nonfinite_action] {
+        assert!(error.contains("outside of expected range 0 to 4294967295 - "));
+        assert!(error.contains(usage));
+    }
 }
 
 #[cfg(feature = "client-retail")]

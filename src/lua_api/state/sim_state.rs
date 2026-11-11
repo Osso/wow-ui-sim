@@ -233,6 +233,8 @@ pub struct SimState {
         HashMap<i32, Vec<crate::c_api::c_weekly_rewards::ActivityTierProgress>>,
     /// WM97 DQ8 host seam: exact 64-bit keys with independent ready state.
     pub weekly_rewards: crate::c_api::c_tooltip_info_weekly::WeeklyRewards,
+    /// Host-supplied SpellLabel IDs keyed by spell; empty when no label records are supplied.
+    pub spell_labels: HashMap<i32, HashSet<i32>>,
     pub action_bars: HashMap<u32, u32>,
     /// Pending unique PTR cooldown refresh; multiple slot changes coalesce per update.
     #[cfg(feature = "client-ptr")]
