@@ -19,6 +19,7 @@
 ## How it works
 
 - [Character-create altered form](character-create-altered-form.md)
+- [Character-create camera and preview state](character-create-visual-state.md)
 - [Selected model-scene catalogue](model-scene-catalogue.md)
 
 ## Implementation inventory
@@ -38,5 +39,4 @@
 
 ## Out of scope
 
-- Permanent 3D visual gap: do not render the blur, model, or camera profiles. R51 confirms native `SetCameraZoomLevel` reads the stored Boolean only to select a camera profile; the simulator stores the flag but does not render that effect. See the [model-scene catalogue](model-scene-catalogue.md).
-- Modeling preview gear, dress state, camera zoom, or other 3D effects.
+- Permanent 3D visual gap: do not render blur, the character model, or camera profiles. R51 confirms native `SetCameraZoomLevel` reads the stored Boolean only to select a camera profile; the simulator stores that flag but does not render the effect. R57 camera zoom storage and its readback contract are in [character-create camera and preview state](character-create-visual-state.md). See the [model-scene catalogue](model-scene-catalogue.md).

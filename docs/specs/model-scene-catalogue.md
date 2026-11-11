@@ -8,4 +8,4 @@ The previous scene-596 seed invented `human-male`, `human` and `player-rider`; t
 
 ## Known gaps
 
-Only these three scenes are supplied. Camera and actor display properties and 3D rendering remain unsupported; this catalogue does not claim full `C_ModelInfo` parity. The character-create blur setting stores the camera-profile Boolean, but blur and profile visuals remain part of this permanent 3D gap; see [character-create blur](character-create-blur.md).
+Only these three scenes are supplied. Camera and actor display properties and 3D rendering remain unsupported; this catalogue does not claim full `C_ModelInfo` parity. Character-create APIs may store camera-profile and zoom state for Lua readback, but blur, camera-profile, model-dress and preview-gear visuals remain part of this permanent 3D gap; see [character-create blur](character-create-blur.md) and [character-create camera and preview state](character-create-visual-state.md).

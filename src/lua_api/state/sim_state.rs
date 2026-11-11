@@ -934,6 +934,10 @@ pub struct SimState {
     pub character_create_viewing_altered_form: bool,
     /// Selected character-create camera profile; no visual 3D effect is rendered.
     pub character_create_blur_enabled: bool,
+    /// Stored Glue character-create zoom; camera profiles are not rendered.
+    pub character_create_camera_zoom: i32,
+    /// Native custom-zoom flag; the simulator has no producer for this input.
+    pub character_create_camera_zoom_is_custom: bool,
     /// Host-supplied facing in degrees, keyed by selected character-create race/sex IDs.
     pub character_create_default_facing_by_race_sex: HashMap<(i64, i64), f64>,
     /// Host-supplied superdistrict records, keyed by native ID.

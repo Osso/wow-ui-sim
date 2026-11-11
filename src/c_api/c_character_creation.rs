@@ -18,6 +18,16 @@ const SET_IN_CHARACTER_CREATE_USAGE: &str =
 const SET_VIEWING_ALTERED_FORM_USAGE: &str =
     "Usage: C_CharacterCreation.SetViewingAlteredForm(isViewingAlteredForm)";
 const SET_BLUR_ENABLED_USAGE: &str = "Usage: C_CharacterCreation.SetBlurEnabled(enabled)";
+const SET_CAMERA_ZOOM_LEVEL_USAGE: &str =
+    "Usage: C_CharacterCreation.SetCameraZoomLevel(zoomLevel [, keepCustomZoom])";
+const SET_MODEL_DRESS_STATE_USAGE: &str =
+    "Usage: C_CharacterCreation.SetModelDressState(dressedState)";
+const SET_SELECTED_PREVIEW_GEAR_TYPE_USAGE: &str =
+    "Usage: C_CharacterCreation.SetSelectedPreviewGearType(gearType)";
+const MAX_CHARACTER_CREATE_CAMERA_ZOOM: i32 = 100;
+const CHARACTER_CREATE_BYTE_MODULUS: f64 = 256.0;
+const NEW_CHAR_GEAR_START: u8 = 0;
+const NEW_CHAR_GEAR_PREVIEW: u8 = 1;
 const SET_CHARACTER_CREATE_FACING_USAGE: &str =
     "Usage: C_CharacterCreation.SetCharacterCreateFacing(degrees)";
 // R36 marks the displayed bounds as inferred; tests check only the stable prefix and usage.
@@ -123,6 +133,10 @@ fn update_retail_and_forever_registration(
             "SetViewingAlteredForm",
             "IsViewingAlteredForm",
             "SetBlurEnabled",
+            "GetCurrentCameraZoom",
+            "SetCameraZoomLevel",
+            "SetModelDressState",
+            "SetSelectedPreviewGearType",
         ] {
             table_set_static(state, Val::Table(namespace), member, Val::Nil);
         }
@@ -131,6 +145,15 @@ fn update_retail_and_forever_registration(
 }
 
 fn register_retail_and_forever_glue_apis(
+    state: &mut LuaState,
+    namespace: GcRef<Table>,
+) -> LuaResult<()> {
+    register_character_create_mode_apis(state, namespace)?;
+    register_character_create_altered_form_apis(state, namespace)?;
+    register_character_create_preview_apis(state, namespace)
+}
+
+fn register_character_create_mode_apis(
     state: &mut LuaState,
     namespace: GcRef<Table>,
 ) -> LuaResult<()> {
@@ -151,7 +174,13 @@ fn register_retail_and_forever_glue_apis(
         namespace,
         "SetCharacterCreateFacing",
         set_character_create_facing,
-    )?;
+    )
+}
+
+fn register_character_create_altered_form_apis(
+    state: &mut LuaState,
+    namespace: GcRef<Table>,
+) -> LuaResult<()> {
     table_set_rust_fn_static(
         state,
         namespace,
@@ -163,8 +192,38 @@ fn register_retail_and_forever_glue_apis(
         namespace,
         "IsViewingAlteredForm",
         is_viewing_altered_form,
+    )
+}
+
+fn register_character_create_preview_apis(
+    state: &mut LuaState,
+    namespace: GcRef<Table>,
+) -> LuaResult<()> {
+    table_set_rust_fn_static(state, namespace, "SetBlurEnabled", set_blur_enabled)?;
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "GetCurrentCameraZoom",
+        get_current_camera_zoom,
     )?;
-    table_set_rust_fn_static(state, namespace, "SetBlurEnabled", set_blur_enabled)
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "SetCameraZoomLevel",
+        set_camera_zoom_level,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "SetModelDressState",
+        set_model_dress_state,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "SetSelectedPreviewGearType",
+        set_selected_preview_gear_type,
+    )
 }
 
 fn set_blur_enabled(state: &mut LuaState) -> LuaResult<u32> {
@@ -175,6 +234,86 @@ fn set_blur_enabled(state: &mut LuaState) -> LuaResult<u32> {
 
     borrow_state_mut(state)?.character_create_blur_enabled = !matches!(argument, Val::Bool(false));
     Ok(0)
+}
+
+fn get_current_camera_zoom(state: &mut LuaState) -> LuaResult<u32> {
+    let zoom = borrow_state(state)?.character_create_camera_zoom;
+    state.push(Val::Num(f64::from(zoom)));
+    Ok(1)
+}
+
+fn set_camera_zoom_level(state: &mut LuaState) -> LuaResult<u32> {
+    let zoom = crate::c_api::helpers::read_untainted_signed32_argument(
+        state,
+        1,
+        "SetCameraZoomLevel",
+        SET_CAMERA_ZOOM_LEVEL_USAGE,
+    )?;
+    let keep_custom_zoom = !matches!(stack_val(state, 2), Val::Nil | Val::Bool(false));
+    let clamped_zoom = zoom.clamp(0, MAX_CHARACTER_CREATE_CAMERA_ZOOM);
+    let mut sim = borrow_state_mut(state)?;
+    if sim.character_create_camera_zoom_is_custom && keep_custom_zoom {
+        return Ok(0);
+    }
+    if sim.character_create_camera_zoom != clamped_zoom {
+        sim.character_create_camera_zoom = clamped_zoom;
+        sim.character_create_camera_zoom_is_custom = false;
+    }
+    Ok(0)
+}
+
+fn set_model_dress_state(state: &mut LuaState) -> LuaResult<u32> {
+    let argument = stack_val(state, 1);
+    if matches!(argument, Val::Nil) {
+        return Err(bad_argument(
+            1,
+            "SetModelDressState",
+            SET_MODEL_DRESS_STATE_USAGE,
+        ));
+    }
+
+    // The value selects unsupported 3D model work, so only validation is observable here.
+    Ok(0)
+}
+
+fn set_selected_preview_gear_type(state: &mut LuaState) -> LuaResult<u32> {
+    validate_selected_preview_gear_type(state)?;
+    Ok(0)
+}
+
+fn validate_selected_preview_gear_type(state: &LuaState) -> LuaResult<()> {
+    let argument = stack_val(state, 1);
+    if matches!(argument, Val::Nil) {
+        return Err(bad_argument(
+            1,
+            "SetSelectedPreviewGearType",
+            SET_SELECTED_PREVIEW_GEAR_TYPE_USAGE,
+        ));
+    }
+
+    let number = match argument {
+        Val::Num(number) => Some(number),
+        Val::Str(reference) => state
+            .gc
+            .string_arena
+            .get(reference)
+            .and_then(|string| crate::c_api::helpers::parse_numeric_string(string.data())),
+        _ => None,
+    }
+    .unwrap_or(0.0);
+    let selected_gear = if number.is_finite() {
+        number.trunc().rem_euclid(CHARACTER_CREATE_BYTE_MODULUS) as u8
+    } else {
+        NEW_CHAR_GEAR_START
+    };
+    if !matches!(selected_gear, NEW_CHAR_GEAR_START | NEW_CHAR_GEAR_PREVIEW) {
+        return Err(bad_argument(
+            1,
+            "SetSelectedPreviewGearType",
+            SET_SELECTED_PREVIEW_GEAR_TYPE_USAGE,
+        ));
+    }
+    Ok(())
 }
 
 fn get_character_create_facing(state: &mut LuaState) -> LuaResult<u32> {

@@ -10,6 +10,10 @@ fn character_create_env() -> WowLuaEnv {
         r#"
         assert(rawget(C_CharacterCreation, 'SetViewingAlteredForm') == nil)
         assert(rawget(C_CharacterCreation, 'IsViewingAlteredForm') == nil)
+        assert(rawget(C_CharacterCreation, 'GetCurrentCameraZoom') == nil)
+        assert(rawget(C_CharacterCreation, 'SetCameraZoomLevel') == nil)
+        assert(rawget(C_CharacterCreation, 'SetModelDressState') == nil)
+        assert(rawget(C_CharacterCreation, 'SetSelectedPreviewGearType') == nil)
         "#,
     )
     .expect("altered-form methods are not installed on Game");
