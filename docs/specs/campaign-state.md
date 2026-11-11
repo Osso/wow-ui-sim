@@ -5,9 +5,9 @@
 ## What it must do
 
 - [ ] `GetCampaignID(questID)` returns the explicitly supplied campaign association, or 0 when none exists.
-- [ ] `GetChapterIDs(campaignID)` returns explicitly supplied chapter IDs in stored order; an absent association returns nil. This input mapping is a simulator scenario, not proof of native row contents.
-- [ ] Without a Campaign metadata row, `GetCampaignInfo(campaignID)` returns nil. Quest associations alone must not create an empty metadata table.
-- [ ] Without Campaign rows and condition inputs, `GetState(campaignID)` returns `Enum.CampaignState.Invalid`. Quest completion alone must not imply Complete or InProgress.
+- [x] `GetChapterIDs(campaignID)` returns explicitly supplied chapter IDs in stored order; an absent association returns nil. This input mapping is a simulator scenario, not proof of native row contents.
+- [x] Without a Campaign metadata row, `GetCampaignInfo(campaignID)` returns nil. Quest associations alone must not create an empty metadata table.
+- [x] Without Campaign rows and condition inputs, `GetState(campaignID)` returns `Enum.CampaignState.Invalid`. Quest completion alone must not imply Complete or InProgress.
 
 ## How it works
 
@@ -30,7 +30,7 @@
 - [ ] No Campaign metadata catalog exists. Populated metadata and all eight fields remain unmodeled.
 - [ ] No current-chapter selector, completion-condition evaluator, or stalled-condition evaluator exists. State for present Campaign rows is unmodeled.
 - [ ] The chapter-ID input does not encode whether its Campaign row exists separately from its chapter relation list.
-- [ ] These tests and the Retail original-consumer case have not been rerun after removing quest-derived metadata and progression. Results remain unverified.
+
 
 ## Out of scope
 

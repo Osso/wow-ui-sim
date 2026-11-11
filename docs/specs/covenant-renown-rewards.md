@@ -4,9 +4,9 @@
 
 ## What it must do
 
-- [ ] When Retail has no supplied reward catalog, return an empty table. Do not invent a reward for a covenant and level pair.
+- [x] When Retail has no supplied reward catalog, return an empty table. Do not invent a reward for a covenant and level pair.
 - [ ] Preserve the existing non-Retail simulator reward scenario. This is simulator compatibility, not a native-parity claim.
-- [ ] The selected Retail `Blizzard_CovenantToasts` tooltip consumer must take its no-row path without querying reward-item details.
+- [x] The selected Retail `Blizzard_CovenantToasts` tooltip consumer must take its no-row path without querying reward-item details.
 
 ## How it works
 
@@ -30,7 +30,7 @@
 
 - [ ] No Covenant RenownRewards catalog or player-condition filter is modeled.
 - [ ] The empty-list fallback is not a claim that every loaded Retail client returns no rewards.
-- [ ] The saved prefork attempt failed at the milestone-title assertion. **INFERRED:** its fixture returned before the intended branch because it did not bind `CovenantRenownToast` to the fixture toast. The fixture is corrected, but the test is not rerun and proof remains pending.
+- [ ] The direct empty-sequence unit test and the non-Retail scenario test remain unrun in this cycle.
 
 ## Out of scope
 

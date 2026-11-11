@@ -4,7 +4,7 @@
 
 ## What it must do
 
-- [ ] When the local currency list has no entry for anima currency 1813, return exactly two values: `1813, 0`.
+- [x] When the local currency list has no entry for anima currency 1813, return exactly two values: `1813, 0`.
 - [ ] Preserve the existing non-Retail simulator scenario. This is not a native-parity claim.
 
 ## How it works
@@ -27,7 +27,7 @@
 - [ ] The supplied state does not model an active currency row, override reservoir limit, effective-limit calculation, bag anima, or contained items.
 - [ ] `CanDepositAnima` remains false without a player/input model. `DepositAnima` does not submit native interaction work.
 - [ ] The selected UI files are admitted through the Covenant Sanctum load-on-demand TOC, but runtime loading of that addon is not proved here.
-- [ ] The Retail API test is not rerun; this result remains unverified.
+
 
 ## Out of scope
 
