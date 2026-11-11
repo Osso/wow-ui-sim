@@ -260,6 +260,17 @@ fn parse_default_cvars() -> (HashMap<String, String>, HashMap<String, String>) {
     let (mut defaults, mut original_names) = parse_cvar_yaml(include_str!("cvars.yaml"));
     insert_store_mirror_cvars(&mut defaults, &mut original_names);
     insert_collected_journal_cvar(&mut defaults, &mut original_names);
+    // R47: real registered local CVar, with distinct PTR/Forever declarations.
+    let preset_default = match crate::client_profile::ACTIVE {
+        crate::client_profile::ClientProfile::Ptr => Some("1"),
+        crate::client_profile::ClientProfile::WowForever => Some("0"),
+        _ => None,
+    };
+    if let Some(value) = preset_default {
+        let name = "hasSelectedExperiencePreset";
+        defaults.insert(name.to_lowercase(), value.to_owned());
+        original_names.insert(name.to_lowercase(), name.to_owned());
+    }
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
         // Forever 1.60.1.70707 WM77b native registration.
         defaults.insert("minimaptrackedinfov4".into(), "2162728".into());

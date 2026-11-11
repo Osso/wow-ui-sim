@@ -55,7 +55,13 @@ impl PtrConnectionState {
 }
 
 pub(super) fn get_state(state: &mut LuaState) -> LuaResult<u32> {
-    let input = borrow_state(state)?.glue_login.ptr_connection.clone();
+    let (input, has_selected_preset) = {
+        let sim = borrow_state(state)?;
+        (
+            sim.glue_login.ptr_connection.clone(),
+            crate::c_api::experience_preset::has_selected(&sim.cvars)?,
+        )
+    };
     let super_district = input.super_district_enabled && input.super_district_choice_pending;
     let connection = if input.connection_object_needs_connect || input.pending_connect {
         2
@@ -93,8 +99,10 @@ pub(super) fn get_state(state: &mut LuaState) -> LuaResult<u32> {
             "keepingCharacterListOnRealmJoin",
             Val::Bool(input.keeping_character_list_on_realm_join),
         ),
-        // Verified absent-setting fallback. Setting identity/coercion awaits R47.
-        ("hasSelectedExperiencePreset", Val::Bool(true)),
+        (
+            "hasSelectedExperiencePreset",
+            Val::Bool(has_selected_preset),
+        ),
     ] {
         table_set(state, result, key, value);
     }

@@ -37,14 +37,6 @@ fn login_screen_discovers_glue_addons_not_game_base() {
     assert!(addons.iter().any(|name| name == "Blizzard_GlueParent"));
     assert!(addons.iter().any(|name| name == "Blizzard_GlueXML"));
     assert!(!addons.iter().any(|name| name == "Blizzard_UIParent"));
-    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::WowForever {
-        assert!(!addons.iter().any(|name| name == "Blizzard_CharacterCreate"));
-        assert!(
-            !addons
-                .iter()
-                .any(|name| name == "Blizzard_CharacterCustomize")
-        );
-    }
 }
 
 #[test]
@@ -56,6 +48,12 @@ fn character_select_screen_uses_glue_addon_set() {
 }
 
 character_create_ui_fixture! {
+#[test]
+fn login_screen_includes_character_create() {
+    let addons = addon_names(ScreenKind::Login);
+    assert!(addons.iter().any(|name| name == "Blizzard_CharacterCreate"));
+}
+
 #[test]
 fn character_select_screen_includes_character_create() {
     let addons = addon_names(ScreenKind::CharacterSelect);
@@ -110,6 +108,47 @@ impl TempBlizzardUiDir {
 impl Drop for TempBlizzardUiDir {
     fn drop(&mut self) {
         let _ = std::fs::remove_dir_all(&self.path);
+    }
+}
+
+#[test]
+#[cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
+fn login_screen_loads_eligible_character_addons_with_dependencies() {
+    let ui = TempBlizzardUiDir::new("login-character-addons");
+    ui.add_addon(
+        "Blizzard_CharacterCreate",
+        "## AllowLoad: Glue\n## Dependencies: Blizzard_CharacterCustomize\nCore.lua\n",
+    );
+    ui.add_addon(
+        "Blizzard_CharacterCustomize",
+        "## AllowLoad: Glue\n## LoadOnDemand: 1\nCore.lua\n",
+    );
+    ui.add_addon(
+        "Blizzard_TimerunningCharacterCreate",
+        "## AllowLoad: Glue\nCore.lua\n",
+    );
+    let addons: Vec<String> = discover_blizzard_addons_for_screen(&ui.path, ScreenKind::Login)
+        .into_iter()
+        .map(|(name, _)| name)
+        .collect();
+    let startup: Vec<String> =
+        crate::loader::discover_blizzard_startup_addons_for_screen(&ui.path, ScreenKind::Login)
+            .into_iter()
+            .map(|addon| addon.name)
+            .collect();
+    for addons in [addons, startup] {
+        let position = |name| addons.iter().position(|addon| addon == name).unwrap();
+        assert!(position("Blizzard_CharacterCustomize") < position("Blizzard_CharacterCreate"));
+        assert!(
+            addons
+                .iter()
+                .any(|name| name == "Blizzard_TimerunningCharacterCreate")
+        );
+        assert_eq!(addons.len(), 3);
     }
 }
 

@@ -7,30 +7,47 @@ use crate::lua_api::state_types::BnetGameAccount;
 #[derive(Clone, Debug, Default)]
 pub struct CharacterSlot {
     pub character_id: String,
-    pub record: Option<BnetGameAccount>,
+    pub record: Option<CharacterRecord>,
+}
+
+/// Host character-list record. An absent season represents native construction 0.
+#[derive(Clone, Debug)]
+pub struct CharacterRecord {
+    pub account: BnetGameAccount,
+    pub timerunning_season_id: Option<u32>,
 }
 
 impl From<BnetGameAccount> for CharacterSlot {
     fn from(record: BnetGameAccount) -> Self {
         Self {
             character_id: record.wow_account_guid.clone(),
-            record: Some(record),
+            record: Some(CharacterRecord {
+                account: record,
+                timerunning_season_id: None,
+            }),
         }
     }
 }
 
 impl CharacterSlot {
-    pub fn resolved_record(&self) -> Option<&BnetGameAccount> {
+    pub fn resolved_record(&self) -> Option<&CharacterRecord> {
         self.record.as_ref().filter(|record| {
-            !self.character_id.is_empty() && record.wow_account_guid == self.character_id
+            !self.character_id.is_empty() && record.account.wow_account_guid == self.character_id
         })
     }
 }
 
 /// Preserve holes and indexes. Direct-screen startup retains its explicit
-/// historical fixture; submitted login uses only the supplied host roster.
+/// historical fixture; the modern Login flow uses only the supplied host roster,
+/// including before submission. Other profiles retain their existing fixtures.
 pub(crate) fn slots_for_sim(sim: &SimState) -> Vec<CharacterSlot> {
-    if sim.glue_login.submitted {
+    let host_login = matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::Ptr
+            | crate::client_profile::ClientProfile::WowForever
+    ) && sim.screen_kind == crate::screen::ScreenKind::Login;
+    if sim.glue_login.submitted || host_login {
         return sim.glue_login.characters.clone();
     }
     sim.bnet_friends

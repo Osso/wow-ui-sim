@@ -131,6 +131,10 @@ fn c_login_get_state(state: &mut LuaState) -> LuaResult<u32> {
         }
     };
     if ACTIVE == ClientProfile::WowForever {
+        let has_selected_preset = {
+            let sim = borrow_state(state)?;
+            crate::c_api::experience_preset::has_selected(&sim.cvars)?
+        };
         let result = create_table(state);
         for (key, value) in [
             ("auroraState", Val::Num(f64::from(aurora_state))),
@@ -145,9 +149,10 @@ fn c_login_get_state(state: &mut LuaState) -> LuaResult<u32> {
             ("superDistrictChoicePending", Val::Bool(false)),
             ("keepingCharacterListOnRealmJoin", Val::Bool(false)),
             ("waitingForRuleSets", Val::Bool(false)),
-            // R44-Q17 declaration fallback supersedes the earlier R40 policy.
-            // Setting-backed override awaits R47; no CVar identity is guessed.
-            ("hasSelectedExperiencePreset", Val::Bool(false)),
+            (
+                "hasSelectedExperiencePreset",
+                Val::Bool(has_selected_preset),
+            ),
         ] {
             table_set(state, result, key, value);
         }

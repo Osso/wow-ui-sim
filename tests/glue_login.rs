@@ -349,6 +349,9 @@ fn enter_credentials_and_submit(env: &WowLuaEnv, click_button: bool) {
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn submit_login_through_ui(click_button: bool) {
     let env = load_blizzard_screen(ScreenKind::Login);
+    #[cfg(feature = "client-wowforever")]
+    env.exec("SetCVar('hasSelectedExperiencePreset', '1')")
+        .unwrap();
     // Explicit host fixture: login never borrows the unrelated social roster.
     let fixture = env
         .state()
@@ -676,6 +679,8 @@ fn login_connection_info_controls_character_creation_capacity() {
 fn login_submit_empty_host_roster_reaches_character_create() {
     test_timeout! {
         let env = load_blizzard_screen(ScreenKind::Login);
+        #[cfg(feature = "client-wowforever")]
+        env.exec("SetCVar('hasSelectedExperiencePreset', '1')").unwrap();
         env.state().borrow_mut().glue_login.connection_info =
             wow_ui_sim::c_api::c_login::ConnectionInfo { ready: true, character_limit: 1 };
         enter_credentials_and_submit(&env, false);
@@ -1028,4 +1033,225 @@ fn glue_character_list_resets_selection_and_resolves_only_host_candidate() {
     assert_eq!(sim.glue_login.saved_character_index, Some(2));
     assert_eq!(sim.glue_login.resolved_saved_character_index, Some(1));
     assert!(sim.lua_errors.is_empty());
+}
+
+#[test]
+#[cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
+fn glue_login_host_roster_does_not_borrow_social_accounts_before_submission() {
+    use wow_ui_sim::c_api::c_login::character_roster::CharacterSlot;
+    let env = common::lock_env(|| WowLuaEnv::new().unwrap());
+    let direct_count = env.eval::<usize>("return GetNumCharacters()").unwrap();
+    assert!(
+        direct_count > 0,
+        "direct-screen fixture must be nonempty for this contrast"
+    );
+    let fixture = env
+        .state()
+        .borrow()
+        .bnet_friends
+        .iter()
+        .flat_map(|friend| &friend.game_accounts)
+        .find(|account| account.client_program == "WoW")
+        .unwrap()
+        .clone();
+    let guid = fixture.wow_account_guid.clone();
+    env.set_screen_mode(ScreenKind::Login);
+    env.exec(r#"
+        assert(GetNumCharacters() == 0 and GetCharacterSelection() == 0)
+        preloginSelectionEvents = 0
+        local listener = CreateFrame('Frame')
+        listener:RegisterEvent('UPDATE_SELECTED_CHARACTER')
+        listener:SetScript('OnEvent', function() preloginSelectionEvents = preloginSelectionEvents + 1 end)
+    "#).unwrap();
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    env.exec(
+        "SelectCharacter(1); assert(GetCharacterSelection() == 0 and preloginSelectionEvents == 0)",
+    )
+    .unwrap();
+    let host_count = direct_count + 2;
+    let mut slots = vec![CharacterSlot::default(); host_count];
+    slots[host_count - 1] = fixture.into();
+    env.state().borrow_mut().glue_login.characters = slots;
+    assert_eq!(
+        env.eval::<usize>("return GetNumCharacters()").unwrap(),
+        host_count
+    );
+    assert_eq!(
+        env.eval::<String>(&format!("return GetCharacterGUID({host_count})"))
+            .unwrap(),
+        guid
+    );
+    for screen in [
+        ScreenKind::CharacterSelect,
+        ScreenKind::CharacterCreate,
+        ScreenKind::Game,
+    ] {
+        env.set_screen_mode(screen);
+        assert_eq!(
+            env.eval::<usize>("return GetNumCharacters()").unwrap(),
+            direct_count
+        );
+    }
+    env.set_screen_mode(ScreenKind::Login);
+    assert_eq!(
+        env.eval::<usize>("return GetNumCharacters()").unwrap(),
+        host_count
+    );
+    env.state().borrow_mut().glue_login.characters.clear();
+    assert_eq!(env.eval::<usize>("return GetNumCharacters()").unwrap(), 0);
+    assert!(env.state().borrow().lua_errors.is_empty());
+}
+
+#[test]
+#[cfg(any(feature = "client-ptr", feature = "client-wowforever"))]
+fn glue_experience_preset_reads_real_cvar_numeric_prefix() {
+    let env = common::lock_env(|| WowLuaEnv::new().unwrap());
+    env.set_screen_mode(ScreenKind::Login);
+    let default =
+        if wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::Ptr {
+            "1"
+        } else {
+            "0"
+        };
+    assert_eq!(
+        env.eval::<String>("return GetCVarDefault('hasSelectedExperiencePreset')")
+            .unwrap(),
+        default
+    );
+    assert_eq!(
+        env.eval::<bool>("return C_Login.GetState().hasSelectedExperiencePreset")
+            .unwrap(),
+        default == "1"
+    );
+    env.exec(
+        r#"
+        SetCVar('hasSelectedExperiencePreset', '0')
+        presetLoginEvents = 0
+        local listener = CreateFrame('Frame')
+        listener:RegisterEvent('CVAR_UPDATE')
+        listener:RegisterEvent('LOGIN_STATE_CHANGED')
+        listener:SetScript('OnEvent', function(_, event, ...)
+            if event == 'LOGIN_STATE_CHANGED' then
+                presetLoginEvents = presetLoginEvents + 1
+            else
+                local name, value = ...
+                if name == 'hasSelectedExperiencePreset' then
+                    assert(select('#', ...) == 2)
+                    presetObservedValue = value
+                    presetObservedState = C_Login.GetState().hasSelectedExperiencePreset
+                end
+            end
+        end)
+    "#,
+    )
+    .unwrap();
+    for (value, expected) in [
+        ("1", true),
+        ("0", false),
+        ("true", false),
+        ("false", false),
+        ("junk", false),
+        ("1junk", true),
+        ("0x10", true),
+        ("0x0junk", false),
+    ] {
+        env.exec(&format!(
+            "SetCVar('hasSelectedExperiencePreset', {value:?})"
+        ))
+        .unwrap();
+        assert_eq!(
+            env.eval::<String>("return GetCVar('hasSelectedExperiencePreset')")
+                .unwrap(),
+            value
+        );
+        assert_eq!(
+            env.eval::<bool>("return C_Login.GetState().hasSelectedExperiencePreset")
+                .unwrap(),
+            expected
+        );
+        assert_eq!(
+            env.eval::<String>("return presetObservedValue").unwrap(),
+            value
+        );
+        assert_eq!(
+            env.eval::<bool>("return presetObservedState").unwrap(),
+            expected
+        );
+    }
+    assert_eq!(
+        env.eval::<u32>("return presetLoginEvents").unwrap(),
+        0,
+        "generic CVar writes must not synthesize a login-state event"
+    );
+    assert!(env.state().borrow().lua_errors.is_empty());
+}
+
+#[test]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn glue_character_timerunning_season_uses_requested_record_without_active_fallback() {
+    use wow_ui_sim::c_api::c_login::character_roster::CharacterSlot;
+    let env = common::lock_env(|| WowLuaEnv::new().unwrap());
+    assert!(
+        env.eval::<bool>("return rawget(_G, 'GetCharacterTimerunningSeasonID') == nil")
+            .unwrap()
+    );
+    env.set_screen_mode(ScreenKind::Login);
+    let fixture = env
+        .state()
+        .borrow()
+        .bnet_friends
+        .iter()
+        .flat_map(|friend| &friend.game_accounts)
+        .find(|account| account.client_program == "WoW")
+        .unwrap()
+        .clone();
+    let mut slots = Vec::new();
+    for (guid, season) in [
+        ("host-one", Some(7)),
+        ("host-two", Some(12)),
+        ("host-zero", Some(0)),
+        ("host-default", None),
+    ] {
+        let mut account = fixture.clone();
+        account.wow_account_guid = guid.into();
+        let mut slot = CharacterSlot::from(account);
+        slot.record.as_mut().unwrap().timerunning_season_id = season;
+        slots.push(slot);
+    }
+    slots.push(CharacterSlot {
+        character_id: "host-unresolved".into(),
+        record: None,
+    });
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.glue_login.characters = slots;
+        sim.timerunning_season_id = Some(99);
+    }
+    env.exec(r#"
+        SelectCharacter(1)
+        assert(GetCharacterTimerunningSeasonID('host-one') == 7)
+        assert(GetCharacterTimerunningSeasonID('host-two', 'ignored') == 12)
+        assert(select('#', GetCharacterTimerunningSeasonID('host-two')) == 1)
+        for _, guid in ipairs({'host-zero', 'host-default', 'host-unresolved', 'unknown'}) do
+            assert(GetCharacterTimerunningSeasonID(guid) == nil)
+            assert(select('#', GetCharacterTimerunningSeasonID(guid)) == 1)
+        end
+        assert(GetCharacterTimerunningSeasonID(1) == nil) -- GUID conversion, not slot index.
+        assert(GetActiveTimerunningSeasonID() == 99)
+        local function bad(...)
+            local ok, message = pcall(GetCharacterTimerunningSeasonID, ...)
+            assert(not ok and message:find('Usage: local timerunningSeasonID = GetCharacterTimerunningSeasonID(guid)', 1, true))
+        end
+        bad(); bad(nil); bad(false); bad({})
+    "#).unwrap();
+    env.set_screen_mode(ScreenKind::Game);
+    assert!(
+        env.eval::<bool>("return rawget(_G, 'GetCharacterTimerunningSeasonID') == nil")
+            .unwrap()
+    );
+    assert!(env.state().borrow().lua_errors.is_empty());
 }

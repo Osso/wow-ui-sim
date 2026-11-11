@@ -201,7 +201,7 @@ fn get_character_race(state: &mut LuaState) -> LuaResult<u32> {
     let character_index = i32::from_stack(state, 1)?;
     let Some(account) = seeded_character_slots(state)
         .get(usize::try_from(character_index.saturating_sub(1)).unwrap_or(usize::MAX))
-        .and_then(crate::c_api::c_login::character_roster::CharacterSlot::resolved_record)
+        .and_then(|slot| slot.resolved_record().map(|record| &record.account))
         .cloned()
     else {
         state.push(Val::Nil);
@@ -239,7 +239,7 @@ fn get_basic_character_info(state: &mut LuaState) -> LuaResult<u32> {
     };
     let Some(account) = seeded_character_slots(state)
         .into_iter()
-        .filter_map(|slot| slot.resolved_record().cloned())
+        .filter_map(|slot| slot.resolved_record().map(|record| record.account.clone()))
         .find(|ga| ga.wow_account_guid == guid)
     else {
         // WM100: failed Forever lookup has no publisher (zero Lua results).

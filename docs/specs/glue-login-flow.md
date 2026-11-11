@@ -219,3 +219,62 @@ continues to read its existing lastCharacterIndex and call SelectCharacter.
 Tests cover fractions 2.9/0.5, plain integer strings, bad arguments, invalid-slot
 fallback, no-op cases, state-before-event, full-list reset/count, and the separate
 candidate search. They do not assert unsupported native conversion boundaries.
+
+ANSWER **56** (R46, Retail70688 / Forever70707, independently verified) resolves
+the loader gap. Native Glue startup submits every eligible non-LoD addon across
+three passes, including an early LoadFirst pass. CharacterCreate therefore
+belongs to the initial Glue load set. Connection-independent loading and keeping
+the addon set during login-to-charselect are INFERRED. Required dependencies
+load first, including LoD dependencies; requesting an already loaded addon does
+not reload it. Ordering against GlueParent OnLoad or the first login-state event
+is UNKNOWN. The simulator removes the three CharacterCreate/Customize/
+TimerunningCharacterCreate Login exclusions and uses its existing TOC and
+dependency ordering. No separate preload, teardown, timing fixture, or vendor
+patch is added. Synthetic loader tests assert eligibility and dependency order;
+real cache tests include CharacterCreate on Login. Any newly exposed missing
+native API remains a contract question rather than a reason to restore exclusions.
+
+The R45 selection event exposes missing `GetCharacterTimerunningSeasonID` at
+Retail CharacterSelect.lua:483/455 and Forever:487/460. QUESTION **57** requests
+its contract. It is not replaced by the unrelated active-player season getter.
+
+For Retail/PTR/Forever, pre-submission Login also uses the empty-by-default host
+roster, not social-account fixtures. Explicit CharacterSelect/Create/Game boots
+retain the historical fixture path. This is the simulator data-input boundary,
+not a claim about native roster-arrival timing. A regression supplies social
+accounts while asserting an empty Login roster, preserved host holes/indexes,
+and the separate direct-screen fixtures.
+
+ANSWER **59** (R47, PTR70668 / Forever70707, independently verified) identifies
+`hasSelectedExperiencePreset` as a real registered local CVar, not a host-only
+flag. Its PTR/Forever defaults are respectively `1`/`0`; missing records retain
+the corresponding declaration fallback. GetState reads the integer-prefix
+projection: nonzero is true, words such as `true`/`false`/`junk` are false,
+`1junk` is true, and hexadecimal prefixes are accepted. The model reads the real
+CVar store without changing generic GetCVarBool semantics. Overflow and locale
+behavior remain UNKNOWN. Generic SetCVar does not dispatch LOGIN_STATE_CHANGED;
+its existing value-update/CVAR_UPDATE path is retained. The real UI fixtures set
+this CVar to `1` when selecting the ordinary Forever character-screen scenario.
+
+The native pre-login preset writer's documented event order is value/cache
+update, CVAR_UPDATE(name, "1") if changed, then unconditional no-payload
+LOGIN_STATE_CHANGED, including unchanged or failed writes. QUESTION **60** asks
+for the writer's required preset-argument contract and other backing effects,
+plus remaining coercion details; no setter argument semantics or incoming native
+callback source is invented. That writer remains pending.
+
+Per ANSWER61, signed, whitespace-prefixed and leading-zero forms remain
+unmodelled pending R50. They currently produce an explicit simulator-coverage
+diagnostic rather than a guessed native value/error contract. Tests use only
+R47's verified ordinary decimal/hex cases. This temporary coverage limit is not
+native validation behavior.
+
+ANSWER **64** (R49, Retail70688 / Forever70707, independently verified) resolves
+GetCharacterTimerunningSeasonID. It accepts one required GUID string or number
+(string conversion, not slot indexing), ignores extra arguments, and returns
+exactly one nonzero season integer or nil for unknown/unresolved/zero-season
+records. Bad/missing/nil/boolean/table arguments use the supplied usage error.
+CharacterRecord now owns an optional season, defaulting to native construction
+zero. The getter uses requested-GUID record resolution and never the selected
+character or active season. Glue-only exposure is INFERRED and profile-scoped.
+No extra events, GUID grammar, secret handling or other writers are invented.

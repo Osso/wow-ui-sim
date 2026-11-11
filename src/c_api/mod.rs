@@ -4,6 +4,7 @@
 //! unsupported compatibility gaps stay isolated under `permanent_shims`.
 
 mod c_account_info;
+pub(crate) mod experience_preset;
 pub mod c_guild_info;
 pub mod c_heirloom;
 pub mod c_recruit_a_friend;
