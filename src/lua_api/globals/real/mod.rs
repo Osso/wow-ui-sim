@@ -26,6 +26,7 @@ pub mod frame_level_helpers;
 pub(crate) mod game_clock;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) mod glue_background;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) mod glue_connection;
 #[cfg(any(feature = "client-ptr", feature = "client-wowforever"))]
 pub mod glue_feature_status;

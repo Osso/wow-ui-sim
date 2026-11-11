@@ -30,7 +30,7 @@ fn numeric_argument(state: &LuaState, value: Val) -> Option<f64> {
             .gc
             .string_arena
             .get(reference)
-            .and_then(|text| crate::c_api::helpers::parse_numeric_string(text.data())),
+            .and_then(|text| crate::c_api::parse_numeric_string(text.data())),
         _ => None,
     }
 }
