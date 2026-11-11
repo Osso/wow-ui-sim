@@ -28,7 +28,7 @@ pub(crate) mod c_tooltip_info_pvp_brawl;
 pub(crate) mod c_tooltip_info_round7;
 pub(crate) mod c_tooltip_info_totem;
 pub(crate) mod c_tooltip_info_weekly;
-pub(crate) mod chr_select_screen_data;
+pub mod chr_select_screen_data;
 pub(crate) mod class_catalog;
 #[cfg(any(feature = "client-era", feature = "client-anniversary"))]
 pub(crate) mod classic_startup_data;

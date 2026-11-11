@@ -1,3 +1,7 @@
+## [2026-11-11] system | Character select screen data
+
+Added [profile-scoped class/race select-screen data](systems/chr-select-screen-data.md), the feature contract, pinned WoWDBDefs schemas, and a local-DB2 generator. Source build provenance distinguishes Retail 12.1.5.70783 from pin 70575 and Forever 1.60.1.70888 from the 70707 pin; the latter values remain UNKNOWN. `lt-a667` owns the native API and roster consumer.
+
 ## [2026-11-10] fix | Mists frame-position residuals
 
 Updated the [frame-position investigation](investigations/frame-position-baseline-drift.md#mists-frame-residuals--2026-11-10) and [profile contract](../specs/frame-position-profile-baselines.md) with pinned-source Mists bag, aura, action-bar, status-bar and WatchFrame-managed right-container geometry. The simulator no longer synthesizes ObjectiveTrackerFrame on Mists, where the selected Blizzard UI has no producer; the test asserts absence. VERIFIED at `3c36dab15`: Mists `frame_positions` passes 25/28; `micro_menu`, `micro_menu_container` and `casting_bar` remain open.

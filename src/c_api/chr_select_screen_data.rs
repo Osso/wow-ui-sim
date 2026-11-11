@@ -1,3 +1,35 @@
+//! Profile-selected class and race select-screen FileDataIDs.
+
+use crate::client_profile::{ACTIVE, ClientProfile};
+
+mod retail {
+    include!("../../data/chr-select-screen/retail-12.1.5.70783/tables.rs");
+}
+
+mod forever {
+    include!("../../data/chr-select-screen/forever-1.60.1.70888/tables.rs");
+}
+
+pub fn class_select_screen_fdid(class_id: i32) -> Option<i64> {
+    let rows = match ACTIVE {
+        ClientProfile::Retail => retail::CLASS_ROWS,
+        ClientProfile::WowForever => forever::CLASS_ROWS,
+        _ => return None,
+    };
+    let index = rows.binary_search_by_key(&class_id, |(id, _)| *id).ok()?;
+    Some(rows[index].1)
+}
+
+pub fn race_select_screen_fdids(race_id: i32) -> Option<(i64, i64)> {
+    let rows = match ACTIVE {
+        ClientProfile::Retail => retail::RACE_ROWS,
+        ClientProfile::WowForever => forever::RACE_ROWS,
+        _ => return None,
+    };
+    let index = rows.binary_search_by_key(&race_id, |(id, _, _)| *id).ok()?;
+    Some((rows[index].1, rows[index].2))
+}
+
 #[cfg(test)]
 mod tests {
     use super::{class_select_screen_fdid, race_select_screen_fdids};
