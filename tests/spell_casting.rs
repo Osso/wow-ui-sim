@@ -860,15 +860,27 @@ fn forever_spell_cast_secrecy_uses_supplied_unit_and_control_guids_in_casting_ba
         .expect("select resolved non-player target");
     env.exec(
         r#"
-        assert(C_Secrets.ShouldUnitSpellCastingBeSecret("player") == false)
-        assert(C_Secrets.ShouldUnitSpellCastingBeSecret("target") == true)
-        assert(C_Secrets.ShouldUnitSpellCastingBeSecret("pet") == true)
-        assert(C_Secrets.ShouldUnitSpellCastingBeSecret(123) == true)
-        assert(C_Secrets.ShouldUnitSpellCastingBeSecret("") == true)
-        assert(not pcall(C_Secrets.ShouldUnitSpellCastingBeSecret))
-        assert(not pcall(C_Secrets.ShouldUnitSpellCastingBeSecret, nil))
-        assert(not pcall(C_Secrets.ShouldUnitSpellCastingBeSecret, false))
-        assert(not pcall(C_Secrets.ShouldUnitSpellCastingBeSecret, {}))
+        local function expect_secret(unit, expected, label)
+            local ok, actual = pcall(function()
+                return C_Secrets.ShouldUnitSpellCastingBeSecret(unit)
+            end)
+            assert(ok, label .. " query failed: " .. tostring(actual))
+            assert(actual == expected, label .. " secrecy mismatch: " .. tostring(actual))
+        end
+        local function rejects_argument(callback)
+            local ok = pcall(callback)
+            return not ok
+        end
+
+        expect_secret("player", false, "player")
+        expect_secret("target", true, "target")
+        expect_secret("pet", true, "unresolved pet")
+        expect_secret(123, true, "numeric token")
+        expect_secret("", true, "empty token")
+        assert(rejects_argument(function() C_Secrets.ShouldUnitSpellCastingBeSecret() end), "missing unit should fail")
+        assert(rejects_argument(function() C_Secrets.ShouldUnitSpellCastingBeSecret(nil) end), "nil unit should fail")
+        assert(rejects_argument(function() C_Secrets.ShouldUnitSpellCastingBeSecret(false) end), "boolean unit should fail")
+        assert(rejects_argument(function() C_Secrets.ShouldUnitSpellCastingBeSecret({}) end), "table unit should fail")
         assert(UnitGUID("pet") == nil)
         "#,
     )
