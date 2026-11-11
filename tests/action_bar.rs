@@ -628,7 +628,16 @@ fn test_bag_bar_layout_locked() {
             local backpackRect, backpackErr = rect(backpack, "backpack")
             if not backpackRect then return backpackErr end
             local toggleRect, toggleErr = rect(toggle, "toggle")
-            if not toggleRect then return toggleErr end
+            if not toggleRect then
+                local width, height = toggle:GetSize()
+                local parent = toggle:GetParent()
+                local parentName = parent and parent:GetName() or "nil"
+                return toggleErr .. ":barLayout=" .. type(bar.Layout)
+                    .. ":size=" .. tostring(width) .. "x" .. tostring(height)
+                    .. ":initial=" .. tostring(bar.bagBarExpandToggleInitialWidth)
+                    .. "x" .. tostring(bar.bagBarExpandToggleInitialHeight)
+                    .. ":parent=" .. parentName .. ":points=" .. points_debug(toggle)
+            end
             local bag0Rect, bag0Err = rect(bag0, "bag0")
             if not bag0Rect then return bag0Err end
             local bag1Rect, bag1Err = rect(bag1, "bag1")
