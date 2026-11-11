@@ -9,7 +9,11 @@ The runtime Retail pin is **12.1.5.70575**: build-specific native facts for that
 pin remain **UNKNOWN**. Tests of its cached Lua are compatibility observations,
 not native conformance proof. New `C_Login.Login` publication is limited to
 Retail and Forever. Glue-only native registration is **INFERRED**, not verified.
-Existing namespace publication in other profiles is unchanged.
+Existing namespace publication in other profiles is unchanged. Native Glue-only
+scope is not enforced by the current simulator registration of Login,
+GetLogonQueueInfo or CanCreateCharacter: those remain exposed in Game. This is
+an exposure limitation, not a native scope claim. PTR evidence below is 70668;
+its committed runtime pin is 70493, another build mismatch with unknown specifics.
 
 ## Native contract
 
@@ -54,7 +58,7 @@ no native charcreate event.
   direct-screen boot compatibility stays unchanged.
 - `realm_list_available` is the host's realm-list availability input, false by
   default. Discovery and populated realm record schemas are not fabricated.
-- Forever's nothing-pending defaults are `hasSelectedExperiencePreset=true`,
+- Forever's current nothing-pending defaults are `hasSelectedExperiencePreset=false`,
   `superDistrictChoicePending=false`, `waitingForRuleSets=false`, and
   `keepingCharacterListOnRealmJoin=false`. Existing kiosk policy is unchanged.
 - A new explicit screen boot cancels pending login progression, preserving host
@@ -125,23 +129,19 @@ at Retail GlueParent.lua:220 / Forever:254. Updated tests assert nil for default
 and empty inputs, preserve explicit nonempty names, and require the original
 GlueParent fallback in the real login-submission tests.
 
-The R42 Forever submission run also reaches absent `IsNameReservationOnly` at
-`Blizzard_GlueXML/Mainline/CharacterSelect.lua:1003`. Its existing approved false
-default is PTR-only. A separate tracker question requests the Forever contract
-or confirmation that coordinator cleanup already owns it; no return is guessed.
+The historical R42 Forever submission run reached absent `IsNameReservationOnly` at
+`Blizzard_GlueXML/Mainline/CharacterSelect.lua:1003`. The R44 answer and implementation below resolve that gap.
 
-After R43, both Retail submission paths reach visible charselect and hidden
-login through the original GlueParent fallback. Their strict no-error assertion
-then exposes missing `SelectCharacter` at Retail CharacterSelect.lua:860
-(Forever:875). QUESTION43 requests that native setter and its relationship to
-`GetCharacterSelection`; it is not replaced by a guessed selection shortcut.
+The historical R43 submission tests reached visible charselect and hidden login,
+then exposed missing SelectCharacter at Retail CharacterSelect.lua:860
+(Forever:875). R45 below resolves QUESTION43 and its selection relationship.
 An additional real-input test covers the empty host roster's charcreate path.
 
 ANSWER **46** identifies the initial Login addon exclusion as simulator policy,
 not the native load set (`Blizzard_CharacterCreate` allows Glue and is not LoD).
 An experimental separate cached preload was reverted in `8ce6bd300` as directed.
-Native initial-load timing and ordering await R46. The empty-roster charcreate
-test remains RED on Retail; no separate preload or startup replay is retained.
+R46 below resolves the eligible startup load set. The Retail empty-roster
+charcreate regression now passes; no separate preload or startup replay is retained.
 
 ANSWER **47** (R44-Q18, PTR70668 / Forever70707) resolves name reservation.
 `IsNameReservationOnly` is a Glue global on PTR and Forever, absent on Retail70688.
@@ -160,10 +160,8 @@ The old PTR constant-false workaround is removed, not layered over the model.
 
 ANSWER **48** additionally specifies PTR GetState's nine-field table and native
 hasSelectedExperiencePreset declaration defaults: true on PTR, false on Forever,
-overridden by a persisted CVar. QUESTION **50** requests that CVar's exact name
-and read/coercion rule, plus remaining PTR flag defaults/backing writers. The
-previous R40 Forever true value is explicitly simulator policy, not a native
-default; this distinction remains until the verified replacement is available.
+overridden by a persisted CVar. R47/R50 below resolve the name and coercion,
+replacing the initial R40 Forever true simulator policy.
 
 ANSWER **51** supersedes the R40 Forever preset policy: the absent-setting
 fallback is now false (PTR remains true), with no fabricated setting override
@@ -234,9 +232,9 @@ patch is added. Synthetic loader tests assert eligibility and dependency order;
 real cache tests include CharacterCreate on Login. Any newly exposed missing
 native API remains a contract question rather than a reason to restore exclusions.
 
-The R45 selection event exposes missing `GetCharacterTimerunningSeasonID` at
-Retail CharacterSelect.lua:483/455 and Forever:487/460. QUESTION **57** requests
-its contract. It is not replaced by the unrelated active-player season getter.
+The R45 selection event exposed missing GetCharacterTimerunningSeasonID at
+Retail CharacterSelect.lua:483/455 and Forever:487/460. R49 below resolves
+QUESTION57 without using the unrelated active-player season getter.
 
 For Retail/PTR/Forever, pre-submission Login also uses the empty-by-default host
 roster, not social-account fixtures. Explicit CharacterSelect/Create/Game boots
@@ -256,18 +254,9 @@ behavior remain UNKNOWN. Generic SetCVar does not dispatch LOGIN_STATE_CHANGED;
 its existing value-update/CVAR_UPDATE path is retained. The real UI fixtures set
 this CVar to `1` when selecting the ordinary Forever character-screen scenario.
 
-The native pre-login preset writer's documented event order is value/cache
-update, CVAR_UPDATE(name, "1") if changed, then unconditional no-payload
-LOGIN_STATE_CHANGED, including unchanged or failed writes. QUESTION **60** asks
-for the writer's required preset-argument contract and other backing effects,
-plus remaining coercion details; no setter argument semantics or incoming native
-callback source is invented. That writer remains pending.
-
-Per ANSWER61, signed, whitespace-prefixed and leading-zero forms remain
-unmodelled pending R50. They currently produce an explicit simulator-coverage
-diagnostic rather than a guessed native value/error contract. Tests use only
-R47's verified ordinary decimal/hex cases. This temporary coverage limit is not
-native validation behavior.
+R47 identified the pre-login writer's changed CVAR_UPDATE followed by
+unconditional LOGIN_STATE_CHANGED. R50 below resolves its argument contract,
+backing effects, and the integer-prefix forms previously left unmodelled.
 
 ANSWER **64** (R49, Retail70688 / Forever70707, independently verified) resolves
 GetCharacterTimerunningSeasonID. It accepts one required GUID string or number
@@ -297,8 +286,8 @@ outside verified coverage. Generic GetCVarBool behavior is not broadened.
 R50 follow-up (comment 71): fractional int32 boundary range-check timing,
 low-byte rejection's exact core error text, and table/function argument handling
 are UNKNOWN. No conformance assertions cover those cases; ordinary shared
-conversion/error behavior is not promoted to native evidence. R52 is pending
-for GetSelectBackgroundModel and SetCharSelectBackground, reached by the original
+conversion/error behavior is not promoted to native evidence. R52 below resolves
+GetSelectBackgroundModel and SetCharSelectBackground, reached by the original
 Retail CharacterSelectUI.lua:374 consumer after the R49 season getter.
 
 The Login-only headless refresh guard is approved in comment 73. Direct
