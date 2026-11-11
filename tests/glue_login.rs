@@ -159,6 +159,11 @@ fn login_boot_hides_non_login_frontend_frames() {
             .expect("AccountLogin visibility should be queryable");
         assert!(account_login_visible, "login screen should show AccountLogin");
 
+        // R62: Retail AccountLogin chat visibility is UNKNOWN. Its unconditional
+        // shared definition must not be replaced or forced hidden. Other profiles
+        // retain their independently supported visibility assertion.
+        #[cfg(not(feature = "client-retail"))]
+        {
         let chat_frame_visible: bool = env
             .eval("return ChatFrame1 ~= nil and ChatFrame1:IsShown()")
             .expect("ChatFrame1 visibility should be queryable");
@@ -166,6 +171,7 @@ fn login_boot_hides_non_login_frontend_frames() {
             !chat_frame_visible,
             "plain login screen should not show the front-end chat frame"
         );
+        }
 
         let chat_dock_visible: bool = env
             .eval("return GeneralDockManager ~= nil and GeneralDockManager:IsShown()")
@@ -1392,4 +1398,39 @@ fn glue_login_settling_does_not_force_direct_character_select_refresh() {
         .unwrap();
     assert_eq!(observed, (0, 0, 0));
     assert!(env.state().borrow().lua_errors.is_empty());
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn glue_retail_chat_source_preserves_r62_verified_asset_facts() {
+    let ui = blizzard_ui_dir();
+    let xml =
+        std::fs::read_to_string(ui.join("Blizzard_ChatFrameBase/Mainline/FloatingChatFrame.xml"))
+            .unwrap();
+    let declaration = xml
+        .lines()
+        .find(|line| line.contains("name=\"ChatFrame1\""))
+        .unwrap();
+    assert!(declaration.contains("hidden=\"true\""));
+    let chat =
+        std::fs::read_to_string(ui.join("Blizzard_ChatFrameBase/Mainline/FloatingChatFrame.lua"))
+            .unwrap();
+    assert!(chat.contains("frame:SetShown(AllowChatFramesToShow(frame))"));
+    let parent =
+        std::fs::read_to_string(ui.join("Blizzard_GlueParent/Mainline/GlueParent.lua")).unwrap();
+    let login = parent
+        .lines()
+        .find(|line| line.contains("[\"login\"]"))
+        .unwrap();
+    assert!(login.contains("AccountLogin") && !login.contains("allowChat"));
+    let policy = parent
+        .split("function AllowChatFramesToShow(chatFrame)")
+        .nth(1)
+        .unwrap()
+        .split("\nend")
+        .next()
+        .unwrap();
+    assert!(policy.contains("if chatFrame and info and info.allowChat then"));
+    assert!(policy.contains("return false;"));
+    // Static source facts do not establish the live winner or visible pixels.
 }

@@ -314,7 +314,7 @@ FloatingChatFrame.lua:40, replacing GlueParent.lua:909's screen-aware policy.
 Comment 99 retracts the earlier stale-pin diagnosis: the installed 70783 CASC
 root also lacks FloatingChatFrameGame.lua, so a pin refresh will not fix this.
 The native ordering/filtering/visibility explanation is UNKNOWN pending R62.
-The failing assertion stays intact; no forced Hide, override, or replay is added.
+R62 below narrows the unsupported Retail visibility assertion without changing runtime behavior.
 
 
 ### R52 background lookup and supplied row boundary
@@ -425,3 +425,22 @@ error lines. No row download or inferred nil-return arity assertion is added.
 
 Cached-integer overflow is an explicit unsupported simulator input diagnostic,
 not silently treated as no mode and not claimed as a native error contract.
+
+### R62 Retail chat evidence boundary
+
+Comment 104 permits narrowing only the Retail ChatFrame1 post-startup visibility
+assertion: live AccountLogin chat visibility remains UNKNOWN. The simulator is
+not changed to hide or show chat, and neither the original Lua nor its winning
+function is overridden. PTR/Forever visibility checks, AccountLogin and
+customization checks, the chat-dock assertion, strict submission error checks,
+and original input/transition tests remain intact. A Retail source regression
+retains VERIFIED XML initial-hidden declaration, GlueParent's own login-false
+policy, and the chat Lua's policy consultation. These source facts are not a
+claim about the final live native visibility state.
+
+R62 verifies phase1 LoadFirst/UseSecureEnvironment completes before native
+non-insecure phase2 and remaining phase3; optional then required dependencies
+and LoadWith targets precede an addon's own files. Files use TOC line order,
+and unannotated lines are accepted at Glue. Shared-loader deviations are
+reported to the coordinator, not repaired in this lane. Case-insensitive name
+order is only inferred and equal-name tie order unknown; neither is asserted.
