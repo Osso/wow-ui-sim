@@ -6,7 +6,7 @@ This contract defines profile-selected class and race FileDataID lookups in `src
 
 - [x] Return the selected class FileDataID for a present class row. Preserve a present zero as `Some(0)` and return `None` for an absent row.
 - [x] Return the race select and low-resolution FileDataIDs for a present race row. Preserve zero fields and return `None` for an absent row.
-- [ ] Return `None` when the active profile has no select-screen data; the PTR case is pending a targeted profile test.
+- [x] Return `None` when the active profile has no select-screen data. A PTR-profile test asserts both lookups return `None`.
 
 ## How it works
 
@@ -30,7 +30,7 @@ This contract defines profile-selected class and race FileDataID lookups in `src
 
 - [ ] UNKNOWN: Retail 12.1.5.70575 rows are not available. The exported Retail data is from installed build 12.1.5.70783 and is labeled with that build.
 - [ ] UNKNOWN: Forever 1.60.1.70707 select-screen rows are not available. The exported Forever data is from installed build 1.60.1.70888 and is labeled with that build.
-- [ ] UNKNOWN: PTR select-screen rows are not available; this data set includes no PTR rows.
+- [ ] UNKNOWN: PTR select-screen rows are not available; this data set includes no PTR rows. The PTR profile's no-data return is tested.
 
 ## Out of scope
 

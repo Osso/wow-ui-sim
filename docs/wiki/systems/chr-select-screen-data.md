@@ -18,4 +18,4 @@
 
 - [[client-profiles]] — profile-specific data selection.
 
-**UNVERIFIED:** The PTR no-data branch has not been tested on a PTR build.
+**VERIFIED:** The PTR profile's no-data test passes for both accessors. **UNKNOWN:** PTR DB2 rows are not included.
