@@ -1,7 +1,9 @@
-//! Retail PartyUtil consumes native role masks and class-token counts.
-#![cfg(any(feature = "client-retail", feature = "client-ptr"))]
+//! PartyUtil consumes Retail native masks and the other profiles' simulator projection.
+#![cfg(not(feature = "client-wrath"))]
 
+use wow_ui_sim::loader::discover_blizzard_addon_closure_for_screen;
 use wow_ui_sim::lua_api::WowLuaEnv;
+#[cfg(feature = "client-retail")]
 use wow_ui_sim::lua_api::state::{GroupMemberCountsMember, GroupMemberCountsState};
 use wow_ui_sim::screen::ScreenKind;
 
@@ -17,12 +19,22 @@ fn load_party_util(env: &WowLuaEnv) {
             .iter()
             .any(|(name, _)| name == "Blizzard_FrameXMLUtil")
     );
+    let toc_path = wow_ui_sim::loader::find_toc_file(&ui.join("Blizzard_FrameXMLUtil"))
+        .expect("FrameXMLUtil has a selected profile TOC");
+    let toc = wow_ui_sim::toc::TocFile::from_file(&toc_path).expect("FrameXMLUtil TOC parses");
+    assert!(toc.allows_screen(ScreenKind::Game));
+    assert!(
+        toc.files
+            .iter()
+            .any(|file| file.file_name().is_some_and(|name| name == "PartyUtil.lua"))
+    );
     let source_path = ui.join("Blizzard_FrameXMLUtil/PartyUtil.lua");
     let source = std::fs::read_to_string(&source_path).expect("selected PartyUtil source");
     env.exec_named(&source, &format!("@{}", source_path.display()))
         .expect("load original PartyUtil");
 }
 
+#[cfg(feature = "client-retail")]
 fn member(
     flags: u32,
     role_mask_a: u32,
@@ -41,7 +53,7 @@ fn member(
 
 #[test]
 #[cfg(feature = "client-retail")]
-fn group_member_counts_retail_uses_native_roster_fields() {
+fn group_role_counts_retail_uses_native_roster_fields() {
     let env = WowLuaEnv::new().expect("environment");
     load_party_util(&env);
 
@@ -102,8 +114,8 @@ fn group_member_counts_retail_uses_native_roster_fields() {
 }
 
 #[test]
-#[cfg(feature = "client-ptr")]
-fn group_role_counts_ptr_preserves_existing_party_role_projection() {
+#[cfg(not(feature = "client-retail"))]
+fn group_role_counts_nonretail_keeps_simulator_party_projection() {
     let env = WowLuaEnv::new().expect("environment");
     load_party_util(&env);
     {
@@ -124,8 +136,5 @@ fn group_role_counts_ptr_preserves_existing_party_role_projection() {
         assert(shown.Warrior == 2 and shown.Paladin == 1 and shown.Hunter == 0)
         "#,
     )
-    .expect("PTR keeps its existing simulator group projection");
+    .expect("non-Retail keeps its existing simulator group projection");
 }
-
-#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
-use wow_ui_sim::loader::discover_blizzard_addon_closure_for_screen;
