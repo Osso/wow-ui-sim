@@ -1,4 +1,5 @@
 //! R52 field cascade over explicit host rows (tracker policy 83).
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 use super::character_roster::CharacterRecord;
 use std::collections::HashMap;
 
@@ -16,6 +17,7 @@ pub struct BackgroundRows {
     pub races: HashMap<u32, RaceBackgroundRow>,
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 impl BackgroundRows {
     pub(crate) fn resolve(&self, record: Option<&CharacterRecord>) -> Option<u32> {
         let race = if let Some(record) = record {

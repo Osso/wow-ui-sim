@@ -77,6 +77,17 @@ fn glue_background_uses_every_host_cascade_step_and_separate_override() {
         .borrow_mut()
         .glue_login
         .backgrounds
+        .classes
+        .clear();
+    assert_eq!(
+        env.eval::<i32>("return GetSelectBackgroundModel(1)")
+            .unwrap(),
+        2201
+    );
+    env.state()
+        .borrow_mut()
+        .glue_login
+        .backgrounds
         .races
         .get_mut(&7)
         .unwrap()
