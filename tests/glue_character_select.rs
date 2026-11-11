@@ -476,21 +476,27 @@ fn forever_character_tooltip_composes_supplied_surname_and_separator() {
         {
             let state = env.state();
             let mut sim = state.borrow_mut();
-            let account = sim.bnet_friends.iter_mut()
+            let account = sim
+                .bnet_friends
+                .iter_mut()
                 .flat_map(|friend| friend.game_accounts.iter_mut())
-                .find(|account| account.client_program == "WoW").unwrap();
+                .find(|account| account.client_program == "WoW")
+                .unwrap();
             account.character_name = "Aldren".into();
             account.surname = surname.into();
             account.name_separator = separator;
         }
-        env.exec(&format!(r#"
+        env.exec(&format!(
+            r#"
             local info = CharacterSelectUtil.GetCharacterInfoTable(1)
             assert(info.characterName == 'Aldren' and info.surname == {surname:?})
             assert(info.fullName == {expected:?})
             GlueTooltip:ClearLines()
             assert(CharacterSelectUtil.SetTooltipForCharacterInfo(info, 1))
             assert(GlueTooltip:GetLeftLine(1):GetText() == {expected:?})
-        "#)).expect("original Camelot tooltip uses composed name and surname");
+        "#
+        ))
+        .expect("original Camelot tooltip uses composed name and surname");
     }
 }
 
@@ -500,9 +506,14 @@ fn forever_basic_character_info_requires_guid_and_unknown_returns_no_values() {
     let env = load_blizzard_screen(ScreenKind::CharacterSelect);
     for call in ["GetBasicCharacterInfo()", "GetBasicCharacterInfo(nil)"] {
         let error = env.exec(call).expect_err("required GUID").to_string();
-        assert!(error.contains("Usage: local basicInfo = GetBasicCharacterInfo(guid)"), "{error}");
+        assert!(
+            error.contains("Usage: local basicInfo = GetBasicCharacterInfo(guid)"),
+            "{error}"
+        );
     }
-    let arity: i32 = env.eval("return select('#', GetBasicCharacterInfo('Player-unknown'))").unwrap();
+    let arity: i32 = env
+        .eval("return select('#', GetBasicCharacterInfo('Player-unknown'))")
+        .unwrap();
     assert_eq!(arity, 0);
 }
 
@@ -719,3 +730,56 @@ fn retail_trial_boost_query_returns_exported_level_and_one_value() {
     assert_eq!(result_count, 1, "the getter publishes exactly one value");
 }
 
+#[test]
+#[cfg(feature = "client-retail")]
+fn retail_trial_boost_host_selector_selects_first_matching_row() {
+    let env = load_blizzard_screen(ScreenKind::CharacterCreate);
+    {
+        let state = env.state();
+        let mut sim = state.borrow_mut();
+        sim.trial_boost_level.replace_rows(vec![
+            wow_ui_sim::c_api::c_character_creation_trial_boost::CharacterServiceInfoRow {
+                service_type: 1,
+                boost_type: 4,
+                boost_level: 71,
+            },
+            wow_ui_sim::c_api::c_character_creation_trial_boost::CharacterServiceInfoRow {
+                service_type: 1,
+                boost_type: 4,
+                boost_level: 72,
+            },
+            wow_ui_sim::c_api::c_character_creation_trial_boost::CharacterServiceInfoRow {
+                service_type: 1,
+                boost_type: 8,
+                boost_level: 90,
+            },
+        ]);
+        sim.trial_boost_level.set_selector(4);
+    }
+    let selected_level: i32 = env
+        .eval("return C_CharacterCreation.GetTrialBoostStartingLevel()")
+        .expect("host-selected row level should be queryable");
+    assert_eq!(selected_level, 71, "the first row for selector 4 wins");
+
+    env.state().borrow_mut().trial_boost_level.set_selector(99);
+    let unmatched_level: i32 = env
+        .eval("return C_CharacterCreation.GetTrialBoostStartingLevel()")
+        .expect("unmatched selector should return a level");
+    assert_eq!(unmatched_level, 0, "an unmatched selector returns zero");
+}
+
+#[test]
+#[cfg(feature = "client-ptr")]
+fn ptr_trial_boost_zero_fallback_is_unchanged() {
+    let env = WowLuaEnv::new().expect("Failed to create Lua environment");
+    let game_level: i32 = env
+        .eval("return C_CharacterCreation.GetTrialBoostStartingLevel()")
+        .expect("existing PTR fallback should remain callable");
+    env.set_screen_mode(ScreenKind::CharacterCreate);
+    let glue_level: i32 = env
+        .eval("return C_CharacterCreation.GetTrialBoostStartingLevel()")
+        .expect("existing PTR fallback should remain callable on Glue");
+
+    assert_eq!(game_level, 0);
+    assert_eq!(glue_level, 0);
+}
