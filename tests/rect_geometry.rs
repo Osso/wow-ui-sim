@@ -220,6 +220,34 @@ fn geometry_getter_resolves_dirty_anchor_target_before_dependent() {
 }
 
 #[test]
+fn geometry_getter_resolves_dirty_anchor_chain_before_dependent() {
+    let env = env();
+    let (initial_left, moved_left): (f64, f64) = env
+        .eval(
+            r##"
+            local source = CreateFrame("Frame", "DirtyGeometryChainSource", UIParent)
+            source:SetSize(20, 20)
+            source:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", 50, 60)
+            local middle = CreateFrame("Frame", "DirtyGeometryChainMiddle", UIParent)
+            middle:SetSize(10, 10)
+            middle:SetPoint("BOTTOMLEFT", source, "TOPRIGHT")
+            local dependent = CreateFrame("Frame", "DirtyGeometryChainDependent", UIParent)
+            dependent:SetSize(5, 5)
+            dependent:SetPoint("BOTTOMLEFT", middle, "TOPRIGHT")
+
+            local initial_left = dependent:GetLeft()
+            source:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", 100, 60)
+            local moved_left = dependent:GetLeft()
+            return initial_left, moved_left
+            "##,
+        )
+        .expect("position query resolves a dirty anchor chain before its dependent");
+
+    assert_eq!(initial_left, 80.0);
+    assert_eq!(moved_left, 130.0);
+}
+
+#[test]
 fn geometry_getter_uses_clean_cached_anchor_target() {
     let env = env();
     let (target_left, child_left): (f64, f64) = env
