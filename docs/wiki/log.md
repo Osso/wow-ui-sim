@@ -1,3 +1,7 @@
+## [2026-11-11] implementation | Character-create trial boost level
+
+Added the R61-backed [`C_CharacterCreation.GetTrialBoostStartingLevel`](systems/character-create-trial-boost-level.md) model and its [contract](../specs/character-create-trial-boost-level.md). **VERIFIED:** Retail 12.1.5.70783's 13-row export yields level 100 for selector 2, and seven Retail tests pass through the original tooltip consumer. Forever ships no rows because its local table payload is encrypted; registration and empty-row tests pass. Three broad Forever startup filters still fail before the trial-level tooltip at `SetInCharacterCreate`; a direct Forever tooltip test is committed but awaits its profile build. PTR native availability remains UNKNOWN; the prior zero fallback stays. The [lane report](../../handoff/r61-trial-boost-level/REPORT.md) records data provenance, RED/GREEN receipts, exact failures, and pending proof.
+
 ## [2026-11-10] fix | Mists frame-position residuals
 
 Updated the [frame-position investigation](investigations/frame-position-baseline-drift.md#mists-frame-residuals--2026-11-10) and [profile contract](../specs/frame-position-profile-baselines.md) with pinned-source Mists bag, aura, action-bar, status-bar and WatchFrame-managed right-container geometry. The simulator no longer synthesizes ObjectiveTrackerFrame on Mists, where the selected Blizzard UI has no producer; the test asserts absence. VERIFIED at `3c36dab15`: Mists `frame_positions` passes 25/28; `micro_menu`, `micro_menu_container` and `casting_bar` remain open.
