@@ -149,6 +149,11 @@ fn is_account_quest(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+#[cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
 fn account_quest_for_id(state: &LuaState, quest_id: Option<i32>) -> LuaResult<bool> {
     let Some(quest_id) = quest_id.filter(|id| *id >= 1) else {
         return Ok(false);

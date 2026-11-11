@@ -499,9 +499,14 @@ mod registration;
 pub(crate) mod restricted_actions;
 
 pub(crate) use c_store_secure::register as register_store_secure_table;
+#[cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
+pub(crate) use helpers::parse_numeric_string;
 pub(crate) use helpers::{
-    ensure_global_table, ensure_namespace, global_val, mark_namespace_keys_removed,
-    parse_numeric_string, set_global_val,
+    ensure_global_table, ensure_namespace, global_val, mark_namespace_keys_removed, set_global_val,
 };
 pub use permanent_shims::c_map_api;
 pub(crate) use registration::{
