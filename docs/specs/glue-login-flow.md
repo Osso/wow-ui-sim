@@ -78,7 +78,10 @@ visible edit boxes, type through key dispatch, verify text, and submit through
 the real handlers. A nonempty host fixture is required for charselect. Tests do
 not replay startup, call a screen-switch shortcut, or assert native frame counts.
 Separate API tests cover validation, password clearing, zero returns, both
-GetState shapes, state-event payloads, and empty roster update payloads.
+GetState shapes, state-event payloads, empty roster update payloads, supplied
+realm availability, replacement of pending attempts, and explicit-boot
+cancellation with host inputs preserved. These are offline policy tests, not
+proof of native cancellation or retry semantics.
 
 ## Remaining dependencies
 
