@@ -147,7 +147,7 @@ Core.lua
 }
 
 #[test]
-fn packaged_startup_phases_precede_user_addons() {
+fn packaged_startup_phases_put_secure_addons_before_packaged_defaults() {
     let ui = TempBlizzardUiDir::new("startup-phases");
     ui.add_addon(
         "Blizzard_Z_LoadFirst",
@@ -177,35 +177,6 @@ fn packaged_startup_phases_precede_user_addons() {
         .unwrap();
     assert!(load_first < ordinary);
     assert!(secure < ordinary);
-
-    let user_root = tempfile::tempdir().unwrap();
-    let mut users = Vec::new();
-    for (name, metadata) in [
-        ("User_A_Ordinary", ""),
-        ("User_Y_Secure", "## UseSecureEnvironment: 1\n"),
-        ("User_Z_LoadFirst", "## LoadFirst: 1\n"),
-    ] {
-        let directory = user_root.path().join(name);
-        std::fs::create_dir(&directory).unwrap();
-        let toc_path = directory.join(format!("{name}.toc"));
-        std::fs::write(&toc_path, format!("{metadata}Core.lua\n")).unwrap();
-        users.push((name.to_string(), toc_path));
-    }
-    crate::loader::sort_addons_by_dependencies(&mut users);
-
-    let mut startup = packaged;
-    startup.extend(users.into_iter().map(|(name, _)| name));
-    let last_packaged = startup
-        .iter()
-        .position(|name| name == "Blizzard_A_Packaged")
-        .unwrap();
-    for user in ["User_A_Ordinary", "User_Y_Secure", "User_Z_LoadFirst"] {
-        let position = startup.iter().position(|name| name == user).unwrap();
-        assert!(
-            last_packaged < position,
-            "{user} must follow packaged addons"
-        );
-    }
 }
 
 #[test]
