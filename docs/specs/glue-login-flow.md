@@ -440,7 +440,9 @@ claim about the final live native visibility state.
 
 R62 verifies phase1 LoadFirst/UseSecureEnvironment completes before native
 non-insecure phase2 and remaining phase3; optional then required dependencies
-and LoadWith targets precede an addon's own files. Files use TOC line order,
+precede an addon's own files. Correction109 identifies LoadManagers, not
+LoadWith, as the list attempted before the own load request. LoadWith reader,
+direction and timing remain UNKNOWN. Files use TOC line order,
 and unannotated lines are accepted at Glue. Shared-loader deviations are
 reported to the coordinator, not repaired in this lane. Case-insensitive name
 order is only inferred and equal-name tie order unknown; neither is asserted.
@@ -450,3 +452,23 @@ GeneralDockManager chat-role dock assertion. Both Retail post-startup chat
 visibility expectations are omitted, without changing runtime behavior; other
 profiles' dock checks and every non-chat visibility/error/input assertion remain.
 The coordinator owns shared-loader ordering deviations in a separate lane.
+
+
+### R63 pending credits inputs and capability evidence
+
+Comment110 supplies PTR70668/Retail70688/Forever70707 evidence. PTR and Forever
+publish GetCreditsDisplayInfo in Game and Glue, and the file-data-ID text API
+only in the direct Glue catalog. Retail requested-name registration remains
+unknown beyond absent exact image literals; its separate GetCreditsText is not
+substituted. Row publication preserves creditsFileID0 and empty strings, omits
+logo0, and distinguishes absent soundKit from present0. Native row data/order,
+fresh PTR list, unknown-ID text result, exceptional paths and text argument
+conversion remain UNKNOWN. A host catalog/default and bounded text-input policy
+were requested before replacing these parts; no Forever vanilla row is copied.
+
+The five video capability bytes are separate from R60 high-resolution input.
+Verified image bytes project to inferred normal Boolean results. A host seam
+models those bytes explicitly, without treating the projections as native
+observations or GPU/CVar state. Retail registers only spell density; PTR and
+Forever register all five in Game and Glue. MultiSample remains a separate
+runtime/device query, not a static byte; its PTR registration is UNKNOWN.
