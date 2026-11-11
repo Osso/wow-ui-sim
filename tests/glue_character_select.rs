@@ -704,3 +704,18 @@ fn retail_class_trial_tooltip_uses_exported_character_service_level() {
         assert_eq!(tooltip_text, expected_tooltip);
     }
 }
+
+#[test]
+#[cfg(feature = "client-retail")]
+fn retail_trial_boost_query_returns_exported_level_and_one_value() {
+    let env = load_blizzard_screen(ScreenKind::CharacterCreate);
+    let (level, result_count): (i32, i32) = env
+        .eval(
+            "return C_CharacterCreation.GetTrialBoostStartingLevel(), select('#', C_CharacterCreation.GetTrialBoostStartingLevel())",
+        )
+        .expect("trial boost query should return its exported level");
+
+    assert_eq!(level, 100, "Retail selector 2 exports level 100");
+    assert_eq!(result_count, 1, "the getter publishes exactly one value");
+}
+
