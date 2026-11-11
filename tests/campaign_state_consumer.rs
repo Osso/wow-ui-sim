@@ -28,6 +28,7 @@ fn campaign_header_does_not_infer_progress_from_quest_associations() {
         local chapters = C_CampaignInfo.GetChapterIDs(101)
         assert(#chapters == 2 and chapters[1] == 201 and chapters[2] == 202, "supplied chapters")
         assert(C_CampaignInfo.GetChapterIDs(102) == nil, "absent chapters")
+        assert(C_CampaignInfo.GetCampaignInfo(999999) == nil, 'unknown campaign info')
         C_CampaignInfo.GetCampaignInfo = function(id) return { id = id } end
         local function check(id)
             local h = { UpdateTextureKit = function() end, UpdateComplete = function(self, v) self.result = v end,
@@ -40,9 +41,8 @@ fn campaign_header_does_not_infer_progress_from_quest_associations() {
         check(102)
         assert(C_QuestLog.GetInfo(2).campaignID == 102, 'quest log campaign ID')
         assert(C_CampaignInfo.GetCampaignID(91001) == 101, 'quest campaign lookup')
-        assert(C_CampaignInfo.GetCampaignInfo(999999) == nil, 'unknown campaign info')
         assert(C_CampaignInfo.GetState(999999) == Enum.CampaignState.Invalid, 'unknown state')
-    "#).expect("selected Blizzard campaign header consumes quest progress");
+    "#).expect("selected Blizzard campaign header does not infer quest progress");
 }
 
 #[test]
