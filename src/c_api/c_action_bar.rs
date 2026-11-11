@@ -106,18 +106,20 @@ fn spell_matches_action_spell_type_restriction(state: &mut LuaState) -> LuaResul
         return Ok(0);
     }
 
-    let sim = borrow_state(state)?;
-    let matches = if sim.game_rules.active_game_mode != crate::c_api::game_mode::WOWHACK {
-        true
-    } else if spell_id == 0 {
-        false
-    } else {
-        match required_spell_label(action_id) {
-            Some(label) => sim
-                .spell_labels
-                .get(&spell_id)
-                .is_some_and(|labels| labels.contains(&label)),
-            None => true,
+    let matches = {
+        let sim = borrow_state(state)?;
+        if sim.game_rules.active_game_mode != crate::c_api::game_mode::WOWHACK {
+            true
+        } else if spell_id == 0 {
+            false
+        } else {
+            match required_spell_label(action_id) {
+                Some(label) => sim
+                    .spell_labels
+                    .get(&spell_id)
+                    .is_some_and(|labels| labels.contains(&label)),
+                None => true,
+            }
         }
     };
     state.push(Val::Bool(matches));
