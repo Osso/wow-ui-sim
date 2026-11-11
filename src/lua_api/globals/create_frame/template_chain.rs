@@ -288,7 +288,7 @@ fn finalize_template_frame(
     crate::lua_api::globals::template::repair_descendant_name_aliases(state, frame_id)?;
     resolve_runtime_template_named_anchors(state, frame_id)?;
     if fire_on_load {
-        runtime::fire_frame_on_load(state, frame_id)?;
+        runtime::fire_frame_on_load_reporting_errors(state, frame_id)?;
     }
 
     // `OnLoad` handlers can re-anchor using named keys (for example after
