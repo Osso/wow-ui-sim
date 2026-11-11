@@ -4,7 +4,7 @@
 
 ## What it must do
 
-- [ ] On PTR 12.1.7.70668, return false. The original bank panel creates both the bank-tab pool and item-button pool.
+- [x] On PTR 12.1.7.70668, return false. The original bank panel creates both the bank-tab pool and item-button pool.
 - [x] On WoW Forever 1.60.1.70707, return true. The original bank panel skips the bank-tab pool and creates the item-button pool.
 
 ## How it works
@@ -22,7 +22,6 @@
 
 ## Known gaps (current cycle)
 
-- [ ] Re-run the PTR bank-panel consumer against the C API provider.
 - [ ] Native capability values for Retail, Mists, Era, Anniversary, and Wrath remain unverified.
 
 ## Out of scope
