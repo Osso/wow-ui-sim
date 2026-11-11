@@ -176,3 +176,33 @@ fn approved_native_defaults_bank_selected_tab_consumer() {
         assert(C_Bank.ShouldUsePlayerBagsInBank() == false)
     "#).expect("original bank event consumes the approved default");
 }
+
+#[test]
+fn approved_bank_panel_onload_uses_ptr_capability() {
+    let env = load_bank();
+    env.exec(
+        r#"
+        local source = debug.getinfo(BankPanelMixin.OnLoad, 'S').source:gsub('\\', '/')
+        assert(source:find('Mainline/BankFrameTemplates.lua', 1, true), 'selected original bank consumer')
+        local createdPools = {}
+        CreateFramePool = function(frameType)
+            createdPools[#createdPools + 1] = frameType
+            return {}
+        end
+        EventRegistry.RegisterCallback = function() end
+        local panel = {
+            AddDynamicEventMethod = function() end,
+            OnBankTabClicked = function() end,
+            OnNewBankTabSelected = function() end,
+            OnPageSwitched = function() end,
+            OnPageSelected = function() end,
+        }
+        BankPanelMixin.OnLoad(panel)
+        assert(C_Bank.ShouldUsePlayerBagsInBank() == false)
+        assert(panel.bankTabPool ~= nil, 'false capability creates the bank-tab pool')
+        assert(panel.itemButtonPool ~= nil, 'the normal item-button pool is always created')
+        assert(#createdPools == 2 and createdPools[1] == 'BUTTON' and createdPools[2] == 'ItemButton')
+        "#,
+    )
+    .expect("original PTR bank panel consumes its native capability byte");
+}
