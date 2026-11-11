@@ -504,6 +504,8 @@ pub struct SimState {
     pub next_report_token: i64,
     pub party_members: Vec<PartyMember>,
     pub party_group_active: bool,
+    /// Retail PartyInfo roster input used by `GetGroupMemberCounts`.
+    pub group_member_counts: GroupMemberCountsState,
     /// INFERRED: host-owned identity classification; no automatic context inference.
     #[cfg(all(
         feature = "retail-12-0-5",
