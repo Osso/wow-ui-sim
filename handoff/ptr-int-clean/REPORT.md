@@ -223,4 +223,30 @@ Design note: implement the loot-style getter from `SimState.game_rules.rules["Lo
 - VERIFIED: all four `merchant_cursor::*` tests passed; `inventory_verbs::pickup_merchant_item_uses_the_supplied_offer` and `action_bar_drag::ptr_tainted_place_merchant_cursor_reports_block_and_clears` each passed 1/1.
 - VERIFIED: the three test services used byte-identical CVar copies and left the original unchanged: SHA-256 `8d1709049bc9acdbed0465889701a0e370667ef18cf06b71db479b3972aa350c`, size 811, with matching before/after stat fields. Logs and JSON receipt: `/home/osso/.local/state/wow-ui-sim/verification/ptr-int-clean-r37/`.
 - VERIFIED (source/evidence scope): `CursorHasItem()`'s mode-1 predicate is established by WM46 for Retail 12.1.5.70688 only; R37 does not establish its PTR merchant result. The unsupported PTR assertion is removed and recorded as UNKNOWN.
-- UNVERIFIED: the PTR full-suite run, master failure-name comparison, targeted Retail tests and remaining profile builds are still pending.
+- UNVERIFIED: the PTR full-suite run, current-failure comparison, targeted Retail tests and remaining profile builds are still pending.
+
+## Current-master comparison — baseline PTR failures
+
+VERIFIED (master `aeb3ce50ecf3351f29675a1134370fc9361df2ea`): the PTR integration/library targets built with zero warnings, and all 26 names from the prior PTR failure set were run once with exact filters. Sixteen also failed on master:
+
+- `action_bar::test_bag_bar_layout_locked`
+- `bags::test_container_frames_array_contains_only_real_container_frames`
+- `bags::test_container_frames_registered`
+- `blizzard_ui_blizzard_achievementui::behavior_comparison_friend_completed::comparison_template_init_completed_writes_format_short_date_and_saturates_friend_card`
+- `blizzard_ui_blizzard_achievementui::behavior_comparison_friend_completed::comparison_template_init_incomplete_writes_incomplete_token_and_short_circuits_on_repeat_id`
+- `blizzard_ui_parent_loads::ptr_mainline_excludes_mists_time_string_helper`
+- `click_targeting::click_targeting_forever_regressions::blizzard_player_world_entry_updates_combo_frame_from_target_power`
+- `keybindings::modified_clicks_round_trip_through_runtime_surface`
+- `micro_menu::micro_menu_professions_button_loads_and_opens_panel`
+- `objective_tracker_tree::objective_tracker_frame_layout_is_locked`
+- `path_control_point::path_actual_cached_smooth_xml_configures_points_and_restores_playback`
+- `spellbook_layout::spellbook_layout_stays_locked`
+- `startup_api_stubs::startup_client_time_camera_and_channel_globals_are_callable`
+- `workarounds_bags::bag_frame_rect_queries_match_render_layout_rects`
+- `workarounds_professions::casting_blacksmithing_opens_professions_frame`
+- `workarounds_professions::clicking_blacksmithing_button_in_professions_book_opens_panel`
+
+VERIFIED: the other ten exact selectors passed on master: `action_text::action_text_empty_spell_and_unplaceable_item_controls`; `container_split_use::b1_invalid_amounts_are_inert_then_valid_split_succeeds`; `container_split_use::b1_occupied_cursor_and_missing_source_are_inert`; `container_split_use::b1_split_moves_supplied_quantity_and_reports_cursor_count`; `game_menu::test_game_menu_shop_button_opens_store_and_menu_can_reopen_after_store_closes`; `inventory_verbs::place_action_writes_spell_id_to_action_bar_slot`; `store_tree::store_free_upgrade_check_handles_account_without_upgrade`; `timeout_reexec::timeout_children_are_limited_to_two_concurrent_processes`; `transmog_outfit_catalog_inputs::transmog_outfit_catalog_inputs_pickup_sets_cursor_and_clear_works`; and `xml_create_error_reporting::partially_created_parent_key_and_array_child_reports_original_nested_failure`.
+
+VERIFIED: the 26 master runs used isolated byte-exact CVar copies and preserved the original CVar SHA-256 `8d1709049bc9acdbed0465889701a0e370667ef18cf06b71db479b3972aa350c` and recorded stat fields. Build receipt and per-selector logs: `/home/osso/.local/state/wow-ui-sim/verification/ptr-int-clean-master-aeb3ce50e/`.
+UNVERIFIED: these results classify the earlier PTR failure set only; compare against the current PTR full-suite failures after that run completes.
