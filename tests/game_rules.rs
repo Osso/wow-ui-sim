@@ -275,7 +275,17 @@ fn numeric_enum_game_rule_ids_resolve_to_rule_names() {
 #[test]
 fn empty_host_glue_screen_is_nil_and_nonempty_name_is_preserved() {
     let env = env();
-    env.state().borrow_mut().game_rules.glue_screen_name = Some(String::new());
+    env.state()
+        .borrow_mut()
+        .game_rules
+        .display
+        .rows
+        .insert(2, Default::default());
+    env.state()
+        .borrow_mut()
+        .game_rules
+        .display
+        .set_temporary_override(2);
     assert_eq!(
         env.eval::<Option<String>>("return C_GameRules.GetGameModeGlueScreenName()")
             .unwrap(),

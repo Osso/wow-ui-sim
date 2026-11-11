@@ -312,12 +312,13 @@ or native contracts; the test does not apply post-load workarounds to mask them.
 At 72037ef24, the PTR glue run is 130 passed/3 failed with zero compiler warnings:
 the two other failures are PTR feedback discovery/file-list expectations.
 
-Retail 70575 instead defines the always-true function in the unfiltered shared
+Retail 70575 defines the always-true function in unfiltered shared
 FloatingChatFrame.lua:40, replacing GlueParent.lua:909's screen-aware policy.
-The coordinator owns the Retail 70783 pin refresh; this case is blocked on that
-refresh, not repaired here. No vendor override, forced hide, addon replay, or
-guessed reordering is added. R55's native evidence is Retail 70688/Forever 70707;
-exact matching of the cached Retail files to the image remains unknown.
+Comment 99 retracts the earlier stale-pin diagnosis: the installed 70783 CASC
+root also lacks FloatingChatFrameGame.lua, so a pin refresh will not fix this.
+The native ordering/filtering/visibility explanation is UNKNOWN pending R62.
+The failing assertion stays intact; no forced Hide, override, or replay is added.
+
 
 ### R52 background lookup and supplied row boundary
 
@@ -390,3 +391,37 @@ was found in the checked direct native code.
 ResetModel is original Blizzard_GlueParent Lua (cached Retail lines 779–785,
 Forever 770–776), not a native API. It is not registered or replaced here.
 Failures in its frame-method calls require separate evidence.
+
+### R60 shared GameMode display selection and high-resolution capability
+
+Comment 100 corrects R43 using PTR70668/Retail70688/Forever70707 evidence.
+Both display and glue-screen getters select a bounded host temporary override
+when enabled, otherwise the real currentGameMode CVar (registered default -1).
+Host GameMode rows default empty. Missing rows, record0, and no-override -1 have
+no display table. Empty screen fields return nil; GlueParent owns its fallback.
+The old independent screen-name input and Forever display placeholder are gone.
+A_Admin.SetActiveGameMode's optional screen remains an explicit administrative
+host-row fixture, not native row data or a native writer.
+
+The seven display fields are logo, logoHeight, logoVerticalOffset,
+logoShrunkenHeight, logoUsesDarkBackdrop, characterCreateExtraHeight, and
+characterCreateOuterBorder. The two file identifiers are omitted when zero.
+The capability and display registrations apply in both Game and Glue; display
+is Retail/PTR/Forever, while high-resolution availability is PTR/Forever only
+and VERIFIED absent on Retail. The latter projects read-only byte0; its normal
+false result is INFERRED, so tests assert Boolean type rather than false.
+
+The bounded Rust host override setter models auto-connect selection without
+inventing a Lua AutoConnectToGameModeRealm contract. The host clear_realm_list
+lifecycle method clears the override; no ClearRealmList Lua API existed here.
+Accepted currentGameMode CVar writes clear it and emit
+GAME_MODE_DISPLAY_INFO_UPDATED through the existing synchronous dispatch path.
+That callback timing relative to assignment and other events is simulator
+scheduling, not native ordering evidence. Direct raw storage writes are not
+callback-producing API calls. The native setter path and Lua CVar setter both
+invoke this callback. Tests exercise original GameLogoDarkBackdrop Lua against
+supplied rows, CVar changes, and the host clear operation.
+
+UNKNOWN: full writer set, exact native callback timing/guards, loaded GameMode
+rows, first login snapshot, computed writes to the capability byte, and complete
+error lines. No row download or inferred nil-return arity assertion is added.

@@ -176,13 +176,7 @@ pub fn get_active_game_mode(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 pub fn get_game_mode_glue_screen_name(state: &mut LuaState) -> LuaResult<u32> {
-    let name = borrow_state(state)?.game_rules.glue_screen_name.clone();
-    let value = match name.filter(|name| !name.is_empty()) {
-        Some(name) => create_string(state, &name),
-        None => Val::Nil,
-    };
-    state.push(value);
-    Ok(1)
+    crate::c_api::game_mode_display::glue_screen(state)
 }
 
 fn get_num_displayed_game_modes(state: &mut LuaState) -> LuaResult<u32> {
@@ -249,6 +243,14 @@ fn install_on_c_game_rules(state: &mut LuaState) -> LuaResult<()> {
     ];
     for (name, func) in entries {
         table_set_rust_fn(state, table_ref, name, *func)?;
+    }
+    if crate::c_api::game_mode_display::modern_profile() {
+        table_set_rust_fn(
+            state,
+            table_ref,
+            "GetCurrentGameModeDisplayInfo",
+            crate::c_api::game_mode_display::current_display,
+        )?;
     }
     if ACTIVE == ClientProfile::Retail {
         table_set_rust_fn(
@@ -417,6 +419,17 @@ pub fn admin_set_active_game_mode(state: &mut LuaState) -> LuaResult<u32> {
     let glue = Option::<String>::from_stack(state, 2)?.filter(|s| !s.is_empty());
     let mut sim = borrow_state_mut(state)?;
     sim.game_rules.active_game_mode = mode;
-    sim.game_rules.glue_screen_name = glue;
+    // Administrative host fixture, not a native writer or a real DB row.
+    sim.game_rules.display.clear_realm_list();
+    if let Some(glue_screen_name) = glue {
+        sim.game_rules.display.rows.insert(
+            mode,
+            crate::c_api::game_mode_display::GameModeRow {
+                glue_screen_name,
+                ..Default::default()
+            },
+        );
+        sim.game_rules.display.set_temporary_override(mode);
+    }
     Ok(0)
 }

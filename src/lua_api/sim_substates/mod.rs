@@ -131,9 +131,7 @@ impl MouseButtons {
 pub struct GameRulesState {
     /// Currently active `Enum.GameMode` value.
     pub active_game_mode: i32,
-    /// Glue screen name the current game mode opens on at the login flow.
-    /// None represents ordinary play; the original GlueParent applies its fallback.
-    pub glue_screen_name: Option<String>,
+    pub display: crate::c_api::game_mode_display::GameModeDisplayState,
     /// Server-supplied rule-set marker; zero means no current rule set.
     pub rule_set_marker: i32,
     /// Sparse rule store keyed by rule name. Missing key = inactive.
@@ -156,7 +154,7 @@ impl Default for GameRulesState {
     fn default() -> Self {
         Self {
             active_game_mode: crate::c_api::game_mode::STANDARD,
-            glue_screen_name: None,
+            display: Default::default(),
             rule_set_marker: 0,
             rules: HashMap::new(),
             hardcore_active: false,

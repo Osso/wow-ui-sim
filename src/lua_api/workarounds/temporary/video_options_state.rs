@@ -127,20 +127,9 @@ if rawget(C_VideoOptions, "SetGameWindowSize") == nil then
 end
 "#;
 
-// User-approved offline capability, not a native platform measurement. Replace
-// this fixture flag with the optional texture-pack/launcher capability model.
+// Unsupported renderer capabilities, separate from the read-only texture
+// capability implemented in c_api::video_texture_capability.
 const FOREVER_VIDEO_CAPABILITIES_LUA: &str = r#"
-local state = C_VideoOptions._state
-if state.highResTexturesAvailable == nil then
-    state.highResTexturesAvailable = false
-end
-
-if rawget(C_VideoOptions, "AreHighResTexturesAvailable") == nil then
-    function C_VideoOptions.AreHighResTexturesAvailable()
-        return state.highResTexturesAvailable == true
-    end
-end
-
 -- The UI renderer uses single-sample targets. Replace this unsupported capability
 -- when multisample render targets and MSAA mode enumeration are implemented.
 if rawget(_G, "MultiSampleAntiAliasingSupported") == nil then

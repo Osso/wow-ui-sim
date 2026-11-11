@@ -127,6 +127,35 @@ impl CVarStorage {
         self.get(name).map(|value| cached_integer_nonzero(&value))
     }
 
+    /// Bounded cached-integer projection using the verified R50 prefix rules.
+    /// Overflow and locale-specific input remain outside coverage.
+    pub(crate) fn cached_integer(&self, name: &str) -> Option<i32> {
+        let value = self.get(name)?;
+        let (digits, radix, sign) = if let Some(hex) = value
+            .strip_prefix("0x")
+            .or_else(|| value.strip_prefix("0X"))
+        {
+            (hex, 16, 1_i64)
+        } else {
+            let trimmed = value.trim_start_matches(|ch: char| ch.is_ascii_whitespace());
+            (
+                trimmed
+                    .strip_prefix('+')
+                    .or_else(|| trimmed.strip_prefix('-'))
+                    .unwrap_or(trimmed),
+                10,
+                if trimmed.starts_with('-') { -1 } else { 1 },
+            )
+        };
+        let mut number = 0_i64;
+        for digit in digits.chars().map_while(|ch| ch.to_digit(radix)) {
+            number = number
+                .checked_mul(i64::from(radix))?
+                .checked_add(i64::from(digit))?;
+        }
+        i32::try_from(number.checked_mul(sign)?).ok()
+    }
+
     /// Set a CVar value and persist to disk.
     pub fn set(&self, name: &str, value: &str) -> bool {
         let key = name.to_lowercase();

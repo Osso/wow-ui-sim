@@ -67,30 +67,14 @@ fn forever_offline_credits_support_original_view_and_selector() {
 }
 
 #[test]
-fn forever_offline_high_res_capability_gates_original_graphics_setting() {
+fn forever_high_res_capability_is_read_only_and_graphics_consumer_loads() {
     test_timeout! {
         let env = load_login_screen();
         env.exec(r#"
-            assert(C_VideoOptions.AreHighResTexturesAvailable() == false)
-            local useHighResTextures = GetCVar("useHighResTextures")
-            SetCVar("useHighResTextures", "1")
-            assert(C_VideoOptions.AreHighResTexturesAvailable() == false)
-            GraphicsOverrides.CreateHiResOptions(nil, nil)
-
-            C_VideoOptions._state.highResTexturesAvailable = true
-            assert(C_VideoOptions.AreHighResTexturesAvailable() == true)
-            assert(select('#', C_BattleNet.CanToggleHighResTexturesWithoutClientReload()) == 1)
-            assert(C_BattleNet.CanToggleHighResTexturesWithoutClientReload() == true)
-            local category, layout = Settings.RegisterVerticalLayoutCategory("Offline high-resolution textures")
+            assert(type(C_VideoOptions.AreHighResTexturesAvailable()) == 'boolean')
+            local category, layout = Settings.RegisterVerticalLayoutCategory("High-resolution textures")
             GraphicsOverrides.CreateHiResOptions(category, layout)
-            local setting = Settings.GetSetting("PROXY_HIGH_RES_TEXTURES")
-            assert(setting ~= nil and setting:GetValue() == true)
-            SetCVar("useHighResTextures", "0")
-            assert(C_BattleNet.CanToggleHighResTexturesWithoutClientReload() == false)
-            C_VideoOptions._state.highResTexturesAvailable = false
-            SetCVar("useHighResTextures", useHighResTextures)
-            assert(C_VideoOptions.AreHighResTexturesAvailable() == false)
-        "#).expect("original Forever graphics setting should use the independent offline capability");
+        "#).expect("original graphics consumer accepts the modeled capability");
     }
 }
 

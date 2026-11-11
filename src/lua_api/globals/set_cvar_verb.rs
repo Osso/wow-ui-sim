@@ -87,6 +87,7 @@ fn set_cvar(state: &mut LuaState) -> LuaResult<u32> {
     let override_change = gamepad_override_change(state, &name, &value)?;
     let accepted = borrow_state_mut(state)?.cvars.set(&name, &value);
     if accepted {
+        crate::c_api::game_mode_display::cvar_set_callback(state, &name)?;
         crate::c_api::restricted_actions::update_forced_cvar(state, &name)?;
         let name_arg = create_string(state, &name);
         let value_arg = create_string(state, &value);
@@ -403,6 +404,9 @@ fn insert_c_cvar_table(state: &mut LuaState, key: GcRef<LuaString>) -> GcRef<Tab
 pub(crate) fn set_native_cvar(state: &mut LuaState, name: &str, value: &str) -> LuaResult<bool> {
     let changed = borrow_state(state)?.cvars.get(name).as_deref() != Some(value);
     let accepted = borrow_state_mut(state)?.cvars.set(name, value);
+    if accepted {
+        crate::c_api::game_mode_display::cvar_set_callback(state, name)?;
+    }
     if accepted && changed {
         let name_arg = create_string(state, name);
         let value_arg = create_string(state, value);

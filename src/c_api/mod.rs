@@ -36,6 +36,7 @@ pub(crate) mod collections_availability;
 pub mod currency_list;
 pub mod forever_talents;
 pub(crate) mod game_mode;
+pub mod game_mode_display;
 pub(crate) mod game_rules_personal_resource;
 pub(crate) mod game_rules_strata;
 pub(crate) mod game_rules_visibility;
@@ -55,6 +56,7 @@ pub(crate) mod tooltip_power_catalog_data;
 pub mod trait_group_currency;
 pub mod trait_group_display;
 pub mod ui_widget_manager;
+pub(crate) mod video_texture_capability;
 #[cfg(feature = "client-wrath")]
 pub mod who_routing;
 
@@ -611,6 +613,7 @@ fn register_specialization_and_model_tables(state: &mut LuaState) -> LuaResult<(
 fn register_glue_and_display_tables(state: &mut LuaState) -> LuaResult<()> {
     c_glue::register_c_glue(state)?;
     c_login::register_c_login(state)?;
+    video_texture_capability::register(state)?;
     c_character_creation_naming::register(state)?;
     c_ui::register(state)?;
     permanent_shims::c_ui::register_c_ui(state)
