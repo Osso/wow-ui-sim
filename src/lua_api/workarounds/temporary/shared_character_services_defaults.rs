@@ -16,8 +16,12 @@ end
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(SHARED_CHARACTER_SERVICES_DEFAULTS_LUA)?;
-    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
-        // Account promotional-upgrade state is not modeled yet.
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+    ) {
+        // R22 verifies false without a qualifying promotion on Retail and PTR.
+        // Replace this temporary default when account promotional-upgrade state is modeled.
         lua.exec(
             r#"
             if rawget(C_SharedCharacterServices, "HasFreePromotionalUpgrade") == nil then
