@@ -206,6 +206,12 @@ fn forever_preview_gear_accepts_numeric_strings_and_failed_conversions() {
         setGear("257")
         setGear(false)
         setGear({})
+        local ok, message = pcall(setGear, "2")
+        assert(not ok and message:find(
+            "Usage: C_CharacterCreation.SetSelectedPreviewGearType(gearType)",
+            1,
+            true
+        ), tostring(message))
         "##,
     )
     .expect("Forever numeric strings parse and failed non-nil conversions map to zero");
