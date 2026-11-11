@@ -369,7 +369,7 @@ fn objective_tracker_pulls_poi_button_owner_templates() {
 }
 
 #[test]
-fn only_forever_glue_feedback_pulls_customization_before_login_hooks() {
+fn glue_startup_keeps_character_roots_and_feedback_dependencies() {
     let ui = TempBlizzardUiDir::new("glue-feedback-customization");
     ui.add_addon(
         "Blizzard_PTRFeedbackGlue",
@@ -388,17 +388,12 @@ fn only_forever_glue_feedback_pulls_customization_before_login_hooks() {
         "## AllowLoad: Both\n## LoadOnDemand: 1\nCustomization.xml\n",
     );
 
-    let expected =
-        if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
-            vec![
-                "Blizzard_CustomizationUI",
-                "Blizzard_CharacterCustomize",
-                "Blizzard_CharacterCreate",
-                "Blizzard_PTRFeedbackGlue",
-            ]
-        } else {
-            vec!["Blizzard_PTRFeedbackGlue"]
-        };
+    let expected = vec![
+        "Blizzard_CustomizationUI",
+        "Blizzard_CharacterCustomize",
+        "Blizzard_CharacterCreate",
+        "Blizzard_PTRFeedbackGlue",
+    ];
     let discovered: Vec<String> = discover_blizzard_addons_for_screen(&ui.path, ScreenKind::Login)
         .into_iter()
         .map(|(name, _)| name)
@@ -643,4 +638,21 @@ fn real_glue_load_first_addons_sort_before_non_load_first_addons() {
         );
     }
 }
+}
+
+#[test]
+fn login_character_addon_bootstrap_is_eligible_without_a_full_root() {
+    let ui = TempBlizzardUiDir::new("login-character-bootstrap");
+    ui.add_addon(
+        "Blizzard_CharacterCustomize",
+        "## AllowLoad: Glue\n## LoadOnDemand: 1\nBootstrap.lua [Bootstrap]\nMain.lua\n",
+    );
+    let startup =
+        crate::loader::discover_blizzard_startup_addons_for_screen(&ui.path, ScreenKind::Login);
+    assert_eq!(startup.len(), 1);
+    assert_eq!(startup[0].name, "Blizzard_CharacterCustomize");
+    assert_eq!(
+        startup[0].kind,
+        crate::loader::StartupAddonLoadKind::BootstrapOnly
+    );
 }

@@ -581,9 +581,13 @@ fn apply_post_event_bootstrap(env: &crate::lua_api::WowLuaEnv) {
     crate::lua_api::workarounds_editmode::init_edit_mode_layout(env);
     crate::lua_api::workarounds_editmode::reapply_player_frame_anchor(env);
     crate::lua_api::chat_init::init_chat_type_colors(env);
-    let is_character_select =
-        env.state().borrow().screen_kind == crate::screen::ScreenKind::CharacterSelect;
-    if !is_character_select {
+    let screen = env.state().borrow().screen_kind;
+    // Login's original GlueParent owns chat visibility. Do not activate the
+    // simulator's in-game chat fixture after that policy has hidden it.
+    if !matches!(
+        screen,
+        crate::screen::ScreenKind::CharacterSelect | crate::screen::ScreenKind::Login
+    ) {
         crate::lua_api::chat_init::show_chat_frame(env);
     }
 }

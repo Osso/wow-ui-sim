@@ -681,6 +681,12 @@ fn login_submit_empty_host_roster_reaches_character_create() {
         let env = load_blizzard_screen(ScreenKind::Login);
         #[cfg(feature = "client-wowforever")]
         env.exec("SetCVar('hasSelectedExperiencePreset', '1')").unwrap();
+        assert!(env.state().borrow().glue_login.characters.is_empty());
+        wow_ui_sim::startup::run_extra_update_ticks(&env, 3);
+        assert!(env.eval::<bool>(r#"
+            return GlueParent.currentScreen == "login" and AccountLogin:IsShown()
+                and not CharacterCreateFrame:IsShown() and GetNumCharacters() == 0
+        "#).unwrap(), "empty-roster boot must remain on login before credentials");
         env.state().borrow_mut().glue_login.connection_info =
             wow_ui_sim::c_api::c_login::ConnectionInfo { ready: true, character_limit: 1 };
         enter_credentials_and_submit(&env, false);
@@ -1224,6 +1230,8 @@ fn glue_character_timerunning_season_uses_requested_record_without_active_fallba
         ("host-two", Some(12)),
         ("host-zero", Some(0)),
         ("host-default", None),
+        // Opaque host identity tests numeric-to-string conversion, not native GUID grammar.
+        ("123", Some(13)),
     ] {
         let mut account = fixture.clone();
         account.wow_account_guid = guid.into();
@@ -1250,6 +1258,7 @@ fn glue_character_timerunning_season_uses_requested_record_without_active_fallba
             assert(select('#', GetCharacterTimerunningSeasonID(guid)) == 1)
         end
         assert(GetCharacterTimerunningSeasonID(1) == nil) -- GUID conversion, not slot index.
+        assert(GetCharacterTimerunningSeasonID(123) == 13)
         assert(GetActiveTimerunningSeasonID() == 99)
         local function bad(...)
             local ok, message = pcall(GetCharacterTimerunningSeasonID, ...)

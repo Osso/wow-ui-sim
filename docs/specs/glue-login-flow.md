@@ -300,3 +300,11 @@ are UNKNOWN. No conformance assertions cover those cases; ordinary shared
 conversion/error behavior is not promoted to native evidence. R52 is pending
 for GetSelectBackgroundModel and SetCharSelectBackground, reached by the original
 Retail CharacterSelectUI.lua:374 consumer after the R49 season getter.
+
+The Login-only headless refresh guard is approved in comment 73. Direct
+CharacterSelect startup retains its compatibility refresh. The legacy
+GetCharacterListUpdate workaround remains necessary: original
+CharacterSelectListUtil.lua calls it, and R45/R49 do not register a replacement.
+Its synchronous direct-handler behavior is not newly claimed as native evidence.
+Login also skips the simulator's post-event chat activation fixture, preserving
+GlueParent's existing visibility decision instead of showing ChatFrame1 again.
