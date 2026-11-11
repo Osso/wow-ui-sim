@@ -74,8 +74,16 @@ fn active_game_mode_matches_published_enum() {
 }
 
 #[test]
-fn defaults_no_rules_standard_mode_character_select() {
-    let (active, f, i, s, plunder, mode, glue): (bool, f64, i64, String, bool, i64, String) = env()
+fn defaults_no_rules_standard_mode_without_glue_override() {
+    let (active, f, i, s, plunder, mode, glue): (
+        bool,
+        f64,
+        i64,
+        String,
+        bool,
+        i64,
+        Option<String>,
+    ) = env()
         .eval(
             r#"
             return C_GameRules.IsGameRuleActive("Anything"),
@@ -94,7 +102,7 @@ fn defaults_no_rules_standard_mode_character_select() {
     assert_eq!(s, "");
     assert!(!plunder);
     assert_eq!(mode, 1);
-    assert_eq!(glue, "CharacterSelect");
+    assert_eq!(glue, None);
 }
 
 #[test]
@@ -210,7 +218,7 @@ fn set_active_game_mode_back_to_standard_resets_glue_default() {
         .unwrap();
     env.exec(r#"A_Admin.SetActiveGameMode(Enum.GameMode.Standard)"#)
         .unwrap();
-    let (mode, plunder, glue): (i64, bool, String) = env
+    let (mode, plunder, glue): (i64, bool, Option<String>) = env
         .eval(
             r#"
             return C_GameRules.GetActiveGameMode(),
@@ -222,8 +230,8 @@ fn set_active_game_mode_back_to_standard_resets_glue_default() {
     assert_eq!(mode, 1);
     assert!(!plunder);
     assert_eq!(
-        glue, "CharacterSelect",
-        "no-glue arg falls back to CharacterSelect",
+        glue, None,
+        "only GlueParent supplies the charselect fallback"
     );
 }
 
@@ -262,4 +270,28 @@ fn numeric_enum_game_rule_ids_resolve_to_rule_names() {
         .unwrap();
     assert!(active, "Enum.GameRule id should resolve to the named rule");
     assert_eq!(value, 1.25);
+}
+
+#[test]
+fn empty_host_glue_screen_is_nil_and_nonempty_name_is_preserved() {
+    let env = env();
+    env.state().borrow_mut().game_rules.glue_screen_name = Some(String::new());
+    assert_eq!(
+        env.eval::<Option<String>>("return C_GameRules.GetGameModeGlueScreenName()")
+            .unwrap(),
+        None
+    );
+    env.exec(r#"A_Admin.SetActiveGameMode(2, "plunderstorm")"#)
+        .unwrap();
+    assert_eq!(
+        env.eval::<Option<String>>("return C_GameRules.GetGameModeGlueScreenName()")
+            .unwrap(),
+        Some("plunderstorm".into())
+    );
+    env.exec(r#"A_Admin.SetActiveGameMode(1, "")"#).unwrap();
+    assert_eq!(
+        env.eval::<Option<String>>("return C_GameRules.GetGameModeGlueScreenName()")
+            .unwrap(),
+        None
+    );
 }

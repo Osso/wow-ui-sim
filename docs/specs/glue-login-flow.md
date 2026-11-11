@@ -103,15 +103,36 @@ The coordinator owns the five existing Forever character-select/create failures
 on `forever-int-clean` (lt-95ac ANSWER 28). Integrate master after its merge; do
 not duplicate those fixes here. No acceptance claim is made before final tests.
 
-QUESTION **34** requests `CanCreateCharacter`, reached by full list updates at
-Retail `CharacterSelect.lua:788` and Forever `:803`. QUESTION **35** requests the
-ordinary/no-override `C_GameRules.GetGameModeGlueScreenName` contract. Its current
-`"CharacterSelect"` scenario default is not a key in the original `GLUE_SCREENS`.
-The getter's exact screen-selection consumers are Retail GlueParent.lua **220**
-and Forever **254**. The declaration says nonnil cstring, but Lua's fallback and
-empty-roster gate depend on absence. No return is guessed to bypass those gates.
+ANSWER **42** (R43, Retail70688 / Forever70707) resolves QUESTIONS34/35.
+`CanCreateCharacter` has no arguments or usage error. Registration is verified;
+Glue-only scope and the one-boolean return are INFERRED. It returns false while
+connection readiness is clear, otherwise compares the number of nonzero roster
+GUIDs with the stored signed limit. It does not test character-list arrival.
+`ConnectionInfo` is host input; default readiness is false and no realm capacity
+is invented. The offline policy delivers the supplied readiness and limit with
+the roster transition. Empty host GUID strings represent absent/zero entries for
+this comparison. Tests cover unready, zero/negative limits, absent GUIDs, equality
+and spare capacity. The nonempty UI fixture explicitly supplies readiness and
+limit 2; neither value is a native realm default.
+
+`GetGameModeGlueScreenName` is registered in Glue and Game. Native selection is
+override record, then selected-realm record, then no-mode sentinel; nonempty
+record names are returned, otherwise nil. Ordinary-play nil and the absence of a
+native charselect fallback are INFERRED. The simulator stores the resolved name
+as optional host input, default None; empty names also return nil. It does not
+fabricate record-selection data. The original GlueParent supplies `charselect`
+at Retail GlueParent.lua:220 / Forever:254. Updated tests assert nil for default
+and empty inputs, preserve explicit nonempty names, and require the original
+GlueParent fallback in the real login-submission tests.
 
 The R42 Forever submission run also reaches absent `IsNameReservationOnly` at
 `Blizzard_GlueXML/Mainline/CharacterSelect.lua:1003`. Its existing approved false
 default is PTR-only. A separate tracker question requests the Forever contract
 or confirmation that coordinator cleanup already owns it; no return is guessed.
+
+After R43, both Retail submission paths reach visible charselect and hidden
+login through the original GlueParent fallback. Their strict no-error assertion
+then exposes missing `SelectCharacter` at Retail CharacterSelect.lua:860
+(Forever:875). QUESTION43 requests that native setter and its relationship to
+`GetCharacterSelection`; it is not replaced by a guessed selection shortcut.
+An additional real-input test covers the empty host roster's charcreate path.

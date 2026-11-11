@@ -132,8 +132,8 @@ pub struct GameRulesState {
     /// Currently active `Enum.GameMode` value.
     pub active_game_mode: i32,
     /// Glue screen name the current game mode opens on at the login flow.
-    /// Default `"CharacterSelect"` (Standard).
-    pub glue_screen_name: String,
+    /// None represents ordinary play; the original GlueParent applies its fallback.
+    pub glue_screen_name: Option<String>,
     /// Server-supplied rule-set marker; zero means no current rule set.
     pub rule_set_marker: i32,
     /// Sparse rule store keyed by rule name. Missing key = inactive.
@@ -153,7 +153,7 @@ impl Default for GameRulesState {
     fn default() -> Self {
         Self {
             active_game_mode: crate::c_api::game_mode::STANDARD,
-            glue_screen_name: "CharacterSelect".into(),
+            glue_screen_name: None,
             rule_set_marker: 0,
             rules: HashMap::new(),
             hardcore_active: false,

@@ -16,7 +16,7 @@
 //!   → string form only, bool → clears on false / sets 0/0/"" with true as
 //!   marker. `nil` removes the rule.
 //! - `A_Admin.SetActiveGameMode(mode, glueScreen?)` — mode is an integer;
-//!   glueScreen defaults to `"CharacterSelect"`.
+//!   glueScreen defaults to no override (`nil`).
 
 use crate::c_api::game_mode;
 use crate::client_profile::{ACTIVE, ClientProfile};
@@ -177,8 +177,11 @@ pub fn get_active_game_mode(state: &mut LuaState) -> LuaResult<u32> {
 
 pub fn get_game_mode_glue_screen_name(state: &mut LuaState) -> LuaResult<u32> {
     let name = borrow_state(state)?.game_rules.glue_screen_name.clone();
-    let val = create_string(state, &name);
-    state.push(val);
+    let value = match name.filter(|name| !name.is_empty()) {
+        Some(name) => create_string(state, &name),
+        None => Val::Nil,
+    };
+    state.push(value);
     Ok(1)
 }
 
@@ -410,9 +413,7 @@ pub fn admin_set_game_rule(state: &mut LuaState) -> LuaResult<u32> {
 pub fn admin_set_active_game_mode(state: &mut LuaState) -> LuaResult<u32> {
     let mode =
         Option::<f64>::from_stack(state, 1)?.map_or(game_mode::STANDARD, |value| value as i32);
-    let glue = Option::<String>::from_stack(state, 2)?
-        .filter(|s| !s.is_empty())
-        .unwrap_or_else(|| "CharacterSelect".into());
+    let glue = Option::<String>::from_stack(state, 2)?.filter(|s| !s.is_empty());
     let mut sim = borrow_state_mut(state)?;
     sim.game_rules.active_game_mode = mode;
     sim.game_rules.glue_screen_name = glue;

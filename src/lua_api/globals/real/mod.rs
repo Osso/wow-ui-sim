@@ -24,6 +24,8 @@ pub mod event_callbacks;
 pub mod forever_stat_contributions;
 pub mod frame_level_helpers;
 pub(crate) mod game_clock;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod glue_connection;
 pub mod glyph_state;
 pub mod gossip_probes;
 pub(crate) mod group_role_counts;

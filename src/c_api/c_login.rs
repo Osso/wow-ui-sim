@@ -18,6 +18,13 @@ pub struct LogonQueue {
     pub estimated_seconds: f64,
 }
 
+/// R43 connection-info input. Zero is an empty simulator input, not a realm limit.
+#[derive(Clone, Copy, Debug, Default)]
+pub struct ConnectionInfo {
+    pub ready: bool,
+    pub character_limit: i32,
+}
+
 /// Host inputs and the offline login policy (lt-a667, ANSWER 30 / R40).
 /// No credentials are retained. Existing direct-screen boot remains separate.
 #[derive(Debug)]
@@ -27,6 +34,8 @@ pub struct LoginState {
     /// False is the empty offline scenario; realm discovery is not emulated.
     pub realm_list_available: bool,
     pub logon_queue: Option<LogonQueue>,
+    pub connection_info: ConnectionInfo,
+    pub(crate) received_connection_info: ConnectionInfo,
     pub(crate) submitted: bool,
     aurora_state: i32,
     connected_to_wow: bool,
@@ -39,6 +48,8 @@ impl Default for LoginState {
             characters: Vec::new(),
             realm_list_available: false,
             logon_queue: None,
+            connection_info: Default::default(),
+            received_connection_info: Default::default(),
             submitted: false,
             aurora_state: 1,
             connected_to_wow: false,
@@ -53,6 +64,7 @@ impl LoginState {
         self.pending_step = 0;
         self.aurora_state = 1;
         self.connected_to_wow = false;
+        self.received_connection_info = Default::default();
     }
 }
 
@@ -63,6 +75,7 @@ pub fn register_c_login(state: &mut LuaState) -> LuaResult<()> {
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     {
         table_set_rust_fn_static(state, ns, "Login", submission::login)?;
+        crate::lua_api::globals::real::glue_connection::register(state)?;
         table_set_rust_fn_static(
             state,
             ns,
@@ -141,6 +154,7 @@ pub(crate) fn advance(env: &crate::lua_api::WowLuaEnv) -> crate::Result<()> {
                 login.pending_step = 3;
             }
             3 => {
+                login.received_connection_info = login.connection_info;
                 login.pending_step = 0;
             }
             _ => return Ok(()),

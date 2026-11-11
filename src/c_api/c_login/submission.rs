@@ -24,6 +24,7 @@ pub(super) fn login(state: &mut LuaState) -> LuaResult<u32> {
         login.submitted = true;
         login.aurora_state = 3;
         login.connected_to_wow = false;
+        login.received_connection_info = Default::default();
         login.pending_step = 1;
     }
     // R40 permits synchronous CONNECTING; this sequence is simulator policy.

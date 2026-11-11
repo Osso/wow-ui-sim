@@ -315,24 +315,12 @@ fn login_editboxes_gain_focus_when_clicking_their_visible_centers() {
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-fn submit_login_through_ui(click_button: bool) {
-    let env = load_blizzard_screen(ScreenKind::Login);
-    // Explicit host fixture: login never borrows the unrelated social roster.
-    let fixture = env
-        .state()
-        .borrow()
-        .bnet_friends
-        .iter()
-        .flat_map(|friend| &friend.game_accounts)
-        .find(|account| account.client_program == "WoW")
-        .unwrap()
-        .clone();
-    env.state().borrow_mut().glue_login.characters = vec![fixture];
+fn enter_credentials_and_submit(env: &WowLuaEnv, click_button: bool) {
     for (path, text) in [
         ("AccountLogin.UI.AccountEditBox", "sim@example.invalid"),
         ("AccountLogin.UI.PasswordEditBox", "arbitrary-password"),
     ] {
-        let hit = hit_test_like_gui(&env, frame_center(&env, path))
+        let hit = hit_test_like_gui(env, frame_center(env, path))
             .expect("edit box center should be hittable");
         env.send_click(hit).expect("edit box click should dispatch");
         for character in text.chars() {
@@ -347,7 +335,7 @@ fn submit_login_through_ui(click_button: bool) {
         );
     }
     if click_button {
-        let hit = hit_test_like_gui(&env, frame_center(&env, "AccountLogin.UI.LoginButton"))
+        let hit = hit_test_like_gui(env, frame_center(env, "AccountLogin.UI.LoginButton"))
             .expect("login button center should be hittable");
         env.send_click(hit)
             .expect("login button click should dispatch");
@@ -355,13 +343,43 @@ fn submit_login_through_ui(click_button: bool) {
         env.send_key_press("ENTER", None)
             .expect("Enter should submit the password edit box");
     }
-    wow_ui_sim::startup::run_extra_update_ticks(&env, 3);
+    wow_ui_sim::startup::run_extra_update_ticks(env, 3);
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn submit_login_through_ui(click_button: bool) {
+    let env = load_blizzard_screen(ScreenKind::Login);
+    // Explicit host fixture: login never borrows the unrelated social roster.
+    let fixture = env
+        .state()
+        .borrow()
+        .bnet_friends
+        .iter()
+        .flat_map(|friend| &friend.game_accounts)
+        .find(|account| account.client_program == "WoW")
+        .unwrap()
+        .clone();
+    env.state().borrow_mut().glue_login.characters = vec![fixture];
+    env.state().borrow_mut().glue_login.connection_info =
+        wow_ui_sim::c_api::c_login::ConnectionInfo {
+            ready: true,
+            character_limit: 2,
+        };
+    enter_credentials_and_submit(&env, click_button);
     let current: String = env
         .eval("return tostring(GlueParent.currentScreen)")
         .unwrap();
     let best: String = env
         .eval("return tostring(GlueParent_GetBestScreen())")
         .unwrap();
+    assert!(
+        env.eval::<bool>("return C_GameRules.GetGameModeGlueScreenName() == nil")
+            .unwrap()
+    );
+    assert_eq!(
+        best, "charselect",
+        "original GlueParent must apply the fallback"
+    );
     let (character_select, login): (bool, bool) = env
         .eval("return CharacterSelect ~= nil and CharacterSelect:IsShown(), AccountLogin:IsShown()")
         .expect("screen visibility should be readable");
@@ -594,4 +612,79 @@ fn login_queue_uses_host_snapshots_separate_from_wow_connection_state() {
         errors.is_empty(),
         "queue callbacks should succeed: {errors:#?}"
     );
+}
+
+#[test]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn login_connection_info_controls_character_creation_capacity() {
+    use wow_ui_sim::c_api::c_login::ConnectionInfo;
+    let env = common::lock_env(|| WowLuaEnv::new().unwrap());
+    env.set_screen_mode(ScreenKind::Login);
+    assert!(!env.eval::<bool>("return CanCreateCharacter()").unwrap());
+    let fixture = env
+        .state()
+        .borrow()
+        .bnet_friends
+        .iter()
+        .flat_map(|friend| &friend.game_accounts)
+        .find(|account| account.client_program == "WoW")
+        .unwrap()
+        .clone();
+    for (ready, limit, populated, expected) in [
+        (false, 2, true, false),
+        (true, 0, false, false),
+        (true, -1, false, false),
+        (true, 1, false, true),
+        (true, 1, true, false),
+        (true, 2, true, true),
+    ] {
+        let mut row = fixture.clone();
+        if !populated {
+            row.wow_account_guid.clear();
+        }
+        {
+            let mut sim = env.state().borrow_mut();
+            sim.glue_login.characters = vec![row];
+            sim.glue_login.connection_info = ConnectionInfo {
+                ready,
+                character_limit: limit,
+            };
+        }
+        env.exec(r#"C_Login.Login("offline", CreateFrame("EditBox"))"#)
+            .unwrap();
+        assert!(
+            !env.eval::<bool>("return CanCreateCharacter()").unwrap(),
+            "connection info has not arrived"
+        );
+        for _ in 0..10 {
+            env.fire_on_update(0.016).unwrap();
+        }
+        assert_eq!(
+            env.eval::<bool>("return CanCreateCharacter()").unwrap(),
+            expected
+        );
+        assert_eq!(
+            env.eval::<i32>("return select('#', CanCreateCharacter())")
+                .unwrap(),
+            1
+        );
+    }
+}
+
+#[test]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn login_submit_empty_host_roster_reaches_character_create() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::Login);
+        env.state().borrow_mut().glue_login.connection_info =
+            wow_ui_sim::c_api::c_login::ConnectionInfo { ready: true, character_limit: 1 };
+        enter_credentials_and_submit(&env, false);
+        assert!(env.eval::<bool>(r#"
+            return GlueParent.currentScreen == "charcreate"
+                and CharacterCreateFrame:IsShown() and not AccountLogin:IsShown()
+                and GetNumCharacters() == 0
+        "#).unwrap(), "empty roster must follow original Lua to charcreate");
+        let errors = env.state().borrow().lua_errors.clone();
+        assert!(errors.is_empty(), "empty-roster login errors: {errors:#?}");
+    }
 }
