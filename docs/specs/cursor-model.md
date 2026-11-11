@@ -23,16 +23,16 @@ VERIFIED (WM46): the mode names and the PickupAction rule that the slot's conten
 
 ### PTR 12.1.7 ActionBar contract (R29)
 
-- [ ] After `PickupAction(slot)` from a spell slot, `GetCursorInfo()` returns five values: `"spell"`, book slot or 0, `"spell"`, spell ID, and related ID or nil. The spell ID is the fourth value; an empty cursor returns zero values.
-- [ ] `PickupAction(slot)` removes the action before notifying its source slot. `PickupAction(slot, true)` copies it without removing the source.
-- [ ] Pickup event order is `ACTIONBAR_SHOWGRID`, `CURSOR_CHANGED`, `ACTIONBAR_SLOT_CHANGED(sourceSlot)`, then one queued/coalesced `ACTIONBAR_UPDATE_COOLDOWN`; no `ACTIONBAR_UPDATE_STATE` post is sent.
-- [ ] Placing into an empty slot hides the grid, clears the cursor, notifies the target slot, then queues `ACTIONBAR_UPDATE_COOLDOWN`.
-- [ ] Placing onto another action swaps the displaced action onto the cursor. A spell-to-spell swap shows the grid before notifying the target and suppresses the final `CURSOR_CHANGED` because the cursor mode stays Spell.
-- [ ] Placing the same resolved spell clears the cursor without changing or notifying the target slot.
-- [ ] During combat lockdown, a tainted caller's pickup is blocked before any change. A blocked place reports `ADDON_ACTION_BLOCKED`, clears the cursor, and does not assign the target.
-- [ ] Action-bar lock settings are checked by the Lua drag consumer, not by `PickupAction` or `PlaceAction`; the receive-drag consumer has no lock check.
-- [ ] PTR action slots are 1–360; Retail action slots are 1–180.
-- [ ] PTR PetAction categories 6 and 7 return a book index or 0 as the third value and nil as the fourth. Retail returns nil as the third value for these categories.
+- [x] After `PickupAction(slot)` from a spell slot, `GetCursorInfo()` returns five values: `"spell"`, book slot or 0, `"spell"`, spell ID, and related ID or nil. The spell ID is the fourth value; an empty cursor returns zero values.
+- [x] `PickupAction(slot)` removes the action before notifying its source slot. `PickupAction(slot, true)` copies it without removing the source.
+- [x] Pickup event order is `ACTIONBAR_SHOWGRID`, `CURSOR_CHANGED`, `ACTIONBAR_SLOT_CHANGED(sourceSlot)`, then one queued/coalesced `ACTIONBAR_UPDATE_COOLDOWN`; no `ACTIONBAR_UPDATE_STATE` post is sent.
+- [x] Placing into an empty slot hides the grid, clears the cursor, notifies the target slot, then queues `ACTIONBAR_UPDATE_COOLDOWN`.
+- [x] Placing onto another action swaps the displaced action onto the cursor. A spell-to-spell swap shows the grid before notifying the target and suppresses the final `CURSOR_CHANGED` because the cursor mode stays Spell.
+- [x] Placing the same resolved spell clears the cursor without changing or notifying the target slot.
+- [x] During combat lockdown, a tainted caller's pickup is blocked before any change. A blocked place reports `ADDON_ACTION_BLOCKED`, clears the cursor, and does not assign the target.
+- [x] Action-bar lock settings are checked by the Lua drag consumer, not by `PickupAction` or `PlaceAction`; the receive-drag consumer has no lock check.
+- [x] PTR action slots are 1–360; Retail action slots are 1–180.
+- [x] PTR PetAction categories 6 and 7 return a book index or 0 as the third value and nil as the fourth. Retail returns nil as the third value for these categories.
 
 ### Stored ID and grid
 

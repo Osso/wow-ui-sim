@@ -6,16 +6,16 @@
 
 ### Registration and arguments
 
-- [ ] Register only in the PTR Game environment; do not publish the member on Retail.
-- [ ] Require `spellID` followed by `actionID`; parse signed 32-bit and unsigned 32-bit values, accept numeric strings, and truncate fractions toward zero.
-- [ ] Report the R33 usage and range errors for missing, nil, nonnumeric, non-finite, and out-of-range arguments.
+- [x] Register only in the PTR Game environment; do not publish the member on Retail.
+- [x] Require `spellID` followed by `actionID`; parse signed 32-bit and unsigned 32-bit values, accept numeric strings, and truncate fractions toward zero.
+- [x] Report the R33 usage and range errors for missing, nil, nonnumeric, non-finite, and out-of-range arguments.
 
 ### Results
 
-- [ ] Return zero Lua values when the converted action slot is outside 1–408; otherwise return one boolean.
-- [ ] In normal mode, return true for every valid slot, including `spellID == 0`.
-- [ ] In WoW Hack mode, return false for `spellID == 0`; allow nonzero spells in unrestricted slots; and require the slot group's SpellLabel in restricted slots.
-- [ ] Read SpellLabel IDs from host-supplied per-spell data, with no records by default.
+- [x] Return zero Lua values when the converted action slot is outside 1–408; otherwise return one boolean.
+- [x] In normal mode, return true for every valid slot, including `spellID == 0`.
+- [x] In WoW Hack mode, return false for `spellID == 0`; allow nonzero spells in unrestricted slots; and require the slot group's SpellLabel in restricted slots.
+- [x] Read SpellLabel IDs from host-supplied per-spell data, with no records by default.
 
 ## How it works
 
