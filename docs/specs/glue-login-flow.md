@@ -309,12 +309,20 @@ Its synchronous direct-handler behavior is not newly claimed as native evidence.
 Login also skips the simulator's post-event chat activation fixture, preserving
 GlueParent's existing visibility decision instead of showing ChatFrame1 again.
 
-Remaining Retail chat visibility gap (comment 77): diagnostic reads show
-AllowChatFramesToShow comes from Shared/FloatingChatFrame.lua:40 (always true),
-replacing GlueParent.lua:909's screen-aware policy before settling. Suppressing
-the simulator chat activation fixture alone does not fix this ordering/environment
-gap. Native clarification is pending; no vendor override, forced hide, or guessed
-addon reordering is added.
+R55 (comment 86) identifies a cached-source split: Forever and PTR put the
+always-true AllowChatFramesToShow in FloatingChatFrameGame.lua, selected only by
+[AllowLoad game]. At Glue this file is skipped, preserving GlueParent's policy.
+The Forever plain-login regression loads original addons with no post-load,
+post-event, or settling fixtures and verifies the original GlueParent function
+source, false policy, shown AccountLogin, and hidden ChatFrame1. It passes.
+PTR runtime verification awaits the authorized complete cache.
+
+Retail 70575 instead defines the always-true function in the unfiltered shared
+FloatingChatFrame.lua:40, replacing GlueParent.lua:909's screen-aware policy.
+The coordinator owns the Retail 70783 pin refresh; this case is blocked on that
+refresh, not repaired here. No vendor override, forced hide, addon replay, or
+guessed reordering is added. R55's native evidence is Retail 70688/Forever 70707;
+exact matching of the cached Retail files to the image remains unknown.
 
 ### R52 background lookup and supplied row boundary
 
