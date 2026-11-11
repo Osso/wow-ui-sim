@@ -14,7 +14,7 @@
 
 - [ ] VERIFIED: a changed `bpayStoreEnable` value fires one `STORE_STATUS_CHANGED` event with no payload and no `CVAR_UPDATE`.
 - [ ] VERIFIED: a `shop2Enabled` change on an initialized path fires no Lua event and no `CVAR_UPDATE`. First-use event behavior is UNKNOWN.
-- [ ] VERIFIED source behavior: the shipped GameMenu creates its Store button only when both API values are true. INFERRED: the built-in `(false, true)` values hide that button by default.
+- [ ] VERIFIED source behavior: PTR 12.1.7 uses an AND gate for the GameMenu Store button; Retail 12.1.5 uses an OR gate. INFERRED: the built-in `(false, true)` values hide the button on PTR and show it on Retail.
 - [ ] Do not assert real-account server values, a `shop2Enabled` first-use event result, or 70493 behavior. The 70493 image was not available for R38.
 
 ## How it works
@@ -31,7 +31,7 @@
 
 ## Tests asserting this spec
 
-- `tests/game_menu.rs`: API defaults/shape, inferred default button visibility, bpay event behavior, hidden CVar non-exposure, and Shop 2 versus legacy Store consumers.
+- `tests/game_menu.rs`: API defaults/shape, profile-specific inferred button visibility, bpay event behavior, hidden CVar non-exposure, and Shop 2 versus legacy Store consumers.
 - `tests/ptr_rewards_shop.rs`: shared PTR `bpayStoreEnable` input behavior.
 - `src/lua_api/workarounds/temporary/housing_catalog_state.rs`: Shop 2 query default on covered profiles.
 

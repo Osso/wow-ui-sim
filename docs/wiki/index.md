@@ -2,7 +2,7 @@
 
 ## [2026-11-11] system | PTR/Retail store API availability
 
-[Store API availability](systems/store-api-availability.md) links the R38 evidence boundary to its [contract](../specs/store-api-availability.md). VERIFIED: the source records separate defaults and update events; INFERRED: GameMenu's Store button is hidden by default. Implementation tests are pending.
+[Store API availability](systems/store-api-availability.md) links the R38 evidence boundary to its [contract](../specs/store-api-availability.md). VERIFIED: PTR GameMenu uses AND and Retail uses OR; INFERRED: defaults (false, true) hide the PTR button and show the Retail button. Targeted verification is pending.
 
 ## [2026-11-10] system | Cursor modes and ActionBar transitions
 

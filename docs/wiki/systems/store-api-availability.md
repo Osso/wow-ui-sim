@@ -16,14 +16,15 @@ On PTR, `C_GameRules.IsRewardsShopEnabled()` also reads the hidden `bpayStoreEna
 
 ## Evidence boundary
 
-R38 verifies PTR 12.1.7.70668 and provides a limited Retail 12.1.5.70688 comparison. It records independent reads, defaults `false`/`true`, the hidden CVar flag, and the event outcomes above. The `C_CVar.GetCVar` refusal is verified, but a nil result is inferred; tests only check that the host values are not returned. The GameMenu default-hidden result is also inferred from the two defaults and the shipped conjunction. 70493, real-account values, and the shop2 first-use path remain UNKNOWN.
+R38 verifies PTR 12.1.7.70668 and provides a limited Retail 12.1.5.70688 comparison. It records independent reads, defaults `false`/`true`, the hidden CVar flag, and the event outcomes above. The `C_CVar.GetCVar` refusal is verified, but a nil result is inferred; tests only check that the host values are not returned. PTR's shipped GameMenu uses an AND gate, so the default-hidden result is inferred. Retail's shipped GameMenu uses an OR gate, so the same defaults infer a visible button. 70493, real-account values, and the shop2 first-use path remain UNKNOWN.
 
 ## Sources
 
 - [Behavioral contract](../../specs/store-api-availability.md).
 - [R38 implementation report](../../handoff/ptr-int-clean/REPORT.md#store-api-behavior--r38-evidence-implementation-verification-pending) — source evidence and verification status.
 - R38 source evidence: `~/.local/state/wow-ui-sim/handoff/pr46-49-decomp-answers.md#r38`.
-- PTR `Blizzard_GameMenu/Shared/GameMenuFrame.lua:43-46,96-102,198-200`.
+- PTR `Blizzard_GameMenu/Shared/GameMenuFrame.lua:198-204` uses an AND gate.
+- Retail `Blizzard_GameMenu/Shared/GameMenuFrame.lua:148-154` uses an OR gate.
 
 ## See Also
 

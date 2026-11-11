@@ -5,6 +5,7 @@
 //! vertically, and lives in the DIALOG strata.
 
 use crate::common::game_menu_fixture::setup_game_menu_env;
+use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
 
 /// Enumerate native buttons without installing a pool or changing vendor frames.
 fn menu_button_chunk(code: &str) -> String {
@@ -473,7 +474,7 @@ fn test_game_menu_shop_button_opens_store_and_menu_can_reopen_after_store_closes
 post_wrath_ui_fixture! {
 #[cfg(any(feature = "client-ptr", feature = "client-retail"))]
 #[test]
-fn store_api_defaults_hide_game_menu_store_button() {
+fn store_api_defaults_follow_profile_game_menu_gate() {
     test_timeout! {
         let env = setup_game_menu_env();
         let result: (i64, bool, i64, bool, bool) = env
@@ -495,8 +496,9 @@ fn store_api_defaults_hide_game_menu_store_button() {
 
         assert_eq!((result.0, result.1), (1, false), "R38 StorePublic default");
         assert_eq!((result.2, result.3), (1, true), "R38 Shop 2 default");
-        // INFERRED: the shipped GameMenu conjunction hides the button for false/true.
-        assert!(!result.4, "default store inputs should hide the GameMenu button");
+        // Retail uses OR; PTR uses AND. The false/true defaults are source-backed.
+        let default_store_button_visible = ACTIVE == ClientProfile::Retail;
+        assert_eq!(result.4, default_store_button_visible);
     }
 }
 }
@@ -504,7 +506,7 @@ fn store_api_defaults_hide_game_menu_store_button() {
 post_wrath_ui_fixture! {
 #[cfg(any(feature = "client-ptr", feature = "client-retail"))]
 #[test]
-fn store_status_change_rebuilds_game_menu_store_button() {
+fn store_status_change_obeys_profile_game_menu_gate() {
     test_timeout! {
         let env = setup_game_menu_env();
         env.exec("GameMenuFrame:Show()").unwrap();
@@ -516,7 +518,8 @@ fn store_status_change_rebuilds_game_menu_store_button() {
                 return false
             "#))
             .unwrap();
-        assert!(!initially_visible);
+        let default_store_button_visible = ACTIVE == ClientProfile::Retail;
+        assert_eq!(initially_visible, default_store_button_visible);
         env.exec(r#"
             StoreEventCounts = { status = 0, cvar = 0, payloads = -1 }
             local listener = CreateFrame("Frame")
@@ -559,7 +562,7 @@ fn store_status_change_rebuilds_game_menu_store_button() {
                 return false
             "#))
             .unwrap();
-        assert!(!disabled_visible);
+        assert_eq!(disabled_visible, default_store_button_visible);
         let after_disable: (i64, i64, i64) = env
             .eval("return StoreEventCounts.status, StoreEventCounts.payloads, StoreEventCounts.cvar")
             .unwrap();
