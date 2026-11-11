@@ -173,6 +173,10 @@ fn login_boot_hides_non_login_frontend_frames() {
         );
         }
 
+        // R62 / tracker107: Retail chat-role dock visibility has the same
+        // UNKNOWN native filtering/parent-visibility boundary as ChatFrame1.
+        #[cfg(not(feature = "client-retail"))]
+        {
         let chat_dock_visible: bool = env
             .eval("return GeneralDockManager ~= nil and GeneralDockManager:IsShown()")
             .expect("GeneralDockManager visibility should be queryable");
@@ -180,6 +184,7 @@ fn login_boot_hides_non_login_frontend_frames() {
             !chat_dock_visible,
             "plain login screen should not show the chat dock"
         );
+        }
 
         let char_customize_visible: bool = env
             .eval("return CharCustomizeFrame ~= nil and CharCustomizeFrame:IsShown()")

@@ -432,7 +432,7 @@ Comment 104 permits narrowing only the Retail ChatFrame1 post-startup visibility
 assertion: live AccountLogin chat visibility remains UNKNOWN. The simulator is
 not changed to hide or show chat, and neither the original Lua nor its winning
 function is overridden. PTR/Forever visibility checks, AccountLogin and
-customization checks, the chat-dock assertion, strict submission error checks,
+customization checks, other-profile chat-dock assertions, strict submission error checks,
 and original input/transition tests remain intact. A Retail source regression
 retains VERIFIED XML initial-hidden declaration, GlueParent's own login-false
 policy, and the chat Lua's policy consultation. These source facts are not a
@@ -444,3 +444,9 @@ and LoadWith targets precede an addon's own files. Files use TOC line order,
 and unannotated lines are accepted at Glue. Shared-loader deviations are
 reported to the coordinator, not repaired in this lane. Case-insensitive name
 order is only inferred and equal-name tie order unknown; neither is asserted.
+
+Comment107 explicitly extends the same Retail-only UNKNOWN boundary to the
+GeneralDockManager chat-role dock assertion. Both Retail post-startup chat
+visibility expectations are omitted, without changing runtime behavior; other
+profiles' dock checks and every non-chat visibility/error/input assertion remain.
+The coordinator owns shared-loader ordering deviations in a separate lane.
