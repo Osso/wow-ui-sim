@@ -139,23 +139,6 @@ fn c_login_get_state(state: &mut LuaState) -> LuaResult<u32> {
 
 /// Advance the explicit offline policy once per update, not native frame timing.
 pub(crate) fn advance(env: &crate::lua_api::WowLuaEnv) -> crate::Result<()> {
-    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-    if env.state().borrow().glue_login.pending_step == 2 {
-        if let Err(error) = crate::loader::glue_login::prepare_character_addons(env) {
-            // A failed load may still mark the addon loaded. Stop this offline
-            // attempt instead of retrying into an empty successful LoadResult.
-            let mut sim = env.state().borrow_mut();
-            if sim.glue_login.pending_step == 2 {
-                sim.glue_login.pending_step = 0;
-            }
-            return Err(error);
-        }
-        // Addon callbacks may cancel or replace this attempt. Never publish the
-        // old authentication transition over a new login or explicit boot.
-        if env.state().borrow().glue_login.pending_step != 2 {
-            return Ok(());
-        }
-    }
     let step = {
         let mut sim = env.state().borrow_mut();
         let login = &mut sim.glue_login;

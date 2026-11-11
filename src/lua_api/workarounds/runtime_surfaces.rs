@@ -86,7 +86,7 @@ pub(super) fn patch_map_canvas_data_provider_attachment(env: &crate::lua_api::Wo
     temporary::map_canvas_data_provider_pin::patch(env);
 }
 
-pub(crate) fn patch_character_create_defaults(env: &crate::lua_api::WowLuaEnv) {
+pub(super) fn patch_character_create_defaults(env: &crate::lua_api::WowLuaEnv) {
     temporary::character_create_defaults::patch(env);
 }
 
