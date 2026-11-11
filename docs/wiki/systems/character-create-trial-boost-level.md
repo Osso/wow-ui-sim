@@ -16,6 +16,12 @@
 - **VERIFIED (R61):** Retail and WowForever register the getter through the Glue catalog. **INFERRED:** native availability is Glue-only because the checked Game catalogs do not install the namespace. The simulator removes the member on Game screens.
 - PTR keeps its existing zero fallback. Native PTR availability and result behavior remain **UNKNOWN**.
 
+### Runtime evidence and boundaries
+
+- **VERIFIED (Retail 12.1.5.70783 simulator):** the screen-registration, getter/arity, host-selector, original tooltip, zero-selector, no-match and exact-export tests pass.
+- **VERIFIED (Forever simulator at `091aac3ce`):** the Glue/Game registration and empty-row tests pass. The three broader CharacterCreate filters fail before the trial-level tooltip consumer at nil `C_CharacterCreation.SetInCharacterCreate` in `Blizzard_CharacterCreate/Camelot/Blizzard_CharacterCreate.lua:221`. The action-update and transition filters also log nil `GetSelectedSuperDistrictID` and `HasQueuedUpgrade` calls; those APIs are outside this contract. The direct original tooltip consumer test is added, but its run is pending.
+- **UNKNOWN:** Forever native rows and PTR native getter availability remain unknown; see the [feature contract](../../specs/character-create-trial-boost-level.md#known-gaps-current-cycle).
+
 ### Retail data regeneration
 
 `data/character-service-info/retail-12.1.5.70783.csv` is the exact CSV exported from local Retail build `12.1.5.70783`. The adjacent provenance file records the FDID, WDC5 layout, scanned WoWDBDefs hash, exporter hash and CSV hash. `python3 tools/gen_character_creation_trial_boost.py` verifies the CSV and definition hashes, then writes the Rust tuple table without reordering the CSV. **VERIFIED (exporter source and CSV):** the exporter sorts records by ID, and the 13 `(ServiceType, BoostType)` pairs are unique. Thus current lookup results do not depend on this export order; future duplicate keys require the host's actual table iteration order.
