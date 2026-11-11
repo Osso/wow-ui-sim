@@ -69,7 +69,9 @@ fn set_preset(state: &mut LuaState) -> LuaResult<u32> {
     }
     // Unknown native refresh and optional server requests are intentionally omitted.
     // No synthetic validation callback or server response is introduced.
-    let _accepted = set_native_cvar(state, CVAR, "1")?;
-    dispatch_event_now(state, "LOGIN_STATE_CHANGED", &[])?;
+    let write_result = set_native_cvar(state, CVAR, "1");
+    let login_result = dispatch_event_now(state, "LOGIN_STATE_CHANGED", &[]);
+    write_result?;
+    login_result?;
     Ok(0)
 }

@@ -1192,7 +1192,7 @@ fn glue_experience_preset_reads_real_cvar_numeric_prefix() {
         );
     }
     assert_eq!(
-        env.eval::<u32>("return presetLoginEvents").unwrap(),
+        env.eval::<i32>("return presetLoginEvents").unwrap(),
         0,
         "generic CVar writes must not synthesize a login-state event"
     );
@@ -1292,10 +1292,23 @@ fn glue_experience_preset_setter_orders_native_cvar_and_login_events() {
         assert(table.concat(presetEvents, ',') == 'LOGIN_STATE_CHANGED')
     "#).unwrap();
     assert!(env.state().borrow().game_rules.experience_preset_changed);
-    assert_eq!(env.state().borrow().game_rules.classic_experience_chosen, Some(false));
-    for (input, classic) in [("256", true), ("0.9", true), ("1.9", false), ("'257'", false), ("true", true), ("'junk'", true)] {
+    assert_eq!(
+        env.state().borrow().game_rules.classic_experience_chosen,
+        Some(false)
+    );
+    for (input, classic) in [
+        ("256", true),
+        ("0.9", true),
+        ("1.9", false),
+        ("'257'", false),
+        ("true", true),
+        ("'junk'", true),
+    ] {
         env.exec(&format!("presetEvents = {{}}; C_GameRules.SetForeverExperiencePresetPreLogin({input}); assert(table.concat(presetEvents, ',') == 'LOGIN_STATE_CHANGED')")).unwrap();
-        assert_eq!(env.state().borrow().game_rules.classic_experience_chosen, Some(classic));
+        assert_eq!(
+            env.state().borrow().game_rules.classic_experience_chosen,
+            Some(classic)
+        );
     }
     env.exec(r#"
         for _, input in ipairs({2, 255, 258, 2147483648, -2147483649}) do
@@ -1306,7 +1319,38 @@ fn glue_experience_preset_setter_orders_native_cvar_and_login_events() {
         local ok, message = pcall(C_GameRules.SetForeverExperiencePresetPreLogin)
         assert(not ok and message:find('Usage: C_GameRules.SetForeverExperiencePresetPreLogin(preset)', 1, true))
     "#).unwrap();
-    assert_eq!(env.state().borrow().game_rules.classic_experience_chosen, Some(true));
+    assert_eq!(
+        env.state().borrow().game_rules.classic_experience_chosen,
+        Some(true)
+    );
+    assert!(env.state().borrow().lua_errors.is_empty());
     env.set_screen_mode(ScreenKind::Game);
-    assert!(env.eval::<bool>("return type(C_GameRules.SetForeverExperiencePresetPreLogin) == 'function'").unwrap());
+    assert!(
+        env.eval::<bool>(
+            "return type(C_GameRules.SetForeverExperiencePresetPreLogin) == 'function'"
+        )
+        .unwrap()
+    );
+}
+
+#[test]
+#[cfg(feature = "client-ptr")]
+fn glue_preset_login_notification_survives_synchronous_cvar_callback_error() {
+    let env = common::lock_env(|| WowLuaEnv::new().unwrap());
+    env.set_screen_mode(ScreenKind::Login);
+    env.exec(r#"
+        SetCVar('hasSelectedExperiencePreset', '0')
+        local callback = C_FunctionContainers.CreateCallback(function() error('preset callback probe') end)
+        RegisterEventCallback('CVAR_UPDATE', callback)
+        loginNotified = 0
+        local frame = CreateFrame('Frame')
+        frame:RegisterEvent('LOGIN_STATE_CHANGED')
+        frame:SetScript('OnEvent', function() loginNotified = loginNotified + 1 end)
+        local ok, message = pcall(C_GameRules.SetForeverExperiencePresetPreLogin, 1)
+        assert(not ok and message:find('preset callback probe', 1, true))
+        assert(loginNotified == 1)
+        assert(GetCVar('hasSelectedExperiencePreset') == '1')
+        UnregisterEventCallback('CVAR_UPDATE', callback)
+    "#).unwrap();
+    assert!(env.state().borrow().lua_errors.is_empty());
 }
