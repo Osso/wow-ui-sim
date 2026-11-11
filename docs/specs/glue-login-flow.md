@@ -485,3 +485,8 @@ asserting projections, preserving the distinction from verified native results.
 The removed Forever credits notice/catalog and mutable video placeholders no
 longer supply native-facing answers. The separate renderer MSAA workaround is
 not relabeled as a static native capability or widened to PTR.
+
+The original credits consumer fixture supplies rows/text before addon loading,
+without replaying OnLoad. Opening credits with an empty host catalog would call
+the text getter with nil at CreditsFrame.lua:112; that input remains an explicit
+coverage error pending R65, not a claim about native empty-list behavior.

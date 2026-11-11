@@ -14,8 +14,18 @@ fn load_login_screen() -> common::LockedEnv {
 fn load_login_screen_with_video_capabilities(
     bytes: Option<VideoCapabilityBytes>,
 ) -> common::LockedEnv {
+    load_login_screen_with_inputs(bytes, None)
+}
+
+fn load_login_screen_with_inputs(
+    bytes: Option<VideoCapabilityBytes>,
+    credits: Option<wow_ui_sim::c_api::credits::CreditsState>,
+) -> common::LockedEnv {
     common::lock_env(|| {
         let env = WowLuaEnv::new().expect("create Forever login environment");
+        if let Some(credits) = credits {
+            env.state().borrow_mut().credits = credits;
+        }
         if let Some(bytes) = bytes {
             env.state().borrow_mut().video_capability_bytes = bytes;
         }
@@ -35,15 +45,16 @@ fn load_login_screen_with_video_capabilities(
 #[test]
 fn forever_host_credits_support_original_view_and_selector() {
     test_timeout! {
-        let env = load_login_screen();
-        // Explicit host fixture, not a reconstructed fresh native credits list.
-        env.state().borrow_mut().credits.rows.push(wow_ui_sim::c_api::credits::CreditsRow {
+        // Supply the fixture before original OnLoad, without replaying startup.
+        let mut credits = wow_ui_sim::c_api::credits::CreditsState::default();
+        credits.rows.push(wow_ui_sim::c_api::credits::CreditsRow {
             is_default: true, credits_file_id: 17,
             key_art: "CreditsScreen-Keyart-0".into(),
             background: "CreditsScreen-Background-0".into(),
             name: "Host credits".into(), ..Default::default()
         });
-        env.state().borrow_mut().credits.texts.insert(17, "<html><body><p>Host-supplied credits.</p></body></html>".into());
+        credits.texts.insert(17, "<html><body><p>Host-supplied credits.</p></body></html>".into());
+        let env = load_login_screen_with_inputs(None, Some(credits));
         env.exec(r#"
             local catalog = GetCreditsDisplayInfo()
             assert(type(catalog) == "table" and #catalog == 1)
@@ -57,7 +68,6 @@ fn forever_host_credits_support_original_view_and_selector() {
             catalog[1].name = "changed"
             assert(GetCreditsDisplayInfo()[1].name == "Host credits")
 
-            CreditsFrame:OnLoad()
             assert(CreditsFrame.selection == 1)
             CreditsFrame:Show()
             CreditsFrame:Update()
