@@ -5,9 +5,10 @@
 ## What it must do
 
 - [x] `GetLootSpecialization()` returns the stored simulator value; the initial value is 0.
-- [x] `SetLootSpecialization` accepts a numeric argument, returns no values, raises `Usage: SetLootSpecialization(specializationID)` for a non-number, and does not reject an ID because it is absent from the local class catalog.
-- [ ] A setter call does not change the stored getter value or emit `PLAYER_LOOT_SPEC_UPDATED`; no server response is simulated.
-- [ ] Do not model `HasLootSpecializations`; the ordinary Retail `true` result is INFERRED, not VERIFIED.
+- [x] On Retail, `SetLootSpecialization` accepts a numeric argument, returns no values, raises `Usage: SetLootSpecialization(specializationID)` for a non-number, and does not reject an ID because it is absent from the local class catalog.
+- [x] On Retail, a setter call leaves the stored getter value unchanged and emits no `PLAYER_LOOT_SPEC_UPDATED` before or after the next OnUpdate tick.
+- [ ] Do not model Retail `HasLootSpecializations`; the ordinary `true` result is INFERRED, not VERIFIED.
+- [ ] Preserve existing non-Retail profile behavior; this answer does not establish their parity.
 
 ## How it works
 
@@ -15,7 +16,7 @@
 
 ## Implementation inventory
 
-- `src/lua_api/globals/real/loot_specialization.rs` — getter and setter argument boundary; server transport is not modeled.
+- `src/lua_api/globals/real/loot_specialization.rs` — Retail getter and setter argument boundary; server transport is not modeled.
 - `src/lua_api/state/sim_state.rs` — stores the current loot-specialization value.
 
 ## Tests asserting this spec
@@ -26,7 +27,7 @@
 
 ## Known gaps (current cycle)
 
-- [ ] Request submission, send availability, rate limiting, server acceptance, and the replicated update producer are not modeled.
+- [ ] Retail request submission, send availability, rate limiting, server acceptance, and replicated update producer are not modeled.
 - [ ] `HasLootSpecializations` remains unavailable, so the original menu's `CanShow` path cannot be verified.
 - [ ] Exact rate-limit reset semantics, request-send availability, and repeated-value response behavior remain unknown.
 
