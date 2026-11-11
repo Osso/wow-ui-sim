@@ -4,7 +4,7 @@
 
 ## What it must do
 
-- [ ] `GetCampaignID(questID)` returns the explicitly supplied campaign association, or 0 when none exists.
+- [x] `GetCampaignID(questID)` returns the explicitly supplied campaign association, or 0 when none exists.
 - [x] `GetChapterIDs(campaignID)` returns explicitly supplied chapter IDs in stored order; an absent association returns nil. This input mapping is a simulator scenario, not proof of native row contents.
 - [x] Without a Campaign metadata row, `GetCampaignInfo(campaignID)` returns nil. Quest associations alone must not create an empty metadata table.
 - [x] Without Campaign rows and condition inputs, `GetState(campaignID)` returns `Enum.CampaignState.Invalid`. Quest completion alone must not imply Complete or InProgress.
