@@ -419,11 +419,6 @@ fn append_colored_text_line(
 }
 
 fn append_blank_line(state: &mut LuaState, tooltip: Val) {
-    append_line(
-        state,
-        tooltip,
-        BLANK_LINE_TYPE,
-        BLANK_LINE_TEXT,
-        named_color(state, "NORMAL_FONT_COLOR"),
-    );
+    let color = named_color(state, "NORMAL_FONT_COLOR");
+    append_line(state, tooltip, BLANK_LINE_TYPE, BLANK_LINE_TEXT, color);
 }
