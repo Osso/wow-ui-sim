@@ -19,7 +19,7 @@ pub(crate) fn parse_numeric_string(bytes: &[u8]) -> Option<f64> {
         .then_some(number)
 }
 
-fn bad_argument(index: i32, function: &str, reason: &str) -> rilua::LuaError {
+pub(crate) fn bad_argument(index: i32, function: &str, reason: &str) -> rilua::LuaError {
     rilua::runtime_error(format!("bad argument #{index} to '{function}' ({reason})"))
 }
 

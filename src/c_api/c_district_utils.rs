@@ -1,5 +1,6 @@
 //! Host-supplied superdistrict information for Forever and PTR.
 
+use super::helpers::bad_argument;
 use crate::c_api::ensure_namespace;
 use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::WowLuaEnv;
@@ -158,7 +159,7 @@ pub(crate) fn read_super_district_id(
 ) -> LuaResult<i32> {
     let argument = stack_val(state, 1);
     if matches!(argument, Val::Nil) {
-        return Err(rilua::runtime_error(usage));
+        return Err(bad_argument(1, function_name, usage));
     }
 
     let Some(value) = numeric_argument(state, argument) else {
@@ -202,7 +203,6 @@ fn parse_numeric_string(text: &str) -> Option<f64> {
 }
 
 fn super_district_id_range_error(function_name: &str, usage: &str) -> LuaResult<i32> {
-    Err(rilua::runtime_error(format!(
-        "bad argument #1 to '{function_name}' ({INT32_RANGE_ERROR} - {usage})"
-    )))
+    let detail = format!("{INT32_RANGE_ERROR} - {usage}");
+    Err(bad_argument(1, function_name, &detail))
 }

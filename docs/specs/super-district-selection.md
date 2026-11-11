@@ -12,7 +12,7 @@ The Glue character-select screen reads the selected superdistrict through `C_Log
 - [ ] An unknown ID, including `0` with no matching record, returns zero values.
 - [ ] The original cached `CharacterSelectList.lua` consumer displays an empty string when the lookup has no record and uses the host record's `displayName` when it does.
 - [ ] Forever and PTR expose the global `SelectSuperDistrict(id)` on Glue only; it returns no values and changes selection only when the host list contains the ID.
-- [ ] Both ID inputs accept numbers and numeric strings, check the signed 32-bit range before truncating fractions toward zero, and report the verified usage or range-error detail.
+- [ ] Both ID inputs accept numbers and numeric strings, check the signed 32-bit range before truncating fractions toward zero, and report argument errors in the standard `bad argument #1` form with the verified usage or range-error detail.
 - [ ] Missing or nil `SelectSuperDistrict` input reports `Usage: SelectSuperDistrict(superDistrictID)`; an invalid value reports `outside of expected range -2147483648 to 2147483647 - Usage: SelectSuperDistrict(superDistrictID)`.
 - [ ] Missing or nil `GetSuperDistrictInfo` input reports `Usage: local info = C_DistrictUtils.GetSuperDistrictInfo(superDistrictID)`; an invalid value reports `outside of expected range -2147483648 to 2147483647 - Usage: local info = C_DistrictUtils.GetSuperDistrictInfo(superDistrictID)`.
 - [ ] Do not emit a selected-ID-changed event or infer district data.
@@ -26,6 +26,7 @@ The Glue character-select screen reads the selected superdistrict through `C_Log
 
 - `src/c_api/c_login.rs`: registers the selected-ID query on Glue and resets the host selection on login-screen start.
 - `src/c_api/c_district_utils.rs`: stores the host district record shape and registers its profile-specific Game/Glue lookup.
+- `src/c_api/helpers.rs`: formats the standard argument errors for district IDs.
 - `src/lua_api/state/sim_state.rs` and `src/lua_api/state.rs`: store and initialize selected-ID and district-record inputs.
 - `src/lua_api/env_runtime.rs`: updates the screen-specific API surfaces.
 - `src/lua_api/workarounds/temporary/forever_glue_display_defaults.rs`: keeps the separate empty `GetAvailableSuperDistricts` default.

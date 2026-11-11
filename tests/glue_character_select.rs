@@ -400,7 +400,10 @@ fn super_district_title_uses_host_selection_and_info() {
                 r#"
                 local function error_contains(callback, expected)
                     local ok, message = pcall(callback)
-                    return not ok and string.find(tostring(message), expected, 1, true) ~= nil
+                    local error_text = tostring(message)
+                    return not ok
+                        and string.find(error_text, "bad argument #1", 1, true) ~= nil
+                        and string.find(error_text, expected, 1, true) ~= nil
                 end
                 return error_contains(function() SelectSuperDistrict() end,
                                       "Usage: SelectSuperDistrict(superDistrictID)")
