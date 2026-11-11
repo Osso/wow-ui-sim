@@ -717,6 +717,30 @@ fn retail_class_trial_tooltip_uses_exported_character_service_level() {
 }
 
 #[test]
+#[cfg(feature = "client-wowforever")]
+fn forever_class_trial_tooltip_uses_empty_host_table_default() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::CharacterCreate);
+        env.exec(
+            "CharacterCreateRaceAndClassMixin.OnShow(CharacterCreateFrame.RaceAndClassFrame)",
+        )
+        .expect("original Camelot class-trial tooltip consumer should execute");
+
+        let (level, tooltip_text): (i32, String) = env
+            .eval(
+                "local button = CharacterCreateFrame.RaceAndClassFrame.ClassTrialCheckButton; return C_CharacterCreation.GetTrialBoostStartingLevel(), button.tooltipLines[1].text",
+            )
+            .expect("empty host-table level and original tooltip should be queryable");
+        let expected_tooltip: String = env
+            .eval("return CHARACTER_TYPE_FRAME_TRIAL_BOOST_CHARACTER_TOOLTIP:format(0)")
+            .expect("Camelot class-trial tooltip template should be queryable");
+
+        assert_eq!(level, 0, "the simulator's empty Forever table yields zero");
+        assert_eq!(tooltip_text, expected_tooltip);
+    }
+}
+
+#[test]
 #[cfg(feature = "client-retail")]
 fn retail_trial_boost_query_returns_exported_level_and_one_value() {
     let env = load_blizzard_screen(ScreenKind::CharacterCreate);
