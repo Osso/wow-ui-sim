@@ -5,10 +5,18 @@
 
 use crate::common;
 use crate::common::blizzard_addon_harness::with_blizzard_addon_startup_shape;
+use wow_ui_sim::loader::BlizzardAddonOverride;
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::lua_api::state::{SpellFlyoutInfo, SpellFlyoutSlot};
 
 const ROOT: &str = "Blizzard_ActionBar";
+#[cfg(feature = "client-ptr")]
+const STARTUP_OVERRIDES: &[BlizzardAddonOverride<'static>] = &[BlizzardAddonOverride {
+    addon: ROOT,
+    extra_roots: &["Blizzard_GamepadSharedUtility"],
+}];
+#[cfg(not(feature = "client-ptr"))]
+const STARTUP_OVERRIDES: &[BlizzardAddonOverride<'static>] = &[];
 const FLYOUT_ID: u32 = 7001;
 const FIRST_SPELL_ID: u32 = 19750;
 const SECOND_SPELL_ID: u32 = 35395;
@@ -17,7 +25,7 @@ post_wrath_ui_fixture! {
 #[test]
 fn spell_flyout_toggle_shows_populates_and_hides_from_same_button() {
     test_timeout! {
-    with_blizzard_addon_startup_shape(&[ROOT], &[], |env, _loaded| {
+    with_blizzard_addon_startup_shape(&[ROOT], STARTUP_OVERRIDES, |env, _loaded| {
         seed_spell_flyout(env);
         install_test_flyout_button(env);
 
