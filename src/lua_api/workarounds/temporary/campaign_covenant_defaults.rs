@@ -13,12 +13,6 @@ if rawget(C_CovenantSanctumUI, "GetSoulCurrencies") == nil then
     end
 end
 
-if rawget(C_CovenantSanctumUI, "GetAnimaInfo") == nil then
-    function C_CovenantSanctumUI.GetAnimaInfo()
-        return 0, 0
-    end
-end
-
 if rawget(C_CovenantSanctumUI, "CanDepositAnima") == nil then
     function C_CovenantSanctumUI.CanDepositAnima()
         return false
@@ -44,6 +38,26 @@ end
 if rawget(C_CovenantSanctumUI, "GetCurrentTalentTreeID") == nil then
     function C_CovenantSanctumUI.GetCurrentTalentTreeID()
         return 0
+    end
+end
+"#;
+
+// R44-Q6: without a local currency row for 1813, the measured pair is 1813, 0.
+#[cfg(feature = "client-retail")]
+const ANIMA_INFO_DEFAULTS_LUA: &str = r#"
+if rawget(C_CovenantSanctumUI, "GetAnimaInfo") == nil then
+    function C_CovenantSanctumUI.GetAnimaInfo()
+        return 1813, 0
+    end
+end
+"#;
+
+// Keep the prior non-Retail simulator scenario; it is not native-parity evidence.
+#[cfg(not(feature = "client-retail"))]
+const ANIMA_INFO_DEFAULTS_LUA: &str = r#"
+if rawget(C_CovenantSanctumUI, "GetAnimaInfo") == nil then
+    function C_CovenantSanctumUI.GetAnimaInfo()
+        return 0, 0
     end
 end
 "#;
@@ -79,6 +93,7 @@ end
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(CAMPAIGN_COVENANT_DEFAULTS_LUA)?;
+    lua.exec(ANIMA_INFO_DEFAULTS_LUA)?;
     lua.exec(RENOWN_REWARD_DEFAULTS_LUA)?;
     Ok(())
 }
