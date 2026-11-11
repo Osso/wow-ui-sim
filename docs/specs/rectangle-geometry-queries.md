@@ -5,10 +5,11 @@ Lua frame geometry getters report a frame's resolved rectangle or its stored dim
 ## What it must do
 
 - [ ] Resolve dirty geometry targets before the dependent frame's ordinary position or size query.
-- [ ] For both Retail 12.1.5.70688 and PTR 12.1.7.70668, resolve a dirty target, then use its rectangle only when its anchor-invalidated flag is clear and its cached rectangle-valid flag is set. A clean target skips resolution and the invalidated-flag check, but still requires cached validity.
+- [ ] For both Retail 12.1.5.70688 and PTR 12.1.7.70668, after resolving a dirty target, use its rectangle only when its anchor-invalidated flag is clear and its cached rectangle-valid flag is set. A clean target skips the invalidated-flag check but still requires cached validity.
 - [ ] `IsRectValid()` reads the cached rectangle-valid flag. It does not resolve layout.
 - [ ] `GetWidth()`, `GetHeight()` and `GetSize()` use the queried frame's stored dimensions when its resolved rectangle is invalid.
 - [ ] `SetSize()` writes the same stored width and height values as the corresponding `SetWidth()` and `SetHeight()` calls.
+- [ ] INFERRED (simulator mapping): a target with a clean own dirty entry but a dirty containment ancestor is treated as dirty because the resolver represents inherited invalidation through ancestor lookup; this does not establish native propagation.
 - [ ] Keep render and hit-test geometry eligibility unchanged.
 - [ ] Treat sibling chains that resolve without a valid containment-parent rectangle as INFERRED, not as verified native behavior.
 
@@ -32,7 +33,6 @@ Lua frame geometry getters report a frame's resolved rectangle or its stored dim
 
 ## Known gaps (current cycle)
 
-- [ ] INFERRED (simulator mapping): a target with a clean own dirty entry but a dirty containment ancestor is treated as dirty because the resolver represents inherited invalidation through ancestor lookup; this does not establish native propagation.
 - [ ] Exact return-list arity, constructor defaults, complete fallback for mixed valid/invalid anchors, callbacks, and cycle outcomes remain UNKNOWN.
 - [ ] The verified target gate does not prove behavior for every frame type or every edge-availability combination.
 
