@@ -220,7 +220,7 @@ fn quest_timer_eager_discovery_matches_profile_game_types() {
         let found = addons.iter().any(|(name, _)| name == "Blizzard_QuestTimer");
         let classic_profile_has_addon = toc_layout::classic_cache() && !toc_layout::wrath();
         let expected =
-            (classic_profile_has_addon || toc_layout::forever()) && *screen == ScreenKind::Game;
+            (classic_profile_has_addon || toc_layout::forever()) && screen == ScreenKind::Game;
         assert_eq!(
             found, expected,
             "QuestTimer allows camelot on Forever and is Game-only; source TOC allows classic, camelot"
