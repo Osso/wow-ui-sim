@@ -486,6 +486,86 @@ fn cursor_info_projects_existing_payloads_with_profile_deltas() {
 
 #[cfg(feature = "client-ptr")]
 #[test]
+fn ptr_action_spell_restriction_matches_native_mode_and_slot_rules() {
+    let env = WowLuaEnv::new().unwrap();
+    let (zero_spell, fractional_numeric, last_slot): (bool, bool, bool) = env
+        .eval(
+            r#"
+            return C_ActionBar.SpellMatchesActionSpellTypeRestriction(0, 1),
+                C_ActionBar.SpellMatchesActionSpellTypeRestriction('0.9', '1.9'),
+                C_ActionBar.SpellMatchesActionSpellTypeRestriction(0, 408)
+            "#,
+        )
+        .unwrap();
+    assert_eq!((zero_spell, fractional_numeric, last_slot), (true, true, true));
+
+    let (below_first, above_last): (i64, i64) = env
+        .eval(
+            r#"
+            return select('#', C_ActionBar.SpellMatchesActionSpellTypeRestriction(853, 0)),
+                select('#', C_ActionBar.SpellMatchesActionSpellTypeRestriction(853, 409))
+            "#,
+        )
+        .unwrap();
+    assert_eq!((below_first, above_last), (0, 0));
+
+    env.state().borrow_mut().game_rules.active_game_mode = 3;
+    assert!(env.eval::<bool>("return C_GameRules.IsWoWHack()").unwrap());
+    let (restricted, unrestricted, zero_spell_unrestricted, other_restricted):
+        (bool, bool, bool, bool) = env
+        .eval(
+            r#"
+            return C_ActionBar.SpellMatchesActionSpellTypeRestriction(853, 1),
+                C_ActionBar.SpellMatchesActionSpellTypeRestriction(853, 13),
+                C_ActionBar.SpellMatchesActionSpellTypeRestriction(0, 13),
+                C_ActionBar.SpellMatchesActionSpellTypeRestriction(853, 61)
+            "#,
+        )
+        .unwrap();
+    assert_eq!(
+        (restricted, unrestricted, zero_spell_unrestricted, other_restricted),
+        (false, true, false, false)
+    );
+}
+
+#[cfg(feature = "client-ptr")]
+#[test]
+fn ptr_action_spell_restriction_reports_native_argument_errors() {
+    let env = WowLuaEnv::new().unwrap();
+    let (missing_spell, missing_action, invalid_spell, invalid_action):
+        (String, String, String, String) = env
+        .eval(
+            r#"
+            local _, missingSpell = pcall(C_ActionBar.SpellMatchesActionSpellTypeRestriction, nil, 1)
+            local _, missingAction = pcall(C_ActionBar.SpellMatchesActionSpellTypeRestriction, 1, nil)
+            local _, invalidSpell = pcall(C_ActionBar.SpellMatchesActionSpellTypeRestriction, 2147483648, 1)
+            local _, invalidAction = pcall(C_ActionBar.SpellMatchesActionSpellTypeRestriction, 1, 4294967296)
+            return missingSpell, missingAction, invalidSpell, invalidAction
+            "#,
+        )
+        .unwrap();
+    let usage = "Usage: local actionMatchesSpellTypeRestriction = C_ActionBar.SpellMatchesActionSpellTypeRestriction(spellID, actionID)";
+    assert!(missing_spell.contains("bad argument #1") && missing_spell.contains(usage));
+    assert!(missing_action.contains("bad argument #2") && missing_action.contains(usage));
+    assert!(invalid_spell.contains("outside of expected range -2147483648 to 2147483647 - "));
+    assert!(invalid_spell.contains(usage));
+    assert!(invalid_action.contains("outside of expected range 0 to 4294967295 - "));
+    assert!(invalid_action.contains(usage));
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn retail_action_spell_type_restriction_is_absent() {
+    let env = WowLuaEnv::new().unwrap();
+    assert!(env
+        .eval::<bool>(
+            "return type(C_ActionBar) ~= 'table' or type(C_ActionBar.SpellMatchesActionSpellTypeRestriction) ~= 'function'"
+        )
+        .unwrap());
+}
+
+#[cfg(feature = "client-ptr")]
+#[test]
 fn ptr_action_button_drag_matches_r29_cursor_and_event_order() {
     common::with_timeout(120, move || {
         let env = env_with_action_bar();
@@ -681,7 +761,14 @@ fn ptr_action_bar_lock_is_checked_by_the_lua_drag_consumer_only() {
 fn ptr_tainted_combat_pickup_is_blocked_and_place_clears_the_cursor() {
     let env = WowLuaEnv::new().unwrap();
     seed_action_slot(&env, 1, 853);
-    env.state().borrow_mut().player.in_combat = true;
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.action_bars.remove(&2);
+        sim.action_outfits.remove(&2);
+        sim.action_macros.remove(&2);
+        sim.player.in_combat = true;
+    }
+    assert!(!env.eval::<bool>("return HasAction(2)").unwrap());
     install_ptr_action_bar_trace(&env);
     env.exec(
         r#"
