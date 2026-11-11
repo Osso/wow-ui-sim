@@ -8,6 +8,8 @@ use crate::lua_bridge::table_set_rust_fn_static;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
+#[cfg(feature = "client-ptr")]
+pub mod ptr_state;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 mod submission;
 
@@ -35,6 +37,8 @@ pub struct LoginState {
     pub realm_list_available: bool,
     pub logon_queue: Option<LogonQueue>,
     pub connection_info: ConnectionInfo,
+    #[cfg(feature = "client-ptr")]
+    pub ptr_connection: ptr_state::PtrConnectionState,
     pub(crate) received_connection_info: ConnectionInfo,
     pub(crate) submitted: bool,
     aurora_state: i32,
@@ -49,6 +53,10 @@ impl Default for LoginState {
             realm_list_available: false,
             logon_queue: None,
             connection_info: Default::default(),
+            #[cfg(feature = "client-ptr")]
+            ptr_connection: ptr_state::PtrConnectionState::for_screen(
+                crate::screen::ScreenKind::Game,
+            ),
             received_connection_info: Default::default(),
             submitted: false,
             aurora_state: 1,
@@ -93,6 +101,10 @@ fn c_login_is_login_ready(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn c_login_get_state(state: &mut LuaState) -> LuaResult<u32> {
+    if ACTIVE == ClientProfile::Ptr {
+        #[cfg(feature = "client-ptr")]
+        return ptr_state::get_state(state);
+    }
     let (aurora_state, connected_to_wow, wow_connection_state, has_realm_list) = {
         let sim = borrow_state(state)?;
         let login = &sim.glue_login;
@@ -107,7 +119,7 @@ fn c_login_get_state(state: &mut LuaState) -> LuaResult<u32> {
             sim.screen_kind.login_state()
         }
     };
-    if matches!(ACTIVE, ClientProfile::Ptr | ClientProfile::WowForever) {
+    if ACTIVE == ClientProfile::WowForever {
         let result = create_table(state);
         for (key, value) in [
             ("auroraState", Val::Num(f64::from(aurora_state))),
@@ -122,7 +134,9 @@ fn c_login_get_state(state: &mut LuaState) -> LuaResult<u32> {
             ("superDistrictChoicePending", Val::Bool(false)),
             ("keepingCharacterListOnRealmJoin", Val::Bool(false)),
             ("waitingForRuleSets", Val::Bool(false)),
-            ("hasSelectedExperiencePreset", Val::Bool(true)),
+            // R44-Q17 declaration fallback supersedes the earlier R40 policy.
+            // Setting-backed override awaits R47; no CVar identity is guessed.
+            ("hasSelectedExperiencePreset", Val::Bool(false)),
         ] {
             table_set(state, result, key, value);
         }

@@ -47,6 +47,7 @@ impl ScreenKind {
         let connection_none = if matches!(
             crate::client_profile::ACTIVE,
             crate::client_profile::ClientProfile::Retail
+                | crate::client_profile::ClientProfile::Ptr
                 | crate::client_profile::ClientProfile::WowForever
         ) {
             1

@@ -164,3 +164,23 @@ overridden by a persisted CVar. QUESTION **50** requests that CVar's exact name
 and read/coercion rule, plus remaining PTR flag defaults/backing writers. The
 previous R40 Forever true value is explicitly simulator policy, not a native
 default; this distinction remains until the verified replacement is available.
+
+ANSWER **51** supersedes the R40 Forever preset policy: the absent-setting
+fallback is now false (PTR remains true), with no fabricated setting override
+before R47. Consequently, the original Forever GlueParent may select
+`experiencepreset` until that host setting is supplied; tests must not force
+charselect around it.
+
+The same answer supplies PTR70668 field projections. `PtrConnectionState` keeps
+the connection/pending/WoW-queue inputs separate from Battle.net queue snapshots,
+requires a present and available realm-list object, gates rule-set and
+superdistrict flags independently, and suppresses realm waiting during an active
+superdistrict choice. Connected-to-WoW suppresses the reported Aurora state to
+NONE. Product gates are host inputs, not guessed product configuration. Explicit
+screen boot seeds the existing connected/disconnected simulator fixture; it is
+not a native reset/disconnect callback. Host field changes emit no invented
+notifications. These PTR formulas are not silently extended to Forever; only
+its explicitly superseded preset fallback changes. Tests cover connection
+precedence, object availability, independent flags/gates, suppression and all
+nine idle fields. Native reset/disconnect details remain documented evidence,
+not new callable native functions.

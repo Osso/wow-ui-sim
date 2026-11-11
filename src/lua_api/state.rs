@@ -1287,6 +1287,11 @@ impl SimState {
     pub fn set_screen_kind(&mut self, screen_kind: ScreenKind) {
         self.screen_kind = screen_kind;
         self.glue_login.reset_connection();
+        #[cfg(feature = "client-ptr")]
+        {
+            self.glue_login.ptr_connection =
+                crate::c_api::c_login::ptr_state::PtrConnectionState::for_screen(screen_kind);
+        }
         self.screen_first_displayed = false;
         if screen_kind.is_glue() {
             self.is_logged_in = false;

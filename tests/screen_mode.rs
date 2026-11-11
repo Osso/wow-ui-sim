@@ -28,11 +28,14 @@ fn login_state(env: &WowLuaEnv) -> (i32, bool, i32, bool) {
     }
 }
 
-// R40 (lt-a667 ANSWER 30): NONE is 1 on the two evidenced profiles.
+// R40/R44 (lt-a667 ANSWERS 30/51): NONE is 1 on these evidenced profiles.
 // Retain historical expectations for profiles not covered by that answer.
 fn expected_connection_none() -> i32 {
     use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
-    if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
+    if matches!(
+        ACTIVE,
+        ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
+    ) {
         1
     } else {
         0

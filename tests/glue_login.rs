@@ -451,7 +451,7 @@ fn login_policy_publishes_states_and_empty_list_payload() {
                     for _ in pairs(a) do count = count + 1 end
                     assert(count == 9)
                     assert(not a.superDistrictChoicePending and not a.waitingForRuleSets)
-                    assert(a.hasSelectedExperiencePreset and not a.keepingCharacterListOnRealmJoin)
+                    assert(not a.hasSelectedExperiencePreset and not a.keepingCharacterListOnRealmJoin)
                     a, connected, connection, realms, waiting = a.auroraState,
                         a.connectedToWoW, a.wowConnectionState, a.hasRealmList, a.waitingForRealmList
                 else
@@ -696,9 +696,13 @@ fn glue_feature_status_uses_host_record_and_ordered_empty_events() {
         GlueFeatureStatus, deliver_status,
     };
     let env = common::lock_env(|| WowLuaEnv::new().unwrap());
-    assert!(env.eval::<bool>("return rawget(_G, 'IsNameReservationOnly') == nil").unwrap());
+    assert!(
+        env.eval::<bool>("return rawget(_G, 'IsNameReservationOnly') == nil")
+            .unwrap()
+    );
     env.set_screen_mode(ScreenKind::Login);
-    env.exec(r#"
+    env.exec(
+        r#"
         assert(IsNameReservationOnly() == false)
         assert(select('#', IsNameReservationOnly()) == 1)
         featureEvents = {}
@@ -708,25 +712,50 @@ fn glue_feature_status_uses_host_record_and_ordered_empty_events() {
         listener:SetScript('OnEvent', function(_, event, ...)
             table.insert(featureEvents, {event, select('#', ...)})
         end)
-    "#).unwrap();
+    "#,
+    )
+    .unwrap();
     for value in [true, true, false] {
-        deliver_status(&env, GlueFeatureStatus { name_reservation_only: value }).unwrap();
-        assert_eq!(env.eval::<bool>("return IsNameReservationOnly()").unwrap(), value);
+        deliver_status(
+            &env,
+            GlueFeatureStatus {
+                name_reservation_only: value,
+            },
+        )
+        .unwrap();
+        assert_eq!(
+            env.eval::<bool>("return IsNameReservationOnly()").unwrap(),
+            value
+        );
     }
-    env.exec(r#"
+    env.exec(
+        r#"
         assert(#featureEvents == 6)
         for i = 1, 6, 2 do
             assert(featureEvents[i][1] == 'TIMERUNNING_SEASON_UPDATE')
             assert(featureEvents[i + 1][1] == 'AVAILABLE_GAME_MODES_UPDATED')
             assert(featureEvents[i][2] == 0 and featureEvents[i + 1][2] == 0)
         end
-    "#).unwrap();
-    deliver_status(&env, GlueFeatureStatus { name_reservation_only: true }).unwrap();
+    "#,
+    )
+    .unwrap();
+    deliver_status(
+        &env,
+        GlueFeatureStatus {
+            name_reservation_only: true,
+        },
+    )
+    .unwrap();
     env.set_screen_mode(ScreenKind::CharacterSelect);
-    assert!(env.eval::<bool>("return IsNameReservationOnly()").unwrap(),
-        "screen/connection reset must not replace feature-system status");
+    assert!(
+        env.eval::<bool>("return IsNameReservationOnly()").unwrap(),
+        "screen/connection reset must not replace feature-system status"
+    );
     env.set_screen_mode(ScreenKind::Game);
-    assert!(env.eval::<bool>("return rawget(_G, 'IsNameReservationOnly') == nil").unwrap());
+    assert!(
+        env.eval::<bool>("return rawget(_G, 'IsNameReservationOnly') == nil")
+            .unwrap()
+    );
     env.set_screen_mode(ScreenKind::Login);
     assert!(env.eval::<bool>("return IsNameReservationOnly()").unwrap());
     assert!(env.state().borrow().lua_errors.is_empty());
@@ -737,5 +766,107 @@ fn glue_feature_status_uses_host_record_and_ordered_empty_events() {
 fn glue_feature_status_name_reservation_global_is_absent_on_retail() {
     let env = common::lock_env(|| WowLuaEnv::new().unwrap());
     env.set_screen_mode(ScreenKind::Login);
-    assert!(env.eval::<bool>("return rawget(_G, 'IsNameReservationOnly') == nil").unwrap());
+    assert!(
+        env.eval::<bool>("return rawget(_G, 'IsNameReservationOnly') == nil")
+            .unwrap()
+    );
+}
+
+#[test]
+#[cfg(feature = "client-ptr")]
+fn glue_ptr_connection_fields_project_independent_host_inputs() {
+    use wow_ui_sim::c_api::c_login::ptr_state::PtrConnectionState;
+    let env = common::lock_env(|| WowLuaEnv::new().unwrap());
+    env.set_screen_mode(ScreenKind::Login);
+    for bits in 0..8 {
+        let input = PtrConnectionState {
+            connection_object_needs_connect: bits & 1 != 0,
+            pending_connect: bits & 2 != 0,
+            wow_queue: bits & 4 != 0,
+            ..Default::default()
+        };
+        let expected = if bits & 3 != 0 {
+            2
+        } else if bits & 4 != 0 {
+            3
+        } else {
+            1
+        };
+        env.state().borrow_mut().glue_login.ptr_connection = input;
+        assert_eq!(
+            env.eval::<i32>("return C_Login.GetState().wowConnectionState")
+                .unwrap(),
+            expected
+        );
+    }
+    for bits in 0..8 {
+        env.state().borrow_mut().glue_login.ptr_connection = PtrConnectionState {
+            aurora_state: 5,
+            connected_to_wow: bits & 1 != 0,
+            realm_list_present: bits & 2 != 0,
+            realm_list_available: bits & 4 != 0,
+            ..Default::default()
+        };
+        assert_eq!(
+            env.eval::<i32>("return C_Login.GetState().auroraState")
+                .unwrap(),
+            if bits & 1 != 0 { 1 } else { 5 }
+        );
+        assert_eq!(
+            env.eval::<bool>("return C_Login.GetState().hasRealmList")
+                .unwrap(),
+            bits & 6 == 6
+        );
+    }
+    for bits in 0..64 {
+        let rule_gate = bits & 1 != 0;
+        let rule_wait = bits & 2 != 0;
+        let district_gate = bits & 4 != 0;
+        let district_pending = bits & 8 != 0;
+        let realm_wait = bits & 16 != 0;
+        let keep_list = bits & 32 != 0;
+        env.state().borrow_mut().glue_login.ptr_connection = PtrConnectionState {
+            rule_sets_enabled: rule_gate,
+            waiting_for_rule_sets: rule_wait,
+            super_district_enabled: district_gate,
+            super_district_choice_pending: district_pending,
+            waiting_for_realm_list: realm_wait,
+            keeping_character_list_on_realm_join: keep_list,
+            ..Default::default()
+        };
+        let observed: (bool, bool, bool, bool) = env
+            .eval(
+                r#"
+            local s = C_Login.GetState()
+            return s.waitingForRuleSets, s.superDistrictChoicePending,
+                s.waitingForRealmList, s.keepingCharacterListOnRealmJoin
+        "#,
+            )
+            .unwrap();
+        let district = district_gate && district_pending;
+        assert_eq!(
+            observed,
+            (
+                rule_gate && rule_wait,
+                district,
+                realm_wait && !district,
+                keep_list
+            )
+        );
+    }
+    env.set_screen_mode(ScreenKind::Login);
+    env.exec(
+        r#"
+        local s = C_Login.GetState()
+        local count = 0
+        for _ in pairs(s) do count = count + 1 end
+        assert(count == 9 and select('#', C_Login.GetState()) == 1)
+        assert(s.auroraState == 1 and not s.connectedToWoW and s.wowConnectionState == 1)
+        assert(not s.hasRealmList and not s.waitingForRealmList and not s.waitingForRuleSets)
+        assert(not s.superDistrictChoicePending and not s.keepingCharacterListOnRealmJoin)
+        assert(s.hasSelectedExperiencePreset)
+    "#,
+    )
+    .unwrap();
+    assert!(env.state().borrow().lua_errors.is_empty());
 }
