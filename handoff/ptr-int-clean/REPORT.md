@@ -15,7 +15,8 @@ VERIFIED: `/var/tmp/osso/prship/m29c-p-int-all.log` ends with 10,573 passed, 69 
 | Pinned source expectations | 35 | (b) | PTR 12.1.7 TOCs, selected variants, declarations and Lua wrappers contradict old expectations; corrections retain other profile expectations. |
 | StaticPopup virtual-template materialization | 1 | (a; R24, resolved) | VERIFIED: PTR `GameDialogBaseMixin:OnLoad` fails on `self.GamepadSequence` after earlier mutations; R24 verifies protected dispatch, installed-handler routing, parentKey timing and post-OnLoad visibility/OnShow. INFERRED: native `CreateFrame` returns the partial frame without propagating the error. Simulator commit `7b4dc8b0a` reports the error and continues finalization; the exact PTR regression passes with partial state, parentKeys, handler capture and visible `OnShow`. |
 | Action-bar startup and presentation | 7 | (b; 1 master-matching failure) | VERIFIED: current PTR fixtures include `Blizzard_RaidWarning`, `Blizzard_StatusTrackingBar`, `Blizzard_GamepadSharedUtility` and its TOC dependencies; all seven exact selectors were rerun at `45b5dc284`, and six pass. `action_bar::test_bag_bar_layout_locked` alone fails with `toggle_missing_rect`; the exact same name failed on master. VERIFIED (simulator source): the bag toggle's parent is the unanchored `BagSlotCluster`, and `GetRect` rejects frames with any ancestor lacking a render-layout anchor. UNKNOWN: native `GetRect` behavior for this grouping frame. This does not add a PTR-only failure name. |
-| Bag-frame revision and fixture selection | 4 | (b) | Seven real container frames observed rather than six; bag-slot template moved. Check selected ContainerFrame source and retain rectangle checks against the new named consumer. |
+| Bag-frame array and template source expectations | 3 | (b; expectation corrections) | VERIFIED: selected Mainline XML yields array lengths 6 on Retail and 7 on PTR/Forever; the two array tests pass 2/2 on all three. Mists has no Mainline `ContainerFrameContainer` contract and these tests select 0. The path fixture now searches XML files from the selected TOC and passes on PTR/Retail. No runtime/vendor behavior changed. |
+| PTR bag-frame rectangle query | 1 | (a; blocked on R48) | VERIFIED: commit `47ec5a397` fails on `CharacterBag0Slot` with `expected numeric result, got nil`. VERIFIED source: the frame is under unanchored `BagSlotCluster`; simulator rect queries reject a frame with any unanchored ancestor. INFERRED: this ancestor causes the empty result. Native rect validity in this hierarchy is UNKNOWN; do not change `frame_has_render_layout` before R48. |
 | Auction-house token namespace | 4 | (a; R22) | VERIFIED: producer commit `ba7df3919` registers the PTR-only `C_WowTokenUI.ShouldDisplayInAuctionHouse()` query; all four original auction-house consumer tests pass. INFERRED from R22: its result is true before and after server status updates. |
 | Profile publication expectations | 1 | (a; R23) | VERIFIED: both PTR tests for `GetLootMethodStyle()` pass, including live rule-157 rereads after `GAME_RULES_CHANGED`; the getter is independent of group and loot-method state. |
 | Profession startup and geometry | 3 | (a) | Blacksmithing book button absent; ProfessionsFrame width 1; crafting ValidateControls transaction nil. Trace selected profession model/input before geometry changes. |
@@ -78,6 +79,13 @@ Further fixture changes require citations at the point of change; the initial ta
 - VERIFIED: all nine earlier targeted runs preserved the original CVar SHA-256 `8d1709049bc9acdbed0465889701a0e370667ef18cf06b71db479b3972aa350c` and recorded stat fields. Receipts and logs: `/home/osso/.local/state/wow-ui-sim/verification/ptr-int-clean-game-menu-nostore-45b5dc284/` and `/home/osso/.local/state/wow-ui-sim/verification/ptr-int-clean-actionbar-current-45b5dc284/`.
 - VERIFIED: the R38 targeted tests pass. PTR: GameMenu 13/13, Store API 1/1, StorePublic 2/2, CatalogShop product structures 19/19, RewardsShop 2/2, StoreFree 1/1, and `ace3::test_load_game_menu` 1/1. Retail: GameMenu 13/13, Store API 1/1, StorePublic 2/2, CatalogShop product structures 19/19, full-UI CatalogShop 4/4, StoreFree 1/1, Achievement comparison 2/2, and ComboFrame consumer 1/1. All these targeted build receipts report zero warnings; receipt files are under `/home/osso/.cache/wow-ui-sim-targets/slot-1/receipts/` with prefixes `ptr-int-clean-r38-ptr-` and `ptr-int-clean-93dc97c1-`.
 - VERIFIED: the earlier broad PTR `store` filter's two in-scope expectation failures pass after `bde1f76b6`; the full PTR failure-name comparison remains pending.
+- VERIFIED: selected `Mainline/ContainerFrame.xml` declares `ContainerFrame1`-`ContainerFrame6` on Retail and adds `ContainerFrame7` on PTR and Forever under a `parentArray="ContainerFrames"` template. The post-`b7c4794b1` array tests pass 2/2 on PTR, Retail and Forever; observed lengths are 7, 6 and 7. Receipts: `ptr-int-clean-b7c4794b1-bag-frames-{ptr,retail,forever}.json`.
+- VERIFIED: the Mists selected Classic source does not declare `ContainerFrameContainer`; before the scope correction the runtime table was empty, and after it the two Mainline array tests select 0. The Mainline path fixture also selects 0 on Mists. Receipts: `ptr-int-clean-b7c4794b1-bag-frames-mists.json` and `ptr-int-clean-b7c4794b1-path-control-mists.json`.
+- VERIFIED: the PTR selected bag-button TOC loads `Mainline/MainMenuBarBagButtonTemplates.xml`, which declares `BaseBagSlotButtonTemplate`; Retail's selected TOC has the declaration in `Mainline/MainMenuBarBagButtons.xml`. The TOC-driven path fixture passes 1/1 on PTR and Retail. The same filter selects 0 on Forever because `path_control_point.rs` is gated by `retail-12-0-0`; WowForever's selected TOC still lists the separate template file. Receipts: `ptr-int-clean-b7c4794b1-path-control-{ptr,retail,forever}.json`.
+- VERIFIED: the PTR bag-rect test fails at `CharacterBag0Slot` on commit `47ec5a397`; Retail passed 1/1 on `b7c4794b1`, and Mists passed 1/1 on `93dc97c1f` before this diagnostic-only edit. Retail, Forever and Mists reruns after `47ec5a397` remain pending.
+- VERIFIED (PTR source): `Mainline/MainMenuBarBagButtons.xml:12,28` parents `BagSlotCluster` under `BagsBar`; `Mainline/MainMenuBarBagButtonTemplates.xml:61,90-97` declares the grouping template without anchors and anchors `CharacterBag0Slot` directly to sibling `MainMenuBarBackpackButton`.
+- VERIFIED (simulator source): `layout_render_eligibility.rs:15-27` requires each ancestor to have a layout anchor; `rect_geometry.rs:44-82,88-100,106-117` returns zero values when that check rejects a frame. INFERRED: the unanchored `BagSlotCluster` causes the empty `CharacterBag0Slot` result.
+- UNKNOWN (native PTR): whether `GetRect`, `GetScaledRect` or `GetCenter` returns values in this hierarchy. Parent requested R48 native evidence; do not change `frame_has_render_layout` before the answer.
 
 ## Exact name coverage
 
@@ -133,11 +141,14 @@ Further fixture changes require citations at the point of change; the initial ta
 - `blizzard_ui_blizzard_actionbar::behavior_main_bar_endcaps::main_bar_endcaps_follow_hide_bar_art_setting`
 - `blizzard_ui_blizzard_actionbar::behavior_spell_flyout::spell_flyout_toggle_shows_populates_and_hides_from_same_button`
 
-### Bag-frame revision and fixture selection
+### Bag-frame array and template source expectations
 
 - `bags::test_container_frames_array_contains_only_real_container_frames`
 - `bags::test_container_frames_registered`
 - `path_control_point::path_actual_cached_smooth_xml_configures_points_and_restores_playback`
+
+### PTR bag-frame rectangle query
+
 - `workarounds_bags::bag_frame_rect_queries_match_render_layout_rects`
 
 ### Auction-house token namespace
