@@ -32,6 +32,7 @@ Lua frame geometry getters report a frame's resolved rectangle or its stored dim
 
 ## Known gaps (current cycle)
 
+- [ ] Native geometry behavior outside Retail 12.1.5.70688 and PTR 12.1.7.70668 remains UNKNOWN; other-profile runs are regression checks only.
 - [ ] INFERRED (simulator mapping): a target with a clean own dirty entry but a dirty containment ancestor or anchor dependency is treated as effectively dirty because the resolver represents inherited invalidation through ancestor and dependency walks; this does not establish native propagation. No test asserts either distinction.
 - [ ] Exact return-list arity, constructor defaults, complete fallback for mixed valid/invalid anchors, callbacks, and cycle outcomes remain UNKNOWN.
 - [ ] The verified target gate does not prove behavior for every frame type or every edge-availability combination.

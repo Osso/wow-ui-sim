@@ -22,7 +22,7 @@ VERIFIED: the PTR `CharacterBag0Slot` test failed with `expected numeric result,
 - VERIFIED: a dirty target is resolved; the anchor path rejects its rect when anchor-invalidated mask 4 is set, then requires rect-valid mask 1 before using the rect.
 - VERIFIED: a clean target skips resolution and the immediate mask-4 check, but still requires mask 1.
 - INFERRED (simulator mapping): the simulator treats a target as effectively dirty when its own entry, containment ancestor, or anchor dependency requires resolution; it uses ancestor and dependency walks to represent invalidation propagation, which does not establish native propagation.
-- UNKNOWN: complete fallback with mixed valid and invalid anchors, callback effects, general cycle policy, exact Lua return-list arity, and constructor defaults remain unmodeled.
+- UNKNOWN: native R59 behavior outside Retail 12.1.5.70688 and PTR 12.1.7.70668, complete fallback with mixed valid and invalid anchors, callback effects, general cycle policy, exact Lua return-list arity, and constructor defaults remain unmodeled.
 
 ## Simulator change
 
