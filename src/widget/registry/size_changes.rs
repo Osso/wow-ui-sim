@@ -12,6 +12,17 @@ pub(crate) fn has_queryable_rect(frame: &Frame, id: u64) -> bool {
 }
 
 impl WidgetRegistry {
+    /// The explicit frame-unit size used when no valid rect is available.
+    pub(crate) fn stored_size(&self, id: u64) -> (f32, f32) {
+        let Some(frame) = self.get(id) else {
+            return (0.0, 0.0);
+        };
+        (
+            self.round_layout_value(frame, frame.width),
+            self.round_layout_value(frame, frame.height),
+        )
+    }
+
     /// The frame-unit size `GetSize` reports from the frame's current layout state.
     pub(crate) fn resolved_size(&self, id: u64) -> (f32, f32) {
         let Some(frame) = self.get(id) else {
@@ -20,10 +31,7 @@ impl WidgetRegistry {
         // FontString:GetWidth reports its text extent after SetText/SetWidth,
         // even when anchors also determine the eventual render rect.
         if frame.widget_type == WidgetType::FontString && frame.width > 0.0 {
-            return (
-                self.round_layout_value(frame, frame.width),
-                self.round_layout_value(frame, frame.height),
-            );
+            return self.stored_size(id);
         }
         if has_queryable_rect(frame, id)
             && let Some(rect) = frame.layout_rect
@@ -31,10 +39,7 @@ impl WidgetRegistry {
             let eff_scale = frame.effective_scale.max(1e-6);
             return (rect.width / eff_scale, rect.height / eff_scale);
         }
-        (
-            self.round_layout_value(frame, frame.width),
-            self.round_layout_value(frame, frame.height),
-        )
+        self.stored_size(id)
     }
 
     /// Called whenever layout resolution writes a frame's rect: queue OnSizeChanged

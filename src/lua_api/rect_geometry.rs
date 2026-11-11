@@ -31,12 +31,56 @@ use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
 use rilua::{LuaResult, Val};
+use rustc_hash::FxHashSet;
+
+/// Whether the frame's own anchors and their geometry targets can resolve.
+/// Containment parents matter only when an anchor uses the parent implicitly.
+pub(crate) fn frame_has_queryable_rect(registry: &crate::widget::WidgetRegistry, id: u64) -> bool {
+    fn follows_anchor_targets(
+        registry: &crate::widget::WidgetRegistry,
+        id: u64,
+        visiting: &mut FxHashSet<u64>,
+    ) -> bool {
+        if !visiting.insert(id) {
+            return false;
+        }
+
+        let queryable = registry.get(id).is_some_and(|frame| {
+            if frame.name.as_deref() == Some("UIParent") || (frame.parent_id.is_none() && id == 1) {
+                true
+            } else if !crate::layout::frame_has_layout_anchor(registry, frame, id) {
+                false
+            } else if frame.anchors.is_empty() {
+                frame
+                    .parent_id
+                    .is_some_and(|parent_id| follows_anchor_targets(registry, parent_id, visiting))
+            } else {
+                frame.anchors.iter().all(|anchor| {
+                    let unresolved_name =
+                        anchor.relative_to_id.is_none() && anchor.relative_to.is_some();
+                    let target_id = anchor
+                        .relative_to_id
+                        .map(|target_id| target_id as u64)
+                        .or(frame.parent_id);
+                    !unresolved_name
+                        && target_id.is_none_or(|target_id| {
+                            follows_anchor_targets(registry, target_id, visiting)
+                        })
+                })
+            }
+        });
+
+        visiting.remove(&id);
+        queryable
+    }
+
+    follows_anchor_targets(registry, id, &mut FxHashSet::default())
+}
 
 /// Resolve the frame's layout rect, computing it if dirty or unset.
 ///
-/// Returns `None` when the frame or any ancestor has no queryable
-/// layout anchor, when the frame isn't in the registry, or when the
-/// rect still can't be resolved after an invalidation pass.
+/// Returns `None` when the frame's own anchor targets cannot resolve,
+/// when the frame isn't in the registry, or when the rect is unavailable.
 ///
 /// Returned tuple is `(rect, effective_scale, screen_height)` — all
 /// three are needed by the per-edge helpers to do coordinate
@@ -68,7 +112,7 @@ fn resolve_queryable_rect(
     }
 
     let sim = borrow_state(state)?;
-    if !crate::layout::frame_has_render_layout(&sim.widgets, id) {
+    if !frame_has_queryable_rect(&sim.widgets, id) {
         return Ok(None);
     }
     let Some(frame) = sim.widgets.get(id) else {
@@ -175,24 +219,26 @@ fn get_center(state: &mut LuaState) -> LuaResult<u32> {
     Ok(2)
 }
 
-/// `frame:GetWidth()` — frame width in WoW UI coordinates.
+fn queryable_size(state: &mut LuaState, id: u64) -> LuaResult<(f32, f32)> {
+    if let Some((rect, effective_scale, _)) = resolve_queryable_rect(state, id)? {
+        return Ok((rect.width / effective_scale, rect.height / effective_scale));
+    }
+
+    Ok(borrow_state(state)?.widgets.stored_size(id))
+}
+
+/// `frame:GetWidth()` — resolved width, or stored width without a valid rect.
 fn get_width(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
-    let Some((rect, eff_scale, _)) = resolve_queryable_rect(state, id)? else {
-        return Ok(0);
-    };
-    let width = rect.width / eff_scale;
+    let (width, _) = queryable_size(state, id)?;
     state.push(Val::Num(width as f64));
     Ok(1)
 }
 
-/// `frame:GetHeight()` — frame height in WoW UI coordinates.
+/// `frame:GetHeight()` — resolved height, or stored height without a valid rect.
 fn get_height(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
-    let Some((rect, eff_scale, _)) = resolve_queryable_rect(state, id)? else {
-        return Ok(0);
-    };
-    let height = rect.height / eff_scale;
+    let (_, height) = queryable_size(state, id)?;
     state.push(Val::Num(height as f64));
     Ok(1)
 }
@@ -200,11 +246,7 @@ fn get_height(state: &mut LuaState) -> LuaResult<u32> {
 /// `frame:GetSize()` — `(width, height)` in WoW UI coordinates.
 fn get_size(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
-    let Some((rect, eff_scale, _)) = resolve_queryable_rect(state, id)? else {
-        return Ok(0);
-    };
-    let width = rect.width / eff_scale;
-    let height = rect.height / eff_scale;
+    let (width, height) = queryable_size(state, id)?;
     state.push(Val::Num(width as f64));
     state.push(Val::Num(height as f64));
     Ok(2)

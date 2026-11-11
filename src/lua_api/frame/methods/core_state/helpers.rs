@@ -31,20 +31,37 @@ fn raw_frame_size(state: &crate::lua_api::state::SimState, id: u64) -> (f32, f32
         .unwrap_or((0.0, 0.0))
 }
 
+fn resolved_frame_size(state: &crate::lua_api::state::SimState, id: u64) -> (f32, f32) {
+    let Some(frame) = state.widgets.get(id) else {
+        return (0.0, 0.0);
+    };
+    if frame.widget_type == crate::widget::WidgetType::FontString {
+        return state.widgets.resolved_size(id);
+    }
+    let Some(rect) = frame.layout_rect else {
+        return state.widgets.stored_size(id);
+    };
+    let effective_scale = frame.effective_scale.max(1e-6);
+    (rect.width / effective_scale, rect.height / effective_scale)
+}
+
 pub(super) fn frame_size(state: &mut LuaState, id: u64, raw: bool) -> LuaResult<(f32, f32)> {
     let mut sim = borrow_state_mut(state)?;
-    if !raw
-        && sim
+    let can_resolve = !raw
+        && (sim
             .widgets
             .get(id)
             .is_some_and(|frame| has_queryable_rect(frame, id))
-    {
+            || crate::lua_api::rect_geometry::frame_has_queryable_rect(&sim.widgets, id));
+    if can_resolve {
         sim.resolve_rect_if_dirty(id);
     }
     let size = if raw {
         raw_frame_size(&sim, id)
+    } else if crate::lua_api::rect_geometry::frame_has_queryable_rect(&sim.widgets, id) {
+        resolved_frame_size(&sim, id)
     } else {
-        sim.widgets.resolved_size(id)
+        sim.widgets.stored_size(id)
     };
     Ok(size)
 }
