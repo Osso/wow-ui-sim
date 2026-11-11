@@ -1,7 +1,7 @@
-//! Retail shared cursor clear and placement (WM46, WM54, WM44-A, WM44-B).
+//! Shared Retail cursor behavior plus PTR ActionBar transitions (R29).
 //!
-//! Other profiles keep their historical behavior: the payload is assigned or
-//! dropped without native modes, stored item IDs or grid events.
+//! Retail uses this model for all represented cursor producers. PTR uses it for
+//! `PickupAction` and `PlaceAction`; other PTR producers keep their prior path.
 
 use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::globals::state_backed_queries::dispatch_event_now;
@@ -55,9 +55,30 @@ impl Default for CursorStorage {
     }
 }
 
-/// Whether this profile uses the native cursor model.
+/// Whether this profile uses native cursor behavior for every represented producer.
 pub(crate) fn modeled() -> bool {
     ACTIVE == ClientProfile::Retail
+}
+
+/// Whether this profile uses native cursor transitions for action-bar verbs.
+pub(crate) fn action_bar_modeled() -> bool {
+    matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr)
+}
+
+/// Whether this payload uses a native `GetCursorInfo` projection on this profile.
+pub(crate) fn native_projection_supported(cursor: &CursorInfo) -> bool {
+    modeled()
+        || (ACTIVE == ClientProfile::Ptr
+            && matches!(
+                cursor,
+                CursorInfo::Action { .. }
+                    | CursorInfo::Spell { .. }
+                    | CursorInfo::PetAction { .. }
+                    | CursorInfo::Item { .. }
+                    | CursorInfo::ActionBar { .. }
+                    | CursorInfo::Macro { .. }
+                    | CursorInfo::Money { .. }
+            ))
 }
 
 /// Native UICursorType of a payload. Talent cursors have none: WM54's Flyout 14
@@ -121,19 +142,28 @@ pub(crate) fn current_mode(state: &LuaState) -> LuaResult<u8> {
 /// S before the clear) for a nonempty cursor. Item-upgrade observations stay
 /// with the caller, which may have swapped them into a slot.
 pub(crate) fn clear(state: &mut LuaState) -> LuaResult<()> {
-    clear_with_restoration(state, true)
+    clear_with_restoration(state, true, modeled())
+}
+
+/// Clear an ActionBar cursor using the native transitions available on PTR and Retail.
+pub(crate) fn clear_action_bar(state: &mut LuaState) -> LuaResult<()> {
+    clear_with_restoration(state, true, action_bar_modeled())
 }
 
 /// An equip request keeps reason 1 when it clears the staged cursor (WM57).
 pub(crate) fn clear_retaining_equip_lock(state: &mut LuaState) -> LuaResult<()> {
-    clear_with_restoration(state, false)
+    clear_with_restoration(state, false, modeled())
 }
 
-fn clear_with_restoration(state: &mut LuaState, restore: bool) -> LuaResult<()> {
+fn clear_with_restoration(
+    state: &mut LuaState,
+    restore: bool,
+    native_model: bool,
+) -> LuaResult<()> {
     let (old, saved_id, grid_shown, unlocked) = {
         let mut sim = borrow_state_mut(state)?;
         let old = sim.cursor_item.take();
-        if !modeled() {
+        if !native_model {
             return Ok(());
         }
         let unlocked = if restore {
@@ -179,7 +209,12 @@ fn clear_with_restoration(state: &mut LuaState, restore: bool) -> LuaResult<()> 
 /// It fires only when that previous mode differs from the new one, so a
 /// same-mode typed replacement reports only the clear.
 pub(crate) fn place(state: &mut LuaState, cursor: CursorInfo) -> LuaResult<()> {
-    place_with_staged(state, cursor, None)
+    place_with_staged(state, cursor, None, modeled())
+}
+
+/// Place a cursor payload through the ActionBar native transition path.
+pub(crate) fn place_action_bar(state: &mut LuaState, cursor: CursorInfo) -> LuaResult<()> {
+    place_with_staged(state, cursor, None, action_bar_modeled())
 }
 
 /// Install an owned item after the caller cleared and re-resolved its identity.
@@ -196,13 +231,14 @@ fn place_with_staged(
     state: &mut LuaState,
     cursor: CursorInfo,
     staged: Option<crate::c_api::item_spell::item_equip::StagedEquip>,
+    native_model: bool,
 ) -> LuaResult<()> {
-    if !modeled() {
+    if !native_model {
         borrow_state_mut(state)?.cursor_item = Some(cursor);
         return Ok(());
     }
     let pre_clear_mode = current_mode(state)?;
-    clear(state)?;
+    clear_with_restoration(state, true, native_model)?;
     install_cursor(state, cursor, staged, pre_clear_mode)
 }
 
@@ -241,6 +277,31 @@ fn install_cursor(
         return Ok(());
     }
     notify(state, previous, reported_id)
+}
+
+/// Replace a held action with an occupied slot's action without clearing first.
+/// Same-mode swaps suppress `CURSOR_CHANGED` (PTR R29).
+pub(crate) fn replace_action_bar_cursor(state: &mut LuaState, cursor: CursorInfo) -> LuaResult<()> {
+    let previous_mode = current_mode(state)?;
+    let previous_id = borrow_state(state)?.cursor_storage.stored_item_id;
+    let mode = native_mode(&cursor);
+    let grid = mode.is_some_and(|mode| shows_grid(&cursor, mode));
+    let new_stored_id = stored_item_id(&cursor);
+    {
+        let mut sim = borrow_state_mut(state)?;
+        if let Some(item_id) = new_stored_id {
+            sim.cursor_storage.stored_item_id = item_id;
+        }
+        sim.cursor_item = Some(cursor);
+    }
+    if grid {
+        dispatch_event_now(state, "ACTIONBAR_SHOWGRID", &[])?;
+        borrow_state_mut(state)?.cursor_storage.grid_shown = true;
+    }
+    if mode.is_some_and(|mode| mode != previous_mode) {
+        notify(state, previous_mode, previous_id)?;
+    }
+    Ok(())
 }
 
 /// CURSOR_CHANGED with its first two arguments read from the cursor at

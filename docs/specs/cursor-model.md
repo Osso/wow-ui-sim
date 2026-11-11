@@ -23,7 +23,7 @@ VERIFIED (WM46): the mode names and the PickupAction rule that the slot's conten
 
 ### PTR 12.1.7 ActionBar contract (R29)
 
-- [ ] `GetCursorInfo()` for a spell from an action slot returns five values: `"spell"`, book slot or 0, `"spell"` or `"pet"`, spell ID, and related ID or nil. The spell ID is the fourth value; an empty cursor returns zero values.
+- [ ] After `PickupAction(slot)` from a spell slot, `GetCursorInfo()` returns five values: `"spell"`, book slot or 0, `"spell"`, spell ID, and related ID or nil. The spell ID is the fourth value; an empty cursor returns zero values.
 - [ ] `PickupAction(slot)` removes the action before notifying its source slot. `PickupAction(slot, true)` copies it without removing the source.
 - [ ] Pickup event order is `ACTIONBAR_SHOWGRID`, `CURSOR_CHANGED`, `ACTIONBAR_SLOT_CHANGED(sourceSlot)`, then one queued/coalesced `ACTIONBAR_UPDATE_COOLDOWN`; no `ACTIONBAR_UPDATE_STATE` post is sent.
 - [ ] Placing into an empty slot hides the grid, clears the cursor, notifies the target slot, then queues `ACTIONBAR_UPDATE_COOLDOWN`.
@@ -88,6 +88,13 @@ Swapping an owned item with a bag or equipment slot places the displaced item th
 
 - `Blizzard_MainMenuBarBagButtons/Shared/MainMenuBarBagManager.lua` reads `CURSOR_CHANGED`'s new cursor type and expands the bag bar for Item, Merchant and GuildBank cursors.
 - `Blizzard_ActionBar/Shared/ActionBar.lua` (`ActionBarMixin`) shows and hides all action buttons on `ACTIONBAR_SHOWGRID` and `ACTIONBAR_HIDEGRID`.
+
+## Implementation inventory
+
+- `src/lua_api/globals/real/cursor_model.rs` — native cursor transitions and supported projections.
+- `src/lua_api/globals/inventory_verbs.rs` — action-slot pickup, placement, and slot notifications.
+- `src/lua_api/state/sim_state.rs` — pending PTR cooldown-update state.
+- `src/lua_api/env_runtime.rs` — coalesced cooldown event delivery after OnUpdate.
 
 ## Tests asserting this spec
 

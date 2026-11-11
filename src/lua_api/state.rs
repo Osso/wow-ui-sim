@@ -212,6 +212,8 @@ macro_rules! build_empty_sim_state {
             has_bonus_action_bar: false,
             bonus_bar_index: 0,
             action_bars: $collections.action_bars,
+            #[cfg(feature = "client-ptr")]
+            actionbar_cooldown_update_pending: false,
             action_repeat_active_slots: HashSet::new(),
             #[cfg(feature = "retail-12-0-5")]
             special_bar_spells: HashSet::new(),

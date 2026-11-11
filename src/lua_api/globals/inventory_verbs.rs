@@ -13,7 +13,7 @@
 //! - `PutItemInBag(slot)`             — cursor item → equipped bag slot
 //! - `EquipCursorItem(slot)`          — cursor → equip slot
 //! - `DeleteCursorItem()`             — clears cursor
-//! - `PlaceAction(slot)`              — cursor spell/action → action bar slot
+//! - `PlaceAction(slot)`              — cursor action → action bar slot (PTR swaps occupied slots)
 //!
 //! Registered from `register_tail_globals` after `missing_surface` so the
 //! Rust impls supersede any `stub_nil` entries that slipped through.
@@ -22,6 +22,7 @@ use crate::c_api::container_inventory::{
     equip_cursor_item, pickup_container_item, pickup_inventory_item, split_container_item,
     use_container_item,
 };
+use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::globals::real::cursor_model;
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, call_function_state, create_string, frame_ref, table_get,
@@ -43,8 +44,39 @@ fn stack_u32(state: &mut LuaState, index: i32) -> Option<u32> {
     stack_i32(state, index).and_then(|n| u32::try_from(n).ok())
 }
 
-fn fire_actionbar_slot_changed(state: &mut LuaState) {
-    fire_named_event_state(state, "ACTIONBAR_SLOT_CHANGED", &[Val::Num(0.0)]);
+/// Native PickupAction/PlaceAction ranges: PTR 1–360, Retail 1–180 (R29).
+fn action_slot_valid(slot: u32) -> bool {
+    match ACTIVE {
+        ClientProfile::Ptr => (1..=360).contains(&slot),
+        ClientProfile::Retail => (1..=180).contains(&slot),
+        _ => true,
+    }
+}
+
+/// PTR reports the changed slot; other profiles keep the legacy broadcast value 0.
+fn fire_actionbar_slot_changed(state: &mut LuaState, slot: u32) {
+    let event_slot = if ACTIVE == ClientProfile::Ptr {
+        slot
+    } else {
+        0
+    };
+    fire_named_event_state(
+        state,
+        "ACTIONBAR_SLOT_CHANGED",
+        &[Val::Num(f64::from(event_slot))],
+    );
+}
+
+/// Coalesce PTR cooldown refreshes until the next update tick (R29).
+#[cfg(feature = "client-ptr")]
+fn queue_actionbar_update_cooldown(state: &mut LuaState) -> LuaResult<()> {
+    borrow_state_mut(state)?.actionbar_cooldown_update_pending = true;
+    Ok(())
+}
+
+#[cfg(not(feature = "client-ptr"))]
+fn queue_actionbar_update_cooldown(_state: &mut LuaState) -> LuaResult<()> {
+    Ok(())
 }
 
 fn refresh_action_ui_buttons(state: &mut LuaState, slot: u32) {
@@ -151,6 +183,18 @@ fn pickup_action(state: &mut LuaState) -> LuaResult<u32> {
     let Some(slot) = stack_u32(state, 1) else {
         return Ok(0);
     };
+    if !action_slot_valid(slot) {
+        return Ok(0);
+    }
+    if ACTIVE == ClientProfile::Ptr
+        && crate::lua_api::globals::real::protected_globals::protected_call_refused(
+            state,
+            "PickupAction",
+            true,
+        )?
+    {
+        return Ok(0);
+    }
     let ignore_removal = matches!(stack_val(state, 2), Val::Bool(true));
     let Ok(mut st) = borrow_state_mut(state) else {
         return Ok(0);
@@ -168,12 +212,17 @@ fn pickup_action(state: &mut LuaState) -> LuaResult<u32> {
         crate::c_api::action_macros::clear_slot(&mut st, slot);
     }
     drop(st);
-    cursor_model::place(state, cursor)?;
+    cursor_model::place_action_bar(state, cursor)?;
     if !ignore_removal {
-        fire_actionbar_slot_changed(state);
+        fire_actionbar_slot_changed(state, slot);
         refresh_action_ui_buttons(state, slot);
+        if ACTIVE == ClientProfile::Ptr {
+            queue_actionbar_update_cooldown(state)?;
+        }
     }
-    cursor_model::legacy_changed(state);
+    if !cursor_model::action_bar_modeled() {
+        cursor_model::legacy_changed(state);
+    }
     Ok(0)
 }
 
@@ -336,7 +385,7 @@ fn get_cursor_info(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn push_cursor_info(state: &mut LuaState, cursor: CursorInfo) -> LuaResult<u32> {
-    if cursor_model::modeled()
+    if cursor_model::native_projection_supported(&cursor)
         && let Some(count) = push_native_projection(state, &cursor)?
     {
         return Ok(count);
@@ -423,13 +472,16 @@ fn push_spell_cursor(state: &mut LuaState, spell_id: u32) -> LuaResult<u32> {
 }
 
 /// Mode 4: ("petaction", low 24 bits, pet-book slot or nil, override or nil)
-/// (WM46, WM56). Only category `(word >> 24) & 63 == 1` enables the pet-book
-/// and override lookups. The pet-book search is a miss (0) and the override
-/// nil, for the same gaps as spells.
+/// (WM46, WM56). The unordered pet-book model cannot resolve a slot or override,
+/// so category 1 returns 0/nil. PTR categories 6 and 7 also return 0/nil (R29);
+/// Retail returns nil/nil for those categories.
 fn push_pet_action_cursor(state: &mut LuaState, packed_action: u32) -> LuaResult<u32> {
     const CATEGORY_SPELL: u32 = 1;
+    let category = (packed_action >> 24) & 63;
     push_cursor_kind_number(state, "petaction", f64::from(packed_action & 0x00FF_FFFF))?;
-    let book = if (packed_action >> 24) & 63 == CATEGORY_SPELL {
+    let book = if category == CATEGORY_SPELL
+        || (ACTIVE == ClientProfile::Ptr && matches!(category, 6 | 7))
+    {
         Val::Num(0.0)
     } else {
         Val::Nil
@@ -497,17 +549,116 @@ fn push_cursor_kind_number(state: &mut LuaState, kind: &str, number: f64) -> Lua
     Ok(2)
 }
 
-/// `PlaceAction(slot)` — if the cursor is carrying a spell/action, write
-/// the spell id into `action_bars[slot]` and clear the cursor. Items are
-/// not placeable on action bars; silent no-op in that case.
+fn action_cursor_at_slot(state: &LuaState, slot: u32) -> Option<CursorInfo> {
+    let sim = borrow_state(state).ok()?;
+    if let Some(&macro_index) = sim.action_macros.get(&slot) {
+        Some(CursorInfo::Macro { macro_index })
+    } else if let Some(&outfit_id) = sim.action_outfits.get(&slot) {
+        Some(CursorInfo::TransmogOutfit { outfit_id })
+    } else {
+        sim.action_bars
+            .get(&slot)
+            .copied()
+            .map(|spell_id| CursorInfo::Action { slot, spell_id })
+    }
+}
+
+fn assign_action_to_slot(state: &mut LuaState, slot: u32, cursor: &CursorInfo) -> LuaResult<bool> {
+    let mut sim = borrow_state_mut(state)?;
+    match cursor {
+        CursorInfo::Macro { macro_index } => {
+            crate::c_api::action_macros::assign_macro(&mut sim, slot, *macro_index)?;
+        }
+        CursorInfo::Action { spell_id, .. }
+        | CursorInfo::Spell { spell_id }
+        | CursorInfo::PetAction { spell_id, .. } => {
+            crate::c_api::action_macros::clear_slot(&mut sim, slot);
+            sim.action_bars.insert(slot, *spell_id);
+        }
+        CursorInfo::Talent { talent_id, .. } => {
+            crate::c_api::action_macros::clear_slot(&mut sim, slot);
+            sim.action_bars.insert(slot, *talent_id);
+        }
+        CursorInfo::TransmogOutfit { outfit_id } => {
+            crate::c_api::action_macros::clear_slot(&mut sim, slot);
+            sim.action_outfits.insert(slot, *outfit_id);
+            if *outfit_id == 0 {
+                sim.equipped_gear_outfit_action_slots.insert(slot);
+            }
+        }
+        CursorInfo::Item { .. }
+        | CursorInfo::ActionBar { .. }
+        | CursorInfo::Money { .. }
+        | CursorInfo::EquipmentSet { .. }
+        | CursorInfo::Currency { .. } => return Ok(false),
+    }
+    Ok(true)
+}
+
+fn cursor_spell_id(cursor: &CursorInfo) -> Option<u32> {
+    match cursor {
+        CursorInfo::Action { spell_id, .. }
+        | CursorInfo::Spell { spell_id }
+        | CursorInfo::PetAction { spell_id, .. } => Some(*spell_id),
+        _ => None,
+    }
+}
+
+fn place_ptr_action(state: &mut LuaState, slot: u32, cursor: CursorInfo) -> LuaResult<()> {
+    let displaced = action_cursor_at_slot(state, slot);
+    if displaced
+        .as_ref()
+        .and_then(cursor_spell_id)
+        .zip(cursor_spell_id(&cursor))
+        .is_some_and(|(target, incoming)| target == incoming)
+    {
+        cursor_model::clear_action_bar(state)?;
+        return Ok(());
+    }
+    if !assign_action_to_slot(state, slot, &cursor)? {
+        return Ok(());
+    }
+    if let Some(displaced) = displaced {
+        cursor_model::replace_action_bar_cursor(state, displaced)?;
+    } else {
+        cursor_model::clear_action_bar(state)?;
+    }
+    fire_actionbar_slot_changed(state, slot);
+    refresh_action_ui_buttons(state, slot);
+    queue_actionbar_update_cooldown(state)
+}
+
+/// `PlaceAction(slot)` — place a held action on an action-bar slot.
+/// PTR swaps an occupied target onto the cursor (R29).
 fn place_action(state: &mut LuaState) -> LuaResult<u32> {
     let Some(slot) = stack_u32(state, 1) else {
         return Ok(0);
     };
-    let Ok(mut st) = borrow_state_mut(state) else {
+    if !action_slot_valid(slot) {
+        return Ok(0);
+    }
+    if ACTIVE == ClientProfile::Ptr
+        && crate::lua_api::globals::real::protected_globals::protected_call_refused(
+            state,
+            "PlaceAction",
+            true,
+        )?
+    {
+        cursor_model::clear_action_bar(state)?;
+        return Ok(0);
+    }
+    let cursor = match borrow_state(state) {
+        Ok(sim) => sim.cursor_item.clone(),
+        Err(_) => None,
+    };
+    let Some(cursor) = cursor else {
         return Ok(0);
     };
-    let Some(cursor) = st.cursor_item.clone() else {
+    if ACTIVE == ClientProfile::Ptr {
+        place_ptr_action(state, slot, cursor)?;
+        return Ok(0);
+    }
+    let Ok(mut st) = borrow_state_mut(state) else {
         return Ok(0);
     };
     match cursor {
@@ -542,7 +693,7 @@ fn place_action(state: &mut LuaState) -> LuaResult<u32> {
     }
     drop(st);
     cursor_model::clear(state)?;
-    fire_actionbar_slot_changed(state);
+    fire_actionbar_slot_changed(state, slot);
     refresh_action_ui_buttons(state, slot);
     cursor_model::legacy_changed(state);
     Ok(0)
