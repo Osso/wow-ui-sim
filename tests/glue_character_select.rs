@@ -372,7 +372,8 @@ fn forever_free_promotional_upgrade_is_available_on_glue() {
 }
 
 #[test]
-#[cfg(any(feature = "client-ptr", feature = "client-wowforever"))]
+// The Camelot CharacterSelectList consumer is TOC-selected only by `AllowLoadGameType camelot`.
+#[cfg(feature = "client-wowforever")]
 fn super_district_title_uses_host_selection_and_info() {
     test_timeout! {
         let env = load_blizzard_screen(ScreenKind::CharacterSelect);

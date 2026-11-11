@@ -567,6 +567,10 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
             lua.exec(
                 "local facing = 0; function C_CharacterCreation.GetCharacterCreateFacing() return facing end; function C_CharacterCreation.SetCharacterCreateFacing(value) facing = value end",
             )?;
+            // Preserve the pre-existing PTR altered-form flag; native registration is unknown.
+            lua.exec(
+                "local altered = false; function C_CharacterCreation.IsViewingAlteredForm() return altered end; function C_CharacterCreation.SetViewingAlteredForm(value) altered = value end",
+            )?;
         }
         // User-approved, not native evidence: class-trial boosts are not modeled.
         lua.exec("function C_CharacterCreation.GetTrialBoostStartingLevel() return 0 end")?;
