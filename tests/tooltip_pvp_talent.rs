@@ -85,6 +85,10 @@ fn game_tooltip_pvp_talent_uses_resolved_spell_and_replacement_line() {
         local line = lines[#lines]
         assert(line.type == 0)
         assert(line.leftText == REPLACES_SPELL:format(replacement.lines[1].leftText))
+        local first = TestGetPvpTalent(91001)
+        local second = TestGetPvpTalent(91001)
+        assert(second.dataInstanceID == first.dataInstanceID + 1,
+            "populated tooltips use the shared incrementing instance counter")
         "#,
     )
     .unwrap();
@@ -138,6 +142,7 @@ fn game_tooltip_pvp_talent_local_annotation_predicates() {
 
     env.exec(
         r#"
+        assert(C_SpecializationInfo.GetActiveSpecGroup() == 1)
         local data = TestGetPvpTalent(91001)
         local line = data.lines[#data.lines]
         assert(line.leftText == UNLOCKED_AT_LEVEL:format(75))
@@ -275,7 +280,7 @@ fn game_tooltip_pvp_talent_local_annotation_predicates() {
         local data = TestGetPvpTalent(91001)
         local line = data.lines[#data.lines]
         assert(line.leftText == UNLOCKED_AT_LEVEL:format(70)
-            and line.wrapText == true,
+            and line.type == 0 and line.wrapText == true,
             "a supplied later level failure uses the wrapped unlock line")
         "#,
     )
@@ -320,6 +325,11 @@ fn game_tooltip_pvp_talent_failure_and_inspect_annotations() {
         local data = TestGetPvpTalent(91001)
         local line = data.lines[#data.lines]
         assert(line.leftText == TALENT_TOOLTIP_ADD_REST_ERROR_PVP)
+        assert(line.type == 0 and line.wrapText == true)
+        local r, g, b = HOSTILE_STATUS_COLOR:GetRGB()
+        assert(math.abs(line.leftColor.r - r) < 0.01
+            and math.abs(line.leftColor.g - g) < 0.01
+            and math.abs(line.leftColor.b - b) < 0.01)
         "#,
     )
     .unwrap();
@@ -363,9 +373,13 @@ fn game_tooltip_pvp_talent_failure_and_inspect_annotations() {
         local data = TestGetPvpTalent(91001)
         local lines = data.lines
         assert(lines[#lines].leftText == PVP_TALENT_GRANTED_BY_AZERITE_ESSENCE)
-        assert(lines[#lines].wrapText == true)
+        assert(lines[#lines].type == 0 and lines[#lines].wrapText == true)
         assert(lines[#lines - 1].type == 1,
             "the essence message replaces the item message")
+        local r, g, b = REFUND_TOOLTIP_COLOR:GetRGB()
+        assert(math.abs(lines[#lines].leftColor.r - r) < 0.01
+            and math.abs(lines[#lines].leftColor.g - g) < 0.01
+            and math.abs(lines[#lines].leftColor.b - b) < 0.01)
         "#,
     )
     .unwrap();
@@ -399,6 +413,7 @@ fn game_tooltip_pvp_talent_failure_and_inspect_annotations() {
         local data = TestGetPvpTalent(91001, true, 2, 1)
         local line = data.lines[#data.lines]
         assert(line.leftText == TALENT_GRANTED_BY_ITEM:format("Hearthstone"))
+        assert(line.type == 0)
         for _, candidate in ipairs(data.lines) do
             assert(candidate.leftText ~= UNLOCKED_AT_LEVEL:format(75)
                 and candidate.leftText ~= TALENT_TOOLTIP_ADDPREVIEWPOINT,
