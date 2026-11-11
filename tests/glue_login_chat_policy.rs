@@ -12,7 +12,7 @@ fn glue_login_chat_policy_comes_from_original_glueparent_without_settling_fixtur
     test_timeout! {
         let env = common::lock_env(|| WowLuaEnv::new().unwrap());
         env.set_screen_mode(ScreenKind::Login);
-        let ui = wow_ui_sim::paths::default_blizzard_ui_addons_path();
+        let ui = wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap();
         for (name, toc) in discover_blizzard_addons_for_screen(&ui, ScreenKind::Login) {
             load_addon(&env.loader_env(), &toc).unwrap_or_else(|error| panic!("{name}: {error}"));
         }
