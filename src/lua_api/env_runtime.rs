@@ -166,6 +166,11 @@ impl WowLuaEnv {
     /// Select which UI surface should be loaded.
     pub fn set_screen_mode(&self, screen_kind: ScreenKind) {
         self.state.borrow_mut().set_screen_kind(screen_kind);
+        {
+            let mut lua = self.lua.borrow_mut();
+            crate::c_api::update_screen_registration(lua.state_mut())
+                .expect("screen-specific C_* registration should succeed");
+        }
         install_screen_mode_globals(self, screen_kind);
     }
 

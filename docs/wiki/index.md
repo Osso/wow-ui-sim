@@ -1,5 +1,9 @@
 > Proof receipts live untracked under `~/.local/state/wow-ui-sim`. The `data/patch-api/evidence` and `data/test-perf/evidence` trees were removed on 2026-11-08; historical links below are records, not live paths. Recover a file with `git show c011c1d95:<path>`.
 
+## [2026-11-11] system | Character-create trial boost level
+
+[Character-create trial boost level](systems/character-create-trial-boost-level.md) links the [contract](../specs/character-create-trial-boost-level.md), the Retail 70783 export, Glue registration, host selector state, and Forever/PTR evidence limits.
+
 ## [2026-11-10] system | ScriptObject full lockdown
 
 [ScriptObject full lockdown](systems/script-object-full-lockdown.md) links the R18 model and its contract: distinct full-lock and forbidden states, access-allowed absence, scoped XML defaults, parent inheritance, and five measured secure/tainted resolver consumers. Retail and Forever native-consumer integration filters pass 7/7 each; six-profile all-target checks plus Wrath, both library suites, and the manifest bin tests pass with zero compiler warnings. See the [lane report](../../handoff/full-lockdown-model/REPORT.md) for exact outputs and UNKNOWNs.

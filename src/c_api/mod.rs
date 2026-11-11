@@ -122,9 +122,11 @@ pub mod c_catalog_shop;
 pub mod c_catalog_shop_products;
 pub mod c_challenge_mode;
 pub(crate) mod c_character_creation_naming;
+pub(crate) mod c_character_creation_seen;
+pub mod c_character_creation_trial_boost;
+mod c_character_creation_trial_boost_data;
 #[cfg(test)]
 mod c_character_creation_trial_boost_tests;
-pub(crate) mod c_character_creation_seen;
 pub mod c_character_services;
 pub mod c_chat_bubbles;
 #[cfg(feature = "retail-12-0-5")]
@@ -516,6 +518,10 @@ pub(crate) use registration::{
 use rilua::LuaResult;
 use rilua::vm::state::LuaState;
 
+pub(crate) fn update_screen_registration(state: &mut LuaState) -> LuaResult<()> {
+    c_character_creation_trial_boost::update_screen_registration(state)
+}
+
 fn supports_super_tracking() -> bool {
     use crate::client_profile::{ACTIVE, ClientProfile};
     matches!(
@@ -612,6 +618,7 @@ fn register_glue_and_display_tables(state: &mut LuaState) -> LuaResult<()> {
     c_glue::register_c_glue(state)?;
     c_login::register_c_login(state)?;
     c_character_creation_naming::register(state)?;
+    c_character_creation_trial_boost::register(state)?;
     c_ui::register(state)?;
     permanent_shims::c_ui::register_c_ui(state)
 }
