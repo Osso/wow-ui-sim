@@ -14,11 +14,11 @@ returned `false`/`false`/no-op from Lua for the same five profiles.
 
 ## Contract
 
-- [ ] On Retail, `HasURL()` returns one boolean and is true only when the URL
+- [x] On Retail, `HasURL()` returns one boolean and is true only when the URL
   text is nonempty.
-- [ ] On Retail, `IsNew()` returns one boolean by comparing the current URL
+- [x] On Retail, `IsNew()` returns one boolean by comparing the current URL
   text with the saved last-launched URL text.
-- [ ] On Retail, `LaunchURL()` with an empty URL logs
+- [x] On Retail, `LaunchURL()` with an empty URL logs
   `No external event URL to launch.`, emits `EXTERNAL_EVENT_LAUNCH_URL_FAILED`
   synchronously with no payload, and returns no values.
 - `LaunchURL()` with a supplied URL records it in `SimState.last_launched_url`
@@ -52,7 +52,6 @@ returned `false`/`false`/no-op from Lua for the same five profiles.
 
 ## Tests asserting this spec
 
-- `tests/external_event_url.rs` — the GameMenu click consumer launches only a
-  supplied URL, the Retail empty-URL failure reaches the original popup handler
-  synchronously, `IsNew` follows the supplied flag on non-Retail profiles, and
-  the PTR minimap consumer uses `can_show`.
+- `tests/external_event_url.rs::retail_original_game_menu_uses_saved_url_for_badge_and_ignores_empty_url` — original Retail `InitButtons` consumer.
+- `tests/external_event_url.rs::retail_empty_url_emits_failure_before_launch_returns` — original Retail popup handler and zero-payload failure event.
+- Other tests cover supplied URL launches, non-Retail newness inputs, and PTR minimap visibility.
