@@ -120,6 +120,7 @@ pub(crate) mod c_campaign_info;
 pub mod c_catalog_shop;
 pub mod c_catalog_shop_products;
 pub mod c_challenge_mode;
+pub(crate) mod c_character_creation;
 pub(crate) mod c_character_creation_naming;
 pub(crate) mod c_character_creation_seen;
 pub mod c_character_services;
@@ -406,6 +407,7 @@ pub(crate) mod c_weather;
 pub mod c_weekly_rewards;
 pub mod c_widget;
 pub mod c_wow_token_public;
+pub mod c_wow_token_ui;
 pub mod c_wowtoken_secure;
 pub mod c_xml_util;
 pub(crate) mod c_zone_ability_icon;
@@ -625,6 +627,7 @@ fn register_token_texture_xml_tables(state: &mut LuaState) -> LuaResult<()> {
     c_ping_texture_kits::register(state)?;
     c_wowtoken_secure::register_c_wowtoken_secure(state)?;
     c_wow_token_public::register_c_wow_token_public(state)?;
+    c_wow_token_ui::register(state)?;
     c_texture::register_c_texture(state)?;
     c_ui_file_asset::register_c_ui_file_asset(state)?;
     c_xml_util::register_c_xml_util(state)

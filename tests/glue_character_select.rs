@@ -132,6 +132,59 @@ fn load_blizzard_screen(screen: ScreenKind) -> common::LockedEnv {
 }
 
 #[test]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn character_create_mode_is_glue_only_and_uses_lua_truthiness() {
+    let env = WowLuaEnv::new().expect("create Lua environment");
+    let game_surface_has_setter: bool = env
+        .eval(
+            "return C_CharacterCreation ~= nil and C_CharacterCreation.SetInCharacterCreate ~= nil",
+        )
+        .expect("Game surface member should be queryable");
+    assert!(!game_surface_has_setter);
+
+    env.set_screen_mode(ScreenKind::CharacterSelect);
+    let glue_surface_has_setter: bool = env
+        .eval("return type(C_CharacterCreation.SetInCharacterCreate) == 'function'")
+        .expect("Glue surface member should be queryable");
+    assert!(glue_surface_has_setter);
+
+    env.exec(
+        r##"
+        characterCreateEventCount = 0
+        local eventProbe = CreateFrame("Frame")
+        eventProbe:RegisterEvent("PLAYER_LOGIN")
+        eventProbe:SetScript("OnEvent", function()
+            characterCreateEventCount = characterCreateEventCount + 1
+        end)
+
+        assert(select("#", C_CharacterCreation.SetInCharacterCreate(true)) == 0)
+        assert(select("#", C_CharacterCreation.SetInCharacterCreate(0)) == 0)
+        assert(select("#", C_CharacterCreation.SetInCharacterCreate("enter")) == 0)
+        assert(select("#", C_CharacterCreation.SetInCharacterCreate({})) == 0)
+        assert(not pcall(C_CharacterCreation.SetInCharacterCreate))
+        assert(not pcall(C_CharacterCreation.SetInCharacterCreate, nil))
+        assert(characterCreateEventCount == 0)
+        "##,
+    )
+    .expect("Glue character-create input should accept Lua truthy values");
+    assert!(env.state().borrow().in_character_create);
+
+    env.exec(
+        "C_CharacterCreation.SetInCharacterCreate(false); C_CharacterCreation.SetInCharacterCreate(false); assert(characterCreateEventCount == 0)",
+    )
+    .unwrap();
+    assert!(!env.state().borrow().in_character_create);
+
+    env.set_screen_mode(ScreenKind::Game);
+    let game_surface_has_setter: bool = env
+        .eval(
+            "return C_CharacterCreation ~= nil and C_CharacterCreation.SetInCharacterCreate ~= nil",
+        )
+        .expect("Game surface member should remain queryable");
+    assert!(!game_surface_has_setter);
+}
+
+#[test]
 fn character_select_screen_shows_character_select_not_login() {
     test_timeout! {
         let env = load_blizzard_screen(ScreenKind::CharacterSelect);
@@ -476,21 +529,27 @@ fn forever_character_tooltip_composes_supplied_surname_and_separator() {
         {
             let state = env.state();
             let mut sim = state.borrow_mut();
-            let account = sim.bnet_friends.iter_mut()
+            let account = sim
+                .bnet_friends
+                .iter_mut()
                 .flat_map(|friend| friend.game_accounts.iter_mut())
-                .find(|account| account.client_program == "WoW").unwrap();
+                .find(|account| account.client_program == "WoW")
+                .unwrap();
             account.character_name = "Aldren".into();
             account.surname = surname.into();
             account.name_separator = separator;
         }
-        env.exec(&format!(r#"
+        env.exec(&format!(
+            r#"
             local info = CharacterSelectUtil.GetCharacterInfoTable(1)
             assert(info.characterName == 'Aldren' and info.surname == {surname:?})
             assert(info.fullName == {expected:?})
             GlueTooltip:ClearLines()
             assert(CharacterSelectUtil.SetTooltipForCharacterInfo(info, 1))
             assert(GlueTooltip:GetLeftLine(1):GetText() == {expected:?})
-        "#)).expect("original Camelot tooltip uses composed name and surname");
+        "#
+        ))
+        .expect("original Camelot tooltip uses composed name and surname");
     }
 }
 
@@ -500,9 +559,14 @@ fn forever_basic_character_info_requires_guid_and_unknown_returns_no_values() {
     let env = load_blizzard_screen(ScreenKind::CharacterSelect);
     for call in ["GetBasicCharacterInfo()", "GetBasicCharacterInfo(nil)"] {
         let error = env.exec(call).expect_err("required GUID").to_string();
-        assert!(error.contains("Usage: local basicInfo = GetBasicCharacterInfo(guid)"), "{error}");
+        assert!(
+            error.contains("Usage: local basicInfo = GetBasicCharacterInfo(guid)"),
+            "{error}"
+        );
     }
-    let arity: i32 = env.eval("return select('#', GetBasicCharacterInfo('Player-unknown'))").unwrap();
+    let arity: i32 = env
+        .eval("return select('#', GetBasicCharacterInfo('Player-unknown'))")
+        .unwrap();
     assert_eq!(arity, 0);
 }
 

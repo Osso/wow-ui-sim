@@ -44,6 +44,9 @@ pub struct WowTokenState {
     /// Number of tokens the player currently owns. Refreshed by
     /// `UpdateTokenCount`.
     pub owned_token_count: i32,
+    /// Forever server-set gate for the Auction House token category. PTR uses
+    /// its native always-enabled override instead of this status input.
+    pub auction_house_feature_enabled: bool,
 }
 
 impl Default for WowTokenState {
@@ -56,6 +59,7 @@ impl Default for WowTokenState {
             guaranteed_price: 0,
             listed_auctionable: Vec::new(),
             owned_token_count: 0,
+            auction_house_feature_enabled: false,
         }
     }
 }

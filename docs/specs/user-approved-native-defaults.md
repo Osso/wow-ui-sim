@@ -1,6 +1,6 @@
 # User-approved native-unknown defaults
 
-These are simulator scenario defaults, approved by the user on 2026-10-28. They are not evidence of native behavior. Supplied state takes precedence where available. Replace them when the named backing systems are modeled.
+These are simulator scenario defaults, approved by the user on 2026-10-28. They are not evidence of native behavior. Supplied state takes precedence where available. Replace them when the named backing systems are modeled. The R27-native `C_CharacterCreation.SetInCharacterCreate` contract is now in [character-create-mode](character-create-mode.md); PTR registration remains UNKNOWN and its previous user-approved registration remains.
 
 ## Glue screens
 
@@ -12,7 +12,6 @@ These are simulator scenario defaults, approved by the user on 2026-10-28. They 
 | C_Login.GetState | Preserve modeled connection fields; waitingForRealmList, superDistrictChoicePending, keepingCharacterListOnRealmJoin, waitingForRuleSets false; hasSelectedExperiencePreset true | PTR | Blizzard_GlueParent/Mainline/GlueParent.lua:222–254 | Login policy |
 | IsNameReservationOnly | false | PTR | Blizzard_GlueXML/Mainline/CharacterSelect.lua:1019 | Name-reservation realm policy |
 | C_CharacterServices.HasQueuedUpgrade | false | Retail, PTR | Blizzard_GlueXML/Mainline/CharacterSelect.lua:337 (Retail), :342 (PTR) | Queued character upgrades |
-| C_CharacterCreation.SetInCharacterCreate | Record supplied boolean; user-approved, not native evidence | Retail, PTR | Blizzard_CharacterCreate/Blizzard_CharacterCreate.lua:194 (Retail), Mainline/Blizzard_CharacterCreate.lua:200 (PTR) | Character-create screen state consumers |
 | C_CharacterCreation.SaveSeenChoices | Record offered choice IDs as seen; user-approved, not native evidence | Retail, PTR | Blizzard_CharacterCreate/Blizzard_CharacterCreate.lua:744 (Retail), Mainline/Blizzard_CharacterCreate.lua:787 (PTR) | Character customization seen-choice persistence |
 | C_CharacterCreation.ClearPreviewChoices | Accept clearSavedChoices; no effect or returns | Retail, PTR | Blizzard_CharacterCreate/Blizzard_CharacterCreate.lua:727 (Retail), Mainline/Blizzard_CharacterCreate.lua:770 (PTR) | Character customization preview and saved choices |
 | C_CharacterCreation.GetDefaultCharacterCreateFacing | 0 | Retail, PTR | Blizzard_CharacterCreate/Blizzard_CharacterCreate.lua:761 (Retail), Mainline/Blizzard_CharacterCreate.lua:804 (PTR) | Default subject rotation; feeds only 3D model rotation (non-goal) |
@@ -36,7 +35,6 @@ These are simulator scenario defaults, approved by the user on 2026-10-28. They 
 | `C_ExternalEventURL` | No supplied promotion: `HasURL`, `IsNew` false; `LaunchURL` records nothing; `CanShow` false (PTR only). Now modeled host state; see [external event URL](external-event-url.md) | Retail, PTR, Mists, Era, Anniversary | GameMenuFrameMixin.ExternalEventClickCallback; PTR minimap | 2026-10-28 |
 | `C_QuestLog.GetZoneStoryInfo` | No values for unknown map | Retail, PTR | QuestLogQuests_Update | 2026-10-28 |
 | Ordinary quest watch seed | Every seeded non-world quest is Manual; user-approved for Retail/PTR, simulator policy, not native evidence | Retail, PTR | QuestLogQuests_AddQuestButton | 2026-10-28 |
-| `C_QuestLog.IsAccountQuest` | Supplied quest flag, otherwise false; user-approved, not native evidence | Retail, PTR | QuestLogQuests_AddQuestButton | 2026-10-28 |
 | `C_StableInfo.GetAvailablePetSpecInfos` | Empty table when no catalog is supplied | Retail, PTR | StableUI specialization Refresh (Retail), OnLoad and Refresh (PTR) | 2026-10-28 |
 
 Declaration references are relative to each profile's pinned `Blizzard_APIDocumentationGenerated`:

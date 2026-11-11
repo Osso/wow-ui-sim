@@ -211,15 +211,20 @@ The file-by-file pass also produced answers for units that are not secrecy surfa
 
 ## Tests asserting this spec
 
-None yet at umbrella level. The narrow specs above list their own tests. Each bullet here gains a test that runs a shipped Blizzard consumer when its lane lands.
+- `tests/spell_casting.rs::forever_spell_cast_secrecy_uses_supplied_unit_and_control_guids_in_casting_bar` checks Forever's default, host-supplied GUID ownership, argument errors, and the original `CastingBarMixin:IsInterruptable` consumer.
+- `tests/spell_casting.rs::casting_bar_original_interruptibility_uses_cast_secrecy_predicate` checks the original consumer on Retail and PTR.
 
 ## Casting and threat predicate surface
 
-The pinned Retail and PTR `Blizzard_APIDocumentationGenerated/SecretPredicateAPIDocumentation.lua` declares `ShouldUnitSpellCastingBeSecret` at lines 372–385 and `ShouldUnitThreatValuesBeSecret` at lines 415–429. Both return one boolean. Casting requires one unit token; threat values requires two. `ShouldUnitThreatStateBeSecret` declares its second token nilable at lines 398–412. These declarations specify required arguments, not exact error text or coercion behavior.
+The pinned Retail and PTR `Blizzard_APIDocumentationGenerated/SecretPredicateAPIDocumentation.lua` declares `ShouldUnitSpellCastingBeSecret` at lines 372–385 and `ShouldUnitThreatValuesBeSecret` at lines 415–429. Both return one boolean. Casting requires one unit token; threat values requires two. `ShouldUnitThreatStateBeSecret` declares its second token nilable at lines 398–412.
 
-The simulator rejects missing, nil and non-string required tokens (best-guess validation, native UNKNOWN). Casting follows the existing public player-cast policy. Threat values follows the existing supplied `threat_state_restricted` policy. Both triggers are **best-guess, native UNKNOWN**. `CanCompareUnitTokens` uses the existing comparison-permission policy, not the inverse of comparison secrecy. Retail and PTR both enable the `retail-12-0-5` feature that gates the existing threat-state predicate.
+**VERIFIED** in Forever 1.60.1.70707: `ShouldUnitSpellCastingBeSecret` is registered in both Game and Glue and takes one required unit input. **VERIFIED** in Forever, Retail 12.1.5.70688, and PTR 12.1.7.70668: its compiled secrecy feature is on, and PTR/Retail use the same decision shape. **VERIFIED** in Forever: the query returns false when the unit GUID equals the player's GUID or its owner/controller GUID is the player's GUID; an unresolved unit or any other resolved unit returns true. Strings and numbers are accepted; missing, nil, boolean, table, and function inputs raise the usage error; inaccessible secret inputs raise. Full PTR/Retail parser parity is UNKNOWN. **INFERRED**: the owner/controller match means a unit the player controls or owns.
 
-Retail's `Blizzard_UIPanels_Game_Mainline.toc:6,10` selects `Shared/CastingBarFrame.lua`; its `IsInterruptable` method reaches the predicate via lines 2, 5 and 604–605. The consumer test observes interruptible and uninterruptible results, but a constant false predicate also permits both: it proves the missing-call boundary and preserves consumer behavior, not nonconstant predicate semantics.
+The simulator resolves existing player, target, focus, and party GUIDs first. **INFERRED simulator inputs** add explicit unit-token-to-GUID overrides and a set of player-owned or controlled GUIDs; both are empty by default. The query does not infer ownership from token spelling. A default unresolved `pet` therefore returns true; a host-mapped pet GUID in the owned/controlled set returns false. The simulator does not model a missing current-player GUID input.
+
+The original cached Forever `Blizzard_UIPanels_Game/Shared/CastingBarFrame.lua` reads the predicate at lines 2–6 and wraps outputs in `GetEffectiveBarType` and `IsInterruptable` at lines 354 and 605. The test above exercises the owned-pet and non-player paths through this consumer.
+
+Threat secrecy still follows the supplied `threat_state_restricted` input. Its native trigger remains UNKNOWN. `CanCompareUnitTokens` uses the existing comparison-permission policy, not the inverse of comparison secrecy. Retail and PTR both enable the `retail-12-0-5` feature that gates the existing threat-state predicate.
 
 ## Native restriction surface (clean-room S10–S13, 2026-10-31)
 
@@ -233,7 +238,7 @@ Source: `native-evidence-70688/secrets/S13-restriction-surface-summary.md` (beha
 
 ## Known gaps (current cycle)
 
-- [ ] Casting and threat restriction triggers: **best-guess, native UNKNOWN**; the shared simulated threat flag is not evidence of native threat-values behavior.
+- [ ] Threat-values restriction trigger: native UNKNOWN; the shared simulated threat flag is not evidence of native `ShouldUnitThreatValuesBeSecret` behavior.
 - [ ] Native S1 §7 describes a generic indexed state-byte predicate path comparing the byte to 2. The mapping of restriction indices and any pairing of a particular predicate with a getter remain unverified; existing `GetSpellCastSecrecy` and `ShouldUnitSpellCastBeSecret` are computed independently.
 
 - [ ] Complete accessor-to-AuraData publication and the remaining secret-operation behavior are UNKNOWN; see the WM61 boundaries below.

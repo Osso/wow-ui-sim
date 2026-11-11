@@ -250,18 +250,26 @@ pub(crate) fn existing_guid_for_unit(
     sim: &crate::lua_api::state::SimState,
     unit: &str,
 ) -> Option<String> {
-    if !super::group_queries::unit_exists_in_state(sim, unit) {
-        return None;
-    }
-    let guid = if let Some(base) = unit.strip_suffix("target") {
-        sim.unit_target_guids
-            .get(base)
-            .cloned()
-            .unwrap_or_else(|| guid_for_unit(sim, unit))
+    let resolved = if super::group_queries::unit_exists_in_state(sim, unit) {
+        let guid = if let Some(base) = unit.strip_suffix("target") {
+            sim.unit_target_guids
+                .get(base)
+                .cloned()
+                .unwrap_or_else(|| guid_for_unit(sim, unit))
+        } else {
+            guid_for_unit(sim, unit)
+        };
+        (guid != UNKNOWN_CREATURE_GUID && !guid.is_empty()).then_some(guid)
     } else {
-        guid_for_unit(sim, unit)
+        None
     };
-    (guid != UNKNOWN_CREATURE_GUID && !guid.is_empty()).then_some(guid)
+
+    resolved.or_else(|| {
+        sim.unit_guid_overrides
+            .get(unit)
+            .filter(|guid| !guid.is_empty())
+            .cloned()
+    })
 }
 
 pub(crate) fn guid_for_unit(sim: &crate::lua_api::state::SimState, unit: &str) -> String {

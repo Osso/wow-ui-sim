@@ -167,6 +167,7 @@ impl WowLuaEnv {
     pub fn set_screen_mode(&self, screen_kind: ScreenKind) {
         self.state.borrow_mut().set_screen_kind(screen_kind);
         install_screen_mode_globals(self, screen_kind);
+        crate::c_api::c_character_creation::update_screen_registration(self, screen_kind.is_glue());
     }
 
     /// Toggle whether the simulated player is logged into the world.

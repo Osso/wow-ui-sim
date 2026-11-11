@@ -71,25 +71,44 @@ fn user_defaults_batch2_quest_watch_membership() {
         assert(C_QuestLog.GetQuestWatchType(id) == Enum.QuestWatchType.Manual)
         assert(C_QuestLog.GetNumQuestWatches() == count)
         assert(not C_QuestLog.IsAccountQuest(id))
+        assert(not C_QuestLog.IsAccountQuest(0))
+        assert(not C_QuestLog.IsAccountQuest(2147483647))
     "#
     ))
     .expect("quest watch membership must follow changes");
     env.state().borrow_mut().quest_log_entries.entries[0].is_account_quest = Some(true);
-    env.exec(&format!("assert(C_QuestLog.IsAccountQuest({quest_id}))"))
-        .expect("supplied account quest flag takes precedence");
+    env.exec(&format!(
+        r#"
+        assert(select('#', C_QuestLog.IsAccountQuest({quest_id})) == 1)
+        assert(C_QuestLog.IsAccountQuest({quest_id}))
+        assert(C_QuestLog.IsAccountQuest(tostring({quest_id})))
+        assert(C_QuestLog.IsAccountQuest({quest_id} + 0.75))
+        assert(C_QuestLog.IsAccountQuest(tostring({quest_id}) .. ".75"))
+        assert(not C_QuestLog.IsAccountQuest(-0.75))
+        assert(not pcall(C_QuestLog.IsAccountQuest))
+        assert(not pcall(C_QuestLog.IsAccountQuest, nil))
+        assert(not pcall(C_QuestLog.IsAccountQuest, "not a number"))
+        assert(not pcall(C_QuestLog.IsAccountQuest, 2147483648))
+        assert(not pcall(C_QuestLog.IsAccountQuest, 0 / 0))
+        "#
+    ))
+    .expect("native account quest conversion and supplied flag should be honored");
 }
 
 #[test]
 fn user_defaults_batch2_world_map_quest_consumer() {
     let env = keybinding_panel_fixtures::setup_env();
+    let quest_id = env.state().borrow().quest_log_entries.entries[0].quest_id;
+    env.state().borrow_mut().quest_log_entries.entries[0].is_account_quest = Some(true);
     env.send_key_press("M", None).expect("open world map");
-    env.exec(
+    env.exec(&format!(
         r#"
         local source = debug.getinfo(QuestLogQuests_Update, 'S').source:gsub('\\', '/')
+        assert(type(QuestUtil.GetAccountQuestText({quest_id})) == 'string')
         assert(source:find('Mainline/QuestMapFrame.lua', 1, true))
         assert(type(QuestMapFrame:GetParent():GetMapID()) == 'number')
         QuestLogQuests_Update()
     "#,
-    )
-    .expect("real quest list consumes quest difficulty");
+    ))
+    .expect("original account quest helper and quest-list consumer should run");
 }

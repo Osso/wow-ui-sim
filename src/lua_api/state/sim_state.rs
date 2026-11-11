@@ -522,6 +522,10 @@ pub struct SimState {
     pub current_target: Option<TargetInfo>,
     /// Supplied target GUIDs for target, focus, and party unit tokens.
     pub unit_target_guids: HashMap<String, String>,
+    /// Host-supplied GUIDs for unit tokens not resolved by the built-in inputs.
+    pub unit_guid_overrides: HashMap<String, String>,
+    /// Host-supplied GUIDs owned or controlled by the player.
+    pub player_owned_or_controlled_unit_guids: HashSet<String>,
     pub previous_target: Option<TargetInfo>,
     pub current_focus: Option<TargetInfo>,
     /// Explicit host NPC-follower identities for player-style display.

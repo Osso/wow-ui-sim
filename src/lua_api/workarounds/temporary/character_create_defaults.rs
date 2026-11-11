@@ -4,10 +4,11 @@
 //! few frame surfaces to be ready by the time creation mixins run. Seed them
 //! here until the simulator models the full character-create state flow.
 
+use crate::c_api::c_character_creation::set_in_character_create;
 use crate::lua_api::WowLuaEnv;
 use crate::lua_api::methods::borrow_state_mut;
-use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
-use rilua::{LuaApiMut, LuaResult, vm::state::LuaState};
+use crate::lua_bridge::table_set_rust_fn_static;
+use rilua::LuaApiMut;
 
 const CHARACTER_CREATION_NAMESPACE_DEFAULTS_LUA: &str = r#"
 local function noop()
@@ -529,14 +530,6 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
         crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
     ) {
         // User-approved, not native evidence: record the character-create screen state.
-        let state = lua.state_mut();
-        let namespace = crate::c_api::ensure_namespace(state, "C_CharacterCreation")?;
-        table_set_rust_fn_static(
-            state,
-            namespace,
-            "SetInCharacterCreate",
-            set_in_character_create,
-        )?;
         // User-approved default until character customization preview choices are modeled.
         lua.exec("function C_CharacterCreation.ClearPreviewChoices(clearSavedChoices) end")?;
         // User-approved, not native evidence: facing feeds only 3D model rotation, a non-goal.
@@ -559,16 +552,18 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
         )?;
     }
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Ptr {
+        let state = lua.state_mut();
+        let namespace = crate::c_api::ensure_namespace(state, "C_CharacterCreation")?;
+        table_set_rust_fn_static(
+            state,
+            namespace,
+            "SetInCharacterCreate",
+            set_in_character_create,
+        )?;
         // User-approved defaults until realm name-reservation and regional naming policies are modeled.
         lua.exec("function IsNameReservationOnly() return false end; function C_CharacterCreation.AreRegionalUniqueNamesEnabled() return false end")?;
     }
     Ok(())
-}
-
-fn set_in_character_create(state: &mut LuaState) -> LuaResult<u32> {
-    let value = bool::from_stack(state, 1)?;
-    borrow_state_mut(state)?.in_character_create = value;
-    Ok(0)
 }
 
 pub(crate) fn patch(env: &WowLuaEnv) {

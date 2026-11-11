@@ -1,6 +1,8 @@
 //! Quest queries projected from explicitly supplied simulator state.
 
-use super::helpers::{ensure_namespace, validate_supplied_relation_id};
+use super::helpers::{
+    ensure_namespace, read_untainted_signed32_argument, validate_supplied_relation_id,
+};
 use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::methods::{borrow_state, val_to_string};
 use crate::lua_api::workarounds::update_campaign_headers;
@@ -45,7 +47,7 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
         "GetQuestAdditionalHighlights",
         additional_highlights,
     )?;
-    // Retail/PTR/Forever QuestLogDocumentation.lua declares this query; user-approved default.
+    // Forever registration is confirmed; R27 confirms the result decisions across all three.
     #[cfg(any(
         feature = "client-retail",
         feature = "client-ptr",
@@ -132,15 +134,20 @@ fn register_forever_queries(state: &mut LuaState) -> LuaResult<()> {
     feature = "client-wowforever"
 ))]
 fn is_account_quest(state: &mut LuaState) -> LuaResult<u32> {
-    let id = validate_supplied_relation_id(stack_val(state, 1), "questID must be a number")?;
-    // User-approved default, not native evidence; supplied quest data takes precedence.
-    let account = borrow_state(state)?
-        .quest_log_entries
-        .entries
-        .iter()
-        .find(|entry| Some(entry.quest_id) == id)
-        .and_then(|entry| entry.is_account_quest)
-        .unwrap_or(false);
+    let quest_id = read_untainted_signed32_argument(
+        state,
+        1,
+        "IsAccountQuest",
+        "Usage: local isAccountQuest = C_QuestLog.IsAccountQuest(questID)",
+    )?;
+    let account = quest_id >= 1
+        && borrow_state(state)?
+            .quest_log_entries
+            .entries
+            .iter()
+            .find(|entry| entry.quest_id == quest_id)
+            .and_then(|entry| entry.is_account_quest)
+            .unwrap_or(false);
     state.push(Val::Bool(account));
     Ok(1)
 }
