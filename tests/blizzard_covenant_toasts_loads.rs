@@ -263,6 +263,7 @@ fn retail_renown_tooltip_does_not_invent_the_path_of_ascension_reward(env: &WowL
             isCapstone = false,
             RewardIconMouseOver = {},
         }
+        CovenantRenownToast = toast
         CovenantRenownToastMixin.RefreshTooltip(toast)
         assert(rewardCalls == 0, 'zero accepted rows do not create a reward tooltip')
         assert(title == 'Milestone 5', 'zero accepted rows use the milestone title')
