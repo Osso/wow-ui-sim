@@ -114,16 +114,29 @@ fn scaled_rect_is_unscaled_layout_rect() {
 #[test]
 fn rect_queries_return_nothing_for_unanchored_frame() {
     let env = env();
-    let (rect_values, width, height, size_width, size_height, rect_valid): (
-        f64, f64, f64, f64, f64, bool,
-    ) = env
+    let (
+        rect_values,
+        width,
+        height,
+        size_width,
+        size_height,
+        rect_valid,
+        individual_width,
+        individual_height,
+    ): (f64, f64, f64, f64, f64, bool, f64, f64) = env
         .eval(
             r##"
             local f = CreateFrame("Frame", "UnanchoredProbe", UIParent)
             f:SetSize(100, 50)
             local rect_values = select("#", f:GetRect())
             local size_width, size_height = f:GetSize()
-            return rect_values, f:GetWidth(), f:GetHeight(), size_width, size_height, f:IsRectValid()
+
+            local individual = CreateFrame("Frame", "IndividualSizeProbe", UIParent)
+            individual:SetWidth(100)
+            individual:SetHeight(50)
+            local individual_width, individual_height = individual:GetSize()
+            return rect_values, f:GetWidth(), f:GetHeight(), size_width, size_height,
+                   f:IsRectValid(), individual_width, individual_height
             "##,
         )
         .expect("eval should succeed");
@@ -134,21 +147,25 @@ fn rect_queries_return_nothing_for_unanchored_frame() {
     assert_eq!(size_width, 100.0);
     assert_eq!(size_height, 50.0);
     assert!(!rect_valid);
+    assert_eq!(individual_width, 100.0);
+    assert_eq!(individual_height, 50.0);
 }
 
 #[test]
 fn valid_anchored_size_queries_use_resolved_dimensions() {
     let env = env();
-    let (width, height, size_width, size_height, left, bottom, rect_width, rect_height): (
-        f64,
-        f64,
-        f64,
-        f64,
-        f64,
-        f64,
-        f64,
-        f64,
-    ) = env
+    let (
+        valid_before,
+        width,
+        height,
+        size_width,
+        size_height,
+        left,
+        bottom,
+        rect_width,
+        rect_height,
+        valid_after,
+    ): (bool, f64, f64, f64, f64, f64, f64, f64, f64, bool) = env
         .eval(
             r#"
             local leftTarget = CreateFrame("Frame", "ResolvedSizeLeftTarget", UIParent)
@@ -161,15 +178,20 @@ fn valid_anchored_size_queries_use_resolved_dimensions() {
             frame:SetSize(5, 20)
             frame:SetPoint("BOTTOMLEFT", leftTarget, "BOTTOMRIGHT")
             frame:SetPoint("BOTTOMRIGHT", rightTarget, "BOTTOMLEFT")
+            local valid_before = frame:IsRectValid()
             local width = frame:GetWidth()
             local height = frame:GetHeight()
             local size_width, size_height = frame:GetSize()
             local left, bottom, rect_width, rect_height = frame:GetRect()
-            return width, height, size_width, size_height, left, bottom, rect_width, rect_height
+            local valid_after = frame:IsRectValid()
+            return valid_before, width, height, size_width, size_height, left, bottom,
+                   rect_width, rect_height, valid_after
             "#,
         )
         .expect("eval should succeed");
 
+    assert!(!valid_before);
+    assert!(valid_after);
     assert_eq!(width, 40.0);
     assert_eq!(height, 20.0);
     assert_eq!(size_width, 40.0);
@@ -183,7 +205,7 @@ fn valid_anchored_size_queries_use_resolved_dimensions() {
 #[test]
 fn child_anchored_to_unanchored_parent_has_no_queryable_rect() {
     let env = env();
-    let result: f64 = env
+    let (rect_values, width, height, rect_valid): (f64, f64, f64, bool) = env
         .eval(
             r##"
             local parent = CreateFrame("Frame", "UnanchoredParentProbe", UIParent)
@@ -193,11 +215,17 @@ fn child_anchored_to_unanchored_parent_has_no_queryable_rect() {
             child:SetSize(20, 20)
             child:SetPoint("CENTER", parent, "CENTER", 0, 0)
 
-            return select("#", child:GetRect())
+            local rect_values = select("#", child:GetRect())
+            local width, height = child:GetSize()
+            return rect_values, width, height, child:IsRectValid()
             "##,
         )
         .expect("eval should succeed");
-    assert_eq!(result, 0.0);
+
+    assert_eq!(rect_values, 0.0);
+    assert_eq!(width, 20.0);
+    assert_eq!(height, 20.0);
+    assert!(!rect_valid);
 }
 
 #[test]
@@ -218,6 +246,10 @@ fn child_rect_queries_follow_anchor_targets_not_unanchored_parent() {
         center_y,
         child_width,
         child_height,
+        target_valid_before,
+        child_valid_before,
+        target_valid_after,
+        child_valid_after,
     ): (
         f64,
         f64,
@@ -233,6 +265,10 @@ fn child_rect_queries_follow_anchor_targets_not_unanchored_parent() {
         f64,
         f64,
         f64,
+        bool,
+        bool,
+        bool,
+        bool,
     ) = env
         .eval(
             r##"
@@ -244,6 +280,8 @@ fn child_rect_queries_follow_anchor_targets_not_unanchored_parent() {
             local child = CreateFrame("Frame", "AnchorGroupChild", parent)
             child:SetSize(10, 12)
             child:SetPoint("BOTTOMLEFT", target, "TOPRIGHT", 5, 7)
+            local target_valid_before = target:IsRectValid()
+            local child_valid_before = child:IsRectValid()
 
             local parent_rect_values = select("#", parent:GetRect())
             local parent_width, parent_height = parent:GetSize()
@@ -253,9 +291,12 @@ fn child_rect_queries_follow_anchor_targets_not_unanchored_parent() {
             local center_values = select("#", child:GetCenter())
             local center_x, center_y = child:GetCenter()
             local child_width, child_height = child:GetSize()
+            local target_valid_after = target:IsRectValid()
+            local child_valid_after = child:IsRectValid()
             return parent_rect_values, parent_width, parent_height, child_rect_values,
                    left, bottom, width, height, scaled_rect_values, center_values,
-                   center_x, center_y, child_width, child_height
+                   center_x, center_y, child_width, child_height,
+                   target_valid_before, child_valid_before, target_valid_after, child_valid_after
             "##,
         )
         .expect("eval should succeed");
@@ -274,6 +315,10 @@ fn child_rect_queries_follow_anchor_targets_not_unanchored_parent() {
     assert_eq!(center_y, 93.0);
     assert_eq!(child_width, 10.0);
     assert_eq!(child_height, 12.0);
+    assert!(!target_valid_before);
+    assert!(!child_valid_before);
+    assert!(target_valid_after);
+    assert!(child_valid_after);
 }
 
 #[test]
