@@ -4,9 +4,9 @@ This contract defines profile-selected class and race FileDataID lookups in `src
 
 ## What it must do
 
-- [ ] Return the selected class FileDataID for a present class row. Preserve a present zero as `Some(0)` and return `None` for an absent row.
-- [ ] Return the race select and low-resolution FileDataIDs for a present race row. Preserve zero fields and return `None` for an absent row.
-- [ ] Return `None` when the active profile has no select-screen data.
+- [x] Return the selected class FileDataID for a present class row. Preserve a present zero as `Some(0)` and return `None` for an absent row.
+- [x] Return the race select and low-resolution FileDataIDs for a present race row. Preserve zero fields and return `None` for an absent row.
+- [ ] Return `None` when the active profile has no select-screen data; the PTR case is pending a targeted profile test.
 
 ## How it works
 
@@ -34,4 +34,4 @@ This contract defines profile-selected class and race FileDataID lookups in `src
 
 ## Out of scope
 
-- `C_CharacterSelect.GetSelectBackgroundModel`, `C_Login`, character roster state, per-character overrides, and the native cascade. The separate API owner will consume these accessors through host-supplied class and race maps after merge.
+- `C_CharacterSelect.GetSelectBackgroundModel`, `C_Login`, and character roster state. VERIFIED per the R52 lane brief: its separate owner applies the per-character override, class row, race select-screen ID, then race low-resolution ID; a missing final race row uses 651555, a present zero yields nil, and an invalid index uses the key-0 row. This lane only provides the class/race table lookups for host-supplied maps after merge.
