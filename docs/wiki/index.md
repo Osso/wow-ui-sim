@@ -178,13 +178,9 @@ ordinary launches retain import priority. See [addon loading](systems/addon-load
 selection, addon-visible names and realms before loading and after ReloadUI,
 Forever surname handling and the bounded original-consumer coverage.
 
-## [2026-11-02] investigation | Forever login startup
+## [2026-11-11] correction | Forever PTR feedback Glue selection
 
-[Login startup](investigations/forever-login-startup.md) records missing profile data,
-TOC sibling provenance, customization initialization and the user-approved offline
-catalog/capability policy. The rebuilt Windows login reports zero Lua errors, down
-from 38 records/58 occurrences; 69 focused checks pass after review. This bounded verification
-is separate from the game-screen baseline and native parity.
+[Login startup](investigations/forever-login-startup.md#r26-toc-admission-correction-2026-11-11) records R26's build-classification gate and the cached TOC distinction. **INFERRED (R26 plus the shipped cache TOC, whose exact build is unknown):** normal Forever startup excludes `Blizzard_PTRFeedbackGlue`. **VERIFIED (test source; runtime proof pending):** the updated fixture checks that selection separately from independently loaded customization addons.
 
 ## [2026-11-03] investigation | Forever Cooldown Viewer in Edit Mode
 

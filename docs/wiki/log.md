@@ -1,3 +1,7 @@
+## [2026-11-11] correction | Forever PTR feedback Glue selection
+
+Updated [Forever login startup](investigations/forever-login-startup.md#r26-toc-admission-correction-2026-11-11). **VERIFIED (native R26):** `OnlyBetaAndPTR` uses build classification. **VERIFIED (shipped cache TOC; exact build unknown):** `Blizzard_PTRFeedbackGlue.toc` carries that directive. **INFERRED:** normal Forever startup excludes this addon. **VERIFIED (test source; runtime proof pending):** the startup fixture expects its absence while customization addons load independently; API absence in all environments remains UNVERIFIED.
+
 ## [2026-11-10] fix | Mists frame-position residuals
 
 Updated the [frame-position investigation](investigations/frame-position-baseline-drift.md#mists-frame-residuals--2026-11-10) and [profile contract](../specs/frame-position-profile-baselines.md) with pinned-source Mists bag, aura, action-bar, status-bar and WatchFrame-managed right-container geometry. The simulator no longer synthesizes ObjectiveTrackerFrame on Mists, where the selected Blizzard UI has no producer; the test asserts absence. VERIFIED at `3c36dab15`: Mists `frame_positions` passes 25/28; `micro_menu`, `micro_menu_container` and `casting_bar` remain open.
