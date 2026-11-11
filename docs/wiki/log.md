@@ -1,6 +1,6 @@
 ## [2026-11-11] correction | Forever PTR feedback Glue selection
 
-Updated [Forever login startup](investigations/forever-login-startup.md#r26-toc-admission-correction-2026-11-11). **VERIFIED (native R26):** `OnlyBetaAndPTR` uses build classification. **VERIFIED (shipped cache TOC; exact build unknown):** `Blizzard_PTRFeedbackGlue.toc` carries that directive. **INFERRED:** normal Forever startup excludes this addon. **VERIFIED (test source; runtime proof pending):** the startup fixture expects its absence while customization addons load independently; API absence in all environments remains UNVERIFIED.
+Updated [Forever login startup](investigations/forever-login-startup.md#r26-toc-admission-correction-2026-11-11). **VERIFIED (native R26):** `OnlyBetaAndPTR` uses build classification. **VERIFIED (shipped cache TOC; exact build unknown):** `Blizzard_PTRFeedbackGlue.toc` carries that directive. **INFERRED:** normal Forever startup excludes this addon. **VERIFIED (test source; runtime proof pending):** the startup fixture checks its absence from Login startup; customization add-on loading is not asserted there. API absence in all environments remains UNVERIFIED.
 
 ## [2026-11-10] fix | Mists frame-position residuals
 

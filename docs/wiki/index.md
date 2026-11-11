@@ -180,7 +180,7 @@ Forever surname handling and the bounded original-consumer coverage.
 
 ## [2026-11-11] correction | Forever PTR feedback Glue selection
 
-[Login startup](investigations/forever-login-startup.md#r26-toc-admission-correction-2026-11-11) records R26's build-classification gate and the cached TOC distinction. **INFERRED (R26 plus the shipped cache TOC, whose exact build is unknown):** normal Forever startup excludes `Blizzard_PTRFeedbackGlue`. **VERIFIED (test source; runtime proof pending):** the updated fixture checks that selection separately from independently loaded customization addons.
+[Login startup](investigations/forever-login-startup.md#r26-toc-admission-correction-2026-11-11) records R26's build-classification gate and the cached TOC distinction. **INFERRED (R26 plus the shipped cache TOC, whose exact build is unknown):** normal Forever startup excludes `Blizzard_PTRFeedbackGlue`. **VERIFIED (test source; runtime proof pending):** the updated fixture checks its absence from Login startup; it does not assert customization add-on loading there.
 
 ## [2026-11-03] investigation | Forever Cooldown Viewer in Edit Mode
 

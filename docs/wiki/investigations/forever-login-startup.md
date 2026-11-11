@@ -111,7 +111,7 @@ Fully disconnected operation was not verified.
 
 **VERIFIED (shipped cache TOC; exact build unknown):** `Blizzard_PTRFeedbackGlue.toc` contains `OnlyBetaAndPTR: 1`. **INFERRED (R26 plus that TOC):** the normal Forever build excludes this Glue addon from startup, so the borrowed-file and feedback-hook checks apply only when it is selected or loaded explicitly. API absence in every environment is **UNVERIFIED**.
 
-**VERIFIED (test source; runtime proof pending):** the Forever startup fixture expects the feedback addon to be absent and checks that the customization addons and frame load independently.
+**VERIFIED (test source; runtime proof pending):** the Forever startup fixture checks that normal Login startup does not select `Blizzard_PTRFeedbackGlue`; it does not assert customization add-on loading on Login.
 
 ## Sources
 
