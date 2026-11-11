@@ -647,6 +647,7 @@ fn store_free_upgrade_check_handles_account_without_upgrade() {
     let env = load_store_ui_tree();
     env.exec(r#"
         assert(type(__secureenv.StoreFrame_CheckForFree) == 'function')
+        assert(C_StorePublic == nil or C_StorePublic.HasFreePromotionalUpgrade == nil)
         assert(C_SharedCharacterServices.HasFreePromotionalUpgrade() == false)
         local frame = {}
         __secureenv.StoreFrame_CheckForFree(frame, 'VARIABLES_LOADED')
