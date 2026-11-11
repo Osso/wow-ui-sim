@@ -683,7 +683,7 @@ macro_rules! build_empty_sim_state {
             glyph: GlyphState::default(),
             currency_info: super::globals::currency_data::seeded_currency_info_map(),
             wrath_currency: super::globals::real::wrath_currency::CurrencyListState::default(),
-            #[cfg(feature = "client-retail")]
+            #[cfg(any(feature = "client-retail", feature = "client-mists"))]
             currency_list: crate::c_api::currency_list::CurrencyListState::default(),
             currency_war_mode_bonus: HashMap::new(),
             currency_faction_grants: HashMap::new(),

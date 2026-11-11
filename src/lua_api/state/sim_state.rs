@@ -827,7 +827,7 @@ pub struct SimState {
     pub currency_info: HashMap<i32, CurrencyInfo>,
     /// Explicit Wrath-only legacy categories; modern currency queries do not read this.
     pub wrath_currency: super::super::globals::real::wrath_currency::CurrencyListState,
-    #[cfg(feature = "client-retail")]
+    #[cfg(any(feature = "client-retail", feature = "client-mists"))]
     pub currency_list: crate::c_api::currency_list::CurrencyListState,
     /// Explicit (War Mode applies, limit once per tooltip) flags; no inferred catalog.
     pub currency_war_mode_bonus: HashMap<i32, (Option<bool>, Option<bool>)>,
