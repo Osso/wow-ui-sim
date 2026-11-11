@@ -961,7 +961,7 @@
         },
         {
           "kind": "source",
-          "reference": "docs/specs/duration-text-binding.md",
+          "reference": "git:93125f591108a45dac8b124dee1cc59a9524fa2b:docs/specs/duration-text-binding.md",
           "summary": "Modeled userdata binding identity, raw table-access rejection, independent copied configuration, and retained duration/clock/formatter/font-string/curve references through collection. Native metatable, finalization, ownership/invalidation, GC timing, and secrecy equivalence remain unverified.",
           "source_hash": "553e526609e7644b12d5d543b12e036f7eb326d0e875612a03c305e0a82886f9"
         },
@@ -1490,7 +1490,7 @@
           "kind": "source",
           "reference": "src/lua_api/env_events.rs",
           "summary": "The dispatcher applies post-event workarounds after PLAYER_ENTERING_WORLD listeners; this call alone does not prove CVar wrapper retirement.",
-          "source_hash": "c49d561881d9d3af2d35424abab70c0b613d2c97e1cfd5413a40a0fafcda1982"
+          "source_hash": "2a6a315900e555e7bc4d26a89afb71cc8f688e5945ff29984d7af44b440ea9e4"
         },
         {
           "kind": "source",
@@ -1578,7 +1578,7 @@
           "kind": "source",
           "reference": "src/lua_api/env_events.rs",
           "summary": "The dispatcher applies post-event workarounds after PLAYER_ENTERING_WORLD listeners; this call alone does not prove CVar wrapper retirement.",
-          "source_hash": "c49d561881d9d3af2d35424abab70c0b613d2c97e1cfd5413a40a0fafcda1982"
+          "source_hash": "2a6a315900e555e7bc4d26a89afb71cc8f688e5945ff29984d7af44b440ea9e4"
         },
         {
           "kind": "source",

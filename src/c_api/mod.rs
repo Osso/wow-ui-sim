@@ -241,6 +241,7 @@ pub mod c_quest_log;
 pub(crate) mod c_quest_log_watches;
 pub mod c_quest_offer;
 mod c_scrapping_machine;
+pub mod c_shared_character_services;
 pub mod c_super_track;
 pub(crate) mod challenge_run;
 pub mod container_quest;
@@ -257,6 +258,7 @@ mod forever_lib_baseline_tests;
 pub mod outfit_entry;
 mod scenario_finder_availability;
 pub mod store_public_eligibility;
+pub(crate) mod store_state;
 pub mod transmog_availability;
 pub use c_quest_log_watches::QuestWatchType;
 pub(crate) use c_quest_log_watches::seed_quest_watch_types;
@@ -308,6 +310,8 @@ pub(crate) mod c_trade_skill_filter;
 pub(crate) mod c_trade_skill_first_craft;
 pub mod c_trade_skill_quality;
 mod c_trade_skill_source;
+#[cfg(feature = "client-mists")]
+pub(crate) mod mists_reputation_list;
 // The pinned classic TransmogItemsDocumentation.lua / TransmogOutfitInfoDocumentation.lua
 // declare these namespaces on Mists, Era and Anniversary, so the backing model
 // is compiled for those profiles together with the retail API epochs.

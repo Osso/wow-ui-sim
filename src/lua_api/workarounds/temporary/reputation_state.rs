@@ -56,9 +56,15 @@ local function VisibleFactions()
     local visible = {}
     local hideChildren = false
     for _, faction in ipairs(state.factions) do
+        -- The legacy list keeps hidden rows in the tail; retain their group owner.
+        local groupHeader = rawget(faction, "__wowLegacyReputationHeader")
         if faction.isHeader then
             hideChildren = faction.isCollapsed == true
             table.insert(visible, faction)
+        elseif type(groupHeader) == "table" then
+            if groupHeader.isCollapsed ~= true then
+                table.insert(visible, faction)
+            end
         elseif not hideChildren then
             table.insert(visible, faction)
         end

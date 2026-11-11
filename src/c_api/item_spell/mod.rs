@@ -68,3 +68,8 @@ pub(crate) fn register_item_and_spell_surfaces(state: &mut LuaState) -> LuaResul
     c_spell_book::register_c_spell_book(state)?;
     Ok(())
 }
+
+#[cfg(feature = "client-mists")]
+pub(crate) fn register_mists_legacy_globals(state: &mut LuaState) -> LuaResult<()> {
+    c_currency::register_mists_legacy_globals(state)
+}

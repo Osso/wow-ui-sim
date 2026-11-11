@@ -687,6 +687,8 @@ macro_rules! build_empty_sim_state {
             wrath_currency: super::globals::real::wrath_currency::CurrencyListState::default(),
             #[cfg(feature = "client-retail")]
             currency_list: crate::c_api::currency_list::CurrencyListState::default(),
+            #[cfg(feature = "client-mists")]
+            mists_currency_watch_overrides: HashMap::new(),
             currency_war_mode_bonus: HashMap::new(),
             currency_faction_grants: HashMap::new(),
             currency_link_buffer: String::new(),
@@ -762,6 +764,8 @@ macro_rules! build_empty_sim_state {
             super_district_info_by_id: ::std::collections::HashMap::new(),
             selected_super_district_id: 0,
             character_services: CharacterServicesState::default(),
+            shared_character_services:
+                crate::c_api::c_shared_character_services::SharedCharacterServicesState::default(),
             scenario: ScenarioState::default(),
             death_recaps: Vec::new(),
             // Cached FrameXMLBase/Constants.lua: MAX_TOTEMS = 4.
@@ -772,6 +776,8 @@ macro_rules! build_empty_sim_state {
             factions: Vec::new(),
             selected_faction_index: 0,
             watched_faction_index: 0,
+            #[cfg(feature = "client-mists")]
+            last_watched_reputation_slot_request: None,
             battlefield_vehicles: ::std::collections::HashMap::new(),
             battlefield_queue: BattlefieldQueue::default(),
             battlefield_minimap_visible: false,

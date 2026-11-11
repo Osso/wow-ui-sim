@@ -556,9 +556,10 @@ pub struct Frame {
     /// Whether this frame is forbidden (secure-restricted, e.g. created inside ScopedModifier forbidden="true").
     /// Forbidden frames are exposed as proxy tables in _G with a "Forbidden" metatable.
     pub forbidden: bool,
-    /// Explicit ScopedModifier full-lockdown state, inherited at child creation.
-    /// Separate from `forbidden`; `IsForbidden()` reports either state.
+    /// Explicit full-lockdown flag, separate from ordinary forbidden state.
     pub full_lockdown: bool,
+    /// Native access-allowed flag; absence also means fully locked down.
+    pub access_allowed: bool,
     /// Owned native forbidden aspects, including inherited and implied aspects.
     pub forbidden_aspects: u64,
     /// Owned aspects that propagate through parent-child relationships.
@@ -635,6 +636,10 @@ impl Frame {
 }
 
 impl Frame {
+    pub fn is_fully_locked_down(&self) -> bool {
+        self.full_lockdown || !self.access_allowed
+    }
+
     pub(crate) fn editbox_selection(&self) -> Option<std::ops::Range<usize>> {
         self.editbox_highlight_range
             .and_then(|(start, end)| (start != end).then(|| start as usize..end as usize))

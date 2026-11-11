@@ -22,8 +22,7 @@ pub struct UiXml {
 }
 
 /// ScopedModifier is a transparent container that wraps child elements.
-/// When `forbidden="true"` or `fullLockdown="true"`, all contained frames are marked
-/// as forbidden (secure-restricted).
+/// `forbidden` and `fullLockdown` set separate creation-scope states.
 #[derive(Debug, Deserialize, Clone)]
 pub struct ScopedModifierXml {
     #[serde(rename = "@forbidden", default)]

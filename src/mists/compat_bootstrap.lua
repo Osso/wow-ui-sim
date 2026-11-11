@@ -964,53 +964,6 @@ if rawget(_G, "HasPetUI") == nil then
   function HasPetUI() return false, false end
 end
 
-if rawget(_G, "GetNumFactions") == nil then
-  function GetNumFactions()
-    if C_Reputation and type(C_Reputation.GetNumFactions) == "function" then
-      return C_Reputation.GetNumFactions()
-    end
-    return 0
-  end
-end
-
-if rawget(_G, "GetFactionInfo") == nil then
-  function GetFactionInfo(index)
-    if not C_Reputation or type(C_Reputation.GetFactionInfo) ~= "function" then
-      return nil
-    end
-    local info = C_Reputation.GetFactionInfo(index)
-    if type(info) ~= "table" then
-      return nil
-    end
-
-    local isHeader = info.isHeader or false
-    local isCollapsed = info.isCollapsed or false
-    local isChild = info.isChild or false
-    local barMin = info.currentReactionThreshold or 0
-    local barMax = info.nextReactionThreshold or info.topValue or 0
-    local barValue = info.currentStanding or info.standing or 0
-    local standingID = info.reaction or info.standing or 4
-    if standingID < 1 or standingID > 8 then
-      standingID = 4
-    end
-
-    return info.name,
-      info.description or "",
-      standingID,
-      barMin,
-      barMax,
-      barValue,
-      info.atWarWith or false,
-      info.canToggleAtWar or false,
-      isHeader,
-      isCollapsed,
-      not isHeader,
-      info.isWatched or false,
-      isChild,
-      info.factionID
-  end
-end
-
 if rawget(_G, "GetCurrencyListInfo") == nil then
   function GetCurrencyListInfo(index)
     if not C_CurrencyInfo or type(C_CurrencyInfo.GetCurrencyListInfo) ~= "function" then
@@ -1032,19 +985,6 @@ if rawget(_G, "GetCurrencyListInfo") == nil then
       nil,
       false,
       info.currencyTypesID
-  end
-end
-
-if rawget(_G, "GetBackpackCurrencyInfo") == nil then
-  function GetBackpackCurrencyInfo(index)
-    if not C_CurrencyInfo or type(C_CurrencyInfo.GetBackpackCurrencyInfo) ~= "function" then
-      return nil
-    end
-    local info = C_CurrencyInfo.GetBackpackCurrencyInfo(index)
-    if type(info) ~= "table" then
-      return nil
-    end
-    return info.name, info.quantity or 0, info.iconFileID, info.currencyTypesID
   end
 end
 

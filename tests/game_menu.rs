@@ -423,6 +423,12 @@ post_wrath_ui_fixture! {
 fn test_game_menu_shop_button_opens_store_and_menu_can_reopen_after_store_closes() {
     test_timeout! {
         let env = setup_game_menu_env();
+        if cfg!(any(feature = "client-ptr", feature = "client-retail")) {
+            env.set_server_mirrored_cvar("bpayStoreEnable", "1")
+                .unwrap();
+            env.set_server_mirrored_cvar("shop2Enabled", "1")
+                .unwrap();
+        }
 
         let result: String = env
             .eval(&menu_button_chunk(r#"
@@ -450,21 +456,32 @@ fn test_game_menu_shop_button_opens_store_and_menu_can_reopen_after_store_closes
                     return "onclick-error:" .. tostring(err)
                 end
 
-                if not StoreFrame:IsShown() then
-                    return "store-not-shown action=" .. tostring(StoreFrame:GetAttribute("action"))
-                end
-
-                StoreFrame_SetShown(false, G_GameMenuFrameContextKey)
-                if StoreFrame:IsShown() then
-                    return "store-still-shown-after-close"
-                end
-
-                if not GameMenuFrame:IsShown() then
-                    ToggleGameMenu()
-                    if not GameMenuFrame:IsShown() then
-                        return "menu-did-not-reopen"
+                if C_CatalogShop.IsShop2Enabled() then
+                    if not CatalogShopInboundInterface.IsShown() then
+                        return "catalog-shop-not-shown"
                     end
-                    return "menu-reopened-only-after-toggle"
+
+                    CatalogShopInboundInterface.SetShown(false, G_GameMenuFrameContextKey)
+                    if CatalogShopInboundInterface.IsShown() then
+                        return "catalog-shop-still-shown-after-close"
+                    end
+                else
+                    if not StoreFrame:IsShown() then
+                        return "store-not-shown action=" .. tostring(StoreFrame:GetAttribute("action"))
+                    end
+
+                    StoreFrame_SetShown(false, G_GameMenuFrameContextKey)
+                    if StoreFrame:IsShown() then
+                        return "store-still-shown-after-close"
+                    end
+
+                    if not GameMenuFrame:IsShown() then
+                        ToggleGameMenu()
+                        if not GameMenuFrame:IsShown() then
+                            return "menu-did-not-reopen"
+                        end
+                        return "menu-reopened-only-after-toggle"
+                    end
                 end
 
                 return "ok"
@@ -472,6 +489,115 @@ fn test_game_menu_shop_button_opens_store_and_menu_can_reopen_after_store_closes
             .unwrap();
 
         assert_eq!(result, "ok");
+    }
+}
+}
+
+post_wrath_ui_fixture! {
+#[cfg(feature = "client-ptr")]
+#[test]
+fn ptr_default_shop_settings_hide_game_menu_store_button() {
+    test_timeout! {
+        let env = setup_game_menu_env();
+        env.set_server_mirrored_cvar("bpayStoreEnable", "0")
+            .unwrap();
+        env.set_server_mirrored_cvar("shop2Enabled", "1")
+            .unwrap();
+        let result: (bool, bool, bool) = env
+            .eval(&menu_button_chunk(r#"
+                GameMenuFrame:Show()
+                local hasShopButton = false
+                for button in menu_buttons() do
+                    if button:GetText() == BLIZZARD_STORE then
+                        hasShopButton = true
+                    end
+                end
+                return C_StorePublic.IsEnabled(), C_CatalogShop.IsShop2Enabled(), hasShopButton
+            "#))
+            .unwrap();
+
+        // PTR GameMenuFrame.lua:198-204 requires both store flags.
+        assert_eq!(result, (false, true, false));
+    }
+}
+}
+
+post_wrath_ui_fixture! {
+#[cfg(feature = "client-ptr")]
+#[test]
+fn ptr_store_status_change_rebuilds_menu_shop_button() {
+    test_timeout! {
+        let env = setup_game_menu_env();
+        env.set_server_mirrored_cvar("bpayStoreEnable", "0")
+            .unwrap();
+        env.set_server_mirrored_cvar("shop2Enabled", "1")
+            .unwrap();
+        env.exec("GameMenuFrame:Show()").unwrap();
+        let initially_visible: bool = env
+            .eval(&menu_button_chunk(r#"
+                for button in menu_buttons() do
+                    if button:GetText() == BLIZZARD_STORE then return true end
+                end
+                return false
+            "#))
+            .unwrap();
+        assert!(!initially_visible);
+
+        env.set_server_mirrored_cvar("bpayStoreEnable", "1")
+            .unwrap();
+        let enabled_visible: bool = env
+            .eval(&menu_button_chunk(r#"
+                for button in menu_buttons() do
+                    if button:GetText() == BLIZZARD_STORE then return true end
+                end
+                return false
+            "#))
+            .unwrap();
+        assert!(enabled_visible);
+
+        env.set_server_mirrored_cvar("bpayStoreEnable", "0")
+            .unwrap();
+        let disabled_visible: bool = env
+            .eval(&menu_button_chunk(r#"
+                for button in menu_buttons() do
+                    if button:GetText() == BLIZZARD_STORE then return true end
+                end
+                return false
+            "#))
+            .unwrap();
+        assert!(!disabled_visible);
+    }
+}
+}
+
+post_wrath_ui_fixture! {
+#[cfg(any(feature = "client-ptr", feature = "client-retail"))]
+#[test]
+fn test_legacy_store_toggle_reopens_game_menu_after_store_closes() {
+    test_timeout! {
+        let env = setup_game_menu_env();
+        if cfg!(any(feature = "client-ptr", feature = "client-retail")) {
+            env.set_server_mirrored_cvar("bpayStoreEnable", "1")
+                .unwrap();
+            env.set_server_mirrored_cvar("shop2Enabled", "0")
+                .unwrap();
+        }
+
+        let result: String = env
+            .eval(r#"
+                GameMenuFrame:Show()
+                ToggleStoreUI(G_GameMenuFrameContextKey)
+                if not StoreFrame:IsShown() then
+                    return "store-not-shown"
+                end
+
+                StoreFrame_SetShown(false, G_GameMenuFrameContextKey)
+                return StoreFrame:IsShown() and "store-still-shown"
+                    or (GameMenuFrame:IsShown() and "menu-reopened" or "menu-stayed-hidden")
+            "#)
+            .unwrap();
+
+        assert_eq!(result, "menu-reopened");
     }
 }
 }

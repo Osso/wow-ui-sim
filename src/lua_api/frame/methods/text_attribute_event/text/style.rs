@@ -433,7 +433,14 @@ pub(crate) fn get_word_wrap(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 pub(crate) fn can_word_wrap(state: &mut LuaState) -> LuaResult<u32> {
-    get_word_wrap(state)
+    let id = crate::lua_api::methods::frame_id_from_stack_reject_fully_locked_down(state, 1)?;
+    let word_wrap = borrow_state(state)?
+        .widgets
+        .get(id)
+        .map(|frame| frame.word_wrap)
+        .unwrap_or(true);
+    state.push(Val::Bool(word_wrap));
+    Ok(1)
 }
 
 pub(crate) fn set_non_space_wrap(state: &mut LuaState) -> LuaResult<u32> {
@@ -444,7 +451,7 @@ pub(crate) fn set_non_space_wrap(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 pub(crate) fn can_non_space_wrap(state: &mut LuaState) -> LuaResult<u32> {
-    let id = frame_id_from_stack(state, 1)?;
+    let id = crate::lua_api::methods::frame_id_from_stack_reject_fully_locked_down(state, 1)?;
     let enabled = borrow_state(state)?
         .widgets
         .get(id)

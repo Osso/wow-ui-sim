@@ -1,6 +1,9 @@
 //! Alpha gradient methods.
 
-use crate::lua_api::methods::{borrow_state, borrow_state_mut, frame_id_from_stack, table_get};
+use crate::lua_api::methods::{
+    borrow_state, borrow_state_mut, frame_id_from_stack,
+    frame_id_from_stack_reject_fully_locked_down, table_get,
+};
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
@@ -17,7 +20,7 @@ pub fn register(state: &mut LuaState, mt: GcRef<Table>) -> LuaResult<()> {
 }
 
 pub fn clear_alpha_gradient(state: &mut LuaState) -> LuaResult<u32> {
-    let id = frame_id_from_stack(state, 1)?;
+    let id = frame_id_from_stack_reject_fully_locked_down(state, 1)?;
     let mut sim = borrow_state_mut(state)?;
     if let Some(frame) = sim.widgets.get_mut(id) {
         frame.alpha_gradients.clear();

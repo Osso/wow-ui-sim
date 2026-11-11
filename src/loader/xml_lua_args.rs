@@ -9,10 +9,22 @@ pub(super) struct XmlLuaArgs {
 }
 
 impl XmlLuaArgs {
+    fn positional_count(&self) -> usize {
+        self.values
+            .iter()
+            .filter(|arg| !matches!(arg, GeneratedChunkArg::FontStringCreator))
+            .count()
+    }
+
     pub fn bind_string(&mut self, value: &str) -> String {
         self.values
             .push(GeneratedChunkArg::String(value.to_string()));
-        format!("(...)[{}]", self.values.len())
+        format!("(...)[{}]", self.positional_count())
+    }
+
+    pub fn bind_font_string_creator(&mut self) -> String {
+        self.values.push(GeneratedChunkArg::FontStringCreator);
+        "(...).__createFontString".to_string()
     }
 
     pub fn bind_frame_ref(&mut self, name: &str) -> String {
@@ -21,7 +33,7 @@ impl XmlLuaArgs {
             .and_then(|suffix| suffix.parse::<u64>().ok())
         {
             self.values.push(GeneratedChunkArg::Number(id as f64));
-            let index = self.values.len();
+            let index = self.positional_count();
             return format!("debug.getregistry().__rilua_frame_refs[(...)[{index}]]");
         }
         let argument = self.bind_string(name);

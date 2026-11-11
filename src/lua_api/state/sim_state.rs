@@ -833,6 +833,8 @@ pub struct SimState {
     pub wrath_currency: super::super::globals::real::wrath_currency::CurrencyListState,
     #[cfg(feature = "client-retail")]
     pub currency_list: crate::c_api::currency_list::CurrencyListState,
+    #[cfg(feature = "client-mists")]
+    pub mists_currency_watch_overrides: HashMap<i32, bool>,
     /// Explicit (War Mode applies, limit once per tooltip) flags; no inferred catalog.
     pub currency_war_mode_bonus: HashMap<i32, (Option<bool>, Option<bool>)>,
     /// Explicit immediate reputation grants; no inferred currency/faction catalog.
@@ -933,6 +935,8 @@ pub struct SimState {
     /// Currently selected superdistrict ID; native clear/start/reset value is zero.
     pub selected_super_district_id: i32,
     pub character_services: CharacterServicesState,
+    pub shared_character_services:
+        crate::c_api::c_shared_character_services::SharedCharacterServicesState,
     pub scenario: ScenarioState,
     pub death_recaps: Vec<DeathRecapEntry>,
     pub chat_bubbles: Vec<ChatBubble>,
@@ -941,6 +945,10 @@ pub struct SimState {
     pub factions: Vec<FactionEntry>,
     pub selected_faction_index: i32,
     pub watched_faction_index: i32,
+    /// Last Mists legacy watched-faction reputation slot request. The simulator
+    /// records request intent without modeling native player or connection checks.
+    #[cfg(feature = "client-mists")]
+    pub last_watched_reputation_slot_request: Option<i16>,
     /// Explicit map observations, visible only while is_active_battlefield is true.
     pub battlefield_vehicles: ::std::collections::HashMap<
         i32,
