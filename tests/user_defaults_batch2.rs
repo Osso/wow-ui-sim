@@ -77,6 +77,16 @@ fn user_defaults_batch2_quest_watch_membership() {
     ))
     .expect("quest watch membership must follow changes");
     env.state().borrow_mut().quest_log_entries.entries[0].is_account_quest = Some(true);
+    env.exec(&format!("assert(C_QuestLog.IsAccountQuest({quest_id}))"))
+        .expect("supplied account quest flag takes precedence");
+}
+
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn forever_account_quest_argument_conversion_matches_native() {
+    let env = keybinding_panel_fixtures::setup_env();
+    let quest_id = env.state().borrow().quest_log_entries.entries[0].quest_id;
+    env.state().borrow_mut().quest_log_entries.entries[0].is_account_quest = Some(true);
     env.exec(&format!(
         r#"
         assert(select('#', C_QuestLog.IsAccountQuest({quest_id})) == 1)
@@ -85,6 +95,7 @@ fn user_defaults_batch2_quest_watch_membership() {
         assert(C_QuestLog.IsAccountQuest({quest_id} + 0.75))
         assert(C_QuestLog.IsAccountQuest(tostring({quest_id}) .. ".75"))
         assert(not C_QuestLog.IsAccountQuest(-0.75))
+        assert(not C_QuestLog.IsAccountQuest(2147483647))
         assert(not pcall(C_QuestLog.IsAccountQuest))
         assert(not pcall(C_QuestLog.IsAccountQuest, nil))
         assert(not pcall(C_QuestLog.IsAccountQuest, "not a number"))
@@ -92,7 +103,7 @@ fn user_defaults_batch2_quest_watch_membership() {
         assert(not pcall(C_QuestLog.IsAccountQuest, 0 / 0))
         "#
     ))
-    .expect("native account quest conversion and supplied flag should be honored");
+    .expect("Forever account quest conversion should match R27 native behavior");
 }
 
 #[test]

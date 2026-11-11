@@ -1,6 +1,6 @@
 # User-approved native-unknown defaults
 
-These are simulator scenario defaults, approved by the user on 2026-10-28. They are not evidence of native behavior. Supplied state takes precedence where available. Replace them when the named backing systems are modeled. The R27-native `C_CharacterCreation.SetInCharacterCreate` contract is now in [character-create-mode](character-create-mode.md); PTR registration remains UNKNOWN and its previous user-approved registration remains.
+These are simulator scenario defaults, approved by the user on 2026-10-28. They are not evidence of native behavior. Supplied state takes precedence where available. Replace them when the named backing systems are modeled. The R27-native `C_CharacterCreation.SetInCharacterCreate` contract is now in [character-create-mode](character-create-mode.md); PTR registration remains UNKNOWN and its previous user-approved registration remains. The `C_QuestLog.IsAccountQuest` result contract is in [quest-account-flag](quest-account-flag.md); Retail/PTR parser parity is UNKNOWN and their existing simulator parser remains unchanged.
 
 ## Glue screens
 
