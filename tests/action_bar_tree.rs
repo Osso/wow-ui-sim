@@ -47,8 +47,6 @@ const ACTION_BAR_ADDONS: &[&str] = &[
     "Blizzard_ObjectAPI",
     "Blizzard_UIParent",
     "Blizzard_TextStatusBar",
-    #[cfg(feature = "client-ptr")]
-    "Blizzard_StatusTrackingBar",
     "Blizzard_MoneyFrame",
     "Blizzard_POIButton",
     "Blizzard_Flyout",
@@ -58,6 +56,8 @@ const ACTION_BAR_ADDONS: &[&str] = &[
     "Blizzard_ManagedFrameSystem",
     "Blizzard_UIParentUtil",
     "Blizzard_EditMode",
+    #[cfg(feature = "client-ptr")]
+    "Blizzard_StatusTrackingBar",
     "Blizzard_GarrisonBase",
     "Blizzard_GameTooltip",
     #[cfg(feature = "client-ptr")]
