@@ -291,6 +291,19 @@ fn validate_selected_preview_gear_type(state: &LuaState) -> LuaResult<()> {
         ));
     }
 
+    let selected_gear = selected_preview_gear_byte(state, argument);
+    if matches!(selected_gear, NEW_CHAR_GEAR_START | NEW_CHAR_GEAR_PREVIEW) {
+        return Ok(());
+    }
+
+    Err(bad_argument(
+        1,
+        "SetSelectedPreviewGearType",
+        SET_SELECTED_PREVIEW_GEAR_TYPE_USAGE,
+    ))
+}
+
+fn selected_preview_gear_byte(state: &LuaState, argument: Val) -> u8 {
     let number = match argument {
         Val::Num(number) => Some(number),
         Val::Str(reference) => state
@@ -301,19 +314,11 @@ fn validate_selected_preview_gear_type(state: &LuaState) -> LuaResult<()> {
         _ => None,
     }
     .unwrap_or(0.0);
-    let selected_gear = if number.is_finite() {
+    if number.is_finite() {
         number.trunc().rem_euclid(CHARACTER_CREATE_BYTE_MODULUS) as u8
     } else {
         NEW_CHAR_GEAR_START
-    };
-    if !matches!(selected_gear, NEW_CHAR_GEAR_START | NEW_CHAR_GEAR_PREVIEW) {
-        return Err(bad_argument(
-            1,
-            "SetSelectedPreviewGearType",
-            SET_SELECTED_PREVIEW_GEAR_TYPE_USAGE,
-        ));
     }
-    Ok(())
 }
 
 fn get_character_create_facing(state: &mut LuaState) -> LuaResult<u32> {
