@@ -22,30 +22,31 @@ if categoriesList then
     expect(type(categoriesList.GetNumElementsForRefresh) == "function",
            "GetNumElementsForRefresh must be a function")
 
-    local expectedCategoryCount = #AuctionCategories
+    local totalCategoryCount = #AuctionCategories
+    local expectedProviderSize = totalCategoryCount
     if C_WowTokenUI and type(C_WowTokenUI.ShouldDisplayInAuctionHouse) == "function"
        and not C_WowTokenUI.ShouldDisplayInAuctionHouse() then
         for _, categoryInfo in ipairs(AuctionCategories) do
             if categoryInfo:HasFlag("WOW_TOKEN_FLAG") then
-                expectedCategoryCount = expectedCategoryCount - 1
+                expectedProviderSize = expectedProviderSize - 1
             end
         end
     end
 
     if type(categoriesList.GetNumElementsForRefresh) == "function" then
-        local actualCategoryCount = categoriesList:GetNumElementsForRefresh()
-        expect(actualCategoryCount == expectedCategoryCount,
-               "category count " .. tostring(actualCategoryCount) ..
-               " did not match visible AuctionCategories count " .. tostring(expectedCategoryCount))
+        local refreshCount = categoriesList:GetNumElementsForRefresh()
+        expect(refreshCount == totalCategoryCount,
+               "refresh count " .. tostring(refreshCount) ..
+               " did not match total AuctionCategories count " .. tostring(totalCategoryCount))
     end
 
     categoriesList:OnShow()
     local provider = categoriesList.ScrollBox:GetDataProvider()
     expect(provider ~= nil, "categories ScrollBox data provider must exist")
     if provider then
-        expect(provider:GetSize() == expectedCategoryCount,
+        expect(provider:GetSize() == expectedProviderSize,
                "provider size " .. tostring(provider:GetSize()) ..
-               " did not match visible AuctionCategories count " .. tostring(expectedCategoryCount))
+               " did not match filtered AuctionCategories count " .. tostring(expectedProviderSize))
     end
 end
 
