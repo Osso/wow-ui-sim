@@ -220,6 +220,30 @@ fn geometry_getter_resolves_dirty_anchor_target_before_dependent() {
 }
 
 #[test]
+fn geometry_getter_uses_clean_cached_anchor_target() {
+    let env = env();
+    let (target_left, child_left): (f64, f64) = env
+        .eval(
+            r##"
+            local target = CreateFrame("Frame", "CleanGeometryTarget", UIParent)
+            target:SetSize(30, 20)
+            target:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", 50, 60)
+            local target_left = target:GetLeft()
+
+            local child = CreateFrame("Frame", "CleanGeometryChild", UIParent)
+            child:SetSize(10, 12)
+            child:SetPoint("BOTTOMLEFT", target, "TOPRIGHT", 5, 7)
+            local child_left = child:GetLeft()
+            return target_left, child_left
+            "##,
+        )
+        .expect("position query uses the cached valid anchor target");
+
+    assert_eq!(target_left, 50.0);
+    assert_eq!(child_left, 85.0);
+}
+
+#[test]
 fn is_rect_valid_reads_cached_flag_without_resolving_dirty_target() {
     let env = env();
     let (cached_validity, fallback_width, fallback_height, invalid_validity): (

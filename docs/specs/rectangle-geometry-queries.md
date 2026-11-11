@@ -1,6 +1,6 @@
 # Rectangle geometry queries
 
-Lua frame geometry getters report a frame's resolved rectangle or its stored dimensions when no valid rectangle is available. Native evidence and implementation details belong in [rectangle-query validity](../wiki/investigations/rectangle-query-validity.md).
+Lua frame geometry getters report a frame's resolved rectangle or its stored dimensions when no valid rectangle is available. Native evidence and implementation details belong in [rectangle-query validity](../wiki/investigations/rect-query-validity.md).
 
 ## What it must do
 
@@ -9,12 +9,13 @@ Lua frame geometry getters report a frame's resolved rectangle or its stored dim
 - [ ] `IsRectValid()` reads the cached rectangle-valid flag. It does not resolve layout.
 - [ ] `GetWidth()`, `GetHeight()` and `GetSize()` use the queried frame's stored dimensions when its resolved rectangle is invalid.
 - [ ] `SetSize()` writes the same stored width and height values as the corresponding `SetWidth()` and `SetHeight()` calls.
+- [ ] INFERRED (simulator mapping): a target with a clean own dirty entry but a dirty containment ancestor is treated as dirty because the resolver represents inherited invalidation through ancestor lookup; this does not establish native propagation.
 - [ ] Keep render and hit-test geometry eligibility unchanged.
 - [ ] Treat sibling chains that resolve without a valid containment-parent rectangle as INFERRED, not as verified native behavior.
 
 ## How it works
 
-- [Rectangle query validity](../wiki/investigations/rectangle-query-validity.md)
+- [Rectangle query validity](../wiki/investigations/rect-query-validity.md)
 - [Layout system](../wiki/systems/layout-system.md)
 
 ## Implementation inventory
@@ -27,7 +28,8 @@ Lua frame geometry getters report a frame's resolved rectangle or its stored dim
 
 ## Tests asserting this spec
 
-- `tests/rect_geometry.rs`: invalid-size fallback, cached validity, dirty target resolution, and setter equivalence.
+- `tests/rect_geometry.rs`: invalid-size fallback, cached validity, dirty and clean target queries, resolved dimensions, and setter equivalence.
+- `src/loader/tests/layout_anchoring.rs`: public-Lua cached validity before and after a geometry query.
 
 ## Known gaps (current cycle)
 

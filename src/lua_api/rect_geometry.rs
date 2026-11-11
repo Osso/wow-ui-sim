@@ -114,14 +114,15 @@ fn resolve_anchor_targets(
     let (targets, unresolved_name, has_layout_path) = anchor_targets(state, id)?;
     let mut targets_valid = !unresolved_name;
     let mut target_changed = false;
-    for (target_id, was_dirty) in targets {
-        let target_chain_changed = resolve_anchor_targets(state, target_id, visiting)?;
-        let target_was_resolved = was_dirty || target_chain_changed;
-        target_changed |= target_was_resolved;
+    for (target_id, needs_resolution) in targets {
+        if needs_resolution {
+            resolve_anchor_targets(state, target_id, visiting)?;
+        }
+        target_changed |= needs_resolution;
         let target_is_usable = {
             let sim = borrow_state(state)?;
             sim.widgets.get(target_id).is_some_and(|target| {
-                target.rect_valid && (!target_was_resolved || !target.anchor_invalidated)
+                target.rect_valid && (!needs_resolution || !target.anchor_invalidated)
             })
         };
         targets_valid &= target_is_usable;
