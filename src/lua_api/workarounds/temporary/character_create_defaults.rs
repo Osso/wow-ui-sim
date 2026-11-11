@@ -570,13 +570,14 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
         }
         // User-approved, not native evidence: class-trial boosts are not modeled.
         lua.exec("function C_CharacterCreation.GetTrialBoostStartingLevel() return 0 end")?;
-        // Scene blur, preview gear, dress state and camera zoom level only affect the 3D model
-        // scene, an intentional gap; Blizzard_CharacterCreate reads none of them back.
+        // Preview gear, dress state and camera zoom only affect the unsupported 3D model scene.
         lua.exec(
-            "function C_CharacterCreation.SetBlurEnabled(enabled) end; function C_CharacterCreation.SetSelectedPreviewGearType(gearType) end; function C_CharacterCreation.SetModelDressState(dressedState) end; function C_CharacterCreation.SetCameraZoomLevel(zoomLevel, keepCustomZoom) end",
+            "function C_CharacterCreation.SetSelectedPreviewGearType(gearType) end; function C_CharacterCreation.SetModelDressState(dressedState) end; function C_CharacterCreation.SetCameraZoomLevel(zoomLevel, keepCustomZoom) end",
         )?;
     }
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Ptr {
+        // Keep the prior PTR shim; R51 does not establish PTR namespace registration.
+        lua.exec("function C_CharacterCreation.SetBlurEnabled(enabled) end")?;
         let state = lua.state_mut();
         let namespace = crate::c_api::ensure_namespace(state, "C_CharacterCreation")?;
         table_set_rust_fn_static(

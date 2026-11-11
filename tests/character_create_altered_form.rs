@@ -158,3 +158,48 @@ fn altered_form_state_tracks_character_create_screen_and_selection_setters() {
     env.exec("assert(C_CharacterCreation.IsViewingAlteredForm() == false)")
         .expect("mode entry clears the value");
 }
+
+#[test]
+fn set_blur_enabled_stores_required_lua_truthiness_without_a_getter() {
+    let env = character_create_env();
+    env.set_screen_mode(ScreenKind::Game);
+    let game_api_absent: bool = env
+        .eval("return rawget(C_CharacterCreation, 'SetBlurEnabled') == nil")
+        .expect("Game screen API should be queryable");
+    assert!(game_api_absent);
+
+    env.set_screen_mode(ScreenKind::CharacterSelect);
+    env.exec(
+        r#"
+        local set = rawget(C_CharacterCreation, 'SetBlurEnabled')
+        assert(type(set) == 'function')
+        assert(rawget(C_CharacterCreation, 'GetBlurEnabled') == nil)
+        local usage = "Usage: C_CharacterCreation.SetBlurEnabled(enabled)"
+        for _, call in ipairs({ function() set() end, function() set(nil) end }) do
+            local ok, message = pcall(call)
+            assert(not ok and message:find("bad argument #1", 1, true), tostring(message))
+            assert(message:find(usage, 1, true), tostring(message))
+        end
+        "#,
+    )
+    .expect("SetBlurEnabled registration and required input errors");
+    assert!(!env.state().borrow().character_create_blur_enabled);
+
+    env.exec(
+        r#"
+        local set = C_CharacterCreation.SetBlurEnabled
+        assert(select('#', set(0)) == 0)
+        assert(select('#', set({})) == 0)
+        "#,
+    )
+    .expect("zero and tables are truthy and the setter returns no values");
+    assert!(env.state().borrow().character_create_blur_enabled);
+
+    env.exec("assert(select('#', C_CharacterCreation.SetBlurEnabled('')) == 0)")
+        .expect("empty strings are truthy and the setter returns no values");
+    assert!(env.state().borrow().character_create_blur_enabled);
+
+    env.exec("assert(select('#', C_CharacterCreation.SetBlurEnabled(false)) == 0)")
+        .expect("false disables the selected camera profile");
+    assert!(!env.state().borrow().character_create_blur_enabled);
+}

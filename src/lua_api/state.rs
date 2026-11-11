@@ -762,6 +762,7 @@ macro_rules! build_empty_sim_state {
             character_create_facing_radians: 0.0,
             character_create_altered_form_races: ::std::collections::HashSet::new(),
             character_create_viewing_altered_form: false,
+            character_create_blur_enabled: false,
             character_create_default_facing_by_race_sex: ::std::collections::HashMap::new(),
             super_district_info_by_id: ::std::collections::HashMap::new(),
             selected_super_district_id: 0,

@@ -17,6 +17,7 @@ const SET_IN_CHARACTER_CREATE_USAGE: &str =
     "Usage: C_CharacterCreation.SetInCharacterCreate(inCharacterCreate)";
 const SET_VIEWING_ALTERED_FORM_USAGE: &str =
     "Usage: C_CharacterCreation.SetViewingAlteredForm(isViewingAlteredForm)";
+const SET_BLUR_ENABLED_USAGE: &str = "Usage: C_CharacterCreation.SetBlurEnabled(enabled)";
 const SET_CHARACTER_CREATE_FACING_USAGE: &str =
     "Usage: C_CharacterCreation.SetCharacterCreateFacing(degrees)";
 // R36 marks the displayed bounds as inferred; tests check only the stable prefix and usage.
@@ -121,6 +122,7 @@ fn update_retail_and_forever_registration(
             "SetCharacterCreateFacing",
             "SetViewingAlteredForm",
             "IsViewingAlteredForm",
+            "SetBlurEnabled",
         ] {
             table_set_static(state, Val::Table(namespace), member, Val::Nil);
         }
@@ -161,7 +163,18 @@ fn register_retail_and_forever_glue_apis(
         namespace,
         "IsViewingAlteredForm",
         is_viewing_altered_form,
-    )
+    )?;
+    table_set_rust_fn_static(state, namespace, "SetBlurEnabled", set_blur_enabled)
+}
+
+fn set_blur_enabled(state: &mut LuaState) -> LuaResult<u32> {
+    let argument = stack_val(state, 1);
+    if matches!(argument, Val::Nil) {
+        return Err(bad_argument(1, "SetBlurEnabled", SET_BLUR_ENABLED_USAGE));
+    }
+
+    borrow_state_mut(state)?.character_create_blur_enabled = !matches!(argument, Val::Bool(false));
+    Ok(0)
 }
 
 fn get_character_create_facing(state: &mut LuaState) -> LuaResult<u32> {
