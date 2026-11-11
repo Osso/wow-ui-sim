@@ -114,8 +114,8 @@ fn group_role_counts_retail_uses_native_roster_fields() {
 }
 
 #[test]
-#[cfg(not(feature = "client-retail"))]
-fn group_role_counts_nonretail_keeps_simulator_party_projection() {
+#[cfg(feature = "client-ptr")]
+fn group_role_counts_ptr_keeps_simulator_party_projection() {
     let env = WowLuaEnv::new().expect("environment");
     load_party_util(&env);
     {
@@ -136,5 +136,34 @@ fn group_role_counts_nonretail_keeps_simulator_party_projection() {
         assert(shown.Warrior == 2 and shown.Paladin == 1 and shown.Hunter == 0)
         "#,
     )
-    .expect("non-Retail keeps its existing simulator group projection");
+    .expect("PTR keeps its existing simulator group projection");
+}
+
+#[test]
+#[cfg(any(
+    feature = "client-mists",
+    feature = "client-era",
+    feature = "client-anniversary",
+    feature = "client-wowforever"
+))]
+fn group_role_counts_classic_profiles_keep_unset_roles() {
+    let env = WowLuaEnv::new().expect("environment");
+    load_party_util(&env);
+    {
+        let mut state = env.state().borrow_mut();
+        state.player.class_index = 1;
+        state.party_members[0].class_index = 2;
+        state.party_members[1].class_index = 99;
+        state.party_members.truncate(2);
+        state.party_group_active = true;
+        state.party_leader_index = None;
+    }
+    env.exec(
+        r#"
+        local shown = GetGroupMemberCountsForDisplay()
+        assert(shown.TANK == 0 and shown.HEALER == 0 and shown.DAMAGER == 3 and shown.NOROLE == 0)
+        assert(shown.Warrior == 2 and shown.Paladin == 1 and shown.Hunter == 0)
+        "#,
+    )
+    .expect("classic profiles preserve their unset-role projection");
 }
