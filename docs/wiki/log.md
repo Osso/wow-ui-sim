@@ -1,6 +1,6 @@
 ## [2026-11-11] implementation | PTR/Retail Store API availability
 
-Added the separate server-mirror model, API queries, event routing, and focused tests from R38. VERIFIED: the selected Retail GameMenu uses OR, while PTR uses AND; INFERRED: defaults (false, true) show the Retail button and hide the PTR button. The [contract](../specs/store-api-availability.md) and [implementation notes](systems/store-api-availability.md) preserve UNKNOWN behavior. Targeted verification is pending.
+Added the separate server-mirror model, API queries, event routing, and focused tests from R38. VERIFIED: Retail GameMenu uses OR and PTR uses AND; GameMenu tests pass 13/13 on both, Store API/StorePublic/CatalogShop structure tests pass on both, and Retail full-UI CatalogShop tests pass 4/4. INFERRED: defaults (false, true) show the Retail button and hide the PTR button. The [contract](../specs/store-api-availability.md) and [implementation notes](systems/store-api-availability.md) preserve UNKNOWN behavior.
 
 ## [2026-11-10] implementation | PTR/Retail merchant cursor
 

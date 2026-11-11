@@ -6,16 +6,16 @@
 
 ### API values
 
-- [ ] VERIFIED: `C_StorePublic.IsEnabled()` takes no arguments and returns exactly one boolean from the hidden server-mirrored `bpayStoreEnable` value. Its built-in default is `false`.
-- [ ] VERIFIED: `C_CatalogShop.IsShop2Enabled()` returns exactly one boolean from the independent hidden server-mirrored `shop2Enabled` value. Its built-in default is `true`; no dependency on `bpayStoreEnable` is allowed.
-- [ ] VERIFIED: `C_CVar.GetCVar` refuses both hidden values. The exact Lua result shape is INFERRED and must not be asserted; global `GetCVar` parity is UNKNOWN.
+- [x] VERIFIED: `C_StorePublic.IsEnabled()` takes no arguments and returns exactly one boolean from the hidden server-mirrored `bpayStoreEnable` value. Its built-in default is `false`.
+- [x] VERIFIED: `C_CatalogShop.IsShop2Enabled()` returns exactly one boolean from the independent hidden server-mirrored `shop2Enabled` value. Its built-in default is `true`; no dependency on `bpayStoreEnable` is allowed.
+- [x] VERIFIED: `C_CVar.GetCVar` refuses both hidden values. The exact Lua result shape is INFERRED and is not asserted; global `GetCVar` parity is UNKNOWN.
 
 ### Updates and GameMenu
 
-- [ ] VERIFIED: a changed `bpayStoreEnable` value fires one `STORE_STATUS_CHANGED` event with no payload and no `CVAR_UPDATE`.
-- [ ] VERIFIED: a `shop2Enabled` change on an initialized path fires no Lua event and no `CVAR_UPDATE`. First-use event behavior is UNKNOWN.
-- [ ] VERIFIED source behavior: PTR 12.1.7 uses an AND gate for the GameMenu Store button; Retail 12.1.5 uses an OR gate. INFERRED: the built-in `(false, true)` values hide the button on PTR and show it on Retail.
-- [ ] Do not assert real-account server values, a `shop2Enabled` first-use event result, or 70493 behavior. The 70493 image was not available for R38.
+- [x] VERIFIED: a changed `bpayStoreEnable` value fires one `STORE_STATUS_CHANGED` event with no payload and no `CVAR_UPDATE`.
+- [x] VERIFIED: a `shop2Enabled` change on an initialized path fires no Lua event and no `CVAR_UPDATE`. First-use event behavior is UNKNOWN.
+- [x] VERIFIED source behavior: PTR 12.1.7 uses an AND gate for the GameMenu Store button; Retail 12.1.5 uses an OR gate. INFERRED: the built-in `(false, true)` values hide the button on PTR and show it on Retail.
+- [x] Do not assert real-account server values, a `shop2Enabled` first-use event result, or 70493 behavior. The 70493 image was not available for R38.
 
 ## How it works
 

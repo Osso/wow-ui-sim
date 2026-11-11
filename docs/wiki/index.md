@@ -2,7 +2,7 @@
 
 ## [2026-11-11] system | PTR/Retail store API availability
 
-[Store API availability](systems/store-api-availability.md) links the R38 evidence boundary to its [contract](../specs/store-api-availability.md). VERIFIED: PTR GameMenu uses AND and Retail uses OR; INFERRED: defaults (false, true) hide the PTR button and show the Retail button. Targeted verification is pending.
+[Store API availability](systems/store-api-availability.md) links the R38 evidence boundary to its [contract](../specs/store-api-availability.md). VERIFIED: PTR/Retail GameMenu tests pass 13/13 each; Store API, StorePublic and CatalogShop structure tests pass on both; Retail CatalogShop UI passes 4/4. INFERRED: defaults (false, true) hide the PTR button and show the Retail button.
 
 ## [2026-11-10] system | Cursor modes and ActionBar transitions
 
