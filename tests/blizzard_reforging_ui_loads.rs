@@ -160,6 +160,9 @@ fn toc_lists_bootstrap_and_three_files_in_classic_subdirectory() {
 post_wrath_ui_fixture! {
 #[test]
 fn is_game_type_restricted_returns_true_for_classic_only_addon() {
+    if reforging_ui_absent_from_active_cache() {
+        return;
+    }
     let toc =
         TocFile::from_file(&reforging_ui_toc()).expect("Blizzard_ReforgingUI TOC should parse");
     assert!(
@@ -199,6 +202,9 @@ fn excluded_from_every_screen_auto_discovery_under_retail() {
 post_wrath_ui_fixture! {
 #[test]
 fn classic_subdirectory_holds_bootstrap_lua_xml_and_localization() {
+    if reforging_ui_absent_from_active_cache() {
+        return;
+    }
     let classic_dir = reforging_ui_dir().join("Classic");
     let mut entries: Vec<String> = std::fs::read_dir(&classic_dir)
         .expect("Blizzard_ReforgingUI/Classic directory should read")

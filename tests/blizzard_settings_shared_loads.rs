@@ -511,7 +511,7 @@ fn toc_entry_count_breakdown_matches_filesystem_layout() {
 
 post_wrath_ui_fixture! {
 #[test]
-fn family_placeholder_resolves_to_mainline_subdir_in_three_entries() {
+fn family_placeholder_resolves_to_profile_selected_subdirs() {
     let toc = TocFile::from_file(&settings_shared_toc()).expect("TOC parses");
 
     let mainline_files: Vec<String> = toc
@@ -526,27 +526,38 @@ fn family_placeholder_resolves_to_mainline_subdir_in_three_entries() {
             }
         })
         .collect();
+    let expected_mainline_files: &[&str] = if cfg!(feature = "client-wowforever") {
+        // Forever selects Camelot NewDefinitions; the three [Family] files remain Mainline.
+        &[
+            "Mainline/Blizzard_SettingsPanelTemplates.xml",
+            "Mainline/GraphicsOverrides.lua",
+            "Mainline/AudioOverrides.lua",
+        ]
+    } else {
+        &[
+            "Mainline/NewDefinitions.lua",
+            "Mainline/Blizzard_SettingsPanelTemplates.xml",
+            "Mainline/GraphicsOverrides.lua",
+            "Mainline/AudioOverrides.lua",
+        ]
+    };
     assert_eq!(
         mainline_files.len(),
-        4,
-        "Exactly 4 body entries must resolve under `Mainline/` after the TOC \
-         parser at src/toc.rs:147 normalizes backslash to forward slash: \
-         Mainline/NewDefinitions.lua, \
-         Mainline/Blizzard_SettingsPanelTemplates.xml, \
-         Mainline/GraphicsOverrides.lua, Mainline/AudioOverrides.lua. The \
-         settings_shared TOC uses literal `Mainline\\` rather than `[Family]\\` \
-         placeholder (no resolution step needed). Got: {mainline_files:?}"
+        expected_mainline_files.len(),
+        "profile-selected Mainline entries must match the TOC: {mainline_files:?}"
     );
 
-    for expected in [
-        "Mainline/NewDefinitions.lua",
-        "Mainline/Blizzard_SettingsPanelTemplates.xml",
-        "Mainline/GraphicsOverrides.lua",
-        "Mainline/AudioOverrides.lua",
-    ] {
+    for expected in expected_mainline_files {
         assert!(
-            mainline_files.iter().any(|f| f == expected),
+            mainline_files.iter().any(|file| file.as_str() == *expected),
             "Mainline body entry {expected} must be present after normalization"
+        );
+    }
+
+    if cfg!(feature = "client-wowforever") {
+        assert!(
+            toc.files.iter().any(|file| file == "Camelot/NewDefinitions.lua"),
+            "Forever selects the Camelot NewDefinitions.lua entry"
         );
     }
 }

@@ -173,15 +173,15 @@ fn allows_screen_returns_true_only_for_game_when_allowload_absent() {
 
 post_wrath_ui_fixture! {
 #[test]
-fn included_in_eager_discovery_for_game_screen_only() {
+fn eager_discovery_matches_game_type_and_screen_filters() {
     let game_addons = discover_blizzard_addons_for_screen(&blizzard_ui_dir(), ScreenKind::Game);
     let in_game = game_addons
         .iter()
         .any(|(name, _)| name == "Blizzard_RPE_TurnStrafe");
-    assert!(
+    assert_eq!(
         in_game,
-        "Blizzard_RPE_TurnStrafe must appear in eager Game-screen discovery — passes \
-         is_game_type_restricted (standard allowlisted) and is_load_on_demand=0 explicit-eager"
+        toc_layout::admits_game_type("standard"),
+        "RPE TurnStrafe is admitted only when the active profile allows standard"
     );
     for screen in [
         ScreenKind::Login,

@@ -1,13 +1,23 @@
 //! Spell aura classification and explicit stat/cooldown output policies.
 
-#[cfg(any(feature = "aura-containers", feature = "retail-12-0-0"))]
+#[cfg(any(
+    feature = "aura-containers",
+    feature = "retail-12-0-0",
+    feature = "client-wowforever"
+))]
 use super::ensure_namespace;
 #[cfg(feature = "retail-12-0-0")]
 #[path = "secrets_queries.rs"]
 mod queries;
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
+use crate::client_profile::{ACTIVE, ClientProfile};
 #[cfg(feature = "retail-12-0-5")]
 use crate::lua_api::methods::borrow_state;
-#[cfg(any(feature = "aura-containers", feature = "retail-12-0-5"))]
+#[cfg(any(
+    feature = "aura-containers",
+    feature = "retail-12-0-5",
+    feature = "client-wowforever"
+))]
 use crate::lua_bridge::table_set_rust_fn_static;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
@@ -22,7 +32,11 @@ pub(crate) const ALWAYS_SECRET: i32 = 1;
 #[cfg(feature = "aura-containers")]
 const CONTEXTUALLY_SECRET: i32 = 2;
 
-#[cfg(any(feature = "aura-containers", feature = "retail-12-0-0"))]
+#[cfg(any(
+    feature = "aura-containers",
+    feature = "retail-12-0-0",
+    feature = "client-wowforever"
+))]
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     let namespace = ensure_namespace(state, "C_Secrets")?;
     #[cfg(feature = "retail-12-0-0")]
@@ -40,6 +54,12 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
             namespace,
             "ShouldAurasBeSecret",
             should_auras_be_secret,
+        )?;
+        table_set_rust_fn_static(
+            state,
+            namespace,
+            "ShouldUnitSpellCastingBeSecret",
+            should_unit_spell_casting_be_secret,
         )?;
     }
     #[cfg(feature = "aura-containers")]
@@ -67,6 +87,52 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         should_cooldowns_be_secret,
     )?;
     Ok(())
+}
+
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
+const SHOULD_UNIT_SPELL_CASTING_BE_SECRET_USAGE: &str =
+    "Usage: local isSpellCastingSecret = C_Secrets.ShouldUnitSpellCastingBeSecret(unit)";
+
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
+fn should_unit_spell_casting_be_secret(state: &mut LuaState) -> LuaResult<u32> {
+    let unit = read_spell_casting_unit(state, 1)?;
+    if !matches!(
+        ACTIVE,
+        ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
+    ) {
+        state.push(Val::Bool(false));
+        return Ok(1);
+    }
+
+    let should_be_secret = {
+        let sim = crate::lua_api::methods::borrow_state(state)?;
+        match crate::lua_api::globals::unit_misc::existing_guid_for_unit(&sim, &unit) {
+            None => true,
+            Some(unit_guid) => {
+                let player_guid =
+                    crate::lua_api::globals::unit_misc::existing_guid_for_unit(&sim, "player");
+                let belongs_to_player = player_guid.as_deref() == Some(unit_guid.as_str())
+                    || sim
+                        .player_owned_or_controlled_unit_guids
+                        .contains(&unit_guid);
+                !belongs_to_player
+            }
+        }
+    };
+    state.push(Val::Bool(should_be_secret));
+    Ok(1)
+}
+
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
+fn read_spell_casting_unit(state: &LuaState, position: i32) -> LuaResult<String> {
+    let value =
+        rilua::table_security::unwrap_secret(state, crate::lua_bridge::stack_val(state, position))?;
+    match value {
+        Val::Str(_) => crate::lua_api::methods::val_to_string(state, value),
+        Val::Num(_) => Some(value.to_string()),
+        _ => None,
+    }
+    .ok_or_else(|| rilua::runtime_error(SHOULD_UNIT_SPELL_CASTING_BE_SECRET_USAGE))
 }
 
 #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]

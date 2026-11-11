@@ -4,10 +4,10 @@
 //! few frame surfaces to be ready by the time creation mixins run. Seed them
 //! here until the simulator models the full character-create state flow.
 
+use crate::c_api::c_character_creation::set_in_character_create;
 use crate::lua_api::WowLuaEnv;
-use crate::lua_api::methods::borrow_state_mut;
-use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
-use rilua::{LuaApiMut, LuaResult, vm::state::LuaState};
+use crate::lua_bridge::table_set_rust_fn_static;
+use rilua::LuaApiMut;
 
 const CHARACTER_CREATION_NAMESPACE_DEFAULTS_LUA: &str = r#"
 local function noop()
@@ -106,6 +106,23 @@ local function find_class(classID)
     return nil
 end
 
+local function clear_altered_form_after_race_change()
+    local setter = rawget(C_CharacterCreation, "SetViewingAlteredForm")
+    if type(setter) == "function" then
+        setter(false)
+    end
+end
+
+local function clear_altered_form_when_race_has_no_model()
+    local has_model = rawget(_G, "__wow_character_create_has_altered_model")
+    local setter = rawget(C_CharacterCreation, "SetViewingAlteredForm")
+    if type(has_model) == "function" and not has_model() and type(setter) == "function" then
+        setter(false)
+    end
+end
+rawset(_G, "__wow_character_create_clear_altered_form_after_race_change", clear_altered_form_after_race_change)
+rawset(_G, "__wow_character_create_clear_altered_form_when_race_has_no_model", clear_altered_form_when_race_has_no_model)
+
 local function character_create_categories()
     local function choices(baseID, names)
         local out = {}
@@ -169,8 +186,13 @@ if rawget(C_CharacterCreation, "GetSelectedRace") == nil then
 end
 if rawget(C_CharacterCreation, "SetSelectedRace") == nil then
     function C_CharacterCreation.SetSelectedRace(raceID)
+        local previousRaceID = rawget(_G, "__wow_selected_race_id") or races[1].raceID
         local selectedRace = find_race(raceID)
-        rawset(_G, "__wow_selected_race_id", selectedRace and selectedRace.raceID or races[1].raceID)
+        local selectedRaceID = selectedRace and selectedRace.raceID or races[1].raceID
+        rawset(_G, "__wow_selected_race_id", selectedRaceID)
+        if selectedRaceID ~= previousRaceID then
+            clear_altered_form_after_race_change()
+        end
     end
 end
 if rawget(C_CharacterCreation, "GetAvailableRaces") == nil then
@@ -191,6 +213,7 @@ if rawget(C_CharacterCreation, "SetSelectedClass") == nil then
     function C_CharacterCreation.SetSelectedClass(classID)
         local selectedClass = find_class(classID)
         rawset(_G, "__wow_selected_class_id", selectedClass and selectedClass.classID or classes[1].classID)
+        clear_altered_form_when_race_has_no_model()
     end
 end
 if rawget(C_CharacterCreation, "GetAvailableClasses") == nil then
@@ -210,6 +233,7 @@ end
 if rawget(C_CharacterCreation, "SetSelectedSex") == nil then
     function C_CharacterCreation.SetSelectedSex(sexID)
         rawset(_G, "__wow_selected_sex_id", sexID or 0)
+        clear_altered_form_when_race_has_no_model()
     end
 end
 if rawget(C_CharacterCreation, "GetSelectedSex") == nil then
@@ -246,11 +270,6 @@ if rawget(C_CharacterCreation, "GetAlliedRaceAchievementRequirements") == nil th
 end
 if rawget(C_CharacterCreation, "UseBeginnerMode") == nil then
     function C_CharacterCreation.UseBeginnerMode()
-        return false
-    end
-end
-if rawget(C_CharacterCreation, "IsViewingAlteredForm") == nil then
-    function C_CharacterCreation.IsViewingAlteredForm()
         return false
     end
 end
@@ -305,7 +324,9 @@ for _, name in ipairs({
     "DestroyAuxModel",
 }) do
     if rawget(C_CharacterCreation, name) == nil then
-        C_CharacterCreation[name] = noop
+        C_CharacterCreation[name] = name == "ResetCharCustomize"
+            and clear_altered_form_when_race_has_no_model
+            or noop
     end
 end
 if rawget(C_CharacterCreation, "GetCreateBackgroundModel") == nil then
@@ -340,8 +361,13 @@ function C_CharacterCreation.GetSelectedRace()
     return rawget(_G, "__wow_selected_race_id") or races[1].raceID
 end
 function C_CharacterCreation.SetSelectedRace(raceID)
+    local previousRaceID = rawget(_G, "__wow_selected_race_id") or races[1].raceID
     local selectedRace = find_race(raceID)
-    rawset(_G, "__wow_selected_race_id", selectedRace and selectedRace.raceID or races[1].raceID)
+    local selectedRaceID = selectedRace and selectedRace.raceID or races[1].raceID
+    rawset(_G, "__wow_selected_race_id", selectedRaceID)
+    if selectedRaceID ~= previousRaceID then
+        clear_altered_form_after_race_change()
+    end
 end
 function C_CharacterCreation.GetAvailableRaces()
     local out = {}
@@ -356,6 +382,7 @@ end
 function C_CharacterCreation.SetSelectedClass(classID)
     local selectedClass = find_class(classID)
     rawset(_G, "__wow_selected_class_id", selectedClass and selectedClass.classID or classes[1].classID)
+    clear_altered_form_when_race_has_no_model()
 end
 function C_CharacterCreation.GetAvailableClasses()
     local out = {}
@@ -369,6 +396,7 @@ function C_CharacterCreation.GetSelectedClass()
 end
 function C_CharacterCreation.SetSelectedSex(sexID)
     rawset(_G, "__wow_selected_sex_id", sexID or 0)
+    clear_altered_form_when_race_has_no_model()
 end
 function C_CharacterCreation.GetSelectedSex()
     return rawget(_G, "__wow_selected_sex_id") or 0
@@ -387,6 +415,9 @@ end
 "#;
 
 const CHARACTER_CREATE_DEFAULTS_WORKAROUND_LUA: &str = r#"
+local clear_altered_form_after_race_change = rawget(_G, "__wow_character_create_clear_altered_form_after_race_change")
+local clear_altered_form_when_race_has_no_model = rawget(_G, "__wow_character_create_clear_altered_form_when_race_has_no_model")
+
 local function __wow_character_create_defaults_frame()
     if type(CharacterCreateFrame) ~= "table" then
         return nil
@@ -529,6 +560,22 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
         crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
     ) {
         // User-approved, not native evidence: record the character-create screen state.
+        // User-approved default until character customization preview choices are modeled.
+        lua.exec("function C_CharacterCreation.ClearPreviewChoices(clearSavedChoices) end")?;
+        if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Ptr {
+            // Preserve this pre-existing PTR surface; native Set registration is unknown.
+            lua.exec(
+                "local facing = 0; function C_CharacterCreation.GetCharacterCreateFacing() return facing end; function C_CharacterCreation.SetCharacterCreateFacing(value) facing = value end",
+            )?;
+        }
+        // User-approved, not native evidence: class-trial boosts are not modeled.
+        lua.exec("function C_CharacterCreation.GetTrialBoostStartingLevel() return 0 end")?;
+    }
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Ptr {
+        // PTR registration is UNKNOWN; retain the previous preview API fallbacks.
+        lua.exec(
+            "function C_CharacterCreation.SetSelectedPreviewGearType(gearType) end; function C_CharacterCreation.SetModelDressState(dressedState) end; function C_CharacterCreation.SetCameraZoomLevel(zoomLevel, keepCustomZoom) end; function C_CharacterCreation.SetBlurEnabled(enabled) end",
+        )?;
         let state = lua.state_mut();
         let namespace = crate::c_api::ensure_namespace(state, "C_CharacterCreation")?;
         table_set_rust_fn_static(
@@ -537,38 +584,10 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
             "SetInCharacterCreate",
             set_in_character_create,
         )?;
-        // User-approved default until character customization preview choices are modeled.
-        lua.exec("function C_CharacterCreation.ClearPreviewChoices(clearSavedChoices) end")?;
-        // User-approved, not native evidence: facing feeds only 3D model rotation, a non-goal.
-        lua.exec("function C_CharacterCreation.GetDefaultCharacterCreateFacing() return 0 end")?;
-        // Stored facing round-trips as Blizzard_CharacterCreate's rotate code expects; it starts at the default.
-        lua.exec(
-            "local facing = 0; function C_CharacterCreation.GetCharacterCreateFacing() return facing end; function C_CharacterCreation.SetCharacterCreateFacing(value) facing = value end",
-        )?;
-        // Stored altered-form flag: CharacterCreateMixin:SetMode writes it (line 512) before
-        // reading it (line 540), so the initial value is not observed on that path.
-        lua.exec(
-            "local altered = false; function C_CharacterCreation.IsViewingAlteredForm() return altered end; function C_CharacterCreation.SetViewingAlteredForm(value) altered = value end",
-        )?;
-        // User-approved, not native evidence: class-trial boosts are not modeled.
-        lua.exec("function C_CharacterCreation.GetTrialBoostStartingLevel() return 0 end")?;
-        // Scene blur, preview gear, dress state and camera zoom level only affect the 3D model
-        // scene, an intentional gap; Blizzard_CharacterCreate reads none of them back.
-        lua.exec(
-            "function C_CharacterCreation.SetBlurEnabled(enabled) end; function C_CharacterCreation.SetSelectedPreviewGearType(gearType) end; function C_CharacterCreation.SetModelDressState(dressedState) end; function C_CharacterCreation.SetCameraZoomLevel(zoomLevel, keepCustomZoom) end",
-        )?;
-    }
-    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Ptr {
         // User-approved defaults until realm name-reservation and regional naming policies are modeled.
         lua.exec("function IsNameReservationOnly() return false end; function C_CharacterCreation.AreRegionalUniqueNamesEnabled() return false end")?;
     }
     Ok(())
-}
-
-fn set_in_character_create(state: &mut LuaState) -> LuaResult<u32> {
-    let value = bool::from_stack(state, 1)?;
-    borrow_state_mut(state)?.in_character_create = value;
-    Ok(0)
 }
 
 pub(crate) fn patch(env: &WowLuaEnv) {

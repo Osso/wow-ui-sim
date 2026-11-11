@@ -69,7 +69,7 @@ const QUERIES: &[(&str, Query)] = &[
     ("ShouldUnitIdentityBeSecret", should_unit_identity_be_secret),
     (
         "ShouldUnitSpellCastingBeSecret",
-        should_unit_spell_casting_be_secret,
+        super::should_unit_spell_casting_be_secret,
     ),
     #[cfg(feature = "retail-12-0-5")]
     (
@@ -263,12 +263,6 @@ fn should_unit_comparison_be_secret(state: &mut LuaState) -> LuaResult<u32> {
     authenticate_arguments(state, 2)?;
     // INFERRED simulator default: UnitIsUnit implements comparability but not
     // SecretWhenUnitComparisonRestricted. Identity secrecy is a different policy.
-    push_bool(state, false)
-}
-
-fn should_unit_spell_casting_be_secret(state: &mut LuaState) -> LuaResult<u32> {
-    require_unit(state, 1)?;
-    // Best guess: existing player-only cast readers stay public; native trigger unknown.
     push_bool(state, false)
 }
 

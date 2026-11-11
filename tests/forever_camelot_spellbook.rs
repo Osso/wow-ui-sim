@@ -54,7 +54,7 @@ fn load_original(enabled: bool) -> WowLuaEnv {
             print('original consumer', path, info.linedefined)
         end
         original(SpellBookFrameMixin.CreateCategoryMixins,
-            'Camelot/SpellBook/Blizzard_SpellBookFrame.lua', 45)
+            'Camelot/SpellBook/Blizzard_SpellBookFrame.lua', 115)
         original(SpellBookFrameMixin.UpdateAllSpellData,
             'SpellBook/Blizzard_SpellBookFrame.lua', 487)
         original(SpellBookTransmogCategoryMixin.IsAvailable,

@@ -13,9 +13,12 @@ const RELATED_USAGE: &str =
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     use crate::client_profile::{ACTIVE, ClientProfile};
-    if cfg!(feature = "retail-12-1-5")
-        && matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr)
-    {
+    let enabled = match ACTIVE {
+        ClientProfile::WowForever => true,
+        ClientProfile::Retail | ClientProfile::Ptr => cfg!(feature = "retail-12-1-5"),
+        _ => false,
+    };
+    if enabled {
         let namespace = super::ensure_namespace(state, "C_AccountInfo")?;
         table_set_rust_fn_static(state, namespace, "IsGUIDBattleNetAccountType", is_bnet_guid)?;
         table_set_rust_fn_static(

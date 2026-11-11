@@ -121,6 +121,7 @@ pub(crate) mod c_campaign_info;
 pub mod c_catalog_shop;
 pub mod c_catalog_shop_products;
 pub mod c_challenge_mode;
+pub(crate) mod c_character_creation;
 pub(crate) mod c_character_creation_naming;
 pub(crate) mod c_character_creation_seen;
 pub mod c_character_services;
@@ -154,6 +155,7 @@ pub(crate) mod c_debug;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_delves_entrance;
 pub mod c_discord;
+pub mod c_district_utils;
 mod c_dungeon_score_rarity;
 #[cfg(feature = "retail-12-0-0")]
 pub mod c_dye_color;
@@ -223,7 +225,6 @@ pub mod c_photo_sharing;
 pub mod c_ping_secure;
 #[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
 pub mod c_player_choice;
-#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 pub(crate) mod c_player_info_guid;
 pub(crate) mod c_player_info_name_policy;
 pub mod c_player_interaction_manager;
@@ -411,6 +412,7 @@ pub(crate) mod c_weather;
 pub mod c_weekly_rewards;
 pub mod c_widget;
 pub mod c_wow_token_public;
+pub mod c_wow_token_ui;
 pub mod c_wowtoken_secure;
 pub mod c_xml_util;
 pub(crate) mod c_zone_ability_icon;
@@ -501,6 +503,12 @@ mod registration;
 pub(crate) mod restricted_actions;
 
 pub(crate) use c_store_secure::register as register_store_secure_table;
+#[cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
+pub(crate) use helpers::parse_numeric_string;
 pub(crate) use helpers::{
     ensure_global_table, ensure_namespace, global_val, mark_namespace_keys_removed, set_global_val,
 };
@@ -591,7 +599,11 @@ pub(crate) fn register_utility_bootstrap_tables(state: &mut LuaState) -> LuaResu
     c_intl::register(state)?;
     #[cfg(feature = "aura-containers")]
     c_aura_container_util::register(state)?;
-    #[cfg(any(feature = "aura-containers", feature = "retail-12-0-0"))]
+    #[cfg(any(
+        feature = "aura-containers",
+        feature = "retail-12-0-0",
+        feature = "client-wowforever"
+    ))]
     c_secrets::register(state)?;
     register_specialization_and_model_tables(state)?;
     register_glue_and_display_tables(state)?;
@@ -609,6 +621,7 @@ fn register_specialization_and_model_tables(state: &mut LuaState) -> LuaResult<(
 fn register_glue_and_display_tables(state: &mut LuaState) -> LuaResult<()> {
     c_glue::register_c_glue(state)?;
     c_login::register_c_login(state)?;
+    c_district_utils::register_ptr_game_surface(state)?;
     c_character_creation_naming::register(state)?;
     c_ui::register(state)?;
     permanent_shims::c_ui::register_c_ui(state)
@@ -630,6 +643,7 @@ fn register_token_texture_xml_tables(state: &mut LuaState) -> LuaResult<()> {
     c_ping_texture_kits::register(state)?;
     c_wowtoken_secure::register_c_wowtoken_secure(state)?;
     c_wow_token_public::register_c_wow_token_public(state)?;
+    c_wow_token_ui::register(state)?;
     c_texture::register_c_texture(state)?;
     c_ui_file_asset::register_c_ui_file_asset(state)?;
     c_xml_util::register_c_xml_util(state)

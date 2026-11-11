@@ -116,11 +116,13 @@ fn load_full_game_ui() -> WowLuaEnv {
 fn blizzard_raid_ui_find_toc_resolves_active_mainline_variant() {
     assert_eq!(
         raid_ui_toc(),
-        raid_ui_dir().join(if toc_layout::classic_cache() || toc_layout::unified_toc_tree() {
-            "Blizzard_RaidUI.toc"
-        } else {
-            "Blizzard_RaidUI_Mainline.toc"
-        }),
+        raid_ui_dir().join(
+            if toc_layout::classic_cache() || toc_layout::unified_toc_tree() {
+                "Blizzard_RaidUI.toc"
+            } else {
+                "Blizzard_RaidUI_Mainline.toc"
+            }
+        ),
         "find_toc_file selects the active profile's RaidUI TOC: the Retail cache ships \
          `_Mainline.toc`, the pinned PTR cache ships the unified bare TOC"
     );
@@ -306,7 +308,11 @@ fn blizzard_raid_ui_toc_lists_bootstrap_xml_then_localization() {
                     "Localization.lua",
                 ][..]
             } else {
-                &["Blizzard_RaidUI.lua", "Blizzard_RaidUI.xml", "Localization.lua"][..]
+                &[
+                    "Blizzard_RaidUI.lua",
+                    "Blizzard_RaidUI.xml",
+                    "Localization.lua",
+                ][..]
             }
         } else if toc_layout::unified_toc_tree() {
             &[
@@ -644,7 +650,31 @@ fn blizzard_raid_ui_registers_extra_events_on_raid_frame(env: &WowLuaEnv) {
 }
 
 #[test]
-fn blizzard_raid_ui_xml_pulls_lua_via_script_directive() {
+fn raid_ui_lua_loads_before_xml_for_active_profile() {
+    if cfg!(feature = "client-wowforever") {
+        // The Forever cache TOC lists [Family] Lua and XML entries directly
+        // (Blizzard_RaidUI.toc:5-7), so XML does not need a Script directive.
+        let toc = TocFile::from_file(&raid_ui_toc()).expect("TOC parses");
+        let files: Vec<String> = toc
+            .files
+            .iter()
+            .map(|path| path.to_string_lossy().into_owned())
+            .collect();
+        let lua_index = files
+            .iter()
+            .position(|path| path == "Mainline/Blizzard_RaidUI.lua")
+            .expect("Forever TOC lists the [Family] Lua file");
+        let xml_index = files
+            .iter()
+            .position(|path| path == "Mainline/Blizzard_RaidUI.xml")
+            .expect("Forever TOC lists the [Family] XML file");
+        assert!(
+            lua_index < xml_index,
+            "Forever Lua must load before XML: {files:?}"
+        );
+        return;
+    }
+
     let xml_path = raid_ui_dir().join(if cfg!(feature = "client-wrath") {
         "Blizzard_RaidUI.xml"
     } else {
@@ -654,11 +684,6 @@ fn blizzard_raid_ui_xml_pulls_lua_via_script_directive() {
     assert!(
         xml.contains(r#"<Script file="Blizzard_RaidUI.lua"/>"#),
         "Blizzard_RaidUI.xml must include `<Script file=\"Blizzard_RaidUI.lua\"/>` \
-         at the top — the modern XML-driven Lua-loading pattern. The \
-         companion .lua file is NOT listed in the TOC body directly; it is \
-         loaded transitively when the XML parser hits the Script directive. \
-         Distinct from the older-style sibling Blizzard_RaidFrame which \
-         lists Mainline/RaidFrame.lua AND Mainline/RaidFrame.xml \
-         explicitly in the TOC body"
+         at the top — the XML-driven Lua-loading pattern"
     );
 }

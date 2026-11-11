@@ -77,7 +77,10 @@ pub(crate) fn register_c_azerite_empowered_item_surface(state: &mut LuaState) ->
     for &(name, func) in AZERITE_EMPOWERED_METHODS {
         table_set_rust_fn_static(state, ns, name, func)?;
     }
-    if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr) {
+    if matches!(
+        ACTIVE,
+        ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
+    ) {
         table_set_rust_fn_static(
             state,
             ns,
