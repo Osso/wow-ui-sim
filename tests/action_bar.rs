@@ -157,20 +157,24 @@ fn test_main_action_bar_end_caps_visible_after_startup() {
 
     let env = env_with_action_bar();
 
-    let (shown, left_atlas, right_atlas): (bool, String, String) = env
-        .eval(
-            r#"
-            if not MainActionBar or not MainActionBar.EndCaps then
-                return false, "", ""
-            end
-            local left = MainActionBar.EndCaps.LeftEndCap.Texture
-            local right = MainActionBar.EndCaps.RightEndCap.Texture
-            return MainActionBar.EndCaps:IsShown(),
-                   (left and left.GetAtlas and left:GetAtlas()) or "",
-                   (right and right.GetAtlas and right:GetAtlas()) or ""
-            "#,
-        )
-        .unwrap();
+    let endcap_texture_access = if cfg!(feature = "client-ptr") {
+        ".Texture"
+    } else {
+        ""
+    };
+    let script = format!(
+        r#"
+        if not MainActionBar or not MainActionBar.EndCaps then
+            return false, "", ""
+        end
+        local left = MainActionBar.EndCaps.LeftEndCap{endcap_texture_access}
+        local right = MainActionBar.EndCaps.RightEndCap{endcap_texture_access}
+        return MainActionBar.EndCaps:IsShown(),
+               (left and left.GetAtlas and left:GetAtlas()) or "",
+               (right and right.GetAtlas and right:GetAtlas()) or ""
+        "#
+    );
+    let (shown, left_atlas, right_atlas): (bool, String, String) = env.eval(&script).unwrap();
 
     assert!(shown, "MainActionBar.EndCaps should be shown after startup");
     assert_eq!(left_atlas, "ui-hud-actionbar-gryphon-left");

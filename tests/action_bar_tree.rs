@@ -260,8 +260,12 @@ fn main_action_bar_layout_is_locked() {
     test_timeout! {
         let env = load_settled_game_ui();
 
-        env.exec(
-            r#"
+        let endcap_texture_access = if cfg!(feature = "client-ptr") {
+            ".Texture"
+        } else {
+            ""
+        };
+        let script = r#"
             local EPS = 0.75
 
             local function approx(actual, expected, eps)
@@ -325,8 +329,14 @@ fn main_action_bar_layout_is_locked() {
 
             local leL, leR, _, leB, leW, leH = rect("LeftEndCap", leftEndCap)
             local reL, reR, _, reB, reW, reH = rect("RightEndCap", rightEndCap)
-            local leftTexture = require_frame("MainActionBar.EndCaps.LeftEndCap.Texture", leftEndCap.Texture)
-            local rightTexture = require_frame("MainActionBar.EndCaps.RightEndCap.Texture", rightEndCap.Texture)
+            local leftTexture = require_frame(
+                "MainActionBar.EndCaps.LeftEndCap__ENDCAP_TEXTURE_ACCESS__",
+                leftEndCap__ENDCAP_TEXTURE_ACCESS__
+            )
+            local rightTexture = require_frame(
+                "MainActionBar.EndCaps.RightEndCap__ENDCAP_TEXTURE_ACCESS__",
+                rightEndCap__ENDCAP_TEXTURE_ACCESS__
+            )
             assert((leftTexture:GetAtlas() or ""):lower() == "ui-hud-actionbar-gryphon-left", "LeftEndCap atlas changed")
             assert((rightTexture:GetAtlas() or ""):lower() == "ui-hud-actionbar-gryphon-right", "RightEndCap atlas changed")
             assert(leW > 0 and leH > 0, "LeftEndCap size must be non-zero")
@@ -397,8 +407,9 @@ fn main_action_bar_layout_is_locked() {
             assert(a1L and a1R and a2L and a12R, "action button bounds missing for spacing checks")
             assert(approx(a2L - a1L, 47), "ActionButton1->2 spacing changed")
             assert(approx(a12R, bR), "ActionButton12 right edge no longer matches MainActionBar")
-            "#,
-        )
-        .expect("main action bar layout lock assertions");
+            "#;
+        let script = script.replace("__ENDCAP_TEXTURE_ACCESS__", endcap_texture_access);
+        env.exec(&script)
+            .expect("main action bar layout lock assertions");
     }
 }
