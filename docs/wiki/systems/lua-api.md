@@ -42,6 +42,13 @@ Original MerchantFrame buyback hover and the three presentation tests pass on
 both profiles. The full PTR tooltip/library runs retain the same failures as
 the source-matched master baseline; this is not a clean PTR startup claim.
 
+## Cursor modes and ActionBar transitions
+
+The [cursor model contract](../../specs/cursor-model.md) is the behavioral
+source of truth for Retail's shared modes and PTR's R29/R37 surface. Producer
+and consumer dispatch is in `inventory_verbs.rs`; shared mode mapping, cursor
+storage and transition notifications are in `real/cursor_model.rs`.
+
 ## Group member counts
 
 The [group-count contract](../../specs/group-member-role-counts.md) distinguishes native build 70688 evidence from simulator coverage. Solo and class counts have selected Retail PartyUtil RED/GREEN proof; the native role bytes, skip flag, and separate raid container remain unmodeled.
@@ -674,6 +681,7 @@ The [owning contract](../../specs/wrath-friends-legacy.md) records static12340 p
 
 ## Sources
 
+- [Cursor model](../../specs/cursor-model.md) — Retail shared modes and PTR R29/R37 transition contract.
 - [UiMap information catalog](../../specs/ui-map-info-catalog.md) — profile scope and provenance.
 - [Wrath legacy friends contract](../../specs/wrath-friends-legacy.md) — native tuple/selection evidence and simulator-policy limits.
 - [Retail unused currency contract](../../specs/currency-unused-mutations.md) — flag scope, original consumers and held grouping.
