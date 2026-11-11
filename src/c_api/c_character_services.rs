@@ -5,6 +5,7 @@
 //! `lua_api::workarounds::temporary::character_services_defaults`.
 
 use crate::c_api::helpers::ensure_namespace;
+use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::methods::borrow_state;
 use crate::lua_bridge::table_set_rust_fn_static;
 use rilua::vm::state::LuaState;
@@ -36,6 +37,15 @@ pub(crate) fn register_c_character_services_surface(state: &mut LuaState) -> Lua
         "GetActiveClassTrialBoostType",
         get_active_class_trial_boost_type,
     )?;
+    let is_glue = borrow_state(state)?.screen_kind.is_glue();
+    if is_glue
+        && matches!(
+            ACTIVE,
+            ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
+        )
+    {
+        table_set_rust_fn_static(state, table_ref, "HasQueuedUpgrade", has_queued_upgrade)?;
+    }
     Ok(())
 }
 
@@ -58,5 +68,13 @@ fn get_active_class_trial_boost_type(state: &mut LuaState) -> LuaResult<u32> {
         Some(t) => state.push(Val::Num(t as f64)),
         None => state.push(Val::Nil),
     }
+    Ok(1)
+}
+
+fn has_queued_upgrade(state: &mut LuaState) -> LuaResult<u32> {
+    let queued = borrow_state(state)?
+        .character_services
+        .queued_upgrade_guid_type_nonzero;
+    state.push(Val::Bool(queued));
     Ok(1)
 }
