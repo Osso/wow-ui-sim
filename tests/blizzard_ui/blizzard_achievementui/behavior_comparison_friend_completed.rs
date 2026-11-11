@@ -123,7 +123,12 @@ const FAKE_FRAME_BUILDER: &str = r#"
                 Icon = {SetTexture = noop_text},
                 Points = {SetText = noop_text, SetFontObject = noop_text},
             },
-            DateCompleted = {SetText = noop_text, Show = noop_show, Hide = noop_show},
+            DateCompleted = {
+                SetText = noop_text,
+                SetShown = noop_show,
+                Show = noop_show,
+                Hide = noop_show,
+            },
             Status = {
                 SetText = function(self, text)
                     captures.status_calls = captures.status_calls + 1
