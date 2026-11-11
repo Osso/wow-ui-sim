@@ -492,8 +492,8 @@ fn login_policy_replaces_pending_attempt_and_cancels_on_screen_boot() {
         local listener = CreateFrame("Frame")
         listener:RegisterEvent("CHARACTER_LIST_UPDATE")
         listener:SetScript("OnEvent", function(_, _, count)
-            assert(count == 1)
             policyListUpdates = policyListUpdates + 1
+            assert(count == 1)
         end)
         policyPasswordBox = CreateFrame("EditBox")
         C_Login.Login("first", policyPasswordBox)
@@ -512,10 +512,15 @@ fn login_policy_replaces_pending_attempt_and_cancels_on_screen_boot() {
     assert_eq!(env.eval::<i32>("return policyListUpdates").unwrap(), 0);
     assert_eq!(env.state().borrow().glue_login.characters.len(), 1);
     assert!(env.state().borrow().glue_login.realm_list_available);
+    env.exec(r#"C_Login.Login("replacement-one", policyPasswordBox)"#)
+        .unwrap();
+    env.fire_on_update(0.016).unwrap();
     env.exec(
         r#"
-        C_Login.Login("replacement-one", policyPasswordBox)
         C_Login.Login("replacement-two", policyPasswordBox)
+        local state = C_Login.GetState()
+        if type(state) == "table" then state = state.auroraState end
+        assert(state == LE_AURORA_STATE_CONNECTING)
     "#,
     )
     .unwrap();
@@ -524,4 +529,9 @@ fn login_policy_replaces_pending_attempt_and_cancels_on_screen_boot() {
     }
     assert_eq!(env.eval::<i32>("return policyListUpdates").unwrap(), 1);
     assert_eq!(env.eval::<i32>("return GetNumCharacters()").unwrap(), 1);
+    let errors = env.state().borrow().lua_errors.clone();
+    assert!(
+        errors.is_empty(),
+        "policy callbacks should succeed: {errors:#?}"
+    );
 }
