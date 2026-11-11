@@ -842,16 +842,3 @@ impl Keybindings {
         self.overrides.clear();
     }
 }
-
-/// Character-boost, trial, and queued-upgrade presence state for `C_CharacterServices`.
-#[derive(Debug, Default, Clone)]
-pub struct CharacterServicesState {
-    /// Active character-upgrade boost type id, or `None` when no boost
-    /// purchase is pending. Retail values: 5 = Level-60 boost, etc.
-    pub active_upgrade_boost_type: Option<i32>,
-    /// Active class-trial boost type id, or `None` when no trial is
-    /// running.
-    pub active_class_trial_boost_type: Option<i32>,
-    /// Whether a queued-upgrade GUID has non-zero type bits.
-    pub queued_upgrade_guid_is_set: bool,
-}

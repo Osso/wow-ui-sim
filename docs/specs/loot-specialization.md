@@ -1,27 +1,35 @@
 # Loot specialization
 
-## Behavior
+`GetLootSpecialization` and `SetLootSpecialization` expose the stored player choice. The original selected `UnitPopupSharedButtonMixins.lua` consumer sends choices through `SetLootSpecialization`. Retail behavior is based on the native evidence for build 70688.
 
-- `GetLootSpecialization()` returns the last applied player value, initially 0. Zero means follow the current specialization.
-- `SetLootSpecialization(id)` accepts a number and returns no values. Missing or non-convertible arguments raise `Usage: SetLootSpecialization(specializationID)`.
-- The setter sends any integer without client-side class or catalog validation. At most five requests are sent per 10-second window; excess requests are silently dropped.
-- The simulator models a server response on the next OnUpdate tick. An accepted response stores the value and fires `PLAYER_LOOT_SPEC_UPDATED` with no arguments. No state change or event occurs synchronously in the setter.
-- The simulated server accepts 0 and IDs in the player's class catalog and rejects other IDs. This is a best guess, not native evidence.
-- `HasLootSpecializations()` uses the player's class catalog.
+## What it must do
 
-## Native basis (70688 behavioural spec)
+- [x] `GetLootSpecialization()` returns the stored simulator value; the initial value is 0.
+- [x] On Retail, `SetLootSpecialization` accepts a numeric argument, returns no values, raises `Usage: SetLootSpecialization(specializationID)` for a non-number, and does not reject an ID because it is absent from the local class catalog.
+- [x] On Retail, a setter call leaves the stored getter value unchanged and emits no `PLAYER_LOOT_SPEC_UPDATED` before or after the next OnUpdate tick.
 
-The clean-room behavioral specs `GetLootSpecialization.md` and `SetLootSpecialization.md` for client build 70688 establish the getter's player field, setter's type check and lack of value validation, rate limit, lack of local write, and the event's update-path origin. The actual server validation and response message are unknown. The getter's field is unsigned 16-bit and returns zero without a player.
+## How it works
 
-## Best-guess basis — native UNKNOWN
+- See the [C API and Lua API boundaries](../wiki/index.md).
 
-[Warcraft Wiki](https://warcraft.wiki.gg/wiki/API_SetLootSpecialization) reports silent failure for invalid or other-class IDs. [Blizzard's off-spec loot announcement](https://worldofwarcraft.blizzard.com/en-gb/news/10058095/patch-5-3-adds-off-spec-loot-and-rewards) describes choosing among class specializations. Neither establishes which side rejects an ID; the simulated server rejects it as a best guess. The exact rate-limit window reset semantics and repeated-value server responses are also unknown.
+## Implementation inventory
 
-## Tests
+- `src/lua_api/globals/real/loot_specialization.rs` — Retail getter and setter argument boundary; server transport is not modeled.
+- `src/lua_api/state/sim_state.rs` — stores the current loot-specialization value.
 
-`tests/loot_specialization.rs` covers the original popup, deferred application, rate limiting and usage error.
+## Tests asserting this spec
 
-## Known gaps
+- `tests/loot_specialization.rs::loot_specialization_original_popup_does_not_fabricate_a_server_response` — invokes the selected original `UnitPopupSharedButtonMixins.lua` click handler.
+- `tests/loot_specialization.rs::loot_specialization_numeric_requests_do_not_apply_locally` — checks numeric request calls do not produce a local value or event.
+- `tests/loot_specialization.rs::loot_specialization_usage_error` — checks the exact non-number diagnostic.
 
-- Server validation, response timing, persistence and whether the server sends a chat message are unknown.
-- No actual server connection or loot generation is modeled.
+## Known gaps (current cycle)
+
+- [ ] Retail request submission, send availability, rate limiting, server acceptance, and replicated update producer are not modeled.
+- [ ] Retail `HasLootSpecializations` remains unavailable because the ordinary `true` result is INFERRED; the original menu's `CanShow` path cannot be verified.
+- [ ] Exact rate-limit reset semantics, request-send availability, and repeated-value response behavior remain unknown.
+- [ ] Non-Retail behavior remains the pre-existing simulator model; R44-Q3 does not establish its native parity.
+
+## Out of scope
+
+- Do not infer server validation, loot generation, persistence, or chat output from the setter's request path.

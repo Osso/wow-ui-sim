@@ -293,7 +293,7 @@ fn queued_upgrade_presence_drives_blizzard_character_select_consumer() {
         env.state()
             .borrow_mut()
             .character_services
-            .queued_upgrade_guid_is_set = true;
+            .queued_upgrade_guid_type_nonzero = true;
         let is_queued: bool = env
             .eval("return C_CharacterServices.HasQueuedUpgrade()")
             .expect("host-supplied queued-upgrade state should be visible");

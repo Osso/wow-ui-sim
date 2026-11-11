@@ -1,4 +1,5 @@
 //! Shared state types for the WoW Lua API.
+pub use crate::c_api::c_character_services::CharacterServicesState;
 use crate::cvars::CVarStorage;
 use crate::event::{EventQueue, ScriptRegistry};
 use crate::lua_api::animation::AnimGroupState;
@@ -401,6 +402,7 @@ macro_rules! build_empty_sim_state {
             next_report_token: $runtime.next_report_token,
             party_members: $collections.party_members,
             party_group_active: $runtime.party_group_active,
+            group_member_counts: GroupMemberCountsState::default(),
             #[cfg(all(
                 feature = "retail-12-0-5",
                 any(feature = "profile-retail", feature = "client-ptr")
@@ -919,21 +921,21 @@ pub use super::state_types::{
     BnetFriendInvite, BnetGameAccount, BrowseQuery, CharacterNameSeparator, ChatBubble,
     CommodityPurchaseQuote, CommoditySearchResultInfo, CommoditySearchResults, CraftingState,
     CurrencyInfo, CursorInfo, CursorItemOrigin, DeathRecapEntry, DeathRecapEventInfo,
-    EquipmentManagerState, EquipmentSet, EquippedItem, GreatVaultActivity,
-    GuildBankRankPermissions, GuildBankTab, GuildMember, GuildRank, ItemSearchKey,
-    ItemSearchResultInfo, ItemSearchResults, KillingBlowInfo, LfdDungeonInfo, LfgActivityGroupInfo,
-    LfgActivityInfo, LfgAdvancedFilter, LfgApplication, LfgCategoryInfo, LfgRoleSelection,
-    LoadDiagnosticAttribution, LoadDiagnostics, LootHistoryState, LootRollInfo, LootSlot,
-    LuaErrorRecord, MacroInfo, MapChildRect, MapData, MapRect, MirrorTimer, MissingRequirement,
-    MissingRequirementKind, MovementState, MythicPlusAffix, MythicPlusRatingMapSummary,
-    MythicPlusRatingSummary, MythicPlusRun, MythicPlusState, MythicPlusWeeklyBest, NilSymbolAccess,
-    NilSymbolEnvironment, NilSymbolObservation, NilSymbolObservationKind, OwnedAuction,
-    OwnedKeystone, PendingTimer, PlayerChoiceInfo, PlayerChoiceOptionButtonInfo,
-    PlayerChoiceOptionInfo, PlayerChoiceOptionRewardInfo, PlayerChoiceRewardCurrencyInfo,
-    PlayerChoiceRewardItemInfo, PlayerChoiceRewardReputationInfo, PlayerChoiceState, PlayerState,
-    PlayerXpState, PvpHonorState, SEEDED_LOCAL_CHARACTER_GUID, SEEDED_LOCAL_CHARACTER_NAME,
-    ScenarioState, ScenarioStep, SecondaryPowerState, SocialFriend, SocialRestrictionsState,
-    SummonRequestState, TokenAuctionInfo, WorldState, WowTokenState,
+    EquipmentManagerState, EquipmentSet, EquippedItem, GreatVaultActivity, GroupMemberCountsMember,
+    GroupMemberCountsState, GuildBankRankPermissions, GuildBankTab, GuildMember, GuildRank,
+    ItemSearchKey, ItemSearchResultInfo, ItemSearchResults, KillingBlowInfo, LfdDungeonInfo,
+    LfgActivityGroupInfo, LfgActivityInfo, LfgAdvancedFilter, LfgApplication, LfgCategoryInfo,
+    LfgRoleSelection, LoadDiagnosticAttribution, LoadDiagnostics, LootHistoryState, LootRollInfo,
+    LootSlot, LuaErrorRecord, MacroInfo, MapChildRect, MapData, MapRect, MirrorTimer,
+    MissingRequirement, MissingRequirementKind, MovementState, MythicPlusAffix,
+    MythicPlusRatingMapSummary, MythicPlusRatingSummary, MythicPlusRun, MythicPlusState,
+    MythicPlusWeeklyBest, NilSymbolAccess, NilSymbolEnvironment, NilSymbolObservation,
+    NilSymbolObservationKind, OwnedAuction, OwnedKeystone, PendingTimer, PlayerChoiceInfo,
+    PlayerChoiceOptionButtonInfo, PlayerChoiceOptionInfo, PlayerChoiceOptionRewardInfo,
+    PlayerChoiceRewardCurrencyInfo, PlayerChoiceRewardItemInfo, PlayerChoiceRewardReputationInfo,
+    PlayerChoiceState, PlayerState, PlayerXpState, PvpHonorState, SEEDED_LOCAL_CHARACTER_GUID,
+    SEEDED_LOCAL_CHARACTER_NAME, ScenarioState, ScenarioStep, SecondaryPowerState, SocialFriend,
+    SocialRestrictionsState, SummonRequestState, TokenAuctionInfo, WorldState, WowTokenState,
 };
 #[cfg(feature = "client-retail")]
 pub use super::state_types::{EffectiveAttackPower, PowerRegen, WeaponAttackPower};
@@ -963,15 +965,14 @@ pub use support_types::*;
 pub use super::sim_substates::{
     ArchaeologyArtifact, ArchaeologyRace, ArchaeologyState, ArrowCalloutInfo, ArrowCalloutState,
     ArtifactAppearanceInfo, ArtifactAppearanceSetInfo, ArtifactArtInfo, ArtifactPowerInfo,
-    BattlefieldQueue, BattlefieldStatus, CharacterServicesState, ChatChannel, ChatWindow, ColorRgb,
-    FactionEntry, GameClock, GameRuleValue, GameRulesState, GardenwealdState, GossipOption,
-    GossipQuestRow, GossipState, Keybindings, LfgListCounts, LootMethodState, MessageLogEntry,
-    MetaPowerEntry, ModifierKeys, MouseButtons, NetStats, PetBattlePet, PetBattleState, PetState,
-    QuestBounty, QuestLogEntry, QuestLogState, QuestRewardCurrency, QuestRewardItem,
-    QuestRewardSpell, RelicSlotInfo, SelectedArtifact, TorghastState, TradeState,
-    ViewedArtifactState, VoiceChannel, VoiceChatState, VoiceMember, WowLabsAreaInfo,
-    WowLabsCircleInfo, WowLabsDataManagerState, WowLabsMatchmakingState, WowLabsPartyInvite,
-    WowLabsPartyMember, WowLabsPoint, WowLabsState,
+    BattlefieldQueue, BattlefieldStatus, ChatChannel, ChatWindow, ColorRgb, FactionEntry,
+    GameClock, GameRuleValue, GameRulesState, GardenwealdState, GossipOption, GossipQuestRow,
+    GossipState, Keybindings, LfgListCounts, LootMethodState, MessageLogEntry, MetaPowerEntry,
+    ModifierKeys, MouseButtons, NetStats, PetBattlePet, PetBattleState, PetState, QuestBounty,
+    QuestLogEntry, QuestLogState, QuestRewardCurrency, QuestRewardItem, QuestRewardSpell,
+    RelicSlotInfo, SelectedArtifact, TorghastState, TradeState, ViewedArtifactState, VoiceChannel,
+    VoiceChatState, VoiceMember, WowLabsAreaInfo, WowLabsCircleInfo, WowLabsDataManagerState,
+    WowLabsMatchmakingState, WowLabsPartyInvite, WowLabsPartyMember, WowLabsPoint, WowLabsState,
 };
 
 #[derive(Default)]
