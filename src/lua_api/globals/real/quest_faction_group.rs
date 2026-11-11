@@ -1,6 +1,6 @@
 //! Game-global quest faction classification from supplied quest records.
 
-use crate::c_api::helpers::parse_numeric_string;
+use crate::c_api::parse_numeric_string;
 use crate::lua_api::WowLuaEnv;
 use crate::lua_api::methods::borrow_state;
 use crate::lua_bridge::stack_val;
