@@ -4,7 +4,8 @@
 
 Task [lt-a667](https://tasks.sakuin.org/tasks/lt-a667) covers the real Blizzard
 login UI on Retail 12.1.5.70575 and WoW Forever 1.60.1.70707. Implementation is
-pending the native contract requested in task comment 22. This document records
+pending the native contract requested in task comment 22 and routed as R40
+by the coordinator in comment 27. This document records
 the acceptance target and observed consumers, not an implemented login model.
 
 ## Simulator policy
@@ -54,3 +55,27 @@ Task comment 22 requests `C_Login.Login` argument validation and returns,
 successful state transitions, event ordering/payloads and dispatch timing for
 both pins, and how empty host-supplied data affects that path. Until answered,
 no new API implementation or event sequence is asserted here.
+
+## Preparation boundary
+
+Coordinator comment 27 permits non-native credential policy and host-supplied
+input preparation, but explicitly keeps native implementation blocked until R40
+is answered. Credential acceptance does not authorize publishing `C_Login.Login`
+with invented returns, argument validation, connection state, or events.
+
+The existing character-list bootstrap is temporary compatibility behavior:
+`src/lua_api/workarounds/temporary/glue_character_select_defaults.rs` publishes
+an empty group list and directly invokes selected character-list event handlers.
+It is not evidence for native event order or a suitable new authentication
+producer. Likewise, the empty Forever subregion/district catalogs in
+`forever_glue_display_defaults.rs` do not specify populated record schemas.
+New unused input types are deferred until their actual consumer contract is
+known; no speculative account/realm/character records are introduced.
+
+The five pre-existing Forever character-select/create failures are owned by the
+coordinator's `forever-int-clean` branch (lt-95ac comment 28). Rebase onto master
+when those fixes land; do not duplicate them in this task.
+
+Both new submission regressions have now reproduced the gap on both profiles:
+Retail reports missing `C_Login.Login` at `AccountLogin.lua:204`, Forever at
+`:213`. These are RED observations, not passing acceptance results.
