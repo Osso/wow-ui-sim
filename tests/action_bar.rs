@@ -38,8 +38,6 @@ const ACTION_BAR_ADDONS: &[&str] = &[
     "Blizzard_UIParentUtil",
     "Blizzard_EditMode",
     #[cfg(feature = "client-ptr")]
-    "Blizzard_MainMenuBarBagButtons",
-    #[cfg(feature = "client-ptr")]
     "Blizzard_StatusTrackingBar",
     "Blizzard_GarrisonBase",
     "Blizzard_GameTooltip",
@@ -58,6 +56,9 @@ const ACTION_BAR_ADDONS: &[&str] = &[
     "Blizzard_RaidWarning",
     "Blizzard_FrameXML",
     "Blizzard_UIPanels_Game",
+    // PTR bag button OnLoad needs container and item-button helpers above.
+    #[cfg(feature = "client-ptr")]
+    "Blizzard_MainMenuBarBagButtons",
     "Blizzard_MapCanvasSecureUtil",
     "Blizzard_MapCanvas",
     "Blizzard_SharedMapDataProviders",
