@@ -924,6 +924,8 @@ pub struct SimState {
     pub auction_should_auto_populate_price: bool,
     pub wow_token: WowTokenState,
     pub mythic_plus: MythicPlusState,
+    /// Current character-create model facing in normalized radians.
+    pub character_create_facing_radians: f32,
     /// Host-supplied facing in degrees, keyed by selected character-create race/sex IDs.
     pub character_create_default_facing_by_race_sex: HashMap<(i64, i64), f64>,
     /// Host-supplied superdistrict records, keyed by native ID.

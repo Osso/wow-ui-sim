@@ -531,10 +531,12 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
         // User-approved, not native evidence: record the character-create screen state.
         // User-approved default until character customization preview choices are modeled.
         lua.exec("function C_CharacterCreation.ClearPreviewChoices(clearSavedChoices) end")?;
-        // Stored facing round-trips as Blizzard_CharacterCreate's rotate code expects; it starts at the default.
-        lua.exec(
-            "local facing = 0; function C_CharacterCreation.GetCharacterCreateFacing() return facing end; function C_CharacterCreation.SetCharacterCreateFacing(value) facing = value end",
-        )?;
+        if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Ptr {
+            // Preserve this pre-existing PTR surface; native Set registration is unknown.
+            lua.exec(
+                "local facing = 0; function C_CharacterCreation.GetCharacterCreateFacing() return facing end; function C_CharacterCreation.SetCharacterCreateFacing(value) facing = value end",
+            )?;
+        }
         // Stored altered-form flag: CharacterCreateMixin:SetMode writes it (line 512) before
         // reading it (line 540), so the initial value is not observed on that path.
         lua.exec(

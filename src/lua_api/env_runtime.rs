@@ -171,6 +171,15 @@ impl WowLuaEnv {
         crate::c_api::c_character_services::update_screen_registration(self, screen_kind.is_glue());
         crate::c_api::c_login::update_screen_registration(self, screen_kind);
         crate::c_api::c_district_utils::update_screen_registration(self, screen_kind.is_glue());
+        #[cfg(any(
+            feature = "client-retail",
+            feature = "client-ptr",
+            feature = "client-wowforever"
+        ))]
+        crate::lua_api::globals::real::quest_faction_group::update_screen_registration(
+            self,
+            screen_kind.is_glue(),
+        );
     }
 
     /// Toggle whether the simulated player is logged into the world.

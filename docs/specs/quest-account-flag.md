@@ -1,6 +1,6 @@
 # Quest Account Flag
 
-`C_QuestLog.IsAccountQuest(questID)` reports the account-wide flag for a quest. The cached `Blizzard_FrameXMLUtil/Mainline/QuestUtils.lua` consumer uses it to build account-quest text.
+`C_QuestLog.IsAccountQuest(questID)` reports the account-wide flag for a quest. The cached `Blizzard_FrameXMLUtil/Mainline/QuestUtils.lua` consumer uses it to build account-quest text and calls [`GetQuestFactionGroup`](quest-faction-group.md) for faction-specific labels.
 
 ## What it must do
 
@@ -18,6 +18,7 @@ R27 native probe: Forever Game registration and the false/true result decisions 
 
 - [Addon loading pipeline](../addon-loading-pipeline.md)
 - [Quest reward item inputs](quest-log-reward-items.md)
+- [Quest faction group](quest-faction-group.md)
 
 ## Implementation inventory
 

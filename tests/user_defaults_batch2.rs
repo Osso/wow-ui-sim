@@ -114,7 +114,18 @@ fn forever_account_quest_argument_conversion_matches_native() {
 #[test]
 fn quest_faction_group_uses_native_argument_conversion() {
     let env = keybinding_panel_fixtures::setup_env();
-    let quest_id = env.state().borrow().quest_log_entries.entries[0].quest_id;
+    let quest_ids = {
+        let state = env.state();
+        let sim = state.borrow();
+        let entries = &sim.quest_log_entries.entries;
+        [
+            entries[0].quest_id,
+            entries[1].quest_id,
+            entries[2].quest_id,
+            entries[3].quest_id,
+        ]
+    };
+    let quest_id = quest_ids[0];
     env.exec(&format!(
         r##"
         local query = GetQuestFactionGroup
@@ -150,6 +161,52 @@ fn quest_faction_group_uses_native_argument_conversion() {
         "##
     ))
     .expect("GetQuestFactionGroup should match native conversion and errors");
+
+    {
+        let mut sim = env.state().borrow_mut();
+        for (entry, faction_mask) in
+            sim.quest_log_entries
+                .entries
+                .iter_mut()
+                .zip([Some(1), Some(2), Some(3), Some(0)])
+        {
+            entry.faction_mask = faction_mask;
+        }
+    }
+    env.exec(&format!(
+        r##"
+        local query = GetQuestFactionGroup
+        local allianceID = {alliance_id}
+        local hordeID = {horde_id}
+        local multipleFactionsID = {multiple_factions_id}
+        local unrestrictedID = {unrestricted_id}
+        assert(select("#", query(allianceID)) == 1 and query(allianceID) == 1)
+        assert(query(tostring(allianceID)) == 1)
+        assert(query(allianceID + 0.75) == 1)
+        assert(select("#", query(hordeID)) == 1 and query(hordeID) == 2)
+        assert(select("#", query(multipleFactionsID)) == 0)
+        assert(select("#", query(unrestrictedID)) == 0)
+        assert(select("#", query(allianceID + 1000000)) == 0)
+        "##,
+        alliance_id = quest_ids[0],
+        horde_id = quest_ids[1],
+        multiple_factions_id = quest_ids[2],
+        unrestricted_id = quest_ids[3],
+    ))
+    .expect("only single-faction quest records should return faction groups");
+
+    // Glue absence follows the no-Glue-installer inference; Game presence is native-verified.
+    env.set_screen_mode(wow_ui_sim::screen::ScreenKind::CharacterSelect);
+    let hidden_in_glue: bool = env
+        .eval("return GetQuestFactionGroup == nil")
+        .expect("Glue global visibility should be queryable");
+    assert!(hidden_in_glue);
+
+    env.set_screen_mode(wow_ui_sim::screen::ScreenKind::Game);
+    let restored_in_game: bool = env
+        .eval("return type(GetQuestFactionGroup) == 'function'")
+        .expect("Game global visibility should be queryable");
+    assert!(restored_in_game);
 }
 
 #[cfg(any(
@@ -161,12 +218,19 @@ fn quest_faction_group_uses_native_argument_conversion() {
 fn user_defaults_batch2_world_map_quest_consumer() {
     let env = keybinding_panel_fixtures::setup_env();
     let quest_id = env.state().borrow().quest_log_entries.entries[0].quest_id;
-    env.state().borrow_mut().quest_log_entries.entries[0].is_account_quest = Some(true);
+    {
+        let mut sim = env.state().borrow_mut();
+        let entry = &mut sim.quest_log_entries.entries[0];
+        entry.is_account_quest = Some(true);
+        entry.faction_mask = Some(1);
+    }
     env.send_key_press("M", None).expect("open world map");
     env.exec(&format!(
         r#"
         local source = debug.getinfo(QuestLogQuests_Update, 'S').source:gsub('\\', '/')
-        assert(type(QuestUtil.GetAccountQuestText({quest_id})) == 'string')
+        local accountQuestText = QuestUtil.GetAccountQuestText({quest_id})
+        assert(type(accountQuestText) == 'string')
+        assert(accountQuestText:find(FACTION_ALLIANCE, 1, true))
         assert(source:find('Mainline/QuestMapFrame.lua', 1, true))
         assert(type(QuestMapFrame:GetParent():GetMapID()) == 'number')
         QuestLogQuests_Update()
