@@ -7,8 +7,6 @@
 - [x] `GetLootSpecialization()` returns the stored simulator value; the initial value is 0.
 - [x] On Retail, `SetLootSpecialization` accepts a numeric argument, returns no values, raises `Usage: SetLootSpecialization(specializationID)` for a non-number, and does not reject an ID because it is absent from the local class catalog.
 - [x] On Retail, a setter call leaves the stored getter value unchanged and emits no `PLAYER_LOOT_SPEC_UPDATED` before or after the next OnUpdate tick.
-- [ ] Do not model Retail `HasLootSpecializations`; the ordinary `true` result is INFERRED, not VERIFIED.
-- [ ] Preserve existing non-Retail profile behavior; this answer does not establish their parity.
 
 ## How it works
 
@@ -28,8 +26,9 @@
 ## Known gaps (current cycle)
 
 - [ ] Retail request submission, send availability, rate limiting, server acceptance, and replicated update producer are not modeled.
-- [ ] `HasLootSpecializations` remains unavailable, so the original menu's `CanShow` path cannot be verified.
+- [ ] Retail `HasLootSpecializations` remains unavailable because the ordinary `true` result is INFERRED; the original menu's `CanShow` path cannot be verified.
 - [ ] Exact rate-limit reset semantics, request-send availability, and repeated-value response behavior remain unknown.
+- [ ] Non-Retail behavior remains the pre-existing simulator model; R44-Q3 does not establish its native parity.
 
 ## Out of scope
 
