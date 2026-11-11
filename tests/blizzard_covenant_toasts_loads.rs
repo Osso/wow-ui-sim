@@ -241,6 +241,38 @@ fn blizzard_covenant_toasts_renown_toast_mixin_methods_are_defined(env: &WowLuaE
 }
 
 prefork_full_ui_case! {
+fn retail_renown_tooltip_does_not_invent_the_path_of_ascension_reward(env: &WowLuaEnv) {
+    env.exec(
+        r#"
+        local source = debug.getinfo(CovenantRenownToastMixin.RefreshTooltip, 'S').source:gsub('\\', '/')
+        assert(source:find('Blizzard_CovenantToasts/Blizzard_CovenantRenownToast.lua', 1, true))
+        local rewardCalls = 0
+        RenownRewardUtil.GetRenownRewardInfo = function()
+            rewardCalls = rewardCalls + 1
+            return 1, 'Path of Ascension', 'unverified reward'
+        end
+        RENOWN_REWARD_MILESTONE_TOOLTIP_TITLE = 'Milestone %d'
+        local title
+        GameTooltip = GameTooltip or {}
+        GameTooltip.GetOwner = function() return CovenantRenownToast.RewardIconMouseOver end
+        GameTooltip.Show = function() end
+        GameTooltip_SetTitle = function(_, value) title = value end
+        GameTooltip_AddNormalLine = function() end
+        local toast = {
+            bannerData = { covenantID = 1, renownLevel = 5 },
+            isCapstone = false,
+            RewardIconMouseOver = {},
+        }
+        CovenantRenownToastMixin.RefreshTooltip(toast)
+        assert(rewardCalls == 0, 'zero accepted rows do not create a reward tooltip')
+        assert(title == 'Milestone 5', 'zero accepted rows use the milestone title')
+        "#,
+    )
+    .expect("Retail toast consumes the empty no-data reward list");
+}
+}
+
+prefork_full_ui_case! {
 fn blizzard_covenant_toasts_namespace_helper_is_defined(env: &WowLuaEnv) {
 
     let helper_present: bool = env

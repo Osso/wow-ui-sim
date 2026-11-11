@@ -4,8 +4,9 @@ fn env() -> WowLuaEnv {
     WowLuaEnv::new().expect("Failed to create Lua environment")
 }
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn covenant_sanctum_defaults_return_empty_state_and_one_known_reward() {
+fn non_retail_covenant_sanctum_scenario_keeps_previous_reward() {
     let env = env();
     let result: String = env
         .eval(
