@@ -131,9 +131,81 @@ fn retail_empty_url_emits_failure_before_launch_returns() {
     );
 }
 
-#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[cfg(feature = "client-retail")]
 #[test]
-fn declared_is_new_projects_host_newness() {
+fn retail_original_game_menu_uses_saved_url_for_badge_and_ignores_empty_url() {
+    let env = load_game_menu();
+    env.state().borrow_mut().external_event_url =
+        supplied("https://example.invalid/promotion", false, false);
+    env.state().borrow_mut().last_launched_url = Some("https://example.invalid/previous".into());
+    env.exec(
+        r#"
+        local source = debug.getinfo(GameMenuFrameMixin.InitButtons, 'S').source:gsub('\\', '/')
+        assert(source:find('Shared/GameMenuFrame.lua', 1, true), 'selected original game-menu consumer')
+        Kiosk = { IsEnabled = function() return false end }
+        CurrentVersionHasNewUnseenSettings = function() return false end
+        C_StorePublic = { IsEnabled = function() return false end }
+        C_CatalogShop = { IsShop2Enabled = function() return false end }
+        GameRulesUtil = {
+            GetActiveAccountStore = function() end,
+            ShouldShowAddOns = function() return false end,
+            ShouldShowSplashScreen = function() return false end,
+        }
+        C_GameRules = { IsGameRuleActive = function() return false end }
+        Enum = Enum or {}
+        Enum.GameRule = Enum.GameRule or { MacrosDisabled = 0 }
+        EditModeManagerFrame = { CanEnterEditMode = function() return false end }
+        StaticPopup_Visible = function() return false end
+        GenerateFlatClosure = function(callback) return callback end
+        SettingsPanel = { Open = function() end }
+        SOUNDKIT = SOUNDKIT or {}
+        function buildMenu()
+            local badge = {
+                shown = false,
+                Hide = function(self) self.shown = false end,
+                SetPoint = function() end,
+                Show = function(self) self.shown = true end,
+            }
+            local externalButtons = 0
+            local panel = {
+                NewExternalEventFrame = badge,
+                NewOptionsFrame = { Hide = function() end },
+                Reset = function() end,
+                AddSection = function() end,
+                AddCloseButton = function() end,
+                GetRatingsButtonShown = function() return false end,
+                GetLogoutText = function() return 'Logout' end,
+                AddButton = function(_, label)
+                    if label == GAMEMENU_EXTERNALEVENT then externalButtons = externalButtons + 1 end
+                    return { GetFontString = function() return {} end }
+                end,
+            }
+            GameMenuFrameMixin.InitButtons(panel)
+            return badge.shown, externalButtons
+        end
+        local shown, count = buildMenu()
+        assert(shown and count == 1, 'different saved URL shows one new-event badge')
+        "#,
+    )
+    .expect("Retail original game menu compares the current and saved URLs");
+
+    env.state().borrow_mut().last_launched_url = Some("https://example.invalid/promotion".into());
+    env.state().borrow_mut().external_event_url.is_new = true;
+    env.exec(
+        "local shown, count = buildMenu(); assert(not shown and count == 1, 'matching saved URL hides the badge')",
+    )
+    .expect("Retail badge follows URL equality, not a host newness flag");
+
+    env.state().borrow_mut().external_event_url.url = Some(String::new());
+    env.exec(
+        "assert(not C_ExternalEventURL.HasURL()); local shown, count = buildMenu(); assert(not shown and count == 0, 'empty URL omits the event button')",
+    )
+    .expect("Retail does not treat an empty URL as a promotion");
+}
+
+#[cfg(feature = "client-ptr")]
+#[test]
+fn ptr_declared_is_new_projects_host_newness() {
     let env = load_game_menu();
     for is_new in [true, false] {
         env.state().borrow_mut().external_event_url =
