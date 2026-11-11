@@ -22,7 +22,8 @@
 
 ## Tests asserting this spec
 
-- `tests/guid_is_player.rs` — permissive inputs and the unmodified PlayerLocation consumer.
+- `tests/account_guid.rs` — direct account GUID behavior for Retail, PTR and Forever.
+- `tests/guid_is_player.rs` — Retail/PTR-only account predicate calls from the unmodified PlayerLocation consumer. Forever consumer behavior remains unverified until R39.1.
 
 ## Known gaps (current cycle)
 

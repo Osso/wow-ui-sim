@@ -215,11 +215,7 @@ fn load_full_game_ui() -> WowLuaEnv {
     env
 }
 
-#[cfg(any(
-    feature = "client-retail",
-    feature = "client-ptr",
-    feature = "client-wowforever"
-))]
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 #[test]
 fn profession_recipe_source_button_displays_supplied_tooltip_text() {
     let env = load_full_game_ui();

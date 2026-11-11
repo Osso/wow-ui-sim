@@ -21,8 +21,12 @@ Argument error and secrecy behavior are not native-verified by this contract.
 
 ## Tests asserting this spec
 
-- `tests/recipe_source_text.rs` — supplied records, missing records and removal.
-- `tests/blizzard_professions_templates_loads.rs` — original recipe form and tooltip consume supplied text.
+- `tests/recipe_source_text.rs` — supplied records, missing records and removal, including Forever.
+- `tests/blizzard_professions_templates_loads.rs` — Retail/PTR original recipe form and tooltip consumer.
+
+## Known gaps (current cycle)
+
+- [ ] The Forever original-professions consumer test remains Retail/PTR-only until R39.2 establishes the Forever `ReagentsFromBankAllowed` behavior. The Forever recipe-source query remains covered by its direct supplied-state test.
 
 ## Out of scope
 

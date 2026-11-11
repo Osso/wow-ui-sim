@@ -90,6 +90,8 @@ refer to the shared C_GameRules rule store.
 
 ## Known gaps (current cycle)
 
+- [ ] Forever 1.60.1.70707 declares `ReagentsFromBankAllowed` and calls it from `ItemUtil.lua:315`, but behavior is UNKNOWN pending R39.2. Keep the PTR-only model and consumer behavior out of Forever.
+
 The original rule-enabled OnEnter boundary is closed by the separate
 [WM93 counted channel](ptr-action-combat-range-check.md), not by a callback stub
 or a changed assertion. Current profile proof belongs to that follow-up contract.

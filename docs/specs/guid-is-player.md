@@ -26,10 +26,13 @@ Current Retail/PTR `C_PlayerInfo.GUIDIsPlayer` must project explicit local, acti
 
 ## Tests asserting this spec
 
-`tests/guid_is_player.rs`: local/misses, target/focus replacement, kind/removal, party lifecycle, environment isolation, strict type, authentic secret boundary and two original ObjectAPI consumer cases. Initial Retail RED at `76f405e1d`:0/9 PASS, exit101, eight missing raw-provider guards and one original whole-consumer exact-true mismatch. Ordinary closure/provenance reached; downstream query/security/account diagnostics unreached. Compile/fmt0 and source unchanged independently verified. At `d6d8de29a`, independent2929 confirms Retail9/9 and PTR9/9 PASS, two normal raw-query/startup markers with `[]`, fmt0/readability clean and four newly authenticated seals. Original whole consumer accepts represented players as true; NPC/unknown direct query is false while unchanged account operand and miss consumer return nil. Account provenance is Lua `=(string)`, not a modeled/native account classifier. Invalid UTF-8 byte rejection is source-inspected, not a separately executed regression.
+`tests/guid_is_player.rs` (Retail/PTR only): local/misses, target/focus replacement, kind/removal, party lifecycle, environment isolation, strict type, authentic secret boundary and two original ObjectAPI consumer cases. Initial Retail RED at `76f405e1d`:0/9 PASS, exit101, eight missing raw-provider guards and one original whole-consumer exact-true mismatch. Ordinary closure/provenance reached; downstream query/security/account diagnostics unreached. Compile/fmt0 and source unchanged independently verified. At `d6d8de29a`, independent2929 confirms Retail9/9 and PTR9/9 PASS, two normal raw-query/startup markers with `[]`, fmt0/readability clean and four newly authenticated seals. Original whole consumer accepts represented players as true; NPC/unknown direct query is false while unchanged account operand and miss consumer return nil. Account provenance is Lua `=(string)`, not a modeled/native account classifier. Invalid UTF-8 byte rejection is source-inspected, not a separately executed regression.
+
+Forever account GUID behavior uses the separate `tests/account_guid.rs`; it does not enable the UNKNOWN Forever `GUIDIsPlayer` behavior.
 
 ## Known gaps (current cycle)
 
+- [ ] Forever 1.60.1.70707 declares `C_PlayerInfo.GUIDIsPlayer` and its original consumer calls it, but its behavior is UNKNOWN pending R39.1. Do not register the Retail/PTR model or run GUID-dependent Forever tests before native evidence.
 - [x] Genuine RED observed before producer; assertions unreached after missing-provider guards receive no behavioral credit.
 - [x] Implement and verify Retail/PTR direct/consumer/startup checks, preserve diagnostics and account predicate provenance.
 - [x] Fresh default library check, owning strict publication and current-validator gates: main-verified `d7a34be4a` check exit0, `a555f927a` strict case PASS and `d21ca3f64` validator retry9/9 plus actual validator exit0. [Current packet](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/guid-is-player-current-2026-10-12/README.md) owns detailed evidence; independent2939 retention/link/privacy PASS at19988.
@@ -39,6 +42,10 @@ Current Retail/PTR `C_PlayerInfo.GUIDIsPlayer` must project explicit local, acti
 - [ ] GUI authenticated-user review, native/other-profile acceptance, credits and Pi provenance remain OPEN; no successful body-timing, cache-content, historical-equivalence or causal claim.
 
 Initial publication1FAIL/exit1 and wrong101 worker guard, publication-before fixture-race/coherenceFAIL, and earlier validator8/9FAIL with standalone NOT RUN remain historical. Retry does not relabel them. Native, earlier-profile, external and whole-handoff acceptance remain OPEN.
+
+## Known gaps (current cycle)
+
+- [ ] Forever `C_PlayerInfo.GUIDIsPlayer` behavior is UNKNOWN pending R39.1. Do not register the Retail/PTR model or run GUID-dependent Forever tests until that evidence is available. The independent Forever account-GUID tests remain enabled.
 
 ## Out of scope
 
