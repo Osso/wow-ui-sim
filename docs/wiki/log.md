@@ -1,3 +1,7 @@
+## [2026-11-11] investigation | Lua rectangle-query validity
+
+VERIFIED (R48): geometry validity follows anchor targets, not containment ancestry. VERIFIED (simulator commit): the Lua-only implementation is in `f255ed881`; `IsRectValid` remains unchanged. VERIFIED (work status): runtime profile and PTR full-suite proof remain pending.
+
 ## [2026-11-11] implementation | PTR/Retail Store API availability
 
 Added the separate server-mirror model, API queries, event routing, and focused tests from R38. VERIFIED: Retail GameMenu uses OR and PTR uses AND; GameMenu tests pass 13/13 on both, Store API/StorePublic/CatalogShop structure tests pass on both, and Retail full-UI CatalogShop tests pass 4/4. INFERRED: defaults (false, true) show the Retail button and hide the PTR button. The [contract](../specs/store-api-availability.md) and [implementation notes](systems/store-api-availability.md) preserve UNKNOWN behavior.

@@ -1,5 +1,9 @@
 > Proof receipts live untracked under `~/.local/state/wow-ui-sim`. The `data/patch-api/evidence` and `data/test-perf/evidence` trees were removed on 2026-11-08; historical links below are records, not live paths. Recover a file with `git show c011c1d95:<path>`.
 
+## [2026-11-11] investigation | Lua rectangle-query validity
+
+[Lua rectangle-query validity](investigations/rect-query-validity.md) records VERIFIED R48 anchor-target behavior, the VERIFIED simulator fix in `f255ed881`, the unchanged `IsRectValid` follow-up, and pending profile/full-suite proof.
+
 ## [2026-11-11] system | PTR/Retail store API availability
 
 [Store API availability](systems/store-api-availability.md) links the R38 evidence boundary to its [contract](../specs/store-api-availability.md). VERIFIED: PTR/Retail GameMenu tests pass 13/13 each; Store API, StorePublic and CatalogShop structure tests pass on both; Retail CatalogShop UI passes 4/4. INFERRED: defaults (false, true) hide the PTR button and show the Retail button.
