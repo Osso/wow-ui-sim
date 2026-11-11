@@ -228,6 +228,7 @@ fn forever_bank_panel_onload_uses_player_bag_capability() {
         assert(panel.bankTabPool == nil, 'true capability must omit the bank-tab pool')
         assert(panel.itemButtonPool ~= nil, 'the normal item-button pool must still be created')
         assert(#createdPools == 1 and createdPools[1] == 'ItemButton', 'OnLoad must skip only the bank-tab pool')
+        assert(C_Bank.ShouldUsePlayerBagsInBank() == true, 'Forever capability is true')
         "#,
     )
     .expect("original bank panel uses the native Forever capability byte");
