@@ -1,4 +1,4 @@
-# product=wowf; build=1.60.1.70888; simulator_pin=1.60.1.70707; 70707 values are UNKNOWN; these rows are from installed build 70888.
+# VERIFIED: product=wowf; build=1.60.1.70888; simulator_pin=1.60.1.70707; 70707 values are UNKNOWN; these rows are from installed build 70888.
 ID,SelectScreenFileDataID
 1,0
 2,0

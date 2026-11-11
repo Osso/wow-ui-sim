@@ -1,4 +1,4 @@
-# product=wow; build=12.1.5.70783; simulator_pin=12.1.5.70575; Installed 70783 data is not a 70575 export.
+# VERIFIED: product=wow; build=12.1.5.70783; simulator_pin=12.1.5.70575; Installed 70783 data is not a 70575 export.
 ID,SelectScreenFileDataID,LowResScreenFileDataID
 1,131948,651555
 2,132003,651558

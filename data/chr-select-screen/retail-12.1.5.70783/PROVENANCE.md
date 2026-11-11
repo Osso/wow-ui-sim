@@ -3,7 +3,7 @@
 Source product: `wow`; installed build: `12.1.5.70783`; build key: `bc493ecb2898766c0f8947a99b4b3d65`.
 Simulator pin: `12.1.5.70575`. Installed 70783 data is not a 70575 export.
 WoWDBDefs revision: `d6f50d4f351193e84226aa62a36faa0f58528afa`.
-All DB2 files were extracted from the local CASC install. No CDN data was used.
+**VERIFIED:** The DB2 files were extracted from the local CASC install and exported with the recorded layouts and schema hashes; no CDN data was used.
 
 | Table | FileDataID | Layout | DB2 SHA-256 | DBD SHA-256 | Rows | Unreadable |
 |---|---:|---|---|---|---:|---:|

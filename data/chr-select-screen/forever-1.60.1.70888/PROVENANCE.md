@@ -3,7 +3,7 @@
 Source product: `wowf`; installed build: `1.60.1.70888`; build key: `0597e74b01a3f779d849ffe9b3270196`.
 Simulator pin: `1.60.1.70707`. 70707 values are UNKNOWN; these rows are from installed build 70888.
 WoWDBDefs revision: `d6f50d4f351193e84226aa62a36faa0f58528afa`.
-All DB2 files were extracted from the local CASC install. No CDN data was used.
+**VERIFIED:** The DB2 files were extracted from the local CASC install and exported with the recorded layouts and schema hashes; no CDN data was used.
 
 | Table | FileDataID | Layout | DB2 SHA-256 | DBD SHA-256 | Rows | Unreadable |
 |---|---:|---|---|---|---:|---:|
