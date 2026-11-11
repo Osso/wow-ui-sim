@@ -106,6 +106,7 @@ fn glue_display_uses_shared_cvar_rows_override_and_clear_callback() {
     assert!(env.state().borrow().lua_errors.is_empty());
 }
 
+#[cfg(any(feature = "client-ptr", feature = "client-wowforever"))]
 #[test]
 fn glue_display_original_backdrop_consumer_tracks_host_flag() {
     let env = common::lock_env(|| WowLuaEnv::new().unwrap());
