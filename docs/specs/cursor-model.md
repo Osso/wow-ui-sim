@@ -75,7 +75,7 @@ Swapping an owned item with a bag or equipment slot places the displaced item th
 
 ### Predicates and projections
 
-- `CursorHasItem()` is true only for mode 1, so merchant and ActionBar cursors fail it. `CursorHasMoney()` tests mode 2, `CursorHasSpell()` mode 3 and `CursorHasMacro()` mode 7. VERIFIED (WM46).
+- `CursorHasItem()` is true only for mode 1, so merchant and ActionBar cursors fail it. `CursorHasMoney()` tests mode 2, `CursorHasSpell()` mode 3 and `CursorHasMacro()` mode 7. VERIFIED (WM46; Retail 12.1.5.70688). R37 does not specify the PTR merchant result.
 - `GetCursorInfo()` returns these tuples. VERIFIED (WM46) unless marked.
 
   | Mode | Values |
@@ -128,6 +128,7 @@ Swapping an owned item with a bag or equipment slot places the displaced item th
 - R37's shared merchant-cursor setter gate is UNKNOWN and is not modeled.
 ### R37 unknown paths
 
+- UNKNOWN (R37; PTR 12.1.7.70668): `CursorHasItem()` on a merchant cursor is not specified and is not asserted.
 - INFERRED (R37; PTR 12.1.7.70668): when the cursor already holds an owned item, the wrapper takes a separate route that is probably a sale. UNKNOWN (R37): its transaction, final cursor state and events are not established. The simulator's existing behavior is unchanged; no native-parity assertion is added.
 - UNKNOWN (R37; PTR 12.1.7.70668): the same-item guard's final cursor state and events are not established. The simulator's existing behavior is unchanged; no native-parity assertion is added.
 
