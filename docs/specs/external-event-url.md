@@ -19,9 +19,10 @@ returned `false`/`false`/no-op from Lua for the same five profiles.
 - `IsNew()` returns exactly one non-nil boolean from the supplied newness flag.
   Consumers use it only after `HasURL()`, so a newness flag without a URL has no
   consumer-visible effect.
-- `LaunchURL()` returns no values. With a supplied URL it records that URL in
-  `SimState.last_launched_url`, the same simulator modeling as the `LaunchURL`
-  global; without one it records nothing. No browser opens.
+- `LaunchURL()` returns no values. With a supplied URL, the simulator records
+  it in `SimState.last_launched_url`; it does not open a browser. On Retail only,
+  an empty URL logs `No external event URL to launch.` and emits
+  `EXTERNAL_EVENT_LAUNCH_URL_FAILED` synchronously with no payload.
 - PTR `CanShow()` returns exactly one non-nil boolean from the supplied
   visibility flag. The other four profiles do not register it because their
   pins do not declare it.
@@ -43,14 +44,15 @@ returned `false`/`false`/no-op from Lua for the same five profiles.
 
 ## Known gaps
 
-- Native writers, native initial values and launch success or failure are
-  unknown. `EXTERNAL_EVENT_LAUNCH_URL_FAILED` (Retail) and
-  `EXTERNAL_EVENT_LAUNCH_URL_RESULT` (PTR) are not emitted.
+- Native URL writers, initial values, nonempty launch success, and PTR
+  `EXTERNAL_EVENT_LAUNCH_URL_RESULT` behavior are unknown. The verified Retail
+  empty-URL failure path is modeled.
 - URL validation, persistence and the relation between `CanShow` and `HasURL`
   are not modeled; both are independent host inputs.
 
 ## Tests asserting this spec
 
 - `tests/external_event_url.rs` — the GameMenu click consumer launches only a
-  supplied URL, `IsNew` follows the supplied flag, and the PTR minimap consumer
+  supplied URL, the Retail empty-URL failure reaches the original popup handler
+  synchronously, `IsNew` follows the supplied flag, and the PTR minimap consumer
   hides or shows the promotion from `can_show`.

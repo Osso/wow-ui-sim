@@ -97,6 +97,40 @@ fn modern_game_menu_click_launches_only_a_supplied_event_url() {
     );
 }
 
+#[cfg(feature = "client-retail")]
+#[test]
+fn retail_empty_url_emits_failure_before_launch_returns() {
+    let env = load_game_menu();
+    env.exec(
+        r#"
+        local handler = GameMenuFrameMixin.OnExternalEventLaunchUrlFailed
+        local source = debug.getinfo(handler, 'S').source:gsub('\\', '/')
+        assert(source:find('Shared/GameMenuFrame.lua', 1, true))
+        local failures = 0
+        local listener = CreateFrame('Frame')
+        listener:RegisterEvent('EXTERNAL_EVENT_LAUNCH_URL_FAILED')
+        listener:SetScript('OnEvent', function(_, _, ...)
+            assert(select('#', ...) == 0)
+            failures = failures + 1
+        end)
+        local result = { n = select('#', C_ExternalEventURL.LaunchURL()) }
+        assert(result.n == 0 and failures == 1, 'failure event is synchronous and has no payload')
+        local popup
+        StaticPopup_Show = function(name) popup = name end
+        handler(GameMenuFrameMixin)
+        assert(popup == 'GAMEMENU_EXTERNALEVENT_FAILURE', 'original consumer presents the failure')
+        "#,
+    )
+    .expect("Retail empty URL follows the native failure path");
+    assert!(
+        env.state()
+            .borrow()
+            .console_output
+            .iter()
+            .any(|line| line == "No external event URL to launch.")
+    );
+}
+
 #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 #[test]
 fn declared_is_new_projects_host_newness() {
@@ -111,7 +145,11 @@ fn declared_is_new_projects_host_newness() {
     }
 }
 
-#[cfg(any(feature = "client-mists", feature = "client-era", feature = "client-anniversary"))]
+#[cfg(any(
+    feature = "client-mists",
+    feature = "client-era",
+    feature = "client-anniversary"
+))]
 fn load_full_game_ui() -> WowLuaEnv {
     use wow_ui_sim::loader::{discover_blizzard_addons_for_screen, load_addon};
     use wow_ui_sim::startup::settle_headless_startup;
@@ -134,7 +172,11 @@ fn load_full_game_ui() -> WowLuaEnv {
 /// Mists, Era and Anniversary call `C_ExternalEventURL` from the local callback
 /// built inside `GameMenuFrameMixin:InitButtons`, so the original game menu is
 /// the consumer.
-#[cfg(any(feature = "client-mists", feature = "client-era", feature = "client-anniversary"))]
+#[cfg(any(
+    feature = "client-mists",
+    feature = "client-era",
+    feature = "client-anniversary"
+))]
 #[test]
 fn classic_game_menu_builds_the_external_event_button_from_host_state() {
     let env = load_full_game_ui();
@@ -251,10 +293,7 @@ fn ptr_minimap_button_projects_visibility_and_newness() {
     )
     .expect("original minimap refresh hides a promotion the host does not show");
 
-    env.state()
-        .borrow_mut()
-        .external_event_url
-        .can_show = true;
+    env.state().borrow_mut().external_event_url.can_show = true;
     env.exec(
         r#"
         local button = {shown=nil, effect=nil,
