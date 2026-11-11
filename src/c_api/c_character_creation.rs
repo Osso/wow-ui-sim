@@ -24,10 +24,9 @@ pub(crate) fn update_screen_registration(env: &WowLuaEnv, is_glue: bool) {
 }
 
 fn update_registration(state: &mut LuaState, is_glue: bool) -> LuaResult<()> {
-    let namespace = LuaApiMut::get_global_val(state, "C_CharacterCreation");
-    let namespace = match namespace {
-        namespace @ Val::Table(_) => namespace,
-        _ if is_glue => Val::Table(ensure_namespace(state, "C_CharacterCreation")?),
+    let namespace = match LuaApiMut::get_global_val(state, "C_CharacterCreation") {
+        Val::Table(namespace) => namespace,
+        _ if is_glue => ensure_namespace(state, "C_CharacterCreation")?,
         _ => return Ok(()),
     };
 
@@ -39,7 +38,12 @@ fn update_registration(state: &mut LuaState, is_glue: bool) -> LuaResult<()> {
             set_in_character_create,
         )
     } else {
-        table_set_static(state, namespace, "SetInCharacterCreate", Val::Nil);
+        table_set_static(
+            state,
+            Val::Table(namespace),
+            "SetInCharacterCreate",
+            Val::Nil,
+        );
         Ok(())
     }
 }
