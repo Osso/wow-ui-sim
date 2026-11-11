@@ -95,36 +95,52 @@ fn get_super_district_info(state: &mut LuaState) -> LuaResult<u32> {
 fn push_super_district_info(state: &mut LuaState, info: &SuperDistrictInfo) {
     let result = create_table(state);
     state.push(result);
+    set_super_district_identity_fields(state, result, info);
+    set_super_district_access_fields(state, result, info);
+    set_super_district_background_fields(state, result, info);
+}
+
+fn set_super_district_identity_fields(state: &mut LuaState, table: Val, info: &SuperDistrictInfo) {
     table_set(
         state,
-        result,
+        table,
         "superDistrictID",
         Val::Num(f64::from(info.super_district_id)),
     );
-    set_string_field(state, result, "displayName", &info.display_name);
-    set_string_field(state, result, "description", &info.description);
+    set_string_field(state, table, "displayName", &info.display_name);
+    set_string_field(state, table, "description", &info.description);
     table_set(
         state,
-        result,
+        table,
         "iconFileDataID",
         Val::Num(f64::from(info.icon_file_data_id)),
     );
+}
+
+fn set_super_district_access_fields(state: &mut LuaState, table: Val, info: &SuperDistrictInfo) {
     table_set(
         state,
-        result,
+        table,
         "disallowLogin",
         Val::Bool(info.disallow_login),
     );
     table_set(
         state,
-        result,
+        table,
         "noRealmsAvailable",
         Val::Bool(info.no_realms_available),
     );
-    set_string_field(state, result, "overrideBgAtlas", &info.override_bg_atlas);
+}
+
+fn set_super_district_background_fields(
+    state: &mut LuaState,
+    table: Val,
+    info: &SuperDistrictInfo,
+) {
+    set_string_field(state, table, "overrideBgAtlas", &info.override_bg_atlas);
     set_string_field(
         state,
-        result,
+        table,
         "overrideBgGlowAtlas",
         &info.override_bg_glow_atlas,
     );
