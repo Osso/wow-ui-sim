@@ -185,6 +185,118 @@ fn character_create_mode_is_glue_only_and_uses_lua_truthiness() {
 }
 
 #[test]
+#[cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
+fn character_create_default_facing_uses_host_race_sex_data_in_blizzard_consumer() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::CharacterCreate);
+        let (return_count, missing_facing): (i32, f64) = env
+            .eval(
+                "return select('#', C_CharacterCreation.GetDefaultCharacterCreateFacing()), C_CharacterCreation.GetDefaultCharacterCreateFacing()",
+            )
+            .expect("GetDefaultCharacterCreateFacing should return one number");
+        assert_eq!(return_count, 1);
+        assert_eq!(missing_facing, 0.0);
+
+        env.exec(
+            "C_CharacterCreation.SetSelectedRace(2); C_CharacterCreation.SetSelectedSex(1)",
+        )
+        .expect("select a character-create race and sex");
+        let selection: (i64, i64) = env
+            .eval(
+                "return C_CharacterCreation.GetSelectedRace(), C_CharacterCreation.GetSelectedSex()",
+            )
+            .expect("selected race and sex should be queryable");
+        env.state()
+            .borrow_mut()
+            .character_create_default_facing_by_race_sex
+            .insert(selection, 137.5);
+
+        let (facing, duration): (Option<f64>, Option<f64>) = env
+            .eval(
+                r#"
+                local original = CharacterCreateFrame.RotateSubjectToTarget
+                local facing, duration
+                CharacterCreateFrame.RotateSubjectToTarget = function(_, target, seconds)
+                    facing, duration = target, seconds
+                end
+                CharacterCreateFrame:ResetSubjectRotation(nil, true)
+                CharacterCreateFrame.RotateSubjectToTarget = original
+                return facing, duration
+                "#,
+            )
+            .expect("the Blizzard character-create consumer should use the host facing");
+        assert_eq!(facing, Some(137.5));
+        assert_eq!(duration, Some(0.0));
+
+        env.set_screen_mode(ScreenKind::Game);
+        let game_member: bool = env
+            .eval("return C_CharacterCreation.GetDefaultCharacterCreateFacing == nil")
+            .expect("Game surface visibility should be queryable");
+        assert!(game_member, "default facing is Glue-only");
+    }
+}
+
+#[test]
+#[cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
+fn queued_upgrade_presence_drives_blizzard_character_select_consumer() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+        let (is_queued, return_count): (bool, i32) = env
+            .eval(
+                "return C_CharacterServices.HasQueuedUpgrade(), select('#', C_CharacterServices.HasQueuedUpgrade())",
+            )
+            .expect("HasQueuedUpgrade should return one boolean");
+        assert!(!is_queued);
+        assert_eq!(return_count, 1);
+
+        env.state()
+            .borrow_mut()
+            .character_services
+            .queued_upgrade_guid_is_set = true;
+        let is_queued: bool = env
+            .eval("return C_CharacterServices.HasQueuedUpgrade()")
+            .expect("host-supplied queued-upgrade state should be visible");
+        assert!(is_queued);
+
+        let refreshed: bool = env
+            .eval(
+                r#"
+                local oldRefresh = CharacterServicesMaster_OnCharacterListUpdate
+                local oldWaiting = StoreFrame_WaitingForCharacterListUpdate
+                local oldPopupCheck = StaticPopup_CheckQueuedDialogs
+                local refreshCount = 0
+                CharacterServicesMaster_OnCharacterListUpdate = function()
+                    refreshCount = refreshCount + 1
+                end
+                StoreFrame_WaitingForCharacterListUpdate = function() return false end
+                StaticPopup_CheckQueuedDialogs = function() end
+                CharacterSelectFrameMixin.OnUpdate(CharacterSelect, 0)
+                CharacterServicesMaster_OnCharacterListUpdate = oldRefresh
+                StoreFrame_WaitingForCharacterListUpdate = oldWaiting
+                StaticPopup_CheckQueuedDialogs = oldPopupCheck
+                return refreshCount == 1
+                "#,
+            )
+            .expect("the Blizzard character-select update should observe queued upgrades");
+        assert!(refreshed);
+
+        env.set_screen_mode(ScreenKind::Game);
+        let game_member: bool = env
+            .eval("return C_CharacterServices.HasQueuedUpgrade == nil")
+            .expect("Game surface visibility should be queryable");
+        assert!(game_member, "queued-upgrade presence is Glue-only");
+    }
+}
+
+#[test]
 fn character_select_screen_shows_character_select_not_login() {
     test_timeout! {
         let env = load_blizzard_screen(ScreenKind::CharacterSelect);

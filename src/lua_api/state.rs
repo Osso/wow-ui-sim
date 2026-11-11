@@ -757,6 +757,7 @@ macro_rules! build_empty_sim_state {
             auction_should_auto_populate_price: true,
             wow_token: WowTokenState::default(),
             mythic_plus: MythicPlusState::default(),
+            character_create_default_facing_by_race_sex: ::std::collections::HashMap::new(),
             character_services: CharacterServicesState::default(),
             scenario: ScenarioState::default(),
             death_recaps: Vec::new(),
