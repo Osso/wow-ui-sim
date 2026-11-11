@@ -88,10 +88,10 @@ fn pickup_merchant_item_truncates_fractional_index_and_errors_on_overflow() {
         assert(kind == 'merchant' and merchantIndex == 1)
 
         ClearCursor()
-        for _, overflow in ipairs({2147483648, -2147483649}) do
-            local ok, err = pcall(PickupMerchantItem, overflow)
-            assert(not ok and err:find('integer overflow attempting to store', 1, true), tostring(err))
-        end
+        local ok, err = pcall(PickupMerchantItem, 2147483648)
+        assert(not ok and err == 'integer overflow attempting to store 2147483648.000000', tostring(err))
+        ok, err = pcall(PickupMerchantItem, -2147483649)
+        assert(not ok and err == 'integer overflow attempting to store -2147483649.000000', tostring(err))
         "#,
     )
     .unwrap();
