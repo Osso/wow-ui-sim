@@ -126,6 +126,7 @@ Swapping an owned item with a bag or equipment slot places the displaced item th
 - Macro 7 projects the picked-up index. Native matches a macro handle and follows the macro when slots move; the simulator has no handles.
 - Modes 8, 10–20 and their projections, guild-bank pickups, and the money storage read by `GetCursorMoney` are not modeled here.
 - R37's shared merchant-cursor setter gate is UNKNOWN and is not modeled.
+
 ### R37 unknown paths
 
 - UNKNOWN (R37; PTR 12.1.7.70668): `CursorHasItem()` on a merchant cursor is not specified and is not asserted.
