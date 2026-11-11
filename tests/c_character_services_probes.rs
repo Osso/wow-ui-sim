@@ -10,13 +10,13 @@ fn env() -> WowLuaEnv {
 
 fn queued_upgrade_result(env: &WowLuaEnv) -> (bool, i32) {
     env.eval(
-        r#"
+        r##"
         local function pack(...)
             return { count = select("#", ...), ... }
         end
         local result = pack(C_CharacterServices.HasQueuedUpgrade())
         return result[1], result.count
-        "#,
+        "##,
     )
     .expect("queued-upgrade result is readable")
 }
