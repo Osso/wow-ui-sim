@@ -1,6 +1,6 @@
 # PvP talent tooltip
 
-VERIFIED: Retail `C_TooltipInfo.GetPvpTalent` uses the PvP talent row to build spell content and then adds conditional talent annotations. See the [tooltip-data system](../wiki/systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) for shared tooltip construction.
+VERIFIED: Retail `C_TooltipInfo.GetPvpTalent` uses the PvP talent row to build spell content and then adds conditional talent annotations. The cached Retail API declaration is at `Blizzard_APIDocumentationGenerated/TooltipInfoDocumentation.lua:726-743`; the `SetPvpTalent` mapping is at `Blizzard_SharedXMLGame/Tooltip/TooltipDataHandler.lua:567`, and a consumer call is at `Blizzard_PlayerSpells/PvPTalents/Blizzard_PvPTalentSlotTemplates.lua:157`. See the [tooltip-data system](../wiki/systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) for shared tooltip construction.
 
 ## What it must do
 
@@ -53,7 +53,7 @@ VERIFIED: Retail `C_TooltipInfo.GetPvpTalent` uses the PvP talent row to build s
 
 ## Known gaps (current cycle)
 
-- [ ] UNKNOWN: The final Lua result for a missing talent row, zero talent ID, failed base-spell presence check, missing player, or missing resolved spell-name row. Tests do not assert these paths.
+- [ ] UNKNOWN: The native final Lua result for a missing talent row, zero talent ID, failed base-spell presence check, missing player, or missing resolved spell-name row. The simulator uses the shared EMULATED zero-value `unknown_getter_failure` seam; this is not a claim of native parity. Tests do not assert these paths.
 - [ ] UNKNOWN: Whether the native base-spell presence provider can report `SpellID` zero as present. This path is not modeled or tested.
 - [ ] UNKNOWN: The native spell override ranking walk's exact ranked IDs, map writers and precedence among talent, aura and SpellReplace sources. The host supplies the resolved ID; this implementation does not infer the walk.
 - [ ] UNKNOWN: The complete PvP talent catalog, effect-parameter decoder, essence lookup, inspect lifecycle, additional progression restrictions and remaining eligibility failure reasons. Hosts must supply rows and observed helper results; absent inputs do not fabricate lines.
