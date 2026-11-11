@@ -14,7 +14,7 @@
 ### Registration
 
 - **VERIFIED (R61):** Retail and WowForever register the getter through the Glue catalog. **INFERRED:** native availability is Glue-only because the checked Game catalogs do not install the namespace. The simulator removes the member on Game screens.
-- PTR keeps its existing zero fallback. Native PTR availability and result behavior remain **UNKNOWN**.
+- PTR keeps its existing zero fallback. **VERIFIED:** the targeted test returns zero on Game and Glue screens. Native PTR availability and result behavior remain **UNKNOWN**.
 
 ### Runtime evidence and boundaries
 

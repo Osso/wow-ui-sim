@@ -14,7 +14,7 @@ This contract defines the `C_CharacterCreation.GetTrialBoostStartingLevel` resul
 - [x] **VERIFIED (local export):** Retail uses the `CharacterServiceInfo` table from installed build `12.1.5.70783`. It contains 13 rows, no unreadable records, and one selector-2 level-boost row with level `100`. **VERIFIED (separate R61 observation):** Retail `12.1.5.70688` has the same matching level; the installed export remains labeled `70783`.
 - **VERIFIED (exporter and CSV):** the exporter writes records in ID order; the generated Rust rows preserve that CSV order. All 13 `(ServiceType, BoostType)` pairs are unique, so current exported lookups do not depend on row order. Future duplicate keys must use the host's actual table iteration order.
 - [x] WowForever ships no `CharacterServiceInfo` rows. **VERIFIED:** the checked Forever payload is encrypted and its key is missing. Forever's native table values remain **UNKNOWN**; the empty host table makes the getter return `0` by the verified no-match rule.
-- [ ] PTR keeps its existing zero fallback. PTR native availability and native result behavior remain **UNKNOWN**; the targeted PTR test is pending.
+- [x] PTR keeps its existing zero fallback. The Game-screen and Glue-screen targeted test passes. PTR native availability and native result behavior remain **UNKNOWN**.
 
 ### Original consumer
 - [x] The Retail class-trial tooltip at `Blizzard_CharacterCreate/Blizzard_CharacterCreate.lua:1454` receives the exported level. The Retail test passes.
