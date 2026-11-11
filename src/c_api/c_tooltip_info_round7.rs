@@ -212,7 +212,7 @@ fn build_runeforge_result_data(
     item_id: u32,
     item: &ItemInfo,
     level: i32,
-) -> Option<GcRef<Table>> {
+) -> Option<Val> {
     let mut displayed_item = item.clone();
     if level != 0 {
         // The shared builder stores a u16 item level. Do not invent conversion
