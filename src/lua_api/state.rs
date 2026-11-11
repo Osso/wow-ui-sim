@@ -683,8 +683,10 @@ macro_rules! build_empty_sim_state {
             glyph: GlyphState::default(),
             currency_info: super::globals::currency_data::seeded_currency_info_map(),
             wrath_currency: super::globals::real::wrath_currency::CurrencyListState::default(),
-            #[cfg(any(feature = "client-retail", feature = "client-mists"))]
+            #[cfg(feature = "client-retail")]
             currency_list: crate::c_api::currency_list::CurrencyListState::default(),
+            #[cfg(feature = "client-mists")]
+            mists_currency_watch_overrides: HashMap::new(),
             currency_war_mode_bonus: HashMap::new(),
             currency_faction_grants: HashMap::new(),
             currency_link_buffer: String::new(),

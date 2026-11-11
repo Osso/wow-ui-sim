@@ -31,7 +31,7 @@ pub(crate) mod class_catalog;
 #[cfg(any(feature = "client-era", feature = "client-anniversary"))]
 pub(crate) mod classic_startup_data;
 pub(crate) mod collections_availability;
-#[cfg(any(feature = "client-retail", feature = "client-mists"))]
+#[cfg(feature = "client-retail")]
 pub mod currency_list;
 pub mod forever_talents;
 pub(crate) mod game_mode;

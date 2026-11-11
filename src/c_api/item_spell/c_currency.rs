@@ -480,9 +480,17 @@ fn c_currency_get_list_info(state: &mut LuaState) -> LuaResult<u32> {
     );
     write_currency_row_display_fields(state, info, &display);
     write_currency_list_status_fields(state, info, &entry);
-    #[cfg(any(feature = "client-retail", feature = "client-mists"))]
+    #[cfg(feature = "client-retail")]
     {
         let watched = borrow_state(state)?.currency_list.is_watched(&entry);
+        table_set_static(state, info, "isShowInBackpack", Val::Bool(watched));
+    }
+    #[cfg(feature = "client-mists")]
+    {
+        let watched = {
+            let sim = borrow_state(state)?;
+            mists_currency_is_watched(&sim, &entry)
+        };
         table_set_static(state, info, "isShowInBackpack", Val::Bool(watched));
     }
     #[cfg(feature = "client-retail")]
@@ -785,16 +793,30 @@ fn update_currency_watch(state: &LuaState, currency_id: i32, watched: bool) -> L
         return Ok(());
     };
     info.is_show_in_backpack = watched;
-    #[cfg(any(feature = "client-retail", feature = "client-mists"))]
+    #[cfg(feature = "client-retail")]
     sim.currency_list.set_watched(currency_id, watched);
+    #[cfg(feature = "client-mists")]
+    sim.mists_currency_watch_overrides
+        .insert(currency_id, watched);
     Ok(())
+}
+
+#[cfg(feature = "client-mists")]
+fn mists_currency_is_watched(
+    sim: &crate::lua_api::state::SimState,
+    entry: &currency_data::CurrencyEntry,
+) -> bool {
+    sim.mists_currency_watch_overrides
+        .get(&entry.currency_id)
+        .copied()
+        .unwrap_or(entry.is_show_in_backpack)
 }
 
 fn read_backpack_currency_entry(
     state: &LuaState,
     index: i32,
 ) -> LuaResult<Option<&'static currency_data::CurrencyEntry>> {
-    #[cfg(any(feature = "client-retail", feature = "client-mists"))]
+    #[cfg(feature = "client-retail")]
     {
         let sim = borrow_state(state)?;
         let offset = match usize::try_from(index.saturating_sub(1)) {
@@ -804,6 +826,18 @@ fn read_backpack_currency_entry(
         Ok((1..=currency_data::currency_list_size())
             .filter_map(currency_data::get_currency_list_entry)
             .filter(|entry| !entry.is_header && sim.currency_list.is_watched(entry))
+            .nth(offset))
+    }
+    #[cfg(feature = "client-mists")]
+    {
+        let sim = borrow_state(state)?;
+        let offset = match usize::try_from(index.saturating_sub(1)) {
+            Ok(offset) if index > 0 => offset,
+            _ => return Ok(None),
+        };
+        Ok((1..=currency_data::currency_list_size())
+            .filter_map(currency_data::get_currency_list_entry)
+            .filter(|entry| !entry.is_header && mists_currency_is_watched(&sim, entry))
             .nth(offset))
     }
     #[cfg(not(any(feature = "client-retail", feature = "client-mists")))]
