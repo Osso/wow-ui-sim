@@ -43,6 +43,30 @@ fn mists_r21_currency_watch_flags_have_no_native_three_slot_cap() {
 }
 
 #[test]
+fn mists_r21_watch_membership_survives_currency_info_refresh() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec("SetCurrencyBackpack(2, 1)").unwrap();
+    {
+        let mut state = env.state().borrow_mut();
+        let info = state.currency_info.get_mut(&2245).unwrap();
+        info.name = "Updated Valorstones".into();
+        info.is_show_in_backpack = false;
+    }
+
+    let actual: (bool, i32, i32) = env
+        .eval(
+            r#"
+            local listed = C_CurrencyInfo.GetCurrencyListInfo(2)
+            local namespaceRow = C_CurrencyInfo.GetBackpackCurrencyInfo(1)
+            local _, _, _, legacyId = GetBackpackCurrencyInfo(1)
+            return listed.isShowInBackpack, namespaceRow.currencyTypesID, legacyId
+            "#,
+        )
+        .unwrap();
+    assert_eq!(actual, (true, 2245, 2245));
+}
+
+#[test]
 fn mists_r21_currency_original_backpack_ui_observes_watch_changes() {
     with_blizzard_addon_startup_shape(
         &["Blizzard_UIPanels_Game", "Blizzard_TokenUI"],
