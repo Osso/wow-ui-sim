@@ -708,7 +708,11 @@ fn ptr_tainted_combat_pickup_is_blocked_and_place_clears_the_cursor() {
     env.fire_on_update(0.016).unwrap();
     env.exec("ResetR29ActionBarEvents(); TaintedPlaceAction()")
         .unwrap();
-    assert!(!env.eval::<bool>("return HasAction(2)").unwrap());
+    assert!(
+        !env.eval::<bool>("return HasAction(2)").unwrap(),
+        "blocked PlaceAction trace: {}",
+        read_ptr_action_bar_trace(&env)
+    );
     assert_eq!(
         env.eval::<i64>("return select('#', GetCursorInfo())").unwrap(),
         0
