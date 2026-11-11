@@ -220,7 +220,7 @@ fn pickup_action(state: &mut LuaState) -> LuaResult<u32> {
             queue_actionbar_update_cooldown(state)?;
         }
     }
-    if !cursor_model::action_bar_modeled() {
+    if !cursor_model::retail_and_ptr_transitions_modeled() {
         cursor_model::legacy_changed(state);
     }
     Ok(0)
