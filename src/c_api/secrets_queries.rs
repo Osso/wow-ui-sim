@@ -17,6 +17,8 @@ use rilua::{LuaResult, Val};
 
 const NEVER_SECRET: f64 = 0.0;
 const CONTEXTUALLY_SECRET: f64 = 2.0;
+const SHOULD_UNIT_SPELL_CASTING_BE_SECRET_USAGE: &str =
+    "Usage: local isSpellCastingSecret = C_Secrets.ShouldUnitSpellCastingBeSecret(unit)";
 type Query = fn(&mut LuaState) -> LuaResult<u32>;
 
 const QUERIES: &[(&str, Query)] = &[
@@ -293,15 +295,12 @@ fn read_spell_casting_unit(state: &LuaState, position: i32) -> LuaResult<String>
     let value = unwrap_secret(state, stack_val(state, position))?;
     if !matches!(value, Val::Str(_) | Val::Num(_)) {
         return Err(rilua::runtime_error(
-            "Usage: local isSpellCastingSecret = C_Secrets.ShouldUnitSpellCastingBeSecret(unit)",
+            SHOULD_UNIT_SPELL_CASTING_BE_SECRET_USAGE,
         ));
     }
 
-    val_to_string(state, value).ok_or_else(|| {
-        rilua::runtime_error(
-            "Usage: local isSpellCastingSecret = C_Secrets.ShouldUnitSpellCastingBeSecret(unit)",
-        )
-    })
+    val_to_string(state, value)
+        .ok_or_else(|| rilua::runtime_error(SHOULD_UNIT_SPELL_CASTING_BE_SECRET_USAGE))
 }
 
 #[cfg(feature = "retail-12-0-5")]

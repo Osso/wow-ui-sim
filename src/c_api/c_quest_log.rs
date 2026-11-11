@@ -136,17 +136,7 @@ fn is_account_quest(state: &mut LuaState) -> LuaResult<u32> {
         "IsAccountQuest",
         "Usage: local isAccountQuest = C_QuestLog.IsAccountQuest(questID)",
     )?;
-    let account = if quest_id < 1 {
-        false
-    } else {
-        borrow_state(state)?
-            .quest_log_entries
-            .entries
-            .iter()
-            .find(|entry| entry.quest_id == quest_id)
-            .and_then(|entry| entry.is_account_quest)
-            .unwrap_or(false)
-    };
+    let account = account_quest_for_id(state, Some(quest_id))?;
     state.push(Val::Bool(account));
     Ok(1)
 }
@@ -154,15 +144,23 @@ fn is_account_quest(state: &mut LuaState) -> LuaResult<u32> {
 #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 fn is_account_quest(state: &mut LuaState) -> LuaResult<u32> {
     let quest_id = validate_supplied_relation_id(stack_val(state, 1), "questID must be a number")?;
-    let account = borrow_state(state)?
+    let account = account_quest_for_id(state, quest_id)?;
+    state.push(Val::Bool(account));
+    Ok(1)
+}
+
+fn account_quest_for_id(state: &LuaState, quest_id: Option<i32>) -> LuaResult<bool> {
+    let Some(quest_id) = quest_id.filter(|id| *id >= 1) else {
+        return Ok(false);
+    };
+    let sim = borrow_state(state)?;
+    Ok(sim
         .quest_log_entries
         .entries
         .iter()
-        .find(|entry| Some(entry.quest_id) == quest_id)
+        .find(|entry| entry.quest_id == quest_id)
         .and_then(|entry| entry.is_account_quest)
-        .unwrap_or(false);
-    state.push(Val::Bool(account));
-    Ok(1)
+        .unwrap_or(false))
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
