@@ -3,11 +3,11 @@
 use crate::c_api::{ensure_namespace, permanent_shims};
 use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::methods::{borrow_state, create_table, table_set};
-use crate::lua_api::state_types::BnetGameAccount;
 use crate::lua_bridge::table_set_rust_fn_static;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
+pub mod character_roster;
 #[cfg(feature = "client-ptr")]
 pub mod ptr_state;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
@@ -31,7 +31,12 @@ pub struct ConnectionInfo {
 /// No credentials are retained. Existing direct-screen boot remains separate.
 #[derive(Debug)]
 pub struct LoginState {
-    pub characters: Vec<BnetGameAccount>,
+    pub characters: Vec<character_roster::CharacterSlot>,
+    /// Host saved candidate input, zero-based. Native initial value/storage UNKNOWN.
+    pub saved_character_index: Option<i64>,
+    /// Clamp/search output, not a selected index or a native setting write.
+    pub resolved_saved_character_index: Option<usize>,
+    pub(crate) selected_character_index: i64,
     /// Availability is independent of the number of realm records (R40).
     /// False is the empty offline scenario; realm discovery is not emulated.
     pub realm_list_available: bool,
@@ -50,6 +55,9 @@ impl Default for LoginState {
     fn default() -> Self {
         Self {
             characters: Vec::new(),
+            saved_character_index: None,
+            resolved_saved_character_index: None,
+            selected_character_index: -1,
             realm_list_available: false,
             logon_queue: None,
             connection_info: Default::default(),
@@ -73,6 +81,8 @@ impl LoginState {
         self.aurora_state = 1;
         self.connected_to_wow = false;
         self.received_connection_info = Default::default();
+        self.selected_character_index = -1;
+        self.resolved_saved_character_index = None;
     }
 }
 
@@ -84,6 +94,7 @@ pub fn register_c_login(state: &mut LuaState) -> LuaResult<()> {
     {
         table_set_rust_fn_static(state, ns, "Login", submission::login)?;
         crate::lua_api::globals::real::glue_connection::register(state)?;
+        crate::lua_api::globals::real::glue_selection::register(state)?;
         table_set_rust_fn_static(
             state,
             ns,
@@ -169,6 +180,11 @@ pub(crate) fn advance(env: &crate::lua_api::WowLuaEnv) -> crate::Result<()> {
             }
             3 => {
                 login.received_connection_info = login.connection_info;
+                login.selected_character_index = -1;
+                login.resolved_saved_character_index = character_roster::resolve_saved_candidate(
+                    &login.characters,
+                    login.saved_character_index,
+                );
                 login.pending_step = 0;
             }
             _ => return Ok(()),

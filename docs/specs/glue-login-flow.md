@@ -184,3 +184,38 @@ its explicitly superseded preset fallback changes. Tests cover connection
 precedence, object availability, independent flags/gates, suppression and all
 nine idle fields. Native reset/disconnect details remain documented evidence,
 not new callable native functions.
+
+ANSWERS **52/54** (R45, Retail70688 / Forever70707) resolve selection. The host
+roster now contains slots with a character ID and an optional resolved record,
+so empty and unresolved slots are retained and counted. Resolved records must
+match their slot ID. Capacity counts nonzero IDs independently of resolution.
+The direct-screen Battle.net fixture is converted into slots without becoming
+submitted-login account data.
+
+`SelectCharacter` converts a number, truncates finite supported values toward
+zero, then converts one-based to zero-based; an invalid numeric slot falls back
+to slot zero. Bad argument types raise exactly `Usage: SelectCharacter(index)`.
+It returns no values. Empty rosters, unchanged selection, or a normalized slot
+without a resolved record produce no selection/event. A changed selection is
+stored before `UPDATE_SELECTED_CHARACTER` with one one-based integer. The
+getter returns the stored zero-based index plus one, initially zero. 3D effects
+and the inferred CVar write are omitted.
+
+Plain numeric-string acceptance is INFERRED; full string grammar is UNKNOWN.
+Native conversion width, NaN, infinity and overflow behavior are UNKNOWN and
+untested. A defensive signed-32-bit finite input envelope returns an explicit
+simulator-coverage error outside that envelope. This is not the native numeric
+range or native error contract, and no native conformance is claimed there.
+No saturating Rust conversion defines selection for those unsupported inputs.
+
+Full-list processing resets selection to -1 before `CHARACTER_LIST_UPDATE`.
+The event's count includes empty and unresolved slots. A separate zero-based
+host saved-candidate input is unset by default because its native initial value
+and storage are UNKNOWN. Unset/invalid input starts at the first slot, searches
+forward and wraps for a resolved record, and falls back to the first slot when
+none resolve. Empty lists produce no candidate. The computed host output does
+not restore selection and is not written into a native setting. Original Lua
+continues to read its existing lastCharacterIndex and call SelectCharacter.
+Tests cover fractions 2.9/0.5, plain integer strings, bad arguments, invalid-slot
+fallback, no-op cases, state-before-event, full-list reset/count, and the separate
+candidate search. They do not assert unsupported native conversion boundaries.

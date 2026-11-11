@@ -22,7 +22,7 @@ fn can_create_character(state: &mut LuaState) -> LuaResult<u32> {
         let count = login
             .characters
             .iter()
-            .filter(|row| !row.wow_account_guid.is_empty())
+            .filter(|slot| !slot.character_id.is_empty())
             .count();
         info.ready && (count as i64) < i64::from(info.character_limit)
     };

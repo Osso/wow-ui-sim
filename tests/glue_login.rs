@@ -359,7 +359,7 @@ fn submit_login_through_ui(click_button: bool) {
         .find(|account| account.client_program == "WoW")
         .unwrap()
         .clone();
-    env.state().borrow_mut().glue_login.characters = vec![fixture];
+    env.state().borrow_mut().glue_login.characters = vec![fixture.into()];
     env.state().borrow_mut().glue_login.connection_info =
         wow_ui_sim::c_api::c_login::ConnectionInfo {
             ready: true,
@@ -501,7 +501,7 @@ fn login_policy_replaces_pending_attempt_and_cancels_on_screen_boot() {
         .clone();
     {
         let mut sim = env.state().borrow_mut();
-        sim.glue_login.characters = vec![fixture];
+        sim.glue_login.characters = vec![fixture.into()];
         sim.glue_login.realm_list_available = true;
     }
     env.exec(
@@ -644,7 +644,7 @@ fn login_connection_info_controls_character_creation_capacity() {
         }
         {
             let mut sim = env.state().borrow_mut();
-            sim.glue_login.characters = vec![row];
+            sim.glue_login.characters = vec![row.into()];
             sim.glue_login.connection_info = ConnectionInfo {
                 ready,
                 character_limit: limit,
@@ -869,4 +869,163 @@ fn glue_ptr_connection_fields_project_independent_host_inputs() {
     )
     .unwrap();
     assert!(env.state().borrow().lua_errors.is_empty());
+}
+
+#[test]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn glue_character_selection_uses_resolved_slots_and_native_events() {
+    use wow_ui_sim::c_api::c_login::character_roster::CharacterSlot;
+    let env = common::lock_env(|| WowLuaEnv::new().unwrap());
+    env.set_screen_mode(ScreenKind::Login);
+    env.exec(
+        r#"
+        selectionEvents = {}
+        local listener = CreateFrame('Frame')
+        listener:RegisterEvent('UPDATE_SELECTED_CHARACTER')
+        listener:SetScript('OnEvent', function(_, event, ...)
+            table.insert(selectionEvents, {select('#', ...), ..., GetCharacterSelection()})
+        end)
+        selectionPassword = CreateFrame('EditBox')
+        C_Login.Login('offline', selectionPassword)
+        assert(GetCharacterSelection() == 0)
+        assert(select('#', SelectCharacter(1)) == 0)
+        assert(#selectionEvents == 0 and GetNumCharacters() == 0)
+    "#,
+    )
+    .unwrap();
+    let fixture = env
+        .state()
+        .borrow()
+        .bnet_friends
+        .iter()
+        .flat_map(|friend| &friend.game_accounts)
+        .find(|account| account.client_program == "WoW")
+        .unwrap()
+        .clone();
+    let mut second = fixture.clone();
+    second.wow_account_guid = "host-character-two".into();
+    env.state().borrow_mut().glue_login.characters = vec![
+        fixture.into(),
+        second.into(),
+        CharacterSlot::default(),
+        CharacterSlot {
+            character_id: "host-unresolved".into(),
+            record: None,
+        },
+    ];
+    env.exec(
+        r#"
+        assert(GetNumCharacters() == 4)
+        assert(GetCharacterSelection() == 0)
+        assert(select('#', SelectCharacter(2.9)) == 0)
+        assert(GetCharacterSelection() == 2)
+        SelectCharacter(0.5)
+        assert(GetCharacterSelection() == 1 and #selectionEvents == 2)
+        SelectCharacter('2')
+        SelectCharacter('1')
+        assert(GetCharacterSelection() == 1)
+        SelectCharacter(-9)
+        SelectCharacter(99)
+        assert(#selectionEvents == 4)
+        SelectCharacter(2)
+        SelectCharacter(-9)
+        assert(GetCharacterSelection() == 1 and #selectionEvents == 6)
+        SelectCharacter(2)
+        SelectCharacter(3) -- Empty ID: no search and no change.
+        SelectCharacter(4) -- Unresolved nonzero ID: no search and no change.
+        assert(GetCharacterSelection() == 2 and #selectionEvents == 7)
+        SelectCharacter(99)
+        assert(GetCharacterSelection() == 1 and #selectionEvents == 8)
+        for i, expected in ipairs({2, 1, 2, 1, 2, 1, 2, 1}) do
+            assert(selectionEvents[i][1] == 1)
+            assert(selectionEvents[i][2] == expected and selectionEvents[i][3] == expected)
+        end
+        local function bad(...)
+            local ok, message = pcall(SelectCharacter, ...)
+            assert(not ok and message:find('Usage: SelectCharacter(index)', 1, true))
+        end
+        bad(); bad(false); bad({}); bad('not a number')
+        assert(#selectionEvents == 8 and GetCharacterSelection() == 1)
+    "#,
+    )
+    .unwrap();
+    assert!(env.state().borrow().lua_errors.is_empty());
+}
+
+#[test]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn glue_character_list_resets_selection_and_resolves_only_host_candidate() {
+    use wow_ui_sim::c_api::c_login::character_roster::{CharacterSlot, resolve_saved_candidate};
+    let env = common::lock_env(|| WowLuaEnv::new().unwrap());
+    env.set_screen_mode(ScreenKind::Login);
+    let fixture = env
+        .state()
+        .borrow()
+        .bnet_friends
+        .iter()
+        .flat_map(|friend| &friend.game_accounts)
+        .find(|account| account.client_program == "WoW")
+        .unwrap()
+        .clone();
+    let valid = CharacterSlot::from(fixture.clone());
+    let alternatives = vec![valid.clone(), CharacterSlot::default(), valid.clone()];
+    assert_eq!(resolve_saved_candidate(&alternatives, Some(2)), Some(2));
+    assert_eq!(resolve_saved_candidate(&alternatives, Some(1)), Some(2));
+    assert_eq!(resolve_saved_candidate(&alternatives, Some(99)), Some(0));
+    let mut mismatched = valid;
+    mismatched.character_id = "different-record-id".into();
+    assert!(mismatched.resolved_record().is_none());
+    let slots = vec![
+        CharacterSlot::default(),
+        fixture.into(),
+        CharacterSlot {
+            character_id: "unresolved".into(),
+            record: None,
+        },
+    ];
+    assert_eq!(resolve_saved_candidate(&[], None), None);
+    for candidate in [None, Some(-1), Some(0), Some(1), Some(2), Some(99)] {
+        assert_eq!(resolve_saved_candidate(&slots, candidate), Some(1));
+    }
+    let unresolved = vec![CharacterSlot::default(), CharacterSlot::default()];
+    assert_eq!(resolve_saved_candidate(&unresolved, Some(1)), Some(0));
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.glue_login.characters = slots;
+        sim.glue_login.saved_character_index = Some(2);
+        sim.glue_login.connection_info = wow_ui_sim::c_api::c_login::ConnectionInfo {
+            ready: true,
+            character_limit: 2,
+        };
+    }
+    env.exec(
+        r#"
+        local password = CreateFrame('EditBox')
+        listSelection = {}
+        local listener = CreateFrame('Frame')
+        listener:RegisterEvent('CHARACTER_LIST_UPDATE')
+        listener:SetScript('OnEvent', function(_, event, ...)
+            table.insert(listSelection, {select('#', ...), ..., GetCharacterSelection()})
+        end)
+        C_Login.Login('offline', password)
+        SelectCharacter(2)
+        assert(GetCharacterSelection() == 2)
+    "#,
+    )
+    .unwrap();
+    wow_ui_sim::startup::run_extra_update_ticks(&env, 3);
+    env.exec(
+        r#"
+        assert(#listSelection == 1)
+        assert(listSelection[1][1] == 1 and listSelection[1][2] == 3)
+        assert(listSelection[1][3] == 0 and GetCharacterSelection() == 0)
+        assert(GetCharacterGUID(3) == 'unresolved')
+        assert(not CanCreateCharacter()) -- Nonzero unresolved IDs also consume capacity.
+    "#,
+    )
+    .unwrap();
+    let sim = env.state().borrow();
+    assert_eq!(sim.glue_login.saved_character_index, Some(2));
+    assert_eq!(sim.glue_login.resolved_saved_character_index, Some(1));
+    assert!(sim.lua_errors.is_empty());
 }
