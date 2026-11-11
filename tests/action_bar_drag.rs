@@ -635,6 +635,8 @@ fn ptr_action_button_drag_matches_r29_cursor_and_event_order() {
         env.exec("SetCVar('lockActionBars', '0')")
             .expect("unlock action bars for drag input");
         env.fire_event("ACTIONBAR_HIDEGRID").unwrap();
+        env.exec("ActionButton1:SetAttribute('showgrid', 0)")
+            .expect("clear EditMode's always-show grid bit for the drag assertion");
         seed_action_slot(&env, 1, 853);
         env.fire_event_with_args("ACTIONBAR_SLOT_CHANGED", &[rilua::Val::Num(0.0)])
             .unwrap();
