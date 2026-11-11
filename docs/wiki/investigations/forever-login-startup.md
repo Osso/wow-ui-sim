@@ -25,7 +25,7 @@ The prior `C_Login.GetState` correction makes Forever use the existing table-sha
 login state. The older scalar-return contract remains for profiles whose consumers
 use it.
 
-## Approved offline policy
+## Historical approved offline policy
 
 The user explicitly approved offline simulator defaults after being told that native
 catalog/capability inputs were unavailable. These are not native-default measurements:
@@ -112,7 +112,7 @@ The persisted CVar file's before/after hash, size and modification time matched.
 Other profiles, the game-screen baseline and direct simulator GUI comparison were
 not covered.
 
-## Review follow-up
+## Historical review follow-up
 
 The high-resolution texture test originally stopped at an error sentinel before
 the original graphics consumer could call
@@ -144,7 +144,7 @@ The installed Forever 1.60.1.70634 client displayed its login controls before
 sign-in with no visible error dialog.
 
 Credits displayed real text and two catalog entries: `World of Warcraft`, then
-`Forever` (selected). The simulator's single offline entry remains a placeholder.
+`Forever` (selected). The simulator used a single offline placeholder at that time; R63 below replaces it with explicit host inputs.
 
 This visual check did not measure native Lua-error counts or API return values.
 Fully disconnected operation was not verified.
@@ -175,6 +175,36 @@ retracted because the installed 70783 root also lacks the split Game-only file.
 No forced hiding, override, or replay is added. Forever failures remain the
 baseline eight plus three submissions blocked by coordinator-owned APIs.
 
+## R63 host credits and video bytes (2026-11-11)
+
+[Credits](../../../src/c_api/credits.rs) replaces the fabricated offline row and
+notice. PTR/Forever share explicit host rows/text maps, empty by default as
+approved simulator policy. Row publication preserves zero and empty fields,
+except logo0 is omitted, and distinguishes absent soundKit from present0.
+Display registration covers Game/Glue; file-data-ID text registration covers
+Glue only. Native row data/order and fresh PTR state remain unknown. Pending
+R65, text input outside the bounded integer-ID seam is an explicit coverage
+error, and absent host-map IDs use the approved unasserted neutral result.
+
+[Video capability bytes](../../../src/c_api/video_capabilities.rs) replaces
+modern placeholder answers with independent per-environment host bytes. Tests
+supply values before asserting inferred projections; image defaults are not
+asserted as verified native Boolean results. Retail publishes only spell density;
+PTR/Forever publish all five. High-resolution capability and renderer MSAA stay
+separate. Legacy-only density compatibility is unchanged.
+
+At d4b69b2a2, Retail glue passes 266/266 and Forever passes 152 with 11 existing
+baseline/cleanup-dependent failures. PTR at 40b5a7c97 passes 139 with only its
+two confirmed baseline feedback failures. All compile without warnings.
+Forever original credits and graphics consumer tests pass 4/4, with host credits
+supplied before original OnLoad rather than replaying startup. Strict unassisted
+PTR and Forever chat startup guards now pass. Retail live chat visibility stays
+UNKNOWN under R62; only its unsupported chat/dock assertions were narrowed.
+
+R62/R64 correction: LoadManagers, not LoadWith, precedes an own load request.
+LoadWith reader/direction/timing remain unknown. The coordinator's separate
+loader lane owns the shared ordering deviations; this lane does not repair them.
+
 ## Sources
 
 - [Login contract](../../specs/glue-login-flow.md) — native evidence, offline policy and remaining unknowns.
@@ -184,7 +214,7 @@ baseline eight plus three submissions blocked by coordinator-owned APIs.
 - [Glue regressions](../../../tests/glue_login.rs) — complete Login startup and screen-state transitions.
 - [Module import implementation](../../../src/loader/addon_modules.rs) and [tests](../../../tests/addon_require.rs) — sibling-file loading and import boundaries.
 - [Startup dependency implementation](../../../src/loader/mod.rs) — real customization initialization before feedback hooks.
-- [Temporary defaults](../../../src/lua_api/workarounds/temporary/forever_glue_display_defaults.rs) and [credits catalog](../../../src/lua_api/workarounds/temporary/offline_glue_credits.rs).
+- [Temporary defaults](../../../src/lua_api/workarounds/temporary/forever_glue_display_defaults.rs) and [host credits catalog](../../../src/c_api/credits.rs).
 - [HTML content nodes](../../../src/lua_api/frame/methods/text_attribute_event/text/simple_html.rs), [cursor state](../../../src/lua_api/globals/real/mouse_probes.rs), and [catalog consumer tests](../../../tests/forever_login_catalog_defaults.rs).
 - [Texture toggle capability](../../../src/c_api/c_battle_net.rs) — reuse the existing CVar-backed producer for the complete Forever graphics consumer.
 - [Video capabilities](../../../src/lua_api/workarounds/temporary/video_options_state.rs) and [UI pipeline](../../../src/render/shader/pipeline.rs) — unsupported MSAA policy for the single-sample renderer.

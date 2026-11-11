@@ -1,3 +1,7 @@
+## [2026-11-11] implementation | Host credits and video capability bytes
+
+Updated [Forever login startup](investigations/forever-login-startup.md#r63-host-credits-and-video-bytes-2026-11-11) with R63 host catalog/text policy, profile registration, verified field publication and separately labelled inferred capability projections. Retail glue is green; PTR retains only confirmed baseline failures; Forever awaits coordinator cleanup. Original credits/graphics consumers pass. R65 text validation remains unknown, and shared-loader corrections belong to a separate lane.
+
 ## [2026-11-11] implementation | Shared Glue game-mode display
 
 Updated [Forever login startup](investigations/forever-login-startup.md#r60-display-and-capability-replacement-2026-11-11) and the [login contract](../specs/glue-login-flow.md) with R60 shared CVar/host-row selection, bounded override lifecycle, display callback, and read-only PTR/Forever texture capability. Corrected the retracted Retail chat pin diagnosis; native visibility remains pending R62. Profile regression counts and remaining native/bootstrap gaps are recorded without an acceptance claim.
