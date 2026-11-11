@@ -10,6 +10,18 @@ use crate::lua_bridge::table_set_rust_fn_static;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
+/// Host-supplied state queried by `C_CharacterServices`.
+#[derive(Debug, Default, Clone)]
+pub struct CharacterServicesState {
+    /// Active character-upgrade boost type id, or `None` when no boost
+    /// purchase is pending. Retail values include 5 for the level-60 boost.
+    pub active_upgrade_boost_type: Option<i32>,
+    /// Active class-trial boost type id, or `None` when no trial is running.
+    pub active_class_trial_boost_type: Option<i32>,
+    /// True when the queued-upgrade GUID's type bits are nonzero.
+    pub queued_upgrade_guid_type_nonzero: bool,
+}
+
 pub(crate) fn register_c_character_services_surface(state: &mut LuaState) -> LuaResult<()> {
     let table_ref = ensure_namespace(state, "C_CharacterServices")?;
     table_set_rust_fn_static(
