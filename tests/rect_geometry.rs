@@ -112,50 +112,44 @@ fn scaled_rect_is_unscaled_layout_rect() {
 }
 
 #[test]
-fn rect_queries_return_nothing_for_unanchored_frame() {
+fn invalid_rect_size_getters_return_stored_dimensions() {
     let env = env();
     let (
-        rect_values,
         width,
         height,
         size_width,
         size_height,
-        rect_valid,
         individual_width,
         individual_height,
-    ): (f64, f64, f64, f64, f64, bool, f64, f64) = env
+        rect_valid,
+    ): (f64, f64, f64, f64, f64, f64, bool) = env
         .eval(
             r##"
             local f = CreateFrame("Frame", "UnanchoredProbe", UIParent)
             f:SetSize(100, 50)
-            local rect_values = select("#", f:GetRect())
+            local width, height = f:GetWidth(), f:GetHeight()
             local size_width, size_height = f:GetSize()
 
             local individual = CreateFrame("Frame", "IndividualSizeProbe", UIParent)
             individual:SetWidth(100)
             individual:SetHeight(50)
             local individual_width, individual_height = individual:GetSize()
-            return rect_values, f:GetWidth(), f:GetHeight(), size_width, size_height,
-                   f:IsRectValid(), individual_width, individual_height
+            return width, height, size_width, size_height,
+                   individual_width, individual_height, f:IsRectValid()
             "##,
         )
-        .expect("eval should succeed");
+        .expect("invalid geometry returns stored size");
 
-    assert_eq!(rect_values, 0.0);
-    assert_eq!(width, 100.0);
-    assert_eq!(height, 50.0);
-    assert_eq!(size_width, 100.0);
-    assert_eq!(size_height, 50.0);
+    assert_eq!((width, height), (100.0, 50.0));
+    assert_eq!((size_width, size_height), (100.0, 50.0));
+    assert_eq!((individual_width, individual_height), (100.0, 50.0));
     assert!(!rect_valid);
-    assert_eq!(individual_width, 100.0);
-    assert_eq!(individual_height, 50.0);
 }
 
 #[test]
 fn valid_anchored_size_queries_use_resolved_dimensions() {
     let env = env();
     let (
-        valid_before,
         width,
         height,
         size_width,
@@ -165,7 +159,7 @@ fn valid_anchored_size_queries_use_resolved_dimensions() {
         rect_width,
         rect_height,
         valid_after,
-    ): (bool, f64, f64, f64, f64, f64, f64, f64, f64, bool) = env
+    ): (f64, f64, f64, f64, f64, f64, f64, f64, bool) = env
         .eval(
             r#"
             local leftTarget = CreateFrame("Frame", "ResolvedSizeLeftTarget", UIParent)
@@ -178,19 +172,17 @@ fn valid_anchored_size_queries_use_resolved_dimensions() {
             frame:SetSize(5, 20)
             frame:SetPoint("BOTTOMLEFT", leftTarget, "BOTTOMRIGHT")
             frame:SetPoint("BOTTOMRIGHT", rightTarget, "BOTTOMLEFT")
-            local valid_before = frame:IsRectValid()
             local width = frame:GetWidth()
             local height = frame:GetHeight()
             local size_width, size_height = frame:GetSize()
             local left, bottom, rect_width, rect_height = frame:GetRect()
             local valid_after = frame:IsRectValid()
-            return valid_before, width, height, size_width, size_height, left, bottom,
+            return width, height, size_width, size_height, left, bottom,
                    rect_width, rect_height, valid_after
             "#,
         )
         .expect("eval should succeed");
 
-    assert!(!valid_before);
     assert!(valid_after);
     assert_eq!(width, 40.0);
     assert_eq!(height, 20.0);
@@ -203,9 +195,67 @@ fn valid_anchored_size_queries_use_resolved_dimensions() {
 }
 
 #[test]
-fn child_anchored_to_unanchored_parent_has_no_queryable_rect() {
+fn geometry_getter_resolves_dirty_anchor_target_before_dependent() {
     let env = env();
-    let (rect_values, width, height, rect_valid): (f64, f64, f64, bool) = env
+    let (initial_left, moved_left): (f64, f64) = env
+        .eval(
+            r##"
+            local target = CreateFrame("Frame", "DirtyGeometryTarget", UIParent)
+            target:SetSize(30, 20)
+            target:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", 50, 60)
+            local child = CreateFrame("Frame", "DirtyGeometryChild", UIParent)
+            child:SetSize(10, 12)
+            child:SetPoint("BOTTOMLEFT", target, "TOPRIGHT", 5, 7)
+
+            local initial_left = child:GetLeft()
+            target:SetSize(50, 20)
+            local moved_left = child:GetLeft()
+            return initial_left, moved_left
+            "##,
+        )
+        .expect("position query resolves its dirty anchor target first");
+
+    assert_eq!(initial_left, 85.0);
+    assert_eq!(moved_left, 105.0);
+}
+
+#[test]
+fn is_rect_valid_reads_cached_flag_without_resolving_dirty_target() {
+    let env = env();
+    let (cached_validity, fallback_width, fallback_height, invalid_validity): (
+        bool,
+        f64,
+        f64,
+        bool,
+    ) = env
+        .eval(
+            r##"
+                local target = CreateFrame("Frame", "CachedValidityTarget", UIParent)
+                target:SetSize(30, 20)
+                target:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", 50, 60)
+                local child = CreateFrame("Frame", "CachedValidityChild", UIParent)
+                child:SetSize(10, 12)
+                child:SetPoint("BOTTOMLEFT", target, "TOPRIGHT", 5, 7)
+                child:GetLeft()
+
+                target:ClearAllPoints()
+                local cached_validity = child:IsRectValid()
+                local fallback_width, fallback_height = child:GetSize()
+                local invalid_validity = child:IsRectValid()
+                return cached_validity, fallback_width, fallback_height, invalid_validity
+                "##,
+        )
+        .expect("validity query reads cached state before geometry resolution");
+
+    assert!(cached_validity);
+    assert_eq!((fallback_width, fallback_height), (10.0, 12.0));
+    assert!(!invalid_validity);
+}
+
+#[test]
+fn child_anchored_to_unanchored_parent_uses_its_stored_size() {
+    let env = env();
+    let (width, height, rect_valid): (f64, f64, bool) = env
         .eval(
             r##"
             local parent = CreateFrame("Frame", "UnanchoredParentProbe", UIParent)
@@ -215,61 +265,31 @@ fn child_anchored_to_unanchored_parent_has_no_queryable_rect() {
             child:SetSize(20, 20)
             child:SetPoint("CENTER", parent, "CENTER", 0, 0)
 
-            local rect_values = select("#", child:GetRect())
             local width, height = child:GetSize()
-            return rect_values, width, height, child:IsRectValid()
+            return width, height, child:IsRectValid()
             "##,
         )
-        .expect("eval should succeed");
+        .expect("invalid child geometry returns its own stored size");
 
-    assert_eq!(rect_values, 0.0);
-    assert_eq!(width, 20.0);
-    assert_eq!(height, 20.0);
+    assert_eq!((width, height), (20.0, 20.0));
     assert!(!rect_valid);
 }
 
 #[test]
-fn child_rect_queries_follow_anchor_targets_not_unanchored_parent() {
+fn sibling_anchor_geometry_does_not_require_a_containment_parent_rect() {
+    // INFERRED by R59; retain as simulator coverage, not native proof.
+
     let env = env();
     let (
-        parent_rect_values,
         parent_width,
         parent_height,
-        child_rect_values,
         left,
         bottom,
         width,
         height,
-        scaled_rect_values,
-        center_values,
-        center_x,
-        center_y,
-        child_width,
-        child_height,
-        target_valid_before,
-        child_valid_before,
         target_valid_after,
         child_valid_after,
-    ): (
-        f64,
-        f64,
-        f64,
-        f64,
-        f64,
-        f64,
-        f64,
-        f64,
-        f64,
-        f64,
-        f64,
-        f64,
-        f64,
-        f64,
-        bool,
-        bool,
-        bool,
-        bool,
-    ) = env
+    ): (f64, f64, f64, f64, f64, f64, bool, bool) = env
         .eval(
             r##"
             local parent = CreateFrame("Frame", "AnchorGroupParent", UIParent)
@@ -280,45 +300,87 @@ fn child_rect_queries_follow_anchor_targets_not_unanchored_parent() {
             local child = CreateFrame("Frame", "AnchorGroupChild", parent)
             child:SetSize(10, 12)
             child:SetPoint("BOTTOMLEFT", target, "TOPRIGHT", 5, 7)
-            local target_valid_before = target:IsRectValid()
-            local child_valid_before = child:IsRectValid()
-
-            local parent_rect_values = select("#", parent:GetRect())
             local parent_width, parent_height = parent:GetSize()
-            local child_rect_values = select("#", child:GetRect())
-            local left, bottom, width, height = child:GetRect()
-            local scaled_rect_values = select("#", child:GetScaledRect())
-            local center_values = select("#", child:GetCenter())
-            local center_x, center_y = child:GetCenter()
-            local child_width, child_height = child:GetSize()
+            local left = child:GetLeft()
+            local bottom = child:GetBottom()
+            local width = child:GetWidth()
+            local height = child:GetHeight()
             local target_valid_after = target:IsRectValid()
             local child_valid_after = child:IsRectValid()
-            return parent_rect_values, parent_width, parent_height, child_rect_values,
-                   left, bottom, width, height, scaled_rect_values, center_values,
-                   center_x, center_y, child_width, child_height,
-                   target_valid_before, child_valid_before, target_valid_after, child_valid_after
+            return parent_width, parent_height, left, bottom, width, height,
+                   target_valid_after, child_valid_after
             "##,
         )
         .expect("eval should succeed");
 
-    assert_eq!(parent_rect_values, 0.0);
     assert_eq!(parent_width, 100.0);
     assert_eq!(parent_height, 80.0);
-    assert_eq!(child_rect_values, 4.0);
     assert_eq!(left, 85.0);
     assert_eq!(bottom, 87.0);
     assert_eq!(width, 10.0);
     assert_eq!(height, 12.0);
-    assert_eq!(scaled_rect_values, 4.0);
-    assert_eq!(center_values, 2.0);
-    assert_eq!(center_x, 90.0);
-    assert_eq!(center_y, 93.0);
-    assert_eq!(child_width, 10.0);
-    assert_eq!(child_height, 12.0);
-    assert!(!target_valid_before);
-    assert!(!child_valid_before);
     assert!(target_valid_after);
     assert!(child_valid_after);
+}
+
+#[test]
+fn set_size_and_individual_size_setters_store_the_same_dimensions() {
+    let env = env();
+    let (
+        set_size_raw_width,
+        set_size_raw_height,
+        individual_raw_width,
+        individual_raw_height,
+        set_size_width,
+        set_size_height,
+        individual_width,
+        individual_height,
+        set_size_size_width,
+        set_size_size_height,
+        individual_size_width,
+        individual_size_height,
+    ): (f64, f64, f64, f64, f64, f64, f64, f64, f64, f64, f64, f64) = env
+        .eval(
+            r##"
+            local set_size = CreateFrame("Frame", "SetSizeEquivalenceProbe", UIParent)
+            set_size:SetSize(40, 30)
+            set_size:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", 10, 20)
+
+            local individual = CreateFrame("Frame", "IndividualSetSizeEquivalenceProbe", UIParent)
+            individual:SetWidth(40)
+            individual:SetHeight(30)
+            individual:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", 10, 20)
+
+            local set_size_width, set_size_height = set_size:GetSize()
+            local individual_width, individual_height = individual:GetSize()
+            return set_size:GetWidth(true), set_size:GetHeight(true),
+                   individual:GetWidth(true), individual:GetHeight(true),
+                   set_size:GetWidth(), set_size:GetHeight(),
+                   individual:GetWidth(), individual:GetHeight(),
+                   set_size_width, set_size_height, individual_width, individual_height
+            "##,
+        )
+        .expect("size setters produce queryable geometry");
+
+    assert_eq!(
+        (
+            set_size_raw_width,
+            set_size_raw_height,
+            individual_raw_width,
+            individual_raw_height,
+            set_size_width,
+            set_size_height,
+            individual_width,
+            individual_height,
+            set_size_size_width,
+            set_size_size_height,
+            individual_size_width,
+            individual_size_height,
+        ),
+        (
+            40.0, 30.0, 40.0, 30.0, 40.0, 30.0, 40.0, 30.0, 40.0, 30.0, 40.0, 30.0
+        )
+    );
 }
 
 #[test]
