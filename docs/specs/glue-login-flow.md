@@ -375,3 +375,23 @@ is no native realm-disconnect callback wiring or invented Lua endpoint. Logout
 and simulator screen boot must not clear these fields: shipped class-trial/store
 Lua writes boost state before Logout. Broader logout/disconnect ordering remains
 UNKNOWN.
+
+
+### R58 character-model moves: explicit 3D gap
+
+Comment 91 provides Retail 70688 and Forever 70707 evidence. Both
+MoveCharactersToModelFFXFrame and MoveCharactersToMapSceneFrame read no Lua
+arguments, perform no supplied-frame type checks, and return zero values.
+Ordinary ignored extra arguments and normal Glue-only scope are inferred from
+those handlers and registration. PTR is uninspected and unchanged.
+
+The coordinator explicitly permits registered Glue-only zero-result no-ops for
+these two model-transfer operations in the simulator without 3D rendering.
+This is a bounded 3D gap, not a universal no-effect native contract: downstream
+frame parenting, shown state, getters, events, and especially MapScene's final
+indirect update remain unknown. No selected-index store or named event dispatch
+was found in the checked direct native code.
+
+ResetModel is original Blizzard_GlueParent Lua (cached Retail lines 779–785,
+Forever 770–776), not a native API. It is not registered or replaced here.
+Failures in its frame-method calls require separate evidence.

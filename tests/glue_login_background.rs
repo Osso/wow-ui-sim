@@ -221,3 +221,24 @@ fn glue_background_setter_validates_without_faking_observable_model_state() {
         .unwrap();
     assert!(env.state().borrow().lua_errors.is_empty());
 }
+
+#[test]
+fn glue_background_move_globals_have_zero_results_and_glue_scope() {
+    let env = supplied_background_env();
+    env.exec(
+        r#"
+        assert(select('#', MoveCharactersToModelFFXFrame()) == 0)
+        assert(select('#', MoveCharactersToMapSceneFrame()) == 0)
+        -- Ordinary extra arguments are inferred ignored, not frame handles.
+        assert(select('#', MoveCharactersToModelFFXFrame(nil, false, {})) == 0)
+        assert(select('#', MoveCharactersToMapSceneFrame('ignored', 1)) == 0)
+    "#,
+    )
+    .unwrap();
+    env.set_screen_mode(ScreenKind::Game);
+    env.exec(
+        "assert(MoveCharactersToModelFFXFrame == nil and MoveCharactersToMapSceneFrame == nil)",
+    )
+    .unwrap();
+    assert!(env.state().borrow().lua_errors.is_empty());
+}

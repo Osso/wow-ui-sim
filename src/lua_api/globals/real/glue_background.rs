@@ -13,6 +13,14 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     for (name, function) in [
         ("GetSelectBackgroundModel", get_background as rilua::RustFn),
         ("SetCharSelectBackground", set_background as rilua::RustFn),
+        (
+            "MoveCharactersToModelFFXFrame",
+            move_character_models as rilua::RustFn,
+        ),
+        (
+            "MoveCharactersToMapSceneFrame",
+            move_character_models as rilua::RustFn,
+        ),
     ] {
         if glue {
             table_set_rust_fn_static(state, state.global, name, function)?;
@@ -80,5 +88,12 @@ fn set_background(state: &mut LuaState) -> LuaResult<u32> {
     }
     // Do not retain a fake visual selection, change the roster override or emit
     // Forever's readiness event: its payload/timing/count remain UNKNOWN.
+    Ok(0)
+}
+
+// R58: native handlers read no arguments and return zero values. This is an
+// explicitly permitted 3D gap, not a claim of universally absent indirect
+// effects (especially the MapScene final update). ResetModel remains vendor Lua.
+fn move_character_models(_state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
