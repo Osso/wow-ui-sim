@@ -6,9 +6,7 @@
 
 - [x] `GetLootSpecialization()` returns the stored simulator value; the initial value is 0.
 - [x] `SetLootSpecialization` accepts a numeric argument, returns no values, raises `Usage: SetLootSpecialization(specializationID)` for a non-number, and does not reject an ID because it is absent from the local class catalog.
-- [ ] A setter call does not synchronously change the getter value or emit `PLAYER_LOOT_SPEC_UPDATED`.
-- [ ] Do not validate requested specialization IDs against the player's class catalog before sending.
-- [ ] Do not synthesize a server response or emit `PLAYER_LOOT_SPEC_UPDATED` without one.
+- [ ] A setter call does not change the stored getter value or emit `PLAYER_LOOT_SPEC_UPDATED`; no server response is simulated.
 - [ ] Do not model `HasLootSpecializations`; the ordinary Retail `true` result is INFERRED, not VERIFIED.
 
 ## How it works
@@ -17,8 +15,8 @@
 
 ## Implementation inventory
 
-- `src/lua_api/globals/real/loot_specialization.rs` — getter, setter argument validation, and request-rate bookkeeping.
-- `src/lua_api/state/sim_state.rs` — stores the current loot-specialization value and rate-limit window.
+- `src/lua_api/globals/real/loot_specialization.rs` — getter and setter argument boundary; server transport is not modeled.
+- `src/lua_api/state/sim_state.rs` — stores the current loot-specialization value.
 
 ## Tests asserting this spec
 
@@ -28,9 +26,9 @@
 
 ## Known gaps (current cycle)
 
-- [ ] The outgoing request transport, send availability, server acceptance, and replicated update producer are not modeled.
+- [ ] Request submission, send availability, rate limiting, server acceptance, and the replicated update producer are not modeled.
 - [ ] `HasLootSpecializations` remains unavailable, so the original menu's `CanShow` path cannot be verified.
-- [ ] Exact rate-limit reset semantics and repeated-value response behavior remain unknown.
+- [ ] Exact rate-limit reset semantics, request-send availability, and repeated-value response behavior remain unknown.
 
 ## Out of scope
 

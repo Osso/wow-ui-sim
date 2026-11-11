@@ -66,7 +66,6 @@ fn begin_tick(state: &mut LuaState, elapsed: f64) -> crate::Result<()> {
     if pending {
         super::script_helpers::fire_named_event_state(state, "TRADE_SKILL_LIST_UPDATE", &[]);
     }
-    super::globals::real::loot_specialization::apply_pending(state)?;
     #[cfg(feature = "player-cast-durations")]
     super::channeling::tick(state)?;
     #[cfg(feature = "retail-12-1-0")]
