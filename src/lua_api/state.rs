@@ -768,6 +768,8 @@ macro_rules! build_empty_sim_state {
             factions: Vec::new(),
             selected_faction_index: 0,
             watched_faction_index: 0,
+            #[cfg(feature = "client-mists")]
+            last_watched_reputation_slot_request: None,
             battlefield_vehicles: ::std::collections::HashMap::new(),
             battlefield_queue: BattlefieldQueue::default(),
             battlefield_minimap_visible: false,

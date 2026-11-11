@@ -308,6 +308,8 @@ pub(crate) mod c_trade_skill_filter;
 pub(crate) mod c_trade_skill_first_craft;
 pub mod c_trade_skill_quality;
 mod c_trade_skill_source;
+#[cfg(feature = "client-mists")]
+pub(crate) mod mists_reputation_list;
 // The pinned classic TransmogItemsDocumentation.lua / TransmogOutfitInfoDocumentation.lua
 // declare these namespaces on Mists, Era and Anniversary, so the backing model
 // is compiled for those profiles together with the retail API epochs.

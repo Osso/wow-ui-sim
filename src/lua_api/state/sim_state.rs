@@ -931,6 +931,10 @@ pub struct SimState {
     pub factions: Vec<FactionEntry>,
     pub selected_faction_index: i32,
     pub watched_faction_index: i32,
+    /// Last Mists legacy watched-faction reputation slot request. The simulator
+    /// records request intent without modeling native player or connection checks.
+    #[cfg(feature = "client-mists")]
+    pub last_watched_reputation_slot_request: Option<i16>,
     /// Explicit map observations, visible only while is_active_battlefield is true.
     pub battlefield_vehicles: ::std::collections::HashMap<
         i32,

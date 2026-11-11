@@ -3,6 +3,9 @@
 ## [2026-11-10] system | ScriptObject full lockdown
 
 [ScriptObject full lockdown](systems/script-object-full-lockdown.md) links the R18 model and its contract: distinct full-lock and forbidden states, access-allowed absence, scoped XML defaults, parent inheritance, and five measured secure/tainted resolver consumers. Retail and Forever native-consumer integration filters pass 7/7 each; six-profile all-target checks plus Wrath, both library suites, and the manifest bin tests pass with zero compiler warnings. See the [lane report](../../handoff/full-lockdown-model/REPORT.md) for exact outputs and UNKNOWNs.
+## [2026-11-10] implementation | Mists R21 Classic API contracts
+
+[Mists R21 Classic API behavior](investigations/mists-r21-classic-apis.md) records shared reputation backing-list indexing, watched-slot request mapping, engraving mode and backpack-currency behavior. **VERIFIED:** Ten targeted Mists tests pass; all six profile builds have zero warnings and all six library suites pass. The Mists `spell` and `frame_position` failure-name sets match base `origin/master` `93125f591`. Native `N+1` watcher behavior and Era/Anniversary behavior remain UNKNOWN.
 
 ## [2026-11-09] investigation | Reconcile profile frame-position baselines
 

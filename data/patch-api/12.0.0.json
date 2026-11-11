@@ -5531,13 +5531,13 @@
           "kind": "source",
           "reference": "src/lua_api/state.rs",
           "summary": "Empty-map initialization; absent-key zero is simulator policy, not native-default proof.",
-          "source_hash": "3524a9b892acc2d9d348530dde8d2e5ae8f43803cb57786a9ba64a1217c5fcbd"
+          "source_hash": "38268f00a6196d9d6d8eba1bc9d492cd9b035ed5d36c476533f99fed7ea1e0ba"
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state/sim_state.rs",
           "summary": "SimState owns an independent HashMap<(i32, i32), f64> for format-setting pairs per environment.",
-          "source_hash": "01b2338b3fe7887aa15200bff7caad46f7ae8163fd16283bde335186539b7493"
+          "source_hash": "8a90e2e429a7735fdb0753d6f69b2bee03ca48d1599956a2d57cb263ae933e3a"
         },
         {
           "kind": "test",
@@ -5606,7 +5606,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/mod.rs",
-          "source_hash": "c41002badcbdadadd07f75537143bc0b7d287064de6531830038d63a8283e514",
+          "source_hash": "fafbb515357a61dad93eafe2d1357e80e0a61fb97831f5202fe673630432d588",
           "summary": "Modeled Rust module is gated at retail-12-0-0; this does not establish absence of generic fallback callability on earlier profiles."
         },
         {
@@ -5618,13 +5618,13 @@
         {
           "kind": "source",
           "reference": "src/lua_api/state.rs",
-          "source_hash": "3524a9b892acc2d9d348530dde8d2e5ae8f43803cb57786a9ba64a1217c5fcbd",
+          "source_hash": "38268f00a6196d9d6d8eba1bc9d492cd9b035ed5d36c476533f99fed7ea1e0ba",
           "summary": "Empty-state construction initializes speaker speed to 0.0 as simulator policy, not a native-default assertion."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state/sim_state.rs",
-          "source_hash": "01b2338b3fe7887aa15200bff7caad46f7ae8163fd16283bde335186539b7493",
+          "source_hash": "8a90e2e429a7735fdb0753d6f69b2bee03ca48d1599956a2d57cb263ae933e3a",
           "summary": "SimState owns the numeric speaker-speed field independently per environment; no persistence or CVar identity is established."
         },
         {
@@ -5687,13 +5687,13 @@
         {
           "kind": "source",
           "reference": "src/lua_api/state.rs",
-          "source_hash": "3524a9b892acc2d9d348530dde8d2e5ae8f43803cb57786a9ba64a1217c5fcbd",
+          "source_hash": "38268f00a6196d9d6d8eba1bc9d492cd9b035ed5d36c476533f99fed7ea1e0ba",
           "summary": "Empty-state construction initializes speaker volume to 100.0 as simulator policy, not a native-default assertion."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state/sim_state.rs",
-          "source_hash": "01b2338b3fe7887aa15200bff7caad46f7ae8163fd16283bde335186539b7493",
+          "source_hash": "8a90e2e429a7735fdb0753d6f69b2bee03ca48d1599956a2d57cb263ae933e3a",
           "summary": "SimState owns the numeric speaker-volume field independently per environment; no persistence or CVar identity is established."
         },
         {
@@ -5844,13 +5844,13 @@
           "kind": "source",
           "reference": "src/lua_api/state.rs",
           "summary": "Empty-map initialization; absent-key zero is simulator policy, not native-default proof.",
-          "source_hash": "3524a9b892acc2d9d348530dde8d2e5ae8f43803cb57786a9ba64a1217c5fcbd"
+          "source_hash": "38268f00a6196d9d6d8eba1bc9d492cd9b035ed5d36c476533f99fed7ea1e0ba"
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state/sim_state.rs",
           "summary": "SimState owns an independent HashMap<(i32, i32), f64> for format-setting pairs per environment.",
-          "source_hash": "01b2338b3fe7887aa15200bff7caad46f7ae8163fd16283bde335186539b7493"
+          "source_hash": "8a90e2e429a7735fdb0753d6f69b2bee03ca48d1599956a2d57cb263ae933e3a"
         },
         {
           "kind": "test",
@@ -5919,7 +5919,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/mod.rs",
-          "source_hash": "c41002badcbdadadd07f75537143bc0b7d287064de6531830038d63a8283e514",
+          "source_hash": "fafbb515357a61dad93eafe2d1357e80e0a61fb97831f5202fe673630432d588",
           "summary": "Modeled Rust module is gated at retail-12-0-0; this does not establish absence of generic fallback callability on earlier profiles."
         },
         {
@@ -5931,13 +5931,13 @@
         {
           "kind": "source",
           "reference": "src/lua_api/state.rs",
-          "source_hash": "3524a9b892acc2d9d348530dde8d2e5ae8f43803cb57786a9ba64a1217c5fcbd",
+          "source_hash": "38268f00a6196d9d6d8eba1bc9d492cd9b035ed5d36c476533f99fed7ea1e0ba",
           "summary": "Empty-state construction initializes speaker speed to 0.0 as simulator policy, not a native-default assertion."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state/sim_state.rs",
-          "source_hash": "01b2338b3fe7887aa15200bff7caad46f7ae8163fd16283bde335186539b7493",
+          "source_hash": "8a90e2e429a7735fdb0753d6f69b2bee03ca48d1599956a2d57cb263ae933e3a",
           "summary": "SimState owns the numeric speaker-speed field independently per environment; no persistence or CVar identity is established."
         },
         {
@@ -6000,13 +6000,13 @@
         {
           "kind": "source",
           "reference": "src/lua_api/state.rs",
-          "source_hash": "3524a9b892acc2d9d348530dde8d2e5ae8f43803cb57786a9ba64a1217c5fcbd",
+          "source_hash": "38268f00a6196d9d6d8eba1bc9d492cd9b035ed5d36c476533f99fed7ea1e0ba",
           "summary": "Empty-state construction initializes speaker volume to 100.0 as simulator policy, not a native-default assertion."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state/sim_state.rs",
-          "source_hash": "01b2338b3fe7887aa15200bff7caad46f7ae8163fd16283bde335186539b7493",
+          "source_hash": "8a90e2e429a7735fdb0753d6f69b2bee03ca48d1599956a2d57cb263ae933e3a",
           "summary": "SimState owns the numeric speaker-volume field independently per environment; no persistence or CVar identity is established."
         },
         {
@@ -26976,7 +26976,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/mod.rs",
-          "source_hash": "c41002badcbdadadd07f75537143bc0b7d287064de6531830038d63a8283e514",
+          "source_hash": "fafbb515357a61dad93eafe2d1357e80e0a61fb97831f5202fe673630432d588",
           "summary": "Bounded historical public enumeration: two tests cover seeded ordinary filters, blocked visibility, live removal, observed sort rules/directions and maxCount limits. Runtime ba31c6b94; tests 33f7fdb39 pass 2/2 each on retail 12.0.0/12.0.5/12.0.7. Default 5/5 regressions preserve existing later behavior, not new historical private/security credit. Native full filter domain, sort semantics, defaults, identity, security and full-LoD parity remain unproven. Historical E0432/E0425 helper-gate compilation failures remain recorded in development proof."
         },
         {
@@ -86764,7 +86764,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/env_init/mod.rs",
-          "source_hash": "0098c69b6635b9224f372f37874a87aa51aeeac0b4b307973530127d4e98809d",
+          "source_hash": "25ccb157bc90df24dc2afee844b41109aec449b21a5d7873cfb104a4bf3d0622",
           "summary": "Environment initialization sequences bootstrap, enum, frame, global, runtime, and profile-specific compatibility registration; ordering/source wiring does not establish native behavior."
         },
         {
@@ -87983,13 +87983,13 @@
         {
           "kind": "source",
           "reference": "src/lua_api/env_init/mod.rs",
-          "source_hash": "0098c69b6635b9224f372f37874a87aa51aeeac0b4b307973530127d4e98809d",
+          "source_hash": "25ccb157bc90df24dc2afee844b41109aec449b21a5d7873cfb104a4bf3d0622",
           "summary": "Environment initialization sequences bootstrap, enum, frame, global, runtime, and profile-specific compatibility registration; ordering/source wiring does not establish native behavior."
         },
         {
           "kind": "source",
           "reference": "src/mists/compat_bootstrap.lua",
-          "source_hash": "1e715f67140d73d3e0c937351dee4ee3d6a87e464af37e4cde3802b6b36d30ff",
+          "source_hash": "ada713e304031019579618f3bc9165463238f6329dfbe17b90ec49f68cf67bb3",
           "summary": "Mists-only compatibility shim returns false and does not establish Retail behavior."
         },
         {
@@ -92281,7 +92281,7 @@
         {
           "kind": "runtime",
           "reference": "src/lua_api/env_init/mod.rs",
-          "source_hash": "0098c69b6635b9224f372f37874a87aa51aeeac0b4b307973530127d4e98809d",
+          "source_hash": "25ccb157bc90df24dc2afee844b41109aec449b21a5d7873cfb104a4bf3d0622",
           "summary": "Environment initialization sequences bootstrap, enum, frame, global, runtime, and profile-specific compatibility registration; ordering/source wiring does not establish native behavior."
         },
         {
@@ -92322,7 +92322,7 @@
         {
           "kind": "runtime",
           "reference": "src/lua_api/env_init/mod.rs",
-          "source_hash": "0098c69b6635b9224f372f37874a87aa51aeeac0b4b307973530127d4e98809d",
+          "source_hash": "25ccb157bc90df24dc2afee844b41109aec449b21a5d7873cfb104a4bf3d0622",
           "summary": "Environment initialization sequences bootstrap, enum, frame, global, runtime, and profile-specific compatibility registration; ordering/source wiring does not establish native behavior."
         },
         {
@@ -92363,7 +92363,7 @@
         {
           "kind": "runtime",
           "reference": "src/lua_api/env_init/mod.rs",
-          "source_hash": "0098c69b6635b9224f372f37874a87aa51aeeac0b4b307973530127d4e98809d",
+          "source_hash": "25ccb157bc90df24dc2afee844b41109aec449b21a5d7873cfb104a4bf3d0622",
           "summary": "Environment initialization sequences bootstrap, enum, frame, global, runtime, and profile-specific compatibility registration; ordering/source wiring does not establish native behavior."
         },
         {
@@ -92404,7 +92404,7 @@
         {
           "kind": "runtime",
           "reference": "src/lua_api/env_init/mod.rs",
-          "source_hash": "0098c69b6635b9224f372f37874a87aa51aeeac0b4b307973530127d4e98809d",
+          "source_hash": "25ccb157bc90df24dc2afee844b41109aec449b21a5d7873cfb104a4bf3d0622",
           "summary": "Environment initialization sequences bootstrap, enum, frame, global, runtime, and profile-specific compatibility registration; ordering/source wiring does not establish native behavior."
         },
         {
@@ -103429,7 +103429,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/mod.rs",
-          "source_hash": "c41002badcbdadadd07f75537143bc0b7d287064de6531830038d63a8283e514",
+          "source_hash": "fafbb515357a61dad93eafe2d1357e80e0a61fb97831f5202fe673630432d588",
           "summary": "C API registration surface; no method publication was found."
         },
         {
@@ -103523,7 +103523,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/mod.rs",
-          "source_hash": "c41002badcbdadadd07f75537143bc0b7d287064de6531830038d63a8283e514",
+          "source_hash": "fafbb515357a61dad93eafe2d1357e80e0a61fb97831f5202fe673630432d588",
           "summary": "C API module registry; no C_ItemInteraction module was found."
         },
         {
@@ -104277,7 +104277,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/reputation_state.rs",
-          "source_hash": "feb2b829bf6ba5498f2ee770e6d610b68ab19c512c9d21ec19e486b2e447c113",
+          "source_hash": "479252127c0e8d3c43dc3a8e8ef100db025f2dd7705f802800bf3b9b8296dc10",
           "summary": "Temporary reputation fallback surface."
         },
         {
@@ -112020,7 +112020,7 @@
         {
           "kind": "source",
           "reference": "src/mists/compat_bootstrap.lua",
-          "source_hash": "1e715f67140d73d3e0c937351dee4ee3d6a87e464af37e4cde3802b6b36d30ff",
+          "source_hash": "ada713e304031019579618f3bc9165463238f6329dfbe17b90ec49f68cf67bb3",
           "summary": "Current non-retail compatibility code supplies a constant-false IsRaidMarkerActive fallback; no retail shared raid-marker state or producer is modeled."
         },
         {
@@ -135350,7 +135350,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/env_init/mod.rs",
-          "source_hash": "0098c69b6635b9224f372f37874a87aa51aeeac0b4b307973530127d4e98809d",
+          "source_hash": "25ccb157bc90df24dc2afee844b41109aec449b21a5d7873cfb104a4bf3d0622",
           "summary": "Environment initialization sequences bootstrap, enum, frame, global, runtime, and profile-specific compatibility registration; ordering/source wiring does not establish native behavior."
         },
         {
@@ -135391,7 +135391,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/env_init/mod.rs",
-          "source_hash": "0098c69b6635b9224f372f37874a87aa51aeeac0b4b307973530127d4e98809d",
+          "source_hash": "25ccb157bc90df24dc2afee844b41109aec449b21a5d7873cfb104a4bf3d0622",
           "summary": "Environment initialization sequences bootstrap, enum, frame, global, runtime, and profile-specific compatibility registration; ordering/source wiring does not establish native behavior."
         },
         {

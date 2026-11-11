@@ -4,6 +4,9 @@ Updated the [frame-position investigation](investigations/frame-position-baselin
 ## [2026-11-10] system | ScriptObject full lockdown
 
 Created [ScriptObject full lockdown](systems/script-object-full-lockdown.md) and its contract. R18's full-lock predicate, scoped XML default, creation-time inheritance, `IsForbidden` union and five measured API consumers are separate from ordinary forbidden, aura restrictions and combat protection. Retail and Forever integration filters pass 7/7 each; six-profile all-target checks plus Wrath, Retail/Forever library suites, Retail filters and manifest bin tests pass with zero compiler warnings. The [lane report](../../handoff/full-lockdown-model/REPORT.md) records proofs and UNKNOWN edges.
+## [2026-11-10] implementation | Mists R21 Classic API contracts
+
+[Mists R21 Classic API behavior](investigations/mists-r21-classic-apis.md) now includes the watched-faction request: the same 1-based backing positions map to a supplied signed reputation slot, while index 0 and indices at least `N+2` request -1. **VERIFIED:** the new direct watched-slot regression passes, and the nine existing reputation, TokenUI and bag tests plus engraving tests pass. All six profile builds have zero warnings and all six library suites pass; Mists `spell` and `frame_position` failure-name sets match base `origin/master` `93125f591`. `N+1`, native player/connection gating, current-slot deduplication and Era/Anniversary native behavior remain UNKNOWN or unmodeled.
 
 ## [2026-11-09] correction | PTR 12.1.7 FrameXML removed-symbol runtime rows
 
@@ -56,7 +59,7 @@ Recorded the [XML parent identity failure](investigations/mists-spellbook-size.m
 [SetForbidden restriction](../specs/set-forbidden-restriction.md) extends the tainted-call no-op gate to `client-wowforever`: the pinned WowForever `1.60.1.70707` `SimpleFrameScriptObjectAPIDocumentation.lua` is byte-identical to the Retail and PTR copies (`:287-295`, `HasRestrictions = true`), and its `Blizzard_RestrictedAddOnEnvironment/RestrictedExecution.lua:397-400` reaches `MakeForbidden` only under `issecure()`. No native WowForever probe covers the method (`handoff/native-evidence-70707`), so the case stays INFERRED. The existing `protected_frame_enforcement` case failed on Forever before the change and passes after it.
 ## [2026-11-07] investigation | Mists engraving mode native default
 
-[Mists engraving inputs](investigations/mists-engraving-inputs.md#supplied-input-boundary) records the INFERRED native defaults for the bag flow: availability false, engraving mode false and current rune nil. The declarations have no availability setter; the only mode producer is `Blizzard_EngravingUI` OnShow/OnHide; its TOC says the feature is for seasonal content, which Mists is not. `SimState::seed_default_game_state` seeds these three values under `client-mists`; the getters keep the named unsupplied-input errors and supplied state overrides. The unchanged bank and mail storage-flow tests now reach original `ContainerFrame_Shared.lua:315` without a Lua error. Other engraving members keep the explicit missing-input contract.
+The November 7 [engraving-input investigation](investigations/mists-engraving-inputs.md#supplied-input-boundary) treated all three bag-flow defaults as inferred. **VERIFIED** Mists R21 evidence now establishes mode=false and the synchronous setter event; **INFERRED** defaults for availability=false and current rune=nil remain open. See [Mists R21 Classic API behavior](investigations/mists-r21-classic-apis.md). The unchanged bank and mail storage-flow tests still reach original `ContainerFrame_Shared.lua:315` without a Lua error.
 
 ## [2026-11-07] investigation | Forever C_Scenario.ShouldShowCriteria
 
