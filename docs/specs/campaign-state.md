@@ -1,18 +1,37 @@
-# Supplied campaign state
+# Campaign metadata and state
 
-## Best-guess basis — best-guess, native UNKNOWN
+`C_CampaignInfo` reads campaign, chapter, quest-association and progression data. The simulator currently supplies quest-to-campaign and chapter-ID associations, but it does not model Campaign metadata rows or campaign condition state. See [Campaign data model](../wiki/systems/campaign-data.md) for implementation details.
 
-Retail, PTR and Forever (whose pinned `WarCampaignDocumentation.lua` declares the same namespace) expose campaign IDs associated with supplied quest state. Unknown campaign IDs return nil info and Invalid state. A campaign whose known quests are all complete is Complete; one with any active or completed quest, but not all complete, is InProgress; otherwise it is Invalid. GetCampaignID maps a supplied quest ID to its campaign ID, or zero when no association is supplied. The active quest-log projection carries that ID.
+## What it must do
 
-GetChapterIDs projects explicitly supplied ordered chapter IDs; absent chapter data returns nil. This is a best guess, not measured native behavior. No chapters are fabricated.
+- [ ] `GetCampaignID(questID)` returns the explicitly supplied campaign association, or 0 when none exists.
+- [ ] `GetChapterIDs(campaignID)` returns explicitly supplied chapter IDs in stored order; an absent association returns nil. This input mapping is a simulator scenario, not proof of native row contents.
+- [ ] Without a Campaign metadata row, `GetCampaignInfo(campaignID)` returns nil. Quest associations alone must not create an empty metadata table.
+- [ ] Without Campaign rows and condition inputs, `GetState(campaignID)` returns `Enum.CampaignState.Invalid`. Quest completion alone must not imply Complete or InProgress.
 
-The pinned Retail `WarCampaignDocumentation.lua:35-122` declares the ID, nullable info, nullable chapter list, and non-nil state signatures; its `CampaignState` enum appears at lines 163-174. [Warcraft Wiki: GetCampaignID](https://warcraft.wiki.gg/wiki/API:C_CampaignInfo.GetCampaignID) confirms the quest ID input. [Warcraft Wiki: GetCampaignInfo](https://warcraft.wiki.gg/wiki/API:C_CampaignInfo.GetCampaignInfo) lists the nullable info and its fields. Neither source establishes the above progression rules.
+## How it works
 
-Retail `Blizzard_ObjectAPI_Mainline.toc:15` selects Campaign.lua. `Blizzard_UIPanels_Game_Mainline.toc:67-76` selects WarCampaignTemplates.lua, CampaignOverview.lua, and QuestMapFrame.lua; QuestMapFrame.lua:1881-1885 selects a campaign header and WarCampaignTemplates.lua:166-187 reads its state. CampaignOverview.lua:45-47 uses that header.
+- [C API boundary](../wiki/index.md)
+- [Campaign data model](../wiki/systems/campaign-data.md)
 
-## Known gaps
+## Implementation inventory
 
-- Native unknown-ID, state transitions, and Stalled rules are unknown; Stalled is not modeled.
-- No campaign metadata source exists. A known campaign has no fabricated name, description, texture kit, or flags; this is an incomplete CampaignInfo shape.
-- Quest-to-campaign and chapter associations require supplied state; current seeded quests do not supply them.
-- Chapter completion, chapter metadata, ordering rules, and live-client parity are not modeled.
+- `src/c_api/c_campaign_info.rs` — projects supplied quest and chapter associations; returns the verified missing-row result for metadata and state queries.
+- `src/lua_api/state_types/quest_log.rs` — stores simulator-supplied campaign associations and chapter IDs.
+
+## Tests asserting this spec
+
+- `tests/campaign_info.rs::campaign_metadata_and_state_are_not_inferred_from_quest_progress`
+- `tests/campaign_info.rs::campaign_chapters_project_supplied_ids`
+- `tests/campaign_state_consumer.rs::campaign_header_does_not_infer_progress_from_quest_associations`
+
+## Known gaps (current cycle)
+
+- [ ] No Campaign metadata catalog exists. Populated metadata and all eight fields remain unmodeled.
+- [ ] No current-chapter selector, completion-condition evaluator, or stalled-condition evaluator exists. State for present Campaign rows is unmodeled.
+- [ ] The chapter-ID input does not encode whether its Campaign row exists separately from its chapter relation list.
+- [ ] These tests and the Retail original-consumer case have not been rerun after removing quest-derived metadata and progression. Results remain unverified.
+
+## Out of scope
+
+- Native condition writers, chapter completion rules, events, protected-return edge cases, and live-client catalog parity.
