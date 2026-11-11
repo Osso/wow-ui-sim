@@ -106,6 +106,24 @@ fn game_tooltip_pvp_talent_uses_resolved_spell_and_replacement_line() {
         .borrow_mut()
         .pvp_talent_tooltip
         .resolved_spell_ids
+        .insert(853, u32::MAX);
+    let mut unresolved_replacement = record();
+    unresolved_replacement.overrides_spell_id = 853;
+    supply_record(&env, TALENT_ID + 4, unresolved_replacement);
+    env.exec(
+        r#"
+        local data = TestGetPvpTalent(91005)
+        local direct = C_TooltipInfo.GetSpellByID(133)
+        assert(#data.lines == #direct.lines,
+            "a resolved replacement without a spell-name row adds no line")
+        "#,
+    )
+    .unwrap();
+
+    env.state()
+        .borrow_mut()
+        .pvp_talent_tooltip
+        .resolved_spell_ids
         .clear();
     let mut no_override = record();
     no_override.spell_id = 116;
@@ -116,6 +134,19 @@ fn game_tooltip_pvp_talent_uses_resolved_spell_and_replacement_line() {
         local direct = C_TooltipInfo.GetSpellByID(116)
         assert(data.id == 116 and #data.lines == #direct.lines,
             "an empty resolver map means identity; zero OverridesSpellID adds no line")
+        "#,
+    )
+    .unwrap();
+
+    let mut missing_override = record();
+    missing_override.overrides_spell_id = u32::MAX;
+    supply_record(&env, TALENT_ID + 3, missing_override);
+    env.exec(
+        r#"
+        local data = TestGetPvpTalent(91004)
+        local direct = C_TooltipInfo.GetSpellByID(116)
+        assert(#data.lines == #direct.lines,
+            "an override without an original spell row adds no line")
         "#,
     )
     .unwrap();
@@ -185,20 +216,32 @@ fn game_tooltip_pvp_talent_local_annotation_predicates() {
     )
     .unwrap();
 
-    {
-        let mut state = env.state().borrow_mut();
-        state
+    env.state()
+        .borrow_mut()
+        .pvp_talent_tooltip
+        .groups
+        .insert(1, [None; 4]);
+    for position in 0..4 {
+        let mut selected_group = [None; 4];
+        selected_group[position] = Some(TALENT_ID);
+        env.state()
+            .borrow_mut()
             .pvp_talent_tooltip
             .groups
-            .insert(0, [None, None, None, Some(TALENT_ID)]);
-        state.pvp_talent_tooltip.groups.insert(1, [None; 4]);
+            .insert(0, selected_group);
+        env.exec(
+            r#"
+            local direct = C_TooltipInfo.GetSpellByID(116)
+            local selected = TestGetPvpTalent(91001)
+            assert(#selected.lines == #direct.lines,
+                "a talent in each active position has no eligibility line")
+            "#,
+        )
+        .unwrap();
     }
     env.exec(
         r#"
         local direct = C_TooltipInfo.GetSpellByID(116)
-        local selected = TestGetPvpTalent(91001)
-        assert(#selected.lines == #direct.lines,
-            "a talent in any of the four active positions has no eligibility line")
         local otherGroup = TestGetPvpTalent(91001, false, 2, 0)
         assert(#otherGroup.lines == #direct.lines,
             "a non-current group suppresses local annotations")
@@ -313,6 +356,18 @@ fn game_tooltip_pvp_talent_local_annotation_predicates() {
     )
     .unwrap();
 
+    env.state().borrow_mut().player_xp.rest_state = 0;
+    env.state().borrow_mut().player.is_resting = true;
+    env.exec(
+        r#"
+        local direct = C_TooltipInfo.GetSpellByID(116)
+        local resting_player = TestGetPvpTalent(91001)
+        assert(#resting_player.lines == #direct.lines,
+            "the resting-player state also permits the talent change")
+        "#,
+    )
+    .unwrap();
+
     {
         let mut state = env.state().borrow_mut();
         let talent = state
@@ -322,6 +377,7 @@ fn game_tooltip_pvp_talent_local_annotation_predicates() {
             .unwrap();
         talent.level_required = 70;
         talent.eligibility_level_failed = true;
+        state.player.is_resting = false;
         state.player_xp.rest_state = 0;
     }
     env.exec(
@@ -331,6 +387,10 @@ fn game_tooltip_pvp_talent_local_annotation_predicates() {
         assert(line.leftText == UNLOCKED_AT_LEVEL:format(70)
             and line.type == 0 and line.wrapText == true,
             "a supplied later level failure uses the wrapped unlock line")
+        local r, g, b = HOSTILE_STATUS_COLOR:GetRGB()
+        assert(math.abs(line.leftColor.r - r) < 0.01
+            and math.abs(line.leftColor.g - g) < 0.01
+            and math.abs(line.leftColor.b - b) < 0.01)
         "#,
     )
     .unwrap();
@@ -391,9 +451,25 @@ fn game_tooltip_pvp_talent_failure_and_inspect_annotations() {
             .get_mut(&TALENT_ID)
             .unwrap();
         talent.grant_rejected_by_item = true;
-        talent.granted_item_id = Some(6948);
+        talent.granted_item_id = Some(u32::MAX);
         state.player.in_combat = true;
     }
+    env.exec(
+        r#"
+        local data = TestGetPvpTalent(91001)
+        assert(data.lines[#data.lines].leftText == TALENT_TOOLTIP_ADD_COMBAT_ERROR,
+            "an item grant without an item row falls through to combat")
+        "#,
+    )
+    .unwrap();
+
+    env.state()
+        .borrow_mut()
+        .pvp_talent_tooltip
+        .catalog
+        .get_mut(&TALENT_ID)
+        .unwrap()
+        .granted_item_id = Some(6948);
     env.exec(
         r#"
         local data = TestGetPvpTalent(91001)
@@ -473,6 +549,21 @@ fn game_tooltip_pvp_talent_failure_and_inspect_annotations() {
         assert(math.abs(line.leftColor.r - r) < 0.01
             and math.abs(line.leftColor.g - g) < 0.01
             and math.abs(line.leftColor.b - b) < 0.01)
+        "#,
+    )
+    .unwrap();
+
+    env.state()
+        .borrow_mut()
+        .pvp_talent_tooltip
+        .inspect_grant_item_ids
+        .remove(&("inspect-guid".to_string(), TALENT_ID));
+    env.exec(
+        r#"
+        local data = TestGetPvpTalent(91001, true, 2, 1)
+        local direct = C_TooltipInfo.GetSpellByID(116)
+        assert(#data.lines == #direct.lines,
+            "inspect mode adds no item line without a granting-item result")
         "#,
     )
     .unwrap();
