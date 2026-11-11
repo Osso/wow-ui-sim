@@ -201,6 +201,9 @@ The file-by-file pass also produced answers for units that are not secrecy surfa
 
 ## Implementation inventory
 
+- `src/c_api/c_secrets.rs`: publishes the Forever spell-casting predicate and its host GUID inputs.
+- `src/c_api/secrets_queries.rs`: registers the broader retail predicate surface.
+- `src/lua_api/globals/unit_misc.rs`: resolves built-in and host-supplied unit GUIDs.
 - `src/c_api/unit_aura_access.rs`: restriction flag and the aura access guard.
 - `src/lua_api/globals/auras.rs`: AuraData builder and table wrapping.
 - `src/c_api/c_unit_auras.rs`, `c_unit_aura_*.rs`, `aura_duration.rs`: aura queries and per-function guards.

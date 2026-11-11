@@ -5,7 +5,6 @@
 
 use super::should_auras_be_secret;
 use crate::c_api::{c_spell, c_spell_book, charge_state, unit_aura_access};
-use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::globals::unit_misc;
 use crate::lua_api::methods::{borrow_state, val_to_string};
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
@@ -17,8 +16,6 @@ use rilua::{LuaResult, Val};
 
 const NEVER_SECRET: f64 = 0.0;
 const CONTEXTUALLY_SECRET: f64 = 2.0;
-const SHOULD_UNIT_SPELL_CASTING_BE_SECRET_USAGE: &str =
-    "Usage: local isSpellCastingSecret = C_Secrets.ShouldUnitSpellCastingBeSecret(unit)";
 type Query = fn(&mut LuaState) -> LuaResult<u32>;
 
 const QUERIES: &[(&str, Query)] = &[
@@ -72,7 +69,7 @@ const QUERIES: &[(&str, Query)] = &[
     ("ShouldUnitIdentityBeSecret", should_unit_identity_be_secret),
     (
         "ShouldUnitSpellCastingBeSecret",
-        should_unit_spell_casting_be_secret,
+        super::should_unit_spell_casting_be_secret,
     ),
     #[cfg(feature = "retail-12-0-5")]
     (
@@ -267,40 +264,6 @@ fn should_unit_comparison_be_secret(state: &mut LuaState) -> LuaResult<u32> {
     // INFERRED simulator default: UnitIsUnit implements comparability but not
     // SecretWhenUnitComparisonRestricted. Identity secrecy is a different policy.
     push_bool(state, false)
-}
-
-fn should_unit_spell_casting_be_secret(state: &mut LuaState) -> LuaResult<u32> {
-    let unit = read_spell_casting_unit(state, 1)?;
-    let secrecy_enabled = matches!(
-        ACTIVE,
-        ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
-    );
-    if !secrecy_enabled {
-        return push_bool(state, false);
-    }
-
-    let sim = borrow_state(state)?;
-    let Some(unit_guid) = unit_misc::existing_guid_for_unit(&sim, &unit) else {
-        return push_bool(state, true);
-    };
-    let player_guid = unit_misc::existing_guid_for_unit(&sim, "player");
-    let belongs_to_player = player_guid.as_deref() == Some(unit_guid.as_str())
-        || sim
-            .player_owned_or_controlled_unit_guids
-            .contains(&unit_guid);
-    push_bool(state, !belongs_to_player)
-}
-
-fn read_spell_casting_unit(state: &LuaState, position: i32) -> LuaResult<String> {
-    let value = unwrap_secret(state, stack_val(state, position))?;
-    if !matches!(value, Val::Str(_) | Val::Num(_)) {
-        return Err(rilua::runtime_error(
-            SHOULD_UNIT_SPELL_CASTING_BE_SECRET_USAGE,
-        ));
-    }
-
-    val_to_string(state, value)
-        .ok_or_else(|| rilua::runtime_error(SHOULD_UNIT_SPELL_CASTING_BE_SECRET_USAGE))
 }
 
 #[cfg(feature = "retail-12-0-5")]
