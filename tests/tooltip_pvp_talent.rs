@@ -314,20 +314,23 @@ fn game_tooltip_pvp_talent_local_annotation_predicates() {
         "#,
     )
     .unwrap();
+}
 
+#[test]
+fn game_tooltip_pvp_talent_missing_eligibility_and_level_error() {
+    let env = env();
+    let mut talent = record();
+    talent.level_required = 70;
+    talent.category_position_mask = 1;
+    supply_record(&env, TALENT_ID, talent);
     {
         let mut state = env.state().borrow_mut();
-        let talent = state
-            .pvp_talent_tooltip
-            .catalog
-            .get_mut(&TALENT_ID)
-            .unwrap();
-        talent.category_position_mask = 1;
-        talent.level_required = 70;
-        talent.eligibility_by_position.remove(&0);
-        talent.eligibility_level_failed = false;
+        state.pvp_talent_tooltip.groups.insert(0, [None; 4]);
+        state.player.level = 80;
+        state.player.effective_level = 0;
         state.player_xp.rest_state = 1;
     }
+
     env.exec(
         r#"
         local direct = C_TooltipInfo.GetSpellByID(116)
@@ -356,8 +359,11 @@ fn game_tooltip_pvp_talent_local_annotation_predicates() {
     )
     .unwrap();
 
-    env.state().borrow_mut().player_xp.rest_state = 0;
-    env.state().borrow_mut().player.is_resting = true;
+    {
+        let mut state = env.state().borrow_mut();
+        state.player_xp.rest_state = 0;
+        state.player.is_resting = true;
+    }
     env.exec(
         r#"
         local direct = C_TooltipInfo.GetSpellByID(116)
@@ -375,10 +381,8 @@ fn game_tooltip_pvp_talent_local_annotation_predicates() {
             .catalog
             .get_mut(&TALENT_ID)
             .unwrap();
-        talent.level_required = 70;
         talent.eligibility_level_failed = true;
         state.player.is_resting = false;
-        state.player_xp.rest_state = 0;
     }
     env.exec(
         r#"
