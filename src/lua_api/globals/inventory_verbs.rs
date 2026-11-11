@@ -360,8 +360,8 @@ fn cursor_has_item_id(state: &LuaState, item_id: u32) -> LuaResult<bool> {
         }))
 }
 
-/// Keep the existing simulator path for profiles without R37 evidence and the
-/// R37 sale/duplicate-item paths, whose native results are not modeled.
+/// Keep existing behavior for profiles without R37 evidence and R37 paths
+/// whose native results are UNKNOWN.
 fn pickup_legacy_merchant_item(state: &mut LuaState) -> LuaResult<u32> {
     let Some(index) = stack_u32(state, 1) else {
         return Ok(0);
