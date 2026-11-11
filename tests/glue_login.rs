@@ -535,3 +535,63 @@ fn login_policy_replaces_pending_attempt_and_cancels_on_screen_boot() {
         "policy callbacks should succeed: {errors:#?}"
     );
 }
+
+#[test]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn login_queue_uses_host_snapshots_separate_from_wow_connection_state() {
+    use wow_ui_sim::c_api::c_login::{LogonQueue, update_logon_queue};
+    let env = common::lock_env(|| WowLuaEnv::new().unwrap());
+    env.set_screen_mode(ScreenKind::Login);
+    assert_eq!(
+        env.eval::<(bool, f64, f64)>("return C_Login.GetLogonQueueInfo()")
+            .unwrap(),
+        (false, 0.0, 0.0)
+    );
+    env.exec(
+        r#"
+        queueUpdateEvents = 0
+        local listener = CreateFrame("Frame")
+        listener:RegisterEvent("LOGIN_STATE_CHANGED")
+        listener:SetScript("OnEvent", function(_, _, ...)
+            queueUpdateEvents = queueUpdateEvents + 1
+            assert(select('#', ...) == 0)
+        end)
+    "#,
+    )
+    .unwrap();
+    let queue = LogonQueue {
+        server_position: 5.0,
+        estimated_seconds: 90.0,
+    };
+    update_logon_queue(&env, Some(queue)).unwrap();
+    update_logon_queue(&env, Some(queue)).unwrap();
+    assert_eq!(env.eval::<i32>("return queueUpdateEvents").unwrap(), 2);
+    env.fire_on_update(30.0).unwrap();
+    assert_eq!(
+        env.eval::<(bool, f64, f64)>("return C_Login.GetLogonQueueInfo()")
+            .unwrap(),
+        (true, 4.0, 90.0)
+    );
+    env.exec(
+        r#"
+        assert(select('#', C_Login.GetLogonQueueInfo()) == 3)
+        local state, _, connection = C_Login.GetState()
+        if type(state) == "table" then connection = state.wowConnectionState end
+        assert(connection == LE_WOW_CONNECTION_STATE_NONE)
+    "#,
+    )
+    .unwrap();
+    update_logon_queue(&env, None).unwrap();
+    env.exec(r#"C_Login.Login("offline", CreateFrame("EditBox"))"#)
+        .unwrap();
+    assert_eq!(
+        env.eval::<(bool, f64, f64)>("return C_Login.GetLogonQueueInfo()")
+            .unwrap(),
+        (false, 0.0, 0.0)
+    );
+    let errors = env.state().borrow().lua_errors.clone();
+    assert!(
+        errors.is_empty(),
+        "queue callbacks should succeed: {errors:#?}"
+    );
+}

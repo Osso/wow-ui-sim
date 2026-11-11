@@ -85,10 +85,19 @@ proof of native cancellation or retry semantics.
 
 ## Remaining dependencies
 
-QUESTION **32** requests the missing `C_Login.GetLogonQueueInfo` contract. Exact
-consumer call sites are Retail GlueParent.lua **248** and Forever **282** (the
-question's initial line numbers were off by one). No implementation is inferred
-from the Lua assignment alone.
+ANSWER **38** (R42, Retail70688 / Forever70707) resolves QUESTION32.
+`C_Login.GetLogonQueueInfo` takes no arguments, has no usage error, and returns
+exactly `(isQueued, queuePosition, estimatedSeconds)`. Default/no queue is
+`(false, 0, 0)`. A supplied active Battle.net queue record produces server
+position minus one and the last supplied estimate; it does not count down.
+This record is independent of the WoW connection state. Every active host update,
+including an identical one, publishes no-payload `LOGIN_STATE_CHANGED`.
+`update_logon_queue` is the simulator host-input producer; clearing the record
+changes getter output without inventing an unspecified inactive-update event.
+Glue-only registration is INFERRED. The exact original getter consumers are
+Retail GlueParent.lua **248** and Forever **282**. A focused test covers the
+empty/default case, repeated active updates, snapshot behavior and independence
+from WoW connection state.
 
 The coordinator owns the five existing Forever character-select/create failures
 on `forever-int-clean` (lt-95ac ANSWER 28). Integrate master after its merge; do

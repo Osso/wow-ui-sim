@@ -8,6 +8,16 @@ use crate::lua_bridge::table_set_rust_fn_static;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+mod submission;
+
+/// R42: supplied Battle.net queue record, separate from the WoW connection state.
+#[derive(Clone, Copy, Debug)]
+pub struct LogonQueue {
+    pub server_position: f64,
+    pub estimated_seconds: f64,
+}
+
 /// Host inputs and the offline login policy (lt-a667, ANSWER 30 / R40).
 /// No credentials are retained. Existing direct-screen boot remains separate.
 #[derive(Debug)]
@@ -16,6 +26,7 @@ pub struct LoginState {
     /// Availability is independent of the number of realm records (R40).
     /// False is the empty offline scenario; realm discovery is not emulated.
     pub realm_list_available: bool,
+    pub logon_queue: Option<LogonQueue>,
     pub(crate) submitted: bool,
     aurora_state: i32,
     connected_to_wow: bool,
@@ -27,6 +38,7 @@ impl Default for LoginState {
         Self {
             characters: Vec::new(),
             realm_list_available: false,
+            logon_queue: None,
             submitted: false,
             aurora_state: 1,
             connected_to_wow: false,
@@ -49,7 +61,15 @@ pub fn register_c_login(state: &mut LuaState) -> LuaResult<()> {
     table_set_rust_fn_static(state, ns, "IsLoginReady", c_login_is_login_ready)?;
     table_set_rust_fn_static(state, ns, "GetState", c_login_get_state)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-    table_set_rust_fn_static(state, ns, "Login", login)?;
+    {
+        table_set_rust_fn_static(state, ns, "Login", submission::login)?;
+        table_set_rust_fn_static(
+            state,
+            ns,
+            "GetLogonQueueInfo",
+            submission::get_logon_queue_info,
+        )?;
+    }
     permanent_shims::c_login::register_c_login_defaults(state, ns)?;
     Ok(())
 }
@@ -104,44 +124,6 @@ fn c_login_get_state(state: &mut LuaState) -> LuaResult<u32> {
     Ok(5)
 }
 
-#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-fn login(state: &mut LuaState) -> LuaResult<u32> {
-    use crate::lua_api::methods::{borrow_state_mut, extract_frame_id};
-    use crate::lua_bridge::stack_val;
-    const USAGE: &str = "Usage: C_Login.Login(\"accountName\", AccountLoginPasswordEdit)";
-    let account = stack_val(state, 1);
-    let password_box = stack_val(state, 2);
-    if !matches!(account, Val::Str(_) | Val::Num(_)) || !matches!(password_box, Val::Table(_)) {
-        return Err(rilua::runtime_error(USAGE));
-    }
-    let id = extract_frame_id(state, password_box).ok_or_else(|| rilua::runtime_error(USAGE))?;
-    if !borrow_state(state)?
-        .widgets
-        .get(id)
-        .is_some_and(|frame| frame.widget_type == crate::widget::WidgetType::EditBox)
-    {
-        return Err(rilua::runtime_error(USAGE));
-    }
-    {
-        let mut sim = borrow_state_mut(state)?;
-        let login = &mut sim.glue_login;
-        login.submitted = true;
-        login.aurora_state = 3;
-        login.connected_to_wow = false;
-        login.pending_step = 1;
-    }
-    // R40 permits synchronous CONNECTING; this sequence is simulator policy.
-    crate::lua_api::script_helpers::fire_named_event_state(state, "LOGIN_STATE_CHANGED", &[]);
-    // The offline policy accepts all input. Do not copy, log or retain the password.
-    crate::lua_api::frame::methods::text_attribute_event::set_frame_text_value(
-        state,
-        id,
-        Some(String::new()),
-        false,
-    )?;
-    Ok(0)
-}
-
 /// Advance the explicit offline policy once per update, not native frame timing.
 pub(crate) fn advance(env: &crate::lua_api::WowLuaEnv) -> crate::Result<()> {
     let step = {
@@ -169,6 +151,19 @@ pub(crate) fn advance(env: &crate::lua_api::WowLuaEnv) -> crate::Result<()> {
         let count = env.state().borrow().glue_login.characters.len();
         env.fire_event_with_args("CHARACTER_LIST_UPDATE", &[Val::Num(count as f64)])?;
     } else {
+        env.fire_event("LOGIN_STATE_CHANGED")?;
+    }
+    Ok(())
+}
+
+/// Publish a host queue snapshot. R42 requires an event for each active update,
+/// even unchanged ones. Clearing the host record emits no inferred native event.
+pub fn update_logon_queue(
+    env: &crate::lua_api::WowLuaEnv,
+    queue: Option<LogonQueue>,
+) -> crate::Result<()> {
+    env.state().borrow_mut().glue_login.logon_queue = queue;
+    if queue.is_some() {
         env.fire_event("LOGIN_STATE_CHANGED")?;
     }
     Ok(())
