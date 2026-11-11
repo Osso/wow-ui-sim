@@ -61,7 +61,14 @@ fn game_tooltip_pvp_talent_uses_resolved_spell_and_replacement_line() {
     let env = env();
     let mut talent = record();
     talent.overrides_spell_id = 853;
+    talent.category_position_mask = 1;
+    talent.eligibility_by_position.insert(0, true);
     supply_record(&env, TALENT_ID, talent);
+    env.state()
+        .borrow_mut()
+        .pvp_talent_tooltip
+        .groups
+        .insert(0, [None; 4]);
     {
         let mut state = env.state().borrow_mut();
         state.pvp_talent_tooltip.resolved_spell_ids.insert(116, 133);
@@ -80,11 +87,13 @@ fn game_tooltip_pvp_talent_uses_resolved_spell_and_replacement_line() {
         assert(data.type == 1 and data.id == 133)
         assert(data.dataInstanceID ~= nil)
         assert(lines[1].leftText == displayed.lines[1].leftText)
-        assert(#lines == #displayed.lines + 1,
-            "only the conditional replacement line follows spell content")
-        local line = lines[#lines]
+        assert(#lines == #displayed.lines + 2,
+            "replacement and talent annotation follow ordinary spell content")
+        local line = lines[#lines - 1]
         assert(line.type == 0)
         assert(line.leftText == REPLACES_SPELL:format(replacement.lines[1].leftText))
+        assert(lines[#lines].leftText == TALENT_TOOLTIP_ADDPREVIEWPOINT,
+            "talent annotation follows REPLACES_SPELL")
         local first = TestGetPvpTalent(91001)
         local second = TestGetPvpTalent(91001)
         assert(second.dataInstanceID == first.dataInstanceID + 1,
@@ -272,8 +281,48 @@ fn game_tooltip_pvp_talent_local_annotation_predicates() {
             .unwrap();
         talent.category_position_mask = 1;
         talent.level_required = 70;
-        talent.eligibility_by_position.insert(0, false);
+        talent.eligibility_by_position.remove(&0);
+        talent.eligibility_level_failed = false;
+        state.player_xp.rest_state = 1;
+    }
+    env.exec(
+        r#"
+        local direct = C_TooltipInfo.GetSpellByID(116)
+        local unmodeled = TestGetPvpTalent(91001)
+        assert(#unmodeled.lines == #direct.lines,
+            "a missing eligibility-helper result emits no guessed message")
+        "#,
+    )
+    .unwrap();
+
+    env.state()
+        .borrow_mut()
+        .pvp_talent_tooltip
+        .catalog
+        .get_mut(&TALENT_ID)
+        .unwrap()
+        .eligibility_by_position
+        .insert(0, false);
+    env.exec(
+        r#"
+        local direct = C_TooltipInfo.GetSpellByID(116)
+        local resting = TestGetPvpTalent(91001)
+        assert(#resting.lines == #direct.lines,
+            "the allowed rest state does not add a rest error")
+        "#,
+    )
+    .unwrap();
+
+    {
+        let mut state = env.state().borrow_mut();
+        let talent = state
+            .pvp_talent_tooltip
+            .catalog
+            .get_mut(&TALENT_ID)
+            .unwrap();
+        talent.level_required = 70;
         talent.eligibility_level_failed = true;
+        state.player_xp.rest_state = 0;
     }
     env.exec(
         r#"
