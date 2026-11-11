@@ -104,18 +104,22 @@ fn should_unit_spell_casting_be_secret(state: &mut LuaState) -> LuaResult<u32> {
         return Ok(1);
     }
 
-    let sim = crate::lua_api::methods::borrow_state(state)?;
-    let Some(unit_guid) = crate::lua_api::globals::unit_misc::existing_guid_for_unit(&sim, &unit)
-    else {
-        state.push(Val::Bool(true));
-        return Ok(1);
+    let should_be_secret = {
+        let sim = crate::lua_api::methods::borrow_state(state)?;
+        match crate::lua_api::globals::unit_misc::existing_guid_for_unit(&sim, &unit) {
+            None => true,
+            Some(unit_guid) => {
+                let player_guid =
+                    crate::lua_api::globals::unit_misc::existing_guid_for_unit(&sim, "player");
+                let belongs_to_player = player_guid.as_deref() == Some(unit_guid.as_str())
+                    || sim
+                        .player_owned_or_controlled_unit_guids
+                        .contains(&unit_guid);
+                !belongs_to_player
+            }
+        }
     };
-    let player_guid = crate::lua_api::globals::unit_misc::existing_guid_for_unit(&sim, "player");
-    let belongs_to_player = player_guid.as_deref() == Some(unit_guid.as_str())
-        || sim
-            .player_owned_or_controlled_unit_guids
-            .contains(&unit_guid);
-    state.push(Val::Bool(!belongs_to_player));
+    state.push(Val::Bool(should_be_secret));
     Ok(1)
 }
 
