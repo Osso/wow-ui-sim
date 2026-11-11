@@ -491,6 +491,7 @@ mod voice_provider_enum;
 
 pub(crate) mod c_tts_settings;
 mod helpers;
+pub(crate) use helpers::parse_numeric_string;
 #[cfg(feature = "retail-12-0-0")]
 mod patch_retired_members;
 #[cfg(feature = "retail-12-0-0")]

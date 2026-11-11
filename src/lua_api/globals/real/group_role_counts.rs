@@ -55,7 +55,7 @@ fn requested_container(state: &LuaState) -> Option<usize> {
             .gc
             .string_arena
             .get(reference)
-            .and_then(|string| crate::c_api::helpers::parse_numeric_string(string.data())),
+            .and_then(|string| crate::c_api::parse_numeric_string(string.data())),
         _ => None,
     }?;
     match value.trunc() {
