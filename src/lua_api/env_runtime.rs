@@ -169,6 +169,8 @@ impl WowLuaEnv {
         install_screen_mode_globals(self, screen_kind);
         crate::c_api::c_character_creation::update_screen_registration(self, screen_kind.is_glue());
         crate::c_api::c_character_services::update_screen_registration(self, screen_kind.is_glue());
+        crate::c_api::c_login::update_screen_registration(self, screen_kind);
+        crate::c_api::c_district_utils::update_screen_registration(self, screen_kind.is_glue());
     }
 
     /// Toggle whether the simulated player is logged into the world.

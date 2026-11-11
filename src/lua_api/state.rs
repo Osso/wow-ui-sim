@@ -758,6 +758,8 @@ macro_rules! build_empty_sim_state {
             wow_token: WowTokenState::default(),
             mythic_plus: MythicPlusState::default(),
             character_create_default_facing_by_race_sex: ::std::collections::HashMap::new(),
+            super_district_info_by_id: ::std::collections::HashMap::new(),
+            selected_super_district_id: 0,
             character_services: CharacterServicesState::default(),
             scenario: ScenarioState::default(),
             death_recaps: Vec::new(),

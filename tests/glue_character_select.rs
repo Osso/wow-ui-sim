@@ -297,6 +297,151 @@ fn queued_upgrade_presence_drives_blizzard_character_select_consumer() {
 }
 
 #[test]
+#[cfg(any(feature = "client-ptr", feature = "client-wowforever"))]
+fn super_district_title_uses_host_selection_and_info() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+        let (selected_id, return_count): (i32, i32) = env
+            .eval(
+                "return C_Login.GetSelectedSuperDistrictID(), select('#', C_Login.GetSelectedSuperDistrictID())",
+            )
+            .expect("selected superdistrict should be queryable");
+        assert_eq!(selected_id, 0);
+        assert_eq!(return_count, 1);
+
+        let unknown_return_count: i32 = env
+            .eval("return select('#', C_DistrictUtils.GetSuperDistrictInfo(0))")
+            .expect("unknown superdistrict lookup should be queryable");
+        assert_eq!(unknown_return_count, 0);
+
+        let default_title: String = env
+            .eval(
+                r#"
+                local list = CharacterSelectUI.VisibilityFramesContainer.CharacterList
+                CharacterSelectListMixin.OnShow(list)
+                return list.SuperdistrictText:GetText()
+                "#,
+            )
+            .expect("the cached CharacterSelectList consumer should display its missing-info title");
+        assert_eq!(default_title, "");
+
+        let district_id = 73;
+        env.state().borrow_mut().super_district_info_by_id.insert(
+            district_id,
+            wow_ui_sim::c_api::c_district_utils::SuperDistrictInfo {
+                super_district_id: district_id,
+                display_name: "Supplied region".to_string(),
+                description: "Host district description".to_string(),
+                icon_file_data_id: 9173,
+                disallow_login: true,
+                no_realms_available: false,
+                override_bg_atlas: "district-background".to_string(),
+                override_bg_glow_atlas: "district-glow".to_string(),
+            },
+        );
+
+        let selection_result: bool = env
+            .eval(
+                r#"
+                local returns = select("#", SelectSuperDistrict("73.9"))
+                local selected = C_Login.GetSelectedSuperDistrictID()
+                SelectSuperDistrict(999)
+                return returns == 0 and selected == 73
+                    and C_Login.GetSelectedSuperDistrictID() == 73
+                "#,
+            )
+            .expect("valid selection should truncate and invalid IDs should preserve state");
+        assert!(selection_result);
+
+        let argument_errors: bool = env
+            .eval(
+                r#"
+                local function error_contains(callback, expected)
+                    local ok, message = pcall(callback)
+                    return not ok and string.find(tostring(message), expected, 1, true) ~= nil
+                end
+                return error_contains(function() SelectSuperDistrict() end,
+                                      "Usage: SelectSuperDistrict(superDistrictID)")
+                    and error_contains(function() SelectSuperDistrict(nil) end,
+                                      "Usage: SelectSuperDistrict(superDistrictID)")
+                    and error_contains(function() SelectSuperDistrict("not numeric") end,
+                        "outside of expected range -2147483648 to 2147483647 - Usage: SelectSuperDistrict(superDistrictID)")
+                    and error_contains(function() SelectSuperDistrict(2147483648) end,
+                        "outside of expected range -2147483648 to 2147483647 - Usage: SelectSuperDistrict(superDistrictID)")
+                    and error_contains(function() C_DistrictUtils.GetSuperDistrictInfo() end,
+                        "Usage: local info = C_DistrictUtils.GetSuperDistrictInfo(superDistrictID)")
+                    and error_contains(function() C_DistrictUtils.GetSuperDistrictInfo(nil) end,
+                        "Usage: local info = C_DistrictUtils.GetSuperDistrictInfo(superDistrictID)")
+                    and error_contains(function() C_DistrictUtils.GetSuperDistrictInfo(false) end,
+                        "outside of expected range -2147483648 to 2147483647 - Usage: local info = C_DistrictUtils.GetSuperDistrictInfo(superDistrictID)")
+                    and error_contains(function() C_DistrictUtils.GetSuperDistrictInfo(2147483648) end,
+                        "outside of expected range -2147483648 to 2147483647 - Usage: local info = C_DistrictUtils.GetSuperDistrictInfo(superDistrictID)")
+                "#,
+            )
+            .expect("superdistrict argument failures should retain native error details");
+        assert!(argument_errors);
+
+        let record_matches: bool = env
+            .eval(
+                r#"
+                local info = C_DistrictUtils.GetSuperDistrictInfo("73.9")
+                return select("#", C_DistrictUtils.GetSuperDistrictInfo("73.9")) == 1
+                    and type(info) == "table"
+                    and info.superDistrictID == 73
+                    and info.displayName == "Supplied region"
+                    and info.description == "Host district description"
+                    and info.iconFileDataID == 9173
+                    and info.disallowLogin == true
+                    and info.noRealmsAvailable == false
+                    and info.overrideBgAtlas == "district-background"
+                    and info.overrideBgGlowAtlas == "district-glow"
+                "#,
+            )
+            .expect("host-supplied district fields should be projected");
+        assert!(record_matches);
+
+        let supplied_title: String = env
+            .eval(
+                r#"
+                local list = CharacterSelectUI.VisibilityFramesContainer.CharacterList
+                CharacterSelectListMixin.OnShow(list)
+                return list.SuperdistrictText:GetText()
+                "#,
+            )
+            .expect("the cached CharacterSelectList consumer should use the host display name");
+        assert_eq!(supplied_title, "Supplied region");
+
+        env.set_screen_mode(ScreenKind::Login);
+        let reset_id: i32 = env
+            .eval("return C_Login.GetSelectedSuperDistrictID()")
+            .expect("login start should reset the selected superdistrict");
+        assert_eq!(reset_id, 0);
+
+        env.set_screen_mode(ScreenKind::Game);
+        let (glue_members_absent, district_info_available): (bool, bool) = env
+            .eval(
+                "return C_Login.GetSelectedSuperDistrictID == nil and SelectSuperDistrict == nil, C_DistrictUtils ~= nil and C_DistrictUtils.GetSuperDistrictInfo ~= nil",
+            )
+            .expect("Game surface visibility should be queryable");
+        assert!(glue_members_absent);
+        assert_eq!(district_info_available, cfg!(feature = "client-ptr"));
+    }
+}
+
+#[test]
+#[cfg(feature = "client-retail")]
+fn retail_does_not_register_super_district_glue_apis() {
+    let env = WowLuaEnv::new().expect("create Lua environment");
+    env.set_screen_mode(ScreenKind::CharacterSelect);
+    let members_absent: bool = env
+        .eval(
+            "return C_Login.GetSelectedSuperDistrictID == nil and SelectSuperDistrict == nil and (C_DistrictUtils == nil or C_DistrictUtils.GetSuperDistrictInfo == nil)",
+        )
+        .expect("Retail superdistrict API visibility should be queryable");
+    assert!(members_absent);
+}
+
+#[test]
 fn character_select_screen_shows_character_select_not_login() {
     test_timeout! {
         let env = load_blizzard_screen(ScreenKind::CharacterSelect);

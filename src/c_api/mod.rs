@@ -154,6 +154,7 @@ pub(crate) mod c_debug;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_delves_entrance;
 pub mod c_discord;
+pub mod c_district_utils;
 mod c_dungeon_score_rarity;
 #[cfg(feature = "retail-12-0-0")]
 pub mod c_dye_color;
@@ -610,6 +611,7 @@ fn register_specialization_and_model_tables(state: &mut LuaState) -> LuaResult<(
 fn register_glue_and_display_tables(state: &mut LuaState) -> LuaResult<()> {
     c_glue::register_c_glue(state)?;
     c_login::register_c_login(state)?;
+    c_district_utils::register_ptr_game_surface(state)?;
     c_character_creation_naming::register(state)?;
     c_ui::register(state)?;
     permanent_shims::c_ui::register_c_ui(state)

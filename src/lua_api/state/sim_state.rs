@@ -926,6 +926,10 @@ pub struct SimState {
     pub mythic_plus: MythicPlusState,
     /// Host-supplied facing in degrees, keyed by selected character-create race/sex IDs.
     pub character_create_default_facing_by_race_sex: HashMap<(i64, i64), f64>,
+    /// Host-supplied superdistrict records, keyed by native ID.
+    pub super_district_info_by_id: HashMap<i32, crate::c_api::c_district_utils::SuperDistrictInfo>,
+    /// Currently selected superdistrict ID; native clear/start/reset value is zero.
+    pub selected_super_district_id: i32,
     pub character_services: CharacterServicesState,
     pub scenario: ScenarioState,
     pub death_recaps: Vec<DeathRecapEntry>,
