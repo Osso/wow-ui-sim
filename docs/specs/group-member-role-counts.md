@@ -26,7 +26,7 @@
 
 ## Tests asserting this spec
 
-- `tests/group_role_counts.rs::group_role_counts_retail_uses_native_roster_fields` — selected original `PartyUtil.lua`, both containers, default selection, table reuse, role priority, skip flag, class resolution, null termination, and 40-slot cap.
+- `tests/group_role_counts.rs::group_role_counts_retail_uses_native_roster_fields` — selected original `PartyUtil.lua`, both containers, numeric and default selection, exact return arity, table reuse, role priority, skip flag, class resolution, null termination, and 40-slot cap.
 - `tests/group_role_counts.rs::group_role_counts_ptr_keeps_simulator_party_projection` and `group_role_counts_classic_profiles_keep_unset_roles` — selected original `PartyUtil.lua` with existing non-Retail simulator inputs; these are not native parity proof.
 - `tests/admin_pvp_guild_api.rs` — no-group role total.
 

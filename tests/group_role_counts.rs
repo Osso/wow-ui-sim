@@ -81,11 +81,16 @@ fn group_role_counts_retail_uses_native_roster_fields() {
     env.exec(
         r#"
         assert(debug.getinfo(GetGroupMemberCountsForDisplay, 'S').source:find('PartyUtil.lua', 1, true))
-        local first = GetGroupMemberCounts(1)
+        local function pack(...) return { count = select('#', ...), ... } end
+        local firstResult = pack(GetGroupMemberCounts(1))
+        assert(firstResult.count == 1 and type(firstResult[1]) == 'table', 'one table return')
+        local first = firstResult[1]
         assert(first.TANK == 3 and first.HEALER == 1 and first.DAMAGER == 1 and first.NOROLE == 1, 'container one role counts')
-        assert(first.WARRIOR == 2 and first.PALADIN == 1 and first.HUNTER == 1 and first.ROGUE == 1, 'class tokens and invalid cached class')
+        assert(first.WARRIOR == 2 and first.PALADIN == 1 and first.HUNTER == 1 and first.ROGUE == 1 and first.PRIEST == 0, 'class tokens, skipped flag, and invalid cached class')
         assert(first.UNKNOWN == nil, 'class zero has no published class key')
 
+        local numericString = GetGroupMemberCounts('1')
+        assert(numericString.TANK == 3, 'numeric strings use the shared numeric predicate')
         local second = GetGroupMemberCounts(2)
         assert(second.TANK == 40 and second.DAMAGER == 0 and second.WARRIOR == 40, '40-member cap')
         local shown = GetGroupMemberCountsForDisplay()
