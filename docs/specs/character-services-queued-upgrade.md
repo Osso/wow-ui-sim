@@ -4,8 +4,8 @@
 
 ## What it must do
 
-- [ ] On Retail, PTR, and WowForever Glue screens, expose `HasQueuedUpgrade()` and return exactly one boolean. It is true iff the queued GUID type bits are nonzero; a zero GUID returns false.
-- [ ] Do not expose `HasQueuedUpgrade` on the Game screen.
+- [x] On Retail, PTR, and WowForever Glue screens, expose `HasQueuedUpgrade()` and return exactly one boolean. It is true iff the queued GUID type bits are nonzero; a zero GUID returns false.
+- [x] Do not expose `HasQueuedUpgrade` on the Game screen.
 - [ ] Do not add eligibility, connection, or mode gates.
 
 ## How it works
