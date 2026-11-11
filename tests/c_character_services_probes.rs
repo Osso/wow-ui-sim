@@ -8,6 +8,19 @@ fn env() -> WowLuaEnv {
     WowLuaEnv::new().expect("Failed to create Lua environment")
 }
 
+fn queued_upgrade_result(env: &WowLuaEnv) -> (bool, i32) {
+    env.eval(
+        r#"
+        local function pack(...)
+            return { count = select("#", ...), ... }
+        end
+        local result = pack(C_CharacterServices.HasQueuedUpgrade())
+        return result[1], result.count
+        "#,
+    )
+    .expect("queued-upgrade result is readable")
+}
+
 #[test]
 fn get_active_character_upgrade_boost_type_returns_nil_by_default() {
     let env = env();
@@ -184,12 +197,14 @@ fn has_queued_upgrade_drives_the_original_character_select_update() {
                     .borrow_mut()
                     .character_services
                     .queued_upgrade_guid_type_nonzero = false;
+                assert_eq!(queued_upgrade_result(env), (false, 1));
                 env.exec("CharacterSelectFrameMixin:OnUpdate(0)")
                     .expect("original consumer accepts an empty queued GUID");
                 env.state()
                     .borrow_mut()
                     .character_services
                     .queued_upgrade_guid_type_nonzero = true;
+                assert_eq!(queued_upgrade_result(env), (true, 1));
                 env.exec("CharacterSelectFrameMixin:OnUpdate(0)")
                     .expect("original consumer accepts a nonzero queued GUID type");
                 let refreshes: i32 = env
