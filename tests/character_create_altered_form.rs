@@ -116,6 +116,10 @@ fn altered_form_state_tracks_character_create_screen_and_selection_setters() {
         .insert(2);
     env.exec("assert(C_CharacterCreation.IsViewingAlteredForm() == false)")
         .expect("the cleared value stays false if the host model returns");
+    env.state()
+        .borrow_mut()
+        .character_create_altered_form_races
+        .remove(&2);
     env.exec(
         "C_CharacterCreation.SetViewingAlteredForm(true); C_CharacterCreation.ResetCharCustomize()",
     )
@@ -138,6 +142,10 @@ fn altered_form_state_tracks_character_create_screen_and_selection_setters() {
     env.exec("assert(C_CharacterCreation.IsViewingAlteredForm() == false)")
         .expect("class rebuild clears the stored value without an altered model");
 
+    env.state()
+        .borrow_mut()
+        .character_create_altered_form_races
+        .insert(2);
     env.exec("C_CharacterCreation.SetViewingAlteredForm(true)")
         .expect("set state before screen initialization");
     env.set_screen_mode(ScreenKind::CharacterCreate);
