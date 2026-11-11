@@ -175,6 +175,8 @@ macro_rules! build_empty_sim_state {
             screen_kind: $runtime.screen_kind,
             in_character_create: false,
             glue_login: Default::default(),
+            #[cfg(any(feature = "client-ptr", feature = "client-wowforever"))]
+            glue_feature_status: Default::default(),
             is_logged_in: $runtime.is_logged_in,
             post_event_workarounds_applied: false,
             screen_first_displayed: $runtime.screen_first_displayed,

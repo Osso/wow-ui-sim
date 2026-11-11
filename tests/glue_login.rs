@@ -688,3 +688,54 @@ fn login_submit_empty_host_roster_reaches_character_create() {
         assert!(errors.is_empty(), "empty-roster login errors: {errors:#?}");
     }
 }
+
+#[test]
+#[cfg(any(feature = "client-ptr", feature = "client-wowforever"))]
+fn glue_feature_status_uses_host_record_and_ordered_empty_events() {
+    use wow_ui_sim::lua_api::globals::real::glue_feature_status::{
+        GlueFeatureStatus, deliver_status,
+    };
+    let env = common::lock_env(|| WowLuaEnv::new().unwrap());
+    assert!(env.eval::<bool>("return rawget(_G, 'IsNameReservationOnly') == nil").unwrap());
+    env.set_screen_mode(ScreenKind::Login);
+    env.exec(r#"
+        assert(IsNameReservationOnly() == false)
+        assert(select('#', IsNameReservationOnly()) == 1)
+        featureEvents = {}
+        local listener = CreateFrame('Frame')
+        listener:RegisterEvent('TIMERUNNING_SEASON_UPDATE')
+        listener:RegisterEvent('AVAILABLE_GAME_MODES_UPDATED')
+        listener:SetScript('OnEvent', function(_, event, ...)
+            table.insert(featureEvents, {event, select('#', ...)})
+        end)
+    "#).unwrap();
+    for value in [true, true, false] {
+        deliver_status(&env, GlueFeatureStatus { name_reservation_only: value }).unwrap();
+        assert_eq!(env.eval::<bool>("return IsNameReservationOnly()").unwrap(), value);
+    }
+    env.exec(r#"
+        assert(#featureEvents == 6)
+        for i = 1, 6, 2 do
+            assert(featureEvents[i][1] == 'TIMERUNNING_SEASON_UPDATE')
+            assert(featureEvents[i + 1][1] == 'AVAILABLE_GAME_MODES_UPDATED')
+            assert(featureEvents[i][2] == 0 and featureEvents[i + 1][2] == 0)
+        end
+    "#).unwrap();
+    deliver_status(&env, GlueFeatureStatus { name_reservation_only: true }).unwrap();
+    env.set_screen_mode(ScreenKind::CharacterSelect);
+    assert!(env.eval::<bool>("return IsNameReservationOnly()").unwrap(),
+        "screen/connection reset must not replace feature-system status");
+    env.set_screen_mode(ScreenKind::Game);
+    assert!(env.eval::<bool>("return rawget(_G, 'IsNameReservationOnly') == nil").unwrap());
+    env.set_screen_mode(ScreenKind::Login);
+    assert!(env.eval::<bool>("return IsNameReservationOnly()").unwrap());
+    assert!(env.state().borrow().lua_errors.is_empty());
+}
+
+#[test]
+#[cfg(feature = "client-retail")]
+fn glue_feature_status_name_reservation_global_is_absent_on_retail() {
+    let env = common::lock_env(|| WowLuaEnv::new().unwrap());
+    env.set_screen_mode(ScreenKind::Login);
+    assert!(env.eval::<bool>("return rawget(_G, 'IsNameReservationOnly') == nil").unwrap());
+}

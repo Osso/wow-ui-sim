@@ -115,6 +115,8 @@ fn register_frame_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
 }
 
 fn register_frame_foundation_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
+    #[cfg(any(feature = "client-ptr", feature = "client-wowforever"))]
+    super::real::glue_feature_status::register_all(lua)?;
     super::real::ambiguate::register_all(lua)?;
     super::create_frame::register_all(lua)?;
     super::font_strings_collection::register_all(lua)?;

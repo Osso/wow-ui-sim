@@ -136,3 +136,31 @@ then exposes missing `SelectCharacter` at Retail CharacterSelect.lua:860
 (Forever:875). QUESTION43 requests that native setter and its relationship to
 `GetCharacterSelection`; it is not replaced by a guessed selection shortcut.
 An additional real-input test covers the empty host roster's charcreate path.
+
+ANSWER **46** identifies the initial Login addon exclusion as simulator policy,
+not the native load set (`Blizzard_CharacterCreate` allows Glue and is not LoD).
+An experimental separate cached preload was reverted in `8ce6bd300` as directed.
+Native initial-load timing and ordering await R46. The empty-roster charcreate
+test remains RED on Retail; no separate preload or startup replay is retained.
+
+ANSWER **47** (R44-Q18, PTR70668 / Forever70707) resolves name reservation.
+`IsNameReservationOnly` is a Glue global on PTR and Forever, absent on Retail70688.
+It takes no arguments and returns one boolean from a feature-system status byte,
+independent of realm and character. Its verified initial value is false; an
+ordinary server-sent value is UNKNOWN. `GlueFeatureStatus` starts false and only
+`deliver_status` replaces it. The host action emits no-payload
+`TIMERUNNING_SEASON_UPDATE`, writes the status, then emits no-payload
+`AVAILABLE_GAME_MODES_UPDATED`, preserving the supplied posting order. Host
+notifications dispatch synchronously; tests do not claim native callback latency
+or handler-time visibility. Tests reject a constant-false getter, cover repeated
+records, exact event order/count/payload and independence from screen resets.
+The getter is unpublished in Game and restored on a transition back to Glue,
+without replacing the feature status; tests cover both directions and fresh Game.
+The old PTR constant-false workaround is removed, not layered over the model.
+
+ANSWER **48** additionally specifies PTR GetState's nine-field table and native
+hasSelectedExperiencePreset declaration defaults: true on PTR, false on Forever,
+overridden by a persisted CVar. QUESTION **50** requests that CVar's exact name
+and read/coercion rule, plus remaining PTR flag defaults/backing writers. The
+previous R40 Forever true value is explicitly simulator policy, not a native
+default; this distinction remains until the verified replacement is available.

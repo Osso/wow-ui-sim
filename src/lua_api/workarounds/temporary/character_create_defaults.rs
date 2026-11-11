@@ -559,8 +559,9 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
         )?;
     }
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Ptr {
-        // User-approved defaults until realm name-reservation and regional naming policies are modeled.
-        lua.exec("function IsNameReservationOnly() return false end; function C_CharacterCreation.AreRegionalUniqueNamesEnabled() return false end")?;
+        // User-approved default until regional naming policies are modeled.
+        // IsNameReservationOnly now reads the R44 feature-system status model.
+        lua.exec("function C_CharacterCreation.AreRegionalUniqueNamesEnabled() return false end")?;
     }
     Ok(())
 }
