@@ -829,6 +829,8 @@ pub struct SimState {
     pub wrath_currency: super::super::globals::real::wrath_currency::CurrencyListState,
     #[cfg(feature = "client-retail")]
     pub currency_list: crate::c_api::currency_list::CurrencyListState,
+    #[cfg(feature = "client-mists")]
+    pub mists_currency_watch_overrides: HashMap<i32, bool>,
     /// Explicit (War Mode applies, limit once per tooltip) flags; no inferred catalog.
     pub currency_war_mode_bonus: HashMap<i32, (Option<bool>, Option<bool>)>,
     /// Explicit immediate reputation grants; no inferred currency/faction catalog.
