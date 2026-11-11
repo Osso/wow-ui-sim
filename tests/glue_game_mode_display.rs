@@ -74,6 +74,32 @@ fn glue_display_uses_shared_cvar_rows_override_and_clear_callback() {
         env.exec("assert(type(C_GameRules.GetCurrentGameModeDisplayInfo()) == 'table')")
             .unwrap();
     }
+    env.state().borrow_mut().game_rules.display.rows.insert(
+        0,
+        GameModeRow {
+            glue_screen_name: "zero-row".into(),
+            ..Default::default()
+        },
+    );
+    env.state().borrow_mut().game_rules.display.rows.insert(
+        -1,
+        GameModeRow {
+            glue_screen_name: "override-negative".into(),
+            ..Default::default()
+        },
+    );
+    env.exec("SetCVar('currentGameMode', 0); assert(C_GameRules.GetGameModeGlueScreenName() == 'zero-row'); assert(type(C_GameRules.GetCurrentGameModeDisplayInfo()) ~= 'table')").unwrap();
+    env.state()
+        .borrow_mut()
+        .game_rules
+        .display
+        .set_temporary_override(-1);
+    env.exec("assert(C_GameRules.GetGameModeGlueScreenName() == 'override-negative'); assert(type(C_GameRules.GetCurrentGameModeDisplayInfo()) == 'table')").unwrap();
+    env.exec(
+        "SetCVar('currentGameMode', -1); assert(C_GameRules.GetGameModeGlueScreenName() == nil)",
+    )
+    .unwrap();
+    env.exec("A_Admin.SetActiveGameMode(7, 'changed-screen'); local d = C_GameRules.GetCurrentGameModeDisplayInfo(); assert(d.logo == 123 and d.logoUsesDarkBackdrop); assert(C_GameRules.GetGameModeGlueScreenName() == 'changed-screen')").unwrap();
     for value in [-1, 0, 999] {
         env.exec(&format!("SetCVar('currentGameMode', {value}); assert(type(C_GameRules.GetCurrentGameModeDisplayInfo()) ~= 'table')")).unwrap();
     }

@@ -32,15 +32,21 @@ impl GameModeDisplayState {
     pub fn clear_realm_list(&mut self) {
         self.temporary_override = None;
     }
-    pub fn selected_row(&self, cvars: &crate::cvars::CVarStorage) -> Option<&GameModeRow> {
-        let record = self
-            .temporary_override
-            .or_else(|| cvars.cached_integer("currentGameMode"))
-            .unwrap_or(-1);
-        if (record == -1 && self.temporary_override.is_none()) || record == 0 {
-            return None;
+    fn selected_record(&self, cvars: &crate::cvars::CVarStorage) -> LuaResult<Option<i32>> {
+        if let Some(record) = self.temporary_override {
+            return Ok(Some(record));
         }
-        self.rows.get(&record)
+        let record = if cvars.get("currentGameMode").is_none() {
+            -1
+        } else {
+            cvars.cached_integer("currentGameMode").ok_or_else(|| rilua::runtime_error("currentGameMode: cached integer outside simulator coverage (native behavior unknown)"))?
+        };
+        Ok((record != -1).then_some(record))
+    }
+    fn selected_row(&self, cvars: &crate::cvars::CVarStorage) -> LuaResult<Option<&GameModeRow>> {
+        Ok(self
+            .selected_record(cvars)?
+            .and_then(|record| self.rows.get(&record)))
     }
 }
 pub(crate) fn modern_profile() -> bool {
@@ -67,7 +73,7 @@ pub(crate) fn glue_screen(state: &mut LuaState) -> LuaResult<u32> {
         let sim = borrow_state(state)?;
         sim.game_rules
             .display
-            .selected_row(&sim.cvars)
+            .selected_row(&sim.cvars)?
             .map(|row| row.glue_screen_name.clone())
     };
     let value = match name.filter(|name| !name.is_empty()) {
@@ -80,7 +86,11 @@ pub(crate) fn glue_screen(state: &mut LuaState) -> LuaResult<u32> {
 pub(crate) fn current_display(state: &mut LuaState) -> LuaResult<u32> {
     let row = {
         let sim = borrow_state(state)?;
-        sim.game_rules.display.selected_row(&sim.cvars).cloned()
+        if sim.game_rules.display.selected_record(&sim.cvars)? == Some(0) {
+            None
+        } else {
+            sim.game_rules.display.selected_row(&sim.cvars)?.cloned()
+        }
     };
     let Some(row) = row else {
         state.push(Val::Nil);

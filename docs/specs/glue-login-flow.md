@@ -119,15 +119,12 @@ this comparison. Tests cover unready, zero/negative limits, absent GUIDs, equali
 and spare capacity. The nonempty UI fixture explicitly supplies readiness and
 limit 2; neither value is a native realm default.
 
-`GetGameModeGlueScreenName` is registered in Glue and Game. Native selection is
-override record, then selected-realm record, then no-mode sentinel; nonempty
-record names are returned, otherwise nil. Ordinary-play nil and the absence of a
-native charselect fallback are INFERRED. The simulator stores the resolved name
-as optional host input, default None; empty names also return nil. It does not
-fabricate record-selection data. The original GlueParent supplies `charselect`
-at Retail GlueParent.lua:220 / Forever:254. Updated tests assert nil for default
-and empty inputs, preserve explicit nonempty names, and require the original
-GlueParent fallback in the real login-submission tests.
+`GetGameModeGlueScreenName` is registered in Glue and Game. The original R43
+selected-realm interpretation is superseded by R60 below: both getters share
+temporary-override/currentGameMode-CVar selection and host rows. Nonempty row
+names are returned, otherwise nil. The display getter alone excludes record0;
+the screen getter may read its supplied string. GlueParent supplies charselect
+at Retail GlueParent.lua:220 / Forever:254; no fallback is invented in the getter.
 
 The historical R42 Forever submission run reached absent `IsNameReservationOnly` at
 `Blizzard_GlueXML/Mainline/CharacterSelect.lua:1003`. The R44 answer and implementation below resolve that gap.
@@ -425,3 +422,6 @@ supplied rows, CVar changes, and the host clear operation.
 UNKNOWN: full writer set, exact native callback timing/guards, loaded GameMode
 rows, first login snapshot, computed writes to the capability byte, and complete
 error lines. No row download or inferred nil-return arity assertion is added.
+
+Cached-integer overflow is an explicit unsupported simulator input diagnostic,
+not silently treated as no mode and not claimed as a native error contract.

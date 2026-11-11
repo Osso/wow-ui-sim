@@ -422,13 +422,12 @@ pub fn admin_set_active_game_mode(state: &mut LuaState) -> LuaResult<u32> {
     // Administrative host fixture, not a native writer or a real DB row.
     sim.game_rules.display.clear_realm_list();
     if let Some(glue_screen_name) = glue {
-        sim.game_rules.display.rows.insert(
-            mode,
-            crate::c_api::game_mode_display::GameModeRow {
-                glue_screen_name,
-                ..Default::default()
-            },
-        );
+        sim.game_rules
+            .display
+            .rows
+            .entry(mode)
+            .or_default()
+            .glue_screen_name = glue_screen_name;
         sim.game_rules.display.set_temporary_override(mode);
     }
     Ok(0)
