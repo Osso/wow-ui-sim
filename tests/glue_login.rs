@@ -313,3 +313,56 @@ fn login_editboxes_gain_focus_when_clicking_their_visible_centers() {
         );
     }
 }
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn submit_login_through_ui(click_button: bool) {
+    let env = load_blizzard_screen(ScreenKind::Login);
+    for (path, text) in [
+        ("AccountLogin.UI.AccountEditBox", "sim@example.invalid"),
+        ("AccountLogin.UI.PasswordEditBox", "arbitrary-password"),
+    ] {
+        let hit = hit_test_like_gui(&env, frame_center(&env, path))
+            .expect("edit box center should be hittable");
+        env.send_click(hit).expect("edit box click should dispatch");
+        for character in text.chars() {
+            let text = character.to_string();
+            env.send_key_press(&text.to_uppercase(), Some(&text))
+                .expect("typing should reach the focused edit box");
+        }
+        assert_eq!(
+            env.eval::<String>(&format!("return {path}:GetText()"))
+                .expect("typed text should be readable"),
+            text
+        );
+    }
+    if click_button {
+        let hit = hit_test_like_gui(&env, frame_center(&env, "AccountLogin.UI.LoginButton"))
+            .expect("login button center should be hittable");
+        env.send_click(hit)
+            .expect("login button click should dispatch");
+    } else {
+        env.send_key_press("ENTER", None)
+            .expect("Enter should submit the password edit box");
+    }
+    wow_ui_sim::startup::run_extra_update_ticks(&env, 3);
+    let (character_select, login): (bool, bool) = env
+        .eval("return CharacterSelect ~= nil and CharacterSelect:IsShown(), AccountLogin:IsShown()")
+        .expect("screen visibility should be readable");
+    assert!(
+        character_select && !login,
+        "submit should show character select and hide login; character_select={character_select}, login={login}, errors={:#?}",
+        env.state().borrow().lua_errors
+    );
+}
+
+#[test]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn login_submit_enter_reaches_character_select() {
+    test_timeout! { submit_login_through_ui(false); }
+}
+
+#[test]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn login_submit_button_reaches_character_select() {
+    test_timeout! { submit_login_through_ui(true); }
+}
