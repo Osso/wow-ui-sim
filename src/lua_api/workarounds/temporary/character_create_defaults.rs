@@ -6,7 +6,6 @@
 
 use crate::c_api::c_character_creation::set_in_character_create;
 use crate::lua_api::WowLuaEnv;
-use crate::lua_api::methods::borrow_state_mut;
 use crate::lua_bridge::table_set_rust_fn_static;
 use rilua::LuaApiMut;
 

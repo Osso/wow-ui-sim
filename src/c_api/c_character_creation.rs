@@ -27,7 +27,7 @@ fn update_registration(state: &mut LuaState, is_glue: bool) -> LuaResult<()> {
     let namespace = LuaApiMut::get_global_val(state, "C_CharacterCreation");
     let namespace = match namespace {
         namespace @ Val::Table(_) => namespace,
-        _ if is_glue => ensure_namespace(state, "C_CharacterCreation")?,
+        _ if is_glue => Val::Table(ensure_namespace(state, "C_CharacterCreation")?),
         _ => return Ok(()),
     };
 
