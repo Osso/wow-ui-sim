@@ -252,7 +252,8 @@ impl WowLuaEnv {
                 crate::client_profile::ClientProfile::Retail
                     | crate::client_profile::ClientProfile::Ptr
             );
-            is_store_enable && retail_or_ptr && previous_enabled != (value == "1")
+            let enabled_value_changed = previous_enabled != (value == "1");
+            is_store_enable && retail_or_ptr && enabled_value_changed
         };
 
         if store_status_changed {
