@@ -19,7 +19,7 @@
 ### Runtime evidence and boundaries
 
 - **VERIFIED (Retail 12.1.5.70783 simulator):** the screen-registration, getter/arity, host-selector, original tooltip, zero-selector, no-match and exact-export tests pass.
-- **VERIFIED (Forever simulator at `091aac3ce`):** the Glue/Game registration and empty-row tests pass. The three broader CharacterCreate filters fail before the trial-level tooltip consumer at nil `C_CharacterCreation.SetInCharacterCreate` in `Blizzard_CharacterCreate/Camelot/Blizzard_CharacterCreate.lua:221`. The action-update and transition filters also log nil `GetSelectedSuperDistrictID` and `HasQueuedUpgrade` calls; those APIs are outside this contract. The direct original tooltip consumer test is added, but its run is pending.
+- **VERIFIED (Forever simulator at `091aac3ce`):** the Glue/Game registration and empty-row tests pass. The three broader CharacterCreate filters fail before the trial-level tooltip consumer at nil `C_CharacterCreation.SetInCharacterCreate` in `Blizzard_CharacterCreate/Camelot/Blizzard_CharacterCreate.lua:221`. The action-update and transition filters also log nil `GetSelectedSuperDistrictID` and `HasQueuedUpgrade` calls; those APIs are outside this contract. The direct original tooltip consumer test passes. It invokes the original Camelot `OnShow` method and asserts the simulator's empty-table level-0 tooltip; startup still logs the separate `SetInCharacterCreate` gap.
 - **UNKNOWN:** Forever native rows and PTR native getter availability remain unknown; see the [feature contract](../../specs/character-create-trial-boost-level.md#known-gaps-current-cycle).
 
 ### Retail data regeneration
