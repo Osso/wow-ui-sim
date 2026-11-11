@@ -2,7 +2,7 @@
 
 ## [2026-11-11] system | Character select screen data
 
-[Character select screen data](systems/chr-select-screen-data.md) links the profile-scoped DB2 rows and provenance. Retail data is labeled with its installed 12.1.5.70783 build; Forever rows use installed build 1.60.1.70888, while 70707 values and PTR data remain UNKNOWN. The native API and roster are separately owned.
+[Character select screen data](systems/chr-select-screen-data.md) links the profile-scoped DB2 rows and provenance. **VERIFIED:** Retail data is labeled with installed build 12.1.5.70783 and Forever rows with installed build 1.60.1.70888; targeted lookup tests pass 3/3 on each profile. **UNKNOWN:** Forever 70707 and PTR source values. The native API and roster are separately owned.
 
 ## [2026-11-10] system | ScriptObject full lockdown
 

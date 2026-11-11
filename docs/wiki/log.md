@@ -1,6 +1,6 @@
 ## [2026-11-11] system | Character select screen data
 
-Added [profile-scoped class/race select-screen data](systems/chr-select-screen-data.md), the feature contract, pinned WoWDBDefs schemas, and a local-DB2 generator. Source build provenance distinguishes Retail 12.1.5.70783 from pin 70575 and Forever 1.60.1.70888 from the 70707 pin; the latter values remain UNKNOWN. `lt-a667` owns the native API and roster consumer.
+Added [profile-scoped class/race select-screen data](systems/chr-select-screen-data.md), the feature contract, pinned WoWDBDefs schemas, and a local-DB2 generator. **VERIFIED:** Retail and Forever each pass three exact targeted tests; exported builds are Retail 12.1.5.70783 and Forever 1.60.1.70888. **UNKNOWN:** Retail pin 70575 rows, Forever pin 70707 rows, and PTR rows. `lt-a667` owns the native API and roster consumer.
 
 ## [2026-11-10] fix | Mists frame-position residuals
 

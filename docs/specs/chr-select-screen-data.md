@@ -28,9 +28,9 @@ This contract defines profile-selected class and race FileDataID lookups in `src
 
 ## Known gaps (current cycle)
 
-- [ ] Retail 12.1.5.70575 rows are UNKNOWN. The exported Retail data is from installed build 12.1.5.70783 and is labeled with that build.
-- [ ] Forever 1.60.1.70707 select-screen rows are UNKNOWN. The exported Forever data is from installed build 1.60.1.70888 and is labeled with that build.
-- [ ] PTR select-screen rows are UNKNOWN; no PTR data is provided.
+- [ ] UNKNOWN: Retail 12.1.5.70575 rows are not available. The exported Retail data is from installed build 12.1.5.70783 and is labeled with that build.
+- [ ] UNKNOWN: Forever 1.60.1.70707 select-screen rows are not available. The exported Forever data is from installed build 1.60.1.70888 and is labeled with that build.
+- [ ] UNKNOWN: PTR select-screen rows are not available; this data set includes no PTR rows.
 
 ## Out of scope
 
