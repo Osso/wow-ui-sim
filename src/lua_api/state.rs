@@ -46,6 +46,7 @@ macro_rules! build_empty_sim_state {
                 crate::c_api::c_nameplate_manager::NamePlateHitTestInsets::default(),
             input_interface_style:
                 crate::c_api::c_input_interface_style::InputInterfaceStyle::default(),
+            video_capability_bytes: Default::default(),
             #[cfg(any(feature = "client-wowforever", feature = "client-ptr"))]
             gamepad_mapped_sticks: None,
             #[cfg(any(feature = "client-wowforever", feature = "client-ptr"))]
@@ -562,6 +563,7 @@ macro_rules! build_empty_sim_state {
             modifier_keys: ModifierKeys::default(),
             pressed_keys: HashSet::new(),
             game_rules: GameRulesState::default(),
+            credits: Default::default(),
             discord: DiscordState::default(),
             forever_startup: crate::c_api::forever_startup::StartupInputs::stock(),
             external_event_url: Default::default(),

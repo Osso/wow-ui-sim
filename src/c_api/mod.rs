@@ -32,6 +32,7 @@ pub(crate) mod class_catalog;
 #[cfg(any(feature = "client-era", feature = "client-anniversary"))]
 pub(crate) mod classic_startup_data;
 pub(crate) mod collections_availability;
+pub mod credits;
 #[cfg(feature = "client-retail")]
 pub mod currency_list;
 pub mod forever_talents;
@@ -56,6 +57,7 @@ pub(crate) mod tooltip_power_catalog_data;
 pub mod trait_group_currency;
 pub mod trait_group_display;
 pub mod ui_widget_manager;
+pub mod video_capabilities;
 pub(crate) mod video_texture_capability;
 #[cfg(feature = "client-wrath")]
 pub mod who_routing;
@@ -613,7 +615,9 @@ fn register_specialization_and_model_tables(state: &mut LuaState) -> LuaResult<(
 fn register_glue_and_display_tables(state: &mut LuaState) -> LuaResult<()> {
     c_glue::register_c_glue(state)?;
     c_login::register_c_login(state)?;
+    video_capabilities::register(state)?;
     video_texture_capability::register(state)?;
+    credits::register(state)?;
     c_character_creation_naming::register(state)?;
     c_ui::register(state)?;
     permanent_shims::c_ui::register_c_ui(state)

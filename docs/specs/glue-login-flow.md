@@ -463,8 +463,13 @@ unknown beyond absent exact image literals; its separate GetCreditsText is not
 substituted. Row publication preserves creditsFileID0 and empty strings, omits
 logo0, and distinguishes absent soundKit from present0. Native row data/order,
 fresh PTR list, unknown-ID text result, exceptional paths and text argument
-conversion remain UNKNOWN. A host catalog/default and bounded text-input policy
-were requested before replacing these parts; no Forever vanilla row is copied.
+conversion remain UNKNOWN. Comment112 approves explicit host rows empty-by-default on both profiles; this
+is simulator policy, not fresh-Glue native state. Empty-list table shape is
+verified for Forever and inferred for PTR. No vanilla row is copied. The host
+text map accepts only the simulator's bounded integer-ID coverage pending R65;
+absent map entries return zero values by explicit neutral policy and are not
+asserted as native unknown-ID results. Unsupported argument diagnostics are
+coverage errors, not claims about native validation or the known Usage literal.
 
 The five video capability bytes are separate from R60 high-resolution input.
 Verified image bytes project to inferred normal Boolean results. A host seam
@@ -472,3 +477,11 @@ models those bytes explicitly, without treating the projections as native
 observations or GPU/CVar state. Retail registers only spell density; PTR and
 Forever register all five in Game and Glue. MultiSample remains a separate
 runtime/device query, not a static byte; its PTR registration is UNKNOWN.
+
+R63 implementation uses distinct per-environment host bytes with image-derived
+inferred defaults: PTR linear0/outlineDisabled0/PBR0/secondary0/density1;
+Forever all five1; Retail density1 only. Tests seed explicit host values before
+asserting projections, preserving the distinction from verified native results.
+The removed Forever credits notice/catalog and mutable video placeholders no
+longer supply native-facing answers. The separate renderer MSAA workaround is
+not relabeled as a static native capability or widened to PTR.
