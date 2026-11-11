@@ -2,7 +2,7 @@
 
 ## [2026-11-11] investigation | Lua rectangle-query validity
 
-[Lua rectangle-query validity](investigations/rect-query-validity.md) records VERIFIED R48 anchor-target behavior, the VERIFIED simulator fix in `f255ed881`, the unchanged `IsRectValid` follow-up, and pending profile/full-suite proof.
+[Lua rectangle-query validity](investigations/rect-query-validity.md) records VERIFIED R48 anchor-target behavior, the VERIFIED simulator fixes in `f255ed881` and `20cbd611a`, the unchanged `IsRectValid` follow-up, and pending profile/full-suite proof.
 
 ## [2026-11-11] system | PTR/Retail store API availability
 

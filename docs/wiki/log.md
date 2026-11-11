@@ -1,6 +1,6 @@
 ## [2026-11-11] investigation | Lua rectangle-query validity
 
-VERIFIED (R48): geometry validity follows anchor targets, not containment ancestry. VERIFIED (simulator commit): the Lua-only implementation is in `f255ed881`; `IsRectValid` remains unchanged. VERIFIED (work status): runtime profile and PTR full-suite proof remain pending.
+VERIFIED (R48): geometry validity follows anchor targets, not containment ancestry. VERIFIED (simulator commits): the Lua-only implementation is in `f255ed881` and resolved-size handling is in `20cbd611a`; `IsRectValid` remains unchanged. VERIFIED (work status): runtime profile and PTR full-suite proof remain pending.
 
 ## [2026-11-11] implementation | PTR/Retail Store API availability
 

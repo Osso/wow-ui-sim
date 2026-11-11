@@ -18,13 +18,13 @@ VERIFIED: the PTR `CharacterBag0Slot` test failed with `expected numeric result,
 
 ## Simulator change
 
-VERIFIED (simulator commit `f255ed881`): the Lua-query-only validity check follows explicit anchor targets and implicit parent targets, and rect getters use it after resolving dirty geometry. VERIFIED: size getters use resolved dimensions for valid rectangles and stored dimensions otherwise. VERIFIED (diff): `frame_has_render_layout` remains unchanged, so this change does not alter rendering or hit-test eligibility.
+VERIFIED (simulator commits `f255ed881` and `20cbd611a`): the Lua-query-only validity check follows explicit anchor targets and implicit parent targets, and rect getters use it after resolving dirty geometry. VERIFIED: size getters resolve an unset valid rect, use its dimensions when valid, and use stored dimensions only when the rect is unavailable. VERIFIED (diff): `frame_has_render_layout` remains unchanged, so this change does not alter rendering or hit-test eligibility.
 
 VERIFIED (simulator source): `IsRectValid` remains unchanged; it resolves dirty layout when a frame has anchors, then returns `has_anchors && !is_rect_dirty`. The inspected source search found no separate `rect_valid` field. Follow-up: reconcile this eager resolution with R48's cached read after identifying an appropriate layout-maintained validity state.
 
 ## Verification status
 
-VERIFIED (test inventory): the new regression tests cover an invalid unanchored frame and a child anchored to a sibling under an unanchored parent. VERIFIED (work status, 2026-11-11): these tests have not yet run on this commit. PTR bag and ActionBar selectors, `layout` and `frame_positions` on Retail/PTR/Forever/Mists, and the post-fix PTR integration/lib suite remain pending. VERIFIED (full-suite status): the pre-R48 PTR attempt for `18c174268` ended with integration and lib exit 101; the master baseline is still pending. See the [PTR cleanup report](../../../handoff/ptr-int-clean/REPORT.md) for the suite and source evidence.
+VERIFIED (test inventory): the regression tests cover an invalid unanchored frame, a child anchored to a sibling under an unanchored parent, and a valid anchored frame whose resolved width differs from its stored width. VERIFIED (work status, 2026-11-11): these tests have not yet run on commit `20cbd611a`. PTR bag and ActionBar selectors, `layout` and `frame_positions` on Retail/PTR/Forever/Mists, and the post-fix PTR integration/lib suite remain pending. VERIFIED (full-suite status): the pre-R48 PTR attempt for `18c174268` ended with integration and lib exit 101; the master baseline is still pending. See the [PTR cleanup report](../../../handoff/ptr-int-clean/REPORT.md) for the suite and source evidence.
 
 ## Sources
 
