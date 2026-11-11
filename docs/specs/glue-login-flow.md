@@ -136,3 +136,17 @@ then exposes missing `SelectCharacter` at Retail CharacterSelect.lua:860
 (Forever:875). QUESTION43 requests that native setter and its relationship to
 `GetCharacterSelection`; it is not replaced by a guessed selection shortcut.
 An additional real-input test covers the empty host roster's charcreate path.
+
+Login startup deliberately excludes the character-create addon roots. The
+offline host prepares their cached dependency closure before publishing the
+authenticated state, only when the original Blizzard_GlueXML is loaded. It uses
+the existing CharacterCreate-profile TOC selection and addon loader, preserves
+initial Login exclusions, and reports missing cache/load failures. Already loaded
+addons are not loaded twice. It neither replays startup nor selects a screen;
+original GlueParent chooses charselect or charcreate. This is simulator loading
+policy, not evidence about `InitializeCharacterScreenData`, native addon timing,
+or native callbacks. No downloading is performed by this preparation.
+It reapplies only the existing character-create post-load defaults after loading
+the missing frames, rather than replaying the complete startup workaround set.
+Preparation errors stop the offline attempt; an already-loaded addon cannot
+silently turn that failure into success on the next update.

@@ -105,9 +105,31 @@ Credits displayed real text and two catalog entries: `World of Warcraft`, then
 This visual check did not measure native Lua-error counts or API return values.
 Fully disconnected operation was not verified.
 
+## Offline credential submission (2026-11-11, in progress)
+
+The [login-flow contract](../../specs/glue-login-flow.md) separates native R40,
+R42 and R43 findings from the explicit simulator policy. Retail native evidence
+is from 70688, not the pinned 70575 UI; Forever evidence matches 70707. Actual
+EditBox input drives the original login consumer. The C_Login model owns pending
+authentication, host roster/realm availability and Battle.net queue snapshots.
+Connection readiness and signed character capacity are host inputs, not invented
+realm data. Ordinary game-mode screen name is nil; GlueParent supplies its own
+charselect fallback.
+
+Empty host rosters exercise the original charcreate branch. Initial Login omits
+character-create addon roots, so offline authentication prepares their cached
+dependency closure without changing native InitializeCharacterScreenData or
+replaying startup. The existing narrow character-create post-load defaults are
+applied after those frames exist. This loading policy performs no downloading.
+
+Acceptance remains open: SelectCharacter (R45), IsNameReservationOnly (R44-Q18),
+and the coordinator's unmerged Forever cleanup are separate blockers. Focused
+contract tests are not a claim that the full login or seven-profile gates pass.
+
 ## Sources
 
 - [Glue regressions](../../../tests/glue_login.rs) — complete Login startup and screen-state transitions.
+- [Offline login model](../../../src/c_api/c_login.rs) and [cached preparation](../../../src/loader/glue_login.rs) — in-progress credential submission policy.
 - [Module import implementation](../../../src/loader/addon_modules.rs) and [tests](../../../tests/addon_require.rs) — sibling-file loading and import boundaries.
 - [Startup dependency implementation](../../../src/loader/mod.rs) — real customization initialization before feedback hooks.
 - [Temporary defaults](../../../src/lua_api/workarounds/temporary/forever_glue_display_defaults.rs) and [credits catalog](../../../src/lua_api/workarounds/temporary/offline_glue_credits.rs).

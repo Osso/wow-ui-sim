@@ -12,6 +12,8 @@ pub(crate) mod bytecode_cache;
 pub(crate) mod chunk_cache;
 mod error;
 mod file_diagnostics;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod glue_login;
 pub(crate) mod helpers;
 pub(crate) mod helpers_anim;
 mod load_addon_trace;
