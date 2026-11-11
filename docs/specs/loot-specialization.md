@@ -5,7 +5,7 @@
 ## What it must do
 
 - [x] `GetLootSpecialization()` returns the stored simulator value; the initial value is 0.
-- [x] `SetLootSpecialization` accepts a numeric argument, returns no values, and raises `Usage: SetLootSpecialization(specializationID)` for a non-number.
+- [x] `SetLootSpecialization` accepts a numeric argument, returns no values, raises `Usage: SetLootSpecialization(specializationID)` for a non-number, and does not reject an ID because it is absent from the local class catalog.
 - [ ] A setter call does not synchronously change the getter value or emit `PLAYER_LOOT_SPEC_UPDATED`.
 - [ ] Do not validate requested specialization IDs against the player's class catalog before sending.
 - [ ] Do not synthesize a server response or emit `PLAYER_LOOT_SPEC_UPDATED` without one.
@@ -23,7 +23,7 @@
 ## Tests asserting this spec
 
 - `tests/loot_specialization.rs::loot_specialization_original_popup_does_not_fabricate_a_server_response` — invokes the selected original `UnitPopupSharedButtonMixins.lua` click handler.
-- `tests/loot_specialization.rs::loot_specialization_numeric_requests_wait_for_server_state` — checks numeric request calls do not produce a local value or event.
+- `tests/loot_specialization.rs::loot_specialization_numeric_requests_do_not_apply_locally` — checks numeric request calls do not produce a local value or event.
 - `tests/loot_specialization.rs::loot_specialization_usage_error` — checks the exact non-number diagnostic.
 
 ## Known gaps (current cycle)

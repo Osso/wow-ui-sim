@@ -62,7 +62,7 @@ fn loot_specialization_original_popup_does_not_fabricate_a_server_response() {
 }
 
 #[test]
-fn loot_specialization_numeric_requests_wait_for_server_state() {
+fn loot_specialization_numeric_requests_do_not_apply_locally() {
     let env = WowLuaEnv::new().expect("environment");
     env.exec(
         r#"
