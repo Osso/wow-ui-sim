@@ -159,10 +159,11 @@ fn packaged_startup_phases_put_secure_addons_before_packaged_defaults() {
     );
     ui.add_addon("Blizzard_A_Packaged", "## AllowLoad: Both\nCore.lua\n");
 
-    let packaged: Vec<String> = discover_blizzard_addons_for_screen(&ui.path, ScreenKind::Game)
-        .into_iter()
-        .map(|(name, _)| name)
-        .collect();
+    let packaged: Vec<String> =
+        crate::loader::discover_blizzard_startup_addons_for_screen(&ui.path, ScreenKind::Game)
+            .into_iter()
+            .map(|addon| addon.name)
+            .collect();
     let load_first = packaged
         .iter()
         .position(|name| name == "Blizzard_Z_LoadFirst")
