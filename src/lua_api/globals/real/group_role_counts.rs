@@ -96,7 +96,7 @@ fn count_retail_members(
         if member.flags & MEMBER_FLAG_SKIP_COUNTS != 0 {
             continue;
         }
-        let class_id = resolve_class_id(member.resolved_class_id, member.cached_class_id);
+        let class_id = resolve_class_id(member.resolved_player_class_id, member.cached_class_id);
         if class_id < 0 || class_id as usize >= classes.len() {
             continue;
         }
@@ -106,8 +106,8 @@ fn count_retail_members(
     (roles, classes)
 }
 
-fn resolve_class_id(resolved_class_id: Option<i32>, cached_class_id: i32) -> i32 {
-    match resolved_class_id {
+fn resolve_class_id(resolved_player_class_id: Option<i32>, cached_class_id: i32) -> i32 {
+    match resolved_player_class_id {
         Some(class_id) => class_id,
         None if (1..=CLASS_FILES.len() as i32).contains(&cached_class_id) => cached_class_id,
         None => 1,

@@ -39,14 +39,14 @@ fn member(
     flags: u32,
     role_mask_a: u32,
     role_mask_b: u32,
-    resolved_class_id: Option<i32>,
+    resolved_player_class_id: Option<i32>,
     cached_class_id: i32,
 ) -> Option<GroupMemberCountsMember> {
     Some(GroupMemberCountsMember {
         flags,
         role_mask_a,
         role_mask_b,
-        resolved_class_id,
+        resolved_player_class_id,
         cached_class_id,
     })
 }
