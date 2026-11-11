@@ -31,8 +31,8 @@ mod tests {
         let result: String = env
             .eval(
                 r#"
-                if C_CatalogShop.IsShop2Enabled() ~= false then
-                    return "bad_shop_flag"
+                if type(C_CatalogShop.IsShop2Enabled()) ~= "boolean" then
+                    return "bad_shop_flag_type"
                 end
                 local productIDs = C_CatalogShop.GetProductIDsForCategory(
                     Constants.HousingCatalogConsts.HOUSING_CATALOG_ALL_CATEGORY_ID)
@@ -60,5 +60,15 @@ mod tests {
             .expect("housing catalog probe should run");
 
         assert_eq!(result, "ok");
+        if matches!(
+            crate::client_profile::ACTIVE,
+            crate::client_profile::ClientProfile::Retail
+                | crate::client_profile::ClientProfile::Ptr
+        ) {
+            let shop2_enabled: bool = env
+                .eval("return C_CatalogShop.IsShop2Enabled()")
+                .expect("R38 Shop 2 default should be queryable");
+            assert!(shop2_enabled, "R38 verifies the default is enabled");
+        }
     }
 }

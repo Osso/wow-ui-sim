@@ -6,7 +6,7 @@ The [supplied eligibility contract](../../specs/store-public-eligibility.md) sep
 
 `SimState.store_public_eligibility` is a map of integer group IDs to explicitly supplied boolean observations. A host supplies or updates it through the environment's existing state handle. New environments start without observations. Missing keys remain distinct from supplied false and raise the named `missing-input` diagnostic. That failure is simulator input policy, not a native default claim.
 
-The query lives under `src/c_api/store_public_eligibility.rs`. Its ACTIVE gate publishes on Retail, PTR, Forever, Mists, Era and Anniversary, not Wrath. It reads no secure product lists, entry flags, ownership fields or CatalogShop DTOs. Store enabled/visibility compatibility defaults remain separate in the workaround layer.
+The query lives under `src/c_api/store_public_eligibility.rs`. Its ACTIVE gate publishes on Retail, PTR, Forever, Mists, Era and Anniversary, not Wrath. It reads no secure product lists, entry flags, ownership fields or CatalogShop DTOs. Store availability is a separate input; see [[store-api-availability]]. Visibility state remains separate in the workaround layer.
 
 ## Original consumer and test boundary
 
@@ -45,5 +45,6 @@ Each profile has a separate accepted canonical all-target check receipt with zer
 
 ## See Also
 
+- [[store-api-availability]] — independent hidden server-mirrored store flags.
 - [[store-secure-pool-constructors]] — secure catalog projection and downstream limitations.
 - [[consumer-selection-and-red-proof]] — original selected consumer evidence and RED boundaries.

@@ -1,6 +1,6 @@
 //! Temporary `C_StorePublic` availability defaults.
 //!
-//! Enabled/visibility probes remain unmodeled and live in this workaround layer.
+//! Visibility stays here; the verified Retail/PTR `IsEnabled` query lives in `c_api`.
 //! Supplied group eligibility is implemented separately under `c_api`.
 
 const STORE_PUBLIC_DEFAULTS_LUA: &str = r#"
@@ -57,18 +57,17 @@ mod tests {
     fn installs_store_public_defaults() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
 
-        let result: (bool, bool, String) = env
+        let result: (bool, String) = env
             .eval(
                 r#"
                 C_StorePublic.EventStoreUISetShown(true, "services")
-                return C_StorePublic.IsEnabled(),
-                       rawget(C_StorePublic, "_state").shown,
+                return rawget(C_StorePublic, "_state").shown,
                        rawget(C_StorePublic, "_state").contextKey
                 "#,
             )
-            .expect("C_StorePublic defaults should run");
+            .expect("C_StorePublic visibility state should run");
 
-        assert_eq!(result, (true, true, "services".to_string()));
+        assert_eq!(result, (true, "services".to_string()));
         if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Wrath {
             env.exec("assert(rawget(C_StorePublic, 'DoesGroupHavePurchaseableProducts') == nil)")
                 .expect("no declaration-backed Wrath query");

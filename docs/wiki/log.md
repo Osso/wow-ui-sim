@@ -1,3 +1,7 @@
+## [2026-11-11] implementation | PTR/Retail Store API availability
+
+Added the separate server-mirror model, API queries, event routing, and focused tests from R38. The [contract](../specs/store-api-availability.md) and [implementation notes](systems/store-api-availability.md) preserve UNKNOWN behavior. Code verification is pending.
+
 ## [2026-11-10] implementation | PTR/Retail merchant cursor
 
 Updated [Lua API](systems/lua-api.md#cursor-modes-and-actionbar-transitions) to link cursor ownership to the [contract](../specs/cursor-model.md). VERIFIED (PTR): focused R37 selectors pass; UNKNOWN (R37): owned-item and same-item outcomes remain unmodeled. UNVERIFIED: the full profile matrix remains open.
