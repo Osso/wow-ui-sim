@@ -23,9 +23,18 @@ fn ptr_feedback_glue_toc() -> PathBuf {
     ptr_feedback_glue_dir().join("Blizzard_PTRFeedbackGlue.toc")
 }
 
-const PTR_FEEDBACK_GLUE_TOC_FILES: &[&str] = &[
+const RETAIL_PTR_FEEDBACK_GLUE_TOC_FILES: &[&str] = &[
     "../Blizzard_PTRFeedback/Blizzard_PTRFeedback.lua",
     "../Blizzard_PTRFeedback/Blizzard_PTRFeedback_Frames.lua",
+    "../Blizzard_PTRFeedback/Blizzard_Reports.lua",
+    "Blizzard_Reports_Glue.lua",
+    "Blizzard_PTRFeedback_Events_Glue.lua",
+];
+
+const UNIFIED_PTR_FEEDBACK_GLUE_TOC_FILES: &[&str] = &[
+    "../Blizzard_PTRFeedback/Blizzard_PTRFeedback.lua",
+    "../Blizzard_PTRFeedback/Blizzard_PTRFeedback_Frames.lua",
+    "../Blizzard_PTRFeedback/Blizzard_PTRFeedback_Gamepad.lua",
     "../Blizzard_PTRFeedback/Blizzard_Reports.lua",
     "Blizzard_Reports_Glue.lua",
     "Blizzard_PTRFeedback_Events_Glue.lua",
@@ -248,7 +257,7 @@ fn blizzard_ptr_feedback_glue_toc_declares_metadata_in_raw_bytes() {
 
 post_wrath_ui_fixture! {
 #[test]
-fn blizzard_ptr_feedback_glue_lists_five_files_with_cross_addon_parent_paths() {
+fn blizzard_ptr_feedback_glue_lists_profile_files_with_cross_addon_parent_paths() {
     let toc =
         TocFile::from_file(&ptr_feedback_glue_toc()).expect("Blizzard_PTRFeedbackGlue TOC parses");
     let listed: Vec<String> = toc
@@ -256,25 +265,17 @@ fn blizzard_ptr_feedback_glue_lists_five_files_with_cross_addon_parent_paths() {
         .iter()
         .map(|p| p.to_string_lossy().into_owned())
         .collect();
+    let expected = match wow_ui_sim::client_profile::ACTIVE {
+        wow_ui_sim::client_profile::ClientProfile::Retail => RETAIL_PTR_FEEDBACK_GLUE_TOC_FILES,
+        wow_ui_sim::client_profile::ClientProfile::Ptr
+        | wow_ui_sim::client_profile::ClientProfile::WowForever => {
+            UNIFIED_PTR_FEEDBACK_GLUE_TOC_FILES
+        }
+        _ => unreachable!("test fixture is limited to Retail, PTR, and Forever"),
+    };
     assert_eq!(
-        listed, PTR_FEEDBACK_GLUE_TOC_FILES,
-        "TOC must list exactly 5 files in canonical order (paths normalized to \
-         forward slashes by src/toc.rs:147 — raw bytes use `\\`). The first 3 use \
-         `../Blizzard_PTRFeedback/` parent-directory paths to import sibling \
-         Lua files from the Game-side addon directory: \
-         Blizzard_PTRFeedback.lua (declares the PTR_IssueReporter root frame + \
-         .Data/.Assets/.DataCollectorTypes namespaces), \
-         Blizzard_PTRFeedback_Frames.lua (the survey-frame UI logic), \
-         Blizzard_Reports.lua (the report-survey definitions). The last 2 are \
-         local Glue-suffixed files: Blizzard_Reports_Glue.lua (glue-specific \
-         survey definitions for character creation / customization), \
-         Blizzard_PTRFeedback_Events_Glue.lua (glue-screen event hooks for \
-         GameMenuFrame / character-customization frames). \
-         `file_paths()` at src/toc.rs:345 resolves each entry via \
-         `resolve_path_case_insensitive(&self.addon_dir, f)` which composes \
-         `addon_dir.join(...)` allowing `..` to walk out of the Glue directory \
-         into the sibling PTRFeedback directory. No Bindings.xml on the glue \
-         side — keybindings are not used at the character-select screen"
+        listed, expected,
+        "Cached TOC files must match the active profile in canonical order"
     );
 }
 }
@@ -282,6 +283,8 @@ fn blizzard_ptr_feedback_glue_lists_five_files_with_cross_addon_parent_paths() {
 #[test]
 fn blizzard_ptr_feedback_glue_appears_only_on_ptr_glue_discovery() {
     let ui = blizzard_ui_dir();
+    let ptr_build =
+        wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::Ptr;
 
     for screen in [
         ScreenKind::Game,
@@ -293,14 +296,11 @@ fn blizzard_ptr_feedback_glue_appears_only_on_ptr_glue_discovery() {
         let found = addons
             .iter()
             .any(|(name, _)| name == "Blizzard_PTRFeedbackGlue");
-        let is_glue_screen = screen != ScreenKind::Game;
-        let expected = is_glue_screen
-            && wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::Ptr;
+        let expected = ptr_build && screen != ScreenKind::Game;
         assert_eq!(
             found, expected,
-            "R26: PTR build classification passes OnlyBetaAndPTR on Glue screens; \
-             normal builds including Forever are filtered, and AllowLoad: Glue excludes \
-             the Game screen"
+            "R26: OnlyBetaAndPTR admits the PTR build; the normal Forever build is \
+             filtered, and AllowLoad: Glue excludes the Game screen"
         );
     }
 }
