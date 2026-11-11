@@ -7,23 +7,6 @@ const CAMPAIGN_COVENANT_DEFAULTS_LUA: &str = r#"
 C_CampaignInfo = C_CampaignInfo or __wow_namespace()
 C_CovenantSanctumUI = C_CovenantSanctumUI or __wow_namespace()
 
-if rawget(C_CovenantSanctumUI, "GetRenownRewardsForLevel") == nil then
-    function C_CovenantSanctumUI.GetRenownRewardsForLevel(factionID, level)
-        if tonumber(factionID) == 1 and tonumber(level) == 5 then
-            return {
-                {
-                    name = "Path of Ascension",
-                    description = "Unlocks a new covenant activity.",
-                    toastDescription = "Path of Ascension unlocked",
-                    icon = 4089529,
-                },
-            }
-        end
-
-        return {}
-    end
-end
-
 if rawget(C_CovenantSanctumUI, "GetSoulCurrencies") == nil then
     function C_CovenantSanctumUI.GetSoulCurrencies()
         return {}
@@ -65,8 +48,38 @@ if rawget(C_CovenantSanctumUI, "GetCurrentTalentTreeID") == nil then
 end
 "#;
 
+#[cfg(feature = "client-retail")]
+const RENOWN_REWARD_DEFAULTS_LUA: &str = r#"
+if rawget(C_CovenantSanctumUI, "GetRenownRewardsForLevel") == nil then
+    function C_CovenantSanctumUI.GetRenownRewardsForLevel(_covenantID, _renownLevel)
+        return {}
+    end
+end
+"#;
+
+#[cfg(not(feature = "client-retail"))]
+const RENOWN_REWARD_DEFAULTS_LUA: &str = r#"
+if rawget(C_CovenantSanctumUI, "GetRenownRewardsForLevel") == nil then
+    function C_CovenantSanctumUI.GetRenownRewardsForLevel(covenantID, renownLevel)
+        if tonumber(covenantID) == 1 and tonumber(renownLevel) == 5 then
+            return {
+                {
+                    name = "Path of Ascension",
+                    description = "Unlocks a new covenant activity.",
+                    toastDescription = "Path of Ascension unlocked",
+                    icon = 4089529,
+                },
+            }
+        end
+
+        return {}
+    end
+end
+"#;
+
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(CAMPAIGN_COVENANT_DEFAULTS_LUA)?;
+    lua.exec(RENOWN_REWARD_DEFAULTS_LUA)?;
     Ok(())
 }
 
