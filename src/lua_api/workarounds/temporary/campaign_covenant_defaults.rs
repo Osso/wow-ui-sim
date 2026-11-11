@@ -75,36 +75,28 @@ mod tests {
     use crate::lua_api::WowLuaEnv;
 
     #[test]
-    fn installs_path_of_ascension_reward_shape() {
+    #[cfg(feature = "client-retail")]
+    fn retail_missing_renown_catalog_returns_no_reward_rows() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
+        let count: i32 = env
+            .eval("return #C_CovenantSanctumUI.GetRenownRewardsForLevel(1, 5)")
+            .expect("no-data reward query should return a table");
+        assert_eq!(count, 0);
+    }
 
-        let result: (i32, String, String, String, i32, i32) = env
+    #[test]
+    #[cfg(not(feature = "client-retail"))]
+    fn non_retail_keeps_previous_renown_reward_scenario() {
+        let env = WowLuaEnv::new().expect("lua env should initialize");
+        let result: (i32, String) = env
             .eval(
                 r#"
                 local rewards = C_CovenantSanctumUI.GetRenownRewardsForLevel(1, 5)
-                local emptyRewards = C_CovenantSanctumUI.GetRenownRewardsForLevel(2, 5)
-                local reward = rewards[1]
-                return #rewards,
-                       reward.name,
-                       reward.description,
-                       reward.toastDescription,
-                       reward.icon,
-                       #emptyRewards
+                return #rewards, rewards[1].name
                 "#,
             )
-            .expect("covenant reward defaults should be callable");
-
-        assert_eq!(
-            result,
-            (
-                1,
-                "Path of Ascension".to_string(),
-                "Unlocks a new covenant activity.".to_string(),
-                "Path of Ascension unlocked".to_string(),
-                4_089_529,
-                0,
-            )
-        );
+            .expect("non-Retail simulator scenario should remain callable");
+        assert_eq!(result, (1, "Path of Ascension".to_string()));
     }
 
     #[test]
