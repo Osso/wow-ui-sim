@@ -391,7 +391,7 @@ fn login_submit_button_reaches_character_select() {
 
 #[test]
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-fn login_api_validates_and_clears_password_without_retaining_credentials() {
+fn login_api_validates_and_clears_password_synchronously() {
     let env = common::lock_env(|| WowLuaEnv::new().unwrap());
     env.set_screen_mode(ScreenKind::Login);
     env.exec(
@@ -465,4 +465,63 @@ fn login_policy_publishes_states_and_empty_list_payload() {
     "#,
     )
     .unwrap();
+}
+
+#[test]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn login_policy_replaces_pending_attempt_and_cancels_on_screen_boot() {
+    let env = common::lock_env(|| WowLuaEnv::new().unwrap());
+    env.set_screen_mode(ScreenKind::Login);
+    let fixture = env
+        .state()
+        .borrow()
+        .bnet_friends
+        .iter()
+        .flat_map(|friend| &friend.game_accounts)
+        .find(|account| account.client_program == "WoW")
+        .unwrap()
+        .clone();
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.glue_login.characters = vec![fixture];
+        sim.glue_login.realm_list_available = true;
+    }
+    env.exec(
+        r#"
+        policyListUpdates = 0
+        local listener = CreateFrame("Frame")
+        listener:RegisterEvent("CHARACTER_LIST_UPDATE")
+        listener:SetScript("OnEvent", function(_, _, count)
+            assert(count == 1)
+            policyListUpdates = policyListUpdates + 1
+        end)
+        policyPasswordBox = CreateFrame("EditBox")
+        C_Login.Login("first", policyPasswordBox)
+        local state, _, _, realmList = C_Login.GetState()
+        if type(state) == "table" then realmList = state.hasRealmList end
+        assert(realmList == true)
+    "#,
+    )
+    .unwrap();
+    env.fire_on_update(0.016).unwrap();
+    // Explicit host boot cancels the offline policy, not a claimed native logout.
+    env.set_screen_mode(ScreenKind::Login);
+    for _ in 0..10 {
+        env.fire_on_update(0.016).unwrap();
+    }
+    assert_eq!(env.eval::<i32>("return policyListUpdates").unwrap(), 0);
+    assert_eq!(env.state().borrow().glue_login.characters.len(), 1);
+    assert!(env.state().borrow().glue_login.realm_list_available);
+    env.exec(
+        r#"
+        C_Login.Login("replacement-one", policyPasswordBox)
+        C_Login.Login("replacement-two", policyPasswordBox)
+    "#,
+    )
+    .unwrap();
+    for _ in 0..10 {
+        env.fire_on_update(0.016).unwrap();
+    }
+    assert_eq!(env.eval::<i32>("return policyListUpdates").unwrap(), 1);
+    assert_eq!(env.eval::<i32>("return GetNumCharacters()").unwrap(), 1);
 }
