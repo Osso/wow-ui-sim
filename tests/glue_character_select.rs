@@ -297,6 +297,48 @@ fn queued_upgrade_presence_drives_blizzard_character_select_consumer() {
 }
 
 #[test]
+#[cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
+fn free_promotional_upgrade_uses_shared_character_services() {
+    let env = WowLuaEnv::new().expect("create Lua environment");
+    let (registered, return_count, available, store_public_absent): (bool, i32, bool, bool) = env
+        .eval(
+            r#"
+            local return_count = select("#", C_SharedCharacterServices.HasFreePromotionalUpgrade())
+            local available = C_SharedCharacterServices.HasFreePromotionalUpgrade()
+            return type(C_SharedCharacterServices.HasFreePromotionalUpgrade) == "function",
+                return_count, available,
+                C_StorePublic == nil or C_StorePublic.HasFreePromotionalUpgrade == nil
+            "#,
+        )
+        .expect("shared promotional-upgrade query should be callable");
+    assert!(registered);
+    assert_eq!(return_count, 1);
+    assert!(!available);
+    assert!(store_public_absent);
+}
+
+#[test]
+#[cfg(feature = "client-wowforever")]
+fn forever_free_promotional_upgrade_is_available_on_glue() {
+    let env = WowLuaEnv::new().expect("create Lua environment");
+    env.set_screen_mode(ScreenKind::CharacterSelect);
+    let (return_count, available): (i32, bool) = env
+        .eval(
+            r#"
+            local return_count = select("#", C_SharedCharacterServices.HasFreePromotionalUpgrade())
+            return return_count, C_SharedCharacterServices.HasFreePromotionalUpgrade()
+            "#,
+        )
+        .expect("Forever Glue should expose the shared promotional-upgrade query");
+    assert_eq!(return_count, 1);
+    assert!(!available);
+}
+
+#[test]
 #[cfg(any(feature = "client-ptr", feature = "client-wowforever"))]
 fn super_district_title_uses_host_selection_and_info() {
     test_timeout! {

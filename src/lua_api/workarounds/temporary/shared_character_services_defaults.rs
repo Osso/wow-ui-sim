@@ -1,8 +1,8 @@
 //! Temporary `C_SharedCharacterServices` defaults.
 //!
-//! Shared upgrade-distribution state is not modeled yet. Return an empty list
-//! so character-service UI code sees no available shared upgrades until that
-//! state exists.
+//! Shared character-upgrade state is not modeled yet. Return an empty list for
+//! shared distributions and false for the verified no-promotion case until that
+//! backing state exists.
 
 const SHARED_CHARACTER_SERVICES_DEFAULTS_LUA: &str = r#"
 C_SharedCharacterServices = C_SharedCharacterServices or __wow_namespace()
@@ -16,8 +16,14 @@ end
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(SHARED_CHARACTER_SERVICES_DEFAULTS_LUA)?;
-    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
-        // Account promotional-upgrade state is not modeled yet.
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::Ptr
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        // The promotional-upgrade inventory is not modeled yet. Native returns
+        // false when no qualifying promotion is available.
         lua.exec(
             r#"
             if rawget(C_SharedCharacterServices, "HasFreePromotionalUpgrade") == nil then
