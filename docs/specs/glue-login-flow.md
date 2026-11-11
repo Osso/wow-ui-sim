@@ -110,3 +110,8 @@ ordinary/no-override `C_GameRules.GetGameModeGlueScreenName` contract. Its curre
 The getter's exact screen-selection consumers are Retail GlueParent.lua **220**
 and Forever **254**. The declaration says nonnil cstring, but Lua's fallback and
 empty-roster gate depend on absence. No return is guessed to bypass those gates.
+
+The R42 Forever submission run also reaches absent `IsNameReservationOnly` at
+`Blizzard_GlueXML/Mainline/CharacterSelect.lua:1003`. Its existing approved false
+default is PTR-only. A separate tracker question requests the Forever contract
+or confirmation that coordinator cleanup already owns it; no return is guessed.
