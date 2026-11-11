@@ -20,7 +20,7 @@ VERIFIED: the PTR `CharacterBag0Slot` test failed with `expected numeric result,
 
 - VERIFIED (PTR 12.1.7.70668 and Retail 12.1.5.70688): the measured target-use gate has the same masks and test order in both profiles.
 - VERIFIED: a dirty target is resolved; the anchor path rejects its rect when anchor-invalidated mask 4 is set, then requires rect-valid mask 1 before using the rect.
-- VERIFIED: a clean target with no dirty ancestor or anchor dependency skips resolution and the immediate mask-4 check, but still requires mask 1.
+- VERIFIED: a clean target skips resolution and the immediate mask-4 check, but still requires mask 1.
 - INFERRED (simulator mapping): the simulator treats a target as effectively dirty when its own entry, containment ancestor, or anchor dependency requires resolution; it uses ancestor and dependency walks to represent invalidation propagation, which does not establish native propagation.
 - UNKNOWN: complete fallback with mixed valid and invalid anchors, callback effects, general cycle policy, exact Lua return-list arity, and constructor defaults remain unmodeled.
 
@@ -32,7 +32,7 @@ INFERRED (simulator mapping, not native evidence): effective dirty state include
 
 ## Verification status
 
-VERIFIED (test inventory): `tests/rect_geometry.rs` covers invalid-size fallback, cached validity, direct dirty-target resolution, clean cached-target use, resolved dimensions and setter equivalence through Lua methods; loader tests also cover cached `IsRectValid` behavior through Lua. No test asserts ancestor-only or dependency-only dirtiness. UNVERIFIED (2026-11-11): commit `45fae8c13` has no fresh compile or runtime result. The earlier `f8a575a9b` compile succeeded with zero warnings but predates this code. The last capacity check was for `edf70955b` and returned HOLD; no build was requested for `45fae8c13` yet. PTR bag and ActionBar selectors, `layout` and `frame_positions` on Retail/PTR/Forever/Mists, and the post-fix PTR integration/lib suite remain pending. See the [PTR cleanup report](../../../handoff/ptr-int-clean/REPORT.md) for suite status and receipts.
+VERIFIED (test inventory): `tests/rect_geometry.rs` covers invalid-size fallback, cached validity, direct dirty-target resolution, clean cached-target use, resolved dimensions and setter equivalence through Lua methods; loader tests also cover cached `IsRectValid` behavior through Lua. No test asserts ancestor-only or dependency-only dirtiness. VERIFIED (build receipt): commit `45fae8c13` compiled the Retail library and integration test targets with zero warnings. UNVERIFIED (2026-11-11): no runtime test has run on `45fae8c13`; the focused test admission returned SHED because free RAM was below 6 GiB. The PTR bag and ActionBar selectors, profile matrix, and post-fix PTR integration/lib suite remain pending. PTR bag and ActionBar selectors, `layout` and `frame_positions` on Retail/PTR/Forever/Mists, and the post-fix PTR integration/lib suite remain pending. See the [PTR cleanup report](../../../handoff/ptr-int-clean/REPORT.md) for suite status and receipts.
 
 ## Sources
 

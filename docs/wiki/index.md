@@ -2,7 +2,7 @@
 
 ## [2026-11-11] investigation | Lua rectangle-query validity
 
-[Lua rectangle-query validity](investigations/rect-query-validity.md) records VERIFIED R48/R59 geometry-query findings for Retail and PTR, cached validity and the dirty/clean target gate in simulator commits `faf99f277`, `edf70955b` and `45fae8c13`, INFERRED ancestor/dependency dirty mapping, UNKNOWN fallback/callback/cycle/return details, and pending profile/full-suite proof. See the [contract](../specs/rectangle-geometry-queries.md).
+[Lua rectangle-query validity](investigations/rect-query-validity.md) records VERIFIED R48/R59 geometry-query findings for Retail and PTR, cached validity and the dirty/clean target gate in simulator commits `faf99f277`, `edf70955b` and `45fae8c13`, INFERRED ancestor/dependency dirty mapping, UNKNOWN fallback/callback/cycle/return details, and pending profile/full-suite proof. VERIFIED: Retail library/integration targets compile at `45fae8c13` with zero warnings; runtime tests await capacity. See the [contract](../specs/rectangle-geometry-queries.md).
 
 ## [2026-11-11] system | PTR/Retail store API availability
 

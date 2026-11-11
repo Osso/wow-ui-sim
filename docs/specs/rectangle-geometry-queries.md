@@ -5,7 +5,7 @@ Lua frame geometry getters report a frame's resolved rectangle or its stored dim
 ## What it must do
 
 - [ ] Resolve dirty anchor dependencies before the dependent frame's ordinary position or size query.
-- [ ] For both Retail 12.1.5.70688 and PTR 12.1.7.70668, use a dirty target's rectangle only after resolution, when anchor-invalidated is clear and cached rectangle-valid is set. A target with no dirty ancestor or anchor dependency skips its own layout resolution and the invalidated-flag check, but still requires cached validity.
+- [ ] For both Retail 12.1.5.70688 and PTR 12.1.7.70668, use a dirty target's rectangle only after resolution, when anchor-invalidated is clear and cached rectangle-valid is set. A clean target skips its own layout resolution and the invalidated-flag check, but still requires cached validity.
 - [ ] `IsRectValid()` reads the cached rectangle-valid flag. It does not resolve layout.
 - [ ] `GetWidth()`, `GetHeight()` and `GetSize()` use the queried frame's stored dimensions when its resolved rectangle is invalid.
 - [ ] `SetSize()` writes the same stored width and height values as the corresponding `SetWidth()` and `SetHeight()` calls.
