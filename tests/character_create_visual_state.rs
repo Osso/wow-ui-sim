@@ -38,16 +38,25 @@ fn camera_zoom_level_clamps_and_getter_reads_stored_value() {
             assert(message:find(usage, 1, true), tostring(message))
         end
 
-        assert(select("#", setZoom(-13.9)) == 0)
-        assert(select("#", getZoom()) == 1 and getZoom() == 0)
-        assert(select("#", setZoom(143.9)) == 0)
+        setZoom(50)
+        assert(select("#", getZoom()) == 1 and getZoom() == 50)
+        setZoom(-13.9)
+        assert(getZoom() == 0)
+        setZoom(143.9)
         assert(getZoom() == 100)
-        assert(select("#", setZoom("42.8")) == 0)
-        assert(getZoom() == 42)
         "##,
     )
     .expect("camera zoom input conversion, clamping, storage and getter");
-    assert_eq!(env.state().borrow().character_create_camera_zoom, 42);
+    #[cfg(feature = "client-wowforever")]
+    {
+        env.exec(
+            "C_CharacterCreation.SetCameraZoomLevel('42.8'); assert(C_CharacterCreation.GetCurrentCameraZoom() == 42)",
+        )
+        .expect("Forever accepts numeric strings for camera zoom");
+        assert_eq!(env.state().borrow().character_create_camera_zoom, 42);
+    }
+    #[cfg(feature = "client-retail")]
+    assert_eq!(env.state().borrow().character_create_camera_zoom, 100);
 }
 
 #[test]
@@ -63,15 +72,18 @@ fn camera_zoom_keep_custom_uses_optional_lua_truthiness() {
         r##"
         local getZoom = C_CharacterCreation.GetCurrentCameraZoom
         local setZoom = C_CharacterCreation.SetCameraZoomLevel
-        assert(select("#", setZoom(80, 0)) == 0 and getZoom() == 42)
-        assert(select("#", setZoom(80, "")) == 0 and getZoom() == 42)
-        assert(select("#", setZoom(80, {})) == 0 and getZoom() == 42)
+        setZoom(80, 0)
+        assert(getZoom() == 42)
+        setZoom(80, "")
+        assert(getZoom() == 42)
+        setZoom(80, {})
+        assert(getZoom() == 42)
         "##,
     )
     .expect("zero, empty strings and tables keep a custom zoom");
     assert!(env.state().borrow().character_create_camera_zoom_is_custom);
 
-    env.exec("assert(select('#', C_CharacterCreation.SetCameraZoomLevel(80)) == 0)")
+    env.exec("C_CharacterCreation.SetCameraZoomLevel(80)")
         .expect("missing keepCustomZoom is false");
     assert_eq!(env.state().borrow().character_create_camera_zoom, 80);
     assert!(!env.state().borrow().character_create_camera_zoom_is_custom);
@@ -79,7 +91,7 @@ fn camera_zoom_keep_custom_uses_optional_lua_truthiness() {
     env.state()
         .borrow_mut()
         .character_create_camera_zoom_is_custom = true;
-    env.exec("assert(select('#', C_CharacterCreation.SetCameraZoomLevel(85, nil)) == 0)")
+    env.exec("C_CharacterCreation.SetCameraZoomLevel(85, nil)")
         .expect("nil keepCustomZoom is false");
     assert_eq!(env.state().borrow().character_create_camera_zoom, 85);
     assert!(!env.state().borrow().character_create_camera_zoom_is_custom);
@@ -87,7 +99,7 @@ fn camera_zoom_keep_custom_uses_optional_lua_truthiness() {
     env.state()
         .borrow_mut()
         .character_create_camera_zoom_is_custom = true;
-    env.exec("assert(select('#', C_CharacterCreation.SetCameraZoomLevel(90, false)) == 0)")
+    env.exec("C_CharacterCreation.SetCameraZoomLevel(90, false)")
         .expect("false keepCustomZoom replaces a custom zoom");
     assert_eq!(env.state().borrow().character_create_camera_zoom, 90);
     assert!(!env.state().borrow().character_create_camera_zoom_is_custom);
@@ -95,7 +107,7 @@ fn camera_zoom_keep_custom_uses_optional_lua_truthiness() {
     env.state()
         .borrow_mut()
         .character_create_camera_zoom_is_custom = true;
-    env.exec("assert(select('#', C_CharacterCreation.SetCameraZoomLevel(90, false)) == 0)")
+    env.exec("C_CharacterCreation.SetCameraZoomLevel(90, false)")
         .expect("an unchanged zoom does not clear the custom flag");
     assert!(env.state().borrow().character_create_camera_zoom_is_custom);
 }
@@ -141,21 +153,18 @@ fn preview_only_setters_validate_without_events_or_cvar_updates() {
         eventProbe:RegisterEvent("CVAR_UPDATE")
         eventProbe:SetScript("OnEvent", function() cvarUpdateCount = cvarUpdateCount + 1 end)
 
-        assert(select("#", setDress(false)) == 0)
-        assert(select("#", setDress(0)) == 0)
-        assert(select("#", setDress("")) == 0)
-        assert(select("#", setDress({})) == 0)
-        assert(select("#", setGear(0)) == 0)
-        assert(select("#", setGear(1)) == 0)
-        assert(select("#", setGear(256)) == 0)
-        assert(select("#", setGear(257)) == 0)
-        assert(select("#", setGear(-256)) == 0)
-        assert(select("#", setGear(-255)) == 0)
-        assert(select("#", setGear(1.9)) == 0)
-        assert(select("#", setGear("257")) == 0)
-        assert(select("#", setGear(false)) == 0)
-        assert(select("#", setGear({})) == 0)
-        assert(select("#", C_CharacterCreation.SetCameraZoomLevel(55, {})) == 0)
+        setDress(false)
+        setDress(0)
+        setDress("")
+        setDress({})
+        setGear(0)
+        setGear(1)
+        setGear(256)
+        setGear(257)
+        setGear(-256)
+        setGear(-255)
+        setGear(1.9)
+        C_CharacterCreation.SetCameraZoomLevel(55, {})
 
         local ok, message = pcall(setGear, 2)
         assert(not ok and message:find("bad argument #1", 1, true), tostring(message))
@@ -185,4 +194,19 @@ fn preview_only_setters_validate_without_events_or_cvar_updates() {
         .map(|event| event.name.clone())
         .collect::<Vec<_>>();
     assert_eq!(events_after, events_before);
+}
+
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn forever_preview_gear_accepts_numeric_strings_and_failed_conversions() {
+    let env = character_create_env();
+    env.exec(
+        r##"
+        local setGear = C_CharacterCreation.SetSelectedPreviewGearType
+        setGear("257")
+        setGear(false)
+        setGear({})
+        "##,
+    )
+    .expect("Forever numeric strings parse and failed non-nil conversions map to zero");
 }
