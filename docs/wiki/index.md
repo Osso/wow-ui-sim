@@ -2,7 +2,7 @@
 
 ## [2026-11-11] investigation | Lua rectangle-query validity
 
-[Lua rectangle-query validity](investigations/rect-query-validity.md) records VERIFIED R48/R59 geometry-query findings for Retail and PTR, cached validity and the dirty/clean target gate in simulator commits `faf99f277`, `edf70955b` and `45fae8c13`, INFERRED ancestor/dependency dirty mapping, UNKNOWN fallback/callback/cycle/return details, and pending profile/full-suite proof. VERIFIED: the Retail library/integration build at HEAD `0834e5438` includes code commit `45fae8c13` and has zero warnings; six geometry and two cached-validity tests pass. PTR and profile proof remain pending. See the [contract](../specs/rectangle-geometry-queries.md).
+[Lua rectangle-query validity](investigations/rect-query-validity.md) records VERIFIED R48/R59 geometry-query findings for Retail and PTR, cached validity and the dirty/clean target gate in simulator commits `faf99f277`, `edf70955b` and `45fae8c13`, INFERRED ancestor/dependency dirty mapping, UNKNOWN fallback/callback/cycle/return details, and pending profile/full-suite proof. VERIFIED: the Retail library/integration build at HEAD `0834e5438` includes code commit `45fae8c13` and has zero warnings; all 12 geometry and two cached-validity tests pass. PTR and profile proof remain pending. See the [contract](../specs/rectangle-geometry-queries.md).
 
 ## [2026-11-11] system | PTR/Retail store API availability
 
