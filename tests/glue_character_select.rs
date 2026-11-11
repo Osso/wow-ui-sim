@@ -680,3 +680,27 @@ fn trial_boost_starting_level_is_registered_only_on_glue_screens() {
         "trial boost API must be removed when returning to Game screens"
     );
 }
+
+#[test]
+#[cfg(feature = "client-retail")]
+fn retail_class_trial_tooltip_uses_exported_character_service_level() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::CharacterCreate);
+        env.exec(
+            "CharacterCreateRaceAndClassMixin.OnShow(CharacterCreateFrame.RaceAndClassFrame)",
+        )
+        .expect("original class-trial tooltip consumer should execute");
+
+        let (level, tooltip_text): (i32, String) = env
+            .eval(
+                "local button = CharacterCreateFrame.RaceAndClassFrame.ClassTrialCheckButton; return C_CharacterCreation.GetTrialBoostStartingLevel(), button.tooltipLines[1].text",
+            )
+            .expect("class-trial level and tooltip should be queryable");
+        let expected_tooltip: String = env
+            .eval("return CHARACTER_TYPE_FRAME_TRIAL_BOOST_CHARACTER_TOOLTIP:format(100)")
+            .expect("class-trial tooltip template should be queryable");
+
+        assert_eq!(level, 100, "Retail 12.1.5.70783 exports level 100 for selector 2");
+        assert_eq!(tooltip_text, expected_tooltip);
+    }
+}

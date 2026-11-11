@@ -122,6 +122,8 @@ pub mod c_catalog_shop;
 pub mod c_catalog_shop_products;
 pub mod c_challenge_mode;
 pub(crate) mod c_character_creation_naming;
+#[cfg(test)]
+mod c_character_creation_trial_boost_tests;
 pub(crate) mod c_character_creation_seen;
 pub mod c_character_services;
 pub mod c_chat_bubbles;
