@@ -315,3 +315,55 @@ replacing GlueParent.lua:909's screen-aware policy before settling. Suppressing
 the simulator chat activation fixture alone does not fix this ordering/environment
 gap. Native clarification is pending; no vendor override, forced hide, or guessed
 addon reordering is added.
+
+### R52 background lookup and supplied row boundary
+
+Comments 80/83 provide Retail 70688 and Forever 70707 evidence and the host-data
+policy. Existing simulator identity catalogs have no select-screen fields.
+`BackgroundRows` therefore has explicit class-ID and race-ID maps, empty by
+approved default. This is not a statement about the real DB2 table contents;
+real data population belongs to the coordinator's separate task. A roster record
+has a host race ID (default 0, not guessed from its social race-name string) and
+an independent background override (native construction 0). Its class ID uses
+the existing supplied account class ID. Timerunning does not select backgrounds.
+
+The getter takes a one-based index, truncates toward zero, and resolves the
+requested record independently of selection. Nonzero override, class select
+field, race select field, then race low-res field form the cascade. Missing final
+race row means 651555; present final zero means one nil. Invalid/empty/unresolved
+slots use only key-zero race low-res, not a clamped first character. Tests supply
+every row/value so they distinguish absent rows and zero fields. Ordinary numeric
+strings are inferred; full grammar, nonfinite values and conversion overflow
+remain outside verified coverage.
+
+Both globals are Glue-only on Retail/Forever (normal scope is inferred from
+native installation). PTR is unchanged and UNKNOWN. The setter validates numeric
+file-ID or string input and returns zero values, but stores no fake observable
+background/selection state. Retail 3D work is omitted. Forever readiness-event
+payload, timing, repeat count and failures remain UNKNOWN; no synthetic
+CHAR_SELECT_BACKGROUND_MODEL_READY is emitted. Filename resolution and all
+indirect resource effects remain outside this bounded non-3D model.
+
+### R54 independent automatic-boost session values
+
+Comment 82 supplies Forever 70707 and Retail 70688 evidence. Two optional session
+values, boost type and GUID, start absent and are separate from active purchase
+and trial-service inputs. The getters/writers are installed in Game and Glue on
+Retail/Forever before the existing protected-global wrappers. PTR is unchanged.
+Tainted callers keep the existing report-and-return refusal without a combat
+condition; no new access rule is added.
+
+Present type returns one number, including zero. Absent type returns no values
+(INFERRED), so tests assert assignment nil without asserting absence return count.
+The GUID getter returns one string or nil. The ordinary int32, valid GUID-string
+and explicit nil writer cases use existing shared readers; nil clears only its
+own value. Full native writer conversions, malformed GUID handling and detailed
+writer errors are UNKNOWN and not claimed by tests. No boost-change event or
+synthetic CHARACTER_LIST_UPDATE is introduced.
+
+The accepted CancelLogout path clears only boost type. An explicit Rust host
+realm-disconnect notification has the same field clear, preserving GUID. There
+is no native realm-disconnect callback wiring or invented Lua endpoint. Logout
+and simulator screen boot must not clear these fields: shipped class-trial/store
+Lua writes boost state before Logout. Broader logout/disconnect ordering remains
+UNKNOWN.

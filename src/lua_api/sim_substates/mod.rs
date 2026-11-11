@@ -860,4 +860,17 @@ pub struct CharacterServicesState {
     /// Active class-trial boost type id, or `None` when no trial is
     /// running.
     pub active_class_trial_boost_type: Option<i32>,
+    /// R54 local session request, independent of active purchase/trial services.
+    pub automatic_boost_type: Option<i32>,
+    /// Independent optional GUID; ordinary valid GUID strings are retained.
+    pub automatic_boost_character_guid: Option<String>,
+}
+
+impl CharacterServicesState {
+    /// Explicit host notification for the verified realm-disconnect clear.
+    /// The simulator has no native network callback wiring or Lua endpoint here.
+    /// Logout and direct-screen boot are not realm-disconnect notifications.
+    pub fn on_realm_disconnect(&mut self) {
+        self.automatic_boost_type = None;
+    }
 }

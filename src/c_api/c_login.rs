@@ -7,6 +7,7 @@ use crate::lua_bridge::table_set_rust_fn_static;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
+pub mod backgrounds;
 pub mod character_roster;
 #[cfg(feature = "client-ptr")]
 pub mod ptr_state;
@@ -32,6 +33,8 @@ pub struct ConnectionInfo {
 #[derive(Debug)]
 pub struct LoginState {
     pub characters: Vec<character_roster::CharacterSlot>,
+    /// Explicit host DB2 projections; empty until a data provider supplies rows.
+    pub backgrounds: backgrounds::BackgroundRows,
     /// Host saved candidate input, zero-based. Native initial value/storage UNKNOWN.
     pub saved_character_index: Option<i64>,
     /// Clamp/search output, not a selected index or a native setting write.
@@ -55,6 +58,7 @@ impl Default for LoginState {
     fn default() -> Self {
         Self {
             characters: Vec::new(),
+            backgrounds: Default::default(),
             saved_character_index: None,
             resolved_saved_character_index: None,
             selected_character_index: -1,

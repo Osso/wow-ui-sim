@@ -15,6 +15,10 @@ pub struct CharacterSlot {
 pub struct CharacterRecord {
     pub account: BnetGameAccount,
     pub timerunning_season_id: Option<u32>,
+    /// Explicit host race ID, not inferred from the social fixture name.
+    pub race_id: u32,
+    /// Independent R52 decoded background value; native construction starts at 0.
+    pub background_override: u32,
 }
 
 impl From<BnetGameAccount> for CharacterSlot {
@@ -24,6 +28,8 @@ impl From<BnetGameAccount> for CharacterSlot {
             record: Some(CharacterRecord {
                 account: record,
                 timerunning_season_id: None,
+                race_id: 0,
+                background_override: 0,
             }),
         }
     }

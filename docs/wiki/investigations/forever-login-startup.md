@@ -87,6 +87,13 @@ contracts. Cached Retail is 70575 and PTR is 70493; cached-UI compatibility does
 not establish build-specific native conformance. The spec records inferred
 scope, supplied-input boundaries and remaining unknowns.
 
+R52 background lookup uses explicit host class/race field maps until the separate
+real-data task populates them. Missing rows and present-zero fields remain
+distinct; the verified missing-final-row fallback is 651555. R54 automatic boost
+uses two independent optional session values behind existing protected wrappers.
+CancelLogout and an explicit host realm-disconnect notification clear only boost
+type; Logout and screen boot preserve both values.
+
 Final acceptance is pending. Historical startup results below do not establish
 that submission and empty-roster paths are green.
 
