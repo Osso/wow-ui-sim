@@ -17,14 +17,23 @@ const ESSENCE_USAGE: &str =
 const ESSENCE_SLOT_USAGE: &str = "Usage: local data = C_TooltipInfo.GetAzeriteEssenceSlot(slot)";
 const LFG_REWARD_USAGE: &str =
     "Usage: local data = C_TooltipInfo.GetLFGDungeonReward(dungeonID, lootIndex)";
-const LFG_SHORTAGE_USAGE: &str = "Usage: local data = C_TooltipInfo.GetLFGDungeonShortageReward(dungeonID, shortageSeverity, lootIndex)";
+const LFG_SHORTAGE_USAGE: &str = concat!(
+    "Usage: local data = C_TooltipInfo.GetLFGDungeonShortageReward(",
+    "dungeonID, shortageSeverity, lootIndex)",
+);
 const POSSESSION_USAGE: &str = "Usage: local data = C_TooltipInfo.GetPossession(slot)";
 const QUEST_SPECIAL_USAGE: &str =
     "Usage: local data = C_TooltipInfo.GetQuestLogSpecialItem(questIndex)";
-const QUEST_PARTY_USAGE: &str = "Usage: local data = C_TooltipInfo.GetQuestPartyProgress(questID [, omitTitle, ignoreActivePlayer])";
+const QUEST_PARTY_USAGE: &str = concat!(
+    "Usage: local data = C_TooltipInfo.GetQuestPartyProgress(",
+    "questID [, omitTitle, ignoreActivePlayer])",
+);
 const RECIPE_RANK_USAGE: &str =
     "Usage: local data = C_TooltipInfo.GetRecipeRankInfo(recipeID, rank)";
-const RUNEFORGE_USAGE: &str = "Usage: local data = C_TooltipInfo.GetRuneforgeResultItem(itemGUID, itemLevel [, powerID, modifiers])";
+const RUNEFORGE_USAGE: &str = concat!(
+    "Usage: local data = C_TooltipInfo.GetRuneforgeResultItem(",
+    "itemGUID, itemLevel [, powerID, modifiers])",
+);
 
 pub(crate) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
     let is_ptr = ACTIVE == ClientProfile::Ptr;
@@ -163,6 +172,20 @@ fn get_recipe_rank_info(state: &mut LuaState) -> LuaResult<u32> {
 fn get_runeforge_result_item(state: &mut LuaState) -> LuaResult<u32> {
     let guid = tooltip_getter_args::round7_guid(state, 1, RUNEFORGE_USAGE)?;
     let level = tooltip_getter_args::round7_signed(state, 2, RUNEFORGE_USAGE)?;
+    if has_unsupported_runeforge_customization(state)? {
+        return no_values();
+    }
+    let Some((item_id, item)) = item_for_owned_guid(state, &guid) else {
+        return no_values();
+    };
+    let Some(data) = build_runeforge_result_data(state, &guid, item_id, item, level) else {
+        return no_values();
+    };
+    state.push(data);
+    Ok(1)
+}
+
+fn has_unsupported_runeforge_customization(state: &mut LuaState) -> LuaResult<bool> {
     let power_id = match stack_val(state, 3) {
         Val::Nil => None,
         _ => Some(tooltip_getter_args::round7_signed(
@@ -180,31 +203,29 @@ fn get_runeforge_result_item(state: &mut LuaState) -> LuaResult<u32> {
         Val::Table(_) => true,
         _ => return Err(rilua::runtime_error(RUNEFORGE_USAGE)),
     };
-    // The selected owned instance is modelled. Power and modifier catalogues
-    // are not, so do not turn their identifiers into guessed bonus data.
-    if power_id.is_some() || modifiers {
-        return no_values();
-    }
-    let Some((item_id, item)) = item_for_owned_guid(state, &guid) else {
-        return no_values();
-    };
+    Ok(power_id.is_some() || modifiers)
+}
+
+fn build_runeforge_result_data(
+    state: &mut LuaState,
+    guid: &str,
+    item_id: u32,
+    item: &ItemInfo,
+    level: i32,
+) -> Option<GcRef<Table>> {
     let mut displayed_item = item.clone();
     if level != 0 {
         // The shared builder stores a u16 item level. Do not invent conversion
         // behavior for native int32 values that this representation cannot hold.
-        let Ok(item_level) = u16::try_from(level) else {
-            return no_values();
-        };
-        displayed_item.item_level = item_level;
+        displayed_item.item_level = u16::try_from(level).ok()?;
     }
     let data = tooltip_for_item_context(state, item_id, Some(&displayed_item));
-    let guid = create_string(state, &guid);
+    let guid = create_string(state, guid);
     table_set(state, data, "guid", guid);
     if level != 0 {
         table_set(state, data, "overrideItemLevel", Val::Num(f64::from(level)));
     }
-    state.push(data);
-    Ok(1)
+    Some(data)
 }
 
 fn get_slotted_keystone(_state: &mut LuaState) -> LuaResult<u32> {

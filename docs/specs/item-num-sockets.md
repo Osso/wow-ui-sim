@@ -9,7 +9,7 @@ proved in Retail 12.1.5.**70688**, PTR 12.1.7.**70668** and Forever 1.60.1.**707
 
 - [x] `GetItemNumSockets(itemInfo)` publishes one number for each accepted argument.
 - [x] The argument resolves to an item like the other `itemInfo` readers: item ID, hyperlink, or item name.
-- [ ] Retail, PTR and Forever reject a secret `itemInfo` argument from tainted execution; an untainted caller can read the secret payload (Round 7).
+- [x] Retail, PTR and Forever reject a secret `itemInfo` argument from tainted execution; an untainted caller can read the secret payload (Round 7).
 - [x] An item that does not resolve, or is not cached, publishes the integer `0`. It never publishes nil and never returns nothing (Q2: the carried value stays 0 and is published as an integer).
 - [x] Publication is every profile with a pinned declaration: Retail, PTR, Forever, Mists, Era and Anniversary. Wrath pins no generated documentation.
 

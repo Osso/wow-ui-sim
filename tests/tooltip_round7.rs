@@ -8,7 +8,10 @@ mod tooltip_full_env_helpers;
 fn tooltip_round7_registration_matches_native_profile_evidence() {
     use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
     let env = wow_ui_sim::lua_api::WowLuaEnv::new().unwrap();
-    let modern = matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever);
+    let modern = matches!(
+        ACTIVE,
+        ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
+    );
     let all_getters = matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever);
     for (name, published) in [
         ("GetAzeriteEssence", modern),
@@ -23,7 +26,8 @@ fn tooltip_round7_registration_matches_native_profile_evidence() {
         ("GetRuneforgeResultItem", all_getters),
         ("GetSlottedKeystone", all_getters),
     ] {
-        let actual: bool = env.eval(&format!("return type(rawget(C_TooltipInfo, '{name}')) == 'function'")).unwrap();
+        let source = format!("return type(rawget(C_TooltipInfo, '{name}')) == 'function'");
+        let actual: bool = env.eval(&source).unwrap();
         assert_eq!(actual, published, "{ACTIVE:?}: {name}");
     }
 }
@@ -41,12 +45,18 @@ tooltip_selection_getters_fixture! {
         if R7AllGetters then
             for _, case in ipairs({
                 {'GetLFGDungeonReward', {1, 0}, 'dungeonID, lootIndex', 2, 2, {1, 2}},
-                {'GetLFGDungeonShortageReward', {1, 0, 0}, 'dungeonID, shortageSeverity, lootIndex', 3, 3, {1, 2, 3}},
+                {
+                    'GetLFGDungeonShortageReward', {1, 0, 0},
+                    'dungeonID, shortageSeverity, lootIndex', 3, 3, {1, 2, 3},
+                },
                 {'GetPossession', {0}, 'slot', 1, 1, {1}},
                 {'GetQuestLogSpecialItem', {1}, 'questIndex', 1, 1, {1}},
                 {'GetQuestPartyProgress', {1}, 'questID [, omitTitle, ignoreActivePlayer]', 1, 3, {1}},
                 {'GetRecipeRankInfo', {1, 1}, 'recipeID, rank', 2, 2, {1, 2}},
-                {'GetRuneforgeResultItem', {'Opaque-1', 40}, 'itemGUID, itemLevel [, powerID, modifiers]', 2, 4, {2}},
+                {
+                    'GetRuneforgeResultItem', {'Opaque-1', 40},
+                    'itemGUID, itemLevel [, powerID, modifiers]', 2, 4, {2},
+                },
             }) do cases[#cases + 1] = case end
         end
     "#;
@@ -100,11 +110,14 @@ tooltip_selection_getters_fixture! {
                     if type(args[position]) == 'number' then
                         local copy = {{unpack(args)}}
                         copy[position] = tostring(args[position] + 0.9)
-                        assert(select('#', getter(unpack(copy))) == 0, name .. ': string/fraction must reach miss arm')
+                        local result_count = select('#', getter(unpack(copy)))
+                        assert(result_count == 0, name .. ': string/fraction must reach miss arm')
                         for _, outside in ipairs({{-2147483649, 2147483648, math.huge, 0/0}}) do
                             copy[position] = outside
                             local ok, message = pcall(getter, unpack(copy))
-                            assert(not ok and message:find('outside of expected range -2147483648 to 2147483647', 1, true),
+                            local has_range_error = message:find(
+                                'outside of expected range -2147483648 to 2147483647', 1, true)
+                            assert(not ok and has_range_error,
                                 name .. ': range error: ' .. tostring(message))
                         end
                     end
@@ -113,13 +126,16 @@ tooltip_selection_getters_fixture! {
             assert(select('#', C_TooltipInfo.GetAzeriteEssence(1, '0.9')) == 0)
             for _, rank in ipairs({{-1, 4294967296}}) do
                 local ok, message = pcall(C_TooltipInfo.GetAzeriteEssence, 1, rank)
-                assert(not ok and message:find('outside of expected range 0 to 4294967295', 1, true))
+                local has_range_error = message:find(
+                    'outside of expected range 0 to 4294967295', 1, true)
+                assert(not ok and has_range_error)
             end
             assert(select('#', C_TooltipInfo.GetAzeriteEssenceSlot(259)) == 0, 'low byte 3 accepted')
             assert(select('#', C_TooltipInfo.GetAzeriteEssenceSlot(-256)) == 0, 'low byte 0 accepted')
             for _, slot in ipairs({{4, 260, -1}}) do
                 local ok, message = pcall(C_TooltipInfo.GetAzeriteEssenceSlot, slot)
-                assert(not ok and message:find('Usage: local data = C_TooltipInfo.GetAzeriteEssenceSlot(slot)', 1, true))
+                local usage = 'Usage: local data = C_TooltipInfo.GetAzeriteEssenceSlot(slot)'
+                assert(not ok and message:find(usage, 1, true))
             end
         "#)).unwrap();
     }
@@ -129,7 +145,8 @@ tooltip_selection_getters_fixture! {
         let env = tooltip_full_env_helpers::load_full_env_without_post_load();
         env.exec(&format!("R7AllGetters = {}", ACTIVE != ClientProfile::Ptr)).unwrap();
         env.exec(&format!(r#"{CASES}
-            assert(C_AddOns.IsAddOnLoaded('Blizzard_SharedXMLGame'), 'selected original tooltip consumer must load')
+            local shared_xml_loaded = C_AddOns.IsAddOnLoaded('Blizzard_SharedXMLGame')
+            assert(shared_xml_loaded, 'selected original tooltip consumer must load')
             if R7AllGetters then
                 cases[#cases + 1] = {{'GetItemInteractionItem', {{}}}}
                 cases[#cases + 1] = {{'GetSlottedKeystone', {{}}}}
@@ -139,10 +156,12 @@ tooltip_selection_getters_fixture! {
                 local getter = assert(rawget(C_TooltipInfo, name), name .. ' missing')
                 assert(select('#', getter(unpack(args))) == 0, name .. ': miss is no values, not nil')
                 local setter = 'Set' .. name:sub(4)
-                assert(debug.getinfo(GameTooltip[setter], 'S').source:find('TooltipDataHandler.lua', 1, true), 'original accessor')
+                local source = debug.getinfo(GameTooltip[setter], 'S').source
+                assert(source:find('TooltipDataHandler.lua', 1, true), 'original accessor')
                 GameTooltip:SetOwner(UIParent, 'ANCHOR_NONE')
                 GameTooltip[setter](GameTooltip, unpack(args))
-                assert(GameTooltip:GetPrimaryTooltipData() == nil, name .. ': original accessor must not fabricate data')
+                local primary_data = GameTooltip:GetPrimaryTooltipData()
+                assert(primary_data == nil, name .. ': original accessor must not fabricate data')
             end
         "#)).unwrap();
     }
@@ -160,14 +179,21 @@ tooltip_selection_getters_fixture! {
                         local copy = {{unpack(args)}}
                         copy[position] = R7Secret
                         local ok, message = pcall(getter, unpack(copy, 1, count))
-                        assert(not ok and message:find('Secret values are only allowed during untainted execution for this argument.', 1, true),
+                        local has_secret_error = message:find(
+                            'Secret values are only allowed during untainted execution for this argument.',
+                            1, true)
+                        assert(not ok and has_secret_error,
                             name .. ' argument ' .. position .. ': ' .. tostring(message))
                     end
                     assert(select('#', getter(unpack(args))) == 0, 'ordinary arguments still work')
                 end
                 if R7AllGetters then
-                    assert(select('#', C_TooltipInfo.GetItemInteractionItem(R7Secret)) == 0, 'no argument reader')
-                    assert(select('#', C_TooltipInfo.GetSlottedKeystone(R7Secret)) == 0, 'no argument reader')
+                    local interaction_count = select(
+                        '#', C_TooltipInfo.GetItemInteractionItem(R7Secret))
+                    local keystone_count = select(
+                        '#', C_TooltipInfo.GetSlottedKeystone(R7Secret))
+                    assert(interaction_count == 0, 'no argument reader')
+                    assert(keystone_count == 0, 'no argument reader')
                 end
             end
             debug.setobjecttaint(tainted, 'Round7Probe')
@@ -178,16 +204,21 @@ tooltip_selection_getters_fixture! {
                 for _, position in ipairs({{2, 3}}) do
                     local args = {{1, false, false}}
                     args[position] = 1
-                    assert(not pcall(C_TooltipInfo.GetQuestPartyProgress, unpack(args)), 'optional boolean is not truthiness')
+                    local ok = pcall(C_TooltipInfo.GetQuestPartyProgress, unpack(args))
+                    assert(not ok, 'optional boolean is not truthiness')
                 end
-                assert(not pcall(C_TooltipInfo.GetRuneforgeResultItem, 'Opaque-1', 40, nil, 7), 'modifier table type')
+                local accepted_bad_modifiers = pcall(
+                    C_TooltipInfo.GetRuneforgeResultItem, 'Opaque-1', 40, nil, 7)
+                assert(not accepted_bad_modifiers, 'modifier table type')
             end
         "#)).unwrap();
     }
 
     #[test]
     fn tooltip_round7_runeforge_original_accessor_uses_owned_guid_and_level() {
-        if ACTIVE == ClientProfile::Ptr { return; }
+        if ACTIVE == ClientProfile::Ptr {
+            return;
+        }
         let env = tooltip_full_env_helpers::load_full_env_without_post_load();
         env.exec(r#"
             A_Admin.AddBagItem(0, 3, 1728, 1)
@@ -201,17 +232,25 @@ tooltip_selection_getters_fixture! {
                 GameTooltip:SetRuneforgeResultItem(guid, case[4])
                 local info = GameTooltip:GetPrimaryTooltipInfo()
                 local data = GameTooltip:GetPrimaryTooltipData()
-                assert(info and info.getterName == 'GetRuneforgeResultItem', 'runeforge accessor missing')
-                assert(data and data.type == 0 and data.id == case[3] and data.guid == guid, 'owned instance identity')
+                local has_runeforge_accessor = info and info.getterName == 'GetRuneforgeResultItem'
+                assert(has_runeforge_accessor, 'runeforge accessor missing')
+                local has_owned_identity = data and data.type == 0
+                    and data.id == case[3] and data.guid == guid
+                assert(has_owned_identity, 'owned instance identity')
                 assert(data.overrideItemLevel == case[4], 'supplied display level')
                 assert(data.lines[1].leftText == case[5], 'ordinary shared item producer')
                 assert(data.lines[2].leftText == 'Item Level ' .. case[4], 'displayed level reaches lines')
                 assert(GameTooltip:GetLeftLine(1):GetText() == case[5], 'original consumer presents item')
             end
-            assert(select('#', C_TooltipInfo.GetRuneforgeResultItem('Item-0-4-1728', 40)) == 0, 'GUID must resolve, not item id alone')
-            assert(select('#', C_TooltipInfo.GetRuneforgeResultItem('garbage', 40)) == 0, 'unparseable GUID is a miss')
-            assert(select('#', C_TooltipInfo.GetRuneforgeResultItem('Opaque-123', 40)) == 0, 'unresolved alias is a miss')
-            assert(select('#', C_TooltipInfo.GetRuneforgeResultItem(123, 40)) == 0, 'numeric GUID conversion reaches miss')
+            local function assert_runeforge_miss(guid, reason)
+                local result_count = select(
+                    '#', C_TooltipInfo.GetRuneforgeResultItem(guid, 40))
+                assert(result_count == 0, reason)
+            end
+            assert_runeforge_miss('Item-0-4-1728', 'GUID must resolve, not item id alone')
+            assert_runeforge_miss('garbage', 'unparseable GUID is a miss')
+            assert_runeforge_miss('Opaque-123', 'unresolved alias is a miss')
+            assert_runeforge_miss(123, 'numeric GUID conversion reaches miss')
         "#).unwrap();
     }
 
@@ -222,7 +261,10 @@ tooltip_selection_getters_fixture! {
         env.exec(r#"
             local function tainted()
                 local ok, message = pcall(C_Item.GetItemNumSockets, R7Secret)
-                assert(not ok and message:find('Secret values are only allowed during untainted execution for this argument.', 1, true), tostring(message))
+                local has_secret_error = message:find(
+                    'Secret values are only allowed during untainted execution for this argument.',
+                    1, true)
+                assert(not ok and has_secret_error, tostring(message))
                 assert(C_Item.GetItemNumSockets(128910) == 2, 'plain input still works')
             end
             debug.setobjecttaint(tainted, 'Round7Probe')
