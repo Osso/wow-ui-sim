@@ -21,7 +21,7 @@ R38 verifies PTR 12.1.7.70668 and provides a limited Retail 12.1.5.70688 compari
 ## Sources
 
 - [Behavioral contract](../../specs/store-api-availability.md).
-- [R38 implementation report](../../handoff/ptr-int-clean/REPORT.md#store-api-behavior--unknown-pending-r38) — pending reconciliation with the completed implementation.
+- [R38 implementation report](../../handoff/ptr-int-clean/REPORT.md#store-api-behavior--r38-evidence-implementation-verification-pending) — source evidence and verification status.
 - R38 source evidence: `~/.local/state/wow-ui-sim/handoff/pr46-49-decomp-answers.md#r38`.
 - PTR `Blizzard_GameMenu/Shared/GameMenuFrame.lua:43-46,96-102,198-200`.
 

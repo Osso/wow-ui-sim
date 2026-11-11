@@ -58,13 +58,16 @@ All paths below are relative to `~/.cache/wow-ui-sim/blizzard-ui/ptr/AddOns/`; n
 
 Further fixture changes require citations at the point of change; the initial table alone does not authorize weaker checks.
 
-## Store API behavior — UNKNOWN pending R38
+## Store API behavior — R38 evidence (implementation verification pending)
 
-- UNKNOWN (PTR 12.1.7): the backing, default values and change-event behavior for `C_StorePublic.IsEnabled()` and `C_CatalogShop.IsShop2Enabled()` are not established. R38 asks decomp for this evidence. Do not infer their outputs from the simulator placeholders or from seeded CVars.
-- VERIFIED (simulator source): the temporary `C_StorePublic.IsEnabled()` workaround returns `true`, and the temporary `C_CatalogShop.IsShop2Enabled()` workaround returns `false`.
-- VERIFIED (master test source at `aeb3ce50ecf3351f29675a1134370fc9361df2ea`): the passing `game_menu::test_game_menu_shop_button_opens_store_and_menu_can_reopen_after_store_closes` run overwrote `C_CatalogShop.IsShop2Enabled` in the test with `return true`; that pass does not establish native behavior.
-- VERIFIED (PTR exact runs at `ce80d0aab28b3263fe633b2c4d221c0759f66ace`): without that override, the shop-button test failed with `missing-shop-button`; the guessed default test observed `(true, false, false)` rather than `(false, true, false)`; and the status-change test failed at `enabled_visible`. The legacy-toggle test passed only while the placeholder returned `false`. Logs: `/home/osso/.local/state/wow-ui-sim/verification/ptr-int-clean-game-menu-ce80d0aab/`.
-- VERIFIED: removed these four store-path tests from `tests/game_menu.rs` until R38 evidence is available: `game_menu::test_game_menu_shop_button_opens_store_and_menu_can_reopen_after_store_closes`, `game_menu::ptr_default_shop_settings_hide_game_menu_store_button`, `game_menu::ptr_store_status_change_rebuilds_menu_shop_button`, and `game_menu::test_legacy_store_toggle_reopens_game_menu_after_store_closes`. The existing GameMenu show, hide and base-button tests remain.
+- VERIFIED (R38, PTR 12.1.7.70668): `C_StorePublic.IsEnabled()` returns one boolean from hidden server mirror `bpayStoreEnable`, default `false`; `C_CatalogShop.IsShop2Enabled()` returns one boolean from independent hidden mirror `shop2Enabled`, default `true`. Retail 12.1.5.70688 has the same results in a limited comparison only.
+- VERIFIED (R38): `C_CVar.GetCVar` refuses both hidden values. INFERRED: the Lua result is one `nil`; exact result shape is not asserted. UNKNOWN: legacy global `GetCVar` parity and real-account values.
+- VERIFIED (R38): a changed `bpayStoreEnable` posts one payload-free `STORE_STATUS_CHANGED` per server update and no `CVAR_UPDATE`. On initialized paths, a `shop2Enabled` change posts no Lua event; first-use behavior is UNKNOWN. The two queries do not read each other's value.
+- VERIFIED (shipped PTR `GameMenuFrame.lua:198-200`): the Store button requires both queries to return true. INFERRED: built-in defaults `(false, true)` hide it by default.
+- VERIFIED (simulator source before the change): the temporary fallbacks returned `true` for `C_StorePublic.IsEnabled` and `false` for `C_CatalogShop.IsShop2Enabled`. VERIFIED (commit `08169d88e`): Retail/PTR now register state-backed queries and keep hidden server mirrors separate from Lua-visible CVar state; the compatibility defaults remain for uncovered profiles.
+- VERIFIED: the duplicate GameMenu shop-button block was removed; one state-backed version remains, with the default-hidden result marked INFERRED.
+- UNKNOWN: 70493 behavior, exact `C_CVar.GetCVar` result shape, and first-use `shop2Enabled` event behavior remain unasserted.
+- UNVERIFIED: commit `08169d88e` has not compiled or run its targeted tests. The configured build-host helper lacks `depot-build.py`; the slot-1 Cargo check launch was refused by capacity admission.
 
 ## Current targeted proof — 2026-11-11
 
