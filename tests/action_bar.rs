@@ -160,8 +160,8 @@ fn test_main_action_bar_end_caps_visible_after_startup() {
             if not MainActionBar or not MainActionBar.EndCaps then
                 return false, "", ""
             end
-            local left = MainActionBar.EndCaps.LeftEndCap
-            local right = MainActionBar.EndCaps.RightEndCap
+            local left = MainActionBar.EndCaps.LeftEndCap.Texture
+            local right = MainActionBar.EndCaps.RightEndCap.Texture
             return MainActionBar.EndCaps:IsShown(),
                    (left and left.GetAtlas and left:GetAtlas()) or "",
                    (right and right.GetAtlas and right:GetAtlas()) or ""
