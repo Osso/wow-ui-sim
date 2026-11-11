@@ -434,6 +434,10 @@ fn place_action_writes_spell_id_to_action_bar_slot() {
     let env = env();
     {
         let mut st = env.state().borrow_mut();
+        st.action_bars.remove(&7);
+        st.action_outfits.remove(&7);
+        st.action_macros.remove(&7);
+        st.equipped_gear_outfit_action_slots.remove(&7);
         st.cursor_item = Some(CursorInfo::Spell { spell_id: 12345 });
     }
     env.exec("PlaceAction(7)").unwrap();
