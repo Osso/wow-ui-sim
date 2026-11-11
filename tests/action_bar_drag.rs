@@ -1,9 +1,9 @@
 use crate::common;
 
-#[cfg(any(feature = "client-ptr", feature = "client-retail"))]
-use wow_ui_sim::lua_api::state::{CursorInfo, CursorItemOrigin};
 use std::path::PathBuf;
 use wow_ui_sim::lua_api::WowLuaEnv;
+#[cfg(any(feature = "client-ptr", feature = "client-retail"))]
+use wow_ui_sim::lua_api::state::{CursorInfo, CursorItemOrigin};
 
 const ACTION_BAR_ADDONS: &[&str] = &[
     "Blizzard_SharedXMLBase",
@@ -391,7 +391,8 @@ fn action_button_1_texture_path_resolves_to_icon_fdid() {
 fn cursor_info_projects_existing_payloads_with_profile_deltas() {
     let env = WowLuaEnv::new().unwrap();
     assert_eq!(
-        env.eval::<i64>("return select('#', GetCursorInfo())").unwrap(),
+        env.eval::<i64>("return select('#', GetCursorInfo())")
+            .unwrap(),
         0,
         "an empty cursor returns no values"
     );
@@ -462,16 +463,22 @@ fn cursor_info_projects_existing_payloads_with_profile_deltas() {
             spell_id: 0x00AB_CDEF,
             packed_action: (category << 24) | 0x00AB_CDEF,
         });
-        let (count, kind, action_id, book_is_nil, book_index, related_is_nil):
-            (i64, String, i64, bool, i64, bool) = env
-                .eval(
-                    r#"
+        let (count, kind, action_id, book_is_nil, book_index, related_is_nil): (
+            i64,
+            String,
+            i64,
+            bool,
+            i64,
+            bool,
+        ) = env
+            .eval(
+                r#"
                     local kind, actionID, bookIndex, relatedID = GetCursorInfo()
                     return select('#', GetCursorInfo()), kind, actionID,
                         bookIndex == nil, bookIndex or 0, relatedID == nil
                     "#,
-                )
-                .unwrap();
+            )
+            .unwrap();
         assert_eq!(count, 4);
         assert_eq!(kind, "petaction");
         assert_eq!(action_id, 0x00AB_CDEF);
@@ -497,7 +504,10 @@ fn ptr_action_spell_restriction_matches_native_mode_and_slot_rules() {
             "#,
         )
         .unwrap();
-    assert_eq!((zero_spell, fractional_numeric, last_slot), (true, true, true));
+    assert_eq!(
+        (zero_spell, fractional_numeric, last_slot),
+        (true, true, true)
+    );
 
     let (below_first, above_last): (i64, i64) = env
         .eval(
@@ -511,8 +521,12 @@ fn ptr_action_spell_restriction_matches_native_mode_and_slot_rules() {
 
     env.state().borrow_mut().game_rules.active_game_mode = 3;
     assert!(env.eval::<bool>("return C_GameRules.IsWoWHack()").unwrap());
-    let (restricted, unrestricted, zero_spell_unrestricted, other_restricted):
-        (bool, bool, bool, bool) = env
+    let (restricted, unrestricted, zero_spell_unrestricted, other_restricted): (
+        bool,
+        bool,
+        bool,
+        bool,
+    ) = env
         .eval(
             r#"
             return C_ActionBar.SpellMatchesActionSpellTypeRestriction(853, 1),
@@ -523,7 +537,12 @@ fn ptr_action_spell_restriction_matches_native_mode_and_slot_rules() {
         )
         .unwrap();
     assert_eq!(
-        (restricted, unrestricted, zero_spell_unrestricted, other_restricted),
+        (
+            restricted,
+            unrestricted,
+            zero_spell_unrestricted,
+            other_restricted
+        ),
         (false, true, false, false)
     );
 
@@ -661,7 +680,10 @@ fn ptr_action_button_drag_matches_r29_cursor_and_event_order() {
         assert_eq!(book_type, "spell");
         assert_eq!(spell_id, 853, "spellID is the fourth cursor value");
         assert!(related_is_nil);
-        assert!(env.eval::<bool>("return ActionButton1:GetShowGrid()").unwrap());
+        assert!(
+            env.eval::<bool>("return ActionButton1:GetShowGrid()")
+                .unwrap()
+        );
         assert!(!env.eval::<bool>("return HasAction(1)").unwrap());
         assert_eq!(
             read_ptr_action_bar_trace(&env),
@@ -678,11 +700,15 @@ fn ptr_action_button_drag_matches_r29_cursor_and_event_order() {
         env.fire_script_handler(button_id, "OnReceiveDrag", vec![])
             .unwrap();
         assert_eq!(
-            env.eval::<i64>("return select('#', GetCursorInfo())").unwrap(),
+            env.eval::<i64>("return select('#', GetCursorInfo())")
+                .unwrap(),
             0
         );
         assert!(env.eval::<bool>("return HasAction(1)").unwrap());
-        assert!(!env.eval::<bool>("return ActionButton1:GetShowGrid()").unwrap());
+        assert!(
+            !env.eval::<bool>("return ActionButton1:GetShowGrid()")
+                .unwrap()
+        );
         assert_eq!(
             read_ptr_action_bar_trace(&env),
             "ACTIONBAR_HIDEGRID;CURSOR_CHANGED,true,0,3,0;ACTIONBAR_SLOT_CHANGED,1"
@@ -714,7 +740,8 @@ fn ptr_action_button_drag_matches_r29_cursor_and_event_order() {
             853
         );
         assert_eq!(
-            env.eval::<i64>("return select('#', GetCursorInfo())").unwrap(),
+            env.eval::<i64>("return select('#', GetCursorInfo())")
+                .unwrap(),
             0
         );
         assert_eq!(
@@ -804,7 +831,8 @@ fn ptr_action_bar_lock_is_checked_by_the_lua_drag_consumer_only() {
             .unwrap();
         assert!(env.eval::<bool>("return HasAction(1)").unwrap());
         assert_eq!(
-            env.eval::<i64>("return select('#', GetCursorInfo())").unwrap(),
+            env.eval::<i64>("return select('#', GetCursorInfo())")
+                .unwrap(),
             0
         );
 
@@ -815,7 +843,8 @@ fn ptr_action_bar_lock_is_checked_by_the_lua_drag_consumer_only() {
             .unwrap();
         assert!(env.eval::<bool>("return HasAction(1)").unwrap());
         assert_eq!(
-            env.eval::<i64>("return select('#', GetCursorInfo())").unwrap(),
+            env.eval::<i64>("return select('#', GetCursorInfo())")
+                .unwrap(),
             0
         );
     });
@@ -847,7 +876,8 @@ fn ptr_tainted_combat_pickup_is_blocked_and_place_clears_the_cursor() {
     .unwrap();
     assert!(env.eval::<bool>("return HasAction(1)").unwrap());
     assert_eq!(
-        env.eval::<i64>("return select('#', GetCursorInfo())").unwrap(),
+        env.eval::<i64>("return select('#', GetCursorInfo())")
+            .unwrap(),
         0
     );
     assert_eq!(
@@ -866,13 +896,54 @@ fn ptr_tainted_combat_pickup_is_blocked_and_place_clears_the_cursor() {
         read_ptr_action_bar_trace(&env)
     );
     assert_eq!(
-        env.eval::<i64>("return select('#', GetCursorInfo())").unwrap(),
+        env.eval::<i64>("return select('#', GetCursorInfo())")
+            .unwrap(),
         0
     );
     assert_eq!(
         read_ptr_action_bar_trace(&env),
         "ADDON_ACTION_BLOCKED,R29TestAddon,PlaceAction();ACTIONBAR_HIDEGRID;CURSOR_CHANGED,true,0,3,0"
     );
+}
+
+#[cfg(feature = "client-ptr")]
+#[test]
+fn ptr_tainted_place_merchant_cursor_reports_block_and_clears() {
+    let env = WowLuaEnv::new().unwrap();
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.merchant_items = vec![6948];
+        sim.action_bars.remove(&202);
+        sim.action_outfits.remove(&202);
+        sim.action_macros.remove(&202);
+    }
+    install_ptr_action_bar_trace(&env);
+    env.exec("PickupMerchantItem(1)").unwrap();
+    env.state().borrow_mut().player.in_combat = true;
+    env.exec(
+        r#"
+        TaintedPlaceMerchant = function() PlaceAction(202) end
+        debug.setobjecttaint(TaintedPlaceMerchant, 'R37TestAddon')
+        ResetR29ActionBarEvents()
+        TaintedPlaceMerchant()
+        "#,
+    )
+    .unwrap();
+
+    assert!(!env.eval::<bool>("return HasAction(202)").unwrap());
+    assert_eq!(
+        env.eval::<i64>("return select('#', GetCursorInfo())")
+            .unwrap(),
+        0
+    );
+    let trace = read_ptr_action_bar_trace(&env);
+    assert!(
+        trace.starts_with(
+            "ADDON_ACTION_BLOCKED,R37TestAddon,PlaceAction();CURSOR_CHANGED,true,0,5,"
+        ),
+        "merchant cursor block trace: {trace}"
+    );
+    assert!(!trace.contains("ACTIONBAR_SLOT_CHANGED"), "{trace}");
 }
 
 #[cfg(any(feature = "client-ptr", feature = "client-retail"))]
@@ -889,14 +960,21 @@ fn action_slot_limits_match_the_client_profile() {
 
     env.exec(&format!("PickupAction({})", max_slot + 1))
         .unwrap();
-    assert!(env.eval::<bool>(&format!("return HasAction({})", max_slot + 1)).unwrap());
+    assert!(
+        env.eval::<bool>(&format!("return HasAction({})", max_slot + 1))
+            .unwrap()
+    );
     assert_eq!(
-        env.eval::<i64>("return select('#', GetCursorInfo())").unwrap(),
+        env.eval::<i64>("return select('#', GetCursorInfo())")
+            .unwrap(),
         0
     );
 
     env.exec(&format!("PickupAction({max_slot})")).unwrap();
-    assert!(!env.eval::<bool>(&format!("return HasAction({max_slot})")).unwrap());
+    assert!(
+        !env.eval::<bool>(&format!("return HasAction({max_slot})"))
+            .unwrap()
+    );
     env.exec(&format!("PlaceAction({})", max_slot + 1)).unwrap();
     let (kind, spell_id): (String, i64) = env
         .eval(&format!(
@@ -912,9 +990,13 @@ fn action_slot_limits_match_the_client_profile() {
     );
 
     env.exec(&format!("PlaceAction({max_slot})")).unwrap();
-    assert!(env.eval::<bool>(&format!("return HasAction({max_slot})")).unwrap());
+    assert!(
+        env.eval::<bool>(&format!("return HasAction({max_slot})"))
+            .unwrap()
+    );
     assert_eq!(
-        env.eval::<i64>("return select('#', GetCursorInfo())").unwrap(),
+        env.eval::<i64>("return select('#', GetCursorInfo())")
+            .unwrap(),
         0
     );
 }
