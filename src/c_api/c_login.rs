@@ -3,14 +3,53 @@
 use crate::c_api::{ensure_namespace, permanent_shims};
 use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::methods::{borrow_state, create_table, table_set};
+use crate::lua_api::state_types::BnetGameAccount;
 use crate::lua_bridge::table_set_rust_fn_static;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
+
+/// Host inputs and the offline login policy (lt-a667, ANSWER 30 / R40).
+/// No credentials are retained. Existing direct-screen boot remains separate.
+#[derive(Debug)]
+pub struct LoginState {
+    pub characters: Vec<BnetGameAccount>,
+    /// Availability is independent of the number of realm records (R40).
+    /// False is the empty offline scenario; realm discovery is not emulated.
+    pub realm_list_available: bool,
+    pub(crate) submitted: bool,
+    aurora_state: i32,
+    connected_to_wow: bool,
+    pending_step: u8,
+}
+
+impl Default for LoginState {
+    fn default() -> Self {
+        Self {
+            characters: Vec::new(),
+            realm_list_available: false,
+            submitted: false,
+            aurora_state: 1,
+            connected_to_wow: false,
+            pending_step: 0,
+        }
+    }
+}
+
+impl LoginState {
+    pub(crate) fn reset_connection(&mut self) {
+        self.submitted = false;
+        self.pending_step = 0;
+        self.aurora_state = 1;
+        self.connected_to_wow = false;
+    }
+}
 
 pub fn register_c_login(state: &mut LuaState) -> LuaResult<()> {
     let ns = ensure_namespace(state, "C_Login")?;
     table_set_rust_fn_static(state, ns, "IsLoginReady", c_login_is_login_ready)?;
     table_set_rust_fn_static(state, ns, "GetState", c_login_get_state)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    table_set_rust_fn_static(state, ns, "Login", login)?;
     permanent_shims::c_login::register_c_login_defaults(state, ns)?;
     Ok(())
 }
@@ -21,9 +60,20 @@ fn c_login_is_login_ready(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn c_login_get_state(state: &mut LuaState) -> LuaResult<u32> {
-    let screen_kind = borrow_state(state)?.screen_kind;
-    let (aurora_state, connected_to_wow, wow_connection_state, has_realm_list) =
-        screen_kind.login_state();
+    let (aurora_state, connected_to_wow, wow_connection_state, has_realm_list) = {
+        let sim = borrow_state(state)?;
+        let login = &sim.glue_login;
+        if login.submitted {
+            (
+                login.aurora_state,
+                login.connected_to_wow,
+                1,
+                login.realm_list_available,
+            )
+        } else {
+            sim.screen_kind.login_state()
+        }
+    };
     if matches!(ACTIVE, ClientProfile::Ptr | ClientProfile::WowForever) {
         let result = create_table(state);
         for (key, value) in [
@@ -52,4 +102,74 @@ fn c_login_get_state(state: &mut LuaState) -> LuaResult<u32> {
     state.push(Val::Bool(has_realm_list));
     state.push(Val::Bool(false));
     Ok(5)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn login(state: &mut LuaState) -> LuaResult<u32> {
+    use crate::lua_api::methods::{borrow_state_mut, extract_frame_id};
+    use crate::lua_bridge::stack_val;
+    const USAGE: &str = "Usage: C_Login.Login(\"accountName\", AccountLoginPasswordEdit)";
+    let account = stack_val(state, 1);
+    let password_box = stack_val(state, 2);
+    if !matches!(account, Val::Str(_) | Val::Num(_)) || !matches!(password_box, Val::Table(_)) {
+        return Err(rilua::runtime_error(USAGE));
+    }
+    let id = extract_frame_id(state, password_box).ok_or_else(|| rilua::runtime_error(USAGE))?;
+    if !borrow_state(state)?
+        .widgets
+        .get(id)
+        .is_some_and(|frame| frame.widget_type == crate::widget::WidgetType::EditBox)
+    {
+        return Err(rilua::runtime_error(USAGE));
+    }
+    {
+        let mut sim = borrow_state_mut(state)?;
+        let login = &mut sim.glue_login;
+        login.submitted = true;
+        login.aurora_state = 3;
+        login.connected_to_wow = false;
+        login.pending_step = 1;
+    }
+    // R40 permits synchronous CONNECTING; this sequence is simulator policy.
+    crate::lua_api::script_helpers::fire_named_event_state(state, "LOGIN_STATE_CHANGED", &[]);
+    // The offline policy accepts all input. Do not copy, log or retain the password.
+    crate::lua_api::frame::methods::text_attribute_event::set_frame_text_value(
+        state,
+        id,
+        Some(String::new()),
+        false,
+    )?;
+    Ok(0)
+}
+
+/// Advance the explicit offline policy once per update, not native frame timing.
+pub(crate) fn advance(env: &crate::lua_api::WowLuaEnv) -> crate::Result<()> {
+    let step = {
+        let mut sim = env.state().borrow_mut();
+        let login = &mut sim.glue_login;
+        let step = login.pending_step;
+        match step {
+            1 => {
+                login.aurora_state = 4;
+                login.pending_step = 2;
+            }
+            2 => {
+                login.aurora_state = 1;
+                login.connected_to_wow = true;
+                login.pending_step = 3;
+            }
+            3 => {
+                login.pending_step = 0;
+            }
+            _ => return Ok(()),
+        }
+        step
+    };
+    if step == 3 {
+        let count = env.state().borrow().glue_login.characters.len();
+        env.fire_event_with_args("CHARACTER_LIST_UPDATE", &[Val::Num(count as f64)])?;
+    } else {
+        env.fire_event("LOGIN_STATE_CHANGED")?;
+    }
+    Ok(())
 }

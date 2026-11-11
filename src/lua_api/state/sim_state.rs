@@ -181,6 +181,7 @@ pub struct SimState {
     pub physical_screen_height: f32,
     pub screen_kind: ScreenKind,
     pub in_character_create: bool,
+    pub glue_login: crate::c_api::c_login::LoginState,
     pub is_logged_in: bool,
     pub post_event_workarounds_applied: bool,
     pub screen_first_displayed: bool,

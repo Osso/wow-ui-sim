@@ -317,6 +317,17 @@ fn login_editboxes_gain_focus_when_clicking_their_visible_centers() {
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn submit_login_through_ui(click_button: bool) {
     let env = load_blizzard_screen(ScreenKind::Login);
+    // Explicit host fixture: login never borrows the unrelated social roster.
+    let fixture = env
+        .state()
+        .borrow()
+        .bnet_friends
+        .iter()
+        .flat_map(|friend| &friend.game_accounts)
+        .find(|account| account.client_program == "WoW")
+        .unwrap()
+        .clone();
+    env.state().borrow_mut().glue_login.characters = vec![fixture];
     for (path, text) in [
         ("AccountLogin.UI.AccountEditBox", "sim@example.invalid"),
         ("AccountLogin.UI.PasswordEditBox", "arbitrary-password"),
@@ -345,13 +356,24 @@ fn submit_login_through_ui(click_button: bool) {
             .expect("Enter should submit the password edit box");
     }
     wow_ui_sim::startup::run_extra_update_ticks(&env, 3);
+    let current: String = env
+        .eval("return tostring(GlueParent.currentScreen)")
+        .unwrap();
+    let best: String = env
+        .eval("return tostring(GlueParent_GetBestScreen())")
+        .unwrap();
     let (character_select, login): (bool, bool) = env
         .eval("return CharacterSelect ~= nil and CharacterSelect:IsShown(), AccountLogin:IsShown()")
         .expect("screen visibility should be readable");
     assert!(
         character_select && !login,
-        "submit should show character select and hide login; character_select={character_select}, login={login}, errors={:#?}",
+        "submit should show character select and hide login; character_select={character_select}, login={login}, current={current}, best={best}, errors={:#?}",
         env.state().borrow().lua_errors
+    );
+    let errors = env.state().borrow().lua_errors.clone();
+    assert!(
+        errors.is_empty(),
+        "login submission should not introduce Lua errors: {errors:#?}"
     );
 }
 
@@ -365,4 +387,82 @@ fn login_submit_enter_reaches_character_select() {
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn login_submit_button_reaches_character_select() {
     test_timeout! { submit_login_through_ui(true); }
+}
+
+#[test]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn login_api_validates_and_clears_password_without_retaining_credentials() {
+    let env = common::lock_env(|| WowLuaEnv::new().unwrap());
+    env.set_screen_mode(ScreenKind::Login);
+    env.exec(
+        r#"
+        local usage = 'Usage: C_Login.Login("accountName", AccountLoginPasswordEdit)'
+        local box = CreateFrame("EditBox")
+        for _, args in ipairs({{false, box}, {{}, box}, {"name", false}, {"name", {}},
+            {"name", CreateFrame("Frame")}}) do
+            local ok, err = pcall(C_Login.Login, unpack(args))
+            assert(not ok and err == usage, tostring(err))
+        end
+        box:SetText("arbitrary-password")
+        assert(select('#', C_Login.Login(42, box)) == 0)
+        assert(box:GetText() == "")
+        assert(select('#', C_Login.Login("", box)) == 0)
+    "#,
+    )
+    .expect("R40 argument contract and synchronous password clearing");
+    assert!(env.state().borrow().glue_login.characters.is_empty());
+}
+
+#[test]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn login_policy_publishes_states_and_empty_list_payload() {
+    let env = common::lock_env(|| WowLuaEnv::new().unwrap());
+    env.set_screen_mode(ScreenKind::Login);
+    env.exec(r#"
+        loginObservations = {}
+        listObservations = {}
+        local listener = CreateFrame("Frame")
+        listener:RegisterEvent("LOGIN_STATE_CHANGED")
+        listener:RegisterEvent("CHARACTER_LIST_UPDATE")
+        listener:SetScript("OnEvent", function(_, event, ...)
+            if event == "LOGIN_STATE_CHANGED" then
+                assert(select('#', ...) == 0)
+                local a, connected, connection, realms, waiting = C_Login.GetState()
+                if type(a) == "table" then
+                    local count = 0
+                    for _ in pairs(a) do count = count + 1 end
+                    assert(count == 9)
+                    assert(not a.superDistrictChoicePending and not a.waitingForRuleSets)
+                    assert(a.hasSelectedExperiencePreset and not a.keepingCharacterListOnRealmJoin)
+                    a, connected, connection, realms, waiting = a.auroraState,
+                        a.connectedToWoW, a.wowConnectionState, a.hasRealmList, a.waitingForRealmList
+                else
+                    assert(select('#', C_Login.GetState()) == 5)
+                end
+                assert(connection == LE_WOW_CONNECTION_STATE_NONE)
+                assert(not realms and not waiting)
+                loginObservations[a] = connected and "wow" or "bnet"
+            else
+                assert(select('#', ...) == 1)
+                table.insert(listObservations, (...))
+            end
+        end)
+        local box = CreateFrame("EditBox")
+        box:SetText("anything")
+        C_Login.Login("any-account", box)
+        assert(loginObservations[LE_AURORA_STATE_CONNECTING] == "bnet")
+    "#).unwrap();
+    // Drive to completion without asserting a native frame count or callback ordering.
+    for _ in 0..10 {
+        env.fire_on_update(0.016).unwrap();
+    }
+    env.exec(
+        r#"
+        assert(loginObservations[LE_AURORA_STATE_CONNECTED] == "bnet")
+        assert(loginObservations[LE_AURORA_STATE_NONE] == "wow")
+        assert(#listObservations == 1 and listObservations[1] == 0)
+        assert(GetNumCharacters() == 0)
+    "#,
+    )
+    .unwrap();
 }

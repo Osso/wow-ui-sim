@@ -174,6 +174,7 @@ macro_rules! build_empty_sim_state {
             physical_screen_height: $runtime.screen_height,
             screen_kind: $runtime.screen_kind,
             in_character_create: false,
+            glue_login: Default::default(),
             is_logged_in: $runtime.is_logged_in,
             post_event_workarounds_applied: false,
             screen_first_displayed: $runtime.screen_first_displayed,
@@ -1283,6 +1284,7 @@ impl SimState {
 
     pub fn set_screen_kind(&mut self, screen_kind: ScreenKind) {
         self.screen_kind = screen_kind;
+        self.glue_login.reset_connection();
         self.screen_first_displayed = false;
         if screen_kind.is_glue() {
             self.is_logged_in = false;

@@ -1,81 +1,100 @@
 # Glue login submission
 
-## Scope and status
+## Scope and evidence
 
-Task [lt-a667](https://tasks.sakuin.org/tasks/lt-a667) covers the real Blizzard
-login UI on Retail 12.1.5.70575 and WoW Forever 1.60.1.70707. Implementation is
-pending the native contract requested in task comment 22 and routed as R40
-by the coordinator in comment 27. This document records
-the acceptance target and observed consumers, not an implemented login model.
+Task [lt-a667](https://tasks.sakuin.org/tasks/lt-a667), ANSWER **30** (round R40),
+is the native evidence and separately labeled simulator-policy authorization.
+Native evidence covers Retail **12.1.5.70688** and Forever **1.60.1.70707**.
+The runtime Retail pin is **12.1.5.70575**: build-specific native facts for that
+pin remain **UNKNOWN**. Tests of its cached Lua are compatibility observations,
+not native conformance proof. New `C_Login.Login` publication is limited to
+Retail and Forever. Glue-only native registration is **INFERRED**, not verified.
+Existing namespace publication in other profiles is unchanged.
 
-## Simulator policy
+## Native contract
 
-The simulator accepts arbitrary credentials without contacting an authentication
-service. This is explicitly simulator policy, not a claim about native credential
-validation. Tests use invented account/password strings. Account, realm and
-character data must be supplied by the host, with empty or evidenced defaults;
-no account or server records may be fabricated to force the transition.
+R40 verifies string/number account arguments and an EditBox frame-table argument.
+Invalid account types, non-table password arguments, and unresolved/non-EditBox
+objects fail with `Usage: C_Login.Login("accountName", AccountLoginPasswordEdit)`.
+The password is read and cleared synchronously; the call returns zero values.
+Native Login does not reject empty strings; the shipped UI does so before calling.
+The simulator does not retain or log credentials and clears the EditBox through
+its normal text mutation path. This is not a guarantee of memory zeroization.
 
-## Original consumers
+`LOGIN_STATE_CHANGED` has no payload. CONNECTING (3) can be posted synchronously
+inside Login. Later native changes come from network callbacks; universal order
+and frame counts are **UNKNOWN**. CONNECTING -> CONNECTED -> authenticated NONE is
+**INFERRED** normal success. A WoW-authenticated connection reports NONE (1), and
+its state event causes the original GlueParent to choose the next screen.
 
-Paths below are relative to each profile's pinned `AddOns` cache.
+Retail `GetState` returns five values: aurora state, WoW connected flag, WoW
+connection state, realm-list availability, and waiting-for-realm-list flag.
+Forever returns one table with those five fields plus `waitingForRuleSets`,
+`superDistrictChoicePending`, `hasSelectedExperiencePreset`, and
+`keepingCharacterListOnRealmJoin`. The initial Retail tuple
+`(1, false, 1, false, false)` is **INFERRED**. Existing global Aurora constants
+1–9 and WoW-connection constants 1–3 already match R40; no Enum is introduced.
 
-- Both profiles select `[Family]/AccountLogin.lua` and `.xml` in
-  `Blizzard_GlueXML/Blizzard_GlueXML.toc`; their family is Mainline. Forever also
-  selects `Camelot/AccountLoginOverrides.lua`, which adjusts the account box
-  anchor without replacing submission.
-- `Blizzard_GlueXML/Mainline/AccountLogin.lua:204` (Retail) and `:213` (Forever)
-  call `C_Login.Login(username, PasswordEditBox)` from `AccountLogin_Login`.
-  The second argument is the actual EditBox, not its text string.
-- Retail `Mainline/AccountLogin.xml:104,137-141,150-155` wires the edit boxes'
-  Enter handlers and the login button to the real login functions.
-- `Blizzard_GlueParent/Mainline/GlueParent.lua:157` (Retail) and `:172` (Forever)
-  handle `LOGIN_STATE_CHANGED` by ensuring a valid screen and updating dialogs.
-- The same file reads `C_Login.GetState` at Retail `:203,216,243` and Forever
-  `:221,242,277`. Retail consumes multiple returns; Forever consumes a table.
-  The current simulator exposes those shapes, but this does not establish the
-  native successful-login transition or event chronology.
-- `Blizzard_GlueXML/Mainline/CharacterSelect.lua:401,594` (Retail) and `:407,609`
-  (Forever) handle `CHARACTER_LIST_UPDATE` and `LOGIN_STATE_CHANGED` respectively.
+`CHARACTER_LIST_UPDATE` takes one optional integer: full-list updates may supply
+0, while other sources may supply nil. Its native ordering relative to login
+state events is **UNKNOWN**. Realm-list availability is not a record count.
+An empty roster normally causes the original CharacterSelect to show charcreate,
+subject to its game-mode, undelete, return-navigation and kiosk gates. There is
+no native charcreate event.
 
-## Acceptance tests
+## Explicit offline simulator policy
 
-`tests/glue_login.rs` adds `login_submit_enter_reaches_character_select` and
-`login_submit_button_reaches_character_select`, gated to Retail and Forever.
-Each boots the cached Blizzard login UI, hit-tests the visible centers of both
-edit boxes, clicks them, types through key dispatch, and verifies the resulting
-text. Submission uses the password box's Enter handler or the hit-tested login
-button. Ordinary update/timer ticks follow; tests never switch the screen,
-replay startup after submission, or directly invoke a simulator login shortcut.
-The required result is visible `CharacterSelect` and hidden `AccountLogin`.
+- Any credentials are accepted. No network authentication is attempted.
+- Login publishes CONNECTING synchronously. Later update ticks publish CONNECTED,
+  then authenticated NONE, then the host roster count as `CHARACTER_LIST_UPDATE`.
+  This ordering and update cadence are policy, not a native scheduling claim.
+- `SimState.glue_login.characters` is the host-supplied roster, empty by default.
+  It reuses the existing character-query record representation. Submitted login
+  queries use this roster, never unrelated seeded Battle.net friends. Existing
+  direct-screen boot compatibility stays unchanged.
+- `realm_list_available` is the host's realm-list availability input, false by
+  default. Discovery and populated realm record schemas are not fabricated.
+- Forever's nothing-pending defaults are `hasSelectedExperiencePreset=true`,
+  `superDistrictChoicePending=false`, `waitingForRuleSets=false`, and
+  `keepingCharacterListOnRealmJoin=false`. Existing kiosk policy is unchanged.
+- A new explicit screen boot cancels pending login progression, preserving host
+  inputs. Repeated Login replaces the pending offline progression.
 
-## Open native questions
+## Original consumers and tests
 
-Task comment 22 requests `C_Login.Login` argument validation and returns,
-successful state transitions, event ordering/payloads and dispatch timing for
-both pins, and how empty host-supplied data affects that path. Until answered,
-no new API implementation or event sequence is asserted here.
+Paths are relative to each profile's pinned AddOns cache. Both select Mainline
+`AccountLogin.lua` through `[Family]`; Forever's Camelot override only changes
+an edit-box anchor. Retail `AccountLogin.lua:204` and Forever `:213` call Login
+with the actual password EditBox. Retail XML `:104,137–141,150–155` connects Enter
+and the login button to the original handlers.
 
-## Preparation boundary
+`Blizzard_GlueParent/Mainline/GlueParent.lua:157` (Retail) / `:172` (Forever)
+handles the state event. GetState consumers are Retail `:203,216,243` and Forever
+`:221,242,277`. CharacterSelect handles list/state updates at Retail `:401,594`
+and Forever `:407,609`.
 
-Coordinator comment 27 permits non-native credential policy and host-supplied
-input preparation, but explicitly keeps native implementation blocked until R40
-is answered. Credential acceptance does not authorize publishing `C_Login.Login`
-with invented returns, argument validation, connection state, or events.
+`tests/glue_login.rs` contains RED-first Enter and button tests that hit-test
+visible edit boxes, type through key dispatch, verify text, and submit through
+the real handlers. A nonempty host fixture is required for charselect. Tests do
+not replay startup, call a screen-switch shortcut, or assert native frame counts.
+Separate API tests cover validation, password clearing, zero returns, both
+GetState shapes, state-event payloads, and empty roster update payloads.
 
-The existing character-list bootstrap is temporary compatibility behavior:
-`src/lua_api/workarounds/temporary/glue_character_select_defaults.rs` publishes
-an empty group list and directly invokes selected character-list event handlers.
-It is not evidence for native event order or a suitable new authentication
-producer. Likewise, the empty Forever subregion/district catalogs in
-`forever_glue_display_defaults.rs` do not specify populated record schemas.
-New unused input types are deferred until their actual consumer contract is
-known; no speculative account/realm/character records are introduced.
+## Remaining dependencies
 
-The five pre-existing Forever character-select/create failures are owned by the
-coordinator's `forever-int-clean` branch (lt-95ac comment 28). Rebase onto master
-when those fixes land; do not duplicate them in this task.
+QUESTION **32** requests the missing `C_Login.GetLogonQueueInfo` contract. Exact
+consumer call sites are Retail GlueParent.lua **248** and Forever **282** (the
+question's initial line numbers were off by one). No implementation is inferred
+from the Lua assignment alone.
 
-Both new submission regressions have now reproduced the gap on both profiles:
-Retail reports missing `C_Login.Login` at `AccountLogin.lua:204`, Forever at
-`:213`. These are RED observations, not passing acceptance results.
+The coordinator owns the five existing Forever character-select/create failures
+on `forever-int-clean` (lt-95ac ANSWER 28). Integrate master after its merge; do
+not duplicate those fixes here. No acceptance claim is made before final tests.
+
+QUESTION **34** requests `CanCreateCharacter`, reached by full list updates at
+Retail `CharacterSelect.lua:788` and Forever `:803`. QUESTION **35** requests the
+ordinary/no-override `C_GameRules.GetGameModeGlueScreenName` contract. Its current
+`"CharacterSelect"` scenario default is not a key in the original `GLUE_SCREENS`.
+The getter's exact screen-selection consumers are Retail GlueParent.lua **220**
+and Forever **254**. The declaration says nonnil cstring, but Lua's fallback and
+empty-roster gate depend on absence. No return is guessed to bypass those gates.

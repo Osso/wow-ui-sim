@@ -252,6 +252,9 @@ fn get_service_character_info(state: &mut LuaState) -> LuaResult<u32> {
 fn seeded_character_accounts(state: &mut LuaState) -> Vec<BnetGameAccount> {
     borrow_state(state)
         .map(|sim| {
+            if sim.glue_login.submitted {
+                return sim.glue_login.characters.clone();
+            }
             sim.bnet_friends
                 .iter()
                 .flat_map(|friend| friend.game_accounts.iter())
