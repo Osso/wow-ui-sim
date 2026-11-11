@@ -271,11 +271,15 @@ fn body_resolves_to_five_entries_in_declared_order() {
             "Camelot/Blizzard_TokenUI.lua",
             "Camelot/Blizzard_TokenUI.xml",
         ]
-    } else {
+    } else if cfg!(feature = "client-ptr") {
+        // The pinned PTR manifest splits TokenUI into Mainline/Camelot/WoWHack.
         [
             "Mainline/Blizzard_TokenUI.lua",
             "Mainline/Blizzard_TokenUI.xml",
         ]
+    } else {
+        // The pinned Retail manifest keeps TokenUI files at the addon root.
+        ["Blizzard_TokenUI.lua", "Blizzard_TokenUI.xml"]
     };
     let expected = vec![
         "Blizzard_CurrencyTransfer.lua".to_string(),
