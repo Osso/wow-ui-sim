@@ -210,7 +210,7 @@ fn forever_bank_panel_onload_uses_player_bag_capability() {
     env.exec(
         r#"
         local source = debug.getinfo(BankPanelMixin.OnLoad, 'S').source:gsub('\\', '/')
-        assert(source:find('Mainline/BankFrameTemplates.lua', 1, true))
+        assert(source:find('Mainline/BankFrameTemplates.lua', 1, true), 'BankPanelMixin.OnLoad must come from the selected original consumer')
         local createdPools = {}
         CreateFramePool = function(frameType)
             createdPools[#createdPools + 1] = frameType
@@ -225,8 +225,9 @@ fn forever_bank_panel_onload_uses_player_bag_capability() {
             OnPageSelected = function() end,
         }
         BankPanelMixin.OnLoad(panel)
-        assert(panel.bankTabPool == nil and panel.itemButtonPool ~= nil)
-        assert(#createdPools == 1 and createdPools[1] == 'ItemButton')
+        assert(panel.bankTabPool == nil, 'true capability must omit the bank-tab pool')
+        assert(panel.itemButtonPool ~= nil, 'the normal item-button pool must still be created')
+        assert(#createdPools == 1 and createdPools[1] == 'ItemButton', 'OnLoad must skip only the bank-tab pool')
         "#,
     )
     .expect("original bank panel uses the native Forever capability byte");
