@@ -48,13 +48,25 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
 }
 
 fn has_url(state: &mut LuaState) -> LuaResult<u32> {
-    let supplied = borrow_state(state)?.external_event_url.url.is_some();
-    state.push(Val::Bool(supplied));
+    let promotion_url = borrow_state(state)?.external_event_url.url.clone();
+    let has_url = if ACTIVE == ClientProfile::Retail {
+        promotion_url.as_deref().is_some_and(|url| !url.is_empty())
+    } else {
+        promotion_url.is_some()
+    };
+    state.push(Val::Bool(has_url));
     Ok(1)
 }
 
 fn is_new(state: &mut LuaState) -> LuaResult<u32> {
-    let is_new = borrow_state(state)?.external_event_url.is_new;
+    let sim = borrow_state(state)?;
+    let is_new = if ACTIVE == ClientProfile::Retail {
+        let current_url = sim.external_event_url.url.as_deref().unwrap_or_default();
+        let last_url = sim.last_launched_url.as_deref().unwrap_or_default();
+        current_url != last_url
+    } else {
+        sim.external_event_url.is_new
+    };
     state.push(Val::Bool(is_new));
     Ok(1)
 }
@@ -65,11 +77,20 @@ fn can_show(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-/// Simulator policy: record the supplied URL in `SimState.last_launched_url`,
-/// the same way the `LaunchURL` global does. No browser is opened, and an empty
-/// event state records nothing. Native launch and failure behavior is unknown.
+/// The simulator does not open a browser; it records nonempty URLs as policy.
 fn launch_url(state: &mut LuaState) -> LuaResult<u32> {
     let url = borrow_state(state)?.external_event_url.url.clone();
+    if ACTIVE == ClientProfile::Retail && url.as_deref().is_none_or(str::is_empty) {
+        borrow_state_mut(state)?
+            .console_output
+            .push("No external event URL to launch.".to_owned());
+        crate::lua_api::script_helpers::fire_named_event_state(
+            state,
+            "EXTERNAL_EVENT_LAUNCH_URL_FAILED",
+            &[],
+        );
+        return Ok(0);
+    }
     if let Some(url) = url {
         borrow_state_mut(state)?.last_launched_url = Some(url);
     }
