@@ -59,13 +59,15 @@ fn has_url(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn is_new(state: &mut LuaState) -> LuaResult<u32> {
-    let sim = borrow_state(state)?;
-    let is_new = if ACTIVE == ClientProfile::Retail {
-        let current_url = sim.external_event_url.url.as_deref().unwrap_or_default();
-        let last_url = sim.last_launched_url.as_deref().unwrap_or_default();
-        current_url != last_url
-    } else {
-        sim.external_event_url.is_new
+    let is_new = {
+        let sim = borrow_state(state)?;
+        if ACTIVE == ClientProfile::Retail {
+            let current_url = sim.external_event_url.url.as_deref().unwrap_or_default();
+            let last_url = sim.last_launched_url.as_deref().unwrap_or_default();
+            current_url != last_url
+        } else {
+            sim.external_event_url.is_new
+        }
     };
     state.push(Val::Bool(is_new));
     Ok(1)
