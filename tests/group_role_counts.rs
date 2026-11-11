@@ -66,6 +66,7 @@ fn group_role_counts_retail_uses_native_roster_fields() {
         member(0, 8, 2, None, 99),
         member(0, 2, 0, Some(0), 99),
         member(0, 8, 0, Some(99), 99),
+        member(0, 2, 0, Some(-1), 99),
         None,
         member(0, 2, 0, Some(2), 99),
     ];

@@ -4,15 +4,17 @@
 
 ## What it must do
 
-- [ ] On Retail, return exactly one table. With no selected roster, all four role counts are zero.
-- [ ] Argument 1 selects container one or two when its converted integer is 1 or 2. Otherwise, select container two when present, then container one. Do not assign party/raid names to these containers without evidence.
-- [ ] If argument 1 is a table, update and return that same table. Preserve its other fields.
-- [ ] Scan no more than 40 slots and stop at the first absent member. Do not exclude the player separately.
-- [ ] Skip members whose flags contain bit 16 from both role and class counts.
-- [ ] Classify role masks A and B in priority order: tank if `A & 2 != 0` or `B & 2 != 0`, `B & 8 == 0`, and `A & 8 != 0`; healer if `A & 4 != 0`; damager if `A & 8 != 0` and `(B & 10) != 2`; otherwise `NOROLE`.
-- [ ] Resolve class from the supplied resolved class when present. Otherwise use cached class when it is positive and in range, or class 1. Skip a resolved class below zero or above the class range. Class zero contributes internally but has no published class key.
-- [ ] Publish class counts under class tokens, using available class rows only.
-- [ ] Keep the selected Retail behavior separate from profiles whose native parity is not established.
+- [x] On Retail, return exactly one table. With no selected roster, all four role counts are zero.
+- [x] Argument 1 selects container one or two when its converted integer is 1 or 2. Otherwise, select container two when present, then container one. Do not assign party/raid names to these containers without evidence.
+- [x] If argument 1 is a table, update and return that same table. Preserve its other fields.
+- [x] Scan no more than 40 slots and stop at the first absent member.
+- [ ] Do not exclude the player separately.
+- [x] Skip members whose flags contain bit 16 from both role and class counts.
+- [x] Classify role masks A and B in priority order: tank if `A & 2 != 0` or `B & 2 != 0`, `B & 8 == 0`, and `A & 8 != 0`; healer if `A & 4 != 0`; damager if `A & 8 != 0` and `(B & 10) != 2`; otherwise `NOROLE`.
+- [x] Resolve class from the supplied resolved class when present. Otherwise use cached class when it is positive and in range, or class 1. Class zero contributes internally but has no published class key.
+- [ ] Skip a resolved class below zero or above the class range.
+- [x] Publish class counts under class tokens.
+- [x] Keep the selected Retail behavior separate from profiles whose native parity is not established.
 
 ## How it works
 
@@ -33,6 +35,8 @@
 ## Known gaps (current cycle)
 
 - [ ] The native semantic names of the two containers and role masks A/B are unknown.
+- [ ] Player exclusion is not directly asserted by the consumer test.
+- [ ] Runtime class-row absence is not represented by the static class-token catalog.
 - [ ] The full producer and server-response lifecycle for roster inputs is not modeled.
 - [ ] PTR and other-profile native parity is unknown; their current simulator role projection remains unchanged.
 
