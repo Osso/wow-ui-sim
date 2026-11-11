@@ -336,6 +336,70 @@ fn optional_dependency_failure_does_not_fail_parent_load() {
 }
 
 #[test]
+fn startup_optional_dependency_loads_before_required_dependency() {
+    let tree = AddonTree::new(ScreenKind::Game);
+    tree.env.exec("startupDependencyOrder = {}").unwrap();
+    tree.add(
+        "Blizzard_A_ParentProbe",
+        "## AllowLoad: Both\n## Dependencies: Blizzard_B_RequiredProbe\n## OptionalDeps: Blizzard_Z_OptionalProbe",
+        "table.insert(startupDependencyOrder, 'parent')",
+    );
+    tree.add(
+        "Blizzard_B_RequiredProbe",
+        "## AllowLoad: Both",
+        "table.insert(startupDependencyOrder, 'required')",
+    );
+    tree.add(
+        "Blizzard_Z_OptionalProbe",
+        "## AllowLoad: Both",
+        "table.insert(startupDependencyOrder, 'optional')",
+    );
+
+    let addons = tree.load_startup_addons(ScreenKind::Game);
+    assert_eq!(
+        addons.iter().map(String::as_str).collect::<Vec<_>>(),
+        [
+            "Blizzard_Z_OptionalProbe",
+            "Blizzard_B_RequiredProbe",
+            "Blizzard_A_ParentProbe",
+        ]
+    );
+    tree.env
+        .exec("assert(table.concat(startupDependencyOrder, ',') == 'optional,required,parent')")
+        .unwrap();
+}
+
+#[test]
+fn load_managers_run_before_their_startup_owner_files() {
+    let tree = AddonTree::new(ScreenKind::Game);
+    tree.env.exec("startupManagerOrder = {}").unwrap();
+    tree.add(
+        "Blizzard_ManagerOwnerProbe",
+        "## AllowLoad: Both\n## LoadManagers: Blizzard_LodManagerProbe",
+        "table.insert(startupManagerOrder, 'owner')",
+    );
+    tree.add(
+        "Blizzard_LodManagerProbe",
+        "## AllowLoad: Both\n## LoadOnDemand: 1",
+        "table.insert(startupManagerOrder, 'manager')",
+    );
+
+    let addons = tree.load_startup_addons(ScreenKind::Game);
+    let manager_position = addons
+        .iter()
+        .position(|name| name == "Blizzard_LodManagerProbe")
+        .expect("LoadManagers entry must be in the startup sequence");
+    let owner_position = addons
+        .iter()
+        .position(|name| name == "Blizzard_ManagerOwnerProbe")
+        .expect("owner must be in the startup sequence");
+    assert!(manager_position < owner_position);
+    tree.env
+        .exec("assert(table.concat(startupManagerOrder, ',') == 'manager,owner')")
+        .unwrap();
+}
+
+#[test]
 fn insecure_toc_allowload_keeps_the_game_default() {
     let tree = AddonTree::new(ScreenKind::Game);
     tree.add(

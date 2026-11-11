@@ -147,6 +147,97 @@ Core.lua
 }
 
 #[test]
+fn packaged_startup_phases_precede_user_addons() {
+    let ui = TempBlizzardUiDir::new("startup-phases");
+    ui.add_addon(
+        "Blizzard_Z_LoadFirst",
+        "## AllowLoad: Both\n## LoadFirst: 1\nCore.lua\n",
+    );
+    ui.add_addon(
+        "Blizzard_Y_Secure",
+        "## AllowLoad: Both\n## UseSecureEnvironment: 1\nCore.lua\n",
+    );
+    ui.add_addon("Blizzard_A_Packaged", "## AllowLoad: Both\nCore.lua\n");
+
+    let packaged: Vec<String> = discover_blizzard_addons_for_screen(&ui.path, ScreenKind::Game)
+        .into_iter()
+        .map(|(name, _)| name)
+        .collect();
+    let load_first = packaged
+        .iter()
+        .position(|name| name == "Blizzard_Z_LoadFirst")
+        .unwrap();
+    let secure = packaged
+        .iter()
+        .position(|name| name == "Blizzard_Y_Secure")
+        .unwrap();
+    let ordinary = packaged
+        .iter()
+        .position(|name| name == "Blizzard_A_Packaged")
+        .unwrap();
+    assert!(load_first < ordinary);
+    assert!(secure < ordinary);
+
+    let user_root = tempfile::tempdir().unwrap();
+    let mut users = Vec::new();
+    for (name, metadata) in [
+        ("User_A_Ordinary", ""),
+        ("User_Y_Secure", "## UseSecureEnvironment: 1\n"),
+        ("User_Z_LoadFirst", "## LoadFirst: 1\n"),
+    ] {
+        let directory = user_root.path().join(name);
+        std::fs::create_dir(&directory).unwrap();
+        let toc_path = directory.join(format!("{name}.toc"));
+        std::fs::write(&toc_path, format!("{metadata}Core.lua\n")).unwrap();
+        users.push((name.to_string(), toc_path));
+    }
+    crate::loader::sort_addons_by_dependencies(&mut users);
+
+    let mut startup = packaged;
+    startup.extend(users.into_iter().map(|(name, _)| name));
+    let last_packaged = startup
+        .iter()
+        .position(|name| name == "Blizzard_A_Packaged")
+        .unwrap();
+    for user in ["User_A_Ordinary", "User_Y_Secure", "User_Z_LoadFirst"] {
+        let position = startup.iter().position(|name| name == user).unwrap();
+        assert!(
+            last_packaged < position,
+            "{user} must follow packaged addons"
+        );
+    }
+}
+
+#[test]
+fn foundational_addon_names_do_not_create_load_first_ordering() {
+    let ui = TempBlizzardUiDir::new("no-foundation-promotion");
+    ui.add_addon(
+        "Blizzard_Z_LoadFirst",
+        "## AllowLoad: Both\n## LoadFirst: 1\nCore.lua\n",
+    );
+    ui.add_addon("Blizzard_SharedXMLBase", "## AllowLoad: Both\nCore.lua\n");
+
+    let expected = vec!["Blizzard_Z_LoadFirst", "Blizzard_SharedXMLBase"];
+    let for_screen: Vec<String> = discover_blizzard_addons_for_screen(&ui.path, ScreenKind::Game)
+        .into_iter()
+        .map(|(name, _)| name)
+        .collect();
+    let startup: Vec<String> =
+        crate::loader::discover_blizzard_startup_addons_for_screen(&ui.path, ScreenKind::Game)
+            .into_iter()
+            .map(|addon| addon.name)
+            .collect();
+    let all: Vec<String> = crate::loader::discover_all_blizzard_addons(&ui.path)
+        .into_iter()
+        .map(|(name, _)| name)
+        .collect();
+
+    assert_eq!(for_screen, expected);
+    assert_eq!(startup, expected);
+    assert_eq!(all, expected);
+}
+
+#[test]
 #[cfg(feature = "client-mists")]
 fn mists_profile_skips_retail_only_deprecated_arena_ui() {
     let ui = TempBlizzardUiDir::new("mists-retail-only-addon");

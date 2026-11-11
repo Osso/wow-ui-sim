@@ -187,6 +187,45 @@ fn failed_required_dependency_of_an_enabled_runtime_addon_prevents_save() {
 }
 
 #[test]
+fn runtime_optional_dependency_loads_before_required_dependency() {
+    let root = tempdir().unwrap();
+    for (name, metadata, source) in [
+        (
+            "RuntimeOrderParent",
+            "## OptionalDeps: RuntimeOrderOptional\n## Dependencies: RuntimeOrderRequired\n",
+            "table.insert(runtimeDependencyOrder, 'parent')",
+        ),
+        (
+            "RuntimeOrderRequired",
+            "",
+            "table.insert(runtimeDependencyOrder, 'required')",
+        ),
+        (
+            "RuntimeOrderOptional",
+            "",
+            "table.insert(runtimeDependencyOrder, 'optional')",
+        ),
+    ] {
+        let directory = root.path().join(name);
+        fs::create_dir(&directory).unwrap();
+        fs::write(
+            directory.join(format!("{name}.toc")),
+            format!("## Title: {name}\n{metadata}{name}.lua\n"),
+        )
+        .unwrap();
+        fs::write(directory.join(format!("{name}.lua")), source).unwrap();
+    }
+
+    let env = WowLuaEnv::new().unwrap();
+    env.state().borrow_mut().addon_base_paths = vec![root.path().to_path_buf()];
+    env.exec("runtimeDependencyOrder = {}").unwrap();
+    env.exec("assert(C_AddOns.LoadAddOn('RuntimeOrderParent'))")
+        .unwrap();
+    env.exec("assert(table.concat(runtimeDependencyOrder, ',') == 'optional,required,parent')")
+        .unwrap();
+}
+
+#[test]
 fn absent_disabled_optional_probes_and_nil_observations_do_not_reject_a_complete_save() {
     let mut fixture = Fixture::new(
         "## OptionalDeps: AbsentOptionalProbe",
