@@ -5,6 +5,7 @@ mod anchor_edits;
 mod pixel_scale;
 mod size_changes;
 
+#[cfg(feature = "client-wrath")]
 pub(crate) use size_changes::has_queryable_rect;
 mod storage;
 
