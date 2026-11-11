@@ -342,13 +342,13 @@ fn super_district_title_uses_host_selection_and_info() {
 
         let selection_result: bool = env
             .eval(
-                r#"
+                r##"
                 local returns = select("#", SelectSuperDistrict("73.9"))
                 local selected = C_Login.GetSelectedSuperDistrictID()
                 SelectSuperDistrict(999)
                 return returns == 0 and selected == 73
                     and C_Login.GetSelectedSuperDistrictID() == 73
-                "#,
+                "##,
             )
             .expect("valid selection should truncate and invalid IDs should preserve state");
         assert!(selection_result);
@@ -383,7 +383,7 @@ fn super_district_title_uses_host_selection_and_info() {
 
         let record_matches: bool = env
             .eval(
-                r#"
+                r##"
                 local info = C_DistrictUtils.GetSuperDistrictInfo("73.9")
                 return select("#", C_DistrictUtils.GetSuperDistrictInfo("73.9")) == 1
                     and type(info) == "table"
@@ -395,7 +395,7 @@ fn super_district_title_uses_host_selection_and_info() {
                     and info.noRealmsAvailable == false
                     and info.overrideBgAtlas == "district-background"
                     and info.overrideBgGlowAtlas == "district-glow"
-                "#,
+                "##,
             )
             .expect("host-supplied district fields should be projected");
         assert!(record_matches);
