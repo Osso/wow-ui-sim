@@ -60,8 +60,8 @@ pub(crate) fn modeled() -> bool {
     ACTIVE == ClientProfile::Retail
 }
 
-/// Whether this profile uses native cursor transitions for action-bar verbs.
-pub(crate) fn action_bar_modeled() -> bool {
+/// Whether this profile uses native cursor transitions for modeled producers.
+pub(crate) fn retail_and_ptr_transitions_modeled() -> bool {
     matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr)
 }
 
@@ -147,7 +147,12 @@ pub(crate) fn clear(state: &mut LuaState) -> LuaResult<()> {
 
 /// Clear an ActionBar cursor using the native transitions available on PTR and Retail.
 pub(crate) fn clear_action_bar(state: &mut LuaState) -> LuaResult<()> {
-    clear_with_restoration(state, true, action_bar_modeled())
+    clear_with_restoration(state, true, retail_and_ptr_transitions_modeled())
+}
+
+/// Clear a merchant cursor using the native transitions available on PTR and Retail.
+pub(crate) fn clear_merchant(state: &mut LuaState) -> LuaResult<()> {
+    clear_with_restoration(state, true, retail_and_ptr_transitions_modeled())
 }
 
 /// An equip request keeps reason 1 when it clears the staged cursor (WM57).
@@ -214,7 +219,12 @@ pub(crate) fn place(state: &mut LuaState, cursor: CursorInfo) -> LuaResult<()> {
 
 /// Place a cursor payload through the ActionBar native transition path.
 pub(crate) fn place_action_bar(state: &mut LuaState, cursor: CursorInfo) -> LuaResult<()> {
-    place_with_staged(state, cursor, None, action_bar_modeled())
+    place_with_staged(state, cursor, None, retail_and_ptr_transitions_modeled())
+}
+
+/// Place a merchant cursor using the native transitions available on PTR and Retail.
+pub(crate) fn place_merchant(state: &mut LuaState, cursor: CursorInfo) -> LuaResult<()> {
+    place_with_staged(state, cursor, None, retail_and_ptr_transitions_modeled())
 }
 
 /// Install an owned item after the caller cleared and re-resolved its identity.

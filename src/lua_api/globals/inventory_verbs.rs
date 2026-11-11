@@ -8,7 +8,7 @@
 //! - `PickupBagFromSlot(slot)`        — bag container slot → cursor
 //!   (bag container slots are the same equipment slot range covered by
 //!    `PickupInventoryItem`; this is a named alias for the bag slots 20-23)
-//! - `PickupMerchantItem(index)`      — merchant row → cursor (synthesized)
+//! - `PickupMerchantItem(index)`      — supplied merchant offer → cursor
 //! - `PutItemInBackpack()`            — cursor item → backpack slot 1-16
 //! - `PutItemInBag(slot)`             — cursor item → equipped bag slot
 //! - `EquipCursorItem(slot)`          — cursor → equip slot
@@ -283,9 +283,86 @@ fn get_action_info(state: &mut LuaState) -> LuaResult<u32> {
     Ok(3)
 }
 
-/// `PickupMerchantItem(index)` — synthesize a merchant item on the cursor
-/// with `item_id = 100_000 + index`. Silent no-op without an index.
+/// `PickupMerchantItem(index)` — move a supplied merchant offer to the cursor (R37).
 fn pickup_merchant_item(state: &mut LuaState) -> LuaResult<u32> {
+    if !cursor_model::retail_and_ptr_transitions_modeled() || cursor_has_owned_item(state)? {
+        return pickup_legacy_merchant_item(state);
+    }
+    let Some(index) = parse_merchant_index(state)? else {
+        cursor_model::clear_merchant(state)?;
+        return Ok(0);
+    };
+    if index <= 0 {
+        cursor_model::clear_merchant(state)?;
+        return Ok(0);
+    }
+    let item_id = borrow_state(state)?
+        .merchant_items
+        .get((index - 1) as usize)
+        .copied()
+        .filter(|item_id| *item_id != 0);
+    let Some(item_id) = item_id else {
+        cursor_model::clear_merchant(state)?;
+        return Ok(0);
+    };
+    if cursor_has_item_id(state, item_id)? {
+        return pickup_legacy_merchant_item(state);
+    }
+    let cursor = CursorInfo::Item {
+        owned_identity: None,
+        item_id,
+        stack_count: 1,
+        origin: CursorItemOrigin::Merchant {
+            index: index as u32,
+        },
+        applied_transmog: None,
+    };
+    cursor_model::place_merchant(state, cursor)?;
+    Ok(0)
+}
+
+fn parse_merchant_index(state: &mut LuaState) -> LuaResult<Option<i32>> {
+    let Val::Num(number) = stack_val(state, 1) else {
+        return Ok(None);
+    };
+    if !number.is_finite() || number < f64::from(i32::MIN) || number > f64::from(i32::MAX) {
+        return Err(rilua::runtime_error(format!(
+            "integer overflow attempting to store {number:.6}"
+        )));
+    }
+    Ok(Some(number.trunc() as i32))
+}
+
+fn cursor_has_owned_item(state: &LuaState) -> LuaResult<bool> {
+    Ok(borrow_state(state)?
+        .cursor_item
+        .as_ref()
+        .is_some_and(|cursor| {
+            matches!(
+                cursor,
+                CursorInfo::Item {
+                    origin: CursorItemOrigin::Bag { .. } | CursorItemOrigin::Equipped { .. },
+                    ..
+                }
+            )
+        }))
+}
+
+fn cursor_has_item_id(state: &LuaState, item_id: u32) -> LuaResult<bool> {
+    Ok(borrow_state(state)?
+        .cursor_item
+        .as_ref()
+        .is_some_and(|cursor| match cursor {
+            CursorInfo::Item { item_id: held, .. } | CursorInfo::ActionBar { item_id: held } => {
+                *held == item_id
+            }
+            _ => false,
+        }))
+}
+
+/// Keep the existing simulator path for profiles without R37 evidence and the
+/// R37 sale/duplicate-item paths, whose native results are not modeled.
+fn pickup_legacy_merchant_item(state: &mut LuaState) -> LuaResult<u32> {
     let Some(index) = stack_u32(state, 1) else {
         return Ok(0);
     };

@@ -34,6 +34,14 @@ VERIFIED (WM46): the mode names and the PickupAction rule that the slot's conten
 - [x] PTR action slots are 1–360; Retail action slots are 1–180.
 - [x] PTR PetAction categories 6 and 7 return a book index or 0 as the third value and nil as the fourth. Retail returns nil as the third value for these categories.
 
+### PTR and Retail merchant cursor contract (R37)
+
+- [ ] A successful `PickupMerchantItem(index)` returns no usage error and `GetCursorInfo()` returns exactly two values: `"merchant"` and the 1-based merchant index. There is no item ID or item link in this tuple. VERIFIED (R37, PTR and Retail).
+- [ ] Omitted, nil, non-number, zero and past-end indexes clear the cursor. Numeric fractions truncate toward zero. Signed 32-bit overflow raises `integer overflow attempting to store %f`. VERIFIED (R37, PTR).
+- [ ] A successful PTR merchant pickup fires `CURSOR_CHANGED(false, 5, 0, …)` and does not show the action-bar grid. VERIFIED (R37).
+- [ ] INFERRED (R37): in the normal state, `PlaceAction(slot)` ignores a merchant cursor, leaves the cursor and slot unchanged, and fires no events. A tainted or insecure call is blocked and then clears the cursor. VERIFIED for the block-and-clear exception (R37, PTR).
+- [ ] INFERRED (R37): no available merchant row clears the cursor. The simulator uses the supplied `merchant_items` rows; it has no separate merchant-open state.
+
 ### Stored ID and grid
 
 - The shared stored item ID S is written by the merchant (its item ID) and ActionBar (its item ID) setters. Clearing zeros S only when the old mode is 5, 6, 10, 18, 19 or 20; other modes keep it. VERIFIED (WM46).
@@ -76,7 +84,7 @@ Swapping an owned item with a bag or equipment slot places the displaced item th
   | 2 Money | `"money"`, amount |
   | 3 Spell | `"spell"`, main-book slot or 0, `"spell"`, spell ID, nil. VERIFIED (WM46, WM56): a spell in neither book projects slot 0 and `"spell"`. |
   | 4 PetAction | `"petaction"`, the packed word's low 24 bits, then 0 and nil when the category `(word >> 24) & 63` is 1, otherwise nil and nil. VERIFIED (WM46, WM56). PTR categories 6 and 7 return a book index or 0, then nil (R29); Retail returns nil for the third value. The word is the pet-bar slot's supplied `packed_action`, zero when unsupplied. |
-  | 5 Merchant | `"merchant"`, the row index the pickup received (the stored zero-based row plus one) |
+  | 5 Merchant | `"merchant"`, the 1-based merchant row index (R37, PTR and Retail) |
   | 6 ActionBar | `"item"`, item ID, link; zero values without item metadata |
   | 12 EquipmentSet | `"equipmentset"`, the set's name (INFERRED: WM46 verifies "the selected record's text"); zero values when the set no longer exists |
   | 13 Currency | `"currency"`, currency ID, icon file ID or nil when zero (INFERRED: WM46 verifies "a metadata integer"); zero values without a `currency_info` record |
@@ -101,6 +109,7 @@ Swapping an owned item with a bag or equipment slot places the displaced item th
 
 - `tests/cursor_model_api.rs` — Retail cursor modes, projections, and clear/place events.
 - `tests/action_bar_drag.rs` — PTR ActionButton drag, swap, security, locking, tuple, and slot-range behavior.
+- `tests/merchant_cursor.rs` — PTR and Retail merchant pickup projection, index handling, clear behavior, and PTR PlaceAction behavior.
 
 ## Known gaps
 
@@ -116,3 +125,9 @@ Swapping an owned item with a bag or equipment slot places the displaced item th
 - `PickupPetAction` installs the slot's supplied word even when it is zero; native entry guards are UNKNOWN. The autocast writers that change the word's high flags (WM56) are not modelled.
 - Macro 7 projects the picked-up index. Native matches a macro handle and follows the macro when slots move; the simulator has no handles.
 - Modes 8, 10–20 and their projections, guild-bank pickups, and the money storage read by `GetCursorMoney` are not modeled here.
+- R37's shared merchant-cursor setter gate is UNKNOWN and is not modeled.
+- UNKNOWN (R37): the same-item guard outcome and the owned-item merchant route (probably a sale) are not modeled; the existing simulator path is retained for these cases without a native-parity claim.
+
+## Out of scope
+
+- R37's owned-item sale path and the native restriction error for action slots 133–144. The sale behavior is only inferred, and the restriction-error details are not established.
