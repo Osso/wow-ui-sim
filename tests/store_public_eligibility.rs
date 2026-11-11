@@ -21,6 +21,10 @@ fn load_original_helper() -> WowLuaEnv {
     assert!(toc.files.iter().any(|file| file == "InterfaceUtil.lua"));
     eprintln!("selected SharedXML TOC: {}", toc_path.display());
     let env = new_blizzard_addon_env(&ui);
+    if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr) {
+        env.set_server_mirrored_cvar("shop2Enabled", "0")
+            .expect("supply disabled Shop 2 state for the legacy helper branch");
+    }
     let loaded = load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_SharedXML"], &[]);
     assert!(loaded.iter().any(|addon| addon == "Blizzard_SharedXML"));
     eprintln!("setup diagnostics: {:?}", env.state().borrow().lua_errors);
