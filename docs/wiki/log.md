@@ -7,6 +7,9 @@ Created [ScriptObject full lockdown](systems/script-object-full-lockdown.md) and
 ## [2026-11-10] implementation | Mists R21 Classic API contracts
 
 [Mists R21 Classic API behavior](investigations/mists-r21-classic-apis.md) now includes the watched-faction request: the same 1-based backing positions map to a supplied signed reputation slot, while index 0 and indices at least `N+2` request -1. **VERIFIED:** the new direct watched-slot regression passes, and the nine existing reputation, TokenUI and bag tests plus engraving tests pass. All six profile builds have zero warnings and all six library suites pass; Mists `spell` and `frame_position` failure-name sets match base `origin/master` `93125f591`. `N+1`, native player/connection gating, current-slot deduplication and Era/Anniversary native behavior remain UNKNOWN or unmodeled.
+## [2026-11-10] implementation | Round 7 tooltip getters
+
+Added the [Round 7 contract](../specs/tooltip-r7-getters.md) and linked it from [Lua API tooltip data](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation). The new getters follow Retail/Forever and PTR registration evidence, use no-value misses when backing state is absent, and reuse the item builder for owned runeforge instances. Socket input secrecy is enforced for tainted callers; native result-tag conditions remain UNKNOWN.
 
 ## [2026-11-09] correction | PTR 12.1.7 FrameXML removed-symbol runtime rows
 

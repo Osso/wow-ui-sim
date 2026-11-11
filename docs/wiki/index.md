@@ -6,6 +6,9 @@
 ## [2026-11-10] implementation | Mists R21 Classic API contracts
 
 [Mists R21 Classic API behavior](investigations/mists-r21-classic-apis.md) records shared reputation backing-list indexing, watched-slot request mapping, engraving mode and backpack-currency behavior. **VERIFIED:** Ten targeted Mists tests pass; all six profile builds have zero warnings and all six library suites pass. The Mists `spell` and `frame_position` failure-name sets match base `origin/master` `93125f591`. Native `N+1` watcher behavior and Era/Anniversary behavior remain UNKNOWN.
+## [2026-11-10] implementation | Round 7 tooltip getters
+
+[Tooltip data](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) links the [Round 7 contract](../specs/tooltip-r7-getters.md): profile-specific getter publication, exact argument readers, no-value misses for absent backing models, owned-item Runeforge composition and the bounded `GetItemNumSockets` secret-input policy. Native socket-result tagging remains UNKNOWN.
 
 ## [2026-11-09] investigation | Reconcile profile frame-position baselines
 
