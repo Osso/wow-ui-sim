@@ -92,10 +92,12 @@ impl ScrollOffsetCache {
     }
 }
 
-/// Cached layout result: computed rect + effective scale.
+/// Cached layout result: computed rect, validity and effective scale.
 #[derive(Clone, Copy)]
 pub struct CachedFrameLayout {
     pub rect: LayoutRect,
+    pub rect_valid: bool,
+    pub anchor_invalidated: bool,
     pub eff_scale: f32,
 }
 
@@ -467,8 +469,11 @@ fn resolve_uncached_frame_layout(
     );
     maybe_clamp_frame_rect(frame, &mut rect, screen_width, screen_height);
 
+    let (rect_valid, anchor_invalidated) = frame_rect_status(registry, frame, id, cache);
     CachedFrameLayout {
         rect,
+        rect_valid,
+        anchor_invalidated,
         eff_scale: scale,
     }
 }
@@ -476,6 +481,8 @@ fn resolve_uncached_frame_layout(
 fn missing_frame_layout() -> CachedFrameLayout {
     CachedFrameLayout {
         rect: LayoutRect::default(),
+        rect_valid: false,
+        anchor_invalidated: true,
         eff_scale: 1.0,
     }
 }
@@ -487,8 +494,69 @@ fn root_frame_layout(
 ) -> CachedFrameLayout {
     CachedFrameLayout {
         rect: full_screen_rect(screen_width, screen_height),
+        rect_valid: true,
+        anchor_invalidated: false,
         eff_scale: frame.effective_scale,
     }
+}
+
+fn cached_target_rect_status(
+    registry: &WidgetRegistry,
+    target_id: u64,
+    cache: &LayoutCache,
+) -> (bool, bool) {
+    let Some(target) = cache.get(target_id) else {
+        return (false, false);
+    };
+    let anchor_invalidated = registry.is_rect_dirty(target_id) && target.anchor_invalidated;
+    (target.rect_valid && !anchor_invalidated, anchor_invalidated)
+}
+
+fn frame_rect_status(
+    registry: &WidgetRegistry,
+    frame: &crate::widget::Frame,
+    id: u64,
+    cache: &LayoutCache,
+) -> (bool, bool) {
+    if is_root_screen_frame(frame, id) {
+        return (true, false);
+    }
+    if !frame_has_layout_anchor(registry, frame, id) {
+        return (false, false);
+    }
+
+    let mut has_geometry_source = false;
+    let mut rect_valid = true;
+    let mut anchor_invalidated = false;
+
+    if frame.anchors.is_empty() {
+        if let Some(parent_id) = frame.parent_id {
+            has_geometry_source = true;
+            (rect_valid, anchor_invalidated) =
+                cached_target_rect_status(registry, parent_id, cache);
+        }
+    } else {
+        for anchor in &frame.anchors {
+            has_geometry_source = true;
+            if anchor.relative_to_id.is_none() && anchor.relative_to.is_some() {
+                rect_valid = false;
+                continue;
+            }
+            let target_id = anchor
+                .relative_to_id
+                .map(|target_id| target_id as u64)
+                .or(frame.parent_id);
+            let Some(target_id) = target_id else {
+                continue;
+            };
+            let (target_valid, target_invalidated) =
+                cached_target_rect_status(registry, target_id, cache);
+            rect_valid &= target_valid;
+            anchor_invalidated |= target_invalidated;
+        }
+    }
+
+    (has_geometry_source && rect_valid, anchor_invalidated)
 }
 
 fn cache_layout_result(

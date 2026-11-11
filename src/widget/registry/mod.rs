@@ -492,6 +492,8 @@ impl WidgetRegistry {
         self.pending_layout_ids.clear();
         for (&id, frame) in self.widgets.iter_mut() {
             frame.layout_rect = None;
+            frame.rect_valid = false;
+            frame.anchor_invalidated = false;
             if frame.parent_id.is_none() {
                 self.pending_layout_ids.insert(id);
             }

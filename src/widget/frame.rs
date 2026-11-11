@@ -362,6 +362,10 @@ pub struct Frame {
     pub pushed_text_offset: (f32, f32),
     /// Eagerly computed layout rect (updated on SetPoint, SetSize, etc.).
     pub layout_rect: Option<crate::LayoutRect>,
+    /// Cached Lua rectangle-validity flag; `layout_rect` may exist when false.
+    pub rect_valid: bool,
+    /// The last anchor resolution was invalidated before its target could be used.
+    pub anchor_invalidated: bool,
     /// Size last reported to OnSizeChanged, in frame units (starts at 0x0).
     pub reported_size: (f32, f32),
     // --- Slider fields ---

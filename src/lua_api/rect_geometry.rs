@@ -33,91 +33,128 @@ use rilua::vm::table::Table;
 use rilua::{LuaResult, Val};
 use rustc_hash::FxHashSet;
 
-/// Whether the frame's own anchors and their geometry targets can resolve.
-/// Containment parents matter only when an anchor uses the parent implicitly.
-pub(crate) fn frame_has_queryable_rect(registry: &crate::widget::WidgetRegistry, id: u64) -> bool {
-    fn follows_anchor_targets(
-        registry: &crate::widget::WidgetRegistry,
-        id: u64,
-        visiting: &mut FxHashSet<u64>,
-    ) -> bool {
-        if !visiting.insert(id) {
-            return false;
-        }
-
-        let queryable = registry.get(id).is_some_and(|frame| {
-            if frame.name.as_deref() == Some("UIParent") || (frame.parent_id.is_none() && id == 1) {
-                true
-            } else if !crate::layout::frame_has_layout_anchor(registry, frame, id) {
-                false
-            } else if frame.anchors.is_empty() {
-                frame
-                    .parent_id
-                    .is_some_and(|parent_id| follows_anchor_targets(registry, parent_id, visiting))
-            } else {
-                frame.anchors.iter().all(|anchor| {
-                    let unresolved_name =
-                        anchor.relative_to_id.is_none() && anchor.relative_to.is_some();
-                    let target_id = anchor
-                        .relative_to_id
-                        .map(|target_id| target_id as u64)
-                        .or(frame.parent_id);
-                    !unresolved_name
-                        && target_id.is_none_or(|target_id| {
-                            follows_anchor_targets(registry, target_id, visiting)
-                        })
-                })
-            }
-        });
-
-        visiting.remove(&id);
-        queryable
+fn resolve_frame_rect_if_dirty(state: &mut LuaState, id: u64, force: bool) -> LuaResult<bool> {
+    let (layout_missing, is_dirty, is_root) = {
+        let sim = borrow_state(state)?;
+        let Some(frame) = sim.widgets.get(id) else {
+            return Ok(false);
+        };
+        (
+            frame.layout_rect.is_none(),
+            sim.widgets.is_rect_dirty(id),
+            frame.name.as_deref() == Some("UIParent") || (frame.parent_id.is_none() && id == 1),
+        )
+    };
+    let needs_resolve = layout_missing || is_dirty;
+    if !needs_resolve && !force && !is_root {
+        return Ok(false);
     }
 
-    follows_anchor_targets(registry, id, &mut FxHashSet::default())
+    let mut sim = borrow_state_mut(state)?;
+    if is_dirty {
+        sim.resolve_rect_if_dirty(id);
+    } else if layout_missing || force {
+        sim.invalidate_layout(id);
+    }
+    if is_root && let Some(frame) = sim.widgets.get_mut(id) {
+        frame.rect_valid = true;
+        frame.anchor_invalidated = false;
+    }
+    Ok(needs_resolve || force)
 }
 
-/// Resolve the frame's layout rect, computing it if dirty or unset.
+fn anchor_targets(state: &LuaState, id: u64) -> LuaResult<(Vec<(u64, bool)>, bool, bool)> {
+    let sim = borrow_state(state)?;
+    let Some(frame) = sim.widgets.get(id) else {
+        return Ok((Vec::new(), true, false));
+    };
+    let has_layout_path = crate::layout::frame_has_layout_anchor(&sim.widgets, frame, id);
+    let mut targets = Vec::new();
+    let mut unresolved_name = false;
+
+    if frame.anchors.is_empty() {
+        if has_layout_path && let Some(parent_id) = frame.parent_id {
+            let needs_resolve = sim.widgets.get(parent_id).is_some_and(|parent| {
+                parent.layout_rect.is_none() || sim.widgets.is_rect_dirty(parent_id)
+            });
+            targets.push((parent_id, needs_resolve));
+        }
+    } else {
+        for anchor in &frame.anchors {
+            if anchor.relative_to_id.is_none() && anchor.relative_to.is_some() {
+                unresolved_name = true;
+                continue;
+            }
+            let Some(target_id) = anchor
+                .relative_to_id
+                .map(|target_id| target_id as u64)
+                .or(frame.parent_id)
+            else {
+                continue;
+            };
+            let needs_resolve = sim.widgets.get(target_id).is_some_and(|target| {
+                target.layout_rect.is_none() || sim.widgets.is_rect_dirty(target_id)
+            });
+            targets.push((target_id, needs_resolve));
+        }
+    }
+
+    Ok((targets, unresolved_name, has_layout_path))
+}
+
+fn resolve_anchor_targets(
+    state: &mut LuaState,
+    id: u64,
+    visiting: &mut FxHashSet<u64>,
+) -> LuaResult<bool> {
+    if !visiting.insert(id) {
+        return Ok(false);
+    }
+
+    let (targets, unresolved_name, has_layout_path) = anchor_targets(state, id)?;
+    let mut targets_valid = !unresolved_name;
+    let mut target_changed = false;
+    for (target_id, was_dirty) in targets {
+        let target_chain_changed = resolve_anchor_targets(state, target_id, visiting)?;
+        let target_was_resolved = was_dirty || target_chain_changed;
+        target_changed |= target_was_resolved;
+        let target_is_usable = {
+            let sim = borrow_state(state)?;
+            sim.widgets.get(target_id).is_some_and(|target| {
+                target.rect_valid && (!target_was_resolved || !target.anchor_invalidated)
+            })
+        };
+        targets_valid &= target_is_usable;
+    }
+
+    visiting.remove(&id);
+    let frame_changed = resolve_frame_rect_if_dirty(state, id, target_changed)?;
+    if !has_layout_path || !targets_valid {
+        if let Some(frame) = borrow_state_mut(state)?.widgets.get_mut(id) {
+            frame.rect_valid = false;
+        }
+    }
+    Ok(target_changed || frame_changed)
+}
+
+/// Resolve the frame and dirty anchor targets before reading cached validity.
 ///
-/// Returns `None` when the frame's own anchor targets cannot resolve,
-/// when the frame isn't in the registry, or when the rect is unavailable.
-///
-/// Returned tuple is `(rect, effective_scale, screen_height)` — all
-/// three are needed by the per-edge helpers to do coordinate
-/// conversion.
-fn resolve_queryable_rect(
+/// The returned tuple is `(rect, effective_scale, screen_height)` for Lua
+/// coordinate conversion. An invalid cached rectangle returns `None`.
+pub(crate) fn resolve_queryable_rect(
     state: &mut LuaState,
     id: u64,
 ) -> LuaResult<Option<(crate::LayoutRect, f32, f32)>> {
     crate::lua_api::frame::methods::secret_origin::require_geometry_readable(state, id)?;
-    let needs_resolve = {
-        let sim = borrow_state(state)?;
-        let Some(frame) = sim.widgets.get(id) else {
-            return Ok(None);
-        };
-        frame.layout_rect.is_none() || sim.widgets.is_rect_dirty(id)
-    };
-
-    if needs_resolve {
-        let mut sim = borrow_state_mut(state)?;
-        if sim
-            .widgets
-            .get(id)
-            .and_then(|frame| frame.layout_rect)
-            .is_none()
-        {
-            sim.invalidate_layout(id);
-        }
-        sim.resolve_rect_if_dirty(id);
-    }
+    resolve_anchor_targets(state, id, &mut FxHashSet::default())?;
 
     let sim = borrow_state(state)?;
-    if !frame_has_queryable_rect(&sim.widgets, id) {
-        return Ok(None);
-    }
     let Some(frame) = sim.widgets.get(id) else {
         return Ok(None);
     };
+    if !frame.rect_valid {
+        return Ok(None);
+    }
     let Some(rect) = frame.layout_rect else {
         return Ok(None);
     };

@@ -21,8 +21,6 @@ pub(super) fn opt_f32(state: &LuaState, index: i32) -> f32 {
     }
 }
 
-pub(super) use crate::widget::has_queryable_rect;
-
 fn raw_frame_size(state: &crate::lua_api::state::SimState, id: u64) -> (f32, f32) {
     state
         .widgets
@@ -31,43 +29,19 @@ fn raw_frame_size(state: &crate::lua_api::state::SimState, id: u64) -> (f32, f32
         .unwrap_or((0.0, 0.0))
 }
 
-fn resolved_frame_size(state: &crate::lua_api::state::SimState, id: u64) -> (f32, f32) {
-    let Some(frame) = state.widgets.get(id) else {
-        return (0.0, 0.0);
-    };
-    let Some(rect) = frame.layout_rect else {
-        return state.widgets.stored_size(id);
-    };
-    let effective_scale = frame.effective_scale.max(1e-6);
-    (rect.width / effective_scale, rect.height / effective_scale)
-}
-
 pub(super) fn frame_size(state: &mut LuaState, id: u64, raw: bool) -> LuaResult<(f32, f32)> {
-    let mut sim = borrow_state_mut(state)?;
-    let can_resolve = !raw
-        && (sim
-            .widgets
-            .get(id)
-            .is_some_and(|frame| has_queryable_rect(frame, id))
-            || crate::lua_api::rect_geometry::frame_has_queryable_rect(&sim.widgets, id));
-    if can_resolve {
-        let rect_is_unset = sim
-            .widgets
-            .get(id)
-            .is_some_and(|frame| frame.layout_rect.is_none());
-        if rect_is_unset {
-            sim.invalidate_layout(id);
-        }
-        sim.resolve_rect_if_dirty(id);
+    if raw {
+        let sim = borrow_state(state)?;
+        return Ok(raw_frame_size(&sim, id));
     }
-    let size = if raw {
-        raw_frame_size(&sim, id)
-    } else if crate::lua_api::rect_geometry::frame_has_queryable_rect(&sim.widgets, id) {
-        resolved_frame_size(&sim, id)
-    } else {
-        sim.widgets.stored_size(id)
-    };
-    Ok(size)
+
+    if let Some((rect, effective_scale, _)) =
+        crate::lua_api::rect_geometry::resolve_queryable_rect(state, id)?
+    {
+        return Ok((rect.width / effective_scale, rect.height / effective_scale));
+    }
+
+    Ok(borrow_state(state)?.widgets.stored_size(id))
 }
 
 pub(super) struct ExplicitSizeState {
