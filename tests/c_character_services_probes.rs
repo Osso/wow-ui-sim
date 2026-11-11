@@ -148,7 +148,7 @@ fn assign_functions_are_callable_without_error() {
 ))]
 fn has_queued_upgrade_drives_the_original_character_select_update() {
     test_timeout! {
-        let ui = common::blizzard_addon_harness::blizzard_ui_dir();
+        let ui = crate::common::blizzard_addon_harness::blizzard_ui_dir();
         let toc_path = wow_ui_sim::loader::find_toc_file(&ui.join("Blizzard_GlueXML"))
             .expect("GlueXML has a selected profile TOC");
         let toc = wow_ui_sim::toc::TocFile::from_file(&toc_path)
@@ -158,7 +158,7 @@ fn has_queued_upgrade_drives_the_original_character_select_update() {
             file.file_name().is_some_and(|name| name == "CharacterSelect.lua")
         }));
 
-        common::blizzard_addon_harness::with_blizzard_addon_glue_smoke_shape(
+        crate::common::blizzard_addon_harness::with_blizzard_addon_glue_smoke_shape(
             &["Blizzard_GlueXML"],
             &[],
             |env, loaded| {
