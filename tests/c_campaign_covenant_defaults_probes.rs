@@ -4,6 +4,22 @@ fn env() -> WowLuaEnv {
     WowLuaEnv::new().expect("Failed to create Lua environment")
 }
 
+#[cfg(feature = "client-retail")]
+#[test]
+fn retail_missing_anima_record_returns_currency_id_and_zero_limit() {
+    let env = env();
+    let result: (i32, i32, i32) = env
+        .eval(
+            r#"
+            local resultCount = select('#', C_CovenantSanctumUI.GetAnimaInfo())
+            local animaCurrencyID, reservoirLimit = C_CovenantSanctumUI.GetAnimaInfo()
+            return animaCurrencyID, reservoirLimit, resultCount
+            "#,
+        )
+        .expect("missing anima record should return the native pair");
+    assert_eq!(result, (1813, 0, 2));
+}
+
 #[cfg(not(feature = "client-retail"))]
 #[test]
 fn non_retail_covenant_sanctum_scenario_keeps_previous_reward() {
