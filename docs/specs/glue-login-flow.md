@@ -293,3 +293,10 @@ The shared CVar truth projection skips ASCII whitespace and an optional sign,
 but selects hex only when the original string starts 0x/0X. Leading zero decimal
 and trailing junk are accepted. Overflow and non-ASCII locale parsing remain
 outside verified coverage. Generic GetCVarBool behavior is not broadened.
+
+R50 follow-up (comment 71): fractional int32 boundary range-check timing,
+low-byte rejection's exact core error text, and table/function argument handling
+are UNKNOWN. No conformance assertions cover those cases; ordinary shared
+conversion/error behavior is not promoted to native evidence. R52 is pending
+for GetSelectBackgroundModel and SetCharSelectBackground, reached by the original
+Retail CharacterSelectUI.lua:374 consumer after the R49 season getter.

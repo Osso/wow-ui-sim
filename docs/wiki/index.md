@@ -1,5 +1,9 @@
 > Proof receipts live untracked under `~/.local/state/wow-ui-sim`. The `data/patch-api/evidence` and `data/test-perf/evidence` trees were removed on 2026-11-08; historical links below are records, not live paths. Recover a file with `git show c011c1d95:<path>`.
 
+## [2026-11-11] implementation | Glue login submission
+
+[Forever Login Startup](investigations/forever-login-startup.md#login-submission-model-lt-a667-2026-11-11) links real-control submission, offline acceptance policy, host roster/capacity and ordinary CharacterCreate startup. Native evidence and cached-build compatibility remain separate. Final acceptance is pending.
+
 ## [2026-11-10] system | ScriptObject full lockdown
 
 [ScriptObject full lockdown](systems/script-object-full-lockdown.md) links the R18 model and its contract: distinct full-lock and forbidden states, access-allowed absence, scoped XML defaults, parent inheritance, and five measured secure/tainted resolver consumers. Retail and Forever native-consumer integration filters pass 7/7 each; six-profile all-target checks plus Wrath, both library suites, and the manifest bin tests pass with zero compiler warnings. See the [lane report](../../handoff/full-lockdown-model/REPORT.md) for exact outputs and UNKNOWNs.

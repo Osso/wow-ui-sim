@@ -53,7 +53,44 @@ the TOC owner's addon arguments, private table, taint, environment and dependenc
 metadata. Logical import checks are unchanged. Borrowed-source identity is simulator
 policy, not native import-conformance evidence.
 
-## Verification
+## Login submission model (lt-a667, 2026-11-11)
+
+The [login contract](../../specs/glue-login-flow.md) extends startup coverage to
+original Retail and Forever account/password controls. `C_Login.Login` accepts
+the actual password EditBox and clears it synchronously without retaining its
+text. Regression cases hit-test the controls, type through normal key dispatch,
+and submit with Enter or the original login button.
+
+Accepting arbitrary credentials without network authentication is explicit
+offline simulator policy. CONNECTING is synchronous; later update ticks advance
+the connection and deliver a host roster. This is not a native network-event or
+frame-timing contract. Original GlueParent and CharacterSelect Lua choose the
+next screen.
+
+Login uses an empty-by-default host roster, including before submission on
+Retail/PTR/Forever, preserving empty and unresolved slots rather than borrowing
+the social-account fixture. Explicit direct-screen boots retain historical
+fixtures. Capacity uses separately supplied readiness and a signed limit; no
+realm limit is invented. The empty-roster regression supplies readiness and
+spare capacity. Forever fixtures select the real experience-preset CVar.
+
+R46 removes Login exclusions for CharacterCreate, CharacterCustomize and
+TimerunningCharacterCreate. Eligible addons and dependencies use the existing
+startup loader, without separate preload, replay, teardown or vendor patch.
+Ordering against GlueParent OnLoad and the first login event remains UNKNOWN.
+The old headless settling helper also forced a character-select refresh during
+Login; with an empty roster this incorrectly chooses charcreate before input.
+That simulator-only refresh must remain separate from the submitted login flow.
+
+Native evidence covers Retail 70688, Forever 70707 and specified PTR 70668
+contracts. Cached Retail is 70575 and PTR is 70493; cached-UI compatibility does
+not establish build-specific native conformance. The spec records inferred
+scope, supplied-input boundaries and remaining unknowns.
+
+Final acceptance is pending. Historical startup results below do not establish
+that submission and empty-roster paths are green.
+
+## Historical startup verification
 
 The original isolated Windows Forever login capture returned `[]` (zero Lua
 errors), down from 38 unique errors / 58 occurrences, with persisted CVars unchanged.
@@ -106,6 +143,10 @@ This visual check did not measure native Lua-error counts or API return values.
 Fully disconnected operation was not verified.
 
 ## Sources
+
+- [Login contract](../../specs/glue-login-flow.md) — native evidence, offline policy and remaining unknowns.
+- [Login model](../../../src/c_api/c_login.rs), [submission](../../../src/c_api/c_login/submission.rs), and [host roster](../../../src/c_api/c_login/character_roster.rs) — credential handling and supplied state.
+- [Startup selection regressions](../../../src/loader/tests/screen_selection.rs) — eligibility and dependency ordering.
 
 - [Glue regressions](../../../tests/glue_login.rs) — complete Login startup and screen-state transitions.
 - [Module import implementation](../../../src/loader/addon_modules.rs) and [tests](../../../tests/addon_require.rs) — sibling-file loading and import boundaries.

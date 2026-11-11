@@ -3599,3 +3599,7 @@ VERIFIED (full explicit PTR runtime plus source-token scan): 171 of 175 historic
 VERIFIED (full-LoD runtime): 93 of 99 removed names previously marked vendor-present are non-callable, four RaidNotice aliases are callable, and `getglobal`/`setglobal` are Lua compatibility functions. The 93 runtime misses do not establish native absence.
 
 VERIFIED (strict lifecycle probe): global CVar wrapper identities were unchanged at `BAG_UPDATE_DELAYED`. UNVERIFIED: the strict-removal timing requirement remains open; the separate native-absence test does not prove lifecycle timing.
+
+## 2026-11-11 — Glue login submission
+
+Updated [Forever Login Startup](investigations/forever-login-startup.md#login-submission-model-lt-a667-2026-11-11) with the lt-a667 flow and contract. Distinguished historical startup verification from pending submission acceptance; documented EditBox input, offline connection policy, host-empty roster/capacity, startup eligibility and the erroneous forced pre-login character-select refresh.

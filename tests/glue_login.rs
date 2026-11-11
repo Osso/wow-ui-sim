@@ -1354,3 +1354,33 @@ fn glue_preset_login_notification_survives_synchronous_cvar_callback_error() {
     "#).unwrap();
     assert!(env.state().borrow().lua_errors.is_empty());
 }
+
+#[test]
+#[cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
+fn glue_login_settling_does_not_force_direct_character_select_refresh() {
+    let env = common::lock_env(|| WowLuaEnv::new().unwrap());
+    env.set_screen_mode(ScreenKind::Login);
+    env.exec(
+        r#"
+        forcedSelectLoads, forcedSelectShows, forcedListRequests = 0, 0, 0
+        CharacterSelect = {
+            OnLoad = function() forcedSelectLoads = forcedSelectLoads + 1 end,
+            OnShow = function() forcedSelectShows = forcedSelectShows + 1 end,
+        }
+        CharacterSelectListUtil = {
+            GetCharacterListUpdate = function() forcedListRequests = forcedListRequests + 1 end,
+        }
+    "#,
+    )
+    .unwrap();
+    settle_headless_startup(&env);
+    let observed: (i32, i32, i32) = env
+        .eval("return forcedSelectLoads, forcedSelectShows, forcedListRequests")
+        .unwrap();
+    assert_eq!(observed, (0, 0, 0));
+    assert!(env.state().borrow().lua_errors.is_empty());
+}
