@@ -1,14 +1,7 @@
-//! Temporary Forever bank UI capability and tab-catalog gaps.
-//! Retire with supplied bank-type capabilities and purchased-tab metadata.
+//! Temporary Forever bank tab-catalog gap.
+//! Retire when purchased-tab metadata is supplied.
 
 const BANK_CAPABILITIES: &str = r#"
--- Missing system: bank-type UI capability policy, not ordinary bag inventory.
-if rawget(C_Bank, "ShouldUsePlayerBagsInBank") == nil then
-    function C_Bank.ShouldUsePlayerBagsInBank()
-        return false
-    end
-end
-
 -- Missing system: purchased bank-tab metadata (IDs, names, icons and flags).
 -- Legacy bank bag counts do not provide a BankTabData catalog.
 if rawget(C_Bank, "FetchPurchasedBankTabData") == nil then
