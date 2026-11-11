@@ -130,18 +130,19 @@ fn quest_faction_group_uses_native_argument_conversion() {
         r##"
         local query = GetQuestFactionGroup
         local questID = {quest_id}
-        assert(type(query) == "function")
-        assert(select("#", query(questID)) == 0)
-        assert(select("#", query(tostring(questID))) == 0)
-        assert(select("#", query(questID + 0.75)) == 0)
-        assert(select("#", query(0)) == 0)
-        assert(select("#", query(-1)) == 0)
-        assert(select("#", query(-0.75)) == 0)
+        assert(type(query) == "function", "Game global is missing")
+        assert(select("#", query(questID)) == 0, "unclassified record should return no values")
+        assert(select("#", query(tostring(questID))) == 0, "numeric string should parse")
+        assert(select("#", query(questID + 0.75)) == 0, "fraction should truncate")
+        assert(select("#", query(0)) == 0, "zero ID should return no values")
+        assert(select("#", query(-1)) == 0, "negative ID should return no values")
+        assert(select("#", query(-0.75)) == 0, "negative fraction should truncate to zero")
 
         local usage = "Usage: GetQuestFactionGroup(questID"
         local function expect_usage_error(...)
             local ok, message = pcall(query, ...)
-            assert(not ok and message == usage)
+            assert(not ok, "expected a usage error")
+            assert(message == usage, "unexpected usage error: " .. tostring(message))
         end
         expect_usage_error()
         expect_usage_error(nil)
@@ -150,8 +151,9 @@ fn quest_faction_group_uses_native_argument_conversion() {
 
         local function expect_overflow(value, formatted)
             local ok, message = pcall(query, value)
-            assert(not ok)
-            assert(message == "integer overflow attempting to store " .. formatted)
+            assert(not ok, "expected overflow for " .. tostring(value))
+            local expected = "integer overflow attempting to store " .. formatted
+            assert(message == expected, "expected " .. expected .. ", got " .. tostring(message))
         end
         expect_overflow(2147483648, "2147483648.000000")
         expect_overflow(2147483647.75, "2147483647.750000")
