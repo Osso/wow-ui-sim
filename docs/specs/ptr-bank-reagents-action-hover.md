@@ -1,4 +1,4 @@
-# PTR bank reagents and action-button visualization
+# PTR/Forever bank reagents and action-button visualization
 
 `ReagentsFromBankAllowed` and `C_ActionBar.EnterActionButton` / `LeaveActionButton`
 implement bounded native decisions over supplied state. The producers live in
@@ -24,17 +24,17 @@ ActionCombatSpellHitIndicationEnabled and rule 211 as CraftFromBankRestricted;
 ActionButton.lua:941,951 also uses the first name. Their PTR enum entries must
 refer to the shared C_GameRules rule store.
 
+R39.2: Forever 1.60.1.70707 and PTR 12.1.7.70668 use the same decision over `CraftFromBankRestricted` and a player permission bit. The universal initial value and permission-bit producer remain UNKNOWN.
+
 ## What it must do
 
 ### Bank reagents
 
-- [x] Publish the global on PTR only; return exactly one Boolean and ignore extra ordinary arguments.
-- [x] Missing shared object returns false. A present object returns true when
+- [ ] Publish the global on PTR and through Forever's Game installer; return exactly one Boolean. Forever calls read no arguments.
+- [ ] No player object returns false. A present player returns true when
   CraftFromBankRestricted is absent/inactive; with that rule active it returns
-  the supplied object flag. Do not infer bank-open, ownership, location or CVar state.
-- [x] Original recipe-source consumer reaches ItemUtil.lua:315 and completes
-  its supplied source-text tooltip. Its fixture explicitly supplies a present
-  object with flag false and no restrictive rule.
+  the supplied permission bit. Do not infer bank-open, ownership, location or CVar state.
+- [ ] The Retail/PTR/Forever original recipe-source consumer reaches ItemUtil.lua:315 and completes its supplied source-text tooltip. Its fixture explicitly supplies a present player with permission bit false and no restrictive rule.
 
 ### Action-button visualization
 
@@ -73,8 +73,7 @@ refer to the shared C_GameRules rule store.
 - `src/c_api/action_button_hover.rs`: supplied visualization records, local stores,
   the builder-read seam, parser, PTR registrations and two game-rule enum entries.
 - `src/c_api/action_button_hover/unknown_policy.rs`: named UNKNOWN execution-policy seam.
-- `src/lua_api/globals/real/bank_reagents.rs`: modeled non-C global and named
-  UNKNOWN character-default/publication seams.
+- `src/lua_api/globals/real/bank_reagents.rs`: PTR/Forever Game global, supplied player/rule query and named UNKNOWN default/publication seams.
 - `src/lua_api/state/sim_state.rs`, `src/lua_api/state.rs`: per-environment inputs.
 - `src/lua_api/env_init/mod.rs`, `src/lua_api/globals/action_bar_api/registration.rs`:
   registration entry points; active-profile checks reside in the producers.
@@ -85,12 +84,13 @@ refer to the shared C_GameRules rule store.
   lookup gates, secret-policy distinction, range-visualization builder read,
   original action handlers, Retail absence.
 - `tests/ptr_tooltip_hover_leave.rs`: independent original OnLeave consumer RED/GREEN.
-- `tests/blizzard_professions_templates_loads.rs`: original recipe-source tooltip.
+- `tests/blizzard_professions_templates_loads.rs`: Retail/PTR/Forever original recipe-source tooltip.
+- `tests/forever_bank_reagents.rs`: Forever player/rule matrix without asserting a universal default or event producer.
 - `tests/tooltip_hover.rs`: original action hover retains spell tooltip postcall identity.
 
 ## Known gaps (current cycle)
 
-- [ ] Forever 1.60.1.70707 declares `ReagentsFromBankAllowed` and calls it from `ItemUtil.lua:315`, but behavior is UNKNOWN pending R39.2. Keep the PTR-only model and consumer behavior out of Forever.
+- [ ] Native `GAME_RULES_CHANGED` fires on whole game-rule collection replacement. The simulator has no such host input or event producer. A single-entry `A_Admin.SetGameRule` must not synthesize it.
 
 The original rule-enabled OnEnter boundary is closed by the separate
 [WM93 counted channel](ptr-action-combat-range-check.md), not by a callback stub
@@ -104,18 +104,19 @@ historical handoff evidence, not the current profile result.
 ## Out of scope
 
 - **UNKNOWN universal character default:** `unknown_character_default` is one
-  named EMULATED scenario seam: object present, restrictive flag clear. The shared
+  named EMULATED scenario seam: player present, restrictive rule inactive. The shared
   rule store starts empty. This is not an unconditional native true/false default;
-  fixtures supply object/rule state explicitly.
+  fixtures supply player/rule state explicitly.
 - **UNKNOWN execution/publication policy:** `unknown_policy::read_accessible_argument`
   uses the existing AllowedWhenUntainted runtime access policy as EMULATED behavior;
   full native secret/combat contexts and taint status are not established. The
   reagent `publish_unknown_native_policy` emits an ordinary Boolean with current
   execution provenance, not a claimed always-secret or always-unmarked native value.
-- **UNKNOWN downstream effects:** no event emission (including CURSOR_CHANGED),
-  tooltip ownership, combat policy, cursor changes or taint reset is synthesized.
-  Rendering geometry/reticle appearance and indirect native object operations are
-  not modeled. Missing supplied records remain unavailable, not fabricated.
+- **UNKNOWN downstream effects:** no bank-query or action-button event, tooltip
+  ownership, combat policy, cursor change or taint reset is synthesized. The event
+  for permission-bit changes is UNKNOWN. Rendering geometry/reticle appearance and
+  indirect native object operations are not modeled. Missing supplied records stay
+  unavailable, not fabricated.
 - **UNKNOWN builder gameplay effect:** `range_visualization_override` is the only
   named seam between the stored flag/value and the range-visualization model. The
   verified read is modeled; the effect of the resolved spell-range-visualization

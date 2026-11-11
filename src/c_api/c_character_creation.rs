@@ -1,10 +1,12 @@
 //! Glue-only character-creation mode and facing inputs.
 
 use crate::c_api::ensure_namespace;
+use crate::c_api::helpers::bad_argument;
 use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::WowLuaEnv;
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, table_set_static};
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
+use crate::screen::ScreenKind;
 use rilua::table_security::unwrap_secret;
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
@@ -13,6 +15,8 @@ use rilua::{LuaApiMut, LuaResult, Val};
 
 const SET_IN_CHARACTER_CREATE_USAGE: &str =
     "Usage: C_CharacterCreation.SetInCharacterCreate(inCharacterCreate)";
+const SET_VIEWING_ALTERED_FORM_USAGE: &str =
+    "Usage: C_CharacterCreation.SetViewingAlteredForm(isViewingAlteredForm)";
 const SET_CHARACTER_CREATE_FACING_USAGE: &str =
     "Usage: C_CharacterCreation.SetCharacterCreateFacing(degrees)";
 // R36 marks the displayed bounds as inferred; tests check only the stable prefix and usage.
@@ -25,7 +29,7 @@ const SET_CHARACTER_CREATE_FACING_FINITE_ERROR: &str =
 const DEGREES_PER_HALF_TURN: f32 = 180.0;
 
 /// Update Glue-only character-creation members for the selected screen.
-pub(crate) fn update_screen_registration(env: &WowLuaEnv, is_glue: bool) {
+pub(crate) fn update_screen_registration(env: &WowLuaEnv, screen: ScreenKind) {
     if !matches!(
         ACTIVE,
         ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
@@ -33,12 +37,19 @@ pub(crate) fn update_screen_registration(env: &WowLuaEnv, is_glue: bool) {
         return;
     }
 
+    if screen == ScreenKind::CharacterCreate
+        && matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever)
+    {
+        env.state.borrow_mut().character_create_viewing_altered_form = false;
+    }
+
     let mut lua = env.lua.borrow_mut();
-    update_registration(lua.state_mut(), is_glue)
+    update_registration(lua.state_mut(), screen.is_glue())
         .expect("register Glue-only C_CharacterCreation members for the selected screen");
 }
 
 fn update_registration(state: &mut LuaState, is_glue: bool) -> LuaResult<()> {
+    update_altered_form_model_helper(state, is_glue)?;
     let namespace = match LuaApiMut::get_global_val(state, "C_CharacterCreation") {
         Val::Table(namespace) => namespace,
         _ if is_glue => ensure_namespace(state, "C_CharacterCreation")?,
@@ -47,6 +58,26 @@ fn update_registration(state: &mut LuaState, is_glue: bool) -> LuaResult<()> {
 
     update_default_facing_registration(state, namespace, is_glue)?;
     update_retail_and_forever_registration(state, namespace, is_glue)
+}
+
+fn update_altered_form_model_helper(state: &mut LuaState, is_glue: bool) -> LuaResult<()> {
+    let global = state.global;
+    if is_glue && matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
+        table_set_rust_fn_static(
+            state,
+            global,
+            "__wow_character_create_has_altered_model",
+            selected_race_has_altered_model,
+        )
+    } else {
+        table_set_static(
+            state,
+            Val::Table(global),
+            "__wow_character_create_has_altered_model",
+            Val::Nil,
+        );
+        Ok(())
+    }
 }
 
 fn update_default_facing_registration(
@@ -88,6 +119,8 @@ fn update_retail_and_forever_registration(
             "SetInCharacterCreate",
             "GetCharacterCreateFacing",
             "SetCharacterCreateFacing",
+            "SetViewingAlteredForm",
+            "IsViewingAlteredForm",
         ] {
             table_set_static(state, Val::Table(namespace), member, Val::Nil);
         }
@@ -116,6 +149,18 @@ fn register_retail_and_forever_glue_apis(
         namespace,
         "SetCharacterCreateFacing",
         set_character_create_facing,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "SetViewingAlteredForm",
+        set_viewing_altered_form,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "IsViewingAlteredForm",
+        is_viewing_altered_form,
     )
 }
 
@@ -124,6 +169,47 @@ fn get_character_create_facing(state: &mut LuaState) -> LuaResult<u32> {
     let degrees = radians * DEGREES_PER_HALF_TURN / std::f32::consts::PI;
     state.push(Val::Num(f64::from(degrees)));
     Ok(1)
+}
+
+fn set_viewing_altered_form(state: &mut LuaState) -> LuaResult<u32> {
+    let argument = stack_val(state, 1);
+    if matches!(argument, Val::Nil) {
+        return Err(bad_argument(
+            1,
+            "SetViewingAlteredForm",
+            SET_VIEWING_ALTERED_FORM_USAGE,
+        ));
+    }
+
+    let has_altered_model = selected_race_has_altered_model_value(state)?;
+    let viewing = has_altered_model && !matches!(argument, Val::Bool(false));
+    let mut sim = borrow_state_mut(state)?;
+    if sim.character_create_viewing_altered_form != viewing {
+        sim.character_create_viewing_altered_form = viewing;
+    }
+    Ok(0)
+}
+
+fn is_viewing_altered_form(state: &mut LuaState) -> LuaResult<u32> {
+    let has_altered_model = selected_race_has_altered_model_value(state)?;
+    let viewing = has_altered_model && borrow_state(state)?.character_create_viewing_altered_form;
+    state.push(Val::Bool(viewing));
+    Ok(1)
+}
+
+fn selected_race_has_altered_model(state: &mut LuaState) -> LuaResult<u32> {
+    let has_altered_model = selected_race_has_altered_model_value(state)?;
+    state.push(Val::Bool(has_altered_model));
+    Ok(1)
+}
+
+fn selected_race_has_altered_model_value(state: &mut LuaState) -> LuaResult<bool> {
+    let Some(race_id) = read_selected_character_create_id(state, "__wow_selected_race_id") else {
+        return Ok(false);
+    };
+    Ok(borrow_state(state)?
+        .character_create_altered_form_races
+        .contains(&race_id))
 }
 
 fn set_character_create_facing(state: &mut LuaState) -> LuaResult<u32> {
@@ -221,8 +307,12 @@ pub(crate) fn set_in_character_create(state: &mut LuaState) -> LuaResult<u32> {
 
     let entering = !matches!(value, Val::Bool(false));
     let mut sim = borrow_state_mut(state)?;
-    if sim.in_character_create != entering {
-        sim.in_character_create = entering;
+    if entering
+        && !sim.in_character_create
+        && matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever)
+    {
+        sim.character_create_viewing_altered_form = false;
     }
+    sim.in_character_create = entering;
     Ok(0)
 }

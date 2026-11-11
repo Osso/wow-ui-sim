@@ -224,7 +224,6 @@ pub mod c_photo_sharing;
 pub mod c_ping_secure;
 #[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
 pub mod c_player_choice;
-#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 pub(crate) mod c_player_info_guid;
 pub(crate) mod c_player_info_name_policy;
 pub mod c_player_interaction_manager;

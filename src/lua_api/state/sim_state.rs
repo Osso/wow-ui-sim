@@ -265,7 +265,7 @@ pub struct SimState {
     pub action_bar_state: ActionBarStateInfo,
     pub spell_range_visualization: crate::c_api::action_button_hover::SpellRangeVisualizationState,
     pub action_combat_range: crate::c_api::action_combat_range_check::ActionCombatRangeState,
-    /// None = missing shared object; Some(flag) = supplied restrictive-rule flag.
+    /// None = no player object; Some(permission) = supplied bank-reagent permission bit.
     pub bank_reagent_object: Option<bool>,
     pub action_highlights: ActionHighlightState,
     pub extra_action_button: ExtraActionButtonState,
@@ -928,6 +928,10 @@ pub struct SimState {
     pub mythic_plus: MythicPlusState,
     /// Current character-create model facing in normalized radians.
     pub character_create_facing_radians: f32,
+    /// Host-supplied race IDs with an altered character-create model.
+    pub character_create_altered_form_races: HashSet<i64>,
+    /// Stored Glue character-create altered-form choice.
+    pub character_create_viewing_altered_form: bool,
     /// Host-supplied facing in degrees, keyed by selected character-create race/sex IDs.
     pub character_create_default_facing_by_race_sex: HashMap<(i64, i64), f64>,
     /// Host-supplied superdistrict records, keyed by native ID.
