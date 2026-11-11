@@ -169,6 +169,7 @@ fn set_blur_enabled_stores_required_lua_truthiness_without_a_getter() {
     assert!(game_api_absent);
 
     env.set_screen_mode(ScreenKind::CharacterSelect);
+    let initial_blur_state = env.state().borrow().character_create_blur_enabled;
     env.exec(
         r#"
         local set = rawget(C_CharacterCreation, 'SetBlurEnabled')
@@ -183,7 +184,10 @@ fn set_blur_enabled_stores_required_lua_truthiness_without_a_getter() {
         "#,
     )
     .expect("SetBlurEnabled registration and required input errors");
-    assert!(!env.state().borrow().character_create_blur_enabled);
+    assert_eq!(
+        env.state().borrow().character_create_blur_enabled,
+        initial_blur_state
+    );
 
     env.exec(
         r#"
