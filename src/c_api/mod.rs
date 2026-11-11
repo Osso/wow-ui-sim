@@ -4,7 +4,6 @@
 //! unsupported compatibility gaps stay isolated under `permanent_shims`.
 
 mod c_account_info;
-pub(crate) mod experience_preset;
 pub mod c_guild_info;
 pub mod c_heirloom;
 pub mod c_recruit_a_friend;
@@ -22,6 +21,7 @@ pub(crate) mod c_tooltip_info_item_key;
 pub(crate) mod c_tooltip_info_loot;
 #[cfg(feature = "retail-12-1-5")]
 pub(crate) mod c_tooltip_info_merchant_cost;
+pub(crate) mod experience_preset;
 // The pinned TooltipInfoDocumentation.lua:710 declares GetPvpBrawl on Retail,
 // PTR and Forever; the supplied-brawl model is compiled for the same profiles.
 #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]

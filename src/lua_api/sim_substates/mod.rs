@@ -147,6 +147,9 @@ pub struct GameRulesState {
     pub sd_toggle_usage_location: Option<i32>,
     /// `Enum.EventRealmQueues` flags; `0 = None` outside event realms.
     pub event_realm_queues: i32,
+    /// R50 observed setter effects; no assumed native initial choice.
+    pub experience_preset_changed: bool,
+    pub classic_experience_chosen: Option<bool>,
 }
 
 impl Default for GameRulesState {
@@ -162,6 +165,8 @@ impl Default for GameRulesState {
             account_has_sd_enabled: false,
             sd_toggle_usage_location: None,
             event_realm_queues: 0,
+            experience_preset_changed: false,
+            classic_experience_chosen: None,
         }
     }
 }

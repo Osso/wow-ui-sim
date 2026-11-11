@@ -121,6 +121,12 @@ impl CVarStorage {
         self.get(name).as_deref() == Some("1")
     }
 
+    /// Native cached-integer truth projection (R50). Overflow and locale-specific
+    /// input remain outside the verified domain; generic GetCVarBool is unchanged.
+    pub(crate) fn cached_integer_nonzero(&self, name: &str) -> Option<bool> {
+        self.get(name).map(|value| cached_integer_nonzero(&value))
+    }
+
     /// Set a CVar value and persist to disk.
     pub fn set(&self, name: &str, value: &str) -> bool {
         let key = name.to_lowercase();
@@ -905,5 +911,40 @@ mod tests {
         for name in PATCH_12_0_7_REMOVED_CVARS {
             assert_eq!(storage.get(name), None, "{name}");
         }
+    }
+}
+
+/// Hex selection precedes whitespace/sign handling in the native cache parser.
+fn cached_integer_nonzero(value: &str) -> bool {
+    let (digits, radix) = if let Some(hex) = value
+        .strip_prefix("0x")
+        .or_else(|| value.strip_prefix("0X"))
+    {
+        (hex, 16)
+    } else {
+        let trimmed = value.trim_start_matches(|ch: char| ch.is_ascii_whitespace());
+        (
+            trimmed
+                .strip_prefix('+')
+                .or_else(|| trimmed.strip_prefix('-'))
+                .unwrap_or(trimmed),
+            10,
+        )
+    };
+    digits
+        .chars()
+        .map_while(|ch| ch.to_digit(radix))
+        .any(|digit| digit != 0)
+}
+
+#[test]
+fn native_cached_integer_truth_prefixes() {
+    for value in ["-1", "+1", " 8", "08", "8 ", "8junk", "0x10", "0Xf"] {
+        assert!(cached_integer_nonzero(value), "{value:?}");
+    }
+    for value in [
+        "-0", "+0x10", "-0x10", " 0x10", "+ 1", "true", "false", "junk", "0x0junk",
+    ] {
+        assert!(!cached_integer_nonzero(value), "{value:?}");
     }
 }

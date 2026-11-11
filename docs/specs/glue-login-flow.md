@@ -278,3 +278,18 @@ CharacterRecord now owns an optional season, defaulting to native construction
 zero. The getter uses requested-GUID record resolution and never the selected
 character or active season. Glue-only exposure is INFERRED and profile-scoped.
 No extra events, GUID grammar, secret handling or other writers are invented.
+
+### R50 preset writer and cached-integer projection
+
+Tracker lt-a667 comment 66 supplies Forever 70707 / PTR 70668 evidence.
+The setter records changed/classic-chosen state, writes the real CVar through a
+native path (not Lua SetCVar access checks), emits CVAR_UPDATE only on a changed
+value, then always emits payload-free LOGIN_STATE_CHANGED. It returns no values.
+There is no GAME_RULES_CHANGED, fabricated validation callback, server response,
+or implementation of the unknown native refresh. Optional outgoing requests are
+omitted. Glue and Game registration is an inference. Required numeric conversion
+uses signed int32, truncation and the low byte, accepting only resulting 0 or 1.
+The shared CVar truth projection skips ASCII whitespace and an optional sign,
+but selects hex only when the original string starts 0x/0X. Leading zero decimal
+and trailing junk are accepted. Overflow and non-ASCII locale parsing remain
+outside verified coverage. Generic GetCVarBool behavior is not broadened.

@@ -1044,7 +1044,7 @@ fn glue_character_list_resets_selection_and_resolves_only_host_candidate() {
 fn glue_login_host_roster_does_not_borrow_social_accounts_before_submission() {
     use wow_ui_sim::c_api::c_login::character_roster::CharacterSlot;
     let env = common::lock_env(|| WowLuaEnv::new().unwrap());
-    let direct_count = env.eval::<usize>("return GetNumCharacters()").unwrap();
+    let direct_count = env.eval::<i32>("return GetNumCharacters()").unwrap();
     assert!(
         direct_count > 0,
         "direct-screen fixture must be nonempty for this contrast"
@@ -1073,11 +1073,11 @@ fn glue_login_host_roster_does_not_borrow_social_accounts_before_submission() {
     )
     .unwrap();
     let host_count = direct_count + 2;
-    let mut slots = vec![CharacterSlot::default(); host_count];
-    slots[host_count - 1] = fixture.into();
+    let mut slots = vec![CharacterSlot::default(); host_count as usize];
+    slots[host_count as usize - 1] = fixture.into();
     env.state().borrow_mut().glue_login.characters = slots;
     assert_eq!(
-        env.eval::<usize>("return GetNumCharacters()").unwrap(),
+        env.eval::<i32>("return GetNumCharacters()").unwrap(),
         host_count
     );
     assert_eq!(
@@ -1092,17 +1092,17 @@ fn glue_login_host_roster_does_not_borrow_social_accounts_before_submission() {
     ] {
         env.set_screen_mode(screen);
         assert_eq!(
-            env.eval::<usize>("return GetNumCharacters()").unwrap(),
+            env.eval::<i32>("return GetNumCharacters()").unwrap(),
             direct_count
         );
     }
     env.set_screen_mode(ScreenKind::Login);
     assert_eq!(
-        env.eval::<usize>("return GetNumCharacters()").unwrap(),
+        env.eval::<i32>("return GetNumCharacters()").unwrap(),
         host_count
     );
     env.state().borrow_mut().glue_login.characters.clear();
-    assert_eq!(env.eval::<usize>("return GetNumCharacters()").unwrap(), 0);
+    assert_eq!(env.eval::<i32>("return GetNumCharacters()").unwrap(), 0);
     assert!(env.state().borrow().lua_errors.is_empty());
 }
 
@@ -1158,6 +1158,15 @@ fn glue_experience_preset_reads_real_cvar_numeric_prefix() {
         ("1junk", true),
         ("0x10", true),
         ("0x0junk", false),
+        ("-1", true),
+        ("-0", false),
+        (" 8", true),
+        ("08", true),
+        ("8junk", true),
+        ("+0x10", false),
+        ("-0x10", false),
+        (" 0x10", false),
+        ("+ 1", false),
     ] {
         env.exec(&format!(
             "SetCVar('hasSelectedExperiencePreset', {value:?})"
@@ -1254,4 +1263,50 @@ fn glue_character_timerunning_season_uses_requested_record_without_active_fallba
             .unwrap()
     );
     assert!(env.state().borrow().lua_errors.is_empty());
+}
+
+#[test]
+#[cfg(any(feature = "client-ptr", feature = "client-wowforever"))]
+fn glue_experience_preset_setter_orders_native_cvar_and_login_events() {
+    let env = common::lock_env(|| WowLuaEnv::new().unwrap());
+    env.set_screen_mode(ScreenKind::Login);
+    env.exec(r#"
+        SetCVar('hasSelectedExperiencePreset', '0')
+        presetEvents = {}
+        local f = CreateFrame('Frame')
+        for _, event in ipairs({'CVAR_UPDATE', 'LOGIN_STATE_CHANGED', 'GAME_RULES_CHANGED'}) do f:RegisterEvent(event) end
+        f:SetScript('OnEvent', function(_, event, ...)
+            table.insert(presetEvents, event)
+            assert(C_Login.GetState().hasSelectedExperiencePreset)
+            if event == 'CVAR_UPDATE' then
+                assert(select('#', ...) == 2)
+                local name, value = ...
+                assert(name == 'hasSelectedExperiencePreset' and value == '1')
+            else assert(select('#', ...) == 0) end
+        end)
+        assert(Enum.ForeverExperiencePreset.Classic == 0 and Enum.ForeverExperiencePreset.Enhanced == 1)
+        assert(select('#', C_GameRules.SetForeverExperiencePresetPreLogin(257)) == 0)
+        assert(table.concat(presetEvents, ',') == 'CVAR_UPDATE,LOGIN_STATE_CHANGED')
+        presetEvents = {}
+        C_GameRules.SetForeverExperiencePresetPreLogin(1)
+        assert(table.concat(presetEvents, ',') == 'LOGIN_STATE_CHANGED')
+    "#).unwrap();
+    assert!(env.state().borrow().game_rules.experience_preset_changed);
+    assert_eq!(env.state().borrow().game_rules.classic_experience_chosen, Some(false));
+    for (input, classic) in [("256", true), ("0.9", true), ("1.9", false), ("'257'", false), ("true", true), ("'junk'", true)] {
+        env.exec(&format!("presetEvents = {{}}; C_GameRules.SetForeverExperiencePresetPreLogin({input}); assert(table.concat(presetEvents, ',') == 'LOGIN_STATE_CHANGED')")).unwrap();
+        assert_eq!(env.state().borrow().game_rules.classic_experience_chosen, Some(classic));
+    }
+    env.exec(r#"
+        for _, input in ipairs({2, 255, 258, 2147483648, -2147483649}) do
+            presetEvents = {}
+            assert(not pcall(C_GameRules.SetForeverExperiencePresetPreLogin, input))
+            assert(#presetEvents == 0)
+        end
+        local ok, message = pcall(C_GameRules.SetForeverExperiencePresetPreLogin)
+        assert(not ok and message:find('Usage: C_GameRules.SetForeverExperiencePresetPreLogin(preset)', 1, true))
+    "#).unwrap();
+    assert_eq!(env.state().borrow().game_rules.classic_experience_chosen, Some(true));
+    env.set_screen_mode(ScreenKind::Game);
+    assert!(env.eval::<bool>("return type(C_GameRules.SetForeverExperiencePresetPreLogin) == 'function'").unwrap());
 }
