@@ -110,7 +110,26 @@ fn assert_no_bag_open_errors(env: &WowLuaEnv, context: &str) {
     );
 }
 
-#[cfg(not(feature = "client-wrath"))]
+#[cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
+// VERIFIED source: Retail Mainline declares frames 1-6; PTR and Forever declare 1-7.
+fn expected_container_frame_count() -> i32 {
+    match wow_ui_sim::client_profile::ACTIVE {
+        wow_ui_sim::client_profile::ClientProfile::Retail => 6,
+        wow_ui_sim::client_profile::ClientProfile::Ptr
+        | wow_ui_sim::client_profile::ClientProfile::WowForever => 7,
+        _ => unreachable!("container frame array test is Mainline-only"),
+    }
+}
+
+#[cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
 #[test]
 fn test_container_frames_registered() {
     let env = setup_env();
@@ -127,13 +146,14 @@ fn test_container_frames_registered() {
         "#,
         )
         .unwrap();
+    let expected_count = expected_container_frame_count();
     assert_eq!(
-        count, 6,
-        "ContainerFrameContainer.ContainerFrames should have 6 entries"
+        count, expected_count,
+        "ContainerFrameContainer.ContainerFrames should match the selected Mainline XML"
     );
 
     // Check individual frames exist
-    for i in 1..=6 {
+    for i in 1..=expected_count {
         let exists: bool = env
             .eval(&format!("return ContainerFrame{i} ~= nil"))
             .unwrap();
@@ -141,7 +161,11 @@ fn test_container_frames_registered() {
     }
 }
 
-#[cfg(not(feature = "client-wrath"))]
+#[cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
 #[test]
 fn test_container_frames_array_contains_only_real_container_frames() {
     let env = setup_env();
@@ -162,17 +186,14 @@ fn test_container_frames_array_contains_only_real_container_frames() {
         )
         .unwrap();
 
+    let expected_count = expected_container_frame_count();
+    let expected_names: Vec<String> = (1..=expected_count)
+        .map(|index| format!("{index}=ContainerFrame{index}"))
+        .collect();
+
     assert_eq!(
-        names,
-        vec![
-            "1=ContainerFrame1".to_string(),
-            "2=ContainerFrame2".to_string(),
-            "3=ContainerFrame3".to_string(),
-            "4=ContainerFrame4".to_string(),
-            "5=ContainerFrame5".to_string(),
-            "6=ContainerFrame6".to_string(),
-        ],
-        "ContainerFrameContainer.ContainerFrames should only contain the six real bag frames",
+        names, expected_names,
+        "ContainerFrameContainer.ContainerFrames should match the selected Mainline XML",
     );
 }
 
