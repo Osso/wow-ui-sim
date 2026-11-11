@@ -126,8 +126,11 @@ Swapping an owned item with a bag or equipment slot places the displaced item th
 - Macro 7 projects the picked-up index. Native matches a macro handle and follows the macro when slots move; the simulator has no handles.
 - Modes 8, 10–20 and their projections, guild-bank pickups, and the money storage read by `GetCursorMoney` are not modeled here.
 - R37's shared merchant-cursor setter gate is UNKNOWN and is not modeled.
-- UNKNOWN (R37): the same-item guard outcome and the owned-item merchant route (probably a sale) are not modeled; the existing simulator path is retained for these cases without a native-parity claim.
+### R37 unknown paths
+
+- INFERRED (R37; PTR 12.1.7.70668): when the cursor already holds an owned item, the wrapper takes a separate route that is probably a sale. UNKNOWN (R37): its transaction, final cursor state and events are not established. The simulator's existing behavior is unchanged; no native-parity assertion is added.
+- UNKNOWN (R37; PTR 12.1.7.70668): the same-item guard's final cursor state and events are not established. The simulator's existing behavior is unchanged; no native-parity assertion is added.
 
 ## Out of scope
 
-- R37's owned-item sale path and the native restriction error for action slots 133–144. The sale behavior is only inferred, and the restriction-error details are not established.
+- Do not model the R37 owned-item and same-item cases above or the native restriction error for action slots 133–144; the restriction-error details are not established.

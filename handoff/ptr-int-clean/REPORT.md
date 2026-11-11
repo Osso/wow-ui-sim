@@ -210,3 +210,12 @@ Design note: implement the loot-style getter from `SimState.game_rules.rules["Lo
 - VERIFIED: `default_action_bars()` in `src/lua_api/game_data.rs` seeds slot 2 with spell 31935, so the tainted-place test had a pre-populated target; its blocked trace had no slot-change event. The fixture now clears slot 2 and passes. The ActionButton drag test also resets `showgrid` to zero before checking the drag-event bit, because EditMode seeds `REASON_CVAR=1`; `tests/blizzard_ui/blizzard_actionbar/behavior_show_grid.rs` documents this fixture requirement.
 - VERIFIED: `cargo fmt --all` and `git diff --check` passed; no Blizzard/vendor or Cargo files changed.
 - UNVERIFIED: the separate PTR startup/presentation failure cluster and full profile failure-name comparison were not rerun as part of this R29/R33 slice.
+
+## R37 merchant cursor
+
+- VERIFIED (R37; PTR 12.1.7.70668 and Retail 12.1.5.70688): a successful merchant pickup projects exactly `"merchant", index`; R37 also verifies invalid-index clearing, fraction truncation, overflow errors, and successful-pickup `CURSOR_CHANGED(false, 5, 0, …)` with no `ACTIONBAR_SHOWGRID` on PTR.
+- INFERRED (R37): no available merchant row clears the cursor. INFERRED (R37): normal PTR `PlaceAction` leaves a merchant cursor and target unchanged with no events; its tainted/insecure exception is verified to block and clear the cursor.
+- INFERRED (R37; PTR 12.1.7.70668): when the cursor holds an owned item, the wrapper takes a separate route that is probably a sale. UNKNOWN (R37; PTR 12.1.7.70668): its transaction, final cursor state and events are not established. Existing simulator behavior remains unchanged; no native-parity assertion is added.
+- UNKNOWN (R37; PTR 12.1.7.70668): the same-item guard's final cursor state and events are not established. Existing simulator behavior remains unchanged; no native-parity assertion is added.
+- VERIFIED (simulator source): both UNKNOWN paths continue through the existing synthetic merchant-cursor path. `tests/merchant_cursor.rs` has no assertions for either path.
+- VERIFIED: integration target build at `c7742e1a6e033bfee2999b469c9acfb5f9a3eeb2` succeeded with zero compiler warnings. The first exact merchant test run failed inside its Lua assertions; it included an unsupported `CursorHasItem()` expectation, which is now removed. Assertion-level follow-up and the remaining R37 selectors are pending.

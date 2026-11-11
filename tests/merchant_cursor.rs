@@ -29,13 +29,16 @@ fn pickup_merchant_item_returns_the_selected_row() {
 
         PickupMerchantItem(2)
         local kind, merchantIndex = GetCursorInfo()
-        assert(select('#', GetCursorInfo()) == 2)
-        assert(kind == 'merchant' and merchantIndex == 2)
-        assert(not CursorHasItem())
-        assert(not gridShown)
-        assert(#cursorChanges == 1)
-        assert(cursorChanges[1][1] == false)
-        assert(cursorChanges[1][2] == 5 and cursorChanges[1][3] == 0)
+        assert(select('#', GetCursorInfo()) == 2, 'GetCursorInfo must return exactly two values')
+        assert(kind == 'merchant' and merchantIndex == 2, 'merchant tuple must contain the selected row')
+        -- R37 does not specify CursorHasItem() for a merchant cursor.
+        assert(not gridShown, 'merchant pickup must not show the action-bar grid')
+        assert(#cursorChanges == 1, 'merchant pickup must emit one cursor change')
+        assert(cursorChanges[1][1] == false, 'cursor change must report a nonempty cursor')
+        assert(
+            cursorChanges[1][2] == 5 and cursorChanges[1][3] == 0,
+            'cursor change must report merchant mode and previous mode zero'
+        )
         "#,
     )
     .unwrap();
