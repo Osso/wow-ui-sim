@@ -1,5 +1,4 @@
 use crate::c_api::ensure_namespace;
-use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::globals::currency_data;
 use crate::lua_api::methods::borrow_state_mut;
 use crate::lua_api::methods::{
@@ -1089,24 +1088,11 @@ pub(super) fn register_c_bank(state: &mut LuaState) -> LuaResult<()> {
         "FetchNumPurchasedBankTabs",
         c_bank_fetch_num_purchased_bank_tabs,
     )?;
-    if matches!(ACTIVE, ClientProfile::Ptr | ClientProfile::WowForever) {
-        table_set_rust_fn_static(
-            state,
-            table_ref,
-            "ShouldUsePlayerBagsInBank",
-            c_bank_should_use_player_bags_in_bank,
-        )?;
-    }
     Ok(())
 }
 
 fn c_bank_fetch_deposited_money(state: &mut LuaState) -> LuaResult<u32> {
     state.push(Val::Num(0.0));
-    Ok(1)
-}
-
-fn c_bank_should_use_player_bags_in_bank(state: &mut LuaState) -> LuaResult<u32> {
-    state.push(Val::Bool(ACTIVE == ClientProfile::WowForever));
     Ok(1)
 }
 

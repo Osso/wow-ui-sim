@@ -163,7 +163,7 @@ fn approved_native_defaults_voice_transcription_consumer() {
 }
 
 #[test]
-fn approved_native_defaults_bank_selected_tab_consumer() {
+fn approved_bank_selected_tab_consumer() {
     let env = load_bank();
     env.exec(r#"
         local source = debug.getinfo(BankPanelMixin.OnEvent, 'S').source:gsub('\\', '/')
@@ -178,7 +178,7 @@ fn approved_native_defaults_bank_selected_tab_consumer() {
 }
 
 #[test]
-fn approved_bank_panel_onload_uses_ptr_capability() {
+fn approved_bank_panel_onload_uses_ptr_scenario() {
     let env = load_bank();
     env.exec(
         r#"
@@ -204,5 +204,5 @@ fn approved_bank_panel_onload_uses_ptr_capability() {
         assert(#createdPools == 2 and createdPools[1] == 'BUTTON' and createdPools[2] == 'ItemButton')
         "#,
     )
-    .expect("original PTR bank panel consumes its native capability byte");
+    .expect("original PTR bank panel consumes the approved false scenario");
 }

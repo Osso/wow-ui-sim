@@ -205,36 +205,6 @@ fn forever_original_bank_consumer_uses_bank_type_permissions() {
 }
 
 #[test]
-fn forever_bank_panel_onload_uses_player_bag_capability() {
-    let env = startup();
-    env.exec(
-        r#"
-        local source = debug.getinfo(BankPanelMixin.OnLoad, 'S').source:gsub('\\', '/')
-        assert(source:find('Mainline/BankFrameTemplates.lua', 1, true), 'BankPanelMixin.OnLoad must come from the selected original consumer')
-        local createdPools = {}
-        CreateFramePool = function(frameType)
-            createdPools[#createdPools + 1] = frameType
-            return {}
-        end
-        EventRegistry.RegisterCallback = function() end
-        local panel = {
-            AddDynamicEventMethod = function() end,
-            OnBankTabClicked = function() end,
-            OnNewBankTabSelected = function() end,
-            OnPageSwitched = function() end,
-            OnPageSelected = function() end,
-        }
-        BankPanelMixin.OnLoad(panel)
-        assert(panel.bankTabPool == nil, 'true capability must omit the bank-tab pool')
-        assert(panel.itemButtonPool ~= nil, 'the normal item-button pool must still be created')
-        assert(#createdPools == 1 and createdPools[1] == 'ItemButton', 'OnLoad must skip only the bank-tab pool')
-        assert(C_Bank.ShouldUsePlayerBagsInBank() == true, 'Forever capability is true')
-        "#,
-    )
-    .expect("original bank panel uses the native Forever capability byte");
-}
-
-#[test]
 fn forever_original_pvp_consumer_uses_completion_state() {
     let env = startup();
     env.state().borrow_mut().pvp_match_active = false;
