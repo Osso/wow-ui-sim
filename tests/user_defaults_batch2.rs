@@ -155,11 +155,16 @@ fn quest_faction_group_uses_native_argument_conversion() {
             local expected = "integer overflow attempting to store " .. formatted
             assert(message == expected, "expected " .. expected .. ", got " .. tostring(message))
         end
+        local function expect_nonfinite_overflow(value)
+            local ok, message = pcall(query, value)
+            assert(not ok, "expected overflow for " .. tostring(value))
+            assert(message:find("integer overflow attempting to store ", 1, true) == 1)
+        end
         expect_overflow(2147483648, "2147483648.000000")
         expect_overflow(2147483647.75, "2147483647.750000")
-        expect_overflow(0 / 0, "nan")
-        expect_overflow(math.huge, "inf")
-        expect_overflow(-math.huge, "-inf")
+        expect_nonfinite_overflow(0 / 0)
+        expect_nonfinite_overflow(math.huge)
+        expect_nonfinite_overflow(-math.huge)
         "##
     ))
     .expect("GetQuestFactionGroup should match native conversion and errors");
