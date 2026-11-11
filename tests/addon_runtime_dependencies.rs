@@ -374,12 +374,12 @@ fn load_managers_run_before_their_startup_owner_files() {
     let tree = AddonTree::new(ScreenKind::Game);
     tree.env.exec("startupManagerOrder = {}").unwrap();
     tree.add(
-        "Blizzard_ManagerOwnerProbe",
-        "## AllowLoad: Both\n## LoadManagers: Blizzard_LodManagerProbe",
+        "Blizzard_A_ManagerOwnerProbe",
+        "## AllowLoad: Both\n## LoadManagers: Blizzard_Z_LodManagerProbe",
         "table.insert(startupManagerOrder, 'owner')",
     );
     tree.add(
-        "Blizzard_LodManagerProbe",
+        "Blizzard_Z_LodManagerProbe",
         "## AllowLoad: Both\n## LoadOnDemand: 1",
         "table.insert(startupManagerOrder, 'manager')",
     );
@@ -387,11 +387,11 @@ fn load_managers_run_before_their_startup_owner_files() {
     let addons = tree.load_startup_addons(ScreenKind::Game);
     let manager_position = addons
         .iter()
-        .position(|name| name == "Blizzard_LodManagerProbe")
+        .position(|name| name == "Blizzard_Z_LodManagerProbe")
         .expect("LoadManagers entry must be in the startup sequence");
     let owner_position = addons
         .iter()
-        .position(|name| name == "Blizzard_ManagerOwnerProbe")
+        .position(|name| name == "Blizzard_A_ManagerOwnerProbe")
         .expect("owner must be in the startup sequence");
     assert!(manager_position < owner_position);
     tree.env
