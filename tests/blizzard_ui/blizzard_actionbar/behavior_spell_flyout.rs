@@ -112,27 +112,24 @@ fn assert_flyout_hidden_by_default(env: &WowLuaEnv) {
 }
 
 fn assert_flyout_shown_with_seeded_spells(env: &WowLuaEnv) {
-    let (is_shown, first_id, second_id, third_visible): (bool, i64, i64, bool) = env
+    let (is_shown, button_count, first_id, second_id): (bool, i64, i64, i64) = env
         .eval(
             r#"
-            local first = SpellFlyoutPopupButton1
-            local second = SpellFlyoutPopupButton2
-            local third = SpellFlyoutPopupButton3
+            local buttons = SpellFlyout.buttons or {}
+            local first = buttons[1]
+            local second = buttons[2]
             return SpellFlyout:IsShown() == true,
+                   #buttons,
                    first and first:IsShown() and first.spellID or -1,
-                   second and second:IsShown() and second.spellID or -1,
-                   third and third:IsShown() == true or false
+                   second and second:IsShown() and second.spellID or -1
             "#,
         )
         .expect("SpellFlyout populated-button probe must run cleanly");
 
     assert!(is_shown, "first toggle must show SpellFlyout");
+    assert_eq!(button_count, 2, "flyout must render two seeded spell buttons");
     assert_eq!(first_id, FIRST_SPELL_ID as i64);
     assert_eq!(second_id, SECOND_SPELL_ID as i64);
-    assert!(
-        !third_visible,
-        "flyout must render exactly two seeded spell buttons"
-    );
 }
 
 fn assert_flyout_hidden_after_second_toggle(env: &WowLuaEnv) {

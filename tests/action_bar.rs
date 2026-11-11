@@ -38,6 +38,8 @@ const ACTION_BAR_ADDONS: &[&str] = &[
     "Blizzard_UIParentUtil",
     "Blizzard_EditMode",
     #[cfg(feature = "client-ptr")]
+    "Blizzard_MainMenuBarBagButtons",
+    #[cfg(feature = "client-ptr")]
     "Blizzard_StatusTrackingBar",
     "Blizzard_GarrisonBase",
     "Blizzard_GameTooltip",

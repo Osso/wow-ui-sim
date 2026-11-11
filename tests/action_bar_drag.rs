@@ -209,6 +209,12 @@ fn action_button_drag_round_trip_keeps_spell_visible() {
 
     common::with_timeout(120, move || {
         let env = env_with_action_bar();
+        env.exec(r#"SetCVar("lockActionBars", "0")"#)
+            .expect("unlock action bars for drag input");
+        let bars_locked: bool = env
+            .eval(r#"return Settings.GetValue("lockActionBars")"#)
+            .expect("read action-bar lock setting");
+        assert!(!bars_locked, "drag test requires unlocked action bars");
         assert_action_button_template_has_receive_drag();
         let button_id = env
             .state()
@@ -242,6 +248,16 @@ fn action_button_drag_round_trip_keeps_spell_visible() {
 
         env.fire_script_handler(button_id, "OnDragStart", vec![])
             .unwrap();
+        let action_picked_up: bool = env
+            .eval(
+                r#"local cursorType = GetCursorInfo(); return cursorType == "spell" and not HasAction(1) and not ActionButton1.icon:IsShown()"#,
+            )
+            .unwrap();
+        assert!(
+            action_picked_up,
+            "unlocked drag start should place the spell on the cursor and hide its action icon"
+        );
+
         env.fire_script_handler(button_id, "OnReceiveDrag", vec![])
             .unwrap();
 
