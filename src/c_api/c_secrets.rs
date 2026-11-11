@@ -127,14 +127,12 @@ fn should_unit_spell_casting_be_secret(state: &mut LuaState) -> LuaResult<u32> {
 fn read_spell_casting_unit(state: &LuaState, position: i32) -> LuaResult<String> {
     let value =
         rilua::table_security::unwrap_secret(state, crate::lua_bridge::stack_val(state, position))?;
-    if !matches!(value, Val::Str(_) | Val::Num(_)) {
-        return Err(rilua::runtime_error(
-            SHOULD_UNIT_SPELL_CASTING_BE_SECRET_USAGE,
-        ));
+    match value {
+        Val::Str(_) => crate::lua_api::methods::val_to_string(state, value),
+        Val::Num(_) => Some(value.to_string()),
+        _ => None,
     }
-
-    crate::lua_api::methods::val_to_string(state, value)
-        .ok_or_else(|| rilua::runtime_error(SHOULD_UNIT_SPELL_CASTING_BE_SECRET_USAGE))
+    .ok_or_else(|| rilua::runtime_error(SHOULD_UNIT_SPELL_CASTING_BE_SECRET_USAGE))
 }
 
 #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
