@@ -54,7 +54,7 @@ pub(crate) fn update_queued_upgrade_registration(
     {
         table_set_rust_fn_static(state, namespace, "HasQueuedUpgrade", has_queued_upgrade)
     } else {
-        table_set(state, namespace, "HasQueuedUpgrade", Val::Nil);
+        table_set(state, Val::Table(namespace), "HasQueuedUpgrade", Val::Nil);
         Ok(())
     }
 }
