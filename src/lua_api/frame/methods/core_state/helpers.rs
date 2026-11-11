@@ -35,9 +35,6 @@ fn resolved_frame_size(state: &crate::lua_api::state::SimState, id: u64) -> (f32
     let Some(frame) = state.widgets.get(id) else {
         return (0.0, 0.0);
     };
-    if frame.widget_type == crate::widget::WidgetType::FontString {
-        return state.widgets.resolved_size(id);
-    }
     let Some(rect) = frame.layout_rect else {
         return state.widgets.stored_size(id);
     };
@@ -54,6 +51,13 @@ pub(super) fn frame_size(state: &mut LuaState, id: u64, raw: bool) -> LuaResult<
             .is_some_and(|frame| has_queryable_rect(frame, id))
             || crate::lua_api::rect_geometry::frame_has_queryable_rect(&sim.widgets, id));
     if can_resolve {
+        let rect_is_unset = sim
+            .widgets
+            .get(id)
+            .is_some_and(|frame| frame.layout_rect.is_none());
+        if rect_is_unset {
+            sim.invalidate_layout(id);
+        }
         sim.resolve_rect_if_dirty(id);
     }
     let size = if raw {

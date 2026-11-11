@@ -137,6 +137,43 @@ fn rect_queries_return_nothing_for_unanchored_frame() {
 }
 
 #[test]
+fn valid_anchored_size_queries_use_resolved_dimensions() {
+    let env = env();
+    let (width, height, size_width, size_height, left, bottom, rect_width, rect_height): (
+        f64, f64, f64, f64, f64, f64, f64, f64,
+    ) = env
+        .eval(
+            r#"
+            local leftTarget = CreateFrame("Frame", "ResolvedSizeLeftTarget", UIParent)
+            leftTarget:SetSize(10, 10)
+            leftTarget:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", 100, 100)
+            local rightTarget = CreateFrame("Frame", "ResolvedSizeRightTarget", UIParent)
+            rightTarget:SetSize(10, 10)
+            rightTarget:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", 150, 100)
+            local frame = CreateFrame("Frame", "ResolvedSizeProbe", UIParent)
+            frame:SetSize(5, 20)
+            frame:SetPoint("BOTTOMLEFT", leftTarget, "BOTTOMRIGHT")
+            frame:SetPoint("BOTTOMRIGHT", rightTarget, "BOTTOMLEFT")
+            local width = frame:GetWidth()
+            local height = frame:GetHeight()
+            local size_width, size_height = frame:GetSize()
+            local left, bottom, rect_width, rect_height = frame:GetRect()
+            return width, height, size_width, size_height, left, bottom, rect_width, rect_height
+            "#,
+        )
+        .expect("eval should succeed");
+
+    assert_eq!(width, 40.0);
+    assert_eq!(height, 20.0);
+    assert_eq!(size_width, 40.0);
+    assert_eq!(size_height, 20.0);
+    assert_eq!(left, 110.0);
+    assert_eq!(bottom, 100.0);
+    assert_eq!(rect_width, 40.0);
+    assert_eq!(rect_height, 20.0);
+}
+
+#[test]
 fn child_anchored_to_unanchored_parent_has_no_queryable_rect() {
     let env = env();
     let result: f64 = env
