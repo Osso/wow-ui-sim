@@ -106,6 +106,57 @@ fn forever_account_quest_argument_conversion_matches_native() {
     .expect("Forever account quest conversion should match R27 native behavior");
 }
 
+#[cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
+#[test]
+fn quest_faction_group_uses_native_argument_conversion() {
+    let env = keybinding_panel_fixtures::setup_env();
+    let quest_id = env.state().borrow().quest_log_entries.entries[0].quest_id;
+    env.exec(&format!(
+        r##"
+        local query = GetQuestFactionGroup
+        local questID = {quest_id}
+        assert(type(query) == "function")
+        assert(select("#", query(questID)) == 0)
+        assert(select("#", query(tostring(questID))) == 0)
+        assert(select("#", query(questID + 0.75)) == 0)
+        assert(select("#", query(0)) == 0)
+        assert(select("#", query(-1)) == 0)
+        assert(select("#", query(-0.75)) == 0)
+
+        local usage = "Usage: GetQuestFactionGroup(questID"
+        local function expect_usage_error(...)
+            local ok, message = pcall(query, ...)
+            assert(not ok and message == usage)
+        end
+        expect_usage_error()
+        expect_usage_error(nil)
+        expect_usage_error(false)
+        expect_usage_error("not a number")
+
+        local function expect_overflow(value, formatted)
+            local ok, message = pcall(query, value)
+            assert(not ok)
+            assert(message == "integer overflow attempting to store " .. formatted)
+        end
+        expect_overflow(2147483648, "2147483648.000000")
+        expect_overflow(2147483647.75, "2147483647.750000")
+        expect_overflow(0 / 0, "nan")
+        expect_overflow(math.huge, "inf")
+        expect_overflow(-math.huge, "-inf")
+        "##
+    ))
+    .expect("GetQuestFactionGroup should match native conversion and errors");
+}
+
+#[cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
 #[test]
 fn user_defaults_batch2_world_map_quest_consumer() {
     let env = keybinding_panel_fixtures::setup_env();

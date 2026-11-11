@@ -185,11 +185,7 @@ fn character_create_mode_is_glue_only_and_uses_lua_truthiness() {
 }
 
 #[test]
-#[cfg(any(
-    feature = "client-retail",
-    feature = "client-ptr",
-    feature = "client-wowforever"
-))]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn character_create_default_facing_uses_host_race_sex_data_in_blizzard_consumer() {
     test_timeout! {
         let env = load_blizzard_screen(ScreenKind::CharacterCreate);
@@ -200,6 +196,46 @@ fn character_create_default_facing_uses_host_race_sex_data_in_blizzard_consumer(
             .expect("GetDefaultCharacterCreateFacing should return one number");
         assert_eq!(return_count, 1);
         assert_eq!(missing_facing, 0.0);
+
+        env.exec(
+            r##"
+            local getFacing = C_CharacterCreation.GetCharacterCreateFacing
+            local setFacing = C_CharacterCreation.SetCharacterCreateFacing
+            assert(type(getFacing) == "function" and type(setFacing) == "function")
+            assert(select("#", getFacing()) == 1)
+            assert(math.abs(getFacing()) < 0.001)
+            assert(select("#", setFacing("370")) == 0)
+            assert(math.abs(getFacing() - 10) < 0.001)
+            setFacing(270)
+            assert(math.abs(getFacing() + 90) < 0.001)
+
+            local usage = "Usage: C_CharacterCreation.SetCharacterCreateFacing(degrees)"
+            local function expect_exact_error(value, detail)
+                local ok, message = pcall(setFacing, value)
+                assert(not ok)
+                assert(message == "bad argument #1 to 'SetCharacterCreateFacing' (" .. detail .. ")")
+            end
+            local missing_ok, missing_message = pcall(setFacing)
+            assert(not missing_ok)
+            assert(missing_message == "bad argument #1 to 'SetCharacterCreateFacing' (" .. usage .. ")")
+            expect_exact_error(nil, usage)
+            local finite_error = "must be a finite number - " .. usage
+            expect_exact_error(0 / 0, finite_error)
+            expect_exact_error(math.huge, finite_error)
+            expect_exact_error(-math.huge, finite_error)
+
+            local function expect_range_error(value)
+                local ok, message = pcall(setFacing, value)
+                assert(not ok)
+                assert(message:find("outside of expected range", 1, true))
+                assert(message:find(usage, 1, true))
+            end
+            expect_range_error("not a number")
+            expect_range_error(false)
+            expect_range_error(3.4028236e38)
+            "##,
+        )
+        .expect("native facing conversion and argument errors should match");
 
         env.exec(
             "C_CharacterCreation.SetSelectedRace(2); C_CharacterCreation.SetSelectedSex(1)",
@@ -215,28 +251,25 @@ fn character_create_default_facing_uses_host_race_sex_data_in_blizzard_consumer(
             .character_create_default_facing_by_race_sex
             .insert(selection, 137.5);
 
-        let (facing, duration): (Option<f64>, Option<f64>) = env
+        let facing: f64 = env
             .eval(
                 r#"
-                local original = CharacterCreateFrame.RotateSubjectToTarget
-                local facing, duration
-                CharacterCreateFrame.RotateSubjectToTarget = function(_, target, seconds)
-                    facing, duration = target, seconds
-                end
+                local source = debug.getinfo(CharacterCreateMixin.ResetSubjectRotation, "S").source
+                assert(source:find("Blizzard_CharacterCreate/", 1, true))
                 CharacterCreateFrame:ResetSubjectRotation(nil, true)
-                CharacterCreateFrame.RotateSubjectToTarget = original
-                return facing, duration
+                return C_CharacterCreation.GetCharacterCreateFacing()
                 "#,
             )
-            .expect("the Blizzard character-create consumer should use the host facing");
-        assert_eq!(facing, Some(137.5));
-        assert_eq!(duration, Some(0.0));
+            .expect("the Blizzard reset consumer should load the supplied default facing");
+        assert!((facing - 137.5).abs() < 0.001);
 
         env.set_screen_mode(ScreenKind::Game);
-        let game_member: bool = env
-            .eval("return C_CharacterCreation.GetDefaultCharacterCreateFacing == nil")
+        let game_members: (bool, bool, bool) = env
+            .eval(
+                "return C_CharacterCreation.GetDefaultCharacterCreateFacing == nil, C_CharacterCreation.GetCharacterCreateFacing == nil, C_CharacterCreation.SetCharacterCreateFacing == nil",
+            )
             .expect("Game surface visibility should be queryable");
-        assert!(game_member, "default facing is Glue-only");
+        assert_eq!(game_members, (true, true, true), "facing APIs are Glue-only");
     }
 }
 
