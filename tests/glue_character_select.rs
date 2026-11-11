@@ -643,3 +643,40 @@ fn character_create_screen_populates_races_classes_and_customizations() {
         assert!(!forward_text.is_empty(), "forward button text should be populated");
     }
 }
+
+#[test]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn trial_boost_starting_level_is_registered_only_on_glue_screens() {
+    let env = WowLuaEnv::new().expect("Failed to create Lua environment");
+    let absent_on_game: bool = env
+        .eval(
+            "local api = rawget(_G, 'C_CharacterCreation'); return api == nil or rawget(api, 'GetTrialBoostStartingLevel') == nil",
+        )
+        .expect("Game-screen API availability should be queryable");
+    assert!(
+        absent_on_game,
+        "trial boost API must be absent on Game screens"
+    );
+
+    env.set_screen_mode(ScreenKind::CharacterCreate);
+    let available_on_glue: bool = env
+        .eval(
+            "local api = rawget(_G, 'C_CharacterCreation'); return api ~= nil and type(rawget(api, 'GetTrialBoostStartingLevel')) == 'function'",
+        )
+        .expect("Glue-screen API availability should be queryable");
+    assert!(
+        available_on_glue,
+        "trial boost API must be available on Glue screens"
+    );
+
+    env.set_screen_mode(ScreenKind::Game);
+    let absent_after_return_to_game: bool = env
+        .eval(
+            "local api = rawget(_G, 'C_CharacterCreation'); return api == nil or rawget(api, 'GetTrialBoostStartingLevel') == nil",
+        )
+        .expect("Game-screen API availability should be queryable after transition");
+    assert!(
+        absent_after_return_to_game,
+        "trial boost API must be removed when returning to Game screens"
+    );
+}
