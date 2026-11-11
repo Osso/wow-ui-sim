@@ -641,6 +641,7 @@ fn real_glue_load_first_addons_sort_before_non_load_first_addons() {
 }
 
 #[test]
+#[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
 fn login_character_addon_bootstrap_is_eligible_without_a_full_root() {
     let ui = TempBlizzardUiDir::new("login-character-bootstrap");
     ui.add_addon(

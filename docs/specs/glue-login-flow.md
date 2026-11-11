@@ -308,3 +308,10 @@ CharacterSelectListUtil.lua calls it, and R45/R49 do not register a replacement.
 Its synchronous direct-handler behavior is not newly claimed as native evidence.
 Login also skips the simulator's post-event chat activation fixture, preserving
 GlueParent's existing visibility decision instead of showing ChatFrame1 again.
+
+Remaining Retail chat visibility gap (comment 77): diagnostic reads show
+AllowChatFramesToShow comes from Shared/FloatingChatFrame.lua:40 (always true),
+replacing GlueParent.lua:909's screen-aware policy before settling. Suppressing
+the simulator chat activation fixture alone does not fix this ordering/environment
+gap. Native clarification is pending; no vendor override, forced hide, or guessed
+addon reordering is added.
