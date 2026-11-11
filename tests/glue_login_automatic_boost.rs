@@ -79,14 +79,23 @@ fn glue_automatic_boost_keeps_existing_protected_refusals_outside_and_inside_com
         env.state().borrow_mut().player.in_combat = combat;
         env.exec(
             r#"
-            for _, call in ipairs({BoostReadType, BoostReadGUID, BoostWriteType, BoostWriteGUID}) do
-                assert(select('#', call()) == 0)
+            for index, call in ipairs({BoostReadType, BoostReadGUID, BoostWriteType, BoostWriteGUID}) do
+                local count = select('#', call())
+                assert(count == 0, 'protected call ' .. index .. ' returned ' .. count .. ' values')
             end
-            assert(C_CharacterServices.GetAutomaticBoost() == 5)
-            assert(C_CharacterServices.GetAutomaticBoostCharacter() == 'Player-1-00000001')
         "#,
         )
         .unwrap();
+        // Do not query protected getters in the now-tainted caller chunk.
+        let sim = env.state();
+        let sim = sim.borrow();
+        assert_eq!(sim.character_services.automatic_boost_type, Some(5));
+        assert_eq!(
+            sim.character_services
+                .automatic_boost_character_guid
+                .as_deref(),
+            Some("Player-1-00000001")
+        );
     }
     env.exec(
         r#"
