@@ -1,6 +1,6 @@
-# Cursor model (Retail)
+# Cursor model (Retail and PTR spell projection)
 
-Retail uses one shared clear and placement model for cursor payloads (`src/lua_api/globals/real/cursor_model.rs`). Other profiles keep their earlier behavior: payloads are assigned or dropped without native modes, stored IDs or grid events, and the sites that fired an argument-less `CURSOR_CHANGED` still do.
+Retail uses one shared clear and placement model for cursor payloads (`src/lua_api/globals/real/cursor_model.rs`). PTR keeps its earlier pickup and clear behavior, with the VERIFIED (R72) five-value `GetCursorInfo()` projection for ordinary Spell and spell-valued Action cursors. Other profiles keep their earlier behavior: payloads are assigned or dropped without native modes, stored IDs or grid events, and the sites that fired an argument-less `CURSOR_CHANGED` still do.
 
 ## What it must do
 
@@ -61,7 +61,7 @@ Swapping an owned item with a bag or equipment slot places the displaced item th
   |---|---|
   | 1 Item | `"item"`, item ID, item link or nil. The cursor carries no owned modifiers, so the link is the one built from the item ID. |
   | 2 Money | `"money"`, amount |
-  | 3 Spell | `"spell"`, main-book slot or 0, `"spell"`, spell ID, nil. VERIFIED (WM46, WM56): a spell in neither book projects slot 0 and `"spell"`. |
+  | 3 Spell | `"spell"`, main-book slot or 0, `"spell"`, selected spell ID, nil. VERIFIED (WM46, WM56; PTR R72 for ordinary Spell and spell-valued Action cursors): a spell in neither book projects slot 0 and `"spell"`. |
   | 4 PetAction | `"petaction"`, the packed word's low 24 bits, then 0 and nil when the category `(word >> 24) & 63` is 1, otherwise nil and nil. VERIFIED (WM46, WM56). The word is the pet-bar slot's supplied `packed_action`, zero when unsupplied. |
   | 5 Merchant | `"merchant"`, the row index the pickup received (the stored zero-based row plus one) |
   | 6 ActionBar | `"item"`, item ID, link; zero values without item metadata |
@@ -70,6 +70,7 @@ Swapping an owned item with a bag or equipment slot places the displaced item th
   | 21 Outfit | `"outfit"`, outfit ID |
 
 - A missing record projects zero values but does not change the mode or clear the cursor. VERIFIED (WM46).
+- VERIFIED (R72): PTR ordinary Spell and spell-valued Action cursors use the five-position tuple, with selected spell ID at position 4 and an optional related ID at position 5. The simulator uses its main-book slot or 0, emits `"spell"`, and returns nil at position 5 because it has no pet-book slot ordering or related-ID data; it does not claim native parity for a non-nil related ID. `PetAction`, Retail, and Forever projections do not change.
 
 ## Original consumers
 

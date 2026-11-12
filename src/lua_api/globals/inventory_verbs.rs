@@ -22,6 +22,7 @@ use crate::c_api::container_inventory::{
     equip_cursor_item, pickup_container_item, pickup_inventory_item, split_container_item,
     use_container_item,
 };
+use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::globals::real::cursor_model;
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, call_function_state, create_string, frame_ref, table_get,
@@ -336,6 +337,11 @@ fn get_cursor_info(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn push_cursor_info(state: &mut LuaState, cursor: CursorInfo) -> LuaResult<u32> {
+    if ACTIVE == ClientProfile::Ptr
+        && let CursorInfo::Action { spell_id, .. } | CursorInfo::Spell { spell_id } = &cursor
+    {
+        return push_spell_cursor(state, *spell_id);
+    }
     if cursor_model::modeled()
         && let Some(count) = push_native_projection(state, &cursor)?
     {
@@ -407,7 +413,8 @@ fn push_native_projection(state: &mut LuaState, cursor: &CursorInfo) -> LuaResul
 }
 
 /// Mode 3: ("spell", book slot, book type, spell ID, override or nil) (WM46,
-/// WM56). The main book is searched first; a miss is slot 0 with "spell".
+/// WM56; PTR R72 for ordinary Spell and spell-valued Action cursors). The main
+/// book is searched first; a miss is slot 0 with "spell".
 /// Gaps: only a pet-book hit selects "pet", but the simulator's pet book has no
 /// slot order, so its search is a miss; overrides are identity-only, so the
 /// override is nil; companion classification is not modelled.
