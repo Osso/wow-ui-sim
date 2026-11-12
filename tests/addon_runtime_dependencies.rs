@@ -487,9 +487,14 @@ fn startup_load_with_follower_runs_after_target_addon_loaded() {
 
     tree.load_startup_addons(ScreenKind::Game);
 
-    tree.env
-        .exec("assert(table.concat(startupLoadWithOrder, ',') == 'target-file,target-event,follower-file,follower-event')")
+    let order: String = tree
+        .env
+        .eval("return table.concat(startupLoadWithOrder, ',')")
         .unwrap();
+    assert_eq!(
+        order,
+        "target-file,target-event,follower-file,follower-event"
+    );
 }
 
 #[cfg(not(feature = "client-ptr"))]
@@ -613,11 +618,14 @@ fn disabled_follower_is_refused_and_does_not_stop_later_followers() {
         ),
         "expected the disabled follower refusal in captured logs; got: {logs}"
     );
-    tree.env
-        .exec(
-            "assert(table.concat(disabledRuntimeOrder, ',') == 'target-file,target-event,later-follower-file,later-follower-event')",
-        )
+    let order: String = tree
+        .env
+        .eval("return table.concat(disabledRuntimeOrder, ',')")
         .unwrap();
+    assert_eq!(
+        order,
+        "target-file,target-event,later-follower-file,later-follower-event"
+    );
     assert!(!tree.ran("UserDisabledRuntimeFollowerRan"));
     assert!(tree.ran("UserAfterDisabledRuntimeFollowerRan"));
 }

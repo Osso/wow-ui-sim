@@ -162,10 +162,41 @@ pub fn load_startup_addon(
                 .and_then(Path::file_name)
                 .and_then(|name| name.to_str())
                 .unwrap_or(&toc.name);
+            fire_startup_addon_loaded(env, addon_name);
             crate::c_api::c_addons::load_startup_addon_followers(env, addon_name);
             Ok(result)
         }
     }
+}
+
+fn fire_startup_addon_loaded(env: &LoaderEnv<'_>, addon_name: &str) {
+    let name_value = env.with_state(|state| {
+        Ok::<_, crate::Error>(crate::lua_api::methods::create_string(state, addon_name))
+    });
+    let name_value = match name_value {
+        Ok(value) => value,
+        Err(error) => {
+            record_startup_addon_loaded_error(env, addon_name, error);
+            return;
+        }
+    };
+    let arguments =
+        crate::loader::addon_loaded_arguments(&env.state().borrow(), addon_name, name_value);
+    if let Err(error) = env.fire_event_with_args("ADDON_LOADED", &arguments) {
+        record_startup_addon_loaded_error(env, addon_name, error);
+    }
+}
+
+fn record_startup_addon_loaded_error(
+    env: &LoaderEnv<'_>,
+    addon_name: &str,
+    error: impl std::fmt::Display,
+) {
+    let message = format!("Error firing ADDON_LOADED for {addon_name}: {error}");
+    env.state()
+        .borrow_mut()
+        .mark_addon_initialization_failed(addon_name, message.clone());
+    tracing::warn!("{message}");
 }
 
 fn validate_startup_dependency_screens(
