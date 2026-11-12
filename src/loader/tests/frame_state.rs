@@ -167,6 +167,18 @@ fn test_prevention_does_not_imply_anchoring_secret() {
          assert(not S6AnchorFrame:IsAnchoringSecret(), 'anchoring must not read prevention')",
     )
     .unwrap();
+    {
+        let mut sim = env.state().borrow_mut();
+        let frame = sim.widgets.get_mut(id).unwrap();
+        frame.prevent_secret_values = false;
+        frame.is_anchoring_secret = true;
+    }
+    env.exec(
+        "assert(S6AnchorFrame:IsAnchoringSecret(), 'reads supplied anchoring state'); \
+         assert(not S6AnchorFrame:IsPreventingSecretValues()); \
+         assert(not S6AnchorFrame:HasAnySecretAspect())",
+    )
+    .unwrap();
 }
 
 #[test]

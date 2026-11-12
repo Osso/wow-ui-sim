@@ -83,7 +83,7 @@ WM citations below identify clean-room reports in `native-evidence-70688/secrets
 
 - **VERIFIED locally — WM61 S6** (`S6-aspects-wm61.md`): Text aspect is 8. The marked-argument `SetText` path supplies it to a helper that checks prevention and script-handler policy before adding it to the direct set. `HasSecretAspect` checks either of two sets; `HasAnySecretAspect` checks whether either is nonempty. Prevention and anchoring use separate flags.
 - **EMULATED — WM61 S6:** With publication enabled, a Text aspect prepares forced-secret `GetText` return policy; a separate helper marks eligible strings under that policy. **UNKNOWN — WM61 S6:** the complete setter/getter path, second-set origin, propagation and clearing on plain reset, `SetToDefaults` or `ClearAllPoints`.
-- **SOURCE — WM61 S6:** Retail `SetText` adds the Text aspect for a secret input and rejects a frame that prevents secrets. The script-handler policy is not yet modeled. The simulator still derives object aspect state from prevention/protection and uses prevention for `IsAnchoringSecret`; these differ from the distinct native calculations.
+- **SOURCE — WM61 S6:** Retail `SetText` adds the Text aspect for a secret input and rejects a frame that prevents secrets. The script-handler policy is not yet modeled. Retail/PTR now query recorded aspect bits independently of prevention/protection, and `IsAnchoringSecret` reads a separate supplied flag. No native writer or second-set propagation is invented. Other profiles retain their existing behavior. Script-handler policy remains unmodelled.
 
 ## Native evidence folded (Retail 12.1.5.70688)
 
@@ -181,7 +181,7 @@ The file-by-file pass also produced answers for units that are not secrecy surfa
 | Marked operand in untainted code | conditional on mode and additional state (VERIFIED) | untainted callers pass the VM guard | partially matches; modes unmodelled |
 | Event-dispatch taint | UNKNOWN | admin dispatch clears caller taint | unverified best guess |
 
-## Current state (SOURCE, 2026-10-31)
+## Current state (SOURCE, lane implementation 2026-11-12)
 
 | Area | Today | Gap |
 |---|---|---|
@@ -189,7 +189,7 @@ The file-by-file pass also produced answers for units that are not secrecy surfa
 | AuraData | Restricted, non-NeverSecret records mark identified fields; the outer value is plain | Full policy selection and `ConditionalSecret` contents are not established |
 | Spell-keyed lookups | ID rejection returns zero values; the name path requires a supplied alias | Complete matched-aura publication and native name-provider behavior remain UNKNOWN (WM61 S8/S8a) |
 | VM operations | Guarded truth/equality for wrapped booleans and nil, guarded ordering for numbers; violations raise with the native templates | Arithmetic, concat, `tostring`, `format` and table-key rules missing; S5's operation-check modes and additional state are unmodelled |
-| Widget sinks | `SetText`, `SetShown`, geometry, texture and cooldown on gated paths | No general argument-mode or aspect model |
+| Widget sinks | `SetText`, `SetShown`, geometry, texture and cooldown on gated paths; Retail/PTR recorded aspects and anchoring flag are independent of prevention/protection | No general argument-mode model, second recorded-set writers or native anchoring writer |
 | Event taint | `A_Admin.FireEvent` clears caller taint during dispatch (4.3.4-based comment) | Retail rule UNKNOWN; other dispatch paths unchecked |
 | Helpers | Bounded shallow checks; `canaccesstable` recursive | Several helpers missing or pass-through |
 
@@ -258,6 +258,10 @@ This table records established contradictions in the audited S2–S9 helper, aur
 - `rilua/src/{table_security.rs,stdlib/taint.rs}`: VM secret wrappers and taint.
 
 ## Tests asserting this spec
+
+- `src/loader/tests/frame_state.rs::test_secret_and_protected_methods_reflect_frame_security_state` checks independent recorded-aspect queries against prevention/protection/forbidden state on Retail/PTR and preserves other profiles. Main approved retargeting the old conflation assertions against WM61 S6.
+- `src/loader/tests/frame_state.rs::test_prevention_does_not_imply_anchoring_secret` checks prevention versus separately supplied anchoring state. These are registered-API calculation tests: no pinned Lua consumer calls these queries.
+- `tests/secret_text_aspect_consumer.rs::compact_unit_name_marks_text_aspect_for_secret_identity` runs original `CompactUnitFrame_UpdateName` on Retail/PTR as a positive Text-aspect control. The native evidence is Retail-only; PTR shares the simulator model, not a claimed native proof.
 
 - `tests/spell_casting.rs::forever_spell_cast_secrecy_uses_supplied_unit_and_control_guids_in_casting_bar` checks Forever's default, host-supplied GUID ownership, argument errors, and the original `CastingBarMixin:IsInterruptable` consumer.
 - `tests/spell_casting.rs::casting_bar_original_interruptibility_uses_cast_secrecy_predicate` checks the original consumer on Retail and PTR.

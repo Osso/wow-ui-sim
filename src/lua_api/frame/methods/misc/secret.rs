@@ -100,7 +100,16 @@ pub fn is_anchoring_restricted(state: &mut LuaState) -> LuaResult<u32> {
 
 pub fn is_anchoring_secret(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
-    let val = { frame_has_secret_values(&borrow_state(state)?.widgets, id) };
+    let val = {
+        let sim = borrow_state(state)?;
+        sim.widgets.get(id).is_some_and(|frame| {
+            if uses_recorded_secret_state() {
+                frame.is_anchoring_secret
+            } else {
+                frame.prevent_secret_values
+            }
+        })
+    };
     state.push(Val::Bool(val));
     Ok(1)
 }
@@ -176,6 +185,10 @@ fn frame_secret_aspects(widgets: &crate::widget::WidgetRegistry, id: u64) -> u32
     let Some(frame) = widgets.get(id) else {
         return 0;
     };
+    // WM61 S6: prevention/protection are not recorded secret aspects.
+    if uses_recorded_secret_state() {
+        return frame.explicit_secret_aspects;
+    }
     let derived = if frame.prevent_secret_values || frame.forbidden || frame.is_protected {
         OBJECT_SECRET_ASPECT
     } else {
@@ -184,11 +197,9 @@ fn frame_secret_aspects(widgets: &crate::widget::WidgetRegistry, id: u64) -> u32
     frame.explicit_secret_aspects | derived
 }
 
-fn frame_has_secret_values(widgets: &crate::widget::WidgetRegistry, id: u64) -> bool {
-    widgets
-        .get(id)
-        .map(|f| f.prevent_secret_values)
-        .unwrap_or(false)
+fn uses_recorded_secret_state() -> bool {
+    use crate::client_profile::{ACTIVE, ClientProfile};
+    matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr)
 }
 
 fn frame_is_anchoring_restricted(widgets: &crate::widget::WidgetRegistry, id: u64) -> bool {
