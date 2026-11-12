@@ -1,68 +1,14 @@
 use crate::common;
 
-use std::path::PathBuf;
 use wow_ui_sim::lua_api::WowLuaEnv;
-
-const ACTION_BAR_ADDONS: &[&str] = &[
-    "Blizzard_SharedXMLBase",
-    "Blizzard_Colors",
-    "Blizzard_SharedXML",
-    "Blizzard_SharedXMLGame",
-    "Blizzard_UIPanelTemplates",
-    "Blizzard_FrameXMLBase",
-    "Blizzard_LoadLocale",
-    "Blizzard_Fonts_Shared",
-    "Blizzard_HelpPlate",
-    "Blizzard_AccessibilityTemplates",
-    "Blizzard_ObjectAPI",
-    "Blizzard_UIParent",
-    "Blizzard_TextStatusBar",
-    "Blizzard_MoneyFrame",
-    "Blizzard_POIButton",
-    "Blizzard_Flyout",
-    "Blizzard_StoreUI",
-    "Blizzard_MicroMenu",
-    "Blizzard_ManagedFrameSystem",
-    "Blizzard_GameMenuEsc",
-    "Blizzard_UIParentUtil",
-    "Blizzard_EditMode",
-    "Blizzard_GarrisonBase",
-    "Blizzard_GameTooltip",
-    "Blizzard_UIParentPanelManager",
-    "Blizzard_Settings_Shared",
-    "Blizzard_SettingsDefinitions_Shared",
-    "Blizzard_SettingsDefinitions_Frame",
-    "Blizzard_FrameXMLUtil",
-    "Blizzard_ItemButton",
-    "Blizzard_QuickKeybind",
-    "Blizzard_FrameXML",
-    "Blizzard_UIPanels_Game",
-    "Blizzard_MapCanvasSecureUtil",
-    "Blizzard_MapCanvas",
-    "Blizzard_SharedMapDataProviders",
-    "Blizzard_WorldMap",
-    "Blizzard_PingUI",
-    "Blizzard_ActionBar",
-];
 
 fn seed_action_slot(env: &WowLuaEnv, slot: u32, spell_id: u32) {
     env.state().borrow_mut().action_bars.insert(slot, spell_id);
 }
 
-fn blizzard_ui_dir() -> PathBuf {
-    wow_ui_sim::client_profile::blizzard_ui_addons_dir_under(std::path::Path::new(env!(
-        "CARGO_MANIFEST_DIR"
-    )))
-}
-
 fn load_action_bar_addons(env: &WowLuaEnv) {
-    let ui = blizzard_ui_dir();
-    env.state().borrow_mut().addon_base_paths = vec![ui.clone()];
-    if !common::load_classic_game_startup_inventory(env) {
-        for addon_name in ACTION_BAR_ADDONS {
-            common::load_required_blizzard_addon(env, &ui, addon_name);
-        }
-    }
+    common::panel_fixtures::seed_addon_search_paths(env);
+    common::panel_fixtures::load_panel_addons(env);
 }
 
 fn fire_action_bar_startup(env: &WowLuaEnv) {

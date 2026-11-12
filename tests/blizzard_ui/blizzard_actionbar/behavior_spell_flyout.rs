@@ -107,9 +107,10 @@ fn assert_flyout_shown_with_seeded_spells(env: &WowLuaEnv) {
     let (is_shown, first_id, second_id, third_visible): (bool, i64, i64, bool) = env
         .eval(
             r#"
-            local first = SpellFlyoutPopupButton1
-            local second = SpellFlyoutPopupButton2
-            local third = SpellFlyoutPopupButton3
+            local buttons = SpellFlyout.buttons or {}
+            local first = buttons[1]
+            local second = buttons[2]
+            local third = buttons[3]
             return SpellFlyout:IsShown() == true,
                    first and first:IsShown() and first.spellID or -1,
                    second and second:IsShown() and second.spellID or -1,

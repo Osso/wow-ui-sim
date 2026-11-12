@@ -1,4 +1,4 @@
-//! Behavior pin: EditMode HideBarArt drives retail main-bar end caps.
+//! Behavior pin: EditMode HideBarArt drives main-bar end caps.
 
 use crate::common;
 use crate::common::blizzard_addon_harness::with_blizzard_addon_startup_shape;
@@ -66,7 +66,10 @@ fn assert_endcaps_hidden(env: &WowLuaEnv) {
 
 fn assert_alliance_endcap_atlases(env: &WowLuaEnv) {
     let (left_atlas, right_atlas): (String, String) = env
-        .eval("return MainActionBar.EndCaps.LeftEndCap:GetAtlas(), MainActionBar.EndCaps.RightEndCap:GetAtlas()")
+        .eval(
+            "return MainActionBar.EndCaps.LeftEndCap.Texture:GetAtlas(), \
+             MainActionBar.EndCaps.RightEndCap.Texture:GetAtlas()",
+        )
         .expect("endcap atlas probe must run cleanly");
     assert_eq!(left_atlas, "ui-hud-actionbar-gryphon-left");
     assert_eq!(right_atlas, "ui-hud-actionbar-gryphon-right");

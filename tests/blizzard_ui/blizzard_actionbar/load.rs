@@ -60,6 +60,7 @@ const CURRENT_DECLARED_DEPS: &[&str] = match wow_ui_sim::client_profile::ACTIVE 
         "Blizzard_MicroMenu",
         "Blizzard_PingUI",
         "Blizzard_GameMenuEsc",
+        "Blizzard_SpellTypeIconOverlay",
     ],
     wow_ui_sim::client_profile::ClientProfile::Mists
     | wow_ui_sim::client_profile::ClientProfile::Era
