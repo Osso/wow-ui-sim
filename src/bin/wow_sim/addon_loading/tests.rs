@@ -82,6 +82,17 @@ fn addon_load_failures_remain_diagnostic_without_persistence() {
         let mut stats = LoadStats::default();
         load_discovered_addons(&env, &addons, &mut None, None, &mut stats);
 
+        if name == "BrokenEvent" {
+            let state = env.state().borrow();
+            assert!(
+                state.lua_error_records.iter().any(|record| {
+                    record.addon_name.as_deref() == Some(name)
+                        && record.message.contains(expected_error)
+                }),
+                "event failure must retain its handler owner: {:?}",
+                state.lua_error_records
+            );
+        }
         assert!(stats.fail_count > 0 || stats.total_warnings > 0, "{name}");
         let diagnostics = format!("{:?}", env.state().borrow().lua_errors);
         if !diagnostics.contains(expected_error) {
@@ -604,6 +615,18 @@ fn load_summary_counts_file_event_and_nested_lua_failures_once_per_addon() {
     assert!(recorded.contains("EventBroken"), "{recorded:?}");
     assert!(recorded.contains("NestedChild"), "{recorded:?}");
     assert!(recorded.contains("MissingDependency"), "{recorded:?}");
+    let event_errors: Vec<_> = state
+        .lua_error_records
+        .iter()
+        .filter(|record| record.message.contains("event failure"))
+        .collect();
+    assert_eq!(event_errors.len(), 2, "{event_errors:?}");
+    assert!(
+        event_errors
+            .iter()
+            .all(|record| record.addon_name.as_deref() == Some("EventBroken")),
+        "callbacks during another addon's load must retain their own owner: {event_errors:?}"
+    );
     for name in [
         "Healthy",
         "FileBroken",
