@@ -524,27 +524,18 @@ fn test_set_spell_by_id_colors_cooldown_line() {
 }
 
 #[test]
-fn test_get_action_adds_colored_binding_line() {
+fn test_get_action_omits_unsupported_binding_line() {
     let env = WowLuaEnv::new().unwrap();
-    let (binding_text, r, g, b): (String, f32, f32, f32) = env
-        .eval(
-            r#"
-            local info = C_TooltipInfo.GetAction(5)
-            for _, line in ipairs(info.lines) do
-                if line.leftText and string.find(line.leftText, "Key bound") then
-                    return line.leftText, line.leftColor:GetRGB()
-                end
-            end
-            return "", 0, 0, 0
-            "#,
-        )
-        .unwrap();
-    let instruction: (f32, f32, f32) = env
-        .eval("local r,g,b = GREEN_FONT_COLOR:GetRGB(); return r,g,b")
-        .unwrap();
-
-    assert_eq!(binding_text, "Key bound: 5");
-    assert_color_close((r, g, b), instruction, "action binding line");
+    env.state().borrow_mut().action_bars.insert(5, 19750);
+    // R81 Q3: fixed slot-to-key mapping has no native evidence; no replacement seam.
+    env.exec(
+        r#"
+        for _, line in ipairs(C_TooltipInfo.GetAction(5).lines) do
+            assert(not line.leftText:find('Key bound') and line.leftText ~= 'Not bound')
+        end
+    "#,
+    )
+    .unwrap();
 }
 
 #[test]
