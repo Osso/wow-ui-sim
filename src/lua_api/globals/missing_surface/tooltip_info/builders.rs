@@ -511,11 +511,12 @@ pub(super) fn populate_item_tooltip_lines(
     let mut next_index = 3;
     push_item_equip_slot_line(state, lines, item.inventory_type, &mut next_index);
     push_item_binding_line(state, lines, &mut next_index, item);
-    let input = borrow_state(state)
-        .expect("item tooltip requires simulator state")
-        .item_tooltip_inputs
-        .get(&(item_id, item.item_level))
-        .cloned();
+    // A standalone Lua state has no host input provider: publish headers only.
+    let input = borrow_state(state).ok().and_then(|sim| {
+        sim.item_tooltip_inputs
+            .get(&(item_id, item.item_level))
+            .cloned()
+    });
     if let Some(input) = input {
         publish_item_metadata(state, tooltip, &input);
         push_item_stat_lines(state, lines, &input.stats, &mut next_index);
