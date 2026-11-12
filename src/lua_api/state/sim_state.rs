@@ -959,6 +959,10 @@ pub struct SimState {
     pub mythic_plus: MythicPlusState,
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     pub character_creation: crate::c_api::c_character_creation_submit::CharacterCreationState,
+    /// None preserves the temporary collector; Some publishes host records (R79).
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub character_customizations:
+        Option<Vec<crate::c_api::c_character_creation_customizations::Category>>,
     /// Byte copied from Forever's Glue feature-status update.
     pub name_reservation_feature_status: u8,
     /// Current character-create model facing in normalized radians.

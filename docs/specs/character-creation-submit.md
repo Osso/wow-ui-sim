@@ -125,3 +125,57 @@ registration remains UNKNOWN and is not added.
 
 #222 also offers an optional INFERRED name-validation bridge. This slice chooses
 to leave IsCharacterNameValid unchanged, avoiding unrelated inferred behavior.
+
+## R79 host-seeded customization publisher (#275, #281)
+
+This separate slice implements only publication for Retail and Forever. The
+collector, selection, DB2 joins, requirement filters, eligibility/lock rules and
+native source ordering remain **UNKNOWN**. No DB2 collector or sorting is added.
+
+`SimState.character_customizations` is an optional host-owned input. `None`
+leaves the existing temporary provider entirely unchanged; `Some(records)` uses
+the publisher, including `Some([])` returning an empty table. The existing
+SaveSeenChoices wrapper captures this provider and retains its existing semantics.
+The exact optional-tests Create-button RED is unchanged. Removing the unseeded
+temporary collector must wait for collector evidence.
+
+VERIFIED publication contract (#275):
+
+- Categories: `id`, `orderIndex`, `name`, `icon`, `selectedIcon`, `undressModel`,
+  `subcategory`, `cameraZoomLevel`, `cameraDistanceOffset`, `spellShapeshiftFormID`,
+  `chrModelID`, `options`, `hasNewChoices`, `needsNativeFormCategory`.
+- Options: `id`, `name`, `orderIndex`, `optionType`, `choices`,
+  `currentChoiceIndex`, `hasNewChoices`, `isSound`.
+- Choices: `id`, `name`, `ineligibleChoice`, `isNew`, `swatchColor1`,
+  `swatchColor2`, `soundKit`, `isLocked`, `lockedText`.
+- Fields are published in these sequences. The publisher's literal field lists
+  and loops are the insertion-order proof; tests do not assert Lua hash iteration
+  order. Nested prepared lists are traversed without sorting by `orderIndex`.
+- Icon ID zero publishes nil; a nonzero unresolved ID publishes an empty string.
+  Resolved bytes come from the host, not an invented asset resolver.
+- `cameraZoomLevel` publishes an integer host input; `cameraDistanceOffset`
+  publishes an unscaled floating-point host input. No source truncation, native
+  integer width, or implicit scaling is inferred.
+- One table is returned, including for explicitly seeded empty input. #275
+  separately labels the final native return bridge UNKNOWN.
+
+All other field conversions and nil/omission rules remain **UNKNOWN**. Per #281,
+these fields accept already-published owned host values: nil, numeric, boolean,
+text, nested objects or arrays. The publisher does not coerce them, infer swatch
+shape, or translate a source index for `currentChoiceIndex`. Host fixtures use
+already-one-based values where appropriate. Nil fields are absent under ordinary
+Lua table semantics. Unknown input field names are not added to the native field
+set. Host values retain no VM references, and every table is rooted while nested
+values allocate.
+
+Tests: `tests/character_creation_publisher.rs` covers field sets, host-value
+passthrough, reversed orderIndex list preservation, icon cases, zoom/distance,
+seeded-empty versus unseeded behavior, and existing SaveSeenChoices semantics.
+Arbitrary host-value shapes in tests are seam fixtures, not native type claims.
+
+R79 delta #285 (Retail 12.1.5.70688, VERIFIED) applies a return policy to
+finished options/choices tables, never to selection or filtering. Disabled
+policy returns one result; nil/userdata and tables at policy value 1 are never
+marked. Other marking depends on unmodeled frame-policy checks. Per #285 this
+slice continues returning one plain table and adds no secret/marking behavior;
+field order and unsorted record traversal are unchanged.
