@@ -146,6 +146,7 @@ macro_rules! build_empty_sim_state {
             party_ai_guids: HashSet::new(),
             #[cfg(feature = "retail-12-0-5")]
             item_tooltip_levels: ::std::collections::HashMap::new(),
+            item_tooltip_inputs: ::std::collections::HashMap::new(),
             blocked_auras_by_unit: $collections.blocked_auras_by_unit,
             #[cfg(feature = "client-wowforever")]
             auras_secret_in_context: false,

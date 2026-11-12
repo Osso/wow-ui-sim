@@ -8,6 +8,8 @@ The Lua API layer bridges Lua addon code with the Rust simulation engine. It pro
 
 The [PvP talent tooltip contract](../../specs/tooltip-pvp-talent.md) owns the `GetPvpTalent` catalog inputs and native UNKNOWNs. **VERIFIED:** the [generated catalog provenance](../../../data/pvp-talents/retail-12.1.5.70783/provenance.json) records installed Retail build 12.1.5.70783; this does not establish parity with the selected 12.1.5.70575 runtime pin. VERIFIED: R73 annotation tests drive the original slot hover for level-lock/selection and original list-template hover for unselected candidates; the panel harness opens the list but does not realize virtualized rows. Slot records take documented fields and supplied values; selected IDs share the active group. Permission and opaque eligibility/grant outcomes remain host-supplied; absent inputs preserve neutral output. UNKNOWN: progression, talent/GUID restriction, indirect Flags reads, final player-state helper and inspect internals remain unmodelled.
 
+The [R80 item tooltip contract](../../specs/tooltip-item-r80.md) separates VERIFIED native helper evidence from the UNKNOWN ordinary item-mod amount producer. Item builders omit unsupplied stats and use ordered final amounts from `SimState.item_tooltip_inputs`, keyed by item ID and resolved level. Optional identity/status fields remain top-level. The old level/slot/class estimate is removed; native line ordering and retained stat type/color are not claimed as verified.
+
 [Bag-child tooltips](../../specs/tooltip-bag-child.md) compose bag state with
 source-derived child-equipment rows and the existing item builder on
 Retail/PTR/Forever. The item generator includes child IDs automatically; absent

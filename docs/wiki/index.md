@@ -6,6 +6,10 @@
 
 [Tooltip data](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) links the [R73 contract](../specs/tooltip-pvp-talent.md). VERIFIED: eight exact tests pass, including seven original-hover outcomes and supplied slot/group fields. Combat precedes grant and later unlock, and supplied rest permission replaces the unproved XP-state mapping. UNKNOWN: opaque native predicates and inspect internals remain unmodelled.
 
+## [2026-11-12] correction | R80 ordinary item tooltip stats
+
+The [item tooltip contract](../specs/tooltip-item-r80.md) records the VERIFIED admitted native stat helper without wiring it to the UNKNOWN ordinary item-mod producer. Shared item builders now omit unsupplied stats and accept final host amounts and optional top-level metadata. Retail 639 tooltip-related integration cases and all 2263 lib cases pass in bounded partitions, including unchanged standalone-Lua and serializer regressions. PTR/Forever exact proofs are recorded separately in the lane report.
+
 > Proof receipts live untracked under `~/.local/state/wow-ui-sim`. The `data/patch-api/evidence` and `data/test-perf/evidence` trees were removed on 2026-11-08; historical links below are records, not live paths. Recover a file with `git show c011c1d95:<path>`.
 
 ## [2026-11-12] fix | Unit-test Blizzard UI cache isolation
