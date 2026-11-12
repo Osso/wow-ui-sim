@@ -591,11 +591,12 @@ fn ptr_pickup_spell_reports_native_cursor_tuple() {
     let env = env();
     env.exec("C_Spell.PickupSpell(853)").unwrap();
 
-    let (arity, kind, book_slot, book_type, spell_id, related_id_valid): (
+    let (arity, kind, book_slot, book_type, spell_id, expected_slot, related_id_nil): (
         f64,
         String,
         f64,
         String,
+        f64,
         f64,
         bool,
     ) = env
@@ -607,7 +608,8 @@ fn ptr_pickup_spell_reports_native_cursor_tuple() {
             local cursor = pack(GetCursorInfo())
             return cursor.n, tostring(cursor[1]), cursor[2] or -1,
                 tostring(cursor[3]), cursor[4] or -1,
-                cursor[5] == nil or type(cursor[5]) == "number"
+                C_SpellBook.FindSpellBookSlotForSpell(853) or 0,
+                cursor[5] == nil
             "#,
         )
         .unwrap();
@@ -615,7 +617,8 @@ fn ptr_pickup_spell_reports_native_cursor_tuple() {
     assert_eq!(arity, 5.0);
     assert_eq!(kind, "spell");
     assert!(book_slot >= 0.0 && book_slot.fract() == 0.0);
+    assert_eq!(book_slot, expected_slot);
     assert!(matches!(book_type.as_str(), "spell" | "pet"));
     assert_eq!(spell_id, 853.0);
-    assert!(related_id_valid);
+    assert!(related_id_nil, "simulator has no related spell ID");
 }
