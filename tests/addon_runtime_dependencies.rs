@@ -454,6 +454,45 @@ fn load_managers_run_before_their_startup_owner_files() {
         .unwrap();
 }
 
+// INFERRED simulator policy; this does not establish PTR native live-list membership.
+#[cfg(feature = "client-ptr")]
+#[test]
+fn ptr_character_create_dependencies_load_before_its_files() {
+    let tree = AddonTree::new(ScreenKind::Login);
+    tree.env.exec("ptrCharacterCreateOrder = {}").unwrap();
+    tree.add(
+        "Blizzard_CharacterCreate",
+        "## AllowLoad: Glue\n## Dep: Blizzard_CharacterCustomize\n## Dep: Blizzard_GlueXML",
+        "table.insert(ptrCharacterCreateOrder, 'character-create')",
+    );
+    tree.add(
+        "Blizzard_CharacterCustomize",
+        "## AllowLoad: Both\n## LoadOnDemand: 1\n## Dep: Blizzard_CustomizationUI",
+        "table.insert(ptrCharacterCreateOrder, 'character-customize')",
+    );
+    tree.add(
+        "Blizzard_CustomizationUI",
+        "## AllowLoad: Both\n## LoadOnDemand: 1",
+        "table.insert(ptrCharacterCreateOrder, 'customization-ui')",
+    );
+    tree.add(
+        "Blizzard_GlueXML",
+        "## AllowLoad: Glue",
+        "table.insert(ptrCharacterCreateOrder, 'glue-xml')",
+    );
+
+    tree.load_startup_addons(ScreenKind::Login);
+
+    let order: String = tree
+        .env
+        .eval("return table.concat(ptrCharacterCreateOrder, ',')")
+        .unwrap();
+    assert_eq!(
+        order,
+        "customization-ui,character-customize,glue-xml,character-create"
+    );
+}
+
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[test]
 fn startup_load_with_follower_runs_after_target_addon_loaded() {

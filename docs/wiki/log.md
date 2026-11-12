@@ -1,6 +1,6 @@
 ## [2026-11-12] correction | Addon loading phases and LoadWith followers
 
-Updated [[addon-loading]] and the [phase contract](../specs/addon-load-phases.md) with R64's startup phases, `LoadManagers`, optional-before-required ordering, and R64b/c follower semantics. Retail and Forever resolve followers without enable-state filtering and submit them through the generic loader; target `ADDON_LOADED` precedes follower requests, and one follower failure does not stop later submissions or change target success. Retail refusal order and reason codes are recorded in the contract. PTR's follower-vector behavior remains UNKNOWN and its prior simulator path remains unchanged; phase-three early loading and disabled native vector membership remain INFERRED.
+Updated [[addon-loading]] and the [phase contract](../specs/addon-load-phases.md) with R64 phases and R64b/c follower behavior, plus R70 PTR phase/mask evidence. Retail and Forever resolve followers without enable-state filtering and submit them through the generic loader; target `ADDON_LOADED` precedes follower requests, and one follower failure does not stop later submissions or change target success. PTR follower-vector behavior remains UNKNOWN and its follower path stays unchanged. The simulator models cached PTR `CharacterCreate` as an INFERRED phase-two Glue root, loads its required chain before its files, and makes no relative-order claim against PTRFeedbackGlue.
 
 ## [2026-11-12] validation | PR54 second review corrections
 

@@ -860,9 +860,16 @@ fn discover_blizzard_addon_toc_pools_for_screen(
 }
 
 fn excluded_addons_for_screen(screen: ScreenKind) -> &'static [&'static str] {
-    match screen {
-        ScreenKind::Game | ScreenKind::CharacterSelect | ScreenKind::CharacterCreate => &[],
-        ScreenKind::Login => &[
+    use crate::client_profile::ClientProfile;
+
+    match (crate::client_profile::ACTIVE, screen) {
+        // INFERRED (R70): cached PTR TOCs model CharacterCreate as a phase-two Glue root.
+        (ClientProfile::Ptr, ScreenKind::Login) => &[
+            "Blizzard_CharacterCustomize",
+            "Blizzard_TimerunningCharacterCreate",
+        ],
+        (_, ScreenKind::Game | ScreenKind::CharacterSelect | ScreenKind::CharacterCreate) => &[],
+        (_, ScreenKind::Login) => &[
             "Blizzard_CharacterCreate",
             "Blizzard_CharacterCustomize",
             "Blizzard_TimerunningCharacterCreate",

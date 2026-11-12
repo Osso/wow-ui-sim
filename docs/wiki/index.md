@@ -2,7 +2,7 @@
 
 ## [2026-11-12] correction | Addon loading phases and LoadWith followers
 
-[Addon loading](systems/addon-loading.md#blizzard-addon-load-order) records R64 startup phases, `LoadManagers`, optional-before-required ordering, R64b/c follower resolution and refusal behavior, target-event ordering, and failure continuation. The simulator uses the verified Retail/Forever follower path without filtering enable state; PTR remains unchanged because native vector membership is UNKNOWN. Public AddOn enumeration remains unchanged; disabled-follower membership and phase-three early loading remain INFERRED.
+[Addon loading](systems/addon-loading.md#blizzard-addon-load-order) records R64 startup phases, `LoadManagers`, optional-before-required ordering, R64b/c follower behavior, and R70 PTR phase/mask evidence. Retail/Forever use the verified follower path; PTR follower behavior stays unchanged because native vector membership is UNKNOWN. The simulator models PTR `CharacterCreate` as an INFERRED phase-two Glue root and loads its required chain before its files, without ordering it against PTRFeedbackGlue.
 
 ## [2026-11-11] implementation | Glue login submission
 

@@ -9,6 +9,8 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 - [x] Phase one must select addons with `LoadFirst` or `UseSecureEnvironment`.
 - [x] Phase two must select the remaining non-insecure packaged UI addons, and its top-level traversal must begin only after phase one returns.
 - [x] Phase membership must not come from addon names or a synthetic foundational-addon list.
+- [ ] VERIFIED (PTR 12.1.7.70668): native startup performs three passes and checks phase flags separately from the active Glue/Game load mask.
+- [ ] INFERRED simulator policy (PTR cached TOCs; native live-list membership UNKNOWN): model `Blizzard_CharacterCreate` as a phase-two Glue startup root and load its required LoadOnDemand dependency chain before its files. Do not assert its order relative to `Blizzard_PTRFeedbackGlue`.
 
 ### Startup prerequisites
 
@@ -57,7 +59,8 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 
 ## Known gaps (current cycle)
 
-- [ ] UNKNOWN: PTR 12.1.7.70668 does not establish whether `LoadWith` populates the follower vector. The simulator keeps its pre-R64c PTR path unchanged until R70; no PTR `LoadWith` assertions are enabled.
+- [ ] UNKNOWN: PTR 12.1.7.70668 does not establish whether `LoadWith` populates the follower vector. The simulator keeps its prior PTR `LoadWith` path; no PTR follower assertions are enabled.
+- [ ] UNKNOWN: PTR phase and demand fields are not mapped to cached TOC directives, and native live-list membership and sort direction are not established.
 - [ ] UNKNOWN: Native `LoadWith` behavior on Mists, Era, Anniversary, and Wrath. The simulator keeps their previous dispatch path.
 - [ ] INFERRED: a registered phase-three user addon may load early during an earlier target's follower loop. The resolver has no phase filter; tests do not assert this inference.
 - [ ] INFERRED: a disabled addon that remains registered can enter the native follower vector and then receive `DISABLED` from the generic loader. Tests verify the simulator refusal, not native vector membership.
