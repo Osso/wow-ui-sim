@@ -179,7 +179,13 @@ fn action_button_drag_round_trip_keeps_spell_visible() {
             has_receive_drag,
             "action button should have an OnReceiveDrag handler"
         );
-
+        let icon_texture_before: String = env
+            .eval("return tostring(ActionButton1.icon:GetTexture())")
+            .unwrap();
+        // The simulator returns a manifest path where native returns a file ID; compare the round trip without pinning either form.
+        let action_texture_before: String = env
+            .eval("return tostring(GetActionTexture(1))")
+            .unwrap();
         env.fire_script_handler(button_id, "OnDragStart", vec![])
             .unwrap();
         env.fire_script_handler(button_id, "OnReceiveDrag", vec![])
@@ -191,16 +197,10 @@ fn action_button_drag_round_trip_keeps_spell_visible() {
                  tostring(GetActionTexture(1)), ActionButton1.icon:IsShown(), HasAction(1)",
             )
             .unwrap();
-        assert_eq!(
-            (
-                texture.as_str(),
-                action_texture.as_str(),
-                icon_shown,
-                has_action
-            ),
-            ("135963", "135963", true, true),
-            "dragging off and back onto the same button should preserve the spell texture and action"
-        );
+        assert_eq!(texture, icon_texture_before);
+        assert_eq!(action_texture, action_texture_before);
+        assert!(icon_shown, "the spell icon should remain visible after drag");
+        assert!(has_action, "the action should remain assigned after drag");
     });
 }
 
