@@ -14,4 +14,16 @@ pub struct CurrencyTooltipInputs {
     pub field_16_transfer_percentage: Option<f64>,
     /// Whether a local player-currency record was supplied.
     pub local_currency_record: Option<bool>,
+    /// Ordered host-supplied CurrencyContainer text rows for this currency.
+    pub text_ranges: Vec<CurrencyTooltipTextRange>,
+}
+
+/// One CurrencyContainer row selected by signed quantity.
+#[derive(Debug, Clone)]
+pub struct CurrencyTooltipTextRange {
+    pub min_quantity: i32,
+    /// Zero means that the range has no upper bound.
+    pub max_quantity: i32,
+    pub name: String,
+    pub description: String,
 }

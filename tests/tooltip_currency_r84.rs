@@ -8,7 +8,7 @@
 #[path = "tooltip_full_env_helpers.rs"]
 mod tooltip_full_env_helpers;
 
-use wow_ui_sim::c_api::c_tooltip_info_currency::CurrencyTooltipInputs;
+use wow_ui_sim::c_api::c_tooltip_info_currency::{CurrencyTooltipInputs, CurrencyTooltipTextRange};
 use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
 use wow_ui_sim::lua_api::WowLuaEnv;
 
@@ -79,10 +79,17 @@ fn set_hyperlink_resolves_currency_links() {
     let Some(env) = retail_env() else {
         return;
     };
-    seed_currency_tooltip_inputs(&env, xp_inputs(false));
+    let mut inputs = xp_inputs(false);
+    inputs.text_ranges.push(CurrencyTooltipTextRange {
+        min_quantity: 99,
+        max_quantity: 0,
+        name: "Link range title".to_owned(),
+        description: "Link range description".to_owned(),
+    });
+    seed_currency_tooltip_inputs(&env, inputs);
     env.exec(
         r#"
-        GameTooltip:SetHyperlink('currency:2245')
+        GameTooltip:SetHyperlink('currency:2245:99')
         local info = GameTooltip:GetPrimaryTooltipInfo()
         local data = GameTooltip:GetPrimaryTooltipData()
         assert(info and info.getterName == 'GetHyperlink', 'SetHyperlink must select GetHyperlink')
@@ -90,9 +97,10 @@ fn set_hyperlink_resolves_currency_links() {
         assert(data and data.id == 2245, 'currency hyperlink id')
         assert(data and data.dataInstanceID ~= nil, 'currency hyperlink data instance id')
         assert(data and data.quantity == nil, 'R84 §Q4: no top-level quantity')
-        assert(data.lines[1] and data.lines[1].leftText, 'currency hyperlink title')
+        assert(data.lines[1].leftText == 'Link range title', 'currency hyperlink must use its optional amount')
+        assert(data.lines[2].leftText == 'Link range description' and data.lines[2].wrapText, 'currency description row')
         assert(#data.lines == 3, 'currency hyperlink XP row')
-        assert(data.lines[3].leftText == XP .. ': 0', 'currency hyperlink without amount must pass zero')
+        assert(data.lines[3].leftText == XP .. ': 99', 'currency hyperlink must not divide its optional amount')
         "#,
     )
     .unwrap();
@@ -126,6 +134,77 @@ fn set_quest_log_currency_uses_selected_quest_and_normalizes_supplied_amount() {
         assert(data.lines[3].type == 14, 'quest currency XP row type')
         assert(data.lines[3].leftText == XP .. ': 123', 'quest currency hundredths must divide with signed truncation')
         assert(data.quantity == nil, 'R84 §Q4: no top-level quantity')
+        "#,
+    )
+    .unwrap();
+    {
+        let mut state = env.state().borrow_mut();
+        state
+            .quest_currency_tooltip_results
+            .insert((quest_id, "reward".to_owned(), 1), (2245, -12_345));
+    }
+    env.exec(
+        r#"
+        GameTooltip:SetQuestLogCurrency('reward', 1)
+        local data = GameTooltip:GetPrimaryTooltipData()
+        assert(data.lines[3].leftText == XP .. ': -123', 'signed division must truncate toward zero')
+        "#,
+    )
+    .unwrap();
+    {
+        let mut state = env.state().borrow_mut();
+        state
+            .currency_tooltip_inputs
+            .get_mut(&2245)
+            .unwrap()
+            .flags_0 = Some(0);
+        state
+            .quest_currency_tooltip_results
+            .insert((quest_id, "reward".to_owned(), 1), (2245, 12_345));
+    }
+    env.exec(
+        r#"
+        GameTooltip:SetQuestLogCurrency('reward', 1)
+        local data = GameTooltip:GetPrimaryTooltipData()
+        assert(data.lines[3].leftText == XP .. ': 12345', 'quest amount must stay unchanged when bit 3 is clear')
+        "#,
+    )
+    .unwrap();
+}
+
+#[test]
+fn currency_by_id_selects_the_first_matching_text_range() {
+    let Some(env) = retail_env() else {
+        return;
+    };
+    let mut inputs = CurrencyTooltipInputs::default();
+    inputs.text_ranges = vec![
+        CurrencyTooltipTextRange {
+            min_quantity: 99,
+            max_quantity: 100,
+            name: "First matching title".to_owned(),
+            description: "First matching description".to_owned(),
+        },
+        CurrencyTooltipTextRange {
+            min_quantity: 100,
+            max_quantity: 0,
+            name: "Unbounded title".to_owned(),
+            description: "Unbounded description".to_owned(),
+        },
+    ];
+    seed_currency_tooltip_inputs(&env, inputs);
+    env.exec(
+        r#"
+        GameTooltip:SetCurrencyByID(2245, 99)
+        local data = GameTooltip:GetPrimaryTooltipData()
+        assert(data.lines[1].leftText == 'First matching title', 'lower bound must be inclusive')
+        assert(data.lines[2].leftText == 'First matching description' and data.lines[2].wrapText, 'range description')
+        GameTooltip:SetCurrencyByID(2245, 100)
+        data = GameTooltip:GetPrimaryTooltipData()
+        assert(data.lines[1].leftText == 'First matching title', 'upper bound must be inclusive and first row wins')
+        GameTooltip:SetCurrencyByID(2245, 101)
+        data = GameTooltip:GetPrimaryTooltipData()
+        assert(data.lines[1].leftText == 'Unbounded title', 'zero upper bound must be unbounded')
         "#,
     )
     .unwrap();
