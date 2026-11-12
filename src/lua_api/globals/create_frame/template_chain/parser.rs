@@ -274,7 +274,10 @@ fn parse_assignment_family<'a>(stmt: &'a str) -> Option<FastHandlerRef<'a>> {
         .or_else(|| parse_inline_parent_assignment(stmt))
 }
 
-fn parse_inline_sequence(handler_name: &'static str, stmt: &str) -> Option<FastHandlerRef<'_>> {
+fn parse_inline_sequence<'a>(
+    handler_name: &'static str,
+    stmt: &'a str,
+) -> Option<FastHandlerRef<'a>> {
     let parse = |part| {
         parse_parameter_prefix_method(handler_name, part)
             .or_else(|| parse_inline_single_fast_handler(part))
