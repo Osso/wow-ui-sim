@@ -182,7 +182,7 @@ fn action_button_drag_round_trip_keeps_spell_visible() {
         let icon_texture_before: String = env
             .eval("return tostring(ActionButton1.icon:GetTexture())")
             .unwrap();
-        // The simulator returns a manifest path where native returns a file ID; compare the round trip without pinning either form.
+        // Known texture-representation gap: the sim returns a manifest path where native GetActionTexture returns a file ID; compare the round trip without pinning either form.
         let action_texture_before: String =
             env.eval("return tostring(GetActionTexture(1))").unwrap();
         env.fire_script_handler(button_id, "OnDragStart", vec![])

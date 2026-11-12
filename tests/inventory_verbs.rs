@@ -589,7 +589,11 @@ fn get_cursor_info_reports_money_cursor() {
 #[test]
 fn ptr_spell_and_action_pickups_report_native_cursor_tuple() {
     let env = env();
-    env.state().borrow_mut().action_bars.insert(1, 853);
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.action_bars.insert(1, 853);
+        sim.cursor_item = Some(CursorInfo::Spell { spell_id: 12345 });
+    }
     env.exec(
         r#"
         local function assert_spell_cursor(expectedSpellID, expectedBookSlot)
@@ -603,7 +607,6 @@ fn ptr_spell_and_action_pickups_report_native_cursor_tuple() {
             assert(relatedID == nil)
         end
 
-        C_Spell.PickupSpell(12345)
         assert_spell_cursor(12345, 0)
         ClearCursor()
 
