@@ -2,6 +2,22 @@
 use wow_ui_sim::c_api::spell_tooltip::SpellTooltipInput;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+#[path = "tooltip_full_env_helpers.rs"]
+mod tooltip_full_env_helpers;
+
+fn consumer_env() -> WowLuaEnv {
+    let env = tooltip_full_env_helpers::setup_full_env();
+    env.exec(
+        r#"
+        assert(debug.getinfo(GameTooltip.SetSpellByID).what == 'Lua', 'original Blizzard accessor')
+        assert(GameTooltip.GetProcessingTooltipInfo ~= nil, 'original TooltipDataHandler')
+        GameTooltip:SetOwner(UIParent, 'ANCHOR_NONE')
+    "#,
+    )
+    .unwrap();
+    env
+}
+
 fn seed(env: &WowLuaEnv, id: u32, input: SpellTooltipInput) {
     env.state()
         .borrow_mut()
@@ -11,7 +27,7 @@ fn seed(env: &WowLuaEnv, id: u32, input: SpellTooltipInput) {
 
 #[test]
 fn r81_spell_override_and_hyperlink_keep_distinct_identity_and_cost_range() {
-    let env = WowLuaEnv::new().unwrap();
+    let env = consumer_env();
     seed(
         &env,
         19750,
@@ -50,7 +66,7 @@ fn r81_spell_override_and_hyperlink_keep_distinct_identity_and_cost_range() {
 
 #[test]
 fn r81_spell_details_follow_verified_order_and_side_publication() {
-    let env = WowLuaEnv::new().unwrap();
+    let env = consumer_env();
     seed(
         &env,
         19750,
@@ -107,7 +123,7 @@ fn r81_spell_details_follow_verified_order_and_side_publication() {
 
 #[test]
 fn r81_spell_cast_uses_localized_threshold_and_explicit_alternate() {
-    let env = WowLuaEnv::new().unwrap();
+    let env = consumer_env();
     // R81 Q2 cast-time bullet: SEC below 60000; MIN at/above. Not a live cast formula.
     for (ms, token, value) in [
         (59999, "SPELL_CAST_TIME_SEC", 59.999),
@@ -152,7 +168,7 @@ fn r81_spell_cast_uses_localized_threshold_and_explicit_alternate() {
 
 #[test]
 fn r81_spell_range_and_cast_skip_masks() {
-    let env = WowLuaEnv::new().unwrap();
+    let env = consumer_env();
     // R81 Q3 range/cast skip bullets, supplied as native attribute groups, not inferred DB2 mappings.
     for (mode, a0, a3, a13, effect, header, range, cast) in [
         (0, 0, 0, 0, 0, false, true, true),
@@ -198,7 +214,7 @@ fn r81_spell_range_and_cast_skip_masks() {
 
 #[test]
 fn r81_spell_unknown_outputs_are_omitted_and_action_has_no_guessed_key() {
-    let env = WowLuaEnv::new().unwrap();
+    let env = consumer_env();
     // R81 Q3 cooldown/charge predicates UNKNOWN; no native support for fixed binding mapping.
     env.state().borrow_mut().action_bars.insert(5, 642);
     env.exec(
