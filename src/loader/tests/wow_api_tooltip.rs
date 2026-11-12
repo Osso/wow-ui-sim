@@ -649,6 +649,13 @@ fn test_c_tooltip_info_get_unit_aura_instance_getters_return_expected_tooltips()
 #[test]
 fn test_c_tooltip_info_get_unit_aura_returns_helpful_and_harmful_tooltips() {
     let env = WowLuaEnv::new().unwrap();
+    // R81 Q4: preserve aura positions with already-formatted host text.
+    env.state()
+        .borrow_mut()
+        .aura_tooltip_inputs
+        .entry(1)
+        .or_default()
+        .remaining_text = Some("1 hr".into());
     seed_c_tooltip_info_test_state(&env);
 
     let has_expected_tooltips: bool = env
