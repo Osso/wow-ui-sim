@@ -39,15 +39,6 @@ const UNIFIED_PTR_FEEDBACK_GLUE_TOC_FILES: &[&str] = &[
     "Blizzard_PTRFeedback_Events_Glue.lua",
 ];
 
-const UNIFIED_PTR_FEEDBACK_GLUE_TOC_FILES: &[&str] = &[
-    "../Blizzard_PTRFeedback/Blizzard_PTRFeedback.lua",
-    "../Blizzard_PTRFeedback/Blizzard_PTRFeedback_Frames.lua",
-    "../Blizzard_PTRFeedback/Blizzard_PTRFeedback_Gamepad.lua",
-    "../Blizzard_PTRFeedback/Blizzard_Reports.lua",
-    "Blizzard_Reports_Glue.lua",
-    "Blizzard_PTRFeedback_Events_Glue.lua",
-];
-
 const SAVED_VARIABLES: &[&str] = &["Blizzard_PTRIssueReporter_Saved"];
 
 // Literal cached inputs absent from Wrath manifest1-382/cache; behavior cases stay enabled.
