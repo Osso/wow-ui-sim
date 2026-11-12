@@ -21273,7 +21273,7 @@
           "kind": "source",
           "reference": "src/c_api/c_spec.rs",
           "summary": "Specialization-change casts dispatch UNIT_SPELLCAST_START through the shared payload helper.",
-          "source_hash": "b8a47e72dba3b8ce16e43ccdcc4ac088a178072205838ce4667fc38da4e8ee17"
+          "source_hash": "2d276fa9ade3f599ef7538cd311a1497d561171a6a88dc3e122e693dcb45f479"
         },
         {
           "kind": "source",
@@ -21348,7 +21348,7 @@
           "kind": "source",
           "reference": "src/c_api/c_spec.rs",
           "summary": "Specialization-change casts dispatch UNIT_SPELLCAST_START through the shared payload helper.",
-          "source_hash": "b8a47e72dba3b8ce16e43ccdcc4ac088a178072205838ce4667fc38da4e8ee17"
+          "source_hash": "2d276fa9ade3f599ef7538cd311a1497d561171a6a88dc3e122e693dcb45f479"
         },
         {
           "kind": "source",
@@ -21430,7 +21430,7 @@
           "kind": "source",
           "reference": "src/c_api/c_spec.rs",
           "summary": "Specialization-change casts dispatch UNIT_SPELLCAST_START through the shared payload helper.",
-          "source_hash": "b8a47e72dba3b8ce16e43ccdcc4ac088a178072205838ce4667fc38da4e8ee17"
+          "source_hash": "2d276fa9ade3f599ef7538cd311a1497d561171a6a88dc3e122e693dcb45f479"
         },
         {
           "kind": "source",

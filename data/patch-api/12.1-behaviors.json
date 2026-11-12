@@ -1478,7 +1478,7 @@
           "kind": "source",
           "reference": "src/startup.rs",
           "summary": "The startup sequence fires BAG_UPDATE_DELAYED before its final post-event workaround step; this source does not prove CVar wrapper identities change at that event.",
-          "source_hash": "ce964bacdaeb4a33bd7f281f404317b6dc90e6977bfacb92ddd328caebed5a8e"
+          "source_hash": "c77fe0e264be75b089fe8f9b91a25417e97e5c52e8fbbfa260da0101eceed800"
         },
         {
           "kind": "source",
@@ -1566,7 +1566,7 @@
           "kind": "source",
           "reference": "src/startup.rs",
           "summary": "The startup sequence fires BAG_UPDATE_DELAYED before its final post-event workaround step; this source does not prove CVar wrapper identities change at that event.",
-          "source_hash": "ce964bacdaeb4a33bd7f281f404317b6dc90e6977bfacb92ddd328caebed5a8e"
+          "source_hash": "c77fe0e264be75b089fe8f9b91a25417e97e5c52e8fbbfa260da0101eceed800"
         },
         {
           "kind": "source",
