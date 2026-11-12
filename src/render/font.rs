@@ -4,7 +4,8 @@
 //! measurement, and glyph rasterization. Provides mapping from WoW font
 //! paths (e.g. `Fonts\\FRIZQT__.TTF`) to fontdb family names.
 
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
+use std::path::{Path, PathBuf};
 
 use cosmic_text::fontdb;
 
@@ -21,7 +22,14 @@ pub(crate) use sim_render::font::{line_height_for_font_size, spaced_text_height}
 #[derive(Debug, Clone)]
 struct FontEntry {
     family: String,
+    /// Weight, style and stretch of the face a path names when it differs
+    /// from a regular face (addon fonts ship bold or condensed files under
+    /// the family of the regular one).
+    face: Option<FaceStyle>,
 }
+
+/// Weight, style and stretch of a font face.
+type FaceStyle = (fontdb::Weight, fontdb::Style, fontdb::Stretch);
 
 struct WowFontFile {
     filename: &'static str,
@@ -163,6 +171,8 @@ pub struct WowFontSystem {
     pub swash_cache: cosmic_text::SwashCache,
     /// Map from normalized WoW font path (uppercase) to family name.
     font_map: HashMap<String, FontEntry>,
+    /// Addon font paths that resolved to no readable font file.
+    missing_addon_fonts: HashSet<String>,
 }
 
 impl std::fmt::Debug for WowFontSystem {
@@ -431,6 +441,7 @@ impl WowFontSystem {
             font_system,
             swash_cache,
             font_map,
+            missing_addon_fonts: HashSet::new(),
         };
         crate::logging::eprintln_elapsed(&format!(
             "[Startup] WowFontSystem::new complete in {:.2?}",
@@ -459,9 +470,17 @@ impl WowFontSystem {
     /// be held across a `&mut self` call. For use with `Buffer::set_text`,
     /// prefer `attrs_owned()` which returns an `AttrsOwned`.
     pub fn attrs(&self, wow_path: Option<&str>) -> cosmic_text::Attrs<'_> {
-        match self.family_name(wow_path) {
-            Some(name) => cosmic_text::Attrs::new().family(cosmic_text::Family::Name(name)),
-            None => cosmic_text::Attrs::new(),
+        let face = wow_path
+            .and_then(|path| self.font_map.get(&normalize_wow_path(path)))
+            .and_then(|entry| entry.face);
+        match (self.family_name(wow_path), face) {
+            (Some(name), Some((weight, style, stretch))) => cosmic_text::Attrs::new()
+                .family(cosmic_text::Family::Name(name))
+                .weight(weight)
+                .style(style)
+                .stretch(stretch),
+            (Some(name), None) => cosmic_text::Attrs::new().family(cosmic_text::Family::Name(name)),
+            (None, _) => cosmic_text::Attrs::new(),
         }
     }
 
@@ -469,8 +488,43 @@ impl WowFontSystem {
     ///
     /// Use this when you need to pass attrs to functions that also take
     /// `&mut font_system`, since `AttrsOwned` doesn't borrow from self.
-    pub fn attrs_owned(&self, wow_path: Option<&str>) -> cosmic_text::AttrsOwned {
+    ///
+    /// A font file shipped by an addon (`Interface\\AddOns\\...`) is loaded on
+    /// first use, as the client does for `FontString:SetFont`.
+    pub fn attrs_owned(&mut self, wow_path: Option<&str>) -> cosmic_text::AttrsOwned {
+        if let Some(path) = wow_path {
+            self.ensure_addon_font(path);
+        }
         cosmic_text::AttrsOwned::new(&self.attrs(wow_path))
+    }
+
+    /// Load the font file an addon path names into the font database.
+    fn ensure_addon_font(&mut self, wow_path: &str) {
+        self.ensure_addon_font_in(addon_font_roots(), wow_path);
+    }
+
+    /// `ensure_addon_font` with the AddOns directories to search.
+    fn ensure_addon_font_in(&mut self, roots: &[PathBuf], wow_path: &str) {
+        let key = normalize_wow_path(wow_path);
+        if self.font_map.contains_key(&key) || self.missing_addon_fonts.contains(&key) {
+            return;
+        }
+        let Some(relative) = addon_relative_font_path(wow_path) else {
+            return;
+        };
+        let data = roots
+            .iter()
+            .find_map(|root| resolve_case_insensitive(root, &relative))
+            .and_then(|file| std::fs::read(file).ok());
+        let Some((family, face)) = data.as_deref().and_then(font_face_identity) else {
+            tracing::warn!("Addon font {wow_path} not found, using the default font");
+            self.missing_addon_fonts.insert(key);
+            return;
+        };
+        if let Some(data) = data {
+            self.font_system.db_mut().load_font_data(data);
+        }
+        self.font_map.insert(key, FontEntry { family, face });
     }
 
     /// Measure the pixel width of a text string using cosmic-text shaping.
@@ -734,6 +788,7 @@ fn register_font_aliases(
 ) {
     let entry = FontEntry {
         family: family_name.to_string(),
+        face: None,
     };
 
     for wow_path in wow_paths {
@@ -745,6 +800,70 @@ fn register_font_aliases(
 /// Normalize a WoW font path to uppercase with forward slashes for map lookup.
 fn normalize_wow_path(path: &str) -> String {
     path.replace('/', "\\").to_uppercase()
+}
+
+/// `Interface\\AddOns\\<Addon>\\...` as a path below the AddOns directory.
+fn addon_relative_font_path(wow_path: &str) -> Option<PathBuf> {
+    let parts: Vec<&str> = wow_path
+        .split(['\\', '/'])
+        .filter(|part| !part.is_empty())
+        .collect();
+    let [interface, addons, rest @ ..] = parts.as_slice() else {
+        return None;
+    };
+    if !interface.eq_ignore_ascii_case("interface")
+        || !addons.eq_ignore_ascii_case("addons")
+        || rest.is_empty()
+        || rest.contains(&"..")
+    {
+        return None;
+    }
+    Some(rest.iter().collect())
+}
+
+/// Whether `wow_path` names a font file below `Interface\\AddOns` that no
+/// AddOns directory holds. The client's `SetFont` rejects such a path with a
+/// Lua error; Blizzard's own font paths are never checked here, as they come
+/// from a WoW install the simulator may lack.
+pub fn addon_font_file_missing(wow_path: &str) -> bool {
+    addon_font_file_missing_in(addon_font_roots(), wow_path)
+}
+
+fn addon_font_file_missing_in(roots: &[PathBuf], wow_path: &str) -> bool {
+    addon_relative_font_path(wow_path).is_some_and(|relative| {
+        !roots
+            .iter()
+            .any(|root| resolve_case_insensitive(root, &relative).is_some())
+    })
+}
+
+fn addon_font_roots() -> &'static [PathBuf] {
+    static ROOTS: std::sync::OnceLock<Vec<PathBuf>> = std::sync::OnceLock::new();
+    ROOTS.get_or_init(crate::paths::default_addons_paths)
+}
+
+/// Resolve each component of `relative` below `root` ignoring case, as on the
+/// file systems the client runs on.
+fn resolve_case_insensitive(root: &Path, relative: &Path) -> Option<PathBuf> {
+    let mut path = root.to_path_buf();
+    for part in relative.iter() {
+        let candidate = path.join(part);
+        path = if candidate.exists() {
+            candidate
+        } else {
+            crate::paths::find_case_insensitive(&path, &part.to_string_lossy())?
+        };
+    }
+    path.is_file().then_some(path)
+}
+
+/// Family name plus weight, style and stretch of the first face in a font file.
+fn font_face_identity(data: &[u8]) -> Option<(String, Option<FaceStyle>)> {
+    let mut tmp_db = fontdb::Database::new();
+    tmp_db.load_font_data(data.to_vec());
+    let face = tmp_db.faces().next()?;
+    let family = face.families.first()?.0.clone();
+    Some((family, Some((face.weight, face.style, face.stretch))))
 }
 
 /// Extract the font family name from raw TTF data using fontdb.
@@ -928,6 +1047,117 @@ mod tests {
         let name = fs.family_name(None).unwrap();
         let default_name = fs.family_name(Some(DEFAULT_WOW_FONT)).unwrap();
         assert_eq!(name, default_name);
+    }
+
+    #[test]
+    fn addon_font_paths_resolve_below_the_addons_directory() {
+        assert_eq!(
+            addon_relative_font_path(
+                "Interface\\AddOns\\EllesmereUI\\media\\fonts\\Expressway.TTF"
+            ),
+            Some(PathBuf::from("EllesmereUI/media/fonts/Expressway.TTF"))
+        );
+        assert_eq!(
+            addon_relative_font_path("interface/addons/MyAddon/font.ttf"),
+            Some(PathBuf::from("MyAddon/font.ttf"))
+        );
+        assert_eq!(addon_relative_font_path("Fonts\\FRIZQT__.TTF"), None);
+        assert_eq!(
+            addon_relative_font_path("Interface\\AddOns\\..\\x.ttf"),
+            None
+        );
+    }
+
+    #[test]
+    fn addon_font_files_resolve_ignoring_case() {
+        let root = tempfile::tempdir().unwrap();
+        std::fs::create_dir_all(root.path().join("MyAddon/Media")).unwrap();
+        std::fs::write(root.path().join("MyAddon/Media/Font.TTF"), b"x").unwrap();
+        // Compared by content: on a case-insensitive file system the path
+        // keeps the spelling it was asked for.
+        let found = resolve_case_insensitive(root.path(), Path::new("myaddon/media/font.ttf"));
+        assert_eq!(
+            found.map(|path| std::fs::read(path).unwrap()),
+            Some(b"x".to_vec())
+        );
+        assert_eq!(
+            resolve_case_insensitive(root.path(), Path::new("MyAddon/none.ttf")),
+            None
+        );
+    }
+
+    /// A font file of the system, standing in for one an addon
+    /// ships (the repository holds no font file of its own): path, family and
+    /// weight. Skips `avoid_family` and prefers a face that is not regular
+    /// weight, so a test can tell the file's face from the default font.
+    fn system_font_file(avoid_family: Option<&str>) -> Option<(PathBuf, String, fontdb::Weight)> {
+        let mut db = fontdb::Database::new();
+        db.load_system_fonts();
+        let mut files: Vec<_> = db
+            .faces()
+            .filter_map(|face| match &face.source {
+                fontdb::Source::File(path) if face.index == 0 => {
+                    let family = face.families.first()?.0.clone();
+                    (Some(family.as_str()) != avoid_family)
+                        .then(|| (path.clone(), family, face.weight))
+                }
+                _ => None,
+            })
+            .collect();
+        files.sort_by_key(|(path, _, weight)| (*weight == fontdb::Weight::NORMAL, path.clone()));
+        files.into_iter().next()
+    }
+
+    #[test]
+    fn set_font_with_an_addon_font_file_uses_its_face() {
+        let mut fs = WowFontSystem::new_without_casc();
+        let default_family = fs.family_name(None).map(str::to_string);
+        let Some((font, family, weight)) = system_font_file(default_family.as_deref()) else {
+            eprintln!("no system font file to stand in for an addon font; skipped");
+            return;
+        };
+        let root = tempfile::tempdir().unwrap();
+        std::fs::create_dir_all(root.path().join("MyAddon/Media")).unwrap();
+        std::fs::copy(&font, root.path().join("MyAddon/Media/Font.ttf")).unwrap();
+        let roots = [root.path().to_path_buf()];
+        let path = "Interface\\AddOns\\MyAddon\\media\\FONT.TTF";
+
+        fs.ensure_addon_font_in(&roots, path);
+
+        assert_eq!(fs.family_name(Some(path)), Some(family.as_str()));
+        assert_eq!(fs.attrs(Some(path)).weight, weight);
+    }
+
+    #[test]
+    fn only_a_missing_addon_font_file_counts_as_missing() {
+        let root = tempfile::tempdir().unwrap();
+        std::fs::create_dir_all(root.path().join("MyAddon/Media")).unwrap();
+        std::fs::write(root.path().join("MyAddon/Media/Font.TTF"), b"x").unwrap();
+        let roots = [root.path().to_path_buf()];
+        assert!(!addon_font_file_missing_in(
+            &roots,
+            "Interface\\AddOns\\MyAddon\\media\\font.ttf"
+        ));
+        assert!(addon_font_file_missing_in(
+            &roots,
+            "Interface\\AddOns\\MyAddon\\none.ttf"
+        ));
+        assert!(!addon_font_file_missing_in(&roots, "Fonts\\FRIZQT__.TTF"));
+    }
+
+    #[test]
+    fn a_missing_addon_font_is_drawn_in_the_default_font() {
+        let root = tempfile::tempdir().unwrap();
+        let roots = [root.path().to_path_buf()];
+        let path = "Interface\\AddOns\\MyAddon\\none.ttf";
+
+        let mut fs = WowFontSystem::new_without_casc();
+        fs.ensure_addon_font_in(&roots, path);
+
+        assert_eq!(
+            fs.family_name(Some(path)),
+            fs.family_name(Some(DEFAULT_WOW_FONT))
+        );
     }
 
     #[test]

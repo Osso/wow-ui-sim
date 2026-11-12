@@ -1,3 +1,7 @@
+## [2026-11-12] docs | Addon fonts
+
+[Rendering pipeline](systems/rendering-pipeline.md#font-sources) records addon font loading on first use; tests live in `src/render/font.rs`.
+
 ## [2026-11-12] investigation | Inline XML tooltip operands
 
 [Inline XML method arguments](investigations/xml-inline-method-arguments.md) records the zero-vararg parser misclassification, source-faithful parameter-prefix installation, and the separately approved RaidFrame AddLine fixture correction.
