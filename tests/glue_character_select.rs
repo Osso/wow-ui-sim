@@ -107,6 +107,27 @@ fn ptr_name_reservation_default_is_false() {
     }
 }
 
+#[test]
+#[cfg(feature = "client-wowforever")]
+fn forever_name_reservation_default_is_false_on_glue() {
+    let env = WowLuaEnv::new().expect("create Lua environment");
+    env.set_screen_mode(ScreenKind::CharacterSelect);
+
+    let (return_count, result_type, result): (i32, String, bool) = env
+        .eval(
+            r##"
+            local return_count = select("#", IsNameReservationOnly())
+            local result = IsNameReservationOnly()
+            return return_count, type(result), result
+            "##,
+        )
+        .expect("Forever Glue name-reservation query should be registered");
+
+    assert_eq!(return_count, 1);
+    assert_eq!(result_type, "boolean");
+    assert!(!result);
+}
+
 fn blizzard_ui_dir() -> std::path::PathBuf {
     default_blizzard_ui_addons_path().expect("Blizzard UI cache should be synced")
 }
@@ -505,6 +526,19 @@ fn super_district_title_uses_host_selection_and_info() {
         assert!(glue_members_absent);
         assert_eq!(district_info_available, cfg!(feature = "client-ptr"));
     }
+}
+
+#[test]
+#[cfg(feature = "client-retail")]
+fn retail_does_not_register_forever_name_reservation_global() {
+    let env = WowLuaEnv::new().expect("create Lua environment");
+    env.set_screen_mode(ScreenKind::CharacterSelect);
+
+    let absent: bool = env
+        .eval("return IsNameReservationOnly == nil")
+        .expect("Retail Glue global visibility should be queryable");
+
+    assert!(absent);
 }
 
 #[test]
@@ -999,6 +1033,56 @@ fn character_create_screen_can_boot_directly() {
             .expect("CharacterCreateFrame visibility should be queryable");
         assert!(character_create_visible, "direct boot should show CharacterCreateFrame");
     }
+}
+
+#[test]
+#[cfg(feature = "client-wowforever")]
+fn forever_race_data_publishes_empty_racial_abilities() {
+    let env = WowLuaEnv::new().expect("create Lua environment");
+
+    let abilities_are_empty_tables: bool = env
+        .eval(
+            r#"
+            local race = C_CharacterCreation.GetRaceDataByID(1)
+            local listedRace = C_CharacterCreation.GetAvailableRaces()[1]
+            return type(race.racialAbilities) == "table"
+                and next(race.racialAbilities) == nil
+                and type(listedRace.racialAbilities) == "table"
+                and next(listedRace.racialAbilities) == nil
+            "#,
+        )
+        .expect("race data should publish empty racial-ability tables");
+
+    assert!(abilities_are_empty_tables);
+}
+
+#[test]
+#[cfg(feature = "client-wowforever")]
+fn forever_race_data_publishes_supplied_racial_ability_fields() {
+    let env = WowLuaEnv::new().expect("create Lua environment");
+    env.exec(
+        r#"
+        __wow_character_create_races[1].racialAbilities = {
+            { description = "Supplied description", name = "Supplied ability", icon = 0 },
+        }
+        "#,
+    )
+    .expect("host-supplied racial ability should be accepted");
+
+    let (row_count, description, name, icon_is_nil): (i32, String, String, bool) = env
+        .eval(
+            r#"
+            local ability = C_CharacterCreation.GetRaceDataByID(1).racialAbilities[1]
+            return #C_CharacterCreation.GetRaceDataByID(1).racialAbilities,
+                ability.description, ability.name, ability.icon == nil
+            "#,
+        )
+        .expect("race data should publish supplied racial abilities");
+
+    assert_eq!(row_count, 1);
+    assert_eq!(description, "Supplied description");
+    assert_eq!(name, "Supplied ability");
+    assert!(icon_is_nil);
 }
 
 #[test]
