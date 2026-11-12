@@ -421,6 +421,7 @@ fn startup_load_with_follower_runs_after_target_files() {
         .unwrap();
 }
 
+/// Preservation: explicitly loading a `LoadWith` follower does not submit its target.
 #[test]
 fn loading_load_with_follower_does_not_load_target() {
     let tree = AddonTree::new(ScreenKind::Game);
@@ -464,6 +465,7 @@ fn runtime_loading_target_runs_load_with_follower_after_target_files() {
         .unwrap();
 }
 
+/// Preservation: a target that exits during dependency checks submits no followers.
 #[test]
 fn runtime_target_early_exit_does_not_load_load_with_followers() {
     let tree = AddonTree::new(ScreenKind::Game);
