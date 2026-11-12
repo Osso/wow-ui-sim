@@ -1166,6 +1166,35 @@ mod tests {
         );
     }
 
+    #[cfg(unix)]
+    #[test]
+    fn addon_font_symlinks_stay_inside_the_addons_root() {
+        use std::os::unix::fs::symlink;
+
+        let root = tempfile::tempdir().unwrap();
+        let outside = tempfile::tempdir().unwrap();
+        std::fs::create_dir(root.path().join("MyAddon")).unwrap();
+        std::fs::write(outside.path().join("Font.ttf"), b"outside").unwrap();
+        std::fs::write(root.path().join("MyAddon/Inside.ttf"), b"inside").unwrap();
+        symlink(outside.path(), root.path().join("MyAddon/Escape")).unwrap();
+        symlink(
+            outside.path().join("Font.ttf"),
+            root.path().join("MyAddon/File.ttf"),
+        )
+        .unwrap();
+        symlink("Inside.ttf", root.path().join("MyAddon/Link.ttf")).unwrap();
+
+        for relative in ["MyAddon/Escape/Font.ttf", "MyAddon/File.ttf"] {
+            assert_eq!(
+                resolve_case_insensitive(root.path(), Path::new(relative)),
+                None
+            );
+        }
+        let inside = resolve_case_insensitive(root.path(), Path::new("myaddon/link.ttf"))
+            .expect("links within the root remain usable");
+        assert_eq!(std::fs::read(inside).unwrap(), b"inside");
+    }
+
     /// A font file of the system, standing in for one an addon
     /// ships (the repository holds no font file of its own): path, family and
     /// weight. Skips `avoid_family` and prefers a face that is not regular
