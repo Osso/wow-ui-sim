@@ -143,6 +143,12 @@ fn action_button_drag_round_trip_keeps_spell_visible() {
 
     common::with_timeout(120, move || {
         let env = env_with_action_bar();
+        // The round-trip asserts only the verified empty-map branch.
+        {
+            let mut sim = env.state().borrow_mut();
+            sim.action_bar_spell_type_restrictions.clear();
+            sim.spell_type_labels.clear();
+        }
         assert_action_button_template_has_receive_drag();
         let button_id = env
             .state()

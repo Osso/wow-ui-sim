@@ -14,8 +14,8 @@
 ### Restriction result
 
 - [ ] For a valid slot and an empty restriction map, return one `true` value before checking whether `spellID` is zero.
-- [ ] With a non-empty map, return `false` for spell ID zero; a missing or zero slot restriction permits a nonzero spell.
-- [ ] For a restricted slot, compare the required label ID with host-supplied spell labels by exact equality.
+- [ ] With a non-empty map, return `false` for spell ID zero; a missing or zero restriction permits a nonzero spell.
+- [ ] Key restrictions by zero-based 12-slot action group and compare the required label ID with host-supplied spell labels by exact equality.
 - [ ] Keep restriction-map and spell-label inputs empty by default; do not ship label records or assert real spell membership.
 
 ## How it works
@@ -26,7 +26,7 @@
 ## Implementation inventory
 
 - `src/c_api/c_action_bar.rs` — PTR API publication, argument conversion, and result selection.
-- `src/lua_api/state/sim_state.rs` — host-supplied restriction and label inputs.
+- `src/lua_api/state/sim_state.rs` — host-supplied group-to-label restrictions and spell-label inputs.
 - `src/lua_api/state.rs` — empty-state construction for those inputs.
 
 ## Tests asserting this spec
