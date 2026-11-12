@@ -13,12 +13,11 @@ fn clear_spell_type_inputs(env: &WowLuaEnv) {
 #[test]
 fn empty_restriction_map_returns_one_true_for_a_valid_slot() {
     let env = WowLuaEnv::new().expect("lua env should initialize");
-    {
-        let state = env.state();
-        let sim = state.borrow();
-        assert!(sim.action_bar_spell_type_restrictions.is_empty());
-        assert!(sim.spell_type_labels.is_empty());
-    }
+    let state = env.state();
+    let sim = state.borrow();
+    assert!(sim.action_bar_spell_type_restrictions.is_empty());
+    assert!(sim.spell_type_labels.is_empty());
+    drop(sim);
     // This asserts the default empty-map path, not spell 853's unknown label membership.
     let (spell_count, spell_match, zero_spell_count, zero_spell_match): (i64, bool, i64, bool) =
         env.eval(
@@ -41,6 +40,7 @@ fn empty_restriction_map_returns_one_true_for_a_valid_slot() {
 fn host_supplied_restrictions_match_exact_labels_in_12_slot_groups() {
     // Synthetic spell and host label rows; no real spell membership is asserted.
     const SPELL_ID: i32 = 900_001;
+    const FRACTIONAL_SPELL_ID: f64 = 900_001.75;
     const FIRST_RESTRICTED_GROUP: u32 = 0;
     const SECOND_RESTRICTED_GROUP: u32 = 1;
     const ZERO_RESTRICTION_GROUP: u32 = 2;
@@ -72,6 +72,7 @@ fn host_supplied_restrictions_match_exact_labels_in_12_slot_groups() {
         r#"
         local matchSpell = C_ActionBar.SpellMatchesActionSpellTypeRestriction
         return matchSpell({SPELL_ID}, {FIRST_ACTION}),
+               matchSpell({FRACTIONAL_SPELL_ID}, {FIRST_ACTION}),
                matchSpell({SPELL_ID}, {LAST_ACTION_IN_FIRST_GROUP}),
                matchSpell({SPELL_ID}, {FIRST_ACTION_IN_SECOND_GROUP}),
                matchSpell({SPELL_ID}, {FIRST_ACTION_IN_ZERO_RESTRICTION_GROUP}),
@@ -81,24 +82,26 @@ fn host_supplied_restrictions_match_exact_labels_in_12_slot_groups() {
     );
     let (
         first_group_first_slot,
+        fractional_spell,
         first_group_last_slot,
         second_group_first_slot,
         zero_restriction,
         missing_restriction,
         zero_spell,
-    ): (bool, bool, bool, bool, bool, bool) = env
+    ): (bool, bool, bool, bool, bool, bool, bool) = env
         .eval(&probe)
         .expect("host-supplied restriction inputs should be queryable");
     assert_eq!(
         (
             first_group_first_slot,
+            fractional_spell,
             first_group_last_slot,
             second_group_first_slot,
             zero_restriction,
             missing_restriction,
             zero_spell,
         ),
-        (true, true, true, true, true, false)
+        (true, true, true, true, true, true, false)
     );
 
     env.state()
@@ -130,17 +133,22 @@ fn host_supplied_restrictions_match_exact_labels_in_12_slot_groups() {
 #[test]
 fn invalid_converted_slots_return_no_values() {
     let env = WowLuaEnv::new().expect("lua env should initialize");
-    let (zero_slot_count, slot_409_count): (i64, i64) = env
+    let (zero_slot_count, slot_409_count, max_action_count): (i64, i64, i64) = env
         .eval(
             r##"
             local matchSpell = C_ActionBar.SpellMatchesActionSpellTypeRestriction
             local function resultCount(...) return select("#", ...) end
-            return resultCount(matchSpell(853, 0)), resultCount(matchSpell(853, 409))
+            return resultCount(matchSpell(853, 0)),
+                   resultCount(matchSpell(853, 409)),
+                   resultCount(matchSpell(853, 4294967295))
             "##,
         )
         .expect("out-of-range slots should not raise an argument error");
 
-    assert_eq!((zero_slot_count, slot_409_count), (0, 0));
+    assert_eq!(
+        (zero_slot_count, slot_409_count, max_action_count),
+        (0, 0, 0)
+    );
 }
 
 #[cfg(feature = "client-ptr")]
@@ -183,6 +191,33 @@ fn arguments_use_verified_numeric_conversions_and_range_errors() {
     assert!(missing_spell_error.contains(
         "Usage: local actionMatchesSpellTypeRestriction = C_ActionBar.SpellMatchesActionSpellTypeRestriction(spellID, actionID)"
     ));
+
+    env.exec(
+        r##"
+        local matchSpell = C_ActionBar.SpellMatchesActionSpellTypeRestriction
+        local invalid = {
+            {-2147483649, 1},
+            {853, 4294967296},
+            {math.huge, 1},
+            {-math.huge, 1},
+            {0 / 0, 1},
+            {853, math.huge},
+            {853, -math.huge},
+            {853, 0 / 0},
+        }
+        for _, args in ipairs(invalid) do
+            local ok, err = pcall(matchSpell, args[1], args[2])
+            assert(not ok)
+            assert(string.find(tostring(err), 'outside of expected range', 1, true))
+        end
+        local missingActionOk, missingActionError = pcall(matchSpell, 853, nil)
+        assert(not missingActionOk)
+        assert(string.find(tostring(missingActionError), 'Usage: ', 1, true))
+        assert(matchSpell(-2147483648, 1) == true)
+        assert(matchSpell(2147483647, 1) == true)
+        "##,
+    )
+    .expect("finite values and inclusive conversion bounds should match R69 readers");
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]

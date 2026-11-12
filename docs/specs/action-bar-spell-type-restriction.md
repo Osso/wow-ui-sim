@@ -8,7 +8,7 @@
 
 - [ ] Publish the method only for PTR.
 - [x] Read required `spellID` then `actionID`; accept finite numbers and numeric strings, and truncate fractions toward zero.
-- [x] Reject tested out-of-range spell and action IDs with their verified range errors.
+- [x] Reject spell IDs outside signed 32-bit range and action IDs outside unsigned 32-bit range with the verified range errors.
 - [x] For an action slot converted outside `[0, 408)`, return zero values without an argument error.
 
 ### Restriction result
@@ -16,7 +16,7 @@
 - [x] For a valid slot and an empty restriction map, return one `true` value before checking whether `spellID` is zero.
 - [x] With a non-empty map, return `false` for spell ID zero; a missing or zero restriction permits a nonzero spell.
 - [x] Key restrictions by zero-based 12-slot action group and compare the required label ID with host-supplied spell labels by exact equality.
-- [ ] Keep restriction-map and spell-label inputs empty by default; do not ship label records or assert real spell membership.
+- [x] Initialize the host-supplied restriction-map and spell-label inputs empty by default.
 
 ## How it works
 
