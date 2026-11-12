@@ -74,6 +74,7 @@ fn load_original_pvp_slot_consumer(env: &WowLuaEnv) {
 #[test]
 fn pvp_slot_on_enter_uses_default_catalog_spell_and_unlock_lines() {
     let env = env();
+    env.apply_post_load_workarounds();
     load_original_pvp_slot_consumer(&env);
     {
         let mut state = env.state().borrow_mut();
