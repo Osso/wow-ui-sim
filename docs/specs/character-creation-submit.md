@@ -33,6 +33,8 @@ not direct mixin invocation or a replacement submit implementation.
   `Usage: C_CharacterCreation.CreateCharacter(name, useNPE [, raceFaction])`.
   Name accepts string or number, with numeric text conversion. `useNPE` uses
   Lua truthiness; optional raceFaction accepts string or number. No surname.
+  #241 clarifies useNPE is REQUIRED on both profiles: missing or nil raises Usage;
+  truthiness applies only to present non-nil values.
 - Forever Usage is
   `Usage: C_CharacterCreation.CreateCharacter(name, surname, useNPE [, raceFaction])`.
   Name and surname are required strings or numbers (numbers convert to text).

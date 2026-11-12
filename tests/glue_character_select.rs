@@ -1091,7 +1091,7 @@ fn submit_real_character_creation(env: &WowLuaEnv) {
     // Drive the same screen transition as the existing Glue tests, then the
     // real edit box and inherited button script. Do not patch the mixin or
     // invoke CreateCharacter directly. No server outcome is supplied here.
-    env.exec(
+    let submission = env.exec(
         r#"
         local original = C_CharacterCreation.CreateCharacter
         assert(type(original) == "function")
@@ -1116,8 +1116,23 @@ fn submit_real_character_creation(env: &WowLuaEnv) {
         assert(CharacterCreateFrame.creatingCharacter == true,
             "the real Create button must reach the submission consumer")
     "#,
-    )
-    .expect("real character creation controls should submit");
+    );
+    let first_error = env.state().borrow().lua_errors[errors_before..]
+        .first()
+        .map(|error| error.lines().next().unwrap_or_default().to_owned());
+    if let Some(first_error) = first_error {
+        const EXPECTED_R79_STOP: &str = concat!(
+            "bad argument #1 to 'SetCameraZoomLevel' ",
+            "(Usage: C_CharacterCreation.SetCameraZoomLevel(zoomLevel [, keepCustomZoom]))"
+        );
+        assert_eq!(
+            first_error, EXPECTED_R79_STOP,
+            "unexpected real-control first error"
+        );
+        // Assert the exact boundary, then remain RED: this is not error tolerance.
+        panic!("R79 real Create-button RED at verified first error: {first_error}");
+    }
+    submission.expect("real character creation controls should submit");
     let observed: (i32, i32, String) = env
         .eval(
             r#"
@@ -1198,13 +1213,15 @@ fn character_creation_submit_argument_contract_and_usage() {
         };
         assert_creation_usage(&env, &args, usage);
     }
-    for (truthy, expected) in [
-        ("nil", false),
-        ("false", false),
-        ("0", true),
-        ("''", true),
-        ("{}", true),
-    ] {
+    for suffix in ["", ", nil"] {
+        let arguments = if forever {
+            format!("'Name', 'Surname'{suffix}")
+        } else {
+            format!("'Name'{suffix}")
+        };
+        assert_creation_usage(&env, &arguments, usage);
+    }
+    for (truthy, expected) in [("false", false), ("0", true), ("''", true), ("{}", true)] {
         let args = if forever {
             format!("123, 456, {truthy}, 7, 'extra'")
         } else {

@@ -133,7 +133,11 @@ fn create_character(state: &mut LuaState) -> LuaResult<u32> {
     let (surname, use_npe_index) = (Some(text_argument(state, 2)?), 3);
     #[cfg(feature = "client-retail")]
     let (surname, use_npe_index) = (None, 2);
-    let use_npe = !matches!(stack_val(state, use_npe_index), Val::Nil | Val::Bool(false));
+    let use_npe_argument = stack_val(state, use_npe_index);
+    if matches!(use_npe_argument, Val::Nil) {
+        return Err(bad_argument(use_npe_index, "CreateCharacter", CREATE_USAGE));
+    }
+    let use_npe = !matches!(use_npe_argument, Val::Bool(false));
     let faction_index = use_npe_index + 1;
     let race_faction = match stack_val(state, faction_index) {
         Val::Nil => None,
