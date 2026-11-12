@@ -1,3 +1,7 @@
+## [2026-11-12] correction | Bag fixture stages and insecure TOC screens
+
+Updated [frame-position investigation](investigations/frame-position-baseline-drift.md#bag-bar-test-application-stages--2026-11-12) with source-derived late-registration versus applied-preset anchors. Updated [addon loading](systems/addon-loading.md#screen-qualified-dependency-declarations) with VERIFIED R13 insecure-parser behavior and INFERRED third-party input-mode mapping; corrected the discovery expectation without changing the producer.
+
 ## [2026-11-11] correction | Addon loading phases and LoadWith followers
 
 Updated [[addon-loading]] and the [phase contract](../specs/addon-load-phases.md) with R64 phases and R64b/c follower behavior, plus R70 PTR phase/mask evidence. Retail and Forever resolve followers without enable-state filtering and submit them through the generic loader; target `ADDON_LOADED` precedes follower requests, and one follower failure does not stop later submissions or change target success. PTR parser-to-child-list linkage remains UNKNOWN, so the simulator applies the INFERRED resolver model and tests a pre-populated child list only. R70 models cached PTR `CharacterCreate` as an INFERRED phase-two Glue root, loads its required chain before its files, and makes no relative-order claim against PTRFeedbackGlue.

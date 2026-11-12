@@ -1,5 +1,9 @@
 > Proof receipts live untracked under `~/.local/state/wow-ui-sim`. The `data/patch-api/evidence` and `data/test-perf/evidence` trees were removed on 2026-11-08; historical links below are records, not live paths. Recover a file with `git show c011c1d95:<path>`.
 
+## [2026-11-12] correction | Bag fixture stages and insecure TOC screens
+
+[Bag-bar fixture stages](investigations/frame-position-baseline-drift.md#bag-bar-test-application-stages--2026-11-12) distinguish late-loaded Retail XML Y=0 from startup-applied PTR preset Y=10. [Addon loading](systems/addon-loading.md#screen-qualified-dependency-declarations) retains VERIFIED R13 insecure-parser Game-only semantics and labels the ordinary third-party parser-mode mapping INFERRED; the contrary discovery-test expectation is superseded.
+
 ## [2026-11-12] system | PvP talent tooltip catalog
 
 [Tooltip data](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) links the [PvP talent contract](../specs/tooltip-pvp-talent.md) and generated 407-row Retail catalog. **VERIFIED:** the installed CASC export is 12.1.5.70783 with zero unreadable PvpTalent and category rows; the exact tooltip tests pass. **UNKNOWN:** equivalence to selected build 12.1.5.70575 and selected-slot state (R73 pending).
