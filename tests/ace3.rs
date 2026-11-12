@@ -518,10 +518,37 @@ fn selected_game_menu_close_button_lifecycle() {
         assert(not GameMenuFrame:IsShown())
         ShowUIPanel(GameMenuFrame)
         assert(GameMenuFrame:IsShown())
-        assert(GameMenuFrame.closeButton)
-        GameMenuFrame.closeButton:Click()
-        assert(not GameMenuFrame:IsShown())
         "#,
     )
-    .expect("active-profile GameMenu close-button lifecycle");
+    .expect("active-profile GameMenu opens");
+
+    #[cfg(feature = "client-retail")]
+    env.exec(
+        r#"
+        -- Retail GameMenuFrame.lua:218 and MainMenuFrameTemplates.lua:25-78:
+        -- the close button is the last pooled button, not a closeButton field.
+        local closeButton
+        for button in GameMenuFrame.buttonPool:EnumerateActive() do
+            if not closeButton or button.layoutIndex > closeButton.layoutIndex then
+                closeButton = button
+            end
+        end
+        assert(closeButton)
+        assert(closeButton:GetText() == RETURN_TO_GAME)
+        closeButton:Click()
+        "#,
+    )
+    .expect("Retail last pooled button returns to the game");
+
+    #[cfg(not(feature = "client-retail"))]
+    env.exec(
+        r#"
+        assert(GameMenuFrame.closeButton)
+        GameMenuFrame.closeButton:Click()
+        "#,
+    )
+    .expect("selected profile closeButton returns to the game");
+
+    env.exec("assert(not GameMenuFrame:IsShown())")
+        .expect("active-profile GameMenu closes after its button click");
 }
