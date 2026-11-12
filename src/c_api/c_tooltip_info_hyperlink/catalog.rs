@@ -34,7 +34,9 @@ pub(super) fn artifact(
     else {
         return Ok(None);
     };
+    let saved_top = state.top;
     let tooltip = compose_tooltip(state, 1.0, None);
+    state.push(tooltip);
     let highlight = named_color(state, "HIGHLIGHT_FONT_COLOR");
     if let Some(spell) = crate::spells::get_spell(spell_id) {
         let line = append_line(state, tooltip, 0.0, spell.name, highlight);
@@ -57,6 +59,7 @@ pub(super) fn artifact(
         append_line(state, tooltip, 1.0, " ", None);
     }
     append_description(state, tooltip, spell_id);
+    state.top = saved_top;
     Ok(Some(tooltip))
 }
 
@@ -73,7 +76,9 @@ pub(super) fn conduit(state: &mut LuaState, id: u32, rank: i32) -> LuaResult<Opt
     else {
         return Ok(None);
     };
+    let saved_top = state.top;
     let tooltip = compose_tooltip(state, 13.0, None);
+    state.push(tooltip);
     // R82 normal conduit path calls no identity setter.
     table_set(state, tooltip, "type", Val::Nil);
     if let Some(spell) = crate::spells::get_spell(spell_id) {
@@ -106,6 +111,7 @@ pub(super) fn conduit(state: &mut LuaState, id: u32, rank: i32) -> LuaResult<Opt
         table_set(state, line, "itemLevel", Val::Num(f64::from(level)));
     }
     append_description(state, tooltip, spell_id);
+    state.top = saved_top;
     Ok(Some(tooltip))
 }
 

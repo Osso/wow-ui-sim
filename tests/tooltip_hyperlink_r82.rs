@@ -109,7 +109,7 @@ tooltip_selection_getters_fixture! {
         use wow_ui_sim::c_api::c_tooltip_info_hyperlink::inputs::EssenceSpells;
         let env = tooltip_full_env_helpers::load_full_env_without_post_load();
         env.state().borrow_mut().hyperlink_tooltip.essence_spells.insert((7,1), EssenceSpells {
-            main_spell_id: 19750, passive_spell_id: 1459,
+            main_spell_id: 19750, passive_spell_id: 53563,
             main_heading: "Supplied main power".into(), passive_heading: "Supplied passive power".into(),
         });
         env.exec(r#"
@@ -125,7 +125,7 @@ tooltip_selection_getters_fixture! {
                 if line.leftText == 'Supplied passive power' then passive = i end
             end
             assert(passive and passive > 2)
-            assert(data.lines[passive+1].leftText == C_Spell.GetSpellName(1459))
+            assert(data.lines[passive+1].leftText == C_Spell.GetSpellName(53563))
         "#).unwrap();
     }
 

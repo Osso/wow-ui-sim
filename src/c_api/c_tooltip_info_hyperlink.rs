@@ -139,10 +139,14 @@ fn power_route(state: &mut LuaState, request: HyperlinkRequest) -> LuaResult<u32
 
 fn append_spell_lines(state: &mut LuaState, tooltip: Val, spell_id: u32) {
     use crate::lua_api::methods::{table_get, table_set_num};
+    let saved_top = state.top;
+    state.push(tooltip);
     let spell = tooltip_for_link_spell(state, spell_id);
+    state.push(spell);
     let source = table_get(state, spell, "lines");
     let destination = table_get(state, tooltip, "lines");
     let (Val::Table(source), Val::Table(destination)) = (source, destination) else {
+        state.top = saved_top;
         return;
     };
     let rows: Vec<_> = (1..)
@@ -164,4 +168,5 @@ fn append_spell_lines(state: &mut LuaState, tooltip: Val, spell_id: u32) {
         table_set_num(state, destination, index as f64, row);
         index += 1;
     }
+    state.top = saved_top;
 }
