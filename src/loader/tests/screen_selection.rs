@@ -568,7 +568,7 @@ Core.lua
     assert_eq!(
         names,
         vec!["Blizzard_C", "Blizzard_B", "Blizzard_A"],
-        "dependency closure should emit optional deps before required deps"
+        "dependency closure emits screen-allowed optional deps before required deps, and includes no others"
     );
     assert!(
         !names.iter().any(|name| name == "Blizzard_D"),
