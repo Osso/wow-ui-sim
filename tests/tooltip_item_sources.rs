@@ -91,12 +91,15 @@ fn missing_unit_hyperlink_does_not_invent_rows_on_retry() {
 }
 
 #[test]
-fn hyperlink_unsupported_and_malformed_links_return_nil_without_changing_item_spell() {
+fn hyperlink_unmodelled_links_do_not_invent_rows_or_change_item_spell() {
     let env = env();
     env.exec(
         r#"
+        -- R82 Q1/Q2 UNKNOWN: malformed cases and native miss shape remain unmodelled.
+        -- Approved by main: retain no-fabricated-data preservation and the controls.
         for _, link in ipairs({"unit:", "unit:not-a-guid", "unit:Creature-0-0-0-0-12-0000000000-extra", "quest:42", "|Hfoo:1|h[foo]|h", "|Hitem:bad|h[x]|h"}) do
-            assert(C_TooltipInfo.GetHyperlink(link) == nil, link)
+            local data = C_TooltipInfo.GetHyperlink(link)
+            assert(not (type(data) == 'table' and data.lines and #data.lines > 0), link)
         end
         local item = C_TooltipInfo.GetHyperlink("|Hitem:6948|h[Hearthstone]|h")
         assert(item.type == Enum.TooltipDataType.Item and item.lines[1].leftText == "Hearthstone")
