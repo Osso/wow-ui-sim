@@ -461,6 +461,13 @@ fn test_c_tooltip_info_get_spell_by_id_returns_spell_tooltip_lines() {
 #[test]
 fn test_c_tooltip_info_get_spell_by_id_resolves_hammer_of_justice_duration() {
     let env = WowLuaEnv::new().unwrap();
+    // R81 Q3: preserve the existing description position with supplied alternate text.
+    env.state()
+        .borrow_mut()
+        .spell_tooltip_inputs
+        .entry(853)
+        .or_default()
+        .alternate_cast_text = Some("Instant".into());
     let description: String = env
         .eval(
             r#"
