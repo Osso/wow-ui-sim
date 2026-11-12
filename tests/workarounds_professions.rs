@@ -562,7 +562,12 @@ fn casting_blacksmithing_opens_professions_frame() {
             local originalInit = form.Init
             form.Init = function(self, ...)
                 PROF_DIAG = PROF_DIAG .. " entry=" .. tostring((...))
-                local result = originalInit(self, ...)
+                local args = {...}
+                local ok, result = xpcall(function() return originalInit(self, unpack(args)) end, debug.traceback)
+                if not ok then
+                    PROF_DIAG = PROF_DIAG .. " error=" .. result
+                    error(result)
+                end
                 PROF_DIAG = PROF_DIAG .. " exit=" .. tostring(self.currentRecipeInfo) .. ":" .. tostring(self.transaction)
                 return result
             end
