@@ -13,7 +13,7 @@ fn env() -> WowLuaEnv {
 }
 
 #[test]
-fn host_seeded_customizations_publish_nested_records_without_sorting() {
+fn host_seeded_customizations_publish_nested_records() {
     let env = env();
     let choice = |id, order| Choice {
         fields: vec![
@@ -30,6 +30,7 @@ fn host_seeded_customizations_publish_nested_records_without_sorting() {
         ],
     };
     let option = |id, order| OptionRecord {
+        stored_order_key: 0,
         fields: vec![
             ("id".into(), V::Number(id)),
             ("orderIndex".into(), V::Number(order)),
@@ -39,6 +40,7 @@ fn host_seeded_customizations_publish_nested_records_without_sorting() {
     };
     env.state().borrow_mut().character_customizations = Some(vec![
         Category {
+            stored_order_key: 0,
             fields: vec![
                 ("id".into(), V::Number(11.0)),
                 ("orderIndex".into(), V::Number(9.0)),
@@ -102,6 +104,7 @@ fn publisher_field_sets_and_unknown_host_values_are_not_reinterpreted() {
             .collect()
     };
     env.state().borrow_mut().character_customizations = Some(vec![Category {
+        stored_order_key: 0,
         fields: fields(&[
             "id",
             "orderIndex",
@@ -125,6 +128,7 @@ fn publisher_field_sets_and_unknown_host_values_are_not_reinterpreted() {
         camera_zoom_level: Some(-4),
         camera_distance_offset: Some(-0.625),
         options: vec![OptionRecord {
+            stored_order_key: 0,
             fields: fields(&[
                 "id",
                 "name",
@@ -171,4 +175,82 @@ fn publisher_field_sets_and_unknown_host_values_are_not_reinterpreted() {
         collectgarbage('collect')
         assert(row.options[1].choices[1].id == 1)
     "#).unwrap();
+}
+
+// R79b/#305 and R79c/#314: stored-key sorting and rewritten positions are
+// VERIFIED. These neutral host keys make no claim about the inferred DB2 fields.
+#[test]
+fn host_customization_finalizer_sorts_and_numbers_each_list() {
+    let env = env();
+    let option = |id, key| OptionRecord {
+        stored_order_key: key,
+        fields: vec![
+            ("id".into(), V::Number(id)),
+            ("orderIndex".into(), V::Number(888.0)),
+        ],
+        ..Default::default()
+    };
+    let category = |id, key| Category {
+        stored_order_key: key,
+        fields: vec![
+            ("id".into(), V::Number(id)),
+            ("orderIndex".into(), V::Number(999.0)),
+        ],
+        options: vec![option(21.0, 70), option(22.0, -5), option(23.0, 9)],
+        ..Default::default()
+    };
+    for rows in [
+        vec![category(11.0, 50), category(12.0, -10), category(13.0, 0)],
+        vec![category(13.0, 0), category(11.0, 50), category(12.0, -10)],
+    ] {
+        env.state().borrow_mut().character_customizations = Some(rows);
+        env.exec(r#"
+            local rows = C_CharacterCreation.GetAvailableCustomizations()
+            assert(#rows == 3)
+            assert(rows[1].id == 12 and rows[2].id == 13 and rows[3].id == 11)
+            for i, row in ipairs(rows) do
+                assert(row.orderIndex == i)
+                assert(#row.options == 3)
+                assert(row.options[1].id == 22 and row.options[2].id == 23 and row.options[3].id == 21)
+                for j, option in ipairs(row.options) do assert(option.orderIndex == j) end
+            end
+        "#).unwrap();
+    }
+}
+
+#[test]
+fn host_customization_finalizer_preserves_small_equal_key_input_order() {
+    let env = env();
+    for count in [1, 2, 31, 32] {
+        let rows = (1..=count)
+            .rev()
+            .map(|id| Category {
+                stored_order_key: 7,
+                fields: vec![("id".into(), V::Number(f64::from(id)))],
+                options: (1..=count)
+                    .rev()
+                    .map(|option_id| OptionRecord {
+                        stored_order_key: -4,
+                        fields: vec![("id".into(), V::Number(f64::from(option_id)))],
+                        ..Default::default()
+                    })
+                    .collect(),
+                ..Default::default()
+            })
+            .collect();
+        env.state().borrow_mut().character_customizations = Some(rows);
+        env.exec(&format!(
+            r#"
+            local rows = C_CharacterCreation.GetAvailableCustomizations()
+            assert(#rows == {count})
+            for i, row in ipairs(rows) do
+                assert(row.id == {count} + 1 - i and row.orderIndex == i)
+                for j, option in ipairs(row.options) do
+                    assert(option.id == {count} + 1 - j and option.orderIndex == j)
+                end
+            end
+        "#
+        ))
+        .unwrap();
+    }
 }

@@ -23,6 +23,8 @@ pub struct Icon {
 }
 #[derive(Clone, Debug, Default)]
 pub struct Category {
+    /// Host-supplied stored finalizer key, not the published sequential position.
+    pub stored_order_key: i64,
     pub fields: Vec<(String, PublishedValue)>,
     pub icon: Icon,
     pub selected_icon: Icon,
@@ -32,6 +34,8 @@ pub struct Category {
 }
 #[derive(Clone, Debug, Default)]
 pub struct OptionRecord {
+    /// Host-supplied stored finalizer key, not the published sequential position.
+    pub stored_order_key: i64,
     pub fields: Vec<(String, PublishedValue)>,
     pub choices: Vec<Choice>,
 }
