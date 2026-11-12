@@ -93,7 +93,8 @@ fn pvp_slot_on_enter_uses_default_catalog_spell_and_unlock_lines() {
             { talent = 51, spell = 236180, title = "Den Mother", level = 30 },
         }
         for _, case in ipairs(cases) do
-            button:SetSelectedTalent(case.talent)
+            -- Supply the already-selected UI value without calling LearnPvpTalent.
+            button.predictedSetting.predictedValue = case.talent
             assert(button:GetSelectedTalent() == case.talent, "real PvP slot carries its selected talent")
             getterCalls = 0
             getterArguments = nil
@@ -102,6 +103,7 @@ fn pvp_slot_on_enter_uses_default_catalog_spell_and_unlock_lines() {
             GameTooltip:ClearLines()
             assert(button:GetScript("OnEnter"))(button)
             assert(GameTooltip:IsShown(), "original PvP slot hover shows the tooltip")
+            assert(GameTooltip:NumLines() > 0, "selected PvP talent shows visible tooltip lines")
             assert(getterCalls == 1, "original OnEnter reaches the registered PvP getter once")
             assert(getterArguments[1] == case.talent and getterArguments[2] == false
                 and getterArguments[4] == 1, "OnEnter supplies the selected talent and slot")
