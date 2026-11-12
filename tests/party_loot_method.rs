@@ -462,11 +462,17 @@ fn loot_method_style_is_mainline_across_method_changes() {
         r#"
         assert(select('#', C_PartyInfo.GetLootMethodStyle()) == 1)
         assert(Enum.LootMethodStyles.Mainline == 0)
+        assert(Enum.LootMethodStyles.Vanilla == 1)
+        assert(Enum.LootMethodStyles.PersonalOnly == nil)
+        local styleMetadata = Enum.LootMethodStylesMeta
+        assert(styleMetadata.NumValues == 2)
+        assert(styleMetadata.MinValue == 0)
+        assert(styleMetadata.MaxValue == 1)
         assert(C_PartyInfo.GetLootMethodStyle() == Enum.LootMethodStyles.Mainline)
         assert(C_PartyInfo.SetLootMethod(0))
         assert(C_PartyInfo.GetLootMethod() == 0)
         assert(C_PartyInfo.GetLootMethodStyle() == Enum.LootMethodStyles.Mainline)
         "#,
     )
-    .expect("the Retail loot ruleset reports the Mainline style");
+    .expect("the Mainline loot style should match its published enum");
 }

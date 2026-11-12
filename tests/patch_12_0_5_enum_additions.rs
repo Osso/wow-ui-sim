@@ -274,36 +274,6 @@ fn loot_method_styles_publish_mainline_without_personal_only_alias() {
 }
 
 #[test]
-#[cfg(feature = "client-ptr")]
-fn ptr_loot_method_styles_publish_mainline_without_personal_only_alias() {
-    let env = WowLuaEnv::new().expect("lua env should initialize");
-    let (mainline, vanilla, personal_only, count, minimum, maximum): (
-        Option<i32>,
-        Option<i32>,
-        Option<i32>,
-        i32,
-        i32,
-        i32,
-    ) = env
-        .eval(
-            r#"
-            local values = Enum.LootMethodStyles
-            local count = 0
-            for _, value in pairs(values) do
-                if type(value) == "number" then count = count + 1 end
-            end
-            local meta = Enum.LootMethodStylesMeta
-            return values.Mainline, values.Vanilla, values.PersonalOnly,
-                   count, meta.MinValue, meta.MaxValue
-            "#,
-        )
-        .expect("PTR loot style enum should be published");
-
-    assert_eq!((mainline, vanilla, personal_only), (Some(0), Some(1), None));
-    assert_eq!((count, minimum, maximum), (2, 0, 1));
-}
-
-#[test]
 #[cfg(feature = "client-retail")]
 fn photo_sharing_upload_statuses_publish_disabled() {
     // ImageSharingConstantsDocumentation.lua:50-87; source delta:603.
