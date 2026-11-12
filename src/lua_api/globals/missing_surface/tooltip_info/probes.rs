@@ -14,8 +14,8 @@ use super::sources::{
 #[cfg(not(feature = "retail-12-0-5"))]
 use super::spell::lookup_player_aura_by_instance_id;
 use super::spell::{
-    append_action_binding_line, lookup_player_aura, spell_id_for_talent_id, tooltip_for_spell_id,
-    tooltip_for_toy_item_id, tooltip_for_unit_aura,
+    lookup_player_aura, spell_id_for_talent_id, tooltip_for_spell_id, tooltip_for_toy_item_id,
+    tooltip_for_unit_aura,
 };
 use super::unit::{tooltip_for_unit, tooltip_for_world_loot};
 use crate::lua_api::globals::currency_data;
