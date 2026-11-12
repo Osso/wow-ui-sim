@@ -21,6 +21,32 @@ fn test_strsplit() {
     assert_eq!(result.1, "debug");
 }
 
+/// SlashCmdList stores and invokes callbacks registered by slash name.
+#[test]
+fn test_slash_command_registration() {
+    let env = WowLuaEnv::new().unwrap();
+
+    env.exec(
+        r#"
+        _G.cmdExecuted = false
+        SlashCmdList["MYCOMMAND"] = function(msg)
+            _G.cmdExecuted = true
+            _G.cmdMsg = msg
+        end
+        SLASH_MYCOMMAND1 = "/mycommand"
+        SlashCmdList["MYCOMMAND"]("test")
+        "#,
+    )
+    .unwrap();
+
+    let (executed, message, slash_name): (bool, String, String) = env
+        .eval("return _G.cmdExecuted, _G.cmdMsg, SLASH_MYCOMMAND1")
+        .unwrap();
+    assert!(executed, "registered slash callback should run");
+    assert_eq!(message, "test");
+    assert_eq!(slash_name, "/mycommand");
+}
+
 /// TimerCallback has no arguments; zero delay still waits for timer processing.
 #[test]
 fn timer_after_plain_callback_is_deferred_once_without_arguments() {
