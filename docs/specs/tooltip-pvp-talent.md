@@ -9,11 +9,11 @@ VERIFIED: Retail `C_TooltipInfo.GetPvpTalent` uses the PvP talent row to build s
 - [x] VERIFIED: Retail registers `GetPvpTalent`, and `GameTooltip:SetPvpTalent` reaches it through Blizzard's original tooltip accessor. UNKNOWN: PTR and WowForever registration were not inspected.
 - [x] VERIFIED: Successful calls use the required talent ID, default `isInspect` to `false`, default local group to the active group, default `talentIndex` to `0`, and preserve the one-based group and zero-based position inputs.
 - [ ] VERIFIED: Invalid argument types, secret-value failures, checked-index errors and the complete usage-error text. The tests cover successful inputs only.
-- [ ] VERIFIED: Read `SpellID` and `OverridesSpellID` from the host-supplied talent row without seeding built-in talent records. The tests provide rows but do not query the empty default catalog.
+- [ ] VERIFIED: Retail starts with generated `SpellID`, `OverridesSpellID`, `LevelRequired`, and category `TalentSlotMask` rows; test the actual default row and its neutral host-only grant/eligibility inputs. The local export is installed build 12.1.5.70783, not the selected 12.1.5.70575 pin.
 
 ### Spell content and identity
 
-- [x] VERIFIED: Use `SpellID` as the primary spell input. The host-supplied resolver map gives its resolved outcome; an absent entry means identity.
+- [x] VERIFIED: Use `SpellID` as the primary spell input. The host-supplied resolver map gives its resolved outcome; an absent entry means identity. R53 confirms `OverridesSpellID` is only used by the conditional replacement annotation and is not a fallback.
 - [x] VERIFIED: A successful tooltip uses type `1` and the resolved nonzero spell ID; the tests do not cover zero-ID publication or miss paths.
 - [x] VERIFIED: Zero `OverridesSpellID` adds no replacement line. A nonzero override can add a type-`0` `REPLACES_SPELL` line after ordinary spell content, and the original row's attribute mask `32768` suppresses it.
 - [ ] VERIFIED: Missing resolved override-name or original override rows suppress `REPLACES_SPELL`; these row-miss branches are not tested.
@@ -40,7 +40,9 @@ VERIFIED: Retail `C_TooltipInfo.GetPvpTalent` uses the PvP talent row to build s
 
 ## Implementation inventory
 
-- `src/c_api/c_tooltip_info_pvp_talent.rs` — Retail registration, host inputs, resolved spell selection and annotation composition.
+- `src/c_api/c_tooltip_info_pvp_talent.rs` — Retail registration, generated default catalog, host inputs, resolved spell selection and annotation composition.
+- `src/c_api/c_tooltip_info_pvp_talent_data.rs` — generated Retail catalog rows.
+- `tools/gen_pvp_talent_catalog.py` and `data/pvp-talents/retail-12.1.5.70783/` — projection generator, CSV and source provenance.
 - `src/c_api/tooltip_getter_args.rs` — shared secret-aware numeric, boolean and index readers.
 - `src/lua_api/globals/missing_surface/tooltip_info/mod.rs` — C_TooltipInfo registration and existing spell-tooltip bridge.
 - `src/lua_api/globals/missing_surface/tooltip_info/spell.rs` — shared spell tooltip producer.
@@ -49,14 +51,15 @@ VERIFIED: Retail `C_TooltipInfo.GetPvpTalent` uses the PvP talent row to build s
 
 ## Tests asserting this spec
 
-- `tests/tooltip_pvp_talent.rs` — Retail registration; original `GameTooltip:SetPvpTalent` consumer; spell identity, replacement line and suppression; local level, group, position, eligibility, combat and rest branches; item, essence and inspect grant branches.
+- `tests/tooltip_pvp_talent.rs` — Retail registration; original `GameTooltip:SetPvpTalent` consumer; generated default catalog values and neutral grant/eligibility inputs; original PvP slot OnEnter; spell identity, replacement line and suppression; local level, group, position, eligibility, combat and rest branches; item, essence and inspect grant branches.
+- `tools/test_gen_pvp_talent_catalog.py` — projected-column, row validation, and generated Rust output.
 
 ## Known gaps (current cycle)
 
 - [ ] UNKNOWN: The native final Lua result for a missing talent row, zero talent ID, failed base-spell presence check, missing player, or missing resolved spell-name row. The simulator uses the shared EMULATED zero-value `unknown_getter_failure` seam; this is not a claim of native parity. Tests do not assert these paths.
 - [ ] UNKNOWN: Whether the native base-spell presence provider can report `SpellID` zero as present. This path is not modeled or tested.
 - [ ] UNKNOWN: The native spell override ranking walk's exact ranked IDs, map writers and precedence among talent, aura and SpellReplace sources. The host supplies the resolved ID; this implementation does not infer the walk.
-- [ ] UNKNOWN: The complete PvP talent catalog, effect-parameter decoder, essence lookup, inspect lifecycle, additional progression restrictions and remaining eligibility failure reasons. Hosts must supply rows and observed helper results; absent inputs do not fabricate lines.
+- [ ] UNKNOWN: Native alignment of the installed 12.1.5.70783 rows with selected build 12.1.5.70575, the effect-parameter decoder, essence lookup, inspect lifecycle, additional progression restrictions and remaining eligibility failure reasons. Grant and eligibility outcomes remain host-only; absent inputs do not fabricate lines.
 - [ ] VERIFIED: When the primary spell producer misses because the local player or spell-name row is unavailable, the native PvP caller still runs talent annotations. UNKNOWN: Its final result and table shape; this failure path stays unmodelled and untested here.
 - [ ] VERIFIED: Native `isInspect` also changes the ordinary spell request. UNKNOWN: The existing simulator producer has no matching observable request field, so this effect stays unmodelled.
 - [ ] UNKNOWN: Numeric RGB defaults, the complete ordinary spell line and field set, and a getter-specific event contract.
