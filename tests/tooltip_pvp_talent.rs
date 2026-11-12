@@ -872,7 +872,7 @@ mod r73 {
         hover(
             &env,
             false,
-            "TALENT_GRANTED_BY_ITEM:format("Hearthstone")",
+            r#"TALENT_GRANTED_BY_ITEM:format("Hearthstone")"#,
         );
     }
 
