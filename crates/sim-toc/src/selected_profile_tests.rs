@@ -835,26 +835,19 @@ fn test_is_all_template_versions() {
 }
 
 #[test]
-fn third_party_allowload_selects_explicit_screens() {
+fn third_party_allowload_keeps_game_default() {
     use crate::screen::ScreenKind;
 
-    for (value, game, glue) in [
-        ("Game", true, false),
-        ("gLuE", false, true),
-        ("Both", true, true),
-        ("Unknown", false, false),
-    ] {
+    // R13 (pr46-49-decomp-answers.md): insecure TOC parsing ignores AllowLoad.
+    // R64 Q1 infers that ordinary third-party AddOns use that parser mode.
+    for value in ["Game", "gLuE", "Both", "Unknown"] {
         let toc = TocFile::parse(
             Path::new("/addons/UserScreenProbe"),
             &format!("## AllowLoad: {value}\nCore.lua"),
         );
-        assert_eq!(toc.allows_screen(ScreenKind::Game), game, "{value}");
-        assert_eq!(toc.allows_screen(ScreenKind::Login), glue, "{value}");
-        assert_eq!(
-            toc.allows_screen(ScreenKind::CharacterSelect),
-            glue,
-            "{value}"
-        );
+        assert!(toc.allows_screen(ScreenKind::Game), "{value}");
+        assert!(!toc.allows_screen(ScreenKind::Login), "{value}");
+        assert!(!toc.allows_screen(ScreenKind::CharacterSelect), "{value}");
     }
 }
 
