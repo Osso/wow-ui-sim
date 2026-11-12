@@ -582,7 +582,13 @@ fn test_set_spell_by_id_shows_cast_time() {
 fn test_set_spell_by_id_instant_cast() {
     let env = WowLuaEnv::new().unwrap();
 
-    // Crusader Strike (35395): instant cast
+    // R81 Q3: a nonpositive cast result alone does not establish Instant.
+    env.state()
+        .borrow_mut()
+        .spell_tooltip_inputs
+        .entry(35395)
+        .or_default()
+        .alternate_cast_text = Some("Instant".into());
     env.exec("GameTooltip:SetSpellByID(35395)").unwrap();
 
     let state = env.state().borrow();
@@ -590,7 +596,20 @@ fn test_set_spell_by_id_instant_cast() {
     let td = state.tooltips.get(&gt_id).unwrap();
     assert_eq!(td.lines[0].left_text, "Crusader Strike");
     let has_instant = td.lines.iter().any(|l| l.left_text == "Instant");
-    assert!(has_instant, "Instant cast spells should show 'Instant'");
+    assert!(has_instant, "Supplied alternate text should appear");
+    drop(state);
+    env.state().borrow_mut().spell_tooltip_inputs.clear();
+    env.exec("GameTooltip:SetSpellByID(35395)").unwrap();
+    assert!(
+        !env.state()
+            .borrow()
+            .tooltips
+            .get(&gt_id)
+            .unwrap()
+            .lines
+            .iter()
+            .any(|line| line.left_text == "Instant")
+    );
 }
 
 #[test]
