@@ -495,3 +495,25 @@ The original credits consumer fixture supplies rows/text before addon loading,
 without replaying OnLoad. Opening credits with an empty host catalog would call
 the text getter with nil at CreditsFrame.lua:112; that input remains an explicit
 coverage error pending R65, not a claim about native empty-list behavior.
+
+
+### R65 credits text input and publication
+
+Comment116 resolves PTR/Forever input validation: numbers and numeric strings
+must be finite and fit signed int32, with fractions truncated toward zero.
+Missing/nil and invalid type/string/nonfinite/out-of-range errors share the
+verified Usage core. The simulator uses that core without claiming a universal
+full decorated Lua error line or boundary conversion details beyond the answer.
+
+IDs resolve directly against the explicit host file-text map, without looking
+up credits rows. Signed keys preserve the converted input. Return is one string
+(including empty) or one nil for an absent file. Publication is VERIFIED for
+Forever; PTR follows the coordinator-approved model without asserting its
+unrecovered full publisher as native fact. Synchronous copy and no later event
+are verified. Client-file origin and load-failure equivalence are inferred;
+storage waiting and the complete publisher route remain unknown.
+
+This supersedes earlier pending-R65 and neutral-zero-return descriptions.
+Opening credits with an empty host catalog still passes nil from original Lua;
+R65 now identifies that as a required-argument error rather than a simulator
+coverage diagnostic. No fabricated default row is added to hide that condition.

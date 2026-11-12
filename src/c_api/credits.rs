@@ -1,5 +1,5 @@
 //! R63 field publication; R112 empty host catalog/text-map simulator policy.
-//! Native fresh rows/order and text validation/unknown-ID result await R65.
+//! Native fresh rows/order remain unknown; R65 specifies text input/publication.
 use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::methods::{borrow_state, create_string, create_table, table_set};
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
@@ -21,7 +21,7 @@ pub struct CreditsRow {
 pub struct CreditsState {
     /// Explicit host order, not a reconstructed native row order/fresh catalog.
     pub rows: Vec<CreditsRow>,
-    pub texts: HashMap<u32, String>,
+    pub texts: HashMap<i32, String>,
 }
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     if !matches!(ACTIVE, ClientProfile::Ptr | ClientProfile::WowForever) {
@@ -78,27 +78,30 @@ fn display(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 fn text(state: &mut LuaState) -> LuaResult<u32> {
-    // Bounded host-map input, NOT native validation or conversion semantics.
-    let Val::Num(id) = stack_val(state, 1) else {
-        return Err(rilua::runtime_error(
-            "GetCreditsTextByFileDataID: argument outside simulator coverage (native validation pending R65)",
-        ));
-    };
-    if !id.is_finite() || id.fract() != 0.0 || id < 0.0 || id > f64::from(u32::MAX) {
-        return Err(rilua::runtime_error(
-            "GetCreditsTextByFileDataID: argument outside simulator coverage (native validation pending R65)",
-        ));
+    const USAGE: &str = "Usage: local creditsText = GetCreditsTextByFileDataID(fileDataID)";
+    let number = match stack_val(state, 1) {
+        Val::Num(number) => Some(number),
+        Val::Str(reference) => state
+            .gc
+            .string_arena
+            .get(reference)
+            .and_then(|value| super::helpers::parse_numeric_string(value.data())),
+        _ => None,
     }
+    .ok_or_else(|| rilua::runtime_error(USAGE))?;
+    if !number.is_finite() || number < f64::from(i32::MIN) || number > f64::from(i32::MAX) {
+        return Err(rilua::runtime_error(USAGE));
+    }
+    // R65: direct FileDataID resolution, independent of the display catalog.
     let text = borrow_state(state)?
         .credits
         .texts
-        .get(&(id as u32))
+        .get(&(number.trunc() as i32))
         .cloned();
-    if let Some(text) = text {
-        let value = create_string(state, &text);
-        state.push(value);
-        Ok(1)
-    } else {
-        Ok(0)
-    } // R112 neutral host-policy result, not native unknown-ID evidence.
+    let value = match text {
+        Some(text) => create_string(state, &text),
+        None => Val::Nil,
+    };
+    state.push(value);
+    Ok(1)
 }
