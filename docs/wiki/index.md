@@ -1,8 +1,12 @@
+## [2026-11-12] implementation | R73 PvP talent annotations
+
+[Tooltip data](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) links the [R73 contract](../specs/tooltip-pvp-talent.md). VERIFIED: eight exact tests pass, including seven original-hover outcomes and supplied slot/group fields. Combat precedes grant and later unlock, and supplied rest permission replaces the unproved XP-state mapping. UNKNOWN: opaque native predicates and inspect internals remain unmodelled.
+
 > Proof receipts live untracked under `~/.local/state/wow-ui-sim`. The `data/patch-api/evidence` and `data/test-perf/evidence` trees were removed on 2026-11-08; historical links below are records, not live paths. Recover a file with `git show c011c1d95:<path>`.
 
 ## [2026-11-12] system | PvP talent tooltip catalog
 
-[Tooltip data](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) links the [PvP talent contract](../specs/tooltip-pvp-talent.md) and generated 407-row Retail catalog. **VERIFIED:** the installed CASC export is 12.1.5.70783 with zero unreadable PvpTalent and category rows; the exact tooltip tests pass. **UNKNOWN:** equivalence to selected build 12.1.5.70575 and selected-slot state (R73 pending).
+[Tooltip data](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) links the [PvP talent contract](../specs/tooltip-pvp-talent.md) and generated 407-row Retail catalog. **VERIFIED:** the installed CASC export is 12.1.5.70783 with zero unreadable PvpTalent and category rows; the exact tooltip tests pass. **UNKNOWN:** equivalence to selected build 12.1.5.70575 ; selected-slot host state is now covered by the R73 contract.
 
 ## [2026-11-11] correction | Addon loading phases and LoadWith followers
 

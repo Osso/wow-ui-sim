@@ -83,6 +83,8 @@ pub fn register_c_specialization_info(state: &mut LuaState) -> LuaResult<()> {
         table_set_rust_fn_static(state, t_ref, "GetTalentInfo", talent_info)?;
     }
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        #[cfg(feature = "client-retail")]
+        super::c_tooltip_info_pvp_talent::register_slot_info(state, t_ref)?;
         table_set_rust_fn_static(
             state,
             t_ref,
