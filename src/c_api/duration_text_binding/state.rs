@@ -158,7 +158,7 @@ pub(super) fn validate_font_string(state: &mut LuaState) -> LuaResult<u32> {
     let fully_locked_down = borrow_state(state)?
         .widgets
         .get(id)
-        .is_some_and(|frame| frame.full_lockdown);
+        .is_some_and(|frame| frame.is_fully_locked_down());
     if fully_locked_down {
         return Err(runtime_error("Attempt to access fully locked-down object."));
     }

@@ -393,11 +393,20 @@ fn game_placeholder_resolves_to_standard_directory() {
         ] {
             assert!(unit_popup_dir().join(relative).is_file(), "missing {relative}");
         }
+        assert!(
+            toc.files.contains(&PathBuf::from("Camelot/UnitPopupMenus.lua")),
+            "Forever [Game] menu entry must resolve to Camelot"
+        );
+        assert!(
+            !toc.files.iter().any(|path| path.starts_with("Standard/")),
+            "Forever does not select Standard [Game] paths"
+        );
         return;
     }
 
     if toc_layout::classic_cache() {
         assert!(!body.iter().any(|entry| entry.starts_with("Standard/")));
+
         return;
     }
 
@@ -405,10 +414,17 @@ fn game_placeholder_resolves_to_standard_directory() {
         let resolved = unit_popup_dir().join(relative);
         assert!(
             resolved.is_file(),
-            "Retail UnitPopup.toc:11,13 selects Standard\\ files through [Game]; \
-             expected `{resolved:?}`"
+            "`[Game]` placeholder must resolve to existing Standard body file at \
+             {resolved:?} for this profile"
         );
     }
+}
+}
+
+post_wrath_ui_fixture! {
+#[test]
+fn game_placeholder_resolves_to_active_profile_variant() {
+    game_placeholder_resolves_to_standard_directory();
 }
 }
 

@@ -1,6 +1,6 @@
 //! Modeled unit criteria input for `C_ScenarioInfo`.
 
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 use {
     super::ensure_namespace,
     crate::lua_api::methods::{borrow_state, create_string, create_table, table_set_static},
@@ -21,7 +21,7 @@ pub struct UnitCriteriaProgress {
     pub identity_restricted: bool,
 }
 
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     let namespace = ensure_namespace(state, "C_ScenarioInfo")?;
     table_set_rust_fn_static(
@@ -40,7 +40,7 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
 }
 
 /// Returns nothing outside a scenario or when it has no theme color.
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 fn get_display_info(state: &mut LuaState) -> LuaResult<u32> {
     let theme_color = {
         let sim = borrow_state(state)?;
@@ -62,7 +62,7 @@ fn get_display_info(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 /// Nil unless inside a tiered entrance scenario.
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 fn get_tiered_entrance_active_spells(state: &mut LuaState) -> LuaResult<u32> {
     let spells = {
         let sim = borrow_state(state)?;
@@ -87,7 +87,7 @@ fn get_tiered_entrance_active_spells(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 fn get_unit_criteria_progress_values(state: &mut LuaState) -> LuaResult<u32> {
     let unit = read_unit_token(state)?;
     let progress = {
@@ -105,7 +105,7 @@ fn get_unit_criteria_progress_values(state: &mut LuaState) -> LuaResult<u32> {
     Ok(3)
 }
 
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 fn read_unit_token(state: &LuaState) -> LuaResult<String> {
     // Secret Lua input retains the VM's untainted-caller guard.
     let unit = unwrap_secret(state, stack_val(state, 1))?;
@@ -124,7 +124,7 @@ fn read_unit_token(state: &LuaState) -> LuaResult<String> {
         .map_err(|_| rilua::runtime_error("UnitToken must be a UTF-8 string"))
 }
 
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 fn push_progress_results(state: &mut LuaState, progress: &UnitCriteriaProgress) {
     for number in [progress.actual_value as f64, progress.percent_value] {
         let value = if progress.identity_restricted {

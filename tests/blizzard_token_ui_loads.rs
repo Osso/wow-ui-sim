@@ -265,10 +265,20 @@ fn body_resolves_to_five_entries_in_declared_order() {
         .map(|p| p.to_string_lossy().to_string())
         .collect();
 
-    let token_files = if toc_layout::unified_toc_tree() {
-        // PTR/Forever TokenUI.toc:6-7 selects Mainline subdirectory files.
-        ["Mainline/Blizzard_TokenUI.lua", "Mainline/Blizzard_TokenUI.xml"]
+    let token_files = if toc_layout::forever() {
+        // Forever's TOC excludes Mainline entries and selects Camelot files.
+        [
+            "Camelot/Blizzard_TokenUI.lua",
+            "Camelot/Blizzard_TokenUI.xml",
+        ]
+    } else if toc_layout::ptr() {
+        // PTR selects the Mainline TokenUI implementation.
+        [
+            "Mainline/Blizzard_TokenUI.lua",
+            "Mainline/Blizzard_TokenUI.xml",
+        ]
     } else {
+        // Retail keeps TokenUI files at the addon root.
         ["Blizzard_TokenUI.lua", "Blizzard_TokenUI.xml"]
     };
     let expected = vec![
@@ -370,7 +380,10 @@ fn token_frame_load_ui_is_absent_and_wow_token_ui_owns_secure_token_flow() {
          UseSecureEnvironment: 1"
     );
     let expected_deps: Vec<String> = if classic_legacy_token {
-        vec!["Blizzard_SharedXML".to_string(), "Blizzard_UIParent".to_string()]
+        vec![
+            "Blizzard_SharedXML".to_string(),
+            "Blizzard_UIParent".to_string(),
+        ]
     } else {
         vec!["Blizzard_SharedXML".to_string()]
     };

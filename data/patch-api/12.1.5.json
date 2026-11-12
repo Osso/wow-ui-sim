@@ -18700,7 +18700,7 @@
         {
           "kind": "source",
           "reference": "src/widget/frame_defaults.rs",
-          "source_hash": "01e5f7dc30248300c5c33747e9ee107647e932b552a667e86efd152dd6732618",
+          "source_hash": "6cff95bd75e1ded1a8d3e253e9f2f618a9b15be20e3ce6c7eb60fc31ae0c8f28",
           "summary": "Cooldown frame defaults initialize threshold storage to numeric 0 in the simulator; this is simulator state, not a native-default claim."
         },
         {
@@ -18743,7 +18743,7 @@
         {
           "kind": "source",
           "reference": "src/widget/frame_defaults.rs",
-          "source_hash": "01e5f7dc30248300c5c33747e9ee107647e932b552a667e86efd152dd6732618",
+          "source_hash": "6cff95bd75e1ded1a8d3e253e9f2f618a9b15be20e3ce6c7eb60fc31ae0c8f28",
           "summary": "Cooldown frame defaults initialize threshold storage to numeric 0 in the simulator; this is simulator state, not a native-default claim."
         },
         {
@@ -19094,7 +19094,7 @@
         {
           "kind": "source",
           "reference": "src/widget/frame_defaults.rs",
-          "source_hash": "01e5f7dc30248300c5c33747e9ee107647e932b552a667e86efd152dd6732618",
+          "source_hash": "6cff95bd75e1ded1a8d3e253e9f2f618a9b15be20e3ce6c7eb60fc31ae0c8f28",
           "summary": "Cooldown frame defaults initialize threshold storage to numeric 0 in the simulator; this is simulator state, not a native-default claim."
         },
         {
@@ -20236,7 +20236,7 @@
         },
         {
           "kind": "source",
-          "reference": "src/loader/xml_file.rs",
+          "reference": "git:93125f591108a45dac8b124dee1cc59a9524fa2b:src/loader/xml_file.rs",
           "summary": "XML loading registers top-level virtual animation declarations through the shared template registry without creating runtime instances.",
           "source_hash": "eb38b1d3208e693794bb80f2bc8c19fc9897407f9d088d3b47ccc3230060d7b1"
         },
@@ -20822,7 +20822,7 @@
         {
           "kind": "test",
           "reference": "tests/spell_casting.rs::spellcast_input_blizzard_bar_observes_delay_and_failure",
-          "source_hash": "4d7e3cdc4fae3cf69b9b10575e4e89a5848ee084e2b67e1f2b830cb4af4ebc8e",
+          "source_hash": "08ab851c532da13ff4ebc65dbcc178914113788f3c858e838fe47c9e57bdeca0",
           "summary": "Focused full Blizzard UI consumer proof covers delayed bar duration plus normal and quiet failure clearing through public admin inputs on PTR and earlier retail."
         }
       ],
@@ -21097,7 +21097,7 @@
         {
           "kind": "test",
           "reference": "tests/spell_casting.rs::spellcast_input_blizzard_bar_observes_delay_and_failure",
-          "source_hash": "4d7e3cdc4fae3cf69b9b10575e4e89a5848ee084e2b67e1f2b830cb4af4ebc8e",
+          "source_hash": "08ab851c532da13ff4ebc65dbcc178914113788f3c858e838fe47c9e57bdeca0",
           "summary": "Focused full Blizzard UI consumer proof covers delayed bar duration plus normal and quiet failure clearing through public admin inputs on PTR and earlier retail."
         }
       ],
@@ -21153,7 +21153,7 @@
         {
           "kind": "test",
           "reference": "tests/spell_casting.rs::spellcast_input_blizzard_bar_observes_delay_and_failure",
-          "source_hash": "4d7e3cdc4fae3cf69b9b10575e4e89a5848ee084e2b67e1f2b830cb4af4ebc8e",
+          "source_hash": "08ab851c532da13ff4ebc65dbcc178914113788f3c858e838fe47c9e57bdeca0",
           "summary": "Focused full Blizzard UI consumer proof covers delayed bar duration plus normal and quiet failure clearing through public admin inputs on PTR and earlier retail."
         }
       ],
@@ -21198,7 +21198,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/unit_misc.rs",
           "summary": "The interruption actor uses the existing player UnitGUID resolver rather than target state or a fabricated enemy identity.",
-          "source_hash": "4ba65143d516df5bfa6a7a137060524c9527118aa93b57e1f4eccb82b259f487"
+          "source_hash": "7177cb4d99d80cac32b2dbc5c39271c4ce5c7572f108dd4b25b3d647fce2a74e"
         },
         {
           "kind": "source",

@@ -62,6 +62,15 @@ Authoritative evidence: `Blizzard_APIDocumentationGenerated/BagIndexConstantsDoc
 
 Implementation: `src/c_api/forever_finite_constants.rs`, registered only for `client-wowforever`. Tests: `forever_bag_index_enumerates_disjoint_bank_tabs` and `forever_bag_index_preserves_non_bank_values_and_exact_metadata` in the existing grouped `tests/wowforever_finite_constants.rs` module. This is enum-publication coverage, not a full BetterBags load or proof of account-bank availability, purchased tabs, bank events, or money-display lifecycle.
 
+## LFG voice mode enum
+
+Forever `LFGConstantsDocumentation.lua:34–45` declares `LFGEntryVoiceMode` (`None=0`, `Legacy=1`, `Discord=2`, `Custom=3`) with metadata range 0–3 and four values. The unchanged `Blizzard_GroupFinder_VanillaStyle/Blizzard_LFGVanilla_VoiceChat.lua:3–7` uses these values as keys in its voice-mode label table.
+
+- [x] Publish the documented values and metadata only for Forever.
+- [x] Execute the original voice module with fixture labels and verify all four enum-keyed entries.
+
+Implementation: `src/c_api/forever_finite_constants.rs`. Test: `forever_lfg_voice_mode_enum_drives_original_voice_chat_labels` in `tests/wowforever_finite_constants.rs`.
+
 ## Finite event registration
 
 Forever additionally accepts `CHAT_MSG_COLLECTED_APPEARANCE` and `UNIT_AURA_BLOCKED`, published by cached `ChatInfoDocumentation.lua:1348–1351` and `UnitAuraDocumentation.lua:641–645`. Both belong to the sorted Forever-only event list; arbitrary unknown names remain rejected. Other profiles and the undocumented `PLAYER_EQUIPED_SPELLS_CHANGED` name remain unchanged.

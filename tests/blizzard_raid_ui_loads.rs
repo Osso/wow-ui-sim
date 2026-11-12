@@ -116,11 +116,13 @@ fn load_full_game_ui() -> WowLuaEnv {
 fn blizzard_raid_ui_find_toc_resolves_active_mainline_variant() {
     assert_eq!(
         raid_ui_toc(),
-        raid_ui_dir().join(if toc_layout::classic_cache() || toc_layout::unified_toc_tree() {
-            "Blizzard_RaidUI.toc"
-        } else {
-            "Blizzard_RaidUI_Mainline.toc"
-        }),
+        raid_ui_dir().join(
+            if toc_layout::classic_cache() || toc_layout::unified_toc_tree() {
+                "Blizzard_RaidUI.toc"
+            } else {
+                "Blizzard_RaidUI_Mainline.toc"
+            }
+        ),
         "find_toc_file selects the active profile's RaidUI TOC: the Retail cache ships \
          `_Mainline.toc`, the pinned PTR cache ships the unified bare TOC"
     );
@@ -306,7 +308,11 @@ fn blizzard_raid_ui_toc_lists_bootstrap_xml_then_localization() {
                     "Localization.lua",
                 ][..]
             } else {
-                &["Blizzard_RaidUI.lua", "Blizzard_RaidUI.xml", "Localization.lua"][..]
+                &[
+                    "Blizzard_RaidUI.lua",
+                    "Blizzard_RaidUI.xml",
+                    "Localization.lua",
+                ][..]
             }
         } else if toc_layout::unified_toc_tree() {
             &[
@@ -665,7 +671,11 @@ fn blizzard_raid_ui_xml_pulls_lua_via_script_directive() {
             .iter()
             .position(|path| path == "Mainline/Blizzard_RaidUI.xml")
             .expect("TOC lists Mainline XML directly");
-        assert!(lua < xml, "PTR/Forever TOC must load Lua before XML: {body:?}");
+        assert!(
+            lua < xml,
+            "PTR/Forever TOC must load Lua before XML: {body:?}"
+        );
+
         return;
     }
 
@@ -679,4 +689,9 @@ fn blizzard_raid_ui_xml_pulls_lua_via_script_directive() {
         xml.contains(r#"<Script file="Blizzard_RaidUI.lua"/>"#),
         "Retail XML loads its companion Lua through a Script directive"
     );
+}
+
+#[test]
+fn raid_ui_lua_loads_before_xml_for_active_profile() {
+    blizzard_raid_ui_xml_pulls_lua_via_script_directive();
 }

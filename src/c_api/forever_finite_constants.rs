@@ -29,6 +29,23 @@ fn register_enums(state: &mut LuaState) {
     register_ping_results(state, enums);
     register_gamepad_overrides(state, enums);
     register_provider_experience_enums(state, enums);
+    register_lfg_voice_mode(state, enums);
+}
+
+fn register_lfg_voice_mode(state: &mut LuaState, enums: Val) {
+    // Forever LFGConstantsDocumentation.lua:34-45; consumed by the VanillaStyle voice module.
+    publish(
+        state,
+        enums,
+        "LFGEntryVoiceMode",
+        &[("None", 0), ("Legacy", 1), ("Discord", 2), ("Custom", 3)],
+    );
+    publish(
+        state,
+        enums,
+        "LFGEntryVoiceModeMeta",
+        &[("MinValue", 0), ("MaxValue", 3), ("NumValues", 4)],
+    );
 }
 
 fn register_provider_experience_enums(state: &mut LuaState, enums: Val) {

@@ -7,8 +7,8 @@ use wow_ui_sim::toc::TocFile;
 #[path = "common/toc_layout.rs"]
 mod toc_layout;
 
-// PTR/Forever cache inventories omit the legacy addon; the active shared talent
-// UI is published by Blizzard_SharedTalentUI/Blizzard_SharedTalentUI.toc:1-42.
+// PTR/Forever cache inventories omit this classic-only addon; the active Mainline
+// talent UI is published by Blizzard_SharedTalentUI/Blizzard_SharedTalentUI.toc:1-42.
 fn talent_ui_absent_from_active_cache() -> bool {
     if toc_layout::unified_toc_tree() {
         assert!(

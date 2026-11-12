@@ -25,8 +25,8 @@ pub(crate) use animations::{
     stop_animation_groups_for_hidden_subtree,
 };
 pub(crate) use font_strings::{
-    apply_font_object_snapshot, ensure_button_text_child, font_object_snapshot_changes_frame,
-    project_font_object_for_frame, read_font_object_fields,
+    apply_font_object_snapshot, create_font_string_for_xml, ensure_button_text_child,
+    font_object_snapshot_changes_frame, project_font_object_for_frame, read_font_object_fields,
 };
 
 use crate::lua_bridge::table_set_rust_fn_static;

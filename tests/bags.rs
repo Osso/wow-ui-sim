@@ -149,7 +149,7 @@ fn test_container_frames_registered() {
     let expected_count = expected_container_frame_count();
     assert_eq!(
         count, expected_count,
-        "ContainerFrameContainer.ContainerFrames should match the selected Mainline XML"
+        "ContainerFrameContainer.ContainerFrames should match the selected profile source"
     );
 
     // Check individual frames exist
@@ -193,7 +193,7 @@ fn test_container_frames_array_contains_only_real_container_frames() {
 
     assert_eq!(
         names, expected_names,
-        "ContainerFrameContainer.ContainerFrames should match the selected Mainline XML",
+        "ContainerFrameContainer.ContainerFrames should match the selected profile source"
     );
 }
 

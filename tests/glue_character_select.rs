@@ -132,6 +132,395 @@ fn load_blizzard_screen(screen: ScreenKind) -> common::LockedEnv {
 }
 
 #[test]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn character_create_mode_is_glue_only_and_uses_lua_truthiness() {
+    let env = WowLuaEnv::new().expect("create Lua environment");
+    let game_surface_has_setter: bool = env
+        .eval(
+            "return C_CharacterCreation ~= nil and C_CharacterCreation.SetInCharacterCreate ~= nil",
+        )
+        .expect("Game surface member should be queryable");
+    assert!(!game_surface_has_setter);
+
+    env.set_screen_mode(ScreenKind::CharacterSelect);
+    let glue_surface_has_setter: bool = env
+        .eval("return type(C_CharacterCreation.SetInCharacterCreate) == 'function'")
+        .expect("Glue surface member should be queryable");
+    assert!(glue_surface_has_setter);
+
+    env.exec(
+        r##"
+        characterCreateEventCount = 0
+        local eventProbe = CreateFrame("Frame")
+        eventProbe:RegisterEvent("PLAYER_LOGIN")
+        eventProbe:SetScript("OnEvent", function()
+            characterCreateEventCount = characterCreateEventCount + 1
+        end)
+
+        assert(select("#", C_CharacterCreation.SetInCharacterCreate(true)) == 0)
+        assert(select("#", C_CharacterCreation.SetInCharacterCreate(0)) == 0)
+        assert(select("#", C_CharacterCreation.SetInCharacterCreate("enter")) == 0)
+        assert(select("#", C_CharacterCreation.SetInCharacterCreate({})) == 0)
+        assert(not pcall(C_CharacterCreation.SetInCharacterCreate))
+        assert(not pcall(C_CharacterCreation.SetInCharacterCreate, nil))
+        assert(characterCreateEventCount == 0)
+        "##,
+    )
+    .expect("Glue character-create input should accept Lua truthy values");
+    assert!(env.state().borrow().in_character_create);
+
+    env.exec(
+        "C_CharacterCreation.SetInCharacterCreate(false); C_CharacterCreation.SetInCharacterCreate(false); assert(characterCreateEventCount == 0)",
+    )
+    .unwrap();
+    assert!(!env.state().borrow().in_character_create);
+
+    env.set_screen_mode(ScreenKind::Game);
+    let game_surface_has_setter: bool = env
+        .eval(
+            "return C_CharacterCreation ~= nil and C_CharacterCreation.SetInCharacterCreate ~= nil",
+        )
+        .expect("Game surface member should remain queryable");
+    assert!(!game_surface_has_setter);
+}
+
+#[test]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn character_create_default_facing_uses_host_race_sex_data_in_blizzard_consumer() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::CharacterCreate);
+        let (return_count, missing_facing): (i32, f64) = env
+            .eval(
+                "return select('#', C_CharacterCreation.GetDefaultCharacterCreateFacing()), C_CharacterCreation.GetDefaultCharacterCreateFacing()",
+            )
+            .expect("GetDefaultCharacterCreateFacing should return one number");
+        assert_eq!(return_count, 1);
+        assert_eq!(missing_facing, 0.0);
+
+        env.exec(
+            r##"
+            local getFacing = C_CharacterCreation.GetCharacterCreateFacing
+            local setFacing = C_CharacterCreation.SetCharacterCreateFacing
+            assert(type(getFacing) == "function" and type(setFacing) == "function")
+            assert(select("#", getFacing()) == 1)
+            assert(math.abs(getFacing()) < 0.001)
+            assert(select("#", setFacing("370")) == 0)
+            assert(math.abs(getFacing() - 10) < 0.001)
+            setFacing(270)
+            assert(math.abs(getFacing() + 90) < 0.001)
+
+            local usage = "Usage: C_CharacterCreation.SetCharacterCreateFacing(degrees)"
+            local function expect_exact_error(value, detail)
+                local ok, message = pcall(setFacing, value)
+                assert(not ok)
+                assert(message == "bad argument #1 to 'SetCharacterCreateFacing' (" .. detail .. ")")
+            end
+            local missing_ok, missing_message = pcall(setFacing)
+            assert(not missing_ok)
+            assert(missing_message == "bad argument #1 to 'SetCharacterCreateFacing' (" .. usage .. ")")
+            expect_exact_error(nil, usage)
+            local finite_error = "must be a finite number - " .. usage
+            expect_exact_error(0 / 0, finite_error)
+            expect_exact_error(math.huge, finite_error)
+            expect_exact_error(-math.huge, finite_error)
+
+            local function expect_range_error(value)
+                local ok, message = pcall(setFacing, value)
+                assert(not ok)
+                assert(message:find("outside of expected range", 1, true))
+                assert(message:find(usage, 1, true))
+            end
+            expect_range_error("not a number")
+            expect_range_error(false)
+            expect_range_error(3.4028236e38)
+            "##,
+        )
+        .expect("native facing conversion and argument errors should match");
+
+        env.exec(
+            "C_CharacterCreation.SetSelectedRace(2); C_CharacterCreation.SetSelectedSex(1)",
+        )
+        .expect("select a character-create race and sex");
+        let selection: (i64, i64) = env
+            .eval(
+                "return C_CharacterCreation.GetSelectedRace(), C_CharacterCreation.GetSelectedSex()",
+            )
+            .expect("selected race and sex should be queryable");
+        env.state()
+            .borrow_mut()
+            .character_create_default_facing_by_race_sex
+            .insert(selection, 137.5);
+
+        let facing: f64 = env
+            .eval(
+                r#"
+                local source = debug.getinfo(CharacterCreateMixin.ResetSubjectRotation, "S").source
+                assert(source:find("Blizzard_CharacterCreate/", 1, true))
+                CharacterCreateFrame:ResetSubjectRotation(nil, true)
+                return C_CharacterCreation.GetCharacterCreateFacing()
+                "#,
+            )
+            .expect("the Blizzard reset consumer should load the supplied default facing");
+        assert!((facing - 137.5).abs() < 0.001);
+
+        env.set_screen_mode(ScreenKind::Game);
+        let game_members: (bool, bool, bool) = env
+            .eval(
+                "return C_CharacterCreation.GetDefaultCharacterCreateFacing == nil, C_CharacterCreation.GetCharacterCreateFacing == nil, C_CharacterCreation.SetCharacterCreateFacing == nil",
+            )
+            .expect("Game surface visibility should be queryable");
+        assert_eq!(game_members, (true, true, true), "facing APIs are Glue-only");
+    }
+}
+
+#[test]
+#[cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
+fn queued_upgrade_presence_drives_blizzard_character_select_consumer() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+        let (is_queued, return_count): (bool, i32) = env
+            .eval(
+                "return C_CharacterServices.HasQueuedUpgrade(), select('#', C_CharacterServices.HasQueuedUpgrade())",
+            )
+            .expect("HasQueuedUpgrade should return one boolean");
+        assert!(!is_queued);
+        assert_eq!(return_count, 1);
+
+        env.state()
+            .borrow_mut()
+            .character_services
+            .queued_upgrade_guid_type_nonzero = true;
+        let is_queued: bool = env
+            .eval("return C_CharacterServices.HasQueuedUpgrade()")
+            .expect("host-supplied queued-upgrade state should be visible");
+        assert!(is_queued);
+
+        let refreshed: bool = env
+            .eval(
+                r#"
+                local oldRefresh = CharacterServicesMaster_OnCharacterListUpdate
+                local oldWaiting = StoreFrame_WaitingForCharacterListUpdate
+                local oldPopupCheck = StaticPopup_CheckQueuedDialogs
+                local refreshCount = 0
+                CharacterServicesMaster_OnCharacterListUpdate = function()
+                    refreshCount = refreshCount + 1
+                end
+                StoreFrame_WaitingForCharacterListUpdate = function() return false end
+                StaticPopup_CheckQueuedDialogs = function() end
+                CharacterSelectFrameMixin.OnUpdate(CharacterSelect, 0)
+                CharacterServicesMaster_OnCharacterListUpdate = oldRefresh
+                StoreFrame_WaitingForCharacterListUpdate = oldWaiting
+                StaticPopup_CheckQueuedDialogs = oldPopupCheck
+                return refreshCount == 1
+                "#,
+            )
+            .expect("the Blizzard character-select update should observe queued upgrades");
+        assert!(refreshed);
+
+        env.set_screen_mode(ScreenKind::Game);
+        let game_member: bool = env
+            .eval("return C_CharacterServices.HasQueuedUpgrade == nil")
+            .expect("Game surface visibility should be queryable");
+        assert!(game_member, "queued-upgrade presence is Glue-only");
+    }
+}
+
+#[test]
+#[cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
+fn free_promotional_upgrade_uses_shared_character_services() {
+    let env = WowLuaEnv::new().expect("create Lua environment");
+    let (registered, return_count, available, store_public_absent): (bool, i32, bool, bool) = env
+        .eval(
+            r##"
+            local return_count = select("#", C_SharedCharacterServices.HasFreePromotionalUpgrade())
+            local available = C_SharedCharacterServices.HasFreePromotionalUpgrade()
+            return type(C_SharedCharacterServices.HasFreePromotionalUpgrade) == "function",
+                return_count, available,
+                C_StorePublic == nil or C_StorePublic.HasFreePromotionalUpgrade == nil
+            "##,
+        )
+        .expect("shared promotional-upgrade query should be callable");
+    assert!(registered);
+    assert_eq!(return_count, 1);
+    assert!(!available);
+    assert!(store_public_absent);
+}
+
+#[test]
+#[cfg(feature = "client-wowforever")]
+fn forever_free_promotional_upgrade_is_available_on_glue() {
+    let env = WowLuaEnv::new().expect("create Lua environment");
+    env.set_screen_mode(ScreenKind::CharacterSelect);
+    let (return_count, available): (i32, bool) = env
+        .eval(
+            r##"
+            local return_count = select("#", C_SharedCharacterServices.HasFreePromotionalUpgrade())
+            return return_count, C_SharedCharacterServices.HasFreePromotionalUpgrade()
+            "##,
+        )
+        .expect("Forever Glue should expose the shared promotional-upgrade query");
+    assert_eq!(return_count, 1);
+    assert!(!available);
+}
+
+#[test]
+// The Camelot CharacterSelectList consumer is TOC-selected only by `AllowLoadGameType camelot`.
+#[cfg(feature = "client-wowforever")]
+fn super_district_title_uses_host_selection_and_info() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+        let (selected_id, return_count): (i32, i32) = env
+            .eval(
+                "return C_Login.GetSelectedSuperDistrictID(), select('#', C_Login.GetSelectedSuperDistrictID())",
+            )
+            .expect("selected superdistrict should be queryable");
+        assert_eq!(selected_id, 0);
+        assert_eq!(return_count, 1);
+
+        let unknown_return_count: i32 = env
+            .eval("return select('#', C_DistrictUtils.GetSuperDistrictInfo(0))")
+            .expect("unknown superdistrict lookup should be queryable");
+        assert_eq!(unknown_return_count, 0);
+
+        let default_title: String = env
+            .eval(
+                r#"
+                local list = CharacterSelectUI.VisibilityFramesContainer.CharacterList
+                CharacterSelectListMixin.OnShow(list)
+                return list.SuperdistrictText:GetText()
+                "#,
+            )
+            .expect("the cached CharacterSelectList consumer should display its missing-info title");
+        assert_eq!(default_title, "");
+
+        let district_id = 73;
+        env.state().borrow_mut().super_district_info_by_id.insert(
+            district_id,
+            wow_ui_sim::c_api::c_district_utils::SuperDistrictInfo {
+                super_district_id: district_id,
+                display_name: "Supplied region".to_string(),
+                description: "Host district description".to_string(),
+                icon_file_data_id: 9173,
+                disallow_login: true,
+                no_realms_available: false,
+                override_bg_atlas: "district-background".to_string(),
+                override_bg_glow_atlas: "district-glow".to_string(),
+            },
+        );
+
+        let selection_result: bool = env
+            .eval(
+                r##"
+                local returns = select("#", SelectSuperDistrict("73.9"))
+                local selected = C_Login.GetSelectedSuperDistrictID()
+                SelectSuperDistrict(999)
+                return returns == 0 and selected == 73
+                    and C_Login.GetSelectedSuperDistrictID() == 73
+                "##,
+            )
+            .expect("valid selection should truncate and invalid IDs should preserve state");
+        assert!(selection_result);
+
+        let argument_errors: bool = env
+            .eval(
+                r#"
+                local function error_contains(callback, expected)
+                    local ok, message = pcall(callback)
+                    local error_text = tostring(message)
+                    return not ok
+                        and string.find(error_text, "bad argument #1", 1, true) ~= nil
+                        and string.find(error_text, expected, 1, true) ~= nil
+                end
+                return error_contains(function() SelectSuperDistrict() end,
+                                      "Usage: SelectSuperDistrict(superDistrictID)")
+                    and error_contains(function() SelectSuperDistrict(nil) end,
+                                      "Usage: SelectSuperDistrict(superDistrictID)")
+                    and error_contains(function() SelectSuperDistrict("not numeric") end,
+                        "outside of expected range -2147483648 to 2147483647 - Usage: SelectSuperDistrict(superDistrictID)")
+                    and error_contains(function() SelectSuperDistrict(2147483648) end,
+                        "outside of expected range -2147483648 to 2147483647 - Usage: SelectSuperDistrict(superDistrictID)")
+                    and error_contains(function() C_DistrictUtils.GetSuperDistrictInfo() end,
+                        "Usage: local info = C_DistrictUtils.GetSuperDistrictInfo(superDistrictID)")
+                    and error_contains(function() C_DistrictUtils.GetSuperDistrictInfo(nil) end,
+                        "Usage: local info = C_DistrictUtils.GetSuperDistrictInfo(superDistrictID)")
+                    and error_contains(function() C_DistrictUtils.GetSuperDistrictInfo(false) end,
+                        "outside of expected range -2147483648 to 2147483647 - Usage: local info = C_DistrictUtils.GetSuperDistrictInfo(superDistrictID)")
+                    and error_contains(function() C_DistrictUtils.GetSuperDistrictInfo(2147483648) end,
+                        "outside of expected range -2147483648 to 2147483647 - Usage: local info = C_DistrictUtils.GetSuperDistrictInfo(superDistrictID)")
+                "#,
+            )
+            .expect("superdistrict argument failures should retain native error details");
+        assert!(argument_errors);
+
+        let record_matches: bool = env
+            .eval(
+                r##"
+                local info = C_DistrictUtils.GetSuperDistrictInfo("73.9")
+                return select("#", C_DistrictUtils.GetSuperDistrictInfo("73.9")) == 1
+                    and type(info) == "table"
+                    and info.superDistrictID == 73
+                    and info.displayName == "Supplied region"
+                    and info.description == "Host district description"
+                    and info.iconFileDataID == 9173
+                    and info.disallowLogin == true
+                    and info.noRealmsAvailable == false
+                    and info.overrideBgAtlas == "district-background"
+                    and info.overrideBgGlowAtlas == "district-glow"
+                "##,
+            )
+            .expect("host-supplied district fields should be projected");
+        assert!(record_matches);
+
+        let supplied_title: String = env
+            .eval(
+                r#"
+                local list = CharacterSelectUI.VisibilityFramesContainer.CharacterList
+                CharacterSelectListMixin.OnShow(list)
+                return list.SuperdistrictText:GetText()
+                "#,
+            )
+            .expect("the cached CharacterSelectList consumer should use the host display name");
+        assert_eq!(supplied_title, "Supplied region");
+
+        env.set_screen_mode(ScreenKind::Login);
+        let reset_id: i32 = env
+            .eval("return C_Login.GetSelectedSuperDistrictID()")
+            .expect("login start should reset the selected superdistrict");
+        assert_eq!(reset_id, 0);
+
+        env.set_screen_mode(ScreenKind::Game);
+        let (glue_members_absent, district_info_available): (bool, bool) = env
+            .eval(
+                "return C_Login.GetSelectedSuperDistrictID == nil and SelectSuperDistrict == nil, C_DistrictUtils ~= nil and C_DistrictUtils.GetSuperDistrictInfo ~= nil",
+            )
+            .expect("Game surface visibility should be queryable");
+        assert!(glue_members_absent);
+        assert_eq!(district_info_available, cfg!(feature = "client-ptr"));
+    }
+}
+
+#[test]
+#[cfg(feature = "client-retail")]
+fn retail_does_not_register_super_district_glue_apis() {
+    let env = WowLuaEnv::new().expect("create Lua environment");
+    env.set_screen_mode(ScreenKind::CharacterSelect);
+    let members_absent: bool = env
+        .eval(
+            "return C_Login.GetSelectedSuperDistrictID == nil and SelectSuperDistrict == nil and (C_DistrictUtils == nil or C_DistrictUtils.GetSuperDistrictInfo == nil)",
+        )
+        .expect("Retail superdistrict API visibility should be queryable");
+    assert!(members_absent);
+}
+
+#[test]
 fn character_select_screen_shows_character_select_not_login() {
     test_timeout! {
         let env = load_blizzard_screen(ScreenKind::CharacterSelect);
@@ -476,21 +865,27 @@ fn forever_character_tooltip_composes_supplied_surname_and_separator() {
         {
             let state = env.state();
             let mut sim = state.borrow_mut();
-            let account = sim.bnet_friends.iter_mut()
+            let account = sim
+                .bnet_friends
+                .iter_mut()
                 .flat_map(|friend| friend.game_accounts.iter_mut())
-                .find(|account| account.client_program == "WoW").unwrap();
+                .find(|account| account.client_program == "WoW")
+                .unwrap();
             account.character_name = "Aldren".into();
             account.surname = surname.into();
             account.name_separator = separator;
         }
-        env.exec(&format!(r#"
+        env.exec(&format!(
+            r#"
             local info = CharacterSelectUtil.GetCharacterInfoTable(1)
             assert(info.characterName == 'Aldren' and info.surname == {surname:?})
             assert(info.fullName == {expected:?})
             GlueTooltip:ClearLines()
             assert(CharacterSelectUtil.SetTooltipForCharacterInfo(info, 1))
             assert(GlueTooltip:GetLeftLine(1):GetText() == {expected:?})
-        "#)).expect("original Camelot tooltip uses composed name and surname");
+        "#
+        ))
+        .expect("original Camelot tooltip uses composed name and surname");
     }
 }
 
@@ -500,9 +895,14 @@ fn forever_basic_character_info_requires_guid_and_unknown_returns_no_values() {
     let env = load_blizzard_screen(ScreenKind::CharacterSelect);
     for call in ["GetBasicCharacterInfo()", "GetBasicCharacterInfo(nil)"] {
         let error = env.exec(call).expect_err("required GUID").to_string();
-        assert!(error.contains("Usage: local basicInfo = GetBasicCharacterInfo(guid)"), "{error}");
+        assert!(
+            error.contains("Usage: local basicInfo = GetBasicCharacterInfo(guid)"),
+            "{error}"
+        );
     }
-    let arity: i32 = env.eval("return select('#', GetBasicCharacterInfo('Player-unknown'))").unwrap();
+    let arity: i32 = env
+        .eval("return select('#', GetBasicCharacterInfo('Player-unknown'))")
+        .unwrap();
     assert_eq!(arity, 0);
 }
 
@@ -642,4 +1042,157 @@ fn character_create_screen_populates_races_classes_and_customizations() {
         assert!(!back_text.is_empty(), "back button text should be populated");
         assert!(!forward_text.is_empty(), "forward button text should be populated");
     }
+}
+
+#[test]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn trial_boost_starting_level_is_registered_only_on_glue_screens() {
+    let env = WowLuaEnv::new().expect("Failed to create Lua environment");
+    let absent_on_game: bool = env
+        .eval(
+            "local api = rawget(_G, 'C_CharacterCreation'); return api == nil or rawget(api, 'GetTrialBoostStartingLevel') == nil",
+        )
+        .expect("Game-screen API availability should be queryable");
+    assert!(
+        absent_on_game,
+        "trial boost API must be absent on Game screens"
+    );
+
+    env.set_screen_mode(ScreenKind::CharacterCreate);
+    let available_on_glue: bool = env
+        .eval(
+            "local api = rawget(_G, 'C_CharacterCreation'); return api ~= nil and type(rawget(api, 'GetTrialBoostStartingLevel')) == 'function'",
+        )
+        .expect("Glue-screen API availability should be queryable");
+    assert!(
+        available_on_glue,
+        "trial boost API must be available on Glue screens"
+    );
+
+    env.set_screen_mode(ScreenKind::Game);
+    let absent_after_return_to_game: bool = env
+        .eval(
+            "local api = rawget(_G, 'C_CharacterCreation'); return api == nil or rawget(api, 'GetTrialBoostStartingLevel') == nil",
+        )
+        .expect("Game-screen API availability should be queryable after transition");
+    assert!(
+        absent_after_return_to_game,
+        "trial boost API must be removed when returning to Game screens"
+    );
+}
+
+#[test]
+#[cfg(feature = "client-retail")]
+fn retail_class_trial_tooltip_uses_exported_character_service_level() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::CharacterCreate);
+        env.exec(
+            "CharacterCreateRaceAndClassMixin.OnShow(CharacterCreateFrame.RaceAndClassFrame)",
+        )
+        .expect("original class-trial tooltip consumer should execute");
+
+        let (level, tooltip_text): (i32, String) = env
+            .eval(
+                "local button = CharacterCreateFrame.RaceAndClassFrame.ClassTrialCheckButton; return C_CharacterCreation.GetTrialBoostStartingLevel(), button.tooltipLines[1].text",
+            )
+            .expect("class-trial level and tooltip should be queryable");
+        let expected_tooltip: String = env
+            .eval("return CHARACTER_TYPE_FRAME_TRIAL_BOOST_CHARACTER_TOOLTIP:format(100)")
+            .expect("class-trial tooltip template should be queryable");
+
+        assert_eq!(level, 100, "Retail 12.1.5.70783 exports level 100 for selector 2");
+        assert_eq!(tooltip_text, expected_tooltip);
+    }
+}
+
+#[test]
+#[cfg(feature = "client-wowforever")]
+fn forever_class_trial_tooltip_uses_empty_host_table_default() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::CharacterCreate);
+        env.exec(
+            "CharacterCreateRaceAndClassMixin.OnShow(CharacterCreateFrame.RaceAndClassFrame)",
+        )
+        .expect("original Camelot class-trial tooltip consumer should execute");
+
+        let (level, tooltip_text): (i32, String) = env
+            .eval(
+                "local button = CharacterCreateFrame.RaceAndClassFrame.ClassTrialCheckButton; return C_CharacterCreation.GetTrialBoostStartingLevel(), button.tooltipLines[1].text",
+            )
+            .expect("empty host-table level and original tooltip should be queryable");
+        let expected_tooltip: String = env
+            .eval("return CHARACTER_TYPE_FRAME_TRIAL_BOOST_CHARACTER_TOOLTIP:format(0)")
+            .expect("Camelot class-trial tooltip template should be queryable");
+
+        assert_eq!(level, 0, "the simulator's empty Forever table yields zero");
+        assert_eq!(tooltip_text, expected_tooltip);
+    }
+}
+
+#[test]
+#[cfg(feature = "client-retail")]
+fn retail_trial_boost_query_returns_exported_level_and_one_value() {
+    let env = load_blizzard_screen(ScreenKind::CharacterCreate);
+    let (level, result_count): (i32, i32) = env
+        .eval(
+            "return C_CharacterCreation.GetTrialBoostStartingLevel(), select('#', C_CharacterCreation.GetTrialBoostStartingLevel())",
+        )
+        .expect("trial boost query should return its exported level");
+
+    assert_eq!(level, 100, "Retail selector 2 exports level 100");
+    assert_eq!(result_count, 1, "the getter publishes exactly one value");
+}
+
+#[test]
+#[cfg(feature = "client-retail")]
+fn retail_trial_boost_host_selector_selects_first_matching_row() {
+    let env = load_blizzard_screen(ScreenKind::CharacterCreate);
+    {
+        let state = env.state();
+        let mut sim = state.borrow_mut();
+        sim.trial_boost_level.replace_rows(vec![
+            wow_ui_sim::c_api::c_character_creation_trial_boost::CharacterServiceInfoRow {
+                service_type: 1,
+                boost_type: 4,
+                boost_level: 71,
+            },
+            wow_ui_sim::c_api::c_character_creation_trial_boost::CharacterServiceInfoRow {
+                service_type: 1,
+                boost_type: 4,
+                boost_level: 72,
+            },
+            wow_ui_sim::c_api::c_character_creation_trial_boost::CharacterServiceInfoRow {
+                service_type: 1,
+                boost_type: 8,
+                boost_level: 90,
+            },
+        ]);
+        sim.trial_boost_level.set_selector(4);
+    }
+    let selected_level: i32 = env
+        .eval("return C_CharacterCreation.GetTrialBoostStartingLevel()")
+        .expect("host-selected row level should be queryable");
+    assert_eq!(selected_level, 71, "the first row for selector 4 wins");
+
+    env.state().borrow_mut().trial_boost_level.set_selector(99);
+    let unmatched_level: i32 = env
+        .eval("return C_CharacterCreation.GetTrialBoostStartingLevel()")
+        .expect("unmatched selector should return a level");
+    assert_eq!(unmatched_level, 0, "an unmatched selector returns zero");
+}
+
+#[test]
+#[cfg(feature = "client-ptr")]
+fn ptr_trial_boost_zero_fallback_is_unchanged() {
+    let env = WowLuaEnv::new().expect("Failed to create Lua environment");
+    let game_level: i32 = env
+        .eval("return C_CharacterCreation.GetTrialBoostStartingLevel()")
+        .expect("existing PTR fallback should remain callable");
+    env.set_screen_mode(ScreenKind::CharacterCreate);
+    let glue_level: i32 = env
+        .eval("return C_CharacterCreation.GetTrialBoostStartingLevel()")
+        .expect("existing PTR fallback should remain callable on Glue");
+
+    assert_eq!(game_level, 0);
+    assert_eq!(glue_level, 0);
 }

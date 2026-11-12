@@ -72,7 +72,6 @@ pub(crate) fn register_character_progression_tables(state: &mut LuaState) -> Lua
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Ptr {
         super::c_player_info_name_policy::register(state)?;
     }
-    #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
     super::c_player_info_guid::register(state)?;
     c_barber_shop::register_c_barber_shop_surface(state)?;
     c_cursor::register_c_cursor_surface(state)?;
@@ -86,6 +85,8 @@ pub(crate) fn register_interaction_tables(state: &mut LuaState) -> LuaResult<()>
     super::c_quest_offer::register(state)?;
     super::c_store_secure::register(state)?;
     super::store_public_eligibility::register(state)?;
+    super::store_state::register(state)?;
+    super::c_shared_character_services::register(state)?;
     super::c_voice_chat_activity::register(state)?;
     super::c_voice_chat_settings::register(state)?;
     super::c_voice_chat_devices::register(state)?;
@@ -144,7 +145,7 @@ pub(crate) fn register_interaction_tables(state: &mut LuaState) -> LuaResult<()>
     ) {
         super::c_log::register_error_sink(state)?;
     }
-    #[cfg(feature = "retail-12-0-5")]
+    #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
     super::c_scenario_info::register(state)?;
     #[cfg(feature = "client-retail")]
     super::c_scenario_bonus::register(state)?;

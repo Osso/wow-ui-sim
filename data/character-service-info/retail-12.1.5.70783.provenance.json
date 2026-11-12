@@ -1,0 +1,39 @@
+{
+  "profile": "retail",
+  "build": "12.1.5.70783",
+  "casc_build_key": "bc493ecb2898766c0f8947a99b4b3d65",
+  "table": "CharacterServiceInfo",
+  "file_data_id": 1815417,
+  "extraction_command": "wow-cli casc extract-fdid 1815417 <CharacterServiceInfo.db2>",
+  "export_command": "python3 <game-engine>/scripts/export_db2_csv.py CharacterServiceInfo <CharacterServiceInfo.db2> <output.csv> --definitions <WoWDBDefs/definitions>",
+  "listfile": {
+    "path": "asset-resolver/data/community-listfile.csv",
+    "sha256": "486bb1d1c5a87cc136c7824857a391ab0b07c6f50bbc724e104fc5f18e320741"
+  },
+  "db2": {
+    "sha256": "92e37f13b6cf994c64ba3afa8acdd88c500a1d85756b7c1cf029710dbe774ff4",
+    "layout_hash": "7DEDBFA6"
+  },
+  "definitions": {
+    "repository": "wowdev/WoWDBDefs",
+    "path": "definitions/CharacterServiceInfo.dbd",
+    "commit": "d6f50d4f351193e84226aa62a36faa0f58528afa",
+    "sha256": "0923512ea0c3eefbc27761f0f42f4bb21bcee457d7af89fe6578638d9927bd6f",
+    "github_scan": "passed"
+  },
+  "exporter": {
+    "path": "game-engine/scripts/export_db2_csv.py",
+    "sha256": "dbd6c8f1d1e1785b65dcb668063ec2832c25a765d957babcf229da1732340f18"
+  },
+  "csv_sha256": "49fbc8491d4a7c9e0dc809b2d731ae09507ed0a0da33f4015329cc5c9c944220",
+  "row_count": 13,
+  "unreadable_records": 0,
+  "reference_comparison": {
+    "decomp_retail_build": "12.1.5.70688",
+    "service_type": 1,
+    "boost_type": 2,
+    "boost_level": 100,
+    "matching_rows": 1,
+    "export_matches": true
+  }
+}

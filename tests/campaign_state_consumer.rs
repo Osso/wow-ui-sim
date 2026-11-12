@@ -1,7 +1,7 @@
 #![cfg(feature = "client-retail")]
 
 #[test]
-fn campaign_header_reflects_quest_progress() {
+fn campaign_header_does_not_infer_progress_from_quest_associations() {
     let ui = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path().unwrap();
     let (env, loaded) = crate::common::blizzard_addon_harness::build_blizzard_addon_closure_env(
         &ui,
@@ -28,20 +28,21 @@ fn campaign_header_reflects_quest_progress() {
         local chapters = C_CampaignInfo.GetChapterIDs(101)
         assert(#chapters == 2 and chapters[1] == 201 and chapters[2] == 202, "supplied chapters")
         assert(C_CampaignInfo.GetChapterIDs(102) == nil, "absent chapters")
-        local function check(id, complete)
+        assert(C_CampaignInfo.GetCampaignInfo(999999) == nil, 'unknown campaign info')
+        C_CampaignInfo.GetCampaignInfo = function(id) return { id = id } end
+        local function check(id)
             local h = { UpdateTextureKit = function() end, UpdateComplete = function(self, v) self.result = v end,
                 UpdateTitle = function() end, UpdateProgress = function() end,
                 UpdateNextObjective = function() end, MarkDirty = function() end, Show = function() end }
             CampaignHeaderDisplayMixin.SetCampaign(h, id)
-            assert(h.result == complete, 'campaign header completion for ' .. id)
+            assert(h.result == false, 'missing campaign data must not show completion for ' .. id)
         end
-        check(101, true)
-        check(102, false)
+        check(101)
+        check(102)
         assert(C_QuestLog.GetInfo(2).campaignID == 102, 'quest log campaign ID')
         assert(C_CampaignInfo.GetCampaignID(91001) == 101, 'quest campaign lookup')
-        assert(C_CampaignInfo.GetCampaignInfo(999999) == nil, 'unknown campaign info')
         assert(C_CampaignInfo.GetState(999999) == Enum.CampaignState.Invalid, 'unknown state')
-    "#).expect("selected Blizzard campaign header consumes quest progress");
+    "#).expect("selected Blizzard campaign header does not infer quest progress");
 }
 
 #[test]

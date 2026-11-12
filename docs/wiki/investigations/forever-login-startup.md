@@ -105,6 +105,14 @@ Credits displayed real text and two catalog entries: `World of Warcraft`, then
 This visual check did not measure native Lua-error counts or API return values.
 Fully disconnected operation was not verified.
 
+## R26 TOC admission correction (2026-11-11)
+
+**VERIFIED (native R26):** `OnlyBetaAndPTR: 1` admits PTR build classification 0 and Beta classification 1; it removes addons from normal builds with classification above 1 during TOC processing. The gate is not based on realm, test realm, portal or CVar state.
+
+**VERIFIED (shipped cache TOC; exact build unknown):** `Blizzard_PTRFeedbackGlue.toc` contains `OnlyBetaAndPTR: 1`. **INFERRED (R26 plus that TOC):** the normal Forever build excludes this Glue addon from startup, so the borrowed-file and feedback-hook checks apply only when it is selected or loaded explicitly. API absence in every environment is **UNVERIFIED**.
+
+**VERIFIED (simulator test at `83d7e3998`, 1/1):** the Forever startup fixture checks that normal Login startup does not select `Blizzard_PTRFeedbackGlue`; it does not assert customization add-on loading on Login.
+
 ## Sources
 
 - [Glue regressions](../../../tests/glue_login.rs) — complete Login startup and screen-state transitions.
@@ -113,6 +121,7 @@ Fully disconnected operation was not verified.
 - [Temporary defaults](../../../src/lua_api/workarounds/temporary/forever_glue_display_defaults.rs) and [credits catalog](../../../src/lua_api/workarounds/temporary/offline_glue_credits.rs).
 - [HTML content nodes](../../../src/lua_api/frame/methods/text_attribute_event/text/simple_html.rs), [cursor state](../../../src/lua_api/globals/real/mouse_probes.rs), and [catalog consumer tests](../../../tests/forever_login_catalog_defaults.rs).
 - [Texture toggle capability](../../../src/c_api/c_battle_net.rs) — reuse the existing CVar-backed producer for the complete Forever graphics consumer.
+- [PTR feedback TOC fixture](../../../tests/blizzard_ptr_feedback_glue_loads.rs) and [Forever startup fixture](../../../tests/forever_ptr_feedback_startup.rs) — profile selection and startup expectations.
 - [Video capabilities](../../../src/lua_api/workarounds/temporary/video_options_state.rs) and [UI pipeline](../../../src/render/shader/pipeline.rs) — unsupported MSAA policy for the single-sample renderer.
 
 ## See Also

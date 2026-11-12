@@ -100,6 +100,13 @@ const STARTUP_GAME: &[&str] = &[
     "Blizzard_HousingTutorials",
 ];
 
+const FOREVER_STARTUP_GAME: &[&str] = &[
+    "Blizzard_StaticPopup",
+    "Blizzard_StaticPopup_Game",
+    "Blizzard_TutorialManager",
+    "Blizzard_Tutorials",
+];
+
 const STARTUP_GLUE: &[&str] = &[
     "Blizzard_StaticPopup",
     "Blizzard_StaticPopup_Glue",
@@ -381,16 +388,15 @@ fn game_screen_eager_discovery_includes_static_popup_core_game_and_eager_tutoria
         .map(|(name, _)| name)
         .collect();
 
-    for required in STARTUP_GAME {
+    let startup_game = if toc_layout::forever() {
+        FOREVER_STARTUP_GAME
+    } else {
+        STARTUP_GAME
+    };
+    for required in startup_game {
         assert!(
             game_names.contains(&required.to_string()),
-            "Game STARTUP addon `{required}` MUST appear in eager Game discovery. \
-             StaticPopup core uses `## AllowLoad: Both`, StaticPopup_Game uses `## AllowLoad: game`, \
-             and the 3 eager tutorials (TutorialManager / Tutorials / HousingTutorials) default to \
-             Game. The 5 form the lane's eager game-side surface — popup confirmation dialogs and \
-             the tutorial state machine. If this regresses, in-world refund/equipment/quest \
-             confirmation flows would have no popup runtime, or the tutorial pointer/main-frame \
-             system would fail to register at startup"
+            "Game STARTUP addon `{required}` must appear in eager Game discovery for this profile"
         );
     }
 }
@@ -481,24 +487,26 @@ fn eager_tutorial_chain_appears_in_game_discovery_in_dep_first_order() {
         .expect("Tutorials must appear in eager Game discovery");
     let housing_idx = names
         .iter()
-        .position(|n| n == "Blizzard_HousingTutorials")
-        .expect("HousingTutorials must appear in eager Game discovery");
+        .position(|name| name == "Blizzard_HousingTutorials");
 
     assert!(
         manager_idx < tutorials_idx,
-        "TutorialManager must emit before Tutorials. Tutorials.toc declares \
-         `## RequiredDep: Blizzard_TutorialManager` — the topological sort respects that \
-         edge so TutorialQueue / TutorialPointerFrame / TutorialMainFrameMixin globals are \
-         live before Tutorials' StateMachineUtil.lua references them. \
-         Got: TutorialManager@{manager_idx}, Tutorials@{tutorials_idx}"
+        "TutorialManager must emit before Tutorials because Tutorials depends on it; \
+         got TutorialManager@{manager_idx}, Tutorials@{tutorials_idx}"
     );
-    assert!(
-        tutorials_idx < housing_idx,
-        "Tutorials must emit before HousingTutorials. HousingTutorials.toc declares \
-         `## Dependencies: Blizzard_Tutorials` — the housing-specific tutorial state \
-         machines inherit from TutorialStateMachineMixin which Tutorials publishes. \
-         Got: Tutorials@{tutorials_idx}, HousingTutorials@{housing_idx}"
-    );
+    if toc_layout::forever() {
+        assert!(
+            housing_idx.is_none(),
+            "Forever HousingTutorials requires standard, which is not an active game type"
+        );
+    } else {
+        let housing_idx = housing_idx.expect("HousingTutorials must appear in eager Game discovery");
+        assert!(
+            tutorials_idx < housing_idx,
+            "Tutorials must emit before its HousingTutorials dependent; \
+             got Tutorials@{tutorials_idx}, HousingTutorials@{housing_idx}"
+        );
+    }
 }
 }
 
@@ -515,21 +523,19 @@ fn tutorial_addons_use_inverse_game_type_restriction_semantics_for_standard() {
     let tutorials = parse_lane_toc("Blizzard_Tutorials");
     let housing = parse_lane_toc("Blizzard_HousingTutorials");
 
-    assert!(
-        !tutorials.is_game_type_restricted(),
-        "Blizzard_Tutorials carries `## AllowLoadGameType: standard`, but \
-         `is_game_type_restricted()` MUST return false. The accessor at src/toc.rs:294-302 \
-         treats `mainline` and `standard` as the unrestricted defaults — only non-mainline/ \
-         non-standard values (plunderstorm, classic, vanilla, wrath, cata, mists) flag the \
-         addon as restricted. If this regresses, the tutorial state machine would skip \
-         loading on the standard mainline screen and every consumer (HousingTutorials, \
-         RPE flow, dragonriding intro) would see TutorialStateMachineMixin as nil"
-    );
-    assert!(
-        !housing.is_game_type_restricted(),
-        "HousingTutorials inherits the same `AllowLoadGameType: standard` semantics as \
-         Tutorials — must NOT flag as restricted on a standard/mainline build"
-    );
+    if toc_layout::forever() {
+        assert!(
+            !tutorials.is_game_type_restricted(),
+            "Tutorials allows camelot in its pinned TOC and must remain loadable in Forever"
+        );
+        assert!(
+            housing.is_game_type_restricted(),
+            "HousingTutorials allows only standard; Forever does not admit standard"
+        );
+    } else {
+        assert!(!tutorials.is_game_type_restricted());
+        assert!(!housing.is_game_type_restricted());
+    }
 }
 
 prefork_full_ui_case! {

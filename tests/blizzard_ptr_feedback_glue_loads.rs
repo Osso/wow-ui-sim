@@ -23,7 +23,15 @@ fn ptr_feedback_glue_toc() -> PathBuf {
     ptr_feedback_glue_dir().join("Blizzard_PTRFeedbackGlue.toc")
 }
 
-const PTR_FEEDBACK_GLUE_TOC_FILES: &[&str] = &[
+const RETAIL_PTR_FEEDBACK_GLUE_TOC_FILES: &[&str] = &[
+    "../Blizzard_PTRFeedback/Blizzard_PTRFeedback.lua",
+    "../Blizzard_PTRFeedback/Blizzard_PTRFeedback_Frames.lua",
+    "../Blizzard_PTRFeedback/Blizzard_Reports.lua",
+    "Blizzard_Reports_Glue.lua",
+    "Blizzard_PTRFeedback_Events_Glue.lua",
+];
+
+const UNIFIED_PTR_FEEDBACK_GLUE_TOC_FILES: &[&str] = &[
     "../Blizzard_PTRFeedback/Blizzard_PTRFeedback.lua",
     "../Blizzard_PTRFeedback/Blizzard_PTRFeedback_Frames.lua",
     "../Blizzard_PTRFeedback/Blizzard_PTRFeedback_Gamepad.lua",
@@ -63,16 +71,16 @@ fn blizzard_ptr_feedback_glue_toc_marks_addon_as_ptr_and_beta_only() {
 
     assert!(
         toc.metadata.get("OnlyBetaAndPTR").map(String::as_str) == Some("1"),
-        "TOC must declare `## OnlyBetaAndPTR: 1` — same PTR/beta gate as the Game-side \
-         Blizzard_PTRFeedback variant. The Glue counterpart inherits the same release \
-         restriction so the bug-report tooling never reaches live realms"
+        "TOC must declare `## OnlyBetaAndPTR: 1`. R26 establishes that this gate checks \
+         client build classification, not realms; the same directive on the Glue addon \
+         excludes normal builds and admits PTR/beta builds"
     );
     assert_eq!(
         toc.is_ptr_only(),
-        !toc_layout::unified_toc_tree(),
-        "`is_ptr_only()` gates the addon out of eager discovery on profiles that do not \
-         permit PTR-only addons; the PTR and Forever profiles admit them, so the gate is \
-         inactive there (src/toc/mod.rs permits_ptr_only)"
+        wow_ui_sim::client_profile::ACTIVE != wow_ui_sim::client_profile::ClientProfile::Ptr,
+        "R26: OnlyBetaAndPTR is a build-classification gate. PTR passes it; Forever 70707 \
+         and Retail 70688 are normal builds and remove the addon. Unified TOC layout does \
+         not affect `is_ptr_only()`"
     );
 }
 }
@@ -249,7 +257,7 @@ fn blizzard_ptr_feedback_glue_toc_declares_metadata_in_raw_bytes() {
 
 retail_ptr_forever_toc_fixture! {
 #[test]
-fn blizzard_ptr_feedback_glue_lists_five_files_with_cross_addon_parent_paths() {
+fn blizzard_ptr_feedback_glue_lists_profile_files_with_cross_addon_parent_paths() {
     let toc =
         TocFile::from_file(&ptr_feedback_glue_toc()).expect("Blizzard_PTRFeedbackGlue TOC parses");
     let listed: Vec<String> = toc
@@ -257,34 +265,33 @@ fn blizzard_ptr_feedback_glue_lists_five_files_with_cross_addon_parent_paths() {
         .iter()
         .map(|p| p.to_string_lossy().into_owned())
         .collect();
+    let expected = match wow_ui_sim::client_profile::ACTIVE {
+        wow_ui_sim::client_profile::ClientProfile::Retail => RETAIL_PTR_FEEDBACK_GLUE_TOC_FILES,
+        wow_ui_sim::client_profile::ClientProfile::Ptr
+        | wow_ui_sim::client_profile::ClientProfile::WowForever => {
+            UNIFIED_PTR_FEEDBACK_GLUE_TOC_FILES
+        }
+        _ => unreachable!("test fixture is limited to Retail, PTR, and Forever"),
+    };
     assert_eq!(
-        listed, PTR_FEEDBACK_GLUE_TOC_FILES,
-        "TOC must list exactly 6 files in canonical order; PTR/Forever \
-         Blizzard_PTRFeedbackGlue.toc:8-14 adds the Gamepad source. Paths normalize to \
-         forward slashes by src/toc.rs:147 — raw bytes use `\\`. The first 4 use \
-         `../Blizzard_PTRFeedback/` parent-directory paths to import sibling \
-         Lua files from the Game-side addon directory: \
-         Blizzard_PTRFeedback.lua (declares the PTR_IssueReporter root frame + \
-         .Data/.Assets/.DataCollectorTypes namespaces), \
-         Blizzard_PTRFeedback_Frames.lua (the survey-frame UI logic), \
-         Blizzard_PTRFeedback_Gamepad.lua (gamepad input), and \
-         Blizzard_Reports.lua (the report-survey definitions). The last 2 are \
-         local Glue-suffixed files: Blizzard_Reports_Glue.lua (glue-specific \
-         survey definitions for character creation / customization), \
-         Blizzard_PTRFeedback_Events_Glue.lua (glue-screen event hooks for \
-         GameMenuFrame / character-customization frames). \
-         `file_paths()` at src/toc.rs:345 resolves each entry via \
-         `resolve_path_case_insensitive(&self.addon_dir, f)` which composes \
-         `addon_dir.join(...)` allowing `..` to walk out of the Glue directory \
-         into the sibling PTRFeedback directory. No Bindings.xml on the glue \
-         side — keybindings are not used at the character-select screen"
+        listed, expected,
+        "Cached TOC files must match the active profile in canonical order"
     );
 }
 }
 
+retail_ptr_forever_toc_fixture! {
 #[test]
-fn blizzard_ptr_feedback_glue_does_not_appear_in_eager_discovery() {
+fn blizzard_ptr_feedback_glue_lists_five_files_with_cross_addon_parent_paths() {
+    blizzard_ptr_feedback_glue_lists_profile_files_with_cross_addon_parent_paths();
+}
+}
+
+#[test]
+fn blizzard_ptr_feedback_glue_appears_only_on_ptr_glue_discovery() {
     let ui = blizzard_ui_dir();
+    let ptr_build =
+        wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::Ptr;
 
     for screen in [
         ScreenKind::Game,
@@ -296,14 +303,18 @@ fn blizzard_ptr_feedback_glue_does_not_appear_in_eager_discovery() {
         let found = addons
             .iter()
             .any(|(name, _)| name == "Blizzard_PTRFeedbackGlue");
-        let expected = toc_layout::unified_toc_tree() && screen != ScreenKind::Game;
+        let expected = ptr_build && screen != ScreenKind::Game;
         assert_eq!(
             found, expected,
-            "PTR/Forever Blizzard_PTRFeedbackGlue.toc:2,4,8-14 permits beta/PTR glue \
-             screens and declares AllowLoad: Glue; it must not enter Game discovery. \
-             Other profile caches do not include this PTR-only addon. Screen: {screen:?}"
+            "R26: OnlyBetaAndPTR admits the PTR build; normal builds including Forever are \
+             filtered, and AllowLoad: Glue excludes the Game screen"
         );
     }
+}
+
+#[test]
+fn blizzard_ptr_feedback_glue_does_not_appear_in_eager_discovery() {
+    blizzard_ptr_feedback_glue_appears_only_on_ptr_glue_discovery();
 }
 
 post_wrath_ui_fixture! {

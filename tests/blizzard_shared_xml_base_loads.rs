@@ -219,8 +219,7 @@ fn body_count_matches_filesystem_layout() {
         .count();
 
     let (expected_files, expected_lua, expected_xml) = if toc_layout::unified_toc_tree() {
-        // PTR/Forever SharedXMLBase.toc:44-45 adds FocusEffects.lua and
-        // FocusEffectTemplates.xml relative to Retail.
+        // PTR/Forever SharedXMLBase.toc adds FocusEffects.lua and FocusEffectTemplates.xml.
         (42, 38, 4)
     } else if toc_layout::classic_cache() {
         (39, 37, 2)
@@ -230,21 +229,20 @@ fn body_count_matches_filesystem_layout() {
     assert_eq!(
         toc.files.len(),
         expected_files,
-        "Pinned SharedXMLBase TOC body lists {expected_files} entries. PTR/Forever \
-         SharedXMLBase.toc:44-45 adds FocusEffects.lua and FocusEffectTemplates.xml. \
-         Got {} entries",
+        "Pinned SharedXMLBase TOC body count must match the selected profile. PTR/Forever adds \
+         FocusEffects.lua and FocusEffectTemplates.xml; classic caches use 39 entries. Got {}",
         toc.files.len()
     );
     assert_eq!(
         lua_count, expected_lua,
-        "Pinned SharedXMLBase TOC body lists {expected_lua} .lua files. PTR/Forever \
-         SharedXMLBase.toc:44 adds FocusEffects.lua relative to Retail. Got {lua_count}"
+        "Pinned SharedXMLBase TOC lists {expected_lua} Lua files; the unified PTR/Forever TOC \
+         adds FocusEffects.lua relative to Retail. Got {lua_count}"
     );
     assert_eq!(
         xml_count, expected_xml,
-        "Pinned SharedXMLBase TOC body lists {expected_xml} .xml files. PTR/Forever \
-         SharedXMLBase.toc:45 adds FocusEffectTemplates.xml; classic caches list \
-         two XML entries. Got {xml_count}"
+        "Pinned SharedXMLBase TOC lists {expected_xml} XML files, including CallbackRegistrant, \
+         ColorSwatch and ForbiddenAspectTemplates. PTR/Forever also adds FocusEffectTemplates; \
+         classic caches list two XML entries. Got {xml_count}"
     );
 }
 

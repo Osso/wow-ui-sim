@@ -6,7 +6,10 @@ use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
 pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
-    if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr) {
+    if matches!(
+        ACTIVE,
+        ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
+    ) {
         let ns = super::ensure_namespace(state, "C_TradeSkillUI")?;
         table_set_rust_fn_static(state, ns, "GetRecipeSourceText", get_recipe_source_text)?;
     }

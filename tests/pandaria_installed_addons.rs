@@ -62,7 +62,10 @@ const PANDARIA_ADDON_TARGETS: &[PandariaAddonTarget] = &[
     PandariaAddonTarget {
         name: "DialogueUI",
         shape: AddonShape::QuestDialog,
-        toc_file: "DialogueUI_Mists.toc",
+        // Source: /syncthing/World of Warcraft/_classic_/Interface/AddOns/DialogueUI/DialogueUI.toc
+        // Version: 1.0.7 b; SHA-256: f0b455dced85c5a3b8ee5818233da60bb2c03a7aa6062af87105f5e8190a8022
+        // The generic TOC declares Mists via its X-GameType header.
+        toc_file: "DialogueUI.toc",
         min_files: 5,
         saved_variable_prefix: "DialogueUI",
     },

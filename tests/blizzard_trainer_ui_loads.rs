@@ -11,7 +11,8 @@ use wow_ui_sim::toc::TocFile;
 mod toc_layout;
 
 fn blizzard_ui_dir() -> PathBuf {
-    wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("Blizzard UI cache should be available")
+    wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("Blizzard UI cache should be available")
 }
 
 fn trainer_dir() -> PathBuf {
@@ -207,7 +208,7 @@ fn toc_raw_bytes_pin_current_mainline_contract() {
 }
 
 #[test]
-fn body_resolves_to_bootstrap_mainline_xml_and_localization_lua() {
+fn body_resolves_profile_selected_sources_in_order() {
     let toc = TocFile::from_file(&trainer_toc()).expect("TOC parses");
 
     let body: Vec<String> = toc
@@ -216,8 +217,17 @@ fn body_resolves_to_bootstrap_mainline_xml_and_localization_lua() {
         .map(|p| p.to_string_lossy().to_string())
         .collect();
 
-    let expected = if toc_layout::unified_toc_tree() {
-        // PTR/Forever TrainerUI.toc:5-9 lists the family Mainline Lua and XML.
+    let expected = if toc_layout::forever() {
+        // Forever loads its Camelot override between Lua and XML.
+        vec![
+            "Blizzard_TrainerUI_Bootstrap.lua".to_string(),
+            "Mainline/Blizzard_TrainerUI.lua".to_string(),
+            "Mainline/Blizzard_TrainerUI_Camelot.lua".to_string(),
+            "Mainline/Blizzard_TrainerUI.xml".to_string(),
+            "Localization.lua".to_string(),
+        ]
+    } else if toc_layout::ptr() {
+        // PTR lists the Mainline Lua and XML directly.
         vec![
             "Blizzard_TrainerUI_Bootstrap.lua".to_string(),
             "Mainline/Blizzard_TrainerUI.lua".to_string(),
@@ -225,7 +235,10 @@ fn body_resolves_to_bootstrap_mainline_xml_and_localization_lua() {
             "Localization.lua".to_string(),
         ]
     } else if toc_layout::classic_cache() {
-        vec!["Blizzard_TrainerUI.xml".to_string(), "Localization.lua".to_string()]
+        vec![
+            "Blizzard_TrainerUI.xml".to_string(),
+            "Localization.lua".to_string(),
+        ]
     } else {
         vec![
             "Blizzard_TrainerUI_Bootstrap.lua".to_string(),
@@ -233,7 +246,15 @@ fn body_resolves_to_bootstrap_mainline_xml_and_localization_lua() {
             "Localization.lua".to_string(),
         ]
     };
-    assert_eq!(body, expected, "TrainerUI body must match the active pinned TOC: {body:?}");
+    assert_eq!(
+        body, expected,
+        "TrainerUI body must match the active profile's pinned TOC: {body:?}"
+    );
+}
+
+#[test]
+fn body_resolves_to_bootstrap_mainline_xml_and_localization_lua() {
+    body_resolves_profile_selected_sources_in_order();
 }
 
 #[test]

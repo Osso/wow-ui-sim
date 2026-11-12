@@ -113,6 +113,11 @@ const UNIFIED_EXPECTED_BODY: &[&str] = &[
     "Standard/Blizzard_StableUI.lua",
     "Standard/Blizzard_StableUI.xml",
 ];
+const FOREVER_EXPECTED_BODY: &[&str] = &[
+    "Shared/Blizzard_StableUI_Shared.lua",
+    "Camelot/Blizzard_StableUI.lua",
+    "Camelot/Blizzard_StableUI.xml",
+];
 
 fn load_full_game_ui() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
@@ -275,8 +280,10 @@ fn body_lists_lua_before_xml_for_mixin_resolution() {
         .map(|p| p.to_string_lossy().to_string())
         .collect();
 
-    let expected_body = if toc_layout::unified_toc_tree() {
-        // PTR/Forever StableUI.toc:4-6 selects shared Lua then Standard Lua/XML.
+    let expected_body = if toc_layout::forever() {
+        FOREVER_EXPECTED_BODY
+    } else if toc_layout::unified_toc_tree() {
+        // PTR StableUI.toc selects shared Lua then Standard Lua/XML.
         UNIFIED_EXPECTED_BODY
     } else {
         RETAIL_EXPECTED_BODY
@@ -284,8 +291,8 @@ fn body_lists_lua_before_xml_for_mixin_resolution() {
     assert_eq!(
         body.len(),
         expected_body.len(),
-        "StableUI body must match the active TOC: Retail lists two files; PTR/Forever \
-         StableUI.toc:4-6 lists shared Lua plus Standard Lua/XML. Got: {body:?}"
+        "StableUI body must match the active profile TOC, including its selected family path: \
+         {body:?}"
     );
 
     for (i, want) in expected_body.iter().enumerate() {
@@ -296,15 +303,17 @@ fn body_lists_lua_before_xml_for_mixin_resolution() {
         );
     }
 
+    let xml_index = body
+        .iter()
+        .position(|path| path.ends_with(".xml"))
+        .expect("selected stable UI TOC lists XML");
     assert!(
-        body.iter().position(|entry| entry.ends_with(".lua"))
-            < body.iter().position(|entry| entry.ends_with(".xml")),
-        "Blizzard_StableUI.lua MUST load BEFORE the .xml — the XML's \
-         mixin attributes (StableFrameMixin on the named StableFrame, \
-         plus 4 virtual-template mixin bindings) resolve mixin tables at \
-         template-registration time, so they MUST already be tables in _G \
-         when the .xml chunk processes. Reverse the order and every \
-         CreateFromMixins / mixin-lookup call would see nil"
+        body.iter()
+            .enumerate()
+            .filter(|(_, path)| path.ends_with(".lua"))
+            .all(|(index, _)| index < xml_index),
+        "Every Lua mixin source must load before XML registration so the StableFrameMixin \
+         and virtual-template mixins exist when XML templates are registered: {body:?}"
     );
 }
 }

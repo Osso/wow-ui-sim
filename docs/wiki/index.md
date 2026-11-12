@@ -12,9 +12,27 @@
 
 [Cursor model](systems/lua-api.md#cursor-modes-and-actionbar-transitions) links Retail and PTR implementation ownership to the [behavioral contract](../specs/cursor-model.md).
 
+## [2026-11-11] system | Character select screen data
+
+[Character select screen data](systems/chr-select-screen-data.md) links the profile-scoped DB2 rows and provenance. **VERIFIED:** Retail data is labeled with installed build 12.1.5.70783 and Forever rows with installed build 1.60.1.70888; targeted lookup tests pass 3/3 on each profile, and the PTR no-data test passes. **UNKNOWN:** Forever 70707 and PTR source rows. The native API and roster are separately owned.
+## [2026-11-11] system | Character-create trial boost level
+
+[Character-create trial boost level](systems/character-create-trial-boost-level.md) links the [contract](../specs/character-create-trial-boost-level.md), the Retail 70783 export, Glue registration, host selector state, and Forever/PTR evidence limits.
+
+## [2026-11-10] system | ScriptObject full lockdown
+
+[ScriptObject full lockdown](systems/script-object-full-lockdown.md) links the R18 model and its contract: distinct full-lock and forbidden states, access-allowed absence, scoped XML defaults, parent inheritance, and five measured secure/tainted resolver consumers. Retail and Forever native-consumer integration filters pass 7/7 each; six-profile all-target checks plus Wrath, both library suites, and the manifest bin tests pass with zero compiler warnings. See the [lane report](../../handoff/full-lockdown-model/REPORT.md) for exact outputs and UNKNOWNs.
+## [2026-11-10] implementation | Mists R21 Classic API contracts
+
+[Mists R21 Classic API behavior](investigations/mists-r21-classic-apis.md) records shared reputation backing-list indexing, watched-slot request mapping, engraving mode and backpack-currency behavior. **VERIFIED:** Ten targeted Mists tests pass; all six profile builds have zero warnings and all six library suites pass. The Mists `spell` and `frame_position` failure-name sets match base `origin/master` `93125f591`. Native `N+1` watcher behavior and Era/Anniversary behavior remain UNKNOWN.
+## [2026-11-10] implementation | Round 7 tooltip getters
+
+[Tooltip data](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) links the [Round 7 contract](../specs/tooltip-r7-getters.md): profile-specific getter publication, exact argument readers, no-value misses for absent backing models, owned-item Runeforge composition and the bounded `GetItemNumSockets` secret-input policy. Native socket-result tagging remains UNKNOWN.
+
 ## [2026-11-09] investigation | Reconcile profile frame-position baselines
 
-[Frame-position baseline drift](investigations/frame-position-baseline-drift.md#verified-lane-result--2026-11-09) records source-derived PTR, Forever and Classic expectations, profile-specific absent-frame checks, six-profile failure matrices, and unresolved model/input divergences. Its Mists follow-up records source-asserted Edit Mode unit-frame anchors, StanceBar replay ordering, and the managed ChatFrame position; 11 Mists frame-position residuals remain. The Forever bag, status-manager and managed-right residuals use Camelot source-derived fixture geometry, and Forever passes all 28 cases.
+[Frame-position baseline drift](investigations/frame-position-baseline-drift.md#verified-lane-result--2026-11-09) records source-derived PTR, Forever and Classic expectations, profile-specific absent-frame checks, six-profile failure matrices, and unresolved model/input divergences. Its Mists follow-ups record source-asserted Edit Mode unit-frame anchors, StanceBar replay ordering, managed ChatFrame position, seven more source-derived frame contracts, the WatchFrame-managed right container, and ObjectiveTracker absence; the three unresolved Mists cases remain open. Forever bag, status-manager and managed-right residuals use Camelot source-derived fixture geometry, and Forever passes all 28 cases.
+
 ## [2026-11-10] verification | Classic frame-position residuals
 
 [Frame-position baseline drift](investigations/frame-position-baseline-drift.md#verified-residual-results--2026-11-10) records the final six-profile matrix: Retail/PTR 28/28, Era/Anniversary 26/28 with only bags/chat open, and source-backed ObjectiveTracker absence for Mists/Era/Anniversary. Six profile all-target checks and Wrath compile are warning-free; the manifest test passes.
@@ -182,13 +200,9 @@ ordinary launches retain import priority. See [addon loading](systems/addon-load
 selection, addon-visible names and realms before loading and after ReloadUI,
 Forever surname handling and the bounded original-consumer coverage.
 
-## [2026-11-02] investigation | Forever login startup
+## [2026-11-11] correction | Forever PTR feedback Glue selection
 
-[Login startup](investigations/forever-login-startup.md) records missing profile data,
-TOC sibling provenance, customization initialization and the user-approved offline
-catalog/capability policy. The rebuilt Windows login reports zero Lua errors, down
-from 38 records/58 occurrences; 69 focused checks pass after review. This bounded verification
-is separate from the game-screen baseline and native parity.
+[Login startup](investigations/forever-login-startup.md#r26-toc-admission-correction-2026-11-11) records R26's build-classification gate and the cached TOC distinction. **INFERRED (R26 plus the shipped cache TOC, whose exact build is unknown):** normal Forever startup excludes `Blizzard_PTRFeedbackGlue`. **VERIFIED (simulator test at `83d7e3998`, 1/1):** the updated fixture checks its absence from Login startup; it does not assert customization add-on loading there.
 
 ## [2026-11-03] investigation | Forever Cooldown Viewer in Edit Mode
 

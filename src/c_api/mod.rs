@@ -25,8 +25,10 @@ pub(crate) mod c_tooltip_info_merchant_cost;
 // PTR and Forever; the supplied-brawl model is compiled for the same profiles.
 #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 pub(crate) mod c_tooltip_info_pvp_brawl;
+pub(crate) mod c_tooltip_info_round7;
 pub(crate) mod c_tooltip_info_totem;
 pub(crate) mod c_tooltip_info_weekly;
+pub mod chr_select_screen_data;
 pub(crate) mod class_catalog;
 #[cfg(any(feature = "client-era", feature = "client-anniversary"))]
 pub(crate) mod classic_startup_data;
@@ -120,8 +122,13 @@ pub(crate) mod c_campaign_info;
 pub mod c_catalog_shop;
 pub mod c_catalog_shop_products;
 pub mod c_challenge_mode;
+pub(crate) mod c_character_creation;
 pub(crate) mod c_character_creation_naming;
 pub(crate) mod c_character_creation_seen;
+pub mod c_character_creation_trial_boost;
+mod c_character_creation_trial_boost_data;
+#[cfg(test)]
+mod c_character_creation_trial_boost_tests;
 pub mod c_character_services;
 pub mod c_chat_bubbles;
 #[cfg(feature = "retail-12-0-5")]
@@ -153,6 +160,7 @@ pub(crate) mod c_debug;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_delves_entrance;
 pub mod c_discord;
+pub mod c_district_utils;
 mod c_dungeon_score_rarity;
 #[cfg(feature = "retail-12-0-0")]
 pub mod c_dye_color;
@@ -222,7 +230,6 @@ pub mod c_photo_sharing;
 pub mod c_ping_secure;
 #[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
 pub mod c_player_choice;
-#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 pub(crate) mod c_player_info_guid;
 pub(crate) mod c_player_info_name_policy;
 pub mod c_player_interaction_manager;
@@ -239,6 +246,7 @@ pub mod c_quest_log;
 pub(crate) mod c_quest_log_watches;
 pub mod c_quest_offer;
 mod c_scrapping_machine;
+pub mod c_shared_character_services;
 pub mod c_super_track;
 pub(crate) mod challenge_run;
 pub mod container_quest;
@@ -255,6 +263,7 @@ mod forever_lib_baseline_tests;
 pub mod outfit_entry;
 mod scenario_finder_availability;
 pub mod store_public_eligibility;
+pub(crate) mod store_state;
 pub mod transmog_availability;
 pub use c_quest_log_watches::QuestWatchType;
 pub(crate) use c_quest_log_watches::seed_quest_watch_types;
@@ -297,6 +306,8 @@ pub(crate) mod c_tooltip_info_indexed_aura;
 pub(crate) mod c_tooltip_info_item_context;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_tooltip_info_outfit;
+#[cfg(feature = "client-retail")]
+pub mod c_tooltip_info_pvp_talent;
 pub(crate) mod c_tooltip_info_socketed_relic;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_tooltip_info_spell_mount;
@@ -306,6 +317,8 @@ pub(crate) mod c_trade_skill_filter;
 pub(crate) mod c_trade_skill_first_craft;
 pub mod c_trade_skill_quality;
 mod c_trade_skill_source;
+#[cfg(feature = "client-mists")]
+pub(crate) mod mists_reputation_list;
 // The pinned classic TransmogItemsDocumentation.lua / TransmogOutfitInfoDocumentation.lua
 // declare these namespaces on Mists, Era and Anniversary, so the backing model
 // is compiled for those profiles together with the retail API epochs.
@@ -406,7 +419,7 @@ pub(crate) mod c_weather;
 pub mod c_weekly_rewards;
 pub mod c_widget;
 pub mod c_wow_token_public;
-pub(crate) mod c_wow_token_ui;
+pub mod c_wow_token_ui;
 pub mod c_wowtoken_secure;
 pub mod c_xml_util;
 pub(crate) mod c_zone_ability_icon;
@@ -487,6 +500,7 @@ mod voice_provider_enum;
 
 pub(crate) mod c_tts_settings;
 mod helpers;
+pub(crate) use helpers::parse_numeric_string;
 #[cfg(feature = "retail-12-0-0")]
 mod patch_retired_members;
 #[cfg(feature = "retail-12-0-0")]
@@ -509,6 +523,10 @@ pub(crate) use registration::{
 
 use rilua::LuaResult;
 use rilua::vm::state::LuaState;
+
+pub(crate) fn update_screen_registration(state: &mut LuaState) -> LuaResult<()> {
+    c_character_creation_trial_boost::update_screen_registration(state)
+}
 
 fn supports_super_tracking() -> bool {
     use crate::client_profile::{ACTIVE, ClientProfile};
@@ -587,7 +605,11 @@ pub(crate) fn register_utility_bootstrap_tables(state: &mut LuaState) -> LuaResu
     c_intl::register(state)?;
     #[cfg(feature = "aura-containers")]
     c_aura_container_util::register(state)?;
-    #[cfg(any(feature = "aura-containers", feature = "retail-12-0-0"))]
+    #[cfg(any(
+        feature = "aura-containers",
+        feature = "retail-12-0-0",
+        feature = "client-wowforever"
+    ))]
     c_secrets::register(state)?;
     register_specialization_and_model_tables(state)?;
     register_glue_and_display_tables(state)?;
@@ -605,7 +627,9 @@ fn register_specialization_and_model_tables(state: &mut LuaState) -> LuaResult<(
 fn register_glue_and_display_tables(state: &mut LuaState) -> LuaResult<()> {
     c_glue::register_c_glue(state)?;
     c_login::register_c_login(state)?;
+    c_district_utils::register_ptr_game_surface(state)?;
     c_character_creation_naming::register(state)?;
+    c_character_creation_trial_boost::register(state)?;
     c_ui::register(state)?;
     permanent_shims::c_ui::register_c_ui(state)
 }
@@ -626,7 +650,7 @@ fn register_token_texture_xml_tables(state: &mut LuaState) -> LuaResult<()> {
     c_ping_texture_kits::register(state)?;
     c_wowtoken_secure::register_c_wowtoken_secure(state)?;
     c_wow_token_public::register_c_wow_token_public(state)?;
-    c_wow_token_ui::register_c_wow_token_ui(state)?;
+    c_wow_token_ui::register(state)?;
     c_texture::register_c_texture(state)?;
     c_ui_file_asset::register_c_ui_file_asset(state)?;
     c_xml_util::register_c_xml_util(state)

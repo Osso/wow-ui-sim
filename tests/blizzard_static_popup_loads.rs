@@ -269,7 +269,7 @@ fn toc_raw_bytes_pin_three_metadata_directives() {
 
 post_wrath_ui_fixture! {
 #[test]
-fn body_lists_three_lua_files_in_dependency_order() {
+fn body_lists_active_profile_lua_files_in_dependency_order() {
     let toc = TocFile::from_file(&static_popup_toc()).expect("TOC parses");
 
     let body: Vec<String> = toc
@@ -279,7 +279,7 @@ fn body_lists_three_lua_files_in_dependency_order() {
         .collect();
 
     let expected: &[&str] = if toc_layout::unified_toc_tree() {
-        // PTR/Forever StaticPopup.toc:4-7 adds StaticPopupGamepad.lua.
+        // PTR/Forever StaticPopup.toc lists StaticPopupGamepad.lua as its fourth entry.
         &[
             "StaticPopup.lua",
             "SharedTemplates.lua",
@@ -293,8 +293,7 @@ fn body_lists_three_lua_files_in_dependency_order() {
     assert_eq!(
         body.len(),
         expected.len(),
-        "Body must match the active StaticPopup TOC. PTR/Forever \
-         Blizzard_StaticPopup.toc:4-7 adds StaticPopupGamepad.lua. Got: {body:?}"
+        "Body must match the selected StaticPopup TOC entries: {body:?}"
     );
 
     for (i, want) in expected.iter().enumerate() {
@@ -306,14 +305,17 @@ fn body_lists_three_lua_files_in_dependency_order() {
     }
 
     assert!(
-        body.iter().all(|f| f.ends_with(".lua")),
-        "All body entries MUST be .lua — StaticPopup ships zero XML \
-         because it is a pure dispatcher library: \
-         StaticPopup.lua publishes the dispatcher, SharedTemplates.lua \
-         publishes the editbox/element mixins consumed by downstream \
-         XML, and SharedDialogDefs.lua seeds the GENERIC_CONFIRMATION \
-         dialog into StaticPopupDialogs"
+        body.iter().all(|file| file.ends_with(".lua")),
+        "StaticPopup's selected dispatcher, templates, definitions, and optional gamepad \
+         source must all be Lua: {body:?}"
     );
+}
+}
+
+post_wrath_ui_fixture! {
+#[test]
+fn body_lists_three_lua_files_in_dependency_order() {
+    body_lists_active_profile_lua_files_in_dependency_order();
 }
 }
 

@@ -138,12 +138,14 @@ fn build_fontstring_create_code(
     args: &mut XmlLuaArgs,
 ) -> String {
     let inherits = fontstring.inherits.as_deref().unwrap_or("");
+    let create_font_string = args.bind_font_string_creator();
     let mut code = format!(
         r#"
         local parent = {}
-        local fs = parent:CreateFontString({}, "{}", {})
+        local fs = {}(parent, {}, "{}", {})
         "#,
         args.bind_frame_ref(parent_ref_name),
+        create_font_string,
         args.bind_string(fs_name),
         escape_lua_string(draw_layer),
         if inherits.is_empty() {

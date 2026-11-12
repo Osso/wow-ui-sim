@@ -177,8 +177,8 @@ fn lane_dep_edges_pin_canonical_chain() {
     let frame_xml_deps = frame_xml.dependencies();
     // PTR 12.1.7 and Forever 1.60.1 both declare GamepadSoftCursor on
     // Blizzard_FrameXML.toc:19; Retail's pinned TOC does not.
-    let expected_frame_xml_deps = if toc_layout::unified_toc_tree() {
-        vec![
+    let expected_frame_xml_deps: &[&str] = if toc_layout::unified_toc_tree() {
+        &[
             "Blizzard_ObjectAPI",
             "Blizzard_FrameXMLBase",
             "Blizzard_UIErrorsFrame",
@@ -197,7 +197,7 @@ fn lane_dep_edges_pin_canonical_chain() {
             "Blizzard_GamepadSoftCursor",
         ]
     } else {
-        vec![
+        &[
             "Blizzard_ObjectAPI",
             "Blizzard_FrameXMLBase",
             "Blizzard_UIErrorsFrame",
@@ -219,7 +219,7 @@ fn lane_dep_edges_pin_canonical_chain() {
         frame_xml_deps,
         expected_frame_xml_deps
             .iter()
-            .map(|s| s.to_string())
+            .map(|dependency| dependency.to_string())
             .collect::<Vec<_>>(),
         "FrameXML dependencies must match the active pinned TOC. PTR 12.1.7 and Forever \
          add Blizzard_GamepadSoftCursor at Blizzard_FrameXML.toc:19; Retail does not. \

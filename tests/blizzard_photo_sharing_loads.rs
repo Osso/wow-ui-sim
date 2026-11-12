@@ -236,19 +236,17 @@ fn blizzard_photo_sharing_toc_lists_four_files_in_canonical_order() {
 
 post_wrath_ui_fixture! {
 #[test]
-fn blizzard_photo_sharing_appears_in_game_screen_eager_discovery_only() {
+fn photo_sharing_discovery_matches_profile_game_type_and_screen() {
     let ui = blizzard_ui_dir();
 
     let game_addons = discover_blizzard_addons_for_screen(&ui, ScreenKind::Game);
     let in_game = game_addons
         .iter()
         .any(|(name, _)| name == "Blizzard_PhotoSharing");
-    assert!(
+    assert_eq!(
         in_game,
-        "Blizzard_PhotoSharing must auto-discover on Game screen — eager (no \
-         LoadOnDemand) AND `## AllowLoadGameType: standard` allows Mainline AND \
-         omitted `## AllowLoad:` defaults to Game-only, which together makes \
-         `discover_blizzard_addons_for_screen(Game)` include the addon"
+        toc_layout::admits_game_type("standard"),
+        "PhotoSharing allows standard, and its default AllowLoad remains Game-only"
     );
 
     for screen in [

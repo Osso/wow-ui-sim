@@ -10,6 +10,7 @@
 // Uniforms (group 0)
 struct Uniforms {
     projection: mat4x4<f32>,
+    color_space: vec4<u32>,
 }
 
 @group(0) @binding(0)
@@ -94,6 +95,50 @@ fn vs_main(in: VertexInput) -> VertexOutput {
 // Blend mode constants
 const BLEND_ALPHA: u32 = 0u;
 const BLEND_ADDITIVE: u32 = 1u;
+const TEX_INDEX_GLYPH: i32 = 5;
+const DISPLAY_RGB_MAX_BYTE: f32 = 255.0;
+const DISPLAY_RGB_ROUNDING_HALF: f32 = 0.5;
+
+fn srgb_to_linear(color: vec3<f32>) -> vec3<f32> {
+    let low = color / 12.92;
+    let high = pow(max((color + 0.055) / 1.055, vec3<f32>(0.0)), vec3<f32>(2.4));
+    return select(high, low, color <= vec3<f32>(0.04045));
+}
+
+fn quantize_display_rgb(color: vec3<f32>) -> vec3<f32> {
+    // Keep UI float values aligned with the 8-bit display-byte screenshot.
+    return floor(color * DISPLAY_RGB_MAX_BYTE + DISPLAY_RGB_ROUNDING_HALF)
+        / DISPLAY_RGB_MAX_BYTE;
+}
+
+fn linear_to_srgb(color: vec3<f32>) -> vec3<f32> {
+    let low = color * 12.92;
+    let high = 1.055 * pow(max(color, vec3<f32>(0.0)), vec3<f32>(1.0 / 2.4)) - 0.055;
+    return select(high, low, color <= vec3<f32>(0.0031308));
+}
+
+fn modulate_texture(
+    tex_color: vec4<f32>,
+    tint: vec4<f32>,
+    sample_rgb_is_linear: bool,
+) -> vec4<f32> {
+    if uniforms.color_space.x != 0u {
+        var display_color = tex_color.rgb;
+        if sample_rgb_is_linear {
+            display_color = linear_to_srgb(display_color);
+        }
+        display_color = quantize_display_rgb(display_color * tint.rgb);
+        return vec4<f32>(srgb_to_linear(display_color), tex_color.a * tint.a);
+    }
+    return tex_color * tint;
+}
+
+fn prepare_solid_color(color: vec4<f32>) -> vec4<f32> {
+    if uniforms.color_space.x != 0u {
+        return vec4<f32>(srgb_to_linear(quantize_display_rgb(color.rgb)), color.a);
+    }
+    return color;
+}
 
 // Sample from the appropriate tier based on tex_index
 // tex_index 0-4: tiered RGBA atlases, 5: glyph atlas, 6: BC1 atlas, 7: BC3 atlas
@@ -123,7 +168,7 @@ fn sample_tiered_texture(tex_index: i32, tex_coords: vec2<f32>) -> vec4<f32> {
         return s3;
     } else if tex_index == 4 {
         return s4;
-    } else if tex_index == 5 {
+    } else if tex_index == TEX_INDEX_GLYPH {
         return sg;
     } else if tex_index == 6 {
         return sbc1;
@@ -141,20 +186,28 @@ fn fs_main(in: VertexOutput) -> @location(0) vec4<f32> {
 
     if (in.flags & FLAG_COOLDOWN_SWIPE) != 0u {
         if in.tex_index < 0 {
-            color = in.color;
+            color = prepare_solid_color(in.color);
         } else {
             // Cooldown swipes use mask_tex_coords as sample UVs because tex_coords.x
             // is reserved for the radial progress value.
             let tex_color = sample_tiered_texture(in.tex_index, in.mask_tex_coords);
-            color = tex_color * in.color;
+            color = modulate_texture(
+                tex_color,
+                in.color,
+                in.tex_index != TEX_INDEX_GLYPH,
+            );
         }
     } else if in.tex_index < 0 {
         // Solid color or pending texture (-1 = solid, -2 = pending)
-        color = in.color;
+        color = prepare_solid_color(in.color);
     } else {
         // Textured quad - sample from the appropriate tier atlas
         let tex_color = sample_tiered_texture(in.tex_index, in.tex_coords);
-        color = tex_color * in.color;
+        color = modulate_texture(
+            tex_color,
+            in.color,
+            in.tex_index != TEX_INDEX_GLYPH,
+        );
     }
 
     let blend_mode = in.flags & 0xFFu;

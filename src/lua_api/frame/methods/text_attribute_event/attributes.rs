@@ -553,7 +553,7 @@ pub(super) fn is_forbidden(state: &mut LuaState) -> LuaResult<u32> {
     let val = sim
         .widgets
         .get(id)
-        .is_some_and(|frame| frame.forbidden || frame.full_lockdown);
+        .is_some_and(|frame| frame.forbidden || frame.is_fully_locked_down());
     drop(sim);
     state.push(Val::Bool(val));
     Ok(1)

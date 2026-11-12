@@ -410,6 +410,7 @@ fn is_widget_specific_script_handler(
     handler_name: &str,
 ) -> bool {
     match handler_name {
+        "OnGamePadButtonDown" | "OnGamePadButtonUp" => supports_gamepad_button_script(widget_type),
         "OnClick" | "PreClick" | "PostClick" => {
             matches!(widget_type, WidgetType::Button | WidgetType::CheckButton)
         }
@@ -446,6 +447,18 @@ fn is_widget_specific_script_handler(
         }
         _ => false,
     }
+}
+
+fn supports_gamepad_button_script(widget_type: WidgetType) -> bool {
+    matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::Ptr
+            | crate::client_profile::ClientProfile::WowForever
+            | crate::client_profile::ClientProfile::Mists
+            | crate::client_profile::ClientProfile::Era
+            | crate::client_profile::ClientProfile::Anniversary
+    ) && matches!(widget_type, WidgetType::Frame | WidgetType::Button)
 }
 
 fn supports_model_script_handler(widget_type: WidgetType, object_type_name: Option<&str>) -> bool {

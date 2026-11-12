@@ -404,10 +404,10 @@ post_wrath_ui_fixture! {
 #[test]
 fn classic_companion_is_restricted_on_mainline_build() {
     if toc_layout::unified_toc_tree() {
+        // Unified PTR/Forever manifests have one TOC and no Classic sibling.
         assert!(
             !unit_frame_classic_toc().exists(),
-            "PTR/Forever Blizzard_UnitFrame.toc:1-20 is the unified TOC; the cache has no \
-             separate Blizzard_UnitFrame_Classic.toc"
+            "PTR/Forever Blizzard_UnitFrame.toc is unified; no Classic sibling exists"
         );
         return;
     }

@@ -236,7 +236,7 @@ impl WowLuaEnv {
         self.fire_event("ACCOUNT_CHARACTER_CURRENCY_DATA_RECEIVED")
     }
 
-    /// Supply one hidden server-mirrored CVar value for this simulated client.
+    /// Set a server-mirrored CVar for this simulated client.
     ///
     /// R38 verifies that a changed `bpayStoreEnable` value emits one
     /// `STORE_STATUS_CHANGED` event with no payload and no `CVAR_UPDATE` on
@@ -255,8 +255,15 @@ impl WowLuaEnv {
                     ))
                 })?
         };
+        let store_status_changed = name.eq_ignore_ascii_case("bpayStoreEnable")
+            && matches!(
+                crate::client_profile::ACTIVE,
+                crate::client_profile::ClientProfile::Retail
+                    | crate::client_profile::ClientProfile::Ptr
+            )
+            && previous_value != value;
 
-        if name.eq_ignore_ascii_case("bpayStoreEnable") && previous_value != value {
+        if store_status_changed {
             self.fire_event("STORE_STATUS_CHANGED")?;
         }
         Ok(())

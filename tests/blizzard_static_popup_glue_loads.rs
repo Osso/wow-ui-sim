@@ -228,7 +228,7 @@ fn toc_raw_bytes_pin_three_metadata_directives() {
 
 post_wrath_ui_fixture! {
 #[test]
-fn body_substitutes_family_placeholders_to_mainline() {
+fn body_selects_family_and_game_entries_for_active_profile() {
     let toc = TocFile::from_file(&static_popup_glue_toc()).expect("TOC parses");
 
     let body: Vec<String> = toc
@@ -237,24 +237,36 @@ fn body_substitutes_family_placeholders_to_mainline() {
         .map(|p| p.to_string_lossy().to_string())
         .collect();
 
-    let expected = [
-        "GlueDialogDefs.lua",
-        "Mainline/GlueDialogDefs.lua",
-        "GlueDialog.lua",
-        "Mainline/GlueDialog.lua",
-        "GlueDialogUserScaledTemplates.lua",
-        "GlueDialog.xml",
-        "Mainline/GlueAnnouncementDialog.lua",
-        "Mainline/GlueAnnouncementDialog.xml",
-    ];
+    let expected: &[&str] = if cfg!(feature = "client-wowforever") {
+        // Forever's TOC includes [Game] Camelot/GlueDialogDefs.lua.
+        &[
+            "GlueDialogDefs.lua",
+            "Mainline/GlueDialogDefs.lua",
+            "Camelot/GlueDialogDefs.lua",
+            "GlueDialog.lua",
+            "Mainline/GlueDialog.lua",
+            "GlueDialogUserScaledTemplates.lua",
+            "GlueDialog.xml",
+            "Mainline/GlueAnnouncementDialog.lua",
+            "Mainline/GlueAnnouncementDialog.xml",
+        ]
+    } else {
+        &[
+            "GlueDialogDefs.lua",
+            "Mainline/GlueDialogDefs.lua",
+            "GlueDialog.lua",
+            "Mainline/GlueDialog.lua",
+            "GlueDialogUserScaledTemplates.lua",
+            "GlueDialog.xml",
+            "Mainline/GlueAnnouncementDialog.lua",
+            "Mainline/GlueAnnouncementDialog.xml",
+        ]
+    };
 
     assert_eq!(
         body.len(),
         expected.len(),
-        "8 retained body entries — `[Family]` substituted to `Mainline/`. \
-         The 2 GlueAnnouncementDialog files are mainline-gated and retained \
-         on glue screens (Login/CharacterSelect/CharacterCreate use mainline \
-         flavor pair). Got: {body:?}"
+        "selected StaticPopup_Glue TOC entries: {body:?}"
     );
 
     for (i, want) in expected.iter().enumerate() {

@@ -10,6 +10,29 @@ Added the separate server-mirror model, API queries, event routing, and focused 
 
 Updated [Lua API](systems/lua-api.md#cursor-modes-and-actionbar-transitions) to link cursor ownership to the [contract](../specs/cursor-model.md). VERIFIED (PTR): focused R37 selectors pass; UNKNOWN (R37): owned-item and same-item outcomes remain unmodeled. UNVERIFIED: the full profile matrix remains open.
 
+## [2026-11-11] correction | Forever PTR feedback Glue selection
+
+Updated [Forever login startup](investigations/forever-login-startup.md#r26-toc-admission-correction-2026-11-11). **VERIFIED (native R26):** `OnlyBetaAndPTR` uses build classification. **VERIFIED (shipped cache TOC; exact build unknown):** `Blizzard_PTRFeedbackGlue.toc` carries that directive. **INFERRED:** normal Forever startup excludes this addon. **VERIFIED (simulator test at `83d7e3998`, 1/1):** the startup fixture checks its absence from Login startup; customization add-on loading is not asserted there. API absence in all environments remains UNVERIFIED.
+## [2026-11-11] system | Character select screen data
+
+Added [profile-scoped class/race select-screen data](systems/chr-select-screen-data.md), the feature contract, pinned WoWDBDefs schemas, and a local-DB2 generator. **VERIFIED:** Retail and Forever each pass three exact targeted tests; the PTR no-data branch passes; Retail/Forever test builds and PTR/Mists/Era/Anniversary/Wrath all-target checks complete with zero compiler warnings (`wow_ui_sim` fresh=false). Exported builds are Retail 12.1.5.70783 and Forever 1.60.1.70888. **UNKNOWN:** Retail pin 70575 rows, Forever pin 70707 rows, and PTR rows. `lt-a667` owns the native API and roster consumer. See the [handoff report](../../handoff/r52-select-screen-data/REPORT.md) for receipt hashes.
+## [2026-11-11] implementation | Character-create trial boost level
+
+Added the R61-backed [`C_CharacterCreation.GetTrialBoostStartingLevel`](systems/character-create-trial-boost-level.md) model and its [contract](../specs/character-create-trial-boost-level.md). **VERIFIED:** Retail 12.1.5.70783's 13-row export yields level 100 for selector 2, and seven Retail tests pass through the original tooltip consumer. Forever ships no rows because its local table payload is encrypted; registration and empty-row tests pass. The direct original Camelot tooltip consumer test passes with the empty-table level-0 result. Three broad Forever startup filters still fail before that consumer at `SetInCharacterCreate`. **VERIFIED:** the PTR zero-fallback test passes on Game and Glue; native PTR availability remains UNKNOWN. The [lane report](../../handoff/r61-trial-boost-level/REPORT.md) records data provenance, RED/GREEN receipts, exact failures, and lane acceptance limits.
+
+## [2026-11-10] fix | Mists frame-position residuals
+
+Updated the [frame-position investigation](investigations/frame-position-baseline-drift.md#mists-frame-residuals--2026-11-10) and [profile contract](../specs/frame-position-profile-baselines.md) with pinned-source Mists bag, aura, action-bar, status-bar and WatchFrame-managed right-container geometry. The simulator no longer synthesizes ObjectiveTrackerFrame on Mists, where the selected Blizzard UI has no producer; the test asserts absence. VERIFIED at `3c36dab15`: Mists `frame_positions` passes 25/28; `micro_menu`, `micro_menu_container` and `casting_bar` remain open.
+## [2026-11-10] system | ScriptObject full lockdown
+
+Created [ScriptObject full lockdown](systems/script-object-full-lockdown.md) and its contract. R18's full-lock predicate, scoped XML default, creation-time inheritance, `IsForbidden` union and five measured API consumers are separate from ordinary forbidden, aura restrictions and combat protection. Retail and Forever integration filters pass 7/7 each; six-profile all-target checks plus Wrath, Retail/Forever library suites, Retail filters and manifest bin tests pass with zero compiler warnings. The [lane report](../../handoff/full-lockdown-model/REPORT.md) records proofs and UNKNOWN edges.
+## [2026-11-10] implementation | Mists R21 Classic API contracts
+
+[Mists R21 Classic API behavior](investigations/mists-r21-classic-apis.md) now includes the watched-faction request: the same 1-based backing positions map to a supplied signed reputation slot, while index 0 and indices at least `N+2` request -1. **VERIFIED:** the new direct watched-slot regression passes, and the nine existing reputation, TokenUI and bag tests plus engraving tests pass. All six profile builds have zero warnings and all six library suites pass; Mists `spell` and `frame_position` failure-name sets match base `origin/master` `93125f591`. `N+1`, native player/connection gating, current-slot deduplication and Era/Anniversary native behavior remain UNKNOWN or unmodeled.
+## [2026-11-10] implementation | Round 7 tooltip getters
+
+Added the [Round 7 contract](../specs/tooltip-r7-getters.md) and linked it from [Lua API tooltip data](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation). The new getters follow Retail/Forever and PTR registration evidence, use no-value misses when backing state is absent, and reuse the item builder for owned runeforge instances. Socket input secrecy is enforced for tainted callers; native result-tag conditions remain UNKNOWN.
+
 ## [2026-11-09] correction | PTR 12.1.7 FrameXML removed-symbol runtime rows
 
 Corrected the [Patch 12.1 FrameXML symbol inventory](investigations/patch-12-1-framexml-symbol-inventory.md): the full-load PTR 12.1.7 probe found 93 of 99 historical removed-symbol paths not callable, four `RaidNotice_*` aliases still published by `Blizzard_DeprecatedRaidWarning`, and `getglobal`/`setglobal` as Lua built-ins. These are simulator-runtime observations, not proof of native absence; the acceptance test now checks only the four current source publishers.
@@ -21,6 +44,7 @@ Corrected the [Patch 12.1 FrameXML symbol inventory](investigations/patch-12-1-f
 [Frame-position baseline drift](investigations/frame-position-baseline-drift.md#verified-residual-results--2026-11-10) records source-derived Era/Anniversary expectations, Mists/Era/Anniversary ObjectiveTracker absence, and the final six-profile failure-name matrix. Era/Anniversary library tests pass; all six profile all-target checks and Wrath compile have zero warnings and compile `wow_ui_sim` with `fresh:false`. The checked-in patch-manifest test passes.
 
 ## [2026-11-08] investigation | GUI CASC cache preparation
+
 ## [2026-11-09] fix | Mists unit-frame Edit Mode replay ordering
 
 Updated the [frame-position investigation](investigations/frame-position-baseline-drift.md#mists-unit-frame-startup-replay--2026-11-09) and its [profile contract](../specs/frame-position-profile-baselines.md): the startup action-bar replay now initializes the native StanceBar state before the Classic dynamic-background-art refresh that reads it. The Mists `frame_positions` run passes all six unit-frame cases and ChatFrame1 at its source-derived managed position; 11 residual names remain from 17 RED. Native C layout-event timing remains UNKNOWN; see the lane report for proof and remaining gates.
@@ -60,7 +84,7 @@ Recorded the [XML parent identity failure](investigations/mists-spellbook-size.m
 [SetForbidden restriction](../specs/set-forbidden-restriction.md) extends the tainted-call no-op gate to `client-wowforever`: the pinned WowForever `1.60.1.70707` `SimpleFrameScriptObjectAPIDocumentation.lua` is byte-identical to the Retail and PTR copies (`:287-295`, `HasRestrictions = true`), and its `Blizzard_RestrictedAddOnEnvironment/RestrictedExecution.lua:397-400` reaches `MakeForbidden` only under `issecure()`. No native WowForever probe covers the method (`handoff/native-evidence-70707`), so the case stays INFERRED. The existing `protected_frame_enforcement` case failed on Forever before the change and passes after it.
 ## [2026-11-07] investigation | Mists engraving mode native default
 
-[Mists engraving inputs](investigations/mists-engraving-inputs.md#supplied-input-boundary) records the INFERRED native defaults for the bag flow: availability false, engraving mode false and current rune nil. The declarations have no availability setter; the only mode producer is `Blizzard_EngravingUI` OnShow/OnHide; its TOC says the feature is for seasonal content, which Mists is not. `SimState::seed_default_game_state` seeds these three values under `client-mists`; the getters keep the named unsupplied-input errors and supplied state overrides. The unchanged bank and mail storage-flow tests now reach original `ContainerFrame_Shared.lua:315` without a Lua error. Other engraving members keep the explicit missing-input contract.
+The November 7 [engraving-input investigation](investigations/mists-engraving-inputs.md#supplied-input-boundary) treated all three bag-flow defaults as inferred. **VERIFIED** Mists R21 evidence now establishes mode=false and the synchronous setter event; **INFERRED** defaults for availability=false and current rune=nil remain open. See [Mists R21 Classic API behavior](investigations/mists-r21-classic-apis.md). The unchanged bank and mail storage-flow tests still reach original `ContainerFrame_Shared.lua:315` without a Lua error.
 
 ## [2026-11-07] investigation | Forever C_Scenario.ShouldShowCriteria
 
