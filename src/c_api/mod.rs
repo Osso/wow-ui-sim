@@ -21,6 +21,7 @@ pub(crate) mod c_tooltip_info_item_key;
 pub(crate) mod c_tooltip_info_loot;
 #[cfg(feature = "retail-12-1-5")]
 pub(crate) mod c_tooltip_info_merchant_cost;
+pub(crate) mod experience_preset;
 // The pinned TooltipInfoDocumentation.lua:710 declares GetPvpBrawl on Retail,
 // PTR and Forever; the supplied-brawl model is compiled for the same profiles.
 #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
@@ -33,10 +34,12 @@ pub(crate) mod class_catalog;
 #[cfg(any(feature = "client-era", feature = "client-anniversary"))]
 pub(crate) mod classic_startup_data;
 pub(crate) mod collections_availability;
+pub mod credits;
 #[cfg(feature = "client-retail")]
 pub mod currency_list;
 pub mod forever_talents;
 pub(crate) mod game_mode;
+pub mod game_mode_display;
 pub(crate) mod game_rules_personal_resource;
 pub(crate) mod game_rules_strata;
 pub(crate) mod game_rules_visibility;
@@ -56,6 +59,8 @@ pub(crate) mod tooltip_power_catalog_data;
 pub mod trait_group_currency;
 pub mod trait_group_display;
 pub mod ui_widget_manager;
+pub mod video_capabilities;
+pub(crate) mod video_texture_capability;
 #[cfg(feature = "client-wrath")]
 pub mod who_routing;
 
@@ -627,6 +632,9 @@ fn register_specialization_and_model_tables(state: &mut LuaState) -> LuaResult<(
 fn register_glue_and_display_tables(state: &mut LuaState) -> LuaResult<()> {
     c_glue::register_c_glue(state)?;
     c_login::register_c_login(state)?;
+    video_capabilities::register(state)?;
+    video_texture_capability::register(state)?;
+    credits::register(state)?;
     c_district_utils::register_ptr_game_surface(state)?;
     c_character_creation_naming::register(state)?;
     c_character_creation_trial_boost::register(state)?;

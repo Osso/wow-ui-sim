@@ -21,6 +21,8 @@ pub struct SimState {
     #[cfg(feature = "retail-12-0-5")]
     pub(crate) nameplate_hit_test_insets: crate::c_api::c_nameplate_manager::NamePlateHitTestInsets,
     pub(crate) input_interface_style: crate::c_api::c_input_interface_style::InputInterfaceStyle,
+    /// INFERRED host byte projection, independent of CVars and GPU detection.
+    pub video_capability_bytes: crate::c_api::video_capabilities::VideoCapabilityBytes,
     /// Explicit mapped-stick input; None means no configured snapshot, not device absence.
     #[cfg(any(feature = "client-wowforever", feature = "client-ptr"))]
     pub gamepad_mapped_sticks: Option<crate::c_api::c_game_pad::MappedStickSnapshot>,
@@ -181,6 +183,10 @@ pub struct SimState {
     pub physical_screen_height: f32,
     pub screen_kind: ScreenKind,
     pub in_character_create: bool,
+    pub glue_login: crate::c_api::c_login::LoginState,
+    #[cfg(any(feature = "client-ptr", feature = "client-wowforever"))]
+    pub(crate) glue_feature_status:
+        crate::lua_api::globals::real::glue_feature_status::GlueFeatureStatus,
     pub is_logged_in: bool,
     pub post_event_workarounds_applied: bool,
     pub screen_first_displayed: bool,
@@ -697,6 +703,7 @@ pub struct SimState {
     pub simulated_mouse_inputs:
         VecDeque<crate::lua_api::globals::real::simulate_mouse::SimulatedMouseInput>,
     pub game_rules: GameRulesState,
+    pub credits: crate::c_api::credits::CreditsState,
     pub discord: DiscordState,
     pub player_choice: PlayerChoiceState,
     pub housing_service_enabled: bool,

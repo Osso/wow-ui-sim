@@ -205,8 +205,6 @@ fn apply_temporary_state_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     apply_unit_state_bootstrap(lua)?;
     temporary::uiparent_onupdate_worklists::apply_bootstrap(lua)?;
     temporary::forever_glue_display_defaults::apply_bootstrap(lua)?;
-    #[cfg(feature = "client-wowforever")]
-    temporary::offline_glue_credits::apply_bootstrap(lua)?;
     temporary::video_options_state::apply_bootstrap(lua)
 }
 
@@ -581,9 +579,12 @@ fn apply_post_event_bootstrap(env: &crate::lua_api::WowLuaEnv) {
     crate::lua_api::workarounds_editmode::init_edit_mode_layout(env);
     crate::lua_api::workarounds_editmode::reapply_player_frame_anchor(env);
     crate::lua_api::chat_init::init_chat_type_colors(env);
-    let is_character_select =
-        env.state().borrow().screen_kind == crate::screen::ScreenKind::CharacterSelect;
-    if !is_character_select {
+    let screen = env.state().borrow().screen_kind;
+    // Retail/PTR/Forever Login's GlueParent owns chat visibility. Preserve the
+    // legacy profiles' existing post-event chat fixture outside that scope.
+    let is_modeled_login = screen == crate::screen::ScreenKind::Login
+        && crate::c_api::game_mode_display::modern_profile();
+    if screen != crate::screen::ScreenKind::CharacterSelect && !is_modeled_login {
         crate::lua_api::chat_init::show_chat_frame(env);
     }
 }

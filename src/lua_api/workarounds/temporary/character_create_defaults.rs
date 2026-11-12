@@ -588,8 +588,8 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
             "SetInCharacterCreate",
             set_in_character_create,
         )?;
-        // User-approved defaults until realm name-reservation and regional naming policies are modeled.
-        lua.exec("function IsNameReservationOnly() return false end; function C_CharacterCreation.AreRegionalUniqueNamesEnabled() return false end")?;
+        // IsNameReservationOnly reads the R44 feature-system status model.
+        lua.exec("function C_CharacterCreation.AreRegionalUniqueNamesEnabled() return false end")?;
     }
     Ok(())
 }

@@ -344,6 +344,12 @@ fn video_options_set_window_size_updates_current_size() {
 #[test]
 fn video_options_official_api_surface_returns_stable_shapes() {
     let env = env();
+    // Modern capability behavior uses explicit host input, not a native default
+    // assertion. Legacy profiles retain their existing temporary false fixture.
+    env.state()
+        .borrow_mut()
+        .video_capability_bytes
+        .spell_visual_density_supported = 0;
     let (
         current_x,
         current_y,
@@ -446,7 +452,7 @@ fn video_options_official_api_surface_returns_stable_shapes() {
     );
     assert!(
         !spell_density_supported,
-        "spell density support should remain disabled in the simulator"
+        "supplied zero spell-density byte (or legacy fixture) should be false"
     );
 }
 

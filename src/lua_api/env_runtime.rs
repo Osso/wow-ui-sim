@@ -314,6 +314,7 @@ impl WowLuaEnv {
     ) -> Result<super::on_update::OnUpdateStageTimings> {
         #[cfg(feature = "retail-12-0-5")]
         super::execution_budget::reset_frame_budgets(self.lua.borrow_mut().state_mut())?;
+        crate::c_api::c_login::advance(self)?;
         super::on_update::fire(self, elapsed)
     }
 
@@ -469,6 +470,13 @@ fn install_screen_size_globals(env: &WowLuaEnv) {
 }
 
 fn install_screen_mode_globals(env: &WowLuaEnv, screen_kind: ScreenKind) {
+    let _ = crate::c_api::credits::register(env.lua.borrow_mut().state_mut());
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let _ = super::globals::real::glue_selection::register_season_query(
+        env.lua.borrow_mut().state_mut(),
+    );
+    #[cfg(any(feature = "client-ptr", feature = "client-wowforever"))]
+    let _ = super::globals::real::glue_feature_status::register_all(&mut env.lua.borrow_mut());
     let is_glue = if screen_kind.is_glue() {
         "true"
     } else {
