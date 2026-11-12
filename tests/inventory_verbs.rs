@@ -593,7 +593,7 @@ fn ptr_spell_and_action_pickups_report_native_cursor_tuple() {
     env.exec(
         r#"
         local function assert_spell_cursor(expectedSpellID, expectedBookSlot)
-            assert(select("#", GetCursorInfo()) == 5)
+            assert(select('#', GetCursorInfo()) == 5)
             local kind, bookSlot, bookType, spellID, relatedID = GetCursorInfo()
             assert(kind == "spell")
             assert(bookSlot == expectedBookSlot)

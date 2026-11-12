@@ -185,7 +185,7 @@ fn action_button_drag_round_trip_keeps_spell_visible() {
         if cfg!(feature = "client-ptr") {
             env.exec(
                 r#"
-                assert(select("#", GetCursorInfo()) == 5)
+                assert(select('#', GetCursorInfo()) == 5)
                 local kind, slot, book, spellID, relatedID = GetCursorInfo()
                 assert(kind == "spell")
                 assert(slot == (C_SpellBook.FindSpellBookSlotForSpell(853) or 0))
