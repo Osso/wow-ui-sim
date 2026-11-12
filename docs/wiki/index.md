@@ -64,6 +64,10 @@
 
 [Addon loading](systems/addon-loading.md#screen-qualified-dependency-declarations) now records the native result: unannotated required cross-screen dependencies fail with `DEP_WRONG_ACTIVE_INTERFACE`; `[AllowLoad ...]` filters a whole header line before dependency splitting; Both targets remain required; optional failures are ignored; and loadability queries skip screen checks. The 2026-11-06 TOC-only inference is superseded. Evidence boundaries distinguish Retail 70688 from partial Forever and unknown PTR annotation grammar.
 
+## [2026-11-12] investigation | Forever integration fixture differences
+
+[Forever startup gaps](investigations/forever-startup-gaps.md#forever-70707-integration-fixture-differences) records the VERIFIED selected-source differences behind 15 integration failures: bindings, talent dependency, status priorities, endcap settings, flyout buttons, C60 art, separate microbuttons and eager QueueStatusFrame. It also records the supplied item-overlay publication repair and independently audited 211-entry load-order fixture. Final cross-profile proof is in the lane report.
+
 ## [2026-11-07] fix | Forever 1.60.1.70707 residuals
 
 [Forever startup gaps](investigations/forever-startup-gaps.md#forever-160170707-residuals) records three missing Forever publications found by the PTR/Forever TOC lane: `Enum.ItemContainerSubclass`/`Enum.ItemQuiverSubclass` for the auction house data, `C_QuestLog.CanAbandonQuest` for the quest map detail buttons, and a zero stock idle target spell. Each cites its pinned declaration in `Blizzard_APIDocumentationGenerated`; Retail and PTR surfaces are unchanged.

@@ -1,3 +1,7 @@
+## [2026-11-12] investigation | Forever integration fixtures
+
+Updated [Forever startup gaps](investigations/forever-startup-gaps.md#forever-70707-integration-fixture-differences) with the source-grounded fixture corrections, supplied item-overlay publication and independent eager-order audit for `forever-touched-15`. The original 15 exact failures were reproduced; targeted and final cross-profile proof is recorded in the private lane report.
+
 ## [2026-11-11] correction | Addon loading phases and LoadWith followers
 
 Updated [[addon-loading]] and the [phase contract](../specs/addon-load-phases.md) with R64 phases and R64b/c follower behavior, plus R70 PTR phase/mask evidence. Retail and Forever resolve followers without enable-state filtering and submit them through the generic loader; target `ADDON_LOADED` precedes follower requests, and one follower failure does not stop later submissions or change target success. PTR parser-to-child-list linkage remains UNKNOWN, so the simulator applies the INFERRED resolver model and tests a pre-populated child list only. R70 models cached PTR `CharacterCreate` as an INFERRED phase-two Glue root, loads its required chain before its files, and makes no relative-order claim against PTRFeedbackGlue.
