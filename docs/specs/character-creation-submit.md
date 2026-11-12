@@ -172,3 +172,10 @@ Tests: `tests/character_creation_publisher.rs` covers field sets, host-value
 passthrough, reversed orderIndex list preservation, icon cases, zoom/distance,
 seeded-empty versus unseeded behavior, and existing SaveSeenChoices semantics.
 Arbitrary host-value shapes in tests are seam fixtures, not native type claims.
+
+R79 delta #285 (Retail 12.1.5.70688, VERIFIED) applies a return policy to
+finished options/choices tables, never to selection or filtering. Disabled
+policy returns one result; nil/userdata and tables at policy value 1 are never
+marked. Other marking depends on unmodeled frame-policy checks. Per #285 this
+slice continues returning one plain table and adds no secret/marking behavior;
+field order and unsorted record traversal are unchanged.
