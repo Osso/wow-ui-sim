@@ -176,14 +176,62 @@ fn failed_required_dependency_of_an_enabled_runtime_addon_prevents_save() {
     );
     let (loaded, reason) = fixture.load();
     assert!(!loaded);
-    assert!(reason.unwrap().contains("AbsentRequiredProbe"));
+    let missing_reason = if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        "DEP_MISSING"
+    } else {
+        "AbsentRequiredProbe"
+    };
+    assert!(reason.unwrap().contains(missing_reason));
     assert!(
         fixture
             .env
             .eval::<bool>("return RuntimeProbeCodeRan == nil")
             .unwrap()
     );
-    fixture.assert_failed_owner_recovers("AbsentRequiredProbe");
+    fixture.assert_failed_owner_recovers(missing_reason);
+}
+
+#[test]
+fn runtime_optional_dependency_loads_before_required_dependency() {
+    let root = tempdir().unwrap();
+    for (name, metadata, source) in [
+        (
+            "RuntimeOrderParent",
+            "## OptionalDeps: RuntimeOrderOptional\n## Dependencies: RuntimeOrderRequired\n",
+            "table.insert(runtimeDependencyOrder, 'parent')",
+        ),
+        (
+            "RuntimeOrderRequired",
+            "",
+            "table.insert(runtimeDependencyOrder, 'required')",
+        ),
+        (
+            "RuntimeOrderOptional",
+            "",
+            "table.insert(runtimeDependencyOrder, 'optional')",
+        ),
+    ] {
+        let directory = root.path().join(name);
+        fs::create_dir(&directory).unwrap();
+        fs::write(
+            directory.join(format!("{name}.toc")),
+            format!("## Title: {name}\n{metadata}{name}.lua\n"),
+        )
+        .unwrap();
+        fs::write(directory.join(format!("{name}.lua")), source).unwrap();
+    }
+
+    let env = WowLuaEnv::new().unwrap();
+    env.state().borrow_mut().addon_base_paths = vec![root.path().to_path_buf()];
+    env.exec("runtimeDependencyOrder = {}").unwrap();
+    env.exec("assert(C_AddOns.LoadAddOn('RuntimeOrderParent'))")
+        .unwrap();
+    env.exec("assert(table.concat(runtimeDependencyOrder, ',') == 'optional,required,parent')")
+        .unwrap();
 }
 
 #[test]
