@@ -1362,6 +1362,67 @@ fn character_creation_host_result_handler_preservation_without_submit() {
 }
 
 #[test]
+#[cfg(feature = "client-ptr")]
+fn ptr_character_creation_submit_real_controls_do_not_invent_outcome() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+        let original_name: String = env.eval("return UnitName('player')").unwrap();
+        let original_count: i32 = env.eval("return GetNumCharacters()").unwrap();
+        let errors_before = env.state().borrow().lua_errors.len();
+        let submission = env.exec(r#"
+            GlueParent_SetScreen("charcreate")
+            assert(CharacterCreateFrame:IsShown())
+            local original = C_CharacterCreation.CreateCharacter
+            __ptrCreateCalls = {}
+            C_CharacterCreation.CreateCharacter = function(...)
+                __ptrCreateCalls[#__ptrCreateCalls + 1] = { n = select('#', ...), ... }
+                return original(...)
+            end
+            __ptrCreateEvents = {}
+            local listener = CreateFrame("Frame")
+            listener:RegisterEvent("CHARACTER_CREATION_RESULT")
+            listener:RegisterEvent("CHARACTER_LIST_UPDATE")
+            listener:SetScript("OnEvent", function(_, event)
+                __ptrCreateEvents[#__ptrCreateEvents + 1] = event
+            end)
+            local button = CharacterCreateFrame.ForwardButton
+            local click = button:GetScript("OnClick")
+            assert(type(click) == "function" and button:IsEnabled())
+            click(button, "LeftButton")
+            CharacterCreateFrame.NameChoiceFrame.EditBox:SetText("Newhero")
+            CharacterCreateFrame.NameChoiceFrame.EditBoxSurname:SetText("Example")
+            for step = 1, 3 do
+                if CharacterCreateFrame.creatingCharacter then break end
+                assert(button:IsEnabled())
+                click(button, "LeftButton")
+            end
+            assert(CharacterCreateFrame.creatingCharacter == true,
+                "PTR real Create button must reach the submission consumer")
+            assert(#__ptrCreateCalls == 1)
+            local args = __ptrCreateCalls[1]
+            assert(args.n == 4 and args[1] == "Newhero")
+            assert(args[2] == CharacterCreateFrame:GetSelectedSurname())
+            assert(args[3] == ZoneChoiceFrame.useNPE)
+            assert(args[4] == RaceAndClassFrame:GetCreateCharacterFaction())
+            assert(#__ptrCreateEvents == 0, "submit must not invent result/list events")
+        "#);
+        let first_error = env.state().borrow().lua_errors[errors_before..]
+            .first().map(|error| error.lines().next().unwrap_or_default().to_owned());
+        if let Some(first_error) = first_error {
+            const EXPECTED_PTR_STOP: &str = concat!(
+                "...rd_CharacterCreate/Mainline/Blizzard_CharacterCreate.lua:287: ",
+                "attempt to call field 'OnPlayerInteraction' (a nil value)"
+            );
+            assert_eq!(first_error, EXPECTED_PTR_STOP, "unexpected PTR first error");
+            panic!("PTR real Create-button reachability RED: {first_error}");
+        }
+        submission.expect("PTR real controls must submit");
+        assert_eq!(env.eval::<String>("return UnitName('player')").unwrap(), original_name);
+        assert_eq!(env.eval::<i32>("return GetNumCharacters()").unwrap(), original_count);
+    }
+}
+
+#[test]
 #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 fn character_create_action_updates_player_name_without_lua_errors() {
     test_timeout! {
