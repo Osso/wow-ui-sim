@@ -1,3 +1,6 @@
+## [2026-11-12] system | PvP talent tooltip catalog
+
+Updated [Tooltip data](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) and its [contract](../specs/tooltip-pvp-talent.md) with the generated Retail catalog. **VERIFIED:** local installed CASC build 12.1.5.70783 yields 407 PvpTalent rows and three category rows with zero unreadable records; exact catalog/accessor tests pass. **UNKNOWN:** alignment with selected build 12.1.5.70575; selected-slot state awaits R73.
 ## [2026-11-11] correction | Forever PTR feedback Glue selection
 
 Updated [Forever login startup](investigations/forever-login-startup.md#r26-toc-admission-correction-2026-11-11). **VERIFIED (native R26):** `OnlyBetaAndPTR` uses build classification. **VERIFIED (shipped cache TOC; exact build unknown):** `Blizzard_PTRFeedbackGlue.toc` carries that directive. **INFERRED:** normal Forever startup excludes this addon. **VERIFIED (simulator test at `83d7e3998`, 1/1):** the startup fixture checks its absence from Login startup; customization add-on loading is not asserted there. API absence in all environments remains UNVERIFIED.

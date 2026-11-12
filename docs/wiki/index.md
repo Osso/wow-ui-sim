@@ -1,5 +1,9 @@
 > Proof receipts live untracked under `~/.local/state/wow-ui-sim`. The `data/patch-api/evidence` and `data/test-perf/evidence` trees were removed on 2026-11-08; historical links below are records, not live paths. Recover a file with `git show c011c1d95:<path>`.
 
+## [2026-11-12] system | PvP talent tooltip catalog
+
+[Tooltip data](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) links the [PvP talent contract](../specs/tooltip-pvp-talent.md) and generated 407-row Retail catalog. **VERIFIED:** the installed CASC export is 12.1.5.70783 with zero unreadable PvpTalent and category rows; the exact tooltip tests pass. **UNKNOWN:** equivalence to selected build 12.1.5.70575 and selected-slot state (R73 pending).
+
 ## [2026-11-11] system | Character select screen data
 
 [Character select screen data](systems/chr-select-screen-data.md) links the profile-scoped DB2 rows and provenance. **VERIFIED:** Retail data is labeled with installed build 12.1.5.70783 and Forever rows with installed build 1.60.1.70888; targeted lookup tests pass 3/3 on each profile, and the PTR no-data test passes. **UNKNOWN:** Forever 70707 and PTR source rows. The native API and roster are separately owned.

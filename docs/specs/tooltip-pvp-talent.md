@@ -9,7 +9,7 @@ VERIFIED: Retail `C_TooltipInfo.GetPvpTalent` uses the PvP talent row to build s
 - [x] VERIFIED: Retail registers `GetPvpTalent`, and `GameTooltip:SetPvpTalent` reaches it through Blizzard's original tooltip accessor. UNKNOWN: PTR and WowForever registration were not inspected.
 - [x] VERIFIED: Successful calls use the required talent ID, default `isInspect` to `false`, default local group to the active group, default `talentIndex` to `0`, and preserve the one-based group and zero-based position inputs.
 - [ ] VERIFIED: Invalid argument types, secret-value failures, checked-index errors and the complete usage-error text. The tests cover successful inputs only.
-- [ ] VERIFIED: Retail starts with generated `SpellID`, `OverridesSpellID`, `LevelRequired`, and category `TalentSlotMask` rows; test the actual default row and its neutral host-only grant/eligibility inputs. The local export is installed build 12.1.5.70783, not the selected 12.1.5.70575 pin.
+- [x] VERIFIED: Retail starts with generated `SpellID`, `OverridesSpellID`, `LevelRequired`, and category `TalentSlotMask` rows; tests check actual default rows and neutral host-only grant/eligibility inputs. The local export is installed build 12.1.5.70783, not the selected 12.1.5.70575 pin.
 
 ### Spell content and identity
 
@@ -51,7 +51,8 @@ VERIFIED: Retail `C_TooltipInfo.GetPvpTalent` uses the PvP talent row to build s
 
 ## Tests asserting this spec
 
-- `tests/tooltip_pvp_talent.rs` — Retail registration; original `GameTooltip:SetPvpTalent` consumer; generated default catalog values and neutral grant/eligibility inputs; original PvP slot OnEnter; spell identity, replacement line and suppression; local level, group, position, eligibility, combat and rest branches; item, essence and inspect grant branches.
+- `tests/tooltip_pvp_talent.rs` — Retail registration; original `GameTooltip:SetPvpTalent` accessor with a pass-through getter spy and visible line checks; generated default catalog values and neutral grant/eligibility inputs; spell identity, replacement line and suppression; local level, group, position, eligibility, combat and rest branches; item, essence and inspect grant branches.
+- `tests/tooltip_full_env_helpers.rs` — optional pre-addon setup hook installs the getter spy before `TooltipDataHandler` copies the namespace.
 - `tools/test_gen_pvp_talent_catalog.py` — projected-column, row validation, and generated Rust output.
 
 ## Known gaps (current cycle)
@@ -60,6 +61,7 @@ VERIFIED: Retail `C_TooltipInfo.GetPvpTalent` uses the PvP talent row to build s
 - [ ] UNKNOWN: Whether the native base-spell presence provider can report `SpellID` zero as present. This path is not modeled or tested.
 - [ ] UNKNOWN: The native spell override ranking walk's exact ranked IDs, map writers and precedence among talent, aura and SpellReplace sources. The host supplies the resolved ID; this implementation does not infer the walk.
 - [ ] UNKNOWN: Native alignment of the installed 12.1.5.70783 rows with selected build 12.1.5.70575, the effect-parameter decoder, essence lookup, inspect lifecycle, additional progression restrictions and remaining eligibility failure reasons. Grant and eligibility outcomes remain host-only; absent inputs do not fabricate lines.
+- [ ] UNKNOWN: The selected PvP talent and slot-state contract is pending R73. A real `PvPTalentSlotButtonMixin:OnEnter` test is deferred; this cycle tests the original `GameTooltip:SetPvpTalent` accessor directly with a real catalog ID.
 - [ ] VERIFIED: When the primary spell producer misses because the local player or spell-name row is unavailable, the native PvP caller still runs talent annotations. UNKNOWN: Its final result and table shape; this failure path stays unmodelled and untested here.
 - [ ] VERIFIED: Native `isInspect` also changes the ordinary spell request. UNKNOWN: The existing simulator producer has no matching observable request field, so this effect stays unmodelled.
 - [ ] UNKNOWN: Numeric RGB defaults, the complete ordinary spell line and field set, and a getter-specific event contract.
@@ -69,5 +71,6 @@ VERIFIED: Retail `C_TooltipInfo.GetPvpTalent` uses the PvP talent row to build s
 ## Out of scope
 
 - UNKNOWN: PTR and WowForever registration and behavior.
+- Real PvP slot selection and button `OnEnter` until R73 provides the selected-slot state contract.
 - Invented PvP talent, aura, essence, item-grant or resolved-spell rows.
 - Native miss-result parity and UNKNOWN eligibility failure messages.
