@@ -74,6 +74,8 @@ tooltip_selection_getters_fixture! {
                 GameTooltip:SetHyperlink(case[1])
                 local data = GameTooltip:GetPrimaryTooltipData()
                 assert(data and data.lines and data.lines[2], 'apower prefix missing')
+                -- Preservation only: do not publish the old guessed Spell identity.
+                assert(data.type == nil, 'apower identity remains UNKNOWN')
                 assert(data.lines[1].type == 0 and data.lines[2].type == 0 and data.lines[3].type == 1)
                 assert(data.lines[2].leftText == TOOLTIP_TALENT_RANK:format(case[3],case[4]), 'R82b rank operands')
                 local colour = data.lines[2].leftColor

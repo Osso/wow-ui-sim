@@ -35,8 +35,11 @@ pub(super) fn artifact(
         return Ok(None);
     };
     let saved_top = state.top;
-    let tooltip = compose_tooltip(state, 1.0, None);
+    let tooltip = compose_tooltip(state, 0.0, None);
     state.push(tooltip);
+    // R82 does not prove an artifact-link identity type. Do not copy the
+    // standalone getter's EMULATED Spell identity into this route.
+    table_set(state, tooltip, "type", Val::Nil);
     let highlight = named_color(state, "HIGHLIGHT_FONT_COLOR");
     if let Some(spell) = crate::spells::get_spell(spell_id) {
         let line = append_line(state, tooltip, 0.0, spell.name, highlight);
