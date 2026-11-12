@@ -27,8 +27,8 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 - [x] VERIFIED (Retail 12.1.5.70688): when Y reaches follower processing, it submits X to the general loader after Y's own files. This applies to startup and runtime `C_AddOns.LoadAddOn(Y)`.
 - [x] VERIFIED (Retail 12.1.5.70688): each follower uses the general loader's checks and dependency order: optional dependencies, required dependencies, then its own files.
 - [x] VERIFIED (Retail 12.1.5.70688): an early-exit Y submits no followers.
-- [ ] SIMULATOR POLICY (pending R64c): register packaged Blizzard `LoadWith` declarations privately before startup without changing the public AddOn list; register user AddOns only in the existing third-party registration step.
-- [ ] SIMULATOR POLICY (pending R64c): build the follower index from registered declarations, invalidate it when registrations change, and do not submit disabled or unregistered followers.
+- [x] SIMULATOR POLICY (pending R64c): register packaged Blizzard `LoadWith` declarations privately before startup without changing the public AddOn list; register user AddOns only in the existing third-party registration step.
+- [x] SIMULATOR POLICY (pending R64c): build the follower index from registered declarations, invalidate it when registrations change, and do not submit disabled or unregistered followers.
 
 ## How it works
 
