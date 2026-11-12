@@ -233,8 +233,9 @@ fn lane_dep_edges_classify_each_addons_load_floor() {
     let soulbinds = parse_lane_toc("Blizzard_Soulbinds");
     let landing_soulbinds = parse_lane_toc("Blizzard_LandingSoulbinds");
 
-    let expected_shared_deps: &[&str] = if toc_layout::unified_toc_tree() {
-        // PTR/Forever SharedTalentUI.toc:3 also requires SpellTypeIconOverlay.
+    let expected_shared_deps: &[&str] = if cfg!(feature = "client-ptr") {
+        // PTR SharedTalentUI.toc:3 requires SpellTypeIconOverlay; Forever
+        // SharedTalentUI.toc:3 lists only SpellSearch, as does Retail.
         &["Blizzard_SpellSearch", "Blizzard_SpellTypeIconOverlay"]
     } else {
         &["Blizzard_SpellSearch"]
@@ -245,7 +246,7 @@ fn lane_dep_edges_classify_each_addons_load_floor() {
             .iter()
             .map(|dependency| dependency.to_string())
             .collect::<Vec<_>>(),
-        "SharedTalentUI dependencies must match the active pinned TOC. PTR/Forever \
+        "SharedTalentUI dependencies must match the active pinned TOC. Only PTR \
          SharedTalentUI.toc:3 adds Blizzard_SpellTypeIconOverlay to the Retail dependency. \
          Got: {:?}",
         shared.dependencies()
