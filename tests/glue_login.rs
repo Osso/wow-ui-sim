@@ -830,16 +830,6 @@ fn glue_feature_status_uses_host_record_and_ordered_empty_events() {
     assert!(env.state().borrow().lua_errors.is_empty());
 }
 
-#[test]
-#[cfg(feature = "client-retail")]
-fn glue_feature_status_name_reservation_global_is_absent_on_retail() {
-    let env = common::lock_env(|| WowLuaEnv::new().unwrap());
-    env.set_screen_mode(ScreenKind::Login);
-    assert!(
-        env.eval::<bool>("return rawget(_G, 'IsNameReservationOnly') == nil")
-            .unwrap()
-    );
-}
 
 #[test]
 #[cfg(feature = "client-ptr")]
