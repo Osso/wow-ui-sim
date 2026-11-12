@@ -549,7 +549,13 @@ fn test_get_action_omits_unsupported_binding_line() {
 fn test_set_spell_by_id_shows_cast_time() {
     let env = WowLuaEnv::new().unwrap();
 
-    // Flash of Light has 1500ms cast time
+    // R81 Q2: final positive helper result is supplied, not computed from catalog.
+    env.state()
+        .borrow_mut()
+        .spell_tooltip_inputs
+        .entry(19750)
+        .or_default()
+        .cast_ms = Some(1500);
     env.exec("GameTooltip:SetSpellByID(19750)").unwrap();
 
     let state = env.state().borrow();
@@ -557,6 +563,19 @@ fn test_set_spell_by_id_shows_cast_time() {
     let td = state.tooltips.get(&gt_id).unwrap();
     let has_cast_line = td.lines.iter().any(|l| l.left_text.contains("sec cast"));
     assert!(has_cast_line, "Should have a cast time line");
+    drop(state);
+    env.state().borrow_mut().spell_tooltip_inputs.clear();
+    env.exec("GameTooltip:SetSpellByID(19750)").unwrap();
+    assert!(
+        !env.state()
+            .borrow()
+            .tooltips
+            .get(&gt_id)
+            .unwrap()
+            .lines
+            .iter()
+            .any(|line| line.left_text.contains("sec cast"))
+    );
 }
 
 #[test]
