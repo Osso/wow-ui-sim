@@ -31,9 +31,8 @@ pub fn discover_blizzard_startup_addons_for_screen(
         return Vec::new();
     };
     let dependencies = implicit_blizzard_startup_dependencies();
-    pull_required_dependency_addons(&mut addons, &mut pool, &dependencies, screen);
+    pull_startup_prerequisites(&mut addons, &mut pool, &dependencies, screen);
     let bootstrap_names = insert_bootstrap_nodes(&mut addons, &mut pool, screen);
-    promote_foundational_addons_to_load_first(&mut addons);
     topological_sort_addons_with_extra_dependencies_for_screen(addons, &dependencies, screen)
         .into_iter()
         .map(|(name, toc_path)| {
@@ -90,7 +89,14 @@ pub fn load_startup_addon(
     match kind {
         StartupAddonLoadKind::BootstrapOnly => load_addon_bootstrap_from_toc(env, &toc),
         StartupAddonLoadKind::Full => {
-            super::load_addon_path_with_toc(env, toc_path, &toc, saved_vars)
+            let result = super::load_addon_path_with_toc(env, toc_path, &toc, saved_vars)?;
+            let addon_name = toc_path
+                .parent()
+                .and_then(Path::file_name)
+                .and_then(|name| name.to_str())
+                .unwrap_or(&toc.name);
+            crate::c_api::c_addons::load_startup_addon_followers(env, addon_name);
+            Ok(result)
         }
     }
 }

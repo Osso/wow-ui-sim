@@ -29,7 +29,10 @@ pub struct TocFile {
 - `Interface`: Version numbers (comma-separated)
 - `Title`: Display name (defaults to directory name)
 - `Dependencies` / `RequiredDeps`: Required addons
-- `OptionalDeps`: Optional dependencies
+- `OptionalDeps`: Optional addon dependencies
+- `LoadManagers`: Startup addons to try before the declaring addon
+- `LoadFirst` / `UseSecureEnvironment`: Native startup phase-one flags
+- `LoadWith`: VERIFIED (Retail 12.1.5.70688): the declaring addon joins each named target's follower list; this does not load the target. Followers run through the general loader after the target's file phase.
 - `LoadOnDemand`: Set to "1" for load-on-demand addons
 - `SavedVariables`: Account-wide persistent variables
 - `SavedVariablesPerCharacter`: Per-character persistent variables
@@ -278,11 +281,15 @@ Default storage: `~/.local/share/wow-sim/SavedVariables/`
 
 ## Blizzard Addon Loading Order
 
-Blizzard startup discovery is root-and-closure based, then topologically sorted from TOC dependencies plus simulator implicit startup dependencies. Eligible non-LoadOnDemand cache addons whose directory names start with `Blizzard_` are roots, subject to screen/profile exclusions. The candidate pool also retains eligible LoadOnDemand Blizzard TOCs and eligible non-Blizzard TOCs so a selected root can pull its transitive hard `## Dependencies:` closure.
+Blizzard startup discovery is root-and-closure based, then topologically sorted from TOC dependencies, `LoadManagers`, and simulator implicit startup dependencies. Eligible non-LoadOnDemand cache addons whose directory names start with `Blizzard_` are roots, subject to screen/profile exclusions. The candidate pool also retains eligible LoadOnDemand Blizzard TOCs and eligible non-Blizzard TOCs so a selected root can pull its transitive hard `## Dependencies:` and `LoadManagers` closure.
 
 A non-Blizzard cache directory is not an eager root: it loads only when a retained Blizzard root requires it. Current retail `Blizzard_TutorialManager` demonstrates this: its `middleclass` dependency loads before the root. Conversely, unrelated non-Blizzard directories such as `Deprecated_PaperDoll` remain excluded. LoadOnDemand Blizzard addons remain out of the root set unless reached by the closure or named as an implicit startup-dependency key; such LoD keys are selected as startup roots and load complete TOCs in dependency order. `Blizzard_CombatLog` remains LoadOnDemand in TOC metadata, but `Blizzard_Game` selects it to publish `CombatLog_LoadUI` before `PLAYER_LOGIN`; `Blizzard_CombatLogBase` and `Blizzard_CombatLogProcessor` precede it through declared dependencies. Standalone Game-only root `Blizzard_AchievementUI` remains LoadOnDemand and glue-excluded, but its full TOC publishes `AchievementFrame_LoadUI` before `AlertFrame` receives `ACHIEVEMENT_EARNED` and enters the real achievement-toast queue. `[Bootstrap]` neither selects every LoD addon nor changes file order.
 
-Foundational SharedXML addons are promoted to `LoadFirst` so templates exist before other Blizzard addons instantiate frames. Third-party addons load after this Blizzard startup pass.
+VERIFIED (Retail 12.1.5.70688): startup phase 1 selects `LoadFirst` or `UseSecureEnvironment` addons. VERIFIED (Retail): phase 2 selects the remaining non-insecure packaged UI addons, and its top-level traversal starts only after phase one returns. VERIFIED (Retail and Forever 1.60.1.70707): the phase predicate uses addon flags, not names or a fixed foundational list. VERIFIED (Retail and Forever): `LoadManagers` names are tried before the declaring startup addon. VERIFIED (Retail): startup and runtime `C_AddOns.LoadAddOn` attempt optional dependencies before required dependencies, and an optional failure does not stop the parent. UNKNOWN (PTR 12.1.5.70668): the native phase predicate and parser rules are not established.
+
+VERIFIED (Retail 12.1.5.70688): a `LoadWith` declaration adds the declaring addon to the named target's follower list and does not submit the target. When the target reaches follower processing at startup or through runtime `C_AddOns.LoadAddOn`, it submits each follower to the general loader after its own files; an early-exit target submits no followers. VERIFIED (Retail): the follower's general-loader request runs optional dependencies before required dependencies and its own files, subject to normal checks. UNKNOWN: whether a LoadOnDemand target receives a startup request through another path, whether this behavior applies to PTR or Forever, and whether follower failures propagate to the target.
+
+SIMULATOR: `startup::load_startup_addons` runs the Blizzard startup batch before it scans and loads user AddOns. SIMULATOR: the loader resolves `LoadWith` declarations once per environment and submits followers through the runtime general loader after target files. Follower failures stay with the follower and do not change the target's load result; native propagation is UNKNOWN. INFERRED: user AddOns correspond to native phase 3; tests do not assert this native classification. UNKNOWN: the callers of the internal mode-one LoD dependency request are not established; dependency-chain-only traversal remains unmodeled.
 
 ### Panel fixture dependency closure
 

@@ -1,3 +1,7 @@
+## [2026-11-11] correction | Addon loading phase evidence
+
+Updated [[addon-loading]] and the [phase contract](../specs/addon-load-phases.md) with R64's verified `LoadFirst`/secure phase, packaged non-insecure phase, `LoadManagers`, and optional-before-required ordering. R64 also verifies Retail `LoadWith` follower resolution and post-file submission at startup and runtime; startup requests for LoD targets, PTR/Forever behavior, and follower-failure propagation remain UNKNOWN. User AddOns as native phase three remains INFERRED and untested.
+
 ## [2026-11-10] fix | Mists frame-position residuals
 
 Updated the [frame-position investigation](investigations/frame-position-baseline-drift.md#mists-frame-residuals--2026-11-10) and [profile contract](../specs/frame-position-profile-baselines.md) with pinned-source Mists bag, aura, action-bar, status-bar and WatchFrame-managed right-container geometry. The simulator no longer synthesizes ObjectiveTrackerFrame on Mists, where the selected Blizzard UI has no producer; the test asserts absence. VERIFIED at `3c36dab15`: Mists `frame_positions` passes 25/28; `micro_menu`, `micro_menu_container` and `casting_bar` remain open.

@@ -100,6 +100,7 @@ macro_rules! build_empty_sim_state {
             timed_signal_maps: ::std::collections::HashMap::new(),
             focused_frame_id: $runtime.focused_frame_id,
             addons: $collections.addons,
+            load_with_followers: None,
             addon_saved_enable_state: None,
             addon_saved_version_check_enabled: None,
             system_chat_log: Vec::new(),

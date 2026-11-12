@@ -131,6 +131,9 @@ fn load_one_blizzard_addon(
     verbose: bool,
     timing: &mut LoadTiming,
 ) {
+    if is_addon_loaded(env, name) {
+        return;
+    }
     let first_error = env.state().borrow().lua_error_records.len();
     let result = load_startup_addon(&env.loader_env(), toc_path, kind, saved_vars.as_mut());
     match result {

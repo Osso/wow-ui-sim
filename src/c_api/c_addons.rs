@@ -40,6 +40,15 @@ pub(super) const GLUE_RUNTIME_FOUNDATIONS: &[&str] = &[
 
 // ── C_AddOns registration ─────────────────────────────────────────────────────
 
+pub(crate) fn load_startup_addon_followers(env: &crate::lua_api::LoaderEnv<'_>, target: &str) {
+    if let Err(error) = env.with_state(|state| {
+        c_addons_runtime::load_with_followers(state, env, target);
+        Ok::<(), crate::Error>(())
+    }) {
+        tracing::warn!("Cannot submit LoadWith followers for {target}: {error}");
+    }
+}
+
 pub fn register_c_addons(state: &mut LuaState) -> LuaResult<()> {
     let c_addons = create_table(state);
     let Val::Table(c_addons_ref) = c_addons else {

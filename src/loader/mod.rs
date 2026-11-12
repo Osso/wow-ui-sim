@@ -148,31 +148,6 @@ pub fn lua_file_timings_snapshot() -> Vec<LuaFileTiming> {
         .unwrap_or_default()
 }
 
-/// Addons that ship the shared XML template library which Blizzard's other
-/// addons inherit from (`ButtonFrameTemplate`, `PortraitFrameBaseTemplate`,
-/// `UIPanelButtonTemplate`, …). In real WoW these are part of the FrameXML
-/// core and load before any addon, so addons reference their templates
-/// without declaring an explicit `## Dependencies:` line. When the full
-/// Blizzard set is force-loaded for testing (`discover_all_blizzard_addons`),
-/// we promote these to `LoadFirst` so dependency-free LoadOnDemand addons
-/// that alphabetically precede them (e.g. `Blizzard_AlliedRacesUI`) do not
-/// instantiate frames against an empty template registry.
-const FOUNDATIONAL_LOAD_FIRST_ADDONS: &[&str] = &[
-    "Blizzard_SharedXMLBase",
-    "Blizzard_SharedXML",
-    "Blizzard_SharedXMLGame",
-    "Blizzard_MoneyFrame",
-];
-
-fn promote_foundational_addons_to_load_first(addons: &mut HashMap<String, (PathBuf, TocFile)>) {
-    for name in FOUNDATIONAL_LOAD_FIRST_ADDONS {
-        if let Some((_, toc)) = addons.get_mut(*name) {
-            toc.metadata
-                .insert("LoadFirst".to_string(), "1".to_string());
-        }
-    }
-}
-
 fn implicit_blizzard_startup_dependencies() -> HashMap<String, Vec<String>> {
     let mut dependencies = HashMap::from([
         (
@@ -587,11 +562,8 @@ pub fn discover_blizzard_addons(blizzard_ui_dir: &Path) -> Vec<(String, PathBuf)
 ///
 /// This includes every parseable built-in addon directory (see
 /// `blizzard_ui_sync::is_builtin_addon_folder`) regardless of screen restrictions or
-/// `LoadOnDemand`, plus the transitive `## Dependencies:` closure of those roots, without
-/// eagerly loading unrelated non-built-in directories. Foundational shared XML addons
-/// (`Blizzard_SharedXMLBase`, `Blizzard_SharedXML`, `Blizzard_SharedXMLGame`) are emitted first
-/// via the eager LoadFirst pass so dependency-free LoadOnDemand frames that inherit their
-/// templates resolve against a fully-registered template chain.
+/// `LoadOnDemand`, plus the transitive required-dependency and `LoadManagers` closure of those
+/// roots, without eagerly loading unrelated non-built-in directories.
 pub fn discover_all_blizzard_addons(blizzard_ui_dir: &Path) -> Vec<(String, PathBuf)> {
     let entries = match std::fs::read_dir(blizzard_ui_dir) {
         Ok(entries) => entries,
@@ -620,8 +592,7 @@ pub fn discover_all_blizzard_addons(blizzard_ui_dir: &Path) -> Vec<(String, Path
         }
     }
 
-    retain_builtin_roots_and_required_dependencies(&mut toc_map);
-    promote_foundational_addons_to_load_first(&mut toc_map);
+    retain_builtin_roots_and_startup_prerequisites(&mut toc_map);
     let mut sorted = topological_sort_addons(toc_map);
     sorted.extend(unparsed);
     sorted
@@ -639,10 +610,8 @@ pub fn discover_blizzard_addons_for_screen(
     };
 
     let extra_dependencies = implicit_blizzard_startup_dependencies();
-    // Pull LOD addons that are required by non-LOD addons or implicit startup deps.
-    pull_required_dependency_addons(&mut addons, &mut lod_pool, &extra_dependencies, screen);
+    pull_startup_prerequisites(&mut addons, &mut lod_pool, &extra_dependencies, screen);
 
-    promote_foundational_addons_to_load_first(&mut addons);
     topological_sort_addons_with_extra_dependencies_for_screen(addons, &extra_dependencies, screen)
 }
 
@@ -792,7 +761,7 @@ fn queue_pending_addon(name: String, pending: &mut Vec<String>, queued: &mut Has
     }
 }
 
-fn retain_builtin_roots_and_required_dependencies(
+fn retain_builtin_roots_and_startup_prerequisites(
     toc_map: &mut HashMap<String, (PathBuf, TocFile)>,
 ) {
     let mut pending: Vec<String> = toc_map
@@ -806,7 +775,7 @@ fn retain_builtin_roots_and_required_dependencies(
         let Some((_, toc)) = toc_map.get(&name) else {
             continue;
         };
-        for dependency in toc.dependencies() {
+        for dependency in toc.dependencies().into_iter().chain(toc.load_managers()) {
             if toc_map.contains_key(&dependency) && retained.insert(dependency.clone()) {
                 pending.push(dependency);
             }
@@ -931,24 +900,24 @@ fn excluded_addons_for_active_profile() -> &'static [&'static str] {
     }
 }
 
-/// Recursively pull hard dependencies into the main set when required by built-in roots.
+/// Pull required dependencies and `LoadManagers` entries into startup discovery.
 ///
 /// The candidate pool contains LoadOnDemand built-in addons and every eligible non-built-in
 /// TOC, so unrelated non-built-in directories remain excluded unless a retained root requires
-/// them through `## Dependencies:`.
-fn pull_required_dependency_addons(
+/// them through a dependency or manager entry.
+fn pull_startup_prerequisites(
     addons: &mut HashMap<String, (PathBuf, TocFile)>,
     lod_pool: &mut HashMap<String, (PathBuf, TocFile)>,
     extra_dependencies: &HashMap<String, Vec<String>>,
     screen: ScreenKind,
 ) {
-    let mut needed = collect_required_addon_names(addons, lod_pool, extra_dependencies, screen);
+    let mut needed = collect_startup_prerequisites(addons, lod_pool, extra_dependencies, screen);
     while let Some(name) = needed.pop() {
-        pull_required_dependency_addon(&name, addons, lod_pool, &mut needed, screen);
+        pull_startup_prerequisite(&name, addons, lod_pool, &mut needed, screen);
     }
 }
 
-fn collect_required_addon_names(
+fn collect_startup_prerequisites(
     addons: &HashMap<String, (PathBuf, TocFile)>,
     lod_pool: &HashMap<String, (PathBuf, TocFile)>,
     extra_dependencies: &HashMap<String, Vec<String>>,
@@ -956,7 +925,11 @@ fn collect_required_addon_names(
 ) -> Vec<String> {
     addons
         .values()
-        .flat_map(|(_, toc)| toc.dependencies_for_screen(screen))
+        .flat_map(|(_, toc)| {
+            toc.dependencies_for_screen(screen)
+                .into_iter()
+                .chain(toc.load_managers())
+        })
         .chain(
             addons
                 .keys()
@@ -972,7 +945,7 @@ fn collect_required_addon_names(
         .collect()
 }
 
-fn pull_required_dependency_addon(
+fn pull_startup_prerequisite(
     name: &str,
     addons: &mut HashMap<String, (PathBuf, TocFile)>,
     lod_pool: &mut HashMap<String, (PathBuf, TocFile)>,
@@ -985,7 +958,11 @@ fn pull_required_dependency_addon(
     let Some((toc_path, toc)) = lod_pool.remove(name) else {
         return;
     };
-    for dependency in toc.dependencies_for_screen(screen) {
+    for dependency in toc
+        .dependencies_for_screen(screen)
+        .into_iter()
+        .chain(toc.load_managers())
+    {
         if lod_pool.contains_key(&dependency) {
             needed.push(dependency);
         }
