@@ -2,6 +2,10 @@
 
 [Inline XML method arguments](investigations/xml-inline-method-arguments.md) records the zero-vararg parser misclassification, source-faithful parameter-prefix installation, and the separately approved RaidFrame AddLine fixture correction.
 
+## [2026-11-11] correction | Addon loading phases and LoadWith followers
+
+Updated [[addon-loading]] and the [phase contract](../specs/addon-load-phases.md) with R64 phases and R64b/c follower behavior, plus R70 PTR phase/mask evidence. Retail and Forever resolve followers without enable-state filtering and submit them through the generic loader; target `ADDON_LOADED` precedes follower requests, and one follower failure does not stop later submissions or change target success. PTR parser-to-child-list linkage remains UNKNOWN, so the simulator applies the INFERRED resolver model and tests a pre-populated child list only. R70 models cached PTR `CharacterCreate` as an INFERRED phase-two Glue root, loads its required chain before its files, and makes no relative-order claim against PTRFeedbackGlue.
+
 ## [2026-11-12] validation | PR54 second review corrections
 
 The [login contract](../specs/glue-login-flow.md#second-review-corrections-comment140) records forbidden-object resolver enforcement, removal of remaining unsupported assertions, and exact PTR diagnostic matching with negative tests. Changed-test gates pass Retail32/32, Forever41/41 and PTR22/22 with zero warnings.
@@ -43,6 +47,9 @@ VERIFIED (R48/R59 native evidence): geometry queries follow anchor targets, and 
 Added the separate server-mirror model, API queries, event routing, and focused tests from R38. VERIFIED: Retail GameMenu uses OR and PTR uses AND; GameMenu tests pass 13/13 on both, Store API/StorePublic/CatalogShop structure tests pass on both, and Retail full-UI CatalogShop tests pass 4/4. INFERRED: defaults (false, true) show the Retail button and hide the PTR button. The [contract](../specs/store-api-availability.md) and [implementation notes](systems/store-api-availability.md) preserve UNKNOWN behavior.
 ## [2026-11-10] implementation | PTR/Retail merchant cursor
 Updated [Lua API](systems/lua-api.md#cursor-modes-and-actionbar-transitions) to link cursor ownership to the [contract](../specs/cursor-model.md). VERIFIED (PTR): focused R37 selectors pass; UNKNOWN (R37): owned-item and same-item outcomes remain unmodeled. UNVERIFIED: the full profile matrix remains open.
+## [2026-11-12] system | PvP talent tooltip catalog
+
+Updated [Tooltip data](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) and its [contract](../specs/tooltip-pvp-talent.md) with the generated Retail catalog. **VERIFIED:** local installed CASC build 12.1.5.70783 yields 407 PvpTalent rows and three category rows with zero unreadable records; exact catalog/accessor tests pass. **UNKNOWN:** alignment with selected build 12.1.5.70575; selected-slot state awaits R73.
 ## [2026-11-11] correction | Forever PTR feedback Glue selection
 
 Updated [Forever login startup](investigations/forever-login-startup.md#r26-toc-admission-correction-2026-11-11). **VERIFIED (native R26):** `OnlyBetaAndPTR` uses build classification. **VERIFIED (shipped cache TOC; exact build unknown):** `Blizzard_PTRFeedbackGlue.toc` carries that directive. **INFERRED:** normal Forever startup excludes this addon. **VERIFIED (simulator test at `83d7e3998`, 1/1):** the startup fixture checks its absence from Login startup; customization add-on loading is not asserted there. API absence in all environments remains UNVERIFIED.

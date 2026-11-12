@@ -238,8 +238,8 @@ fn item_socketing_frame_loads_and_populates_socket_buttons() {
     }
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
-#[ignore = "EncounterTimeline behavior is intentionally unsupported by wow-ui-sim"]
 fn encounter_timeline_loads_and_populates_track_view_event_frames() {
     test_timeout! {
         let env = setup_env();
@@ -560,8 +560,8 @@ fn settings_open_to_interface_category_opens_settings_panel() {
     }
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
-#[ignore = "C_ProfSpecs path/tree semantics are not modeled"]
 fn professions_frame_loads_and_populates_specialization_tab() {
     test_timeout! {
         let env = setup_env();

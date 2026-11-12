@@ -1,5 +1,8 @@
 #![cfg(feature = "client-retail")]
 
+#[path = "tooltip_full_env_helpers.rs"]
+mod tooltip_full_env_helpers;
+
 use wow_ui_sim::c_api::c_tooltip_info_pvp_talent::PvpTalentTooltipRecord;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
@@ -39,6 +42,122 @@ fn supply_record(env: &WowLuaEnv, talent_id: i32, record: PvpTalentTooltipRecord
         .pvp_talent_tooltip
         .catalog
         .insert(talent_id, record);
+}
+
+#[test]
+fn retail_pvp_talent_catalog_uses_exported_rows_without_inventing_grants() {
+    let env = WowLuaEnv::new().unwrap();
+    let state = env.state().borrow();
+    let catalog = &state.pvp_talent_tooltip.catalog;
+    assert_eq!(catalog.len(), 407);
+    let spellwarding = catalog.get(&5573).expect("exported talent 5573");
+    assert_eq!(spellwarding.spell_id, 204018);
+    assert_eq!(spellwarding.overrides_spell_id, 0);
+    assert_eq!(spellwarding.level_required, 25);
+    assert_eq!(spellwarding.category_position_mask, 15);
+    assert!(spellwarding.eligibility_by_position.is_empty());
+    assert!(!spellwarding.grant_rejected_by_item);
+    assert_eq!(spellwarding.granted_item_id, None);
+    assert!(!spellwarding.granted_by_essence);
+    let guardian = catalog.get(&94).expect("exported talent 94");
+    assert_eq!((guardian.spell_id, guardian.overrides_spell_id), (228049, 86659));
+    assert_eq!(guardian.level_required, 40);
+    assert!(!catalog.contains_key(&i32::MAX), "absent IDs stay catalog misses");
+}
+
+fn env_with_pvp_talent_getter_spy() -> WowLuaEnv {
+    tooltip_full_env_helpers::load_full_env_without_post_load_with_addon_hook(
+        |env, addon_name| {
+            if addon_name == "Blizzard_SharedXMLGame" {
+                env.exec(
+                    r#"
+                    __pvpTalentGetterCalls = 0
+                    __pvpTalentGetterArguments = nil
+                    local originalGetPvpTalent = C_TooltipInfo.GetPvpTalent
+                    C_TooltipInfo.GetPvpTalent = function(...)
+                        __pvpTalentGetterCalls = __pvpTalentGetterCalls + 1
+                        __pvpTalentGetterArguments = { ... }
+                        return originalGetPvpTalent(...)
+                    end
+                    "#,
+                )
+                .expect("install pass-through PvP getter spy before TooltipDataHandler loads");
+            }
+        },
+    )
+}
+
+#[test]
+fn game_tooltip_pvp_talent_default_catalog_shows_spell_and_verified_unlock_line() {
+    let env = env_with_pvp_talent_getter_spy();
+    {
+        let mut state = env.state().borrow_mut();
+        state.player.level = 20;
+        state.player.effective_level = 0;
+        state.pvp_talent_tooltip.groups.insert(0, [None; 4]);
+    }
+    env.exec(
+        r#"
+        assert(type(GameTooltip.SetPvpTalent) == "function",
+            "the original TooltipDataHandler accessor is installed")
+        GameTooltip:Hide()
+        GameTooltip:ClearHandlerInfo()
+        GameTooltip:ClearLines()
+        GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
+        GameTooltip:SetPvpTalent(5573)
+        assert(GameTooltip:IsShown(), "SetPvpTalent displays the tooltip")
+        assert(GameTooltip:NumLines() > 0, "the tooltip has visible spell content")
+        assert(__pvpTalentGetterCalls == 1
+            and __pvpTalentGetterArguments[1] == 5573,
+            "the pass-through spy records the original accessor call")
+        local data = GameTooltip:GetPrimaryTooltipData()
+        assert(data and data.id == 204018, "the verified SpellID supplies tooltip identity")
+        local ordinary = C_TooltipInfo.GetSpellByID(204018)
+        assert(#data.lines == #ordinary.lines + 1,
+            "only the verified early unlock annotation is added")
+        assert(GameTooltip:NumLines() == #data.lines,
+            "the tooltip shows every published content line")
+        for index, dataLine in ipairs(data.lines) do
+            local visibleLine = _G["GameTooltipTextLeft" .. index]
+            assert(visibleLine:GetText() == dataLine.leftText,
+                "visible text matches the tooltip data line")
+        end
+        local info = GameTooltip:GetPrimaryTooltipInfo()
+        assert(info and info.getterName == "GetPvpTalent",
+            "the primary tooltip record names the original getter")
+        local finalLine = data.lines[#data.lines]
+        assert(finalLine.leftText == UNLOCKED_AT_LEVEL:format(25),
+            "LevelRequired supplies the only verified annotation")
+        assert(finalLine.wrapText == nil, "the early unlock annotation is unwrapped")
+        local r, g, b = HOSTILE_STATUS_COLOR:GetRGB()
+        assert(math.abs(finalLine.leftColor.r - r) < 0.01
+            and math.abs(finalLine.leftColor.g - g) < 0.01
+            and math.abs(finalLine.leftColor.b - b) < 0.01)
+        "#,
+    )
+    .unwrap();
+}
+
+#[test]
+fn default_pvp_talent_catalog_does_not_invent_eligibility_annotations() {
+    let env = WowLuaEnv::new().unwrap();
+    {
+        let mut state = env.state().borrow_mut();
+        state.player.level = 80;
+        state.player.effective_level = 0;
+        state.pvp_talent_tooltip.groups.insert(0, [None; 4]);
+    }
+    env.exec(
+        r#"
+        for _, case in ipairs({ {5573, 204018}, {51, 236180} }) do
+            local data = C_TooltipInfo.GetPvpTalent(case[1])
+            local ordinary = C_TooltipInfo.GetSpellByID(case[2])
+            assert(data and data.id == case[2], "default catalog must supply the primary spell")
+            assert(#data.lines == #ordinary.lines, "unknown eligibility and grant results add no lines")
+        end
+        "#,
+    )
+    .unwrap();
 }
 
 #[test]

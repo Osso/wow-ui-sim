@@ -271,6 +271,7 @@ fn test_blizzard_addon_load_order_snapshot() {
             "Blizzard_TransmogShared",
             "Blizzard_LFGUtil",
             "Blizzard_FrameXML",
+            "Blizzard_RestrictedAddOnEnvironment",
             "Blizzard_SimpleCheckout",
             "Blizzard_StoreUI",
             "Blizzard_QuickKeybind",
@@ -293,7 +294,6 @@ fn test_blizzard_addon_load_order_snapshot() {
             "Blizzard_StatusTrayManager",
             "Blizzard_UnitFrame",
             "Blizzard_ScriptErrorsFrame",
-            "Blizzard_RestrictedAddOnEnvironment",
             "Blizzard_EnvironmentCleanup",
             "Blizzard_TimeManager",
             "Blizzard_CooldownBroadcaster",
@@ -437,19 +437,6 @@ fn test_blizzard_addon_load_order_snapshot() {
              To regenerate: cargo test --test integration load_order::dump_load_order -- --ignored --nocapture"
         );
     }
-}
-
-/// Helper to regenerate the snapshot above.
-#[test]
-#[ignore]
-fn dump_load_order() {
-    let ui = blizzard_ui_dir();
-    let addons = discover_blizzard_addons(&ui);
-    for (name, _) in &addons {
-        eprintln!("    \"{name}\",");
-    }
-    eprintln!("Total: {} addons", addons.len());
-    panic!("dump complete — copy output into test_blizzard_addon_load_order_snapshot");
 }
 
 /// PaperDollItemSlotButton_OnLoad must exist when Blizzard_MainMenuBarBagButtons loads.

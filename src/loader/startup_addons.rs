@@ -12,12 +12,98 @@ pub struct StartupAddon {
     pub kind: StartupAddonLoadKind,
 }
 
+pub fn uses_verified_load_with_semantics() -> bool {
+    matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    )
+}
+
+/// Whether runtime loading resolves registered TOC child declarations.
+/// PTR inclusion is inferred because parser-to-resolver linkage remains unknown.
+pub fn resolves_load_with_children() -> bool {
+    matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::Ptr
+            | crate::client_profile::ClientProfile::WowForever
+    )
+}
+
 pub fn startup_bootstrap_eligible(toc: &TocFile) -> bool {
     cfg!(any(
         feature = "retail-12-1-0",
         feature = "client-wowforever"
     )) && toc.is_load_on_demand()
         && toc.has_bootstrap_files()
+}
+
+/// Register `LoadWith` declarations without changing the public AddOn list.
+pub fn register_load_with_addons(env: &LoaderEnv<'_>, addons: &[(String, PathBuf)]) {
+    let registered_enabled = env
+        .state()
+        .borrow()
+        .addons
+        .iter()
+        .map(|addon| (addon.folder_name.clone(), addon.enabled))
+        .collect::<HashMap<_, _>>();
+    let declarations = addons
+        .iter()
+        .filter_map(|(name, toc_path)| {
+            let toc = match TocFile::from_file(toc_path) {
+                Ok(toc) => toc,
+                Err(error) => {
+                    tracing::warn!(
+                        "Cannot read addon TOC {} for LoadWith registration: {error}",
+                        toc_path.display()
+                    );
+                    return None;
+                }
+            };
+            let targets = toc.load_with();
+            let enabled = registered_enabled
+                .get(name)
+                .copied()
+                .unwrap_or_else(|| toc.default_enabled());
+            Some((name.clone(), targets, enabled))
+        })
+        .collect::<Vec<_>>();
+    register_load_with_declarations(env, &declarations);
+}
+
+/// Register already-parsed `LoadWith` declarations and invalidate their index.
+pub fn register_load_with_declarations(
+    env: &LoaderEnv<'_>,
+    declarations: &[(String, Vec<String>, bool)],
+) {
+    let mut state = env.state().borrow_mut();
+    for (follower, targets, enabled) in declarations {
+        if let Some(index) = state
+            .registered_load_with
+            .iter()
+            .position(|registration| registration.addon_name == *follower)
+        {
+            if targets.is_empty() {
+                state.registered_load_with.remove(index);
+            } else {
+                let registration = &mut state.registered_load_with[index];
+                registration.enabled = *enabled;
+                registration.targets.clone_from(targets);
+            }
+        } else if !targets.is_empty() {
+            state
+                .registered_load_with
+                .push(crate::lua_api::state::RegisteredLoadWith {
+                    addon_name: follower.clone(),
+                    enabled: *enabled,
+                    targets: targets.clone(),
+                });
+        }
+    }
+    if !declarations.is_empty() {
+        state.load_with_followers = None;
+    }
 }
 
 /// Keep bootstrap-only addons in the ordinary dependency-ordered startup stream.
@@ -31,9 +117,8 @@ pub fn discover_blizzard_startup_addons_for_screen(
         return Vec::new();
     };
     let dependencies = implicit_blizzard_startup_dependencies();
-    pull_required_dependency_addons(&mut addons, &mut pool, &dependencies, screen);
+    pull_startup_prerequisites(&mut addons, &mut pool, &dependencies, screen);
     let bootstrap_names = insert_bootstrap_nodes(&mut addons, &mut pool, screen);
-    promote_foundational_addons_to_load_first(&mut addons);
     topological_sort_addons_with_extra_dependencies_for_screen(addons, &dependencies, screen)
         .into_iter()
         .map(|(name, toc_path)| {
@@ -90,9 +175,49 @@ pub fn load_startup_addon(
     match kind {
         StartupAddonLoadKind::BootstrapOnly => load_addon_bootstrap_from_toc(env, &toc),
         StartupAddonLoadKind::Full => {
-            super::load_addon_path_with_toc(env, toc_path, &toc, saved_vars)
+            let result = super::load_addon_path_with_toc(env, toc_path, &toc, saved_vars)?;
+            let addon_name = toc_path
+                .parent()
+                .and_then(Path::file_name)
+                .and_then(|name| name.to_str())
+                .unwrap_or(&toc.name);
+            if uses_verified_load_with_semantics() {
+                fire_startup_addon_loaded(env, addon_name);
+            }
+            crate::c_api::c_addons::load_startup_addon_followers(env, addon_name);
+            Ok(result)
         }
     }
+}
+
+fn fire_startup_addon_loaded(env: &LoaderEnv<'_>, addon_name: &str) {
+    let name_value = env.with_state(|state| {
+        Ok::<_, crate::Error>(crate::lua_api::methods::create_string(state, addon_name))
+    });
+    let name_value = match name_value {
+        Ok(value) => value,
+        Err(error) => {
+            record_startup_addon_loaded_error(env, addon_name, error);
+            return;
+        }
+    };
+    let arguments =
+        crate::loader::addon_loaded_arguments(&env.state().borrow(), addon_name, name_value);
+    if let Err(error) = env.fire_event_with_args("ADDON_LOADED", &arguments) {
+        record_startup_addon_loaded_error(env, addon_name, error);
+    }
+}
+
+fn record_startup_addon_loaded_error(
+    env: &LoaderEnv<'_>,
+    addon_name: &str,
+    error: impl std::fmt::Display,
+) {
+    let message = format!("Error firing ADDON_LOADED for {addon_name}: {error}");
+    env.state()
+        .borrow_mut()
+        .mark_addon_initialization_failed(addon_name, message.clone());
+    tracing::warn!("{message}");
 }
 
 fn validate_startup_dependency_screens(
