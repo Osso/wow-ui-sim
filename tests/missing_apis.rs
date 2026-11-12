@@ -1,5 +1,5 @@
-//! Tests for APIs we need to implement.
-//! These tests document what's missing and will fail until implemented.
+//! Tests for Lua APIs exposed by the simulator.
+//! Optional cases document API gaps that remain unimplemented.
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 
