@@ -31,12 +31,32 @@ Profile → Gethe branch:
 | anniversary | `classic_anniversary` |
 | wowforever | `forever` (current selected target 1.60.1.70532; distinct runtime profile, cache, and manifest) |
 
-## Retail selected target — October 31, 2026
+## Retail selected target — November 12, 2026
 
-Retail sync pins `wow` **12.1.5.70575** in `data/blizzard-ui-builds/retail.json`. Its build, CDN and install keys and all 4,026 file ranges come from Blizzard metadata; runtime content comes only from the Blizzard CDN. The installed client build does not select or invalidate this cache. Sync verifies each cached content key and retains matching files, including a verified restored cache with older provenance. It writes pinned provenance after all files match.
+Retail sync pins `wow` **12.1.5.70783** in `data/blizzard-ui-builds/retail.json`. The selected installed `.build.info` row and its hash-verified configs identify build key `bc493ecb2898766c0f8947a99b4b3d65`, CDN key `8ecf609471cb2ea16667be9cc2b7a555`, install content key `e58758dc26b4c93c71f5fb65054f90c4`, root content key `01a40491e0e9fd3d5e542bd7821cd499`, and encoding content key `6b8cf81a721a9eea0538c75a8eb7fc38`. Gethe `live` revision `297d7aaaa736f346b3e036f38ee088eaf7f8c07f` reports version 12.1.5.70783. The full manifest contains 4,026 paths; compared with 12.1.5.70575 it has zero path additions, zero removals, and zero case changes. The existing CDN runtime path remains authoritative; Gethe files supply the path inventory and source-key cross-check, never runtime fallback bytes.
 
-To retarget, regenerate the manifest and CDN index for the same immutable build, verify every downloaded range and decoded content key, and update the pin and manifest together. Do not use Gethe content as a runtime fallback.
+The generated Retail CDN index uses the installed build/CDN configs, decoded root and encoding files, resolution database, Gethe inventory, local community listfile, and the archive indexes named by the installed CDN config. The indexed file content keys must match Gethe bytes (including the accepted line-ending variants), and each encoding key must resolve to a validated configured archive index entry. Refresh the limited listfile after changing the manifest. The generator reads local installed files only; it does not fetch Blizzard content or use Gethe bytes as runtime fallback:
 
+```sh
+python3 tools/gen_blizzard_ui_retail_index.py \
+  --install "$WOW_INSTALL_PATH" \
+  --source-dir "$HOME/.cache/wow-ui-sim/wow-ui-source-git/live/Interface/AddOns" \
+  --listfile "$HOME/.cache/asset-resolver/data/community-listfile.csv" \
+  --decoded-root "$HOME/.cache/asset-resolver/casc/wow/<build-key>/root.bin" \
+  --decoded-encoding "$HOME/.cache/asset-resolver/casc/wow/<build-key>/encoding.bin" \
+  --resolution-db "$HOME/.cache/asset-resolver/casc/wow/<build-key>/resolution.sqlite" \
+  --manifest-output data/blizzard-ui-files/retail.txt \
+  --index-output data/blizzard-ui-builds/retail.json
+python3 tools/gen_limited_listfile.py
+```
+
+The local community listfile used for the November 12, 2026 pin has SHA256 `486bb1d1c5a87cc136c7824857a391ab0b07c6f50bbc724e104fc5f18e320741`. A new remote refresh was blocked by the listfile content scanner, so this pin used that existing local copy; it does not claim a fresh listfile release. The 70783 manifest does not contain `Blizzard_ChatFrameBase/Shared/FloatingChatFrameGame.lua`; the authenticated installed root also has no enUS FDID `8547105` entry. This does not establish Glue login behavior. See the lane report for exact hashes, source differences, baseline and runtime results.
+
+To retarget, select one exact installed Retail build, verify the `.build.info` identity and build/CDN config hashes, pin the matching immutable Gethe revision, refresh the community listfile when permitted, regenerate the manifest and CDN index, and verify the source keys and archive index records. Then sync to a private runtime cache, verify every downloaded range and decoded content key, capture the baseline from that matching isolated runtime, and update the pin and manifest together. Do not use Gethe content as a runtime fallback.
+
+## Historical Retail target — October 31, 2026
+
+Retail previously pinned `wow` **12.1.5.70575** with build key `d718abcc42604d8efbd35aecfa5bb75b`, CDN key `c13b476a09cb3262797a6fdc88103036`, and Gethe revision `15881d522c44cd106d3d8660106ec9f9d2f44167`. Its 4,026-file CDN index and runtime acquisition used the same pinned CDN verification path. The installed client build did not select or invalidate that cache.
 ## Historical Retail target — October 16, 2026
 
 Retail's selected installed product is `wow` **12.1.5.70448**, active build key
