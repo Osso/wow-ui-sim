@@ -150,7 +150,8 @@ fn create_character(state: &mut LuaState) -> LuaResult<u32> {
         use_npe,
         race_faction,
     });
-    // UNKNOWN native return count; simulator returns nothing (coordinator #208).
+    // INFERRED zero native returns on success (R78b Q2/#222); not asserted.
+    // This preserves the explicit zero-return simulator policy from #208.
     // No outcome, roster/name mutation, event, or network request is inferred.
     Ok(0)
 }

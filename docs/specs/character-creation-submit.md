@@ -47,8 +47,10 @@ not direct mixin invocation or a replacement submit implementation.
 
 ## Unknowns and host boundaries
 
-- CreateCharacter return: **UNKNOWN; simulator returns nothing**, explicitly
-  authorized by #208. Do not assert its return count. Request serialization and
+- CreateCharacter return: **INFERRED zero returns on success (R78b Q2/#222)**.
+  This preserves the explicit zero-return simulator policy authorized by #208;
+  tests do not assert its count. This evidence-label update is a separate,
+  droppable INFERRED commit. Request serialization and
   fields remain UNKNOWN; do not invent a network payload.
 - Result timing, ordering relative to `CHARACTER_LIST_UPDATE`, and automatic
   roster refresh are UNKNOWN. The submit/result path must not emit that event or
