@@ -74,11 +74,6 @@ fn pvp_slot_on_enter_uses_default_catalog_spell_and_unlock_lines() {
     }
     env.exec(
         r#"
-        assert(PlayerSpellsUtil and PlayerSpellsUtil.ToggleClassTalentFrame)
-        PlayerSpellsUtil.ToggleClassTalentFrame()
-        local talents = assert(PlayerSpellsFrame and PlayerSpellsFrame.TalentsFrame)
-        local tray = assert(talents.PvPTalentSlotTray)
-        local button = assert(tray.Slots[1])
         assert(type(GameTooltip.SetPvpTalent) == "function", "original tooltip accessor is installed")
         local originalGetPvpTalent = C_TooltipInfo.GetPvpTalent
         local getterArguments
@@ -88,6 +83,11 @@ fn pvp_slot_on_enter_uses_default_catalog_spell_and_unlock_lines() {
             getterArguments = { ... }
             return originalGetPvpTalent(...)
         end
+        assert(PlayerSpellsUtil and PlayerSpellsUtil.ToggleClassTalentFrame)
+        PlayerSpellsUtil.ToggleClassTalentFrame()
+        local talents = assert(PlayerSpellsFrame and PlayerSpellsFrame.TalentsFrame)
+        local tray = assert(talents.PvPTalentSlotTray)
+        local button = assert(tray.Slots[1])
         local cases = {
             { talent = 5573, spell = 204018, title = "Blessing of Spellwarding", level = 25 },
             { talent = 51, spell = 236180, title = "Den Mother", level = 30 },
