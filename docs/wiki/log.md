@@ -1,6 +1,9 @@
 ## [2026-11-12] investigation | Inline XML tooltip operands
 
 [Inline XML method arguments](investigations/xml-inline-method-arguments.md) records the zero-vararg parser misclassification, source-faithful parameter-prefix installation, and the separately approved RaidFrame AddLine fixture correction.
+## [2026-11-12] investigation | Forever integration fixtures
+
+Updated [Forever startup gaps](investigations/forever-startup-gaps.md#forever-70707-integration-fixture-differences) with the source-grounded fixture corrections, supplied item-overlay publication and independent eager-order audit for `forever-touched-15`. The original 15 exact failures were reproduced; targeted and final cross-profile proof is recorded in the private lane report.
 
 ## [2026-11-11] correction | Addon loading phases and LoadWith followers
 
