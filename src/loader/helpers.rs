@@ -553,7 +553,12 @@ pub(crate) fn handler_params(handler_name: &str) -> &'static str {
         "OnClick" | "OnDoubleClick" => "self, button, down",
         "OnEnter" | "OnLeave" => "self, motion",
         "OnMouseDown" | "OnMouseUp" => "self, button",
-        "OnValueChanged" => "self, value",
+        // Blizzard_SharedXML/Mainline/SharedUIPanelTemplates.xml:1404 uses userInput.
+        "OnValueChanged" => "self, value, userInput",
+        // Blizzard_HelpFrame/HelpFrame.xml:32 forwards msg to its parent.
+        "OnError" => "self, msg",
+        // Blizzard_UIPanels_Game/Mainline/DressUpFrames.xml:163 forwards these three names.
+        "OnDressModel" => "self, itemModifiedAppearanceID, invSlot, removed",
         "OnTextChanged" => "self, userInput",
         "OnChar" => "self, text",
         _ => "self, ...",

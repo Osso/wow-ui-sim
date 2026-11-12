@@ -7,6 +7,7 @@ Inline XML method calls must preserve Lua operand values, order, identity, and a
 - [x] Forward a global string, a color table, and a boolean as three distinct operands without expanding the table.
 - [x] Preserve reordered callback operands instead of substituting the callback's varargs.
 - [x] Preserve named parameter prefixes, including explicit `self` and optional varargs, during fast frame installation.
+- [ ] Preserve the existing true/false user-input flag through the pinned SliderWithButtonsAndLabelTemplate OnValueChanged script; retain the pinned msg and dress-model parameter names.
 
 ## How it works
 
@@ -24,6 +25,7 @@ Inline XML method calls must preserve Lua operand values, order, identity, and a
 - `tests/xml_templates/inline_flow/tooltip_sequences.rs::test_inline_tooltip_three_arguments_preserve_lua_values`
 - `tests/xml_templates/inline_flow/tooltip_sequences.rs::test_inline_tooltip_reordered_handler_arguments`
 - `tests/xml_templates/inline_flow/tooltip_sequences.rs::test_inline_tooltip_handler_parameter_prefixes`
+- `tests/xml_templates/inline_flow/tooltip_sequences.rs::test_pinned_slider_on_value_changed_preserves_user_input`
 
 ## Known gaps (current cycle)
 
