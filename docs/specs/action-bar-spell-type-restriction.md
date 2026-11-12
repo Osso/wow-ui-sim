@@ -1,6 +1,6 @@
 # Action-bar spell type restriction
 
-`C_ActionBar.SpellMatchesActionSpellTypeRestriction` is a PTR action-slot query. PTR API documentation at `ActionBarFrameDocumentation.lua:1031–1048` declares required `spellID` and `actionID` inputs and a Boolean result. Verified native behavior also returns zero Lua values for converted slots outside the valid range. Its modeled restriction and spell-label inputs are host supplied; the simulator does not ship `SpellLabel` data.
+`C_ActionBar.SpellMatchesActionSpellTypeRestriction` is a PTR action-slot query. **VERIFIED:** PTR API documentation at `ActionBarFrameDocumentation.lua:1031–1048` declares required `spellID` and `actionID` inputs and a Boolean result. **VERIFIED:** native behavior returns zero Lua values for converted slots outside the valid range. The modeled restriction and spell-label inputs are host supplied; the simulator does not ship `SpellLabel` data.
 
 ## What it must do
 

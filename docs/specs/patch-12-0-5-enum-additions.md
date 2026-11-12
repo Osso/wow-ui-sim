@@ -10,7 +10,7 @@ Publish 33 documented enum deltas across 20 subjects from [retained patch notes]
 - [x] Metadata reflects actual published numeric members rather than replacing later-epoch bounds/counts with 12.0.5 values.
 - [ ] On PTR, publish `Enum.LootMethodStyles = { Mainline=0, Vanilla=1 }`, omit `PersonalOnly`, and set metadata to `MinValue=0`, `MaxValue=1`, `NumValues=2`.
 
-Documented values: cached official `CurrencyConstantsDocumentation.lua:95–113`, `TransmogSharedDocumentation.lua:46–57`, and `PlayerHousingConstantsDocumentation.lua:52–69` under `~/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/`. PTR `LootConstantsDocumentation.lua:22–31` at `~/.cache/wow-ui-sim/blizzard-ui/ptr/AddOns/Blizzard_APIDocumentationGenerated/` declares `LootMethodStyles` as `Mainline=0` and `Vanilla=1`, with metadata `0/1/2`; it does not list `PersonalOnly`. The housing cache includes later `Relinquished=128`; that addition is excluded. Patch-note names occur at retained-source lines 573–574, 590–591, and 606–607.
+Documented values: cached official `CurrencyConstantsDocumentation.lua:95–113`, `TransmogSharedDocumentation.lua:46–57`, and `PlayerHousingConstantsDocumentation.lua:52–69` under `~/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/`. **VERIFIED:** PTR `LootConstantsDocumentation.lua:22–31` at `~/.cache/wow-ui-sim/blizzard-ui/ptr/AddOns/Blizzard_APIDocumentationGenerated/` declares `LootMethodStyles` as `Mainline=0` and `Vanilla=1`, with metadata `0/1/2`; it does not list `PersonalOnly`. The housing cache includes later `Relinquished=128`; that addition is excluded. Patch-note names occur at retained-source lines 573–574, 590–591, and 606–607.
 
 ## How it works
 

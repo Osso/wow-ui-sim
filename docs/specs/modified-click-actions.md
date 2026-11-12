@@ -8,7 +8,7 @@ Modified-click action bindings select the action used by Blizzard item-click han
 - [ ] Action bindings can be read and changed through `GetModifiedClick` and `SetModifiedClick`.
 - [ ] Defaults come from the selected profile's Blizzard `ModifiedClick` definitions, not invented values.
 
-Retail and PTR select `Blizzard_FrameXML/Bindings_Standard.xml`; PTR declares SELFCAST=ALT, FOCUSCAST=NONE, and AUTOLOOTTOGGLE=SHIFT at lines 1776–1781. Retail's standard definitions at lines 1776–1797 include CHATLINK=`SHIFT-BUTTON1` and DRESSUP=`CTRL-BUTTON1` at lines 1782–1783. The selected `Blizzard_ItemButton_Mainline.toc:5-9` loads `Mainline/ItemButtonTemplate.xml:3`, which loads the consumer at `Mainline/ItemButtonTemplate.lua:367-400`. That consumer checks CHATLINK before DRESSUP.
+**VERIFIED:** the loader selects `Blizzard_FrameXML/Bindings_Standard.xml` for Retail and PTR; PTR declares SELFCAST=ALT, FOCUSCAST=NONE, and AUTOLOOTTOGGLE=SHIFT at lines 1776–1781. Retail's standard definitions at lines 1776–1797 include CHATLINK=`SHIFT-BUTTON1` and DRESSUP=`CTRL-BUTTON1` at lines 1782–1783. The selected `Blizzard_ItemButton_Mainline.toc:5-9` loads `Mainline/ItemButtonTemplate.xml:3`, which loads the consumer at `Mainline/ItemButtonTemplate.lua:367-400`. That consumer checks CHATLINK before DRESSUP.
 
 ## How it works
 
