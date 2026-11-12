@@ -501,11 +501,31 @@ fn test_bag_bar_layout_locked() {
                 local l, b, w, h = frame:GetRect()
                 if not (l and b and w and h) then
                     local frameWidth, frameHeight = frame:GetSize()
+                    local parent = frame:GetParent()
+                    local parentRect = "<missing>"
+                    if parent then
+                        local pl, pb, pw, ph = parent:GetRect()
+                        parentRect = string.format("%s/%s/%s/%s", tostring(pl), tostring(pb), tostring(pw), tostring(ph))
+                    end
+                    local point, relative, relativePoint, x, y = frame:GetPoint(1)
+                    local relativeRect = "<missing>"
+                    if relative then
+                        local rl, rb, rw, rh = relative:GetRect()
+                        relativeRect = string.format("%s/%s/%s/%s", tostring(rl), tostring(rb), tostring(rw), tostring(rh))
+                    end
                     return nil, string.format(
-                        "%s_missing_rect:%sx%s:%s",
+                        "%s_missing_rect:%sx%s:parent=%s:%s:relative=%s:%s(%s,%s):relative_rect=%s:points=%s",
                         tag,
                         tostring(frameWidth),
                         tostring(frameHeight),
+                        parent and parent:GetName() or "<unnamed>",
+                        parentRect,
+                        relative and relative:GetName() or "<unnamed>",
+                        tostring(point),
+                        tostring(relativePoint),
+                        tostring(x),
+                        tostring(y),
+                        relativeRect,
                         points_debug(frame)
                     )
                 end

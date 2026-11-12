@@ -179,14 +179,21 @@ fn action_button_drag_round_trip_keeps_spell_visible() {
         env.fire_script_handler(button_id, "OnReceiveDrag", vec![])
             .unwrap();
 
-        let after_drag: bool = env
+        let (texture, action_texture, icon_shown, has_action): (String, String, bool, bool) = env
             .eval(
-                "return ActionButton1.icon:IsShown() and ActionButton1.icon:GetTexture() == 135963 and HasAction(1)",
+                "return tostring(ActionButton1.icon:GetTexture()), \
+                 tostring(GetActionTexture(1)), ActionButton1.icon:IsShown(), HasAction(1)",
             )
             .unwrap();
-        assert!(
-            after_drag,
-            "dragging off and back onto the same button should keep spell texture 135963 and its action"
+        assert_eq!(
+            (
+                texture.as_str(),
+                action_texture.as_str(),
+                icon_shown,
+                has_action
+            ),
+            ("135963", "135963", true, true),
+            "dragging off and back onto the same button should preserve the spell texture and action"
         );
     });
 }
