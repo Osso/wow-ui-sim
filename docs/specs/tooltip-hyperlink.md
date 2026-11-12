@@ -35,6 +35,8 @@ The hyperlink dispatcher follows R82/R82b, Retail 12.1.5.70688. Source lives in 
 - `tests/tooltip_hyperlink_r82.rs`: original `GameTooltip:SetHyperlink` and `C_TooltipInfo.GetHyperlink`, typed parsing, rank arithmetic and supplied-state composition.
 - `tests/tooltip_item_sources.rs`: no fabricated unit rows; item/spell controls.
 
+VERIFIED on code tree `195448e8b` after the m41 merge: Retail library 2264/2264 and tooltip-related integration 653/653 pass, with zero compiler warnings. VERIFIED on preceding production tree `0763fde84`: PTR and Forever each pass all 15 exact changed cases, with zero warnings. These are simulator proofs, not full native output equivalence; request-only and catalog evidence limits remain as stated above.
+
 ## Known gaps (current cycle)
 
 - [ ] Difficulty, mode and unknown wrapper fields are retained but cannot affect the current spell producer, which has no corresponding inputs. R81 integration is separate.
