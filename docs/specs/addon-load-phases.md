@@ -6,27 +6,27 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 
 ### Startup phases
 
-- [ ] Phase one must select addons with `LoadFirst` or `UseSecureEnvironment`.
-- [ ] Phase two must select the remaining non-insecure packaged UI addons, and its top-level traversal must begin only after phase one returns.
-- [ ] Phase membership must not come from addon names or a synthetic foundational-addon list.
+- [x] Phase one must select addons with `LoadFirst` or `UseSecureEnvironment`.
+- [x] Phase two must select the remaining non-insecure packaged UI addons, and its top-level traversal must begin only after phase one returns.
+- [x] Phase membership must not come from addon names or a synthetic foundational-addon list.
 
 ### Startup prerequisites
 
-- [ ] Startup must try each available `LoadManagers` addon before the addon that declares it.
-- [ ] Startup must attempt optional dependencies before required dependencies.
-- [ ] An optional dependency failure must not stop the parent addon from loading.
+- [x] Startup must try each available `LoadManagers` addon before the addon that declares it.
+- [x] Startup must attempt optional dependencies before required dependencies.
+- [x] An optional dependency failure must not stop the parent addon from loading.
 
 ### Runtime loading
 
-- [ ] `C_AddOns.LoadAddOn` must attempt optional dependencies before required dependencies.
-- [ ] An optional dependency failure must not stop the requested addon from loading.
+- [x] `C_AddOns.LoadAddOn` must attempt optional dependencies before required dependencies.
+- [x] An optional dependency failure must not stop the requested addon from loading.
 
 ### `LoadWith` followers
 
-- [ ] VERIFIED (Retail 12.1.5.70688): an addon X that names Y in `LoadWith` joins Y's follower list; resolving the relation does not load Y.
-- [ ] VERIFIED (Retail 12.1.5.70688): when Y reaches follower processing, it submits X to the general loader after Y's own files. This applies to startup and runtime `C_AddOns.LoadAddOn(Y)`.
-- [ ] VERIFIED (Retail 12.1.5.70688): each follower uses the general loader's checks and dependency order: optional dependencies, required dependencies, then its own files.
-- [ ] VERIFIED (Retail 12.1.5.70688): an early-exit Y submits no followers.
+- [x] VERIFIED (Retail 12.1.5.70688): an addon X that names Y in `LoadWith` joins Y's follower list; resolving the relation does not load Y.
+- [x] VERIFIED (Retail 12.1.5.70688): when Y reaches follower processing, it submits X to the general loader after Y's own files. This applies to startup and runtime `C_AddOns.LoadAddOn(Y)`.
+- [x] VERIFIED (Retail 12.1.5.70688): each follower uses the general loader's checks and dependency order: optional dependencies, required dependencies, then its own files.
+- [x] VERIFIED (Retail 12.1.5.70688): an early-exit Y submits no followers.
 
 ## How it works
 
