@@ -63,23 +63,12 @@ fn retail_pvp_talent_catalog_uses_exported_rows_without_inventing_grants() {
 }
 
 fn load_original_pvp_slot_templates(env: &WowLuaEnv) {
-    use wow_ui_sim::loader::{AddonContext, LoadTiming, load_xml_file};
+    use wow_ui_sim::loader::{find_toc_file, load_addon};
 
     let addon = wow_ui_sim::client_profile::blizzard_ui_addons_dir()
         .join("Blizzard_PlayerSpells");
-    let table = env.create_addon_table().unwrap();
-    let context = AddonContext::new(env.lua(), "Blizzard_PlayerSpells", table, &addon, false, false)
-        .unwrap();
-    let mut warnings = Vec::new();
-    load_xml_file(
-        &env.loader_env(),
-        &addon.join("PvPTalents/Blizzard_PvPTalentSlotTemplates.xml"),
-        &context,
-        &mut LoadTiming::default(),
-        &mut warnings,
-    )
-    .expect("load the Retail TOC-selected original PvP slot templates");
-    assert!(warnings.is_empty(), "PvP slot XML warnings: {warnings:?}");
+    let toc = find_toc_file(&addon).expect("Retail PlayerSpells TOC is present");
+    load_addon(&env.loader_env(), &toc).expect("load the original Retail PlayerSpells addon");
 }
 
 #[test]
