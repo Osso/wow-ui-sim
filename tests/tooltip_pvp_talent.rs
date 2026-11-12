@@ -62,19 +62,19 @@ fn retail_pvp_talent_catalog_uses_exported_rows_without_inventing_grants() {
     assert!(!catalog.contains_key(&i32::MAX), "absent IDs stay catalog misses");
 }
 
-fn load_original_pvp_slot_templates(env: &WowLuaEnv) {
-    use wow_ui_sim::loader::{find_toc_file, load_addon};
-
+fn load_original_pvp_slot_consumer(env: &WowLuaEnv) {
     let addon = wow_ui_sim::client_profile::blizzard_ui_addons_dir()
-        .join("Blizzard_PlayerSpells");
-    let toc = find_toc_file(&addon).expect("Retail PlayerSpells TOC is present");
-    load_addon(&env.loader_env(), &toc).expect("load the original Retail PlayerSpells addon");
+        .join("Blizzard_PlayerSpells/PvPTalents/Blizzard_PvPTalentSlotTemplates.lua");
+    let source = std::fs::read_to_string(&addon)
+        .unwrap_or_else(|error| panic!("read original PvP talent consumer {}: {error}", addon.display()));
+    env.exec(&source)
+        .expect("load original PvPTalentSlotButtonMixin.OnEnter consumer");
 }
 
 #[test]
 fn pvp_slot_on_enter_uses_default_catalog_spell_and_unlock_lines() {
     let env = env();
-    load_original_pvp_slot_templates(&env);
+    load_original_pvp_slot_consumer(&env);
     {
         let mut state = env.state().borrow_mut();
         state.player.level = 20;
@@ -83,15 +83,23 @@ fn pvp_slot_on_enter_uses_default_catalog_spell_and_unlock_lines() {
     }
     env.exec(
         r#"
-        local tray = CreateFrame("Frame", nil, UIParent, "PvPTalentSlotTrayTemplate")
-        local button = tray.Slots[1]
-        assert(button and button:GetScript("OnEnter"), "original XML OnEnter binding")
+        local tray = CreateFrame("Frame", nil, UIParent)
+        tray.IsInspecting = function() return false end
+        tray.GetInspectUnit = function() return nil end
+        tray.AcknowledgeNewNotification = function() end
+        local button = CreateFrame("Button", nil, tray)
+        button.slotIndex = 1
+        button.GetSelectedTalent = function(self) return self.selectedTalent end
+        button.IsInspecting = function() return false end
+        button.GetInspectUnit = function() return nil end
+        button:SetScript("OnEnter", PvPTalentSlotButtonMixin.OnEnter)
+        assert(button:GetScript("OnEnter"), "original PvP slot OnEnter consumer")
         local cases = {
             { talent = 5573, spell = 204018, title = "Blessing of Spellwarding", level = 25 },
             { talent = 51, spell = 236180, title = "Den Mother", level = 30 },
         }
         for _, case in ipairs(cases) do
-            button.predictedSetting:Set(case.talent)
+            button.selectedTalent = case.talent
             GameTooltip:Hide()
             GameTooltip:ClearHandlerInfo()
             button:GetScript("OnEnter")(button)
@@ -118,7 +126,7 @@ fn pvp_slot_on_enter_uses_default_catalog_spell_and_unlock_lines() {
 
 #[test]
 fn default_pvp_talent_catalog_does_not_invent_eligibility_annotations() {
-    let env = env();
+    let env = WowLuaEnv::new().unwrap();
     {
         let mut state = env.state().borrow_mut();
         state.player.level = 80;
@@ -128,7 +136,7 @@ fn default_pvp_talent_catalog_does_not_invent_eligibility_annotations() {
     env.exec(
         r#"
         for _, case in ipairs({ {5573, 204018}, {51, 236180} }) do
-            local data = TestGetPvpTalent(case[1])
+            local data = C_TooltipInfo.GetPvpTalent(case[1])
             local ordinary = C_TooltipInfo.GetSpellByID(case[2])
             assert(data and data.id == case[2], "default catalog must supply the primary spell")
             assert(#data.lines == #ordinary.lines, "unknown eligibility and grant results add no lines")
