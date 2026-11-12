@@ -10,6 +10,7 @@
 #[path = "tooltip_full_env_helpers.rs"]
 mod tooltip_full_env_helpers;
 
+use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::lua_api::state::{BagItem, LootSlot};
 
@@ -34,12 +35,15 @@ fn loot_fixture() -> WowLuaEnv {
 }
 
 /// `Blizzard_UIPanels_Game/Mainline/LootFrame.lua` (`LootFrameItemElementMixin:OnEnter`,
-/// Retail :342, PTR/Forever :620) reads `GetLootSlotType` and routes a currency
+/// Retail :348, PTR/Forever :620) reads `GetLootSlotType` and routes a currency
 /// slot to `GameTooltip:SetLootCurrency`, which the handler map at
 /// `Blizzard_SharedXMLGame/Tooltip/TooltipDataHandler.lua:557` maps to this
 /// getter.
 #[test]
 fn tooltip_loot_currency_original_hover_selects_the_currency_slot() {
+    if ACTIVE != ClientProfile::Retail {
+        return;
+    }
     let env = loot_fixture();
     env.exec(
         r#"
@@ -55,7 +59,15 @@ fn tooltip_loot_currency_original_hover_selects_the_currency_slot() {
         local data = GameTooltip:GetPrimaryTooltipData()
         assert(info and info.getterName == 'GetLootCurrency', 'original hover must select GetLootCurrency')
         assert(data and data.type == Enum.TooltipDataType.Currency, 'loot currency data type')
-        assert(data and data.lines[1].leftText == 'Valorstones', 'loot currency name mismatch')
+        assert(data and data.id == 2245, 'loot currency id mismatch')
+        assert(data and data.dataInstanceID ~= nil, 'loot currency instance id missing')
+        assert(data and data.quantity == nil, 'R84 §Q4: loot currency must not publish quantity')
+        local currencyName = C_CurrencyInfo.GetCurrencyInfo(2245).name
+        assert(currencyName ~= nil and currencyName ~= '', 'resolved currency name missing')
+        assert(data.lines[1].leftText == currencyName, 'currency title must use the resolved CurrencyTypes name')
+        for _, line in ipairs(data.lines) do
+            assert(line.rightText == nil and line.rightColor == nil, 'currency rows are left-only')
+        end
         "#,
     )
     .unwrap();
