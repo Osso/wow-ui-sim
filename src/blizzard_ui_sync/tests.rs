@@ -608,15 +608,18 @@ fn retail_provenance_ignores_installed_build_identity() {
 #[cfg(all(feature = "casc", feature = "client-retail"))]
 fn retail_sync_cached_fixture_child() {
     use std::io::{IsTerminal, Read};
+    const CHILD: &str = "WOW_SIM_RETAIL_SYNC_CACHE_CHILD";
     let args: Vec<_> = std::env::args().collect();
-    if !args.windows(2).any(|args| {
+    let selected_exactly = args.windows(2).any(|args| {
         args == [
             "--exact",
             "blizzard_ui_sync::tests::retail_sync_cached_fixture_child",
         ]
-    }) {
+    });
+    if !selected_exactly {
         return;
     }
+
     let mut input = std::io::stdin();
     if input.is_terminal() {
         return;
@@ -627,27 +630,52 @@ fn retail_sync_cached_fixture_child() {
         return;
     }
     let root: std::path::PathBuf = serde_json::from_str(&message).unwrap();
+    if std::env::var_os(CHILD).is_some() {
+        let install = std::env::var("WOW_INSTALL_PATH").unwrap();
+        let installed =
+            super::read_active_build_identity(std::path::Path::new(&install), "wow").unwrap();
+        let index: serde_json::Value =
+            serde_json::from_str(include_str!("../../data/blizzard-ui-builds/retail.json"))
+                .unwrap();
+        let pinned_version = index["version"].as_str().unwrap();
+        assert_ne!(installed.version, pinned_version);
+        let entry = "Blizzard_ArchaeologyUI/Blizzard_ArchaeologyUI.lua";
+        let before = std::fs::read(root.join(entry)).unwrap();
+        let result = super::sync_blizzard_ui_to(&root);
+        assert_eq!(
+            std::fs::read(root.join(entry)).unwrap(),
+            before,
+            "valid cached bytes must survive sync"
+        );
+        let summary = result.expect("the pinned cache must be ready");
+        assert_eq!(summary.extracted, 0);
+        assert_eq!(summary.missing, 0);
+        assert_eq!(summary.present, summary.total);
+        assert_eq!(summary.total, 4026);
+        let provenance = std::fs::read_to_string(root.join(super::PROVENANCE_FILE)).unwrap();
+        assert!(provenance.contains(&format!("version={pinned_version}\n")));
+        assert!(provenance.contains("source=blizzard-cdn-pinned\n"));
+        return;
+    }
+
     let install = installed_product_fixture();
     std::fs::create_dir_all(install.path().join("Data/data")).unwrap();
-    let installed = super::read_active_build_identity(install.path(), "wow").unwrap();
-    let index: serde_json::Value =
-        serde_json::from_str(include_str!("../../data/blizzard-ui-builds/retail.json")).unwrap();
-    let pinned_version = index["version"].as_str().unwrap();
-    assert_ne!(installed.version, pinned_version);
-    let entry = "Blizzard_ArchaeologyUI/Blizzard_ArchaeologyUI.lua";
-    let before = std::fs::read(root.join(entry)).unwrap();
-    let result = super::sync_blizzard_ui_to(&root);
-    assert_eq!(
-        std::fs::read(root.join(entry)).unwrap(),
-        before,
-        "valid cached bytes must survive sync"
-    );
-    let summary = result.expect("the pinned cache must be ready");
-    assert_eq!(summary.extracted, 0);
-    assert_eq!(summary.missing, 0);
-    assert_eq!(summary.present, summary.total);
-    assert_eq!(summary.total, 4026);
-    let provenance = std::fs::read_to_string(root.join(super::PROVENANCE_FILE)).unwrap();
-    assert!(provenance.contains(&format!("version={pinned_version}\n")));
-    assert!(provenance.contains("source=blizzard-cdn-pinned\n"));
+    let mut child = std::process::Command::new(std::env::current_exe().unwrap())
+        .args([
+            "--exact",
+            "blizzard_ui_sync::tests::retail_sync_cached_fixture_child",
+            "--nocapture",
+        ])
+        .env(CHILD, "1")
+        .env("WOW_INSTALL_PATH", install.path())
+        .stdin(std::process::Stdio::piped())
+        .spawn()
+        .unwrap();
+    std::io::Write::write_all(
+        &mut child.stdin.take().unwrap(),
+        &serde_json::to_vec(&root).unwrap(),
+    )
+    .unwrap();
+    let status = child.wait().unwrap();
+    assert!(status.success(), "fixture sync child failed: {status}");
 }
