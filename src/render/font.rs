@@ -883,7 +883,9 @@ fn resolve_case_insensitive(root: &Path, relative: &Path) -> Option<PathBuf> {
             crate::paths::find_case_insensitive(&path, &part.to_string_lossy())?
         };
     }
-    path.is_file().then_some(path)
+    let root = root.canonicalize().ok()?;
+    let path = path.canonicalize().ok()?;
+    (path.starts_with(root) && path.is_file()).then_some(path)
 }
 
 /// Family name plus weight, style and stretch of the first face in a font file.
