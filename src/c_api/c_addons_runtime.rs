@@ -4,9 +4,9 @@ use crate::lua_api::methods::{borrow_lua, borrow_state, create_string, state_han
 use crate::screen::ScreenKind;
 use crate::toc::TocFile;
 use rilua::vm::state::LuaState;
-use std::collections::{HashMap, HashSet};
+use std::collections::HashMap;
 use std::io;
-use std::path::{Path, PathBuf};
+use std::path::PathBuf;
 
 pub(super) fn load_runtime_addon(state: &mut LuaState, addon_name: &str) -> Result<(), LoadError> {
     let loader_env = LoaderEnv::from_parts_active(
