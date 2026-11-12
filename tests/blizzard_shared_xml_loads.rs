@@ -801,3 +801,23 @@ prefork_full_ui_case! {
         );
     }
 }
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn mainline_smooth_progress_helper_remains_in_interpolator_namespace() {
+    let env = load_full_game_ui();
+
+    let (global_type, namespaced_type, smoothed): (String, String, f64) = env
+        .eval(
+            r#"
+            return type(GetSmoothProgressChange),
+                type(InterpolatorUtil.GetSmoothProgressChange),
+                InterpolatorUtil.GetSmoothProgressChange(100, 0, 100, 1)
+            "#,
+        )
+        .expect("smooth progress snapshot mismatch probe should succeed");
+
+    assert_eq!(global_type, "nil");
+    assert_eq!(namespaced_type, "function");
+    assert!((smoothed - 70.0).abs() < f64::EPSILON);
+}

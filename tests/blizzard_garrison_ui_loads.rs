@@ -658,3 +658,32 @@ fn blizzard_garrison_ui_monument_frame_uses_high_strata_on_uiparent() {
     let env = load_full_game_ui_with_lod_deps();
     blizzard_garrison_ui_monument_frame_uses_high_strata_on_uiparent::run(&env);
 }
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn mainline_garrison_bootstrap_hide_wrappers_hide_open_frames() {
+    let env = load_full_game_ui_with_lod_deps();
+    load_addon(&env.loader_env(), &garrison_ui_toc()).expect("Blizzard_GarrisonUI should load");
+
+    let wrappers_targeted_frames: (bool, bool, bool, bool, bool, bool) = env
+        .eval(
+            "local mission, bfa, covenant, shipyard = {}, {}, {}, {}; \
+             GarrisonMissionFrame, BFAMissionFrame, CovenantMissionFrame, GarrisonShipyardFrame = \
+                 mission, bfa, covenant, shipyard; \
+             local calls = {}; local original = HideUIPanel; \
+             HideUIPanel = function(frame) calls[#calls + 1] = frame end; \
+             local loaded = C_AddOns.IsAddOnLoaded('Blizzard_GarrisonUI'); \
+             local callable = type(HideGarrisonMissionFrames) == 'function' \
+                 and type(HideGarrisonShipyardFrame) == 'function'; \
+             if not callable then HideUIPanel = original; return false, false, loaded, false, false, false end; \
+             HideGarrisonMissionFrames(); HideGarrisonShipyardFrame(); HideUIPanel = original; \
+             return callable, loaded, #calls == 4, \
+                 calls[1] == mission and calls[2] == bfa and calls[3] == covenant, \
+                 calls[4] == shipyard, true",
+        )
+        .expect("selected Garrison bootstrap hide wrappers should run");
+    assert_eq!(
+        wrappers_targeted_frames,
+        (true, true, true, true, true, true)
+    );
+}

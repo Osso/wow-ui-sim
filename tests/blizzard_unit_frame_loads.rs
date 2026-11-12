@@ -755,3 +755,32 @@ fn full_game_load_emits_no_addon_specific_errors(env: &WowLuaEnv) {
     );
 }
 }
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn classic_combo_entries_are_restricted_on_mainline_build() {
+    if toc_layout::unified_toc_tree() {
+        let toc = TocFile::from_file(&unit_frame_toc()).expect("unified UnitFrame TOC parses");
+        let raw = std::fs::read_to_string(unit_frame_toc()).expect("unified UnitFrame TOC reads");
+        let classic_combo_selector = raw.lines().any(|line| {
+            line.trim_start().starts_with("[Family]")
+                && line.contains("ComboFrame.lua")
+                && line.contains("[AllowLoadGameType classic]")
+        });
+        assert!(
+            classic_combo_selector,
+            "PTR TOC lines 69-70 select ComboFrame only for Classic"
+        );
+        assert!(!toc.files.iter().any(|file| {
+            file.to_string_lossy().ends_with("ComboFrame.lua")
+                || file.to_string_lossy().ends_with("ComboFrame.xml")
+        }));
+    } else {
+        let classic = TocFile::from_file(&unit_frame_classic_toc()).expect("Classic TOC parses");
+        assert!(
+            classic.is_game_type_restricted(),
+            "Retail's `_Classic.toc` carries `## AllowLoadGameType: classic`, which the \
+             mainline selection rejects"
+        );
+    }
+}

@@ -123,3 +123,31 @@ fn load_auction_house_through_runtime(env: &wow_ui_sim::lua_api::WowLuaEnv) {
         .expect("C_AddOns.LoadAddOn should return");
     assert!(loaded, "`{root}` should load: {reason:?}");
 }
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn mainline_auction_house_bootstrap_hide_wrapper_hides_the_open_frame() {
+    common::with_perf_lock(|| {
+        common::with_timeout(240, || {
+            let env = common::panel_fixtures::setup_env();
+            load_auction_house_through_runtime(&env);
+            env.apply_post_load_workarounds();
+
+            let wrapper_targeted_frame: bool = env
+                .eval(
+                    "if type(HideAuctionHouseFrame) ~= 'function' or not AuctionHouseFrame then \
+                         return false \
+                     end; local expected = AuctionHouseFrame; local actual; \
+                     local original = HideUIPanel; \
+                     HideUIPanel = function(frame) actual = frame end; \
+                     HideAuctionHouseFrame(); HideUIPanel = original; \
+                     return actual == expected",
+                )
+                .expect("selected AuctionHouse bootstrap wrapper should run");
+            assert!(
+                wrapper_targeted_frame,
+                "HideAuctionHouseFrame must pass the original AuctionHouseFrame to HideUIPanel"
+            );
+        });
+    });
+}
