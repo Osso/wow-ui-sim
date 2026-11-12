@@ -557,13 +557,13 @@ fn casting_blacksmithing_opens_professions_frame() {
         .eval(
             r#"
             C_AddOns.LoadAddOn("Blizzard_Professions")
-            local original = ProfessionsRecipeSchematicFormMixin.Init
+            _G.PROF_DIAG = ""
             local form = ProfessionsFrame.CraftingPage.SchematicForm
             local originalInit = form.Init
             form.Init = function(self, ...)
-                print("DIAG Init entry", ...)
+                PROF_DIAG = PROF_DIAG .. " entry=" .. tostring((...))
                 local result = originalInit(self, ...)
-                print("DIAG Init exit", self.currentRecipeInfo, self.transaction)
+                PROF_DIAG = PROF_DIAG .. " exit=" .. tostring(self.currentRecipeInfo) .. ":" .. tostring(self.transaction)
                 return result
             end
             CastSpellByID(2018)
@@ -575,7 +575,7 @@ fn casting_blacksmithing_opens_professions_frame() {
                 return "crafting_page_link_button_missing"
             end
             if ProfessionsFrame:GetWidth() < 900 then
-                return "width=" .. tostring(ProfessionsFrame:GetWidth())
+                return "width=" .. tostring(ProfessionsFrame:GetWidth()) .. PROF_DIAG
             end
             return "ok"
             "#,
@@ -643,6 +643,7 @@ fn clicking_blacksmithing_button_in_professions_book_opens_panel() {
         )
         .unwrap();
 
+    eprintln!("DIAG errors {:?}", env.state().borrow().lua_errors);
     assert!(
         shown,
         "Clicking the Blacksmithing spell button should open ProfessionsFrame"
