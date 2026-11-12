@@ -7,7 +7,7 @@ Inline XML method calls must preserve Lua operand values, order, identity, and a
 - [x] Forward a global string, a color table, and a boolean as three distinct operands without expanding the table.
 - [x] Preserve reordered callback operands instead of substituting the callback's varargs.
 - [x] Preserve named parameter prefixes, including explicit `self` and optional varargs, during fast frame installation.
-- [ ] Preserve the existing true/false user-input flag through the pinned SliderWithButtonsAndLabelTemplate OnValueChanged script; retain the pinned msg and dress-model parameter names.
+- [x] Preserve the existing true/false user-input flag through the pinned SliderWithButtonsAndLabelTemplate OnValueChanged script; retain the pinned msg and dress-model parameter names.
 
 ## How it works
 
@@ -29,7 +29,7 @@ Inline XML method calls must preserve Lua operand values, order, identity, and a
 
 ## Known gaps (current cycle)
 
-Retail targeted regressions pass 3/3 at `d89725ba3`; final integration comparison remains in the lane handoff report.
+VERIFIED: Retail with `optional-tests` at `fddbfe16f` passes all 15 tooltip-sequence tests, all 176 XML-template tests, all 649 tooltip-filter tests, and all 2267 library tests in bounded partitions. The build has zero compiler warnings. Native AddLine overload handling remains outside this contract.
 
 ## Out of scope
 

@@ -20,7 +20,7 @@ The catch-all predicate no longer accepts arbitrary identifier operands. Simple 
 
 VERIFIED: a preservation test extracts the actual Slider child from pinned `SliderWithButtonsAndLabelTemplate`. It passes on master `ef798ed9c`, but fails on the initial parser correction with `user input flag lost`. The normal XML compiler previously omitted `userInput` from OnValueChanged's parameter list. The mapping now includes that name from `SharedUIPanelTemplates.xml:1404`, plus `msg` from `HelpFrame.xml:32` and `itemModifiedAppearanceID, invSlot, removed` from `DressUpFrames.xml:163`. Slider dispatch is unchanged: existing SetValue calls supply true for the supplied mouse-event flag, false for explicit or default code changes. UNKNOWN: broader undocumented callback signatures.
 
-The coordinator approved a separate master-assertion correction after the nil cause was established: keep the original test name and attribute, and use the five operands from the pinned RaidFrame consumer. Execution results are recorded in the lane handoff report, not inferred from source inspection.
+The coordinator approved a separate master-assertion correction after the nil cause was established: keep the original test name and attribute, and use the five operands from the pinned RaidFrame consumer. VERIFIED: `fddbfe16f` passes Retail optional-tests coverage of 15 tooltip sequences, 176 XML-template tests, 649 tooltip-filter tests and 2267 library tests, with zero compiler warnings. The exact target passes. Against `ef798ed9c`, the XML and tooltip filters remove only the original target failure; four new behavioral tests pass. Full output is in the private lane handoff report.
 
 ## Sources
 
