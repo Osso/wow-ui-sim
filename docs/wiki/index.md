@@ -8,6 +8,10 @@
 
 > Proof receipts live untracked under `~/.local/state/wow-ui-sim`. The `data/patch-api/evidence` and `data/test-perf/evidence` trees were removed on 2026-11-08; historical links below are records, not live paths. Recover a file with `git show c011c1d95:<path>`.
 
+## [2026-11-12] fix | Unit-test Blizzard UI cache isolation
+
+[Addon loading](systems/addon-loading.md#blizzard-ui-cache--per-profile-setup) records the concurrent Retail pin cache incident and the test-only startup hard error. Normal user startup keeps auto-sync; pin-versioned cache directories remain a design proposal.
+
 ## [2026-11-12] system | PvP talent tooltip catalog
 
 [Tooltip data](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) links the [PvP talent contract](../specs/tooltip-pvp-talent.md) and generated 407-row Retail catalog. **VERIFIED:** the installed CASC export is 12.1.5.70783 with zero unreadable PvpTalent and category rows; the exact tooltip tests pass. **UNKNOWN:** equivalence to selected build 12.1.5.70575 ; selected-slot host state is now covered by the R73 contract.

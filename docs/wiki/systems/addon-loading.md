@@ -4,6 +4,8 @@ The addon loading pipeline discovers addon directories, parses TOC files, loads 
 
 ## Blizzard UI cache & per-profile setup
 
+The `wow-sim` unit-test executable never auto-syncs missing or stale UI sources, including reload child processes. It reports the expected Retail/PTR pin and requires explicit cache preparation. The regression starts the original reload consumer in child processes with isolated stale and missing `XDG_CACHE_HOME` trees, then checks rejection and unchanged cache bytes. This prevents the 2026-11-12 incident in which concurrent unit tests from different pins rewrote the shared Retail cache. Normal user-facing startup still syncs. See the [cache-isolation contract](../../specs/casc-loading.md#unit-test-startup-cache-isolation). Profile cache directories are not yet pin-versioned.
+
 The Blizzard UI source isn't checked into this repo. Runtime loading reads the active profile from a user-cache tree:
 
 ```
@@ -27,7 +29,7 @@ wow-cli casc sync-blizzard-ui
 ./scripts/init-worktree.sh
 ```
 
-`scripts/init-worktree.sh` is the bootstrap for a fresh worktree: it syncs the active profile cache so startup, benchmarks, and tests can find Blizzard addon sources. Without the completed cache, or when required profile files are missing from an otherwise completed cache, startup re-runs the sync/reports the stale `~/.cache/wow-ui-sim/blizzard-ui/<profile>/AddOns` tree instead of falling back to repo-local symlinks.
+`scripts/init-worktree.sh` is the bootstrap for a fresh worktree: it syncs the active profile cache so startup, benchmarks, and tests can find Blizzard addon sources. Without the completed cache, or when required profile files are missing from an otherwise completed cache, normal non-test startup re-runs the sync/reports the stale `~/.cache/wow-ui-sim/blizzard-ui/<profile>/AddOns` tree instead of falling back to repo-local symlinks.
 
 Wrath uses the separate pinned source route described in [client profiles](client-profiles.md#runtime-cache), not CASC UI-source extraction. Asset CASC selection is unchanged.
 

@@ -3672,3 +3672,6 @@ Updated [Forever Login Startup](investigations/forever-login-startup.md#login-su
 ## [2026-11-12] implementation | R73 PvP talent annotations
 
 VERIFIED: [tooltip data](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) now uses shared supplied slot selections and R73 alternative annotation dispatch. Eight exact tests pass on Retail, including original slot hover and original list-template hover; the native virtualized-row realization is not claimed. The [contract](../specs/tooltip-pvp-talent.md) separates host seams, installed 70783 catalog provenance, inferred field names and UNKNOWN native predicates.
+## 2026-11-12 — Unit-test cache isolation
+
+Updated addon-loading and the CASC contract: unit-test startup must reject stale/missing UI caches without auto-sync; normal startup remains unchanged. Recorded the concurrent Retail-pin overwrite incident and isolated reload-child regression.
