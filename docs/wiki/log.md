@@ -1,3 +1,7 @@
+## [2026-11-12] implementation | Credits FileDataID validation
+
+Updated the [login contract](../specs/glue-login-flow.md#r65-credits-text-input-and-publication) and [startup investigation](investigations/forever-login-startup.md#r65-credits-validation-2026-11-12) with R65 validation, direct host file lookup and exact Forever string/empty/nil publication. PTR and Forever cached glue regressions retain only recorded baseline/cleanup failures; the original credits consumer passes. No network-backed file resolver or native fresh catalog is invented.
+
 ## [2026-11-12] clarification | Retail LoadWith evidence
 
 Updated the [login contract](../specs/glue-login-flow.md#r62-retail-chat-evidence-boundary) and [startup investigation](investigations/forever-login-startup.md) with comment115's Retail70688 reverse follower-list and post-own-file general-loader traversal. Forever/PTR and other startup requests for LOD targets remain unknown. Shared-loader code remains owned by the coordinator's separate lane; no implementation or test changes.

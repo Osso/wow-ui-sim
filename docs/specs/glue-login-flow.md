@@ -459,7 +459,7 @@ profiles' dock checks and every non-chat visibility/error/input assertion remain
 The coordinator owns shared-loader ordering deviations in a separate lane.
 
 
-### R63 pending credits inputs and capability evidence
+### R63 credits inputs and capability evidence
 
 Comment110 supplies PTR70668/Retail70688/Forever70707 evidence. PTR and Forever
 publish GetCreditsDisplayInfo in Game and Glue, and the file-data-ID text API
@@ -467,14 +467,12 @@ only in the direct Glue catalog. Retail requested-name registration remains
 unknown beyond absent exact image literals; its separate GetCreditsText is not
 substituted. Row publication preserves creditsFileID0 and empty strings, omits
 logo0, and distinguishes absent soundKit from present0. Native row data/order,
-fresh PTR list, unknown-ID text result, exceptional paths and text argument
-conversion remain UNKNOWN. Comment112 approves explicit host rows empty-by-default on both profiles; this
-is simulator policy, not fresh-Glue native state. Empty-list table shape is
-verified for Forever and inferred for PTR. No vanilla row is copied. The host
-text map accepts only the simulator's bounded integer-ID coverage pending R65;
-absent map entries return zero values by explicit neutral policy and are not
-asserted as native unknown-ID results. Unsupported argument diagnostics are
-coverage errors, not claims about native validation or the known Usage literal.
+fresh PTR list and exceptional paths remain UNKNOWN. Comment112 approves
+explicit host rows empty-by-default on both profiles, not fresh native state.
+Empty-list table shape is verified for Forever and inferred for PTR. No vanilla
+row is copied. R65 below supersedes the temporary text-map coverage boundary
+and neutral result with verified input validation and Forever publication.
+
 
 The five video capability bytes are separate from R60 high-resolution input.
 Verified image bytes project to inferred normal Boolean results. A host seam
@@ -493,8 +491,8 @@ not relabeled as a static native capability or widened to PTR.
 
 The original credits consumer fixture supplies rows/text before addon loading,
 without replaying OnLoad. Opening credits with an empty host catalog would call
-the text getter with nil at CreditsFrame.lua:112; that input remains an explicit
-coverage error pending R65, not a claim about native empty-list behavior.
+the text getter with nil at CreditsFrame.lua:112; R65 identifies this as a
+required-argument error. Native fresh row catalogs remain unknown.
 
 
 ### R65 credits text input and publication

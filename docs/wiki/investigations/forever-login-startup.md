@@ -182,9 +182,11 @@ notice. PTR/Forever share explicit host rows/text maps, empty by default as
 approved simulator policy. Row publication preserves zero and empty fields,
 except logo0 is omitted, and distinguishes absent soundKit from present0.
 Display registration covers Game/Glue; file-data-ID text registration covers
-Glue only. Native row data/order and fresh PTR state remain unknown. Pending
-R65, text input outside the bounded integer-ID seam is an explicit coverage
-error, and absent host-map IDs use the approved unasserted neutral result.
+Glue only. Native row data/order and fresh PTR state remain unknown. R65 now
+validates finite signed-int32 numbers/numeric strings with truncation and the
+verified Usage core. Direct host FileDataID lookup returns a string (including
+empty) or one nil for missing files; that publication is verified on Forever,
+while PTR follows the approved model without an exact native publisher claim.
 
 [Video capability bytes](../../../src/c_api/video_capabilities.rs) replaces
 modern placeholder answers with independent per-environment host bytes. Tests
@@ -208,6 +210,16 @@ the general loader with optional then required dependencies before own files.
 An early-exit Y submits none. Other startup requests for an LOD target and
 Forever/PTR LoadWith behavior remain unknown. The coordinator's separate loader
 lane owns the shared ordering deviations; this lane does not repair them.
+
+## R65 credits validation (2026-11-12)
+
+At d5eecb579, PTR glue is 140 passed/2 confirmed baseline failures, Forever is
+153 passed/11 unchanged baseline/cleanup-dependent failures, and the original
+Forever supplied-credits view/selector passes 1/1. All compile without warnings.
+Regression tests cover missing/nil and invalid input diagnostics, numeric-string
+acceptance, truncation, direct noncatalog file IDs, empty files and missing-file
+one-nil publication (the publication assertions are Forever-only). Native
+storage waiting and full publisher paths remain unknown; no file fetch occurs.
 
 ## Sources
 
