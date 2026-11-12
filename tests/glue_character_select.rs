@@ -124,6 +124,27 @@ fn forever_name_reservation_reads_feature_status_byte() {
 
 #[test]
 #[cfg(feature = "client-wowforever")]
+fn forever_trial_boost_status_defaults_false_on_glue() {
+    let env = WowLuaEnv::new().expect("create Lua environment");
+    env.set_screen_mode(ScreenKind::CharacterSelect);
+
+    let (return_count, is_boolean, enabled): (i32, bool, bool) = env
+        .eval(
+            r##"
+            local return_count = select("#", C_CharacterServices.IsTrialBoostEnabled())
+            local enabled = C_CharacterServices.IsTrialBoostEnabled()
+            return return_count, type(enabled) == "boolean", enabled
+            "##,
+        )
+        .expect("Forever Glue trial-boost status should be registered");
+
+    assert_eq!(return_count, 1);
+    assert!(is_boolean);
+    assert!(!enabled);
+}
+
+#[test]
+#[cfg(feature = "client-wowforever")]
 fn forever_name_reservation_default_is_false_on_glue() {
     let env = WowLuaEnv::new().expect("create Lua environment");
     env.set_screen_mode(ScreenKind::CharacterSelect);
