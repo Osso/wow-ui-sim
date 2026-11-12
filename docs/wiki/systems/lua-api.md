@@ -6,6 +6,8 @@ The Lua API layer bridges Lua addon code with the Rust simulation engine. It pro
 
 ## Tooltip data and merchant cursor presentation
 
+The [PvP talent tooltip contract](../../specs/tooltip-pvp-talent.md) owns the `GetPvpTalent` catalog inputs and native UNKNOWNs. **VERIFIED:** the [generated catalog provenance](../../../data/pvp-talents/retail-12.1.5.70783/provenance.json) records installed Retail build 12.1.5.70783; this does not establish parity with the selected 12.1.5.70575 runtime pin. Grant and eligibility outcomes remain host-supplied. A direct original `GameTooltip:SetPvpTalent` test covers the getter; selected-slot UI behavior waits for R73.
+
 [Bag-child tooltips](../../specs/tooltip-bag-child.md) compose bag state with
 source-derived child-equipment rows and the existing item builder on
 Retail/PTR/Forever. The item generator includes child IDs automatically; absent

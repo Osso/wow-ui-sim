@@ -18,6 +18,10 @@ pub enum LoadError {
     Toc(std::io::Error),
     Xml(crate::xml::XmlLoadError),
     Lua(String),
+    /// The requested addon is not present in the runtime addon sources.
+    Missing,
+    /// A required dependency is not present in the runtime addon sources.
+    DepMissing(String),
     /// Caller asked to load an addon whose dependency chain contains
     /// a disabled addon. Renders to exactly `"DEP_DISABLED"` so it can
     /// flow through `LoadAddOn`'s reason string unchanged. Tuple holds
@@ -62,6 +66,8 @@ impl std::fmt::Display for LoadError {
             LoadError::Toc(e) => write!(f, "TOC error: {}", e),
             LoadError::Xml(e) => write!(f, "XML error: {}", e),
             LoadError::Lua(e) => write!(f, "Lua error: {}", e),
+            LoadError::Missing => write!(f, "MISSING"),
+            LoadError::DepMissing(_) => write!(f, "DEP_MISSING"),
             LoadError::DepDisabled(_) => write!(f, "DEP_DISABLED"),
             LoadError::WrongActiveInterface => write!(f, "WRONG_ACTIVE_INTERFACE"),
             LoadError::DepWrongActiveInterface(_) => write!(f, "DEP_WRONG_ACTIVE_INTERFACE"),

@@ -47,8 +47,8 @@ fn assert_secret_setter_boundary(env: &WowLuaEnv) {
 
 // Retained RED: the duration core authenticates secret timing with the caller's
 // VM guard; no opaque rendering accessor exists. Do not clear taint to bypass it.
+#[cfg(feature = "optional-tests")]
 #[test]
-#[ignore = "pending opaque consumption of secret-bearing duration timing; see prose-2026-03-21-174"]
 fn patch_12_0_1_tainted_secret_duration_object() {
     let env = WowLuaEnv::new().unwrap();
     env.exec(
