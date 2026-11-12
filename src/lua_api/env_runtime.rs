@@ -178,6 +178,11 @@ impl WowLuaEnv {
         }
         install_screen_mode_globals(self, screen_kind);
         crate::c_api::c_character_creation::update_screen_registration(self, screen_kind);
+        #[cfg(feature = "client-wowforever")]
+        crate::lua_api::globals::real::name_reservation::update_screen_registration(
+            self,
+            screen_kind.is_glue(),
+        );
         crate::c_api::c_login::update_screen_registration(self, screen_kind);
         crate::c_api::c_district_utils::update_screen_registration(self, screen_kind.is_glue());
         crate::c_api::c_player_info_guid::update_screen_registration(self, screen_kind.is_glue());
@@ -315,7 +320,18 @@ impl WowLuaEnv {
         #[cfg(feature = "retail-12-0-5")]
         super::execution_budget::reset_frame_budgets(self.lua.borrow_mut().state_mut())?;
         crate::c_api::c_login::advance(self)?;
-        super::on_update::fire(self, elapsed)
+        let timings = super::on_update::fire(self, elapsed)?;
+        #[cfg(feature = "client-ptr")]
+        {
+            let pending = {
+                let mut sim = self.state.borrow_mut();
+                std::mem::take(&mut sim.actionbar_cooldown_update_pending)
+            };
+            if pending {
+                self.fire_event("ACTIONBAR_UPDATE_COOLDOWN")?;
+            }
+        }
+        Ok(timings)
     }
 
     /// Fire `EDIT_MODE_LAYOUTS_UPDATED` with layout info from `C_EditMode.GetLayouts()`.

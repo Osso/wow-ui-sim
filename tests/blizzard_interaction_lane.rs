@@ -236,30 +236,38 @@ fn popup_cluster_dep_edges_pin_load_floor_for_popup_flow() {
          would silently become a no-op"
     );
 
-    let expected_game_dependencies = if toc_layout::forever() {
-        vec![
-            "Blizzard_StaticPopup".to_string(),
-            "Blizzard_ItemButton".to_string(),
-            "Blizzard_AutoComplete".to_string(),
-            "Blizzard_MoneyFrame".to_string(),
-            "Blizzard_AccessibilityTemplates".to_string(),
-            "Blizzard_GameMenuEsc".to_string(),
-            "Blizzard_GamepadSharedUtility".to_string(),
+    let expected_game_deps: Vec<String> = if toc_layout::classic_cache() {
+        [
+            "Blizzard_StaticPopup",
+            "Blizzard_ItemButton",
+            "Blizzard_AutoComplete",
+            "Blizzard_MoneyFrame",
+            "Blizzard_AccessibilityTemplates",
         ]
+        .iter()
+        .map(|dependency| dependency.to_string())
+        .collect()
     } else {
-        vec![
+        let mut dependencies = vec![
             "Blizzard_StaticPopup".to_string(),
             "Blizzard_ItemButton".to_string(),
             "Blizzard_AutoComplete".to_string(),
             "Blizzard_MoneyFrame".to_string(),
             "Blizzard_AccessibilityTemplates".to_string(),
             "Blizzard_GameMenuEsc".to_string(),
-        ]
+        ];
+        if toc_layout::unified_toc_tree() {
+            // PTR/Forever StaticPopup_Game.toc:2 adds this dependency.
+            dependencies.push("Blizzard_GamepadSharedUtility".to_string());
+        }
+        dependencies
     };
     assert_eq!(
         game.dependencies(),
-        expected_game_dependencies,
-        "StaticPopup_Game dependencies must match the selected profile TOC"
+        expected_game_deps,
+        "StaticPopup_Game dependencies must match the active pinned TOC. PTR/Forever \
+         Blizzard_StaticPopup_Game.toc:2 adds Blizzard_GamepadSharedUtility. Got: {:?}",
+        game.dependencies()
     );
 
     assert_eq!(

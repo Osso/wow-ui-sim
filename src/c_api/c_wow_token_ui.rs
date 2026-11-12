@@ -34,6 +34,7 @@ pub fn set_feature_status(env: &WowLuaEnv, enabled: bool) -> crate::Result<()> {
 }
 
 fn should_display_in_auction_house(state: &mut LuaState) -> LuaResult<u32> {
+    // R22 verifies that PTR always displays the token entry, independent of updates.
     let should_display = if ACTIVE == ClientProfile::Ptr {
         true
     } else {

@@ -3,6 +3,8 @@ use super::click_targeting_full_ui::{
 };
 use crate::common;
 
+// PTR's selected UnitFrame TOC does not load ComboFrame.lua; Retail and classic profiles do.
+#[cfg(not(feature = "client-ptr"))]
 #[test]
 fn blizzard_player_world_entry_updates_combo_frame_from_target_power() {
     common::with_perf_lock(|| {

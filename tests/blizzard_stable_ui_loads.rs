@@ -6,6 +6,9 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -104,7 +107,12 @@ const VIRTUAL_TEMPLATES: &[&str] = &[
     "StablePetAbilityTemplate",
 ];
 
-const EXPECTED_BODY: &[&str] = &["Blizzard_StableUI.lua", "Blizzard_StableUI.xml"];
+const RETAIL_EXPECTED_BODY: &[&str] = &["Blizzard_StableUI.lua", "Blizzard_StableUI.xml"];
+const UNIFIED_EXPECTED_BODY: &[&str] = &[
+    "Shared/Blizzard_StableUI_Shared.lua",
+    "Standard/Blizzard_StableUI.lua",
+    "Standard/Blizzard_StableUI.xml",
+];
 const FOREVER_EXPECTED_BODY: &[&str] = &[
     "Shared/Blizzard_StableUI_Shared.lua",
     "Camelot/Blizzard_StableUI.lua",
@@ -272,15 +280,19 @@ fn body_lists_lua_before_xml_for_mixin_resolution() {
         .map(|p| p.to_string_lossy().to_string())
         .collect();
 
-    let expected_body = if cfg!(feature = "client-wowforever") {
+    let expected_body = if toc_layout::forever() {
         FOREVER_EXPECTED_BODY
+    } else if toc_layout::unified_toc_tree() {
+        // PTR StableUI.toc selects shared Lua then Standard Lua/XML.
+        UNIFIED_EXPECTED_BODY
     } else {
-        EXPECTED_BODY
+        RETAIL_EXPECTED_BODY
     };
     assert_eq!(
         body.len(),
         expected_body.len(),
-        "selected profile body entries must match its TOC: {body:?}"
+        "StableUI body must match the active profile TOC, including its selected family path: \
+         {body:?}"
     );
 
     for (i, want) in expected_body.iter().enumerate() {
@@ -300,7 +312,8 @@ fn body_lists_lua_before_xml_for_mixin_resolution() {
             .enumerate()
             .filter(|(_, path)| path.ends_with(".lua"))
             .all(|(index, _)| index < xml_index),
-        "every selected Lua mixin source must load before XML registration: {body:?}"
+        "Every Lua mixin source must load before XML registration so the StableFrameMixin \
+         and virtual-template mixins exist when XML templates are registered: {body:?}"
     );
 }
 }

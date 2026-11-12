@@ -365,20 +365,48 @@ fn family_placeholder_resolves_to_mainline_directory() {
 
 post_wrath_ui_fixture! {
 #[test]
-fn game_placeholder_resolves_to_active_profile_variant() {
+fn game_placeholder_resolves_to_standard_directory() {
+    let toc = TocFile::from_file(&unit_popup_toc()).expect("UnitPopup TOC parses");
+    let body: Vec<String> = toc
+        .files
+        .iter()
+        .map(|path| path.to_string_lossy().replace('\\', "/"))
+        .collect();
+
+    if toc_layout::ptr() {
+        // PTR TOC:11,14 selects Family/Mainline files; :12,15 filter the
+        // Standard-only Game files out of the active mainline body.
+        for relative in ["Mainline/UnitPopupButtons.lua", "Mainline/UnitPopupMenus.lua"] {
+            assert!(unit_popup_dir().join(relative).is_file(), "missing {relative}");
+            assert!(body.iter().any(|entry| entry == relative));
+        }
+        assert!(!body.iter().any(|entry| entry.starts_with("Standard/")));
+        return;
+    }
+
     if toc_layout::forever() {
-        // Forever's TOC selects [Game] UnitPopupMenus.lua for camelot.
-        let toc = TocFile::from_file(&unit_popup_toc()).expect("TOC parses");
+        // Forever keeps Mainline buttons and resolves its Camelot game menu separately.
+        for relative in [
+            "Mainline/UnitPopupButtons.lua",
+            "Mainline/UnitPopupMenus.lua",
+            "Camelot/UnitPopupMenus.lua",
+        ] {
+            assert!(unit_popup_dir().join(relative).is_file(), "missing {relative}");
+        }
         assert!(
             toc.files.contains(&PathBuf::from("Camelot/UnitPopupMenus.lua")),
             "Forever [Game] menu entry must resolve to Camelot"
         );
         assert!(
-            !toc.files
-                .iter()
-                .any(|path| path.starts_with("Standard/")),
+            !toc.files.iter().any(|path| path.starts_with("Standard/")),
             "Forever does not select Standard [Game] paths"
         );
+        return;
+    }
+
+    if toc_layout::classic_cache() {
+        assert!(!body.iter().any(|entry| entry.starts_with("Standard/")));
+
         return;
     }
 
@@ -386,10 +414,17 @@ fn game_placeholder_resolves_to_active_profile_variant() {
         let resolved = unit_popup_dir().join(relative);
         assert!(
             resolved.is_file(),
-            "`[Game]` placeholder must resolve to existing Standard\\ \
-             body file at {resolved:?} for this profile"
+            "`[Game]` placeholder must resolve to existing Standard body file at \
+             {resolved:?} for this profile"
         );
     }
+}
+}
+
+post_wrath_ui_fixture! {
+#[test]
+fn game_placeholder_resolves_to_active_profile_variant() {
+    game_placeholder_resolves_to_standard_directory();
 }
 }
 

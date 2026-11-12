@@ -80,17 +80,58 @@ pub(crate) fn update_queued_upgrade_registration(
     screen_kind: crate::screen::ScreenKind,
 ) -> LuaResult<()> {
     let namespace = ensure_namespace(state, "C_CharacterServices")?;
-    if screen_kind.is_glue()
+    let should_register_queued_upgrade = screen_kind.is_glue()
         && matches!(
             ACTIVE,
             ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
-        )
-    {
-        table_set_rust_fn_static(state, namespace, "HasQueuedUpgrade", has_queued_upgrade)
+        );
+    if should_register_queued_upgrade {
+        table_set_rust_fn_static(state, namespace, "HasQueuedUpgrade", has_queued_upgrade)?;
     } else {
         table_set(state, Val::Table(namespace), "HasQueuedUpgrade", Val::Nil);
+    }
+
+    if ACTIVE == ClientProfile::WowForever {
+        update_trial_boost_registration(state, namespace, screen_kind.is_glue())?;
+    }
+
+    Ok(())
+}
+
+fn update_trial_boost_registration(
+    state: &mut LuaState,
+    namespace: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
+    is_glue: bool,
+) -> LuaResult<()> {
+    if is_glue {
+        table_set_rust_fn_static(
+            state,
+            namespace,
+            "IsTrialBoostEnabled",
+            is_trial_boost_enabled,
+        )
+    } else {
+        table_set(
+            state,
+            Val::Table(namespace),
+            "IsTrialBoostEnabled",
+            Val::Nil,
+        );
         Ok(())
     }
+}
+
+fn is_trial_boost_enabled(state: &mut LuaState) -> LuaResult<u32> {
+    // The nonzero path also needs service-table data that the simulator does not model.
+    let status_byte = borrow_state(state)?.name_reservation_feature_status;
+    if status_byte != 0 {
+        return Err(rilua::runtime_error(
+            "C_CharacterServices.IsTrialBoostEnabled is unmodelled for nonzero feature status",
+        ));
+    }
+
+    state.push(Val::Bool(false));
+    Ok(1)
 }
 
 fn get_active_character_upgrade_boost_type(state: &mut LuaState) -> LuaResult<u32> {

@@ -17,6 +17,9 @@ if type(C_CharacterCreation) ~= "table" then
     C_CharacterCreation = {}
 end
 
+local publishRacialAbilities = rawget(_G, "__wow_character_create_publish_racial_abilities") == true
+rawset(_G, "__wow_character_create_publish_racial_abilities", nil)
+
 local races = rawget(_G, "__wow_character_create_races")
 if type(races) ~= "table" then
     races = {
@@ -88,10 +91,34 @@ local function customization_option_type(kind)
     return 0
 end
 
+local function publish_racial_abilities(abilities)
+    if abilities == nil then
+        return {}
+    end
+
+    local published = {}
+    for index, ability in ipairs(abilities) do
+        published[index] = {
+            description = ability.description,
+            name = ability.name,
+            icon = ability.icon ~= 0 and ability.icon or nil,
+        }
+    end
+    return published
+end
+
+local function publish_race_data(raceData)
+    local published = clone_table(raceData)
+    if publishRacialAbilities then
+        published.racialAbilities = publish_racial_abilities(raceData.racialAbilities)
+    end
+    return published
+end
+
 local function find_race(raceID)
     for _, raceData in ipairs(races) do
         if raceData.raceID == raceID then
-            return clone_table(raceData)
+            return publish_race_data(raceData)
         end
     end
     return nil
@@ -372,7 +399,7 @@ end
 function C_CharacterCreation.GetAvailableRaces()
     local out = {}
     for index, raceData in ipairs(races) do
-        out[index] = clone_table(raceData)
+        out[index] = publish_race_data(raceData)
     end
     return out
 end
@@ -540,6 +567,9 @@ end
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
+        lua.exec("rawset(_G, '__wow_character_create_publish_racial_abilities', true)")?;
+    }
     lua.exec(CHARACTER_CREATION_NAMESPACE_DEFAULTS_LUA)?;
     crate::c_api::c_character_creation_seen::install(lua)?;
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {

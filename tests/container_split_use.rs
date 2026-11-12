@@ -74,9 +74,9 @@ fn assert_split(env: &WowLuaEnv) {
         cursor(env),
         Some((ITEM, 2, CursorItemOrigin::Bag { bag: 0, slot: 3 }))
     );
-    // Retail mode 1 projects the item link third (WM46); other profiles keep
-    // the simulator's stack count.
-    let third = if cfg!(feature = "client-retail") {
+    // Retail and PTR mode 1 project the item link third (WM46, R29); other
+    // profiles keep the simulator's stack count.
+    let third = if cfg!(any(feature = "client-retail", feature = "client-ptr")) {
         "third == select(2, C_Item.GetItemInfo(id))"
     } else {
         "third == 2"

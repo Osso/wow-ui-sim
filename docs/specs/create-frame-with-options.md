@@ -18,6 +18,11 @@ PTR `CreateFrameWithOptions(options)` constructs a frame from a structured argum
 - [x] Run template OnLoad before initial OnShow. Hidden frames and frames under hidden parents do not receive an initial OnShow; later Show uses normal visibility dispatch.
 - [ ] `forbidden=true` sets the frame flag; false does not clear restrictions inherited from its parent or existing loading scope. This is flag state, not security enforcement.
 
+### PTR native evidence — R24 StaticPopup path
+
+- [x] For the tested StaticPopup template path, the simulator reports a failing `OnLoad` to the installed handler and returns the partial `CreateFrame` frame. The regression test asserts this behavior; R24 labels the native end-to-end return INFERRED from VERIFIED protected dispatch, handler routing and frame publication.
+- [x] ParentKey children are assigned before `OnLoad`, and visibility/`OnShow` processing follows it without an `OnLoad`-success gate. R24 marks these orderings VERIFIED; the test also asserts that pre-error state persists, later handler statements do not run, and a visible options-created frame receives `OnShow`.
+
 ### Simulator validation policy — not native coercion/error evidence
 
 - [x] Reject malformed options before registering a frame: non-table input, missing/invalid frame type, non-string name, invalid parent, non-boolean flags, nonfinite/fractional/out-of-range i32 ID, and non-dense or non-string inheritance arrays.
@@ -39,11 +44,13 @@ PTR `CreateFrameWithOptions(options)` constructs a frame from a structured argum
 ## Tests asserting this spec
 
 - `src/loader/tests/wow_api_globals/patch_12_1_5_create_frame_options.rs` — constructor identity, ordered templates, flags/lifecycle, malformed inputs, and retail positional regression.
+- `tests/blizzard_static_popup_game_loads.rs::create_frame_onload_error_reports_and_preserves_partial_template` — PTR positional/options template OnLoad error reporting, partial state, parentKeys, visibility and `OnShow`.
 
 ## Known gaps (current cycle)
 
-- [ ] Native validation, nil-parent defaults and lifecycle ordering require a real PTR probe; tests establish the simulator choices above only.
-- [ ] Reentrant creation/Show/Hide inside OnLoad, template child event ordering, and handler-error recovery are not established by this slice.
+- [ ] Native validation and nil-parent defaults require a real PTR probe; R24 covers only the StaticPopup OnLoad-error path.
+- [ ] Native error parity for `CreateFrameWithOptions` is inferred from the shared simulator lifecycle; R24 directly inspected ordinary `CreateFrame`, not this options entry point.
+- [ ] Reentrant creation/Show/Hide inside OnLoad and template child event ordering are not established by this slice.
 
 ## Out of scope
 

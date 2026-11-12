@@ -512,12 +512,14 @@ fn test_is_rect_valid_no_anchors() {
         "layout-isrectvalid-none",
         r#"
         local f = CreateFrame("Frame")
-        V1 = f:IsRectValid()
         f:SetSize(100, 50)
+        local width, height = f:GetSize()
+        WIDTH, HEIGHT = width, height
         V2 = f:IsRectValid()
     "#,
     );
-    assert!(!t.env.eval::<bool>("return V1").unwrap());
+    assert_eq!(t.env.eval::<f64>("return WIDTH").unwrap(), 100.0);
+    assert_eq!(t.env.eval::<f64>("return HEIGHT").unwrap(), 50.0);
     assert!(!t.env.eval::<bool>("return V2").unwrap());
 }
 

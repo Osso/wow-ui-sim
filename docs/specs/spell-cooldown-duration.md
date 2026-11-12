@@ -6,10 +6,10 @@
 
 - [x] On retail 12.0.0+, resolve numeric identifiers and seeded case-insensitive aliases through the same identifier model as `GetSpellIDForSpellIdentifier`.
 - [x] Snapshot the existing spell/GCD selector's interval into a duration with rate 1 and the runtime clock, consistently with numeric `GetSpellCooldown` results.
-- [x] Return zero timing for an inactive numeric identifier and nil for an unresolved string alias; these are explicit simulator policies.
+- [x] Before R17 behavior, preserve the simulator's bounded policy: inactive numeric identifiers yield zero timing and unresolved string aliases yield nil.
 - [x] Keep an earlier object's configured interval unchanged after cooldown or alias updates; new queries reflect current state.
 - [x] Preserve the nil result on profiles earlier than Retail 12.0.0 rather than installing the new producer there; Forever is not an earlier profile for this API.
-- [ ] On R17 Forever/Retail 12.1.5, reject missing and non-number/non-string required identifiers, return zero Lua values for valid unknown identifiers, and return a zero LuaDurationObject for a known supported spell with no active cooldown. `ignoreGCD` accepts nil/false/true and its true path may return the zero object. The general cooldown/GCD selection and error-message text remain bounded simulator behavior unless separately proven.
+- [x] On R17 profiles (Forever 1.60.1, Retail 12.1.5 and PTR 12.1.7), reject missing, nil and non-number/non-string required identifiers; return zero Lua values for valid unknown numeric/name identifiers; and return a zero `LuaDurationObject` for a known supported spell with no active cooldown, including with `ignoreGCD=true`. The 12.1.7 PTR matches R17. General active cooldown/GCD selection and exact error text remain bounded simulator behavior unless separately proven.
 
 ## 12.0.5 ignoreGCD contract (GREEN pending)
 
@@ -37,13 +37,13 @@ Retained `data/patch-api/sources/12.0.5-api-changes.txt:306–307` adds arg2 `ig
 
 ## Tests asserting this spec
 
-`tests/cooldown_probes.rs::get_spell_cooldown_duration_*` covers the modeled 12.0.0 behavior and earlier-profile control. `tests/cooldown_probes/forever_duration.rs::forever_spell_cooldown_duration_distinguishes_missing_inactive_and_active` covers the R17 Forever surface, unknown result arity, invalid argument types, active supplied timing, and supported inactive object. Existing evidence for earlier Retail/Mists remains historical and does not prove native 12.1.5 parity.
+`tests/cooldown_probes.rs::get_spell_cooldown_duration_*` covers the modeled 12.0.0 behavior and earlier-profile control; its R17 assertions cover unknown result arity, invalid selectors, numeric-string/fraction inputs, and inactive objects with `ignoreGCD=true`. `tests/cooldown_probes/forever_duration.rs::forever_spell_cooldown_duration_distinguishes_missing_inactive_and_active` covers the R17 Forever surface. Existing earlier Retail/Mists evidence remains profile-specific and does not prove native 12.1.5 parity.
 
 Existing `tests/c_spell_flyout_probes.rs` covers shared identifier lookup. Existing action duration cases cover the moved construction path.
 
 ## Known gaps (current cycle)
 
-- [ ] Native cooldown interval selection, GCD precedence, snapshot clock/lifetime, secrecy, exact error rendering, spell-name aliases, and all spell-link forms remain unverified. R17 covers parser types and normal-result categories, not every resolver or timing branch.
+- [ ] Native cooldown interval selection, GCD precedence, snapshot clock/lifetime, secrecy, exact error rendering, real spell-name discovery and all spell-link forms remain unverified. R17 covers parser types and normal-result categories, not every resolver or timing branch.
 - [ ] Real Blizzard-consumer acceptance is not established by seeded API fixtures.
 
 ## Out of scope

@@ -359,7 +359,8 @@ fn forever_known_startup_names_preserve_other_profile_registration_policy() {
         feature = "client-era",
         feature = "client-anniversary"
     ));
-    // Retail 12.1.5 adds the age-verification event; the other four remain Forever-only.
+    // PTR 12.1.7 APIDocumentation declares all five: System:85-90, PvpInfo:1385-1390,
+    // SocialRestrictions:120-125, VoiceChat:918-923 and :1397-1402.
     for event in [
         "ALERT_AGE_VERIFICATION_RESTRICTED",
         "GLOBAL_REGION_MOUSE_DOWN",
@@ -380,7 +381,8 @@ fn forever_known_startup_names_preserve_other_profile_registration_policy() {
             .unwrap();
         let retail_age_verification =
             cfg!(feature = "retail-12-1-5") && event == "ALERT_AGE_VERIFICATION_RESTRICTED";
-        let expected = permissive_classic || retail_age_verification;
+        let ptr_documented_event = cfg!(feature = "client-ptr");
+        let expected = permissive_classic || retail_age_verification || ptr_documented_event;
         assert_eq!(accepted, expected, "{event}: registration policy");
         assert_eq!(registered, expected, "{event}: listener state");
         assert!(

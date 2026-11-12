@@ -526,28 +526,32 @@ fn family_placeholder_resolves_to_profile_selected_subdirs() {
             }
         })
         .collect();
-    let expected_mainline_files: &[&str] = if cfg!(feature = "client-wowforever") {
-        // Forever selects Camelot NewDefinitions; the three [Family] files remain Mainline.
-        &[
+    let mut expected_mainline_files = if toc_layout::forever() {
+        // Forever selects Camelot NewDefinitions; the [Family] overrides stay Mainline.
+        vec![
             "Mainline/Blizzard_SettingsPanelTemplates.xml",
             "Mainline/GraphicsOverrides.lua",
             "Mainline/AudioOverrides.lua",
         ]
     } else {
-        &[
+        vec![
             "Mainline/NewDefinitions.lua",
             "Mainline/Blizzard_SettingsPanelTemplates.xml",
             "Mainline/GraphicsOverrides.lua",
             "Mainline/AudioOverrides.lua",
         ]
     };
+    if toc_layout::ptr() {
+        // PTR Blizzard_Settings_Shared.toc adds the Mainline language override.
+        expected_mainline_files.push("Mainline/LanguagesOverrides.lua");
+    }
     assert_eq!(
         mainline_files.len(),
         expected_mainline_files.len(),
-        "profile-selected Mainline entries must match the TOC: {mainline_files:?}"
+        "profile-selected Mainline entries must match the active TOC: {mainline_files:?}"
     );
 
-    for expected in expected_mainline_files {
+    for expected in expected_mainline_files.iter() {
         assert!(
             mainline_files.iter().any(|file| file.as_str() == *expected),
             "Mainline body entry {expected} must be present after normalization"
@@ -560,6 +564,13 @@ fn family_placeholder_resolves_to_profile_selected_subdirs() {
             "Forever selects the Camelot NewDefinitions.lua entry"
         );
     }
+}
+}
+
+post_wrath_ui_fixture! {
+#[test]
+fn family_placeholder_resolves_to_mainline_subdir_in_three_entries() {
+    family_placeholder_resolves_to_profile_selected_subdirs();
 }
 }
 

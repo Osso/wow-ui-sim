@@ -8,13 +8,12 @@ use wow_ui_sim::toc::TocFile;
 #[path = "common/toc_layout.rs"]
 mod toc_layout;
 
-// The pinned PTR 12.1.7 manifest no longer ships this classic-only addon, so
-// its TOC/XML content assertions apply to the profiles that do ship it.
+// PTR/Forever pinned AddOns caches omit the legacy Reforging addon directory.
 fn reforging_ui_absent_from_active_cache() -> bool {
     if toc_layout::unified_toc_tree() {
         assert!(
             !reforging_ui_dir().exists(),
-            "Pinned PTR/Forever manifest must not ship the classic-only Blizzard_ReforgingUI"
+            "The PTR/Forever pinned AddOns cache has no Blizzard_ReforgingUI directory"
         );
         true
     } else {

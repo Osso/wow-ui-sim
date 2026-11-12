@@ -46,7 +46,8 @@ impl WidgetRegistry {
 
     /// Queue layout for an anchor edit without marking it visually dirty.
     pub fn mark_anchor_rect_dirty(&mut self, id: u64) {
-        if self.widgets.contains_key(&id) {
+        if let Some(frame) = self.widgets.get_mut(&id) {
+            frame.anchor_invalidated = true;
             self.rect_dirty_ids.insert(id);
             self.hit_grid_dirty_ids.insert(id);
         }

@@ -650,28 +650,32 @@ fn blizzard_raid_ui_registers_extra_events_on_raid_frame(env: &WowLuaEnv) {
 }
 
 #[test]
-fn raid_ui_lua_loads_before_xml_for_active_profile() {
-    if cfg!(feature = "client-wowforever") {
-        // The Forever cache TOC lists [Family] Lua and XML entries directly
-        // (Blizzard_RaidUI.toc:5-7), so XML does not need a Script directive.
-        let toc = TocFile::from_file(&raid_ui_toc()).expect("TOC parses");
-        let files: Vec<String> = toc
+fn blizzard_raid_ui_xml_pulls_lua_via_script_directive() {
+    if toc_layout::classic_cache() {
+        // Mists Blizzard_RaidUI.toc:8-9 selects the Mists XML, not Mainline XML.
+        return;
+    }
+    if toc_layout::unified_toc_tree() {
+        // PTR/Forever Blizzard_RaidUI.toc:5-6 lists Mainline Lua before XML.
+        let body: Vec<String> = TocFile::from_file(&raid_ui_toc())
+            .expect("RaidUI TOC parses")
             .files
             .iter()
-            .map(|path| path.to_string_lossy().into_owned())
+            .map(|path| path.to_string_lossy().replace('\\', "/"))
             .collect();
-        let lua_index = files
+        let lua = body
             .iter()
             .position(|path| path == "Mainline/Blizzard_RaidUI.lua")
-            .expect("Forever TOC lists the [Family] Lua file");
-        let xml_index = files
+            .expect("TOC lists Mainline Lua directly");
+        let xml = body
             .iter()
             .position(|path| path == "Mainline/Blizzard_RaidUI.xml")
-            .expect("Forever TOC lists the [Family] XML file");
+            .expect("TOC lists Mainline XML directly");
         assert!(
-            lua_index < xml_index,
-            "Forever Lua must load before XML: {files:?}"
+            lua < xml,
+            "PTR/Forever TOC must load Lua before XML: {body:?}"
         );
+
         return;
     }
 
@@ -683,7 +687,11 @@ fn raid_ui_lua_loads_before_xml_for_active_profile() {
     let xml = std::fs::read_to_string(&xml_path).expect("XML reads utf-8");
     assert!(
         xml.contains(r#"<Script file="Blizzard_RaidUI.lua"/>"#),
-        "Blizzard_RaidUI.xml must include `<Script file=\"Blizzard_RaidUI.lua\"/>` \
-         at the top — the XML-driven Lua-loading pattern"
+        "Retail XML loads its companion Lua through a Script directive"
     );
+}
+
+#[test]
+fn raid_ui_lua_loads_before_xml_for_active_profile() {
+    blizzard_raid_ui_xml_pulls_lua_via_script_directive();
 }

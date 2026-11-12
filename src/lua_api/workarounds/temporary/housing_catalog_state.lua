@@ -518,7 +518,9 @@ local function __wow_housing_copy_market_info(decor_id)
 end
 
 C_CatalogShop = __wow_merge_namespace(C_CatalogShop, {
-  IsShop2Enabled = function() return false end,
+  -- PTR/Retail register the R38 server-backed query before this workaround.
+  IsShop2Enabled = (C_CatalogShop and rawget(C_CatalogShop, "IsShop2Enabled"))
+    or function() return false end,
   HasNewProducts = function() return false end,
   GetAvailableCategoryIDs = function() return { __wow_housing_all_category_id, 101 } end,
   GetProductIDsForCategory = function(categoryID)

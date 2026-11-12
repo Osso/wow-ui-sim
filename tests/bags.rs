@@ -110,7 +110,26 @@ fn assert_no_bag_open_errors(env: &WowLuaEnv, context: &str) {
     );
 }
 
-#[cfg(not(feature = "client-wrath"))]
+#[cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
+// VERIFIED source: Retail Mainline declares frames 1-6; PTR and Forever declare 1-7.
+fn expected_container_frame_count() -> i32 {
+    match wow_ui_sim::client_profile::ACTIVE {
+        wow_ui_sim::client_profile::ClientProfile::Retail => 6,
+        wow_ui_sim::client_profile::ClientProfile::Ptr
+        | wow_ui_sim::client_profile::ClientProfile::WowForever => 7,
+        _ => unreachable!("container frame array test is Mainline-only"),
+    }
+}
+
+#[cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
 #[test]
 fn test_container_frames_registered() {
     let env = setup_env();
@@ -127,19 +146,14 @@ fn test_container_frames_registered() {
         "#,
         )
         .unwrap();
-    let expected_frames = if cfg!(feature = "client-wowforever") {
-        // Forever ContainerFrame.xml declares ContainerFrame1 through 7 (lines 298-304).
-        7
-    } else {
-        6
-    };
+    let expected_count = expected_container_frame_count();
     assert_eq!(
-        count, expected_frames,
-        "ContainerFrameContainer.ContainerFrames should match the active profile source"
+        count, expected_count,
+        "ContainerFrameContainer.ContainerFrames should match the selected profile source"
     );
 
     // Check individual frames exist
-    for i in 1..=expected_frames {
+    for i in 1..=expected_count {
         let exists: bool = env
             .eval(&format!("return ContainerFrame{i} ~= nil"))
             .unwrap();
@@ -147,7 +161,11 @@ fn test_container_frames_registered() {
     }
 }
 
-#[cfg(not(feature = "client-wrath"))]
+#[cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
 #[test]
 fn test_container_frames_array_contains_only_real_container_frames() {
     let env = setup_env();
@@ -168,17 +186,14 @@ fn test_container_frames_array_contains_only_real_container_frames() {
         )
         .unwrap();
 
-    let expected_frames = if cfg!(feature = "client-wowforever") {
-        7
-    } else {
-        6
-    };
-    let expected: Vec<String> = (1..=expected_frames)
+    let expected_count = expected_container_frame_count();
+    let expected_names: Vec<String> = (1..=expected_count)
         .map(|index| format!("{index}=ContainerFrame{index}"))
         .collect();
+
     assert_eq!(
-        names, expected,
-        "ContainerFrameContainer.ContainerFrames should match the active profile source"
+        names, expected_names,
+        "ContainerFrameContainer.ContainerFrames should match the selected profile source"
     );
 }
 

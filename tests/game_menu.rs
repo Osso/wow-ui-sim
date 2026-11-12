@@ -5,6 +5,7 @@
 //! vertically, and lives in the DIALOG strata.
 
 use crate::common::game_menu_fixture::setup_game_menu_env;
+use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
 
 /// Enumerate native buttons without installing a pool or changing vendor frames.
 fn menu_button_chunk(code: &str) -> String {
@@ -419,6 +420,7 @@ fn test_game_menu_hide() {
 }
 
 post_wrath_ui_fixture! {
+#[cfg(any(feature = "client-ptr", feature = "client-retail"))]
 #[test]
 fn test_game_menu_shop_button_opens_store_and_menu_can_reopen_after_store_closes() {
     test_timeout! {
@@ -436,8 +438,7 @@ fn test_game_menu_shop_button_opens_store_and_menu_can_reopen_after_store_closes
 
                 local shopButton
                 for button in menu_buttons() do
-                    local text = button:GetText()
-                    if text == BLIZZARD_STORE then
+                    if button:GetText() == BLIZZARD_STORE then
                         shopButton = button
                         break
                     end
@@ -483,12 +484,43 @@ fn test_game_menu_shop_button_opens_store_and_menu_can_reopen_after_store_closes
                         return "menu-reopened-only-after-toggle"
                     end
                 end
-
                 return "ok"
                 "#))
             .unwrap();
 
         assert_eq!(result, "ok");
+    }
+}
+}
+
+post_wrath_ui_fixture! {
+#[cfg(any(feature = "client-ptr", feature = "client-retail"))]
+#[test]
+fn store_api_defaults_follow_profile_game_menu_gate() {
+    test_timeout! {
+        let env = setup_game_menu_env();
+        let result: (i64, bool, i64, bool, bool) = env
+            .eval(&menu_button_chunk(r#"
+                GameMenuFrame:Show()
+                local hasShopButton = false
+                for button in menu_buttons() do
+                    if button:GetText() == BLIZZARD_STORE then
+                        hasShopButton = true
+                    end
+                end
+                return select('#', C_StorePublic.IsEnabled()),
+                    C_StorePublic.IsEnabled(),
+                    select('#', C_CatalogShop.IsShop2Enabled()),
+                    C_CatalogShop.IsShop2Enabled(),
+                    hasShopButton
+            "#))
+            .unwrap();
+
+        assert_eq!((result.0, result.1), (1, false), "R38 StorePublic default");
+        assert_eq!((result.2, result.3), (1, true), "R38 Shop 2 default");
+        // Retail uses OR; PTR uses AND. The false/true defaults are source-backed.
+        let default_store_button_visible = ACTIVE == ClientProfile::Retail;
+        assert_eq!(result.4, default_store_button_visible);
     }
 }
 }
@@ -515,17 +547,15 @@ fn ptr_default_shop_settings_hide_game_menu_store_button() {
                 return C_StorePublic.IsEnabled(), C_CatalogShop.IsShop2Enabled(), hasShopButton
             "#))
             .unwrap();
-
-        // PTR GameMenuFrame.lua:198-204 requires both store flags.
         assert_eq!(result, (false, true, false));
     }
 }
 }
 
 post_wrath_ui_fixture! {
-#[cfg(feature = "client-ptr")]
+#[cfg(any(feature = "client-ptr", feature = "client-retail"))]
 #[test]
-fn ptr_store_status_change_rebuilds_menu_shop_button() {
+fn store_status_change_obeys_profile_game_menu_gate() {
     test_timeout! {
         let env = setup_game_menu_env();
         env.set_server_mirrored_cvar("bpayStoreEnable", "0")
@@ -541,7 +571,23 @@ fn ptr_store_status_change_rebuilds_menu_shop_button() {
                 return false
             "#))
             .unwrap();
-        assert!(!initially_visible);
+        let default_store_button_visible = ACTIVE == ClientProfile::Retail;
+        assert_eq!(initially_visible, default_store_button_visible);
+        env.exec(r#"
+            StoreEventCounts = { status = 0, cvar = 0, payloads = -1 }
+            local listener = CreateFrame("Frame")
+            listener:RegisterEvent("STORE_STATUS_CHANGED")
+            listener:RegisterEvent("CVAR_UPDATE")
+            listener:SetScript("OnEvent", function(_, event, ...)
+                if event == "STORE_STATUS_CHANGED" then
+                    StoreEventCounts.status = StoreEventCounts.status + 1
+                    StoreEventCounts.payloads = select('#', ...)
+                elseif event == "CVAR_UPDATE" then
+                    StoreEventCounts.cvar = StoreEventCounts.cvar + 1
+                end
+            end)
+        "#)
+        .unwrap();
 
         env.set_server_mirrored_cvar("bpayStoreEnable", "1")
             .unwrap();
@@ -553,7 +599,11 @@ fn ptr_store_status_change_rebuilds_menu_shop_button() {
                 return false
             "#))
             .unwrap();
+        let after_enable: (i64, i64, i64) = env
+            .eval("return StoreEventCounts.status, StoreEventCounts.payloads, StoreEventCounts.cvar")
+            .unwrap();
         assert!(enabled_visible);
+        assert_eq!(after_enable, (1, 0, 0));
 
         env.set_server_mirrored_cvar("bpayStoreEnable", "0")
             .unwrap();
@@ -565,7 +615,64 @@ fn ptr_store_status_change_rebuilds_menu_shop_button() {
                 return false
             "#))
             .unwrap();
-        assert!(!disabled_visible);
+        assert_eq!(disabled_visible, default_store_button_visible);
+        let after_disable: (i64, i64, i64) = env
+            .eval("return StoreEventCounts.status, StoreEventCounts.payloads, StoreEventCounts.cvar")
+            .unwrap();
+        assert_eq!(after_disable, (2, 0, 0));
+
+        env.set_server_mirrored_cvar("shop2Enabled", "0")
+            .unwrap();
+        let shop2_disabled: (bool, bool) = env
+            .eval("return C_StorePublic.IsEnabled(), C_CatalogShop.IsShop2Enabled()")
+            .unwrap();
+        assert_eq!(shop2_disabled, (false, false));
+        env.set_server_mirrored_cvar("shop2Enabled", "1")
+            .unwrap();
+        let shop2_enabled: (bool, bool) = env
+            .eval("return C_StorePublic.IsEnabled(), C_CatalogShop.IsShop2Enabled()")
+            .unwrap();
+        assert_eq!(shop2_enabled, (false, true));
+        let hidden_values: (bool, bool) = env
+            .eval(
+                "return C_CVar.GetCVar('bpayStoreEnable') ~= '0', \
+                 C_CVar.GetCVar('shop2Enabled') ~= '1'",
+            )
+            .unwrap();
+        // VERIFIED refusal; the exact hidden-value return shape is UNKNOWN.
+        assert_eq!(hidden_values, (true, true));
+        let after_shop2: (i64, i64) = env
+            .eval("return StoreEventCounts.status, StoreEventCounts.cvar")
+            .unwrap();
+        assert_eq!(after_shop2, (2, 0));
+    }
+}
+}
+
+post_wrath_ui_fixture! {
+#[cfg(feature = "client-ptr")]
+#[test]
+fn ptr_store_status_change_rebuilds_menu_shop_button() {
+    test_timeout! {
+        let env = setup_game_menu_env();
+        env.set_server_mirrored_cvar("bpayStoreEnable", "0")
+            .unwrap();
+        env.set_server_mirrored_cvar("shop2Enabled", "1")
+            .unwrap();
+        env.exec("GameMenuFrame:Show()").unwrap();
+        let visible = |env: &wow_ui_sim::lua_api::WowLuaEnv| -> bool {
+            env.eval(&menu_button_chunk(r#"
+                for button in menu_buttons() do
+                    if button:GetText() == BLIZZARD_STORE then return true end
+                end
+                return false
+            "#)).unwrap()
+        };
+        assert!(!visible(&env));
+        env.set_server_mirrored_cvar("bpayStoreEnable", "1").unwrap();
+        assert!(visible(&env));
+        env.set_server_mirrored_cvar("bpayStoreEnable", "0").unwrap();
+        assert!(!visible(&env));
     }
 }
 }
@@ -576,16 +683,15 @@ post_wrath_ui_fixture! {
 fn test_legacy_store_toggle_reopens_game_menu_after_store_closes() {
     test_timeout! {
         let env = setup_game_menu_env();
-        if cfg!(any(feature = "client-ptr", feature = "client-retail")) {
-            env.set_server_mirrored_cvar("bpayStoreEnable", "1")
-                .unwrap();
-            env.set_server_mirrored_cvar("shop2Enabled", "0")
-                .unwrap();
-        }
+        env.set_server_mirrored_cvar("bpayStoreEnable", "1")
+            .unwrap();
+        env.set_server_mirrored_cvar("shop2Enabled", "0")
+            .unwrap();
 
         let result: String = env
             .eval(r#"
                 GameMenuFrame:Show()
+                assert(C_CatalogShop.IsShop2Enabled() == false)
                 ToggleStoreUI(G_GameMenuFrameContextKey)
                 if not StoreFrame:IsShown() then
                     return "store-not-shown"
@@ -600,4 +706,30 @@ fn test_legacy_store_toggle_reopens_game_menu_after_store_closes() {
         assert_eq!(result, "menu-reopened");
     }
 }
+}
+
+#[cfg(feature = "client-ptr")]
+#[test]
+fn ptr_game_menu_narration_completes_native_show_callbacks() {
+    test_timeout! {
+        let env = setup_game_menu_env();
+        let result: (bool, i32, bool, i32) = env.eval(r#"
+            local shownCount = 0
+            EventRegistry:RegisterCallback("GameMenuFrame.Shown", function()
+                shownCount = shownCount + 1
+            end)
+
+            ToggleGameMenu()
+            local firstShown = GameMenuFrame:IsShown()
+            local firstCount = shownCount
+            ToggleGameMenu()
+            assert(not GameMenuFrame:IsShown())
+            ToggleGameMenu()
+            return firstShown, firstCount, GameMenuFrame:IsShown(), shownCount
+        "#).unwrap();
+
+        // PTR GameMenuFrameMixin:OnShow narrates before emitting this event.
+        // Visibility alone misses a suppressed error inside the real OnShow.
+        assert_eq!(result, (true, 1, true, 2));
+    }
 }

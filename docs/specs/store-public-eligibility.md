@@ -8,7 +8,7 @@
 - [x] Return exactly one non-null boolean for each supplied group ID, independent of secure-product membership and catalog DTOs.
 - [x] Keep observations environment-local and updateable. Missing observations raise `missing-input: C_StorePublic.DoesGroupHavePurchaseableProducts groupID=<id> has no supplied eligibility observation`, never false.
 - [x] Let the selected original subscription helper choose subscription, game time or web redirect according to independent supplied observations, preserving subscription priority and transitions.
-- [x] Preserve enabled/visibility defaults without building purchase policy or publishing classic subscription selection.
+- [x] Keep group eligibility independent from store availability and visibility; see the [separate Store API contract](store-api-availability.md). Do not derive eligibility from either availability flag.
 
 ## How it works
 
@@ -19,7 +19,7 @@
 - `src/c_api/store_public_eligibility.rs`: supplied observations and profile-gated query.
 - `src/c_api/registration.rs`: namespace registration.
 - `src/lua_api/state/sim_state.rs`, `src/lua_api/state.rs`: per-environment input storage.
-- `src/lua_api/workarounds/temporary/store_public_defaults.rs`: separate enabled/visibility defaults; no eligibility adapter.
+- `src/lua_api/workarounds/temporary/store_public_defaults.rs`: visibility state and compatibility defaults only where no source-backed `IsEnabled` producer is registered.
 
 ## Tests asserting this spec
 

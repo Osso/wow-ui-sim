@@ -210,8 +210,9 @@ fn test_blizzard_addon_load_order_snapshot() {
             return;
         }
 
+        // PTR 12.1.7.70668 snapshot from the selected pinned AddOns cache.
         #[cfg(feature = "client-ptr")]
-        let expected: Vec<&str> = include_str!("fixtures/ptr-12-1-5-eager-load-order.txt")
+        let expected: Vec<&str> = include_str!("fixtures/ptr-12-1-7-eager-load-order.txt")
             .lines()
             .collect();
         #[cfg(not(feature = "client-ptr"))]

@@ -241,9 +241,10 @@ fn store_apis_report_enabled_and_available() {
         )
         .expect("store API flags should be queryable");
 
+    // R38 (VERIFIED; docs/specs/store-api-availability.md): IsEnabled returns the supplied server mirror.
     assert!(
         store_public_enabled,
-        "C_StorePublic.IsEnabled() should be true"
+        "C_StorePublic.IsEnabled() should report the supplied enabled state"
     );
     assert!(
         store_secure_available,

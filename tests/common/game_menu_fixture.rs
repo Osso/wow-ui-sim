@@ -19,6 +19,9 @@ const BLIZZARD_ADDONS: &[&str] = &[
     "Blizzard_LoadLocale",
     "Blizzard_Fonts_Shared",
     "Blizzard_HelpPlate",
+    // PTR GameMenuFrame:OnShow narrates before emitting GameMenuFrame.Shown.
+    #[cfg(feature = "client-ptr")]
+    "Blizzard_Narration",
     "Blizzard_Menu",
     "Blizzard_AccessibilityTemplates",
     "Blizzard_ObjectAPI",
@@ -81,7 +84,7 @@ pub fn setup_game_menu_env() -> WowLuaEnv {
                         | wow_ui_sim::client_profile::ClientProfile::Ptr
                 )
             {
-                // The PTR/Retail shop button enters CatalogShop, not legacy StoreFrame.
+                // PTR/Retail use CatalogShop for the GameMenu store button, not legacy StoreFrame.
                 for catalog_addon in [
                     "Blizzard_CatalogShopSharedUtil",
                     "Blizzard_CatalogShopSharedTemplates",

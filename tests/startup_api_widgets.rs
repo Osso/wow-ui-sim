@@ -371,6 +371,7 @@ fn set_disabled_atlas_creates_child_texture() {
             r#"
             local btn = CreateFrame("Button", "AtlasChildProbeButton", UIParent)
             btn:SetSize(32, 40)
+            btn:SetPoint("CENTER", UIParent, "CENTER")
             btn:SetNormalAtlas("UI-HUD-MicroMenu-Groupfinder-Up")
             btn:SetPushedAtlas("UI-HUD-MicroMenu-Groupfinder-Down")
             btn:SetDisabledAtlas("UI-HUD-MicroMenu-Groupfinder-Disabled")

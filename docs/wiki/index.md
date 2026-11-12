@@ -3,6 +3,12 @@
 ## [2026-11-11] implementation | Glue login submission
 
 [Forever Login Startup](investigations/forever-login-startup.md#login-submission-model-lt-a667-2026-11-11) links real-control submission, offline acceptance policy, host roster/capacity, ordinary CharacterCreate startup, R60 shared GameMode display, and R63 host credits/capability state, and R65 FileDataID validation. Native evidence and cached-build compatibility remain separate. Retail/PTR gates and real Forever submission pass after m35 integration; the approved passive empty-roster transition snapshot passes while downstream baseline setup errors remain visible. Final acceptance is pending.
+## [2026-11-11] investigation | Lua rectangle-query validity
+[Lua rectangle-query validity](investigations/rect-query-validity.md) records VERIFIED R48/R59 geometry-query findings for Retail and PTR, cached validity and the dirty/clean target gate in simulator commits `faf99f277`, `edf70955b` and `45fae8c13`, INFERRED ancestor/dependency dirty mapping, UNKNOWN non-Retail/PTR native parity and fallback/callback/cycle/return details, and pending profile/full-suite proof. VERIFIED: the Retail library/integration build at HEAD `0834e5438` includes code commit `45fae8c13` and has zero warnings; all 12 geometry and two cached-validity tests pass. PTR and profile proof remain pending. See the [contract](../specs/rectangle-geometry-queries.md).
+## [2026-11-11] system | PTR/Retail store API availability
+[Store API availability](systems/store-api-availability.md) links the R38 evidence boundary to its [contract](../specs/store-api-availability.md). VERIFIED: PTR/Retail GameMenu tests pass 13/13 each; Store API, StorePublic and CatalogShop structure tests pass on both; Retail CatalogShop UI passes 4/4. INFERRED: defaults (false, true) hide the PTR button and show the Retail button.
+## [2026-11-10] system | Cursor modes and ActionBar transitions
+[Cursor model](systems/lua-api.md#cursor-modes-and-actionbar-transitions) links Retail and PTR implementation ownership to the [behavioral contract](../specs/cursor-model.md).
 ## [2026-11-11] system | Character select screen data
 
 [Character select screen data](systems/chr-select-screen-data.md) links the profile-scoped DB2 rows and provenance. **VERIFIED:** Retail data is labeled with installed build 12.1.5.70783 and Forever rows with installed build 1.60.1.70888; targeted lookup tests pass 3/3 on each profile, and the PTR no-data test passes. **UNKNOWN:** Forever 70707 and PTR source rows. The native API and roster are separately owned.

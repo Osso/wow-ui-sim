@@ -680,13 +680,17 @@ fn ptr_smooth_progress_helper_is_global_not_interpolator_method() {
             r#"
             return type(GetSmoothProgressChange),
                 type(InterpolatorUtil.GetSmoothProgressChange),
-                GetSmoothProgressChange(100, 0, 100, 1)
+                InterpolatorUtil.GetSmoothProgressChange(100, 0, 100, 1)
             "#,
         )
         .expect("smooth progress snapshot mismatch probe should succeed");
 
-    assert_eq!(global_type, "function");
-    assert_eq!(namespaced_type, "nil");
+    // PTR 12.1.7 Blizzard_SharedXML/Interpolator.lua:13 publishes this
+    // helper on InterpolatorUtil, not as a global function.
+    // PTR 12.1.7 Blizzard_SharedXML/Interpolator.lua:13 publishes this
+    // helper on InterpolatorUtil, not as a global function.
+    assert_eq!(global_type, "nil");
+    assert_eq!(namespaced_type, "function");
     assert!((smoothed - 70.0).abs() < f64::EPSILON);
 }
 

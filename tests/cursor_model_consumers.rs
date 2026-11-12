@@ -15,6 +15,7 @@ fn cursor_type_and_grid_reach_bag_bar_and_action_bar(env: &WowLuaEnv) {
         applied_transmog: None,
         owned_identity: None,
     });
+    env.state().borrow_mut().merchant_items = vec![6948, 6256];
     env.exec(r#"
         local source = debug.getinfo(MainMenuBarBagManager.OnCursorChanged, 'S').source:gsub('\\', '/')
         assert(source:find('Blizzard_MainMenuBarBagButtons/Shared/MainMenuBarBagManager.lua', 1, true), source)

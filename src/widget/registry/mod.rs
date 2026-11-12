@@ -5,6 +5,7 @@ mod anchor_edits;
 mod pixel_scale;
 mod size_changes;
 
+#[cfg(feature = "client-wrath")]
 pub(crate) use size_changes::has_queryable_rect;
 mod storage;
 
@@ -493,6 +494,8 @@ impl WidgetRegistry {
         self.pending_layout_ids.clear();
         for (&id, frame) in self.widgets.iter_mut() {
             frame.layout_rect = None;
+            frame.rect_valid = false;
+            frame.anchor_invalidated = false;
             if frame.parent_id.is_none() {
                 self.pending_layout_ids.insert(id);
             }

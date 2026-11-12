@@ -331,20 +331,21 @@ impl SimState {
         }
         // Remove stale entry so compute_frame_rect_cached recomputes.
         cache.remove(&id);
-        let rect = crate::layout::compute_frame_rect_cached(
+        let layout = crate::layout::compute_frame_rect_cached(
             widgets,
             id,
             screen_width,
             screen_height,
             cache,
-        )
-        .rect;
+        );
         let children: Vec<u64> = widgets
             .get(id)
             .map(|f| f.children.clone())
             .unwrap_or_default();
-        if let Some(f) = widgets.get_mut(id) {
-            f.layout_rect = Some(rect);
+        if let Some(frame) = widgets.get_mut(id) {
+            frame.layout_rect = Some(layout.rect);
+            frame.rect_valid = layout.rect_valid;
+            frame.anchor_invalidated = layout.anchor_invalidated;
         }
         widgets.note_layout_size(id);
         widgets.mark_layout_resolved(id);
@@ -418,8 +419,8 @@ impl SimState {
     }
 
     /// Force layout resolution for a single frame, clearing its rect_dirty flag.
-    /// Called by GetSize/GetWidth/GetHeight, rect query methods, and IsRectValid
-    /// to match WoW behavior where layout resolves immediately.
+    /// Called by GetSize/GetWidth/GetHeight and rect query methods so dirty
+    /// geometry resolves before those getters return.
     ///
     /// Fast path: when `id` is directly in `rect_dirty_ids` (common during
     /// loading — SetPoint marks dirty, then GetRect resolves), skips the

@@ -10,12 +10,10 @@ fn test_anchor_initial_state() {
         r#"
         local f = CreateFrame("Frame")
         NUM_POINTS = f:GetNumPoints()
-        RECT_VALID = f:IsRectValid()
         GET_POINT_COUNT = select('#', f:GetPoint(1))
     "#,
     );
     assert_eq!(t.env.eval::<i32>("return NUM_POINTS").unwrap(), 0);
-    assert!(!t.env.eval::<bool>("return RECT_VALID").unwrap());
     assert_eq!(t.env.eval::<i32>("return GET_POINT_COUNT").unwrap(), 0);
 }
 
@@ -189,12 +187,10 @@ fn test_clear_all_points() {
         N_BEFORE = f:GetNumPoints()
         f:ClearAllPoints()
         N_AFTER = f:GetNumPoints()
-        VALID = f:IsRectValid()
     "#,
     );
     assert_eq!(t.env.eval::<i32>("return N_BEFORE").unwrap(), 2);
     assert_eq!(t.env.eval::<i32>("return N_AFTER").unwrap(), 0);
-    assert!(!t.env.eval::<bool>("return VALID").unwrap());
 }
 
 #[test]
@@ -222,11 +218,14 @@ fn test_clear_all_points_invalidates_resolved_rect() {
         f:GetLeft()
         VALID_BEFORE = f:IsRectValid()
         f:ClearAllPoints()
-        VALID_AFTER = f:IsRectValid()
+        VALID_CACHED = f:IsRectValid()
+        f:GetLeft()
+        VALID_AFTER_QUERY = f:IsRectValid()
     "#,
     );
-    t.assert_lua_true("return VALID_BEFORE", "should be valid after resolution");
-    assert!(!t.env.eval::<bool>("return VALID_AFTER").unwrap());
+    t.assert_lua_true("return VALID_BEFORE", "geometry getter caches a valid rect");
+    t.assert_lua_true("return VALID_CACHED", "IsRectValid reads the cache");
+    assert!(!t.env.eval::<bool>("return VALID_AFTER_QUERY").unwrap());
 }
 
 #[test]
@@ -405,7 +404,7 @@ fn test_anchor_cycle_detection_chain() {
 }
 
 #[test]
-fn test_set_point_dirties_resolved_rect() {
+fn test_set_point_preserves_cached_validity_until_position_query() {
     let (t, _) = load_test_lua(
         "layout-dirty-sp",
         r#"
@@ -415,16 +414,13 @@ fn test_set_point_dirties_resolved_rect() {
         f:GetLeft()
         VALID_BEFORE = f:IsRectValid()
         f:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 5, -5)
-        VALID_AFTER = f:IsRectValid()
+        VALID_CACHED = f:IsRectValid()
         LEFT_AFTER = f:GetLeft()
+        VALID_AFTER_QUERY = f:IsRectValid()
     "#,
     );
-    t.assert_lua_true("return VALID_BEFORE", "valid after resolution");
-    // IsRectValid resolves a dirty anchored rect on demand, so the new
-    // SetPoint must already be reflected rather than reported as invalid.
-    t.assert_lua_true(
-        "return VALID_AFTER",
-        "IsRectValid should resolve the re-anchored rect",
-    );
+    t.assert_lua_true("return VALID_BEFORE", "valid after geometry resolution");
+    t.assert_lua_true("return VALID_CACHED", "IsRectValid does not resolve layout");
     assert_eq!(t.env.eval::<f64>("return LEFT_AFTER").unwrap(), 5.0);
+    t.assert_lua_true("return VALID_AFTER_QUERY", "position query caches validity");
 }

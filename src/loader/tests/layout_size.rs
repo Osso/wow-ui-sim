@@ -93,7 +93,7 @@ fn test_get_height_true_returns_explicit() {
 }
 
 #[test]
-fn test_set_size_marks_dirty() {
+fn test_set_size_preserves_cached_validity_until_position_query() {
     let (t, _) = load_test_lua(
         "layout-size-dirty",
         r#"
@@ -102,20 +102,22 @@ fn test_set_size_marks_dirty() {
         f:GetLeft()
         VALID_BEFORE = f:IsRectValid()
         f:SetSize(100, 60)
-        VALID_AFTER = f:IsRectValid()
+        VALID_CACHED = f:IsRectValid()
         LEFT_AFTER = f:GetLeft()
+        VALID_AFTER_QUERY = f:IsRectValid()
     "#,
     );
-    t.assert_lua_true("return VALID_BEFORE", "valid after resolution");
-    t.assert_lua_true(
-        "return VALID_AFTER",
-        "IsRectValid should resolve dirty anchored layout",
-    );
+    t.assert_lua_true("return VALID_BEFORE", "valid after geometry resolution");
+    t.assert_lua_true("return VALID_CACHED", "IsRectValid reads cached validity");
     assert!(t.env.eval::<f64>("return LEFT_AFTER").unwrap().is_finite());
+    t.assert_lua_true(
+        "return VALID_AFTER_QUERY",
+        "position query refreshes validity",
+    );
 }
 
 #[test]
-fn test_set_size_same_values_no_dirty() {
+fn test_set_size_same_values_preserves_cached_validity() {
     let (t, _) = load_test_lua(
         "layout-size-nodirty",
         r#"
@@ -126,7 +128,7 @@ fn test_set_size_same_values_no_dirty() {
         STILL_VALID = f:IsRectValid()
     "#,
     );
-    t.assert_lua_true("return STILL_VALID", "same size should not dirty");
+    t.assert_lua_true("return STILL_VALID", "IsRectValid reads cached validity");
 }
 
 #[test]

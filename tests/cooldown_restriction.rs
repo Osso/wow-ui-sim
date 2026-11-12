@@ -604,7 +604,13 @@ mod ssp1 {
     #[test]
     fn missing_and_no_state_secret_selectors_preserve_existing_empty_results() {
         let env = fixture(false);
-        let r17 = cfg!(feature = "retail-12-1-5");
+        // R17 is verified on Retail/Forever and parent approved applying it to PTR
+        // until R23 reports a build-specific delta.
+        let r17 = cfg!(any(
+            feature = "retail-12-1-5",
+            feature = "client-ptr",
+            feature = "client-wowforever"
+        ));
         {
             let mut state = env.state().borrow_mut();
             state.spell_cooldowns.clear();

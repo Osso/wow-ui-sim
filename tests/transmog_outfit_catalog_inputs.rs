@@ -80,27 +80,28 @@ fn transmog_outfit_catalog_inputs_pickup_sets_cursor_and_clear_works() {
     env.exec(&format!("OUTFIT_KIND = '{kind}'")).unwrap();
     env.eval::<()>(
         r#"
+        A_Admin.ClearActionSlot(1)
         local api = C_TransmogOutfitInfo
         api.AddNewOutfit('Raid',135771)
         local id = api.GetOutfitInfoByName('Raid').outfitID
         api.PickupOutfit(id)
         local kind, cursorID = GetCursorInfo()
-        assert(kind == OUTFIT_KIND and cursorID == id)
+        assert(kind == OUTFIT_KIND and cursorID == id, 'PickupOutfit must publish its cursor payload')
         PlaceAction(1)
         local actionKind, actionID = GetActionInfo(1)
-        assert(actionKind == 'outfit' and actionID == id)
-        assert(GetCursorInfo() == nil)
+        assert(actionKind == 'outfit' and actionID == id, 'PlaceAction must store the picked outfit')
+        assert(GetCursorInfo() == nil, 'PlaceAction must clear the outfit cursor')
         PickupAction(1)
         kind, cursorID = GetCursorInfo()
-        assert(kind == OUTFIT_KIND and cursorID == id)
-        assert(not HasAction(1))
+        assert(kind == OUTFIT_KIND and cursorID == id, 'PickupAction must restore the outfit cursor')
+        assert(not HasAction(1), 'PickupAction must remove the outfit action')
         ClearCursor()
-        assert(GetCursorInfo() == nil)
+        assert(GetCursorInfo() == nil, 'ClearCursor must clear the outfit cursor')
         api.PickupOutfit(0)
         kind, cursorID = GetCursorInfo()
-        assert(kind == OUTFIT_KIND and cursorID == 0)
+        assert(kind == OUTFIT_KIND and cursorID == 0, 'PickupOutfit(0) must select equipped gear')
         PlaceAction(1)
-        assert(C_ActionBar.IsEquippedGearOutfitAction(1))
+        assert(C_ActionBar.IsEquippedGearOutfitAction(1), 'equipped gear outfit action must be marked')
     "#,
     )
     .unwrap();

@@ -222,13 +222,19 @@ fn test_load_game_menu() {
     let env = WowLuaEnv::new().unwrap();
 
     // First load Blizzard_SharedXML (already tested to work)
-    let shared_xml_base_toc = blizzard_ui.join("Blizzard_SharedXMLBase/Blizzard_SharedXMLBase.toc");
+    let shared_xml_base_toc = wow_ui_sim::loader::find_toc_file(
+        &blizzard_ui.join("Blizzard_SharedXMLBase"),
+    )
+    .expect("SharedXMLBase active-profile TOC resolves");
     match load_addon(&env.loader_env(), &shared_xml_base_toc) {
         Ok(r) => println!("SharedXMLBase: {} Lua, {} XML", r.lua_files, r.xml_files),
         Err(e) => println!("SharedXMLBase failed: {}", e),
     }
 
-    let shared_xml_toc = blizzard_ui.join("Blizzard_SharedXML/Blizzard_SharedXML_Mainline.toc");
+    let shared_xml_toc = wow_ui_sim::loader::find_toc_file(
+        &blizzard_ui.join("Blizzard_SharedXML"),
+    )
+    .expect("SharedXML active-profile TOC resolves");
     match load_addon(&env.loader_env(), &shared_xml_toc) {
         Ok(r) => println!(
             "SharedXML: {} Lua, {} XML (warnings: {})",
@@ -239,8 +245,9 @@ fn test_load_game_menu() {
         Err(e) => println!("SharedXML failed: {}", e),
     }
 
-    // Now try loading GameMenu
-    let game_menu_toc = blizzard_ui.join("Blizzard_GameMenu/Blizzard_GameMenu_Mainline.toc");
+    // PTR 12.1.7 Blizzard_GameMenu.toc:7-9 selects the shared frame source.
+    let game_menu_toc = wow_ui_sim::loader::find_toc_file(&blizzard_ui.join("Blizzard_GameMenu"))
+        .expect("GameMenu active-profile TOC resolves");
     let result = load_addon(&env.loader_env(), &game_menu_toc);
 
     match result {

@@ -6,6 +6,9 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -275,8 +278,8 @@ fn body_lists_active_profile_lua_files_in_dependency_order() {
         .map(|p| p.to_string_lossy().to_string())
         .collect();
 
-    let expected: &[&str] = if cfg!(feature = "client-wowforever") {
-        // The Forever TOC adds StaticPopupGamepad.lua as its fourth entry.
+    let expected: &[&str] = if toc_layout::unified_toc_tree() {
+        // PTR/Forever StaticPopup.toc lists StaticPopupGamepad.lua as its fourth entry.
         &[
             "StaticPopup.lua",
             "SharedTemplates.lua",
@@ -290,7 +293,7 @@ fn body_lists_active_profile_lua_files_in_dependency_order() {
     assert_eq!(
         body.len(),
         expected.len(),
-        "selected StaticPopup TOC entries: {body:?}"
+        "Body must match the selected StaticPopup TOC entries: {body:?}"
     );
 
     for (i, want) in expected.iter().enumerate() {
@@ -303,9 +306,16 @@ fn body_lists_active_profile_lua_files_in_dependency_order() {
 
     assert!(
         body.iter().all(|file| file.ends_with(".lua")),
-        "StaticPopup's selected dispatcher, templates, definitions, and \
-         optional gamepad source must all be Lua: {body:?}"
+        "StaticPopup's selected dispatcher, templates, definitions, and optional gamepad \
+         source must all be Lua: {body:?}"
     );
+}
+}
+
+post_wrath_ui_fixture! {
+#[test]
+fn body_lists_three_lua_files_in_dependency_order() {
+    body_lists_active_profile_lua_files_in_dependency_order();
 }
 }
 

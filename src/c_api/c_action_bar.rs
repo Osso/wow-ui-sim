@@ -15,22 +15,114 @@ const HAS_ACTIVE_FIELD: bool = cfg!(any(
 ));
 const ACTION_COOLDOWN_HASH_FIELDS: usize = 4 + HAS_ACTIVE_FIELD as usize;
 
-pub(crate) fn register_keyring(state: &mut LuaState) -> LuaResult<()> {
-    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Ptr {
-        let namespace = crate::c_api::helpers::ensure_namespace(state, "C_ActionBar")?;
-        crate::lua_bridge::table_set_rust_fn_static(
-            state,
-            namespace,
-            "ShouldShowKeyring",
-            should_show_keyring,
-        )?;
+const SPELL_RESTRICTION_FUNCTION: &str = "SpellMatchesActionSpellTypeRestriction";
+const SPELL_RESTRICTION_USAGE: &str = "Usage: local actionMatchesSpellTypeRestriction = C_ActionBar.SpellMatchesActionSpellTypeRestriction(spellID, actionID)";
+
+pub(crate) fn register_ptr_methods(state: &mut LuaState) -> LuaResult<()> {
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Ptr {
+        return Ok(());
     }
+    let namespace = crate::c_api::helpers::ensure_namespace(state, "C_ActionBar")?;
+    crate::lua_bridge::table_set_rust_fn_static(
+        state,
+        namespace,
+        "ShouldShowKeyring",
+        should_show_keyring,
+    )?;
+    crate::lua_bridge::table_set_rust_fn_static(
+        state,
+        namespace,
+        SPELL_RESTRICTION_FUNCTION,
+        spell_matches_action_spell_type_restriction,
+    )?;
     Ok(())
 }
 
 fn should_show_keyring(state: &mut LuaState) -> LuaResult<u32> {
     let enabled = borrow_state(state)?.action_bar_state.keyring_ui_enabled;
     state.push(Val::Bool(enabled));
+    Ok(1)
+}
+
+fn unsigned_argument_error(index: i32, reason: &str) -> rilua::LuaError {
+    rilua::runtime_error(format!(
+        "bad argument #{index} to '{SPELL_RESTRICTION_FUNCTION}' ({reason})"
+    ))
+}
+
+fn read_untainted_u32_argument(state: &LuaState, index: i32) -> LuaResult<u32> {
+    let original = stack_val(state, index);
+    if matches!(original, Val::Nil) {
+        return Err(unsigned_argument_error(index, SPELL_RESTRICTION_USAGE));
+    }
+    let marked = rilua::table_security::is_secret_value(state, original);
+    let value = rilua::table_security::unwrap_secret(state, original).map_err(|_| {
+        unsigned_argument_error(
+            index,
+            &format!(
+                "{SPELL_RESTRICTION_USAGE}. Secret values are only allowed during untainted execution for this argument."
+            ),
+        )
+    })?;
+    let number = match value {
+        Val::Num(number) => Some(number),
+        Val::Str(reference) if !marked => state
+            .gc
+            .string_arena
+            .get(reference)
+            .and_then(|string| super::helpers::parse_numeric_string(string.data())),
+        _ => None,
+    };
+    let number = number
+        .filter(|number| (0.0..=f64::from(u32::MAX)).contains(number))
+        .ok_or_else(|| {
+            unsigned_argument_error(
+                index,
+                &format!("outside of expected range 0 to 4294967295 - {SPELL_RESTRICTION_USAGE}"),
+            )
+        })?;
+    Ok(number.trunc() as u32)
+}
+
+/// R33: PTR WoW Hack slots that require a SpellLabel; other slots are unrestricted.
+fn required_spell_label(action_id: u32) -> Option<i32> {
+    match action_id {
+        1..=12 | 157..=168 => Some(6590),
+        61..=72 => Some(6595),
+        145..=156 => Some(6609),
+        _ => None,
+    }
+}
+
+fn spell_matches_action_spell_type_restriction(state: &mut LuaState) -> LuaResult<u32> {
+    let spell_id = super::helpers::read_untainted_signed32_argument(
+        state,
+        1,
+        SPELL_RESTRICTION_FUNCTION,
+        SPELL_RESTRICTION_USAGE,
+    )?;
+    let action_id = read_untainted_u32_argument(state, 2)?;
+    if !(1..=408).contains(&action_id) {
+        return Ok(0);
+    }
+
+    let matches = {
+        let sim = borrow_state(state)?;
+        if sim.game_rules.active_game_mode != crate::c_api::game_mode::WOWHACK {
+            true
+        } else if spell_id == 0 {
+            false
+        } else {
+            match required_spell_label(action_id) {
+                Some(label) => sim
+                    .spell_labels
+                    .get(&spell_id)
+                    .is_some_and(|labels| labels.contains(&label)),
+                None => true,
+            }
+        }
+    };
+    state.push(Val::Bool(matches));
     Ok(1)
 }
 
