@@ -8,7 +8,7 @@ Publish 33 documented enum deltas across 20 subjects from [retained patch notes]
 - [x] Publish `Enum.TransmogIllusionFlags.AllowedRangedShieldsHoldables = 4`, retaining values `HideUntilCollected=1` and `PlayerConditionGrantsOnLogin=2`; current retail metadata is `1/4/3` (minimum/maximum/count).
 - [x] Publish `Enum.HouseFinderSuggestionReason.HomeOwner = 64`, retaining seven earlier members. For 12.0.5/12.0.7, metadata is `0/64/8`. Shared 12.1 compatibility already adds `Relinquished=65`; preserve it unchanged and refresh metadata to actual members (`0/65/9` in current retail), including after post-load restoration. Do not introduce or correct `Relinquished` through this patch.
 - [x] Metadata reflects actual published numeric members rather than replacing later-epoch bounds/counts with 12.0.5 values.
-- [ ] On PTR, publish `Enum.LootMethodStyles = { Mainline=0, Vanilla=1 }`, omit `PersonalOnly`, and set metadata to `MinValue=0`, `MaxValue=1`, `NumValues=2`.
+- [x] On PTR, publish `Enum.LootMethodStyles = { Mainline=0, Vanilla=1 }`, omit `PersonalOnly`, and set metadata to `MinValue=0`, `MaxValue=1`, `NumValues=2`.
 
 Documented values: cached official `CurrencyConstantsDocumentation.lua:95–113`, `TransmogSharedDocumentation.lua:46–57`, and `PlayerHousingConstantsDocumentation.lua:52–69` under `~/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/`. **VERIFIED:** PTR `LootConstantsDocumentation.lua:22–31` at `~/.cache/wow-ui-sim/blizzard-ui/ptr/AddOns/Blizzard_APIDocumentationGenerated/` declares `LootMethodStyles` as `Mainline=0` and `Vanilla=1`, with metadata `0/1/2`; it does not list `PersonalOnly`. The housing cache includes later `Relinquished=128`; that addition is excluded. Patch-note names occur at retained-source lines 573–574, 590–591, and 606–607.
 
@@ -26,7 +26,7 @@ Documented values: cached official `CurrencyConstantsDocumentation.lua:95–113`
 ## Tests asserting this spec
 
 - `tests/patch_12_0_5_enum_additions.rs`: 20 grouped public-value/removal/metadata tests, including 17 current-retail initialization/post-load tests and three original publication controls.
-- `tests/party_loot_method.rs::loot_method_style_is_mainline_across_method_changes`: Retail-epoch getter result and Mainline enum values/metadata; PTR GREEN is pending.
+- `tests/party_loot_method.rs::loot_method_style_is_mainline_across_method_changes`: exact PTR run passed the Mainline getter, enum values, and metadata assertions.
 - `tests/enum_diff_coverage.rs`: representative abbreviation value uses current-retail flags while preserving the old expectation elsewhere.
 - `src/loader/tests/wow_api_globals/patch_12_0_0_edit_mode_unit_frame_settings_enums.rs`: current-retail unit-frame values and metadata; historical expectations retained.
 - `src/loader/tests/wow_api_globals/patch_12_1_5_transmog_illusion_flags.rs`: existing default-retail publication/post-load control passes. Numerical publication is not native-client/domain parity.
@@ -40,7 +40,7 @@ The original three additions retain their bounded default-retail proof. Historic
 ### Remaining retained-source enum deltas
 
 - [x] Current `client-retail` publishes the other 30 retained-source deltas at numeric values from the official retail cache, with `InvalidAbbreviation`, `House`, and `PersonalOnly` absent from their respective enums. Current-retail corrections are implemented; batch7 observed GREEN is 20/20; independent bounded acceptance recorded below. Historical `profile-retail` keeps its prior publication.
-- [ ] Current PTR publishes the documented Mainline loot-style enum and coherent metadata; exact test `party_loot_method::loot_method_style_is_mainline_across_method_changes` is committed, with GREEN pending.
+- [x] Current PTR publishes the documented Mainline loot-style enum and coherent metadata; exact test `party_loot_method::loot_method_style_is_mainline_across_method_changes` passed.
 - [x] Each newly covered enum has coherent `NumValues`, `MinValue`, and `MaxValue` derived from actual Lua-visible numeric members, both after environment initialization and after compatibility post-load restoration. Later cumulative members are permitted; no historical exact count is asserted.
 
 The retained section at lines 569–621 contains **33 delta rows across 20 enum subjects**, including the three already tested additions. The earlier audit's 36/24 totals are unsupported by this source; no extra rows are invented. The source/proof matrix below is the durable enum accounting source. Machine-readable cache extracts remain in `/tmp/patch-12.0.5-enum-doc-contracts.json`.
