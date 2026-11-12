@@ -4,11 +4,18 @@
 
 [Tracker lt-4183, coordinator comment 217 (R75)](https://tasks.sakuin.org/tasks/lt-4183)
 reports native decompilation findings for PTR 12.1.7.70668. This implementation
-models only its VERIFIED contracts. The runtime consumer is the pinned PTR
+models its VERIFIED contracts, within the limits stated below. The runtime consumer is the pinned PTR
 12.1.7.70493 `Blizzard_StoreUI/Blizzard_Shared_StoreUIToggle.lua:60–72`;
 this is not a claim that the 70493 native image was inspected.
 
 ## Verified contracts
+
+Evidence limits (R75): the return shapes below are VERIFIED for the cached API
+documentation and the ordinary measured native result paths. The complete
+native argument/return contract of the protected handlers is INFERRED, not
+proved on every path. The validator's single Boolean is the clean result tail,
+not an all-path control-flow proof. Where this simulator's contract is
+stronger than that, it is simulator policy, not native proof.
 
 - `C_StorePublic.IsRewardsShopOverrideEnabled()` returns exactly one Boolean:
   `rewardsShopOverrideEnabled && !bpayStoreEnable`. Both are MirrorVar inputs;
@@ -24,9 +31,13 @@ this is not a claim that the 70493 native image was inspected.
   `Usage: local isValid = C_CatalogShop.ValidateOverrideShopInteraction([shoppingSessionUUIDStr])`.
   The outer bad-argument formatting is UNKNOWN and is not asserted.
 - A string validates only when host catalog mode is 3 and its bytes match the
-  host session bytes exactly. Empty matches empty only in mode 3. This query
+  host session bytes exactly. Native byte matching is VERIFIED only for input
+  and stored lengths below 2^32; longer strings are UNKNOWN natively, and the
+  simulator's plain byte comparison for them is simulator policy. Empty matches empty only in mode 3. This query
   does not consult the override CVar.
-- Both APIs are registered in Game and Glue, on PTR only. Retail is unchanged.
+- Both APIs are registered in Game and Glue. Restricting them to PTR is this
+  implementation's scope (the evidence covers PTR 12.1.7); it is not a native
+  claim about other builds. Retail is unchanged.
 
 ## Host inputs and limits
 
