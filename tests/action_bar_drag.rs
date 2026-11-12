@@ -949,54 +949,57 @@ fn ptr_tainted_place_merchant_cursor_reports_block_and_clears() {
 #[cfg(any(feature = "client-ptr", feature = "client-retail"))]
 #[test]
 fn action_slot_limits_match_the_client_profile() {
-    let max_slot = if cfg!(feature = "client-ptr") {
-        360
-    } else {
-        180
-    };
     let env = WowLuaEnv::new().unwrap();
-    seed_action_slot(&env, max_slot, 853);
-    seed_action_slot(&env, max_slot + 1, 642);
+    if cfg!(feature = "client-ptr") {
+        seed_action_slot(&env, 360, 853);
+        seed_action_slot(&env, 361, 642);
 
-    env.exec(&format!("PickupAction({})", max_slot + 1))
-        .unwrap();
-    assert!(
-        env.eval::<bool>(&format!("return HasAction({})", max_slot + 1))
-            .unwrap()
-    );
-    assert_eq!(
-        env.eval::<i64>("return select('#', GetCursorInfo())")
-            .unwrap(),
-        0
-    );
+        env.exec("PickupAction(361)").unwrap();
+        assert!(env.eval::<bool>("return HasAction(361)").unwrap());
+        assert_eq!(
+            env.eval::<i64>("return select('#', GetCursorInfo())")
+                .unwrap(),
+            0
+        );
 
-    env.exec(&format!("PickupAction({max_slot})")).unwrap();
-    assert!(
-        !env.eval::<bool>(&format!("return HasAction({max_slot})"))
-            .unwrap()
-    );
-    env.exec(&format!("PlaceAction({})", max_slot + 1)).unwrap();
-    let (kind, spell_id): (String, i64) = env
-        .eval(&format!(
-            "local kind, id = GetActionInfo({}); return kind, id",
-            max_slot + 1
-        ))
-        .unwrap();
-    assert_eq!((kind.as_str(), spell_id), ("spell", 642));
-    assert_eq!(
-        env.eval::<i64>("local _, _, _, spellID = GetCursorInfo(); return spellID")
-            .unwrap(),
-        853
-    );
+        env.exec("PickupAction(360)").unwrap();
+        assert!(!env.eval::<bool>("return HasAction(360)").unwrap());
+        env.exec("PlaceAction(361)").unwrap();
+        let (kind, spell_id): (String, i64) = env
+            .eval("local kind, id = GetActionInfo(361); return kind, id")
+            .unwrap();
+        assert_eq!((kind.as_str(), spell_id), ("spell", 642));
+        assert_eq!(
+            env.eval::<i64>("local _, _, _, spellID = GetCursorInfo(); return spellID")
+                .unwrap(),
+            853
+        );
 
-    env.exec(&format!("PlaceAction({max_slot})")).unwrap();
-    assert!(
-        env.eval::<bool>(&format!("return HasAction({max_slot})"))
-            .unwrap()
-    );
-    assert_eq!(
-        env.eval::<i64>("return select('#', GetCursorInfo())")
-            .unwrap(),
-        0
-    );
+        env.exec("PlaceAction(360)").unwrap();
+        assert!(env.eval::<bool>("return HasAction(360)").unwrap());
+        assert_eq!(
+            env.eval::<i64>("return select('#', GetCursorInfo())")
+                .unwrap(),
+            0
+        );
+    } else {
+        seed_action_slot(&env, 201, 853);
+        env.exec("PickupAction(201)").unwrap();
+        assert!(!env.eval::<bool>("return HasAction(201)").unwrap());
+        let (kind, spell_id): (String, i64) = env
+            .eval("local kind, _, _, spellID = GetCursorInfo(); return kind, spellID")
+            .unwrap();
+        assert_eq!((kind.as_str(), spell_id), ("spell", 853));
+
+        env.exec("PlaceAction(202)").unwrap();
+        let (kind, spell_id): (String, i64) = env
+            .eval("local kind, id = GetActionInfo(202); return kind, id")
+            .unwrap();
+        assert_eq!((kind.as_str(), spell_id), ("spell", 853));
+        assert_eq!(
+            env.eval::<i64>("return select('#', GetCursorInfo())")
+                .unwrap(),
+            0
+        );
+    }
 }

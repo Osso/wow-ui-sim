@@ -235,7 +235,7 @@ fn fishing_inventory(equipped: bool) -> WowLuaEnv {
 
 // ── PickupMerchantItem ────────────────────────────────────────────────────────
 
-#[cfg(not(any(feature = "client-ptr", feature = "client-retail")))]
+#[cfg(not(feature = "client-ptr"))]
 #[test]
 fn pickup_merchant_item_synthesizes_item_on_cursor() {
     let env = env();
@@ -251,7 +251,7 @@ fn pickup_merchant_item_synthesizes_item_on_cursor() {
     ));
 }
 
-#[cfg(any(feature = "client-ptr", feature = "client-retail"))]
+#[cfg(feature = "client-ptr")]
 #[test]
 fn pickup_merchant_item_uses_the_supplied_offer() {
     let env = env();

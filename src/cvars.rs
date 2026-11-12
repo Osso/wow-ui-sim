@@ -853,16 +853,26 @@ mod tests {
     }
 
     #[test]
-    fn store_mirror_cvars_have_the_pinned_client_defaults() {
+    fn store_mirror_defaults_stay_out_of_the_cvar_registry() {
         use crate::client_profile::{ACTIVE, ClientProfile};
 
         if !matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr) {
             return;
         }
 
-        let storage = CVarStorage::new();
-        assert_eq!(storage.get_default("bpayStoreEnable").as_deref(), Some("0"));
-        assert_eq!(storage.get_default("shop2Enabled").as_deref(), Some("1"));
+        let directory = tempfile::tempdir().unwrap();
+        let storage = CVarStorage::with_path(directory.path().join("cvars.json"));
+        for name in ["bpayStoreEnable", "shop2Enabled"] {
+            assert!(storage.get(name).is_none());
+            assert!(storage.get_default(name).is_none());
+            assert!(
+                !storage
+                    .all_keys()
+                    .iter()
+                    .any(|key| key.eq_ignore_ascii_case(name)),
+                "{name} must stay out of the Lua-visible CVar registry"
+            );
+        }
         assert_eq!(
             storage
                 .get_default("seenAsiaCharacterUpgradePopup")

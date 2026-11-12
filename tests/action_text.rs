@@ -98,6 +98,41 @@ fn action_text_requires_a_populated_macro_name() {
     .unwrap();
 }
 
+#[cfg(not(feature = "client-ptr"))]
+#[test]
+fn action_text_empty_spell_controls() {
+    // Retail projects a merchant row as cursor mode 5, "merchant" (WM46).
+    let merchant_kind = if cfg!(feature = "client-retail") {
+        "merchant"
+    } else {
+        "item"
+    };
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        &r##"
+        assert(C_ActionBar.UsesActionText(201) == false)
+        assert(type(C_ActionBar.UsesActionText(201)) == "boolean")
+        assert(not issecretvalue(C_ActionBar.UsesActionText(201)))
+        assert(C_ActionBar.GetActionText(201) == nil)
+        assert(select("#", C_ActionBar.GetActionText(201)) == 1)
+        PickupSpell(853); PlaceAction(201)
+        assert(GetActionInfo(201) == "spell")
+        assert(C_ActionBar.UsesActionText(201) == false)
+        assert(C_ActionBar.GetActionText(201) == nil)
+        -- The current model rejects item action placement: this is not a real item-slot fixture.
+        PickupMerchantItem(1)
+        assert(GetCursorInfo() == "MERCHANT_KIND")
+        PlaceAction(202)
+        assert(GetActionInfo(202) == nil)
+        assert(C_ActionBar.UsesActionText(202) == false)
+        assert(C_ActionBar.GetActionText(202) == nil)
+        "##
+        .replace("MERCHANT_KIND", merchant_kind),
+    )
+    .unwrap();
+}
+
+#[cfg(feature = "client-ptr")]
 #[test]
 fn action_text_empty_spell_controls() {
     let env = WowLuaEnv::new().unwrap();

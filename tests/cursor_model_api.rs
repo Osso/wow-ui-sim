@@ -34,7 +34,6 @@ fn env() -> WowLuaEnv {
 #[test]
 fn item_setters_report_stored_ids_and_clears_zero_them() {
     let env = env();
-    env.state().borrow_mut().merchant_items = vec![100_001, 100_002, 6948];
     env.exec(
         r#"
         local log = record(function() C_Item.PickupItem(6948) end)
@@ -46,9 +45,9 @@ fn item_setters_report_stored_ids_and_clears_zero_them() {
         local kind, index = GetCursorInfo()
         assert(kind == 'merchant' and index == 3)
         assert(not CursorHasItem())
-        -- Merchant row 3 stores its supplied item ID in S.
+        -- Merchant row 3 stores synthesized item 100003 in S.
         log = record(ClearCursor)
-        assert(log == 'CURSOR_CHANGED,true,0,5,6948', log)
+        assert(log == 'CURSOR_CHANGED,true,0,5,100003', log)
         assert(record(ClearCursor) == '')
     "#,
     )

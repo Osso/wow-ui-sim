@@ -5,6 +5,7 @@
 
 use crate::common;
 use crate::common::blizzard_addon_harness::with_blizzard_addon_startup_shape;
+#[cfg(feature = "client-ptr")]
 use wow_ui_sim::loader::BlizzardAddonOverride;
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::lua_api::state::{SpellFlyoutInfo, SpellFlyoutSlot};
@@ -15,13 +16,29 @@ const STARTUP_OVERRIDES: &[BlizzardAddonOverride<'static>] = &[BlizzardAddonOver
     addon: ROOT,
     extra_roots: &["Blizzard_GamepadSharedUtility"],
 }];
-#[cfg(not(feature = "client-ptr"))]
-const STARTUP_OVERRIDES: &[BlizzardAddonOverride<'static>] = &[];
 const FLYOUT_ID: u32 = 7001;
 const FIRST_SPELL_ID: u32 = 19750;
 const SECOND_SPELL_ID: u32 = 35395;
 
 post_wrath_ui_fixture! {
+#[cfg(not(feature = "client-ptr"))]
+#[test]
+fn spell_flyout_toggle_shows_populates_and_hides_from_same_button() {
+    test_timeout! {
+    with_blizzard_addon_startup_shape(&[ROOT], &[], |env, _loaded| {
+        seed_spell_flyout(env);
+        install_test_flyout_button(env);
+
+        assert_flyout_hidden_by_default(env);
+        toggle_spell_flyout(env);
+        assert_flyout_shown_with_seeded_spells(env);
+        toggle_spell_flyout(env);
+        assert_flyout_hidden_after_second_toggle(env);
+    });
+    }
+}
+
+#[cfg(feature = "client-ptr")]
 #[test]
 fn spell_flyout_toggle_shows_populates_and_hides_from_same_button() {
     test_timeout! {
@@ -111,6 +128,32 @@ fn assert_flyout_hidden_by_default(env: &WowLuaEnv) {
     assert!(!is_shown, "SpellFlyout must start hidden");
 }
 
+#[cfg(not(feature = "client-ptr"))]
+fn assert_flyout_shown_with_seeded_spells(env: &WowLuaEnv) {
+    let (is_shown, first_id, second_id, third_visible): (bool, i64, i64, bool) = env
+        .eval(
+            r#"
+            local first = SpellFlyoutPopupButton1
+            local second = SpellFlyoutPopupButton2
+            local third = SpellFlyoutPopupButton3
+            return SpellFlyout:IsShown() == true,
+                   first and first:IsShown() and first.spellID or -1,
+                   second and second:IsShown() and second.spellID or -1,
+                   third and third:IsShown() == true or false
+            "#,
+        )
+        .expect("SpellFlyout populated-button probe must run cleanly");
+
+    assert!(is_shown, "first toggle must show SpellFlyout");
+    assert_eq!(first_id, FIRST_SPELL_ID as i64);
+    assert_eq!(second_id, SECOND_SPELL_ID as i64);
+    assert!(
+        !third_visible,
+        "flyout must render exactly two seeded spell buttons"
+    );
+}
+
+#[cfg(feature = "client-ptr")]
 fn assert_flyout_shown_with_seeded_spells(env: &WowLuaEnv) {
     let (is_shown, button_count, first_id, second_id): (bool, i64, i64, i64) = env
         .eval(

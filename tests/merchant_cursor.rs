@@ -8,6 +8,7 @@ fn env_with_merchant_items(items: &[u32]) -> WowLuaEnv {
     env
 }
 
+#[cfg(feature = "client-ptr")]
 #[test]
 fn pickup_merchant_item_returns_the_selected_row() {
     let env = env_with_merchant_items(&[6948, 6256]);
@@ -53,6 +54,57 @@ fn pickup_merchant_item_returns_the_selected_row() {
     ));
 }
 
+#[cfg(feature = "client-retail")]
+#[test]
+fn retail_pickup_merchant_item_keeps_legacy_wrapper_and_projection() {
+    let env = env_with_merchant_items(&[]);
+    env.exec(
+        r#"
+        PickupMerchantItem(2)
+        local kind, merchantIndex = GetCursorInfo()
+        assert(select('#', GetCursorInfo()) == 2)
+        assert(kind == 'merchant' and merchantIndex == 2)
+        "#,
+    )
+    .unwrap();
+}
+
+#[cfg(feature = "client-ptr")]
+#[test]
+fn ptr_merchant_cursor_clear_reports_supplied_item_id() {
+    let env = env_with_merchant_items(&[6948]);
+    env.exec(
+        r#"
+        local events = {}
+        local listener = CreateFrame('Frame')
+        listener:RegisterEvent('CURSOR_CHANGED')
+        listener:SetScript('OnEvent', function(_, event, empty, mode, previous, itemID)
+            events[#events + 1] = table.concat({event, tostring(empty), tostring(mode), tostring(previous), tostring(itemID)}, ',')
+        end)
+        PickupMerchantItem(1)
+        ClearCursor()
+        assert(events[#events] == 'CURSOR_CHANGED,true,0,5,6948', events[#events])
+        "#,
+    )
+    .unwrap();
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn retail_pickup_merchant_item_keeps_legacy_wrapper_and_projection() {
+    let env = env_with_merchant_items(&[]);
+    env.exec(
+        r#"
+        PickupMerchantItem(2)
+        local kind, merchantIndex = GetCursorInfo()
+        assert(select('#', GetCursorInfo()) == 2)
+        assert(kind == 'merchant' and merchantIndex == 2)
+        "#,
+    )
+    .unwrap();
+}
+
+#[cfg(feature = "client-ptr")]
 #[test]
 fn pickup_merchant_item_clears_for_invalid_inputs() {
     let env = env_with_merchant_items(&[6948, 6256]);
@@ -77,6 +129,7 @@ fn pickup_merchant_item_clears_for_invalid_inputs() {
     .unwrap();
 }
 
+#[cfg(feature = "client-ptr")]
 #[test]
 fn pickup_merchant_item_truncates_fractional_index_and_errors_on_overflow() {
     let env = env_with_merchant_items(&[6948, 6256]);
