@@ -6,7 +6,7 @@ use crate::toc::TocFile;
 use rilua::vm::state::LuaState;
 use std::collections::{HashMap, HashSet};
 use std::io;
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
 pub(super) fn load_runtime_addon(state: &mut LuaState, addon_name: &str) -> Result<(), LoadError> {
     let loader_env = LoaderEnv::from_parts_active(
@@ -133,40 +133,46 @@ fn scan_load_with_followers(
 fn scan_addon_names(bases: &[PathBuf]) -> Vec<String> {
     let mut addon_names = HashSet::new();
     for base in bases {
-        let entries = match std::fs::read_dir(base) {
-            Ok(entries) => entries,
-            Err(_) if !base.is_dir() => continue,
-            Err(error) => {
-                tracing::warn!(
-                    "Cannot inspect addon root {} for LoadWith: {error}",
-                    base.display()
-                );
-                continue;
-            }
-        };
-        for entry in entries {
-            let entry = match entry {
-                Ok(entry) => entry,
-                Err(error) => {
-                    tracing::warn!(
-                        "Cannot inspect an addon entry under {}: {error}",
-                        base.display()
-                    );
-                    continue;
-                }
-            };
-            let path = entry.path();
-            if path.is_dir()
-                && let Some(name) = path.file_name().and_then(|name| name.to_str())
-            {
-                addon_names.insert(name.to_owned());
-            }
-        }
+        collect_addon_names_from_root(base, &mut addon_names);
     }
 
     let mut addon_names: Vec<_> = addon_names.into_iter().collect();
     addon_names.sort();
     addon_names
+}
+
+fn collect_addon_names_from_root(base: &Path, addon_names: &mut HashSet<String>) {
+    let entries = match std::fs::read_dir(base) {
+        Ok(entries) => entries,
+        Err(_) if !base.is_dir() => return,
+        Err(error) => {
+            tracing::warn!(
+                "Cannot inspect addon root {} for LoadWith: {error}",
+                base.display()
+            );
+            return;
+        }
+    };
+    for entry in entries {
+        let entry = match entry {
+            Ok(entry) => entry,
+            Err(error) => {
+                tracing::warn!(
+                    "Cannot inspect an addon entry under {}: {error}",
+                    base.display()
+                );
+                continue;
+            }
+        };
+        let path = entry.path();
+        if !path.is_dir() {
+            continue;
+        }
+        let Some(name) = path.file_name().and_then(|name| name.to_str()) else {
+            continue;
+        };
+        addon_names.insert(name.to_owned());
+    }
 }
 
 fn read_load_with_declarations(
