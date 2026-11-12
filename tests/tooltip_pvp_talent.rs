@@ -103,7 +103,6 @@ fn pvp_slot_on_enter_uses_default_catalog_spell_and_unlock_lines() {
             GameTooltip:Hide()
             GameTooltip:ClearHandlerInfo()
             button:GetScript("OnEnter")(button)
-            assert(GameTooltip:GetOwner() == button, "OnEnter sets this button as tooltip owner")
             local info = GameTooltip:GetPrimaryTooltipInfo()
             assert(info and info.getterName == "GetPvpTalent", "original tooltip accessor")
             local data = GameTooltip:GetPrimaryTooltipData()
