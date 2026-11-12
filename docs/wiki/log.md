@@ -1,3 +1,7 @@
+## [2026-11-12] investigation | Inline XML tooltip operands
+
+[Inline XML method arguments](investigations/xml-inline-method-arguments.md) records the zero-vararg parser misclassification, source-faithful parameter-prefix installation, and the separately approved RaidFrame AddLine fixture correction.
+
 ## [2026-11-11] correction | Addon loading phases and LoadWith followers
 
 Updated [[addon-loading]] and the [phase contract](../specs/addon-load-phases.md) with R64 phases and R64b/c follower behavior, plus R70 PTR phase/mask evidence. Retail and Forever resolve followers without enable-state filtering and submit them through the generic loader; target `ADDON_LOADED` precedes follower requests, and one follower failure does not stop later submissions or change target success. PTR parser-to-child-list linkage remains UNKNOWN, so the simulator applies the INFERRED resolver model and tests a pre-populated child list only. R70 models cached PTR `CharacterCreate` as an INFERRED phase-two Glue root, loads its required chain before its files, and makes no relative-order claim against PTRFeedbackGlue.
@@ -3664,3 +3668,7 @@ VERIFIED (strict lifecycle probe): global CVar wrapper identities were unchanged
 ## 2026-11-11 — Glue login submission
 
 Updated [Forever Login Startup](investigations/forever-login-startup.md#login-submission-model-lt-a667-2026-11-11) with the lt-a667 flow and contract. Distinguished historical startup verification from pending submission acceptance; documented EditBox input, offline connection policy, host-empty roster/capacity, startup eligibility and the erroneous forced pre-login character-select refresh.
+
+## [2026-11-12] implementation | R73 PvP talent annotations
+
+VERIFIED: [tooltip data](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) now uses shared supplied slot selections and R73 alternative annotation dispatch. Eight exact tests pass on Retail, including original slot hover and original list-template hover; the native virtualized-row realization is not claimed. The [contract](../specs/tooltip-pvp-talent.md) separates host seams, installed 70783 catalog provenance, inferred field names and UNKNOWN native predicates.
