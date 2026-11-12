@@ -286,7 +286,7 @@ fn test_create_frame_from_xml_inline_tooltip_add_line_global_three_global_bool_r
         r#"<Ui>
         <Button name="XmlInlineTooltipAddLineButton" parent="UIParent">
             <Scripts><OnEnter>
-                GameTooltip:AddLine(ALL_ASSIST_NOT_LEADER_ERROR, RED_FONT_COLOR, true);
+                GameTooltip:AddLine(ALL_ASSIST_NOT_LEADER_ERROR, RED_FONT_COLOR.r, RED_FONT_COLOR.g, RED_FONT_COLOR.b, true);
             </OnEnter></Scripts>
         </Button>
     </Ui>"#,
