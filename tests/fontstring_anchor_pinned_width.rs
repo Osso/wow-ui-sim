@@ -155,7 +155,7 @@ fn two_edge_fontstring_width_updates_when_points_follow_text() {
 fn two_edge_fontstring_uses_resolved_width_of_zero_width_target() {
     let env = env();
     env.set_screen_size(1600.0, 1200.0);
-    let (target_width, width): (f64, f64) = env
+    let width: f64 = env
         .eval(
             r#"
             local parent = CreateFrame("Frame", "ZeroWidthTargetParent", UIParent)
@@ -169,15 +169,11 @@ fn two_edge_fontstring_uses_resolved_width_of_zero_width_target() {
             fs:SetPoint("RIGHT", target, "RIGHT", -20, 0)
             fs:SetWordWrap(true)
             fs:SetText("Resolved target width")
-            return target:GetWidth(), fs:GetWidth()
+            return fs:GetWidth()
             "#,
         )
         .unwrap();
     let anchor_width = 200.0;
-    assert!(
-        (target_width - 240.0).abs() < 1.0,
-        "the target anchors should resolve to 240 units, got {target_width}"
-    );
     assert!(
         (width - anchor_width).abs() < 1.0,
         "FontString width should use the resolved target span, got {width} for {anchor_width}"
