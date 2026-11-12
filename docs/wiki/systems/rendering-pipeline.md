@@ -100,6 +100,10 @@ Follow-ups `4e344ab4f` and `1ecc0c98c` cache cumulative offsets only for one ren
 
 `frame_collect` owns the shared `HitOrderKey`. Input must derive its spatial order from flattened render buckets, not a second raw strata/level sort, so a grouped child cannot steal input through a panel rendered above it. The GUI-only `hit_grid` module imports that key for spatial indexing; headless builds do not compile the grid or its GUI dependency tree. ScrollFrame presentation transforms and ancestor clips are shared with rendering, so cache-backed hit targets move and clip with presented content. Several system frames (UIParent, Minimap, WorldFrame, chat frames) are excluded.
 
+## Font sources
+
+`WowFontSystem` (`src/render/font.rs`) loads Blizzard's fonts (`Fonts\\FRIZQT__.TTF`, ...) from CASC at startup. Without CASC every Blizzard font path maps to one fallback family: the font file `WOW_SIM_FALLBACK_FONT` names, else the first system face. The first system face differs between operating systems, so renders compared across machines pin the fallback.
+
 ## FontString smooth scaling
 
 `0624da720` adds independent `Frame.font_string_smooth_scaling`, shared fractional line-height shaping, mode-keyed caches, and ordinary/runtime/inherited XML handling under retail 12.0.5+. `3c8b48012` adds wrapped render/cache measurement assertions. Contract, inferred-policy boundaries, RED provenance, current GREEN status, earlier XML epoch gap, and future native recorder live in [FontString smooth scaling](../../specs/fontstring-smooth-scaling.md). No native/GPU visual proof is claimed.
@@ -119,6 +123,7 @@ The headless path is implemented in `src/render/headless.rs` and uses the same W
 
 ## Sources
 
+- [font.rs](../../../src/render/font.rs) — font sources: Blizzard fonts from CASC, the fallback family without them and `WOW_SIM_FALLBACK_FONT`
 - [FontString smooth scaling](../../specs/fontstring-smooth-scaling.md) — inferred height policy, tests, scope and future native probe
 
 - [rendering-pipeline.md](../../rendering-pipeline.md) — QuadBatch, shaders, atlas, hit testing, alpha, text
