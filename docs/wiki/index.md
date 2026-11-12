@@ -12,6 +12,13 @@
 
 > Proof receipts live untracked under `~/.local/state/wow-ui-sim`. The `data/patch-api/evidence` and `data/test-perf/evidence` trees were removed on 2026-11-08; historical links below are records, not live paths. Recover a file with `git show c011c1d95:<path>`.
 
+## [2026-11-12] fix | Unit-test Blizzard UI cache isolation
+
+[Addon loading](systems/addon-loading.md#blizzard-ui-cache--per-profile-setup) records the concurrent Retail pin cache incident and the test-only startup hard error. Normal user startup keeps auto-sync; pin-versioned cache directories remain a design proposal.
+## [2026-11-12] correction | Bag fixture stages and insecure TOC screens
+
+[Bag-bar fixture stages](investigations/frame-position-baseline-drift.md#bag-bar-test-application-stages--2026-11-12) distinguish late-loaded Retail XML Y=0 from startup-applied PTR preset Y=10. [Addon loading](systems/addon-loading.md#screen-qualified-dependency-declarations) retains VERIFIED R13 insecure-parser Game-only semantics and labels the ordinary third-party parser-mode mapping INFERRED; the contrary discovery-test expectation is superseded.
+
 ## [2026-11-12] system | PvP talent tooltip catalog
 
 [Tooltip data](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) links the [PvP talent contract](../specs/tooltip-pvp-talent.md) and generated 407-row Retail catalog. **VERIFIED:** the installed CASC export is 12.1.5.70783 with zero unreadable PvpTalent and category rows; the exact tooltip tests pass. **UNKNOWN:** equivalence to selected build 12.1.5.70575 ; selected-slot host state is now covered by the R73 contract.
@@ -75,6 +82,10 @@
 ## [2026-11-08] correction | Native R13 addon dependency semantics
 
 [Addon loading](systems/addon-loading.md#screen-qualified-dependency-declarations) now records the native result: unannotated required cross-screen dependencies fail with `DEP_WRONG_ACTIVE_INTERFACE`; `[AllowLoad ...]` filters a whole header line before dependency splitting; Both targets remain required; optional failures are ignored; and loadability queries skip screen checks. The 2026-11-06 TOC-only inference is superseded. Evidence boundaries distinguish Retail 70688 from partial Forever and unknown PTR annotation grammar.
+
+## [2026-11-12] investigation | Forever integration fixture differences
+
+[Forever startup gaps](investigations/forever-startup-gaps.md#forever-70707-integration-fixture-differences) records the VERIFIED selected-source differences behind 15 integration failures: bindings, talent dependency, status priorities, endcap settings, flyout buttons, C60 art, separate microbuttons and eager QueueStatusFrame. It also records the supplied item-overlay publication repair and independently audited 211-entry load-order fixture. Final cross-profile proof is in the lane report.
 
 ## [2026-11-07] fix | Forever 1.60.1.70707 residuals
 

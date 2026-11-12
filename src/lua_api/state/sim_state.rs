@@ -726,6 +726,9 @@ pub struct SimState {
     pub housing: HousingState,
     /// Explicit catalog shop product/display records; empty until host-seeded.
     pub catalog_shop_products: crate::c_api::c_catalog_shop_products::CatalogShopProducts,
+    /// R75 neutral host inputs; native mode/session writers remain unknown.
+    #[cfg(feature = "client-ptr")]
+    pub catalog_shop_interaction: crate::c_api::ptr_store_override::CatalogShopInteraction,
     /// One bundle record store; preserves the existing simulator storefront seed.
     pub housing_bundles: crate::c_api::c_housing_bundles::HousingBundles,
     pub pet_battles: PetBattleState,
@@ -956,6 +959,10 @@ pub struct SimState {
     pub mythic_plus: MythicPlusState,
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     pub character_creation: crate::c_api::c_character_creation_submit::CharacterCreationState,
+    /// None preserves the temporary collector; Some publishes host records (R79).
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub character_customizations:
+        Option<Vec<crate::c_api::c_character_creation_customizations::Category>>,
     /// Byte copied from Forever's Glue feature-status update.
     pub name_reservation_feature_status: u8,
     /// Current character-create model facing in normalized radians.

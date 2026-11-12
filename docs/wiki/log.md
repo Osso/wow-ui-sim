@@ -1,6 +1,12 @@
 ## [2026-11-12] investigation | Inline XML tooltip operands
 
 [Inline XML method arguments](investigations/xml-inline-method-arguments.md) records the zero-vararg parser misclassification, source-faithful parameter-prefix installation, and the separately approved RaidFrame AddLine fixture correction.
+## [2026-11-12] investigation | Forever integration fixtures
+
+Updated [Forever startup gaps](investigations/forever-startup-gaps.md#forever-70707-integration-fixture-differences) with the source-grounded fixture corrections, supplied item-overlay publication and independent eager-order audit for `forever-touched-15`. The original 15 exact failures were reproduced; targeted and final cross-profile proof is recorded in the private lane report.
+## [2026-11-12] correction | Bag fixture stages and insecure TOC screens
+
+Updated [frame-position investigation](investigations/frame-position-baseline-drift.md#bag-bar-test-application-stages--2026-11-12) with source-derived late-registration versus applied-preset anchors. Updated [addon loading](systems/addon-loading.md#screen-qualified-dependency-declarations) with VERIFIED R13 insecure-parser behavior and INFERRED third-party input-mode mapping; corrected the discovery expectation without changing the producer.
 
 ## [2026-11-11] correction | Addon loading phases and LoadWith followers
 
@@ -3676,3 +3682,7 @@ VERIFIED: [tooltip data](systems/lua-api.md#tooltip-data-and-merchant-cursor-pre
 ## 2026-11-12 — PTR spellbook anchors
 
 Updated [XML templates](systems/xml-template-system.md#texture-template-anchor-inheritance) and linked the [contract](../specs/texture-template-anchors.md). VERIFIED: PTR original locked spellbook and synthetic XML/runtime half-page tests change RED to GREEN after retaining inherited texture anchors. Profile preservation is pending.
+
+## 2026-11-12 — Unit-test cache isolation
+
+Updated addon-loading and the CASC contract: unit-test startup must reject stale/missing UI caches without auto-sync; normal startup remains unchanged. Recorded the concurrent Retail-pin overwrite incident and isolated reload-child regression.

@@ -128,7 +128,7 @@ fn assert_flyout_hidden_by_default(env: &WowLuaEnv) {
     assert!(!is_shown, "SpellFlyout must start hidden");
 }
 
-#[cfg(not(feature = "client-ptr"))]
+#[cfg(not(any(feature = "client-ptr", feature = "client-wowforever")))]
 fn assert_flyout_shown_with_seeded_spells(env: &WowLuaEnv) {
     let (is_shown, first_id, second_id, third_visible): (bool, i64, i64, bool) = env
         .eval(
@@ -153,7 +153,9 @@ fn assert_flyout_shown_with_seeded_spells(env: &WowLuaEnv) {
     );
 }
 
-#[cfg(feature = "client-ptr")]
+// Forever Shared/SpellFlyout.lua:214-215,338-339 creates unnamed pooled
+// buttons in self.buttons, rather than Retail's numbered global buttons.
+#[cfg(any(feature = "client-ptr", feature = "client-wowforever"))]
 fn assert_flyout_shown_with_seeded_spells(env: &WowLuaEnv) {
     let (is_shown, button_count, first_id, second_id): (bool, i64, i64, i64) = env
         .eval(
@@ -170,7 +172,10 @@ fn assert_flyout_shown_with_seeded_spells(env: &WowLuaEnv) {
         .expect("SpellFlyout populated-button probe must run cleanly");
 
     assert!(is_shown, "first toggle must show SpellFlyout");
-    assert_eq!(button_count, 2, "flyout must render two seeded spell buttons");
+    assert_eq!(
+        button_count, 2,
+        "flyout must render two seeded spell buttons"
+    );
     assert_eq!(first_id, FIRST_SPELL_ID as i64);
     assert_eq!(second_id, SECOND_SPELL_ID as i64);
 }

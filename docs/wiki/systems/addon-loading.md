@@ -4,6 +4,8 @@ The addon loading pipeline discovers addon directories, parses TOC files, loads 
 
 ## Blizzard UI cache & per-profile setup
 
+The `wow-sim` unit-test executable never auto-syncs missing or stale UI sources, including reload child processes. It reports the expected Retail/PTR pin and requires explicit cache preparation. The regression starts the original reload consumer in child processes with isolated stale and missing `XDG_CACHE_HOME` trees, then checks rejection and unchanged cache bytes. This prevents the 2026-11-12 incident in which concurrent unit tests from different pins rewrote the shared Retail cache. Normal user-facing startup still syncs. See the [cache-isolation contract](../../specs/casc-loading.md#unit-test-startup-cache-isolation). Profile cache directories are not yet pin-versioned.
+
 The Blizzard UI source isn't checked into this repo. Runtime loading reads the active profile from a user-cache tree:
 
 ```
@@ -27,7 +29,7 @@ wow-cli casc sync-blizzard-ui
 ./scripts/init-worktree.sh
 ```
 
-`scripts/init-worktree.sh` is the bootstrap for a fresh worktree: it syncs the active profile cache so startup, benchmarks, and tests can find Blizzard addon sources. Without the completed cache, or when required profile files are missing from an otherwise completed cache, startup re-runs the sync/reports the stale `~/.cache/wow-ui-sim/blizzard-ui/<profile>/AddOns` tree instead of falling back to repo-local symlinks.
+`scripts/init-worktree.sh` is the bootstrap for a fresh worktree: it syncs the active profile cache so startup, benchmarks, and tests can find Blizzard addon sources. Without the completed cache, or when required profile files are missing from an otherwise completed cache, normal non-test startup re-runs the sync/reports the stale `~/.cache/wow-ui-sim/blizzard-ui/<profile>/AddOns` tree instead of falling back to repo-local symlinks.
 
 Wrath uses the separate pinned source route described in [client profiles](client-profiles.md#runtime-cache), not CASC UI-source extraction. Asset CASC selection is unchanged.
 
@@ -47,7 +49,7 @@ VERIFIED (native R13, Retail 12.1.5.70688; the screen-mismatch result and `Both`
 
 VERIFIED (native R13, Retail 70688): a trailing `[AllowLoad glue]`, `[AllowLoad game]`, or `[AllowLoad both]` is a condition on the whole TOC header line. The client checks it before dispatching the directive or splitting dependency names. A rejected line contributes no dependencies; an accepted line has the bracket removed. Values are exact and case-insensitive: an unknown value or `glue game` has an empty mask and rejects the line. Names split only on ASCII spaces and commas. Use separate lines for different conditions. The line condition does not change the target addon's own `AllowLoad` mask. Forever's complete bracket grammar is partial evidence; PTR's is unknown.
 
-VERIFIED (native R13, Retail 70688): `GetAddOnInfo` and `IsAddOnLoadable` skip active-screen checks. INFERRED: when other checks pass, these queries can report an addon loadable while `LoadAddOn` rejects its required dependency. Optional dependencies are not recursively validated, and their load failures are ignored. In insecure TOC mode, `AllowLoad` is ignored and the addon keeps the Game default.
+VERIFIED (native R13, Retail 70688): `GetAddOnInfo` and `IsAddOnLoadable` skip active-screen checks. INFERRED: when other checks pass, these queries can report an addon loadable while `LoadAddOn` rejects its required dependency. Optional dependencies are not recursively validated, and their load failures are ignored. VERIFIED (R13, Retail 70688): in insecure TOC mode, `AllowLoad` is ignored and the addon keeps the Game default. INFERRED (R64 Q1): ordinary third-party AddOns use that parser mode. The simulator therefore retains Game-only selection for non-builtin addons; explicit Glue/Both headers do not enable Glue discovery. The former `GameLazy`/`GlueLazy` discovery expectation is superseded; see the [screen contract](../../specs/addon-load-phases.md#screen-selection).
 
 The simulator stores dependency declarations by header line. `TocFile::dependencies_for_screen` and `optional_deps_for_screen` filter whole lines before returning names; runtime loading maps the two wrong-screen errors above, and startup discovery uses the same line filter. It checks the required dependency chain before startup files run. Query APIs retain their separate screen-agnostic loadability path.
 

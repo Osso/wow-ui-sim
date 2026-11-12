@@ -49,6 +49,8 @@ pub(crate) mod item_quality_color;
 pub(crate) mod journal_collected;
 pub mod mount_filters;
 pub(crate) mod ptr_i4_game_rules;
+#[cfg(feature = "client-ptr")]
+pub mod ptr_store_override;
 pub(crate) mod quest_difficulty;
 pub mod quest_objectives;
 pub mod quest_readiness;
@@ -128,6 +130,8 @@ pub mod c_catalog_shop;
 pub mod c_catalog_shop_products;
 pub mod c_challenge_mode;
 pub(crate) mod c_character_creation;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub mod c_character_creation_customizations;
 pub(crate) mod c_character_creation_naming;
 pub(crate) mod c_character_creation_seen;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]

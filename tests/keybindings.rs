@@ -351,7 +351,13 @@ fn c_keybindings_index_resolves_registry_rows() {
 
 #[test]
 fn modified_clicks_round_trip_through_runtime_surface() {
-    #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+    // loader/addon.rs:537 loads selected Bindings XML defaults; Forever
+    // Bindings_Camelot.xml:1533 supplies SELFCAST=ALT, not the bare environment.
+    #[cfg(any(
+        feature = "client-retail",
+        feature = "client-ptr",
+        feature = "client-wowforever"
+    ))]
     let env = {
         let (env, loaded) = crate::common::blizzard_addon_harness::build_blizzard_addon_closure_env(
             &crate::common::blizzard_addon_harness::blizzard_ui_dir(),
@@ -361,7 +367,11 @@ fn modified_clicks_round_trip_through_runtime_surface() {
         assert!(loaded.iter().any(|name| name == "Blizzard_FrameXML"));
         env
     };
-    #[cfg(not(any(feature = "client-retail", feature = "client-ptr")))]
+    #[cfg(not(any(
+        feature = "client-retail",
+        feature = "client-ptr",
+        feature = "client-wowforever"
+    )))]
     let env = env();
     let (
         default_self_cast,

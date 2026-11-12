@@ -313,21 +313,45 @@ fn keybind_s_keeps_spellbook_backgrounds_below_icons_after_initial_bucket_build(
             .find(|request| bounds_match_rect(quad_bounds(&batch, request), icon_rect))
             .expect("Spellbook first-open path should emit a textured quad for the first visible spell icon");
 
+        // Forever PlayerSpells.toc:31-32 selects Camelot spellbook templates;
+        // Camelot/SpellBook/Blizzard_SpellBookTemplates.xml:37,43,49 uses C60 art.
+        #[cfg(feature = "client-wowforever")]
+        let background_files: Vec<String> = ["spellbook-Page-Left-C60", "spellbook-Page-Right-C60"]
+            .iter()
+            .map(|atlas| wow_ui_sim::atlas::get_render_atlas_info(atlas)
+                .unwrap_or_else(|| panic!("Forever spellbook atlas {atlas} must resolve"))
+                .info.file.replace('\\', "/").to_ascii_lowercase())
+            .collect();
+
         let last_background_request = batch
             .texture_requests
             .iter()
             .filter(|request| {
-                request
-                    .path
-                    .to_ascii_lowercase()
-                    .contains(if is_wrath() {
-                        "ui-spellbookpanel-"
-                    } else {
-                        "spellbookbackgroundevergreen"
-                    })
+                #[cfg(feature = "client-wowforever")]
+                {
+                    // quad_builders_textures.rs::remap_atlas_crop adds the
+                    // atlas subregion suffix to this same source texture file.
+                    let path = request.path.replace('\\', "/").to_ascii_lowercase();
+                    let file = path.split('@').next().unwrap();
+                    background_files.iter().any(|expected| file == expected)
+                }
+                #[cfg(not(feature = "client-wowforever"))]
+                {
+                    request
+                        .path
+                        .to_ascii_lowercase()
+                        .contains(if is_wrath() {
+                            "ui-spellbookpanel-"
+                        } else {
+                            "spellbookbackgroundevergreen"
+                        })
+                }
             })
             .max_by_key(|request| request.vertex_start)
-            .expect("Spellbook should emit evergreen parchment background quads");
+            .unwrap_or_else(|| panic!(
+                "Spellbook should emit its selected parchment background quads; textures: {:?}",
+                batch.texture_requests.iter().map(|request| &request.path).collect::<Vec<_>>()
+            ));
 
         assert!(
             last_background_request.vertex_start < icon_request.vertex_start,
@@ -445,6 +469,9 @@ fn hidden_talent_dialogs_do_not_emit_quads_after_opening_talents() {
 
 // ── A → ToggleAchievementFrame() ────────────────────────────────────────
 
+// Forever Bindings_Camelot.xml has no TOGGLEACHIEVEMENT binding;
+// the Retail binding under test is in Bindings_Standard.xml:1251.
+#[cfg(not(feature = "client-wowforever"))]
 #[test]
 fn keybind_a_opens_achievements() {
     test_timeout! {

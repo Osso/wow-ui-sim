@@ -12,12 +12,6 @@ if type(rawget(C_StorePublic, "_state")) ~= "table" then
     })
 end
 
-if rawget(C_StorePublic, "IsEnabled") == nil then
-    function C_StorePublic.IsEnabled()
-        return true
-    end
-end
-
 if rawget(C_StorePublic, "EventStoreUISetShown") == nil then
     function C_StorePublic.EventStoreUISetShown(shown, contextKey)
         local state = rawget(C_StorePublic, "_state")
@@ -25,6 +19,17 @@ if rawget(C_StorePublic, "EventStoreUISetShown") == nil then
         state.contextKey = contextKey
     end
 end
+"#;
+
+// Guessed/unevidenced non-PTR fallback retained pending profile-specific evidence.
+// R75 does not authorize changing other profiles (lt-4183 comment 227).
+const NON_PTR_STORE_AVAILABILITY_FALLBACK_LUA: &str = r#"
+if rawget(C_StorePublic, "IsEnabled") == nil then
+    function C_StorePublic.IsEnabled()
+        return true
+    end
+end
+
 "#;
 
 const STORE_FRAME_ESCAPE_DEFAULTS_LUA: &str = r#"
@@ -42,6 +47,9 @@ end
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(STORE_PUBLIC_DEFAULTS_LUA)?;
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Ptr {
+        lua.exec(NON_PTR_STORE_AVAILABILITY_FALLBACK_LUA)?;
+    }
     Ok(())
 }
 
@@ -52,6 +60,16 @@ pub(crate) fn patch(env: &crate::lua_api::WowLuaEnv) {
 #[cfg(test)]
 mod tests {
     use crate::lua_api::WowLuaEnv;
+
+    #[cfg(feature = "client-ptr")]
+    #[test]
+    fn ptr_bootstrap_does_not_guess_missing_store_availability() {
+        let env = WowLuaEnv::new().unwrap();
+        env.exec("C_StorePublic.IsEnabled = nil").unwrap();
+        super::apply_bootstrap(&mut env.lua.borrow_mut()).unwrap();
+        env.exec("assert(rawget(C_StorePublic, 'IsEnabled') == nil)")
+            .unwrap();
+    }
 
     #[test]
     fn installs_store_public_defaults() {

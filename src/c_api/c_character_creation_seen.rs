@@ -3,6 +3,8 @@
 use crate::client_profile::{ACTIVE, ClientProfile};
 
 pub(crate) fn install(lua: &mut rilua::Lua) -> crate::Result<()> {
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    super::c_character_creation_customizations::install(lua)?;
     if matches!(
         ACTIVE,
         ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
