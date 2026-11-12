@@ -154,18 +154,18 @@ fn nested_guards_execute_each_closure_once() {
 
 #[test]
 fn timeout_children_are_limited_to_two_concurrent_processes() {
-    assert_concurrency_fixture(true);
+    assert_concurrency_fixture();
 }
 
 #[test]
 fn timeout_fixtures_can_run_concurrently() {
     std::thread::scope(|scope| {
         let launchers = [
-            scope.spawn(|| assert_concurrency_fixture(false)),
+            scope.spawn(assert_concurrency_fixture),
             scope.spawn(assert_permit_release_fixture),
-            scope.spawn(|| assert_concurrency_fixture(false)),
+            scope.spawn(assert_concurrency_fixture),
             scope.spawn(assert_permit_release_fixture),
-            scope.spawn(|| assert_concurrency_fixture(false)),
+            scope.spawn(assert_concurrency_fixture),
             scope.spawn(assert_permit_release_fixture),
         ];
         for launcher in launchers {
@@ -174,7 +174,7 @@ fn timeout_fixtures_can_run_concurrently() {
     });
 }
 
-fn assert_concurrency_fixture(expect_saturation: bool) {
+fn assert_concurrency_fixture() {
     let temp = TempDir::new().expect("create concurrency fixture tempdir");
     let state_path = temp.path().join("concurrency-state");
     std::fs::write(&state_path, "0 0\n").expect("initialize concurrency state");
@@ -189,18 +189,11 @@ fn assert_concurrency_fixture(expect_saturation: bool) {
 
     let (active, peak) = read_concurrency_state(&state_path);
     assert_eq!(active, 0, "all timeout children must release their slots");
-    let child_limit = expected_timeout_child_limit();
-    if expect_saturation {
-        assert_eq!(
-            peak, child_limit,
-            "single fixture must reach the child limit"
-        );
-    } else {
-        assert!(
-            peak > 0 && peak <= child_limit,
-            "concurrent fixture peak must stay within the configured child limit"
-        );
-    }
+    assert_eq!(
+        peak,
+        expected_timeout_child_limit(),
+        "timeout child peak exceeded the intended bound"
+    );
 }
 
 #[test]
@@ -465,10 +458,9 @@ fn apply_concurrency_delta((active, peak): (u32, u32), delta: i32) -> (u32, u32)
 }
 
 fn write_locked_concurrency_state(file: &mut File, (active, peak): (u32, u32)) {
-    // The configured child limit is at most six, so both counters stay one digit.
-    // Keep the four-byte record in place; termination must not leave it truncated.
     file.seek(SeekFrom::Start(0))
         .expect("rewind timeout concurrency state");
+    // Keep the fixed-width record intact if a timeout terminates this child.
     file.write_all(format!("{active} {peak}\n").as_bytes())
         .expect("write timeout concurrency state");
 }
@@ -569,42 +561,42 @@ mod fixtures {
         #[test]
         fn a_records_concurrency() {
             if fixture_mode() == Some("concurrency") {
-                crate::common::with_timeout(5, record_concurrency_window);
+                crate::common::with_timeout(1, record_concurrency_window);
             }
         }
 
         #[test]
         fn b_records_concurrency() {
             if fixture_mode() == Some("concurrency") {
-                crate::common::with_timeout(5, record_concurrency_window);
+                crate::common::with_timeout(1, record_concurrency_window);
             }
         }
 
         #[test]
         fn c_records_concurrency() {
             if fixture_mode() == Some("concurrency") {
-                crate::common::with_timeout(5, record_concurrency_window);
+                crate::common::with_timeout(1, record_concurrency_window);
             }
         }
 
         #[test]
         fn d_records_concurrency() {
             if fixture_mode() == Some("concurrency") {
-                crate::common::with_timeout(5, record_concurrency_window);
+                crate::common::with_timeout(1, record_concurrency_window);
             }
         }
 
         #[test]
         fn e_records_concurrency() {
             if fixture_mode() == Some("concurrency") {
-                crate::common::with_timeout(5, record_concurrency_window);
+                crate::common::with_timeout(1, record_concurrency_window);
             }
         }
 
         #[test]
         fn f_records_concurrency() {
             if fixture_mode() == Some("concurrency") {
-                crate::common::with_timeout(5, record_concurrency_window);
+                crate::common::with_timeout(1, record_concurrency_window);
             }
         }
     }

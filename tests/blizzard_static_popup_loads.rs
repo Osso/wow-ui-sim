@@ -269,7 +269,7 @@ fn toc_raw_bytes_pin_three_metadata_directives() {
 
 post_wrath_ui_fixture! {
 #[test]
-fn body_lists_profile_selected_lua_files_in_dependency_order() {
+fn body_lists_active_profile_lua_files_in_dependency_order() {
     let toc = TocFile::from_file(&static_popup_toc()).expect("TOC parses");
 
     let body: Vec<String> = toc
@@ -279,6 +279,7 @@ fn body_lists_profile_selected_lua_files_in_dependency_order() {
         .collect();
 
     let expected: &[&str] = if toc_layout::unified_toc_tree() {
+        // PTR/Forever StaticPopup.toc lists StaticPopupGamepad.lua as its fourth entry.
         &[
             "StaticPopup.lua",
             "SharedTemplates.lua",
@@ -292,7 +293,7 @@ fn body_lists_profile_selected_lua_files_in_dependency_order() {
     assert_eq!(
         body.len(),
         expected.len(),
-        "StaticPopup body entries follow the active profile TOC. Got: {body:?}"
+        "Body must match the selected StaticPopup TOC entries: {body:?}"
     );
 
     for (i, want) in expected.iter().enumerate() {
@@ -305,9 +306,16 @@ fn body_lists_profile_selected_lua_files_in_dependency_order() {
 
     assert!(
         body.iter().all(|file| file.ends_with(".lua")),
-        "Every selected StaticPopup body entry must be Lua source; the unified TOC also \
-         selects StaticPopupGamepad.lua after the dispatcher and shared definitions: {body:?}"
+        "StaticPopup's selected dispatcher, templates, definitions, and optional gamepad \
+         source must all be Lua: {body:?}"
     );
+}
+}
+
+post_wrath_ui_fixture! {
+#[test]
+fn body_lists_three_lua_files_in_dependency_order() {
+    body_lists_active_profile_lua_files_in_dependency_order();
 }
 }
 

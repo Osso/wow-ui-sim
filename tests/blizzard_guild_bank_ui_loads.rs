@@ -239,22 +239,31 @@ fn blizzard_guild_bank_ui_loads_explicitly_without_unexpected_addon_specific_lua
 }
 }
 
-#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[cfg(feature = "client-ptr")]
 #[test]
-fn mainline_guild_bank_bootstrap_hide_wrapper_hides_the_open_frame() {
+fn ptr_guild_bank_does_not_publish_snapshot_only_hide_wrapper() {
     let env = load_full_game_ui_with_guild_bank_lod();
 
-    let wrapper_targeted_frame: bool = env
+    let wrapper_hides_frame: bool = env
         .eval(
-            "if type(HideGuildBankFrame) ~= 'function' or not GuildBankFrame then return false end; \
-             local expected = GuildBankFrame; local actual; local original = HideUIPanel; \
-             HideUIPanel = function(frame) actual = frame end; \
-             HideGuildBankFrame(); HideUIPanel = original; return actual == expected",
+            r#"
+            local originalHide = HideUIPanel
+            local originalLoaded = C_AddOns.IsAddOnLoaded
+            local hidGuildBank = false
+            C_AddOns.IsAddOnLoaded = function(name) return name == "Blizzard_GuildBankUI" end
+            HideUIPanel = function(frame) hidGuildBank = frame == GuildBankFrame end
+            GuildBankFrame = {}
+            local callable = type(HideGuildBankFrame) == "function"
+            HideGuildBankFrame()
+            HideUIPanel = originalHide
+            C_AddOns.IsAddOnLoaded = originalLoaded
+            return callable and hidGuildBank
+            "#,
         )
-        .expect("selected GuildBank bootstrap hide wrapper should run");
+        .expect("guild bank wrapper behavior should be queryable");
     assert!(
-        wrapper_targeted_frame,
-        "HideGuildBankFrame must pass the original GuildBankFrame to HideUIPanel"
+        wrapper_hides_frame,
+        "PTR GuildBankUI bootstrap.lua:14-18 publishes a loaded-addon hide delegate"
     );
 }
 
@@ -399,4 +408,23 @@ fn blizzard_guild_bank_ui_publishes_guild_bank_money_frame_global(env: &WowLuaEn
          current money balance"
     );
 }
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn mainline_guild_bank_bootstrap_hide_wrapper_hides_the_open_frame() {
+    let env = load_full_game_ui_with_guild_bank_lod();
+
+    let wrapper_targeted_frame: bool = env
+        .eval(
+            "if type(HideGuildBankFrame) ~= 'function' or not GuildBankFrame then return false end; \
+             local expected = GuildBankFrame; local actual; local original = HideUIPanel; \
+             HideUIPanel = function(frame) actual = frame end; \
+             HideGuildBankFrame(); HideUIPanel = original; return actual == expected",
+        )
+        .expect("selected GuildBank bootstrap hide wrapper should run");
+    assert!(
+        wrapper_targeted_frame,
+        "HideGuildBankFrame must pass the original GuildBankFrame to HideUIPanel"
+    );
 }

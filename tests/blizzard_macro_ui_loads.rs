@@ -103,31 +103,20 @@ const MACRO_FREE_FUNCTIONS: &[&str] = &[
     "MacroEditButton_OnClick",
 ];
 
-fn load_full_game_ui() -> WowLuaEnv {
+fn fresh_game_env() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
     env.set_screen_size(1024.0, 768.0);
     env.set_screen_mode(ScreenKind::Game);
-
-    {
-        let mut state = env.state().borrow_mut();
-        state.addon_base_paths = vec![blizzard_ui_dir()];
-    }
-
+    env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
     wow_ui_sim::xml::register_intrinsic_templates();
+    env
+}
 
+fn load_full_game_ui() -> WowLuaEnv {
+    let env = fresh_game_env();
     let ui = blizzard_ui_dir();
     let addons = discover_blizzard_addons_for_screen(&ui, ScreenKind::Game);
     for (name, toc_path) in &addons {
-        if name == "Blizzard_MacroUI" {
-            // PTR TOC line 4 marks only this file as Bootstrap; lines 7-10 remain LoadOnDemand.
-            crate::common::load_blizzard_addon_bootstrap(
-                &env,
-                &ui,
-                "Blizzard_MacroUI",
-                "Blizzard_MacroUI_Bootstrap.lua",
-            );
-            continue;
-        }
         load_addon(&env.loader_env(), toc_path)
             .unwrap_or_else(|err| panic!("[load {name}] FAILED: {err}"));
     }
@@ -286,15 +275,15 @@ fn blizzard_macro_ui_toc_lists_bootstrap_then_five_ui_files_in_dependency_order(
 }
 
 #[test]
-fn blizzard_macro_ui_directory_matches_profile_manifest() {
+fn blizzard_macro_ui_directory_holds_nine_entries_with_bootstrap() {
     let entries = std::fs::read_dir(macro_ui_dir())
         .expect("Blizzard_MacroUI directory reads")
         .count();
     let expected_entries = if toc_layout::unified_toc_tree() { 8 } else { 9 };
     assert_eq!(
         entries, expected_entries,
-        "Directory entry count follows the active manifest: unified PTR/Forever has 8 \
-         top-level entries because Mainline files are stored in subdirectories"
+        "Directory must hold {expected_entries} entries. PTR/Forever MacroUI.toc:4-11 \
+         explicitly lists eight files; Retail's pinned tree has nine directory entries"
     );
 }
 
@@ -477,32 +466,28 @@ fn blizzard_macro_ui_publishes_macro_popup_frame_mixin_with_seven_methods(env: &
 }
 }
 
-#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[cfg(feature = "client-ptr")]
 #[test]
-fn mainline_macro_save_delegate_is_published_after_lod_load() {
-    let env = load_full_game_ui();
-
-    let save_delegate_unpublished: bool = env
-        .eval("return MacroFrame_SaveMacro == nil")
-        .expect("startup MacroFrame_SaveMacro publication probe should succeed");
-    assert!(
-        save_delegate_unpublished,
-        "the selected LoadOnDemand TOC body must not publish MacroFrame_SaveMacro at startup"
-    );
-
+fn ptr_macro_save_placeholder_is_replaced_by_lod_delegate() {
+    let env = fresh_game_env();
     load_addon(&env.loader_env(), &macro_ui_toc())
-        .expect("Blizzard_MacroUI should load through its selected TOC");
+        .expect("Blizzard_MacroUI loads through its explicit LoD entry point");
 
-    let lod_delegate_called: bool = env
+    let delegated: bool = env
         .eval(
             r#"
             MacroFrame = { calls = 0, SaveMacro = function(self) self.calls = self.calls + 1 end }
+            local callable = type(MacroFrame_SaveMacro) == "function"
             MacroFrame_SaveMacro()
-            return MacroFrame.calls == 1
+            return callable and MacroFrame.calls == 1
             "#,
         )
-        .expect("selected MacroFrame_SaveMacro delegate probe should succeed");
-    assert!(lod_delegate_called);
+        .expect("MacroFrame_SaveMacro delegate probe should succeed");
+    assert!(
+        delegated,
+        "PTR MacroUI.lua:20-21 publishes MacroFrame_SaveMacro as a delegate to \
+         MacroFrame:SaveMacro() after the LoadOnDemand addon loads"
+    );
 }
 
 prefork_full_ui_case! {
@@ -643,4 +628,32 @@ fn blizzard_macro_ui_publishes_macro_popup_frame_global_parented_to_macro_frame(
          the player clicks New / Edit (which sets MacroPopupFrame.mode + calls Show)"
     );
 }
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn mainline_macro_save_delegate_is_published_after_lod_load() {
+    let env = load_full_game_ui();
+
+    let save_delegate_unpublished: bool = env
+        .eval("return MacroFrame_SaveMacro == nil")
+        .expect("startup MacroFrame_SaveMacro publication probe should succeed");
+    assert!(
+        save_delegate_unpublished,
+        "the selected LoadOnDemand TOC body must not publish MacroFrame_SaveMacro at startup"
+    );
+
+    load_addon(&env.loader_env(), &macro_ui_toc())
+        .expect("Blizzard_MacroUI should load through its selected TOC");
+
+    let lod_delegate_called: bool = env
+        .eval(
+            r#"
+            MacroFrame = { calls = 0, SaveMacro = function(self) self.calls = self.calls + 1 end }
+            MacroFrame_SaveMacro()
+            return MacroFrame.calls == 1
+            "#,
+        )
+        .expect("selected MacroFrame_SaveMacro delegate probe should succeed");
+    assert!(lod_delegate_called);
 }

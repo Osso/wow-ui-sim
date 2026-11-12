@@ -210,24 +210,84 @@ fn test_load_game_menu() {
         .expect("12340 game menu continue-button lifecycle");
         return;
     }
-    let env = crate::common::game_menu_fixture::setup_game_menu_env();
-    let (mixin_exists, frame_exists): (bool, bool) = env
-        .eval("return GameMenuFrameMixin ~= nil, GameMenuFrame ~= nil")
-        .expect("selected GameMenu consumer should publish its frame and mixin");
-    assert!(mixin_exists, "GameMenuFrameMixin should exist");
-    assert!(frame_exists, "GameMenuFrame should exist");
+    let blizzard_ui = wow_ui_sim::client_profile::blizzard_ui_addons_dir_under(
+        std::path::Path::new(env!("CARGO_MANIFEST_DIR")),
+    );
 
-    env.exec(
-        r#"
-        assert(not GameMenuFrame:IsShown())
-        ShowUIPanel(GameMenuFrame)
-        assert(GameMenuFrame:IsShown())
-        assert(GameMenuFrame.closeButton)
-        GameMenuFrame.closeButton:Click()
-        assert(not GameMenuFrame:IsShown())
-        "#,
-    )
-    .expect("active-profile GameMenu close-button lifecycle");
+    if !blizzard_ui.exists() {
+        eprintln!("Skipping: BlizzardUI not found at {:?}", blizzard_ui);
+        return;
+    }
+
+    let env = WowLuaEnv::new().unwrap();
+
+    // First load Blizzard_SharedXML (already tested to work)
+    let shared_xml_base_toc =
+        wow_ui_sim::loader::find_toc_file(&blizzard_ui.join("Blizzard_SharedXMLBase"))
+            .expect("SharedXMLBase active-profile TOC resolves");
+    match load_addon(&env.loader_env(), &shared_xml_base_toc) {
+        Ok(r) => println!("SharedXMLBase: {} Lua, {} XML", r.lua_files, r.xml_files),
+        Err(e) => println!("SharedXMLBase failed: {}", e),
+    }
+
+    let shared_xml_toc = wow_ui_sim::loader::find_toc_file(&blizzard_ui.join("Blizzard_SharedXML"))
+        .expect("SharedXML active-profile TOC resolves");
+    match load_addon(&env.loader_env(), &shared_xml_toc) {
+        Ok(r) => println!(
+            "SharedXML: {} Lua, {} XML (warnings: {})",
+            r.lua_files,
+            r.xml_files,
+            r.warnings.len()
+        ),
+        Err(e) => println!("SharedXML failed: {}", e),
+    }
+
+    // PTR 12.1.7 Blizzard_GameMenu.toc:7-9 selects the shared frame source.
+    let game_menu_toc = wow_ui_sim::loader::find_toc_file(&blizzard_ui.join("Blizzard_GameMenu"))
+        .expect("GameMenu active-profile TOC resolves");
+    let result = load_addon(&env.loader_env(), &game_menu_toc);
+
+    match result {
+        Ok(r) => {
+            println!(
+                "GameMenu loaded: {} Lua files, {} XML files",
+                r.lua_files, r.xml_files
+            );
+            if !r.warnings.is_empty() {
+                println!("Warnings ({}):", r.warnings.len());
+                for w in &r.warnings {
+                    println!("  {}", w);
+                }
+            }
+        }
+        Err(e) => {
+            println!("GameMenu failed to load: {}", e);
+        }
+    }
+
+    // Check if GameMenuFrame exists
+    let mixin_exists: bool = env
+        .eval("return GameMenuFrameMixin ~= nil")
+        .unwrap_or(false);
+    let frame_exists: bool = env.eval("return GameMenuFrame ~= nil").unwrap_or(false);
+    let main_menu_mixin: bool = env
+        .eval("return MainMenuFrameMixin ~= nil")
+        .unwrap_or(false);
+
+    println!("GameMenuFrameMixin exists: {}", mixin_exists);
+    println!("GameMenuFrame exists: {}", frame_exists);
+    println!("MainMenuFrameMixin exists: {}", main_menu_mixin);
+
+    // Try to show the menu (if frame exists)
+    if frame_exists {
+        let _ = env.exec("GameMenuFrame:Show()");
+        let visible: bool = env
+            .eval("return GameMenuFrame:IsVisible()")
+            .unwrap_or(false);
+        println!("GameMenuFrame visible after Show(): {}", visible);
+    }
+
+    assert!(mixin_exists, "GameMenuFrameMixin should exist");
 }
 
 #[test]
@@ -426,4 +486,42 @@ fn test_load_plater() {
             println!("Plater failed to load: {}", e);
         }
     }
+}
+
+#[test]
+fn selected_game_menu_close_button_lifecycle() {
+    if cfg!(feature = "client-wrath") {
+        let env = WowLuaEnv::new().unwrap();
+        crate::common::load_profile_framexml(&env);
+        env.exec(
+            r#"
+            assert(GameMenuFrameMixin == nil)
+            assert(not GameMenuFrame:IsShown())
+            ShowUIPanel(GameMenuFrame)
+            assert(GameMenuFrame:IsShown())
+            GameMenuButtonContinue:Click()
+            assert(not GameMenuFrame:IsShown())
+        "#,
+        )
+        .expect("12340 game menu continue-button lifecycle");
+        return;
+    }
+    let env = crate::common::game_menu_fixture::setup_game_menu_env();
+    let (mixin_exists, frame_exists): (bool, bool) = env
+        .eval("return GameMenuFrameMixin ~= nil, GameMenuFrame ~= nil")
+        .expect("selected GameMenu consumer should publish its frame and mixin");
+    assert!(mixin_exists, "GameMenuFrameMixin should exist");
+    assert!(frame_exists, "GameMenuFrame should exist");
+
+    env.exec(
+        r#"
+        assert(not GameMenuFrame:IsShown())
+        ShowUIPanel(GameMenuFrame)
+        assert(GameMenuFrame:IsShown())
+        assert(GameMenuFrame.closeButton)
+        GameMenuFrame.closeButton:Click()
+        assert(not GameMenuFrame:IsShown())
+        "#,
+    )
+    .expect("active-profile GameMenu close-button lifecycle");
 }

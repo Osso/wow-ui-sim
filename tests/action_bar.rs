@@ -2,14 +2,88 @@
 
 use crate::common;
 
+use std::path::PathBuf;
 use wow_ui_sim::lua_api::WowLuaEnv;
+
+fn blizzard_ui_dir() -> PathBuf {
+    wow_ui_sim::client_profile::blizzard_ui_addons_dir_under(std::path::Path::new(env!(
+        "CARGO_MANIFEST_DIR"
+    )))
+}
+
+/// Blizzard addons needed for the action bar, in dependency order.
+const ACTION_BAR_ADDONS: &[&str] = &[
+    "Blizzard_SharedXMLBase",
+    "Blizzard_Colors",
+    "Blizzard_SharedXML",
+    #[cfg(feature = "client-ptr")]
+    "Blizzard_GamepadSmartNavigation",
+    "Blizzard_SharedXMLGame",
+    "Blizzard_UIPanelTemplates",
+    "Blizzard_FrameXMLBase",
+    "Blizzard_LoadLocale",
+    "Blizzard_Fonts_Shared",
+    "Blizzard_HelpPlate",
+    "Blizzard_AccessibilityTemplates",
+    "Blizzard_ObjectAPI",
+    "Blizzard_UIParent",
+    "Blizzard_TextStatusBar",
+    "Blizzard_MoneyFrame",
+    "Blizzard_POIButton",
+    "Blizzard_Flyout",
+    "Blizzard_GameMenuEsc",
+    "Blizzard_StoreUI",
+    "Blizzard_MicroMenu",
+    "Blizzard_ManagedFrameSystem",
+    "Blizzard_UIParentUtil",
+    "Blizzard_EditMode",
+    #[cfg(feature = "client-ptr")]
+    "Blizzard_StatusTrackingBar",
+    "Blizzard_GarrisonBase",
+    "Blizzard_GameTooltip",
+    #[cfg(feature = "client-ptr")]
+    "Blizzard_StaticPopup",
+    "Blizzard_UIParentPanelManager",
+    #[cfg(feature = "client-ptr")]
+    "Blizzard_GamepadSharedUtility",
+    "Blizzard_Settings_Shared",
+    "Blizzard_SettingsDefinitions_Shared",
+    "Blizzard_SettingsDefinitions_Frame",
+    "Blizzard_FrameXMLUtil",
+    "Blizzard_ItemButton",
+    "Blizzard_QuickKeybind",
+    #[cfg(feature = "client-ptr")]
+    "Blizzard_RaidWarning",
+    "Blizzard_FrameXML",
+    "Blizzard_UIPanels_Game",
+    // PTR bag button OnLoad needs container and item-button helpers above.
+    #[cfg(feature = "client-ptr")]
+    "Blizzard_MainMenuBarBagButtons",
+    "Blizzard_MapCanvasSecureUtil",
+    "Blizzard_MapCanvas",
+    "Blizzard_SharedMapDataProviders",
+    "Blizzard_WorldMap",
+    "Blizzard_PingUI",
+    #[cfg(feature = "client-ptr")]
+    "Blizzard_SpellTypeIconOverlay",
+    "Blizzard_ActionBar",
+];
 
 fn build_action_bar_env() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
     env.set_screen_size(1024.0, 768.0);
 
-    common::panel_fixtures::seed_addon_search_paths(&env);
-    common::panel_fixtures::load_panel_addons(&env);
+    // Set addon_base_paths so runtime LoadAddOn() can find on-demand addons.
+    {
+        let mut state = env.state().borrow_mut();
+        state.addon_base_paths = vec![blizzard_ui_dir()];
+    }
+
+    if !common::load_classic_game_startup_inventory(&env) {
+        for addon_name in ACTION_BAR_ADDONS {
+            common::load_required_blizzard_addon(&env, &blizzard_ui_dir(), addon_name);
+        }
+    }
 
     env.apply_post_load_workarounds();
     fire_startup_events(&env);
@@ -83,22 +157,24 @@ fn test_main_action_bar_end_caps_visible_after_startup() {
 
     let env = env_with_action_bar();
 
-    let (shown, left_atlas, right_atlas): (bool, String, String) = env
-        .eval(
-            r#"
-            if not MainActionBar or not MainActionBar.EndCaps then
-                return false, "", ""
-            end
-            local left = MainActionBar.EndCaps.LeftEndCap
-            local right = MainActionBar.EndCaps.RightEndCap
-            local leftTexture = left and (left.Texture or left)
-            local rightTexture = right and (right.Texture or right)
-            return MainActionBar.EndCaps:IsShown(),
-                   (leftTexture and leftTexture.GetAtlas and leftTexture:GetAtlas()) or "",
-                   (rightTexture and rightTexture.GetAtlas and rightTexture:GetAtlas()) or ""
-            "#,
-        )
-        .unwrap();
+    let endcap_texture_access = if cfg!(feature = "client-ptr") {
+        ".Texture"
+    } else {
+        ""
+    };
+    let script = format!(
+        r#"
+        if not MainActionBar or not MainActionBar.EndCaps then
+            return false, "", ""
+        end
+        local left = MainActionBar.EndCaps.LeftEndCap{endcap_texture_access}
+        local right = MainActionBar.EndCaps.RightEndCap{endcap_texture_access}
+        return MainActionBar.EndCaps:IsShown(),
+               (left and left.GetAtlas and left:GetAtlas()) or "",
+               (right and right.GetAtlas and right:GetAtlas()) or ""
+        "#
+    );
+    let (shown, left_atlas, right_atlas): (bool, String, String) = env.eval(&script).unwrap();
 
     assert!(shown, "MainActionBar.EndCaps should be shown after startup");
     assert_eq!(left_atlas, "ui-hud-actionbar-gryphon-left");
@@ -475,7 +551,6 @@ fn test_bag_bar_layout_locked() {
         .eval(
             r#"
             local EPS = 0.75
-            local BAGS_ANCHOR_OFFSET_Y = 10
 
             local function approx(actual, expected, eps)
                 if type(actual) ~= "number" or type(expected) ~= "number" then
@@ -484,51 +559,13 @@ fn test_bag_bar_layout_locked() {
                 return math.abs(actual - expected) <= (eps or EPS)
             end
 
-            local function points_debug(frame)
-                local out = {}
-                for i = 1, frame:GetNumPoints() do
-                    local p, r, rp, ox, oy = frame:GetPoint(i)
-                    local rn = r and r:GetName() or "nil"
-                    out[#out + 1] = string.format("%s->%s:%s(%.2f,%.2f)", tostring(p), rn, tostring(rp), tonumber(ox) or 0, tonumber(oy) or 0)
-                end
-                table.sort(out)
-                return table.concat(out, " | ")
-            end
-
             local function rect(frame, tag)
                 if type(frame) ~= "table" then
                     return nil, tag .. "_missing"
                 end
                 local l, b, w, h = frame:GetRect()
                 if not (l and b and w and h) then
-                    local frameWidth, frameHeight = frame:GetSize()
-                    local parent = frame:GetParent()
-                    local parentRect = "<missing>"
-                    if parent then
-                        local pl, pb, pw, ph = parent:GetRect()
-                        parentRect = string.format("%s/%s/%s/%s", tostring(pl), tostring(pb), tostring(pw), tostring(ph))
-                    end
-                    local point, relative, relativePoint, x, y = frame:GetPoint(1)
-                    local relativeRect = "<missing>"
-                    if relative then
-                        local rl, rb, rw, rh = relative:GetRect()
-                        relativeRect = string.format("%s/%s/%s/%s", tostring(rl), tostring(rb), tostring(rw), tostring(rh))
-                    end
-                    return nil, string.format(
-                        "%s_missing_rect:%sx%s:parent=%s:%s:relative=%s:point=%s:relative_point=%s:offset=(%s,%s):relative_rect=%s:points=%s",
-                        tag,
-                        tostring(frameWidth),
-                        tostring(frameHeight),
-                        parent and parent:GetName() or "<unnamed>",
-                        parentRect,
-                        relative and relative:GetName() or "<unnamed>",
-                        tostring(point),
-                        tostring(relativePoint),
-                        tostring(x),
-                        tostring(y),
-                        relativeRect,
-                        points_debug(frame)
-                    )
+                    return nil, tag .. "_missing_rect"
                 end
                 return { l = l, b = b, w = w, h = h, r = l + w, t = b + h }, nil
             end
@@ -544,13 +581,23 @@ fn test_bag_bar_layout_locked() {
                 return false
             end
 
-            if not BagsBar and UIParentLoadAddOn then
-                UIParentLoadAddOn("Blizzard_MainMenuBarBagButtons")
+            local function points_debug(frame)
+                local out = {}
+                for i = 1, frame:GetNumPoints() do
+                    local p, r, rp, ox, oy = frame:GetPoint(i)
+                    local rn = r and r:GetName() or "nil"
+                    out[#out + 1] = string.format("%s->%s:%s(%.2f,%.2f)", tostring(p), rn, tostring(rp), tonumber(ox) or 0, tonumber(oy) or 0)
+                end
+                table.sort(out)
+                return table.concat(out, " | ")
             end
-            if not BagsBar and C_AddOns and C_AddOns.LoadAddOn then
-                local loaded, reason = C_AddOns.LoadAddOn("Blizzard_MainMenuBarBagButtons")
-                if not loaded then
-                    return "bag_addon_load_failed:" .. tostring(reason)
+
+            if not BagsBar then
+                if UIParentLoadAddOn then
+                    pcall(UIParentLoadAddOn, "Blizzard_MainMenuBarBagButtons")
+                end
+                if not BagsBar and C_AddOns and C_AddOns.LoadAddOn then
+                    pcall(C_AddOns.LoadAddOn, "Blizzard_MainMenuBarBagButtons")
                 end
             end
 
@@ -585,7 +632,16 @@ fn test_bag_bar_layout_locked() {
             local backpackRect, backpackErr = rect(backpack, "backpack")
             if not backpackRect then return backpackErr end
             local toggleRect, toggleErr = rect(toggle, "toggle")
-            if not toggleRect then return toggleErr end
+            if not toggleRect then
+                local width, height = toggle:GetSize()
+                local parent = toggle:GetParent()
+                local parentName = parent and parent:GetName() or "nil"
+                return toggleErr .. ":barLayout=" .. type(bar.Layout)
+                    .. ":size=" .. tostring(width) .. "x" .. tostring(height)
+                    .. ":initial=" .. tostring(bar.bagBarExpandToggleInitialWidth)
+                    .. "x" .. tostring(bar.bagBarExpandToggleInitialHeight)
+                    .. ":parent=" .. parentName .. ":points=" .. points_debug(toggle)
+            end
             local bag0Rect, bag0Err = rect(bag0, "bag0")
             if not bag0Rect then return bag0Err end
             local bag1Rect, bag1Err = rect(bag1, "bag1")
@@ -597,7 +653,7 @@ fn test_bag_bar_layout_locked() {
             local reagentRect, reagentErr = rect(reagent, "reagent")
             if not reagentRect then return reagentErr end
 
-            if not has_point(bar, "TOPRIGHT", microBar, "TOPRIGHT", 0, BAGS_ANCHOR_OFFSET_Y, 0.1) then
+            if not has_point(bar, "TOPRIGHT", microBar, "TOPRIGHT", 0, 0, 0.1) then
                 return "bags_bar_anchor_mismatch:" .. points_debug(bar)
             end
             if not approx(barRect.w, 208, 0.1) or not approx(barRect.h, 47, 0.1) then
@@ -606,8 +662,8 @@ fn test_bag_bar_layout_locked() {
             if not approx(barRect.r, microRect.r, 0.1) then
                 return "bags_bar_right=" .. tostring(barRect.r) .. ",micro_right=" .. tostring(microRect.r)
             end
-            if not approx(barRect.t, microRect.t + BAGS_ANCHOR_OFFSET_Y, 0.1) then
-                return "bags_bar_top=" .. tostring(barRect.t) .. ",expected_micro_top_plus_10=" .. tostring(microRect.t + BAGS_ANCHOR_OFFSET_Y)
+            if not approx(barRect.t, microRect.t, 0.1) then
+                return "bags_bar_top=" .. tostring(barRect.t) .. ",micro_top=" .. tostring(microRect.t)
             end
 
             if not backpack:IsShown() then return "backpack_hidden" end

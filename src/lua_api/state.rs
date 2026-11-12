@@ -47,6 +47,7 @@ macro_rules! build_empty_sim_state {
                 crate::c_api::c_nameplate_manager::NamePlateHitTestInsets::default(),
             input_interface_style:
                 crate::c_api::c_input_interface_style::InputInterfaceStyle::default(),
+            video_capability_bytes: Default::default(),
             #[cfg(any(feature = "client-wowforever", feature = "client-ptr"))]
             gamepad_mapped_sticks: None,
             #[cfg(any(feature = "client-wowforever", feature = "client-ptr"))]
@@ -175,6 +176,9 @@ macro_rules! build_empty_sim_state {
             physical_screen_height: $runtime.screen_height,
             screen_kind: $runtime.screen_kind,
             in_character_create: false,
+            glue_login: Default::default(),
+            #[cfg(any(feature = "client-ptr", feature = "client-wowforever"))]
+            glue_feature_status: Default::default(),
             is_logged_in: $runtime.is_logged_in,
             post_event_workarounds_applied: false,
             screen_first_displayed: $runtime.screen_first_displayed,
@@ -212,9 +216,10 @@ macro_rules! build_empty_sim_state {
             temp_shapeshift_bar_index: 1,
             has_bonus_action_bar: false,
             bonus_bar_index: 0,
+            spell_labels: HashMap::new(),
             action_bars: $collections.action_bars,
-            action_bar_spell_type_restrictions: HashMap::new(),
-            spell_type_labels: HashMap::new(),
+            #[cfg(feature = "client-ptr")]
+            actionbar_cooldown_update_pending: false,
             action_repeat_active_slots: HashSet::new(),
             #[cfg(feature = "retail-12-0-5")]
             special_bar_spells: HashSet::new(),
@@ -568,6 +573,7 @@ macro_rules! build_empty_sim_state {
             modifier_keys: ModifierKeys::default(),
             pressed_keys: HashSet::new(),
             game_rules: GameRulesState::default(),
+            credits: Default::default(),
             discord: DiscordState::default(),
             forever_startup: crate::c_api::forever_startup::StartupInputs::stock(),
             external_event_url: Default::default(),
@@ -766,6 +772,7 @@ macro_rules! build_empty_sim_state {
             auction_should_auto_populate_price: true,
             wow_token: WowTokenState::default(),
             mythic_plus: MythicPlusState::default(),
+            name_reservation_feature_status: 0,
             character_create_facing_radians: 0.0,
             character_create_altered_form_races: ::std::collections::HashSet::new(),
             character_create_viewing_altered_form: false,
@@ -1302,6 +1309,12 @@ impl SimState {
 
     pub fn set_screen_kind(&mut self, screen_kind: ScreenKind) {
         self.screen_kind = screen_kind;
+        self.glue_login.reset_connection();
+        #[cfg(feature = "client-ptr")]
+        {
+            self.glue_login.ptr_connection =
+                crate::c_api::c_login::ptr_state::PtrConnectionState::for_screen(screen_kind);
+        }
         self.screen_first_displayed = false;
         if screen_kind.is_glue() {
             self.is_logged_in = false;

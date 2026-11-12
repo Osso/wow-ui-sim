@@ -1,3 +1,44 @@
+## [2026-11-12] validation | PR54 second review corrections
+
+The [login contract](../specs/glue-login-flow.md#second-review-corrections-comment140) records forbidden-object resolver enforcement, removal of remaining unsupported assertions, and exact PTR diagnostic matching with negative tests. Changed-test gates pass Retail32/32, Forever41/41 and PTR22/22 with zero warnings.
+
+## [2026-11-12] validation | PR54 review revisions after m36
+
+The [login contract](../specs/glue-login-flow.md#review-validation-after-m36) records targeted Retail48/48, Forever60/60 and PTR38/38, plus Era/Anniversary/Wrath integration-target compile checks, all without warnings. Shared loader files match master. PTR retains exactly two named R64 diagnostics under coordinator approval; no other error allowance or loader workaround.
+
+## [2026-11-12] review | Bound PR54 contracts and profile scope
+
+The [login specification](../specs/glue-login-flow.md#pr54-review-corrections-comment132) records coordinator review corrections: restore shared-loader ownership and legacy behavior, distinguish login/credits diagnostics, clear inactive signed-int32 queues without events, and remove unsupported conformance assertions. Validation is pending on the revised source.
+
+## [2026-11-12] validation | Observe empty-roster transition
+
+The [login contract](../specs/glue-login-flow.md#m35-integration-validation-2026-11-12) records coordinator #124’s approved passive ScreenChanged snapshot. Retail submission tests pass 3/3; Forever full glue is 169 passed with only three confirmed master-baseline setup failures. Original OnShow still runs and later errors remain diagnostics. No vendor override or blanket error allowance.
+
+## [2026-11-12] integration | Merge m35 login dependencies
+
+Updated the [login contract](../specs/glue-login-flow.md#m35-integration-validation-2026-11-12) and [startup investigation](investigations/forever-login-startup.md) with m35 merge resolutions, green Retail/PTR gates, successful real Enter/button submission on Forever, and the explicitly bounded character-create baseline/transition work still pending. The coordinator now owns the final all-profile gate.
+
+## [2026-11-12] implementation | Credits FileDataID validation
+
+Updated the [login contract](../specs/glue-login-flow.md#r65-credits-text-input-and-publication) and [startup investigation](investigations/forever-login-startup.md#r65-credits-validation-2026-11-12) with R65 validation, direct host file lookup and exact Forever string/empty/nil publication. PTR and Forever cached glue regressions retain only recorded baseline/cleanup failures; the original credits consumer passes. No network-backed file resolver or native fresh catalog is invented.
+
+## [2026-11-12] clarification | Retail LoadWith evidence
+
+Updated the [login contract](../specs/glue-login-flow.md#r62-retail-chat-evidence-boundary) and [startup investigation](investigations/forever-login-startup.md) with comment115's Retail70688 reverse follower-list and post-own-file general-loader traversal. Forever/PTR and other startup requests for LOD targets remain unknown. Shared-loader code remains owned by the coordinator's separate lane; no implementation or test changes.
+
+## [2026-11-11] implementation | Host credits and video capability bytes
+
+Updated [Forever login startup](investigations/forever-login-startup.md#r63-host-credits-and-video-bytes-2026-11-11) with R63 host catalog/text policy, profile registration, verified field publication and separately labelled inferred capability projections. Retail glue is green; PTR retains only confirmed baseline failures; Forever awaits coordinator cleanup. Original credits/graphics consumers pass. R65 text validation remains unknown, and shared-loader corrections belong to a separate lane.
+
+## [2026-11-11] implementation | Shared Glue game-mode display
+
+Updated [Forever login startup](investigations/forever-login-startup.md#r60-display-and-capability-replacement-2026-11-11) and the [login contract](../specs/glue-login-flow.md) with R60 shared CVar/host-row selection, bounded override lifecycle, display callback, and read-only PTR/Forever texture capability. Corrected the retracted Retail chat pin diagnosis; native visibility remains pending R62. Profile regression counts and remaining native/bootstrap gaps are recorded without an acceptance claim.
+## [2026-11-11] investigation | Lua rectangle-query validity
+VERIFIED (R48/R59 native evidence): geometry queries follow anchor targets, and PTR 12.1.7.70668 and Retail 12.1.5.70688 share the dirty/clean target-use gate. VERIFIED (simulator commits): `faf99f277` adds cached validity, `edf70955b` skips clean-target layout resolution, and `45fae8c13` resolves dirty anchor dependencies before dependents; `IsRectValid` reads only cached validity. INFERRED: ancestor/dependency propagation maps to effective target dirtiness in the simulator. UNKNOWN: native behavior outside Retail/PTR, full mixed-anchor fallback, callbacks, cycles and exact return-list arity. VERIFIED: the Retail library/integration build at HEAD `0834e5438` includes code commit `45fae8c13` and has zero warnings; all 12 geometry tests and two cached-validity loader tests pass. UNVERIFIED: PTR tests, profile selectors and PTR full-suite proof remain pending.
+## [2026-11-11] implementation | PTR/Retail Store API availability
+Added the separate server-mirror model, API queries, event routing, and focused tests from R38. VERIFIED: Retail GameMenu uses OR and PTR uses AND; GameMenu tests pass 13/13 on both, Store API/StorePublic/CatalogShop structure tests pass on both, and Retail full-UI CatalogShop tests pass 4/4. INFERRED: defaults (false, true) show the Retail button and hide the PTR button. The [contract](../specs/store-api-availability.md) and [implementation notes](systems/store-api-availability.md) preserve UNKNOWN behavior.
+## [2026-11-10] implementation | PTR/Retail merchant cursor
+Updated [Lua API](systems/lua-api.md#cursor-modes-and-actionbar-transitions) to link cursor ownership to the [contract](../specs/cursor-model.md). VERIFIED (PTR): focused R37 selectors pass; UNKNOWN (R37): owned-item and same-item outcomes remain unmodeled. UNVERIFIED: the full profile matrix remains open.
 ## [2026-11-11] correction | Forever PTR feedback Glue selection
 
 Updated [Forever login startup](investigations/forever-login-startup.md#r26-toc-admission-correction-2026-11-11). **VERIFIED (native R26):** `OnlyBetaAndPTR` uses build classification. **VERIFIED (shipped cache TOC; exact build unknown):** `Blizzard_PTRFeedbackGlue.toc` carries that directive. **INFERRED:** normal Forever startup excludes this addon. **VERIFIED (simulator test at `83d7e3998`, 1/1):** the startup fixture checks its absence from Login startup; customization add-on loading is not asserted there. API absence in all environments remains UNVERIFIED.
@@ -3612,3 +3653,7 @@ VERIFIED (full explicit PTR runtime plus source-token scan): 171 of 175 historic
 VERIFIED (full-LoD runtime): 93 of 99 removed names previously marked vendor-present are non-callable, four RaidNotice aliases are callable, and `getglobal`/`setglobal` are Lua compatibility functions. The 93 runtime misses do not establish native absence.
 
 VERIFIED (strict lifecycle probe): global CVar wrapper identities were unchanged at `BAG_UPDATE_DELAYED`. UNVERIFIED: the strict-removal timing requirement remains open; the separate native-absence test does not prove lifecycle timing.
+
+## 2026-11-11 — Glue login submission
+
+Updated [Forever Login Startup](investigations/forever-login-startup.md#login-submission-model-lt-a667-2026-11-11) with the lt-a667 flow and contract. Distinguished historical startup verification from pending submission acceptance; documented EditBox input, offline connection policy, host-empty roster/capacity, startup eligibility and the erroneous forced pre-login character-select refresh.

@@ -137,8 +137,6 @@ pub(crate) mod mythic_plus_cache_defaults;
 pub(crate) mod navigation_defaults;
 pub(crate) mod object_api_request_load_callbacks;
 pub(crate) mod objective_tracker_quest_header;
-#[cfg(feature = "client-wowforever")]
-pub(crate) mod offline_glue_credits;
 pub(crate) mod paging_controls_page_text;
 #[cfg(not(feature = "retail-12-0-0"))]
 pub(crate) mod party_ai_legacy;

@@ -26,32 +26,6 @@ fn lod_addon_toc(folder: &str) -> PathBuf {
     find_toc_file(&dir).unwrap_or_else(|| panic!("{folder} TOC must resolve"))
 }
 
-fn assert_directory_omits_symbols(directory: &std::path::Path, symbols: &[&str]) {
-    for entry in std::fs::read_dir(directory).expect("Blizzard source directory should read") {
-        let path = entry.expect("Blizzard source entry should read").path();
-        if path.is_dir() {
-            assert_directory_omits_symbols(&path, symbols);
-            continue;
-        }
-
-        let Some(extension) = path.extension().and_then(|extension| extension.to_str()) else {
-            continue;
-        };
-        if !matches!(extension, "lua" | "xml" | "toc") {
-            continue;
-        }
-
-        let source = std::fs::read_to_string(&path).expect("Blizzard source file should read");
-        for symbol in symbols {
-            assert!(
-                !source.contains(symbol),
-                "{symbol} unexpectedly exists in {}",
-                path.display()
-            );
-        }
-    }
-}
-
 // Keep the original owned fixture for non-retail profiles. Retail cases start
 // from the full Game snapshot, then explicitly load these LoD dependencies.
 fn load_garrison_dependencies_after_fork(env: &WowLuaEnv) {
@@ -360,32 +334,36 @@ fn blizzard_garrison_ui_is_addon_loaded_returns_true_after_explicit_load() {
     blizzard_garrison_ui_is_addon_loaded_returns_true_after_explicit_load::run(&env);
 }
 
-#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[cfg(feature = "client-ptr")]
 #[test]
-fn mainline_garrison_bootstrap_hide_wrappers_hide_open_frames() {
+fn ptr_garrison_ui_does_not_publish_snapshot_only_hide_wrappers() {
     let env = load_full_game_ui_with_lod_deps();
     load_addon(&env.loader_env(), &garrison_ui_toc()).expect("Blizzard_GarrisonUI should load");
 
-    let wrappers_targeted_frames: (bool, bool, bool, bool, bool, bool) = env
+    let wrappers_hide_frames: bool = env
         .eval(
-            "local mission, bfa, covenant, shipyard = {}, {}, {}, {}; \
-             GarrisonMissionFrame, BFAMissionFrame, CovenantMissionFrame, GarrisonShipyardFrame = \
-                 mission, bfa, covenant, shipyard; \
-             local calls = {}; local original = HideUIPanel; \
-             HideUIPanel = function(frame) calls[#calls + 1] = frame end; \
-             local loaded = C_AddOns.IsAddOnLoaded('Blizzard_GarrisonUI'); \
-             local callable = type(HideGarrisonMissionFrames) == 'function' \
-                 and type(HideGarrisonShipyardFrame) == 'function'; \
-             if not callable then HideUIPanel = original; return false, false, loaded, false, false, false end; \
-             HideGarrisonMissionFrames(); HideGarrisonShipyardFrame(); HideUIPanel = original; \
-             return callable, loaded, #calls == 4, \
-                 calls[1] == mission and calls[2] == bfa and calls[3] == covenant, \
-                 calls[4] == shipyard, true",
+            r#"
+            local originalHide = HideUIPanel
+            local hidden = {}
+            HideUIPanel = function(frame) hidden[#hidden + 1] = frame end
+            GarrisonMissionFrame = {}
+            BFAMissionFrame = {}
+            CovenantMissionFrame = {}
+            GarrisonShipyardFrame = {}
+            HideGarrisonMissionFrames()
+            HideGarrisonShipyardFrame()
+            HideUIPanel = originalHide
+            return #hidden == 4
+                and hidden[1] == GarrisonMissionFrame
+                and hidden[2] == BFAMissionFrame
+                and hidden[3] == CovenantMissionFrame
+                and hidden[4] == GarrisonShipyardFrame
+            "#,
         )
-        .expect("selected Garrison bootstrap hide wrappers should run");
-    assert_eq!(
-        wrappers_targeted_frames,
-        (true, true, true, true, true, true)
+        .expect("garrison hide wrapper behavior should be queryable");
+    assert!(
+        wrappers_hide_frames,
+        "PTR GarrisonUI bootstrap.lua:40-58 publishes two loaded-addon panel-hide delegates"
     );
 }
 
@@ -679,4 +657,33 @@ fn blizzard_garrison_ui_monument_frame_uses_high_strata_on_uiparent(env: &WowLua
 fn blizzard_garrison_ui_monument_frame_uses_high_strata_on_uiparent() {
     let env = load_full_game_ui_with_lod_deps();
     blizzard_garrison_ui_monument_frame_uses_high_strata_on_uiparent::run(&env);
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn mainline_garrison_bootstrap_hide_wrappers_hide_open_frames() {
+    let env = load_full_game_ui_with_lod_deps();
+    load_addon(&env.loader_env(), &garrison_ui_toc()).expect("Blizzard_GarrisonUI should load");
+
+    let wrappers_targeted_frames: (bool, bool, bool, bool, bool, bool) = env
+        .eval(
+            "local mission, bfa, covenant, shipyard = {}, {}, {}, {}; \
+             GarrisonMissionFrame, BFAMissionFrame, CovenantMissionFrame, GarrisonShipyardFrame = \
+                 mission, bfa, covenant, shipyard; \
+             local calls = {}; local original = HideUIPanel; \
+             HideUIPanel = function(frame) calls[#calls + 1] = frame end; \
+             local loaded = C_AddOns.IsAddOnLoaded('Blizzard_GarrisonUI'); \
+             local callable = type(HideGarrisonMissionFrames) == 'function' \
+                 and type(HideGarrisonShipyardFrame) == 'function'; \
+             if not callable then HideUIPanel = original; return false, false, loaded, false, false, false end; \
+             HideGarrisonMissionFrames(); HideGarrisonShipyardFrame(); HideUIPanel = original; \
+             return callable, loaded, #calls == 4, \
+                 calls[1] == mission and calls[2] == bfa and calls[3] == covenant, \
+                 calls[4] == shipyard, true",
+        )
+        .expect("selected Garrison bootstrap hide wrappers should run");
+    assert_eq!(
+        wrappers_targeted_frames,
+        (true, true, true, true, true, true)
+    );
 }

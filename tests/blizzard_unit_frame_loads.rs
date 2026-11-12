@@ -400,32 +400,29 @@ fn allow_load_game_type_mainline_is_not_restricted() {
 }
 }
 
-// Retail selects the separate Classic companion; PTR selects the unified TOC, whose exact
-// Classic ComboFrame lines are 69-70. Mists/Era/Anniversary select Classic profile TOCs instead.
 post_wrath_ui_fixture! {
-#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 #[test]
-fn classic_combo_entries_are_restricted_on_mainline_build() {
+fn classic_companion_is_restricted_on_mainline_build() {
     if toc_layout::unified_toc_tree() {
-        let toc = TocFile::from_file(&unit_frame_toc()).expect("unified UnitFrame TOC parses");
-        let raw = std::fs::read_to_string(unit_frame_toc()).expect("unified UnitFrame TOC reads");
-        let classic_combo_selector = raw.lines().any(|line| {
-            line.trim_start().starts_with("[Family]") && line.contains("ComboFrame.lua")
-                && line.contains("[AllowLoadGameType classic]")
-        });
-        assert!(classic_combo_selector, "PTR TOC lines 69-70 select ComboFrame only for Classic");
-        assert!(!toc.files.iter().any(|file| {
-            file.to_string_lossy().ends_with("ComboFrame.lua")
-                || file.to_string_lossy().ends_with("ComboFrame.xml")
-        }));
-    } else {
-        let classic = TocFile::from_file(&unit_frame_classic_toc()).expect("Classic TOC parses");
+        // Unified PTR/Forever manifests have one TOC and no Classic sibling.
         assert!(
-            classic.is_game_type_restricted(),
-            "Retail's `_Classic.toc` carries `## AllowLoadGameType: classic`, which the \
-             mainline selection rejects"
+            !unit_frame_classic_toc().exists(),
+            "PTR/Forever Blizzard_UnitFrame.toc is unified; no Classic sibling exists"
         );
+        return;
     }
+    let classic = TocFile::from_file(&unit_frame_classic_toc()).expect("Classic TOC parses");
+
+    assert!(
+        classic.is_game_type_restricted(),
+        "Companion `_Classic.toc` carries `## AllowLoadGameType: classic` \
+         which hits toc.rs:294-302 as a non-{{standard,mainline}} value \
+         → restricted on a mainline build. The Classic body files (with \
+         Wrath/Cata/Mists/Vanilla flavor inline annotations like \
+         `Wrath\\AlternatePowerBar.lua [AllowLoadGameType wrath, cata, mists]`) \
+         only matter on Classic-flavor builds; the Mainline build \
+         silently skips this TOC at discovery time"
+    );
 }
 }
 
@@ -757,4 +754,33 @@ fn full_game_load_emits_no_addon_specific_errors(env: &WowLuaEnv) {
          in-world UI. Found: {addon_specific:?}"
     );
 }
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn classic_combo_entries_are_restricted_on_mainline_build() {
+    if toc_layout::unified_toc_tree() {
+        let toc = TocFile::from_file(&unit_frame_toc()).expect("unified UnitFrame TOC parses");
+        let raw = std::fs::read_to_string(unit_frame_toc()).expect("unified UnitFrame TOC reads");
+        let classic_combo_selector = raw.lines().any(|line| {
+            line.trim_start().starts_with("[Family]")
+                && line.contains("ComboFrame.lua")
+                && line.contains("[AllowLoadGameType classic]")
+        });
+        assert!(
+            classic_combo_selector,
+            "PTR TOC lines 69-70 select ComboFrame only for Classic"
+        );
+        assert!(!toc.files.iter().any(|file| {
+            file.to_string_lossy().ends_with("ComboFrame.lua")
+                || file.to_string_lossy().ends_with("ComboFrame.xml")
+        }));
+    } else {
+        let classic = TocFile::from_file(&unit_frame_classic_toc()).expect("Classic TOC parses");
+        assert!(
+            classic.is_game_type_restricted(),
+            "Retail's `_Classic.toc` carries `## AllowLoadGameType: classic`, which the \
+             mainline selection rejects"
+        );
+    }
 }

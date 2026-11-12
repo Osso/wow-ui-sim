@@ -26,6 +26,8 @@ pub struct CVarStorage {
     overrides: RwLock<HashMap<String, String>>,
     /// Effective session-only values, never included in persisted overrides.
     session_overrides: RwLock<HashMap<String, SessionCVar>>,
+    /// Hidden host/server mirrors, separate from Lua-visible CVar reads.
+    server_mirrored: RwLock<HashMap<String, String>>,
     /// Path to persist overrides.
     storage_path: PathBuf,
 }
@@ -59,6 +61,7 @@ impl CVarStorage {
             registered_original_names: RwLock::new(HashMap::new()),
             overrides: RwLock::new(overrides),
             session_overrides: RwLock::new(HashMap::new()),
+            server_mirrored: RwLock::new(server_mirrored_store_defaults()),
             storage_path: path,
         }
     }
@@ -121,6 +124,41 @@ impl CVarStorage {
         self.get(name).as_deref() == Some("1")
     }
 
+    /// Native cached-integer truth projection (R50). Overflow and locale-specific
+    /// input remain outside the verified domain; generic GetCVarBool is unchanged.
+    pub(crate) fn cached_integer_nonzero(&self, name: &str) -> Option<bool> {
+        self.get(name).map(|value| cached_integer_nonzero(&value))
+    }
+
+    /// Bounded cached-integer projection using the verified R50 prefix rules.
+    /// Overflow and locale-specific input remain outside coverage.
+    pub(crate) fn cached_integer(&self, name: &str) -> Option<i32> {
+        let value = self.get(name)?;
+        let (digits, radix, sign) = if let Some(hex) = value
+            .strip_prefix("0x")
+            .or_else(|| value.strip_prefix("0X"))
+        {
+            (hex, 16, 1_i64)
+        } else {
+            let trimmed = value.trim_start_matches(|ch: char| ch.is_ascii_whitespace());
+            (
+                trimmed
+                    .strip_prefix('+')
+                    .or_else(|| trimmed.strip_prefix('-'))
+                    .unwrap_or(trimmed),
+                10,
+                if trimmed.starts_with('-') { -1 } else { 1 },
+            )
+        };
+        let mut number = 0_i64;
+        for digit in digits.chars().map_while(|ch| ch.to_digit(radix)) {
+            number = number
+                .checked_mul(i64::from(radix))?
+                .checked_add(i64::from(digit))?;
+        }
+        i32::try_from(number.checked_mul(sign)?).ok()
+    }
+
     /// Set a CVar value and persist to disk.
     pub fn set(&self, name: &str, value: &str) -> bool {
         let key = name.to_lowercase();
@@ -148,6 +186,31 @@ impl CVarStorage {
             .entry(name.to_lowercase())
             .or_default()
             .imported = Some(value.to_string());
+    }
+
+    /// Replace one known host/server mirror value without exposing it to CVar getters.
+    pub(crate) fn set_server_mirrored(&self, name: &str, value: &str) -> Option<String> {
+        let key = name.to_lowercase();
+        let mut server_mirrored = self.server_mirrored.write().unwrap();
+        let current = server_mirrored.get_mut(&key)?;
+        Some(std::mem::replace(current, value.to_owned()))
+    }
+
+    /// Read a hidden server mirror as a CVar boolean.
+    pub(crate) fn get_server_mirrored_bool(&self, name: &str) -> Option<bool> {
+        self.server_mirrored
+            .read()
+            .unwrap()
+            .get(&name.to_lowercase())
+            .map(|value| value == "1")
+    }
+
+    /// Whether the selected profile has a hidden server-mirrored CVar with this name.
+    pub(crate) fn is_server_mirrored(&self, name: &str) -> bool {
+        self.server_mirrored
+            .read()
+            .unwrap()
+            .contains_key(&name.to_lowercase())
     }
 
     /// Set an effective temporary value without changing or saving persisted state.
@@ -178,6 +241,7 @@ impl CVarStorage {
     /// Get all known CVar names in original case (defaults + overrides).
     pub fn all_keys(&self) -> Vec<String> {
         let mut keys: std::collections::HashSet<String> = self.defaults.keys().cloned().collect();
+        let server_mirrored = self.server_mirrored.read().unwrap();
         for key in self.registered_defaults.read().unwrap().keys() {
             keys.insert(key.clone());
         }
@@ -192,7 +256,8 @@ impl CVarStorage {
                 .filter(|(_, values)| values.imported.is_some())
                 .map(|(key, _)| key.clone()),
         );
-        keys.retain(|key| !is_profile_removed_cvar_key(key));
+        keys.retain(|key| !is_profile_removed_cvar_key(key) && !server_mirrored.contains_key(key));
+        drop(server_mirrored);
         let mut sorted: Vec<String> = keys
             .into_iter()
             .map(|k| {
@@ -256,10 +321,34 @@ impl Default for CVarStorage {
     }
 }
 
+fn server_mirrored_store_defaults() -> HashMap<String, String> {
+    if !matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+    ) {
+        return HashMap::new();
+    }
+
+    HashMap::from([
+        ("bpaystoreenable".to_owned(), "0".to_owned()),
+        ("shop2enabled".to_owned(), "1".to_owned()),
+    ])
+}
+
 fn parse_default_cvars() -> (HashMap<String, String>, HashMap<String, String>) {
     let (mut defaults, mut original_names) = parse_cvar_yaml(include_str!("cvars.yaml"));
-    insert_store_mirror_cvars(&mut defaults, &mut original_names);
     insert_collected_journal_cvar(&mut defaults, &mut original_names);
+    // R47: real registered local CVar, with distinct PTR/Forever declarations.
+    let preset_default = match crate::client_profile::ACTIVE {
+        crate::client_profile::ClientProfile::Ptr => Some("1"),
+        crate::client_profile::ClientProfile::WowForever => Some("0"),
+        _ => None,
+    };
+    if let Some(value) = preset_default {
+        let name = "hasSelectedExperiencePreset";
+        defaults.insert(name.to_lowercase(), value.to_owned());
+        original_names.insert(name.to_lowercase(), name.to_owned());
+    }
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
         // Forever 1.60.1.70707 WM77b native registration.
         defaults.insert("minimaptrackedinfov4".into(), "2162728".into());
@@ -290,24 +379,6 @@ fn parse_default_cvars() -> (HashMap<String, String>, HashMap<String, String>) {
     insert_profile_cvars(&mut defaults, &mut original_names);
     remove_profile_cvars(&mut defaults, &mut original_names);
     (defaults, original_names)
-}
-
-/// Retail/PTR server-mirrored store flags, with defaults verified by R20.
-fn insert_store_mirror_cvars(
-    defaults: &mut HashMap<String, String>,
-    original_names: &mut HashMap<String, String>,
-) {
-    if !matches!(
-        crate::client_profile::ACTIVE,
-        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
-    ) {
-        return;
-    }
-    for (name, value) in [("bpayStoreEnable", "0"), ("shop2Enabled", "1")] {
-        let key = name.to_lowercase();
-        defaults.insert(key.clone(), value.to_owned());
-        original_names.insert(key, name.to_owned());
-    }
 }
 
 /// Collections journal CVar shipped by the PTR and WowForever pins only.
@@ -765,6 +836,40 @@ mod tests {
     }
 
     #[test]
+    fn store_mirror_cvars_have_the_pinned_client_defaults() {
+        use crate::client_profile::{ACTIVE, ClientProfile};
+
+        if !matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr) {
+            return;
+        }
+
+        let directory = tempfile::tempdir().unwrap();
+        let storage = CVarStorage::with_path(directory.path().join("cvars.json"));
+        for name in ["bpayStoreEnable", "shop2Enabled"] {
+            assert!(storage.get(name).is_none());
+            assert!(storage.get_default(name).is_none());
+            assert!(
+                !storage
+                    .all_keys()
+                    .iter()
+                    .any(|key| key.eq_ignore_ascii_case(name)),
+                "{name} must stay out of the Lua-visible CVar registry"
+            );
+        }
+        assert_eq!(
+            storage
+                .get_default("seenAsiaCharacterUpgradePopup")
+                .as_deref(),
+            Some("0")
+        );
+        assert_eq!(
+            storage.get_server_mirrored_bool("bpayStoreEnable"),
+            Some(false)
+        );
+        assert_eq!(storage.get_server_mirrored_bool("shop2Enabled"), Some(true));
+    }
+
+    #[test]
     fn test_persistence_roundtrip() {
         let dir = tempfile::tempdir().unwrap();
         let path = dir.path().join("cvars.json");
@@ -894,5 +999,40 @@ mod tests {
         for name in PATCH_12_0_7_REMOVED_CVARS {
             assert_eq!(storage.get(name), None, "{name}");
         }
+    }
+}
+
+/// Hex selection precedes whitespace/sign handling in the native cache parser.
+fn cached_integer_nonzero(value: &str) -> bool {
+    let (digits, radix) = if let Some(hex) = value
+        .strip_prefix("0x")
+        .or_else(|| value.strip_prefix("0X"))
+    {
+        (hex, 16)
+    } else {
+        let trimmed = value.trim_start_matches(|ch: char| ch.is_ascii_whitespace());
+        (
+            trimmed
+                .strip_prefix('+')
+                .or_else(|| trimmed.strip_prefix('-'))
+                .unwrap_or(trimmed),
+            10,
+        )
+    };
+    digits
+        .chars()
+        .map_while(|ch| ch.to_digit(radix))
+        .any(|digit| digit != 0)
+}
+
+#[test]
+fn native_cached_integer_truth_prefixes() {
+    for value in ["-1", "+1", " 8", "08", "8 ", "8junk", "0x10", "0Xf"] {
+        assert!(cached_integer_nonzero(value), "{value:?}");
+    }
+    for value in [
+        "-0", "+0x10", "-0x10", " 0x10", "+ 1", "true", "false", "junk", "0x0junk",
+    ] {
+        assert!(!cached_integer_nonzero(value), "{value:?}");
     }
 }

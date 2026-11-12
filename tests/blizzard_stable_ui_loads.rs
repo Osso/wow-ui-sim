@@ -108,7 +108,7 @@ const VIRTUAL_TEMPLATES: &[&str] = &[
 ];
 
 const RETAIL_EXPECTED_BODY: &[&str] = &["Blizzard_StableUI.lua", "Blizzard_StableUI.xml"];
-const PTR_EXPECTED_BODY: &[&str] = &[
+const UNIFIED_EXPECTED_BODY: &[&str] = &[
     "Shared/Blizzard_StableUI_Shared.lua",
     "Standard/Blizzard_StableUI.lua",
     "Standard/Blizzard_StableUI.xml",
@@ -118,16 +118,6 @@ const FOREVER_EXPECTED_BODY: &[&str] = &[
     "Camelot/Blizzard_StableUI.lua",
     "Camelot/Blizzard_StableUI.xml",
 ];
-
-fn expected_body() -> &'static [&'static str] {
-    if toc_layout::forever() {
-        FOREVER_EXPECTED_BODY
-    } else if toc_layout::unified_toc_tree() {
-        PTR_EXPECTED_BODY
-    } else {
-        RETAIL_EXPECTED_BODY
-    }
-}
 
 fn load_full_game_ui() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
@@ -290,14 +280,22 @@ fn body_lists_lua_before_xml_for_mixin_resolution() {
         .map(|p| p.to_string_lossy().to_string())
         .collect();
 
-    let expected_entries = expected_body();
+    let expected_body = if toc_layout::forever() {
+        FOREVER_EXPECTED_BODY
+    } else if toc_layout::unified_toc_tree() {
+        // PTR StableUI.toc selects shared Lua then Standard Lua/XML.
+        UNIFIED_EXPECTED_BODY
+    } else {
+        RETAIL_EXPECTED_BODY
+    };
     assert_eq!(
         body.len(),
-        expected_entries.len(),
-        "StableUI body entries follow the active profile TOC. Got: {body:?}"
+        expected_body.len(),
+        "StableUI body must match the active profile TOC, including its selected family path: \
+         {body:?}"
     );
 
-    for (i, want) in expected_entries.iter().enumerate() {
+    for (i, want) in expected_body.iter().enumerate() {
         assert_eq!(
             &body[i], want,
             "Body entry {i}: expected {want}, got {}",
@@ -314,7 +312,8 @@ fn body_lists_lua_before_xml_for_mixin_resolution() {
             .enumerate()
             .filter(|(_, path)| path.ends_with(".lua"))
             .all(|(index, _)| index < xml_index),
-        "every selected Lua mixin source must load before XML registration: {body:?}"
+        "Every Lua mixin source must load before XML registration so the StableFrameMixin \
+         and virtual-template mixins exist when XML templates are registered: {body:?}"
     );
 }
 }

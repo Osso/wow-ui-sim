@@ -234,14 +234,60 @@ fn path_smooth_uses_declared_catmull_rom_geometry_through_supplied_points() {
     assert_shift(&env, "PathStageIcon", icon, 0.0, 0.0);
 }
 
+#[cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
+fn read_selected_template_source(addon_name: &str, template_name: &str) -> String {
+    let ui_dir = wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("active profile cache required");
+    let addon_dir = ui_dir.join(addon_name);
+    let toc_path =
+        wow_ui_sim::loader::find_toc_file(&addon_dir).expect("selected bag-button TOC required");
+    let toc = wow_ui_sim::toc::TocFile::from_file(&toc_path)
+        .expect("selected bag-button TOC should parse");
+    let template_declaration = format!("<ItemButton name=\"{template_name}\"");
+
+    for relative_path in &toc.files {
+        if relative_path
+            .extension()
+            .and_then(|extension| extension.to_str())
+            != Some("xml")
+        {
+            continue;
+        }
+
+        let source_path = toc.addon_dir.join(relative_path);
+        let source = std::fs::read_to_string(&source_path).unwrap_or_else(|error| {
+            panic!(
+                "could not read selected TOC file {}: {error}",
+                source_path.display()
+            )
+        });
+        if source.contains(&template_declaration) {
+            return source;
+        }
+    }
+
+    panic!(
+        "selected TOC {} has no XML declaration for {template_name}",
+        toc_path.display()
+    );
+}
+
+#[cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
 #[test]
 fn path_actual_cached_smooth_xml_configures_points_and_restores_playback() {
     let env = new_env();
-    // PTR TOC Blizzard_MainMenuBarBagButtons.toc:14 selects this Mainline template XML.
-    let source_path = wow_ui_sim::paths::default_blizzard_ui_addons_path()
-        .expect("active profile cache required")
-        .join("Blizzard_MainMenuBarBagButtons/Mainline/MainMenuBarBagButtonTemplates.xml");
-    let source = std::fs::read_to_string(source_path).expect("actual cached bag-button XML");
+    let source = read_selected_template_source(
+        "Blizzard_MainMenuBarBagButtons",
+        "BaseBagSlotButtonTemplate",
+    );
     // Preserve the actual first Path element unchanged; unrelated template dependencies
     // are not this failure boundary. Assertions below observe configuration/layout.
     let template = source

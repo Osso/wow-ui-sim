@@ -74,30 +74,6 @@ fn professions_templates_toc() -> PathBuf {
         .join("Blizzard_ProfessionsTemplates.toc")
 }
 
-fn assert_directory_omits_symbol(directory: &std::path::Path, symbol: &str) {
-    for entry in std::fs::read_dir(directory).expect("Blizzard source directory should read") {
-        let path = entry.expect("Blizzard source entry should read").path();
-        if path.is_dir() {
-            assert_directory_omits_symbol(&path, symbol);
-            continue;
-        }
-
-        let Some(extension) = path.extension().and_then(|extension| extension.to_str()) else {
-            continue;
-        };
-        if !matches!(extension, "lua" | "xml" | "toc") {
-            continue;
-        }
-
-        let source = std::fs::read_to_string(&path).expect("Blizzard source file should read");
-        assert!(
-            !source.contains(symbol),
-            "{symbol} unexpectedly exists in {}",
-            path.display()
-        );
-    }
-}
-
 fn load_full_game_ui() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
     env.set_screen_size(1024.0, 768.0);
@@ -132,22 +108,36 @@ fn load_customer_orders_with_deps(env: &WowLuaEnv) {
         .expect("Blizzard_ProfessionsCustomerOrders loads cleanly");
 }
 
-#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[cfg(feature = "client-ptr")]
 #[test]
-fn mainline_customer_orders_bootstrap_hide_wrapper_hides_the_open_frame() {
+fn ptr_customer_orders_does_not_publish_snapshot_only_hide_wrapper() {
     let env = load_full_game_ui();
     load_customer_orders_with_deps(&env);
-    let result: (String, bool, bool) = env
+    let wrapper_hides_frame: bool = env
         .eval(
-            "local frame = ProfessionsCustomerOrdersFrame; local received; \
-             local original = HideUIPanel; \
-             HideUIPanel = function(value) received = value end; \
-             local callable = type(HideProfessionsCustomerOrdersFrame) == 'function'; \
-             HideProfessionsCustomerOrdersFrame(); HideUIPanel = original; \
-             return type(frame), callable, received == frame",
+            r#"
+            local originalHide = HideUIPanel
+            local originalLoaded = C_AddOns.IsAddOnLoaded
+            local hidden = false
+            C_AddOns.IsAddOnLoaded = function(name)
+                return name == "Blizzard_ProfessionsCustomerOrders"
+            end
+            HideUIPanel = function(frame)
+                hidden = frame == ProfessionsCustomerOrdersFrame
+            end
+            ProfessionsCustomerOrdersFrame = {}
+            local callable = type(HideProfessionsCustomerOrdersFrame) == "function"
+            HideProfessionsCustomerOrdersFrame()
+            HideUIPanel = originalHide
+            C_AddOns.IsAddOnLoaded = originalLoaded
+            return callable and hidden
+            "#,
         )
-        .expect("selected customer-orders bootstrap hide wrapper should run");
-    assert_eq!(result, ("table".to_string(), true, true));
+        .expect("customer orders wrapper behavior should be queryable");
+    assert!(
+        wrapper_hides_frame,
+        "PTR ProfessionsCustomerOrders bootstrap.lua:10-14 publishes a loaded-addon hide delegate"
+    );
 }
 
 #[test]
@@ -508,4 +498,22 @@ fn blizzard_professions_customer_orders_registers_one_ui_panel_with_uiparent(env
          `pushable=0` prevents the frame from being pushed aside by other UI panels"
     );
 }
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn mainline_customer_orders_bootstrap_hide_wrapper_hides_the_open_frame() {
+    let env = load_full_game_ui();
+    load_customer_orders_with_deps(&env);
+    let result: (String, bool, bool) = env
+        .eval(
+            "local frame = ProfessionsCustomerOrdersFrame; local received; \
+             local original = HideUIPanel; \
+             HideUIPanel = function(value) received = value end; \
+             local callable = type(HideProfessionsCustomerOrdersFrame) == 'function'; \
+             HideProfessionsCustomerOrdersFrame(); HideUIPanel = original; \
+             return type(frame), callable, received == frame",
+        )
+        .expect("selected customer-orders bootstrap hide wrapper should run");
+    assert_eq!(result, ("table".to_string(), true, true));
 }

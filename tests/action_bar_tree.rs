@@ -27,7 +27,73 @@
 
 use crate::common;
 
+use std::path::PathBuf;
+
 use wow_ui_sim::lua_api::WowLuaEnv;
+
+const ACTION_BAR_ADDONS: &[&str] = &[
+    "Blizzard_SharedXMLBase",
+    "Blizzard_Colors",
+    "Blizzard_SharedXML",
+    #[cfg(feature = "client-ptr")]
+    "Blizzard_GamepadSmartNavigation",
+    "Blizzard_SharedXMLGame",
+    "Blizzard_UIPanelTemplates",
+    "Blizzard_FrameXMLBase",
+    "Blizzard_LoadLocale",
+    "Blizzard_Fonts_Shared",
+    "Blizzard_HelpPlate",
+    "Blizzard_AccessibilityTemplates",
+    "Blizzard_ObjectAPI",
+    "Blizzard_UIParent",
+    "Blizzard_TextStatusBar",
+    "Blizzard_MoneyFrame",
+    "Blizzard_POIButton",
+    "Blizzard_Flyout",
+    "Blizzard_GameMenuEsc",
+    "Blizzard_StoreUI",
+    "Blizzard_MicroMenu",
+    "Blizzard_ManagedFrameSystem",
+    "Blizzard_UIParentUtil",
+    "Blizzard_EditMode",
+    #[cfg(feature = "client-ptr")]
+    "Blizzard_StatusTrackingBar",
+    "Blizzard_GarrisonBase",
+    "Blizzard_GameTooltip",
+    #[cfg(feature = "client-ptr")]
+    "Blizzard_StaticPopup",
+    "Blizzard_UIParentPanelManager",
+    #[cfg(feature = "client-ptr")]
+    "Blizzard_GamepadSharedUtility",
+    "Blizzard_Settings_Shared",
+    "Blizzard_SettingsDefinitions_Shared",
+    "Blizzard_SettingsDefinitions_Frame",
+    "Blizzard_FrameXMLUtil",
+    "Blizzard_ItemButton",
+    "Blizzard_QuickKeybind",
+    #[cfg(feature = "client-ptr")]
+    "Blizzard_RaidWarning",
+    "Blizzard_FrameXML",
+    "Blizzard_UIPanels_Game",
+    "Blizzard_MapCanvasSecureUtil",
+    "Blizzard_MapCanvas",
+    "Blizzard_SharedMapDataProviders",
+    "Blizzard_WorldMap",
+    "Blizzard_PingUI",
+    #[cfg(feature = "client-ptr")]
+    "Blizzard_SpellTypeIconOverlay",
+    "Blizzard_ActionBar",
+];
+
+fn blizzard_ui_dir() -> PathBuf {
+    wow_ui_sim::client_profile::blizzard_ui_addons_dir_under(std::path::Path::new(env!(
+        "CARGO_MANIFEST_DIR"
+    )))
+}
+
+fn action_bar_addons() -> &'static [&'static str] {
+    ACTION_BAR_ADDONS
+}
 
 fn fire_startup_events(env: &WowLuaEnv) {
     let _ = env.fire_event_with_args("ADDON_LOADED", &[env.lua_string("WoWUISim")]);
@@ -53,8 +119,14 @@ fn load_settled_game_ui() -> common::LockedEnv {
     common::lock_env(|| {
         let env = WowLuaEnv::new().expect("Failed to create Lua environment");
         env.set_screen_size(1024.0, 768.0);
-        common::panel_fixtures::seed_addon_search_paths(&env);
-        common::panel_fixtures::load_panel_addons(&env);
+        env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
+
+        if !common::load_classic_game_startup_inventory(&env) {
+            let ui = blizzard_ui_dir();
+            for addon_name in action_bar_addons() {
+                common::load_required_blizzard_addon(&env, &ui, addon_name);
+            }
+        }
 
         env.apply_post_load_workarounds();
         fire_startup_events(&env);
@@ -188,8 +260,12 @@ fn main_action_bar_layout_is_locked() {
     test_timeout! {
         let env = load_settled_game_ui();
 
-        env.exec(
-            r#"
+        let endcap_texture_access = if cfg!(feature = "client-ptr") {
+            ".Texture"
+        } else {
+            ""
+        };
+        let script = r#"
             local EPS = 0.75
 
             local function approx(actual, expected, eps)
@@ -253,8 +329,14 @@ fn main_action_bar_layout_is_locked() {
 
             local leL, leR, _, leB, leW, leH = rect("LeftEndCap", leftEndCap)
             local reL, reR, _, reB, reW, reH = rect("RightEndCap", rightEndCap)
-            local leftTexture = leftEndCap.Texture or leftEndCap
-            local rightTexture = rightEndCap.Texture or rightEndCap
+            local leftTexture = require_frame(
+                "MainActionBar.EndCaps.LeftEndCap__ENDCAP_TEXTURE_ACCESS__",
+                leftEndCap__ENDCAP_TEXTURE_ACCESS__
+            )
+            local rightTexture = require_frame(
+                "MainActionBar.EndCaps.RightEndCap__ENDCAP_TEXTURE_ACCESS__",
+                rightEndCap__ENDCAP_TEXTURE_ACCESS__
+            )
             assert((leftTexture:GetAtlas() or ""):lower() == "ui-hud-actionbar-gryphon-left", "LeftEndCap atlas changed")
             assert((rightTexture:GetAtlas() or ""):lower() == "ui-hud-actionbar-gryphon-right", "RightEndCap atlas changed")
             assert(leW > 0 and leH > 0, "LeftEndCap size must be non-zero")
@@ -325,8 +407,9 @@ fn main_action_bar_layout_is_locked() {
             assert(a1L and a1R and a2L and a12R, "action button bounds missing for spacing checks")
             assert(approx(a2L - a1L, 47), "ActionButton1->2 spacing changed")
             assert(approx(a12R, bR), "ActionButton12 right edge no longer matches MainActionBar")
-            "#,
-        )
-        .expect("main action bar layout lock assertions");
+            "#;
+        let script = script.replace("__ENDCAP_TEXTURE_ACCESS__", endcap_texture_access);
+        env.exec(&script)
+            .expect("main action bar layout lock assertions");
     }
 }

@@ -105,17 +105,24 @@ fn load_full_game_ui() -> WowLuaEnv {
 
 #[test]
 fn each_lane_addon_directory_exists_on_disk() {
-    // PTR/Forever manifests omit the classic TalentUI consumer; Classic profiles select its
-    // Mists TOC at Blizzard_TalentUI_Mists.toc:1 instead.
     if toc_layout::unified_toc_tree() {
         assert!(!blizzard_ui_dir().join("Blizzard_TalentUI").exists());
     }
-    for name in LANE_ADDONS
-        .iter()
-        .copied()
-        .filter(|name| !toc_layout::unified_toc_tree() || *name != "Blizzard_TalentUI")
-    {
+    for name in LANE_ADDONS {
+        if toc_layout::unified_toc_tree() && *name == "Blizzard_TalentUI" {
+            // The pinned PTR/Forever manifests contain no TalentUI entries.
+            continue;
+        }
         let dir = blizzard_ui_dir().join(name);
+        if toc_layout::unified_toc_tree() && *name == "Blizzard_TalentUI" {
+            assert!(
+                !dir.exists(),
+                "PTR/Forever pinned caches omit Blizzard_TalentUI; their active talent UI is \
+                 represented by Blizzard_SharedTalentUI/Blizzard_SharedTalentUI.toc:3-42 \
+                 and Blizzard_PlayerSpells"
+            );
+            continue;
+        }
         assert!(
             dir.is_dir(),
             "Lane addon `{name}` directory must exist at \
@@ -226,19 +233,22 @@ fn lane_dep_edges_classify_each_addons_load_floor() {
     let soulbinds = parse_lane_toc("Blizzard_Soulbinds");
     let landing_soulbinds = parse_lane_toc("Blizzard_LandingSoulbinds");
 
-    let expected_shared_deps = if toc_layout::unified_toc_tree() {
-        vec!["Blizzard_SpellSearch", "Blizzard_SpellTypeIconOverlay"]
+    let expected_shared_deps: &[&str] = if toc_layout::unified_toc_tree() {
+        // PTR/Forever SharedTalentUI.toc:3 also requires SpellTypeIconOverlay.
+        &["Blizzard_SpellSearch", "Blizzard_SpellTypeIconOverlay"]
     } else {
-        vec!["Blizzard_SpellSearch"]
+        &["Blizzard_SpellSearch"]
     };
     assert_eq!(
         shared.dependencies(),
         expected_shared_deps
-            .into_iter()
-            .map(str::to_string)
+            .iter()
+            .map(|dependency| dependency.to_string())
             .collect::<Vec<_>>(),
-        "SharedTalentUI dependencies follow the active TOC; the unified PTR/Forever TOC line 3 \
-         also selects Blizzard_SpellTypeIconOverlay"
+        "SharedTalentUI dependencies must match the active pinned TOC. PTR/Forever \
+         SharedTalentUI.toc:3 adds Blizzard_SpellTypeIconOverlay to the Retail dependency. \
+         Got: {:?}",
+        shared.dependencies()
     );
 
     assert_eq!(

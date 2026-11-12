@@ -22,8 +22,8 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
             | crate::client_profile::ClientProfile::Ptr
             | crate::client_profile::ClientProfile::WowForever
     ) {
-        // The promotional-upgrade inventory is not modeled yet. Native returns
-        // false when no qualifying promotion is available.
+        // The promotional-upgrade inventory is not modeled yet. R22 verifies
+        // false without a qualifying promotion on Retail and PTR.
         lua.exec(
             r#"
             if rawget(C_SharedCharacterServices, "HasFreePromotionalUpgrade") == nil then

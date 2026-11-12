@@ -162,22 +162,31 @@ fn get_active_timerunning_season_id(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn get_num_characters(state: &mut LuaState) -> LuaResult<u32> {
-    let count = seeded_character_accounts(state).len();
+    let count = seeded_character_slots(state).len();
     state.push(Val::Num(count as f64));
     Ok(1)
 }
 
 fn get_character_selection(state: &mut LuaState) -> LuaResult<u32> {
-    let count = seeded_character_accounts(state).len();
-    state.push(Val::Num(if count > 0 { 1.0 } else { 0.0 }));
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        let selected = borrow_state(state)?.glue_login.selected_character_index;
+        state.push(Val::Num((selected + 1) as f64));
+    } else {
+        let count = seeded_character_slots(state).len();
+        state.push(Val::Num(if count > 0 { 1.0 } else { 0.0 }));
+    }
     Ok(1)
 }
 
 fn get_character_guid(state: &mut LuaState) -> LuaResult<u32> {
     let character_index = i32::from_stack(state, 1)?;
-    let guid = seeded_character_accounts(state)
+    let guid = seeded_character_slots(state)
         .get(usize::try_from(character_index.saturating_sub(1)).unwrap_or(usize::MAX))
-        .map(|ga| ga.wow_account_guid.clone());
+        .map(|slot| slot.character_id.clone());
     match guid {
         Some(guid) => {
             let guid_value = create_string(state, &guid);
@@ -190,8 +199,9 @@ fn get_character_guid(state: &mut LuaState) -> LuaResult<u32> {
 
 fn get_character_race(state: &mut LuaState) -> LuaResult<u32> {
     let character_index = i32::from_stack(state, 1)?;
-    let Some(account) = seeded_character_accounts(state)
+    let Some(account) = seeded_character_slots(state)
         .get(usize::try_from(character_index.saturating_sub(1)).unwrap_or(usize::MAX))
+        .and_then(|slot| slot.resolved_record().map(|record| &record.account))
         .cloned()
     else {
         state.push(Val::Nil);
@@ -227,8 +237,9 @@ fn get_basic_character_info(state: &mut LuaState) -> LuaResult<u32> {
             return Ok(1);
         }
     };
-    let Some(account) = seeded_character_accounts(state)
+    let Some(account) = seeded_character_slots(state)
         .into_iter()
+        .filter_map(|slot| slot.resolved_record().map(|record| record.account.clone()))
         .find(|ga| ga.wow_account_guid == guid)
     else {
         // WM100: failed Forever lookup has no publisher (zero Lua results).
@@ -249,16 +260,11 @@ fn get_service_character_info(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-fn seeded_character_accounts(state: &mut LuaState) -> Vec<BnetGameAccount> {
+fn seeded_character_slots(
+    state: &mut LuaState,
+) -> Vec<crate::c_api::c_login::character_roster::CharacterSlot> {
     borrow_state(state)
-        .map(|sim| {
-            sim.bnet_friends
-                .iter()
-                .flat_map(|friend| friend.game_accounts.iter())
-                .filter(|ga| ga.client_program == "WoW")
-                .cloned()
-                .collect()
-        })
+        .map(|sim| crate::c_api::c_login::character_roster::slots_for_sim(&sim))
         .unwrap_or_default()
 }
 

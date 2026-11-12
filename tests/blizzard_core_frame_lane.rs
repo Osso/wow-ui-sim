@@ -175,42 +175,55 @@ fn lane_dep_edges_pin_canonical_chain() {
     );
 
     let frame_xml_deps = frame_xml.dependencies();
-    let expected_frame_xml_deps = [
-        "Blizzard_ObjectAPI",
-        "Blizzard_FrameXMLBase",
-        "Blizzard_UIErrorsFrame",
-        "Blizzard_UIParentPanelManager",
-        "Blizzard_SettingsDefinitions_Frame",
-        "Blizzard_ItemButton",
-        "Blizzard_FrameXMLUtil",
-        "Blizzard_RaidWarning",
-        "Blizzard_UIPanelTemplates",
-        "Blizzard_GameTooltip",
-        "Blizzard_MoneyFrame",
-        "Blizzard_Colors",
-        "Blizzard_TransmogShared",
-        "Blizzard_LFGUtil",
-        "Blizzard_ManagedFrameSystem",
-    ];
-    let expected_count =
-        expected_frame_xml_deps.len() + if toc_layout::unified_toc_tree() { 1 } else { 0 };
-    assert_eq!(frame_xml_deps.len(), expected_count);
+    // PTR 12.1.7 and Forever 1.60.1 both declare GamepadSoftCursor on
+    // Blizzard_FrameXML.toc:19; Retail's pinned TOC does not.
+    let expected_frame_xml_deps: &[&str] = if toc_layout::unified_toc_tree() {
+        &[
+            "Blizzard_ObjectAPI",
+            "Blizzard_FrameXMLBase",
+            "Blizzard_UIErrorsFrame",
+            "Blizzard_UIParentPanelManager",
+            "Blizzard_SettingsDefinitions_Frame",
+            "Blizzard_ItemButton",
+            "Blizzard_FrameXMLUtil",
+            "Blizzard_RaidWarning",
+            "Blizzard_UIPanelTemplates",
+            "Blizzard_GameTooltip",
+            "Blizzard_MoneyFrame",
+            "Blizzard_Colors",
+            "Blizzard_TransmogShared",
+            "Blizzard_LFGUtil",
+            "Blizzard_ManagedFrameSystem",
+            "Blizzard_GamepadSoftCursor",
+        ]
+    } else {
+        &[
+            "Blizzard_ObjectAPI",
+            "Blizzard_FrameXMLBase",
+            "Blizzard_UIErrorsFrame",
+            "Blizzard_UIParentPanelManager",
+            "Blizzard_SettingsDefinitions_Frame",
+            "Blizzard_ItemButton",
+            "Blizzard_FrameXMLUtil",
+            "Blizzard_RaidWarning",
+            "Blizzard_UIPanelTemplates",
+            "Blizzard_GameTooltip",
+            "Blizzard_MoneyFrame",
+            "Blizzard_Colors",
+            "Blizzard_TransmogShared",
+            "Blizzard_LFGUtil",
+            "Blizzard_ManagedFrameSystem",
+        ]
+    };
     assert_eq!(
-        &frame_xml_deps[..expected_frame_xml_deps.len()],
+        frame_xml_deps,
         expected_frame_xml_deps
             .iter()
             .map(|dependency| dependency.to_string())
             .collect::<Vec<_>>(),
-        "FrameXML must preserve the selected profile dependencies in TOC order. \
-         Classic-only Blizzard_UnitPopup and Blizzard_MirrorTimer declarations are \
-         excluded by their AllowLoadGameType annotations."
-    );
-    assert_eq!(
-        frame_xml_deps
-            .get(expected_frame_xml_deps.len())
-            .map(String::as_str),
-        toc_layout::unified_toc_tree().then_some("Blizzard_GamepadSoftCursor"),
-        "PTR and Forever FrameXML TOCs select GamepadSoftCursor with a mainline selector"
+        "FrameXML dependencies must match the active pinned TOC. PTR 12.1.7 and Forever \
+         add Blizzard_GamepadSoftCursor at Blizzard_FrameXML.toc:19; Retail does not. \
+         Classic-only declarations remain excluded by their annotations. Got: {frame_xml_deps:?}"
     );
 }
 

@@ -107,12 +107,6 @@ if rawget(C_VideoOptions, "GetGxAdapterInfo") == nil then
     end
 end
 
-if rawget(C_VideoOptions, "IsSpellVisualDensitySystemSupported") == nil then
-    function C_VideoOptions.IsSpellVisualDensitySystemSupported()
-        return false
-    end
-end
-
 if rawget(C_VideoOptions, "SetGameWindowSize") == nil then
     function C_VideoOptions.SetGameWindowSize(width, height)
         local currentState = VideoOptionsState()
@@ -127,20 +121,19 @@ if rawget(C_VideoOptions, "SetGameWindowSize") == nil then
 end
 "#;
 
-// User-approved offline capability, not a native platform measurement. Replace
-// this fixture flag with the optional texture-pack/launcher capability model.
-const FOREVER_VIDEO_CAPABILITIES_LUA: &str = r#"
-local state = C_VideoOptions._state
-if state.highResTexturesAvailable == nil then
-    state.highResTexturesAvailable = false
-end
-
-if rawget(C_VideoOptions, "AreHighResTexturesAvailable") == nil then
-    function C_VideoOptions.AreHighResTexturesAvailable()
-        return state.highResTexturesAvailable == true
+// Preserve the legacy fixture outside R63's Retail/PTR/Forever scope.
+const LEGACY_VIDEO_CAPABILITIES_LUA: &str = r#"
+if rawget(C_VideoOptions, "IsSpellVisualDensitySystemSupported") == nil then
+    function C_VideoOptions.IsSpellVisualDensitySystemSupported()
+        return false
     end
 end
+"#;
 
+// Separate temporary runtime/device policy, not an R63 static capability byte.
+// Native MSAA is a runtime/device query on Retail and Forever; PTR publication
+// remains UNKNOWN. This existing Forever workaround does not assert native false.
+const FOREVER_MSAA_CAPABILITY_LUA: &str = r#"
 -- The UI renderer uses single-sample targets. Replace this unsupported capability
 -- when multisample render targets and MSAA mode enumeration are implemented.
 if rawget(_G, "MultiSampleAntiAliasingSupported") == nil then
@@ -148,27 +141,15 @@ if rawget(_G, "MultiSampleAntiAliasingSupported") == nil then
         return false
     end
 end
-
--- The simulator renders 2D UI, without a 3D world renderer. These unsupported
--- water, object-outline and secondary-lighting capabilities are not host GPU probes.
--- Native world linear-lighting/Bloom startup mode is also absent; this does not
--- describe the color space used to composite the simulator's 2D UI.
-for _, method in ipairs({
-    "IsPBRWaterSupported",
-    "IsOutlineModeSupported",
-    "IsSecondaryLightingSupported",
-    "IsLinearEnabledOnStart",
-}) do
-    if rawget(C_VideoOptions, method) == nil then
-        C_VideoOptions[method] = function() return false end
-    end
-end
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(VIDEO_OPTIONS_STATE_LUA)?;
+    if !crate::c_api::video_capabilities::publishes_capabilities() {
+        lua.exec(LEGACY_VIDEO_CAPABILITIES_LUA)?;
+    }
     if cfg!(feature = "client-wowforever") {
-        lua.exec(FOREVER_VIDEO_CAPABILITIES_LUA)?;
+        lua.exec(FOREVER_MSAA_CAPABILITY_LUA)?;
     }
     Ok(())
 }
@@ -212,9 +193,6 @@ mod tests {
                 adapters[1].name = "mutated"
                 if C_VideoOptions.GetGxAdapterInfo()[1].name ~= "adapter" then
                     return "leaked_adapter_copy"
-                end
-                if C_VideoOptions.IsSpellVisualDensitySystemSupported() then
-                    return "bad_density"
                 end
                 if C_VideoOptions._state.setGameWindowSizeCount ~= 1 then
                     return "bad_counter"

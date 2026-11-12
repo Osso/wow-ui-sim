@@ -1,14 +1,82 @@
 use crate::common;
 
+use std::path::PathBuf;
 use wow_ui_sim::lua_api::WowLuaEnv;
+#[cfg(any(feature = "client-ptr", feature = "client-retail"))]
+use wow_ui_sim::lua_api::state::{CursorInfo, CursorItemOrigin};
+
+const ACTION_BAR_ADDONS: &[&str] = &[
+    "Blizzard_SharedXMLBase",
+    "Blizzard_Colors",
+    "Blizzard_SharedXML",
+    #[cfg(feature = "client-ptr")]
+    "Blizzard_GamepadSmartNavigation",
+    "Blizzard_SharedXMLGame",
+    "Blizzard_UIPanelTemplates",
+    "Blizzard_FrameXMLBase",
+    "Blizzard_LoadLocale",
+    "Blizzard_Fonts_Shared",
+    "Blizzard_HelpPlate",
+    "Blizzard_AccessibilityTemplates",
+    "Blizzard_ObjectAPI",
+    "Blizzard_UIParent",
+    "Blizzard_TextStatusBar",
+    "Blizzard_MoneyFrame",
+    "Blizzard_POIButton",
+    "Blizzard_Flyout",
+    "Blizzard_GameMenuEsc",
+    "Blizzard_StoreUI",
+    "Blizzard_MicroMenu",
+    "Blizzard_ManagedFrameSystem",
+    "Blizzard_UIParentUtil",
+    "Blizzard_EditMode",
+    #[cfg(feature = "client-ptr")]
+    "Blizzard_StatusTrackingBar",
+    "Blizzard_GarrisonBase",
+    "Blizzard_GameTooltip",
+    #[cfg(feature = "client-ptr")]
+    "Blizzard_StaticPopup",
+    "Blizzard_UIParentPanelManager",
+    #[cfg(feature = "client-ptr")]
+    "Blizzard_GamepadSharedUtility",
+    "Blizzard_Settings_Shared",
+    "Blizzard_SettingsDefinitions_Shared",
+    "Blizzard_SettingsDefinitions_Frame",
+    "Blizzard_FrameXMLUtil",
+    "Blizzard_ItemButton",
+    "Blizzard_QuickKeybind",
+    #[cfg(feature = "client-ptr")]
+    "Blizzard_RaidWarning",
+    "Blizzard_FrameXML",
+    "Blizzard_UIPanels_Game",
+    "Blizzard_MapCanvasSecureUtil",
+    "Blizzard_MapCanvas",
+    "Blizzard_SharedMapDataProviders",
+    "Blizzard_WorldMap",
+    "Blizzard_PingUI",
+    #[cfg(feature = "client-ptr")]
+    "Blizzard_SpellTypeIconOverlay",
+    "Blizzard_ActionBar",
+];
 
 fn seed_action_slot(env: &WowLuaEnv, slot: u32, spell_id: u32) {
     env.state().borrow_mut().action_bars.insert(slot, spell_id);
 }
 
+fn blizzard_ui_dir() -> PathBuf {
+    wow_ui_sim::client_profile::blizzard_ui_addons_dir_under(std::path::Path::new(env!(
+        "CARGO_MANIFEST_DIR"
+    )))
+}
+
 fn load_action_bar_addons(env: &WowLuaEnv) {
-    common::panel_fixtures::seed_addon_search_paths(env);
-    common::panel_fixtures::load_panel_addons(env);
+    let ui = blizzard_ui_dir();
+    env.state().borrow_mut().addon_base_paths = vec![ui.clone()];
+    if !common::load_classic_game_startup_inventory(env) {
+        for addon_name in ACTION_BAR_ADDONS {
+            common::load_required_blizzard_addon(env, &ui, addon_name);
+        }
+    }
 }
 
 fn fire_action_bar_startup(env: &WowLuaEnv) {
@@ -52,6 +120,56 @@ fn assert_action_button_template_has_receive_drag() {
     );
 }
 
+#[cfg(feature = "client-ptr")]
+fn install_ptr_action_bar_trace(env: &WowLuaEnv) {
+    env.exec(
+        r#"
+        R29ActionBarEvents = {}
+        local listener = CreateFrame('Frame')
+        for _, event in ipairs({
+            'ADDON_ACTION_BLOCKED',
+            'ACTIONBAR_HIDEGRID',
+            'ACTIONBAR_SHOWGRID',
+            'ACTIONBAR_SLOT_CHANGED',
+            'ACTIONBAR_UPDATE_COOLDOWN',
+            'ACTIONBAR_UPDATE_STATE',
+            'CURSOR_CHANGED',
+        }) do
+            listener:RegisterEvent(event)
+        end
+        listener:SetScript('OnEvent', function(_, event, ...)
+            local values = {event}
+            for index = 1, select('#', ...) do
+                values[#values + 1] = tostring(select(index, ...))
+            end
+            R29ActionBarEvents[#R29ActionBarEvents + 1] = table.concat(values, ',')
+        end)
+        function ResetR29ActionBarEvents()
+            R29ActionBarEvents = {}
+        end
+        function ReadR29ActionBarEvents()
+            return table.concat(R29ActionBarEvents, ';')
+        end
+        "#,
+    )
+    .unwrap();
+}
+
+#[cfg(feature = "client-ptr")]
+fn read_ptr_action_bar_trace(env: &WowLuaEnv) -> String {
+    env.eval("return ReadR29ActionBarEvents()")
+        .expect("read PTR action-bar event trace")
+}
+
+#[cfg(feature = "client-ptr")]
+fn action_button_id(env: &WowLuaEnv, name: &str) -> u64 {
+    env.state()
+        .borrow()
+        .widgets
+        .get_id_by_name(name)
+        .unwrap_or_else(|| panic!("missing {name}"))
+}
+
 #[test]
 fn pickup_action_accepts_ignore_removal_arg_and_place_restores_slot() {
     let env = WowLuaEnv::new().unwrap();
@@ -77,7 +195,7 @@ fn pickup_action_accepts_ignore_removal_arg_and_place_restores_slot() {
     assert!(!env.eval::<bool>("return HasAction(1)").unwrap());
 
     // Retail and PTR project mode 3 as ("spell", book slot, book type,
-    // spell ID, ...) (WM46, WM56, R72); other profiles keep ("spell", spell ID).
+    // spell ID, ...) (WM46, WM56, R29); other profiles keep ("spell", spell ID).
     let projection = if cfg!(feature = "client-retail") || cfg!(feature = "client-ptr") {
         "local kind, _, _, spellID = GetCursorInfo(); return kind, spellID"
     } else {
@@ -95,6 +213,14 @@ fn pickup_action_accepts_ignore_removal_arg_and_place_restores_slot() {
         env.eval::<bool>("return type(C_ActionBar.GetActionTexture(1)) == 'string'")
             .unwrap()
     );
+
+    env.exec("PickupAction(1, true)").unwrap();
+    assert!(env.eval::<bool>("return HasAction(1)").unwrap());
+    let (copy_type, copy_spell_id): (String, i32) = env.eval(projection).unwrap();
+    assert_eq!((copy_type.as_str(), copy_spell_id), ("spell", 853));
+    env.exec("ClearCursor()").unwrap();
+    assert!(env.eval::<bool>("return HasAction(1)").unwrap());
+    assert!(env.eval::<bool>("return GetCursorInfo() == nil").unwrap());
 }
 
 #[test]
@@ -143,12 +269,12 @@ fn action_button_drag_round_trip_keeps_spell_visible() {
 
     common::with_timeout(120, move || {
         let env = env_with_action_bar();
-        // The round-trip asserts only the verified empty-map branch.
-        {
-            let mut sim = env.state().borrow_mut();
-            sim.action_bar_spell_type_restrictions.clear();
-            sim.spell_type_labels.clear();
-        }
+        env.exec(r#"SetCVar("lockActionBars", "0")"#)
+            .expect("unlock action bars for drag input");
+        let bars_locked: bool = env
+            .eval(r#"return Settings.GetValue("lockActionBars")"#)
+            .expect("read action-bar lock setting");
+        assert!(!bars_locked, "drag test requires unlocked action bars");
         assert_action_button_template_has_receive_drag();
         let button_id = env
             .state()
@@ -179,30 +305,31 @@ fn action_button_drag_round_trip_keeps_spell_visible() {
             has_receive_drag,
             "action button should have an OnReceiveDrag handler"
         );
-        let icon_texture_before: String = env
-            .eval("return tostring(ActionButton1.icon:GetTexture())")
-            .unwrap();
-        // Known texture-representation gap: the sim returns a manifest path where native GetActionTexture returns a file ID; compare the round trip without pinning either form.
-        let action_texture_before: String =
-            env.eval("return tostring(GetActionTexture(1))").unwrap();
+
         env.fire_script_handler(button_id, "OnDragStart", vec![])
             .unwrap();
+        let action_picked_up: bool = env
+            .eval(
+                r#"local cursorType = GetCursorInfo(); return cursorType == "spell" and not HasAction(1) and not ActionButton1.icon:IsShown()"#,
+            )
+            .unwrap();
+        assert!(
+            action_picked_up,
+            "unlocked drag start should place the spell on the cursor and hide its action icon"
+        );
+
         env.fire_script_handler(button_id, "OnReceiveDrag", vec![])
             .unwrap();
 
-        let (texture, action_texture, icon_shown, has_action): (String, String, bool, bool) = env
+        let after_drag: bool = env
             .eval(
-                "return tostring(ActionButton1.icon:GetTexture()), \
-                 tostring(GetActionTexture(1)), ActionButton1.icon:IsShown(), HasAction(1)",
+                "return ActionButton1.icon:IsShown() and ActionButton1.icon:GetTexture() == 135963 and HasAction(1)",
             )
             .unwrap();
-        assert_eq!(texture, icon_texture_before);
-        assert_eq!(action_texture, action_texture_before);
         assert!(
-            icon_shown,
-            "the spell icon should remain visible after drag"
+            after_drag,
+            "dragging off and back onto the same button should keep spell texture 135963 and its action"
         );
-        assert!(has_action, "the action should remain assigned after drag");
     });
 }
 
@@ -257,4 +384,622 @@ fn action_button_1_texture_path_resolves_to_icon_fdid() {
             "ActionButton1 texture path should resolve to the expected icon FDID: {result}"
         );
     });
+}
+
+#[cfg(any(feature = "client-ptr", feature = "client-retail"))]
+#[test]
+fn cursor_info_projects_existing_payloads_with_profile_deltas() {
+    let env = WowLuaEnv::new().unwrap();
+    assert_eq!(
+        env.eval::<i64>("return select('#', GetCursorInfo())")
+            .unwrap(),
+        0,
+        "an empty cursor returns no values"
+    );
+
+    env.state().borrow_mut().cursor_item = Some(CursorInfo::Action {
+        slot: 1,
+        spell_id: 853,
+    });
+    let (count, kind, book_type, spell_id, related_is_nil): (i64, String, String, i64, bool) = env
+        .eval(
+            r#"
+            local kind, bookSlot, bookType, spellID, relatedID = GetCursorInfo()
+            return select('#', GetCursorInfo()), kind, bookType, spellID, relatedID == nil
+            "#,
+        )
+        .unwrap();
+    assert_eq!(count, 5);
+    assert_eq!(kind, "spell");
+    assert_eq!(book_type, "spell");
+    assert_eq!(spell_id, 853);
+    assert!(related_is_nil);
+
+    env.state().borrow_mut().cursor_item = Some(CursorInfo::Item {
+        owned_identity: None,
+        item_id: 6948,
+        stack_count: 4,
+        origin: CursorItemOrigin::Bag { bag: 0, slot: 1 },
+        applied_transmog: None,
+    });
+    let (count, kind, item_id, link_kind): (i64, String, i64, String) = env
+        .eval(
+            r#"
+            local kind, itemID, itemLink = GetCursorInfo()
+            return select('#', GetCursorInfo()), kind, itemID, type(itemLink)
+            "#,
+        )
+        .unwrap();
+    assert_eq!(count, 3);
+    assert_eq!(kind, "item");
+    assert_eq!(item_id, 6948);
+    assert!(matches!(link_kind.as_str(), "string" | "nil"));
+
+    env.state().borrow_mut().cursor_item = Some(CursorInfo::Macro { macro_index: 4 });
+    let (count, kind, macro_index): (i64, String, i64) = env
+        .eval(
+            r#"
+            local kind, macroIndex = GetCursorInfo()
+            return select('#', GetCursorInfo()), kind, macroIndex
+            "#,
+        )
+        .unwrap();
+    assert_eq!((count, kind.as_str(), macro_index), (2, "macro", 4));
+
+    env.state().borrow_mut().cursor_item = Some(CursorInfo::Money { copper: 10 });
+    let (count, kind, copper): (i64, String, i64) = env
+        .eval(
+            r#"
+            local kind, copper = GetCursorInfo()
+            return select('#', GetCursorInfo()), kind, copper
+            "#,
+        )
+        .unwrap();
+    assert_eq!((count, kind.as_str(), copper), (2, "money", 10));
+
+    for category in [6_u32, 7] {
+        env.state().borrow_mut().cursor_item = Some(CursorInfo::PetAction {
+            slot: 1,
+            spell_id: 0x00AB_CDEF,
+            packed_action: (category << 24) | 0x00AB_CDEF,
+        });
+        let (count, kind, action_id, book_is_nil, book_index, related_is_nil): (
+            i64,
+            String,
+            i64,
+            bool,
+            i64,
+            bool,
+        ) = env
+            .eval(
+                r#"
+                    local kind, actionID, bookIndex, relatedID = GetCursorInfo()
+                    return select('#', GetCursorInfo()), kind, actionID,
+                        bookIndex == nil, bookIndex or 0, relatedID == nil
+                    "#,
+            )
+            .unwrap();
+        assert_eq!(count, 4);
+        assert_eq!(kind, "petaction");
+        assert_eq!(action_id, 0x00AB_CDEF);
+        assert!(related_is_nil);
+        if cfg!(feature = "client-ptr") {
+            assert_eq!((book_is_nil, book_index), (false, 0));
+        } else {
+            assert!(book_is_nil);
+        }
+    }
+}
+
+#[cfg(feature = "client-ptr")]
+#[test]
+fn ptr_action_spell_restriction_matches_native_mode_and_slot_rules() {
+    let env = WowLuaEnv::new().unwrap();
+    let (zero_spell, fractional_numeric, last_slot): (bool, bool, bool) = env
+        .eval(
+            r#"
+            return C_ActionBar.SpellMatchesActionSpellTypeRestriction(0, 1),
+                C_ActionBar.SpellMatchesActionSpellTypeRestriction('0.9', '1.9'),
+                C_ActionBar.SpellMatchesActionSpellTypeRestriction(0, 408)
+            "#,
+        )
+        .unwrap();
+    assert_eq!(
+        (zero_spell, fractional_numeric, last_slot),
+        (true, true, true)
+    );
+
+    let (below_first, above_last): (i64, i64) = env
+        .eval(
+            r#"
+            return select('#', C_ActionBar.SpellMatchesActionSpellTypeRestriction(853, 0)),
+                select('#', C_ActionBar.SpellMatchesActionSpellTypeRestriction(853, 409))
+            "#,
+        )
+        .unwrap();
+    assert_eq!((below_first, above_last), (0, 0));
+
+    env.state().borrow_mut().game_rules.active_game_mode = 3;
+    assert!(env.eval::<bool>("return C_GameRules.IsWoWHack()").unwrap());
+    let (restricted, unrestricted, zero_spell_unrestricted, other_restricted): (
+        bool,
+        bool,
+        bool,
+        bool,
+    ) = env
+        .eval(
+            r#"
+            return C_ActionBar.SpellMatchesActionSpellTypeRestriction(853, 1),
+                C_ActionBar.SpellMatchesActionSpellTypeRestriction(853, 13),
+                C_ActionBar.SpellMatchesActionSpellTypeRestriction(0, 13),
+                C_ActionBar.SpellMatchesActionSpellTypeRestriction(853, 61)
+            "#,
+        )
+        .unwrap();
+    assert_eq!(
+        (
+            restricted,
+            unrestricted,
+            zero_spell_unrestricted,
+            other_restricted
+        ),
+        (false, true, false, false)
+    );
+
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.spell_labels
+            .insert(853, std::collections::HashSet::from([6590]));
+        sim.spell_labels
+            .insert(642, std::collections::HashSet::from([6595]));
+        sim.spell_labels
+            .insert(19750, std::collections::HashSet::from([6609]));
+    }
+    let (
+        offensive_first,
+        offensive_last,
+        defensive_first,
+        defensive_last,
+        ultimate_first,
+        ultimate_last,
+        wrong_label,
+        fractional_match,
+    ): (bool, bool, bool, bool, bool, bool, bool, bool) = env
+        .eval(
+            r#"
+            return C_ActionBar.SpellMatchesActionSpellTypeRestriction(853, 1),
+                C_ActionBar.SpellMatchesActionSpellTypeRestriction(853, 168),
+                C_ActionBar.SpellMatchesActionSpellTypeRestriction(642, 61),
+                C_ActionBar.SpellMatchesActionSpellTypeRestriction(642, 72),
+                C_ActionBar.SpellMatchesActionSpellTypeRestriction(19750, 145),
+                C_ActionBar.SpellMatchesActionSpellTypeRestriction(19750, 156),
+                C_ActionBar.SpellMatchesActionSpellTypeRestriction(642, 1),
+                C_ActionBar.SpellMatchesActionSpellTypeRestriction('853.9', '1.9')
+            "#,
+        )
+        .unwrap();
+    assert_eq!(
+        (
+            offensive_first,
+            offensive_last,
+            defensive_first,
+            defensive_last,
+            ultimate_first,
+            ultimate_last,
+            wrong_label,
+            fractional_match,
+        ),
+        (true, true, true, true, true, true, false, true)
+    );
+}
+
+#[cfg(feature = "client-ptr")]
+#[test]
+fn ptr_action_spell_restriction_reports_native_argument_errors() {
+    let env = WowLuaEnv::new().unwrap();
+    let (
+        missing_spell,
+        missing_action,
+        invalid_spell,
+        invalid_low_spell,
+        invalid_action,
+        invalid_high_action,
+        nonnumeric_spell,
+        nonfinite_action,
+    ): (String, String, String, String, String, String, String, String) = env
+        .eval(
+            r#"
+            local _, missingSpell = pcall(C_ActionBar.SpellMatchesActionSpellTypeRestriction, nil, 1)
+            local _, missingAction = pcall(C_ActionBar.SpellMatchesActionSpellTypeRestriction, 1, nil)
+            local _, invalidSpell = pcall(C_ActionBar.SpellMatchesActionSpellTypeRestriction, 2147483648, 1)
+            local _, invalidLowSpell = pcall(C_ActionBar.SpellMatchesActionSpellTypeRestriction, -2147483649, 1)
+            local _, invalidAction = pcall(C_ActionBar.SpellMatchesActionSpellTypeRestriction, 1, -1)
+            local _, invalidHighAction = pcall(C_ActionBar.SpellMatchesActionSpellTypeRestriction, 1, 4294967296)
+            local _, nonnumericSpell = pcall(C_ActionBar.SpellMatchesActionSpellTypeRestriction, true, 1)
+            local _, nonfiniteAction = pcall(C_ActionBar.SpellMatchesActionSpellTypeRestriction, 1, math.huge)
+            return missingSpell, missingAction, invalidSpell, invalidLowSpell,
+                invalidAction, invalidHighAction, nonnumericSpell, nonfiniteAction
+            "#,
+        )
+        .unwrap();
+    let usage = "Usage: local actionMatchesSpellTypeRestriction = C_ActionBar.SpellMatchesActionSpellTypeRestriction(spellID, actionID)";
+    assert!(missing_spell.contains("bad argument #1") && missing_spell.contains(usage));
+    assert!(missing_action.contains("bad argument #2") && missing_action.contains(usage));
+    for error in [&invalid_spell, &invalid_low_spell, &nonnumeric_spell] {
+        assert!(error.contains("outside of expected range -2147483648 to 2147483647 - "));
+        assert!(error.contains(usage));
+    }
+    for error in [&invalid_action, &invalid_high_action, &nonfinite_action] {
+        assert!(error.contains("outside of expected range 0 to 4294967295 - "));
+        assert!(error.contains(usage));
+    }
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn retail_action_spell_type_restriction_is_absent() {
+    let env = WowLuaEnv::new().unwrap();
+    assert!(env
+        .eval::<bool>(
+            "return type(C_ActionBar) ~= 'table' or type(C_ActionBar.SpellMatchesActionSpellTypeRestriction) ~= 'function'"
+        )
+        .unwrap());
+}
+
+#[cfg(feature = "client-ptr")]
+#[test]
+fn ptr_action_button_drag_matches_r29_cursor_and_event_order() {
+    common::with_timeout(120, move || {
+        let env = env_with_action_bar();
+        env.exec("SetCVar('lockActionBars', '0')")
+            .expect("unlock action bars for drag input");
+        env.fire_event("ACTIONBAR_HIDEGRID").unwrap();
+        env.exec("ActionButton1:SetAttribute('showgrid', 0)")
+            .expect("clear EditMode's always-show grid bit for the drag assertion");
+        seed_action_slot(&env, 1, 853);
+        env.fire_event_with_args("ACTIONBAR_SLOT_CHANGED", &[rilua::Val::Num(0.0)])
+            .unwrap();
+        env.fire_event("ACTIONBAR_UPDATE_STATE").unwrap();
+        env.exec("if ActionButton1 then ActionButton1.icon:SetTexture(GetActionTexture(1)) end")
+            .unwrap();
+        let button_id = action_button_id(&env, "ActionButton1");
+        install_ptr_action_bar_trace(&env);
+
+        env.fire_script_handler(button_id, "OnDragStart", vec![])
+            .unwrap();
+        let (count, kind, book_type, spell_id, related_is_nil): (i64, String, String, i64, bool) =
+            env.eval(
+                r#"
+                local kind, bookSlot, bookType, spellID, relatedID = GetCursorInfo()
+                return select('#', GetCursorInfo()), kind, bookType, spellID, relatedID == nil
+                "#,
+            )
+            .unwrap();
+        assert_eq!(count, 5);
+        assert_eq!(kind, "spell");
+        assert_eq!(book_type, "spell");
+        assert_eq!(spell_id, 853, "spellID is the fourth cursor value");
+        assert!(related_is_nil);
+        assert!(
+            env.eval::<bool>("return ActionButton1:GetShowGrid()")
+                .unwrap()
+        );
+        assert!(!env.eval::<bool>("return HasAction(1)").unwrap());
+        assert_eq!(
+            read_ptr_action_bar_trace(&env),
+            "ACTIONBAR_SHOWGRID;CURSOR_CHANGED,false,3,0,0;ACTIONBAR_SLOT_CHANGED,1"
+        );
+
+        env.fire_on_update(0.016).unwrap();
+        assert_eq!(
+            read_ptr_action_bar_trace(&env),
+            "ACTIONBAR_SHOWGRID;CURSOR_CHANGED,false,3,0,0;ACTIONBAR_SLOT_CHANGED,1;ACTIONBAR_UPDATE_COOLDOWN"
+        );
+
+        env.exec("ResetR29ActionBarEvents()").unwrap();
+        env.fire_script_handler(button_id, "OnReceiveDrag", vec![])
+            .unwrap();
+        assert_eq!(
+            env.eval::<i64>("return select('#', GetCursorInfo())")
+                .unwrap(),
+            0
+        );
+        assert!(env.eval::<bool>("return HasAction(1)").unwrap());
+        assert!(
+            !env.eval::<bool>("return ActionButton1:GetShowGrid()")
+                .unwrap()
+        );
+        assert_eq!(
+            read_ptr_action_bar_trace(&env),
+            "ACTIONBAR_HIDEGRID;CURSOR_CHANGED,true,0,3,0;ACTIONBAR_SLOT_CHANGED,1"
+        );
+        env.fire_on_update(0.016).unwrap();
+        assert_eq!(
+            read_ptr_action_bar_trace(&env),
+            "ACTIONBAR_HIDEGRID;CURSOR_CHANGED,true,0,3,0;ACTIONBAR_SLOT_CHANGED,1;ACTIONBAR_UPDATE_COOLDOWN"
+        );
+
+        seed_action_slot(&env, 2, 853);
+        env.fire_event_with_args("ACTIONBAR_SLOT_CHANGED", &[rilua::Val::Num(0.0)])
+            .unwrap();
+        env.fire_event("ACTIONBAR_UPDATE_STATE").unwrap();
+        env.exec("if ActionButton2 then ActionButton2.icon:SetTexture(GetActionTexture(2)) end")
+            .unwrap();
+        let target_id = action_button_id(&env, "ActionButton2");
+        env.exec("ResetR29ActionBarEvents()").unwrap();
+        env.fire_script_handler(button_id, "OnDragStart", vec![])
+            .unwrap();
+        env.fire_on_update(0.016).unwrap();
+        env.exec("ResetR29ActionBarEvents()").unwrap();
+        env.fire_script_handler(target_id, "OnReceiveDrag", vec![])
+            .unwrap();
+        assert!(!env.eval::<bool>("return HasAction(1)").unwrap());
+        assert_eq!(
+            env.eval::<i64>("local _, id = GetActionInfo(2); return id")
+                .unwrap(),
+            853
+        );
+        assert_eq!(
+            env.eval::<i64>("return select('#', GetCursorInfo())")
+                .unwrap(),
+            0
+        );
+        assert_eq!(
+            read_ptr_action_bar_trace(&env),
+            "ACTIONBAR_HIDEGRID;CURSOR_CHANGED,true,0,3,0"
+        );
+        env.fire_on_update(0.016).unwrap();
+        assert_eq!(
+            read_ptr_action_bar_trace(&env),
+            "ACTIONBAR_HIDEGRID;CURSOR_CHANGED,true,0,3,0"
+        );
+    });
+}
+
+#[cfg(feature = "client-ptr")]
+#[test]
+fn ptr_action_button_drag_swaps_occupied_spell_without_cursor_change() {
+    common::with_timeout(120, move || {
+        let env = env_with_action_bar();
+        env.exec("SetCVar('lockActionBars', '0')")
+            .expect("unlock action bars for drag input");
+        env.fire_event("ACTIONBAR_HIDEGRID").unwrap();
+        seed_action_slot(&env, 1, 853);
+        seed_action_slot(&env, 2, 642);
+        env.fire_event_with_args("ACTIONBAR_SLOT_CHANGED", &[rilua::Val::Num(0.0)])
+            .unwrap();
+        env.fire_event("ACTIONBAR_UPDATE_STATE").unwrap();
+        env.exec(
+            "if ActionButton1 then ActionButton1.icon:SetTexture(GetActionTexture(1)) end; if ActionButton2 then ActionButton2.icon:SetTexture(GetActionTexture(2)) end",
+        )
+        .unwrap();
+        let source = action_button_id(&env, "ActionButton1");
+        let target = action_button_id(&env, "ActionButton2");
+        install_ptr_action_bar_trace(&env);
+
+        env.fire_script_handler(source, "OnDragStart", vec![])
+            .unwrap();
+        env.fire_script_handler(target, "OnReceiveDrag", vec![])
+            .unwrap();
+
+        assert!(!env.eval::<bool>("return HasAction(1)").unwrap());
+        assert_eq!(
+            env.eval::<i64>("local _, id = GetActionInfo(2); return id")
+                .unwrap(),
+            853
+        );
+        let (count, kind, spell_id): (i64, String, i64) = env
+            .eval(
+                r#"
+                local kind, bookSlot, bookType, spellID = GetCursorInfo()
+                return select('#', GetCursorInfo()), kind, spellID
+                "#,
+            )
+            .unwrap();
+        assert_eq!((count, kind.as_str(), spell_id), (5, "spell", 642));
+        assert_eq!(
+            read_ptr_action_bar_trace(&env),
+            "ACTIONBAR_SHOWGRID;CURSOR_CHANGED,false,3,0,0;ACTIONBAR_SLOT_CHANGED,1;ACTIONBAR_SHOWGRID;ACTIONBAR_SLOT_CHANGED,2"
+        );
+        env.fire_on_update(0.016).unwrap();
+        assert_eq!(
+            read_ptr_action_bar_trace(&env),
+            "ACTIONBAR_SHOWGRID;CURSOR_CHANGED,false,3,0,0;ACTIONBAR_SLOT_CHANGED,1;ACTIONBAR_SHOWGRID;ACTIONBAR_SLOT_CHANGED,2;ACTIONBAR_UPDATE_COOLDOWN"
+        );
+    });
+}
+
+#[cfg(feature = "client-ptr")]
+#[test]
+fn ptr_action_bar_lock_is_checked_by_the_lua_drag_consumer_only() {
+    common::with_timeout(120, move || {
+        let env = env_with_action_bar();
+        env.exec("SetCVar('lockActionBars', '1')")
+            .expect("lock action bars");
+        assert!(
+            env.eval::<bool>("return Settings.GetValue('lockActionBars')")
+                .unwrap()
+        );
+        seed_action_slot(&env, 1, 853);
+        env.fire_event_with_args("ACTIONBAR_SLOT_CHANGED", &[rilua::Val::Num(0.0)])
+            .unwrap();
+        env.exec("if ActionButton1 then ActionButton1.icon:SetTexture(GetActionTexture(1)) end")
+            .unwrap();
+        let button_id = action_button_id(&env, "ActionButton1");
+
+        env.fire_script_handler(button_id, "OnDragStart", vec![])
+            .unwrap();
+        assert!(env.eval::<bool>("return HasAction(1)").unwrap());
+        assert_eq!(
+            env.eval::<i64>("return select('#', GetCursorInfo())")
+                .unwrap(),
+            0
+        );
+
+        env.exec("PickupAction(1)")
+            .expect("the native pickup wrapper does not inspect the lock setting");
+        assert!(!env.eval::<bool>("return HasAction(1)").unwrap());
+        env.fire_script_handler(button_id, "OnReceiveDrag", vec![])
+            .unwrap();
+        assert!(env.eval::<bool>("return HasAction(1)").unwrap());
+        assert_eq!(
+            env.eval::<i64>("return select('#', GetCursorInfo())")
+                .unwrap(),
+            0
+        );
+    });
+}
+
+#[cfg(feature = "client-ptr")]
+#[test]
+fn ptr_tainted_combat_pickup_is_blocked_and_place_clears_the_cursor() {
+    let env = WowLuaEnv::new().unwrap();
+    seed_action_slot(&env, 1, 853);
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.action_bars.remove(&2);
+        sim.action_outfits.remove(&2);
+        sim.action_macros.remove(&2);
+        sim.player.in_combat = true;
+    }
+    assert!(!env.eval::<bool>("return HasAction(2)").unwrap());
+    install_ptr_action_bar_trace(&env);
+    env.exec(
+        r#"
+        TaintedPickupAction = function() PickupAction(1) end
+        TaintedPlaceAction = function() PlaceAction(2) end
+        debug.setobjecttaint(TaintedPickupAction, 'R29TestAddon')
+        debug.setobjecttaint(TaintedPlaceAction, 'R29TestAddon')
+        TaintedPickupAction()
+        "#,
+    )
+    .unwrap();
+    assert!(env.eval::<bool>("return HasAction(1)").unwrap());
+    assert_eq!(
+        env.eval::<i64>("return select('#', GetCursorInfo())")
+            .unwrap(),
+        0
+    );
+    assert_eq!(
+        read_ptr_action_bar_trace(&env),
+        "ADDON_ACTION_BLOCKED,R29TestAddon,PickupAction()"
+    );
+
+    env.exec("PickupAction(1)")
+        .expect("secure pickup is allowed during combat");
+    env.fire_on_update(0.016).unwrap();
+    env.exec("ResetR29ActionBarEvents(); TaintedPlaceAction()")
+        .unwrap();
+    assert!(
+        !env.eval::<bool>("return HasAction(2)").unwrap(),
+        "blocked PlaceAction trace: {}",
+        read_ptr_action_bar_trace(&env)
+    );
+    assert_eq!(
+        env.eval::<i64>("return select('#', GetCursorInfo())")
+            .unwrap(),
+        0
+    );
+    assert_eq!(
+        read_ptr_action_bar_trace(&env),
+        "ADDON_ACTION_BLOCKED,R29TestAddon,PlaceAction();ACTIONBAR_HIDEGRID;CURSOR_CHANGED,true,0,3,0"
+    );
+}
+
+#[cfg(feature = "client-ptr")]
+#[test]
+fn ptr_tainted_place_merchant_cursor_reports_block_and_clears() {
+    let env = WowLuaEnv::new().unwrap();
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.merchant_items = vec![6948];
+        sim.action_bars.remove(&202);
+        sim.action_outfits.remove(&202);
+        sim.action_macros.remove(&202);
+    }
+    install_ptr_action_bar_trace(&env);
+    env.exec("PickupMerchantItem(1)").unwrap();
+    env.state().borrow_mut().player.in_combat = true;
+    env.exec(
+        r#"
+        TaintedPlaceMerchant = function() PlaceAction(202) end
+        debug.setobjecttaint(TaintedPlaceMerchant, 'R37TestAddon')
+        ResetR29ActionBarEvents()
+        TaintedPlaceMerchant()
+        "#,
+    )
+    .unwrap();
+
+    assert!(!env.eval::<bool>("return HasAction(202)").unwrap());
+    assert_eq!(
+        env.eval::<i64>("return select('#', GetCursorInfo())")
+            .unwrap(),
+        0
+    );
+    let trace = read_ptr_action_bar_trace(&env);
+    assert!(
+        trace.starts_with(
+            "ADDON_ACTION_BLOCKED,R37TestAddon,PlaceAction();CURSOR_CHANGED,true,0,5,"
+        ),
+        "merchant cursor block trace: {trace}"
+    );
+    assert!(!trace.contains("ACTIONBAR_SLOT_CHANGED"), "{trace}");
+}
+
+#[cfg(any(feature = "client-ptr", feature = "client-retail"))]
+#[test]
+fn action_slot_limits_match_the_client_profile() {
+    let env = WowLuaEnv::new().unwrap();
+    if cfg!(feature = "client-ptr") {
+        seed_action_slot(&env, 360, 853);
+        seed_action_slot(&env, 361, 642);
+
+        env.exec("PickupAction(361)").unwrap();
+        assert!(env.eval::<bool>("return HasAction(361)").unwrap());
+        assert_eq!(
+            env.eval::<i64>("return select('#', GetCursorInfo())")
+                .unwrap(),
+            0
+        );
+
+        env.exec("PickupAction(360)").unwrap();
+        assert!(!env.eval::<bool>("return HasAction(360)").unwrap());
+        env.exec("PlaceAction(361)").unwrap();
+        let (kind, spell_id): (String, i64) = env
+            .eval("local kind, id = GetActionInfo(361); return kind, id")
+            .unwrap();
+        assert_eq!((kind.as_str(), spell_id), ("spell", 642));
+        assert_eq!(
+            env.eval::<i64>("local _, _, _, spellID = GetCursorInfo(); return spellID")
+                .unwrap(),
+            853
+        );
+
+        env.exec("PlaceAction(360)").unwrap();
+        assert!(env.eval::<bool>("return HasAction(360)").unwrap());
+        assert_eq!(
+            env.eval::<i64>("return select('#', GetCursorInfo())")
+                .unwrap(),
+            0
+        );
+    } else {
+        seed_action_slot(&env, 201, 853);
+        env.exec("PickupAction(201)").unwrap();
+        assert!(!env.eval::<bool>("return HasAction(201)").unwrap());
+        let (kind, spell_id): (String, i64) = env
+            .eval("local kind, _, _, spellID = GetCursorInfo(); return kind, spellID")
+            .unwrap();
+        assert_eq!((kind.as_str(), spell_id), ("spell", 853));
+
+        env.exec("PlaceAction(202)").unwrap();
+        let (kind, spell_id): (String, i64) = env
+            .eval("local kind, id = GetActionInfo(202); return kind, id")
+            .unwrap();
+        assert_eq!((kind.as_str(), spell_id), ("spell", 853));
+        assert_eq!(
+            env.eval::<i64>("return select('#', GetCursorInfo())")
+                .unwrap(),
+            0
+        );
+    }
 }

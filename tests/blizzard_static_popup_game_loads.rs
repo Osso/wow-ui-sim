@@ -102,9 +102,10 @@ const DEFS_UTIL_FUNCTIONS: &[&str] = &[
     "GetDefaultExpirationText",
 ];
 
-const VIRTUAL_TEMPLATES: &[(&str, &str)] = &[
-    ("StaticPopupButtonTemplate", "Button"),
-    ("StaticPopupTemplate", "Frame"),
+const VIRTUAL_TEMPLATES: &[&str] = &[
+    "StaticPopupButtonTemplate",
+    "StaticPopupBaseTemplate",
+    "StaticPopupTemplate",
 ];
 
 const NAMED_DIALOG_SLOTS: &[&str] = &[
@@ -178,38 +179,42 @@ fn find_toc_file_resolves_bare_toc() {
 
 post_wrath_ui_fixture! {
 #[test]
-fn dependencies_chain_pulls_declared_addons_via_plural_dependencies_key() {
+fn dependencies_match_active_profile_plural_toc_directive() {
     let toc = TocFile::from_file(&static_popup_game_toc()).expect("TOC parses");
 
-    let expected_deps = if toc_layout::unified_toc_tree() {
-        vec![
+    let expected_deps: Vec<String> = if toc_layout::classic_cache() {
+        [
             "Blizzard_StaticPopup",
             "Blizzard_ItemButton",
             "Blizzard_AutoComplete",
             "Blizzard_MoneyFrame",
             "Blizzard_AccessibilityTemplates",
-            "Blizzard_GameMenuEsc",
-            "Blizzard_GamepadSharedUtility",
         ]
+        .iter()
+        .map(|dependency| dependency.to_string())
+        .collect()
     } else {
-        vec![
-            "Blizzard_StaticPopup",
-            "Blizzard_ItemButton",
-            "Blizzard_AutoComplete",
-            "Blizzard_MoneyFrame",
-            "Blizzard_AccessibilityTemplates",
-            "Blizzard_GameMenuEsc",
-        ]
+        let mut dependencies = vec![
+            "Blizzard_StaticPopup".to_string(),
+            "Blizzard_ItemButton".to_string(),
+            "Blizzard_AutoComplete".to_string(),
+            "Blizzard_MoneyFrame".to_string(),
+            "Blizzard_AccessibilityTemplates".to_string(),
+            "Blizzard_GameMenuEsc".to_string(),
+        ];
+        if toc_layout::unified_toc_tree() {
+            // PTR/Forever Blizzard_StaticPopup_Game.toc:2 adds gamepad support.
+            dependencies.push("Blizzard_GamepadSharedUtility".to_string());
+        }
+        dependencies
     };
 
     assert_eq!(
         toc.dependencies(),
-        expected_deps
-            .into_iter()
-            .map(str::to_string)
-            .collect::<Vec<_>>(),
-        "Dependencies follow the selected profile TOC; unified PTR/Forever TOCs add \
-         GamepadSharedUtility after GameMenuEsc. Got: {:?}",
+        expected_deps,
+        "Plural `## Dependencies:` must match the active pinned TOC. Order is StaticPopup, \
+         ItemButton, AutoComplete, MoneyFrame, AccessibilityTemplates and GameMenuEsc; PTR/Forever \
+         Blizzard_StaticPopup_Game.toc:2 also adds GamepadSharedUtility. Got: {:?}",
         toc.dependencies()
     );
 }
@@ -270,25 +275,18 @@ post_wrath_ui_fixture! {
 fn toc_raw_bytes_pin_three_metadata_directives() {
     let raw = std::fs::read_to_string(static_popup_game_toc()).expect("TOC reads utf-8");
 
-    let expected_directives: &[&str] = if toc_layout::classic_cache() {
-        &[
-            "## Title: Blizzard_StaticPopup_Game",
-            "## Dependencies: Blizzard_StaticPopup, Blizzard_ItemButton, Blizzard_AutoComplete, Blizzard_MoneyFrame, Blizzard_AccessibilityTemplates",
-            "## AllowLoad: game",
-        ]
-    } else if toc_layout::forever() {
-        &[
-            "## Title: Blizzard_StaticPopup_Game",
-            "## Dependencies: Blizzard_StaticPopup, Blizzard_ItemButton, Blizzard_AutoComplete, Blizzard_MoneyFrame, Blizzard_AccessibilityTemplates, Blizzard_GameMenuEsc, Blizzard_GamepadSharedUtility",
-            "## AllowLoad: game",
-        ]
+    let expected_dependencies = if toc_layout::classic_cache() {
+        "## Dependencies: Blizzard_StaticPopup, Blizzard_ItemButton, Blizzard_AutoComplete, Blizzard_MoneyFrame, Blizzard_AccessibilityTemplates"
+    } else if toc_layout::unified_toc_tree() {
+        "## Dependencies: Blizzard_StaticPopup, Blizzard_ItemButton, Blizzard_AutoComplete, Blizzard_MoneyFrame, Blizzard_AccessibilityTemplates, Blizzard_GameMenuEsc, Blizzard_GamepadSharedUtility"
     } else {
-        &[
-            "## Title: Blizzard_StaticPopup_Game",
-            "## Dependencies: Blizzard_StaticPopup, Blizzard_ItemButton, Blizzard_AutoComplete, Blizzard_MoneyFrame, Blizzard_AccessibilityTemplates, Blizzard_GameMenuEsc",
-            "## AllowLoad: game",
-        ]
+        "## Dependencies: Blizzard_StaticPopup, Blizzard_ItemButton, Blizzard_AutoComplete, Blizzard_MoneyFrame, Blizzard_AccessibilityTemplates, Blizzard_GameMenuEsc"
     };
+    let expected_directives = [
+        "## Title: Blizzard_StaticPopup_Game",
+        expected_dependencies,
+        "## AllowLoad: game",
+    ];
 
     for directive in expected_directives {
         assert!(
@@ -358,6 +356,20 @@ fn body_selects_active_profile_family_and_game_entries() {
             body[i]
         );
     }
+}
+}
+
+post_wrath_ui_fixture! {
+#[test]
+fn body_substitutes_family_and_filters_classic_only_entries() {
+    body_selects_active_profile_family_and_game_entries();
+}
+}
+
+post_wrath_ui_fixture! {
+#[test]
+fn dependencies_chain_pulls_six_blizzard_addons_via_plural_dependencies_key() {
+    dependencies_match_active_profile_plural_toc_directive();
 }
 }
 
@@ -834,17 +846,22 @@ fn money_frame_on_load_global_publishes_as_function() {
 }
 
 prefork_full_ui_case! {
-fn xml_registers_button_and_full_dialog_virtual_templates(env: &WowLuaEnv) {
-    for (template, frame_type) in VIRTUAL_TEMPLATES {
+fn xml_registers_three_virtual_templates(env: &WowLuaEnv) {
+
+    for template in VIRTUAL_TEMPLATES {
         let probe = format!(
-            "return CreateFrame({frame_type:?}, nil, UIParent, {template:?}) ~= nil"
+            "local ok, frame = pcall(function() \
+                return CreateFrame('Frame', nil, UIParent, {template:?}) \
+             end) \
+             return ok and frame ~= nil"
         );
         let result: bool = env
             .eval(&probe)
             .unwrap_or_else(|err| panic!("template probe ({template}): {err}"));
         assert!(
             result,
-            "Virtual template {template} must materialize as {frame_type} from the selected XML"
+            "Virtual template {template} must materialize via CreateFrame \
+             — virtual=\"true\", consumed by inheritance"
         );
     }
 }
@@ -852,13 +869,78 @@ fn xml_registers_button_and_full_dialog_virtual_templates(env: &WowLuaEnv) {
 
 #[cfg(not(feature = "client-retail"))]
 #[test]
-fn xml_registers_button_and_full_dialog_virtual_templates() {
+fn xml_registers_three_virtual_templates() {
     let env = load_full_ui_for(ScreenKind::Game);
-    xml_registers_button_and_full_dialog_virtual_templates::run(&env);
+    xml_registers_three_virtual_templates::run(&env);
+}
+
+#[cfg(feature = "client-ptr")]
+#[test]
+fn create_frame_onload_error_reports_and_preserves_partial_template() {
+    let env = load_full_ui_for(ScreenKind::Game);
+    let result: String = env
+        .eval(
+            r#"
+            local errors = {}
+            local previousErrorHandler = geterrorhandler()
+            seterrorhandler(function(message)
+                table.insert(errors, tostring(message))
+            end)
+
+            local created, frame = pcall(function()
+                return CreateFrame("Frame", "PTRStaticPopupBaseProbe", UIParent, "StaticPopupBaseTemplate")
+            end)
+
+            local originalOnLoad = GameDialogBaseMixin.OnLoad
+            local onShowCalls = 0
+            GameDialogBaseMixin.OnLoad = function(self, ...)
+                self.beforeGamepadError = true
+                self:SetScript("OnShow", function(shownFrame)
+                    onShowCalls = onShowCalls + 1
+                    shownFrame.onShowAfterError = true
+                end)
+                originalOnLoad(self, ...)
+                self.afterGamepadError = true
+            end
+            local optionsCreated, visibleFrame = pcall(function()
+                return CreateFrameWithOptions({
+                    frameType = "Frame",
+                    name = "PTRStaticPopupBaseOptionsProbe",
+                    parent = UIParent,
+                    inherits = { "StaticPopupBaseTemplate" },
+                    hidden = false,
+                })
+            end)
+
+            GameDialogBaseMixin.OnLoad = originalOnLoad
+            seterrorhandler(previousErrorHandler)
+
+            assert(created and frame ~= nil, "CreateFrame propagated the template OnLoad error")
+            assert(frame.BG ~= nil and frame.CloseButton ~= nil, "parentKey children must survive the error")
+            assert(frame.BG.Top:GetAtlas() == GameDialogBackgroundTop, "OnLoad mutations before the error must persist")
+            local captured = false
+            for _, message in ipairs(errors) do
+                if string.find(message, "GamepadSequence", 1, true) then
+                    captured = true
+                end
+            end
+            assert(captured, "GamepadSequence error did not reach the installed error handler")
+            assert(optionsCreated and visibleFrame ~= nil, "visible options creation should return a frame")
+            assert(visibleFrame:IsShown(), "initial visibility should run after failed OnLoad")
+            assert(visibleFrame.BG ~= nil and visibleFrame.CloseButton ~= nil, "options frame keeps parentKey children")
+            assert(visibleFrame.beforeGamepadError and visibleFrame.afterGamepadError == nil,
+                   "OnLoad statements before the error persist and later statements do not run")
+            assert(visibleFrame.onShowAfterError and onShowCalls == 1, "initial OnShow should run after failed OnLoad")
+            return "ok"
+            "#,
+        )
+        .expect("CreateFrame OnLoad error probe should run");
+    assert_eq!(result, "ok");
 }
 
 prefork_full_ui_case! {
 fn four_named_dialog_slots_materialize_as_hidden_dialogs(env: &WowLuaEnv) {
+
     for name in NAMED_DIALOG_SLOTS {
         let hidden: bool = env.eval(&format!("return {name} ~= nil and not {name}:IsShown()")).expect("popup visibility");
         assert!(hidden, "{name} should start hidden");
@@ -930,4 +1012,33 @@ fn pet_battle_queue_ready_frame_materializes_from_mainline_special_xml() {
     let env = load_full_ui_for(ScreenKind::Game);
     pet_battle_queue_ready_frame_materializes_from_mainline_special_xml::run(&env);
 }
+}
+
+const R72_TYPED_TEMPLATES: &[(&str, &str)] = &[
+    ("StaticPopupButtonTemplate", "Button"),
+    ("StaticPopupTemplate", "Frame"),
+];
+
+prefork_full_ui_case! {
+fn xml_registers_button_and_full_dialog_virtual_templates(env: &WowLuaEnv) {
+    for (template, frame_type) in R72_TYPED_TEMPLATES {
+        let probe = format!(
+            "return CreateFrame({frame_type:?}, nil, UIParent, {template:?}) ~= nil"
+        );
+        let result: bool = env
+            .eval(&probe)
+            .unwrap_or_else(|err| panic!("template probe ({template}): {err}"));
+        assert!(
+            result,
+            "Virtual template {template} must materialize as {frame_type} from the selected XML"
+        );
+    }
+}
+}
+
+#[cfg(not(feature = "client-retail"))]
+#[test]
+fn xml_registers_button_and_full_dialog_virtual_templates() {
+    let env = load_full_ui_for(ScreenKind::Game);
+    xml_registers_button_and_full_dialog_virtual_templates::run(&env);
 }

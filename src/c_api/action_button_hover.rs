@@ -83,19 +83,10 @@ fn read_slot(state: &LuaState, function: &str) -> LuaResult<Option<u32>> {
 }
 
 pub(crate) fn read_converted_slot(state: &LuaState, function: &str, usage: &str) -> LuaResult<i32> {
-    read_converted_slot_at(state, 1, function, usage)
-}
-
-pub(crate) fn read_converted_slot_at(
-    state: &LuaState,
-    index: i32,
-    function: &str,
-    usage: &str,
-) -> LuaResult<i32> {
-    if matches!(stack_val(state, index), Val::Nil) {
-        return Err(argument_error(index, function, usage));
+    if matches!(stack_val(state, 1), Val::Nil) {
+        return Err(argument_error(1, function, usage));
     }
-    let value = unknown_policy::read_accessible_argument(state, index, usage)?;
+    let value = unknown_policy::read_accessible_argument(state, 1, usage)?;
     let number = match value {
         Val::Num(number) => Some(number),
         Val::Str(reference) => state
@@ -109,7 +100,7 @@ pub(crate) fn read_converted_slot_at(
         .filter(|n| n.is_finite() && (0.0..=f64::from(u32::MAX)).contains(n))
         .ok_or_else(|| {
             argument_error(
-                index,
+                1,
                 function,
                 &format!("outside of expected range 0 to 4294967295 - {usage}"),
             )

@@ -5,29 +5,39 @@ use crate::common;
 use common::auction_fixtures::auction_root;
 use common::panel_fixtures::{clear_recorded_lua_errors, recorded_lua_errors};
 
-#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[cfg(feature = "client-ptr")]
 #[test]
-fn mainline_auction_house_bootstrap_hide_wrapper_hides_the_open_frame() {
+fn ptr_auction_house_does_not_publish_snapshot_only_hide_wrapper() {
     common::with_perf_lock(|| {
         common::with_timeout(240, || {
             let env = common::panel_fixtures::setup_env();
             load_auction_house_through_runtime(&env);
             env.apply_post_load_workarounds();
 
-            let wrapper_targeted_frame: bool = env
+            let wrapper_hides_frame: bool = env
                 .eval(
-                    "if type(HideAuctionHouseFrame) ~= 'function' or not AuctionHouseFrame then \
-                         return false \
-                     end; local expected = AuctionHouseFrame; local actual; \
-                     local original = HideUIPanel; \
-                     HideUIPanel = function(frame) actual = frame end; \
-                     HideAuctionHouseFrame(); HideUIPanel = original; \
-                     return actual == expected",
+                    r#"
+                    local originalHide = HideUIPanel
+                    local originalLoaded = C_AddOns.IsAddOnLoaded
+                    local hidAuctionHouse = false
+                    C_AddOns.IsAddOnLoaded = function(name)
+                        return name == "Blizzard_AuctionHouseUI"
+                    end
+                    HideUIPanel = function(frame)
+                        hidAuctionHouse = frame == AuctionHouseFrame
+                    end
+                    AuctionHouseFrame = {}
+                    local callable = type(HideAuctionHouseFrame) == "function"
+                    HideAuctionHouseFrame()
+                    HideUIPanel = originalHide
+                    C_AddOns.IsAddOnLoaded = originalLoaded
+                    return callable and hidAuctionHouse
+                    "#,
                 )
-                .expect("selected AuctionHouse bootstrap wrapper should run");
+                .expect("auction house wrapper behavior should be queryable");
             assert!(
-                wrapper_targeted_frame,
-                "HideAuctionHouseFrame must pass the original AuctionHouseFrame to HideUIPanel"
+                wrapper_hides_frame,
+                "PTR AuctionHouseUI bootstrap.lua:10-17 publishes a loaded-addon hide delegate"
             );
         });
     });
@@ -112,4 +122,32 @@ fn load_auction_house_through_runtime(env: &wow_ui_sim::lua_api::WowLuaEnv) {
         .eval(&format!(r#"return C_AddOns.LoadAddOn("{root}")"#))
         .expect("C_AddOns.LoadAddOn should return");
     assert!(loaded, "`{root}` should load: {reason:?}");
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn mainline_auction_house_bootstrap_hide_wrapper_hides_the_open_frame() {
+    common::with_perf_lock(|| {
+        common::with_timeout(240, || {
+            let env = common::panel_fixtures::setup_env();
+            load_auction_house_through_runtime(&env);
+            env.apply_post_load_workarounds();
+
+            let wrapper_targeted_frame: bool = env
+                .eval(
+                    "if type(HideAuctionHouseFrame) ~= 'function' or not AuctionHouseFrame then \
+                         return false \
+                     end; local expected = AuctionHouseFrame; local actual; \
+                     local original = HideUIPanel; \
+                     HideUIPanel = function(frame) actual = frame end; \
+                     HideAuctionHouseFrame(); HideUIPanel = original; \
+                     return actual == expected",
+                )
+                .expect("selected AuctionHouse bootstrap wrapper should run");
+            assert!(
+                wrapper_targeted_frame,
+                "HideAuctionHouseFrame must pass the original AuctionHouseFrame to HideUIPanel"
+            );
+        });
+    });
 }

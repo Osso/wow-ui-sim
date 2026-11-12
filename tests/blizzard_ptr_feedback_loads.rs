@@ -307,7 +307,7 @@ fn blizzard_ptr_feedback_toc_lists_six_files_in_canonical_order() {
 }
 
 #[test]
-fn blizzard_ptr_feedback_appears_only_on_selected_screens() {
+fn blizzard_ptr_feedback_appears_only_on_ptr_game_discovery() {
     let ui = blizzard_ui_dir();
 
     for screen in [
@@ -324,10 +324,16 @@ fn blizzard_ptr_feedback_appears_only_on_selected_screens() {
             && wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::Ptr;
         assert_eq!(
             found, expected,
-            "OnlyBetaAndPTR admits the PTR build on Game; normal builds including Forever \
-             are filtered, and AllowLoad defaults to Game-only"
+            "R26: PTR build classification passes OnlyBetaAndPTR on the Game screen; \
+             normal builds including Forever are filtered, and AllowLoad defaults to \
+             Game-only for every other screen"
         );
     }
+}
+
+#[test]
+fn blizzard_ptr_feedback_does_not_appear_in_eager_discovery() {
+    blizzard_ptr_feedback_appears_only_on_ptr_game_discovery();
 }
 
 post_wrath_ui_fixture! {

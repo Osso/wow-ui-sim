@@ -28,7 +28,7 @@ const CVAR_DATA_MASK: u8 = 0x3F;
 const CVAR_DATA_TAG: u8 = 0x40;
 const DEFAULT_CVAR_BITFIELD_VERSION: u8 = b'0';
 const C_CVAR_FUNCTIONS: &[(&str, RustFn)] = &[
-    ("GetCVar", get_cvar),
+    ("GetCVar", get_cvar_namespace),
     ("SetCVar", set_cvar),
     ("GetCVarBool", get_cvar_bool),
     ("GetCVarDefault", get_cvar_default),
@@ -87,6 +87,7 @@ fn set_cvar(state: &mut LuaState) -> LuaResult<u32> {
     let override_change = gamepad_override_change(state, &name, &value)?;
     let accepted = borrow_state_mut(state)?.cvars.set(&name, &value);
     if accepted {
+        crate::c_api::game_mode_display::cvar_set_callback(state, &name)?;
         crate::c_api::restricted_actions::update_forced_cvar(state, &name)?;
         let name_arg = create_string(state, &name);
         let value_arg = create_string(state, &value);
@@ -196,6 +197,19 @@ fn register_cvar(state: &mut LuaState) -> LuaResult<u32> {
 /// CVars that haven't been registered.
 fn get_cvar(state: &mut LuaState) -> LuaResult<u32> {
     push_cvar_string(state, CvarStringSource::Current)
+}
+
+/// `C_CVar.GetCVar` refuses the hidden Retail/PTR server mirror names.
+/// INFERRED: the wrapper exposes that refusal as one nil result.
+fn get_cvar_namespace(state: &mut LuaState) -> LuaResult<u32> {
+    let Some(name) = required_string(state, 1) else {
+        return get_cvar(state);
+    };
+    if borrow_state(state)?.cvars.is_server_mirrored(&name) {
+        state.push(Val::Nil);
+        return Ok(1);
+    }
+    get_cvar(state)
 }
 
 /// `GetCVarDefault(name)` — read the YAML/factory default for `name`,
@@ -396,4 +410,20 @@ fn insert_c_cvar_table(state: &mut LuaState, key: GcRef<LuaString>) -> GcRef<Tab
     }
     state.gc.barrier_back(global);
     new_ref
+}
+
+/// Native caller path: bypass Lua-only access checks and notify only on change.
+/// CVarStorage currently has no active native validation callback.
+pub(crate) fn set_native_cvar(state: &mut LuaState, name: &str, value: &str) -> LuaResult<bool> {
+    let changed = borrow_state(state)?.cvars.get(name).as_deref() != Some(value);
+    let accepted = borrow_state_mut(state)?.cvars.set(name, value);
+    if accepted {
+        crate::c_api::game_mode_display::cvar_set_callback(state, name)?;
+    }
+    if accepted && changed {
+        let name_arg = create_string(state, name);
+        let value_arg = create_string(state, value);
+        dispatch_event_now(state, "CVAR_UPDATE", &[name_arg, value_arg])?;
+    }
+    Ok(accepted)
 }

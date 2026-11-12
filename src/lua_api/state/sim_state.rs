@@ -21,6 +21,8 @@ pub struct SimState {
     #[cfg(feature = "retail-12-0-5")]
     pub(crate) nameplate_hit_test_insets: crate::c_api::c_nameplate_manager::NamePlateHitTestInsets,
     pub(crate) input_interface_style: crate::c_api::c_input_interface_style::InputInterfaceStyle,
+    /// INFERRED host byte projection, independent of CVars and GPU detection.
+    pub video_capability_bytes: crate::c_api::video_capabilities::VideoCapabilityBytes,
     /// Explicit mapped-stick input; None means no configured snapshot, not device absence.
     #[cfg(any(feature = "client-wowforever", feature = "client-ptr"))]
     pub gamepad_mapped_sticks: Option<crate::c_api::c_game_pad::MappedStickSnapshot>,
@@ -181,6 +183,10 @@ pub struct SimState {
     pub physical_screen_height: f32,
     pub screen_kind: ScreenKind,
     pub in_character_create: bool,
+    pub glue_login: crate::c_api::c_login::LoginState,
+    #[cfg(any(feature = "client-ptr", feature = "client-wowforever"))]
+    pub(crate) glue_feature_status:
+        crate::lua_api::globals::real::glue_feature_status::GlueFeatureStatus,
     pub is_logged_in: bool,
     pub post_event_workarounds_applied: bool,
     pub screen_first_displayed: bool,
@@ -233,11 +239,12 @@ pub struct SimState {
         HashMap<i32, Vec<crate::c_api::c_weekly_rewards::ActivityTierProgress>>,
     /// WM97 DQ8 host seam: exact 64-bit keys with independent ready state.
     pub weekly_rewards: crate::c_api::c_tooltip_info_weekly::WeeklyRewards,
+    /// Host-supplied SpellLabel IDs keyed by spell; empty when no label records are supplied.
+    pub spell_labels: HashMap<i32, HashSet<i32>>,
     pub action_bars: HashMap<u32, u32>,
-    /// Host-supplied group-to-label map; default empty and no WoWHack data bundled.
-    pub action_bar_spell_type_restrictions: HashMap<u32, u32>,
-    /// Host-supplied labels only; no SpellLabel table data bundled.
-    pub spell_type_labels: HashMap<i32, HashSet<u32>>,
+    /// Pending unique PTR cooldown refresh; multiple slot changes coalesce per update.
+    #[cfg(feature = "client-ptr")]
+    pub(crate) actionbar_cooldown_update_pending: bool,
     /// Explicit slot-owned input; no cast/attack/spell-lifetime inference.
     pub(crate) action_repeat_active_slots: HashSet<u32>,
     /// INFERRED host-declared resolved spell IDs on special bars; empty by default.
@@ -701,6 +708,7 @@ pub struct SimState {
     pub simulated_mouse_inputs:
         VecDeque<crate::lua_api::globals::real::simulate_mouse::SimulatedMouseInput>,
     pub game_rules: GameRulesState,
+    pub credits: crate::c_api::credits::CreditsState,
     pub discord: DiscordState,
     pub player_choice: PlayerChoiceState,
     pub housing_service_enabled: bool,
@@ -935,6 +943,8 @@ pub struct SimState {
     pub auction_should_auto_populate_price: bool,
     pub wow_token: WowTokenState,
     pub mythic_plus: MythicPlusState,
+    /// Byte copied from Forever's Glue feature-status update.
+    pub name_reservation_feature_status: u8,
     /// Current character-create model facing in normalized radians.
     pub character_create_facing_radians: f32,
     /// Host-supplied race IDs with an altered character-create model.

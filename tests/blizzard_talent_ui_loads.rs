@@ -7,13 +7,14 @@ use wow_ui_sim::toc::TocFile;
 #[path = "common/toc_layout.rs"]
 mod toc_layout;
 
-// The pinned PTR and Forever manifests omit this classic-only addon, so the
-// Mists TOC/body assertions apply only when the active cache ships it.
+// PTR/Forever cache inventories omit this classic-only addon; the active Mainline
+// talent UI is published by Blizzard_SharedTalentUI/Blizzard_SharedTalentUI.toc:1-42.
 fn talent_ui_absent_from_active_cache() -> bool {
     if toc_layout::unified_toc_tree() {
         assert!(
             !talent_ui_dir().exists(),
-            "Pinned PTR/Forever manifest must not ship the classic-only Blizzard_TalentUI"
+            "The PTR/Forever pinned AddOns cache has no Blizzard_TalentUI directory; \
+             its selected shared talent sources are listed in Blizzard_SharedTalentUI.toc:1-42"
         );
         true
     } else {
@@ -85,29 +86,38 @@ fn mists_toc_file_exists_at_expected_path() {
 }
 
 #[test]
-fn flavor_subdirs_match_the_active_manifest() {
-    if toc_layout::unified_toc_tree() {
-        assert!(
-            !talent_ui_dir().exists(),
-            "PTR/Forever manifests omit Blizzard_TalentUI and its TOCs"
-        );
-    } else {
-        assert!(talent_ui_dir().join("Mists").is_dir());
-        assert!(talent_ui_dir().join("Cata").is_dir());
-        assert_eq!(
-            talent_ui_dir().join("Classic").is_dir(),
-            toc_layout::classic_cache(),
-            "Classic cache manifests ship Classic/ sources; Retail's sparse Mists TOC does not"
-        );
+fn flavor_subdirs_present_classic_subdir_absent() {
+    if talent_ui_absent_from_active_cache() {
+        return;
     }
+    assert!(
+        talent_ui_dir().join("Mists").is_dir(),
+        "Mists/ flavor subdir must exist — holds the Mists-tier \
+         StaticPopupDialogs + PlayerTalentFrame logic"
+    );
+    assert!(
+        talent_ui_dir().join("Cata").is_dir(),
+        "Cata/ flavor subdir must exist — holds the Cataclysm-era \
+         talent-tree variant (referenced by no TOC body in our \
+         checkout, kept only for source-archive completeness)"
+    );
+    assert!(
+        !talent_ui_dir().join("Classic").exists(),
+        "Classic/ subdir must be ABSENT in the mainline-flavor sparse \
+         checkout — the Mists TOC body references \
+         Classic\\Blizzard_TalentUI_Shared.lua/.xml which would be \
+         pulled from the upstream classic-flavor source distribution \
+         (not mirrored here). Confirms the addon is unrunnable in our \
+         checkout regardless of TOC selection"
+    );
 }
 
-// Mists resolves Blizzard_TalentUI_Mists.toc via the Mists profile suffix; its lines 2-3 \
-// select LoadOnDemand and Blizzard_HelpPlate. PTR/Forever manifests omit this addon.
 post_wrath_ui_fixture! {
-#[cfg(feature = "client-mists")]
 #[test]
 fn mists_toc_parses_with_load_on_demand_and_help_plate_dep() {
+    if talent_ui_absent_from_active_cache() {
+        return;
+    }
     let toc = TocFile::from_file(&talent_ui_mists_toc()).expect("Mists TOC parses");
 
     assert!(
@@ -135,9 +145,11 @@ fn mists_toc_parses_with_load_on_demand_and_help_plate_dep() {
 }
 
 post_wrath_ui_fixture! {
-#[cfg(feature = "client-mists")]
 #[test]
 fn mists_toc_raw_bytes_pin_three_metadata_directives() {
+    if talent_ui_absent_from_active_cache() {
+        return;
+    }
     let raw = std::fs::read_to_string(talent_ui_mists_toc()).expect("TOC reads utf-8");
 
     let expected_directives: &[&str] = if toc_layout::classic_cache() {
@@ -185,7 +197,6 @@ fn mists_toc_raw_bytes_pin_three_metadata_directives() {
 }
 
 post_wrath_ui_fixture! {
-#[cfg(feature = "client-mists")]
 #[test]
 fn body_resolves_two_bootstraps_and_five_entries_with_normalized_slashes() {
     if talent_ui_absent_from_active_cache() {
@@ -200,6 +211,8 @@ fn body_resolves_two_bootstraps_and_five_entries_with_normalized_slashes() {
         .collect();
 
     let expected = vec![
+        "Blizzard_TalentUI_Bootstrap.lua".to_string(),
+        "Mists/Blizzard_TalentUI_Bootstrap.lua".to_string(),
         "Classic/Blizzard_TalentUI_Shared.lua".to_string(),
         "Classic/Blizzard_TalentUI_Shared.xml".to_string(),
         "Mists/Blizzard_TalentUI.lua".to_string(),
@@ -209,13 +222,13 @@ fn body_resolves_two_bootstraps_and_five_entries_with_normalized_slashes() {
 
     assert_eq!(
         body, expected,
-        "Mists TOC lines 4-8 select five source entries in declared order. Got: {body:?}"
+        "Body must resolve to two bootstraps followed by five legacy source entries in declared \
+         order. Got: {body:?}"
     );
 }
 }
 
 post_wrath_ui_fixture! {
-#[cfg(feature = "client-mists")]
 #[test]
 fn allow_load_absent_restricts_to_game_screen_only() {
     if talent_ui_absent_from_active_cache() {

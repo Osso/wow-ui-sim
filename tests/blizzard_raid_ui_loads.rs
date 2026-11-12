@@ -650,38 +650,48 @@ fn blizzard_raid_ui_registers_extra_events_on_raid_frame(env: &WowLuaEnv) {
 }
 
 #[test]
-fn blizzard_raid_ui_xml_and_lua_follow_the_selected_toc() {
-    let toc = TocFile::from_file(&raid_ui_toc()).expect("active RaidUI TOC parses");
-    let body: Vec<String> = toc
-        .files
-        .iter()
-        .map(|file| file.to_string_lossy().replace('\\', "/"))
-        .collect();
-
+fn blizzard_raid_ui_xml_pulls_lua_via_script_directive() {
+    if toc_layout::classic_cache() {
+        // Mists Blizzard_RaidUI.toc:8-9 selects the Mists XML, not Mainline XML.
+        return;
+    }
     if toc_layout::unified_toc_tree() {
+        // PTR/Forever Blizzard_RaidUI.toc:5-6 lists Mainline Lua before XML.
+        let body: Vec<String> = TocFile::from_file(&raid_ui_toc())
+            .expect("RaidUI TOC parses")
+            .files
+            .iter()
+            .map(|path| path.to_string_lossy().replace('\\', "/"))
+            .collect();
         let lua = body
             .iter()
-            .position(|file| file.ends_with("Blizzard_RaidUI.lua"))
-            .expect("unified TOC selects RaidUI Lua directly");
+            .position(|path| path == "Mainline/Blizzard_RaidUI.lua")
+            .expect("TOC lists Mainline Lua directly");
         let xml = body
             .iter()
-            .position(|file| file.ends_with("Blizzard_RaidUI.xml"))
-            .expect("unified TOC selects RaidUI XML directly");
+            .position(|path| path == "Mainline/Blizzard_RaidUI.xml")
+            .expect("TOC lists Mainline XML directly");
         assert!(
             lua < xml,
-            "Unified PTR/Forever TOC selects Lua before XML: {body:?}"
+            "PTR/Forever TOC must load Lua before XML: {body:?}"
         );
+
         return;
     }
 
-    let xml_entry = body
-        .iter()
-        .find(|file| file.ends_with("Blizzard_RaidUI.xml"))
-        .expect("selected TOC lists RaidUI XML");
-    let xml_path = raid_ui_dir().join(xml_entry);
-    let raw = std::fs::read_to_string(&xml_path).expect("selected RaidUI XML reads");
+    let xml_path = raid_ui_dir().join(if cfg!(feature = "client-wrath") {
+        "Blizzard_RaidUI.xml"
+    } else {
+        "Mainline/Blizzard_RaidUI.xml"
+    });
+    let xml = std::fs::read_to_string(&xml_path).expect("XML reads utf-8");
     assert!(
-        raw.contains("<Script file=\"Blizzard_RaidUI.lua\""),
-        "Non-unified selected XML loads RaidUI Lua with a Script directive: {xml_path:?}"
+        xml.contains(r#"<Script file="Blizzard_RaidUI.lua"/>"#),
+        "Retail XML loads its companion Lua through a Script directive"
     );
+}
+
+#[test]
+fn raid_ui_lua_loads_before_xml_for_active_profile() {
+    blizzard_raid_ui_xml_pulls_lua_via_script_directive();
 }
