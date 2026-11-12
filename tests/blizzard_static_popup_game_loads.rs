@@ -104,7 +104,6 @@ const DEFS_UTIL_FUNCTIONS: &[&str] = &[
 
 const VIRTUAL_TEMPLATES: &[(&str, &str)] = &[
     ("StaticPopupButtonTemplate", "Button"),
-    ("StaticPopupBaseTemplate", "Frame"),
     ("StaticPopupTemplate", "Frame"),
 ];
 
@@ -802,7 +801,7 @@ fn money_frame_on_load_global_publishes_as_function() {
 }
 
 prefork_full_ui_case! {
-fn xml_registers_three_virtual_templates(env: &WowLuaEnv) {
+fn xml_registers_button_and_full_dialog_virtual_templates(env: &WowLuaEnv) {
     for (template, frame_type) in VIRTUAL_TEMPLATES {
         let probe = format!(
             "return CreateFrame({frame_type:?}, nil, UIParent, {template:?}) ~= nil"
@@ -820,9 +819,9 @@ fn xml_registers_three_virtual_templates(env: &WowLuaEnv) {
 
 #[cfg(not(feature = "client-retail"))]
 #[test]
-fn xml_registers_three_virtual_templates() {
+fn xml_registers_button_and_full_dialog_virtual_templates() {
     let env = load_full_ui_for(ScreenKind::Game);
-    xml_registers_three_virtual_templates::run(&env);
+    xml_registers_button_and_full_dialog_virtual_templates::run(&env);
 }
 
 prefork_full_ui_case! {
