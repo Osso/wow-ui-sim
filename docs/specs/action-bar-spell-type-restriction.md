@@ -7,15 +7,15 @@
 ### API and arguments
 
 - [ ] Publish the method only for PTR.
-- [ ] Read required `spellID` then `actionID`; accept finite numbers and numeric strings, and truncate fractions toward zero.
-- [ ] Reject spell IDs outside signed 32-bit range and action IDs outside unsigned 32-bit range with the verified range errors.
-- [ ] For an action slot converted outside `[0, 408)`, return zero values without an argument error.
+- [x] Read required `spellID` then `actionID`; accept finite numbers and numeric strings, and truncate fractions toward zero.
+- [x] Reject tested out-of-range spell and action IDs with their verified range errors.
+- [x] For an action slot converted outside `[0, 408)`, return zero values without an argument error.
 
 ### Restriction result
 
-- [ ] For a valid slot and an empty restriction map, return one `true` value before checking whether `spellID` is zero.
-- [ ] With a non-empty map, return `false` for spell ID zero; a missing or zero restriction permits a nonzero spell.
-- [ ] Key restrictions by zero-based 12-slot action group and compare the required label ID with host-supplied spell labels by exact equality.
+- [x] For a valid slot and an empty restriction map, return one `true` value before checking whether `spellID` is zero.
+- [x] With a non-empty map, return `false` for spell ID zero; a missing or zero restriction permits a nonzero spell.
+- [x] Key restrictions by zero-based 12-slot action group and compare the required label ID with host-supplied spell labels by exact equality.
 - [ ] Keep restriction-map and spell-label inputs empty by default; do not ship label records or assert real spell membership.
 
 ## How it works
@@ -26,6 +26,8 @@
 ## Implementation inventory
 
 - `src/c_api/c_action_bar_spell_type_restriction.rs` — PTR API publication, argument conversion, and result selection.
+- `src/c_api/action_button_hover.rs` — shared action-slot conversion used by the PTR API.
+- `src/lua_api/globals/action_bar_api/registration.rs` — action-bar API registration.
 - `src/lua_api/state/sim_state.rs` — host-supplied group-to-label restrictions and spell-label inputs.
 - `src/lua_api/state.rs` — empty-state construction for those inputs.
 
