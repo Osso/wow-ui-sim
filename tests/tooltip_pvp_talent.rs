@@ -84,6 +84,11 @@ fn pvp_slot_on_enter_uses_default_catalog_spell_and_unlock_lines() {
     }
     env.exec(
         r#"
+        -- Slot availability is only an OnEnter precondition, so keep it explicit.
+        C_SpecializationInfo.GetPvpTalentSlotInfo = function(slotIndex)
+            return { enabled = true, slotIndex = slotIndex }
+        end
+        assert(type(GameTooltip.SetPvpTalent) == "function", "original tooltip accessor is installed")
         local tray = CreateFrame("Frame", nil, UIParent)
         tray.IsInspecting = function() return false end
         tray.GetInspectUnit = function() return nil end
@@ -101,6 +106,7 @@ fn pvp_slot_on_enter_uses_default_catalog_spell_and_unlock_lines() {
         }
         for _, case in ipairs(cases) do
             button.selectedTalent = case.talent
+            assert(button:GetSelectedTalent() == case.talent, "button supplies its selected talent")
             GameTooltip:Hide()
             GameTooltip:ClearHandlerInfo()
             button:GetScript("OnEnter")(button)
