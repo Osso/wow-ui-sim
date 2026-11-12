@@ -202,8 +202,12 @@ PTR and Forever chat startup guards now pass. Retail live chat visibility stays
 UNKNOWN under R62; only its unsupported chat/dock assertions were narrowed.
 
 R62/R64 correction: LoadManagers, not LoadWith, precedes an own load request.
-LoadWith reader/direction/timing remain unknown. The coordinator's separate
-loader lane owns the shared ordering deviations; this lane does not repair them.
+Comment115 verifies Retail70688 LoadWith: X declaring Y joins Y's followers,
+without loading Y; after Y's own files, startup/runtime submit followers through
+the general loader with optional then required dependencies before own files.
+An early-exit Y submits none. Other startup requests for an LOD target and
+Forever/PTR LoadWith behavior remain unknown. The coordinator's separate loader
+lane owns the shared ordering deviations; this lane does not repair them.
 
 ## Sources
 

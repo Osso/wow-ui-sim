@@ -1,3 +1,7 @@
+## [2026-11-12] clarification | Retail LoadWith evidence
+
+Updated the [login contract](../specs/glue-login-flow.md#r62-retail-chat-evidence-boundary) and [startup investigation](investigations/forever-login-startup.md) with comment115's Retail70688 reverse follower-list and post-own-file general-loader traversal. Forever/PTR and other startup requests for LOD targets remain unknown. Shared-loader code remains owned by the coordinator's separate lane; no implementation or test changes.
+
 ## [2026-11-11] implementation | Host credits and video capability bytes
 
 Updated [Forever login startup](investigations/forever-login-startup.md#r63-host-credits-and-video-bytes-2026-11-11) with R63 host catalog/text policy, profile registration, verified field publication and separately labelled inferred capability projections. Retail glue is green; PTR retains only confirmed baseline failures; Forever awaits coordinator cleanup. Original credits/graphics consumers pass. R65 text validation remains unknown, and shared-loader corrections belong to a separate lane.

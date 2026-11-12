@@ -441,8 +441,13 @@ claim about the final live native visibility state.
 R62 verifies phase1 LoadFirst/UseSecureEnvironment completes before native
 non-insecure phase2 and remaining phase3; optional then required dependencies
 precede an addon's own files. Correction109 identifies LoadManagers, not
-LoadWith, as the list attempted before the own load request. LoadWith reader,
-direction and timing remain UNKNOWN. Files use TOC line order,
+LoadWith, as the list attempted before the own load request. Comment115 later
+verifies Retail70688 LoadWith: X declaring Y joins Y's follower list without
+loading Y. After Y's own file phase, startup and runtime paths submit followers
+to the general loader (optional dependencies, required dependencies, own files).
+An early-exit Y load submits no followers. An LOD target receiving a startup
+request another way remains UNKNOWN, as do Forever/PTR LoadWith semantics.
+Files use TOC line order,
 and unannotated lines are accepted at Glue. Shared-loader deviations are
 reported to the coordinator, not repaired in this lane. Case-insensitive name
 order is only inferred and equal-name tie order unknown; neither is asserted.
