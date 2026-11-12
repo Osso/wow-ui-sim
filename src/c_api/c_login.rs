@@ -21,8 +21,8 @@ mod submission;
 /// R42: supplied Battle.net queue record, separate from the WoW connection state.
 #[derive(Clone, Copy, Debug)]
 pub struct LogonQueue {
-    pub server_position: f64,
-    pub estimated_seconds: f64,
+    pub server_position: i32,
+    pub estimated_seconds: i32,
 }
 
 /// R43 connection-info input. Zero is an empty simulator input, not a realm limit.
@@ -287,6 +287,7 @@ pub fn update_logon_queue(
     env: &crate::lua_api::WowLuaEnv,
     queue: Option<LogonQueue>,
 ) -> crate::Result<()> {
+    let queue = queue.filter(|snapshot| snapshot.server_position > 1);
     env.state().borrow_mut().glue_login.logon_queue = queue;
     if queue.is_some() {
         env.fire_event("LOGIN_STATE_CHANGED")?;

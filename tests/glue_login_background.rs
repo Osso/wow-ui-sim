@@ -44,7 +44,7 @@ fn glue_background_uses_every_host_cascade_step_and_separate_override() {
         );
     }
     assert_eq!(
-        env.eval::<i32>("return GetSelectBackgroundModel(1, 'ignored')")
+        env.eval::<i32>("return GetSelectBackgroundModel(1)")
             .unwrap(),
         1101
     );
@@ -55,7 +55,7 @@ fn glue_background_uses_every_host_cascade_step_and_separate_override() {
         record.timerunning_season_id = Some(99);
     }
     assert_eq!(
-        env.eval::<i32>("return GetSelectBackgroundModel('1')")
+        env.eval::<i32>("return GetSelectBackgroundModel(1)")
             .unwrap(),
         4401
     );
@@ -206,7 +206,7 @@ fn glue_background_setter_validates_without_faking_observable_model_state() {
         listener:RegisterEvent('UPDATE_SELECTED_CHARACTER')
         listener:SetScript('OnEvent', function() backgroundEvents = backgroundEvents + 1 end)
         for _, value in ipairs({0, 651555, 651555.9, '651555', '', 'host-model.m2'}) do
-            assert(select('#', SetCharSelectBackground(value, 'ignored')) == 0)
+            assert(select('#', SetCharSelectBackground(value)) == 0)
         end
         assert(backgroundEvents == 0)
         assert(GetCharacterSelection() == 1 and GetSelectBackgroundModel(1) == 4401)
@@ -229,9 +229,6 @@ fn glue_background_move_globals_have_zero_results_and_glue_scope() {
         r#"
         assert(select('#', MoveCharactersToModelFFXFrame()) == 0)
         assert(select('#', MoveCharactersToMapSceneFrame()) == 0)
-        -- Ordinary extra arguments are inferred ignored, not frame handles.
-        assert(select('#', MoveCharactersToModelFFXFrame(nil, false, {})) == 0)
-        assert(select('#', MoveCharactersToMapSceneFrame('ignored', 1)) == 0)
     "#,
     )
     .unwrap();

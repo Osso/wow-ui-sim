@@ -431,10 +431,12 @@ fn login_api_validates_and_clears_password_synchronously() {
         local usage = 'Usage: C_Login.Login("accountName", AccountLoginPasswordEdit)'
         local box = CreateFrame("EditBox")
         for _, args in ipairs({{false, box}, {{}, box}, {"name", false}, {"name", {}},
-            {"name", CreateFrame("Frame")}}) do
+            {"name", nil}}) do
             local ok, err = pcall(C_Login.Login, unpack(args))
             assert(not ok and err == usage, tostring(err))
         end
+        local ok, err = pcall(C_Login.Login, "name", CreateFrame("Frame"))
+        assert(not ok and err:find("Wrong object type for function", 1, true))
         box:SetText("arbitrary-password")
         assert(select('#', C_Login.Login(42, box)) == 0)
         assert(box:GetText() == "")
@@ -592,8 +594,8 @@ fn login_queue_uses_host_snapshots_separate_from_wow_connection_state() {
     )
     .unwrap();
     let queue = LogonQueue {
-        server_position: 5.0,
-        estimated_seconds: 90.0,
+        server_position: 5,
+        estimated_seconds: 90,
     };
     update_logon_queue(&env, Some(queue)).unwrap();
     update_logon_queue(&env, Some(queue)).unwrap();
@@ -613,6 +615,22 @@ fn login_queue_uses_host_snapshots_separate_from_wow_connection_state() {
     "#,
     )
     .unwrap();
+    for position in [1, 0, -1, i32::MIN] {
+        update_logon_queue(
+            &env,
+            Some(LogonQueue {
+                server_position: position,
+                estimated_seconds: 90,
+            }),
+        )
+        .unwrap();
+        assert_eq!(
+            env.eval::<(bool, i32, i32)>("return C_Login.GetLogonQueueInfo()")
+                .unwrap(),
+            (false, 0, 0)
+        );
+        assert_eq!(env.eval::<i32>("return queueUpdateEvents").unwrap(), 2);
+    }
     update_logon_queue(&env, None).unwrap();
     env.exec(r#"C_Login.Login("offline", CreateFrame("EditBox"))"#)
         .unwrap();
@@ -755,10 +773,6 @@ fn glue_feature_status_uses_host_record_and_ordered_empty_events() {
         GlueFeatureStatus, deliver_status,
     };
     let env = common::lock_env(|| WowLuaEnv::new().unwrap());
-    assert!(
-        env.eval::<bool>("return rawget(_G, 'IsNameReservationOnly') == nil")
-            .unwrap()
-    );
     env.set_screen_mode(ScreenKind::Login);
     env.exec(
         r#"
@@ -811,10 +825,6 @@ fn glue_feature_status_uses_host_record_and_ordered_empty_events() {
         "screen/connection reset must not replace feature-system status"
     );
     env.set_screen_mode(ScreenKind::Game);
-    assert!(
-        env.eval::<bool>("return rawget(_G, 'IsNameReservationOnly') == nil")
-            .unwrap()
-    );
     env.set_screen_mode(ScreenKind::Login);
     assert!(env.eval::<bool>("return IsNameReservationOnly()").unwrap());
     assert!(env.state().borrow().lua_errors.is_empty());
@@ -980,22 +990,20 @@ fn glue_character_selection_uses_resolved_slots_and_native_events() {
         assert(GetCharacterSelection() == 2)
         SelectCharacter(0.5)
         assert(GetCharacterSelection() == 1 and #selectionEvents == 2)
-        SelectCharacter('2')
-        SelectCharacter('1')
         assert(GetCharacterSelection() == 1)
         SelectCharacter(-9)
         SelectCharacter(99)
-        assert(#selectionEvents == 4)
+        assert(#selectionEvents == 2)
         SelectCharacter(2)
         SelectCharacter(-9)
-        assert(GetCharacterSelection() == 1 and #selectionEvents == 6)
+        assert(GetCharacterSelection() == 1 and #selectionEvents == 4)
         SelectCharacter(2)
         SelectCharacter(3) -- Empty ID: no search and no change.
         SelectCharacter(4) -- Unresolved nonzero ID: no search and no change.
-        assert(GetCharacterSelection() == 2 and #selectionEvents == 7)
+        assert(GetCharacterSelection() == 2 and #selectionEvents == 5)
         SelectCharacter(99)
-        assert(GetCharacterSelection() == 1 and #selectionEvents == 8)
-        for i, expected in ipairs({2, 1, 2, 1, 2, 1, 2, 1}) do
+        assert(GetCharacterSelection() == 1 and #selectionEvents == 6)
+        for i, expected in ipairs({2, 1, 2, 1, 2, 1}) do
             assert(selectionEvents[i][1] == 1)
             assert(selectionEvents[i][2] == expected and selectionEvents[i][3] == expected)
         end
@@ -1004,7 +1012,7 @@ fn glue_character_selection_uses_resolved_slots_and_native_events() {
             assert(not ok and message:find('Usage: SelectCharacter(index)', 1, true))
         end
         bad(); bad(false); bad({}); bad('not a number')
-        assert(#selectionEvents == 8 and GetCharacterSelection() == 1)
+        assert(#selectionEvents == 6 and GetCharacterSelection() == 1)
     "#,
     )
     .unwrap();

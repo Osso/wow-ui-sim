@@ -11,12 +11,17 @@ pub(super) fn login(state: &mut LuaState) -> LuaResult<u32> {
         return Err(rilua::runtime_error(USAGE));
     }
     let id = extract_frame_id(state, password_box).ok_or_else(|| rilua::runtime_error(USAGE))?;
-    if !borrow_state(state)?
-        .widgets
-        .get(id)
-        .is_some_and(|frame| frame.widget_type == crate::widget::WidgetType::EditBox)
     {
-        return Err(rilua::runtime_error(USAGE));
+        let sim = borrow_state(state)?;
+        let frame = sim
+            .widgets
+            .get(id)
+            .ok_or_else(|| rilua::runtime_error(USAGE))?;
+        if frame.widget_type != crate::widget::WidgetType::EditBox {
+            // R40 object resolution distinguishes a wrong resolved type from
+            // invalid arguments and an object that cannot be resolved.
+            return Err(rilua::runtime_error("Wrong object type for function"));
+        }
     }
     {
         let mut sim = borrow_state_mut(state)?;
@@ -42,11 +47,13 @@ pub(super) fn login(state: &mut LuaState) -> LuaResult<u32> {
 pub(super) fn get_logon_queue_info(state: &mut LuaState) -> LuaResult<u32> {
     let queue = borrow_state(state)?.glue_login.logon_queue;
     let (queued, position, seconds) = match queue {
-        Some(queue) => (true, queue.server_position - 1.0, queue.estimated_seconds),
-        None => (false, 0.0, 0.0),
+        Some(queue) if queue.server_position > 1 => {
+            (true, queue.server_position - 1, queue.estimated_seconds)
+        }
+        _ => (false, 0, 0),
     };
     state.push(Val::Bool(queued));
-    state.push(Val::Num(position));
-    state.push(Val::Num(seconds));
+    state.push(Val::Num(f64::from(position)));
+    state.push(Val::Num(f64::from(seconds)));
     Ok(3)
 }

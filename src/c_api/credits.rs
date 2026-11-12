@@ -79,7 +79,26 @@ fn display(state: &mut LuaState) -> LuaResult<u32> {
 }
 fn text(state: &mut LuaState) -> LuaResult<u32> {
     const USAGE: &str = "Usage: local creditsText = GetCreditsTextByFileDataID(fileDataID)";
-    let number = match stack_val(state, 1) {
+    let argument = stack_val(state, 1);
+    if matches!(argument, Val::Nil) {
+        return Err(super::helpers::bad_argument(
+            1,
+            "GetCreditsTextByFileDataID",
+            USAGE,
+        ));
+    }
+    let range_error = || {
+        super::helpers::bad_argument(
+            1,
+            "GetCreditsTextByFileDataID",
+            &format!(
+                "outside of expected range {} to {} - {USAGE}",
+                i32::MIN,
+                i32::MAX
+            ),
+        )
+    };
+    let number = match argument {
         Val::Num(number) => Some(number),
         Val::Str(reference) => state
             .gc
@@ -88,9 +107,9 @@ fn text(state: &mut LuaState) -> LuaResult<u32> {
             .and_then(|value| super::helpers::parse_numeric_string(value.data())),
         _ => None,
     }
-    .ok_or_else(|| rilua::runtime_error(USAGE))?;
+    .ok_or_else(range_error)?;
     if !number.is_finite() || number < f64::from(i32::MIN) || number > f64::from(i32::MAX) {
-        return Err(rilua::runtime_error(USAGE));
+        return Err(range_error());
     }
     // R65: direct FileDataID resolution, independent of the display catalog.
     let text = borrow_state(state)?
