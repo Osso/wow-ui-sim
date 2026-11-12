@@ -88,10 +88,32 @@ local function customization_option_type(kind)
     return 0
 end
 
+local function publish_racial_abilities(abilities)
+    if abilities == nil then
+        return {}
+    end
+
+    local published = {}
+    for index, ability in ipairs(abilities) do
+        published[index] = {
+            description = ability.description,
+            name = ability.name,
+            icon = ability.icon ~= 0 and ability.icon or nil,
+        }
+    end
+    return published
+end
+
+local function publish_race_data(raceData)
+    local published = clone_table(raceData)
+    published.racialAbilities = publish_racial_abilities(raceData.racialAbilities)
+    return published
+end
+
 local function find_race(raceID)
     for _, raceData in ipairs(races) do
         if raceData.raceID == raceID then
-            return clone_table(raceData)
+            return publish_race_data(raceData)
         end
     end
     return nil
@@ -199,7 +221,7 @@ if rawget(C_CharacterCreation, "GetAvailableRaces") == nil then
     function C_CharacterCreation.GetAvailableRaces()
         local out = {}
         for index, raceData in ipairs(races) do
-            out[index] = clone_table(raceData)
+            out[index] = publish_race_data(raceData)
         end
         return out
     end

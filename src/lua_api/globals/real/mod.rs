@@ -59,6 +59,8 @@ pub mod merchant_buyback;
 pub mod merchant_repair;
 pub mod modifier_keys;
 pub mod mouse_probes;
+#[cfg(feature = "client-wowforever")]
+pub mod name_reservation;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod nameplate_display;
 #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]

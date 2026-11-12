@@ -109,6 +109,21 @@ fn ptr_name_reservation_default_is_false() {
 
 #[test]
 #[cfg(feature = "client-wowforever")]
+fn forever_name_reservation_reads_feature_status_byte() {
+    let env = WowLuaEnv::new().expect("create Lua environment");
+    env.set_screen_mode(ScreenKind::CharacterSelect);
+
+    wow_ui_sim::lua_api::globals::real::name_reservation::set_feature_status(&env, 0x80);
+
+    let enabled: bool = env
+        .eval("return IsNameReservationOnly()")
+        .expect("Forever Glue name-reservation query should be callable");
+
+    assert!(enabled);
+}
+
+#[test]
+#[cfg(feature = "client-wowforever")]
 fn forever_name_reservation_default_is_false_on_glue() {
     let env = WowLuaEnv::new().expect("create Lua environment");
     env.set_screen_mode(ScreenKind::CharacterSelect);

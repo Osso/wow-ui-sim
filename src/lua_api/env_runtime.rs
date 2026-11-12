@@ -178,6 +178,11 @@ impl WowLuaEnv {
         }
         install_screen_mode_globals(self, screen_kind);
         crate::c_api::c_character_creation::update_screen_registration(self, screen_kind);
+        #[cfg(feature = "client-wowforever")]
+        crate::lua_api::globals::real::name_reservation::update_screen_registration(
+            self,
+            screen_kind.is_glue(),
+        );
         crate::c_api::c_login::update_screen_registration(self, screen_kind);
         crate::c_api::c_district_utils::update_screen_registration(self, screen_kind.is_glue());
         crate::c_api::c_player_info_guid::update_screen_registration(self, screen_kind.is_glue());
