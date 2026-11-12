@@ -234,6 +234,10 @@ pub struct SimState {
     /// WM97 DQ8 host seam: exact 64-bit keys with independent ready state.
     pub weekly_rewards: crate::c_api::c_tooltip_info_weekly::WeeklyRewards,
     pub action_bars: HashMap<u32, u32>,
+    /// Host-supplied group-to-label map; default empty and no WoWHack data bundled.
+    pub action_bar_spell_type_restrictions: HashMap<u32, u32>,
+    /// Host-supplied labels only; no SpellLabel table data bundled.
+    pub spell_type_labels: HashMap<i32, HashSet<u32>>,
     /// Explicit slot-owned input; no cast/attack/spell-lifetime inference.
     pub(crate) action_repeat_active_slots: HashSet<u32>,
     /// INFERRED host-declared resolved spell IDs on special bars; empty by default.

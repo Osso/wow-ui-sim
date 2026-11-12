@@ -95,6 +95,7 @@ pub(crate) mod c_action_bar_loss_of_control;
 pub mod c_action_bar_queries;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_action_bar_spell_slots;
+pub(crate) mod c_action_bar_spell_type_restriction;
 pub mod c_addon_profiler;
 pub mod c_addons;
 pub(crate) mod c_addons_local_table;
