@@ -937,6 +937,53 @@ fn character_select_can_transition_to_character_create_without_lua_errors() {
 }
 
 #[test]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn character_creation_submit_real_controls_wait_for_host_result() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+        let original_name: String = env.eval("return UnitName('player')").unwrap();
+        let original_count: i32 = env.eval("return GetNumCharacters()").unwrap();
+
+        // Drive the same screen transition as the existing Glue tests, then the
+        // real edit box and inherited button script. Do not patch the mixin or
+        // invoke CreateCharacter directly. No server outcome is supplied here.
+        env.exec(r#"
+            GlueParent_SetScreen("charcreate")
+            assert(CharacterCreateFrame:IsShown())
+            local button = CharacterCreateFrame.ForwardButton
+            local click = button:GetScript("OnClick")
+            assert(type(click) == "function", "real ForwardButton must have OnClick")
+            assert(button:IsEnabled(), "initial customization navigation must be enabled")
+            click(button, "LeftButton")
+            CharacterCreateFrame.NameChoiceFrame.EditBox:SetText("Newhero")
+            for step = 1, 3 do
+                if CharacterCreateFrame.creatingCharacter then break end
+                assert(button:IsEnabled(), "real Create navigation must be enabled")
+                click(button, "LeftButton")
+            end
+            assert(CharacterCreateFrame.creatingCharacter == true,
+                "the real Create button must reach the submission consumer")
+        "#).expect("real character creation controls should submit");
+        run_extra_update_ticks(&env, 3);
+        let pending_ui: (String, bool, String) = env.eval(r#"
+            return GlueParent.currentScreen, CharacterCreateFrame:IsShown(),
+                CharacterCreateFrame.NameChoiceFrame.EditBox:GetText()
+        "#).unwrap();
+        assert_eq!(pending_ui, ("charcreate".to_string(), true, "Newhero".to_string()),
+            "without a host result the real UI must remain on the submitted creation screen");
+
+        // lt-a912 requires server outcomes to be host-supplied, never invented.
+        // The old workaround instead renames the existing player immediately.
+        let current_name: String = env.eval("return UnitName('player')").unwrap();
+        assert_eq!(current_name, original_name,
+            "submission must not rename the existing player while awaiting a host result");
+        let current_count: i32 = env.eval("return GetNumCharacters()").unwrap();
+        assert_eq!(current_count, original_count,
+            "submission without a host result must not manufacture a roster entry");
+    }
+}
+
+#[test]
 fn character_create_action_updates_player_name_without_lua_errors() {
     test_timeout! {
         let env = load_blizzard_screen(ScreenKind::CharacterSelect);
