@@ -103,17 +103,19 @@ fn pvp_slot_on_enter_uses_default_catalog_spell_and_unlock_lines() {
             GameTooltip:Hide()
             GameTooltip:ClearHandlerInfo()
             button:GetScript("OnEnter")(button)
-            assert(GameTooltip:GetOwner() == button)
+            assert(GameTooltip:GetOwner() == button, "OnEnter sets this button as tooltip owner")
             local info = GameTooltip:GetPrimaryTooltipInfo()
             assert(info and info.getterName == "GetPvpTalent", "original tooltip accessor")
             local data = GameTooltip:GetPrimaryTooltipData()
             assert(data and data.id == case.spell, "exported talent must produce its catalog spell")
-            assert(data.type == 1 and data.lines[1].leftText == case.title)
+            assert(data.type == 1 and data.lines[1].leftText == case.title,
+                "spell title and primary tooltip type match the exported talent")
             local ordinary = C_TooltipInfo.GetSpellByID(case.spell)
             assert(#data.lines == #ordinary.lines + 1, "only the early unlock annotation applies")
             local line = data.lines[#data.lines]
-            assert(line.type == 0 and line.leftText == UNLOCKED_AT_LEVEL:format(case.level))
-            assert(line.wrapText == nil)
+            assert(line.type == 0 and line.leftText == UNLOCKED_AT_LEVEL:format(case.level),
+                "only the verified early unlock annotation applies")
+            assert(line.wrapText == nil, "the early unlock annotation is unwrapped")
             local r, g, b = HOSTILE_STATUS_COLOR:GetRGB()
             assert(math.abs(line.leftColor.r - r) < 0.01
                 and math.abs(line.leftColor.g - g) < 0.01
