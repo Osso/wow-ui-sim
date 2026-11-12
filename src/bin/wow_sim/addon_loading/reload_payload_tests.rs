@@ -59,7 +59,7 @@ fn reload_startup_rejects_stale_or_missing_cache_without_writing() {
             )
             .unwrap();
         }
-        let before = cache_snapshot(cache.path());
+        let before = cache_snapshot(&root);
         let output = std::process::Command::new(std::env::current_exe().unwrap())
             .args([
                 "--exact",
@@ -90,10 +90,10 @@ fn reload_startup_rejects_stale_or_missing_cache_without_writing() {
             "expected pin missing: {transcript}"
         );
         assert!(transcript.contains("automatic Blizzard UI sync is disabled in tests"));
-        assert_eq!(
-            cache_snapshot(cache.path()),
-            before,
-            "test startup wrote cache"
+        assert_eq!(root.exists(), stale, "test startup created the UI cache");
+        assert!(
+            cache_snapshot(&root) == before,
+            "test startup wrote UI cache bytes"
         );
     }
 }
