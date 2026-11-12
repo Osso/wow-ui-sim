@@ -570,7 +570,7 @@ fn disabled_follower_is_refused_and_does_not_stop_later_followers() {
             observer:SetScript('OnEvent', function(_, _, name)
                 if name == 'Blizzard_DisabledRuntimeLoadWithTargetProbe' then
                     table.insert(disabledRuntimeOrder, 'target-event')
-                elseif name == 'User_AfterDisabledRuntimeLoadWithFollowerProbe' then
+                elseif name == 'User_A_AfterDisabledRuntimeLoadWithFollowerProbe' then
                     table.insert(disabledRuntimeOrder, 'later-follower-event')
                 end
             end)
