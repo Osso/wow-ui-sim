@@ -36,38 +36,40 @@ fn empty_restriction_map_returns_one_true_for_a_valid_slot() {
 fn host_supplied_restrictions_match_exact_labels_in_12_slot_groups() {
     // Synthetic spell and host label rows; no real spell membership is asserted.
     const SPELL_ID: i32 = 900_001;
-    const GROUP: u32 = 0;
-    const GROUP_WITHOUT_RESTRICTION: u32 = 1;
+    const RESTRICTED_GROUP: u32 = 0;
+    const ZERO_RESTRICTION_GROUP: u32 = 1;
+    const NO_RESTRICTION: u32 = 0;
     const REQUIRED_LABEL: u32 = 6590;
     const OTHER_LABEL: u32 = 6595;
+    const FIRST_ACTION: u32 = 1;
+    const LAST_ACTION_IN_GROUP: u32 = 12;
+    const FIRST_ACTION_IN_NEXT_GROUP: u32 = 13;
 
     let env = WowLuaEnv::new().expect("lua env should initialize");
     {
         let mut sim = env.state().borrow_mut();
         sim.action_bar_spell_type_restrictions
-            .insert(GROUP, REQUIRED_LABEL);
+            .insert(RESTRICTED_GROUP, REQUIRED_LABEL);
         sim.action_bar_spell_type_restrictions
-            .insert(GROUP_WITHOUT_RESTRICTION, 0);
+            .insert(ZERO_RESTRICTION_GROUP, NO_RESTRICTION);
         sim.spell_type_labels
             .insert(SPELL_ID, HashSet::from([REQUIRED_LABEL]));
     }
 
-    let (first_slot, last_slot_in_group, unrestricted_group, zero_spell): (bool, bool, bool, bool) =
-        env.eval(
-            r#"
-            local matchSpell = C_ActionBar.SpellMatchesActionSpellTypeRestriction
-            return matchSpell(900001, 1), matchSpell(900001, 12),
-                   matchSpell(900001, 13), matchSpell(0, 1)
-            "#,
-        )
-        .expect("host-supplied restriction inputs should be queryable");
+    let probe = format!(
+        r#"
+        local matchSpell = C_ActionBar.SpellMatchesActionSpellTypeRestriction
+        return matchSpell({SPELL_ID}, {FIRST_ACTION}),
+               matchSpell({SPELL_ID}, {LAST_ACTION_IN_GROUP}),
+               matchSpell({SPELL_ID}, {FIRST_ACTION_IN_NEXT_GROUP}),
+               matchSpell(0, {FIRST_ACTION})
+        "#
+    );
+    let (first_slot, last_slot_in_group, zero_restriction, zero_spell): (bool, bool, bool, bool) =
+        env.eval(&probe)
+            .expect("host-supplied restriction inputs should be queryable");
     assert_eq!(
-        (
-            first_slot,
-            last_slot_in_group,
-            unrestricted_group,
-            zero_spell
-        ),
+        (first_slot, last_slot_in_group, zero_restriction, zero_spell),
         (true, true, true, false)
     );
 
@@ -75,8 +77,11 @@ fn host_supplied_restrictions_match_exact_labels_in_12_slot_groups() {
         .borrow_mut()
         .spell_type_labels
         .insert(SPELL_ID, HashSet::from([OTHER_LABEL]));
+    let mismatch_probe = format!(
+        "return C_ActionBar.SpellMatchesActionSpellTypeRestriction({SPELL_ID}, {FIRST_ACTION})"
+    );
     let mismatched_label: bool = env
-        .eval("return C_ActionBar.SpellMatchesActionSpellTypeRestriction(900001, 1)")
+        .eval(&mismatch_probe)
         .expect("restricted label mismatch should return a Boolean");
     assert!(!mismatched_label);
 }
