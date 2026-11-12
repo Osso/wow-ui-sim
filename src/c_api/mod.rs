@@ -366,6 +366,7 @@ pub mod map_world_coordinates;
 #[cfg(feature = "retail-12-0-7")]
 pub(crate) mod patch_12_0_7_inputs;
 mod spell_cooldown_output;
+pub mod spell_tooltip;
 pub(crate) mod spell_tooltip_cost;
 #[cfg(test)]
 mod spell_tooltip_cost_tests;
