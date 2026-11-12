@@ -708,6 +708,11 @@ impl Frame {
             frame.frame_strata = FrameStrata::Tooltip;
             frame.has_fixed_frame_strata = true;
         }
+        // The client starts an EditBox's text at the left (`GetJustifyH()`
+        // is "LEFT" on a new box), unlike a FontString's CENTER.
+        if widget_type == WidgetType::EditBox {
+            frame.justify_h = TextJustify::Left;
+        }
         frame
     }
 

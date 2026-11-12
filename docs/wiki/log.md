@@ -1,3 +1,7 @@
+## [2026-11-12] investigation | EditBox text font and insets
+
+[EditBox text font, insets and justification](investigations/editbox-text-font.md) records the client checks, the three loader gaps and their fix, and the unmodeled font of `InputBoxInstructionsTemplate`'s instructions region.
+
 ## [2026-11-12] docs | Addon fonts and pinned fallback
 
 [Rendering pipeline](systems/rendering-pipeline.md#font-sources) records addon font loading on first use and `WOW_SIM_FALLBACK_FONT`; tests live in `src/render/font.rs`.
