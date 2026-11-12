@@ -453,9 +453,8 @@ fn login_rejects_addon_tainted_access_to_forbidden_editbox() {
     let env = common::lock_env(|| WowLuaEnv::new().unwrap());
     env.set_screen_mode(ScreenKind::Login);
     env.state().borrow_mut().loading_forbidden = true;
-    env.exec_maybe_secure(
+    env.exec(
         "LoginForbiddenPassword = CreateFrame('EditBox'); LoginForbiddenPassword:SetText('not-retained')",
-        true,
     ).unwrap();
     env.state().borrow_mut().loading_forbidden = false;
     env.exec(r#"
