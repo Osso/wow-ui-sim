@@ -1399,6 +1399,28 @@ fn ptr_character_creation_verified_members_are_glue_only() {
 
 #[test]
 #[cfg(feature = "client-ptr")]
+fn ptr_character_creation_camera_zoom_getter_is_glue_only_and_reads_no_arguments() {
+    let env = WowLuaEnv::new().unwrap();
+    for screen in [
+        ScreenKind::CharacterCreate,
+        ScreenKind::Game,
+        ScreenKind::Login,
+    ] {
+        env.set_screen_mode(screen);
+        let expected = if screen.is_glue() { "function" } else { "nil" };
+        assert_eq!(
+            env.eval::<String>("return type(C_CharacterCreation.GetCurrentCameraZoom)")
+                .unwrap(),
+            expected
+        );
+        if screen.is_glue() {
+            env.exec("C_CharacterCreation.GetCurrentCameraZoom(); C_CharacterCreation.GetCurrentCameraZoom(nil, {}, 'unused')").unwrap();
+        }
+    }
+}
+
+#[test]
+#[cfg(feature = "client-ptr")]
 fn ptr_character_creation_interaction_write_and_no_model_visibility() {
     let env = WowLuaEnv::new().unwrap();
     env.set_screen_mode(ScreenKind::CharacterCreate);

@@ -205,3 +205,13 @@ still awaits evidence for the newly exposed camera prerequisite.
 Coordinator #292 confirms retaining the exact PTR `GetCurrentCameraZoom`
 line 812 RED behind `optional-tests` for this PR. The native camera question
 is filed as R83; no camera API or default is guessed in this addendum.
+
+### PTR R83 verified zoom reader (#298)
+
+GetCurrentCameraZoom is VERIFIED registered through Glue only. It reads no
+arguments, has no Usage text, and reads stored zoom state rather than model
+distance. The verified-only commit registers that route and reads the existing
+shared character_create_camera_zoom storage, while deferring the Lua return
+bridge to a separate INFERRED commit. This scaffold is not a claim of zero native
+return values. Tests cover only Glue/Game routing and unused arguments at this
+stage. SetCameraZoomLevel remains unchanged pending its argument-reader evidence.

@@ -2,7 +2,7 @@
 //! No request serialization, outcomes, events, or inferred reader conversions.
 
 use crate::c_api::helpers::bad_argument;
-use crate::lua_api::methods::{borrow_state_mut, table_set_static};
+use crate::lua_api::methods::{borrow_state, borrow_state_mut, table_set_static};
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
@@ -60,7 +60,39 @@ pub(crate) fn update_registration(
             Val::Nil,
         );
     }
+    update_camera_zoom_registration(state, namespace, is_glue)?;
     update_inferred_registration(state, namespace, is_glue)
+}
+
+/// R83 VERIFIED Glue registration, stored-state source, and no argument reads.
+fn update_camera_zoom_registration(
+    state: &mut LuaState,
+    namespace: GcRef<Table>,
+    is_glue: bool,
+) -> LuaResult<()> {
+    if is_glue {
+        table_set_rust_fn_static(
+            state,
+            namespace,
+            "GetCurrentCameraZoom",
+            get_current_camera_zoom,
+        )
+    } else {
+        table_set_static(
+            state,
+            Val::Table(namespace),
+            "GetCurrentCameraZoom",
+            Val::Nil,
+        );
+        Ok(())
+    }
+}
+
+fn get_current_camera_zoom(state: &mut LuaState) -> LuaResult<u32> {
+    let _zoom = borrow_state(state)?.character_create_camera_zoom;
+    // VERIFIED-only scaffold: single-number Lua return bridge is INFERRED (R83)
+    // and is deliberately deferred to its separate droppable commit.
+    Ok(0)
 }
 
 // Existence INFERRED from unguarded consumer calls; catalog UNKNOWN (R78c Q1).
