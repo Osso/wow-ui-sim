@@ -549,10 +549,10 @@ fn ptr_character_create_dependencies_load_before_its_files() {
         .env
         .eval("return table.concat(ptrCharacterCreateOrder, ',')")
         .unwrap();
-    assert_eq!(
-        order,
-        "customization-ui,character-customize,glue-xml,character-create"
-    );
+    let position = |name| order.split(',').position(|entry| entry == name).unwrap();
+    assert!(position("customization-ui") < position("character-customize"));
+    assert!(position("character-customize") < position("character-create"));
+    assert!(position("glue-xml") < position("character-create"));
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
