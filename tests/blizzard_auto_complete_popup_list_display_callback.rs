@@ -21,6 +21,7 @@ expect(popup ~= nil, "AutoCompletePopupListTemplate must instantiate")
 if popup ~= nil then
   popup:OnLoad()
   popup:SetSize(176, 100)
+  -- The probe stands in for the consumer; the template has no position source.
   popup:SetPoint("CENTER", UIParent, "CENTER")
   popup.ScrollBox:SetSize(176, 100)
   popup.resultsListCallback = function()
@@ -66,9 +67,8 @@ expect(noSubtextPopup ~= nil,
 
 if noSubtextPopup ~= nil then
   noSubtextPopup:OnLoad()
-  noSubtextPopup:SetSize(176, 100)
+  -- The probe stands in for the consumer; retain the template's 176x27 size.
   noSubtextPopup:SetPoint("CENTER", UIParent, "CENTER")
-  noSubtextPopup.ScrollBox:SetSize(176, 100)
   noSubtextPopup.resultsListCallback = function()
     return 1, { { token = "plain" } }, function()
       return "Plain", nil, nil
