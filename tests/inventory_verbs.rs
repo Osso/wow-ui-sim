@@ -597,6 +597,7 @@ fn ptr_spell_and_action_pickups_report_native_cursor_tuple() {
             local kind, bookSlot, bookType, spellID, relatedID = GetCursorInfo()
             assert(kind == "spell")
             assert(bookSlot == expectedBookSlot)
+            assert(bookSlot == (C_SpellBook.FindSpellBookSlotForSpell(spellID) or 0))
             assert(bookType == "spell")
             assert(spellID == expectedSpellID)
             assert(relatedID == nil)
