@@ -53,3 +53,7 @@ Handoff `native-evidence-70688/WM87-profspecs-tabstate-favorite-orders.md` (Reta
 ## Out of scope
 
 - Trait configuration identity and native trait purchase decisions remain supplied rather than computed, as described above.
+
+## PTR registration
+
+VERIFIED: PTR 70493 `Blizzard_Professions/Blizzard_ProfessionsSpecializationsTemplates.lua:144` consumes `GetStateForTab`. Its registered contract is the same as Retail WM87, **INFERRED for PTR** pending native R85 evidence; Retail native findings do not establish PTR parity.
