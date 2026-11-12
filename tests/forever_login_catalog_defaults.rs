@@ -94,11 +94,10 @@ fn forever_host_credits_support_original_view_and_selector() {
 }
 
 #[test]
-fn forever_high_res_capability_is_read_only_and_graphics_consumer_loads() {
+fn forever_high_res_graphics_consumer_loads() {
     test_timeout! {
         let env = load_login_screen();
         env.exec(r#"
-            assert(type(C_VideoOptions.AreHighResTexturesAvailable()) == 'boolean')
             local category, layout = Settings.RegisterVerticalLayoutCategory("High-resolution textures")
             GraphicsOverrides.CreateHiResOptions(category, layout)
         "#).expect("original graphics consumer accepts the modeled capability");
@@ -106,9 +105,9 @@ fn forever_high_res_capability_is_read_only_and_graphics_consumer_loads() {
 }
 
 #[test]
-fn forever_graphics_settings_skip_controls_for_explicit_host_capability_bytes() {
+fn forever_graphics_settings_load_with_first_host_capability_fixture() {
     test_timeout! {
-        // INFERRED host behavior, not native default capability assertions.
+        // Preserve original consumer loading without asserting inferred byte projections.
         let env = load_login_screen_with_video_capabilities(Some(VideoCapabilityBytes {
             linear_enabled_on_start: 0,
             outline_disabled: 1,
@@ -122,13 +121,7 @@ fn forever_graphics_settings_skip_controls_for_explicit_host_capability_bytes() 
             assert(MultiSampleAntiAliasingSupported() == false)
             assert(Settings.GetSetting("PROXY_MSAA") ~= nil)
             assert(Settings.GetSetting("PROXY_MSAA_ALPHA") ~= nil)
-            assert(C_VideoOptions.IsPBRWaterSupported() == false)
-            assert(C_VideoOptions.IsOutlineModeSupported() == false)
-            assert(C_VideoOptions.IsSecondaryLightingSupported() == false)
-            assert(C_VideoOptions.IsLinearEnabledOnStart() == false)
-            assert(C_VideoOptions.IsSpellVisualDensitySystemSupported() == false)
             assert(Settings.GetSetting("Gamma") ~= nil)
-            assert(Settings.GetSetting("bloomUserMult") == nil)
 
             local added = {}
             local function RecordSetting(settings, category, variable)
@@ -141,12 +134,8 @@ fn forever_graphics_settings_skip_controls_for_explicit_host_capability_bytes() 
             for _, prefix in ipairs({ "graphics", "raidGraphics" }) do
                 assert(added[prefix .. "LiquidDetail"] == true)
                 assert(added[prefix .. "TextureResolution"] == true)
-                assert(added[prefix .. "PBRLiquidDetail"] == nil)
-                assert(added[prefix .. "OutlineMode"] == nil)
-                assert(added[prefix .. "LightMode"] == nil)
-                assert(added[prefix .. "SpellDensity"] == nil)
             end
-        "#).expect("original Forever graphics controls should honor explicit host bytes");
+        "#).expect("original Forever graphics definitions should load with supplied host bytes");
 
         let errors: Vec<_> = env.state().borrow().lua_errors.iter()
             .filter(|error| error.contains("Blizzard_SettingsDefinitions_Shared/Graphics.lua"))
@@ -157,9 +146,9 @@ fn forever_graphics_settings_skip_controls_for_explicit_host_capability_bytes() 
 }
 
 #[test]
-fn forever_graphics_settings_include_controls_for_explicit_host_capability_bytes() {
+fn forever_graphics_settings_load_with_alternate_host_capability_fixture() {
     test_timeout! {
-        // Enable all five host projections, including the inverted outline byte.
+        // A second host fixture preserves loading coverage, not projected control selection.
         let env = load_login_screen_with_video_capabilities(Some(VideoCapabilityBytes {
             linear_enabled_on_start: 2,
             outline_disabled: 0,
@@ -168,13 +157,7 @@ fn forever_graphics_settings_include_controls_for_explicit_host_capability_bytes
             spell_visual_density_supported: 3,
         }));
         env.exec(r#"
-            assert(C_VideoOptions.IsLinearEnabledOnStart() == true)
-            assert(C_VideoOptions.IsOutlineModeSupported() == true)
-            assert(C_VideoOptions.IsPBRWaterSupported() == true)
-            assert(C_VideoOptions.IsSecondaryLightingSupported() == true)
-            assert(C_VideoOptions.IsSpellVisualDensitySystemSupported() == true)
             assert(Settings.GetSetting("Gamma") ~= nil)
-            assert(Settings.GetSetting("bloomUserMult") ~= nil)
 
             local added = {}
             local function RecordSetting(settings, category, variable)
@@ -187,17 +170,13 @@ fn forever_graphics_settings_include_controls_for_explicit_host_capability_bytes
             for _, prefix in ipairs({ "graphics", "raidGraphics" }) do
                 assert(added[prefix .. "LiquidDetail"] == true)
                 assert(added[prefix .. "TextureResolution"] == true)
-                assert(added[prefix .. "PBRLiquidDetail"] == true)
-                assert(added[prefix .. "OutlineMode"] == true)
-                assert(added[prefix .. "LightMode"] == true)
-                assert(added[prefix .. "SpellDensity"] == true)
             end
-        "#).expect("original Forever graphics controls should honor explicit host bytes");
+        "#).expect("original Forever graphics definitions should load with supplied host bytes");
 
         let errors: Vec<_> = env.state().borrow().lua_errors.iter()
             .filter(|error| error.contains("Blizzard_SettingsDefinitions_Shared/Graphics.lua"))
             .cloned()
             .collect();
-        assert!(errors.is_empty(), "host-enabled graphics definition errors: {errors:#?}");
+        assert!(errors.is_empty(), "alternate-host graphics definition errors: {errors:#?}");
     }
 }

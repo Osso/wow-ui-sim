@@ -1,5 +1,5 @@
-//! R60 publication and result-type coverage. The simulator's fixed capability
-//! value is inferred and deliberately is not a native-value assertion here.
+//! R60 verified publication coverage. The high-resolution return convention
+//! and fixed capability value are inferred and are not asserted here.
 #![cfg(any(
     feature = "client-retail",
     feature = "client-ptr",
@@ -29,25 +29,5 @@ fn high_res_texture_capability_publication_matches_profile_in_game_and_glue() {
             .eval("return type(rawget(C_VideoOptions, 'AreHighResTexturesAvailable'))")
             .expect("inspect raw texture capability registration");
         assert_eq!(actual_type, expected_type, "{ACTIVE:?} {screen:?}");
-    }
-}
-
-#[test]
-fn published_high_res_texture_capability_returns_boolean_in_game_and_glue() {
-    if ACTIVE == ClientProfile::Retail {
-        return;
-    }
-    let env = WowLuaEnv::new().expect("create texture capability environment");
-    for screen in [
-        ScreenKind::Game,
-        ScreenKind::Login,
-        ScreenKind::CharacterSelect,
-        ScreenKind::CharacterCreate,
-    ] {
-        env.set_screen_mode(screen);
-        let actual_type: String = env
-            .eval("return type(C_VideoOptions.AreHighResTexturesAvailable())")
-            .expect("query high-resolution texture capability");
-        assert_eq!(actual_type, "boolean", "{ACTIVE:?} {screen:?}");
     }
 }

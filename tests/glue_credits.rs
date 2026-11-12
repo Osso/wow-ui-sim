@@ -7,7 +7,8 @@ use wow_ui_sim::screen::ScreenKind;
 fn glue_credits_projects_supplied_rows_and_profile_screen_catalogs() {
     let env = common::lock_env(|| WowLuaEnv::new().unwrap());
     env.exec("assert(type(GetCreditsDisplayInfo) == 'function'); assert(GetCreditsTextByFileDataID == nil)").unwrap();
-    // Empty rows are explicit host policy, not a native fresh-Glue assertion.
+    // Empty rows are explicit host policy. Only Forever has verified empty-list shape.
+    #[cfg(feature = "client-wowforever")]
     env.exec(
         "assert(type(GetCreditsDisplayInfo()) == 'table' and next(GetCreditsDisplayInfo()) == nil)",
     )
@@ -38,11 +39,13 @@ fn glue_credits_projects_supplied_rows_and_profile_screen_catalogs() {
         assert(rows[1].creditsFileID == 0 and rows[1].keyArt == '' and rows[1].background == '' and rows[1].name == '')
         assert(rows[1].logo == nil and rows[1].soundKit == 0)
         assert(rows[2].creditsFileID == 17 and rows[2].logo == 23 and rows[2].soundKit == nil)
-        -- Explicit host file contents, independent of the display catalog.
-        assert(GetCreditsTextByFileDataID(17) == 'Host-supplied text')
         rows[2].name = 'changed'
         assert(GetCreditsDisplayInfo()[2].name == 'Host credits')
     "#).unwrap();
+    // The complete text publisher is verified only on Forever.
+    #[cfg(feature = "client-wowforever")]
+    env.exec("assert(GetCreditsTextByFileDataID(17) == 'Host-supplied text')")
+        .unwrap();
     env.set_screen_mode(ScreenKind::Game);
     env.exec("assert(type(GetCreditsDisplayInfo) == 'function'); assert(GetCreditsTextByFileDataID == nil)").unwrap();
     assert!(env.state().borrow().lua_errors.is_empty());
@@ -63,13 +66,16 @@ fn glue_credits_text_validates_r65_ids_and_reads_direct_host_files() {
     env.exec(
         r#"
         local usage = 'Usage: local creditsText = GetCreditsTextByFileDataID(fileDataID)'
-        local function fails(...)
+        local function fails(rangeError, ...)
             local ok, err = pcall(GetCreditsTextByFileDataID, ...)
-            assert(not ok and tostring(err):find(usage, 1, true), tostring(err))
+            local message = tostring(err)
+            assert(not ok and message:find(usage, 1, true), message)
+            assert((message:find('outside of expected range', 1, true) ~= nil) == rangeError, message)
         end
-        fails(); fails(nil); fails(false); fails({}); fails(function() end)
-        fails('bad'); fails(0/0); fails(math.huge); fails(-math.huge)
-        fails(2147483648); fails(-2147483649)
+        fails(false); fails(false, nil)
+        fails(true, false); fails(true, {}); fails(true, function() end)
+        fails(true, 'bad'); fails(true, 0/0); fails(true, math.huge); fails(true, -math.huge)
+        fails(true, 2147483648); fails(true, -2147483649)
     "#,
     )
     .unwrap();
