@@ -58,6 +58,7 @@ const BLIZZARD_ADDONS: &[&str] = &[
     "Blizzard_MacroUI",
     "Blizzard_GameMenu",
     "Blizzard_HelpFrame",
+    "Blizzard_Narration",
 ];
 
 pub fn setup_game_menu_env() -> WowLuaEnv {
@@ -73,25 +74,12 @@ pub fn setup_game_menu_env() -> WowLuaEnv {
         super::load_profile_framexml(&env);
     } else if !super::load_classic_game_startup_inventory(&env) {
         let ui = blizzard_ui_dir();
-        for addon_name in BLIZZARD_ADDONS {
-            if *addon_name == "Blizzard_StoreUI"
-                && matches!(
-                    wow_ui_sim::client_profile::ACTIVE,
-                    wow_ui_sim::client_profile::ClientProfile::Retail
-                        | wow_ui_sim::client_profile::ClientProfile::Ptr
-                )
-            {
-                // The PTR/Retail shop button enters CatalogShop, not legacy StoreFrame.
-                for catalog_addon in [
-                    "Blizzard_CatalogShopSharedUtil",
-                    "Blizzard_CatalogShopSharedTemplates",
-                    "Blizzard_CatalogShop",
-                ] {
-                    super::load_required_blizzard_addon(&env, &ui, catalog_addon);
-                }
-            }
-            super::load_required_blizzard_addon(&env, &ui, addon_name);
-        }
+        super::blizzard_addon_harness::load_blizzard_addon_closure_into_env(
+            &env,
+            &ui,
+            BLIZZARD_ADDONS,
+            &[],
+        );
     }
 
     env.apply_post_load_workarounds();

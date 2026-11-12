@@ -222,11 +222,12 @@ fn test_load_game_menu() {
         assert(not GameMenuFrame:IsShown())
         ShowUIPanel(GameMenuFrame)
         assert(GameMenuFrame:IsShown())
-        GameMenuButtonContinue:Click()
+        assert(GameMenuFrame.closeButton)
+        GameMenuFrame.closeButton:Click()
         assert(not GameMenuFrame:IsShown())
         "#,
     )
-    .expect("active-profile GameMenu continue-button lifecycle");
+    .expect("active-profile GameMenu close-button lifecycle");
 }
 
 #[test]
