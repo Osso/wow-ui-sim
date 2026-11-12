@@ -1,6 +1,6 @@
 ## [2026-11-12] implementation | R81 spell tooltip composition
 
-Updated [tooltip data](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) and the [contract](../specs/tooltip-spell-composition.md). VERIFIED R81 outer conditions use host-supplied helper outputs; fixed cooldowns, aura time and binding mapping are removed. Five original-consumer tests reject the base producer. GREEN/profile proof is pending; UNKNOWN formulas and native build limits remain explicit.
+Updated [tooltip data](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) and the [contract](../specs/tooltip-spell-composition.md). VERIFIED R81 outer conditions use host-supplied helper outputs; fixed cooldowns, aura time and binding mapping are removed. VERIFIED: five original-consumer tests reject the base producer and pass with the change. Retail passes 2263 lib / 641 tooltip integration cases; PTR passes 81 integration / 10 lib touched cases; Forever passes 23 / 10 available touched cases. Final profile builds have zero warnings. UNKNOWN formulas and native build limits remain explicit.
 
 ## [2026-11-11] correction | Addon loading phases and LoadWith followers
 

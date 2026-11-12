@@ -4,13 +4,13 @@ The shared spell tooltip producer uses R81 Retail 12.1.5.70688 evidence for its 
 
 ## What it must do
 
-- [ ] VERIFIED R81 Q1: GetSpellByID resolves an effective spell unless dontOverride is set. A spell hyperlink keeps the parsed ID and passes a link context without suppressing cost or range.
-- [ ] VERIFIED R81 Q1: ordinary detail rows follow replacement, Azerite annotation, cost/range, cast/recast order. Replacement requires a nonzero override, a resolved name and no suppression; it is left-only, type 0, normal color, without wrapText.
-- [ ] VERIFIED R81 Q1/Q2: cost/range rows are highlighted type 0; first range may share cost's right side, remaining ranges go left. Empty buffers add nothing.
-- [ ] VERIFIED R81 Q3: apply the supplied mode, native SpellMisc attribute-group masks, alternate-header and first-effect skip conditions. Existing attributes_9 catalog provenance remains separate from R81's verified native mask.
-- [ ] VERIFIED R81 Q2: positive final cast milliseconds select SPELL_CAST_TIME_SEC below 60000 and SPELL_CAST_TIME_MIN otherwise, formatted through the Blizzard global. Nonpositive or absent results do not imply Instant.
-- [ ] UNKNOWN helpers use neutral host inputs: final cost, range, alternate/recast/cooldown text and final cast milliseconds. An absent input omits its row. Aura remaining text is also already formatted and host-supplied by aura instance ID.
-- [ ] The unsupported fixed slot-to-key binding line is absent.
+- [x] VERIFIED R81 Q1: GetSpellByID resolves an effective spell with override resolution enabled. A spell hyperlink keeps the parsed ID and passes a link context without suppressing cost or range.
+- [x] VERIFIED R81 Q1: ordinary detail rows follow replacement, Azerite annotation, cost/range, cast/recast order. Replacement requires a nonzero override, a resolved name and no suppression; it is left-only, type 0, normal color, without wrapText.
+- [x] VERIFIED R81 Q1/Q2: cost/range rows are highlighted type 0; first range may share cost's right side, remaining ranges go left. Empty buffers add nothing.
+- [x] VERIFIED R81 Q3: apply the supplied mode, native SpellMisc attribute-group masks, alternate-header and first-effect skip conditions. Existing attributes_9 catalog provenance remains separate from R81's verified native mask.
+- [x] VERIFIED R81 Q2: positive final cast milliseconds select SPELL_CAST_TIME_SEC below 60000 and SPELL_CAST_TIME_MIN otherwise, formatted through the Blizzard global. Nonpositive or absent results do not imply Instant.
+- [x] UNKNOWN helpers use neutral host inputs: final cost, range, alternate/recast/cooldown text and final cast milliseconds. An absent input omits its row. Aura remaining text is also already formatted and host-supplied by aura instance ID.
+- [x] The unsupported fixed slot-to-key binding line is absent.
 
 ## How it works
 
@@ -32,7 +32,7 @@ The shared spell tooltip producer uses R81 Retail 12.1.5.70688 evidence for its 
 
 ## Known gaps (current cycle)
 
-- [ ] Record RED/GREEN and profile test results in the lane report.
+None. VERIFIED simulator proof: five original-consumer tests reject the base; Retail passes 2263 library and 641 tooltip integration cases, PTR passes 81 touched integration and 10 library cases, and Forever passes 23 available touched integration and 10 library cases. Final builds have zero compiler warnings. Native evidence limits remain below. Full logs and the exact-name profile manifest are in `/home/osso/.local/state/wow-ui-sim/handoff/tooltip-spell-r81/REPORT.md`.
 
 ## Out of scope
 

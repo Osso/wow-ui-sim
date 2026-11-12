@@ -10,7 +10,7 @@
 
 ## [2026-11-12] implementation | R81 spell tooltip composition
 
-[Tooltip data](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) links the R81 contract, neutral host-helper inputs and native evidence limits. RED is recorded; GREEN and profile proof are pending.
+[Tooltip data](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) links the R81 contract, neutral host-helper inputs and native evidence limits. VERIFIED: the five original-consumer tests reject the base and pass with the producer; Retail passes 2263 lib / 641 tooltip integration cases, PTR passes 81 / 10 touched integration/lib cases, and Forever passes 23 / 10 available touched cases, with zero-warning final builds. Native 70688 evidence is not a serialized-output certificate for other builds.
 
 ## [2026-11-11] implementation | Glue login submission
 
