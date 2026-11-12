@@ -1798,7 +1798,7 @@
           "kind": "test",
           "reference": "src/cvars.rs::patch_12_0_7_cvar_defaults_match_retail",
           "summary": "Profile-gated retail 12.0.7 CVar default is 1; focused test verifies runtime and registered default values.",
-          "source_hash": "f9e2476424256f6498b8c98d680d0e08adc623ccecdec5293f0a3dfa6b68ce0c"
+          "source_hash": "2595c64cf734c089793938172dbf7991d9aab2a45550244fd0bbd6365e800686"
         }
       ],
       "tests": [
@@ -1822,7 +1822,7 @@
           "kind": "test",
           "reference": "src/cvars.rs::patch_12_0_7_cvar_defaults_match_retail",
           "summary": "Profile-gated retail 12.0.7 CVar default is 0; focused test verifies runtime and registered default values.",
-          "source_hash": "f9e2476424256f6498b8c98d680d0e08adc623ccecdec5293f0a3dfa6b68ce0c"
+          "source_hash": "2595c64cf734c089793938172dbf7991d9aab2a45550244fd0bbd6365e800686"
         }
       ],
       "tests": [
@@ -1846,7 +1846,7 @@
           "kind": "test",
           "reference": "src/cvars.rs::patch_12_0_7_cvar_defaults_match_retail",
           "summary": "Profile-gated retail 12.0.7 CVar default is 1; focused test verifies runtime and registered default values.",
-          "source_hash": "f9e2476424256f6498b8c98d680d0e08adc623ccecdec5293f0a3dfa6b68ce0c"
+          "source_hash": "2595c64cf734c089793938172dbf7991d9aab2a45550244fd0bbd6365e800686"
         }
       ],
       "tests": [
@@ -1870,7 +1870,7 @@
           "kind": "test",
           "reference": "src/cvars.rs::patch_12_0_7_cvar_defaults_match_retail",
           "summary": "Profile-gated retail 12.0.7 CVar default is 1; focused test verifies runtime and registered default values.",
-          "source_hash": "f9e2476424256f6498b8c98d680d0e08adc623ccecdec5293f0a3dfa6b68ce0c"
+          "source_hash": "2595c64cf734c089793938172dbf7991d9aab2a45550244fd0bbd6365e800686"
         }
       ],
       "tests": [
@@ -1894,7 +1894,7 @@
           "kind": "test",
           "reference": "src/cvars.rs::patch_12_0_7_cvar_defaults_match_retail",
           "summary": "Profile-gated retail 12.0.7 CVar default is 1; focused test verifies runtime and registered default values.",
-          "source_hash": "f9e2476424256f6498b8c98d680d0e08adc623ccecdec5293f0a3dfa6b68ce0c"
+          "source_hash": "2595c64cf734c089793938172dbf7991d9aab2a45550244fd0bbd6365e800686"
         }
       ],
       "tests": [
@@ -1918,7 +1918,7 @@
           "kind": "test",
           "reference": "src/cvars.rs::patch_12_0_7_cvar_defaults_match_retail",
           "summary": "Profile-gated retail 12.0.7 CVar default is 0; focused test verifies runtime and registered default values.",
-          "source_hash": "f9e2476424256f6498b8c98d680d0e08adc623ccecdec5293f0a3dfa6b68ce0c"
+          "source_hash": "2595c64cf734c089793938172dbf7991d9aab2a45550244fd0bbd6365e800686"
         }
       ],
       "tests": [
