@@ -101,6 +101,32 @@ fn addon_load_failures_remain_diagnostic_without_persistence() {
                 "{name}: {diagnostics}"
             );
         }
+        if name == "BrokenEvent" {
+            let previous_owner = env
+                .state()
+                .borrow()
+                .addons
+                .iter()
+                .position(|addon| addon.folder_name == "__BuiltIn")
+                .expect("built-in owner") as u16;
+            env.state().borrow_mut().executing_addon_index = Some(previous_owner);
+            env.loader_env()
+                .fire_event_with_args("ADDON_LOADED", &[env.lua_string(name)])
+                .unwrap();
+            let state = env.state().borrow();
+            assert_eq!(state.executing_addon_index, Some(previous_owner));
+            assert_eq!(
+                state
+                    .lua_error_records
+                    .last()
+                    .unwrap()
+                    .addon_name
+                    .as_deref(),
+                Some(name)
+            );
+            drop(state);
+            env.state().borrow_mut().executing_addon_index = None;
+        }
         env.finalize_session(&mut None).unwrap();
     }
 }
