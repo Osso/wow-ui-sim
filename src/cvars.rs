@@ -836,7 +836,7 @@ mod tests {
     }
 
     #[test]
-    fn store_mirror_defaults_stay_out_of_the_cvar_registry() {
+    fn store_mirror_cvars_have_the_pinned_client_defaults() {
         use crate::client_profile::{ACTIVE, ClientProfile};
 
         if !matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr) {
