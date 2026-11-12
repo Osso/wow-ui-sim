@@ -37,7 +37,7 @@
 
 ## Known gaps (current cycle)
 
-- [ ] `GetAllCommands` listing of hidden mirror vars: UNKNOWN (not modelled).
+- [ ] `GetAllCommands` excludes hidden mirror vars: Retail INFERRED (R77: 0x40 filter, VERIFIED registration flags); PTR UNKNOWN.
 - [ ] Verify 70493 behavior; R38 evidence covers PTR 70668 and a limited Retail 70688 comparison.
 - [ ] Verify the exact Lua result shape of `C_CVar.GetCVar` for these hidden variables.
 - [ ] Verify whether a `shop2Enabled` change fires an event on a first-use, uninitialized path.
