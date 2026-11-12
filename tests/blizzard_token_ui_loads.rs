@@ -268,8 +268,8 @@ fn body_resolves_to_five_entries_in_declared_order() {
     let expected = vec![
         "Blizzard_CurrencyTransfer.lua".to_string(),
         "Blizzard_CurrencyTransfer.xml".to_string(),
-        "Blizzard_TokenUI.lua".to_string(),
-        "Blizzard_TokenUI.xml".to_string(),
+        "Mainline/Blizzard_TokenUI.lua".to_string(),
+        "Mainline/Blizzard_TokenUI.xml".to_string(),
         "Localization.lua".to_string(),
     ];
 
@@ -364,7 +364,10 @@ fn token_frame_load_ui_is_absent_and_wow_token_ui_owns_secure_token_flow() {
          UseSecureEnvironment: 1"
     );
     let expected_deps: Vec<String> = if classic_legacy_token {
-        vec!["Blizzard_SharedXML".to_string(), "Blizzard_UIParent".to_string()]
+        vec![
+            "Blizzard_SharedXML".to_string(),
+            "Blizzard_UIParent".to_string(),
+        ]
     } else {
         vec!["Blizzard_SharedXML".to_string()]
     };
