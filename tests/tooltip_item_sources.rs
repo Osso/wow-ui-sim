@@ -33,7 +33,7 @@ fn tooltip_spell_identity_survives_missing_local_metadata() {
 }
 
 #[test]
-fn hyperlink_unit_guid_uses_modeled_player_and_target_tooltips() {
+fn hyperlink_unit_guids_do_not_invent_lookup_rows() {
     let env = env();
     let target_guid = "Creature-0-0-0-0-12345-0000000000";
     {
@@ -62,17 +62,15 @@ fn hyperlink_unit_guid_uses_modeled_player_and_target_tooltips() {
     }
     env.exec(
         r#"
-        local player = C_TooltipInfo.GetHyperlink("unit:Player-1-00000001")
-        assert(player.type == Enum.TooltipDataType.Unit and player.guid == "Player-1-00000001")
-        assert(player.lines[1].leftText == "Uther")
-        local target = C_TooltipInfo.GetHyperlink("unit:Creature-0-0-0-0-12345-0000000000")
-        assert(target.type == Enum.TooltipDataType.Unit)
-        assert(target.guid == UnitGUID("target"))
-        assert(target.lines[1].leftText == "Quilboar")
-        assert(target.lines[2].leftText == "Level 10")
+        -- R82 Q2 UNKNOWN: GUID acceptance and native object lookup are not established.
+        -- Approved by main: remove guessed rows, without asserting native miss shape.
+        for _, guid in ipairs({'Player-1-00000001', 'Creature-0-0-0-0-12345-0000000000'}) do
+            local data = C_TooltipInfo.GetHyperlink('unit:' .. guid)
+            assert(not (type(data) == 'table' and data.lines and #data.lines > 0))
+        end
         "#,
     )
-    .expect("unit hyperlinks should resolve modeled GUIDs before consumer first-line access");
+    .expect("unit hyperlinks must not fabricate UNKNOWN object lookup rows");
 }
 
 #[test]
