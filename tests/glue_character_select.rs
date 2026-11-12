@@ -1043,3 +1043,156 @@ fn character_create_screen_populates_races_classes_and_customizations() {
         assert!(!forward_text.is_empty(), "forward button text should be populated");
     }
 }
+
+#[test]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn trial_boost_starting_level_is_registered_only_on_glue_screens() {
+    let env = WowLuaEnv::new().expect("Failed to create Lua environment");
+    let absent_on_game: bool = env
+        .eval(
+            "local api = rawget(_G, 'C_CharacterCreation'); return api == nil or rawget(api, 'GetTrialBoostStartingLevel') == nil",
+        )
+        .expect("Game-screen API availability should be queryable");
+    assert!(
+        absent_on_game,
+        "trial boost API must be absent on Game screens"
+    );
+
+    env.set_screen_mode(ScreenKind::CharacterCreate);
+    let available_on_glue: bool = env
+        .eval(
+            "local api = rawget(_G, 'C_CharacterCreation'); return api ~= nil and type(rawget(api, 'GetTrialBoostStartingLevel')) == 'function'",
+        )
+        .expect("Glue-screen API availability should be queryable");
+    assert!(
+        available_on_glue,
+        "trial boost API must be available on Glue screens"
+    );
+
+    env.set_screen_mode(ScreenKind::Game);
+    let absent_after_return_to_game: bool = env
+        .eval(
+            "local api = rawget(_G, 'C_CharacterCreation'); return api == nil or rawget(api, 'GetTrialBoostStartingLevel') == nil",
+        )
+        .expect("Game-screen API availability should be queryable after transition");
+    assert!(
+        absent_after_return_to_game,
+        "trial boost API must be removed when returning to Game screens"
+    );
+}
+
+#[test]
+#[cfg(feature = "client-retail")]
+fn retail_class_trial_tooltip_uses_exported_character_service_level() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::CharacterCreate);
+        env.exec(
+            "CharacterCreateRaceAndClassMixin.OnShow(CharacterCreateFrame.RaceAndClassFrame)",
+        )
+        .expect("original class-trial tooltip consumer should execute");
+
+        let (level, tooltip_text): (i32, String) = env
+            .eval(
+                "local button = CharacterCreateFrame.RaceAndClassFrame.ClassTrialCheckButton; return C_CharacterCreation.GetTrialBoostStartingLevel(), button.tooltipLines[1].text",
+            )
+            .expect("class-trial level and tooltip should be queryable");
+        let expected_tooltip: String = env
+            .eval("return CHARACTER_TYPE_FRAME_TRIAL_BOOST_CHARACTER_TOOLTIP:format(100)")
+            .expect("class-trial tooltip template should be queryable");
+
+        assert_eq!(level, 100, "Retail 12.1.5.70783 exports level 100 for selector 2");
+        assert_eq!(tooltip_text, expected_tooltip);
+    }
+}
+
+#[test]
+#[cfg(feature = "client-wowforever")]
+fn forever_class_trial_tooltip_uses_empty_host_table_default() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::CharacterCreate);
+        env.exec(
+            "CharacterCreateRaceAndClassMixin.OnShow(CharacterCreateFrame.RaceAndClassFrame)",
+        )
+        .expect("original Camelot class-trial tooltip consumer should execute");
+
+        let (level, tooltip_text): (i32, String) = env
+            .eval(
+                "local button = CharacterCreateFrame.RaceAndClassFrame.ClassTrialCheckButton; return C_CharacterCreation.GetTrialBoostStartingLevel(), button.tooltipLines[1].text",
+            )
+            .expect("empty host-table level and original tooltip should be queryable");
+        let expected_tooltip: String = env
+            .eval("return CHARACTER_TYPE_FRAME_TRIAL_BOOST_CHARACTER_TOOLTIP:format(0)")
+            .expect("Camelot class-trial tooltip template should be queryable");
+
+        assert_eq!(level, 0, "the simulator's empty Forever table yields zero");
+        assert_eq!(tooltip_text, expected_tooltip);
+    }
+}
+
+#[test]
+#[cfg(feature = "client-retail")]
+fn retail_trial_boost_query_returns_exported_level_and_one_value() {
+    let env = load_blizzard_screen(ScreenKind::CharacterCreate);
+    let (level, result_count): (i32, i32) = env
+        .eval(
+            "return C_CharacterCreation.GetTrialBoostStartingLevel(), select('#', C_CharacterCreation.GetTrialBoostStartingLevel())",
+        )
+        .expect("trial boost query should return its exported level");
+
+    assert_eq!(level, 100, "Retail selector 2 exports level 100");
+    assert_eq!(result_count, 1, "the getter publishes exactly one value");
+}
+
+#[test]
+#[cfg(feature = "client-retail")]
+fn retail_trial_boost_host_selector_selects_first_matching_row() {
+    let env = load_blizzard_screen(ScreenKind::CharacterCreate);
+    {
+        let state = env.state();
+        let mut sim = state.borrow_mut();
+        sim.trial_boost_level.replace_rows(vec![
+            wow_ui_sim::c_api::c_character_creation_trial_boost::CharacterServiceInfoRow {
+                service_type: 1,
+                boost_type: 4,
+                boost_level: 71,
+            },
+            wow_ui_sim::c_api::c_character_creation_trial_boost::CharacterServiceInfoRow {
+                service_type: 1,
+                boost_type: 4,
+                boost_level: 72,
+            },
+            wow_ui_sim::c_api::c_character_creation_trial_boost::CharacterServiceInfoRow {
+                service_type: 1,
+                boost_type: 8,
+                boost_level: 90,
+            },
+        ]);
+        sim.trial_boost_level.set_selector(4);
+    }
+    let selected_level: i32 = env
+        .eval("return C_CharacterCreation.GetTrialBoostStartingLevel()")
+        .expect("host-selected row level should be queryable");
+    assert_eq!(selected_level, 71, "the first row for selector 4 wins");
+
+    env.state().borrow_mut().trial_boost_level.set_selector(99);
+    let unmatched_level: i32 = env
+        .eval("return C_CharacterCreation.GetTrialBoostStartingLevel()")
+        .expect("unmatched selector should return a level");
+    assert_eq!(unmatched_level, 0, "an unmatched selector returns zero");
+}
+
+#[test]
+#[cfg(feature = "client-ptr")]
+fn ptr_trial_boost_zero_fallback_is_unchanged() {
+    let env = WowLuaEnv::new().expect("Failed to create Lua environment");
+    let game_level: i32 = env
+        .eval("return C_CharacterCreation.GetTrialBoostStartingLevel()")
+        .expect("existing PTR fallback should remain callable");
+    env.set_screen_mode(ScreenKind::CharacterCreate);
+    let glue_level: i32 = env
+        .eval("return C_CharacterCreation.GetTrialBoostStartingLevel()")
+        .expect("existing PTR fallback should remain callable on Glue");
+
+    assert_eq!(game_level, 0);
+    assert_eq!(glue_level, 0);
+}

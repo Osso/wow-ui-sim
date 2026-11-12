@@ -3,6 +3,9 @@
 ## [2026-11-11] system | Character select screen data
 
 [Character select screen data](systems/chr-select-screen-data.md) links the profile-scoped DB2 rows and provenance. **VERIFIED:** Retail data is labeled with installed build 12.1.5.70783 and Forever rows with installed build 1.60.1.70888; targeted lookup tests pass 3/3 on each profile, and the PTR no-data test passes. **UNKNOWN:** Forever 70707 and PTR source rows. The native API and roster are separately owned.
+## [2026-11-11] system | Character-create trial boost level
+
+[Character-create trial boost level](systems/character-create-trial-boost-level.md) links the [contract](../specs/character-create-trial-boost-level.md), the Retail 70783 export, Glue registration, host selector state, and Forever/PTR evidence limits.
 
 ## [2026-11-10] system | ScriptObject full lockdown
 

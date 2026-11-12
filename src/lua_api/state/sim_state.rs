@@ -952,6 +952,7 @@ pub struct SimState {
     pub character_services: CharacterServicesState,
     pub shared_character_services:
         crate::c_api::c_shared_character_services::SharedCharacterServicesState,
+    pub trial_boost_level: crate::c_api::c_character_creation_trial_boost::TrialBoostLevelState,
     pub scenario: ScenarioState,
     pub death_recaps: Vec<DeathRecapEntry>,
     pub chat_bubbles: Vec<ChatBubble>,
