@@ -146,6 +146,24 @@ fn test_c_tooltip_info_get_item_by_id_returns_item_tooltip_lines() {
 #[test]
 fn test_c_tooltip_info_get_item_by_id_includes_stat_lines_for_gear() {
     let env = WowLuaEnv::new().unwrap();
+    // R80 Q2: ordinary stat amounts are supplied, not derived from ItemSparse percentages.
+    use crate::c_api::item_tooltip::{ItemTooltipInput, ItemTooltipStat};
+    env.state().borrow_mut().item_tooltip_inputs.insert(
+        (211995, 571),
+        ItemTooltipInput {
+            stats: vec![
+                ItemTooltipStat {
+                    label: "Strength".into(),
+                    amount: 37,
+                },
+                ItemTooltipStat {
+                    label: "Stamina".into(),
+                    amount: 91,
+                },
+            ],
+            ..Default::default()
+        },
+    );
     let has_colored_stat_lines: bool = env
         .eval(
             r#"
