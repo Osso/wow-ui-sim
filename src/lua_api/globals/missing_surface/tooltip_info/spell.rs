@@ -101,7 +101,8 @@ fn push_spell_tooltip_lines(
     if !input.suppress_replacement && input.overrides_spell_id != 0 {
         if let Some(replaced) = spells::get_spell(input.overrides_spell_id) {
             let text = super::format_global_text(state, "REPLACES_SPELL", replaced.name)?;
-            let line = push_tooltip_line(state, lines, index, 0.0, &text, None, false);
+            let color = spell_color_from_global(state, b"NORMAL_FONT_COLOR", (1.0, 0.82, 0.0));
+            let line = push_tooltip_line(state, lines, index, 0.0, &text, Some(color), false);
             super::restore_plain_line_type(state, line);
             index += 1;
         }
