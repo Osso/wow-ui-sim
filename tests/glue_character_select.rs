@@ -1399,6 +1399,64 @@ fn ptr_character_creation_verified_members_are_glue_only() {
 
 #[test]
 #[cfg(feature = "client-ptr")]
+fn ptr_character_creation_interaction_write_and_no_model_visibility() {
+    let env = WowLuaEnv::new().unwrap();
+    env.set_screen_mode(ScreenKind::CharacterCreate);
+    // Calling the inferred catalog entries is fixture setup, not catalog proof.
+    for arguments in ["", "nil"] {
+        let error = env
+            .exec(&format!(
+                "C_CharacterCreation.SetPlayerModelHiddenState({arguments})"
+            ))
+            .expect_err("PTR hidden state requires a non-nil first argument");
+        assert!(
+            error
+                .to_string()
+                .contains("Usage: C_CharacterCreation.SetPlayerModelHiddenState(hiddenState)"),
+            "{error}"
+        );
+    }
+    env.state()
+        .borrow_mut()
+        .ptr_character_creation
+        .interaction_state = 42;
+    env.exec(
+        r#"
+        local events = 0
+        local listener = CreateFrame("Frame")
+        listener:RegisterAllEvents()
+        listener:SetScript("OnEvent", function() events = events + 1 end)
+        C_CharacterCreation.SetPlayerModelHiddenState(false)
+        C_CharacterCreation.SetPlayerModelHiddenState(true)
+        C_CharacterCreation.SetPlayerModelHiddenState(0)
+        C_CharacterCreation.SetPlayerModelHiddenState("")
+        C_CharacterCreation.SetPlayerModelHiddenState({})
+        assert(events == 0)
+        listener:UnregisterAllEvents()
+    "#,
+    )
+    .unwrap();
+    assert_eq!(
+        env.state()
+            .borrow()
+            .ptr_character_creation
+            .interaction_state,
+        42
+    );
+    env.exec("C_CharacterCreation.OnPlayerInteraction()")
+        .unwrap();
+    assert_eq!(
+        env.state()
+            .borrow()
+            .ptr_character_creation
+            .interaction_state,
+        1
+    );
+    // No Lua return count, inferred catalog, or nonexistent model-alpha claim.
+}
+
+#[test]
+#[cfg(feature = "client-ptr")]
 fn ptr_character_creation_submit_requires_three_non_nil_arguments() {
     let env = WowLuaEnv::new().unwrap();
     env.set_screen_mode(ScreenKind::CharacterCreate);
@@ -1426,7 +1484,7 @@ fn ptr_character_creation_submit_requires_three_non_nil_arguments() {
 }
 
 #[test]
-#[cfg(feature = "client-ptr")]
+#[cfg(all(feature = "client-ptr", feature = "optional-tests"))]
 fn ptr_character_creation_submit_real_controls_do_not_invent_outcome() {
     test_timeout! {
         let env = load_blizzard_screen(ScreenKind::CharacterSelect);
@@ -1474,8 +1532,8 @@ fn ptr_character_creation_submit_real_controls_do_not_invent_outcome() {
             .first().map(|error| error.lines().next().unwrap_or_default().to_owned());
         if let Some(first_error) = first_error {
             const EXPECTED_PTR_STOP: &str = concat!(
-                "...rd_CharacterCreate/Mainline/Blizzard_CharacterCreate.lua:287: ",
-                "attempt to call field 'OnPlayerInteraction' (a nil value)"
+                "...rd_CharacterCreate/Mainline/Blizzard_CharacterCreate.lua:812: ",
+                "attempt to call field 'GetCurrentCameraZoom' (a nil value)"
             );
             assert_eq!(first_error, EXPECTED_PTR_STOP, "unexpected PTR first error");
             panic!("PTR real Create-button reachability RED: {first_error}");

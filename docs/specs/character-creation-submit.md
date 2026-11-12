@@ -179,3 +179,25 @@ return count remains INFERRED and is not asserted. OnPlayerInteraction and
 SetPlayerModelHiddenState remain absent at this verified-only stage; the exact
 OnPlayerInteraction real-control RED is retained before the separate droppable
 inferred-existence change.
+
+### PTR R78c droppable inferred existence (#282)
+
+OnPlayerInteraction and SetPlayerModelHiddenState exist by **INFERRED** unguarded
+consumer calls; the native PTR catalog is **UNKNOWN**. Their registration is a
+separate droppable commit, not a verified catalog claim. OnPlayerInteraction
+VERIFIED writes one to an internal byte; the model exposes that write only as a
+neutral host seam. No Lua reader or indirect gameplay effect is invented.
+SetPlayerModelHiddenState VERIFIED requires a non-nil first argument, uses Lua
+truthiness, and emits no event. With no owner/model it writes nothing. The
+simulator has no character-create model, so it stores no hidden flag or alpha.
+Its return count is UNKNOWN and is not asserted. Interaction's ordinary zero
+return count remains INFERRED and is also not asserted. IsCharacterNameValid
+remains unchanged.
+
+The verified-only stage retained the exact OnPlayerInteraction RED (0 passed,
+1 failed, 5.44s). After the inferred entries are applied, that boundary is passed;
+the next exact first error is Mainline/Blizzard_CharacterCreate.lua:812 attempting
+to call nil GetCurrentCameraZoom. No PTR camera behavior is inferred from Retail.
+The real-control test remains explicitly RED with that exact-first-error assertion,
+gated under optional-tests as directed in #289. Full PTR submit GREEN therefore
+still awaits evidence for the newly exposed camera prerequisite.

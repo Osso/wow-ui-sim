@@ -33,6 +33,8 @@ pub struct CreateCharacterCall {
 #[derive(Debug, Default)]
 pub struct PtrCharacterCreationState {
     pub last_call: Option<CreateCharacterCall>,
+    /// R78c #282 VERIFIED byte write; no Lua reader or inferred gameplay effect.
+    pub interaction_state: u8,
 }
 
 /// R78c #282 VERIFIED: these members belong to the PTR Glue registrar only.
@@ -58,7 +60,69 @@ pub(crate) fn update_registration(
             Val::Nil,
         );
     }
+    update_inferred_registration(state, namespace, is_glue)
+}
+
+// Existence INFERRED from unguarded consumer calls; catalog UNKNOWN (R78c Q1).
+// Kept together in a droppable commit, separate from verified Glue registrations.
+fn update_inferred_registration(
+    state: &mut LuaState,
+    namespace: GcRef<Table>,
+    is_glue: bool,
+) -> LuaResult<()> {
+    if is_glue {
+        table_set_rust_fn_static(
+            state,
+            namespace,
+            "OnPlayerInteraction",
+            on_player_interaction,
+        )?;
+        table_set_rust_fn_static(
+            state,
+            namespace,
+            "SetPlayerModelHiddenState",
+            set_player_model_hidden_state,
+        )?;
+    } else {
+        table_set_static(
+            state,
+            Val::Table(namespace),
+            "OnPlayerInteraction",
+            Val::Nil,
+        );
+        table_set_static(
+            state,
+            Val::Table(namespace),
+            "SetPlayerModelHiddenState",
+            Val::Nil,
+        );
+    }
     Ok(())
+}
+
+fn on_player_interaction(state: &mut LuaState) -> LuaResult<u32> {
+    // VERIFIED #282: internal byte is written to one. No Lua reader is known.
+    borrow_state_mut(state)?
+        .ptr_character_creation
+        .interaction_state = 1;
+    // Ordinary zero-result count remains INFERRED (#261), never asserted.
+    Ok(0)
+}
+
+fn set_player_model_hidden_state(state: &mut LuaState) -> LuaResult<u32> {
+    let argument = stack_val(state, 1);
+    if matches!(argument, Val::Nil) {
+        return Err(bad_argument(
+            1,
+            "SetPlayerModelHiddenState",
+            "Usage: C_CharacterCreation.SetPlayerModelHiddenState(hiddenState)",
+        ));
+    }
+    let _hidden = !matches!(argument, Val::Bool(false));
+    // VERIFIED #282: without an owner/model nothing is written and no event is
+    // emitted. This simulator has no character-create model; do not invent one.
+    // Return count UNKNOWN: use no returns, with no count assertion.
+    Ok(0)
 }
 
 fn stop_all_spell_visual_kits(_state: &mut LuaState) -> LuaResult<u32> {
