@@ -677,11 +677,33 @@ fn normalize_edit_mode_selection_layers(
 }
 
 pub(super) fn fire_frame_on_load(state: &mut LuaState, frame_id: u64) -> LuaResult<()> {
+    dispatch_frame_on_load(state, frame_id, false)
+}
+
+pub(super) fn fire_frame_on_load_reporting_errors(
+    state: &mut LuaState,
+    frame_id: u64,
+) -> LuaResult<()> {
+    dispatch_frame_on_load(state, frame_id, true)
+}
+
+fn dispatch_frame_on_load(
+    state: &mut LuaState,
+    frame_id: u64,
+    report_errors_and_continue: bool,
+) -> LuaResult<()> {
     let frame = frame_ref(state, frame_id)?;
     for handler in
         crate::lua_api::script_helpers::get_scripts_for_dispatch(state, frame_id, "OnLoad")
     {
-        call_handler_with_frame(state, handler, frame)?;
+        let result = call_handler_with_frame(state, handler, frame);
+        if report_errors_and_continue {
+            if let Err(error) = result {
+                crate::lua_api::script_helpers::call_error_handler_state(state, &error.to_string());
+            }
+        } else {
+            result?;
+        }
     }
     crate::lua_api::frame::methods::core_state::size::mark_nearest_layout_parent_dirty(
         state, frame_id,

@@ -217,13 +217,26 @@ fn body_resolves_profile_selected_sources_in_order() {
         .map(|p| p.to_string_lossy().to_string())
         .collect();
 
-    let expected = if cfg!(feature = "client-wowforever") {
-        // The Forever TOC loads its Mainline Camelot override between Lua and XML.
+    let expected = if toc_layout::forever() {
+        // Forever loads its Camelot override between Lua and XML.
         vec![
             "Blizzard_TrainerUI_Bootstrap.lua".to_string(),
             "Mainline/Blizzard_TrainerUI.lua".to_string(),
             "Mainline/Blizzard_TrainerUI_Camelot.lua".to_string(),
             "Mainline/Blizzard_TrainerUI.xml".to_string(),
+            "Localization.lua".to_string(),
+        ]
+    } else if toc_layout::ptr() {
+        // PTR lists the Mainline Lua and XML directly.
+        vec![
+            "Blizzard_TrainerUI_Bootstrap.lua".to_string(),
+            "Mainline/Blizzard_TrainerUI.lua".to_string(),
+            "Mainline/Blizzard_TrainerUI.xml".to_string(),
+            "Localization.lua".to_string(),
+        ]
+    } else if toc_layout::classic_cache() {
+        vec![
+            "Blizzard_TrainerUI.xml".to_string(),
             "Localization.lua".to_string(),
         ]
     } else {
@@ -235,8 +248,13 @@ fn body_resolves_profile_selected_sources_in_order() {
     };
     assert_eq!(
         body, expected,
-        "active-profile TrainerUI TOC body: {body:?}"
+        "TrainerUI body must match the active profile's pinned TOC: {body:?}"
     );
+}
+
+#[test]
+fn body_resolves_to_bootstrap_mainline_xml_and_localization_lua() {
+    body_resolves_profile_selected_sources_in_order();
 }
 
 #[test]

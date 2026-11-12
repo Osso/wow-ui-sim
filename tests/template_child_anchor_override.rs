@@ -98,6 +98,28 @@ fn setup_env() -> WowLuaEnv {
     env
 }
 
+fn create_hero_nodes_host(env: &WowLuaEnv) {
+    env.exec(
+        r#"
+        local root = CreateFrame("Frame", "TestHeroNodesRoot", UIParent)
+        root:SetSize(500, 800)
+        root:SetPoint("CENTER", UIParent, "CENTER")
+
+        local container = CreateFrame("Frame", "TestHeroTalentsContainer", root)
+        container:SetSize(200, 800)
+        container:SetPoint("TOP", root, "TOP")
+
+        local button = CreateFrame("Button", "TestHeroSpecButton", container)
+        button:SetSize(108, 108)
+        button:SetPoint("TOP", container, "TOP", 0, -102)
+
+        local host = CreateFrame("Frame", "TestHeroNodesHost", container, "HeroNodesHostTemplate")
+        host:SetPoint("TOP", button, "BOTTOM", 0, 34)
+        "#,
+    )
+    .unwrap();
+}
+
 /// World-map style child anchors should still produce the intended stretched
 /// layout after template application. This covers the case where the child
 /// reasserts `TOPLEFT` and adds `BOTTOMLEFT + RIGHT`.
@@ -155,8 +177,7 @@ fn child_inline_anchors_keep_expected_world_map_scroll_layout() {
 fn child_inline_anchors_preserve_inherited_hero_nodes_top_anchor() {
     let env = setup_env();
 
-    env.exec(r#"CreateFrame("Frame", "TestHeroNodesHost", UIParent, "HeroNodesHostTemplate")"#)
-        .unwrap();
+    create_hero_nodes_host(&env);
 
     let result: String = env
         .eval(
@@ -203,8 +224,7 @@ fn child_inline_anchors_preserve_inherited_hero_nodes_top_anchor() {
 fn template_scale_attribute_is_inherited_and_affects_layout() {
     let env = setup_env();
 
-    env.exec(r#"CreateFrame("Frame", "TestHeroNodesHost", UIParent, "HeroNodesHostTemplate")"#)
-        .unwrap();
+    create_hero_nodes_host(&env);
 
     let (scale, effective_scale, height): (f64, f64, f64) = env
         .eval(

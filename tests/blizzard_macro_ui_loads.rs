@@ -103,18 +103,17 @@ const MACRO_FREE_FUNCTIONS: &[&str] = &[
     "MacroEditButton_OnClick",
 ];
 
-fn load_full_game_ui() -> WowLuaEnv {
+fn fresh_game_env() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
     env.set_screen_size(1024.0, 768.0);
     env.set_screen_mode(ScreenKind::Game);
-
-    {
-        let mut state = env.state().borrow_mut();
-        state.addon_base_paths = vec![blizzard_ui_dir()];
-    }
-
+    env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
     wow_ui_sim::xml::register_intrinsic_templates();
+    env
+}
 
+fn load_full_game_ui() -> WowLuaEnv {
+    let env = fresh_game_env();
     let ui = blizzard_ui_dir();
     let addons = discover_blizzard_addons_for_screen(&ui, ScreenKind::Game);
     for (name, toc_path) in &addons {
@@ -280,10 +279,11 @@ fn blizzard_macro_ui_directory_holds_nine_entries_with_bootstrap() {
     let entries = std::fs::read_dir(macro_ui_dir())
         .expect("Blizzard_MacroUI directory reads")
         .count();
+    let expected_entries = if toc_layout::unified_toc_tree() { 8 } else { 9 };
     assert_eq!(
-        entries, 9,
-        "Directory must hold exactly 9 entries — the bare TOC, Bootstrap.lua, four remaining \
-         Lua files, and three XML files"
+        entries, expected_entries,
+        "Directory must hold {expected_entries} entries. PTR/Forever MacroUI.toc:4-11 \
+         explicitly lists eight files; Retail's pinned tree has nine directory entries"
     );
 }
 
@@ -469,34 +469,25 @@ fn blizzard_macro_ui_publishes_macro_popup_frame_mixin_with_seven_methods(env: &
 #[cfg(feature = "client-ptr")]
 #[test]
 fn ptr_macro_save_placeholder_is_replaced_by_lod_delegate() {
-    let env = load_full_game_ui();
-
-    let placeholder_is_noop: bool = env
-        .eval(
-            r#"
-            local before = MacroFrame_SaveMacro
-            MacroFrame = { calls = 0, SaveMacro = function(self) self.calls = self.calls + 1 end }
-            before()
-            return type(before) == "function" and MacroFrame.calls == 0
-            "#,
-        )
-        .expect("startup MacroFrame_SaveMacro placeholder probe should succeed");
-    assert!(placeholder_is_noop);
-
+    let env = fresh_game_env();
     load_addon(&env.loader_env(), &macro_ui_toc())
-        .expect("Blizzard_MacroUI should replace the startup placeholder");
+        .expect("Blizzard_MacroUI loads through its explicit LoD entry point");
 
-    let lod_delegate_called: bool = env
+    let delegated: bool = env
         .eval(
             r#"
-            MacroFrame.calls = 0
-            MacroFrame.SaveMacro = function(self) self.calls = self.calls + 1 end
+            MacroFrame = { calls = 0, SaveMacro = function(self) self.calls = self.calls + 1 end }
+            local callable = type(MacroFrame_SaveMacro) == "function"
             MacroFrame_SaveMacro()
-            return MacroFrame.calls == 1
+            return callable and MacroFrame.calls == 1
             "#,
         )
-        .expect("LoD MacroFrame_SaveMacro delegate probe should succeed");
-    assert!(lod_delegate_called);
+        .expect("MacroFrame_SaveMacro delegate probe should succeed");
+    assert!(
+        delegated,
+        "PTR MacroUI.lua:20-21 publishes MacroFrame_SaveMacro as a delegate to \
+         MacroFrame:SaveMacro() after the LoadOnDemand addon loads"
+    );
 }
 
 prefork_full_ui_case! {

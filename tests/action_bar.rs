@@ -16,6 +16,8 @@ const ACTION_BAR_ADDONS: &[&str] = &[
     "Blizzard_SharedXMLBase",
     "Blizzard_Colors",
     "Blizzard_SharedXML",
+    #[cfg(feature = "client-ptr")]
+    "Blizzard_GamepadSmartNavigation",
     "Blizzard_SharedXMLGame",
     "Blizzard_UIPanelTemplates",
     "Blizzard_FrameXMLBase",
@@ -29,28 +31,41 @@ const ACTION_BAR_ADDONS: &[&str] = &[
     "Blizzard_MoneyFrame",
     "Blizzard_POIButton",
     "Blizzard_Flyout",
+    "Blizzard_GameMenuEsc",
     "Blizzard_StoreUI",
     "Blizzard_MicroMenu",
     "Blizzard_ManagedFrameSystem",
-    "Blizzard_GameMenuEsc",
     "Blizzard_UIParentUtil",
     "Blizzard_EditMode",
+    #[cfg(feature = "client-ptr")]
+    "Blizzard_StatusTrackingBar",
     "Blizzard_GarrisonBase",
     "Blizzard_GameTooltip",
+    #[cfg(feature = "client-ptr")]
+    "Blizzard_StaticPopup",
     "Blizzard_UIParentPanelManager",
+    #[cfg(feature = "client-ptr")]
+    "Blizzard_GamepadSharedUtility",
     "Blizzard_Settings_Shared",
     "Blizzard_SettingsDefinitions_Shared",
     "Blizzard_SettingsDefinitions_Frame",
     "Blizzard_FrameXMLUtil",
     "Blizzard_ItemButton",
     "Blizzard_QuickKeybind",
+    #[cfg(feature = "client-ptr")]
+    "Blizzard_RaidWarning",
     "Blizzard_FrameXML",
     "Blizzard_UIPanels_Game",
+    // PTR bag button OnLoad needs container and item-button helpers above.
+    #[cfg(feature = "client-ptr")]
+    "Blizzard_MainMenuBarBagButtons",
     "Blizzard_MapCanvasSecureUtil",
     "Blizzard_MapCanvas",
     "Blizzard_SharedMapDataProviders",
     "Blizzard_WorldMap",
     "Blizzard_PingUI",
+    #[cfg(feature = "client-ptr")]
+    "Blizzard_SpellTypeIconOverlay",
     "Blizzard_ActionBar",
 ];
 
@@ -142,20 +157,24 @@ fn test_main_action_bar_end_caps_visible_after_startup() {
 
     let env = env_with_action_bar();
 
-    let (shown, left_atlas, right_atlas): (bool, String, String) = env
-        .eval(
-            r#"
-            if not MainActionBar or not MainActionBar.EndCaps then
-                return false, "", ""
-            end
-            local left = MainActionBar.EndCaps.LeftEndCap
-            local right = MainActionBar.EndCaps.RightEndCap
-            return MainActionBar.EndCaps:IsShown(),
-                   (left and left.GetAtlas and left:GetAtlas()) or "",
-                   (right and right.GetAtlas and right:GetAtlas()) or ""
-            "#,
-        )
-        .unwrap();
+    let endcap_texture_access = if cfg!(feature = "client-ptr") {
+        ".Texture"
+    } else {
+        ""
+    };
+    let script = format!(
+        r#"
+        if not MainActionBar or not MainActionBar.EndCaps then
+            return false, "", ""
+        end
+        local left = MainActionBar.EndCaps.LeftEndCap{endcap_texture_access}
+        local right = MainActionBar.EndCaps.RightEndCap{endcap_texture_access}
+        return MainActionBar.EndCaps:IsShown(),
+               (left and left.GetAtlas and left:GetAtlas()) or "",
+               (right and right.GetAtlas and right:GetAtlas()) or ""
+        "#
+    );
+    let (shown, left_atlas, right_atlas): (bool, String, String) = env.eval(&script).unwrap();
 
     assert!(shown, "MainActionBar.EndCaps should be shown after startup");
     assert_eq!(left_atlas, "ui-hud-actionbar-gryphon-left");
@@ -613,7 +632,16 @@ fn test_bag_bar_layout_locked() {
             local backpackRect, backpackErr = rect(backpack, "backpack")
             if not backpackRect then return backpackErr end
             local toggleRect, toggleErr = rect(toggle, "toggle")
-            if not toggleRect then return toggleErr end
+            if not toggleRect then
+                local width, height = toggle:GetSize()
+                local parent = toggle:GetParent()
+                local parentName = parent and parent:GetName() or "nil"
+                return toggleErr .. ":barLayout=" .. type(bar.Layout)
+                    .. ":size=" .. tostring(width) .. "x" .. tostring(height)
+                    .. ":initial=" .. tostring(bar.bagBarExpandToggleInitialWidth)
+                    .. "x" .. tostring(bar.bagBarExpandToggleInitialHeight)
+                    .. ":parent=" .. parentName .. ":points=" .. points_debug(toggle)
+            end
             local bag0Rect, bag0Err = rect(bag0, "bag0")
             if not bag0Rect then return bag0Err end
             local bag1Rect, bag1Err = rect(bag1, "bag1")
