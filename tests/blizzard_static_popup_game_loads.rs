@@ -102,6 +102,12 @@ const DEFS_UTIL_FUNCTIONS: &[&str] = &[
     "GetDefaultExpirationText",
 ];
 
+const VIRTUAL_TEMPLATES: &[(&str, &str)] = &[
+    ("StaticPopupButtonTemplate", "Button"),
+    ("StaticPopupBaseTemplate", "Frame"),
+    ("StaticPopupTemplate", "Frame"),
+];
+
 const NAMED_DIALOG_SLOTS: &[&str] = &[
     "StaticPopup1",
     "StaticPopup2",
@@ -796,8 +802,31 @@ fn money_frame_on_load_global_publishes_as_function() {
 }
 
 prefork_full_ui_case! {
+fn xml_registers_three_virtual_templates(env: &WowLuaEnv) {
+    for (template, frame_type) in VIRTUAL_TEMPLATES {
+        let probe = format!(
+            "return CreateFrame({frame_type:?}, nil, UIParent, {template:?}) ~= nil"
+        );
+        let result: bool = env
+            .eval(&probe)
+            .unwrap_or_else(|err| panic!("template probe ({template}): {err}"));
+        assert!(
+            result,
+            "Virtual template {template} must materialize as {frame_type} from the selected XML"
+        );
+    }
+}
+}
+
+#[cfg(not(feature = "client-retail"))]
+#[test]
+fn xml_registers_three_virtual_templates() {
+    let env = load_full_ui_for(ScreenKind::Game);
+    xml_registers_three_virtual_templates::run(&env);
+}
+
+prefork_full_ui_case! {
 fn four_named_dialog_slots_materialize_as_hidden_dialogs(env: &WowLuaEnv) {
-    // These named XML consumers exercise the complete template chain through the selected source.
     for name in NAMED_DIALOG_SLOTS {
         let hidden: bool = env.eval(&format!("return {name} ~= nil and not {name}:IsShown()")).expect("popup visibility");
         assert!(hidden, "{name} should start hidden");
