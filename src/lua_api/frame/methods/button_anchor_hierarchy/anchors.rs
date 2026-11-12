@@ -270,7 +270,7 @@ pub(super) fn clear_points_offset(state: &mut LuaState) -> LuaResult<u32> {
             anchor.y_offset = 0.0;
         }
     }
-    sim.widgets.mark_rect_dirty(id);
+    sim.widgets.mark_anchor_rect_dirty(id);
     Ok(0)
 }
 

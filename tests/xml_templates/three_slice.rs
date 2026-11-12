@@ -143,8 +143,13 @@ fn test_three_slice_center_texture_layout() {
     let result: String = env
         .eval(
             r#"
-        local btn = CreateFrame("Button", "TestThreeSlice2", UIParent, "SharedButtonSmallTemplate")
+        local parent = CreateFrame("Frame", "TestThreeSliceParent", UIParent)
+        parent:SetSize(600, 550)
+        parent:SetPoint("CENTER", UIParent, "CENTER")
+
+        local btn = CreateFrame("Button", "TestThreeSlice2", parent, "SharedButtonSmallTemplate")
         btn:SetSize(120, 22)
+        btn:SetPoint("BOTTOMLEFT", parent, "BOTTOMLEFT", 4, 4)
         if not btn.Center then return "Center child missing" end
         if btn.Center:GetNumPoints() ~= 2 then
             return "Center has " .. btn.Center:GetNumPoints() .. " anchors, expected 2"

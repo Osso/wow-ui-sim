@@ -376,6 +376,25 @@ fn get_spell_cooldown_duration_inactive_numeric_and_unresolved_alias() {
         "#
     ))
     .expect("inactive supported identifiers yield zero timing and unresolved aliases yield nil");
+
+    if cfg!(feature = "retail-12-1-5") {
+        env.exec(&format!(
+            r#"
+            local query = C_Spell.GetSpellCooldownDuration
+            assert(select('#', query(2147483647)) == 0)
+            assert(select('#', query('unresolved R17 spell name')) == 0)
+            assert(not pcall(query) and not pcall(query, nil))
+            assert(not pcall(query, true) and not pcall(query, {{}}))
+            assert(not pcall(query, {spell_id}, {{}}))
+            local fractional = query({spell_id}.9)
+            local numericString = query('{spell_id}')
+            local ignoredGCD = query({spell_id}, true)
+            assert(fractional:IsZero() and numericString:IsZero())
+            assert(select('#', query({spell_id}, true)) == 1 and ignoredGCD:IsZero())
+            "#
+        ))
+        .expect("R17 validates selectors and distinguishes unknown lookups from zero duration");
+    }
 }
 
 // Forever SpellDocumentation.lua:327 declares the modeled duration query;

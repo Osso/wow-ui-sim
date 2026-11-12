@@ -7,7 +7,7 @@ use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
-    if ACTIVE != ClientProfile::Retail {
+    if !matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr) {
         return Ok(());
     }
     let namespace = super::ensure_namespace(state, "C_Commentator")?;

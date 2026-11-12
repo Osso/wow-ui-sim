@@ -239,7 +239,12 @@ pub struct SimState {
         HashMap<i32, Vec<crate::c_api::c_weekly_rewards::ActivityTierProgress>>,
     /// WM97 DQ8 host seam: exact 64-bit keys with independent ready state.
     pub weekly_rewards: crate::c_api::c_tooltip_info_weekly::WeeklyRewards,
+    /// Host-supplied SpellLabel IDs keyed by spell; empty when no label records are supplied.
+    pub spell_labels: HashMap<i32, HashSet<i32>>,
     pub action_bars: HashMap<u32, u32>,
+    /// Pending unique PTR cooldown refresh; multiple slot changes coalesce per update.
+    #[cfg(feature = "client-ptr")]
+    pub(crate) actionbar_cooldown_update_pending: bool,
     /// Explicit slot-owned input; no cast/attack/spell-lifetime inference.
     pub(crate) action_repeat_active_slots: HashSet<u32>,
     /// INFERRED host-declared resolved spell IDs on special bars; empty by default.
@@ -938,6 +943,8 @@ pub struct SimState {
     pub auction_should_auto_populate_price: bool,
     pub wow_token: WowTokenState,
     pub mythic_plus: MythicPlusState,
+    /// Byte copied from Forever's Glue feature-status update.
+    pub name_reservation_feature_status: u8,
     /// Current character-create model facing in normalized radians.
     pub character_create_facing_radians: f32,
     /// Host-supplied race IDs with an altered character-create model.

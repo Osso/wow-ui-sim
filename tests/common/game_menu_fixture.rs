@@ -84,7 +84,7 @@ pub fn setup_game_menu_env() -> WowLuaEnv {
                         | wow_ui_sim::client_profile::ClientProfile::Ptr
                 )
             {
-                // The PTR/Retail shop button enters CatalogShop, not legacy StoreFrame.
+                // PTR/Retail use CatalogShop for the GameMenu store button, not legacy StoreFrame.
                 for catalog_addon in [
                     "Blizzard_CatalogShopSharedUtil",
                     "Blizzard_CatalogShopSharedTemplates",

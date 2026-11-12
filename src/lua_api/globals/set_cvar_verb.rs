@@ -28,7 +28,7 @@ const CVAR_DATA_MASK: u8 = 0x3F;
 const CVAR_DATA_TAG: u8 = 0x40;
 const DEFAULT_CVAR_BITFIELD_VERSION: u8 = b'0';
 const C_CVAR_FUNCTIONS: &[(&str, RustFn)] = &[
-    ("GetCVar", get_cvar),
+    ("GetCVar", get_cvar_namespace),
     ("SetCVar", set_cvar),
     ("GetCVarBool", get_cvar_bool),
     ("GetCVarDefault", get_cvar_default),
@@ -197,6 +197,19 @@ fn register_cvar(state: &mut LuaState) -> LuaResult<u32> {
 /// CVars that haven't been registered.
 fn get_cvar(state: &mut LuaState) -> LuaResult<u32> {
     push_cvar_string(state, CvarStringSource::Current)
+}
+
+/// `C_CVar.GetCVar` refuses the hidden Retail/PTR server mirror names.
+/// INFERRED: the wrapper exposes that refusal as one nil result.
+fn get_cvar_namespace(state: &mut LuaState) -> LuaResult<u32> {
+    let Some(name) = required_string(state, 1) else {
+        return get_cvar(state);
+    };
+    if borrow_state(state)?.cvars.is_server_mirrored(&name) {
+        state.push(Val::Nil);
+        return Ok(1);
+    }
+    get_cvar(state)
 }
 
 /// `GetCVarDefault(name)` — read the YAML/factory default for `name`,

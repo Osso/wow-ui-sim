@@ -238,22 +238,30 @@ impl WowLuaEnv {
 
     /// Set a server-mirrored CVar for this simulated client.
     ///
-    /// A changed `bpayStoreEnable` value emits `STORE_STATUS_CHANGED` on Retail/PTR.
-    /// `shop2Enabled` has no confirmed change event.
+    /// R38 verifies that a changed `bpayStoreEnable` value emits one
+    /// `STORE_STATUS_CHANGED` event with no payload and no `CVAR_UPDATE` on
+    /// PTR 12.1.7 and in the limited Retail 12.1.5 comparison. `shop2Enabled`
+    /// emits no Lua event on initialized paths; first-use behavior is UNKNOWN.
     pub fn set_server_mirrored_cvar(&self, name: &str, value: &str) -> Result<()> {
-        let store_status_changed = {
+        let previous_value = {
             let state = self.state();
             let state = state.borrow();
-            let previous_enabled = state.cvars.get_bool("bpayStoreEnable");
-            state.cvars.set_imported(name, value);
-            let is_store_enable = name.eq_ignore_ascii_case("bpayStoreEnable");
-            let retail_or_ptr = matches!(
+            state
+                .cvars
+                .set_server_mirrored(name, value)
+                .ok_or_else(|| {
+                    crate::Error::Other(format!(
+                        "unsupported server-mirrored CVar input for this client: {name}"
+                    ))
+                })?
+        };
+        let store_status_changed = name.eq_ignore_ascii_case("bpayStoreEnable")
+            && matches!(
                 crate::client_profile::ACTIVE,
                 crate::client_profile::ClientProfile::Retail
                     | crate::client_profile::ClientProfile::Ptr
-            );
-            is_store_enable && retail_or_ptr && previous_enabled != (value == "1")
-        };
+            )
+            && previous_value != value;
 
         if store_status_changed {
             self.fire_event("STORE_STATUS_CHANGED")?;

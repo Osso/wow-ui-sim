@@ -78,13 +78,10 @@ fn load_full_game_ui() -> WowLuaEnv {
 #[cfg(feature = "client-ptr")]
 #[test]
 fn ptr_mainline_excludes_mists_time_string_helper() {
-    let mainline_toc =
-        std::fs::read_to_string(ui_parent_dir().join("Blizzard_UIParent_Mainline.toc"))
-            .expect("mainline TOC should read");
-    let mists_toc = std::fs::read_to_string(ui_parent_dir().join("Blizzard_UIParent_Mists.toc"))
-        .expect("mists TOC should read");
-    assert!(!mainline_toc.contains("Mists\\UIParent.lua"));
-    assert!(mists_toc.contains("Mists\\UIParent.lua"));
+    let ptr_toc = std::fs::read_to_string(ui_parent_toc()).expect("PTR UIParent TOC should read");
+    // PTR 12.1.7 Blizzard_UIParent.toc:1-3 is one unified TOC with only UIParent.lua.
+    assert!(ptr_toc.lines().any(|line| line == "UIParent.lua"));
+    assert!(!ptr_toc.contains("Mists\\UIParent.lua"));
 
     let env = fresh_game_env();
     let assert_helper_absent = |stage: &str| {

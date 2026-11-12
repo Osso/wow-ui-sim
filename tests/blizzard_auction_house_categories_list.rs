@@ -196,6 +196,14 @@ fn auction_house_categories_list_refresh_count_matches_categories() {
                     .expect("C_AddOns.LoadAddOn should return");
                 assert!(loaded, "`{ROOT}` should load: {reason:?}");
 
+                #[cfg(feature = "client-ptr")]
+                {
+                    let should_display: bool = env
+                        .eval("return C_WowTokenUI.ShouldDisplayInAuctionHouse()")
+                        .expect("PTR token display query should return a boolean");
+                    assert!(should_display, "PTR should display the WoW Token category");
+                }
+
                 let failures: String = env
                     .eval(CATEGORIES_LIST_PROBE_LUA)
                     .expect("AuctionHouse categories-list probe should run");

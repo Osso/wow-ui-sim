@@ -17,12 +17,22 @@ fn expected_default_glue_screen() -> Option<String> {
 #[test]
 fn game_rules_hardcore_flag_defaults_to_false() {
     let env = env();
-    // WM80: Retail 70688 has no native IsHardcoreActive registration.
+    // WM80: Retail 70688 has no native IsHardcoreActive registration; PTR docs add the boolean API.
     if cfg!(feature = "profile-retail") {
         let absent: bool = env
             .eval("return rawget(C_GameRules, 'IsHardcoreActive') == nil and C_GameRules.IsHardcoreActive == nil")
             .unwrap();
         assert!(absent);
+        return;
+    }
+    if cfg!(feature = "client-ptr") {
+        // PTR Blizzard_APIDocumentationGenerated/GameRulesDocumentation.lua:276-281.
+        let (result_type, count): (String, i64) = env
+            .eval(
+                "local value = C_GameRules.IsHardcoreActive(); return type(value), select('#', C_GameRules.IsHardcoreActive())",
+            )
+            .expect("PTR IsHardcoreActive query succeeds");
+        assert_eq!((result_type.as_str(), count), ("boolean", 1));
         return;
     }
     let result: String = env
