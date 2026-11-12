@@ -117,10 +117,11 @@ fn fontstring_get_num_lines_reports_wrapped_line_count() {
 }
 
 // INFERRED from Retail 12.1.5.70688 L1 Q1: two resolved horizontal anchors set
-// the FontString width. EllesmereUI's HotKey consumer sets text before its two anchors.
+// the FontString width. `EUI_ActionBars_Apply.lua:315-357` sets the HotKey text before its two anchors.
 #[test]
 fn two_edge_fontstring_width_updates_when_points_follow_text() {
     let env = env();
+    env.set_screen_size(1600.0, 1200.0);
     let (width, text_width): (f64, f64) = env
         .eval(
             r#"
@@ -153,6 +154,7 @@ fn two_edge_fontstring_width_updates_when_points_follow_text() {
 #[test]
 fn two_edge_fontstring_uses_resolved_width_of_zero_width_target() {
     let env = env();
+    env.set_screen_size(1600.0, 1200.0);
     let (target_width, width): (f64, f64) = env
         .eval(
             r#"
@@ -187,6 +189,7 @@ fn two_edge_fontstring_uses_resolved_width_of_zero_width_target() {
 #[test]
 fn two_edge_fontstring_width_tracks_parent_resize() {
     let env = env();
+    env.set_screen_size(1600.0, 1200.0);
     let (initial_width, width, parent_width): (f64, f64, f64) = env
         .eval(
             r#"
