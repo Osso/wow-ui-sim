@@ -417,6 +417,13 @@ fn test_c_tooltip_info_get_hyperlink_returns_item_and_spell_tooltips() {
 #[test]
 fn test_c_tooltip_info_get_spell_by_id_returns_spell_tooltip_lines() {
     let env = WowLuaEnv::new().unwrap();
+    // R81 Q2: these are supplied final helper outputs, not catalog formulas.
+    {
+        let mut sim = env.state().borrow_mut();
+        let input = sim.spell_tooltip_inputs.entry(19750).or_default();
+        input.cost = Some("10% of Base MANA".into());
+        input.cast_ms = Some(1500);
+    }
     let has_real_tooltip: bool = env
         .eval(
             r#"
