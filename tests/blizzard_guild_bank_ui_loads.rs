@@ -4,7 +4,6 @@ use std::path::PathBuf;
 use wow_ui_sim::loader::{discover_blizzard_addons_for_screen, find_toc_file, load_addon};
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
-#[cfg(feature = "client-ptr")]
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
@@ -30,7 +29,6 @@ fn load_guild_bank_ui(env: &WowLuaEnv) {
         .expect("Blizzard_GuildBankUI should load via explicit Rust loader call");
 }
 
-#[cfg(feature = "client-ptr")]
 fn load_full_game_ui_with_guild_bank_lod() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
     env.set_screen_size(1024.0, 768.0);
