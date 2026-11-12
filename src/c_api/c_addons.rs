@@ -659,18 +659,12 @@ fn load_request_refusal(
     if !disabled {
         return Ok(None);
     }
-    if uses_verified_load_with_semantics() && addon_has_wrong_active_interface(state, addon_name)? {
+    if crate::loader::uses_verified_load_with_semantics()
+        && addon_has_wrong_active_interface(state, addon_name)?
+    {
         return Ok(Some("WRONG_ACTIVE_INTERFACE"));
     }
     Ok(Some("DISABLED"))
-}
-
-pub(super) fn uses_verified_load_with_semantics() -> bool {
-    matches!(
-        crate::client_profile::ACTIVE,
-        crate::client_profile::ClientProfile::Retail
-            | crate::client_profile::ClientProfile::WowForever
-    )
 }
 
 fn addon_has_wrong_active_interface(state: &LuaState, addon_name: &str) -> Result<bool, String> {

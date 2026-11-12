@@ -141,7 +141,7 @@ fn load_one_blizzard_addon(
     let first_error = env.state().borrow().lua_error_records.len();
     let result = load_startup_addon(&env.loader_env(), toc_path, kind, saved_vars.as_mut());
     match result {
-        Ok(r) => record_blizzard_addon_success(env, name, verbose, timing, r),
+        Ok(r) => record_blizzard_addon_success(env, name, kind, verbose, timing, r),
         Err(e) => {
             env.mark_addon_initialization_failed(name, format!("Failed to load {name}: {e}"));
             println!("{} failed: {}", name, e);
@@ -153,6 +153,7 @@ fn load_one_blizzard_addon(
 fn record_blizzard_addon_success(
     env: &WowLuaEnv,
     name: &str,
+    kind: StartupAddonLoadKind,
     verbose: bool,
     timing: &mut LoadTiming,
     result: LoadResult,
@@ -160,6 +161,11 @@ fn record_blizzard_addon_success(
     record_load_initialization(env, name, &result);
     print_verbose_blizzard_status(name, verbose, &result);
     print_load_diagnostics(&result);
+    if kind == StartupAddonLoadKind::Full
+        && !wow_ui_sim::loader::uses_verified_load_with_semantics()
+    {
+        fire_addon_loaded(env, name);
+    }
     timing.accumulate(&result.timing);
 }
 
@@ -210,6 +216,17 @@ fn print_load_diagnostics(result: &LoadResult) {
     }
     for requirement in &result.missing_requirements {
         println!("  [missing-requirement] {requirement}");
+    }
+}
+
+fn fire_addon_loaded(env: &WowLuaEnv, name: &str) {
+    let name_value = env.lua_string(name);
+    let arguments =
+        wow_ui_sim::loader::addon_loaded_arguments(&env.state().borrow(), name, name_value);
+    if let Err(error) = env.fire_event_with_args("ADDON_LOADED", &arguments) {
+        let message = format!("Error firing ADDON_LOADED for {name}: {error}");
+        env.mark_addon_initialization_failed(name, message.clone());
+        logging::println_elapsed(&message);
     }
 }
 
@@ -616,6 +633,9 @@ fn load_registered_single_addon(
             record_load_initialization(env, name, &r);
             if kind == StartupAddonLoadKind::Full {
                 mark_addon_loaded(env, name, &r);
+                if !wow_ui_sim::loader::uses_verified_load_with_semantics() {
+                    fire_addon_loaded(env, name);
+                }
             }
             record_addon_success(name, &r, stats);
         }

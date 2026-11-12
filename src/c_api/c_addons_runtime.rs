@@ -104,7 +104,8 @@ pub(super) fn load_with_followers(state: &mut LuaState, loader_env: &LoaderEnv<'
     };
 
     for follower in followers {
-        if !super::uses_verified_load_with_semantics() && !super::addon_is_enabled(state, &follower)
+        if !crate::loader::uses_verified_load_with_semantics()
+            && !super::addon_is_enabled(state, &follower)
         {
             continue;
         }
@@ -114,7 +115,7 @@ pub(super) fn load_with_followers(state: &mut LuaState, loader_env: &LoaderEnv<'
 
 fn submit_load_with_follower(state: &mut LuaState, addon_name: &str) {
     let (top, base, ci) = (state.top, state.base, state.ci);
-    let result = if super::uses_verified_load_with_semantics() {
+    let result = if crate::loader::uses_verified_load_with_semantics() {
         super::request_addon_load(state, addon_name, true)
     } else {
         load_runtime_addon(state, addon_name).map_err(|error| error.to_string())
@@ -136,7 +137,7 @@ fn index_load_with_declarations(
             followers.entry(target).or_default().push(follower.clone());
         }
     }
-    if !super::uses_verified_load_with_semantics() {
+    if !crate::loader::uses_verified_load_with_semantics() {
         for names in followers.values_mut() {
             names.sort();
             names.dedup();
@@ -191,7 +192,7 @@ fn load_runtime_addon_dependencies(
             Err(LoadError::WrongActiveInterface) => {
                 return Err(LoadError::DepWrongActiveInterface(dependency));
             }
-            Err(LoadError::Missing) if super::uses_verified_load_with_semantics() => {
+            Err(LoadError::Missing) if crate::loader::uses_verified_load_with_semantics() => {
                 return Err(LoadError::DepMissing(dependency));
             }
             result => result?,
@@ -356,7 +357,7 @@ fn is_addon_loading_by_name(state: &LuaState, addon_name: &str) -> bool {
 }
 
 fn missing_runtime_addon_error(addon_name: &str) -> LoadError {
-    if super::uses_verified_load_with_semantics() {
+    if crate::loader::uses_verified_load_with_semantics() {
         return LoadError::Missing;
     }
     LoadError::Io(io::Error::new(

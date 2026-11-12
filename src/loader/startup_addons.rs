@@ -12,6 +12,14 @@ pub struct StartupAddon {
     pub kind: StartupAddonLoadKind,
 }
 
+pub fn uses_verified_load_with_semantics() -> bool {
+    matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    )
+}
+
 pub fn startup_bootstrap_eligible(toc: &TocFile) -> bool {
     cfg!(any(
         feature = "retail-12-1-0",
@@ -162,7 +170,9 @@ pub fn load_startup_addon(
                 .and_then(Path::file_name)
                 .and_then(|name| name.to_str())
                 .unwrap_or(&toc.name);
-            fire_startup_addon_loaded(env, addon_name);
+            if uses_verified_load_with_semantics() {
+                fire_startup_addon_loaded(env, addon_name);
+            }
             crate::c_api::c_addons::load_startup_addon_followers(env, addon_name);
             Ok(result)
         }
