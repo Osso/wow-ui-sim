@@ -49,6 +49,8 @@ pub(crate) mod item_quality_color;
 pub(crate) mod journal_collected;
 pub mod mount_filters;
 pub(crate) mod ptr_i4_game_rules;
+#[cfg(feature = "client-ptr")]
+pub mod ptr_store_override;
 pub(crate) mod quest_difficulty;
 pub mod quest_objectives;
 pub mod quest_readiness;

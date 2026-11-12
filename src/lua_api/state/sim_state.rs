@@ -715,6 +715,9 @@ pub struct SimState {
     pub housing: HousingState,
     /// Explicit catalog shop product/display records; empty until host-seeded.
     pub catalog_shop_products: crate::c_api::c_catalog_shop_products::CatalogShopProducts,
+    /// R75 neutral host inputs; native mode/session writers remain unknown.
+    #[cfg(feature = "client-ptr")]
+    pub catalog_shop_interaction: crate::c_api::ptr_store_override::CatalogShopInteraction,
     /// One bundle record store; preserves the existing simulator storefront seed.
     pub housing_bundles: crate::c_api::c_housing_bundles::HousingBundles,
     pub pet_battles: PetBattleState,
