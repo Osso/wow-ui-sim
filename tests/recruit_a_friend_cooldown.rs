@@ -30,7 +30,7 @@ fn original_retail_social_card_receives_supplied_cooldown_and_enable_flag() {
         ),
         (
             "Blizzard_FriendsFrame/Mainline/FriendsListTemplates.lua",
-            "0f36b661642864fb0d4797dde8191d3e0849f30c4d5ad7f182bc8e234f455743",
+            "3e36c8bfb43c342292d8a4542674a67f4930a573eb4f61702bf480f50e58372f",
         ),
     ] {
         let source = std::fs::read(cache.join(file)).unwrap();
