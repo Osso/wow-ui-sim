@@ -17,6 +17,9 @@ if type(C_CharacterCreation) ~= "table" then
     C_CharacterCreation = {}
 end
 
+local publishRacialAbilities = rawget(_G, "__wow_character_create_publish_racial_abilities") == true
+rawset(_G, "__wow_character_create_publish_racial_abilities", nil)
+
 local races = rawget(_G, "__wow_character_create_races")
 if type(races) ~= "table" then
     races = {
@@ -106,7 +109,9 @@ end
 
 local function publish_race_data(raceData)
     local published = clone_table(raceData)
-    published.racialAbilities = publish_racial_abilities(raceData.racialAbilities)
+    if publishRacialAbilities then
+        published.racialAbilities = publish_racial_abilities(raceData.racialAbilities)
+    end
     return published
 end
 
@@ -562,6 +567,9 @@ end
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
+        lua.exec("rawset(_G, '__wow_character_create_publish_racial_abilities', true)")?;
+    }
     lua.exec(CHARACTER_CREATION_NAMESPACE_DEFAULTS_LUA)?;
     crate::c_api::c_character_creation_seen::install(lua)?;
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
