@@ -794,6 +794,8 @@ pub struct SimState {
     pub quest_choice_response_id: Option<u32>,
     pub quest_poi_map_id: Option<i32>,
     pub selected_quest_log_id: Option<u32>,
+    /// Exact host-supplied `(questID, type, currencyIndex) -> (currencyID, raw quantity)` results.
+    pub quest_currency_tooltip_results: HashMap<(i32, String, i32), (i32, i32)>,
     /// Ready server-supplied quest reward spell candidates, in source order.
     pub quest_reward_spell_cache: std::collections::HashMap<u32, Vec<u32>>,
     /// Current detail quest and its three supplied spell slots.
@@ -860,6 +862,9 @@ pub struct SimState {
     pub pet_actions: Vec<PetActionSlot>,
     pub glyph: GlyphState,
     pub currency_info: HashMap<i32, CurrencyInfo>,
+    /// Explicit `CurrencyTypes` flags and local-record presence for Retail tooltips.
+    pub currency_tooltip_inputs:
+        HashMap<i32, crate::c_api::c_tooltip_info_currency::CurrencyTooltipInputs>,
     /// Explicit Wrath-only legacy categories; modern currency queries do not read this.
     pub wrath_currency: super::super::globals::real::wrath_currency::CurrencyListState,
     #[cfg(feature = "client-retail")]

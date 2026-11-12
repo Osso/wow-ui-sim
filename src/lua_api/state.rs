@@ -643,6 +643,7 @@ macro_rules! build_empty_sim_state {
             quest_choice_response_id: None,
             quest_poi_map_id: None,
             selected_quest_log_id: None,
+            quest_currency_tooltip_results: HashMap::new(),
             quest_reward_spell_cache: HashMap::new(),
             quest_detail_reward_spells: None,
             #[cfg(feature = "retail-12-0-5")]
@@ -701,6 +702,7 @@ macro_rules! build_empty_sim_state {
             pet_actions: vec![PetActionSlot::default(); 10],
             glyph: GlyphState::default(),
             currency_info: super::globals::currency_data::seeded_currency_info_map(),
+            currency_tooltip_inputs: HashMap::new(),
             wrath_currency: super::globals::real::wrath_currency::CurrencyListState::default(),
             #[cfg(feature = "client-retail")]
             currency_list: crate::c_api::currency_list::CurrencyListState::default(),

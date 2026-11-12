@@ -10,6 +10,7 @@
 #[path = "tooltip_full_env_helpers.rs"]
 mod tooltip_full_env_helpers;
 
+use wow_ui_sim::c_api::c_tooltip_info_currency::CurrencyTooltipInputs;
 use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::lua_api::state::{BagItem, LootSlot};
@@ -41,9 +42,6 @@ fn loot_fixture() -> WowLuaEnv {
 /// getter.
 #[test]
 fn tooltip_loot_currency_original_hover_selects_the_currency_slot() {
-    if ACTIVE != ClientProfile::Retail {
-        return;
-    }
     let env = loot_fixture();
     env.exec(
         r#"
@@ -59,18 +57,21 @@ fn tooltip_loot_currency_original_hover_selects_the_currency_slot() {
         local data = GameTooltip:GetPrimaryTooltipData()
         assert(info and info.getterName == 'GetLootCurrency', 'original hover must select GetLootCurrency')
         assert(data and data.type == Enum.TooltipDataType.Currency, 'loot currency data type')
-        assert(data and data.id == 2245, 'loot currency id mismatch')
-        assert(data and data.dataInstanceID ~= nil, 'loot currency instance id missing')
-        assert(data and data.quantity == nil, 'R84 §Q4: loot currency must not publish quantity')
-        local currencyName = C_CurrencyInfo.GetCurrencyInfo(2245).name
-        assert(currencyName ~= nil and currencyName ~= '', 'resolved currency name missing')
-        assert(data.lines[1].leftText == currencyName, 'currency title must use the resolved CurrencyTypes name')
-        for _, line in ipairs(data.lines) do
-            assert(line.rightText == nil and line.rightColor == nil, 'currency rows are left-only')
-        end
+        assert(data and data.lines[1].leftText == 'Valorstones', 'loot currency name mismatch')
         "#,
     )
     .unwrap();
+    if ACTIVE == ClientProfile::Retail {
+        let r84_payload: bool = env
+            .eval(
+                "local data = GameTooltip:GetPrimaryTooltipData(); return data.id == 2245 and data.dataInstanceID ~= nil and data.quantity == nil and data.lines[1].rightText == nil and data.lines[1].rightColor == nil",
+            )
+            .unwrap();
+        assert!(
+            r84_payload,
+            "R84 §Q4: loot currency identity must omit top-level quantity"
+        );
+    }
 }
 
 /// Round 6-B §1(b): the loot-item reader requires kind `0` and the
@@ -124,6 +125,70 @@ fn tooltip_loot_currency_miss_and_argument_text() {
         assert(error_text(4294967296):find(range, 1, true), 'above the domain must report the range')
         assert(error_text('1'):find(usage, 1, true), 'wrong type must report the usage text')
         assert(error_text():find(usage, 1, true), 'missing argument must report the usage text')
+        "#,
+    )
+    .unwrap();
+}
+
+/// LootFrame.lua:348 routes the currency slot through SetLootCurrency.
+#[test]
+fn tooltip_loot_currency_normalizes_hundredths_for_the_xp_row() {
+    if ACTIVE != ClientProfile::Retail {
+        return;
+    }
+    let env = loot_fixture();
+    {
+        let mut state = env.state().borrow_mut();
+        state.loot_slots[1] = LootSlot::Currency {
+            currency_id: 2245,
+            quantity: 12_345,
+        };
+        state.currency_tooltip_inputs.insert(
+            2245,
+            CurrencyTooltipInputs {
+                flags_0: Some(1 << 3),
+                flags_1: Some(1 << 1),
+                field_11_xp_quest_difficulty: Some(1),
+                local_currency_record: Some(true),
+                ..CurrencyTooltipInputs::default()
+            },
+        );
+    }
+    env.exec(
+        r#"
+        local button = CreateFrame('Button', nil, UIParent)
+        button.HighlightNameFrame = CreateFrame('Frame', nil, button)
+        button.GetItemSlotType = LootFrameElementMixin.GetItemSlotType
+        function button:GetSlotIndex() return self.slot end
+        button.slot = 2
+        LootFrameItemElementMixin.OnEnter(button)
+        local info = GameTooltip:GetPrimaryTooltipInfo()
+        local data = GameTooltip:GetPrimaryTooltipData()
+        assert(info and info.getterName == 'GetLootCurrency', 'loot hover must select GetLootCurrency')
+        assert(#data.lines == 3, 'XP row must end the producer')
+        assert(data.lines[3].type == 14, 'currency XP row type')
+        assert(data.lines[3].leftText == XP .. ': 123', 'loot amount must divide by 100 with signed truncation')
+        assert(data.quantity == nil, 'R84 §Q4: no top-level quantity')
+        "#,
+    )
+    .unwrap();
+
+    env.state()
+        .borrow_mut()
+        .currency_tooltip_inputs
+        .get_mut(&2245)
+        .expect("currency tooltip input")
+        .flags_0 = Some(0);
+    env.exec(
+        r#"
+        local button = CreateFrame('Button', nil, UIParent)
+        button.HighlightNameFrame = CreateFrame('Frame', nil, button)
+        button.GetItemSlotType = LootFrameElementMixin.GetItemSlotType
+        function button:GetSlotIndex() return self.slot end
+        button.slot = 2
+        LootFrameItemElementMixin.OnEnter(button)
+        local data = GameTooltip:GetPrimaryTooltipData()
+        assert(data.lines[3].leftText == XP .. ': 12345', 'loot amount must stay unchanged when bit 3 is clear')
         "#,
     )
     .unwrap();
