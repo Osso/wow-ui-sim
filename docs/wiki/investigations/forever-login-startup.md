@@ -344,3 +344,18 @@ claiming a new full-suite or all-profile matrix run.
 - [[addon-module-imports]] — completed-module registry and logical import policy.
 - [[client-profiles]] — profile-scoped sources and return-contract selection.
 - [[forever-startup-gaps]] — separate game-screen startup investigation.
+
+
+## Enter World owner handover (lt-81c7, 2026-11-12)
+
+The [R74 contract](../../specs/glue-login-flow.md#enter-world-host-handover-lt-81c7-r74)
+separates measured selection/dispatch from the approved offline host transition.
+The existing mutable owner, VM reconstruction and production Game startup loader
+are reused; selected naming wins over initial WTF seeding without changing the
+configured import source. Native login sequencing and Glue lifetime remain
+UNKNOWN. The original control still requires R76 `SaveCharacterOrder` evidence;
+no placeholder, vendor bypass or consumer GREEN is claimed.
+
+Sources: lt-81c7 ANSWERS149/175 (R74 and policy), QUESTION152/ANSWER155 (R76),
+`src/lua_api/env.rs`, `src/lua_api/globals/real/glue_enter_world.rs`, and
+`src/bin/wow_sim/startup.rs`.

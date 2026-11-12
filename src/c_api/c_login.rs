@@ -37,6 +37,9 @@ pub struct ConnectionInfo {
 #[derive(Debug)]
 pub struct LoginState {
     pub characters: Vec<character_roster::CharacterSlot>,
+    /// Host dispatch queue, not a native cadence/debounce contract (R74).
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    world_entry_requests: std::collections::VecDeque<character_roster::CharacterRecord>,
     /// Explicit host DB2 projections; empty until a data provider supplies rows.
     pub backgrounds: backgrounds::BackgroundRows,
     /// Host saved candidate input, zero-based. Native initial value/storage UNKNOWN.
@@ -62,6 +65,8 @@ impl Default for LoginState {
     fn default() -> Self {
         Self {
             characters: Vec::new(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            world_entry_requests: Default::default(),
             backgrounds: Default::default(),
             saved_character_index: None,
             resolved_saved_character_index: None,
@@ -83,7 +88,24 @@ impl Default for LoginState {
 }
 
 impl LoginState {
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub(crate) fn queue_world_entry_request(&mut self, record: character_roster::CharacterRecord) {
+        self.world_entry_requests.push_back(record);
+    }
+
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub(crate) fn take_world_entry_request(&mut self) -> Option<character_roster::CharacterRecord> {
+        self.world_entry_requests.pop_front()
+    }
+
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub(crate) fn has_world_entry_request(&self) -> bool {
+        !self.world_entry_requests.is_empty()
+    }
+
     pub(crate) fn reset_connection(&mut self) {
+        // Keep copied world-entry requests: the host transition resets connection
+        // state before consuming subsequent queued requests. This is host policy.
         self.submitted = false;
         self.pending_step = 0;
         self.aurora_state = 1;

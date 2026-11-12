@@ -1,5 +1,9 @@
 > Proof receipts live untracked under `~/.local/state/wow-ui-sim`. The `data/patch-api/evidence` and `data/test-perf/evidence` trees were removed on 2026-11-08; historical links below are records, not live paths. Recover a file with `git show c011c1d95:<path>`.
 
+## [2026-11-12] implementation | Enter World host handover
+
+[Forever Login Startup](investigations/forever-login-startup.md#enter-world-owner-handover-lt-81c7-2026-11-12) links R74 selection/dispatch, the existing owner-held Game bootstrap, selected naming and preserved WTF import source. Native sequencing remains UNKNOWN; the real control is still blocked on R76 SaveCharacterOrder.
+
 ## [2026-11-11] implementation | Glue login submission
 
 [Forever Login Startup](investigations/forever-login-startup.md#login-submission-model-lt-a667-2026-11-11) links real-control submission, offline acceptance policy, host roster/capacity, ordinary CharacterCreate startup, R60 shared GameMode display, and R63 host credits/capability state, and R65 FileDataID validation. Native evidence and cached-build compatibility remain separate. Retail/PTR gates and real Forever submission pass after m35 integration; the approved passive empty-roster transition snapshot passes while downstream baseline setup errors remain visible. Final acceptance is pending.

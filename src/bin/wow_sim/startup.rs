@@ -66,7 +66,6 @@ fn initialize_and_load_env(args: &Args, screen: ScreenKind, mut env: WowLuaEnv) 
     install_reload_loader(
         &mut env,
         args,
-        screen,
         saved_vars.as_ref().or(edit_mode_cache_vars.as_ref()),
         snapshot_edit_mode_layout,
     );
@@ -76,7 +75,6 @@ fn initialize_and_load_env(args: &Args, screen: ScreenKind, mut env: WowLuaEnv) 
 fn install_reload_loader(
     env: &mut WowLuaEnv,
     args: &Args,
-    screen: ScreenKind,
     cache_source: Option<&SavedVariablesManager>,
     initial_layout_name: Option<String>,
 ) {
@@ -100,6 +98,8 @@ fn install_reload_loader(
         if reload_args.window_size.is_some() && reload_args.session_wtf_path.is_some() {
             saved_var_config::apply_session_ui_scale(env);
         }
+        // Host world entry and later reloads reuse the current screen bootstrap.
+        let screen = env.state().borrow().screen_kind;
         load_startup_addons(
             &reload_args,
             screen,
@@ -596,7 +596,8 @@ fn load_edit_mode_cache_and_initial_snapshot(
             snapshot_edit_mode_layout,
         )
     });
-    if !env.state().borrow().ui_reloaded {
+    // Host entry retains the model already imported during the initial Glue boot.
+    if !env.state().borrow().ui_reloaded && !env.is_host_world_entry_bootstrap() {
         load_server_snapshot_state(env, saved_vars);
     }
 }

@@ -630,3 +630,58 @@ fixture and remove a Retail/Forever inferred assertion. All three builds have
 zero compiler warnings; no jobs remain. Master remains m36 b4a4a14a5.
 These targeted receipts supersede earlier failed fixture iterations, without
 claiming a new full-suite or all-profile matrix run.
+
+
+## Enter World host handover (lt-81c7, R74)
+
+Source: [lt-81c7](https://tasks.sakuin.org/tasks/lt-81c7), ANSWERS **149**
+and **175**. R74 covers Retail **70688** and Forever **70707**; the Retail
+runtime pin remains **70575**, so its exact native contract is UNKNOWN.
+
+VERIFIED: `EnterWorld` is in both Glue API catalogs, reads no Lua arguments,
+resolves the current selected index to a GUID and record, silently skips empty,
+invalid or unresolved selections, and copies a valid record before dispatch.
+Glue-only publication and zero return values are INFERRED but explicitly
+approved implementation policy in 175. Extra arguments are ignored because no
+argument reading was measured. No repeated-press debounce is implemented.
+
+**Host transition; native login sequence UNKNOWN (R74).** The provider queues an
+owned copy of the selected record. At the next mutable GUI/headless owner
+boundary, the host switches to Game, reconstructs the Lua UI with the existing
+rebuild helper, and invokes the existing production startup loader for the
+current screen. GUI owners reuse normal stale-input/render reset and startup;
+headless owners reuse `settle_headless_startup`. This is not evidence about
+native Glue VM lifetime, login acceptance, loading screens, realm-list requests,
+event order, or initial/reloading event payloads. Those remain UNKNOWN; no new
+native event sequence is synthesized or asserted.
+
+Host policy details:
+- The selected name, surname and realm become the player identity before Game
+  addons load. Other existing player/world inputs (including class, race and
+  level) are retained, not inferred from a social fixture or invented GUID.
+- Existing WTF/SavedVariables import paths are unchanged. Initial WTF identity
+  seeding cannot overwrite the host-selected identity, including on later reload.
+  The initial world snapshot is not re-imported during the handover.
+- The old UI's SavedVariables registrations are discarded without writing a
+  speculative Glue shutdown snapshot. This does not model native logout.
+- Accepted requests are FIFO, one per owner service call, with no debounce. A
+  host entry takes precedence over a simultaneously pending UI reload; replacing
+  the old UI clears that old reload request. This is host scheduling policy.
+- A missing startup loader leaves the queued request and old UI intact. A failed
+  reconstruction marks the UI incomplete, using the existing failure boundary.
+
+The real consumers are Mainline `CharacterSelect.lua`: Retail **894–897** /
+Forever **909–912** calls `EnterWorld`; the original Enter World button handlers
+are Retail **1330–1337** / Forever **1347–1354**. Before entry, the real control
+calls `CharacterSelectListUtil.SaveCharacterOrder` (Retail **918**), whose helper
+calls native `SaveCharacterOrder` at **190–192**, identically on Forever.
+QUESTION **152** and ANSWER **155** track the R76 evidence gap. The native global
+remains unregistered: no no-op or vendor helper bypass is introduced.
+
+Tests separate R74 provider checks and engine host-policy checks from the actual
+consumer regression. The original-button integration regression and production
+startup identity observer remain pending R76 and complete runtime caches. The
+published pre-implementation Retail RED first failed on the real
+`SaveCharacterOrder` call (0 passed, 1 failed); the reconstructed Forever target
+compiled without warnings, but no Forever runtime result is claimed. New host
+implementation validation is not a full consumer GREEN or all-profile gate.

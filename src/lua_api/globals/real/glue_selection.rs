@@ -15,6 +15,7 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
 /// R49 Glue registration; Glue-only exposure is INFERRED from native evidence.
 pub(crate) fn register_season_query(state: &mut LuaState) -> LuaResult<()> {
     super::glue_background::register(state)?;
+    super::glue_enter_world::register(state)?;
     let glue = borrow_state(state)?.screen_kind.is_glue();
     if glue {
         table_set_rust_fn_static(
