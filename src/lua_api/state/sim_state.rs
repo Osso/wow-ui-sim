@@ -938,6 +938,8 @@ pub struct SimState {
     pub auction_should_auto_populate_price: bool,
     pub wow_token: WowTokenState,
     pub mythic_plus: MythicPlusState,
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub character_creation: crate::c_api::c_character_creation_submit::CharacterCreationState,
     /// Current character-create model facing in normalized radians.
     pub character_create_facing_radians: f32,
     /// Host-supplied race IDs with an altered character-create model.
