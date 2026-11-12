@@ -671,3 +671,74 @@ fn test_inline_tooltip_handler_parameter_prefixes() {
         .unwrap();
     }
 }
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn test_pinned_slider_on_value_changed_preserves_user_input() {
+    clear_templates();
+    let env = WowLuaEnv::new().unwrap();
+    let root = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path().unwrap();
+    let xml = std::fs::read_to_string(
+        root.join("Blizzard_SharedXML/Mainline/SharedUIPanelTemplates.xml"),
+    )
+    .unwrap();
+    let ui = parse_xml(&xml).unwrap();
+    let template = ui
+        .elements
+        .iter()
+        .find_map(|element| match element {
+            XmlElement::Frame(frame)
+                if frame.name.as_deref() == Some("SliderWithButtonsAndLabelTemplate") =>
+            {
+                Some(frame)
+            }
+            _ => None,
+        })
+        .unwrap();
+    let mut slider = template
+        .all_frame_elements()
+        .into_iter()
+        .find(|(frame, tag)| *tag == "Slider" && frame.parent_key.as_deref() == Some("Slider"))
+        .unwrap()
+        .0
+        .clone();
+    slider.name = Some("PinnedInputSlider".into());
+    slider.parent = Some("PinnedInputOwner".into());
+    env.exec(
+        r#"
+        local owner = CreateFrame("Frame", "PinnedInputOwner", UIParent)
+        owner.calls = {}
+        function owner:OnSliderValueChanged(value, userInput)
+            self.calls[#self.calls + 1] = { value = value, userInput = userInput }
+        end
+        userInput = "not the callback parameter"
+    "#,
+    )
+    .unwrap();
+    create_frame_from_xml(
+        &env.loader_env(),
+        &slider,
+        "Slider",
+        None,
+        None,
+        None,
+        &mut LoadTiming::default(),
+    )
+    .unwrap();
+    env.exec(
+        r#"
+        PinnedInputSlider:SetMinMaxValues(0, 10)
+        PinnedInputSlider:SetValueStep(0)
+        PinnedInputOwner.calls = {}
+        PinnedInputSlider:SetValue(1, true)
+        PinnedInputSlider:SetValue(2, false)
+        PinnedInputSlider:SetValue(3)
+        local calls = PinnedInputOwner.calls
+        assert(#calls == 3, "slider callback count changed")
+        assert(calls[1].value == 1 and calls[1].userInput == true, "user input flag lost")
+        assert(calls[2].value == 2 and calls[2].userInput == false, "explicit code flag changed")
+        assert(calls[3].value == 3 and calls[3].userInput == false, "default code flag changed")
+    "#,
+    )
+    .unwrap();
+}
