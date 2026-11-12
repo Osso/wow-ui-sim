@@ -313,18 +313,36 @@ fn keybind_s_keeps_spellbook_backgrounds_below_icons_after_initial_bucket_build(
             .find(|request| bounds_match_rect(quad_bounds(&batch, request), icon_rect))
             .expect("Spellbook first-open path should emit a textured quad for the first visible spell icon");
 
+        // Forever PlayerSpells.toc:31-32 selects Camelot spellbook templates;
+        // Camelot/SpellBook/Blizzard_SpellBookTemplates.xml:37,43,49 uses C60 art.
+        #[cfg(feature = "client-wowforever")]
+        let background_files: Vec<String> = ["spellbook-Page-Left-C60", "spellbook-Page-Right-C60"]
+            .iter()
+            .map(|atlas| wow_ui_sim::atlas::get_render_atlas_info(atlas)
+                .unwrap_or_else(|| panic!("Forever spellbook atlas {atlas} must resolve"))
+                .info.file.replace('\\', "/").to_ascii_lowercase())
+            .collect();
+
         let last_background_request = batch
             .texture_requests
             .iter()
             .filter(|request| {
-                request
-                    .path
-                    .to_ascii_lowercase()
-                    .contains(if is_wrath() {
-                        "ui-spellbookpanel-"
-                    } else {
-                        "spellbookbackgroundevergreen"
-                    })
+                #[cfg(feature = "client-wowforever")]
+                {
+                    let path = request.path.replace('\\', "/").to_ascii_lowercase();
+                    background_files.iter().any(|file| path == *file)
+                }
+                #[cfg(not(feature = "client-wowforever"))]
+                {
+                    request
+                        .path
+                        .to_ascii_lowercase()
+                        .contains(if is_wrath() {
+                            "ui-spellbookpanel-"
+                        } else {
+                            "spellbookbackgroundevergreen"
+                        })
+                }
             })
             .max_by_key(|request| request.vertex_start)
             .expect("Spellbook should emit evergreen parchment background quads");
