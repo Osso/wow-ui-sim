@@ -167,3 +167,15 @@ The PTR producer replacement and removal of its guessed namespace/mixin paths
 are atomic with gating the two old guessed-rename tests out of PTR. Their bodies
 and the guessed Lua chunks remain unchanged for the remaining legacy profiles;
 initial-frame seeding remains unchanged everywhere.
+
+### PTR R78c verified registrations (#282)
+
+CreateCharacter and StopAllSpellVisualKitsOnCharacter are VERIFIED members of the
+PTR Glue registrar. The Game aggregate does not invoke that registrar; both are
+removed on the Game route and restored on Glue routes. StopAll accepts no
+arguments and has no Lua-visible effect in the simulator's no-model/no-pending-error
+case (#261). No pending-error input, visual flag, or model is invented. Ordinary
+return count remains INFERRED and is not asserted. OnPlayerInteraction and
+SetPlayerModelHiddenState remain absent at this verified-only stage; the exact
+OnPlayerInteraction real-control RED is retained before the separate droppable
+inferred-existence change.

@@ -1371,6 +1371,34 @@ fn character_creation_host_result_handler_preservation_without_submit() {
 
 #[test]
 #[cfg(feature = "client-ptr")]
+fn ptr_character_creation_verified_members_are_glue_only() {
+    let env = WowLuaEnv::new().unwrap();
+    for screen in [
+        ScreenKind::CharacterCreate,
+        ScreenKind::Game,
+        ScreenKind::Login,
+    ] {
+        env.set_screen_mode(screen);
+        let expected = if screen.is_glue() { "function" } else { "nil" };
+        let types: (String, String) = env
+            .eval(
+                r#"
+            return type(C_CharacterCreation.CreateCharacter),
+                type(C_CharacterCreation.StopAllSpellVisualKitsOnCharacter)
+        "#,
+            )
+            .unwrap();
+        assert_eq!(types, (expected.to_owned(), expected.to_owned()));
+        if screen.is_glue() {
+            // VERIFIED no-model/no-pending-error call, without a return-count claim.
+            env.exec("C_CharacterCreation.StopAllSpellVisualKitsOnCharacter()")
+                .unwrap();
+        }
+    }
+}
+
+#[test]
+#[cfg(feature = "client-ptr")]
 fn ptr_character_creation_submit_requires_three_non_nil_arguments() {
     let env = WowLuaEnv::new().unwrap();
     env.set_screen_mode(ScreenKind::CharacterCreate);

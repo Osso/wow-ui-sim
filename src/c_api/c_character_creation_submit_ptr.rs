@@ -1,10 +1,12 @@
 //! PTR R78 required arguments and neutral, host-only call observations.
 //! No request serialization, outcomes, events, or inferred reader conversions.
 
-use crate::c_api::helpers::{bad_argument, ensure_namespace};
-use crate::lua_api::methods::borrow_state_mut;
+use crate::c_api::helpers::bad_argument;
+use crate::lua_api::methods::{borrow_state_mut, table_set_static};
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
+use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
+use rilua::vm::table::Table;
 use rilua::{LuaResult, Val};
 
 const USAGE: &str =
@@ -33,11 +35,37 @@ pub struct PtrCharacterCreationState {
     pub last_call: Option<CreateCharacterCall>,
 }
 
-/// Preserve the existing PTR bootstrap availability, not new catalog evidence.
-/// Interaction/visual-kit/hidden-state registrations await R78c (#268).
-pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
-    let namespace = ensure_namespace(state, "C_CharacterCreation")?;
-    table_set_rust_fn_static(state, namespace, "CreateCharacter", create_character)
+/// R78c #282 VERIFIED: these members belong to the PTR Glue registrar only.
+pub(crate) fn update_registration(
+    state: &mut LuaState,
+    namespace: GcRef<Table>,
+    is_glue: bool,
+) -> LuaResult<()> {
+    if is_glue {
+        table_set_rust_fn_static(state, namespace, "CreateCharacter", create_character)?;
+        table_set_rust_fn_static(
+            state,
+            namespace,
+            "StopAllSpellVisualKitsOnCharacter",
+            stop_all_spell_visual_kits,
+        )?;
+    } else {
+        table_set_static(state, Val::Table(namespace), "CreateCharacter", Val::Nil);
+        table_set_static(
+            state,
+            Val::Table(namespace),
+            "StopAllSpellVisualKitsOnCharacter",
+            Val::Nil,
+        );
+    }
+    Ok(())
+}
+
+fn stop_all_spell_visual_kits(_state: &mut LuaState) -> LuaResult<u32> {
+    // R78 PTR/#261: no model and no pending error produce no Lua-visible effect.
+    // Do not invent a pending-error input or a model/visual-kit flag.
+    // Ordinary zero-result count is INFERRED; no test asserts it.
+    Ok(0)
 }
 
 fn observe(state: &LuaState, value: Val) -> ObservedArgument {

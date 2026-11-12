@@ -69,6 +69,8 @@ fn update_registration(state: &mut LuaState, is_glue: bool) -> LuaResult<()> {
 
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     super::c_character_creation_submit::update_registration(state, namespace, is_glue)?;
+    #[cfg(feature = "client-ptr")]
+    super::c_character_creation_submit_ptr::update_registration(state, namespace, is_glue)?;
     update_default_facing_registration(state, namespace, is_glue)?;
     update_retail_and_forever_registration(state, namespace, is_glue)
 }
