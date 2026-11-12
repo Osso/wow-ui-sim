@@ -601,3 +601,29 @@ fn test_legacy_store_toggle_reopens_game_menu_after_store_closes() {
     }
 }
 }
+
+#[cfg(feature = "client-ptr")]
+#[test]
+fn ptr_game_menu_narration_completes_native_show_callbacks() {
+    test_timeout! {
+        let env = setup_game_menu_env();
+        let result: (bool, i32, bool, i32) = env.eval(r#"
+            local shownCount = 0
+            EventRegistry:RegisterCallback("GameMenuFrame.Shown", function()
+                shownCount = shownCount + 1
+            end)
+
+            ToggleGameMenu()
+            local firstShown = GameMenuFrame:IsShown()
+            local firstCount = shownCount
+            ToggleGameMenu()
+            assert(not GameMenuFrame:IsShown())
+            ToggleGameMenu()
+            return firstShown, firstCount, GameMenuFrame:IsShown(), shownCount
+        "#).unwrap();
+
+        // PTR GameMenuFrameMixin:OnShow narrates before emitting this event.
+        // Visibility alone misses a suppressed error inside the real OnShow.
+        assert_eq!(result, (true, 1, true, 2));
+    }
+}
