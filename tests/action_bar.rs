@@ -91,9 +91,11 @@ fn test_main_action_bar_end_caps_visible_after_startup() {
             end
             local left = MainActionBar.EndCaps.LeftEndCap
             local right = MainActionBar.EndCaps.RightEndCap
+            local leftTexture = left and (left.Texture or left)
+            local rightTexture = right and (right.Texture or right)
             return MainActionBar.EndCaps:IsShown(),
-                   (left and left.GetAtlas and left:GetAtlas()) or "",
-                   (right and right.GetAtlas and right:GetAtlas()) or ""
+                   (leftTexture and leftTexture.GetAtlas and leftTexture:GetAtlas()) or "",
+                   (rightTexture and rightTexture.GetAtlas and rightTexture:GetAtlas()) or ""
             "#,
         )
         .unwrap();

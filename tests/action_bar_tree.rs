@@ -253,8 +253,10 @@ fn main_action_bar_layout_is_locked() {
 
             local leL, leR, _, leB, leW, leH = rect("LeftEndCap", leftEndCap)
             local reL, reR, _, reB, reW, reH = rect("RightEndCap", rightEndCap)
-            assert((leftEndCap:GetAtlas() or ""):lower() == "ui-hud-actionbar-gryphon-left", "LeftEndCap atlas changed")
-            assert((rightEndCap:GetAtlas() or ""):lower() == "ui-hud-actionbar-gryphon-right", "RightEndCap atlas changed")
+            local leftTexture = leftEndCap.Texture or leftEndCap
+            local rightTexture = rightEndCap.Texture or rightEndCap
+            assert((leftTexture:GetAtlas() or ""):lower() == "ui-hud-actionbar-gryphon-left", "LeftEndCap atlas changed")
+            assert((rightTexture:GetAtlas() or ""):lower() == "ui-hud-actionbar-gryphon-right", "RightEndCap atlas changed")
             assert(leW > 0 and leH > 0, "LeftEndCap size must be non-zero")
             assert(reW > 0 and reH > 0, "RightEndCap size must be non-zero")
             assert(approx(leW, reW, 0.1), "EndCap widths diverged")
