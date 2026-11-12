@@ -10,6 +10,7 @@ pub(crate) mod button;
 pub(crate) mod bytecode;
 pub(crate) mod bytecode_cache;
 pub(crate) mod chunk_cache;
+pub(crate) mod editbox_font;
 mod error;
 mod file_diagnostics;
 pub(crate) mod helpers;
