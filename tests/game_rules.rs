@@ -18,7 +18,7 @@ fn expected_default_glue_screen() -> Option<String> {
 fn game_rules_hardcore_flag_defaults_to_false() {
     let env = env();
     // WM80: Retail 70688 has no native IsHardcoreActive registration.
-    if cfg!(any(feature = "profile-retail", feature = "client-ptr")) {
+    if cfg!(feature = "profile-retail") {
         let absent: bool = env
             .eval("return rawget(C_GameRules, 'IsHardcoreActive') == nil and C_GameRules.IsHardcoreActive == nil")
             .unwrap();

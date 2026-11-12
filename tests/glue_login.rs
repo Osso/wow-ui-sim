@@ -714,7 +714,8 @@ fn login_submit_empty_host_roster_reaches_character_create() {
         wow_ui_sim::startup::run_extra_update_ticks(&env, 3);
         assert!(env.eval::<bool>(r#"
             return GlueParent.currentScreen == "login" and AccountLogin:IsShown()
-                and not CharacterCreateFrame:IsShown() and GetNumCharacters() == 0
+                and (not CharacterCreateFrame or not CharacterCreateFrame:IsShown())
+                and GetNumCharacters() == 0
         "#).unwrap(), "empty-roster boot must remain on login before credentials");
         env.state().borrow_mut().glue_login.connection_info =
             wow_ui_sim::c_api::c_login::ConnectionInfo { ready: true, character_limit: 1 };
@@ -829,7 +830,6 @@ fn glue_feature_status_uses_host_record_and_ordered_empty_events() {
     assert!(env.eval::<bool>("return IsNameReservationOnly()").unwrap());
     assert!(env.state().borrow().lua_errors.is_empty());
 }
-
 
 #[test]
 #[cfg(feature = "client-ptr")]

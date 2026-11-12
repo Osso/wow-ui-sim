@@ -26,6 +26,6 @@ fn glue_login_chat_policy_comes_from_original_glueparent_without_settling_fixtur
             assert(AllowChatFramesToShow(ChatFrame1) == false)
             assert(not ChatFrame1:IsShown(), 'chat visibility before any settling fixture')
         "#).unwrap();
-        assert!(env.state().borrow().lua_errors.is_empty());
+        assert!(env.state().borrow().lua_errors.is_empty(), "unassisted login errors: {:#?}", env.state().borrow().lua_errors);
     }
 }
