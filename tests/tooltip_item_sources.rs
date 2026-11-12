@@ -74,19 +74,17 @@ fn hyperlink_unit_guids_do_not_invent_lookup_rows() {
 }
 
 #[test]
-fn missing_unit_hyperlink_returns_nil_for_att_shaped_retry() {
+fn missing_unit_hyperlink_does_not_invent_rows_on_retry() {
     let env = env();
     env.exec(
         r#"
+        -- R82 Q2 UNKNOWN object lookup; native miss arity/shape is not asserted.
+        -- Approved by main: preserve only the no-fabricated-data retry boundary.
         local guid = "Creature-0-0-0-0-98765-0000000000"
-        local function readName()
-            local tooltipData = C_TooltipInfo.GetHyperlink("unit:" .. guid)
-            if tooltipData and tooltipData.lines and tooltipData.lines[1] then
-                return tooltipData.lines[1].leftText
-            end
+        for _ = 1, 2 do
+            local data = C_TooltipInfo.GetHyperlink("unit:" .. guid)
+            assert(not (type(data) == 'table' and data.lines and #data.lines > 0))
         end
-        assert(readName() == nil)
-        assert(readName() == nil)
         "#,
     )
     .expect("missing GUID must not fabricate a tooltip on retry");
