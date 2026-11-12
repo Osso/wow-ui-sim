@@ -246,13 +246,23 @@ button submission to character select pass on Retail and Forever.
 Three Forever character-create failures are confirmed master baseline by
 comment122. Missing GetTrialBoostStartingLevel belongs to main's pending m36;
 the raceData.racialAbilities contract belongs to main's R67. Neither is filled
-or masked here. The fourth failure is this lane's stronger empty-roster test
-asserting all downstream character-create setup is error-free. The coordinator
-narrows that test to the transition boundary. Because original GlueParent
-dispatches ScreenChanged and CharacterCreate OnShow synchronously, comment123
-requests confirmation of a passive transition snapshot without suppressing
-OnShow or hiding later diagnostics. Until resolved, this is not a passing
-empty-roster setup claim.
+or masked here. The fourth failure was this lane's stronger empty-roster test
+asserting all downstream character-create setup is error-free. Comment124
+explicitly scopes it to a passive observer of Blizzard EventRegistry's
+GlueParent.ScreenChanged. The snapshot records screen, authenticated login state,
+empty roster and Lua error count before original CharacterCreate OnShow. Only
+that snapshot is asserted; original setup still executes and its later errors
+remain recorded and printed. No vendor callback is replaced or suppressed.
+This does not claim character-create setup succeeds; main will extend coverage
+after R67.
+
+At 28c142d6d the revised Forever full glue run passes 169 tests with only the
+three confirmed master-baseline character-create failures (50.52s). Retail's
+three real submission tests pass (4.20s). Both builds emit zero warnings.
+The earlier full Retail 272/0 and PTR 144/0 results remain applicable: changes
+since those runs are only the Retail/Forever empty-roster observer test and
+documentation. Read-only review found no remaining integration or observer
+defects. All validation jobs completed.
 
 Comment120 supersedes the earlier seven-profile all-target lane gate: targeted
 PTR/Retail/Forever proof is required; final all-profile integration and GitHub CI

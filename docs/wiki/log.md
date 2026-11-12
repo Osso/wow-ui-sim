@@ -1,3 +1,7 @@
+## [2026-11-12] validation | Observe empty-roster transition
+
+The [login contract](../specs/glue-login-flow.md#m35-integration-validation-2026-11-12) records coordinator #124’s approved passive ScreenChanged snapshot. Retail submission tests pass 3/3; Forever full glue is 169 passed with only three confirmed master-baseline setup failures. Original OnShow still runs and later errors remain diagnostics. No vendor override or blanket error allowance.
+
 ## [2026-11-12] integration | Merge m35 login dependencies
 
 Updated the [login contract](../specs/glue-login-flow.md#m35-integration-validation-2026-11-12) and [startup investigation](investigations/forever-login-startup.md) with m35 merge resolutions, green Retail/PTR gates, successful real Enter/button submission on Forever, and the explicitly bounded character-create baseline/transition work still pending. The coordinator now owns the final all-profile gate.

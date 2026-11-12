@@ -2,7 +2,7 @@
 
 ## [2026-11-11] implementation | Glue login submission
 
-[Forever Login Startup](investigations/forever-login-startup.md#login-submission-model-lt-a667-2026-11-11) links real-control submission, offline acceptance policy, host roster/capacity, ordinary CharacterCreate startup, R60 shared GameMode display, and R63 host credits/capability state, and R65 FileDataID validation. Native evidence and cached-build compatibility remain separate. Retail/PTR gates and real Forever submission pass after m35 integration; the empty-roster transition boundary remains under clarification. Final acceptance is pending.
+[Forever Login Startup](investigations/forever-login-startup.md#login-submission-model-lt-a667-2026-11-11) links real-control submission, offline acceptance policy, host roster/capacity, ordinary CharacterCreate startup, R60 shared GameMode display, and R63 host credits/capability state, and R65 FileDataID validation. Native evidence and cached-build compatibility remain separate. Retail/PTR gates and real Forever submission pass after m35 integration; the approved passive empty-roster transition snapshot passes while downstream baseline setup errors remain visible. Final acceptance is pending.
 
 ## [2026-11-10] system | ScriptObject full lockdown
 
