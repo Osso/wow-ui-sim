@@ -479,22 +479,15 @@ fn blizzard_macro_ui_publishes_macro_popup_frame_mixin_with_seven_methods(env: &
 
 #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 #[test]
-fn mainline_macro_save_placeholder_is_replaced_by_lod_delegate() {
+fn mainline_macro_save_delegate_is_published_after_lod_load() {
     let env = load_full_game_ui();
 
-    let placeholder_is_noop: bool = env
-        .eval(
-            r#"
-            local before = MacroFrame_SaveMacro
-            MacroFrame = { calls = 0, SaveMacro = function(self) self.calls = self.calls + 1 end }
-            before()
-            return type(before) == "function" and MacroFrame.calls == 0
-            "#,
-        )
-        .expect("startup MacroFrame_SaveMacro placeholder probe should succeed");
+    let save_delegate_unpublished: bool = env
+        .eval("return MacroFrame_SaveMacro == nil")
+        .expect("startup MacroFrame_SaveMacro publication probe should succeed");
     assert!(
-        placeholder_is_noop,
-        "MacroUI body must remain LoadOnDemand before explicit load"
+        save_delegate_unpublished,
+        "the selected LoadOnDemand TOC body must not publish MacroFrame_SaveMacro at startup"
     );
 
     load_addon(&env.loader_env(), &macro_ui_toc())
@@ -503,7 +496,7 @@ fn mainline_macro_save_placeholder_is_replaced_by_lod_delegate() {
     let lod_delegate_called: bool = env
         .eval(
             r#"
-            MacroFrame.calls = 0
+            MacroFrame = { calls = 0, SaveMacro = function(self) self.calls = self.calls + 1 end }
             MacroFrame_SaveMacro()
             return MacroFrame.calls == 1
             "#,
