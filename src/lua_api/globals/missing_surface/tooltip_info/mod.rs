@@ -211,8 +211,8 @@ pub(crate) fn tooltip_for_socketed_relic_context(
     builders::tooltip_for_socketed_relic(state, item_id, item, relic)
 }
 
-/// Bounded bridge to the existing payload model; no identifier parsing here.
-#[cfg(feature = "retail-12-0-5")]
+/// Bounded bridge for the Retail-only PvP talent producer; no identifier parsing here.
+#[cfg(feature = "client-retail")]
 pub(crate) fn tooltip_for_spell_identifier(
     state: &mut LuaState,
     spell_id: Option<u32>,
