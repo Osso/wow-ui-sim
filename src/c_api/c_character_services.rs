@@ -54,7 +54,7 @@ pub(crate) fn update_queued_upgrade_registration(
     if should_register_queued_upgrade {
         table_set_rust_fn_static(state, namespace, "HasQueuedUpgrade", has_queued_upgrade)?;
     } else {
-        table_set(state, Val::Table(namespace), "HasQueuedUpgrade", Val::Nil)?;
+        table_set(state, Val::Table(namespace), "HasQueuedUpgrade", Val::Nil);
     }
 
     if ACTIVE == ClientProfile::WowForever {
@@ -82,7 +82,8 @@ fn update_trial_boost_registration(
             Val::Table(namespace),
             "IsTrialBoostEnabled",
             Val::Nil,
-        )
+        );
+        Ok(())
     }
 }
 
