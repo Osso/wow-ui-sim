@@ -21,28 +21,6 @@ fn test_strsplit() {
     assert_eq!(result.1, "debug");
 }
 
-/// SlashCmdList is a global table for registering slash commands.
-#[test]
-#[ignore = "SlashCmdList not implemented"]
-fn test_slash_command_registration() {
-    let env = WowLuaEnv::new().unwrap();
-
-    env.exec(
-        r#"
-        _G.cmdExecuted = false
-        SlashCmdList["MYCOMMAND"] = function(msg)
-            _G.cmdExecuted = true
-            _G.cmdMsg = msg
-        end
-        SLASH_MYCOMMAND1 = "/mycommand"
-        "#,
-    )
-    .unwrap();
-
-    // Would need a way to execute slash commands
-    // env.execute_slash_command("/mycommand test");
-}
-
 /// TimerCallback has no arguments; zero delay still waits for timer processing.
 #[test]
 fn timer_after_plain_callback_is_deferred_once_without_arguments() {
@@ -209,7 +187,6 @@ fn timer_nested_callbacks_preserve_pending_timers_and_cancel_taken_timers() {
 
 /// Game API functions that need mocking.
 #[test]
-#[ignore = "Game APIs not implemented"]
 fn test_game_api_stubs() {
     let env = WowLuaEnv::new().unwrap();
 
@@ -317,7 +294,6 @@ fn test_global_table_access() {
 
 /// Frame:CreateTexture for creating texture widgets.
 #[test]
-#[ignore = "CreateTexture not implemented"]
 fn test_create_texture() {
     let env = WowLuaEnv::new().unwrap();
 
@@ -336,7 +312,6 @@ fn test_create_texture() {
 
 /// Frame:CreateFontString for creating text widgets.
 #[test]
-#[ignore = "CreateFontString not implemented"]
 fn test_create_font_string() {
     let env = WowLuaEnv::new().unwrap();
 
@@ -352,8 +327,8 @@ fn test_create_font_string() {
 }
 
 /// LibStub is commonly used for library management.
+#[cfg(feature = "optional-tests")]
 #[test]
-#[ignore = "LibStub not implemented"]
 fn test_libstub() {
     let env = WowLuaEnv::new().unwrap();
 
@@ -385,8 +360,8 @@ fn test_get_build_info() {
 }
 
 /// Settings API for modern addon options.
+#[cfg(feature = "optional-tests")]
 #[test]
-#[ignore = "Settings API not implemented"]
 fn test_settings_api() {
     let env = WowLuaEnv::new().unwrap();
 
