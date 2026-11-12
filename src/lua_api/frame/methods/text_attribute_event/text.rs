@@ -458,53 +458,35 @@ fn apply_anchor_pinned_width(state: &mut LuaState, id: u64) -> bool {
 }
 
 fn anchor_pinned_horizontal_width(state: &mut LuaState, id: u64) -> Option<f32> {
-    let (left_target, left_factor, left_offset, right_target, right_factor, right_offset, scale) = {
+    let (left_target, right_target) = {
         let sim = borrow_state(state).ok()?;
         let frame = sim.widgets.get(id)?;
         if frame.anchors.len() < 2 {
             return None;
         }
 
-        let mut left: Option<(u64, f32, f32)> = None;
-        let mut right: Option<(u64, f32, f32)> = None;
+        let mut left_target = None;
+        let mut right_target = None;
         for anchor in &frame.anchors {
             let target_id = anchor
                 .relative_to_id
-                .map(|i| i as u64)
+                .map(|target_id| target_id as u64)
                 .or(frame.parent_id)?;
-            if anchor.point.pins_left_edge() && left.is_none() {
-                left = Some((
-                    target_id,
-                    anchor.relative_point.horizontal_factor(),
-                    anchor.x_offset,
-                ));
-            } else if anchor.point.pins_right_edge() && right.is_none() {
-                right = Some((
-                    target_id,
-                    anchor.relative_point.horizontal_factor(),
-                    anchor.x_offset,
-                ));
+            if anchor.point.pins_left_edge() && left_target.is_none() {
+                left_target = Some(target_id);
+            } else if anchor.point.pins_right_edge() && right_target.is_none() {
+                right_target = Some(target_id);
             }
         }
-        let (left_target, left_factor, left_offset) = left?;
-        let (right_target, right_factor, right_offset) = right?;
-        (
-            left_target,
-            left_factor,
-            left_offset,
-            right_target,
-            right_factor,
-            right_offset,
-            frame.effective_scale.max(1e-6),
-        )
+        (left_target?, right_target?)
     };
     if left_target != right_target {
         return None;
     }
-    let (target_rect, _, _) =
-        crate::lua_api::rect_geometry::resolve_queryable_rect(state, left_target).ok()??;
-    let width =
-        target_rect.width * (right_factor - left_factor) / scale + right_offset - left_offset;
+
+    let (rect, effective_scale, _) =
+        crate::lua_api::rect_geometry::resolve_queryable_rect(state, id).ok()??;
+    let width = rect.width / effective_scale;
     (width > 0.0).then_some(width)
 }
 
