@@ -1,7 +1,5 @@
-//! EditBox text defaults from XML templates: the box's `<FontString>`
-//! element, its `<TextInsets>` and the LEFT justification of a new box, as the
-//! WoW Forever 1.60.1 client reports them.
-// Contributor-observed native defaults and font-object precedence await evidence.
+//! UNKNOWN native EditBox XML-loader behavior probes from contributor observations.
+//! L2 does not prove FontString child selection, font/color application, identity or precedence.
 #![cfg(feature = "optional-tests")]
 
 use wow_ui_sim::loader::load_addon;
@@ -41,6 +39,7 @@ fn env_with_templates() -> (WowLuaEnv, tempfile::TempDir) {
     (env, addon)
 }
 
+// UNKNOWN: L2 does not prove the native default horizontal justification.
 #[test]
 fn a_new_editbox_justifies_its_text_left() {
     let (env, _addon) = env_with_templates();
@@ -50,6 +49,7 @@ fn a_new_editbox_justifies_its_text_left() {
     assert_eq!(justify, "LEFT");
 }
 
+// UNKNOWN: L2 does not prove native XML child selection or FontObject identity/application.
 #[test]
 fn an_editbox_takes_the_font_of_its_inherited_font_string_element() {
     let (env, _addon) = env_with_templates();
@@ -68,6 +68,7 @@ fn an_editbox_takes_the_font_of_its_inherited_font_string_element() {
     assert_eq!(probe, (true, true, 1.0, 1.0, 1.0, "LEFT".to_string()));
 }
 
+// UNKNOWN: L2 does not prove native XML justification or color application order.
 #[test]
 fn an_editbox_font_string_element_sets_justification_and_color() {
     let (env, _addon) = env_with_templates();
@@ -83,6 +84,7 @@ fn an_editbox_font_string_element_sets_justification_and_color() {
     assert_eq!(probe, ("RIGHT".to_string(), 0.5, 0.25, 0.0));
 }
 
+// UNKNOWN: L2 verifies the constructor's zero inset values, not inherited XML inset selection.
 #[test]
 fn an_editbox_takes_the_text_insets_of_its_template() {
     let (env, _addon) = env_with_templates();
