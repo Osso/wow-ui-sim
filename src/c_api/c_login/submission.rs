@@ -2,7 +2,9 @@
 use super::*;
 
 pub(super) fn login(state: &mut LuaState) -> LuaResult<u32> {
-    use crate::lua_api::methods::{borrow_state_mut, extract_frame_id};
+    use crate::lua_api::methods::{
+        borrow_state_mut, frame_id_from_stack, frame_id_from_stack_unrestricted,
+    };
     use crate::lua_bridge::stack_val;
     const USAGE: &str = "Usage: C_Login.Login(\"accountName\", AccountLoginPasswordEdit)";
     let account = stack_val(state, 1);
@@ -10,13 +12,22 @@ pub(super) fn login(state: &mut LuaState) -> LuaResult<u32> {
     if !matches!(account, Val::Str(_) | Val::Num(_)) || !matches!(password_box, Val::Table(_)) {
         return Err(rilua::runtime_error(USAGE));
     }
-    let id = extract_frame_id(state, password_box).ok_or_else(|| rilua::runtime_error(USAGE))?;
+    // Distinguish unresolved objects (Usage) from fallible access rejection.
+    frame_id_from_stack_unrestricted(state, 2).map_err(|_| rilua::runtime_error(USAGE))?;
+    let id = frame_id_from_stack(state, 2)?;
     {
         let sim = borrow_state(state)?;
         let frame = sim
             .widgets
             .get(id)
             .ok_or_else(|| rilua::runtime_error(USAGE))?;
+        // Match the existing forbidden-frame guard used by CreateFontString.
+        // The shared fallible resolver also enforces dynamic access restrictions.
+        if frame.forbidden && !rilua::api::state_is_secure(state) {
+            return Err(rilua::runtime_error(
+                "Attempt to access forbidden object from code tainted by an AddOn",
+            ));
+        }
         if frame.widget_type != crate::widget::WidgetType::EditBox {
             // R40 object resolution distinguishes a wrong resolved type from
             // invalid arguments and an object that cannot be resolved.

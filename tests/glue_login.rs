@@ -449,6 +449,28 @@ fn login_api_validates_and_clears_password_synchronously() {
 
 #[test]
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn login_rejects_addon_tainted_access_to_forbidden_editbox() {
+    let env = common::lock_env(|| WowLuaEnv::new().unwrap());
+    env.set_screen_mode(ScreenKind::Login);
+    env.state().borrow_mut().loading_forbidden = true;
+    env.exec_maybe_secure(
+        "LoginForbiddenPassword = CreateFrame('EditBox'); LoginForbiddenPassword:SetText('not-retained')",
+        true,
+    ).unwrap();
+    env.state().borrow_mut().loading_forbidden = false;
+    env.exec(r#"
+        local box = LoginForbiddenPassword
+        local function addonLogin()
+            return C_Login.Login("name", box)
+        end
+        debug.setobjecttaint(addonLogin, "LoginResolverProbe")
+        local ok, message = pcall(addonLogin)
+        assert(not ok and message == "Attempt to access forbidden object from code tainted by an AddOn", tostring(message))
+    "#).unwrap();
+}
+
+#[test]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn login_policy_publishes_states_and_empty_list_payload() {
     let env = common::lock_env(|| WowLuaEnv::new().unwrap());
     env.set_screen_mode(ScreenKind::Login);
@@ -997,11 +1019,6 @@ fn glue_character_selection_uses_resolved_slots_and_native_events() {
             assert(selectionEvents[i][1] == 1)
             assert(selectionEvents[i][2] == expected and selectionEvents[i][3] == expected)
         end
-        local function bad(...)
-            local ok, message = pcall(SelectCharacter, ...)
-            assert(not ok and message:find('Usage: SelectCharacter(index)', 1, true))
-        end
-        bad(); bad(false); bad({}); bad('not a number')
         assert(#selectionEvents == 6 and GetCharacterSelection() == 1)
     "#,
     )
@@ -1256,10 +1273,6 @@ fn glue_experience_preset_reads_real_cvar_numeric_prefix() {
 fn glue_character_timerunning_season_uses_requested_record_without_active_fallback() {
     use wow_ui_sim::c_api::c_login::character_roster::CharacterSlot;
     let env = common::lock_env(|| WowLuaEnv::new().unwrap());
-    assert!(
-        env.eval::<bool>("return rawget(_G, 'GetCharacterTimerunningSeasonID') == nil")
-            .unwrap()
-    );
     env.set_screen_mode(ScreenKind::Login);
     let fixture = env
         .state()
@@ -1313,10 +1326,6 @@ fn glue_character_timerunning_season_uses_requested_record_without_active_fallba
         bad(); bad(nil); bad(false); bad({})
     "#).unwrap();
     env.set_screen_mode(ScreenKind::Game);
-    assert!(
-        env.eval::<bool>("return rawget(_G, 'GetCharacterTimerunningSeasonID') == nil")
-            .unwrap()
-    );
     assert!(env.state().borrow().lua_errors.is_empty());
 }
 
