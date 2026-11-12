@@ -400,6 +400,98 @@ fn load_managers_run_before_their_startup_owner_files() {
 }
 
 #[test]
+fn startup_load_with_follower_runs_after_target_files() {
+    let tree = AddonTree::new(ScreenKind::Game);
+    tree.env.exec("startupLoadWithOrder = {}").unwrap();
+    tree.add(
+        "Blizzard_Z_LoadWithTargetProbe",
+        "## AllowLoad: Both",
+        "table.insert(startupLoadWithOrder, 'target')",
+    );
+    tree.add(
+        "Blizzard_A_LoadWithFollowerProbe",
+        "## AllowLoad: Both\n## LoadOnDemand: 1\n## LoadWith: Blizzard_Z_LoadWithTargetProbe",
+        "table.insert(startupLoadWithOrder, 'follower')",
+    );
+
+    tree.load_startup_addons(ScreenKind::Game);
+
+    tree.env
+        .exec("assert(table.concat(startupLoadWithOrder, ',') == 'target,follower')")
+        .unwrap();
+}
+
+#[test]
+fn loading_load_with_follower_does_not_load_target() {
+    let tree = AddonTree::new(ScreenKind::Game);
+    tree.add(
+        "Blizzard_LoadWithTargetProbe",
+        "## AllowLoad: Both\n## LoadOnDemand: 1",
+        "LoadWithTargetRan = true",
+    );
+    tree.add(
+        "Blizzard_LoadWithFollowerProbe",
+        "## AllowLoad: Both\n## LoadOnDemand: 1\n## LoadWith: Blizzard_LoadWithTargetProbe",
+        "LoadWithFollowerRan = true",
+    );
+
+    assert_eq!(tree.load("Blizzard_LoadWithFollowerProbe"), (true, None));
+    assert!(tree.ran("LoadWithFollowerRan"));
+    assert!(!tree.ran("LoadWithTargetRan"));
+}
+
+#[test]
+fn runtime_loading_target_runs_load_with_follower_after_target_files() {
+    let tree = AddonTree::new(ScreenKind::Game);
+    tree.env.exec("runtimeLoadWithOrder = {}").unwrap();
+    tree.add(
+        "Blizzard_RuntimeLoadWithTargetProbe",
+        "## AllowLoad: Both\n## LoadOnDemand: 1",
+        "table.insert(runtimeLoadWithOrder, 'target')",
+    );
+    tree.add(
+        "Blizzard_RuntimeLoadWithFollowerProbe",
+        "## AllowLoad: Both\n## LoadOnDemand: 1\n## LoadWith: Blizzard_RuntimeLoadWithTargetProbe",
+        "table.insert(runtimeLoadWithOrder, 'follower')",
+    );
+
+    assert_eq!(
+        tree.load("Blizzard_RuntimeLoadWithTargetProbe"),
+        (true, None)
+    );
+    tree.env
+        .exec("assert(table.concat(runtimeLoadWithOrder, ',') == 'target,follower')")
+        .unwrap();
+}
+
+#[test]
+fn runtime_target_early_exit_does_not_load_load_with_followers() {
+    let tree = AddonTree::new(ScreenKind::Game);
+    tree.add(
+        "Blizzard_EarlyExitLoadWithTargetProbe",
+        "## AllowLoad: Both\n## LoadOnDemand: 1\n## RequiredDeps: Blizzard_GlueOnlyLoadWithDependencyProbe",
+        "EarlyExitLoadWithTargetRan = true",
+    );
+    tree.add(
+        "Blizzard_GlueOnlyLoadWithDependencyProbe",
+        "## AllowLoad: Glue",
+        "GlueOnlyLoadWithDependencyRan = true",
+    );
+    tree.add(
+        "Blizzard_EarlyExitLoadWithFollowerProbe",
+        "## AllowLoad: Both\n## LoadOnDemand: 1\n## LoadWith: Blizzard_EarlyExitLoadWithTargetProbe",
+        "EarlyExitLoadWithFollowerRan = true",
+    );
+
+    let (loaded, reason) = tree.load("Blizzard_EarlyExitLoadWithTargetProbe");
+
+    assert!(!loaded);
+    assert_eq!(reason.as_deref(), Some("DEP_WRONG_ACTIVE_INTERFACE"));
+    assert!(!tree.ran("EarlyExitLoadWithTargetRan"));
+    assert!(!tree.ran("EarlyExitLoadWithFollowerRan"));
+}
+
+#[test]
 fn insecure_toc_allowload_keeps_the_game_default() {
     let tree = AddonTree::new(ScreenKind::Game);
     tree.add(
