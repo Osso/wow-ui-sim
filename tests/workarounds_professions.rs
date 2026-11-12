@@ -350,6 +350,10 @@ fn favorite_order_recipes_api_metadata_rows() {
         assert(select('#', api()) == 1 and api() == false, 'favorite is not order eligible')
         C_TradeSkillUI.SetRecipeFavorite(365729, true)
         assert(select('#', api()) == 1 and api('ignored', {}) == true, 'eligible favorite row')
+        C_TradeSkillUI.SetRecipeFavorite(365729, false)
+        assert(api() == false, 'only the ineligible favorite remains')
+        C_TradeSkillUI.SetRecipeFavorite(438914, true)
+        assert(api() == true, 'metadata row qualifies even with Field_10_0_2_46479_002 zero')
         "#,
     )
     .unwrap();
