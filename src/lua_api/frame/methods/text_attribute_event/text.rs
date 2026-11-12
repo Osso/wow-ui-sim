@@ -430,8 +430,8 @@ pub(crate) fn update_auto_text_width(state: &mut LuaState, id: u64) {
     crate::lua_api::frame::methods::core_state::size::mark_nearest_layout_parent_dirty(state, id);
 }
 
-/// If the frame's anchors pin both its left and right edges, set its width from
-/// the relative frame's width and clear `width_is_text_auto` so word-wrap works.
+/// If the frame's anchors pin both horizontal edges, set its width from their
+/// current resolved span and clear `width_is_text_auto` so word-wrap works.
 /// Returns true when handling the frame, false if anchors do not pin both edges.
 fn apply_anchor_pinned_width(state: &mut LuaState, id: u64) -> bool {
     let Some(pinned_width) = anchor_pinned_horizontal_width(state, id) else {
@@ -457,41 +457,54 @@ fn apply_anchor_pinned_width(state: &mut LuaState, id: u64) -> bool {
     true
 }
 
-fn anchor_pinned_horizontal_width(state: &LuaState, id: u64) -> Option<f32> {
-    let sim = borrow_state(state).ok()?;
-    let frame = sim.widgets.get(id)?;
-    if frame.anchors.len() < 2 {
-        return None;
-    }
-
-    let mut left: Option<(u64, &crate::widget::Anchor)> = None;
-    let mut right: Option<(u64, &crate::widget::Anchor)> = None;
-    for anchor in &frame.anchors {
-        let target_id = anchor
-            .relative_to_id
-            .map(|i| i as u64)
-            .or(frame.parent_id)?;
-        if anchor.point.pins_left_edge() && left.is_none() {
-            left = Some((target_id, anchor));
-        } else if anchor.point.pins_right_edge() && right.is_none() {
-            right = Some((target_id, anchor));
+fn anchor_pinned_horizontal_width(state: &mut LuaState, id: u64) -> Option<f32> {
+    let (left_target, left_factor, left_offset, right_target, right_factor, right_offset, scale) = {
+        let sim = borrow_state(state).ok()?;
+        let frame = sim.widgets.get(id)?;
+        if frame.anchors.len() < 2 {
+            return None;
         }
-    }
-    let (left_target, left_anchor) = left?;
-    let (right_target, right_anchor) = right?;
+
+        let mut left: Option<(u64, f32, f32)> = None;
+        let mut right: Option<(u64, f32, f32)> = None;
+        for anchor in &frame.anchors {
+            let target_id = anchor
+                .relative_to_id
+                .map(|i| i as u64)
+                .or(frame.parent_id)?;
+            if anchor.point.pins_left_edge() && left.is_none() {
+                left = Some((
+                    target_id,
+                    anchor.relative_point.horizontal_factor(),
+                    anchor.x_offset,
+                ));
+            } else if anchor.point.pins_right_edge() && right.is_none() {
+                right = Some((
+                    target_id,
+                    anchor.relative_point.horizontal_factor(),
+                    anchor.x_offset,
+                ));
+            }
+        }
+        let (left_target, left_factor, left_offset) = left?;
+        let (right_target, right_factor, right_offset) = right?;
+        (
+            left_target,
+            left_factor,
+            left_offset,
+            right_target,
+            right_factor,
+            right_offset,
+            frame.effective_scale.max(1e-6),
+        )
+    };
     if left_target != right_target {
         return None;
     }
-    let target = sim.widgets.get(left_target)?;
-    if target.width <= 0.0 {
-        return None;
-    }
-
-    let left_x =
-        target.width * left_anchor.relative_point.horizontal_factor() + left_anchor.x_offset;
-    let right_x =
-        target.width * right_anchor.relative_point.horizontal_factor() + right_anchor.x_offset;
-    let width = right_x - left_x;
+    let (target_rect, _, _) =
+        crate::lua_api::rect_geometry::resolve_queryable_rect(state, left_target).ok()??;
+    let width =
+        target_rect.width * (right_factor - left_factor) / scale + right_offset - left_offset;
     (width > 0.0).then_some(width)
 }
 

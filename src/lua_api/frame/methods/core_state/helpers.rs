@@ -35,16 +35,6 @@ pub(super) fn frame_size(state: &mut LuaState, id: u64, raw: bool) -> LuaResult<
         return Ok(raw_frame_size(&sim, id));
     }
 
-    {
-        let sim = borrow_state(state)?;
-        let is_font_string_with_measured_width = sim.widgets.get(id).is_some_and(|frame| {
-            frame.widget_type == crate::widget::WidgetType::FontString && frame.width > 0.0
-        });
-        if is_font_string_with_measured_width {
-            return Ok(sim.widgets.resolved_size(id));
-        }
-    }
-
     if let Some((rect, effective_scale, _)) =
         crate::lua_api::rect_geometry::resolve_queryable_rect(state, id)?
     {
