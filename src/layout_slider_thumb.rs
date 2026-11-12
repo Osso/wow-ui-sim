@@ -15,22 +15,19 @@ fn bound_slider_thumb_parent<'a>(registry: &'a WidgetRegistry, frame: &Frame) ->
     (parent.widget_type == WidgetType::Slider && bound).then_some(parent)
 }
 
+fn has_positive_finite_dimensions(width: f32, height: f32) -> bool {
+    width.is_finite() && height.is_finite() && width > 0.0 && height > 0.0
+}
+
 fn has_positive_finite_size(rect: LayoutRect) -> bool {
-    rect.width.is_finite() && rect.height.is_finite() && rect.width > 0.0 && rect.height > 0.0
+    has_positive_finite_dimensions(rect.width, rect.height)
 }
 
 pub(crate) fn has_sized_slider_thumb_binding(registry: &WidgetRegistry, frame: &Frame) -> bool {
-    if bound_slider_thumb_parent(registry, frame).is_none() {
-        return false;
-    }
+    let is_bound = bound_slider_thumb_parent(registry, frame).is_some();
     let width = registry.round_layout_value(frame, frame.width) * frame.effective_scale;
     let height = registry.round_layout_value(frame, frame.height) * frame.effective_scale;
-    has_positive_finite_size(LayoutRect {
-        x: 0.0,
-        y: 0.0,
-        width,
-        height,
-    })
+    is_bound && has_positive_finite_dimensions(width, height)
 }
 
 /// Admission uses the real stored layout result, never binding identity alone.
