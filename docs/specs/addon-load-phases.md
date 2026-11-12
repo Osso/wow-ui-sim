@@ -9,7 +9,7 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 - [x] Phase one must select addons with `LoadFirst` or `UseSecureEnvironment`.
 - [x] Phase two must select the remaining non-insecure packaged UI addons, and its top-level traversal must begin only after phase one returns.
 - [x] Phase membership must not come from addon names or a synthetic foundational-addon list.
-- [ ] VERIFIED (PTR 12.1.7.70668): native startup performs three passes and checks phase flags separately from the active Glue/Game load mask.
+- [x] VERIFIED (PTR 12.1.7.70668): native startup performs three passes and checks phase flags separately from the active Glue/Game load mask.
 - [ ] INFERRED simulator policy (PTR cached TOCs; native live-list membership UNKNOWN): model `Blizzard_CharacterCreate` as a phase-two Glue startup root and load its required LoadOnDemand dependency chain before its files. Do not assert its order relative to `Blizzard_PTRFeedbackGlue`.
 
 ### Startup prerequisites
@@ -29,12 +29,11 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 - [x] VERIFIED (Retail 12.1.5.70688): the target completes its own files and fires `ADDON_LOADED` before it submits followers. The follower loop preserves its resolved vector order.
 - [x] VERIFIED (Retail 12.1.5.70688): a failing follower does not stop later submissions and does not change the target's success result.
 - [x] VERIFIED (Retail 12.1.5.70688; Forever 1.60.1.70707): follower submissions use the generic loader and its dependency order: optional dependencies, required dependencies, then the follower's own files.
-- [ ] VERIFIED (PTR 12.1.7.70668): the generic loader visits the target's child list after the target's own file-processing path; the resolver does not filter by enabled state, phase, origin, or `INSECURE`.
-- [ ] INFERRED simulator policy (PTR 12.1.7.70668): apply the child-list resolver to registered `LoadWith` declarations and suppress duplicates. Native parser-to-resolver linkage is UNKNOWN; PTR tests seed the child list directly and do not assert parser population.
+- [x] VERIFIED (PTR 12.1.7.70668): the generic loader visits the target's child list after the target's own file-processing path; the resolver does not filter by enabled state, phase, origin, or `INSECURE`.
+- [ ] INFERRED simulator policy (PTR 12.1.7.70668): apply the child-list resolver to registered `LoadWith` declarations and suppress duplicates. The PTR test seeds the child list directly; parser population and duplicate handling are not tested. Native parser-to-resolver linkage is UNKNOWN.
 - [x] VERIFIED (Retail 12.1.5.70688): generic refusal order is `USER_ADDONS_DISABLED` (14), `WRONG_LOAD_PHASE` (13), `NO_ACTIVE_INTERFACE` (10), `WRONG_ACTIVE_INTERFACE` (11), `WRONG_GAME_TYPE` (12), `DISABLED` (2) / `BANNED` (3) / `NOT_AVAILABLE` (8), `INSECURE` (5), `INCOMPATIBLE` (15), `INTERFACE_VERSION` (7), then required dependencies. Missing and rejected required children use `DEP_MISSING` (1), `DEP_DISABLED` (2), and `DEP_WRONG_GAME_TYPE` (12), as applicable.
 - [x] SIMULATOR POLICY: register packaged declarations privately before startup without changing public AddOn enumeration; register user declarations at the existing third-party registration step. Invalidate the follower index when declarations change.
 - [x] SIMULATOR POLICY: Retail and Forever submit registered followers in registration order through the shared request path. A disabled registered follower reaches the refusal check and returns `DISABLED`; one failure does not block later followers.
-- [ ] INFERRED SIMULATOR POLICY (PTR R64D): resolve registered declarations into a child list, suppress duplicate children, and submit children after target files. The PTR parser-to-resolver link is UNKNOWN; tests seed the list directly. Other unverified profiles keep their prior path.
 
 ## How it works
 
