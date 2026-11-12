@@ -51,17 +51,25 @@ fn login_screen_discovers_glue_addons_not_game_base() {
     }
 }
 
-// Unflagged candidates model phase two; this tests screen masks, not PTR field mapping.
+// LoadFirst is the simulator's phase-one selector, not a PTR field mapping.
 #[cfg(feature = "client-ptr")]
 #[test]
-fn ptr_phase_two_candidates_respect_glue_game_masks() {
-    let ui = TempBlizzardUiDir::new("ptr-phase-two-screen-mask");
+fn ptr_phase_flags_and_glue_game_masks_select_independently() {
+    let ui = TempBlizzardUiDir::new("ptr-phase-screen-mask");
     ui.add_addon(
-        "Blizzard_A_GlueCandidate",
+        "Blizzard_A_PhaseOneGlue",
+        "## AllowLoad: Glue\n## LoadFirst: 1\nGlueFirst.lua\n",
+    );
+    ui.add_addon(
+        "Blizzard_B_PhaseTwoGlue",
         "## AllowLoad: Glue\nGlue.lua\n",
     );
     ui.add_addon(
-        "Blizzard_B_GameCandidate",
+        "Blizzard_C_PhaseOneGame",
+        "## AllowLoad: Game\n## LoadFirst: 1\nGameFirst.lua\n",
+    );
+    ui.add_addon(
+        "Blizzard_D_PhaseTwoGame",
         "## AllowLoad: Game\nGame.lua\n",
     );
 
@@ -74,11 +82,11 @@ fn ptr_phase_two_candidates_respect_glue_game_masks() {
 
     assert_eq!(
         startup_names(ScreenKind::Login),
-        vec!["Blizzard_A_GlueCandidate"]
+        vec!["Blizzard_A_PhaseOneGlue", "Blizzard_B_PhaseTwoGlue"]
     );
     assert_eq!(
         startup_names(ScreenKind::Game),
-        vec!["Blizzard_B_GameCandidate"]
+        vec!["Blizzard_C_PhaseOneGame", "Blizzard_D_PhaseTwoGame"]
     );
 }
 

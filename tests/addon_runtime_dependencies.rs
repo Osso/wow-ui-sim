@@ -481,7 +481,7 @@ fn ptr_character_create_dependencies_load_before_its_files() {
         "table.insert(ptrCharacterCreateOrder, 'glue-xml')",
     );
 
-    tree.load_startup_addons(ScreenKind::Login);
+    let _ = tree.load("Blizzard_CharacterCreate");
 
     let order: String = tree
         .env
