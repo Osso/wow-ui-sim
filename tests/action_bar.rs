@@ -483,13 +483,31 @@ fn test_bag_bar_layout_locked() {
                 return math.abs(actual - expected) <= (eps or EPS)
             end
 
+            local function points_debug(frame)
+                local out = {}
+                for i = 1, frame:GetNumPoints() do
+                    local p, r, rp, ox, oy = frame:GetPoint(i)
+                    local rn = r and r:GetName() or "nil"
+                    out[#out + 1] = string.format("%s->%s:%s(%.2f,%.2f)", tostring(p), rn, tostring(rp), tonumber(ox) or 0, tonumber(oy) or 0)
+                end
+                table.sort(out)
+                return table.concat(out, " | ")
+            end
+
             local function rect(frame, tag)
                 if type(frame) ~= "table" then
                     return nil, tag .. "_missing"
                 end
                 local l, b, w, h = frame:GetRect()
                 if not (l and b and w and h) then
-                    return nil, tag .. "_missing_rect"
+                    local frameWidth, frameHeight = frame:GetSize()
+                    return nil, string.format(
+                        "%s_missing_rect:%sx%s:%s",
+                        tag,
+                        tostring(frameWidth),
+                        tostring(frameHeight),
+                        points_debug(frame)
+                    )
                 end
                 return { l = l, b = b, w = w, h = h, r = l + w, t = b + h }, nil
             end
@@ -505,23 +523,13 @@ fn test_bag_bar_layout_locked() {
                 return false
             end
 
-            local function points_debug(frame)
-                local out = {}
-                for i = 1, frame:GetNumPoints() do
-                    local p, r, rp, ox, oy = frame:GetPoint(i)
-                    local rn = r and r:GetName() or "nil"
-                    out[#out + 1] = string.format("%s->%s:%s(%.2f,%.2f)", tostring(p), rn, tostring(rp), tonumber(ox) or 0, tonumber(oy) or 0)
-                end
-                table.sort(out)
-                return table.concat(out, " | ")
+            if not BagsBar and UIParentLoadAddOn then
+                UIParentLoadAddOn("Blizzard_MainMenuBarBagButtons")
             end
-
-            if not BagsBar then
-                if UIParentLoadAddOn then
-                    pcall(UIParentLoadAddOn, "Blizzard_MainMenuBarBagButtons")
-                end
-                if not BagsBar and C_AddOns and C_AddOns.LoadAddOn then
-                    pcall(C_AddOns.LoadAddOn, "Blizzard_MainMenuBarBagButtons")
+            if not BagsBar and C_AddOns and C_AddOns.LoadAddOn then
+                local loaded, reason = C_AddOns.LoadAddOn("Blizzard_MainMenuBarBagButtons")
+                if not loaded then
+                    return "bag_addon_load_failed:" .. tostring(reason)
                 end
             end
 
