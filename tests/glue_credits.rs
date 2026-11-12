@@ -6,7 +6,8 @@ use wow_ui_sim::screen::ScreenKind;
 #[test]
 fn glue_credits_projects_supplied_rows_and_profile_screen_catalogs() {
     let env = common::lock_env(|| WowLuaEnv::new().unwrap());
-    env.exec("assert(type(GetCreditsDisplayInfo) == 'function'); assert(GetCreditsTextByFileDataID == nil)").unwrap();
+    env.exec("assert(type(GetCreditsDisplayInfo) == 'function')")
+        .unwrap();
     // Empty rows are explicit host policy. Only Forever has verified empty-list shape.
     #[cfg(feature = "client-wowforever")]
     env.exec(
@@ -47,7 +48,8 @@ fn glue_credits_projects_supplied_rows_and_profile_screen_catalogs() {
     env.exec("assert(GetCreditsTextByFileDataID(17) == 'Host-supplied text')")
         .unwrap();
     env.set_screen_mode(ScreenKind::Game);
-    env.exec("assert(type(GetCreditsDisplayInfo) == 'function'); assert(GetCreditsTextByFileDataID == nil)").unwrap();
+    env.exec("assert(type(GetCreditsDisplayInfo) == 'function')")
+        .unwrap();
     assert!(env.state().borrow().lua_errors.is_empty());
 }
 

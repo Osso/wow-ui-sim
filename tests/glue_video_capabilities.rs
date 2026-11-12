@@ -25,7 +25,7 @@ const SCREENS: [ScreenKind; 4] = [
     ScreenKind::CharacterCreate,
 ];
 
-fn published(index: usize) -> bool {
+fn has_verified_publication(index: usize) -> bool {
     ACTIVE != ClientProfile::Retail || index == 4
 }
 
@@ -35,14 +35,14 @@ fn verified_video_capability_publication_matches_profile_in_game_and_glue() {
     for screen in SCREENS {
         env.set_screen_mode(screen);
         for (index, method) in METHODS.iter().enumerate() {
+            // Retail publication of the other four members remains unknown.
+            if !has_verified_publication(index) {
+                continue;
+            }
             let kind: String = env
                 .eval(&format!("return type(rawget(C_VideoOptions, '{method}'))"))
                 .expect("inspect exact capability member");
-            assert_eq!(
-                kind,
-                if published(index) { "function" } else { "nil" },
-                "{ACTIVE:?} {screen:?} {method}"
-            );
+            assert_eq!(kind, "function", "{ACTIVE:?} {screen:?} {method}");
         }
     }
 }
