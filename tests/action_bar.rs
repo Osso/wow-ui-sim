@@ -475,6 +475,7 @@ fn test_bag_bar_layout_locked() {
         .eval(
             r#"
             local EPS = 0.75
+            local BAGS_ANCHOR_OFFSET_Y = 10
 
             local function approx(actual, expected, eps)
                 if type(actual) ~= "number" or type(expected) ~= "number" then
@@ -596,7 +597,7 @@ fn test_bag_bar_layout_locked() {
             local reagentRect, reagentErr = rect(reagent, "reagent")
             if not reagentRect then return reagentErr end
 
-            if not has_point(bar, "TOPRIGHT", microBar, "TOPRIGHT", 0, 10, 0.1) then
+            if not has_point(bar, "TOPRIGHT", microBar, "TOPRIGHT", 0, BAGS_ANCHOR_OFFSET_Y, 0.1) then
                 return "bags_bar_anchor_mismatch:" .. points_debug(bar)
             end
             if not approx(barRect.w, 208, 0.1) or not approx(barRect.h, 47, 0.1) then
@@ -605,8 +606,8 @@ fn test_bag_bar_layout_locked() {
             if not approx(barRect.r, microRect.r, 0.1) then
                 return "bags_bar_right=" .. tostring(barRect.r) .. ",micro_right=" .. tostring(microRect.r)
             end
-            if not approx(barRect.t, microRect.t + 10, 0.1) then
-                return "bags_bar_top=" .. tostring(barRect.t) .. ",expected_micro_top_plus_10=" .. tostring(microRect.t + 10)
+            if not approx(barRect.t, microRect.t + BAGS_ANCHOR_OFFSET_Y, 0.1) then
+                return "bags_bar_top=" .. tostring(barRect.t) .. ",expected_micro_top_plus_10=" .. tostring(microRect.t + BAGS_ANCHOR_OFFSET_Y)
             end
 
             if not backpack:IsShown() then return "backpack_hidden" end
