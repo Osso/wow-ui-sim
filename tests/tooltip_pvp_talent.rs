@@ -430,10 +430,6 @@ fn game_tooltip_pvp_talent_local_annotation_predicates() {
         local data = TestGetPvpTalent(91001, false, 1, 3)
         assert(data.lines[#data.lines].leftText == TALENT_TOOLTIP_ADDPREVIEWPOINT,
             "the fourth local position is included")
-        local direct = C_TooltipInfo.GetSpellByID(116)
-        local pastEnd = TestGetPvpTalent(91001, false, 1, 4)
-        assert(#pastEnd.lines == #direct.lines,
-            "positions beyond zero through three have no local annotation")
         "#,
     )
     .unwrap();

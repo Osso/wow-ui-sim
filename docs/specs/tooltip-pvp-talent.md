@@ -25,12 +25,12 @@ VERIFIED: Retail `C_TooltipInfo.GetPvpTalent` uses the PvP talent row to build s
 - [x] VERIFIED: For local calls, omitted `groupIndex` selects the active group; an explicit current group is accepted, while non-current and unknown groups have no local annotation context.
 - [x] VERIFIED: The early `UNLOCKED_AT_LEVEL` line uses `LevelRequired` and `HOSTILE_STATUS_COLOR` without wrapping.
 - [x] VERIFIED: Eligibility annotations are suppressed when the talent is present in each of the active group's four positions.
-- [x] VERIFIED: Eligibility checks use supported zero-based positions `0..=3` and the supplied position mask. A supplied absent helper result adds no line.
-- [x] VERIFIED: Supplied eligibility success appends `TALENT_TOOLTIP_ADDPREVIEWPOINT` with `FRIENDLY_STATUS_COLOR`, type `0`, and wrapping.
+- [x] VERIFIED (R73): The category mask tests the requested index shifted by its low five bits; current-slot access is guarded to `0..=3`. Tests cover supported positions and masking. UNKNOWN: general out-of-range requested-position results are not asserted. Absent helper and permission inputs retain neutral output.
+- [x] VERIFIED: A supplied eligibility pass after combat, grant, level and permission checks appends `TALENT_TOOLTIP_ADDPREVIEWPOINT` with `FRIENDLY_STATUS_COLOR`, type `0`, and wrapping.
 - [x] VERIFIED: A supplied later level failure appends `UNLOCKED_AT_LEVEL` with `HOSTILE_STATUS_COLOR`, type `0`, and wrapping.
 - [x] VERIFIED: A supplied item-grant rejection uses a catalogued item row; it adds blank rows and either `TALENT_GRANTED_BY_ITEM` or the host-confirmed essence message. The lines use `REFUND_TOOLTIP_COLOR`, type `0`, and wrapping.
-- [ ] VERIFIED (R73): Combat status takes priority over grant and later unlock status. Combat selects `TALENT_TOOLTIP_ADD_COMBAT_ERROR` with `HOSTILE_STATUS_COLOR`, type `0`, and wrapping.
-- [ ] VERIFIED (R73): A failed rest-like permission or any other supplied eligibility failure selects `TALENT_TOOLTIP_ADD_REST_ERROR_PVP`. Host `rest_permission: Option<bool>` replaces the unproved mapping to XP/resting fields. `None` with no explicit eligibility result preserves neutral output; supplied permission permits preview or rejects with a rest error. This host seam is not a native default.
+- [x] VERIFIED (R73): Combat status takes priority over grant and later unlock status. Combat selects `TALENT_TOOLTIP_ADD_COMBAT_ERROR` with `HOSTILE_STATUS_COLOR`, type `0`, and wrapping.
+- [x] VERIFIED (R73): A failed rest-like permission or any other supplied eligibility failure selects `TALENT_TOOLTIP_ADD_REST_ERROR_PVP`. Host `rest_permission: Option<bool>` replaces the unproved mapping to XP/resting fields. `None` with no explicit eligibility result preserves neutral output; supplied permission permits preview or rejects with a rest error. This host seam is not a native default.
 - [ ] UNKNOWN: The progression gate, talent/GUID rejection predicate, indirect Flags-bit reads and final player-state helper remain unmodelled; tests supply eligibility outcomes, not guessed predicates.
 - [x] VERIFIED: Inspect mode bypasses local group, selection, level and eligibility checks. It reads the granting item from current inspect GUID context, not local PvP state; a supplied item result appends `TALENT_GRANTED_BY_ITEM` with `ITEM_LEGENDARY_COLOR`, type `0`, and wrapping. An absent inspect granting-item result adds no line.
 
@@ -46,12 +46,13 @@ VERIFIED: Retail `C_TooltipInfo.GetPvpTalent` uses the PvP talent row to build s
 - `src/c_api/tooltip_getter_args.rs` — shared secret-aware numeric, boolean and index readers.
 - `src/lua_api/globals/missing_surface/tooltip_info/mod.rs` — C_TooltipInfo registration and existing spell-tooltip bridge.
 - `src/lua_api/globals/missing_surface/tooltip_info/spell.rs` — shared spell tooltip producer.
-- `src/c_api/c_spec.rs` — active PvP talent group publication.
+- `src/c_api/c_spec.rs` — active PvP talent group and Retail slot-info registration.
+- `src/lua_api/workarounds/temporary/pvp_talent_defaults.rs` — preserves only the old no-host slot result pending native defaults; the modeled Retail slot producer replaces its Lua slot registration.
 - `src/lua_api/state/sim_state.rs` and `src/lua_api/state.rs` — empty-by-default host state.
 
 ## Tests asserting this spec
 
-- `tests/tooltip_pvp_talent.rs` — Retail registration; original `GameTooltip:SetPvpTalent` accessor with a pass-through getter spy and visible line checks; generated default catalog values and neutral grant/eligibility inputs; spell identity, replacement line and suppression; local level, group, position, eligibility, combat and rest branches; item, essence and inspect grant branches.
+- `tests/tooltip_pvp_talent.rs` — optional R73 tests drive original slot hover and the original list template hover (the panel harness does not realize virtualized list rows), with a pre-load pass-through spy, visible lines, mutually exclusive outcomes and primary getter metadata; supplied slot fields share group selection and preserve no-host defaults. Retail registration; original `GameTooltip:SetPvpTalent` accessor with a pass-through getter spy and visible line checks; generated default catalog values and neutral grant/eligibility inputs; spell identity, replacement line and suppression; local level, group, position, eligibility, combat and rest branches; item, essence and inspect grant branches.
 - `tests/tooltip_full_env_helpers.rs` — optional pre-addon setup hook installs the getter spy before `TooltipDataHandler` copies the namespace.
 - `tools/test_gen_pvp_talent_catalog.py` — projected-column, row validation, and generated Rust output.
 
@@ -61,8 +62,8 @@ VERIFIED: Retail `C_TooltipInfo.GetPvpTalent` uses the PvP talent row to build s
 - [ ] UNKNOWN: Whether the native base-spell presence provider can report `SpellID` zero as present. This path is not modeled or tested.
 - [ ] UNKNOWN: The native spell override ranking walk's exact ranked IDs, map writers and precedence among talent, aura and SpellReplace sources. The host supplies the resolved ID; this implementation does not infer the walk.
 - [ ] UNKNOWN: Native alignment of the installed 12.1.5.70783 rows with selected build 12.1.5.70575, the effect-parameter decoder, essence lookup, inspect lifecycle, additional progression restrictions and remaining eligibility failure reasons. Grant and eligibility outcomes remain host-only; absent inputs do not fabricate lines.
-- [ ] VERIFIED (R73): Active-group membership uses four shared selected positions. The original slot hover supplies selected talents; the original list hover supplies unselected candidates.
-- [ ] VERIFIED (cached declaration): `GetPvpTalentSlotInfo` uses the shape at `SpecializationInfoDocumentation.lua:153-165,491-499`. Supplied slot records contain enabled/level/available IDs; selectedTalentID comes only from shared groups. UNKNOWN: native default values. The old empty default remains isolated as a temporary workaround, unchanged for calls without supplied records.
+- [x] VERIFIED (R73): Active-group membership uses four shared selected positions. The original slot hover supplies selected talents; the original list hover supplies unselected candidates.
+- [x] VERIFIED (cached declaration): `GetPvpTalentSlotInfo` uses the shape at `SpecializationInfoDocumentation.lua:153-165,491-499`. Supplied slot records contain enabled/level/available IDs; selectedTalentID comes only from shared groups. UNKNOWN: native default values. The old empty default remains isolated as a temporary workaround, unchanged for calls without supplied records.
 - [ ] VERIFIED: When the primary spell producer misses because the local player or spell-name row is unavailable, the native PvP caller still runs talent annotations. UNKNOWN: Its final result and table shape; this failure path stays unmodelled and untested here.
 - [ ] VERIFIED: Native `isInspect` also changes the ordinary spell request. UNKNOWN: The existing simulator producer has no matching observable request field, so this effect stays unmodelled.
 - [ ] UNKNOWN: Numeric RGB defaults, the complete ordinary spell line and field set, and a getter-specific event contract.
