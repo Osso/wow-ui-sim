@@ -1,6 +1,9 @@
 //! FontString:SetFont with a font file below Interface\AddOns that does not
 //! exist: the client (WoW Forever 1.60.1) raises "Invalid font asset" and
 //! keeps the font.
+// Contributor-observed native error text awaits independent profile evidence.
+#![cfg(feature = "optional-tests")]
+
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 #[test]

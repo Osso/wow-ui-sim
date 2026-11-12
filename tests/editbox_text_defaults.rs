@@ -1,6 +1,9 @@
 //! EditBox text defaults from XML templates: the box's `<FontString>`
 //! element, its `<TextInsets>` and the LEFT justification of a new box, as the
 //! WoW Forever 1.60.1 client reports them.
+// Contributor-observed native defaults and font-object precedence await evidence.
+#![cfg(feature = "optional-tests")]
+
 use wow_ui_sim::loader::load_addon;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
