@@ -196,3 +196,40 @@ fn number(text: &str) -> Option<u32> {
         .map_or((text, 10), |digits| (digits, 16));
     u32::from_str_radix(digits, radix).ok()
 }
+
+/// R82/R82b: display total and lookup rank are distinct when total is zero.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub struct ArtifactRanks {
+    pub displayed_total: u32,
+    pub lookup_rank: u8,
+    pub displayed_maximum: u32,
+    pub adjusted_bonus: u32,
+}
+
+pub fn artifact_ranks(
+    flags: u32,
+    base: u8,
+    total: u8,
+    display: &super::inputs::ArtifactDisplay,
+) -> ArtifactRanks {
+    let total = if flags & 64 != 0 { 1 } else { total };
+    let bonus = u32::from(total).wrapping_sub(u32::from(base));
+    let mut maximum = display.normal_maximum.wrapping_add(bonus);
+    if (maximum as i32) > (display.rank_limit as i32) {
+        maximum = display.rank_limit;
+    }
+    ArtifactRanks {
+        displayed_total: u32::from(total),
+        lookup_rank: total.max(1),
+        displayed_maximum: if display.use_normal_maximum {
+            display.normal_maximum
+        } else {
+            maximum
+        },
+        adjusted_bonus: if flags & 16 != 0 && (bonus as i32) > 0 {
+            bonus.wrapping_sub(1)
+        } else {
+            bonus
+        },
+    }
+}

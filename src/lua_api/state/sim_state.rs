@@ -8,6 +8,7 @@ pub(crate) struct RegisteredLoadWith {
 }
 
 pub struct SimState {
+    pub hyperlink_tooltip: crate::c_api::c_tooltip_info_hyperlink::inputs::HyperlinkTooltipInputs,
     /// Selected loot specialization; zero follows the active specialization.
     pub loot_specialization: u32,
     pub(crate) loot_spec_window: Option<(std::time::Instant, u8)>,

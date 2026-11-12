@@ -1,5 +1,6 @@
 //! R82 (70688) hyperlink service. Native UNKNOWN paths publish no fabricated rows.
 //! PTR/Forever reuse of the Retail routing contract is INFERRED.
+pub mod inputs;
 pub mod parse;
 
 use crate::lua_api::globals::missing_surface::tooltip_info::{
@@ -77,6 +78,24 @@ pub(crate) fn get_hyperlink(state: &mut LuaState) -> LuaResult<u32> {
             // R82 secondaryFlag=true suppresses all grant/inspect annotations.
             tooltip_for_link_spell(state, spell_id)
         }
+        HyperlinkRequest::AzeriteEssence { id, rank } => {
+            let Some(input) = borrow_state(state)?
+                .hyperlink_tooltip
+                .essence_spells
+                .get(&(id, rank))
+                .cloned()
+            else {
+                return crate::c_api::tooltip_data::unknown_getter_failure();
+            };
+            let tooltip = compose_tooltip(state, 8.0, Some(f64::from(id)));
+            let line = append_line(state, tooltip, 0.0, &input.main_heading, None);
+            restore_plain_line_type(state, line);
+            append_spell_lines(state, tooltip, input.main_spell_id);
+            let line = append_line(state, tooltip, 0.0, &input.passive_heading, None);
+            restore_plain_line_type(state, line);
+            append_spell_lines(state, tooltip, input.passive_spell_id);
+            tooltip
+        }
         // Producer-specific descriptor rows are composed by the hyperlink route.
         other => return power_route(state, other),
     };
@@ -103,4 +122,33 @@ fn pvp_talent_spell(state: &LuaState, id: u32) -> LuaResult<Option<u32>> {
 fn power_route(_state: &mut LuaState, _request: HyperlinkRequest) -> LuaResult<u32> {
     // No fallback: unknown row providers and no-producer routes stay unmodelled.
     crate::c_api::tooltip_data::unknown_getter_failure()
+}
+
+fn append_spell_lines(state: &mut LuaState, tooltip: Val, spell_id: u32) {
+    use crate::lua_api::methods::{table_get, table_set_num};
+    let spell = tooltip_for_link_spell(state, spell_id);
+    let source = table_get(state, spell, "lines");
+    let destination = table_get(state, tooltip, "lines");
+    let (Val::Table(source), Val::Table(destination)) = (source, destination) else {
+        return;
+    };
+    let rows: Vec<_> = (1..)
+        .map_while(|index| {
+            let row = state.gc.tables.get(source)?.get_int(index);
+            (row != Val::Nil).then_some(row)
+        })
+        .collect();
+    let mut index = 1;
+    while state
+        .gc
+        .tables
+        .get(destination)
+        .is_some_and(|rows| rows.get_int(index) != Val::Nil)
+    {
+        index += 1;
+    }
+    for row in rows {
+        table_set_num(state, destination, index as f64, row);
+        index += 1;
+    }
 }

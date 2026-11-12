@@ -62,6 +62,10 @@ tooltip_selection_getters_fixture! {
     #[test]
     fn tooltip_hyperlink_r82_apower_rank_colour_uses_adjusted_bonus() {
         let env = tooltip_full_env_helpers::load_full_env_without_post_load();
+        env.state().borrow_mut().hyperlink_tooltip.artifact_display.insert(41,
+            wow_ui_sim::c_api::c_tooltip_info_hyperlink::inputs::ArtifactDisplay {
+                normal_maximum: 3, rank_limit: 6, use_normal_maximum: false,
+            });
         env.exec(r#"
             -- R82 Q3 apower: rank line type 0, followed by type-1 blank.
             -- Fixture row 41 is INFERRED 70391 data. No assertion of its text/value.
@@ -95,6 +99,73 @@ tooltip_selection_getters_fixture! {
                     if line.type == 31 then hasLevel = type(line.itemLevel) == 'number' end
                 end
                 assert(hasLevel, 'conduit item-level metadata missing')
+            end
+        "#).unwrap();
+    }
+
+    #[test]
+    fn tooltip_hyperlink_r82_essence_uses_supplied_rank_spell_selection() {
+        use wow_ui_sim::c_api::c_tooltip_info_hyperlink::inputs::EssenceSpells;
+        let env = tooltip_full_env_helpers::load_full_env_without_post_load();
+        env.state().borrow_mut().hyperlink_tooltip.essence_spells.insert((7,1), EssenceSpells {
+            main_spell_id: 19750, passive_spell_id: 1459,
+            main_heading: "Supplied main power".into(), passive_heading: "Supplied passive power".into(),
+        });
+        env.exec(r#"
+            -- R82 Q2/Q3 mode 2: identity and main/passive ordering, no source/next rank.
+            GameTooltip:SetOwner(UIParent, 'ANCHOR_NONE')
+            GameTooltip:SetHyperlink('azessence:7:0')
+            local data = GameTooltip:GetPrimaryTooltipData()
+            assert(data and data.type == 8 and data.id == 7)
+            assert(data.lines[1].leftText == 'Supplied main power')
+            assert(data.lines[2].leftText == C_Spell.GetSpellName(19750))
+            local passive
+            for i,line in ipairs(data.lines) do
+                if line.leftText == 'Supplied passive power' then passive = i end
+            end
+            assert(passive and passive > 2)
+            assert(data.lines[passive+1].leftText == C_Spell.GetSpellName(1459))
+        "#).unwrap();
+    }
+
+    #[test]
+    fn tooltip_hyperlink_r82_quest_only_publishes_supplied_title() {
+        let env = tooltip_full_env_helpers::load_full_env_without_post_load();
+        let id = {
+            let mut state = env.state().borrow_mut();
+            let quest = state.quest_log_entries.entries.first_mut().expect("seeded quest");
+            quest.title = "Supplied hyperlink quest".into();
+            quest.quest_id
+        };
+        env.exec(&format!(r#"
+            -- R82 Q3 quest prefix; objective/state helpers are UNKNOWN.
+            GameTooltip:SetOwner(UIParent, 'ANCHOR_NONE')
+            GameTooltip:SetHyperlink('quest:{id}')
+            local data = GameTooltip:GetPrimaryTooltipData()
+            assert(data and data.type == 23 and data.id == {id})
+            assert(#data.lines == 1 and data.lines[1].type == 0)
+            assert(data.lines[1].leftText == 'Supplied hyperlink quest')
+        "#)).unwrap();
+    }
+
+    #[cfg(feature = "client-retail")]
+    #[test]
+    fn tooltip_hyperlink_r82_pvptal_uses_primary_spell_without_annotation() {
+        use wow_ui_sim::c_api::c_tooltip_info_pvp_talent::PvpTalentTooltipRecord;
+        let env = tooltip_full_env_helpers::load_full_env_without_post_load();
+        env.state().borrow_mut().pvp_talent_tooltip.catalog.insert(9001,PvpTalentTooltipRecord {
+            spell_id:19750, overrides_spell_id:1459, level_required:99,
+            grant_rejected_by_item:true, ..Default::default()
+        });
+        env.exec(r#"
+            -- R82 Q2/Q3: primary row spell, secondaryFlag=true suppresses annotation.
+            GameTooltip:SetOwner(UIParent, 'ANCHOR_NONE')
+            GameTooltip:SetHyperlink('pvptal:9001')
+            local data = GameTooltip:GetPrimaryTooltipData()
+            local spell = C_TooltipInfo.GetHyperlink('spell:19750')
+            assert(data and data.id == 19750 and #data.lines == #spell.lines)
+            for i,line in ipairs(data.lines) do
+                assert(line.leftText == spell.lines[i].leftText)
             end
         "#).unwrap();
     }
@@ -210,4 +281,41 @@ fn tooltip_hyperlink_r82_rank_inputs_and_marker_inventory() {
             total: 3
         })
     );
+}
+
+#[test]
+fn tooltip_hyperlink_r82b_artifact_display_math_uses_explicit_context() {
+    use wow_ui_sim::c_api::c_tooltip_info_hyperlink::{
+        inputs::ArtifactDisplay, parse::artifact_ranks,
+    };
+    let mut display = ArtifactDisplay {
+        normal_maximum: 3,
+        rank_limit: 6,
+        use_normal_maximum: false,
+    };
+    // R82b: zero displays zero but looks up rank 1. Max adjusts by total-base.
+    let ranks = artifact_ranks(0, 0, 0, &display);
+    assert_eq!(
+        (
+            ranks.displayed_total,
+            ranks.lookup_rank,
+            ranks.displayed_maximum
+        ),
+        (0, 1, 3)
+    );
+    let ranks = artifact_ranks(0, 1, 3, &display);
+    assert_eq!(
+        (
+            ranks.displayed_total,
+            ranks.displayed_maximum,
+            ranks.adjusted_bonus
+        ),
+        (3, 5, 2)
+    );
+    assert_eq!(artifact_ranks(0, 0, 8, &display).displayed_maximum, 6);
+    assert_eq!(artifact_ranks(64, 0, 8, &display).displayed_total, 1);
+    assert_eq!(artifact_ranks(16, 1, 2, &display).adjusted_bonus, 0);
+    assert_eq!(artifact_ranks(16, 2, 1, &display).adjusted_bonus, u32::MAX);
+    display.use_normal_maximum = true;
+    assert_eq!(artifact_ranks(0, 1, 3, &display).displayed_maximum, 3);
 }
