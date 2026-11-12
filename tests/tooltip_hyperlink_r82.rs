@@ -59,6 +59,46 @@ tooltip_selection_getters_fixture! {
         "#).unwrap();
     }
 
+    #[test]
+    fn tooltip_hyperlink_r82_apower_rank_colour_uses_adjusted_bonus() {
+        let env = tooltip_full_env_helpers::load_full_env_without_post_load();
+        env.exec(r#"
+            -- R82 Q3 apower: rank line type 0, followed by type-1 blank.
+            -- Fixture row 41 is INFERRED 70391 data. No assertion of its text/value.
+            GameTooltip:SetOwner(UIParent, 'ANCHOR_NONE')
+            for _, case in ipairs({{'apower:41:1:1', HIGHLIGHT_FONT_COLOR}, {'apower:41:2:1', INCREASE_STAT_COLOR}}) do
+                GameTooltip:SetHyperlink(case[1])
+                local data = GameTooltip:GetPrimaryTooltipData()
+                assert(data and data.lines and data.lines[2], 'apower prefix missing')
+                assert(data.lines[1].type == 0 and data.lines[2].type == 0 and data.lines[3].type == 1)
+                local colour = data.lines[2].leftColor
+                assert(math.abs(colour.r-case[2].r)<0.005 and math.abs(colour.g-case[2].g)<0.005 and math.abs(colour.b-case[2].b)<0.005, 'bonus colour')
+            end
+        "#).unwrap();
+    }
+
+    #[test]
+    fn tooltip_hyperlink_r82_conduit_clamps_rank_and_suppresses_soulbound() {
+        let env = tooltip_full_env_helpers::load_full_env_without_post_load();
+        env.exec(r#"
+            -- R82 Q2/Q3 mode 1, signed clamp, descriptor prefix, no soulbound row.
+            -- Fixture conduit 5 is INFERRED 70391 data, not native 70688 proof.
+            for _, rank in ipairs({0,1,-1}) do
+                GameTooltip:SetOwner(UIParent, 'ANCHOR_NONE')
+                GameTooltip:SetHyperlink('conduit:5:' .. rank)
+                local data = GameTooltip:GetPrimaryTooltipData()
+                assert(data and data.lines and #data.lines >= 3, 'conduit prefix missing')
+                assert(data.lines[1].type == 0)
+                local hasLevel = false
+                for _, line in ipairs(data.lines) do
+                    assert(line.leftText ~= ITEM_SOULBOUND, 'link mode must suppress soulbound')
+                    if line.type == 31 then hasLevel = type(line.itemLevel) == 'number' end
+                end
+                assert(hasLevel, 'conduit item-level metadata missing')
+            end
+        "#).unwrap();
+    }
+
 }
 
 #[test]
