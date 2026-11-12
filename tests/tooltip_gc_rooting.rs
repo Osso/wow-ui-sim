@@ -94,6 +94,14 @@ fn aura_parent_survives_color_collection() {
     env.exec("A_Admin.AddBuff(19750, 'Audit Aura', 136243, 60, 1)")
         .unwrap();
     collect_in_colors(&env);
+    // R81 Q4: name + supplied remaining text + description keep three collecting rows.
+    let id = env.state().borrow().player.buffs[0].aura_instance_id;
+    env.state()
+        .borrow_mut()
+        .aura_tooltip_inputs
+        .entry(id)
+        .or_default()
+        .remaining_text = Some("host aura time".into());
     env.exec("local t = C_TooltipInfo.GetUnitAura('player', 1, 'HELPFUL'); CheckTip(t, 'Audit Aura'); assert(#t.lines == 3)").unwrap();
 }
 
