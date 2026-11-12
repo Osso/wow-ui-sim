@@ -572,10 +572,10 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
                 "local altered = false; function C_CharacterCreation.IsViewingAlteredForm() return altered end; function C_CharacterCreation.SetViewingAlteredForm(value) altered = value end",
             )?;
         }
-        // User-approved, not native evidence: class-trial boosts are not modeled.
-        lua.exec("function C_CharacterCreation.GetTrialBoostStartingLevel() return 0 end")?;
     }
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Ptr {
+        // Preserve the existing PTR scenario default; R61 did not prove PTR availability.
+        lua.exec("function C_CharacterCreation.GetTrialBoostStartingLevel() return 0 end")?;
         // PTR registration is UNKNOWN; retain the previous preview API fallbacks.
         lua.exec(
             "function C_CharacterCreation.SetSelectedPreviewGearType(gearType) end; function C_CharacterCreation.SetModelDressState(dressedState) end; function C_CharacterCreation.SetCameraZoomLevel(zoomLevel, keepCustomZoom) end; function C_CharacterCreation.SetBlurEnabled(enabled) end",

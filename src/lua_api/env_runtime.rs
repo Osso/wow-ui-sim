@@ -171,6 +171,11 @@ impl WowLuaEnv {
             screen_kind,
         )
         .expect("queued-upgrade registration should follow screen mode");
+        {
+            let mut lua = self.lua.borrow_mut();
+            crate::c_api::update_screen_registration(lua.state_mut())
+                .expect("screen-specific C_* registration should succeed");
+        }
         install_screen_mode_globals(self, screen_kind);
         crate::c_api::c_character_creation::update_screen_registration(self, screen_kind);
         crate::c_api::c_login::update_screen_registration(self, screen_kind);

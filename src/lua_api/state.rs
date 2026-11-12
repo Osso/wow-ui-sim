@@ -547,6 +547,9 @@ macro_rules! build_empty_sim_state {
             player: PlayerState::seeded(),
             war_mode: crate::c_api::c_pvp::war_mode::WarModeState::default(),
             pvp_talents: crate::c_api::c_spec::PvpTalentState::default(),
+            #[cfg(feature = "client-retail")]
+            pvp_talent_tooltip:
+                crate::c_api::c_tooltip_info_pvp_talent::PvpTalentTooltipInputs::default(),
             player_xp: PlayerXpState::default(),
             bind_location: "Stormwind City".into(),
             pvp_honor: PvpHonorState::default(),
@@ -778,6 +781,8 @@ macro_rules! build_empty_sim_state {
             character_services: CharacterServicesState::default(),
             shared_character_services:
                 crate::c_api::c_shared_character_services::SharedCharacterServicesState::default(),
+            trial_boost_level:
+                crate::c_api::c_character_creation_trial_boost::TrialBoostLevelState::default(),
             scenario: ScenarioState::default(),
             death_recaps: Vec::new(),
             // Cached FrameXMLBase/Constants.lua: MAX_TOTEMS = 4.

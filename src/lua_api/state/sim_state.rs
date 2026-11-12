@@ -669,6 +669,9 @@ pub struct SimState {
     pub player: PlayerState,
     pub war_mode: crate::c_api::c_pvp::war_mode::WarModeState,
     pub pvp_talents: crate::c_api::c_spec::PvpTalentState,
+    /// Retail GetPvpTalent catalog and state inputs; all maps are host-supplied.
+    #[cfg(feature = "client-retail")]
+    pub pvp_talent_tooltip: crate::c_api::c_tooltip_info_pvp_talent::PvpTalentTooltipInputs,
     pub player_xp: PlayerXpState,
     pub bind_location: String,
     pub pvp_honor: PvpHonorState,
@@ -956,6 +959,7 @@ pub struct SimState {
     pub character_services: CharacterServicesState,
     pub shared_character_services:
         crate::c_api::c_shared_character_services::SharedCharacterServicesState,
+    pub trial_boost_level: crate::c_api::c_character_creation_trial_boost::TrialBoostLevelState,
     pub scenario: ScenarioState,
     pub death_recaps: Vec<DeathRecapEntry>,
     pub chat_bubbles: Vec<ChatBubble>,
