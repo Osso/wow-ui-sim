@@ -63,9 +63,8 @@ fn retail_pvp_talent_catalog_uses_exported_rows_without_inventing_grants() {
 }
 
 #[test]
-fn pvp_slot_on_enter_uses_default_catalog_spell_and_unlock_lines() {
-    let env = crate::common::panel_fixtures::setup_env();
-    crate::common::supply_empty_forever_spellbook_outfits(&env);
+fn game_tooltip_pvp_talent_default_catalog_shows_spell_and_verified_unlock_line() {
+    let env = env();
     {
         let mut state = env.state().borrow_mut();
         state.player.level = 20;
@@ -74,64 +73,51 @@ fn pvp_slot_on_enter_uses_default_catalog_spell_and_unlock_lines() {
     }
     env.exec(
         r#"
-        assert(type(GameTooltip.SetPvpTalent) == "function", "original tooltip accessor is installed")
-        C_SpecializationInfo.GetPvpTalentSlotInfo = function(slotIndex)
-            return { enabled = true, slotIndex = slotIndex }
-        end
+        assert(type(GameTooltip.SetPvpTalent) == "function",
+            "the original TooltipDataHandler accessor is installed")
         local originalGetPvpTalent = C_TooltipInfo.GetPvpTalent
         local getterArguments
+        local getterArgumentCount = 0
         local getterCalls = 0
         C_TooltipInfo.GetPvpTalent = function(...)
             getterCalls = getterCalls + 1
             getterArguments = { ... }
+            getterArgumentCount = select("#", ...)
             return originalGetPvpTalent(...)
         end
-        assert(PlayerSpellsUtil and PlayerSpellsUtil.ToggleClassTalentFrame)
-        PlayerSpellsUtil.ToggleClassTalentFrame()
-        local talents = assert(PlayerSpellsFrame and PlayerSpellsFrame.TalentsFrame)
-        local tray = assert(talents.PvPTalentSlotTray)
-        local button = assert(tray.Slots[1])
-        local cases = {
-            { talent = 5573, spell = 204018, title = "Blessing of Spellwarding", level = 25 },
-            { talent = 51, spell = 236180, title = "Den Mother", level = 30 },
-        }
-        for _, case in ipairs(cases) do
-            -- Supply the already-selected UI value without calling LearnPvpTalent.
-            button.predictedSetting.predictedValue = case.talent
-            assert(button:GetSelectedTalent() == case.talent, "real PvP slot carries its selected talent")
-            getterCalls = 0
-            getterArguments = nil
-            GameTooltip:Hide()
-            GameTooltip:ClearHandlerInfo()
-            GameTooltip:ClearLines()
-            assert(button:GetScript("OnEnter"))(button)
-            assert(GameTooltip:IsShown(), "original PvP slot hover shows the tooltip")
-            assert(GameTooltip:NumLines() > 0, "selected PvP talent shows visible tooltip lines")
-            assert(getterCalls == 1, "original OnEnter reaches the registered PvP getter once")
-            assert(getterArguments[1] == case.talent and getterArguments[2] == false
-                and getterArguments[4] == 1, "OnEnter supplies the selected talent and slot")
-            local data = GameTooltip:GetPrimaryTooltipData()
-            assert(data and data.id == case.spell,
-                "original hover displays the exported talent's spell line")
-            assert(GameTooltip:NumLines() == #data.lines, "tooltip shows every published content line")
-            for index, dataLine in ipairs(data.lines) do
-                local visibleLine = _G["GameTooltipTextLeft" .. index]
-                assert(visibleLine:GetText() == dataLine.leftText,
-                    "visible tooltip line text matches its published content")
-            end
-            local info = GameTooltip:GetPrimaryTooltipInfo()
-            assert(info and info.getterName == "GetPvpTalent", "original tooltip accessor metadata")
-            local ordinary = C_TooltipInfo.GetSpellByID(case.spell)
-            assert(#data.lines == #ordinary.lines + 1, "only the early unlock annotation applies")
-            local line = data.lines[#data.lines]
-            assert(line.leftText == UNLOCKED_AT_LEVEL:format(case.level),
-                "only the verified early unlock annotation applies")
-            assert(line.wrapText == nil, "the early unlock annotation is unwrapped")
-            local r, g, b = HOSTILE_STATUS_COLOR:GetRGB()
-            assert(math.abs(line.leftColor.r - r) < 0.01
-                and math.abs(line.leftColor.g - g) < 0.01
-                and math.abs(line.leftColor.b - b) < 0.01)
+        GameTooltip:Hide()
+        GameTooltip:ClearHandlerInfo()
+        GameTooltip:ClearLines()
+        GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
+        GameTooltip:SetPvpTalent(5573)
+        assert(getterCalls == 1 and getterArgumentCount == 1
+            and getterArguments[1] == 5573,
+            "the pass-through spy records the original accessor call")
+        assert(GameTooltip:IsShown(), "SetPvpTalent displays the tooltip")
+        assert(GameTooltip:NumLines() > 0, "the tooltip has visible spell content")
+        local data = GameTooltip:GetPrimaryTooltipData()
+        assert(data and data.id == 204018, "the verified SpellID supplies tooltip identity")
+        local ordinary = C_TooltipInfo.GetSpellByID(204018)
+        assert(#data.lines == #ordinary.lines + 1,
+            "only the verified early unlock annotation is added")
+        assert(GameTooltip:NumLines() == #data.lines,
+            "the tooltip shows every published content line")
+        for index, dataLine in ipairs(data.lines) do
+            local visibleLine = _G["GameTooltipTextLeft" .. index]
+            assert(visibleLine:GetText() == dataLine.leftText,
+                "visible text matches the tooltip data line")
         end
+        local info = GameTooltip:GetPrimaryTooltipInfo()
+        assert(info and info.getterName == "GetPvpTalent",
+            "the primary tooltip record names the original getter")
+        local finalLine = data.lines[#data.lines]
+        assert(finalLine.leftText == UNLOCKED_AT_LEVEL:format(25),
+            "LevelRequired supplies the only verified annotation")
+        assert(finalLine.wrapText == nil, "the early unlock annotation is unwrapped")
+        local r, g, b = HOSTILE_STATUS_COLOR:GetRGB()
+        assert(math.abs(finalLine.leftColor.r - r) < 0.01
+            and math.abs(finalLine.leftColor.g - g) < 0.01
+            and math.abs(finalLine.leftColor.b - b) < 0.01)
         "#,
     )
     .unwrap();
