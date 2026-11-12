@@ -452,8 +452,18 @@ fn runtime_loading_target_runs_load_with_follower_after_target_files() {
     );
     tree.add(
         "Blizzard_RuntimeLoadWithFollowerProbe",
-        "## AllowLoad: Both\n## LoadOnDemand: 1\n## LoadWith: Blizzard_RuntimeLoadWithTargetProbe",
+        "## AllowLoad: Both\n## LoadOnDemand: 1\n## LoadWith: Blizzard_RuntimeLoadWithTargetProbe\n## OptionalDeps: RuntimeLoadWithOptionalProbe\n## RequiredDeps: RuntimeLoadWithRequiredProbe",
         "table.insert(runtimeLoadWithOrder, 'follower')",
+    );
+    tree.add(
+        "RuntimeLoadWithOptionalProbe",
+        "",
+        "table.insert(runtimeLoadWithOrder, 'optional')",
+    );
+    tree.add(
+        "RuntimeLoadWithRequiredProbe",
+        "",
+        "table.insert(runtimeLoadWithOrder, 'required')",
     );
 
     assert_eq!(
@@ -461,7 +471,7 @@ fn runtime_loading_target_runs_load_with_follower_after_target_files() {
         (true, None)
     );
     tree.env
-        .exec("assert(table.concat(runtimeLoadWithOrder, ',') == 'target,follower')")
+        .exec("assert(table.concat(runtimeLoadWithOrder, ',') == 'target,optional,required,follower')")
         .unwrap();
 }
 
