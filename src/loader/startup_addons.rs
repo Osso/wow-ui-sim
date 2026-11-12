@@ -20,6 +20,63 @@ pub fn startup_bootstrap_eligible(toc: &TocFile) -> bool {
         && toc.has_bootstrap_files()
 }
 
+/// Register `LoadWith` declarations without changing the public AddOn list.
+pub fn register_load_with_addons(env: &LoaderEnv<'_>, addons: &[(String, PathBuf)]) {
+    let registered_enabled = env
+        .state()
+        .borrow()
+        .addons
+        .iter()
+        .map(|addon| (addon.folder_name.clone(), addon.enabled))
+        .collect::<HashMap<_, _>>();
+    let declarations = addons
+        .iter()
+        .filter_map(|(name, toc_path)| {
+            let toc = match TocFile::from_file(toc_path) {
+                Ok(toc) => toc,
+                Err(error) => {
+                    tracing::warn!(
+                        "Cannot read addon TOC {} for LoadWith registration: {error}",
+                        toc_path.display()
+                    );
+                    return None;
+                }
+            };
+            let targets = toc.load_with();
+            let enabled = registered_enabled
+                .get(name)
+                .copied()
+                .unwrap_or_else(|| toc.default_enabled());
+            Some((name.clone(), targets, enabled))
+        })
+        .collect::<Vec<_>>();
+    register_load_with_declarations(env, &declarations);
+}
+
+/// Register already-parsed `LoadWith` declarations and invalidate their index.
+pub fn register_load_with_declarations(
+    env: &LoaderEnv<'_>,
+    declarations: &[(String, Vec<String>, bool)],
+) {
+    let mut state = env.state().borrow_mut();
+    for (follower, targets, enabled) in declarations {
+        if targets.is_empty() {
+            state.registered_load_with.remove(follower);
+        } else {
+            state.registered_load_with.insert(
+                follower.clone(),
+                crate::lua_api::state::RegisteredLoadWith {
+                    enabled: *enabled,
+                    targets: targets.clone(),
+                },
+            );
+        }
+    }
+    if !declarations.is_empty() {
+        state.load_with_followers = None;
+    }
+}
+
 /// Keep bootstrap-only addons in the ordinary dependency-ordered startup stream.
 pub fn discover_blizzard_startup_addons_for_screen(
     directory: &Path,

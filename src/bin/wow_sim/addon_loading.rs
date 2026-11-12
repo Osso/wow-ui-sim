@@ -4,8 +4,9 @@ use std::collections::{HashMap, HashSet};
 use std::path::{Path, PathBuf};
 use wow_ui_sim::client_profile;
 use wow_ui_sim::loader::{
-    LoadResult, LoadTiming, StartupAddonLoadKind, discover_blizzard_startup_addons_for_screen,
-    load_startup_addon, startup_bootstrap_eligible,
+    LoadResult, LoadTiming, StartupAddonLoadKind, discover_all_blizzard_addons,
+    discover_blizzard_startup_addons_for_screen, load_startup_addon, register_load_with_addons,
+    register_load_with_declarations, startup_bootstrap_eligible,
 };
 use wow_ui_sim::logging;
 use wow_ui_sim::lua_api::state::LuaErrorRecord;
@@ -65,6 +66,9 @@ pub fn load_blizzard_addons(
     let mut total_timing = LoadTiming::default();
 
     env.gc_stop();
+
+    let registered_candidates = discover_all_blizzard_addons(&addons_dir);
+    register_load_with_addons(&env.loader_env(), &registered_candidates);
 
     // Wrath ships a top-level FrameXML.toc that pre-dates the retail Blizzard_*
     // split. Load it as a synthetic addon before iterating Blizzard_* dirs so
@@ -445,6 +449,7 @@ struct AddonMetadata {
     title: String,
     notes: String,
     metadata: HashMap<String, String>,
+    load_with: Vec<String>,
     load_on_demand: bool,
     default_enabled: bool,
     dependencies: Vec<String>,
@@ -458,6 +463,7 @@ fn parse_addon_metadata(name: &str, toc_path: &Path) -> AddonMetadata {
             title: name.to_string(),
             notes: String::new(),
             metadata: HashMap::new(),
+            load_with: Vec::new(),
             load_on_demand: false,
             default_enabled: true,
             dependencies: Vec::new(),
@@ -474,6 +480,7 @@ fn parse_addon_metadata(name: &str, toc_path: &Path) -> AddonMetadata {
             .unwrap_or_else(|| name.to_string()),
         notes: toc.metadata.get("Notes").cloned().unwrap_or_default(),
         metadata: toc.metadata.clone(),
+        load_with: toc.load_with(),
         load_on_demand: toc.is_load_on_demand(),
         default_enabled: toc.default_enabled(),
         dependencies: toc.dependencies(),
@@ -528,11 +535,14 @@ fn register_discovered_addons(
     addons: &[(String, PathBuf)],
     enable_overrides: Option<&HashMap<String, bool>>,
 ) {
+    let mut declarations = Vec::with_capacity(addons.len());
     for (name, toc_path) in addons {
         let metadata = parse_addon_metadata(name, toc_path);
         let enabled = addon_enabled(name, &metadata, enable_overrides);
+        declarations.push((name.clone(), metadata.load_with.clone(), enabled));
         register_or_update_addon(env, name, metadata, enabled);
     }
+    register_load_with_declarations(&env.loader_env(), &declarations);
 }
 
 fn register_or_update_addon(env: &WowLuaEnv, name: &str, metadata: AddonMetadata, enabled: bool) {

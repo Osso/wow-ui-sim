@@ -27,6 +27,8 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 - [x] VERIFIED (Retail 12.1.5.70688): when Y reaches follower processing, it submits X to the general loader after Y's own files. This applies to startup and runtime `C_AddOns.LoadAddOn(Y)`.
 - [x] VERIFIED (Retail 12.1.5.70688): each follower uses the general loader's checks and dependency order: optional dependencies, required dependencies, then its own files.
 - [x] VERIFIED (Retail 12.1.5.70688): an early-exit Y submits no followers.
+- [ ] SIMULATOR POLICY (pending R64c): register packaged Blizzard `LoadWith` declarations privately before startup without changing the public AddOn list; register user AddOns only in the existing third-party registration step.
+- [ ] SIMULATOR POLICY (pending R64c): build the follower index from registered declarations, invalidate it when registrations change, and do not submit disabled or unregistered followers.
 
 ## How it works
 
@@ -38,12 +40,12 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 - `crates/sim-toc/src/lib.rs` — parses `LoadManagers` metadata.
 - `src/loader/addon_order.rs` — orders packaged startup addons and dependencies.
 - `src/loader/mod.rs` — discovers startup roots and prerequisite addons.
-- `src/loader/startup_addons.rs` — builds the ordered startup stream and submits startup followers.
-- `src/bin/wow_sim/addon_loading.rs` — skips startup roots that the follower loader already loaded.
+- `src/loader/startup_addons.rs` — builds the ordered startup stream, registers follower declarations, and submits startup followers.
+- `src/bin/wow_sim/addon_loading.rs` — registers packaged follower declarations before Blizzard startup, registers third-party declarations, and skips startup roots already loaded by followers.
 - `src/c_api/c_addons.rs` — exposes startup follower processing through the runtime loader.
 - `src/c_api/c_addons_runtime.rs` — resolves runtime dependencies and submits `LoadWith` followers.
-- `src/lua_api/state/sim_state.rs` — holds the resolved target-to-follower index.
-- `src/lua_api/state.rs` — initializes the follower index.
+- `src/lua_api/state/sim_state.rs` — holds registered follower declarations and the resolved target-to-follower index.
+- `src/lua_api/state.rs` — initializes the registration map and follower index.
 - `src/lua_api/state/ui_reload.rs` — clears the follower index on UI reload.
 
 ## Tests asserting this spec
@@ -58,6 +60,7 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 - [ ] INFERRED: user AddOns-directory inputs correspond to native phase three. This inference is not asserted by tests.
 - [ ] UNKNOWN: Whether a LoadOnDemand `LoadWith` target receives a startup request through another path.
 - [ ] UNKNOWN: `LoadWith` behavior on PTR and Forever; R64 verifies it only on Retail 12.1.5.70688.
+- [ ] UNKNOWN (R64c item 3): whether a disabled addon appears in the native follower list. Tests assert only that it is not loaded.
 - [ ] UNKNOWN: Whether follower load failures propagate to the triggering addon. The simulator keeps the trigger result based on the trigger's own load and records follower failures separately.
 - [ ] UNKNOWN: The callers and observable effect of the internal mode-one load-on-demand dependency request; dependency file loading remains unchanged.
 

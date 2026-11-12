@@ -55,7 +55,8 @@ pub(crate) use load_addon_trace::{
 };
 pub use startup_addons::{
     StartupAddon, StartupAddonLoadKind, discover_blizzard_startup_addons_for_screen,
-    load_startup_addon, startup_bootstrap_eligible,
+    load_startup_addon, register_load_with_addons, register_load_with_declarations,
+    startup_bootstrap_eligible,
 };
 mod simple_html;
 pub use xml_frame::create_frame_from_xml;

@@ -625,6 +625,22 @@ pub(super) fn addon_is_disabled(state: &LuaState, addon_name: &str) -> bool {
         .unwrap_or(false)
 }
 
+pub(super) fn addon_is_enabled(state: &LuaState, addon_name: &str) -> bool {
+    let Ok(sim) = borrow_state(state) else {
+        return false;
+    };
+    if let Some(addon) = sim
+        .addons
+        .iter()
+        .find(|addon| addon.folder_name == addon_name)
+    {
+        return addon.enabled;
+    }
+    sim.registered_load_with
+        .get(addon_name)
+        .is_some_and(|registration| registration.enabled)
+}
+
 fn push_load_result(
     state: &mut LuaState,
     success: bool,

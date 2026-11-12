@@ -1,3 +1,7 @@
+## [2026-11-11] implementation | Registered LoadWith followers
+
+Updated [[addon-loading]] and the [phase contract](../specs/addon-load-phases.md) with simulator-only registration policy: packaged declarations use private state before startup, third-party registration invalidates the index, later runtime target loads see new declarations, and disabled or unregistered followers are not submitted. Public AddOn enumeration stays unchanged; native disabled-follower list membership remains UNKNOWN pending R64c.
+
 ## [2026-11-11] correction | Addon loading phase evidence
 
 Updated [[addon-loading]] and the [phase contract](../specs/addon-load-phases.md) with R64's verified `LoadFirst`/secure phase, packaged non-insecure phase, `LoadManagers`, and optional-before-required ordering. R64 also verifies Retail `LoadWith` follower resolution and post-file submission at startup and runtime; startup requests for LoD targets, PTR/Forever behavior, and follower-failure propagation remain UNKNOWN. User AddOns as native phase three remains INFERRED and untested.

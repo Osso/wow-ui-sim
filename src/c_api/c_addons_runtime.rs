@@ -81,21 +81,25 @@ fn load_runtime_addon_with_dependencies(
 }
 
 pub(super) fn load_with_followers(state: &mut LuaState, loader_env: &LoaderEnv<'_>, target: &str) {
-    if loader_env.state().borrow().load_with_followers.is_none() {
-        let followers = scan_load_with_followers(state, loader_env);
-        loader_env.state().borrow_mut().load_with_followers = Some(followers);
-    }
+    let followers = {
+        let mut sim = loader_env.state().borrow_mut();
+        if sim.load_with_followers.is_none() {
+            let declarations = sim
+                .registered_load_with
+                .iter()
+                .map(|(follower, registration)| (follower.clone(), registration.targets.clone()))
+                .collect();
+            sim.load_with_followers = Some(index_load_with_declarations(declarations));
+        }
+        sim.load_with_followers
+            .as_ref()
+            .and_then(|map| map.get(target))
+            .cloned()
+            .unwrap_or_default()
+    };
 
-    let followers = loader_env
-        .state()
-        .borrow()
-        .load_with_followers
-        .as_ref()
-        .and_then(|map| map.get(target))
-        .cloned()
-        .unwrap_or_default();
     for follower in followers {
-        if super::addon_is_disabled(state, &follower) {
+        if !super::addon_is_enabled(state, &follower) {
             continue;
         }
         submit_load_with_follower(state, &follower);
@@ -113,98 +117,8 @@ fn submit_load_with_follower(state: &mut LuaState, addon_name: &str) {
     }
 }
 
-fn scan_load_with_followers(
-    state: &LuaState,
-    loader_env: &LoaderEnv<'_>,
-) -> HashMap<String, Vec<String>> {
-    let bases = {
-        let sim = loader_env.state().borrow();
-        if sim.addon_base_paths.is_empty() {
-            super::default_runtime_addon_bases()
-        } else {
-            sim.addon_base_paths.clone()
-        }
-    };
-    let addon_names = scan_addon_names(&bases);
-    let declarations = read_load_with_declarations(state, addon_names);
-    index_load_with_declarations(declarations)
-}
-
-fn scan_addon_names(bases: &[PathBuf]) -> Vec<String> {
-    let mut addon_names = HashSet::new();
-    for base in bases {
-        collect_addon_names_from_root(base, &mut addon_names);
-    }
-
-    let mut addon_names: Vec<_> = addon_names.into_iter().collect();
-    addon_names.sort();
-    addon_names
-}
-
-fn collect_addon_names_from_root(base: &Path, addon_names: &mut HashSet<String>) {
-    let entries = match std::fs::read_dir(base) {
-        Ok(entries) => entries,
-        Err(_) if !base.is_dir() => return,
-        Err(error) => {
-            tracing::warn!(
-                "Cannot inspect addon root {} for LoadWith: {error}",
-                base.display()
-            );
-            return;
-        }
-    };
-    for entry in entries {
-        let entry = match entry {
-            Ok(entry) => entry,
-            Err(error) => {
-                tracing::warn!(
-                    "Cannot inspect an addon entry under {}: {error}",
-                    base.display()
-                );
-                continue;
-            }
-        };
-        let path = entry.path();
-        if !path.is_dir() {
-            continue;
-        }
-        let Some(name) = path.file_name().and_then(|name| name.to_str()) else {
-            continue;
-        };
-        addon_names.insert(name.to_owned());
-    }
-}
-
-fn read_load_with_declarations(
-    state: &LuaState,
-    addon_names: Vec<String>,
-) -> Vec<(String, Vec<String>)> {
-    let mut declarations = Vec::new();
-    for addon_name in addon_names {
-        let Some(toc_path) = super::find_runtime_addon_toc_ignoring_screen(state, &addon_name)
-        else {
-            continue;
-        };
-        let toc = match TocFile::from_file(&toc_path) {
-            Ok(toc) => toc,
-            Err(error) => {
-                tracing::warn!(
-                    "Cannot read addon TOC {} for LoadWith: {error}",
-                    toc_path.display()
-                );
-                continue;
-            }
-        };
-        let targets = toc.load_with();
-        if !targets.is_empty() {
-            declarations.push((addon_name, targets));
-        }
-    }
-    declarations
-}
-
 fn index_load_with_declarations(
-    declarations: Vec<(String, Vec<String>)>,
+    declarations: HashMap<String, Vec<String>>,
 ) -> HashMap<String, Vec<String>> {
     let mut followers = HashMap::<String, Vec<String>>::new();
     for (follower, targets) in declarations {

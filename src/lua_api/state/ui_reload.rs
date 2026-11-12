@@ -75,6 +75,7 @@ impl SimState {
 
     fn discard_addon_runtime(&mut self) {
         self.addons.clear();
+        self.registered_load_with.clear();
         self.load_with_followers = None;
         self.addon_initialization_failures.clear();
         self.loading_addon_index = None;
