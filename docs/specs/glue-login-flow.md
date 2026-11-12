@@ -578,3 +578,26 @@ Unsupported numeric-string selection/background and extra-argument assertions,
 Game absence assertions for R44, PTR empty-catalog/publisher claims, capability
 projection tails and high-resolution return-type claims are removed. Verified
 publication, field serialization and unrelated consumer error checks remain.
+
+
+### Review validation after m36
+
+Master b4a4a14a5 was merged with --no-ff as fd5e2a995. Its native trial-boost
+registration and screen hooks remain unchanged. At 6b1454c53, the changed-test
+batch passes Retail 48/48 (8.40s) and Forever 60/60 (21.18s). At 1bae720ff,
+PTR passes 38/38 (9.44s). The only intervening source change scopes the PTR
+strict-startup diagnostic check as explicitly approved by comment136.
+
+That check retains and prints exactly two known R64 loader residues:
+CharCustomizeFrame nil at Blizzard_PTRFeedback.lua:729 and
+Blizzard_PTRFeedback_Events_Glue.lua:71. Only their complete first-line
+diagnostic suffixes are allowed on PTR; other errors and all Forever errors
+remain failures. No loader workaround or vendor override is introduced.
+
+The runtime batch uses integration-test filters glue_login, glue_credits,
+glue_video, glue_startup_scope, game_rules and forever_login_catalog_defaults.
+The new legacy cfg paths also pass cargo check --test integration for Era,
+Anniversary and Wrath (154s, 50.72s and 48.50s), with incremental compilation
+disabled for these checks. All six logs have zero compiler warnings.
+These are targeted checks, not a new all-profile/full-suite acceptance claim.
+The shared-loader files exactly match m36 master. All jobs completed.

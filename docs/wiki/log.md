@@ -1,3 +1,7 @@
+## [2026-11-12] validation | PR54 review revisions after m36
+
+The [login contract](../specs/glue-login-flow.md#review-validation-after-m36) records targeted Retail48/48, Forever60/60 and PTR38/38, plus Era/Anniversary/Wrath integration-target compile checks, all without warnings. Shared loader files match master. PTR retains exactly two named R64 diagnostics under coordinator approval; no other error allowance or loader workaround.
+
 ## [2026-11-12] review | Bound PR54 contracts and profile scope
 
 The [login specification](../specs/glue-login-flow.md#pr54-review-corrections-comment132) records coordinator review corrections: restore shared-loader ownership and legacy behavior, distinguish login/credits diagnostics, clear inactive signed-int32 queues without events, and remove unsupported conformance assertions. Validation is pending on the revised source.
