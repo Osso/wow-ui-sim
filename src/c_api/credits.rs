@@ -1,0 +1,126 @@
+//! R63 field publication; R112 empty host catalog/text-map simulator policy.
+//! Native fresh rows/order remain unknown; R65 specifies text input/publication.
+use crate::client_profile::{ACTIVE, ClientProfile};
+use crate::lua_api::methods::{borrow_state, create_string, create_table, table_set};
+use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
+use rilua::vm::state::LuaState;
+use rilua::{LuaResult, Val};
+use std::collections::HashMap;
+
+#[derive(Clone, Debug, Default)]
+pub struct CreditsRow {
+    pub is_default: bool,
+    pub credits_file_id: u32,
+    pub key_art: String,
+    pub background: String,
+    pub name: String,
+    pub logo: u32,
+    pub sound_kit: Option<u32>,
+}
+#[derive(Clone, Debug, Default)]
+pub struct CreditsState {
+    /// Explicit host order, not a reconstructed native row order/fresh catalog.
+    pub rows: Vec<CreditsRow>,
+    pub texts: HashMap<i32, String>,
+}
+pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
+    if !matches!(ACTIVE, ClientProfile::Ptr | ClientProfile::WowForever) {
+        return Ok(());
+    }
+    table_set_rust_fn_static(state, state.global, "GetCreditsDisplayInfo", display)?;
+    if borrow_state(state)?.screen_kind.is_glue() {
+        table_set_rust_fn_static(state, state.global, "GetCreditsTextByFileDataID", text)?;
+    } else {
+        table_set(
+            state,
+            Val::Table(state.global),
+            "GetCreditsTextByFileDataID",
+            Val::Nil,
+        );
+    }
+    Ok(())
+}
+fn display(state: &mut LuaState) -> LuaResult<u32> {
+    let rows = borrow_state(state)?.credits.rows.clone();
+    let result = create_table(state);
+    let Val::Table(result_ref) = result else {
+        unreachable!()
+    };
+    for (index, row) in rows.iter().enumerate() {
+        let entry = create_table(state);
+        table_set(state, entry, "isDefault", Val::Bool(row.is_default));
+        table_set(
+            state,
+            entry,
+            "creditsFileID",
+            Val::Num(f64::from(row.credits_file_id)),
+        );
+        for (key, value) in [
+            ("keyArt", &row.key_art),
+            ("background", &row.background),
+            ("name", &row.name),
+        ] {
+            let value = create_string(state, value);
+            table_set(state, entry, key, value);
+        }
+        if row.logo != 0 {
+            table_set(state, entry, "logo", Val::Num(f64::from(row.logo)));
+        }
+        if let Some(sound) = row.sound_kit {
+            table_set(state, entry, "soundKit", Val::Num(f64::from(sound)));
+        }
+        if let Some(table) = state.gc.tables.get_mut(result_ref) {
+            let _ = table.raw_set(Val::Num((index + 1) as f64), entry, &state.gc.string_arena);
+        }
+        state.gc.barrier_back(result_ref);
+    }
+    state.push(result);
+    Ok(1)
+}
+fn text(state: &mut LuaState) -> LuaResult<u32> {
+    const USAGE: &str = "Usage: local creditsText = GetCreditsTextByFileDataID(fileDataID)";
+    let argument = stack_val(state, 1);
+    if matches!(argument, Val::Nil) {
+        return Err(super::helpers::bad_argument(
+            1,
+            "GetCreditsTextByFileDataID",
+            USAGE,
+        ));
+    }
+    let range_error = || {
+        super::helpers::bad_argument(
+            1,
+            "GetCreditsTextByFileDataID",
+            &format!(
+                "outside of expected range {} to {} - {USAGE}",
+                i32::MIN,
+                i32::MAX
+            ),
+        )
+    };
+    let number = match argument {
+        Val::Num(number) => Some(number),
+        Val::Str(reference) => state
+            .gc
+            .string_arena
+            .get(reference)
+            .and_then(|value| super::helpers::parse_numeric_string(value.data())),
+        _ => None,
+    }
+    .ok_or_else(range_error)?;
+    if !number.is_finite() || number < f64::from(i32::MIN) || number > f64::from(i32::MAX) {
+        return Err(range_error());
+    }
+    // R65: direct FileDataID resolution, independent of the display catalog.
+    let text = borrow_state(state)?
+        .credits
+        .texts
+        .get(&(number.trunc() as i32))
+        .cloned();
+    let value = match text {
+        Some(text) => create_string(state, &text),
+        None => Val::Nil,
+    };
+    state.push(value);
+    Ok(1)
+}

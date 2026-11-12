@@ -1,9 +1,12 @@
 > Proof receipts live untracked under `~/.local/state/wow-ui-sim`. The `data/patch-api/evidence` and `data/test-perf/evidence` trees were removed on 2026-11-08; historical links below are records, not live paths. Recover a file with `git show c011c1d95:<path>`.
 
-## [2026-11-11] implementation | Registered LoadWith followers
+## [2026-11-12] correction | Addon loading phases and LoadWith followers
 
-[Addon loading](systems/addon-loading.md#blizzard-addon-load-order) records private packaged declaration registration, ordered Retail/Forever follower submission, normal disabled refusal, continued processing after follower failure, and unchanged PTR behavior pending R70. Public AddOn enumeration remains unchanged; native disabled-follower vector membership is INFERRED.
+[Addon loading](systems/addon-loading.md#blizzard-addon-load-order) records R64 startup phases, `LoadManagers`, optional-before-required ordering, R64b/c follower resolution and refusal behavior, target-event ordering, and failure continuation. The simulator uses the verified Retail/Forever follower path without filtering enable state; PTR remains unchanged because native vector membership is UNKNOWN. Public AddOn enumeration remains unchanged; disabled-follower membership and phase-three early loading remain INFERRED.
 
+## [2026-11-11] implementation | Glue login submission
+
+[Forever Login Startup](investigations/forever-login-startup.md#login-submission-model-lt-a667-2026-11-11) links real-control submission, offline acceptance policy, host roster/capacity, ordinary CharacterCreate startup, R60 shared GameMode display, and R63 host credits/capability state, and R65 FileDataID validation. Native evidence and cached-build compatibility remain separate. Retail/PTR gates and real Forever submission pass after m35 integration; the approved passive empty-roster transition snapshot passes while downstream baseline setup errors remain visible. Final acceptance is pending.
 ## [2026-11-11] system | Character select screen data
 
 [Character select screen data](systems/chr-select-screen-data.md) links the profile-scoped DB2 rows and provenance. **VERIFIED:** Retail data is labeled with installed build 12.1.5.70783 and Forever rows with installed build 1.60.1.70888; targeted lookup tests pass 3/3 on each profile, and the PTR no-data test passes. **UNKNOWN:** Forever 70707 and PTR source rows. The native API and roster are separately owned.

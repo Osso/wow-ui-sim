@@ -28,6 +28,20 @@ fn login_state(env: &WowLuaEnv) -> (i32, bool, i32, bool) {
     }
 }
 
+// R40/R44 (lt-a667 ANSWERS 30/51): NONE is 1 on these evidenced profiles.
+// Retain historical expectations for profiles not covered by that answer.
+fn expected_connection_none() -> i32 {
+    use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
+    if matches!(
+        ACTIVE,
+        ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
+    ) {
+        1
+    } else {
+        0
+    }
+}
+
 #[test]
 fn login_screen_updates_glue_login_state() {
     let env = WowLuaEnv::new().unwrap();
@@ -41,7 +55,7 @@ fn login_screen_updates_glue_login_state() {
     let expected_aurora_state: i32 = env.eval("return LE_AURORA_STATE_NONE").unwrap();
     assert_eq!(aurora_state, expected_aurora_state);
     assert!(!connected_to_wow);
-    assert_eq!(wow_connection_state, 0);
+    assert_eq!(wow_connection_state, expected_connection_none());
     assert!(!has_realm_list);
 }
 
@@ -58,7 +72,7 @@ fn character_select_screen_updates_glue_login_state() {
     let expected_aurora_state: i32 = env.eval("return LE_AURORA_STATE_NONE").unwrap();
     assert_eq!(aurora_state, expected_aurora_state);
     assert!(connected_to_wow);
-    assert_eq!(wow_connection_state, 0);
+    assert_eq!(wow_connection_state, expected_connection_none());
     assert!(!has_realm_list);
 }
 
@@ -75,7 +89,7 @@ fn character_create_screen_updates_glue_login_state() {
     let expected_aurora_state: i32 = env.eval("return LE_AURORA_STATE_NONE").unwrap();
     assert_eq!(aurora_state, expected_aurora_state);
     assert!(connected_to_wow);
-    assert_eq!(wow_connection_state, 0);
+    assert_eq!(wow_connection_state, expected_connection_none());
     assert!(!has_realm_list);
 }
 
@@ -220,7 +234,12 @@ fn physical_display_input_matches_captured_wow_ui_dimensions() {
 #[test]
 fn invalid_physical_display_dimensions_leave_screen_state_unchanged() {
     let env = WowLuaEnv::new().expect("create environment");
-    for dimensions in [(0.0, 1440.0), (3440.0, 0.0), (f32::NAN, 1440.0), (3440.0, f32::INFINITY)] {
+    for dimensions in [
+        (0.0, 1440.0),
+        (3440.0, 0.0),
+        (f32::NAN, 1440.0),
+        (3440.0, f32::INFINITY),
+    ] {
         assert!(env.set_display_size(dimensions.0, dimensions.1).is_err());
     }
     let metrics: (f64, f64, f64, f64) = env

@@ -47,6 +47,7 @@ macro_rules! build_empty_sim_state {
                 crate::c_api::c_nameplate_manager::NamePlateHitTestInsets::default(),
             input_interface_style:
                 crate::c_api::c_input_interface_style::InputInterfaceStyle::default(),
+            video_capability_bytes: Default::default(),
             #[cfg(any(feature = "client-wowforever", feature = "client-ptr"))]
             gamepad_mapped_sticks: None,
             #[cfg(any(feature = "client-wowforever", feature = "client-ptr"))]
@@ -177,6 +178,9 @@ macro_rules! build_empty_sim_state {
             physical_screen_height: $runtime.screen_height,
             screen_kind: $runtime.screen_kind,
             in_character_create: false,
+            glue_login: Default::default(),
+            #[cfg(any(feature = "client-ptr", feature = "client-wowforever"))]
+            glue_feature_status: Default::default(),
             is_logged_in: $runtime.is_logged_in,
             post_event_workarounds_applied: false,
             screen_first_displayed: $runtime.screen_first_displayed,
@@ -568,6 +572,7 @@ macro_rules! build_empty_sim_state {
             modifier_keys: ModifierKeys::default(),
             pressed_keys: HashSet::new(),
             game_rules: GameRulesState::default(),
+            credits: Default::default(),
             discord: DiscordState::default(),
             forever_startup: crate::c_api::forever_startup::StartupInputs::stock(),
             external_event_url: Default::default(),
@@ -1303,6 +1308,12 @@ impl SimState {
 
     pub fn set_screen_kind(&mut self, screen_kind: ScreenKind) {
         self.screen_kind = screen_kind;
+        self.glue_login.reset_connection();
+        #[cfg(feature = "client-ptr")]
+        {
+            self.glue_login.ptr_connection =
+                crate::c_api::c_login::ptr_state::PtrConnectionState::for_screen(screen_kind);
+        }
         self.screen_first_displayed = false;
         if screen_kind.is_glue() {
             self.is_logged_in = false;

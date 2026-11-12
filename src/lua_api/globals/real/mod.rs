@@ -24,6 +24,14 @@ pub mod event_callbacks;
 pub mod forever_stat_contributions;
 pub mod frame_level_helpers;
 pub(crate) mod game_clock;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod glue_background;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod glue_connection;
+#[cfg(any(feature = "client-ptr", feature = "client-wowforever"))]
+pub mod glue_feature_status;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod glue_selection;
 pub mod glyph_state;
 pub mod gossip_probes;
 pub(crate) mod group_role_counts;

@@ -121,6 +121,41 @@ impl CVarStorage {
         self.get(name).as_deref() == Some("1")
     }
 
+    /// Native cached-integer truth projection (R50). Overflow and locale-specific
+    /// input remain outside the verified domain; generic GetCVarBool is unchanged.
+    pub(crate) fn cached_integer_nonzero(&self, name: &str) -> Option<bool> {
+        self.get(name).map(|value| cached_integer_nonzero(&value))
+    }
+
+    /// Bounded cached-integer projection using the verified R50 prefix rules.
+    /// Overflow and locale-specific input remain outside coverage.
+    pub(crate) fn cached_integer(&self, name: &str) -> Option<i32> {
+        let value = self.get(name)?;
+        let (digits, radix, sign) = if let Some(hex) = value
+            .strip_prefix("0x")
+            .or_else(|| value.strip_prefix("0X"))
+        {
+            (hex, 16, 1_i64)
+        } else {
+            let trimmed = value.trim_start_matches(|ch: char| ch.is_ascii_whitespace());
+            (
+                trimmed
+                    .strip_prefix('+')
+                    .or_else(|| trimmed.strip_prefix('-'))
+                    .unwrap_or(trimmed),
+                10,
+                if trimmed.starts_with('-') { -1 } else { 1 },
+            )
+        };
+        let mut number = 0_i64;
+        for digit in digits.chars().map_while(|ch| ch.to_digit(radix)) {
+            number = number
+                .checked_mul(i64::from(radix))?
+                .checked_add(i64::from(digit))?;
+        }
+        i32::try_from(number.checked_mul(sign)?).ok()
+    }
+
     /// Set a CVar value and persist to disk.
     pub fn set(&self, name: &str, value: &str) -> bool {
         let key = name.to_lowercase();
@@ -260,6 +295,17 @@ fn parse_default_cvars() -> (HashMap<String, String>, HashMap<String, String>) {
     let (mut defaults, mut original_names) = parse_cvar_yaml(include_str!("cvars.yaml"));
     insert_store_mirror_cvars(&mut defaults, &mut original_names);
     insert_collected_journal_cvar(&mut defaults, &mut original_names);
+    // R47: real registered local CVar, with distinct PTR/Forever declarations.
+    let preset_default = match crate::client_profile::ACTIVE {
+        crate::client_profile::ClientProfile::Ptr => Some("1"),
+        crate::client_profile::ClientProfile::WowForever => Some("0"),
+        _ => None,
+    };
+    if let Some(value) = preset_default {
+        let name = "hasSelectedExperiencePreset";
+        defaults.insert(name.to_lowercase(), value.to_owned());
+        original_names.insert(name.to_lowercase(), name.to_owned());
+    }
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
         // Forever 1.60.1.70707 WM77b native registration.
         defaults.insert("minimaptrackedinfov4".into(), "2162728".into());
@@ -894,5 +940,40 @@ mod tests {
         for name in PATCH_12_0_7_REMOVED_CVARS {
             assert_eq!(storage.get(name), None, "{name}");
         }
+    }
+}
+
+/// Hex selection precedes whitespace/sign handling in the native cache parser.
+fn cached_integer_nonzero(value: &str) -> bool {
+    let (digits, radix) = if let Some(hex) = value
+        .strip_prefix("0x")
+        .or_else(|| value.strip_prefix("0X"))
+    {
+        (hex, 16)
+    } else {
+        let trimmed = value.trim_start_matches(|ch: char| ch.is_ascii_whitespace());
+        (
+            trimmed
+                .strip_prefix('+')
+                .or_else(|| trimmed.strip_prefix('-'))
+                .unwrap_or(trimmed),
+            10,
+        )
+    };
+    digits
+        .chars()
+        .map_while(|ch| ch.to_digit(radix))
+        .any(|digit| digit != 0)
+}
+
+#[test]
+fn native_cached_integer_truth_prefixes() {
+    for value in ["-1", "+1", " 8", "08", "8 ", "8junk", "0x10", "0Xf"] {
+        assert!(cached_integer_nonzero(value), "{value:?}");
+    }
+    for value in [
+        "-0", "+0x10", "-0x10", " 0x10", "+ 1", "true", "false", "junk", "0x0junk",
+    ] {
+        assert!(!cached_integer_nonzero(value), "{value:?}");
     }
 }

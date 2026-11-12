@@ -1,7 +1,6 @@
 //! User-approved offline Forever glue presentation defaults, not native policy.
 //!
 //! Retire the realm-button default when realm-list/account presentation is modeled.
-//! Retire the nil display record when current game-mode display data is modeled.
 //! Retire the empty subregion/district catalogs when login realm discovery is modeled.
 //! Raw guards preserve modeled producers when they become available.
 
@@ -39,16 +38,6 @@ if rawget(districts, "GetAvailableSuperDistricts") == nil then
     end)
 end
 
-local rules = rawget(_G, "C_GameRules")
-if rules == nil then
-    rules = {}
-    rawset(_G, "C_GameRules", rules)
-end
-if rawget(rules, "GetCurrentGameModeDisplayInfo") == nil then
-    rawset(rules, "GetCurrentGameModeDisplayInfo", function()
-        return nil
-    end)
-end
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {

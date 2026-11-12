@@ -44,11 +44,21 @@ impl ScreenKind {
     /// Return the values expected by `C_Login.GetState()`.
     pub const fn login_state(self) -> (i32, bool, i32, bool) {
         const LE_AURORA_STATE_NONE: i32 = 1;
+        let connection_none = if matches!(
+            crate::client_profile::ACTIVE,
+            crate::client_profile::ClientProfile::Retail
+                | crate::client_profile::ClientProfile::Ptr
+                | crate::client_profile::ClientProfile::WowForever
+        ) {
+            1
+        } else {
+            0
+        };
         match self {
-            Self::Game => (LE_AURORA_STATE_NONE, true, 0, false),
-            Self::Login => (LE_AURORA_STATE_NONE, false, 0, false),
-            Self::CharacterSelect => (LE_AURORA_STATE_NONE, true, 0, false),
-            Self::CharacterCreate => (LE_AURORA_STATE_NONE, true, 0, false),
+            Self::Game => (LE_AURORA_STATE_NONE, true, connection_none, false),
+            Self::Login => (LE_AURORA_STATE_NONE, false, connection_none, false),
+            Self::CharacterSelect => (LE_AURORA_STATE_NONE, true, connection_none, false),
+            Self::CharacterCreate => (LE_AURORA_STATE_NONE, true, connection_none, false),
         }
     }
 }
