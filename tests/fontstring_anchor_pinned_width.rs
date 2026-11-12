@@ -7,7 +7,9 @@
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 fn env() -> WowLuaEnv {
-    WowLuaEnv::new().expect("Failed to create Lua environment")
+    let env = WowLuaEnv::new().expect("Failed to create Lua environment");
+    env.set_screen_size(1600.0, 1200.0);
+    env
 }
 
 #[test]
@@ -18,6 +20,7 @@ fn two_anchor_fontstring_takes_parent_width_not_text_width() {
             r#"
             local parent = CreateFrame("Frame", "AnchorParent", UIParent)
             parent:SetSize(150, 30)
+            parent:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 0, 0)
             local fs = parent:CreateFontString(nil, "ARTWORK", "GameFontNormal")
             fs:SetPoint("TOPLEFT")
             fs:SetPoint("TOPRIGHT")
@@ -46,6 +49,7 @@ fn left_offset_anchor_subtracts_from_parent_width() {
             r#"
             local parent = CreateFrame("Frame", "AnchorParent2", UIParent)
             parent:SetSize(220, 60)
+            parent:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 0, 0)
             local fs = parent:CreateFontString(nil, "ARTWORK", "GameFontNormal")
             fs:SetPoint("LEFT", parent, "LEFT", 50, 0)
             fs:SetPoint("RIGHT", parent, "RIGHT", 0, 0)
@@ -70,6 +74,7 @@ fn single_anchor_fontstring_still_uses_auto_text_width() {
             r#"
             local parent = CreateFrame("Frame", "AnchorParent3", UIParent)
             parent:SetSize(500, 60)
+            parent:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 0, 0)
             local fs = parent:CreateFontString(nil, "ARTWORK", "GameFontNormal")
             fs:SetPoint("CENTER")
             fs:SetText("Short")
@@ -92,6 +97,7 @@ fn fontstring_get_num_lines_reports_wrapped_line_count() {
             r#"
             local parent = CreateFrame("Frame", "NumLinesParent", UIParent)
             parent:SetSize(120, 80)
+            parent:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 0, 0)
 
             local fs = parent:CreateFontString(nil, "ARTWORK", "GameFontNormal")
             fs:SetWidth(120)
@@ -121,7 +127,6 @@ fn fontstring_get_num_lines_reports_wrapped_line_count() {
 #[test]
 fn two_edge_fontstring_width_updates_when_points_follow_text() {
     let env = env();
-    env.set_screen_size(1600.0, 1200.0);
     let (width, text_width): (f64, f64) = env
         .eval(
             r#"
@@ -155,7 +160,6 @@ fn two_edge_fontstring_width_updates_when_points_follow_text() {
 #[test]
 fn two_edge_fontstring_uses_resolved_width_of_zero_width_target() {
     let env = env();
-    env.set_screen_size(1600.0, 1200.0);
     let width: f64 = env
         .eval(
             r#"
@@ -187,7 +191,6 @@ fn two_edge_fontstring_uses_resolved_width_of_zero_width_target() {
 #[test]
 fn two_edge_fontstring_width_tracks_parent_resize() {
     let env = env();
-    env.set_screen_size(1600.0, 1200.0);
     let (initial_width, width, parent_width): (f64, f64, f64) = env
         .eval(
             r#"
