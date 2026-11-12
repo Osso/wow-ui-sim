@@ -446,6 +446,13 @@ fn test_set_spell_by_id_uses_wrapped_description_for_tooltip_width() {
 #[test]
 fn test_set_spell_by_id_colors_title_and_metadata_lines() {
     let env = WowLuaEnv::new().unwrap();
+    // R81 Q2: final helper outputs, not a cost or cast-time formula.
+    {
+        let mut sim = env.state().borrow_mut();
+        let input = sim.spell_tooltip_inputs.entry(19750).or_default();
+        input.cost = Some("host MANA cost".into());
+        input.cast_ms = Some(1500);
+    }
 
     env.exec("GameTooltip:SetSpellByID(19750)").unwrap();
 
