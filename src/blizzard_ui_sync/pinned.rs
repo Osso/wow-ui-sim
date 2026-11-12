@@ -489,7 +489,7 @@ mod tests {
             retail_provenance()
                 .unwrap()
                 .contents()
-                .contains("source=blizzard-cdn-pinned\\n")
+                .contains("source=blizzard-cdn-pinned\n")
         );
     }
 
