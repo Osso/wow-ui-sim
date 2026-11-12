@@ -460,6 +460,10 @@ fn spellbook_layout_stays_locked() {
                 if not approx(bgLeftRect.h, bgRightRect.h, 1.5) then
                     return "book_bg_halves_height_mismatch=" .. tostring(bgLeftRect.h) .. "," .. tostring(bgRightRect.h)
                 end
+                for _, f in ipairs({spellbook, bgLeft, bgRight}) do
+                    print("DIAG rect", f:GetDebugName(), f:GetRect())
+                    for i = 1, f:GetNumPoints() do print("DIAG point", f:GetPoint(i)) end
+                end
                 if not approx(bgLeftRect.r, bgRightRect.l, 2.0) then
                     return "book_bg_gap=" .. tostring(bgLeftRect.r - bgRightRect.l)
                 end

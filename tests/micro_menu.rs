@@ -223,7 +223,13 @@ fn texture_path(env: &WowLuaEnv, texture_expr: &str) -> String {
 
 post_wrath_ui_fixture! {
 fn professions_primary_frame_expr() -> &'static str {
-    "PrimaryProfession1 or (ProfessionsContentFrame and ProfessionsContentFrame.PrimaryProfession1)"
+    // PTR 70493: Mainline/Blizzard_ProfessionsBookTemplates.xml:166,172.
+    if cfg!(feature = "client-ptr") {
+        "ProfessionsBookFrame.ProfessionsContentFrame.PrimaryProfession1"
+    } else {
+        // Retail 70575: Blizzard_ProfessionsBook.xml:353,359.
+        "PrimaryProfession1"
+    }
 }
 
 fn professions_primary_spell_button_is_shown(env: &WowLuaEnv, button_name: &str) -> bool {

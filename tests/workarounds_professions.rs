@@ -556,7 +556,18 @@ fn casting_blacksmithing_opens_professions_frame() {
     let result: String = env
         .eval(
             r#"
+            C_AddOns.LoadAddOn("Blizzard_Professions")
+            local original = ProfessionsRecipeSchematicFormMixin.Init
+            local form = ProfessionsFrame.CraftingPage.SchematicForm
+            local originalInit = form.Init
+            form.Init = function(self, ...)
+                print("DIAG Init entry", ...)
+                local result = originalInit(self, ...)
+                print("DIAG Init exit", self.currentRecipeInfo, self.transaction)
+                return result
+            end
             CastSpellByID(2018)
+            print("DIAG transaction", form.currentRecipeInfo, form.transaction)
             if not ProfessionsFrame or not ProfessionsFrame:IsShown() then
                 return "frame_not_shown"
             end
@@ -592,13 +603,26 @@ fn clicking_blacksmithing_button_in_professions_book_opens_panel() {
             r#"
             ToggleProfessionsBook()
 
+            local candidates
+            if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE and ProfessionsBookFrame.ProfessionsContentFrame then
+                -- PTR 70493 Mainline/Blizzard_ProfessionsBookTemplates.xml:58,63,166.
+                local content = ProfessionsBookFrame.ProfessionsContentFrame
+                candidates = {
+                    content.PrimaryProfession1.SpellButton1,
+                    content.PrimaryProfession1.SpellButton2,
+                    content.PrimaryProfession2.SpellButton1,
+                    content.PrimaryProfession2.SpellButton2,
+                }
+            else
+                candidates = {
+                    PrimaryProfession1SpellButtonTop,
+                    PrimaryProfession1SpellButtonBottom,
+                    PrimaryProfession2SpellButtonTop,
+                    PrimaryProfession2SpellButtonBottom,
+                }
+            end
             local button
-            for _, candidate in ipairs({
-                PrimaryProfession1SpellButtonTop,
-                PrimaryProfession1SpellButtonBottom,
-                PrimaryProfession2SpellButtonTop,
-                PrimaryProfession2SpellButtonBottom,
-            }) do
+            for _, candidate in ipairs(candidates) do
                 if candidate then
                     local slot = ProfessionsBook_GetSpellBookItemSlot(candidate)
                     if slot then
