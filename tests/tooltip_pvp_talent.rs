@@ -1,5 +1,8 @@
 #![cfg(feature = "client-retail")]
 
+#[path = "tooltip_full_env_helpers.rs"]
+mod tooltip_full_env_helpers;
+
 use wow_ui_sim::c_api::c_tooltip_info_pvp_talent::PvpTalentTooltipRecord;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
@@ -62,9 +65,31 @@ fn retail_pvp_talent_catalog_uses_exported_rows_without_inventing_grants() {
     assert!(!catalog.contains_key(&i32::MAX), "absent IDs stay catalog misses");
 }
 
+fn env_with_pvp_talent_getter_spy() -> WowLuaEnv {
+    tooltip_full_env_helpers::load_full_env_without_post_load_with_addon_hook(
+        |env, addon_name| {
+            if addon_name == "Blizzard_SharedXMLGame" {
+                env.exec(
+                    r#"
+                    __pvpTalentGetterCalls = 0
+                    __pvpTalentGetterArguments = nil
+                    local originalGetPvpTalent = C_TooltipInfo.GetPvpTalent
+                    C_TooltipInfo.GetPvpTalent = function(...)
+                        __pvpTalentGetterCalls = __pvpTalentGetterCalls + 1
+                        __pvpTalentGetterArguments = { ... }
+                        return originalGetPvpTalent(...)
+                    end
+                    "#,
+                )
+                .expect("install pass-through PvP getter spy before TooltipDataHandler loads");
+            }
+        },
+    )
+}
+
 #[test]
 fn game_tooltip_pvp_talent_default_catalog_shows_spell_and_verified_unlock_line() {
-    let env = env();
+    let env = env_with_pvp_talent_getter_spy();
     {
         let mut state = env.state().borrow_mut();
         state.player.level = 20;
@@ -75,26 +100,16 @@ fn game_tooltip_pvp_talent_default_catalog_shows_spell_and_verified_unlock_line(
         r#"
         assert(type(GameTooltip.SetPvpTalent) == "function",
             "the original TooltipDataHandler accessor is installed")
-        local originalGetPvpTalent = C_TooltipInfo.GetPvpTalent
-        local getterArguments
-        local getterArgumentCount = 0
-        local getterCalls = 0
-        C_TooltipInfo.GetPvpTalent = function(...)
-            getterCalls = getterCalls + 1
-            getterArguments = { ... }
-            getterArgumentCount = select('#', ...)
-            return originalGetPvpTalent(...)
-        end
         GameTooltip:Hide()
         GameTooltip:ClearHandlerInfo()
         GameTooltip:ClearLines()
         GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
         GameTooltip:SetPvpTalent(5573)
-        assert(getterCalls == 1 and getterArgumentCount == 1
-            and getterArguments[1] == 5573,
-            "the pass-through spy records the original accessor call")
         assert(GameTooltip:IsShown(), "SetPvpTalent displays the tooltip")
         assert(GameTooltip:NumLines() > 0, "the tooltip has visible spell content")
+        assert(__pvpTalentGetterCalls == 1
+            and __pvpTalentGetterArguments[1] == 5573,
+            "the pass-through spy records the original accessor call")
         local data = GameTooltip:GetPrimaryTooltipData()
         assert(data and data.id == 204018, "the verified SpellID supplies tooltip identity")
         local ordinary = C_TooltipInfo.GetSpellByID(204018)

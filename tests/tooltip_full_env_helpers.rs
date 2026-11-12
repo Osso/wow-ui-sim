@@ -88,6 +88,12 @@ pub fn setup_full_env() -> WowLuaEnv {
 }
 
 pub fn load_full_env_without_post_load() -> WowLuaEnv {
+    load_full_env_without_post_load_with_addon_hook(|_, _| {})
+}
+
+pub fn load_full_env_without_post_load_with_addon_hook(
+    mut before_addon_load: impl FnMut(&WowLuaEnv, &str),
+) -> WowLuaEnv {
     let env = WowLuaEnv::new().unwrap();
     env.set_screen_size(1024.0, 768.0);
 
@@ -99,7 +105,7 @@ pub fn load_full_env_without_post_load() -> WowLuaEnv {
     if wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::WowForever {
         crate::common::load_game_startup_inventory(&env);
     } else {
-        load_blizzard_addons(&env, &ui);
+        load_blizzard_addons_with_hook(&env, &ui, &mut before_addon_load);
     }
     env.exec(
         r#"
@@ -112,7 +118,11 @@ pub fn load_full_env_without_post_load() -> WowLuaEnv {
     env
 }
 
-fn load_blizzard_addons(env: &WowLuaEnv, ui: &Path) {
+fn load_blizzard_addons_with_hook(
+    env: &WowLuaEnv,
+    ui: &Path,
+    before_addon_load: &mut impl FnMut(&WowLuaEnv, &str),
+) {
     for name in TOOLTIP_TEST_ADDONS {
         let addon_dir = ui.join(name);
         // `find_toc_file` applies `active_profile_toc_suffixes()`. Classic
@@ -122,6 +132,7 @@ fn load_blizzard_addons(env: &WowLuaEnv, ui: &Path) {
         let Some(toc_path) = find_toc_file(&addon_dir) else {
             continue;
         };
+        before_addon_load(env, name);
         load_addon(&env.loader_env(), &toc_path)
             .unwrap_or_else(|error| panic!("load {name} from {}: {error}", toc_path.display()));
     }
