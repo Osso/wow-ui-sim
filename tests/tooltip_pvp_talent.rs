@@ -62,20 +62,10 @@ fn retail_pvp_talent_catalog_uses_exported_rows_without_inventing_grants() {
     assert!(!catalog.contains_key(&i32::MAX), "absent IDs stay catalog misses");
 }
 
-fn load_original_pvp_slot_consumer(env: &WowLuaEnv) {
-    let addon = wow_ui_sim::client_profile::blizzard_ui_addons_dir()
-        .join("Blizzard_PlayerSpells/PvPTalents/Blizzard_PvPTalentSlotTemplates.lua");
-    let source = std::fs::read_to_string(&addon)
-        .unwrap_or_else(|error| panic!("read original PvP talent consumer {}: {error}", addon.display()));
-    env.exec(&source)
-        .expect("load original PvPTalentSlotButtonMixin.OnEnter consumer");
-}
-
 #[test]
 fn pvp_slot_on_enter_uses_default_catalog_spell_and_unlock_lines() {
-    let env = env();
-    env.apply_post_load_workarounds();
-    load_original_pvp_slot_consumer(&env);
+    let env = crate::common::panel_fixtures::setup_env();
+    crate::common::supply_empty_forever_spellbook_outfits(&env);
     {
         let mut state = env.state().borrow_mut();
         state.player.level = 20;
@@ -84,10 +74,11 @@ fn pvp_slot_on_enter_uses_default_catalog_spell_and_unlock_lines() {
     }
     env.exec(
         r#"
-        -- Slot availability is only an OnEnter precondition, so keep it explicit.
-        C_SpecializationInfo.GetPvpTalentSlotInfo = function(slotIndex)
-            return { enabled = true, slotIndex = slotIndex }
-        end
+        assert(PlayerSpellsUtil and PlayerSpellsUtil.ToggleClassTalentFrame)
+        PlayerSpellsUtil.ToggleClassTalentFrame()
+        local talents = assert(PlayerSpellsFrame and PlayerSpellsFrame.TalentsFrame)
+        local tray = assert(talents.PvPTalentSlotTray)
+        local button = assert(tray.Slots[1])
         assert(type(GameTooltip.SetPvpTalent) == "function", "original tooltip accessor is installed")
         local originalGetPvpTalent = C_TooltipInfo.GetPvpTalent
         local getterArguments
@@ -97,30 +88,19 @@ fn pvp_slot_on_enter_uses_default_catalog_spell_and_unlock_lines() {
             getterArguments = { ... }
             return originalGetPvpTalent(...)
         end
-        local tray = CreateFrame("Frame", nil, UIParent)
-        tray.IsInspecting = function() return false end
-        tray.GetInspectUnit = function() return nil end
-        tray.AcknowledgeNewNotification = function() end
-        local button = CreateFrame("Button", nil, tray)
-        button.slotIndex = 1
-        button.GetSelectedTalent = function(self) return self.selectedTalent end
-        button.IsInspecting = function() return false end
-        button.GetInspectUnit = function() return nil end
-        button:SetScript("OnEnter", PvPTalentSlotButtonMixin.OnEnter)
-        assert(button:GetScript("OnEnter"), "original PvP slot OnEnter consumer")
         local cases = {
             { talent = 5573, spell = 204018, title = "Blessing of Spellwarding", level = 25 },
             { talent = 51, spell = 236180, title = "Den Mother", level = 30 },
         }
         for _, case in ipairs(cases) do
-            button.selectedTalent = case.talent
-            assert(button:GetSelectedTalent() == case.talent, "button supplies its selected talent")
+            button:SetSelectedTalent(case.talent)
+            assert(button:GetSelectedTalent() == case.talent, "real PvP slot carries its selected talent")
             getterCalls = 0
             getterArguments = nil
             GameTooltip:Hide()
             GameTooltip:ClearHandlerInfo()
             GameTooltip:ClearLines()
-            button:GetScript("OnEnter")(button)
+            assert(button:GetScript("OnEnter"))(button)
             assert(GameTooltip:IsShown(), "original PvP slot hover shows the tooltip")
             assert(getterCalls == 1, "original OnEnter reaches the registered PvP getter once")
             assert(getterArguments[1] == case.talent and getterArguments[2] == false
