@@ -75,6 +75,9 @@ fn pvp_slot_on_enter_uses_default_catalog_spell_and_unlock_lines() {
     env.exec(
         r#"
         assert(type(GameTooltip.SetPvpTalent) == "function", "original tooltip accessor is installed")
+        C_SpecializationInfo.GetPvpTalentSlotInfo = function(slotIndex)
+            return { enabled = true, slotIndex = slotIndex }
+        end
         local originalGetPvpTalent = C_TooltipInfo.GetPvpTalent
         local getterArguments
         local getterCalls = 0
