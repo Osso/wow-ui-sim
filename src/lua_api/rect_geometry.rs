@@ -68,7 +68,8 @@ fn anchor_targets(state: &LuaState, id: u64) -> LuaResult<(Vec<(u64, bool)>, boo
     let Some(frame) = sim.widgets.get(id) else {
         return Ok((Vec::new(), true, false));
     };
-    let has_layout_path = crate::layout::frame_has_layout_anchor(&sim.widgets, frame, id);
+    let has_layout_path = crate::layout::frame_has_layout_anchor(&sim.widgets, frame, id)
+        || crate::layout::has_sized_slider_thumb_binding(&sim.widgets, frame);
     let mut targets = Vec::new();
     let mut unresolved_name = false;
 

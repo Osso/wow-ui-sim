@@ -13,7 +13,7 @@ use crate::LayoutRect;
 use crate::widget::{AnchorPoint, WidgetRegistry, WidgetType};
 use layout_line::resolve_line_frame_rect;
 pub use layout_render_eligibility::{frame_has_layout_anchor, frame_has_render_layout};
-pub(crate) use layout_slider_thumb::resolved_slider_thumb_rect;
+pub(crate) use layout_slider_thumb::{has_sized_slider_thumb_binding, resolved_slider_thumb_rect};
 
 /// Offset contributed by the designated scroll-child edge, in screen pixels.
 fn scroll_edge_offset(child: &crate::widget::Frame, parent: &crate::widget::Frame) -> (f32, f32) {
@@ -521,7 +521,9 @@ fn frame_rect_status(
     if is_root_screen_frame(frame, id) {
         return (true, false);
     }
-    if !frame_has_layout_anchor(registry, frame, id) {
+    let has_layout_anchor = frame_has_layout_anchor(registry, frame, id)
+        || layout_slider_thumb::has_sized_slider_thumb_binding(registry, frame);
+    if !has_layout_anchor {
         return (false, false);
     }
 

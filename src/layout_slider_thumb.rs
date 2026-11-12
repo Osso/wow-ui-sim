@@ -19,6 +19,20 @@ fn has_positive_finite_size(rect: LayoutRect) -> bool {
     rect.width.is_finite() && rect.height.is_finite() && rect.width > 0.0 && rect.height > 0.0
 }
 
+pub(crate) fn has_sized_slider_thumb_binding(registry: &WidgetRegistry, frame: &Frame) -> bool {
+    if bound_slider_thumb_parent(registry, frame).is_none() {
+        return false;
+    }
+    let width = registry.round_layout_value(frame, frame.width) * frame.effective_scale;
+    let height = registry.round_layout_value(frame, frame.height) * frame.effective_scale;
+    has_positive_finite_size(LayoutRect {
+        x: 0.0,
+        y: 0.0,
+        width,
+        height,
+    })
+}
+
 /// Admission uses the real stored layout result, never binding identity alone.
 /// Both query and render paths resolve dirty layout before consulting this.
 pub(crate) fn resolved_slider_thumb_rect(

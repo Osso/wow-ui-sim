@@ -80,6 +80,7 @@ fn transmog_outfit_catalog_inputs_pickup_sets_cursor_and_clear_works() {
     env.exec(&format!("OUTFIT_KIND = '{kind}'")).unwrap();
     env.eval::<()>(
         r#"
+        A_Admin.ClearActionSlot(1)
         local api = C_TransmogOutfitInfo
         api.AddNewOutfit('Raid',135771)
         local id = api.GetOutfitInfoByName('Raid').outfitID
