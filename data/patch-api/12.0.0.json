@@ -5144,7 +5144,7 @@
           "kind": "source",
           "reference": "src/c_api/c_character_services.rs",
           "summary": "Current C_CharacterServices model has no AssignFCMDistribution registration or free-character-move validation/assignment state.",
-          "source_hash": "dc38ed036873d71097686487078182c7033394661a8aa3c6aabacaf065b616cc"
+          "source_hash": "df799b911a11b343da9a0aa13bc9078d72b4e24bb390ed42e8b4c2342aa8cdd5"
         }
       ],
       "tests": [],
@@ -5519,7 +5519,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
           "summary": "Global registration orchestrates the simulator API modules; registration presence alone does not establish native semantics.",
-          "source_hash": "48c62eaba34797ee1a3e2368fdafd46e245be920a7dcb9b0e29df76848e94486"
+          "source_hash": "899372d604b8de36d67d0ed0abaf1bc87e80db842cc434a93ed8bd281b35f8e0"
         },
         {
           "kind": "source",
@@ -5531,13 +5531,13 @@
           "kind": "source",
           "reference": "src/lua_api/state.rs",
           "summary": "Empty-map initialization; absent-key zero is simulator policy, not native-default proof.",
-          "source_hash": "3788c3aed7c01594e0348189ecd5a24ee5025daae87011ac5afd7804c1af9e08"
+          "source_hash": "3096a684a3d03c12156220c6b960edaae9a446a416ae523a579e5b7fa6b8f0c4"
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state/sim_state.rs",
           "summary": "SimState owns an independent HashMap<(i32, i32), f64> for format-setting pairs per environment.",
-          "source_hash": "744760ef0629a4e3dd851955c9e8f6437af8c98c1e180607978aed4edb8b1718"
+          "source_hash": "b13cada4d9f3feecb50cf7ebe0df484f7c091b3b1e841368f319f54c69b557bc"
         },
         {
           "kind": "test",
@@ -5594,7 +5594,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "48c62eaba34797ee1a3e2368fdafd46e245be920a7dcb9b0e29df76848e94486",
+          "source_hash": "899372d604b8de36d67d0ed0abaf1bc87e80db842cc434a93ed8bd281b35f8e0",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         },
         {
@@ -5606,25 +5606,25 @@
         {
           "kind": "source",
           "reference": "src/c_api/mod.rs",
-          "source_hash": "7c0cee7f2e29095f430af2163e41ddd9216d8ee723aac609ca48d3d560fe79d9",
+          "source_hash": "ac9298c17ca6672cea1b2a3a482381f6b839e39eed77e10f577a39e7ed12517d",
           "summary": "Modeled Rust module is gated at retail-12-0-0; this does not establish absence of generic fallback callability on earlier profiles."
         },
         {
           "kind": "source",
           "reference": "src/c_api/registration.rs",
-          "source_hash": "f8fbfc61bab24a16c154edc113613ab513a9348fb08596d1bd67e2689a804b12",
+          "source_hash": "ca5f7ffb53038af7149a7637a6846f139d76a5b1735f695afce70ba762266b96",
           "summary": "Interaction-table registration wires the modeled speaker-speed functions under the retail-12-0-0 gate."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state.rs",
-          "source_hash": "3788c3aed7c01594e0348189ecd5a24ee5025daae87011ac5afd7804c1af9e08",
+          "source_hash": "3096a684a3d03c12156220c6b960edaae9a446a416ae523a579e5b7fa6b8f0c4",
           "summary": "Empty-state construction initializes speaker speed to 0.0 as simulator policy, not a native-default assertion."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state/sim_state.rs",
-          "source_hash": "744760ef0629a4e3dd851955c9e8f6437af8c98c1e180607978aed4edb8b1718",
+          "source_hash": "b13cada4d9f3feecb50cf7ebe0df484f7c091b3b1e841368f319f54c69b557bc",
           "summary": "SimState owns the numeric speaker-speed field independently per environment; no persistence or CVar identity is established."
         },
         {
@@ -5675,7 +5675,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "48c62eaba34797ee1a3e2368fdafd46e245be920a7dcb9b0e29df76848e94486",
+          "source_hash": "899372d604b8de36d67d0ed0abaf1bc87e80db842cc434a93ed8bd281b35f8e0",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         },
         {
@@ -5687,13 +5687,13 @@
         {
           "kind": "source",
           "reference": "src/lua_api/state.rs",
-          "source_hash": "3788c3aed7c01594e0348189ecd5a24ee5025daae87011ac5afd7804c1af9e08",
+          "source_hash": "3096a684a3d03c12156220c6b960edaae9a446a416ae523a579e5b7fa6b8f0c4",
           "summary": "Empty-state construction initializes speaker volume to 100.0 as simulator policy, not a native-default assertion."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state/sim_state.rs",
-          "source_hash": "744760ef0629a4e3dd851955c9e8f6437af8c98c1e180607978aed4edb8b1718",
+          "source_hash": "b13cada4d9f3feecb50cf7ebe0df484f7c091b3b1e841368f319f54c69b557bc",
           "summary": "SimState owns the numeric speaker-volume field independently per environment; no persistence or CVar identity is established."
         },
         {
@@ -5744,7 +5744,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "48c62eaba34797ee1a3e2368fdafd46e245be920a7dcb9b0e29df76848e94486",
+          "source_hash": "899372d604b8de36d67d0ed0abaf1bc87e80db842cc434a93ed8bd281b35f8e0",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         }
       ],
@@ -5773,7 +5773,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "48c62eaba34797ee1a3e2368fdafd46e245be920a7dcb9b0e29df76848e94486",
+          "source_hash": "899372d604b8de36d67d0ed0abaf1bc87e80db842cc434a93ed8bd281b35f8e0",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         }
       ],
@@ -5802,7 +5802,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "48c62eaba34797ee1a3e2368fdafd46e245be920a7dcb9b0e29df76848e94486",
+          "source_hash": "899372d604b8de36d67d0ed0abaf1bc87e80db842cc434a93ed8bd281b35f8e0",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         }
       ],
@@ -5832,7 +5832,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
           "summary": "Global registration orchestrates the simulator API modules; registration presence alone does not establish native semantics.",
-          "source_hash": "48c62eaba34797ee1a3e2368fdafd46e245be920a7dcb9b0e29df76848e94486"
+          "source_hash": "899372d604b8de36d67d0ed0abaf1bc87e80db842cc434a93ed8bd281b35f8e0"
         },
         {
           "kind": "source",
@@ -5844,13 +5844,13 @@
           "kind": "source",
           "reference": "src/lua_api/state.rs",
           "summary": "Empty-map initialization; absent-key zero is simulator policy, not native-default proof.",
-          "source_hash": "3788c3aed7c01594e0348189ecd5a24ee5025daae87011ac5afd7804c1af9e08"
+          "source_hash": "3096a684a3d03c12156220c6b960edaae9a446a416ae523a579e5b7fa6b8f0c4"
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state/sim_state.rs",
           "summary": "SimState owns an independent HashMap<(i32, i32), f64> for format-setting pairs per environment.",
-          "source_hash": "744760ef0629a4e3dd851955c9e8f6437af8c98c1e180607978aed4edb8b1718"
+          "source_hash": "b13cada4d9f3feecb50cf7ebe0df484f7c091b3b1e841368f319f54c69b557bc"
         },
         {
           "kind": "test",
@@ -5907,7 +5907,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "48c62eaba34797ee1a3e2368fdafd46e245be920a7dcb9b0e29df76848e94486",
+          "source_hash": "899372d604b8de36d67d0ed0abaf1bc87e80db842cc434a93ed8bd281b35f8e0",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         },
         {
@@ -5919,25 +5919,25 @@
         {
           "kind": "source",
           "reference": "src/c_api/mod.rs",
-          "source_hash": "7c0cee7f2e29095f430af2163e41ddd9216d8ee723aac609ca48d3d560fe79d9",
+          "source_hash": "ac9298c17ca6672cea1b2a3a482381f6b839e39eed77e10f577a39e7ed12517d",
           "summary": "Modeled Rust module is gated at retail-12-0-0; this does not establish absence of generic fallback callability on earlier profiles."
         },
         {
           "kind": "source",
           "reference": "src/c_api/registration.rs",
-          "source_hash": "f8fbfc61bab24a16c154edc113613ab513a9348fb08596d1bd67e2689a804b12",
+          "source_hash": "ca5f7ffb53038af7149a7637a6846f139d76a5b1735f695afce70ba762266b96",
           "summary": "Interaction-table registration wires the modeled speaker-speed functions under the retail-12-0-0 gate."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state.rs",
-          "source_hash": "3788c3aed7c01594e0348189ecd5a24ee5025daae87011ac5afd7804c1af9e08",
+          "source_hash": "3096a684a3d03c12156220c6b960edaae9a446a416ae523a579e5b7fa6b8f0c4",
           "summary": "Empty-state construction initializes speaker speed to 0.0 as simulator policy, not a native-default assertion."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state/sim_state.rs",
-          "source_hash": "744760ef0629a4e3dd851955c9e8f6437af8c98c1e180607978aed4edb8b1718",
+          "source_hash": "b13cada4d9f3feecb50cf7ebe0df484f7c091b3b1e841368f319f54c69b557bc",
           "summary": "SimState owns the numeric speaker-speed field independently per environment; no persistence or CVar identity is established."
         },
         {
@@ -5988,7 +5988,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "48c62eaba34797ee1a3e2368fdafd46e245be920a7dcb9b0e29df76848e94486",
+          "source_hash": "899372d604b8de36d67d0ed0abaf1bc87e80db842cc434a93ed8bd281b35f8e0",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         },
         {
@@ -6000,13 +6000,13 @@
         {
           "kind": "source",
           "reference": "src/lua_api/state.rs",
-          "source_hash": "3788c3aed7c01594e0348189ecd5a24ee5025daae87011ac5afd7804c1af9e08",
+          "source_hash": "3096a684a3d03c12156220c6b960edaae9a446a416ae523a579e5b7fa6b8f0c4",
           "summary": "Empty-state construction initializes speaker volume to 100.0 as simulator policy, not a native-default assertion."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state/sim_state.rs",
-          "source_hash": "744760ef0629a4e3dd851955c9e8f6437af8c98c1e180607978aed4edb8b1718",
+          "source_hash": "b13cada4d9f3feecb50cf7ebe0df484f7c091b3b1e841368f319f54c69b557bc",
           "summary": "SimState owns the numeric speaker-volume field independently per environment; no persistence or CVar identity is established."
         },
         {
@@ -6057,7 +6057,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "48c62eaba34797ee1a3e2368fdafd46e245be920a7dcb9b0e29df76848e94486",
+          "source_hash": "899372d604b8de36d67d0ed0abaf1bc87e80db842cc434a93ed8bd281b35f8e0",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         }
       ],
@@ -6086,7 +6086,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "48c62eaba34797ee1a3e2368fdafd46e245be920a7dcb9b0e29df76848e94486",
+          "source_hash": "899372d604b8de36d67d0ed0abaf1bc87e80db842cc434a93ed8bd281b35f8e0",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         }
       ],
@@ -6115,7 +6115,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "48c62eaba34797ee1a3e2368fdafd46e245be920a7dcb9b0e29df76848e94486",
+          "source_hash": "899372d604b8de36d67d0ed0abaf1bc87e80db842cc434a93ed8bd281b35f8e0",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         }
       ],
@@ -7174,7 +7174,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/unit_misc.rs",
           "summary": "Legacy UnitCreatureID reuses the same C API parser, preserving its established unit-token behavior.",
-          "source_hash": "4ba65143d516df5bfa6a7a137060524c9527118aa93b57e1f4eccb82b259f487"
+          "source_hash": "7177cb4d99d80cac32b2dbc5c39271c4ce5c7572f108dd4b25b3d647fce2a74e"
         },
         {
           "kind": "test",
@@ -18042,7 +18042,7 @@
           "kind": "source",
           "reference": "src/lua_api/sim_substates/quest_log.rs",
           "summary": "Quest-log state models entries, completion, rewards, waypoints, and tags, but no active-prey quest identifier or transitions.",
-          "source_hash": "825fa414a9473c4581b11f6898521a26d23968f57cbafc8c7973b134eaabfbad"
+          "source_hash": "fed89031cd82396af7d1e08a3fce3eab0f30f3497561a5a6b15909a9ad538407"
         }
       ],
       "tests": [],
@@ -18276,7 +18276,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "48c62eaba34797ee1a3e2368fdafd46e245be920a7dcb9b0e29df76848e94486",
+          "source_hash": "899372d604b8de36d67d0ed0abaf1bc87e80db842cc434a93ed8bd281b35f8e0",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         }
       ],
@@ -18305,7 +18305,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "48c62eaba34797ee1a3e2368fdafd46e245be920a7dcb9b0e29df76848e94486",
+          "source_hash": "899372d604b8de36d67d0ed0abaf1bc87e80db842cc434a93ed8bd281b35f8e0",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         }
       ],
@@ -18334,7 +18334,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "48c62eaba34797ee1a3e2368fdafd46e245be920a7dcb9b0e29df76848e94486",
+          "source_hash": "899372d604b8de36d67d0ed0abaf1bc87e80db842cc434a93ed8bd281b35f8e0",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         }
       ],
@@ -18363,7 +18363,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "48c62eaba34797ee1a3e2368fdafd46e245be920a7dcb9b0e29df76848e94486",
+          "source_hash": "899372d604b8de36d67d0ed0abaf1bc87e80db842cc434a93ed8bd281b35f8e0",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         }
       ],
@@ -18392,7 +18392,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "48c62eaba34797ee1a3e2368fdafd46e245be920a7dcb9b0e29df76848e94486",
+          "source_hash": "899372d604b8de36d67d0ed0abaf1bc87e80db842cc434a93ed8bd281b35f8e0",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         }
       ],
@@ -18421,7 +18421,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "48c62eaba34797ee1a3e2368fdafd46e245be920a7dcb9b0e29df76848e94486",
+          "source_hash": "899372d604b8de36d67d0ed0abaf1bc87e80db842cc434a93ed8bd281b35f8e0",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         }
       ],
@@ -18450,7 +18450,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "48c62eaba34797ee1a3e2368fdafd46e245be920a7dcb9b0e29df76848e94486",
+          "source_hash": "899372d604b8de36d67d0ed0abaf1bc87e80db842cc434a93ed8bd281b35f8e0",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         }
       ],
@@ -18479,7 +18479,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "48c62eaba34797ee1a3e2368fdafd46e245be920a7dcb9b0e29df76848e94486",
+          "source_hash": "899372d604b8de36d67d0ed0abaf1bc87e80db842cc434a93ed8bd281b35f8e0",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         }
       ],
@@ -18508,7 +18508,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "48c62eaba34797ee1a3e2368fdafd46e245be920a7dcb9b0e29df76848e94486",
+          "source_hash": "899372d604b8de36d67d0ed0abaf1bc87e80db842cc434a93ed8bd281b35f8e0",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         }
       ],
@@ -18537,7 +18537,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "48c62eaba34797ee1a3e2368fdafd46e245be920a7dcb9b0e29df76848e94486",
+          "source_hash": "899372d604b8de36d67d0ed0abaf1bc87e80db842cc434a93ed8bd281b35f8e0",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         }
       ],
@@ -18566,7 +18566,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "48c62eaba34797ee1a3e2368fdafd46e245be920a7dcb9b0e29df76848e94486",
+          "source_hash": "899372d604b8de36d67d0ed0abaf1bc87e80db842cc434a93ed8bd281b35f8e0",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         }
       ],
@@ -18595,7 +18595,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "48c62eaba34797ee1a3e2368fdafd46e245be920a7dcb9b0e29df76848e94486",
+          "source_hash": "899372d604b8de36d67d0ed0abaf1bc87e80db842cc434a93ed8bd281b35f8e0",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         }
       ],
@@ -18624,7 +18624,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "48c62eaba34797ee1a3e2368fdafd46e245be920a7dcb9b0e29df76848e94486",
+          "source_hash": "899372d604b8de36d67d0ed0abaf1bc87e80db842cc434a93ed8bd281b35f8e0",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         }
       ],
@@ -18653,7 +18653,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "48c62eaba34797ee1a3e2368fdafd46e245be920a7dcb9b0e29df76848e94486",
+          "source_hash": "899372d604b8de36d67d0ed0abaf1bc87e80db842cc434a93ed8bd281b35f8e0",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         }
       ],
@@ -18682,7 +18682,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "48c62eaba34797ee1a3e2368fdafd46e245be920a7dcb9b0e29df76848e94486",
+          "source_hash": "899372d604b8de36d67d0ed0abaf1bc87e80db842cc434a93ed8bd281b35f8e0",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         }
       ],
@@ -18711,7 +18711,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "48c62eaba34797ee1a3e2368fdafd46e245be920a7dcb9b0e29df76848e94486",
+          "source_hash": "899372d604b8de36d67d0ed0abaf1bc87e80db842cc434a93ed8bd281b35f8e0",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         }
       ],
@@ -18740,7 +18740,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "48c62eaba34797ee1a3e2368fdafd46e245be920a7dcb9b0e29df76848e94486",
+          "source_hash": "899372d604b8de36d67d0ed0abaf1bc87e80db842cc434a93ed8bd281b35f8e0",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         }
       ],
@@ -18769,7 +18769,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "48c62eaba34797ee1a3e2368fdafd46e245be920a7dcb9b0e29df76848e94486",
+          "source_hash": "899372d604b8de36d67d0ed0abaf1bc87e80db842cc434a93ed8bd281b35f8e0",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         }
       ],
@@ -18798,7 +18798,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "48c62eaba34797ee1a3e2368fdafd46e245be920a7dcb9b0e29df76848e94486",
+          "source_hash": "899372d604b8de36d67d0ed0abaf1bc87e80db842cc434a93ed8bd281b35f8e0",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         }
       ],
@@ -18827,7 +18827,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "48c62eaba34797ee1a3e2368fdafd46e245be920a7dcb9b0e29df76848e94486",
+          "source_hash": "899372d604b8de36d67d0ed0abaf1bc87e80db842cc434a93ed8bd281b35f8e0",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         }
       ],
@@ -18856,7 +18856,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "48c62eaba34797ee1a3e2368fdafd46e245be920a7dcb9b0e29df76848e94486",
+          "source_hash": "899372d604b8de36d67d0ed0abaf1bc87e80db842cc434a93ed8bd281b35f8e0",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         }
       ],
@@ -18885,7 +18885,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "48c62eaba34797ee1a3e2368fdafd46e245be920a7dcb9b0e29df76848e94486",
+          "source_hash": "899372d604b8de36d67d0ed0abaf1bc87e80db842cc434a93ed8bd281b35f8e0",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         }
       ],
@@ -18914,7 +18914,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "48c62eaba34797ee1a3e2368fdafd46e245be920a7dcb9b0e29df76848e94486",
+          "source_hash": "899372d604b8de36d67d0ed0abaf1bc87e80db842cc434a93ed8bd281b35f8e0",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         }
       ],
@@ -20251,7 +20251,7 @@
           "kind": "source",
           "reference": "tests/blizzard_stable_ui_loads.rs",
           "summary": "Existing stable UI coverage proves vendor references and refresh wiring only, not the API result or talent/configuration transitions.",
-          "source_hash": "63b67655798178f8f4e86df2369e5959d9e6096691a054857950e5c2ad09f252"
+          "source_hash": "b01dd562618929101eb17d90d975e252a552531d004fa1a634154074943919fa"
         }
       ],
       "tests": [],
@@ -26976,13 +26976,13 @@
         {
           "kind": "source",
           "reference": "src/c_api/mod.rs",
-          "source_hash": "7c0cee7f2e29095f430af2163e41ddd9216d8ee723aac609ca48d3d560fe79d9",
+          "source_hash": "ac9298c17ca6672cea1b2a3a482381f6b839e39eed77e10f577a39e7ed12517d",
           "summary": "Bounded historical public enumeration: two tests cover seeded ordinary filters, blocked visibility, live removal, observed sort rules/directions and maxCount limits. Runtime ba31c6b94; tests 33f7fdb39 pass 2/2 each on retail 12.0.0/12.0.5/12.0.7. Default 5/5 regressions preserve existing later behavior, not new historical private/security credit. Native full filter domain, sort semantics, defaults, identity, security and full-LoD parity remain unproven. Historical E0432/E0425 helper-gate compilation failures remain recorded in development proof."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "48c62eaba34797ee1a3e2368fdafd46e245be920a7dcb9b0e29df76848e94486",
+          "source_hash": "899372d604b8de36d67d0ed0abaf1bc87e80db842cc434a93ed8bd281b35f8e0",
           "summary": "Bounded historical public enumeration: two tests cover seeded ordinary filters, blocked visibility, live removal, observed sort rules/directions and maxCount limits. Runtime ba31c6b94; tests 33f7fdb39 pass 2/2 each on retail 12.0.0/12.0.5/12.0.7. Default 5/5 regressions preserve existing later behavior, not new historical private/security credit. Native full filter domain, sort semantics, defaults, identity, security and full-LoD parity remain unproven. Historical E0432/E0425 helper-gate compilation failures remain recorded in development proof."
         }
       ],
@@ -91654,13 +91654,13 @@
         {
           "kind": "runtime",
           "reference": "src/lua_api/globals/real/mod.rs",
-          "source_hash": "d9f5b8e30c396cff2439aeab7f5d6e9f5737508eccb06cd6e8ef4e701d64827a",
+          "source_hash": "cab160660df07279956c64a7edbf8e6183736c30f06660687f584fc7846b37ab",
           "summary": "Bounded ordinary global callback lifecycle for plain functions and actual C_FunctionContainers: nil owner and unchanged payload, Rust environment and synchronous Lua dispatch, exact identity removal, boolean registration/zero-return removal and environment isolation. Actual pinned Event.lua wrapping and handle removal, container cancellation/GC survival and unrelated-userdata rejection are covered. Corrected runtime 2ff787d41; tests 55cec0a97; registry 5b04622da, integration 462a1866c, fallback 08eeaa48a. Independent proof: 8/8 each retail 12.0.0/12.0.5/12.0.7, default startup []. Duplicate handling, insertion/global-before-frame order, validation, accepted true, snapshot dispatch and error propagation are SIMULATOR policies, not native parity. Native eligibility/order/duplicates/errors/security/full-LoD and mutation/recursion/error recovery remain unproven; unit callback variants are not credited."
         },
         {
           "kind": "runtime",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "48c62eaba34797ee1a3e2368fdafd46e245be920a7dcb9b0e29df76848e94486",
+          "source_hash": "899372d604b8de36d67d0ed0abaf1bc87e80db842cc434a93ed8bd281b35f8e0",
           "summary": "Bounded ordinary global callback lifecycle for plain functions and actual C_FunctionContainers: nil owner and unchanged payload, Rust environment and synchronous Lua dispatch, exact identity removal, boolean registration/zero-return removal and environment isolation. Actual pinned Event.lua wrapping and handle removal, container cancellation/GC survival and unrelated-userdata rejection are covered. Corrected runtime 2ff787d41; tests 55cec0a97; registry 5b04622da, integration 462a1866c, fallback 08eeaa48a. Independent proof: 8/8 each retail 12.0.0/12.0.5/12.0.7, default startup []. Duplicate handling, insertion/global-before-frame order, validation, accepted true, snapshot dispatch and error propagation are SIMULATOR policies, not native parity. Native eligibility/order/duplicates/errors/security/full-LoD and mutation/recursion/error recovery remain unproven; unit callback variants are not credited."
         },
         {
@@ -91776,13 +91776,13 @@
         {
           "kind": "runtime",
           "reference": "src/lua_api/globals/real/mod.rs",
-          "source_hash": "d9f5b8e30c396cff2439aeab7f5d6e9f5737508eccb06cd6e8ef4e701d64827a",
+          "source_hash": "cab160660df07279956c64a7edbf8e6183736c30f06660687f584fc7846b37ab",
           "summary": "Bounded ordinary global unit callback lifecycle with actual pinned Event.lua wrappers and C_FunctionContainers: first-payload exact unit filtering, nil-owner payload delivery through Rust environment and synchronous Lua dispatch, event/container/unit removal identity, zero-return registration/removal and environment isolation. Runtime 0a0ac416f plus 0835b3c94; tests c1d401ba3. Independent proof: 12/12 each retail 12.0.0/12.0.5/12.0.7 (four unit and eight global regressions), fallback retail 2/2 and Mists 3/3, fmt/check/build/startup exit 0 with []. Exact unit-token matching, duplicates, ordering, validation, snapshot dispatch and error policy are SIMULATOR policies, not native parity. Native aliases/eligibility/order/validation/security/full-LoD and callback mutation/recursion/error recovery remain unproven; frame methods remain separate."
         },
         {
           "kind": "runtime",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "48c62eaba34797ee1a3e2368fdafd46e245be920a7dcb9b0e29df76848e94486",
+          "source_hash": "899372d604b8de36d67d0ed0abaf1bc87e80db842cc434a93ed8bd281b35f8e0",
           "summary": "Bounded ordinary global unit callback lifecycle with actual pinned Event.lua wrappers and C_FunctionContainers: first-payload exact unit filtering, nil-owner payload delivery through Rust environment and synchronous Lua dispatch, event/container/unit removal identity, zero-return registration/removal and environment isolation. Runtime 0a0ac416f plus 0835b3c94; tests c1d401ba3. Independent proof: 12/12 each retail 12.0.0/12.0.5/12.0.7 (four unit and eight global regressions), fallback retail 2/2 and Mists 3/3, fmt/check/build/startup exit 0 with []. Exact unit-token matching, duplicates, ordering, validation, snapshot dispatch and error policy are SIMULATOR policies, not native parity. Native aliases/eligibility/order/validation/security/full-LoD and callback mutation/recursion/error recovery remain unproven; frame methods remain separate."
         },
         {
@@ -93796,7 +93796,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/unit_misc.rs",
-          "source_hash": "4ba65143d516df5bfa6a7a137060524c9527118aa93b57e1f4eccb82b259f487",
+          "source_hash": "7177cb4d99d80cac32b2dbc5c39271c4ce5c7572f108dd4b25b3d647fce2a74e",
           "summary": "Existing unit_misc publishes UnitGUID and related unit helpers, but the named GUID/class, GUID/name, lieutenant, minion, and threat-lead APIs/state are absent; do not infer equivalence."
         },
         {
@@ -93832,7 +93832,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/unit_misc.rs",
           "summary": "Current modeled GUID resolution returns numeric creature ID 0 for the configured creature target and nil for the player GUID.",
-          "source_hash": "4ba65143d516df5bfa6a7a137060524c9527118aa93b57e1f4eccb82b259f487"
+          "source_hash": "7177cb4d99d80cac32b2dbc5c39271c4ce5c7572f108dd4b25b3d647fce2a74e"
         },
         {
           "kind": "test",
@@ -95372,7 +95372,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/unit_misc.rs",
-          "source_hash": "4ba65143d516df5bfa6a7a137060524c9527118aa93b57e1f4eccb82b259f487",
+          "source_hash": "7177cb4d99d80cac32b2dbc5c39271c4ce5c7572f108dd4b25b3d647fce2a74e",
           "summary": "Existing unit_misc publishes UnitGUID and related unit helpers, but the named GUID/class, GUID/name, lieutenant, minion, and threat-lead APIs/state are absent; do not infer equivalence."
         },
         {
@@ -95407,7 +95407,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/unit_misc.rs",
-          "source_hash": "4ba65143d516df5bfa6a7a137060524c9527118aa93b57e1f4eccb82b259f487",
+          "source_hash": "7177cb4d99d80cac32b2dbc5c39271c4ce5c7572f108dd4b25b3d647fce2a74e",
           "summary": "Existing unit_misc publishes UnitGUID and related unit helpers, but the named GUID/class, GUID/name, lieutenant, minion, and threat-lead APIs/state are absent; do not infer equivalence."
         },
         {
@@ -95514,7 +95514,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/unit_misc.rs",
-          "source_hash": "4ba65143d516df5bfa6a7a137060524c9527118aa93b57e1f4eccb82b259f487",
+          "source_hash": "7177cb4d99d80cac32b2dbc5c39271c4ce5c7572f108dd4b25b3d647fce2a74e",
           "summary": "Existing unit_misc publishes UnitGUID and related unit helpers, but the named GUID/class, GUID/name, lieutenant, minion, and threat-lead APIs/state are absent; do not infer equivalence."
         },
         {
@@ -95824,7 +95824,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/unit_misc.rs",
-          "source_hash": "4ba65143d516df5bfa6a7a137060524c9527118aa93b57e1f4eccb82b259f487",
+          "source_hash": "7177cb4d99d80cac32b2dbc5c39271c4ce5c7572f108dd4b25b3d647fce2a74e",
           "summary": "Existing unit_misc publishes UnitGUID and related unit helpers, but the named GUID/class, GUID/name, lieutenant, minion, and threat-lead APIs/state are absent; do not infer equivalence."
         },
         {
@@ -95937,13 +95937,13 @@
         {
           "kind": "runtime",
           "reference": "src/lua_api/globals/real/mod.rs",
-          "source_hash": "d9f5b8e30c396cff2439aeab7f5d6e9f5737508eccb06cd6e8ef4e701d64827a",
+          "source_hash": "cab160660df07279956c64a7edbf8e6183736c30f06660687f584fc7846b37ab",
           "summary": "Bounded ordinary global callback lifecycle for plain functions and actual C_FunctionContainers: nil owner and unchanged payload, Rust environment and synchronous Lua dispatch, exact identity removal, boolean registration/zero-return removal and environment isolation. Actual pinned Event.lua wrapping and handle removal, container cancellation/GC survival and unrelated-userdata rejection are covered. Corrected runtime 2ff787d41; tests 55cec0a97; registry 5b04622da, integration 462a1866c, fallback 08eeaa48a. Independent proof: 8/8 each retail 12.0.0/12.0.5/12.0.7, default startup []. Duplicate handling, insertion/global-before-frame order, validation, accepted true, snapshot dispatch and error propagation are SIMULATOR policies, not native parity. Native eligibility/order/duplicates/errors/security/full-LoD and mutation/recursion/error recovery remain unproven; unit callback variants are not credited."
         },
         {
           "kind": "runtime",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "48c62eaba34797ee1a3e2368fdafd46e245be920a7dcb9b0e29df76848e94486",
+          "source_hash": "899372d604b8de36d67d0ed0abaf1bc87e80db842cc434a93ed8bd281b35f8e0",
           "summary": "Bounded ordinary global callback lifecycle for plain functions and actual C_FunctionContainers: nil owner and unchanged payload, Rust environment and synchronous Lua dispatch, exact identity removal, boolean registration/zero-return removal and environment isolation. Actual pinned Event.lua wrapping and handle removal, container cancellation/GC survival and unrelated-userdata rejection are covered. Corrected runtime 2ff787d41; tests 55cec0a97; registry 5b04622da, integration 462a1866c, fallback 08eeaa48a. Independent proof: 8/8 each retail 12.0.0/12.0.5/12.0.7, default startup []. Duplicate handling, insertion/global-before-frame order, validation, accepted true, snapshot dispatch and error propagation are SIMULATOR policies, not native parity. Native eligibility/order/duplicates/errors/security/full-LoD and mutation/recursion/error recovery remain unproven; unit callback variants are not credited."
         },
         {
@@ -96053,13 +96053,13 @@
         {
           "kind": "runtime",
           "reference": "src/lua_api/globals/real/mod.rs",
-          "source_hash": "d9f5b8e30c396cff2439aeab7f5d6e9f5737508eccb06cd6e8ef4e701d64827a",
+          "source_hash": "cab160660df07279956c64a7edbf8e6183736c30f06660687f584fc7846b37ab",
           "summary": "Bounded ordinary global unit callback lifecycle with actual pinned Event.lua wrappers and C_FunctionContainers: first-payload exact unit filtering, nil-owner payload delivery through Rust environment and synchronous Lua dispatch, event/container/unit removal identity, zero-return registration/removal and environment isolation. Runtime 0a0ac416f plus 0835b3c94; tests c1d401ba3. Independent proof: 12/12 each retail 12.0.0/12.0.5/12.0.7 (four unit and eight global regressions), fallback retail 2/2 and Mists 3/3, fmt/check/build/startup exit 0 with []. Exact unit-token matching, duplicates, ordering, validation, snapshot dispatch and error policy are SIMULATOR policies, not native parity. Native aliases/eligibility/order/validation/security/full-LoD and callback mutation/recursion/error recovery remain unproven; frame methods remain separate."
         },
         {
           "kind": "runtime",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "48c62eaba34797ee1a3e2368fdafd46e245be920a7dcb9b0e29df76848e94486",
+          "source_hash": "899372d604b8de36d67d0ed0abaf1bc87e80db842cc434a93ed8bd281b35f8e0",
           "summary": "Bounded ordinary global unit callback lifecycle with actual pinned Event.lua wrappers and C_FunctionContainers: first-payload exact unit filtering, nil-owner payload delivery through Rust environment and synchronous Lua dispatch, event/container/unit removal identity, zero-return registration/removal and environment isolation. Runtime 0a0ac416f plus 0835b3c94; tests c1d401ba3. Independent proof: 12/12 each retail 12.0.0/12.0.5/12.0.7 (four unit and eight global regressions), fallback retail 2/2 and Mists 3/3, fmt/check/build/startup exit 0 with []. Exact unit-token matching, duplicates, ordering, validation, snapshot dispatch and error policy are SIMULATOR policies, not native parity. Native aliases/eligibility/order/validation/security/full-LoD and callback mutation/recursion/error recovery remain unproven; frame methods remain separate."
         },
         {
@@ -103429,7 +103429,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/mod.rs",
-          "source_hash": "7c0cee7f2e29095f430af2163e41ddd9216d8ee723aac609ca48d3d560fe79d9",
+          "source_hash": "ac9298c17ca6672cea1b2a3a482381f6b839e39eed77e10f577a39e7ed12517d",
           "summary": "C API registration surface; no method publication was found."
         },
         {
@@ -103523,7 +103523,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/mod.rs",
-          "source_hash": "7c0cee7f2e29095f430af2163e41ddd9216d8ee723aac609ca48d3d560fe79d9",
+          "source_hash": "ac9298c17ca6672cea1b2a3a482381f6b839e39eed77e10f577a39e7ed12517d",
           "summary": "C API module registry; no C_ItemInteraction module was found."
         },
         {
@@ -105155,7 +105155,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "48c62eaba34797ee1a3e2368fdafd46e245be920a7dcb9b0e29df76848e94486",
+          "source_hash": "899372d604b8de36d67d0ed0abaf1bc87e80db842cc434a93ed8bd281b35f8e0",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         },
         {
@@ -112675,7 +112675,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "48c62eaba34797ee1a3e2368fdafd46e245be920a7dcb9b0e29df76848e94486",
+          "source_hash": "899372d604b8de36d67d0ed0abaf1bc87e80db842cc434a93ed8bd281b35f8e0",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         },
         {
@@ -112716,7 +112716,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "48c62eaba34797ee1a3e2368fdafd46e245be920a7dcb9b0e29df76848e94486",
+          "source_hash": "899372d604b8de36d67d0ed0abaf1bc87e80db842cc434a93ed8bd281b35f8e0",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         },
         {
@@ -113970,7 +113970,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/unit_misc.rs",
-          "source_hash": "4ba65143d516df5bfa6a7a137060524c9527118aa93b57e1f4eccb82b259f487",
+          "source_hash": "7177cb4d99d80cac32b2dbc5c39271c4ce5c7572f108dd4b25b3d647fce2a74e",
           "summary": "Existing unit_misc publishes UnitGUID and related unit helpers, but the named GUID/class, GUID/name, lieutenant, minion, and threat-lead APIs/state are absent; do not infer equivalence."
         },
         {
@@ -114006,7 +114006,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/unit_misc.rs",
-          "source_hash": "4ba65143d516df5bfa6a7a137060524c9527118aa93b57e1f4eccb82b259f487",
+          "source_hash": "7177cb4d99d80cac32b2dbc5c39271c4ce5c7572f108dd4b25b3d647fce2a74e",
           "summary": "Current simulator runtime implementation/publication for UnitIsUnit."
         },
         {

@@ -168,6 +168,11 @@ const ROOT_PANEL_MIXINS: &[&str] = &[
     "ClassTalentsFrameMixin",
     "SpellBookFrameMixin",
 ];
+const FOREVER_ROOT_PANEL_MIXINS: &[&str] = &[
+    "PlayerSpellsFrameMixin",
+    "ClassTalentsFrameMixin",
+    "SpellBookFrameMixin",
+];
 
 const TALENT_BUTTON_MIXINS: &[&str] = &[
     "ClassTalentButtonBaseMixin",
@@ -724,19 +729,20 @@ fn blizzard_player_spells_publishes_root_panel_mixins(env: &WowLuaEnv) {
     #[cfg(feature = "client-retail")]
     load_player_spells_after_fork(env);
 
-    for mixin in ROOT_PANEL_MIXINS {
+    let root_panel_mixins = if cfg!(feature = "client-wowforever") {
+        // Forever's Camelot/ClassSpecializations/Blizzard_ClassSpecializationsFrame.xml:3-5
+        // defines a stub template without a mixin attribute.
+        FOREVER_ROOT_PANEL_MIXINS
+    } else {
+        ROOT_PANEL_MIXINS
+    };
+    for mixin in root_panel_mixins {
         let kind: String = env
             .eval(&format!("return type(_G.{mixin})"))
             .unwrap_or_else(|err| panic!("type(_G.{mixin}) probe failed: {err}"));
         assert_eq!(
             kind, "table",
-            "_G.{mixin} must publish as a table — these are the 4 root-tab mixins that \
-             back the major panel sections: PlayerSpellsFrameMixin (the parent panel \
-             owning the TabSystem), ClassSpecFrameMixin (Specialization tab content), \
-             ClassTalentsFrameMixin (Talents tab content — the talent tree), \
-             SpellBookFrameMixin (SpellBook tab content). Each is referenced by an XML \
-             `mixin=\"...\"` attribute on a top-level Frame inside its respective tab \
-             content XML"
+            "_G.{mixin} must publish as a table for the active profile's PlayerSpells tabs"
         );
     }
 }

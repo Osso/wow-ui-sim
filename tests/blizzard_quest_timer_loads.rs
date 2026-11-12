@@ -207,7 +207,7 @@ fn blizzard_quest_timer_toc_lists_two_files_lua_then_xml() {
 }
 
 #[test]
-fn blizzard_quest_timer_excluded_from_eager_game_discovery() {
+fn quest_timer_eager_discovery_matches_profile_game_types() {
     let ui = blizzard_ui_dir();
 
     for screen in [
@@ -218,14 +218,12 @@ fn blizzard_quest_timer_excluded_from_eager_game_discovery() {
     ] {
         let addons = discover_blizzard_addons_for_screen(&ui, screen);
         let found = addons.iter().any(|(name, _)| name == "Blizzard_QuestTimer");
-        assert!(
-            !found,
-            "Blizzard_QuestTimer MUST NOT appear in eager discovery for \
-             {screen:?} — `## AllowLoadGameType: classic` flips \
-             `is_game_type_restricted()` true on retail, and the loader filter \
-             at src/loader/mod.rs:527 rejects classic-only addons during \
-             eager-pool construction. The simulator emulates a retail/mainline \
-             client, so classic-gated addons stay dormant on every screen"
+        let classic_profile_has_addon = toc_layout::classic_cache() && !toc_layout::wrath();
+        let expected =
+            (classic_profile_has_addon || toc_layout::forever()) && screen == ScreenKind::Game;
+        assert_eq!(
+            found, expected,
+            "QuestTimer allows camelot on Forever and is Game-only; source TOC allows classic, camelot"
         );
     }
 }

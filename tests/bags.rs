@@ -127,13 +127,19 @@ fn test_container_frames_registered() {
         "#,
         )
         .unwrap();
+    let expected_frames = if cfg!(feature = "client-wowforever") {
+        // Forever ContainerFrame.xml declares ContainerFrame1 through 7 (lines 298-304).
+        7
+    } else {
+        6
+    };
     assert_eq!(
-        count, 6,
-        "ContainerFrameContainer.ContainerFrames should have 6 entries"
+        count, expected_frames,
+        "ContainerFrameContainer.ContainerFrames should match the active profile source"
     );
 
     // Check individual frames exist
-    for i in 1..=6 {
+    for i in 1..=expected_frames {
         let exists: bool = env
             .eval(&format!("return ContainerFrame{i} ~= nil"))
             .unwrap();
@@ -162,17 +168,17 @@ fn test_container_frames_array_contains_only_real_container_frames() {
         )
         .unwrap();
 
+    let expected_frames = if cfg!(feature = "client-wowforever") {
+        7
+    } else {
+        6
+    };
+    let expected: Vec<String> = (1..=expected_frames)
+        .map(|index| format!("{index}=ContainerFrame{index}"))
+        .collect();
     assert_eq!(
-        names,
-        vec![
-            "1=ContainerFrame1".to_string(),
-            "2=ContainerFrame2".to_string(),
-            "3=ContainerFrame3".to_string(),
-            "4=ContainerFrame4".to_string(),
-            "5=ContainerFrame5".to_string(),
-            "6=ContainerFrame6".to_string(),
-        ],
-        "ContainerFrameContainer.ContainerFrames should only contain the six real bag frames",
+        names, expected,
+        "ContainerFrameContainer.ContainerFrames should match the active profile source"
     );
 }
 

@@ -1,4 +1,4 @@
-//! `C_LootHistory` empty-state model for retail clients.
+//! Empty-state model for `C_LootHistory`.
 
 use crate::c_api::ensure_namespace;
 use crate::client_profile::{ACTIVE, ClientProfile};
@@ -8,7 +8,10 @@ use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
 pub(crate) fn register_c_loot_history(state: &mut LuaState) -> LuaResult<()> {
-    if !matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr) {
+    if !matches!(
+        ACTIVE,
+        ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
+    ) {
         return Ok(());
     }
 

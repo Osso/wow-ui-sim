@@ -267,7 +267,7 @@ fn toc_raw_bytes_pin_current_metadata_directives_and_bootstrap() {
 
 post_wrath_ui_fixture! {
 #[test]
-fn body_resolves_bootstrap_and_three_entries_with_normalized_slashes() {
+fn body_resolves_bootstrap_and_profile_entries_with_normalized_slashes() {
     let toc = TocFile::from_file(&time_manager_toc()).expect("TOC parses");
 
     let body: Vec<String> = toc
@@ -276,12 +276,23 @@ fn body_resolves_bootstrap_and_three_entries_with_normalized_slashes() {
         .map(|p| p.to_string_lossy().to_string())
         .collect();
 
-    let expected = vec![
-        "Blizzard_TimeManager_Bootstrap.lua".to_string(),
-        "Mainline/Blizzard_TimeManager.lua".to_string(),
-        "Mainline/Blizzard_TimeManager.xml".to_string(),
-        "Mainline/Localization.lua".to_string(),
-    ];
+    let expected = if cfg!(feature = "client-wowforever") {
+        // The Forever TOC adds the Camelot TimeManager override before XML.
+        vec![
+            "Blizzard_TimeManager_Bootstrap.lua".to_string(),
+            "Mainline/Blizzard_TimeManager.lua".to_string(),
+            "Camelot/Blizzard_TimeManagerOverrides.lua".to_string(),
+            "Mainline/Blizzard_TimeManager.xml".to_string(),
+            "Mainline/Localization.lua".to_string(),
+        ]
+    } else {
+        vec![
+            "Blizzard_TimeManager_Bootstrap.lua".to_string(),
+            "Mainline/Blizzard_TimeManager.lua".to_string(),
+            "Mainline/Blizzard_TimeManager.xml".to_string(),
+            "Mainline/Localization.lua".to_string(),
+        ]
+    };
 
     assert_eq!(
         body, expected,

@@ -25,6 +25,8 @@ pub struct QuestLogEntry {
     pub is_meta: bool,
     /// Supplied account-wide classification, if known.
     pub is_account_quest: Option<bool>,
+    /// Supplied faction restriction mask used by `GetQuestFactionGroup`.
+    pub faction_mask: Option<i32>,
     pub is_world_quest: bool,
     pub is_replayable: bool,
     pub is_flagged_completed: bool,
@@ -267,6 +269,7 @@ fn ordinary_offer_entry(quest_id: i32, offer: &GossipQuestRow) -> QuestLogEntry 
         is_failed: false,
         is_meta: offer.is_meta,
         is_account_quest: None,
+        faction_mask: None,
         is_world_quest: false,
         is_replayable: false,
         is_flagged_completed: false,
@@ -304,6 +307,7 @@ fn seed_quest_defaults() -> QuestLogEntry {
         is_failed: false,
         is_meta: false,
         is_account_quest: None,
+        faction_mask: None,
         is_world_quest: false,
         is_replayable: false,
         is_flagged_completed: false,

@@ -644,11 +644,17 @@ fn store_frame_subtree_has_no_cycles_in_full_game_ui(env: &WowLuaEnv) {
 
 #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 #[test]
+#[cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
 fn store_free_upgrade_check_handles_account_without_upgrade() {
     let env = load_store_ui_tree();
     env.exec(
         r#"
         assert(type(__secureenv.StoreFrame_CheckForFree) == 'function')
+        assert(C_StorePublic == nil or C_StorePublic.HasFreePromotionalUpgrade == nil)
         assert(C_SharedCharacterServices.HasFreePromotionalUpgrade() == false)
         local frame = {}
         __secureenv.StoreFrame_CheckForFree(frame, 'VARIABLES_LOADED')

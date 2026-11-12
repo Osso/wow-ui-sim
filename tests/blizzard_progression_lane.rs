@@ -106,6 +106,10 @@ fn load_full_game_ui() -> WowLuaEnv {
 #[test]
 fn each_lane_addon_directory_exists_on_disk() {
     for name in LANE_ADDONS {
+        if toc_layout::unified_toc_tree() && *name == "Blizzard_TalentUI" {
+            // The pinned PTR/Forever manifests contain no TalentUI entries.
+            continue;
+        }
         let dir = blizzard_ui_dir().join(name);
         assert!(
             dir.is_dir(),
@@ -176,7 +180,10 @@ fn talent_ui_ships_only_a_mists_toc_variant_unresolvable_by_find_toc_file() {
 
     if toc_layout::wrath() {
         let bare = talent_ui_dir.join("Blizzard_TalentUI.toc");
-        assert!(bare.exists(), "the Wrath cache ships the bare Blizzard_TalentUI.toc");
+        assert!(
+            bare.exists(),
+            "the Wrath cache ships the bare Blizzard_TalentUI.toc"
+        );
         let toc = TocFile::from_file(&bare).expect("Wrath Blizzard_TalentUI TOC parses");
         assert!(toc.is_load_on_demand());
         assert!(toc.dependencies().is_empty());

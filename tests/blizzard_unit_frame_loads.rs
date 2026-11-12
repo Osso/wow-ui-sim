@@ -403,6 +403,10 @@ fn allow_load_game_type_mainline_is_not_restricted() {
 post_wrath_ui_fixture! {
 #[test]
 fn classic_companion_is_restricted_on_mainline_build() {
+    if toc_layout::unified_toc_tree() {
+        // Unified PTR/Forever manifests have one TOC and no Classic sibling.
+        return;
+    }
     let classic = TocFile::from_file(&unit_frame_classic_toc()).expect("Classic TOC parses");
 
     assert!(

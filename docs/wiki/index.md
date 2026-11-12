@@ -4,6 +4,13 @@
 
 [Addon loading](systems/addon-loading.md#blizzard-addon-load-order) records the simulator policy for private packaged declaration registration, disabled/unregistered follower rejection, and cache invalidation when third-party declarations register. Later runtime target loads see new declarations. Public AddOn enumeration remains unchanged; native disabled-follower list membership remains UNKNOWN pending R64c.
 
+## [2026-11-11] system | Character select screen data
+
+[Character select screen data](systems/chr-select-screen-data.md) links the profile-scoped DB2 rows and provenance. **VERIFIED:** Retail data is labeled with installed build 12.1.5.70783 and Forever rows with installed build 1.60.1.70888; targeted lookup tests pass 3/3 on each profile, and the PTR no-data test passes. **UNKNOWN:** Forever 70707 and PTR source rows. The native API and roster are separately owned.
+## [2026-11-11] system | Character-create trial boost level
+
+[Character-create trial boost level](systems/character-create-trial-boost-level.md) links the [contract](../specs/character-create-trial-boost-level.md), the Retail 70783 export, Glue registration, host selector state, and Forever/PTR evidence limits.
+
 ## [2026-11-10] system | ScriptObject full lockdown
 
 [ScriptObject full lockdown](systems/script-object-full-lockdown.md) links the R18 model and its contract: distinct full-lock and forbidden states, access-allowed absence, scoped XML defaults, parent inheritance, and five measured secure/tainted resolver consumers. Retail and Forever native-consumer integration filters pass 7/7 each; six-profile all-target checks plus Wrath, both library suites, and the manifest bin tests pass with zero compiler warnings. See the [lane report](../../handoff/full-lockdown-model/REPORT.md) for exact outputs and UNKNOWNs.
@@ -185,13 +192,9 @@ ordinary launches retain import priority. See [addon loading](systems/addon-load
 selection, addon-visible names and realms before loading and after ReloadUI,
 Forever surname handling and the bounded original-consumer coverage.
 
-## [2026-11-02] investigation | Forever login startup
+## [2026-11-11] correction | Forever PTR feedback Glue selection
 
-[Login startup](investigations/forever-login-startup.md) records missing profile data,
-TOC sibling provenance, customization initialization and the user-approved offline
-catalog/capability policy. The rebuilt Windows login reports zero Lua errors, down
-from 38 records/58 occurrences; 69 focused checks pass after review. This bounded verification
-is separate from the game-screen baseline and native parity.
+[Login startup](investigations/forever-login-startup.md#r26-toc-admission-correction-2026-11-11) records R26's build-classification gate and the cached TOC distinction. **INFERRED (R26 plus the shipped cache TOC, whose exact build is unknown):** normal Forever startup excludes `Blizzard_PTRFeedbackGlue`. **VERIFIED (simulator test at `83d7e3998`, 1/1):** the updated fixture checks its absence from Login startup; it does not assert customization add-on loading there.
 
 ## [2026-11-03] investigation | Forever Cooldown Viewer in Edit Mode
 

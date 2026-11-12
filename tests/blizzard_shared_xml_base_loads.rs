@@ -215,21 +215,28 @@ fn body_count_matches_filesystem_layout() {
         .filter(|f| f.extension().is_some_and(|ext| ext == "xml"))
         .count();
 
+    let (expected_total, expected_lua, expected_xml) =
+        if cfg!(feature = "client-wowforever") {
+            // The Forever TOC adds FocusEffects.lua and FocusEffectTemplates.xml.
+            (42, 38, 4)
+        } else {
+            (40, 37, 3)
+        };
     assert_eq!(
         toc.files.len(),
-        40,
-        "Retail 12.1.5.70575 TOC body lists exactly 40 entries — the foundational \
+        expected_total,
+        "Selected profile TOC body entry count must match its pinned source — the foundational \
          primitive surface for the entire UI codebase. Got {} entries",
         toc.files.len()
     );
     assert_eq!(
-        lua_count, 37,
-        "Retail 12.1.5.70575 TOC body lists exactly 37 .lua files, ending with \
+        lua_count, expected_lua,
+        "Selected profile TOC Lua count must match its pinned source, ending with \
          CurveConstants.lua and TimerUtil.lua. Got {lua_count}"
     );
     assert_eq!(
-        xml_count, 3,
-        "TOC body must list exactly 3 .xml files: CallbackRegistrant.xml, \
+        xml_count, expected_xml,
+        "TOC XML count must match the selected profile; entries include CallbackRegistrant.xml, \
          ColorSwatch.xml, and ForbiddenAspectTemplates.xml. Got {xml_count}"
     );
 }

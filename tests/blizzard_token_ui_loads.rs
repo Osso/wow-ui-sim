@@ -265,11 +265,27 @@ fn body_resolves_to_five_entries_in_declared_order() {
         .map(|p| p.to_string_lossy().to_string())
         .collect();
 
+    let token_ui_files = if cfg!(feature = "client-wowforever") {
+        // Forever's TOC excludes the Mainline entries and selects Camelot entries.
+        [
+            "Camelot/Blizzard_TokenUI.lua",
+            "Camelot/Blizzard_TokenUI.xml",
+        ]
+    } else if cfg!(feature = "client-ptr") {
+        // The pinned PTR manifest splits TokenUI into Mainline/Camelot/WoWHack.
+        [
+            "Mainline/Blizzard_TokenUI.lua",
+            "Mainline/Blizzard_TokenUI.xml",
+        ]
+    } else {
+        // The pinned Retail manifest keeps TokenUI files at the addon root.
+        ["Blizzard_TokenUI.lua", "Blizzard_TokenUI.xml"]
+    };
     let expected = vec![
         "Blizzard_CurrencyTransfer.lua".to_string(),
         "Blizzard_CurrencyTransfer.xml".to_string(),
-        "Blizzard_TokenUI.lua".to_string(),
-        "Blizzard_TokenUI.xml".to_string(),
+        token_ui_files[0].to_string(),
+        token_ui_files[1].to_string(),
         "Localization.lua".to_string(),
     ];
 
@@ -364,7 +380,10 @@ fn token_frame_load_ui_is_absent_and_wow_token_ui_owns_secure_token_flow() {
          UseSecureEnvironment: 1"
     );
     let expected_deps: Vec<String> = if classic_legacy_token {
-        vec!["Blizzard_SharedXML".to_string(), "Blizzard_UIParent".to_string()]
+        vec![
+            "Blizzard_SharedXML".to_string(),
+            "Blizzard_UIParent".to_string(),
+        ]
     } else {
         vec!["Blizzard_SharedXML".to_string()]
     };

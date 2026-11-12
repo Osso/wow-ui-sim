@@ -34,8 +34,7 @@ fn map_data_providers_dir() -> PathBuf {
 }
 
 fn map_data_providers_toc() -> PathBuf {
-    find_toc_file(&map_data_providers_dir())
-        .expect("Blizzard_SharedMapDataProviders TOC resolves")
+    find_toc_file(&map_data_providers_dir()).expect("Blizzard_SharedMapDataProviders TOC resolves")
 }
 
 const PROVIDER_MIXINS: &[&str] = &[
@@ -524,10 +523,15 @@ fn frame_clone_manager_published_as_table_with_init_method() {
 }
 
 #[test]
-fn publishes_38_data_provider_mixin_tables_for_widget_families() {
+fn publishes_profile_selected_data_provider_mixin_tables_for_widget_families() {
     let env = load_map_data_providers_closure();
+    let provider_mixins = PROVIDER_MIXINS
+        .iter()
+        .copied()
+        .filter(|mixin| !toc_layout::forever() || *mixin != "EncounterJournalDataProviderMixin");
 
-    for mixin in PROVIDER_MIXINS {
+    // The Forever TOC excludes EncounterJournalDataProvider.xml for camelot.
+    for mixin in provider_mixins {
         let kind: String = env
             .eval(&format!("return type({mixin})"))
             .unwrap_or_else(|_| panic!("{mixin} probe failed"));
@@ -543,8 +547,12 @@ fn publishes_38_data_provider_mixin_tables_for_widget_families() {
 #[test]
 fn publishes_pin_mixin_tables_for_per_widget_pins() {
     let env = load_map_data_providers_closure();
+    let pin_mixins = SHARED_PIN_MIXINS
+        .iter()
+        .copied()
+        .filter(|mixin| !toc_layout::forever() || *mixin != "EncounterJournalPinMixin");
 
-    for mixin in SHARED_PIN_MIXINS {
+    for mixin in pin_mixins {
         let kind: String = env
             .eval(&format!("return type({mixin})"))
             .unwrap_or_else(|_| panic!("{mixin} probe failed"));

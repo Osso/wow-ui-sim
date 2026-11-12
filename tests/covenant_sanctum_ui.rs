@@ -4,8 +4,9 @@ fn env() -> WowLuaEnv {
     WowLuaEnv::new().expect("Failed to create Lua environment")
 }
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn covenant_sanctum_get_renown_rewards_for_level_returns_seeded_rewards() {
+fn non_retail_covenant_sanctum_get_renown_rewards_returns_seeded_scenario() {
     let env = env();
     let result: String = env
         .eval(
@@ -41,6 +42,6 @@ fn covenant_sanctum_get_renown_rewards_for_level_returns_seeded_rewards() {
 
     assert_eq!(
         result, "ok",
-        "C_CovenantSanctumUI.GetRenownRewardsForLevel should return seeded reward tables"
+        "non-Retail profiles retain the prior simulator reward scenario"
     );
 }

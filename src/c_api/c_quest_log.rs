@@ -1,5 +1,7 @@
 //! Quest queries projected from explicitly supplied simulator state.
 
+#[cfg(feature = "client-wowforever")]
+use super::helpers::read_untainted_signed32_argument;
 use super::helpers::{ensure_namespace, validate_supplied_relation_id};
 use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::methods::{borrow_state, val_to_string};
@@ -45,18 +47,20 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
         "GetQuestAdditionalHighlights",
         additional_highlights,
     )?;
+    // Forever's parser is native-backed; Retail/PTR parser parity remains unknown.
+    #[cfg(any(
+        feature = "client-retail",
+        feature = "client-ptr",
+        feature = "client-wowforever"
+    ))]
+    table_set_rust_fn_static(state, namespace, "IsAccountQuest", is_account_quest)?;
     #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
-    {
-        let namespace = ensure_namespace(state, "C_QuestLog")?;
-        // QuestLogDocumentation.lua:701 Retail, :719 PTR; user-approved default.
-        table_set_rust_fn_static(state, namespace, "IsAccountQuest", is_account_quest)?;
-        table_set_rust_fn_static(
-            state,
-            namespace,
-            "QuestCanHaveWarModeBonus",
-            quest_can_have_war_mode_bonus,
-        )?;
-    }
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "QuestCanHaveWarModeBonus",
+        quest_can_have_war_mode_bonus,
+    )?;
     // Retail/PTR/Forever QuestLogDocumentation.lua:380-392 declares this query.
     if matches!(
         ACTIVE,
@@ -124,19 +128,44 @@ fn register_forever_queries(state: &mut LuaState) -> LuaResult<()> {
     Ok(())
 }
 
+#[cfg(feature = "client-wowforever")]
+fn is_account_quest(state: &mut LuaState) -> LuaResult<u32> {
+    let quest_id = read_untainted_signed32_argument(
+        state,
+        1,
+        "IsAccountQuest",
+        "Usage: local isAccountQuest = C_QuestLog.IsAccountQuest(questID)",
+    )?;
+    let account = account_quest_for_id(state, Some(quest_id))?;
+    state.push(Val::Bool(account));
+    Ok(1)
+}
+
 #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 fn is_account_quest(state: &mut LuaState) -> LuaResult<u32> {
-    let id = validate_supplied_relation_id(stack_val(state, 1), "questID must be a number")?;
-    // User-approved default, not native evidence; supplied quest data takes precedence.
-    let account = borrow_state(state)?
+    let quest_id = validate_supplied_relation_id(stack_val(state, 1), "questID must be a number")?;
+    let account = account_quest_for_id(state, quest_id)?;
+    state.push(Val::Bool(account));
+    Ok(1)
+}
+
+#[cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
+fn account_quest_for_id(state: &LuaState, quest_id: Option<i32>) -> LuaResult<bool> {
+    let Some(quest_id) = quest_id.filter(|id| *id >= 1) else {
+        return Ok(false);
+    };
+    let sim = borrow_state(state)?;
+    Ok(sim
         .quest_log_entries
         .entries
         .iter()
-        .find(|entry| Some(entry.quest_id) == id)
+        .find(|entry| entry.quest_id == quest_id)
         .and_then(|entry| entry.is_account_quest)
-        .unwrap_or(false);
-    state.push(Val::Bool(account));
-    Ok(1)
+        .unwrap_or(false))
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-ptr"))]

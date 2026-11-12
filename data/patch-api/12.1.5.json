@@ -20822,7 +20822,7 @@
         {
           "kind": "test",
           "reference": "tests/spell_casting.rs::spellcast_input_blizzard_bar_observes_delay_and_failure",
-          "source_hash": "4d7e3cdc4fae3cf69b9b10575e4e89a5848ee084e2b67e1f2b830cb4af4ebc8e",
+          "source_hash": "08ab851c532da13ff4ebc65dbcc178914113788f3c858e838fe47c9e57bdeca0",
           "summary": "Focused full Blizzard UI consumer proof covers delayed bar duration plus normal and quiet failure clearing through public admin inputs on PTR and earlier retail."
         }
       ],
@@ -21097,7 +21097,7 @@
         {
           "kind": "test",
           "reference": "tests/spell_casting.rs::spellcast_input_blizzard_bar_observes_delay_and_failure",
-          "source_hash": "4d7e3cdc4fae3cf69b9b10575e4e89a5848ee084e2b67e1f2b830cb4af4ebc8e",
+          "source_hash": "08ab851c532da13ff4ebc65dbcc178914113788f3c858e838fe47c9e57bdeca0",
           "summary": "Focused full Blizzard UI consumer proof covers delayed bar duration plus normal and quiet failure clearing through public admin inputs on PTR and earlier retail."
         }
       ],
@@ -21153,7 +21153,7 @@
         {
           "kind": "test",
           "reference": "tests/spell_casting.rs::spellcast_input_blizzard_bar_observes_delay_and_failure",
-          "source_hash": "4d7e3cdc4fae3cf69b9b10575e4e89a5848ee084e2b67e1f2b830cb4af4ebc8e",
+          "source_hash": "08ab851c532da13ff4ebc65dbcc178914113788f3c858e838fe47c9e57bdeca0",
           "summary": "Focused full Blizzard UI consumer proof covers delayed bar duration plus normal and quiet failure clearing through public admin inputs on PTR and earlier retail."
         }
       ],
@@ -21198,7 +21198,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/unit_misc.rs",
           "summary": "The interruption actor uses the existing player UnitGUID resolver rather than target state or a fabricated enemy identity.",
-          "source_hash": "4ba65143d516df5bfa6a7a137060524c9527118aa93b57e1f4eccb82b259f487"
+          "source_hash": "7177cb4d99d80cac32b2dbc5c39271c4ce5c7572f108dd4b25b3d647fce2a74e"
         },
         {
           "kind": "source",
