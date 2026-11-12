@@ -38,8 +38,10 @@ fn push_tooltip(
     reject_secret_options(state, api_name, last_optional)?;
     let secret_selector = is_secret_value(state, stack_val(state, 1));
     let spell_id = read_spell_selector(state, api_name)?;
-    // Public optional values retain the existing ignored-provider behavior.
-    let tooltip = tooltip_for_spell_identifier(state, spell_id, is_mount);
+    // R81 Q1: dontOverride controls effective selection; isLink reaches cast context.
+    let dont_override = !is_mount && stack_val(state, 4).is_truthy();
+    let is_link = !is_mount && stack_val(state, 6).is_truthy();
+    let tooltip = tooltip_for_spell_identifier(state, spell_id, is_mount, dont_override, is_link);
     // Root the DTO before identity wrappers allocate.
     state.push(tooltip);
     if secret_selector {
