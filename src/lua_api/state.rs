@@ -583,6 +583,8 @@ macro_rules! build_empty_sim_state {
             housing_service_enabled: true,
             housing: HousingState::default(),
             catalog_shop_products: Default::default(),
+            #[cfg(feature = "client-ptr")]
+            catalog_shop_interaction: Default::default(),
             store_public_eligibility: Default::default(),
             housing_bundles: Default::default(),
             pet_battles: PetBattleState::default(),
@@ -776,6 +778,8 @@ macro_rules! build_empty_sim_state {
             mythic_plus: MythicPlusState::default(),
             #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
             character_creation: Default::default(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            character_customizations: None,
             name_reservation_feature_status: 0,
             #[cfg(feature = "client-ptr")]
             ptr_character_creation: Default::default(),

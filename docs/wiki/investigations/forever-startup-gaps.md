@@ -123,6 +123,41 @@ unchanged. Contract details live in
 [target spell and flyout membership](../../specs/spell-target-flyout.md) and
 [quest abandonability](../../specs/quest-abandonability.md).
 
+## Forever 70707 integration fixture differences
+
+VERIFIED (2026-11-12): the `forever-touched-15` exact replay reproduced all
+15 failures from base `54acfb8e0`. Most were Retail fixture assumptions, not
+simulator runtime defects:
+
+| Consumer | Selected Forever evidence | Required fixture |
+|---|---|---|
+| Modified clicks | `Blizzard_FrameXML/Bindings_Camelot.xml:1533` supplies SELFCAST ALT; `src/loader/addon.rs::load_modified_click_defaults` installs it when FrameXML loads | Load the FrameXML closure, not a bare environment |
+| SharedTalentUI dependency | `Blizzard_SharedTalentUI.toc:3` lists only SpellSearch | Do not use PTR's additional SpellTypeIconOverlay edge |
+| Tracking bars | `Camelot/StatusTrackingBarConstants.lua:21-28` gives Exp=0, Rep=2, Honor=3, HouseFavor=5; shared manager `:61` sorts descending | Cold Rep+Exp; battlefield Honor+Rep; tracked house HouseFavor+Rep |
+| Endcaps | `Camelot/EditModePresetLayoutConstants.lua:11` disables parent management; `EditModeSystemTemplates.lua:3786-3802` applies each cap's Hidden setting | Use per-cap Hidden settings and `Camelot/MainMenuBarEndCaps.lua:16-22` Edit Mode visibility override; atlas is on `.Texture` |
+| Flyout | `Shared/SpellFlyout.lua:214-215,338-339` creates unnamed pooled buttons | Observe `SpellFlyout.buttons`, not numbered globals |
+| Spellbook art | `Camelot/SpellBook/Blizzard_SpellBookTemplates.xml:37,43,49` selects C60 page atlases | Resolve those atlas files and compare emitted texture requests, including renderer crop suffixes; retain the draw-order assertion |
+| Specialization | `Camelot/Blizzard_PlayerSpellsFrame.lua:58-63` disables the top tab system | Use the separate TalentMicroButton and public specialization helper, with the same Escape assertions; explicitly supply empty outfits/unavailable transmog |
+
+VERIFIED: the selected `Bindings_Camelot.xml` has no TOGGLEACHIEVEMENT
+binding; the Retail test references `Bindings_Standard.xml:1251`. The Forever
+gate has coordinator approval and makes no claim about the A key's behavior.
+VERIFIED: the partial panel closure also needed eager QueueStatusFrame because
+`EditModeSystemTemplates.lua:2467` reaches QueueStatusButton during transitions.
+
+VERIFIED: the runtime defect was the Forever publication gate for the existing
+[supplied item-overlay classifications](../../specs/retail-corrupted-azerite-items.md).
+`ItemDocumentation.lua:1232` declares IsCorruptedItem and the selected
+`ItemButtonTemplate.lua:271` calls it. The original consumer test distinguishes
+marked and unmarked item IDs; no native classification default is inferred.
+
+VERIFIED: the dedicated 211-entry eager-order fixture was independently generated
+from the pin's selected Game TOCs, with file hashes and header citations in the
+private lane report. Its required/manager dependency graph has no cycles or
+reversed edges. A test validates those edges separately from snapshot equality.
+INFERRED: implicit startup publisher edges remain simulator policy; native total
+ordering of unrelated addons is UNKNOWN.
+
 ## Excluded and unmodeled branches
 
 The user approved correcting the positive housing expectation after proving

@@ -329,10 +329,15 @@ fn server_mirrored_store_defaults() -> HashMap<String, String> {
         return HashMap::new();
     }
 
-    HashMap::from([
+    let mut defaults = HashMap::from([
         ("bpaystoreenable".to_owned(), "0".to_owned()),
         ("shop2enabled".to_owned(), "1".to_owned()),
-    ])
+    ]);
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Ptr {
+        // R75: PTR MirrorVar input with a verified false default.
+        defaults.insert("rewardsshopoverrideenabled".to_owned(), "0".to_owned());
+    }
+    defaults
 }
 
 fn parse_default_cvars() -> (HashMap<String, String>, HashMap<String, String>) {
