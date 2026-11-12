@@ -23,6 +23,7 @@ Modified-click action bindings select the action used by Blizzard item-click han
 
 - `tests/blizzard_item_button_loads.rs` — selected Retail consumer routing.
 - `tests/keybindings.rs::modified_clicks_round_trip_through_runtime_surface` — selected Retail/PTR defaults after `Blizzard_FrameXML` loads.
+- `tests/startup_api_stubs.rs::startup_client_time_camera_and_channel_globals_are_callable` — Retail/PTR SELFCAST default after `Blizzard_FrameXML` loads.
 
 ## Known gaps (current cycle)
 
