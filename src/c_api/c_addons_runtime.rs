@@ -4,7 +4,7 @@ use crate::lua_api::methods::{borrow_lua, borrow_state, create_string, state_han
 use crate::screen::ScreenKind;
 use crate::toc::TocFile;
 use rilua::vm::state::LuaState;
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 use std::io;
 use std::path::PathBuf;
 
@@ -104,7 +104,7 @@ pub(super) fn load_with_followers(state: &mut LuaState, loader_env: &LoaderEnv<'
     };
 
     for follower in followers {
-        if !crate::loader::uses_verified_load_with_semantics()
+        if !crate::loader::resolves_load_with_children()
             && !super::addon_is_enabled(state, &follower)
         {
             continue;
@@ -115,7 +115,7 @@ pub(super) fn load_with_followers(state: &mut LuaState, loader_env: &LoaderEnv<'
 
 fn submit_load_with_follower(state: &mut LuaState, addon_name: &str) {
     let (top, base, ci) = (state.top, state.base, state.ci);
-    let result = if crate::loader::uses_verified_load_with_semantics() {
+    let result = if crate::loader::resolves_load_with_children() {
         super::request_addon_load(state, addon_name, true)
     } else {
         load_runtime_addon(state, addon_name).map_err(|error| error.to_string())
@@ -137,13 +137,27 @@ fn index_load_with_declarations(
             followers.entry(target).or_default().push(follower.clone());
         }
     }
-    if !crate::loader::uses_verified_load_with_semantics() {
-        for names in followers.values_mut() {
-            names.sort();
-            names.dedup();
+    match crate::client_profile::ACTIVE {
+        crate::client_profile::ClientProfile::Ptr => {
+            for names in followers.values_mut() {
+                deduplicate_followers(names);
+            }
+        }
+        crate::client_profile::ClientProfile::Retail
+        | crate::client_profile::ClientProfile::WowForever => {}
+        _ => {
+            for names in followers.values_mut() {
+                names.sort();
+                names.dedup();
+            }
         }
     }
     followers
+}
+
+fn deduplicate_followers(names: &mut Vec<String>) {
+    let mut seen = HashSet::new();
+    names.retain(|name| seen.insert(name.clone()));
 }
 
 fn read_runtime_addon_toc(

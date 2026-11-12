@@ -1,8 +1,8 @@
 > Proof receipts live untracked under `~/.local/state/wow-ui-sim`. The `data/patch-api/evidence` and `data/test-perf/evidence` trees were removed on 2026-11-08; historical links below are records, not live paths. Recover a file with `git show c011c1d95:<path>`.
 
-## [2026-11-12] correction | Addon loading phases and LoadWith followers
+## [2026-11-11] correction | Addon loading phases and LoadWith followers
 
-[Addon loading](systems/addon-loading.md#blizzard-addon-load-order) records R64 startup phases, `LoadManagers`, optional-before-required ordering, R64b/c follower behavior, and R70 PTR phase/mask evidence. Retail/Forever use the verified follower path; PTR follower behavior stays unchanged because native vector membership is UNKNOWN. The simulator models PTR `CharacterCreate` as an INFERRED phase-two Glue root and loads its required chain before its files, without ordering it against PTRFeedbackGlue.
+[Addon loading](systems/addon-loading.md#blizzard-addon-load-order) records R64 startup phases, `LoadManagers`, optional-before-required ordering, R64b/c follower behavior, and R70 PTR phase/mask evidence. Retail/Forever use the verified follower path. PTR uses an INFERRED child-list model; native parser linkage remains UNKNOWN, and tests seed the list directly. The simulator models PTR `CharacterCreate` as an INFERRED phase-two Glue root and loads its required chain before its files, without ordering it against PTRFeedbackGlue.
 
 ## [2026-11-11] implementation | Glue login submission
 

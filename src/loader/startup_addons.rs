@@ -20,6 +20,17 @@ pub fn uses_verified_load_with_semantics() -> bool {
     )
 }
 
+/// Whether runtime loading resolves registered TOC child declarations.
+/// PTR inclusion is inferred because parser-to-resolver linkage remains unknown.
+pub fn resolves_load_with_children() -> bool {
+    matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::Ptr
+            | crate::client_profile::ClientProfile::WowForever
+    )
+}
+
 pub fn startup_bootstrap_eligible(toc: &TocFile) -> bool {
     cfg!(any(
         feature = "retail-12-1-0",

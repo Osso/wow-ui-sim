@@ -9,6 +9,7 @@ use tempfile::TempDir;
 use wow_ui_sim::loader::{
     StartupAddonLoadKind, discover_all_blizzard_addons,
     discover_blizzard_startup_addons_for_screen, load_startup_addon, register_load_with_addons,
+    register_load_with_declarations,
 };
 use wow_ui_sim::lua_api::{AddonInfo, WowLuaEnv};
 use wow_ui_sim::screen::ScreenKind;
@@ -454,7 +455,68 @@ fn load_managers_run_before_their_startup_owner_files() {
         .unwrap();
 }
 
-// INFERRED simulator policy; this does not establish PTR native live-list membership.
+// This supplies the PTR child list directly; it does not assert parser linkage.
+// `LoadFirst` is a simulator phase marker here, not a PTR field-mapping claim.
+#[cfg(feature = "client-ptr")]
+#[test]
+fn ptr_prepopulated_children_run_after_target_files_without_resolver_gates() {
+    let tree = AddonTree::new(ScreenKind::Game);
+    let target = "Blizzard_PTRLoadWithTargetProbe";
+    let disabled_follower = "User_DisabledPTRLoadWithFollowerProbe";
+    let phase_follower = "User_PhasePTRLoadWithFollowerProbe";
+    tree.env.exec("ptrLoadWithOrder = {}").unwrap();
+    tree.add(
+        target,
+        "## AllowLoad: Game\n## LoadOnDemand: 1",
+        "ptrTargetFileRan = true; table.insert(ptrLoadWithOrder, 'target-file')",
+    );
+    tree.add(
+        disabled_follower,
+        "## AllowLoad: Game\n## LoadOnDemand: 1",
+        "table.insert(ptrLoadWithOrder, 'disabled-follower-file')",
+    );
+    tree.add(
+        phase_follower,
+        "## AllowLoad: Game\n## LoadOnDemand: 1\n## LoadFirst: 1",
+        "assert(ptrTargetFileRan == true); table.insert(ptrLoadWithOrder, 'phase-follower-file')",
+    );
+    tree.env.register_addon(AddonInfo {
+        folder_name: disabled_follower.to_owned(),
+        title: disabled_follower.to_owned(),
+        enabled: false,
+        ..Default::default()
+    });
+    tree.register_enabled(phase_follower);
+    register_load_with_declarations(
+        &tree.env.loader_env(),
+        &[
+            (
+                disabled_follower.to_owned(),
+                vec![target.to_owned()],
+                false,
+            ),
+            (
+                phase_follower.to_owned(),
+                vec![target.to_owned()],
+                true,
+            ),
+        ],
+    );
+
+    let (_, logs) = capture_warnings(|| tree.load(target));
+
+    assert!(
+        logs.contains(&format!("LoadWith follower {disabled_follower} failed:")),
+        "the disabled child should reach the generic loader; got: {logs}"
+    );
+    let order: String = tree
+        .env
+        .eval("return table.concat(ptrLoadWithOrder, ',')")
+        .unwrap();
+    assert_eq!(order, "target-file,phase-follower-file");
+}
+
+// The startup-candidate relation is inferred; this test checks dependency order only.
 #[cfg(feature = "client-ptr")]
 #[test]
 fn ptr_character_create_dependencies_load_before_its_files() {

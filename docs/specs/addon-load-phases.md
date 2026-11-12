@@ -29,9 +29,12 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 - [x] VERIFIED (Retail 12.1.5.70688): the target completes its own files and fires `ADDON_LOADED` before it submits followers. The follower loop preserves its resolved vector order.
 - [x] VERIFIED (Retail 12.1.5.70688): a failing follower does not stop later submissions and does not change the target's success result.
 - [x] VERIFIED (Retail 12.1.5.70688; Forever 1.60.1.70707): follower submissions use the generic loader and its dependency order: optional dependencies, required dependencies, then the follower's own files.
+- [ ] VERIFIED (PTR 12.1.7.70668): the generic loader visits the target's child list after the target's own file-processing path; the resolver does not filter by enabled state, phase, origin, or `INSECURE`.
+- [ ] INFERRED simulator policy (PTR 12.1.7.70668): apply the child-list resolver to registered `LoadWith` declarations and suppress duplicates. Native parser-to-resolver linkage is UNKNOWN; PTR tests seed the child list directly and do not assert parser population.
 - [x] VERIFIED (Retail 12.1.5.70688): generic refusal order is `USER_ADDONS_DISABLED` (14), `WRONG_LOAD_PHASE` (13), `NO_ACTIVE_INTERFACE` (10), `WRONG_ACTIVE_INTERFACE` (11), `WRONG_GAME_TYPE` (12), `DISABLED` (2) / `BANNED` (3) / `NOT_AVAILABLE` (8), `INSECURE` (5), `INCOMPATIBLE` (15), `INTERFACE_VERSION` (7), then required dependencies. Missing and rejected required children use `DEP_MISSING` (1), `DEP_DISABLED` (2), and `DEP_WRONG_GAME_TYPE` (12), as applicable.
 - [x] SIMULATOR POLICY: register packaged declarations privately before startup without changing public AddOn enumeration; register user declarations at the existing third-party registration step. Invalidate the follower index when declarations change.
-- [x] SIMULATOR POLICY: Retail and Forever submit registered followers in registration order through the shared request path. A disabled registered follower reaches the refusal check and returns `DISABLED`; one failure does not block later followers. Preserve the existing simulator path on PTR and other unverified profiles.
+- [x] SIMULATOR POLICY: Retail and Forever submit registered followers in registration order through the shared request path. A disabled registered follower reaches the refusal check and returns `DISABLED`; one failure does not block later followers.
+- [ ] INFERRED SIMULATOR POLICY (PTR R64D): resolve registered declarations into a child list, suppress duplicate children, and submit children after target files. The PTR parser-to-resolver link is UNKNOWN; tests seed the list directly. Other unverified profiles keep their prior path.
 
 ## How it works
 
@@ -59,7 +62,7 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 
 ## Known gaps (current cycle)
 
-- [ ] UNKNOWN: PTR 12.1.7.70668 does not establish whether `LoadWith` populates the follower vector. The simulator keeps its prior PTR `LoadWith` path; no PTR follower assertions are enabled.
+- [ ] UNKNOWN: PTR 12.1.7.70668 does not establish whether declaration parsing feeds the child-list resolver. The simulator applies the inferred resolver model; PTR tests do not assert parser linkage or duplicate suppression.
 - [ ] UNKNOWN: PTR phase and demand fields are not mapped to cached TOC directives, and native live-list membership and sort direction are not established.
 - [ ] UNKNOWN: Native `LoadWith` behavior on Mists, Era, Anniversary, and Wrath. The simulator keeps their previous dispatch path.
 - [ ] INFERRED: a registered phase-three user addon may load early during an earlier target's follower loop. The resolver has no phase filter; tests do not assert this inference.
