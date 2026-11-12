@@ -73,12 +73,12 @@ guess and old test bodies unchanged behind explicit profile cfgs, labelled
 The old guessed-rename tests are `character_create_action_updates_player_name_without_lua_errors`
 and `create_character_wrapper_seeds_state_and_admin_name`.
 
-Coordinator #205 allows model/test preparation now but requires merging the
-announced m37 master commit before editing `character_create_defaults.rs`.
-Coordinator #214 subsequently authorizes landing the evidence-ready APIs/tests
-first. The Retail/Forever CreateCharacter guess and mixin wrapper removal and
-old-test gating must land together after the m37 merge. No other workaround
-behavior is in scope.
+Coordinator #224 supplied m37 master `ab91e4f92c2fc01c5fc0c96418ee98c1e230fd4b`,
+merged without rewriting history in `4ade986593b3269b731ca08775811a3938566c5c`.
+The subsequent atomic change excludes the CreateCharacter guess and mixin wrapper
+from Retail/Forever and cfg-gates the two old test bodies unchanged. Raw Lua
+chunks are recomposed in their original order/scope for every other profile;
+initial frame seeding and other workaround functions remain untouched.
 
 ## Host call observation (#210)
 

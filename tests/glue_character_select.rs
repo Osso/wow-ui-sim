@@ -1345,6 +1345,7 @@ fn character_creation_host_result_handler_preservation_without_submit() {
 }
 
 #[test]
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 fn character_create_action_updates_player_name_without_lua_errors() {
     test_timeout! {
         let env = load_blizzard_screen(ScreenKind::CharacterSelect);
