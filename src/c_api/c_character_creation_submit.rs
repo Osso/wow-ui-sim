@@ -53,6 +53,12 @@ pub(crate) fn update_registration(
     is_glue: bool,
 ) -> LuaResult<()> {
     if is_glue {
+        table_set_rust_fn_static(
+            state,
+            namespace,
+            "SetPlayerModelHiddenState",
+            set_player_model_hidden_state,
+        )?;
         table_set_rust_fn_static(state, namespace, "CreateCharacter", create_character)?;
         table_set_rust_fn_static(
             state,
@@ -67,6 +73,12 @@ pub(crate) fn update_registration(
             stop_all_spell_visual_kits,
         )?;
     } else {
+        table_set_static(
+            state,
+            Val::Table(namespace),
+            "SetPlayerModelHiddenState",
+            Val::Nil,
+        );
         table_set_static(state, Val::Table(namespace), "CreateCharacter", Val::Nil);
         table_set_static(
             state,
@@ -82,6 +94,22 @@ pub(crate) fn update_registration(
         );
     }
     Ok(())
+}
+
+fn set_player_model_hidden_state(state: &mut LuaState) -> LuaResult<u32> {
+    let argument = stack_val(state, 1);
+    if matches!(argument, Val::Nil) {
+        return Err(bad_argument(
+            1,
+            "SetPlayerModelHiddenState",
+            "Usage: C_CharacterCreation.SetPlayerModelHiddenState(hiddenState)",
+        ));
+    }
+    let _hidden = !matches!(argument, Val::Bool(false));
+    // R78b Q3/#222 VERIFIED: without a character-create player model, there is
+    // no effect, stored hidden flag, or event. This simulator has no such model
+    // object (as with SetModelDressState); do not invent one to store alpha.
+    Ok(0)
 }
 
 fn text_argument(state: &LuaState, index: i32) -> LuaResult<Vec<u8>> {

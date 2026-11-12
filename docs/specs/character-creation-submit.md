@@ -98,7 +98,24 @@ arguments from Blizzard's real Create button.
   failure and both success payload variants to the real, already-loaded handler.
   It checks the actual localized popup text, handler CVar update, and all three
   event arguments. This is **handler preservation**, not end-to-end submit proof.
-- The real-button RED still stops at the missing
-  `C_CharacterCreation.SetPlayerModelHiddenState(false)` in Retail line 1565 /
-  Forever Camelot line 1701. Coordinator #212 requests R78b Q3 evidence; no no-op
-  or error tolerance is permitted. End-to-end submit/result GREEN waits for it.
+- After the R78b Q3 visibility prerequisite, the Retail real-button RED reaches
+  customization categories whose guessed provider omits `cameraZoomLevel`.
+  `Blizzard_CustomizationUI.lua:583` passes nil to the evidenced zoom setter;
+  #228 requests a supported input/provider fix. Do not weaken the setter or
+  tolerate the error. Full submit/result GREEN remains pending.
+
+## Model visibility prerequisite (R78b Q3, #222)
+
+VERIFIED identically on Retail/Forever: Glue-only
+`C_CharacterCreation.SetPlayerModelHiddenState(hiddenState)` requires one non-nil
+argument, uses Lua truthiness, returns zero values, and emits no event. Missing
+or nil raises `Usage: C_CharacterCreation.SetPlayerModelHiddenState(hiddenState)`.
+With a native player model it sets alpha to zero when truthy and 1.0 otherwise.
+Without a model it has no effect and stores no hidden flag. The simulator has
+no character-create player-model object (the existing dress-state API likewise
+models the no-model branch), so only argument validation/zero returns are
+observable. No fake model, hidden flag, or alpha storage is introduced. Game
+registration remains UNKNOWN and is not added.
+
+#222 also offers an optional INFERRED name-validation bridge. This slice chooses
+to leave IsCharacterNameValid unchanged, avoiding unrelated inferred behavior.

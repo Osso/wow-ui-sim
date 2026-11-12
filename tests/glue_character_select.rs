@@ -980,6 +980,42 @@ fn character_creation_visual_kits_clear_without_a_model() {
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn character_creation_hidden_state_validates_and_has_no_model_effect() {
+    let env = WowLuaEnv::new().unwrap();
+    env.set_screen_mode(ScreenKind::CharacterCreate);
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.events.drain();
+        sim.character_creation.interaction_state = 23;
+        sim.character_creation.visual_kit_active = true;
+        sim.character_creation.visual_kit_value = 55;
+    }
+    env.exec(r#"
+        __hiddenStateEvents = 0
+        local listener = CreateFrame("Frame")
+        listener:RegisterAllEvents()
+        listener:SetScript("OnEvent", function() __hiddenStateEvents = __hiddenStateEvents + 1 end)
+        local api = C_CharacterCreation.SetPlayerModelHiddenState
+        for _, invoke in ipairs({ function() api() end, function() api(nil) end }) do
+            local ok, err = pcall(invoke)
+            assert(not ok)
+            assert(string.find(err, "Usage: C_CharacterCreation.SetPlayerModelHiddenState(hiddenState)", 1, true))
+        end
+        for _, value in ipairs({false, true, 1, 0, "", {}, function() end}) do
+            assert(select('#', api(value)) == 0)
+        end
+        assert(__hiddenStateEvents == 0)
+    "#).unwrap();
+    let sim = env.state().borrow();
+    assert!(sim.events.is_empty());
+    assert!(sim.character_creation.last_call.is_none());
+    assert_eq!(sim.character_creation.interaction_state, 23);
+    assert!(sim.character_creation.visual_kit_active);
+    assert_eq!(sim.character_creation.visual_kit_value, 55);
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn submit_real_character_creation(env: &WowLuaEnv) {
     let errors_before = env.state().borrow().lua_errors.len();
     // Drive the same screen transition as the existing Glue tests, then the
@@ -1150,9 +1186,10 @@ fn assert_creation_usage(env: &WowLuaEnv, arguments: &str, usage: &str) {
 #[test]
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn character_creation_submit_real_controls_wait_for_host_result() {
-    // Current reachability RED (#212): Retail line 1565 / Forever Camelot line 1701:
-    // attempt to call field 'SetPlayerModelHiddenState' (a nil value).
-    // Do not tolerate/skip it; the missing model awaits R78b Q3.
+    // Current reachability RED (#228): customization category cameraZoomLevel is nil.
+    // Exact first line: bad argument #1 to 'SetCameraZoomLevel'
+    // (Usage: C_CharacterCreation.SetCameraZoomLevel(zoomLevel [, keepCustomZoom])).
+    // Do not tolerate/skip it or weaken the evidenced zoom argument gate.
     test_timeout! {
         let env = load_blizzard_screen(ScreenKind::CharacterSelect);
         let original_name: String = env.eval("return UnitName('player')").unwrap();
