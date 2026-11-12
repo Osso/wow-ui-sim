@@ -103,8 +103,10 @@ arguments from Blizzard's real Create button.
 - After the R78b Q3 visibility prerequisite, the Retail real-button RED reaches
   customization categories whose guessed provider omits `cameraZoomLevel`.
   `Blizzard_CustomizationUI.lua:583` passes nil to the evidenced zoom setter;
-  #228 requests a supported input/provider fix. Do not weaken the setter or
-  tolerate the error. Full submit/result GREEN remains pending.
+  #232 confirms the categories themselves are invented and requires a native,
+  DB2-backed GetAvailableCustomizations provider (R79, separate in-house lane).
+  This slice must not modify that provider, add guessed camera values, weaken
+  the setter, or tolerate the error. Full submit/result GREEN is blocked on R79.
 
 ## Model visibility prerequisite (R78b Q3, #222)
 
