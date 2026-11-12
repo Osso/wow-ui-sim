@@ -115,3 +115,113 @@ fn fontstring_get_num_lines_reports_wrapped_line_count() {
         "wrapped text should report multiple lines, got {wrapped_lines}"
     );
 }
+
+// INFERRED from Retail 12.1.5.70688 L1 Q1: two resolved horizontal anchors set
+// the FontString width. EllesmereUI's HotKey consumer sets text before its two anchors.
+#[test]
+fn two_edge_fontstring_width_updates_when_points_follow_text() {
+    let env = env();
+    let (width, left, right, text_width): (f64, f64, f64, f64) = env
+        .eval(
+            r#"
+            local parent = CreateFrame("Frame", "TextFirstAnchorParent", UIParent)
+            parent:SetSize(150, 30)
+            local fs = parent:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+            fs:SetText("A long consumer label that is wider than its anchor span")
+            local textWidth = fs:GetWidth()
+            fs:SetWordWrap(true)
+            fs:ClearAllPoints()
+            fs:SetPoint("TOPRIGHT", parent, "TOPRIGHT", -5, 0)
+            fs:SetPoint("TOPLEFT", parent, "TOPLEFT", 5, 0)
+            return fs:GetWidth(), fs:GetLeft(), fs:GetRight(), textWidth
+            "#,
+        )
+        .unwrap();
+    let anchor_width = right - left;
+    assert!(
+        (text_width - 140.0).abs() > 1.0,
+        "the fixture text must exceed the 140-unit anchor span, got {text_width}"
+    );
+    assert!(
+        (anchor_width - 140.0).abs() < 1.0,
+        "the two anchors should span 140 units, got {anchor_width}"
+    );
+    assert!(
+        (width - anchor_width).abs() < 1.0,
+        "GetWidth should follow the two anchors, got {width} for span {anchor_width}"
+    );
+}
+
+// INFERRED from Retail 12.1.5.70688 L1 Q1: anchor width uses the target's
+// resolved span, not only its stored width. L1 Q2 verifies SetWidth(0) stores zero.
+#[test]
+fn two_edge_fontstring_uses_resolved_width_of_zero_width_target() {
+    let env = env();
+    let (target_width, width, left, right): (f64, f64, f64, f64) = env
+        .eval(
+            r#"
+            local parent = CreateFrame("Frame", "ZeroWidthTargetParent", UIParent)
+            parent:SetSize(260, 50)
+            local target = CreateFrame("Frame", "ZeroWidthTarget", parent)
+            target:SetSize(0, 40)
+            target:SetPoint("TOPLEFT", parent, "TOPLEFT", 10, 0)
+            target:SetPoint("TOPRIGHT", parent, "TOPRIGHT", -10, 0)
+            local fs = target:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+            fs:SetPoint("LEFT", target, "LEFT", 20, 0)
+            fs:SetPoint("RIGHT", target, "RIGHT", -20, 0)
+            fs:SetWordWrap(true)
+            fs:SetText("Resolved target width")
+            return target:GetWidth(), fs:GetWidth(), fs:GetLeft(), fs:GetRight()
+            "#,
+        )
+        .unwrap();
+    let anchor_width = right - left;
+    assert!(
+        (target_width - 240.0).abs() < 1.0,
+        "the target anchors should resolve to 240 units, got {target_width}"
+    );
+    assert!(
+        (anchor_width - 200.0).abs() < 1.0,
+        "the FontString anchors should span 200 units, got {anchor_width}"
+    );
+    assert!(
+        (width - anchor_width).abs() < 1.0,
+        "FontString width should use the resolved target span, got {width} for {anchor_width}"
+    );
+}
+
+// INFERRED from Retail 12.1.5.70688 L1 Q1: the FontString's anchored width
+// follows current target geometry after the parent is resized.
+#[test]
+fn two_edge_fontstring_width_tracks_parent_resize() {
+    let env = env();
+    let (initial_width, width, left, right): (f64, f64, f64, f64) = env
+        .eval(
+            r#"
+            local parent = CreateFrame("Frame", "ResizeAnchorParent", UIParent)
+            parent:SetSize(150, 30)
+            local fs = parent:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+            fs:SetPoint("TOPLEFT", parent, "TOPLEFT", 5, 0)
+            fs:SetPoint("TOPRIGHT", parent, "TOPRIGHT", -5, 0)
+            fs:SetWordWrap(true)
+            fs:SetText("A long label that remains anchored when its parent changes width")
+            local initialWidth = fs:GetWidth()
+            parent:SetSize(90, 30)
+            return initialWidth, fs:GetWidth(), fs:GetLeft(), fs:GetRight()
+            "#,
+        )
+        .unwrap();
+    let anchor_width = right - left;
+    assert!(
+        (initial_width - 140.0).abs() < 1.0,
+        "initial anchored width should be 140 units, got {initial_width}"
+    );
+    assert!(
+        (anchor_width - 80.0).abs() < 1.0,
+        "resized anchors should span 80 units, got {anchor_width}"
+    );
+    assert!(
+        (width - anchor_width).abs() < 1.0,
+        "GetWidth should follow the resized anchors, got {width} for {anchor_width}"
+    );
+}
