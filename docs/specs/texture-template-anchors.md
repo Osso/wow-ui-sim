@@ -4,8 +4,8 @@ XML texture instances retain template anchors unless the instance declares its o
 
 ## What it must do
 
-- [ ] Preserve template anchors for XML-loaded and runtime-created frame children, including the half-width backgrounds and 51-pixel top inset used by PTR 70493 `Blizzard_PlayerSpells/Mainline/SpellBook/Blizzard_SpellBookTemplates.xml:41-51`.
-- [ ] Use instance anchors in place of inherited anchors when explicitly supplied.
+- [x] Preserve template anchors for XML-loaded and runtime-created frame children, including the half-width backgrounds and 51-pixel top inset used by PTR 70493 `Blizzard_PlayerSpells/Mainline/SpellBook/Blizzard_SpellBookTemplates.xml:41-51`.
+- [x] Use instance anchors in place of inherited anchors when explicitly supplied.
 
 ## How it works
 
@@ -22,7 +22,7 @@ XML texture instances retain template anchors unless the instance declares its o
 
 ## Known gaps (current cycle)
 
-- [ ] Complete targeted profile proof.
+- [ ] Complete merged-tree preservation proof. PTR and Retail original spellbook tests and the synthetic anchor regression pass. The synthetic case also passes on Forever; its Retail-geometry spellbook fixtures still fail and do not establish a resolver regression.
 
 ## Out of scope
 
