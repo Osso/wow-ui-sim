@@ -24,12 +24,12 @@ fn rewards_shop_tracks_mirrored_flags_and_integer_rule() {
     let flags = |r: bool, b: bool, o: bool| {
         {
             let state = state.borrow();
-            for (name, value) in [("rewardsShopEnabled", r), ("rewardsShopOverrideEnabled", o)] {
-                state
-                    .cvars
-                    .set_imported(name, if value { "1" } else { "0" });
-            }
+            state
+                .cvars
+                .set_imported("rewardsShopEnabled", if r { "1" } else { "0" });
         }
+        env.set_server_mirrored_cvar("rewardsShopOverrideEnabled", if o { "1" } else { "0" })
+            .unwrap();
         env.set_server_mirrored_cvar("bpayStoreEnable", if b { "1" } else { "0" })
             .unwrap();
     };
