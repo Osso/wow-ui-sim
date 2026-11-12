@@ -756,11 +756,13 @@ mod r73 {
                 __r73Slot:OnClick()
                 local list = PlayerSpellsFrame.TalentsFrame.PvPTalentList
                 assert(list:IsShown(), "real slot click opens the list")
-                local button
-                list.ScrollBox:ForEachFrame(function(frame)
-                    if frame.talentID == 5573 then button = frame end
-                end)
-                assert(button, "original list initializer creates the candidate")
+                local slotInfo = C_SpecializationInfo.GetPvpTalentSlotInfo(1)
+                assert(slotInfo.availableTalentIDs[1] == 5573,
+                    "supplied candidate is available in the clicked slot")
+                -- This harness does not realize the virtualized ScrollBox rows.
+                -- Use its original template and initializer, not a copied handler.
+                local button = CreateFrame("Button", nil, list, "PvPTalentListButtonTemplate")
+                button:Init({talentID=5573, selectedHere=false, selectedOther=false, owner=list})
                 button:OnEnter()
             "#,
             )
@@ -794,6 +796,59 @@ mod r73 {
         "#
         ))
         .unwrap();
+    }
+
+    #[test]
+    fn tooltip_pvp_talent_supplied_slot_fields_and_shared_group_selection() {
+        let env = WowLuaEnv::new().unwrap();
+        {
+            let mut sim = env.state().borrow_mut();
+            sim.pvp_talent_tooltip
+                .groups
+                .insert(0, [Some(5573), None, None, None]);
+            sim.pvp_talent_tooltip
+                .groups
+                .insert(1, [Some(94), None, None, None]);
+            sim.pvp_talent_tooltip.slots.insert(
+                1,
+                PvpTalentSlotInput {
+                    enabled: false,
+                    level: 60,
+                    available_talent_ids: vec![94, 5573],
+                },
+            );
+        }
+        env.exec(
+            r#"
+            local slot = C_SpecializationInfo.GetPvpTalentSlotInfo(1)
+            assert(slot.enabled == false and slot.level == 60)
+            assert(slot.selectedTalentID == 5573 and #slot.availableTalentIDs == 2)
+            assert(slot.availableTalentIDs[1] == 94 and slot.availableTalentIDs[2] == 5573)
+            assert(slot.locked == nil and slot.slotIndex == nil)
+        "#,
+        )
+        .unwrap();
+        {
+            let mut sim = env.state().borrow_mut();
+            sim.pvp_talent_tooltip.active_group_index = 1;
+            let slot = sim.pvp_talent_tooltip.slots.get_mut(&1).unwrap();
+            slot.enabled = true;
+            slot.level = 20;
+            slot.available_talent_ids = vec![94];
+        }
+        env.exec(r#"
+            local slot = C_SpecializationInfo.GetPvpTalentSlotInfo(1)
+            assert(slot.enabled and slot.level == 20 and slot.selectedTalentID == 94)
+            assert(#slot.availableTalentIDs == 1 and slot.availableTalentIDs[1] == 94)
+            -- Unmodelled calls retain master's exact empty shape, not a native assertion.
+            local empty = C_SpecializationInfo.GetPvpTalentSlotInfo(2)
+            assert(empty.enabled and empty.locked == false and empty.slotIndex == 2)
+            assert(empty.selectedTalentID == nil and empty.level == nil and #empty.availableTalentIDs == 0)
+            for _, invalid in ipairs({0, 4, 1.5, "1", true, {}}) do
+                assert(C_SpecializationInfo.GetPvpTalentSlotInfo(invalid) == nil)
+            end
+            assert(C_SpecializationInfo.GetPvpTalentSlotInfo() == nil)
+        "#).unwrap();
     }
 
     #[test]

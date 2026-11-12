@@ -464,11 +464,20 @@ pub(crate) fn register_slot_info(state: &mut LuaState, namespace: GcRef<Table>) 
 
 fn get_slot_info(state: &mut LuaState) -> LuaResult<u32> {
     use crate::lua_api::methods::create_table;
-    let Some(index) = lua_index(state, 1)? else {
-        state.push(Val::Nil);
-        return Ok(1);
+    // Preserve the old no-host call behavior; native argument failures are UNKNOWN.
+    let value = allowed_when_untainted(state, 1, "C_SpecializationInfo.GetPvpTalentSlotInfo")?;
+    let ui_index = match value {
+        Val::Num(number)
+            if number.fract() == 0.0 && (1.0..=f64::from(u32::MAX)).contains(&number) =>
+        {
+            number as usize
+        }
+        _ => {
+            state.push(Val::Nil);
+            return Ok(1);
+        }
     };
-    let ui_index = index + 1;
+    let index = ui_index - 1;
     let (slot, selected) = {
         let sim = borrow_state(state)?;
         let inputs = &sim.pvp_talent_tooltip;
