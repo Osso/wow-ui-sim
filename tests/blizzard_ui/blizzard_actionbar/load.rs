@@ -60,6 +60,8 @@ const CURRENT_DECLARED_DEPS: &[&str] = match wow_ui_sim::client_profile::ACTIVE 
         "Blizzard_MicroMenu",
         "Blizzard_PingUI",
         "Blizzard_GameMenuEsc",
+        // PTR Blizzard_ActionBar.toc declares this dependency; Retail/Forever do not.
+        #[cfg(feature = "client-ptr")]
         "Blizzard_SpellTypeIconOverlay",
     ],
     wow_ui_sim::client_profile::ClientProfile::Mists
