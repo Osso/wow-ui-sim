@@ -776,6 +776,8 @@ macro_rules! build_empty_sim_state {
             auction_should_auto_populate_price: true,
             wow_token: WowTokenState::default(),
             mythic_plus: MythicPlusState::default(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            character_creation: Default::default(),
             name_reservation_feature_status: 0,
             character_create_facing_radians: 0.0,
             character_create_altered_form_races: ::std::collections::HashSet::new(),

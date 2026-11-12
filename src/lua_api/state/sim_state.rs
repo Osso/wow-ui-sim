@@ -957,6 +957,8 @@ pub struct SimState {
     pub auction_should_auto_populate_price: bool,
     pub wow_token: WowTokenState,
     pub mythic_plus: MythicPlusState,
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub character_creation: crate::c_api::c_character_creation_submit::CharacterCreationState,
     /// Byte copied from Forever's Glue feature-status update.
     pub name_reservation_feature_status: u8,
     /// Current character-create model facing in normalized radians.

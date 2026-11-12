@@ -188,3 +188,25 @@ fn black_market_show_runs_without_errors(env: &WowLuaEnv) {
     );
 }
 }
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn mainline_black_market_bootstrap_hide_wrapper_hides_the_open_frame() {
+    let env = load_full_game_ui();
+    load_addon(&env.loader_env(), &black_market_toc()).expect("BlackMarketUI should load");
+
+    let result: (String, bool) = env
+        .eval(
+            r#"
+            local frame = BlackMarketFrame
+            local received
+            local originalHide = HideUIPanel
+            HideUIPanel = function(value) received = value end
+            HideBlackMarketFrame()
+            HideUIPanel = originalHide
+            return type(HideBlackMarketFrame), received == frame
+            "#,
+        )
+        .expect("selected BlackMarket bootstrap hide wrapper should run");
+    assert_eq!(result, ("function".to_string(), true));
+}

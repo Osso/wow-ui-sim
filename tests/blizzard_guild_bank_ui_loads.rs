@@ -4,7 +4,6 @@ use std::path::PathBuf;
 use wow_ui_sim::loader::{discover_blizzard_addons_for_screen, find_toc_file, load_addon};
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
-#[cfg(feature = "client-ptr")]
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
@@ -30,7 +29,6 @@ fn load_guild_bank_ui(env: &WowLuaEnv) {
         .expect("Blizzard_GuildBankUI should load via explicit Rust loader call");
 }
 
-#[cfg(feature = "client-ptr")]
 fn load_full_game_ui_with_guild_bank_lod() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
     env.set_screen_size(1024.0, 768.0);
@@ -408,4 +406,23 @@ fn blizzard_guild_bank_ui_publishes_guild_bank_money_frame_global(env: &WowLuaEn
          current money balance"
     );
 }
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn mainline_guild_bank_bootstrap_hide_wrapper_hides_the_open_frame() {
+    let env = load_full_game_ui_with_guild_bank_lod();
+
+    let wrapper_targeted_frame: bool = env
+        .eval(
+            "if type(HideGuildBankFrame) ~= 'function' or not GuildBankFrame then return false end; \
+             local expected = GuildBankFrame; local actual; local original = HideUIPanel; \
+             HideUIPanel = function(frame) actual = frame end; \
+             HideGuildBankFrame(); HideUIPanel = original; return actual == expected",
+        )
+        .expect("selected GuildBank bootstrap hide wrapper should run");
+    assert!(
+        wrapper_targeted_frame,
+        "HideGuildBankFrame must pass the original GuildBankFrame to HideUIPanel"
+    );
 }

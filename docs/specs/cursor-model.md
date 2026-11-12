@@ -91,6 +91,7 @@ Swapping an owned item with a bag or equipment slot places the displaced item th
   | 21 Outfit | `"outfit"`, outfit ID |
 
 - A missing record projects zero values but does not change the mode or clear the cursor. VERIFIED (WM46).
+- VERIFIED (R72): PTR ordinary Spell and spell-valued Action cursors use the five-position tuple, with selected spell ID at position 4 and an optional related ID at position 5. The simulator uses its main-book slot or 0, emits `"spell"`, and returns nil at position 5 because it has no pet-book slot ordering or related-ID data; it does not claim native parity for a non-nil related ID. `PetAction`, Retail, and Forever projections do not change.
 
 ## Original consumers
 

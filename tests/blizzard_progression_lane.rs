@@ -105,6 +105,9 @@ fn load_full_game_ui() -> WowLuaEnv {
 
 #[test]
 fn each_lane_addon_directory_exists_on_disk() {
+    if toc_layout::unified_toc_tree() {
+        assert!(!blizzard_ui_dir().join("Blizzard_TalentUI").exists());
+    }
     for name in LANE_ADDONS {
         if toc_layout::unified_toc_tree() && *name == "Blizzard_TalentUI" {
             // The pinned PTR/Forever manifests contain no TalentUI entries.

@@ -8,7 +8,7 @@ Modified-click action bindings select the action used by Blizzard item-click han
 - [ ] Action bindings can be read and changed through `GetModifiedClick` and `SetModifiedClick`.
 - [ ] Defaults come from the selected profile's Blizzard `ModifiedClick` definitions, not invented values.
 
-Retail's standard definitions are `Blizzard_FrameXML/Bindings_Standard.xml:1776-1797`; CHATLINK is `SHIFT-BUTTON1` and DRESSUP is `CTRL-BUTTON1` at lines 1782–1783. The selected `Blizzard_ItemButton_Mainline.toc:5-9` loads `Mainline/ItemButtonTemplate.xml:3`, which loads the consumer at `Mainline/ItemButtonTemplate.lua:367-400`. That consumer checks CHATLINK before DRESSUP.
+**VERIFIED:** the loader selects `Blizzard_FrameXML/Bindings_Standard.xml` for Retail and PTR; PTR declares SELFCAST=ALT, FOCUSCAST=NONE, and AUTOLOOTTOGGLE=SHIFT at lines 1776–1781. Retail's standard definitions at lines 1776–1797 include CHATLINK=`SHIFT-BUTTON1` and DRESSUP=`CTRL-BUTTON1` at lines 1782–1783. The selected `Blizzard_ItemButton_Mainline.toc:5-9` loads `Mainline/ItemButtonTemplate.xml:3`, which loads the consumer at `Mainline/ItemButtonTemplate.lua:367-400`. That consumer checks CHATLINK before DRESSUP.
 
 ## How it works
 
@@ -22,6 +22,8 @@ Retail's standard definitions are `Blizzard_FrameXML/Bindings_Standard.xml:1776-
 ## Tests asserting this spec
 
 - `tests/blizzard_item_button_loads.rs` — selected Retail consumer routing.
+- `tests/keybindings.rs::modified_clicks_round_trip_through_runtime_surface` — selected Retail/PTR defaults after `Blizzard_FrameXML` loads.
+- `tests/startup_api_stubs.rs::startup_client_time_camera_and_channel_globals_are_callable` — Retail/PTR SELFCAST default after `Blizzard_FrameXML` loads.
 
 ## Known gaps (current cycle)
 
