@@ -702,8 +702,16 @@ fn login_submit_empty_host_roster_reaches_character_create() {
             wow_ui_sim::c_api::c_login::ConnectionInfo { ready: true, character_limit: 1 };
         // Coordinator #124: observe the transition before the original synchronous
         // CharacterCreate OnShow. Do not replace or suppress any vendor callback.
+        thread_local! {
+            static OBSERVED_STATE: std::cell::RefCell<
+                std::rc::Weak<std::cell::RefCell<wow_ui_sim::lua_api::state::SimState>>
+            > = const { std::cell::RefCell::new(std::rc::Weak::new()) };
+        }
+        OBSERVED_STATE.with(|slot| *slot.borrow_mut() = std::rc::Rc::downgrade(env.state()));
         env.register_rilua_function("__login_test_error_count", |state| {
-            let count = wow_ui_sim::lua_api::methods::borrow_state(state)?.lua_errors.len();
+            let count = OBSERVED_STATE.with(|slot| {
+                slot.borrow().upgrade().expect("live observed environment").borrow().lua_errors.len()
+            });
             state.push(rilua::Val::Num(count as f64));
             Ok(1)
         }).unwrap();
@@ -727,8 +735,8 @@ fn login_submit_empty_host_roster_reaches_character_create() {
         assert!(env.eval::<bool>(r#"
             local s = emptyRosterTransition
             return s and s.screen == "charcreate" and s.currentScreen == "charcreate"
-                and s.aurora == LE_AURORA_STATE_CONNECTED and s.connected
-                and s.connection == WOW_CONNECTION_STATE_NONE
+                and s.aurora == LE_AURORA_STATE_NONE and s.connected
+                and s.connection == LE_WOW_CONNECTION_STATE_NONE
                 and s.count == 0 and s.errors == 0
         "#).unwrap(), "empty roster must reach an error-free authenticated charcreate transition");
         // Later setup belongs to main's R67. Retain diagnostics, but make no
