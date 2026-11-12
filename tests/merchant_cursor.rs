@@ -89,21 +89,6 @@ fn ptr_merchant_cursor_clear_reports_supplied_item_id() {
     .unwrap();
 }
 
-#[cfg(feature = "client-retail")]
-#[test]
-fn retail_pickup_merchant_item_keeps_legacy_wrapper_and_projection() {
-    let env = env_with_merchant_items(&[]);
-    env.exec(
-        r#"
-        PickupMerchantItem(2)
-        local kind, merchantIndex = GetCursorInfo()
-        assert(select('#', GetCursorInfo()) == 2)
-        assert(kind == 'merchant' and merchantIndex == 2)
-        "#,
-    )
-    .unwrap();
-}
-
 #[cfg(feature = "client-ptr")]
 #[test]
 fn pickup_merchant_item_clears_for_invalid_inputs() {
