@@ -26,6 +26,8 @@ pub struct CVarStorage {
     overrides: RwLock<HashMap<String, String>>,
     /// Effective session-only values, never included in persisted overrides.
     session_overrides: RwLock<HashMap<String, SessionCVar>>,
+    /// Hidden host/server mirrors, separate from Lua-visible CVar reads.
+    server_mirrored: RwLock<HashMap<String, String>>,
     /// Path to persist overrides.
     storage_path: PathBuf,
 }
@@ -59,6 +61,7 @@ impl CVarStorage {
             registered_original_names: RwLock::new(HashMap::new()),
             overrides: RwLock::new(overrides),
             session_overrides: RwLock::new(HashMap::new()),
+            server_mirrored: RwLock::new(server_mirrored_store_defaults()),
             storage_path: path,
         }
     }
@@ -185,6 +188,31 @@ impl CVarStorage {
             .imported = Some(value.to_string());
     }
 
+    /// Replace one known host/server mirror value without exposing it to CVar getters.
+    pub(crate) fn set_server_mirrored(&self, name: &str, value: &str) -> Option<String> {
+        let key = name.to_lowercase();
+        let mut server_mirrored = self.server_mirrored.write().unwrap();
+        let current = server_mirrored.get_mut(&key)?;
+        Some(std::mem::replace(current, value.to_owned()))
+    }
+
+    /// Read a hidden server mirror as a CVar boolean.
+    pub(crate) fn get_server_mirrored_bool(&self, name: &str) -> Option<bool> {
+        self.server_mirrored
+            .read()
+            .unwrap()
+            .get(&name.to_lowercase())
+            .map(|value| value == "1")
+    }
+
+    /// Whether the selected profile has a hidden server-mirrored CVar with this name.
+    pub(crate) fn is_server_mirrored(&self, name: &str) -> bool {
+        self.server_mirrored
+            .read()
+            .unwrap()
+            .contains_key(&name.to_lowercase())
+    }
+
     /// Set an effective temporary value without changing or saving persisted state.
     pub(crate) fn set_temporary(&self, name: &str, value: &str) {
         self.session_overrides
@@ -289,6 +317,20 @@ impl Default for CVarStorage {
     fn default() -> Self {
         Self::new()
     }
+}
+
+fn server_mirrored_store_defaults() -> HashMap<String, String> {
+    if !matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+    ) {
+        return HashMap::new();
+    }
+
+    HashMap::from([
+        ("bpaystoreenable".to_owned(), "0".to_owned()),
+        ("shop2enabled".to_owned(), "1".to_owned()),
+    ])
 }
 
 fn parse_default_cvars() -> (HashMap<String, String>, HashMap<String, String>) {
@@ -808,6 +850,30 @@ mod tests {
             storage.get("NAMEPLATESHOWENEMIES"),
             storage.get("nameplateShowEnemies")
         );
+    }
+
+    #[test]
+    fn store_mirror_cvars_have_the_pinned_client_defaults() {
+        use crate::client_profile::{ACTIVE, ClientProfile};
+
+        if !matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr) {
+            return;
+        }
+
+        let storage = CVarStorage::new();
+        assert_eq!(storage.get_default("bpayStoreEnable").as_deref(), Some("0"));
+        assert_eq!(storage.get_default("shop2Enabled").as_deref(), Some("1"));
+        assert_eq!(
+            storage
+                .get_default("seenAsiaCharacterUpgradePopup")
+                .as_deref(),
+            Some("0")
+        );
+        assert_eq!(
+            storage.get_server_mirrored_bool("bpayStoreEnable"),
+            Some(false)
+        );
+        assert_eq!(storage.get_server_mirrored_bool("shop2Enabled"), Some(true));
     }
 
     #[test]

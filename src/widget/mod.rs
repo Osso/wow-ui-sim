@@ -18,6 +18,7 @@ pub use frame::{
 };
 pub use frame_enums::{DrawLayer, FrameStrata};
 pub use frame_types::TextSegment;
+#[cfg(feature = "client-wrath")]
 pub(crate) use registry::has_queryable_rect;
 pub use registry::{AnchorCyclePath, RenderDirtyBatch, RenderDirtySource, WidgetRegistry};
 

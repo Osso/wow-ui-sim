@@ -235,6 +235,7 @@ fn fishing_inventory(equipped: bool) -> WowLuaEnv {
 
 // ── PickupMerchantItem ────────────────────────────────────────────────────────
 
+#[cfg(not(any(feature = "client-ptr", feature = "client-retail")))]
 #[test]
 fn pickup_merchant_item_synthesizes_item_on_cursor() {
     let env = env();
@@ -244,6 +245,23 @@ fn pickup_merchant_item_synthesizes_item_on_cursor() {
         st.cursor_item,
         Some(CursorInfo::Item {
             item_id: 100_003,
+            origin: CursorItemOrigin::Merchant { index: 3 },
+            ..
+        })
+    ));
+}
+
+#[cfg(any(feature = "client-ptr", feature = "client-retail"))]
+#[test]
+fn pickup_merchant_item_uses_the_supplied_offer() {
+    let env = env();
+    env.state().borrow_mut().merchant_items = vec![100_001, 100_002, 6948];
+    env.exec("PickupMerchantItem(3)").unwrap();
+    let st = env.state().borrow();
+    assert!(matches!(
+        st.cursor_item,
+        Some(CursorInfo::Item {
+            item_id: 6948,
             origin: CursorItemOrigin::Merchant { index: 3 },
             ..
         })
@@ -434,6 +452,10 @@ fn place_action_writes_spell_id_to_action_bar_slot() {
     let env = env();
     {
         let mut st = env.state().borrow_mut();
+        st.action_bars.remove(&7);
+        st.action_outfits.remove(&7);
+        st.action_macros.remove(&7);
+        st.equipped_gear_outfit_action_slots.remove(&7);
         st.cursor_item = Some(CursorInfo::Spell { spell_id: 12345 });
     }
     env.exec("PlaceAction(7)").unwrap();

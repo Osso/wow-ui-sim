@@ -244,12 +244,26 @@ fn blizzard_guild_bank_ui_loads_explicitly_without_unexpected_addon_specific_lua
 fn ptr_guild_bank_does_not_publish_snapshot_only_hide_wrapper() {
     let env = load_full_game_ui_with_guild_bank_lod();
 
-    let wrapper_is_absent: bool = env
-        .eval("return HideGuildBankFrame == nil")
-        .expect("guild bank wrapper visibility should be queryable");
+    let wrapper_hides_frame: bool = env
+        .eval(
+            r#"
+            local originalHide = HideUIPanel
+            local originalLoaded = C_AddOns.IsAddOnLoaded
+            local hidGuildBank = false
+            C_AddOns.IsAddOnLoaded = function(name) return name == "Blizzard_GuildBankUI" end
+            HideUIPanel = function(frame) hidGuildBank = frame == GuildBankFrame end
+            GuildBankFrame = {}
+            local callable = type(HideGuildBankFrame) == "function"
+            HideGuildBankFrame()
+            HideUIPanel = originalHide
+            C_AddOns.IsAddOnLoaded = originalLoaded
+            return callable and hidGuildBank
+            "#,
+        )
+        .expect("guild bank wrapper behavior should be queryable");
     assert!(
-        wrapper_is_absent,
-        "snapshot-only HideGuildBankFrame unexpectedly exists after PTR addon load"
+        wrapper_hides_frame,
+        "PTR GuildBankUI bootstrap.lua:14-18 publishes a loaded-addon hide delegate"
     );
 }
 

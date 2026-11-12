@@ -7,13 +7,14 @@ use wow_ui_sim::toc::TocFile;
 #[path = "common/toc_layout.rs"]
 mod toc_layout;
 
-// The pinned PTR and Forever manifests omit this classic-only addon, so the
-// Mists TOC/body assertions apply only when the active cache ships it.
+// PTR/Forever cache inventories omit this classic-only addon; the active Mainline
+// talent UI is published by Blizzard_SharedTalentUI/Blizzard_SharedTalentUI.toc:1-42.
 fn talent_ui_absent_from_active_cache() -> bool {
     if toc_layout::unified_toc_tree() {
         assert!(
             !talent_ui_dir().exists(),
-            "Pinned PTR/Forever manifest must not ship the classic-only Blizzard_TalentUI"
+            "The PTR/Forever pinned AddOns cache has no Blizzard_TalentUI directory; \
+             its selected shared talent sources are listed in Blizzard_SharedTalentUI.toc:1-42"
         );
         true
     } else {

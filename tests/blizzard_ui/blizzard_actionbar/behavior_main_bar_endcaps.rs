@@ -2,14 +2,22 @@
 
 use crate::common;
 use crate::common::blizzard_addon_harness::with_blizzard_addon_startup_shape;
+use wow_ui_sim::loader::BlizzardAddonOverride;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 const ROOT: &str = "Blizzard_ActionBar";
+#[cfg(feature = "client-ptr")]
+const STARTUP_OVERRIDES: &[BlizzardAddonOverride<'static>] = &[BlizzardAddonOverride {
+    addon: ROOT,
+    extra_roots: &["Blizzard_GamepadSharedUtility"],
+}];
+#[cfg(not(feature = "client-ptr"))]
+const STARTUP_OVERRIDES: &[BlizzardAddonOverride<'static>] = &[];
 
 #[test]
 fn main_bar_endcaps_follow_hide_bar_art_setting() {
     test_timeout! {
-    with_blizzard_addon_startup_shape(&[ROOT], &[], |env, _loaded| {
+    with_blizzard_addon_startup_shape(&[ROOT], STARTUP_OVERRIDES, |env, _loaded| {
         show_bar_art(env);
         assert_endcaps_visible(env);
         assert_alliance_endcap_atlases(env);
@@ -66,7 +74,7 @@ fn assert_endcaps_hidden(env: &WowLuaEnv) {
 
 fn assert_alliance_endcap_atlases(env: &WowLuaEnv) {
     let (left_atlas, right_atlas): (String, String) = env
-        .eval("return MainActionBar.EndCaps.LeftEndCap:GetAtlas(), MainActionBar.EndCaps.RightEndCap:GetAtlas()")
+        .eval("return MainActionBar.EndCaps.LeftEndCap.Texture:GetAtlas(), MainActionBar.EndCaps.RightEndCap.Texture:GetAtlas()")
         .expect("endcap atlas probe must run cleanly");
     assert_eq!(left_atlas, "ui-hud-actionbar-gryphon-left");
     assert_eq!(right_atlas, "ui-hud-actionbar-gryphon-right");

@@ -14,12 +14,30 @@ fn ptr_auction_house_does_not_publish_snapshot_only_hide_wrapper() {
             load_auction_house_through_runtime(&env);
             env.apply_post_load_workarounds();
 
-            let wrapper_is_absent: bool = env
-                .eval("return HideAuctionHouseFrame == nil")
-                .expect("auction house wrapper visibility should be queryable");
+            let wrapper_hides_frame: bool = env
+                .eval(
+                    r#"
+                    local originalHide = HideUIPanel
+                    local originalLoaded = C_AddOns.IsAddOnLoaded
+                    local hidAuctionHouse = false
+                    C_AddOns.IsAddOnLoaded = function(name)
+                        return name == "Blizzard_AuctionHouseUI"
+                    end
+                    HideUIPanel = function(frame)
+                        hidAuctionHouse = frame == AuctionHouseFrame
+                    end
+                    AuctionHouseFrame = {}
+                    local callable = type(HideAuctionHouseFrame) == "function"
+                    HideAuctionHouseFrame()
+                    HideUIPanel = originalHide
+                    C_AddOns.IsAddOnLoaded = originalLoaded
+                    return callable and hidAuctionHouse
+                    "#,
+                )
+                .expect("auction house wrapper behavior should be queryable");
             assert!(
-                wrapper_is_absent,
-                "snapshot-only HideAuctionHouseFrame unexpectedly exists after PTR addon load"
+                wrapper_hides_frame,
+                "PTR AuctionHouseUI bootstrap.lua:10-17 publishes a loaded-addon hide delegate"
             );
         });
     });

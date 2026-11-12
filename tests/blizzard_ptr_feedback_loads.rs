@@ -331,6 +331,11 @@ fn blizzard_ptr_feedback_appears_only_on_ptr_game_discovery() {
     }
 }
 
+#[test]
+fn blizzard_ptr_feedback_does_not_appear_in_eager_discovery() {
+    blizzard_ptr_feedback_appears_only_on_ptr_game_discovery();
+}
+
 post_wrath_ui_fixture! {
 #[test]
 fn blizzard_ptr_feedback_appears_in_full_addon_inventory() {

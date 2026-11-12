@@ -55,9 +55,19 @@ fn is_rewards_shop_enabled_store(state: &mut LuaState) -> LuaResult<u32> {
 fn is_rewards_shop_enabled_rules(state: &mut LuaState) -> LuaResult<u32> {
     let enabled = {
         let sim = borrow_state(state)?;
+        let store_enabled = if ACTIVE == ClientProfile::Ptr {
+            sim.cvars
+                .get_server_mirrored_bool("bpayStoreEnable")
+                .ok_or_else(|| {
+                    rilua::runtime_error(
+                        "missing-input: C_GameRules.IsRewardsShopEnabled has no bpayStoreEnable server value",
+                    )
+                })?
+        } else {
+            sim.cvars.get_bool("bpayStoreEnable")
+        };
         sim.cvars.get_bool("rewardsShopEnabled")
-            && (sim.cvars.get_bool("bpayStoreEnable")
-                || sim.cvars.get_bool("rewardsShopOverrideEnabled"))
+            && (store_enabled || sim.cvars.get_bool("rewardsShopOverrideEnabled"))
             && sim.game_rules.rule_set_marker != 0
             && sim
                 .game_rules

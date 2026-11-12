@@ -165,7 +165,7 @@ fn blizzard_ptr_feedback_glue_toc_declares_eager_no_lod_no_deps() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_ptr_feedback_glue_shares_saved_variable_with_game_variant() {
     let toc =
@@ -255,7 +255,7 @@ fn blizzard_ptr_feedback_glue_toc_declares_metadata_in_raw_bytes() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_ptr_feedback_glue_lists_profile_files_with_cross_addon_parent_paths() {
     let toc =
@@ -280,6 +280,13 @@ fn blizzard_ptr_feedback_glue_lists_profile_files_with_cross_addon_parent_paths(
 }
 }
 
+retail_ptr_forever_toc_fixture! {
+#[test]
+fn blizzard_ptr_feedback_glue_lists_five_files_with_cross_addon_parent_paths() {
+    blizzard_ptr_feedback_glue_lists_profile_files_with_cross_addon_parent_paths();
+}
+}
+
 #[test]
 fn blizzard_ptr_feedback_glue_appears_only_on_ptr_glue_discovery() {
     let ui = blizzard_ui_dir();
@@ -299,10 +306,15 @@ fn blizzard_ptr_feedback_glue_appears_only_on_ptr_glue_discovery() {
         let expected = ptr_build && screen != ScreenKind::Game;
         assert_eq!(
             found, expected,
-            "R26: OnlyBetaAndPTR admits the PTR build; the normal Forever build is \
+            "R26: OnlyBetaAndPTR admits the PTR build; normal builds including Forever are \
              filtered, and AllowLoad: Glue excludes the Game screen"
         );
     }
+}
+
+#[test]
+fn blizzard_ptr_feedback_glue_does_not_appear_in_eager_discovery() {
+    blizzard_ptr_feedback_glue_appears_only_on_ptr_glue_discovery();
 }
 
 post_wrath_ui_fixture! {
@@ -312,18 +324,17 @@ fn blizzard_ptr_feedback_glue_appears_in_full_addon_inventory() {
     let found = inventory
         .iter()
         .any(|(name, _)| name == "Blizzard_PTRFeedbackGlue");
-    assert!(
+    assert_eq!(
         found,
-        "Blizzard_PTRFeedbackGlue MUST appear in `discover_all_blizzard_addons` \
-         even though it is PTR-only and glue-only — the full-inventory accessor at \
-         src/loader/mod.rs:309-343 does NOT apply the `is_ptr_only()` or screen \
-         filters, so tests can still load the addon explicitly via `load_addon` \
-         for coverage"
+        !toc_layout::classic_cache(),
+        "The PTR/Forever/Retail source inventory contains this add-on, and \
+         discover_all_blizzard_addons includes it without applying screen filters; \
+         the Mists/Era/Anniversary caches omit the glue add-on"
     );
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_ptr_feedback_glue_loads_explicitly_on_glue_screen() {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
