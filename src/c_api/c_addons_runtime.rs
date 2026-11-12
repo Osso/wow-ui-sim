@@ -87,7 +87,12 @@ pub(super) fn load_with_followers(state: &mut LuaState, loader_env: &LoaderEnv<'
             let declarations = sim
                 .registered_load_with
                 .iter()
-                .map(|(follower, registration)| (follower.clone(), registration.targets.clone()))
+                .map(|registration| {
+                    (
+                        registration.addon_name.clone(),
+                        registration.targets.clone(),
+                    )
+                })
                 .collect();
             sim.load_with_followers = Some(index_load_with_declarations(declarations));
         }
@@ -99,7 +104,8 @@ pub(super) fn load_with_followers(state: &mut LuaState, loader_env: &LoaderEnv<'
     };
 
     for follower in followers {
-        if !super::addon_is_enabled(state, &follower) {
+        if !super::uses_verified_load_with_semantics() && !super::addon_is_enabled(state, &follower)
+        {
             continue;
         }
         submit_load_with_follower(state, &follower);
@@ -108,7 +114,11 @@ pub(super) fn load_with_followers(state: &mut LuaState, loader_env: &LoaderEnv<'
 
 fn submit_load_with_follower(state: &mut LuaState, addon_name: &str) {
     let (top, base, ci) = (state.top, state.base, state.ci);
-    let result = load_runtime_addon(state, addon_name);
+    let result = if super::uses_verified_load_with_semantics() {
+        super::request_addon_load(state, addon_name, true)
+    } else {
+        load_runtime_addon(state, addon_name).map_err(|error| error.to_string())
+    };
     state.top = top;
     state.base = base;
     state.ci = ci;
@@ -118,7 +128,7 @@ fn submit_load_with_follower(state: &mut LuaState, addon_name: &str) {
 }
 
 fn index_load_with_declarations(
-    declarations: HashMap<String, Vec<String>>,
+    declarations: Vec<(String, Vec<String>)>,
 ) -> HashMap<String, Vec<String>> {
     let mut followers = HashMap::<String, Vec<String>>::new();
     for (follower, targets) in declarations {
@@ -126,9 +136,11 @@ fn index_load_with_declarations(
             followers.entry(target).or_default().push(follower.clone());
         }
     }
-    for names in followers.values_mut() {
-        names.sort();
-        names.dedup();
+    if !super::uses_verified_load_with_semantics() {
+        for names in followers.values_mut() {
+            names.sort();
+            names.dedup();
+        }
     }
     followers
 }
@@ -178,6 +190,9 @@ fn load_runtime_addon_dependencies(
         match load_runtime_addon_recursive(state, loader_env, &dependency) {
             Err(LoadError::WrongActiveInterface) => {
                 return Err(LoadError::DepWrongActiveInterface(dependency));
+            }
+            Err(LoadError::Missing) if super::uses_verified_load_with_semantics() => {
+                return Err(LoadError::DepMissing(dependency));
             }
             result => result?,
         }
@@ -341,6 +356,9 @@ fn is_addon_loading_by_name(state: &LuaState, addon_name: &str) -> bool {
 }
 
 fn missing_runtime_addon_error(addon_name: &str) -> LoadError {
+    if super::uses_verified_load_with_semantics() {
+        return LoadError::Missing;
+    }
     LoadError::Io(io::Error::new(
         io::ErrorKind::NotFound,
         format!("runtime addon not found: {addon_name}"),

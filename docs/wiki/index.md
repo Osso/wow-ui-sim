@@ -2,7 +2,7 @@
 
 ## [2026-11-11] implementation | Registered LoadWith followers
 
-[Addon loading](systems/addon-loading.md#blizzard-addon-load-order) records the simulator policy for private packaged declaration registration, disabled/unregistered follower rejection, and cache invalidation when third-party declarations register. Later runtime target loads see new declarations. Public AddOn enumeration remains unchanged; native disabled-follower list membership remains UNKNOWN pending R64c.
+[Addon loading](systems/addon-loading.md#blizzard-addon-load-order) records private packaged declaration registration, ordered Retail/Forever follower submission, normal disabled refusal, continued processing after follower failure, and unchanged PTR behavior pending R70. Public AddOn enumeration remains unchanged; native disabled-follower vector membership is INFERRED.
 
 ## [2026-11-11] system | Character select screen data
 
@@ -4201,7 +4201,7 @@ The sixteen retail 12.0.0 `Enum.EditModeDamageMeterSetting.*` and `Enum.EditMode
 | [[lua-api]] | WowLuaEnv, FrameHandle userdata, 300+ frame methods, model-family compatibility surface, texture fileDataID/path identity, C_* namespaces including the bounded C_ProfSpecs specialization fixture, timers, animation system |
 | [[event-system]] | EventQueue, 36+ script handler types, dispatch flow, OnUpdate tick, startup event sequence, XML script setup |
 | [[xml-template-system]] | XML parsing, template registry/inheritance, same-object engine-root reuse, inline scripts/events and bounded callback late-binding proof |
-| [[addon-loading]] | Native R13 whole-line screen dependency rules, R64 startup phases and `LoadManagers`, optional-before-required ordering, Retail-verified `LoadWith` followers with PTR/Forever and failure-propagation unknowns, mode-one unknowns, TOC parsing and Blizzard discovery, inline `[Bootstrap]` semantics, Lua diagnostics, secure replay, SavedVariables and startup sequence |
+| [[addon-loading]] | Native R13 screen dependency rules, R64 startup phases and `LoadManagers`, optional-before-required ordering, Retail/Forever `LoadWith` submission, Retail failure behavior, PTR eligibility unknown, mode-one unknowns, TOC parsing and Blizzard discovery, inline `[Bootstrap]` semantics, Lua diagnostics, secure replay, SavedVariables and startup sequence |
 | [[addon-module-imports]] | Forever completed-module `require`; [import checkpoint](systems/addon-module-imports.md#forever-import-binding--2026-10-15): historical completed-table/missing-binding RED; current bounded binding/control execution observed, independent acceptance pending; reused simulator policy, native parity UNKNOWN |
 | [[server-snapshot-action-bars]] | Imports captured action bars and carried bags from local ServerSnapshot SavedVariables before Blizzard UI loading; source-matching 0.3.0 install, July 5 no-bag snapshot, final fixture-failure boundary, and pending fresh capture recorded |
 | [[client-profiles]] | Seven mutually-exclusive client profiles, including distinct Forever `16001` / `wow_classic_beta` / `wowforever` cache from source branch `forever`; `5e26960b6` routes its `[Family]` files to `Mainline` while retaining Camelot and annotation filters; [running report](../wowforever-1.60.1.md) separates the historical 422-record baseline from current proof |

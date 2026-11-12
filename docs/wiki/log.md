@@ -1,10 +1,10 @@
 ## [2026-11-11] implementation | Registered LoadWith followers
 
-Updated [[addon-loading]] and the [phase contract](../specs/addon-load-phases.md) with simulator-only registration policy: packaged declarations use private state before startup, third-party registration invalidates the index, later runtime target loads see new declarations, and disabled or unregistered followers are not submitted. Public AddOn enumeration stays unchanged; native disabled-follower list membership remains UNKNOWN pending R64c.
+Updated [[addon-loading]] and the [phase contract](../specs/addon-load-phases.md) with R64b/R64c: Retail and Forever use the verified parse/resolve/submit chain without enable-state filtering; Retail also verifies target-event-before-follower order and failure continuation. The simulator applies the disabled `DISABLED` refusal and continues later followers on both profiles. PTR keeps its previous path pending R70; native PTR vector membership is UNKNOWN. Public AddOn enumeration stays unchanged.
 
 ## [2026-11-11] correction | Addon loading phase evidence
 
-Updated [[addon-loading]] and the [phase contract](../specs/addon-load-phases.md) with R64's verified `LoadFirst`/secure phase, packaged non-insecure phase, `LoadManagers`, and optional-before-required ordering. R64 also verifies Retail `LoadWith` follower resolution and post-file submission at startup and runtime; startup requests for LoD targets, PTR/Forever behavior, and follower-failure propagation remain UNKNOWN. User AddOns as native phase three remains INFERRED and untested.
+Updated [[addon-loading]] and the [phase contract](../specs/addon-load-phases.md) with R64's verified startup phases, `LoadManagers`, and optional-before-required ordering. R64b verifies target-event-before-follower order, stable vector iteration, failure continuation, and unchanged target success on Retail. R64c verifies resolver eligibility and refusal order on Retail, plus the shared LoadWith chain on Forever. PTR vector linkage remains UNKNOWN and unchanged in the simulator; user AddOns as native phase three remains INFERRED and untested.
 
 ## [2026-11-11] correction | Forever PTR feedback Glue selection
 

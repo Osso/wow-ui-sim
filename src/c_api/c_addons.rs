@@ -583,32 +583,106 @@ pub fn c_addons_load_addon(state: &mut LuaState) -> LuaResult<u32> {
     let Some(addon_name) = addon_name_from_value(state, stack_val(state, 1)) else {
         return push_load_result(state, false, Some("MISSING"));
     };
-    if !addon_exists(state, &addon_name) {
-        return push_load_result(state, false, Some("MISSING"));
+    match request_addon_load(state, &addon_name, false) {
+        Ok(()) => push_load_result(state, true, None),
+        Err(reason) => push_load_result(state, false, Some(&reason)),
     }
-    if with_addon(state, stack_val(state, 1), |a| a.loaded).unwrap_or(false) {
-        return push_load_result(state, true, None);
+}
+
+pub(super) fn request_addon_load(
+    state: &mut LuaState,
+    addon_name: &str,
+    include_registered_load_with: bool,
+) -> Result<(), String> {
+    let private_enabled =
+        registered_load_with_enabled(state, addon_name, include_registered_load_with);
+    if !addon_exists(state, addon_name) && private_enabled.is_none() {
+        return Err("MISSING".to_owned());
     }
-    if borrow_state(state)
-        .map(|sim| sim.is_addon_loading(&addon_name))
-        .unwrap_or(false)
-    {
-        return push_load_result(state, true, None);
+
+    let (public_enabled, loaded_or_loading) = addon_request_state(state, addon_name);
+    if loaded_or_loading {
+        return Ok(());
     }
-    if addon_is_disabled(state, &addon_name) {
-        return push_load_result(state, false, Some("DISABLED"));
+    let disabled = public_enabled
+        .map(|enabled| !enabled)
+        .unwrap_or(private_enabled == Some(false));
+    if let Some(reason) = load_request_refusal(state, addon_name, disabled)? {
+        return Err(reason.to_owned());
     }
+
     let saved_top = state.top;
     let saved_base = state.base;
     let saved_ci = state.ci;
-    let result = c_addons_runtime::load_runtime_addon(state, &addon_name);
+    let result =
+        c_addons_runtime::load_runtime_addon(state, addon_name).map_err(|error| error.to_string());
     state.top = saved_top;
     state.base = saved_base;
     state.ci = saved_ci;
-    match result {
-        Ok(()) => push_load_result(state, true, None),
-        Err(error) => push_load_result(state, false, Some(&error.to_string())),
+    result
+}
+
+fn registered_load_with_enabled(
+    state: &LuaState,
+    addon_name: &str,
+    include_registered_load_with: bool,
+) -> Option<bool> {
+    if !include_registered_load_with {
+        return None;
     }
+    borrow_state(state).ok().and_then(|sim| {
+        sim.registered_load_with
+            .iter()
+            .find(|registration| registration.addon_name == addon_name)
+            .map(|registration| registration.enabled)
+    })
+}
+
+fn addon_request_state(state: &LuaState, addon_name: &str) -> (Option<bool>, bool) {
+    let Ok(sim) = borrow_state(state) else {
+        return (None, false);
+    };
+    let addon = sim
+        .addons
+        .iter()
+        .find(|addon| addon.folder_name == addon_name);
+    let loaded_or_loading =
+        addon.is_some_and(|addon| addon.loaded) || sim.is_addon_loading(addon_name);
+    (addon.map(|addon| addon.enabled), loaded_or_loading)
+}
+
+fn load_request_refusal(
+    state: &LuaState,
+    addon_name: &str,
+    disabled: bool,
+) -> Result<Option<&'static str>, String> {
+    if !disabled {
+        return Ok(None);
+    }
+    if uses_verified_load_with_semantics() && addon_has_wrong_active_interface(state, addon_name)? {
+        return Ok(Some("WRONG_ACTIVE_INTERFACE"));
+    }
+    Ok(Some("DISABLED"))
+}
+
+pub(super) fn uses_verified_load_with_semantics() -> bool {
+    matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    )
+}
+
+fn addon_has_wrong_active_interface(state: &LuaState, addon_name: &str) -> Result<bool, String> {
+    let Some(toc_path) = find_runtime_addon_toc_ignoring_screen(state, addon_name) else {
+        return Ok(false);
+    };
+    let toc = crate::toc::TocFile::from_file(&toc_path)
+        .map_err(|error| format!("Cannot read addon TOC {}: {error}", toc_path.display()))?;
+    let screen = borrow_state(state)
+        .map_err(|error| error.to_string())?
+        .screen_kind;
+    Ok(!toc.allows_screen(screen))
 }
 
 /// `true` iff the addon is registered AND its `enabled` flag is false.
@@ -620,9 +694,8 @@ pub(super) fn addon_is_disabled(state: &LuaState, addon_name: &str) -> bool {
     };
     sim.addons
         .iter()
-        .find(|a| a.folder_name == addon_name)
-        .map(|a| !a.enabled)
-        .unwrap_or(false)
+        .find(|addon| addon.folder_name == addon_name)
+        .is_some_and(|addon| !addon.enabled)
 }
 
 pub(super) fn addon_is_enabled(state: &LuaState, addon_name: &str) -> bool {
@@ -637,7 +710,8 @@ pub(super) fn addon_is_enabled(state: &LuaState, addon_name: &str) -> bool {
         return addon.enabled;
     }
     sim.registered_load_with
-        .get(addon_name)
+        .iter()
+        .find(|registration| registration.addon_name == addon_name)
         .is_some_and(|registration| registration.enabled)
 }
 

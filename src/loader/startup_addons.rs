@@ -60,16 +60,26 @@ pub fn register_load_with_declarations(
 ) {
     let mut state = env.state().borrow_mut();
     for (follower, targets, enabled) in declarations {
-        if targets.is_empty() {
-            state.registered_load_with.remove(follower);
-        } else {
-            state.registered_load_with.insert(
-                follower.clone(),
-                crate::lua_api::state::RegisteredLoadWith {
+        if let Some(index) = state
+            .registered_load_with
+            .iter()
+            .position(|registration| registration.addon_name == *follower)
+        {
+            if targets.is_empty() {
+                state.registered_load_with.remove(index);
+            } else {
+                let registration = &mut state.registered_load_with[index];
+                registration.enabled = *enabled;
+                registration.targets.clone_from(targets);
+            }
+        } else if !targets.is_empty() {
+            state
+                .registered_load_with
+                .push(crate::lua_api::state::RegisteredLoadWith {
+                    addon_name: follower.clone(),
                     enabled: *enabled,
                     targets: targets.clone(),
-                },
-            );
+                });
         }
     }
     if !declarations.is_empty() {

@@ -23,12 +23,13 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 
 ### `LoadWith` followers
 
-- [x] VERIFIED (Retail 12.1.5.70688): an addon X that names Y in `LoadWith` joins Y's follower list; resolving the relation does not load Y.
-- [x] VERIFIED (Retail 12.1.5.70688): when Y reaches follower processing, it submits X to the general loader after Y's own files. This applies to startup and runtime `C_AddOns.LoadAddOn(Y)`.
-- [x] VERIFIED (Retail 12.1.5.70688): each follower uses the general loader's checks and dependency order: optional dependencies, required dependencies, then its own files.
-- [x] VERIFIED (Retail 12.1.5.70688): an early-exit Y submits no followers.
-- [x] SIMULATOR POLICY (pending R64c): register packaged Blizzard `LoadWith` declarations privately before startup without changing the public AddOn list; register user AddOns only in the existing third-party registration step.
-- [x] SIMULATOR POLICY (pending R64c): build the follower index from registered declarations, invalidate it when registrations change, and do not submit disabled or unregistered followers.
+- [x] VERIFIED (Retail 12.1.5.70688; Forever 1.60.1.70707): each `LoadWith` declaration joins the declaring addon to each named target's follower vector; resolution does not load the target or filter followers by enabled state, phase, origin, or `INSECURE`.
+- [x] VERIFIED (Retail 12.1.5.70688): the target completes its own files and fires `ADDON_LOADED` before it submits followers. The follower loop preserves its resolved vector order.
+- [x] VERIFIED (Retail 12.1.5.70688): a failing follower does not stop later submissions and does not change the target's success result.
+- [x] VERIFIED (Retail 12.1.5.70688; Forever 1.60.1.70707): follower submissions use the generic loader and its dependency order: optional dependencies, required dependencies, then the follower's own files.
+- [x] VERIFIED (Retail 12.1.5.70688): generic refusal order is `USER_ADDONS_DISABLED` (14), `WRONG_LOAD_PHASE` (13), `NO_ACTIVE_INTERFACE` (10), `WRONG_ACTIVE_INTERFACE` (11), `WRONG_GAME_TYPE` (12), `DISABLED` (2) / `BANNED` (3) / `NOT_AVAILABLE` (8), `INSECURE` (5), `INCOMPATIBLE` (15), `INTERFACE_VERSION` (7), then required dependencies. Missing and rejected required children use `DEP_MISSING` (1), `DEP_DISABLED` (2), and `DEP_WRONG_GAME_TYPE` (12), as applicable.
+- [x] SIMULATOR POLICY: register packaged declarations privately before startup without changing public AddOn enumeration; register user declarations at the existing third-party registration step. Invalidate the follower index when declarations change.
+- [x] SIMULATOR POLICY: Retail and Forever submit registered followers in registration order through the shared request path. A disabled registered follower reaches the refusal check and returns `DISABLED`; one failure does not block later followers. Preserve the existing simulator path on PTR and other unverified profiles.
 
 ## How it works
 
@@ -44,8 +45,8 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 - `src/bin/wow_sim/addon_loading.rs` — registers packaged follower declarations before Blizzard startup, registers third-party declarations, and skips startup roots already loaded by followers.
 - `src/c_api/c_addons.rs` — exposes startup follower processing through the runtime loader.
 - `src/c_api/c_addons_runtime.rs` — resolves runtime dependencies and submits `LoadWith` followers.
-- `src/lua_api/state/sim_state.rs` — holds registered follower declarations and the resolved target-to-follower index.
-- `src/lua_api/state.rs` — initializes the registration map and follower index.
+- `src/lua_api/state/sim_state.rs` — holds ordered registered follower declarations and the resolved target-to-follower index.
+- `src/lua_api/state.rs` — initializes the registration vector and follower index.
 - `src/lua_api/state/ui_reload.rs` — clears the follower index on UI reload.
 
 ## Tests asserting this spec
@@ -56,12 +57,12 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 
 ## Known gaps (current cycle)
 
-- [ ] UNKNOWN: PTR 12.1.5.70668 phase predicate and parser rules are not established by R64.
-- [ ] INFERRED: user AddOns-directory inputs correspond to native phase three. This inference is not asserted by tests.
+- [ ] UNKNOWN: PTR 12.1.7.70668 does not establish whether `LoadWith` populates the follower vector. The simulator keeps its pre-R64c PTR path unchanged until R70; no PTR `LoadWith` assertions are enabled.
+- [ ] UNKNOWN: Native `LoadWith` behavior on Mists, Era, Anniversary, and Wrath. The simulator keeps their previous dispatch path.
+- [ ] INFERRED: a registered phase-three user addon may load early during an earlier target's follower loop. The resolver has no phase filter; tests do not assert this inference.
+- [ ] INFERRED: a disabled addon that remains registered can enter the native follower vector and then receive `DISABLED` from the generic loader. Tests verify the simulator refusal, not native vector membership.
+- [ ] The simulator does not model all verified refusal predicates, including user-add-on policy, load phase, interface availability, game type, banned/unavailable state, `INSECURE`, or version compatibility.
 - [ ] UNKNOWN: Whether a LoadOnDemand `LoadWith` target receives a startup request through another path.
-- [ ] UNKNOWN: `LoadWith` behavior on PTR and Forever; R64 verifies it only on Retail 12.1.5.70688.
-- [ ] UNKNOWN (R64c item 3): whether a disabled addon appears in the native follower list. Tests assert only that it is not loaded.
-- [ ] UNKNOWN: Whether follower load failures propagate to the triggering addon. The simulator keeps the trigger result based on the trigger's own load and records follower failures separately.
 - [ ] UNKNOWN: The callers and observable effect of the internal mode-one load-on-demand dependency request; dependency file loading remains unchanged.
 
 ## Out of scope

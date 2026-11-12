@@ -176,14 +176,23 @@ fn failed_required_dependency_of_an_enabled_runtime_addon_prevents_save() {
     );
     let (loaded, reason) = fixture.load();
     assert!(!loaded);
-    assert_eq!(reason.as_deref(), Some("DEP_MISSING"));
+    let missing_reason = if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        "DEP_MISSING"
+    } else {
+        "AbsentRequiredProbe"
+    };
+    assert!(reason.unwrap().contains(missing_reason));
     assert!(
         fixture
             .env
             .eval::<bool>("return RuntimeProbeCodeRan == nil")
             .unwrap()
     );
-    fixture.assert_failed_owner_recovers("DEP_MISSING");
+    fixture.assert_failed_owner_recovers(missing_reason);
 }
 
 #[test]

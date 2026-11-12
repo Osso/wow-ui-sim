@@ -454,7 +454,7 @@ fn load_managers_run_before_their_startup_owner_files() {
         .unwrap();
 }
 
-#[cfg(not(feature = "client-ptr"))]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[test]
 fn startup_load_with_follower_runs_after_target_addon_loaded() {
     let tree = AddonTree::new(ScreenKind::Game);
@@ -552,7 +552,7 @@ fn disabled_user_load_with_follower_does_not_load_at_blizzard_startup() {
     assert!(!tree.ran("UserDisabledLoadWithFollowerRan"));
 }
 
-#[cfg(not(feature = "client-ptr"))]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[test]
 fn disabled_follower_is_refused_and_does_not_stop_later_followers() {
     let tree = AddonTree::new(ScreenKind::Game);
@@ -644,7 +644,7 @@ fn loading_load_with_follower_does_not_load_target() {
     assert!(!tree.ran("LoadWithTargetRan"));
 }
 
-#[cfg(not(feature = "client-ptr"))]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[test]
 fn runtime_loading_target_fires_addon_loaded_before_followers() {
     let tree = AddonTree::new(ScreenKind::Game);
@@ -770,7 +770,7 @@ fn runtime_target_early_exit_does_not_load_load_with_followers() {
     assert!(!tree.ran("EarlyExitLoadWithFollowerRan"));
 }
 
-#[cfg(not(feature = "client-ptr"))]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[test]
 fn runtime_load_with_followers_preserve_registration_order() {
     let tree = AddonTree::new(ScreenKind::Game);
