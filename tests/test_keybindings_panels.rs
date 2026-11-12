@@ -445,6 +445,9 @@ fn hidden_talent_dialogs_do_not_emit_quads_after_opening_talents() {
 
 // ── A → ToggleAchievementFrame() ────────────────────────────────────────
 
+// Forever Bindings_Camelot.xml has no TOGGLEACHIEVEMENT binding;
+// the Retail binding under test is in Bindings_Standard.xml:1251.
+#[cfg(not(feature = "client-wowforever"))]
 #[test]
 fn keybind_a_opens_achievements() {
     test_timeout! {

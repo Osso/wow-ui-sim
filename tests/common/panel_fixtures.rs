@@ -67,6 +67,10 @@ pub const PANEL_ADDONS: &[&str] = &[
     "Blizzard_UnitFrame",
     "Blizzard_TokenUI",
     "Blizzard_Minimap",
+    // Forever EditModeSystemTemplates.lua:2467 reaches QueueStatusButton
+    // during action-bar transitions; QueueStatusFrame.toc is an eager root.
+    #[cfg(feature = "client-wowforever")]
+    "Blizzard_QueueStatusFrame",
 ];
 
 /// INFERRED eager root: native CharacterFrame hides TokenFrame on every tab switch.
