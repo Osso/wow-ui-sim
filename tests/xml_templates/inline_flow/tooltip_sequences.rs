@@ -263,8 +263,8 @@ fn test_create_frame_from_xml_inline_show_game_tooltip_helper_runs() {
     assert!(result.3);
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
-#[ignore = "TODO: test calls GameTooltip:AddLine(STRING, COLOR_TABLE, true) expecting r/g/b expansion, but the GlobalMethodWithStringGlobalBoolArgs fast-path only forwards three values verbatim. Either the test needs a 5-arg call to match GlobalMethodWithGlobalThreeGlobalBoolArgs or a new color-expanding fast-path needs adding."]
 fn test_create_frame_from_xml_inline_tooltip_add_line_global_three_global_bool_runs() {
     clear_templates();
     let env = WowLuaEnv::new().unwrap();

@@ -2741,7 +2741,7 @@
       "source_id": "prose-2026-03-21-174",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Pending: Secret-bearing duration objects reject tainted callers; retained ignored RED patch_12_0_1_tainted_secret_duration_object. Opaque rendering consumption is not implemented; caller taint is never cleared. Previous 18-row proof retained; missing piece not remodeled."
+      "note": "Pending: Secret-bearing duration objects reject tainted callers; retained optional-tests RED patch_12_0_1_tainted_secret_duration_object. Opaque rendering consumption is not implemented; caller taint is never cleared. Previous 18-row proof retained; missing piece not remodeled."
     },
     {
       "source_id": "prose-2026-03-21-176",

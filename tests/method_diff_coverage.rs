@@ -302,6 +302,7 @@ fn assert_diff_file_matches_current_surface(
     panic!("{message}");
 }
 
+#[cfg(feature = "optional-tests")]
 fn serialize_diff_file(diff: &BTreeMap<String, BTreeSet<String>>) -> String {
     let mut lines: Vec<String> = flatten_diff_entries(diff).into_iter().collect();
     lines.push(String::new());
@@ -338,8 +339,8 @@ fn diff_methods_extra_snapshot_matches_current_metatable_surface() {
     );
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
-#[ignore = "helper for refreshing only the active configuration's two method baselines"]
 fn refresh_method_diff_files() {
     let env = env();
     let snapshot = load_method_snapshot(&env);

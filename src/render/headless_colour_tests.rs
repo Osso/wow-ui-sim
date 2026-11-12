@@ -98,7 +98,6 @@ fn upload_glyph_colour_pixels(pipeline: &mut WowUiPipeline, queue: &wgpu::Queue)
 }
 
 #[test]
-#[ignore = "opt-in production wgpu readback; use the documented exact test filter"]
 fn colour_readback_uses_display_byte_rgb_values() {
     let _gpu = crate::render::headless::lock_gpu_device_lifetime();
     let (device, queue) = request_colour_test_device();

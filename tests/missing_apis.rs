@@ -1,5 +1,5 @@
-//! Tests for APIs we need to implement.
-//! These tests document what's missing and will fail until implemented.
+//! Tests for Lua APIs exposed by the simulator.
+//! Optional cases document API gaps that remain unimplemented.
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 
@@ -21,9 +21,8 @@ fn test_strsplit() {
     assert_eq!(result.1, "debug");
 }
 
-/// SlashCmdList is a global table for registering slash commands.
+/// SlashCmdList stores and invokes callbacks registered by slash name.
 #[test]
-#[ignore = "SlashCmdList not implemented"]
 fn test_slash_command_registration() {
     let env = WowLuaEnv::new().unwrap();
 
@@ -35,12 +34,17 @@ fn test_slash_command_registration() {
             _G.cmdMsg = msg
         end
         SLASH_MYCOMMAND1 = "/mycommand"
+        SlashCmdList["MYCOMMAND"]("test")
         "#,
     )
     .unwrap();
 
-    // Would need a way to execute slash commands
-    // env.execute_slash_command("/mycommand test");
+    let (executed, message, slash_name): (bool, String, String) = env
+        .eval("return _G.cmdExecuted, _G.cmdMsg, SLASH_MYCOMMAND1")
+        .unwrap();
+    assert!(executed, "registered slash callback should run");
+    assert_eq!(message, "test");
+    assert_eq!(slash_name, "/mycommand");
 }
 
 /// TimerCallback has no arguments; zero delay still waits for timer processing.
@@ -209,7 +213,6 @@ fn timer_nested_callbacks_preserve_pending_timers_and_cancel_taken_timers() {
 
 /// Game API functions that need mocking.
 #[test]
-#[ignore = "Game APIs not implemented"]
 fn test_game_api_stubs() {
     let env = WowLuaEnv::new().unwrap();
 
@@ -317,7 +320,6 @@ fn test_global_table_access() {
 
 /// Frame:CreateTexture for creating texture widgets.
 #[test]
-#[ignore = "CreateTexture not implemented"]
 fn test_create_texture() {
     let env = WowLuaEnv::new().unwrap();
 
@@ -336,7 +338,6 @@ fn test_create_texture() {
 
 /// Frame:CreateFontString for creating text widgets.
 #[test]
-#[ignore = "CreateFontString not implemented"]
 fn test_create_font_string() {
     let env = WowLuaEnv::new().unwrap();
 
@@ -352,8 +353,8 @@ fn test_create_font_string() {
 }
 
 /// LibStub is commonly used for library management.
+#[cfg(feature = "optional-tests")]
 #[test]
-#[ignore = "LibStub not implemented"]
 fn test_libstub() {
     let env = WowLuaEnv::new().unwrap();
 
@@ -385,8 +386,8 @@ fn test_get_build_info() {
 }
 
 /// Settings API for modern addon options.
+#[cfg(feature = "optional-tests")]
 #[test]
-#[ignore = "Settings API not implemented"]
 fn test_settings_api() {
     let env = WowLuaEnv::new().unwrap();
 

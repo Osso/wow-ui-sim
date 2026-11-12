@@ -312,6 +312,53 @@ fn favorite_order_recipes_drive_the_original_orders_button() {
     .unwrap();
 }
 
+/// WM87 original consumer: metadata-backed favorites enable search; other favorites do not.
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+#[test]
+fn favorite_order_recipes_metadata_drives_original_orders_button() {
+    let env = full_game_env();
+    env.exec(
+        r#"
+        C_TradeSkillUI.SetProfessionChildSkillLineID(164)
+        assert(C_AddOns.LoadAddOn('Blizzard_Professions'))
+        local page = ProfessionsFrame.OrdersPage
+        local button = page.BrowseFrame.FavoritesSearchButton
+        C_TradeSkillUI.SetRecipeFavorite(2662, true)
+        page:UpdateFavoritesButton()
+        assert(not button:IsEnabled(), 'favorite without CraftingOrder metadata stays disabled')
+        assert(button.Icon:IsDesaturated(), 'ineligible favorite keeps icon desaturated')
+        C_TradeSkillUI.SetRecipeFavorite(365729, true)
+        page:UpdateFavoritesButton()
+        assert(button:IsEnabled(), 'favorite with CraftingOrder metadata enables search')
+        assert(not button.Icon:IsDesaturated(), 'eligible favorite restores icon color')
+        "#,
+    )
+    .unwrap();
+}
+
+/// API-level WM87 table: no favorites, only ineligible favorites, eligible favorite.
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+#[test]
+fn favorite_order_recipes_api_metadata_rows() {
+    let env = WowLuaEnv::new().expect("environment");
+    env.exec(
+        r#"
+        C_TradeSkillUI.SetProfessionChildSkillLineID(164)
+        local api = C_TradeSkillUI.HasFavoriteOrderRecipes
+        assert(select('#', api()) == 1 and api() == false, 'no favorite rows')
+        C_TradeSkillUI.SetRecipeFavorite(2662, true)
+        assert(select('#', api()) == 1 and api() == false, 'favorite is not order eligible')
+        C_TradeSkillUI.SetRecipeFavorite(365729, true)
+        assert(select('#', api()) == 1 and api('ignored', {}) == true, 'eligible favorite row')
+        C_TradeSkillUI.SetRecipeFavorite(365729, false)
+        assert(api() == false, 'only the ineligible favorite remains')
+        C_TradeSkillUI.SetRecipeFavorite(438914, true)
+        assert(api() == true, 'metadata row qualifies even with Field_10_0_2_46479_002 zero')
+        "#,
+    )
+    .unwrap();
+}
+
 /// WM88: one Boolean from the ability relation; GetRecipeInfo shares the predicate.
 #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
 #[test]

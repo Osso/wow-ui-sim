@@ -55,6 +55,7 @@ Blizzard_TransmogShared
 Blizzard_LFGUtil
 Blizzard_GamepadSoftCursor
 Blizzard_FrameXML
+Blizzard_RestrictedAddOnEnvironment
 Blizzard_SimpleCheckout
 Blizzard_StoreUI
 Blizzard_QuickKeybind
@@ -79,7 +80,6 @@ Blizzard_SpellDiminishUI
 Blizzard_ColorPickerFrame
 Blizzard_StatusTrayManager
 Blizzard_UnitFrame
-Blizzard_RestrictedAddOnEnvironment
 Blizzard_EnvironmentCleanup
 Blizzard_TimeManager
 Blizzard_CooldownBroadcaster

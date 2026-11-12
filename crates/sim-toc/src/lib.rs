@@ -501,13 +501,17 @@ impl<P: Selection> TocFile<P> {
         dependency_names(&self.required_dependency_lines)
     }
 
-    /// Get `LoadWith` triggers — addon names that, when loaded, should trigger
-    /// loading this addon immediately inline.
+    /// Get the names stored in the `LoadWith` metadata field.
     pub fn load_with(&self) -> Vec<String> {
         self.metadata
             .get("LoadWith")
             .map(|s| split_metadata_list(s))
             .unwrap_or_default()
+    }
+
+    /// Get addon names that the startup loader tries before this addon.
+    pub fn load_managers(&self) -> Vec<String> {
+        collect_metadata_lists(&self.metadata, &["LoadManagers"])
     }
 
     /// Get optional dependencies.

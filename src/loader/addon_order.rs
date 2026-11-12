@@ -4,7 +4,7 @@ use std::cmp::Ordering;
 use std::collections::{HashMap, HashSet};
 use std::path::PathBuf;
 
-/// Sort a list of `(name, toc_path)` pairs by their `## Dependencies:` / `## OptionalDeps:`.
+/// Sort addons by available `LoadManagers`, optional, and required TOC entries.
 ///
 /// Addons whose dependencies aren't in the list are treated as having no deps (they load early).
 /// Ties are broken alphabetically for deterministic output.
@@ -16,22 +16,23 @@ pub fn sort_addons_by_dependencies(addons: &mut Vec<(String, PathBuf)>) {
         }
     }
 
-    let available: HashSet<&str> = toc_map.keys().map(|s| s.as_str()).collect();
-    let deps = build_dependency_graph(&toc_map, &available);
+    let available: HashSet<&str> = toc_map.keys().map(|name| name.as_str()).collect();
+    let dependencies = build_dependency_graph(&toc_map, &available);
     let load_first = build_load_first_set(&toc_map);
-    let sorted = kahns_sort(&deps, toc_map.len(), &load_first);
+    let sorted = kahns_sort(&dependencies, toc_map.len(), &load_first);
 
-    let name_to_path: HashMap<&str, &PathBuf> =
-        addons.iter().map(|(n, p)| (n.as_str(), p)).collect();
+    let name_to_path: HashMap<&str, &PathBuf> = addons
+        .iter()
+        .map(|(name, path)| (name.as_str(), path))
+        .collect();
     let mut result: Vec<(String, PathBuf)> = sorted
         .iter()
         .filter_map(|&name| {
             name_to_path
                 .get(name)
-                .map(|&p| (name.to_string(), p.clone()))
+                .map(|&path| (name.to_string(), path.clone()))
         })
         .collect();
-
     for (name, path) in addons.iter() {
         if !toc_map.contains_key(name) {
             result.push((name.clone(), path.clone()));
@@ -40,16 +41,10 @@ pub fn sort_addons_by_dependencies(addons: &mut Vec<(String, PathBuf)>) {
     *addons = result;
 }
 
-/// Order Blizzard addons using a two-pass eager load model.
+/// Order packaged Blizzard addons by their native startup phases.
 ///
-/// First pass eagerly emits addons marked `LoadFirst` or `UseSecureEnvironment`,
-/// recursively pulling in any declared dependencies first. Second pass emits the
-/// remaining addons the same way. This matches wowless's "load first pass, then
-/// load the rest" behavior more closely than treating `LoadFirst` as a mere sort
-/// tiebreaker.
-///
-/// After emitting each addon, any addon with `LoadWith` pointing to it is emitted
-/// immediately (matching WoW's inline load-on-trigger behavior).
+/// Phase one emits `LoadFirst` and `UseSecureEnvironment` addons. Phase two
+/// emits the remaining addons from the non-insecure packaged UI input.
 pub(super) fn topological_sort_addons(
     addons: HashMap<String, (PathBuf, TocFile)>,
 ) -> Vec<(String, PathBuf)> {
@@ -77,14 +72,12 @@ fn topological_sort_addons_with_screen(
     extra_dependencies: &HashMap<String, Vec<String>>,
     screen: Option<ScreenKind>,
 ) -> Vec<(String, PathBuf)> {
-    let load_with_map = build_load_with_map(&addons);
     let mut result = Vec::with_capacity(addons.len());
     let mut loaded: HashSet<String> = HashSet::new();
     let mut visiting: HashSet<String> = HashSet::new();
 
     emit_early_addons(
         &mut addons,
-        &load_with_map,
         extra_dependencies,
         screen,
         &mut result,
@@ -93,7 +86,6 @@ fn topological_sort_addons_with_screen(
     );
     emit_remaining_addons(
         &mut addons,
-        &load_with_map,
         extra_dependencies,
         screen,
         &mut result,
@@ -105,7 +97,6 @@ fn topological_sort_addons_with_screen(
 
 fn emit_early_addons(
     addons: &mut HashMap<String, (PathBuf, TocFile)>,
-    load_with_map: &HashMap<String, Vec<String>>,
     extra_dependencies: &HashMap<String, Vec<String>>,
     screen: Option<ScreenKind>,
     result: &mut Vec<(String, PathBuf)>,
@@ -123,7 +114,6 @@ fn emit_early_addons(
         emit_addon_recursive(
             &name,
             addons,
-            load_with_map,
             extra_dependencies,
             screen,
             result,
@@ -135,7 +125,6 @@ fn emit_early_addons(
 
 fn emit_remaining_addons(
     addons: &mut HashMap<String, (PathBuf, TocFile)>,
-    load_with_map: &HashMap<String, Vec<String>>,
     extra_dependencies: &HashMap<String, Vec<String>>,
     screen: Option<ScreenKind>,
     result: &mut Vec<(String, PathBuf)>,
@@ -148,7 +137,6 @@ fn emit_remaining_addons(
         emit_addon_recursive(
             &name,
             addons,
-            load_with_map,
             extra_dependencies,
             screen,
             result,
@@ -161,7 +149,6 @@ fn emit_remaining_addons(
 fn emit_addon_recursive(
     name: &str,
     addons: &mut HashMap<String, (PathBuf, TocFile)>,
-    load_with_map: &HashMap<String, Vec<String>>,
     extra_dependencies: &HashMap<String, Vec<String>>,
     screen: Option<ScreenKind>,
     result: &mut Vec<(String, PathBuf)>,
@@ -180,7 +167,6 @@ fn emit_addon_recursive(
         emit_addon_recursive(
             &dep,
             addons,
-            load_with_map,
             extra_dependencies,
             screen,
             result,
@@ -194,7 +180,6 @@ fn emit_addon_recursive(
     if let Some((toc_path, _)) = addons.remove(name) {
         result.push((name.to_string(), toc_path));
         loaded.insert(name.to_string());
-        emit_load_with(name, load_with_map, addons, result, loaded);
     }
 }
 
@@ -210,16 +195,17 @@ fn collect_emit_dependencies(
 
     let mut seen = HashSet::new();
     let mut deps = Vec::new();
-    let required = screen.map_or_else(
-        || toc.dependencies(),
-        |screen| toc.dependencies_for_screen(screen),
-    );
     let optional = screen.map_or_else(
         || toc.optional_deps(),
         |screen| toc.optional_deps_for_screen(screen),
     );
-    append_emit_dependencies(&mut deps, &mut seen, required, addons);
+    let required = screen.map_or_else(
+        || toc.dependencies(),
+        |screen| toc.dependencies_for_screen(screen),
+    );
+    append_emit_dependencies(&mut deps, &mut seen, toc.load_managers(), addons);
     append_emit_dependencies(&mut deps, &mut seen, optional, addons);
+    append_emit_dependencies(&mut deps, &mut seen, required, addons);
     append_emit_dependencies(
         &mut deps,
         &mut seen,
@@ -242,49 +228,7 @@ fn append_emit_dependencies(
     }
 }
 
-/// Build reverse index: for each addon name, which addons have `LoadWith` pointing to it.
-fn build_load_with_map(
-    addons: &HashMap<String, (PathBuf, TocFile)>,
-) -> HashMap<String, Vec<String>> {
-    let mut map: HashMap<String, Vec<String>> = HashMap::new();
-    for (name, (_, toc)) in addons {
-        for trigger in toc.load_with() {
-            map.entry(trigger).or_default().push(name.clone());
-        }
-    }
-    for list in map.values_mut() {
-        list.sort();
-    }
-    map
-}
-
-/// After emitting an addon, emit any addons with `LoadWith` pointing to it.
-/// Recurses to handle chained LoadWith triggers.
-fn emit_load_with(
-    just_loaded: &str,
-    load_with_map: &HashMap<String, Vec<String>>,
-    addons: &mut HashMap<String, (PathBuf, TocFile)>,
-    result: &mut Vec<(String, PathBuf)>,
-    loaded: &mut HashSet<String>,
-) {
-    let Some(triggered) = load_with_map.get(just_loaded) else {
-        return;
-    };
-    for name in triggered.clone() {
-        if loaded.contains(&name) {
-            continue;
-        }
-        if let Some((toc_path, _)) = addons.remove(&name) {
-            result.push((name.clone(), toc_path));
-            loaded.insert(name.clone());
-            emit_load_with(&name, load_with_map, addons, result, loaded);
-        }
-    }
-}
-
-/// Build a map of addon name -> list of available addon names it depends on.
-/// Includes both required and optional dependencies (WoW loads optional deps
-/// before the addon if they are present).
+/// Build available manager and dependency edges for startup sorting.
 fn build_dependency_graph<'a>(
     addons: &'a HashMap<String, (PathBuf, TocFile)>,
     available: &HashSet<&'a str>,
@@ -293,21 +237,17 @@ fn build_dependency_graph<'a>(
         .iter()
         .map(|(name, (_, toc))| {
             let mut seen = HashSet::new();
-            let mut deps: Vec<&str> = Vec::new();
-            for dep in toc
-                .dependencies()
-                .iter()
-                .filter_map(|d| available.get(d.as_str()).copied())
+            let mut deps = Vec::new();
+            for candidate in toc
+                .load_managers()
+                .into_iter()
+                .chain(toc.optional_deps())
+                .chain(toc.dependencies())
             {
-                if seen.insert(dep) {
-                    deps.push(dep);
-                }
-            }
-            for d in toc.optional_deps() {
-                if let Some(&dep) = available.get(d.as_str())
-                    && seen.insert(dep)
+                if let Some(&dependency) = available.get(candidate.as_str())
+                    && seen.insert(dependency)
                 {
-                    deps.push(dep);
+                    deps.push(dependency);
                 }
             }
             (name.as_str(), deps)

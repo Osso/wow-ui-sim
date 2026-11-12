@@ -8,10 +8,9 @@
 //!   per-id override tables.
 //! * The `LoadAddOnWithErrorHandling` seam mirrors broadcaster failure
 //!   bookkeeping, dedupes per name, and passes unrelated names through.
-//! * The `__test_skip_cooldown_broadcaster_load` opt-out flag wires up a
-//!   live path to exercise the real `CooldownBroadcaster_LoadUI` (kept
-//!   `#[ignore]`d because the broadcaster's runtime deps aren't brought
-//!   up by these panel tests).
+//! * The `__test_skip_cooldown_broadcaster_load` opt-out flag wires up an
+//!   optional-tests path to exercise the real `CooldownBroadcaster_LoadUI`
+//!   because its runtime dependencies are outside this panel fixture.
 
 use crate::common;
 
@@ -150,13 +149,13 @@ fn load_addon_with_error_handling_seam_records_broadcaster_failure() {
     }
 }
 
-/// Dedicated coverage path for `CooldownBroadcaster_LoadUI` against the
-/// real `Blizzard_CooldownBroadcaster` addon load. Off by default
-/// (`#[ignore]`) because its runtime dependencies are outside this panel
-/// fixture. Set `__test_skip_cooldown_broadcaster_load` to `false` before
+/// Dedicated optional coverage for `CooldownBroadcaster_LoadUI` against the
+/// real `Blizzard_CooldownBroadcaster` addon load because its runtime
+/// dependencies are outside this panel fixture. Set
+/// `__test_skip_cooldown_broadcaster_load` to `false` before
 /// invoking its current bootstrap publisher to exercise the real path.
+#[cfg(feature = "optional-tests")]
 #[test]
-#[ignore = "opt-in coverage for real CooldownBroadcaster load — needs C_ChatInfo/C_Spell surface"]
 fn cooldown_broadcaster_loadui_can_be_exercised_when_opt_in() {
     test_timeout! {
         let env = setup_env();

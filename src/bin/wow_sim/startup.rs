@@ -243,8 +243,8 @@ mod tests {
     }
     }
 
+    #[cfg(feature = "optional-tests")]
     #[test]
-    #[ignore = "private host-budget probe; external no-sound setting and 90s process bound required"]
     fn trusted_finite_budget_for_selected_addons() {
         // Explicit trusted test input, NOT a production default or native policy.
         const TEST_LIMIT: u64 = 100_000_000;
@@ -252,8 +252,8 @@ mod tests {
         run_trusted_finite_budget_probe(&OWNERS, &OWNERS, TEST_LIMIT);
     }
 
+    #[cfg(feature = "optional-tests")]
     #[test]
-    #[ignore = "private host-budget probe; run alone with external no-sound setting and 90s process bound"]
     fn trusted_finite_budget_for_selected_addons_with_shared_media() {
         // Explicit trusted test input, NOT a production default or native policy.
         const TEST_LIMIT: u64 = 100_000_000;
@@ -282,6 +282,7 @@ mod tests {
         );
     }
 
+    #[cfg(feature = "optional-tests")]
     fn run_trusted_finite_budget_probe(
         owners: &[&str],
         early_owners: &[&str],

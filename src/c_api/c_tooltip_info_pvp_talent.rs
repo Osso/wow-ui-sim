@@ -1,9 +1,9 @@
 //! Retail `C_TooltipInfo.GetPvpTalent` composition.
 //!
-//! R44-Q20, R53 and R56 establish the success path. PvP talent rows and
-//! resolved spell IDs are host inputs; empty maps do not fabricate records or
-//! override results. Native failure publication and override ranking remain
-//! unknown.
+//! R44-Q20, R53 and R56 establish the success path. The Retail talent catalog
+//! is generated from the local-CASC export recorded in provenance; resolved
+//! spell IDs and eligibility/grant outcomes remain host inputs. Native failure
+//! publication and override ranking remain unknown.
 
 use crate::c_api::tooltip_getter_args::{
     allowed_when_untainted, lua_index, round7_optional_bool, round7_signed,
@@ -18,6 +18,8 @@ use rilua::vm::{gc::arena::GcRef, state::LuaState, table::Table};
 use rilua::{LuaResult, Val};
 use std::collections::HashMap;
 
+include!("c_tooltip_info_pvp_talent_data.rs");
+
 const API_NAME: &str = "C_TooltipInfo.GetPvpTalent";
 const USAGE: &str = "Usage: local data = C_TooltipInfo.GetPvpTalent(talentID [, isInspect, groupIndex, talentIndex])";
 const PLAIN_LINE_TYPE: f64 = 0.0;
@@ -26,8 +28,7 @@ const TALENT_POSITION_COUNT: i32 = 4;
 const SUPPRESSED_OVERRIDE_ATTRIBUTE: u32 = 32768;
 const BLANK_LINE_TEXT: &str = " ";
 
-/// One host-supplied PvP talent row. The pinned CSV export has no PvP talent
-/// table, so the simulator does not seed records.
+/// One catalogued PvP talent row plus host-supplied eligibility and grant outcomes.
 #[derive(Clone, Debug, Default)]
 pub struct PvpTalentTooltipRecord {
     pub spell_id: u32,
@@ -66,8 +67,31 @@ pub struct PvpTalentTooltipInputs {
 
 impl Default for PvpTalentTooltipInputs {
     fn default() -> Self {
+        let catalog = ROWS
+            .iter()
+            .map(
+                |&(
+                    talent_id,
+                    spell_id,
+                    overrides_spell_id,
+                    level_required,
+                    category_position_mask,
+                )| {
+                    (
+                        talent_id,
+                        PvpTalentTooltipRecord {
+                            spell_id,
+                            overrides_spell_id,
+                            level_required,
+                            category_position_mask,
+                            ..PvpTalentTooltipRecord::default()
+                        },
+                    )
+                },
+            )
+            .collect();
         Self {
-            catalog: HashMap::new(),
+            catalog,
             active_group_index: 0,
             groups: HashMap::new(),
             resolved_spell_ids: HashMap::new(),

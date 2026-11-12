@@ -1,14 +1,55 @@
 //! Runtime and startup addon dependency behavior across Game and Glue screens.
 
 use std::fs;
+use std::io::{self, Write};
 use std::path::PathBuf;
+use std::sync::{Arc, Mutex};
 
 use tempfile::TempDir;
 use wow_ui_sim::loader::{
-    StartupAddonLoadKind, discover_blizzard_startup_addons_for_screen, load_startup_addon,
+    StartupAddonLoadKind, discover_all_blizzard_addons,
+    discover_blizzard_startup_addons_for_screen, load_startup_addon, register_load_with_addons,
+    register_load_with_declarations,
 };
 use wow_ui_sim::lua_api::{AddonInfo, WowLuaEnv};
 use wow_ui_sim::screen::ScreenKind;
+
+#[derive(Clone, Default)]
+struct CapturedLogs(Arc<Mutex<Vec<u8>>>);
+
+struct CapturedLogsWriter(Arc<Mutex<Vec<u8>>>);
+
+impl<'a> tracing_subscriber::fmt::MakeWriter<'a> for CapturedLogs {
+    type Writer = CapturedLogsWriter;
+
+    fn make_writer(&'a self) -> Self::Writer {
+        CapturedLogsWriter(self.0.clone())
+    }
+}
+
+impl Write for CapturedLogsWriter {
+    fn write(&mut self, bytes: &[u8]) -> io::Result<usize> {
+        self.0.lock().unwrap().extend_from_slice(bytes);
+        Ok(bytes.len())
+    }
+
+    fn flush(&mut self) -> io::Result<()> {
+        Ok(())
+    }
+}
+
+fn capture_warnings<T>(run: impl FnOnce() -> T) -> (T, String) {
+    let logs = CapturedLogs::default();
+    let subscriber = tracing_subscriber::fmt()
+        .without_time()
+        .with_ansi(false)
+        .with_max_level(tracing::Level::WARN)
+        .with_writer(logs.clone())
+        .finish();
+    let result = tracing::subscriber::with_default(subscriber, run);
+    let output = String::from_utf8(logs.0.lock().unwrap().clone()).unwrap();
+    (result, output)
+}
 
 struct AddonTree {
     root: TempDir,
@@ -56,7 +97,22 @@ impl AddonTree {
         });
     }
 
+    fn register_load_with(&self, name: &str, toc_path: &PathBuf, enabled: bool) {
+        self.env.register_addon(AddonInfo {
+            folder_name: name.to_owned(),
+            title: name.to_owned(),
+            enabled,
+            ..Default::default()
+        });
+        register_load_with_addons(
+            &self.env.loader_env(),
+            &[(name.to_owned(), toc_path.clone())],
+        );
+    }
+
     fn load_startup_addons(&self, screen: ScreenKind) -> Vec<String> {
+        let candidates = discover_all_blizzard_addons(self.root.path());
+        register_load_with_addons(&self.env.loader_env(), &candidates);
         let addons = discover_blizzard_startup_addons_for_screen(self.root.path(), screen);
         let names = addons.iter().map(|addon| addon.name.clone()).collect();
         for addon in addons {
@@ -333,6 +389,532 @@ fn optional_dependency_failure_does_not_fail_parent_load() {
     assert!(tree.ran("OptionalFailureParentRan"));
     assert!(!tree.ran("OptionalFailureProbeRan"));
     assert!(!tree.ran("OptionalGlueOnlyProbeRan"));
+}
+
+#[test]
+fn startup_optional_dependency_loads_before_required_dependency() {
+    let tree = AddonTree::new(ScreenKind::Game);
+    tree.env.exec("startupDependencyOrder = {}").unwrap();
+    tree.add(
+        "Blizzard_A_ParentProbe",
+        "## AllowLoad: Both\n## Dependencies: Blizzard_B_RequiredProbe\n## OptionalDeps: Blizzard_Z_OptionalProbe",
+        "table.insert(startupDependencyOrder, 'parent')",
+    );
+    tree.add(
+        "Blizzard_B_RequiredProbe",
+        "## AllowLoad: Both",
+        "table.insert(startupDependencyOrder, 'required')",
+    );
+    tree.add(
+        "Blizzard_Z_OptionalProbe",
+        "## AllowLoad: Both",
+        "table.insert(startupDependencyOrder, 'optional')",
+    );
+
+    let addons = tree.load_startup_addons(ScreenKind::Game);
+    assert_eq!(
+        addons.iter().map(String::as_str).collect::<Vec<_>>(),
+        [
+            "Blizzard_Z_OptionalProbe",
+            "Blizzard_B_RequiredProbe",
+            "Blizzard_A_ParentProbe",
+        ]
+    );
+    tree.env
+        .exec("assert(table.concat(startupDependencyOrder, ',') == 'optional,required,parent')")
+        .unwrap();
+}
+
+#[test]
+fn load_managers_run_before_their_startup_owner_files() {
+    let tree = AddonTree::new(ScreenKind::Game);
+    tree.env.exec("startupManagerOrder = {}").unwrap();
+    tree.add(
+        "Blizzard_A_ManagerOwnerProbe",
+        "## AllowLoad: Both\n## LoadManagers: Blizzard_Z_LodManagerProbe",
+        "table.insert(startupManagerOrder, 'owner')",
+    );
+    tree.add(
+        "Blizzard_Z_LodManagerProbe",
+        "## AllowLoad: Both\n## LoadOnDemand: 1",
+        "table.insert(startupManagerOrder, 'manager')",
+    );
+
+    let addons = tree.load_startup_addons(ScreenKind::Game);
+    let manager_position = addons
+        .iter()
+        .position(|name| name == "Blizzard_Z_LodManagerProbe")
+        .expect("LoadManagers entry must be in the startup sequence");
+    let owner_position = addons
+        .iter()
+        .position(|name| name == "Blizzard_A_ManagerOwnerProbe")
+        .expect("owner must be in the startup sequence");
+    assert!(manager_position < owner_position);
+    tree.env
+        .exec("assert(table.concat(startupManagerOrder, ',') == 'manager,owner')")
+        .unwrap();
+}
+
+// This supplies the PTR child list directly; it does not assert parser linkage.
+// `LoadFirst` is a simulator phase marker here, not a PTR field-mapping claim.
+#[cfg(feature = "client-ptr")]
+#[test]
+fn ptr_prepopulated_children_run_after_target_files_without_resolver_gates() {
+    let tree = AddonTree::new(ScreenKind::Game);
+    let target = "Blizzard_PTRLoadWithTargetProbe";
+    let disabled_follower = "User_DisabledPTRLoadWithFollowerProbe";
+    let phase_follower = "User_PhasePTRLoadWithFollowerProbe";
+    tree.env.exec("ptrLoadWithOrder = {}").unwrap();
+    tree.add(
+        target,
+        "## AllowLoad: Game\n## LoadOnDemand: 1",
+        "ptrTargetFileRan = true; table.insert(ptrLoadWithOrder, 'target-file')",
+    );
+    tree.add(
+        disabled_follower,
+        "## AllowLoad: Game\n## LoadOnDemand: 1",
+        "table.insert(ptrLoadWithOrder, 'disabled-follower-file')",
+    );
+    tree.add(
+        phase_follower,
+        "## AllowLoad: Game\n## LoadOnDemand: 1\n## LoadFirst: 1",
+        "assert(ptrTargetFileRan == true); table.insert(ptrLoadWithOrder, 'phase-follower-file')",
+    );
+    tree.env.register_addon(AddonInfo {
+        folder_name: disabled_follower.to_owned(),
+        title: disabled_follower.to_owned(),
+        enabled: false,
+        ..Default::default()
+    });
+    tree.register_enabled(phase_follower);
+    register_load_with_declarations(
+        &tree.env.loader_env(),
+        &[
+            (
+                disabled_follower.to_owned(),
+                vec![target.to_owned()],
+                false,
+            ),
+            (
+                phase_follower.to_owned(),
+                vec![target.to_owned()],
+                true,
+            ),
+        ],
+    );
+
+    let (_, logs) = capture_warnings(|| tree.load(target));
+
+    assert!(
+        logs.contains(&format!("LoadWith follower {disabled_follower} failed:")),
+        "the disabled child should reach the generic loader; got: {logs}"
+    );
+    let order: String = tree
+        .env
+        .eval("return table.concat(ptrLoadWithOrder, ',')")
+        .unwrap();
+    assert_eq!(order, "target-file,phase-follower-file");
+}
+
+// The startup-candidate relation is inferred; this test checks dependency order only.
+#[cfg(feature = "client-ptr")]
+#[test]
+fn ptr_character_create_dependencies_load_before_its_files() {
+    let tree = AddonTree::new(ScreenKind::Login);
+    tree.env.exec("ptrCharacterCreateOrder = {}").unwrap();
+    tree.add(
+        "Blizzard_CharacterCreate",
+        "## AllowLoad: Glue\n## Dep: Blizzard_CharacterCustomize\n## Dep: Blizzard_GlueXML",
+        "table.insert(ptrCharacterCreateOrder, 'character-create')",
+    );
+    tree.add(
+        "Blizzard_CharacterCustomize",
+        "## AllowLoad: Both\n## LoadOnDemand: 1\n## Dep: Blizzard_CustomizationUI",
+        "table.insert(ptrCharacterCreateOrder, 'character-customize')",
+    );
+    tree.add(
+        "Blizzard_CustomizationUI",
+        "## AllowLoad: Both\n## LoadOnDemand: 1",
+        "table.insert(ptrCharacterCreateOrder, 'customization-ui')",
+    );
+    tree.add(
+        "Blizzard_GlueXML",
+        "## AllowLoad: Glue",
+        "table.insert(ptrCharacterCreateOrder, 'glue-xml')",
+    );
+
+    let _ = tree.load("Blizzard_CharacterCreate");
+
+    let order: String = tree
+        .env
+        .eval("return table.concat(ptrCharacterCreateOrder, ',')")
+        .unwrap();
+    let position = |name| order.split(',').position(|entry| entry == name).unwrap();
+    assert!(position("customization-ui") < position("character-customize"));
+    assert!(position("character-customize") < position("character-create"));
+    assert!(position("glue-xml") < position("character-create"));
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn startup_load_with_follower_runs_after_target_addon_loaded() {
+    let tree = AddonTree::new(ScreenKind::Game);
+    tree.env
+        .exec(
+            r#"
+            startupLoadWithOrder = {}
+            local observer = CreateFrame('Frame')
+            observer:RegisterEvent('ADDON_LOADED')
+            observer:SetScript('OnEvent', function(_, _, name)
+                if name == 'Blizzard_Z_LoadWithTargetProbe' then
+                    table.insert(startupLoadWithOrder, 'target-event')
+                elseif name == 'Blizzard_A_LoadWithFollowerProbe' then
+                    table.insert(startupLoadWithOrder, 'follower-event')
+                end
+            end)
+            "#,
+        )
+        .unwrap();
+    tree.add(
+        "Blizzard_Z_LoadWithTargetProbe",
+        "## AllowLoad: Both",
+        "table.insert(startupLoadWithOrder, 'target-file')",
+    );
+    tree.add(
+        "Blizzard_A_LoadWithFollowerProbe",
+        "## AllowLoad: Both\n## LoadOnDemand: 1\n## LoadWith: Blizzard_Z_LoadWithTargetProbe",
+        "table.insert(startupLoadWithOrder, 'follower-file')",
+    );
+
+    tree.load_startup_addons(ScreenKind::Game);
+
+    let order: String = tree
+        .env
+        .eval("return table.concat(startupLoadWithOrder, ',')")
+        .unwrap();
+    assert_eq!(
+        order,
+        "target-file,target-event,follower-file,follower-event"
+    );
+}
+
+#[cfg(not(feature = "client-ptr"))]
+#[test]
+fn load_with_registration_preserves_public_addon_enumeration_and_state() {
+    let tree = AddonTree::new(ScreenKind::Game);
+    tree.register_enabled("ExistingLoadWithRegistrationProbe");
+    let follower_path = tree.add(
+        "Blizzard_LoadWithRegistrationProbe",
+        "## AllowLoad: Both\n## LoadOnDemand: 1\n## LoadWith: Blizzard_LoadWithRegistrationTargetProbe",
+        "LoadWithRegistrationFollowerRan = true",
+    );
+    let snapshot = || {
+        tree.env
+            .eval::<(i32, String, String, String)>(
+                "local names = {}\n\
+                 for index = 1, C_AddOns.GetNumAddOns() do\n\
+                 names[index] = C_AddOns.GetAddOnInfo(index)\n\
+                 end\n\
+                 return C_AddOns.GetNumAddOns(), table.concat(names, ','),\n\
+                 tostring(C_AddOns.GetAddOnEnableState('ExistingLoadWithRegistrationProbe')),\n\
+                 tostring(C_AddOns.IsAddOnLoaded('ExistingLoadWithRegistrationProbe'))",
+            )
+            .unwrap()
+    };
+    let before = snapshot();
+
+    register_load_with_addons(
+        &tree.env.loader_env(),
+        &[(
+            "Blizzard_LoadWithRegistrationProbe".to_owned(),
+            follower_path,
+        )],
+    );
+
+    assert_eq!(snapshot(), before);
+}
+
+#[cfg(not(feature = "client-ptr"))]
+#[test]
+fn disabled_user_load_with_follower_does_not_load_at_blizzard_startup() {
+    let tree = AddonTree::new(ScreenKind::Game);
+    tree.env.exec("disabledUserStartupOrder = {}").unwrap();
+    tree.add(
+        "Blizzard_DisabledUserLoadWithTargetProbe",
+        "## AllowLoad: Both",
+        "table.insert(disabledUserStartupOrder, 'target')",
+    );
+    tree.add(
+        "User_DisabledLoadWithFollowerProbe",
+        "## AllowLoad: Both\n## LoadOnDemand: 1\n## DefaultState: disabled\n## LoadWith: Blizzard_DisabledUserLoadWithTargetProbe",
+        "UserDisabledLoadWithFollowerRan = true; table.insert(disabledUserStartupOrder, 'follower')",
+    );
+
+    tree.load_startup_addons(ScreenKind::Game);
+
+    tree.env
+        .exec("assert(table.concat(disabledUserStartupOrder, ',') == 'target')")
+        .unwrap();
+    assert!(!tree.ran("UserDisabledLoadWithFollowerRan"));
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn disabled_follower_is_refused_and_does_not_stop_later_followers() {
+    let tree = AddonTree::new(ScreenKind::Game);
+    tree.env
+        .exec(
+            r#"
+            disabledRuntimeOrder = {}
+            local observer = CreateFrame('Frame')
+            observer:RegisterEvent('ADDON_LOADED')
+            observer:SetScript('OnEvent', function(_, _, name)
+                if name == 'Blizzard_DisabledRuntimeLoadWithTargetProbe' then
+                    table.insert(disabledRuntimeOrder, 'target-event')
+                elseif name == 'User_A_AfterDisabledRuntimeLoadWithFollowerProbe' then
+                    table.insert(disabledRuntimeOrder, 'later-follower-event')
+                end
+            end)
+            "#,
+        )
+        .unwrap();
+    tree.add(
+        "Blizzard_DisabledRuntimeLoadWithTargetProbe",
+        "## AllowLoad: Both\n## LoadOnDemand: 1",
+        "table.insert(disabledRuntimeOrder, 'target-file')",
+    );
+    let disabled_path = tree.add(
+        "User_Z_DisabledRuntimeLoadWithFollowerProbe",
+        "## AllowLoad: Both\n## LoadOnDemand: 1\n## LoadWith: Blizzard_DisabledRuntimeLoadWithTargetProbe",
+        "UserDisabledRuntimeFollowerRan = true",
+    );
+    tree.register_load_with(
+        "User_Z_DisabledRuntimeLoadWithFollowerProbe",
+        &disabled_path,
+        false,
+    );
+    let enabled_path = tree.add(
+        "User_A_AfterDisabledRuntimeLoadWithFollowerProbe",
+        "## AllowLoad: Both\n## LoadOnDemand: 1\n## LoadWith: Blizzard_DisabledRuntimeLoadWithTargetProbe",
+        "UserAfterDisabledRuntimeFollowerRan = true; table.insert(disabledRuntimeOrder, 'later-follower-file')",
+    );
+    tree.register_load_with(
+        "User_A_AfterDisabledRuntimeLoadWithFollowerProbe",
+        &enabled_path,
+        true,
+    );
+
+    let disabled_result: (bool, Option<String>) = tree
+        .env
+        .eval("return C_AddOns.LoadAddOn('User_Z_DisabledRuntimeLoadWithFollowerProbe')")
+        .unwrap();
+    assert_eq!(disabled_result, (false, Some("DISABLED".to_owned())));
+
+    let (target_result, logs) =
+        capture_warnings(|| tree.load("Blizzard_DisabledRuntimeLoadWithTargetProbe"));
+    assert_eq!(target_result, (true, None));
+    assert!(
+        logs.contains(
+            "LoadWith follower User_Z_DisabledRuntimeLoadWithFollowerProbe failed: DISABLED"
+        ),
+        "expected the disabled follower refusal in captured logs; got: {logs}"
+    );
+    let order: String = tree
+        .env
+        .eval("return table.concat(disabledRuntimeOrder, ',')")
+        .unwrap();
+    assert_eq!(
+        order,
+        "target-file,target-event,later-follower-file,later-follower-event"
+    );
+    assert!(!tree.ran("UserDisabledRuntimeFollowerRan"));
+    assert!(tree.ran("UserAfterDisabledRuntimeFollowerRan"));
+}
+
+/// Preservation: explicitly loading a `LoadWith` follower does not submit its target.
+#[cfg(not(feature = "client-ptr"))]
+#[test]
+fn loading_load_with_follower_does_not_load_target() {
+    let tree = AddonTree::new(ScreenKind::Game);
+    tree.add(
+        "Blizzard_LoadWithTargetProbe",
+        "## AllowLoad: Both\n## LoadOnDemand: 1",
+        "LoadWithTargetRan = true",
+    );
+    let follower_path = tree.add(
+        "Blizzard_LoadWithFollowerProbe",
+        "## AllowLoad: Both\n## LoadOnDemand: 1\n## LoadWith: Blizzard_LoadWithTargetProbe",
+        "LoadWithFollowerRan = true",
+    );
+    tree.register_load_with("Blizzard_LoadWithFollowerProbe", &follower_path, true);
+
+    assert_eq!(tree.load("Blizzard_LoadWithFollowerProbe"), (true, None));
+    assert!(tree.ran("LoadWithFollowerRan"));
+    assert!(!tree.ran("LoadWithTargetRan"));
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn runtime_loading_target_fires_addon_loaded_before_followers() {
+    let tree = AddonTree::new(ScreenKind::Game);
+    tree.env
+        .exec(
+            r#"
+            runtimeLoadWithOrder = {}
+            local observer = CreateFrame('Frame')
+            observer:RegisterEvent('ADDON_LOADED')
+            observer:SetScript('OnEvent', function(_, _, name)
+                if name == 'Blizzard_RuntimeLoadWithTargetProbe' then
+                    table.insert(runtimeLoadWithOrder, 'target-event')
+                elseif name == 'Blizzard_RuntimeLoadWithFollowerProbe' then
+                    table.insert(runtimeLoadWithOrder, 'follower-event')
+                end
+            end)
+            "#,
+        )
+        .unwrap();
+    tree.add(
+        "Blizzard_RuntimeLoadWithTargetProbe",
+        "## AllowLoad: Both\n## LoadOnDemand: 1",
+        "table.insert(runtimeLoadWithOrder, 'target-file')",
+    );
+    let follower_path = tree.add(
+        "Blizzard_RuntimeLoadWithFollowerProbe",
+        "## AllowLoad: Both\n## LoadOnDemand: 1\n## LoadWith: Blizzard_RuntimeLoadWithTargetProbe\n## OptionalDeps: RuntimeLoadWithOptionalProbe\n## RequiredDeps: RuntimeLoadWithRequiredProbe",
+        "table.insert(runtimeLoadWithOrder, 'follower-file')",
+    );
+    tree.register_load_with(
+        "Blizzard_RuntimeLoadWithFollowerProbe",
+        &follower_path,
+        true,
+    );
+    tree.add(
+        "RuntimeLoadWithOptionalProbe",
+        "",
+        "table.insert(runtimeLoadWithOrder, 'optional')",
+    );
+    tree.add(
+        "RuntimeLoadWithRequiredProbe",
+        "",
+        "table.insert(runtimeLoadWithOrder, 'required')",
+    );
+
+    assert_eq!(
+        tree.load("Blizzard_RuntimeLoadWithTargetProbe"),
+        (true, None)
+    );
+    tree.env
+        .exec("assert(table.concat(runtimeLoadWithOrder, ',') == 'target-file,target-event,optional,required,follower-file,follower-event')")
+        .unwrap();
+}
+
+#[cfg(not(feature = "client-ptr"))]
+#[test]
+fn user_load_with_registration_after_startup_updates_runtime_follower_index() {
+    let tree = AddonTree::new(ScreenKind::Game);
+    tree.env.exec("registeredUserRuntimeOrder = {}").unwrap();
+    tree.add(
+        "Blizzard_RuntimeLoadWithIndexWarmupProbe",
+        "## AllowLoad: Both",
+        "true",
+    );
+    tree.add(
+        "Blizzard_RuntimeRegisteredUserTargetProbe",
+        "## AllowLoad: Both\n## LoadOnDemand: 1",
+        "table.insert(registeredUserRuntimeOrder, 'target')",
+    );
+    let follower_path = tree.add(
+        "User_RuntimeRegisteredLoadWithFollowerProbe",
+        "## AllowLoad: Both\n## LoadOnDemand: 1\n## LoadWith: Blizzard_RuntimeRegisteredUserTargetProbe",
+        "table.insert(registeredUserRuntimeOrder, 'follower')",
+    );
+
+    tree.load_startup_addons(ScreenKind::Game);
+    tree.register_load_with(
+        "User_RuntimeRegisteredLoadWithFollowerProbe",
+        &follower_path,
+        true,
+    );
+
+    assert_eq!(
+        tree.load("Blizzard_RuntimeRegisteredUserTargetProbe"),
+        (true, None)
+    );
+    tree.env
+        .exec("assert(table.concat(registeredUserRuntimeOrder, ',') == 'target,follower')")
+        .unwrap();
+}
+
+/// Preservation: a target that exits during dependency checks submits no followers.
+#[cfg(not(feature = "client-ptr"))]
+#[test]
+fn runtime_target_early_exit_does_not_load_load_with_followers() {
+    let tree = AddonTree::new(ScreenKind::Game);
+    tree.add(
+        "Blizzard_EarlyExitLoadWithTargetProbe",
+        "## AllowLoad: Both\n## LoadOnDemand: 1\n## RequiredDeps: Blizzard_GlueOnlyLoadWithDependencyProbe",
+        "EarlyExitLoadWithTargetRan = true",
+    );
+    tree.add(
+        "Blizzard_GlueOnlyLoadWithDependencyProbe",
+        "## AllowLoad: Glue",
+        "GlueOnlyLoadWithDependencyRan = true",
+    );
+    let follower_path = tree.add(
+        "Blizzard_EarlyExitLoadWithFollowerProbe",
+        "## AllowLoad: Both\n## LoadOnDemand: 1\n## LoadWith: Blizzard_EarlyExitLoadWithTargetProbe",
+        "EarlyExitLoadWithFollowerRan = true",
+    );
+    tree.register_load_with(
+        "Blizzard_EarlyExitLoadWithFollowerProbe",
+        &follower_path,
+        true,
+    );
+
+    let (loaded, reason) = tree.load("Blizzard_EarlyExitLoadWithTargetProbe");
+
+    assert!(!loaded);
+    assert_eq!(reason.as_deref(), Some("DEP_WRONG_ACTIVE_INTERFACE"));
+    assert!(!tree.ran("EarlyExitLoadWithTargetRan"));
+    assert!(!tree.ran("EarlyExitLoadWithFollowerRan"));
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn runtime_load_with_followers_preserve_registration_order() {
+    let tree = AddonTree::new(ScreenKind::Game);
+    tree.env.exec("followerRegistrationOrder = {}").unwrap();
+    tree.add(
+        "Blizzard_FollowerRegistrationOrderTargetProbe",
+        "## AllowLoad: Both\n## LoadOnDemand: 1",
+        "table.insert(followerRegistrationOrder, 'target')",
+    );
+    let later_path = tree.add(
+        "User_Z_FirstRegisteredFollowerProbe",
+        "## AllowLoad: Both\n## LoadOnDemand: 1\n## LoadWith: Blizzard_FollowerRegistrationOrderTargetProbe",
+        "table.insert(followerRegistrationOrder, 'first-registered')",
+    );
+    tree.register_load_with("User_Z_FirstRegisteredFollowerProbe", &later_path, true);
+    let earlier_name_path = tree.add(
+        "User_A_SecondRegisteredFollowerProbe",
+        "## AllowLoad: Both\n## LoadOnDemand: 1\n## LoadWith: Blizzard_FollowerRegistrationOrderTargetProbe",
+        "table.insert(followerRegistrationOrder, 'second-registered')",
+    );
+    tree.register_load_with(
+        "User_A_SecondRegisteredFollowerProbe",
+        &earlier_name_path,
+        true,
+    );
+
+    assert_eq!(
+        tree.load("Blizzard_FollowerRegistrationOrderTargetProbe"),
+        (true, None)
+    );
+    tree.env
+        .exec(
+            "assert(table.concat(followerRegistrationOrder, ',') == 'target,first-registered,second-registered')",
+        )
+        .unwrap();
 }
 
 #[test]

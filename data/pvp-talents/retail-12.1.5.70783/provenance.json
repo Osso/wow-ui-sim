@@ -1,0 +1,54 @@
+{
+  "profile": "retail",
+  "product": "wow",
+  "build": "12.1.5.70783",
+  "build_key": "bc493ecb2898766c0f8947a99b4b3d65",
+  "source": "local Retail CASC via wow-cli casc extract-fdid",
+  "db2_tables": {
+    "PvpTalent": {
+      "file_data_id": 1302853,
+      "layout": "BE69BB5A",
+      "sha256": "f896be5301919c63a9c9e47760e442f08274a7ab70cf755a1d4e1c3a8cde69dd",
+      "unreadable_records": 0
+    },
+    "PvpTalentCategory": {
+      "file_data_id": 1891534,
+      "layout": "ECB2C5C2",
+      "sha256": "68eeac68125f5b64ac62eaebb8aa81c1ee48eee6d047d340c51550dc304e6817",
+      "unreadable_records": 0
+    }
+  },
+  "exporter": {
+    "path": "game-engine/scripts/export_db2_csv.py",
+    "sha256": "dbd6c8f1d1e1785b65dcb668063ec2832c25a765d957babcf229da1732340f18",
+    "schema_columns": {
+      "PvpTalent": [
+        "ID",
+        "Description_lang",
+        "SpecID",
+        "SpellID",
+        "OverridesSpellID",
+        "Flags",
+        "ActionBarSpellID",
+        "PvpTalentCategoryID",
+        "LevelRequired",
+        "PlayerConditionID"
+      ],
+      "PvpTalentCategory": [
+        "ID",
+        "TalentSlotMask"
+      ]
+    },
+    "schema_source": "existing exporter TABLES exact-layout mappings; pinned WoWDBDefs clone unavailable"
+  },
+  "projected_fields": [
+    "ID",
+    "SpellID",
+    "OverridesSpellID",
+    "LevelRequired",
+    "TalentSlotMask"
+  ],
+  "row_count": 407,
+  "projected_csv_sha256": "6734c7d3ab2311582a991272f6575c0bb687c1c3caceda0b4f65184d07e55de1",
+  "granted_by_item_and_eligibility_inputs": "not derived from DB2; host-only inputs remain neutral"
+}

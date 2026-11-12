@@ -97,10 +97,14 @@ fn set_recipe_favorite(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
-/// EMULATED/UNKNOWN (WM87): eligibility comes from CraftingOrder metadata the
-/// simulator does not export, so every row is treated as not order-eligible.
-fn is_order_eligible(_recipe_id: i32) -> bool {
-    false
+#[path = "crafting_order_recipe_data.rs"]
+mod crafting_order_recipe_data;
+
+/// WM87: existence of associated CraftingOrder metadata makes a row eligible.
+fn is_order_eligible(recipe_id: i32) -> bool {
+    crafting_order_recipe_data::ORDER_RECIPE_IDS
+        .binary_search(&recipe_id)
+        .is_ok()
 }
 
 /// WM87: any loaded row with both the favorite and order-eligibility flags.
@@ -113,6 +117,24 @@ fn has_favorite_order_recipes(state: &mut LuaState) -> LuaResult<u32> {
     };
     state.push(Val::Bool(has_favorites));
     Ok(1)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::is_order_eligible;
+
+    #[test]
+    fn crafting_order_recipe_data_matches_70391_export() {
+        // CraftingOrder 36 -> SkillLineAbility 46625 -> Spell 365729.
+        assert!(is_order_eligible(365729));
+        // CraftingOrder 21 -> SkillLineAbility 46644 -> Spell 365730.
+        assert!(is_order_eligible(365730));
+        // CraftingOrder 854 -> SkillLineAbility 49927 -> Spell 438914.
+        // Its Field_10_0_2_46479_002 is zero; existence still qualifies.
+        assert!(is_order_eligible(438914));
+        assert!(!is_order_eligible(2662));
+        assert!(!is_order_eligible(99_999_999));
+    }
 }
 
 pub(crate) fn drain_pending(state: &mut LuaState) -> LuaResult<()> {

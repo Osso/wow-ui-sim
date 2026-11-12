@@ -1,15 +1,21 @@
 //! Bound generated-code compilation during real XML reconstruction after reload.
 
 use super::{AddonContext, LoadTiming, WowLuaEnv, load_xml_file};
+#[cfg(feature = "casc")]
 use std::io::Read;
 use std::path::Path;
+#[cfg(feature = "casc")]
 use std::process::{Command, Output};
 use std::rc::Rc;
+#[cfg(feature = "casc")]
 use std::thread;
+#[cfg(feature = "casc")]
 use std::time::{Duration, Instant};
 
+#[cfg(feature = "casc")]
 const TEST_NAME: &str =
     "loader::tests::reload_xml_cost::reload_xml_layer_reconstruction_bounds_source_compiles";
+#[cfg(feature = "casc")]
 const CHILD_TEST_NAME: &str =
     "loader::tests::reload_xml_cost::reload_xml_layer_reconstruction_child";
 const RELOAD_BEGIN: &str = "[reload-xml-cost-begin]";
@@ -18,6 +24,7 @@ const INSTANCE_COUNT: usize = 16;
 const RELOAD_COUNT: usize = 2;
 // One homogeneous XML operation may prepare code once in each fresh VM,
 // but must not compile again for every instance's generated name/frame ID.
+#[cfg(feature = "casc")]
 const MAX_SOURCE_COMPILES_PER_RELOAD: usize = 1;
 
 fn write_xml_fixture(root: &Path) {
@@ -116,6 +123,7 @@ fn reconstruct_xml_across_reloads() {
     }
 }
 
+#[cfg(feature = "casc")]
 fn assert_reload_compile_budget(stderr: &str) {
     let reloads: Vec<_> = stderr.split(RELOAD_BEGIN).skip(1).collect();
     assert_eq!(reloads.len(), RELOAD_COUNT, "missing reload observations");
@@ -148,12 +156,14 @@ fn reload_xml_layer_reconstruction_child() {
     reconstruct_xml_across_reloads();
 }
 
+#[cfg(feature = "casc")]
 fn exact_test_command(test_name: &str) -> Command {
     let mut command = Command::new(std::env::current_exe().unwrap());
     command.args(["--exact", test_name, "--nocapture", "--test-threads=1"]);
     command
 }
 
+#[cfg(feature = "casc")]
 fn read_test_output(mut pipe: impl Read + Send + 'static) -> thread::JoinHandle<Vec<u8>> {
     thread::spawn(move || {
         let mut bytes = Vec::new();
@@ -162,6 +172,7 @@ fn read_test_output(mut pipe: impl Read + Send + 'static) -> thread::JoinHandle<
     })
 }
 
+#[cfg(feature = "casc")]
 fn run_bounded_test(mut command: Command) -> Output {
     use std::process::Stdio;
 
@@ -191,6 +202,7 @@ fn run_bounded_test(mut command: Command) -> Output {
     }
 }
 
+#[cfg(feature = "casc")]
 fn successful_test_stderr(output: Output) -> String {
     let stderr = String::from_utf8(output.stderr).unwrap();
     assert!(
@@ -206,6 +218,7 @@ fn successful_test_stderr(output: Output) -> String {
 }
 
 #[test]
+#[cfg(feature = "casc")]
 fn reload_xml_parent_marker_does_not_skip_compile_budget() {
     let mut command = exact_test_command(TEST_NAME);
     // Set only the subprocess environment; never mutate the parallel test runner.
@@ -232,6 +245,7 @@ fn reload_xml_parent_marker_does_not_skip_compile_budget() {
 }
 
 #[test]
+#[cfg(feature = "casc")]
 fn reload_xml_layer_reconstruction_bounds_source_compiles() {
     // Fresh process: profiling/cache OnceLocks must not inherit other tests.
     // Fresh cache: unrelated previous runs must not hide ID-key churn.

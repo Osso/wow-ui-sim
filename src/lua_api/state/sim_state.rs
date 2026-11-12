@@ -1,5 +1,12 @@
 use super::*;
 
+#[derive(Clone, Debug)]
+pub(crate) struct RegisteredLoadWith {
+    pub addon_name: String,
+    pub enabled: bool,
+    pub targets: Vec<String>,
+}
+
 pub struct SimState {
     /// Selected loot specialization; zero follows the active specialization.
     pub loot_specialization: u32,
@@ -59,6 +66,10 @@ pub struct SimState {
     pub(crate) timed_signal_maps: HashMap<u64, crate::c_api::timed_signal_map::TimedSignalMapState>,
     pub focused_frame_id: Option<u64>,
     pub addons: Vec<AddonInfo>,
+    /// Registered `LoadWith` declarations in registration order.
+    pub(crate) registered_load_with: Vec<RegisteredLoadWith>,
+    /// Lazily indexed target-to-follower map built from registered declarations.
+    pub(crate) load_with_followers: Option<HashMap<String, Vec<String>>>,
     pub(crate) addon_message_prefixes: crate::c_api::addon_message_prefixes::AddonMessagePrefixes,
     pub addon_saved_enable_state: Option<AddonEnableSnapshot>,
     pub addon_saved_version_check_enabled: Option<bool>,
