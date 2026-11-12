@@ -1,5 +1,6 @@
 //! R82 (70688) hyperlink service. Native UNKNOWN paths publish no fabricated rows.
 //! PTR/Forever reuse of the Retail routing contract is INFERRED.
+mod catalog;
 pub mod inputs;
 pub mod parse;
 
@@ -119,9 +120,21 @@ fn pvp_talent_spell(state: &LuaState, id: u32) -> LuaResult<Option<u32>> {
     }
 }
 
-fn power_route(_state: &mut LuaState, _request: HyperlinkRequest) -> LuaResult<u32> {
-    // No fallback: unknown row providers and no-producer routes stay unmodelled.
-    crate::c_api::tooltip_data::unknown_getter_failure()
+fn power_route(state: &mut LuaState, request: HyperlinkRequest) -> LuaResult<u32> {
+    let tooltip = match request {
+        HyperlinkRequest::ArtifactPower { id, base, total } => {
+            catalog::artifact(state, id, base, total)?
+        }
+        HyperlinkRequest::Conduit { id, rank } => catalog::conduit(state, id, rank)?,
+        _ => None,
+    };
+    match tooltip {
+        Some(tooltip) => {
+            state.push(tooltip);
+            Ok(1)
+        }
+        None => crate::c_api::tooltip_data::unknown_getter_failure(),
+    }
 }
 
 fn append_spell_lines(state: &mut LuaState, tooltip: Val, spell_id: u32) {

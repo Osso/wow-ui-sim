@@ -68,13 +68,14 @@ tooltip_selection_getters_fixture! {
             });
         env.exec(r#"
             -- R82 Q3 apower: rank line type 0, followed by type-1 blank.
-            -- Fixture row 41 is INFERRED 70391 data. No assertion of its text/value.
+            -- Fixture row 41 is INFERRED 70391 data. No assertion of catalog text or catalog numeric values.
             GameTooltip:SetOwner(UIParent, 'ANCHOR_NONE')
-            for _, case in ipairs({{'apower:41:1:1', HIGHLIGHT_FONT_COLOR}, {'apower:41:2:1', INCREASE_STAT_COLOR}}) do
+            for _, case in ipairs({{'apower:41:1:1', HIGHLIGHT_FONT_COLOR, 1, 3}, {'apower:41:2:1', INCREASE_STAT_COLOR, 1, 2}, {'apower:41:1:0', INCREASE_STAT_COLOR, 0, 2}, {'apower:41:1:2', INCREASE_STAT_COLOR, 2, 4}}) do
                 GameTooltip:SetHyperlink(case[1])
                 local data = GameTooltip:GetPrimaryTooltipData()
                 assert(data and data.lines and data.lines[2], 'apower prefix missing')
                 assert(data.lines[1].type == 0 and data.lines[2].type == 0 and data.lines[3].type == 1)
+                assert(data.lines[2].leftText == TOOLTIP_TALENT_RANK:format(case[3],case[4]), 'R82b rank operands')
                 local colour = data.lines[2].leftColor
                 assert(math.abs(colour.r-case[2].r)<0.005 and math.abs(colour.g-case[2].g)<0.005 and math.abs(colour.b-case[2].b)<0.005, 'bonus colour')
             end

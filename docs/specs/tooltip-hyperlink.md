@@ -25,6 +25,7 @@ The hyperlink dispatcher follows R82/R82b, Retail 12.1.5.70688. Source lives in 
 - `src/c_api/c_tooltip_info_hyperlink.rs`: dispatch and existing-producer composition.
 - `src/c_api/c_tooltip_info_hyperlink/parse.rs`: typed requests and R82b rank arithmetic.
 - `src/c_api/c_tooltip_info_hyperlink/inputs.rs`: explicit native-UNKNOWN state/record inputs with consumer citations.
+- `src/c_api/c_tooltip_info_hyperlink/catalog.rs`: isolated INFERRED 70391 artifact/conduit bindings and R82 prefix composition.
 - `src/c_api/item_descriptor/link.rs`: parsed item descriptor fields.
 - `src/lua_api/globals/missing_surface/tooltip_info/`: bounded item/spell/currency adapters; no new producer formulas.
 - `src/lua_api/frame/methods/widgets/tooltip/content.rs`: frame-method request forwarding without item-ID bypass.
