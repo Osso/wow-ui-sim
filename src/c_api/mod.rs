@@ -128,6 +128,8 @@ pub mod c_catalog_shop;
 pub mod c_catalog_shop_products;
 pub mod c_challenge_mode;
 pub(crate) mod c_character_creation;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub mod c_character_creation_customizations;
 pub(crate) mod c_character_creation_naming;
 pub(crate) mod c_character_creation_seen;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
