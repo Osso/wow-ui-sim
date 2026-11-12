@@ -567,8 +567,8 @@ Core.lua
 
     assert_eq!(
         names,
-        vec!["Blizzard_B", "Blizzard_C", "Blizzard_A"],
-        "dependency closure should include required and screen-allowed optional TOC deps only",
+        vec!["Blizzard_C", "Blizzard_B", "Blizzard_A"],
+        "dependency closure should emit optional deps before required deps"
     );
     assert!(
         !names.iter().any(|name| name == "Blizzard_D"),
