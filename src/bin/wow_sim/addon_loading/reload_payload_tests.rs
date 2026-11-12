@@ -19,6 +19,85 @@ fn assert_payload_child_process() {
     assert!(status.success(), "original Settings payload child failed");
 }
 
+fn cache_snapshot(root: &std::path::Path) -> Vec<(std::path::PathBuf, Vec<u8>)> {
+    let mut entries = Vec::new();
+    if !root.exists() {
+        return entries;
+    }
+    for entry in std::fs::read_dir(root).unwrap() {
+        let path = entry.unwrap().path();
+        if path.is_dir() {
+            entries.extend(cache_snapshot(&path));
+        } else {
+            entries.push((path.clone(), std::fs::read(path).unwrap()));
+        }
+    }
+    entries.sort_by(|left, right| left.0.cmp(&right.0));
+    entries
+}
+
+#[test]
+fn reload_startup_rejects_stale_or_missing_cache_without_writing() {
+    let source = wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap();
+    let pin: serde_json::Value = serde_json::from_str(include_str!(
+        "../../../../data/blizzard-ui-builds/retail.json"
+    ))
+    .unwrap();
+    let version = pin["version"].as_str().unwrap();
+    for stale in [true, false] {
+        let cache = tempfile::tempdir().unwrap();
+        let root = cache.path().join("wow-ui-sim/blizzard-ui/retail/AddOns");
+        if stale {
+            for (path, bytes) in cache_snapshot(&source) {
+                let destination = root.join(path.strip_prefix(&source).unwrap());
+                std::fs::create_dir_all(destination.parent().unwrap()).unwrap();
+                std::fs::write(destination, bytes).unwrap();
+            }
+            std::fs::write(
+                root.join(".wow-ui-sim-blizzard-ui-provenance"),
+                "version=stale\n",
+            )
+            .unwrap();
+        }
+        let before = cache_snapshot(cache.path());
+        let output = std::process::Command::new(std::env::current_exe().unwrap())
+            .args([
+                "--exact",
+                PAYLOAD_TEST_NAME,
+                "--nocapture",
+                "--test-threads=1",
+            ])
+            .env(PAYLOAD_CHILD_ENV, "1")
+            .env("XDG_CACHE_HOME", cache.path())
+            .env("WOW_SIM_NO_SOUND", "1")
+            .output()
+            .unwrap();
+        let transcript = format!(
+            "{}{}",
+            String::from_utf8_lossy(&output.stdout),
+            String::from_utf8_lossy(&output.stderr)
+        );
+        assert!(
+            !transcript.contains("syncing Blizzard UI"),
+            "test startup must not sync (stale={stale}): {transcript}"
+        );
+        assert!(
+            !output.status.success(),
+            "invalid cache must reject startup"
+        );
+        assert!(
+            transcript.contains(version),
+            "expected pin missing: {transcript}"
+        );
+        assert!(transcript.contains("automatic Blizzard UI sync is disabled in tests"));
+        assert_eq!(
+            cache_snapshot(cache.path()),
+            before,
+            "test startup wrote cache"
+        );
+    }
+}
+
 #[derive(Debug, PartialEq)]
 struct PayloadObservation {
     name: String,
