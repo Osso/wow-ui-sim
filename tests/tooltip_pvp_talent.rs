@@ -42,6 +42,114 @@ fn supply_record(env: &WowLuaEnv, talent_id: i32, record: PvpTalentTooltipRecord
 }
 
 #[test]
+fn retail_pvp_talent_catalog_uses_exported_rows_without_inventing_grants() {
+    let env = WowLuaEnv::new().unwrap();
+    let state = env.state().borrow();
+    let catalog = &state.pvp_talent_tooltip.catalog;
+    assert_eq!(catalog.len(), 407);
+    let spellwarding = catalog.get(&5573).expect("exported talent 5573");
+    assert_eq!(spellwarding.spell_id, 204018);
+    assert_eq!(spellwarding.overrides_spell_id, 0);
+    assert_eq!(spellwarding.level_required, 25);
+    assert_eq!(spellwarding.category_position_mask, 15);
+    assert!(spellwarding.eligibility_by_position.is_empty());
+    assert!(!spellwarding.grant_rejected_by_item);
+    assert_eq!(spellwarding.granted_item_id, None);
+    assert!(!spellwarding.granted_by_essence);
+    let guardian = catalog.get(&94).expect("exported talent 94");
+    assert_eq!((guardian.spell_id, guardian.overrides_spell_id), (228049, 86659));
+    assert_eq!(guardian.level_required, 40);
+    assert!(!catalog.contains_key(&i32::MAX), "absent IDs stay catalog misses");
+}
+
+fn load_original_pvp_slot_templates(env: &WowLuaEnv) {
+    use wow_ui_sim::loader::{AddonContext, LoadTiming, load_xml_file};
+
+    let addon = wow_ui_sim::client_profile::blizzard_ui_addons_dir()
+        .join("Blizzard_PlayerSpells");
+    let table = env.create_addon_table().unwrap();
+    let context = AddonContext::new(env.lua(), "Blizzard_PlayerSpells", table, &addon, false, false)
+        .unwrap();
+    let mut warnings = Vec::new();
+    load_xml_file(
+        &env.loader_env(),
+        &addon.join("PvPTalents/Blizzard_PvPTalentSlotTemplates.xml"),
+        &context,
+        &mut LoadTiming::default(),
+        &mut warnings,
+    )
+    .expect("load the Retail TOC-selected original PvP slot templates");
+    assert!(warnings.is_empty(), "PvP slot XML warnings: {warnings:?}");
+}
+
+#[test]
+fn pvp_slot_on_enter_uses_default_catalog_spell_and_unlock_lines() {
+    let env = env();
+    load_original_pvp_slot_templates(&env);
+    {
+        let mut state = env.state().borrow_mut();
+        state.player.level = 20;
+        state.player.effective_level = 0;
+        state.pvp_talent_tooltip.groups.insert(0, [None; 4]);
+    }
+    env.exec(
+        r#"
+        local tray = CreateFrame("Frame", nil, UIParent, "PvPTalentSlotTrayTemplate")
+        local button = tray.Slots[1]
+        assert(button and button:GetScript("OnEnter"), "original XML OnEnter binding")
+        local cases = {
+            { talent = 5573, spell = 204018, title = "Blessing of Spellwarding", level = 25 },
+            { talent = 51, spell = 236180, title = "Den Mother", level = 30 },
+        }
+        for _, case in ipairs(cases) do
+            button.predictedSetting:Set(case.talent)
+            GameTooltip:Hide()
+            GameTooltip:ClearHandlerInfo()
+            button:GetScript("OnEnter")(button)
+            assert(GameTooltip:GetOwner() == button)
+            local info = GameTooltip:GetPrimaryTooltipInfo()
+            assert(info and info.getterName == "GetPvpTalent", "original tooltip accessor")
+            local data = GameTooltip:GetPrimaryTooltipData()
+            assert(data and data.id == case.spell, "exported talent must produce its catalog spell")
+            assert(data.type == 1 and data.lines[1].leftText == case.title)
+            local ordinary = C_TooltipInfo.GetSpellByID(case.spell)
+            assert(#data.lines == #ordinary.lines + 1, "only the early unlock annotation applies")
+            local line = data.lines[#data.lines]
+            assert(line.type == 0 and line.leftText == UNLOCKED_AT_LEVEL:format(case.level))
+            assert(line.wrapText == nil)
+            local r, g, b = HOSTILE_STATUS_COLOR:GetRGB()
+            assert(math.abs(line.leftColor.r - r) < 0.01
+                and math.abs(line.leftColor.g - g) < 0.01
+                and math.abs(line.leftColor.b - b) < 0.01)
+        end
+        "#,
+    )
+    .unwrap();
+}
+
+#[test]
+fn default_pvp_talent_catalog_does_not_invent_eligibility_annotations() {
+    let env = env();
+    {
+        let mut state = env.state().borrow_mut();
+        state.player.level = 80;
+        state.player.effective_level = 0;
+        state.pvp_talent_tooltip.groups.insert(0, [None; 4]);
+    }
+    env.exec(
+        r#"
+        for _, case in ipairs({ {5573, 204018}, {51, 236180} }) do
+            local data = TestGetPvpTalent(case[1])
+            local ordinary = C_TooltipInfo.GetSpellByID(case[2])
+            assert(data and data.id == case[2], "default catalog must supply the primary spell")
+            assert(#data.lines == #ordinary.lines, "unknown eligibility and grant results add no lines")
+        end
+        "#,
+    )
+    .unwrap();
+}
+
+#[test]
 fn get_pvp_talent_is_registered_on_retail() {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
     let getter_type: String = env
