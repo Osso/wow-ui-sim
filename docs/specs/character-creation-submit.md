@@ -1,6 +1,6 @@
 # Character creation submission
 
-Scope: Retail and WoW Forever. Evidence is coordinator `agent-server-wow-ui-sim`
+Initial slice: Retail and WoW Forever; the PTR addendum is below. Evidence is coordinator `agent-server-wow-ui-sim`
 on tracker task `lt-a912`, especially R78 answers #205, #208, and #210 (Retail 12.1.5.70688 and
 Forever 1.60.1.70707). VERIFIED contracts are distinguished from simulator host
 inputs and UNKNOWN behavior below.
@@ -69,7 +69,7 @@ not direct mixin invocation or a replacement submit implementation.
 
 ## Preservation and merge gate
 
-Coordinator #194 requires all non-Retail/non-Forever profiles to keep the old
+For the first PR (#56), coordinator #194 required all non-Retail/non-Forever profiles to keep the old
 guess and old test bodies unchanged behind explicit profile cfgs, labelled
 `guessed; native evidence pending (R78 PTR part)`. PTR evidence is pending.
 The old guessed-rename tests are `character_create_action_updates_player_name_without_lua_errors`
@@ -125,3 +125,45 @@ registration remains UNKNOWN and is not added.
 
 #222 also offers an optional INFERRED name-validation bridge. This slice chooses
 to leave IsCharacterNameValid unchanged, avoiding unrelated inferred behavior.
+
+## PTR addendum (R78 PTR, #256/#261/#265/#268)
+
+Native evidence targets PTR 12.1.7.70668; tests use the owner-hosted pinned
+PTR 12.1.7.70493 UI. Its TOC selects Mainline through `[Family]` excluding Camelot.
+The real consumer at `Mainline/Blizzard_CharacterCreate.lua:748` supplies four
+arguments, including `GetSelectedSurname()`; the runtime traceback independently
+confirms this selection.
+
+VERIFIED required-input behavior (#265): name, surname and useNPE must each be
+present and non-nil. Missing/nil raises the Usage substring
+`Usage: C_CharacterCreation.CreateCharacter(name, surname, useNPE [, raceFaction])`.
+The surrounding error wording is UNKNOWN and is not asserted. Missing/nil
+raceFaction advances without error.
+
+PTR uses its own neutral host-only call record, not the RF validated-reader
+output. Name, surname and useNPE are owned observations of the supplied inputs;
+no native numeric-to-text conversion or truthiness normalization is inferred.
+These reader conversions are INFERRED and are not implemented or asserted here.
+String/number faction values are preserved. Other non-nil faction types are
+**UNKNOWN** and accepted without interpretation as an opaque marker, as explicitly
+authorized by #268; there is no type-contract test. Opaque markers retain no VM
+references. The record is not a native request, serialized packet, or result.
+
+CreateCharacter retains the existing PTR simulator's no-return convention.
+An ordinary native zero-result call is only **INFERRED** (#265 corrects #256);
+only a zero-result tail is VERIFIED. No test asserts the public return count.
+Neither result nor roster events, roster changes, or player renames are emitted.
+The PTR result payload, timing and ordering are UNKNOWN, so the RF host result
+adapter is not enabled on PTR.
+
+The existing PTR CreateCharacter bootstrap availability is preserved, not taken
+as native catalog evidence. OnPlayerInteraction, StopAllSpellVisualKitsOnCharacter
+and SetPlayerModelHiddenState remain unregistered pending R78c. The real-control
+RED asserts the exact Mainline line 287 OnPlayerInteraction nil-call and still
+fails. No internal interaction byte, visual flags, hidden flag or pending-error
+input is invented for PTR. IsCharacterNameValid remains unchanged per #265.
+
+The PTR producer replacement and removal of its guessed namespace/mixin paths
+are atomic with gating the two old guessed-rename tests out of PTR. Their bodies
+and the guessed Lua chunks remain unchanged for the remaining legacy profiles;
+initial-frame seeding remains unchanged everywhere.

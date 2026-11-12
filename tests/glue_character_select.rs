@@ -1451,7 +1451,11 @@ fn ptr_character_creation_submit_real_controls_do_not_invent_outcome() {
 }
 
 #[test]
-#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+#[cfg(not(any(
+    feature = "client-retail",
+    feature = "client-wowforever",
+    feature = "client-ptr"
+)))]
 fn character_create_action_updates_player_name_without_lua_errors() {
     test_timeout! {
         let env = load_blizzard_screen(ScreenKind::CharacterSelect);

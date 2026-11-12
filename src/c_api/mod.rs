@@ -132,6 +132,8 @@ pub(crate) mod c_character_creation_naming;
 pub(crate) mod c_character_creation_seen;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub mod c_character_creation_submit;
+#[cfg(feature = "client-ptr")]
+pub mod c_character_creation_submit_ptr;
 pub mod c_character_creation_trial_boost;
 mod c_character_creation_trial_boost_data;
 #[cfg(test)]
@@ -638,6 +640,8 @@ fn register_glue_and_display_tables(state: &mut LuaState) -> LuaResult<()> {
     credits::register(state)?;
     c_district_utils::register_ptr_game_surface(state)?;
     c_character_creation_naming::register(state)?;
+    #[cfg(feature = "client-ptr")]
+    c_character_creation_submit_ptr::register(state)?;
     c_character_creation_trial_boost::register(state)?;
     c_ui::register(state)?;
     permanent_shims::c_ui::register_c_ui(state)

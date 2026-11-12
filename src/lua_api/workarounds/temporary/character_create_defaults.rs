@@ -379,8 +379,12 @@ if rawget(C_CharacterCreation, "IsGuildNameValid") == nil then
 end
 "#;
 
-// guessed; native evidence pending (R78 PTR part)
-#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+// guessed; native evidence pending for remaining legacy profiles
+#[cfg(not(any(
+    feature = "client-retail",
+    feature = "client-wowforever",
+    feature = "client-ptr"
+)))]
 const CHARACTER_CREATION_SUBMIT_GUESS_LUA: &str = r#"
 if rawget(C_CharacterCreation, "CreateCharacter") == nil then
     function C_CharacterCreation.CreateCharacter(name)
@@ -511,8 +515,12 @@ end
 
 "#;
 
-// guessed; native evidence pending (R78 PTR part)
-#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+// guessed; native evidence pending for remaining legacy profiles
+#[cfg(not(any(
+    feature = "client-retail",
+    feature = "client-wowforever",
+    feature = "client-ptr"
+)))]
 const CHARACTER_CREATION_SUBMIT_MIXIN_GUESS_LUA: &str = r#"
 if type(CharacterCreateMixin) == "table" and type(CharacterCreateMixin.CreateCharacter) == "function" and not rawget(_G, "__wow_character_create_defaults_patched") then
     local originalCreateCharacter = CharacterCreateMixin.CreateCharacter
@@ -589,7 +597,11 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     }
     let source = [
         CHARACTER_CREATION_NAMESPACE_DEFAULTS_LUA,
-        #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+        #[cfg(not(any(
+            feature = "client-retail",
+            feature = "client-wowforever",
+            feature = "client-ptr"
+        )))]
         CHARACTER_CREATION_SUBMIT_GUESS_LUA,
         CHARACTER_CREATION_NAMESPACE_DEFAULTS_TAIL_LUA,
     ]
@@ -651,7 +663,11 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 pub(crate) fn patch(env: &WowLuaEnv) {
     let source = [
         CHARACTER_CREATE_DEFAULTS_WORKAROUND_LUA,
-        #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+        #[cfg(not(any(
+            feature = "client-retail",
+            feature = "client-wowforever",
+            feature = "client-ptr"
+        )))]
         CHARACTER_CREATION_SUBMIT_MIXIN_GUESS_LUA,
         CHARACTER_CREATE_DEFAULTS_WORKAROUND_TAIL_LUA,
     ]
@@ -736,7 +752,11 @@ mod tests {
     }
 
     #[test]
-    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    #[cfg(not(any(
+        feature = "client-retail",
+        feature = "client-wowforever",
+        feature = "client-ptr"
+    )))]
     fn create_character_wrapper_seeds_state_and_admin_name() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
         env.exec(
