@@ -74,9 +74,10 @@ fixtures. Capacity uses separately supplied readiness and a signed limit; no
 realm limit is invented. The empty-roster regression supplies readiness and
 spare capacity. Forever fixtures select the real experience-preset CVar.
 
-R46 removes Login exclusions for CharacterCreate, CharacterCustomize and
-TimerunningCharacterCreate. Eligible addons and dependencies use the existing
-startup loader, without separate preload, replay, teardown or vendor patch.
+Review132 restores master Login exclusions for CharacterCreate,
+CharacterCustomize and TimerunningCharacterCreate. R46/R62/R64 loader changes
+belong to a separate lane; no local preload, replay or vendor patch substitutes
+for that work.
 Ordering against GlueParent OnLoad and the first login event remains UNKNOWN.
 The old headless settling helper also forced a character-select refresh during
 Login; with an empty roster this incorrectly chooses charcreate before input.
