@@ -535,14 +535,24 @@ fn register_discovered_addons(
     addons: &[(String, PathBuf)],
     enable_overrides: Option<&HashMap<String, bool>>,
 ) {
-    let mut declarations = Vec::with_capacity(addons.len());
-    for (name, toc_path) in addons {
-        let metadata = parse_addon_metadata(name, toc_path);
-        let enabled = addon_enabled(name, &metadata, enable_overrides);
-        declarations.push((name.clone(), metadata.load_with.clone(), enabled));
-        register_or_update_addon(env, name, metadata, enabled);
-    }
+    let declarations = addons
+        .iter()
+        .map(|(name, toc_path)| register_discovered_addon(env, name, toc_path, enable_overrides))
+        .collect::<Vec<_>>();
     register_load_with_declarations(&env.loader_env(), &declarations);
+}
+
+fn register_discovered_addon(
+    env: &WowLuaEnv,
+    name: &str,
+    toc_path: &Path,
+    enable_overrides: Option<&HashMap<String, bool>>,
+) -> (String, Vec<String>, bool) {
+    let metadata = parse_addon_metadata(name, toc_path);
+    let enabled = addon_enabled(name, &metadata, enable_overrides);
+    let load_with = metadata.load_with.clone();
+    register_or_update_addon(env, name, metadata, enabled);
+    (name.to_owned(), load_with, enabled)
 }
 
 fn register_or_update_addon(env: &WowLuaEnv, name: &str, metadata: AddonMetadata, enabled: bool) {
