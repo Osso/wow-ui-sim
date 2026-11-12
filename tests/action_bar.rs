@@ -514,7 +514,7 @@ fn test_bag_bar_layout_locked() {
                         relativeRect = string.format("%s/%s/%s/%s", tostring(rl), tostring(rb), tostring(rw), tostring(rh))
                     end
                     return nil, string.format(
-                        "%s_missing_rect:%sx%s:parent=%s:%s:relative=%s:%s(%s,%s):relative_rect=%s:points=%s",
+                        "%s_missing_rect:%sx%s:parent=%s:%s:relative=%s:point=%s:relative_point=%s:offset=(%s,%s):relative_rect=%s:points=%s",
                         tag,
                         tostring(frameWidth),
                         tostring(frameHeight),
