@@ -221,7 +221,7 @@ if rawget(C_CharacterCreation, "GetAvailableRaces") == nil then
     function C_CharacterCreation.GetAvailableRaces()
         local out = {}
         for index, raceData in ipairs(races) do
-            out[index] = publish_race_data(raceData)
+            out[index] = clone_table(raceData)
         end
         return out
     end
@@ -394,7 +394,7 @@ end
 function C_CharacterCreation.GetAvailableRaces()
     local out = {}
     for index, raceData in ipairs(races) do
-        out[index] = clone_table(raceData)
+        out[index] = publish_race_data(raceData)
     end
     return out
 end
