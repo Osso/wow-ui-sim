@@ -4,6 +4,9 @@
 ## [2026-11-12] investigation | Forever integration fixtures
 
 Updated [Forever startup gaps](investigations/forever-startup-gaps.md#forever-70707-integration-fixture-differences) with the source-grounded fixture corrections, supplied item-overlay publication and independent eager-order audit for `forever-touched-15`. The original 15 exact failures were reproduced; targeted and final cross-profile proof is recorded in the private lane report.
+## [2026-11-12] correction | Bag fixture stages and insecure TOC screens
+
+Updated [frame-position investigation](investigations/frame-position-baseline-drift.md#bag-bar-test-application-stages--2026-11-12) with source-derived late-registration versus applied-preset anchors. Updated [addon loading](systems/addon-loading.md#screen-qualified-dependency-declarations) with VERIFIED R13 insecure-parser behavior and INFERRED third-party input-mode mapping; corrected the discovery expectation without changing the producer.
 
 ## [2026-11-11] correction | Addon loading phases and LoadWith followers
 

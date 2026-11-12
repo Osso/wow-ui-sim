@@ -448,20 +448,18 @@ fn third_party_lod_discovery_preserves_screen_game_and_interface_filters() {
         "IncompatibleLazy",
         "## Interface: 999999\n## LoadOnDemand: 1\nmain.lua\n",
     );
+    // R13 (pr46-49-decomp-answers.md): insecure TOCs ignore AllowLoad and
+    // retain Game. Mapping ordinary third-party AddOns to this mode is INFERRED
+    // (R64 Q1); game-type and interface-version filters still apply.
     let game = scan_addons(temp.path(), &[], ScreenKind::Game);
     let glue = scan_addons(temp.path(), &[], ScreenKind::CharacterSelect);
     assert_eq!(
         game.iter()
             .map(|(name, _)| name.as_str())
             .collect::<Vec<_>>(),
-        ["GameLazy"]
+        ["GameLazy", "GlueLazy"]
     );
-    assert_eq!(
-        glue.iter()
-            .map(|(name, _)| name.as_str())
-            .collect::<Vec<_>>(),
-        ["GlueLazy"]
-    );
+    assert!(glue.is_empty(), "user addons must not enter Glue discovery");
 }
 
 #[cfg(feature = "retail-12-1-0")]

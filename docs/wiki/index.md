@@ -11,6 +11,9 @@
 ## [2026-11-12] fix | Unit-test Blizzard UI cache isolation
 
 [Addon loading](systems/addon-loading.md#blizzard-ui-cache--per-profile-setup) records the concurrent Retail pin cache incident and the test-only startup hard error. Normal user startup keeps auto-sync; pin-versioned cache directories remain a design proposal.
+## [2026-11-12] correction | Bag fixture stages and insecure TOC screens
+
+[Bag-bar fixture stages](investigations/frame-position-baseline-drift.md#bag-bar-test-application-stages--2026-11-12) distinguish late-loaded Retail XML Y=0 from startup-applied PTR preset Y=10. [Addon loading](systems/addon-loading.md#screen-qualified-dependency-declarations) retains VERIFIED R13 insecure-parser Game-only semantics and labels the ordinary third-party parser-mode mapping INFERRED; the contrary discovery-test expectation is superseded.
 
 ## [2026-11-12] system | PvP talent tooltip catalog
 

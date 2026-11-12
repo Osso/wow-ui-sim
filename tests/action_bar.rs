@@ -547,10 +547,36 @@ fn test_bag_bar_layout_locked() {
     wrath_action_case!(bag_layout);
 
     let env = env_with_action_bar();
+    if cfg!(any(feature = "client-retail", feature = "client-ptr")) {
+        let (loaded, applied): (bool, bool) = env
+            .eval("return BagsBar ~= nil, BagsBar ~= nil and BagsBar.systemInfo ~= nil")
+            .unwrap();
+        assert_eq!(
+            loaded,
+            cfg!(feature = "client-ptr"),
+            "bag fixture load stage"
+        );
+        assert_eq!(
+            applied,
+            cfg!(feature = "client-ptr"),
+            "bag preset application stage"
+        );
+    }
+    // Retail loads this system below, AFTER startup. OnSystemLoad only registers it
+    // (Shared/EditModeSystemTemplates.lua:3-30); RegisterSystemFrame only inserts it
+    // (Retail Shared/EditModeManager.lua:210-212; PTR:220-222). Retail therefore checks
+    // the XML anchor BEFORE the next layout update, not the startup steady state.
+    // PTR loads it before startup and applies Standard's preset offset (10).
+    let expected_bar_y = if cfg!(feature = "client-ptr") {
+        "10"
+    } else {
+        "0"
+    };
     let result: String = env
         .eval(
-            r#"
+            &r#"
             local EPS = 0.75
+            local expectedBarY = $BAG_ANCHOR_Y
 
             local function approx(actual, expected, eps)
                 if type(actual) ~= "number" or type(expected) ~= "number" then
@@ -653,7 +679,7 @@ fn test_bag_bar_layout_locked() {
             local reagentRect, reagentErr = rect(reagent, "reagent")
             if not reagentRect then return reagentErr end
 
-            if not has_point(bar, "TOPRIGHT", microBar, "TOPRIGHT", 0, 0, 0.1) then
+            if not has_point(bar, "TOPRIGHT", microBar, "TOPRIGHT", 0, expectedBarY, 0.1) then
                 return "bags_bar_anchor_mismatch:" .. points_debug(bar)
             end
             if not approx(barRect.w, 208, 0.1) or not approx(barRect.h, 47, 0.1) then
@@ -662,7 +688,7 @@ fn test_bag_bar_layout_locked() {
             if not approx(barRect.r, microRect.r, 0.1) then
                 return "bags_bar_right=" .. tostring(barRect.r) .. ",micro_right=" .. tostring(microRect.r)
             end
-            if not approx(barRect.t, microRect.t, 0.1) then
+            if not approx(barRect.t, microRect.t + expectedBarY, 0.1) then
                 return "bags_bar_top=" .. tostring(barRect.t) .. ",micro_top=" .. tostring(microRect.t)
             end
 
@@ -748,12 +774,59 @@ fn test_bag_bar_layout_locked() {
             end
 
             return "ok"
-        "#,
+        "#.replace("$BAG_ANCHOR_Y", expected_bar_y),
         )
         .unwrap();
 
     assert_eq!(
         result, "ok",
         "Bags bar and bag-slot chain should remain layout-locked: {result}"
+    );
+}
+
+/// Both pinned Standard presets use offsetY=10 (Retail constants:26; PTR:42).
+/// Mainline/EditModePresetLayouts.lua:578 Retail / :598 PTR feeds that value to
+/// Shared/EditModeSystemTemplates.lua:350-375 ApplySystemAnchor on both profiles.
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn test_bag_bar_applies_selected_edit_mode_preset() {
+    let env = env_with_action_bar();
+    if !env.eval::<bool>("return BagsBar ~= nil").unwrap() {
+        common::load_required_blizzard_addon(
+            &env,
+            &blizzard_ui_dir(),
+            "Blizzard_MainMenuBarBagButtons",
+        );
+    }
+    env.apply_post_load_workarounds();
+    env.exec(
+        r#"
+        local manager = EditModeManagerFrame
+        assert(manager:IsActiveLayoutPreset(), "fixture must select a preset, not a saved layout")
+        assert(manager.layoutInfo.activeLayout == 1, "fixture must select the Modern preset")
+        assert(#C_EditMode.GetLayouts().layouts == 0, "fixture must not load a saved cache")
+        assert(BagsBar.systemInfo.anchorInfo.offsetY == 10, "selected preset must supply Y=10")
+        -- Displace the frame first so a no-op ApplySystemAnchor cannot pass.
+        BagsBar:ClearAllPointsBase()
+        BagsBar:SetPointBase("TOPRIGHT", MicroButtonAndBagsBar, "TOPRIGHT", 0, -37)
+        BagsBar:ApplySystemAnchor()
+        "#,
+    )
+    .unwrap();
+    let (point, relative, relative_point, x, y, scale): (String, bool, String, f64, f64, f64) = env
+        .eval(
+            r#"
+        local point, relative, relativePoint, x, y = BagsBar:GetPoint(1)
+        return point, relative == MicroButtonAndBagsBar, relativePoint, x, y, BagsBar:GetScale()
+        "#,
+        )
+        .unwrap();
+    assert_eq!(point, "TOPRIGHT");
+    assert!(relative);
+    assert_eq!(relative_point, "TOPRIGHT");
+    assert_eq!(x, 0.0);
+    assert!(
+        (y * scale - 10.0).abs() < 0.1,
+        "applied preset Y={y}, scale={scale}"
     );
 }
