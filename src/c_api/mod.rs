@@ -16,6 +16,7 @@ pub(crate) mod c_tooltip_info_bag_child;
 pub(crate) mod c_tooltip_info_conduit;
 pub(crate) mod c_tooltip_info_enhanced_conduit;
 pub(crate) mod c_tooltip_info_equipment_set;
+pub mod c_tooltip_info_hyperlink;
 pub(crate) mod c_tooltip_info_inventory_by_id;
 pub(crate) mod c_tooltip_info_item_key;
 pub(crate) mod c_tooltip_info_loot;

@@ -113,6 +113,7 @@ macro_rules! build_empty_sim_state {
             pet_journal_hover: crate::c_api::c_pet_journal_hover::PetJournalHoverState::default(),
             anima_diversion: AnimaDiversionState::default(),
             garrison_talents: GarrisonTalentState::default(),
+            hyperlink_tooltip: Default::default(),
             #[cfg(feature = "client-retail")]
             garrison_trees: crate::c_api::c_garrison_trees::GarrisonTrees::default(),
             clipboard: ClipboardState::default(),

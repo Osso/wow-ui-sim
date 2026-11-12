@@ -152,6 +152,19 @@ pub(crate) fn tooltip_for_item_context(
     }
 }
 
+/// R82 item descriptor bridge; parsing and selection remain in the dispatcher.
+pub(crate) fn tooltip_for_item_hyperlink(
+    state: &mut LuaState,
+    parsed: &crate::c_api::item_descriptor::ParsedItemLink,
+) -> LuaResult<Val> {
+    sources::tooltip_for_item_link(state, parsed)
+}
+
+/// R82 link flags are kept separate from ordinary spell-ID queries.
+pub(crate) fn tooltip_for_link_spell(state: &mut LuaState, id: u32) -> Val {
+    spell::tooltip_for_spell_options(state, id, true, true)
+}
+
 /// Feed a spell ID through the existing spell payload builder. The identical
 /// bridge is used by every spell-identifying getter, so the published type/id and
 /// line set stay in one place.

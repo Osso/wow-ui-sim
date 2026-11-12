@@ -225,10 +225,6 @@ pub(super) fn tooltip_for_spell_options(
     tooltip_for_spell_source(state, effective, is_link)
 }
 
-pub(super) fn tooltip_for_spell_hyperlink(state: &mut LuaState, spell_id: u32) -> Val {
-    tooltip_for_spell_source(state, spell_id, true)
-}
-
 fn tooltip_for_spell_source(state: &mut LuaState, spell_id: u32, is_link: bool) -> Val {
     let tooltip = create_identified_tooltip(state, TOOLTIP_TYPE_SPELL, spell_id);
     let Some(spell) = spells::get_spell(spell_id) else {
