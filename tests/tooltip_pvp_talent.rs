@@ -82,7 +82,7 @@ fn game_tooltip_pvp_talent_default_catalog_shows_spell_and_verified_unlock_line(
         C_TooltipInfo.GetPvpTalent = function(...)
             getterCalls = getterCalls + 1
             getterArguments = { ... }
-            getterArgumentCount = select("#", ...)
+            getterArgumentCount = select('#', ...)
             return originalGetPvpTalent(...)
         end
         GameTooltip:Hide()
