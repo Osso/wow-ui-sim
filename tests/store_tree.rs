@@ -557,6 +557,9 @@ fn secure_env_preserves_secure_store_free_check_function(env: &WowLuaEnv) {
 
 prefork_full_ui_case! {
 fn store_button_full_game_path_shows_store_frame(env: &WowLuaEnv) {
+    // Native shop2Enabled defaults to true (R20/R38). This case exercises
+    // the legacy StoreFrame branch, not the default CatalogShop backend.
+    env.set_server_mirrored_cvar("shop2Enabled", "0").unwrap();
     let (ok, err, store_shown, isshown_attr, action): (
         bool,
         Option<String>,
@@ -583,6 +586,9 @@ fn store_button_full_game_path_shows_store_frame(env: &WowLuaEnv) {
 
 prefork_full_ui_case! {
 fn store_button_full_game_path_fires_onshow(env: &WowLuaEnv) {
+    // Native shop2Enabled defaults to true (R20/R38). This case exercises
+    // the legacy StoreFrame branch, not the default CatalogShop backend.
+    env.set_server_mirrored_cvar("shop2Enabled", "0").unwrap();
     let (store_shown, onshow_count, onhide_count, isshown_attr, action): (
         bool,
         i32,
