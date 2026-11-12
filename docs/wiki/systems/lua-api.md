@@ -10,6 +10,8 @@ The [PvP talent tooltip contract](../../specs/tooltip-pvp-talent.md) owns the `G
 
 The [R80 item tooltip contract](../../specs/tooltip-item-r80.md) separates VERIFIED native helper evidence from the UNKNOWN ordinary item-mod amount producer. Item builders omit unsupplied stats and use ordered final amounts from `SimState.item_tooltip_inputs`, keyed by item ID and resolved level. Optional identity/status fields remain top-level. The old level/slot/class estimate is removed; native line ordering and retained stat type/color are not claimed as verified.
 
+[Spell tooltip composition](../../specs/tooltip-spell-composition.md) owns the R81 outer-row contract. VERIFIED by source inspection: host inputs in `src/c_api/spell_tooltip.rs` replace the fixed cooldown, aura-duration and slot-key recipes; cost and cast inputs no longer come from guessed spell tables. The shared producer keeps the existing title/description behavior, resolves direct overrides, and gives spell links their own cast context without suppressing cost/range. Native evidence is partial Retail 70688; selected Retail 70575 and other profiles are not native-output certifications. UNKNOWN helper formulas, Azerite gates and later rows stay host-supplied or unmodelled. Tests and source citations are recorded in the private lane report.
+
 [Bag-child tooltips](../../specs/tooltip-bag-child.md) compose bag state with
 source-derived child-equipment rows and the existing item builder on
 Retail/PTR/Forever. The item generator includes child IDs automatically; absent

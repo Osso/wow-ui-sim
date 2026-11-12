@@ -15,9 +15,8 @@ use super::sources::{
 #[cfg(not(feature = "retail-12-0-5"))]
 use super::spell::lookup_player_aura_by_instance_id;
 use super::spell::{
-    append_action_binding_line, lookup_player_aura, spell_id_for_talent_id,
-    tooltip_for_spell_hyperlink, tooltip_for_spell_id, tooltip_for_toy_item_id,
-    tooltip_for_unit_aura,
+    lookup_player_aura, spell_id_for_talent_id, tooltip_for_spell_hyperlink, tooltip_for_spell_id,
+    tooltip_for_toy_item_id, tooltip_for_unit_aura,
 };
 use super::unit::{tooltip_for_unit, tooltip_for_unit_guid, tooltip_for_world_loot};
 use crate::lua_api::globals::currency_data;
@@ -42,7 +41,6 @@ pub(super) fn c_tooltip_get_action(state: &mut LuaState) -> LuaResult<u32> {
     match spell_id {
         Some(spell_id) => {
             let tooltip = tooltip_for_spell_id(state, spell_id);
-            append_action_binding_line(state, tooltip, slot);
             state.push(tooltip);
         }
         None => state.push(Val::Nil),
@@ -371,7 +369,9 @@ pub(super) fn c_tooltip_get_spell_book_item(state: &mut LuaState) -> LuaResult<u
 #[cfg(not(feature = "retail-12-0-5"))]
 pub(super) fn c_tooltip_get_spell_by_id(state: &mut LuaState) -> LuaResult<u32> {
     let spell_id = u32::from_stack(state, 1)?;
-    let tooltip = tooltip_for_spell_id(state, spell_id);
+    let dont_override = stack_val(state, 4).is_truthy();
+    let is_link = stack_val(state, 6).is_truthy();
+    let tooltip = super::spell::tooltip_for_spell_options(state, spell_id, dont_override, is_link);
     state.push(tooltip);
     Ok(1)
 }

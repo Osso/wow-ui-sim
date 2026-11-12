@@ -25,7 +25,10 @@ fn tooltip_spell_identity_survives_missing_local_metadata() {
         end
         local action = C_TooltipInfo.GetAction(5)
         assert(action.id == 45524, "action tooltip lost spell identity")
-        assert(#action.lines > 0, "action binding line should remain present")
+        -- R81 Q3: unsupported binding rows are omitted, even without catalog metadata.
+        for _, line in ipairs(action.lines) do
+            assert(not line.leftText:find('Key bound') and line.leftText ~= 'Not bound')
+        end
         assert(C_TooltipInfo.GetAction(999) == nil)
         "#,
     )

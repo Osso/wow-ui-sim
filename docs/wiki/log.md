@@ -1,9 +1,11 @@
 ## [2026-11-12] investigation | Inline XML tooltip operands
 
 [Inline XML method arguments](investigations/xml-inline-method-arguments.md) records the zero-vararg parser misclassification, source-faithful parameter-prefix installation, and the separately approved RaidFrame AddLine fixture correction.
+
 ## [2026-11-12] investigation | Forever integration fixtures
 
 Updated [Forever startup gaps](investigations/forever-startup-gaps.md#forever-70707-integration-fixture-differences) with the source-grounded fixture corrections, supplied item-overlay publication and independent eager-order audit for `forever-touched-15`. The original 15 exact failures were reproduced; targeted and final cross-profile proof is recorded in the private lane report.
+
 ## [2026-11-12] correction | Bag fixture stages and insecure TOC screens
 
 Updated [frame-position investigation](investigations/frame-position-baseline-drift.md#bag-bar-test-application-stages--2026-11-12) with source-derived late-registration versus applied-preset anchors. Updated [addon loading](systems/addon-loading.md#screen-qualified-dependency-declarations) with VERIFIED R13 insecure-parser behavior and INFERRED third-party input-mode mapping; corrected the discovery expectation without changing the producer.
@@ -11,6 +13,10 @@ Updated [frame-position investigation](investigations/frame-position-baseline-dr
 ## [2026-11-12] correction | R80 ordinary item tooltip stats
 
 The [item tooltip contract](../specs/tooltip-item-r80.md) records the VERIFIED admitted native stat helper without wiring it to the UNKNOWN ordinary item-mod producer. Shared item builders now omit unsupplied stats and accept final host amounts and optional top-level metadata. Retail 639 tooltip-related integration cases and all 2263 lib cases pass in bounded partitions, including unchanged standalone-Lua and serializer regressions. PTR/Forever exact proofs are recorded separately in the lane report.
+
+## [2026-11-12] implementation | R81 spell tooltip composition
+
+Updated [tooltip data](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) and the [contract](../specs/tooltip-spell-composition.md). VERIFIED R81 outer conditions use host-supplied helper outputs; fixed cooldowns, aura time and binding mapping are removed. VERIFIED: five original-consumer tests reject the base producer and pass with the change. Retail passes 2263 lib / 641 tooltip integration cases; PTR passes 81 integration / 10 lib touched cases; Forever passes 23 / 10 available touched cases. Final profile builds have zero warnings. UNKNOWN formulas and native build limits remain explicit.
 
 ## [2026-11-11] correction | Addon loading phases and LoadWith followers
 

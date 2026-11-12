@@ -382,6 +382,13 @@ fn test_c_tooltip_info_get_inventory_item_returns_equipped_item_tooltip() {
 #[test]
 fn test_c_tooltip_info_get_hyperlink_returns_item_and_spell_tooltips() {
     let env = WowLuaEnv::new().unwrap();
+    // R81 Q2: these are supplied final helper outputs, not catalog formulas.
+    {
+        let mut sim = env.state().borrow_mut();
+        let input = sim.spell_tooltip_inputs.entry(19750).or_default();
+        input.cost = Some("10% of Base MANA".into());
+        input.cast_ms = Some(1500);
+    }
     let has_real_tooltip: bool = env
         .eval(
             r#"
@@ -428,6 +435,13 @@ fn test_c_tooltip_info_get_hyperlink_returns_item_and_spell_tooltips() {
 #[test]
 fn test_c_tooltip_info_get_spell_by_id_returns_spell_tooltip_lines() {
     let env = WowLuaEnv::new().unwrap();
+    // R81 Q2: these are supplied final helper outputs, not catalog formulas.
+    {
+        let mut sim = env.state().borrow_mut();
+        let input = sim.spell_tooltip_inputs.entry(19750).or_default();
+        input.cost = Some("10% of Base MANA".into());
+        input.cast_ms = Some(1500);
+    }
     let has_real_tooltip: bool = env
         .eval(
             r#"
@@ -465,6 +479,13 @@ fn test_c_tooltip_info_get_spell_by_id_returns_spell_tooltip_lines() {
 #[test]
 fn test_c_tooltip_info_get_spell_by_id_resolves_hammer_of_justice_duration() {
     let env = WowLuaEnv::new().unwrap();
+    // R81 Q3: preserve the existing description position with supplied alternate text.
+    env.state()
+        .borrow_mut()
+        .spell_tooltip_inputs
+        .entry(853)
+        .or_default()
+        .alternate_cast_text = Some("Instant".into());
     let description: String = env
         .eval(
             r#"
@@ -480,6 +501,14 @@ fn test_c_tooltip_info_get_spell_by_id_resolves_hammer_of_justice_duration() {
 #[test]
 fn test_c_tooltip_info_get_spell_book_item_returns_spell_tooltip_lines() {
     let env = WowLuaEnv::new().unwrap();
+    // R81 Q2: supply the actual book selector's final helper outputs.
+    let (_, entry, _) = crate::lua_api::globals::spellbook_data::get_spell_at_slot(1).unwrap();
+    {
+        let mut sim = env.state().borrow_mut();
+        let input = sim.spell_tooltip_inputs.entry(entry.spell_id).or_default();
+        input.cost = Some("10% of Base MANA".into());
+        input.cast_ms = Some(1500);
+    }
     let has_real_tooltip: bool = env
         .eval(
             r#"
@@ -510,6 +539,13 @@ fn test_c_tooltip_info_get_spell_book_item_returns_spell_tooltip_lines() {
 #[test]
 fn test_c_tooltip_info_get_unit_buff_returns_aura_tooltip_lines() {
     let env = WowLuaEnv::new().unwrap();
+    // R81 Q4: preserve aura positions with already-formatted host text.
+    env.state()
+        .borrow_mut()
+        .aura_tooltip_inputs
+        .entry(1)
+        .or_default()
+        .remaining_text = Some("1 hr".into());
     seed_c_tooltip_info_test_state(&env);
 
     let has_real_tooltip: bool = env
@@ -580,6 +616,13 @@ fn test_c_tooltip_info_get_unit_debuff_returns_empty_without_simulated_debuffs()
 #[test]
 fn test_c_tooltip_info_get_unit_aura_instance_getters_return_expected_tooltips() {
     let env = WowLuaEnv::new().unwrap();
+    // R81 Q4: preserve aura positions with already-formatted host text.
+    env.state()
+        .borrow_mut()
+        .aura_tooltip_inputs
+        .entry(1)
+        .or_default()
+        .remaining_text = Some("1 hr".into());
     seed_c_tooltip_info_test_state(&env);
 
     let has_expected_tooltips: bool = env
@@ -625,6 +668,13 @@ fn test_c_tooltip_info_get_unit_aura_instance_getters_return_expected_tooltips()
 #[test]
 fn test_c_tooltip_info_get_unit_aura_returns_helpful_and_harmful_tooltips() {
     let env = WowLuaEnv::new().unwrap();
+    // R81 Q4: preserve aura positions with already-formatted host text.
+    env.state()
+        .borrow_mut()
+        .aura_tooltip_inputs
+        .entry(1)
+        .or_default()
+        .remaining_text = Some("1 hr".into());
     seed_c_tooltip_info_test_state(&env);
 
     let has_expected_tooltips: bool = env
