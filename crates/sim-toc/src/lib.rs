@@ -667,6 +667,10 @@ impl<P: Selection> TocFile<P> {
 
     /// Whether this addon should load for the requested screen kind.
     pub fn allows_screen(&self, screen: P::Screen) -> bool {
+        if !self.folder_name().is_some_and(P::is_builtin_addon_folder) {
+            return P::is_game(screen);
+        }
+
         let line_is_selected = self
             .allow_load_header_condition
             .as_deref()

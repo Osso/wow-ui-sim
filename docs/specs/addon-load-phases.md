@@ -12,11 +12,6 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 - [x] VERIFIED (PTR 12.1.7.70668): native startup performs three passes and checks phase flags separately from the active Glue/Game load mask.
 - [ ] INFERRED simulator policy (PTR cached TOCs; native live-list membership UNKNOWN): model `Blizzard_CharacterCreate` as a phase-two Glue startup root and load its required LoadOnDemand dependency chain before its files. Do not assert its order relative to `Blizzard_PTRFeedbackGlue`.
 
-### Screen selection
-
-- [x] SIMULATOR POLICY: honor explicit addon `AllowLoad: Game`, `Glue`, or `Both` on packaged and third-party addons; an absent header selects Game only. This screen filter is separate from startup phase membership.
-- [ ] UNKNOWN: native insecure-parser support for third-party `AllowLoad` headers. R64 Q1 establishes the packaged UI screen mask, not user-addon parser parity. See [TOC evidence](../wiki/reference/toc-game-type-tokens.md) and [dependency screen annotations](../wiki/systems/addon-loading.md#screen-qualified-dependency-declarations).
-
 ### Startup prerequisites
 
 - [x] Startup must try each available `LoadManagers` addon before the addon that declares it.
