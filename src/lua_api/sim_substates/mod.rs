@@ -131,6 +131,9 @@ impl MouseButtons {
 pub struct GameRulesState {
     /// Currently active `Enum.GameMode` value.
     pub active_game_mode: i32,
+    /// Legacy glue screen fixture, defaulting to `"CharacterSelect"`.
+    /// Retail/PTR/Forever use the R60 display rows instead.
+    pub glue_screen_name: String,
     pub display: crate::c_api::game_mode_display::GameModeDisplayState,
     /// Server-supplied rule-set marker; zero means no current rule set.
     pub rule_set_marker: i32,
@@ -154,6 +157,7 @@ impl Default for GameRulesState {
     fn default() -> Self {
         Self {
             active_game_mode: crate::c_api::game_mode::STANDARD,
+            glue_screen_name: "CharacterSelect".into(),
             display: Default::default(),
             rule_set_marker: 0,
             rules: HashMap::new(),

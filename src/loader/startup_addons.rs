@@ -32,7 +32,7 @@ pub fn discover_blizzard_startup_addons_for_screen(
     };
     let dependencies = implicit_blizzard_startup_dependencies();
     pull_required_dependency_addons(&mut addons, &mut pool, &dependencies, screen);
-    let bootstrap_names = insert_bootstrap_nodes(&mut addons, &mut pool);
+    let bootstrap_names = insert_bootstrap_nodes(&mut addons, &mut pool, screen);
     promote_foundational_addons_to_load_first(&mut addons);
     topological_sort_addons_with_extra_dependencies_for_screen(addons, &dependencies, screen)
         .into_iter()
@@ -54,10 +54,11 @@ pub fn discover_blizzard_startup_addons_for_screen(
 fn insert_bootstrap_nodes(
     addons: &mut HashMap<String, (PathBuf, TocFile)>,
     pool: &mut HashMap<String, (PathBuf, TocFile)>,
+    screen: ScreenKind,
 ) -> HashSet<String> {
     let bootstrap_names: HashSet<String> = pool
         .iter()
-        .filter(|(name, (_, toc))| is_eligible_bootstrap_root(name, toc))
+        .filter(|(name, (_, toc))| is_eligible_bootstrap_root(name, toc, screen))
         .map(|(name, _)| name.clone())
         .collect();
     for name in &bootstrap_names {
@@ -68,8 +69,11 @@ fn insert_bootstrap_nodes(
     bootstrap_names
 }
 
-fn is_eligible_bootstrap_root(name: &str, toc: &TocFile) -> bool {
+fn is_eligible_bootstrap_root(name: &str, toc: &TocFile, screen: ScreenKind) -> bool {
     if !is_builtin_addon_folder(name) || is_addon_excluded_for_active_profile(name) {
+        return false;
+    }
+    if excluded_addons_for_screen(screen).contains(&name) {
         return false;
     }
     startup_bootstrap_eligible(toc)

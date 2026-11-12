@@ -16,7 +16,8 @@
 //!   → string form only, bool → clears on false / sets 0/0/"" with true as
 //!   marker. `nil` removes the rule.
 //! - `A_Admin.SetActiveGameMode(mode, glueScreen?)` — mode is an integer;
-//!   glueScreen defaults to no override (`nil`).
+//!   glueScreen defaults to no override (`nil`) on Retail/PTR/Forever and
+//!   `"CharacterSelect"` on legacy profiles.
 
 use crate::c_api::game_mode;
 use crate::client_profile::{ACTIVE, ClientProfile};
@@ -176,7 +177,13 @@ pub fn get_active_game_mode(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 pub fn get_game_mode_glue_screen_name(state: &mut LuaState) -> LuaResult<u32> {
-    crate::c_api::game_mode_display::glue_screen(state)
+    if crate::c_api::game_mode_display::modern_profile() {
+        return crate::c_api::game_mode_display::glue_screen(state);
+    }
+    let name = borrow_state(state)?.game_rules.glue_screen_name.clone();
+    let val = create_string(state, &name);
+    state.push(val);
+    Ok(1)
 }
 
 fn get_num_displayed_game_modes(state: &mut LuaState) -> LuaResult<u32> {
@@ -419,6 +426,10 @@ pub fn admin_set_active_game_mode(state: &mut LuaState) -> LuaResult<u32> {
     let glue = Option::<String>::from_stack(state, 2)?.filter(|s| !s.is_empty());
     let mut sim = borrow_state_mut(state)?;
     sim.game_rules.active_game_mode = mode;
+    if !crate::c_api::game_mode_display::modern_profile() {
+        sim.game_rules.glue_screen_name = glue.unwrap_or_else(|| "CharacterSelect".into());
+        return Ok(0);
+    }
     // Administrative host fixture, not a native writer or a real DB row.
     sim.game_rules.display.clear_realm_list();
     if let Some(glue_screen_name) = glue {

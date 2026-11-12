@@ -6,6 +6,14 @@ fn env() -> WowLuaEnv {
     WowLuaEnv::new().expect("Failed to create Lua environment")
 }
 
+fn expected_default_glue_screen() -> Option<String> {
+    use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
+    match ACTIVE {
+        ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever => None,
+        _ => Some("CharacterSelect".into()),
+    }
+}
+
 #[test]
 fn game_rules_hardcore_flag_defaults_to_false() {
     let env = env();
@@ -74,7 +82,7 @@ fn active_game_mode_matches_published_enum() {
 }
 
 #[test]
-fn defaults_no_rules_standard_mode_without_glue_override() {
+fn defaults_no_rules_standard_mode_with_profile_glue_default() {
     let (active, f, i, s, plunder, mode, glue): (
         bool,
         f64,
@@ -102,7 +110,7 @@ fn defaults_no_rules_standard_mode_without_glue_override() {
     assert_eq!(s, "");
     assert!(!plunder);
     assert_eq!(mode, 1);
-    assert_eq!(glue, None);
+    assert_eq!(glue, expected_default_glue_screen());
 }
 
 #[test]
@@ -230,8 +238,9 @@ fn set_active_game_mode_back_to_standard_resets_glue_default() {
     assert_eq!(mode, 1);
     assert!(!plunder);
     assert_eq!(
-        glue, None,
-        "only GlueParent supplies the charselect fallback"
+        glue,
+        expected_default_glue_screen(),
+        "omitting the screen preserves the profile's existing default"
     );
 }
 
@@ -273,6 +282,11 @@ fn numeric_enum_game_rule_ids_resolve_to_rule_names() {
 }
 
 #[test]
+#[cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
 fn empty_host_glue_screen_is_nil_and_nonempty_name_is_preserved() {
     let env = env();
     env.state()
@@ -304,4 +318,55 @@ fn empty_host_glue_screen_is_nil_and_nonempty_name_is_preserved() {
             .unwrap(),
         None
     );
+}
+
+#[test]
+#[cfg(any(feature = "client-era", feature = "client-anniversary"))]
+fn legacy_glue_screen_retains_state_and_ignores_r60_display_inputs() {
+    use wow_ui_sim::c_api::game_mode_display::GameModeRow;
+    use wow_ui_sim::screen::ScreenKind;
+
+    let env = env();
+    {
+        let mut state = env.state().borrow_mut();
+        assert_eq!(state.game_rules.glue_screen_name, "CharacterSelect");
+        state.game_rules.glue_screen_name = "LegacyHostScreen".into();
+        state.game_rules.display.rows.insert(
+            7,
+            GameModeRow {
+                glue_screen_name: "R60HostScreen".into(),
+                ..Default::default()
+            },
+        );
+        state.game_rules.display.set_temporary_override(7);
+        state.cvars.set_imported("currentGameMode", "7");
+    }
+    for screen in [ScreenKind::Login, ScreenKind::Game] {
+        env.set_screen_mode(screen);
+        assert_eq!(
+            env.eval::<String>("return C_GameRules.GetGameModeGlueScreenName()")
+                .unwrap(),
+            "LegacyHostScreen"
+        );
+    }
+    env.exec("A_Admin.SetActiveGameMode(2, 'LegacyAdminScreen')")
+        .unwrap();
+    assert_eq!(
+        env.state().borrow().game_rules.glue_screen_name,
+        "LegacyAdminScreen"
+    );
+    assert_eq!(
+        env.state().borrow().game_rules.display.rows[&7].glue_screen_name,
+        "R60HostScreen",
+        "the legacy admin fixture must not rewrite R60 host rows"
+    );
+    for args in ["1", "1, nil", "1, ''"] {
+        env.exec(&format!("A_Admin.SetActiveGameMode({args})"))
+            .unwrap();
+        assert_eq!(
+            env.eval::<String>("return C_GameRules.GetGameModeGlueScreenName()")
+                .unwrap(),
+            "CharacterSelect"
+        );
+    }
 }

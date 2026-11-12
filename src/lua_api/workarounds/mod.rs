@@ -580,12 +580,11 @@ fn apply_post_event_bootstrap(env: &crate::lua_api::WowLuaEnv) {
     crate::lua_api::workarounds_editmode::reapply_player_frame_anchor(env);
     crate::lua_api::chat_init::init_chat_type_colors(env);
     let screen = env.state().borrow().screen_kind;
-    // Login's original GlueParent owns chat visibility. Do not activate the
-    // simulator's in-game chat fixture after that policy has hidden it.
-    if !matches!(
-        screen,
-        crate::screen::ScreenKind::CharacterSelect | crate::screen::ScreenKind::Login
-    ) {
+    // Retail/PTR/Forever Login's GlueParent owns chat visibility. Preserve the
+    // legacy profiles' existing post-event chat fixture outside that scope.
+    let is_modeled_login = screen == crate::screen::ScreenKind::Login
+        && crate::c_api::game_mode_display::modern_profile();
+    if screen != crate::screen::ScreenKind::CharacterSelect && !is_modeled_login {
         crate::lua_api::chat_init::show_chat_frame(env);
     }
 }

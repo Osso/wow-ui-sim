@@ -297,10 +297,10 @@ pub fn settle_headless_startup(env: &WowLuaEnv) {
     fire_one_on_update_tick(env);
     let _ = crate::lua_api::globals::global_frames::hide_runtime_hidden_frames(&*env.rilua());
     run_extra_update_ticks(env, 3);
-    // This compatibility refresh is for direct-screen fixtures. On Login it
-    // would synthesize a character list before authentication and send an empty
-    // host roster to CharacterSelect, which redirects the original UI to create.
-    if screen != ScreenKind::Login {
+    // On Retail/PTR/Forever Login, this compatibility refresh would synthesize
+    // a character list before authentication and redirect the UI to create.
+    // Preserve the legacy profiles' existing refresh behavior.
+    if screen != ScreenKind::Login || !crate::c_api::game_mode_display::modern_profile() {
         refresh_character_select_screen(env);
     }
     run_extra_update_ticks(env, 2);

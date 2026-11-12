@@ -877,6 +877,7 @@ fn discover_blizzard_addon_toc_pools_for_screen(
         }
 
         let is_builtin_root = is_builtin_addon_folder(&dir_name)
+            && !excluded_addons_for_screen(screen).contains(&dir_name.as_str())
             && !excluded_addons_for_active_profile().contains(&dir_name.as_str());
         if is_builtin_root && !toc.is_load_on_demand() {
             addons.insert(dir_name, (toc_path, toc));
@@ -886,6 +887,17 @@ fn discover_blizzard_addon_toc_pools_for_screen(
     }
 
     Some((addons, dependency_pool))
+}
+
+fn excluded_addons_for_screen(screen: ScreenKind) -> &'static [&'static str] {
+    match screen {
+        ScreenKind::Game | ScreenKind::CharacterSelect | ScreenKind::CharacterCreate => &[],
+        ScreenKind::Login => &[
+            "Blizzard_CharacterCreate",
+            "Blizzard_CharacterCustomize",
+            "Blizzard_TimerunningCharacterCreate",
+        ],
+    }
 }
 
 /// Whether runtime loading excludes this addon for the active client profile.
