@@ -1093,10 +1093,8 @@ mod tests {
 
     #[test]
     fn a_pinned_fallback_font_stands_in_for_every_wow_font() {
-        let Some(font) = pinned_system_font_file() else {
-            eprintln!("no system font file to pin; skipped");
-            return;
-        };
+        let font =
+            pinned_system_font_file().expect("font tests require an installed system font file");
         let pinned_data = std::fs::read(&font).unwrap();
         let family = fontdb_family_name(&pinned_data).unwrap();
         let mut db = fontdb::Database::new();
@@ -1223,10 +1221,8 @@ mod tests {
     fn set_font_with_an_addon_font_file_uses_its_face() {
         let mut fs = WowFontSystem::new_without_casc();
         let default_family = fs.family_name(None).map(str::to_string);
-        let Some((font, family, weight)) = system_font_file(default_family.as_deref()) else {
-            eprintln!("no system font file to stand in for an addon font; skipped");
-            return;
-        };
+        let (font, family, weight) = system_font_file(default_family.as_deref())
+            .expect("addon font tests require an installed font from a second family");
         let root = tempfile::tempdir().unwrap();
         std::fs::create_dir_all(root.path().join("MyAddon/Media")).unwrap();
         std::fs::copy(&font, root.path().join("MyAddon/Media/Font.ttf")).unwrap();
