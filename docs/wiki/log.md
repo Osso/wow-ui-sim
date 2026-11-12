@@ -1,6 +1,6 @@
-## [2026-11-12] docs | Addon fonts
+## [2026-11-12] docs | Addon fonts and pinned fallback
 
-[Rendering pipeline](systems/rendering-pipeline.md#font-sources) records addon font loading on first use; tests live in `src/render/font.rs`.
+[Rendering pipeline](systems/rendering-pipeline.md#font-sources) records addon font loading on first use and `WOW_SIM_FALLBACK_FONT`; tests live in `src/render/font.rs`.
 
 ## [2026-11-12] investigation | Inline XML tooltip operands
 

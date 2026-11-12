@@ -424,7 +424,8 @@ impl WowFontSystem {
         }
         if font_map.is_empty() {
             timed_font_phase("font system fallback loaded", || {
-                load_system_font_fallback(&mut db, &mut font_map)
+                let pinned = std::env::var_os("WOW_SIM_FALLBACK_FONT").map(PathBuf::from);
+                load_system_font_fallback(&mut db, &mut font_map, pinned.as_deref())
             });
         }
 
@@ -760,9 +761,20 @@ fn timed_font_phase<T>(label: &str, action: impl FnOnce() -> T) -> T {
     result
 }
 
-fn load_system_font_fallback(db: &mut fontdb::Database, font_map: &mut HashMap<String, FontEntry>) {
-    db.load_system_fonts();
-    let Some(family_name) = first_system_family_name(db) else {
+/// Register one family for every WoW font path. `pinned` (from
+/// WOW_SIM_FALLBACK_FONT) names a font file to use, so text measures and
+/// renders the same on every machine; otherwise the first system face is
+/// used, which differs between operating systems.
+fn load_system_font_fallback(
+    db: &mut fontdb::Database,
+    font_map: &mut HashMap<String, FontEntry>,
+    pinned: Option<&Path>,
+) {
+    let pinned = pinned.and_then(|path| load_pinned_fallback_font(db, path));
+    if pinned.is_none() {
+        db.load_system_fonts();
+    }
+    let Some(family_name) = pinned.clone().or_else(|| first_system_family_name(db)) else {
         tracing::warn!("No CASC or system fonts available for text shaping");
         return;
     };
@@ -771,7 +783,24 @@ fn load_system_font_fallback(db: &mut fontdb::Database, font_map: &mut HashMap<S
         register_font_aliases(font_file.wow_paths, &family_name, font_map);
     }
 
-    tracing::warn!("Using system font '{family_name}' as WoW font fallback");
+    let source = if pinned.is_some() { "pinned" } else { "system" };
+    tracing::warn!("Using {source} font '{family_name}' as WoW font fallback");
+}
+
+/// Load the font file WOW_SIM_FALLBACK_FONT names and return its family.
+fn load_pinned_fallback_font(db: &mut fontdb::Database, path: &Path) -> Option<String> {
+    let identity = std::fs::read(path)
+        .ok()
+        .and_then(|data| fontdb_family_name(&data).map(|family| (family, data)));
+    let Some((family, data)) = identity else {
+        tracing::warn!(
+            "WOW_SIM_FALLBACK_FONT {} is not a readable font, using system fonts",
+            path.display()
+        );
+        return None;
+    };
+    db.load_font_data(data);
+    Some(family)
 }
 
 fn first_system_family_name(db: &fontdb::Database) -> Option<String> {
@@ -1047,6 +1076,57 @@ mod tests {
         let name = fs.family_name(None).unwrap();
         let default_name = fs.family_name(Some(DEFAULT_WOW_FONT)).unwrap();
         assert_eq!(name, default_name);
+    }
+
+    /// A font file of the system to pin; the repository holds no font
+    /// file of its own.
+    fn pinned_system_font_file() -> Option<PathBuf> {
+        let mut db = fontdb::Database::new();
+        db.load_system_fonts();
+        db.faces().find_map(|face| match &face.source {
+            fontdb::Source::File(path) if face.index == 0 => Some(path.clone()),
+            _ => None,
+        })
+    }
+
+    #[test]
+    fn a_pinned_fallback_font_stands_in_for_every_wow_font() {
+        let Some(font) = pinned_system_font_file() else {
+            eprintln!("no system font file to pin; skipped");
+            return;
+        };
+        let pinned_data = std::fs::read(&font).unwrap();
+        let family = fontdb_family_name(&pinned_data).unwrap();
+        let mut db = fontdb::Database::new();
+        let mut font_map = HashMap::new();
+
+        load_system_font_fallback(&mut db, &mut font_map, Some(&font));
+
+        for font_file in WOW_FONT_FILES {
+            for wow_path in font_file.wow_paths {
+                assert_eq!(font_map[&normalize_wow_path(wow_path)].family, family);
+            }
+        }
+        assert!(
+            db.faces().all(|face| matches!(&face.source,
+                fontdb::Source::Binary(data) if data.as_ref().as_ref() == pinned_data.as_slice())),
+            "only the pinned font is loaded, no system font"
+        );
+    }
+
+    #[test]
+    fn an_unreadable_pinned_fallback_font_leaves_the_system_fonts() {
+        let dir = tempfile::tempdir().unwrap();
+        let not_a_font = dir.path().join("font.ttf");
+        std::fs::write(&not_a_font, b"x").unwrap();
+        let mut db = fontdb::Database::new();
+
+        assert_eq!(load_pinned_fallback_font(&mut db, &not_a_font), None);
+        assert_eq!(
+            load_pinned_fallback_font(&mut db, &dir.path().join("none.ttf")),
+            None
+        );
+        assert_eq!(db.faces().count(), 0);
     }
 
     #[test]
