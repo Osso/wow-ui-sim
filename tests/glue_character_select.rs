@@ -1363,6 +1363,34 @@ fn character_creation_host_result_handler_preservation_without_submit() {
 
 #[test]
 #[cfg(feature = "client-ptr")]
+fn ptr_character_creation_submit_requires_three_non_nil_arguments() {
+    let env = WowLuaEnv::new().unwrap();
+    env.set_screen_mode(ScreenKind::CharacterCreate);
+    const USAGE: &str =
+        "Usage: C_CharacterCreation.CreateCharacter(name, surname, useNPE [, raceFaction])";
+    for arguments in [
+        "",
+        "nil, 'Surname', false",
+        "'Name'",
+        "'Name', nil, false",
+        "'Name', 'Surname'",
+        "'Name', 'Surname', nil",
+    ] {
+        let error = env
+            .exec(&format!("C_CharacterCreation.CreateCharacter({arguments})"))
+            .expect_err("PTR requires present, non-nil name, surname, and useNPE");
+        assert!(error.to_string().contains(USAGE), "{error}");
+    }
+    // R78 PTR verifies that missing/nil optional faction advances. Do not assert
+    // types, conversions, Lua return count, or native request fields here.
+    for arguments in ["'Name', 'Surname', false", "'Name', 'Surname', false, nil"] {
+        env.exec(&format!("C_CharacterCreation.CreateCharacter({arguments})"))
+            .unwrap();
+    }
+}
+
+#[test]
+#[cfg(feature = "client-ptr")]
 fn ptr_character_creation_submit_real_controls_do_not_invent_outcome() {
     test_timeout! {
         let env = load_blizzard_screen(ScreenKind::CharacterSelect);
