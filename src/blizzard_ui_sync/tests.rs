@@ -571,9 +571,17 @@ fn retail_provenance_ignores_installed_build_identity() {
             "wow",
         )
         .unwrap();
-        assert_ne!(installed.version, "12.1.5.70575");
+        let index: serde_json::Value =
+            serde_json::from_str(include_str!("../../data/blizzard-ui-builds/retail.json"))
+                .unwrap();
+        let pinned_version = index["version"].as_str().unwrap();
+        assert_ne!(installed.version, pinned_version);
         let provenance = super::expected_cache_provenance().unwrap();
-        assert!(provenance.contents().contains("version=12.1.5.70575\n"));
+        assert!(
+            provenance
+                .contents()
+                .contains(&format!("version={pinned_version}\n"))
+        );
         assert!(
             provenance
                 .contents()
@@ -619,10 +627,13 @@ fn retail_sync_cached_fixture_child() {
         return;
     }
     let root: std::path::PathBuf = serde_json::from_str(&message).unwrap();
-    let install = std::env::var("WOW_INSTALL_PATH").unwrap();
-    let installed =
-        super::read_active_build_identity(std::path::Path::new(&install), "wow").unwrap();
-    assert_ne!(installed.version, "12.1.5.70575");
+    let install = installed_product_fixture();
+    std::fs::create_dir_all(install.path().join("Data/data")).unwrap();
+    let installed = super::read_active_build_identity(install.path(), "wow").unwrap();
+    let index: serde_json::Value =
+        serde_json::from_str(include_str!("../../data/blizzard-ui-builds/retail.json")).unwrap();
+    let pinned_version = index["version"].as_str().unwrap();
+    assert_ne!(installed.version, pinned_version);
     let entry = "Blizzard_ArchaeologyUI/Blizzard_ArchaeologyUI.lua";
     let before = std::fs::read(root.join(entry)).unwrap();
     let result = super::sync_blizzard_ui_to(&root);
@@ -637,6 +648,6 @@ fn retail_sync_cached_fixture_child() {
     assert_eq!(summary.present, summary.total);
     assert_eq!(summary.total, 4026);
     let provenance = std::fs::read_to_string(root.join(super::PROVENANCE_FILE)).unwrap();
-    assert!(provenance.contains("version=12.1.5.70575\n"));
+    assert!(provenance.contains(&format!("version={pinned_version}\n")));
     assert!(provenance.contains("source=blizzard-cdn-pinned\n"));
 }
