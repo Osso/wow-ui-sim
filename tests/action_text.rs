@@ -100,7 +100,7 @@ fn action_text_requires_a_populated_macro_name() {
 
 #[cfg(not(feature = "client-ptr"))]
 #[test]
-fn action_text_empty_spell_controls() {
+fn action_text_empty_spell_and_unplaceable_item_controls() {
     // Retail projects a merchant row as cursor mode 5, "merchant" (WM46).
     let merchant_kind = if cfg!(feature = "client-retail") {
         "merchant"
