@@ -555,3 +555,46 @@ fn test_create_frame_from_xml_inline_conditional_global_field_equals_string_then
     let result: String = env.eval(r#"return XmlInlinePopupArgs[1]"#).unwrap();
     assert_eq!(result, "RENAME_GUILD");
 }
+
+#[test]
+fn test_inline_tooltip_three_arguments_preserve_lua_values() {
+    clear_templates();
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r##"
+        RED_FONT_COLOR = { r = 0.1, g = 0.2, b = 0.3 }
+        ALL_ASSIST_NOT_LEADER_ERROR = "No leader"
+        GameTooltip = {
+            AddLine = function(self, ...)
+                self.args = { n = select('#', ...), ... }
+            end,
+        }
+    "##,
+    )
+    .unwrap();
+    create_first_frame(
+        &env,
+        r#"<Ui>
+        <Button name="XmlInlineThreeArgsButton" parent="UIParent">
+            <Scripts><OnEnter>
+                GameTooltip:AddLine(ALL_ASSIST_NOT_LEADER_ERROR, RED_FONT_COLOR, true);
+            </OnEnter></Scripts>
+        </Button>
+    </Ui>"#,
+        "Button",
+    );
+    for text in ["No leader", "Not the leader"] {
+        env.exec(&format!("ALL_ASSIST_NOT_LEADER_ERROR = {text:?}"))
+            .unwrap();
+        env.exec(
+            r#"
+            XmlInlineThreeArgsButton:GetScript("OnEnter")(XmlInlineThreeArgsButton)
+            assert(GameTooltip.args.n == 3, "explicit AddLine operands were lost")
+            assert(GameTooltip.args[1] == ALL_ASSIST_NOT_LEADER_ERROR)
+            assert(GameTooltip.args[2] == RED_FONT_COLOR)
+            assert(GameTooltip.args[3] == true)
+        "#,
+        )
+        .unwrap();
+    }
+}
