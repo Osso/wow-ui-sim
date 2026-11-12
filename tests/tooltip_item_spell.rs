@@ -187,6 +187,14 @@ fn test_set_unit_aura_populates_lines() {
 #[test]
 fn test_set_unit_aura_colors_like_spell_tooltip() {
     let env = WowLuaEnv::new().unwrap();
+    // R81 Q4: remaining-time formula UNKNOWN; final display text is host input.
+    let id = env.state().borrow().player.buffs[0].aura_instance_id;
+    env.state()
+        .borrow_mut()
+        .aura_tooltip_inputs
+        .entry(id)
+        .or_default()
+        .remaining_text = Some("host aura time".into());
     env.exec(r#"GameTooltip:SetUnitAura("player", 1, "HELPFUL")"#)
         .unwrap();
 
@@ -204,7 +212,7 @@ fn test_set_unit_aura_colors_like_spell_tooltip() {
     let duration = td
         .lines
         .iter()
-        .find(|line| line.left_text == "1 hr")
+        .find(|line| line.left_text == "host aura time")
         .expect("unit aura tooltip should include the remaining duration");
     let description = td
         .lines
@@ -214,6 +222,20 @@ fn test_set_unit_aura_colors_like_spell_tooltip() {
     assert_color_close(title.left_color, highlight, "unit aura title");
     assert_color_close(duration.left_color, highlight, "unit aura duration");
     assert_color_close(description.left_color, normal, "unit aura description");
+    drop(state);
+    env.state().borrow_mut().aura_tooltip_inputs.clear();
+    env.exec(r#"GameTooltip:SetUnitAura("player", 1, "HELPFUL")"#)
+        .unwrap();
+    assert!(
+        !env.state()
+            .borrow()
+            .tooltips
+            .get(&gt_id)
+            .unwrap()
+            .lines
+            .iter()
+            .any(|line| line.left_text == "host aura time" || line.left_text == "1 hr")
+    );
 }
 
 #[test]
