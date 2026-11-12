@@ -176,14 +176,14 @@ fn failed_required_dependency_of_an_enabled_runtime_addon_prevents_save() {
     );
     let (loaded, reason) = fixture.load();
     assert!(!loaded);
-    assert!(reason.unwrap().contains("AbsentRequiredProbe"));
+    assert_eq!(reason.as_deref(), Some("DEP_MISSING"));
     assert!(
         fixture
             .env
             .eval::<bool>("return RuntimeProbeCodeRan == nil")
             .unwrap()
     );
-    fixture.assert_failed_owner_recovers("AbsentRequiredProbe");
+    fixture.assert_failed_owner_recovers("DEP_MISSING");
 }
 
 #[test]
