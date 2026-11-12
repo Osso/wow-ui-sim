@@ -733,3 +733,26 @@ fn ptr_game_menu_narration_completes_native_show_callbacks() {
         assert_eq!(result, (true, 1, true, 2));
     }
 }
+
+#[cfg(feature = "client-ptr")]
+#[test]
+fn ptr_store_disabled_without_override_leaves_game_menu_and_stores_unchanged() {
+    test_timeout! {
+        let env = setup_game_menu_env();
+        env.set_server_mirrored_cvar("bpayStoreEnable", "0").unwrap();
+        // R75 verifies that the override mirror defaults to false. Drive the
+        // real toggle: a missing override query must fail, not silently pass.
+        for shop2 in ["0", "1"] {
+            env.set_server_mirrored_cvar("shop2Enabled", shop2).unwrap();
+            let result: (bool, bool, bool) = env.eval(r#"
+                GameMenuFrame:Show()
+                assert(not StoreFrame:IsShown())
+                assert(not CatalogShopInboundInterface.IsShown())
+                ToggleStoreUI(G_GameMenuFrameContextKey)
+                return GameMenuFrame:IsShown(), StoreFrame:IsShown(),
+                    CatalogShopInboundInterface.IsShown()
+            "#).unwrap();
+            assert_eq!(result, (true, false, false));
+        }
+    }
+}
