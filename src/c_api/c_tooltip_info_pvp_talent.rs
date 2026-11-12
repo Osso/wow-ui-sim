@@ -50,6 +50,15 @@ pub struct PvpTalentTooltipRecord {
     pub eligibility_level_failed: bool,
 }
 
+/// Host-supplied values with the pinned Retail PvpTalentSlotInfo shape.
+/// SpecializationInfoDocumentation.lua:491-499; no native defaults are inferred.
+#[derive(Clone, Debug)]
+pub struct PvpTalentSlotInput {
+    pub enabled: bool,
+    pub level: i32,
+    pub available_talent_ids: Vec<i32>,
+}
+
 /// Host inputs used by the Retail PvP talent tooltip producer.
 #[derive(Clone, Debug)]
 pub struct PvpTalentTooltipInputs {
@@ -61,6 +70,10 @@ pub struct PvpTalentTooltipInputs {
     pub groups: HashMap<usize, [Option<i32>; TALENT_POSITION_COUNT as usize]>,
     /// Resolved spell outcomes supplied by the host; absent entries mean identity.
     pub resolved_spell_ids: HashMap<u32, u32>,
+    /// None leaves the eligibility result unmodelled; not a native default.
+    pub rest_permission: Option<bool>,
+    /// One-based UI slot records; selected IDs come from `groups`.
+    pub slots: HashMap<usize, PvpTalentSlotInput>,
     /// Granting items in the inspected-unit context, keyed by GUID and talent ID.
     pub inspect_grant_item_ids: HashMap<(String, i32), u32>,
 }
@@ -95,6 +108,8 @@ impl Default for PvpTalentTooltipInputs {
             active_group_index: 0,
             groups: HashMap::new(),
             resolved_spell_ids: HashMap::new(),
+            rest_permission: None,
+            slots: HashMap::new(),
             inspect_grant_item_ids: HashMap::new(),
         }
     }
