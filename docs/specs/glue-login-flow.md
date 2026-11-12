@@ -487,8 +487,9 @@ runtime/device query, not a static byte; its PTR registration is UNKNOWN.
 
 R63 implementation uses distinct per-environment host bytes with image-derived
 inferred defaults: PTR linear0/outlineDisabled0/PBR0/secondary0/density1;
-Forever all five1; Retail density1 only. Tests seed explicit host values before
-asserting projections, preserving the distinction from verified native results.
+Forever all five1; Retail density1 only. Review132 removes inferred projection
+assertions even for supplied bytes. Tests retain verified registration and
+Forever return shape, plus original consumer loading/error checks.
 The removed Forever credits notice/catalog and mutable video placeholders no
 longer supply native-facing answers. The separate renderer MSAA workaround is
 not relabeled as a static native capability or widened to PTR.

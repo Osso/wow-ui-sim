@@ -162,7 +162,8 @@ getter. No selected-realm data or native DB rows are invented.
 replaces the mutable Forever fixture: PTR and Forever expose a read-only
 capability-byte projection in Game and Glue; Retail does not publish it.
 The zero byte is verified image data, while the completed false result is an
-inference. Tests check publication and Boolean type, not fixed false.
+inference. Review132 removes Boolean type assertions too; only verified
+publication remains asserted.
 
 At 380e9c1a2, Retail glue is 261 passed/1 failed and Forever is 148 passed/11
 failed, with zero compiler warnings. The adapted Forever graphics consumer
@@ -189,9 +190,10 @@ empty) or one nil for missing files; that publication is verified on Forever,
 while PTR follows the approved model without an exact native publisher claim.
 
 [Video capability bytes](../../../src/c_api/video_capabilities.rs) replaces
-modern placeholder answers with independent per-environment host bytes. Tests
-supply values before asserting inferred projections; image defaults are not
-asserted as verified native Boolean results. Retail publishes only spell density;
+modern placeholder answers with independent per-environment host bytes.
+Review132 removes all inferred projection assertions, including explicit-byte
+control-selection expectations. Tests retain verified publication and Forever
+return shape, alongside unrelated original consumer load/error checks. Retail publishes only spell density;
 PTR/Forever publish all five. High-resolution capability and renderer MSAA stay
 separate. Legacy-only density compatibility is unchanged.
 
