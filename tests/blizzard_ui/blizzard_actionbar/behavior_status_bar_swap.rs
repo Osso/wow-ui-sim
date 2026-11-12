@@ -205,6 +205,7 @@ fn assert_cold_manager_globals_resolve(env: &WowLuaEnv) {
     );
 }
 
+#[cfg(not(feature = "client-wowforever"))]
 fn assert_cold_shown_bar_indices_match_priority(env: &WowLuaEnv) {
     let (length, first, second) = read_shown_bar_indices(env);
     assert_eq!(
@@ -272,6 +273,45 @@ fn call_update_bars_shown(env: &WowLuaEnv) {
     );
 }
 
+// Forever Camelot/StatusTrackingBarConstants.lua:21-28 sets Exp=0,
+// Rep=2 and HouseFavor=5; Shared/StatusTrackingManager.lua:61 sorts descending.
+#[cfg(feature = "client-wowforever")]
+fn assert_cold_shown_bar_indices_match_priority(env: &WowLuaEnv) {
+    assert_forever_bar_priorities(env);
+    assert_eq!(
+        read_shown_bar_indices(env),
+        (
+            EXPECTED_CONTAINER_COUNT,
+            REPUTATION_BAR_INDEX,
+            EXPERIENCE_BAR_INDEX
+        )
+    );
+}
+
+#[cfg(feature = "client-wowforever")]
+fn assert_post_update_shown_bar_indices(env: &WowLuaEnv) {
+    assert_forever_bar_priorities(env);
+    assert_eq!(
+        read_shown_bar_indices(env),
+        (
+            EXPECTED_CONTAINER_COUNT,
+            HOUSE_FAVOR_BAR_INDEX,
+            REPUTATION_BAR_INDEX
+        )
+    );
+}
+
+#[cfg(feature = "client-wowforever")]
+fn assert_forever_bar_priorities(env: &WowLuaEnv) {
+    let priorities: (i64, i64, i64) = env.eval(
+        "local p = StatusTrackingBarInfo.BarPriorities; local b = StatusTrackingBarInfo.BarsEnum; \
+         return p[b.Experience], p[b.Reputation], p[b.HouseFavor]"
+    ).unwrap();
+    assert_eq!(priorities, (0, 2, 5));
+    assert!(priorities.2 > priorities.1 && priorities.1 > priorities.0);
+}
+
+#[cfg(not(feature = "client-wowforever"))]
 fn assert_post_update_shown_bar_indices(env: &WowLuaEnv) {
     let (length, first, second) = read_shown_bar_indices(env);
     assert_eq!(

@@ -92,7 +92,7 @@ fn assert_endcaps_hidden(env: &WowLuaEnv) {
     assert!(hidden, "main-bar end caps must be hidden");
 }
 
-#[cfg(not(feature = "client-ptr"))]
+#[cfg(not(any(feature = "client-ptr", feature = "client-wowforever")))]
 fn assert_alliance_endcap_atlases(env: &WowLuaEnv) {
     let (left_atlas, right_atlas): (String, String) = env
         .eval("return MainActionBar.EndCaps.LeftEndCap:GetAtlas(), MainActionBar.EndCaps.RightEndCap:GetAtlas()")
@@ -101,7 +101,9 @@ fn assert_alliance_endcap_atlases(env: &WowLuaEnv) {
     assert_eq!(right_atlas, "ui-hud-actionbar-gryphon-right");
 }
 
-#[cfg(feature = "client-ptr")]
+// Forever ActionBar.toc:35-36 selects Camelot/MainMenuBarEndCaps.xml:8-12:
+// the end cap is a Frame and its Texture owns the atlas, as on PTR.
+#[cfg(any(feature = "client-ptr", feature = "client-wowforever"))]
 fn assert_alliance_endcap_atlases(env: &WowLuaEnv) {
     let (left_atlas, right_atlas): (String, String) = env
         .eval("return MainActionBar.EndCaps.LeftEndCap.Texture:GetAtlas(), MainActionBar.EndCaps.RightEndCap.Texture:GetAtlas()")
