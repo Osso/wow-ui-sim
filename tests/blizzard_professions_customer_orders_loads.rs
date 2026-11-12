@@ -132,19 +132,22 @@ fn load_customer_orders_with_deps(env: &WowLuaEnv) {
         .expect("Blizzard_ProfessionsCustomerOrders loads cleanly");
 }
 
-#[cfg(feature = "client-ptr")]
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 #[test]
-fn ptr_customer_orders_does_not_publish_snapshot_only_hide_wrapper() {
-    assert_directory_omits_symbol(&blizzard_ui_dir(), "HideProfessionsCustomerOrdersFrame");
-
+fn mainline_customer_orders_bootstrap_hide_wrapper_hides_the_open_frame() {
     let env = load_full_game_ui();
     load_customer_orders_with_deps(&env);
-    let result: (String, bool) = env
+    let result: (String, bool, bool) = env
         .eval(
-            "return type(ProfessionsCustomerOrdersFrame), HideProfessionsCustomerOrdersFrame == nil",
+            "local frame = ProfessionsCustomerOrdersFrame; local received; \
+             local original = HideUIPanel; \
+             HideUIPanel = function(value) received = value end; \
+             local callable = type(HideProfessionsCustomerOrdersFrame) == 'function'; \
+             HideProfessionsCustomerOrdersFrame(); HideUIPanel = original; \
+             return type(frame), callable, received == frame",
         )
-        .expect("customer orders wrapper visibility should be queryable");
-    assert_eq!(result, ("table".to_string(), true));
+        .expect("selected customer-orders bootstrap hide wrapper should run");
+    assert_eq!(result, ("table".to_string(), true, true));
 }
 
 #[test]

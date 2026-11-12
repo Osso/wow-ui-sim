@@ -23,9 +23,17 @@ fn ptr_feedback_glue_toc() -> PathBuf {
     ptr_feedback_glue_dir().join("Blizzard_PTRFeedbackGlue.toc")
 }
 
-const PTR_FEEDBACK_GLUE_TOC_FILES: &[&str] = &[
+const RETAIL_PTR_FEEDBACK_GLUE_TOC_FILES: &[&str] = &[
     "../Blizzard_PTRFeedback/Blizzard_PTRFeedback.lua",
     "../Blizzard_PTRFeedback/Blizzard_PTRFeedback_Frames.lua",
+    "../Blizzard_PTRFeedback/Blizzard_Reports.lua",
+    "Blizzard_Reports_Glue.lua",
+    "Blizzard_PTRFeedback_Events_Glue.lua",
+];
+const UNIFIED_PTR_FEEDBACK_GLUE_TOC_FILES: &[&str] = &[
+    "../Blizzard_PTRFeedback/Blizzard_PTRFeedback.lua",
+    "../Blizzard_PTRFeedback/Blizzard_PTRFeedback_Frames.lua",
+    "../Blizzard_PTRFeedback/Blizzard_PTRFeedback_Gamepad.lua",
     "../Blizzard_PTRFeedback/Blizzard_Reports.lua",
     "Blizzard_Reports_Glue.lua",
     "Blizzard_PTRFeedback_Events_Glue.lua",
@@ -256,31 +264,21 @@ fn blizzard_ptr_feedback_glue_lists_five_files_with_cross_addon_parent_paths() {
         .iter()
         .map(|p| p.to_string_lossy().into_owned())
         .collect();
+    let expected_files = if toc_layout::unified_toc_tree() {
+        UNIFIED_PTR_FEEDBACK_GLUE_TOC_FILES
+    } else {
+        RETAIL_PTR_FEEDBACK_GLUE_TOC_FILES
+    };
     assert_eq!(
-        listed, PTR_FEEDBACK_GLUE_TOC_FILES,
-        "TOC must list exactly 5 files in canonical order (paths normalized to \
-         forward slashes by src/toc.rs:147 — raw bytes use `\\`). The first 3 use \
-         `../Blizzard_PTRFeedback/` parent-directory paths to import sibling \
-         Lua files from the Game-side addon directory: \
-         Blizzard_PTRFeedback.lua (declares the PTR_IssueReporter root frame + \
-         .Data/.Assets/.DataCollectorTypes namespaces), \
-         Blizzard_PTRFeedback_Frames.lua (the survey-frame UI logic), \
-         Blizzard_Reports.lua (the report-survey definitions). The last 2 are \
-         local Glue-suffixed files: Blizzard_Reports_Glue.lua (glue-specific \
-         survey definitions for character creation / customization), \
-         Blizzard_PTRFeedback_Events_Glue.lua (glue-screen event hooks for \
-         GameMenuFrame / character-customization frames). \
-         `file_paths()` at src/toc.rs:345 resolves each entry via \
-         `resolve_path_case_insensitive(&self.addon_dir, f)` which composes \
-         `addon_dir.join(...)` allowing `..` to walk out of the Glue directory \
-         into the sibling PTRFeedback directory. No Bindings.xml on the glue \
-         side — keybindings are not used at the character-select screen"
+        listed, expected_files,
+        "TOC file order follows the active manifest. PTR/Forever TOC lines 8-14 list six \
+         files and include Blizzard_PTRFeedback_Gamepad.lua; Retail lists five."
     );
 }
 }
 
 #[test]
-fn blizzard_ptr_feedback_glue_does_not_appear_in_eager_discovery() {
+fn blizzard_ptr_feedback_glue_appears_only_on_selected_screens() {
     let ui = blizzard_ui_dir();
 
     for screen in [
@@ -293,15 +291,11 @@ fn blizzard_ptr_feedback_glue_does_not_appear_in_eager_discovery() {
         let found = addons
             .iter()
             .any(|(name, _)| name == "Blizzard_PTRFeedbackGlue");
-        assert!(
-            !found,
-            "Blizzard_PTRFeedbackGlue must NOT appear in eager discovery for \
-             {screen:?} — even though `## AllowLoad: Glue` would otherwise route \
-             this addon to the 3 glue screens, the loader filter at \
-             src/loader/mod.rs:527 also rejects PTR-only addons. The two gates \
-             stack: the addon is hidden from BOTH the eager pool AND the LOD pool \
-             on every screen of a live client. Asymmetric exposure: \
-             `discover_all_blizzard_addons` does not apply this filter"
+        let expected_on_screen = toc_layout::unified_toc_tree() && screen != ScreenKind::Game;
+        assert_eq!(
+            found, expected_on_screen,
+            "PTR/Forever permits OnlyBetaAndPTR addons. PTRFeedbackGlue TOC lines 2 and 4 \
+             select beta/PTR glue screens; Retail excludes the PTR-only addon."
         );
     }
 }

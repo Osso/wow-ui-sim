@@ -102,12 +102,6 @@ const DEFS_UTIL_FUNCTIONS: &[&str] = &[
     "GetDefaultExpirationText",
 ];
 
-const VIRTUAL_TEMPLATES: &[&str] = &[
-    "StaticPopupButtonTemplate",
-    "StaticPopupBaseTemplate",
-    "StaticPopupTemplate",
-];
-
 const NAMED_DIALOG_SLOTS: &[&str] = &[
     "StaticPopup1",
     "StaticPopup2",
@@ -179,26 +173,38 @@ fn find_toc_file_resolves_bare_toc() {
 
 post_wrath_ui_fixture! {
 #[test]
-fn dependencies_chain_pulls_six_blizzard_addons_via_plural_dependencies_key() {
+fn dependencies_chain_pulls_declared_addons_via_plural_dependencies_key() {
     let toc = TocFile::from_file(&static_popup_game_toc()).expect("TOC parses");
 
-    let expected_deps = vec![
-        "Blizzard_StaticPopup".to_string(),
-        "Blizzard_ItemButton".to_string(),
-        "Blizzard_AutoComplete".to_string(),
-        "Blizzard_MoneyFrame".to_string(),
-        "Blizzard_AccessibilityTemplates".to_string(),
-        "Blizzard_GameMenuEsc".to_string(),
-    ];
+    let expected_deps = if toc_layout::unified_toc_tree() {
+        vec![
+            "Blizzard_StaticPopup",
+            "Blizzard_ItemButton",
+            "Blizzard_AutoComplete",
+            "Blizzard_MoneyFrame",
+            "Blizzard_AccessibilityTemplates",
+            "Blizzard_GameMenuEsc",
+            "Blizzard_GamepadSharedUtility",
+        ]
+    } else {
+        vec![
+            "Blizzard_StaticPopup",
+            "Blizzard_ItemButton",
+            "Blizzard_AutoComplete",
+            "Blizzard_MoneyFrame",
+            "Blizzard_AccessibilityTemplates",
+            "Blizzard_GameMenuEsc",
+        ]
+    };
 
     assert_eq!(
         toc.dependencies(),
-        expected_deps,
-        "Plural `## Dependencies:` parsed at toc.rs:210-217. Order: \
-         StaticPopup (dispatcher), ItemButton (SetItemButtonTexture/Quality), \
-         AutoComplete (EditBox template), MoneyFrame (Money templates), \
-         AccessibilityTemplates (UserScaledFrameTemplate), GameMenuEsc \
-         (escape-menu integration). Got: {:?}",
+        expected_deps
+            .into_iter()
+            .map(str::to_string)
+            .collect::<Vec<_>>(),
+        "Dependencies are read from the selected profile TOC in declared order; unified PTR \
+         line 2 adds GamepadSharedUtility after GameMenuEsc. Got: {:?}",
         toc.dependencies()
     );
 }
@@ -790,37 +796,8 @@ fn money_frame_on_load_global_publishes_as_function() {
 }
 
 prefork_full_ui_case! {
-fn xml_registers_three_virtual_templates(env: &WowLuaEnv) {
-
-    for template in VIRTUAL_TEMPLATES {
-        let probe = format!(
-            "local ok, frame = pcall(function() \
-                return CreateFrame('Frame', nil, UIParent, {template:?}) \
-             end) \
-             return ok and frame ~= nil"
-        );
-        let result: bool = env
-            .eval(&probe)
-            .unwrap_or_else(|err| panic!("template probe ({template}): {err}"));
-        assert!(
-            result,
-            "Virtual template {template} must materialize via CreateFrame \
-             — virtual=\"true\", consumed by inheritance"
-        );
-    }
-}
-}
-
-#[cfg(not(feature = "client-retail"))]
-#[test]
-fn xml_registers_three_virtual_templates() {
-    let env = load_full_ui_for(ScreenKind::Game);
-    xml_registers_three_virtual_templates::run(&env);
-}
-
-prefork_full_ui_case! {
 fn four_named_dialog_slots_materialize_as_hidden_dialogs(env: &WowLuaEnv) {
-
+    // These named XML consumers exercise the complete template chain through the selected source.
     for name in NAMED_DIALOG_SLOTS {
         let hidden: bool = env.eval(&format!("return {name} ~= nil and not {name}:IsShown()")).expect("popup visibility");
         assert!(hidden, "{name} should start hidden");

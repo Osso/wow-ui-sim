@@ -41,6 +41,9 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -189,15 +192,25 @@ fn lane_dep_edges_pin_canonical_chain() {
         "Blizzard_LFGUtil",
         "Blizzard_ManagedFrameSystem",
     ];
+    let expected_count =
+        expected_frame_xml_deps.len() + if toc_layout::unified_toc_tree() { 1 } else { 0 };
+    assert_eq!(frame_xml_deps.len(), expected_count);
     assert_eq!(
-        frame_xml_deps,
+        &frame_xml_deps[..expected_frame_xml_deps.len()],
         expected_frame_xml_deps
             .iter()
-            .map(|s| s.to_string())
+            .map(|dependency| dependency.to_string())
             .collect::<Vec<_>>(),
-        "FrameXML must preserve its 15 Retail-applicable dependencies in TOC order. \
+        "FrameXML must preserve the selected profile dependencies in TOC order. \
          Classic-only Blizzard_UnitPopup and Blizzard_MirrorTimer declarations are \
-         excluded by their AllowLoadGameType annotations. Got: {frame_xml_deps:?}"
+         excluded by their AllowLoadGameType annotations."
+    );
+    assert_eq!(
+        frame_xml_deps
+            .get(expected_frame_xml_deps.len())
+            .map(String::as_str),
+        toc_layout::unified_toc_tree().then_some("Blizzard_GamepadSoftCursor"),
+        "Unified PTR/Forever FrameXML TOCs select GamepadSoftCursor on mainline at line 19"
     );
 }
 

@@ -364,6 +364,10 @@ fn family_placeholder_resolves_to_mainline_directory() {
 }
 
 post_wrath_ui_fixture! {
+// Retail selects Standard button/menu files at Blizzard_UnitPopup.toc:11,13. The unified
+// PTR TOC selects `[Family]` Mainline files at lines 11,14 and filters its `[Game]` files at
+// lines 12,15, so the Standard-directory check does not apply to PTR.
+#[cfg(feature = "client-retail")]
 #[test]
 fn game_placeholder_resolves_to_standard_directory() {
     for relative in GAME_PLACEHOLDER_RESOLVED_RELATIVES {

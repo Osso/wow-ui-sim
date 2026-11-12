@@ -8,20 +8,7 @@ use wow_ui_sim::toc::TocFile;
 #[path = "common/toc_layout.rs"]
 mod toc_layout;
 
-// The pinned PTR 12.1.7 manifest no longer ships this classic-only addon, so
-// its TOC/XML content assertions apply to the profiles that do ship it.
-fn reforging_ui_absent_from_active_cache() -> bool {
-    if toc_layout::unified_toc_tree() {
-        assert!(
-            !reforging_ui_dir().exists(),
-            "Pinned PTR/Forever manifest must not ship the classic-only Blizzard_ReforgingUI"
-        );
-        true
-    } else {
-        false
-    }
-}
-
+// Mists/Era/Anniversary select Blizzard_ReforgingUI_Classic.toc; PTR/Forever omit the addon.
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -79,11 +66,9 @@ fn retail_toc_selection_excludes_classic_only_reforging() {
 
 // Literal cached inputs absent from Wrath manifest1-382/cache; behavior cases stay enabled.
 post_wrath_ui_fixture! {
+#[cfg(any(feature = "client-mists", feature = "client-era", feature = "client-anniversary"))]
 #[test]
 fn toc_declares_load_on_demand_secure_classic_only_and_no_deps() {
-    if reforging_ui_absent_from_active_cache() {
-        return;
-    }
     let toc =
         TocFile::from_file(&reforging_ui_toc()).expect("Blizzard_ReforgingUI TOC should parse");
     assert!(
@@ -125,11 +110,9 @@ fn toc_declares_load_on_demand_secure_classic_only_and_no_deps() {
 }
 
 post_wrath_ui_fixture! {
+#[cfg(any(feature = "client-mists", feature = "client-era", feature = "client-anniversary"))]
 #[test]
-fn toc_lists_bootstrap_and_three_files_in_classic_subdirectory() {
-    if reforging_ui_absent_from_active_cache() {
-        return;
-    }
+fn toc_lists_the_active_classic_files_in_order() {
     let toc =
         TocFile::from_file(&reforging_ui_toc()).expect("Blizzard_ReforgingUI TOC should parse");
     let listed: Vec<String> = toc
@@ -137,18 +120,13 @@ fn toc_lists_bootstrap_and_three_files_in_classic_subdirectory() {
         .iter()
         .map(|p| p.to_string_lossy().replace('\\', "/"))
         .collect();
-    let expected: Vec<String> = if toc_layout::classic_cache() {
-        [
-            "Classic/Blizzard_ReforgingUI.lua",
-            "Classic/Blizzard_ReforgingUI.xml",
-            "Classic/Localization.lua",
-        ]
-        .iter()
-        .map(|s| s.to_string())
-        .collect()
-    } else {
-        REFORGING_FILES.iter().map(|s| s.to_string()).collect()
-    };
+    let expected = [
+        "Classic/Blizzard_ReforgingUI.lua",
+        "Classic/Blizzard_ReforgingUI.xml",
+        "Classic/Localization.lua",
+    ]
+    .map(str::to_string)
+    .to_vec();
     assert_eq!(
         listed, expected,
         "Retail 12.1.0.69497 lists the bootstrap before the classic Lua, XML, and localization \
@@ -158,6 +136,9 @@ fn toc_lists_bootstrap_and_three_files_in_classic_subdirectory() {
 }
 
 post_wrath_ui_fixture! {
+// Retail tests the Classic-only selector against mainline; the companion declares \
+// AllowLoadGameType: classic at Blizzard_ReforgingUI_Classic.toc:5.
+#[cfg(feature = "client-retail")]
 #[test]
 fn is_game_type_restricted_returns_true_for_classic_only_addon() {
     let toc =
@@ -197,8 +178,10 @@ fn excluded_from_every_screen_auto_discovery_under_retail() {
 }
 
 post_wrath_ui_fixture! {
+// The selected Classic consumer's TOC is Blizzard_ReforgingUI_Classic.toc:5.
+#[cfg(any(feature = "client-mists", feature = "client-era", feature = "client-anniversary"))]
 #[test]
-fn classic_subdirectory_holds_bootstrap_lua_xml_and_localization() {
+fn classic_subdirectory_matches_the_selected_toc() {
     let classic_dir = reforging_ui_dir().join("Classic");
     let mut entries: Vec<String> = std::fs::read_dir(&classic_dir)
         .expect("Blizzard_ReforgingUI/Classic directory should read")
@@ -206,16 +189,12 @@ fn classic_subdirectory_holds_bootstrap_lua_xml_and_localization() {
         .filter_map(|e| e.file_name().into_string().ok())
         .collect();
     entries.sort();
-    assert_eq!(
-        entries,
-        vec![
-            "Blizzard_ReforgingUI.lua".to_string(),
-            "Blizzard_ReforgingUI.xml".to_string(),
-            "Blizzard_ReforgingUI_Bootstrap.lua".to_string(),
-            "Localization.lua".to_string(),
-        ],
-        "Retail 12.1.0.69497 ships the classic bootstrap beside the Lua, XML, and localization files"
-    );
+    let expected = [
+        "Blizzard_ReforgingUI.lua",
+        "Blizzard_ReforgingUI.xml",
+        "Localization.lua",
+    ];
+    assert_eq!(entries, expected.into_iter().map(str::to_string).collect::<Vec<_>>());
 }
 }
 
@@ -406,11 +385,9 @@ fn defines_no_mixin_tables_pre_mixin_pattern(env: &WowLuaEnv) {
 }
 
 post_wrath_ui_fixture! {
+#[cfg(any(feature = "client-mists", feature = "client-era", feature = "client-anniversary"))]
 #[test]
 fn xml_loads_via_script_directive_and_inline_lua_listed_in_toc() {
-    if reforging_ui_absent_from_active_cache() {
-        return;
-    }
     let xml_text =
         std::fs::read_to_string(reforging_ui_dir().join("Classic/Blizzard_ReforgingUI.xml"))
             .expect("Classic/Blizzard_ReforgingUI.xml should read");

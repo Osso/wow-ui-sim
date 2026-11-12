@@ -239,17 +239,22 @@ fn blizzard_guild_bank_ui_loads_explicitly_without_unexpected_addon_specific_lua
 }
 }
 
-#[cfg(feature = "client-ptr")]
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 #[test]
-fn ptr_guild_bank_does_not_publish_snapshot_only_hide_wrapper() {
+fn mainline_guild_bank_bootstrap_hide_wrapper_hides_the_open_frame() {
     let env = load_full_game_ui_with_guild_bank_lod();
 
-    let wrapper_is_absent: bool = env
-        .eval("return HideGuildBankFrame == nil")
-        .expect("guild bank wrapper visibility should be queryable");
+    let wrapper_targeted_frame: bool = env
+        .eval(
+            "if type(HideGuildBankFrame) ~= 'function' or not GuildBankFrame then return false end; \
+             local expected = GuildBankFrame; local actual; local original = HideUIPanel; \
+             HideUIPanel = function(frame) actual = frame end; \
+             HideGuildBankFrame(); HideUIPanel = original; return actual == expected",
+        )
+        .expect("selected GuildBank bootstrap hide wrapper should run");
     assert!(
-        wrapper_is_absent,
-        "snapshot-only HideGuildBankFrame unexpectedly exists after PTR addon load"
+        wrapper_targeted_frame,
+        "HideGuildBankFrame must pass the original GuildBankFrame to HideUIPanel"
     );
 }
 

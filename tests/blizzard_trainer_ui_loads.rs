@@ -11,7 +11,8 @@ use wow_ui_sim::toc::TocFile;
 mod toc_layout;
 
 fn blizzard_ui_dir() -> PathBuf {
-    wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("Blizzard UI cache should be available")
+    wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("Blizzard UI cache should be available")
 }
 
 fn trainer_dir() -> PathBuf {
@@ -207,7 +208,7 @@ fn toc_raw_bytes_pin_current_mainline_contract() {
 }
 
 #[test]
-fn body_resolves_to_bootstrap_mainline_xml_and_localization_lua() {
+fn body_resolves_profile_lua_xml_and_localization_order() {
     let toc = TocFile::from_file(&trainer_toc()).expect("TOC parses");
 
     let body: Vec<String> = toc
@@ -216,14 +217,25 @@ fn body_resolves_to_bootstrap_mainline_xml_and_localization_lua() {
         .map(|p| p.to_string_lossy().to_string())
         .collect();
 
+    let expected = if toc_layout::unified_toc_tree() {
+        vec![
+            "Blizzard_TrainerUI_Bootstrap.lua",
+            "Mainline/Blizzard_TrainerUI.lua",
+            "Mainline/Blizzard_TrainerUI.xml",
+            "Localization.lua",
+        ]
+    } else {
+        vec![
+            "Blizzard_TrainerUI_Bootstrap.lua",
+            "Mainline/Blizzard_TrainerUI.xml",
+            "Localization.lua",
+        ]
+    };
     assert_eq!(
         body,
-        vec![
-            "Blizzard_TrainerUI_Bootstrap.lua".to_string(),
-            "Mainline/Blizzard_TrainerUI.xml".to_string(),
-            "Localization.lua".to_string(),
-        ],
-        "Retail 12.1 body must retain the bootstrap, Mainline XML, and localization trailer in order. Got: {body:?}"
+        expected.into_iter().map(str::to_string).collect::<Vec<_>>(),
+        "TrainerUI body follows the active profile TOC. The unified PTR/Forever TOC line 6 \
+         selects the Mainline Lua file directly before its XML entry. Got: {body:?}"
     );
 }
 

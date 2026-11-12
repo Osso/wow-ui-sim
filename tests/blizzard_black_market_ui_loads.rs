@@ -135,31 +135,26 @@ fn blizzard_black_market_ui_loads_without_errors(env: &WowLuaEnv) {
 }
 }
 
-#[cfg(feature = "client-ptr")]
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 #[test]
-fn ptr_black_market_does_not_publish_reversed_hide_wrapper() {
+fn mainline_black_market_bootstrap_hide_wrapper_hides_the_open_frame() {
     let env = load_full_game_ui();
     load_addon(&env.loader_env(), &black_market_toc()).expect("BlackMarketUI should load");
 
-    let result: (String, bool, bool, bool) = env
+    let result: (String, bool) = env
         .eval(
             r#"
-            BlackMarketFrame:Show()
-            local playedSound
-            local originalPlaySound = PlaySound
-            PlaySound = function(soundKitID)
-                playedSound = soundKitID
-            end
-            BlackMarketFrame_Hide()
-            PlaySound = originalPlaySound
-            return type(BlackMarketFrame_Hide),
-                HideBlackMarketFrame == nil,
-                not BlackMarketFrame:IsShown(),
-                playedSound == SOUNDKIT.AUCTION_WINDOW_CLOSE
+            local frame = BlackMarketFrame
+            local received
+            local originalHide = HideUIPanel
+            HideUIPanel = function(value) received = value end
+            HideBlackMarketFrame()
+            HideUIPanel = originalHide
+            return type(HideBlackMarketFrame), received == frame
             "#,
         )
-        .expect("black market hide helper behavior should be queryable");
-    assert_eq!(result, ("function".to_string(), true, true, true));
+        .expect("selected BlackMarket bootstrap hide wrapper should run");
+    assert_eq!(result, ("function".to_string(), true));
 }
 
 prefork_full_ui_case! {

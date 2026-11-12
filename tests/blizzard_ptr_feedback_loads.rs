@@ -307,7 +307,7 @@ fn blizzard_ptr_feedback_toc_lists_six_files_in_canonical_order() {
 }
 
 #[test]
-fn blizzard_ptr_feedback_does_not_appear_in_eager_discovery() {
+fn blizzard_ptr_feedback_appears_only_on_selected_screens() {
     let ui = blizzard_ui_dir();
 
     for screen in [
@@ -320,14 +320,12 @@ fn blizzard_ptr_feedback_does_not_appear_in_eager_discovery() {
         let found = addons
             .iter()
             .any(|(name, _)| name == "Blizzard_PTRFeedback");
-        assert!(
-            !found,
-            "Blizzard_PTRFeedback must NOT appear in eager discovery for {screen:?} \
-             — `## OnlyBetaAndPTR: 1` causes `is_ptr_only()` to flip true at \
-             src/toc.rs:285-290, and the loader filters PTR-only addons out of \
-             both the eager pool AND the LOD pool at src/loader/mod.rs:527 \
-             regardless of LoadOnDemand status. The simulator emulates a live \
-             client by default — PTR-only addons stay dormant"
+        assert_eq!(
+            found,
+            toc_layout::unified_toc_tree() && screen == ScreenKind::Game,
+            "Blizzard_PTRFeedback is selected on the PTR Game screen: its TOC line 2 \
+             says OnlyBetaAndPTR and line 8 uses the default Game-only screen. \
+             Retail blocks PTR-only addons; glue screens remain excluded."
         );
     }
 }

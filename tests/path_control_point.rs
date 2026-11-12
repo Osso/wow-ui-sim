@@ -237,9 +237,10 @@ fn path_smooth_uses_declared_catmull_rom_geometry_through_supplied_points() {
 #[test]
 fn path_actual_cached_smooth_xml_configures_points_and_restores_playback() {
     let env = new_env();
+    // PTR TOC Blizzard_MainMenuBarBagButtons.toc:14 selects this Mainline template XML.
     let source_path = wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("active profile cache required")
-        .join("Blizzard_MainMenuBarBagButtons/Mainline/MainMenuBarBagButtons.xml");
+        .join("Blizzard_MainMenuBarBagButtons/Mainline/MainMenuBarBagButtonTemplates.xml");
     let source = std::fs::read_to_string(source_path).expect("actual cached bag-button XML");
     // Preserve the actual first Path element unchanged; unrelated template dependencies
     // are not this failure boundary. Assertions below observe configuration/layout.

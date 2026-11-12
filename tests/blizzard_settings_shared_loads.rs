@@ -511,7 +511,7 @@ fn toc_entry_count_breakdown_matches_filesystem_layout() {
 
 post_wrath_ui_fixture! {
 #[test]
-fn family_placeholder_resolves_to_mainline_subdir_in_three_entries() {
+fn family_placeholder_resolves_profile_selected_mainline_entries() {
     let toc = TocFile::from_file(&settings_shared_toc()).expect("TOC parses");
 
     let mainline_files: Vec<String> = toc
@@ -526,26 +526,42 @@ fn family_placeholder_resolves_to_mainline_subdir_in_three_entries() {
             }
         })
         .collect();
+    let expected_mainline_files: &[&str] = if toc_layout::forever() {
+        &[
+            "Mainline/Blizzard_SettingsPanelTemplates.xml",
+            "Mainline/GraphicsOverrides.lua",
+            "Mainline/AudioOverrides.lua",
+        ]
+    } else if toc_layout::unified_toc_tree() {
+        &[
+            "Mainline/NewDefinitions.lua",
+            "Mainline/Blizzard_SettingsPanelTemplates.xml",
+            "Mainline/GraphicsOverrides.lua",
+            "Mainline/AudioOverrides.lua",
+            "Mainline/LanguagesOverrides.lua",
+        ]
+    } else {
+        &[
+            "Mainline/NewDefinitions.lua",
+            "Mainline/Blizzard_SettingsPanelTemplates.xml",
+            "Mainline/GraphicsOverrides.lua",
+            "Mainline/AudioOverrides.lua",
+        ]
+    };
     assert_eq!(
-        mainline_files.len(),
-        4,
-        "Exactly 4 body entries must resolve under `Mainline/` after the TOC \
-         parser at src/toc.rs:147 normalizes backslash to forward slash: \
-         Mainline/NewDefinitions.lua, \
-         Mainline/Blizzard_SettingsPanelTemplates.xml, \
-         Mainline/GraphicsOverrides.lua, Mainline/AudioOverrides.lua. The \
-         settings_shared TOC uses literal `Mainline\\` rather than `[Family]\\` \
-         placeholder (no resolution step needed). Got: {mainline_files:?}"
+        mainline_files,
+        expected_mainline_files
+            .iter()
+            .map(|file| file.to_string())
+            .collect::<Vec<_>>(),
+        "Resolved Mainline entries follow the active profile selectors; PTR TOC lines 12, 24, \
+         34, 35, and 38 select five files, while Forever excludes Mainline NewDefinitions and \
+         LanguagesOverrides"
     );
 
-    for expected in [
-        "Mainline/NewDefinitions.lua",
-        "Mainline/Blizzard_SettingsPanelTemplates.xml",
-        "Mainline/GraphicsOverrides.lua",
-        "Mainline/AudioOverrides.lua",
-    ] {
+    for expected in expected_mainline_files {
         assert!(
-            mainline_files.iter().any(|f| f == expected),
+            mainline_files.iter().any(|file| file == *expected),
             "Mainline body entry {expected} must be present after normalization"
         );
     }
