@@ -46,6 +46,7 @@ pub(crate) mod game_rules_visibility;
 pub mod item_descriptor;
 pub mod item_overlay;
 pub(crate) mod item_quality_color;
+pub mod item_tooltip;
 pub(crate) mod journal_collected;
 pub mod mount_filters;
 pub(crate) mod ptr_i4_game_rules;
