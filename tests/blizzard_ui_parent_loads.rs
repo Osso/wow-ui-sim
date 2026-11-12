@@ -82,29 +82,6 @@ fn ptr_mainline_excludes_mists_time_string_helper() {
     // PTR 12.1.7 Blizzard_UIParent.toc:1-3 is one unified TOC with only UIParent.lua.
     assert!(ptr_toc.lines().any(|line| line == "UIParent.lua"));
     assert!(!ptr_toc.contains("Mists\\UIParent.lua"));
-
-    let env = fresh_game_env();
-    let assert_helper_absent = |stage: &str| {
-        let helper_is_absent: bool = env
-            .eval("return GetTimeStringFromSeconds == nil")
-            .expect("time string helper visibility should be queryable");
-        assert!(
-            helper_is_absent,
-            "Mists-only GetTimeStringFromSeconds leaked into PTR mainline during {stage}"
-        );
-    };
-    assert_helper_absent("environment initialization");
-
-    let addons = discover_blizzard_addons_for_screen(&blizzard_ui_dir(), ScreenKind::Game);
-    for (name, toc_path) in &addons {
-        load_addon(&env.loader_env(), toc_path)
-            .unwrap_or_else(|err| panic!("[load {name}] FAILED: {err}"));
-    }
-    env.apply_post_load_workarounds();
-    assert_helper_absent("Blizzard loading or post-load compatibility");
-
-    fire_startup_events_for_screen(&env, ScreenKind::Game);
-    assert_helper_absent("settled startup");
 }
 
 // Literal cached inputs absent from Wrath manifest1-382/cache; behavior cases stay enabled.
@@ -454,4 +431,20 @@ fn full_game_load_emits_no_addon_specific_errors(env: &WowLuaEnv) {
          Found: {addon_specific:?}"
     );
 }
+}
+
+// PTR 12.1.7.70493 SharedXML.toc:26 selects TimeUtil.lua; line 342 defines this global.
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn mainline_shared_time_util_helper_is_published() {
+    let shared_xml_dir = blizzard_ui_dir().join("Blizzard_SharedXML");
+    let shared_xml_toc = find_toc_file(&shared_xml_dir).expect("SharedXML TOC resolves");
+    let toc = TocFile::from_file(&shared_xml_toc).expect("selected SharedXML TOC parses");
+    assert!(toc.files.iter().any(|file| file.ends_with("TimeUtil.lua")));
+
+    let env = load_full_game_ui();
+    let helper_type: String = env
+        .eval("return type(GetTimeStringFromSeconds)")
+        .expect("SharedXML time helper should be queryable");
+    assert_eq!(helper_type, "function");
 }

@@ -217,6 +217,7 @@ fn successful_test_stderr(output: Output) -> String {
     stderr
 }
 
+#[cfg(feature = "casc")]
 #[test]
 #[cfg(feature = "casc")]
 fn reload_xml_parent_marker_does_not_skip_compile_budget() {
@@ -244,6 +245,7 @@ fn reload_xml_parent_marker_does_not_skip_compile_budget() {
     }
 }
 
+#[cfg(feature = "casc")]
 #[test]
 #[cfg(feature = "casc")]
 fn reload_xml_layer_reconstruction_bounds_source_compiles() {
