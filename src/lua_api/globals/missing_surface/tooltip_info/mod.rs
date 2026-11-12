@@ -133,6 +133,10 @@ fn register_c_tooltip_info(state: &mut LuaState) -> LuaResult<()> {
         crate::c_api::c_tooltip_info_aura_instance::register(state, table_ref)?;
         crate::c_api::c_tooltip_info_indexed_aura::register(state, table_ref)?;
     }
+    #[cfg(feature = "client-retail")]
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        crate::c_api::c_tooltip_info_pvp_talent::register(state, table_ref)?;
+    }
     Ok(())
 }
 

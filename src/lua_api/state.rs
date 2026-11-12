@@ -543,6 +543,9 @@ macro_rules! build_empty_sim_state {
             player: PlayerState::seeded(),
             war_mode: crate::c_api::c_pvp::war_mode::WarModeState::default(),
             pvp_talents: crate::c_api::c_spec::PvpTalentState::default(),
+            #[cfg(feature = "client-retail")]
+            pvp_talent_tooltip:
+                crate::c_api::c_tooltip_info_pvp_talent::PvpTalentTooltipInputs::default(),
             player_xp: PlayerXpState::default(),
             bind_location: "Stormwind City".into(),
             pvp_honor: PvpHonorState::default(),
