@@ -598,3 +598,39 @@ fn test_inline_tooltip_three_arguments_preserve_lua_values() {
         .unwrap();
     }
 }
+
+#[test]
+fn test_inline_tooltip_reordered_handler_arguments() {
+    clear_templates();
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r##"
+        GameTooltip = {
+            AddLine = function(self, ...)
+                self.args = { n = select('#', ...), ... }
+            end,
+        }
+    "##,
+    )
+    .unwrap();
+    create_first_frame(
+        &env,
+        r#"<Ui>
+        <Button name="XmlInlineReorderedArgsButton" parent="UIParent">
+            <Scripts><OnClick>
+                GameTooltip:AddLine(button, self);
+            </OnClick></Scripts>
+        </Button>
+    </Ui>"#,
+        "Button",
+    );
+    env.exec(
+        r#"
+        XmlInlineReorderedArgsButton:GetScript("OnClick")(XmlInlineReorderedArgsButton, "RightButton", true)
+        assert(GameTooltip.args.n == 2, "explicit argument count changed")
+        assert(GameTooltip.args[1] == "RightButton", "button argument moved")
+        assert(GameTooltip.args[2] == XmlInlineReorderedArgsButton, "frame argument lost")
+    "#,
+    )
+    .unwrap();
+}
