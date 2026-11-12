@@ -40,7 +40,6 @@ The original three additions retain their bounded default-retail proof. Historic
 ### Remaining retained-source enum deltas
 
 - [x] Current `client-retail` publishes the other 30 retained-source deltas at numeric values from the official retail cache, with `InvalidAbbreviation`, `House`, and `PersonalOnly` absent from their respective enums. Current-retail corrections are implemented; batch7 observed GREEN is 20/20; independent bounded acceptance recorded below. Historical `profile-retail` keeps its prior publication.
-- [x] Current PTR publishes the documented Mainline loot-style enum and coherent metadata; exact test `party_loot_method::loot_method_style_is_mainline_across_method_changes` passed.
 - [x] Each newly covered enum has coherent `NumValues`, `MinValue`, and `MaxValue` derived from actual Lua-visible numeric members, both after environment initialization and after compatibility post-load restoration. Later cumulative members are permitted; no historical exact count is asserted.
 
 The retained section at lines 569–621 contains **33 delta rows across 20 enum subjects**, including the three already tested additions. The earlier audit's 36/24 totals are unsupported by this source; no extra rows are invented. The source/proof matrix below is the durable enum accounting source. Machine-readable cache extracts remain in `/tmp/patch-12.0.5-enum-doc-contracts.json`.
