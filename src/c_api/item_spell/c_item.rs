@@ -581,7 +581,19 @@ const RECORD_SOCKET_SLOTS: usize = 3;
 /// adds the two halves without a clamp; the sum cannot exceed three while the
 /// bonus half stays zero. An unresolved item publishes `0`.
 fn c_item_get_item_num_sockets(state: &mut LuaState) -> LuaResult<u32> {
-    let item_id = parse_item_id_key(state, stack_val(state, 1));
+    let input = if matches!(
+        ACTIVE,
+        ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
+    ) {
+        crate::c_api::tooltip_getter_args::allowed_when_untainted(
+            state,
+            1,
+            "C_Item.GetItemNumSockets",
+        )?
+    } else {
+        stack_val(state, 1)
+    };
+    let item_id = parse_item_id_key(state, input);
     let count = {
         let host = borrow_state(state)?;
         item_id.and_then(|id| host.item_info(id)).map_or(0, |item| {

@@ -845,30 +845,3 @@ impl Keybindings {
         self.overrides.clear();
     }
 }
-
-/// Character-boost / trial service state. Drives
-/// `C_CharacterServices.GetActiveCharacterUpgradeBoostType` and
-/// `C_CharacterServices.GetActiveClassTrialBoostType`. Both default to
-/// `None` (no active service).
-#[derive(Debug, Default, Clone)]
-pub struct CharacterServicesState {
-    /// Active character-upgrade boost type id, or `None` when no boost
-    /// purchase is pending.  Retail values: 5 = Level-60 boost, etc.
-    pub active_upgrade_boost_type: Option<i32>,
-    /// Active class-trial boost type id, or `None` when no trial is
-    /// running.
-    pub active_class_trial_boost_type: Option<i32>,
-    /// R54 local session request, independent of active purchase/trial services.
-    pub automatic_boost_type: Option<i32>,
-    /// Independent optional GUID; ordinary valid GUID strings are retained.
-    pub automatic_boost_character_guid: Option<String>,
-}
-
-impl CharacterServicesState {
-    /// Explicit host notification for the verified realm-disconnect clear.
-    /// The simulator has no native network callback wiring or Lua endpoint here.
-    /// Logout and direct-screen boot are not realm-disconnect notifications.
-    pub fn on_realm_disconnect(&mut self) {
-        self.automatic_boost_type = None;
-    }
-}

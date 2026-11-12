@@ -4,14 +4,106 @@
 //! passes a secret-access check before conversion, signed conversion rejects
 //! non-integers, and unsigned/index conversion rejects negatives.
 
+use crate::lua_api::methods::val_to_string;
 use crate::lua_bridge::{stack_val, val_to_i32};
-use rilua::table_security::unwrap_secret;
+use rilua::table_security::{can_access_secrets, is_secret_value, unwrap_secret};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
 /// Signed numeric argument (WM94 §1: `outside of expected range -2147483648 to 2147483647`).
 pub(crate) fn signed(state: &LuaState, position: i32) -> LuaResult<i32> {
     val_to_i32(unwrap_secret(state, stack_val(state, position))?, position)
+}
+
+/// Apply the currently modelled AllowedWhenUntainted policy using the
+/// native argument-error wording. R7's other access-mode messages are unknown
+/// to the VM and are not inferred here.
+pub(crate) fn allowed_when_untainted(
+    state: &LuaState,
+    position: i32,
+    api_name: &str,
+) -> LuaResult<Val> {
+    let value = stack_val(state, position);
+    if is_secret_value(state, value) && !can_access_secrets(state) {
+        return Err(rilua::runtime_error(format!(
+            "{api_name}: Secret values are only allowed during untainted execution for this argument."
+        )));
+    }
+    unwrap_secret(state, value)
+}
+
+/// Round 7 numeric parser: accepts numeric strings, checks the full numeric
+/// range before truncating toward zero, and reports the getter's baked usage.
+pub(crate) fn round7_signed(state: &LuaState, position: i32, usage: &str) -> LuaResult<i32> {
+    let value = allowed_when_untainted(state, position, tooltip_api_name(usage))?;
+    let number =
+        numeric_argument(state, value).ok_or_else(|| rilua::runtime_error(usage.to_string()))?;
+    if !number.is_finite() || number < f64::from(i32::MIN) || number > f64::from(i32::MAX) {
+        return Err(rilua::runtime_error(format!(
+            "outside of expected range -2147483648 to 2147483647 - {usage}"
+        )));
+    }
+    Ok(number.trunc() as i32)
+}
+
+/// Round 7 optional unsigned rank. Absent or nil is not an argument error.
+pub(crate) fn round7_optional_unsigned(
+    state: &LuaState,
+    position: i32,
+    usage: &str,
+) -> LuaResult<Option<u32>> {
+    if stack_val(state, position).is_nil() {
+        return Ok(None);
+    }
+    let value = allowed_when_untainted(state, position, tooltip_api_name(usage))?;
+    let number =
+        numeric_argument(state, value).ok_or_else(|| rilua::runtime_error(usage.to_string()))?;
+    if !number.is_finite() || number < 0.0 || number > f64::from(u32::MAX) {
+        return Err(rilua::runtime_error(format!(
+            "outside of expected range 0 to 4294967295 - {usage}"
+        )));
+    }
+    Ok(Some(number.trunc() as u32))
+}
+
+/// Optional strict boolean used by Round 7's party-progress flags. The native
+/// invalid-boolean diagnostic is not established; preserve the public usage.
+pub(crate) fn round7_optional_bool(
+    state: &LuaState,
+    position: i32,
+    usage: &str,
+) -> LuaResult<bool> {
+    match allowed_when_untainted(state, position, tooltip_api_name(usage))? {
+        Val::Nil => Ok(false),
+        Val::Bool(value) => Ok(value),
+        _ => Err(rilua::runtime_error(usage.to_string())),
+    }
+}
+
+/// Convert the GUID reader's string-or-number inputs without inventing an
+/// identity mapping. An unparseable string is a miss, as in the native reader.
+pub(crate) fn round7_guid(state: &LuaState, position: i32, usage: &str) -> LuaResult<String> {
+    let value = allowed_when_untainted(state, position, tooltip_api_name(usage))?;
+    match value {
+        Val::Num(number) => Ok(number.to_string()),
+        Val::Str(_) => Ok(val_to_string(state, value).unwrap_or_default()),
+        _ => Err(rilua::runtime_error(usage.to_string())),
+    }
+}
+
+fn tooltip_api_name(usage: &str) -> &str {
+    usage
+        .strip_prefix("Usage: local data = ")
+        .and_then(|name| name.split_once('(').map(|(name, _)| name))
+        .unwrap_or("C_TooltipInfo")
+}
+
+fn numeric_argument(state: &LuaState, value: Val) -> Option<f64> {
+    match value {
+        Val::Num(number) => Some(number),
+        Val::Str(_) => val_to_string(state, value)?.trim().parse().ok(),
+        _ => None,
+    }
 }
 
 /// Unsigned numeric argument (WM94 §1: `outside of expected range 0 to 4294967295`).

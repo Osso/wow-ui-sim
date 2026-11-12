@@ -10,7 +10,7 @@ Only Forever publishes the supplied GetOutfitsInfo handler. The modern epoch-gat
 
 ## Selected consumer and ordering
 
-Forever `Blizzard_PlayerSpells.toc` selects `[Game]` as Camelot and the shared SpellBook category. The selected Camelot CreateCategoryMixins:45 instantiates the transmog category at 67; its Init:422 calls original UpdateSpellGroups:483, which reads GetOutfitsInfo before later IsAvailable:506 reads availability at 507 and outfits at 508. Therefore constructor failure alone cannot prove availability publication. The independent original query in each availability test runs before explicit construction, then GREEN tests use the constructor-created category and original UpdateAllSpellData:487.
+Forever `Blizzard_PlayerSpells.toc` selects `[Game]` as Camelot and the shared SpellBook category. The selected Camelot CreateCategoryMixins:115 instantiates the transmog category at 67; its Init:422 calls original UpdateSpellGroups:483, which reads GetOutfitsInfo before later IsAvailable:506 reads availability at 507 and outfits at 508. Therefore constructor failure alone cannot prove availability publication. The independent original query in each availability test runs before explicit construction, then GREEN tests use the constructor-created category and original UpdateAllSpellData:487.
 
 The original PopulateSpellGroupsIndiciesByRange:463 reads GetOutfitsInfo without consulting availability. It rebuilds membership and ordered indices as 100000+outfitID, including the clear-outfit index 100000. Sparse replacement fixtures distinguish a live supplied list from empty/fixed/no-op producers.
 

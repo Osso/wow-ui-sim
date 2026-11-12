@@ -852,6 +852,70 @@ fn casting_bar_original_interruptibility_uses_cast_secrecy_predicate() {
     "#).expect("original CastingBarFrame interruptibility path");
 }
 
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn forever_spell_cast_secrecy_uses_supplied_unit_and_control_guids_in_casting_bar() {
+    let env = env_with_full_blizzard_ui();
+    env.exec("TargetUnit('enemy1')")
+        .expect("select resolved non-player target");
+    env.exec(
+        r#"
+        local function expect_secret(unit, expected, label)
+            local ok, actual = pcall(function()
+                return C_Secrets.ShouldUnitSpellCastingBeSecret(unit)
+            end)
+            assert(ok, label .. " query failed: " .. tostring(actual))
+            assert(actual == expected, label .. " secrecy mismatch: " .. tostring(actual))
+        end
+        local function rejects_argument(callback)
+            local ok = pcall(callback)
+            return not ok
+        end
+
+        expect_secret("player", false, "player")
+        expect_secret("target", true, "target")
+        expect_secret("pet", true, "unresolved pet")
+        expect_secret(123, true, "numeric token")
+        expect_secret("", true, "empty token")
+        assert(rejects_argument(function() C_Secrets.ShouldUnitSpellCastingBeSecret() end), "missing unit should fail")
+        assert(rejects_argument(function() C_Secrets.ShouldUnitSpellCastingBeSecret(nil) end), "nil unit should fail")
+        assert(rejects_argument(function() C_Secrets.ShouldUnitSpellCastingBeSecret(false) end), "boolean unit should fail")
+        assert(rejects_argument(function() C_Secrets.ShouldUnitSpellCastingBeSecret({}) end), "table unit should fail")
+        assert(UnitGUID("pet") == nil)
+        "#,
+    )
+    .expect("native spell-casting secrecy should classify resolved and unknown units");
+
+    let pet_guid = "Pet-0-0000-00000000-00000-00000";
+    {
+        let mut state = env.state().borrow_mut();
+        state
+            .unit_guid_overrides
+            .insert("pet".to_string(), pet_guid.to_string());
+        state
+            .player_owned_or_controlled_unit_guids
+            .insert(pet_guid.to_string());
+    }
+
+    env.exec(
+        r#"
+        assert(UnitGUID("pet") == "Pet-0-0000-00000000-00000-00000")
+        assert(C_Secrets.ShouldUnitSpellCastingBeSecret("pet") == false)
+
+        PlayerCastingBarFrame.unit = "pet"
+        PlayerCastingBarFrame.barType = CastingBarType.Standard
+        local ownedPetResult = PlayerCastingBarFrame:IsInterruptable()
+        assert(ownedPetResult == true)
+        assert(not issecretvalue(ownedPetResult))
+
+        PlayerCastingBarFrame.unit = "target"
+        local nonPlayerResult = PlayerCastingBarFrame:IsInterruptable()
+        assert(issecretvalue(nonPlayerResult))
+        "#,
+    )
+    .expect("original CastingBarFrame consumer should honor supplied ownership GUIDs");
+}
+
 #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 #[test]
 fn secret_predicates_validate_required_units_and_follow_sibling_policies() {
@@ -861,6 +925,7 @@ fn secret_predicates_validate_required_units_and_follow_sibling_policies() {
         local cast = C_Secrets.ShouldUnitSpellCastingBeSecret
         local threat = C_Secrets.ShouldUnitThreatValuesBeSecret
         assert(select('#', cast('player')) == 1 and cast('player') == false)
+        assert(cast(123) == true)
         assert(select('#', threat('player', 'target')) == 1 and threat('player', 'target') == false)
         assert(not pcall(cast))
         assert(not pcall(cast, nil))

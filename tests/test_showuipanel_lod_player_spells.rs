@@ -11,7 +11,8 @@ retail_ptr_forever_toc_fixture! {
 use crate::common;
 
 use common::panel_fixtures::{
-    clear_recorded_lua_errors, player_spells_panel_debug_snapshot, recorded_lua_errors, setup_env,
+    clear_recorded_lua_errors, player_spells_panel_debug_snapshot, recorded_lua_errors,
+    setup_env as setup_panel_env,
 };
 use wow_ui_sim::startup::run_extra_update_ticks;
 post_wrath_ui_fixture! {
@@ -41,6 +42,12 @@ fn max_points_for_currency(currency_id: u32) -> u32 {
         8 => 30,
         _ => 0,
     }
+}
+
+fn setup_env() -> wow_ui_sim::lua_api::WowLuaEnv {
+    let env = setup_panel_env();
+    common::supply_empty_forever_spellbook_outfits(&env);
+    env
 }
 
 post_wrath_ui_fixture! {

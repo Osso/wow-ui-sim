@@ -72,6 +72,7 @@ fn register_c_tooltip_info(state: &mut LuaState) -> LuaResult<()> {
         // GetEnhancedConduit (:254).
         crate::c_api::c_tooltip_info_artifact_power::register(state, table_ref)?;
         crate::c_api::c_tooltip_info_enhanced_conduit::register(state, table_ref)?;
+        crate::c_api::c_tooltip_info_round7::register(state, table_ref)?;
         // WM107: the pinned docs declare GetPvpBrawl
         // (TooltipInfoDocumentation.lua:710) on Retail, PTR and Forever; the
         // supplied brawl state is compiled for the same profiles.

@@ -1,11 +1,15 @@
-//! `C_Login` glue-screen connection state helpers.
+//! `C_Login` connection state and selected-superdistrict helpers.
 
-use crate::c_api::{ensure_namespace, permanent_shims};
+use crate::c_api::{c_district_utils, ensure_namespace, permanent_shims};
 use crate::client_profile::{ACTIVE, ClientProfile};
-use crate::lua_api::methods::{borrow_state, create_table, table_set};
+use crate::lua_api::WowLuaEnv;
+use crate::lua_api::methods::{
+    borrow_state, borrow_state_mut, create_table, table_set, table_set_static,
+};
 use crate::lua_bridge::table_set_rust_fn_static;
+use crate::screen::ScreenKind;
 use rilua::vm::state::LuaState;
-use rilua::{LuaResult, Val};
+use rilua::{LuaApiMut, LuaResult, Val};
 
 pub mod backgrounds;
 pub mod character_roster;
@@ -108,6 +112,74 @@ pub fn register_c_login(state: &mut LuaState) -> LuaResult<()> {
     }
     permanent_shims::c_login::register_c_login_defaults(state, ns)?;
     Ok(())
+}
+
+/// Update the Glue-only selected-superdistrict query and login-start state.
+pub(crate) fn update_screen_registration(env: &WowLuaEnv, screen: ScreenKind) {
+    if !matches!(ACTIVE, ClientProfile::Ptr | ClientProfile::WowForever) {
+        return;
+    }
+
+    let mut lua = env.lua.borrow_mut();
+    let state = lua.state_mut();
+    update_selected_super_district_registration(state, screen.is_glue())
+        .expect("register Glue-only C_Login.GetSelectedSuperDistrictID and SelectSuperDistrict");
+
+    if screen == ScreenKind::Login {
+        borrow_state_mut(state)
+            .expect("borrow login state when starting the login screen")
+            .selected_super_district_id = 0;
+    }
+}
+
+fn update_selected_super_district_registration(
+    state: &mut LuaState,
+    is_glue: bool,
+) -> LuaResult<()> {
+    let namespace = match LuaApiMut::get_global_val(state, "C_Login") {
+        Val::Table(namespace) => namespace,
+        _ if is_glue => ensure_namespace(state, "C_Login")?,
+        _ => return Ok(()),
+    };
+
+    if is_glue {
+        table_set_rust_fn_static(
+            state,
+            namespace,
+            "GetSelectedSuperDistrictID",
+            get_selected_super_district_id,
+        )?;
+        LuaApiMut::register_function(state, "SelectSuperDistrict", select_super_district)
+    } else {
+        table_set_static(
+            state,
+            Val::Table(namespace),
+            "GetSelectedSuperDistrictID",
+            Val::Nil,
+        );
+        LuaApiMut::set_global_val(state, "SelectSuperDistrict", Val::Nil)
+    }
+}
+
+fn get_selected_super_district_id(state: &mut LuaState) -> LuaResult<u32> {
+    let selected_id = borrow_state(state)?.selected_super_district_id;
+    state.push(Val::Num(f64::from(selected_id)));
+    Ok(1)
+}
+
+fn select_super_district(state: &mut LuaState) -> LuaResult<u32> {
+    let super_district_id = c_district_utils::read_super_district_id(
+        state,
+        "SelectSuperDistrict",
+        "Usage: SelectSuperDistrict(superDistrictID)",
+    )?;
+    let is_available = borrow_state(state)?
+        .super_district_info_by_id
+        .contains_key(&super_district_id);
+    if is_available {
+        borrow_state_mut(state)?.selected_super_district_id = super_district_id;
+    }
+    Ok(0)
 }
 
 fn c_login_is_login_ready(state: &mut LuaState) -> LuaResult<u32> {

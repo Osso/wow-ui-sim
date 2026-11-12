@@ -174,13 +174,30 @@ fn frame_is_protected(widgets: &WidgetRegistry, id: u64) -> bool {
     widgets.get(id).is_some_and(|frame| frame.is_protected)
 }
 
+/// Walks the frame's `children` lists (the hierarchy `GetChildren` reports),
+/// so a check costs the subtree size rather than a registry scan per level:
+/// it runs on every insecure protected-state call in combat, and the registry
+/// holds the whole Blizzard UI.
 fn frame_has_protected_descendant(widgets: &WidgetRegistry, id: u64) -> bool {
-    widgets.iter_ids().any(|child_id| {
-        widgets.get(child_id).is_some_and(|frame| {
-            frame.parent_id == Some(id)
-                && (frame.is_protected || frame_has_protected_descendant(widgets, child_id))
-        })
-    })
+    let mut pending = vec![id];
+    while let Some(parent_id) = pending.pop() {
+        let Some(parent) = widgets.get(parent_id) else {
+            continue;
+        };
+        for &child_id in &parent.children {
+            let Some(child) = widgets.get(child_id) else {
+                continue;
+            };
+            if child.parent_id != Some(parent_id) {
+                continue;
+            }
+            if child.is_protected {
+                return true;
+            }
+            pending.push(child_id);
+        }
+    }
+    false
 }
 
 fn frame_anchor_references_protected_state(widgets: &WidgetRegistry, id: u64) -> bool {
@@ -191,4 +208,59 @@ fn frame_anchor_references_protected_state(widgets: &WidgetRegistry, id: u64) ->
                 .is_some_and(|relative_to_id| frame_is_protected(widgets, relative_to_id as u64))
         })
     })
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    fn frame(id: u64, parent_id: Option<u64>, is_protected: bool) -> Frame {
+        Frame {
+            id,
+            parent_id,
+            is_protected,
+            ..Default::default()
+        }
+    }
+
+    fn registry(frames: &[(u64, Option<u64>, bool)]) -> WidgetRegistry {
+        let mut widgets = WidgetRegistry::default();
+        for &(id, parent_id, is_protected) in frames {
+            widgets.register(frame(id, parent_id, is_protected));
+            if let Some(parent_id) = parent_id {
+                widgets.add_child(parent_id, id);
+            }
+        }
+        widgets
+    }
+
+    #[test]
+    fn protected_grandchild_blocks_every_ancestor() {
+        let widgets = registry(&[
+            (1, None, false),
+            (2, Some(1), false),
+            (3, Some(2), true),
+            (4, None, false),
+        ]);
+        assert!(frame_has_protected_descendant(&widgets, 1));
+        assert!(frame_has_protected_descendant(&widgets, 2));
+        assert!(!frame_has_protected_descendant(&widgets, 3));
+        assert!(!frame_has_protected_descendant(&widgets, 4));
+        assert!(frame_blocks_protected_state(&widgets, 1));
+        assert!(!frame_blocks_protected_state(&widgets, 4));
+    }
+
+    #[test]
+    fn reparenting_moves_the_protected_descendant() {
+        let mut widgets = registry(&[
+            (1, None, false),
+            (2, Some(1), false),
+            (3, Some(2), true),
+            (4, None, false),
+        ]);
+        widgets.add_child(4, 3);
+        assert!(!frame_has_protected_descendant(&widgets, 1));
+        assert!(!frame_has_protected_descendant(&widgets, 2));
+        assert!(frame_has_protected_descendant(&widgets, 4));
+    }
 }

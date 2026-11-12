@@ -1,8 +1,8 @@
 //! Temporary `C_CharacterServices` service/display defaults.
 //!
-//! Active boost and class-trial type probes are state-backed in Rust. Service
-//! entitlement, VAS distribution, display metadata, and assignment state are not
-//! modeled yet, so these functions preserve the inert startup-compatible shape.
+//! Active boost, class-trial, and queued-upgrade presence probes are state-backed
+//! in Rust. Service entitlement, VAS distribution, display metadata, and assignment
+//! state are not modeled yet, so these functions preserve the inert startup-compatible shape.
 
 const CHARACTER_SERVICES_DEFAULTS_LUA: &str = r#"
 C_CharacterServices = C_CharacterServices or __wow_namespace()
@@ -75,8 +75,6 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
         crate::client_profile::ACTIVE,
         crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
     ) {
-        // User-approved default until queued character upgrades are modeled.
-        lua.exec("function C_CharacterServices.HasQueuedUpgrade() return false end")?;
         // User-approved, not native evidence: class-trial boosts are not modeled.
         lua.exec("function C_CharacterServices.IsTrialBoostEnabled() return false end")?;
     }

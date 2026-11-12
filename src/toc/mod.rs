@@ -41,7 +41,8 @@ impl sim_toc::Selection for ActiveSelection {
         )
     }
     fn permits_ptr_only() -> bool {
-        Self::expands_regional_text_locale()
+        // R26: only the PTR profile has the native PTR/beta build classification.
+        crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Ptr
     }
     fn is_mists() -> bool {
         crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Mists

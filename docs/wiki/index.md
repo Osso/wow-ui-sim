@@ -10,6 +10,9 @@
 ## [2026-11-10] implementation | Mists R21 Classic API contracts
 
 [Mists R21 Classic API behavior](investigations/mists-r21-classic-apis.md) records shared reputation backing-list indexing, watched-slot request mapping, engraving mode and backpack-currency behavior. **VERIFIED:** Ten targeted Mists tests pass; all six profile builds have zero warnings and all six library suites pass. The Mists `spell` and `frame_position` failure-name sets match base `origin/master` `93125f591`. Native `N+1` watcher behavior and Era/Anniversary behavior remain UNKNOWN.
+## [2026-11-10] implementation | Round 7 tooltip getters
+
+[Tooltip data](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) links the [Round 7 contract](../specs/tooltip-r7-getters.md): profile-specific getter publication, exact argument readers, no-value misses for absent backing models, owned-item Runeforge composition and the bounded `GetItemNumSockets` secret-input policy. Native socket-result tagging remains UNKNOWN.
 
 ## [2026-11-09] investigation | Reconcile profile frame-position baselines
 
@@ -182,13 +185,9 @@ ordinary launches retain import priority. See [addon loading](systems/addon-load
 selection, addon-visible names and realms before loading and after ReloadUI,
 Forever surname handling and the bounded original-consumer coverage.
 
-## [2026-11-02] investigation | Forever login startup
+## [2026-11-11] correction | Forever PTR feedback Glue selection
 
-[Login startup](investigations/forever-login-startup.md) records missing profile data,
-TOC sibling provenance, customization initialization and the user-approved offline
-catalog/capability policy. The rebuilt Windows login reports zero Lua errors, down
-from 38 records/58 occurrences; 69 focused checks pass after review. This bounded verification
-is separate from the game-screen baseline and native parity.
+[Login startup](investigations/forever-login-startup.md#r26-toc-admission-correction-2026-11-11) records R26's build-classification gate and the cached TOC distinction. **INFERRED (R26 plus the shipped cache TOC, whose exact build is unknown):** normal Forever startup excludes `Blizzard_PTRFeedbackGlue`. **VERIFIED (simulator test at `83d7e3998`, 1/1):** the updated fixture checks its absence from Login startup; it does not assert customization add-on loading there.
 
 ## [2026-11-03] investigation | Forever Cooldown Viewer in Edit Mode
 

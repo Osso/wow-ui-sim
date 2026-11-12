@@ -105,6 +105,11 @@ const VIRTUAL_TEMPLATES: &[&str] = &[
 ];
 
 const EXPECTED_BODY: &[&str] = &["Blizzard_StableUI.lua", "Blizzard_StableUI.xml"];
+const FOREVER_EXPECTED_BODY: &[&str] = &[
+    "Shared/Blizzard_StableUI_Shared.lua",
+    "Camelot/Blizzard_StableUI.lua",
+    "Camelot/Blizzard_StableUI.xml",
+];
 
 fn load_full_game_ui() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
@@ -267,15 +272,18 @@ fn body_lists_lua_before_xml_for_mixin_resolution() {
         .map(|p| p.to_string_lossy().to_string())
         .collect();
 
+    let expected_body = if cfg!(feature = "client-wowforever") {
+        FOREVER_EXPECTED_BODY
+    } else {
+        EXPECTED_BODY
+    };
     assert_eq!(
         body.len(),
-        EXPECTED_BODY.len(),
-        "Body must contain exactly 2 entries — one .lua holding all 20 \
-         mixin tables and one .xml registering the 4 virtual templates + \
-         the named StableFrame instance. Got: {body:?}"
+        expected_body.len(),
+        "selected profile body entries must match its TOC: {body:?}"
     );
 
-    for (i, want) in EXPECTED_BODY.iter().enumerate() {
+    for (i, want) in expected_body.iter().enumerate() {
         assert_eq!(
             &body[i], want,
             "Body entry {i}: expected {want}, got {}",
@@ -283,14 +291,16 @@ fn body_lists_lua_before_xml_for_mixin_resolution() {
         );
     }
 
+    let xml_index = body
+        .iter()
+        .position(|path| path.ends_with(".xml"))
+        .expect("selected stable UI TOC lists XML");
     assert!(
-        body[0].ends_with(".lua") && body[1].ends_with(".xml"),
-        "Blizzard_StableUI.lua MUST load BEFORE the .xml — the XML's \
-         mixin attributes (StableFrameMixin on the named StableFrame, \
-         plus 4 virtual-template mixin bindings) resolve mixin tables at \
-         template-registration time, so they MUST already be tables in _G \
-         when the .xml chunk processes. Reverse the order and every \
-         CreateFromMixins / mixin-lookup call would see nil"
+        body.iter()
+            .enumerate()
+            .filter(|(_, path)| path.ends_with(".lua"))
+            .all(|(index, _)| index < xml_index),
+        "every selected Lua mixin source must load before XML registration: {body:?}"
     );
 }
 }

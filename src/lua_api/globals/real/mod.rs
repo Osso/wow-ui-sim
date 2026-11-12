@@ -88,6 +88,12 @@ pub mod publication_12_0_0;
 #[cfg(feature = "retail-12-0-0")]
 pub(crate) mod publication_unit_12_0_0;
 pub(crate) mod quest_dialog;
+#[cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
+pub(crate) mod quest_faction_group;
 #[cfg(feature = "retail-12-0-0")]
 pub(crate) mod raid_targets;
 #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
