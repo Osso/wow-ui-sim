@@ -44,13 +44,9 @@ fn stack_u32(state: &mut LuaState, index: i32) -> Option<u32> {
     stack_i32(state, index).and_then(|n| u32::try_from(n).ok())
 }
 
-/// Native PickupAction/PlaceAction ranges: PTR 1–360, Retail 1–180 (R29).
+/// PTR ActionBar slots are limited to 1–360 (R29); other profiles keep their prior range.
 fn action_slot_valid(slot: u32) -> bool {
-    match ACTIVE {
-        ClientProfile::Ptr => (1..=360).contains(&slot),
-        ClientProfile::Retail => (1..=180).contains(&slot),
-        _ => true,
-    }
+    ACTIVE != ClientProfile::Ptr || (1..=360).contains(&slot)
 }
 
 /// PTR reports the changed slot; other profiles keep the legacy broadcast value 0.
@@ -285,7 +281,7 @@ fn get_action_info(state: &mut LuaState) -> LuaResult<u32> {
 
 /// `PickupMerchantItem(index)` — move a supplied merchant offer to the cursor (R37).
 fn pickup_merchant_item(state: &mut LuaState) -> LuaResult<u32> {
-    if !cursor_model::retail_and_ptr_transitions_modeled() || cursor_has_owned_item(state)? {
+    if ACTIVE != ClientProfile::Ptr || cursor_has_owned_item(state)? {
         return pickup_legacy_merchant_item(state);
     }
     let Some(index) = parse_merchant_index(state)? else {

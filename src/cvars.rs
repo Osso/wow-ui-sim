@@ -241,6 +241,7 @@ impl CVarStorage {
     /// Get all known CVar names in original case (defaults + overrides).
     pub fn all_keys(&self) -> Vec<String> {
         let mut keys: std::collections::HashSet<String> = self.defaults.keys().cloned().collect();
+        let server_mirrored = self.server_mirrored.read().unwrap();
         for key in self.registered_defaults.read().unwrap().keys() {
             keys.insert(key.clone());
         }
@@ -255,7 +256,8 @@ impl CVarStorage {
                 .filter(|(_, values)| values.imported.is_some())
                 .map(|(key, _)| key.clone()),
         );
-        keys.retain(|key| !is_profile_removed_cvar_key(key));
+        keys.retain(|key| !is_profile_removed_cvar_key(key) && !server_mirrored.contains_key(key));
+        drop(server_mirrored);
         let mut sorted: Vec<String> = keys
             .into_iter()
             .map(|k| {
@@ -335,7 +337,6 @@ fn server_mirrored_store_defaults() -> HashMap<String, String> {
 
 fn parse_default_cvars() -> (HashMap<String, String>, HashMap<String, String>) {
     let (mut defaults, mut original_names) = parse_cvar_yaml(include_str!("cvars.yaml"));
-    insert_store_mirror_cvars(&mut defaults, &mut original_names);
     insert_collected_journal_cvar(&mut defaults, &mut original_names);
     // R47: real registered local CVar, with distinct PTR/Forever declarations.
     let preset_default = match crate::client_profile::ACTIVE {
@@ -378,24 +379,6 @@ fn parse_default_cvars() -> (HashMap<String, String>, HashMap<String, String>) {
     insert_profile_cvars(&mut defaults, &mut original_names);
     remove_profile_cvars(&mut defaults, &mut original_names);
     (defaults, original_names)
-}
-
-/// Retail/PTR server-mirrored store flags, with defaults verified by R20.
-fn insert_store_mirror_cvars(
-    defaults: &mut HashMap<String, String>,
-    original_names: &mut HashMap<String, String>,
-) {
-    if !matches!(
-        crate::client_profile::ACTIVE,
-        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
-    ) {
-        return;
-    }
-    for (name, value) in [("bpayStoreEnable", "0"), ("shop2Enabled", "1")] {
-        let key = name.to_lowercase();
-        defaults.insert(key.clone(), value.to_owned());
-        original_names.insert(key, name.to_owned());
-    }
 }
 
 /// Collections journal CVar shipped by the PTR and WowForever pins only.
