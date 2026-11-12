@@ -55,6 +55,11 @@ fn test_frame_level_methods_follow_parent_level_and_raise_state() {
 #[test]
 fn test_secret_and_protected_methods_reflect_frame_security_state() {
     let env = WowLuaEnv::new().unwrap();
+    // WM61 S6 verifies independent calculations on Retail. PTR shares this
+    // model; other profiles retain their separate compatibility behavior.
+    let independent = cfg!(any(feature = "client-retail", feature = "client-ptr"));
+    env.exec(&format!("S6IndependentFlags = {independent}"))
+        .unwrap();
     env.exec(
         r#"
         SecretValuesFrame = CreateFrame("Frame", "SecretValuesFrame", UIParent)
@@ -88,9 +93,9 @@ fn test_secret_and_protected_methods_reflect_frame_security_state() {
 
         assert(SecretValuesFrame:IsPreventingSecretValues(), "SetPreventSecretValues(true) should persist")
         assert(SecretValuesFrame:HasSecretValues(), "preventing secret values should mark the frame as having secret values")
-        assert(SecretValuesFrame:HasAnySecretAspect(), "secret-valued frame should report a secret aspect")
-        assert(SecretValuesFrame:HasSecretAspect(Enum.SecretAspect.ObjectSecrets), "object secret aspect should be present")
-        assert(SecretValuesFrame:IsAnchoringSecret(), "secret-valued frame should be anchoring secret")
+        assert(SecretValuesFrame:HasAnySecretAspect() == not S6IndependentFlags, "prevention must not create a recorded aspect on Retail/PTR")
+        assert(SecretValuesFrame:HasSecretAspect(Enum.SecretAspect.ObjectSecrets) == not S6IndependentFlags, "prevention is independent of ObjectSecrets on Retail/PTR")
+        assert(SecretValuesFrame:IsAnchoringSecret() == not S6IndependentFlags, "prevention is independent of anchoring secrecy on Retail/PTR")
         assert(not SecretValuesFrame:IsAnchoringRestricted(), "secret-valued frame should not become anchoring restricted")
 
         "#,
@@ -107,21 +112,21 @@ fn test_secret_and_protected_methods_reflect_frame_security_state() {
 
         assert(not SecretValuesFrame:IsPreventingSecretValues(), "SetPreventSecretValues(false) should clear")
         assert(not SecretValuesFrame:HasSecretValues(), "clearing prevention should clear secret values")
-        assert(not SecretValuesFrame:HasAnySecretAspect(), "clearing prevention should clear secret aspects")
-        assert(not SecretValuesFrame:IsAnchoringSecret(), "clearing prevention should clear anchoring secret")
+        assert(not SecretValuesFrame:HasAnySecretAspect(), "no aspect was recorded")
+        assert(not SecretValuesFrame:IsAnchoringSecret(), "no anchoring input was supplied")
 
         A_Admin.SetFrameProtected("ProtectedSecretFrame", true)
         ForbiddenSecretFrame:SetForbidden(true)
 
         assert(ProtectedSecretFrame:IsAnchoringRestricted(), "protected frames should be anchoring restricted")
-        assert(ProtectedSecretFrame:HasAnySecretAspect(), "protected frames should report a secret/security aspect")
-        assert(ProtectedSecretFrame:HasSecretAspect(Enum.SecretAspect.ObjectSecurity), "protected frames should report object security aspect")
+        assert(ProtectedSecretFrame:HasAnySecretAspect() == not S6IndependentFlags, "protection must not create a recorded aspect on Retail/PTR")
+        assert(ProtectedSecretFrame:HasSecretAspect(Enum.SecretAspect.ObjectSecurity) == not S6IndependentFlags, "protection is independent of recorded ObjectSecurity on Retail/PTR")
         assert(not ProtectedSecretFrame:HasSecretValues(), "protected frames should not imply secret values")
         assert(not ProtectedSecretFrame:IsAnchoringSecret(), "protected frames should not imply anchoring secret")
 
         assert(ForbiddenSecretFrame:IsAnchoringRestricted(), "forbidden frames should be anchoring restricted")
-        assert(ForbiddenSecretFrame:HasAnySecretAspect(), "forbidden frames should report a secret/security aspect")
-        assert(ForbiddenSecretFrame:HasSecretAspect(Enum.SecretAspect.ObjectSecurity), "forbidden frames should report object security aspect")
+        assert(ForbiddenSecretFrame:HasAnySecretAspect() == not S6IndependentFlags, "forbidden state must not create a recorded aspect on Retail/PTR")
+        assert(ForbiddenSecretFrame:HasSecretAspect(Enum.SecretAspect.ObjectSecurity) == not S6IndependentFlags, "forbidden state is independent of recorded ObjectSecurity on Retail/PTR")
 
         SECRET_PROTECTED_STATE_OK = true
     "#,
@@ -135,6 +140,33 @@ fn test_secret_and_protected_methods_reflect_frame_security_state() {
         ok,
         "secret/protected state should round-trip through frame methods"
     );
+}
+
+/// VERIFIED local calculation: S6-aspects-wm61.md, Native mechanism.
+/// There is no original Blizzard Lua consumer of IsAnchoringSecret in the cache.
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn test_prevention_does_not_imply_anchoring_secret() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec("CreateFrame('Frame', 'S6AnchorFrame', UIParent)")
+        .unwrap();
+    let id = env
+        .state()
+        .borrow()
+        .widgets
+        .get_id_by_name("S6AnchorFrame")
+        .unwrap();
+    env.state()
+        .borrow_mut()
+        .widgets
+        .get_mut(id)
+        .unwrap()
+        .prevent_secret_values = true;
+    env.exec(
+        "assert(S6AnchorFrame:IsPreventingSecretValues()); \
+         assert(not S6AnchorFrame:IsAnchoringSecret(), 'anchoring must not read prevention')",
+    )
+    .unwrap();
 }
 
 #[test]
