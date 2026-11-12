@@ -201,3 +201,7 @@ to call nil GetCurrentCameraZoom. No PTR camera behavior is inferred from Retail
 The real-control test remains explicitly RED with that exact-first-error assertion,
 gated under optional-tests as directed in #289. Full PTR submit GREEN therefore
 still awaits evidence for the newly exposed camera prerequisite.
+
+Coordinator #292 confirms retaining the exact PTR `GetCurrentCameraZoom`
+line 812 RED behind `optional-tests` for this PR. The native camera question
+is filed as R83; no camera API or default is guessed in this addendum.
