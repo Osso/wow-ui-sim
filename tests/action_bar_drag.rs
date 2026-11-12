@@ -183,30 +183,18 @@ fn action_button_drag_round_trip_keeps_spell_visible() {
         env.fire_script_handler(button_id, "OnDragStart", vec![])
             .unwrap();
         if cfg!(feature = "client-ptr") {
-            let (arity, kind, book_slot, book_type, spell_id, related_id_nil, expected_slot): (
-                f64,
-                String,
-                f64,
-                String,
-                f64,
-                bool,
-                f64,
-            ) = env
-                .eval(
-                    r#"
-                    local arity = select("#", GetCursorInfo())
-                    local kind, slot, book, spellID, relatedID = GetCursorInfo()
-                    return arity, kind, slot, book, spellID, relatedID == nil,
-                        C_SpellBook.FindSpellBookSlotForSpell(853) or 0
-                    "#,
-                )
-                .unwrap();
-            assert_eq!(arity, 5.0, "PTR spell cursor should return five values");
-            assert_eq!(kind, "spell");
-            assert_eq!(book_slot, expected_slot);
-            assert_eq!(book_type, "spell");
-            assert_eq!(spell_id, 853.0);
-            assert!(related_id_nil, "simulator has no related spell ID");
+            env.exec(
+                r#"
+                assert(select("#", GetCursorInfo()) == 5)
+                local kind, slot, book, spellID, relatedID = GetCursorInfo()
+                assert(kind == "spell")
+                assert(slot == (C_SpellBook.FindSpellBookSlotForSpell(853) or 0))
+                assert(book == "spell")
+                assert(spellID == 853)
+                assert(relatedID == nil)
+                "#,
+            )
+            .unwrap();
         }
         env.fire_script_handler(button_id, "OnReceiveDrag", vec![])
             .unwrap();
