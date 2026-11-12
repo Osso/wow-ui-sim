@@ -87,3 +87,18 @@ useNPE as Lua truthiness, and optional raceFaction as the original string/number
 without conversion. Missing/nil faction is absent. It must not affect names,
 roster, events, or result delivery. The pass-through spy independently observes
 arguments from Blizzard's real Create button.
+
+## Tests and current reachability boundary
+
+- API tests in `tests/glue_character_select.rs` check argument Usage gates,
+  numeric name conversion, Lua truthiness, zero-return interaction/model-state
+  setters, and the host-only last-call observation. They do not assert the
+  unknown CreateCharacter return count.
+- `character_creation_host_result_handler_preservation_without_submit` delivers
+  failure and both success payload variants to the real, already-loaded handler.
+  It checks the actual localized popup text, handler CVar update, and all three
+  event arguments. This is **handler preservation**, not end-to-end submit proof.
+- The real-button RED still stops at the missing
+  `C_CharacterCreation.SetPlayerModelHiddenState(false)` in Retail line 1565 /
+  Forever Camelot line 1701. Coordinator #212 requests R78b Q3 evidence; no no-op
+  or error tolerance is permitted. End-to-end submit/result GREEN waits for it.

@@ -1178,6 +1178,65 @@ fn character_creation_submit_real_controls_wait_for_host_result() {
     }
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn record_creation_results(env: &WowLuaEnv) {
+    env.exec(
+        r#"
+        __creationResults = {}
+        local listener = CreateFrame("Frame")
+        listener:RegisterEvent("CHARACTER_CREATION_RESULT")
+        listener:SetScript("OnEvent", function(_, _, ...)
+            __creationResults[#__creationResults + 1] = { n = select('#', ...), ... }
+        end)
+    "#,
+    )
+    .unwrap();
+}
+
+#[test]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn character_creation_host_result_handler_preservation_without_submit() {
+    test_timeout! {
+        use wow_ui_sim::c_api::c_character_creation_submit::deliver_result;
+        // Isolate the already-loaded real handler while submit is blocked by
+        // R78b. This is handler preservation, not an end-to-end Create GREEN.
+        let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+        record_creation_results(&env);
+        env.exec(r#"
+            assert(CharacterCreateFrame:IsEventRegistered("CHARACTER_CREATION_RESULT"))
+            SetCVar("showCreateCharacterRealmConfirmDialog", 1)
+        "#).unwrap();
+        let errors_before = env.state().borrow().lua_errors.len();
+        deliver_result(&env, Some("CHAR_CREATE_NAME_IN_USE"), Some("discarded-guid")).unwrap();
+        env.exec(r#"
+            local args = __creationResults[1]
+            assert(args.n == 3 and args[1] == false)
+            assert(args[2] == "CHAR_CREATE_NAME_IN_USE" and args[3] == nil)
+            local popup = StaticPopup_FindVisible("CHARACTER_CREATE_FAILURE")
+            assert(popup and popup:IsShown())
+            assert(type(CHAR_CREATE_NAME_IN_USE) == "string" and #CHAR_CREATE_NAME_IN_USE > 0)
+            assert(popup:GetTextFontString():GetText() == CHAR_CREATE_NAME_IN_USE)
+            StaticPopup_Hide("CHARACTER_CREATE_FAILURE")
+        "#).unwrap();
+        deliver_result(&env, None, Some("Player-1-00000042")).unwrap();
+        env.exec(r#"
+            local args = __creationResults[2]
+            assert(args.n == 3 and args[1] == true and args[2] == nil)
+            assert(args[3] == "Player-1-00000042")
+            assert(GetCVar("showCreateCharacterRealmConfirmDialog") == "0")
+            assert(GlueParent.currentScreen == "charselect")
+        "#).unwrap();
+        deliver_result(&env, Some(""), None).unwrap();
+        env.exec(r#"
+            assert(#__creationResults == 3)
+            local args = __creationResults[3]
+            assert(args.n == 3 and args[1] == true and args[2] == nil and args[3] == nil)
+        "#).unwrap();
+        let sim = env.state().borrow();
+        assert!(sim.lua_errors[errors_before..].is_empty(), "new result-handler errors: {:?}", &sim.lua_errors[errors_before..]);
+    }
+}
+
 #[test]
 fn character_create_action_updates_player_name_without_lua_errors() {
     test_timeout! {

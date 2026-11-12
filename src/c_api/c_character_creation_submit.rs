@@ -2,6 +2,7 @@
 //! neither network serialization nor a roster refresh is inferred here.
 
 use crate::c_api::helpers::bad_argument;
+use crate::lua_api::WowLuaEnv;
 use crate::lua_api::methods::{borrow_state_mut, table_set_static};
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::vm::gc::arena::GcRef;
@@ -139,4 +140,23 @@ fn stop_all_spell_visual_kits(state: &mut LuaState) -> LuaResult<u32> {
     sim.character_creation.visual_kit_value = 0;
     // No modeled stop/finish helpers: their Lua-visible effects are UNKNOWN.
     Ok(0)
+}
+
+/// Deliver exactly the host-supplied result. The host chooses when to call this;
+/// no native timing, roster mutation, or CHARACTER_LIST_UPDATE is invented.
+pub fn deliver_result(
+    env: &WowLuaEnv,
+    error_text: Option<&str>,
+    guid: Option<&str>,
+) -> crate::Result<()> {
+    let args = if let Some(error) = error_text.filter(|text| !text.is_empty()) {
+        [Val::Bool(false), env.lua_string(error), Val::Nil]
+    } else {
+        [
+            Val::Bool(true),
+            Val::Nil,
+            guid.map_or(Val::Nil, |value| env.lua_string(value)),
+        ]
+    };
+    env.fire_event_with_args("CHARACTER_CREATION_RESULT", &args)
 }
