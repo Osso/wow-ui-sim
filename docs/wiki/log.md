@@ -1,3 +1,7 @@
+## [2026-11-12] review | Bound PR54 contracts and profile scope
+
+The [login specification](../specs/glue-login-flow.md#pr54-review-corrections-comment132) records coordinator review corrections: restore shared-loader ownership and legacy behavior, distinguish login/credits diagnostics, clear inactive signed-int32 queues without events, and remove unsupported conformance assertions. Validation is pending on the revised source.
+
 ## [2026-11-12] validation | Observe empty-roster transition
 
 The [login contract](../specs/glue-login-flow.md#m35-integration-validation-2026-11-12) records coordinator #124’s approved passive ScreenChanged snapshot. Retail submission tests pass 3/3; Forever full glue is 169 passed with only three confirmed master-baseline setup failures. Original OnShow still runs and later errors remain diagnostics. No vendor override or blanket error allowance.

@@ -18,8 +18,10 @@ its committed runtime pin is 70493, another build mismatch with unknown specific
 ## Native contract
 
 R40 verifies string/number account arguments and an EditBox frame-table argument.
-Invalid account types, non-table password arguments, and unresolved/non-EditBox
+Invalid account types, non-table password arguments, and unresolved
 objects fail with `Usage: C_Login.Login("accountName", AccountLoginPasswordEdit)`.
+A resolved non-EditBox instead raises the object-resolver error
+`Wrong object type for function` (review132 correction).
 The password is read and cleared synchronously; the call returns zero values.
 Native Login does not reject empty strings; the shipped UI does so before calling.
 The simulator does not retain or log credentials and clears the EditBox through
@@ -94,6 +96,8 @@ ANSWER **38** (R42, Retail70688 / Forever70707) resolves QUESTION32.
 exactly `(isQueued, queuePosition, estimatedSeconds)`. Default/no queue is
 `(false, 0, 0)`. A supplied active Battle.net queue record produces server
 position minus one and the last supplied estimate; it does not count down.
+Review132 specifies signed-int32 inputs: positions <=1 clear the record, return
+(false,0,0), and emit no login-state event.
 This record is independent of the WoW connection state. Every active host update,
 including an identical one, publishes no-payload `LOGIN_STATE_CHANGED`.
 `update_logon_queue` is the simulator host-input producer; clearing the record
@@ -222,12 +226,11 @@ belongs to the initial Glue load set. Connection-independent loading and keeping
 the addon set during login-to-charselect are INFERRED. Required dependencies
 load first, including LoD dependencies; requesting an already loaded addon does
 not reload it. Ordering against GlueParent OnLoad or the first login-state event
-is UNKNOWN. The simulator removes the three CharacterCreate/Customize/
-TimerunningCharacterCreate Login exclusions and uses its existing TOC and
-dependency ordering. No separate preload, teardown, timing fixture, or vendor
-patch is added. Synthetic loader tests assert eligibility and dependency order;
-real cache tests include CharacterCreate on Login. Any newly exposed missing
-native API remains a contract question rather than a reason to restore exclusions.
+is UNKNOWN. Review132 assigns all shared-loader eligibility/phases work to the
+separate R62/R64 lane. This branch restores master discovery, bootstrap and
+screen-selection tests, including its existing Login exclusions. No preload,
+timing fixture, vendor override or local eligibility change substitutes for
+that lane. Any resulting real-consumer blocker must remain explicit.
 
 The R45 selection event exposed missing GetCharacterTimerunningSeasonID at
 Retail CharacterSelect.lua:483/455 and Forever:487/460. R49 below resolves
@@ -406,7 +409,8 @@ characterCreateOuterBorder. The two file identifiers are omitted when zero.
 The capability and display registrations apply in both Game and Glue; display
 is Retail/PTR/Forever, while high-resolution availability is PTR/Forever only
 and VERIFIED absent on Retail. The latter projects read-only byte0; its normal
-false result is INFERRED, so tests assert Boolean type rather than false.
+false result and completed return tail are INFERRED. Review132 removes result
+type/value assertions; only verified publication is asserted.
 
 The bounded Rust host override setter models auto-connect selection without
 inventing a Lua AutoConnectToGameModeRealm contract. The host clear_realm_list
@@ -557,3 +561,19 @@ Comment120 supersedes the earlier seven-profile all-target lane gate: targeted
 PTR/Retail/Forever proof is required; final all-profile integration and GitHub CI
 belong to main. No shared-loader changes, native-data fetches or Blizzard CDN
 requests were made.
+
+
+## PR54 review corrections (comment132)
+
+Login chat activation and headless character-select refresh skips apply only to
+Retail/PTR/Forever. Era/Anniversary retain the old game-mode screen-name state
+and CharacterSelect default, outside R43/R60 evidence. Shared-loader edits are
+removed rather than repaired in this lane.
+
+R65 now distinguishes required-argument errors (missing/nil) from signed-int32
+range errors (bad type/string/nonfinite/out-of-range), retaining the verified
+Usage core. Tests check categories, not the full decorated diagnostic.
+Unsupported numeric-string selection/background and extra-argument assertions,
+Game absence assertions for R44, PTR empty-catalog/publisher claims, capability
+projection tails and high-resolution return-type claims are removed. Verified
+publication, field serialization and unrelated consumer error checks remain.
