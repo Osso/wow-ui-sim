@@ -32,6 +32,10 @@ pub struct TemplateEntry { pub name: String, pub widget_type: String, pub frame:
 
 A separate registry holds virtual texture templates for mixin chain resolution.
 
+## Texture-template anchor inheritance
+
+VERIFIED: PTR 70493 `Blizzard_PlayerSpells/Mainline/SpellBook/Blizzard_SpellBookTemplates.xml:41-51` supplies half-page anchors through texture templates. `resolve_texture_inheritance` discarded those anchors by restoring the instance's absent anchor field after merging, so both book halves received parent-fill anchors. The resolver now merges anchor declarations and lets explicit instance anchors replace inherited anchors. Both XML-loaded and runtime-created frame children share this resolution. The [contract](../../specs/texture-template-anchors.md) records targeted geometry proof and its native-evidence limits.
+
 ## Inheritance Chain Resolution
 
 `get_template_chain(names: &str) -> Vec<TemplateEntry>` splits comma-separated names and recursively follows each template's own `inherits`, depth-first with cycle detection. Returns base-to-derived order — for `inherits="A, B"` where A inherits C: chain is `[C, A, B]`.

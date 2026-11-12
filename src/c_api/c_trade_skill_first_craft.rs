@@ -8,8 +8,12 @@ use rilua::{LuaResult, Val};
 const USAGE: &str = "Usage: local result = C_TradeSkillUI.IsRecipeFirstCraft(recipeID)";
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
-    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail
-        || !cfg!(feature = "retail-12-1-5")
+    // PTR 70493 ProfessionsRecipeSchematicForm.lua:661 consumes this API.
+    // Same contract as Retail WM88; INFERRED for PTR pending native evidence.
+    if !matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+    ) || !cfg!(feature = "retail-12-1-5")
     {
         return Ok(());
     }
