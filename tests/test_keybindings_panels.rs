@@ -329,8 +329,11 @@ fn keybind_s_keeps_spellbook_backgrounds_below_icons_after_initial_bucket_build(
             .filter(|request| {
                 #[cfg(feature = "client-wowforever")]
                 {
+                    // quad_builders_textures.rs::remap_atlas_crop adds the
+                    // atlas subregion suffix to this same source texture file.
                     let path = request.path.replace('\\', "/").to_ascii_lowercase();
-                    background_files.iter().any(|file| path == *file)
+                    let file = path.split('@').next().unwrap();
+                    background_files.iter().any(|expected| file == expected)
                 }
                 #[cfg(not(feature = "client-wowforever"))]
                 {
@@ -345,7 +348,10 @@ fn keybind_s_keeps_spellbook_backgrounds_below_icons_after_initial_bucket_build(
                 }
             })
             .max_by_key(|request| request.vertex_start)
-            .expect("Spellbook should emit evergreen parchment background quads");
+            .unwrap_or_else(|| panic!(
+                "Spellbook should emit its selected parchment background quads; textures: {:?}",
+                batch.texture_requests.iter().map(|request| &request.path).collect::<Vec<_>>()
+            ));
 
         assert!(
             last_background_request.vertex_start < icon_request.vertex_start,
