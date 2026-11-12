@@ -587,38 +587,32 @@ fn get_cursor_info_reports_money_cursor() {
 
 #[cfg(feature = "client-ptr")]
 #[test]
-fn ptr_pickup_spell_reports_native_cursor_tuple() {
+fn ptr_spell_and_action_pickups_report_native_cursor_tuple() {
     let env = env();
-    env.exec("C_Spell.PickupSpell(853)").unwrap();
+    env.state().borrow_mut().action_bars.insert(1, 853);
+    env.exec(
+        r#"
+        local function assert_spell_cursor(expectedSpellID, expectedBookSlot)
+            assert(select("#", GetCursorInfo()) == 5)
+            local kind, bookSlot, bookType, spellID, relatedID = GetCursorInfo()
+            assert(kind == "spell")
+            assert(bookSlot == expectedBookSlot)
+            assert(bookType == "spell")
+            assert(spellID == expectedSpellID)
+            assert(relatedID == nil)
+        end
 
-    let (arity, kind, book_slot, book_type, spell_id, expected_slot, related_id_nil): (
-        f64,
-        String,
-        f64,
-        String,
-        f64,
-        f64,
-        bool,
-    ) = env
-        .eval(
-            r#"
-            local function pack(...)
-                return { n = select("#", ...), ... }
-            end
-            local cursor = pack(GetCursorInfo())
-            return cursor.n, tostring(cursor[1]), cursor[2] or -1,
-                tostring(cursor[3]), cursor[4] or -1,
-                C_SpellBook.FindSpellBookSlotForSpell(853) or 0,
-                cursor[5] == nil
-            "#,
-        )
-        .unwrap();
+        C_Spell.PickupSpell(12345)
+        assert_spell_cursor(12345, 0)
+        ClearCursor()
 
-    assert_eq!(arity, 5.0);
-    assert_eq!(kind, "spell");
-    assert!(book_slot >= 0.0 && book_slot.fract() == 0.0);
-    assert_eq!(book_slot, expected_slot);
-    assert!(matches!(book_type.as_str(), "spell" | "pet"));
-    assert_eq!(spell_id, 853.0);
-    assert!(related_id_nil, "simulator has no related spell ID");
+        C_Spell.PickupSpell(853)
+        assert_spell_cursor(853, C_SpellBook.FindSpellBookSlotForSpell(853) or 0)
+        ClearCursor()
+
+        PickupAction(1)
+        assert_spell_cursor(853, C_SpellBook.FindSpellBookSlotForSpell(853) or 0)
+        "#,
+    )
+    .unwrap();
 }
