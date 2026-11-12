@@ -484,6 +484,13 @@ fn test_set_spell_by_id_colors_title_and_metadata_lines() {
 #[test]
 fn test_set_spell_by_id_colors_cooldown_line() {
     let env = WowLuaEnv::new().unwrap();
+    // R81 Q3: cooldown helper predicates UNKNOWN; supply its final text.
+    env.state()
+        .borrow_mut()
+        .spell_tooltip_inputs
+        .entry(642)
+        .or_default()
+        .cooldown_text = Some("host cooldown".into());
 
     env.exec("GameTooltip:SetSpellByID(642)").unwrap();
     let highlight: (f32, f32, f32) = env
@@ -499,7 +506,21 @@ fn test_set_spell_by_id_colors_cooldown_line() {
         .find(|line| line.left_text.contains("cooldown"))
         .expect("Divine Shield tooltip should include cooldown line");
 
+    assert_eq!(cooldown.left_text, "host cooldown");
     assert_color_close(cooldown.left_color, highlight, "cooldown line");
+    drop(state);
+    env.state().borrow_mut().spell_tooltip_inputs.clear();
+    env.exec("GameTooltip:SetSpellByID(642)").unwrap();
+    assert!(
+        !env.state()
+            .borrow()
+            .tooltips
+            .get(&gt_id)
+            .unwrap()
+            .lines
+            .iter()
+            .any(|line| line.left_text.contains("cooldown"))
+    );
 }
 
 #[test]
