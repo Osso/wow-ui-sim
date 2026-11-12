@@ -546,7 +546,7 @@ pub(crate) fn script_clears_handler(script: &crate::xml::ScriptBodyXml) -> bool 
 }
 
 /// WoW implicit parameter names for inline XML script bodies.
-fn handler_params(handler_name: &str) -> &'static str {
+pub(crate) fn handler_params(handler_name: &str) -> &'static str {
     match handler_name {
         "OnUpdate" => "self, elapsed",
         "OnEvent" => "self, event, ...",
@@ -561,7 +561,7 @@ fn handler_params(handler_name: &str) -> &'static str {
 }
 
 /// Bind XML argument names without consuming the existing vararg payload.
-fn inline_argument_locals(handler_name: &str) -> &'static str {
+pub(crate) fn inline_argument_locals(handler_name: &str) -> &'static str {
     match handler_name {
         "OnHyperlinkClick" => "local link, text, button = ...;",
         "OnCursorChanged" => "local x, y, w, h = ...;",

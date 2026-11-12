@@ -20,7 +20,7 @@ use self::parser_inline_sequence::split_inline_sequence_parts;
 use self::parser_method_family::parse_method_family;
 
 pub(super) fn parse_inline_fast_handler<'a>(
-    _handler_name: &'static str,
+    handler_name: &'static str,
     body: &'a str,
 ) -> Option<FastHandlerRef<'a>> {
     let trimmed = strip_leading_comment_lines(body.trim());
@@ -31,10 +31,13 @@ pub(super) fn parse_inline_fast_handler<'a>(
     if stmt.is_empty() {
         return Some(FastHandlerRef::NoOp);
     }
+    if let Some(handler) = parse_parameter_prefix_method(handler_name, stmt) {
+        return Some(handler);
+    }
     if let Some(handler) = parse_pre_split_special_handler(stmt) {
         return Some(handler);
     }
-    if let Some(sequence) = parse_inline_sequence(stmt) {
+    if let Some(sequence) = parse_inline_sequence(handler_name, stmt) {
         return Some(sequence);
     }
     parse_inline_single_fast_handler(stmt)
@@ -271,23 +274,27 @@ fn parse_assignment_family<'a>(stmt: &'a str) -> Option<FastHandlerRef<'a>> {
         .or_else(|| parse_inline_parent_assignment(stmt))
 }
 
-fn parse_inline_sequence(stmt: &str) -> Option<FastHandlerRef<'_>> {
+fn parse_inline_sequence(handler_name: &'static str, stmt: &str) -> Option<FastHandlerRef<'_>> {
+    let parse = |part| {
+        parse_parameter_prefix_method(handler_name, part)
+            .or_else(|| parse_inline_single_fast_handler(part))
+    };
     let parts = split_inline_sequence_parts(stmt);
     match parts.as_slice() {
         [first, second] => Some(FastHandlerRef::Sequence2(Box::new((
-            parse_inline_single_fast_handler(first)?,
-            parse_inline_single_fast_handler(second)?,
+            parse(first)?,
+            parse(second)?,
         )))),
         [first, second, third] => Some(FastHandlerRef::Sequence3(Box::new((
-            parse_inline_single_fast_handler(first)?,
-            parse_inline_single_fast_handler(second)?,
-            parse_inline_single_fast_handler(third)?,
+            parse(first)?,
+            parse(second)?,
+            parse(third)?,
         )))),
         [first, second, third, fourth] => Some(FastHandlerRef::Sequence4(Box::new((
-            parse_inline_single_fast_handler(first)?,
-            parse_inline_single_fast_handler(second)?,
-            parse_inline_single_fast_handler(third)?,
-            parse_inline_single_fast_handler(fourth)?,
+            parse(first)?,
+            parse(second)?,
+            parse(third)?,
+            parse(fourth)?,
         )))),
         _ => None,
     }
@@ -470,9 +477,65 @@ fn is_fast_identifier(value: &str) -> bool {
 }
 
 fn is_fast_passthrough_args(args: &str) -> bool {
-    args.split(',')
+    matches!(args, "" | "...")
+}
+
+fn parse_parameter_prefix_method<'a>(
+    handler_name: &'static str,
+    body: &'a str,
+) -> Option<FastHandlerRef<'a>> {
+    let (receiver, call) = body.rsplit_once(':')?;
+    let (method, args) = call.split_once('(')?;
+    let args = args.strip_suffix(')')?.trim();
+    if !is_fast_method_receiver(receiver) || !is_fast_identifier(method) {
+        return None;
+    }
+    if args.is_empty() || args == "..." {
+        return None;
+    }
+    let params = crate::loader::helpers::handler_params(handler_name);
+    let locals = crate::loader::helpers::inline_argument_locals(handler_name);
+    let local_names = locals
+        .strip_prefix("local ")
+        .and_then(|s| s.split_once(" ="));
+    let mut params = params
+        .split(',')
         .map(str::trim)
-        .all(|arg| arg.is_empty() || arg == "..." || is_fast_identifier(arg))
+        .filter(|s| *s != "...")
+        .chain(
+            local_names
+                .into_iter()
+                .flat_map(|(names, _)| names.split(',').map(str::trim)),
+        );
+    // The callback frame may be the method receiver rather than an explicit operand.
+    if args.split(',').next()?.trim() != "self" {
+        let _ = params.next();
+    }
+    let mut args = args.split(',').map(str::trim).peekable();
+    while let Some(arg) = args.next() {
+        if arg == "..." {
+            return args
+                .peek()
+                .is_none()
+                .then_some(FastHandlerRef::InlineMethod { handler_name, body });
+        }
+        if params.next() != Some(arg) {
+            return None;
+        }
+    }
+    Some(FastHandlerRef::InlineMethod { handler_name, body })
+}
+
+fn is_fast_method_receiver(receiver: &str) -> bool {
+    if is_fast_handler_path(receiver) {
+        return true;
+    }
+    let receiver = receiver
+        .strip_prefix("self:GetParent():GetParent()")
+        .or_else(|| receiver.strip_prefix("self:GetParent()"));
+    receiver.is_some_and(|tail| {
+        tail.is_empty() || tail.strip_prefix('.').is_some_and(is_fast_handler_path)
+    })
 }
 
 fn is_fast_global_path(path: &str) -> bool {

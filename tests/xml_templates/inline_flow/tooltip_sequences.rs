@@ -634,3 +634,40 @@ fn test_inline_tooltip_reordered_handler_arguments() {
     )
     .unwrap();
 }
+
+#[test]
+fn test_inline_tooltip_handler_parameter_prefixes() {
+    clear_templates();
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r##"
+        GameTooltip = {
+            AddLine = function(self, ...)
+                self.args = { n = select('#', ...), ... }
+            end,
+        }
+    "##,
+    )
+    .unwrap();
+    for (name, handler, args, count) in [
+        ("PrefixFrame", "OnClick", "self", 1),
+        ("PrefixButton", "OnClick", "self, button", 2),
+        ("PrefixDown", "OnClick", "self, button, down", 3),
+        ("PrefixVarargs", "OnEvent", "self, event, ...", 4),
+        ("PrefixSelfVarargs", "OnEvent", "self, ...", 3),
+    ] {
+        let xml = format!(
+            r#"<Ui><Button name="{name}" parent="UIParent"><Scripts><{handler}>GameTooltip:AddLine({args});</{handler}></Scripts></Button></Ui>"#
+        );
+        create_first_frame(&env, &xml, "Button");
+        env.exec(&format!(
+            r#"
+            local frame = _G["{name}"]
+            frame:GetScript("{handler}")(frame, "RightButton", true, "extra")
+            assert(GameTooltip.args.n == {count}, "prefix argument count changed")
+            assert(GameTooltip.args[1] == frame, "prefix lost self")
+            "#,
+        ))
+        .unwrap();
+    }
+}
