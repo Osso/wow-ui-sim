@@ -263,7 +263,6 @@ mod forever_lib_baseline_tests;
 pub mod outfit_entry;
 mod scenario_finder_availability;
 pub mod store_public_eligibility;
-pub(crate) mod store_state;
 pub mod transmog_availability;
 pub use c_quest_log_watches::QuestWatchType;
 pub(crate) use c_quest_log_watches::seed_quest_watch_types;

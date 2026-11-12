@@ -1,4 +1,3 @@
-use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 const STORE_SECURE_VAS_SCRIPT: &str = r#"
@@ -242,11 +241,10 @@ fn store_apis_report_enabled_and_available() {
         )
         .expect("store API flags should be queryable");
 
-    let store_public_enabled_default =
-        !matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr);
-    assert_eq!(
-        store_public_enabled, store_public_enabled_default,
-        "C_StorePublic.IsEnabled() default for {ACTIVE:?}"
+    // R38 (VERIFIED; docs/specs/store-api-availability.md): IsEnabled returns the supplied server mirror.
+    assert!(
+        store_public_enabled,
+        "C_StorePublic.IsEnabled() should report the supplied enabled state"
     );
     assert!(
         store_secure_available,

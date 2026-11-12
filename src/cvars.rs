@@ -807,6 +807,30 @@ mod tests {
     }
 
     #[test]
+    fn store_mirror_cvars_have_the_pinned_client_defaults() {
+        use crate::client_profile::{ACTIVE, ClientProfile};
+
+        if !matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr) {
+            return;
+        }
+
+        let storage = CVarStorage::new();
+        assert_eq!(storage.get_default("bpayStoreEnable").as_deref(), Some("0"));
+        assert_eq!(storage.get_default("shop2Enabled").as_deref(), Some("1"));
+        assert_eq!(
+            storage
+                .get_default("seenAsiaCharacterUpgradePopup")
+                .as_deref(),
+            Some("0")
+        );
+        assert_eq!(
+            storage.get_server_mirrored_bool("bpayStoreEnable"),
+            Some(false)
+        );
+        assert_eq!(storage.get_server_mirrored_bool("shop2Enabled"), Some(true));
+    }
+
+    #[test]
     fn test_persistence_roundtrip() {
         let dir = tempfile::tempdir().unwrap();
         let path = dir.path().join("cvars.json");
