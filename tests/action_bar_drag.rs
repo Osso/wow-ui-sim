@@ -76,9 +76,9 @@ fn pickup_action_accepts_ignore_removal_arg_and_place_restores_slot() {
     );
     assert!(!env.eval::<bool>("return HasAction(1)").unwrap());
 
-    // Retail projects mode 3 as ("spell", book slot, book type, spell ID, ...)
-    // (WM46, WM56); other profiles keep ("spell", spell ID).
-    let projection = if cfg!(feature = "client-retail") {
+    // Retail and PTR project mode 3 as ("spell", book slot, book type,
+    // spell ID, ...) (WM46, WM56, R72); other profiles keep ("spell", spell ID).
+    let projection = if cfg!(feature = "client-retail") || cfg!(feature = "client-ptr") {
         "local kind, _, _, spellID = GetCursorInfo(); return kind, spellID"
     } else {
         "return GetCursorInfo()"
@@ -182,6 +182,34 @@ fn action_button_drag_round_trip_keeps_spell_visible() {
 
         env.fire_script_handler(button_id, "OnDragStart", vec![])
             .unwrap();
+        if cfg!(feature = "client-ptr") {
+            let (arity, kind, book_slot, book_type, spell_id, related_id_valid): (
+                f64,
+                String,
+                f64,
+                String,
+                f64,
+                bool,
+            ) = env
+                .eval(
+                    r#"
+                    local function pack(...)
+                        return { n = select("#", ...), ... }
+                    end
+                    local cursor = pack(GetCursorInfo())
+                    return cursor.n, tostring(cursor[1]), cursor[2] or -1,
+                        tostring(cursor[3]), cursor[4] or -1,
+                        cursor[5] == nil or type(cursor[5]) == "number"
+                    "#,
+                )
+                .unwrap();
+            assert_eq!(arity, 5.0, "PTR spell cursor should return five values");
+            assert_eq!(kind, "spell");
+            assert!(book_slot >= 0.0 && book_slot.fract() == 0.0);
+            assert!(matches!(book_type.as_str(), "spell" | "pet"));
+            assert_eq!(spell_id, 853.0);
+            assert!(related_id_valid);
+        }
         env.fire_script_handler(button_id, "OnReceiveDrag", vec![])
             .unwrap();
 

@@ -584,3 +584,38 @@ fn get_cursor_info_reports_money_cursor() {
     assert_eq!(kind, "money");
     assert_eq!(copper as u64, 777);
 }
+
+#[cfg(feature = "client-ptr")]
+#[test]
+fn ptr_pickup_spell_reports_native_cursor_tuple() {
+    let env = env();
+    env.exec("C_Spell.PickupSpell(853)").unwrap();
+
+    let (arity, kind, book_slot, book_type, spell_id, related_id_valid): (
+        f64,
+        String,
+        f64,
+        String,
+        f64,
+        bool,
+    ) = env
+        .eval(
+            r#"
+            local function pack(...)
+                return { n = select("#", ...), ... }
+            end
+            local cursor = pack(GetCursorInfo())
+            return cursor.n, tostring(cursor[1]), cursor[2] or -1,
+                tostring(cursor[3]), cursor[4] or -1,
+                cursor[5] == nil or type(cursor[5]) == "number"
+            "#,
+        )
+        .unwrap();
+
+    assert_eq!(arity, 5.0);
+    assert_eq!(kind, "spell");
+    assert!(book_slot >= 0.0 && book_slot.fract() == 0.0);
+    assert!(matches!(book_type.as_str(), "spell" | "pet"));
+    assert_eq!(spell_id, 853.0);
+    assert!(related_id_valid);
+}
