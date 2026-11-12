@@ -5531,13 +5531,13 @@
           "kind": "source",
           "reference": "src/lua_api/state.rs",
           "summary": "Empty-map initialization; absent-key zero is simulator policy, not native-default proof.",
-          "source_hash": "c1e4b44825e3e97bf618abad6cc9a1d64e69b9dc84d66cc456f4cb175970a35e"
+          "source_hash": "7a7eabab4e1a63d68a939f3c8f4f5ef094a9cde1a99ff97842d06bda7a768464"
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state/sim_state.rs",
           "summary": "SimState owns an independent HashMap<(i32, i32), f64> for format-setting pairs per environment.",
-          "source_hash": "e2f1346ca327a68bec5a353c094f41813d8022bd9960886b7741f90a837635b1"
+          "source_hash": "bb961be51ae34ae822fe5dc02f069e2f0419731438ba077c8822bd30337894b0"
         },
         {
           "kind": "test",
@@ -5618,13 +5618,13 @@
         {
           "kind": "source",
           "reference": "src/lua_api/state.rs",
-          "source_hash": "c1e4b44825e3e97bf618abad6cc9a1d64e69b9dc84d66cc456f4cb175970a35e",
+          "source_hash": "7a7eabab4e1a63d68a939f3c8f4f5ef094a9cde1a99ff97842d06bda7a768464",
           "summary": "Empty-state construction initializes speaker speed to 0.0 as simulator policy, not a native-default assertion."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state/sim_state.rs",
-          "source_hash": "e2f1346ca327a68bec5a353c094f41813d8022bd9960886b7741f90a837635b1",
+          "source_hash": "bb961be51ae34ae822fe5dc02f069e2f0419731438ba077c8822bd30337894b0",
           "summary": "SimState owns the numeric speaker-speed field independently per environment; no persistence or CVar identity is established."
         },
         {
@@ -5687,13 +5687,13 @@
         {
           "kind": "source",
           "reference": "src/lua_api/state.rs",
-          "source_hash": "c1e4b44825e3e97bf618abad6cc9a1d64e69b9dc84d66cc456f4cb175970a35e",
+          "source_hash": "7a7eabab4e1a63d68a939f3c8f4f5ef094a9cde1a99ff97842d06bda7a768464",
           "summary": "Empty-state construction initializes speaker volume to 100.0 as simulator policy, not a native-default assertion."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state/sim_state.rs",
-          "source_hash": "e2f1346ca327a68bec5a353c094f41813d8022bd9960886b7741f90a837635b1",
+          "source_hash": "bb961be51ae34ae822fe5dc02f069e2f0419731438ba077c8822bd30337894b0",
           "summary": "SimState owns the numeric speaker-volume field independently per environment; no persistence or CVar identity is established."
         },
         {
@@ -5844,13 +5844,13 @@
           "kind": "source",
           "reference": "src/lua_api/state.rs",
           "summary": "Empty-map initialization; absent-key zero is simulator policy, not native-default proof.",
-          "source_hash": "c1e4b44825e3e97bf618abad6cc9a1d64e69b9dc84d66cc456f4cb175970a35e"
+          "source_hash": "7a7eabab4e1a63d68a939f3c8f4f5ef094a9cde1a99ff97842d06bda7a768464"
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state/sim_state.rs",
           "summary": "SimState owns an independent HashMap<(i32, i32), f64> for format-setting pairs per environment.",
-          "source_hash": "e2f1346ca327a68bec5a353c094f41813d8022bd9960886b7741f90a837635b1"
+          "source_hash": "bb961be51ae34ae822fe5dc02f069e2f0419731438ba077c8822bd30337894b0"
         },
         {
           "kind": "test",
@@ -5931,13 +5931,13 @@
         {
           "kind": "source",
           "reference": "src/lua_api/state.rs",
-          "source_hash": "c1e4b44825e3e97bf618abad6cc9a1d64e69b9dc84d66cc456f4cb175970a35e",
+          "source_hash": "7a7eabab4e1a63d68a939f3c8f4f5ef094a9cde1a99ff97842d06bda7a768464",
           "summary": "Empty-state construction initializes speaker speed to 0.0 as simulator policy, not a native-default assertion."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state/sim_state.rs",
-          "source_hash": "e2f1346ca327a68bec5a353c094f41813d8022bd9960886b7741f90a837635b1",
+          "source_hash": "bb961be51ae34ae822fe5dc02f069e2f0419731438ba077c8822bd30337894b0",
           "summary": "SimState owns the numeric speaker-speed field independently per environment; no persistence or CVar identity is established."
         },
         {
@@ -6000,13 +6000,13 @@
         {
           "kind": "source",
           "reference": "src/lua_api/state.rs",
-          "source_hash": "c1e4b44825e3e97bf618abad6cc9a1d64e69b9dc84d66cc456f4cb175970a35e",
+          "source_hash": "7a7eabab4e1a63d68a939f3c8f4f5ef094a9cde1a99ff97842d06bda7a768464",
           "summary": "Empty-state construction initializes speaker volume to 100.0 as simulator policy, not a native-default assertion."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state/sim_state.rs",
-          "source_hash": "e2f1346ca327a68bec5a353c094f41813d8022bd9960886b7741f90a837635b1",
+          "source_hash": "bb961be51ae34ae822fe5dc02f069e2f0419731438ba077c8822bd30337894b0",
           "summary": "SimState owns the numeric speaker-volume field independently per environment; no persistence or CVar identity is established."
         },
         {
@@ -104375,7 +104375,7 @@
           "kind": "test",
           "reference": "tests/missing_apis.rs",
           "summary": "Normal timer processing proves ordinary function and callback-container After calls return no values, defer zero-delay invocation, deliver once with zero callback arguments and do not repeat. NewTimer/NewTicker controls retain one equal-but-raw-distinct container proxy with shared fields and finite ticker iterations.",
-          "source_hash": "c4b4fb32628c98a4bbb38278979dc0ac0383e409ae1bd036432f533a74004bf5"
+          "source_hash": "c484eb836bc2a2630437becd7e5e182a5bdd3181e01d48f6a910ce3194f238a2"
         }
       ],
       "tests": [
