@@ -102,9 +102,11 @@ Follow-ups `4e344ab4f` and `1ecc0c98c` cache cumulative offsets only for one ren
 
 ## Font sources
 
-`WowFontSystem` (`src/render/font.rs`) loads Blizzard's fonts (`Fonts\\FRIZQT__.TTF`, ...) from CASC at startup. A font file an addon ships (`Interface\\AddOns\\<Addon>\\...`) is loaded on first use from the AddOns directories, resolved ignoring case, and keeps the weight, style and stretch of its face, so a bold file of a family renders bold. `SetFont` with an addon path that names no file raises the client's error, `FontString:SetFont(): Invalid font asset (<path>): file not found`, and keeps the font (checked in the WoW Forever 1.60.1 client); a file that is not a font warns once and draws in the default font.
+`WowFontSystem` (`src/render/font.rs`) loads Blizzard's fonts (`Fonts\\FRIZQT__.TTF`, ...) from CASC at startup. A font file an addon ships (`Interface\\AddOns\\<Addon>\\...`) is loaded on first use from the AddOns directories, resolved ignoring case, and keeps the weight, style and stretch of its face, so a bold file of a family renders bold. `SetFont` with an addon path that names no file raises the client's error, `FontString:SetFont(): Invalid font asset (<path>): file not found`, and keeps the font (**UNVERIFIED native claim:** contributor observation on Forever 1.60.1; independent profile evidence is pending); a file that is not a font warns once and draws in the default font.
 
 `WowFontSystem` (`src/render/font.rs`) loads Blizzard's fonts (`Fonts\\FRIZQT__.TTF`, ...) from CASC at startup. Without CASC every Blizzard font path maps to one fallback family: the font file `WOW_SIM_FALLBACK_FONT` names, else the first system face. The first system face differs between operating systems, so renders compared across machines pin the fallback.
+
+The [font-source contract](../../specs/font-sources.md) separates simulator file-loading policy from native evidence. Resolved addon font files must remain under their canonical AddOns root, including when paths contain symlinks. The missing-file native assertion is currently optional; the combined-tree runtime gate has not run.
 
 ## FontString smooth scaling
 

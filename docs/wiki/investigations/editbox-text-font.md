@@ -6,7 +6,7 @@ A `SearchBoxTemplate` box drew its text yellow, centered and against its left ed
 
 ### Client behavior
 
-Checked in the WoW Forever client (1.60.1, no addons loaded, running under Wine). Forever and retail ship the same `SearchBoxTemplate` and `InputBoxVisualTemplate`.
+**UNVERIFIED native observations:** the contributor reports the following values from WoW Forever 1.60.1 without addons under Wine. They are leads, not independent native proof. The claim that Retail ships equivalent templates does not establish Retail runtime behavior. See the [contract and evidence gaps](../../specs/editbox-text-font.md).
 
 | Call | Result |
 |---|---|
@@ -20,6 +20,8 @@ Checked in the WoW Forever client (1.60.1, no addons loaded, running under Wine)
 | `ChatFontNormal:GetFont()` | `Fonts\ARIALN.TTF, 14, ""` |
 
 ### Root causes and fix
+
+The following describes the simulator implementation, not verified native precedence. `tests/editbox_text_defaults.rs` is behind `optional-tests` pending independent evidence. No compiled or executed combined-tree result is recorded yet.
 
 - `FrameXml::font_string_child()` parsed an EditBox's `<FontString>` element, but nothing applied it. `src/loader/editbox_font.rs` now applies the element of the box or its nearest template on both the XML path (`xml_frame/finalize.rs`) and the runtime template path (`runtime_loader_effects.rs`): the font object it inherits, and the `justifyH`, `justifyV` and `<Color>` it names. The font object leaves the justification as it was unless the element names one, because font objects default to `CENTER` while the client keeps a `SearchBoxTemplate` box at `LEFT`.
 - `Frame::new` gave an EditBox the FontString default `CENTER`; it now starts at `LEFT`.

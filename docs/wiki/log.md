@@ -1,3 +1,7 @@
+## [2026-11-12] review | Contributor font evidence and path containment
+
+The [font-source contract](../specs/font-sources.md) records canonical AddOns-root containment and explicit missing-font test failures. The [EditBox contract](../specs/editbox-text-font.md) separates the XML model from UNVERIFIED contributor native observations; those assertions remain optional pending independent profile evidence. Combined-tree compilation and runtime proof are pending slot availability.
+
 ## [2026-11-12] investigation | EditBox text font and insets
 
 [EditBox text font, insets and justification](investigations/editbox-text-font.md) records the client checks, the three loader gaps and their fix, and the unmodeled font of `InputBoxInstructionsTemplate`'s instructions region.
