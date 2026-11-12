@@ -6,6 +6,8 @@ The Lua API layer bridges Lua addon code with the Rust simulation engine. It pro
 
 ## Tooltip data and merchant cursor presentation
 
+[Spell tooltip composition](../../specs/tooltip-spell-composition.md) owns the R81 outer-row contract. VERIFIED by source inspection: host inputs in `src/c_api/spell_tooltip.rs` replace the fixed cooldown, aura-duration and slot-key recipes; cost and cast inputs no longer come from guessed spell tables. The shared producer keeps the existing title/description behavior, resolves direct overrides, and gives spell links their own cast context without suppressing cost/range. Native evidence is partial Retail 70688; selected Retail 70575 and other profiles are not native-output certifications. UNKNOWN helper formulas, Azerite gates and later rows stay host-supplied or unmodelled. Tests and source citations are recorded in the [lane report](/home/osso/.local/state/wow-ui-sim/handoff/tooltip-spell-r81/REPORT.md).
+
 The [PvP talent tooltip contract](../../specs/tooltip-pvp-talent.md) owns the `GetPvpTalent` catalog inputs and native UNKNOWNs. **VERIFIED:** the [generated catalog provenance](../../../data/pvp-talents/retail-12.1.5.70783/provenance.json) records installed Retail build 12.1.5.70783; this does not establish parity with the selected 12.1.5.70575 runtime pin. Grant and eligibility outcomes remain host-supplied. A direct original `GameTooltip:SetPvpTalent` test covers the getter; selected-slot UI behavior waits for R73.
 
 [Bag-child tooltips](../../specs/tooltip-bag-child.md) compose bag state with

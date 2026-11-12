@@ -21,6 +21,19 @@ fn push_highlight_spell_line(state: &mut LuaState, lines: Val, index: i64, text:
     line
 }
 
+fn push_spell_name_line(state: &mut LuaState, lines: Val, index: i64, text: &str) {
+    let color = spell_color_from_global(state, b"HIGHLIGHT_FONT_COLOR", (1.0, 1.0, 1.0));
+    push_tooltip_line(
+        state,
+        lines,
+        index,
+        LINE_TYPE_SPELL_NAME,
+        text,
+        Some(color),
+        false,
+    );
+}
+
 fn push_spell_description_line(state: &mut LuaState, lines: Val, index: i64, spell_id: u32) {
     let description = resolved_spell_description(state, spell_id);
     push_tooltip_line(
@@ -82,7 +95,7 @@ fn push_spell_tooltip_lines(
             .cloned()
             .unwrap_or_default()
     };
-    push_highlight_spell_line(state, lines, 1, spell_name);
+    push_spell_name_line(state, lines, 1, spell_name);
     let mut index = 2;
     // R81 Q1: replacement is the first ordinary detail row; zero skips lookup.
     if !input.suppress_replacement && input.overrides_spell_id != 0 {
@@ -247,7 +260,7 @@ pub(super) fn tooltip_for_unit_aura(
     state.push(tooltip);
     stamp_data_instance(state, tooltip);
     let lines = table_get(state, tooltip, "lines");
-    push_highlight_spell_line(state, lines, 1, &aura.name);
+    push_spell_name_line(state, lines, 1, &aura.name);
     let remaining = borrow_state(state)
         .ok()
         .and_then(|sim| {
@@ -258,7 +271,7 @@ pub(super) fn tooltip_for_unit_aura(
         .filter(|text| !text.is_empty());
     let mut index = 2;
     if let Some(text) = remaining {
-        push_highlight_spell_line(state, lines, index, &text);
+        push_spell_name_line(state, lines, index, &text);
         index += 1;
     }
     push_spell_description_line(state, lines, index, aura.spell_id as u32);

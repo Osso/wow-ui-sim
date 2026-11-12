@@ -217,6 +217,15 @@ pub(crate) fn tooltip_for_spell_identifier(
     state: &mut LuaState,
     spell_id: Option<u32>,
     is_mount: bool,
+) -> rilua::Val {
+    tooltip_for_spell_identifier_options(state, spell_id, is_mount, false, false)
+}
+
+#[cfg(feature = "retail-12-0-5")]
+pub(crate) fn tooltip_for_spell_identifier_options(
+    state: &mut LuaState,
+    spell_id: Option<u32>,
+    is_mount: bool,
     dont_override: bool,
     is_link: bool,
 ) -> rilua::Val {

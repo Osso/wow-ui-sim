@@ -1,3 +1,7 @@
+## [2026-11-12] implementation | R81 spell tooltip composition
+
+Updated [tooltip data](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) and the [contract](../specs/tooltip-spell-composition.md). VERIFIED R81 outer conditions use host-supplied helper outputs; fixed cooldowns, aura time and binding mapping are removed. Five original-consumer tests reject the base producer. GREEN/profile proof is pending; UNKNOWN formulas and native build limits remain explicit.
+
 ## [2026-11-11] correction | Addon loading phases and LoadWith followers
 
 Updated [[addon-loading]] and the [phase contract](../specs/addon-load-phases.md) with R64 phases and R64b/c follower behavior, plus R70 PTR phase/mask evidence. Retail and Forever resolve followers without enable-state filtering and submit them through the generic loader; target `ADDON_LOADED` precedes follower requests, and one follower failure does not stop later submissions or change target success. PTR parser-to-child-list linkage remains UNKNOWN, so the simulator applies the INFERRED resolver model and tests a pre-populated child list only. R70 models cached PTR `CharacterCreate` as an INFERRED phase-two Glue root, loads its required chain before its files, and makes no relative-order claim against PTRFeedbackGlue.
