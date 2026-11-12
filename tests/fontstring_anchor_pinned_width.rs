@@ -127,6 +127,7 @@ fn two_edge_fontstring_width_updates_when_points_follow_text() {
             r#"
             local parent = CreateFrame("Frame", "TextFirstAnchorParent", UIParent)
             parent:SetSize(150, 30)
+            parent:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 0, 0)
             local fs = parent:CreateFontString(nil, "ARTWORK", "GameFontNormal")
             fs:SetText("A long consumer label that is wider than its anchor span")
             local textWidth = fs:GetWidth()
@@ -160,6 +161,7 @@ fn two_edge_fontstring_uses_resolved_width_of_zero_width_target() {
             r#"
             local parent = CreateFrame("Frame", "ZeroWidthTargetParent", UIParent)
             parent:SetSize(260, 50)
+            parent:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 0, 0)
             local target = CreateFrame("Frame", "ZeroWidthTarget", parent)
             target:SetSize(0, 40)
             target:SetPoint("TOPLEFT", parent, "TOPLEFT", 10, 0)
@@ -191,6 +193,7 @@ fn two_edge_fontstring_width_tracks_parent_resize() {
             r#"
             local parent = CreateFrame("Frame", "ResizeAnchorParent", UIParent)
             parent:SetSize(150, 30)
+            parent:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 0, 0)
             local fs = parent:CreateFontString(nil, "ARTWORK", "GameFontNormal")
             fs:SetPoint("TOPLEFT", parent, "TOPLEFT", 5, 0)
             fs:SetPoint("TOPRIGHT", parent, "TOPRIGHT", -5, 0)
