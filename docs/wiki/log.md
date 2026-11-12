@@ -3681,3 +3681,5 @@ VERIFIED: [tooltip data](systems/lua-api.md#tooltip-data-and-merchant-cursor-pre
 ## 2026-11-12 — Unit-test cache isolation
 
 Updated addon-loading and the CASC contract: unit-test startup must reject stale/missing UI caches without auto-sync; normal startup remains unchanged. Recorded the concurrent Retail-pin overwrite incident and isolated reload-child regression.
+
+- 2026-11-12: Folded secret-aura native reports and corrected prevention/aspect/anchoring conflation; see [Lua API](systems/lua-api.md#recorded-widget-secrecy) and the [contract](../specs/secret-auras.md).

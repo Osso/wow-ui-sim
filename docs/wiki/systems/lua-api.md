@@ -98,6 +98,10 @@ RED/GREEN, checks and exact stock-preservation receipts.
 
 [The M3 contract](../../specs/c-factory-m3-social-inputs.md) owns profile scope and simulator policies. `c_api::c_guild_info` projects supplied numeric metadata plus existing guild-logo colors into independent DTOs; changing the legacy filename invalidates metadata rather than guessing a file ID. Named temporary social-service defaults cover capability systems that roster, listing and friend data do not model. Unknown members remain nil. Frozen original-consumer and fresh Retail RED precede integrated seven-profile GREEN. The [social contract](../../specs/c-factory-m3-social-inputs.md#bounded-proof--2026-10-21) links final proof and distinguishes newly reached residual queries from this batch.
 
+## Recorded widget secrecy
+
+The [secret-aura contract](../../specs/secret-auras.md#verified-contradiction-audit-at-e29763f8e) owns native evidence labels and remaining gaps. VERIFIED locally for Retail WM61 S6: recorded aspect queries, prevention and anchoring use distinct state. Retail/PTR `Frame.explicit_secret_aspects` feeds aspect queries without deriving bits from prevention, protected or forbidden flags. `Frame.is_anchoring_secret` is a separate host input; no native writer or second-set propagation is invented. Forever retains its separate compatibility behavior. API-level tests check independent state; original `CompactUnitFrame_UpdateName` supplies the positive Text-aspect consumer. Complete native Lua publication, clearing and event taint remain UNKNOWN.
+
 ## C API numeric-secret selector boundaries
 
 Classification endpoints in `src/c_api/c_spell_classification.rs` inspect authentic numeric-secret selectors only inside their modeled host lookup. The shared public spell reader and VM unwrap permissions remain unchanged; ExternalDefensive keeps VM authentication. [Classification contract](../../specs/secret-selector-classification.md) owns endpoint scope, inferred output policy and revision-scoped proof. Original-consumer wrapper injection is not evidence of natural secret-ID production at startup.
