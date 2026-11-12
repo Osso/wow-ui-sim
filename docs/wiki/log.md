@@ -1,6 +1,9 @@
 ## [2026-11-11] correction | Forever PTR feedback Glue selection
 
 Updated [Forever login startup](investigations/forever-login-startup.md#r26-toc-admission-correction-2026-11-11). **VERIFIED (native R26):** `OnlyBetaAndPTR` uses build classification. **VERIFIED (shipped cache TOC; exact build unknown):** `Blizzard_PTRFeedbackGlue.toc` carries that directive. **INFERRED:** normal Forever startup excludes this addon. **VERIFIED (simulator test at `83d7e3998`, 1/1):** the startup fixture checks its absence from Login startup; customization add-on loading is not asserted there. API absence in all environments remains UNVERIFIED.
+## [2026-11-11] system | Character select screen data
+
+Added [profile-scoped class/race select-screen data](systems/chr-select-screen-data.md), the feature contract, pinned WoWDBDefs schemas, and a local-DB2 generator. **VERIFIED:** Retail and Forever each pass three exact targeted tests; the PTR no-data branch passes; Retail/Forever test builds and PTR/Mists/Era/Anniversary/Wrath all-target checks complete with zero compiler warnings (`wow_ui_sim` fresh=false). Exported builds are Retail 12.1.5.70783 and Forever 1.60.1.70888. **UNKNOWN:** Retail pin 70575 rows, Forever pin 70707 rows, and PTR rows. `lt-a667` owns the native API and roster consumer. See the [handoff report](../../handoff/r52-select-screen-data/REPORT.md) for receipt hashes.
 
 ## [2026-11-10] fix | Mists frame-position residuals
 
