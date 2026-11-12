@@ -197,7 +197,7 @@ fn frame_secret_aspects(widgets: &crate::widget::WidgetRegistry, id: u64) -> u32
     frame.explicit_secret_aspects | derived
 }
 
-fn uses_recorded_secret_state() -> bool {
+pub(crate) fn uses_recorded_secret_state() -> bool {
     use crate::client_profile::{ACTIVE, ClientProfile};
     matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr)
 }
