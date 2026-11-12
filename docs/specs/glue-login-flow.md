@@ -590,8 +590,8 @@ strict-startup diagnostic check as explicitly approved by comment136.
 
 That check retains and prints exactly two known R64 loader residues:
 CharCustomizeFrame nil at Blizzard_PTRFeedback.lua:729 and
-Blizzard_PTRFeedback_Events_Glue.lua:71. Only their complete first-line
-diagnostic suffixes are allowed on PTR; other errors and all Forever errors
+Blizzard_PTRFeedback_Events_Glue.lua:71. Review140 replaces the earlier suffix matcher with exact cached-source
+first-line matching, allowing only the known Lua Error wrapper on PTR; other errors and all Forever errors
 remain failures. No loader workaround or vendor override is introduced.
 
 The runtime batch uses integration-test filters glue_login, glue_credits,
@@ -601,3 +601,32 @@ Anniversary and Wrath (154s, 50.72s and 48.50s), with incremental compilation
 disabled for these checks. All six logs have zero compiler warnings.
 These are targeted checks, not a new all-profile/full-suite acceptance claim.
 The shared-loader files exactly match m36 master. All jobs completed.
+
+
+### Second review corrections (comment140)
+
+Login now resolves frame arguments through the existing fallible frame helpers
+and applies the existing forbidden-frame/tainted-caller guard used by
+CreateFontString. Plain unresolved tables still raise Usage; wrong resolved
+types still raise Wrong object type for function. A forbidden resolved EditBox
+called from AddOn-tainted code raises the supplied forbidden-object error
+before login state or password changes. A regression uses the real forbidden
+loading flag and tainted Lua function, without replacing the login provider.
+
+Remaining unsupported argument-conversion and Game-absence assertions were
+removed, including the inferred R58 move-global absence check. Production
+registration is unchanged. Retail video tests assert only the verified spell
+density publication, not absence of other methods.
+
+The PTR R64 allowance now matches only the two exact cached-source first lines,
+optionally prefixed once by the known Lua Error wrapper. It no longer accepts
+arbitrary prefixes or suffix matches. Negative tests reject other paths,
+line numbers, frames, preceding errors and arbitrary text prefixes.
+
+Changed-test filters glue_login, glue_credits and glue_video pass Retail32/32
+(8.05s) and Forever41/41 (15.36s) at e58b80af1, and PTR22/22 (6.22s) at
+46d273b2e. Changes after the PTR run only fix the Retail/Forever forbidden test
+fixture and remove a Retail/Forever inferred assertion. All three builds have
+zero compiler warnings; no jobs remain. Master remains m36 b4a4a14a5.
+These targeted receipts supersede earlier failed fixture iterations, without
+claiming a new full-suite or all-profile matrix run.

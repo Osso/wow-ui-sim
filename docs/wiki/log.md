@@ -1,3 +1,7 @@
+## [2026-11-12] validation | PR54 second review corrections
+
+The [login contract](../specs/glue-login-flow.md#second-review-corrections-comment140) records forbidden-object resolver enforcement, removal of remaining unsupported assertions, and exact PTR diagnostic matching with negative tests. Changed-test gates pass Retail32/32, Forever41/41 and PTR22/22 with zero warnings.
+
 ## [2026-11-12] validation | PR54 review revisions after m36
 
 The [login contract](../specs/glue-login-flow.md#review-validation-after-m36) records targeted Retail48/48, Forever60/60 and PTR38/38, plus Era/Anniversary/Wrath integration-target compile checks, all without warnings. Shared loader files match master. PTR retains exactly two named R64 diagnostics under coordinator approval; no other error allowance or loader workaround.
