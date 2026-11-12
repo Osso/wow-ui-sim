@@ -1,3 +1,4 @@
+use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::methods::{borrow_state, borrow_state_mut};
 use crate::lua_api::script_helpers::fire_named_event_state;
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
@@ -6,12 +7,14 @@ use rilua::vm::state::LuaState;
 use rilua::{LuaError, LuaResult, RuntimeError, Val};
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
-    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Wrath {
+    if ACTIVE == ClientProfile::Wrath {
         return Ok(());
     }
     table_set_rust_fn_static(state, state.global, "GetLootSpecialization", get)?;
     table_set_rust_fn_static(state, state.global, "SetLootSpecialization", set)?;
-    table_set_rust_fn_static(state, state.global, "HasLootSpecializations", has)?;
+    if ACTIVE != ClientProfile::Retail {
+        table_set_rust_fn_static(state, state.global, "HasLootSpecializations", has)?;
+    }
     Ok(())
 }
 
@@ -30,8 +33,28 @@ fn has(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn set(state: &mut LuaState) -> LuaResult<u32> {
+    if ACTIVE == ClientProfile::Retail {
+        return set_retail(state);
+    }
+    set_simulator(state)
+}
+
+/// No server transport is modeled; keep the verified argument boundary without
+/// inventing a local update or a `PLAYER_LOOT_SPEC_UPDATED` response.
+fn set_retail(state: &mut LuaState) -> LuaResult<u32> {
+    if !matches!(stack_val(state, 1), Val::Num(_)) {
+        return Err(LuaError::Runtime(RuntimeError {
+            message: "Usage: SetLootSpecialization(specializationID)".into(),
+            level: 1,
+            traceback: vec![],
+        }));
+    }
+    Ok(0)
+}
+
+fn set_simulator(state: &mut LuaState) -> LuaResult<u32> {
     let value = match stack_val(state, 1) {
-        Val::Num(n) => n as i64,
+        Val::Num(number) => number as i64,
         _ => {
             return Err(LuaError::Runtime(RuntimeError {
                 message: "Usage: SetLootSpecialization(specializationID)".into(),
@@ -57,6 +80,9 @@ fn set(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 pub(crate) fn apply_pending(state: &mut LuaState) -> LuaResult<()> {
+    if ACTIVE == ClientProfile::Retail {
+        return Ok(());
+    }
     let requests = std::mem::take(&mut borrow_state_mut(state)?.pending_loot_specs);
     for id in requests {
         let accepted = {

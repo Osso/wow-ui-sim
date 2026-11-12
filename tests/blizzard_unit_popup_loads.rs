@@ -369,19 +369,29 @@ post_wrath_ui_fixture! {
 // lines 12,15, so the Standard-directory check does not apply to PTR.
 #[cfg(feature = "client-retail")]
 #[test]
-fn game_placeholder_resolves_to_standard_directory() {
+fn game_placeholder_resolves_to_active_profile_variant() {
+    if toc_layout::forever() {
+        // Forever's TOC selects [Game] UnitPopupMenus.lua for camelot.
+        let toc = TocFile::from_file(&unit_popup_toc()).expect("TOC parses");
+        assert!(
+            toc.files.contains(&PathBuf::from("Camelot/UnitPopupMenus.lua")),
+            "Forever [Game] menu entry must resolve to Camelot"
+        );
+        assert!(
+            !toc.files
+                .iter()
+                .any(|path| path.starts_with("Standard/")),
+            "Forever does not select Standard [Game] paths"
+        );
+        return;
+    }
+
     for relative in GAME_PLACEHOLDER_RESOLVED_RELATIVES {
         let resolved = unit_popup_dir().join(relative);
         assert!(
             resolved.is_file(),
             "`[Game]` placeholder must resolve to existing Standard\\ \
-             body file at {resolved:?}. toc.rs:146 substitutes \
-             `[Game]` → `Standard` literally; the Standard subdir holds \
-             the cross-build button/menu definitions used by retail \
-             mainline AND plunderstorm/wowhack flavors. The \
-             WoWLabs/WoWHack subdirs each carry their own copies but \
-             those `[AllowLoadGameType ...]` filters are written so \
-             only Standard variants load on a mainline build"
+             body file at {resolved:?} for this profile"
         );
     }
 }

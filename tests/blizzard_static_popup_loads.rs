@@ -292,7 +292,7 @@ fn body_lists_profile_selected_lua_files_in_dependency_order() {
     assert_eq!(
         body.len(),
         expected.len(),
-        "StaticPopup body entries follow the active TOC. Got: {body:?}"
+        "StaticPopup body entries follow the active profile TOC. Got: {body:?}"
     );
 
     for (i, want) in expected.iter().enumerate() {
@@ -304,9 +304,9 @@ fn body_lists_profile_selected_lua_files_in_dependency_order() {
     }
 
     assert!(
-        body.iter().all(|f| f.ends_with(".lua")),
+        body.iter().all(|file| file.ends_with(".lua")),
         "Every selected StaticPopup body entry must be Lua source; the unified TOC also \
-         selects StaticPopupGamepad.lua after the dispatcher and shared definitions"
+         selects StaticPopupGamepad.lua after the dispatcher and shared definitions: {body:?}"
     );
 }
 }

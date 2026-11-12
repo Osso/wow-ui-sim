@@ -208,8 +208,8 @@ fn dependencies_chain_pulls_declared_addons_via_plural_dependencies_key() {
             .into_iter()
             .map(str::to_string)
             .collect::<Vec<_>>(),
-        "Dependencies are read from the selected profile TOC in declared order; unified PTR \
-         line 2 adds GamepadSharedUtility after GameMenuEsc. Got: {:?}",
+        "Dependencies follow the selected profile TOC; unified PTR/Forever TOCs add \
+         GamepadSharedUtility after GameMenuEsc. Got: {:?}",
         toc.dependencies()
     );
 }
@@ -276,6 +276,12 @@ fn toc_raw_bytes_pin_three_metadata_directives() {
             "## Dependencies: Blizzard_StaticPopup, Blizzard_ItemButton, Blizzard_AutoComplete, Blizzard_MoneyFrame, Blizzard_AccessibilityTemplates",
             "## AllowLoad: game",
         ]
+    } else if toc_layout::forever() {
+        &[
+            "## Title: Blizzard_StaticPopup_Game",
+            "## Dependencies: Blizzard_StaticPopup, Blizzard_ItemButton, Blizzard_AutoComplete, Blizzard_MoneyFrame, Blizzard_AccessibilityTemplates, Blizzard_GameMenuEsc, Blizzard_GamepadSharedUtility",
+            "## AllowLoad: game",
+        ]
     } else {
         &[
             "## Title: Blizzard_StaticPopup_Game",
@@ -287,8 +293,7 @@ fn toc_raw_bytes_pin_three_metadata_directives() {
     for directive in expected_directives {
         assert!(
             raw.contains(directive),
-            "Raw TOC must pin `{directive}` — 3 metadata lines + 11 body \
-             entries; each directive is load-bearing"
+            "Raw TOC must pin `{directive}`; each directive is load-bearing"
         );
     }
 
@@ -307,7 +312,7 @@ fn toc_raw_bytes_pin_three_metadata_directives() {
 
 post_wrath_ui_fixture! {
 #[test]
-fn body_substitutes_family_and_filters_classic_only_entries() {
+fn body_selects_active_profile_family_and_game_entries() {
     let toc = TocFile::from_file(&static_popup_game_toc()).expect("TOC parses");
 
     let body: Vec<String> = toc
@@ -316,22 +321,34 @@ fn body_substitutes_family_and_filters_classic_only_entries() {
         .map(|p| p.to_string_lossy().to_string())
         .collect();
 
-    let expected = [
-        "GameDialogDefsUtil.lua",
-        "GameDialogDefs.lua",
-        "Mainline/GameDialogDefs.lua",
-        "GameDialog.lua",
-        "Mainline/GameDialog.lua",
-        "GameDialog.xml",
-        "Mainline/StaticPopupSpecial.xml",
-    ];
+    let expected: &[&str] = if toc_layout::forever() {
+        // The Forever TOC adds [Game] GameDialogDefs.lua for Camelot.
+        &[
+            "GameDialogDefsUtil.lua",
+            "GameDialogDefs.lua",
+            "Mainline/GameDialogDefs.lua",
+            "Camelot/GameDialogDefs.lua",
+            "GameDialog.lua",
+            "Mainline/GameDialog.lua",
+            "GameDialog.xml",
+            "Mainline/StaticPopupSpecial.xml",
+        ]
+    } else {
+        &[
+            "GameDialogDefsUtil.lua",
+            "GameDialogDefs.lua",
+            "Mainline/GameDialogDefs.lua",
+            "GameDialog.lua",
+            "Mainline/GameDialog.lua",
+            "GameDialog.xml",
+            "Mainline/StaticPopupSpecial.xml",
+        ]
+    };
 
     assert_eq!(
         body.len(),
         expected.len(),
-        "7 retained body entries: 11 raw lines minus 4 filtered by inline \
-         AllowLoadGameType (1 wrath/cata/mists + 3 classic-only). \
-         [Family] → Mainline/ per toc.rs:145. Got: {body:?}"
+        "selected StaticPopup_Game TOC entries: {body:?}"
     );
 
     for (i, want) in expected.iter().enumerate() {
@@ -367,10 +384,26 @@ fn body_orders_definitions_before_logic_before_layout() {
         "Defs (data) before GameDialog.lua (logic)"
     );
 
-    assert_eq!(
-        body[5], "GameDialog.xml",
-        "XML last: mixin=\"…\" attrs are resolved at template-registration \
-         time, so mixin tables must already exist in _G"
+    let dialog_xml_index = body
+        .iter()
+        .position(|file| file == "GameDialog.xml")
+        .expect("GameDialog.xml is listed");
+    let dialog_lua_indices: Vec<usize> = body
+        .iter()
+        .enumerate()
+        .filter_map(|(index, file)| {
+            ["GameDialogDefsUtil.lua", "GameDialogDefs.lua", "GameDialog.lua"]
+                .iter()
+                .any(|suffix| {
+                    let suffix = *suffix;
+                    file.as_str() == suffix || file.as_str().ends_with(suffix)
+                })
+                .then_some(index)
+        })
+        .collect();
+    assert!(
+        dialog_lua_indices.iter().all(|index| *index < dialog_xml_index),
+        "dialog Lua mixins and definitions must load before XML registration: {body:?}"
     );
 }
 }

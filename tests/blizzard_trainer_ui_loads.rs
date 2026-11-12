@@ -217,7 +217,15 @@ fn body_resolves_profile_lua_xml_and_localization_order() {
         .map(|p| p.to_string_lossy().to_string())
         .collect();
 
-    let expected = if toc_layout::unified_toc_tree() {
+    let expected = if toc_layout::forever() {
+        vec![
+            "Blizzard_TrainerUI_Bootstrap.lua",
+            "Mainline/Blizzard_TrainerUI.lua",
+            "Mainline/Blizzard_TrainerUI_Camelot.lua",
+            "Mainline/Blizzard_TrainerUI.xml",
+            "Localization.lua",
+        ]
+    } else if toc_layout::unified_toc_tree() {
         vec![
             "Blizzard_TrainerUI_Bootstrap.lua",
             "Mainline/Blizzard_TrainerUI.lua",
@@ -234,8 +242,7 @@ fn body_resolves_profile_lua_xml_and_localization_order() {
     assert_eq!(
         body,
         expected.into_iter().map(str::to_string).collect::<Vec<_>>(),
-        "TrainerUI body follows the active profile TOC. The unified PTR/Forever TOC line 6 \
-         selects the Mainline Lua file directly before its XML entry. Got: {body:?}"
+        "TrainerUI body follows the selected profile TOC. Got: {body:?}"
     );
 }
 

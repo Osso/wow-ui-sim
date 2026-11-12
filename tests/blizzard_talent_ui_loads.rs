@@ -7,8 +7,8 @@ use wow_ui_sim::toc::TocFile;
 #[path = "common/toc_layout.rs"]
 mod toc_layout;
 
-// The pinned PTR 12.1.7 manifest no longer ships this classic-only addon, so
-// the Mists TOC/body assertions apply to the profiles that do ship it.
+// The pinned PTR and Forever manifests omit this classic-only addon, so the
+// Mists TOC/body assertions apply only when the active cache ships it.
 fn talent_ui_absent_from_active_cache() -> bool {
     if toc_layout::unified_toc_tree() {
         assert!(
@@ -188,6 +188,9 @@ post_wrath_ui_fixture! {
 #[cfg(feature = "client-mists")]
 #[test]
 fn body_resolves_two_bootstraps_and_five_entries_with_normalized_slashes() {
+    if talent_ui_absent_from_active_cache() {
+        return;
+    }
     let toc = TocFile::from_file(&talent_ui_mists_toc()).expect("TOC parses");
 
     let body: Vec<String> = toc
@@ -215,6 +218,9 @@ post_wrath_ui_fixture! {
 #[cfg(feature = "client-mists")]
 #[test]
 fn allow_load_absent_restricts_to_game_screen_only() {
+    if talent_ui_absent_from_active_cache() {
+        return;
+    }
     let toc = TocFile::from_file(&talent_ui_mists_toc()).expect("TOC parses");
 
     assert!(

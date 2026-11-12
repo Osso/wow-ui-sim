@@ -226,7 +226,7 @@ fn body_count_matches_filesystem_layout() {
     assert_eq!(
         toc.files.len(),
         expected_files,
-        "SharedXMLBase body entry count follows the active TOC. Got {} entries",
+        "SharedXMLBase body entry count follows the active profile TOC. Got {} entries",
         toc.files.len()
     );
     assert_eq!(
@@ -235,7 +235,7 @@ fn body_count_matches_filesystem_layout() {
     );
     assert_eq!(
         xml_count, expected_xml,
-        "SharedXMLBase XML entry count follows the active TOC. Got {xml_count}"
+        "SharedXMLBase XML entry count follows the active profile TOC. Got {xml_count}"
     );
 }
 

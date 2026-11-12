@@ -487,6 +487,43 @@ fn forever_provider_experience_enums_match_raw_documented_scalars() {
 }
 
 #[test]
+fn forever_lfg_voice_mode_enum_drives_original_voice_chat_labels() {
+    let env = WowLuaEnv::new().unwrap();
+    assert_enums_match_documentation(
+        &env,
+        &["LFGEntryVoiceMode"],
+        &["LFGConstantsDocumentation.lua"],
+    );
+    env.exec(
+        r#"
+        VOICE_CHAT_MODE_NONE = "none"
+        VOICE_CHAT_MODE_LEGACY = "legacy"
+        VOICE_CHAT_MODE_DISCORD = "discord"
+        VOICE_CHAT_MODE_CUSTOM = "custom"
+        "#,
+    )
+    .unwrap();
+    let root = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path().unwrap();
+    let source = std::fs::read_to_string(
+        root.join("Blizzard_GroupFinder_VanillaStyle/Blizzard_LFGVanilla_VoiceChat.lua"),
+    )
+    .unwrap();
+    env.exec(&format!("LFGVoiceChat = (function()\n{source}\nend)()"))
+        .unwrap();
+    env.exec(
+        r#"
+        local values = Enum.LFGEntryVoiceMode
+        local labels = LFGVoiceChat.VoiceModeLabels
+        assert(labels[values.None] == "none")
+        assert(labels[values.Legacy] == "legacy")
+        assert(labels[values.Discord] == "discord")
+        assert(labels[values.Custom] == "custom")
+        "#,
+    )
+    .unwrap();
+}
+
+#[test]
 fn forever_item_subclass_enums_match_raw_documented_scalars() {
     let env = WowLuaEnv::new().unwrap();
     assert_enums_match_documentation(

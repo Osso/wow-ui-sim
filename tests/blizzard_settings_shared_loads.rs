@@ -554,15 +554,22 @@ fn family_placeholder_resolves_profile_selected_mainline_entries() {
             .iter()
             .map(|file| file.to_string())
             .collect::<Vec<_>>(),
-        "Resolved Mainline entries follow the active profile selectors; PTR TOC lines 12, 24, \
-         34, 35, and 38 select five files, while Forever excludes Mainline NewDefinitions and \
-         LanguagesOverrides"
+        "Resolved Mainline entries follow the active profile selectors; PTR TOC selects five \
+         entries, while Forever uses Camelot NewDefinitions and excludes LanguagesOverrides"
+
     );
 
     for expected in expected_mainline_files {
         assert!(
             mainline_files.iter().any(|file| file == *expected),
             "Mainline body entry {expected} must be present after normalization"
+        );
+    }
+
+    if cfg!(feature = "client-wowforever") {
+        assert!(
+            toc.files.iter().any(|file| file == "Camelot/NewDefinitions.lua"),
+            "Forever selects the Camelot NewDefinitions.lua entry"
         );
     }
 }

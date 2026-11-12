@@ -1,23 +1,44 @@
 # Group member role counts
 
-## Native contract: Retail build 70688
+`GetGroupMemberCounts` supplies group counts to the selected original `PartyUtil.lua` consumer. Retail behavior is based on R44-Q1, inspected from Retail 12.1.5 build 70688. This evidence does not establish parity for other profiles.
 
-Basis: native behavioral evidence `GetGroupMemberCounts.md`, client 70688.
+## What it must do
 
-`GetGroupMemberCounts()` returns one table. With no group or an empty group, all role and class counts are zero. Otherwise it scans up to 40 slots in the current party or raid container, including the player. A member with flag `0x10` is skipped. Class IDs outside the class range count as class 1. Every class has a numeric key even when its count is zero; the evidence indicates the key is most likely the class name, but its exact string resolution is not fully decoded.
+- [x] On Retail, return exactly one table. With no selected roster, all four role counts are zero.
+- [x] Argument 1 selects container one or two when its converted integer is 1 or 2. Otherwise, select container two when present, then container one. Do not assign party/raid names to these containers without evidence.
+- [x] If argument 1 is a table, update and return that same table. Preserve its other fields.
+- [x] Scan no more than 40 slots and stop at the first absent member. Count each present non-skipped record; do not apply a separate self-exclusion.
+- [x] Skip members whose flags contain bit 16 from both role and class counts.
+- [x] Classify role masks A and B in priority order: tank if `A & 2 != 0` or `B & 2 != 0`, `B & 8 == 0`, and `A & 8 != 0`; healer if `A & 4 != 0`; damager if `A & 8 != 0` and `(B & 10) != 2`; otherwise `NOROLE`.
+- [x] For the supported player identity kind, use the resolved player's class. Otherwise use cached class when it is positive and in range, or class 1. Skip a resolved class below zero or above range. Class zero contributes internally but has no published class key.
+- [x] Publish class counts under class tokens.
+- [x] Keep the selected Retail behavior separate from profiles whose native parity is not established.
 
-For each non-skipped member, native role classification checks the two supplied flag bytes `Stage` and `Spec` in order: `Stage & 0x2` counts as `TANK`; otherwise `Stage & 0x4` counts as `HEALER`; otherwise `(Stage & 0xA) != 0x2` and `Spec & 0x8` counts as `DAMAGER`; otherwise it counts as `NOROLE`. The names and meaning of these bits and the skipped-member flag remain unknown. The function fires no events.
+## How it works
 
-## Simulator coverage
+- See the [C API and Lua API boundaries](../wiki/index.md).
 
-Solo returns zero role and class counts. The simulator counts the player and up to 39 other members of the active modeled party using assigned roles and class display names; invalid class IDs count as class 1. Other profiles retain this shared implementation; build 70688 evidence does not establish their native behavior.
+## Implementation inventory
 
-## Known gaps
+- `src/lua_api/globals/real/group_role_counts.rs` — Retail roster count projection and the existing non-Retail simulator projection.
+- `src/lua_api/state_types/group_member_counts.rs` — host-supplied Retail roster input. `resolved_player_class_id` is set only after the host matches the supported player identity kind.
+- `src/lua_api/state/sim_state.rs` — stores that input on `SimState`.
 
-The simulator does not model the native `Stage` and `Spec` bytes, the member `0x10` skip flag, or a separate raid container. Its raid representation derives from the party vector. The mapping from modeled assigned roles to the native bytes is not established, so grouped role counts are not proven native-equivalent. The exact native class key spelling remains uncertain. The 40-slot cap is implemented but not exercised by the consumer test.
+## Tests asserting this spec
 
-The pinned generated API documentation does not declare this global. Retail `Blizzard_FrameXMLUtil/Blizzard_FrameXMLUtil.toc:5,8` selects `PartyUtil.lua` for the Game screen. `PartyUtil.lua:108-112` reads `DAMAGER` and `NOROLE` and folds the latter into the former.
+- `tests/group_role_counts.rs::group_role_counts_retail_uses_native_roster_fields` — selected original `PartyUtil.lua`, both containers, numeric and default selection, exact return arity, table reuse, role priority, skip flag, class resolution by supported player identity and cached class (including negative and oversized resolved classes), null termination, and 40-slot cap.
+- `tests/group_role_counts.rs::group_role_counts_ptr_keeps_simulator_party_projection` and `group_role_counts_classic_profiles_keep_unset_roles` — selected original `PartyUtil.lua` with existing non-Retail simulator inputs; these are not native parity proof.
+- `tests/admin_pvp_guild_api.rs` — no-group role total.
 
-## Tests
+## Known gaps (current cycle)
 
-`tests/group_role_counts.rs` loads the selected original PartyUtil and exercises two assigned rosters, class counts, invalid class IDs, and solo transitions. `tests/admin_pvp_guild_api.rs` covers the solo total. These tests do not establish the missing native behaviors above.
+- [ ] The native semantic names of the two containers and role masks A/B are unknown.
+- [ ] The host input does not identify the local player, so the no-self-exclusion rule is not independently distinguishable in a behavioral fixture.
+- [ ] Runtime class-row absence is not represented by the static class-token catalog.
+- [ ] The full producer and server-response lifecycle for roster inputs is not modeled.
+- [ ] PTR and other-profile native parity is unknown; their current simulator role projection remains unchanged.
+
+## Out of scope
+
+- Do not infer a group event contract from the getter or numeric error-report calls.
+- Do not derive the two native role masks from assigned simulator roles.

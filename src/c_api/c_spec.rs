@@ -401,6 +401,18 @@ fn c_spec_get_active_spec_group(state: &mut LuaState) -> LuaResult<u32> {
     let group = if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever
     {
         borrow_state(state)?.talents.forever.current_group + 1
+    } else if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        #[cfg(feature = "client-retail")]
+        {
+            borrow_state(state)?
+                .pvp_talent_tooltip
+                .active_group_index
+                .saturating_add(1)
+        }
+        #[cfg(not(feature = "client-retail"))]
+        {
+            1
+        }
     } else {
         1
     };

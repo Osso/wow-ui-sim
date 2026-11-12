@@ -210,7 +210,7 @@ fn lane_dep_edges_pin_canonical_chain() {
             .get(expected_frame_xml_deps.len())
             .map(String::as_str),
         toc_layout::unified_toc_tree().then_some("Blizzard_GamepadSoftCursor"),
-        "Unified PTR/Forever FrameXML TOCs select GamepadSoftCursor on mainline at line 19"
+        "PTR and Forever FrameXML TOCs select GamepadSoftCursor with a mainline selector"
     );
 }
 

@@ -11,7 +11,7 @@
 
 use std::path::{Path, PathBuf};
 
-use wow_ui_sim::client_profile::{ClientProfile, ACTIVE};
+use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
 
 /// True when the pinned active-profile cache stores one unified TOC per addon
 /// instead of flavor-suffixed variants.

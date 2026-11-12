@@ -265,7 +265,7 @@ pub struct SimState {
     pub action_bar_state: ActionBarStateInfo,
     pub spell_range_visualization: crate::c_api::action_button_hover::SpellRangeVisualizationState,
     pub action_combat_range: crate::c_api::action_combat_range_check::ActionCombatRangeState,
-    /// None = missing shared object; Some(flag) = supplied restrictive-rule flag.
+    /// None = no player object; Some(permission) = supplied bank-reagent permission bit.
     pub bank_reagent_object: Option<bool>,
     pub action_highlights: ActionHighlightState,
     pub extra_action_button: ExtraActionButtonState,
@@ -504,6 +504,8 @@ pub struct SimState {
     pub next_report_token: i64,
     pub party_members: Vec<PartyMember>,
     pub party_group_active: bool,
+    /// Retail PartyInfo roster input used by `GetGroupMemberCounts`.
+    pub group_member_counts: GroupMemberCountsState,
     /// INFERRED: host-owned identity classification; no automatic context inference.
     #[cfg(all(
         feature = "retail-12-0-5",
@@ -522,6 +524,10 @@ pub struct SimState {
     pub current_target: Option<TargetInfo>,
     /// Supplied target GUIDs for target, focus, and party unit tokens.
     pub unit_target_guids: HashMap<String, String>,
+    /// Host-supplied GUIDs for unit tokens not resolved by the built-in inputs.
+    pub unit_guid_overrides: HashMap<String, String>,
+    /// Host-supplied GUIDs owned or controlled by the player.
+    pub player_owned_or_controlled_unit_guids: HashSet<String>,
     pub previous_target: Option<TargetInfo>,
     pub current_focus: Option<TargetInfo>,
     /// Explicit host NPC-follower identities for player-style display.
@@ -657,6 +663,9 @@ pub struct SimState {
     pub player: PlayerState,
     pub war_mode: crate::c_api::c_pvp::war_mode::WarModeState,
     pub pvp_talents: crate::c_api::c_spec::PvpTalentState,
+    /// Retail GetPvpTalent catalog and state inputs; all maps are host-supplied.
+    #[cfg(feature = "client-retail")]
+    pub pvp_talent_tooltip: crate::c_api::c_tooltip_info_pvp_talent::PvpTalentTooltipInputs,
     pub player_xp: PlayerXpState,
     pub bind_location: String,
     pub pvp_honor: PvpHonorState,
@@ -922,9 +931,28 @@ pub struct SimState {
     pub auction_should_auto_populate_price: bool,
     pub wow_token: WowTokenState,
     pub mythic_plus: MythicPlusState,
+    /// Current character-create model facing in normalized radians.
+    pub character_create_facing_radians: f32,
+    /// Host-supplied race IDs with an altered character-create model.
+    pub character_create_altered_form_races: HashSet<i64>,
+    /// Stored Glue character-create altered-form choice.
+    pub character_create_viewing_altered_form: bool,
+    /// Selected character-create camera profile; no visual 3D effect is rendered.
+    pub character_create_blur_enabled: bool,
+    /// Stored Glue character-create zoom; camera profiles are not rendered.
+    pub character_create_camera_zoom: i32,
+    /// Native custom-zoom flag; the simulator has no producer for this input.
+    pub character_create_camera_zoom_is_custom: bool,
+    /// Host-supplied facing in degrees, keyed by selected character-create race/sex IDs.
+    pub character_create_default_facing_by_race_sex: HashMap<(i64, i64), f64>,
+    /// Host-supplied superdistrict records, keyed by native ID.
+    pub super_district_info_by_id: HashMap<i32, crate::c_api::c_district_utils::SuperDistrictInfo>,
+    /// Currently selected superdistrict ID; native clear/start/reset value is zero.
+    pub selected_super_district_id: i32,
     pub character_services: CharacterServicesState,
     pub shared_character_services:
         crate::c_api::c_shared_character_services::SharedCharacterServicesState,
+    pub trial_boost_level: crate::c_api::c_character_creation_trial_boost::TrialBoostLevelState,
     pub scenario: ScenarioState,
     pub death_recaps: Vec<DeathRecapEntry>,
     pub chat_bubbles: Vec<ChatBubble>,

@@ -92,7 +92,7 @@ fn ptr_profile_allows_beta_and_ptr_tocs() {
 }
 
 #[test]
-#[cfg(not(any(feature = "client-ptr", feature = "client-wowforever")))]
+#[cfg(not(feature = "client-ptr"))]
 fn non_ptr_profiles_restrict_beta_and_ptr_tocs() {
     let toc = TocFile::parse(
         Path::new("/addons/Blizzard_PTRFeedback"),

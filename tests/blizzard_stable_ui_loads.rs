@@ -290,13 +290,14 @@ fn body_lists_lua_before_xml_for_mixin_resolution() {
         .map(|p| p.to_string_lossy().to_string())
         .collect();
 
+    let expected_entries = expected_body();
     assert_eq!(
         body.len(),
-        expected_body().len(),
+        expected_entries.len(),
         "StableUI body entries follow the active profile TOC. Got: {body:?}"
     );
 
-    for (i, want) in expected_body().iter().enumerate() {
+    for (i, want) in expected_entries.iter().enumerate() {
         assert_eq!(
             &body[i], want,
             "Body entry {i}: expected {want}, got {}",
@@ -304,10 +305,16 @@ fn body_lists_lua_before_xml_for_mixin_resolution() {
         );
     }
 
+    let xml_index = body
+        .iter()
+        .position(|path| path.ends_with(".xml"))
+        .expect("selected stable UI TOC lists XML");
     assert!(
-        body.first().is_some_and(|file| file.ends_with(".lua"))
-            && body.last().is_some_and(|file| file.ends_with(".xml")),
-        "StableUI Lua mixins must load before the XML template registrations"
+        body.iter()
+            .enumerate()
+            .filter(|(_, path)| path.ends_with(".lua"))
+            .all(|(index, _)| index < xml_index),
+        "every selected Lua mixin source must load before XML registration: {body:?}"
     );
 }
 }

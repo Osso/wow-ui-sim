@@ -657,16 +657,31 @@ fn blizzard_raid_ui_xml_and_lua_follow_the_selected_toc() {
         .iter()
         .map(|file| file.to_string_lossy().replace('\\', "/"))
         .collect();
-    let lua = body
+
+    if toc_layout::unified_toc_tree() {
+        let lua = body
+            .iter()
+            .position(|file| file.ends_with("Blizzard_RaidUI.lua"))
+            .expect("unified TOC selects RaidUI Lua directly");
+        let xml = body
+            .iter()
+            .position(|file| file.ends_with("Blizzard_RaidUI.xml"))
+            .expect("unified TOC selects RaidUI XML directly");
+        assert!(
+            lua < xml,
+            "Unified PTR/Forever TOC selects Lua before XML: {body:?}"
+        );
+        return;
+    }
+
+    let xml_entry = body
         .iter()
-        .position(|file| file.ends_with("Blizzard_RaidUI.lua"));
-    let xml = body
-        .iter()
-        .position(|file| file.ends_with("Blizzard_RaidUI.xml"));
+        .find(|file| file.ends_with("Blizzard_RaidUI.xml"))
+        .expect("selected TOC lists RaidUI XML");
+    let xml_path = raid_ui_dir().join(xml_entry);
+    let raw = std::fs::read_to_string(&xml_path).expect("selected RaidUI XML reads");
     assert!(
-        matches!((lua, xml), (Some(lua), Some(xml)) if lua < xml),
-        "Active RaidUI TOC must list its selected Lua before XML. PTR TOC lines 6-7 select \
-         Mainline Lua and XML directly; the XML does not contain a Script file directive. \
-         Got: {body:?}"
+        raw.contains("<Script file=\"Blizzard_RaidUI.lua\""),
+        "Non-unified selected XML loads RaidUI Lua with a Script directive: {xml_path:?}"
     );
 }

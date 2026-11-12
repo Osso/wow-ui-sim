@@ -290,7 +290,10 @@ fn wowforever_profile_applies_header_filters_without_vanilla_alias() {
             "{header}"
         );
     }
-    assert!(!TocFile::parse(Path::new("/addons/Test"), "## OnlyBetaAndPTR: 1").is_ptr_only());
+    assert!(
+        TocFile::parse(Path::new("/addons/Test"), "## OnlyBetaAndPTR: 1").is_ptr_only(),
+        "R26: Forever build 70707 is normal build classification 2, so it does not pass the PTR/beta gate"
+    );
 }
 
 #[test]

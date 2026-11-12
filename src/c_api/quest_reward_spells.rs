@@ -9,12 +9,14 @@ use rilua::{LuaResult, Val};
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     if !matches!(
         crate::client_profile::ACTIVE,
-        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::Ptr
+            | crate::client_profile::ClientProfile::WowForever
     ) {
         return Ok(());
     }
     let namespace = super::ensure_namespace(state, "C_QuestInfoSystem")?;
-    // Retail QuestInfoSystemDocumentation.lua:90-104.
+    // Retail/Forever QuestInfoSystemDocumentation.lua:90-104.
     table_set_rust_fn_static(state, namespace, "GetQuestRewardSpells", get_reward_spells)
 }
 

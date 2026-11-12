@@ -9,6 +9,18 @@ use wow_ui_sim::toc::TocFile;
 mod toc_layout;
 
 // Mists/Era/Anniversary select Blizzard_ReforgingUI_Classic.toc; PTR/Forever omit the addon.
+fn reforging_ui_absent_from_active_cache() -> bool {
+    if toc_layout::unified_toc_tree() {
+        assert!(
+            !reforging_ui_dir().exists(),
+            "PTR/Forever manifests must not ship the Classic-only Blizzard_ReforgingUI"
+        );
+        true
+    } else {
+        false
+    }
+}
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -141,6 +153,9 @@ post_wrath_ui_fixture! {
 #[cfg(feature = "client-retail")]
 #[test]
 fn is_game_type_restricted_returns_true_for_classic_only_addon() {
+    if reforging_ui_absent_from_active_cache() {
+        return;
+    }
     let toc =
         TocFile::from_file(&reforging_ui_toc()).expect("Blizzard_ReforgingUI TOC should parse");
     assert!(
@@ -182,6 +197,9 @@ post_wrath_ui_fixture! {
 #[cfg(any(feature = "client-mists", feature = "client-era", feature = "client-anniversary"))]
 #[test]
 fn classic_subdirectory_matches_the_selected_toc() {
+    if reforging_ui_absent_from_active_cache() {
+        return;
+    }
     let classic_dir = reforging_ui_dir().join("Classic");
     let mut entries: Vec<String> = std::fs::read_dir(&classic_dir)
         .expect("Blizzard_ReforgingUI/Classic directory should read")

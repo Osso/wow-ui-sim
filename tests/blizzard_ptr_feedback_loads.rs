@@ -128,15 +128,15 @@ fn blizzard_ptr_feedback_toc_marks_addon_as_ptr_and_beta_only() {
 
     assert!(
         toc.metadata.get("OnlyBetaAndPTR").map(String::as_str) == Some("1"),
-        "TOC must declare `## OnlyBetaAndPTR: 1`. The PTR Issue Reporter is a developer tool \
-         that ships with the live client tree but is gated to PTR / beta realms only"
+        "TOC must declare `## OnlyBetaAndPTR: 1`. R26 establishes that this Boolean is \
+         checked against the client build classification, not realms, portals, or CVars"
     );
     assert_eq!(
         toc.is_ptr_only(),
-        !toc_layout::unified_toc_tree(),
-        "`is_ptr_only()` gates the addon out of eager discovery on profiles that do not \
-         permit PTR-only addons; the PTR and Forever profiles admit them, so the gate is \
-         inactive there (src/toc/mod.rs permits_ptr_only)"
+        wow_ui_sim::client_profile::ACTIVE != wow_ui_sim::client_profile::ClientProfile::Ptr,
+        "R26: OnlyBetaAndPTR is a build-classification gate. PTR passes it; Forever 70707 \
+         and Retail 70688 are normal builds and remove the addon. Unified TOC layout does \
+         not affect `is_ptr_only()`"
     );
 }
 }
@@ -320,12 +320,12 @@ fn blizzard_ptr_feedback_appears_only_on_selected_screens() {
         let found = addons
             .iter()
             .any(|(name, _)| name == "Blizzard_PTRFeedback");
+        let expected = screen == ScreenKind::Game
+            && wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::Ptr;
         assert_eq!(
-            found,
-            toc_layout::unified_toc_tree() && screen == ScreenKind::Game,
-            "Blizzard_PTRFeedback is selected on the PTR Game screen: its TOC line 2 \
-             says OnlyBetaAndPTR and line 8 uses the default Game-only screen. \
-             Retail blocks PTR-only addons; glue screens remain excluded."
+            found, expected,
+            "OnlyBetaAndPTR admits the PTR build on Game; normal builds including Forever \
+             are filtered, and AllowLoad defaults to Game-only"
         );
     }
 }

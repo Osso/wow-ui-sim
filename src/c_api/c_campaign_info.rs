@@ -50,48 +50,15 @@ fn get_campaign_id(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn get_campaign_info(state: &mut LuaState) -> LuaResult<u32> {
-    let id = i32::from_stack(state, 1)?;
-    let exists = borrow_state(state)?
-        .quest_log_entries
-        .campaign_ids
-        .values()
-        .any(|campaign| *campaign == id && id != 0);
-    let result = if exists {
-        create_table(state)
-    } else {
-        Val::Nil
-    };
-    state.push(result);
+    let _campaign_id = i32::from_stack(state, 1)?;
+    // Quest associations do not establish a Campaign metadata record.
+    state.push(Val::Nil);
     Ok(1)
 }
 
 fn get_state(state: &mut LuaState) -> LuaResult<u32> {
-    let id = i32::from_stack(state, 1)?;
-    let result = {
-        let sim = borrow_state(state)?;
-        let log = &sim.quest_log_entries;
-        let quests: Vec<_> = log
-            .campaign_ids
-            .iter()
-            .filter_map(|(quest, campaign)| (*campaign == id && id != 0).then_some(*quest))
-            .collect();
-        let complete = |quest: &i32| {
-            log.completed_quest_ids.contains(quest)
-                || log
-                    .entries
-                    .iter()
-                    .any(|entry| entry.quest_id == *quest && entry.is_complete && !entry.is_failed)
-        };
-        if !quests.is_empty() && quests.iter().all(complete) {
-            1
-        } else if quests.iter().any(|quest| {
-            complete(quest) || log.entries.iter().any(|entry| entry.quest_id == *quest)
-        }) {
-            2
-        } else {
-            0
-        }
-    };
-    state.push(Val::Num(f64::from(result)));
+    let _campaign_id = i32::from_stack(state, 1)?;
+    // Without Campaign rows and condition inputs, every query is a data miss.
+    state.push(Val::Num(0.0));
     Ok(1)
 }
