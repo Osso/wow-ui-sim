@@ -835,6 +835,30 @@ fn test_is_all_template_versions() {
 }
 
 #[test]
+fn third_party_allowload_selects_explicit_screens() {
+    use crate::screen::ScreenKind;
+
+    for (value, game, glue) in [
+        ("Game", true, false),
+        ("gLuE", false, true),
+        ("Both", true, true),
+        ("Unknown", false, false),
+    ] {
+        let toc = TocFile::parse(
+            Path::new("/addons/UserScreenProbe"),
+            &format!("## AllowLoad: {value}\nCore.lua"),
+        );
+        assert_eq!(toc.allows_screen(ScreenKind::Game), game, "{value}");
+        assert_eq!(toc.allows_screen(ScreenKind::Login), glue, "{value}");
+        assert_eq!(
+            toc.allows_screen(ScreenKind::CharacterSelect),
+            glue,
+            "{value}"
+        );
+    }
+}
+
+#[test]
 fn test_allows_screen_modes() {
     use crate::screen::ScreenKind;
 
