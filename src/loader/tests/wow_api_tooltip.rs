@@ -520,6 +520,13 @@ fn test_c_tooltip_info_get_spell_book_item_returns_spell_tooltip_lines() {
 #[test]
 fn test_c_tooltip_info_get_unit_buff_returns_aura_tooltip_lines() {
     let env = WowLuaEnv::new().unwrap();
+    // R81 Q4: preserve aura positions with already-formatted host text.
+    env.state()
+        .borrow_mut()
+        .aura_tooltip_inputs
+        .entry(1)
+        .or_default()
+        .remaining_text = Some("1 hr".into());
     seed_c_tooltip_info_test_state(&env);
 
     let has_real_tooltip: bool = env
