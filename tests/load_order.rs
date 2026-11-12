@@ -439,19 +439,6 @@ fn test_blizzard_addon_load_order_snapshot() {
     }
 }
 
-/// Helper to regenerate the snapshot above.
-#[test]
-#[ignore]
-fn dump_load_order() {
-    let ui = blizzard_ui_dir();
-    let addons = discover_blizzard_addons(&ui);
-    for (name, _) in &addons {
-        eprintln!("    \"{name}\",");
-    }
-    eprintln!("Total: {} addons", addons.len());
-    panic!("dump complete — copy output into test_blizzard_addon_load_order_snapshot");
-}
-
 /// PaperDollItemSlotButton_OnLoad must exist when Blizzard_MainMenuBarBagButtons loads.
 #[test]
 fn test_paperdoll_onload_exists_for_bag_buttons() {

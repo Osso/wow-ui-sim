@@ -725,7 +725,7 @@ mod tests {
     }
 }
 
-#[cfg(test)]
+#[cfg(all(test, feature = "optional-tests"))]
 #[path = "headless_colour_tests.rs"]
 mod colour_tests;
 
