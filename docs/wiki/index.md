@@ -1,3 +1,7 @@
+## [2026-11-12] investigation | Inline XML tooltip operands
+
+[Inline XML method arguments](investigations/xml-inline-method-arguments.md) records the zero-vararg parser misclassification, source-faithful parameter-prefix installation, and the separately approved RaidFrame AddLine fixture correction.
+
 ## [2026-11-12] implementation | R73 PvP talent annotations
 
 [Tooltip data](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) links the [R73 contract](../specs/tooltip-pvp-talent.md). VERIFIED: eight exact tests pass, including seven original-hover outcomes and supplied slot/group fields. Combat precedes grant and later unlock, and supplied rest permission replaces the unproved XP-state mapping. UNKNOWN: opaque native predicates and inspect internals remain unmodelled.

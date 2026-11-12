@@ -1,6 +1,10 @@
 #[derive(Clone)]
 pub(crate) enum FastHandlerRef<'a> {
     NoOp,
+    InlineMethod {
+        handler_name: &'static str,
+        body: &'a str,
+    },
     Sequence2(Box<(FastHandlerRef<'a>, FastHandlerRef<'a>)>),
     Sequence3(Box<(FastHandlerRef<'a>, FastHandlerRef<'a>, FastHandlerRef<'a>)>),
     Sequence4(

@@ -99,6 +99,18 @@ pub(super) fn build_fast_handler(
     state: &mut LuaState,
     handler_ref: FastHandlerRef<'_>,
 ) -> LuaResult<Option<Val>> {
+    if let FastHandlerRef::InlineMethod { handler_name, body } = handler_ref {
+        let params = crate::loader::helpers::handler_params(handler_name);
+        let locals = crate::loader::helpers::inline_argument_locals(handler_name);
+        let source = format!("return function({params}) {locals}\n{body}\nend");
+        let builder = load_template(state, &source, "template-inline-method")?;
+        return crate::lua_api::methods::call_function_state(
+            state,
+            Val::Function(builder.gc_ref()),
+            &[],
+        )
+        .map(Some);
+    }
     if let Some(result) = try_family_dispatchers(state, &handler_ref)? {
         return Ok(result);
     }
