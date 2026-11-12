@@ -228,6 +228,37 @@ storage waiting and full publisher paths remain unknown; no file fetch occurs.
 
 **VERIFIED (simulator test at `83d7e3998`, 1/1):** the Forever startup fixture checks that normal Login startup does not select `Blizzard_PTRFeedbackGlue`; it does not assert customization add-on loading on Login.
 
+## m35 integration validation (2026-11-12)
+
+Master 926aadc0c (v0.1.41) was merged with --no-ff as 2ffbe6d36.
+Integration fixes removed a duplicate numeric-parser export and its orphaned
+profile gate; current code is 4d16f9ca7. The coordinator's moved character-service
+state retains both queued-upgrade and automatic-boost inputs. Its character-create
+cleanup remains intact; the obsolete name-reservation fallback does not replace
+the R44 model.
+
+Cached full glue tests: Retail 272 passed/0 failed (63.11s), PTR 144/0 (44.19s),
+and Forever 168/4 (51.46s). Forever's run preceded the profile-neutral export-gate
+fix; its original graphics/credits consumer suite subsequently passed 4/4
+(4.39s) at 4d16f9ca7. All successful builds emitted zero warnings. Real Enter and
+button submission to character select pass on Retail and Forever.
+
+Three Forever character-create failures are confirmed master baseline by
+comment122. Missing GetTrialBoostStartingLevel belongs to main's pending m36;
+the raceData.racialAbilities contract belongs to main's R67. Neither is filled
+or masked here. The fourth failure is this lane's stronger empty-roster test
+asserting all downstream character-create setup is error-free. The coordinator
+narrows that test to the transition boundary. Because original GlueParent
+dispatches ScreenChanged and CharacterCreate OnShow synchronously, comment123
+requests confirmation of a passive transition snapshot without suppressing
+OnShow or hiding later diagnostics. Until resolved, this is not a passing
+empty-roster setup claim.
+
+Comment120 supersedes the earlier seven-profile all-target lane gate: targeted
+PTR/Retail/Forever proof is required; final all-profile integration and GitHub CI
+belong to main. No shared-loader changes, native-data fetches or Blizzard CDN
+requests were made.
+
 ## Sources
 
 - [Login contract](../../specs/glue-login-flow.md) — native evidence, offline policy and remaining unknowns.

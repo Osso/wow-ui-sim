@@ -1,3 +1,7 @@
+## [2026-11-12] integration | Merge m35 login dependencies
+
+Updated the [login contract](../specs/glue-login-flow.md#m35-integration-validation-2026-11-12) and [startup investigation](investigations/forever-login-startup.md) with m35 merge resolutions, green Retail/PTR gates, successful real Enter/button submission on Forever, and the explicitly bounded character-create baseline/transition work still pending. The coordinator now owns the final all-profile gate.
+
 ## [2026-11-12] implementation | Credits FileDataID validation
 
 Updated the [login contract](../specs/glue-login-flow.md#r65-credits-text-input-and-publication) and [startup investigation](investigations/forever-login-startup.md#r65-credits-validation-2026-11-12) with R65 validation, direct host file lookup and exact Forever string/empty/nil publication. PTR and Forever cached glue regressions retain only recorded baseline/cleanup failures; the original credits consumer passes. No network-backed file resolver or native fresh catalog is invented.
