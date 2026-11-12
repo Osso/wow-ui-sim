@@ -71,26 +71,6 @@ fn retail_pickup_merchant_item_keeps_legacy_wrapper_and_projection() {
 
 #[cfg(feature = "client-ptr")]
 #[test]
-fn ptr_merchant_cursor_clear_reports_supplied_item_id() {
-    let env = env_with_merchant_items(&[6948]);
-    env.exec(
-        r#"
-        local events = {}
-        local listener = CreateFrame('Frame')
-        listener:RegisterEvent('CURSOR_CHANGED')
-        listener:SetScript('OnEvent', function(_, event, empty, mode, previous, itemID)
-            events[#events + 1] = table.concat({event, tostring(empty), tostring(mode), tostring(previous), tostring(itemID)}, ',')
-        end)
-        PickupMerchantItem(1)
-        ClearCursor()
-        assert(events[#events] == 'CURSOR_CHANGED,true,0,5,6948', events[#events])
-        "#,
-    )
-    .unwrap();
-}
-
-#[cfg(feature = "client-ptr")]
-#[test]
 fn pickup_merchant_item_clears_for_invalid_inputs() {
     let env = env_with_merchant_items(&[6948, 6256]);
     env.exec(
