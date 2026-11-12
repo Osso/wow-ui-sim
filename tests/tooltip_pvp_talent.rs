@@ -476,8 +476,8 @@ fn game_tooltip_pvp_talent_missing_eligibility_and_level_error() {
         r#"
         local direct = C_TooltipInfo.GetSpellByID(116)
         local resting = TestGetPvpTalent(91001)
-        assert(#resting.lines == #direct.lines,
-            "the allowed rest state does not add a rest error")
+        assert(resting.lines[#resting.lines].leftText == TALENT_TOOLTIP_ADD_REST_ERROR_PVP,
+            "a supplied failure uses the default rest error, not inferred XP state")
         "#,
     )
     .unwrap();
@@ -491,8 +491,8 @@ fn game_tooltip_pvp_talent_missing_eligibility_and_level_error() {
         r#"
         local direct = C_TooltipInfo.GetSpellByID(116)
         local resting_player = TestGetPvpTalent(91001)
-        assert(#resting_player.lines == #direct.lines,
-            "the resting-player state also permits the talent change")
+        assert(resting_player.lines[#resting_player.lines].leftText == TALENT_TOOLTIP_ADD_REST_ERROR_PVP,
+            "the supplied failure is not overridden by inferred resting-player state")
         "#,
     )
     .unwrap();
@@ -585,11 +585,12 @@ fn game_tooltip_pvp_talent_failure_and_inspect_annotations() {
         r#"
         local data = TestGetPvpTalent(91001)
         assert(data.lines[#data.lines].leftText == TALENT_TOOLTIP_ADD_COMBAT_ERROR,
-            "an item grant without an item row falls through to combat")
+            "combat status precedes the grant outcome")
         "#,
     )
     .unwrap();
 
+    env.state().borrow_mut().player.in_combat = false;
     env.state()
         .borrow_mut()
         .pvp_talent_tooltip
@@ -804,7 +805,7 @@ mod r73 {
             sim.pvp_talent_tooltip.rest_permission = Some(false);
             let record = sim.pvp_talent_tooltip.catalog.get_mut(&5573).unwrap();
             record.grant_rejected_by_item = true;
-            record.granted_item_id = Some(19019);
+            record.granted_item_id = Some(6948);
             record.granted_by_essence = true;
             record.eligibility_by_position.insert(1, false);
         }
@@ -834,7 +835,7 @@ mod r73 {
             record.eligibility_by_position.insert(0, false);
             record.eligibility_by_position.insert(1, false);
             record.grant_rejected_by_item = true;
-            record.granted_item_id = Some(19019);
+            record.granted_item_id = Some(6948);
             record.eligibility_level_failed = true;
         }
         hover(&env, false, "TALENT_TOOLTIP_ADD_COMBAT_ERROR");
@@ -859,7 +860,7 @@ mod r73 {
             let mut sim = env.state().borrow_mut();
             let record = sim.pvp_talent_tooltip.catalog.get_mut(&5573).unwrap();
             record.grant_rejected_by_item = true;
-            record.granted_item_id = Some(19019);
+            record.granted_item_id = Some(6948);
             record.granted_by_essence = essence;
         }
         env
@@ -871,7 +872,7 @@ mod r73 {
         hover(
             &env,
             false,
-            "TALENT_GRANTED_BY_ITEM:format(C_Item.GetItemInfo(19019))",
+            "TALENT_GRANTED_BY_ITEM:format("Hearthstone")",
         );
     }
 

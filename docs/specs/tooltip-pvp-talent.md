@@ -29,9 +29,9 @@ VERIFIED: Retail `C_TooltipInfo.GetPvpTalent` uses the PvP talent row to build s
 - [x] VERIFIED: Supplied eligibility success appends `TALENT_TOOLTIP_ADDPREVIEWPOINT` with `FRIENDLY_STATUS_COLOR`, type `0`, and wrapping.
 - [x] VERIFIED: A supplied later level failure appends `UNLOCKED_AT_LEVEL` with `HOSTILE_STATUS_COLOR`, type `0`, and wrapping.
 - [x] VERIFIED: A supplied item-grant rejection uses a catalogued item row; it adds blank rows and either `TALENT_GRANTED_BY_ITEM` or the host-confirmed essence message. The lines use `REFUND_TOOLTIP_COLOR`, type `0`, and wrapping.
-- [x] VERIFIED: A valid item-grant result takes priority over combat. Otherwise, combat selects `TALENT_TOOLTIP_ADD_COMBAT_ERROR` with `HOSTILE_STATUS_COLOR`, type `0`, and wrapping.
-- [x] VERIFIED: A failed rest predicate appends `TALENT_TOOLTIP_ADD_REST_ERROR_PVP`; the rest state and explicit resting-player paths both prevent this line. The failure line uses `HOSTILE_STATUS_COLOR`, type `0`, and wrapping. INFERRED: The simulator maps native state to `PlayerXpState.rest_state`, `PlayerState.in_combat`, and `PlayerState.is_resting`.
-- [ ] UNKNOWN: The rest-error message is also the default for other eligibility failures, but their predicates are not fully known. This implementation leaves those outcomes unmodelled.
+- [ ] VERIFIED (R73): Combat status takes priority over grant and later unlock status. Combat selects `TALENT_TOOLTIP_ADD_COMBAT_ERROR` with `HOSTILE_STATUS_COLOR`, type `0`, and wrapping.
+- [ ] VERIFIED (R73): A failed rest-like permission or any other supplied eligibility failure selects `TALENT_TOOLTIP_ADD_REST_ERROR_PVP`. Host `rest_permission: Option<bool>` replaces the unproved mapping to XP/resting fields. `None` with no explicit eligibility result preserves neutral output; supplied permission permits preview or rejects with a rest error. This host seam is not a native default.
+- [ ] UNKNOWN: The progression gate, talent/GUID rejection predicate, indirect Flags-bit reads and final player-state helper remain unmodelled; tests supply eligibility outcomes, not guessed predicates.
 - [x] VERIFIED: Inspect mode bypasses local group, selection, level and eligibility checks. It reads the granting item from current inspect GUID context, not local PvP state; a supplied item result appends `TALENT_GRANTED_BY_ITEM` with `ITEM_LEGENDARY_COLOR`, type `0`, and wrapping. An absent inspect granting-item result adds no line.
 
 ## How it works
@@ -61,7 +61,8 @@ VERIFIED: Retail `C_TooltipInfo.GetPvpTalent` uses the PvP talent row to build s
 - [ ] UNKNOWN: Whether the native base-spell presence provider can report `SpellID` zero as present. This path is not modeled or tested.
 - [ ] UNKNOWN: The native spell override ranking walk's exact ranked IDs, map writers and precedence among talent, aura and SpellReplace sources. The host supplies the resolved ID; this implementation does not infer the walk.
 - [ ] UNKNOWN: Native alignment of the installed 12.1.5.70783 rows with selected build 12.1.5.70575, the effect-parameter decoder, essence lookup, inspect lifecycle, additional progression restrictions and remaining eligibility failure reasons. Grant and eligibility outcomes remain host-only; absent inputs do not fabricate lines.
-- [ ] UNKNOWN: The selected PvP talent and slot-state contract is pending R73. A real `PvPTalentSlotButtonMixin:OnEnter` test is deferred; this cycle tests the original `GameTooltip:SetPvpTalent` accessor directly with a real catalog ID.
+- [ ] VERIFIED (R73): Active-group membership uses four shared selected positions. The original slot hover supplies selected talents; the original list hover supplies unselected candidates.
+- [ ] VERIFIED (cached declaration): `GetPvpTalentSlotInfo` uses the shape at `SpecializationInfoDocumentation.lua:153-165,491-499`. Supplied slot records contain enabled/level/available IDs; selectedTalentID comes only from shared groups. UNKNOWN: native default values. The old empty default remains isolated as a temporary workaround, unchanged for calls without supplied records.
 - [ ] VERIFIED: When the primary spell producer misses because the local player or spell-name row is unavailable, the native PvP caller still runs talent annotations. UNKNOWN: Its final result and table shape; this failure path stays unmodelled and untested here.
 - [ ] VERIFIED: Native `isInspect` also changes the ordinary spell request. UNKNOWN: The existing simulator producer has no matching observable request field, so this effect stays unmodelled.
 - [ ] UNKNOWN: Numeric RGB defaults, the complete ordinary spell line and field set, and a getter-specific event contract.
@@ -71,6 +72,10 @@ VERIFIED: Retail `C_TooltipInfo.GetPvpTalent` uses the PvP talent row to build s
 ## Out of scope
 
 - UNKNOWN: PTR and WowForever registration and behavior.
-- Real PvP slot selection and button `OnEnter` until R73 provides the selected-slot state contract.
+- Native learning, progression and effect-list internals; host records expose only supplied outcomes.
 - Invented PvP talent, aura, essence, item-grant or resolved-spell rows.
 - Native miss-result parity and UNKNOWN eligibility failure messages.
+
+## R73 evidence boundary
+
+VERIFIED: R73 describes Retail 12.1.5.70688 builder decisions; the catalog export remains labeled 12.1.5.70783. INFERRED: native field-name mapping (field 7 selects category, field 8 supplies the level, fields 3/4 feed ordinary spell/replacement content). No inferred-only producer behavior is added. UNKNOWN: native final miss results and inspect-unit details remain outside this change. The existing inspect seam is preserved, not extended.
