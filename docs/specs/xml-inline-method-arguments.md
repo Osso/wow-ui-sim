@@ -4,9 +4,9 @@ Inline XML method calls must preserve Lua operand values, order, identity, and a
 
 ## What it must do
 
-- [ ] Forward a global string, a color table, and a boolean as three distinct operands without expanding the table.
-- [ ] Preserve reordered callback operands instead of substituting the callback's varargs.
-- [ ] Preserve named parameter prefixes, including explicit `self` and optional varargs, during fast frame installation.
+- [x] Forward a global string, a color table, and a boolean as three distinct operands without expanding the table.
+- [x] Preserve reordered callback operands instead of substituting the callback's varargs.
+- [x] Preserve named parameter prefixes, including explicit `self` and optional varargs, during fast frame installation.
 
 ## How it works
 
@@ -27,7 +27,7 @@ Inline XML method calls must preserve Lua operand values, order, identity, and a
 
 ## Known gaps (current cycle)
 
-- [ ] Retail execution proof is pending.
+Retail targeted regressions pass 3/3 at `d89725ba3`; final integration comparison remains in the lane handoff report.
 
 ## Out of scope
 

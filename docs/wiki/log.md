@@ -1,3 +1,7 @@
+## [2026-11-12] investigation | Inline XML tooltip operands
+
+[Inline XML method arguments](investigations/xml-inline-method-arguments.md) records the zero-vararg parser misclassification, source-faithful parameter-prefix installation, and the separately approved RaidFrame AddLine fixture correction.
+
 ## [2026-11-12] validation | PR54 second review corrections
 
 The [login contract](../specs/glue-login-flow.md#second-review-corrections-comment140) records forbidden-object resolver enforcement, removal of remaining unsupported assertions, and exact PTR diagnostic matching with negative tests. Changed-test gates pass Retail32/32, Forever41/41 and PTR22/22 with zero warnings.
