@@ -81,10 +81,6 @@ const POST_LOAD_WORKAROUNDS: &[WorkaroundStep] = &[
         apply: patch_chat_voice_button_surface,
     },
     WorkaroundStep {
-        label: "patch_item_socketing_tooltips",
-        apply: patch_item_socketing_tooltips,
-    },
-    WorkaroundStep {
         label: "patch_character_select_selected_name",
         apply: patch_character_select_selected_name,
     },
@@ -107,10 +103,6 @@ const POST_LOAD_WORKAROUNDS: &[WorkaroundStep] = &[
     WorkaroundStep {
         label: "patch_map_exploration_pin_mixin",
         apply: patch_map_exploration_pin_mixin,
-    },
-    WorkaroundStep {
-        label: "patch_map_canvas_data_provider_attachment",
-        apply: patch_map_canvas_data_provider_attachment,
     },
     WorkaroundStep {
         label: "ensure_adventure_map_frame_surface",
@@ -697,7 +689,6 @@ fn patch_runtime_map_addon_surfaces(env: &crate::lua_api::LoaderEnv<'_>, addon_n
     ) {
         patch_fog_of_war_pin_mixin_for_runtime_addon_load(env);
         patch_map_exploration_pin_mixin_for_runtime_addon_load(env);
-        patch_map_canvas_data_provider_attachment_for_runtime_addon_load(env);
     }
 }
 
