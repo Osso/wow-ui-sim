@@ -212,7 +212,8 @@ fn selected_combat_log_preview_uses_original_inbound_owner() {
                     },
                 }
 
-                CombatConfig_Colorize_Update()
+                local ok, errorText = xpcall(CombatConfig_Colorize_Update, debug.traceback)
+                assert(ok, errorText)
                 assert(type(previewTexts[1]) == "string" and previewTexts[1] ~= "",
                     "original combat-log preview should generate player-event text")
                 assert(type(previewTexts[2]) == "string" and previewTexts[2] ~= "",
