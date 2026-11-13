@@ -1,14 +1,17 @@
 use super::*;
 
-/// Extended-cost record of one merchant offer. The two lists are the record's
-/// item-cost entries and currency-cost entries, in record order; zero is an
-/// absent identity. Native `C_TooltipInfo.GetMerchantCostItem` scans the item
-/// entries first and then the currency entries (decomp Round 6 §2c), so the
-/// selectable ordinals follow that order.
+/// Host-supplied price and extended costs for one merchant offer. Each amount
+/// array is slot-aligned with its identity array; zero is an absent identity.
+/// Native `C_TooltipInfo.GetMerchantCostItem` scans item entries first, then
+/// currency entries (decomp Round 6 §2c), so selectable ordinals follow that order.
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct MerchantCostRecord {
+    /// Offer price in copper, supplied by the host scenario.
+    pub price: u64,
     pub item_costs: [u32; 5],
+    pub item_cost_counts: [u32; 5],
     pub currency_costs: [u32; 5],
+    pub currency_cost_amounts: [u32; 5],
 }
 
 /// Scenario-supplied Wrath talent tab data.
