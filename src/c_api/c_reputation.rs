@@ -1,9 +1,10 @@
 //! State-backed paragon reputation queries.
 
-use crate::lua_api::methods::borrow_state;
+use crate::lua_api::methods::{borrow_state, table_get_static, table_set_static};
 use crate::lua_bridge::stack_val;
+use rilua::table_security::{can_access_secrets, is_secret_value, unwrap_secret};
 use rilua::vm::state::LuaState;
-use rilua::{LuaResult, Val};
+use rilua::{LuaResult, Val, runtime_error};
 
 /// Mists fixture policy; native account-wide reputation behavior is unknown.
 pub(crate) fn fixture_account_wide_default() -> bool {
@@ -20,6 +21,34 @@ pub struct FactionParagonInfo {
     pub has_reward_pending: bool,
     pub too_low_level_for_paragon: bool,
     pub paragon_storage_level: i32,
+}
+
+// VERIFIED (Retail 12.1.5.70688, R88f.A.72): nil is required-argument
+// failure; non-nil ordinary values use Lua truthiness after secret access checks.
+pub(crate) fn set_legacy_reputations_shown(state: &mut LuaState) -> LuaResult<u32> {
+    const USAGE: &str = "Usage: C_Reputation.SetLegacyReputationsShown(showLegacyReputations)";
+
+    let value = stack_val(state, 1);
+    if is_secret_value(state, value) && !can_access_secrets(state) {
+        return Err(runtime_error(format!(
+            "{USAGE}. Secret values are only allowed during untainted execution for this argument."
+        )));
+    }
+    let value = unwrap_secret(state, value)?;
+    if matches!(value, Val::Nil) {
+        return Err(runtime_error(USAGE));
+    }
+
+    let show_legacy = !matches!(value, Val::Bool(false));
+    let global = Val::Table(state.global);
+    let reputation_state = table_get_static(state, global, "__wow_reputation_state");
+    table_set_static(
+        state,
+        reputation_state,
+        "showLegacy",
+        Val::Bool(show_legacy),
+    );
+    Ok(0)
 }
 
 pub(crate) fn get_faction_paragon_info(state: &mut LuaState) -> LuaResult<u32> {

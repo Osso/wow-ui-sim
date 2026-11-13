@@ -181,8 +181,10 @@ C_Reputation.AreLegacyReputationsShown = function()
     return state.showLegacy == true
 end
 
-C_Reputation.SetLegacyReputationsShown = function(shown)
-    state.showLegacy = shown ~= false
+if C_Reputation.SetLegacyReputationsShown == nil then
+    C_Reputation.SetLegacyReputationsShown = function(shown)
+        state.showLegacy = shown ~= false
+    end
 end
 
 C_Reputation.GetGuildFactionData = function()

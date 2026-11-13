@@ -292,6 +292,14 @@ fn register_reputation_namespace(lua: &mut rilua::Lua) -> crate::Result<()> {
         unreachable!("namespace table must be a table");
     };
     install_static_methods(lua.state_mut(), reputation_ref, REPUTATION_METHODS)?;
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        table_set_rust_fn_static(
+            lua.state_mut(),
+            reputation_ref,
+            "SetLegacyReputationsShown",
+            crate::c_api::c_reputation::set_legacy_reputations_shown,
+        )?;
+    }
     LuaApiMut::set_global_val(lua, "C_Reputation", reputation)?;
     Ok(())
 }
