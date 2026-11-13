@@ -1,14 +1,11 @@
 //! Temporary Settings canvas visibility workaround.
 //!
-//! Real WoW registers Settings canvas categories without displaying their
-//! frames. Keep the original Retail registration and category switching, and retain the
-//! existing visibility policy for other profiles.
+//! Preserve the existing visibility compatibility policy on non-Retail profiles.
+//! Retail leaves the original Settings registration, selection and startup intact.
 
 use crate::lua_api::WowLuaEnv;
 
 pub(crate) const SETTINGS_CANVAS_LAYOUT_HIDE_LUA: &str = r#"
-local preserveRetailBehavior = ...
-
 local function __wow_hide_settings_canvas_frame(frame, layout)
     if type(frame) ~= "table" or type(frame.Hide) ~= "function" then
         return
@@ -97,7 +94,7 @@ local function __wow_patch_settings_canvas_registration()
         return
     end
 
-    if not preserveRetailBehavior and type(Settings.RegisterCanvasLayoutCategory) == "function" then
+    if type(Settings.RegisterCanvasLayoutCategory) == "function" then
         local original = Settings.RegisterCanvasLayoutCategory
         Settings.RegisterCanvasLayoutCategory = function(frame, ...)
             local category, layout = original(frame, ...)
@@ -106,7 +103,7 @@ local function __wow_patch_settings_canvas_registration()
         end
     end
 
-    if not preserveRetailBehavior and type(Settings.RegisterCanvasLayoutSubcategory) == "function" then
+    if type(Settings.RegisterCanvasLayoutSubcategory) == "function" then
         local original = Settings.RegisterCanvasLayoutSubcategory
         Settings.RegisterCanvasLayoutSubcategory = function(parentCategory, frame, ...)
             local category, layout = original(parentCategory, frame, ...)
@@ -115,7 +112,7 @@ local function __wow_patch_settings_canvas_registration()
         end
     end
 
-    if not preserveRetailBehavior and type(Settings.OpenToCategory) == "function" then
+    if type(Settings.OpenToCategory) == "function" then
         local original = Settings.OpenToCategory
         Settings.OpenToCategory = function(...)
             local result = original(...)
@@ -135,14 +132,9 @@ __wow_hide_registered_settings_canvas_frames()
 pub(crate) fn patch(env: &WowLuaEnv) {
     use crate::client_profile::{ACTIVE, ClientProfile};
 
-    let lua = if ACTIVE == ClientProfile::Retail {
-        // Retail's selected Settings closure maps the frame and returns the
-        // layout, without changing the frame's shown state at registration.
-        format!("local function patch(...)\n{SETTINGS_CANVAS_LAYOUT_HIDE_LUA}\nend\npatch(true)")
-    } else {
-        SETTINGS_CANVAS_LAYOUT_HIDE_LUA.to_owned()
-    };
-    let _ = env.exec(&lua);
+    if ACTIVE != ClientProfile::Retail {
+        let _ = env.exec(SETTINGS_CANVAS_LAYOUT_HIDE_LUA);
+    }
 }
 
 #[cfg(test)]

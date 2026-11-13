@@ -203,6 +203,10 @@ const PUBLIC_SETTINGS_FUNCTIONS: &[&str] = &[
 ];
 
 fn load_full_game_ui() -> WowLuaEnv {
+    load_full_game_ui_with_addon_registration(|_| {})
+}
+
+fn load_full_game_ui_with_addon_registration(register: impl FnOnce(&WowLuaEnv)) -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
     env.set_screen_size(1024.0, 768.0);
     env.set_screen_mode(ScreenKind::Game);
@@ -220,6 +224,7 @@ fn load_full_game_ui() -> WowLuaEnv {
             .unwrap_or_else(|err| panic!("[load {name}] FAILED: {err}"));
     }
 
+    register(&env);
     env.apply_post_load_workarounds();
     fire_startup_events_for_screen(&env, ScreenKind::Game);
     env
@@ -1023,5 +1028,29 @@ fn retail_settings_category_switch_preserves_unrelated_canvas() {
             "#,
         )
         .expect("switch the selected canvas through the original Settings panel");
+    }
+}
+
+#[cfg(all(feature = "client-retail", feature = "optional-tests"))]
+#[test]
+fn retail_settings_startup_keeps_registered_canvas_visibility() {
+    test_timeout! {
+        let env = load_full_game_ui_with_addon_registration(|env| {
+            env.exec(r#"
+                assert(C_AddOns.IsAddOnLoaded("Blizzard_Settings_Shared"))
+                assert(not SettingsPanel:IsShown())
+                local frame = CreateFrame("Frame", "SettingsStartupCanvasProbe", UIParent)
+                frame:Show()
+                local category, layout = Settings.RegisterCanvasLayoutCategory(frame, "Startup canvas")
+                Settings.RegisterAddOnCategory(category)
+                assert(SettingsPanel:GetLayout(category) == layout and layout:GetFrame() == frame)
+                assert(frame:IsShown(), "the original registrar preserves visibility before post-load")
+            "#).expect("addon registration in the original Settings panel");
+        });
+        env.exec(r#"
+            assert(not SettingsPanel:IsShown())
+            assert(SettingsStartupCanvasProbe:IsShown(),
+                   "post-load must not hide a canvas the original registrar left shown")
+        "#).expect("normal startup must preserve original canvas registration visibility");
     }
 }
