@@ -36,7 +36,7 @@ pub(super) fn color_table(state: &mut LuaState, r: f64, g: f64, b: f64, a: f64) 
     }
 }
 
-pub(crate) fn push_tooltip_line(
+pub(super) fn push_tooltip_line(
     state: &mut LuaState,
     lines: Val,
     index: i64,

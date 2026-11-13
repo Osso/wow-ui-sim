@@ -6,20 +6,20 @@ Retail 12.1.5 currency tooltips publish R84/R84b `C_TooltipInfo` data through th
 
 ### Inputs and routing
 
-- [ ] `GetCurrencyByID` passes the signed amount unchanged and uses zero when the amount is absent.
-- [ ] `GetLootCurrency` and `GetQuestLogCurrency` divide signed quantities by 100 only when CurrencyTypes Flags_0 bit 3 is set; division truncates toward zero.
-- [ ] A `currency:` hyperlink passes its optional quantity to the shared producer without that division; absent quantity is zero.
-- [ ] `GetQuestLogCurrency` accepts the full `reward`, `required` and `choice` strings with ASCII case folding, converts the public index from one-based to zero-based by subtracting before truncation, and uses the selected quest only when questID is absent.
-- [ ] Quest source lists, currency rows, local values and preformatted display strings are explicit host inputs. Missing inputs do not come from unrelated quest reward state.
+- [x] `GetCurrencyByID` passes the signed amount unchanged and uses zero when the amount is absent.
+- [x] `GetLootCurrency` and `GetQuestLogCurrency` divide signed quantities by 100 only when CurrencyTypes Flags_0 bit 3 is set; division truncates toward zero.
+- [x] A `currency:` hyperlink passes its optional quantity to the shared producer without that division; absent quantity is zero.
+- [x] `GetQuestLogCurrency` accepts the full `reward`, `required` and `choice` strings with ASCII case folding, converts the public index from one-based to zero-based by subtracting before truncation, and uses the selected quest only when questID is absent.
+- [x] Quest currency source results use the host input `(questID, canonical type, zero-based source index) -> (currencyID, raw quantity)`. Currency text rows, local values and preformatted display strings are also explicit inputs. The simulator does not infer source results from unrelated quest reward state.
 
 ### Payload and rows
 
-- [ ] Populated payloads use type 5 and a data-instance ID, include a nonzero currency ID, and omit top-level quantity.
-- [ ] The first supplied CurrencyContainer text row matching currency ID and signed quantity wins; bounds are inclusive and maximum zero is unbounded. No match uses ordinary currency text.
-- [ ] Rows are left-only. Account labels follow their verified flag/field gates and order. The description is the only wrapped row.
-- [ ] The XP row uses the getter's amount and ends the producer before spacer or cap rows.
-- [ ] A supplied local currency record with Flags_0 bit 22 clear permits the spacer and cap section; bit 22 suppresses both.
-- [ ] Weekly and total/season rows follow their verified maximum-source, scaling, flag and seasonal-exclusivity rules.
+- [x] Populated payloads use type 5 and a data-instance ID, include the currency ID only when it is nonzero, and omit top-level quantity.
+- [x] The first supplied CurrencyContainer text row matching currency ID and signed quantity wins; bounds are inclusive and maximum zero is unbounded. No match uses ordinary currency text.
+- [x] Rows are left-only. Account labels follow their verified flag/field gates and order. The description is the only wrapped row.
+- [x] The XP row uses the getter's amount and ends the producer before spacer or cap rows.
+- [x] A supplied local currency record with Flags_0 bit 22 clear permits the spacer and cap section; bit 22 suppresses both.
+- [x] Weekly and total/season rows follow their verified maximum-source, scaling, flag and seasonal-exclusivity rules.
 
 ## How it works
 

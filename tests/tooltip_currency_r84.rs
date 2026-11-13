@@ -140,6 +140,12 @@ fn set_quest_log_currency_uses_selected_quest_and_normalizes_supplied_amount() {
         state
             .quest_currency_tooltip_results
             .insert((quest_id + 1, "reward".to_owned(), 0), (2245, 900));
+        state
+            .quest_currency_tooltip_results
+            .insert((quest_id, "required".to_owned(), 0), (2245, 900));
+        state
+            .quest_currency_tooltip_results
+            .insert((quest_id, "choice".to_owned(), 0), (2245, 9_900));
     }
     env.exec(
         r#"
@@ -159,6 +165,12 @@ fn set_quest_log_currency_uses_selected_quest_and_normalizes_supplied_amount() {
         GameTooltip:SetQuestLogCurrency('reward', 1, 81235)
         data = GameTooltip:GetPrimaryTooltipData()
         assert(data.lines[3].leftText == XP .. ': 9', 'explicit quest ID must select its row')
+        GameTooltip:SetQuestLogCurrency('required', 1)
+        data = GameTooltip:GetPrimaryTooltipData()
+        assert(data.lines[3].leftText == XP .. ': 9', 'required must select its canonical source type')
+        GameTooltip:SetQuestLogCurrency('choice', 1)
+        data = GameTooltip:GetPrimaryTooltipData()
+        assert(data.lines[3].leftText == XP .. ': 99', 'choice must select its canonical source type')
         "#,
     )
     .unwrap();
@@ -327,6 +339,15 @@ fn currency_weekly_cap_uses_verified_override_and_color_gates() {
         assert(data.lines[4].type == 14, 'weekly cap line type')
         assert(data.lines[4].leftText == 'weekly:|cffff0000:9/9', 'override normalization and at-cap error prefix')
         assert(data.lines[4].wrapText == nil, 'weekly cap must not wrap')
+        "#,
+    )
+    .unwrap();
+    env.exec(
+        r#"
+        ERROR_COLOR = false
+        GameTooltip:SetCurrencyByID(2245, 0)
+        local data = GameTooltip:GetPrimaryTooltipData()
+        assert(data.lines[4].leftText == 'weekly:|cffff00ff:9/9', 'missing runtime color must use the verified magenta prefix')
         "#,
     )
     .unwrap();

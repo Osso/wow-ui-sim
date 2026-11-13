@@ -1,4 +1,5 @@
-pub(crate) mod builders;
+mod builders;
+pub(crate) use builders::item_quality_color;
 mod probes;
 mod sources;
 mod spell;

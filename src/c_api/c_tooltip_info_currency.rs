@@ -4,10 +4,10 @@ use std::collections::HashMap;
 
 use crate::c_api::tooltip_getter_args::one_based_index;
 use crate::lua_api::globals::missing_surface::tooltip_info::{
-    builders, compose_tooltip, global_text, named_color,
+    append_line, compose_tooltip, global_text, item_quality_color, named_color,
 };
 use crate::lua_api::methods::{
-    borrow_state, call_function_state, create_string, table_get, val_to_string,
+    borrow_state, call_function_state, create_string, table_get, table_set, val_to_string,
 };
 use crate::lua_api::state::LootSlot;
 use crate::lua_bridge::FromStack;
@@ -15,6 +15,10 @@ use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
 
 const TOOLTIP_TYPE_CURRENCY: f64 = 5.0;
+const CURRENCY_HUNDREDTHS_PER_UNIT: i32 = 100;
+const CURRENCY_COLOR_MARKUP_PREFIX: &str = "|c";
+const MISSING_CURRENCY_COLOR_PREFIX: &str = "|cffff00ff";
+const FIELD_6_REPUTATION_LABEL: u8 = 1 << 2;
 const LINE_TYPE_PLAIN: f64 = 0.0;
 const LINE_TYPE_SPACER: f64 = 1.0;
 const LINE_TYPE_NUMERIC: f64 = 14.0;
@@ -100,101 +104,124 @@ pub(crate) fn build_currency_tooltip(
             .unwrap_or_default();
         (currency, inputs)
     };
-    let selected_text = amount.and_then(|quantity| {
-        inputs.text_ranges.iter().find(|row| {
-            quantity >= row.min_quantity && (row.max_quantity == 0 || quantity <= row.max_quantity)
-        })
-    });
-    let title = selected_text
-        .map(|row| row.name.as_str())
-        .unwrap_or(&currency.name)
-        .to_owned();
-    let description = selected_text
-        .map(|row| row.description.as_str())
-        .unwrap_or(&currency.description)
-        .to_owned();
+    let (title, description) = select_currency_text(&currency, &inputs, amount);
     let tooltip_id = (currency_id != 0).then_some(f64::from(currency_id));
     let saved_top = state.top;
     let result = (|| {
         let tooltip = compose_tooltip(state, TOOLTIP_TYPE_CURRENCY, tooltip_id);
         state.push(tooltip);
-        let lines = table_get(state, tooltip, "lines");
-        let mut next_line = 1;
-        push_currency_line(
-            state,
-            lines,
-            &mut next_line,
-            LINE_TYPE_PLAIN,
-            &title,
-            Some(builders::item_quality_color(currency.quality as u8)),
-            false,
-        );
-
-        let normal_color = required_color(state, "NORMAL_FONT_COLOR")?;
-        if has_flag(inputs.flags_0, FLAGS_0_ACCOUNT_WIDE)
-            || has_flag(inputs.flags_1, FLAGS_1_ACCOUNT_WIDE)
-        {
-            append_account_label(state, lines, &mut next_line, "ACCOUNT_LEVEL_CURRENCY")?;
+        let normal_color =
+            append_currency_text_rows(state, tooltip, &currency, &inputs, (&title, &description))?;
+        if append_xp_row(state, tooltip, &inputs, amount, normal_color)? {
+            return Ok(Some(tooltip));
         }
-        if inputs
-            .field_16_transfer_percentage
-            .is_some_and(|percentage| percentage > 0.0)
-        {
-            append_account_label(
-                state,
-                lines,
-                &mut next_line,
-                "ACCOUNT_TRANSFERRABLE_CURRENCY",
-            )?;
-        }
-        if inputs
-            .field_6_low_byte
-            .is_some_and(|field| field & (1 << 2) != 0)
-        {
-            append_account_label(
-                state,
-                lines,
-                &mut next_line,
-                "REPUTATION_TOOLTIP_ACCOUNT_WIDE_LABEL",
-            )?;
-        }
-        push_currency_line(
-            state,
-            lines,
-            &mut next_line,
-            LINE_TYPE_PLAIN,
-            &description,
-            Some(normal_color),
-            true,
-        );
-
-        let xp_row = inputs
-            .field_11_xp_quest_difficulty
-            .is_some_and(|difficulty| difficulty > 0)
-            && has_flag(inputs.flags_1, FLAGS_1_XP_ROW);
-        if xp_row {
-            if let Some(amount) = amount {
-                let xp = required_global_text(state, "XP")?;
-                let amount = formatted_number(&inputs, amount, "XP amount")?;
-                let text = format!("{xp}: {amount}");
-                push_currency_line(
-                    state,
-                    lines,
-                    &mut next_line,
-                    LINE_TYPE_NUMERIC,
-                    &text,
-                    Some(normal_color),
-                    false,
-                );
-                return Ok(Some(tooltip));
-            }
-        }
-
-        append_currency_cap_section(state, lines, &mut next_line, &inputs, normal_color)?;
+        append_currency_cap_section(state, tooltip, &inputs, normal_color)?;
         Ok(Some(tooltip))
     })();
     state.top = saved_top;
     result
+}
+
+fn select_currency_text<'a>(
+    currency: &'a crate::lua_api::state::CurrencyInfo,
+    inputs: &'a CurrencyTooltipInputs,
+    amount: Option<i32>,
+) -> (String, String) {
+    let range = amount.and_then(|quantity| {
+        inputs.text_ranges.iter().find(|row| {
+            quantity >= row.min_quantity && (row.max_quantity == 0 || quantity <= row.max_quantity)
+        })
+    });
+    let title = range
+        .map(|row| row.name.as_str())
+        .unwrap_or(&currency.name)
+        .to_owned();
+    let description = range
+        .map(|row| row.description.as_str())
+        .unwrap_or(&currency.description)
+        .to_owned();
+    (title, description)
+}
+
+fn append_currency_text_rows(
+    state: &mut LuaState,
+    tooltip: Val,
+    currency: &crate::lua_api::state::CurrencyInfo,
+    inputs: &CurrencyTooltipInputs,
+    text: (&str, &str),
+) -> LuaResult<(f64, f64, f64)> {
+    let (title, description) = text;
+    append_line(
+        state,
+        tooltip,
+        LINE_TYPE_PLAIN,
+        title,
+        Some(item_quality_color(currency.quality as u8)),
+    );
+    let normal_color = required_color(state, "NORMAL_FONT_COLOR")?;
+    append_account_rows(state, tooltip, inputs)?;
+    let description_line = append_line(
+        state,
+        tooltip,
+        LINE_TYPE_PLAIN,
+        description,
+        Some(normal_color),
+    );
+    table_set(state, description_line, "wrapText", Val::Bool(true));
+    Ok(normal_color)
+}
+
+fn append_account_rows(
+    state: &mut LuaState,
+    tooltip: Val,
+    inputs: &CurrencyTooltipInputs,
+) -> LuaResult<()> {
+    let level = has_flag(inputs.flags_0, FLAGS_0_ACCOUNT_WIDE)
+        || has_flag(inputs.flags_1, FLAGS_1_ACCOUNT_WIDE);
+    let transferable = inputs
+        .field_16_transfer_percentage
+        .is_some_and(|percentage| percentage > 0.0);
+    let reputation = inputs
+        .field_6_low_byte
+        .is_some_and(|field| field & FIELD_6_REPUTATION_LABEL != 0);
+    if level {
+        append_account_label(state, tooltip, "ACCOUNT_LEVEL_CURRENCY")?;
+    }
+    if transferable {
+        append_account_label(state, tooltip, "ACCOUNT_TRANSFERRABLE_CURRENCY")?;
+    }
+    if reputation {
+        append_account_label(state, tooltip, "REPUTATION_TOOLTIP_ACCOUNT_WIDE_LABEL")?;
+    }
+    Ok(())
+}
+
+fn append_account_label(state: &mut LuaState, tooltip: Val, key: &str) -> LuaResult<()> {
+    let text = required_global_text(state, key)?;
+    let color = required_color(state, "ACCOUNT_WIDE_FONT_COLOR")?;
+    append_line(state, tooltip, LINE_TYPE_PLAIN, &text, Some(color));
+    Ok(())
+}
+
+fn append_xp_row(
+    state: &mut LuaState,
+    tooltip: Val,
+    inputs: &CurrencyTooltipInputs,
+    amount: Option<i32>,
+    normal_color: (f64, f64, f64),
+) -> LuaResult<bool> {
+    let gate = inputs
+        .field_11_xp_quest_difficulty
+        .is_some_and(|difficulty| difficulty > 0)
+        && has_flag(inputs.flags_1, FLAGS_1_XP_ROW);
+    let Some(amount) = amount.filter(|_| gate) else {
+        return Ok(false);
+    };
+    let xp = required_global_text(state, "XP")?;
+    let amount = formatted_number(inputs, amount, "XP amount")?;
+    let text = format!("{xp}: {amount}");
+    append_line(state, tooltip, LINE_TYPE_NUMERIC, &text, Some(normal_color));
+    Ok(true)
 }
 
 /// Retail `GetLootCurrency` reads the selected loot row and normalizes its
@@ -237,79 +264,63 @@ pub(crate) fn get_quest_log_currency(state: &mut LuaState) -> LuaResult<u32> {
         Option::<i32>::from_stack(state, 3).map_err(|_| runtime_error(QUEST_LOG_CURRENCY_USAGE))?;
     let selector = selector.to_ascii_lowercase();
     if !matches!(selector.as_str(), "reward" | "required" | "choice") {
-        state.push(Val::Nil);
-        return Ok(1);
+        return crate::c_api::tooltip_data::unknown_getter_failure();
     }
     let Some(source_index) = source_index else {
-        state.push(Val::Nil);
-        return Ok(1);
+        return crate::c_api::tooltip_data::unknown_getter_failure();
     };
-    let quest_id = match requested_quest {
-        Some(quest_id) => Some(quest_id),
-        None => borrow_state(state)?
-            .selected_quest_log_id
-            .and_then(|quest_id| i32::try_from(quest_id).ok()),
-    }
-    .filter(|quest_id| *quest_id > 0);
-    let Some(quest_id) = quest_id else {
-        state.push(Val::Nil);
-        return Ok(1);
+    let Some(quest_id) = positive_quest_id(state, requested_quest)? else {
+        return crate::c_api::tooltip_data::unknown_getter_failure();
     };
-    let result = borrow_state(state)?
-        .quest_currency_tooltip_results
-        .get(&(quest_id, selector, source_index))
-        .copied();
-    let Some((currency_id, raw_quantity)) = result else {
-        state.push(Val::Nil);
-        return Ok(1);
+    let Some((currency_id, raw_quantity)) =
+        find_quest_currency_source(state, quest_id, selector, source_index)?
+    else {
+        return crate::c_api::tooltip_data::unknown_getter_failure();
     };
     let amount = normalize_amount(state, currency_id, raw_quantity)?;
     let Some(tooltip) = build_currency_tooltip(state, currency_id, amount)? else {
-        state.push(Val::Nil);
-        return Ok(1);
+        return crate::c_api::tooltip_data::unknown_getter_failure();
     };
     state.push(tooltip);
     Ok(1)
 }
 
+fn positive_quest_id(state: &LuaState, requested: Option<i32>) -> LuaResult<Option<i32>> {
+    let quest_id = match requested {
+        Some(quest_id) => Some(quest_id),
+        None => borrow_state(state)?
+            .selected_quest_log_id
+            .and_then(|quest_id| i32::try_from(quest_id).ok()),
+    };
+    Ok(quest_id.filter(|quest_id| *quest_id > 0))
+}
+
+fn find_quest_currency_source(
+    state: &LuaState,
+    quest_id: i32,
+    selector: String,
+    source_index: usize,
+) -> LuaResult<Option<(i32, i32)>> {
+    let source = borrow_state(state)?
+        .quest_currency_tooltip_results
+        .get(&(quest_id, selector, source_index))
+        .copied();
+    Ok(source)
+}
+
+/// Retail `GetLootCurrency` and `GetQuestLogCurrency` apply this scaling before
+/// the shared producer. Direct IDs and hyperlinks do not use this helper.
 fn normalize_amount(state: &LuaState, currency_id: i32, quantity: i32) -> LuaResult<Option<i32>> {
     let flags_0 = borrow_state(state)?
         .currency_tooltip_inputs
         .get(&currency_id)
         .and_then(|inputs| inputs.flags_0);
-    Ok(flags_0.map(|flags| {
-        if flags & FLAGS_0_AMOUNT_IS_HUNDREDTHS != 0 {
-            quantity / 100
-        } else {
-            quantity
-        }
-    }))
-}
-
-fn append_account_label(
-    state: &mut LuaState,
-    lines: Val,
-    next_line: &mut i64,
-    key: &str,
-) -> LuaResult<()> {
-    let text = required_global_text(state, key)?;
-    let color = required_color(state, "ACCOUNT_WIDE_FONT_COLOR")?;
-    push_currency_line(
-        state,
-        lines,
-        next_line,
-        LINE_TYPE_PLAIN,
-        &text,
-        Some(color),
-        false,
-    );
-    Ok(())
+    Ok(flags_0.map(|flags| scale_quantity(quantity, flags)))
 }
 
 fn append_currency_cap_section(
     state: &mut LuaState,
-    lines: Val,
-    next_line: &mut i64,
+    tooltip: Val,
     inputs: &CurrencyTooltipInputs,
     normal_color: (f64, f64, f64),
 ) -> LuaResult<()> {
@@ -322,173 +333,166 @@ fn append_currency_cap_section(
     if flags_0 & FLAGS_0_HIDE_LOCAL_SECTION != 0 {
         return Ok(());
     }
-
-    push_currency_line(
-        state,
-        lines,
-        next_line,
-        LINE_TYPE_SPACER,
-        " ",
-        Some(normal_color),
-        false,
-    );
-    let weekly_maximum = resolve_weekly_maximum(inputs, flags_0);
-    if let Some(weekly_maximum) = weekly_maximum.filter(|maximum| *maximum > 0) {
-        append_weekly_cap_row(
-            state,
-            lines,
-            next_line,
-            inputs,
-            flags_0,
-            weekly_maximum,
-            normal_color,
-        )?;
-    }
-    append_total_rows(
-        state,
-        lines,
-        next_line,
-        inputs,
-        flags_0,
-        weekly_maximum,
-        normal_color,
-    )
+    append_line(state, tooltip, LINE_TYPE_SPACER, " ", Some(normal_color));
+    let weekly_maximum = append_weekly_cap_row(state, tooltip, inputs, normal_color)?;
+    append_total_rows(state, tooltip, inputs, weekly_maximum, normal_color)
 }
 
 fn append_weekly_cap_row(
     state: &mut LuaState,
-    lines: Val,
-    next_line: &mut i64,
+    tooltip: Val,
     inputs: &CurrencyTooltipInputs,
-    flags_0: u32,
-    weekly_maximum: i32,
     normal_color: (f64, f64, f64),
-) -> LuaResult<()> {
+) -> LuaResult<Option<i32>> {
+    let Some(flags_0) = inputs.flags_0 else {
+        return Ok(None);
+    };
+    let weekly_maximum = resolve_weekly_maximum(inputs, flags_0);
+    let Some(maximum) = weekly_maximum.filter(|maximum| *maximum > 0) else {
+        return Ok(weekly_maximum);
+    };
     let current = inputs
         .local_quantity
         .ok_or_else(|| runtime_error("currency weekly cap requires local quantity input"))?;
     let current = scale_quantity(current, flags_0);
-    let color_name = if current >= weekly_maximum {
+    let color_name = if current >= maximum {
         "ERROR_COLOR"
     } else {
         "HIGHLIGHT_FONT_COLOR"
     };
     let prefix = currency_color_prefix(state, color_name)?;
     let current_text = formatted_number(inputs, current, "weekly current quantity")?;
-    let maximum_text = formatted_number(inputs, weekly_maximum, "weekly maximum")?;
-    let text = format_global_strings(
+    let maximum_text = formatted_number(inputs, maximum, "weekly maximum")?;
+    append_formatted_currency_row(
         state,
+        tooltip,
         "CURRENCY_WEEKLY_CAP",
         &[prefix, current_text, maximum_text],
+        normal_color,
     )?;
-    push_currency_line(
-        state,
-        lines,
-        next_line,
-        LINE_TYPE_NUMERIC,
-        &text,
-        Some(normal_color),
-        false,
-    );
-    Ok(())
+    Ok(weekly_maximum)
 }
 
 fn append_total_rows(
     state: &mut LuaState,
-    lines: Val,
-    next_line: &mut i64,
+    tooltip: Val,
     inputs: &CurrencyTooltipInputs,
-    flags_0: u32,
     weekly_maximum: Option<i32>,
     normal_color: (f64, f64, f64),
 ) -> LuaResult<()> {
+    let Some(flags_0) = inputs.flags_0 else {
+        return Ok(());
+    };
     let total_maximum = resolve_total_maximum(inputs, flags_0);
     let seasonal = inputs
         .flags_1
         .map(|flags| flags & FLAGS_1_SEASONAL_ROWS != 0);
     match (total_maximum, seasonal) {
         (Some(maximum), Some(true)) if maximum > 0 => {
-            let prefix = total_row_prefix(inputs)?;
-            let balance = balance_text(inputs)?;
-            let text = format_global_strings(state, "CURRENCY_TOTAL", &[prefix.clone(), balance])?;
-            push_currency_line(
-                state,
-                lines,
-                next_line,
-                LINE_TYPE_NUMERIC,
-                &text,
-                Some(normal_color),
-                false,
-            );
-            let seasonal_amount = scaled_local_quantity(inputs.seasonal_quantity, flags_0)?;
-            let seasonal_text = formatted_number(inputs, seasonal_amount, "seasonal quantity")?;
-            let maximum_text = formatted_number(inputs, maximum, "total maximum")?;
-            let text = format_global_strings(
-                state,
-                "CURRENCY_SEASON_TOTAL_MAXIMUM",
-                &[prefix, seasonal_text, maximum_text],
-            )?;
-            push_currency_line(
-                state,
-                lines,
-                next_line,
-                LINE_TYPE_NUMERIC,
-                &text,
-                Some(normal_color),
-                false,
-            );
+            append_total_and_season_maximum(state, tooltip, inputs, maximum, normal_color)?;
         }
         (Some(maximum), Some(false)) if maximum > 0 => {
-            let prefix = total_row_prefix(inputs)?;
-            let balance = balance_text(inputs)?;
-            let maximum_text = formatted_number(inputs, maximum, "total maximum")?;
-            let text = format_global_strings(
-                state,
-                "CURRENCY_TOTAL_CAP",
-                &[prefix, balance, maximum_text],
-            )?;
-            push_currency_line(
-                state,
-                lines,
-                next_line,
-                LINE_TYPE_NUMERIC,
-                &text,
-                Some(normal_color),
-                false,
-            );
+            append_total_cap_row(state, tooltip, inputs, maximum, normal_color)?;
         }
         (Some(maximum), Some(true)) if maximum <= 0 => {
-            let prefix = total_row_prefix(inputs)?;
-            let seasonal_amount = scaled_local_quantity(inputs.seasonal_quantity, flags_0)?;
-            let seasonal_text = formatted_number(inputs, seasonal_amount, "seasonal quantity")?;
-            let text =
-                format_global_strings(state, "CURRENCY_SEASON_TOTAL", &[prefix, seasonal_text])?;
-            push_currency_line(
-                state,
-                lines,
-                next_line,
-                LINE_TYPE_NUMERIC,
-                &text,
-                Some(normal_color),
-                false,
-            );
+            append_season_total_row(state, tooltip, inputs, flags_0, normal_color)?;
         }
         (Some(0), Some(false)) if weekly_maximum == Some(0) => {
-            let prefix = total_row_prefix(inputs)?;
-            let balance = balance_text(inputs)?;
-            let text = format_global_strings(state, "CURRENCY_TOTAL", &[prefix, balance])?;
-            push_currency_line(
-                state,
-                lines,
-                next_line,
-                LINE_TYPE_NUMERIC,
-                &text,
-                Some(normal_color),
-                false,
-            );
+            append_fallback_total_row(state, tooltip, inputs, normal_color)?;
         }
         _ => {}
     }
+    Ok(())
+}
+
+fn append_total_and_season_maximum(
+    state: &mut LuaState,
+    tooltip: Val,
+    inputs: &CurrencyTooltipInputs,
+    maximum: i32,
+    normal_color: (f64, f64, f64),
+) -> LuaResult<()> {
+    let prefix = total_row_prefix(inputs)?;
+    let balance = balance_text(inputs)?;
+    append_formatted_currency_row(
+        state,
+        tooltip,
+        "CURRENCY_TOTAL",
+        &[prefix.clone(), balance],
+        normal_color,
+    )?;
+
+    let flags_0 = inputs
+        .flags_0
+        .ok_or_else(|| runtime_error("seasonal maximum requires CurrencyTypes flags"))?;
+    let seasonal_amount = scaled_local_quantity(inputs.seasonal_quantity, flags_0)?;
+    let seasonal_text = formatted_number(inputs, seasonal_amount, "seasonal quantity")?;
+    let maximum_text = formatted_number(inputs, maximum, "total maximum")?;
+    append_formatted_currency_row(
+        state,
+        tooltip,
+        "CURRENCY_SEASON_TOTAL_MAXIMUM",
+        &[prefix, seasonal_text, maximum_text],
+        normal_color,
+    )?;
+    Ok(())
+}
+
+fn append_total_cap_row(
+    state: &mut LuaState,
+    tooltip: Val,
+    inputs: &CurrencyTooltipInputs,
+    maximum: i32,
+    normal_color: (f64, f64, f64),
+) -> LuaResult<()> {
+    let prefix = total_row_prefix(inputs)?;
+    let balance = balance_text(inputs)?;
+    let maximum_text = formatted_number(inputs, maximum, "total maximum")?;
+    append_formatted_currency_row(
+        state,
+        tooltip,
+        "CURRENCY_TOTAL_CAP",
+        &[prefix, balance, maximum_text],
+        normal_color,
+    )?;
+    Ok(())
+}
+
+fn append_season_total_row(
+    state: &mut LuaState,
+    tooltip: Val,
+    inputs: &CurrencyTooltipInputs,
+    flags_0: u32,
+    normal_color: (f64, f64, f64),
+) -> LuaResult<()> {
+    let prefix = total_row_prefix(inputs)?;
+    let seasonal_amount = scaled_local_quantity(inputs.seasonal_quantity, flags_0)?;
+    let seasonal_text = formatted_number(inputs, seasonal_amount, "seasonal quantity")?;
+    append_formatted_currency_row(
+        state,
+        tooltip,
+        "CURRENCY_SEASON_TOTAL",
+        &[prefix, seasonal_text],
+        normal_color,
+    )?;
+    Ok(())
+}
+
+fn append_fallback_total_row(
+    state: &mut LuaState,
+    tooltip: Val,
+    inputs: &CurrencyTooltipInputs,
+    normal_color: (f64, f64, f64),
+) -> LuaResult<()> {
+    let prefix = total_row_prefix(inputs)?;
+    let balance = balance_text(inputs)?;
+    append_formatted_currency_row(
+        state,
+        tooltip,
+        "CURRENCY_TOTAL",
+        &[prefix, balance],
+        normal_color,
+    )?;
     Ok(())
 }
 
@@ -526,7 +530,7 @@ fn scaled_local_quantity(quantity: Option<i32>, flags_0: u32) -> LuaResult<i32> 
 
 fn scale_quantity(quantity: i32, flags_0: u32) -> i32 {
     if flags_0 & FLAGS_0_AMOUNT_IS_HUNDREDTHS != 0 {
-        quantity / 100
+        quantity / CURRENCY_HUNDREDTHS_PER_UNIT
     } else {
         quantity
     }
@@ -556,12 +560,24 @@ fn total_row_prefix(inputs: &CurrencyTooltipInputs) -> LuaResult<String> {
         .total_row_color_prefix
         .as_deref()
         .ok_or_else(|| runtime_error("currency total row requires color-prefix input"))?;
-    if !prefix.starts_with("|c") {
+    if !prefix.starts_with(CURRENCY_COLOR_MARKUP_PREFIX) {
         return Err(runtime_error(
             "currency total-row color prefix must start with |c",
         ));
     }
     Ok(prefix.to_owned())
+}
+
+fn append_formatted_currency_row(
+    state: &mut LuaState,
+    tooltip: Val,
+    key: &str,
+    values: &[String],
+    normal_color: (f64, f64, f64),
+) -> LuaResult<()> {
+    let text = format_global_strings(state, key, values)?;
+    append_line(state, tooltip, LINE_TYPE_NUMERIC, &text, Some(normal_color));
+    Ok(())
 }
 
 fn format_global_strings(state: &mut LuaState, key: &str, values: &[String]) -> LuaResult<String> {
@@ -589,9 +605,12 @@ fn format_global_strings(state: &mut LuaState, key: &str, values: &[String]) -> 
 fn currency_color_prefix(state: &mut LuaState, key: &str) -> LuaResult<String> {
     let color = crate::lua_api::global_colors::global_value(state, key);
     let Val::Table(_) = color else {
-        return Ok("|cffff00ff".to_owned());
+        return Ok(MISSING_CURRENCY_COLOR_PREFIX.to_owned());
     };
     let formatter = table_get(state, color, "GenerateHexColorMarkup");
+    if !matches!(formatter, Val::Function(_)) {
+        return Ok(MISSING_CURRENCY_COLOR_PREFIX.to_owned());
+    }
     let prefix = call_function_state(state, formatter, &[color])?;
     val_to_string(state, prefix)
         .ok_or_else(|| runtime_error(format!("{key}.GenerateHexColorMarkup did not return text")))
@@ -607,17 +626,4 @@ fn required_color(state: &mut LuaState, key: &str) -> LuaResult<(f64, f64, f64)>
 
 fn has_flag(flags: Option<u32>, flag: u32) -> bool {
     flags.is_some_and(|flags| flags & flag != 0)
-}
-
-fn push_currency_line(
-    state: &mut LuaState,
-    lines: Val,
-    next_line: &mut i64,
-    line_type: f64,
-    text: &str,
-    color: Option<(f64, f64, f64)>,
-    wrap: bool,
-) {
-    builders::push_tooltip_line(state, lines, *next_line, line_type, text, color, wrap);
-    *next_line += 1;
 }

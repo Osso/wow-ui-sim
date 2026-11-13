@@ -59,16 +59,13 @@ pub(super) fn c_tooltip_get_currency_by_id(state: &mut LuaState) -> LuaResult<u3
     let currency_id = i32::from_stack(state, 1)?;
     let amount = Option::<i32>::from_stack(state, 2)?;
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
-        let tooltip = match crate::c_api::c_tooltip_info_currency::build_currency_tooltip(
+        let Some(tooltip) = crate::c_api::c_tooltip_info_currency::build_currency_tooltip(
             state,
             currency_id,
             Some(amount.unwrap_or(0)),
-        )? {
-            Some(tooltip) => tooltip,
-            None => {
-                use super::super::TOOLTIP_TYPE_CURRENCY;
-                empty_tooltip(state, TOOLTIP_TYPE_CURRENCY)
-            }
+        )?
+        else {
+            return crate::c_api::tooltip_data::unknown_getter_failure();
         };
         state.push(tooltip);
         return Ok(1);
