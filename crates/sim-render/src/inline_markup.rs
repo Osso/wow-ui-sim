@@ -197,7 +197,7 @@ fn next_icon_escape(text: &str) -> Option<(usize, &'static str)> {
 }
 
 fn parse_texture_escape(body: &str) -> Option<InlineIcon> {
-    let fields: Vec<&str> = body.split(':').collect();
+    let fields = read_fields(body);
     if fields.len() < 2 {
         return None;
     }
@@ -241,7 +241,7 @@ fn parse_texture_escape(body: &str) -> Option<InlineIcon> {
 
 fn parse_atlas_escape(body: &str) -> Option<InlineIcon> {
     let body = body.strip_prefix(':')?;
-    let fields: Vec<&str> = body.split(':').collect();
+    let fields = read_fields(body);
     if fields.len() < 3 {
         return None;
     }
@@ -263,6 +263,19 @@ fn parse_atlas_escape(body: &str) -> Option<InlineIcon> {
         tex_coords: None,
         vertex_color: vertex_color(number(5), number(6), number(7)),
     })
+}
+
+/// Read colon-delimited fields, matching the native 31-byte field buffer.
+fn read_fields(body: &str) -> Vec<&str> {
+    body.split(':')
+        .map(|field| {
+            let mut end = field.len().min(31);
+            while !field.is_char_boundary(end) {
+                end -= 1;
+            }
+            &field[..end]
+        })
+        .collect()
 }
 
 /// Escape colors are 0..255 per channel; all three must be given.
