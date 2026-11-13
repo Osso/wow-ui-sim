@@ -24,18 +24,17 @@ fn patch_6_2_0_spell_link_retains_eligible_cost(env: &WowLuaEnv) {
 #[test]
 fn patch_6_2_0_spell_link_retains_eligible_cost_bare() {
     let env = WowLuaEnv::new().unwrap();
-    check_spell_link_cost(&env);
-}
-
-fn check_spell_link_cost(env: &WowLuaEnv) {
-    // UNKNOWN R81 Q2 helper output (docs/specs/tooltip-spell-composition.md):
-    // supply explicit host display text, not a guessed cost.
+    // UNKNOWN R81 Q2 helper output: supply host text, not a guessed cost.
     env.state()
         .borrow_mut()
         .spell_tooltip_inputs
         .entry(19750)
         .or_default()
         .cost = Some("host MANA cost".into());
+    check_spell_link_cost(&env);
+}
+
+fn check_spell_link_cost(env: &WowLuaEnv) {
     env.exec(
         r#"
         local tooltip = CreateFrame('GameTooltip', 'P620Tooltip', UIParent, 'GameTooltipTemplate')
@@ -48,11 +47,9 @@ fn check_spell_link_cost(env: &WowLuaEnv) {
         end
         local directData = C_TooltipInfo.GetSpellByID(19750)
         local linkedData = C_TooltipInfo.GetHyperlink('spell:19750')
-        assert(#directData.lines == #linkedData.lines,
-            'direct and linked spell tooltip row counts differ')
+        assert(#directData.lines == #linkedData.lines)
         for index, line in ipairs(directData.lines) do
-            assert(line.leftText == linkedData.lines[index].leftText,
-                'direct and linked spell tooltip text differs at row ' .. index)
+            assert(line.leftText == linkedData.lines[index].leftText)
         end
         tooltip:SetSpellByID(19750)
         local direct = textLines()
@@ -63,8 +60,7 @@ fn check_spell_link_cost(env: &WowLuaEnv) {
             assert(linked:find('Flash of Light'), linked)
             assert(linked:find('MANA'), linked)
             local name, id = tooltip:GetSpell()
-            assert(name == 'Flash of Light' and id == 19750,
-                'spell identity differs: ' .. tostring(name) .. '/' .. tostring(id))
+            assert(name == 'Flash of Light' and id == 19750)
         end
         tooltip:SetSpellByID(19750)
         assert(textLines():find('MANA'), textLines())
