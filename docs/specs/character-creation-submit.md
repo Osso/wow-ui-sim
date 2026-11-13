@@ -156,10 +156,10 @@ Neither result nor roster events, roster changes, or player renames are emitted.
 The PTR result payload, timing and ordering are UNKNOWN, so the RF host result
 adapter is not enabled on PTR.
 
-The existing PTR CreateCharacter bootstrap availability is preserved, not taken
+At the pre-R78c stage, PTR CreateCharacter bootstrap availability was preserved, not taken
 as native catalog evidence. OnPlayerInteraction, StopAllSpellVisualKitsOnCharacter
-and SetPlayerModelHiddenState remain unregistered pending R78c. The real-control
-RED asserts the exact Mainline line 287 OnPlayerInteraction nil-call and still
+and SetPlayerModelHiddenState were unregistered pending R78c. That historical real-control
+RED asserted the exact Mainline line 287 OnPlayerInteraction nil-call and still
 fails. No internal interaction byte, visual flags, hidden flag or pending-error
 input is invented for PTR. IsCharacterNameValid remains unchanged per #265.
 
@@ -198,9 +198,9 @@ The verified-only stage retained the exact OnPlayerInteraction RED (0 passed,
 1 failed, 5.44s). After the inferred entries are applied, that boundary is passed;
 the next exact first error is Mainline/Blizzard_CharacterCreate.lua:812 attempting
 to call nil GetCurrentCameraZoom. No PTR camera behavior is inferred from Retail.
-The real-control test remains explicitly RED with that exact-first-error assertion,
-gated under optional-tests as directed in #289. Full PTR submit GREEN therefore
-still awaits evidence for the newly exposed camera prerequisite.
+At that stage the real-control test was explicitly RED with that exact-first-error
+assertion, gated under optional-tests as directed in #289. The R83 sections below
+supersede the camera prerequisite status.
 
 Coordinator #292 confirms retaining the exact PTR `GetCurrentCameraZoom`
 line 812 RED behind `optional-tests` for this PR. The native camera question
@@ -276,8 +276,9 @@ A separate **INFERRED (R83)** commit enables the single-number Lua return and
 labels the existing shared zero initialization as INFERRED for PTR. No test
 asserts the initial value or return count. Tests seed nonzero host zoom values
 and check only the VERIFIED stored-value identity. Existing RF initialization
-and all setter behavior are unchanged; the PTR setter's reader/Usage behavior
-still awaits clarification. This commit alone is not a modeled setter claim.
+and all setter behavior were unchanged in that commit; the later R83b/R83c
+sections below supply the setter evidence. This commit alone is not a modeled
+setter claim.
 
 
 ### PTR R83b/R83c shared setter core (#305, #318, #320)

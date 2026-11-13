@@ -1,3 +1,9 @@
+## [2026-11-13] system | PTR character-creation camera evidence
+
+[Lua API](systems/lua-api.md#ptr-character-creation-evidence-boundary) separates
+verified R78/R83 argument/state behavior from droppable inferred catalog and
+return bridges. The unseeded collector and end-to-end submit remain distinct.
+
 ## [2026-11-12] system | Secure delegate global
 
 Updated [Lua API](systems/lua-api.md#secure-delegate-global) and linked the [secure-helper contract](../specs/secure-helpers.md). Recorded S4s7b's emulated construction/invocation boundary, simulator inference labels, six-profile exact tests, and the separate optional Retail duration-object failure.

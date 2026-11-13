@@ -866,3 +866,21 @@ CVars or alternate producers exist; ordinary chat channel membership stays separ
 The [TTS contract](../../specs/c-factory-cf2-tts.md#staged-producer-contract-and-evidence-limits)
 owns default evidence, supported pairs, selection, UNKNOWN mappings and the approved
 non-native fresh=false/Mark=true persistent marker model. The [bounded integration proof](../investigations/cf2-tts-integration.md#bounded-verification) records exact original-consumer GREEN on six registered profiles, the corrected legacy oracle on all seven, stock-map deltas and warning gates. Native parity and full-suite acceptance remain unverified.
+
+
+## PTR character-creation evidence boundary
+
+The [character-creation contract](../../specs/character-creation-submit.md)
+separates verified PTR Glue CreateCharacter/StopAll registrations from inferred
+OnPlayerInteraction/SetPlayerModelHiddenState existence (R78c). No result/list
+payload or timing is invented, and host-only call observations do not rename a
+player or create a roster entry.
+
+R83 verifies the stored camera-zoom reader's Glue route; its single numeric
+return/default policy remains a separate inference. R83b/R83c verify the shared
+signed32 setter, 0..100 clamp, and changed-only custom-marker clearing. PTR
+setter installation and ordinary zero returns/non-boolean optional truthiness
+remain in a separate droppable inferred registration, replacing only its old
+zoom no-op. Camera profile/model rendering effects remain unmodeled. The
+unseeded customization collector is unchanged pending native evidence, so
+camera API progress is not a claim of end-to-end character creation success.

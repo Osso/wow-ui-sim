@@ -1,3 +1,9 @@
+## [2026-11-13] system | PTR character-creation camera evidence
+
+[Lua API](systems/lua-api.md#ptr-character-creation-evidence-boundary) separates
+verified R78/R83 argument/state behavior from droppable inferred catalog and
+return bridges. The unseeded collector and end-to-end submit remain distinct.
+
 ## [2026-11-12] system | Secure delegate global
 
 [Lua API](systems/lua-api.md#secure-delegate-global) links the [secure-helper contract](../specs/secure-helpers.md). **VERIFIED from S4s7b emulation:** source rejection, shallow provenance assignment and function-argument wrapping are bounded; target security, reporter effects and full result publication remain UNKNOWN. **VERIFIED locally:** exact tests pass across six applicable profiles. The optional Retail duration-object case remains a separate failure because it does not call `CreateSecureDelegate`.
