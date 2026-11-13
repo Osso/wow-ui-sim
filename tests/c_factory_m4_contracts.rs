@@ -250,6 +250,22 @@ mod forever {
         "assert(type(C_TradeSkillUI.CanTradeSkillShowCraftingUI) == 'function')"
     );
     contract!(
+        hardcore_active_returns_false_when_rule_10_is_unset,
+        "assert(type(C_GameRules.IsHardcoreActive) == 'function'); assert(C_GameRules.IsHardcoreActive() == false)"
+    );
+    #[cfg(feature = "optional-tests")]
+    #[test]
+    fn hardcore_active_reads_nonzero_native_rule_10() {
+        let env = WowLuaEnv::new().unwrap();
+        env.state()
+            .borrow_mut()
+            .game_rules
+            .rules_by_id
+            .insert(10, 1);
+        env.exec("assert(C_GameRules.IsHardcoreActive() == true)")
+            .unwrap();
+    }
+    contract!(
         experience_preset_is_not_guessed,
         "assert(C_GameRules.GetForeverExperiencePreset() == nil)"
     );

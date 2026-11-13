@@ -187,6 +187,7 @@ pub(crate) mod c_encounter_warnings;
 mod c_engraving;
 pub(crate) mod c_event_scheduler;
 pub(crate) mod c_friend_list;
+pub(crate) mod c_game_rules;
 mod c_garrison_currency;
 pub(crate) mod c_garrison_damage_classes;
 mod c_garrison_follower_xp;

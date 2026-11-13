@@ -139,6 +139,8 @@ pub struct GameRulesState {
     pub rule_set_marker: i32,
     /// Sparse rule store keyed by rule name. Missing key = inactive.
     pub rules: HashMap<String, GameRuleValue>,
+    /// Native numeric rule values keyed by rule ID; no name/Enum mapping is implied.
+    pub rules_by_id: HashMap<i32, i64>,
     /// Supplied PTR capabilities, not inferred native realm/account defaults.
     pub hardcore_active: bool,
     pub self_found_allowed: bool,
@@ -161,6 +163,7 @@ impl Default for GameRulesState {
             display: Default::default(),
             rule_set_marker: 0,
             rules: HashMap::new(),
+            rules_by_id: HashMap::new(),
             hardcore_active: false,
             self_found_allowed: false,
             sd_hd_toggle_enabled: false,
