@@ -1,3 +1,7 @@
+## [2026-11-13] system | C_Map user waypoint
+
+Added [the user waypoint model](systems/c-map-user-waypoint.md) and its [API contract](../specs/c-map-user-waypoint.md). **VERIFIED (Retail 12.1.5.70688):** the original Retail provider uses the six C_Map methods and accepts the tested normalized-point/replacement contract. **VERIFIED (Retail prefork test):** HandleClick stores the point, then reaches the separate missing C_SuperTrack method at line 101. **INFERRED:** session-only state, same-map-only position lookup and nonzero-ID map eligibility. **UNKNOWN:** persistence, cross-map projection and callback/event identity. Profile docs declare the methods for Retail/PTR/Forever, not Mists; Wrath remains compile-only.
+
 ## [2026-11-13] fix | EllesmereUI AuraKit secret texture error
 
 Updated [full third-party startup](investigations/full-addon-startup-2026-10-10.md#aurakit-secret-texture-error-r88c-2026-11-13) and the [secret aura contract](../specs/secret-auras.md) after the R88c call-shape trace. **VERIFIED (Retail code SHA `39ca0bc72d9539563288b79e622feeeb4a9282bb`):** the 20-addon run is clean and the five requested profile builds report zero warnings. **INFERRED:** revoked numeric input and tainted secret nil are accepted by `SetTexture`; nil clears the texture. Getter and render parity remain open.

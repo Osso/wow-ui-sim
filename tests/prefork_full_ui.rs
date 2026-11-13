@@ -181,6 +181,11 @@ const BYTECODE_FIXTURE_CASES: &[Case<BytecodeFixtureState>] = &[Case::new(
 
 #[cfg(feature = "client-retail")]
 const MANUAL_FULL_UI_CASES: &[Case<WowLuaEnv>] = &[
+    #[cfg(feature = "optional-tests")]
+    Case::new(
+        "test_c_map_user_waypoint::world_map_provider_sets_and_refreshes_user_waypoint",
+        test_c_map_user_waypoint::world_map_provider_sets_and_refreshes_user_waypoint,
+    ),
     Case::new(
         "test_keybindings_panels_detail::world_map_campaign_headers_refresh_on_show",
         test_keybindings_panels_detail::world_map_campaign_headers_refresh_on_show,
