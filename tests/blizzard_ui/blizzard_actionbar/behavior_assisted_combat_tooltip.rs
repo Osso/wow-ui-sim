@@ -22,17 +22,21 @@ where
             .expect("PlayerSpells load state should be available after loading");
         assert!(loaded, "PlayerSpells must load before its consumers run");
 
-        let source_suffix = if wow_ui_sim::client_profile::ACTIVE
-            == wow_ui_sim::client_profile::ClientProfile::WowForever
-        {
-            "Blizzard_PlayerSpells/Camelot/SpellBook/Blizzard_SpellBookFrame.lua"
-        } else {
-            "Blizzard_PlayerSpells/SpellBook/Blizzard_SpellBookFrame.lua"
+        let frame_source_suffix = "Blizzard_PlayerSpells/SpellBook/Blizzard_SpellBookFrame.lua";
+        let attic_source_suffix = match wow_ui_sim::client_profile::ACTIVE {
+            wow_ui_sim::client_profile::ClientProfile::WowForever => {
+                "Blizzard_PlayerSpells/Camelot/SpellBook/Blizzard_SpellBookFrame.lua"
+            }
+            _ => frame_source_suffix,
         };
         env.exec(&format!(
-            "__wow_test_spellbook_frame_source_suffix = '{source_suffix}'"
+            "__wow_test_spellbook_frame_source_suffix = '{frame_source_suffix}'"
         ))
-        .expect("selected spellbook source suffix should be available to Lua assertions");
+        .expect("spellbook consumer source suffix should be available to Lua assertions");
+        env.exec(&format!(
+            "__wow_test_spellbook_attic_source_suffix = '{attic_source_suffix}'"
+        ))
+        .expect("spellbook attic source suffix should be available to Lua assertions");
 
         assertions(env);
     });
@@ -219,7 +223,7 @@ fn spellbook_attic_reads_original_assisted_action_state() {
 
                 local consumerInfo = debug.getinfo(SpellBookFrameMixin.UpdateAttic, "S")
                 local consumerSource = consumerInfo.source:gsub("\\", "/")
-                local consumerSuffix = __wow_test_spellbook_frame_source_suffix
+                local consumerSuffix = __wow_test_spellbook_attic_source_suffix
                 assert(consumerSource:sub(-#consumerSuffix) == consumerSuffix,
                     "expected the selected spellbook consumer, got " .. consumerSource)
 
