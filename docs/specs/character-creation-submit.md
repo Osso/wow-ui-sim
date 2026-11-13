@@ -296,3 +296,19 @@ The existing shared body needs no semantic change. Its visibility is widened
 only for the separately droppable PTR Lua registration. PTR installation is
 UNKNOWN; ordinary zero returns and non-boolean second-argument truthiness are
 INFERRED, not verified by these tests.
+
+
+### PTR R83b droppable setter registration
+
+The separately droppable **INFERRED** commit installs SetCameraZoomLevel only
+in Glue, replacing its temporary no-op atomically. The pinned PTR Mainline
+Blizzard_CharacterCreate.lua:548 calls the wrapper at :791 with zoom 0;
+Blizzard_CustomizationUI.lua:664 calls it with category.cameraZoomLevel.
+The native Glue catalog is UNKNOWN (#305/#320), not asserted by tests.
+
+This bridge reuses the existing RF body: ordinary zero returns and truthiness
+for non-boolean non-nil keepCustomZoom are INFERRED on PTR. Tests assert neither.
+The R83b reader and R83c changed-only marker clearing remain VERIFIED. Wider
+camera-profile effects are unmodeled. Getter initial zero and single numeric
+return remain the earlier separate R83 inferred policy, never count/default
+assertions. Unseeded category data remains unchanged pending the collector.

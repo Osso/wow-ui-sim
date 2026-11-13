@@ -61,7 +61,29 @@ pub(crate) fn update_registration(
         );
     }
     update_camera_zoom_registration(state, namespace, is_glue)?;
+    update_inferred_camera_setter_registration(state, namespace, is_glue)?;
     update_inferred_registration(state, namespace, is_glue)
+}
+
+// INFERRED (R83b): original PTR Mainline consumer :548/:791 invokes this
+// unguarded, but Glue catalog installation is UNKNOWN. Shared body's ordinary
+// zero returns and non-boolean keepCustomZoom truthiness are also INFERRED.
+fn update_inferred_camera_setter_registration(
+    state: &mut LuaState,
+    namespace: GcRef<Table>,
+    is_glue: bool,
+) -> LuaResult<()> {
+    if is_glue {
+        table_set_rust_fn_static(
+            state,
+            namespace,
+            "SetCameraZoomLevel",
+            super::c_character_creation::set_camera_zoom_level,
+        )
+    } else {
+        table_set_static(state, Val::Table(namespace), "SetCameraZoomLevel", Val::Nil);
+        Ok(())
+    }
 }
 
 /// R83 VERIFIED Glue registration, stored-state source, and no argument reads.

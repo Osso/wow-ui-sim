@@ -642,9 +642,10 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Ptr {
         // Preserve the existing PTR scenario default; R61 did not prove PTR availability.
         lua.exec("function C_CharacterCreation.GetTrialBoostStartingLevel() return 0 end")?;
-        // PTR registration is UNKNOWN; retain the previous preview API fallbacks.
+        // R83b replaces only the PTR zoom fallback with a separately inferred
+        // Glue registration. Other preview API catalogs remain UNKNOWN.
         lua.exec(
-            "function C_CharacterCreation.SetSelectedPreviewGearType(gearType) end; function C_CharacterCreation.SetModelDressState(dressedState) end; function C_CharacterCreation.SetCameraZoomLevel(zoomLevel, keepCustomZoom) end; function C_CharacterCreation.SetBlurEnabled(enabled) end",
+            "function C_CharacterCreation.SetSelectedPreviewGearType(gearType) end; function C_CharacterCreation.SetModelDressState(dressedState) end; function C_CharacterCreation.SetBlurEnabled(enabled) end",
         )?;
         let state = lua.state_mut();
         let namespace = crate::c_api::ensure_namespace(state, "C_CharacterCreation")?;
