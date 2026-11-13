@@ -242,3 +242,36 @@ fn pvp_match_cell_consumes_honor_reward_catalog(env: &WowLuaEnv) {
     assert_eq!(badges, (202, 606));
 }
 }
+
+#[cfg(feature = "optional-tests")]
+prefork_full_ui_case! {
+fn combat_audio_consumer_stops_when_manager_is_unavailable(env: &WowLuaEnv) {
+    assert_addon_loaded(env, "Blizzard_CombatAudioAlerts");
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.sound_manager = None;
+        sim.cvars.set_imported("CAAEnabled", "1");
+    }
+
+    let stopped: bool = env
+        .eval(
+            r#"
+            local addon = C_AddOns.GetAddOnLocalTable("Blizzard_CombatAudioAlerts")
+            if type(addon) ~= "table" or type(addon.TrySpeakText) ~= "function" then
+                return false
+            end
+            if addon.IsEnabled() ~= false then return false end
+
+            local throttleChecked, speechStarted = false, false
+            local oldCheckThrottle, oldSpeakText = addon.CheckThrottle, addon.SpeakText
+            addon.CheckThrottle = function() throttleChecked = true; return true end
+            addon.SpeakText = function() speechStarted = true end
+            addon:TrySpeakText({})
+            addon.CheckThrottle, addon.SpeakText = oldCheckThrottle, oldSpeakText
+            return not throttleChecked and not speechStarted
+            "#,
+        )
+        .expect("CombatAudioAlert manager should stop on unavailable audio manager");
+    assert!(stopped, "the original CAA consumer must not continue without its manager");
+}
+}
