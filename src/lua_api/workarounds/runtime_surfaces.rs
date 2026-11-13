@@ -28,10 +28,6 @@ pub(super) fn patch_chat_voice_button_surface(env: &crate::lua_api::WowLuaEnv) {
     temporary::chat_voice_button_surface::patch(env);
 }
 
-pub(super) fn patch_item_socketing_tooltips(env: &crate::lua_api::WowLuaEnv) {
-    temporary::item_socketing_tooltips::patch(env);
-}
-
 pub(super) fn patch_action_bar_button_event_fanout(env: &crate::lua_api::WowLuaEnv) {
     temporary::action_bar_button_event_fanout::patch(env);
 }
@@ -81,10 +77,6 @@ pub(super) fn patch_map_exploration_pin_mixin(env: &crate::lua_api::WowLuaEnv) {
     temporary::map_exploration_pin::patch(env);
 }
 
-pub(super) fn patch_map_canvas_data_provider_attachment(env: &crate::lua_api::WowLuaEnv) {
-    temporary::map_canvas_data_provider_pin::patch(env);
-}
-
 pub(super) fn patch_character_create_defaults(env: &crate::lua_api::WowLuaEnv) {
     temporary::character_create_defaults::patch(env);
 }
@@ -115,11 +107,7 @@ pub(super) fn patch_toggle_collections_journal_for_runtime_addon_load(
     temporary::mount_journal_dynamic_flight_popup::patch(env);
 }
 
-pub(super) fn patch_map_canvas_data_provider_attachment_for_runtime_addon_load(
-    env: &crate::lua_api::LoaderEnv<'_>,
-) {
-    temporary::map_canvas_data_provider_pin::patch_for_runtime_addon_load(env);
-}
+
 
 pub(super) fn ensure_adventure_map_frame_surface(env: &crate::lua_api::WowLuaEnv) {
     temporary::adventure_map_frame_surface::patch(env);

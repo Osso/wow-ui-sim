@@ -1,13 +1,14 @@
 //! Temporary Settings canvas visibility workaround.
 //!
 //! Real WoW registers Settings canvas categories without displaying their
-//! frames. Our simulated Settings surface can leave registered addon option
-//! frames visible at startup, so hide canvases on registration and only show
-//! the active category's canvas when opened.
+//! frames. Keep the original Retail registration behavior, and retain the
+//! existing visibility policy for opening categories and for other profiles.
 
 use crate::lua_api::WowLuaEnv;
 
 pub(crate) const SETTINGS_CANVAS_LAYOUT_HIDE_LUA: &str = r#"
+local preserveRetailRegistration = ...
+
 local function __wow_hide_settings_canvas_frame(frame, layout)
     if type(frame) ~= "table" or type(frame.Hide) ~= "function" then
         return
@@ -96,7 +97,7 @@ local function __wow_patch_settings_canvas_registration()
         return
     end
 
-    if type(Settings.RegisterCanvasLayoutCategory) == "function" then
+    if not preserveRetailRegistration and type(Settings.RegisterCanvasLayoutCategory) == "function" then
         local original = Settings.RegisterCanvasLayoutCategory
         Settings.RegisterCanvasLayoutCategory = function(frame, ...)
             local category, layout = original(frame, ...)
@@ -105,7 +106,7 @@ local function __wow_patch_settings_canvas_registration()
         end
     end
 
-    if type(Settings.RegisterCanvasLayoutSubcategory) == "function" then
+    if not preserveRetailRegistration and type(Settings.RegisterCanvasLayoutSubcategory) == "function" then
         local original = Settings.RegisterCanvasLayoutSubcategory
         Settings.RegisterCanvasLayoutSubcategory = function(parentCategory, frame, ...)
             local category, layout = original(parentCategory, frame, ...)
@@ -132,7 +133,16 @@ __wow_hide_registered_settings_canvas_frames()
 "#;
 
 pub(crate) fn patch(env: &WowLuaEnv) {
-    let _ = env.exec(SETTINGS_CANVAS_LAYOUT_HIDE_LUA);
+    use crate::client_profile::{ACTIVE, ClientProfile};
+
+    let lua = if ACTIVE == ClientProfile::Retail {
+        // Retail's selected Settings closure maps the frame and returns the
+        // layout, without changing the frame's shown state at registration.
+        format!("local function patch(...)\n{SETTINGS_CANVAS_LAYOUT_HIDE_LUA}\nend\npatch(true)")
+    } else {
+        SETTINGS_CANVAS_LAYOUT_HIDE_LUA.to_owned()
+    };
+    let _ = env.exec(&lua);
 }
 
 #[cfg(test)]
@@ -197,7 +207,8 @@ mod tests {
         )
         .expect("fake settings surface should install");
 
-        patch(&env);
+        env.exec(SETTINGS_CANVAS_LAYOUT_HIDE_LUA)
+            .expect("legacy visibility policy should install");
 
         let hidden_after_register: bool = env
             .eval(
