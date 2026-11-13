@@ -4818,3 +4818,5 @@ is reused; original-consumer runtime RED/GREEN remains unexecuted.
 [[lua-api]] records Retail/Forever neutral stored-key sorting, independent 1-based
 category/option numbering, small-list stable ties, and unchanged unknown collector
 and choice-order boundaries. See the [spec](../specs/character-creation-submit.md#r79br79c-host-finalizer-305-314-319).
+
+- 2026-11-13: Retail TokenTracker startup ownership: corrected low-level-loader fixture, baseline preservation and Retail-only stale repair removal; see [consumer selection](investigations/consumer-selection-and-red-proof.md#retail-token-tracker-startup-ownership).

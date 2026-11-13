@@ -132,6 +132,8 @@ const POST_LOAD_WORKAROUNDS: &[WorkaroundStep] = &[
         label: "patch_tooltip_nineslice_surface",
         apply: patch_tooltip_nineslice_surface,
     },
+    // Retail startup dispatches per-addon ADDON_LOADED and owns this XML frame.
+    #[cfg(not(feature = "client-retail"))]
     WorkaroundStep {
         label: "patch_container_frame_token_tracker",
         apply: patch_container_frame_token_tracker,
@@ -825,6 +827,18 @@ mod tests {
         assert!(
             opened_canvas_visible_others_hidden,
             "opening a settings category should show only that category's canvas"
+        );
+    }
+}
+
+#[cfg(all(test, feature = "client-retail"))]
+mod retail_token_tracker_ownership_tests {
+    #[test]
+    fn original_startup_owns_token_tracker_without_repair_registration() {
+        assert!(
+            super::POST_LOAD_WORKAROUNDS
+                .iter()
+                .all(|step| step.label != "patch_container_frame_token_tracker")
         );
     }
 }

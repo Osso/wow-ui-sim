@@ -45,6 +45,7 @@ pub(super) fn patch_tooltip_nineslice_surface(env: &crate::lua_api::WowLuaEnv) {
     temporary::tooltip_nineslice_surface::patch(env);
 }
 
+#[cfg(not(feature = "client-retail"))]
 pub(super) fn patch_container_frame_token_tracker(env: &crate::lua_api::WowLuaEnv) {
     temporary::container_frame_token_tracker::patch(env);
 }

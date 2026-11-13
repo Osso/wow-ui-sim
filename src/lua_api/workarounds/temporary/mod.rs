@@ -59,6 +59,7 @@ pub(crate) mod color_defaults;
 pub(crate) mod combat_log_state;
 pub(crate) mod configuration_warnings_defaults;
 pub(crate) mod container_default_shapes;
+#[cfg(not(feature = "client-retail"))]
 pub(crate) mod container_frame_token_tracker;
 pub(crate) mod container_portrait_texture;
 pub(crate) mod content_tracking_defaults;

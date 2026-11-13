@@ -3773,3 +3773,5 @@ Added [FontString anchor sizing](investigations/fontstring-anchor-sizing.md). Th
 - 2026-11-13: Recorded lt-a912 R79b/R79c verified host finalization in [[lua-api]]
   and the character-creation spec: sorted neutral keys, rewritten 1-based indices,
   <=32 stable ties, no claim about larger tie order or the missing collector.
+
+- 2026-11-13: Retail TokenTracker startup ownership: corrected low-level-loader fixture, baseline preservation and Retail-only stale repair removal; see [consumer selection](investigations/consumer-selection-and-red-proof.md#retail-token-tracker-startup-ownership).
