@@ -19,3 +19,7 @@ Retail 12.1.5 consumer: `Blizzard_ProfessionsRecipeSchematicForm.lua:652` (Schem
 ## Evidence
 
 Handoff `native-evidence-70688/WM88-recipe-first-craft.md` (Retail build 70688). Test: `tests/workarounds_professions.rs::recipe_first_craft_resolves_ability_and_validates_arguments`.
+
+## PTR registration
+
+VERIFIED: PTR 70493 `Blizzard_ProfessionsTemplates/Blizzard_ProfessionsRecipeSchematicForm.lua:661` consumes this API. The registered contract is the same as Retail WM88, **INFERRED for PTR** pending native R85 evidence. Retail native evidence does not establish PTR parity.

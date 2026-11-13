@@ -187,6 +187,14 @@ fn test_set_unit_aura_populates_lines() {
 #[test]
 fn test_set_unit_aura_colors_like_spell_tooltip() {
     let env = WowLuaEnv::new().unwrap();
+    // R81 Q4: remaining-time formula UNKNOWN; final display text is host input.
+    let id = env.state().borrow().player.buffs[0].aura_instance_id;
+    env.state()
+        .borrow_mut()
+        .aura_tooltip_inputs
+        .entry(id)
+        .or_default()
+        .remaining_text = Some("host aura time".into());
     env.exec(r#"GameTooltip:SetUnitAura("player", 1, "HELPFUL")"#)
         .unwrap();
 
@@ -204,7 +212,7 @@ fn test_set_unit_aura_colors_like_spell_tooltip() {
     let duration = td
         .lines
         .iter()
-        .find(|line| line.left_text == "1 hr")
+        .find(|line| line.left_text == "host aura time")
         .expect("unit aura tooltip should include the remaining duration");
     let description = td
         .lines
@@ -214,6 +222,20 @@ fn test_set_unit_aura_colors_like_spell_tooltip() {
     assert_color_close(title.left_color, highlight, "unit aura title");
     assert_color_close(duration.left_color, highlight, "unit aura duration");
     assert_color_close(description.left_color, normal, "unit aura description");
+    drop(state);
+    env.state().borrow_mut().aura_tooltip_inputs.clear();
+    env.exec(r#"GameTooltip:SetUnitAura("player", 1, "HELPFUL")"#)
+        .unwrap();
+    assert!(
+        !env.state()
+            .borrow()
+            .tooltips
+            .get(&gt_id)
+            .unwrap()
+            .lines
+            .iter()
+            .any(|line| line.left_text == "host aura time" || line.left_text == "1 hr")
+    );
 }
 
 #[test]
@@ -424,6 +446,13 @@ fn test_set_spell_by_id_uses_wrapped_description_for_tooltip_width() {
 #[test]
 fn test_set_spell_by_id_colors_title_and_metadata_lines() {
     let env = WowLuaEnv::new().unwrap();
+    // R81 Q2: final helper outputs, not a cost or cast-time formula.
+    {
+        let mut sim = env.state().borrow_mut();
+        let input = sim.spell_tooltip_inputs.entry(19750).or_default();
+        input.cost = Some("host MANA cost".into());
+        input.cast_ms = Some(1500);
+    }
 
     env.exec("GameTooltip:SetSpellByID(19750)").unwrap();
 
@@ -462,6 +491,13 @@ fn test_set_spell_by_id_colors_title_and_metadata_lines() {
 #[test]
 fn test_set_spell_by_id_colors_cooldown_line() {
     let env = WowLuaEnv::new().unwrap();
+    // R81 Q3: cooldown helper predicates UNKNOWN; supply its final text.
+    env.state()
+        .borrow_mut()
+        .spell_tooltip_inputs
+        .entry(642)
+        .or_default()
+        .cooldown_text = Some("host cooldown".into());
 
     env.exec("GameTooltip:SetSpellByID(642)").unwrap();
     let highlight: (f32, f32, f32) = env
@@ -477,38 +513,49 @@ fn test_set_spell_by_id_colors_cooldown_line() {
         .find(|line| line.left_text.contains("cooldown"))
         .expect("Divine Shield tooltip should include cooldown line");
 
+    assert_eq!(cooldown.left_text, "host cooldown");
     assert_color_close(cooldown.left_color, highlight, "cooldown line");
+    drop(state);
+    env.state().borrow_mut().spell_tooltip_inputs.clear();
+    env.exec("GameTooltip:SetSpellByID(642)").unwrap();
+    assert!(
+        !env.state()
+            .borrow()
+            .tooltips
+            .get(&gt_id)
+            .unwrap()
+            .lines
+            .iter()
+            .any(|line| line.left_text.contains("cooldown"))
+    );
 }
 
 #[test]
-fn test_get_action_adds_colored_binding_line() {
+fn test_get_action_omits_unsupported_binding_line() {
     let env = WowLuaEnv::new().unwrap();
-    let (binding_text, r, g, b): (String, f32, f32, f32) = env
-        .eval(
-            r#"
-            local info = C_TooltipInfo.GetAction(5)
-            for _, line in ipairs(info.lines) do
-                if line.leftText and string.find(line.leftText, "Key bound") then
-                    return line.leftText, line.leftColor:GetRGB()
-                end
-            end
-            return "", 0, 0, 0
-            "#,
-        )
-        .unwrap();
-    let instruction: (f32, f32, f32) = env
-        .eval("local r,g,b = GREEN_FONT_COLOR:GetRGB(); return r,g,b")
-        .unwrap();
-
-    assert_eq!(binding_text, "Key bound: 5");
-    assert_color_close((r, g, b), instruction, "action binding line");
+    env.state().borrow_mut().action_bars.insert(5, 19750);
+    // R81 Q3: fixed slot-to-key mapping has no native evidence; no replacement seam.
+    env.exec(
+        r#"
+        for _, line in ipairs(C_TooltipInfo.GetAction(5).lines) do
+            assert(not line.leftText:find('Key bound') and line.leftText ~= 'Not bound')
+        end
+    "#,
+    )
+    .unwrap();
 }
 
 #[test]
 fn test_set_spell_by_id_shows_cast_time() {
     let env = WowLuaEnv::new().unwrap();
 
-    // Flash of Light has 1500ms cast time
+    // R81 Q2: final positive helper result is supplied, not computed from catalog.
+    env.state()
+        .borrow_mut()
+        .spell_tooltip_inputs
+        .entry(19750)
+        .or_default()
+        .cast_ms = Some(1500);
     env.exec("GameTooltip:SetSpellByID(19750)").unwrap();
 
     let state = env.state().borrow();
@@ -516,13 +563,32 @@ fn test_set_spell_by_id_shows_cast_time() {
     let td = state.tooltips.get(&gt_id).unwrap();
     let has_cast_line = td.lines.iter().any(|l| l.left_text.contains("sec cast"));
     assert!(has_cast_line, "Should have a cast time line");
+    drop(state);
+    env.state().borrow_mut().spell_tooltip_inputs.clear();
+    env.exec("GameTooltip:SetSpellByID(19750)").unwrap();
+    assert!(
+        !env.state()
+            .borrow()
+            .tooltips
+            .get(&gt_id)
+            .unwrap()
+            .lines
+            .iter()
+            .any(|line| line.left_text.contains("sec cast"))
+    );
 }
 
 #[test]
 fn test_set_spell_by_id_instant_cast() {
     let env = WowLuaEnv::new().unwrap();
 
-    // Crusader Strike (35395): instant cast
+    // R81 Q3: a nonpositive cast result alone does not establish Instant.
+    env.state()
+        .borrow_mut()
+        .spell_tooltip_inputs
+        .entry(35395)
+        .or_default()
+        .alternate_cast_text = Some("Instant".into());
     env.exec("GameTooltip:SetSpellByID(35395)").unwrap();
 
     let state = env.state().borrow();
@@ -530,7 +596,20 @@ fn test_set_spell_by_id_instant_cast() {
     let td = state.tooltips.get(&gt_id).unwrap();
     assert_eq!(td.lines[0].left_text, "Crusader Strike");
     let has_instant = td.lines.iter().any(|l| l.left_text == "Instant");
-    assert!(has_instant, "Instant cast spells should show 'Instant'");
+    assert!(has_instant, "Supplied alternate text should appear");
+    drop(state);
+    env.state().borrow_mut().spell_tooltip_inputs.clear();
+    env.exec("GameTooltip:SetSpellByID(35395)").unwrap();
+    assert!(
+        !env.state()
+            .borrow()
+            .tooltips
+            .get(&gt_id)
+            .unwrap()
+            .lines
+            .iter()
+            .any(|line| line.left_text == "Instant")
+    );
 }
 
 #[test]
