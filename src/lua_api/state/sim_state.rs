@@ -997,6 +997,9 @@ pub struct SimState {
     #[cfg(feature = "client-ptr")]
     pub ptr_character_creation:
         crate::c_api::c_character_creation_submit_ptr::PtrCharacterCreationState,
+    /// Host inputs for starting-zone choices; defaults do not claim native initialization.
+    pub character_create_starting_zone_choices:
+        crate::c_api::c_character_creation::StartingZoneChoicesInput,
     /// Current character-create model facing in normalized radians.
     pub character_create_facing_radians: f32,
     /// Host-supplied race IDs with an altered character-create model.

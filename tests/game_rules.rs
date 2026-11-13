@@ -52,6 +52,48 @@ fn game_rules_hardcore_flag_defaults_to_false() {
 }
 
 #[test]
+#[cfg(feature = "client-wowforever")]
+fn forever_self_found_allowed_uses_rule_22_and_defaults_false() {
+    const SELF_FOUND_ALLOWED_RULE_ID: i32 = 22;
+
+    let env = env();
+    assert!(
+        !env.state()
+            .borrow()
+            .game_rules
+            .rules_by_id
+            .contains_key(&SELF_FOUND_ALLOWED_RULE_ID)
+    );
+
+    let (allowed, return_count): (bool, i64) = env
+        .eval(
+            r##"
+            local function pack(...) return { n = select("#", ...), ... } end
+            local result = pack(C_GameRules.IsSelfFoundAllowed())
+            return result[1], result.n
+            "##,
+        )
+        .unwrap();
+    assert_eq!((allowed, return_count), (false, 1));
+
+    env.state()
+        .borrow_mut()
+        .game_rules
+        .rules_by_id
+        .insert(SELF_FOUND_ALLOWED_RULE_ID, 1);
+    let (allowed, return_count): (bool, i64) = env
+        .eval(
+            r##"
+            local function pack(...) return { n = select("#", ...), ... } end
+            local result = pack(C_GameRules.IsSelfFoundAllowed())
+            return result[1], result.n
+            "##,
+        )
+        .unwrap();
+    assert_eq!((allowed, return_count), (true, 1));
+}
+
+#[test]
 fn standard_mode_predicate_tracks_supplied_game_mode() {
     use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
 

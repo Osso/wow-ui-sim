@@ -801,6 +801,7 @@ macro_rules! build_empty_sim_state {
             name_reservation_feature_status: 0,
             #[cfg(feature = "client-ptr")]
             ptr_character_creation: Default::default(),
+            character_create_starting_zone_choices: Default::default(),
             character_create_facing_radians: 0.0,
             character_create_altered_form_races: ::std::collections::HashSet::new(),
             character_create_viewing_altered_form: false,
