@@ -28,7 +28,7 @@ fn atlas_icon_adds_its_width() {
 }
 
 #[test]
-fn texture_icon_of_size_zero_is_as_wide_as_a_line_is_high() {
+fn texture_zero_height_uses_inferred_line_metric() {
     let env = WowLuaEnv::new().unwrap();
     let (plain, with_icon, line): (f64, f64, f64) = env
         .eval(
@@ -58,7 +58,7 @@ fn texture_icon_without_size_takes_no_room() {
 }
 
 #[test]
-fn atlas_icon_without_width_is_a_line_high_square() {
+fn atlas_zero_width_uses_inferred_line_metric() {
     let (plain, with_icon) = widths("ab", "a|A:hud-backpack:24:0|ab");
     let (_, line) = widths("ab", "|A:hud-backpack:0:0|a");
     assert!(
@@ -82,7 +82,10 @@ fn a_tall_icon_raises_the_line() {
             "#,
         )
         .unwrap();
-    assert!(text < 32.0 && (tall - 32.0).abs() < 0.01, "text {text}, tall {tall}");
+    assert!(
+        text < 32.0 && (tall - 32.0).abs() < 0.01,
+        "text {text}, tall {tall}"
+    );
 }
 
 #[test]
@@ -119,6 +122,7 @@ fn text_scale_scales_the_icons_with_the_glyphs() {
     );
 }
 
+// R88d verifies cached width and height division by FontString scale.
 #[test]
 fn string_metrics_are_local_to_fontstring_scale() {
     let env = WowLuaEnv::new().unwrap();
@@ -144,10 +148,18 @@ fn string_metrics_are_local_to_fontstring_scale() {
     );
 }
 
+// R88e.6 verifies that each shown left FontString region height enters the row total.
 #[test]
 fn tooltip_height_adds_each_left_fontstring_row() {
     let env = WowLuaEnv::new().unwrap();
-    let (one_row, two_rows, three_rows): (f64, f64, f64) = env
+    let (one_row, two_rows, three_rows, first_height, second_height, third_height): (
+        f64,
+        f64,
+        f64,
+        f64,
+        f64,
+        f64,
+    ) = env
         .eval(
             r#"
             GameTooltip:ClearLines()
@@ -155,22 +167,36 @@ fn tooltip_height_adds_each_left_fontstring_row() {
             GameTooltip:AddLine("Repeated row")
             GameTooltip:Show()
             local one = GameTooltip:GetHeight()
+            local first_height = GameTooltip:GetLeftLine(1):GetHeight()
             GameTooltip:AddLine("Repeated row")
             GameTooltip:Show()
             local two = GameTooltip:GetHeight()
+            local second_height = GameTooltip:GetLeftLine(2):GetHeight()
             GameTooltip:AddLine("Repeated row")
             GameTooltip:Show()
-            return one, two, GameTooltip:GetHeight()
+            local three = GameTooltip:GetHeight()
+            local third_height = GameTooltip:GetLeftLine(3):GetHeight()
+            return one, two, three, first_height, second_height, third_height
             "#,
         )
         .unwrap();
-    let second_row = two_rows - one_row;
-    let third_row = three_rows - two_rows;
-    assert!(second_row > 0.0, "one row {one_row}, two rows {two_rows}");
-    assert!(third_row > 0.0, "two rows {two_rows}, three rows {three_rows}");
+    let second_row_spacing = two_rows - one_row - second_height;
+    let third_row_spacing = three_rows - two_rows - third_height;
     assert!(
-        (second_row - third_row).abs() < 0.01,
-        "second row {second_row}, third row {third_row}"
+        first_height > 0.0,
+        "first left region height {first_height}"
+    );
+    assert!(
+        second_height > 0.0,
+        "second left region height {second_height}"
+    );
+    assert!(
+        third_height > 0.0,
+        "third left region height {third_height}"
+    );
+    assert!(
+        (second_row_spacing - third_row_spacing).abs() < 0.01,
+        "second row spacing {second_row_spacing}, third row spacing {third_row_spacing}"
     );
 }
 
