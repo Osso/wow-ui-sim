@@ -28,7 +28,7 @@
 
 - [method discovery](../../wow-client-diff/diff_methods_extra.txt) — methods reported as extras on widget types.
 - [frame method registration](../../../src/lua_api/frame/methods/misc/mod.rs) — shared method surface.
-- [RED/GREEN consumer test](../../../tests/frame_edit_mode_methods.rs) — plain frame behavior through the original managed-frame consumer.
+- [RED/GREEN consumer test](../../../tests/frame_edit_mode_method_surface.rs) — plain frame behavior through the original managed-frame consumer.
 - [profile layout fixtures](../../../tests/frame_positions.rs) — tracker and Mists Paladin layout assertions.
 - [frame helper defaults](../../../src/lua_api/workarounds/temporary/frame_helper_defaults.rs) — regression checks for generic frame helper methods.
 - Pinned Blizzard source: `Blizzard_EditMode/Shared/EditModeSystemTemplates.lua`, `Blizzard_ActionBar/Shared/MainActionBar.lua`, `Blizzard_ManagedFrameSystem/Shared/ManagedFrameSystem.lua`, `Blizzard_UIParent/Shared/UIParent.lua`, `Blizzard_UnitFrame/Shared/PlayerFrameTemplates.xml`, `Blizzard_UnitFrame/Classic/PlayerFrame.xml`, `Blizzard_UnitFrame/Mists/PaladinPowerBar.xml`, and `Blizzard_SharedXML/LayoutFrame.lua`.
