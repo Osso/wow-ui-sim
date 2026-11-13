@@ -116,8 +116,8 @@ const POSITION_TESTS: &[TestCase] = &[
     // HUD elements
     ("minimap",                    "Minimap",                       1391.0,   44.0,  198.0, 198.0, 1.0),
     ("minimap_cluster",            "MinimapCluster",                1360.0,    0.0,  240.0, 252.0, 1.0),
-    // VERIFIED from Retail source: the one-unit widget container and 10-unit spacing reduce the managed tracker height by 11.
-    ("objective_tracker",          "ObjectiveTrackerFrame",         1335.0,  260.0,  260.0, 836.5, 1.0),
+    // VERIFIED from Retail source: the one-unit widget row and 10-unit spacing move the tracker down 11 and reduce its height by 11.
+    ("objective_tracker",          "ObjectiveTrackerFrame",         1335.0,  271.0,  260.0, 836.5, 1.0),
     ("bags_bar",                   "BagsBar",                       1386.0, 1104.0,  208.0,  47.0, 1.0),
     ("micro_button_bags_bar",      "MicroButtonAndBagsBar",         1362.0, 1114.0,  232.0,  80.0, 1.0),
     ("micro_menu",                 "MicroMenu",                     1265.0, 1154.0,  329.0,  40.0, 1.0),
