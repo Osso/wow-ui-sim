@@ -207,6 +207,30 @@ C_PvP = __wow_color_merge_namespace(C_PvP, {
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(COLOR_DEFAULTS_LUA)?;
+    register_secure_ui_color_fallback(lua)?;
+    Ok(())
+}
+
+fn register_secure_ui_color_fallback(lua: &mut rilua::Lua) -> crate::Result<()> {
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
+        return Ok(());
+    }
+
+    let state = lua.state_mut();
+    let (ordinary, secure) = crate::c_api::ensure_namespace_pair(state, "C_UIColor")?;
+    let get_colors =
+        crate::lua_api::methods::table_get_static(state, rilua::Val::Table(ordinary), "GetColors");
+    let secure_get_colors =
+        crate::lua_api::methods::table_get_static(state, rilua::Val::Table(secure), "GetColors");
+    if matches!(get_colors, rilua::Val::Function(_)) && matches!(secure_get_colors, rilua::Val::Nil)
+    {
+        crate::lua_api::methods::table_set_static(
+            state,
+            rilua::Val::Table(secure),
+            "GetColors",
+            get_colors,
+        );
+    }
     Ok(())
 }
 

@@ -141,7 +141,7 @@ fn secure_private_auras_loads_tooltip_processor_from_secure_dependency() {
         })
         .cloned()
         .collect();
-    let registration_snapshot: (String, String, String, String, String) = env
+    let registration_snapshot: (String, String, String, String, String, String, String) = env
         .eval(
             r#"
                 local ordinary = rawget(_G, 'TooltipDataProcessor')
@@ -149,14 +149,16 @@ fn secure_private_auras_loads_tooltip_processor_from_secure_dependency() {
                 return type(ordinary), type(secure),
                     type(secure and secure.AddTooltipPostCall),
                     type(rawget(__secureenv, 'C_Timer')),
-                    type(rawget(__secureenv, 'C_StoreSecure'))
+                    type(rawget(__secureenv, 'C_StoreSecure')),
+                    type(rawget(__secureenv, 'CreateFrame')),
+                    type(rawget(__secureenv, 'C_UIColor'))
             "#,
         )
         .expect("secure registration snapshot should evaluate");
     assert!(
         load_errors.is_empty(),
         "PrivateAurasUI must load without tooltip errors when defaults are disabled:\n  {}\n\
-         registration snapshot (ordinary/secure/processor callback/C_Timer/C_StoreSecure): {:?}",
+         registration snapshot (ordinary/secure/processor callback/C_Timer/C_StoreSecure/CreateFrame/C_UIColor): {:?}",
         load_errors.join("\n  "),
         registration_snapshot
     );
@@ -178,8 +180,14 @@ fn secure_private_auras_loads_tooltip_processor_from_secure_dependency() {
                  and type(rawget(rawget(__secureenv, 'C_Timer'), 'After')) == 'function' \
                  and type(rawget(__secureenv, 'C_StoreSecure')) == 'table' \
                  and rawget(__secureenv, 'C_StoreSecure') ~= rawget(_G, 'C_StoreSecure') \
+                 and type(rawget(rawget(__secureenv, 'C_StoreSecure'), 'GetProductGroups')) == 'function' \
+                 and type(rawget(__secureenv, 'CreateFrame')) == 'function' \
+                 and type(rawget(__secureenv, 'C_UIColor')) == 'table' \
+                 and rawget(__secureenv, 'C_UIColor') ~= rawget(_G, 'C_UIColor') \
+                 and type(rawget(rawget(__secureenv, 'C_UIColor'), 'GetColors')) == 'function' \
                  and type(rawget(__secureenv, 'Enum')) == 'table' \
                  and rawget(__secureenv, 'Enum') ~= rawget(_G, 'Enum') \
+                 and type(rawget(rawget(rawget(__secureenv, 'Enum'), 'TooltipDataType'), 'Unit')) == 'number' \
                  and rawget(__secureenv, '__secure_env_ordinary_only_probe') == nil",
         )
         .expect("secure TooltipDataProcessor provenance query should succeed");

@@ -355,7 +355,7 @@ pub fn register_global_frames(lua: &mut rilua::Lua) -> LuaResult<()> {
 /// onto the rilua Lua state.
 pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     super::loader_script_bindings::register_all(lua)?;
-    LuaApiMut::register_function(lua, "CreateFrame", create_frame)?;
+    super::security::register_function_in_both_environments(lua, "CreateFrame", create_frame)?;
     #[cfg(feature = "retail-12-1-5")]
     LuaApiMut::register_function(
         lua,
