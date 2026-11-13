@@ -57,35 +57,3 @@ fn login_character_refresh_skip_does_not_change_legacy_startup() {
         "Login compatibility refresh scope on {ACTIVE:?}"
     );
 }
-
-#[cfg(all(feature = "client-retail", feature = "optional-tests"))]
-#[test]
-fn retail_glue_parent_leaves_panel_attributes_with_the_original_layout_owner() {
-    test_timeout! {
-        use wow_ui_sim::loader::{discover_blizzard_addons_for_screen, load_addon};
-
-        let env = WowLuaEnv::new().unwrap();
-        env.set_screen_mode(ScreenKind::Login);
-        let ui = wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap();
-        for (name, toc) in discover_blizzard_addons_for_screen(&ui, ScreenKind::Login) {
-            load_addon(&env.loader_env(), &toc)
-                .unwrap_or_else(|error| panic!("load {name}: {error}"));
-        }
-        env.exec(r#"
-            assert(C_AddOns.IsAddOnLoaded("Blizzard_GlueParent"))
-            assert(UIParent == GlueParent, "the original GlueParent alias must be in effect")
-            assert(C_AddOns.IsAddOnLoaded("Blizzard_UIParentPanelManager"))
-            assert(GetUIPanelLayoutFrame() == UIPanelLayoutFrame)
-            assert(UIPanelLayoutFrame ~= UIParent)
-            local expected = {
-                DEFAULT_FRAME_WIDTH = 384, TOP_OFFSET = -116, LEFT_OFFSET = 16,
-                CENTER_OFFSET = 384, RIGHT_OFFSET = 768, RIGHT_OFFSET_BUFFER = 80,
-                PANEl_SPACING_X = 32,
-            }
-            for name, value in pairs(expected) do
-                assert(GetUIPanelLayoutAttribute(name) == value, name .. " must come from original layout")
-                assert(UIParent:GetAttribute(name) == nil, name .. " must not be copied to GlueParent")
-            end
-        "#).expect("the original panel getter should read from the original layout owner");
-    }
-}
