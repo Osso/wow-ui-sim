@@ -10,6 +10,10 @@ clamp coverage. RF host inputs only; no collector or PTR category changes.
 verified R78/R83 argument/state behavior from droppable inferred catalog and
 return bridges. The unseeded collector and end-to-end submit remain distinct.
 
+## [2026-11-13] implementation | Garrison landing-page visibility
+
+[Full third-party startup](investigations/full-addon-startup-2026-10-10.md#garrison-minimap-button-visibility-r88e1-2026-11-13) and the [Retail garrison contract](../specs/garrison-landing-page-type.md) record R88e.1's record lookup, type-111 condition, inferred host inputs and original Minimap test. **VERIFIED (Retail 12.1.5 build 70688):** low-byte lookup, missing-record false and non-111 state flags. **INFERRED:** the type-111 player-state value is a covenant ID.
+
 ## [2026-11-13] investigation | EllesmereUI core API boundary
 
 [Full third-party startup](investigations/full-addon-startup-2026-10-10.md#r88a-api-boundary-follow-up-2026-11-13) links the [garrison type](../specs/garrison-landing-page-type.md) and [nameplate inset](../specs/nameplate-hit-test-insets.md) contracts. **VERIFIED (Retail 12.1.5.70688):** R88a establishes the garrison query shape and nameplate setter parser. **VERIFIED (Retail run at code SHA `bc01ba60c`):** 20/20 add-ons loaded with zero load-time errors; `lua-errors` reports `C_Garrison.IsLandingPageMinimapButtonVisible` (1) and the AuraKit secret-access error (70), while the old nameplate taint error is absent. **INFERRED (simulator policy):** the neutral garrison host input starts at zero. **UNKNOWN:** the visibility predicate and the nameplate restriction/secret policy remain unmodeled.

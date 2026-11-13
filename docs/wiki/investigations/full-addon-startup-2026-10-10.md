@@ -41,7 +41,10 @@ Only sanitized report, small outcome, marker summary and derivative SHA-256 mani
 - /home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/full-addon-startup-current/marker-summary.json — bounded counts, shapes and original artifact hashes.
 - /home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/full-addon-startup-current/SHA256SUMS — retained derivative hashes.
 - /home/osso/.local/state/wow-ui-sim/handoff/pr46-49-decomp-answers.md — R88a native API findings.
-- /home/osso/.local/state/wow-ui-sim/handoff/ellesmere-core-3/REPORT.md — lane build, test and runtime receipts.
+- Earlier EllesmereUI Core 3 handoff — previous lane build, test and runtime receipts; the handoff is local and untracked.
+- `docs/specs/garrison-landing-page-type.md` — current landing-page query contract.
+- `tests/retail_garrison_minimap_consumer.rs` — original Minimap consumer proof.
+- Retail UI cache `Blizzard_Minimap/Mainline/Minimap.lua:885` and `Blizzard_APIDocumentationGenerated/GarrisonInfoDocumentation.lua:477-490` — consumer and API declaration.
 
 ## New diagnostic capture
 
@@ -77,7 +80,17 @@ Epoch `20261010T183739Z`: [bounded independent attribution report](https://githu
 
 **VERIFIED (isolated Retail run at production-code SHA `bc01ba60cdb7b844bf88adba7ff2cb6e809b665f`):** the former nil `GetLandingPageGarrisonType` call was no longer present; the original Minimap path next failed once on missing `C_Garrison.IsLandingPageMinimapButtonVisible`.
 
-**VERIFIED (local Retail UI cache; exact build UNKNOWN):** `GarrisonInfoDocumentation.lua` declares `C_Garrison.IsLandingPageMinimapButtonVisible(number)` with a boolean return. **UNKNOWN:** its native predicate and result. R88 evidence is pending; this lane does not register a production stub.
+**VERIFIED (Retail API documentation; exact cache build UNKNOWN):** `GarrisonInfoDocumentation.lua` declares one numeric argument and one boolean return for `C_Garrison.IsLandingPageMinimapButtonVisible`. The native predicate is established by R88e.1 below.
+
+#### Garrison minimap button visibility (R88e.1, 2026-11-13)
+
+**VERIFIED (Retail 12.1.5 build 70688):** a missing landing-page record returns false. A matched type other than 111 returns its record state flag. Type 111 returns true only when PlayerCondition 105386 is true and the player-state value is nonzero. Record lookup uses the low byte and does not check enum membership. A missing record still returns false for type 111.
+
+**UNKNOWN (Retail 12.1.5 build 70688):** whether a record keyed by zero exists. **VERIFIED (simulator test):** the empty default record set and inferred type input zero reach the missing-record path and hide the button. This lane does not add a zero-key record.
+
+**INFERRED (native interpretation):** the nonzero player-state value is the covenant ID. **INFERRED (simulator policy):** no general PlayerCondition evaluator is modeled; the host input for 105386 defaults to false. These host inputs do not claim a native default condition or establish the player-state field identity.
+
+**VERIFIED (simulator test):** the original `ExpansionLandingPageMinimapButtonMixin:RefreshButton` completes with default state and leaves its button hidden; a supplied type-6 record with a true flag makes it show. The same test checks low-byte lookup, missing and false records, type-111 gating, and one boolean return. Its minimal button fixture replaces only the rendering `UpdateIcon` method.
 
 #### Nameplate inset contract (R88a, 2026-11-13)
 
