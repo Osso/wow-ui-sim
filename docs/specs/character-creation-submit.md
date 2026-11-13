@@ -278,3 +278,21 @@ asserts the initial value or return count. Tests seed nonzero host zoom values
 and check only the VERIFIED stored-value identity. Existing RF initialization
 and all setter behavior are unchanged; the PTR setter's reader/Usage behavior
 still awaits clarification. This commit alone is not a modeled setter claim.
+
+
+### PTR R83b/R83c shared setter core (#305, #318, #320)
+
+The verified setter body is shared with Retail and Forever. Argument 1 is
+required/non-nil signed int32, fractions truncate toward zero, and the stored
+zoom clamps to 0..100. Its missing-input Usage and int32 range message are those
+in #305. No camera-profile/model-distance effects are modeled.
+
+R83c supersedes the interim #318 marker uncertainty: a changed zoom clears the
+custom marker; an unchanged clamped zoom leaves it untouched. Explicit true for
+keepCustomZoom skips the update while the marker is set. Tests cover all three
+cases and the verified reader/clamp, not registration or return counts.
+
+The existing shared body needs no semantic change. Its visibility is widened
+only for the separately droppable PTR Lua registration. PTR installation is
+UNKNOWN; ordinary zero returns and non-boolean second-argument truthiness are
+INFERRED, not verified by these tests.

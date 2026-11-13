@@ -1945,3 +1945,29 @@ fn ptr_character_creation_camera_zoom_setter_verified_inputs_and_clamp() {
     }
     // No catalog, numeric-string/secret, truthy non-boolean, or return-count claim.
 }
+
+#[test]
+#[cfg(feature = "client-ptr")]
+fn ptr_character_creation_camera_zoom_marker_changes_only_with_zoom() {
+    let env = WowLuaEnv::new().unwrap();
+    env.set_screen_mode(ScreenKind::CharacterCreate);
+    // R83c #320: equal, changed, and explicitly preserved custom zoom.
+    for (requested, keep, expected_zoom, expected_custom) in [
+        (63, false, 63, true),
+        (24, false, 24, false),
+        (24, true, 63, true),
+    ] {
+        {
+            let mut sim = env.state().borrow_mut();
+            sim.character_create_camera_zoom = 63;
+            sim.character_create_camera_zoom_is_custom = true;
+        }
+        env.exec(&format!(
+            "C_CharacterCreation.SetCameraZoomLevel({requested}, {keep})"
+        ))
+        .unwrap();
+        let sim = env.state().borrow();
+        assert_eq!(sim.character_create_camera_zoom, expected_zoom);
+        assert_eq!(sim.character_create_camera_zoom_is_custom, expected_custom);
+    }
+}

@@ -246,7 +246,10 @@ fn get_current_camera_zoom(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-fn set_camera_zoom_level(state: &mut LuaState) -> LuaResult<u32> {
+// R83b/R83c (#305/#320): PTR shares this verified signed32/clamp and
+// changed-only marker update with Retail/Forever. Its Lua installation and
+// ordinary return/second-argument truthiness policy remain separately inferred.
+pub(super) fn set_camera_zoom_level(state: &mut LuaState) -> LuaResult<u32> {
     let zoom = crate::c_api::helpers::read_untainted_signed32_argument(
         state,
         1,
