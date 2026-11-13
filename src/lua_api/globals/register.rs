@@ -253,6 +253,7 @@ fn register_core_surfaces(lua: &mut rilua::Lua) -> crate::Result<()> {
     crate::c_api::quest_reward_currencies::register(lua.state_mut())?;
     crate::c_api::quest_reward_spells::register(lua.state_mut())?;
     super::missing_surface::register_quest_log_overrides(lua)?;
+    crate::c_api::c_quest_log::register_info_queries(lua.state_mut())?;
     super::lua_duration_object::register_lua_duration_object(lua)?;
     Ok(())
 }
