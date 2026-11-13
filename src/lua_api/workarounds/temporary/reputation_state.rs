@@ -350,7 +350,7 @@ mod tests {
                     return "bad_active"
                 end
                 C_Reputation.RequestFactionParagonPreloadRewardData(2590)
-                C_Reputation.SetFactionActive(2590)
+                C_Reputation.SetFactionActive(2, false)
                 C_Reputation.ToggleFactionAtWar(2590)
                 return "ok"
                 "#
