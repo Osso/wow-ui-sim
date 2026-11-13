@@ -417,3 +417,45 @@ fn forever_known_startup_catalog_preserves_strict_unknown_name_rejection() {
     )
     .unwrap();
 }
+
+#[cfg(all(feature = "optional-tests", feature = "client-retail"))]
+#[test]
+fn retail_event_util_dispatches_and_unregisters_frame_events() {
+    use crate::common::panel_fixtures::blizzard_ui_dir;
+
+    let env = env();
+    for relative_path in [
+        "Blizzard_SharedXMLBase/CallbackRegistry.lua",
+        "Blizzard_SharedXMLBase/GlobalCallbackRegistry.lua",
+        "Blizzard_SharedXML/EventUtil.lua",
+    ] {
+        let path = blizzard_ui_dir().join(relative_path);
+        let source = std::fs::read_to_string(&path)
+            .unwrap_or_else(|error| panic!("failed to read {}: {error}", path.display()));
+        env.exec(&source)
+            .unwrap_or_else(|error| panic!("failed to load {}: {error}", path.display()));
+    }
+    env.exec(
+        r#"
+        EVENT_UTIL_FRAME_CALLBACK_CALLS = 0
+        EventUtil.ContinueAfterAllEvents(function()
+            EVENT_UTIL_FRAME_CALLBACK_CALLS = EVENT_UTIL_FRAME_CALLBACK_CALLS + 1
+        end, "ADDON_LOADED", "PLAYER_LOGIN")
+        "#,
+    )
+    .expect("EventUtil should register callbacks for both frame events");
+
+    env.fire_event("ADDON_LOADED")
+        .expect("ADDON_LOADED should dispatch");
+    env.fire_event("ADDON_LOADED")
+        .expect("repeated ADDON_LOADED should dispatch");
+    env.fire_event("PLAYER_LOGIN")
+        .expect("PLAYER_LOGIN should dispatch");
+    env.fire_event("PLAYER_LOGIN")
+        .expect("repeated PLAYER_LOGIN should dispatch");
+
+    let calls: i32 = env
+        .eval("return EVENT_UTIL_FRAME_CALLBACK_CALLS")
+        .expect("EventUtil callback count should be readable");
+    assert_eq!(calls, 1, "the callback should run once after both events");
+}

@@ -483,3 +483,69 @@ fn blizzard_help_plate_virtual_templates_do_not_publish_as_globals(env: &WowLuaE
     }
 }
 }
+
+#[cfg(feature = "optional-tests")]
+#[test]
+fn help_plate_tooltip_rotates_real_arrow_texture_geometry() {
+    let env = WowLuaEnv::new().expect("Lua environment should initialize");
+    let texture_util_source =
+        std::fs::read_to_string(blizzard_ui_dir().join("Blizzard_SharedXMLBase/TextureUtil.lua"))
+            .expect("Retail Blizzard SharedXMLBase TextureUtil.lua should be present");
+    env.exec(&texture_util_source)
+        .expect("original SharedXMLBase TextureUtil provider should load");
+
+    let consumer_source = std::fs::read_to_string(help_plate_dir().join("Blizzard_HelpPlate.lua"))
+        .expect("Retail Blizzard_HelpPlate.lua should be present");
+    env.exec(&consumer_source)
+        .expect("original Blizzard HelpPlate consumer should load");
+
+    let failures: String = env
+        .eval(
+            r#"
+            local textureParent = CreateFrame("Frame")
+            local tooltip = {
+                Text = textureParent:CreateFontString(),
+                LingerAndFade = textureParent:CreateAnimationGroup(),
+            }
+
+            local function createArrow()
+                local arrow = textureParent:CreateTexture()
+                arrow:SetSize(20, 10)
+                arrow:SetTexCoord(0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8)
+                return arrow
+            end
+
+            tooltip.ArrowLeft = createArrow()
+            tooltip.ArrowRight = createArrow()
+            tooltip.ArrowGlowLeft = createArrow()
+            tooltip.ArrowGlowRight = createArrow()
+            HelpPlateTooltipMixin.OnLoad(tooltip)
+
+            local failures = {}
+            local function expectRotation(name, texture, expected)
+                if texture:GetWidth() ~= 10 or texture:GetHeight() ~= 20 then
+                    table.insert(failures, name .. " dimensions were not clamped to 10x20")
+                end
+                local actual = { texture:GetTexCoord() }
+                for index, value in ipairs(expected) do
+                    if math.abs(actual[index] - value) > 0.0001 then
+                        table.insert(failures, name .. " texcoords did not match the arrow orientation")
+                        break
+                    end
+                end
+            end
+
+            expectRotation("left", tooltip.ArrowLeft, { 0.5, 0.6, 0.1, 0.2, 0.7, 0.8, 0.3, 0.4 })
+            expectRotation("right", tooltip.ArrowRight, { 0.3, 0.4, 0.7, 0.8, 0.1, 0.2, 0.5, 0.6 })
+            expectRotation("glow left", tooltip.ArrowGlowLeft, { 0.5, 0.6, 0.1, 0.2, 0.7, 0.8, 0.3, 0.4 })
+            expectRotation("glow right", tooltip.ArrowGlowRight, { 0.3, 0.4, 0.7, 0.8, 0.1, 0.2, 0.5, 0.6 })
+            return table.concat(failures, "\n")
+            "#,
+        )
+        .expect("original HelpPlate tooltip OnLoad geometry probe should run");
+
+    assert!(
+        failures.is_empty(),
+        "HelpPlate arrow geometry mismatches:\n{failures}"
+    );
+}
