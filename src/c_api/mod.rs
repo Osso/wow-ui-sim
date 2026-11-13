@@ -139,6 +139,8 @@ pub(crate) mod c_character_creation_naming;
 pub(crate) mod c_character_creation_seen;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub mod c_character_creation_submit;
+#[cfg(feature = "client-ptr")]
+pub mod c_character_creation_submit_ptr;
 pub mod c_character_creation_trial_boost;
 mod c_character_creation_trial_boost_data;
 #[cfg(test)]
