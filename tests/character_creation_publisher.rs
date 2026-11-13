@@ -254,3 +254,40 @@ fn host_customization_finalizer_preserves_small_equal_key_input_order() {
         .unwrap();
     }
 }
+
+#[test]
+fn host_customization_finalizer_sorts_large_lists_without_tie_order_claims() {
+    let env = env();
+    env.state().borrow_mut().character_customizations = Some(
+        (1..=33)
+            .rev()
+            .map(|key| Category {
+                stored_order_key: key,
+                fields: vec![("id".into(), V::Number(key as f64))],
+                options: (1..=33)
+                    .rev()
+                    .map(|option_key| OptionRecord {
+                        stored_order_key: option_key,
+                        fields: vec![("id".into(), V::Number(option_key as f64))],
+                        ..Default::default()
+                    })
+                    .collect(),
+                ..Default::default()
+            })
+            .collect(),
+    );
+    env.exec(
+        r#"
+        local rows = C_CharacterCreation.GetAvailableCustomizations()
+        assert(#rows == 33)
+        for i, row in ipairs(rows) do
+            assert(row.id == i and row.orderIndex == i)
+            assert(#row.options == 33)
+            for j, option in ipairs(row.options) do
+                assert(option.id == j and option.orderIndex == j)
+            end
+        end
+    "#,
+    )
+    .unwrap();
+}
