@@ -479,7 +479,7 @@ pub struct SimState {
     /// INFERRED explicit client catalog; GetFileID resolution does not imply membership.
     #[cfg(feature = "retail-12-0-7")]
     pub known_shipped_asset_ids: HashSet<u32>,
-    /// INFERRED normalized lowercase slash paths; host owns selected-root reconciliation.
+    /// INFERRED normalized lowercase slash paths scanned from loaded addon roots.
     #[cfg(feature = "retail-12-0-7")]
     pub known_loose_asset_paths: HashSet<String>,
     /// INFERRED observable request input only; no eligibility response or event model.

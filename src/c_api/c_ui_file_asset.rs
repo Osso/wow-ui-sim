@@ -1,7 +1,8 @@
 //! `C_UIFileAsset` path/fileDataID helpers.
 //!
 //! Under 12.0.7, GetFileID resolves bundled paths while known/loose queries
-//! read explicit host catalogs. Catalog acquisition is not modeled.
+//! read explicit host catalogs. Loaded-addon path registration is INFERRED;
+//! complete native catalog acquisition and table identity remain UNKNOWN.
 //! Earlier epochs retain their separate loader-selected filesystem contract.
 
 use crate::c_api::helpers::ensure_namespace;
@@ -11,7 +12,6 @@ use crate::lua_bridge::FromStack;
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
-#[cfg(not(feature = "retail-12-0-7"))]
 use std::path::{Path, PathBuf};
 
 pub(crate) fn register_c_ui_file_asset(state: &mut LuaState) -> LuaResult<()> {
@@ -29,6 +29,57 @@ pub(crate) fn register_c_ui_file_asset(state: &mut LuaState) -> LuaResult<()> {
         "IsLooseFile",
         c_ui_file_asset_is_loose_file,
     )
+}
+
+/// INFERRED: scanning an addon's directory seeds known loose-path markers before its Lua loads.
+#[cfg(feature = "retail-12-0-7")]
+pub(crate) fn register_loaded_addon_files(
+    state: &mut crate::lua_api::state::SimState,
+    addon_name: &str,
+    addon_root: &Path,
+) -> std::io::Result<()> {
+    let entries = match std::fs::read_dir(addon_root) {
+        Ok(entries) => entries,
+        Err(error) if error.kind() == std::io::ErrorKind::NotFound => return Ok(()),
+        Err(error) => return Err(error),
+    };
+    let mut asset_paths = Vec::new();
+    append_addon_asset_paths(addon_root, Path::new(""), entries, &mut asset_paths)?;
+    let addon_prefix = Path::new("Interface").join("AddOns").join(addon_name);
+    for relative_path in asset_paths {
+        let path = addon_prefix.join(relative_path);
+        let path = path.to_str().ok_or_else(|| {
+            std::io::Error::new(
+                std::io::ErrorKind::InvalidData,
+                "loaded addon asset path is not UTF-8",
+            )
+        })?;
+        state
+            .known_loose_asset_paths
+            .insert(normalize_loose_asset_path(path));
+    }
+    Ok(())
+}
+
+#[cfg(feature = "retail-12-0-7")]
+fn append_addon_asset_paths(
+    addon_root: &Path,
+    relative_directory: &Path,
+    entries: std::fs::ReadDir,
+    asset_paths: &mut Vec<PathBuf>,
+) -> std::io::Result<()> {
+    for entry in entries {
+        let entry = entry?;
+        let file_type = entry.file_type()?;
+        let relative_path = relative_directory.join(entry.file_name());
+        if file_type.is_dir() {
+            let child_entries = std::fs::read_dir(addon_root.join(&relative_path))?;
+            append_addon_asset_paths(addon_root, &relative_path, child_entries, asset_paths)?;
+        } else if file_type.is_file() {
+            asset_paths.push(relative_path);
+        }
+    }
+    Ok(())
 }
 
 /// INFERRED: the result is public and authenticated extra arguments are ignored.
