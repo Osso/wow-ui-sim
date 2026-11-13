@@ -37,15 +37,6 @@ if ChatFrameUtil.GetChatWindowName == nil then
   end
 end
 
-if ChatFrameUtil.GetCommunitiesChannelColor == nil then
-  function ChatFrameUtil.GetCommunitiesChannelColor(_clubId, streamId)
-    if tonumber(streamId) == 2 then
-      return 0.25, 0.75, 0.25
-    end
-    return 0.25, 1, 0.25
-  end
-end
-
 if ChatFrameUtil.GetCommunitiesChannelLocalID == nil then
   function ChatFrameUtil.GetCommunitiesChannelLocalID(_clubId, _streamId)
     return nil
@@ -197,8 +188,6 @@ mod tests {
                 if ChatFrame1:GetObjectType() ~= "ScrollingMessageFrame" then return "chat_frame1_type" end
                 if ChatFrameUtil.GetChatWindowName(3) ~= "Chat Window 3" then return "window_name" end
 
-                local altR, altG, altB = ChatFrameUtil.GetCommunitiesChannelColor(nil, 2)
-                if altR ~= 0.25 or altG ~= 0.75 or altB ~= 0.25 then return "community_color" end
                 if ChatFrameUtil.GetCommunitiesChannelLocalID(nil, nil) ~= nil then return "community_local_id" end
 
                 local name, fontSize, r, g, b, alpha, shown, locked, docked = GetChatWindowInfo(2)
