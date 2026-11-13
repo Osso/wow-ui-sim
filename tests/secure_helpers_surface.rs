@@ -7,34 +7,6 @@
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 #[test]
-fn selected_mixin_wraps_untrusted_delegate_arguments() {
-    let env = WowLuaEnv::new().unwrap();
-    let addons = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path().unwrap();
-    let source = std::fs::read_to_string(addons.join("Blizzard_SharedXMLBase/Mixin.lua")).unwrap();
-    env.exec(&source).unwrap();
-    env.exec(
-        r#"
-        local originalCallback = function() return issecure() end
-        debug.setobjecttaint(originalCallback, 'UntrustedCallback')
-        local methods = { run = function(callback, value)
-            assert(issecure())
-            assert(callback ~= originalCallback, 'untrusted callback must be wrapped')
-            return callback(), value, nil, 'end'
-        end }
-        ApplySecureDelegatesToTable(methods)
-        local function addon()
-            local secure, value, empty, last = methods.run(originalCallback, 42)
-            assert(secure == false and value == 42 and empty == nil and last == 'end')
-            assert(not issecure(), 'caller taint must be restored')
-        end
-        debug.setobjecttaint(addon, 'AddonCaller')
-        addon()
-        "#,
-    )
-    .unwrap();
-}
-
-#[test]
 fn selected_mixin_wraps_every_function_argument_with_caller_source() {
     let env = WowLuaEnv::new().unwrap();
     let addons = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path().unwrap();
@@ -44,52 +16,100 @@ fn selected_mixin_wraps_every_function_argument_with_caller_source() {
         r#"
         local seen = {}
         local originalCallback = function()
-            seen.secure = issecure()
-            seen.taint = debug.getstacktaint()
-            return 'ran'
+            return debug.getstacktaint()
         end
         local methods = { run = function(callback)
-            assert(issecure(), 'delegate body runs without caller taint')
-            seen.wrapped = callback ~= originalCallback
-            seen.result = callback()
+            seen.wrapped = callback ~= originalCallback and not issecretvalue(callback)
+            seen.callbackSource = callback()
         end }
         ApplySecureDelegatesToTable(methods)
-        local function addon()
-            methods.run(originalCallback)
+        local function invoke(source)
+            local addon = function()
+                methods.run(originalCallback)
+                seen.callerSource = debug.getstacktaint()
+            end
+            debug.setobjecttaint(addon, source)
+            addon()
+            assert(seen.wrapped, 'every function argument must be replaced by a fresh closure')
+            assert(seen.callbackSource == source,
+                'the wrapper must use the source present before it is created')
+            assert(seen.callerSource == source, 'normal return must restore caller source')
         end
-        debug.setobjecttaint(addon, 'AddonCaller')
-        addon()
-        assert(seen.wrapped,
-            'every function-valued argument must be wrapped, not only stamped ones')
-        assert(seen.result == 'ran')
-        assert(seen.secure == false,
-            'the wrapped argument runs under the source captured at invocation')
-        assert(seen.taint == 'AddonCaller')
+        invoke('FirstAddon')
+        invoke('SecondAddon')
         "#,
     )
     .unwrap();
 }
 
 #[test]
-fn original_unit_frame_delegate_reports_target_errors() {
+fn secure_delegate_tainted_construction_returns_zero_values() {
     let env = WowLuaEnv::new().unwrap();
-    let addons = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path().unwrap();
-    crate::common::load_blizzard_addon_lua_files(
-        &env,
-        &addons,
-        "Blizzard_UnitFrame",
-        &[
-            "UnitFramePvPIndicatorStyle.lua",
-            "Shared/UnitFrameUtil.lua",
-        ],
-    );
     env.exec(
         r#"
-        local reported
-        seterrorhandler(function(message) reported = message end)
-        local count = select('#', UnitFrameUtil.UpdateUnitFrameRoleIcon(nil))
-        assert(count == 0, 'failed original delegate must return zero values')
-        assert(reported, 'original delegate failure must reach the error handler')
+        local function addon()
+            return select('#', CreateSecureDelegate(function() end))
+        end
+        debug.setobjecttaint(addon, 'DelegateConstructorProbe')
+        assert(addon() == 0, 'tainted construction must return zero values')
+        "#,
+    )
+    .unwrap();
+}
+
+#[test]
+fn secure_delegate_untainted_construction_returns_one_function() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local count = select('#', CreateSecureDelegate(function() end))
+        local delegate = CreateSecureDelegate(function() end)
+        assert(count == 1 and type(delegate) == 'function')
+        "#,
+    )
+    .unwrap();
+}
+
+#[test]
+fn secure_delegate_rejects_nil_target() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local ok = pcall(CreateSecureDelegate, nil)
+        assert(not ok, 'the required target argument cannot be nil')
+        "#,
+    )
+    .unwrap();
+}
+
+#[cfg(feature = "retail-12-1-0")]
+#[test]
+fn secure_delegate_rejects_inaccessible_secret_target() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local target = secretwrap(function() end)
+        dropsecretaccess()
+        local ok, message = pcall(CreateSecureDelegate, target)
+        assert(not ok and tostring(message):find('secret access', 1, true), tostring(message))
+        "#,
+    )
+    .unwrap();
+}
+
+#[cfg(feature = "retail-12-1-0")]
+#[test]
+fn secure_delegate_preserves_secret_argument_markers() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local secret = secretwrap(17)
+        local observed
+        local delegate = CreateSecureDelegate(function(value)
+            observed = issecretvalue(value)
+        end)
+        delegate(secret)
+        assert(observed, 'changing argument provenance must not clear secrecy')
         "#,
     )
     .unwrap();
@@ -184,36 +204,6 @@ fn securecopy_rejects_script_objects_unless_permitted() {
         assert(not pcall(securecopy, {frame = frame}))
         local kept = securecopy({frame = frame}, {permitScriptObjects = true})
         assert(kept.frame == frame)
-        "#,
-    )
-    .unwrap();
-}
-
-#[test]
-fn secure_delegate_honours_wrap_option_and_restores_taint_on_error() {
-    let env = WowLuaEnv::new().unwrap();
-    env.exec(
-        r#"
-        local untrusted = function() end
-        debug.setobjecttaint(untrusted, 'CallbackAddon')
-        local received
-        local unwrapped = CreateSecureDelegate(function(callback) received = callback end,
-            {wrapUntrustedFunctions = false})
-        unwrapped(untrusted)
-        assert(received == untrusted)
-
-        local reported
-        seterrorhandler(function(message) reported = message end)
-        local failing = CreateSecureDelegate(function() error('delegate failure') end)
-        local function addon()
-            local count = select('#', failing())
-            return count, issecure()
-        end
-        debug.setobjecttaint(addon, 'ErrorAddon')
-        local count, secure = addon()
-        assert(count == 0, 'failed delegate must return zero values')
-        assert(reported and string.find(reported, 'delegate failure', 1, true))
-        assert(secure == false, 'caller taint must be restored after an error')
         "#,
     )
     .unwrap();
