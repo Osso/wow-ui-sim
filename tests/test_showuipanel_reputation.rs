@@ -326,6 +326,36 @@ fn retail_reputation_sort_consumer_rejects_unknown_sort_type() {
     }
 }
 
+#[cfg(feature = "client-retail")]
+#[test]
+fn retail_reputation_tooltip_consumer_truncates_faction_id() {
+    test_timeout! {
+        let env = setup_env();
+        let result: String = env
+            .eval(
+                r#"
+                local consumer = ReputationUtil and ReputationUtil.TryAppendAccountReputationLineToTooltip
+                if type(consumer) ~= "function" then
+                    return "missing_reputation_tooltip_consumer"
+                end
+                local source = debug.getinfo(consumer, "S").source:gsub("\\", "/")
+                if not source:find("Blizzard_FrameXMLUtil/Mainline/ReputationUtil.lua", 1, true) then
+                    return "wrong_reputation_tooltip_consumer=" .. source
+                end
+
+                GameTooltip_AddColoredLine = function(tooltip)
+                    tooltip.accountWideLineCount = tooltip.accountWideLineCount + 1
+                end
+                local tooltip = { accountWideLineCount = 0 }
+                consumer(tooltip, 2590.5)
+                return tostring(tooltip.accountWideLineCount)
+                "#,
+            )
+            .expect("Retail reputation tooltip consumer should run");
+        assert_eq!(result, "1");
+    }
+}
+
 #[cfg(not(any(feature = "client-era", feature = "client-anniversary")))]
 #[test]
 fn show_ui_panel_locks_reputation_frame_layout() {
