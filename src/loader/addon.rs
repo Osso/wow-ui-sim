@@ -8,6 +8,7 @@ use crate::saved_variables::SavedVariablesManager;
 use crate::toc::TocFile;
 use rilua::Val;
 use std::cell::RefCell;
+use std::collections::HashSet;
 use std::path::Path;
 use std::rc::Rc;
 
@@ -227,6 +228,9 @@ pub fn load_addon_internal(
     let nil_symbol_access_start = env.state().borrow().nil_symbol_accesses.len();
     let addon_name = result.name.clone();
 
+    if ctx.use_secure_env {
+        load_secure_dependencies(env, toc, &mut result, &mut HashSet::new())?;
+    }
     load_addon_files(
         env,
         toc,
@@ -539,6 +543,17 @@ fn load_addon_files(
         }
         load_addon_file(env, &file_ctx, result, &file, pass);
     }
+    if !matches!(pass, EnvironmentPass::Bootstrap) && pass.use_secure_env(ctx) {
+        if let Some(addon) = env
+            .state()
+            .borrow_mut()
+            .addons
+            .iter_mut()
+            .find(|addon| addon.folder_name == folder_name)
+        {
+            addon.secure_env_loaded = true;
+        }
+    }
 }
 
 fn load_modified_click_defaults(env: &LoaderEnv<'_>, toc: &TocFile, result: &mut LoadResult) {
@@ -639,9 +654,8 @@ fn loads_file_in_bootstrap_phase(
 ) -> bool {
     match pass {
         EnvironmentPass::Bootstrap => is_bootstrap,
-        EnvironmentPass::Normal | EnvironmentPass::SecureReplay => {
-            !is_bootstrap || !bootstrap_loaded
-        }
+        EnvironmentPass::Normal => !is_bootstrap || !bootstrap_loaded,
+        EnvironmentPass::SecureReplay => true,
     }
 }
 
@@ -652,7 +666,10 @@ fn maybe_replay_blizzard_lua_in_secure_env(
     ctx: &AddonContext,
     result: &mut LoadResult,
 ) {
-    if !is_secure_replay_library_addon(folder_name) || ctx.use_secure_env {
+    if !is_secure_replay_library_addon(folder_name)
+        || ctx.use_secure_env
+        || secure_environment_already_loaded(env, folder_name)
+    {
         return;
     }
 
@@ -664,6 +681,114 @@ fn maybe_replay_blizzard_lua_in_secure_env(
         EnvironmentPass::SecureReplay,
         result,
     );
+}
+
+fn load_secure_dependencies(
+    env: &LoaderEnv<'_>,
+    toc: &TocFile,
+    result: &mut LoadResult,
+    visited: &mut HashSet<String>,
+) -> Result<(), LoadError> {
+    for dependency in toc.dependencies().into_iter().chain(toc.optional_deps()) {
+        if !visited.insert(dependency.clone()) {
+            continue;
+        }
+
+        let dependency_dir = {
+            let state = env.state().borrow();
+            let Some(addon) = state
+                .addons
+                .iter()
+                .find(|addon| addon.folder_name == dependency)
+            else {
+                continue;
+            };
+            if !addon.loaded {
+                continue;
+            }
+            let Some(addon_dir) = addon.addon_dir.clone() else {
+                continue;
+            };
+            addon_dir
+        };
+        let Some(dependency_toc_path) = super::find_toc_file(&dependency_dir) else {
+            continue;
+        };
+        let dependency_toc = TocFile::from_file(&dependency_toc_path)?;
+        load_secure_dependencies(env, &dependency_toc, result, visited)?;
+        if secure_environment_already_loaded(env, &dependency) {
+            continue;
+        }
+
+        let loading_guard = begin_addon_load(env, &dependency, &dependency_toc)?;
+        let context = build_secure_replay_context(env, &dependency_toc, &dependency)?;
+        let nil_symbol_access_start = env.state().borrow().nil_symbol_accesses.len();
+        let mut dependency_result = empty_load_result(&dependency_toc);
+        load_addon_files(
+            env,
+            &dependency_toc,
+            &dependency,
+            &context,
+            EnvironmentPass::SecureReplay,
+            &mut dependency_result,
+        );
+        append_nil_symbol_diagnostics(
+            env,
+            loading_guard.addon_index(),
+            &dependency,
+            nil_symbol_access_start,
+            &mut dependency_result,
+        );
+        append_pending_nested_addon_diagnostics(
+            env,
+            loading_guard.addon_index(),
+            &mut dependency_result,
+        );
+        loading_guard.commit_loaded();
+
+        let mut diagnostics = dependency_result.diagnostics();
+        for warning in &mut diagnostics.warnings {
+            *warning = format!("secure dependency {dependency}: {warning}");
+        }
+        result.extend_diagnostics(diagnostics);
+    }
+    Ok(())
+}
+
+fn build_secure_replay_context<'a>(
+    env: &LoaderEnv<'a>,
+    toc: &'a TocFile,
+    folder_name: &'a str,
+) -> Result<AddonContext<'a>, LoadError> {
+    let existing_namespace = env
+        .with_state(|state| {
+            Ok::<_, String>(crate::c_api::c_addons_local_table::existing_namespace(
+                state,
+                folder_name,
+            ))
+        })
+        .map_err(LoadError::Lua)?;
+    if let Some(table) = existing_namespace {
+        return Ok(AddonContext {
+            name: folder_name,
+            table,
+            addon_root: &toc.addon_dir,
+            use_secure_env: true,
+            taint: !is_blizzard_addon(toc),
+        });
+    }
+
+    let mut context = build_addon_context(env, toc, folder_name)?;
+    context.use_secure_env = true;
+    Ok(context)
+}
+
+fn secure_environment_already_loaded(env: &LoaderEnv<'_>, folder_name: &str) -> bool {
+    env.state()
+        .borrow()
+        .addons
+        .iter()
+        .any(|addon| addon.folder_name == folder_name && addon.secure_env_loaded)
 }
 
 pub(super) fn is_secure_replay_library_addon(folder_name: &str) -> bool {
