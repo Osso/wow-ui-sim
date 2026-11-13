@@ -1,27 +1,48 @@
 //! Forever CombatLog roleset publication and membership.
-#![cfg(feature = "client-wowforever")]
+#![cfg(all(feature = "client-wowforever", feature = "optional-tests"))]
 
 #[test]
 fn combat_log_rolesets_preserve_membership_and_frame_isolation() {
     let env = wow_ui_sim::lua_api::WowLuaEnv::new().unwrap();
     env.exec(
         r#"
-        local button = CreateFrame("Button", "CombatLogQuickButtonFrame")
+        local button = CreateFrame("Frame", "CombatLogQuickButtonFrame", UIParent)
         assert(type(getmetatable(button).__index.SetRolesets) == "function")
+
+        -- Blizzard_CombatLog assigns this exact roleset to its quick-button frame.
         button:SetRolesets("chat")
-        assert(button:GetRolesetNames().chat == true)
+        local names = button:GetRolesetNames()
+        assert(#names == 1 and names[1] == "chat" and names.chat == nil)
+
         button:AddRoleset("combat")
-        assert(button:GetRolesetNames().combat == true)
+        names = button:GetRolesetNames()
+        assert(#names == 2)
+        assert((names[1] == "chat" and names[2] == "combat")
+            or (names[1] == "combat" and names[2] == "chat"))
+
         button:RemoveRoleset("chat")
-        assert(button:GetRolesetNames().chat == nil)
-        button:SetRolesets("chat", "log")
-        assert(button:GetRolesetNames().chat == true)
-        assert(button:GetRolesetNames().log == true)
-        assert(button:GetRolesetNames().combat == nil)
+        names = button:GetRolesetNames()
+        assert(#names == 1 and names[1] == "combat")
+
+        button:SetRolesets(" chat, ,log ")
+        names = button:GetRolesetNames()
+        assert(#names == 2)
+        assert((names[1] == "chat" and names[2] == "log")
+            or (names[1] == "log" and names[2] == "chat"))
+        assert(names.chat == nil and names.log == nil and names.combat == nil)
+
         local other = CreateFrame("Frame")
-        assert(next(other:GetRolesetNames()) == nil)
-        button:SetRolesets()
-        assert(next(button:GetRolesetNames()) == nil)
+        other:SetRolesets("other")
+        C_Roleset.ApplyRolesetFilters({ "chat" }, {})
+        assert(not button:IsVisible() and other:IsVisible())
+
+        button:SetRolesets("")
+        C_Roleset.ApplyRolesetFilters({ "roleless" }, {})
+        assert(button:IsVisible())
+
+        -- INFERRED: the optional-string convention rejects a table with the verified usage text.
+        local ok, message = pcall(function() button:SetRolesets({}) end)
+        assert(not ok and message == "Usage: self:SetRolesets([rolesetsString])")
     "#,
     )
     .unwrap();
