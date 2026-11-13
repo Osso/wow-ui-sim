@@ -1,3 +1,7 @@
+## [2026-11-12] implementation | Retail currency tooltips
+
+[Tooltip data](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) links the [R84/R84b contract](../specs/tooltip-currency.md). VERIFIED: the four original Retail consumers share the currency producer and publish the verified rows; explicit host inputs leave resolver misses, the error-row predicate, balance formula and runtime number mode UNKNOWN. The shared color remapper can turn a verified type-0 row into 41 when placeholder colors collide; the producer restores type 0. Retail passes 2264 library tests and 17 exact integration tests. PTR and Forever pass zero-warning compile builds and eight exact integration tests each.
+
 ## [2026-11-12] correction | R82 hyperlink routing
 
 [Hyperlink routing](investigations/att-unit-hyperlink-tooltip.md) records the removal of guessed unit-GUID rows and links the R82/R82b request contract, explicit display inputs and INFERRED catalog boundary.
