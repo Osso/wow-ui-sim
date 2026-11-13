@@ -206,6 +206,35 @@ fn aura_secret_texture_replaces_and_clears_without_plain_readout() {
     "#).unwrap();
 }
 
+#[cfg(all(feature = "optional-tests", feature = "client-retail"))]
+#[test]
+fn tainted_secret_texture_target_reports_prevention_error() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec("BlockedSecretTexture = CreateFrame('Frame'):CreateTexture()")
+        .unwrap();
+    let texture_id = crate::common::aura_container_harness::frame_id(&env, "BlockedSecretTexture");
+    env.state()
+        .borrow_mut()
+        .widgets
+        .get_mut(texture_id)
+        .expect("secret target texture exists")
+        .prevent_secret_values = true;
+
+    env.exec(
+        r#"
+        local function addon()
+            local ok, err = pcall(BlockedSecretTexture.SetTexture, BlockedSecretTexture,
+                secretwrap(136243))
+            assert(not ok)
+            assert(err == 'Attempt to set secret values on an object that prevents secret values', err)
+        end
+        debug.setobjecttaint(addon, 'SecretTextureProbe')
+        addon()
+        "#,
+    )
+    .unwrap();
+}
+
 modern_engine_namespace_fixture! {
 #[test]
 fn aura_geometry_texture_plain_handoffs_preserve_values() {
