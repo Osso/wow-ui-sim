@@ -4,9 +4,9 @@
 
 ## What it must do
 
-- [ ] Register `CanTradeSkillShowCraftingUI` on PTR `C_TradeSkillUI`, accept one required spell ID, and return one Boolean.
-- [ ] Return true only when the supplied opaque-helper input is true, the spell exists in simulator spell data, and generated `SpellEffect` effect 0 equals 47.
-- [ ] Return false when the helper input is not supplied, the spell is unknown, or effect 0 is absent or not 47.
+- [x] Register `CanTradeSkillShowCraftingUI` on PTR `C_TradeSkillUI`, accept one required spell ID, and return one Boolean.
+- [x] Return true only when the supplied opaque-helper input is true, the spell exists in simulator spell data, and generated `SpellEffect` effect 0 equals 47.
+- [x] Return false when the helper input is not supplied, the spell is unknown, or effect 0 is absent or not 47.
 
 ## How it works
 
