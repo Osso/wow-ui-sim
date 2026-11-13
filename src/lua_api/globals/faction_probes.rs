@@ -305,6 +305,12 @@ fn register_reputation_namespace(lua: &mut rilua::Lua) -> crate::Result<()> {
             "SetReputationSortType",
             crate::c_api::c_reputation::set_reputation_sort_type,
         )?;
+        table_set_rust_fn_static(
+            lua.state_mut(),
+            reputation_ref,
+            "IsAccountWideReputation",
+            crate::c_api::c_reputation::is_account_wide_reputation,
+        )?;
     }
     LuaApiMut::set_global_val(lua, "C_Reputation", reputation)?;
     Ok(())

@@ -25,18 +25,96 @@ pub struct FactionParagonInfo {
     pub paragon_storage_level: i32,
 }
 
+fn read_allowed_argument(state: &LuaState, value: Val, usage: &str) -> LuaResult<Val> {
+    if is_secret_value(state, value) && !can_access_secrets(state) {
+        return Err(runtime_error(format!(
+            "{usage}. Secret values are only allowed during untainted execution for this argument."
+        )));
+    }
+    unwrap_secret(state, value)
+}
+
+fn read_required_number(state: &mut LuaState, usage: &str) -> LuaResult<f64> {
+    let value = read_allowed_argument(state, stack_val(state, 1), usage)?;
+    if matches!(value, Val::Nil) {
+        return Err(runtime_error(usage));
+    }
+
+    let number = match value {
+        Val::Num(number) => Some(number),
+        Val::Str(_) => {
+            let tonumber = crate::c_api::global_val(state, "tonumber");
+            match call_function_state(state, tonumber, &[value])? {
+                Val::Num(number) => Some(number),
+                _ => None,
+            }
+        }
+        _ => None,
+    };
+    number.ok_or_else(|| runtime_error(usage))
+}
+
+fn integer_table_value(state: &LuaState, table: Val, index: i32) -> Val {
+    let Val::Table(table_ref) = table else {
+        return Val::Nil;
+    };
+    state
+        .gc
+        .tables
+        .get(table_ref)
+        .map(|table| table.get_int(i64::from(index)))
+        .unwrap_or(Val::Nil)
+}
+
+fn is_account_wide_reputation_in_rows(state: &mut LuaState, rows: Val, faction_id: i32) -> bool {
+    let mut index = 1;
+    loop {
+        let row = integer_table_value(state, rows, index);
+        if row == Val::Nil {
+            return false;
+        }
+        let is_header = matches!(table_get_static(state, row, "isHeader"), Val::Bool(true));
+        let row_id = table_get_static(state, row, "factionID");
+        if !is_header && row_id == Val::Num(f64::from(faction_id)) {
+            return matches!(
+                table_get_static(state, row, "isAccountWide"),
+                Val::Bool(true)
+            );
+        }
+        index += 1;
+    }
+}
+
+// VERIFIED (Retail 12.1.5.70688, R88f.A.74): factionID is a required signed-i32
+// input; classification reads the Faction row directly and missing rows return false.
+pub(crate) fn is_account_wide_reputation(state: &mut LuaState) -> LuaResult<u32> {
+    const USAGE: &str =
+        "Usage: local isAccountWide = C_Reputation.IsAccountWideReputation(factionID)";
+    let number = read_required_number(state, USAGE)?;
+    if number < f64::from(i32::MIN) || number > f64::from(i32::MAX) {
+        return Err(runtime_error(format!(
+            "outside of expected range {} to {}",
+            i32::MIN,
+            i32::MAX
+        )));
+    }
+    if !number.is_finite() {
+        return Err(runtime_error(USAGE));
+    }
+
+    let global = Val::Table(state.global);
+    let reputation_state = table_get_static(state, global, "__wow_reputation_state");
+    let rows = table_get_static(state, reputation_state, "factions");
+    let is_account_wide = is_account_wide_reputation_in_rows(state, rows, number as i32);
+    state.push(Val::Bool(is_account_wide));
+    Ok(1)
+}
+
 // VERIFIED (Retail 12.1.5.70688, R88f.A.72): nil is required-argument
 // failure; non-nil ordinary values use Lua truthiness after secret access checks.
 pub(crate) fn set_legacy_reputations_shown(state: &mut LuaState) -> LuaResult<u32> {
     const USAGE: &str = "Usage: C_Reputation.SetLegacyReputationsShown(showLegacyReputations)";
-
-    let value = stack_val(state, 1);
-    if is_secret_value(state, value) && !can_access_secrets(state) {
-        return Err(runtime_error(format!(
-            "{USAGE}. Secret values are only allowed during untainted execution for this argument."
-        )));
-    }
-    let value = unwrap_secret(state, value)?;
+    let value = read_allowed_argument(state, stack_val(state, 1), USAGE)?;
     if matches!(value, Val::Nil) {
         return Err(runtime_error(USAGE));
     }
@@ -57,31 +135,7 @@ pub(crate) fn set_legacy_reputations_shown(state: &mut LuaState) -> LuaResult<u3
 // conversions but stores only ReputationSortType values 0, 1, and 2.
 pub(crate) fn set_reputation_sort_type(state: &mut LuaState) -> LuaResult<u32> {
     const USAGE: &str = "Usage: C_Reputation.SetReputationSortType(sortType)";
-
-    let value = stack_val(state, 1);
-    if is_secret_value(state, value) && !can_access_secrets(state) {
-        return Err(runtime_error(format!(
-            "{USAGE}. Secret values are only allowed during untainted execution for this argument."
-        )));
-    }
-    let value = unwrap_secret(state, value)?;
-    if matches!(value, Val::Nil) {
-        return Err(runtime_error(USAGE));
-    }
-
-    let number = match value {
-        Val::Num(number) => Some(number),
-        Val::Str(_) => {
-            let tonumber = crate::c_api::global_val(state, "tonumber");
-            match call_function_state(state, tonumber, &[value])? {
-                Val::Num(number) => Some(number),
-                _ => None,
-            }
-        }
-        _ => None,
-    }
-    .ok_or_else(|| runtime_error(USAGE))?;
-
+    let number = read_required_number(state, USAGE)?;
     if number < f64::from(i32::MIN) || number > f64::from(i32::MAX) {
         return Err(runtime_error(format!(
             "integer overflow attempting to store {number:.6}"

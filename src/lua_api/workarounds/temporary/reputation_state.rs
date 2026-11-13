@@ -209,9 +209,11 @@ C_Reputation.GetGuildFactionData = function()
     })
 end
 
-C_Reputation.IsAccountWideReputation = function(factionID)
-    local faction = FindByID(tonumber(factionID) or 0)
-    return faction ~= nil and faction.isAccountWide == true
+if not retailNativeReputationSemantics then
+    C_Reputation.IsAccountWideReputation = function(factionID)
+        local faction = FindByID(tonumber(factionID) or 0)
+        return faction ~= nil and faction.isAccountWide == true
+    end
 end
 
 if C_Reputation.IsFactionParagonForCurrentPlayer == nil then
