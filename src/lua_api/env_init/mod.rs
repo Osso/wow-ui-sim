@@ -118,11 +118,9 @@ pub(super) fn init_lua_state(
     rilua::table_security::register_table_security(lua)?;
     trace_debug_getter_values(lua, "after_profile_bootstrap");
     super::globals::real::protected_globals::install(lua)?;
-    // secureenv is shallow-copied from `_G` here. It keeps its copy of
-    // the dangerous globals (dofile / loadfile / require / string.dump /
-    // math.randomseed) so secure chunks — which Blizzard trusts —
-    // retain them. Insecure addon code that reads through `_G` sees nil
-    // after the cleanup below.
+    // secureenv is created from its fixed native base list here. It does
+    // not receive later `_G` registrations; insecure addon code that reads
+    // through `_G` sees nil after the cleanup below.
     super::globals::security::create_secure_environment(lua)?;
     #[cfg(feature = "forbidden-aspects")]
     super::script_object_transfer::install(lua)?;

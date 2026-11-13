@@ -14,31 +14,33 @@ use crate::lua_api::methods::{registry_get, registry_set};
 const CREATE_SECURE_ENV_LUA: &str = r##"
     local genv = _G
     local recordPublication = rawget(genv, "__wow_record_secure_global_publication")
-    local logNilSymbolAccess = rawget(genv, "__wow_log_nil_symbol_access")
-    local debugTable = rawget(genv, "debug")
     rawset(genv, "__wow_record_secure_global_publication", nil)
 
+    local baseNames = {
+        "assert", "bit", "date", "error", "forceinsecure",
+        "GetCurrentEnvironment", "geterrorhandler", "getfenv",
+        "GetGlobalEnvironment", "getmetatable", "ipairs", "issecure",
+        "math", "next", "pairs", "pcall", "pcallwithenv", "rawget",
+        "rawset", "securecall", "securecallfunction", "secureexecuterange",
+        "select", "setfenv", "setmetatable", "string", "strcmputf8i",
+        "strconcat", "strjoin", "strlenutf8", "strsplit", "table", "time",
+        "tonumber", "tostring", "type", "unpack", "IsInGlobalEnvironment",
+        "SwapToGlobalEnvironment",
+    }
     local secureenv = {}
-    for k, v in pairs(genv) do
-        secureenv[k] = v
-    end
-    if genv.Enum then
-        local se = {}
-        for k, v in pairs(genv.Enum) do
-            se[k] = v
+    for _, name in ipairs(baseNames) do
+        local value = rawget(genv, name)
+        if type(value) == "table" then
+            local clone = {}
+            for key, field in pairs(value) do
+                clone[key] = field
+            end
+            value = clone
         end
-        secureenv.Enum = se
+        rawset(secureenv, name, value)
     end
     secureenv._G = secureenv
     setmetatable(secureenv, {
-        __index = function(_, key)
-            local isGlobalIndex = debugTable and debugTable.isglobalindex
-            if type(isGlobalIndex) == "function" and isGlobalIndex()
-                    and type(logNilSymbolAccess) == "function" then
-                logNilSymbolAccess("__secureenv", key)
-            end
-            return nil
-        end,
         __newindex = function(t, key, value)
             rawset(t, key, value)
             if type(key) == "string" and value ~= nil and key:sub(1, 2) ~= "C_"
@@ -77,11 +79,10 @@ pub(crate) fn set_secure_env_key_state(
     Ok(())
 }
 
-/// Create the secure environment as a shallow copy of `_G`.
+/// Create the secure environment from the fixed native base list.
 ///
-/// This preserves secure APIs when `Blizzard_EnvironmentCleanup` nils them
-/// from `_G`. Later `_G` registrations do not fall through; secure-visible
-/// exports must be written directly into secureenv.
+/// Table-valued base entries are shallow-copied. Later `_G` registrations do
+/// not fall through; secure-visible exports must be written directly into secureenv.
 pub fn create_secure_environment(lua: &mut rilua::Lua) -> LuaResult<()> {
     if matches!(LuaApiMut::get_global_val(lua, "__secureenv"), Val::Table(_)) {
         return Ok(());
@@ -152,12 +153,29 @@ mod tests {
     use crate::lua_api::WowLuaEnv;
 
     #[test]
-    fn secure_environment_includes_soundkit_table() {
+    fn secure_environment_uses_fixed_base_and_shallow_table_copies() {
         let env = WowLuaEnv::new().expect("lua env");
-        let soundkit_type: String = env
-            .eval(r#"return type(rawget(__secureenv, "SOUNDKIT"))"#)
-            .expect("secureenv SOUNDKIT type");
+        let result: (bool, bool, bool, bool, bool) = env
+            .eval(
+                r#"
+                local secure = __secureenv
+                local probe = "__secure_env_copy_probe"
+                local before = rawget(math, probe)
+                rawset(math, probe, true)
+                local result = {
+                    type(rawget(secure, "assert")) == "function",
+                    rawget(secure, "Enum") == nil,
+                    rawget(secure, "TooltipDataProcessor") == nil,
+                    rawget(secure, "math") ~= math,
+                    rawget(secure, "math").abs == math.abs
+                        and rawget(rawget(secure, "math"), probe) == nil,
+                }
+                rawset(math, probe, before)
+                return result[1], result[2], result[3], result[4], result[5]
+                "#,
+            )
+            .expect("secure environment base probe");
 
-        assert_eq!(soundkit_type, "table");
+        assert_eq!(result, (true, true, true, true, true));
     }
 }
