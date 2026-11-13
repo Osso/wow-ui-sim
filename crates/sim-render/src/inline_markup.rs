@@ -292,19 +292,38 @@ mod tests {
     }
 
     #[test]
-    fn reads_atlas_with_and_without_colon() {
-        for text in ["|A:hud-backpack:14:16:2:3|a", "|Ahud-backpack:14:16:2:3|a"] {
+    fn reads_atlas_with_required_colon() {
+        assert_eq!(
+            split_inline_markup("|A:hud-backpack:14:16:2:3|a"),
+            vec![InlinePiece::Icon(InlineIcon {
+                height: Some(14.0),
+                width: Some(16.0),
+                offset_x: 2.0,
+                offset_y: 3.0,
+                ..icon(InlineIconSource::Atlas("hud-backpack".into()))
+            })]
+        );
+    }
+
+    #[test]
+    fn atlas_without_colon_is_not_an_icon() {
+        let pieces = split_inline_markup("|Ahud-backpack:14:16:2:3|a");
+        assert!(
+            !pieces
+                .iter()
+                .any(|piece| matches!(piece, InlinePiece::Icon(_)))
+        );
+    }
+
+    #[test]
+    fn wrong_closing_marker_does_not_form_an_icon() {
+        for text in ["|Tspell:12|a later |t", "|A:atlas:12:12|t later |a"] {
             let pieces = split_inline_markup(text);
-            assert_eq!(
-                pieces,
-                vec![InlinePiece::Icon(InlineIcon {
-                    height: Some(14.0),
-                    width: Some(16.0),
-                    offset_x: 2.0,
-                    offset_y: 3.0,
-                    ..icon(InlineIconSource::Atlas("hud-backpack".into()))
-                })],
-                "{text}"
+            assert!(
+                pieces
+                    .iter()
+                    .all(|piece| !matches!(piece, InlinePiece::Icon(_))),
+                "{text}: {pieces:?}"
             );
         }
     }
@@ -327,11 +346,21 @@ mod tests {
     }
 
     #[test]
-    fn unterminated_escape_ends_the_string() {
-        assert_eq!(
-            split_inline_markup("Before|TInterface\\Icons\\Spell:16"),
-            vec![InlinePiece::Text("Before".into())]
+    fn unterminated_escape_returns_its_opening_pipe_to_text() {
+        let pieces = split_inline_markup("Before|TInterface\\Icons\\Spell:16");
+        assert!(
+            pieces
+                .iter()
+                .all(|piece| !matches!(piece, InlinePiece::Icon(_)))
         );
+        let text = pieces
+            .into_iter()
+            .filter_map(|piece| match piece {
+                InlinePiece::Text(text) => Some(text),
+                InlinePiece::Icon(_) => None,
+            })
+            .collect::<String>();
+        assert_eq!(text, "Before|TInterface\\Icons\\Spell:16");
     }
 
     #[test]
