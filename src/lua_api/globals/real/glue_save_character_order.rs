@@ -77,7 +77,7 @@ fn save_character_order(state: &mut LuaState) -> LuaResult<u32> {
     }
     let mut sim = borrow_state_mut(state)?;
     if let Some(slot) = selected_slot {
-        sim.cvars.set("lastCharacterIndex", &slot.to_string());
+        sim.cvars.set_temporary("lastCharacterIndex", &slot.to_string());
     }
     sim.glue_login.saved_character_order = order;
     Ok(0)
