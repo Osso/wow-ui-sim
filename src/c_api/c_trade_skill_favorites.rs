@@ -35,24 +35,46 @@ impl RecipeFavorites {
 }
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
-    // PTR 70493 ProfessionsRecipeSchematicForm.lua:469 consumes IsRecipeFavorite.
-    // Same contract as Retail WM83; INFERRED for PTR pending native evidence.
-    if !matches!(
-        crate::client_profile::ACTIVE,
-        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
-    ) || !cfg!(feature = "retail-12-1-5")
-    {
+    // VERIFIED (PTR R85 and Retail WM83): IsRecipeFavorite and SetRecipeFavorite match.
+    if !supports_recipe_favorite_apis() {
         return Ok(());
     }
     let namespace = super::ensure_namespace(state, "C_TradeSkillUI")?;
     table_set_rust_fn_static(state, namespace, "IsRecipeFavorite", is_recipe_favorite)?;
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        // VERIFIED (Retail WM83): HasFavoriteOrderRecipes is registered on Retail.
+        table_set_rust_fn_static(
+            state,
+            namespace,
+            "HasFavoriteOrderRecipes",
+            has_favorite_order_recipes,
+        )?;
+    }
+    table_set_rust_fn_static(state, namespace, "SetRecipeFavorite", set_recipe_favorite)
+}
+
+pub(crate) fn register_has_favorite_order_recipes(state: &mut LuaState) -> LuaResult<()> {
+    // INFERRED (PTR R85; publication UNKNOWN): retain for PTR 70493 consumers
+    // TradeSkillUIDocumentation.lua:897 and ProfessionsCrafterOrderPage.lua:434,523.
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Ptr
+        || !cfg!(feature = "retail-12-1-5")
+    {
+        return Ok(());
+    }
+    let namespace = super::ensure_namespace(state, "C_TradeSkillUI")?;
     table_set_rust_fn_static(
         state,
         namespace,
         "HasFavoriteOrderRecipes",
         has_favorite_order_recipes,
-    )?;
-    table_set_rust_fn_static(state, namespace, "SetRecipeFavorite", set_recipe_favorite)
+    )
+}
+
+fn supports_recipe_favorite_apis() -> bool {
+    matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+    ) && cfg!(feature = "retail-12-1-5")
 }
 
 fn recipe_id(state: &LuaState, usage: &str) -> LuaResult<i32> {
