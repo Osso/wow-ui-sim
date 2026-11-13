@@ -13,6 +13,22 @@ use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
 use rilua::{LuaApiMut, LuaResult, Val};
 
+/// Host-supplied data for the normal starting-zone choice.
+#[derive(Clone, Debug, Default, PartialEq)]
+pub struct StartingZoneChoiceInput {
+    pub zone_name: String,
+    pub zone_image_atlas: Option<String>,
+}
+
+/// Host inputs for GetStartingZoneChoices. Defaults represent no supplied data.
+#[derive(Clone, Debug, Default, PartialEq)]
+pub struct StartingZoneChoicesInput {
+    /// None means no matching normal-zone record was supplied.
+    pub normal_choice: Option<StartingZoneChoiceInput>,
+    /// None means no restriction signal was supplied.
+    pub restricted_to_npe: Option<bool>,
+}
+
 const SET_IN_CHARACTER_CREATE_USAGE: &str =
     "Usage: C_CharacterCreation.SetInCharacterCreate(inCharacterCreate)";
 const SET_VIEWING_ALTERED_FORM_USAGE: &str =
