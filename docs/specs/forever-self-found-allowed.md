@@ -4,9 +4,9 @@
 
 ## What it must do
 
-- [ ] Forever registers `C_GameRules.IsSelfFoundAllowed` and returns exactly one Boolean value.
-- [ ] A missing rule-22 entry returns `false`.
-- [ ] **INFERRED:** a nonzero numeric rule-22 value returns `true`.
+- [x] Forever registers `C_GameRules.IsSelfFoundAllowed` and returns exactly one Boolean value.
+- [x] A missing rule-22 entry returns `false`.
+- [x] **INFERRED:** a nonzero numeric rule-22 value returns `true`.
 
 ## How it works
 
