@@ -40,6 +40,8 @@ Only sanitized report, small outcome, marker summary and derivative SHA-256 mani
 - /home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/full-addon-startup-current/independent-report.md — sanitized retained report.
 - /home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/full-addon-startup-current/marker-summary.json — bounded counts, shapes and original artifact hashes.
 - /home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/full-addon-startup-current/SHA256SUMS — retained derivative hashes.
+- /home/osso/.local/state/wow-ui-sim/handoff/pr46-49-decomp-answers.md — R88a native API findings.
+- /home/osso/.local/state/wow-ui-sim/handoff/ellesmere-core-3/REPORT.md — lane build, test and runtime receipts.
 
 ## New diagnostic capture
 
@@ -62,6 +64,32 @@ Epoch `20261010T183739Z`: [bounded independent attribution report](https://githu
 **INFERRED (simulator policy):** Retail/PTR use an empty-default last-input timestamp and `GamePadOverlapMouseMs`; no writer, event, or mouse reset is modeled. **INFERRED (simulator policy):** before add-on Lua runs, the loader indexes regular files under that add-on's root in `known_loose_asset_paths`. **UNKNOWN:** whether native Retail asset tables include loose files from add-on roots, and the exact native table identities.
 
 **VERIFIED (isolated Retail run at code SHA `6845ba42e`):** all 20 installed EllesmereUI add-ons loaded, with zero load-time Lua errors; post-startup `lua-errors` reported three unique errors across 72 occurrences: missing `GetLandingPageGarrisonType` in Blizzard minimap code (1), `SetNamePlateHitTestInsets requires an untainted caller` (1), and secret access without an untainted caller (70). The captured error set contained no `IsUsingGamepad` nil call or LibSharedMedia asset rejection.
+
+### R88a API boundary follow-up (2026-11-13)
+
+#### Garrison landing-page type (R88a, 2026-11-13)
+
+**VERIFIED (Retail 12.1.5 build 70688):** `C_Garrison.GetLandingPageGarrisonType` is registered under `C_Garrison`, takes no arguments and returns one number; the empty or unmatched native helper path returns `0`. **UNKNOWN (Retail 12.1.5 build 70688):** nonzero selection state and its writers.
+
+**INFERRED (simulator policy):** the neutral host input starts at `0`; this is not a claim that every native no-page state uses the zero path.
+
+**VERIFIED (simulator test at commit `291db5f24`):** the original Minimap refresh reaches the type query and passes a number to the next predicate. The test stops at that visibility boundary with a sentinel; it does not claim that the full `RefreshButton` path succeeds.
+
+**VERIFIED (isolated Retail run at production-code SHA `bc01ba60cdb7b844bf88adba7ff2cb6e809b665f`):** the former nil `GetLandingPageGarrisonType` call was no longer present; the original Minimap path next failed once on missing `C_Garrison.IsLandingPageMinimapButtonVisible`.
+
+**VERIFIED (local Retail UI cache; exact build UNKNOWN):** `GarrisonInfoDocumentation.lua` declares `C_Garrison.IsLandingPageMinimapButtonVisible(number)` with a boolean return. **UNKNOWN:** its native predicate and result. R88 evidence is pending; this lane does not register a production stub.
+
+#### Nameplate inset contract (R88a, 2026-11-13)
+
+**VERIFIED (Retail 12.1.5 build 70688):** `SetNamePlateHitTestInsets` does not reject every tainted caller. Its restriction gate needs source metadata, a restriction-state pointer and a false permission; the permission's meaning remains UNKNOWN. The native type parser rejects nil, maps failed numeric conversion to type 0, converts successful values to signed 32-bit and selects by the low byte. Insets accept numbers and values accepted by native numeric coercion, then convert to single precision and scale by `1/1024 * 0.8f`.
+
+**VERIFIED (simulator tests at code commit `bc01ba60c`):** four exact nameplate tests pass, including the tainted public setter call without restriction state, type low-byte/coercion behavior and scaled getter values. **UNKNOWN in simulator:** the restriction-state gate and conditional secret-argument denial are not modeled; see the [nameplate contract](../../specs/nameplate-hit-test-insets.md).
+
+**VERIFIED (20-addon Retail run at production-code SHA `bc01ba60cdb7b844bf88adba7ff2cb6e809b665f`):** all 20 staged addons loaded, with zero load-time Lua errors. `lua-errors` reported two unique errors across 71 occurrences: `C_Garrison.IsLandingPageMinimapButtonVisible` missing in the Minimap path (1) and `secret access requires an untainted caller without revoked access` in AuraKit (70). The earlier `SetNamePlateHitTestInsets requires an untainted caller` error was absent.
+
+#### AuraKit probe boundary (2026-11-13)
+
+**VERIFIED (incomplete public-path probe):** the `CustomAuraButton:ApplyIcon` hook fired zero times and no secret icon was observed. The probe was removed because it stopped before the target call. **UNKNOWN:** whether the aura icon was secret or `Texture:SetTexture` rejected it. R88c and a later reproduction are pending; no secret-policy claim is made.
 
 ### Issue #22 symptoms
 
@@ -90,8 +118,10 @@ The following observations come from isolated 1600x1200 or 3840x2160 simulator r
 - `/var/tmp/osso/ellesmere-core-enabled-baseline-dump.log`, `/var/tmp/osso/ellesmere-core-input-only-baseline.log`, and `/var/tmp/osso/ellesmere-core-unlock-1600-dumptree.log` — local diagnostic outputs.
 - `/home/osso/.local/state/wow-ui-sim/handoff/issue22-layout/REPORT.md` — prior six-symptom baseline and evidence limits.
 
-### Related pages
+## See Also
 
+- [Garrison landing-page type contract](../../specs/garrison-landing-page-type.md) — verified query shape and separate visibility blocker.
+- [Nameplate hit-test inset contract](../../specs/nameplate-hit-test-insets.md) — verified parser and the unmodeled restriction policy.
 - [[gamepad-mapped-state]] — existing, separate gamepad capability and mapped-stick behavior.
 - [[ellesmereui-forever]] — prior Forever compatibility investigation.
 - [[addon-loading]] — addon selection, enablement and load phases.

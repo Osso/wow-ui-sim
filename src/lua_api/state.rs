@@ -119,6 +119,9 @@ macro_rules! build_empty_sim_state {
             trade_skill_crafting_ui_inputs: Default::default(),
             #[cfg(feature = "client-retail")]
             garrison_trees: crate::c_api::c_garrison_trees::GarrisonTrees::default(),
+            #[cfg(feature = "client-retail")]
+            garrison_landing_page:
+                crate::c_api::c_garrison_landing_page::GarrisonLandingPage::default(),
             clipboard: ClipboardState::default(),
             chat_edit_open_state: None,
             #[cfg(feature = "retail-12-0-7")]

@@ -10,6 +10,10 @@ clamp coverage. RF host inputs only; no collector or PTR category changes.
 verified R78/R83 argument/state behavior from droppable inferred catalog and
 return bridges. The unseeded collector and end-to-end submit remain distinct.
 
+## [2026-11-13] investigation | EllesmereUI core API boundary
+
+Updated [full third-party startup](investigations/full-addon-startup-2026-10-10.md#r88a-api-boundary-follow-up-2026-11-13) with R88a behavior, the lane's exact tests, and the post-fix 20-addon result. **VERIFIED (Retail run at code SHA `bc01ba60c`):** 20/20 add-ons loaded with zero load-time errors; two post-startup blockers remain, including `C_Garrison.IsLandingPageMinimapButtonVisible` and AuraKit. **INFERRED:** the neutral garrison input starts at zero. **UNKNOWN:** the visibility predicate and secret/restriction policies.
+
 ## [2026-11-12] correction | FontString anchor-width evidence
 
 Updated [FontString anchor sizing](investigations/fontstring-anchor-sizing.md) with L1c labels. **VERIFIED (code):** the inferred stored-width rewrite and `SetPoint()` measurement refresh are removed so native-UNKNOWN wrapping is not modeled. **VERIFIED (test code):** default tests observe rectangle edges and SetWidth priority; **INFERRED (test code):** GetWidth and single-anchor assertions are optional; **UNKNOWN:** renderer wrapping width and text-cache invalidation remain unmodeled.
