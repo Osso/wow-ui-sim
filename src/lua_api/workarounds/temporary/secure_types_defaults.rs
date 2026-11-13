@@ -1,10 +1,9 @@
 //! Temporary SecureTypes compatibility defaults.
 //!
-//! The simulator has taint primitives, but does not model Blizzard's full
-//! secure container implementation yet. Keep these compatibility containers in
-//! the workaround layer until the secure environment owns them.
+//! The named-securecall wrapper is shared; constructor substitutes remain only
+//! for profiles without a verified owner-first load route.
 
-const SECURE_TYPES_DEFAULTS_LUA: &str = r#"
+const SECURE_TYPES_COMMON_LUA: &str = r#"
 if SecureTypes == nil then
   SecureTypes = {}
 end
@@ -22,7 +21,9 @@ do
     rawset(_G, "__wow_securecall_accepts_names", true)
   end
 end
+"#;
 
+const SECURE_TYPES_DEFAULTS_LUA: &str = r#"
 local function __wow_securetypes_call(fn, ...)
   if type(securecallfunction) == "function" then
     return securecallfunction(fn, ...)
@@ -172,7 +173,18 @@ end
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
-    lua.exec(SECURE_TYPES_DEFAULTS_LUA)?;
+    lua.exec(SECURE_TYPES_COMMON_LUA)?;
+
+    if !matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::Ptr
+            | crate::client_profile::ClientProfile::WowForever
+            | crate::client_profile::ClientProfile::Mists
+    ) {
+        lua.exec(SECURE_TYPES_DEFAULTS_LUA)?;
+    }
+
     Ok(())
 }
 
@@ -181,34 +193,18 @@ mod tests {
     use crate::lua_api::WowLuaEnv;
 
     #[test]
-    fn installs_secure_type_defaults() {
+    fn installs_securecall_name_compatibility() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
 
-        let result: String = env
+        let result: i64 = env
             .eval(
                 r#"
                 function __secure_types_named_add(a, b) return a + b end
-                if securecall("__secure_types_named_add", 2, 3) ~= 5 then return "securecall_name" end
-                local map = SecureTypes.CreateSecureMap()
-                map:Insert("alpha", 7)
-                if map:GetValue("alpha") ~= 7 then return "map_get" end
-                if map:GetSize() ~= 1 then return "map_size" end
-                if map:Remove("alpha") ~= 7 or map:GetSize() ~= 0 then return "map_remove" end
-                if SecureTypes.CreateSecureFunction(__secure_types_named_add) ~= __secure_types_named_add then return "secure_function" end
-                if SecureTypes.CreateSecureNumber(nil) ~= 0 or SecureTypes.CreateSecureNumber(4) ~= 4 then return "secure_number" end
-                local array = SecureTypes.CreateSecureArray()
-                array:Insert("a")
-                array:Insert("b")
-                local index, value = array:FindInTableIf(function(v) return v == "b" end)
-                if index ~= 2 or value ~= "b" then return "array_find" end
-                if array:Remove("a") ~= true or array[1] ~= "b" then return "array_remove" end
-                array:Clear()
-                if array[1] ~= nil then return "array_clear" end
-                return "ok"
+                return securecall("__secure_types_named_add", 2, 3)
                 "#,
             )
-            .expect("secure types defaults should be callable");
+            .expect("named securecall compatibility should be callable");
 
-        assert_eq!(result, "ok");
+        assert_eq!(result, 5);
     }
 }
