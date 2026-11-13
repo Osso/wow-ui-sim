@@ -29,10 +29,6 @@ pub(super) fn patch_chat_voice_button_surface(env: &crate::lua_api::WowLuaEnv) {
     temporary::chat_voice_button_surface::patch(env);
 }
 
-pub(super) fn patch_action_bar_button_event_fanout(env: &crate::lua_api::WowLuaEnv) {
-    temporary::action_bar_button_event_fanout::patch(env);
-}
-
 pub(super) fn patch_game_time_defaults(env: &crate::lua_api::WowLuaEnv) {
     temporary::game_time_calendar_invites::patch(env);
 }
