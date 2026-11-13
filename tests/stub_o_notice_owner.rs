@@ -65,9 +65,28 @@ fn stub_o_notice_original_initial_login_callback_adds_chat_history() {
     assert!(original.contains("ChatFrameUtil.AddSystemMessage(ONLINE_SAFETY_NOTICE);"));
 
     wow_ui_sim::xml::register_intrinsic_templates();
-    let (env, loaded) = crate::common::blizzard_addon_harness::build_blizzard_addon_closure_env(
+    // Chat OnLoad calls HideUIPanel before hiding unused chat windows. Its
+    // owner is an implicit startup dependency, not a bootstrap native function.
+    let env = crate::common::blizzard_addon_harness::new_blizzard_addon_env(&ui);
+    let panels = crate::common::blizzard_addon_harness::load_blizzard_addon_closure_into_env(
+        &env,
         &ui,
-        &["Blizzard_UIParentPanelManager", "Blizzard_CodeOfConduct"],
+        &["Blizzard_UIParentPanelManager"],
+        &[],
+    );
+    assert!(
+        panels
+            .iter()
+            .any(|name| name == "Blizzard_UIParentPanelManager")
+    );
+    env.exec(
+        "assert(debug.getinfo(HideUIPanel, 'S').source:find('UIParentPanelManager.lua', 1, true))",
+    )
+    .unwrap();
+    let loaded = crate::common::blizzard_addon_harness::load_blizzard_addon_closure_into_env(
+        &env,
+        &ui,
+        &["Blizzard_CodeOfConduct"],
         &[],
     );
     assert!(loaded.iter().any(|name| name == "Blizzard_CodeOfConduct"));
