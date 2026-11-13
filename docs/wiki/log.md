@@ -1,3 +1,15 @@
+## [2026-11-12] review | Contributor font evidence and path containment
+
+The [font-source contract](../specs/font-sources.md) records canonical AddOns-root containment and explicit missing-font test failures. The [EditBox contract](../specs/editbox-text-font.md) separates the XML model from UNVERIFIED contributor native observations; those assertions remain optional pending independent profile evidence. Combined-tree compilation and runtime proof are pending slot availability.
+
+## [2026-11-12] investigation | EditBox text font and insets
+
+[EditBox text font, insets and justification](investigations/editbox-text-font.md) records the client checks, the three loader gaps and their fix, and the unmodeled font of `InputBoxInstructionsTemplate`'s instructions region.
+
+## [2026-11-12] docs | Addon fonts and pinned fallback
+
+[Rendering pipeline](systems/rendering-pipeline.md#font-sources) records addon font loading on first use and `WOW_SIM_FALLBACK_FONT`; tests live in `src/render/font.rs`.
+
 ## [2026-11-12] investigation | Inline XML tooltip operands
 
 [Inline XML method arguments](investigations/xml-inline-method-arguments.md) records the zero-vararg parser misclassification, source-faithful parameter-prefix installation, and the separately approved RaidFrame AddLine fixture correction.
