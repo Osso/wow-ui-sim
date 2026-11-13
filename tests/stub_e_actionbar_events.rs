@@ -15,7 +15,7 @@ fn selected_actionbar_event_consumer_uses_original_fanout() {
                 assert(type(ActionBarButtonEventsFrameMixin) == "table")
                 assert(ActionBarButtonEventsFrame:IsEventRegistered("ACTIONBAR_SLOT_CHANGED"))
 
-                local probe = { events = 0, artUpdates = 0 }
+                probe = { events = 0, artUpdates = 0 }
                 ActionBarButtonEventsFrame.frames = {
                     {
                         OnEvent = function(_, event, slot)
