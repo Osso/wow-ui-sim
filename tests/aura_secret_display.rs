@@ -254,6 +254,24 @@ fn tainted_secret_texture_string_reports_native_error() {
     .unwrap();
 }
 
+#[cfg(all(feature = "optional-tests", feature = "client-retail"))]
+#[test]
+fn tainted_secretwrap_does_not_reject_a_marked_number() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local marked = secretwrap(136243)
+        local function addon()
+            local ok, err = pcall(secretwrap, marked)
+            assert(ok, err)
+        end
+        debug.setobjecttaint(addon, 'AuraKit')
+        addon()
+        "#,
+    )
+    .unwrap();
+}
+
 modern_engine_namespace_fixture! {
 #[test]
 fn aura_geometry_texture_plain_handoffs_preserve_values() {

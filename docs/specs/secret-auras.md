@@ -53,6 +53,7 @@ Evidence levels used below:
 
 ### Helpers
 - [ ] `issecretvalue`, `issecrettable`, `hasanysecretvalues`, `canaccessvalue`, `canaccessallvalues`, `canaccesstable`, `canaccesssecrets`, `scrubsecretvalues`, `dropsecretaccess`, `secretwrap`, `secretunwrap` and the widget `HasSecretValues` / `HasSecretAspect` / `HasAnySecretAspect` / `IsPreventingSecretValues` / `IsAnchoringSecret` match the client's usage strings and return counts. Use the bounded S7/S7a/S18 contracts below: `issecretvalue()` is VERIFIED false, and `canaccessvalue()` is VERIFIED true. Do not treat the remaining incomplete contracts as implemented native behavior.
+- [ ] `secretwrap` does not reject an already-marked numeric value from tainted code (**VERIFIED — R88c Q3, Retail 12.1.5.70688**); whether the returned value is marked depends on an **UNKNOWN** live gate, and marker output is **INFERRED** if that gate is enabled.
 
 ## WM61 evidence (Retail 12.1.5 build 70688)
 
@@ -271,6 +272,7 @@ This table records established contradictions in the audited S2–S9 helper, aur
 - `tests/spell_casting.rs::forever_spell_cast_secrecy_uses_supplied_unit_and_control_guids_in_casting_bar` checks Forever's default, host-supplied GUID ownership, argument errors, and the original `CastingBarMixin:IsInterruptable` consumer.
 - `tests/spell_casting.rs::casting_bar_original_interruptibility_uses_cast_secrecy_predicate` checks the original consumer on Retail and PTR.
 - `tests/aura_secret_display.rs::tainted_secret_texture_string_reports_native_error` checks the VERIFIED tainted-string diagnostic.
+- `tests/aura_secret_display.rs::tainted_secretwrap_does_not_reject_a_marked_number` checks the VERIFIED tainted-call acceptance boundary without asserting output secrecy.
 - `tests/aura_secret_display.rs::aura_secret_texture_replaces_and_clears_without_plain_readout` checks secret texture input and getter behavior under `optional-tests`.
 - `tests/aura_secret_display.rs::tainted_secret_texture_target_reports_prevention_error` checks the inferred prevention behavior under `optional-tests`.
 - `tests/aura_container_util.rs::retail_aura_container_apply_icon_accepts_tainted_secret_file_id` exercises the original Retail `ApplyIcon` consumer under `optional-tests`.
