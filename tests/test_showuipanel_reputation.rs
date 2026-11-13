@@ -238,6 +238,94 @@ fn retail_reputation_header_consumer_expands_all_for_zero_index() {
     }
 }
 
+#[cfg(feature = "client-retail")]
+#[test]
+fn retail_reputation_sort_consumer_rejects_unknown_sort_type() {
+    test_timeout! {
+        let env = setup_env();
+        let result: String = env
+            .eval(
+                r#"
+                local onShow = ReputationFrameMixin and ReputationFrameMixin.OnShow
+                if type(onShow) ~= "function" then
+                    return "missing_reputation_consumer"
+                end
+                local source = debug.getinfo(onShow, "S").source:gsub("\\", "/")
+                if not source:find("Blizzard_UIPanels_Game/Mainline/ReputationFrame.lua", 1, true) then
+                    return "wrong_reputation_consumer=" .. source
+                end
+
+                local menuGenerator
+                local dropdown = {
+                    SetupMenu = function(_, generator)
+                        menuGenerator = generator
+                    end,
+                }
+                local frame = {
+                    filterDropdown = dropdown,
+                    Update = function() end,
+                    GetParent = function() return nil end,
+                }
+                local oldRegister = FrameUtil.RegisterFrameForEvents
+                local oldHelpTip = HelpTip.IsShowing
+                local oldPlayerExpansion = GetExpansionLevel
+                local oldServerExpansion = GetServerExpansionLevel
+                FrameUtil.RegisterFrameForEvents = function() end
+                HelpTip.IsShowing = function() return false end
+                GetExpansionLevel = function() return 12 end
+                GetServerExpansionLevel = function() return 12 end
+                onShow(frame)
+
+                local setSortType
+                menuGenerator(dropdown, {
+                    SetTag = function() end,
+                    CreateRadio = function(_, _, _, setSelected, sortType)
+                        if sortType == 0 then
+                            setSortType = setSelected
+                        end
+                    end,
+                    CreateDivider = function() end,
+                    CreateCheckbox = function()
+                        return { SetSelectionIgnored = function() end }
+                    end,
+                })
+                FrameUtil.RegisterFrameForEvents = oldRegister
+                HelpTip.IsShowing = oldHelpTip
+                GetExpansionLevel = oldPlayerExpansion
+                GetServerExpansionLevel = oldServerExpansion
+                if type(setSortType) ~= "function" then
+                    return "sort_radio_missing"
+                end
+
+                for _, sortType in ipairs({0, 1, 2}) do
+                    setSortType(sortType)
+                    if C_Reputation.GetReputationSortType() ~= sortType then
+                        return "valid_sort_type_not_stored=" .. tostring(sortType)
+                    end
+                end
+                local invalidOK = pcall(setSortType, 3)
+                if invalidOK then
+                    return "invalid_sort_type_was_accepted"
+                end
+                if C_Reputation.GetReputationSortType() ~= 2 then
+                    return "invalid_sort_type_changed_state"
+                end
+                local usage = "Usage: C_Reputation.SetReputationSortType(sortType)"
+                local missingOK, missingError = pcall(setSortType)
+                if missingOK then
+                    return "missing_sort_type_was_accepted"
+                end
+                if not tostring(missingError):find(usage, 1, true) then
+                    return "wrong_missing_argument_error=" .. tostring(missingError)
+                end
+                return "ok"
+                "#,
+            )
+            .expect("Retail reputation sort consumer should run");
+        assert_eq!(result, "ok");
+    }
+}
+
 #[cfg(not(any(feature = "client-era", feature = "client-anniversary")))]
 #[test]
 fn show_ui_panel_locks_reputation_frame_layout() {
