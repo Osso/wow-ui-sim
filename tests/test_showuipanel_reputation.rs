@@ -112,8 +112,335 @@ fn fire_startup_events(env: &WowLuaEnv) {
     }
 }
 
+#[cfg(feature = "client-retail")]
+#[test]
+fn retail_reputation_filter_toggles_and_requires_legacy_visibility_argument() {
+    test_timeout! {
+        let env = setup_env();
+        let result: String = env
+            .eval(
+                r#"
+                local onShow = ReputationFrameMixin and ReputationFrameMixin.OnShow
+                if type(onShow) ~= "function" then
+                    return "missing_reputation_consumer"
+                end
+                local source = debug.getinfo(onShow, "S").source:gsub("\\", "/")
+                if not source:find("Blizzard_UIPanels_Game/Mainline/ReputationFrame.lua", 1, true) then
+                    return "wrong_reputation_consumer=" .. source
+                end
+
+                local menuGenerator
+                local dropdown = {
+                    SetupMenu = function(_, generator)
+                        menuGenerator = generator
+                    end,
+                }
+                local frame = {
+                    filterDropdown = dropdown,
+                    Update = function() end,
+                    GetParent = function() return nil end,
+                }
+                local oldRegister = FrameUtil.RegisterFrameForEvents
+                local oldHelpTip = HelpTip.IsShowing
+                local oldPlayerExpansion = GetExpansionLevel
+                local oldServerExpansion = GetServerExpansionLevel
+                FrameUtil.RegisterFrameForEvents = function() end
+                HelpTip.IsShowing = function() return false end
+                GetExpansionLevel = function() return 12 end
+                GetServerExpansionLevel = function() return 12 end
+                onShow(frame)
+
+                local isSelected
+                local toggleSelection
+                menuGenerator(dropdown, {
+                    SetTag = function() end,
+                    CreateRadio = function() end,
+                    CreateDivider = function() end,
+                    CreateCheckbox = function(_, _, selected, toggle)
+                        isSelected = selected
+                        toggleSelection = toggle
+                        return { SetSelectionIgnored = function() end }
+                    end,
+                })
+                FrameUtil.RegisterFrameForEvents = oldRegister
+                HelpTip.IsShowing = oldHelpTip
+                GetExpansionLevel = oldPlayerExpansion
+                GetServerExpansionLevel = oldServerExpansion
+
+                if type(isSelected) ~= "function" or type(toggleSelection) ~= "function" then
+                    return "legacy_checkbox_missing"
+                end
+                if not isSelected() then
+                    return "legacy_checkbox_should_start_selected"
+                end
+                toggleSelection()
+                if isSelected() then
+                    return "consumer_did_not_hide_legacy_reputations"
+                end
+                toggleSelection()
+                if not isSelected() then
+                    return "consumer_did_not_show_legacy_reputations"
+                end
+
+                local usage = "Usage: C_Reputation.SetLegacyReputationsShown(showLegacyReputations)"
+                local missingOK, missingError = pcall(C_Reputation.SetLegacyReputationsShown)
+                if missingOK then
+                    return "missing_argument_was_accepted"
+                end
+                if not tostring(missingError):find(usage, 1, true) then
+                    return "wrong_missing_argument_error=" .. tostring(missingError)
+                end
+                local nilOK, nilError = pcall(C_Reputation.SetLegacyReputationsShown, nil)
+                if nilOK then
+                    return "nil_argument_was_accepted"
+                end
+                if not tostring(nilError):find(usage, 1, true) then
+                    return "wrong_nil_argument_error=" .. tostring(nilError)
+                end
+                return "ok"
+                "#,
+            )
+            .expect("Retail reputation consumer should run");
+        assert_eq!(result, "ok");
+    }
+}
+
 // Era/Anniversary select `Blizzard_CharacterFrame/Vanilla/CharacterFrame.lua`,
 // which does not define the Retail/Cata `CharacterFrame:RefreshDisplay` method.
+#[cfg(feature = "client-retail")]
+#[test]
+fn retail_reputation_header_consumer_expands_all_for_zero_index() {
+    test_timeout! {
+        let env = setup_env();
+        let result: String = env
+            .eval(
+                r#"
+                local toggleCollapsed = ReputationHeaderMixin and ReputationHeaderMixin.ToggleCollapsed
+                if type(toggleCollapsed) ~= "function" then
+                    return "missing_reputation_header_consumer"
+                end
+                local source = debug.getinfo(toggleCollapsed, "S").source:gsub("\\", "/")
+                if not source:find("Blizzard_UIPanels_Game/Mainline/ReputationFrame.lua", 1, true) then
+                    return "wrong_reputation_header_consumer=" .. source
+                end
+
+                C_Reputation.CollapseAllFactionHeaders()
+                local collapsedCount = C_Reputation.GetNumFactions()
+                toggleCollapsed({
+                    factionIndex = 0,
+                    IsCollapsed = function() return true end,
+                })
+                return tostring(collapsedCount) .. ":" .. tostring(C_Reputation.GetNumFactions())
+                "#,
+            )
+            .expect("Retail reputation header consumer should run");
+        assert_eq!(result, "3:11");
+    }
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn retail_reputation_sort_consumer_rejects_unknown_sort_type() {
+    test_timeout! {
+        let env = setup_env();
+        let result: String = env
+            .eval(
+                r#"
+                local onShow = ReputationFrameMixin and ReputationFrameMixin.OnShow
+                if type(onShow) ~= "function" then
+                    return "missing_reputation_consumer"
+                end
+                local source = debug.getinfo(onShow, "S").source:gsub("\\", "/")
+                if not source:find("Blizzard_UIPanels_Game/Mainline/ReputationFrame.lua", 1, true) then
+                    return "wrong_reputation_consumer=" .. source
+                end
+
+                local menuGenerator
+                local dropdown = {
+                    SetupMenu = function(_, generator)
+                        menuGenerator = generator
+                    end,
+                }
+                local frame = {
+                    filterDropdown = dropdown,
+                    Update = function() end,
+                    GetParent = function() return nil end,
+                }
+                local oldRegister = FrameUtil.RegisterFrameForEvents
+                local oldHelpTip = HelpTip.IsShowing
+                local oldPlayerExpansion = GetExpansionLevel
+                local oldServerExpansion = GetServerExpansionLevel
+                FrameUtil.RegisterFrameForEvents = function() end
+                HelpTip.IsShowing = function() return false end
+                GetExpansionLevel = function() return 12 end
+                GetServerExpansionLevel = function() return 12 end
+                onShow(frame)
+
+                local setSortType
+                menuGenerator(dropdown, {
+                    SetTag = function() end,
+                    CreateRadio = function(_, _, _, setSelected, sortType)
+                        if sortType == 0 then
+                            setSortType = setSelected
+                        end
+                    end,
+                    CreateDivider = function() end,
+                    CreateCheckbox = function()
+                        return { SetSelectionIgnored = function() end }
+                    end,
+                })
+                FrameUtil.RegisterFrameForEvents = oldRegister
+                HelpTip.IsShowing = oldHelpTip
+                GetExpansionLevel = oldPlayerExpansion
+                GetServerExpansionLevel = oldServerExpansion
+                if type(setSortType) ~= "function" then
+                    return "sort_radio_missing"
+                end
+
+                for _, sortType in ipairs({0, 1, 2}) do
+                    setSortType(sortType)
+                    if C_Reputation.GetReputationSortType() ~= sortType then
+                        return "valid_sort_type_not_stored=" .. tostring(sortType)
+                    end
+                end
+                local invalidOK = pcall(setSortType, 3)
+                if invalidOK then
+                    return "invalid_sort_type_was_accepted"
+                end
+                if C_Reputation.GetReputationSortType() ~= 2 then
+                    return "invalid_sort_type_changed_state"
+                end
+                local usage = "Usage: C_Reputation.SetReputationSortType(sortType)"
+                local missingOK, missingError = pcall(setSortType)
+                if missingOK then
+                    return "missing_sort_type_was_accepted"
+                end
+                if not tostring(missingError):find(usage, 1, true) then
+                    return "wrong_missing_argument_error=" .. tostring(missingError)
+                end
+                return "ok"
+                "#,
+            )
+            .expect("Retail reputation sort consumer should run");
+        assert_eq!(result, "ok");
+    }
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn retail_reputation_tooltip_consumer_truncates_faction_id() {
+    test_timeout! {
+        let env = setup_env();
+        let result: String = env
+            .eval(
+                r#"
+                local consumer = ReputationUtil and ReputationUtil.TryAppendAccountReputationLineToTooltip
+                if type(consumer) ~= "function" then
+                    return "missing_reputation_tooltip_consumer"
+                end
+                local source = debug.getinfo(consumer, "S").source:gsub("\\", "/")
+                if not source:find("Blizzard_FrameXMLUtil/Mainline/ReputationUtil.lua", 1, true) then
+                    return "wrong_reputation_tooltip_consumer=" .. source
+                end
+
+                GameTooltip_AddColoredLine = function(tooltip)
+                    tooltip.accountWideLineCount = tooltip.accountWideLineCount + 1
+                end
+                local tooltip = { accountWideLineCount = 0 }
+                consumer(tooltip, 2590.5)
+                return tostring(tooltip.accountWideLineCount)
+                "#,
+            )
+            .expect("Retail reputation tooltip consumer should run");
+        assert_eq!(result, "1");
+    }
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn retail_inactive_checkbox_consumer_updates_faction_activity() {
+    test_timeout! {
+        let env = setup_env();
+        let result: String = env
+            .eval(
+                r#"
+                local onClick = ReputationDetailInactiveCheckboxMixin and ReputationDetailInactiveCheckboxMixin.OnClick
+                if type(onClick) ~= "function" then
+                    return "missing_inactive_checkbox_consumer"
+                end
+                local source = debug.getinfo(onClick, "S").source:gsub("\\", "/")
+                if not source:find("Blizzard_UIPanels_Game/Mainline/ReputationFrame.lua", 1, true) then
+                    return "wrong_inactive_checkbox_consumer=" .. source
+                end
+
+                local faction = __wow_reputation_state.factions[2]
+                faction.canSetInactive = true
+                faction.reputationIndex = 114
+                faction.isInactive = false
+                C_Reputation.SetSelectedFaction(2)
+                local checked = false
+                local checkbox = { GetChecked = function() return checked end }
+                PlaySound = function() end
+
+                onClick(checkbox)
+                checked = true
+                onClick(checkbox)
+                if C_Reputation.IsFactionActive(2) then
+                    return "consumer_did_not_mark_faction_inactive"
+                end
+                C_Reputation.SetFactionActive(2, 0)
+                if not C_Reputation.IsFactionActive(2) then
+                    return "zero_was_not_truthy"
+                end
+                return "ok"
+                "#,
+            )
+            .expect("Retail inactive checkbox consumer should run");
+        assert_eq!(result, "ok");
+    }
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn retail_inactive_checkbox_truncates_zero_based_native_index() {
+    test_timeout! {
+        let env = setup_env();
+        let result: String = env
+            .eval(
+                r#"
+                local onClick = ReputationDetailInactiveCheckboxMixin and ReputationDetailInactiveCheckboxMixin.OnClick
+                if type(onClick) ~= "function" then
+                    return "missing_inactive_checkbox_consumer"
+                end
+                local source = debug.getinfo(onClick, "S").source:gsub("\\", "/")
+                if not source:find("Blizzard_UIPanels_Game/Mainline/ReputationFrame.lua", 1, true) then
+                    return "wrong_inactive_checkbox_consumer=" .. source
+                end
+
+                local faction = __wow_reputation_state.factions[1]
+                faction.factionID = 2590
+                faction.canSetInactive = true
+                faction.reputationIndex = 114
+                faction.isInactive = false
+                C_Reputation.GetSelectedFaction = function() return 0.5 end
+                local checked = false
+                local checkbox = { GetChecked = function() return checked end }
+                PlaySound = function() end
+
+                onClick(checkbox)
+                checked = true
+                onClick(checkbox)
+                if C_Reputation.IsFactionActive(0.5) then
+                    return "consumer_did_not_map_fractional_index_to_first_row"
+                end
+                return "ok"
+                "#,
+            )
+            .expect("Retail inactive checkbox should accept the native index conversion");
+        assert_eq!(result, "ok");
+    }
+}
+
 #[cfg(not(any(feature = "client-era", feature = "client-anniversary")))]
 #[test]
 fn show_ui_panel_locks_reputation_frame_layout() {
