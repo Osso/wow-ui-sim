@@ -509,7 +509,6 @@ fn additional_highlights(state: &mut LuaState) -> LuaResult<u32> {
 
 #[cfg(all(test, feature = "client-retail"))]
 mod r88e2_tests {
-    use super::*;
     use crate::lua_api::WowLuaEnv;
 
     #[test]
