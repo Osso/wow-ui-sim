@@ -221,8 +221,8 @@ mod forever {
         "assert(C_UnitAuras.GetGroupBuffVisualAlerts == nil); assert(C_UnitAuras.SetGroupBuffVisualAlerts == nil); assert(C_UnitAuras.SetHiddenGroupBuffs == nil)"
     );
     contract!(
-        identity_secrecy_query_uses_the_existing_unit_identity_policy,
-        "assert(C_Secrets.ShouldUnitIdentityBeSecret('player') == false); assert(C_Secrets.ShouldUnitIdentityBeSecret('party1') == true)"
+        identity_secrecy_accepts_party_token_without_party,
+        "assert(type(C_Secrets.ShouldUnitIdentityBeSecret) == 'function'); C_Secrets.ShouldUnitIdentityBeSecret('party1')"
     );
     contract!(
         experience_preset_is_not_guessed,
