@@ -1,6 +1,6 @@
 //! Legacy merchant affordability query backed by host-supplied offer and inventory state.
 
-use crate::c_api::helpers::parse_numeric_string;
+use crate::c_api::parse_numeric_string;
 use crate::items;
 use crate::lua_api::methods::borrow_state;
 use crate::lua_api::state::{MerchantCostRecord, SimState};
