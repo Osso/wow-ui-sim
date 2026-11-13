@@ -1155,6 +1155,9 @@ pub struct SimState {
     pub ui_reload_requested: bool,
     pub(crate) session_lifecycle: super::super::env_lifecycle::SessionLifecycle,
     pub(crate) addon_initialization_failures: HashMap<String, String>,
+    /// Opt-in client parity (`WOW_SIM_SAVE_FAILED_ADDONS`): initialization failures stay
+    /// diagnostics and the failed owners' SavedVariables are saved, as the client saves them.
+    pub save_failed_addons: bool,
     /// Explicit host-supplied cinematic playback state; no playback engine implied.
     pub cinematic_active: bool,
     /// World entry is distinct from IsLoggedIn; supplied/transitioned by the owner.

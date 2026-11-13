@@ -160,6 +160,7 @@ These are the variables a player normally sets:
 | --- | --- |
 | `WOW_SIM_NO_ADDONS` | `1` or `true` skips third-party addon loading. |
 | `WOW_SIM_NO_SAVED_VARS` | `1` or `true` skips loading WTF SavedVariables. |
+| `WOW_SIM_SAVE_FAILED_ADDONS` | `1` or `true` saves the SavedVariables of addons that raised Lua errors or named missing files while loading, as the client does. Failed SavedVariables input stays protected. |
 | `WOW_SIM_DEBUG_ELEMENTS` | `1` draws element borders and anchor points; see [debug tools](docs/debug-tools.md). |
 | `WOW_SIM_DEBUG_BORDERS` | `1` draws element borders only. |
 | `WOW_SIM_DEBUG_ANCHORS` | `1` draws anchor points only. |
