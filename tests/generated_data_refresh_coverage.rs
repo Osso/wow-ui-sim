@@ -47,8 +47,8 @@ fn generated_lua_refresh_manifest_matches_current_file_contents() {
 
     assert_eq!(
         manifest.generated_files.len(),
-        2,
-        "refresh manifest should track the current large generated Lua files explicitly"
+        3,
+        "refresh manifest should track every generated artifact explicitly"
     );
 
     for entry in manifest.generated_files {
