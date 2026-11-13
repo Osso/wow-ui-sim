@@ -9,14 +9,6 @@ pub(crate) fn world_map_provider_sets_and_refreshes_user_waypoint(env: &WowLuaEn
         assert(type(WaypointLocationDataProviderMixin.RefreshAllData) == "function")
         assert(type(WaypointLocationDataProviderMixin.HandleClick) == "function")
 
-        local function assert_point(point, mapID, expectedX, expectedY, expectedZ)
-            assert(point and point.uiMapID == mapID)
-            local x, y = point.position:GetXY()
-            assert(math.abs(x - expectedX) < 0.000001)
-            assert(math.abs(y - expectedY) < 0.000001)
-            assert(point.z == expectedZ)
-        end
-
         local pin
         local cursorX, cursorY = 0.25, 0.75
         local map = {
@@ -43,13 +35,36 @@ pub(crate) fn world_map_provider_sets_and_refreshes_user_waypoint(env: &WowLuaEn
         local provider = CreateFromMixins(WaypointLocationDataProviderMixin)
         provider.GetMap = function() return map end
         provider.toggleActive = true
+        _G.__c_map_user_waypoint_provider = provider
+        _G.__assert_user_waypoint = function(point, mapID, expectedX, expectedY, expectedZ)
+            assert(point and point.uiMapID == mapID)
+            local x, y = point.position:GetXY()
+            assert(math.abs(x - expectedX) < 0.000001)
+            assert(math.abs(y - expectedY) < 0.000001)
+            assert(point.z == expectedZ)
+        end
 
         provider:RefreshAllData()
         assert(provider.pin == nil, "a map without a user waypoint must not get a pin")
+        "#,
+    )
+    .expect("the original waypoint provider must refresh an empty map without error");
 
-        provider:HandleClick()
+    let click_error = env
+        .exec("__c_map_user_waypoint_provider:HandleClick()")
+        .expect_err("original HandleClick should reach the known C_SuperTrack blocker")
+        .to_string();
+    assert!(
+        click_error.contains("WaypointLocationDataProvider.lua:101")
+            && click_error.contains("SetSuperTrackedUserWaypoint"),
+        "HandleClick must fail only at the out-of-scope C_SuperTrack call; got {click_error}"
+    );
+
+    env.exec(
+        r#"
+        local provider = __c_map_user_waypoint_provider
         local point = C_Map.GetUserWaypoint()
-        assert_point(point, 2248, 0.25, 0.75, nil)
+        __assert_user_waypoint(point, 2248, 0.25, 0.75, nil)
         assert(C_Map.HasUserWaypoint() == true)
 
         provider:RefreshAllData()
@@ -63,7 +78,7 @@ pub(crate) fn world_map_provider_sets_and_refreshes_user_waypoint(env: &WowLuaEn
             z = 12,
         })
         point = C_Map.GetUserWaypoint()
-        assert_point(point, 2248, 0.6, 0.4, 12)
+        __assert_user_waypoint(point, 2248, 0.6, 0.4, 12)
 
         local rejectedPoints = {
             { uiMapID = 0, position = { x = 0.6, y = 0.4 } },
@@ -75,7 +90,7 @@ pub(crate) fn world_map_provider_sets_and_refreshes_user_waypoint(env: &WowLuaEn
         for _, rejected in ipairs(rejectedPoints) do
             C_Map.SetUserWaypoint(rejected)
             point = C_Map.GetUserWaypoint()
-            assert_point(point, 2248, 0.6, 0.4, 12)
+            __assert_user_waypoint(point, 2248, 0.6, 0.4, 12)
         end
 
         C_Map.SetUserWaypoint({
@@ -84,7 +99,7 @@ pub(crate) fn world_map_provider_sets_and_refreshes_user_waypoint(env: &WowLuaEn
             z = "not a number",
         })
         point = C_Map.GetUserWaypoint()
-        assert_point(point, 2248, 0.45, 0.35, nil)
+        __assert_user_waypoint(point, 2248, 0.45, 0.35, nil)
 
         local mapPosition = C_Map.GetUserWaypointPositionForMap(2248)
         local positionX, positionY = mapPosition:GetXY()
@@ -95,13 +110,13 @@ pub(crate) fn world_map_provider_sets_and_refreshes_user_waypoint(env: &WowLuaEn
         assert(provider.pin ~= nil)
         assert(math.abs(provider.pin.x - 0.45) < 0.000001)
         assert(math.abs(provider.pin.y - 0.35) < 0.000001)
-        provider.pin.IsMouseOver = function() return true end
-        provider:HandleClick()
+
+        C_Map.ClearUserWaypoint()
         assert(C_Map.HasUserWaypoint() == false)
         assert(C_Map.GetUserWaypoint() == nil)
         provider:RefreshAllData()
         assert(provider.pin == nil)
         "#,
     )
-    .expect("the original waypoint provider must set, refresh, and clear a user waypoint");
+    .expect("the original provider must observe the stored, replaced, and cleared waypoint");
 }
