@@ -29,10 +29,6 @@ pub(super) fn patch_chat_voice_button_surface(env: &crate::lua_api::WowLuaEnv) {
     temporary::chat_voice_button_surface::patch(env);
 }
 
-pub(super) fn patch_item_socketing_tooltips(env: &crate::lua_api::WowLuaEnv) {
-    temporary::item_socketing_tooltips::patch(env);
-}
-
 pub(super) fn patch_action_bar_button_event_fanout(env: &crate::lua_api::WowLuaEnv) {
     temporary::action_bar_button_event_fanout::patch(env);
 }
