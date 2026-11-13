@@ -207,6 +207,7 @@ fn call_with_captured_source(state: &mut LuaState) -> LuaResult<u32> {
 
 fn create_secure_delegate(state: &mut LuaState) -> LuaResult<u32> {
     if current_stack_taint(state).is_some_and(|source| !source.is_empty()) {
+        // INFERRED: the native reporting helper's effect is unknown; add no report.
         return Ok(0);
     }
 

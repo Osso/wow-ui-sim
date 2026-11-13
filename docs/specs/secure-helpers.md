@@ -35,6 +35,7 @@ The documentation does not state these details, and decompiled bodies were not r
 
 - **Implemented:** `securecopy` omits metatables. The independent VERIFIED static table-copy and allocation findings in `S4s7a-securecopy-emulated.md`, window E, corroborate the emulated metatable-bearing table result. The simulator allocates a new ordinary table without assigning a metatable.
 - **Implemented:** the verified construction gate returns zero values for nonempty execution taint when the native reporting helper returns. Reporter effects remain UNKNOWN.
+- **INFERRED simulator choice:** no additional reporter is called because its native effect is unknown.
 - **Not fully implemented:** `secretwrap` variadic same-type values and marker gate. The Retail generated declaration `FrameScriptDocumentation.lua:426-440` independently documents variadic input and output and secret conversion; `S7a-secretwrap-emulated.md` verifies the conditional return-transfer rule, but the complete handler is EMULATED and the live gate is UNKNOWN. The current simulator invokes rilua `wrap_secret` for each argument; complete per-value marker/gate parity requires rilua work.
 - **Not implemented:** the `secretunwrap` denied path returning zero values. `S7a-secretwrap-emulated.md` labels that result EMULATED and assumes the reporting helper returns; no independent route establishes this outcome.
 
