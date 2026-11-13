@@ -7,6 +7,13 @@ fn env() -> WowLuaEnv {
 #[test]
 fn c_tooltip_info_talent_reuses_spell_tooltips() {
     let env = env();
+    // R81 Q3: preserve description index 3 with explicit alternate helper text.
+    env.state()
+        .borrow_mut()
+        .spell_tooltip_inputs
+        .entry(467911)
+        .or_default()
+        .alternate_cast_text = Some("host alternate".into());
     let (talent_name, talent_desc, spell_name, spell_desc): (String, String, String, String) = env
         .eval(
             r#"

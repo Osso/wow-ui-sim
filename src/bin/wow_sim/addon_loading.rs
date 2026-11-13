@@ -4,8 +4,9 @@ use std::collections::{HashMap, HashSet};
 use std::path::{Path, PathBuf};
 use wow_ui_sim::client_profile;
 use wow_ui_sim::loader::{
-    LoadResult, LoadTiming, StartupAddonLoadKind, discover_blizzard_startup_addons_for_screen,
-    load_startup_addon, startup_bootstrap_eligible,
+    LoadResult, LoadTiming, StartupAddonLoadKind, discover_all_blizzard_addons,
+    discover_blizzard_startup_addons_for_screen, load_startup_addon, register_load_with_addons,
+    register_load_with_declarations, startup_bootstrap_eligible,
 };
 use wow_ui_sim::logging;
 use wow_ui_sim::lua_api::state::LuaErrorRecord;
@@ -65,6 +66,9 @@ pub fn load_blizzard_addons(
     let mut total_timing = LoadTiming::default();
 
     env.gc_stop();
+
+    let registered_candidates = discover_all_blizzard_addons(&addons_dir);
+    register_load_with_addons(&env.loader_env(), &registered_candidates);
 
     // Wrath ships a top-level FrameXML.toc that pre-dates the retail Blizzard_*
     // split. Load it as a synthetic addon before iterating Blizzard_* dirs so
@@ -131,6 +135,9 @@ fn load_one_blizzard_addon(
     verbose: bool,
     timing: &mut LoadTiming,
 ) {
+    if is_addon_loaded(env, name) {
+        return;
+    }
     let first_error = env.state().borrow().lua_error_records.len();
     let result = load_startup_addon(&env.loader_env(), toc_path, kind, saved_vars.as_mut());
     match result {
@@ -154,7 +161,9 @@ fn record_blizzard_addon_success(
     record_load_initialization(env, name, &result);
     print_verbose_blizzard_status(name, verbose, &result);
     print_load_diagnostics(&result);
-    if kind == StartupAddonLoadKind::Full {
+    if kind == StartupAddonLoadKind::Full
+        && !wow_ui_sim::loader::uses_verified_load_with_semantics()
+    {
         fire_addon_loaded(env, name);
     }
     timing.accumulate(&result.timing);
@@ -214,12 +223,10 @@ fn fire_addon_loaded(env: &WowLuaEnv, name: &str) {
     let name_value = env.lua_string(name);
     let arguments =
         wow_ui_sim::loader::addon_loaded_arguments(&env.state().borrow(), name, name_value);
-    if let Err(e) = env.fire_event_with_args("ADDON_LOADED", &arguments) {
-        env.mark_addon_initialization_failed(
-            name,
-            format!("Error firing ADDON_LOADED for {name}: {e}"),
-        );
-        logging::println_elapsed(&format!("Error firing ADDON_LOADED for {name}: {e}"));
+    if let Err(error) = env.fire_event_with_args("ADDON_LOADED", &arguments) {
+        let message = format!("Error firing ADDON_LOADED for {name}: {error}");
+        env.mark_addon_initialization_failed(name, message.clone());
+        logging::println_elapsed(&message);
     }
 }
 
@@ -442,6 +449,7 @@ struct AddonMetadata {
     title: String,
     notes: String,
     metadata: HashMap<String, String>,
+    load_with: Vec<String>,
     load_on_demand: bool,
     default_enabled: bool,
     dependencies: Vec<String>,
@@ -455,6 +463,7 @@ fn parse_addon_metadata(name: &str, toc_path: &Path) -> AddonMetadata {
             title: name.to_string(),
             notes: String::new(),
             metadata: HashMap::new(),
+            load_with: Vec::new(),
             load_on_demand: false,
             default_enabled: true,
             dependencies: Vec::new(),
@@ -471,6 +480,7 @@ fn parse_addon_metadata(name: &str, toc_path: &Path) -> AddonMetadata {
             .unwrap_or_else(|| name.to_string()),
         notes: toc.metadata.get("Notes").cloned().unwrap_or_default(),
         metadata: toc.metadata.clone(),
+        load_with: toc.load_with(),
         load_on_demand: toc.is_load_on_demand(),
         default_enabled: toc.default_enabled(),
         dependencies: toc.dependencies(),
@@ -525,11 +535,24 @@ fn register_discovered_addons(
     addons: &[(String, PathBuf)],
     enable_overrides: Option<&HashMap<String, bool>>,
 ) {
-    for (name, toc_path) in addons {
-        let metadata = parse_addon_metadata(name, toc_path);
-        let enabled = addon_enabled(name, &metadata, enable_overrides);
-        register_or_update_addon(env, name, metadata, enabled);
-    }
+    let declarations = addons
+        .iter()
+        .map(|(name, toc_path)| register_discovered_addon(env, name, toc_path, enable_overrides))
+        .collect::<Vec<_>>();
+    register_load_with_declarations(&env.loader_env(), &declarations);
+}
+
+fn register_discovered_addon(
+    env: &WowLuaEnv,
+    name: &str,
+    toc_path: &Path,
+    enable_overrides: Option<&HashMap<String, bool>>,
+) -> (String, Vec<String>, bool) {
+    let metadata = parse_addon_metadata(name, toc_path);
+    let enabled = addon_enabled(name, &metadata, enable_overrides);
+    let load_with = metadata.load_with.clone();
+    register_or_update_addon(env, name, metadata, enabled);
+    (name.to_owned(), load_with, enabled)
 }
 
 fn register_or_update_addon(env: &WowLuaEnv, name: &str, metadata: AddonMetadata, enabled: bool) {
@@ -610,7 +633,9 @@ fn load_registered_single_addon(
             record_load_initialization(env, name, &r);
             if kind == StartupAddonLoadKind::Full {
                 mark_addon_loaded(env, name, &r);
-                fire_addon_loaded(env, name);
+                if !wow_ui_sim::loader::uses_verified_load_with_semantics() {
+                    fire_addon_loaded(env, name);
+                }
             }
             record_addon_success(name, &r, stats);
         }

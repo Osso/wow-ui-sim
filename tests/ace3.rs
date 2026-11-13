@@ -222,13 +222,16 @@ fn test_load_game_menu() {
     let env = WowLuaEnv::new().unwrap();
 
     // First load Blizzard_SharedXML (already tested to work)
-    let shared_xml_base_toc = blizzard_ui.join("Blizzard_SharedXMLBase/Blizzard_SharedXMLBase.toc");
+    let shared_xml_base_toc =
+        wow_ui_sim::loader::find_toc_file(&blizzard_ui.join("Blizzard_SharedXMLBase"))
+            .expect("SharedXMLBase active-profile TOC resolves");
     match load_addon(&env.loader_env(), &shared_xml_base_toc) {
         Ok(r) => println!("SharedXMLBase: {} Lua, {} XML", r.lua_files, r.xml_files),
         Err(e) => println!("SharedXMLBase failed: {}", e),
     }
 
-    let shared_xml_toc = blizzard_ui.join("Blizzard_SharedXML/Blizzard_SharedXML_Mainline.toc");
+    let shared_xml_toc = wow_ui_sim::loader::find_toc_file(&blizzard_ui.join("Blizzard_SharedXML"))
+        .expect("SharedXML active-profile TOC resolves");
     match load_addon(&env.loader_env(), &shared_xml_toc) {
         Ok(r) => println!(
             "SharedXML: {} Lua, {} XML (warnings: {})",
@@ -239,8 +242,9 @@ fn test_load_game_menu() {
         Err(e) => println!("SharedXML failed: {}", e),
     }
 
-    // Now try loading GameMenu
-    let game_menu_toc = blizzard_ui.join("Blizzard_GameMenu/Blizzard_GameMenu_Mainline.toc");
+    // PTR 12.1.7 Blizzard_GameMenu.toc:7-9 selects the shared frame source.
+    let game_menu_toc = wow_ui_sim::loader::find_toc_file(&blizzard_ui.join("Blizzard_GameMenu"))
+        .expect("GameMenu active-profile TOC resolves");
     let result = load_addon(&env.loader_env(), &game_menu_toc);
 
     match result {
@@ -482,4 +486,69 @@ fn test_load_plater() {
             println!("Plater failed to load: {}", e);
         }
     }
+}
+
+#[test]
+fn selected_game_menu_close_button_lifecycle() {
+    if cfg!(feature = "client-wrath") {
+        let env = WowLuaEnv::new().unwrap();
+        crate::common::load_profile_framexml(&env);
+        env.exec(
+            r#"
+            assert(GameMenuFrameMixin == nil)
+            assert(not GameMenuFrame:IsShown())
+            ShowUIPanel(GameMenuFrame)
+            assert(GameMenuFrame:IsShown())
+            GameMenuButtonContinue:Click()
+            assert(not GameMenuFrame:IsShown())
+        "#,
+        )
+        .expect("12340 game menu continue-button lifecycle");
+        return;
+    }
+    let env = crate::common::game_menu_fixture::setup_game_menu_env();
+    let (mixin_exists, frame_exists): (bool, bool) = env
+        .eval("return GameMenuFrameMixin ~= nil, GameMenuFrame ~= nil")
+        .expect("selected GameMenu consumer should publish its frame and mixin");
+    assert!(mixin_exists, "GameMenuFrameMixin should exist");
+    assert!(frame_exists, "GameMenuFrame should exist");
+
+    env.exec(
+        r#"
+        assert(not GameMenuFrame:IsShown())
+        ShowUIPanel(GameMenuFrame)
+        assert(GameMenuFrame:IsShown())
+        "#,
+    )
+    .expect("active-profile GameMenu opens");
+
+    #[cfg(feature = "client-retail")]
+    env.exec(
+        r#"
+        -- Retail GameMenuFrame.lua:218 and MainMenuFrameTemplates.lua:25-78:
+        -- the close button is the last pooled button, not a closeButton field.
+        local closeButton
+        for button in GameMenuFrame.buttonPool:EnumerateActive() do
+            if not closeButton or button.layoutIndex > closeButton.layoutIndex then
+                closeButton = button
+            end
+        end
+        assert(closeButton)
+        assert(closeButton:GetText() == RETURN_TO_GAME)
+        closeButton:Click()
+        "#,
+    )
+    .expect("Retail last pooled button returns to the game");
+
+    #[cfg(not(feature = "client-retail"))]
+    env.exec(
+        r#"
+        assert(GameMenuFrame.closeButton)
+        GameMenuFrame.closeButton:Click()
+        "#,
+    )
+    .expect("selected profile closeButton returns to the game");
+
+    env.exec("assert(not GameMenuFrame:IsShown())")
+        .expect("active-profile GameMenu closes after its button click");
 }

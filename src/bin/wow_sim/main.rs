@@ -456,6 +456,35 @@ fn runtime_blizzard_ui_addons_path_with_setup() -> wow_ui_sim::Result<PathBuf> {
     )))
 }
 
+#[cfg(test)]
+fn recover_missing_blizzard_ui_addons_path(
+    missing_cache_error: wow_ui_sim::Error,
+) -> wow_ui_sim::Result<PathBuf> {
+    use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
+
+    let index = match ACTIVE {
+        ClientProfile::Retail => Some(include_str!("../../../data/blizzard-ui-builds/retail.json")),
+        ClientProfile::Ptr => Some(include_str!("../../../data/blizzard-ui-builds/ptr.json")),
+        _ => None,
+    };
+    let expected_pin = match index {
+        Some(index) => {
+            let index: serde_json::Value = serde_json::from_str(index).map_err(|cause| {
+                wow_ui_sim::Error::Other(format!("read expected UI pin: {cause}"))
+            })?;
+            index["version"]
+                .as_str()
+                .ok_or_else(|| wow_ui_sim::Error::Other("UI pin has no version".into()))?
+                .to_owned()
+        }
+        None => format!("{ACTIVE:?} profile manifest"),
+    };
+    Err(wow_ui_sim::Error::Other(format!(
+        "{missing_cache_error}; expected pin {expected_pin}; automatic Blizzard UI sync is disabled in tests; prepare the cache with `wow-cli casc sync-blizzard-ui` before testing"
+    )))
+}
+
+#[cfg(not(test))]
 fn recover_missing_blizzard_ui_addons_path(
     _missing_cache_error: wow_ui_sim::Error,
 ) -> wow_ui_sim::Result<PathBuf> {

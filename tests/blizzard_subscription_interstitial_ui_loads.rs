@@ -7,6 +7,9 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -167,7 +170,7 @@ fn toc_raw_bytes_pin_metadata_and_bootstrap_xml_body() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn body_resolves_bootstrap_then_xml_entry() {
     let toc = TocFile::from_file(&subscription_interstitial_toc()).expect("TOC parses");
@@ -178,9 +181,15 @@ fn body_resolves_bootstrap_then_xml_entry() {
         .map(|p| p.to_string_lossy().to_string())
         .collect();
 
-    let expected = if cfg!(feature = "client-wowforever") {
-        // Forever's TOC lists the shared Lua and [Game] Camelot Lua before
-        // XML (Blizzard_SubscriptionInterstitialUI.toc:3-6).
+    let expected = if toc_layout::ptr() {
+        // PTR lists bootstrap, Mainline Lua and XML directly in the TOC.
+        vec![
+            "Blizzard_SubscriptionInterstitialUI_Bootstrap.lua".to_string(),
+            "Blizzard_SubscriptionInterstitialUI.lua".to_string(),
+            "Blizzard_SubscriptionInterstitialUI.xml".to_string(),
+        ]
+    } else if toc_layout::forever() {
+        // Forever also lists its Camelot [Game] Lua before XML.
         vec![
             "Blizzard_SubscriptionInterstitialUI_Bootstrap.lua".to_string(),
             "Blizzard_SubscriptionInterstitialUI.lua".to_string(),
@@ -197,7 +206,7 @@ fn body_resolves_bootstrap_then_xml_entry() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn subscription_lua_loads_before_xml_for_active_profile() {
     if cfg!(feature = "client-wowforever") {
@@ -232,10 +241,22 @@ fn subscription_lua_loads_before_xml_for_active_profile() {
 
     let xml_path = subscription_interstitial_dir().join("Blizzard_SubscriptionInterstitialUI.xml");
     let raw = std::fs::read_to_string(&xml_path).expect("XML reads");
-    assert!(
-        raw.contains("<Script file=\"Blizzard_SubscriptionInterstitialUI.lua\""),
-        "active-profile XML must load its Lua consumer with a Script directive"
-    );
+    if toc_layout::unified_toc_tree() {
+        // PTR/Forever TOCs list Lua directly; the XML does not own Lua loading.
+        assert!(!raw.contains("<Script file=\"Blizzard_SubscriptionInterstitialUI.lua\""));
+    } else {
+        assert!(
+            raw.contains("<Script file=\"Blizzard_SubscriptionInterstitialUI.lua\""),
+            "Retail XML loads its Lua through the Script directive"
+        );
+    }
+}
+}
+
+retail_ptr_forever_toc_fixture! {
+#[test]
+fn xml_chains_lua_via_script_file_directive() {
+    subscription_lua_loads_before_xml_for_active_profile();
 }
 }
 
@@ -534,4 +555,36 @@ fn blizzard_subscriptioninterstitialui_toc_is_absent_from_classic_caches() {
     );
     assert!(wow_ui_sim::loader::find_toc_file(&dir).is_none());
 }
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn xml_lua_loading_matches_selected_toc() {
+    let toc = TocFile::from_file(&subscription_interstitial_toc()).expect("TOC parses");
+    let body: Vec<String> = toc
+        .files
+        .iter()
+        .map(|file| file.to_string_lossy().into_owned())
+        .collect();
+    let lua_index = body
+        .iter()
+        .position(|file| file.ends_with("Blizzard_SubscriptionInterstitialUI.lua"));
+    let xml_index = body
+        .iter()
+        .position(|file| file.ends_with("Blizzard_SubscriptionInterstitialUI.xml"));
+    if toc_layout::unified_toc_tree() {
+        assert!(
+            matches!((lua_index, xml_index), (Some(lua), Some(xml)) if lua < xml),
+            "Unified PTR TOC line 4 lists Lua before XML; no XML Script directive is needed"
+        );
+    } else {
+        let xml_path =
+            subscription_interstitial_dir().join("Blizzard_SubscriptionInterstitialUI.xml");
+        let raw = std::fs::read_to_string(&xml_path).expect("XML reads");
+        assert!(raw.contains("<Script file=\"Blizzard_SubscriptionInterstitialUI.lua\""));
+        assert!(
+            lua_index.is_none(),
+            "Retail TOC delegates Lua loading to XML"
+        );
+    }
 }

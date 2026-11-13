@@ -1,6 +1,6 @@
 //! Private helpers shared across core_state submodules.
 
-use crate::lua_api::methods::borrow_state_mut;
+use crate::lua_api::methods::borrow_state;
 use crate::lua_bridge::stack_val;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
@@ -21,8 +21,6 @@ pub(super) fn opt_f32(state: &LuaState, index: i32) -> f32 {
     }
 }
 
-pub(super) use crate::widget::has_queryable_rect;
-
 fn raw_frame_size(state: &crate::lua_api::state::SimState, id: u64) -> (f32, f32) {
     state
         .widgets
@@ -32,21 +30,28 @@ fn raw_frame_size(state: &crate::lua_api::state::SimState, id: u64) -> (f32, f32
 }
 
 pub(super) fn frame_size(state: &mut LuaState, id: u64, raw: bool) -> LuaResult<(f32, f32)> {
-    let mut sim = borrow_state_mut(state)?;
-    if !raw
-        && sim
-            .widgets
-            .get(id)
-            .is_some_and(|frame| has_queryable_rect(frame, id))
-    {
-        sim.resolve_rect_if_dirty(id);
+    if raw {
+        let sim = borrow_state(state)?;
+        return Ok(raw_frame_size(&sim, id));
     }
-    let size = if raw {
-        raw_frame_size(&sim, id)
-    } else {
-        sim.widgets.resolved_size(id)
+
+    let stored_font_string_height = {
+        let sim = borrow_state(state)?;
+        sim.widgets
+            .get(id)
+            .filter(|frame| {
+                frame.widget_type == crate::widget::WidgetType::FontString && frame.width > 0.0
+            })
+            .map(|_| sim.widgets.stored_size(id).1)
     };
-    Ok(size)
+    if let Some((rect, effective_scale, _)) =
+        crate::lua_api::rect_geometry::resolve_queryable_rect(state, id)?
+    {
+        let height = stored_font_string_height.unwrap_or(rect.height / effective_scale);
+        return Ok((rect.width / effective_scale, height));
+    }
+
+    Ok(borrow_state(state)?.widgets.stored_size(id))
 }
 
 pub(super) struct ExplicitSizeState {

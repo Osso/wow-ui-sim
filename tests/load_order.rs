@@ -210,11 +210,18 @@ fn test_blizzard_addon_load_order_snapshot() {
             return;
         }
 
+        // PTR 12.1.7.70668 snapshot from the selected pinned AddOns cache.
         #[cfg(feature = "client-ptr")]
-        let expected: Vec<&str> = include_str!("fixtures/ptr-12-1-5-eager-load-order.txt")
+        let expected: Vec<&str> = include_str!("fixtures/ptr-12-1-7-eager-load-order.txt")
             .lines()
             .collect();
-        #[cfg(not(feature = "client-ptr"))]
+        // Forever 1.60.1.70707: independently derived from selected Game TOCs,
+        // then checked for all required edges and stable dependency-first order.
+        #[cfg(feature = "client-wowforever")]
+        let expected: Vec<&str> = include_str!("fixtures/forever-1-60-1-eager-load-order.txt")
+            .lines()
+            .collect();
+        #[cfg(not(any(feature = "client-ptr", feature = "client-wowforever")))]
         #[rustfmt::skip]
         let expected: &[&str] = &[
             "Blizzard_ProjectConstants",
@@ -270,6 +277,7 @@ fn test_blizzard_addon_load_order_snapshot() {
             "Blizzard_TransmogShared",
             "Blizzard_LFGUtil",
             "Blizzard_FrameXML",
+            "Blizzard_RestrictedAddOnEnvironment",
             "Blizzard_SimpleCheckout",
             "Blizzard_StoreUI",
             "Blizzard_QuickKeybind",
@@ -292,7 +300,6 @@ fn test_blizzard_addon_load_order_snapshot() {
             "Blizzard_StatusTrayManager",
             "Blizzard_UnitFrame",
             "Blizzard_ScriptErrorsFrame",
-            "Blizzard_RestrictedAddOnEnvironment",
             "Blizzard_EnvironmentCleanup",
             "Blizzard_TimeManager",
             "Blizzard_CooldownBroadcaster",
@@ -438,17 +445,49 @@ fn test_blizzard_addon_load_order_snapshot() {
     }
 }
 
-/// Helper to regenerate the snapshot above.
+/// The Forever fixture is a valid selected Game dependency order, not just an
+/// accepted copy of the simulator's current output.
+#[cfg(feature = "client-wowforever")]
 #[test]
-#[ignore]
-fn dump_load_order() {
+fn forever_fixture_orders_selected_required_publishers_before_consumers() {
+    use std::collections::HashMap;
+    use wow_ui_sim::screen::ScreenKind;
+    use wow_ui_sim::toc::TocFile;
+
     let ui = blizzard_ui_dir();
-    let addons = discover_blizzard_addons(&ui);
-    for (name, _) in &addons {
-        eprintln!("    \"{name}\",");
+    let positions: HashMap<&str, usize> =
+        include_str!("fixtures/forever-1-60-1-eager-load-order.txt")
+            .lines()
+            .enumerate()
+            .map(|(index, name)| (name, index))
+            .collect();
+    assert_eq!(positions.len(), 211);
+    for (&name, &position) in &positions {
+        let path = wow_ui_sim::loader::find_toc_file(&ui.join(name))
+            .unwrap_or_else(|| panic!("fixture addon {name} must have a selected TOC"));
+        let toc = TocFile::from_file(&path).unwrap();
+        assert!(
+            toc.allows_screen(ScreenKind::Game),
+            "{name}: Game TOC required"
+        );
+        assert!(
+            !toc.is_game_type_restricted(),
+            "{name}: selected game type required"
+        );
+        for dependency in toc
+            .dependencies_for_screen(ScreenKind::Game)
+            .into_iter()
+            .chain(toc.load_managers())
+        {
+            let dependency_position = positions.get(dependency.as_str()).unwrap_or_else(|| {
+                panic!("{name} requires missing fixture publisher {dependency}")
+            });
+            assert!(
+                *dependency_position < position,
+                "{dependency} must precede {name}"
+            );
+        }
     }
-    eprintln!("Total: {} addons", addons.len());
-    panic!("dump complete — copy output into test_blizzard_addon_load_order_snapshot");
 }
 
 /// PaperDollItemSlotButton_OnLoad must exist when Blizzard_MainMenuBarBagButtons loads.

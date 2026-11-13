@@ -263,8 +263,8 @@ fn test_create_frame_from_xml_inline_show_game_tooltip_helper_runs() {
     assert!(result.3);
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
-#[ignore = "TODO: test calls GameTooltip:AddLine(STRING, COLOR_TABLE, true) expecting r/g/b expansion, but the GlobalMethodWithStringGlobalBoolArgs fast-path only forwards three values verbatim. Either the test needs a 5-arg call to match GlobalMethodWithGlobalThreeGlobalBoolArgs or a new color-expanding fast-path needs adding."]
 fn test_create_frame_from_xml_inline_tooltip_add_line_global_three_global_bool_runs() {
     clear_templates();
     let env = WowLuaEnv::new().unwrap();
@@ -286,7 +286,7 @@ fn test_create_frame_from_xml_inline_tooltip_add_line_global_three_global_bool_r
         r#"<Ui>
         <Button name="XmlInlineTooltipAddLineButton" parent="UIParent">
             <Scripts><OnEnter>
-                GameTooltip:AddLine(ALL_ASSIST_NOT_LEADER_ERROR, RED_FONT_COLOR, true);
+                GameTooltip:AddLine(ALL_ASSIST_NOT_LEADER_ERROR, RED_FONT_COLOR.r, RED_FONT_COLOR.g, RED_FONT_COLOR.b, true);
             </OnEnter></Scripts>
         </Button>
     </Ui>"#,
@@ -554,4 +554,191 @@ fn test_create_frame_from_xml_inline_conditional_global_field_equals_string_then
     .unwrap();
     let result: String = env.eval(r#"return XmlInlinePopupArgs[1]"#).unwrap();
     assert_eq!(result, "RENAME_GUILD");
+}
+
+#[test]
+fn test_inline_tooltip_three_arguments_preserve_lua_values() {
+    clear_templates();
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r##"
+        RED_FONT_COLOR = { r = 0.1, g = 0.2, b = 0.3 }
+        ALL_ASSIST_NOT_LEADER_ERROR = "No leader"
+        GameTooltip = {
+            AddLine = function(self, ...)
+                self.args = { n = select('#', ...), ... }
+            end,
+        }
+    "##,
+    )
+    .unwrap();
+    create_first_frame(
+        &env,
+        r#"<Ui>
+        <Button name="XmlInlineThreeArgsButton" parent="UIParent">
+            <Scripts><OnEnter>
+                GameTooltip:AddLine(ALL_ASSIST_NOT_LEADER_ERROR, RED_FONT_COLOR, true);
+            </OnEnter></Scripts>
+        </Button>
+    </Ui>"#,
+        "Button",
+    );
+    for text in ["No leader", "Not the leader"] {
+        env.exec(&format!("ALL_ASSIST_NOT_LEADER_ERROR = {text:?}"))
+            .unwrap();
+        env.exec(
+            r#"
+            XmlInlineThreeArgsButton:GetScript("OnEnter")(XmlInlineThreeArgsButton)
+            assert(GameTooltip.args.n == 3, "explicit AddLine operands were lost")
+            assert(GameTooltip.args[1] == ALL_ASSIST_NOT_LEADER_ERROR)
+            assert(GameTooltip.args[2] == RED_FONT_COLOR)
+            assert(GameTooltip.args[3] == true)
+        "#,
+        )
+        .unwrap();
+    }
+}
+
+#[test]
+fn test_inline_tooltip_reordered_handler_arguments() {
+    clear_templates();
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r##"
+        GameTooltip = {
+            AddLine = function(self, ...)
+                self.args = { n = select('#', ...), ... }
+            end,
+        }
+    "##,
+    )
+    .unwrap();
+    create_first_frame(
+        &env,
+        r#"<Ui>
+        <Button name="XmlInlineReorderedArgsButton" parent="UIParent">
+            <Scripts><OnClick>
+                GameTooltip:AddLine(button, self);
+            </OnClick></Scripts>
+        </Button>
+    </Ui>"#,
+        "Button",
+    );
+    env.exec(
+        r#"
+        XmlInlineReorderedArgsButton:GetScript("OnClick")(XmlInlineReorderedArgsButton, "RightButton", true)
+        assert(GameTooltip.args.n == 2, "explicit argument count changed")
+        assert(GameTooltip.args[1] == "RightButton", "button argument moved")
+        assert(GameTooltip.args[2] == XmlInlineReorderedArgsButton, "frame argument lost")
+    "#,
+    )
+    .unwrap();
+}
+
+#[test]
+fn test_inline_tooltip_handler_parameter_prefixes() {
+    clear_templates();
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r##"
+        GameTooltip = {
+            AddLine = function(self, ...)
+                self.args = { n = select('#', ...), ... }
+            end,
+        }
+    "##,
+    )
+    .unwrap();
+    for (name, handler, args, count) in [
+        ("PrefixFrame", "OnClick", "self", 1),
+        ("PrefixButton", "OnClick", "self, button", 2),
+        ("PrefixDown", "OnClick", "self, button, down", 3),
+        ("PrefixVarargs", "OnEvent", "self, event, ...", 4),
+        ("PrefixSelfVarargs", "OnEvent", "self, ...", 3),
+    ] {
+        let xml = format!(
+            r#"<Ui><Button name="{name}" parent="UIParent"><Scripts><{handler}>GameTooltip:AddLine({args});</{handler}></Scripts></Button></Ui>"#
+        );
+        create_first_frame(&env, &xml, "Button");
+        env.exec(&format!(
+            r#"
+            local frame = _G["{name}"]
+            frame:GetScript("{handler}")(frame, "RightButton", true, "extra")
+            assert(GameTooltip.args.n == {count}, "prefix argument count changed")
+            assert(GameTooltip.args[1] == frame, "prefix lost self")
+            "#,
+        ))
+        .unwrap();
+    }
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn test_pinned_slider_on_value_changed_preserves_user_input() {
+    clear_templates();
+    let env = WowLuaEnv::new().unwrap();
+    let root = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path().unwrap();
+    let xml = std::fs::read_to_string(
+        root.join("Blizzard_SharedXML/Mainline/SharedUIPanelTemplates.xml"),
+    )
+    .unwrap();
+    let ui = parse_xml(&xml).unwrap();
+    let template = ui
+        .elements
+        .iter()
+        .find_map(|element| match element {
+            XmlElement::Frame(frame)
+                if frame.name.as_deref() == Some("SliderWithButtonsAndLabelTemplate") =>
+            {
+                Some(frame)
+            }
+            _ => None,
+        })
+        .unwrap();
+    let mut slider = template
+        .all_frame_elements()
+        .into_iter()
+        .find(|(frame, tag)| *tag == "Slider" && frame.parent_key.as_deref() == Some("Slider"))
+        .unwrap()
+        .0
+        .clone();
+    slider.name = Some("PinnedInputSlider".into());
+    slider.parent = Some("PinnedInputOwner".into());
+    env.exec(
+        r#"
+        local owner = CreateFrame("Frame", "PinnedInputOwner", UIParent)
+        owner.calls = {}
+        function owner:OnSliderValueChanged(value, userInput)
+            self.calls[#self.calls + 1] = { value = value, userInput = userInput }
+        end
+        userInput = "not the callback parameter"
+    "#,
+    )
+    .unwrap();
+    create_frame_from_xml(
+        &env.loader_env(),
+        &slider,
+        "Slider",
+        None,
+        None,
+        None,
+        &mut LoadTiming::default(),
+    )
+    .unwrap();
+    env.exec(
+        r#"
+        PinnedInputSlider:SetMinMaxValues(0, 10)
+        PinnedInputSlider:SetValueStep(0)
+        PinnedInputOwner.calls = {}
+        PinnedInputSlider:SetValue(1, true)
+        PinnedInputSlider:SetValue(2, false)
+        PinnedInputSlider:SetValue(3)
+        local calls = PinnedInputOwner.calls
+        assert(#calls == 3, "slider callback count changed")
+        assert(calls[1].value == 1 and calls[1].userInput == true, "user input flag lost")
+        assert(calls[2].value == 2 and calls[2].userInput == false, "explicit code flag changed")
+        assert(calls[3].value == 3 and calls[3].userInput == false, "default code flag changed")
+    "#,
+    )
+    .unwrap();
 }

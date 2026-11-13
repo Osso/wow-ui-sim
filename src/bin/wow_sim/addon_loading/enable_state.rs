@@ -227,6 +227,7 @@ mod tests {
             title: "TestAddon".to_string(),
             notes: String::new(),
             metadata: HashMap::new(),
+            load_with: Vec::new(),
             load_on_demand: false,
             default_enabled,
             dependencies: Vec::new(),

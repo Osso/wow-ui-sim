@@ -186,6 +186,8 @@ macro_rules! frame_defaults {
             button_state: 0,
             pushed_text_offset: (0.0, 0.0),
             layout_rect: None,
+            rect_valid: false,
+            anchor_invalidated: false,
             reported_size: (0.0, 0.0),
 
             // Slider
@@ -298,6 +300,7 @@ macro_rules! frame_defaults {
             is_protected: false,
             prevent_secret_values: false,
             explicit_secret_aspects: 0,
+            is_anchoring_secret: false,
             tooltip_owner_id: None,
             blocking_loads_requested: false,
             vertex_offsets: None,

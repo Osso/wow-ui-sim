@@ -47,6 +47,8 @@ macro_rules! build_empty_sim_state {
                 crate::c_api::c_nameplate_manager::NamePlateHitTestInsets::default(),
             input_interface_style:
                 crate::c_api::c_input_interface_style::InputInterfaceStyle::default(),
+            #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+            last_gamepad_input_timestamp: None,
             video_capability_bytes: Default::default(),
             #[cfg(any(feature = "client-wowforever", feature = "client-ptr"))]
             gamepad_mapped_sticks: None,
@@ -102,6 +104,8 @@ macro_rules! build_empty_sim_state {
             timed_signal_maps: ::std::collections::HashMap::new(),
             focused_frame_id: $runtime.focused_frame_id,
             addons: $collections.addons,
+            registered_load_with: ::std::vec::Vec::new(),
+            load_with_followers: None,
             addon_saved_enable_state: None,
             addon_saved_version_check_enabled: None,
             system_chat_log: Vec::new(),
@@ -111,6 +115,8 @@ macro_rules! build_empty_sim_state {
             pet_journal_hover: crate::c_api::c_pet_journal_hover::PetJournalHoverState::default(),
             anima_diversion: AnimaDiversionState::default(),
             garrison_talents: GarrisonTalentState::default(),
+            hyperlink_tooltip: Default::default(),
+            trade_skill_crafting_ui_inputs: Default::default(),
             #[cfg(feature = "client-retail")]
             garrison_trees: crate::c_api::c_garrison_trees::GarrisonTrees::default(),
             clipboard: ClipboardState::default(),
@@ -144,6 +150,7 @@ macro_rules! build_empty_sim_state {
             party_ai_guids: HashSet::new(),
             #[cfg(feature = "retail-12-0-5")]
             item_tooltip_levels: ::std::collections::HashMap::new(),
+            item_tooltip_inputs: ::std::collections::HashMap::new(),
             blocked_auras_by_unit: $collections.blocked_auras_by_unit,
             #[cfg(feature = "client-wowforever")]
             auras_secret_in_context: false,
@@ -216,7 +223,10 @@ macro_rules! build_empty_sim_state {
             temp_shapeshift_bar_index: 1,
             has_bonus_action_bar: false,
             bonus_bar_index: 0,
+            spell_labels: HashMap::new(),
             action_bars: $collections.action_bars,
+            #[cfg(feature = "client-ptr")]
+            actionbar_cooldown_update_pending: false,
             action_repeat_active_slots: HashSet::new(),
             #[cfg(feature = "retail-12-0-5")]
             special_bar_spells: HashSet::new(),
@@ -337,6 +347,8 @@ macro_rules! build_empty_sim_state {
             is_active_battlefield: false,
             spell_trade_skill_links: HashMap::new(),
             spell_id_aliases: HashMap::new(),
+            spell_tooltip_inputs: HashMap::new(),
+            aura_tooltip_inputs: HashMap::new(),
             spell_tooltip_cost_contexts: HashMap::new(),
             #[cfg(feature = "retail-12-0-5")]
             maw_powers: Default::default(),
@@ -578,6 +590,8 @@ macro_rules! build_empty_sim_state {
             housing_service_enabled: true,
             housing: HousingState::default(),
             catalog_shop_products: Default::default(),
+            #[cfg(feature = "client-ptr")]
+            catalog_shop_interaction: Default::default(),
             store_public_eligibility: Default::default(),
             housing_bundles: Default::default(),
             pet_battles: PetBattleState::default(),
@@ -636,6 +650,7 @@ macro_rules! build_empty_sim_state {
             quest_choice_response_id: None,
             quest_poi_map_id: None,
             selected_quest_log_id: None,
+            quest_currency_tooltip_results: HashMap::new(),
             quest_reward_spell_cache: HashMap::new(),
             quest_detail_reward_spells: None,
             #[cfg(feature = "retail-12-0-5")]
@@ -694,6 +709,7 @@ macro_rules! build_empty_sim_state {
             pet_actions: vec![PetActionSlot::default(); 10],
             glyph: GlyphState::default(),
             currency_info: super::globals::currency_data::seeded_currency_info_map(),
+            currency_tooltip_inputs: HashMap::new(),
             wrath_currency: super::globals::real::wrath_currency::CurrencyListState::default(),
             #[cfg(feature = "client-retail")]
             currency_list: crate::c_api::currency_list::CurrencyListState::default(),
@@ -769,10 +785,18 @@ macro_rules! build_empty_sim_state {
             auction_should_auto_populate_price: true,
             wow_token: WowTokenState::default(),
             mythic_plus: MythicPlusState::default(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            character_creation: Default::default(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            character_customizations: None,
+            name_reservation_feature_status: 0,
+            #[cfg(feature = "client-ptr")]
+            ptr_character_creation: Default::default(),
             character_create_facing_radians: 0.0,
             character_create_altered_form_races: ::std::collections::HashSet::new(),
             character_create_viewing_altered_form: false,
             character_create_blur_enabled: false,
+            // PTR initial zero is INFERRED (R83); existing RF policy is unchanged.
             character_create_camera_zoom: 0,
             character_create_camera_zoom_is_custom: false,
             character_create_default_facing_by_race_sex: ::std::collections::HashMap::new(),
@@ -965,6 +989,7 @@ mod support_types;
 mod ui_reload;
 
 use defaults::*;
+pub(crate) use sim_state::RegisteredLoadWith;
 pub use sim_state::SimState;
 pub use support_types::*;
 

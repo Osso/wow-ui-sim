@@ -37,7 +37,11 @@ fn login_screen_discovers_glue_addons_not_game_base() {
     assert!(addons.iter().any(|name| name == "Blizzard_GlueParent"));
     assert!(addons.iter().any(|name| name == "Blizzard_GlueXML"));
     assert!(!addons.iter().any(|name| name == "Blizzard_UIParent"));
-    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::WowForever {
+    if !matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::WowForever
+            | crate::client_profile::ClientProfile::Ptr
+    ) {
         assert!(!addons.iter().any(|name| name == "Blizzard_CharacterCreate"));
         assert!(
             !addons
@@ -45,6 +49,45 @@ fn login_screen_discovers_glue_addons_not_game_base() {
                 .any(|name| name == "Blizzard_CharacterCustomize")
         );
     }
+}
+
+// LoadFirst is the simulator's phase-one selector, not a PTR field mapping.
+#[cfg(feature = "client-ptr")]
+#[test]
+fn ptr_phase_flags_and_glue_game_masks_select_independently() {
+    let ui = TempBlizzardUiDir::new("ptr-phase-screen-mask");
+    ui.add_addon(
+        "Blizzard_A_PhaseOneGlue",
+        "## AllowLoad: Glue\n## LoadFirst: 1\nGlueFirst.lua\n",
+    );
+    ui.add_addon(
+        "Blizzard_B_PhaseTwoGlue",
+        "## AllowLoad: Glue\nGlue.lua\n",
+    );
+    ui.add_addon(
+        "Blizzard_C_PhaseOneGame",
+        "## AllowLoad: Game\n## LoadFirst: 1\nGameFirst.lua\n",
+    );
+    ui.add_addon(
+        "Blizzard_D_PhaseTwoGame",
+        "## AllowLoad: Game\nGame.lua\n",
+    );
+
+    let startup_names = |screen| {
+        crate::loader::discover_blizzard_startup_addons_for_screen(&ui.path, screen)
+            .into_iter()
+            .map(|addon| addon.name)
+            .collect::<Vec<_>>()
+    };
+
+    assert_eq!(
+        startup_names(ScreenKind::Login),
+        vec!["Blizzard_A_PhaseOneGlue", "Blizzard_B_PhaseTwoGlue"]
+    );
+    assert_eq!(
+        startup_names(ScreenKind::Game),
+        vec!["Blizzard_C_PhaseOneGame", "Blizzard_D_PhaseTwoGame"]
+    );
 }
 
 #[test]
@@ -113,6 +156,7 @@ impl Drop for TempBlizzardUiDir {
     }
 }
 
+#[cfg(not(feature = "client-ptr"))]
 #[test]
 fn load_first_addons_sort_ahead_of_non_load_first_addons() {
     let ui = TempBlizzardUiDir::new("load-first-order");
@@ -144,6 +188,71 @@ Core.lua
         vec!["Blizzard_Z_LoadFirst", "Blizzard_A_Normal"],
         "LoadFirst addons should sort before normal addons",
     );
+}
+
+#[cfg(not(feature = "client-ptr"))]
+#[test]
+fn packaged_startup_phases_put_secure_addons_before_packaged_defaults() {
+    let ui = TempBlizzardUiDir::new("startup-phases");
+    ui.add_addon(
+        "Blizzard_Z_LoadFirst",
+        "## AllowLoad: Both\n## LoadFirst: 1\nCore.lua\n",
+    );
+    ui.add_addon(
+        "Blizzard_Y_Secure",
+        "## AllowLoad: Both\n## UseSecureEnvironment: 1\nCore.lua\n",
+    );
+    ui.add_addon("Blizzard_A_Packaged", "## AllowLoad: Both\nCore.lua\n");
+
+    let packaged: Vec<String> =
+        crate::loader::discover_blizzard_startup_addons_for_screen(&ui.path, ScreenKind::Game)
+            .into_iter()
+            .map(|addon| addon.name)
+            .collect();
+    let load_first = packaged
+        .iter()
+        .position(|name| name == "Blizzard_Z_LoadFirst")
+        .unwrap();
+    let secure = packaged
+        .iter()
+        .position(|name| name == "Blizzard_Y_Secure")
+        .unwrap();
+    let ordinary = packaged
+        .iter()
+        .position(|name| name == "Blizzard_A_Packaged")
+        .unwrap();
+    assert!(load_first < ordinary);
+    assert!(secure < ordinary);
+}
+
+#[cfg(not(feature = "client-ptr"))]
+#[test]
+fn foundational_addon_names_do_not_create_load_first_ordering() {
+    let ui = TempBlizzardUiDir::new("no-foundation-promotion");
+    ui.add_addon(
+        "Blizzard_Z_LoadFirst",
+        "## AllowLoad: Both\n## LoadFirst: 1\nCore.lua\n",
+    );
+    ui.add_addon("Blizzard_SharedXMLBase", "## AllowLoad: Both\nCore.lua\n");
+
+    let expected = vec!["Blizzard_Z_LoadFirst", "Blizzard_SharedXMLBase"];
+    let for_screen: Vec<String> = discover_blizzard_addons_for_screen(&ui.path, ScreenKind::Game)
+        .into_iter()
+        .map(|(name, _)| name)
+        .collect();
+    let startup: Vec<String> =
+        crate::loader::discover_blizzard_startup_addons_for_screen(&ui.path, ScreenKind::Game)
+            .into_iter()
+            .map(|addon| addon.name)
+            .collect();
+    let all: Vec<String> = crate::loader::discover_all_blizzard_addons(&ui.path)
+        .into_iter()
+        .map(|(name, _)| name)
+        .collect();
+
+    assert_eq!(for_screen, expected);
+    assert_eq!(startup, expected);
+    assert_eq!(all, expected);
 }
 
 #[test]
@@ -329,8 +438,9 @@ fn objective_tracker_pulls_poi_button_owner_templates() {
     );
 }
 
+#[cfg(feature = "client-wowforever")]
 #[test]
-fn only_forever_glue_feedback_pulls_customization_before_login_hooks() {
+fn forever_glue_feedback_pulls_customization_before_login_hooks() {
     let ui = TempBlizzardUiDir::new("glue-feedback-customization");
     ui.add_addon(
         "Blizzard_PTRFeedbackGlue",
@@ -349,17 +459,12 @@ fn only_forever_glue_feedback_pulls_customization_before_login_hooks() {
         "## AllowLoad: Both\n## LoadOnDemand: 1\nCustomization.xml\n",
     );
 
-    let expected =
-        if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
-            vec![
-                "Blizzard_CustomizationUI",
-                "Blizzard_CharacterCustomize",
-                "Blizzard_CharacterCreate",
-                "Blizzard_PTRFeedbackGlue",
-            ]
-        } else {
-            vec!["Blizzard_PTRFeedbackGlue"]
-        };
+    let expected = vec![
+        "Blizzard_CustomizationUI",
+        "Blizzard_CharacterCustomize",
+        "Blizzard_CharacterCreate",
+        "Blizzard_PTRFeedbackGlue",
+    ];
     let discovered: Vec<String> = discover_blizzard_addons_for_screen(&ui.path, ScreenKind::Login)
         .into_iter()
         .map(|(name, _)| name)
@@ -382,6 +487,7 @@ fn only_forever_glue_feedback_pulls_customization_before_login_hooks() {
     );
 }
 
+#[cfg(not(feature = "client-ptr"))]
 #[test]
 fn cyclic_addons_still_emit_dependencies_before_load_first_addon() {
     let ui = TempBlizzardUiDir::new("load-first-cycle");
@@ -461,8 +567,8 @@ Core.lua
 
     assert_eq!(
         names,
-        vec!["Blizzard_B", "Blizzard_C", "Blizzard_A"],
-        "dependency closure should include required and screen-allowed optional TOC deps only",
+        vec!["Blizzard_C", "Blizzard_B", "Blizzard_A"],
+        "dependency closure emits screen-allowed optional deps before required deps, and includes no others"
     );
     assert!(
         !names.iter().any(|name| name == "Blizzard_D"),
@@ -569,6 +675,7 @@ Core.lua
 }
 
 post_wrath_ui_fixture! {
+#[cfg(not(feature = "client-ptr"))]
 #[test]
 fn real_glue_load_first_addons_sort_before_non_load_first_addons() {
     let addons = addon_names(ScreenKind::Login);

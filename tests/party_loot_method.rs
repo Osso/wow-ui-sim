@@ -456,17 +456,86 @@ fn actual_secret_enum_and_master_reject_for_secure_and_tainted_callers() {
 }
 
 #[test]
+fn loot_method_style_reads_rule_157_and_ignores_loot_method() {
+    let env = loot_env();
+    seed_party_identity(&env);
+    env.exec(
+        r#"
+        local query = C_PartyInfo.GetLootMethodStyle
+        assert(Enum.GameRule.LootMethodStyle == 157, 'loot style rule id')
+        assert(select('#', query('ignored')) == 1, 'one result with ignored extra arguments')
+        assert(query() == 0, 'missing style rule defaults to Mainline')
+        A_Admin.SetGameRule('LootMethodStyle', Enum.LootMethodStyles.Vanilla)
+        assert(C_GameRules.GetGameRuleAsInt(157) == 1, 'rule state accepts numeric ID lookup')
+        assert(query() == Enum.LootMethodStyles.Vanilla, 'getter reads rule 157')
+        for _, method in ipairs({0, 1}) do
+            assert(C_PartyInfo.SetLootMethod(method), 'set loot method ' .. method)
+            assert(query() == Enum.LootMethodStyles.Vanilla, 'loot method does not change style')
+        end
+        assert(C_PartyInfo.SetLootMethod(2, 'LootPartnerOne'), 'set master looter')
+        assert(query() == Enum.LootMethodStyles.Vanilla, 'master looter does not change style')
+        assert(C_PartyInfo.SetLootMethod(3), 'set group loot')
+        assert(query() == Enum.LootMethodStyles.Vanilla, 'group loot does not change style')
+        A_Admin.SetGameRule('LootMethodStyle', nil)
+        assert(C_GameRules.GetGameRuleAsInt(157) == 0, 'removed rule defaults to zero')
+        assert(query() == 0, 'getter follows removal of rule 157')
+        "#,
+    )
+    .expect("loot method style reads game rule 157, not loot method state");
+}
+
+#[cfg(feature = "client-ptr")]
+#[test]
+fn ptr_loot_method_style_rereads_rule_157_on_game_rules_changed() {
+    let env = loot_env();
+    env.exec(
+        r#"
+        LootStyleRefreshes = 0
+        local listener = CreateFrame('Frame')
+        listener:RegisterEvent('GAME_RULES_CHANGED')
+        listener:SetScript('OnEvent', function(_, _, ...)
+            assert(select('#', ...) == 0)
+            LootStyleRefreshes = LootStyleRefreshes + 1
+            LootStyleAtRefresh = C_PartyInfo.GetLootMethodStyle()
+        end)
+        A_Admin.SetGameRule('LootMethodStyle', Enum.LootMethodStyles.Vanilla)
+        "#,
+    )
+    .expect("register a PTR game-rules listener and supply the new rule value");
+    env.fire_event("GAME_RULES_CHANGED")
+        .expect("dispatch the synchronous PTR game-rules refresh event");
+    env.exec(
+        "assert(LootStyleRefreshes == 1 and LootStyleAtRefresh == Enum.LootMethodStyles.Vanilla)",
+    )
+    .expect("the event listener reads the updated loot-method style");
+}
+
+#[cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever",
+    feature = "client-mists",
+    feature = "client-era",
+    feature = "client-anniversary"
+))]
+#[test]
 fn loot_method_style_is_mainline_across_method_changes() {
     let env = loot_env();
     env.exec(
         r#"
         assert(select('#', C_PartyInfo.GetLootMethodStyle()) == 1)
         assert(Enum.LootMethodStyles.Mainline == 0)
+        assert(Enum.LootMethodStyles.Vanilla == 1)
+        assert(Enum.LootMethodStyles.PersonalOnly == nil)
+        local styleMetadata = Enum.LootMethodStylesMeta
+        assert(styleMetadata.NumValues == 2)
+        assert(styleMetadata.MinValue == 0)
+        assert(styleMetadata.MaxValue == 1)
         assert(C_PartyInfo.GetLootMethodStyle() == Enum.LootMethodStyles.Mainline)
         assert(C_PartyInfo.SetLootMethod(0))
         assert(C_PartyInfo.GetLootMethod() == 0)
         assert(C_PartyInfo.GetLootMethodStyle() == Enum.LootMethodStyles.Mainline)
         "#,
     )
-    .expect("the Retail loot ruleset reports the Mainline style");
+    .expect("the Mainline loot style should match its published enum");
 }

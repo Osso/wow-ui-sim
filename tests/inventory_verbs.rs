@@ -235,6 +235,7 @@ fn fishing_inventory(equipped: bool) -> WowLuaEnv {
 
 // ── PickupMerchantItem ────────────────────────────────────────────────────────
 
+#[cfg(not(feature = "client-ptr"))]
 #[test]
 fn pickup_merchant_item_synthesizes_item_on_cursor() {
     let env = env();
@@ -244,6 +245,23 @@ fn pickup_merchant_item_synthesizes_item_on_cursor() {
         st.cursor_item,
         Some(CursorInfo::Item {
             item_id: 100_003,
+            origin: CursorItemOrigin::Merchant { index: 3 },
+            ..
+        })
+    ));
+}
+
+#[cfg(feature = "client-ptr")]
+#[test]
+fn pickup_merchant_item_uses_the_supplied_offer() {
+    let env = env();
+    env.state().borrow_mut().merchant_items = vec![100_001, 100_002, 6948];
+    env.exec("PickupMerchantItem(3)").unwrap();
+    let st = env.state().borrow();
+    assert!(matches!(
+        st.cursor_item,
+        Some(CursorInfo::Item {
+            item_id: 6948,
             origin: CursorItemOrigin::Merchant { index: 3 },
             ..
         })
@@ -434,6 +452,10 @@ fn place_action_writes_spell_id_to_action_bar_slot() {
     let env = env();
     {
         let mut st = env.state().borrow_mut();
+        st.action_bars.remove(&7);
+        st.action_outfits.remove(&7);
+        st.action_macros.remove(&7);
+        st.equipped_gear_outfit_action_slots.remove(&7);
         st.cursor_item = Some(CursorInfo::Spell { spell_id: 12345 });
     }
     env.exec("PlaceAction(7)").unwrap();
@@ -583,4 +605,40 @@ fn get_cursor_info_reports_money_cursor() {
     let (kind, copper): (String, f64) = env.eval("return GetCursorInfo()").unwrap();
     assert_eq!(kind, "money");
     assert_eq!(copper as u64, 777);
+}
+
+#[cfg(feature = "client-ptr")]
+#[test]
+fn ptr_spell_and_action_pickups_report_native_cursor_tuple() {
+    let env = env();
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.action_bars.insert(1, 853);
+        sim.cursor_item = Some(CursorInfo::Spell { spell_id: 12345 });
+    }
+    env.exec(
+        r#"
+        local function assert_spell_cursor(expectedSpellID, expectedBookSlot)
+            assert(select('#', GetCursorInfo()) == 5, 'PTR spell cursor must return five values')
+            local kind, bookSlot, bookType, spellID, relatedID = GetCursorInfo()
+            assert(kind == "spell")
+            assert(bookSlot == expectedBookSlot)
+            assert(bookSlot == (C_SpellBook.FindSpellBookSlotForSpell(spellID) or 0))
+            assert(bookType == "spell")
+            assert(spellID == expectedSpellID)
+            assert(relatedID == nil)
+        end
+
+        assert_spell_cursor(12345, 0)
+        ClearCursor()
+
+        C_Spell.PickupSpell(853)
+        assert_spell_cursor(853, C_SpellBook.FindSpellBookSlotForSpell(853) or 0)
+        ClearCursor()
+
+        PickupAction(1)
+        assert_spell_cursor(853, C_SpellBook.FindSpellBookSlotForSpell(853) or 0)
+        "#,
+    )
+    .unwrap();
 }

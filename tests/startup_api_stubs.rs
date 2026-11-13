@@ -604,6 +604,27 @@ fn startup_world_map_auxiliary_globals_are_callable() {
 
 #[test]
 fn startup_client_time_camera_and_channel_globals_are_callable() {
+    // loader/addon.rs:537 loads selected Bindings XML defaults; Forever
+    // Bindings_Camelot.xml:1533 supplies SELFCAST=ALT, not the bare environment.
+    #[cfg(any(
+        feature = "client-retail",
+        feature = "client-ptr",
+        feature = "client-wowforever"
+    ))]
+    let env = {
+        let (env, loaded) = crate::common::blizzard_addon_harness::build_blizzard_addon_closure_env(
+            &crate::common::blizzard_addon_harness::blizzard_ui_dir(),
+            &["Blizzard_FrameXML"],
+            &[],
+        );
+        assert!(loaded.iter().any(|name| name == "Blizzard_FrameXML"));
+        env
+    };
+    #[cfg(not(any(
+        feature = "client-retail",
+        feature = "client-ptr",
+        feature = "client-wowforever"
+    )))]
     let env = env();
     let (
         is_windows_type,
@@ -665,10 +686,7 @@ fn startup_client_time_camera_and_channel_globals_are_callable() {
     );
     assert_eq!(pvp_lifetime_hks, 0.0);
     assert_eq!(pvp_lifetime_rank, 0.0);
-    // Retail defaults are checked after loading FrameXML in keybindings.rs.
-    if !cfg!(feature = "client-retail") {
-        assert_eq!(modified_click_default, "ALT");
-    }
+    assert_eq!(modified_click_default, "ALT");
     assert_eq!(modified_click_updated, "NONE");
 }
 

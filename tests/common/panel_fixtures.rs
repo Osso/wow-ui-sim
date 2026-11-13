@@ -67,6 +67,10 @@ pub const PANEL_ADDONS: &[&str] = &[
     "Blizzard_UnitFrame",
     "Blizzard_TokenUI",
     "Blizzard_Minimap",
+    // Forever EditModeSystemTemplates.lua:2467 reaches QueueStatusButton
+    // during action-bar transitions; QueueStatusFrame.toc is an eager root.
+    #[cfg(feature = "client-wowforever")]
+    "Blizzard_QueueStatusFrame",
 ];
 
 /// INFERRED eager root: native CharacterFrame hides TokenFrame on every tab switch.
@@ -78,7 +82,13 @@ pub fn load_wrath_panel_core(env: &WowLuaEnv) {
 }
 
 pub fn setup_env() -> WowLuaEnv {
+    setup_env_with_inputs(|_| {})
+}
+
+/// Supply host state or pass-through observers before Blizzard captures APIs.
+pub fn setup_env_with_inputs(supply: impl FnOnce(&WowLuaEnv)) -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
+    supply(&env);
     env.set_screen_size(1024.0, 768.0);
 
     seed_addon_search_paths(&env);

@@ -14,8 +14,10 @@ pub(crate) mod c_tooltip_info_artifact_power;
 pub(crate) mod c_tooltip_info_azerite_power;
 pub(crate) mod c_tooltip_info_bag_child;
 pub(crate) mod c_tooltip_info_conduit;
+pub mod c_tooltip_info_currency;
 pub(crate) mod c_tooltip_info_enhanced_conduit;
 pub(crate) mod c_tooltip_info_equipment_set;
+pub mod c_tooltip_info_hyperlink;
 pub(crate) mod c_tooltip_info_inventory_by_id;
 pub(crate) mod c_tooltip_info_item_key;
 pub(crate) mod c_tooltip_info_loot;
@@ -46,9 +48,12 @@ pub(crate) mod game_rules_visibility;
 pub mod item_descriptor;
 pub mod item_overlay;
 pub(crate) mod item_quality_color;
+pub mod item_tooltip;
 pub(crate) mod journal_collected;
 pub mod mount_filters;
 pub(crate) mod ptr_i4_game_rules;
+#[cfg(feature = "client-ptr")]
+pub mod ptr_store_override;
 pub(crate) mod quest_difficulty;
 pub mod quest_objectives;
 pub mod quest_readiness;
@@ -128,8 +133,14 @@ pub mod c_catalog_shop;
 pub mod c_catalog_shop_products;
 pub mod c_challenge_mode;
 pub(crate) mod c_character_creation;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub mod c_character_creation_customizations;
 pub(crate) mod c_character_creation_naming;
 pub(crate) mod c_character_creation_seen;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub mod c_character_creation_submit;
+#[cfg(feature = "client-ptr")]
+pub mod c_character_creation_submit_ptr;
 pub mod c_character_creation_trial_boost;
 mod c_character_creation_trial_boost_data;
 #[cfg(test)]
@@ -268,7 +279,6 @@ mod forever_lib_baseline_tests;
 pub mod outfit_entry;
 mod scenario_finder_availability;
 pub mod store_public_eligibility;
-pub(crate) mod store_state;
 pub mod transmog_availability;
 pub use c_quest_log_watches::QuestWatchType;
 pub(crate) use c_quest_log_watches::seed_quest_watch_types;
@@ -317,6 +327,7 @@ pub(crate) mod c_tooltip_info_socketed_relic;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_tooltip_info_spell_mount;
 pub(crate) mod c_trade_skill_cooldown;
+pub mod c_trade_skill_crafting_ui;
 pub(crate) mod c_trade_skill_favorites;
 pub(crate) mod c_trade_skill_filter;
 pub(crate) mod c_trade_skill_first_craft;
@@ -365,6 +376,7 @@ pub mod map_world_coordinates;
 #[cfg(feature = "retail-12-0-7")]
 pub(crate) mod patch_12_0_7_inputs;
 mod spell_cooldown_output;
+pub mod spell_tooltip;
 pub(crate) mod spell_tooltip_cost;
 #[cfg(test)]
 mod spell_tooltip_cost_tests;

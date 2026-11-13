@@ -630,7 +630,13 @@ fn character_panel_inventory_tooltip_has_lines_and_closes_without_errors() {
 }
 }
 
-#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+// Forever ItemDocumentation.lua:1232 and ItemButtonTemplate.lua:271 use
+// the same supplied item classification as Retail/PTR.
+#[cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
 #[test]
 fn item_button_corruption_uses_supplied_identity() {
     let env = setup_env();

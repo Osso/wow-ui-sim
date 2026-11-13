@@ -167,7 +167,7 @@ pub(super) fn create_identified_tooltip(state: &mut LuaState, tooltip_type: f64,
     tooltip
 }
 
-pub(super) fn item_quality_color(quality: u8) -> (f64, f64, f64) {
+pub(crate) fn item_quality_color(quality: u8) -> (f64, f64, f64) {
     match quality {
         0 => (0.62, 0.62, 0.62),
         1 => (1.0, 1.0, 1.0),
@@ -324,105 +324,17 @@ fn global_color_or_fallback(
     global_color(state, key).unwrap_or(fallback)
 }
 
-fn slot_budget_multiplier(inventory_type: u8) -> f64 {
-    match inventory_type {
-        1 | 3 | 5 | 6 | 7 | 8 | 9 | 10 => 2.0, // armor pieces
-        2 | 11 | 12 | 16 => 1.25,              // neck, rings, trinkets, cloak
-        13 | 17 | 21 => 2.7,                   // one-hand, two-hand, main hand
-        14 | 22 => 1.6,                        // shield/off hand
-        15 => 2.2,                             // ranged
-        _ => 1.0,
-    }
-}
-
-fn primary_stat_for_class(class_index: i32) -> i16 {
-    match class_index {
-        1 | 2 | 6 => 4,       // Strength classes
-        3 | 4 | 10 | 12 => 3, // Agility classes
-        _ => 5,               // Intellect classes
-    }
-}
-
-fn resolve_hybrid_stat_id(raw_stat_id: i16, class_index: i32) -> i16 {
-    let primary = primary_stat_for_class(class_index);
-    match raw_stat_id {
-        71 => primary, // Agi/Str/Int
-        72 => {
-            if primary == 4 {
-                4
-            } else {
-                3
-            }
-        } // Agi/Str
-        73 => {
-            if primary == 3 {
-                3
-            } else {
-                5
-            }
-        } // Agi/Int
-        74 => {
-            if primary == 4 {
-                4
-            } else {
-                5
-            }
-        } // Str/Int
-        _ => raw_stat_id,
-    }
-}
-
-fn stat_display_spec(stat_id: i16) -> Option<(&'static [u8], &'static str, f64)> {
-    match stat_id {
-        3 => Some((b"ITEM_MOD_AGILITY_SHORT", "Agility", 1.2)),
-        4 => Some((b"ITEM_MOD_STRENGTH_SHORT", "Strength", 1.2)),
-        5 => Some((b"ITEM_MOD_INTELLECT_SHORT", "Intellect", 1.2)),
-        7 => Some((b"ITEM_MOD_STAMINA_SHORT", "Stamina", 1.8)),
-        32 => Some((b"ITEM_MOD_CRIT_RATING_SHORT", "Critical Strike", 0.75)),
-        36 => Some((b"ITEM_MOD_HASTE_RATING_SHORT", "Haste", 0.75)),
-        40 => Some((b"ITEM_MOD_VERSATILITY", "Versatility", 0.75)),
-        49 => Some((b"ITEM_MOD_MASTERY_RATING_SHORT", "Mastery", 0.75)),
-        50 => Some((b"ITEM_MOD_EXTRA_ARMOR_SHORT", "Bonus Armor", 0.9)),
-        61 => Some((b"ITEM_MOD_CR_SPEED_SHORT", "Speed", 0.35)),
-        62 => Some((b"ITEM_MOD_CR_LIFESTEAL_SHORT", "Leech", 0.35)),
-        63 => Some((b"ITEM_MOD_CR_AVOIDANCE_SHORT", "Avoidance", 0.35)),
-        _ => None,
-    }
-}
-
-fn estimate_stat_value(item: &items::ItemInfo, stat_percent: u16, scale: f64) -> i32 {
-    let budget = f64::from(item.item_level) * slot_budget_multiplier(item.inventory_type);
-    let raw = budget * (f64::from(stat_percent) / 10_000.0) * scale;
-    raw.round().max(1.0) as i32
-}
-
 fn push_item_stat_lines(
     state: &mut LuaState,
     lines: Val,
-    item: &items::ItemInfo,
+    stats: &[crate::c_api::item_tooltip::ItemTooltipStat],
     next_index: &mut i64,
 ) {
     let stat_color = global_color_or_fallback(state, b"GREEN_FONT_COLOR", (0.12, 1.0, 0.0));
-    let class_index = borrow_state(state)
-        .ok()
-        .map(|sim| sim.player.class_index)
-        .unwrap_or(2);
-
-    for (&raw_stat_id, &stat_percent) in item
-        .stat_modifier_bonus_stat
-        .iter()
-        .zip(item.stat_percent_editor.iter())
-    {
-        if raw_stat_id < 0 || stat_percent == 0 {
-            continue;
-        }
-        let stat_id = resolve_hybrid_stat_id(raw_stat_id, class_index);
-        let Some((label_key, label_fallback, scale)) = stat_display_spec(stat_id) else {
-            continue;
-        };
-        let label = global_string_or_fallback(state, label_key, label_fallback);
-        let value = estimate_stat_value(item, stat_percent, scale);
-        let line_text = format!("+{value} {label}");
+    // R80 Q2: ordinary item-mod amounts are not proved by the admitted calculator.
+    // Keep the existing position, but publish only final amounts supplied by the host.
+    for stat in stats {
+        let line_text = format!("{:+} {}", stat.amount, stat.label);
         push_tooltip_line(
             state,
             lines,
@@ -433,6 +345,36 @@ fn push_item_stat_lines(
             false,
         );
         *next_index += 1;
+    }
+}
+
+fn publish_item_metadata(
+    state: &mut LuaState,
+    tooltip: Val,
+    input: &crate::c_api::item_tooltip::ItemTooltipInput,
+) {
+    for (key, value) in [("guid", &input.guid), ("hyperlink", &input.hyperlink)] {
+        if let Some(value) = value {
+            let value = create_string(state, value);
+            table_set(state, tooltip, key, value);
+        }
+    }
+    if let Some(level) = input.override_item_level.filter(|level| *level != 0) {
+        table_set(
+            state,
+            tooltip,
+            "overrideItemLevel",
+            Val::Num(f64::from(level)),
+        );
+    }
+    for (key, value) in [
+        ("isCorruptedItem", input.is_corrupted_item),
+        ("isAzeriteEmpoweredItem", input.is_azerite_empowered_item),
+        ("isAzeriteItem", input.is_azerite_item),
+    ] {
+        if let Some(value) = value {
+            table_set(state, tooltip, key, Val::Bool(value));
+        }
     }
 }
 
@@ -450,7 +392,7 @@ pub(super) fn tooltip_for_item_info(
 ) -> Val {
     let tooltip = create_identified_tooltip(state, TOOLTIP_TYPE_ITEM, item_id);
     stamp_data_instance(state, tooltip);
-    populate_item_tooltip_lines(state, tooltip, item);
+    populate_item_tooltip_lines(state, tooltip, item_id, item);
     tooltip
 }
 
@@ -557,6 +499,7 @@ fn format_global_string(
 pub(super) fn populate_item_tooltip_lines(
     state: &mut LuaState,
     tooltip: Val,
+    item_id: u32,
     item: &items::ItemInfo,
 ) {
     let saved_top = state.top;
@@ -568,7 +511,16 @@ pub(super) fn populate_item_tooltip_lines(
     let mut next_index = 3;
     push_item_equip_slot_line(state, lines, item.inventory_type, &mut next_index);
     push_item_binding_line(state, lines, &mut next_index, item);
-    push_item_stat_lines(state, lines, item, &mut next_index);
+    // A standalone Lua state has no host input provider: publish headers only.
+    let input = borrow_state(state).ok().and_then(|sim| {
+        sim.item_tooltip_inputs
+            .get(&(item_id, item.item_level))
+            .cloned()
+    });
+    if let Some(input) = input {
+        publish_item_metadata(state, tooltip, &input);
+        push_item_stat_lines(state, lines, &input.stats, &mut next_index);
+    }
     state.top = saved_top;
 }
 

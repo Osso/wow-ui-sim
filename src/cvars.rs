@@ -26,6 +26,8 @@ pub struct CVarStorage {
     overrides: RwLock<HashMap<String, String>>,
     /// Effective session-only values, never included in persisted overrides.
     session_overrides: RwLock<HashMap<String, SessionCVar>>,
+    /// Hidden host/server mirrors, separate from Lua-visible CVar reads.
+    server_mirrored: RwLock<HashMap<String, String>>,
     /// Path to persist overrides.
     storage_path: PathBuf,
 }
@@ -59,6 +61,7 @@ impl CVarStorage {
             registered_original_names: RwLock::new(HashMap::new()),
             overrides: RwLock::new(overrides),
             session_overrides: RwLock::new(HashMap::new()),
+            server_mirrored: RwLock::new(server_mirrored_store_defaults()),
             storage_path: path,
         }
     }
@@ -185,6 +188,31 @@ impl CVarStorage {
             .imported = Some(value.to_string());
     }
 
+    /// Replace one known host/server mirror value without exposing it to CVar getters.
+    pub(crate) fn set_server_mirrored(&self, name: &str, value: &str) -> Option<String> {
+        let key = name.to_lowercase();
+        let mut server_mirrored = self.server_mirrored.write().unwrap();
+        let current = server_mirrored.get_mut(&key)?;
+        Some(std::mem::replace(current, value.to_owned()))
+    }
+
+    /// Read a hidden server mirror as a CVar boolean.
+    pub(crate) fn get_server_mirrored_bool(&self, name: &str) -> Option<bool> {
+        self.server_mirrored
+            .read()
+            .unwrap()
+            .get(&name.to_lowercase())
+            .map(|value| value == "1")
+    }
+
+    /// Whether the selected profile has a hidden server-mirrored CVar with this name.
+    pub(crate) fn is_server_mirrored(&self, name: &str) -> bool {
+        self.server_mirrored
+            .read()
+            .unwrap()
+            .contains_key(&name.to_lowercase())
+    }
+
     /// Set an effective temporary value without changing or saving persisted state.
     pub(crate) fn set_temporary(&self, name: &str, value: &str) {
         self.session_overrides
@@ -213,6 +241,7 @@ impl CVarStorage {
     /// Get all known CVar names in original case (defaults + overrides).
     pub fn all_keys(&self) -> Vec<String> {
         let mut keys: std::collections::HashSet<String> = self.defaults.keys().cloned().collect();
+        let server_mirrored = self.server_mirrored.read().unwrap();
         for key in self.registered_defaults.read().unwrap().keys() {
             keys.insert(key.clone());
         }
@@ -227,7 +256,8 @@ impl CVarStorage {
                 .filter(|(_, values)| values.imported.is_some())
                 .map(|(key, _)| key.clone()),
         );
-        keys.retain(|key| !is_profile_removed_cvar_key(key));
+        keys.retain(|key| !is_profile_removed_cvar_key(key) && !server_mirrored.contains_key(key));
+        drop(server_mirrored);
         let mut sorted: Vec<String> = keys
             .into_iter()
             .map(|k| {
@@ -291,9 +321,31 @@ impl Default for CVarStorage {
     }
 }
 
+fn server_mirrored_store_defaults() -> HashMap<String, String> {
+    // R87 verifies only this store mirror/default on Forever.
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
+        return HashMap::from([("bpaystoreenable".to_owned(), "0".to_owned())]);
+    }
+    if !matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+    ) {
+        return HashMap::new();
+    }
+
+    let mut defaults = HashMap::from([
+        ("bpaystoreenable".to_owned(), "0".to_owned()),
+        ("shop2enabled".to_owned(), "1".to_owned()),
+    ]);
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Ptr {
+        // R75: PTR MirrorVar input with a verified false default.
+        defaults.insert("rewardsshopoverrideenabled".to_owned(), "0".to_owned());
+    }
+    defaults
+}
+
 fn parse_default_cvars() -> (HashMap<String, String>, HashMap<String, String>) {
     let (mut defaults, mut original_names) = parse_cvar_yaml(include_str!("cvars.yaml"));
-    insert_store_mirror_cvars(&mut defaults, &mut original_names);
     insert_collected_journal_cvar(&mut defaults, &mut original_names);
     // R47: real registered local CVar, with distinct PTR/Forever declarations.
     let preset_default = match crate::client_profile::ACTIVE {
@@ -336,24 +388,6 @@ fn parse_default_cvars() -> (HashMap<String, String>, HashMap<String, String>) {
     insert_profile_cvars(&mut defaults, &mut original_names);
     remove_profile_cvars(&mut defaults, &mut original_names);
     (defaults, original_names)
-}
-
-/// Retail/PTR server-mirrored store flags, with defaults verified by R20.
-fn insert_store_mirror_cvars(
-    defaults: &mut HashMap<String, String>,
-    original_names: &mut HashMap<String, String>,
-) {
-    if !matches!(
-        crate::client_profile::ACTIVE,
-        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
-    ) {
-        return;
-    }
-    for (name, value) in [("bpayStoreEnable", "0"), ("shop2Enabled", "1")] {
-        let key = name.to_lowercase();
-        defaults.insert(key.clone(), value.to_owned());
-        original_names.insert(key, name.to_owned());
-    }
 }
 
 /// Collections journal CVar shipped by the PTR and WowForever pins only.
@@ -808,6 +842,51 @@ mod tests {
             storage.get("NAMEPLATESHOWENEMIES"),
             storage.get("nameplateShowEnemies")
         );
+    }
+
+    #[test]
+    fn store_mirror_cvars_have_the_pinned_client_defaults() {
+        use crate::client_profile::{ACTIVE, ClientProfile};
+
+        if !matches!(
+            ACTIVE,
+            ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
+        ) {
+            return;
+        }
+
+        let directory = tempfile::tempdir().unwrap();
+        let storage = CVarStorage::with_path(directory.path().join("cvars.json"));
+        // R87 verifies only bpayStoreEnable's default on Forever.
+        assert_eq!(
+            storage.get_server_mirrored_bool("bpayStoreEnable"),
+            Some(false)
+        );
+        if ACTIVE == ClientProfile::WowForever {
+            return;
+        }
+        for name in ["bpayStoreEnable", "shop2Enabled"] {
+            assert!(storage.get(name).is_none());
+            assert!(storage.get_default(name).is_none());
+            assert!(
+                !storage
+                    .all_keys()
+                    .iter()
+                    .any(|key| key.eq_ignore_ascii_case(name)),
+                "{name} must stay out of the Lua-visible CVar registry"
+            );
+        }
+        assert_eq!(
+            storage
+                .get_default("seenAsiaCharacterUpgradePopup")
+                .as_deref(),
+            Some("0")
+        );
+        assert_eq!(
+            storage.get_server_mirrored_bool("bpayStoreEnable"),
+            Some(false)
+        );
+        assert_eq!(storage.get_server_mirrored_bool("shop2Enabled"), Some(true));
     }
 
     #[test]

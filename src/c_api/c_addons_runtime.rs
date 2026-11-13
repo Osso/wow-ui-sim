@@ -4,6 +4,7 @@ use crate::lua_api::methods::{borrow_lua, borrow_state, create_string, state_han
 use crate::screen::ScreenKind;
 use crate::toc::TocFile;
 use rilua::vm::state::LuaState;
+use std::collections::{HashMap, HashSet};
 use std::io;
 use std::path::PathBuf;
 
@@ -61,7 +62,7 @@ fn load_runtime_addon_with_dependencies(
     );
     crate::loader::trace_load_addon(origin, format!("begin {addon_name}"));
     let (toc_path, toc, screen) = read_runtime_addon_toc(state, addon_name, origin)?;
-    let loading_guard = crate::loader::begin_addon_load(loader_env, addon_name, &toc);
+    let loading_guard = crate::loader::begin_addon_load(loader_env, addon_name, &toc)?;
     apply_mists_runtime_preload(loader_env, &toc, &toc_path, origin)?;
     load_runtime_addon_dependencies(state, loader_env, addon_name, &toc, screen, origin)?;
     let mut result =
@@ -75,7 +76,88 @@ fn load_runtime_addon_with_dependencies(
         loading_guard.addon_index(),
         &mut result,
     );
+    load_with_followers(state, loader_env, addon_name);
     Ok(())
+}
+
+pub(super) fn load_with_followers(state: &mut LuaState, loader_env: &LoaderEnv<'_>, target: &str) {
+    let followers = {
+        let mut sim = loader_env.state().borrow_mut();
+        if sim.load_with_followers.is_none() {
+            let declarations = sim
+                .registered_load_with
+                .iter()
+                .map(|registration| {
+                    (
+                        registration.addon_name.clone(),
+                        registration.targets.clone(),
+                    )
+                })
+                .collect();
+            sim.load_with_followers = Some(index_load_with_declarations(declarations));
+        }
+        sim.load_with_followers
+            .as_ref()
+            .and_then(|map| map.get(target))
+            .cloned()
+            .unwrap_or_default()
+    };
+
+    for follower in followers {
+        if !crate::loader::resolves_load_with_children()
+            && !super::addon_is_enabled(state, &follower)
+        {
+            continue;
+        }
+        submit_load_with_follower(state, &follower);
+    }
+}
+
+fn submit_load_with_follower(state: &mut LuaState, addon_name: &str) {
+    let (top, base, ci) = (state.top, state.base, state.ci);
+    let result = if crate::loader::resolves_load_with_children() {
+        super::request_addon_load(state, addon_name, true)
+    } else {
+        load_runtime_addon(state, addon_name).map_err(|error| error.to_string())
+    };
+    state.top = top;
+    state.base = base;
+    state.ci = ci;
+    if let Err(error) = result {
+        tracing::warn!("LoadWith follower {addon_name} failed: {error}");
+    }
+}
+
+fn index_load_with_declarations(
+    declarations: Vec<(String, Vec<String>)>,
+) -> HashMap<String, Vec<String>> {
+    let mut followers = HashMap::<String, Vec<String>>::new();
+    for (follower, targets) in declarations {
+        for target in targets {
+            followers.entry(target).or_default().push(follower.clone());
+        }
+    }
+    match crate::client_profile::ACTIVE {
+        crate::client_profile::ClientProfile::Ptr => {
+            for names in followers.values_mut() {
+                deduplicate_followers(names);
+            }
+        }
+        crate::client_profile::ClientProfile::Retail
+        | crate::client_profile::ClientProfile::WowForever => {}
+        _ => {
+            for names in followers.values_mut() {
+                names.sort();
+                names.dedup();
+            }
+        }
+    }
+    followers
+}
+
+fn deduplicate_followers(names: &mut Vec<String>) {
+    let mut seen = HashSet::new();
+    names.retain(|name| seen.insert(name.clone()));
 }
 
 fn read_runtime_addon_toc(
@@ -108,6 +190,13 @@ fn load_runtime_addon_dependencies(
         crate::loader::trace_load_addon(origin, format!("{addon_name} -> foundation {dependency}"));
         load_runtime_addon_recursive(state, loader_env, dependency)?;
     }
+    for dependency in toc.optional_deps_for_screen(screen) {
+        crate::loader::trace_load_addon(origin, format!("{addon_name} -> optional {dependency}"));
+        if !super::addon_is_disabled(state, &dependency) {
+            // Native R13 ignores failures from optional dependency loads.
+            let _ = load_runtime_addon_recursive(state, loader_env, &dependency);
+        }
+    }
     for dependency in toc.dependencies_for_screen(screen) {
         crate::loader::trace_load_addon(origin, format!("{addon_name} -> dep {dependency}"));
         if super::addon_is_disabled(state, &dependency) {
@@ -117,14 +206,10 @@ fn load_runtime_addon_dependencies(
             Err(LoadError::WrongActiveInterface) => {
                 return Err(LoadError::DepWrongActiveInterface(dependency));
             }
+            Err(LoadError::Missing) if crate::loader::uses_verified_load_with_semantics() => {
+                return Err(LoadError::DepMissing(dependency));
+            }
             result => result?,
-        }
-    }
-    for dependency in toc.optional_deps_for_screen(screen) {
-        crate::loader::trace_load_addon(origin, format!("{addon_name} -> optional {dependency}"));
-        if !super::addon_is_disabled(state, &dependency) {
-            // Native R13 ignores failures from optional dependency loads.
-            let _ = load_runtime_addon_recursive(state, loader_env, &dependency);
         }
     }
     Ok(())
@@ -286,6 +371,9 @@ fn is_addon_loading_by_name(state: &LuaState, addon_name: &str) -> bool {
 }
 
 fn missing_runtime_addon_error(addon_name: &str) -> LoadError {
+    if crate::loader::uses_verified_load_with_semantics() {
+        return LoadError::Missing;
+    }
     LoadError::Io(io::Error::new(
         io::ErrorKind::NotFound,
         format!("runtime addon not found: {addon_name}"),

@@ -35,20 +35,46 @@ impl RecipeFavorites {
 }
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
-    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail
+    // VERIFIED (PTR R85 and Retail WM83): IsRecipeFavorite and SetRecipeFavorite match.
+    if !supports_recipe_favorite_apis() {
+        return Ok(());
+    }
+    let namespace = super::ensure_namespace(state, "C_TradeSkillUI")?;
+    table_set_rust_fn_static(state, namespace, "IsRecipeFavorite", is_recipe_favorite)?;
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        // VERIFIED (Retail WM83): HasFavoriteOrderRecipes is registered on Retail.
+        table_set_rust_fn_static(
+            state,
+            namespace,
+            "HasFavoriteOrderRecipes",
+            has_favorite_order_recipes,
+        )?;
+    }
+    table_set_rust_fn_static(state, namespace, "SetRecipeFavorite", set_recipe_favorite)
+}
+
+pub(crate) fn register_has_favorite_order_recipes(state: &mut LuaState) -> LuaResult<()> {
+    // INFERRED (PTR R85; publication UNKNOWN): retain for PTR 70493 consumers
+    // TradeSkillUIDocumentation.lua:897 and ProfessionsCrafterOrderPage.lua:434,523.
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Ptr
         || !cfg!(feature = "retail-12-1-5")
     {
         return Ok(());
     }
     let namespace = super::ensure_namespace(state, "C_TradeSkillUI")?;
-    table_set_rust_fn_static(state, namespace, "IsRecipeFavorite", is_recipe_favorite)?;
     table_set_rust_fn_static(
         state,
         namespace,
         "HasFavoriteOrderRecipes",
         has_favorite_order_recipes,
-    )?;
-    table_set_rust_fn_static(state, namespace, "SetRecipeFavorite", set_recipe_favorite)
+    )
+}
+
+fn supports_recipe_favorite_apis() -> bool {
+    matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+    ) && cfg!(feature = "retail-12-1-5")
 }
 
 fn recipe_id(state: &LuaState, usage: &str) -> LuaResult<i32> {
@@ -97,10 +123,14 @@ fn set_recipe_favorite(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
-/// EMULATED/UNKNOWN (WM87): eligibility comes from CraftingOrder metadata the
-/// simulator does not export, so every row is treated as not order-eligible.
-fn is_order_eligible(_recipe_id: i32) -> bool {
-    false
+#[path = "crafting_order_recipe_data.rs"]
+mod crafting_order_recipe_data;
+
+/// WM87: existence of associated CraftingOrder metadata makes a row eligible.
+fn is_order_eligible(recipe_id: i32) -> bool {
+    crafting_order_recipe_data::ORDER_RECIPE_IDS
+        .binary_search(&recipe_id)
+        .is_ok()
 }
 
 /// WM87: any loaded row with both the favorite and order-eligibility flags.
@@ -113,6 +143,24 @@ fn has_favorite_order_recipes(state: &mut LuaState) -> LuaResult<u32> {
     };
     state.push(Val::Bool(has_favorites));
     Ok(1)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::is_order_eligible;
+
+    #[test]
+    fn crafting_order_recipe_data_matches_70391_export() {
+        // CraftingOrder 36 -> SkillLineAbility 46625 -> Spell 365729.
+        assert!(is_order_eligible(365729));
+        // CraftingOrder 21 -> SkillLineAbility 46644 -> Spell 365730.
+        assert!(is_order_eligible(365730));
+        // CraftingOrder 854 -> SkillLineAbility 49927 -> Spell 438914.
+        // Its Field_10_0_2_46479_002 is zero; existence still qualifies.
+        assert!(is_order_eligible(438914));
+        assert!(!is_order_eligible(2662));
+        assert!(!is_order_eligible(99_999_999));
+    }
 }
 
 pub(crate) fn drain_pending(state: &mut LuaState) -> LuaResult<()> {

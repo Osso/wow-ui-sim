@@ -680,13 +680,17 @@ fn ptr_smooth_progress_helper_is_global_not_interpolator_method() {
             r#"
             return type(GetSmoothProgressChange),
                 type(InterpolatorUtil.GetSmoothProgressChange),
-                GetSmoothProgressChange(100, 0, 100, 1)
+                InterpolatorUtil.GetSmoothProgressChange(100, 0, 100, 1)
             "#,
         )
         .expect("smooth progress snapshot mismatch probe should succeed");
 
-    assert_eq!(global_type, "function");
-    assert_eq!(namespaced_type, "nil");
+    // PTR 12.1.7 Blizzard_SharedXML/Interpolator.lua:13 publishes this
+    // helper on InterpolatorUtil, not as a global function.
+    // PTR 12.1.7 Blizzard_SharedXML/Interpolator.lua:13 publishes this
+    // helper on InterpolatorUtil, not as a global function.
+    assert_eq!(global_type, "nil");
+    assert_eq!(namespaced_type, "function");
     assert!((smoothed - 70.0).abs() < f64::EPSILON);
 }
 
@@ -796,4 +800,24 @@ prefork_full_ui_case! {
              and downstream files swallowed the error). Got: {mixin_count}"
         );
     }
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn mainline_smooth_progress_helper_remains_in_interpolator_namespace() {
+    let env = load_full_game_ui();
+
+    let (global_type, namespaced_type, smoothed): (String, String, f64) = env
+        .eval(
+            r#"
+            return type(GetSmoothProgressChange),
+                type(InterpolatorUtil.GetSmoothProgressChange),
+                InterpolatorUtil.GetSmoothProgressChange(100, 0, 100, 1)
+            "#,
+        )
+        .expect("smooth progress snapshot mismatch probe should succeed");
+
+    assert_eq!(global_type, "nil");
+    assert_eq!(namespaced_type, "function");
+    assert!((smoothed - 70.0).abs() < f64::EPSILON);
 }

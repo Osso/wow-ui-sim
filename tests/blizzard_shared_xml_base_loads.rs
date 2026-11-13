@@ -5,6 +5,9 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -215,29 +218,31 @@ fn body_count_matches_filesystem_layout() {
         .filter(|f| f.extension().is_some_and(|ext| ext == "xml"))
         .count();
 
-    let (expected_total, expected_lua, expected_xml) =
-        if cfg!(feature = "client-wowforever") {
-            // The Forever TOC adds FocusEffects.lua and FocusEffectTemplates.xml.
-            (42, 38, 4)
-        } else {
-            (40, 37, 3)
-        };
+    let (expected_files, expected_lua, expected_xml) = if toc_layout::unified_toc_tree() {
+        // PTR/Forever SharedXMLBase.toc adds FocusEffects.lua and FocusEffectTemplates.xml.
+        (42, 38, 4)
+    } else if toc_layout::classic_cache() {
+        (39, 37, 2)
+    } else {
+        (40, 37, 3)
+    };
     assert_eq!(
         toc.files.len(),
-        expected_total,
-        "Selected profile TOC body entry count must match its pinned source — the foundational \
-         primitive surface for the entire UI codebase. Got {} entries",
+        expected_files,
+        "Pinned SharedXMLBase TOC body count must match the selected profile. PTR/Forever adds \
+         FocusEffects.lua and FocusEffectTemplates.xml; classic caches use 39 entries. Got {}",
         toc.files.len()
     );
     assert_eq!(
         lua_count, expected_lua,
-        "Selected profile TOC Lua count must match its pinned source, ending with \
-         CurveConstants.lua and TimerUtil.lua. Got {lua_count}"
+        "Pinned SharedXMLBase TOC lists {expected_lua} Lua files; the unified PTR/Forever TOC \
+         adds FocusEffects.lua relative to Retail. Got {lua_count}"
     );
     assert_eq!(
         xml_count, expected_xml,
-        "TOC XML count must match the selected profile; entries include CallbackRegistrant.xml, \
-         ColorSwatch.xml, and ForbiddenAspectTemplates.xml. Got {xml_count}"
+        "Pinned SharedXMLBase TOC lists {expected_xml} XML files, including CallbackRegistrant, \
+         ColorSwatch and ForbiddenAspectTemplates. PTR/Forever also adds FocusEffectTemplates; \
+         classic caches list two XML entries. Got {xml_count}"
     );
 }
 

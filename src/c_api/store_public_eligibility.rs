@@ -29,7 +29,27 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         namespace,
         "DoesGroupHavePurchaseableProducts",
         query_group_eligibility,
-    )
+    )?;
+    if matches!(
+        ACTIVE,
+        ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
+    ) {
+        table_set_rust_fn_static(state, namespace, "IsEnabled", is_store_enabled)?;
+    }
+    Ok(())
+}
+
+fn is_store_enabled(state: &mut LuaState) -> LuaResult<u32> {
+    let enabled = borrow_state(state)?
+        .cvars
+        .get_server_mirrored_bool("bpayStoreEnable")
+        .ok_or_else(|| {
+            rilua::runtime_error(
+                "missing-input: C_StorePublic.IsEnabled has no supplied bpayStoreEnable value",
+            )
+        })?;
+    state.push(Val::Bool(enabled));
+    Ok(1)
 }
 
 fn query_group_eligibility(state: &mut LuaState) -> LuaResult<u32> {

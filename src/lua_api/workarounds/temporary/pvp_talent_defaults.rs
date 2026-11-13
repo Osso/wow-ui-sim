@@ -15,26 +15,6 @@ local function numberArgument(value)
     return nil
 end
 
-local function isValidPvpTalentSlot(slotIndex)
-    return slotIndex == 1 or slotIndex == 2 or slotIndex == 3
-end
-
-if rawget(C_SpecializationInfo, "GetPvpTalentSlotInfo") == nil then
-    function C_SpecializationInfo.GetPvpTalentSlotInfo(slotIndex)
-        slotIndex = numberArgument(slotIndex)
-        if slotIndex == nil or not isValidPvpTalentSlot(slotIndex) then
-            return nil
-        end
-
-            return {
-                enabled = true,
-                locked = false,
-                slotIndex = slotIndex,
-                availableTalentIDs = {},
-            }
-    end
-end
-
 if rawget(C_SpecializationInfo, "GetPvpTalentSlotUnlockLevel") == nil then
     function C_SpecializationInfo.GetPvpTalentSlotUnlockLevel(slotIndex)
         slotIndex = numberArgument(slotIndex)
@@ -98,13 +78,44 @@ if rawget(C_SpecializationInfo, "SetPvpTalentLocked") == nil then
 end
 "#;
 
+const PVP_SLOT_DEFAULTS_LUA: &str = r#"
+local function numberArgument(value)
+    return type(value) == "number" and value or nil
+end
+local function isValidPvpTalentSlot(slotIndex)
+    return slotIndex == 1 or slotIndex == 2 or slotIndex == 3
+end
+if rawget(C_SpecializationInfo, "GetPvpTalentSlotInfo") == nil then
+    function C_SpecializationInfo.GetPvpTalentSlotInfo(slotIndex)
+        slotIndex = numberArgument(slotIndex)
+        if slotIndex == nil or not isValidPvpTalentSlot(slotIndex) then
+            return nil
+        end
+
+            return {
+                enabled = true,
+                locked = false,
+                slotIndex = slotIndex,
+                availableTalentIDs = {},
+            }
+    end
+end
+
+"#;
+
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(PVP_TALENT_DEFAULTS_LUA)?;
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
+        lua.exec(PVP_SLOT_DEFAULTS_LUA)?;
+    }
     Ok(())
 }
 
 pub(crate) fn patch_loader(env: &crate::lua_api::LoaderEnv<'_>) {
     let _ = env.exec(PVP_TALENT_DEFAULTS_LUA);
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
+        let _ = env.exec(PVP_SLOT_DEFAULTS_LUA);
+    }
 }
 
 #[cfg(test)]
@@ -195,4 +206,22 @@ mod tests {
 
         assert_eq!(result, ("Existing".to_string(), "function".to_string()));
     }
+}
+
+/// Preserve the pre-R73 unmodelled Retail slot result, not a native default.
+/// Retire when native no-host slot behavior is established.
+#[cfg(feature = "client-retail")]
+pub(crate) fn pvp_slot_default(state: &mut rilua::vm::state::LuaState, index: usize) -> rilua::Val {
+    use crate::lua_api::methods::{create_table, table_set};
+    use rilua::Val;
+    if !(1..=3).contains(&index) {
+        return Val::Nil;
+    }
+    let result = create_table(state);
+    table_set(state, result, "enabled", Val::Bool(true));
+    table_set(state, result, "locked", Val::Bool(false));
+    table_set(state, result, "slotIndex", Val::Num(index as f64));
+    let available = create_table(state);
+    table_set(state, result, "availableTalentIDs", available);
+    result
 }

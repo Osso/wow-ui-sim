@@ -557,6 +557,9 @@ fn secure_env_preserves_secure_store_free_check_function(env: &WowLuaEnv) {
 
 prefork_full_ui_case! {
 fn store_button_full_game_path_shows_store_frame(env: &WowLuaEnv) {
+    // Native shop2Enabled defaults to true (R20/R38). This case exercises
+    // the legacy StoreFrame branch, not the default CatalogShop backend.
+    env.set_server_mirrored_cvar("shop2Enabled", "0").unwrap();
     let (ok, err, store_shown, isshown_attr, action): (
         bool,
         Option<String>,
@@ -583,6 +586,9 @@ fn store_button_full_game_path_shows_store_frame(env: &WowLuaEnv) {
 
 prefork_full_ui_case! {
 fn store_button_full_game_path_fires_onshow(env: &WowLuaEnv) {
+    // Native shop2Enabled defaults to true (R20/R38). This case exercises
+    // the legacy StoreFrame branch, not the default CatalogShop backend.
+    env.set_server_mirrored_cvar("shop2Enabled", "0").unwrap();
     let (store_shown, onshow_count, onhide_count, isshown_attr, action): (
         bool,
         i32,
@@ -642,18 +648,18 @@ fn store_frame_subtree_has_no_cycles_in_full_game_ui(env: &WowLuaEnv) {
 }
 }
 
-#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
-#[test]
 #[cfg(any(
     feature = "client-retail",
     feature = "client-ptr",
     feature = "client-wowforever"
 ))]
+#[test]
 fn store_free_upgrade_check_handles_account_without_upgrade() {
     let env = load_store_ui_tree();
     env.exec(
         r#"
         assert(type(__secureenv.StoreFrame_CheckForFree) == 'function')
+        assert(select('#', C_SharedCharacterServices.HasFreePromotionalUpgrade()) == 1)
         assert(C_StorePublic == nil or C_StorePublic.HasFreePromotionalUpgrade == nil)
         assert(C_SharedCharacterServices.HasFreePromotionalUpgrade() == false)
         local frame = {}

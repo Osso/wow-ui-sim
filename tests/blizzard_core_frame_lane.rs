@@ -41,6 +41,9 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -172,8 +175,9 @@ fn lane_dep_edges_pin_canonical_chain() {
     );
 
     let frame_xml_deps = frame_xml.dependencies();
-    let expected_frame_xml_deps: &[&str] = if cfg!(feature = "client-wowforever") {
-        // Forever's FrameXML TOC line 19 admits the mainline soft cursor dependency.
+    // PTR 12.1.7 and Forever 1.60.1 both declare GamepadSoftCursor on
+    // Blizzard_FrameXML.toc:19; Retail's pinned TOC does not.
+    let expected_frame_xml_deps: &[&str] = if toc_layout::unified_toc_tree() {
         &[
             "Blizzard_ObjectAPI",
             "Blizzard_FrameXMLBase",
@@ -217,7 +221,9 @@ fn lane_dep_edges_pin_canonical_chain() {
             .iter()
             .map(|dependency| dependency.to_string())
             .collect::<Vec<_>>(),
-        "FrameXML dependency order must match the selected profile TOC. Got: {frame_xml_deps:?}"
+        "FrameXML dependencies must match the active pinned TOC. PTR 12.1.7 and Forever \
+         add Blizzard_GamepadSoftCursor at Blizzard_FrameXML.toc:19; Retail does not. \
+         Classic-only declarations remain excluded by their annotations. Got: {frame_xml_deps:?}"
     );
 }
 

@@ -312,6 +312,53 @@ fn favorite_order_recipes_drive_the_original_orders_button() {
     .unwrap();
 }
 
+/// WM87 original consumer: metadata-backed favorites enable search; other favorites do not.
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+#[test]
+fn favorite_order_recipes_metadata_drives_original_orders_button() {
+    let env = full_game_env();
+    env.exec(
+        r#"
+        C_TradeSkillUI.SetProfessionChildSkillLineID(164)
+        assert(C_AddOns.LoadAddOn('Blizzard_Professions'))
+        local page = ProfessionsFrame.OrdersPage
+        local button = page.BrowseFrame.FavoritesSearchButton
+        C_TradeSkillUI.SetRecipeFavorite(2662, true)
+        page:UpdateFavoritesButton()
+        assert(not button:IsEnabled(), 'favorite without CraftingOrder metadata stays disabled')
+        assert(button.Icon:IsDesaturated(), 'ineligible favorite keeps icon desaturated')
+        C_TradeSkillUI.SetRecipeFavorite(365729, true)
+        page:UpdateFavoritesButton()
+        assert(button:IsEnabled(), 'favorite with CraftingOrder metadata enables search')
+        assert(not button.Icon:IsDesaturated(), 'eligible favorite restores icon color')
+        "#,
+    )
+    .unwrap();
+}
+
+/// API-level WM87 table: no favorites, only ineligible favorites, eligible favorite.
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+#[test]
+fn favorite_order_recipes_api_metadata_rows() {
+    let env = WowLuaEnv::new().expect("environment");
+    env.exec(
+        r#"
+        C_TradeSkillUI.SetProfessionChildSkillLineID(164)
+        local api = C_TradeSkillUI.HasFavoriteOrderRecipes
+        assert(select('#', api()) == 1 and api() == false, 'no favorite rows')
+        C_TradeSkillUI.SetRecipeFavorite(2662, true)
+        assert(select('#', api()) == 1 and api() == false, 'favorite is not order eligible')
+        C_TradeSkillUI.SetRecipeFavorite(365729, true)
+        assert(select('#', api()) == 1 and api('ignored', {}) == true, 'eligible favorite row')
+        C_TradeSkillUI.SetRecipeFavorite(365729, false)
+        assert(api() == false, 'only the ineligible favorite remains')
+        C_TradeSkillUI.SetRecipeFavorite(438914, true)
+        assert(api() == true, 'metadata row qualifies even with Field_10_0_2_46479_002 zero')
+        "#,
+    )
+    .unwrap();
+}
+
 /// WM88: one Boolean from the ability relation; GetRecipeInfo shares the predicate.
 #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
 #[test]
@@ -535,9 +582,76 @@ fn casting_blacksmithing_opens_professions_frame() {
     );
 }
 
+#[cfg(feature = "client-ptr")]
+#[test]
+fn ptr_crafting_ui_requires_a_known_spell_with_effect_47() {
+    let env = WowLuaEnv::new().expect("environment");
+    env.state()
+        .borrow_mut()
+        .trade_skill_crafting_ui_inputs
+        .opaque_helper_non_null = true;
+
+    // VERIFIED (PTR 12.1.7.70668): the predicate requires a non-null helper result,
+    // a spell record, and Effect[0].Effect == 47.
+    // INFERRED (Retail 12.1.5.70391 source): 2018 has effect 47, 2657 has 24,
+    // and 27973 has no first-effect row; PTR data-row parity is UNKNOWN.
+    env.exec(
+        r#"
+        local api = C_TradeSkillUI.CanTradeSkillShowCraftingUI
+        assert(select('#', api(2018)) == 1)
+        assert(api(2018) == true)
+        assert(api(2657) == false)
+        assert(api(27973) == false)
+        assert(api(2147483647) == false)
+        "#,
+    )
+    .unwrap();
+}
+
+#[cfg(feature = "client-ptr")]
+#[test]
+fn ptr_crafting_ui_helper_defaults_to_false_without_host_input() {
+    let env = WowLuaEnv::new().expect("environment");
+    let result: bool = env
+        .eval("return C_TradeSkillUI.CanTradeSkillShowCraftingUI(2018)")
+        .unwrap();
+    assert!(
+        !result,
+        "the unsupplied opaque-helper input defaults to false"
+    );
+}
+
+// VERIFIED (PTR 12.1.7.70668): known-row query returns one Boolean, unknown query zero values, and setter zero values.
+#[cfg(feature = "client-ptr")]
+#[test]
+fn ptr_recipe_favorite_return_shapes_match_r85() {
+    let env = WowLuaEnv::new().expect("environment");
+    let observed: (i32, bool, i32, i32) = env
+        .eval(
+            r#"
+            local api = C_TradeSkillUI
+            local knownCount = select('#', api.IsRecipeFavorite(2662))
+            local knownValueIsBoolean = type(api.IsRecipeFavorite(2662)) == 'boolean'
+            local unknownCount = select('#', api.IsRecipeFavorite(99999999))
+            local setterCount = select('#', api.SetRecipeFavorite(2662, true))
+            return knownCount, knownValueIsBoolean, unknownCount, setterCount
+            "#,
+        )
+        .unwrap();
+    assert_eq!(observed, (1, true, 0, 0));
+}
+
+// PTR R85: keep the original ProfessionsBook click consumer in the necessary test set.
 #[test]
 fn clicking_blacksmithing_button_in_professions_book_opens_panel() {
     let env = full_game_env();
+    #[cfg(feature = "client-ptr")]
+    {
+        env.state()
+            .borrow_mut()
+            .trade_skill_crafting_ui_inputs
+            .opaque_helper_non_null = true;
+    }
     env.state().borrow_mut().lua_errors.clear();
 
     let shown: bool = env
@@ -545,13 +659,26 @@ fn clicking_blacksmithing_button_in_professions_book_opens_panel() {
             r#"
             ToggleProfessionsBook()
 
+            local candidates
+            if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE and ProfessionsBookFrame.ProfessionsContentFrame then
+                -- PTR 70493 Mainline/Blizzard_ProfessionsBookTemplates.xml:58,63,166.
+                local content = ProfessionsBookFrame.ProfessionsContentFrame
+                candidates = {
+                    content.PrimaryProfession1.SpellButton1,
+                    content.PrimaryProfession1.SpellButton2,
+                    content.PrimaryProfession2.SpellButton1,
+                    content.PrimaryProfession2.SpellButton2,
+                }
+            else
+                candidates = {
+                    PrimaryProfession1SpellButtonTop,
+                    PrimaryProfession1SpellButtonBottom,
+                    PrimaryProfession2SpellButtonTop,
+                    PrimaryProfession2SpellButtonBottom,
+                }
+            end
             local button
-            for _, candidate in ipairs({
-                PrimaryProfession1SpellButtonTop,
-                PrimaryProfession1SpellButtonBottom,
-                PrimaryProfession2SpellButtonTop,
-                PrimaryProfession2SpellButtonBottom,
-            }) do
+            for _, candidate in ipairs(candidates) do
                 if candidate then
                     local slot = ProfessionsBook_GetSpellBookItemSlot(candidate)
                     if slot then

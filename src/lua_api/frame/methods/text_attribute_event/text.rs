@@ -79,7 +79,8 @@ pub(super) fn set_text(state: &mut LuaState) -> LuaResult<u32> {
         return Err(rilua::runtime_error("expected text, not userdata"));
     }
     let text = read_text_arg(state, value);
-    if secret && cfg!(feature = "client-retail") {
+    // INFERRED: PTR shares Retail's recorded Text-aspect model.
+    if secret && crate::lua_api::frame::methods::misc::secret::uses_recorded_secret_state() {
         mark_secret_text_aspect(state, id)?;
     }
     set_frame_text_value(state, id, text, secret)
@@ -388,10 +389,6 @@ pub(crate) fn refresh_auto_text_height_after_width_change(state: &mut LuaState, 
 }
 
 pub(crate) fn update_auto_text_width(state: &mut LuaState, id: u64) {
-    if apply_anchor_pinned_width(state, id) {
-        return;
-    }
-
     let should_update = {
         let Ok(sim) = borrow_state(state) else {
             return;
@@ -428,71 +425,6 @@ pub(crate) fn update_auto_text_width(state: &mut LuaState, id: u64) {
     sim.widgets.mark_rect_dirty(id);
     drop(sim);
     crate::lua_api::frame::methods::core_state::size::mark_nearest_layout_parent_dirty(state, id);
-}
-
-/// If the frame's anchors pin both its left and right edges, set its width from
-/// the relative frame's width and clear `width_is_text_auto` so word-wrap works.
-/// Returns true when handling the frame, false if anchors do not pin both edges.
-fn apply_anchor_pinned_width(state: &mut LuaState, id: u64) -> bool {
-    let Some(pinned_width) = anchor_pinned_horizontal_width(state, id) else {
-        return false;
-    };
-    let Ok(mut sim) = borrow_state_mut(state) else {
-        return true;
-    };
-    let Some(frame) = sim.widgets.get(id) else {
-        return true;
-    };
-    let width_changed = (frame.width - pinned_width).abs() > 0.5;
-    let auto_flag_changed = frame.width_is_text_auto;
-    if !width_changed && !auto_flag_changed {
-        return true;
-    }
-    let Some(frame) = sim.widgets.get_mut_visual(id) else {
-        return true;
-    };
-    frame.width = pinned_width;
-    frame.width_is_text_auto = false;
-    sim.widgets.mark_rect_dirty(id);
-    true
-}
-
-fn anchor_pinned_horizontal_width(state: &LuaState, id: u64) -> Option<f32> {
-    let sim = borrow_state(state).ok()?;
-    let frame = sim.widgets.get(id)?;
-    if frame.anchors.len() < 2 {
-        return None;
-    }
-
-    let mut left: Option<(u64, &crate::widget::Anchor)> = None;
-    let mut right: Option<(u64, &crate::widget::Anchor)> = None;
-    for anchor in &frame.anchors {
-        let target_id = anchor
-            .relative_to_id
-            .map(|i| i as u64)
-            .or(frame.parent_id)?;
-        if anchor.point.pins_left_edge() && left.is_none() {
-            left = Some((target_id, anchor));
-        } else if anchor.point.pins_right_edge() && right.is_none() {
-            right = Some((target_id, anchor));
-        }
-    }
-    let (left_target, left_anchor) = left?;
-    let (right_target, right_anchor) = right?;
-    if left_target != right_target {
-        return None;
-    }
-    let target = sim.widgets.get(left_target)?;
-    if target.width <= 0.0 {
-        return None;
-    }
-
-    let left_x =
-        target.width * left_anchor.relative_point.horizontal_factor() + left_anchor.x_offset;
-    let right_x =
-        target.width * right_anchor.relative_point.horizontal_factor() + right_anchor.x_offset;
-    let width = right_x - left_x;
-    (width > 0.0).then_some(width)
 }
 
 pub(crate) fn refresh_text_measurements(state: &mut LuaState, id: u64) {

@@ -111,6 +111,7 @@ const EXPECTED_INCOMPLETE: &str = "comparison_calls=1 status_calls=1 \
 type CompletedProbe = (String, String, String, String, String);
 type IncompleteProbe = (String, String);
 
+#[cfg(not(feature = "client-ptr"))]
 const FAKE_FRAME_BUILDER: &str = r#"
     local function noop_text() end
     local function noop_show() end
@@ -124,6 +125,42 @@ const FAKE_FRAME_BUILDER: &str = r#"
                 Points = {SetText = noop_text, SetFontObject = noop_text},
             },
             DateCompleted = {SetText = noop_text, Show = noop_show, Hide = noop_show},
+            Status = {
+                SetText = function(self, text)
+                    captures.status_calls = captures.status_calls + 1
+                    captures.status_text = tostring(text)
+                end,
+            },
+            Saturate = function(self)
+                captures[saturate_counter_key] = captures[saturate_counter_key] + 1
+            end,
+            Desaturate = function(self)
+                captures[desaturate_counter_key] = captures[desaturate_counter_key] + 1
+            end,
+        }
+        return card
+    end
+"#;
+
+#[cfg(feature = "client-ptr")]
+const FAKE_FRAME_BUILDER: &str = r#"
+    local function noop_text() end
+    local function noop_show() end
+    local function build_card(saturate_counter_key, desaturate_counter_key, captures)
+        local card = {
+            Label = {SetText = noop_text},
+            Description = {SetText = noop_text},
+            Icon = {texture = {SetTexture = noop_text}},
+            Shield = {
+                Icon = {SetTexture = noop_text},
+                Points = {SetText = noop_text, SetFontObject = noop_text},
+            },
+            DateCompleted = {
+                SetText = noop_text,
+                SetShown = noop_show,
+                Show = noop_show,
+                Hide = noop_show,
+            },
             Status = {
                 SetText = function(self, text)
                     captures.status_calls = captures.status_calls + 1

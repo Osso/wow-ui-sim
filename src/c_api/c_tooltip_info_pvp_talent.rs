@@ -1,9 +1,9 @@
 //! Retail `C_TooltipInfo.GetPvpTalent` composition.
 //!
-//! R44-Q20, R53 and R56 establish the success path. PvP talent rows and
-//! resolved spell IDs are host inputs; empty maps do not fabricate records or
-//! override results. Native failure publication and override ranking remain
-//! unknown.
+//! R44-Q20, R53 and R56 establish the success path. The Retail talent catalog
+//! is generated from the local-CASC export recorded in provenance; resolved
+//! spell IDs and eligibility/grant outcomes remain host inputs. Native failure
+//! publication and override ranking remain unknown.
 
 use crate::c_api::tooltip_getter_args::{
     allowed_when_untainted, lua_index, round7_optional_bool, round7_signed,
@@ -18,6 +18,8 @@ use rilua::vm::{gc::arena::GcRef, state::LuaState, table::Table};
 use rilua::{LuaResult, Val};
 use std::collections::HashMap;
 
+include!("c_tooltip_info_pvp_talent_data.rs");
+
 const API_NAME: &str = "C_TooltipInfo.GetPvpTalent";
 const USAGE: &str = "Usage: local data = C_TooltipInfo.GetPvpTalent(talentID [, isInspect, groupIndex, talentIndex])";
 const PLAIN_LINE_TYPE: f64 = 0.0;
@@ -26,8 +28,7 @@ const TALENT_POSITION_COUNT: i32 = 4;
 const SUPPRESSED_OVERRIDE_ATTRIBUTE: u32 = 32768;
 const BLANK_LINE_TEXT: &str = " ";
 
-/// One host-supplied PvP talent row. The pinned CSV export has no PvP talent
-/// table, so the simulator does not seed records.
+/// One catalogued PvP talent row plus host-supplied eligibility and grant outcomes.
 #[derive(Clone, Debug, Default)]
 pub struct PvpTalentTooltipRecord {
     pub spell_id: u32,
@@ -49,6 +50,15 @@ pub struct PvpTalentTooltipRecord {
     pub eligibility_level_failed: bool,
 }
 
+/// Host-supplied values with the pinned Retail PvpTalentSlotInfo shape.
+/// SpecializationInfoDocumentation.lua:491-499; no native defaults are inferred.
+#[derive(Clone, Debug)]
+pub struct PvpTalentSlotInput {
+    pub enabled: bool,
+    pub level: i32,
+    pub available_talent_ids: Vec<i32>,
+}
+
 /// Host inputs used by the Retail PvP talent tooltip producer.
 #[derive(Clone, Debug)]
 pub struct PvpTalentTooltipInputs {
@@ -60,17 +70,46 @@ pub struct PvpTalentTooltipInputs {
     pub groups: HashMap<usize, [Option<i32>; TALENT_POSITION_COUNT as usize]>,
     /// Resolved spell outcomes supplied by the host; absent entries mean identity.
     pub resolved_spell_ids: HashMap<u32, u32>,
+    /// None leaves the eligibility result unmodelled; not a native default.
+    pub rest_permission: Option<bool>,
+    /// One-based UI slot records; selected IDs come from `groups`.
+    pub slots: HashMap<usize, PvpTalentSlotInput>,
     /// Granting items in the inspected-unit context, keyed by GUID and talent ID.
     pub inspect_grant_item_ids: HashMap<(String, i32), u32>,
 }
 
 impl Default for PvpTalentTooltipInputs {
     fn default() -> Self {
+        let catalog = ROWS
+            .iter()
+            .map(
+                |&(
+                    talent_id,
+                    spell_id,
+                    overrides_spell_id,
+                    level_required,
+                    category_position_mask,
+                )| {
+                    (
+                        talent_id,
+                        PvpTalentTooltipRecord {
+                            spell_id,
+                            overrides_spell_id,
+                            level_required,
+                            category_position_mask,
+                            ..PvpTalentTooltipRecord::default()
+                        },
+                    )
+                },
+            )
+            .collect();
         Self {
-            catalog: HashMap::new(),
+            catalog,
             active_group_index: 0,
             groups: HashMap::new(),
             resolved_spell_ids: HashMap::new(),
+            rest_permission: None,
+            slots: HashMap::new(),
             inspect_grant_item_ids: HashMap::new(),
         }
     }
@@ -223,28 +262,19 @@ fn append_talent_annotation(
     if !(0..TALENT_POSITION_COUNT).contains(&talent_position) {
         return Ok(());
     }
-    let position_mask = 1_u8 << talent_position;
-    if record.category_position_mask & position_mask == 0 {
+    let position_mask = 1_u32 << (talent_position as u32 & 31);
+    if u32::from(record.category_position_mask) & position_mask == 0 {
         return Ok(());
     }
 
-    match record.eligibility_by_position.get(&talent_position) {
-        Some(true) => append_key_line(
-            state,
-            tooltip,
-            "TALENT_TOOLTIP_ADDPREVIEWPOINT",
-            "FRIENDLY_STATUS_COLOR",
-            true,
-        ),
-        Some(false) => {
-            if record.eligibility_level_failed {
-                append_unlock_line(state, tooltip, record.level_required, true)
-            } else {
-                append_local_failure_line(state, tooltip, context, record)
-            }
-        }
-        None => Ok(()),
+    let eligibility = record
+        .eligibility_by_position
+        .get(&talent_position)
+        .copied();
+    if eligibility.is_none() && context.rest_permission.is_none() {
+        return Ok(());
     }
+    append_local_eligibility_line(state, tooltip, context, record, eligibility)
 }
 
 #[derive(Clone, Copy)]
@@ -252,8 +282,7 @@ struct LocalAnnotationContext {
     active_group_index: usize,
     player_level: i32,
     in_combat: bool,
-    is_resting: bool,
-    rest_state: i32,
+    rest_permission: Option<bool>,
     selected_talents: [Option<i32>; TALENT_POSITION_COUNT as usize],
 }
 
@@ -277,8 +306,7 @@ fn local_annotation_context(
         active_group_index: sim.pvp_talent_tooltip.active_group_index,
         player_level,
         in_combat: sim.player.in_combat,
-        is_resting: sim.player.is_resting,
-        rest_state: sim.player_xp.rest_state,
+        rest_permission: sim.pvp_talent_tooltip.rest_permission,
         selected_talents,
     }))
 }
@@ -294,15 +322,14 @@ fn append_unlock_line(
     Ok(())
 }
 
-fn append_local_failure_line(
+fn append_local_eligibility_line(
     state: &mut LuaState,
     tooltip: Val,
     context: LocalAnnotationContext,
     record: &PvpTalentTooltipRecord,
+    eligibility: Option<bool>,
 ) -> LuaResult<()> {
-    if append_local_grant_line(state, tooltip, record)? {
-        return Ok(());
-    }
+    // R73: dispatch exactly one result, with combat before grant and unlock.
     if context.in_combat {
         return append_key_line(
             state,
@@ -312,7 +339,14 @@ fn append_local_failure_line(
             true,
         );
     }
-    if !rest_change_allowed(context) {
+    if record.grant_rejected_by_item {
+        append_local_grant_line(state, tooltip, record)?;
+        return Ok(());
+    }
+    if record.eligibility_level_failed {
+        return append_unlock_line(state, tooltip, record.level_required, true);
+    }
+    if eligibility == Some(false) || context.rest_permission == Some(false) {
         return append_key_line(
             state,
             tooltip,
@@ -321,13 +355,13 @@ fn append_local_failure_line(
             true,
         );
     }
-    // The R56 default for other helper failures is known, but those failure
-    // predicates are UNKNOWN and stay unmodelled.
-    Ok(())
-}
-
-fn rest_change_allowed(context: LocalAnnotationContext) -> bool {
-    (context.rest_state > 0 && !context.in_combat) || context.is_resting
+    append_key_line(
+        state,
+        tooltip,
+        "TALENT_TOOLTIP_ADDPREVIEWPOINT",
+        "FRIENDLY_STATUS_COLOR",
+        true,
+    )
 }
 
 fn append_local_grant_line(
@@ -421,4 +455,61 @@ fn append_colored_text_line(
 fn append_blank_line(state: &mut LuaState, tooltip: Val) {
     let color = named_color(state, "NORMAL_FONT_COLOR");
     append_line(state, tooltip, BLANK_LINE_TYPE, BLANK_LINE_TEXT, color);
+}
+
+// Retail SpecializationInfoDocumentation.lua:153-165,491-499.
+pub(crate) fn register_slot_info(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
+    table_set_rust_fn_static(state, namespace, "GetPvpTalentSlotInfo", get_slot_info)
+}
+
+fn get_slot_info(state: &mut LuaState) -> LuaResult<u32> {
+    use crate::lua_api::methods::create_table;
+    // Preserve the old no-host call behavior; native argument failures are UNKNOWN.
+    let value = allowed_when_untainted(state, 1, "C_SpecializationInfo.GetPvpTalentSlotInfo")?;
+    let ui_index = match value {
+        Val::Num(number)
+            if number.fract() == 0.0 && (1.0..=f64::from(u32::MAX)).contains(&number) =>
+        {
+            number as usize
+        }
+        _ => {
+            state.push(Val::Nil);
+            return Ok(1);
+        }
+    };
+    let index = ui_index - 1;
+    let (slot, selected) = {
+        let sim = borrow_state(state)?;
+        let inputs = &sim.pvp_talent_tooltip;
+        let selected = inputs
+            .groups
+            .get(&inputs.active_group_index)
+            .and_then(|group| group.get(index))
+            .copied()
+            .flatten();
+        (inputs.slots.get(&ui_index).cloned(), selected)
+    };
+    let result = if let Some(slot) = slot {
+        let result = create_table(state);
+        table_set(state, result, "enabled", Val::Bool(slot.enabled));
+        table_set(state, result, "level", Val::Num(f64::from(slot.level)));
+        if let Some(id) = selected {
+            table_set(state, result, "selectedTalentID", Val::Num(f64::from(id)));
+        }
+        let available = create_table(state);
+        for (position, id) in slot.available_talent_ids.iter().enumerate() {
+            super::helpers::set_table_array(
+                state,
+                available,
+                (position + 1) as i64,
+                Val::Num(f64::from(*id)),
+            );
+        }
+        table_set(state, result, "availableTalentIDs", available);
+        result
+    } else {
+        crate::lua_api::workarounds::pvp_slot_default(state, ui_index)
+    };
+    state.push(result);
+    Ok(1)
 }

@@ -141,7 +141,7 @@ fn ptr_black_market_does_not_publish_reversed_hide_wrapper() {
     let env = load_full_game_ui();
     load_addon(&env.loader_env(), &black_market_toc()).expect("BlackMarketUI should load");
 
-    let result: (String, bool, bool, bool) = env
+    let result: (String, String, bool, bool) = env
         .eval(
             r#"
             BlackMarketFrame:Show()
@@ -150,16 +150,19 @@ fn ptr_black_market_does_not_publish_reversed_hide_wrapper() {
             PlaySound = function(soundKitID)
                 playedSound = soundKitID
             end
-            BlackMarketFrame_Hide()
+            HideBlackMarketFrame()
             PlaySound = originalPlaySound
-            return type(BlackMarketFrame_Hide),
-                HideBlackMarketFrame == nil,
+            return type(BlackMarketFrame_Hide), type(HideBlackMarketFrame),
                 not BlackMarketFrame:IsShown(),
                 playedSound == SOUNDKIT.AUCTION_WINDOW_CLOSE
             "#,
         )
-        .expect("black market hide helper behavior should be queryable");
-    assert_eq!(result, ("function".to_string(), true, true, true));
+        .expect("black market hide wrapper behavior should be queryable");
+    assert_eq!(
+        result,
+        ("function".to_string(), "function".to_string(), true, true),
+        "PTR BlackMarketUI bootstrap.lua:10-16 exposes a working interaction hide delegate"
+    );
 }
 
 prefork_full_ui_case! {
@@ -184,4 +187,26 @@ fn black_market_show_runs_without_errors(env: &WowLuaEnv) {
         errors.join("\n  ")
     );
 }
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn mainline_black_market_bootstrap_hide_wrapper_hides_the_open_frame() {
+    let env = load_full_game_ui();
+    load_addon(&env.loader_env(), &black_market_toc()).expect("BlackMarketUI should load");
+
+    let result: (String, bool) = env
+        .eval(
+            r#"
+            local frame = BlackMarketFrame
+            local received
+            local originalHide = HideUIPanel
+            HideUIPanel = function(value) received = value end
+            HideBlackMarketFrame()
+            HideUIPanel = originalHide
+            return type(HideBlackMarketFrame), received == frame
+            "#,
+        )
+        .expect("selected BlackMarket bootstrap hide wrapper should run");
+    assert_eq!(result, ("function".to_string(), true));
 }

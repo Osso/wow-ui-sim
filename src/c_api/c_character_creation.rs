@@ -67,6 +67,10 @@ fn update_registration(state: &mut LuaState, is_glue: bool) -> LuaResult<()> {
         _ => return Ok(()),
     };
 
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    super::c_character_creation_submit::update_registration(state, namespace, is_glue)?;
+    #[cfg(feature = "client-ptr")]
+    super::c_character_creation_submit_ptr::update_registration(state, namespace, is_glue)?;
     update_default_facing_registration(state, namespace, is_glue)?;
     update_retail_and_forever_registration(state, namespace, is_glue)
 }
@@ -242,7 +246,10 @@ fn get_current_camera_zoom(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-fn set_camera_zoom_level(state: &mut LuaState) -> LuaResult<u32> {
+// R83b/R83c (#305/#320): PTR shares this verified signed32/clamp and
+// changed-only marker update with Retail/Forever. Its Lua installation and
+// ordinary return/second-argument truthiness policy remain separately inferred.
+pub(super) fn set_camera_zoom_level(state: &mut LuaState) -> LuaResult<u32> {
     let zoom = crate::c_api::helpers::read_untainted_signed32_argument(
         state,
         1,

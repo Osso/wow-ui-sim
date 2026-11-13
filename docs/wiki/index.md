@@ -1,12 +1,79 @@
+## [2026-11-13] system | PTR character-creation camera evidence
+
+[Lua API](systems/lua-api.md#ptr-character-creation-evidence-boundary) separates
+verified R78/R83 argument/state behavior from droppable inferred catalog and
+return bridges. The unseeded collector and end-to-end submit remain distinct.
+
+## [2026-11-12] investigation | Retail EllesmereUI v9.8 load boundary
+
+[Full third-party startup](investigations/full-addon-startup-2026-10-10.md#retail-ellesmereui-v98-load-reproduction-2026-11-12) records the initial 3/20 enablement mistake and issue #22 limits. **VERIFIED:** Retail G1/G1c behavior and a 20/20 post-fix load with three unique Lua errors (72 occurrences). **INFERRED:** the CVar overlap window and loader-populated addon-file catalog. **UNKNOWN:** native addon-file table membership and exact backing table identities.
+
+## [2026-11-12] system | Secure delegate global
+
+[Lua API](systems/lua-api.md#secure-delegate-global) links the [secure-helper contract](../specs/secure-helpers.md). **VERIFIED from S4s7b emulation:** source rejection, shallow provenance assignment and function-argument wrapping are bounded; target security, reporter effects and full result publication remain UNKNOWN. **VERIFIED locally:** exact tests pass across six applicable profiles. The optional Retail duration-object case remains a separate failure because it does not call `CreateSecureDelegate`.
+
+## [2026-11-12] implementation | Retail currency tooltips
+
+[Tooltip data](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) links the [R84/R84b contract](../specs/tooltip-currency.md). VERIFIED: the four original Retail consumers share the currency producer and publish the verified rows; explicit host inputs leave resolver misses, the error-row predicate, balance formula and runtime number mode UNKNOWN. The shared color remapper can turn a verified type-0 row into 41 when placeholder colors collide; the producer restores type 0. Retail passes 2264 library tests and 17 exact integration tests. PTR and Forever pass zero-warning compile builds and eight exact integration tests each.
+
+## [2026-11-12] correction | R82 hyperlink routing
+
+[Hyperlink routing](investigations/att-unit-hyperlink-tooltip.md) records the removal of guessed unit-GUID rows and links the R82/R82b request contract, explicit display inputs and INFERRED catalog boundary.
+
+## [2026-11-12] investigation | PTR spellbook texture anchors
+
+[XML templates](systems/xml-template-system.md#texture-template-anchor-inheritance) records the discarded inherited anchor field, generic resolver correction, and concrete XML/runtime half-page geometry tests.
+
+## [2026-11-12] investigation | Recorded secret-aspect independence
+
+[Lua API](systems/lua-api.md#recorded-widget-secrecy) links the [native evidence fold and contradiction audit](../specs/secret-auras.md). VERIFIED locally: Retail WM61 S6 separates recorded aspects, prevention and anchoring. Retail/PTR implement those calculations; complete publication and native writers remain UNKNOWN.
+
+## [2026-11-12] investigation | Inline XML tooltip operands
+
+[Inline XML method arguments](investigations/xml-inline-method-arguments.md) records the zero-vararg parser misclassification, source-faithful parameter-prefix installation, and the separately approved RaidFrame AddLine fixture correction.
+
+## [2026-11-12] implementation | R73 PvP talent annotations
+
+[Tooltip data](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) links the [R73 contract](../specs/tooltip-pvp-talent.md). VERIFIED: eight exact tests pass, including seven original-hover outcomes and supplied slot/group fields. Combat precedes grant and later unlock, and supplied rest permission replaces the unproved XP-state mapping. UNKNOWN: opaque native predicates and inspect internals remain unmodelled.
+
+## [2026-11-12] correction | R80 ordinary item tooltip stats
+
+The [item tooltip contract](../specs/tooltip-item-r80.md) records the VERIFIED admitted native stat helper without wiring it to the UNKNOWN ordinary item-mod producer. Shared item builders now omit unsupplied stats and accept final host amounts and optional top-level metadata. Retail 639 tooltip-related integration cases and all 2263 lib cases pass in bounded partitions, including unchanged standalone-Lua and serializer regressions. PTR/Forever exact proofs are recorded separately in the lane report.
+
 > Proof receipts live untracked under `~/.local/state/wow-ui-sim`. The `data/patch-api/evidence` and `data/test-perf/evidence` trees were removed on 2026-11-08; historical links below are records, not live paths. Recover a file with `git show c011c1d95:<path>`.
 
 ## [2026-11-12] implementation | Enter World host handover
 
 [Forever Login Startup](investigations/forever-login-startup.md#enter-world-owner-handover-lt-81c7-2026-11-12) links R74 selection/dispatch, the existing owner-held Game bootstrap, selected naming and preserved WTF import source. Native sequencing remains UNKNOWN; the real control is still blocked on R76 SaveCharacterOrder.
 
+## [2026-11-12] fix | Unit-test Blizzard UI cache isolation
+
+[Addon loading](systems/addon-loading.md#blizzard-ui-cache--per-profile-setup) records the concurrent Retail pin cache incident and the test-only startup hard error. Normal user startup keeps auto-sync; pin-versioned cache directories remain a design proposal.
+## [2026-11-12] correction | Bag fixture stages and insecure TOC screens
+
+[Bag-bar fixture stages](investigations/frame-position-baseline-drift.md#bag-bar-test-application-stages--2026-11-12) distinguish late-loaded Retail XML Y=0 from startup-applied PTR preset Y=10. [Addon loading](systems/addon-loading.md#screen-qualified-dependency-declarations) retains VERIFIED R13 insecure-parser Game-only semantics and labels the ordinary third-party parser-mode mapping INFERRED; the contrary discovery-test expectation is superseded.
+
+## [2026-11-12] system | PvP talent tooltip catalog
+
+[Tooltip data](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) links the [PvP talent contract](../specs/tooltip-pvp-talent.md) and generated 407-row Retail catalog. **VERIFIED:** the installed CASC export is 12.1.5.70783 with zero unreadable PvpTalent and category rows; the exact tooltip tests pass. **UNKNOWN:** equivalence to selected build 12.1.5.70575 ; selected-slot host state is now covered by the R73 contract.
+
+## [2026-11-11] correction | Addon loading phases and LoadWith followers
+
+[Addon loading](systems/addon-loading.md#blizzard-addon-load-order) records R64 startup phases, `LoadManagers`, optional-before-required ordering, R64b/c follower behavior, and R70 PTR phase/mask evidence. Retail/Forever use the verified follower path. PTR uses an INFERRED child-list model; native parser linkage remains UNKNOWN, and tests seed the list directly. The simulator models PTR `CharacterCreate` as an INFERRED phase-two Glue root and loads its required chain before its files, without ordering it against PTRFeedbackGlue.
+
+## [2026-11-12] implementation | R81 spell tooltip composition
+
+[Tooltip data](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) links the R81 contract, neutral host-helper inputs and native evidence limits. VERIFIED: the five original-consumer tests reject the base and pass with the producer; Retail passes 2263 lib / 641 tooltip integration cases, PTR passes 81 / 10 touched integration/lib cases, and Forever passes 23 / 10 available touched cases, with zero-warning final builds. Native 70688 evidence is not a serialized-output certificate for other builds.
+
 ## [2026-11-11] implementation | Glue login submission
 
 [Forever Login Startup](investigations/forever-login-startup.md#login-submission-model-lt-a667-2026-11-11) links real-control submission, offline acceptance policy, host roster/capacity, ordinary CharacterCreate startup, R60 shared GameMode display, and R63 host credits/capability state, and R65 FileDataID validation. Native evidence and cached-build compatibility remain separate. Retail/PTR gates and real Forever submission pass after m35 integration; the approved passive empty-roster transition snapshot passes while downstream baseline setup errors remain visible. Final acceptance is pending.
+## [2026-11-11] investigation | Lua rectangle-query validity
+[Lua rectangle-query validity](investigations/rect-query-validity.md) records VERIFIED R48/R59 geometry-query findings for Retail and PTR, cached validity and the dirty/clean target gate in simulator commits `faf99f277`, `edf70955b` and `45fae8c13`, INFERRED ancestor/dependency dirty mapping, UNKNOWN non-Retail/PTR native parity and fallback/callback/cycle/return details, and pending profile/full-suite proof. VERIFIED: the Retail library/integration build at HEAD `0834e5438` includes code commit `45fae8c13` and has zero warnings; all 12 geometry and two cached-validity tests pass. PTR and profile proof remain pending. See the [contract](../specs/rectangle-geometry-queries.md).
+## [2026-11-11] system | PTR/Retail store API availability
+[Store API availability](systems/store-api-availability.md) links the R38 evidence boundary to its [contract](../specs/store-api-availability.md). VERIFIED: PTR/Retail GameMenu tests pass 13/13 each; Store API, StorePublic and CatalogShop structure tests pass on both; Retail CatalogShop UI passes 4/4. INFERRED: defaults (false, true) hide the PTR button and show the Retail button.
+## [2026-11-10] system | Cursor modes and ActionBar transitions
+[Cursor model](systems/lua-api.md#cursor-modes-and-actionbar-transitions) links Retail and PTR implementation ownership to the [behavioral contract](../specs/cursor-model.md).
 ## [2026-11-11] system | Character select screen data
 
 [Character select screen data](systems/chr-select-screen-data.md) links the profile-scoped DB2 rows and provenance. **VERIFIED:** Retail data is labeled with installed build 12.1.5.70783 and Forever rows with installed build 1.60.1.70888; targeted lookup tests pass 3/3 on each profile, and the PTR no-data test passes. **UNKNOWN:** Forever 70707 and PTR source rows. The native API and roster are separately owned.
@@ -53,6 +120,10 @@
 ## [2026-11-08] correction | Native R13 addon dependency semantics
 
 [Addon loading](systems/addon-loading.md#screen-qualified-dependency-declarations) now records the native result: unannotated required cross-screen dependencies fail with `DEP_WRONG_ACTIVE_INTERFACE`; `[AllowLoad ...]` filters a whole header line before dependency splitting; Both targets remain required; optional failures are ignored; and loadability queries skip screen checks. The 2026-11-06 TOC-only inference is superseded. Evidence boundaries distinguish Retail 70688 from partial Forever and unknown PTR annotation grammar.
+
+## [2026-11-12] investigation | Forever integration fixture differences
+
+[Forever startup gaps](investigations/forever-startup-gaps.md#forever-70707-integration-fixture-differences) records the VERIFIED selected-source differences behind 15 integration failures: bindings, talent dependency, status priorities, endcap settings, flyout buttons, C60 art, separate microbuttons and eager QueueStatusFrame. It also records the supplied item-overlay publication repair and independently audited 211-entry load-order fixture. Final cross-profile proof is in the lane report.
 
 ## [2026-11-07] fix | Forever 1.60.1.70707 residuals
 
@@ -4204,7 +4275,7 @@ The sixteen retail 12.0.0 `Enum.EditModeDamageMeterSetting.*` and `Enum.EditMode
 | [[lua-api]] | WowLuaEnv, FrameHandle userdata, 300+ frame methods, model-family compatibility surface, texture fileDataID/path identity, C_* namespaces including the bounded C_ProfSpecs specialization fixture, timers, animation system |
 | [[event-system]] | EventQueue, 36+ script handler types, dispatch flow, OnUpdate tick, startup event sequence, XML script setup |
 | [[xml-template-system]] | XML parsing, template registry/inheritance, same-object engine-root reuse, inline scripts/events and bounded callback late-binding proof |
-| [[addon-loading]] | Native R13 whole-line screen dependency rules, TOC parsing, root-and-transitive-hard-dependency Blizzard discovery without eager-loading unrelated cache directories, inline `[Bootstrap]` semantics, typed nil-symbol observations and missing `C_*` requirements separated from runtime failures, public/secure same-addon publication reconciliation, exactly-once nested diagnostic forwarding with top-level runtime diagnostic retention and draining, VM-scoped lookup provenance, hidden publication-recorder boundary, stable addon-index ownership, single SimState-owned RAII load transactions, explicit secure replay allowlist, SavedVariables, startup sequence |
+| [[addon-loading]] | Native R13 screen dependency rules, R64 startup phases and `LoadManagers`, optional-before-required ordering, Retail/Forever `LoadWith` submission, Retail failure behavior, PTR eligibility unknown, mode-one unknowns, TOC parsing and Blizzard discovery, inline `[Bootstrap]` semantics, Lua diagnostics, secure replay, SavedVariables and startup sequence |
 | [[addon-module-imports]] | Forever completed-module `require`; [import checkpoint](systems/addon-module-imports.md#forever-import-binding--2026-10-15): historical completed-table/missing-binding RED; current bounded binding/control execution observed, independent acceptance pending; reused simulator policy, native parity UNKNOWN |
 | [[server-snapshot-action-bars]] | Imports captured action bars and carried bags from local ServerSnapshot SavedVariables before Blizzard UI loading; source-matching 0.3.0 install, July 5 no-bag snapshot, final fixture-failure boundary, and pending fresh capture recorded |
 | [[client-profiles]] | Seven mutually-exclusive client profiles, including distinct Forever `16001` / `wow_classic_beta` / `wowforever` cache from source branch `forever`; `5e26960b6` routes its `[Family]` files to `Mainline` while retaining Camelot and annotation filters; [running report](../wowforever-1.60.1.md) separates the historical 422-record baseline from current proof |
@@ -4269,6 +4340,7 @@ The sixteen retail 12.0.0 `Enum.EditModeDamageMeterSetting.*` and `Enum.EditMode
 | [[retail-core-behavior-probes]] | Live retail `12.0.5.67823` probes pinned `SetForbidden`, `CreateForbiddenFrame`, invalid `RegisterUnitEvent`, wildcard false attributes, and the improved Raise/Lower capture path |
 | [[minimap-map-ring-alignment]] | Active minimap bug is map texture/mask/ring alignment, not the SimCommands minimap button; debug the minimap render mask/clip and ring aperture directly |
 | [[casc-fdid-1579624-root-debug]] | FDID 1579624 root/CASC resolution data, CRLF hash proof, and parser debugging checklist |
+| [[editbox-text-font]] | EditBox XML font/inset model and [contract](../specs/editbox-text-font.md); contributor-only native observations remain UNVERIFIED and optional, including LEFT default and font-object precedence |
 | [[windows-casc-blizzard-taint]] | CASC/TOC load taint and runtime LoadAddOn boundaries; generated template handlers also need declaration-origin taint instead of constructor taint (grouped GREEN pending) |
 | [[achievement-panel-hide]] | Achievement panel hide now uses Blizzard's managed panel path; animation completion also fires child animation `OnFinished` scripts for alert hide XML |
 | [[adventure-guide-layout]] | Suggested Content card overlap came from synchronous geometry queries resolving resized anchor targets without updating dependent sibling frames |
@@ -4289,6 +4361,7 @@ The sixteen retail 12.0.0 `Enum.EditModeDamageMeterSetting.*` and `Enum.EditMode
 | [[editbox-render-text-cache]] | SimCommands search text can disappear from stale `text_stripped` cache or because opaque EditBox child regions render above the internal text/caret emitter |
 | [[explicit-xml-parent-anchors]] | Nested XML frames with `parent="..."` must use that explicit parent for implicit anchors; fixed PaperDoll sidebar tabs anchoring to `PaperDollFrame` instead of `CharacterFrameInsetRight` |
 | [[fontstring-default-anchors]] | Unanchored XML `FontString` layer children and `ButtonText` pick their implicit anchor from `justifyH`; explicit anchors suppress the default, while EditBox backing FontStrings stay unanchored |
+| [[fontstring-anchor-sizing]] | VERIFIED: native rect span precedes stored width; INFERRED: public GetWidth span and single-anchor fallback; UNKNOWN: wrap metric and text-cache invalidation |
 | [[frame-surrogate-identity-slot]] | Frame method dispatch now seeds `frame[0]` with a backed identity token so Restricted Environment-style surrogates resolve through `[0]`; `[1]`-only surrogates no longer dispatch |
 | [[generated-stubs-audit]] | 5 unresolved priority findings in generated-stub surfaces; retail/PTR C_LootHistory empty state is resolved |
 | [[chatframe-scrollbar-anchor-reapply]] | Inherited child anchor reapply used the child name for `$parent...` substitution, pushing `ChatFrame1` scrollbar descendants off-screen |
@@ -4722,3 +4795,12 @@ is reused; original-consumer runtime RED/GREEN remains unexecuted.
 ## [2026-10-26] implementation | Mists supplied party minimum
 
 [Supplied minimum](systems/mists-scenario-finder.md#supplied-active-party-minimum) links the [bounded contract](../specs/mists-party-minimum.md). Three exact producer-subtracted REDs and three GREENs prove the original58 boundary, empty-catalog preservation, direct85/90/isolation and explicit errors. Stock stays6/12 with two individually traced diagnostic replacements; catalog discrimination is blocked. All seven full-feature all-target checks pass with zero compiler warnings. Formatting/readability pass; other-profile runtime parity is not claimed.
+
+## [2026-11-13] correction | Forever store availability
+[Store API availability](systems/store-api-availability.md) records R87: Forever shares the server-mirrored `bpayStoreEnable` query and false default in Game/Glue. Shop 2 and update-event parity remain outside the evidence.
+
+### Character-customization host finalizer (R79b/R79c)
+
+[[lua-api]] records Retail/Forever neutral stored-key sorting, independent 1-based
+category/option numbering, small-list stable ties, and unchanged unknown collector
+and choice-order boundaries. See the [spec](../specs/character-creation-submit.md#r79br79c-host-finalizer-305-314-319).

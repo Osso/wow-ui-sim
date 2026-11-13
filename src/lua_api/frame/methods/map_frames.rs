@@ -699,6 +699,8 @@ fn set_to_defaults(state: &mut LuaState) -> LuaResult<u32> {
             frame.set_size(0.0, 0.0);
             frame.width_is_text_auto = false;
             frame.layout_rect = None;
+            frame.rect_valid = false;
+            frame.anchor_invalidated = false;
             frame.minimap_blip_texture = None;
             frame.minimap_mask_texture = None;
             frame.minimap_icon_texture = None;

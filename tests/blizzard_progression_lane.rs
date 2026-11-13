@@ -105,12 +105,24 @@ fn load_full_game_ui() -> WowLuaEnv {
 
 #[test]
 fn each_lane_addon_directory_exists_on_disk() {
+    if toc_layout::unified_toc_tree() {
+        assert!(!blizzard_ui_dir().join("Blizzard_TalentUI").exists());
+    }
     for name in LANE_ADDONS {
         if toc_layout::unified_toc_tree() && *name == "Blizzard_TalentUI" {
             // The pinned PTR/Forever manifests contain no TalentUI entries.
             continue;
         }
         let dir = blizzard_ui_dir().join(name);
+        if toc_layout::unified_toc_tree() && *name == "Blizzard_TalentUI" {
+            assert!(
+                !dir.exists(),
+                "PTR/Forever pinned caches omit Blizzard_TalentUI; their active talent UI is \
+                 represented by Blizzard_SharedTalentUI/Blizzard_SharedTalentUI.toc:3-42 \
+                 and Blizzard_PlayerSpells"
+            );
+            continue;
+        }
         assert!(
             dir.is_dir(),
             "Lane addon `{name}` directory must exist at \
@@ -221,12 +233,23 @@ fn lane_dep_edges_classify_each_addons_load_floor() {
     let soulbinds = parse_lane_toc("Blizzard_Soulbinds");
     let landing_soulbinds = parse_lane_toc("Blizzard_LandingSoulbinds");
 
+    let expected_shared_deps: &[&str] = if cfg!(feature = "client-ptr") {
+        // PTR SharedTalentUI.toc:3 requires SpellTypeIconOverlay; Forever
+        // SharedTalentUI.toc:3 lists only SpellSearch, as does Retail.
+        &["Blizzard_SpellSearch", "Blizzard_SpellTypeIconOverlay"]
+    } else {
+        &["Blizzard_SpellSearch"]
+    };
     assert_eq!(
         shared.dependencies(),
-        vec!["Blizzard_SpellSearch".to_string()],
-        "SharedTalentUI depends on Blizzard_SpellSearch — the addon's filter-by-spell-name \
-         feature (talent-tree search bar) calls into SpellSearch's index. Without this dep, \
-         the search input is dead at file scope"
+        expected_shared_deps
+            .iter()
+            .map(|dependency| dependency.to_string())
+            .collect::<Vec<_>>(),
+        "SharedTalentUI dependencies must match the active pinned TOC. Only PTR \
+         SharedTalentUI.toc:3 adds Blizzard_SpellTypeIconOverlay to the Retail dependency. \
+         Got: {:?}",
+        shared.dependencies()
     );
 
     assert_eq!(

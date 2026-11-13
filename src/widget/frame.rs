@@ -364,6 +364,10 @@ pub struct Frame {
     pub pushed_text_offset: (f32, f32),
     /// Eagerly computed layout rect (updated on SetPoint, SetSize, etc.).
     pub layout_rect: Option<crate::LayoutRect>,
+    /// Cached Lua rectangle-validity flag; `layout_rect` may exist when false.
+    pub rect_valid: bool,
+    /// The last anchor resolution was invalidated before its target could be used.
+    pub anchor_invalidated: bool,
     /// Size last reported to OnSizeChanged, in frame units (starts at 0x0).
     pub reported_size: (f32, f32),
     // --- Slider fields ---
@@ -577,8 +581,12 @@ pub struct Frame {
     /// Whether this frame marks script-visible values as secret.
     pub prevent_secret_values: bool,
 
-    /// Secret-aspect bits explicitly added to this object, independent of derived state.
+    /// Secret-aspect bits explicitly recorded on this object.
     pub explicit_secret_aspects: u32,
+
+    /// Supplied anchoring secrecy, independent of prevention and recorded aspects.
+    /// WM61 S6 establishes the reader; native writers remain unknown.
+    pub is_anchoring_secret: bool,
 
     /// ID of the frame that owns this tooltip (set via `SetOwner`).
     ///
@@ -703,6 +711,11 @@ impl Frame {
         if widget_type == WidgetType::GameTooltip {
             frame.frame_strata = FrameStrata::Tooltip;
             frame.has_fixed_frame_strata = true;
+        }
+        // The client starts an EditBox's text at the left (`GetJustifyH()`
+        // is "LEFT" on a new box), unlike a FontString's CENTER.
+        if widget_type == WidgetType::EditBox {
+            frame.justify_h = TextJustify::Left;
         }
         frame
     }

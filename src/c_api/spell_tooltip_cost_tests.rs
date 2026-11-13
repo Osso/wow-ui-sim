@@ -21,6 +21,14 @@ fn has_cost(env: &WowLuaEnv, spell_id: u32) -> (bool, bool) {
 #[test]
 fn spell_cost_eligibility_matches_wm98() {
     let env = WowLuaEnv::new().unwrap();
+    // R81 Q2: final resource helper display text is not a computed percentage.
+    assert_eq!(has_cost(&env, 19750), (false, false));
+    env.state()
+        .borrow_mut()
+        .spell_tooltip_inputs
+        .entry(19750)
+        .or_default()
+        .cost = Some("host MANA cost".into());
     for (mode, suppress_content, attributes_9, expected) in [
         (0, false, 0, true),
         (1, false, 0, false),

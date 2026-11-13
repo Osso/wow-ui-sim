@@ -7,6 +7,8 @@ mod temporary;
 pub(crate) use temporary::legacy_talent_skill_defaults::get_legacy_talent_info;
 pub(crate) use temporary::lfg_encounters::get_search_result_encounter_info;
 pub(crate) use temporary::minimap_tracking_defaults::RETAIL_TRACKING_DEFAULT_MASK;
+#[cfg(feature = "client-retail")]
+pub(crate) use temporary::pvp_talent_defaults::pvp_slot_default;
 pub(crate) use temporary::quest_campaign_header_default::update_campaign_headers;
 
 #[cfg(feature = "client-wrath")]
@@ -661,7 +663,11 @@ fn patch_runtime_feature_addon_surfaces(env: &crate::lua_api::LoaderEnv<'_>, add
     if addon_name == "Blizzard_AuthChallengeUI" {
         patch_auth_challenge_frame_parent(env);
     }
-    if addon_name == "Blizzard_AccountStore" {
+    // Retail's TOC loads Blizzard_AccountStore.lua before the frame XML.
+    // Preserve its setter: it updates the title and emits StoreFrontSet.
+    if addon_name == "Blizzard_AccountStore"
+        && crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail
+    {
         let _ = patch_account_store_set_storefront(env);
     }
     if addon_name == "Blizzard_CatalogShop" {
