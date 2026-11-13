@@ -18,6 +18,13 @@ clamp coverage. RF host inputs only; no collector or PTR category changes.
 verified R78/R83 argument/state behavior from droppable inferred catalog and
 return bridges. The unseeded collector and end-to-end submit remain distinct.
 
+## [2026-11-13] investigation | EditMode Frame method ownership
+
+Added [the method-surface investigation](investigations/frame-editmode-method-surface.md)
+and corrected the earlier Mists claim that these methods belong on every Frame.
+VERIFIED: the Mists pre-change and current `frame_positions` runs fail the same
+four unrelated cases; the managed Paladin frame passes with mixin-scoped methods.
+
 ## [2026-11-13] investigation | EllesmereUI core API boundary
 
 Updated [full third-party startup](investigations/full-addon-startup-2026-10-10.md#r88a-api-boundary-follow-up-2026-11-13) with R88a behavior, the lane's exact tests, and the post-fix 20-addon result. **VERIFIED (Retail run at code SHA `bc01ba60c`):** 20/20 add-ons loaded with zero load-time errors; two post-startup blockers remain, including `C_Garrison.IsLandingPageMinimapButtonVisible` and AuraKit. **INFERRED:** the neutral garrison input starts at zero. **UNKNOWN:** the visibility predicate and secret/restriction policies.

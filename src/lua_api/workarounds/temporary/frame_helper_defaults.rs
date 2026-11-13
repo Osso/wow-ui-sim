@@ -60,19 +60,6 @@ local function __wow_install_frame_helpers(frame)
     end
   end
 
-  if frame.IsInitialized == nil then
-    function frame:IsInitialized()
-      return type(self.layoutInfo) == "table" or type(self.systemInfo) == "table"
-    end
-  end
-
-  if frame.IsInDefaultPosition == nil then
-    function frame:IsInDefaultPosition()
-      local info = self.systemInfo
-      return type(info) == "table" and info.isInDefaultPosition == true
-    end
-  end
-
   return frame
 end
 
@@ -153,18 +140,6 @@ do
       end
     end
 
-    if frameIndex.IsInitialized == nil then
-      function frameIndex:IsInitialized()
-        return type(self.layoutInfo) == "table" or type(self.systemInfo) == "table"
-      end
-    end
-
-    if frameIndex.IsInDefaultPosition == nil then
-      function frameIndex:IsInDefaultPosition()
-        local info = self.systemInfo
-        return type(info) == "table" and info.isInDefaultPosition == true
-      end
-    end
   end
 end
 
@@ -196,22 +171,6 @@ local function __wow_register_core_frame_methods()
   local methods = mt and mt.__index
   if type(methods) ~= "table" then
     return
-  end
-
-  if methods.IsInitialized == nil then
-    function methods:IsInitialized()
-      return type(self.layoutInfo) == "table" or type(self.systemInfo) == "table"
-    end
-  end
-
-  if methods.IsInDefaultPosition == nil then
-    function methods:IsInDefaultPosition()
-      local systemInfo = self.systemInfo
-      if type(systemInfo) == "table" and systemInfo.isInDefaultPosition ~= nil then
-        return systemInfo.isInDefaultPosition == true
-      end
-      return false
-    end
   end
 
   if methods.AddDataProvider == nil then
@@ -440,12 +399,8 @@ mod tests {
                 if not provider.pin or provider.pin.dataProvider ~= provider then return "pin_missing" end
                 frame:RemoveDataProvider(provider)
                 if #providers ~= 0 then return "provider_remove_failed" end
-                if frame:IsInitialized() then return "fresh_frame_initialized" end
-                frame.layoutInfo = {}
-                if not frame:IsInitialized() then return "layout_frame_uninitialized" end
-                if frame:IsInDefaultPosition() then return "default_position_without_info" end
-                frame.systemInfo = { isInDefaultPosition = true }
-                if not frame:IsInDefaultPosition() then return "default_position_missing" end
+                if frame.IsInitialized ~= nil then return "unexpected_initialized_method" end
+                if frame.IsInDefaultPosition ~= nil then return "unexpected_default_position_method" end
                 return "ok"
                 "#,
             )

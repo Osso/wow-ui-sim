@@ -10,6 +10,12 @@ clamp coverage. RF host inputs only; no collector or PTR category changes.
 verified R78/R83 argument/state behavior from droppable inferred catalog and
 return bridges. The unseeded collector and end-to-end submit remain distinct.
 
+## [2026-11-13] investigation | EditMode Frame method ownership
+
+**VERIFIED:** [EditMode method surface](investigations/frame-editmode-method-surface.md)
+records the four mixin-owned methods, the original managed-frame presence guard,
+and the Mists baseline proving four unrelated position failures predate this change.
+
 ## [2026-11-13] implementation | Garrison landing-page visibility
 
 [Full third-party startup](investigations/full-addon-startup-2026-10-10.md#garrison-minimap-button-visibility-r88e1-2026-11-13) and the [Retail garrison contract](../specs/garrison-landing-page-type.md) record R88e.1's record lookup, type-111 condition, inferred host inputs and original Minimap test. **VERIFIED (Retail 12.1.5 build 70688):** low-byte lookup, missing-record false and non-111 state flags. **VERIFIED (20-addon Retail run at simulator SHA `2a03dbee7`):** 20/20 addons loaded with zero load-time errors; `lua-errors` reports only the AuraKit secret-access error (70 occurrences). **INFERRED:** the type-111 player-state value is a covenant ID.
@@ -4372,6 +4378,7 @@ The sixteen retail 12.0.0 `Enum.EditModeDamageMeterSetting.*` and `Enum.EditMode
 | [[class-talents-edge-frame-levels]] | Class-talent connector edges were rendering above node icons; edge-frame-level workaround now patches both mixin + live frame and re-levels active edges |
 | [[class-talents-trait-loadout-state]] | `PlayerSpells` trait queries now read live loadout state; hero subtree visibility uses correct spec-condition OR semantics; config-scoped `GetNodeInfo` ignores stale view spec |
 | [[editmode-layout]] | Historical frame regressions; active2 remap rationale superseded by unchanged Blizzard selection/source and fresh whole-startup RED at `653e829f1`; repair `057b65d3d`, Retail startup2/cache10/Enter3 GREEN at `7d9d9f621`; bounded layout/chat/command-field user acceptance after native focus fix; later PTR startup2/cache10/Enter3 PASS; universal native/pixel/all-key/all-profile/full handoff OPEN |
+| [[frame-editmode-method-surface]] | VERIFIED: four EditMode methods belong to mixins, not generic Frame; generic registration caused original managed-frame presence checks to skip plain frames |
 | [[editbox-render-text-cache]] | SimCommands search text can disappear from stale `text_stripped` cache or because opaque EditBox child regions render above the internal text/caret emitter |
 | [[explicit-xml-parent-anchors]] | Nested XML frames with `parent="..."` must use that explicit parent for implicit anchors; fixed PaperDoll sidebar tabs anchoring to `PaperDollFrame` instead of `CharacterFrameInsetRight` |
 | [[fontstring-default-anchors]] | Unanchored XML `FontString` layer children and `ButtonText` pick their implicit anchor from `justifyH`; explicit anchors suppress the default, while EditBox backing FontStrings stay unanchored |
