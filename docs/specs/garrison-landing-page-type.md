@@ -4,7 +4,7 @@
 
 ## What it must do
 
-- [ ] Publish `C_Garrison.GetLandingPageGarrisonType` for Retail. **VERIFIED (Retail 12.1.5 build 70688):** the native member takes no arguments and returns exactly one number on normal completion.
+- [x] Publish `C_Garrison.GetLandingPageGarrisonType` for Retail. **VERIFIED (Retail 12.1.5 build 70688):** the native member takes no arguments and returns exactly one number on normal completion.
 - [ ] The original `Blizzard_Minimap` refresh path must complete without a Lua error once its required `C_Garrison` members are modeled. The current test stops after the native type query, before the separately blocked visibility predicate.
 - [ ] **VERIFIED (Retail 12.1.5 build 70688):** the empty or unmatched native helper path returns one number, `0`. Do not infer that every no-page state uses this path.
 - [ ] **INFERRED (simulator policy):** the neutral host input starts at `0`. This does not prove that `0` is the native no-active-page sentinel in every state.

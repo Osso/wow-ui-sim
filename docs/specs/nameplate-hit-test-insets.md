@@ -4,13 +4,13 @@ The Retail `C_NamePlateManager` API stores four hit-test inset values for each `
 
 ## What it must do
 
-- [ ] Publish `C_NamePlateManager.GetNamePlateHitTestInsets(type)` and `SetNamePlateHitTestInsets(type, left, right, top, bottom)` for Retail. The pinned local API documentation declares Friendly=0 and Enemy=1; its exact client build is UNKNOWN.
-- [ ] **VERIFIED (pinned local Retail API documentation; exact client build UNKNOWN):** Return four values in left/right/top/bottom order and keep each type's tuple separate.
-- [ ] **VERIFIED (Retail 12.1.5 build 70688):** The setter rejects a missing or nil type. For a non-nil type, failed numeric conversion selects type 0; successful conversion produces a signed 32-bit integer, and the parser accepts low-byte values 0 and 1. Values 256 and 257 therefore select Friendly and Enemy.
-- [ ] **VERIFIED (Retail 12.1.5 build 70688):** Each inset must pass the native number check, which accepts numbers and values accepted by the native numeric coercer. The setter converts each value to single precision, multiplies by `1/1024`, then by single-precision `0.8`, and stores the float.
-- [ ] **VERIFIED (Retail 12.1.5 build 70688):** A tainted caller is not rejected when no restriction-state pointer exists. The public setter must complete without a Lua error for ordinary inset numbers in this context.
-- [ ] **INFERRED (simulator policy):** Each type starts with `(0, 0, 0, 0)`. This is not a native-observed default.
-- [ ] Leave `C_NamePlate.GetNamePlateForUnit` nil and `GetNamePlates` empty. Do not create plate frames or clamp offsets against fabricated bounds.
+- [x] Publish `C_NamePlateManager.GetNamePlateHitTestInsets(type)` and `SetNamePlateHitTestInsets(type, left, right, top, bottom)` for Retail. The pinned local API documentation declares Friendly=0 and Enemy=1; its exact client build is UNKNOWN.
+- [x] **VERIFIED (pinned local Retail API documentation; exact client build UNKNOWN):** Return four values in left/right/top/bottom order and keep each type's tuple separate.
+- [x] **VERIFIED (Retail 12.1.5 build 70688):** The setter rejects a missing or nil type. For a non-nil type, failed numeric conversion selects type 0; successful conversion produces a signed 32-bit integer, and the parser accepts low-byte values 0 and 1. Values 256 and 257 therefore select Friendly and Enemy.
+- [x] **VERIFIED (Retail 12.1.5 build 70688):** Each inset must pass the native number check, which accepts numbers and values accepted by the native numeric coercer. The setter converts each value to single precision, multiplies by `1/1024`, then by single-precision `0.8`, and stores the float.
+- [x] **VERIFIED (Retail 12.1.5 build 70688):** A tainted caller is not rejected when no restriction-state pointer exists. The public setter must complete without a Lua error for ordinary inset numbers in this context.
+- [x] **INFERRED (simulator policy):** Each type starts with `(0, 0, 0, 0)`. This is not a native-observed default.
+- [x] Leave `C_NamePlate.GetNamePlateForUnit` nil and `GetNamePlates` empty. Do not create plate frames or clamp offsets against fabricated bounds.
 
 ## How it works
 
