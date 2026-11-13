@@ -4,40 +4,46 @@
 use crate::common::blizzard_addon_harness::with_blizzard_addon_smoke_shape;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+fn load_player_spells(env: &WowLuaEnv) {
+    let loaded_before: bool = env
+        .eval("return C_AddOns.IsAddOnLoaded('Blizzard_PlayerSpells')")
+        .expect("PlayerSpells load state should be available");
+    assert!(!loaded_before, "PlayerSpells must begin LoadOnDemand");
+
+    crate::common::supply_empty_forever_spellbook_outfits(env);
+    env.exec("C_AddOns.LoadAddOn('Blizzard_PlayerSpells')")
+        .expect("PlayerSpells should load through the addon manager");
+    let loaded: bool = env
+        .eval("return C_AddOns.IsAddOnLoaded('Blizzard_PlayerSpells')")
+        .expect("PlayerSpells load state should be available after loading");
+    assert!(loaded, "PlayerSpells must load before its consumers run");
+}
+
+fn set_spellbook_source_suffixes(env: &WowLuaEnv) {
+    let frame_source_suffix = "Blizzard_PlayerSpells/SpellBook/Blizzard_SpellBookFrame.lua";
+    let attic_source_suffix = match wow_ui_sim::client_profile::ACTIVE {
+        wow_ui_sim::client_profile::ClientProfile::WowForever => {
+            "Blizzard_PlayerSpells/Camelot/SpellBook/Blizzard_SpellBookFrame.lua"
+        }
+        _ => frame_source_suffix,
+    };
+    env.exec(&format!(
+        "__wow_test_spellbook_frame_source_suffix = '{frame_source_suffix}'"
+    ))
+    .expect("spellbook consumer source suffix should be available to Lua assertions");
+    env.exec(&format!(
+        "__wow_test_spellbook_attic_source_suffix = '{attic_source_suffix}'"
+    ))
+    .expect("spellbook attic source suffix should be available to Lua assertions");
+}
+
 pub(super) fn with_player_spells_loaded<F>(assertions: F)
 where
     F: FnOnce(&WowLuaEnv),
 {
     with_blizzard_addon_smoke_shape(&["Blizzard_UIPanels_Game"], &[], |env, _| {
-        let loaded_before: bool = env
-            .eval("return C_AddOns.IsAddOnLoaded('Blizzard_PlayerSpells')")
-            .expect("PlayerSpells load state should be available");
-        assert!(!loaded_before, "PlayerSpells must begin LoadOnDemand");
-
-        crate::common::supply_empty_forever_spellbook_outfits(env);
-        env.exec("C_AddOns.LoadAddOn('Blizzard_PlayerSpells')")
-            .expect("PlayerSpells should load through the addon manager");
-        let loaded: bool = env
-            .eval("return C_AddOns.IsAddOnLoaded('Blizzard_PlayerSpells')")
-            .expect("PlayerSpells load state should be available after loading");
-        assert!(loaded, "PlayerSpells must load before its consumers run");
-
-        let frame_source_suffix = "Blizzard_PlayerSpells/SpellBook/Blizzard_SpellBookFrame.lua";
-        let attic_source_suffix = match wow_ui_sim::client_profile::ACTIVE {
-            wow_ui_sim::client_profile::ClientProfile::WowForever => {
-                "Blizzard_PlayerSpells/Camelot/SpellBook/Blizzard_SpellBookFrame.lua"
-            }
-            _ => frame_source_suffix,
-        };
-        env.exec(&format!(
-            "__wow_test_spellbook_frame_source_suffix = '{frame_source_suffix}'"
-        ))
-        .expect("spellbook consumer source suffix should be available to Lua assertions");
-        env.exec(&format!(
-            "__wow_test_spellbook_attic_source_suffix = '{attic_source_suffix}'"
-        ))
-        .expect("spellbook attic source suffix should be available to Lua assertions");
-
+        load_player_spells(env);
+        set_spellbook_source_suffixes(env);
         assertions(env);
     });
 }
