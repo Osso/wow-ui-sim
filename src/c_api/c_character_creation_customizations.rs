@@ -34,6 +34,12 @@ pub struct Category {
     pub options: Vec<OptionRecord>,
 }
 impl Category {
+    /// INFERRED host convenience (#690/#701), not a native no-data claim.
+    /// No collector or default test selects this zero fallback implicitly.
+    pub fn with_inferred_zero_zoom() -> Self {
+        Self::new(0)
+    }
+
     /// Construct a host record with an explicitly supplied camera zoom.
     pub fn new(camera_zoom_level: i32) -> Self {
         Self {

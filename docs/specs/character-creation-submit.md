@@ -408,3 +408,11 @@ The full ForwardButton continues beyond the R83d consumer into zone-choice
 setup, whose `GetStartingZoneChoices` API is missing. #712 keeps that separate
 (R88 pending evidence), rather than weakening the zero-new-errors assertion or
 inventing zone data. The bounded test does not claim full navigation success.
+
+### Separate INFERRED host convenience
+
+`Category::with_inferred_zero_zoom()` explicitly opts a host caller into a
+zero-zoom record (#690/#701). It is not a `Default` implementation, not selected
+by a collector or unseeded fallback, and not asserted by the default tests.
+Native no-data behavior remains UNKNOWN. This constructor is independently
+droppable without changing the verified numeric publication contract.
