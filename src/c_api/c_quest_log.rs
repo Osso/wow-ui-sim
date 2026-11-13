@@ -20,6 +20,13 @@ pub struct QuestAdditionalHighlights {
     pub treasures: bool,
 }
 
+/// R88e.2 log-entry flags, separate from quest-record or category inputs.
+#[derive(Debug, Clone, Copy, Default)]
+pub struct QuestInfoEntryFlags {
+    pub is_task: bool,
+    pub is_bounty: bool,
+}
+
 pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     super::c_map_bounties::register_quest_queries(state)?;
     let namespace = ensure_namespace(state, "C_QuestLog")?;

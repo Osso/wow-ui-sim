@@ -114,6 +114,15 @@ pub struct QuestLogState {
     /// Supplied chapter IDs in campaign order.
     pub campaign_chapter_ids: HashMap<i32, Vec<i32>>,
     pub entries: Vec<QuestLogEntry>,
+    /// R88e.2 supplied flags on filtered log rows, indexed by their quest ID.
+    pub info_entry_flags: HashMap<i32, crate::c_api::c_quest_log::QuestInfoEntryFlags>,
+    /// R88e.2 quest-record autocomplete flags, independent of active log rows.
+    pub info_record_autocomplete: HashMap<i32, bool>,
+    /// Results of separate native category and list lookups, not log flags.
+    pub task_category_five: HashSet<i32>,
+    pub task_record_values: HashMap<i32, u8>,
+    pub task_list_lookup_matches: HashSet<i32>,
+    pub bounty_category_matches: HashSet<i32>,
     /// Supplied ready records outside the current quest log.
     pub abandon_ready_ids: HashSet<i32>,
     /// Supplied quest-record flags for the abandonability query.
@@ -226,6 +235,12 @@ impl QuestLogState {
     pub fn seeded() -> Self {
         Self {
             campaign_ids: HashMap::new(),
+            info_entry_flags: HashMap::new(),
+            info_record_autocomplete: HashMap::new(),
+            task_category_five: HashSet::new(),
+            task_record_values: HashMap::new(),
+            task_list_lookup_matches: HashSet::new(),
+            bounty_category_matches: HashSet::new(),
             campaign_chapter_ids: HashMap::new(),
             threat_entry_flags: HashMap::new(),
             bounties_by_set: HashMap::new(),

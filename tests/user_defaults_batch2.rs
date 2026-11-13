@@ -245,3 +245,49 @@ fn user_defaults_batch2_world_map_quest_consumer() {
     ))
     .expect("original account quest helper and quest-list consumer should run");
 }
+
+#[cfg(all(feature = "client-retail", feature = "optional-tests"))]
+#[test]
+fn retail_quest_log_r88e2_original_consumers_read_independent_flags() {
+    test_timeout! {
+        let env = keybinding_panel_fixtures::setup_env();
+        let ids = {
+            use wow_ui_sim::c_api::c_quest_log::QuestInfoEntryFlags;
+
+            let mut sim = env.state().borrow_mut();
+            let quests = &mut sim.quest_log_entries;
+            let ids: Vec<i32> = quests.entries.iter().take(3).map(|entry| entry.quest_id).collect();
+            assert_eq!(ids.len(), 3);
+            for entry in &mut quests.entries[..3] {
+                entry.is_world_quest = false;
+                entry.is_complete = false;
+            }
+            quests.info_entry_flags.insert(ids[0], QuestInfoEntryFlags { is_task: true, is_bounty: false });
+            quests.info_entry_flags.insert(ids[1], QuestInfoEntryFlags { is_task: false, is_bounty: true });
+            quests.info_record_autocomplete.insert(ids[2], true);
+            quests.info_record_autocomplete.insert(0, true);
+            ids
+        };
+
+        env.send_key_press("M", None).expect("open original World Map");
+        env.exec(&format!(r#"
+            assert(debug.getinfo(QuestLogQuests_Update, 'S').source:gsub('\\', '/')
+                :find('Mainline/QuestMapFrame.lua', 1, true))
+            QuestLogQuests_Update()
+            local visible = {{}}
+            for button in QuestScrollFrame.titleFramePool:EnumerateActive() do
+                visible[button.questID] = button.info
+            end
+            assert(visible[{auto}], "ordinary autocomplete quest should have a real log button")
+            assert(not visible[{task}], "original quest log excludes tasks")
+            assert(not visible[{bounty}], "original quest log excludes incomplete bounties")
+            local info = visible[{auto}]
+            assert(info.header and info.header.isHeader and not info.header.isAutoComplete)
+            assert(info.isAutoComplete)
+            assert(QuestCache:Get({auto}).isAutoComplete)
+            assert(C_QuestLog.IsQuestTask({task}))
+            assert(not C_QuestLog.IsQuestBounty({bounty}))
+        "#, task = ids[0], bounty = ids[1], auto = ids[2]))
+        .expect("original quest log and QuestCache must consume R88e.2 flags");
+    }
+}
