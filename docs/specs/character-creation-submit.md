@@ -130,7 +130,8 @@ to leave IsCharacterNameValid unchanged, avoiding unrelated inferred behavior.
 
 This separate slice implements only publication for Retail and Forever. The
 collector, selection, DB2 joins, requirement filters, eligibility/lock rules and
-native source ordering remain **UNKNOWN**. No DB2 collector or sorting is added.
+native source ordering remain **UNKNOWN**. No DB2 collector is added. The
+verified R79b/R79c finalizer below supersedes the original no-sort boundary.
 
 `SimState.character_customizations` is an optional host-owned input. `None`
 leaves the existing temporary provider entirely unchanged; `Some(records)` uses
@@ -150,7 +151,8 @@ VERIFIED publication contract (#275):
   `swatchColor2`, `soundKit`, `isLocked`, `lockedText`.
 - Fields are published in these sequences. The publisher's literal field lists
   and loops are the insertion-order proof; tests do not assert Lua hash iteration
-  order. Nested prepared lists are traversed without sorting by `orderIndex`.
+  order. The publisher traverses the finalized category/option vectors; choice
+  vectors remain host-supplied.
 - Icon ID zero publishes nil; a nonzero unresolved ID publishes an empty string.
   Resolved bytes come from the host, not an invented asset resolver.
 - `cameraZoomLevel` publishes an integer host input; `cameraDistanceOffset`
@@ -169,7 +171,7 @@ set. Host values retain no VM references, and every table is rooted while nested
 values allocate.
 
 Tests: `tests/character_creation_publisher.rs` covers field sets, host-value
-passthrough, reversed orderIndex list preservation, icon cases, zoom/distance,
+passthrough, finalized order and positions, icon cases, zoom/distance,
 seeded-empty versus unseeded behavior, and existing SaveSeenChoices semantics.
 Arbitrary host-value shapes in tests are seam fixtures, not native type claims.
 
@@ -178,4 +180,31 @@ finished options/choices tables, never to selection or filtering. Disabled
 policy returns one result; nil/userdata and tables at policy value 1 are never
 marked. Other marking depends on unmodeled frame-policy checks. Per #285 this
 slice continues returning one plain table and adds no secret/marking behavior;
-field order and unsorted record traversal are unchanged.
+field order is unchanged; category/option ordering is corrected below.
+
+
+## R79b/R79c host finalizer (#305, #314, #319)
+
+VERIFIED on Retail and Forever: categories and each category's options are
+sorted by their stored order keys. Their published `orderIndex` is then rewritten
+to 1..n independently for each list, not copied from raw source data. Equal keys
+retain input order for lists of at most 32 records. For 33 or more records native
+ordering is unstable: the simulator uses an unstable key sort without an ID or
+input-order tie-breaker, and tests make no equal-key order claim. The native
+depth-limit fallback algorithm remains UNKNOWN; the Rust sort is not a claim
+about that algorithm. Choice ordering remains UNKNOWN and is left host-supplied.
+
+`stored_order_key` is a neutral host input on `Category` and `OptionRecord`. The
+finalizer works on the publisher's owned snapshot, replaces any host `orderIndex`,
+and does not mutate the original host records. Unseeded temporary behavior is
+unchanged. No collector, DB2 adapter, filtering, or eligibility logic is added.
+
+Icon IDs are host inputs taken after the gated lookup; failed gates/lookups
+provide zero. `currentChoiceIndex` remains an already-published host input; native
+matching choices may overwrite it, and this is not a first-match contract.
+
+The three `host_customization_finalizer_*` tests use neutral stored keys to
+reject unsorted/no-op output and raw index passthrough. They cover per-category
+numbering, stable small ties (1, 2, 31, 32), and 33-record distinct-key sorting.
+These are host-seam/API tests, not a claim that the real Create-button path is
+unblocked; that remains behind its exact known optional-tests RED.

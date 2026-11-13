@@ -866,3 +866,18 @@ CVars or alternate producers exist; ordinary chat channel membership stays separ
 The [TTS contract](../../specs/c-factory-cf2-tts.md#staged-producer-contract-and-evidence-limits)
 owns default evidence, supported pairs, selection, UNKNOWN mappings and the approved
 non-native fresh=false/Mark=true persistent marker model. The [bounded integration proof](../investigations/cf2-tts-integration.md#bounded-verification) records exact original-consumer GREEN on six registered profiles, the corrected legacy oracle on all seven, stock-map deltas and warning gates. Native parity and full-suite acceptance remain unverified.
+
+## Host-seeded character-customization finalization (R79b/R79c)
+
+Retail and Forever's host-seeded `C_CharacterCreation.GetAvailableCustomizations`
+path sorts categories and each category's options by neutral `stored_order_key`
+inputs, then publishes 1-based `orderIndex` values per list. R79b/R79c answers on
+lt-a912 (#305/#314/#319) verify sorting, numbering and input-order ties for at most
+32 records. Larger lists use no extra tie-breaker; their exact tie order and the
+native depth-limit fallback are not modeled. Choice ordering and the collector
+remain unknown. Unseeded calls still use the unchanged temporary provider, so
+this does not unblock the real Create-button test. Icons enter after the gated
+lookup, and `currentChoiceIndex` is not assumed to select the first match.
+
+Sources: [character-creation spec](../../specs/character-creation-submit.md#r79br79c-host-finalizer-305-314-319),
+`src/c_api/c_character_creation_customizations.rs`, `tests/character_creation_publisher.rs`.
