@@ -582,6 +582,39 @@ fn casting_blacksmithing_opens_professions_frame() {
     );
 }
 
+#[cfg(feature = "client-ptr")]
+#[test]
+fn ptr_crafting_ui_helper_defaults_to_false_without_host_input() {
+    let env = WowLuaEnv::new().expect("environment");
+    let result: bool = env
+        .eval("return C_TradeSkillUI.CanTradeSkillShowCraftingUI(2018)")
+        .unwrap();
+    assert!(
+        !result,
+        "the unsupplied opaque-helper input defaults to false"
+    );
+}
+
+// VERIFIED (PTR 12.1.7.70668): known-row query returns one Boolean, unknown query zero values, and setter zero values.
+#[cfg(feature = "client-ptr")]
+#[test]
+fn ptr_recipe_favorite_return_shapes_match_r85() {
+    let env = WowLuaEnv::new().expect("environment");
+    let observed: (i32, bool, i32, i32) = env
+        .eval(
+            r#"
+            local api = C_TradeSkillUI
+            local knownCount = select('#', api.IsRecipeFavorite(2662))
+            local knownValueIsBoolean = type(api.IsRecipeFavorite(2662)) == 'boolean'
+            local unknownCount = select('#', api.IsRecipeFavorite(99999999))
+            local setterCount = select('#', api.SetRecipeFavorite(2662, true))
+            return knownCount, knownValueIsBoolean, unknownCount, setterCount
+            "#,
+        )
+        .unwrap();
+    assert_eq!(observed, (1, true, 0, 0));
+}
+
 // PTR R85: keep the original ProfessionsBook click consumer in the necessary test set.
 #[test]
 fn clicking_blacksmithing_button_in_professions_book_opens_panel() {
