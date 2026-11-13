@@ -1,10 +1,10 @@
-//! Configuration-only NamePlateManager contract; native defaults/security are inferred.
+//! Retail hit-test inset parsing and the simulator's limited read/write state.
 #![cfg(feature = "retail-12-0-5")]
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 #[test]
-fn nameplate_hit_test_insets_round_trip_isolation_and_replacement() {
+fn nameplate_hit_test_insets_store_scaled_values_per_type() {
     let env = WowLuaEnv::new().unwrap();
     env.exec(
         r#"
@@ -12,14 +12,20 @@ fn nameplate_hit_test_insets_round_trip_isolation_and_replacement() {
         local set = C_NamePlateManager.SetNamePlateHitTestInsets
         local types = {Enum.NamePlateType.Friendly, Enum.NamePlateType.Enemy}
         assert(types[1] == 0 and types[2] == 1)
-        local function expect(kind, a, b, c, d)
+        local function stored(value)
+            return (value / 1024) * 0.8
+        end
+        local function expect(kind, left, right, top, bottom)
             assert(select('#', get(kind)) == 4)
-            local left, right, top, bottom = get(kind)
-            assert(left == a and right == b and top == c and bottom == d)
+            local actualLeft, actualRight, actualTop, actualBottom = get(kind)
+            assert(math.abs(actualLeft - stored(left)) < 0.000001)
+            assert(math.abs(actualRight - stored(right)) < 0.000001)
+            assert(math.abs(actualTop - stored(top)) < 0.000001)
+            assert(math.abs(actualBottom - stored(bottom)) < 0.000001)
         end
         for _, kind in ipairs(types) do expect(kind, 0, 0, 0, 0) end
         for i, kind in ipairs(types) do
-            assert(select('#', set(kind, 2.5, -1.25, 3, 4)) == 0)
+            set(kind, 2.5, -1.25, 3, 4)
             expect(kind, 2.5, -1.25, 3, 4)
             local other = types[3-i]
             if i == 1 then expect(other, 0, 0, 0, 0)
@@ -43,23 +49,30 @@ fn nameplate_hit_test_insets_errors_preserve_configuration() {
         r#"
         local get = C_NamePlateManager.GetNamePlateHitTestInsets
         local set = C_NamePlateManager.SetNamePlateHitTestInsets
+        local function stored(value)
+            return (value / 1024) * 0.8
+        end
         set(0, 2.5, -1.25, 3, 4)
         set(1, -7, 6, 5, -4)
         local function unchanged()
             local a,b,c,d = get(0)
-            assert(a == 2.5 and b == -1.25 and c == 3 and d == 4)
+            assert(math.abs(a - stored(2.5)) < 0.000001)
+            assert(math.abs(b - stored(-1.25)) < 0.000001)
+            assert(math.abs(c - stored(3)) < 0.000001)
+            assert(math.abs(d - stored(4)) < 0.000001)
             a,b,c,d = get(1)
-            assert(a == -7 and b == 6 and c == 5 and d == -4)
+            assert(math.abs(a - stored(-7)) < 0.000001)
+            assert(math.abs(b - stored(6)) < 0.000001)
+            assert(math.abs(c - stored(5)) < 0.000001)
+            assert(math.abs(d - stored(-4)) < 0.000001)
         end
-        for _, kind in ipairs({-1, 2, 0.5, 0/0, math.huge, -math.huge, '0', false, {}}) do
-            assert(not pcall(get, kind))
+        for _, kind in ipairs({-1, 2, 0/0, math.huge, -math.huge, 258, 2147483648}) do
             assert(not pcall(set, kind, 11, 12, 13, 14))
             unchanged()
         end
-        assert(not pcall(get))
         assert(not pcall(set, nil, 11, 12, 13, 14))
         for position = 1, 4 do
-            for _, value in ipairs({0/0, math.huge, -math.huge, '2', false, {}}) do
+            for _, value in ipairs({'not-number', false, {}}) do
                 local args = {0, 11, 12, 13, 14}
                 args[position+1] = value
                 assert(not pcall(set, unpack(args)))
@@ -71,40 +84,6 @@ fn nameplate_hit_test_insets_errors_preserve_configuration() {
             unchanged()
         end
         unchanged()
-        "#,
-    )
-    .unwrap();
-}
-
-#[test]
-fn nameplate_hit_test_insets_secret_arguments_and_getter_access() {
-    let env = WowLuaEnv::new().unwrap();
-    env.exec(
-        r#"
-        local get = C_NamePlateManager.GetNamePlateHitTestInsets
-        local set = C_NamePlateManager.SetNamePlateHitTestInsets
-        set(0, 2.5, -1.25, 3, 4)
-        local secretType = secretwrap(0)
-        local a,b,c,d = get(secretType)
-        assert(a == 2.5 and b == -1.25 and c == 3 and d == 4)
-        for position = 1, 5 do
-            local args = {0, 11, 12, 13, 14}
-            args[position] = secretwrap(args[position])
-            assert(not pcall(set, unpack(args)))
-        end
-        local function tainted()
-            assert(not issecure())
-            assert(not pcall(get, secretType))
-            local left,right,top,bottom = get(0)
-            assert(left == 2.5 and right == -1.25 and top == 3 and bottom == 4)
-            assert(not issecretvalue(left))
-        end
-        debug.setobjecttaint(tainted, 'NamePlateInsetsProbe')
-        tainted()
-        a,b,c,d = get(0)
-        assert(a == 2.5 and b == -1.25 and c == 3 and d == 4)
-        a,b,c,d = get(1)
-        assert(a == 0 and b == 0 and c == 0 and d == 0)
         "#,
     )
     .unwrap();
@@ -130,19 +109,34 @@ fn retail_tainted_nameplate_hit_test_insets_succeeds_without_restriction_state()
 
 #[cfg(feature = "client-retail")]
 #[test]
-fn retail_nameplate_hit_test_insets_rejects_secret_arguments_with_native_error() {
+fn retail_nameplate_hit_test_insets_matches_native_input_parsing() {
     let env = WowLuaEnv::new().unwrap();
     env.exec(
         r#"
         local set = C_NamePlateManager.SetNamePlateHitTestInsets
-        local expected = 'Usage: C_NamePlateManager.SetNamePlateHitTestInsets(type, left, right, top, bottom). Secret values are not allowed for this argument.'
-        for position = 1, 5 do
-            local args = {0, 11, 12, 13, 14}
-            args[position] = secretwrap(args[position])
-            local ok, err = pcall(set, unpack(args))
-            assert(not ok and err == expected, tostring(err))
+        local get = C_NamePlateManager.GetNamePlateHitTestInsets
+        local function assertStored(typeId, left)
+            local actual = get(typeId)
+            assert(math.abs(actual - (left / 1024 * 0.8)) < 0.000001)
         end
+
+        set(256, 11, 12, 13, 14)
+        assertStored(0, 11)
+        set(257, 21, 22, 23, 24)
+        assertStored(1, 21)
+        set('not a number', 31, 32, 33, 34)
+        assertStored(0, 31)
+        set(false, 41, 42, 43, 44)
+        assertStored(0, 41)
+        set('1', 51, 52, 53, 54)
+        assertStored(1, 51)
+
+        assert(not pcall(set, nil, 1, 2, 3, 4))
+        assert(not pcall(set, 2147483648, 1, 2, 3, 4))
+        assert(not pcall(set, 0, 'not-number', 2, 3, 4))
+        assert(pcall(set, 0, '2', '2.5', '-3', '4'))
+        assert(pcall(set, 0, math.huge, 0/0, -math.huge, 4))
         "#,
     )
-    .expect("the Retail secret-argument error must match the native usage text");
+    .expect("Retail type and inset arguments must use the native numeric conversions");
 }
