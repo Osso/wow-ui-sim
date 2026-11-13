@@ -3713,6 +3713,8 @@ Updated [XML templates](systems/xml-template-system.md#texture-template-anchor-i
 
 Updated addon-loading and the CASC contract: unit-test startup must reject stale/missing UI caches without auto-sync; normal startup remains unchanged. Recorded the concurrent Retail-pin overwrite incident and isolated reload-child regression.
 
+- 2026-11-13: Recorded lt-6cee/R87 Forever StorePublic registration/default boundary; no Shop 2/event parity inferred.
+
 ## 2026-11-12 — R82 hyperlink dispatch
 
 Updated the [unit-link investigation](investigations/att-unit-hyperlink-tooltip.md) and identity spec: removed guessed GUID lookup, documented typed substring dispatch and linked the [R82 contract](../specs/tooltip-hyperlink.md). Native UNKNOWN miss shape remains separate from simulator preservation tests.
