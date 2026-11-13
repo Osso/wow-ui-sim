@@ -41,7 +41,7 @@ fn selected_chat_message_consumer_runs_original_filter_owner() {
                 ChatFrameUtil.AddMessageEventFilter("CHAT_MSG_SAY", callback)
                 local ok, discarded = pcall(ChatFrameMixin.MessageEventHandler, {}, "CHAT_MSG_SAY",
                     "probe", "sender", nil, nil, nil, nil, 0, 0,
-                    nil, nil, nil, nil, nil, nil, false, nil, { userID = 0 })
+                    nil, nil, nil, nil, nil, nil, false, nil, nil, { userID = 0 })
                 ChatFrameUtil.RemoveMessageEventFilter("CHAT_MSG_SAY", callback)
 
                 assert(ok, tostring(discarded))
