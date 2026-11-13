@@ -91,24 +91,10 @@ const LUA_SOURCE_PATCHES: &[LuaSourcePatch] = &[
         ],
     },
     LuaSourcePatch {
-        suffix: "/Blizzard_CodeOfConduct.lua",
-        operations: &[LuaSourcePatchOp::Replace {
-            from: "ChatFrameUtil.AddSystemMessage(ONLINE_SAFETY_NOTICE);",
-            to: "-- suppressed in the simulator to keep chat history tests stable",
-        }],
-    },
-    LuaSourcePatch {
         suffix: "/VoiceChatTranscriptionFrame.lua",
         operations: &[LuaSourcePatchOp::Replace {
             from: "chatInfo = ChatTypeInfo[chatType];",
             to: "chatInfo = ChatTypeInfo[chatType] or ChatTypeInfo.SYSTEM or { r = 1, g = 1, b = 0, id = 1 };",
-        }],
-    },
-    LuaSourcePatch {
-        suffix: "/EventUtil.lua",
-        operations: &[LuaSourcePatchOp::Replace {
-            from: "callback();",
-            to: "if type(callback) == \"function\" then callback(); end",
         }],
     },
     LuaSourcePatch {
@@ -198,13 +184,6 @@ const LUA_SOURCE_PATCHES: &[LuaSourcePatch] = &[
                 to: "function StoreFrame_IsShown()\n\tif type(StoreFrame) ~= \"table\" or type(StoreFrame.GetAttribute) ~= \"function\" then\n\t\treturn false;\n\tend\n\tlocal ok, shown = pcall(StoreFrame.GetAttribute, StoreFrame, \"isshown\");\n\treturn ok and shown or false;\nend",
             },
         ],
-    },
-    LuaSourcePatch {
-        suffix: "/MinimalSlider.lua",
-        operations: &[LuaSourcePatchOp::Replace {
-            from: "self.Slider.Thumb:SetAlpha(alpha);",
-            to: "if self.Slider and self.Slider.Thumb then self.Slider.Thumb:SetAlpha(alpha); end",
-        }],
     },
     LuaSourcePatch {
         suffix: "/FloatingChatFrame.lua",
