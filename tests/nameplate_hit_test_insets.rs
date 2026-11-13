@@ -77,7 +77,7 @@ fn nameplate_hit_test_insets_errors_preserve_configuration() {
 }
 
 #[test]
-fn nameplate_hit_test_insets_secret_and_restricted_callers() {
+fn nameplate_hit_test_insets_secret_arguments_and_getter_access() {
     let env = WowLuaEnv::new().unwrap();
     env.exec(
         r#"
@@ -94,9 +94,6 @@ fn nameplate_hit_test_insets_secret_and_restricted_callers() {
         end
         local function tainted()
             assert(not issecure())
-            local ok, err = pcall(set, 0, 11, 12, 13, 14)
-            assert(not ok and type(err) == 'string')
-            assert(not issecure())
             assert(not pcall(get, secretType))
             local left,right,top,bottom = get(0)
             assert(left == 2.5 and right == -1.25 and top == 3 and bottom == 4)
@@ -111,4 +108,41 @@ fn nameplate_hit_test_insets_secret_and_restricted_callers() {
         "#,
     )
     .unwrap();
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn retail_tainted_nameplate_hit_test_insets_succeeds_without_restriction_state() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local set = C_NamePlateManager.SetNamePlateHitTestInsets
+        local function tainted()
+            assert(not issecure())
+            set(Enum.NamePlateType.Enemy, -10000, -10000, -10000, -10000)
+        end
+        debug.setobjecttaint(tainted, 'EllesmereUINameplates')
+        tainted()
+        "#,
+    )
+    .expect("an ordinary tainted nameplate setup without restriction state must not error");
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn retail_nameplate_hit_test_insets_rejects_secret_arguments_with_native_error() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local set = C_NamePlateManager.SetNamePlateHitTestInsets
+        local expected = 'Usage: C_NamePlateManager.SetNamePlateHitTestInsets(type, left, right, top, bottom). Secret values are not allowed for this argument.'
+        for position = 1, 5 do
+            local args = {0, 11, 12, 13, 14}
+            args[position] = secretwrap(args[position])
+            local ok, err = pcall(set, unpack(args))
+            assert(not ok and err == expected, tostring(err))
+        end
+        "#,
+    )
+    .expect("the Retail secret-argument error must match the native usage text");
 }
