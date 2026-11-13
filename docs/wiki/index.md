@@ -1,3 +1,7 @@
+## [2026-11-12] implementation | Retail currency tooltips
+
+[Tooltip data](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) links the [R84/R84b contract](../specs/tooltip-currency.md). VERIFIED: the four original Retail consumers share the currency producer and publish the verified rows; explicit host inputs leave resolver misses, the error-row predicate, balance formula and runtime number mode UNKNOWN. The shared color remapper can turn a verified type-0 row into 41 when placeholder colors collide; the producer restores type 0. Retail passes 2264 library tests and 17 exact integration tests. PTR and Forever pass zero-warning compile builds and eight exact integration tests each.
+
 ## [2026-11-12] correction | R82 hyperlink routing
 
 [Hyperlink routing](investigations/att-unit-hyperlink-tooltip.md) records the removal of guessed unit-GUID rows and links the R82/R82b request contract, explicit display inputs and INFERRED catalog boundary.
@@ -5,6 +9,10 @@
 ## [2026-11-12] investigation | PTR spellbook texture anchors
 
 [XML templates](systems/xml-template-system.md#texture-template-anchor-inheritance) records the discarded inherited anchor field, generic resolver correction, and concrete XML/runtime half-page geometry tests.
+
+## [2026-11-12] investigation | Recorded secret-aspect independence
+
+[Lua API](systems/lua-api.md#recorded-widget-secrecy) links the [native evidence fold and contradiction audit](../specs/secret-auras.md). VERIFIED locally: Retail WM61 S6 separates recorded aspects, prevention and anchoring. Retail/PTR implement those calculations; complete publication and native writers remain UNKNOWN.
 
 ## [2026-11-12] investigation | Inline XML tooltip operands
 
@@ -4314,6 +4322,7 @@ The sixteen retail 12.0.0 `Enum.EditModeDamageMeterSetting.*` and `Enum.EditMode
 | [[retail-core-behavior-probes]] | Live retail `12.0.5.67823` probes pinned `SetForbidden`, `CreateForbiddenFrame`, invalid `RegisterUnitEvent`, wildcard false attributes, and the improved Raise/Lower capture path |
 | [[minimap-map-ring-alignment]] | Active minimap bug is map texture/mask/ring alignment, not the SimCommands minimap button; debug the minimap render mask/clip and ring aperture directly |
 | [[casc-fdid-1579624-root-debug]] | FDID 1579624 root/CASC resolution data, CRLF hash proof, and parser debugging checklist |
+| [[editbox-text-font]] | EditBox XML font/inset model and [contract](../specs/editbox-text-font.md); contributor-only native observations remain UNVERIFIED and optional, including LEFT default and font-object precedence |
 | [[windows-casc-blizzard-taint]] | CASC/TOC load taint and runtime LoadAddOn boundaries; generated template handlers also need declaration-origin taint instead of constructor taint (grouped GREEN pending) |
 | [[achievement-panel-hide]] | Achievement panel hide now uses Blizzard's managed panel path; animation completion also fires child animation `OnFinished` scripts for alert hide XML |
 | [[adventure-guide-layout]] | Suggested Content card overlap came from synchronous geometry queries resolving resized anchor targets without updating dependent sibling frames |
@@ -4768,3 +4777,6 @@ is reused; original-consumer runtime RED/GREEN remains unexecuted.
 ## [2026-10-26] implementation | Mists supplied party minimum
 
 [Supplied minimum](systems/mists-scenario-finder.md#supplied-active-party-minimum) links the [bounded contract](../specs/mists-party-minimum.md). Three exact producer-subtracted REDs and three GREENs prove the original58 boundary, empty-catalog preservation, direct85/90/isolation and explicit errors. Stock stays6/12 with two individually traced diagnostic replacements; catalog discrimination is blocked. All seven full-feature all-target checks pass with zero compiler warnings. Formatting/readability pass; other-profile runtime parity is not claimed.
+
+## [2026-11-13] correction | Forever store availability
+[Store API availability](systems/store-api-availability.md) records R87: Forever shares the server-mirrored `bpayStoreEnable` query and false default in Game/Glue. Shop 2 and update-event parity remain outside the evidence.

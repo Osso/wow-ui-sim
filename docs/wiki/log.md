@@ -1,3 +1,19 @@
+## [2026-11-12] implementation | Retail currency tooltips
+
+Updated [Tooltip data](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) and the [R84/R84b contract](../specs/tooltip-currency.md). VERIFIED: Retail by-ID, quest, loot and currency-link consumers share the populated producer; source results and display values are explicit inputs. The verified type-0 rows are restored after the shared color remapper misclassifies them against placeholder colors. Retail passes 2264 library tests and 17 exact integrations; PTR and Forever pass zero-warning compile builds and eight exact integrations each. UNKNOWN resolver misses, conditional error row, balance formula and runtime number mode remain unmodeled.
+
+## [2026-11-12] review | Contributor font evidence and path containment
+
+The [font-source contract](../specs/font-sources.md) records canonical AddOns-root containment and explicit missing-font test failures. The [EditBox contract](../specs/editbox-text-font.md) separates the XML model from UNVERIFIED contributor native observations; those assertions remain optional pending independent profile evidence. Combined-tree compilation and runtime proof are pending slot availability.
+
+## [2026-11-12] investigation | EditBox text font and insets
+
+[EditBox text font, insets and justification](investigations/editbox-text-font.md) records the client checks, the three loader gaps and their fix, and the unmodeled font of `InputBoxInstructionsTemplate`'s instructions region.
+
+## [2026-11-12] docs | Addon fonts and pinned fallback
+
+[Rendering pipeline](systems/rendering-pipeline.md#font-sources) records addon font loading on first use and `WOW_SIM_FALLBACK_FONT`; tests live in `src/render/font.rs`.
+
 ## [2026-11-12] investigation | Inline XML tooltip operands
 
 [Inline XML method arguments](investigations/xml-inline-method-arguments.md) records the zero-vararg parser misclassification, source-faithful parameter-prefix installation, and the separately approved RaidFrame AddLine fixture correction.
@@ -3697,6 +3713,8 @@ Updated [XML templates](systems/xml-template-system.md#texture-template-anchor-i
 
 Updated addon-loading and the CASC contract: unit-test startup must reject stale/missing UI caches without auto-sync; normal startup remains unchanged. Recorded the concurrent Retail-pin overwrite incident and isolated reload-child regression.
 
+- 2026-11-13: Recorded lt-6cee/R87 Forever StorePublic registration/default boundary; no Shop 2/event parity inferred.
+
 ## 2026-11-12 — R82 hyperlink dispatch
 
 Updated the [unit-link investigation](investigations/att-unit-hyperlink-tooltip.md) and identity spec: removed guessed GUID lookup, documented typed substring dispatch and linked the [R82 contract](../specs/tooltip-hyperlink.md). Native UNKNOWN miss shape remains separate from simulator preservation tests.
@@ -3704,3 +3722,5 @@ Updated the [unit-link investigation](investigations/att-unit-hyperlink-tooltip.
 ## 2026-11-12 — FontString anchor-derived width
 
 Added [FontString anchor sizing](investigations/fontstring-anchor-sizing.md). The simulator tests cover resolved width for two opposite horizontal anchors; native sizing remains INFERRED, and the six-symptom EllesmereUI reproduction remains incomplete.
+
+- 2026-11-12: Folded secret-aura native reports and corrected prevention/aspect/anchoring conflation; see [Lua API](systems/lua-api.md#recorded-widget-secrecy) and the [contract](../specs/secret-auras.md).

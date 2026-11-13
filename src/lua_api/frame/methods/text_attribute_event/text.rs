@@ -79,7 +79,8 @@ pub(super) fn set_text(state: &mut LuaState) -> LuaResult<u32> {
         return Err(rilua::runtime_error("expected text, not userdata"));
     }
     let text = read_text_arg(state, value);
-    if secret && cfg!(feature = "client-retail") {
+    // INFERRED: PTR shares Retail's recorded Text-aspect model.
+    if secret && crate::lua_api::frame::methods::misc::secret::uses_recorded_secret_state() {
         mark_secret_text_aspect(state, id)?;
     }
     set_frame_text_value(state, id, text, secret)

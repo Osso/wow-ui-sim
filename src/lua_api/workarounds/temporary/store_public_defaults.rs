@@ -1,6 +1,6 @@
 //! Temporary `C_StorePublic` availability defaults.
 //!
-//! Visibility stays here; the verified Retail/PTR `IsEnabled` query lives in `c_api`.
+//! Visibility stays here; the verified Retail/PTR/Forever `IsEnabled` query lives in `c_api`.
 //! Supplied group eligibility is implemented separately under `c_api`.
 
 const STORE_PUBLIC_DEFAULTS_LUA: &str = r#"
@@ -21,9 +21,9 @@ if rawget(C_StorePublic, "EventStoreUISetShown") == nil then
 end
 "#;
 
-// Guessed/unevidenced non-PTR fallback retained pending profile-specific evidence.
-// R75 does not authorize changing other profiles (lt-4183 comment 227).
-const NON_PTR_STORE_AVAILABILITY_FALLBACK_LUA: &str = r#"
+// Guessed fallback retained only on Mists, Era, Anniversary and Wrath.
+// Those profiles have no R38/R75/R87 evidence and remain out of scope.
+const UNEVIDENCED_STORE_AVAILABILITY_FALLBACK_LUA: &str = r#"
 if rawget(C_StorePublic, "IsEnabled") == nil then
     function C_StorePublic.IsEnabled()
         return true
@@ -47,8 +47,14 @@ end
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(STORE_PUBLIC_DEFAULTS_LUA)?;
-    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Ptr {
-        lua.exec(NON_PTR_STORE_AVAILABILITY_FALLBACK_LUA)?;
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Mists
+            | crate::client_profile::ClientProfile::Era
+            | crate::client_profile::ClientProfile::Anniversary
+            | crate::client_profile::ClientProfile::Wrath
+    ) {
+        lua.exec(UNEVIDENCED_STORE_AVAILABILITY_FALLBACK_LUA)?;
     }
     Ok(())
 }
@@ -61,14 +67,46 @@ pub(crate) fn patch(env: &crate::lua_api::WowLuaEnv) {
 mod tests {
     use crate::lua_api::WowLuaEnv;
 
-    #[cfg(feature = "client-ptr")]
+    #[cfg(any(
+        feature = "client-ptr",
+        feature = "client-retail",
+        feature = "client-wowforever"
+    ))]
     #[test]
-    fn ptr_bootstrap_does_not_guess_missing_store_availability() {
+    fn evidenced_profiles_do_not_guess_missing_store_availability() {
         let env = WowLuaEnv::new().unwrap();
         env.exec("C_StorePublic.IsEnabled = nil").unwrap();
         super::apply_bootstrap(&mut env.lua.borrow_mut()).unwrap();
         env.exec("assert(rawget(C_StorePublic, 'IsEnabled') == nil)")
             .unwrap();
+    }
+
+    #[cfg(feature = "client-wowforever")]
+    #[test]
+    fn forever_store_enabled_reads_server_mirror_in_game_and_glue() {
+        for screen in [
+            crate::screen::ScreenKind::Game,
+            crate::screen::ScreenKind::CharacterSelect,
+        ] {
+            let env = WowLuaEnv::new().unwrap();
+            env.set_screen_mode(screen);
+            assert!(
+                !env.eval::<bool>("return C_StorePublic.IsEnabled()")
+                    .unwrap()
+            );
+            env.set_server_mirrored_cvar("bpayStoreEnable", "1")
+                .unwrap();
+            assert!(
+                env.eval::<bool>("return C_StorePublic.IsEnabled()")
+                    .unwrap()
+            );
+            env.set_server_mirrored_cvar("bpayStoreEnable", "0")
+                .unwrap();
+            assert!(
+                !env.eval::<bool>("return C_StorePublic.IsEnabled()")
+                    .unwrap()
+            );
+        }
     }
 
     #[test]
@@ -98,6 +136,7 @@ mod tests {
             crate::client_profile::ACTIVE,
             crate::client_profile::ClientProfile::Retail
                 | crate::client_profile::ClientProfile::Ptr
+                | crate::client_profile::ClientProfile::WowForever
         );
         assert_eq!(result, (expected_enabled, true, "services".to_string()));
         if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Wrath {

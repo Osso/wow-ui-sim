@@ -9,6 +9,7 @@ The hyperlink dispatcher follows R82/R82b, Retail 12.1.5.70688. Source lives in 
 - [ ] Keep the two wrapper integers separate. Preserve the item's existing second field when its wrapper value is absent. The native downstream meanings are UNKNOWN.
 - [ ] Spell links use mode 0, link semantics, disabled ordinary override resolution, and difficulty `-1` when absent, not a rank field. Wrapper integers do not replace the spell ID.
 - [ ] Currency links pass quantity unchanged, default zero, to the existing producer. The title is type 0, without divide-by-100 scaling.
+- [ ] R84 adds the populated currency payload contract: the amount affects text/conditional rows but is not a top-level `quantity`; see the [currency contract](tooltip-currency.md).
 - [ ] `urlIndex`, `storecategory`, `perksactivity`, and `initiativetask` call no producer. Trade returns false; server response state stays unmodelled. Neither battle-pet spelling is a branch.
 - [ ] R82b artifact rank text uses total after the flag check, including total zero despite lookup rank one. The second operand uses explicit normal-maximum/rank-limit/player-setting inputs. Adjusted maximum uses wrapping addition of `total-base` followed by a signed cap comparison. Flag 16 decrements the bonus only when signed-positive; nonzero adjusted bonus uses increase color, zero uses highlight.
 - [ ] Essence mode 2 uses explicit rank/main/passive selection and supplied localized headings, emits identity type 8, and orders main before passive without next-rank/source/requirement annotations.
