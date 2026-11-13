@@ -68,6 +68,9 @@ pub(crate) struct InlineLine {
 }
 
 /// Lay the runs out in lines and emit their glyph and icon quads.
+///
+/// R88e.6 verifies taller-icon line-height growth. The default vertical mode
+/// and the +0.5/floor coordinate's axis and drawing path remain UNKNOWN.
 pub fn emit_inline_markup_quads(
     batch: &mut QuadBatch,
     font_system: &mut WowFontSystem,
@@ -115,6 +118,8 @@ pub fn emit_inline_markup_quads(
                     );
                 }
                 InlineItem::Icon(icon) => {
+                    // INFERRED simulator placement: mode 1 centers on the caller metric,
+                    // but the native default mode and the 0/1/2 mapping are UNKNOWN.
                     let bounds = Rectangle::new(
                         Point::new(
                             item_x + icon.offset_x * request.icon_scale,
@@ -131,7 +136,8 @@ pub fn emit_inline_markup_quads(
 }
 
 /// Height of each laid-out line: the text's line height, or its tallest
-/// icon when that is taller. Text and icons are centered on the line.
+/// icon when that is taller. R88e.6 verifies this height increase. The
+/// centering here is simulator policy; the native default vertical mode is UNKNOWN.
 pub(crate) fn line_box_heights(lines: &[InlineLine], line_height: f32) -> Vec<f32> {
     lines
         .iter()
@@ -146,7 +152,8 @@ pub(crate) fn line_box_heights(lines: &[InlineLine], line_height: f32) -> Vec<f3
 
 /// Break the runs into lines. A line ends at a line break and, with word
 /// wrap, before a word or icon that would cross the right edge of the
-/// bounds. `measure` gives the pixel width of escape-free text.
+/// bounds. R88e.6 verifies that accepted icon width enters the wrap check.
+/// `measure` gives the pixel width of escape-free text.
 pub(crate) fn layout_inline_runs(
     request: &InlineTextRequest<'_>,
     mut measure: impl FnMut(&str) -> f32,
@@ -269,7 +276,9 @@ fn emit_text_piece(
 }
 
 /// Push the icon's textured quad. Its texture loads like any other texture
-/// path; an unknown atlas or file ID draws nothing, as in the client.
+/// path; unknown atlas and file IDs draw no quad in this simulator, while
+/// their native result remains UNKNOWN (R88d). R88e.6 verifies one post-size
+/// coordinate snap, but its axis and drawing path are UNKNOWN.
 pub(crate) fn push_inline_icon(
     batch: &mut QuadBatch,
     icon: &InlineIcon,
@@ -373,6 +382,7 @@ mod tests {
             .collect()
     }
 
+    // R88e.6 verifies width participation; the explicit-size outputs are INFERRED.
     #[test]
     fn icons_take_room_in_the_line() {
         let runs = [InlineTextRun {
@@ -398,6 +408,7 @@ mod tests {
         assert_eq!(lines[0].items[0].height, 28.0);
     }
 
+    // R88e.6 verifies line-height growth; the exact 32-unit size is INFERRED.
     #[test]
     fn a_tall_icon_raises_its_line() {
         let runs = [InlineTextRun {
@@ -408,6 +419,7 @@ mod tests {
         assert_eq!(line_box_heights(&lines, 29.0), vec![64.0, 29.0]);
     }
 
+    // R88e.6 verifies accepted icon width enters the wrap check; exact size is INFERRED.
     #[test]
     fn word_wrap_moves_an_icon_to_the_next_line() {
         let runs = [InlineTextRun {

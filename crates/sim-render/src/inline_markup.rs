@@ -49,6 +49,9 @@ impl InlineIcon {
     /// R88d verifies that nonpositive dimensions use the caller metric. This
     /// maps that metric to `line_height`, INFERRED from Forever measurements;
     /// R88d does not identify the metric as font height or line height.
+    /// R88e.6 verifies the explicit-size formula but leaves its runtime unit
+    /// count and caller scale UNKNOWN, so this code keeps the Forever size
+    /// mapping INFERRED instead of applying an unparameterized formula.
     pub fn size(&self, line_height: f32) -> (f32, f32) {
         let positive = |value: Option<f32>| value.filter(|value| *value > 0.0);
         let height_uses_caller_metric = self.height.is_some_and(|height| height <= 0.0);
@@ -126,8 +129,9 @@ pub fn split_inline_markup(text: &str) -> Vec<InlinePiece> {
 }
 
 /// Width of the first line of `text` (up to the first line break), with
-/// inline icons sized for lines of `line_height` units. `measure` gives the
-/// width of a text piece that holds no escapes.
+/// inline icons sized for lines of `line_height` units. R88e.6 verifies that
+/// accepted icon widths contribute to measured text width. `measure` gives
+/// the width of a text piece that holds no escapes.
 pub fn first_line_width(text: &str, line_height: f32, mut measure: impl FnMut(&str) -> f32) -> f32 {
     let mut width = 0.0;
     for piece in split_inline_markup(text) {
@@ -151,7 +155,8 @@ pub fn first_line_width(text: &str, line_height: f32, mut measure: impl FnMut(&s
 }
 
 /// Height of each line of `text` (split at line breaks, without word wrap):
-/// `line_height`, or the tallest icon on the line when it is taller.
+/// `line_height`, or the tallest icon on the line when it is taller. R88e.6
+/// verifies that a taller accepted icon raises the stored line height.
 pub fn line_heights(text: &str, line_height: f32) -> Vec<f32> {
     let mut heights = vec![line_height];
     for piece in split_inline_markup(text) {
@@ -487,13 +492,15 @@ mod tests {
         ));
     }
 
+    // INFERRED from Forever measurements: this maps the caller metric to line_height.
     #[test]
-    fn texture_size_zero_is_the_line_height_and_no_size_takes_no_room() {
+    fn texture_size_zero_uses_inferred_caller_metric() {
         let texture = |height, width| InlineIcon {
             height,
             width,
             ..icon(InlineIconSource::File("x".into()))
         };
+        // R88d rejects a missing height position; None here is only a synthetic value.
         assert_eq!(texture(None, None).size(15.0), (0.0, 0.0));
         assert_eq!(texture(Some(0.0), None).size(15.0), (15.0, 15.0));
         assert_eq!(texture(Some(0.0), Some(0.0)).size(15.0), (15.0, 15.0));
@@ -501,6 +508,7 @@ mod tests {
         assert_eq!(texture(Some(1.0), Some(110.0)).size(15.0), (110.0, 1.0));
     }
 
+    // R88d verifies the width rule; caller-metric-to-line-height mapping is INFERRED.
     #[test]
     fn nonpositive_width_uses_caller_metric_without_changing_height() {
         let texture = |height, width| InlineIcon {

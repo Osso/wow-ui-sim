@@ -18,6 +18,7 @@ fn widths(text_a: &str, text_b: &str) -> (f64, f64) {
     .unwrap()
 }
 
+// VERIFIED R88e.6: accepted width contributes. The exact 20-unit size is INFERRED.
 #[test]
 fn atlas_icon_adds_its_width() {
     let (plain, with_icon) = widths("3 2", "3 |A:hud-backpack:14:20|a2");
@@ -27,6 +28,7 @@ fn atlas_icon_adds_its_width() {
     );
 }
 
+// VERIFIED R88d: zero height uses the caller metric; mapping it to line height is INFERRED.
 #[test]
 fn texture_zero_height_uses_inferred_line_metric() {
     let env = WowLuaEnv::new().unwrap();
@@ -48,6 +50,7 @@ fn texture_zero_height_uses_inferred_line_metric() {
     );
 }
 
+// VERIFIED R88d: a missing height rejects the token; its zero-width measurement is INFERRED.
 #[test]
 fn texture_icon_without_size_takes_no_room() {
     let (plain, with_icon) = widths("ab", "a|TInterface\\Icons\\INV_Misc_QuestionMark|tb");
@@ -57,6 +60,7 @@ fn texture_icon_without_size_takes_no_room() {
     );
 }
 
+// VERIFIED R88d: width zero uses the caller metric; mapping it to line height is INFERRED.
 #[test]
 fn atlas_zero_width_uses_inferred_line_metric() {
     let (plain, with_icon) = widths("ab", "a|A:hud-backpack:24:0|ab");
@@ -67,6 +71,7 @@ fn atlas_zero_width_uses_inferred_line_metric() {
     );
 }
 
+// VERIFIED R88e.6: a taller accepted icon raises line height; exact size 32 is INFERRED.
 #[test]
 fn a_tall_icon_raises_the_line() {
     let env = WowLuaEnv::new().unwrap();
@@ -88,6 +93,7 @@ fn a_tall_icon_raises_the_line() {
     );
 }
 
+// VERIFIED R88e.6: accepted width contributes. The exact 110-unit size is INFERRED.
 #[test]
 fn texture_icon_width_overrides_its_height() {
     let (plain, with_icon) = widths(
@@ -100,6 +106,7 @@ fn texture_icon_width_overrides_its_height() {
     );
 }
 
+// INFERRED: the simulator's text-scale mapping retains the contributor's Forever measurements.
 #[test]
 fn text_scale_scales_the_icons_with_the_glyphs() {
     let env = WowLuaEnv::new().unwrap();
@@ -200,6 +207,7 @@ fn tooltip_height_adds_each_left_fontstring_row() {
     );
 }
 
+// INFERRED: icon-only line height and the default native vertical mode remain unknown.
 #[test]
 fn icon_only_text_is_one_line_high() {
     let env = WowLuaEnv::new().unwrap();

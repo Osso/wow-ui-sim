@@ -1,6 +1,6 @@
-## [2026-11-13] docs | Inline texture and atlas icons
+## [2026-11-13] correction | Inline texture and atlas icon evidence
 
-[Rendering pipeline](systems/rendering-pipeline.md#inline-icons-in-text) records how `|T` and `|A` escapes are parsed, laid out, drawn and measured, with icon sizes and line heights from a contributor measurement on WoW Forever 1.60.1; tests live in `crates/sim-render/src/inline_markup.rs`, `src/render/glyph/inline_emit.rs` and `tests/inline_icon_width.rs`.
+[Rendering pipeline](systems/rendering-pipeline.md#inline-icons-in-text) separates VERIFIED Retail 12.1.5.70688 R88d/R88e.6 parser, measurement and row-layout findings from INFERRED Forever explicit sizes. Runtime scale inputs, caller-metric identity, vertical-mode defaults/mapping, snap axis/path, and oversized single-icon wrapping remain UNKNOWN. Tests cover parser rules, FontString scale division, accepted width and GameTooltip left-region row heights.
 
 ## [2026-11-13] system | Mandatory host category camera zoom
 
