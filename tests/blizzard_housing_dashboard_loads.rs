@@ -74,8 +74,15 @@ fn retail_housing_tutorial_owner_precedes_dashboard_consumer() {
                 assert!(owner_loaded);
                 assert!(owner_source_is_original);
 
-                env.set_server_mirrored_cvar("housingTutorialsEnabled", "1")
-                    .expect("housing tutorial CVar should be enabled for this fixture");
+                env.state()
+                    .borrow_mut()
+                    .cvars
+                    .set_imported("housingTutorialsEnabled", "1");
+                let tutorials_enabled: bool = env
+                    .eval("return C_CVar.GetCVarBool('housingTutorialsEnabled')")
+                    .expect("housing tutorial CVar should be readable");
+                assert!(tutorials_enabled);
+
                 env.state()
                     .borrow_mut()
                     .quest_log_entries
