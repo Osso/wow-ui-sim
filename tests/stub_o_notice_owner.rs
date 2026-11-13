@@ -97,12 +97,85 @@ fn stub_o_notice_original_initial_login_callback_adds_chat_history() {
     )
     .expect("original notice and chat-owner prerequisites");
 
+    env.exec(
+        r#"
+        ONoticeProbe = {frameCalls = 0, registryCalls = 0, originalCalls = 0}
+        local probe = ONoticeProbe
+        assert(EventRegistry.frameEventFrame:IsEventRegistered("PLAYER_ENTERING_WORLD"),
+            "original EventRegistry frame must register the login event")
+        probe.attributeCount = EventRegistry.frameEventFrame:GetAttribute("PLAYER_ENTERING_WORLD")
+        local found = 0
+        for _, events in pairs(EventRegistry:GetCallbackTables()) do
+            for owner, callback in pairs(events.PLAYER_ENTERING_WORLD or {}) do
+                local source = debug.getinfo(callback, "S").source
+                if source:find("Blizzard_CodeOfConduct.lua", 1, true) then
+                    found = found + 1
+                    -- Diagnostic forwarding observer only: invoke the actual original
+                    -- callback with the identical owner/varargs and preserve returns.
+                    events.PLAYER_ENTERING_WORLD[owner] = function(callbackOwner, ...)
+                        probe.originalCalls = probe.originalCalls + 1
+                        probe.originalOwnerMatches = callbackOwner == owner
+                        probe.originalArgs = {n = select('#', ...), ...}
+                        return callback(callbackOwner, ...)
+                    end
+                end
+            end
+        end
+        assert(found == 1, "exactly one original CodeOfConduct callback must be registered")
+        EventRegistry.frameEventFrame:HookScript("OnEvent", function(_, event, ...)
+            if event == "PLAYER_ENTERING_WORLD" then
+                probe.frameCalls = probe.frameCalls + 1
+                probe.frameArgs = {n = select('#', ...), ...}
+            end
+        end)
+        EventRegistry:RegisterCallback("PLAYER_ENTERING_WORLD", function(_, ...)
+            probe.registryCalls = probe.registryCalls + 1
+            probe.registryArgs = {n = select('#', ...), ...}
+        end, probe)
+        "#,
+    )
+    .expect("observe original event registration and forwarding, without replacing its behavior");
+
     let before = notice_count(&env);
     env.fire_event_with_args(
         "PLAYER_ENTERING_WORLD",
         &[rilua::Val::Bool(true), rilua::Val::Bool(false)],
     )
     .expect("dispatch actual initial-login frame event");
+    let diagnostic: String = env
+        .eval(
+            r#"
+        local p = ONoticeProbe
+        local function args(a)
+            return a and (tostring(a.n)..":"..tostring(a[1])..","..tostring(a[2])) or "unseen"
+        end
+        return "frame="..p.frameCalls.." args="..args(p.frameArgs)..
+            " registry="..p.registryCalls.." args="..args(p.registryArgs)..
+            " original="..p.originalCalls.." args="..args(p.originalArgs)..
+            " owner="..tostring(p.originalOwnerMatches)..
+            " registrationCount="..tostring(p.attributeCount)
+    "#,
+        )
+        .expect("read event-path diagnostics");
+    println!("O notice login event path: {diagnostic}");
+    for record in &env.state().borrow().lua_error_records {
+        println!(
+            "O notice post-event diagnostic {:?}: {}",
+            record.addon_name, record.message
+        );
+    }
+    env.exec(
+        r#"
+        local p = ONoticeProbe
+        assert(p.frameCalls == 1, "actual event must reach EventRegistry frame")
+        assert(p.registryCalls == 1, "original registry must dispatch registered callbacks")
+        assert(p.originalCalls == 1 and p.originalOwnerMatches,
+            "registry must invoke original notice callback with its owner")
+        assert(p.originalArgs.n == 2 and p.originalArgs[1] == true and p.originalArgs[2] == false,
+            "original callback must receive isInitialLogin=true, isUIReload=false")
+    "#,
+    )
+    .expect("original event bridge and arguments must work before claiming suppression RED");
     assert_notice_path_errors_absent(&env, "initial login");
     assert_eq!(
         notice_count(&env),
