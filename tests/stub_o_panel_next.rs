@@ -153,12 +153,19 @@ fn original_achievement_lod_regular_and_statistics_lifecycle() {
         assert(not C_AddOns.IsAddOnLoaded('Blizzard_AchievementUI'))
         assert(AchievementFrame == nil, 'fixture must start before original XML')
         assert(not C_GameRules.IsGameRuleActive(Enum.GameRule.AchievementsPanelDisabled), 'fixture requires enabled UI')
+        -- Existing modeled rows only; do not manufacture missing default-summary metadata.
+        for _, id in ipairs({6, 7, 8, 9, 10}) do A_Admin.SetAchievementEarned(id, true) end
         ToggleAchievementFrame(false)
         assert(C_AddOns.IsAddOnLoaded('Blizzard_AchievementUI'))
         assert(AchievementFrame:IsShown())
         -- Original Mainline toggle215-248 selects1 regular /3 statistics.
         -- Never assign selectedTab or replace original tab handler.
         assert(AchievementFrame.selectedTab == 1)
+        AchievementFrameSummary_UpdateAchievements(GetLatestCompletedAchievements(false))
+        assert(not AchievementFrameSummaryAchievementsEmptyText:IsShown(), 'original populated summary hides empty text')
+        for _, button in ipairs(AchievementFrameSummaryAchievements.buttons) do
+            assert(button:IsShown(), 'original earned row must remain visible')
+        end
         ToggleAchievementFrame(false)
         assert(not AchievementFrame:IsShown())
         ToggleAchievementFrame(true)
