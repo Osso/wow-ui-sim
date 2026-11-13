@@ -71,3 +71,59 @@ fn class_talent_tooltip_uses_original_assisted_combat_manager() {
         assert_eq!(actual, expected);
     });
 }
+
+#[test]
+fn spellbook_rotation_hover_updates_highlight_permission() {
+    with_blizzard_addon_smoke_shape(&["Blizzard_PlayerSpells"], &[], |env, loaded| {
+        assert!(
+            loaded.iter().any(|name| name == "Blizzard_PlayerSpells"),
+            "the LoadOnDemand PlayerSpells consumer must load"
+        );
+
+        let (enabled_on_enter, disabled_on_leave): (bool, bool) = env
+            .eval(
+                r#"
+                assert(C_AddOns.IsAddOnLoaded("Blizzard_ActionBar"),
+                    "ActionBar must load before the PlayerSpells consumer")
+                assert(C_AddOns.IsAddOnLoaded("Blizzard_PlayerSpells"),
+                    "PlayerSpells must be runtime-loaded")
+
+                local ownerInfo = debug.getinfo(AssistedCombatManager.SetCanHighlightSpellbookSpells, "S")
+                local ownerSource = ownerInfo.source:gsub("\\", "/")
+                local ownerSuffix = "Blizzard_ActionBar/Mainline/AssistedCombatManager.lua"
+                assert(ownerSource:sub(-#ownerSuffix) == ownerSuffix,
+                    "expected the original ActionBar owner, got " .. ownerSource)
+
+                local consumerInfo = debug.getinfo(AssistedCombatRotationSpellFrameMixin.OnIconEnter, "S")
+                local consumerSource = consumerInfo.source:gsub("\\", "/")
+                local consumerSuffix = "Blizzard_PlayerSpells/SpellBook/Blizzard_SpellBookFrame.lua"
+                assert(consumerSource:sub(-#consumerSuffix) == consumerSuffix,
+                    "expected the selected spellbook consumer, got " .. consumerSource)
+
+                local button = CreateFrame("Button", nil, UIParent)
+                local rotationButton = {
+                    Button = button,
+                    tooltipAnchor = "ANCHOR_RIGHT",
+                    UpdateTooltip = AssistedCombatRotationSpellFrameMixin.UpdateTooltip,
+                    ShowTooltip = function() end,
+                }
+
+                AssistedCombatRotationSpellFrameMixin.OnIconEnter(rotationButton)
+                local enabled = AssistedCombatManager.canHighlightSpellbookSpells == true
+                AssistedCombatRotationSpellFrameMixin.OnIconLeave(rotationButton)
+                local disabled = AssistedCombatManager.canHighlightSpellbookSpells == false
+                return enabled, disabled
+                "#,
+            )
+            .expect("the selected spellbook hover consumer must execute");
+
+        assert!(
+            enabled_on_enter,
+            "hover enter must enable spellbook highlighting"
+        );
+        assert!(
+            disabled_on_leave,
+            "hover leave must disable spellbook highlighting"
+        );
+    });
+}
