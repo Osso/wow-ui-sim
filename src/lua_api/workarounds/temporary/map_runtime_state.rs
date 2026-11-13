@@ -81,12 +81,16 @@ local function __wow_map_point_from_table(mapID, pos)
   }
 end
 
-UiMapPoint.CreateFromVector2D = function(mapID, pos)
-  return __wow_map_point_from_table(mapID, pos)
-end
+-- Retail owns these constructors in the original game ObjectAPI. Other
+-- profiles retain the fallback until their ownership boundary is proven.
+if retainUiMapPointFallback then
+  UiMapPoint.CreateFromVector2D = function(mapID, pos)
+    return __wow_map_point_from_table(mapID, pos)
+  end
 
-UiMapPoint.CreateFromCoordinates = function(mapID, x, y)
-  return { uiMapID = mapID, x = tonumber(x) or 0, y = tonumber(y) or 0 }
+  UiMapPoint.CreateFromCoordinates = function(mapID, x, y)
+    return { uiMapID = mapID, x = tonumber(x) or 0, y = tonumber(y) or 0 }
+  end
 end
 
 if type(C_MapExplorationInfo.GetExploredAreaIDsAtPosition) ~= "function" then
@@ -385,7 +389,11 @@ end
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
-    lua.exec(MAP_RUNTIME_STATE_LUA)?;
+    let retain_fallback =
+        crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail;
+    lua.exec(&format!(
+        "local retainUiMapPointFallback = {retain_fallback}\n{MAP_RUNTIME_STATE_LUA}"
+    ))?;
     Ok(())
 }
 
@@ -394,16 +402,34 @@ mod tests {
     use crate::lua_api::WowLuaEnv;
 
     #[test]
+    fn uimap_point_bootstrap_respects_profile_boundary() {
+        let env = WowLuaEnv::new().expect("lua env should initialize");
+        let constructors: (bool, bool) = env
+            .eval("return UiMapPoint.CreateFromCoordinates ~= nil, UiMapPoint.CreateFromVector2D ~= nil")
+            .expect("constructor publication probe");
+        let retained =
+            crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail;
+        assert_eq!(constructors, (retained, retained));
+        if retained {
+            env.exec(
+                r#"
+                local point = UiMapPoint.CreateFromCoordinates(2248, 0.25, 0.75)
+                assert(point.uiMapID == 2248 and point.x == 0.25 and point.y == 0.75)
+                local vector = UiMapPoint.CreateFromVector2D(1, {x=0.7, y=0.2})
+                assert(vector.uiMapID == 1 and vector.x == 0.7 and vector.y == 0.2)
+            "#,
+            )
+            .expect("other profiles retain their existing fallback");
+        }
+    }
+
+    #[test]
     fn installs_map_runtime_state_and_helpers() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
 
         let result: String = env
             .eval(
                 r#"
-                local point = UiMapPoint.CreateFromCoordinates(2248, 0.25, 0.75)
-                if point.uiMapID ~= 2248 or point.x ~= 0.25 or point.y ~= 0.75 then
-                    return "bad_point"
-                end
                 C_Map.SetMapForQuestLog(1)
                 if C_Map.GetCurrentMapID() ~= 1 then
                     return "bad_current_map"
