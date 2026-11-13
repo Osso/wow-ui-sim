@@ -57,8 +57,8 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     Ok(())
 }
 
-/// VERIFIED: an unavailable audio manager gives false. The setting lookup is INFERRED:
-/// Retail AudioAssist exposes `CAAEnabled` as the main combat-audio toggle.
+/// VERIFIED (R88f.L.3, Retail 12.1.5.70688): an unavailable manager gives false;
+/// otherwise `IsEnabled` reads `CAAEnabled` and returns false if that CVar is absent.
 fn is_enabled(state: &mut LuaState) -> LuaResult<u32> {
     let enabled = {
         let sim = borrow_state(state)?;
