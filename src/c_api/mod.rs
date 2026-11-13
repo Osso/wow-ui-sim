@@ -14,6 +14,7 @@ pub(crate) mod c_tooltip_info_artifact_power;
 pub(crate) mod c_tooltip_info_azerite_power;
 pub(crate) mod c_tooltip_info_bag_child;
 pub(crate) mod c_tooltip_info_conduit;
+pub mod c_tooltip_info_currency;
 pub(crate) mod c_tooltip_info_enhanced_conduit;
 pub(crate) mod c_tooltip_info_equipment_set;
 pub mod c_tooltip_info_hyperlink;
@@ -324,6 +325,7 @@ pub(crate) mod c_tooltip_info_socketed_relic;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_tooltip_info_spell_mount;
 pub(crate) mod c_trade_skill_cooldown;
+pub mod c_trade_skill_crafting_ui;
 pub(crate) mod c_trade_skill_favorites;
 pub(crate) mod c_trade_skill_filter;
 pub(crate) mod c_trade_skill_first_craft;

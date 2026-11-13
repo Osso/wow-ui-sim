@@ -59,6 +59,9 @@ pub struct Options {
     /// Add only Attributes_9 to the committed spell records; requires SpellMisc.csv only.
     #[arg(long)]
     augment_attributes: bool,
+    /// Generate only the required spells' first-effect values.
+    #[arg(long, conflicts_with = "augment_attributes")]
+    spell_effects_only: bool,
     /// Explicit CSV directory; never uses the shared default data directory.
     #[arg(long)]
     csv_dir: Option<PathBuf>,
@@ -66,6 +69,13 @@ pub struct Options {
 
 pub fn run(options: Options) -> Result<(), Box<dyn std::error::Error>> {
     let wow_data = options.csv_dir.clone().unwrap_or_else(wow_data_dir);
+    if options.spell_effects_only {
+        let required_ids = collect_required_spell_ids(&wow_data)?;
+        let source_path = wow_data.join("SpellEffect.csv");
+        let effects = load_spell_effect_0(&source_path, &required_ids)?;
+        generate_spell_effect_0_table(&effects, &required_ids, &source_path)?;
+        return Ok(());
+    }
     if options.augment_attributes {
         let path = wow_data.join("SpellMisc.csv");
         let misc = load_spell_misc(&path)?;
@@ -603,6 +613,93 @@ fn load_spell_effect_targets(path: &Path) -> Result<HashMap<u32, u8>, Box<dyn st
         map.entry(spell_id).or_insert(target);
     }
     Ok(map)
+}
+
+fn load_spell_effect_0(
+    path: &Path,
+    required_ids: &BTreeSet<u32>,
+) -> Result<HashMap<u32, u32>, Box<dyn std::error::Error>> {
+    let file = File::open(path)?;
+    let reader = BufReader::new(file);
+    let mut effects = HashMap::new();
+
+    for (index, line) in read_csv_records(reader)?.into_iter().enumerate() {
+        if index == 0 {
+            continue;
+        }
+        let fields = parse_csv_line(&line);
+        if fields.len() < 37 {
+            continue;
+        }
+        if fields[2].parse::<u32>().unwrap_or(1) != 0
+            || fields[3].parse::<u32>().unwrap_or(999) != 0
+        {
+            continue;
+        }
+        let Ok(spell_id) = fields[36].parse::<u32>() else {
+            continue;
+        };
+        if !required_ids.contains(&spell_id) {
+            continue;
+        }
+        let effect = fields[4].parse::<u32>()?;
+        effects.entry(spell_id).or_insert(effect);
+    }
+    Ok(effects)
+}
+
+fn generate_spell_effect_0_table(
+    effects: &HashMap<u32, u32>,
+    required_ids: &BTreeSet<u32>,
+    source_path: &Path,
+) -> Result<(), Box<dyn std::error::Error>> {
+    let mut builder = phf_codegen::Map::new();
+    let mut count = 0;
+    for &spell_id in required_ids {
+        let Some(effect) = effects.get(&spell_id) else {
+            continue;
+        };
+        builder.entry(spell_id, &effect.to_string());
+        count += 1;
+    }
+
+    let output_path = Path::new("crates/sim-data/data/spell_effects.rs");
+    let mut out = File::create(output_path)?;
+    let source_hash = spell_effect_csv_hash(source_path)?;
+    writeln!(
+        out,
+        "//! Auto-generated first-effect values for required spells."
+    )?;
+    writeln!(
+        out,
+        "//! SpellEffect.csv build 12.1.5.70391, locale enUS, fetched 2026-11-01; sha256={source_hash}"
+    )?;
+    writeln!(out, "//! Includes DifficultyID=0 and EffectIndex=0 only.")?;
+    writeln!(
+        out,
+        "//! Do not edit manually - regenerate with: wow-cli generate spells --spell-effects-only"
+    )?;
+    writeln!(out)?;
+    writeln!(
+        out,
+        "pub static SPELL_EFFECT_0: phf::Map<u32, u32> = {};",
+        builder.build()
+    )?;
+    writeln!(out)?;
+    writeln!(
+        out,
+        "pub fn spell_effect_0(spell_id: u32) -> Option<u32> {{"
+    )?;
+    writeln!(out, "    SPELL_EFFECT_0.get(&spell_id).copied()")?;
+    writeln!(out, "}}")?;
+    println!("Generated {} required spell effect rows", count);
+    println!("Output: {}", output_path.display());
+    Ok(())
+}
+
+fn spell_effect_csv_hash(path: &Path) -> Result<String, Box<dyn std::error::Error>> {
+    use sha2::{Digest, Sha256};
+    Ok(format!("{:x}", Sha256::digest(std::fs::read(path)?)))
 }
 
 fn load_spell_misc(

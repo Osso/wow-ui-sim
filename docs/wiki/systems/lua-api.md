@@ -12,6 +12,8 @@ The [R80 item tooltip contract](../../specs/tooltip-item-r80.md) separates VERIF
 
 [Spell tooltip composition](../../specs/tooltip-spell-composition.md) owns the R81 outer-row contract. VERIFIED by source inspection: host inputs in `src/c_api/spell_tooltip.rs` replace the fixed cooldown, aura-duration and slot-key recipes; cost and cast inputs no longer come from guessed spell tables. The shared producer keeps the existing title/description behavior, resolves direct overrides, and gives spell links their own cast context without suppressing cost/range. Native evidence is partial Retail 70688; selected Retail 70575 and other profiles are not native-output certifications. UNKNOWN helper formulas, Azerite gates and later rows stay host-supplied or unmodelled. Tests and source citations are recorded in the private lane report.
 
+[Retail currency tooltips](../../specs/tooltip-currency.md) own the R84/R84b row and input contract. Retail by-ID, quest, loot and currency-link consumers share `c_api::c_tooltip_info_currency::build_currency_tooltip`; quest-source results and display inputs are supplied rather than inferred. The shared line builder can remap a verified type-0 row to 41 when placeholder colors collide, so the currency producer restores the verified row type. Resolver misses, conditional error rows, balance formulas and runtime number-format mode remain UNKNOWN.
+
 [Bag-child tooltips](../../specs/tooltip-bag-child.md) compose bag state with
 source-derived child-equipment rows and the existing item builder on
 Retail/PTR/Forever. The item generator includes child IDs automatically; absent
@@ -101,6 +103,16 @@ RED/GREEN, checks and exact stock-preservation receipts.
 ## Factory-removal social inputs — 2026-10-21
 
 [The M3 contract](../../specs/c-factory-m3-social-inputs.md) owns profile scope and simulator policies. `c_api::c_guild_info` projects supplied numeric metadata plus existing guild-logo colors into independent DTOs; changing the legacy filename invalidates metadata rather than guessing a file ID. Named temporary social-service defaults cover capability systems that roster, listing and friend data do not model. Unknown members remain nil. Frozen original-consumer and fresh Retail RED precede integrated seven-profile GREEN. The [social contract](../../specs/c-factory-m3-social-inputs.md#bounded-proof--2026-10-21) links final proof and distinguishes newly reached residual queries from this batch.
+
+## Recorded widget secrecy
+
+The [secret-aura contract](../../specs/secret-auras.md#verified-contradiction-audit-at-e29763f8e) owns native evidence labels and remaining gaps. VERIFIED locally for Retail WM61 S6: recorded aspect queries, prevention and anchoring use distinct state. Retail/PTR `Frame.explicit_secret_aspects` feeds aspect queries without deriving bits from prevention, protected or forbidden flags. `Frame.is_anchoring_secret` is a separate host input; no native writer or second-set propagation is invented. Forever retains its separate compatibility behavior. API-level tests check independent state; original `CompactUnitFrame_UpdateName` supplies the positive Text-aspect consumer. Complete native Lua publication, clearing and event taint remain UNKNOWN.
+
+## Secure delegate global
+
+`CreateSecureDelegate` is published on all profiles except Wrath, while `securecopy` is limited to Retail, PTR and WoWForever, matching the pinned API declarations. **VERIFIED from S4s7b emulation:** construction rejects a nonempty execution source before dispatch and returns zero values if the reporting helper returns; the first argument is required and accessible. Invocation applies the captured source shallowly to arguments and the inner call, wraps every function-valued argument when wrapping is enabled, and restores the saved source after a normal return. Reporter effects, target security and complete result publication remain UNKNOWN. **VERIFIED locally:** exact construction, publication and passthrough tests pass on all six applicable profiles; the original Mixin consumer and securecopy tests pass on Retail, PTR and WoWForever. **INFERRED simulator choices:** numeric targets are accepted, and the simulator adds no second report. The focused Mixin test loads the original file directly; it does not establish a startup-selected consumer. The optional Retail `patch_12_0_1_tainted_secret_duration_object` case still fails at `Cooldown:SetCooldownFromDurationObject` with `secret-origin widget readout requires an untainted caller`; that test does not invoke `CreateSecureDelegate`.
+
+The [secure-helper contract](../../specs/secure-helpers.md) owns the evidence boundary and remaining gaps.
 
 ## C API numeric-secret selector boundaries
 
@@ -695,6 +707,9 @@ The [owning contract](../../specs/wrath-friends-legacy.md) records static12340 p
 - [UiMap information catalog](../../specs/ui-map-info-catalog.md) — profile scope and provenance.
 - [Wrath legacy friends contract](../../specs/wrath-friends-legacy.md) — native tuple/selection evidence and simulator-policy limits.
 - [Retail unused currency contract](../../specs/currency-unused-mutations.md) — flag scope, original consumers and held grouping.
+- [Retail currency tooltip contract](../../specs/tooltip-currency.md) — R84/R84b verified rows, explicit host inputs and UNKNOWNs.
+- [c_tooltip_info_currency.rs](../../../src/c_api/c_tooltip_info_currency.rs) — shared Retail currency producer; text-row type restoration keeps verified type-0 rows after color remapping.
+- [tooltip_info/builders.rs](../../../src/lua_api/globals/missing_surface/tooltip_info/builders.rs) — shared line builder and color-based type remapping.
 
 - [Wrath action callback queries](../../specs/wrath-action-callback-queries.md) — native projections, shared snapshot boundary and bounded proof
 

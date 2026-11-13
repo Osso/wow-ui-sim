@@ -90,6 +90,13 @@ fn apply_frame_button_extras(
     apply_button_textures_with_ref(env, frame, name, &frame_ref_name, inherits)?;
     apply_button_text_with_ref(env, frame, name, &frame_ref_name, "")?;
     apply_button_fonts_with_ref(env, frame, name, &frame_ref_name, "")?;
+    crate::loader::editbox_font::apply_editbox_font_with_ref(
+        env,
+        frame,
+        name,
+        &frame_ref_name,
+        "",
+    )?;
     apply_bar_texture(env, frame, name, inherits)?;
     apply_thumb_texture(env, frame, name, inherits)?;
     apply_colorselect_textures(env, frame, name, inherits)?;
