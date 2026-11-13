@@ -400,6 +400,47 @@ fn retail_inactive_checkbox_consumer_updates_faction_activity() {
     }
 }
 
+#[cfg(feature = "client-retail")]
+#[test]
+fn retail_inactive_checkbox_truncates_zero_based_native_index() {
+    test_timeout! {
+        let env = setup_env();
+        let result: String = env
+            .eval(
+                r#"
+                local onClick = ReputationDetailInactiveCheckboxMixin and ReputationDetailInactiveCheckboxMixin.OnClick
+                if type(onClick) ~= "function" then
+                    return "missing_inactive_checkbox_consumer"
+                end
+                local source = debug.getinfo(onClick, "S").source:gsub("\\", "/")
+                if not source:find("Blizzard_UIPanels_Game/Mainline/ReputationFrame.lua", 1, true) then
+                    return "wrong_inactive_checkbox_consumer=" .. source
+                end
+
+                local faction = __wow_reputation_state.factions[1]
+                faction.factionID = 2590
+                faction.canSetInactive = true
+                faction.reputationIndex = 114
+                faction.isInactive = false
+                C_Reputation.GetSelectedFaction = function() return 0.5 end
+                local checked = false
+                local checkbox = { GetChecked = function() return checked end }
+                PlaySound = function() end
+
+                onClick(checkbox)
+                checked = true
+                onClick(checkbox)
+                if C_Reputation.IsFactionActive(0.5) then
+                    return "consumer_did_not_map_fractional_index_to_first_row"
+                end
+                return "ok"
+                "#,
+            )
+            .expect("Retail inactive checkbox should accept the native index conversion");
+        assert_eq!(result, "ok");
+    }
+}
+
 #[cfg(not(any(feature = "client-era", feature = "client-anniversary")))]
 #[test]
 fn show_ui_panel_locks_reputation_frame_layout() {
