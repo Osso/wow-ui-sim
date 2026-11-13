@@ -116,7 +116,14 @@ fn stub_o_notice_original_initial_login_callback_adds_chat_history() {
                         probe.originalCalls = probe.originalCalls + 1
                         probe.originalOwnerMatches = callbackOwner == owner
                         probe.originalArgs = {n = select('#', ...), ...}
-                        return callback(callbackOwner, ...)
+                        local results = SafePack(callback(callbackOwner, ...))
+                        probe.noticeCountAfterOriginal = 0
+                        for i = 1, DEFAULT_CHAT_FRAME:GetNumMessages() do
+                            if DEFAULT_CHAT_FRAME:GetMessageInfo(i) == ONLINE_SAFETY_NOTICE then
+                                probe.noticeCountAfterOriginal = probe.noticeCountAfterOriginal + 1
+                            end
+                        end
+                        return SafeUnpack(results)
                     end
                 end
             end
@@ -136,6 +143,8 @@ fn stub_o_notice_original_initial_login_callback_adds_chat_history() {
     )
     .expect("observe original event registration and forwarding, without replacing its behavior");
 
+    env.exec("ChatFrameUtil.AddSystemMessage('O pre-world preserved history')")
+        .expect("original chat path appends pre-world history");
     let before = notice_count(&env);
     env.fire_event_with_args(
         "PLAYER_ENTERING_WORLD",
@@ -153,7 +162,8 @@ fn stub_o_notice_original_initial_login_callback_adds_chat_history() {
             " registry="..p.registryCalls.." args="..args(p.registryArgs)..
             " original="..p.originalCalls.." args="..args(p.originalArgs)..
             " owner="..tostring(p.originalOwnerMatches)..
-            " registrationCount="..tostring(p.attributeCount)
+            " registrationCount="..tostring(p.attributeCount)..
+            " noticeCountAfterOriginal="..tostring(p.noticeCountAfterOriginal)
     "#,
         )
         .expect("read event-path diagnostics");
@@ -177,6 +187,13 @@ fn stub_o_notice_original_initial_login_callback_adds_chat_history() {
     )
     .expect("original event bridge and arguments must work before claiming suppression RED");
     assert_notice_path_errors_absent(&env, "initial login");
+    env.exec(r#"
+        local found = false
+        for i = 1, DEFAULT_CHAT_FRAME:GetNumMessages() do
+            if DEFAULT_CHAT_FRAME:GetMessageInfo(i) == 'O pre-world preserved history' then found = true end
+        end
+        assert(found, 'pre-world original chat message must survive post-event setup')
+    "#).expect("preserve actual chat history across PLAYER_ENTERING_WORLD");
     assert_eq!(
         notice_count(&env),
         before + 1,
