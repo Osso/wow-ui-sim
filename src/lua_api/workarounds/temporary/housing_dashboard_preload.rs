@@ -173,6 +173,9 @@ mod tests {
                 NeighborhoodType = { Public = 0 },
             }
             C_Housing = {}
+            HousingTutorialUtil = {
+                BoughtHouseQuestComplete = function() return false end,
+            }
             callbacks = {}
             C_Timer = {
                 After = function(_, callback)
@@ -281,7 +284,7 @@ mod tests {
             )
             .expect("patched housing state should be readable");
 
-        assert!(bought_house_complete);
+        assert!(!bought_house_complete);
         assert_eq!(map_id, 2248);
         assert_eq!(texture_suffix, "elwynn");
         assert!(faction_match);
