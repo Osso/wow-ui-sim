@@ -4,6 +4,21 @@
 //! isolated addon/test paths where SharedXML pool helpers have not been loaded.
 
 const POOL_CONSTRUCTOR_DEFAULTS_LUA: &str = r#"
+local function __wow_pool_release_error(object, belongs)
+  if belongs then
+    return ("Attempted to release inactive object '%s'"):format(tostring(object))
+  end
+  return ("Attempted to release object '%s' that doesn't belong to this pool"):format(tostring(object))
+end
+
+local function __wow_pool_is_active_for_release(pool, object, canFailToFindObject)
+  local active = pool.active[object] == true
+  if active or canFailToFindObject then
+    return active
+  end
+  error(__wow_pool_release_error(object, pool:DoesObjectBelongToPool(object)), 3)
+end
+
 if CreateFramePool == nil then
   function CreateFramePool(frameType, parent, template, resetter)
     local pool = {
@@ -22,22 +37,25 @@ if CreateFramePool == nil then
       if frame == nil then
         frame = CreateFrame(self.frameType, nil, self.parent, self.template)
         isNew = true
+        if self.resetter then
+          self.resetter(self, frame, true, self.template)
+        end
         self.known[frame] = true
       end
       self.active[frame] = true
       return frame, isNew
     end
 
-    function pool:Release(frame)
-      if frame == nil or not self:DoesObjectBelongToPool(frame) then
+    function pool:Release(frame, canFailToFindObject)
+      if not __wow_pool_is_active_for_release(self, frame, canFailToFindObject) then
         return false
       end
-      self.active[frame] = nil
       if self.resetter then
-        self.resetter(self, frame, false, self.template)
+        self.resetter(self, frame, nil, self.template)
       elseif frame.Hide then
         frame:Hide()
       end
+      self.active[frame] = nil
       table.insert(self.inactive, frame)
       return true
     end
@@ -110,20 +128,23 @@ local function __wow_make_region_pool(acquire_region)
       if region == nil then
         region = acquire_region(self.parent, self.layer, self.subLevel, self.template)
         isNew = true
+        if self.resetter then
+          self.resetter(self, region, true, self.template)
+        end
         self.known[region] = true
       end
       self.active[region] = true
       return region, isNew
     end
 
-    function pool:Release(region)
-      if region == nil or not self:DoesObjectBelongToPool(region) then
+    function pool:Release(region, canFailToFindObject)
+      if not __wow_pool_is_active_for_release(self, region, canFailToFindObject) then
         return false
       end
-      self.active[region] = nil
       if self.resetter then
-        self.resetter(self, region, false, self.template)
+        self.resetter(self, region, nil, self.template)
       end
+      self.active[region] = nil
       table.insert(self.inactive, region)
       return true
     end
@@ -257,11 +278,11 @@ if CreateFramePoolCollection == nil then
 
     function collection:Release(object)
       for _, pool in pairs(self.pools) do
-        if pool.Release and pool:Release(object) then
+        if pool.Release and pool:Release(object, true) then
           return true
         end
       end
-      return false
+      error(__wow_pool_release_error(object, self:DoesObjectBelongToPool(object)), 2)
     end
 
     function collection:ReleaseAll()
