@@ -10,6 +10,8 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/blizzard_addon_manifest.rs"]
+mod blizzard_addon_manifest;
 #[path = "common/toc_layout.rs"]
 mod toc_layout;
 
@@ -678,5 +680,81 @@ fn empty_contribution_id_list_adds_no_map_tooltip_rows() {
     assert_eq!(
         line_count, 0,
         "an empty managed-contribution result must not create a blank tooltip row"
+    );
+}
+
+#[cfg(all(feature = "optional-tests", feature = "client-retail"))]
+#[test]
+fn world_map_provider_pins_keep_original_backref_ownership() {
+    let ui = blizzard_ui_dir();
+    let (env, loaded) = build_blizzard_addon_closure_env(
+        &ui,
+        blizzard_addon_manifest::WORLD_MAP_SMOKE_ROOTS,
+        blizzard_addon_manifest::WORLD_MAP_SMOKE_OVERRIDES,
+    );
+
+    for addon in [
+        "Blizzard_MapCanvas",
+        "Blizzard_SharedMapDataProviders",
+        "Blizzard_WorldMap",
+    ] {
+        assert!(
+            loaded.iter().any(|loaded_name| loaded_name == addon),
+            "WorldMap's Retail dependency closure must load {addon}"
+        );
+    }
+
+    let (highlight_stays_unassociated, exploration_has_original_owner): (bool, bool) = env
+        .eval(
+            r#"
+            local function find_provider(mixin)
+                for provider in pairs(WorldMapFrame.dataProviders) do
+                    if provider.OnAdded == mixin.OnAdded then
+                        return provider
+                    end
+                end
+            end
+
+            local highlightProvider = assert(find_provider(MapHighlightDataProviderMixin))
+            local explorationProvider = assert(find_provider(MapExplorationDataProviderMixin))
+
+            local highlightPin = assert(highlightProvider.pin)
+            local highlightWasUnassociated = highlightPin:GetDataProvider() == nil
+            WorldMapFrame:RemoveDataProvider(highlightProvider)
+            WorldMapFrame:AddDataProvider(highlightProvider)
+            local highlightStayedUnassociated = highlightProvider.pin:GetDataProvider() == nil
+
+            local explorationPin = assert(explorationProvider.pin)
+            local explorationWasOwned = explorationPin:GetDataProvider() == explorationProvider
+            WorldMapFrame:RemoveDataProvider(explorationProvider)
+            WorldMapFrame:AddDataProvider(explorationProvider)
+            local explorationStayedOwned = explorationProvider.pin:GetDataProvider() == explorationProvider
+
+            return highlightWasUnassociated and highlightStayedUnassociated,
+                explorationWasOwned and explorationStayedOwned
+            "#,
+        )
+        .expect("original WorldMap provider attachment and pin acquisition should run");
+
+    assert!(highlight_stays_unassociated);
+    assert!(exploration_has_original_owner);
+
+    env.apply_post_load_workarounds();
+
+    let new_highlight_stays_unassociated: bool = env
+        .eval(
+            r#"
+            local provider = CreateFromMixins(MapHighlightDataProviderMixin)
+            WorldMapFrame:AddDataProvider(provider)
+            local staysUnassociated = provider.pin:GetDataProvider() == nil
+            WorldMapFrame:RemoveDataProvider(provider)
+            return staysUnassociated
+            "#,
+        )
+        .expect("original AddDataProvider callback and pin acquisition should run");
+
+    assert!(
+        new_highlight_stays_unassociated,
+        "MapCanvasMixin:AddDataProvider must not assign a back-reference that the original provider does not set"
     );
 }
