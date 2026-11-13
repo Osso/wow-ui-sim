@@ -22,6 +22,10 @@ fn selected_actionbar_event_consumer_uses_original_fanout() {
                 r#"
                 assert(type(ActionBarButtonEventsFrameMixin) == "table")
                 assert(ActionBarButtonEventsFrame:IsEventRegistered("ACTIONBAR_SLOT_CHANGED"))
+                local actionBarLoadSource = debug.getinfo(ActionBarMixin.ActionBar_OnLoad, "S").source:gsub("\\", "/")
+                assert(actionBarLoadSource:find("Blizzard_ActionBar/Shared/ActionBar.lua", 1, true), actionBarLoadSource)
+                assert(type(StanceBar.actionButtons) == "table" and #StanceBar.actionButtons == StanceBar.numButtons,
+                    "selected StanceBar owner must create its buttons during XML OnLoad")
 
                 probe = { events = 0, artUpdates = 0, cooldownUpdates = 0, framesVisited = 0 }
                 local button = {
