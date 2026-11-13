@@ -564,6 +564,61 @@ impl WowFontSystem {
             .unwrap_or(0.0)
     }
 
+    /// Width of the first line of text that may hold WoW escapes: colors and
+    /// hyperlinks take no room, inline `|T`/`|A` icons take their width, as
+    /// the client's `GetStringWidth` reports it.
+    pub fn measure_markup_width(
+        &mut self,
+        text: &str,
+        font_path: Option<&str>,
+        font_size: f32,
+    ) -> f32 {
+        use crate::render::inline_markup::{first_line_width, has_inline_icons};
+        if !has_inline_icons(text) {
+            let stripped = crate::render::strip_wow_markup(text);
+            return self.measure_text_width(&stripped, font_path, font_size);
+        }
+        let line_height = line_height_for_font_size(font_size, false).unwrap_or(font_size);
+        first_line_width(text, line_height, |piece| {
+            self.measure_text_width(piece, font_path, font_size)
+        })
+    }
+
+    /// Height of text that may hold WoW escapes: the text without its
+    /// escapes, one line at least when it holds an inline `|T`/`|A` icon, and
+    /// each line raised to its tallest icon.
+    pub fn measure_markup_height(
+        &mut self,
+        text: &str,
+        font_path: Option<&str>,
+        font_size: f32,
+        wrap_width: Option<f32>,
+        spacing: f32,
+        smooth_scaling: bool,
+    ) -> f32 {
+        use crate::render::inline_markup::{has_inline_icons, line_heights};
+        let stripped = crate::render::strip_wow_markup(text);
+        let text_height = self.measure_text_height(
+            &stripped,
+            font_path,
+            font_size,
+            wrap_width,
+            spacing,
+            smooth_scaling,
+        );
+        if !has_inline_icons(text) {
+            return text_height;
+        }
+        let Some(line_height) = line_height_for_font_size(font_size, smooth_scaling) else {
+            return text_height;
+        };
+        let raised: f32 = line_heights(text, line_height)
+            .iter()
+            .map(|height| height - line_height)
+            .sum();
+        text_height.max(line_height) + raised
+    }
+
     /// Measure the pixel height of text, accounting for word wrapping.
     ///
     /// If `wrap_width` is Some and > 0, text wraps at that width.
