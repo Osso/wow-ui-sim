@@ -36,23 +36,34 @@ impl RecipeFavorites {
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     // VERIFIED (PTR R85 and Retail WM83): IsRecipeFavorite and SetRecipeFavorite match.
-    // HasFavoriteOrderRecipes publication is UNKNOWN in PTR R85; its registration is INFERRED.
-    if !matches!(
-        crate::client_profile::ACTIVE,
-        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
-    ) || !cfg!(feature = "retail-12-1-5")
-    {
+    if !supports_recipe_favorite_apis() {
         return Ok(());
     }
     let namespace = super::ensure_namespace(state, "C_TradeSkillUI")?;
     table_set_rust_fn_static(state, namespace, "IsRecipeFavorite", is_recipe_favorite)?;
+    table_set_rust_fn_static(state, namespace, "SetRecipeFavorite", set_recipe_favorite)
+}
+
+pub(crate) fn register_has_favorite_order_recipes(state: &mut LuaState) -> LuaResult<()> {
+    // INFERRED (PTR R85; publication UNKNOWN): retain for PTR 70493 consumers
+    // TradeSkillUIDocumentation.lua:897 and ProfessionsCrafterOrderPage.lua:434,523.
+    if !supports_recipe_favorite_apis() {
+        return Ok(());
+    }
+    let namespace = super::ensure_namespace(state, "C_TradeSkillUI")?;
     table_set_rust_fn_static(
         state,
         namespace,
         "HasFavoriteOrderRecipes",
         has_favorite_order_recipes,
-    )?;
-    table_set_rust_fn_static(state, namespace, "SetRecipeFavorite", set_recipe_favorite)
+    )
+}
+
+fn supports_recipe_favorite_apis() -> bool {
+    matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+    ) && cfg!(feature = "retail-12-1-5")
 }
 
 fn recipe_id(state: &LuaState, usage: &str) -> LuaResult<i32> {
