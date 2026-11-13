@@ -1,6 +1,8 @@
 //! State-backed paragon reputation queries.
 
-use crate::lua_api::methods::{borrow_state, table_get_static, table_set_static};
+use crate::lua_api::methods::{
+    borrow_state, call_function_state, table_get_static, table_set_static,
+};
 use crate::lua_bridge::stack_val;
 use rilua::table_security::{can_access_secrets, is_secret_value, unwrap_secret};
 use rilua::vm::state::LuaState;
@@ -47,6 +49,60 @@ pub(crate) fn set_legacy_reputations_shown(state: &mut LuaState) -> LuaResult<u3
         reputation_state,
         "showLegacy",
         Val::Bool(show_legacy),
+    );
+    Ok(0)
+}
+
+// VERIFIED (Retail 12.1.5.70688, R88f.A.70): the setter accepts signed-i32
+// conversions but stores only ReputationSortType values 0, 1, and 2.
+pub(crate) fn set_reputation_sort_type(state: &mut LuaState) -> LuaResult<u32> {
+    const USAGE: &str = "Usage: C_Reputation.SetReputationSortType(sortType)";
+
+    let value = stack_val(state, 1);
+    if is_secret_value(state, value) && !can_access_secrets(state) {
+        return Err(runtime_error(format!(
+            "{USAGE}. Secret values are only allowed during untainted execution for this argument."
+        )));
+    }
+    let value = unwrap_secret(state, value)?;
+    if matches!(value, Val::Nil) {
+        return Err(runtime_error(USAGE));
+    }
+
+    let number = match value {
+        Val::Num(number) => Some(number),
+        Val::Str(_) => {
+            let tonumber = crate::c_api::global_val(state, "tonumber");
+            match call_function_state(state, tonumber, &[value])? {
+                Val::Num(number) => Some(number),
+                _ => None,
+            }
+        }
+        _ => None,
+    }
+    .ok_or_else(|| runtime_error(USAGE))?;
+
+    if number < f64::from(i32::MIN) || number > f64::from(i32::MAX) {
+        return Err(runtime_error(format!(
+            "integer overflow attempting to store {number:.6}"
+        )));
+    }
+    if !number.is_finite() {
+        return Err(runtime_error(USAGE));
+    }
+
+    let sort_type = number as i32;
+    if !matches!(sort_type, 0..=2) {
+        return Err(runtime_error(USAGE));
+    }
+
+    let global = Val::Table(state.global);
+    let reputation_state = table_get_static(state, global, "__wow_reputation_state");
+    table_set_static(
+        state,
+        reputation_state,
+        "sortType",
+        Val::Num(f64::from(sort_type)),
     );
     Ok(0)
 }

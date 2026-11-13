@@ -299,6 +299,12 @@ fn register_reputation_namespace(lua: &mut rilua::Lua) -> crate::Result<()> {
             "SetLegacyReputationsShown",
             crate::c_api::c_reputation::set_legacy_reputations_shown,
         )?;
+        table_set_rust_fn_static(
+            lua.state_mut(),
+            reputation_ref,
+            "SetReputationSortType",
+            crate::c_api::c_reputation::set_reputation_sort_type,
+        )?;
     }
     LuaApiMut::set_global_val(lua, "C_Reputation", reputation)?;
     Ok(())

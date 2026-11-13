@@ -178,8 +178,10 @@ C_Reputation.GetReputationSortType = function()
     return state.sortType
 end
 
-C_Reputation.SetReputationSortType = function(sortType)
-    state.sortType = tonumber(sortType) or 0
+if C_Reputation.SetReputationSortType == nil then
+    C_Reputation.SetReputationSortType = function(sortType)
+        state.sortType = tonumber(sortType) or 0
+    end
 end
 
 C_Reputation.AreLegacyReputationsShown = function()
@@ -318,8 +320,8 @@ mod tests {
                 if C_Reputation.GetNumFactions() ~= 11 then
                     return "bad_expand_all"
                 end
-                C_Reputation.SetReputationSortType(4)
-                if C_Reputation.GetReputationSortType() ~= 4 then
+                C_Reputation.SetReputationSortType(2)
+                if C_Reputation.GetReputationSortType() ~= 2 then
                     return "bad_sort"
                 end
                 C_Reputation.SetLegacyReputationsShown(false)
