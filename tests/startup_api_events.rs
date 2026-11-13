@@ -424,11 +424,17 @@ fn retail_event_util_dispatches_and_unregisters_frame_events() {
     use crate::common::panel_fixtures::blizzard_ui_dir;
 
     let env = env();
-    let event_util_source =
-        std::fs::read_to_string(blizzard_ui_dir().join("Blizzard_SharedXML/EventUtil.lua"))
-            .expect("Retail Blizzard SharedXML EventUtil.lua should be present");
-    env.exec(&event_util_source)
-        .expect("original Blizzard EventUtil consumer should load");
+    for relative_path in [
+        "Blizzard_SharedXMLBase/CallbackRegistry.lua",
+        "Blizzard_SharedXMLBase/GlobalCallbackRegistry.lua",
+        "Blizzard_SharedXML/EventUtil.lua",
+    ] {
+        let path = blizzard_ui_dir().join(relative_path);
+        let source = std::fs::read_to_string(&path)
+            .unwrap_or_else(|error| panic!("failed to read {}: {error}", path.display()));
+        env.exec(&source)
+            .unwrap_or_else(|error| panic!("failed to load {}: {error}", path.display()));
+    }
     env.exec(
         r#"
         EVENT_UTIL_FRAME_CALLBACK_CALLS = 0
