@@ -74,27 +74,6 @@ const LUA_SOURCE_PATCHES: &[LuaSourcePatch] = &[
         }],
     },
     LuaSourcePatch {
-        suffix: "/ChatFrameUtil.lua",
-        operations: &[
-            LuaSourcePatchOp::Replace {
-                from: "local info = ChatTypeInfo[\"SYSTEM\"];",
-                to: "local info = ChatTypeInfo[\"SYSTEM\"] or { r = 1, g = 1, b = 0, id = 1 };",
-            },
-            LuaSourcePatchOp::ReplaceOnce {
-                from: "previousValue:Hide();",
-                to: "if type(previousValue.Hide) == \"function\" then previousValue:Hide(); end",
-            },
-            LuaSourcePatchOp::ReplaceOnce {
-                from: "FCFClickAnywhereButton_UpdateState(previousValue.chatFrame.clickAnywhereButton);",
-                to: "if previousValue.chatFrame and previousValue.chatFrame.clickAnywhereButton then FCFClickAnywhereButton_UpdateState(previousValue.chatFrame.clickAnywhereButton); end",
-            },
-            LuaSourcePatchOp::ReplaceOnce {
-                from: "FCFClickAnywhereButton_UpdateState(editBox.chatFrame.clickAnywhereButton);",
-                to: "if editBox.chatFrame and editBox.chatFrame.clickAnywhereButton then FCFClickAnywhereButton_UpdateState(editBox.chatFrame.clickAnywhereButton); end",
-            },
-        ],
-    },
-    LuaSourcePatch {
         suffix: "/Deprecated_ArenaUI.lua",
         operations: &[
             LuaSourcePatchOp::ReplaceOnce {
