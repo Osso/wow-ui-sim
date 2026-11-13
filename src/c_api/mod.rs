@@ -16,6 +16,7 @@ pub(crate) mod c_tooltip_info_bag_child;
 pub(crate) mod c_tooltip_info_conduit;
 pub(crate) mod c_tooltip_info_enhanced_conduit;
 pub(crate) mod c_tooltip_info_equipment_set;
+pub mod c_tooltip_info_hyperlink;
 pub(crate) mod c_tooltip_info_inventory_by_id;
 pub(crate) mod c_tooltip_info_item_key;
 pub(crate) mod c_tooltip_info_loot;
@@ -46,6 +47,7 @@ pub(crate) mod game_rules_visibility;
 pub mod item_descriptor;
 pub mod item_overlay;
 pub(crate) mod item_quality_color;
+pub mod item_tooltip;
 pub(crate) mod journal_collected;
 pub mod mount_filters;
 pub(crate) mod ptr_i4_game_rules;
@@ -372,6 +374,7 @@ pub mod map_world_coordinates;
 #[cfg(feature = "retail-12-0-7")]
 pub(crate) mod patch_12_0_7_inputs;
 mod spell_cooldown_output;
+pub mod spell_tooltip;
 pub(crate) mod spell_tooltip_cost;
 #[cfg(test)]
 mod spell_tooltip_cost_tests;

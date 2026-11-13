@@ -403,16 +403,23 @@ fn rendered_lines(env: &WowLuaEnv) -> Vec<(String, Option<String>, (f32, f32, f3
 
 #[test]
 fn known_spell_numeric_keeps_generated_title_and_nonempty_lines() {
-    fixture_env()
-        .exec(
-            r#"
+    let env = fixture_env();
+    // R81 Q2: the existing cast/description row positions use a supplied helper result.
+    env.state()
+        .borrow_mut()
+        .spell_tooltip_inputs
+        .entry(19750)
+        .or_default()
+        .cast_ms = Some(1500);
+    env.exec(
+        r#"
         local d = TMCheck(C_TooltipInfo.GetSpellByID, 19750, 19750, 'Flash of Light')
         assert(#d.lines >= 3, 'real cast/description payload, not nil shim')
         assert(type(d.lines[2].leftText) == 'string' and #d.lines[2].leftText > 0)
         assert(type(d.lines[#d.lines].leftText) == 'string' and #d.lines[#d.lines].leftText > 0)
     "#,
-        )
-        .unwrap();
+    )
+    .unwrap();
 }
 
 #[test]
