@@ -881,3 +881,7 @@ lookup, and `currentChoiceIndex` is not assumed to select the first match.
 
 Sources: [character-creation spec](../../specs/character-creation-submit.md#r79br79c-host-finalizer-305-314-319),
 `src/c_api/c_character_creation_customizations.rs`, `tests/character_creation_publisher.rs`.
+
+INFERRED source identities (R79b #305; documentary-only plan approved #319):
+category keys originate from `OrderIndex`, option keys from `SecondaryOrderIndex`.
+These names do not define an implemented DB2 adapter or a verified source claim.

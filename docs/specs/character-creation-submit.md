@@ -208,3 +208,11 @@ reject unsorted/no-op output and raw index passthrough. They cover per-category
 numbering, stable small ties (1, 2, 31, 32), and 33-record distinct-key sorting.
 These are host-seam/API tests, not a claim that the real Create-button path is
 unblocked; that remains behind its exact known optional-tests RED.
+
+### INFERRED source-key identities (R79b #305, approved #319)
+
+The category stored key is inferred to originate from `OrderIndex`; the option
+stored key is inferred to originate from `SecondaryOrderIndex`, not the option's
+`OrderIndex`. These names are documentary only. No DB2 adapter or key-source test
+is added, and dropping this paragraph does not change the verified neutral-key
+finalizer or its tests. The collector remains unmodeled.
