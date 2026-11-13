@@ -351,6 +351,11 @@ pub(crate) fn set_font(state: &mut LuaState) -> LuaResult<u32> {
         state.push(Val::Bool(false));
         return Ok(1);
     }
+    if let Some(path) = font.as_deref()
+        && crate::render::font::addon_font_file_missing(path)
+    {
+        return Err(missing_font_asset_error(state, id, path));
+    }
     let size = match stack_val(state, 3) {
         Val::Num(n) => Some(n as f32),
         _ => None,
@@ -368,6 +373,25 @@ pub(crate) fn set_font(state: &mut LuaState) -> LuaResult<u32> {
     drop(sim);
     state.push(Val::Bool(true));
     Ok(1)
+}
+
+/// The client's error for a font file it cannot find, e.g.
+/// `FontString:SetFont(): Invalid font asset (Interface\\AddOns\\X\\x.ttf): file not found`.
+fn missing_font_asset_error(state: &mut LuaState, id: u64, path: &str) -> rilua::LuaError {
+    let object_type = borrow_state(state)
+        .ok()
+        .and_then(|sim| {
+            sim.widgets.get(id).map(|frame| {
+                frame
+                    .object_type_name
+                    .clone()
+                    .unwrap_or_else(|| frame.widget_type.as_str().to_string())
+            })
+        })
+        .unwrap_or_else(|| "FontString".to_string());
+    runtime_error(format!(
+        "{object_type}:SetFont(): Invalid font asset ({path}): file not found"
+    ))
 }
 
 /// Generation acceptance is separate; this path validates only known arguments.

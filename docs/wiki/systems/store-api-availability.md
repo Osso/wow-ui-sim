@@ -6,11 +6,11 @@ The covered PTR/Retail store APIs read separate hidden server-mirrored values. T
 
 `CVarStorage` keeps server mirrors in a separate per-environment map. Ordinary CVar value/default/key enumeration does not read this map. Retail and PTR start with `bpayStoreEnable=0` and `shop2Enabled=1`, from R38. The host setter changes either value without saving it to the user's CVar file.
 
-`src/c_api/store_public_eligibility.rs` registers `C_StorePublic.IsEnabled()` for Retail/PTR. `src/c_api/c_catalog_shop.rs` registers `C_CatalogShop.IsShop2Enabled()` for the same profiles. Each query reads only its own value. The Shop 2 workaround preserves the registered Rust method; profiles outside R38 retain the pre-existing temporary compatibility default, without a native-parity claim.
+`src/c_api/store_public_eligibility.rs` registers `C_StorePublic.IsEnabled()` for Retail/PTR/Forever. R87 verifies Forever’s `bpayStoreEnable=0` default and registration in both Game and Glue; it does not establish Forever Shop 2 or event semantics. `src/c_api/c_catalog_shop.rs` registers `C_CatalogShop.IsShop2Enabled()` for the same profiles. Each query reads only its own value. The Shop 2 workaround preserves the registered Rust method; profiles outside R38 retain the pre-existing temporary compatibility default, without a native-parity claim.
 
 ## Update events
 
-`WowLuaEnv::set_server_mirrored_cvar` fires `STORE_STATUS_CHANGED` with no arguments only when `bpayStoreEnable` changes. It does not fire `CVAR_UPDATE`. Changes to `shop2Enabled` fire no event on the initialized path. First-use behavior remains UNKNOWN and has no assertion.
+On Retail/PTR, `WowLuaEnv::set_server_mirrored_cvar` fires `STORE_STATUS_CHANGED` with no arguments only when `bpayStoreEnable` changes. It does not fire `CVAR_UPDATE`. Changes to `shop2Enabled` fire no event on the initialized path. First-use behavior remains UNKNOWN and has no assertion.
 
 On PTR, `C_GameRules.IsRewardsShopEnabled()` also reads the hidden `bpayStoreEnable` input. Its other gates remain separate.
 

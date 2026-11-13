@@ -4,20 +4,21 @@ mod tooltip_full_env_helpers;
 
 tooltip_selection_getters_fixture! {
     #[test]
-    fn tooltip_hyperlink_r82_raw_and_coloured_currency_preserve_quantity() {
+    fn tooltip_hyperlink_r82_raw_and_coloured_currency_omit_top_level_quantity() {
         let env = tooltip_full_env_helpers::load_full_env_without_post_load();
         env.exec(r#"
             -- R82 Q1 marker search; Q2 currency quantity defaults to zero, no /100.
             for _, link in ipairs({'currency:1792:1234', '|cff00ff00|Hcurrency:1792:1234|h[Points]|h|r', 'prefix currency:1792:1234'}) do
                 local data = C_TooltipInfo.GetHyperlink(link)
-                assert(data and data.id == 1792 and data.quantity == 1234, 'currency request lost')
+                assert(data and data.id == 1792 and data.quantity == nil and data.dataInstanceID ~= nil, 'currency payload identity')
+                assert(data.lines[1] and data.lines[1].type == 0, 'currency title line type')
                 GameTooltip:SetOwner(UIParent, 'ANCHOR_NONE')
                 GameTooltip:SetHyperlink(link)
                 local shown = GameTooltip:GetPrimaryTooltipData()
-                assert(shown and shown.id == 1792 and shown.quantity == 1234, 'accessor request lost')
+                assert(shown and shown.id == 1792 and shown.quantity == nil, 'accessor currency payload must omit quantity')
             end
-            assert(C_TooltipInfo.GetHyperlink('currency:1792').quantity == 0)
-            assert(C_TooltipInfo.GetHyperlink('currency:0x700:0x4D2').quantity == 1234)
+            assert(C_TooltipInfo.GetHyperlink('currency:1792').quantity == nil)
+            assert(C_TooltipInfo.GetHyperlink('currency:0x700:0x4D2').quantity == nil)
         "#).unwrap();
     }
 

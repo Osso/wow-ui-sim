@@ -322,6 +322,10 @@ impl Default for CVarStorage {
 }
 
 fn server_mirrored_store_defaults() -> HashMap<String, String> {
+    // R87 verifies only this store mirror/default on Forever.
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
+        return HashMap::from([("bpaystoreenable".to_owned(), "0".to_owned())]);
+    }
     if !matches!(
         crate::client_profile::ACTIVE,
         crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
@@ -844,12 +848,23 @@ mod tests {
     fn store_mirror_cvars_have_the_pinned_client_defaults() {
         use crate::client_profile::{ACTIVE, ClientProfile};
 
-        if !matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr) {
+        if !matches!(
+            ACTIVE,
+            ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
+        ) {
             return;
         }
 
         let directory = tempfile::tempdir().unwrap();
         let storage = CVarStorage::with_path(directory.path().join("cvars.json"));
+        // R87 verifies only bpayStoreEnable's default on Forever.
+        assert_eq!(
+            storage.get_server_mirrored_bool("bpayStoreEnable"),
+            Some(false)
+        );
+        if ACTIVE == ClientProfile::WowForever {
+            return;
+        }
         for name in ["bpayStoreEnable", "shop2Enabled"] {
             assert!(storage.get(name).is_none());
             assert!(storage.get_default(name).is_none());

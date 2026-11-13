@@ -9,6 +9,9 @@ pub(crate) struct RegisteredLoadWith {
 
 pub struct SimState {
     pub hyperlink_tooltip: crate::c_api::c_tooltip_info_hyperlink::inputs::HyperlinkTooltipInputs,
+    /// INFERRED host input for the opaque crafting-UI helper; not player state.
+    pub trade_skill_crafting_ui_inputs:
+        crate::c_api::c_trade_skill_crafting_ui::TradeSkillCraftingUiInputs,
     /// Selected loot specialization; zero follows the active specialization.
     pub loot_specialization: u32,
     pub(crate) loot_spec_window: Option<(std::time::Instant, u8)>,
@@ -799,6 +802,9 @@ pub struct SimState {
     pub quest_choice_response_id: Option<u32>,
     pub quest_poi_map_id: Option<i32>,
     pub selected_quest_log_id: Option<u32>,
+    /// Host-supplied `(questID, canonical type, zero-based source index) -> (currencyID, raw quantity)` results.
+    /// The source lists are not inferred from unrelated quest reward state.
+    pub quest_currency_tooltip_results: HashMap<(i32, String, usize), (i32, i32)>,
     /// Ready server-supplied quest reward spell candidates, in source order.
     pub quest_reward_spell_cache: std::collections::HashMap<u32, Vec<u32>>,
     /// Current detail quest and its three supplied spell slots.
@@ -865,6 +871,9 @@ pub struct SimState {
     pub pet_actions: Vec<PetActionSlot>,
     pub glyph: GlyphState,
     pub currency_info: HashMap<i32, CurrencyInfo>,
+    /// Explicit `CurrencyTypes` flags and local-record presence for Retail tooltips.
+    pub currency_tooltip_inputs:
+        HashMap<i32, crate::c_api::c_tooltip_info_currency::CurrencyTooltipInputs>,
     /// Explicit Wrath-only legacy categories; modern currency queries do not read this.
     pub wrath_currency: super::super::globals::real::wrath_currency::CurrencyListState,
     #[cfg(feature = "client-retail")]
