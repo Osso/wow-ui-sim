@@ -639,9 +639,6 @@ fn patch_runtime_journal_addon_surfaces(env: &crate::lua_api::LoaderEnv<'_>, add
         patch_toggle_collections_journal_for_runtime_addon_load(env);
         temporary::collections_journal_namespace::patch(env);
     }
-    if addon_name == "Blizzard_EncounterJournal" {
-        patch_toggle_encounter_journal_for_runtime_addon_load(env);
-    }
     if addon_name == "Blizzard_AdventureMap" {
         ensure_adventure_map_frame_surface_for_runtime_addon_load(env);
     }
