@@ -40,6 +40,9 @@ pub struct LoginState {
     /// Host dispatch queue, not a native cadence/debounce contract (R74).
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     world_entry_requests: std::collections::VecDeque<character_roster::CharacterRecord>,
+    /// Latest accepted R76 order, separate from the live roster.
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub(crate) saved_character_order: Vec<i32>,
     /// Explicit host DB2 projections; empty until a data provider supplies rows.
     pub backgrounds: backgrounds::BackgroundRows,
     /// Host saved candidate input, zero-based. Native initial value/storage UNKNOWN.
@@ -67,6 +70,8 @@ impl Default for LoginState {
             characters: Vec::new(),
             #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
             world_entry_requests: Default::default(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            saved_character_order: Vec::new(),
             backgrounds: Default::default(),
             saved_character_index: None,
             resolved_saved_character_index: None,

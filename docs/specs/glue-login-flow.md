@@ -685,3 +685,19 @@ published pre-implementation Retail RED first failed on the real
 `SaveCharacterOrder` call (0 passed, 1 failed); the reconstructed Forever target
 compiled without warnings, but no Forever runtime result is claimed. New host
 implementation validation is not a full consumer GREEN or all-profile gate.
+
+### SaveCharacterOrder (R76 / R76b)
+
+Retail and Forever's original CharacterSelectListUtil.lua:190–191 forwards
+its display translation to the Glue global. The provider reads the numeric
+table range, skips zero placeholders without collapsing their display slots,
+and saves the accepted order as host state without changing the roster.
+A matching selected roster index writes the zero-based raw slot to
+`lastCharacterIndex` (read by Retail CharacterSelect.lua:771 and Forever
+CharacterSelect.lua:786). For example, character 1 selected in `{0,2,1}`
+writes 2. A negative or past-roster entry aborts without storing an order.
+
+Evidence: lt-81c7 ANSWERs #243, #253, #254 and #742. No packet, event,
+persistence, or idempotence policy is modeled. Forever string coercion and
+the CVar outcome of a selection before an aborting entry remain unknown.
+The zero-return policy is inferred and is not asserted.
