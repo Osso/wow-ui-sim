@@ -82,6 +82,44 @@ fn secure_delegate_rejects_nil_target() {
     .unwrap();
 }
 
+// INFERRED: S4s7b's emulation accepted numeric targets; invocation remains unknown.
+#[test]
+fn secure_delegate_constructs_for_numeric_target_inferred() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local count = select('#', CreateSecureDelegate(42))
+        local delegate = CreateSecureDelegate(42)
+        assert(count == 1 and type(delegate) == 'function')
+        "#,
+    )
+    .unwrap();
+}
+
+// INFERRED: S4s7b emulation let a tainted target supply the captured source.
+#[test]
+fn secure_delegate_captures_tainted_target_source_inferred() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local observed = {}
+        local function target(value)
+            observed.value = value
+            observed.source = debug.getstacktaint()
+        end
+        debug.setobjecttaint(target, 'TargetSource')
+        local delegate = CreateSecureDelegate(target)
+        local function addon() delegate(42) end
+        debug.setobjecttaint(addon, 'CallerSource')
+        addon()
+        local secure, source = issecurevariable(observed, 'value')
+        assert(observed.value == 42 and observed.source == 'TargetSource')
+        assert(not secure and source == 'TargetSource')
+        "#,
+    )
+    .unwrap();
+}
+
 #[cfg(feature = "retail-12-1-0")]
 #[test]
 fn secure_delegate_rejects_inaccessible_secret_target() {
