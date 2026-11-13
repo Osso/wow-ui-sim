@@ -1,3 +1,17 @@
+## [2026-11-13] system | PTR character-creation camera evidence
+
+[Lua API](systems/lua-api.md#ptr-character-creation-evidence-boundary) separates
+verified R78/R83 argument/state behavior from droppable inferred catalog and
+return bridges. The unseeded collector and end-to-end submit remain distinct.
+
+## [2026-11-12] investigation | Retail EllesmereUI v9.8 load boundary
+
+[Full third-party startup](investigations/full-addon-startup-2026-10-10.md#retail-ellesmereui-v98-load-reproduction-2026-11-12) records the initial 3/20 enablement mistake and issue #22 limits. **VERIFIED:** Retail G1/G1c behavior and a 20/20 post-fix load with three unique Lua errors (72 occurrences). **INFERRED:** the CVar overlap window and loader-populated addon-file catalog. **UNKNOWN:** native addon-file table membership and exact backing table identities.
+
+## [2026-11-12] system | Secure delegate global
+
+[Lua API](systems/lua-api.md#secure-delegate-global) links the [secure-helper contract](../specs/secure-helpers.md). **VERIFIED from S4s7b emulation:** source rejection, shallow provenance assignment and function-argument wrapping are bounded; target security, reporter effects and full result publication remain UNKNOWN. **VERIFIED locally:** exact tests pass across six applicable profiles. The optional Retail duration-object case remains a separate failure because it does not call `CreateSecureDelegate`.
+
 ## [2026-11-12] implementation | Retail currency tooltips
 
 [Tooltip data](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) links the [R84/R84b contract](../specs/tooltip-currency.md). VERIFIED: the four original Retail consumers share the currency producer and publish the verified rows; explicit host inputs leave resolver misses, the error-row predicate, balance formula and runtime number mode UNKNOWN. The shared color remapper can turn a verified type-0 row into 41 when placeholder colors collide; the producer restores type 0. Retail passes 2264 library tests and 17 exact integration tests. PTR and Forever pass zero-warning compile builds and eight exact integration tests each.
@@ -4343,6 +4357,7 @@ The sixteen retail 12.0.0 `Enum.EditModeDamageMeterSetting.*` and `Enum.EditMode
 | [[editbox-render-text-cache]] | SimCommands search text can disappear from stale `text_stripped` cache or because opaque EditBox child regions render above the internal text/caret emitter |
 | [[explicit-xml-parent-anchors]] | Nested XML frames with `parent="..."` must use that explicit parent for implicit anchors; fixed PaperDoll sidebar tabs anchoring to `PaperDollFrame` instead of `CharacterFrameInsetRight` |
 | [[fontstring-default-anchors]] | Unanchored XML `FontString` layer children and `ButtonText` pick their implicit anchor from `justifyH`; explicit anchors suppress the default, while EditBox backing FontStrings stay unanchored |
+| [[fontstring-anchor-sizing]] | VERIFIED: native rect span precedes stored width; INFERRED: public GetWidth span and single-anchor fallback; UNKNOWN: wrap metric and text-cache invalidation |
 | [[frame-surrogate-identity-slot]] | Frame method dispatch now seeds `frame[0]` with a backed identity token so Restricted Environment-style surrogates resolve through `[0]`; `[1]`-only surrogates no longer dispatch |
 | [[generated-stubs-audit]] | 5 unresolved priority findings in generated-stub surfaces; retail/PTR C_LootHistory empty state is resolved |
 | [[chatframe-scrollbar-anchor-reapply]] | Inherited child anchor reapply used the child name for `$parent...` substitution, pushing `ChatFrame1` scrollbar descendants off-screen |
@@ -4779,3 +4794,9 @@ is reused; original-consumer runtime RED/GREEN remains unexecuted.
 
 ## [2026-11-13] correction | Forever store availability
 [Store API availability](systems/store-api-availability.md) records R87: Forever shares the server-mirrored `bpayStoreEnable` query and false default in Game/Glue. Shop 2 and update-event parity remain outside the evidence.
+
+### Character-customization host finalizer (R79b/R79c)
+
+[[lua-api]] records Retail/Forever neutral stored-key sorting, independent 1-based
+category/option numbering, small-list stable ties, and unchanged unknown collector
+and choice-order boundaries. See the [spec](../specs/character-creation-submit.md#r79br79c-host-finalizer-305-314-319).

@@ -97,7 +97,7 @@ Clean-room reports: `H/native-evidence-70688/secrets/` (S0–S11, S15, S18, and 
 | S3 | AuraData types | VERIFIED (types), INFERRED (fields) | Four AuraData types, four accessors, a swappable provider; field-level marking is WM61 S3 |
 | S4 | helper surface | VERIFIED (surface) | The restricted helper set is closed; behaviour reads blocked |
 | S4s7a | `securecopy` | EMULATED | One result on success; secret scalars stay secret; tainted arguments rejected |
-| S4s7b | `CreateSecureDelegate` | INFERRED + EMULATED | One C closure with three upvalues; invocation captures argument provenance |
+| S4s7b | `CreateSecureDelegate` | VERIFIED (bounded helper regions) + EMULATED | Construction gate, source selection, shallow argument provenance and callback wrapping; complete return and target behavior remain unknown |
 | S5 | operations on secrets | VERIFIED (conditional mode calculation), UNKNOWN (boundary selection) | With additional state present, mode 0 rejects regardless of source, mode 1 rejects only with source, and other modes permit; absent state permits |
 | S6 | sinks and aspects | VERIFIED (strings only) | Three argument diagnostics; the text aspect is 8 (WM61 S6) |
 | S7, S7a | wrap/unwrap | EMULATED | Both are variadic transforms, one result per argument |
@@ -228,8 +228,8 @@ This table records established contradictions in the audited S2–S9 helper, aur
 | Aspect queries | Only recorded sets determine intersection/nonempty (`secrets/S6-aspects-wm61.md`, Native mechanism) | `src/lua_api/frame/methods/misc/secret.rs:175–184` derives ObjectSecurity from prevention, forbidden or protected state | Fix the Retail/PTR calculation; do not assert second-set propagation or complete native publication. |
 | Anchoring query | Separate anchoring flag, not prevention (`secrets/S6-aspects-wm61.md`, Native mechanism) | `src/lua_api/frame/methods/misc/secret.rs:101–105,187–191` aliases prevention | Supply a separate host input; leave native writers UNKNOWN. |
 | Explicit aspect addition | Helper refuses prevention before adding requested bits (`secrets/S6-aspects-wm61.md`, Native mechanism) | `src/lua_api/frame/methods/misc/secret.rs:51–62` unconditionally ORs bits | Remaining slice; script-handler policy and final native diagnostic publication remain UNKNOWN. |
-| Secure delegate entry | Nonempty execution source rejects before dispatch (`secrets/S4s7b-createsecuredelegate-emulated.md`, §3) | `src/lua_api/globals/real/secure_helpers.rs:193–211` constructs without source rejection | Deferred separate slice; reporting-helper effect is UNKNOWN. |
-| Secure delegate provenance | Captured source selected during construction, used at invocation (`secrets/S4s7b-createsecuredelegate-emulated.md`, §§1–2) | `src/lua_api/globals/real/secure_helpers.rs:213–254` captures invocation source and always selects a clean target source | Deferred separate slice; retain inhibit-flag and complete-target limits. |
+| Secure delegate entry | Nonempty execution source rejects before dispatch (`secrets/S4s7b-createsecuredelegate-emulated.md`, §3) | At e297, construction had no source gate; this lane adds the zero-result gate when the reporting helper returns | Reporter effects remain UNKNOWN; no target or error behavior is asserted. |
+| Secure delegate provenance | Constructor captures source and the helper selects it at invocation (`secrets/S4s7b-createsecuredelegate-emulated.md`, §§1–2) | At e297, source was captured at invocation and the target call always selected nil; this lane stores construction source and selects it for the inner call | Target security, inhibit flag and complete return publication remain UNKNOWN. |
 
 **VERIFIED source, not a contradiction:** `issecretvalue` uses the existing VM registration (`src/lua_api/globals/security/mod.rs:66`, `value_access.rs:15–20`); its conditional fallback calls a shallow secret predicate (`value_access.rs:136–140`), not constant false. `canaccessvalue()` uses missing-input nil and returns true (`value_access.rs:145–158`), as S18 requires. Named taint already exists in slot and closure metadata (`value_access.rs:47–70`, `secret_values.rs:207–214`); S9 does not establish an event-source rule to replace current dispatch.
 
@@ -294,7 +294,7 @@ Source: `native-evidence-70688/S13-restriction-surface-summary.md` (behavioural 
 - [ ] Native S1 §7 describes a generic indexed state-byte predicate path comparing the byte to 2. The mapping of restriction indices and any pairing of a particular predicate with a getter remain unverified; existing `GetSpellCastSecrecy` and `ShouldUnitSpellCastBeSecret` are computed independently.
 
 - [ ] Complete accessor-to-AuraData publication and the remaining secret-operation behavior are UNKNOWN; see the WM61 boundaries below.
-- [ ] Restricted-helper refusal guard (`CreateSecureDelegate`, `secretunwrap`, `settablesecurity` return `nil` while a native singleton is set): not modelled; the singleton is UNKNOWN.
+- [ ] Restricted-helper refusal guard (the separate singleton-based `CreateSecureDelegate`, `secretunwrap` and `settablesecurity` path returns `nil`): not modelled; the singleton is UNKNOWN. See [secure helpers](secure-helpers.md) for the tainted-construction gate.
 - [ ] Production restriction inputs and transitions (WM61 S1).
 - [ ] Complete AuraData publication beyond the implemented WM61 S3 field marking; populated points and complete accessor linkage remain UNKNOWN.
 - [ ] General operation rules for secrets in tainted code (after S4).

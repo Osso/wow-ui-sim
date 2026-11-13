@@ -23,6 +23,8 @@ pub struct Icon {
 }
 #[derive(Clone, Debug, Default)]
 pub struct Category {
+    /// Host-supplied stored finalizer key, not the published sequential position.
+    pub stored_order_key: i64,
     pub fields: Vec<(String, PublishedValue)>,
     pub icon: Icon,
     pub selected_icon: Icon,
@@ -32,6 +34,8 @@ pub struct Category {
 }
 #[derive(Clone, Debug, Default)]
 pub struct OptionRecord {
+    /// Host-supplied stored finalizer key, not the published sequential position.
+    pub stored_order_key: i64,
     pub fields: Vec<(String, PublishedValue)>,
     pub choices: Vec<Choice>,
 }
@@ -99,13 +103,41 @@ const CHOICE_FIELDS: &[&str] = &[
 
 fn publish(state: &mut LuaState) -> LuaResult<u32> {
     let records = borrow_state(state)?.character_customizations.clone();
-    if let Some(records) = records {
+    if let Some(mut records) = records {
+        finalize(&mut records);
         push_sequence(state, &records, push_category);
     } else {
         // None means no collector decision: preserve the captured temporary provider.
         state.push(Val::Nil);
     }
     Ok(1)
+}
+
+// VERIFIED R79b/R79c (#305/#314/#319): sort stored keys, then assign 1-based
+// positions independently per list. Choice order and collector rules are unknown.
+fn finalize(records: &mut [Category]) {
+    sort_stored_keys(records, |record| record.stored_order_key);
+    for (index, category) in records.iter_mut().enumerate() {
+        set_position(&mut category.fields, index + 1);
+        sort_stored_keys(&mut category.options, |record| record.stored_order_key);
+        for (index, option) in category.options.iter_mut().enumerate() {
+            set_position(&mut option.fields, index + 1);
+        }
+    }
+}
+
+fn sort_stored_keys<T>(records: &mut [T], key: impl Fn(&T) -> i64) {
+    if records.len() <= 32 {
+        records.sort_by_key(key);
+    } else {
+        // No secondary key or native tie-order/depth-limit algorithm claim.
+        records.sort_unstable_by_key(key);
+    }
+}
+
+fn set_position(fields: &mut Vec<(String, PublishedValue)>, position: usize) {
+    fields.retain(|(key, _)| key != "orderIndex");
+    fields.push(("orderIndex".into(), PublishedValue::Number(position as f64)));
 }
 
 // All builders leave exactly one rooted value on the stack. Parents stay rooted

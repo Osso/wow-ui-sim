@@ -582,12 +582,76 @@ fn casting_blacksmithing_opens_professions_frame() {
     );
 }
 
-// PTR 70493 ProfessionsBook.lua:344 requires CanTradeSkillShowCraftingUI.
-// Main-approved deferral: retain the RED original consumer until native R85 evidence.
-#[cfg(any(not(feature = "client-ptr"), feature = "optional-tests"))]
+#[cfg(feature = "client-ptr")]
+#[test]
+fn ptr_crafting_ui_requires_a_known_spell_with_effect_47() {
+    let env = WowLuaEnv::new().expect("environment");
+    env.state()
+        .borrow_mut()
+        .trade_skill_crafting_ui_inputs
+        .opaque_helper_non_null = true;
+
+    // VERIFIED (PTR 12.1.7.70668): the predicate requires a non-null helper result,
+    // a spell record, and Effect[0].Effect == 47.
+    // INFERRED (Retail 12.1.5.70391 source): 2018 has effect 47, 2657 has 24,
+    // and 27973 has no first-effect row; PTR data-row parity is UNKNOWN.
+    env.exec(
+        r#"
+        local api = C_TradeSkillUI.CanTradeSkillShowCraftingUI
+        assert(select('#', api(2018)) == 1)
+        assert(api(2018) == true)
+        assert(api(2657) == false)
+        assert(api(27973) == false)
+        assert(api(2147483647) == false)
+        "#,
+    )
+    .unwrap();
+}
+
+#[cfg(feature = "client-ptr")]
+#[test]
+fn ptr_crafting_ui_helper_defaults_to_false_without_host_input() {
+    let env = WowLuaEnv::new().expect("environment");
+    let result: bool = env
+        .eval("return C_TradeSkillUI.CanTradeSkillShowCraftingUI(2018)")
+        .unwrap();
+    assert!(
+        !result,
+        "the unsupplied opaque-helper input defaults to false"
+    );
+}
+
+// VERIFIED (PTR 12.1.7.70668): known-row query returns one Boolean, unknown query zero values, and setter zero values.
+#[cfg(feature = "client-ptr")]
+#[test]
+fn ptr_recipe_favorite_return_shapes_match_r85() {
+    let env = WowLuaEnv::new().expect("environment");
+    let observed: (i32, bool, i32, i32) = env
+        .eval(
+            r#"
+            local api = C_TradeSkillUI
+            local knownCount = select('#', api.IsRecipeFavorite(2662))
+            local knownValueIsBoolean = type(api.IsRecipeFavorite(2662)) == 'boolean'
+            local unknownCount = select('#', api.IsRecipeFavorite(99999999))
+            local setterCount = select('#', api.SetRecipeFavorite(2662, true))
+            return knownCount, knownValueIsBoolean, unknownCount, setterCount
+            "#,
+        )
+        .unwrap();
+    assert_eq!(observed, (1, true, 0, 0));
+}
+
+// PTR R85: keep the original ProfessionsBook click consumer in the necessary test set.
 #[test]
 fn clicking_blacksmithing_button_in_professions_book_opens_panel() {
     let env = full_game_env();
+    #[cfg(feature = "client-ptr")]
+    {
+        env.state()
+            .borrow_mut()
+            .trade_skill_crafting_ui_inputs
+            .opaque_helper_non_null = true;
+    }
     env.state().borrow_mut().lua_errors.clear();
 
     let shown: bool = env

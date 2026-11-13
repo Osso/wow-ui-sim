@@ -195,7 +195,11 @@ fn register_frame_context_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
     super::inventory_slot::register_all(lua)?;
     super::zone_text::register_all(lua)?;
     super::real::modifier_keys::register_all(lua)?;
-    #[cfg(feature = "client-wowforever")]
+    #[cfg(any(
+        feature = "client-retail",
+        feature = "client-ptr",
+        feature = "client-wowforever"
+    ))]
     super::real::input_interface::register_all(lua)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     super::real::player_facing::register_all(lua)?;

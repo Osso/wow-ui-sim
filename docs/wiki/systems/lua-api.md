@@ -108,6 +108,12 @@ RED/GREEN, checks and exact stock-preservation receipts.
 
 The [secret-aura contract](../../specs/secret-auras.md#verified-contradiction-audit-at-e29763f8e) owns native evidence labels and remaining gaps. VERIFIED locally for Retail WM61 S6: recorded aspect queries, prevention and anchoring use distinct state. Retail/PTR `Frame.explicit_secret_aspects` feeds aspect queries without deriving bits from prevention, protected or forbidden flags. `Frame.is_anchoring_secret` is a separate host input; no native writer or second-set propagation is invented. Forever retains its separate compatibility behavior. API-level tests check independent state; original `CompactUnitFrame_UpdateName` supplies the positive Text-aspect consumer. Complete native Lua publication, clearing and event taint remain UNKNOWN.
 
+## Secure delegate global
+
+`CreateSecureDelegate` is published on all profiles except Wrath, while `securecopy` is limited to Retail, PTR and WoWForever, matching the pinned API declarations. **VERIFIED from S4s7b emulation:** construction rejects a nonempty execution source before dispatch and returns zero values if the reporting helper returns; the first argument is required and accessible. Invocation applies the captured source shallowly to arguments and the inner call, wraps every function-valued argument when wrapping is enabled, and restores the saved source after a normal return. Reporter effects, target security and complete result publication remain UNKNOWN. **VERIFIED locally:** exact construction, publication and passthrough tests pass on all six applicable profiles; the original Mixin consumer and securecopy tests pass on Retail, PTR and WoWForever. **INFERRED simulator choices:** numeric targets are accepted, and the simulator adds no second report. The focused Mixin test loads the original file directly; it does not establish a startup-selected consumer. The optional Retail `patch_12_0_1_tainted_secret_duration_object` case still fails at `Cooldown:SetCooldownFromDurationObject` with `secret-origin widget readout requires an untainted caller`; that test does not invoke `CreateSecureDelegate`.
+
+The [secure-helper contract](../../specs/secure-helpers.md) owns the evidence boundary and remaining gaps.
+
 ## C API numeric-secret selector boundaries
 
 Classification endpoints in `src/c_api/c_spell_classification.rs` inspect authentic numeric-secret selectors only inside their modeled host lookup. The shared public spell reader and VM unwrap permissions remain unchanged; ExternalDefensive keeps VM authentication. [Classification contract](../../specs/secret-selector-classification.md) owns endpoint scope, inferred output policy and revision-scoped proof. Original-consumer wrapper injection is not evidence of natural secret-ID production at startup.
@@ -860,3 +866,40 @@ CVars or alternate producers exist; ordinary chat channel membership stays separ
 The [TTS contract](../../specs/c-factory-cf2-tts.md#staged-producer-contract-and-evidence-limits)
 owns default evidence, supported pairs, selection, UNKNOWN mappings and the approved
 non-native fresh=false/Mark=true persistent marker model. The [bounded integration proof](../investigations/cf2-tts-integration.md#bounded-verification) records exact original-consumer GREEN on six registered profiles, the corrected legacy oracle on all seven, stock-map deltas and warning gates. Native parity and full-suite acceptance remain unverified.
+
+## Host-seeded character-customization finalization (R79b/R79c)
+
+Retail and Forever's host-seeded `C_CharacterCreation.GetAvailableCustomizations`
+path sorts categories and each category's options by neutral `stored_order_key`
+inputs, then publishes 1-based `orderIndex` values per list. R79b/R79c answers on
+lt-a912 (#305/#314/#319) verify sorting, numbering and input-order ties for at most
+32 records. Larger lists use no extra tie-breaker; their exact tie order and the
+native depth-limit fallback are not modeled. Choice ordering and the collector
+remain unknown. Unseeded calls still use the unchanged temporary provider, so
+this does not unblock the real Create-button test. Icons enter after the gated
+lookup, and `currentChoiceIndex` is not assumed to select the first match.
+
+Sources: [character-creation spec](../../specs/character-creation-submit.md#r79br79c-host-finalizer-305-314-319),
+`src/c_api/c_character_creation_customizations.rs`, `tests/character_creation_publisher.rs`.
+
+INFERRED source identities (R79b #305; documentary-only plan approved #319):
+category keys originate from `OrderIndex`, option keys from `SecondaryOrderIndex`.
+These names do not define an implemented DB2 adapter or a verified source claim.
+
+
+## PTR character-creation evidence boundary
+
+The [character-creation contract](../../specs/character-creation-submit.md)
+separates verified PTR Glue CreateCharacter/StopAll registrations from inferred
+OnPlayerInteraction/SetPlayerModelHiddenState existence (R78c). No result/list
+payload or timing is invented, and host-only call observations do not rename a
+player or create a roster entry.
+
+R83 verifies the stored camera-zoom reader's Glue route; its single numeric
+return/default policy remains a separate inference. R83b/R83c verify the shared
+signed32 setter, 0..100 clamp, and changed-only custom-marker clearing. PTR
+setter installation and ordinary zero returns/non-boolean optional truthiness
+remain in a separate droppable inferred registration, replacing only its old
+zoom no-op. Camera profile/model rendering effects remain unmodeled. The
+unseeded customization collector is unchanged pending native evidence, so
+camera API progress is not a claim of end-to-end character creation success.

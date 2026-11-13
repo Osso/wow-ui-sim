@@ -1,6 +1,6 @@
 # Character creation submission
 
-Scope: Retail and WoW Forever. Evidence is coordinator `agent-server-wow-ui-sim`
+Initial slice: Retail and WoW Forever; the PTR addendum is below. Evidence is coordinator `agent-server-wow-ui-sim`
 on tracker task `lt-a912`, especially R78 answers #205, #208, and #210 (Retail 12.1.5.70688 and
 Forever 1.60.1.70707). VERIFIED contracts are distinguished from simulator host
 inputs and UNKNOWN behavior below.
@@ -69,7 +69,7 @@ not direct mixin invocation or a replacement submit implementation.
 
 ## Preservation and merge gate
 
-Coordinator #194 requires all non-Retail/non-Forever profiles to keep the old
+For the first PR (#56), coordinator #194 required all non-Retail/non-Forever profiles to keep the old
 guess and old test bodies unchanged behind explicit profile cfgs, labelled
 `guessed; native evidence pending (R78 PTR part)`. PTR evidence is pending.
 The old guessed-rename tests are `character_create_action_updates_player_name_without_lua_errors`
@@ -126,11 +126,102 @@ registration remains UNKNOWN and is not added.
 #222 also offers an optional INFERRED name-validation bridge. This slice chooses
 to leave IsCharacterNameValid unchanged, avoiding unrelated inferred behavior.
 
+## PTR addendum (R78 PTR, #256/#261/#265/#268)
+
+Native evidence targets PTR 12.1.7.70668; tests use the owner-hosted pinned
+PTR 12.1.7.70493 UI. Its TOC selects Mainline through `[Family]` excluding Camelot.
+The real consumer at `Mainline/Blizzard_CharacterCreate.lua:748` supplies four
+arguments, including `GetSelectedSurname()`; the runtime traceback independently
+confirms this selection.
+
+VERIFIED required-input behavior (#265): name, surname and useNPE must each be
+present and non-nil. Missing/nil raises the Usage substring
+`Usage: C_CharacterCreation.CreateCharacter(name, surname, useNPE [, raceFaction])`.
+The surrounding error wording is UNKNOWN and is not asserted. Missing/nil
+raceFaction advances without error.
+
+PTR uses its own neutral host-only call record, not the RF validated-reader
+output. Name, surname and useNPE are owned observations of the supplied inputs;
+no native numeric-to-text conversion or truthiness normalization is inferred.
+These reader conversions are INFERRED and are not implemented or asserted here.
+String/number faction values are preserved. Other non-nil faction types are
+**UNKNOWN** and accepted without interpretation as an opaque marker, as explicitly
+authorized by #268; there is no type-contract test. Opaque markers retain no VM
+references. The record is not a native request, serialized packet, or result.
+
+CreateCharacter retains the existing PTR simulator's no-return convention.
+An ordinary native zero-result call is only **INFERRED** (#265 corrects #256);
+only a zero-result tail is VERIFIED. No test asserts the public return count.
+Neither result nor roster events, roster changes, or player renames are emitted.
+The PTR result payload, timing and ordering are UNKNOWN, so the RF host result
+adapter is not enabled on PTR.
+
+At the pre-R78c stage, PTR CreateCharacter bootstrap availability was preserved, not taken
+as native catalog evidence. OnPlayerInteraction, StopAllSpellVisualKitsOnCharacter
+and SetPlayerModelHiddenState were unregistered pending R78c. That historical real-control
+RED asserted the exact Mainline line 287 OnPlayerInteraction nil-call and still
+fails. No internal interaction byte, visual flags, hidden flag or pending-error
+input is invented for PTR. IsCharacterNameValid remains unchanged per #265.
+
+The PTR producer replacement and removal of its guessed namespace/mixin paths
+are atomic with gating the two old guessed-rename tests out of PTR. Their bodies
+and the guessed Lua chunks remain unchanged for the remaining legacy profiles;
+initial-frame seeding remains unchanged everywhere.
+
+### PTR R78c verified registrations (#282)
+
+CreateCharacter and StopAllSpellVisualKitsOnCharacter are VERIFIED members of the
+PTR Glue registrar. The Game aggregate does not invoke that registrar; both are
+removed on the Game route and restored on Glue routes. StopAll accepts no
+arguments and has no Lua-visible effect in the simulator's no-model/no-pending-error
+case (#261). No pending-error input, visual flag, or model is invented. Ordinary
+return count remains INFERRED and is not asserted. OnPlayerInteraction and
+SetPlayerModelHiddenState remain absent at this verified-only stage; the exact
+OnPlayerInteraction real-control RED is retained before the separate droppable
+inferred-existence change.
+
+### PTR R78c droppable inferred existence (#282)
+
+OnPlayerInteraction and SetPlayerModelHiddenState exist by **INFERRED** unguarded
+consumer calls; the native PTR catalog is **UNKNOWN**. Their registration is a
+separate droppable commit, not a verified catalog claim. OnPlayerInteraction
+VERIFIED writes one to an internal byte; the model exposes that write only as a
+neutral host seam. No Lua reader or indirect gameplay effect is invented.
+SetPlayerModelHiddenState VERIFIED requires a non-nil first argument, uses Lua
+truthiness, and emits no event. With no owner/model it writes nothing. The
+simulator has no character-create model, so it stores no hidden flag or alpha.
+Its return count is UNKNOWN and is not asserted. Interaction's ordinary zero
+return count remains INFERRED and is also not asserted. IsCharacterNameValid
+remains unchanged.
+
+The verified-only stage retained the exact OnPlayerInteraction RED (0 passed,
+1 failed, 5.44s). After the inferred entries are applied, that boundary is passed;
+the next exact first error is Mainline/Blizzard_CharacterCreate.lua:812 attempting
+to call nil GetCurrentCameraZoom. No PTR camera behavior is inferred from Retail.
+At that stage the real-control test was explicitly RED with that exact-first-error
+assertion, gated under optional-tests as directed in #289. The R83 sections below
+supersede the camera prerequisite status.
+
+Coordinator #292 confirms retaining the exact PTR `GetCurrentCameraZoom`
+line 812 RED behind `optional-tests` for this PR. The native camera question
+is filed as R83; no camera API or default is guessed in this addendum.
+
+### PTR R83 verified zoom reader (#298)
+
+GetCurrentCameraZoom is VERIFIED registered through Glue only. It reads no
+arguments, has no Usage text, and reads stored zoom state rather than model
+distance. The verified-only commit registers that route and reads the existing
+shared character_create_camera_zoom storage, while deferring the Lua return
+bridge to a separate INFERRED commit. This scaffold is not a claim of zero native
+return values. Tests cover only Glue/Game routing and unused arguments at this
+stage. SetCameraZoomLevel remains unchanged pending its argument-reader evidence.
+
 ## R79 host-seeded customization publisher (#275, #281)
 
 This separate slice implements only publication for Retail and Forever. The
 collector, selection, DB2 joins, requirement filters, eligibility/lock rules and
-native source ordering remain **UNKNOWN**. No DB2 collector or sorting is added.
+native source ordering remain **UNKNOWN**. No DB2 collector is added. The
+verified R79b/R79c finalizer below supersedes the original no-sort boundary.
 
 `SimState.character_customizations` is an optional host-owned input. `None`
 leaves the existing temporary provider entirely unchanged; `Some(records)` uses
@@ -150,7 +241,8 @@ VERIFIED publication contract (#275):
   `swatchColor2`, `soundKit`, `isLocked`, `lockedText`.
 - Fields are published in these sequences. The publisher's literal field lists
   and loops are the insertion-order proof; tests do not assert Lua hash iteration
-  order. Nested prepared lists are traversed without sorting by `orderIndex`.
+  order. The publisher traverses the finalized category/option vectors; choice
+  vectors remain host-supplied.
 - Icon ID zero publishes nil; a nonzero unresolved ID publishes an empty string.
   Resolved bytes come from the host, not an invented asset resolver.
 - `cameraZoomLevel` publishes an integer host input; `cameraDistanceOffset`
@@ -169,7 +261,7 @@ set. Host values retain no VM references, and every table is rooted while nested
 values allocate.
 
 Tests: `tests/character_creation_publisher.rs` covers field sets, host-value
-passthrough, reversed orderIndex list preservation, icon cases, zoom/distance,
+passthrough, finalized order and positions, icon cases, zoom/distance,
 seeded-empty versus unseeded behavior, and existing SaveSeenChoices semantics.
 Arbitrary host-value shapes in tests are seam fixtures, not native type claims.
 
@@ -178,4 +270,104 @@ finished options/choices tables, never to selection or filtering. Disabled
 policy returns one result; nil/userdata and tables at policy value 1 are never
 marked. Other marking depends on unmodeled frame-policy checks. Per #285 this
 slice continues returning one plain table and adds no secret/marking behavior;
-field order and unsorted record traversal are unchanged.
+field order is unchanged; category/option ordering is corrected below.
+
+
+## R79b/R79c host finalizer (#305, #314, #319)
+
+VERIFIED on Retail and Forever: categories and each category's options are
+sorted by their stored order keys. Their published `orderIndex` is then rewritten
+to 1..n independently for each list, not copied from raw source data. Equal keys
+retain input order for lists of at most 32 records. For 33 or more records native
+ordering is unstable: the simulator uses an unstable key sort without an ID or
+input-order tie-breaker, and tests make no equal-key order claim. The native
+depth-limit fallback algorithm remains UNKNOWN; the Rust sort is not a claim
+about that algorithm. Choice ordering remains UNKNOWN and is left host-supplied.
+
+`stored_order_key` is a neutral host input on `Category` and `OptionRecord`. The
+finalizer works on the publisher's owned snapshot, replaces any host `orderIndex`,
+and does not mutate the original host records. Unseeded temporary behavior is
+unchanged. No collector, DB2 adapter, filtering, or eligibility logic is added.
+
+Icon IDs are host inputs taken after the gated lookup; failed gates/lookups
+provide zero. `currentChoiceIndex` remains an already-published host input; native
+matching choices may overwrite it, and this is not a first-match contract.
+
+The three `host_customization_finalizer_*` tests use neutral stored keys to
+reject unsorted/no-op output and raw index passthrough. They cover per-category
+numbering, stable small ties (1, 2, 31, 32), and 33-record distinct-key sorting.
+These are host-seam/API tests, not a claim that the real Create-button path is
+unblocked; that remains behind its exact known optional-tests RED.
+
+### INFERRED source-key identities (R79b #305, approved #319)
+
+The category stored key is inferred to originate from `OrderIndex`; the option
+stored key is inferred to originate from `SecondaryOrderIndex`, not the option's
+`OrderIndex`. These names are documentary only. No DB2 adapter or key-source test
+is added, and dropping this paragraph does not change the verified neutral-key
+finalizer or its tests. The collector remains unmodeled.
+
+
+### PTR R83 droppable getter return bridge
+
+A separate **INFERRED (R83)** commit enables the single-number Lua return and
+labels the existing shared zero initialization as INFERRED for PTR. No test
+asserts the initial value or return count. Tests seed nonzero host zoom values
+and check only the VERIFIED stored-value identity. Existing RF initialization
+and all setter behavior were unchanged in that commit; the later R83b/R83c
+sections below supply the setter evidence. This commit alone is not a modeled
+setter claim.
+
+
+### PTR R83b/R83c shared setter core (#305, #318, #320)
+
+The verified setter body is shared with Retail and Forever. Argument 1 is
+required/non-nil signed int32, fractions truncate toward zero, and the stored
+zoom clamps to 0..100. Its missing-input Usage and int32 range message are those
+in #305. No camera-profile/model-distance effects are modeled.
+
+R83c supersedes the interim #318 marker uncertainty: a changed zoom clears the
+custom marker; an unchanged clamped zoom leaves it untouched. Explicit true for
+keepCustomZoom skips the update while the marker is set. Tests cover all three
+cases and the verified reader/clamp, not registration or return counts.
+
+The existing shared body needs no semantic change. Its visibility is widened
+only for the separately droppable PTR Lua registration. PTR installation is
+UNKNOWN; ordinary zero returns and non-boolean second-argument truthiness are
+INFERRED, not verified by these tests.
+
+
+### PTR R83b droppable setter registration
+
+The separately droppable **INFERRED** commit installs SetCameraZoomLevel only
+in Glue, replacing its temporary no-op atomically. The pinned PTR Mainline
+Blizzard_CharacterCreate.lua:548 calls the wrapper at :791 with zoom 0;
+Blizzard_CustomizationUI.lua:664 calls it with category.cameraZoomLevel.
+The native Glue catalog is UNKNOWN (#305/#320), not asserted by tests.
+
+This bridge reuses the existing RF body: ordinary zero returns and truthiness
+for non-boolean non-nil keepCustomZoom are INFERRED on PTR. Tests assert neither.
+The R83b reader and R83c changed-only marker clearing remain VERIFIED. Wider
+camera-profile effects are unmodeled. Getter initial zero and single numeric
+return remain the earlier separate R83 inferred policy, never count/default
+assertions. Unseeded category data remains unchanged pending the collector.
+
+
+### Current PTR real-control boundary after R83b/R83c
+
+The optional real-button test now passes the missing getter/interaction/visibility
+calls and stops at exactly:
+`bad argument #1 to 'SetCameraZoomLevel' (Usage: C_CharacterCreation.SetCameraZoomLevel(zoomLevel [, keepCustomZoom]))`.
+The unchanged guessed category provider supplies no cameraZoomLevel to the real
+PTR Blizzard_CustomizationUI.lua:664 consumer, just as in the RF R79 boundary.
+The test asserts this complete first line and then deliberately fails; it does
+not suppress the error or claim full submit GREEN. It remains optional until a
+native-evidenced collector supplies the categories. The setter is not weakened,
+and no camera value is added to invented categories. Four focused PTR camera
+selectors pass with the separate inferred bridge applied.
+
+Coordinator #438 confirms this PTR category boundary belongs to a later native-
+evidence slice: preserve the guessed provider and exact optional RED. At
+32f3146fa the optional PTR character-creation selectors report seven passes and
+one deliberate RED; its exact first-line assertion succeeds before the explicit
+panic. This is bounded API/preservation proof, not submit success.
