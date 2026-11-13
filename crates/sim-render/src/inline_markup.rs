@@ -413,17 +413,37 @@ mod tests {
     }
 
     #[test]
-    fn atlas_without_width_is_a_line_high_square() {
+    fn nonpositive_width_uses_caller_metric_without_changing_height() {
+        let texture = |height, width| InlineIcon {
+            height,
+            width,
+            ..icon(InlineIconSource::File("x".into()))
+        };
         let atlas = |height, width| InlineIcon {
             height,
             width,
             ..icon(InlineIconSource::Atlas("x".into()))
         };
-        assert_eq!(atlas(Some(24.0), Some(0.0)).size(15.0), (15.0, 15.0));
-        assert_eq!(atlas(Some(24.0), None).size(15.0), (15.0, 15.0));
+        assert_eq!(texture(Some(24.0), Some(0.0)).size(15.0), (15.0, 24.0));
+        assert_eq!(atlas(Some(24.0), Some(0.0)).size(15.0), (15.0, 24.0));
+        assert_eq!(texture(Some(0.0), Some(0.0)).size(15.0), (15.0, 15.0));
         assert_eq!(atlas(Some(0.0), Some(0.0)).size(15.0), (15.0, 15.0));
-        assert_eq!(atlas(Some(12.0), Some(20.0)).size(15.0), (20.0, 12.0));
-        assert_eq!(atlas(Some(0.0), Some(20.0)).size(15.0), (20.0, 15.0));
+    }
+
+    #[test]
+    fn positive_width_uses_resolved_height_when_height_uses_metric() {
+        let texture = InlineIcon {
+            height: Some(0.0),
+            width: Some(2.0),
+            ..icon(InlineIconSource::File("x".into()))
+        };
+        let atlas = InlineIcon {
+            height: Some(0.0),
+            width: Some(2.0),
+            ..icon(InlineIconSource::Atlas("x".into()))
+        };
+        assert_eq!(texture.size(15.0), (30.0, 15.0));
+        assert_eq!(atlas.size(15.0), (30.0, 15.0));
     }
 
     #[test]
