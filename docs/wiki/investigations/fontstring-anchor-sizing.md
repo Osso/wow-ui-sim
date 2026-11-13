@@ -1,27 +1,53 @@
 # FontString Anchor-Derived Width
 
-The simulator now uses the resolved horizontal span for a FontString whose left and right edges anchor to the same target. **INFERRED:** this matches native two-edge sizing; the available native evidence does not verify that rule. Issue #22’s full EllesmereUI layout remains unreproduced.
+**VERIFIED (simulator code):** the simulator implements two-edge FontString sizing from resolved geometry. **INFERRED (Retail 12.1.5.70688):** native two-edge sizing is consistent with that model, but the public `GetWidth()` return path is not fully proved. **VERIFIED (reproduction record):** the six-symptom EllesmereUI reproduction remains incomplete.
 
-## Findings
+## Native evidence: Retail 12.1.5.70688
 
-- **VERIFIED (simulator):** the focused tests cover text set before anchors, left/right offsets, a zero-stored-width target with resolved geometry, parent resize, and the unchanged single-anchor auto-width case.
-- **VERIFIED (simulator):** setting FontString anchors refreshes text measurements. With two opposite horizontal edges on one target, width comes from the resolved FontString rectangle and is no longer marked text-auto; the resolved rectangle also lets width follow parent resizing.
-- **VERIFIED (code inspection):** `frame_size` returns the resolved FontString width but preserves its stored height when the stored width is positive. The new focused tests do not establish a separate native height contract.
-- **INFERRED (native behavior):** two-edge anchors determine FontString width. L1 evidence for `GetStringWidth` cache behavior does not establish two-edge sizing or its invalidation rules.
-- **VERIFIED (runtime probe):** the simulator probe at default and 3840×2160 sizes measured stale FontString widths after anchor or parent-size changes, and an action-button HotKey width that did not follow its measured anchor span.
-- **VERIFIED (reproduction limit):** the addon-level run loaded 3 of 20 installed addons and EllesmereUI core reported a nil-call error. It does not establish all six issue symptoms or their causes. **UNVERIFIED:** the issue screenshots’ exact addon package, SavedVariables, and UI scale.
+### VERIFIED
 
-## Change and coverage
+- The rectangle calculator reads both resolved horizontal positions. The ordinary width-measurement path uses the valid rectangle span after scale conversion, before it considers stored width.
+- A changed stored-size setter invalidates failed geometry state, invalidates the region and its dependents when needed, and queues layout work. The ordinary width-measurement path attempts to resolve dirty geometry before it reads a valid rectangle.
+- The lower-level `SetPoint()` mutation path invalidates and queues layout when its change flag is set, unless the region is already dirty and queued. The full public `SetPoint()` path is not proved.
+- `ClearAllPoints()` clears eligible anchor records, marks the rectangle dirty, and invalidates dependents when the rectangle needs a new calculation.
+- The internal text-storage path clears the FontString text-width cache when stored text changes. The public `SetText()` connection to that path is inferred.
+- When an edge is missing, stored width supplies the fallback edge. A nonzero stored width can also be returned when the FontString rectangle is not valid.
 
-The width behavior is isolated in commits `eea53dc30` and `b96986e58`, both labeled `INFERRED`; `4f89b465e` preserves stored FontString height reads. The simulator change is in `src/lua_api/frame/methods/text_attribute_event/text.rs`, with the `SetPoint` refresh in `src/lua_api/frame/methods/button_anchor_hierarchy/anchors.rs`. Regression cases are in `tests/fontstring_anchor_pinned_width.rs`.
+### INFERRED
 
-The tests prove the simulator’s stated behavior. They do not prove native WoW parity, the cause of the other EllesmereUI symptoms, or that the issue’s screenshots used the locally installed v9.8 package.
+- An ordinary completed `GetWidth()` call reports the resolved two-edge span.
+- Two horizontal anchors can resolve against the same target and determine the width; the admitted evidence does not prove every point pairing.
+- When the rectangle is valid, an explicit `SetWidth()` value does not replace the two resolved edges in the ordinary width-measurement result.
+- With one horizontal anchor and zero stored width, the FontString width path uses its string-width measurement fallback.
+- A public `SetText()` call that changes text reaches the internal text-storage path.
+
+### UNKNOWN
+
+- The renderer's cache-miss metric: full source-text width, wrapped visible width, or another metric.
+- Whether the renderer uses the anchor span as its wrap width.
+- Whether `SetPoint()`, `ClearAllPoints()`, or a parent resize clears the text-width cache. Geometry invalidation and text-width cache invalidation are separate operations.
+- Whether every public `SetPoint()` call takes the lower-level change path described above.
+- Native parity for Forever 1.60.1.70707 and other client builds; this evidence covers Retail 12.1.5.70688 only.
+
+**VERIFIED (evidence provenance):** the source-backed labels above come from `~/.local/state/wow-ui-sim/handoff/pr46-49-decomp-answers.md`, sections L1, L1b, and L1c. This is static client-image analysis, not a live-client test.
+
+## Simulator implementation and tests
+
+- **VERIFIED (code history):** commits `eea53dc30` (`INFERRED: resolve FontString widths from anchors`) and `b96986e58` (`INFERRED: derive pinned width from FontString rect`) contain the inferred two-edge width model. Commit `4f89b465e` (`INFERRED: preserve FontString height reads`) separately preserves stored FontString height reads. These commits remain individually droppable; their subjects identify the native-evidence status.
+- **VERIFIED (simulator tests):** default tests observe the resolved rectangle through `GetLeft()` and `GetRight()` when stored width conflicts with the anchor span, and after a parent size change. They do not assert the inferred public `GetWidth()` result or inspect internal width flags.
+- **INFERRED (simulator tests):** tests behind `optional-tests` cover `GetWidth()` reporting the span and the single-anchor text-width fallback. Each test cites L1c.
+- **UNKNOWN:** these simulator tests do not establish native renderer wrapping width, native text-cache invalidation, or native behavior outside Retail 12.1.5.70688.
+
+**VERIFIED (simulator probe):** prior read-only runs measured stale FontString widths after anchor or parent-size changes and an action-button HotKey width that did not follow its measured anchor span. The addon-level run loaded 3 of 20 installed addons and EllesmereUI core reported a nil-call error. It did not reproduce all six symptoms or establish their causes. **UNVERIFIED:** the issue screenshots' exact addon package, SavedVariables, and UI scale.
 
 ## Sources
 
-- [text.rs](../../../src/lua_api/frame/methods/text_attribute_event/text.rs) — FontString width and height measurement refresh
-- [anchors.rs](../../../src/lua_api/frame/methods/button_anchor_hierarchy/anchors.rs) — `SetPoint` refresh for FontStrings
-- [fontstring_anchor_pinned_width.rs](../../../tests/fontstring_anchor_pinned_width.rs) — focused regression cases
+- `~/.local/state/wow-ui-sim/handoff/pr46-49-decomp-answers.md` — native L1/L1b/L1c evidence for Retail 12.1.5.70688
+- [text.rs](../../../src/lua_api/frame/methods/text_attribute_event/text.rs) — simulator FontString width and height measurement
+- [anchors.rs](../../../src/lua_api/frame/methods/button_anchor_hierarchy/anchors.rs) — simulator `SetPoint()` handling
+- [helpers.rs](../../../src/lua_api/frame/methods/core_state/helpers.rs) — simulator `GetWidth()`/`GetHeight()` geometry reads
+- [fontstring_anchor_pinned_width.rs](../../../tests/fontstring_anchor_pinned_width.rs) — verified rectangle tests and optional inferred `GetWidth()` tests
+- [fontstring_smooth_scaling.rs](../../../tests/fontstring_smooth_scaling.rs) — separate wrapped line-count regression
 - [anchor-resolution.md](../../anchor-resolution.md) — simulator anchor resolution
 - [FontString Default Anchors](fontstring-default-anchors.md) — separate XML implicit-anchor behavior
 - `/home/osso/.local/state/wow-ui-sim/handoff/issue22-layout/runtime-probe.lua` — read-only issue probe

@@ -1,3 +1,7 @@
+## [2026-11-13] correction | FontString anchor-width evidence
+
+Updated [FontString anchor sizing](investigations/fontstring-anchor-sizing.md) with L1c labels. **VERIFIED (test code):** default tests are written to observe rectangle edges and SetWidth priority; **INFERRED (test code):** GetWidth and single-anchor assertions are optional; **UNKNOWN:** renderer wrapping width and text-cache invalidation remain unmodeled.
+
 ## [2026-11-12] implementation | Retail currency tooltips
 
 Updated [Tooltip data](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) and the [R84/R84b contract](../specs/tooltip-currency.md). VERIFIED: Retail by-ID, quest, loot and currency-link consumers share the populated producer; source results and display values are explicit inputs. The verified type-0 rows are restored after the shared color remapper misclassifies them against placeholder colors. Retail passes 2264 library tests and 17 exact integrations; PTR and Forever pass zero-warning compile builds and eight exact integrations each. UNKNOWN resolver misses, conditional error row, balance formula and runtime number mode remain unmodeled.
