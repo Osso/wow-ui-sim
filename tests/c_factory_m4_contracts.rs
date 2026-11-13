@@ -225,6 +225,10 @@ mod forever {
         "assert(type(C_Secrets.ShouldUnitIdentityBeSecret) == 'function'); C_Secrets.ShouldUnitIdentityBeSecret('party1')"
     );
     contract!(
+        can_trade_skill_show_crafting_ui_is_registered,
+        "assert(type(C_TradeSkillUI.CanTradeSkillShowCraftingUI) == 'function')"
+    );
+    contract!(
         experience_preset_is_not_guessed,
         "assert(C_GameRules.GetForeverExperiencePreset() == nil)"
     );
