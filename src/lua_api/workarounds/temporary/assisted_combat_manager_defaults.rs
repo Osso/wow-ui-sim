@@ -36,14 +36,29 @@ if rawget(AssistedCombatManager, "ShouldHighlightSpellbookSpell") == nil then
   end
 end
 
+"#;
+
+const ASSISTED_COMBAT_MANAGER_TOOLTIP_FALLBACK_LUA: &str = r#"
 if rawget(AssistedCombatManager, "AddSpellTooltipLine") == nil then
   function AssistedCombatManager:AddSpellTooltipLine(_tooltip, _spellID, _overriddenSpellID)
   end
 end
 "#;
 
+fn profile_has_original_assisted_combat_owner() -> bool {
+    matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::Ptr
+            | crate::client_profile::ClientProfile::WowForever
+    )
+}
+
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(ASSISTED_COMBAT_MANAGER_DEFAULTS_LUA)?;
+    if !profile_has_original_assisted_combat_owner() {
+        lua.exec(ASSISTED_COMBAT_MANAGER_TOOLTIP_FALLBACK_LUA)?;
+    }
     Ok(())
 }
 
@@ -59,6 +74,12 @@ mod tests {
             super::apply_bootstrap(&mut lua).expect("assisted combat defaults should apply");
         }
 
+        let expected_tooltip_fallback = !super::profile_has_original_assisted_combat_owner();
+        let has_tooltip_fallback: bool = env
+            .eval("return type(AssistedCombatManager.AddSpellTooltipLine) == 'function'")
+            .expect("tooltip fallback availability probe should run");
+        assert_eq!(has_tooltip_fallback, expected_tooltip_fallback);
+
         let result: String = env
             .eval(
                 r#"
@@ -68,7 +89,9 @@ mod tests {
                 if AssistedCombatManager:GetActionSpellDescription() ~= "" then return "description" end
                 if AssistedCombatManager:ShouldHighlightSpellbookSpell(116) ~= false then return "highlight" end
                 AssistedCombatManager:SetCanHighlightSpellbookSpells(true)
-                AssistedCombatManager:AddSpellTooltipLine({}, 116, nil)
+                if type(AssistedCombatManager.AddSpellTooltipLine) == "function" then
+                    AssistedCombatManager:AddSpellTooltipLine({}, 116, nil)
+                end
                 return "ok"
                 "#,
             )
