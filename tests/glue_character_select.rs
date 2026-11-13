@@ -1896,3 +1896,52 @@ fn ptr_trial_boost_zero_fallback_is_unchanged() {
     assert_eq!(game_level, 0);
     assert_eq!(glue_level, 0);
 }
+#[test]
+#[cfg(feature = "client-ptr")]
+fn ptr_character_creation_camera_zoom_setter_verified_inputs_and_clamp() {
+    let env = WowLuaEnv::new().unwrap();
+    env.set_screen_mode(ScreenKind::CharacterCreate);
+    for arguments in ["", "nil"] {
+        let error = env
+            .exec(&format!(
+                "C_CharacterCreation.SetCameraZoomLevel({arguments})"
+            ))
+            .expect_err("zoomLevel is required");
+        assert!(
+            error.to_string().contains(
+                "Usage: C_CharacterCreation.SetCameraZoomLevel(zoomLevel [, keepCustomZoom])"
+            ),
+            "{error}"
+        );
+    }
+    for zoom in ["2147483648", "-2147483649"] {
+        let error = env
+            .exec(&format!("C_CharacterCreation.SetCameraZoomLevel({zoom})"))
+            .expect_err("zoomLevel must fit signed int32");
+        assert!(
+            error
+                .to_string()
+                .contains("outside of expected range -2147483648 to 2147483647"),
+            "{error}"
+        );
+    }
+    for (input, expected) in [(17.9, 17), (-17.9, 0), (150.0, 100), (51.7, 51)] {
+        env.exec(&format!("C_CharacterCreation.SetCameraZoomLevel({input})"))
+            .unwrap();
+        assert_eq!(env.state().borrow().character_create_camera_zoom, expected);
+    }
+    for keep in ["", ", nil", ", false", ", true"] {
+        {
+            let mut sim = env.state().borrow_mut();
+            sim.character_create_camera_zoom = 63;
+            sim.character_create_camera_zoom_is_custom = true;
+        }
+        env.exec(&format!("C_CharacterCreation.SetCameraZoomLevel(24{keep})"))
+            .unwrap();
+        assert_eq!(
+            env.state().borrow().character_create_camera_zoom,
+            if keep == ", true" { 63 } else { 24 }
+        );
+    }
+    // No catalog, numeric-string/secret, truthy non-boolean, or return-count claim.
+}
