@@ -285,8 +285,7 @@ fn deprecated_spell_book_globals_follow_the_original_cvar_gate() {
     env.exec("SetCVar('loadDeprecationFallbacks', '0')")
         .expect("fixture should disable Blizzard's deprecated spell wrappers");
 
-    let toc = find_toc_file(&ui.join("Blizzard_DeprecatedSpellBook"))
-        .expect("Retail game screen should select Blizzard_DeprecatedSpellBook");
+    let toc = deprecated_spell_book_toc();
     load_addon(&env.loader_env(), &toc)
         .expect("selected Blizzard deprecated spellbook addon should load");
 
