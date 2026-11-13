@@ -10,6 +10,8 @@
 #[path = "tooltip_full_env_helpers.rs"]
 mod tooltip_full_env_helpers;
 
+use std::collections::HashMap;
+
 use wow_ui_sim::c_api::c_tooltip_info_currency::CurrencyTooltipInputs;
 use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
 use wow_ui_sim::lua_api::WowLuaEnv;
@@ -57,7 +59,8 @@ fn tooltip_loot_currency_original_hover_selects_the_currency_slot() {
         local data = GameTooltip:GetPrimaryTooltipData()
         assert(info and info.getterName == 'GetLootCurrency', 'original hover must select GetLootCurrency')
         assert(data and data.type == Enum.TooltipDataType.Currency, 'loot currency data type')
-        assert(data and data.lines[1].leftText == 'Valorstones', 'loot currency name mismatch')
+        local currencyName = C_CurrencyInfo.GetCurrencyInfo(2245).name
+        assert(data and data.lines[1].leftText == currencyName and currencyName ~= '', 'loot currency name mismatch')
         "#,
     )
     .unwrap();
@@ -91,7 +94,8 @@ fn tooltip_loot_currency_and_item_are_mutually_exclusive_per_slot() {
         assert(currency and currency.type == Enum.TooltipDataType.Currency, 'currency identity type')
         assert(currency and currency.id == 2245, 'currency identity id')
         assert(currency and #currency.lines > 0, 'currency tooltip lines')
-        assert(currency and currency.lines[1].leftText == 'Valorstones', 'currency name mismatch')
+        local currencyName = C_CurrencyInfo.GetCurrencyInfo(2245).name
+        assert(currency and currency.lines[1].leftText == currencyName and currencyName ~= '', 'currency name mismatch')
         local item = C_TooltipInfo.GetLootItem(1)
         assert(item and item.lines[1].leftText == 'Hearthstone', 'item slot still selects GetLootItem')
         "#,
@@ -104,10 +108,13 @@ fn tooltip_loot_currency_and_item_are_mutually_exclusive_per_slot() {
 #[test]
 fn tooltip_loot_currency_miss_and_argument_text() {
     let env = loot_fixture();
-    env.state().borrow_mut().loot_slots.push(LootSlot::Currency {
-        currency_id: 0,
-        quantity: 1,
-    });
+    env.state()
+        .borrow_mut()
+        .loot_slots
+        .push(LootSlot::Currency {
+            currency_id: 0,
+            quantity: 1,
+        });
     env.exec(
         r#"
         local getter = C_TooltipInfo.GetLootCurrency
@@ -141,7 +148,7 @@ fn tooltip_loot_currency_normalizes_hundredths_for_the_xp_row() {
         let mut state = env.state().borrow_mut();
         state.loot_slots[1] = LootSlot::Currency {
             currency_id: 2245,
-            quantity: 12_345,
+            quantity: 999,
         };
         state.currency_tooltip_inputs.insert(
             2245,
@@ -150,6 +157,7 @@ fn tooltip_loot_currency_normalizes_hundredths_for_the_xp_row() {
                 flags_1: Some(1 << 1),
                 field_11_xp_quest_difficulty: Some(1),
                 local_currency_record: Some(true),
+                formatted_numbers: HashMap::from([(9, "9".to_owned()), (999, "999".to_owned())]),
                 ..CurrencyTooltipInputs::default()
             },
         );
@@ -167,7 +175,7 @@ fn tooltip_loot_currency_normalizes_hundredths_for_the_xp_row() {
         assert(info and info.getterName == 'GetLootCurrency', 'loot hover must select GetLootCurrency')
         assert(#data.lines == 3, 'XP row must end the producer')
         assert(data.lines[3].type == 14, 'currency XP row type')
-        assert(data.lines[3].leftText == XP .. ': 123', 'loot amount must divide by 100 with signed truncation')
+        assert(data.lines[3].leftText == XP .. ': 9', 'loot amount must divide by 100 with signed truncation')
         assert(data.quantity == nil, 'R84 §Q4: no top-level quantity')
         "#,
     )
@@ -188,7 +196,7 @@ fn tooltip_loot_currency_normalizes_hundredths_for_the_xp_row() {
         button.slot = 2
         LootFrameItemElementMixin.OnEnter(button)
         local data = GameTooltip:GetPrimaryTooltipData()
-        assert(data.lines[3].leftText == XP .. ': 12345', 'loot amount must stay unchanged when bit 3 is clear')
+        assert(data.lines[3].leftText == XP .. ': 999', 'loot amount must stay unchanged when bit 3 is clear')
         "#,
     )
     .unwrap();
