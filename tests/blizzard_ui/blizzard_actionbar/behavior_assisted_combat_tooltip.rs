@@ -46,6 +46,7 @@ fn class_talent_tooltip_uses_original_assisted_combat_manager() {
                     CanRefundRank = function() return false end,
                     CanCascadeRepurchaseRanks = function() return false end,
                     IsGhosted = function() return false end,
+                    HasMassPurchase = function() return false end,
                 }
                 ClassTalentButtonSpendMixin.AddTooltipInstructions(button, GameTooltip)
 
