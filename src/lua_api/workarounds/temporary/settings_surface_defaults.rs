@@ -169,7 +169,9 @@ do
             end
             rawset(header, "Title", title)
         end
-        ensure_settings_preview(settingsPanel, "AccessibilityFontPreview")
+        if not retail then
+            ensure_settings_preview(settingsPanel, "AccessibilityFontPreview")
+        end
         ensure_settings_preview(settingsPanel, "QuestTextPreview")
     end
 

@@ -1082,3 +1082,21 @@ fn retail_settings_original_groups_register_in_game_and_glue() {
         }
     }
 }
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn retail_settings_original_font_preview_has_live_accessor() {
+    test_timeout! {
+        let env = load_full_game_ui();
+        env.exec(r#"
+            assert(C_AddOns.IsAddOnLoaded("Blizzard_SettingsDefinitions_Shared"))
+            local preview = SettingsPanel.AccessibilityFontPreview
+            assert(preview.RegisterWithSettingInitializer ==
+                   AccessibilitySettingsPreviewMixin.RegisterWithSettingInitializer)
+            assert(preview.SetValueAccessor == AccessibilitySettingsPreviewMixin.SetValueAccessor)
+            assert(preview.UpdatePreview == AccessibilityFontPreviewMixin.UpdatePreview)
+            assert(type(preview.accessor) == "function")
+            assert(preview:GetValue() == TextSizeManager:GetSettingValue())
+        "#).expect("original Text.lua must register the font preview accessor");
+    }
+}
