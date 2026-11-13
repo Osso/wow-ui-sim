@@ -15,7 +15,9 @@ use super::font::{WowFontSystem, line_height_for_font_size, spaced_text_height};
 use super::shader::{BlendMode, QuadBatch};
 use crate::widget::TextJustify;
 
+mod inline_emit;
 mod text_emit;
+pub use inline_emit::{InlineTextRequest, InlineTextRun, emit_inline_markup_quads};
 pub use text_emit::emit_text_quads;
 pub(crate) use text_emit::{PreparedBufferTextRequest, emit_prepared_buffer_text_quads};
 
