@@ -17,10 +17,10 @@ C_Minimap = C_Minimap or {}
 C_PvP = C_PvP or {}
 C_PlayerInfo = C_PlayerInfo or {}
 C_QuestLog = C_QuestLog or {}
--- Missing hybrid-minimap world presentation capability.
+-- INFERRED-UNKNOWN: this fallback is constant false; context does not select a verified result.
 install(C_Minimap, "ShouldUseHybridMinimap", function() return false end)
--- Missing covenant-calling membership metadata; ordinary quest/world-quest
--- membership is not evidence of calling membership.
+-- VERIFIED: absent from the incomplete recovered Retail C_QuestLog census; export status remains unknown.
+-- Ordinary quest/world-quest membership is not evidence of calling membership.
 install(C_QuestLog, "IsQuestCalling", function(questID) return false end)
 "#;
 
@@ -28,28 +28,31 @@ const CLASSIC: &str = r#"
 C_Map = C_Map or {}
 C_PvP = C_PvP or {}
 C_QuestInfoSystem = C_QuestInfoSystem or {}
--- Missing map-highlight polygons/textures. MayReturnNothing=true; no fake DTO.
+-- VERIFIED: the Retail C_Map member census lists this API; Mists behavior remains unknown.
+-- No map-highlight geometry is supplied, so the compatibility result has no fake DTO.
 if rawget(C_Map, "GetMapHighlightInfoAtPosition") == nil then
     function C_Map.GetMapHighlightInfoAtPosition(uiMapID, x, y) end
 end
--- Missing world-PvP queue wait estimates; no estimated wait in simulator state.
+-- VERIFIED: this exact name is absent from the incomplete Retail C_PvP census.
+-- Mists behavior is unknown; no estimated wait is supplied.
 if rawget(C_PvP, "GetWorldPvPWaitTime") == nil then
     function C_PvP.GetWorldPvPWaitTime(index) return 0 end
 end
--- Missing numeric quest reward-spell catalog/context. Existing legacy reward
--- presentation has name/texture but no spell ID; do not infer IDs from names.
+-- VERIFIED: the Retail C_QuestInfoSystem member census lists this API; Mists behavior is unknown.
+-- Existing legacy reward presentation has no spell ID, so do not infer IDs from names.
 if rawget(C_QuestInfoSystem, "GetQuestRewardSpells") == nil then
     function C_QuestInfoSystem.GetQuestRewardSpells(questID) return {} end
 end
 "#;
 
 const FOREVER: &str = r#"
--- Missing host-selected Forever experience preset. Optional result.
+-- VERIFIED: Forever registers this API; no exact entry appears in the recovered Retail C_GameRules census.
+-- Optional result remains the existing compatibility value.
 if rawget(C_GameRules, "GetForeverExperiencePreset") == nil then
     function C_GameRules.GetForeverExperiencePreset() return nil end
 end
--- Missing quest timer lifecycle/remaining-time model. Existing objective
--- progress is not a timer snapshot.
+-- VERIFIED: Forever registers this API; the incomplete Retail C_QuestLog census has no exact entry.
+-- UNKNOWN: the Retail census does not establish export status or timer behavior.
 if rawget(C_QuestLog, "GetQuestTimers") == nil then
     function C_QuestLog.GetQuestTimers() return {} end
 end
