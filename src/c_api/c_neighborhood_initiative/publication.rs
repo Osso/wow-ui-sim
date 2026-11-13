@@ -16,6 +16,14 @@ use rilua::{LuaResult, RustFn, Val};
 use serde::Serialize;
 
 pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        table_set_rust_fn_static(
+            state,
+            namespace,
+            "GetAvailableHouseXP",
+            get_available_house_xp,
+        )?;
+    }
     for (name, callback) in [
         ("GetActiveNeighborhood", get_active_neighborhood as RustFn),
         ("SetActiveNeighborhood", set_active_neighborhood),
@@ -40,6 +48,27 @@ pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResu
         table_set_rust_fn_static(state, namespace, name, callback)?;
     }
     Ok(())
+}
+
+/// VERIFIED local result: no active neighborhood gives zero; otherwise subtract used XP,
+/// floored at zero, using the supplied unsigned 32-bit values without an upper clamp. The one-number
+/// publication shape follows the local declaration. Missing host input is not native evidence.
+fn get_available_house_xp(state: &mut LuaState) -> LuaResult<u32> {
+    let available = {
+        let sim = borrow_state(state)?;
+        let initiative = &sim.housing.initiative;
+        if initiative.active_neighborhood.is_empty() {
+            0
+        } else {
+            // An absent simulator input is a host-data gap, not a native default claim.
+            initiative
+                .house_experience
+                .get(&initiative.active_neighborhood)
+                .map_or(0, |input| input.total_xp.saturating_sub(input.used_xp))
+        }
+    };
+    state.push(Val::Num(f64::from(available)));
+    Ok(1)
 }
 
 fn get_active_neighborhood(state: &mut LuaState) -> LuaResult<u32> {

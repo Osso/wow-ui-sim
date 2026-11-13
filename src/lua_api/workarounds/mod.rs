@@ -128,6 +128,8 @@ const POST_LOAD_WORKAROUNDS: &[WorkaroundStep] = &[
         label: "patch_game_time_defaults",
         apply: patch_game_time_defaults,
     },
+    // SharedTooltipArtTemplate owns both Retail tooltip children.
+    #[cfg(not(feature = "client-retail"))]
     WorkaroundStep {
         label: "patch_tooltip_nineslice_surface",
         apply: patch_tooltip_nineslice_surface,

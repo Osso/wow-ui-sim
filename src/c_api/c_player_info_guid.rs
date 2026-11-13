@@ -1,6 +1,6 @@
 //! Profile-specific `C_PlayerInfo.GUIDIsPlayer` behavior.
 
-use crate::c_api::helpers::ensure_namespace;
+use crate::c_api::helpers::{ensure_namespace, read_untainted_signed32_argument};
 use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::WowLuaEnv;
 use crate::lua_api::globals::unit_misc::{existing_guid_for_unit, party_guid_for_index};
@@ -24,7 +24,16 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     }
 
     let namespace = ensure_namespace(state, "C_PlayerInfo")?;
-    table_set_rust_fn_static(state, namespace, "GUIDIsPlayer", guid_is_player)
+    table_set_rust_fn_static(state, namespace, "GUIDIsPlayer", guid_is_player)?;
+    if ACTIVE == ClientProfile::Retail {
+        table_set_rust_fn_static(
+            state,
+            namespace,
+            "IsExpansionLandingPageUnlockedForPlayer",
+            is_expansion_landing_page_unlocked,
+        )?;
+    }
+    Ok(())
 }
 
 /// Apply Forever's Game API installer surface to the selected screen.
@@ -51,6 +60,25 @@ fn update_registration(state: &mut LuaState, should_register: bool) -> LuaResult
         table_set_static(state, Val::Table(namespace), "GUIDIsPlayer", Val::Nil);
         Ok(())
     }
+}
+
+/// VERIFIED local branch: only expansion 11 reads the helper result; other IDs are false.
+/// INFERRED: the host input represents that helper result and is false by default. The one-boolean
+/// publication shape follows the local Retail declaration; the complete return path is unknown.
+fn is_expansion_landing_page_unlocked(state: &mut LuaState) -> LuaResult<u32> {
+    let expansion_id = read_untainted_signed32_argument(
+        state,
+        1,
+        "IsExpansionLandingPageUnlockedForPlayer",
+        "Usage: local isUnlocked = C_PlayerInfo.IsExpansionLandingPageUnlockedForPlayer(expansionID)",
+    )?;
+    let is_unlocked = if expansion_id == 11 {
+        borrow_state(state)?.expansion_landing_page_unlocked
+    } else {
+        false
+    };
+    state.push(Val::Bool(is_unlocked));
+    Ok(1)
 }
 
 fn guid_is_player(state: &mut LuaState) -> LuaResult<u32> {

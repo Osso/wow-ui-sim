@@ -1,4 +1,6 @@
 //! Explicit PvP catalog/eligibility snapshots; queue requests use the existing queue.
+use std::collections::BTreeMap;
+
 use crate::lua_api::methods::{
     borrow_state, create_string, create_table, table_set, val_to_string,
 };
@@ -25,9 +27,19 @@ pub struct BattlegroundInfo {
     pub is_training_ground: bool,
 }
 
-/// INFERRED empty/disabled defaults. Acquisition, matchmaking and rewards are not fabricated.
+/// INFERRED mapping from a local UI declaration; native field mapping is unknown.
+#[derive(Debug, Clone, Default)]
+pub struct HonorRewardInfo {
+    pub honor_level_name: String,
+    pub badge_file_data_id: u32,
+    pub achievement_rewarded_id: u32,
+}
+
+/// INFERRED empty/disabled defaults; no reward records are fabricated.
 #[derive(Debug, Default)]
 pub struct PvpCatalog {
+    /// Host-supplied reward rows keyed by honor level; empty by default.
+    pub honor_rewards: BTreeMap<i32, HonorRewardInfo>,
     pub battlegrounds: Vec<BattlegroundInfo>,
     pub training_enabled: bool,
     pub training_eligible: bool,
@@ -39,6 +51,9 @@ pub struct PvpCatalog {
 }
 
 pub(super) fn register(state: &mut LuaState, ns: GcRef<Table>) -> LuaResult<()> {
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        table_set_rust_fn_static(state, ns, "GetHonorRewardInfo", get_honor_reward_info)?;
+    }
     if matches!(
         crate::client_profile::ACTIVE,
         crate::client_profile::ClientProfile::Retail
@@ -59,6 +74,46 @@ pub(super) fn register(state: &mut LuaState, ns: GcRef<Table>) -> LuaResult<()> 
         table_set_rust_fn_static(state, ns, name, function)?;
     }
     Ok(())
+}
+
+fn get_honor_reward_info(state: &mut LuaState) -> LuaResult<u32> {
+    let honor_level = crate::c_api::helpers::read_untainted_signed32_argument(
+        state,
+        1,
+        "GetHonorRewardInfo",
+        "Usage: local rewardInfo = C_PvP.GetHonorRewardInfo(honorLevel)",
+    )?;
+    let reward = borrow_state(state)?
+        .pvp_catalog
+        .honor_rewards
+        .range(..=honor_level)
+        .next_back()
+        .map(|(_, reward)| reward.clone());
+    let Some(reward) = reward else {
+        // UNKNOWN native empty-catalog return; preserve the existing one-nil simulator result.
+        state.push(Val::Nil);
+        return Ok(1);
+    };
+
+    // INFERRED one-record output fields follow the local Retail UI declaration; native mapping and
+    // return count remain unknown.
+    let result = create_table(state);
+    let name = create_string(state, &reward.honor_level_name);
+    table_set(state, result, "honorLevelName", name);
+    table_set(
+        state,
+        result,
+        "badgeFileDataID",
+        Val::Num(f64::from(reward.badge_file_data_id)),
+    );
+    table_set(
+        state,
+        result,
+        "achievementRewardedID",
+        Val::Num(f64::from(reward.achievement_rewarded_id)),
+    );
+    state.push(result);
+    Ok(1)
 }
 
 fn read_id(state: &LuaState) -> LuaResult<u32> {

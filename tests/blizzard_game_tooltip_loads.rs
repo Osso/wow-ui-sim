@@ -615,3 +615,39 @@ fn blizzard_game_tooltip_main_tooltip_uses_uiparent_with_tooltip_strata(env: &Wo
     );
 }
 }
+
+#[test]
+#[cfg(feature = "optional-tests")]
+fn retail_game_tooltip_preserves_shared_nineslice() {
+    let env = WowLuaEnv::new().expect("create normal Game startup environment");
+    let ui = blizzard_ui_dir();
+    env.state().borrow_mut().addon_base_paths = vec![ui.clone()];
+    wow_ui_sim::loader::register_load_with_addons(
+        &env.loader_env(),
+        &wow_ui_sim::loader::discover_all_blizzard_addons(&ui),
+    );
+    crate::common::load_game_startup_inventory(&env);
+    env.apply_post_load_workarounds();
+    fire_startup_events_for_screen(&env, ScreenKind::Game);
+    env.exec(r#"
+        -- SharedTooltipTemplates.xml:19 creates the NineSlice before the
+        -- inherited OnLoad calls DisableSharpening (SharedTooltipTemplates.lua:9-10).
+        local source = debug.getinfo(SharedTooltip_SetBackdropStyle, 'S')
+        assert(source.source:gsub('\\', '/'):find('Blizzard_SharedXML/SharedTooltipTemplates.lua', 1, true))
+        assert(source.linedefined == 47)
+        local child = assert(GameTooltip.NineSlice)
+        assert(child:GetParent() == GameTooltip)
+        assert(child:IsUsingParentLevel() and child:GetFrameLevel() == GameTooltip:GetFrameLevel())
+        SharedTooltip_SetBackdropStyle(GameTooltip, nil, true)
+        assert(not child:IsShown())
+        SharedTooltip_SetBackdropStyle(GameTooltip, nil, false)
+        assert(child:IsShown() and GameTooltip.NineSlice == child)
+    "#).expect("original GameTooltip backdrop should use its inherited NineSlice");
+    assert!(
+        !env.state()
+            .borrow()
+            .lua_errors
+            .iter()
+            .any(|error| error.contains("SharedTooltipTemplates.lua"))
+    );
+}
