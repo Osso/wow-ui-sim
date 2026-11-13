@@ -112,6 +112,99 @@ fn fire_startup_events(env: &WowLuaEnv) {
     }
 }
 
+#[cfg(feature = "client-retail")]
+#[test]
+fn retail_reputation_filter_toggles_and_requires_legacy_visibility_argument() {
+    test_timeout! {
+        let env = setup_env();
+        let result: String = env
+            .eval(
+                r#"
+                local onShow = ReputationFrameMixin and ReputationFrameMixin.OnShow
+                if type(onShow) ~= "function" then
+                    return "missing_reputation_consumer"
+                end
+                local source = debug.getinfo(onShow, "S").source:gsub("\\", "/")
+                if not source:find("Blizzard_UIPanels_Game/Mainline/ReputationFrame.lua", 1, true) then
+                    return "wrong_reputation_consumer=" .. source
+                end
+
+                local menuGenerator
+                local dropdown = {
+                    SetupMenu = function(_, generator)
+                        menuGenerator = generator
+                    end,
+                }
+                local frame = {
+                    filterDropdown = dropdown,
+                    Update = function() end,
+                    GetParent = function() return nil end,
+                }
+                local oldRegister = FrameUtil.RegisterFrameForEvents
+                local oldHelpTip = HelpTip.IsShowing
+                local oldPlayerExpansion = GetExpansionLevel
+                local oldServerExpansion = GetServerExpansionLevel
+                FrameUtil.RegisterFrameForEvents = function() end
+                HelpTip.IsShowing = function() return false end
+                GetExpansionLevel = function() return 12 end
+                GetServerExpansionLevel = function() return 12 end
+                onShow(frame)
+
+                local isSelected
+                local toggleSelection
+                menuGenerator(dropdown, {
+                    SetTag = function() end,
+                    CreateRadio = function() end,
+                    CreateDivider = function() end,
+                    CreateCheckbox = function(_, _, selected, toggle)
+                        isSelected = selected
+                        toggleSelection = toggle
+                        return { SetSelectionIgnored = function() end }
+                    end,
+                })
+                FrameUtil.RegisterFrameForEvents = oldRegister
+                HelpTip.IsShowing = oldHelpTip
+                GetExpansionLevel = oldPlayerExpansion
+                GetServerExpansionLevel = oldServerExpansion
+
+                if type(isSelected) ~= "function" or type(toggleSelection) ~= "function" then
+                    return "legacy_checkbox_missing"
+                end
+                if not isSelected() then
+                    return "legacy_checkbox_should_start_selected"
+                end
+                toggleSelection()
+                if isSelected() then
+                    return "consumer_did_not_hide_legacy_reputations"
+                end
+                toggleSelection()
+                if not isSelected() then
+                    return "consumer_did_not_show_legacy_reputations"
+                end
+
+                local usage = "Usage: C_Reputation.SetLegacyReputationsShown(showLegacyReputations)"
+                local missingOK, missingError = pcall(C_Reputation.SetLegacyReputationsShown)
+                if missingOK then
+                    return "missing_argument_was_accepted"
+                end
+                if not tostring(missingError):find(usage, 1, true) then
+                    return "wrong_missing_argument_error=" .. tostring(missingError)
+                end
+                local nilOK, nilError = pcall(C_Reputation.SetLegacyReputationsShown, nil)
+                if nilOK then
+                    return "nil_argument_was_accepted"
+                end
+                if not tostring(nilError):find(usage, 1, true) then
+                    return "wrong_nil_argument_error=" .. tostring(nilError)
+                end
+                return "ok"
+                "#,
+            )
+            .expect("Retail reputation consumer should run");
+        assert_eq!(result, "ok");
+    }
+}
+
 // Era/Anniversary select `Blizzard_CharacterFrame/Vanilla/CharacterFrame.lua`,
 // which does not define the Retail/Cata `CharacterFrame:RefreshDisplay` method.
 #[cfg(not(any(feature = "client-era", feature = "client-anniversary")))]
