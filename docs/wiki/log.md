@@ -1,3 +1,7 @@
+## [2026-11-12] system | Secure delegate global
+
+Updated [Lua API](systems/lua-api.md#secure-delegate-global) and linked the [secure-helper contract](../specs/secure-helpers.md). Recorded S4s7b's emulated construction/invocation boundary, simulator inference labels, six-profile exact tests, and the separate optional Retail duration-object failure.
+
 ## [2026-11-12] implementation | Retail currency tooltips
 
 Updated [Tooltip data](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) and the [R84/R84b contract](../specs/tooltip-currency.md). VERIFIED: Retail by-ID, quest, loot and currency-link consumers share the populated producer; source results and display values are explicit inputs. The verified type-0 rows are restored after the shared color remapper misclassifies them against placeholder colors. Retail passes 2264 library tests and 17 exact integrations; PTR and Forever pass zero-warning compile builds and eight exact integrations each. UNKNOWN resolver misses, conditional error row, balance formula and runtime number mode remain unmodeled.
