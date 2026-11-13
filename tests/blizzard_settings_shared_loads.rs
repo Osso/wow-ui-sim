@@ -207,9 +207,13 @@ fn load_full_game_ui() -> WowLuaEnv {
 }
 
 fn load_full_game_ui_with_addon_registration(register: impl FnOnce(&WowLuaEnv)) -> WowLuaEnv {
+    load_settings_ui(ScreenKind::Game, register)
+}
+
+fn load_settings_ui(screen: ScreenKind, register: impl FnOnce(&WowLuaEnv)) -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
     env.set_screen_size(1024.0, 768.0);
-    env.set_screen_mode(ScreenKind::Game);
+    env.set_screen_mode(screen);
 
     {
         let mut state = env.state().borrow_mut();
@@ -218,7 +222,7 @@ fn load_full_game_ui_with_addon_registration(register: impl FnOnce(&WowLuaEnv)) 
 
     wow_ui_sim::xml::register_intrinsic_templates();
 
-    let addons = discover_blizzard_addons_for_screen(&blizzard_ui_dir(), ScreenKind::Game);
+    let addons = discover_blizzard_addons_for_screen(&blizzard_ui_dir(), screen);
     for (name, toc_path) in &addons {
         load_addon(&env.loader_env(), toc_path)
             .unwrap_or_else(|err| panic!("[load {name}] FAILED: {err}"));
@@ -226,7 +230,7 @@ fn load_full_game_ui_with_addon_registration(register: impl FnOnce(&WowLuaEnv)) 
 
     register(&env);
     env.apply_post_load_workarounds();
-    fire_startup_events_for_screen(&env, ScreenKind::Game);
+    fire_startup_events_for_screen(&env, screen);
     env
 }
 
@@ -1052,5 +1056,29 @@ fn retail_settings_startup_keeps_registered_canvas_visibility() {
             assert(SettingsStartupCanvasProbe:IsShown(),
                    "post-load must not hide a canvas the original registrar left shown")
         "#).expect("normal startup must preserve original canvas registration visibility");
+    }
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn retail_settings_original_groups_register_in_game_and_glue() {
+    test_timeout! {
+        for screen in [ScreenKind::Game, ScreenKind::Login] {
+            let env = load_settings_ui(screen, |_| {});
+            env.exec(r#"
+                assert(C_AddOns.IsAddOnLoaded("Blizzard_Settings_Shared"))
+                assert(C_AddOns.IsAddOnLoaded("Blizzard_SettingsDefinitions_Shared"))
+                local groups = {}
+                for _, group in ipairs(SettingsPanel:GetCategoryList().groups) do
+                    groups[group.groupText] = group.order
+                end
+                local glue = C_Glue.IsOnGlueScreen()
+                assert(groups[SETTING_GROUP_SYSTEM] == (glue and 1 or 3))
+                assert(groups[SETTING_GROUP_ACCESSIBILITY] == 2)
+                if not glue then
+                    assert(groups[SETTING_GROUP_GAMEPLAY] == 1)
+                end
+            "#).expect("original Groups.lua must register the screen's group order");
+        }
     }
 }

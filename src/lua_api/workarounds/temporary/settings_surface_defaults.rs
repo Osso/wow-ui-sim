@@ -5,6 +5,7 @@
 //! functional without leaving the surface in the generic runtime bootstrap.
 
 const SETTINGS_SURFACE_DEFAULTS_LUA: &str = r#"
+local retail = ...
 local function settings_surface_noop()
 end
 
@@ -91,7 +92,7 @@ Settings = Settings or settings_surface_namespace({
             Disconnect = settings_surface_noop,
         }
     end,
-    GetOrCreateSettingsGroup = function()
+    GetOrCreateSettingsGroup = not retail and function()
         return settings_surface_namespace({
             AddInitializer = settings_surface_noop,
             AddSetting = settings_surface_noop,
@@ -99,7 +100,7 @@ Settings = Settings or settings_surface_namespace({
             SetValue = settings_surface_noop,
             GetValue = function() return nil end,
         })
-    end,
+    end or nil,
 })
 __wow_prepare_temporary_global_assignment("Settings", Settings)
 
@@ -373,13 +374,24 @@ if rawget(_G, "InterfaceOptions_AddCategory") == nil then
 end
 "#;
 
+fn profile_source() -> std::borrow::Cow<'static, str> {
+    use crate::client_profile::{ACTIVE, ClientProfile};
+
+    if ACTIVE == ClientProfile::Retail {
+        format!("local function patch(...)\n{SETTINGS_SURFACE_DEFAULTS_LUA}\nend\npatch(true)")
+            .into()
+    } else {
+        SETTINGS_SURFACE_DEFAULTS_LUA.into()
+    }
+}
+
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
-    lua.exec(SETTINGS_SURFACE_DEFAULTS_LUA)?;
+    lua.exec(&profile_source())?;
     Ok(())
 }
 
 pub(crate) fn patch(env: &crate::lua_api::WowLuaEnv) {
-    let _ = env.exec(SETTINGS_SURFACE_DEFAULTS_LUA);
+    let _ = env.exec(&profile_source());
 }
 
 #[cfg(test)]
@@ -392,13 +404,14 @@ mod tests {
     }
 
     #[test]
-    fn installs_minimal_settings_categories_and_group_factory() {
+    fn installs_minimal_settings_categories_and_scopes_the_legacy_group_factory() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
 
         let result: (String, String, String, String, String, String) = env
             .eval(
                 r#"
-                local group = Settings.GetOrCreateSettingsGroup()
+                local groupFactory = rawget(Settings, "GetOrCreateSettingsGroup")
+                local group = groupFactory and groupFactory() or {}
                 local interface = Settings.GetCategory(Settings.INTERFACE_CATEGORY_ID)
                 local audio = Settings.GetCategory(Settings.AUDIO_CATEGORY_ID)
                 return type(Settings),
@@ -415,8 +428,18 @@ mod tests {
             result,
             (
                 "table".to_string(),
-                "function".to_string(),
-                "function".to_string(),
+                if cfg!(feature = "client-retail") {
+                    "nil"
+                } else {
+                    "function"
+                }
+                .to_string(),
+                if cfg!(feature = "client-retail") {
+                    "nil"
+                } else {
+                    "function"
+                }
+                .to_string(),
                 "Interface".to_string(),
                 "Audio".to_string(),
                 "function".to_string()
