@@ -1,4 +1,4 @@
-## [2026-11-13] correction | FontString anchor-width evidence
+## [2026-11-12] correction | FontString anchor-width evidence
 
 Updated [FontString anchor sizing](investigations/fontstring-anchor-sizing.md) with L1c labels. **VERIFIED (code):** the inferred stored-width rewrite and `SetPoint()` measurement refresh are removed so native-UNKNOWN wrapping is not modeled. **VERIFIED (test code):** default tests observe rectangle edges and SetWidth priority; **INFERRED (test code):** GetWidth and single-anchor assertions are optional; **UNKNOWN:** renderer wrapping width and text-cache invalidation remain unmodeled.
 
