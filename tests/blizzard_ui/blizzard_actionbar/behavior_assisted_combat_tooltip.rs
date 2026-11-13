@@ -2,15 +2,45 @@
 //! AssistedCombatManager implementation after the ActionBar owner loads.
 
 use crate::common::blizzard_addon_harness::with_blizzard_addon_smoke_shape;
+use wow_ui_sim::lua_api::WowLuaEnv;
+
+fn with_player_spells_loaded<F>(assertions: F)
+where
+    F: FnOnce(&WowLuaEnv),
+{
+    with_blizzard_addon_smoke_shape(&[], &[], |env, _| {
+        let loaded_before: bool = env
+            .eval("return C_AddOns.IsAddOnLoaded('Blizzard_PlayerSpells')")
+            .expect("PlayerSpells load state should be available");
+        assert!(!loaded_before, "PlayerSpells must begin LoadOnDemand");
+
+        crate::common::supply_empty_forever_spellbook_outfits(env);
+        env.exec("C_AddOns.LoadAddOn('Blizzard_PlayerSpells')")
+            .expect("PlayerSpells should load through the addon manager");
+        let loaded: bool = env
+            .eval("return C_AddOns.IsAddOnLoaded('Blizzard_PlayerSpells')")
+            .expect("PlayerSpells load state should be available after loading");
+        assert!(loaded, "PlayerSpells must load before its consumers run");
+
+        let source_suffix = if wow_ui_sim::client_profile::ACTIVE
+            == wow_ui_sim::client_profile::ClientProfile::WowForever
+        {
+            "Blizzard_PlayerSpells/Camelot/SpellBook/Blizzard_SpellBookFrame.lua"
+        } else {
+            "Blizzard_PlayerSpells/SpellBook/Blizzard_SpellBookFrame.lua"
+        };
+        env.exec(&format!(
+            "__wow_test_spellbook_frame_source_suffix = '{source_suffix}'"
+        ))
+        .expect("selected spellbook source suffix should be available to Lua assertions");
+
+        assertions(env);
+    });
+}
 
 #[test]
 fn class_talent_tooltip_uses_original_assisted_combat_manager() {
-    with_blizzard_addon_smoke_shape(&["Blizzard_PlayerSpells"], &[], |env, loaded| {
-        assert!(
-            loaded.iter().any(|name| name == "Blizzard_PlayerSpells"),
-            "the LoadOnDemand PlayerSpells consumer must load"
-        );
-
+    with_player_spells_loaded(|env| {
         let (found_line, expected, actual): (bool, String, String) = env
             .eval(
                 r#"
@@ -74,12 +104,7 @@ fn class_talent_tooltip_uses_original_assisted_combat_manager() {
 
 #[test]
 fn spellbook_rotation_hover_updates_highlight_permission() {
-    with_blizzard_addon_smoke_shape(&["Blizzard_PlayerSpells"], &[], |env, loaded| {
-        assert!(
-            loaded.iter().any(|name| name == "Blizzard_PlayerSpells"),
-            "the LoadOnDemand PlayerSpells consumer must load"
-        );
-
+    with_player_spells_loaded(|env| {
         let (enabled_on_enter, disabled_on_leave): (bool, bool) = env
             .eval(
                 r#"
@@ -96,7 +121,7 @@ fn spellbook_rotation_hover_updates_highlight_permission() {
 
                 local consumerInfo = debug.getinfo(AssistedCombatRotationSpellFrameMixin.OnIconEnter, "S")
                 local consumerSource = consumerInfo.source:gsub("\\", "/")
-                local consumerSuffix = "Blizzard_PlayerSpells/SpellBook/Blizzard_SpellBookFrame.lua"
+                local consumerSuffix = __wow_test_spellbook_frame_source_suffix
                 assert(consumerSource:sub(-#consumerSuffix) == consumerSuffix,
                     "expected the selected spellbook consumer, got " .. consumerSource)
 
@@ -130,12 +155,7 @@ fn spellbook_rotation_hover_updates_highlight_permission() {
 
 #[test]
 fn spellbook_rotation_tooltip_uses_original_action_description() {
-    with_blizzard_addon_smoke_shape(&["Blizzard_PlayerSpells"], &[], |env, loaded| {
-        assert!(
-            loaded.iter().any(|name| name == "Blizzard_PlayerSpells"),
-            "the LoadOnDemand PlayerSpells consumer must load"
-        );
-
+    with_player_spells_loaded(|env| {
         let (contains_description, passed_description): (bool, String) = env
             .eval(
                 r#"
@@ -152,7 +172,7 @@ fn spellbook_rotation_tooltip_uses_original_action_description() {
 
                 local consumerInfo = debug.getinfo(AssistedCombatRotationSpellFrameMixin.ShowTooltip, "S")
                 local consumerSource = consumerInfo.source:gsub("\\", "/")
-                local consumerSuffix = "Blizzard_PlayerSpells/SpellBook/Blizzard_SpellBookFrame.lua"
+                local consumerSuffix = __wow_test_spellbook_frame_source_suffix
                 assert(consumerSource:sub(-#consumerSuffix) == consumerSuffix,
                     "expected the selected spellbook consumer, got " .. consumerSource)
 
@@ -182,12 +202,7 @@ fn spellbook_rotation_tooltip_uses_original_action_description() {
 
 #[test]
 fn spellbook_attic_reads_original_assisted_action_state() {
-    with_blizzard_addon_smoke_shape(&["Blizzard_PlayerSpells"], &[], |env, loaded| {
-        assert!(
-            loaded.iter().any(|name| name == "Blizzard_PlayerSpells"),
-            "the LoadOnDemand PlayerSpells consumer must load"
-        );
-
+    with_player_spells_loaded(|env| {
         let (shown, spell_id): (bool, i32) = env
             .eval(
                 r#"
@@ -204,7 +219,7 @@ fn spellbook_attic_reads_original_assisted_action_state() {
 
                 local consumerInfo = debug.getinfo(SpellBookFrameMixin.UpdateAttic, "S")
                 local consumerSource = consumerInfo.source:gsub("\\", "/")
-                local consumerSuffix = "Blizzard_PlayerSpells/SpellBook/Blizzard_SpellBookFrame.lua"
+                local consumerSuffix = __wow_test_spellbook_frame_source_suffix
                 assert(consumerSource:sub(-#consumerSuffix) == consumerSuffix,
                     "expected the selected spellbook consumer, got " .. consumerSource)
 
@@ -244,12 +259,7 @@ fn spellbook_attic_reads_original_assisted_action_state() {
 
 #[test]
 fn spellbook_item_consumes_original_rotation_highlight_state() {
-    with_blizzard_addon_smoke_shape(&["Blizzard_PlayerSpells"], &[], |env, loaded| {
-        assert!(
-            loaded.iter().any(|name| name == "Blizzard_PlayerSpells"),
-            "the LoadOnDemand PlayerSpells consumer must load"
-        );
-
+    with_player_spells_loaded(|env| {
         let shown: bool = env
             .eval(
                 r#"
