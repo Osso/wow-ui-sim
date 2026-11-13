@@ -127,3 +127,55 @@ fn spellbook_rotation_hover_updates_highlight_permission() {
         );
     });
 }
+
+#[test]
+fn spellbook_rotation_tooltip_uses_original_action_description() {
+    with_blizzard_addon_smoke_shape(&["Blizzard_PlayerSpells"], &[], |env, loaded| {
+        assert!(
+            loaded.iter().any(|name| name == "Blizzard_PlayerSpells"),
+            "the LoadOnDemand PlayerSpells consumer must load"
+        );
+
+        let contains_description: bool = env
+            .eval(
+                r#"
+                assert(C_AddOns.IsAddOnLoaded("Blizzard_ActionBar"),
+                    "ActionBar must load before the PlayerSpells consumer")
+                assert(C_AddOns.IsAddOnLoaded("Blizzard_PlayerSpells"),
+                    "PlayerSpells must be runtime-loaded")
+
+                local ownerInfo = debug.getinfo(AssistedCombatManager.GetActionSpellDescription, "S")
+                local ownerSource = ownerInfo.source:gsub("\\", "/")
+                local ownerSuffix = "Blizzard_ActionBar/Mainline/AssistedCombatManager.lua"
+                assert(ownerSource:sub(-#ownerSuffix) == ownerSuffix,
+                    "expected the original ActionBar owner, got " .. ownerSource)
+
+                local consumerInfo = debug.getinfo(AssistedCombatRotationSpellFrameMixin.ShowTooltip, "S")
+                local consumerSource = consumerInfo.source:gsub("\\", "/")
+                local consumerSuffix = "Blizzard_PlayerSpells/SpellBook/Blizzard_SpellBookFrame.lua"
+                assert(consumerSource:sub(-#consumerSuffix) == consumerSuffix,
+                    "expected the selected spellbook consumer, got " .. consumerSource)
+
+                local expected = "supplied assisted-combat description"
+                AssistedCombatManager.spellDescription = expected
+                AssistedCombatManager.rotationSpells = {}
+                GameTooltip:ClearLines()
+                AssistedCombatRotationSpellFrameMixin.ShowTooltip()
+
+                for index = 1, GameTooltip:NumLines() do
+                    local line = _G["GameTooltipTextLeft" .. index]
+                    if line and line:GetText() == expected then
+                        return true
+                    end
+                end
+                return false
+                "#,
+            )
+            .expect("the selected spellbook tooltip consumer must execute");
+
+        assert!(
+            contains_description,
+            "the original tooltip consumer must show the supplied manager description"
+        );
+    });
+}
