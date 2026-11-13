@@ -162,6 +162,16 @@ fn capture_execution_source(state: &mut LuaState) -> Val {
     }
 }
 
+/// INFERRED from S4s7b emulation: a tainted target can supply the delegate source.
+fn capture_delegate_source(state: &mut LuaState, target: Val) -> Val {
+    if let Val::Function(function) = target
+        && let Some(source) = get_closure_taint(state, function)
+    {
+        return Val::Str(state.gc.intern_string(source.as_bytes()));
+    }
+    capture_execution_source(state)
+}
+
 /// Every function-valued delegate argument is replaced with a wrapper that
 /// calls the original under the source present before wrapper creation (S4s7b §2).
 /// The code does not check whether the argument is untrusted.
@@ -208,17 +218,11 @@ fn create_secure_delegate(state: &mut LuaState) -> LuaResult<u32> {
         )));
     }
     rilua::table_security::unwrap_secret(state, func)?;
-    if !matches!(func, Val::Function(_)) {
-        return Err(runtime_error(format!(
-            "bad argument #1 to 'CreateSecureDelegate' (function expected, got {})",
-            func.type_name()
-        )));
-    }
 
     let options = arg(state, 1);
     check_options_type(options, "CreateSecureDelegate")?;
     let wrap = bool_option(state, options, "wrapUntrustedFunctions", true);
-    let source = capture_execution_source(state);
+    let source = capture_delegate_source(state, func);
     let delegate = new_rust_closure(
         state,
         invoke_secure_delegate,

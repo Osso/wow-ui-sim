@@ -41,7 +41,7 @@ The documentation does not state these details, and decompiled bodies were not r
 ## Known gaps
 
 - **VERIFIED + EMULATED, single route:** `S4s7b-createsecuredelegate-emulated.md` reports the tainted-construction gate; static inspection and emulation read the same client binary. The generated declaration's `HasRestrictions` does not independently identify this restriction. The simulator applies the gate to its active stack source; equivalence between addon-chunk stamps and native data-flow taint is not established. Reporter effects remain UNKNOWN.
-- **INFERRED from EMULATED:** the constructor accepts non-function values (`S4s7b-createsecuredelegate-emulated.md`); the simulator still rejects them. Their invocation remains UNKNOWN. Result forwarding is also INFERRED because the complete return path is not corroborated.
+- **INFERRED from EMULATED:** the constructor accepts non-function values (`S4s7b-createsecuredelegate-emulated.md`); the simulator accepts them, but their invocation remains UNKNOWN. Result forwarding is also INFERRED because the complete return path is not corroborated.
 - **EMULATED only:** Secret wrapping and unwrapping marker and result counts for the complete handler paths, including denied unwrap, remain conditional on the modeled state and stubbed reporting helper (`S7a-secretwrap-emulated.md`).
 
 - Slot taint on copies covers only string and integer keys. Other key types (tables, booleans, non-integer numbers, functions) require a rilua change.
@@ -51,6 +51,6 @@ The documentation does not state these details, and decompiled bodies were not r
 
 ## Evidence
 
-- `tests/secure_helpers_surface.rs`: the original Mixin consumer checks function-argument wrapping and per-invocation source; construction source rejection, required/access-checked arguments, and secret-marker preservation; securecopy depth, graph identity, taint, function wrapping, and script-object handling.
+- `tests/secure_helpers_surface.rs`: the original Mixin consumer checks function-argument wrapping and per-invocation source; construction source rejection, required/access-checked arguments, secret-marker preservation, and INFERRED numeric-target construction/source capture; securecopy depth, graph identity, taint, function wrapping, and script-object handling.
 - `tests/security_state_drivers.rs`: publication on each profile; delegate argument and return-value pass-through.
 - Requires the rilua primitive `stdlib::taint::call_with_stack_taint` (rilua `secure-delegate` branch).
