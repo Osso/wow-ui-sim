@@ -8,7 +8,7 @@
 
 - [ ] VERIFIED (Retail 12.1.5.70688): return a non-nil boolean. The gamepad-input timestamp starts at zero, so return false until its writer runs.
 - [ ] VERIFIED (Retail 12.1.5.70688): read gamepad-input time, not mouse time or `C_GamePad.IsEnabled()` state.
-- [ ] INFERRED: compare the last gamepad-input timestamp with `GamePadOverlapMouseMs` using unsigned 32-bit millisecond time arithmetic.
+- [ ] INFERRED: return true while unsigned 32-bit elapsed milliseconds are less than `GamePadOverlapMouseMs`; the exact boundary behavior is UNKNOWN.
 - [ ] Do not invent timestamp writers, input events, or mouse-input resets; the native writer's conditions and lifecycle remain UNKNOWN.
 
 ### Forever
