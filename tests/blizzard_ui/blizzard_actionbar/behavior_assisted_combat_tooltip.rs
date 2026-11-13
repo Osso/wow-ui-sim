@@ -241,3 +241,55 @@ fn spellbook_attic_reads_original_assisted_action_state() {
         );
     });
 }
+
+#[test]
+fn spellbook_item_consumes_original_rotation_highlight_state() {
+    with_blizzard_addon_smoke_shape(&["Blizzard_PlayerSpells"], &[], |env, loaded| {
+        assert!(
+            loaded.iter().any(|name| name == "Blizzard_PlayerSpells"),
+            "the LoadOnDemand PlayerSpells consumer must load"
+        );
+
+        let shown: bool = env
+            .eval(
+                r#"
+                assert(C_AddOns.IsAddOnLoaded("Blizzard_ActionBar"),
+                    "ActionBar must load before the PlayerSpells consumer")
+                assert(C_AddOns.IsAddOnLoaded("Blizzard_PlayerSpells"),
+                    "PlayerSpells must be runtime-loaded")
+
+                local ownerInfo = debug.getinfo(AssistedCombatManager.ShouldHighlightSpellbookSpell, "S")
+                local ownerSource = ownerInfo.source:gsub("\\", "/")
+                local ownerSuffix = "Blizzard_ActionBar/Mainline/AssistedCombatManager.lua"
+                assert(ownerSource:sub(-#ownerSuffix) == ownerSuffix,
+                    "expected the original ActionBar owner, got " .. ownerSource)
+
+                local consumerInfo = debug.getinfo(SpellBookItemMixin.UpdateAssistedCombatState, "S")
+                local consumerSource = consumerInfo.source:gsub("\\", "/")
+                local consumerSuffix = "Blizzard_PlayerSpells/SpellBook/Blizzard_SpellBookItem.lua"
+                assert(consumerSource:sub(-#consumerSuffix) == consumerSuffix,
+                    "expected the selected spellbook item consumer, got " .. consumerSource)
+
+                local spellID = 116
+                AssistedCombatManager.useAssistedHighlight = true
+                AssistedCombatManager.rotationSpells[spellID] = true
+                local cover = {
+                    shown = false,
+                    SetShown = function(self, value) self.shown = value end,
+                }
+                local item = {
+                    spellBookItemInfo = { spellID = spellID, isOffSpec = false },
+                    Button = { AssistedCombatIconCover = cover },
+                }
+                SpellBookItemMixin.UpdateAssistedCombatState(item)
+                return cover.shown == true
+                "#,
+            )
+            .expect("the selected spellbook item consumer must execute");
+
+        assert!(
+            shown,
+            "the original consumer must show the supplied rotation highlight"
+        );
+    });
+}
