@@ -3,7 +3,7 @@
 //! Numeric-secret selector permission is endpoint-local; output restriction is separate.
 
 #[cfg(feature = "retail-12-0-5")]
-use super::c_action_bar_counts::{format_display_count, parse_maximum, parse_replacement};
+use super::c_action_bar_counts::{format_display_count, parse_replacement};
 use super::c_spell::read_public_spell_identifier_at;
 use super::c_spell::read_spell_identifier_value;
 use super::charge_state::cooldowns_are_restricted;
@@ -23,6 +23,13 @@ use rilua::{LuaResult, Val};
 const CAST_API: &str = "C_Spell.GetSpellCastCount";
 #[cfg(feature = "retail-12-0-5")]
 const DISPLAY_API: &str = "C_Spell.GetSpellDisplayCount";
+#[cfg(feature = "retail-12-0-5")]
+const DISPLAY_USAGE: &str = concat!(
+    "Usage: local displayCount = C_Spell.GetSpellDisplayCount(",
+    "spellIdentifier [, maxDisplayCount, replacementString])"
+);
+#[cfg(feature = "retail-12-0-5")]
+const DEFAULT_DISPLAY_MAXIMUM: f64 = 9999.0;
 
 fn read_count_identifier(state: &LuaState, api: &str) -> LuaResult<Option<u32>> {
     let value = stack_val(state, 1);
@@ -99,7 +106,7 @@ pub(crate) fn get_spell_display_count(state: &mut LuaState) -> LuaResult<u32> {
     let maximum_value = authenticate_argument(state, 2)?;
     let replacement_value = authenticate_argument(state, 3)?;
     validate_identifier(state, identifier)?;
-    let maximum = parse_maximum(maximum_value, DISPLAY_API)?;
+    let maximum = parse_display_maximum(state, maximum_value)?;
     let replacement = parse_replacement(state, replacement_value, DISPLAY_API)?;
     let spell_id = read_spell_identifier_value(state, identifier)?;
     let (quantity, restricted) = read_display_snapshot(state, spell_id)?;
@@ -111,6 +118,15 @@ pub(crate) fn get_spell_display_count(state: &mut LuaState) -> LuaResult<u32> {
     };
     state.push(result);
     Ok(1)
+}
+
+#[cfg(feature = "retail-12-0-5")]
+fn parse_display_maximum(state: &LuaState, value: Val) -> LuaResult<f64> {
+    if value == Val::Nil {
+        return Ok(DEFAULT_DISPLAY_MAXIMUM);
+    }
+    super::helpers::read_untainted_signed32_argument(state, 2, DISPLAY_API, DISPLAY_USAGE)
+        .map(f64::from)
 }
 
 #[cfg(feature = "retail-12-0-5")]
