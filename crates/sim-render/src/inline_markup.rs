@@ -214,14 +214,19 @@ fn parse_texture_escape(body: &str) -> Option<InlineIcon> {
             .get(index)
             .and_then(|field| field.trim().parse::<f32>().ok())
     };
-    let tex_coords = match (number(5), number(6)) {
-        (Some(tex_width), Some(tex_height)) if tex_width > 0.0 && tex_height > 0.0 => {
-            match (number(7), number(8), number(9), number(10)) {
+    let integer = |index: usize| {
+        fields
+            .get(index)
+            .and_then(|field| parse_integer_field(field))
+    };
+    let tex_coords = match (integer(5), integer(6)) {
+        (Some(tex_width), Some(tex_height)) if tex_width > 0 && tex_height > 0 => {
+            match (integer(7), integer(8), integer(9), integer(10)) {
                 (Some(left), Some(right), Some(top), Some(bottom)) => Some((
-                    left / tex_width,
-                    right / tex_width,
-                    top / tex_height,
-                    bottom / tex_height,
+                    left as f32 / tex_width as f32,
+                    right as f32 / tex_width as f32,
+                    top as f32 / tex_height as f32,
+                    bottom as f32 / tex_height as f32,
                 )),
                 _ => None,
             }
@@ -235,7 +240,7 @@ fn parse_texture_escape(body: &str) -> Option<InlineIcon> {
         offset_x: number(3).unwrap_or(0.0),
         offset_y: number(4).unwrap_or(0.0),
         tex_coords,
-        vertex_color: vertex_color(number(11), number(12), number(13)),
+        vertex_color: vertex_color(integer(11), integer(12), integer(13)),
     })
 }
 
@@ -254,6 +259,11 @@ fn parse_atlas_escape(body: &str) -> Option<InlineIcon> {
             .get(index)
             .and_then(|field| field.trim().parse::<f32>().ok())
     };
+    let integer = |index: usize| {
+        fields
+            .get(index)
+            .and_then(|field| parse_integer_field(field))
+    };
     Some(InlineIcon {
         source: InlineIconSource::Atlas(name.to_string()),
         height: number(1),
@@ -261,7 +271,7 @@ fn parse_atlas_escape(body: &str) -> Option<InlineIcon> {
         offset_x: number(3).unwrap_or(0.0),
         offset_y: number(4).unwrap_or(0.0),
         tex_coords: None,
-        vertex_color: vertex_color(number(5), number(6), number(7)),
+        vertex_color: vertex_color(integer(5), integer(6), integer(7)),
     })
 }
 
@@ -278,9 +288,21 @@ fn read_fields(body: &str) -> Vec<&str> {
         .collect()
 }
 
+fn parse_integer_field(field: &str) -> Option<i64> {
+    let field = field.trim();
+    if let Some(hex) = field
+        .strip_prefix("0x")
+        .or_else(|| field.strip_prefix("0X"))
+    {
+        i64::from_str_radix(hex, 16).ok()
+    } else {
+        field.parse().ok()
+    }
+}
+
 /// Escape colors are 0..255 per channel; all three must be given.
-fn vertex_color(r: Option<f32>, g: Option<f32>, b: Option<f32>) -> Option<[f32; 3]> {
-    let channel = |value: f32| (value / 255.0).clamp(0.0, 1.0);
+fn vertex_color(r: Option<i64>, g: Option<i64>, b: Option<i64>) -> Option<[f32; 3]> {
+    let channel = |value: i64| (value as f32 / 255.0).clamp(0.0, 1.0);
     Some([channel(r?), channel(g?), channel(b?)])
 }
 
