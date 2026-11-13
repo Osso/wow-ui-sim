@@ -1,3 +1,7 @@
+## [2026-11-12] investigation | Retail EllesmereUI v9.8 load boundary
+
+[Full third-party startup](investigations/full-addon-startup-2026-10-10.md#retail-ellesmereui-v98-load-reproduction-2026-11-12) records the false 3/20 load interpretation, Forever-only `IsUsingGamepad` registration, the loose-asset query rejection, and issue #22 symptom limits; native input and addon-path semantics remain UNKNOWN.
+
 ## [2026-11-12] implementation | Retail currency tooltips
 
 [Tooltip data](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) links the [R84/R84b contract](../specs/tooltip-currency.md). VERIFIED: the four original Retail consumers share the currency producer and publish the verified rows; explicit host inputs leave resolver misses, the error-row predicate, balance formula and runtime number mode UNKNOWN. The shared color remapper can turn a verified type-0 row into 41 when placeholder colors collide; the producer restores type 0. Retail passes 2264 library tests and 17 exact integration tests. PTR and Forever pass zero-warning compile builds and eight exact integration tests each.

@@ -44,3 +44,44 @@ Only sanitized report, small outcome, marker summary and derivative SHA-256 mani
 ## New diagnostic capture
 
 Epoch `20261010T183739Z`: [bounded independent attribution report](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/success-file-budget-full-addon/independent-report.md), submission `b048251f38b2d53e33b3365590cd227d40fc07d0` (diagnostic code `0e4bf4161`). Source/artifact and 4,044 vendor-cache paths bound; completion observed. Records: 3,064 file-success, four file-error, 91 handler-error; exact private file attribution across 50 owners, zero rejected records and zero observed continuity gaps. Raw owner/file joins remain private. Current95 diagnostic error records are not historical105 actual error occurrences or evidence of a numeric count fix. Third-party inputs remain unsealed; full startup remains unfixed/unaccepted.
+
+## Retail EllesmereUI v9.8 load reproduction (2026-11-12)
+
+**VERIFIED:** the earlier `3/20` observation came from the active addon-enable configuration, which enabled only three compatible EllesmereUI directories; it did not show that the other 17 failed to load. A read-only staging directory and temporary `WOW_SIM_ADDONS_TXT` enabled all 20 installed Retail-compatible, non-LOD EllesmereUI addons without changing installed addon files or SavedVariables.
+
+**VERIFIED:** `EllesmereUI_UICore.lua:1499` calls `IsUsingGamepad()` before the following `C_GamePad` expression. The simulator registers its existing `IsUsingGamepad` implementation only under `client-wowforever` in `src/lua_api/globals/real/mod.rs`; that implementation reads the existing `InputInterfaceStyle` model. The pinned Retail `InputDocumentation.lua` declares `IsUsingGamepad` as a boolean-returning function. The focused Retail consumer test at `tests/retail_ellesmere_core_gamepad_consumer.rs` reproduces `attempt to call a nil value`; commit `fdf247810` adds this test only and makes no runtime change.
+
+**VERIFIED:** a local diagnostic addon that supplies only `IsUsingGamepad = function() return false end` lets all 20 EllesmereUI addons reach loaded state while without defining or replacing `C_GamePad`. No `C_GamePad` error occurs on this short-circuited path. One addon still reports a load-time Lua error at `EllesmereUI_Profiles.lua:3159` when LibSharedMedia rejects an existing addon media path through `C_UIFileAsset.IsKnownFile`.
+
+**VERIFIED:** under `retail-12-0-7`, `src/c_api/c_ui_file_asset.rs` accepts shipped IDs or normalized membership in `known_loose_asset_paths`; `src/lua_api/state.rs` initializes that set empty, and no writer to that set was found in `src/`. The pinned `UIFileAssetAPIDocumentation.lua` says known files may be shipped assets or known loose files, and says loose-file existence or openability is not checked. **UNKNOWN:** whether Retail treats these EllesmereUI addon-local paths as known loose assets, and the native path-normalization rules. No asset behavior was changed.
+
+### Issue #22 symptoms
+
+The following observations come from isolated 1600x1200 or 3840x2160 simulator runs with fresh session paths; they do not establish equivalence to the screenshots or SavedVariables.
+
+| Symptom | Current evidence |
+|---|---|
+| a. Stacked movers | **VERIFIED:** Bar2/Bar3, Bar4/Bar5, Bar9/Bar10, and cooldown/utility mover coordinates overlap in the probe; the corresponding underlying frames were hidden. **UNVERIFIED:** visible stacked mover overlays. |
+| b. Truncated mover labels | **UNVERIFIED:** no matching mover-label fields appeared in the sampled tree, including after the unlock-mode probe; truncation was not reproduced. |
+| c. Quest overflow/guide overlap | **VERIFIED:** Retail's `UseCustomTracker()` was false and `EUI_CustomQuestTracker` was absent in this run. **UNVERIFIED:** overflow or guide overlap; the run had no matching quest data. |
+| d. Off-screen unit frames | **VERIFIED:** the sampled player unit frame was within the 1600x1200 viewport. **UNVERIFIED:** the screenshot's saved positions and UI scale. |
+| e. Dim/under-bar health text | **VERIFIED:** sampled health text had alpha 1, white color, `OVERLAY` draw layer and frame level 5, above the Health `ARTWORK` layer at level 5. The dim/under-bar symptom was not reproduced. |
+| f. Detached keybind row | **VERIFIED:** the HotKey anchor span measured 55 px while its resolved text width was 37 px after the local probe resized/anchored the button. **UNVERIFIED:** visible detachment; the button was hidden in the sampled tree. |
+
+**VERIFIED:** the Retail `--lib --test integration --no-run` build at `fdf247810` completed with zero warnings, the focused existing `C_UIFileAsset` listfile test passed 1/1, and the new Ellesmere consumer test remains RED on the missing global. These results do not prove native gamepad or loose-file behavior. G1/G1b/G1c native questions remain open; no production fix or full visual acceptance is claimed.
+
+### Retail follow-up sources
+
+- [Retail input consumer test](../../tests/retail_ellesmere_core_gamepad_consumer.rs) — exact missing-global boundary.
+- [Input interface registration](../../src/lua_api/globals/real/mod.rs) — profile gate for the existing model.
+- [C_UIFileAsset implementation](../../src/c_api/c_ui_file_asset.rs) and [state fields](../../src/lua_api/state/sim_state.rs) — current shipped/loose lookup inputs.
+- `/syncthing/World of Warcraft/_retail_/Interface/AddOns/EllesmereUI/EllesmereUI_UICore.lua`, `EllesmereUI_Profiles.lua`, and `Libs/LibSharedMedia-3.0/LibSharedMedia-3.0.lua` — installed read-only addon sources.
+- `/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/InputDocumentation.lua` and `UIFileAssetAPIDocumentation.lua` — pinned Retail declarations.
+- `/var/tmp/osso/ellesmere-core-enabled-baseline-dump.log`, `/var/tmp/osso/ellesmere-core-input-only-baseline.log`, and `/var/tmp/osso/ellesmere-core-unlock-1600-dumptree.log` — local diagnostic outputs.
+- `/home/osso/.local/state/wow-ui-sim/handoff/issue22-layout/REPORT.md` — prior six-symptom baseline and evidence limits.
+
+### Related pages
+
+- [[gamepad-mapped-state]] — existing, separate gamepad capability and mapped-stick behavior.
+- [[ellesmereui-forever]] — prior Forever compatibility investigation.
+- [[addon-loading]] — addon selection, enablement and load phases.
