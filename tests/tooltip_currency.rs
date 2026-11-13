@@ -1,3 +1,4 @@
+use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 fn env() -> WowLuaEnv {
@@ -11,7 +12,6 @@ fn c_tooltip_info_currency_getters_expose_seeded_currency_lines() {
         .eval(
             r#"
             local byId = C_TooltipInfo.GetCurrencyByID(2245)
-            local overridden = C_TooltipInfo.GetCurrencyByID(2245, 99)
             local watched = C_TooltipInfo.GetCurrencyToken(1)
 
             if byId.type ~= Enum.TooltipDataType.Currency then
@@ -20,16 +20,9 @@ fn c_tooltip_info_currency_getters_expose_seeded_currency_lines() {
             if byId.id ~= 2245 then
                 return "currency_id"
             end
-            if byId.lines[1].leftText ~= "Valorstones" then
+            local currencyName = C_CurrencyInfo.GetCurrencyInfo(2245).name
+            if currencyName == nil or currencyName == "" or byId.lines[1].leftText ~= currencyName then
                 return "currency_name"
-            end
-            -- WM97 DQ6: the supplied quantity is composition data, not an invented
-            -- "Amount: N/cap" text line.
-            if byId.quantity ~= 1847 then
-                return "currency_quantity"
-            end
-            if overridden.quantity ~= 99 then
-                return "currency_override"
             end
             for index, line in ipairs(byId.lines) do
                 local text = line.leftText or ""
@@ -50,4 +43,21 @@ fn c_tooltip_info_currency_getters_expose_seeded_currency_lines() {
         result, "ok",
         "Currency tooltip getters should expose seeded currency tooltip data"
     );
+    if ACTIVE == ClientProfile::Retail {
+        // R84 §Q4: the traced GetCurrencyByID producer does not publish a top-level quantity.
+        let quantity_absent: bool = env
+            .eval("return C_TooltipInfo.GetCurrencyByID(2245).quantity == nil")
+            .unwrap();
+        assert!(
+            quantity_absent,
+            "R84 §Q4: top-level quantity must be absent"
+        );
+        let override_quantity_absent: bool = env
+            .eval("return C_TooltipInfo.GetCurrencyByID(2245, 99).quantity == nil")
+            .unwrap();
+        assert!(
+            override_quantity_absent,
+            "R84 §Q4: supplied amount must not become a top-level quantity"
+        );
+    }
 }

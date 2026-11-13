@@ -167,7 +167,7 @@ pub(super) fn create_identified_tooltip(state: &mut LuaState, tooltip_type: f64,
     tooltip
 }
 
-pub(super) fn item_quality_color(quality: u8) -> (f64, f64, f64) {
+pub(crate) fn item_quality_color(quality: u8) -> (f64, f64, f64) {
     match quality {
         0 => (0.62, 0.62, 0.62),
         1 => (1.0, 1.0, 1.0),

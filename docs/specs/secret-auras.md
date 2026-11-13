@@ -13,7 +13,10 @@ Evidence levels used below:
 - **UI**: shipped Blizzard Lua consumers.
 - **STRING**: a string that is present in the 12.1.5.70688 client image. Presence alone is not proof of behaviour.
 - **NATIVE**: a clean-room behavioural spec traced from the client.
-- **SOURCE**: simulator source as inspected on 2026-10-31.
+- **SOURCE**: simulator source at base `e29763f8e`, audited on 2026-11-12.
+- **VERIFIED**: the cited report establishes the stated local calculation or bytes, not a complete client invocation.
+- **INFERRED**: a conclusion from verified facts, not a verified contract.
+- **EMULATED**: a seeded fragment result; it is not promoted to VERIFIED or used alone to authorize a fix.
 - **UNKNOWN**: no evidence yet.
 
 ## What it must do
@@ -35,8 +38,8 @@ Evidence levels used below:
 - [ ] Model the WM61 S8 pre-lookup rejection and data-driven spell classification below; do not generalize the fragment result to every matched aura.
 
 ### Operations on secret values
-- [ ] Tainted code gets defined results or errors for arithmetic, comparison, concatenation, `tostring`, `string.format`, `#`, table keys, table storage, truth tests and `type`. UNKNOWN (S4).
-- [ ] Untainted code may operate on secrets where the client allows it. UNKNOWN (S5).
+- [ ] Apply the conditional shared operation check documented under S5 below. **VERIFIED:** mode 0 rejects a marked operand even without taint when the additional state is present; mode 1 rejects only with a recorded source; other modes permit. **UNKNOWN:** the additional state's meaning and the mode selected at each public boundary. Do not replace this with “all untainted callers pass.”
+- [ ] Leave complete arithmetic, comparison, concatenation, `tostring`, `string.format`, length, table storage and truth-test outcomes UNKNOWN where S5 does not establish them.
 - [ ] Secret values render as `<secret>`, `<secret table>`, or `nil --[[ secret value ]]` where the client renders them (STRING). Tables cannot be indexed with secret keys where the client forbids it (STRING: "attempted to %s a table that cannot be indexed with secret keys").
 
 ### Widget sinks and aspects
@@ -45,7 +48,7 @@ Evidence levels used below:
 - [ ] Shipped aura buttons can pass secret duration, text, icon, visibility and geometry to their widgets and render correctly (UI).
 
 ### Helpers
-- [ ] `issecretvalue`, `issecrettable`, `hasanysecretvalues`, `canaccessvalue`, `canaccessallvalues`, `canaccesstable`, `canaccesssecrets`, `scrubsecretvalues`, `dropsecretaccess`, `secretwrap`, `secretunwrap` and the widget `HasSecretValues` / `HasSecretAspect` / `HasAnySecretAspect` / `IsPreventingSecretValues` / `IsAnchoringSecret` match the client's usage strings and return counts. Usage strings are STRING; semantics UNKNOWN (S7).
+- [ ] `issecretvalue`, `issecrettable`, `hasanysecretvalues`, `canaccessvalue`, `canaccessallvalues`, `canaccesstable`, `canaccesssecrets`, `scrubsecretvalues`, `dropsecretaccess`, `secretwrap`, `secretunwrap` and the widget `HasSecretValues` / `HasSecretAspect` / `HasAnySecretAspect` / `IsPreventingSecretValues` / `IsAnchoringSecret` match the client's usage strings and return counts. Use the bounded S7/S7a/S18 contracts below: `issecretvalue()` is VERIFIED false, and `canaccessvalue()` is VERIFIED true. Do not treat the remaining incomplete contracts as implemented native behavior.
 
 ## WM61 evidence (Retail 12.1.5 build 70688)
 
@@ -80,7 +83,7 @@ WM citations below identify clean-room reports in `native-evidence-70688/secrets
 
 - **VERIFIED locally — WM61 S6** (`S6-aspects-wm61.md`): Text aspect is 8. The marked-argument `SetText` path supplies it to a helper that checks prevention and script-handler policy before adding it to the direct set. `HasSecretAspect` checks either of two sets; `HasAnySecretAspect` checks whether either is nonempty. Prevention and anchoring use separate flags.
 - **EMULATED — WM61 S6:** With publication enabled, a Text aspect prepares forced-secret `GetText` return policy; a separate helper marks eligible strings under that policy. **UNKNOWN — WM61 S6:** the complete setter/getter path, second-set origin, propagation and clearing on plain reset, `SetToDefaults` or `ClearAllPoints`.
-- **SOURCE — WM61 S6:** Retail `SetText` adds the Text aspect for a secret input and rejects a frame that prevents secrets. The script-handler policy is not yet modeled. The simulator still derives object aspect state from prevention/protection and uses prevention for `IsAnchoringSecret`; these differ from the distinct native calculations.
+- **SOURCE — WM61 S6:** Retail `SetText` adds the Text aspect for a secret input and rejects a frame that prevents secrets. Retail/PTR now query recorded aspect bits independently of prevention/protection, and `IsAnchoringSecret` reads a separate supplied flag. No native writer or second-set propagation is invented. Other profiles retain their existing behavior. **INFERRED PTR compatibility:** `SetText` records Text=8 on the same profiles that query recorded bits; native PTR equivalence is not established by S6. This writer extension is a separate droppable commit. Script-handler policy remains unmodelled.
 
 ## Native evidence folded (Retail 12.1.5.70688)
 
@@ -95,7 +98,7 @@ Clean-room reports: `H/native-evidence-70688/secrets/` (S0–S11, S15, S18, and 
 | S4 | helper surface | VERIFIED (surface) | The restricted helper set is closed; behaviour reads blocked |
 | S4s7a | `securecopy` | EMULATED | One result on success; secret scalars stay secret; tainted arguments rejected |
 | S4s7b | `CreateSecureDelegate` | VERIFIED (bounded helper regions) + EMULATED | Construction gate, source selection, shallow argument provenance and callback wrapping; complete return and target behavior remain unknown |
-| S5 | operations on secrets | VERIFIED (check), UNKNOWN (modes) | Marked operands consult one shared check; mode 0 rejects without a taint source |
+| S5 | operations on secrets | VERIFIED (conditional mode calculation), UNKNOWN (boundary selection) | With additional state present, mode 0 rejects regardless of source, mode 1 rejects only with source, and other modes permit; absent state permits |
 | S6 | sinks and aspects | VERIFIED (strings only) | Three argument diagnostics; the text aspect is 8 (WM61 S6) |
 | S7, S7a | wrap/unwrap | EMULATED | Both are variadic transforms, one result per argument |
 | S8 | `RequiresNonSecretAura` | VERIFIED (enum, classifier) | `NeverSecret` 0, `AlwaysSecret` 1, `ContextuallySecret` 2; flags 33554432 wins over 67108864 |
@@ -117,7 +120,7 @@ Clean-room reports: `H/native-evidence-70688/secrets/` (S0–S11, S15, S18, and 
 - **VERIFIED:** `scrub` inspects only scalar arguments (Lua types 1, 3 and 4: boolean, number, string). Tables, userdata and functions take a separate path. `scrubsecretvalues` shares the iteration skeleton; whether it shares the filter is **UNKNOWN**.
 - **EMULATED (S7a):** `secretwrap` and `secretunwrap` are transforms, not checks or grants. Both take variable arguments and return one result per argument, in order, with the same type and payload; no arguments return zero results. `secretwrap` marks every returned value when the marker gate is enabled and marks none when it is disabled. `secretunwrap` unmarks marked argument slots without changing payloads. Guard denial returns zero results.
 - **CORRECTED (S7a):** the earlier "two arguments" reading of the wrap pair is wrong. The constant 2 in those handlers is an operation-policy setting, not an arity.
-- **UNKNOWN:** success values of `secretunwrap`, mutation of referenced tables, `canaccesssecrets` signature, and the contracts of `dropsecretaccess`, `mapvalues`, `settablesecurity` and `securecallmethod` (S7).
+- **UNKNOWN:** complete live `secretunwrap` success behavior, mutation outside the seeded fragments, `canaccesssecrets` signature, and the contracts of `dropsecretaccess`, `mapvalues`, `settablesecurity` and `securecallmethod` (S7). S7a supplies EMULATED success results, not a complete live contract.
 
 ### Operation check (S5)
 
@@ -144,7 +147,7 @@ Clean-room reports: `H/native-evidence-70688/secrets/` (S0–S11, S15, S18, and 
 
 - **VERIFIED:** the registration class byte takes only 3, 6 and 7. Class 7 covers every secret/secure helper and also `Mixin` and the event-callback registrations, so the class does not separate secret from ordinary functions. `GetForbiddenObjectTable` is the only class 6 entry. Class meanings are **UNKNOWN**.
 - **VERIFIED:** the client carries exactly 16 `Predicate check failed: <Name>` messages. Each maps to one guarded API; `SetFont` carries two. `RequiresUnitAuraAccess` guards `GetAuraDataByIndex`/`GetUnitAura`. WM105 corrects the earlier reading: there is no numeric code 46. The predicate text is pushed with an explicit string length of 46, exactly the character count of `Predicate check failed: RequiresUnitAuraAccess`.
-- **VERIFIED:** these named predicates are a separate mechanism from the restriction state array. **UNKNOWN:** the numeric codes and any shared storage.
+- **VERIFIED:** the named diagnostic sites differ from the indexed-state getter. **UNKNOWN:** any shared storage or complete connection between these mechanisms; no numeric error code is established.
 - **VERIFIED:** `addonCombatRestrictionsForced`, `addonEncounterRestrictionsForced`, `addonChallengeModeRestrictionsForced`, `addonPvPMatchRestrictionsForced`, `addonMapRestrictionsForced` and `addonChatRestrictionsForced` exist with their help text; `taintLogObjectSecrets` enables aspect logging.
 - **VERIFIED:** the 38-function registration family contains every restricted/secrecy helper. Membership does **not** encode protection: `GetMoney`, `RepopMe` and `RetrieveCorpse` sit in the large general family yet behave as protected.
 - **VERIFIED (S15):** `ADDON_ACTION_FORBIDDEN`, `ADDON_ACTION_BLOCKED` and the `MACRO_ACTION_*` equivalents exist as event names. The player-facing message text is composed Lua-side. The **protected set** is **UNKNOWN**: four candidate mechanisms were eliminated and the remaining one is inside a contaminated body.
@@ -159,7 +162,7 @@ The file-by-file pass also produced answers for units that are not secrecy surfa
 
 ## Native behaviour vs simulator
 
-`Native` gives the strongest admissible label; `Simulator` is source behaviour on 2026-11-04.
+`Native` gives the strongest admissible label; `Simulator` is source behavior at `e29763f8e`. The audit below supersedes stale implementation summaries.
 
 | Behaviour | Native | Simulator | Verdict |
 |---|---|---|---|
@@ -178,17 +181,59 @@ The file-by-file pass also produced answers for units that are not secrecy surfa
 | Marked operand in untainted code | conditional on mode and additional state (VERIFIED) | untainted callers pass the VM guard | partially matches; modes unmodelled |
 | Event-dispatch taint | UNKNOWN | admin dispatch clears caller taint | unverified best guess |
 
-## Current state (SOURCE, 2026-10-31)
+## Current state (SOURCE, lane implementation 2026-11-12)
 
 | Area | Today | Gap |
 |---|---|---|
 | Restriction trigger | Aura secrecy reads `restricted_actions[0..3] == Active` plus the WM105 policy flag; `restricted_actions.rs` models supplied indexed transitions and forced CVars | The complete WM61 natural conditions are still supplied inputs |
 | AuraData | Restricted, non-NeverSecret records mark identified fields; the outer value is plain | Full policy selection and `ConditionalSecret` contents are not established |
-| Spell-keyed lookups | Never-secret spells stay plain; others return one nil to tainted callers (inferred) | WM61 S8 rejection fragments return zero results, not one nil; complete entry behavior remains UNKNOWN |
+| Spell-keyed lookups | ID rejection returns zero values; the name path requires a supplied alias | Complete matched-aura publication and native name-provider behavior remain UNKNOWN (WM61 S8/S8a) |
 | VM operations | Guarded truth/equality for wrapped booleans and nil, guarded ordering for numbers; violations raise with the native templates | Arithmetic, concat, `tostring`, `format` and table-key rules missing; S5's operation-check modes and additional state are unmodelled |
-| Widget sinks | `SetText`, `SetShown`, geometry, texture and cooldown on gated paths | No general argument-mode or aspect model |
+| Widget sinks | `SetText`, `SetShown`, geometry, texture and cooldown on gated paths; Retail/PTR recorded aspects and anchoring flag are independent of prevention/protection | No general argument-mode model, second recorded-set writers or native anchoring writer |
 | Event taint | `A_Admin.FireEvent` clears caller taint during dispatch (4.3.4-based comment) | Retail rule UNKNOWN; other dispatch paths unchecked |
 | Helpers | Bounded shallow checks; `canaccesstable` recursive | Several helpers missing or pass-through |
+
+## Evidence index and corrections (2026-11-12)
+
+All paths below are relative to `/home/osso/.local/state/wow-ui-sim/handoff/native-evidence-70688/`. A citation identifies a clean-room report, not client source. UNKNOWN selections stay unmodelled; this fold adds no guessed values.
+
+| Answer | Evidence and exact limit |
+|---|---|
+| S2 access and invocation | **VERIFIED:** the aura gate needs context, recorded source, policy flag and one Active entry 0..3 (`secrets/S2-who-sees-secret.md`, Answer; corrected by `secrets/S2-four-state-wm105.md`, §§1–7). **VERIFIED locally:** secure invocation saves/restores caller source and rewrites surviving result provenance without clearing secrecy (`secrets/S2-secure-invocation-wm61.md`, Answer). **UNKNOWN:** complete callback execution and exceptional restoration. |
+| S3 publication | **VERIFIED locally:** the converter marks individual identified fields, not the outer table by default (`secrets/S3-aura-field-granularity-wm61.md`, Native mechanism). This supersedes the whole-struct **INFERRED** reading of `secrets/S3-aura-field-granularity.md`, §1.1. **UNKNOWN:** complete accessor linkage and populated points. |
+| S4 registration | **VERIFIED:** closed helper registration set and classes; class is not a protection decision (`secrets/S4-restriction-helpers.md`, Registration; `S16-global-api-families.md`, Notes). **UNKNOWN:** full bodies in contaminated regions. Usage strings alone do not establish behavior (`secrets/S4s7-securecopy-and-delegate.md`, Usage strings). |
+| S4s7a copying | **VERIFIED at helper scope:** recursive copying handles keys and values, creates a new table without the metatable, and assigns saved execution provenance (`secrets/S4s7a-securecopy-emulated.md`, input table and provenance rule). **EMULATED:** successful secret scalars retain secrecy; nested tables are copied. **UNKNOWN:** complete protected wrapper, live propagation counter and error unwinding. Do not assert that copying always removes taint. |
+| S4s7b delegate | **VERIFIED locally:** construction publishes a function with three captured values; invocation assigns captured provenance to arguments and selects/restores captured source; nonempty entry source rejects before dispatch (`secrets/S4s7b-createsecuredelegate-emulated.md`, §§1–3). **INFERRED:** exactly one public callable and forwarding all target results. **UNKNOWN:** actual Lua target security and inhibit-flag reachability. |
+| S5 operations | **VERIFIED:** the shared check has the conditional mode branches stated above (`secrets/S5-untainted-operations.md`, Shared operation check and Answers). **UNKNOWN:** mode origin and boundary selection, result secrecy and operations whose continuation is unread. |
+| S6 aspects | **VERIFIED locally:** aspect queries read recorded sets; prevention and anchoring use independent flags; Text is 8 (`secrets/S6-aspects-wm61.md`, Native mechanism). **UNKNOWN:** complete Lua publication, second-set writers, clearing and propagation. `secrets/S6-sinks-and-aspects.md` establishes three diagnostic strings, not complete argument-mode tables. |
+| S7/S7a helpers | **VERIFIED:** registration and marker transfer rules; **EMULATED:** variadic wrap/unwrap transforms, one result per argument, zero for no arguments, no persistent access grant (`secrets/S7a-secretwrap-emulated.md`, §§1–2). This corrects S18's two-argument reading. **UNKNOWN:** remaining full helper contracts (`secrets/S7-secret-helpers.md`, per-helper sections). |
+| S8/S8a lookup | **VERIFIED:** secrecy enum and classifier precedence, and bounded pre-lookup rejection (`secrets/S8-requires-nonsecret-aura.md`, NeverSecret mechanism; `secrets/S8-requires-nonsecret-aura-wm61.md`, Answer). **EMULATED:** rejection fragments return zero results (`secrets/S8a-unitauras-secret-emulated.md`). **UNKNOWN:** complete registered entry and matched-aura results. |
+| S9 taint | **VERIFIED:** named provenance, separate protected categories and raising secret violations (`secrets/S9-taint-model.md`, §§1–4; `secrets/S9-taint-templates.md`, formatter findings). **UNKNOWN:** event-dispatch inheritance; RTTI map membership is not a dispatch trace (§7). |
+| S11 admissibility | **VERIFIED:** unreachable 25-byte filler repeats 38,230 times; earlier nine-byte description was incomplete (`secrets/S11-deobfuscation.md`, §§0–0.1). **UNKNOWN:** behavior beyond admitted windows. |
+| S14 predicates | **VERIFIED:** 16 diagnostic strings and co-located API names; attribution of each co-located name to its enclosing API is **INFERRED** (`S14-predicate-names.md`, §§5–5.2). WM105 corrects “code 46” to string length and makes the predicate text an alternative to raising the pending aura report. |
+| S15 protection | **VERIFIED:** addon/macro event names and distinct combat/non-combat log wording (`secrets/S15-protected-globals.md`, Q1/Q4). **INFERRED:** combat input to the decision. **UNKNOWN:** protected set, complete emitter and event payload order. Later evidence belongs to [restriction reporting](restricted-actions-state.md). |
+| S16 registration | **VERIFIED:** a 38-function family includes secrecy and ordinary helpers; family membership does not establish protection (`S16-global-api-families.md`, Notes). |
+| S17 targeting | **VERIFIED:** 22-name registration family and `TargetUnit` optional name/exact-match input with empty-name default (`S17-targeting-unit.md`, §§1–2). **UNKNOWN:** complete target mutation and protection. No aura contract follows from this unit. |
+| S18 predicates | **VERIFIED:** `issecretvalue()` false; supplied value uses a secret predicate; `canaccessvalue()` true for missing/malformed input (`S18-secrecy-predicates.md`, §§1–2). **VERIFIED:** table-type gates and scalar-only `scrub` scan; **INFERRED:** remaining result accumulation and non-table defaults (`S18-secrecy-predicates.md`, §§6–12; `secrets/S18-secrecy-predicates.md`, §§13–14). The latter's empty-scan false is not promoted over the former's INFERRED result. |
+| S19 cursor | **VERIFIED:** 18-name family and `CursorHasItem` equality-to-1 flag test; **UNKNOWN:** flag meaning and `GetCursorInfo` returned tuple (`S19-cursor-unit.md`, §§1–4). See [cursor model](cursor-model.md); no secrecy behavior is established. |
+| S20 time | **VERIFIED:** local time returns two numbers, initialized to -1; server time is a computed double; session time scales a counter by 0.001. Counter units are **INFERRED** (`S20-time-unit.md`, §§5–10). See [time contract](get-local-game-time.md). |
+| S21 formatting | **VERIFIED:** named separator lookup, double thresholds and two configuration tables; **UNKNOWN:** configuration selector meaning (`S21-formatting-unit.md`, §§5,15). See [number formatter](abbreviated-number-formatter.md); no secrecy rule follows. |
+
+## VERIFIED contradiction audit at `e29763f8e`
+
+This table records established contradictions in the audited S2–S9 helper, aura and widget paths. It does not classify UNKNOWN behavior as a contradiction. Native citations use the evidence root above.
+
+| Case | VERIFIED native claim | Simulator source | Disposition |
+|---|---|---|---|
+| Aspect queries | Only recorded sets determine intersection/nonempty (`secrets/S6-aspects-wm61.md`, Native mechanism) | `src/lua_api/frame/methods/misc/secret.rs:175–184` derives ObjectSecurity from prevention, forbidden or protected state | Fix the Retail/PTR calculation; do not assert second-set propagation or complete native publication. |
+| Anchoring query | Separate anchoring flag, not prevention (`secrets/S6-aspects-wm61.md`, Native mechanism) | `src/lua_api/frame/methods/misc/secret.rs:101–105,187–191` aliases prevention | Supply a separate host input; leave native writers UNKNOWN. |
+| Explicit aspect addition | Helper refuses prevention before adding requested bits (`secrets/S6-aspects-wm61.md`, Native mechanism) | `src/lua_api/frame/methods/misc/secret.rs:51–62` unconditionally ORs bits | Remaining slice; script-handler policy and final native diagnostic publication remain UNKNOWN. |
+| Secure delegate entry | Nonempty execution source rejects before dispatch (`secrets/S4s7b-createsecuredelegate-emulated.md`, §3) | At e297, construction had no source gate; this lane adds the zero-result gate when the reporting helper returns | Reporter effects remain UNKNOWN; no target or error behavior is asserted. |
+| Secure delegate provenance | Constructor captures source and the helper selects it at invocation (`secrets/S4s7b-createsecuredelegate-emulated.md`, §§1–2) | At e297, source was captured at invocation and the target call always selected nil; this lane stores construction source and selects it for the inner call | Target security, inhibit flag and complete return publication remain UNKNOWN. |
+
+**VERIFIED source, not a contradiction:** `issecretvalue` uses the existing VM registration (`src/lua_api/globals/security/mod.rs:66`, `value_access.rs:15–20`); its conditional fallback calls a shallow secret predicate (`value_access.rs:136–140`), not constant false. `canaccessvalue()` uses missing-input nil and returns true (`value_access.rs:145–158`), as S18 requires. Named taint already exists in slot and closure metadata (`value_access.rs:47–70`, `secret_values.rs:207–214`); S9 does not establish an event-source rule to replace current dispatch.
+
+**UNKNOWN, not contradictions:** S5 public-boundary mode selection; S9 event inheritance; complete getter publication and clearing; missing restricted-helper singleton state. `securecallmethod` delegates to a protected `xpcall` bridge (`src/lua_api/script_helpers.rs:853–877`), which does not explicitly clear caller taint; a source-restoration difference is UNVERIFIED, not an established contradiction. Keep these unmodelled rather than selecting guessed native values.
 
 ## How it works
 
@@ -214,6 +259,10 @@ The file-by-file pass also produced answers for units that are not secrecy surfa
 
 ## Tests asserting this spec
 
+- `src/loader/tests/frame_state.rs::test_secret_and_protected_methods_reflect_frame_security_state` checks independent recorded-aspect queries against prevention/protection/forbidden state on Retail/PTR and preserves other profiles. Main approved retargeting the old conflation assertions against WM61 S6.
+- `src/loader/tests/frame_state.rs::test_prevention_does_not_imply_anchoring_secret` checks prevention versus separately supplied anchoring state. These are registered-API calculation tests: no pinned Lua consumer calls these queries.
+- `tests/secret_text_aspect_consumer.rs::compact_unit_name_marks_text_aspect_for_secret_identity` runs original `CompactUnitFrame_UpdateName` on Retail/PTR as a positive Text-aspect control. The native evidence is Retail-only; PTR shares the simulator model, not a claimed native proof.
+
 - `tests/spell_casting.rs::forever_spell_cast_secrecy_uses_supplied_unit_and_control_guids_in_casting_bar` checks Forever's default, host-supplied GUID ownership, argument errors, and the original `CastingBarMixin:IsInterruptable` consumer.
 - `tests/spell_casting.rs::casting_bar_original_interruptibility_uses_cast_secrecy_predicate` checks the original consumer on Retail and PTR.
 
@@ -231,9 +280,9 @@ Threat secrecy still follows the supplied `threat_state_restricted` input. Its n
 
 ## Native restriction surface (clean-room S10–S13, 2026-10-31)
 
-Source: `native-evidence-70688/secrets/S13-restriction-surface-summary.md` (behavioural specs only; builds 12.1.5.70688, Forever 70707, 12.1.7 PTR).
+Source: `native-evidence-70688/S13-restriction-surface-summary.md` (behavioural specs only; builds 12.1.5.70688, Forever 70707, 12.1.7 PTR).
 
-- VERIFIED, all three builds: the restricted helper set is closed. It has 25 names: 24 at permission class 7 and `GetForbiddenObjectTable` at class 6. The set is `canaccessallvalues`, `canaccesssecrets`, `canaccesstable`, `canaccessvalue`, `hasanysecretvalues`, `issecrettable`, `issecretvalue`, `mapvalues`, `scrub`, `scrubsecretvalues`, `secretunwrap`, `secretwrap`, `securecopy`, `CreateFromMixins`, `CreateSecureDelegate`, `Mixin`, `RegisterEventCallback`, `RegisterUnitEventCallback`, `UnregisterEventCallback`, `UnregisterUnitEventCallback`, `dropsecretaccess`, `dumpobject`, `securecallmethod`, `settablesecurity` and `GetForbiddenObjectTable`. The simulator registers all 25. See the separate [secure-helpers contract](secure-helpers.md) for modeled behavior. One implementation is correct for every pinned build.
+- VERIFIED, all three builds: the restricted helper set is closed. It has 25 names: 24 at permission class 7 and `GetForbiddenObjectTable` at class 6. The set is `canaccessallvalues`, `canaccesssecrets`, `canaccesstable`, `canaccessvalue`, `hasanysecretvalues`, `issecrettable`, `issecretvalue`, `mapvalues`, `scrub`, `scrubsecretvalues`, `secretunwrap`, `secretwrap`, `securecopy`, `CreateFromMixins`, `CreateSecureDelegate`, `Mixin`, `RegisterEventCallback`, `RegisterUnitEventCallback`, `UnregisterEventCallback`, `UnregisterUnitEventCallback`, `dropsecretaccess`, `dumpobject`, `securecallmethod`, `settablesecurity` and `GetForbiddenObjectTable`. The simulator registers all 25. `securecopy` and `CreateSecureDelegate` are implemented in `src/lua_api/globals/real/secure_helpers.rs`, not temporary fallbacks. Equal registration names do not establish equal implementation semantics across builds; the VERIFIED delegate mismatches are listed in the audit above.
 - VERIFIED: `GetAddOnRestrictionState(type)` returns one byte of a per-type state array, and `IsAddOnRestrictionActive(type)` is `state[type] == 2`. See [restricted-actions-state](restricted-actions-state.md).
 - VERIFIED structure, two builds: `canaccessvalue` returns its fallback `1` when the argument is missing or fails its check. INFERRED meaning: fail-open (access allowed). The simulator matches this: `canaccessvalue()` returns `true`. Do not apply one fail-closed default to the whole surface.
 - VERIFIED, three builds: `CreateSecureDelegate`, `secretunwrap` and `settablesecurity` refuse while a native singleton is set. They report an error and return `nil`; they do not raise. `secretwrap` has no guard. The singleton and its writer are native UNKNOWN, so the simulator does not model this refusal.
@@ -247,12 +296,12 @@ Source: `native-evidence-70688/secrets/S13-restriction-surface-summary.md` (beha
 - [ ] Complete accessor-to-AuraData publication and the remaining secret-operation behavior are UNKNOWN; see the WM61 boundaries below.
 - [ ] Restricted-helper refusal guard (the separate singleton-based `CreateSecureDelegate`, `secretunwrap` and `settablesecurity` path returns `nil`): not modelled; the singleton is UNKNOWN. See [secure helpers](secure-helpers.md) for the tainted-construction gate.
 - [ ] Production restriction inputs and transitions (WM61 S1).
-- [ ] Per-field AuraData secrecy (WM61 S3).
+- [ ] Complete AuraData publication beyond the implemented WM61 S3 field marking; populated points and complete accessor linkage remain UNKNOWN.
 - [ ] General operation rules for secrets in tainted code (after S4).
 - [ ] Event-dispatch taint rule, which fixes the issue #13 `CompactArenaFrame` case (after S9).
 - [ ] `RequiresUnitAuraAccess` predicate string: WM105 §6 shows it is only the fallback when the pending-error lookup finds no report, so it never appears on the aura-denial path. The simulator does not model a no-report denial arm; no native route to it is known.
 - [x] Aura rejection condition (WM105): context, then a recorded taint source (a null source permits), then the generated-secrecy-policy flag, then any of restriction entries 0..3 equal to `Active`. `Map` and `Chat` are never read, `Activating` does not match, and the gate shares `GetAddOnRestrictionState`'s array. `forceinsecure()` installs `*** TaintForced ***`, so a forced caller is denied.
-- [ ] Helper contracts left open by S7/S18: `canaccesssecrets` signature, `dropsecretaccess`, `mapvalues`, `settablesecurity`, `securecallmethod`, and success values of `secretunwrap`.
+- [ ] Helper contracts left open by S7/S18: `canaccesssecrets` signature, `dropsecretaccess`, `mapvalues`, `settablesecurity`, `securecallmethod`, and live `secretunwrap` success outside the bounded S7a EMULATED fragments.
 
 ## Out of scope
 
