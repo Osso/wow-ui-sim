@@ -1,3 +1,7 @@
+## [2026-11-12] investigation | Retail EllesmereUI v9.8 load boundary
+
+[Full third-party startup](investigations/full-addon-startup-2026-10-10.md#retail-ellesmereui-v98-load-reproduction-2026-11-12) records the initial 3/20 enablement mistake and issue #22 limits. **VERIFIED:** Retail G1/G1c behavior and a 20/20 post-fix load with three unique Lua errors (72 occurrences). **INFERRED:** the CVar overlap window and loader-populated addon-file catalog. **UNKNOWN:** native addon-file table membership and exact backing table identities.
+
 ## [2026-11-12] system | Secure delegate global
 
 [Lua API](systems/lua-api.md#secure-delegate-global) links the [secure-helper contract](../specs/secure-helpers.md). **VERIFIED from S4s7b emulation:** source rejection, shallow provenance assignment and function-argument wrapping are bounded; target security, reporter effects and full result publication remain UNKNOWN. **VERIFIED locally:** exact tests pass across six applicable profiles. The optional Retail duration-object case remains a separate failure because it does not call `CreateSecureDelegate`.

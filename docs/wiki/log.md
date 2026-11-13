@@ -2,6 +2,14 @@
 
 Updated [FontString anchor sizing](investigations/fontstring-anchor-sizing.md) with L1c labels. **VERIFIED (code):** the inferred stored-width rewrite and `SetPoint()` measurement refresh are removed so native-UNKNOWN wrapping is not modeled. **VERIFIED (test code):** default tests observe rectangle edges and SetWidth priority; **INFERRED (test code):** GetWidth and single-anchor assertions are optional; **UNKNOWN:** renderer wrapping width and text-cache invalidation remain unmodeled.
 
+## [2026-11-12] investigation | EllesmereUI native contracts and runtime result
+
+Updated [full third-party startup](investigations/full-addon-startup-2026-10-10.md#retail-ellesmereui-v98-load-reproduction-2026-11-12) with G1/G1c classifications and the post-fix load. **VERIFIED:** 20/20 installed addons loaded; `lua-errors` reported three unique post-startup errors across 72 occurrences. **INFERRED:** CVar-window behavior and pre-load catalog seeding. **UNKNOWN:** whether native tables include addon files.
+
+## [2026-11-12] investigation | Retail EllesmereUI v9.8 load boundary
+
+Updated [full third-party startup](investigations/full-addon-startup-2026-10-10.md#retail-ellesmereui-v98-load-reproduction-2026-11-12) with the original enabled-addon reproduction and issue #22 symptom limits; its former nil-global and asset rejection were baseline failures, not current results.
+
 ## [2026-11-12] system | Secure delegate global
 
 Updated [Lua API](systems/lua-api.md#secure-delegate-global) and linked the [secure-helper contract](../specs/secure-helpers.md). Recorded S4s7b's emulated construction/invocation boundary, simulator inference labels, six-profile exact tests, and the separate optional Retail duration-object failure.
