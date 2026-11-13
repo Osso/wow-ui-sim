@@ -513,7 +513,7 @@ fn help_plate_tooltip_rotates_real_arrow_texture_geometry() {
             tooltip.ArrowRight = createArrow()
             tooltip.ArrowGlowLeft = createArrow()
             tooltip.ArrowGlowRight = createArrow()
-            HelpPlateTooltipMixin:OnLoad(tooltip)
+            HelpPlateTooltipMixin.OnLoad(tooltip)
 
             local failures = {}
             local function expectRotation(name, texture, expected)
