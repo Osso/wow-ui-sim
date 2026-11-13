@@ -207,6 +207,37 @@ fn retail_reputation_filter_toggles_and_requires_legacy_visibility_argument() {
 
 // Era/Anniversary select `Blizzard_CharacterFrame/Vanilla/CharacterFrame.lua`,
 // which does not define the Retail/Cata `CharacterFrame:RefreshDisplay` method.
+#[cfg(feature = "client-retail")]
+#[test]
+fn retail_reputation_header_consumer_expands_all_for_zero_index() {
+    test_timeout! {
+        let env = setup_env();
+        let result: String = env
+            .eval(
+                r#"
+                local toggleCollapsed = ReputationHeaderMixin and ReputationHeaderMixin.ToggleCollapsed
+                if type(toggleCollapsed) ~= "function" then
+                    return "missing_reputation_header_consumer"
+                end
+                local source = debug.getinfo(toggleCollapsed, "S").source:gsub("\\", "/")
+                if not source:find("Blizzard_UIPanels_Game/Mainline/ReputationFrame.lua", 1, true) then
+                    return "wrong_reputation_header_consumer=" .. source
+                end
+
+                C_Reputation.CollapseAllFactionHeaders()
+                local collapsedCount = C_Reputation.GetNumFactions()
+                toggleCollapsed({
+                    factionIndex = 0,
+                    IsCollapsed = function() return true end,
+                })
+                return tostring(collapsedCount) .. ":" .. tostring(C_Reputation.GetNumFactions())
+                "#,
+            )
+            .expect("Retail reputation header consumer should run");
+        assert_eq!(result, "3:11");
+    }
+}
+
 #[cfg(not(any(feature = "client-era", feature = "client-anniversary")))]
 #[test]
 fn show_ui_panel_locks_reputation_frame_layout() {
