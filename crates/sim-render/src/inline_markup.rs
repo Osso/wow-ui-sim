@@ -304,6 +304,28 @@ mod tests {
     }
 
     #[test]
+    fn markup_fields_are_limited_to_31_bytes() {
+        let long_name = "x".repeat(40);
+        let expected_name = "x".repeat(31);
+        let texture = split_inline_markup(&format!("|T{long_name}:12|t"));
+        let atlas = split_inline_markup(&format!("|A:{long_name}:12:16|a"));
+        assert!(matches!(
+            texture.as_slice(),
+            [InlinePiece::Icon(InlineIcon {
+                source: InlineIconSource::File(path),
+                ..
+            })] if path == &expected_name
+        ));
+        assert!(matches!(
+            atlas.as_slice(),
+            [InlinePiece::Icon(InlineIcon {
+                source: InlineIconSource::Atlas(name),
+                ..
+            })] if name == &expected_name
+        ));
+    }
+
+    #[test]
     fn reads_every_texture_field() {
         let pieces = split_inline_markup("|T133784:12:20:1:-2:64:32:16:48:0:32:255:0:51|t");
         let [InlinePiece::Icon(parsed)] = pieces.as_slice() else {
