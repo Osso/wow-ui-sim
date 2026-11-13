@@ -113,6 +113,40 @@ fn test_c_addons_load_addon_preserves_account_store_mixin_methods() {
     }
 }
 
+#[cfg(all(feature = "client-retail", feature = "optional-tests"))]
+#[test]
+fn test_retail_runtime_account_store_setter_preserves_title_and_event() {
+    test_timeout! {
+        let env = load_all_addons_except(Some("Blizzard_AccountStore"));
+        let (initially_unselected, storefront, title, event_id): (bool, i64, String, Option<i64>) =
+            env.eval(
+                r#"
+                assert(not C_AddOns.IsAddOnLoaded("Blizzard_AccountStore"))
+                local loaded, reason = C_AddOns.LoadAddOn("Blizzard_AccountStore")
+                assert(loaded, tostring(reason))
+                assert(C_AddOns.IsAddOnLoaded("Blizzard_AccountStore"))
+                local frame = AccountStoreFrame
+                local initiallyUnselected = frame.storeFrontID == nil
+                local owner = {}
+                local eventID
+                EventRegistry:RegisterCallback("AccountStore.StoreFrontSet", function(_, id)
+                    eventID = id
+                end, owner)
+                frame:SetTitle("storefront setter test sentinel")
+                frame:SetStoreFrontID(42424242)
+                EventRegistry:UnregisterCallback("AccountStore.StoreFrontSet", owner)
+                return initiallyUnselected, frame.storeFrontID,
+                    frame:GetTitleText():GetText() or "", eventID
+                "#,
+            )
+            .expect("runtime-loaded Account Store setter should run");
+        assert_eq!(storefront, 42_424_242);
+        assert_eq!(title, "", "unmapped storefront should clear the frame title");
+        assert_eq!(event_id, Some(42_424_242), "the original setter should emit the storefront event");
+        assert!(initially_unselected, "runtime load must not seed Plunderstorm as the storefront");
+    }
+}
+
 // Native 1.60.1.70707 activates {mainline, camelot}: `standard` is recognised but inactive and
 // `wowlabs` is an unknown token, so `## AllowLoadGameType: standard, wowlabs` fails closed and
 // Blizzard_AccountStore must not load (evidence: native-evidence-70707/TOC_AllowLoadGameType.md).

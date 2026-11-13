@@ -663,7 +663,11 @@ fn patch_runtime_feature_addon_surfaces(env: &crate::lua_api::LoaderEnv<'_>, add
     if addon_name == "Blizzard_AuthChallengeUI" {
         patch_auth_challenge_frame_parent(env);
     }
-    if addon_name == "Blizzard_AccountStore" {
+    // Retail's TOC loads Blizzard_AccountStore.lua before the frame XML.
+    // Preserve its setter: it updates the title and emits StoreFrontSet.
+    if addon_name == "Blizzard_AccountStore"
+        && crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail
+    {
         let _ = patch_account_store_set_storefront(env);
     }
     if addon_name == "Blizzard_CatalogShop" {
