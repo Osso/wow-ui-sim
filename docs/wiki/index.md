@@ -4353,6 +4353,7 @@ The sixteen retail 12.0.0 `Enum.EditModeDamageMeterSetting.*` and `Enum.EditMode
 | [[editbox-render-text-cache]] | SimCommands search text can disappear from stale `text_stripped` cache or because opaque EditBox child regions render above the internal text/caret emitter |
 | [[explicit-xml-parent-anchors]] | Nested XML frames with `parent="..."` must use that explicit parent for implicit anchors; fixed PaperDoll sidebar tabs anchoring to `PaperDollFrame` instead of `CharacterFrameInsetRight` |
 | [[fontstring-default-anchors]] | Unanchored XML `FontString` layer children and `ButtonText` pick their implicit anchor from `justifyH`; explicit anchors suppress the default, while EditBox backing FontStrings stay unanchored |
+| [[fontstring-anchor-sizing]] | VERIFIED: native rect span precedes stored width; INFERRED: public GetWidth span and single-anchor fallback; UNKNOWN: wrap metric and text-cache invalidation |
 | [[frame-surrogate-identity-slot]] | Frame method dispatch now seeds `frame[0]` with a backed identity token so Restricted Environment-style surrogates resolve through `[0]`; `[1]`-only surrogates no longer dispatch |
 | [[generated-stubs-audit]] | 5 unresolved priority findings in generated-stub surfaces; retail/PTR C_LootHistory empty state is resolved |
 | [[chatframe-scrollbar-anchor-reapply]] | Inherited child anchor reapply used the child name for `$parent...` substitution, pushing `ChatFrame1` scrollbar descendants off-screen |
