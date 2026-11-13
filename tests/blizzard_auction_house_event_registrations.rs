@@ -28,6 +28,7 @@ AuctionHouseFrame:Show()
 local browseResults = AuctionHouseFrame.BrowseResultsFrame
 local itemBuy = AuctionHouseFrame.ItemBuyFrame
 browseResults:Show()
+itemBuy:SetItemKey(C_AuctionHouse.MakeItemKey(210935, 70))
 itemBuy:Show()
 
 for _, eventName in ipairs(requiredFrameEvents) do
