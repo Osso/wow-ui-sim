@@ -276,7 +276,7 @@ fn blizzard_deprecated_spell_book_load_deprecation_fallbacks_cvar_is_default_on(
 
 #[cfg(all(feature = "client-retail", feature = "optional-tests"))]
 #[test]
-fn deprecated_spell_book_globals_follow_the_original_cvar_gate() {
+fn deprecated_spell_book_wrapper_fallbacks_follow_original_cvar_gate() {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
     env.set_screen_mode(ScreenKind::Game);
 
@@ -289,16 +289,22 @@ fn deprecated_spell_book_globals_follow_the_original_cvar_gate() {
     load_addon(&env.loader_env(), &toc)
         .expect("selected Blizzard deprecated spellbook addon should load");
 
-    let (loaded, cvar_disabled, wrappers_absent): (bool, bool, bool) = env
+    let (loaded, cvar_disabled, fallbacks_absent, existing_global_callable): (
+        bool,
+        bool,
+        bool,
+        bool,
+    ) = env
         .eval(
             r#"
             return C_AddOns.IsAddOnLoaded("Blizzard_DeprecatedSpellBook"),
                    not GetCVarBool("loadDeprecationFallbacks"),
                    IsPlayerSpell == nil
-                       and IsSpellKnownOrOverridesKnown == nil
                        and FindFlyoutSlotBySpellID == nil
                        and FindSpellOverrideByID == nil
-                       and FindBaseSpellByID == nil
+                       and FindBaseSpellByID == nil,
+                   type(IsSpellKnownOrOverridesKnown) == "function"
+                       and type(IsSpellKnownOrOverridesKnown(116)) == "boolean"
             "#,
         )
         .expect("deprecated spell wrapper state should be readable");
@@ -309,8 +315,12 @@ fn deprecated_spell_book_globals_follow_the_original_cvar_gate() {
         "the original deprecation-fallback CVar stays off"
     );
     assert!(
-        wrappers_absent,
-        "the original Retail addon returns before publishing these globals when the CVar is off"
+        fallbacks_absent,
+        "the four bootstrap-only globals stay absent when their selected owner declines to publish them"
+    );
+    assert!(
+        existing_global_callable,
+        "the existing IsSpellKnownOrOverridesKnown global remains available"
     );
 }
 
