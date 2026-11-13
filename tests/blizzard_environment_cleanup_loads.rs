@@ -261,6 +261,28 @@ fn blizzard_environment_cleanup_is_addon_loaded_returns_true(env: &WowLuaEnv) {
 }
 }
 
+#[test]
+#[cfg(feature = "optional-tests")]
+fn environment_cleanup_keeps_secure_namespaces_absent_after_restore() {
+    common::with_timeout(90, || {
+        common::blizzard_addon_harness::with_blizzard_addon_smoke_shape(
+            &["Blizzard_EnvironmentCleanup"],
+            &[],
+            |env, loaded| {
+                assert!(
+                    loaded
+                        .iter()
+                        .any(|name| name == "Blizzard_EnvironmentCleanup")
+                );
+                let absent: (bool, bool) = env
+                    .eval("return C_StoreSecure == nil, C_WowTokenSecure == nil")
+                    .expect("post-cleanup secure namespace probe should succeed");
+                assert_eq!(absent, (true, true));
+            },
+        );
+    });
+}
+
 prefork_full_ui_case! {
 fn blizzard_environment_cleanup_secure_namespaces_get_restored_post_load(env: &WowLuaEnv) {
     // EnvironmentCleanup.lua:3–6 removes these public globals. Commit a07283768
