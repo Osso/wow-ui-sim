@@ -903,3 +903,14 @@ remain in a separate droppable inferred registration, replacing only its old
 zoom no-op. Camera profile/model rendering effects remain unmodeled. The
 unseeded customization collector is unchanged pending native evidence, so
 camera API progress is not a claim of end-to-end character creation success.
+
+
+## Host category camera zoom (R83d)
+
+Retail/Forever host categories require an explicit signed32 camera zoom and
+always publish it numerically, including zero. The original customization
+consumer retains the supplied value and applies the existing setter's 0..100
+clamp; default coverage uses original customize-entry and category-selection
+methods (#712), stopping short of the unrelated zone-choice API gap. See the [R83d contract](../../specs/character-creation-submit.md#r83d-mandatory-host-category-camera-zoom-679690701).
+No DB2 adapter, PTR category publisher, unseeded category change, or pre-choice
+nil/empty assertion is included. Native category data remains unmodeled.

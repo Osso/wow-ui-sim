@@ -1,3 +1,9 @@
+## [2026-11-13] system | Mandatory host category camera zoom
+
+[Lua API](systems/lua-api.md#host-category-camera-zoom-r83d) records R83d's
+verified signed32 numeric publication, explicit zero, and original-consumer
+clamp coverage. RF host inputs only; no collector or PTR category changes.
+
 ## [2026-11-13] system | PTR character-creation camera evidence
 
 [Lua API](systems/lua-api.md#ptr-character-creation-evidence-boundary) separates
