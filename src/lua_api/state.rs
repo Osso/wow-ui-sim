@@ -114,6 +114,7 @@ macro_rules! build_empty_sim_state {
             anima_diversion: AnimaDiversionState::default(),
             garrison_talents: GarrisonTalentState::default(),
             hyperlink_tooltip: Default::default(),
+            trade_skill_crafting_ui_inputs: Default::default(),
             #[cfg(feature = "client-retail")]
             garrison_trees: crate::c_api::c_garrison_trees::GarrisonTrees::default(),
             clipboard: ClipboardState::default(),
