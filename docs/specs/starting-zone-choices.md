@@ -4,10 +4,10 @@
 
 ## What it must do
 
-- [ ] Retail with no host input returns two values: a choice table with `zoneName = ""`, `zoneImageAtlas = nil`, and `isNPE = false`, then nil.
-- [ ] Retail with a normal-zone input and no restriction returns that first choice and a second choice with `zoneName = ""`, `zoneImageAtlas = nil`, and `isNPE = true`.
-- [ ] Retail with a normal-zone record and the NPE restriction active returns the default first-choice fields with `isNPE = true` and no second choice.
-- [ ] Forever returns a choice table and nil; `isNPE` is always false.
+- [x] Retail with no host input returns two values: a choice table with `zoneName = ""`, `zoneImageAtlas = nil`, and `isNPE = false`, then nil.
+- [x] Retail with a normal-zone input and no restriction returns that first choice and a second choice with `zoneName = ""`, `zoneImageAtlas = nil`, and `isNPE = true`.
+- [x] Retail with a normal-zone record and the NPE restriction active returns the default first-choice fields with `isNPE = true` and no second choice.
+- [x] Forever returns a choice table and nil; `isNPE` is always false.
 - [ ] PTR uses the Retail projection. PTR applicability is **INFERRED** from Retail 12.1.5.70688; no PTR-specific behavior is asserted.
 
 ## How it works
