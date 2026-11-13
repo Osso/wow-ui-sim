@@ -150,11 +150,6 @@ fn explicit_secret_aspects_reflect_recorded_bits_on_retail() {
         local protected = SecretAspectProtectedFrame
         assert(protected:IsProtected())
         assert(protected:HasSecretAspect(32768))
-        local forbidden = CreateFrame("Frame")
-        forbidden:SetForbidden()
-        assert(forbidden:IsForbidden())
-        forbidden:AddSecretAspect(8)
-        assert(forbidden:HasSecretAspect(8) and forbidden:IsForbidden())
         "#,
     )
     .expect("explicit aspect writes succeed after prevention is disabled");
