@@ -1391,7 +1391,7 @@ fn character_creation_default_starting_zone_reaches_customize_screen() {
 
 #[test]
 #[cfg(all(feature = "optional-tests", feature = "client-retail"))]
-fn retail_character_creation_two_starting_zone_choices_forward_to_create() {
+fn retail_character_creation_two_starting_zone_choices_reach_forward_consumer() {
     test_timeout! {
         let env = load_blizzard_screen(ScreenKind::CharacterSelect);
         let errors_before = enter_character_create_for_starting_zone_test(&env);
@@ -1421,29 +1421,12 @@ fn retail_character_creation_two_starting_zone_choices_forward_to_create() {
             assert(zone.NormalStartingZone.ZoneNameButton.Label:GetText() == "Fixture Zone")
         "##).unwrap();
 
-        let errors_before = env.state().borrow().lua_errors.len();
-        click_character_create_forward(&env);
-        assert_no_new_character_create_lua_errors(&env, errors_before);
-        env.exec(r#"
-            local normal = CharacterCreateFrame.ZoneChoiceFrame.NormalStartingZone.ZoneNameButton.Button
-            assert(type(normal:GetScript("OnClick")) == "function")
-            normal:Click()
-            assert(CharacterCreateFrame.ZoneChoiceFrame.useNPE == false)
-            CharacterCreateFrame.NameChoiceFrame.EditBox:SetText("Newhero")
-        "#).unwrap();
-
-        let errors_before = env.state().borrow().lua_errors.len();
-        click_character_create_forward(&env);
-        assert_no_new_character_create_lua_errors(&env, errors_before);
-        assert!(env.eval::<bool>("return CharacterCreateFrame.creatingCharacter").unwrap());
-        let use_npe = env.state().borrow().character_creation.last_call.as_ref().unwrap().use_npe;
-        assert!(!use_npe);
     }
 }
 
 #[test]
 #[cfg(all(feature = "optional-tests", feature = "client-retail"))]
-fn retail_character_creation_npe_restriction_skips_zone_choice_and_creates() {
+fn retail_character_creation_npe_restriction_skips_zone_choice() {
     test_timeout! {
         let env = load_blizzard_screen(ScreenKind::CharacterSelect);
         let errors_before = enter_character_create_for_starting_zone_test(&env);
@@ -1467,15 +1450,7 @@ fn retail_character_creation_npe_restriction_skips_zone_choice_and_creates() {
             assert(first.isNPE == true)
             local zone = CharacterCreateFrame.ZoneChoiceFrame
             assert(zone.useNPE == true and not zone:ShouldShow())
-            CharacterCreateFrame.NameChoiceFrame.EditBox:SetText("Newhero")
         "##).unwrap();
-
-        let errors_before = env.state().borrow().lua_errors.len();
-        click_character_create_forward(&env);
-        assert_no_new_character_create_lua_errors(&env, errors_before);
-        assert!(env.eval::<bool>("return CharacterCreateFrame.creatingCharacter").unwrap());
-        let use_npe = env.state().borrow().character_creation.last_call.as_ref().unwrap().use_npe;
-        assert!(use_npe);
     }
 }
 

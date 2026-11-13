@@ -25,8 +25,8 @@
 ## Tests asserting this spec
 
 - `tests/glue_character_select.rs::character_creation_default_starting_zone_reaches_customize_screen`
-- `tests/glue_character_select.rs::retail_character_creation_two_starting_zone_choices_forward_to_create`
-- `tests/glue_character_select.rs::retail_character_creation_npe_restriction_skips_zone_choice_and_creates`
+- `tests/glue_character_select.rs::retail_character_creation_two_starting_zone_choices_reach_forward_consumer`
+- `tests/glue_character_select.rs::retail_character_creation_npe_restriction_skips_zone_choice`
 
 ## Known gaps (current cycle)
 
