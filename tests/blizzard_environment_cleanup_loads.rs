@@ -1,4 +1,5 @@
 #![cfg(feature = "client-retail")]
+use crate::common;
 use std::path::PathBuf;
 
 use wow_ui_sim::loader::discover_blizzard_addons_for_screen;
