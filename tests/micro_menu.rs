@@ -223,7 +223,13 @@ fn texture_path(env: &WowLuaEnv, texture_expr: &str) -> String {
 
 post_wrath_ui_fixture! {
 fn professions_primary_frame_expr() -> &'static str {
-    "PrimaryProfession1 or (ProfessionsContentFrame and ProfessionsContentFrame.PrimaryProfession1)"
+    // PTR 70493: Mainline/Blizzard_ProfessionsBookTemplates.xml:166,172.
+    if cfg!(feature = "client-ptr") {
+        "ProfessionsBookFrame.ProfessionsContentFrame.PrimaryProfession1"
+    } else {
+        // Retail 70575: Blizzard_ProfessionsBook.xml:353,359.
+        "PrimaryProfession1"
+    }
 }
 
 fn professions_primary_spell_button_is_shown(env: &WowLuaEnv, button_name: &str) -> bool {
@@ -277,7 +283,7 @@ fn professions_primary_spell_button_nameframe_texture(
                 local draw_layer = region:GetDrawLayer()
                 local width, height = region:GetSize()
                 if draw_layer == "BACKGROUND" and width == 108 and height == 41 then
-                    return region:GetTextureFilePath() or ""
+                    return region:GetTextureFilePath() or "<untextured NameFrame>"
                 end
             end
         end
@@ -582,6 +588,12 @@ fn micro_menu_professions_button_loads_and_opens_panel() {
 
     let first_nameframe = professions_primary_spell_button_nameframe_texture(&env, "SpellButton1");
     let second_nameframe = professions_primary_spell_button_nameframe_texture(&env, "SpellButton2");
+    if cfg!(feature = "client-ptr") {
+        // PTR 70493 Blizzard_ProfessionsBookTemplates.xml:4-75 has no NameFrame.
+        // Retail 70575 Blizzard_ProfessionsBook.xml:29-37 supplies the old parchment.
+        assert_eq!(first_nameframe, "", "PTR SpellButton1 has no NameFrame region");
+        assert_eq!(second_nameframe, "", "PTR SpellButton2 has no NameFrame region");
+    } else {
     assert_eq!(
         first_nameframe, "Interface\\Spellbook\\ProfessionsBook",
         "SpellButton1 name frame should keep its textured parchment background"
@@ -590,6 +602,7 @@ fn micro_menu_professions_button_loads_and_opens_panel() {
         second_nameframe, "Interface\\Spellbook\\ProfessionsBook",
         "SpellButton2 name frame should keep its textured parchment background"
     );
+    }
 }
 }
 

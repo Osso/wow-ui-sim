@@ -10,6 +10,12 @@ field of recipe information to build the favorites group. The selected Retail
 `TradeSkillUIDocumentation.lua:1327-1335` declares the favorite-event payload.
 The API members themselves are not declared in the pinned generated docs.
 
+PTR 70493 `Blizzard_ProfessionsTemplates/Blizzard_ProfessionsRecipeSchematicForm.lua:469`
+consumes `IsRecipeFavorite` during the original crafting-form initialization.
+VERIFIED: this PTR consumer needs the API. The registered contract is the same
+as Retail WM83, **INFERRED for PTR** pending native R85 evidence; the Retail
+native findings below do not establish PTR parity.
+
 ## Contract
 
 - Numeric or numerically convertible recipe IDs are truncated to signed

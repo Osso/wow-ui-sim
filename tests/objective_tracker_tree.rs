@@ -370,6 +370,21 @@ fn objective_tracker_frame_layout_is_locked(env: &WowLuaEnv) {
         env.exec(include_str!("objective_tracker/wrath_layout.lua")).unwrap();
         return;
     }
+    #[cfg(feature = "client-ptr")]
+    {
+        // Match the Retail third-quest fixture without its Retail-only abandonability checks.
+        // PTR 70493 QuestLogDocumentation.lua:15,1189 publishes the watch APIs.
+        let state = env.state();
+        let mut sim = state.borrow_mut();
+        let mut quest = sim.quest_log_entries.entries[0].clone();
+        quest.quest_id = 80002;
+        quest.title = "Tracker layout fixture".into();
+        assert!(sim.quest_log_entries.entries.iter().all(|entry| entry.quest_id != quest.quest_id));
+        sim.quest_log_entries.entries.push(quest);
+        drop(sim);
+        env.exec("assert(C_QuestLog.AddQuestWatch(80002))").unwrap();
+        wow_ui_sim::startup::run_extra_update_ticks(env, 5);
+    }
     #[cfg(feature = "client-retail")]
     {
         let state = env.state();

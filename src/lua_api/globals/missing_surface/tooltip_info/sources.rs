@@ -22,20 +22,16 @@ pub(super) fn tooltip_for_item_source(state: &mut LuaState, value: Val) -> Val {
 
 pub(super) fn tooltip_for_item_link(
     state: &mut LuaState,
-    link: &str,
-    item_id: u32,
+    parsed: &crate::c_api::item_descriptor::ParsedItemLink,
 ) -> LuaResult<Val> {
     // WM97 evidence is Retail 12.1.5; other profiles keep the catalog-only path.
     if !matches!(
         crate::client_profile::ACTIVE,
         crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
     ) {
-        return Ok(tooltip_for_item_id(state, item_id));
+        return Ok(tooltip_for_item_id(state, parsed.descriptor.item_id));
     }
-    let Some(parsed) = crate::c_api::item_descriptor::parse_item_link(link) else {
-        return Ok(tooltip_for_item_id(state, item_id));
-    };
-    let descriptor = parsed.descriptor;
+    let descriptor = &parsed.descriptor;
     let player_level = {
         let model = borrow_state(state)?;
         let player = &model.player;

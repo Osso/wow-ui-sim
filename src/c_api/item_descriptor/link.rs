@@ -14,6 +14,7 @@ pub struct ParsedItemLink {
     pub link_level: u32,
     pub request_context: u32,
     pub upgrade_mask: u32,
+    pub socket_bonus_groups: [Vec<u32>; 3],
     pub crafter_guid: String,
     pub trailing_scalar: u32,
 }
@@ -68,10 +69,10 @@ pub fn parse_item_link(text: &str) -> Option<ParsedItemLink> {
             }
         }
     }
-    for _ in 0..3 {
+    for group in &mut link.socket_bonus_groups {
         let count = parse_signed(&field());
         for _ in 0..count.max(0) {
-            field();
+            group.push(parse_number(&field())?);
         }
     }
     link.crafter_guid = field();

@@ -2,9 +2,17 @@
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 fn collect_in_colors(env: &WowLuaEnv) {
-    env.exec(&format!("D56 = {}", matches!(wow_ui_sim::client_profile::ACTIVE,
-        wow_ui_sim::client_profile::ClientProfile::Retail | wow_ui_sim::client_profile::ClientProfile::Ptr))).unwrap();
-    env.exec(r#"
+    env.exec(&format!(
+        "D56 = {}",
+        matches!(
+            wow_ui_sim::client_profile::ACTIVE,
+            wow_ui_sim::client_profile::ClientProfile::Retail
+                | wow_ui_sim::client_profile::ClientProfile::Ptr
+        )
+    ))
+    .unwrap();
+    env.exec(
+        r#"
         colorCalls = 0
         local original = CreateColor
         CreateColor = function(...)
@@ -17,7 +25,9 @@ fn collect_in_colors(env: &WowLuaEnv) {
             assert(tip.lines[1].leftText == name)
             assert(colorCalls > 0, 'must exercise collecting callback')
         end
-    "#).unwrap();
+    "#,
+    )
+    .unwrap();
 }
 
 #[test]
@@ -28,15 +38,16 @@ fn spell_parent_survives_color_collection() {
 }
 
 #[test]
-fn action_parent_survives_binding_color_collection() {
+fn action_parent_survives_color_collection() {
     let env = WowLuaEnv::new().unwrap();
     env.state().borrow_mut().action_bars.insert(5, 19750);
     collect_in_colors(&env);
-    env.exec(r#"
+    env.exec(
+        r#"
         local original = CreateColor
-        GREEN_FONT_COLOR = {r=0.25, g=0.75, b=0.5}
+        HIGHLIGHT_FONT_COLOR = {r=0.25, g=0.75, b=0.5}
         CreateColor = function(r, g, b, a)
-            -- Only collect in the final binding line, not the base spell DTO.
+            -- R81 Q3: binding is removed; collect at the remaining highlight color boundary.
             if r == 0.25 and g == 0.75 and b == 0.5 then
                 return original(r, g, b, a)
             end
@@ -44,8 +55,12 @@ fn action_parent_survives_binding_color_collection() {
         end
         local t = C_TooltipInfo.GetAction(5)
         CheckTip(t, 'Flash of Light')
-        assert(t.lines[#t.lines].leftText == 'Key bound: 5')
-    "#).unwrap();
+        for _, line in ipairs(t.lines) do
+            assert(not line.leftText:find('Key bound') and line.leftText ~= 'Not bound')
+        end
+    "#,
+    )
+    .unwrap();
 }
 
 #[test]
@@ -76,8 +91,17 @@ fn toy_parent_survives_color_collection() {
 fn aura_parent_survives_color_collection() {
     let env = WowLuaEnv::new().unwrap();
     env.state().borrow_mut().player.buffs.clear();
-    env.exec("A_Admin.AddBuff(19750, 'Audit Aura', 136243, 60, 1)").unwrap();
+    env.exec("A_Admin.AddBuff(19750, 'Audit Aura', 136243, 60, 1)")
+        .unwrap();
     collect_in_colors(&env);
+    // R81 Q4: name + supplied remaining text + description keep three collecting rows.
+    let id = env.state().borrow().player.buffs[0].aura_instance_id;
+    env.state()
+        .borrow_mut()
+        .aura_tooltip_inputs
+        .entry(id)
+        .or_default()
+        .remaining_text = Some("host aura time".into());
     env.exec("local t = C_TooltipInfo.GetUnitAura('player', 1, 'HELPFUL'); CheckTip(t, 'Audit Aura'); assert(#t.lines == 3)").unwrap();
 }
 
@@ -112,7 +136,12 @@ fn mount_parent_survives_markup_color_collection() {
     let env = WowLuaEnv::new().unwrap();
     {
         let mut state = env.state().borrow_mut();
-        let mount = state.world.mounts.iter_mut().find(|m| m.spell_id == 23338).unwrap();
+        let mount = state
+            .world
+            .mounts
+            .iter_mut()
+            .find(|m| m.spell_id == 23338)
+            .unwrap();
         mount.spell_id = 4_000_000_001;
         mount.name = "|cffff0000Audit Mount|r".into();
     }

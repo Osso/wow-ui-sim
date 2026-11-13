@@ -9,20 +9,18 @@ use super::builders::{
 use super::sources::{
     inbox_attachment_item_id, merchant_item_id, parse_spell_source, recipe_output_item,
     send_mail_attachment_item_id, tooltip_for_bag_item, tooltip_for_currency,
-    tooltip_for_inventory_slot, tooltip_for_item_link, tooltip_for_item_source,
-    trade_skill_item_id, trade_slot_item_id,
+    tooltip_for_inventory_slot, tooltip_for_item_source, trade_skill_item_id, trade_slot_item_id,
 };
 #[cfg(not(feature = "retail-12-0-5"))]
 use super::spell::lookup_player_aura_by_instance_id;
 use super::spell::{
-    append_action_binding_line, lookup_player_aura, spell_id_for_talent_id,
-    tooltip_for_spell_hyperlink, tooltip_for_spell_id, tooltip_for_toy_item_id,
+    lookup_player_aura, spell_id_for_talent_id, tooltip_for_spell_id, tooltip_for_toy_item_id,
     tooltip_for_unit_aura,
 };
-use super::unit::{tooltip_for_unit, tooltip_for_unit_guid, tooltip_for_world_loot};
+use super::unit::{tooltip_for_unit, tooltip_for_world_loot};
 use crate::lua_api::globals::currency_data;
 use crate::lua_api::globals::missing_surface::item_spell::{
-    current_item_upgrade_location, parse_item_guid, parse_prefixed_id,
+    current_item_upgrade_location, parse_item_guid,
 };
 use crate::lua_api::globals::spellbook_data;
 use crate::lua_api::methods::{borrow_state, create_string, table_get, table_set};
@@ -42,7 +40,6 @@ pub(super) fn c_tooltip_get_action(state: &mut LuaState) -> LuaResult<u32> {
     match spell_id {
         Some(spell_id) => {
             let tooltip = tooltip_for_spell_id(state, spell_id);
-            append_action_binding_line(state, tooltip, slot);
             state.push(tooltip);
         }
         None => state.push(Val::Nil),
@@ -371,7 +368,9 @@ pub(super) fn c_tooltip_get_spell_book_item(state: &mut LuaState) -> LuaResult<u
 #[cfg(not(feature = "retail-12-0-5"))]
 pub(super) fn c_tooltip_get_spell_by_id(state: &mut LuaState) -> LuaResult<u32> {
     let spell_id = u32::from_stack(state, 1)?;
-    let tooltip = tooltip_for_spell_id(state, spell_id);
+    let dont_override = stack_val(state, 4).is_truthy();
+    let is_link = stack_val(state, 6).is_truthy();
+    let tooltip = super::spell::tooltip_for_spell_options(state, spell_id, dont_override, is_link);
     state.push(tooltip);
     Ok(1)
 }
@@ -450,18 +449,7 @@ pub(super) fn c_tooltip_get_unit_aura_by_aura_instance_id(state: &mut LuaState) 
 }
 
 pub(super) fn c_tooltip_get_hyperlink(state: &mut LuaState) -> LuaResult<u32> {
-    let link = String::from_stack(state, 1)?;
-    let tooltip = if let Some(item_id) = parse_prefixed_id(&link, "item") {
-        tooltip_for_item_link(state, &link, item_id)?
-    } else if let Some(spell_id) = parse_prefixed_id(&link, "spell") {
-        tooltip_for_spell_hyperlink(state, spell_id)
-    } else if let Some(guid) = link.strip_prefix("unit:") {
-        tooltip_for_unit_guid(state, guid).unwrap_or(Val::Nil)
-    } else {
-        Val::Nil
-    };
-    state.push(tooltip);
-    Ok(1)
+    crate::c_api::c_tooltip_info_hyperlink::get_hyperlink(state)
 }
 
 pub(super) fn c_tooltip_get_inbox_item(state: &mut LuaState) -> LuaResult<u32> {
