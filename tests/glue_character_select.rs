@@ -22,6 +22,47 @@ fn ptr_character_select_registers_undelete_event_on_load() {
 }
 
 #[test]
+#[cfg(all(feature = "client-retail", feature = "optional-tests"))]
+fn original_character_services_consumer_handles_absent_display_data() {
+    test_timeout! {
+        let ui = common::blizzard_addon_harness::blizzard_ui_dir();
+        let glue_dir = ui.join("Blizzard_GlueXML");
+        let toc_path = wow_ui_sim::loader::find_toc_file(&glue_dir)
+            .expect("GlueXML has a selected profile TOC");
+        let toc = wow_ui_sim::toc::TocFile::from_file(&toc_path)
+            .expect("selected GlueXML TOC parses");
+        assert!(toc.allows_screen(ScreenKind::CharacterSelect));
+        assert!(toc.files.iter().any(|file| {
+            file.file_name().is_some_and(|name| name == "CharacterServices.lua")
+        }));
+
+        common::blizzard_addon_harness::with_blizzard_addon_glue_smoke_shape(
+            &["Blizzard_GlueXML"],
+            &[],
+            |env, loaded| {
+                assert!(loaded.iter().any(|name| name == "Blizzard_GlueXML"));
+                let (available_count, display_data_is_absent, consumer_is_original):
+                    (i32, bool, bool) = env
+                    .eval(
+                        r#"
+                        local available = GetAvailableBoostTypesForCharacterByGUID("hostless-character")
+                        local info = debug.getinfo(GetAvailableBoostTypesForCharacterByGUID, "S")
+                        return #available,
+                            C_CharacterServices.GetCharacterServiceDisplayData(5) == nil,
+                            info ~= nil and info.source:find("CharacterServices.lua", 1, true) ~= nil
+                        "#,
+                    )
+                    .expect("original character-services consumer should handle absent host data");
+
+                assert_eq!(available_count, 0);
+                assert!(display_data_is_absent);
+                assert!(consumer_is_original);
+            },
+        );
+    }
+}
+
+#[test]
 #[cfg(feature = "client-retail")]
 fn retail_fonts_follow_screen_phase() {
     test_timeout! {
