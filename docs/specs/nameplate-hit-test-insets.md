@@ -1,6 +1,6 @@
 # Nameplate hit-test inset configuration
 
-The Retail `C_NamePlateManager` API stores four hit-test inset values for each `Enum.NamePlateType`. The simulator models this configuration and getter only; it does not model nameplate objects or world hit testing. The lane findings are in the [EllesmereUI startup investigation](../wiki/investigations/full-addon-startup-2026-10-10.md#nameplate-inset-contract-r88a-2026-11-13).
+The Retail `C_NamePlateManager` API stores four hit-test inset values for each `Enum.NamePlateType`. The simulator models this configuration, setter and getter; it does not model nameplate objects or world hit testing. The lane findings are in the [EllesmereUI startup investigation](../wiki/investigations/full-addon-startup-2026-10-10.md#nameplate-inset-contract-r88a-2026-11-13).
 
 ## What it must do
 
@@ -34,7 +34,7 @@ The Retail `C_NamePlateManager` API stores four hit-test inset values for each `
 
 - [ ] **VERIFIED (Retail 12.1.5 build 70688):** The `HasRestrictions` gate blocks only when source metadata and a restriction-state pointer exist and the permission is false; a blocked call reports a blocked action and returns zero Lua values. **UNKNOWN (Retail 12.1.5 build 70688):** The permission's meaning is not established. **UNKNOWN in simulator:** this restriction gate and its state are not modeled.
 - [ ] **VERIFIED (Retail 12.1.5 build 70688):** Secret access depends on the argument mark, restriction-state pointer and mode. A clear mark or null pointer allows access; with a mark and pointer, mode 0 denies, mode 1 denies only for nonzero source metadata, and other modes allow. **VERIFIED (Retail 12.1.5 build 70688):** When the native `NotAllowed` gate denies an argument, its exact reason is `Usage: C_NamePlateManager.SetNamePlateHitTestInsets(type, left, right, top, bottom). Secret values are not allowed for this argument.` **UNKNOWN in simulator:** this conditional secret-argument policy is not modeled. Tests must not assert its denial.
-- [ ] **UNKNOWN (Retail 12.1.5 build 70688):** The native setter writes four fields before a pending-error check, but the path from that check to normal return is not established. The simulator's normal return count is not a native-parity claim.
+- [ ] **VERIFIED (simulator code):** The setter returns zero Lua values on normal calls. **UNKNOWN (Retail 12.1.5 build 70688):** The native setter writes four fields before a pending-error check, but the path from that check to normal return is not established; simulator return-count parity is unverified.
 
 ## Out of scope
 

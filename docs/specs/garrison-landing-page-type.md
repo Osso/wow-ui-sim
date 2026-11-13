@@ -28,7 +28,7 @@
 ## Known gaps (current cycle)
 
 - [ ] **UNKNOWN (Retail 12.1.5 build 70688):** The state that selects each nonzero landing-page type and the functions that write that state are not established. Keep selection unmodeled.
-- [ ] **VERIFIED (20-addon Retail run at production-code SHA `bc01ba60cdb7b844bf88adba7ff2cb6e809b665f`):** after `GetLandingPageGarrisonType` returns, the original Minimap call fails on the missing `C_Garrison.IsLandingPageMinimapButtonVisible` member. **VERIFIED (local Retail UI cache; exact build UNKNOWN):** its generated declaration takes a number and returns a boolean. **UNKNOWN:** its native predicate and result. This is a separate blocker; do not register a production stub.
+- [ ] **VERIFIED (20-addon Retail run at production-code SHA `bc01ba60cdb7b844bf88adba7ff2cb6e809b665f`):** after `GetLandingPageGarrisonType` returns, the original Minimap call fails on the missing `C_Garrison.IsLandingPageMinimapButtonVisible` member. **VERIFIED (local Retail UI cache; exact build UNKNOWN):** its generated declaration takes a number and returns a boolean. **UNKNOWN:** its native predicate and result; the R88 evidence request is pending. This is a separate blocker; do not register a production stub.
 - [ ] The consumer test verifies the numeric type query and stops at the visibility member. It does not claim that the full `RefreshButton` path passes or assert the inferred zero host default.
 
 ## Out of scope
