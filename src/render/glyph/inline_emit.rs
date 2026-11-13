@@ -69,8 +69,8 @@ pub(crate) struct InlineLine {
 
 /// Lay the runs out in lines and emit their glyph and icon quads.
 ///
-/// R88e.6 verifies taller-icon line-height growth. The default vertical mode
-/// and the +0.5/floor coordinate's axis and drawing path remain UNKNOWN.
+/// R88e.6 verifies taller-icon line-height growth. R88e.7 verifies a snap on
+/// the FontString horizontal edge; its exact operand and advance effect remain UNKNOWN.
 pub fn emit_inline_markup_quads(
     batch: &mut QuadBatch,
     font_system: &mut WowFontSystem,
@@ -277,8 +277,8 @@ fn emit_text_piece(
 
 /// Push the icon's textured quad. Its texture loads like any other texture
 /// path; unknown atlas and file IDs draw no quad in this simulator, while
-/// their native result remains UNKNOWN (R88d). R88e.6 verifies one post-size
-/// coordinate snap, but its axis and drawing path are UNKNOWN.
+/// their native result remains UNKNOWN (R88d). R88e.7 verifies a FontString
+/// horizontal-edge snap after width scaling; its operand and advance effect remain UNKNOWN.
 pub(crate) fn push_inline_icon(
     batch: &mut QuadBatch,
     icon: &InlineIcon,
