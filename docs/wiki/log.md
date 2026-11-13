@@ -1,3 +1,7 @@
+## [2026-11-13] implementation | Garrison landing-page visibility
+
+Updated [full third-party startup](investigations/full-addon-startup-2026-10-10.md#garrison-minimap-button-visibility-r88e1-2026-11-13) and the [Retail garrison contract](../specs/garrison-landing-page-type.md) with R88e.1. **VERIFIED (Retail 12.1.5 build 70688):** missing records return false, non-111 records return their flag, type 111 uses PlayerCondition 105386 and nonzero player state, and lookup uses the low byte without an enum check. **VERIFIED (20-addon Retail run at simulator SHA `2a03dbee7`):** one AuraKit secret-access error remains (70 occurrences); the Minimap error is absent. **INFERRED:** the player-state value is the covenant ID; the simulator's 105386 result is a false-default host input.
+
 ## [2026-11-13] correction | Inline texture and atlas icon evidence
 
 [Rendering pipeline](systems/rendering-pipeline.md#inline-icons-in-text) separates VERIFIED Retail 12.1.5.70688 R88d/R88e.6 parser, measurement and row-layout findings from INFERRED Forever explicit sizes. Runtime scale inputs, caller-metric identity, vertical-mode defaults/mapping, snap axis/path, and oversized single-icon wrapping remain UNKNOWN. Tests cover parser rules, FontString scale division, accepted width and GameTooltip left-region row heights.
