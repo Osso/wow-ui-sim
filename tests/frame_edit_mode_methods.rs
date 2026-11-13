@@ -9,9 +9,10 @@ fn env() -> WowLuaEnv {
 fn plain_managed_frame_is_added_by_original_managed_frame_system() {
     test_timeout! {
         crate::common::blizzard_addon_harness::with_blizzard_addon_closure(
-            &["Blizzard_ManagedFrameSystem"],
+            &["Blizzard_EditMode"],
             &[],
             |env, loaded| {
+                assert!(loaded.iter().any(|addon| addon == "Blizzard_EditMode"));
                 assert!(loaded.iter().any(|addon| addon == "Blizzard_ManagedFrameSystem"));
 
                 let actual: (bool, bool, bool, bool, bool, bool, bool) = env
@@ -45,24 +46,39 @@ fn plain_managed_frame_is_added_by_original_managed_frame_system() {
 }
 
 #[test]
-fn edit_mode_position_methods_are_native_frame_methods() {
-    let env = env();
-    let result: (String, bool, bool, bool, bool) = env
-        .eval(
-            r#"
-            local frame = CreateFrame("Frame")
-            local methodType = type(frame.IsInDefaultPosition)
-            local initiallyDefault = frame:IsInDefaultPosition()
-            frame.systemInfo = { isInDefaultPosition = true }
-            local defaultAfterSystemInfo = frame:IsInDefaultPosition()
-            local initialized = frame:IsInitialized()
-            local dragging = frame:IsEditModeDragging()
-            return methodType, initiallyDefault, defaultAfterSystemInfo, initialized, dragging
-            "#,
-        )
-        .expect("probe edit-mode frame methods");
+#[cfg(all(feature = "optional-tests", feature = "client-retail"))]
+fn edit_mode_methods_are_owned_by_edit_mode_system_mixin() {
+    test_timeout! {
+        crate::common::blizzard_addon_harness::with_blizzard_addon_closure(
+            &["Blizzard_EditMode", "Blizzard_ActionBar"],
+            &[],
+            |env, loaded| {
+                assert!(loaded.iter().any(|addon| addon == "Blizzard_EditMode"));
+                assert!(loaded.iter().any(|addon| addon == "Blizzard_ActionBar"));
 
-    assert_eq!(result, ("function".to_string(), false, true, true, false));
+                let actual: (bool, bool, bool, bool, bool, bool, bool, bool, bool) = env
+                    .eval(
+                        r#"
+                        local owner = assert(EditModeSystemMixin)
+                        local actionBarOwner = assert(MainActionBarMixin)
+                        local plain = CreateFrame("Frame")
+                        return type(owner.IsEditModeDragging) == "function",
+                            type(owner.IsInitialized) == "function",
+                            type(owner.IsInDefaultPosition) == "function",
+                            type(owner.IsSystemSettingDefault) == "function",
+                            type(actionBarOwner.IsInDefaultPosition) == "function",
+                            plain.IsEditModeDragging == nil,
+                            plain.IsInitialized == nil,
+                            plain.IsInDefaultPosition == nil,
+                            plain.IsSystemSettingDefault == nil
+                        "#,
+                    )
+                    .expect("original EditModeSystemMixin methods should stay mixin-owned");
+
+                assert_eq!(actual, (true, true, true, true, true, true, true, true, true));
+            },
+        );
+    }
 }
 
 #[test]
@@ -73,28 +89,4 @@ fn unit_level_non_attackable_color_is_available() {
         .expect("read unit-level color");
 
     assert_eq!(result, (1.0, 1.0, 0.0));
-}
-
-#[test]
-fn edit_mode_setting_default_reads_system_settings() {
-    let env = env();
-    let result: (bool, bool) = env
-        .eval(
-            r#"
-            Enum = Enum or {}
-            Enum.EditModeActionBarSetting = { Orientation = 1, NumRows = 2 }
-            local frame = CreateFrame("Frame")
-            frame.systemInfo = {
-                settings = {
-                    { setting = Enum.EditModeActionBarSetting.Orientation, value = 0 },
-                    { setting = Enum.EditModeActionBarSetting.NumRows, value = 3 },
-                }
-            }
-            return frame:IsSystemSettingDefault(Enum.EditModeActionBarSetting.Orientation),
-                   frame:IsSystemSettingDefault(Enum.EditModeActionBarSetting.NumRows)
-            "#,
-        )
-        .expect("probe edit-mode setting defaults");
-
-    assert_eq!(result, (true, false));
 }
