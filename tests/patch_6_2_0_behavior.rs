@@ -1,5 +1,9 @@
 //! WM98 modern data getters retain eligible costs; historical frame notes are not an oracle.
-#![cfg(any(feature = "profile-retail", feature = "client-ptr", feature = "client-wowforever"))]
+#![cfg(any(
+    feature = "profile-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 prefork_full_ui_case! {
@@ -24,7 +28,16 @@ fn patch_6_2_0_spell_link_retains_eligible_cost_bare() {
 }
 
 fn check_spell_link_cost(env: &WowLuaEnv) {
-    env.exec(r#"
+    // UNKNOWN R81 Q2 helper output (docs/specs/tooltip-spell-composition.md):
+    // supply explicit host display text, not a guessed cost.
+    env.state()
+        .borrow_mut()
+        .spell_tooltip_inputs
+        .entry(19750)
+        .or_default()
+        .cost = Some("host MANA cost".into());
+    env.exec(
+        r#"
         local tooltip = CreateFrame('GameTooltip', 'P620Tooltip', UIParent, 'GameTooltipTemplate')
         local function textLines()
             local lines = {}
@@ -52,5 +65,7 @@ fn check_spell_link_cost(env: &WowLuaEnv) {
         end
         tooltip:SetSpellByID(19750)
         assert(textLines():find('MANA'), textLines())
-    "#).unwrap();
+    "#,
+    )
+    .unwrap();
 }
