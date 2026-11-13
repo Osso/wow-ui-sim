@@ -69,10 +69,12 @@ mod modern {
         hybrid_minimap_is_explicitly_disabled,
         "assert(C_Minimap.ShouldUseHybridMinimap() == false)"
     );
+    #[cfg(feature = "client-retail")]
     contract!(
         honor_reward_catalog_is_explicitly_unavailable,
         "assert(C_PvP.GetHonorRewardInfo(1) == nil)"
     );
+    #[cfg(feature = "client-retail")]
     contract!(
         landing_page_unlock_state_is_explicitly_unavailable,
         "assert(C_PlayerInfo.IsExpansionLandingPageUnlockedForPlayer(10) == false)"

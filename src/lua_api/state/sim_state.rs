@@ -118,6 +118,10 @@ pub struct SimState {
     /// Writable session storage selected before any persisted state is loaded.
     pub session_wtf_path: PathBuf,
     pub cvars: CVarStorage,
+    /// INFERRED helper-result input for the Retail Midnight landing-page unlock; defaults locked.
+    pub expansion_landing_page_unlocked: bool,
+    /// Explicit host-supplied content-tracking lists; empty does not claim native initial state.
+    pub content_tracking: crate::c_api::c_content_tracking::ContentTrackingState,
     /// User-approved signed legacy gamma; simulator state only, never host gamma.
     #[cfg(feature = "client-wrath")]
     pub legacy_gamma: f64,

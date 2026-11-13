@@ -17,6 +17,9 @@ pub struct CategorySettings {
 
 pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     let namespace = ensure_namespace(state, "C_CombatAudioAlert")?;
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        table_set_rust_fn_static(state, namespace, "IsEnabled", is_enabled)?;
+    }
     if matches!(
         crate::client_profile::ACTIVE,
         crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
@@ -52,6 +55,21 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
         table_set_rust_fn_static(state, namespace, "SetSpecSetting", set_spec_setting)?;
     }
     Ok(())
+}
+
+/// VERIFIED: an unavailable audio manager gives false. The setting lookup is INFERRED:
+/// Retail AudioAssist exposes `CAAEnabled` as the main combat-audio toggle.
+fn is_enabled(state: &mut LuaState) -> LuaResult<u32> {
+    let enabled = {
+        let sim = borrow_state(state)?;
+        sim.sound_manager.is_some()
+            && sim
+                .cvars
+                .cached_integer_nonzero("CAAEnabled")
+                .unwrap_or(false)
+    };
+    state.push(Val::Bool(enabled));
+    Ok(1)
 }
 
 fn add_known_target(state: &mut LuaState) -> LuaResult<u32> {

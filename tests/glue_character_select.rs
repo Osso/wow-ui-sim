@@ -2200,3 +2200,26 @@ fn character_creation_category_zoom_through_original_consumer() {
             "original category consumer must not introduce Lua errors");
     }
 }
+
+#[test]
+#[cfg(all(feature = "client-retail", feature = "optional-tests"))]
+fn retail_glue_tooltip_preserves_shared_nineslice() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+        env.exec(r#"
+            -- Mainline/GlueTooltip.xml:3,18 inherits SharedTooltipTemplate
+            -- and SharedTooltipTemplates.xml:19 supplies the NineSlice.
+            local source = debug.getinfo(SharedTooltip_SetBackdropStyle, 'S')
+            assert(source.source:gsub('\\', '/'):find('Blizzard_SharedXML/SharedTooltipTemplates.lua', 1, true))
+            assert(source.linedefined == 47)
+            local child = assert(GlueTooltip.NineSlice)
+            assert(child:GetParent() == GlueTooltip)
+            assert(child:IsUsingParentLevel() and child:GetFrameLevel() == GlueTooltip:GetFrameLevel())
+            SharedTooltip_SetBackdropStyle(GlueTooltip, nil, true)
+            assert(not child:IsShown())
+            SharedTooltip_SetBackdropStyle(GlueTooltip, nil, false)
+            assert(child:IsShown() and GlueTooltip.NineSlice == child)
+        "#).expect("original GlueTooltip backdrop should use its inherited NineSlice");
+        assert!(!env.state().borrow().lua_errors.iter().any(|error| error.contains("SharedTooltipTemplates.lua")));
+    }
+}

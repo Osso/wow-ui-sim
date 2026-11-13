@@ -127,6 +127,7 @@ pub(crate) fn register_interaction_tables(state: &mut LuaState) -> LuaResult<()>
     super::c_dye_color::register(state)?;
     super::c_item_interaction::register(state)?;
     super::c_cooldown_viewer::register(state)?;
+    super::c_content_tracking::register(state)?;
     super::c_neighborhood_initiative::register(state)?;
     super::c_roleset::register(state)?;
     if cfg!(all(

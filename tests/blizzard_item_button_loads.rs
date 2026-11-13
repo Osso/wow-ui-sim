@@ -289,7 +289,8 @@ fn blizzard_item_button_toc_lists_three_files_lua_first_then_shared_xml_then_mai
         .map(|p| p.to_string_lossy().into_owned())
         .collect();
     assert_eq!(
-        actual_files, item_button_files(),
+        actual_files,
+        item_button_files(),
         "TOC body must list exactly these files in this order: Shared\\ItemButtonTemplate.lua \
          loads FIRST (publishes ItemButtonMixin + ItemButtonConstants + GetItemButtonIconTexture \
          at file scope) so Shared\\ItemButtonTemplate.xml's `mixin=\"ItemButtonMixin\"` resolves \
@@ -630,5 +631,102 @@ fn modified_item_click_routes_by_action_and_modifier() {
     assert_eq!(
         result, "chat,dress",
         "each modifier must select its bound action"
+    );
+}
+
+#[test]
+#[cfg(all(feature = "client-retail", feature = "optional-tests"))]
+fn retail_original_merchant_consumes_item_button_display_helpers() {
+    use wow_ui_sim::loader::{
+        discover_all_blizzard_addons, discover_blizzard_startup_addons_for_screen,
+        register_load_with_addons,
+    };
+    use wow_ui_sim::lua_api::globals::real::merchant_buyback::BuybackItem;
+    let ui = blizzard_ui_dir();
+    let env = WowLuaEnv::new().expect("normal Retail Game environment");
+    env.state().borrow_mut().addon_base_paths = vec![ui.clone()];
+    assert!(
+        env.eval::<bool>(
+            r#"
+        return SetItemButtonCount == nil and SetItemButtonTexture == nil
+            and SetItemButtonTextureVertexColor == nil
+            and SetItemButtonNormalTextureVertexColor == nil
+    "#
+        )
+        .unwrap()
+    );
+    register_load_with_addons(&env.loader_env(), &discover_all_blizzard_addons(&ui));
+
+    let startup = discover_blizzard_startup_addons_for_screen(&ui, ScreenKind::Game);
+    let owner = startup
+        .iter()
+        .position(|a| a.name == "Blizzard_ItemButton")
+        .unwrap();
+    let merchant = startup
+        .iter()
+        .position(|a| a.name == "Blizzard_UIPanels_Game")
+        .unwrap();
+    assert!(
+        owner < merchant,
+        "FrameXML.toc:7 is the transitive owner dependency"
+    );
+    crate::common::load_game_startup_inventory(&env);
+    env.apply_post_load_workarounds();
+    fire_startup_events_for_screen(&env, ScreenKind::Game);
+    env.state().borrow_mut().merchant_buyback_items = vec![
+        BuybackItem {
+            item_id: 2840,
+            quantity: 7,
+            price: 20,
+            num_available: 1,
+            is_usable: false,
+            is_bound: false,
+        },
+        BuybackItem {
+            item_id: 6948,
+            quantity: 3,
+            price: 30,
+            num_available: 1,
+            is_usable: true,
+            is_bound: false,
+        },
+    ];
+    env.exec(r#"
+        local function original(func, path, line)
+            local info = debug.getinfo(func, 'S')
+            local source = info.source:gsub('\\', '/')
+            assert(source:find(path, 1, true), source)
+            assert(info.linedefined == line, path .. ': ' .. info.linedefined)
+        end
+        local owner = 'Blizzard_ItemButton/Mainline/ItemButtonTemplate.lua'
+        original(SetItemButtonCount, owner, 9)
+        original(SetItemButtonTexture, owner, 94)
+        original(SetItemButtonTextureVertexColor, owner, 111)
+        original(SetItemButtonNormalTextureVertexColor, owner, 146)
+        original(MerchantFrame_UpdateBuybackInfo, 'Blizzard_UIPanels_Game/Mainline/MerchantFrame.lua', 506)
+        -- Calls all four globals (MerchantFrame.lua:532,534,544-550).
+        MerchantFrame_UpdateBuybackInfo()
+        for index, quantity in ipairs({7, 3}) do
+            local button = _G['MerchantItem' .. index .. 'ItemButton']
+            local _, icon = GetBuybackItemInfo(index)
+            assert(button.Count:IsShown() and tonumber(button.Count:GetText()) == quantity)
+            assert(GetItemButtonIconTexture(button):GetTexture() == icon)
+            local expectedR, expectedGB = index == 1 and 0.9 or 1, index == 1 and 0 or 1
+            for _, texture in ipairs({GetItemButtonIconTexture(button), button:GetNormalTexture()}) do
+                local r, g, b = texture:GetVertexColor()
+                assert(math.abs(r - expectedR) < 0.001 and g == expectedGB and b == expectedGB)
+            end
+        end
+    "#).expect("original MerchantFrame buyback updates count, icon, and both vertex colors");
+    assert!(
+        !env.state()
+            .borrow()
+            .lua_errors
+            .iter()
+            .any(|error| error.contains("SetItemButtonCount")
+                || error.contains("SetItemButtonTexture")
+                || error.contains("SetItemButtonNormalTextureVertexColor")),
+        "unexpected item-button startup error: {:?}",
+        env.state().borrow().lua_errors
     );
 }

@@ -161,6 +161,7 @@ pub(crate) mod c_combat_log;
 pub mod c_combat_text;
 mod c_commentator;
 pub(crate) mod c_console;
+pub mod c_content_tracking;
 pub mod c_cooldown_viewer;
 #[cfg(feature = "retail-12-0-0")]
 mod c_crafting_orders;
