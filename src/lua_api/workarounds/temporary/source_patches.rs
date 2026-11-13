@@ -269,19 +269,6 @@ const LUA_SOURCE_PATCHES: &[LuaSourcePatch] = &[
         ],
     },
     LuaSourcePatch {
-        suffix: "/MenuTemplates.lua",
-        operations: &[
-            LuaSourcePatchOp::Replace {
-                from: "function DropdownTextMixin:UpdateText()\n\tself.Text:SetText(self:GetUpdateText());",
-                to: "local function __wow_ensure_dropdown_text_font_string(self)\n\tif self.Text then\n\t\treturn self.Text;\n\tend\n\tif not MenuVariants or type(MenuVariants.CreateFontString) ~= \"function\" then\n\t\treturn nil;\n\tend\n\tlocal ok, fontString = pcall(MenuVariants.CreateFontString, self);\n\tif not ok or fontString == nil then\n\t\treturn nil;\n\tend\n\tself.Text = fontString;\n\treturn fontString;\nend\n\nfunction DropdownTextMixin:UpdateText()\n\tlocal text = __wow_ensure_dropdown_text_font_string(self);\n\tif not text then\n\t\treturn;\n\tend\n\ttext:SetText(self:GetUpdateText());",
-            },
-            LuaSourcePatchOp::ReplaceOnce {
-                from: "local newWidth = self.Text:GetUnboundedStringWidth();",
-                to: "local newWidth = text:GetUnboundedStringWidth();",
-            },
-        ],
-    },
-    LuaSourcePatch {
         suffix: "TextToSpeechFrame.lua",
         operations: &[LuaSourcePatchOp::Replace {
             from: "function TextToSpeechFrame_CheckLoad(self)",
