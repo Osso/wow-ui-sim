@@ -131,18 +131,6 @@ pub(super) fn patch_artifact_ui_show_panel_guard(env: &crate::lua_api::LoaderEnv
     temporary::artifact_ui_show_panel_guard::patch(env);
 }
 
-pub(super) fn patch_auction_house_categories_refresh_count(env: &crate::lua_api::LoaderEnv<'_>) {
-    temporary::auction_house_categories_refresh_count::patch(env);
-}
-
-pub(super) fn patch_auction_house_browse_results_event(env: &crate::lua_api::LoaderEnv<'_>) {
-    temporary::auction_house_browse_results_event::patch(env);
-}
-
-pub(super) fn patch_auction_house_browse_results_event_from_env(env: &crate::lua_api::WowLuaEnv) {
-    temporary::auction_house_browse_results_event::patch_env(env);
-}
-
 pub(super) fn patch_auction_house_search_context_aliases(env: &crate::lua_api::LoaderEnv<'_>) {
     temporary::auction_house_search_context_aliases::patch(env);
 }

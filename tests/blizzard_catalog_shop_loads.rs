@@ -81,6 +81,50 @@ fn blizzard_catalog_shop_loads_without_errors(env: &WowLuaEnv) {
 }
 }
 
+#[test]
+#[cfg(feature = "optional-tests")]
+fn catalog_shop_main_inbound_drives_game_menu_after_normal_startup() {
+    test_timeout! {
+        let env = load_full_game_ui();
+        assert_catalog_shop_loaded(&env);
+        env.set_server_mirrored_cvar("shop2Enabled", "1")
+            .expect("Shop2 should be enabled for this fixture");
+
+        let (owner_is_original, was_shown): (bool, bool) = env
+            .eval(
+                r#"
+                local info = debug.getinfo(CatalogShopInboundInterface.SetShown, "S")
+                local ownerIsOriginal = info ~= nil
+                    and info.source:find("Blizzard_CatalogShop_Inbound.lua", 1, true) ~= nil
+
+                GameMenuFrame:Show()
+                local shopButton
+                for button in GameMenuFrame.buttonPool:EnumerateActive() do
+                    if button:GetText() == BLIZZARD_STORE then
+                        shopButton = button
+                        break
+                    end
+                end
+                assert(shopButton, "GameMenu must expose its store button")
+
+                local onClick = shopButton:GetScript("OnClick")
+                assert(type(onClick) == "function", "store button must have an OnClick handler")
+                onClick(shopButton, "LeftButton", false)
+                local wasShown = CatalogShopInboundInterface.IsShown()
+                assert(wasShown, "store click must show CatalogShop")
+
+                CatalogShopInboundInterface.SetShown(false, G_GameMenuFrameContextKey)
+                assert(not CatalogShopInboundInterface.IsShown(), "store close must hide CatalogShop")
+                return ownerIsOriginal, wasShown
+                "#,
+            )
+            .expect("GameMenu should reach the selected CatalogShop inbound owner");
+
+        assert!(owner_is_original);
+        assert!(was_shown);
+    }
+}
+
 prefork_full_ui_case! {
 fn catalog_shop_host_sections_refresh_without_errors(env: &WowLuaEnv) {
     assert_catalog_shop_loaded(&env);

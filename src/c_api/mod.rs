@@ -531,7 +531,6 @@ pub(crate) use patch_retired_members::mark_retail_table_util_retirement;
 mod registration;
 pub(crate) mod restricted_actions;
 
-pub(crate) use c_store_secure::register as register_store_secure_table;
 pub(crate) use helpers::{
     ensure_global_table, ensure_namespace, global_val, mark_namespace_keys_removed, set_global_val,
 };
@@ -555,23 +554,6 @@ fn supports_super_tracking() -> bool {
         ACTIVE,
         ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
     )
-}
-
-pub(crate) fn restore_cleanup_namespaces(state: &mut LuaState) -> LuaResult<()> {
-    let store = helpers::global_val(state, "C_StoreSecure");
-    if matches!(
-        crate::lua_api::methods::table_get_static(state, store, "GetProductGroups"),
-        rilua::Val::Nil
-    ) {
-        register_store_secure_table(state)?;
-    }
-    if matches!(
-        helpers::global_val(state, "C_WowTokenSecure"),
-        rilua::Val::Nil
-    ) {
-        c_wowtoken_secure::register_c_wowtoken_secure(state)?;
-    }
-    Ok(())
 }
 
 pub(crate) fn register_utility_bootstrap_tables(state: &mut LuaState) -> LuaResult<()> {

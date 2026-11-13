@@ -1,4 +1,5 @@
 #![cfg(feature = "client-retail")]
+use crate::common;
 use std::path::PathBuf;
 
 use wow_ui_sim::loader::discover_blizzard_addons_for_screen;
@@ -261,13 +262,51 @@ fn blizzard_environment_cleanup_is_addon_loaded_returns_true(env: &WowLuaEnv) {
 }
 }
 
-prefork_full_ui_case! {
-fn blizzard_environment_cleanup_secure_namespaces_get_restored_post_load(env: &WowLuaEnv) {
-    // EnvironmentCleanup.lua:3–6 removes these public globals. Commit a07283768
-    // records that secure-only capsule APIs should stay nil after cleanup.
-    // Store and token restoration remains a temporary simulator workaround, not native parity.
+#[test]
+#[cfg(feature = "optional-tests")]
+fn environment_cleanup_keeps_secure_namespaces_absent_after_restore() {
+    common::with_timeout(90, || {
+        let initial_env = WowLuaEnv::new().expect("Lua environment should initialize");
+        let initially_present: (bool, bool) = initial_env
+            .eval("return C_StoreSecure ~= nil, C_WowTokenSecure ~= nil")
+            .expect("initial secure namespace probe should succeed");
+        assert_eq!(initially_present, (true, true));
 
-    let restored: (bool, bool, bool, bool) = env
+        let env = execute_environment_cleanup_source_without_restore();
+        let absent_after_cleanup: (bool, bool) = env
+            .eval("return C_StoreSecure == nil, C_WowTokenSecure == nil")
+            .expect("cleanup should clear the public secure namespaces");
+        assert_eq!(absent_after_cleanup, (true, true));
+
+        env.restore_post_cleanup_globals();
+        let absent_after_restore: (bool, bool) = env
+            .eval("return C_StoreSecure == nil, C_WowTokenSecure == nil")
+            .expect("post-cleanup secure namespace probe should succeed");
+        assert_eq!(absent_after_restore, (true, true));
+
+        common::blizzard_addon_harness::with_blizzard_addon_smoke_shape(
+            &["Blizzard_EnvironmentCleanup"],
+            &[],
+            |env, loaded| {
+                assert!(
+                    loaded
+                        .iter()
+                        .any(|name| name == "Blizzard_EnvironmentCleanup")
+                );
+                let absent: (bool, bool) = env
+                    .eval("return C_StoreSecure == nil, C_WowTokenSecure == nil")
+                    .expect("selected cleanup add-on should leave secure namespaces absent");
+                assert_eq!(absent, (true, true));
+            },
+        );
+    });
+}
+
+prefork_full_ui_case! {
+fn blizzard_environment_cleanup_keeps_secure_namespaces_removed_post_load(env: &WowLuaEnv) {
+    // EnvironmentCleanup.lua:3–6 and 224 remove these public globals.
+
+    let removed: (bool, bool, bool, bool) = env
         .eval(
             "return C_StoreSecure ~= nil, \
                     C_AuthChallenge ~= nil, \
@@ -276,10 +315,10 @@ fn blizzard_environment_cleanup_secure_namespaces_get_restored_post_load(env: &W
         )
         .expect("secure-only namespace probe should succeed");
     assert_eq!(
-        restored,
-        (true, false, false, true),
-        "Cleanup removes public C_AuthChallenge and C_SecureTransfer; the simulator \
-         temporarily restores C_StoreSecure and C_WowTokenSecure"
+        removed,
+        (false, false, false, false),
+        "cleanup must leave C_StoreSecure, C_AuthChallenge, C_SecureTransfer, and \
+         C_WowTokenSecure absent"
     );
 }
 }

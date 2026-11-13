@@ -17,10 +17,14 @@ end
 
 local categoriesList = AuctionHouseFrame and AuctionHouseFrame.CategoriesList
 expect(categoriesList ~= nil, "CategoriesList must exist")
+expect(type(AuctionHouseCategoriesListMixin) == "table",
+       "AuctionHouseCategoriesListMixin must exist")
 
 if categoriesList then
-    expect(type(categoriesList.GetNumElementsForRefresh) == "function",
-           "GetNumElementsForRefresh must be a function")
+    expect(type(categoriesList.GetNumElementsForRefresh) ~= "function",
+           "the simulator must not invent GetNumElementsForRefresh")
+    expect(type(AuctionHouseCategoriesListMixin.GetNumElementsForRefresh) ~= "function",
+           "the simulator must not invent GetNumElementsForRefresh on the mixin")
 
     local totalCategoryCount = #AuctionCategories
     local expectedProviderSize = totalCategoryCount
@@ -31,13 +35,6 @@ if categoriesList then
                 expectedProviderSize = expectedProviderSize - 1
             end
         end
-    end
-
-    if type(categoriesList.GetNumElementsForRefresh) == "function" then
-        local refreshCount = categoriesList:GetNumElementsForRefresh()
-        expect(refreshCount == totalCategoryCount,
-               "refresh count " .. tostring(refreshCount) ..
-               " did not match total AuctionCategories count " .. tostring(totalCategoryCount))
     end
 
     categoriesList:OnShow()
@@ -185,7 +182,8 @@ fn auction_house_token_category_follows_native_status_policy() {
 }
 
 #[test]
-fn auction_house_categories_list_refresh_count_matches_categories() {
+#[cfg(all(feature = "optional-tests", feature = "client-retail"))]
+fn auction_house_categories_list_does_not_need_a_refresh_count_method() {
     common::with_perf_lock(|| {
         common::with_timeout(240, || {
             with_blizzard_addon_smoke_shape(&[], &[], |env, _loaded| {

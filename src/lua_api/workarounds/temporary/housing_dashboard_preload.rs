@@ -8,13 +8,6 @@
 use crate::lua_api::LoaderEnv;
 
 const HOUSING_DASHBOARD_PRELOAD_WORKAROUND_LUA: &str = r#"
-HousingTutorialUtil = HousingTutorialUtil or {}
-if type(HousingTutorialUtil.BoughtHouseQuestComplete) ~= "function" then
-    function HousingTutorialUtil.BoughtHouseQuestComplete()
-        return true
-    end
-end
-
 if type(C_Housing) == "table" then
     local function set_default(key, fn)
         if rawget(C_Housing, key) == nil then
@@ -173,6 +166,9 @@ mod tests {
                 NeighborhoodType = { Public = 0 },
             }
             C_Housing = {}
+            HousingTutorialUtil = {
+                BoughtHouseQuestComplete = function() return false end,
+            }
             callbacks = {}
             C_Timer = {
                 After = function(_, callback)
@@ -281,7 +277,7 @@ mod tests {
             )
             .expect("patched housing state should be readable");
 
-        assert!(bought_house_complete);
+        assert!(!bought_house_complete);
         assert_eq!(map_id, 2248);
         assert_eq!(texture_suffix, "elwynn");
         assert!(faction_match);

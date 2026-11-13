@@ -24,6 +24,159 @@ fn ptr_character_select_registers_undelete_event_on_load() {
 }
 
 #[test]
+#[cfg(all(feature = "client-retail", feature = "optional-tests"))]
+fn retail_character_services_consumer_uses_test_display_provider() {
+    test_timeout! {
+        let ui = common::blizzard_addon_harness::blizzard_ui_dir();
+        let glue_dir = ui.join("Blizzard_GlueXML");
+        let toc_path = wow_ui_sim::loader::find_toc_file(&glue_dir)
+            .expect("GlueXML has a selected profile TOC");
+        let toc = wow_ui_sim::toc::TocFile::from_file(&toc_path)
+            .expect("selected GlueXML TOC parses");
+        assert!(toc.allows_screen(ScreenKind::CharacterSelect));
+        assert!(toc.files.iter().any(|file| {
+            file.file_name().is_some_and(|name| name == "CharacterServices.lua")
+        }));
+
+        common::blizzard_addon_harness::with_blizzard_addon_glue_smoke_shape(
+            &["Blizzard_GlueXML"],
+            &[],
+            |env, loaded| {
+                assert!(loaded.iter().any(|name| name == "Blizzard_GlueXML"));
+                env.exec(
+                    r#"
+                    local info = debug.getinfo(GetAvailableBoostTypesForCharacterByGUID, "S")
+                    assert(info and info.source:find("CharacterServices.lua", 1, true))
+
+                    local displayData = {
+                        level = 80,
+                        flowTitle = "Fixture Upgrade",
+                        iconTextureKit = "FixtureUpgrade",
+                    }
+                    C_SharedCharacterServices.GetUpgradeDistributions = function()
+                        return { [5] = { amount = 1 } }
+                    end
+                    C_CharacterServices.GetCharacterServiceDisplayData = function(boostType)
+                        assert(boostType == 5)
+                        return displayData
+                    end
+                    GetBasicCharacterInfo = function(guid)
+                        assert(guid == "fixture-character")
+                        return { experienceLevel = 60 }
+                    end
+                    GetServiceCharacterInfo = function(guid)
+                        assert(guid == "fixture-character")
+                        return {
+                            boostInProgress = false,
+                            isTrialBoost = false,
+                            isRevokedCharacterUpgrade = false,
+                            vasServiceInProgress = false,
+                        }
+                    end
+
+                    local function texture()
+                        return { SetAtlas = function(self, atlas) self.atlas = atlas end }
+                    end
+                    local function noop() end
+                    characterServiceButton = {
+                        Icon = texture(),
+                        Highlight = { Icon = texture() },
+                        Timer = { StartTimer = noop, StopTimer = noop },
+                        Ring = { Show = noop, Hide = noop },
+                        Number = { Show = noop, Hide = noop, SetText = noop },
+                        SetAlpha = noop,
+                        Show = noop,
+                    }
+                    CharacterSelect.VASPools = {
+                        Acquire = function(_, template)
+                            assert(template == "CharacterBoostTemplate")
+                            return characterServiceButton
+                        end,
+                        GetNumActive = function() return 1 end,
+                    }
+                    "#,
+                )
+                .expect("original character-service consumers should load with test providers");
+
+                let (available_count, boost_type, blocked_count, title, atlas):
+                    (i32, i32, i32, String, String) = env
+                    .eval(
+                        r#"
+                        local available = GetAvailableBoostTypesForCharacterByGUID("fixture-character")
+                        local available_count, boost_type = #available, available[1]
+                        C_CharacterServices.GetCharacterServiceDisplayData(5).level = 60
+                        local blocked = GetAvailableBoostTypesForCharacterByGUID("fixture-character")
+                        C_CharacterServices.GetCharacterServiceDisplayData(5).level = 80
+                        CharacterServicesMaster_UpdateBoostButtons(
+                            { { isVAS = false, serviceID = 5 } },
+                            { [5] = { amount = 1 } }
+                        )
+                        return available_count, boost_type, #blocked,
+                            CharacterVASMixin.NarrationGetName(characterServiceButton),
+                            characterServiceButton.Icon.atlas
+                        "#,
+                    )
+                    .expect("original character-service consumers should read the supplied fields");
+
+                assert_eq!(available_count, 1);
+                assert_eq!(boost_type, 5);
+                assert_eq!(blocked_count, 0, "the original filter must use displayData.level");
+                assert_eq!(title, "Fixture Upgrade");
+                assert_eq!(atlas, "FixtureUpgrade-small");
+
+                env.exec(
+                    "C_CharacterServices.GetCharacterServiceDisplayData = function() return nil end",
+                )
+                .expect("nil-provider fixture should install");
+                let nil_consumer = env
+                    .exec("GetAvailableBoostTypesForCharacterByGUID('fixture-character')");
+                assert!(
+                    nil_consumer.is_err(),
+                    "the original consumer dereferences flowData.level when a boost exists"
+                );
+            },
+        );
+    }
+}
+
+#[test]
+#[cfg(all(feature = "client-retail", feature = "optional-tests"))]
+fn retail_catalog_shop_owner_precedes_character_select_toggle() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+        let (owner_loaded, original_inbound): (bool, bool) = env
+            .eval(
+                r#"
+                local info = debug.getinfo(CatalogShopInboundInterface.SetShown, "S")
+                return C_AddOns.IsAddOnLoaded("Blizzard_CatalogShop"),
+                    info ~= nil and info.source:find("Blizzard_CatalogShop_Inbound.lua", 1, true) ~= nil
+                "#,
+            )
+            .expect("the selected CatalogShop inbound owner should be queryable");
+        assert!(owner_loaded);
+        assert!(original_inbound);
+
+        env.set_server_mirrored_cvar("shop2Enabled", "1")
+            .expect("Shop2 should be enabled for this fixture");
+        env.exec(
+            r#"
+            CharacterSelectUtil.IsStoreAvailable = function() return true end
+            ToggleStoreUI("character-select-probe")
+            "#,
+        )
+        .expect("original CharacterSelect toggle should call the CatalogShop inbound owner");
+
+        let (action, context_key): (String, String) = env
+            .eval(
+                "return CatalogShopFrame:GetAttribute('action'), CatalogShopFrame:GetAttribute('contextkey')",
+            )
+            .expect("CatalogShop action attributes should be readable");
+        assert_eq!(action, "Show");
+        assert_eq!(context_key, "character-select-probe");
+    }
+}
+
+#[test]
 #[cfg(feature = "client-retail")]
 fn retail_fonts_follow_screen_phase() {
     test_timeout! {

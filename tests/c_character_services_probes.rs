@@ -123,22 +123,6 @@ fn get_character_service_display_info_returns_empty_table() {
 }
 
 #[test]
-fn get_character_service_display_data_returns_default_shape() {
-    let env = env();
-    let has_shape: bool = env
-        .eval(
-            r#"
-            local data = C_CharacterServices.GetCharacterServiceDisplayData()
-            return data.boostLevel == 80 and
-                data.flowTitle == "Character Upgrade" and
-                data.popupInfo.textureKit == "characterupdate"
-            "#,
-        )
-        .unwrap();
-    assert!(has_shape);
-}
-
-#[test]
 fn assign_functions_are_callable_without_error() {
     let env = env();
     let ok: bool = env
