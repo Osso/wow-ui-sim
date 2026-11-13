@@ -666,11 +666,15 @@ pub(super) fn measure_text_width(state: &LuaState, id: u64) -> f64 {
         let text_scale = frame_text_scale_value(state, id);
         let line_height =
             crate::render::font::line_height_for_font_size(font_size, false).unwrap_or(font_size);
-        let unscaled =
-            crate::render::inline_markup::first_line_width(&markup, line_height, |piece| {
+        let unscaled = crate::render::inline_markup::first_line_width_fontstring(
+            &markup,
+            line_height,
+            text_scale as f32,
+            |piece| {
                 (measure_width_in_frame_font(state, id, piece, font.as_deref(), font_size)
                     / text_scale) as f32
-            });
+            },
+        );
         return f64::from(unscaled) * text_scale;
     }
     measure_width_in_frame_font(state, id, &text, font.as_deref(), font_size)

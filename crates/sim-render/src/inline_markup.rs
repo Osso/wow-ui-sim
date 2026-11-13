@@ -154,6 +154,43 @@ pub fn first_line_width(text: &str, line_height: f32, mut measure: impl FnMut(&s
     width
 }
 
+/// Width of a FontString's first line, with the icon cursor snapped after each
+/// icon. `measure` and the returned width use unscaled FontString units.
+pub fn first_line_width_fontstring(
+    text: &str,
+    line_height: f32,
+    text_scale: f32,
+    mut measure: impl FnMut(&str) -> f32,
+) -> f32 {
+    let mut cursor = 0.0;
+    for piece in split_inline_markup(text) {
+        match piece {
+            InlinePiece::Text(text) => {
+                let (line, broken) = match text.split_once('\n') {
+                    Some((line, _)) => (line, true),
+                    None => (text.as_str(), false),
+                };
+                if !line.is_empty() {
+                    cursor += measure(line) * text_scale;
+                }
+                if broken {
+                    break;
+                }
+            }
+            InlinePiece::Icon(icon) => {
+                let width = icon.size(line_height).0 * text_scale;
+                cursor = snap_icon_right_edge(cursor, width);
+            }
+        }
+    }
+    cursor / text_scale
+}
+
+/// Snap an icon's absolute right edge to the nearest pixel, with halves up.
+pub fn snap_icon_right_edge(x: f32, width: f32) -> f32 {
+    (x + width + 0.5).floor()
+}
+
 /// Height of each line of `text` (split at line breaks, without word wrap):
 /// `line_height`, or the tallest icon on the line when it is taller. R88e.6
 /// verifies that a taller accepted icon raises the stored line height.
