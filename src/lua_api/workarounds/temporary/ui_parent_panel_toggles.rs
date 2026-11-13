@@ -8,52 +8,6 @@
 #[cfg(test)]
 use crate::lua_api::WowLuaEnv;
 
-const PANEL_REGISTRATION_DEFAULTS_LUA: &str = r#"
-if ShowUIPanel == nil then
-    function ShowUIPanel(frame)
-        if frame ~= nil and type(frame.Show) == "function" then
-            frame:Show()
-            return true
-        end
-        return false
-    end
-end
-
-if HideUIPanel == nil then
-    function HideUIPanel(frame)
-        if frame ~= nil and type(frame.Hide) == "function" then
-            frame:Hide()
-            return true
-        end
-        return false
-    end
-end
-
-if CloseAllWindows == nil then
-    function CloseAllWindows()
-        return false
-    end
-end
-
-if CloseMenus == nil then
-    function CloseMenus()
-        local closed = false
-        if type(UIMenus) == "table" then
-            for _, name in pairs(UIMenus) do
-                local menu = _G[name]
-                if menu ~= nil and type(menu.IsShown) == "function" and menu:IsShown() then
-                    if type(menu.Hide) == "function" then
-                        menu:Hide()
-                        closed = true
-                    end
-                end
-            end
-        end
-        return closed
-    end
-end
-"#;
-
 const STARTUP_NAVIGATION_DEFAULTS_LUA: &str = r#"
 local uiParent = rawget(_G, "UIParent")
 
@@ -161,7 +115,6 @@ end
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
-    lua.exec(PANEL_REGISTRATION_DEFAULTS_LUA)?;
     lua.exec(STARTUP_NAVIGATION_DEFAULTS_LUA)?;
     Ok(())
 }
@@ -169,9 +122,6 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 #[cfg(test)]
 mod tests {
     use super::*;
-
-    #[path = "close_menus.rs"]
-    mod close_menus_tests;
 
     #[test]
     fn does_not_fabricate_original_panel_registry() {
