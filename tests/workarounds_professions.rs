@@ -582,9 +582,7 @@ fn casting_blacksmithing_opens_professions_frame() {
     );
 }
 
-// PTR 70493 ProfessionsBook.lua:344 requires CanTradeSkillShowCraftingUI.
-// Main-approved deferral: retain the RED original consumer until native R85 evidence.
-#[cfg(any(not(feature = "client-ptr"), feature = "optional-tests"))]
+// PTR R85: keep the original ProfessionsBook click consumer in the necessary test set.
 #[test]
 fn clicking_blacksmithing_button_in_professions_book_opens_panel() {
     let env = full_game_env();
