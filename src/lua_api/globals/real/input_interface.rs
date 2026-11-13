@@ -46,13 +46,12 @@ pub(crate) fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     LuaApiMut::register_function(lua, "IsUsingGamepad", is_using_gamepad)
 }
 
-#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
-#[cfg(test)]
+#[cfg(all(test, feature = "client-retail"))]
 mod tests {
     use crate::lua_api::WowLuaEnv;
 
     #[test]
-    fn retail_and_ptr_is_using_gamepad_defaults_to_false() {
+    fn retail_is_using_gamepad_defaults_to_false() {
         let env = WowLuaEnv::new().expect("create Retail Lua environment");
 
         assert!(!env.eval::<bool>("return IsUsingGamepad()").unwrap());

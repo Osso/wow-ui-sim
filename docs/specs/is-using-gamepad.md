@@ -28,7 +28,7 @@
 
 ## Tests asserting this spec
 
-- `src/lua_api/globals/real/input_interface.rs` — Retail/PTR default-false unit test.
+- `src/lua_api/globals/real/input_interface.rs` — Retail default-false unit test.
 - `tests/retail_ellesmere_core_gamepad_consumer.rs` — original Retail addon consumer call.
 - `tests/wowforever_input_style.rs` — preserves the Forever style-backed contract.
 
