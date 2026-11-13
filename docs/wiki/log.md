@@ -1,3 +1,9 @@
+## [2026-11-13] system | PTR character-creation camera evidence
+
+[Lua API](systems/lua-api.md#ptr-character-creation-evidence-boundary) separates
+verified R78/R83 argument/state behavior from droppable inferred catalog and
+return bridges. The unseeded collector and end-to-end submit remain distinct.
+
 ## [2026-11-12] correction | FontString anchor-width evidence
 
 Updated [FontString anchor sizing](investigations/fontstring-anchor-sizing.md) with L1c labels. **VERIFIED (code):** the inferred stored-width rewrite and `SetPoint()` measurement refresh are removed so native-UNKNOWN wrapping is not modeled. **VERIFIED (test code):** default tests observe rectangle edges and SetWidth priority; **INFERRED (test code):** GetWidth and single-anchor assertions are optional; **UNKNOWN:** renderer wrapping width and text-cache invalidation remain unmodeled.

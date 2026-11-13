@@ -982,6 +982,9 @@ pub struct SimState {
         Option<Vec<crate::c_api::c_character_creation_customizations::Category>>,
     /// Byte copied from Forever's Glue feature-status update.
     pub name_reservation_feature_status: u8,
+    #[cfg(feature = "client-ptr")]
+    pub ptr_character_creation:
+        crate::c_api::c_character_creation_submit_ptr::PtrCharacterCreationState,
     /// Current character-create model facing in normalized radians.
     pub character_create_facing_radians: f32,
     /// Host-supplied race IDs with an altered character-create model.

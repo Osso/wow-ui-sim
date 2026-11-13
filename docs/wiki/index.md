@@ -1,3 +1,9 @@
+## [2026-11-13] system | PTR character-creation camera evidence
+
+[Lua API](systems/lua-api.md#ptr-character-creation-evidence-boundary) separates
+verified R78/R83 argument/state behavior from droppable inferred catalog and
+return bridges. The unseeded collector and end-to-end submit remain distinct.
+
 ## [2026-11-12] investigation | Retail EllesmereUI v9.8 load boundary
 
 [Full third-party startup](investigations/full-addon-startup-2026-10-10.md#retail-ellesmereui-v98-load-reproduction-2026-11-12) records the initial 3/20 enablement mistake and issue #22 limits. **VERIFIED:** Retail G1/G1c behavior and a 20/20 post-fix load with three unique Lua errors (72 occurrences). **INFERRED:** the CVar overlap window and loader-populated addon-file catalog. **UNKNOWN:** native addon-file table membership and exact backing table identities.
