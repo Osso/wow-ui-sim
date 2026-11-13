@@ -5,8 +5,7 @@ mod model;
 
 use crate::c_api::ensure_namespace;
 use crate::lua_api::methods::{
-    call_function_state, create_string, create_table, registry_get, registry_set, table_get,
-    table_set_static,
+    call_function_state, create_string, registry_get, registry_set, table_get, table_set_static,
 };
 use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
 use model::Breakpoint;

@@ -2,9 +2,10 @@
 //! Copies recognized fields and applies only the documented defaults.
 
 use crate::c_api::{ensure_namespace, global_val};
+#[cfg(not(feature = "retail-12-1-5"))]
+use crate::lua_api::methods::table_set_static;
 use crate::lua_api::methods::{
     call_function_state, create_string, create_table, table_get, table_set, table_set_num,
-    table_set_static,
 };
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
