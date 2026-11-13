@@ -1373,8 +1373,8 @@ fn character_creation_default_starting_zone_reaches_customize_screen() {
         assert_no_new_character_create_lua_errors(&env, errors_before);
 
         let next_step: (bool, bool, bool) = env.eval(r#"
-            return CharCustomizeFrame:IsShown(), ZoneChoiceFrame.useNPE,
-                ZoneChoiceFrame:ShouldShow()
+            local zone = CharacterCreateFrame.ZoneChoiceFrame
+            return CharCustomizeFrame:IsShown(), zone.useNPE, zone:ShouldShow()
         "#).unwrap();
         assert_eq!(next_step, (true, false, false));
         env.exec(r##"
