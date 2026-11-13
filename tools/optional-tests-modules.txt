@@ -155,3 +155,6 @@ wowforever_graveyard
 wowforever_name_policy
 wowforever_profile
 wrath_legacy_lod_retail_preservation
+
+# lt-2897: original Retail consumer regression; explicitly requested optional.
+objective_tracker_original_animation
