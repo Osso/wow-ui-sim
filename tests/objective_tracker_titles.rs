@@ -64,9 +64,12 @@ fn quest_objective_tracker_populates_titles_via_normal_async_load_path() {
         })
         .unwrap();
 
+    // VERIFIED: Camelot prefixes each quest title with its difficulty level.
     // Retail seeds two ordinary quests; the Wrath watch fixture supplies Supply Run too.
     let expected = if cfg!(feature = "client-wrath") {
         "Defending the Gates|Supply Run|The Lost Expedition"
+    } else if cfg!(feature = "client-wowforever") {
+        "[80] Defending the Gates|[80] The Lost Expedition"
     } else {
         "Defending the Gates|The Lost Expedition"
     };
