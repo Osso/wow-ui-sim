@@ -153,10 +153,6 @@ const POST_LOAD_WORKAROUNDS: &[WorkaroundStep] = &[
         apply: patch_lfg_lock_list,
     },
     WorkaroundStep {
-        label: "patch_auction_house_browse_results_event",
-        apply: patch_auction_house_browse_results_event_from_env,
-    },
-    WorkaroundStep {
         label: "patch_auction_house_search_context_aliases",
         apply: patch_auction_house_search_context_aliases_from_env,
     },
@@ -675,7 +671,6 @@ fn patch_runtime_feature_addon_surfaces(env: &crate::lua_api::LoaderEnv<'_>, add
 }
 
 fn patch_auction_house_runtime_surface(env: &crate::lua_api::LoaderEnv<'_>) {
-    patch_auction_house_browse_results_event(env);
     patch_auction_house_search_context_aliases(env);
 }
 

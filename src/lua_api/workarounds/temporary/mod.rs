@@ -29,7 +29,6 @@ pub(crate) mod adventure_map_frame_surface;
 pub(crate) mod alert_frame_defaults;
 pub(crate) mod artifact_ui_show_panel_guard;
 pub(crate) mod assisted_combat_manager_defaults;
-pub(crate) mod auction_house_browse_results_event;
 pub(crate) mod auction_house_search_context_aliases;
 pub(crate) mod auth_challenge_frame_parent;
 pub(crate) mod auto_complete_defaults;
