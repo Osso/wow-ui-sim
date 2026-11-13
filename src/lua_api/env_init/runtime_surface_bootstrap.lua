@@ -437,7 +437,14 @@ local function __wow_store_frame()
   return nil
 end
 
-C_StoreSecure = __wow_merge_namespace(rawget(_G, "C_StoreSecure"), {})
+-- Cleanup removes this public secure-only binding. Populate only an existing
+-- registration; when absent, keep this compatibility table local to bootstrap.
+local C_StoreSecure = rawget(_G, "C_StoreSecure")
+if type(C_StoreSecure) == "table" then
+  C_StoreSecure = __wow_merge_namespace(C_StoreSecure, {})
+else
+  C_StoreSecure = {}
+end
 C_StoreSecure.IsAvailable = function()
   return __wow_store_state.available == true
 end
@@ -867,7 +874,6 @@ local function __wow_store_product(productID)
   return __wow_store_products[tonumber(productID) or -1]
 end
 
-C_StoreSecure = C_StoreSecure or __wow_namespace()
 if rawget(C_StoreSecure, "_state") == nil then
   C_StoreSecure._state = __wow_store_secure_state
 end
