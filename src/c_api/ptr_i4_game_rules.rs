@@ -1,6 +1,6 @@
 //! Shared PTR/Forever SD/HD inputs and PTR-only 70493 consumer declarations.
 use crate::client_profile::{ACTIVE, ClientProfile};
-use crate::lua_api::methods::{borrow_state, borrow_state_mut, create_table, table_set};
+use crate::lua_api::methods::{borrow_state, borrow_state_mut};
 use crate::lua_bridge::{FromStack, table_set_rust_fn};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
@@ -18,7 +18,7 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     for &(name, function) in functions {
         table_set_rust_fn(state, namespace, name, function)?;
     }
-    let enums = super::helpers::ensure_global_table(state, "Enum");
+    let enums = super::helpers::ensure_enum_table(state);
     register_usage_locations(state, enums);
     if ACTIVE == ClientProfile::Ptr {
         #[cfg(feature = "client-ptr")]
@@ -166,9 +166,10 @@ fn register_recent_allies_categories(state: &mut LuaState, enums: Val) {
 }
 
 fn publish(state: &mut LuaState, enums: Val, name: &str, fields: &[(&str, i32)]) {
-    let table = create_table(state);
+    let table = super::helpers::ensure_paired_table_field(state, enums, name)
+        .expect("Enum group must have a secure registration peer");
     for &(field, value) in fields {
-        table_set(state, table, field, Val::Num(f64::from(value)));
+        super::helpers::set_namespace_member(state, table, field, Val::Num(f64::from(value)))
+            .expect("Enum group must have a secure registration peer");
     }
-    table_set(state, enums, name, table);
 }

@@ -431,28 +431,13 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
 /// Register the `C_Timer` global table with the three timer functions.
 fn register_c_timer(lua: &mut rilua::Lua) -> LuaResult<()> {
     let state = lua.state_mut();
-
-    let c_timer_ref = {
-        let builder = TableBuilder::new(state)
-            .set_function("After", timer_after)?
-            .set_function("NewTimerID", timer_new_timer_id)?
-            .set_function("NewTicker", timer_new_ticker)?
-            .set_function("NewTimer", timer_new_timer)?;
-        builder.table_ref()
-    };
-
-    let key = state.gc.intern_string(b"C_Timer");
-    let global = state.global;
-    state
-        .gc
-        .tables
-        .get_mut(global)
-        .ok_or_else(|| runtime_error("missing global table"))?
-        .raw_set(
-            Val::Str(key),
-            Val::Table(c_timer_ref),
-            &state.gc.string_arena,
-        )?;
+    let c_timer_ref = crate::c_api::ensure_namespace(state, "C_Timer")?;
+    let _ = TableBuilder::from_table(state, c_timer_ref)
+        .set_function("After", timer_after)?
+        .set_function("NewTimerID", timer_new_timer_id)?
+        .set_function("NewTicker", timer_new_ticker)?
+        .set_function("NewTimer", timer_new_timer)?
+        .build();
     #[cfg(feature = "timed-signal-maps")]
     crate::c_api::timed_signal_map::register_c_timer_timed_signal_map(state)?;
     #[cfg(not(feature = "timed-signal-maps"))]

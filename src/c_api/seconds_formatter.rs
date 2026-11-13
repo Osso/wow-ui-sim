@@ -23,13 +23,12 @@ fn publish_values(
     fields: &[(&'static str, f64)],
 ) -> LuaResult<()> {
     let enums = super::helpers::ensure_namespace(state, "Enum")?;
-    let values = create_table(state);
-    state.push(values);
+    let values = Val::Table(crate::c_api::ensure_namespace_table_field(
+        state, enums, name,
+    )?);
     for &(key, value) in fields {
-        table_set_static(state, values, key, Val::Num(value));
+        crate::c_api::set_namespace_member(state, values, key, Val::Num(value))?;
     }
-    table_set_static(state, Val::Table(enums), name, values);
-    state.pop();
     Ok(())
 }
 
@@ -39,13 +38,12 @@ fn publish_metadata(
     name: &'static str,
 ) -> LuaResult<()> {
     let namespace = super::helpers::ensure_namespace(state, namespace)?;
-    let metadata = create_table(state);
-    state.push(metadata);
+    let metadata = Val::Table(crate::c_api::ensure_namespace_table_field(
+        state, namespace, name,
+    )?);
     for (key, value) in [("MinValue", 0.0), ("MaxValue", 2.0), ("NumValues", 3.0)] {
-        table_set_static(state, metadata, key, Val::Num(value));
+        crate::c_api::set_namespace_member(state, metadata, key, Val::Num(value))?;
     }
-    table_set_static(state, Val::Table(namespace), name, metadata);
-    state.pop();
     Ok(())
 }
 

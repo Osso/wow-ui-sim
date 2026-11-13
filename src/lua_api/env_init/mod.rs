@@ -58,6 +58,13 @@ pub(super) fn init_lua_state(
     trace_debug_getter_values(lua, "init_entry");
     registry::init_registry_tables(lua, &state)?;
     bootstrap::init_shared_bootstrap(lua)?;
+    super::globals::security::register_environment_helpers(lua)?;
+    super::globals::missing_surface::register_secure_environment_base_globals(lua)?;
+    LuaApiMut::register_function(lua, "forceinsecure", forceinsecure)?;
+    // INFERRED: create the shared secure table before native registration, because the
+    // native registrar order relative to the 39-name copy is UNKNOWN.
+    super::globals::security::create_secure_environment(lua)?;
+    publish_bootstrap_native_globals(lua)?;
     enums::init_enum_globals(lua)?;
     frames::init_frame_metatable(lua)?;
     // register_globals calls gc_stop at its entry; finalize_bootstrap_gc
@@ -118,10 +125,6 @@ pub(super) fn init_lua_state(
     rilua::table_security::register_table_security(lua)?;
     trace_debug_getter_values(lua, "after_profile_bootstrap");
     super::globals::real::protected_globals::install(lua)?;
-    // secureenv is created from its fixed native base list here. It does
-    // not receive later `_G` registrations; insecure addon code that reads
-    // through `_G` sees nil after the cleanup below.
-    super::globals::security::create_secure_environment(lua)?;
     #[cfg(feature = "forbidden-aspects")]
     super::script_object_transfer::install(lua)?;
     enable_taint_and_wrap_loadstring(lua)?;
@@ -195,7 +198,14 @@ fn enable_taint_and_wrap_loadstring(lua: &mut rilua::Lua) -> crate::Result<()> {
         LuaApiMut::set_global_val(lua, "loadstring_untainted", original_loadstring)?;
     }
     LuaApiMut::register_function(lua, "loadstring", tainting_loadstring)?;
-    LuaApiMut::register_function(lua, "forceinsecure", forceinsecure)?;
+    Ok(())
+}
+
+fn publish_bootstrap_native_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
+    for name in ["Mixin", "CreateFromMixins", "CreateAndInitFromMixin"] {
+        let value = LuaApiMut::get_global_val(lua, name);
+        super::globals::security::set_in_both_envs_rilua(lua, name, value)?;
+    }
     Ok(())
 }
 

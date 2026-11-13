@@ -46,30 +46,40 @@ pub(crate) use secure_env::{secure_env_table, set_secure_env_key_state};
 #[cfg(feature = "retail-12-1-0")]
 pub(crate) use secret_values::register_retail_secret_values;
 
-/// Register all security-related globals into rilua's global table.
-///
-/// Registers the security globals as rilua `RustFn`s.
+/// Register the secure-environment base helpers before the shared secure table is built.
+pub(crate) fn register_environment_helpers(lua: &mut rilua::Lua) -> LuaResult<()> {
+    environment::register_environment_helpers(lua)
+}
+
+/// Register all security-related globals into both global environments.
 pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
-    LuaApiMut::register_function(lua, "securecallmethod", securecallmethod::securecallmethod)?;
-    environment::register_environment_helpers(lua)?;
-    LuaApiMut::register_function(
+    secure_env::register_function_in_both_environments(
+        lua,
+        "securecallmethod",
+        securecallmethod::securecallmethod,
+    )?;
+    secure_env::register_function_in_both_environments(
         lua,
         "issecurevariable",
         value_access::issecurevariable_override,
     )?;
-    LuaApiMut::register_function(
+    secure_env::register_function_in_both_environments(
         lua,
         "__sim_mark_secret_value",
         value_access::mark_secret_values,
     )?;
-    LuaApiMut::register_function(lua, "__sim_mark_slot_taint", value_access::mark_slot_taint)?;
+    secure_env::register_function_in_both_environments(
+        lua,
+        "__sim_mark_slot_taint",
+        value_access::mark_slot_taint,
+    )?;
     value_access::register_value_access_fallbacks(lua)?;
     #[cfg(feature = "retail-12-0-0")]
     retail_secret_helpers::register(lua)?;
     secret_values::register_scrub_fallbacks(lua)?;
     secure_handler::register_secure_handler_stubs(lua)?;
     state_drivers::register_state_driver_stubs(lua)?;
-    LuaApiMut::register_function(
+    secure_env::register_function_in_both_environments(
         lua,
         "SecureCmdOptionParse",
         cmd_option::secure_cmd_option_parse,
@@ -83,7 +93,7 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
 fn register_if_missing(lua: &mut rilua::Lua, name: &str, func: rilua::RustFn) -> LuaResult<()> {
     let existing = LuaApiMut::get_global_val(lua, name);
     if existing == Val::Nil {
-        LuaApiMut::register_function(lua, name, func)?;
+        secure_env::register_function_in_both_environments(lua, name, func)?;
     }
     Ok(())
 }

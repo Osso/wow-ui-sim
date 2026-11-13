@@ -10,7 +10,7 @@ pub(crate) fn register(state: &mut LuaState) {
 }
 
 fn register_enums(state: &mut LuaState) {
-    let enums = super::helpers::ensure_global_table(state, "Enum");
+    let enums = super::helpers::ensure_enum_table(state);
     publish(
         state,
         enums,
@@ -79,7 +79,7 @@ fn register_provider_experience_enums(state: &mut LuaState, enums: Val) {
 
 pub(crate) fn register_player_swing_type(state: &mut LuaState) {
     // Shared enum bootstrap also restores this publication after cleanup.
-    let enums = super::helpers::ensure_global_table(state, "Enum");
+    let enums = super::helpers::ensure_enum_table(state);
     // Forever SwingTimerDocumentation.lua publishes the event payload enum.
     publish(
         state,
@@ -276,16 +276,11 @@ fn register_ping_results(state: &mut LuaState, enums: Val) {
 }
 
 fn publish(state: &mut LuaState, root: Val, name: &str, fields: &[(&str, i32)]) {
-    let values = match table_get(state, root, name) {
-        value @ Val::Table(_) => value,
-        _ => {
-            let value = create_table(state);
-            table_set(state, root, name, value);
-            value
-        }
-    };
+    let values = super::helpers::ensure_paired_table_field(state, root, name)
+        .expect("Enum group must have a secure registration peer");
     for &(field, value) in fields {
-        table_set(state, values, field, Val::Num(f64::from(value)));
+        super::helpers::set_namespace_member(state, values, field, Val::Num(f64::from(value)))
+            .expect("Enum group must have a secure registration peer");
     }
 }
 

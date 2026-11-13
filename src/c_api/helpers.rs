@@ -109,34 +109,90 @@ pub(crate) fn ensure_global_table(state: &mut LuaState, name: &str) -> Val {
     }
 }
 
+pub(crate) fn ensure_enum_table(state: &mut LuaState) -> Val {
+    let (ordinary, _) = ensure_namespace_pair(state, "Enum")
+        .expect("secure environment must exist before Enum registration");
+    Val::Table(ordinary)
+}
+
 pub(crate) fn ensure_namespace(
     state: &mut LuaState,
     name: &'static str,
 ) -> LuaResult<GcRef<Table>> {
-    let key_ref = state.gc.intern_string_static(name.as_bytes());
+    ensure_namespace_pair(state, name).map(|(ordinary, _)| ordinary)
+}
+
+pub(crate) fn ensure_namespace_pair(
+    state: &mut LuaState,
+    name: &str,
+) -> LuaResult<(GcRef<Table>, GcRef<Table>)> {
+    let ordinary_parent = state.global;
+    let secure_parent = crate::lua_api::globals::security::secure_env_table(state)?;
+    let ordinary = ensure_table_at_parent(state, ordinary_parent, name);
+    let secure = ensure_table_at_parent(state, secure_parent, name);
+    crate::lua_bridge::set_namespace_peer(state, ordinary, secure)?;
+    Ok((ordinary, secure))
+}
+
+pub(crate) fn ensure_namespace_table_field(
+    state: &mut LuaState,
+    ordinary_parent: GcRef<Table>,
+    name: &str,
+) -> LuaResult<GcRef<Table>> {
+    let secure_parent = crate::lua_bridge::namespace_peer(state, ordinary_parent)?
+        .ok_or_else(|| rilua::runtime_error("secure namespace parent was not registered"))?;
+    let ordinary = ensure_table_at_parent(state, ordinary_parent, name);
+    let secure = ensure_table_at_parent(state, secure_parent, name);
+    crate::lua_bridge::set_namespace_peer(state, ordinary, secure)?;
+    Ok(ordinary)
+}
+
+pub(crate) fn ensure_paired_table_field(
+    state: &mut LuaState,
+    ordinary_parent: Val,
+    name: &str,
+) -> LuaResult<Val> {
+    let Val::Table(parent_ref) = ordinary_parent else {
+        return Err(rilua::runtime_error("namespace parent must be a table"));
+    };
+    ensure_namespace_table_field(state, parent_ref, name).map(Val::Table)
+}
+
+pub(crate) fn set_namespace_member(
+    state: &mut LuaState,
+    namespace: Val,
+    name: &str,
+    value: Val,
+) -> LuaResult<()> {
+    let Val::Table(namespace_ref) = namespace else {
+        return Err(rilua::runtime_error("namespace must be a table"));
+    };
+    let key = Val::Str(state.gc.intern_string(name.as_bytes()));
+    crate::lua_bridge::table_set_namespace_member(state, namespace_ref, key, value)
+}
+
+fn ensure_table_at_parent(state: &mut LuaState, parent: GcRef<Table>, name: &str) -> GcRef<Table> {
+    let key_ref = state.gc.intern_string(name.as_bytes());
     let current = state
         .gc
         .tables
-        .get(state.global)
-        .map(|globals| globals.get_str(key_ref, &state.gc.string_arena))
+        .get(parent)
+        .map(|table| table.get_str(key_ref, &state.gc.string_arena))
         .unwrap_or(Val::Nil);
-    let table_ref = match current {
-        Val::Table(table_ref) => table_ref,
-        _ => {
-            let table_ref = state.gc.alloc_table(Table::new());
-            let global = state.global;
-            if let Some(globals) = state.gc.tables.get_mut(global) {
-                let _ = globals.raw_set(
-                    Val::Str(key_ref),
-                    Val::Table(table_ref),
-                    &state.gc.string_arena,
-                );
-            }
-            state.gc.barrier_back(global);
-            table_ref
-        }
-    };
-    Ok(table_ref)
+    if let Val::Table(table_ref) = current {
+        return table_ref;
+    }
+
+    let table_ref = state.gc.alloc_table(Table::new());
+    if let Some(table) = state.gc.tables.get_mut(parent) {
+        let _ = table.raw_set(
+            Val::Str(key_ref),
+            Val::Table(table_ref),
+            &state.gc.string_arena,
+        );
+    }
+    state.gc.barrier_back(parent);
+    table_ref
 }
 
 /// Keep ordinary namespace lookup from fabricating retired members.

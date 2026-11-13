@@ -140,12 +140,22 @@ pub fn mark_secure_state(state: &mut LuaState, func: &rilua::Function) -> LuaRes
 pub fn set_in_both_envs_rilua(lua: &mut rilua::Lua, key: &str, val: Val) -> LuaResult<()> {
     LuaApiMut::set_global_val(lua, key, val)?;
     let state = lua.state_mut();
-    if let Ok(secureenv_ref) = secure_env_table(state) {
-        let secureenv = rilua::Table::from_gc_ref(secureenv_ref);
-        let key_ref = state.gc.intern_string(key.as_bytes());
-        secureenv.raw_set(state, Val::Str(key_ref), val)?;
-    }
+    let secureenv_ref = secure_env_table(state)?;
+    let key_ref = state.gc.intern_string(key.as_bytes());
+    let secureenv = rilua::Table::from_gc_ref(secureenv_ref);
+    secureenv.raw_set(state, Val::Str(key_ref), val)?;
+    state.gc.barrier_back(secureenv_ref);
     Ok(())
+}
+
+pub(crate) fn register_function_in_both_environments(
+    lua: &mut rilua::Lua,
+    name: &str,
+    function: rilua::RustFn,
+) -> LuaResult<()> {
+    LuaApiMut::register_function(lua, name, function)?;
+    let value = LuaApiMut::get_global_val(lua, name);
+    set_in_both_envs_rilua(lua, name, value)
 }
 
 #[cfg(test)]

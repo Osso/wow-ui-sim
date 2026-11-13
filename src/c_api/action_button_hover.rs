@@ -6,7 +6,7 @@
 pub(crate) mod unknown_policy;
 
 use crate::client_profile::{ACTIVE, ClientProfile};
-use crate::lua_api::methods::{borrow_state_mut, table_get, table_set};
+use crate::lua_api::methods::{borrow_state_mut, table_get};
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
@@ -59,15 +59,15 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     table_set_rust_fn_static(state, namespace, "LeaveActionButton", leave)?;
     // Native-only enum names/values from WM92 PTR 70668; the pinned original
     // ActionButton.lua:941,951 uses ActionCombatSpellHitIndicationEnabled.
-    let enums = super::helpers::ensure_global_table(state, "Enum");
+    let enums = super::helpers::ensure_enum_table(state);
     let rules = table_get(state, enums, "GameRule");
-    table_set(
+    super::helpers::set_namespace_member(
         state,
         rules,
         "ActionCombatSpellHitIndicationEnabled",
         Val::Num(204.0),
-    );
-    table_set(state, rules, "CraftFromBankRestricted", Val::Num(211.0));
+    )?;
+    super::helpers::set_namespace_member(state, rules, "CraftFromBankRestricted", Val::Num(211.0))?;
     Ok(())
 }
 

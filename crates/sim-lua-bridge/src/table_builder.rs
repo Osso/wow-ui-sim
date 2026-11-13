@@ -12,10 +12,130 @@ use rilua::vm::value::Userdata;
 
 use crate::IntoStack;
 
+const NAMESPACE_PEERS_REGISTRY_KEY: &str = "__wow_secure_namespace_peers";
+
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub struct FrameIdentity {
     pub index: u32,
     pub generation: u32,
+}
+
+/// Link the ordinary and secure tables for a native namespace registration.
+pub fn set_namespace_peer(
+    state: &mut LuaState,
+    ordinary: GcRef<RiluaTable>,
+    secure: GcRef<RiluaTable>,
+) -> LuaResult<()> {
+    let peers = namespace_peers_table(state, true)?.ok_or_else(table_collected_error)?;
+    set_peer(state, peers, ordinary, secure)?;
+    set_peer(state, peers, secure, ordinary)
+}
+
+/// Return the paired table for a namespace, if registration linked one.
+pub fn namespace_peer(
+    state: &mut LuaState,
+    table_ref: GcRef<RiluaTable>,
+) -> LuaResult<Option<GcRef<RiluaTable>>> {
+    let Some(peers) = namespace_peers_table(state, false)? else {
+        return Ok(None);
+    };
+    let value = state
+        .gc
+        .tables
+        .get(peers)
+        .map(|table| table.get(Val::Table(table_ref), &state.gc.string_arena))
+        .unwrap_or(Val::Nil);
+    Ok(match value {
+        Val::Table(peer) => Some(peer),
+        _ => None,
+    })
+}
+
+/// Write one registration value into a namespace and its paired environment table.
+pub fn table_set_namespace_member(
+    state: &mut LuaState,
+    table_ref: GcRef<RiluaTable>,
+    key: Val,
+    value: Val,
+) -> LuaResult<()> {
+    let peer = namespace_peer(state, table_ref)?;
+    set_table_member(state, table_ref, key, value)?;
+    if let Some(peer) = peer {
+        set_table_member(state, peer, key, value)?;
+    }
+    Ok(())
+}
+
+fn namespace_peers_table(
+    state: &mut LuaState,
+    create: bool,
+) -> LuaResult<Option<GcRef<RiluaTable>>> {
+    let registry_key = state
+        .gc
+        .intern_string_static(NAMESPACE_PEERS_REGISTRY_KEY.as_bytes());
+    let registry = state.registry;
+    let existing = state
+        .gc
+        .tables
+        .get(registry)
+        .map(|table| table.get_str(registry_key, &state.gc.string_arena))
+        .unwrap_or(Val::Nil);
+    if let Val::Table(table_ref) = existing {
+        return Ok(Some(table_ref));
+    }
+    if !create {
+        return Ok(None);
+    }
+
+    let peers = state.gc.alloc_table(RiluaTable::new());
+    let registry_table = state
+        .gc
+        .tables
+        .get_mut(registry)
+        .ok_or_else(table_collected_error)?;
+    registry_table.raw_set(
+        Val::Str(registry_key),
+        Val::Table(peers),
+        &state.gc.string_arena,
+    )?;
+    state.gc.barrier_back(registry);
+    Ok(Some(peers))
+}
+
+fn set_peer(
+    state: &mut LuaState,
+    peers: GcRef<RiluaTable>,
+    table_ref: GcRef<RiluaTable>,
+    peer: GcRef<RiluaTable>,
+) -> LuaResult<()> {
+    let table = state
+        .gc
+        .tables
+        .get_mut(peers)
+        .ok_or_else(table_collected_error)?;
+    table.raw_set(
+        Val::Table(table_ref),
+        Val::Table(peer),
+        &state.gc.string_arena,
+    )?;
+    state.gc.barrier_back(peers);
+    Ok(())
+}
+
+fn set_table_member(
+    state: &mut LuaState,
+    table_ref: GcRef<RiluaTable>,
+    key: Val,
+    value: Val,
+) -> LuaResult<()> {
+    let table = state
+        .gc
+        .tables
+        .get_mut(table_ref)
+        .ok_or_else(table_collected_error)?;
+    table.raw_set(key, value, &state.gc.string_arena)?;
+    state.gc.barrier_back(table_ref);
+    Ok(())
 }
 
 // ---------------------------------------------------------------------------
@@ -69,13 +189,7 @@ fn install_rust_fn(
     state.ensure_stack(stack_slot + 1);
     state.stack_set(stack_slot, Val::Function(closure_ref));
     state.top = stack_slot + 1;
-    let table = state
-        .gc
-        .tables
-        .get_mut(table_ref)
-        .ok_or_else(table_collected_error)?;
-    let result = table.raw_set(key, Val::Function(closure_ref), &state.gc.string_arena);
-    state.gc.barrier_back(table_ref);
+    let result = table_set_namespace_member(state, table_ref, key, Val::Function(closure_ref));
     state.top = stack_slot;
     result
 }
@@ -136,6 +250,11 @@ impl<'a> TableBuilder<'a> {
         Self { state, table_ref }
     }
 
+    /// Wrap an existing table, such as one returned by `c_api::ensure_namespace`.
+    pub fn from_table(state: &'a mut LuaState, table_ref: GcRef<RiluaTable>) -> Self {
+        Self { state, table_ref }
+    }
+
     /// Set a string-keyed entry to any value implementing [`IntoStack`].
     ///
     /// `IntoStack` is used only to convert the value to `Val`; no stack
@@ -144,14 +263,7 @@ impl<'a> TableBuilder<'a> {
     pub fn set(self, key: &str, value: impl IntoStack) -> LuaResult<Self> {
         let val = value_to_table_entry(self.state, value)?;
         let key_ref = self.state.gc.intern_string(key.as_bytes());
-        let k = Val::Str(key_ref);
-        let table = self
-            .state
-            .gc
-            .tables
-            .get_mut(self.table_ref)
-            .ok_or_else(table_collected_error)?;
-        table.raw_set(k, val, &self.state.gc.string_arena)?;
+        table_set_namespace_member(self.state, self.table_ref, Val::Str(key_ref), val)?;
         Ok(self)
     }
 

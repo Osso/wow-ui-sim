@@ -532,7 +532,9 @@ mod registration;
 pub(crate) mod restricted_actions;
 
 pub(crate) use helpers::{
-    ensure_global_table, ensure_namespace, global_val, mark_namespace_keys_removed, set_global_val,
+    ensure_enum_table, ensure_global_table, ensure_namespace, ensure_namespace_table_field,
+    ensure_paired_table_field, global_val, mark_namespace_keys_removed, set_global_val,
+    set_namespace_member,
 };
 pub use permanent_shims::c_map_api;
 pub(crate) use registration::{

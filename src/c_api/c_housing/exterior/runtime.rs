@@ -10,7 +10,7 @@ mod queries;
 use crate::c_api::c_housing::catalog::HousingCatalogEntryVariantID;
 use crate::c_api::helpers::ensure_namespace;
 use crate::lua_api::globals::state_backed_queries::dispatch_event_now;
-use crate::lua_api::methods::{borrow_state_mut, create_table, table_set_static};
+use crate::lua_api::methods::borrow_state_mut;
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use mutation::{AttachedDecorAction, ExteriorChange};
 use rilua::table_security::unwrap_secret;
@@ -50,16 +50,14 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
 
 fn publish_decor_action_enum(state: &mut LuaState) -> LuaResult<()> {
     let enum_namespace = ensure_namespace(state, "Enum")?;
-    let action_enum = create_table(state);
-    state.push(action_enum);
-    table_set_static(
+    let action_enum = Val::Table(crate::c_api::ensure_namespace_table_field(
         state,
-        Val::Table(enum_namespace),
+        enum_namespace,
         "HousingFixtureDecorAction",
-        action_enum,
-    );
-    table_set_static(state, action_enum, "Store", Val::Num(0.0));
-    table_set_static(state, action_enum, "Detach", Val::Num(1.0));
+    )?);
+    state.push(action_enum);
+    crate::c_api::set_namespace_member(state, action_enum, "Store", Val::Num(0.0))?;
+    crate::c_api::set_namespace_member(state, action_enum, "Detach", Val::Num(1.0))?;
     state.top -= 1;
     Ok(())
 }

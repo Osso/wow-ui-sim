@@ -175,7 +175,11 @@ const DURATION_TEXT: &[Field] = &[
 
 fn register_duration_property_enum(state: &mut LuaState) -> LuaResult<()> {
     let enums = ensure_namespace(state, "Enum")?;
-    let values = create_table(state);
+    let values = Val::Table(crate::c_api::ensure_namespace_table_field(
+        state,
+        enums,
+        "DurationTextBindingProperty",
+    )?);
     for (index, name) in [
         "RemainingDuration",
         "RemainingPercent",
@@ -188,25 +192,17 @@ fn register_duration_property_enum(state: &mut LuaState) -> LuaResult<()> {
     .into_iter()
     .enumerate()
     {
-        table_set_static(state, values, name, Val::Num(index as f64));
-    }
-    table_set_static(
-        state,
-        Val::Table(enums),
-        "DurationTextBindingProperty",
-        values,
-    );
-    let metadata = create_table(state);
-    for (name, value) in [("MinValue", 0.0), ("MaxValue", 6.0), ("NumValues", 7.0)] {
-        table_set_static(state, metadata, name, Val::Num(value));
+        crate::c_api::set_namespace_member(state, values, name, Val::Num(index as f64))?;
     }
     let enum_meta = ensure_namespace(state, "EnumMeta")?;
-    table_set_static(
+    let metadata = Val::Table(crate::c_api::ensure_namespace_table_field(
         state,
-        Val::Table(enum_meta),
+        enum_meta,
         "DurationTextBindingProperty",
-        metadata,
-    );
+    )?);
+    for (name, value) in [("MinValue", 0.0), ("MaxValue", 6.0), ("NumValues", 7.0)] {
+        crate::c_api::set_namespace_member(state, metadata, name, Val::Num(value))?;
+    }
     Ok(())
 }
 

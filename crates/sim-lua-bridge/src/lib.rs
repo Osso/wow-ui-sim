@@ -33,5 +33,8 @@ pub use multivalue::MultiValue;
 pub use table_builder::FrameIdentity;
 pub use table_builder::TableBuilder;
 pub use table_builder::create_frame_table;
+pub use table_builder::namespace_peer;
+pub use table_builder::set_namespace_peer;
+pub use table_builder::table_set_namespace_member;
 pub use table_builder::table_set_rust_fn;
 pub use table_builder::table_set_rust_fn_static;
