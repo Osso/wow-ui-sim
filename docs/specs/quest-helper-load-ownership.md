@@ -160,3 +160,18 @@ B(b) tests now assert Campaign2/Calling3 in an ordinary newly initialized
 environment on every profile and after the actual original Retail dependency
 closure. No Enum deletion or fake input. Baseline and post-removal tests are
 preservation; no production RED is expected for an unreachable fallback.
+
+## B(b) baseline and bounded implementation
+
+Retail preservation baseline at211060dae41feb2c860e5eab1176391315cb9176
+compiled lib+integration successfully with zero warnings and passed both tests
+(2/2), terminating2026-11-13T08:21:14Z. The only production change now removes
+the four redundant Enum setup lines, leaving the QuestCache adapter untouched.
+No previously failing production test is claimed. Final all-profile no-run gates
+and normal-bootstrap preservation tests remain pending on this change; Retail
+also repeats the actual original ownership closure.
+
+Coordinator #717 confirms B(c) has no existing native evidence. Classify
+temporary/quest_log_mixin.rs:11-42 NATIVE and leave it unchanged, no RED. Its
+exact lifecycle question above is assigned to pending R88; no duplicate query
+or further lifecycle investigation is required in this slice. B(d) remains KEEP.
