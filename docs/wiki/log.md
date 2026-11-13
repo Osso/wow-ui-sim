@@ -3765,3 +3765,5 @@ Added [FontString anchor sizing](investigations/fontstring-anchor-sizing.md). Th
 - 2026-11-13: Recorded lt-a912 R79b/R79c verified host finalization in [[lua-api]]
   and the character-creation spec: sorted neutral keys, rewritten 1-based indices,
   <=32 stable ties, no claim about larger tie order or the missing collector.
+
+- 2026-11-13: Recorded inventory O original Lua/XML ownership retirement, chat history preservation, journal/panel/navigation consumer proof and deferred native/conditional boundaries in [[lua-owned-fallback-retirement]].
