@@ -109,7 +109,8 @@ const POSITION_TESTS: &[TestCase] = &[
     ("player_frame",               "PlayerFrame",                    268.0,  850.0,  232.0, 100.0, 1.0),
     ("target_frame",               "TargetFrame",                   1100.0,  850.0,  232.0, 100.0, 1.0),
     ("focus_frame",                "FocusFrame",                    1320.0,  835.0, 232.0, 100.0, 1.0),
-    ("paladin_power_bar",          "PaladinPowerBarFrame",           314.0,  945.0,  150.0,  43.0, 1.0),
+    // VERIFIED in Retail source: PaladinPowerBarFrame inherits PlayerBottomManagedFrameTemplate without an EditMode system template, so the original OnShow -> AddManagedFrame path replaces its XML anchor with the player-container layout.
+    ("paladin_power_bar",          "PaladinPowerBarFrame",           341.5,  922.0,  150.0,  43.0, 1.0),
     ("party_frame",                "PartyFrame",                      22.0,  147.0,  120.0, 244.0, 1.0),
     ("compact_party_frame",        "CompactPartyFrame",               22.0,  147.0,   98.0, 234.0, 1.0),
     // HUD elements
@@ -832,8 +833,23 @@ fn assert_layout_state(env: &WowLuaEnv, test: &str) {
             r#"
             assert(ObjectiveTrackerFrame:IsInDefaultPosition(), "tracker default-position state")
             assert(ObjectiveTrackerFrame:GetParent() == RightManagedFrameContainer, "tracker parent")
+
+            local widgetContainer = UIWidgetBelowMinimapContainerFrame
+            assert(widgetContainer:IsShown(), "below-minimap widget container is shown")
+            assert(widgetContainer:GetParent() == RightManagedFrameContainer, "widget container parent")
+            assert(widgetContainer.IsInDefaultPosition == nil, "plain managed widget container has no EditMode method")
+            assert(widgetContainer:GetNumWidgetsShowing() == 0, "empty widget container")
+            assert(widgetContainer:GetHeight() == 1, "empty resize-layout frame uses the source default size")
+
+            local widgetIsLaidOut = false
+            for _, child in ipairs(RightManagedFrameContainer:GetLayoutChildren()) do
+                widgetIsLaidOut = widgetIsLaidOut or child == widgetContainer
+            end
+            assert(widgetIsLaidOut, "plain widget container participates in managed layout")
+
             local _, relative, _, _, offsetY = ObjectiveTrackerFrame:GetPoint(1)
-            assert(relative == RightManagedFrameContainer and offsetY == 0, "tracker anchor")
+            assert(relative == RightManagedFrameContainer and offsetY == -11,
+                "one-unit widget row plus ten-unit container spacing")
             assert(math.abs(ObjectiveTrackerFrame:GetHeight() - RightManagedFrameContainer:GetHeight()) < 0.001, "tracker height")
             "#
         }
