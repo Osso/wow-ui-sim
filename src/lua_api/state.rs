@@ -47,6 +47,8 @@ macro_rules! build_empty_sim_state {
                 crate::c_api::c_nameplate_manager::NamePlateHitTestInsets::default(),
             input_interface_style:
                 crate::c_api::c_input_interface_style::InputInterfaceStyle::default(),
+            #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+            last_gamepad_input_timestamp: None,
             video_capability_bytes: Default::default(),
             #[cfg(any(feature = "client-wowforever", feature = "client-ptr"))]
             gamepad_mapped_sticks: None,
