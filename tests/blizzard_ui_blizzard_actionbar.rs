@@ -120,3 +120,14 @@ mod behavior_paragon_tooltip;
 
 #[path = "blizzard_ui/blizzard_actionbar/behavior_button_tooltip.rs"]
 mod behavior_button_tooltip;
+
+#[cfg(all(
+    feature = "optional-tests",
+    any(
+        feature = "client-retail",
+        feature = "client-ptr",
+        feature = "client-wowforever"
+    )
+))]
+#[path = "blizzard_ui/blizzard_actionbar/behavior_assisted_combat_tooltip.rs"]
+mod behavior_assisted_combat_tooltip;
