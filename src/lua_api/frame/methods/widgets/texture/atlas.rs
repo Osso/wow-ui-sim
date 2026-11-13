@@ -294,10 +294,32 @@ fn button_texture_should_show(
     }
 }
 
+fn unwrap_set_texture_input(state: &LuaState, value: Val) -> LuaResult<(Val, bool)> {
+    if !cfg!(feature = "forbidden-aspects") {
+        return crate::lua_api::frame::methods::secret_origin::unwrap_input(state, value);
+    }
+    if !rilua::table_security::is_secret_value(state, value) {
+        return crate::lua_api::frame::methods::secret_origin::unwrap_input(state, value);
+    }
+    if rilua::api::state_is_secure(state) {
+        return crate::lua_api::frame::methods::secret_origin::unwrap_input(state, value);
+    }
+
+    if matches!(
+        rilua::table_security::secret_payload_kind(state, value),
+        Some(rilua::table_security::SecretPayloadKind::String)
+    ) {
+        return Err(runtime_error(
+            "Cannot set texture to a secret string value.",
+        ));
+    }
+
+    crate::lua_api::frame::methods::secret_origin::unwrap_input(state, value)
+}
+
 pub(super) fn set_texture(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
-    let (texture_val, secret) =
-        crate::lua_api::frame::methods::secret_origin::unwrap_input(state, stack_val(state, 2))?;
+    let (texture_val, secret) = unwrap_set_texture_input(state, stack_val(state, 2))?;
     let resolved = resolve_texture_value(state, texture_val);
     if secret && resolved.is_none() {
         return Err(runtime_error(

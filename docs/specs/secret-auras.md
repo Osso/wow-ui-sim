@@ -44,6 +44,7 @@ Evidence levels used below:
 
 ### Widget sinks and aspects
 - [ ] Widget methods apply their `SecretArguments` mode. STRING names three modes: never allowed, not allowed, and only allowed during untainted execution.
+- [ ] Under tainted execution, a marked string passed to `Texture:SetTexture` raises `Cannot set texture to a secret string value.` (**VERIFIED — R88c Q1, Retail 12.1.5.70688**; full native error context is UNKNOWN).
 - [ ] Apply `SecretArgumentsAddAspect` and `SecretReturnsForAspect` according to the bounded WM61 S6 findings below; complete getter publication remains UNKNOWN.
 - [ ] Shipped aura buttons can pass secret duration, text, icon, visibility and geometry to their widgets and render correctly (UI).
 
