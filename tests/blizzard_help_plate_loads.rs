@@ -496,12 +496,14 @@ fn help_plate_tooltip_rotates_real_arrow_texture_geometry() {
     let failures: String = env
         .eval(
             r#"
-            local tooltip = CreateFrame("Frame")
-            tooltip.Text = tooltip:CreateFontString()
-            tooltip.LingerAndFade = tooltip:CreateAnimationGroup()
+            local textureParent = CreateFrame("Frame")
+            local tooltip = {
+                Text = textureParent:CreateFontString(),
+                LingerAndFade = textureParent:CreateAnimationGroup(),
+            }
 
             local function createArrow()
-                local arrow = tooltip:CreateTexture()
+                local arrow = textureParent:CreateTexture()
                 arrow:SetSize(20, 10)
                 arrow:SetTexCoord(0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8)
                 return arrow
