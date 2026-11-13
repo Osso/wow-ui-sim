@@ -266,6 +266,24 @@ fn blizzard_environment_cleanup_is_addon_loaded_returns_true(env: &WowLuaEnv) {
 #[cfg(feature = "optional-tests")]
 fn environment_cleanup_keeps_secure_namespaces_absent_after_restore() {
     common::with_timeout(90, || {
+        let initial_env = WowLuaEnv::new().expect("Lua environment should initialize");
+        let initially_present: (bool, bool) = initial_env
+            .eval("return C_StoreSecure ~= nil, C_WowTokenSecure ~= nil")
+            .expect("initial secure namespace probe should succeed");
+        assert_eq!(initially_present, (true, true));
+
+        let env = execute_environment_cleanup_source_without_restore();
+        let absent_after_cleanup: (bool, bool) = env
+            .eval("return C_StoreSecure == nil, C_WowTokenSecure == nil")
+            .expect("cleanup should clear the public secure namespaces");
+        assert_eq!(absent_after_cleanup, (true, true));
+
+        env.restore_post_cleanup_globals();
+        let absent_after_restore: (bool, bool) = env
+            .eval("return C_StoreSecure == nil, C_WowTokenSecure == nil")
+            .expect("post-cleanup secure namespace probe should succeed");
+        assert_eq!(absent_after_restore, (true, true));
+
         common::blizzard_addon_harness::with_blizzard_addon_smoke_shape(
             &["Blizzard_EnvironmentCleanup"],
             &[],
@@ -277,7 +295,7 @@ fn environment_cleanup_keeps_secure_namespaces_absent_after_restore() {
                 );
                 let absent: (bool, bool) = env
                     .eval("return C_StoreSecure == nil, C_WowTokenSecure == nil")
-                    .expect("post-cleanup secure namespace probe should succeed");
+                    .expect("selected cleanup add-on should leave secure namespaces absent");
                 assert_eq!(absent, (true, true));
             },
         );
