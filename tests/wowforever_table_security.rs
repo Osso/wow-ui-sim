@@ -1,5 +1,6 @@
 #![cfg(feature = "client-wowforever")]
 
+use rilua::LuaApi;
 #[cfg(feature = "optional-tests")]
 use wow_ui_sim::loader::load_addon;
 use wow_ui_sim::lua_api::WowLuaEnv;
