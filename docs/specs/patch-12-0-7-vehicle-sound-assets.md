@@ -32,13 +32,16 @@ Cached `UIFileAssetAPIDocumentation.lua:29,45` declares `AllowedWhenUntainted`; 
 
 ### Known-asset host catalog candidate — B28
 
-- [ ] Under `retail-12-0-7`, predicates read explicit empty-default per-environment catalogs; resolvable GetFileID values do not fabricate catalog membership. GetFileID itself remains unchanged.
-- [ ] IsKnownFile returns true for host-declared shipped ID or loose path; IsLooseFile returns true only for a declared loose path not already classified shipped. Each returns exactly one public boolean.
-- [ ] A registered absent/unopenable loose file stays known; physical presence alone does not make an unregistered file known. No filesystem query, extension probing, shim or catalog fallback is used by these epoch producers.
+- [ ] Under `retail-12-0-7`, predicates read explicit per-environment catalogs; `GetFileID` results do not fabricate shipped membership. `GetFileID` remains unchanged.
+- [ ] VERIFIED (Retail 12.1.5.70688): `IsKnownFile` is true when either runtime table contains the resolved file ID. `IsLooseFile` is true when the first table's marker is nonzero, independently of `IsKnownFile`'s second-table lookup.
+- [ ] VERIFIED (Retail 12.1.5.70688): string paths are upper-cased and `/` becomes `\\`; an exact lookup miss retries with the final extension replaced by `.BLP`, or `.BLP` appended when no extension exists. A resolved file ID of zero returns false for both predicates.
+- [ ] VERIFIED (Retail 12.1.5.70688): these predicates do not check the disk. A known loose-file marker does not prove that the loose file exists or can be opened.
+- [ ] INFERRED simulator representation: `known_shipped_asset_ids` models the second table; the normalized `known_loose_asset_paths` catalog models first-table path entries and markers. Exact native backing structures remain UNKNOWN.
+- [ ] INFERRED: each loaded addon's own files are inserted into the loose-path catalog before its Lua files run. Whether native runtime tables include addon loose files is UNKNOWN.
 - [ ] Host changes and revocations are visible without recreating the environment. Another environment remains empty and unaffected.
 - [ ] Both queries authenticate every original argument and every extra with `rilua::table_security::unwrap_secret` before validating any. Secure authentic secrets work; tainted authentic secrets fail, including extras after a malformed public first argument. Caller taint and input secrecy remain unchanged.
-- [ ] INFERRED: reuse GetFileID's positive integral u32 boundary and mandatory number/string type; invalid numeric domains return false, invalid types error, authenticated extras are ignored. String paths normalize ASCII case and backslashes; host inserts normalized keys. No numeric-string coercion or inferred extension aliases.
-- [ ] INFERRED: public outputs, shipped precedence and adopting the later-cache catalog contract under 12.0.7. No native complete-catalog or historical population proof is claimed.
+- [ ] INFERRED: reuse GetFileID's positive integral u32 boundary and mandatory number/string type; invalid numeric domains return false, invalid types error, authenticated extras are ignored. No numeric-string coercion.
+- [ ] INFERRED: catalog acquisition and the exact path-to-file-ID table model under `retail-12-0-7`; no complete-catalog or historical population proof is claimed.
 
 ## How it works
 
@@ -63,8 +66,8 @@ Existing-test changes: restricted M+ denial fixture in `tests/private_aura_sound
 ## Known gaps (current cycle)
 
 - [ ] Targeted default-profile compilation and RED/GREEN are proven. Strict earlier/current-only epochs, full cached-consumer startup and native parity remain unproved; alternate features and startup CLI were excluded from integration.
-- [ ] No pinned historical declarations for asset registry behavior, simultaneous sound restrictions or vehicle timing/identity. Inferences remain qualified.
-- [ ] B28 automatic loader registration, pre-load catalog availability and selected-root reconciliation remain unmodeled. Explicit host catalog tests do not close that runtime boundary; do not claim complete B28 or namespace coverage.
+- [ ] The pinned API documentation declares the C_UIFileAsset surface, but native asset-table identities and catalog acquisition remain unknown. The 12.1.5 byte evidence does not prove identical behavior in every earlier patch.
+- [ ] Selected-root reconciliation and completeness of the loaded-addon loose-path catalog remain unproved; do not claim complete native B28 parity.
 
 ## Out of scope
 

@@ -78,60 +78,108 @@ fn c_ui_file_asset_get_file_id(state: &mut LuaState) -> LuaResult<u32> {
 
 fn c_ui_file_asset_is_known_file(state: &mut LuaState) -> LuaResult<u32> {
     let asset = query_asset(state)?;
-    state.push(Val::Bool(!matches!(asset, Asset::Missing)));
+    state.push(Val::Bool(asset.is_known));
     Ok(1)
 }
 
 fn c_ui_file_asset_is_loose_file(state: &mut LuaState) -> LuaResult<u32> {
     let asset = query_asset(state)?;
-    state.push(Val::Bool(matches!(asset, Asset::Loose)));
+    state.push(Val::Bool(asset.is_loose));
     Ok(1)
 }
 
-enum Asset {
-    Shipped,
-    Loose,
-    Missing,
+#[derive(Default)]
+struct AssetStatus {
+    is_known: bool,
+    is_loose: bool,
 }
 
 /// INFERRED public boolean, positive integral u32 domain and ignored authenticated extras.
 #[cfg(feature = "retail-12-0-7")]
-fn query_asset(state: &LuaState) -> LuaResult<Asset> {
+fn query_asset(state: &LuaState) -> LuaResult<AssetStatus> {
     let asset = rilua::table_security::unwrap_secret(state, stack_val(state, 1))?;
     for value in state.stack.iter().take(state.top).skip(state.base + 1) {
         rilua::table_security::unwrap_secret(state, *value)?;
     }
     // No validation can mask secret denial in any original argument or extra.
-    let file_id = resolve_authenticated_asset_id(state, asset)?;
-    let path = val_to_string(state, asset);
-    let sim = borrow_state(state)?;
-    if file_id.is_some_and(|id| sim.known_shipped_asset_ids.contains(&id)) {
-        return Ok(Asset::Shipped);
+    if !matches!(asset, Val::Str(_)) {
+        let file_id = resolve_authenticated_asset_id(state, asset)?;
+        let sim = borrow_state(state)?;
+        let is_known =
+            file_id.is_some_and(|id| id > 0 && sim.known_shipped_asset_ids.contains(&id));
+        return Ok(AssetStatus {
+            is_known,
+            is_loose: false,
+        });
     }
-    // INFERRED exact normalized path membership; no filesystem or extension probing.
-    let is_loose = path.is_some_and(|path| {
-        let normalized = path.replace('\\', "/").to_ascii_lowercase();
-        sim.known_loose_asset_paths.contains(&normalized)
-    });
-    Ok(if is_loose {
-        Asset::Loose
+
+    let path = val_to_string(state, asset)
+        .ok_or_else(|| rilua::runtime_error("C_UIFileAsset.GetFileID: invalid asset string"))?;
+    let sim = borrow_state(state)?;
+    let normalized_path = normalize_native_asset_path(&path);
+    for candidate in [
+        normalized_path.clone(),
+        retry_blp_asset_path(&normalized_path),
+    ] {
+        let normalized_loose_path = normalize_loose_asset_path(&candidate);
+        let is_loose = sim.known_loose_asset_paths.contains(&normalized_loose_path);
+        let file_id = crate::limited_listfile::lookup_path(&candidate);
+        if let Some(file_id) = file_id {
+            if file_id == 0 {
+                return Ok(AssetStatus::default());
+            }
+            let is_known_shipped = sim.known_shipped_asset_ids.contains(&file_id);
+            return Ok(AssetStatus {
+                is_known: is_known_shipped || is_loose,
+                is_loose,
+            });
+        }
+        if is_loose {
+            return Ok(AssetStatus {
+                is_known: true,
+                is_loose: true,
+            });
+        }
+    }
+    Ok(AssetStatus::default())
+}
+
+#[cfg(feature = "retail-12-0-7")]
+fn normalize_native_asset_path(path: &str) -> String {
+    path.replace('/', "\\").to_ascii_uppercase()
+}
+
+#[cfg(feature = "retail-12-0-7")]
+fn normalize_loose_asset_path(path: &str) -> String {
+    path.replace('\\', "/").to_ascii_lowercase()
+}
+
+#[cfg(feature = "retail-12-0-7")]
+fn retry_blp_asset_path(path: &str) -> String {
+    let file_name_start = path.rfind('\\').map_or(0, |index| index + 1);
+    let file_name = &path[file_name_start..];
+    if let Some(extension_start) = file_name.rfind('.') {
+        format!("{}.BLP", &path[..file_name_start + extension_start])
     } else {
-        Asset::Missing
-    })
+        format!("{path}.BLP")
+    }
 }
 
 #[cfg(not(feature = "retail-12-0-7"))]
-fn query_asset(state: &LuaState) -> LuaResult<Asset> {
+fn query_asset(state: &LuaState) -> LuaResult<AssetStatus> {
     if file_id_from_asset_arg(state).is_some() {
-        return Ok(Asset::Shipped);
+        return Ok(AssetStatus {
+            is_known: true,
+            is_loose: false,
+        });
     }
     let Some(path) = val_to_string(state, stack_val(state, 1)) else {
-        return Ok(Asset::Missing);
+        return Ok(AssetStatus::default());
     };
-    Ok(if query_selected_addon_file(state, &path) {
-        Asset::Loose
-    } else {
-        Asset::Missing
+    let is_loose = query_selected_addon_file(state, &path);
+    Ok(AssetStatus {
+        is_known: is_loose,
+        is_loose,
     })
 }
 
@@ -244,6 +292,59 @@ mod tests {
                 "#,
             )
             .expect("probe should run");
+        assert_eq!(result, "ok");
+    }
+
+    #[cfg(feature = "retail-12-0-7")]
+    #[test]
+    fn known_file_normalizes_paths_and_retries_blp() {
+        assert_eq!(
+            crate::limited_listfile::lookup_path("Interface/Icons/Trade_Engineering.tga"),
+            None
+        );
+        assert_eq!(
+            crate::limited_listfile::lookup_path("Interface/Icons/Trade_Engineering.blp"),
+            Some(136243)
+        );
+
+        let env = WowLuaEnv::new().expect("env");
+        env.state()
+            .borrow_mut()
+            .known_shipped_asset_ids
+            .insert(136243);
+        let result: String = env
+            .eval(
+                r#"
+                if C_UIFileAsset.IsKnownFile("iNterFace\\iCons\\TRADE_Engineering.blp") ~= true then return "normalization" end
+                if C_UIFileAsset.IsKnownFile("Interface/Icons/Trade_Engineering.tga") ~= true then return "blp-retry" end
+                return "ok"
+                "#,
+            )
+            .expect("queries should run");
+
+        assert_eq!(result, "ok");
+    }
+
+    #[cfg(feature = "retail-12-0-7")]
+    #[test]
+    fn loose_file_queries_read_the_host_path_catalog() {
+        let env = WowLuaEnv::new().expect("env");
+        env.state()
+            .borrow_mut()
+            .known_loose_asset_paths
+            .insert("interface/addons/probe/media/example.blp".to_owned());
+        let result: String = env
+            .eval(
+                r#"
+                local path = "Interface\\AddOns\\Probe\\Media\\Example.blp"
+                if C_UIFileAsset.IsKnownFile(path) ~= true then return "known" end
+                if C_UIFileAsset.IsLooseFile(path) ~= true then return "loose" end
+                if C_UIFileAsset.IsLooseFile("Interface/Icons/Trade_Engineering.blp") ~= false then return "shipped" end
+                return "ok"
+                "#,
+            )
+            .expect("queries should run");
+
         assert_eq!(result, "ok");
     }
 }

@@ -39,7 +39,11 @@ pub(crate) mod group_role_counts;
 pub mod guild_invites;
 pub mod guild_logo;
 pub(crate) mod heal_prediction;
-#[cfg(feature = "client-wowforever")]
+#[cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
 pub mod input_interface;
 #[cfg(all(
     feature = "retail-12-0-5",
