@@ -246,7 +246,7 @@ fn retail_aura_container_apply_icon_accepts_tainted_secret_file_id() {
                 assert(issecretvalue(auraData.icon))
 
                 local function addonApplyIcon()
-                    securecallfunction(mixin.ApplyIcon, button, 'player', auraData)
+                    mixin.ApplyIcon(button, 'player', auraData)
                 end
                 debug.setobjecttaint(addonApplyIcon, 'AuraKit')
                 addonApplyIcon()
