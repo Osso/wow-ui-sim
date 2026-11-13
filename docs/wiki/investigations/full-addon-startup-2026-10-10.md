@@ -72,9 +72,9 @@ The following observations come from isolated 1600x1200 or 3840x2160 simulator r
 
 ### Retail follow-up sources
 
-- [Retail input consumer test](../../tests/retail_ellesmere_core_gamepad_consumer.rs) — exact missing-global boundary.
-- [Input interface registration](../../src/lua_api/globals/real/mod.rs) — profile gate for the existing model.
-- [C_UIFileAsset implementation](../../src/c_api/c_ui_file_asset.rs) and [state fields](../../src/lua_api/state/sim_state.rs) — current shipped/loose lookup inputs.
+- [Retail input consumer test](../../../tests/retail_ellesmere_core_gamepad_consumer.rs) — exact missing-global boundary.
+- [Input interface registration](../../../src/lua_api/globals/real/mod.rs) — profile gate for the existing model.
+- [C_UIFileAsset implementation](../../../src/c_api/c_ui_file_asset.rs) and [state fields](../../../src/lua_api/state/sim_state.rs) — current shipped/loose lookup inputs.
 - `/syncthing/World of Warcraft/_retail_/Interface/AddOns/EllesmereUI/EllesmereUI_UICore.lua`, `EllesmereUI_Profiles.lua`, and `Libs/LibSharedMedia-3.0/LibSharedMedia-3.0.lua` — installed read-only addon sources.
 - `/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/InputDocumentation.lua` and `UIFileAssetAPIDocumentation.lua` — pinned Retail declarations.
 - `/var/tmp/osso/ellesmere-core-enabled-baseline-dump.log`, `/var/tmp/osso/ellesmere-core-input-only-baseline.log`, and `/var/tmp/osso/ellesmere-core-unlock-1600-dumptree.log` — local diagnostic outputs.
