@@ -1,5 +1,7 @@
 use crate::common;
 
+#[cfg(all(feature = "optional-tests", feature = "client-retail"))]
+use wow_ui_sim::c_api::c_character_creation::{StartingZoneChoiceInput, StartingZoneChoicesInput};
 use wow_ui_sim::loader::{discover_blizzard_addons_for_screen, load_addon};
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::paths::default_blizzard_ui_addons_path;
@@ -1385,6 +1387,178 @@ fn character_creation_submit_real_controls_wait_for_host_result() {
         let current_count: i32 = env.eval("return GetNumCharacters()").unwrap();
         assert_eq!(current_count, original_count,
             "submission without a host result must not manufacture a roster entry");
+    }
+}
+
+#[cfg(all(
+    feature = "optional-tests",
+    any(feature = "client-retail", feature = "client-wowforever")
+))]
+fn enter_character_create_for_starting_zone_test(env: &WowLuaEnv) -> usize {
+    use wow_ui_sim::c_api::c_character_creation_customizations::Category;
+
+    // This host fixture is not native customization data; its explicit zoom
+    // lets the original Forward path reach the starting-zone consumer.
+    env.state().borrow_mut().character_customizations = Some(vec![Category::new(0)]);
+    env.exec(
+        r#"
+        GlueParent_SetScreen("charcreate")
+        assert(CharacterCreateFrame:IsShown())
+    "#,
+    )
+    .expect("the original CharacterCreate screen should open");
+    env.state().borrow().lua_errors.len()
+}
+
+#[cfg(all(
+    feature = "optional-tests",
+    any(feature = "client-retail", feature = "client-wowforever")
+))]
+fn click_character_create_forward(env: &WowLuaEnv) {
+    env.exec(
+        r#"
+        local button = CharacterCreateFrame.ForwardButton
+        local click = button:GetScript("OnClick")
+        assert(type(click) == "function" and button:IsEnabled())
+        click(button, "LeftButton")
+    "#,
+    )
+    .expect("the real Forward button should run");
+}
+
+#[cfg(all(
+    feature = "optional-tests",
+    any(feature = "client-retail", feature = "client-wowforever")
+))]
+fn assert_no_new_character_create_lua_errors(env: &WowLuaEnv, errors_before: usize) {
+    let errors = env.state().borrow().lua_errors[errors_before..].to_vec();
+    assert!(
+        errors.is_empty(),
+        "unexpected character-create Lua errors: {errors:#?}"
+    );
+}
+
+#[test]
+#[cfg(all(feature = "optional-tests", feature = "client-retail"))]
+fn retail_character_creation_default_starting_zone_reaches_customize_screen() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+        let errors_before = enter_character_create_for_starting_zone_test(&env);
+        click_character_create_forward(&env);
+        assert_no_new_character_create_lua_errors(&env, errors_before);
+
+        let next_step: (bool, bool, bool) = env.eval(r#"
+            local zone = CharacterCreateFrame.ZoneChoiceFrame
+            return CharCustomizeFrame:IsShown(), zone.useNPE, zone:ShouldShow()
+        "#).unwrap();
+        assert_eq!(next_step, (true, false, false));
+        env.exec(r##"
+            local function pack(...) return { n = select("#", ...), ... } end
+            local choices = pack(C_CharacterCreation.GetStartingZoneChoices())
+            assert(choices.n == 2)
+            local first, second = choices[1], choices[2]
+            assert(type(first) == "table" and second == nil)
+            assert(first.zoneName == "" and first.zoneImageAtlas == nil)
+            assert(first.isNPE == false)
+        "##).unwrap();
+    }
+}
+
+#[test]
+#[cfg(all(feature = "optional-tests", feature = "client-wowforever"))]
+fn forever_character_creation_default_starting_zone_reaches_customize_screen() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+        let errors_before = enter_character_create_for_starting_zone_test(&env);
+        click_character_create_forward(&env);
+        assert_no_new_character_create_lua_errors(&env, errors_before);
+
+        let next_step: (bool, bool, bool) = env.eval(r#"
+            local zone = CharacterCreateFrame.ZoneChoiceFrame
+            return CharCustomizeFrame:IsShown(), zone.useNPE, zone:ShouldShow()
+        "#).unwrap();
+        assert_eq!(next_step, (true, false, false));
+        let (self_found_allowed, return_count): (bool, i64) = env
+            .eval(r##"
+                local function pack(...) return { n = select("#", ...), ... } end
+                local result = pack(C_GameRules.IsSelfFoundAllowed())
+                return result[1], result.n
+            "##)
+            .unwrap();
+        assert_eq!((self_found_allowed, return_count), (false, 1));
+        env.exec(r##"
+            local function pack(...) return { n = select("#", ...), ... } end
+            local choices = pack(C_CharacterCreation.GetStartingZoneChoices())
+            assert(choices.n == 2)
+            local first, second = choices[1], choices[2]
+            assert(type(first) == "table" and second == nil)
+            assert(first.zoneName == "" and first.zoneImageAtlas == nil)
+            assert(first.isNPE == false)
+        "##).unwrap();
+    }
+}
+
+#[test]
+#[cfg(all(feature = "optional-tests", feature = "client-retail"))]
+fn retail_character_creation_two_starting_zone_choices_reach_forward_consumer() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+        let errors_before = enter_character_create_for_starting_zone_test(&env);
+        env.state().borrow_mut().character_create_starting_zone_choices = StartingZoneChoicesInput {
+            normal_choice: Some(StartingZoneChoiceInput {
+                zone_name: "Fixture Zone".to_string(),
+                zone_image_atlas: Some("charactercreate-startingzone-exilesreach".to_string()),
+            }),
+            restricted_to_npe: None,
+        };
+
+        click_character_create_forward(&env);
+        assert_no_new_character_create_lua_errors(&env, errors_before);
+        env.exec(r##"
+            local function pack(...) return { n = select("#", ...), ... } end
+            local choices = pack(C_CharacterCreation.GetStartingZoneChoices())
+            assert(choices.n == 2)
+            local first, second = choices[1], choices[2]
+            assert(type(first) == "table" and type(second) == "table")
+            assert(first.zoneName == "Fixture Zone")
+            assert(first.zoneImageAtlas == "charactercreate-startingzone-exilesreach")
+            assert(first.isNPE == false)
+            assert(second.zoneName == "" and second.zoneImageAtlas == nil)
+            assert(second.isNPE == true)
+            local zone = CharacterCreateFrame.ZoneChoiceFrame
+            assert(zone:ShouldShow() and zone.useNPE == true)
+            assert(zone.NormalStartingZone.ZoneNameButton.Label:GetText() == "Fixture Zone")
+        "##).unwrap();
+    }
+}
+
+#[test]
+#[cfg(all(feature = "optional-tests", feature = "client-retail"))]
+fn retail_character_creation_npe_restriction_skips_zone_choice() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+        let errors_before = enter_character_create_for_starting_zone_test(&env);
+        env.state().borrow_mut().character_create_starting_zone_choices = StartingZoneChoicesInput {
+            normal_choice: Some(StartingZoneChoiceInput {
+                zone_name: "Restricted Fixture Zone".to_string(),
+                zone_image_atlas: Some("charactercreate-startingzone-exilesreach".to_string()),
+            }),
+            restricted_to_npe: Some(true),
+        };
+
+        click_character_create_forward(&env);
+        assert_no_new_character_create_lua_errors(&env, errors_before);
+        env.exec(r##"
+            local function pack(...) return { n = select("#", ...), ... } end
+            local choices = pack(C_CharacterCreation.GetStartingZoneChoices())
+            assert(choices.n == 2)
+            local first, second = choices[1], choices[2]
+            assert(type(first) == "table" and second == nil)
+            assert(first.zoneName == "" and first.zoneImageAtlas == nil)
+            assert(first.isNPE == true)
+            local zone = CharacterCreateFrame.ZoneChoiceFrame
+            assert(zone.useNPE == true and not zone:ShouldShow())
+        "##).unwrap();
     }
 }
 
