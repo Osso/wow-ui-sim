@@ -12,7 +12,7 @@ return bridges. The unseeded collector and end-to-end submit remain distinct.
 
 ## [2026-11-13] implementation | Garrison landing-page visibility
 
-[Full third-party startup](investigations/full-addon-startup-2026-10-10.md#garrison-minimap-button-visibility-r88e1-2026-11-13) and the [Retail garrison contract](../specs/garrison-landing-page-type.md) record R88e.1's record lookup, type-111 condition, inferred host inputs and original Minimap test. **VERIFIED (Retail 12.1.5 build 70688):** low-byte lookup, missing-record false and non-111 state flags. **INFERRED:** the type-111 player-state value is a covenant ID.
+[Full third-party startup](investigations/full-addon-startup-2026-10-10.md#garrison-minimap-button-visibility-r88e1-2026-11-13) and the [Retail garrison contract](../specs/garrison-landing-page-type.md) record R88e.1's record lookup, type-111 condition, inferred host inputs and original Minimap test. **VERIFIED (Retail 12.1.5 build 70688):** low-byte lookup, missing-record false and non-111 state flags. **VERIFIED (20-addon Retail run at simulator SHA `2a03dbee7`):** 20/20 addons loaded with zero load-time errors; `lua-errors` reports only the AuraKit secret-access error (70 occurrences). **INFERRED:** the type-111 player-state value is a covenant ID.
 
 ## [2026-11-13] investigation | EllesmereUI core API boundary
 

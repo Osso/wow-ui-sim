@@ -92,6 +92,8 @@ Epoch `20261010T183739Z`: [bounded independent attribution report](https://githu
 
 **VERIFIED (simulator test):** the original `ExpansionLandingPageMinimapButtonMixin:RefreshButton` completes with default state and leaves its button hidden; a supplied type-6 record with a true flag makes it show. The same test checks low-byte lookup, missing and false records, type-111 gating, and one boolean return. Its minimal button fixture replaces only the rendering `UpdateIcon` method.
 
+**VERIFIED (20-addon Retail run at simulator SHA `2a03dbee7`):** all 20 staged addons loaded, with 443 Lua files, zero load failures, zero load-time errors and zero warnings. `lua-errors` reported one unique post-startup error in 70 occurrences: AuraKit's secret-access error. The former Minimap visibility nil error is absent.
+
 #### Nameplate inset contract (R88a, 2026-11-13)
 
 **VERIFIED (Retail 12.1.5 build 70688):** `SetNamePlateHitTestInsets` does not reject every tainted caller. Its restriction gate needs source metadata, a restriction-state pointer and a false permission; the permission's meaning remains UNKNOWN. The native type parser rejects nil, maps failed numeric conversion to type 0, converts successful values to signed 32-bit and selects by the low byte. Insets accept numbers and values accepted by native numeric coercion, then convert to single precision and scale by `1/1024 * 0.8f`.
