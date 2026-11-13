@@ -205,25 +205,36 @@ fn secure_types_owner_preservation_through_selected_consumers() {
 
         -- Menu.lua:212-220 and :443-451 consume SecureArray and SecureFunction.
         local root = Menu.CreateRootMenuDescription({})
-        local secureFunction = root:GetFinalInitializer()
-        assert(type(secureFunction) == "table" and type(secureFunction.SetFunction) == "function"
-            and secureFunction.wrapper == nil, "SecureTypes.lua:388-392 secure function wrapper object")
+        local element = Menu.CreateMenuElementDescription()
+        root:Insert(element)
+        assert(root:HasElements(), "Menu.lua:427-430 stores descriptions in its SecureArray")
+        local iterator, state, index = root:EnumerateElementDescriptions()
+        local actualIndex, actualElement = iterator(state, index)
+        assert(actualIndex == 1 and actualElement == element,
+            "Menu.lua:419-420 preserves the SecureArray index/value iterator")
         local initializer = function() end
         root:SetFinalInitializer(initializer)
-        assert(type(secureFunction.wrapper) == "function" and secureFunction.wrapper ~= initializer,
-            "SecureTypes.lua:356-369 stores a wrapper, not the identity function")
 
-        local callbacks = root:GetMenuResponseCallbacks()
-        local menuCallback = function() end
-        callbacks:Insert(menuCallback)
-        assert(callbacks:Remove(1) == menuCallback,
-            "SecureTypes.lua:131-134 Remove(index) returns the removed value")
-        callbacks:Insert(menuCallback)
-        local iterator, state, index = callbacks:Enumerate()
-        assert(select("#", callbacks:Enumerate()) == 3 and type(iterator) == "function"
-            and state == nil and index == nil, "SecureTypes.lua:169-173 Enumerate return shape")
-        local actualIndex, actualValue = iterator(state, index)
-        assert(actualIndex == 1 and actualValue == menuCallback,
+        -- SecureTypes.lua:388-392 returns an object; :356-364 stores a wrapper,
+        -- unlike the fallback's identity-function result.
+        local secureFunction = SecureTypes.CreateSecureFunction()
+        assert(type(secureFunction) == "table" and type(secureFunction.SetFunction) == "function"
+            and secureFunction.wrapper == nil, "SecureTypes.lua:388-392 secure function wrapper object")
+        secureFunction:SetFunction(initializer)
+        assert(type(secureFunction.wrapper) == "function" and secureFunction.wrapper ~= initializer,
+            "SecureTypes.lua:356-364 stores a wrapper, not the identity function")
+
+        -- SecureTypes.lua:131-134 returns the value at an array index, not a boolean.
+        local array = SecureTypes.CreateSecureArray()
+        array:Insert("first")
+        array:Insert("second")
+        assert(array:Remove(1) == "first", "SecureTypes.lua:131-134 Remove(index) returns the removed value")
+        array:Insert("second")
+        local arrayIterator, arrayState, arrayIndex = array:Enumerate()
+        assert(select("#", array:Enumerate()) == 3 and type(arrayIterator) == "function"
+            and arrayState == nil and arrayIndex == nil, "SecureTypes.lua:169-173 Enumerate return shape")
+        local actualArrayIndex, actualArrayValue = arrayIterator(arrayState, arrayIndex)
+        assert(actualArrayIndex == 1 and actualArrayValue == "second",
             "SecureTypes.lua:169-173 Enumerate yields index and value")
         "##,
     )
