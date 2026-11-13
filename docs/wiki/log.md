@@ -3681,3 +3681,5 @@ VERIFIED: [tooltip data](systems/lua-api.md#tooltip-data-and-merchant-cursor-pre
 ## 2026-11-12 — Unit-test cache isolation
 
 Updated addon-loading and the CASC contract: unit-test startup must reject stale/missing UI caches without auto-sync; normal startup remains unchanged. Recorded the concurrent Retail-pin overwrite incident and isolated reload-child regression.
+
+- 2026-11-13: Recorded lt-6cee/R87 Forever StorePublic registration/default boundary; no Shop 2/event parity inferred.
