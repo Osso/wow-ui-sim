@@ -175,3 +175,23 @@ Coordinator #717 confirms B(c) has no existing native evidence. Classify
 temporary/quest_log_mixin.rs:11-42 NATIVE and leave it unchanged, no RED. Its
 exact lifecycle question above is assigned to pending R88; no duplicate query
 or further lifecycle investigation is required in this slice. B(d) remains KEEP.
+
+## Retail quest-log row flags (R88e.2)
+
+The shared C_QuestLog.GetInfo serializer lives in `src/c_api/c_quest_log.rs`.
+On Retail, task and bounty values are supplied for the active log row, not
+derived from the world-quest classification. The existing structural header
+path performs no quest-record lookup and leaves autocomplete false. A
+non-header row reads the supplied autocomplete record flag; existing explicit
+quest-readiness fixtures also supply a quest-ID record flag.
+
+IsQuestTask uses the same active row flag when a row exists. With no row,
+a positive category-five test takes the separate list predicate; otherwise a
+supplied record value gives true only for 3 or 5, and a missing record takes
+the list predicate. IsQuestBounty reads its separate supplied category
+predicate, never the GetInfo row flag.
+
+Evidence: lt-4265 R88e.2, Retail 12.1.5.70688. Full native public-handler
+publication and the final Lua value for an absent index remain UNKNOWN.
+The simulator preserves its existing absent-index policy. This change does
+not model event timing, event dispatch or the native notification queue.
