@@ -101,3 +101,62 @@ Each selector independently varies member and player levels and replaces catalog
 The explicitly authorized static GREEN stage adds `C_PartyInfo.GetMinLevel` in [the C API](../../../src/c_api/c_party_info.rs), using existing player/active-party levels. [Legacy catalog globals](../../../src/lua_api/globals/battlefield_lfg_probes.rs) project existing subtype4 scenario records: specific IDs exclude random rows; random count/info retain catalog order and read live supplied fields. Both publication/filter gates use `client_profile::ACTIVE` for Retail/PTR only. No seeded values, second model or vendor change is introduced. The info projection covers the six fields consumed here; additional native outputs and argument/category/disconnected semantics remain unproven.
 
 The RED sibling restores only those producer files to their merged staging contents. Lane tests are byte-identical. Both Retail/PTR exact selectors independently fail at original `ScenarioFinder_Shared.lua:58` (`GetMinLevel`), after original XML bindings and Lua provenance pass, then pass GREEN under both disjoint catalog-ID sets. Each profile records 24 specific and 26 random observations. Empty-catalog preservation passes in both phases/profiles. Pinned-master producer-equivalent stock changes Retail12/14→10/12 and PTR244/312→242/310, removing only each party-minimum primary/reporter pair; no additions or surviving count changes. Retail/PTR/Era all-target checks have zero compiler warnings; full workspace formatting and changed-line readability pass. Runtime calls used 28 fresh current CVar copies with unchanged-original guards. Mists remains the separate supplied `IsLFREnabled` boundary; no Mists, native-policy or full-suite claim. Empty-catalog checks are preservation, not producer RED. Static contradictions must be read per endpoint: the random selector does not independently reject an empty specific-ID projection because its random loop can satisfy availability.
+
+## Retail token tracker startup ownership
+
+The C inventory's old TokenTracker diagnostic used `load_addon`, which does not
+perform the application's per-addon startup notification. Its missing-tracker
+failure was a fixture omission, not producer RED. Current application startup
+registers LoadWith declarations, discovers startup addon kinds, calls
+`load_startup_addon`, and restores globals after EnvironmentCleanup. Retail Full
+loads dispatch ADDON_LOADED through that existing loader.
+
+`tests/stub_c_startup_token_tracker.rs` follows that flow without a manual event,
+source override, fake tracker, or post-load repair. It verifies selected Mainline
+UIPanels/bare TokenUI TOCs and original manager/method source, then checks the XML
+Border and OnLoad pool and calls the original capacity consumer across widths
+100/250/100 (2/5/2 tokens using original XML width50). Baseline at3e5eac938 passes
+one exact test with no recorded startup Lua errors. This is preservation evidence,
+not RED or new native ADDON_LOADED evidence.
+
+The Retail-only cleanup omits the stale token-tracker post-load workaround and
+its compiled module. It no longer replays the handler or fabricates a bare frame
+when startup is broken. Other profiles retain their existing workaround: Retail
+success does not establish their lifecycle. A library guard checks the absence
+of that Retail workaround registration. Final changed-source gates are recorded
+separately; baseline success alone is not a final acceptance claim.
+
+The remaining C inventory defaults are not fixed by this cleanup. TransmogUtil's
+Lua-owned fallback and ContainerFrameContainer scaffold need their own selected
+consumer/removal proof; legacy container tuple applicability is unproven. Native
+item/spell targeting, professions, loot, merchant and transmog catalog/state
+questions remain open. No native policy, vendor Lua/XML or cache bytes change.
+
+## Retail TransmogUtil location ownership
+
+The next C slice retains the unrelated unresolved
+`GetBestItemModifiedAppearanceID` fallback but removes Retail's synthetic
+`GetTransmogLocation`/`CreateTransmogLocation` and their fabricated location
+methods. Other profiles retain the historical location fallback. No native slot
+producer or vendor source changes; `c_transmog_outfit_info/slots.rs` still labels
+its layout positions INFERRED.
+
+The optional `stub_c_transmog_location_ownership` selector uses the application's
+normal startup discovery, LoadWith registration, kind-aware load, loaded-addon
+skip and cleanup restoration. It checks selected TOCs and original initializer,
+helpers and mixin provenance. It does not replay the initializer or fabricate
+locations: primary/secondary shoulders and both hand appearance/illusion entries
+must already exist in the original initialized cache. Two passes check stable
+cache identity, fresh equivalent construction, distinct equality, type/hand/
+secondary predicates, and original GetCameraVariation's explicit true/false
+branches (also used by original TransmogTemplates). Constants/no-op location
+objects cannot satisfy all those observations.
+
+Baseline at743765e13 passed this exact selector once with no recorded startup
+Lua errors. It demonstrates existing original ownership and supports removal
+preservation, not producer RED or native topology verification. Final gates use
+the current merged base rather than asserting baseline source equivalence. The
+Retail library boundary checks that pre-UI bootstrap does not publish either
+location helper, leaves existing helpers unchanged, and separately preserves the
+unresolved best-item helper. Missing native catalogs must remain blockers, not
+be seeded to manufacture a passing consumer.

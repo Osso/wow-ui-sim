@@ -12,7 +12,6 @@ use crate::lua_api::globals::real::quest_dialog::*;
 
 pub const QUEST_LOG_METHODS: &[(&str, SurfaceFn)] = &[
     ("GetNumQuestLogEntries", get_num_quest_log_entries),
-    ("GetInfo", get_quest_log_info),
     ("GetQuestIDForLogIndex", get_quest_id_for_log_index),
     ("GetLogIndexForQuestID", get_log_index_for_quest_id),
     ("GetTitleForQuestID", get_title_for_quest_id),

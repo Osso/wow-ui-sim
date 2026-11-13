@@ -418,8 +418,10 @@ fn apply_system_anchors_batches_compact_unit_frame_startup_refreshes() {
 
         function EditModeManagerFrame:InitSystemAnchors()
             for _, systemFrame in ipairs(self.registeredSystemFrames) do
+                local isInDefaultPosition = systemFrame.systemInfo
+                    and systemFrame.systemInfo.isInDefaultPosition
                 if not ((systemFrame.isBottomManagedFrame or systemFrame.isRightManagedFrame)
-                    and systemFrame:IsInDefaultPosition()) then
+                    and isInDefaultPosition) then
                     systemFrame:ClearAllPoints()
                     systemFrame:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 0, 0)
                 end

@@ -279,6 +279,7 @@ fn measure_native_tooltip(state: &mut SimState, id: u64, fonts: &mut WowFontSyst
         if height > 0.0 {
             height += td.line_spacing.unwrap_or(TOOLTIP_LINE_SPACING);
         }
+        // R88e.6 verifies that the shown left FontString region height enters this row total.
         height += measured + top + bottom;
     }
     if let Some(tooltip) = state.tooltips.get_mut(&id) {

@@ -1,10 +1,14 @@
+## [2026-11-13] fix | EllesmereUI AuraKit secret texture error
+
+Updated [full third-party startup](investigations/full-addon-startup-2026-10-10.md#aurakit-secret-texture-error-r88c-2026-11-13) and the [secret aura contract](../specs/secret-auras.md) after the R88c call-shape trace. **VERIFIED (Retail code SHA `39ca0bc72d9539563288b79e622feeeb4a9282bb`):** the 20-addon run is clean and the five requested profile builds report zero warnings. **INFERRED:** revoked numeric input and tainted secret nil are accepted by `SetTexture`; nil clears the texture. Getter and render parity remain open.
+
 ## [2026-11-13] implementation | Garrison landing-page visibility
 
 Updated [full third-party startup](investigations/full-addon-startup-2026-10-10.md#garrison-minimap-button-visibility-r88e1-2026-11-13) and the [Retail garrison contract](../specs/garrison-landing-page-type.md) with R88e.1. **VERIFIED (Retail 12.1.5 build 70688):** missing records return false, non-111 records return their flag, type 111 uses PlayerCondition 105386 and nonzero player state, and lookup uses the low byte without an enum check. **VERIFIED (20-addon Retail run at simulator SHA `2a03dbee7`):** one AuraKit secret-access error remains (70 occurrences); the Minimap error is absent. **INFERRED:** the player-state value is the covenant ID; the simulator's 105386 result is a false-default host input.
 
-## [2026-11-13] docs | Inline texture and atlas icons
+## [2026-11-13] correction | Inline texture and atlas icon evidence
 
-[Rendering pipeline](systems/rendering-pipeline.md#inline-icons-in-text) records how `|T` and `|A` escapes are parsed, laid out, drawn and measured, with icon sizes and line heights from a contributor measurement on WoW Forever 1.60.1; tests live in `crates/sim-render/src/inline_markup.rs`, `src/render/glyph/inline_emit.rs` and `tests/inline_icon_width.rs`.
+[Rendering pipeline](systems/rendering-pipeline.md#inline-icons-in-text) separates VERIFIED Retail 12.1.5.70688 R88d/R88e.6/R88e.7 parser, measurement, line-height and row-layout findings from INFERRED Forever explicit sizes. Runtime scale inputs, caller-metric identity, vertical-mode defaults/mapping, snap operand/advance effect, tooltip snap use, and oversized single-icon wrapping remain UNKNOWN. Tests cover parser rules, FontString scale division, accepted width and GameTooltip left-region row heights.
 
 ## [2026-11-13] system | Mandatory host category camera zoom
 
@@ -17,6 +21,13 @@ clamp coverage. RF host inputs only; no collector or PTR category changes.
 [Lua API](systems/lua-api.md#ptr-character-creation-evidence-boundary) separates
 verified R78/R83 argument/state behavior from droppable inferred catalog and
 return bridges. The unseeded collector and end-to-end submit remain distinct.
+
+## [2026-11-13] investigation | EditMode Frame method ownership
+
+Added [the method-surface investigation](investigations/frame-editmode-method-surface.md)
+and corrected the earlier Mists claim that these methods belong on every Frame.
+VERIFIED: the Mists pre-change and current `frame_positions` runs fail the same
+four unrelated cases; the managed Paladin frame passes with mixin-scoped methods.
 
 ## [2026-11-13] investigation | EllesmereUI core API boundary
 
@@ -3773,3 +3784,7 @@ Added [FontString anchor sizing](investigations/fontstring-anchor-sizing.md). Th
 - 2026-11-13: Recorded lt-a912 R79b/R79c verified host finalization in [[lua-api]]
   and the character-creation spec: sorted neutral keys, rewritten 1-based indices,
   <=32 stable ties, no claim about larger tie order or the missing collector.
+
+- 2026-11-13: Retail TokenTracker startup ownership: corrected low-level-loader fixture, baseline preservation and Retail-only stale repair removal; see [consumer selection](investigations/consumer-selection-and-red-proof.md#retail-token-tracker-startup-ownership).
+
+- 2026-11-13: C Transmog location slice: baseline original startup/cache consumer passed; remove only Retail synthetic location helpers, keep other profiles and unresolved best-item helper unchanged. See consumer-selection investigation.

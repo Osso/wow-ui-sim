@@ -6,7 +6,6 @@
 
 pub mod data;
 mod handlers;
-mod info_fields;
 mod legacy_globals;
 mod register;
 mod task_quest;

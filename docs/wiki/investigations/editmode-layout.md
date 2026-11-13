@@ -276,3 +276,4 @@ simulator proofs, not native parity.
 ## See Also
 
 - [[method-dispatch-refactor]] — the `__index` ordering change that exposed these bugs
+- [[frame-editmode-method-surface]] — mixin ownership of EditMode methods on Frame

@@ -12,7 +12,6 @@ use rilua::vm::table::Table;
 use rilua::{LuaResult, Val};
 
 use super::data::{Objective, QUEST_LOG, QuestLogEntry, WORLD_QUESTS, WorldQuest};
-use super::info_fields::{write_quest_entry_fields, write_quest_header_fields};
 
 #[derive(Clone, Copy)]
 pub(super) struct StaticQuest {
@@ -353,31 +352,6 @@ fn is_completed_quest(state: &LuaState, quest_id: i32) -> LuaResult<bool> {
         })
         .unwrap_or(false);
     Ok(completed)
-}
-
-pub fn get_quest_log_info(state: &mut LuaState) -> LuaResult<u32> {
-    let index = Option::<f64>::from_stack(state, 1)?.unwrap_or(0.0) as i32;
-    let Some(entry) = entry_at(index) else {
-        return Ok(0);
-    };
-    let info = create_table(state);
-    table_set(state, info, "questLogIndex", Val::Num(index as f64));
-    match entry {
-        QuestLogEntry::Header { title } => write_quest_header_fields(state, info, title),
-        QuestLogEntry::Quest {
-            quest_id, title, ..
-        } => {
-            let campaign_id = borrow_state(state)?
-                .quest_log_entries
-                .campaign_ids
-                .get(quest_id)
-                .copied()
-                .unwrap_or(0);
-            write_quest_entry_fields(state, info, *quest_id, title, campaign_id);
-        }
-    }
-    state.push(info);
-    Ok(1)
 }
 
 pub fn get_quest_id_for_log_index(state: &mut LuaState) -> LuaResult<u32> {

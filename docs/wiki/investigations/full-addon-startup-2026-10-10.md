@@ -102,9 +102,19 @@ Epoch `20261010T183739Z`: [bounded independent attribution report](https://githu
 
 **VERIFIED (20-addon Retail run at production-code SHA `bc01ba60cdb7b844bf88adba7ff2cb6e809b665f`):** all 20 staged addons loaded, with zero load-time Lua errors. `lua-errors` reported two unique errors across 71 occurrences: `C_Garrison.IsLandingPageMinimapButtonVisible` missing in the Minimap path (1) and `secret access requires an untainted caller without revoked access` in AuraKit (70). The earlier `SetNamePlateHitTestInsets requires an untainted caller` error was absent.
 
-#### AuraKit probe boundary (2026-11-13)
+#### AuraKit secret texture error (R88c, 2026-11-13)
 
-**VERIFIED (incomplete public-path probe):** the `CustomAuraButton:ApplyIcon` hook fired zero times and no secret icon was observed. The probe was removed because it stopped before the target call. **UNKNOWN:** whether the aura icon was secret or `Texture:SetTexture` rejected it. R88c and a later reproduction are pending; no secret-policy claim is made.
+The earlier zero-call probe did not establish that the `ApplyIcon` path was absent. A later error-stack trace reached the original consumer.
+
+**VERIFIED (pre-fix trace):** `AuraContainerUtil.SetIconTextureForAura` in cached Retail `Blizzard_AuraContainerUtil.lua:269–284` called `Texture:SetTexture(secretwrap(icon))`. `CustomAuraButtonPrivateMixin:ApplyIcon` at `Blizzard_CustomAuraButton.lua:634–638` called it from `ApplyAuraInstance` and `UpdateAuraDisplay`. The error returned through AuraKit's callback at `EllesmereUI_AuraKit.lua:1357` and was reported by `RunJob` at `:2151–2158`. See `/var/tmp/osso/ellesmere-aurakit-trace-20261113/trace-inner.stderr.log`.
+
+**VERIFIED (temporary no-payload simulator trace):** 70 marked arguments reached `Texture:SetTexture` in the same 20-addon run that reported 70 errors: 55 were secret numbers with `state_is_secure=true`; 15 were secret nil values with `state_is_secure=false`. See `trace-kinds.stderr.log`. **VERIFIED (Rilua source):** secret access requires `state_is_secure && !secret_context_is_revoked()`. **VERIFIED (pre-fix simulator source):** secure callers used generic unwrapping before type dispatch, while tainted secret nil values fell through to generic unwrapping. **INFERRED:** the secure numeric calls had revoked access.
+
+**VERIFIED (R88c Q1/Q2/Q3, Retail 12.1.5.70688):** `SetTexture` permits marked values through its shared secret check, a marked string with a current taint source reaches `Cannot set texture to a secret string value.`, an accepted value sets the region secret-values flag when its condition holds, and `secretwrap` has no taint check. Other target checks can still stop the setter. **INFERRED:** a marked numeric file ID can complete when target checks permit it; a marked nil behaves like ordinary `SetTexture(nil)` and clears the texture because the Retail argument is nilable. Getter marking remains INFERRED; rendering remains UNKNOWN.
+
+**VERIFIED (simulator fix):** `Texture:SetTexture` now inspects only marked numbers at the host boundary, handles a marked nil as nil while preserving its secret marker, keeps the tainted-string diagnostic, and leaves Rilua's generic `unwrap_secret` unchanged. The optional Retail tests exercise the original Blizzard consumer for tainted number, revoked number and tainted nil, plus string, prevention and secret-origin behavior.
+
+**VERIFIED (20-addon Retail run at code SHA `39ca0bc72d9539563288b79e622feeeb4a9282bb`):** all 20 EllesmereUI addons loaded and `lua-errors` returned `[]`; startup status was CLEAN with zero errors. Five requested compile receipts at this code SHA report zero warnings. The final logs are in `/var/tmp/osso/ellesmere-aurakit-trace-20261113/final-run2.stdout.log` and `.stderr.log`.
 
 ### Issue #22 symptoms
 
@@ -132,11 +142,16 @@ The following observations come from isolated 1600x1200 or 3840x2160 simulator r
 - `/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/InputDocumentation.lua` and `UIFileAssetAPIDocumentation.lua` — pinned Retail declarations.
 - `/var/tmp/osso/ellesmere-core-enabled-baseline-dump.log`, `/var/tmp/osso/ellesmere-core-input-only-baseline.log`, and `/var/tmp/osso/ellesmere-core-unlock-1600-dumptree.log` — local diagnostic outputs.
 - `/home/osso/.local/state/wow-ui-sim/handoff/issue22-layout/REPORT.md` — prior six-symptom baseline and evidence limits.
+- `/home/osso/.local/state/wow-ui-sim/handoff/pr46-49-decomp-answers.md` — Retail R88c setter, string, secret-flag and `secretwrap` evidence.
+- `../../specs/secret-auras.md` — current SetTexture evidence labels and tests.
+- `../../../tests/aura_container_util.rs` and `../../../tests/aura_secret_display.rs` — optional Retail regressions.
+- `/home/osso/.local/state/wow-ui-sim/handoff/ellesmere-aurakit/REPORT.md` — lane receipts, RED/GREEN results and the one-merge origin/master exception.
 
 ## See Also
 
 - [Garrison landing-page type contract](../../specs/garrison-landing-page-type.md) — verified query shape and separate visibility blocker.
 - [Nameplate hit-test inset contract](../../specs/nameplate-hit-test-insets.md) — verified parser and the unmodeled restriction policy.
+- [Secret aura contract](../../specs/secret-auras.md) — SetTexture behavior and native evidence limits.
 - [[gamepad-mapped-state]] — existing, separate gamepad capability and mapped-stick behavior.
 - [[ellesmereui-forever]] — prior Forever compatibility investigation.
 - [[addon-loading]] — addon selection, enablement and load phases.
