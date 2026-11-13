@@ -67,7 +67,7 @@ fn stub_o_notice_original_initial_login_callback_adds_chat_history() {
     wow_ui_sim::xml::register_intrinsic_templates();
     let (env, loaded) = crate::common::blizzard_addon_harness::build_blizzard_addon_closure_env(
         &ui,
-        &["Blizzard_CodeOfConduct"],
+        &["Blizzard_UIParentPanelManager", "Blizzard_CodeOfConduct"],
         &[],
     );
     assert!(loaded.iter().any(|name| name == "Blizzard_CodeOfConduct"));

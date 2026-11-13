@@ -3,7 +3,9 @@
 //! Help observer measures scheduling only, never native ticket response parity.
 #![cfg(all(feature = "optional-tests", feature = "client-retail"))]
 
-use crate::common::blizzard_addon_harness::{new_blizzard_addon_env, load_blizzard_addon_closure_into_env};
+use crate::common::blizzard_addon_harness::{
+    load_blizzard_addon_closure_into_env, new_blizzard_addon_env,
+};
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 fn original_owner(root: &str) -> WowLuaEnv {
@@ -113,4 +115,15 @@ fn original_help_xml_onupdate_schedules_ticket_queries_preservation() {
         GetWebTicket = originalQuery
         assert(ok, err)
     "#).expect("original Help timer scheduling with delegating query observer only");
+}
+
+#[test]
+fn settings_panel_has_no_invented_dirty_method_after_bootstrap_or_cleanup() {
+    let env = WowLuaEnv::new().unwrap();
+    for restore in [false, true] {
+        if restore {
+            env.restore_post_cleanup_globals();
+        }
+        env.exec("assert(SettingsPanel); assert(rawget(SettingsPanel, 'MarkAllSettingsDirty') == nil, 'synthetic Settings dirty method remains')").unwrap();
+    }
 }
