@@ -131,3 +131,32 @@ Lua-owned fallback and ContainerFrameContainer scaffold need their own selected
 consumer/removal proof; legacy container tuple applicability is unproven. Native
 item/spell targeting, professions, loot, merchant and transmog catalog/state
 questions remain open. No native policy, vendor Lua/XML or cache bytes change.
+
+## Retail TransmogUtil location ownership
+
+The next C slice retains the unrelated unresolved
+`GetBestItemModifiedAppearanceID` fallback but removes Retail's synthetic
+`GetTransmogLocation`/`CreateTransmogLocation` and their fabricated location
+methods. Other profiles retain the historical location fallback. No native slot
+producer or vendor source changes; `c_transmog_outfit_info/slots.rs` still labels
+its layout positions INFERRED.
+
+The optional `stub_c_transmog_location_ownership` selector uses the application's
+normal startup discovery, LoadWith registration, kind-aware load, loaded-addon
+skip and cleanup restoration. It checks selected TOCs and original initializer,
+helpers and mixin provenance. It does not replay the initializer or fabricate
+locations: primary/secondary shoulders and both hand appearance/illusion entries
+must already exist in the original initialized cache. Two passes check stable
+cache identity, fresh equivalent construction, distinct equality, type/hand/
+secondary predicates, and original GetCameraVariation's explicit true/false
+branches (also used by original TransmogTemplates). Constants/no-op location
+objects cannot satisfy all those observations.
+
+Baseline at743765e13 passed this exact selector once with no recorded startup
+Lua errors. It demonstrates existing original ownership and supports removal
+preservation, not producer RED or native topology verification. Final gates use
+the current merged base rather than asserting baseline source equivalence. The
+Retail library boundary checks that pre-UI bootstrap does not publish either
+location helper, leaves existing helpers unchanged, and separately preserves the
+unresolved best-item helper. Missing native catalogs must remain blockers, not
+be seeded to manufacture a passing consumer.

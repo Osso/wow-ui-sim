@@ -4831,3 +4831,5 @@ category/option numbering, small-list stable ties, and unchanged unknown collect
 and choice-order boundaries. See the [spec](../specs/character-creation-submit.md#r79br79c-host-finalizer-305-314-319).
 
 - 2026-11-13: Retail TokenTracker startup ownership: corrected low-level-loader fixture, baseline preservation and Retail-only stale repair removal; see [consumer selection](investigations/consumer-selection-and-red-proof.md#retail-token-tracker-startup-ownership).
+
+- 2026-11-13: [Retail TransmogUtil location ownership](investigations/consumer-selection-and-red-proof.md#retail-transmogutil-location-ownership): original startup-cache/consumer preservation; best-item helper and native slot provenance remain separate.
