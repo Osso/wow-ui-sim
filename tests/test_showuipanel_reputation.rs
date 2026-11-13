@@ -356,6 +356,50 @@ fn retail_reputation_tooltip_consumer_truncates_faction_id() {
     }
 }
 
+#[cfg(feature = "client-retail")]
+#[test]
+fn retail_inactive_checkbox_consumer_updates_faction_activity() {
+    test_timeout! {
+        let env = setup_env();
+        let result: String = env
+            .eval(
+                r#"
+                local onClick = ReputationDetailInactiveCheckboxMixin and ReputationDetailInactiveCheckboxMixin.OnClick
+                if type(onClick) ~= "function" then
+                    return "missing_inactive_checkbox_consumer"
+                end
+                local source = debug.getinfo(onClick, "S").source:gsub("\\", "/")
+                if not source:find("Blizzard_UIPanels_Game/Mainline/ReputationFrame.lua", 1, true) then
+                    return "wrong_inactive_checkbox_consumer=" .. source
+                end
+
+                local faction = __wow_reputation_state.factions[2]
+                faction.canSetInactive = true
+                faction.reputationIndex = 114
+                faction.isInactive = false
+                C_Reputation.SetSelectedFaction(2)
+                local checked = false
+                local checkbox = { GetChecked = function() return checked end }
+                PlaySound = function() end
+
+                onClick(checkbox)
+                checked = true
+                onClick(checkbox)
+                if C_Reputation.IsFactionActive(2) then
+                    return "consumer_did_not_mark_faction_inactive"
+                end
+                C_Reputation.SetFactionActive(2, 0)
+                if not C_Reputation.IsFactionActive(2) then
+                    return "zero_was_not_truthy"
+                end
+                return "ok"
+                "#,
+            )
+            .expect("Retail inactive checkbox consumer should run");
+        assert_eq!(result, "ok");
+    }
+}
+
 #[cfg(not(any(feature = "client-era", feature = "client-anniversary")))]
 #[test]
 fn show_ui_panel_locks_reputation_frame_layout() {
