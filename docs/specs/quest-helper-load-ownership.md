@@ -144,3 +144,19 @@ and mark unavailable observations. Existing C_Map result semantics are separate.
 Keep encounter color bookkeeping unchanged: no selected original consumer was
 established for the inventoried color setter. Absence of that consumer does not
 certify the public setter's validation or native behavior. No opportunistic fix.
+
+## Native evidence disposition (coordinator #713)
+
+The three current false GetInfo flags are KEEP neutral seams because supplied
+quest rows have no corresponding fields, not certified native false results.
+Coordinator #713 reports PTR12.1.7 C_QuestLog.GetInfo.md VERIFIED absent/nil
+out-of-range, isHeader mask0x20 and serializer27fields including these flags;
+other values, omission and validation are UNKNOWN. IsQuestTask/IsQuestBounty
+predicate record meanings remain UNKNOWN. Retail70688 mapping, predicate
+agreement and refresh are assigned pending R88; do not duplicate the question
+or implement flags from PTR partial evidence. B(a) remains preservation only.
+
+B(b) tests now assert Campaign2/Calling3 in an ordinary newly initialized
+environment on every profile and after the actual original Retail dependency
+closure. No Enum deletion or fake input. Baseline and post-removal tests are
+preservation; no production RED is expected for an unreachable fallback.

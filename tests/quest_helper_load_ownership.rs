@@ -1,6 +1,16 @@
-//! B(a) source-only fixture preparation. Preservation/ownership, not a claimed RED.
-#![cfg(all(feature = "client-retail", feature = "optional-tests"))]
+//! B(a/b) normal-environment preservation, not a claimed production RED.
+#![cfg(feature = "optional-tests")]
 
+#[test]
+fn normal_bootstrap_owns_quest_classification_enums() {
+    let env = wow_ui_sim::lua_api::WowLuaEnv::new().expect("normal environment");
+    let values: (i64, i64) = env
+        .eval("return Enum.QuestClassification.Campaign, Enum.QuestClassification.Calling")
+        .expect("normal enum provider");
+    assert_eq!(values, (2, 3));
+}
+
+#[cfg(feature = "client-retail")]
 #[test]
 fn original_quest_helpers_own_normal_tracker_dependency_closure() {
     let cache = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path().unwrap();
@@ -22,6 +32,8 @@ fn original_quest_helpers_own_normal_tracker_dependency_closure() {
     println!("B(a) normal discovered closure: {loaded:?}");
     env.exec(
         r#"
+        assert(Enum.QuestClassification.Campaign == 2)
+        assert(Enum.QuestClassification.Calling == 3)
         local function requireSource(fn, suffix)
             local info = debug.getinfo(fn, 'S')
             local source = info.source:gsub('\\', '/')
