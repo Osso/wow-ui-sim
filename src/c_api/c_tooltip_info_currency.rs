@@ -272,41 +272,6 @@ pub(crate) fn get_quest_log_currency(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-/// The currency arm of `GetHyperlink` supplies zero when its optional quantity
-/// is absent. It shares the currency producer and does not apply getter scaling.
-pub(crate) fn currency_hyperlink_tooltip(
-    state: &mut LuaState,
-    link: &str,
-) -> LuaResult<Option<Val>> {
-    let Some((currency_id, quantity)) = parse_currency_hyperlink(link) else {
-        return Ok(None);
-    };
-    build_currency_tooltip(state, currency_id, Some(quantity.unwrap_or(0)))
-}
-
-fn parse_currency_hyperlink(link: &str) -> Option<(i32, Option<i32>)> {
-    let marker = link.find("currency:")? + "currency:".len();
-    let mut fields = link[marker..].split(':');
-    let currency_id = parse_decimal_prefix(fields.next()?)?;
-    let quantity = match fields.next() {
-        Some(field) => Some(parse_decimal_prefix(field)?),
-        None => None,
-    };
-    Some((currency_id, quantity))
-}
-
-fn parse_decimal_prefix(field: &str) -> Option<i32> {
-    let digits: String = field
-        .chars()
-        .take_while(|character| character.is_ascii_digit())
-        .collect();
-    if digits.is_empty() {
-        None
-    } else {
-        digits.parse().ok()
-    }
-}
-
 fn normalize_amount(state: &LuaState, currency_id: i32, quantity: i32) -> LuaResult<Option<i32>> {
     let flags_0 = borrow_state(state)?
         .currency_tooltip_inputs

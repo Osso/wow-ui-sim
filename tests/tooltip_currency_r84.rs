@@ -110,6 +110,10 @@ fn set_hyperlink_resolves_currency_links() {
         assert(data.lines[2].leftText == 'Link range description' and data.lines[2].wrapText, 'currency description row')
         assert(#data.lines == 3, 'currency hyperlink XP row')
         assert(data.lines[3].leftText == XP .. ': 99', 'currency hyperlink must not divide its optional amount')
+        GameTooltip:SetHyperlink('currency:2245')
+        data = GameTooltip:GetPrimaryTooltipData()
+        assert(data.lines[1].leftText == C_CurrencyInfo.GetCurrencyInfo(2245).name, 'missing hyperlink amount must select ordinary currency text at zero')
+        assert(data.lines[3].leftText == XP .. ': 0', 'missing hyperlink amount must reach the producer as zero')
         "#,
     )
     .unwrap();

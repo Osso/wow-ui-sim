@@ -24,6 +24,7 @@ Retail 12.1.5 currency tooltips publish R84/R84b `C_TooltipInfo` data through th
 ## How it works
 
 - [Tooltip-data system](../wiki/systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation).
+- [Hyperlink requests](tooltip-hyperlink.md) — R82 marker grammar and request routing.
 - R84/R84b native evidence: `~/.local/state/wow-ui-sim/handoff/pr46-49-decomp-answers.md` — Retail 12.1.5.70688.
 
 ## Implementation inventory
