@@ -1,4 +1,6 @@
 //! Retail consumer coverage through the selected game-startup addon set.
+//! The callback later hits missing `CanAffordMerchantItem` at MerchantFrame.lua:290.
+//! Assert that known gap; do not stub it to hide the unrelated failure.
 #![cfg(feature = "client-retail")]
 
 use crate::common::blizzard_addon_harness::{blizzard_ui_dir, new_blizzard_addon_env};
@@ -46,12 +48,17 @@ fn merchant_frame_on_show_resets_the_filter_without_return_values() {
     env.exec(
         r##"
         assert(type(MerchantFrame_OnShow) == "function", "Retail merchant consumer missing")
+        assert(CanAffordMerchantItem == nil, "known later consumer gap changed")
         SetMerchantFilter(3)
-        MerchantFrame_OnShow(MerchantFrame)
-        assert(GetMerchantFilter() == 2, "merchant filter was not reset")
+        local ok, err = pcall(MerchantFrame_OnShow, MerchantFrame)
+        local errorText = tostring(err)
+        assert(not ok, "merchant consumer should reach the known CanAffordMerchantItem gap")
+        assert(errorText:find("MerchantFrame.lua:290", 1, true), errorText)
+        assert(errorText:find("attempt to call a nil value", 1, true), errorText)
+        assert(GetMerchantFilter() == 2, "merchant filter reset before the later consumer gap")
         assert(select("#", ResetSetMerchantFilter()) == 0, "reset must return no values")
         assert(GetMerchantNumItems() == 2, "simulator merchant count remains unfiltered")
         "##,
     )
-    .expect("original Retail MerchantFrame_OnShow should run");
+    .expect("original Retail MerchantFrame_OnShow should reach the reset");
 }
