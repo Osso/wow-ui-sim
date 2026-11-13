@@ -324,6 +324,19 @@ mod tests {
     }
 
     #[test]
+    fn required_size_field_positions_reject_the_icon() {
+        for text in ["|Tspell|t", "|A:atlas|a", "|A:atlas:12|a"] {
+            let pieces = split_inline_markup(text);
+            assert!(
+                pieces
+                    .iter()
+                    .all(|piece| !matches!(piece, InlinePiece::Icon(_))),
+                "{text}: {pieces:?}"
+            );
+        }
+    }
+
+    #[test]
     fn wrong_closing_marker_does_not_form_an_icon() {
         for text in ["|Tspell:12|a later |t", "|A:atlas:12:12|t later |a"] {
             let pieces = split_inline_markup(text);
