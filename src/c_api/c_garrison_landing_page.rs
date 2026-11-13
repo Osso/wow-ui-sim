@@ -12,6 +12,12 @@ const EMPTY_GARRISON_TYPE: u32 = 0;
 pub struct GarrisonLandingPage {
     /// Host-supplied type; no selection or lifecycle is modeled.
     pub garrison_type: Option<u32>,
+    /// Host-supplied flags keyed by the low byte of the garrison type.
+    pub minimap_button_records: std::collections::HashMap<u8, bool>,
+    /// INFERRED host input for PlayerCondition 105386; no evaluator is modeled.
+    pub player_condition_105386: bool,
+    /// INFERRED to be the covenant ID; the native predicate checks for nonzero.
+    pub player_state_value: u32,
 }
 
 impl Default for GarrisonLandingPage {
@@ -19,6 +25,11 @@ impl Default for GarrisonLandingPage {
         Self {
             // INFERRED: the neutral host input starts at the empty-path type.
             garrison_type: Some(EMPTY_GARRISON_TYPE),
+            minimap_button_records: std::collections::HashMap::new(),
+            // INFERRED: 105386 is inactive until the host supplies its result.
+            player_condition_105386: false,
+            // INFERRED: the neutral player-state input is zero.
+            player_state_value: 0,
         }
     }
 }
