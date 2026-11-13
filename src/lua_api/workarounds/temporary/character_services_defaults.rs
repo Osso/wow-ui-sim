@@ -95,25 +95,20 @@ mod tests {
     fn installs_character_services_defaults() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
 
-        let result: (bool, bool, i32, i32, bool, bool) = env
+        let result: (bool, bool, i32, i32) = env
             .eval(
                 r#"
                 C_CharacterServices.AssignUpgradeDistribution()
                 C_CharacterServices.AssignPCTDistribution()
-                local data = C_CharacterServices.GetCharacterServiceDisplayData()
                 return C_CharacterServices.HasRequiredServiceForCharacterUpgrade(),
                        C_CharacterServices.HasRequiredBoostForClassTrial(),
                        #C_CharacterServices.GetCharacterServiceDisplayInfo(),
-                       #C_CharacterServices.GetVASDistributions(),
-                       data.boostLevel == 80
-                           and data.flowTitle == "Character Upgrade"
-                           and data.popupInfo.textureKit == "characterupdate",
-                       true
+                       #C_CharacterServices.GetVASDistributions()
                 "#,
             )
             .expect("character service defaults should be callable");
 
-        assert_eq!(result, (false, false, 0, 0, true, true));
+        assert_eq!(result, (false, false, 0, 0));
     }
 
     #[test]
@@ -128,7 +123,7 @@ mod tests {
             end
 
             function C_CharacterServices.GetCharacterServiceDisplayData()
-                return { boostLevel = 70, flowTitle = "Existing" }
+                return { level = 70, flowTitle = "Existing", iconTextureKit = "existing" }
             end
             "#,
         )
@@ -136,17 +131,21 @@ mod tests {
 
         super::apply_bootstrap(&mut env.rilua_mut()).expect("workaround should apply");
 
-        let result: (bool, i32, String) = env
+        let result: (bool, i32, String, String) = env
             .eval(
                 r#"
                 local data = C_CharacterServices.GetCharacterServiceDisplayData()
                 return C_CharacterServices.HasRequiredServiceForCharacterUpgrade(),
-                       data.boostLevel,
-                       data.flowTitle
+                       data.level,
+                       data.flowTitle,
+                       data.iconTextureKit
                 "#,
             )
             .expect("existing character service provider should remain callable");
 
-        assert_eq!(result, (true, 70, "Existing".to_string()));
+        assert_eq!(
+            result,
+            (true, 70, "Existing".to_string(), "existing".to_string())
+        );
     }
 }

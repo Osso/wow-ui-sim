@@ -31,8 +31,10 @@ Display formatting/maximum and secret-output behavior remain Retail125-scoped. O
 ### Display formatting
 
 - [ ] Default maximum9999 retains9999 and replaces10000. Replace only strictly beyond maximum; equality keeps digits. These precise boundary policies are inferred.
-- [ ] Decimal ASCII formatting, nil/omitted defaults, finite f64 thresholds including negative/fractional values, and empty/Unicode replacement exact bytes are inferred simulator policies.
-- [ ] Public identifiers inherit strict UTF-8 string or finite integral u32 representations from the existing public helper. Display maximum must be finite number or default; replacement must be UTF-8, NUL-free CString-representable string or default. Validate even when lookup finds no source.
+- [x] The Retail `SpellFlyoutPopupButtonMixin:UpdateCount` consumer accepts an ordinary numeric-string `maxDisplayCount` and passes a string to `SetText`; see `tests/blizzard_ui/blizzard_actionbar/behavior_spell_flyout.rs::spell_flyout_count_accepts_numeric_string_display_limit`.
+- [ ] Parse nonnil `maxDisplayCount` as signed 32-bit input, check range before truncation toward zero, and use9999 for nil or omitted input. The consumer test covers numeric-string acceptance; range and fractional-bound tests remain.
+- [ ] The exact display threshold, equality behavior, decimal formatting, negative-maximum effects, and empty/Unicode replacement bytes remain inferred simulator policies, not native claims.
+- [ ] Public identifiers inherit strict UTF-8 string or finite integral u32 representations from the existing public helper. Replacement must be UTF-8 and NUL-free; validate it even when lookup finds no source.
 
 ### Authentication and partial input parity
 
@@ -64,12 +66,12 @@ Display formatting/maximum and secret-output behavior remain Retail125-scoped. O
 - `src/c_api/c_spell_counts.rs`: cast producer from Retail1200 onward; display and maximum-aura producer remain Retail125-gated. Pre125 cast returns an ordinary number by simulator policy, without retroactive native secrecy proof. Cast validates public identifiers plus the [bounded numeric-secret subset](secret-selector-count-usability.md), copies explicit quantity/restriction without charge reads, then immediately pushes ordinary or typed host-secret NUM. Display authenticates all three original arguments before validation/model access, resolves the authenticated value, copies quantity/restriction under one immutable snapshot borrow, then immediately pushes ordinary or typed host-secret STR. Original wrappers remain rooted and untouched. No new state or acquisition.
 - `src/c_api/mod.rs`: count module declared from Retail1200 onward.
 - `src/c_api/c_spell.rs`: cast entry from Retail1200 onward; display/maximum entries remain Retail125-gated in the existing `SPELL_QUERY_METHODS`, published once through the existing root namespace. `read_spell_identifier_at` delegates to extracted `read_spell_identifier_value`; the existing `alias_key_from_input`, alias-first body and numeric passthrough are unchanged. Authentication/strict validation belongs to the new display caller; other callers retain their policies.
-- `src/c_api/c_action_bar_counts.rs`: shared `pub(crate)` formatter plus `parse_maximum(value, api)` and `parse_replacement(state, value, api)` validators. Action and Spell pass their original display API constants for unchanged argument/error context; defaults and validation predicates remain unchanged. Both authenticate all original arguments before parsing. The formatter body remains unchanged; historical proof for that body is not fresh proof of the parameterized validators.
+- `src/c_api/c_action_bar_counts.rs`: shared `pub(crate)` formatter plus `parse_maximum(value, api)` and `parse_replacement(state, value, api)` validators. ActionBar uses its endpoint-specific maximum parser; C_Spell uses the shared native signed32 argument converter for its distinct maximum contract. Both authenticate all original arguments before parsing. The formatter body remains unchanged; historical proof for that body is not fresh proof of the parameterized validators.
 - `src/lua_api/workarounds/temporary/spell_metadata_defaults.rs`: separate inverse gates retain numeric0 cast before Retail1200 and numeric0 display before Retail125 (including Forever). Passive/Ranged/Press/PriorityAura defaults and the existing custom-provider guard remain unchanged. No second C_Spell publication or new global policy flag.
 
 ## Tests asserting this spec
 
-`tests/spell_count_outputs.rs`: historical thirty-case scalar/provider suite, with cast numeric-secret admission updated by [P4](secret-selector-count-usability.md); display authentication and independent output/lifetime checks remain. New original-consumer and selector controls live in `tests/secret_selector_counts.rs`. Historical receipts below remain revision-scoped, not current blanket acceptance.
+`tests/spell_count_outputs.rs`: historical thirty-case scalar/provider suite, with cast numeric-secret admission updated by [P4](secret-selector-count-usability.md); display authentication and independent output/lifetime checks remain. New original-consumer and selector controls live in `tests/secret_selector_counts.rs`. The Retail numeric-string maximum consumer case is in `tests/blizzard_ui/blizzard_actionbar/behavior_spell_flyout.rs`. Historical receipts below remain revision-scoped, not current blanket acceptance.
 
 At the original producer checkpoint, existing `tests/c_spell_probes.rs::test_spell_count_shims_return_zero` and the `spell_metadata_defaults.rs` unit tuple still expected display numeric0. Expected Retail125 control mismatch: documented display result is STRING, so the new producer returns empty STR without a source. Both tests were then untouched; the observed control failures and subsequent corrections are recorded below. Earlier/Forever numeric0 defaults remain deliberate.
 
@@ -110,7 +112,7 @@ Accounting promotes only301/309: **190 pending/157 bounded/14 partial/1 metadata
 - [x] Obtain scoped startup reuse, Rust checks, security, readability and relevant current-profile controls.
 - [x] Promote only exact301/309 output deltas after independent bounded acceptance.
 - [ ] Keep full native cast input parity separate from the [bounded numeric-selector subset](secret-selector-count-usability.md); no VM changes or blanket reader widening.
-- [ ] Native probes deferred: real reagent/charge counts;9999/10000/equality; coercion/nil; opaque type, root copies and tainted cast permission versus display permission; width, priority, no-source, profile/UI/global privacy. These remain unknown, not native claims.
+- [ ] Native probes deferred: real reagent/charge counts;9999/10000/equality; display error decoration; opaque type, root copies and tainted cast permission versus display permission; width, priority, no-source, profile/UI/global privacy. These remain unknown, not native claims.
 
 ## Out of scope
 

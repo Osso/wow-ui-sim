@@ -29,10 +29,6 @@ pub(super) fn patch_chat_voice_button_surface(env: &crate::lua_api::WowLuaEnv) {
     temporary::chat_voice_button_surface::patch(env);
 }
 
-pub(super) fn patch_action_bar_button_event_fanout(env: &crate::lua_api::WowLuaEnv) {
-    temporary::action_bar_button_event_fanout::patch(env);
-}
-
 pub(super) fn patch_game_time_defaults(env: &crate::lua_api::WowLuaEnv) {
     temporary::game_time_calendar_invites::patch(env);
 }
@@ -133,18 +129,6 @@ pub(super) fn patch_item_quality_color_data_methods(env: &crate::lua_api::Loader
 
 pub(super) fn patch_artifact_ui_show_panel_guard(env: &crate::lua_api::LoaderEnv<'_>) {
     temporary::artifact_ui_show_panel_guard::patch(env);
-}
-
-pub(super) fn patch_auction_house_categories_refresh_count(env: &crate::lua_api::LoaderEnv<'_>) {
-    temporary::auction_house_categories_refresh_count::patch(env);
-}
-
-pub(super) fn patch_auction_house_browse_results_event(env: &crate::lua_api::LoaderEnv<'_>) {
-    temporary::auction_house_browse_results_event::patch(env);
-}
-
-pub(super) fn patch_auction_house_browse_results_event_from_env(env: &crate::lua_api::WowLuaEnv) {
-    temporary::auction_house_browse_results_event::patch_env(env);
 }
 
 pub(super) fn patch_auction_house_search_context_aliases(env: &crate::lua_api::LoaderEnv<'_>) {

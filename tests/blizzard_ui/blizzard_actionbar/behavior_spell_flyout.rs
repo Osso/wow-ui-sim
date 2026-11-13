@@ -54,6 +54,42 @@ fn spell_flyout_toggle_shows_populates_and_hides_from_same_button() {
     });
     }
 }
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn spell_flyout_count_accepts_numeric_string_display_limit() {
+    test_timeout! {
+    with_blizzard_addon_startup_shape(&[ROOT], &[], |env, _loaded| {
+        let updated: bool = env
+            .eval(
+                r#"
+                local countText = {}
+                function countText:SetText(value)
+                    self.value = value
+                end
+                _G.SpellFlyoutNativeCountProbeCount = countText
+
+                local button = {
+                    spellID = 19750,
+                    maxDisplayCount = "9999",
+                }
+                function button:GetName()
+                    return "SpellFlyoutNativeCountProbe"
+                end
+
+                local succeeded = pcall(SpellFlyoutPopupButtonMixin.UpdateCount, button)
+                return succeeded and type(countText.value) == "string"
+                "#,
+            )
+            .expect("the selected Retail SpellFlyout consumer should run");
+
+        assert!(
+            updated,
+            "SpellFlyoutPopupButtonMixin:UpdateCount must accept a native numeric-string maximum"
+        );
+    });
+    }
+}
 }
 
 fn seed_spell_flyout(env: &WowLuaEnv) {

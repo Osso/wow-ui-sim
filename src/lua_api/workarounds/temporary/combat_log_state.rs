@@ -4,13 +4,15 @@
 //! fixture explicit rather than presenting it as complete C API behavior.
 //! Retire the empty-only path when the authorized history model owns validity and traversal.
 
-const COMBAT_LOG_STATE_LUA: &str = r#"
+const COMBAT_LOG_INBOUND_PROFILE_FALLBACK_LUA: &str = r#"
 CombatLogInbound = CombatLogInbound or {
     GenerateMessage = function()
         return "", 1, 1, 1
     end,
 }
+"#;
 
+const COMBAT_LOG_STATE_LUA: &str = r#"
 if type(C_CombatLog) ~= "table" then
     C_CombatLog = {}
 end
@@ -380,6 +382,15 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
         crate::client_profile::ACTIVE,
         crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
     );
+    let original_inbound_owner_selected = matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::Ptr
+            | crate::client_profile::ClientProfile::WowForever
+    );
+    if !original_inbound_owner_selected {
+        lua.exec(COMBAT_LOG_INBOUND_PROFILE_FALLBACK_LUA)?;
+    }
     let source = format!(
         "local publishLegacyCurrentEvent = {publish_legacy}\nlocal publishLegacyGlobals = {publish_globals}\nlocal publishClassicEmptyHistory = {classic_empty_history}\nlocal publishLegacyFilters = {publish_legacy_filters}\n{COMBAT_LOG_STATE_LUA}"
     );
@@ -390,6 +401,23 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 #[cfg(test)]
 mod tests {
     use crate::lua_api::WowLuaEnv;
+
+    #[cfg(any(
+        feature = "client-retail",
+        feature = "client-ptr",
+        feature = "client-wowforever"
+    ))]
+    #[test]
+    fn leaves_inbound_formatter_to_selected_blizzard_owner() {
+        let env = WowLuaEnv::new().expect("lua env should initialize");
+        let fallback_present: bool = env
+            .eval("return type(CombatLogInbound) == 'table' and type(CombatLogInbound.GenerateMessage) == 'function'")
+            .expect("inbound formatter availability should be readable");
+        assert!(
+            !fallback_present,
+            "selected profiles must not publish an empty formatter before Blizzard loads"
+        );
+    }
 
     #[cfg(feature = "retail-12-0-0")]
     #[test]
@@ -512,7 +540,12 @@ mod tests {
         );
     }
 
-    #[cfg(not(feature = "retail-12-0-0"))]
+    #[cfg(any(
+        feature = "client-wrath",
+        feature = "client-mists",
+        feature = "client-era",
+        feature = "client-anniversary"
+    ))]
     #[test]
     fn installs_shared_combat_log_state_and_navigation() {
         let env = WowLuaEnv::new().expect("lua env should initialize");

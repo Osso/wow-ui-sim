@@ -1,8 +1,9 @@
 //! Temporary catalog-shop inbound globals.
 //!
 //! Blizzard catalog-shop and checkout addons publish these inbound tables from
-//! secure/global environment swaps. These shallow defaults keep partial startup
-//! loads callable until those real addons replace or extend the surface.
+//! secure/global environment swaps. Retail's eager Catalog Shop addon owns the main
+//! interface before handlers run; other profiles keep its bootstrap fallback. The
+//! other interfaces keep their fallbacks on every profile.
 
 const CATALOG_SHOP_INBOUND_GLOBALS_LUA: &str = r#"
 local function ensure_inbound_interface(name)
@@ -53,14 +54,27 @@ local function ensure_inbound_interface(name)
     rawset(_G, name, inbound)
 end
 
-ensure_inbound_interface("CatalogShopInboundInterface")
+if $INSTALL_MAIN_CATALOG_SHOP_INTERFACE then
+    ensure_inbound_interface("CatalogShopInboundInterface")
+end
 ensure_inbound_interface("CatalogShopTopUpFlowInboundInterface")
 ensure_inbound_interface("CatalogShopRefundFlowInboundInterface")
 ensure_inbound_interface("SimpleCheckoutInboundInterface")
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
-    lua.exec(CATALOG_SHOP_INBOUND_GLOBALS_LUA)?;
+    // Only Retail has a verified eager owner for the main interface.
+    let install_main_interface =
+        crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail;
+    let bootstrap = CATALOG_SHOP_INBOUND_GLOBALS_LUA.replace(
+        "$INSTALL_MAIN_CATALOG_SHOP_INTERFACE",
+        if install_main_interface {
+            "true"
+        } else {
+            "false"
+        },
+    );
+    lua.exec(&bootstrap)?;
     Ok(())
 }
 
@@ -76,7 +90,6 @@ mod tests {
             .eval(
                 r#"
                 local names = {
-                    "CatalogShopInboundInterface",
                     "CatalogShopTopUpFlowInboundInterface",
                     "CatalogShopRefundFlowInboundInterface",
                     "SimpleCheckoutInboundInterface",
@@ -96,6 +109,14 @@ mod tests {
             .expect("catalog shop inbound defaults probe should run");
 
         assert_eq!(result, "ok");
+
+        let main_interface_present: bool = env
+            .eval("return type(CatalogShopInboundInterface) == 'table'")
+            .expect("main Catalog Shop inbound fallback should be queryable");
+        assert_eq!(
+            main_interface_present,
+            crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail
+        );
     }
 
     #[test]

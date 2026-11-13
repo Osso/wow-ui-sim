@@ -50,6 +50,74 @@ fn assert_mixin_methods(env: &WowLuaEnv, mixin: &str, methods: &[&str], rational
 }
 
 #[test]
+#[cfg(feature = "optional-tests")]
+fn retail_housing_tutorial_owner_precedes_dashboard_consumer() {
+    test_timeout! {
+        crate::common::blizzard_addon_harness::with_blizzard_addon_startup_shape(
+            &["Blizzard_HousingTutorials"],
+            &[],
+            |env, loaded| {
+                assert!(loaded.iter().any(|name| name == "Blizzard_HousingTutorials"));
+
+                let owner_loaded: bool = env
+                    .eval("return C_AddOns.IsAddOnLoaded('Blizzard_HousingTutorials')")
+                    .expect("eager housing tutorials owner should be queryable");
+                let owner_source_is_original: bool = env
+                    .eval(
+                        r#"
+                        local info = debug.getinfo(HousingTutorialUtil.BoughtHouseQuestComplete, "S")
+                        return info ~= nil
+                            and info.source:find("Blizzard_HousingTutorialsUtil.lua", 1, true) ~= nil
+                        "#,
+                    )
+                    .expect("selected housing tutorial provider source should be queryable");
+                assert!(owner_loaded);
+                assert!(owner_source_is_original);
+
+                env.state()
+                    .borrow_mut()
+                    .cvars
+                    .set_imported("housingTutorialsEnabled", "1");
+                let tutorials_enabled: bool = env
+                    .eval("return C_CVar.GetCVarBool('housingTutorialsEnabled')")
+                    .expect("housing tutorial CVar should be readable");
+                assert!(tutorials_enabled);
+
+                env.state()
+                    .borrow_mut()
+                    .quest_log_entries
+                    .completed_quest_ids
+                    .remove(&91863);
+
+                load_housing_dashboard(env);
+                let (consumer_is_original, tutorial_is_complete, title, expected_title):
+                    (bool, bool, String, String) = env
+                    .eval(
+                        r#"
+                        HousingDashboardFrame.HouseInfoContent:UpdateNoHousesDashboard()
+                        local info = debug.getinfo(
+                            HousingDashboardHouseInfoMixin.UpdateNoHousesDashboard, "S")
+                        local title = HousingDashboardFrame.HouseInfoContent
+                            .DashboardNoHousesFrame.TitleText:GetText()
+                        return info ~= nil
+                                and info.source:find(
+                                    "Blizzard_HousingDashboardHouseInfoContent.lua", 1, true) ~= nil,
+                            HousingTutorialUtil.BoughtHouseQuestComplete(),
+                            title,
+                            HOUSING_DASHBOARD_START_TUTORIAL_TEXT
+                        "#,
+                    )
+                    .expect("original housing dashboard consumer should use the tutorial owner");
+
+                assert!(consumer_is_original);
+                assert!(!tutorial_is_complete);
+                assert_eq!(title, expected_title);
+            },
+        );
+    }
+}
+
+#[test]
 fn blizzard_housing_dashboard_find_toc_resolves_bare_variant() {
     let resolved =
         find_toc_file(&dashboard_dir()).expect("Blizzard_HousingDashboard TOC should resolve");

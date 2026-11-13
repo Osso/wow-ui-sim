@@ -54,6 +54,8 @@ use rilua::vm::table::Table;
 use rilua::{LuaResult, Val};
 use std::collections::HashSet;
 
+mod user_waypoint;
+
 type LuaTableRef = GcRef<Table>;
 type RustLuaFn = rilua::vm::closure::RustFn;
 
@@ -62,6 +64,15 @@ type RustLuaFn = rilua::vm::closure::RustFn;
 pub struct UnitMapPosition {
     pub ui_map_id: i32,
     pub position: (f64, f64),
+}
+
+/// Session-only waypoint state; account/character ownership and persistence are UNKNOWN.
+#[derive(Clone, Copy, Debug)]
+pub(crate) struct UserWaypoint {
+    pub(crate) ui_map_id: i32,
+    pub(crate) x: f64,
+    pub(crate) y: f64,
+    pub(crate) z: Option<f64>,
 }
 
 const MAP_ART_LAYER_HASH_FIELDS: usize = 7;
@@ -124,6 +135,7 @@ fn register_c_map_methods(state: &mut LuaState, table_ref: LuaTableRef) -> LuaRe
             c_map_get_map_display_info,
         )?;
     }
+    user_waypoint::register(state, table_ref)?;
     Ok(())
 }
 

@@ -1,11 +1,9 @@
 //! Temporary EnvironmentCleanup runtime-surface restore.
 //!
-//! This workaround restores C_StoreSecure and C_WowTokenSecure after cleanup,
-//! along with shared bootstrap globals. It does not restore C_AuthChallenge or
-//! C_SecureTransfer. Restored secure namespaces do not establish native parity.
+//! This workaround restores shared bootstrap globals after cleanup. The
+//! cleanup-removed secure namespaces remain absent from the public environment.
 
 use crate::lua_api::SimState;
-use rilua::LuaApiMut;
 use std::cell::RefCell;
 use std::rc::Rc;
 
@@ -15,7 +13,6 @@ pub(crate) fn restore_post_cleanup_globals(
 ) -> crate::Result<()> {
     crate::lua_api::env_init::init_shared_bootstrap(lua)?;
     crate::lua_api::env_init::init_runtime_surface_bootstrap(lua)?;
-    crate::c_api::restore_cleanup_namespaces(lua.state_mut())?;
     crate::lua_api::env_init::init_enum_globals(lua)?;
     crate::lua_api::globals::strings::restore_missing_ui_strings(lua)?;
     super::debug_environment_defaults::apply_bootstrap(lua)?;
