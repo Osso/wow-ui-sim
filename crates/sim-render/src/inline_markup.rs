@@ -339,6 +339,27 @@ mod tests {
     }
 
     #[test]
+    fn integer_fields_accept_hex_prefixes_and_keep_float_fields() {
+        let texture = split_inline_markup(
+            "|Tspell:12.5:20.25:1.5:-2.5:0X40:0x20:0x10:0x30:0x0:0x20:0xFF:0x00:0x33|t",
+        );
+        let atlas = split_inline_markup("|A:atlas:12.5:20.25:1.5:-2.5:0xFF:0x00:0x33|a");
+        let [InlinePiece::Icon(texture)] = texture.as_slice() else {
+            panic!("one texture expected: {texture:?}");
+        };
+        let [InlinePiece::Icon(atlas)] = atlas.as_slice() else {
+            panic!("one atlas expected: {atlas:?}");
+        };
+        assert_eq!((texture.height, texture.width), (Some(12.5), Some(20.25)));
+        assert_eq!((texture.offset_x, texture.offset_y), (1.5, -2.5));
+        assert_eq!(texture.tex_coords, Some((0.25, 0.75, 0.0, 1.0)));
+        assert_eq!(texture.vertex_color, Some([1.0, 0.0, 0.2]));
+        assert_eq!((atlas.height, atlas.width), (Some(12.5), Some(20.25)));
+        assert_eq!((atlas.offset_x, atlas.offset_y), (1.5, -2.5));
+        assert_eq!(atlas.vertex_color, Some([1.0, 0.0, 0.2]));
+    }
+
+    #[test]
     fn reads_every_texture_field() {
         let pieces = split_inline_markup("|T133784:12:20:1:-2:64:32:16:48:0:32:255:0:51|t");
         let [InlinePiece::Icon(parsed)] = pieces.as_slice() else {
