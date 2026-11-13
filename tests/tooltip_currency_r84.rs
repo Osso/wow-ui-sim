@@ -521,7 +521,9 @@ fn currency_account_labels_and_bit_22_control_the_spacer() {
         assert(data.lines[3].leftText == ACCOUNT_TRANSFERRABLE_CURRENCY, 'transferable row')
         assert(data.lines[4].leftText == REPUTATION_TOOLTIP_ACCOUNT_WIDE_LABEL, 'reputation account-wide row')
         for index = 2, 4 do
-            assert(data.lines[index].type == 0 and data.lines[index].leftColor ~= nil, 'account label row shape')
+            local line = data.lines[index]
+            assert(line.type == 0, 'account label row type at ' .. index .. ': ' .. tostring(line.type))
+            assert(line.leftColor ~= nil, 'account label row color at ' .. index)
         end
         local hasSpacer = false
         for _, line in ipairs(data.lines) do
