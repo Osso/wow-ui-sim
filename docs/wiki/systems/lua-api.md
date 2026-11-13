@@ -699,7 +699,7 @@ The [owning contract](../../specs/wrath-friends-legacy.md) records static12340 p
 
 ## Retail UiMap catalog
 
-`C_Map.GetMapInfo` checks seeded state first and then the Retail UiMap catalog. The [catalog contract](../../specs/ui-map-info-catalog.md) records the profile boundary, seed precedence, and data provenance limits. Other profiles do not use the Retail catalog.
+`C_Map.GetMapInfo` checks seeded state first and then the Retail UiMap catalog. The [catalog contract](../../specs/ui-map-info-catalog.md) records the profile boundary, seed precedence, and data provenance limits. Other profiles do not use the Retail catalog. The [C_Map user waypoint page](c-map-user-waypoint.md) records the separate session-state model and original WorldMap consumer boundary.
 
 ## Sources
 

@@ -7,20 +7,21 @@ This contract defines the session-scoped user waypoint consumed by Blizzard's Re
 ### State and validation
 
 - [ ] **INFERRED:** Keep one shared waypoint in `SimState` for the simulator session. Account-versus-character ownership and persistence are UNKNOWN.
-- [ ] **VERIFIED (Retail 12.1.5.70688):** Parse `uiMapID` as signed 32-bit with truncation toward zero; require a nonzero result.
-- [ ] **VERIFIED (Retail 12.1.5.70688):** Require finite normalized `x` and `y` values in the inclusive range 0 to 1; numeric-convertible coordinate strings are accepted.
-- [ ] **VERIFIED (Retail 12.1.5.70688):** A missing or rejected `z` uses the no-z path. Serialization includes `z` only when present.
-- [ ] **VERIFIED (Retail 12.1.5.70688):** A valid point replaces the shared point. A rejected point leaves the stored point unchanged.
+- [x] **VERIFIED (Retail 12.1.5.70688):** Parse `uiMapID` as signed 32-bit with truncation toward zero; require a nonzero result.
+- [x] **VERIFIED (Retail 12.1.5.70688):** Require finite normalized `x` and `y` values in the inclusive range 0 to 1; numeric-convertible coordinate strings are accepted.
+- [x] **VERIFIED (Retail 12.1.5.70688):** A missing or rejected `z` uses the no-z path. Serialization includes `z` only when present.
+- [x] **VERIFIED (Retail 12.1.5.70688):** A valid point replaces the shared point. A rejected point leaves the stored point unchanged.
 
 ### API surface
 
 - [ ] `SetUserWaypoint` performs its `AllowedWhenUntainted` secret check before point conversion. **VERIFIED:** the Retail, PTR and Forever API documentation declares this mode; R88h.1 supplies the tainted-denial template. The other secret-mode templates are unreachable for this API.
-- [ ] `GetUserWaypoint` returns a valid stored point with `uiMapID` and `position`, and includes `z` only when present.
-- [ ] `GetUserWaypointPositionForMap` returns the stored position for the matching map. **INFERRED:** cross-map projection is not modeled; other maps return no position.
-- [ ] `HasUserWaypoint` reports whether the stored point is valid. `ClearUserWaypoint` removes the stored point.
+- [x] `GetUserWaypoint` returns a valid stored point with `uiMapID` and `position`, and includes `z` only when present.
+- [x] **VERIFIED (Retail 12.1.5.70688):** `GetUserWaypointPositionForMap` returns the stored position for the matching map.
+- [ ] **INFERRED:** cross-map projection is not modeled; other maps return no position.
+- [x] `HasUserWaypoint` reports whether the stored point is valid. `ClearUserWaypoint` removes the stored point.
 - [ ] **INFERRED:** `CanSetUserWaypointOnMap` returns true for a nonzero signed map ID and false for zero. Native map categories and allowed-ID rules are UNKNOWN.
 - [ ] **INFERRED:** `SetUserWaypoint` returns one Boolean named `wasSet`; exact native return publication is UNKNOWN in R88h.1.
-- [ ] **UNKNOWN:** The waypoint-change callback identity and event name are not established. Do not dispatch an event.
+- [ ] **UNKNOWN:** The exact `z` conversion predicate and waypoint-change callback identity/event are not established. The simulator accepts finite numeric z values and dispatches no event.
 
 ### Profile boundary
 
@@ -49,8 +50,9 @@ This contract defines the session-scoped user waypoint consumed by Blizzard's Re
 - [ ] Native account/character ownership, persistence and waypoint-change callback/event remain UNKNOWN.
 - [ ] Cross-map projection and native map-category eligibility remain UNKNOWN; the simulator uses the labeled nonzero-ID policy.
 - [ ] PTR and Forever behavior is not separately asserted. Mists and Wrath receive compile-only receipts.
+- [ ] **VERIFIED (Retail prefork test):** the original `HandleClick` stores the point, then errors at `WaypointLocationDataProvider.lua:101` because `C_SuperTrack.SetSuperTrackedUserWaypoint` is nil; that separate API is out of scope.
 
 ## Out of scope
 
-- Cross-map coordinate projection, persisted waypoint state, `USER_WAYPOINT_UPDATED`, and other waypoint APIs such as hyperlink parsing.
+- Cross-map coordinate projection, persisted waypoint state, `USER_WAYPOINT_UPDATED`, `C_SuperTrack.SetSuperTrackedUserWaypoint`, and other waypoint APIs such as hyperlink parsing.
 - Mists publication, because the pinned Mists API documentation does not declare these six methods.

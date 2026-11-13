@@ -8,7 +8,7 @@ The Retail `WaypointLocationDataProvider` calls `GetUserWaypointPositionForMap` 
 
 **VERIFIED from code:** `SimState.user_waypoint` stores one point with a signed map ID, normalized x/y and optional z. It is session-only in the simulator. **INFERRED:** this scope avoids claiming account/character ownership or persistence, which R88h.1 leaves UNKNOWN.
 
-**VERIFIED (Retail 12.1.5.70688):** the setter checks secret access before parsing, truncates an in-range signed map ID toward zero, requires finite normalized coordinates in [0, 1], and leaves old state unchanged on a rejected point. A missing or rejected z follows the no-z path. The returned `UiMapPoint` is built with the loaded `UiMapPoint.CreateFromCoordinates` constructor.
+**VERIFIED (Retail 12.1.5.70688):** the setter checks secret access before parsing, truncates an in-range signed map ID toward zero, requires finite normalized coordinates in [0, 1], and leaves old state unchanged on a rejected point. A missing or rejected z follows the no-z path. The returned `UiMapPoint` is built with the loaded `UiMapPoint.CreateFromCoordinates` constructor. **INFERRED (simulator policy):** finite numeric z values are retained; other z values are omitted because the exact native z predicate is UNKNOWN.
 
 **VERIFIED (Retail 12.1.5.70688):** getters validate the stored map ID and coordinates before publishing. The position query returns the point only for the same map. **INFERRED:** the simulator does not project coordinates to a different map.
 
@@ -16,9 +16,11 @@ The Retail `WaypointLocationDataProvider` calls `GetUserWaypointPositionForMap` 
 
 ### Original consumer boundary
 
-**VERIFIED:** the Retail manifest selects `Blizzard_SharedMapDataProviders_Mainline.toc`; that TOC permits Game/mainline loading and includes `WaypointLocationDataProvider.xml`, which loads the original Lua provider. The provider calls `GetUserWaypointPositionForMap` at line 57 and `CanSetUserWaypointOnMap`/`SetUserWaypoint` at lines 91/100. The prefork test loads this addon and invokes its original `RefreshAllData` and `HandleClick` methods.
+**VERIFIED:** the Retail manifest selects `Blizzard_SharedMapDataProviders_Mainline.toc`; that TOC permits Game/mainline loading and includes `WaypointLocationDataProvider.xml`, which loads the original Lua provider. The provider calls `GetUserWaypointPositionForMap` at line 57 and `CanSetUserWaypointOnMap`/`SetUserWaypoint` at lines 91/100. The prefork test loads this addon and invokes its original `RefreshAllData` and `HandleClick` methods. **VERIFIED (Retail prefork test):** `HandleClick` stores the waypoint, then errors at line 101 because `C_SuperTrack.SetSuperTrackedUserWaypoint` is nil; this separate API is outside the C_Map task.
 
 **INFERRED:** PTR shares the Retail implementation path; the tests make no PTR-specific behavioral assertions. **UNKNOWN:** whether the Retail handler behavior is identical on PTR or Forever.
+
+**VERIFIED (Retail prefork test):** after the expected `HandleClick` blocker, the stored point remains readable, and the original `RefreshAllData` displays it. The test also sets a point directly through `C_Map`, checks the refreshed pin, then clears it through `C_Map` and checks that a later refresh removes the pin.
 
 ## Sources
 

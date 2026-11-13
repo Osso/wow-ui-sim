@@ -1,6 +1,6 @@
 ## [2026-11-13] system | C_Map user waypoint
 
-Added [the user waypoint model](systems/c-map-user-waypoint.md) and its [API contract](../specs/c-map-user-waypoint.md). **VERIFIED (Retail 12.1.5.70688):** the original Retail provider uses the six C_Map methods and accepts the tested normalized-point/replacement contract. **INFERRED:** session-only state, same-map-only position lookup and nonzero-ID map eligibility. **UNKNOWN:** persistence, cross-map projection and callback/event identity. Profile docs declare the methods for Retail/PTR/Forever, not Mists; Wrath remains compile-only.
+Added [the user waypoint model](systems/c-map-user-waypoint.md) and its [API contract](../specs/c-map-user-waypoint.md). **VERIFIED (Retail 12.1.5.70688):** the original Retail provider uses the six C_Map methods and accepts the tested normalized-point/replacement contract. **VERIFIED (Retail prefork test):** HandleClick stores the point, then reaches the separate missing C_SuperTrack method at line 101. **INFERRED:** session-only state, same-map-only position lookup and nonzero-ID map eligibility. **UNKNOWN:** persistence, cross-map projection and callback/event identity. Profile docs declare the methods for Retail/PTR/Forever, not Mists; Wrath remains compile-only.
 
 ## [2026-11-13] fix | EllesmereUI AuraKit secret texture error
 
