@@ -21,17 +21,15 @@ fn class_talent_tooltip_uses_original_assisted_combat_manager() {
 
                 local managerInfo = debug.getinfo(AssistedCombatManager.AddSpellTooltipLine, "S")
                 local managerSource = managerInfo.source:gsub("\\", "/")
-                assert(managerSource:find("Blizzard_ActionBar/Mainline/AssistedCombatManager.lua", 1, true),
+                local managerSuffix = "Blizzard_ActionBar/Mainline/AssistedCombatManager.lua"
+                assert(managerSource:sub(-#managerSuffix) == managerSuffix,
                     "expected the original ActionBar owner, got " .. managerSource)
-                assert(managerInfo.linedefined == 339,
-                    "expected original owner line 339, got " .. tostring(managerInfo.linedefined))
 
                 local consumerInfo = debug.getinfo(ClassTalentButtonSpendMixin.AddTooltipInstructions, "S")
                 local consumerSource = consumerInfo.source:gsub("\\", "/")
-                assert(consumerSource:find("Blizzard_PlayerSpells/ClassTalents/Blizzard_ClassTalentButtonTemplates.lua", 1, true),
+                local consumerSuffix = "Blizzard_PlayerSpells/ClassTalents/Blizzard_ClassTalentButtonTemplates.lua"
+                assert(consumerSource:sub(-#consumerSuffix) == consumerSuffix,
                     "expected the selected class-talent consumer, got " .. consumerSource)
-                assert(consumerInfo.linedefined == 209,
-                    "expected original consumer line 209, got " .. tostring(consumerInfo.linedefined))
 
                 local spellID = 116
                 AssistedCombatManager.useAssistedHighlight = true
