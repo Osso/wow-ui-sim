@@ -2,6 +2,12 @@
 
 [User waypoint model](systems/c-map-user-waypoint.md) links the [contract](../specs/c-map-user-waypoint.md), original Retail provider, one session-scoped state and six API methods. **VERIFIED (Retail 12.1.5.70688):** normalized-point validation, shared replacement and the original consumer path. **VERIFIED (Retail prefork test):** `HandleClick` stores the waypoint before the separate missing `C_SuperTrack.SetSuperTrackedUserWaypoint` call at line 101. **INFERRED:** session-only ownership, same-map-only position lookup and nonzero-ID map eligibility. **UNKNOWN:** persistence, cross-map projection and callback/event identity. Retail/PTR/Forever declarations are profile-gated; Mists does not declare these methods; Wrath is compile-only.
 
+## [2026-11-13] investigation | UiMapPoint original ownership
+
+[UiMapPoint ownership](investigations/uimap-point-original-ownership.md) records
+the Retail-only constructor preservation boundary, unchanged other-profile
+fallbacks, and the separate unmodeled waypoint prerequisites.
+
 ## [2026-11-13] fix | EllesmereUI AuraKit secret texture error
 
 [Full third-party startup](investigations/full-addon-startup-2026-10-10.md#aurakit-secret-texture-error-r88c-2026-11-13) and the [secret aura contract](../specs/secret-auras.md) record the R88c boundary, original `ApplyIcon` call path and simulator fix. **VERIFIED (Retail code SHA `39ca0bc72d9539563288b79e622feeeb4a9282bb`):** all 20 add-ons loaded and `lua-errors` returned `[]`; five profile compile receipts have zero warnings. **INFERRED:** revoked numeric and tainted nil inputs pass the `SetTexture` check; nil clears the texture. Getter marking and rendering remain INFERRED/UNKNOWN.
