@@ -208,6 +208,110 @@ fn test_get_world_pos_from_map_pos_returns_instance_and_vector() {
     assert!(y > 0.0);
 }
 
+#[cfg(all(feature = "optional-tests", feature = "profile-retail"))]
+#[test]
+fn retail_map_world_position_probe_covers_zone_maps_under_cosmic() {
+    let env = env();
+    use std::collections::{HashMap, HashSet};
+
+    let mut map_rows = sim_data::ui_maps::UI_MAP_DB
+        .iter()
+        .map(|(&map_id, info)| (map_id, info.parent_map_id, info.map_type))
+        .collect::<Vec<_>>();
+    map_rows.sort_unstable_by_key(|(map_id, _, _)| *map_id);
+
+    let mut children_by_parent = HashMap::<u32, Vec<u32>>::new();
+    let mut map_types = HashMap::<u32, u32>::new();
+    for &(map_id, parent_map_id, map_type) in &map_rows {
+        children_by_parent
+            .entry(parent_map_id)
+            .or_default()
+            .push(map_id);
+        map_types.insert(map_id, map_type);
+    }
+    let mut pending = vec![946];
+    let mut visited = HashSet::new();
+    let mut zone_count = 0;
+    while let Some(map_id) = pending.pop() {
+        if !visited.insert(map_id) {
+            continue;
+        }
+        if map_types.get(&map_id) == Some(&3) {
+            zone_count += 1;
+        }
+        if let Some(children) = children_by_parent.get(&map_id) {
+            pending.extend(children);
+        }
+    }
+
+    let map_rows = map_rows
+        .iter()
+        .map(|(map_id, parent_map_id, map_type)| format!("{{{map_id},{parent_map_id},{map_type}}}"))
+        .collect::<Vec<_>>()
+        .join(",");
+
+    let script = format!(
+        r#"
+        local mapRows = {{{map_rows}}}
+        local childrenByParent = {{}}
+        local mapTypes = {{}}
+        for _, row in ipairs(mapRows) do
+            local mapID, parentMapID, mapType = row[1], row[2], row[3]
+            mapTypes[mapID] = mapType
+            local children = childrenByParent[parentMapID]
+            if not children then
+                children = {{}}
+                childrenByParent[parentMapID] = children
+            end
+            children[#children + 1] = mapID
+        end
+
+        for _, children in pairs(childrenByParent) do
+            table.sort(children)
+        end
+
+        local pending = {{946}}
+        local visited = {{}}
+        local zoneCount = 0
+        while #pending > 0 do
+            local mapID = table.remove(pending)
+            if not visited[mapID] then
+                visited[mapID] = true
+                local info = C_Map.GetMapInfo(mapID)
+                assert(info and info.mapID == mapID, "missing map info for " .. mapID)
+
+                if mapTypes[mapID] == 3 then
+                    zoneCount = zoneCount + 1
+                    local instanceID, worldPos = C_Map.GetWorldPosFromMapPos(
+                        mapID,
+                        CreateVector2D(0.5, 0.5)
+                    )
+                    assert(
+                        type(instanceID) == "number",
+                        "GetWorldPosFromMapPos returned no instance for uiMapID " .. mapID
+                    )
+                    assert(
+                        type(worldPos) == "table"
+                            and type(worldPos.x) == "number"
+                            and type(worldPos.y) == "number",
+                        "GetWorldPosFromMapPos returned no vector for uiMapID " .. mapID
+                    )
+                end
+
+                local children = childrenByParent[mapID] or {{}}
+                for index = #children, 1, -1 do
+                    pending[#pending + 1] = children[index]
+                end
+            end
+        end
+        assert(zoneCount == {zone_count}, "probe did not visit every Zone below Cosmic")
+        assert(visited[7], "Mulgore (uiMapID 7) must be reachable from Cosmic")
+        "#
+    );
+    env.eval::<()>(script)
+        .expect("run HBD-style Retail map-position probe");
+}
+
 // ============================================================================
 // Map art layer textures (world map tile rendering)
 // ============================================================================
