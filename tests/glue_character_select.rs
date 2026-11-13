@@ -63,6 +63,43 @@ fn original_character_services_consumer_handles_absent_display_data() {
 }
 
 #[test]
+#[cfg(all(feature = "client-retail", feature = "optional-tests"))]
+fn retail_catalog_shop_owner_precedes_character_select_toggle() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+        let (owner_loaded, original_inbound): (bool, bool) = env
+            .eval(
+                r#"
+                local info = debug.getinfo(CatalogShopInboundInterface.SetShown, "S")
+                return C_AddOns.IsAddOnLoaded("Blizzard_CatalogShop"),
+                    info ~= nil and info.source:find("Blizzard_CatalogShop_Inbound.lua", 1, true) ~= nil
+                "#,
+            )
+            .expect("the selected CatalogShop inbound owner should be queryable");
+        assert!(owner_loaded);
+        assert!(original_inbound);
+
+        env.set_server_mirrored_cvar("shop2Enabled", "1")
+            .expect("Shop2 should be enabled for this fixture");
+        env.exec(
+            r#"
+            CharacterSelectUtil.IsStoreAvailable = function() return true end
+            ToggleStoreUI("character-select-probe")
+            "#,
+        )
+        .expect("original CharacterSelect toggle should call the CatalogShop inbound owner");
+
+        let (action, context_key): (String, String) = env
+            .eval(
+                "return CatalogShopFrame:GetAttribute('action'), CatalogShopFrame:GetAttribute('contextkey')",
+            )
+            .expect("CatalogShop action attributes should be readable");
+        assert_eq!(action, "Show");
+        assert_eq!(context_key, "character-select-probe");
+    }
+}
+
+#[test]
 #[cfg(feature = "client-retail")]
 fn retail_fonts_follow_screen_phase() {
     test_timeout! {
