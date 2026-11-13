@@ -1,4 +1,12 @@
-#![cfg(all(feature = "optional-tests", feature = "client-retail"))]
+#![cfg(all(
+    feature = "optional-tests",
+    any(
+        feature = "client-retail",
+        feature = "client-ptr",
+        feature = "client-wowforever",
+        feature = "client-mists"
+    )
+))]
 
 #[test]
 fn selected_actionbar_event_consumer_uses_original_fanout() {
