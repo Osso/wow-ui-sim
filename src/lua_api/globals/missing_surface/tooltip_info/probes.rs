@@ -58,6 +58,18 @@ pub(super) fn c_tooltip_get_bag_item(state: &mut LuaState) -> LuaResult<u32> {
 pub(super) fn c_tooltip_get_currency_by_id(state: &mut LuaState) -> LuaResult<u32> {
     let currency_id = i32::from_stack(state, 1)?;
     let amount = Option::<i32>::from_stack(state, 2)?;
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        let Some(tooltip) = crate::c_api::c_tooltip_info_currency::build_currency_tooltip(
+            state,
+            currency_id,
+            Some(amount.unwrap_or(0)),
+        )?
+        else {
+            return crate::c_api::tooltip_data::unknown_getter_failure();
+        };
+        state.push(tooltip);
+        return Ok(1);
+    }
     let tooltip = currency_data::get_currency_by_id(currency_id)
         .map(|currency| tooltip_for_currency(state, currency, amount))
         .unwrap_or_else(|| {
@@ -581,6 +593,9 @@ pub(super) fn c_tooltip_get_quest_item(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 pub(super) fn c_tooltip_get_quest_log_currency(state: &mut LuaState) -> LuaResult<u32> {
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        return crate::c_api::c_tooltip_info_currency::get_quest_log_currency(state);
+    }
     let _currency_type = Option::<i32>::from_stack(state, 1)?;
     let _index = Option::<i32>::from_stack(state, 2)?;
     state.push(Val::Nil);

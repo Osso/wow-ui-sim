@@ -12,6 +12,8 @@ The [R80 item tooltip contract](../../specs/tooltip-item-r80.md) separates VERIF
 
 [Spell tooltip composition](../../specs/tooltip-spell-composition.md) owns the R81 outer-row contract. VERIFIED by source inspection: host inputs in `src/c_api/spell_tooltip.rs` replace the fixed cooldown, aura-duration and slot-key recipes; cost and cast inputs no longer come from guessed spell tables. The shared producer keeps the existing title/description behavior, resolves direct overrides, and gives spell links their own cast context without suppressing cost/range. Native evidence is partial Retail 70688; selected Retail 70575 and other profiles are not native-output certifications. UNKNOWN helper formulas, Azerite gates and later rows stay host-supplied or unmodelled. Tests and source citations are recorded in the private lane report.
 
+[Retail currency tooltips](../../specs/tooltip-currency.md) own the R84/R84b row and input contract. Retail by-ID, quest, loot and currency-link consumers share `c_api::c_tooltip_info_currency::build_currency_tooltip`; quest-source results and display inputs are supplied rather than inferred. The shared line builder can remap a verified type-0 row to 41 when placeholder colors collide, so the currency producer restores the verified row type. Resolver misses, conditional error rows, balance formulas and runtime number-format mode remain UNKNOWN.
+
 [Bag-child tooltips](../../specs/tooltip-bag-child.md) compose bag state with
 source-derived child-equipment rows and the existing item builder on
 Retail/PTR/Forever. The item generator includes child IDs automatically; absent
@@ -699,6 +701,9 @@ The [owning contract](../../specs/wrath-friends-legacy.md) records static12340 p
 - [UiMap information catalog](../../specs/ui-map-info-catalog.md) — profile scope and provenance.
 - [Wrath legacy friends contract](../../specs/wrath-friends-legacy.md) — native tuple/selection evidence and simulator-policy limits.
 - [Retail unused currency contract](../../specs/currency-unused-mutations.md) — flag scope, original consumers and held grouping.
+- [Retail currency tooltip contract](../../specs/tooltip-currency.md) — R84/R84b verified rows, explicit host inputs and UNKNOWNs.
+- [c_tooltip_info_currency.rs](../../../src/c_api/c_tooltip_info_currency.rs) — shared Retail currency producer; text-row type restoration keeps verified type-0 rows after color remapping.
+- [tooltip_info/builders.rs](../../../src/lua_api/globals/missing_surface/tooltip_info/builders.rs) — shared line builder and color-based type remapping.
 
 - [Wrath action callback queries](../../specs/wrath-action-callback-queries.md) — native projections, shared snapshot boundary and bounded proof
 
