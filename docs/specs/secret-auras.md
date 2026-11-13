@@ -45,6 +45,9 @@ Evidence levels used below:
 ### Widget sinks and aspects
 - [ ] Widget methods apply their `SecretArguments` mode. STRING names three modes: never allowed, not allowed, and only allowed during untainted execution.
 - [x] Under tainted execution, a marked string passed to `Texture:SetTexture` raises `Cannot set texture to a secret string value.` (**VERIFIED — R88c Q1, Retail 12.1.5.70688**; full native error context is UNKNOWN).
+- [ ] A marked numeric file identifier can pass `Texture:SetTexture` from tainted code when the target permits it (**INFERRED — R88c Q1**; Retail docs declare `AllowedWhenTainted` at `Blizzard_APIDocumentationGenerated/SimpleTextureBaseAPIDocumentation.lua:604–607`).
+- [ ] An accepted marked input sets the region's secret-values flag (**VERIFIED — R88c Q2**). Getter marking is **INFERRED**; whether the asset renders is **UNKNOWN**.
+- [ ] A target that prevents secret values rejects marked `SetTexture` input with `Attempt to set secret values on an object that prevents secret values` (**INFERRED — R88c Q1**; full native error context is UNKNOWN).
 - [ ] Apply `SecretArgumentsAddAspect` and `SecretReturnsForAspect` according to the bounded WM61 S6 findings below; complete getter publication remains UNKNOWN.
 - [ ] Shipped aura buttons can pass secret duration, text, icon, visibility and geometry to their widgets and render correctly (UI).
 
