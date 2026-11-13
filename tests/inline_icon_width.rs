@@ -82,10 +82,7 @@ fn a_tall_icon_raises_the_line() {
             "#,
         )
         .unwrap();
-    assert!(
-        text < 32.0 && (tall - 32.0).abs() < 0.01,
-        "text {text}, tall {tall}"
-    );
+    assert!(text < 32.0 && (tall - 32.0).abs() < 0.01, "text {text}, tall {tall}");
 }
 
 #[test]
@@ -170,10 +167,7 @@ fn tooltip_height_adds_each_left_fontstring_row() {
     let second_row = two_rows - one_row;
     let third_row = three_rows - two_rows;
     assert!(second_row > 0.0, "one row {one_row}, two rows {two_rows}");
-    assert!(
-        third_row > 0.0,
-        "two rows {two_rows}, three rows {three_rows}"
-    );
+    assert!(third_row > 0.0, "two rows {two_rows}, three rows {three_rows}");
     assert!(
         (second_row - third_row).abs() < 0.01,
         "second row {second_row}, third row {third_row}"
