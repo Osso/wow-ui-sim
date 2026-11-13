@@ -238,10 +238,12 @@ fn expected_position(test: TestCase) -> TestCase {
             1.0,
         ),
         (ClientProfile::Mists, "paladin_power_bar") => {
-            // Mists/PaladinPowerBar.xml:49-51: 136x39, TOP to PlayerFrame
-            // BOTTOM (25,35). Classic/PlayerFrame.xml:14: height100.
-            // x = 268 + 232/2 + 25 - 136/2; y = 850 + 100 - 35.
-            (name, "PaladinPowerBar", 341.0, 915.0, 136.0, 39.0, 1.0)
+            // The XML template routes this plain frame through UIParent's managed-frame layout:
+            // PlayerFrameTemplates.xml:4-9 selects PlayerFrameBottomManagedFramesContainer;
+            // PlayerFrame.xml:381-387 gives it width160 and TOP at PlayerFrame BOTTOM (10,36).
+            // LayoutFrame.lua:349 centers the 136-wide child at TOP; PlayerFrame is (268,850,232x100).
+            // The XML anchor on PaladinPowerBar.xml:49-54 is replaced by AddManagedFrame.
+            (name, "PaladinPowerBar", 326.0, 914.0, 136.0, 39.0, 1.0)
         }
         (ClientProfile::Mists, "bags_bar") => {
             // Mists/MainMenuBarBagButtonsConsts.lua:2-5 sets five buttons
@@ -852,11 +854,11 @@ fn assert_layout_state(env: &WowLuaEnv, test: &str) {
         }
         (ClientProfile::Mists, "paladin_power_bar") => {
             r#"
-            assert(PaladinPowerBar:GetParent() == PlayerFrame)
+            assert(PaladinPowerBar:GetParent() == PlayerFrameBottomManagedFramesContainer)
             assert(PaladinPowerBar:GetWidth() == 136 and PaladinPowerBar:GetHeight() == 39)
             local point, relative, relativePoint, x, y = PaladinPowerBar:GetPoint(1)
-            assert(point == "TOP" and relative == PlayerFrame and relativePoint == "BOTTOM")
-            assert(x == 25 and y == 35)
+            assert(point == "TOP" and relative == PlayerFrameBottomManagedFramesContainer and relativePoint == "TOP")
+            assert(x == 0 and y == 0)
             "#
         }
         (ClientProfile::Retail, "objective_tracker") => {
