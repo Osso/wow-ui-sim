@@ -654,7 +654,7 @@ fn shared_map_poi_templates_register_in_template_registry_not_global_frames() {
 fn empty_contribution_id_list_adds_no_map_tooltip_rows() {
     let env = load_map_data_providers_closure();
 
-    let line_count: usize = env
+    let line_count: i32 = env
         .eval(
             r#"
             assert(type(ContributionCollectorPinMixin.AddContributionsToTooltip) == "function")
