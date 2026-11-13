@@ -8,10 +8,19 @@ use rilua::{LuaResult, Val};
 
 const EMPTY_GARRISON_TYPE: u32 = 0;
 
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GarrisonLandingPage {
     /// Host-supplied type; no selection or lifecycle is modeled.
     pub garrison_type: Option<u32>,
+}
+
+impl Default for GarrisonLandingPage {
+    fn default() -> Self {
+        Self {
+            // INFERRED: the neutral host input starts at the empty-path type.
+            garrison_type: Some(EMPTY_GARRISON_TYPE),
+        }
+    }
 }
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
