@@ -10,6 +10,8 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/blizzard_addon_manifest.rs"]
+mod blizzard_addon_manifest;
 #[path = "common/toc_layout.rs"]
 mod toc_layout;
 
@@ -685,7 +687,11 @@ fn empty_contribution_id_list_adds_no_map_tooltip_rows() {
 #[test]
 fn world_map_provider_pins_keep_original_backref_ownership() {
     let ui = blizzard_ui_dir();
-    let (env, loaded) = build_blizzard_addon_closure_env(&ui, &["Blizzard_WorldMap"], &[]);
+    let (env, loaded) = build_blizzard_addon_closure_env(
+        &ui,
+        blizzard_addon_manifest::WORLD_MAP_SMOKE_ROOTS,
+        blizzard_addon_manifest::WORLD_MAP_SMOKE_OVERRIDES,
+    );
 
     for addon in [
         "Blizzard_MapCanvas",
