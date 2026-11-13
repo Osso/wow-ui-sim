@@ -17,10 +17,10 @@ fn retail_addon_can_call_is_using_gamepad() {
     let env = WowLuaEnv::new().expect("create Retail Lua environment");
     let result = load_addon(&env.loader_env(), &toc).expect("load consumer fixture");
 
-    assert_eq!(result.lua_files, 1);
     assert!(
         result.warnings.is_empty(),
         "EllesmereUI's Retail input consumer failed: {}",
         result.warnings.join("\n")
     );
+    assert_eq!(result.lua_files, 1);
 }
