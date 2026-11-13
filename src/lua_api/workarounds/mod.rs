@@ -673,7 +673,6 @@ fn patch_runtime_feature_addon_surfaces(env: &crate::lua_api::LoaderEnv<'_>, add
 }
 
 fn patch_auction_house_runtime_surface(env: &crate::lua_api::LoaderEnv<'_>) {
-    patch_auction_house_categories_refresh_count(env);
     patch_auction_house_browse_results_event(env);
     patch_auction_house_search_context_aliases(env);
 }
