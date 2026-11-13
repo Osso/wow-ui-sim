@@ -274,6 +274,47 @@ fn blizzard_deprecated_spell_book_load_deprecation_fallbacks_cvar_is_default_on(
 }
 }
 
+#[cfg(all(feature = "client-retail", feature = "optional-tests"))]
+#[test]
+fn deprecated_spell_book_globals_follow_the_original_cvar_gate() {
+    let env = WowLuaEnv::new().expect("Failed to create Lua environment");
+    env.set_screen_mode(ScreenKind::Game);
+
+    let ui = blizzard_ui_dir();
+    env.state().borrow_mut().addon_base_paths = vec![ui.clone()];
+    env.exec("SetCVar('loadDeprecationFallbacks', '0')")
+        .expect("fixture should disable Blizzard's deprecated spell wrappers");
+
+    let toc = find_toc_file(&ui.join("Blizzard_DeprecatedSpellBook"))
+        .expect("Retail game screen should select Blizzard_DeprecatedSpellBook");
+    load_addon(&env.loader_env(), &toc)
+        .expect("selected Blizzard deprecated spellbook addon should load");
+
+    let (loaded, cvar_disabled, wrappers_absent): (bool, bool, bool) = env
+        .eval(
+            r#"
+            return C_AddOns.IsAddOnLoaded("Blizzard_DeprecatedSpellBook"),
+                   not GetCVarBool("loadDeprecationFallbacks"),
+                   IsPlayerSpell == nil
+                       and IsSpellKnownOrOverridesKnown == nil
+                       and FindFlyoutSlotBySpellID == nil
+                       and FindSpellOverrideByID == nil
+                       and FindBaseSpellByID == nil
+            "#,
+        )
+        .expect("deprecated spell wrapper state should be readable");
+
+    assert!(loaded, "the selected original addon ran");
+    assert!(
+        cvar_disabled,
+        "the original deprecation-fallback CVar stays off"
+    );
+    assert!(
+        wrappers_absent,
+        "the original Retail addon returns before publishing these globals when the CVar is off"
+    );
+}
+
 #[test]
 fn blizzard_deprecated_spell_book_has_no_xml_or_other_assets() {
     let dir = blizzard_ui_dir().join("Blizzard_DeprecatedSpellBook");
