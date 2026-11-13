@@ -81,10 +81,6 @@ const POST_LOAD_WORKAROUNDS: &[WorkaroundStep] = &[
         apply: patch_chat_voice_button_surface,
     },
     WorkaroundStep {
-        label: "patch_item_socketing_tooltips",
-        apply: patch_item_socketing_tooltips,
-    },
-    WorkaroundStep {
         label: "patch_character_select_selected_name",
         apply: patch_character_select_selected_name,
     },
