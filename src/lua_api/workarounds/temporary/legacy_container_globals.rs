@@ -12,11 +12,6 @@ end
 if GAME_LOCALE == nil then
     GAME_LOCALE = GetLocale()
 end
-if ContainerFrameContainer == nil then
-    ContainerFrameContainer = { ContainerFrames = {} }
-elseif ContainerFrameContainer.ContainerFrames == nil then
-    ContainerFrameContainer.ContainerFrames = {}
-end
 if GetContainerItemInfo == nil and C_Container ~= nil then
     function GetContainerItemInfo(...)
         return C_Container.GetContainerItemInfo(...)
@@ -24,12 +19,24 @@ if GetContainerItemInfo == nil and C_Container ~= nil then
 end
 "#;
 
+// Retail owns this frame and parentArray in original ContainerFrame.xml.
+#[cfg(not(feature = "client-retail"))]
+const LEGACY_CONTAINER_SCAFFOLD_LUA: &str = r#"
+if ContainerFrameContainer == nil then
+    ContainerFrameContainer = { ContainerFrames = {} }
+elseif ContainerFrameContainer.ContainerFrames == nil then
+    ContainerFrameContainer.ContainerFrames = {}
+end
+"#;
+
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(LEGACY_CONTAINER_GLOBALS_LUA)?;
+    #[cfg(not(feature = "client-retail"))]
+    lua.exec(LEGACY_CONTAINER_SCAFFOLD_LUA)?;
     Ok(())
 }
 
-#[cfg(test)]
+#[cfg(all(test, not(feature = "client-retail")))]
 mod tests {
     use crate::lua_api::WowLuaEnv;
 
@@ -96,5 +103,30 @@ mod tests {
         assert!(existing);
         assert!(has_frames);
         assert_eq!(item_info, "existing");
+    }
+}
+
+#[cfg(all(test, feature = "client-retail"))]
+mod retail_tests {
+    use crate::lua_api::WowLuaEnv;
+    #[test]
+    fn retail_defers_container_owner_without_changing_other_legacy_globals() {
+        let env = WowLuaEnv::new().unwrap();
+        env.exec(
+            r#"
+            assert(ContainerFrameContainer == nil, 'original XML must own publication')
+            assert(GetLocale() == 'enUS' and GAME_LOCALE == GetLocale())
+            assert(type(GetContainerItemInfo) == 'function')
+            assert(type(GetContainerItemInfo(0, 1)) == 'table')
+            originalOwner = { preserved = true }
+            ContainerFrameContainer = originalOwner
+        "#,
+        )
+        .unwrap();
+        super::apply_bootstrap(&mut env.lua.borrow_mut()).unwrap();
+        env.exec(r#"
+            assert(ContainerFrameContainer == originalOwner)
+            assert(originalOwner.ContainerFrames == nil, 'bootstrap must not synthesize parentArray')
+        "#).unwrap();
     }
 }

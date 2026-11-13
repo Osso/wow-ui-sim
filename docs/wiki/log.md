@@ -3788,3 +3788,5 @@ Added [FontString anchor sizing](investigations/fontstring-anchor-sizing.md). Th
 - 2026-11-13: Retail TokenTracker startup ownership: corrected low-level-loader fixture, baseline preservation and Retail-only stale repair removal; see [consumer selection](investigations/consumer-selection-and-red-proof.md#retail-token-tracker-startup-ownership).
 
 - 2026-11-13: C Transmog location slice: baseline original startup/cache consumer passed; remove only Retail synthetic location helpers, keep other profiles and unresolved best-item helper unchanged. See consumer-selection investigation.
+
+- 2026-11-13: [Retail container parentArray ownership](investigations/consumer-selection-and-red-proof.md#retail-container-parentarray-ownership): original six XML bags and repeated real enumerator membership preserve Retail-only scaffold removal.
