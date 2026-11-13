@@ -269,6 +269,7 @@ fn install_on_c_game_rules(state: &mut LuaState) -> LuaResult<()> {
     }
     if ACTIVE == ClientProfile::WowForever {
         crate::c_api::c_game_rules::register_hardcore_active(state, table_ref)?;
+        crate::c_api::c_game_rules::register_self_found_allowed(state, table_ref)?;
     }
     // GameRulesDocumentation.lua declares these on every profile except Wrath,
     // which ships no generated documentation.
