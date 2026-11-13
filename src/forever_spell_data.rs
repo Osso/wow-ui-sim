@@ -220,6 +220,9 @@ mod tests {
                 .len(),
             2
         );
-        assert_eq!(output["tables"]["SpellPower"]["rows"], json!([{"ID": 3}]));
+        assert_eq!(
+            output["tables"]["SpellPower"]["rows"],
+            json!([{"ID": 3, "Name": "test"}])
+        );
     }
 }
