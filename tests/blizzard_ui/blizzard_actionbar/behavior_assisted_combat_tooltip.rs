@@ -179,3 +179,65 @@ fn spellbook_rotation_tooltip_uses_original_action_description() {
         assert_eq!(passed_description, "supplied assisted-combat description");
     });
 }
+
+#[test]
+fn spellbook_attic_reads_original_assisted_action_state() {
+    with_blizzard_addon_smoke_shape(&["Blizzard_PlayerSpells"], &[], |env, loaded| {
+        assert!(
+            loaded.iter().any(|name| name == "Blizzard_PlayerSpells"),
+            "the LoadOnDemand PlayerSpells consumer must load"
+        );
+
+        let (shown, spell_id): (bool, i32) = env
+            .eval(
+                r#"
+                assert(C_AddOns.IsAddOnLoaded("Blizzard_ActionBar"),
+                    "ActionBar must load before the PlayerSpells consumer")
+                assert(C_AddOns.IsAddOnLoaded("Blizzard_PlayerSpells"),
+                    "PlayerSpells must be runtime-loaded")
+
+                local ownerInfo = debug.getinfo(AssistedCombatManager.HasActionSpell, "S")
+                local ownerSource = ownerInfo.source:gsub("\\", "/")
+                local ownerSuffix = "Blizzard_ActionBar/Mainline/AssistedCombatManager.lua"
+                assert(ownerSource:sub(-#ownerSuffix) == ownerSuffix,
+                    "expected the original ActionBar owner, got " .. ownerSource)
+
+                local consumerInfo = debug.getinfo(SpellBookFrameMixin.UpdateAttic, "S")
+                local consumerSource = consumerInfo.source:gsub("\\", "/")
+                local consumerSuffix = "Blizzard_PlayerSpells/SpellBook/Blizzard_SpellBookFrame.lua"
+                assert(consumerSource:sub(-#consumerSuffix) == consumerSuffix,
+                    "expected the selected spellbook consumer, got " .. consumerSource)
+
+                AssistedCombatManager.actionSpellID = 116
+                local rotationButton = {
+                    shown = false,
+                    spellID = 0,
+                    Show = function(self) self.shown = true end,
+                    Hide = function(self) self.shown = false end,
+                    SetSpellID = function(self, value) self.spellID = value end,
+                }
+                local settingsDropdown = {
+                    ClearAllPoints = function() end,
+                    SetPoint = function() end,
+                }
+                local frame = {
+                    SettingsDropdown = settingsDropdown,
+                    AssistedCombatRotationSpellFrame = rotationButton,
+                    ResizeSearchBox = function() end,
+                }
+                SpellBookFrameMixin.UpdateAttic(frame)
+                return rotationButton.shown, rotationButton.spellID
+                "#,
+            )
+            .expect("the original spellbook attic consumer must execute");
+
+        assert!(
+            shown,
+            "the supplied action spell must show the rotation button"
+        );
+        assert_eq!(
+            spell_id, 116,
+            "the consumer must use the supplied action spell id"
+        );
+    });
+}
