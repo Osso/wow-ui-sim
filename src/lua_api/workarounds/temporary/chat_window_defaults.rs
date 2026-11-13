@@ -37,12 +37,6 @@ if ChatFrameUtil.GetChatWindowName == nil then
   end
 end
 
-if ChatFrameUtil.GetCommunitiesChannelLocalID == nil then
-  function ChatFrameUtil.GetCommunitiesChannelLocalID(_clubId, _streamId)
-    return nil
-  end
-end
-
 local __wow_chat_window_state = __wow_chat_window_state or {}
 
 local function __wow_is_chat_window_shown_by_default(id)
@@ -188,7 +182,6 @@ mod tests {
                 if ChatFrame1:GetObjectType() ~= "ScrollingMessageFrame" then return "chat_frame1_type" end
                 if ChatFrameUtil.GetChatWindowName(3) ~= "Chat Window 3" then return "window_name" end
 
-                if ChatFrameUtil.GetCommunitiesChannelLocalID(nil, nil) ~= nil then return "community_local_id" end
 
                 local name, fontSize, r, g, b, alpha, shown, locked, docked = GetChatWindowInfo(2)
                 if name ~= "" or fontSize ~= 12 then return "info_shape" end
