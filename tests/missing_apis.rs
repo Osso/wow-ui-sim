@@ -1,5 +1,6 @@
 //! Tests for Lua APIs exposed by the simulator.
 //! Optional cases document API gaps that remain unimplemented.
+//! Third-party libraries require a fixture that loads their provider addon.
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 
