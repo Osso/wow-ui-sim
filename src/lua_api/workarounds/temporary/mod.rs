@@ -21,7 +21,6 @@ pub(crate) mod wrath_startup_defaults;
 pub(crate) mod account_store_set_storefront;
 pub(crate) mod achievement_search_preview;
 pub(crate) mod achievement_ui_access_defaults;
-pub(crate) mod action_bar_button_event_fanout;
 pub(crate) mod addon_compartment_defaults;
 pub(crate) mod addons_beta_policy_defaults;
 pub(crate) mod adventure_journal_fallbacks;

@@ -302,7 +302,6 @@ fn apply_blizzard_post_load_patches(
         "Blizzard_FrameXMLUtil" => {
             crate::lua_api::workarounds::patch_quest_objective_defaults_for_addon_load(env);
         }
-        "Blizzard_ActionBar" => patch_action_bar_button_event_fanout(env),
         "Blizzard_PlayerSpells" => patch_playerspells_onload_backfill(env, result),
         "Blizzard_Dispatcher" => {
             crate::lua_api::workarounds::patch_dispatcher_surface_for_addon_load(env)
@@ -334,10 +333,6 @@ fn patch_environment_cleanup(env: &LoaderEnv<'_>, result: &mut LoadResult) {
             &e,
         );
     }
-}
-
-fn patch_action_bar_button_event_fanout(env: &LoaderEnv<'_>) {
-    crate::lua_api::workarounds::patch_action_bar_button_event_fanout_for_addon_load(env);
 }
 
 fn patch_shared_xml_anim_mixins(env: &LoaderEnv<'_>, result: &mut LoadResult) {

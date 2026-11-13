@@ -44,12 +44,6 @@ pub(crate) use runtime_surfaces::{
     patch_unit_position_frame_mixin,
 };
 
-pub(crate) fn patch_action_bar_button_event_fanout_for_addon_load(
-    env: &crate::lua_api::LoaderEnv<'_>,
-) {
-    temporary::action_bar_button_event_fanout::patch_loader(env);
-}
-
 struct WorkaroundStep {
     label: &'static str,
     apply: fn(&crate::lua_api::WowLuaEnv),
@@ -107,10 +101,6 @@ const POST_LOAD_WORKAROUNDS: &[WorkaroundStep] = &[
     WorkaroundStep {
         label: "ensure_adventure_map_frame_surface",
         apply: ensure_adventure_map_frame_surface,
-    },
-    WorkaroundStep {
-        label: "patch_action_bar_button_event_fanout",
-        apply: patch_action_bar_button_event_fanout,
     },
     WorkaroundStep {
         label: "patch_paging_controls_page_text",
