@@ -78,13 +78,17 @@ fn add_roleset(state: &mut LuaState) -> LuaResult<u32> {
 /// `SetRolesets("a,b")` assigns comma-separated tags; nil clears them.
 fn set_rolesets(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
-    let names = set_rolesets_arg(state)?.map(|list| split_roleset_list(&list));
+    // INFERRED: a missing or nil argument follows the empty-string path.
+    let names = match set_rolesets_arg(state)? {
+        Some(list) => split_roleset_list(&list),
+        None => split_roleset_list(""),
+    };
     if !can_change_protected_state_for(state, id) {
         emit_addon_action_blocked(state, id, "SetRolesets");
         return Ok(0);
     }
     update_rolesets(state, id, |rolesets| {
-        *rolesets = names.unwrap_or_default();
+        *rolesets = names;
     })?;
     Ok(0)
 }
