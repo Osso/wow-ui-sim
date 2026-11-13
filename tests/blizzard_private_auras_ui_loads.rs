@@ -83,10 +83,18 @@ const VIRTUAL_TEMPLATES_NOT_IN_GLOBAL_ENV: &[&str] = &[
 const SCOPED_NAMED_FRAMES_HIDDEN_FROM_GLOBAL_ENV: &[&str] =
     &["RaidBossEmoteFramePrivate", "PrivateAurasTooltip"];
 
+#[cfg(feature = "client-retail")]
 fn load_full_game_ui() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
     env.set_screen_size(1024.0, 768.0);
     env.set_screen_mode(ScreenKind::Game);
+    env.exec(
+        "rawset(_G, 'TooltipDataProcessor', nil); \
+         rawset(_G, 'AddTooltipDataAccessor', nil); \
+         rawset(__secureenv, 'TooltipDataProcessor', nil); \
+         rawset(__secureenv, 'AddTooltipDataAccessor', nil)",
+    )
+    .expect("disable tooltip data processor defaults before addon startup");
 
     {
         let mut state = env.state().borrow_mut();
@@ -106,6 +114,57 @@ fn load_full_game_ui() -> WowLuaEnv {
     fire_startup_events_for_screen(&env, ScreenKind::Game);
 
     env
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn secure_private_auras_loads_tooltip_processor_from_secure_dependency() {
+    let env = load_full_game_ui();
+
+    let loaded: bool = env
+        .eval("return C_AddOns.IsAddOnLoaded('Blizzard_PrivateAurasUI')")
+        .expect("PrivateAurasUI loaded-state query should succeed");
+    assert!(
+        loaded,
+        "normal Retail startup must load Blizzard_PrivateAurasUI"
+    );
+
+    let load_errors: Vec<String> = env
+        .state()
+        .borrow()
+        .lua_errors
+        .iter()
+        .filter(|message| {
+            message.contains("Blizzard_PrivateAurasUI")
+                || message.contains("PrivateAurasTooltip")
+                || message.contains("TooltipDataProcessor")
+        })
+        .cloned()
+        .collect();
+    assert!(
+        load_errors.is_empty(),
+        "PrivateAurasUI must load without tooltip errors when defaults are disabled:\n  {}",
+        load_errors.join("\n  ")
+    );
+
+    let original_processor: bool = env
+        .eval(
+            "local processor = rawget(__secureenv, 'TooltipDataProcessor'); \
+             local ordinary = rawget(_G, 'TooltipDataProcessor'); \
+             rawset(_G, '__secure_env_ordinary_only_probe', true); \
+             return type(processor) == 'table' \
+                 and processor.AllTypes == 'ALL' \
+                 and processor ~= ordinary \
+                 and type(processor.AddTooltipPostCall) == 'function' \
+                 and __secureenv.getfenv(processor.AddTooltipPostCall) == __secureenv \
+                 and rawget(__secureenv, '__secure_env_ordinary_only_probe') == nil",
+        )
+        .expect("secure TooltipDataProcessor provenance query should succeed");
+    assert!(
+        original_processor,
+        "secureenv must contain the original TooltipDataHandler.lua processor from secure \
+         execution, while globals added only to ordinary _G stay invisible"
+    );
 }
 
 // Literal cached inputs absent from Wrath manifest1-382/cache; behavior cases stay enabled.
