@@ -46,23 +46,34 @@ impl InlineIcon {
     /// Width and height in UI units next to text whose lines are
     /// `line_height` units high.
     ///
-    /// A texture without a height takes no room; a height of 0 is the line
-    /// height, and a missing or zero width is the height. An atlas without a
-    /// width, or with a width of 0, is a square of the line height whatever
-    /// its height; otherwise a missing or zero height is the line height.
+    /// R88d verifies that nonpositive dimensions use the caller metric. This
+    /// maps that metric to `line_height`, INFERRED from Forever measurements;
+    /// R88d does not identify the metric as font height or line height.
     pub fn size(&self, line_height: f32) -> (f32, f32) {
         let positive = |value: Option<f32>| value.filter(|value| *value > 0.0);
-        if let InlineIconSource::Atlas(_) = self.source {
-            return match positive(self.width) {
-                Some(width) => (width, positive(self.height).unwrap_or(line_height)),
+        let height_uses_caller_metric = self.height.is_some_and(|height| height <= 0.0);
+        let height = positive(self.height).unwrap_or(line_height);
+
+        if matches!(self.source, InlineIconSource::Atlas(_)) {
+            return match self.width {
+                Some(width) if width > 0.0 && height_uses_caller_metric => (width * height, height),
+                Some(width) if width > 0.0 => (width, height),
+                Some(_) => (line_height, height),
                 None => (line_height, line_height),
             };
         }
-        let Some(height) = self.height else {
+
+        let Some(raw_height) = self.height else {
             return (0.0, 0.0);
         };
-        let height = if height > 0.0 { height } else { line_height };
-        (positive(self.width).unwrap_or(height), height)
+        let height = positive(Some(raw_height)).unwrap_or(line_height);
+        let width = match self.width {
+            None => height,
+            Some(width) if width > 0.0 && height_uses_caller_metric => width * height,
+            Some(width) if width > 0.0 => width,
+            Some(_) => line_height,
+        };
+        (width, height)
     }
 }
 
