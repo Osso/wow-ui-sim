@@ -88,6 +88,8 @@ pub struct SimState {
     pub garrison_talents: GarrisonTalentState,
     #[cfg(feature = "client-retail")]
     pub garrison_trees: crate::c_api::c_garrison_trees::GarrisonTrees,
+    #[cfg(feature = "client-retail")]
+    pub garrison_landing_page: crate::c_api::c_garrison_landing_page::GarrisonLandingPage,
     pub clipboard: ClipboardState,
     pub chat_edit_open_state: Option<ChatEditOpenState>,
     /// INFERRED explicit host ingress; empty per environment.
