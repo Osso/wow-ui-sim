@@ -885,3 +885,21 @@ Sources: [character-creation spec](../../specs/character-creation-submit.md#r79b
 INFERRED source identities (R79b #305; documentary-only plan approved #319):
 category keys originate from `OrderIndex`, option keys from `SecondaryOrderIndex`.
 These names do not define an implemented DB2 adapter or a verified source claim.
+
+
+## PTR character-creation evidence boundary
+
+The [character-creation contract](../../specs/character-creation-submit.md)
+separates verified PTR Glue CreateCharacter/StopAll registrations from inferred
+OnPlayerInteraction/SetPlayerModelHiddenState existence (R78c). No result/list
+payload or timing is invented, and host-only call observations do not rename a
+player or create a roster entry.
+
+R83 verifies the stored camera-zoom reader's Glue route; its single numeric
+return/default policy remains a separate inference. R83b/R83c verify the shared
+signed32 setter, 0..100 clamp, and changed-only custom-marker clearing. PTR
+setter installation and ordinary zero returns/non-boolean optional truthiness
+remain in a separate droppable inferred registration, replacing only its old
+zoom no-op. Camera profile/model rendering effects remain unmodeled. The
+unseeded customization collector is unchanged pending native evidence, so
+camera API progress is not a claim of end-to-end character creation success.

@@ -47,6 +47,8 @@ macro_rules! build_empty_sim_state {
                 crate::c_api::c_nameplate_manager::NamePlateHitTestInsets::default(),
             input_interface_style:
                 crate::c_api::c_input_interface_style::InputInterfaceStyle::default(),
+            #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+            last_gamepad_input_timestamp: None,
             video_capability_bytes: Default::default(),
             #[cfg(any(feature = "client-wowforever", feature = "client-ptr"))]
             gamepad_mapped_sticks: None,
@@ -788,10 +790,13 @@ macro_rules! build_empty_sim_state {
             #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
             character_customizations: None,
             name_reservation_feature_status: 0,
+            #[cfg(feature = "client-ptr")]
+            ptr_character_creation: Default::default(),
             character_create_facing_radians: 0.0,
             character_create_altered_form_races: ::std::collections::HashSet::new(),
             character_create_viewing_altered_form: false,
             character_create_blur_enabled: false,
+            // PTR initial zero is INFERRED (R83); existing RF policy is unchanged.
             character_create_camera_zoom: 0,
             character_create_camera_zoom_is_custom: false,
             character_create_default_facing_by_race_sex: ::std::collections::HashMap::new(),

@@ -32,6 +32,9 @@ pub struct SimState {
     #[cfg(feature = "retail-12-0-5")]
     pub(crate) nameplate_hit_test_insets: crate::c_api::c_nameplate_manager::NamePlateHitTestInsets,
     pub(crate) input_interface_style: crate::c_api::c_input_interface_style::InputInterfaceStyle,
+    /// VERIFIED-neutral host seam for the last gamepad input timestamp; None maps to native zero.
+    #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+    pub last_gamepad_input_timestamp: Option<u32>,
     /// INFERRED host byte projection, independent of CVars and GPU detection.
     pub video_capability_bytes: crate::c_api::video_capabilities::VideoCapabilityBytes,
     /// Explicit mapped-stick input; None means no configured snapshot, not device absence.
@@ -476,7 +479,7 @@ pub struct SimState {
     /// INFERRED explicit client catalog; GetFileID resolution does not imply membership.
     #[cfg(feature = "retail-12-0-7")]
     pub known_shipped_asset_ids: HashSet<u32>,
-    /// INFERRED normalized lowercase slash paths; host owns selected-root reconciliation.
+    /// INFERRED loaded-root file paths, normalized lowercase/slash; native table inclusion UNKNOWN.
     #[cfg(feature = "retail-12-0-7")]
     pub known_loose_asset_paths: HashSet<String>,
     /// INFERRED observable request input only; no eligibility response or event model.
@@ -979,6 +982,9 @@ pub struct SimState {
         Option<Vec<crate::c_api::c_character_creation_customizations::Category>>,
     /// Byte copied from Forever's Glue feature-status update.
     pub name_reservation_feature_status: u8,
+    #[cfg(feature = "client-ptr")]
+    pub ptr_character_creation:
+        crate::c_api::c_character_creation_submit_ptr::PtrCharacterCreationState,
     /// Current character-create model facing in normalized radians.
     pub character_create_facing_radians: f32,
     /// Host-supplied race IDs with an altered character-create model.

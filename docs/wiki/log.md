@@ -1,3 +1,21 @@
+## [2026-11-13] system | PTR character-creation camera evidence
+
+[Lua API](systems/lua-api.md#ptr-character-creation-evidence-boundary) separates
+verified R78/R83 argument/state behavior from droppable inferred catalog and
+return bridges. The unseeded collector and end-to-end submit remain distinct.
+
+## [2026-11-12] correction | FontString anchor-width evidence
+
+Updated [FontString anchor sizing](investigations/fontstring-anchor-sizing.md) with L1c labels. **VERIFIED (code):** the inferred stored-width rewrite and `SetPoint()` measurement refresh are removed so native-UNKNOWN wrapping is not modeled. **VERIFIED (test code):** default tests observe rectangle edges and SetWidth priority; **INFERRED (test code):** GetWidth and single-anchor assertions are optional; **UNKNOWN:** renderer wrapping width and text-cache invalidation remain unmodeled.
+
+## [2026-11-12] investigation | EllesmereUI native contracts and runtime result
+
+Updated [full third-party startup](investigations/full-addon-startup-2026-10-10.md#retail-ellesmereui-v98-load-reproduction-2026-11-12) with G1/G1c classifications and the post-fix load. **VERIFIED:** 20/20 installed addons loaded; `lua-errors` reported three unique post-startup errors across 72 occurrences. **INFERRED:** CVar-window behavior and pre-load catalog seeding. **UNKNOWN:** whether native tables include addon files.
+
+## [2026-11-12] investigation | Retail EllesmereUI v9.8 load boundary
+
+Updated [full third-party startup](investigations/full-addon-startup-2026-10-10.md#retail-ellesmereui-v98-load-reproduction-2026-11-12) with the original enabled-addon reproduction and issue #22 symptom limits; its former nil-global and asset rejection were baseline failures, not current results.
+
 ## [2026-11-12] system | Secure delegate global
 
 Updated [Lua API](systems/lua-api.md#secure-delegate-global) and linked the [secure-helper contract](../specs/secure-helpers.md). Recorded S4s7b's emulated construction/invocation boundary, simulator inference labels, six-profile exact tests, and the separate optional Retail duration-object failure.
@@ -3722,6 +3740,10 @@ Updated addon-loading and the CASC contract: unit-test startup must reject stale
 ## 2026-11-12 — R82 hyperlink dispatch
 
 Updated the [unit-link investigation](investigations/att-unit-hyperlink-tooltip.md) and identity spec: removed guessed GUID lookup, documented typed substring dispatch and linked the [R82 contract](../specs/tooltip-hyperlink.md). Native UNKNOWN miss shape remains separate from simulator preservation tests.
+
+## 2026-11-12 — FontString anchor-derived width
+
+Added [FontString anchor sizing](investigations/fontstring-anchor-sizing.md). The simulator tests cover resolved width for two opposite horizontal anchors; native sizing remains INFERRED, and the six-symptom EllesmereUI reproduction remains incomplete.
 
 - 2026-11-12: Folded secret-aura native reports and corrected prevention/aspect/anchoring conflation; see [Lua API](systems/lua-api.md#recorded-widget-secrecy) and the [contract](../specs/secret-auras.md).
 

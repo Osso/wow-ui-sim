@@ -138,7 +138,7 @@ pub(super) fn load_addon_bootstrap_internal(
     if !toc.has_bootstrap_files() || bootstrap_has_loaded(env, folder_name) {
         return Ok(result);
     }
-    let guard = begin_addon_load(env, folder_name, toc);
+    let guard = begin_addon_load(env, folder_name, toc)?;
     let ctx = build_addon_context(env, toc, folder_name)?;
     let start = env.state().borrow().nil_symbol_accesses.len();
     load_addon_files(
@@ -222,7 +222,7 @@ pub fn load_addon_internal(
     } else {
         maybe_init_saved_variables(env, toc, folder_name, saved_vars_mgr, &mut result)
     };
-    let loading_guard = begin_addon_load(env, folder_name, toc);
+    let loading_guard = begin_addon_load(env, folder_name, toc)?;
     let ctx = build_addon_context(env, toc, folder_name)?;
     let nil_symbol_access_start = env.state().borrow().nil_symbol_accesses.len();
     let addon_name = result.name.clone();
@@ -428,21 +428,28 @@ pub(crate) fn begin_addon_load(
     env: &LoaderEnv<'_>,
     folder_name: &str,
     toc: &TocFile,
-) -> LoadingAddonGuard {
+) -> Result<LoadingAddonGuard, LoadError> {
     let addon_idx = resolve_addon_index(env, folder_name);
     let mut state = env.state().borrow_mut();
     let entered = !state.loading_addon_stack.contains(&addon_idx);
     if entered {
         update_addon_metadata(&mut state, addon_idx, folder_name, toc);
+        #[cfg(feature = "retail-12-0-7")]
+        crate::c_api::c_ui_file_asset::register_loaded_addon_files(
+            &mut state,
+            folder_name,
+            &toc.addon_dir,
+        )
+        .map_err(|error| LoadError::io_with_path(&toc.addon_dir, error))?;
         state.loading_addon_stack.push(addon_idx);
         state.loading_addon_index = Some(addon_idx);
     }
 
-    LoadingAddonGuard {
+    Ok(LoadingAddonGuard {
         state: Rc::clone(env.state()),
         addon_idx,
         entered,
-    }
+    })
 }
 
 fn update_addon_metadata(state: &mut SimState, addon_idx: u16, folder_name: &str, toc: &TocFile) {
