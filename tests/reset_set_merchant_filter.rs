@@ -37,6 +37,19 @@ fn retail_game_startup_env() -> WowLuaEnv {
 }
 
 #[test]
+fn merchant_frame_update_reaches_the_affordability_consumer() {
+    let env = retail_game_startup_env();
+    {
+        let mut state = env.state().borrow_mut();
+        state.merchant_items = vec![6948, 2840];
+        state.merchant_frame_open = true;
+    }
+
+    env.exec("MerchantFrame_Update()")
+        .expect("original Retail MerchantFrame_Update should update populated offers");
+}
+
+#[test]
 fn merchant_frame_on_show_resets_the_filter_without_return_values() {
     let env = retail_game_startup_env();
     {
