@@ -116,6 +116,78 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 mod tests {
     use crate::lua_api::WowLuaEnv;
 
+    #[cfg(all(feature = "optional-tests", feature = "client-retail"))]
+    #[test]
+    fn retail_game_uses_original_player_location_getter_in_channel_roster() {
+        use crate::screen::ScreenKind;
+        use std::path::Path;
+
+        let env = WowLuaEnv::new().expect("lua env should initialize");
+        env.set_screen_mode(ScreenKind::Game);
+
+        let fallback_absent: bool = env
+            .eval("return PlayerLocation == nil")
+            .expect("game screen PlayerLocation probe should run");
+        assert!(
+            fallback_absent,
+            "Retail Game must leave PlayerLocation to the selected ObjectAPI source"
+        );
+
+        let ui = crate::client_profile::blizzard_ui_addons_dir_under(Path::new(env!(
+            "CARGO_MANIFEST_DIR"
+        )));
+        let addons = crate::loader::discover_blizzard_addons_for_screen(&ui, ScreenKind::Game);
+        assert!(addons.iter().any(|(name, _)| name == "Blizzard_ObjectAPI"));
+        assert!(addons.iter().any(|(name, _)| name == "Blizzard_Channels"));
+
+        for relative_path in [
+            "Blizzard_ObjectAPI/Mainline/PlayerLocation.lua",
+            "Blizzard_Channels/RosterButton.lua",
+        ] {
+            let source = std::fs::read_to_string(ui.join(relative_path)).unwrap_or_else(|error| {
+                panic!("failed to read selected source {relative_path}: {error}")
+            });
+            env.loader_env().exec(&source).unwrap_or_else(|error| {
+                panic!("failed to load original source {relative_path}: {error}")
+            });
+        }
+
+        let result: (bool, bool, String, String) = env
+            .eval(
+                r#"
+                local seen = {}
+                C_AccountInfo.IsGUIDRelatedToLocalAccount = function(guid)
+                    seen[#seen + 1] = guid
+                    return guid == "Player-3676-00000001"
+                end
+
+                local function check(guid)
+                    local button = {
+                        playerLocation = PlayerLocation:CreateFromGUID(guid),
+                        GetMemberPlayerLocation = ChannelRosterButtonMixin.GetMemberPlayerLocation,
+                        IsLocalPlayer = ChannelRosterButtonMixin.IsLocalPlayer,
+                    }
+                    return button:IsLocalPlayer() and true or false
+                end
+
+                local first = check("Player-3676-00000001")
+                local second = check("Player-3676-00000002")
+                return first, second, seen[1], seen[2]
+                "#,
+            )
+            .expect("original channel roster consumer should read PlayerLocation GUIDs");
+
+        assert_eq!(
+            result,
+            (
+                true,
+                false,
+                "Player-3676-00000001".to_string(),
+                "Player-3676-00000002".to_string()
+            )
+        );
+    }
+
     #[test]
     fn installs_player_location_defaults() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
