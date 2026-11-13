@@ -21,17 +21,33 @@ pub struct Icon {
     pub id: u32,
     pub resolved: Option<Vec<u8>>,
 }
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct Category {
     /// Host-supplied stored finalizer key, not the published sequential position.
     pub stored_order_key: i64,
     pub fields: Vec<(String, PublishedValue)>,
     pub icon: Icon,
     pub selected_icon: Icon,
-    pub camera_zoom_level: Option<i64>,
+    /// R83d: every published category carries an explicit signed32 numeric zoom.
+    pub camera_zoom_level: i32,
     pub camera_distance_offset: Option<f64>,
     pub options: Vec<OptionRecord>,
 }
+impl Category {
+    /// Construct a host record with an explicitly supplied camera zoom.
+    pub fn new(camera_zoom_level: i32) -> Self {
+        Self {
+            stored_order_key: 0,
+            fields: Vec::new(),
+            icon: Icon::default(),
+            selected_icon: Icon::default(),
+            camera_zoom_level,
+            camera_distance_offset: None,
+            options: Vec::new(),
+        }
+    }
+}
+
 #[derive(Clone, Debug, Default)]
 pub struct OptionRecord {
     /// Host-supplied stored finalizer key, not the published sequential position.
@@ -204,9 +220,7 @@ fn push_category(state: &mut LuaState, record: &Category) -> Val {
             "icon" => push_icon(state, &record.icon),
             "selectedIcon" => push_icon(state, &record.selected_icon),
             "cameraZoomLevel" => {
-                let value = record
-                    .camera_zoom_level
-                    .map_or(Val::Nil, |n| Val::Num(n as f64));
+                let value = Val::Num(f64::from(record.camera_zoom_level));
                 state.push(value);
                 value
             }

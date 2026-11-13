@@ -245,9 +245,10 @@ VERIFIED publication contract (#275):
   vectors remain host-supplied.
 - Icon ID zero publishes nil; a nonzero unresolved ID publishes an empty string.
   Resolved bytes come from the host, not an invented asset resolver.
-- `cameraZoomLevel` publishes an integer host input; `cameraDistanceOffset`
-  publishes an unscaled floating-point host input. No source truncation, native
-  integer width, or implicit scaling is inferred.
+- `cameraZoomLevel` publishes an explicit signed32 host input on every category
+  (R83d, #679/#690/#701); numeric zero is not omitted. `cameraDistanceOffset`
+  publishes an unscaled floating-point host input. No source truncation or
+  implicit scaling is inferred.
 - One table is returned, including for explicitly seeded empty input. #275
   separately labels the final native return bridge UNKNOWN.
 
@@ -371,3 +372,39 @@ evidence slice: preserve the guessed provider and exact optional RED. At
 32f3146fa the optional PTR character-creation selectors report seven passes and
 one deliberate RED; its exact first-line assertion succeeds before the explicit
 panic. This is bounded API/preservation proof, not submit success.
+
+
+## R83d mandatory host category camera zoom (#679/#690/#701)
+
+**VERIFIED:** every published category has a numeric signed32 `cameraZoomLevel`,
+including explicit zero. An empty category list contains no category records;
+this is not a nil-field rule. The existing zoom setter clamps to 0..100.
+The RF host publisher therefore requires `Category::new(camera_zoom_level: i32)`
+or a complete explicitly populated record and never publishes nil for this field.
+No collector, default category, PTR category publisher, or DB2 adapter is added.
+
+The default Retail/Forever regression enters via the original SetSelectedData and
+UpdateCharCustomizationFrame calls (bounded entry approved #712), retrieves the
+categories retained by the original consumer,
+and selects the supplied categories through its unmodified selection methods.
+Explicit host values -1, 0, 37, 101, 73 publish unchanged and yield camera states
+0, 0, 37, 100, 73, with original zoom-button enabled states. This is an explicit
+host scenario, not a claim about native category IDs or race defaults. Its first
+RED (8a918aa42) exercised the old optional field's omitted value and failed the
+numeric-field assertion after the explicit-value clamp checks.
+
+Consumer sources: Retail `Blizzard_CharacterCreate.lua:540-544`,
+`Blizzard_CustomizationUI.lua:581-600`; Forever Camelot
+`Blizzard_CharacterCreate.lua:637-641`, `Blizzard_CustomizationUI.lua:662-686`.
+R83d was forwarded from `pr46-49-decomp-answers.md` (PTR70668); #690/#701 approve
+application to the existing RF host publisher only.
+
+**INFERRED:** source identity `ChrCustomizationCategory.CameraZoomLevel`; no
+mapping, collector, or DB2 input is implemented. **UNKNOWN:** nil versus empty
+API return before race/class choice; no new assertion covers it. The unchanged
+unseeded temporary provider and intentional real-submit RED are separate.
+
+The full ForwardButton continues beyond the R83d consumer into zone-choice
+setup, whose `GetStartingZoneChoices` API is missing. #712 keeps that separate
+(R88 pending evidence), rather than weakening the zero-new-errors assertion or
+inventing zone data. The bounded test does not claim full navigation success.

@@ -1979,9 +1979,9 @@ fn character_creation_category_zoom_through_original_consumer() {
         use wow_ui_sim::c_api::c_character_creation_customizations::{Category, PublishedValue as V};
         let env = load_blizzard_screen(ScreenKind::CharacterSelect);
         // Explicit host scenario, not a collector or native category-ID claim.
-        // The final record exercises the old model's permitted omitted zoom.
+        // R83d requires every host record to supply signed32 zoom explicitly.
         env.state().borrow_mut().character_customizations = Some(
-            [Some(-1), Some(0), Some(37), Some(101), None]
+            [-1, 0, 37, 101, 73]
                 .into_iter().enumerate().map(|(index, zoom)| Category {
                     stored_order_key: index as i64,
                     fields: vec![
@@ -1993,24 +1993,26 @@ fn character_creation_category_zoom_through_original_consumer() {
                     ],
                     camera_zoom_level: zoom,
                     camera_distance_offset: Some(0.0),
-                    ..Default::default()
+                    ..Category::new(zoom)
                 }).collect()
         );
         let errors_before = env.state().borrow().lua_errors.len();
         env.exec(r#"
             GlueParent_SetScreen("charcreate")
-            local button = CharacterCreateFrame.ForwardButton
-            local click = button:GetScript("OnClick")
-            assert(type(click) == "function" and button:IsEnabled())
-            click(button, "LeftButton")
+            -- Original customize-entry setup: Retail CharacterCreate.lua:540-544,
+            -- Forever Camelot CharacterCreate.lua:637-641; bounded scope approved #712.
+            local RaceAndClassFrame = CharacterCreateFrame.RaceAndClassFrame
+            assert(RaceAndClassFrame.selectedRaceData)
+            CharCustomizeFrame:SetSelectedData(RaceAndClassFrame.selectedRaceData,
+                RaceAndClassFrame.selectedSexID, C_CharacterCreation.IsViewingAlteredForm())
+            CharacterCreateFrame:UpdateCharCustomizationFrame(true)
             local categories = CharCustomizeFrame:GetCategories()
             assert(#categories == 5, "original consumer must receive seeded categories")
-            local inputs = {-1, 0, 37, 101}
-            local expected = {0, 0, 37, 100}
+            local inputs = {-1, 0, 37, 101, 73}
+            local expected = {0, 0, 37, 100, 73}
             for index, category in ipairs(categories) do
                 assert(type(category.cameraZoomLevel) == "number",
                     "R83d: every published category must have numeric cameraZoomLevel")
-                if expected[index] ~= nil then
                 assert(category.cameraZoomLevel == inputs[index])
                 CharCustomizeFrame:SetSelectedSubcategory(nil)
                 CharCustomizeFrame:SetSelectedCategory(category, false)
@@ -2018,7 +2020,6 @@ fn character_creation_category_zoom_through_original_consumer() {
                 assert(zoom == expected[index], "consumer must apply the 0-100 clamp")
                 assert(CharCustomizeFrame.SmallButtons.ZoomInButton:IsEnabled() == (zoom < 100))
                 assert(CharCustomizeFrame.SmallButtons.ZoomOutButton:IsEnabled() == (zoom > 0))
-                end
             end
         "#).expect("R83d original category consumer must publish numeric zoom and clamp it");
         assert_eq!(env.state().borrow().lua_errors.len(), errors_before,
