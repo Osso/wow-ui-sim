@@ -131,3 +131,6 @@ mod behavior_button_tooltip;
 ))]
 #[path = "blizzard_ui/blizzard_actionbar/behavior_assisted_combat_tooltip.rs"]
 mod behavior_assisted_combat_tooltip;
+
+#[path = "blizzard_ui/blizzard_actionbar/behavior_playerspells_open_tabs.rs"]
+mod behavior_playerspells_open_tabs;
