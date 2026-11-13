@@ -47,7 +47,7 @@ fn class_talent_tooltip_uses_original_assisted_combat_manager() {
                     CanCascadeRepurchaseRanks = function() return false end,
                     IsGhosted = function() return false end,
                 }
-                ClassTalentButtonSpendMixin:AddTooltipInstructions(button, GameTooltip)
+                ClassTalentButtonSpendMixin.AddTooltipInstructions(button, GameTooltip)
 
                 local expected = C_ActionBar.HasAssistedCombatActionButtons()
                     and ASSISTED_COMBAT_SPELL_INCLUDED
