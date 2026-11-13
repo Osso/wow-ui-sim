@@ -363,13 +363,25 @@ fn assert_greed_result(env: &WowLuaEnv, roll_id: i32) {
     let state = env.state().borrow();
     assert_eq!(state.last_loot_roll_choice, Some(2));
     assert!(!state.world.loot_rolls.contains_key(&roll_id));
+    drop(state);
+    let message_logged: bool = env
+        .eval(
+            r#"
+            local frame = DEFAULT_CHAT_FRAME
+            for index = 1, frame:GetNumMessages() do
+                local message = frame:GetMessageInfo(index)
+                if message and message:find('AutoRoll Integration Sword', 1, true)
+                    and message:find('Greed', 1, true) then
+                    return true
+                end
+            end
+            return false
+            "#,
+        )
+        .unwrap();
     assert!(
-        state
-            .console_output
-            .iter()
-            .any(|line| { line.contains(ITEM_NAME) && line.contains("Greed") }),
-        "real addon roll log missing: {:?}",
-        state.console_output
+        message_logged,
+        "real addon roll message is missing from the chat frame"
     );
 }
 
