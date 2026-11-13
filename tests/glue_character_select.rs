@@ -1310,6 +1310,30 @@ fn character_creation_submit_real_controls_wait_for_host_result() {
     }
 }
 
+#[test]
+#[cfg(all(
+    feature = "optional-tests",
+    any(feature = "client-retail", feature = "client-wowforever")
+))]
+fn character_creation_default_starting_zone_reaches_customize_screen() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+        // Keep this test on the navigation path; do not exercise the separate R79 provider gap.
+        env.state().borrow_mut().character_customizations = Some(Vec::new());
+        env.exec(r#"
+            GlueParent_SetScreen("charcreate")
+            assert(CharacterCreateFrame:IsShown())
+            local button = CharacterCreateFrame.ForwardButton
+            local click = button:GetScript("OnClick")
+            assert(type(click) == "function" and button:IsEnabled())
+            click(button, "LeftButton")
+            assert(CharCustomizeFrame:IsShown(), "Forward must enter customization")
+            assert(ZoneChoiceFrame.useNPE == false)
+            assert(not ZoneChoiceFrame:ShouldShow())
+        "#).expect("the original Forward control should enter customization")
+    }
+}
+
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn record_creation_results(env: &WowLuaEnv) {
     env.exec(
