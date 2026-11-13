@@ -2,11 +2,13 @@
 
 use super::helpers::ensure_namespace;
 use crate::lua_api::methods::borrow_state;
-use crate::lua_bridge::table_set_rust_fn_static;
+use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
-use rilua::{LuaResult, Val};
+use rilua::{LuaResult, Val, runtime_error};
 
 const EMPTY_GARRISON_TYPE: u32 = 0;
+const COVENANT_GARRISON_TYPE: u8 = 111;
+const GARRISON_TYPE_KEY_MODULUS: f64 = 256.0;
 
 #[derive(Clone, Debug)]
 pub struct GarrisonLandingPage {
@@ -41,6 +43,12 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         namespace,
         "GetLandingPageGarrisonType",
         get_landing_page_garrison_type,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "IsLandingPageMinimapButtonVisible",
+        is_landing_page_minimap_button_visible,
     )
 }
 
@@ -50,5 +58,35 @@ fn get_landing_page_garrison_type(state: &mut LuaState) -> LuaResult<u32> {
         .garrison_type
         .unwrap_or(EMPTY_GARRISON_TYPE);
     state.push(Val::Num(f64::from(garrison_type)));
+    Ok(1)
+}
+
+fn is_landing_page_minimap_button_visible(state: &mut LuaState) -> LuaResult<u32> {
+    let garrison_type = match stack_val(state, 1) {
+        Val::Num(number) if number.is_finite() => number,
+        _ => {
+            return Err(runtime_error(
+                "C_Garrison.IsLandingPageMinimapButtonVisible expects a finite number",
+            ));
+        }
+    };
+    let record_key = garrison_type.trunc().rem_euclid(GARRISON_TYPE_KEY_MODULUS) as u8;
+
+    let sim_state = borrow_state(state)?;
+    let landing_page = &sim_state.garrison_landing_page;
+    let record_flag = landing_page
+        .minimap_button_records
+        .get(&record_key)
+        .copied();
+    let is_visible = match (record_key, record_flag) {
+        (_, None) => false,
+        (COVENANT_GARRISON_TYPE, Some(_)) => {
+            landing_page.player_condition_105386 && landing_page.player_state_value != 0
+        }
+        (_, Some(state_flag)) => state_flag,
+    };
+    drop(sim_state);
+
+    state.push(Val::Bool(is_visible));
     Ok(1)
 }
