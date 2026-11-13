@@ -473,7 +473,6 @@ fn apply_feature_ui_defaults(lua: &mut rilua::Lua) -> crate::Result<()> {
     temporary::trade_skill_ui_fallbacks::apply_bootstrap(lua)?;
     temporary::transmog_util_defaults::apply_bootstrap(lua)?;
     temporary::campaign_covenant_defaults::apply_bootstrap(lua)?;
-    temporary::ui_parent_panel_toggles::apply_bootstrap(lua)?;
     temporary::ui_frame_manager_defaults::apply_bootstrap(lua)
 }
 
