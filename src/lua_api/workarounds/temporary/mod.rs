@@ -202,6 +202,7 @@ pub(crate) mod talent_edge_frame_level_sync;
 pub(crate) mod taxi_map_defaults;
 pub(crate) mod texture_file_data_defaults;
 pub(crate) mod tooltip_data_processor_defaults;
+#[cfg(not(feature = "client-retail"))]
 pub(crate) mod tooltip_nineslice_surface;
 pub(crate) mod top_level_parent_defaults;
 pub(crate) mod tracking_namespace_defaults;
