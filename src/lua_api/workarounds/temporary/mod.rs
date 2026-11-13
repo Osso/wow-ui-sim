@@ -122,7 +122,6 @@ pub(crate) mod macro_defaults;
 pub(crate) mod main_menu_microbutton_click;
 pub(crate) mod major_faction_display_defaults;
 pub(crate) mod map_art_help_text_defaults;
-pub(crate) mod map_canvas_data_provider_pin;
 pub(crate) mod map_canvas_scroll_container;
 pub(crate) mod map_exploration_pin;
 pub(crate) mod map_group_defaults;
