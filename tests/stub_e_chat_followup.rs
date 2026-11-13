@@ -208,6 +208,7 @@ fn selected_combat_log_preview_uses_original_inbound_owner() {
                             spell = { r = 1, g = 1, b = 0 },
                             damage = { r = 1, g = 0, b = 0 },
                         },
+                        unitColoring = {},
                         highlightedEvents = {},
                     },
                 }
