@@ -3724,3 +3724,7 @@ Updated addon-loading and the CASC contract: unit-test startup must reject stale
 Updated the [unit-link investigation](investigations/att-unit-hyperlink-tooltip.md) and identity spec: removed guessed GUID lookup, documented typed substring dispatch and linked the [R82 contract](../specs/tooltip-hyperlink.md). Native UNKNOWN miss shape remains separate from simulator preservation tests.
 
 - 2026-11-12: Folded secret-aura native reports and corrected prevention/aspect/anchoring conflation; see [Lua API](systems/lua-api.md#recorded-widget-secrecy) and the [contract](../specs/secret-auras.md).
+
+- 2026-11-13: Recorded lt-a912 R79b/R79c verified host finalization in [[lua-api]]
+  and the character-creation spec: sorted neutral keys, rewritten 1-based indices,
+  <=32 stable ties, no claim about larger tie order or the missing collector.
