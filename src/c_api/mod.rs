@@ -189,9 +189,12 @@ pub(crate) mod c_encounter_warnings;
 mod c_engraving;
 pub(crate) mod c_event_scheduler;
 pub(crate) mod c_friend_list;
+pub(crate) mod c_game_rules;
 mod c_garrison_currency;
 pub(crate) mod c_garrison_damage_classes;
 mod c_garrison_follower_xp;
+#[cfg(feature = "client-retail")]
+pub(crate) mod c_garrison_landing_page;
 #[cfg(feature = "client-retail")]
 pub mod c_garrison_trees;
 pub mod c_glue;
@@ -615,7 +618,10 @@ pub(crate) fn register_utility_bootstrap_tables(state: &mut LuaState) -> LuaResu
     }
     c_garrison_damage_classes::register(state)?;
     #[cfg(feature = "client-retail")]
-    c_garrison_trees::register(state)?;
+    {
+        c_garrison_landing_page::register(state)?;
+        c_garrison_trees::register(state)?;
+    }
     c_damage_meter::register(state)?;
     #[cfg(feature = "retail-12-1-0")]
     c_encounter_timeline::register(state)?;

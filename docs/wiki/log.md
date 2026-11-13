@@ -2,11 +2,21 @@
 
 [Rendering pipeline](systems/rendering-pipeline.md#inline-icons-in-text) records how `|T` and `|A` escapes are parsed, laid out, drawn and measured, with icon sizes and line heights from a contributor measurement on WoW Forever 1.60.1; tests live in `crates/sim-render/src/inline_markup.rs`, `src/render/glyph/inline_emit.rs` and `tests/inline_icon_width.rs`.
 
+## [2026-11-13] system | Mandatory host category camera zoom
+
+[Lua API](systems/lua-api.md#host-category-camera-zoom-r83d) records R83d's
+verified signed32 numeric publication, explicit zero, and original-consumer
+clamp coverage. RF host inputs only; no collector or PTR category changes.
+
 ## [2026-11-13] system | PTR character-creation camera evidence
 
 [Lua API](systems/lua-api.md#ptr-character-creation-evidence-boundary) separates
 verified R78/R83 argument/state behavior from droppable inferred catalog and
 return bridges. The unseeded collector and end-to-end submit remain distinct.
+
+## [2026-11-13] investigation | EllesmereUI core API boundary
+
+Updated [full third-party startup](investigations/full-addon-startup-2026-10-10.md#r88a-api-boundary-follow-up-2026-11-13) with R88a behavior, the lane's exact tests, and the post-fix 20-addon result. **VERIFIED (Retail run at code SHA `bc01ba60c`):** 20/20 add-ons loaded with zero load-time errors; two post-startup blockers remain, including `C_Garrison.IsLandingPageMinimapButtonVisible` and AuraKit. **INFERRED:** the neutral garrison input starts at zero. **UNKNOWN:** the visibility predicate and secret/restriction policies.
 
 ## [2026-11-12] correction | FontString anchor-width evidence
 
@@ -3726,6 +3736,11 @@ VERIFIED (strict lifecycle probe): global CVar wrapper identities were unchanged
 ## 2026-11-11 — Glue login submission
 
 Updated [Forever Login Startup](investigations/forever-login-startup.md#login-submission-model-lt-a667-2026-11-11) with the lt-a667 flow and contract. Distinguished historical startup verification from pending submission acceptance; documented EditBox input, offline connection policy, host-empty roster/capacity, startup eligibility and the erroneous forced pre-login character-select refresh.
+
+
+## 2026-11-12 — Enter World host handover
+
+Added the [R74 handover contract](../specs/glue-login-flow.md#enter-world-host-handover-lt-81c7-r74) and linked the existing startup investigation. Documents verified selection/dispatch separately from host queueing, VM reconstruction, identity precedence and failure handling. R76 and runtime proof remain pending; no native lifecycle or consumer GREEN claim.
 
 ## [2026-11-12] implementation | R73 PvP talent annotations
 

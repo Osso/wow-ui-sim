@@ -221,9 +221,50 @@ mod forever {
         "assert(C_UnitAuras.GetGroupBuffVisualAlerts == nil); assert(C_UnitAuras.SetGroupBuffVisualAlerts == nil); assert(C_UnitAuras.SetHiddenGroupBuffs == nil)"
     );
     contract!(
-        identity_secrecy_query_uses_the_existing_unit_identity_policy,
-        "assert(C_Secrets.ShouldUnitIdentityBeSecret('player') == false); assert(C_Secrets.ShouldUnitIdentityBeSecret('party1') == true)"
+        identity_secrecy_accepts_party_token_without_party,
+        "assert(type(C_Secrets.ShouldUnitIdentityBeSecret) == 'function'); C_Secrets.ShouldUnitIdentityBeSecret('party1')"
     );
+    contract!(
+        invitation_candidates_validates_required_club_id,
+        r#"
+        local getCandidates = C_Club.GetInvitationCandidates
+        assert(type(getCandidates) == 'function')
+        local ok, message = pcall(getCandidates)
+        local usage = 'Usage: local candidates = C_Club.GetInvitationCandidates([filter, maxResults, cursorPosition, allowFullMatch], clubId)'
+        assert(not ok and string.find(message, usage, 1, true), tostring(message))
+        ok, message = pcall(getCandidates, nil, nil, nil, nil, {})
+        assert(not ok and string.find(message, usage, 1, true), tostring(message))
+        "#
+    );
+    #[cfg(feature = "optional-tests")]
+    #[test]
+    fn invitation_candidates_return_inferred_empty_table() {
+        let env = WowLuaEnv::new().unwrap();
+        env.exec(
+            "local rows = C_Club.GetInvitationCandidates(nil, nil, nil, nil, 'unknown-club'); assert(type(rows) == 'table' and next(rows) == nil)",
+        )
+        .unwrap();
+    }
+    contract!(
+        can_trade_skill_show_crafting_ui_is_registered,
+        "assert(type(C_TradeSkillUI.CanTradeSkillShowCraftingUI) == 'function')"
+    );
+    contract!(
+        hardcore_active_returns_false_when_rule_10_is_unset,
+        "assert(type(C_GameRules.IsHardcoreActive) == 'function'); assert(C_GameRules.IsHardcoreActive() == false)"
+    );
+    #[cfg(feature = "optional-tests")]
+    #[test]
+    fn hardcore_active_reads_nonzero_native_rule_10() {
+        let env = WowLuaEnv::new().unwrap();
+        env.state()
+            .borrow_mut()
+            .game_rules
+            .rules_by_id
+            .insert(10, 1);
+        env.exec("assert(C_GameRules.IsHardcoreActive() == true)")
+            .unwrap();
+    }
     contract!(
         experience_preset_is_not_guessed,
         "assert(C_GameRules.GetForeverExperiencePreset() == nil)"

@@ -49,7 +49,21 @@ fn seeded_env() -> WowLuaEnv {
         let mut state = env.state().borrow_mut();
         let template = state.player.buffs[0].clone();
         state.player.buffs = seed_auras(&template, PLAYER_AURAS);
-        state.target_auras = seed_auras(&template, TARGET_AURAS);
+        let target_auras = seed_auras(&template, TARGET_AURAS);
+        state.target_auras = target_auras.clone();
+        // VERIFIED: UnitId defines `target` as the currently targeted unit.
+        // Retail TargetFrame passes `"target"` into its aura container and refreshes
+        // it (Blizzard_UnitFrame/Mainline/TargetFrame.lua:1176,65,555).
+        let party1 = &mut state.party_members[0];
+        party1.buffs = target_auras
+            .iter()
+            .filter(|aura| aura.is_helpful)
+            .cloned()
+            .collect();
+        party1.debuffs = target_auras
+            .into_iter()
+            .filter(|aura| !aura.is_helpful)
+            .collect();
         let target = state.current_target.as_mut().unwrap();
         target.is_enemy = true;
         target.reaction = 2;
@@ -116,7 +130,10 @@ fn raid_player_dispellable_follows_raid_capabilities_and_hostility() {
         env.eval(&format!("return Ids('{unit}', '{filter}')"))
             .unwrap()
     };
-    env.state().borrow_mut().aura_filter_facts.raid_can_spellsteal = false;
+    env.state()
+        .borrow_mut()
+        .aura_filter_facts
+        .raid_can_spellsteal = false;
     assert_eq!(ids("target", "HELPFUL|RAID_PLAYER_DISPELLABLE"), "61");
     env.state()
         .borrow_mut()

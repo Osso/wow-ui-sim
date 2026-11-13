@@ -13,6 +13,8 @@ use crate::lua_api::methods::{
 };
 use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
 use rilua::LuaResult;
+#[cfg(feature = "client-wowforever")]
+use rilua::Val;
 use rilua::vm::state::LuaState;
 
 pub(crate) fn register_c_merchant_frame_surface(state: &mut LuaState) -> LuaResult<()> {
@@ -24,14 +26,25 @@ pub(crate) fn register_c_merchant_frame_surface(state: &mut LuaState) -> LuaResu
         table_set_rust_fn_static(state, merchant, "GetItemInfo", get_item_info)?;
     }
     register_patch_12_0_7_merchant_frame_surface(state, merchant)?;
+    // Forever MerchantFrameDocumentation.lua:77-83 declares this member.
     #[cfg(feature = "client-wowforever")]
-    crate::lua_bridge::table_set_rust_fn_static(
-        state,
-        merchant,
-        "GetNumJunkItems",
-        junk::get_num_junk_items,
-    )?;
+    {
+        table_set_rust_fn_static(state, merchant, "GetNumJunkItems", junk::get_num_junk_items)?;
+        table_set_rust_fn_static(
+            state,
+            merchant,
+            "IsSellAllJunkEnabled",
+            is_sell_all_junk_enabled,
+        )?;
+    }
     Ok(())
+}
+
+#[cfg(feature = "client-wowforever")]
+fn is_sell_all_junk_enabled(state: &mut LuaState) -> LuaResult<u32> {
+    let enabled = borrow_state(state)?.merchant_sell_all_junk_feature_enabled;
+    state.push(Val::Bool(enabled));
+    Ok(1)
 }
 
 /// ID-only host inventory represents free, single-unit offers with unlimited

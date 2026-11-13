@@ -252,6 +252,11 @@ fn encounter_timeline_loads_and_populates_track_view_event_frames() {
                 return "encounter_timeline_missing"
             end
 
+            -- VERIFIED locally: the event store starts empty
+            -- (tests/p1207_remaining_timeline_color_event.rs); seed this test's event.
+            C_EncounterTimeline.AddScriptEvent({
+                spellID = 19750, iconFileID = 135907, duration = 10,
+            })
             EncounterTimeline:UpdateSystemSettingViewType()
             EncounterTimeline:SetExplicitlyShown(true)
             EncounterTimeline.TrackView:ActivateView()

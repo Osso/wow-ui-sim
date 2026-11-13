@@ -119,6 +119,9 @@ macro_rules! build_empty_sim_state {
             trade_skill_crafting_ui_inputs: Default::default(),
             #[cfg(feature = "client-retail")]
             garrison_trees: crate::c_api::c_garrison_trees::GarrisonTrees::default(),
+            #[cfg(feature = "client-retail")]
+            garrison_landing_page:
+                crate::c_api::c_garrison_landing_page::GarrisonLandingPage::default(),
             clipboard: ClipboardState::default(),
             chat_edit_open_state: None,
             #[cfg(feature = "retail-12-0-7")]
@@ -671,6 +674,8 @@ macro_rules! build_empty_sim_state {
             merchant_frame_open: false,
             // Inferred default scenario: no configured repair service.
             merchant_repair_capable: false,
+            #[cfg(feature = "client-wowforever")]
+            merchant_sell_all_junk_feature_enabled: false,
             tabard_frame_open: false,
             trainer_frame_open: false,
             socket_frame_open: false,
@@ -751,6 +756,8 @@ macro_rules! build_empty_sim_state {
             #[cfg(any(feature = "retail-12-0-7", feature = "retail-12-1-0"))]
             quest_hub_dragonriding_races: ::std::collections::HashMap::new(),
             bnet_friends: default_bnet_friends(),
+            #[cfg(feature = "client-wowforever")]
+            bnet_friend_tags_enabled: false,
             bnet_friend_invites: Vec::new(),
             bnet_appear_offline: false,
             #[cfg(feature = "retail-12-0-0")]

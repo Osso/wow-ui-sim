@@ -218,23 +218,21 @@ fn install_popup_call_observer(env: &WowLuaEnv) {
             end
         end
         debug.sethook(observer, 'c')
-        -- Calibration precedes world/local TOC/lifecycle. Invoke the actual cached
-        -- nil closures, not replacement functions or popup/vendor callbacks.
+        -- Calibrate the hook with known functions. Do not call the cached C_ APIs
+        -- with placeholder arguments.
         local outerTaint = debug.getstacktaint()
         local calibrate = function()
             local before = debug.getstacktaint()
             assert(before == 'AutoRollFixtureCalibration')
-            assert(invite.autoCompleteSource(nil, nil, nil, nil, 0) == nil)
-            assert(hardcore() == nil)
             assert(witness() == 'observer witness' and nativeWitness(-7) == 7)
             assert(debug.getstacktaint() == before, 'observer changed caller taint')
         end
         debug.setobjecttaint(calibrate, 'AutoRollFixtureCalibration')
         calibrate()
         assert(debug.getstacktaint() == outerTaint, 'calibration taint escaped caller')
-        assert(counts[club] == 1 and counts[hardcore] == 1
+        assert(counts[club] == 0 and counts[hardcore] == 0
             and counts[witness] == 1 and counts[nativeWitness] == 1,
-            'call hook must observe cached Lua and native functions by identity')
+            'calibration must not call the cached C_ APIs')
         __AutoRollFixtureAssertPopupIsolation = function()
             local hook, mask = debug.gethook()
             assert(hook == observer and mask == 'c', 'observer must stay installed')
@@ -245,7 +243,7 @@ fn install_popup_call_observer(env: &WowLuaEnv) {
             assert(debug.getstacktaint() == taintBefore)
             assert(rawget(C_Club, 'GetInvitationCandidates') == club)
             assert(rawget(C_GameRules, 'IsHardcoreActive') == hardcore)
-            assert(counts[club] == 1 and counts[hardcore] == 1,
+            assert(counts[club] == 0 and counts[hardcore] == 0,
                 'excluded popup queries called after calibration')
             assert(StaticPopupDialogs.INVITE_COMMUNITY_MEMBER == invite)
             assert(invite.autoCompleteSource == club)
@@ -276,20 +274,21 @@ fn assert_default_lifecycle(env: &WowLuaEnv) {
         r#"
         assert(AutoRollDB.enabled == true and AutoRollDB.debugMode == false)
         assert(AutoRollDB.defaultRollMode == 2 and AutoRollDB.fallbackRollMode == 5)
-        assert(AutoRollDB.version == 1 and AutoRollDB.autoCloseLootWindow == true)
+        -- VERIFIED: local AutoRoll 1.2 has no version default and defines 15 raid IDs.
+        assert(AutoRollDB.version == nil and AutoRollDB.autoCloseLootWindow == true)
         local enabled = {2296, 2450, 2481, 2522, 2569, 2549}
-        local disabled = {2649, 2650, 2651}
+        local disabled = {2657, 2769, 2810, 2912, 2939, 2913, 1592, 2987, 3004}
         for _, id in ipairs(enabled) do assert(AutoRollDB.raidSettings[id] == true) end
         for _, id in ipairs(disabled) do assert(AutoRollDB.raidSettings[id] == false) end
         local count = 0
         for _ in pairs(AutoRollDB.raidSettings) do count = count + 1 end
-        assert(count == 9)
+        assert(count == 15)
         assert(AutoRollFrame:IsEventRegistered('ADDON_LOADED'))
         assert(AutoRollFrame:IsEventRegistered('START_LOOT_ROLL'))
         assert(Settings.GetSetting('AutoRoll_enabled'):GetValue() == true)
         assert(Settings.GetSetting('AutoRoll_defaultRollMode'):GetValue() == 2)
         assert(Settings.GetSetting('AutoRoll_raid_2522'):GetValue() == true)
-        assert(Settings.GetSetting('AutoRoll_raid_2649'):GetValue() == false)
+        assert(Settings.GetSetting('AutoRoll_raid_2657'):GetValue() == false)
         assert(A_Admin.GetLastLootRollChoice() == nil)
         assert(#GetActiveLootRollIDs() == 0)
         "#,
@@ -364,13 +363,25 @@ fn assert_greed_result(env: &WowLuaEnv, roll_id: i32) {
     let state = env.state().borrow();
     assert_eq!(state.last_loot_roll_choice, Some(2));
     assert!(!state.world.loot_rolls.contains_key(&roll_id));
+    drop(state);
+    let message_logged: bool = env
+        .eval(
+            r#"
+            local frame = DEFAULT_CHAT_FRAME
+            for index = 1, frame:GetNumMessages() do
+                local message = frame:GetMessageInfo(index)
+                if message and message:find('AutoRoll Integration Sword', 1, true)
+                    and message:find('Greed', 1, true) then
+                    return true
+                end
+            end
+            return false
+            "#,
+        )
+        .unwrap();
     assert!(
-        state
-            .console_output
-            .iter()
-            .any(|line| { line.contains(ITEM_NAME) && line.contains("Greed") }),
-        "real addon roll log missing: {:?}",
-        state.console_output
+        message_logged,
+        "real addon roll message is missing from the chat frame"
     );
 }
 
@@ -392,7 +403,7 @@ fn forever_auto_roll_unsupported_raid_leaves_produced_roll_untouched() {
 
 #[test]
 fn forever_auto_roll_default_disabled_nerubar_leaves_produced_roll_untouched() {
-    let (env, setup) = load_auto_roll_in_configured_world(2649, "Nerub-ar Palace");
+    let (env, setup) = load_auto_roll_in_configured_world(2657, "Nerub-ar Palace");
     start_real_loot_roll(&env, 44);
     assert_untouched_roll(&env, 44);
     assert_consumed_path_checkpoint(&env, &setup);

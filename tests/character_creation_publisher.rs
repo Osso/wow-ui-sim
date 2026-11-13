@@ -53,7 +53,7 @@ fn host_seeded_customizations_publish_nested_records() {
                 id: 8,
                 resolved: None,
             },
-            camera_zoom_level: Some(17),
+            camera_zoom_level: 17,
             camera_distance_offset: Some(0.375),
             options: vec![option(21.0, 9.0), option(22.0, 1.0)],
         },
@@ -62,7 +62,7 @@ fn host_seeded_customizations_publish_nested_records() {
                 ("id".into(), V::Number(12.0)),
                 ("orderIndex".into(), V::Number(1.0)),
             ],
-            ..Default::default()
+            ..Category::new(0)
         },
     ]);
     env.exec(r#"
@@ -125,7 +125,7 @@ fn publisher_field_sets_and_unknown_host_values_are_not_reinterpreted() {
             id: 2,
             resolved: Some(b"host/selected".to_vec()),
         },
-        camera_zoom_level: Some(-4),
+        camera_zoom_level: -4,
         camera_distance_offset: Some(-0.625),
         options: vec![OptionRecord {
             stored_order_key: 0,
@@ -197,7 +197,7 @@ fn host_customization_finalizer_sorts_and_numbers_each_list() {
             ("orderIndex".into(), V::Number(999.0)),
         ],
         options: vec![option(21.0, 70), option(22.0, -5), option(23.0, 9)],
-        ..Default::default()
+        ..Category::new(0)
     };
     for rows in [
         vec![category(11.0, 50), category(12.0, -10), category(13.0, 0)],
@@ -235,7 +235,7 @@ fn host_customization_finalizer_preserves_small_equal_key_input_order() {
                         ..Default::default()
                     })
                     .collect(),
-                ..Default::default()
+                ..Category::new(0)
             })
             .collect();
         env.state().borrow_mut().character_customizations = Some(rows);
@@ -272,7 +272,7 @@ fn host_customization_finalizer_sorts_large_lists_without_tie_order_claims() {
                         ..Default::default()
                     })
                     .collect(),
-                ..Default::default()
+                ..Category::new(0)
             })
             .collect(),
     );

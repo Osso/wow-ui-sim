@@ -58,6 +58,11 @@ pub fn add_secret_aspect(state: &mut LuaState) -> LuaResult<u32> {
         .widgets
         .get_mut(id)
         .ok_or_else(|| runtime_error("invalid frame"))?;
+    #[cfg(all(feature = "client-retail", feature = "retail-12-1-0"))]
+    if frame.prevent_secret_values {
+        // VERIFIED WM61 S6: Retail prevention blocks a new recorded aspect mark.
+        return Ok(0);
+    }
     frame.explicit_secret_aspects |= aspect;
     Ok(0)
 }

@@ -217,6 +217,7 @@ fn forever_supplemental_spell_info_preserves_catalog_metadata() {
             local info = C_Spell.GetSpellInfo(expected[1])
             assert(info.name == expected[2] and info.spellID == expected[1])
             assert(info.iconID == expected[3])
+            assert(C_Spell.GetSpellPowerCost(expected[1]) == nil)
             local name, subtext, icon = GetSpellInfo(expected[1])
             assert(name == expected[2] and subtext == nil and icon == expected[3])
         end

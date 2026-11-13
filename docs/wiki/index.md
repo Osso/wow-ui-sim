@@ -1,8 +1,18 @@
+## [2026-11-13] system | Mandatory host category camera zoom
+
+[Lua API](systems/lua-api.md#host-category-camera-zoom-r83d) records R83d's
+verified signed32 numeric publication, explicit zero, and original-consumer
+clamp coverage. RF host inputs only; no collector or PTR category changes.
+
 ## [2026-11-13] system | PTR character-creation camera evidence
 
 [Lua API](systems/lua-api.md#ptr-character-creation-evidence-boundary) separates
 verified R78/R83 argument/state behavior from droppable inferred catalog and
 return bridges. The unseeded collector and end-to-end submit remain distinct.
+
+## [2026-11-13] investigation | EllesmereUI core API boundary
+
+[Full third-party startup](investigations/full-addon-startup-2026-10-10.md#r88a-api-boundary-follow-up-2026-11-13) links the [garrison type](../specs/garrison-landing-page-type.md) and [nameplate inset](../specs/nameplate-hit-test-insets.md) contracts. **VERIFIED (Retail 12.1.5.70688):** R88a establishes the garrison query shape and nameplate setter parser. **VERIFIED (Retail run at code SHA `bc01ba60c`):** 20/20 add-ons loaded with zero load-time errors; `lua-errors` reports `C_Garrison.IsLandingPageMinimapButtonVisible` (1) and the AuraKit secret-access error (70), while the old nameplate taint error is absent. **INFERRED (simulator policy):** the neutral garrison host input starts at zero. **UNKNOWN:** the visibility predicate and the nameplate restriction/secret policy remain unmodeled.
 
 ## [2026-11-12] investigation | Retail EllesmereUI v9.8 load boundary
 
@@ -41,6 +51,10 @@ return bridges. The unseeded collector and end-to-end submit remain distinct.
 The [item tooltip contract](../specs/tooltip-item-r80.md) records the VERIFIED admitted native stat helper without wiring it to the UNKNOWN ordinary item-mod producer. Shared item builders now omit unsupplied stats and accept final host amounts and optional top-level metadata. Retail 639 tooltip-related integration cases and all 2263 lib cases pass in bounded partitions, including unchanged standalone-Lua and serializer regressions. PTR/Forever exact proofs are recorded separately in the lane report.
 
 > Proof receipts live untracked under `~/.local/state/wow-ui-sim`. The `data/patch-api/evidence` and `data/test-perf/evidence` trees were removed on 2026-11-08; historical links below are records, not live paths. Recover a file with `git show c011c1d95:<path>`.
+
+## [2026-11-12] implementation | Enter World host handover
+
+[Forever Login Startup](investigations/forever-login-startup.md#enter-world-owner-handover-lt-81c7-2026-11-12) links R74 selection/dispatch, the existing owner-held Game bootstrap, selected naming and preserved WTF import source. Native sequencing remains UNKNOWN; the real control is still blocked on R76 SaveCharacterOrder.
 
 ## [2026-11-12] fix | Unit-test Blizzard UI cache isolation
 
