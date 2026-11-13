@@ -7,12 +7,6 @@
 const ASSISTED_COMBAT_MANAGER_DEFAULTS_LUA: &str = r#"
 AssistedCombatManager = type(AssistedCombatManager) == "table" and AssistedCombatManager or {}
 
-if rawget(AssistedCombatManager, "GetActionSpellID") == nil then
-  function AssistedCombatManager:GetActionSpellID()
-    return 0
-  end
-end
-
 if rawget(AssistedCombatManager, "ShouldHighlightSpellbookSpell") == nil then
   function AssistedCombatManager:ShouldHighlightSpellbookSpell(_spellID)
     return false
@@ -22,6 +16,12 @@ end
 "#;
 
 const ASSISTED_COMBAT_MANAGER_OWNER_FALLBACK_LUA: &str = r#"
+if rawget(AssistedCombatManager, "GetActionSpellID") == nil then
+  function AssistedCombatManager:GetActionSpellID()
+    return 0
+  end
+end
+
 if rawget(AssistedCombatManager, "HasActionSpell") == nil then
   function AssistedCombatManager:HasActionSpell()
     return false
@@ -75,6 +75,9 @@ mod tests {
         }
 
         let expected_owner_fallback = !super::profile_has_original_assisted_combat_owner();
+        let has_action_spell_id_fallback: bool = env
+            .eval("return type(AssistedCombatManager.GetActionSpellID) == 'function'")
+            .expect("action-spell ID fallback availability probe should run");
         let has_action_spell_fallback: bool = env
             .eval("return type(AssistedCombatManager.HasActionSpell) == 'function'")
             .expect("action-spell fallback availability probe should run");
@@ -87,6 +90,7 @@ mod tests {
         let has_highlight_fallback: bool = env
             .eval("return type(AssistedCombatManager.SetCanHighlightSpellbookSpells) == 'function'")
             .expect("highlight fallback availability probe should run");
+        assert_eq!(has_action_spell_id_fallback, expected_owner_fallback);
         assert_eq!(has_action_spell_fallback, expected_owner_fallback);
         assert_eq!(has_description_fallback, expected_owner_fallback);
         assert_eq!(has_tooltip_fallback, expected_owner_fallback);
@@ -99,7 +103,9 @@ mod tests {
                 if type(AssistedCombatManager.HasActionSpell) == "function"
                     and AssistedCombatManager:HasActionSpell() ~= false
                 then return "has_action_spell" end
-                if AssistedCombatManager:GetActionSpellID() ~= 0 then return "spell_id" end
+                if type(AssistedCombatManager.GetActionSpellID) == "function"
+                    and AssistedCombatManager:GetActionSpellID() ~= 0
+                then return "spell_id" end
                 if type(AssistedCombatManager.GetActionSpellDescription) == "function"
                     and AssistedCombatManager:GetActionSpellDescription() ~= ""
                 then return "description" end
