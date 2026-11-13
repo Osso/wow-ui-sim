@@ -132,7 +132,7 @@ const ASSERTIONS: &str = r#"
         assert(data.lines[1].type == Enum.TooltipDataLineType.SpellName)
         assert(data.lines[1].leftText == name, 'concrete aura identity ' .. tostring(id))
         assert(data.lines[2].type == Enum.TooltipDataLineType.SpellName)
-        assert(data.lines[2].leftText == '1 hr', 'preserved hardcoded duration limitation')
+        assert(data.lines[2].leftText == 'host aura time', 'R81 Q4: supplied final display text')
         assert(data.lines[3].type == Enum.TooltipDataLineType.SpellDescription)
         assert(type(data.lines[3].leftText) == 'string' and #data.lines[3].leftText > 0)
         assert(data.lines[3].wrapText == true)
@@ -195,6 +195,15 @@ const ASSERTIONS: &str = r#"
 fn seed_env(class: &str) -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("real tooltip namespace");
     env.state().borrow_mut().player.buffs = aura_rows();
+    // R81 Q4: unchanged security assertions consume explicit final remaining text.
+    for id in [1, 2] {
+        env.state()
+            .borrow_mut()
+            .aura_tooltip_inputs
+            .entry(id)
+            .or_default()
+            .remaining_text = Some("host aura time".into());
+    }
     env.exec(ASSERTIONS)
         .expect("assertions; no query/callback replacement");
     env.exec(&format!(

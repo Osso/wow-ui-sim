@@ -97,7 +97,8 @@ const ASSERTIONS: &str = r#"
     end
     function ITCheck(level, ...)
         local data = ITData(C_TooltipInfo.GetItemByID(...))
-        assert(data.id == 211995 and #data.lines == 8, 'meaningful catalog gear payload')
+        -- R80 Q2: four preserved header rows plus four explicitly supplied stat rows.
+        assert(data.id == 211995 and #data.lines == 8, 'headers plus supplied stat rows')
         assert(data.lines[1].type == 22 and data.lines[1].leftText == "Entombed Seraph's Sabatons")
         assert(data.lines[2].type == 31 and data.lines[2].leftText == 'Item Level '..level)
         assert(data.lines[3].type == 21 and data.lines[3].leftText == 'Feet')
@@ -108,14 +109,18 @@ const ASSERTIONS: &str = r#"
         assert(name[1] == 0.6392157077789307)
         assert(name[2] == 0.21176472306251526)
         assert(name[3] == 0.9294118285179138)
-        local specs = {
-            {5259,1.2,ITEM_MOD_STRENGTH_SHORT}, {7889,1.8,ITEM_MOD_STAMINA_SHORT},
-            {4799,0.75,ITEM_MOD_MASTERY_RATING_SHORT}, {2201,0.75,ITEM_MOD_VERSATILITY},
+        -- R80 Q2 does not prove the admitted formula for ordinary item rows.
+        local supplied = {
+            [571]={37,91,17,23}, [601]={41,99,19,29}, [602]={43,101,21,31},
+            [603]={47,103,25,37}, [604]={53,107,27,41}, [605]={59,109,33,43},
+            [606]={61,113,35,47}, [607]={67,127,39,53}, [608]={71,131,45,59},
         }
-        for i,spec in ipairs(specs) do
+        local labels = {ITEM_MOD_STRENGTH_SHORT, ITEM_MOD_STAMINA_SHORT,
+            ITEM_MOD_MASTERY_RATING_SHORT, ITEM_MOD_VERSATILITY}
+        for i,label in ipairs(labels) do
             local line = data.lines[i+4]
-            local value = math.max(1,math.floor(level*2*spec[1]/10000*spec[2]+0.5))
-            assert(line.type == 13 and line.leftText == '+'..value..' '..spec[3], 'existing budget heuristic')
+            local value = supplied[level][i]
+            assert(line.type == 13 and line.leftText == '+'..value..' '..label, 'R80 supplied final amount')
             local rgb = ITRGB(line.leftColor)
             assert(rgb and rgb[2] > rgb[1] and line.leftColor.a == nil, 'D56 RGB green stat')
         end
@@ -189,6 +194,35 @@ fn empty_env() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("real tooltip namespace");
     env.state().borrow_mut().player.class_index = 2;
     assert!(env.state().borrow().item_tooltip_levels.is_empty());
+    // R80: exact final amounts are independent fixture inputs, not derived budgets.
+    use wow_ui_sim::c_api::item_tooltip::{ItemTooltipInput, ItemTooltipStat};
+    for (level, amounts) in [
+        (571, [37, 91, 17, 23]),
+        (601, [41, 99, 19, 29]),
+        (602, [43, 101, 21, 31]),
+        (603, [47, 103, 25, 37]),
+        (604, [53, 107, 27, 41]),
+        (605, [59, 109, 33, 43]),
+        (606, [61, 113, 35, 47]),
+        (607, [67, 127, 39, 53]),
+        (608, [71, 131, 45, 59]),
+    ] {
+        let labels = ["Strength", "Stamina", "Mastery", "Versatility"];
+        env.state().borrow_mut().item_tooltip_inputs.insert(
+            (ITEM, level),
+            ItemTooltipInput {
+                stats: labels
+                    .into_iter()
+                    .zip(amounts)
+                    .map(|(label, amount)| ItemTooltipStat {
+                        label: label.into(),
+                        amount,
+                    })
+                    .collect(),
+                ..Default::default()
+            },
+        );
+    }
     env.exec(ASSERTIONS)
         .expect("assertions only; never replace actual query/callback");
     env.exec(&format!("ITBase = ITCheck({},211995)", item.item_level))
@@ -390,6 +424,24 @@ fn default_no_map_is_meaningful_base_catalog_not_a_missing_provider() {
         &empty_env(),
         "ITEqual(ITBase,ITCheck(571,211995)); ITEqual(ITBase,ITCheck(571,211995,nil,nil,nil)); ITMiss(211995,nil,1); ITMiss(211995,nil,nil,70)",
     );
+}
+
+#[test]
+fn context_without_final_stat_inputs_preserves_only_four_header_rows() {
+    let env = seeded_env();
+    env.state().borrow_mut().item_tooltip_inputs.clear();
+    env.exec(
+        r#"
+        -- R80 Q2: 8 becomes 4 only because the four unsupplied stat rows are omitted.
+        for _,data in ipairs({C_TooltipInfo.GetItemByID(211995),
+            C_TooltipInfo.GetItemByID(211995,nil,1)}) do
+            assert(#data.lines == 4)
+            assert(data.lines[1].leftText == "Entombed Seraph's Sabatons")
+            assert(data.lines[4].leftText == ITEM_BIND_ON_PICKUP)
+        end
+    "#,
+    )
+    .unwrap();
 }
 
 #[test]

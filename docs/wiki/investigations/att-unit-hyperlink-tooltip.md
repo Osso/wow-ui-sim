@@ -1,22 +1,24 @@
 # ATT unit hyperlink tooltip
 
-`AllTheThings/src/Classes/NPC.lua:58` reads `C_TooltipInfo.GetHyperlink("unit:Creature-…").lines[1].leftText`. Previously `GetHyperlink` handled item/spell IDs and returned an empty Item tooltip for every other link. The missing first line caused the reported failure; the consumer guard was not the source of the invalid payload.
+`AllTheThings/src/Classes/NPC.lua:58` reads `C_TooltipInfo.GetHyperlink("unit:Creature-…").lines[1].leftText`. This exposed missing hyperlink data, but it did not establish native GUID lookup behavior.
 
-## Resolution
+## R82 correction
 
-`GetHyperlink` now resolves `unit:<GUID>` against the modeled player, current target/focus, and active party GUIDs. A known named unit reuses its Unit tooltip lines and GUID. Unknown or unsupported links return nil rather than a fabricated Item payload, consistent with the cached `TooltipInfoDocumentation.lua` declaration `MayReturnNothing = true` for `GetHyperlink`. Item/spell dispatch remains unchanged. No NPC names or data are inferred from GUID components.
+VERIFIED: R82 (Retail 70688) establishes substring marker search, 22 ordered branches and producer-specific requests. UNKNOWN: accepted unit GUID prefixes, object lookup, unresolved-object results and server-backed rows. The previous simulator mapping from seeded player/target/focus/party GUIDs to unit tooltips was a guess, not native evidence.
 
-## Proof boundary
+The R82 dispatcher removes that mapping. Unit links remain parsed but do not produce invented rows. The simulator's unmodelled result policy is not a native nil/arity claim. Main approved three separately committed assertion retargets in `tests/tooltip_item_sources.rs`; they now preserve no-fabricated-data and item/spell controls rather than guessed names, levels or result shapes.
 
-An existing binary before the change returned `ATT_TOOLTIP_RED 0 0` for an unknown creature GUID (Item type, zero lines). Grouped Lua-facing regression cases were committed in `tests/tooltip_item_sources.rs` at `dc6672dc2` for known target/player, repeated unknown lookup, malformed/unsupported links, and item/spell controls. Cargo ownership is elsewhere; these new tests, rebuilt diagnostic and full GUI hover are **not yet verified**.
+## Dispatcher boundary
+
+Typed hyperlink requests live under `src/c_api/c_tooltip_info_hyperlink/`. The old frame-method item-ID bypass is removed; parsed item descriptors reach the existing item producer. Spell routing uses a narrow link adapter while R81 changes its producer. The [hyperlink contract](../../specs/tooltip-hyperlink.md) owns the exact requirements, supported rows and native-UNKNOWN exclusions. Catalog-backed artifact/conduit selection uses the existing INFERRED 70391 rows in an isolated commit, separate from request parsing and R82b rank arithmetic.
 
 ## Sources
 
-- [Tooltip identity spec](../../specs/tooltip-identity.md) — public contract and grouped test inventory.
-- [Tooltip unit model](../../../src/lua_api/globals/missing_surface/tooltip_info/unit.rs) — modeled GUID and line construction.
-- [Tooltip hyperlink dispatch](../../../src/lua_api/globals/missing_surface/tooltip_info/probes.rs) — source selection and nil behavior.
+- R82/R82b, `~/.local/state/wow-ui-sim/handoff/pr46-49-decomp-answers.md` — native routing and UNKNOWN boundaries.
+- [Hyperlink contract](../../specs/tooltip-hyperlink.md) — requirements and proof inventory.
+- [Tooltip identity spec](../../specs/tooltip-identity.md) — preserved direct/action identity contracts.
 
 ## See Also
 
-- [[lua-api]] — Lua surface and state ownership.
+- [[lua-api]] — tooltip data system.
 - [[tooltip-money-line]] — separate tooltip investigation.
