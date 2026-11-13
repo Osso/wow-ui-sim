@@ -110,7 +110,9 @@ pub(crate) fn is_account_wide_reputation(state: &mut LuaState) -> LuaResult<u32>
     Ok(1)
 }
 
-fn read_faction_sort_index(state: &mut LuaState, usage: &str) -> LuaResult<u32> {
+// VERIFIED (R88f.A.80-A.81): the API index is one-based; native subtracts one
+// before signed-integer truncation. The seeded Lua list remains one-based.
+fn read_faction_sort_index(state: &mut LuaState, usage: &str) -> LuaResult<Option<i32>> {
     let index = read_required_number(state, usage)?;
     if index < 0.0 || index > f64::from(u32::MAX) {
         return Err(runtime_error(format!(
@@ -121,17 +123,22 @@ fn read_faction_sort_index(state: &mut LuaState, usage: &str) -> LuaResult<u32> 
     if !index.is_finite() {
         return Err(runtime_error(usage));
     }
-    Ok(index as u32)
+
+    let internal_index = (index - 1.0).trunc();
+    if internal_index < 0.0 || internal_index > f64::from(i32::MAX) {
+        return Ok(None);
+    }
+    Ok(Some(internal_index as i32))
 }
 
-fn reputation_faction_at_index(state: &mut LuaState, index: u32) -> Val {
-    let Ok(index) = i32::try_from(index) else {
+fn reputation_faction_at_index(state: &mut LuaState, index: i32) -> Val {
+    let Some(row_index) = index.checked_add(1) else {
         return Val::Nil;
     };
     let global = Val::Table(state.global);
     let reputation_state = table_get_static(state, global, "__wow_reputation_state");
     let rows = table_get_static(state, reputation_state, "factions");
-    integer_table_value(state, rows, index)
+    integer_table_value(state, rows, row_index)
 }
 
 // INFERRED (R88f.A.80-A.81): reputationIndex is the scenario row's
@@ -148,7 +155,9 @@ fn has_valid_activity_reputation_index(state: &mut LuaState, row: Val) -> bool {
 pub(crate) fn is_faction_active(state: &mut LuaState) -> LuaResult<u32> {
     const USAGE: &str = "Usage: local isActive = C_Reputation.IsFactionActive(factionSortIndex)";
     let index = read_faction_sort_index(state, USAGE)?;
-    let row = reputation_faction_at_index(state, index);
+    let row = index
+        .map(|index| reputation_faction_at_index(state, index))
+        .unwrap_or(Val::Nil);
     let active = if row == Val::Nil || !has_valid_activity_reputation_index(state, row) {
         true
     } else {
@@ -168,6 +177,9 @@ pub(crate) fn set_faction_active(state: &mut LuaState) -> LuaResult<u32> {
         return Err(runtime_error(USAGE));
     }
     let set_active = !matches!(active_value, Val::Bool(false));
+    let Some(index) = index else {
+        return Ok(0);
+    };
     let row = reputation_faction_at_index(state, index);
     let faction_id = table_get_static(state, row, "factionID");
     let can_set_inactive = matches!(
