@@ -111,11 +111,6 @@ if rawget(PlayerSpellsUtil, "ToggleClassTalentFrame") == nil then
         return PlayerSpellsUtil.TogglePlayerSpellsFrame(PlayerSpellsUtil.FrameTabs.ClassTalents, inspectUnit)
     end
 end
-if rawget(PlayerSpellsUtil, "OpenToClassSpecializationsTab") == nil then
-    function PlayerSpellsUtil.OpenToClassSpecializationsTab()
-        return PlayerSpellsUtil.TogglePlayerSpellsFrame(PlayerSpellsUtil.FrameTabs.ClassSpecializations)
-    end
-end
 if rawget(PlayerSpellsUtil, "ToggleSpellBookFrame") == nil then
     function PlayerSpellsUtil.ToggleSpellBookFrame(spellBookCategory)
         return PlayerSpellsUtil.TogglePlayerSpellsFrame(
@@ -142,6 +137,11 @@ const PLAYER_SPELLS_UTIL_OPEN_TAB_FALLBACK_LUA: &str = r#"
 if rawget(PlayerSpellsUtil, "OpenToClassTalentsTab") == nil then
     function PlayerSpellsUtil.OpenToClassTalentsTab(inspectUnit)
         return PlayerSpellsUtil.TogglePlayerSpellsFrame(PlayerSpellsUtil.FrameTabs.ClassTalents, inspectUnit)
+    end
+end
+if rawget(PlayerSpellsUtil, "OpenToClassSpecializationsTab") == nil then
+    function PlayerSpellsUtil.OpenToClassSpecializationsTab()
+        return PlayerSpellsUtil.TogglePlayerSpellsFrame(PlayerSpellsUtil.FrameTabs.ClassSpecializations)
     end
 end
 "#;
@@ -299,6 +299,13 @@ mod tests {
             .expect("class-talent open fallback availability probe should run");
         assert_eq!(
             has_open_talents_fallback,
+            !super::profile_has_original_player_spells_util_owner()
+        );
+        let has_open_specializations_fallback: bool = env
+            .eval("return type(PlayerSpellsUtil.OpenToClassSpecializationsTab) == 'function'")
+            .expect("specialization open fallback availability probe should run");
+        assert_eq!(
+            has_open_specializations_fallback,
             !super::profile_has_original_player_spells_util_owner()
         );
 
