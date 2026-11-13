@@ -107,8 +107,6 @@ pub(super) fn patch_toggle_collections_journal_for_runtime_addon_load(
     temporary::mount_journal_dynamic_flight_popup::patch(env);
 }
 
-
-
 pub(super) fn ensure_adventure_map_frame_surface(env: &crate::lua_api::WowLuaEnv) {
     temporary::adventure_map_frame_surface::patch(env);
 }

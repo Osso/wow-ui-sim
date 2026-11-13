@@ -45,11 +45,11 @@ fn navigation_has_no_synthetic_bootstrap_functions() {
 }
 
 #[test]
-fn original_merchant_consumer_opens_all_modeled_bags() {
-    let env = nav_env(&["Blizzard_UIPanels_Game"]);
+fn original_tutorial_consumer_opens_all_modeled_bags() {
+    let env = nav_env(&["Blizzard_UIPanels_Game", "Blizzard_TutorialManager"]);
     env.exec(r#"
         NavigationOriginalSource(OpenAllBags, 'Blizzard_UIPanels_Game/Mainline/ContainerFrame.lua')
-        NavigationOriginalSource(MerchantFrame_OnShow, 'Blizzard_UIPanels_Game/Mainline/MerchantFrame.lua')
+        NavigationOriginalSource(TutorialHelper.OpenAllBags, 'Blizzard_TutorialManager/Blizzard_TutorialHelper.lua')
         SetCVar('combinedBags', '0')
         CloseAllBags()
         assert(not IsAnyBagOpen(), 'fixture failed to close original bags')
@@ -59,9 +59,9 @@ fn original_merchant_consumer_opens_all_modeled_bags() {
         end
         assert(populated >= 2, 'need existing modeled backpack and equipped bag; do not invent API results')
         FRAME_THAT_OPENED_BAGS = nil
-        -- Original merchant OnShow passes self and forceUpdate=true to OpenAllBags.
-        MerchantFrame_OnShow(MerchantFrame)
-        assert(FRAME_THAT_OPENED_BAGS == MerchantFrame:GetName())
+        -- Original unmodified tutorial consumer calls global OpenAllBags.
+        TutorialHelper:OpenAllBags()
+        assert(FRAME_THAT_OPENED_BAGS == nil)
         assert(IsBagOpen(Enum.BagIndex.Backpack))
         for i=1,NUM_TOTAL_BAG_FRAMES do
             if C_Container.GetContainerNumSlots(i) > 0 then
