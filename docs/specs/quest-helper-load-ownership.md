@@ -88,3 +88,59 @@ test, or KEEP if real use is not settled. (c) QuestLog parent/event order remain
 an exact native/lifecycle question, no guessed guard changes. (d) Encounter color
 has no selected consumer: KEEP seam, no implementation fix. The overall task is
 not closed by the already reviewed objective-header slice.
+
+## Executed negative finding and remaining B plan (2026-11-13)
+
+At `9c1fc20e4de06cf65c73c64a0f559c953a37f9ef`, based on merged
+`ed4eef3c761b4a853b9aeaf17683a798049dbeda`, Retail lib+integration no-run
+compiled successfully with zero compiler warnings. The one normal-closure
+ownership test passed (1/1). Source/document hashes and the executed integration
+binary hash were reverified against receipts. No normal QuestCache/QuestUtil load
+gap was reproduced. This is preservation, not a production RED; it does not prove
+populated native quest flags. No QuestCache/QuestUtil replacement is removed.
+Untracked receipts: `wow-build-tools/stub-b-receipts/deferred-9c1fc20e4de06cf65c73c64a0f559c953a37f9ef/ownership`.
+
+### B(b): enum fallback, source-only removal candidate
+
+`env_init/mod.rs:61` calls `init_enum_globals` before temporary bootstrap at82.
+`env_init/enums.rs:257` executes `missing_enums.lua`; its lines11549-11563
+supply QuestClassification, including Campaign=2 and Calling=3. Temporary
+`quest_objective_defaults.rs:38-41` therefore cannot install its -1/-2 defaults
+in the normal initialized environment. The actual original quest helper closure
+already passes; it never requires manufacturing an absent Enum table.
+
+Plan: add a normal-environment preservation assertion that Campaign=2 and
+Calling=3 before addon load and after actual original tracker closure, without
+nil assignments, fake globals or artificial missing-provider inputs. Then remove
+only the redundant four Enum setup lines38-41, keeping the QuestCache adapter
+and other profiles' behavior. The known provider runs without profile gating;
+verify the normal bootstrap assertion across profiles before accepting a shared
+removal. This is unreachable-fallback removal plus preservation, not native RED.
+No removal/test edit or additional build has yet occurred at this checkpoint.
+
+### B(c): lifecycle evidence question, no guessed fix
+
+No dedicated QuestLog parent/event ordering contract was found in docs/specs.
+Pinned Retail original `Blizzard_UIPanels_Game/Mainline/QuestMapFrame.lua:278-284`
+requires a parent in GetCurrentMapID; :858-874 does so in UpdateAll. Original
+`Blizzard_WorldMap/Blizzard_WorldMap.lua:152` invokes AttachQuestLog; :541-547
+sets QuestMapFrame's parent to the map. Temporary `quest_log_mixin.rs:11-42`
+permits missing-parent refresh and bypasses original callback work.
+
+QUESTION for Retail12.1.5.70688: In the real startup and load-on-demand lifecycle,
+what ordering exists between QuestMapFrame creation/OnLoad, WorldMap OnLoad and
+AttachQuestLog/SetParent, and first QUEST_LOG_UPDATE/UNIT_QUEST_LOG_CHANGED and
+refresh dispatch? Can either original GetCurrentMapID or UpdateAll legitimately
+run before parenting, and if so what guarantees a nonnil parent? For no-parent,
+default hidden parent and shown populated parent, establish native CreateFrame,
+GetParent/SetParent visibility callback and event-queue ordering, including
+reentrant dispatch. Identify which facts are native frame/event behavior versus
+original Lua order and which quest server state triggers events. Do not invent a
+native QuestLogMixin wrapper; return exact verified primitives/lifecycle facts
+and mark unavailable observations. Existing C_Map result semantics are separate.
+
+### B(d): retained seam
+
+Keep encounter color bookkeeping unchanged: no selected original consumer was
+established for the inventoried color setter. Absence of that consumer does not
+certify the public setter's validation or native behavior. No opportunistic fix.
