@@ -48,6 +48,10 @@ The [item tooltip contract](../specs/tooltip-item-r80.md) records the VERIFIED a
 
 > Proof receipts live untracked under `~/.local/state/wow-ui-sim`. The `data/patch-api/evidence` and `data/test-perf/evidence` trees were removed on 2026-11-08; historical links below are records, not live paths. Recover a file with `git show c011c1d95:<path>`.
 
+## [2026-11-12] implementation | Enter World host handover
+
+[Forever Login Startup](investigations/forever-login-startup.md#enter-world-owner-handover-lt-81c7-2026-11-12) links R74 selection/dispatch, the existing owner-held Game bootstrap, selected naming and preserved WTF import source. Native sequencing remains UNKNOWN; the real control is still blocked on R76 SaveCharacterOrder.
+
 ## [2026-11-12] fix | Unit-test Blizzard UI cache isolation
 
 [Addon loading](systems/addon-loading.md#blizzard-ui-cache--per-profile-setup) records the concurrent Retail pin cache incident and the test-only startup hard error. Normal user startup keeps auto-sync; pin-versioned cache directories remain a design proposal.

@@ -63,7 +63,17 @@ pub struct WowLuaEnv {
     pub(crate) lua: Rc<RefCell<rilua::Lua>>,
     pub(crate) state: Rc<RefCell<SimState>>,
     reload_loader: Option<Rc<ReloadLoader>>,
+    bootstrap_kind: BootstrapKind,
+    host_world_entry_identity: bool,
     post_startup_exec_hook: RefCell<Option<Box<dyn FnOnce(&WowLuaEnv)>>>,
+}
+
+#[derive(Clone, Copy, PartialEq, Eq)]
+enum BootstrapKind {
+    Initial,
+    Reload,
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    HostWorldEntry,
 }
 
 type ReloadLoader =
@@ -125,6 +135,8 @@ impl WowLuaEnv {
             lua,
             state,
             reload_loader: None,
+            bootstrap_kind: BootstrapKind::Initial,
+            host_world_entry_identity: false,
             post_startup_exec_hook: RefCell::new(None),
         };
         env.install_final_runtime_globals();
@@ -154,6 +166,105 @@ impl WowLuaEnv {
         + 'static,
     ) {
         self.reload_loader = Some(Rc::new(loader));
+    }
+
+    /// A selected host roster identity takes precedence over initial WTF seeding.
+    /// The configured SavedVariables/import source itself is not retargeted.
+    pub fn has_host_world_entry_identity(&self) -> bool {
+        self.host_world_entry_identity
+    }
+
+    /// Distinguish the host handover from initial input import and ReloadUI.
+    pub fn is_host_world_entry_bootstrap(&self) -> bool {
+        #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+        {
+            self.bootstrap_kind == BootstrapKind::HostWorldEntry
+        }
+        #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+        {
+            false
+        }
+    }
+
+    /// Service UI reconstruction after the owner has released all Lua borrows.
+    /// Host world entry uses the same startup loader as the launch and ReloadUI.
+    pub fn service_ui_transition(
+        &mut self,
+        saved_vars: &mut Option<crate::saved_variables::SavedVariablesManager>,
+    ) -> Result<bool> {
+        #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+        if self.service_world_entry(saved_vars)? {
+            return Ok(true);
+        }
+        self.service_reload(saved_vars)
+    }
+
+    /// Host transition; native login sequence UNKNOWN (R74).
+    /// VM reconstruction, owner cadence and identity precedence here are policy,
+    /// not a model of native Glue lifetime, loading events or login payloads.
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    fn service_world_entry(
+        &mut self,
+        saved_vars: &mut Option<crate::saved_variables::SavedVariablesManager>,
+    ) -> Result<bool> {
+        if !self.state.borrow().glue_login.has_world_entry_request() {
+            return Ok(false);
+        }
+        if matches!(
+            self.state.borrow().session_lifecycle,
+            super::env_lifecycle::SessionLifecycle::Finished
+        ) {
+            return Err(crate::Error::Other("session is already finalized".into()));
+        }
+        let loader = self.reload_loader.clone().ok_or_else(|| {
+            crate::Error::Other("host world entry requires a startup loader".into())
+        })?;
+        {
+            let mut state = self.state.borrow_mut();
+            let record = state
+                .glue_login
+                .take_world_entry_request()
+                .expect("owner checked the pending request without running Lua");
+            state.set_screen_kind(crate::screen::ScreenKind::Game);
+            state.player.name = record.account.character_name;
+            state.player.surname =
+                (!record.account.surname.is_empty()).then_some(record.account.surname);
+            state.player.realm_name = Some(record.account.realm_name);
+            state.session_lifecycle = super::env_lifecycle::SessionLifecycle::Incomplete(
+                "host world entry reconstruction did not complete".into(),
+            );
+        }
+        self.bootstrap_kind = BootstrapKind::HostWorldEntry;
+        self.host_world_entry_identity = true;
+        if let Some(manager) = saved_vars {
+            manager.discard_lua_environment();
+        }
+        let result = (|| {
+            self.rebuild_lua_environment()?;
+            self.state.borrow_mut().session_lifecycle =
+                super::env_lifecycle::SessionLifecycle::Active;
+            loader(self, saved_vars)?;
+            self.ensure_ui_environment_usable()
+        })();
+        if let Err(error) = &result {
+            self.state.borrow_mut().session_lifecycle =
+                super::env_lifecycle::SessionLifecycle::Incomplete(format!(
+                    "host world entry reconstruction failed: {error}"
+                ));
+        }
+        result.map(|()| true)
+    }
+
+    /// Headless owners settle the same Game startup after servicing a transition.
+    pub fn service_headless_ui_transition(
+        &mut self,
+        saved_vars: &mut Option<crate::saved_variables::SavedVariablesManager>,
+    ) -> Result<bool> {
+        let rebuilt = self.service_ui_transition(saved_vars)?;
+        if rebuilt {
+            crate::startup::settle_headless_startup(self);
+        }
+        Ok(rebuilt)
     }
 
     /// Supply completion/readiness without implementing account-data networking.
@@ -290,6 +401,7 @@ impl WowLuaEnv {
         saved_vars: &mut Option<crate::saved_variables::SavedVariablesManager>,
         #[cfg(feature = "client-wrath")] layout_saved: bool,
     ) -> Result<()> {
+        self.bootstrap_kind = BootstrapKind::Reload;
         self.rebuild_lua_environment()?;
         self.state.borrow_mut().session_lifecycle = super::env_lifecycle::SessionLifecycle::Active;
         if let Some(loader) = self.reload_loader.clone() {
@@ -351,7 +463,11 @@ impl WowLuaEnv {
             .and_then(|data| data.font_system.clone());
         let fresh_lua = Rc::new(RefCell::new(Self::new_rilua(Rc::clone(&self.state))));
         clear_app_data_handles(&self.lua);
-        self.state.borrow_mut().discard_ui_environment();
+        {
+            let mut state = self.state.borrow_mut();
+            state.discard_ui_environment();
+            state.ui_reloaded = self.bootstrap_kind == BootstrapKind::Reload;
+        }
         let old_lua = std::mem::replace(&mut self.lua, fresh_lua);
         drop(old_lua);
         clear_templates();
@@ -588,6 +704,10 @@ fn clear_app_data_handles(lua: &Rc<RefCell<rilua::Lua>>) {
     app_data.lua = None;
     app_data.font_system = None;
 }
+
+#[cfg(all(test, any(feature = "client-retail", feature = "client-wowforever")))]
+#[path = "env_world_entry_tests.rs"]
+mod world_entry_tests;
 
 #[cfg(test)]
 mod tests {

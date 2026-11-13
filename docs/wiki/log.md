@@ -3729,6 +3729,11 @@ VERIFIED (strict lifecycle probe): global CVar wrapper identities were unchanged
 
 Updated [Forever Login Startup](investigations/forever-login-startup.md#login-submission-model-lt-a667-2026-11-11) with the lt-a667 flow and contract. Distinguished historical startup verification from pending submission acceptance; documented EditBox input, offline connection policy, host-empty roster/capacity, startup eligibility and the erroneous forced pre-login character-select refresh.
 
+
+## 2026-11-12 — Enter World host handover
+
+Added the [R74 handover contract](../specs/glue-login-flow.md#enter-world-host-handover-lt-81c7-r74) and linked the existing startup investigation. Documents verified selection/dispatch separately from host queueing, VM reconstruction, identity precedence and failure handling. R76 and runtime proof remain pending; no native lifecycle or consumer GREEN claim.
+
 ## [2026-11-12] implementation | R73 PvP talent annotations
 
 VERIFIED: [tooltip data](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) now uses shared supplied slot selections and R73 alternative annotation dispatch. Eight exact tests pass on Retail, including original slot hover and original list-template hover; the native virtualized-row realization is not claimed. The [contract](../specs/tooltip-pvp-talent.md) separates host seams, installed 70783 catalog provenance, inferred field names and UNKNOWN native predicates.
