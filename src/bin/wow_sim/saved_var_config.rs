@@ -56,6 +56,11 @@ pub fn configure_character_identity(
     env: &WowLuaEnv,
     source: Option<&SavedVariablesManager>,
 ) -> wow_ui_sim::Result<()> {
+    // Host selection wins after entry; the configured WTF/SavedVariables source
+    // remains unchanged rather than being retargeted to the selected roster name.
+    if env.has_host_world_entry_identity() {
+        return Ok(());
+    }
     if std::env::var_os("WOW_SIM_WTF_CHARACTER").is_none_or(|value| value.is_empty()) {
         return Ok(());
     }

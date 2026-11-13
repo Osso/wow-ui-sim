@@ -393,3 +393,83 @@ fn absent_or_empty_character_selection_keeps_default_identity() {
         assert_eq!(actual, original, "{observation}");
     }
 }
+
+/// Host transition; native login sequence UNKNOWN (R74).
+/// The original button remains blocked until SaveCharacterOrder R76 is resolved.
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn character_select_button_reuses_production_game_bootstrap() {
+    let Some(root) = child_root() else {
+        spawn_identity_case(
+            "character_select_button_reuses_production_game_bootstrap",
+            Some(CHARACTER),
+            false,
+        );
+        return;
+    };
+    let args = startup_args(&root, false);
+    let env = WowLuaEnv::with_session_wtf_path(root.join("session")).unwrap();
+    env.state().borrow_mut().bnet_friends[0].game_accounts[0].character_name = "Entrant".into();
+    let (mut env, _font_system, mut saved_vars) =
+        initialize_and_load_env(&args, ScreenKind::CharacterSelect, env).unwrap();
+    wow_ui_sim::startup::settle_headless_startup(&env);
+    env.exec(
+        r#"
+        assert(CharacterSelect:IsShown())
+        CharacterSelect_SelectCharacter(1, true)
+        assert(GetCharacterSelection() == 1)
+        assert(CharacterSelect_AllowedToEnterWorld())
+        assert(CharSelectEnterWorldButton:IsShown())
+        assert(CharSelectEnterWorldButton:IsEnabled())
+        assert(CharSelectEnterWorldButton:GetScript('OnClick') ~= nil)
+        assert(IdentityProbeFile == nil, 'observer must first execute in Game')
+        "#,
+    )
+    .unwrap();
+    assert_ne!(env.state().borrow().player.name, "Entrant");
+    let button = env
+        .state()
+        .borrow()
+        .widgets
+        .get_id_by_name("CharSelectEnterWorldButton")
+        .unwrap();
+    let errors_before = env.state().borrow().lua_errors.len();
+    env.send_click(button).unwrap();
+    assert!(
+        env.service_headless_ui_transition(&mut saved_vars).unwrap(),
+        "original button must request host transition; errors: {:#?}",
+        &env.state().borrow().lua_errors[errors_before..]
+    );
+    assert_eq!(env.state().borrow().screen_kind, ScreenKind::Game);
+    assert!(
+        env.eval::<bool>(
+            r#"return UIParent:IsShown() and IsLoggedIn()
+                and (GlueParent == nil or not GlueParent:IsShown())
+                and (CharacterSelect == nil or not CharacterSelect:IsShown())"#,
+        )
+        .unwrap()
+    );
+    // This is host identity policy, not an assertion about native event timing.
+    for observation in ["IdentityProbeFile", "IdentityProbeLoaded"] {
+        assert_eq!(
+            env.eval::<String>(&format!("return {observation}.first"))
+                .unwrap(),
+            "Entrant"
+        );
+    }
+    assert_eq!(env.state().borrow().lua_errors.len(), errors_before);
+    assert_eq!(
+        saved_vars.as_ref().unwrap().wtf_config().unwrap().character,
+        CHARACTER,
+        "entry must not retarget the configured SavedVariables source"
+    );
+    env.exec("ReloadUI()").unwrap();
+    assert!(env.service_headless_ui_transition(&mut saved_vars).unwrap());
+    assert_eq!(env.state().borrow().screen_kind, ScreenKind::Game);
+    assert_eq!(
+        env.eval::<String>("return IdentityProbeFile.first")
+            .unwrap(),
+        "Entrant",
+        "later reload retains the host-selected identity rather than seeding WTF identity"
+    );
+}

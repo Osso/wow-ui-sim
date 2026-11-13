@@ -300,20 +300,20 @@ fn prepare_screenshot_env(
     command: &ScreenshotCommand<'_>,
 ) {
     settle_headless_startup(env);
-    env.service_headless_reload(saved_vars)
-        .expect("screenshot startup ReloadUI failed");
+    env.service_headless_ui_transition(saved_vars)
+        .expect("screenshot startup UI transition failed");
     apply_ui_scale(env, command.ui_scale);
     env.set_screen_size(command.width as f32, command.height as f32);
     wow_ui_sim::debug_helpers::debug_show_game_menu(env);
     apply_delay_with_tick(env, command.delay);
-    env.service_headless_reload(saved_vars)
-        .expect("screenshot delay ReloadUI failed");
+    env.service_headless_ui_transition(saved_vars)
+        .expect("screenshot delay UI transition failed");
     run_screenshot_exec_lua(env, command);
-    env.service_headless_reload(saved_vars)
-        .expect("screenshot script ReloadUI failed");
+    env.service_headless_ui_transition(saved_vars)
+        .expect("screenshot script UI transition failed");
     run_extra_update_ticks(env, 3);
-    env.service_headless_reload(saved_vars)
-        .expect("screenshot timer ReloadUI failed");
+    env.service_headless_ui_transition(saved_vars)
+        .expect("screenshot timer UI transition failed");
 }
 
 fn run_screenshot_exec_lua(env: &WowLuaEnv, command: &ScreenshotCommand<'_>) {
