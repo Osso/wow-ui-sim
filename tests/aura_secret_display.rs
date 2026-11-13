@@ -162,7 +162,7 @@ fn aura_secret_geometry_decodes_native_arguments_and_keeps_mixed_origins() {
     "#).unwrap();
 }
 
-#[cfg(feature = "forbidden-aspects")]
+#[cfg(all(feature = "forbidden-aspects", feature = "optional-tests"))]
 #[test]
 fn aura_secret_texture_replaces_and_clears_without_plain_readout() {
     let env = WowLuaEnv::new().unwrap();
@@ -229,6 +229,25 @@ fn tainted_secret_texture_target_reports_prevention_error() {
             assert(err == 'Attempt to set secret values on an object that prevents secret values', err)
         end
         debug.setobjecttaint(addon, 'SecretTextureProbe')
+        addon()
+        "#,
+    )
+    .unwrap();
+}
+
+#[cfg(all(feature = "optional-tests", feature = "client-retail"))]
+#[test]
+fn tainted_secret_texture_string_reports_native_error() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local texture = CreateFrame('Frame'):CreateTexture()
+        local function addon()
+            local ok, err = pcall(texture.SetTexture, texture,
+                secretwrap('Interface\\Icons\\Spell_Holy_FlashHeal'))
+            assert(not ok and err == 'Cannot set texture to a secret string value.', err)
+        end
+        debug.setobjecttaint(addon, 'SecretTextureStringProbe')
         addon()
         "#,
     )
