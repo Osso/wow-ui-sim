@@ -8,41 +8,6 @@
 use crate::lua_api::{LoaderEnv, WowLuaEnv};
 
 const PANEL_REGISTRATION_DEFAULTS_LUA: &str = r#"
-if type(UIPanelWindows) ~= "table" then
-    UIPanelWindows = {}
-end
-
-if RegisterUIPanel == nil then
-    function RegisterUIPanel(panel, attributes)
-        if panel == nil or type(panel.GetName) ~= "function" then
-            return
-        end
-
-        local name = panel:GetName()
-        if name == nil or UIPanelWindows[name] ~= nil then
-            return
-        end
-
-        local entry = {}
-        if type(attributes) == "table" then
-            for key, value in pairs(attributes) do
-                entry[key] = value
-                if type(panel.SetAttributeNoHandler) == "function" then
-                    panel:SetAttributeNoHandler("UIPanelLayout-" .. key, value)
-                elseif type(panel.SetAttribute) == "function" then
-                    panel:SetAttribute("UIPanelLayout-" .. key, value)
-                end
-            end
-        end
-        UIPanelWindows[name] = entry
-        if type(panel.SetAttributeNoHandler) == "function" then
-            panel:SetAttributeNoHandler("UIPanelLayout-defined", true)
-        elseif type(panel.SetAttribute) == "function" then
-            panel:SetAttribute("UIPanelLayout-defined", true)
-        end
-    end
-end
-
 if ShowUIPanel == nil then
     function ShowUIPanel(frame)
         if frame ~= nil and type(frame.Show) == "function" then
@@ -384,41 +349,10 @@ mod tests {
     mod close_menus_tests;
 
     #[test]
-    fn installs_panel_registration_defaults() {
+    fn does_not_fabricate_original_panel_registry() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
-        env.exec("RegisterUIPanel = nil; CloseAllWindows = nil; UIPanelWindows = nil")
-            .expect("fixture should clear panel globals");
-
-        {
-            let mut lua = env.lua.borrow_mut();
-            super::apply_bootstrap(&mut lua).expect("panel defaults should apply");
-        }
-
-        let result: String = env
-            .eval(
-                r#"
-                local panel = CreateFrame("Frame", "FallbackPanelRegistrationFrame", UIParent)
-                RegisterUIPanel(panel, { area = "center", pushable = 0, whileDead = 1 })
-                local entry = UIPanelWindows.FallbackPanelRegistrationFrame
-                if type(entry) ~= "table" then return "missing_entry" end
-                if entry.area ~= "center" or entry.pushable ~= 0 or entry.whileDead ~= 1 then
-                    return "bad_attributes"
-                end
-                if panel:GetAttribute("UIPanelLayout-defined") ~= true then return "defined_attribute" end
-                if panel:GetAttribute("UIPanelLayout-area") ~= "center" then return "area_attribute" end
-                if panel:GetAttribute("UIPanelLayout-pushable") ~= 0 then return "pushable_attribute" end
-                if panel.editModeManuallyShown ~= nil then return "direct_toggle_flag" end
-
-                RegisterUIPanel(panel, { area = "left", pushable = 3 })
-                if entry.area ~= "center" or entry.pushable ~= 0 then return "overwrote" end
-                if CloseAllWindows() ~= false then return "close_result" end
-
-                return "ok"
-                "#,
-            )
-            .expect("panel defaults probe should run");
-
-        assert_eq!(result, "ok");
+        env.exec("assert(RegisterUIPanel == nil and UIPanelWindows == nil)")
+            .expect("original panel owner has not loaded");
     }
 
     #[test]
