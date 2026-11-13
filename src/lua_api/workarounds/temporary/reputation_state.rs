@@ -147,6 +147,11 @@ C_Reputation.CollapseFactionHeader = function(index)
 end
 
 C_Reputation.ExpandFactionHeader = function(index)
+    if retailNativeReputationSemantics and index == 0 then
+        C_Reputation.ExpandAllFactionHeaders()
+        return
+    end
+
     local header = FindHeader(index)
     if header then
         header.isCollapsed = false
@@ -253,9 +258,11 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
         crate::client_profile::ClientProfile::Era
             | crate::client_profile::ClientProfile::Anniversary
     );
+    let retail_native_reputation_semantics =
+        crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail;
     let fixture_account_wide = crate::c_api::c_reputation::fixture_account_wide_default();
     lua.exec(&format!(
-        "local seedRetailReputationFixture = {seed_retail_fixture}\nlocal fixtureAccountWide = {fixture_account_wide}\n{REPUTATION_STATE_LUA}"
+        "local seedRetailReputationFixture = {seed_retail_fixture}\nlocal retailNativeReputationSemantics = {retail_native_reputation_semantics}\nlocal fixtureAccountWide = {fixture_account_wide}\n{REPUTATION_STATE_LUA}"
     ))?;
     Ok(())
 }
