@@ -48,9 +48,11 @@ fn check_spell_link_cost(env: &WowLuaEnv) {
         end
         local directData = C_TooltipInfo.GetSpellByID(19750)
         local linkedData = C_TooltipInfo.GetHyperlink('spell:19750')
-        assert(#directData.lines == #linkedData.lines)
+        assert(#directData.lines == #linkedData.lines,
+            'direct and linked spell tooltip row counts differ')
         for index, line in ipairs(directData.lines) do
-            assert(line.leftText == linkedData.lines[index].leftText)
+            assert(line.leftText == linkedData.lines[index].leftText,
+                'direct and linked spell tooltip text differs at row ' .. index)
         end
         tooltip:SetSpellByID(19750)
         local direct = textLines()
@@ -61,7 +63,8 @@ fn check_spell_link_cost(env: &WowLuaEnv) {
             assert(linked:find('Flash of Light'), linked)
             assert(linked:find('MANA'), linked)
             local name, id = tooltip:GetSpell()
-            assert(name == 'Flash of Light' and id == 19750)
+            assert(name == 'Flash of Light' and id == 19750,
+                'spell identity differs: ' .. tostring(name) .. '/' .. tostring(id))
         end
         tooltip:SetSpellByID(19750)
         assert(textLines():find('MANA'), textLines())
