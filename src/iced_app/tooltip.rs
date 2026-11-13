@@ -14,7 +14,9 @@ use crate::lua_api::tooltip::{
 };
 use crate::render::QuadBatch;
 use crate::render::font::WowFontSystem;
-use crate::render::glyph::{GlyphAtlas, emit_text_quads};
+use crate::render::glyph::{
+    GlyphAtlas, InlineTextRequest, InlineTextRun, emit_inline_markup_quads, emit_text_quads,
+};
 use crate::render::shader::GLYPH_ATLAS_TEX_INDEX;
 use crate::widget::{TextJustify, TextOutline};
 
@@ -165,7 +167,12 @@ pub(crate) fn measure_tooltip(
                 Some(content_width),
             )
         } else {
-            (font_size * 1.2).ceil()
+            legacy_line_height(
+                font_system,
+                &line.left_text,
+                line.right_text.as_deref(),
+                font_size,
+            )
         };
         if (native && total_height > 0.0) || (!native && i > 0) {
             total_height += line_spacing;
@@ -249,9 +256,9 @@ fn measure_native_tooltip(state: &mut SimState, id: u64, fonts: &mut WowFontSyst
             continue;
         }
         let (font, size, scale, spacing, smooth) = native_line_font(state, &td, index, false);
-        let text = native_line_text(state, &td, index, false, &line.left_text);
-        let measured = fonts.measure_text_height(
-            &text,
+        let text = native_line_markup(state, &td, index, false, &line.left_text);
+        let measured = fonts.measure_markup_height(
+            text,
             font.as_deref(),
             size,
             wrapped.then_some(wrap_width / scale),
@@ -301,8 +308,8 @@ fn native_right_text_height(
         return 0.0;
     }
     let (font, size, scale, spacing, smooth) = native_line_font(state, td, index, true);
-    let text = native_line_text(state, td, index, true, right_text);
-    fonts.measure_text_height(&text, font.as_deref(), size, None, spacing, smooth) * scale
+    let text = native_line_markup(state, td, index, true, right_text);
+    fonts.measure_markup_height(text, font.as_deref(), size, None, spacing, smooth) * scale
 }
 
 fn native_line_font(
@@ -337,6 +344,17 @@ fn native_line_text(
     right: bool,
     fallback: &str,
 ) -> String {
+    tooltip_visible_text(native_line_markup(state, td, index, right, fallback))
+}
+
+/// The line's text with its escapes, from its FontString when it has one.
+fn native_line_markup<'a>(
+    state: &'a SimState,
+    td: &crate::lua_api::tooltip::TooltipData,
+    index: usize,
+    right: bool,
+    fallback: &'a str,
+) -> &'a str {
     let ids = if right {
         &td.right_line_ids
     } else {
@@ -345,8 +363,7 @@ fn native_line_text(
     ids.get(index)
         .and_then(|id| state.widgets.get(*id))
         .and_then(|frame| frame.text.as_deref())
-        .map(tooltip_visible_text)
-        .unwrap_or_else(|| tooltip_visible_text(fallback))
+        .unwrap_or(fallback)
 }
 
 fn native_line_width(
@@ -365,8 +382,8 @@ fn native_line_width(
         return 0.0;
     }
     let (font, size, scale, _, _) = native_line_font(state, td, index, right);
-    let text = native_line_text(state, td, index, right, text);
-    fonts.measure_text_width(&text, font.as_deref(), size) * scale
+    let text = native_line_markup(state, td, index, right, text);
+    fonts.measure_markup_width(text, font.as_deref(), size) * scale
 }
 
 fn tooltip_column_gap(left: &str, right: Option<&str>, effective_scale: f32) -> f32 {
@@ -462,7 +479,24 @@ fn tooltip_line_has_width_text(line: &crate::lua_api::tooltip::TooltipLine) -> b
 }
 
 fn measure_tooltip_text_width(font_system: &mut WowFontSystem, text: &str, font_size: f32) -> f32 {
-    font_system.measure_text_width(&tooltip_visible_text(text), None, font_size)
+    font_system.measure_markup_width(text, None, font_size)
+}
+
+/// Height of an unwrapped legacy tooltip line: `ceil(1.2 × font size)`, or
+/// more when an inline icon on either side is taller.
+fn legacy_line_height(
+    font_system: &mut WowFontSystem,
+    left: &str,
+    right: Option<&str>,
+    font_size: f32,
+) -> f32 {
+    let line_height = (font_size * 1.2).ceil();
+    [Some(left), right]
+        .into_iter()
+        .flatten()
+        .filter(|text| crate::render::inline_markup::has_inline_icons(text))
+        .map(|text| font_system.measure_markup_height(text, None, font_size, None, 0.0, false))
+        .fold(line_height, f32::max)
 }
 
 fn measure_tooltip_text_height(
@@ -471,14 +505,7 @@ fn measure_tooltip_text_height(
     font_size: f32,
     wrap_width: Option<f32>,
 ) -> f32 {
-    font_system.measure_text_height(
-        &tooltip_visible_text(text),
-        None,
-        font_size,
-        wrap_width,
-        0.0,
-        false,
-    )
+    font_system.measure_markup_height(text, None, font_size, wrap_width, 0.0, false)
 }
 
 fn tooltip_visible_text(text: &str) -> String {
@@ -764,7 +791,12 @@ fn emit_tooltip_lines(
                 false,
             )
         } else {
-            line.measured_height * eff_scale
+            legacy_line_height(
+                text_renderer.font_sys,
+                &line.left_text,
+                line.right_text.as_deref(),
+                line.font_size,
+            ) * eff_scale
         };
 
         let left_origin = if matches!(
@@ -946,6 +978,7 @@ fn emit_left_tooltip_text(
             font_size,
             color: line.left_color,
             wrap: line.wrap,
+            icon_scale: font_size / line.font_size,
         },
     );
 }
@@ -973,6 +1006,7 @@ fn emit_right_tooltip_text(
             font_size,
             color: line.right_color,
             wrap: false,
+            icon_scale: effective_scale,
         },
     );
 }
@@ -986,6 +1020,8 @@ struct TooltipTextSegments<'a> {
     font_size: f32,
     color: [f32; 4],
     wrap: bool,
+    /// Screen pixels per UI unit, for inline icon sizes.
+    icon_scale: f32,
 }
 
 struct TooltipSegmentFlow {
@@ -999,6 +1035,10 @@ fn emit_tooltip_text_segments(
     tr: &mut TooltipTextRenderer<'_>,
     segment_run: TooltipTextSegments<'_>,
 ) {
+    if tooltip_text_has_inline_icons(segment_run) {
+        emit_inline_tooltip_text(tr, segment_run);
+        return;
+    }
     if segment_run.segments.is_empty() {
         emit_unsegmented_tooltip_text(tr, segment_run);
         return;
@@ -1008,6 +1048,72 @@ fn emit_tooltip_text_segments(
     for segment in segment_run.segments {
         emit_tooltip_segment_chunks(tr, segment_run, segment, &mut flow);
     }
+}
+
+fn tooltip_text_has_inline_icons(segment_run: TooltipTextSegments<'_>) -> bool {
+    use crate::render::inline_markup::has_inline_icons;
+    if segment_run.segments.is_empty() {
+        has_inline_icons(segment_run.text)
+    } else {
+        segment_run
+            .segments
+            .iter()
+            .any(|segment| has_inline_icons(&segment.text))
+    }
+}
+
+/// A line with `|T`/`|A` escapes: icons take room in the line, as in the
+/// client, instead of being dropped with the other markup.
+fn emit_inline_tooltip_text(
+    tr: &mut TooltipTextRenderer<'_>,
+    segment_run: TooltipTextSegments<'_>,
+) {
+    let runs: Vec<InlineTextRun<'_>> = if segment_run.segments.is_empty() {
+        vec![InlineTextRun {
+            text: segment_run.text,
+            color: segment_run.color,
+        }]
+    } else {
+        segment_run
+            .segments
+            .iter()
+            .map(|segment| InlineTextRun {
+                text: &segment.text,
+                color: segment.color,
+            })
+            .collect()
+    };
+    let line_height = (segment_run.font_size * 1.2).ceil();
+    let bounds = Rectangle::new(
+        segment_run.bounds.position(),
+        Size::new(
+            segment_run.bounds.width,
+            line_height.max(segment_run.bounds.height),
+        ),
+    );
+    emit_inline_markup_quads(
+        tr.batch,
+        tr.font_sys,
+        tr.glyph_atlas,
+        &InlineTextRequest {
+            runs: &runs,
+            bounds,
+            font_path: None,
+            font_size: segment_run.font_size,
+            icon_scale: segment_run.icon_scale,
+            justify_h: segment_run.justify,
+            justify_v: TextJustify::Left,
+            word_wrap: segment_run.wrap,
+            max_lines: 0,
+            spacing: 0.0,
+            smooth_scaling: false,
+            glyph_tex_index: GLYPH_ATLAS_TEX_INDEX,
+            shadow_color: None,
+            shadow_offset: (0.0, 0.0),
+            outline: TextOutline::None,
+            alpha: segment_run.color[3],
+        },
+    );
 }
 
 fn emit_unsegmented_tooltip_text(
@@ -1095,7 +1201,7 @@ fn measure_tooltip_segments_width(
         .iter()
         .map(|segment| {
             tr.font_sys
-                .measure_text_width(&segment.text, None, font_size)
+                .measure_markup_width(&segment.text, None, font_size)
         })
         .sum()
 }

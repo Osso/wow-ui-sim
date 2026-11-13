@@ -1,3 +1,7 @@
+## [2026-11-13] docs | Inline texture and atlas icons
+
+[Rendering pipeline](systems/rendering-pipeline.md#inline-icons-in-text) records how `|T` and `|A` escapes are parsed, laid out, drawn and measured, with icon sizes and line heights from a contributor measurement on WoW Forever 1.60.1; tests live in `crates/sim-render/src/inline_markup.rs`, `src/render/glyph/inline_emit.rs` and `tests/inline_icon_width.rs`.
+
 ## [2026-11-13] system | Mandatory host category camera zoom
 
 [Lua API](systems/lua-api.md#host-category-camera-zoom-r83d) records R83d's

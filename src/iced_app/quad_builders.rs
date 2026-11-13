@@ -3,7 +3,9 @@
 use iced::{Point, Rectangle, Size};
 
 use crate::render::font::WowFontSystem;
-use crate::render::glyph::{GlyphAtlas, emit_text_quads};
+use crate::render::glyph::{
+    GlyphAtlas, InlineTextRequest, InlineTextRun, emit_inline_markup_quads, emit_text_quads,
+};
 use crate::render::shader::GLYPH_ATLAS_TEX_INDEX;
 use crate::render::{BlendMode, QuadBatch};
 use crate::widget::{TextJustify, WidgetType};
@@ -202,6 +204,11 @@ pub(super) fn emit_widget_text_quads(
     let shadow = (f.shadow_color.a > 0.0).then(|| color_with_alpha(&f.shadow_color, layout.alpha));
     let clip_bounds = layout.bounds;
     let vert_before = text_renderer.batch.vertices.len();
+    if widget_text_has_inline_icons(f, layout.text) {
+        emit_widget_inline_text_quads(text_renderer, f, &layout, color, shadow);
+        clip_recent_quads(text_renderer.batch, vert_before, clip_bounds);
+        return;
+    }
     if !f.text_segments.is_empty() {
         emit_widget_text_segment_quads(text_renderer, f, layout, shadow);
         clip_recent_quads(text_renderer.batch, vert_before, clip_bounds);
@@ -230,6 +237,65 @@ pub(super) fn emit_widget_text_quads(
         fontstring_alpha_gradient(f),
     );
     clip_recent_quads(text_renderer.batch, vert_before, clip_bounds);
+}
+
+fn widget_text_has_inline_icons(f: &crate::widget::Frame, text: &str) -> bool {
+    use crate::render::inline_markup::has_inline_icons;
+    if f.text_segments.is_empty() {
+        has_inline_icons(text)
+    } else {
+        f.text_segments
+            .iter()
+            .any(|segment| has_inline_icons(&segment.text))
+    }
+}
+
+/// Text with `|T`/`|A` escapes: drawn piece by piece so the icons take room
+/// in the line. Color segments, when present, give the runs.
+fn emit_widget_inline_text_quads(
+    text_renderer: &mut WidgetTextRenderer<'_>,
+    f: &crate::widget::Frame,
+    layout: &WidgetTextLayout<'_>,
+    color: [f32; 4],
+    shadow: Option<[f32; 4]>,
+) {
+    let runs: Vec<InlineTextRun<'_>> = if f.text_segments.is_empty() {
+        vec![InlineTextRun {
+            text: layout.text,
+            color,
+        }]
+    } else {
+        f.text_segments
+            .iter()
+            .map(|segment| InlineTextRun {
+                text: &segment.text,
+                color: color_with_alpha(&segment.color, layout.alpha),
+            })
+            .collect()
+    };
+    emit_inline_markup_quads(
+        text_renderer.batch,
+        text_renderer.font_sys,
+        text_renderer.glyph_atlas,
+        &InlineTextRequest {
+            runs: &runs,
+            bounds: layout.bounds,
+            font_path: f.font.as_deref(),
+            font_size: f.font_size * f.effective_scale,
+            icon_scale: f.effective_scale,
+            justify_h: layout.justify_h,
+            justify_v: layout.justify_v,
+            word_wrap: layout.word_wrap,
+            max_lines: layout.max_lines,
+            spacing: f.text_line_spacing * f.effective_scale,
+            smooth_scaling: f.font_string_smooth_scaling,
+            glyph_tex_index: GLYPH_ATLAS_TEX_INDEX,
+            shadow_color: shadow,
+            shadow_offset: screen_shadow_offset(f),
+            outline: f.font_outline,
+            alpha: layout.alpha,
+        },
+    );
 }
 
 fn emit_widget_text_segment_quads(

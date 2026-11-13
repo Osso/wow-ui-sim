@@ -660,7 +660,33 @@ fn frame_text_scale_value(state: &LuaState, id: u64) -> f64 {
 
 pub(super) fn measure_text_width(state: &LuaState, id: u64) -> f64 {
     let (text, font, font_size) = frame_text_measurement(state, id);
+    if let Some(markup) = frame_inline_icon_markup(state, id) {
+        // Inline |T/|A icons take their width in the line, scaled with the
+        // text like the glyphs around them.
+        let text_scale = frame_text_scale_value(state, id);
+        let line_height =
+            crate::render::font::line_height_for_font_size(font_size, false).unwrap_or(font_size);
+        let unscaled =
+            crate::render::inline_markup::first_line_width(&markup, line_height, |piece| {
+                (measure_width_in_frame_font(state, id, piece, font.as_deref(), font_size)
+                    / text_scale) as f32
+            });
+        return f64::from(unscaled) * text_scale;
+    }
     measure_width_in_frame_font(state, id, &text, font.as_deref(), font_size)
+}
+
+/// The measured text with its escapes, when it holds an inline icon.
+fn frame_inline_icon_markup(state: &LuaState, id: u64) -> Option<String> {
+    let sim = borrow_state(state).expect("sim state should exist");
+    let frame = sim.widgets.get(id)?;
+    let measurement_frame = frame
+        .children_keys
+        .get("Text")
+        .and_then(|&child_id| sim.widgets.get(child_id))
+        .unwrap_or(frame);
+    frame_text_value(&sim, measurement_frame, false)
+        .filter(|text| crate::render::inline_markup::has_inline_icons(text))
 }
 
 fn measure_width_in_frame_font(
@@ -699,9 +725,6 @@ pub(super) fn get_unbounded_string_width_for_text(state: &mut LuaState) -> LuaRe
 
 fn measure_text_height(state: &LuaState, id: u64, wrap_width: Option<f32>) -> f64 {
     let (text, font, font_size) = frame_text_measurement(state, id);
-    if text.is_empty() {
-        return 0.0;
-    }
     let text_scale = frame_text_scale_value(state, id);
     let (spacing, smooth_scaling) = borrow_state(state)
         .expect("sim state should exist")
@@ -709,21 +732,47 @@ fn measure_text_height(state: &LuaState, id: u64, wrap_width: Option<f32>) -> f6
         .get(id)
         .map(|frame| (frame.text_line_spacing, frame.font_string_smooth_scaling))
         .unwrap_or((0.0, false));
+    let markup = frame_inline_icon_markup(state, id);
+    if text.is_empty() && markup.is_none() {
+        return 0.0;
+    }
     if let Some(app) = state.app_data::<crate::lua_api::env::WowLuaAppData>()
         && let Some(font_system) = app.font_system.as_ref()
     {
-        return font_system.borrow_mut().measure_text_height(
-            &text,
-            font.as_deref(),
-            font_size,
-            wrap_width,
-            spacing,
-            smooth_scaling,
-        ) as f64
-            * text_scale;
+        let mut font_system = font_system.borrow_mut();
+        let height = match markup.as_deref() {
+            // Inline |T/|A icons: one line at least, lines raised to tall icons.
+            Some(markup) => font_system.measure_markup_height(
+                markup,
+                font.as_deref(),
+                font_size,
+                wrap_width,
+                spacing,
+                smooth_scaling,
+            ),
+            None => font_system.measure_text_height(
+                &text,
+                font.as_deref(),
+                font_size,
+                wrap_width,
+                spacing,
+                smooth_scaling,
+            ),
+        };
+        return height as f64 * text_scale;
     }
-    approximate_text_height(&text, font_size, wrap_width, spacing, smooth_scaling) as f64
-        * text_scale
+    let mut height = approximate_text_height(&text, font_size, wrap_width, spacing, smooth_scaling);
+    if let Some(markup) = markup
+        && let Some(line_height) =
+            crate::render::font::line_height_for_font_size(font_size, smooth_scaling)
+    {
+        let raised: f32 = crate::render::inline_markup::line_heights(&markup, line_height)
+            .iter()
+            .map(|line| line - line_height)
+            .sum();
+        height = height.max(line_height) + raised;
+    }
+    height as f64 * text_scale
 }
 
 pub(super) fn get_string_width(state: &mut LuaState) -> LuaResult<u32> {

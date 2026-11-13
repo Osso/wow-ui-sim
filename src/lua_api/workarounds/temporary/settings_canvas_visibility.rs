@@ -1,13 +1,13 @@
 //! Temporary Settings canvas visibility workaround.
 //!
 //! Real WoW registers Settings canvas categories without displaying their
-//! frames. Keep the original Retail registration behavior, and retain the
-//! existing visibility policy for opening categories and for other profiles.
+//! frames. Keep the original Retail registration and category switching, and retain the
+//! existing visibility policy for other profiles.
 
 use crate::lua_api::WowLuaEnv;
 
 pub(crate) const SETTINGS_CANVAS_LAYOUT_HIDE_LUA: &str = r#"
-local preserveRetailRegistration = ...
+local preserveRetailBehavior = ...
 
 local function __wow_hide_settings_canvas_frame(frame, layout)
     if type(frame) ~= "table" or type(frame.Hide) ~= "function" then
@@ -97,7 +97,7 @@ local function __wow_patch_settings_canvas_registration()
         return
     end
 
-    if not preserveRetailRegistration and type(Settings.RegisterCanvasLayoutCategory) == "function" then
+    if not preserveRetailBehavior and type(Settings.RegisterCanvasLayoutCategory) == "function" then
         local original = Settings.RegisterCanvasLayoutCategory
         Settings.RegisterCanvasLayoutCategory = function(frame, ...)
             local category, layout = original(frame, ...)
@@ -106,7 +106,7 @@ local function __wow_patch_settings_canvas_registration()
         end
     end
 
-    if not preserveRetailRegistration and type(Settings.RegisterCanvasLayoutSubcategory) == "function" then
+    if not preserveRetailBehavior and type(Settings.RegisterCanvasLayoutSubcategory) == "function" then
         local original = Settings.RegisterCanvasLayoutSubcategory
         Settings.RegisterCanvasLayoutSubcategory = function(parentCategory, frame, ...)
             local category, layout = original(parentCategory, frame, ...)
@@ -115,7 +115,7 @@ local function __wow_patch_settings_canvas_registration()
         end
     end
 
-    if type(Settings.OpenToCategory) == "function" then
+    if not preserveRetailBehavior and type(Settings.OpenToCategory) == "function" then
         local original = Settings.OpenToCategory
         Settings.OpenToCategory = function(...)
             local result = original(...)
