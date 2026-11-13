@@ -58,7 +58,8 @@ fn selected_chat_message_consumer_runs_original_filter_owner() {
 #[cfg(any(
     feature = "client-retail",
     feature = "client-ptr",
-    feature = "client-wowforever"
+    feature = "client-wowforever",
+    feature = "client-mists"
 ))]
 // PRESERVATION: Communities consumes the original ChatFrameUtil color and local-ID owners.
 #[test]
