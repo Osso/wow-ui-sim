@@ -82,7 +82,10 @@ fn a_tall_icon_raises_the_line() {
             "#,
         )
         .unwrap();
-    assert!(text < 32.0 && (tall - 32.0).abs() < 0.01, "text {text}, tall {tall}");
+    assert!(
+        text < 32.0 && (tall - 32.0).abs() < 0.01,
+        "text {text}, tall {tall}"
+    );
 }
 
 #[test]
@@ -116,6 +119,64 @@ fn text_scale_scales_the_icons_with_the_glyphs() {
     assert!(
         (with_icon - plain - 20.0).abs() < 0.01,
         "plain {plain}, with icon {with_icon}"
+    );
+}
+
+#[test]
+fn string_metrics_are_local_to_fontstring_scale() {
+    let env = WowLuaEnv::new().unwrap();
+    let (width_before, height_before, width_after, height_after): (f64, f64, f64, f64) = env
+        .eval(
+            r#"
+            local fs = UIParent:CreateFontString(nil, "ARTWORK")
+            fs:SetFont("Fonts\\FRIZQT__.TTF", 12, "")
+            fs:SetText("R88d scale probe")
+            local width, height = fs:GetStringWidth(), fs:GetStringHeight()
+            fs:SetScale(2)
+            return width, height, fs:GetStringWidth(), fs:GetStringHeight()
+            "#,
+        )
+        .unwrap();
+    assert!(
+        (width_before - width_after).abs() < 0.01,
+        "width before {width_before}, after {width_after}"
+    );
+    assert!(
+        (height_before - height_after).abs() < 0.01,
+        "height before {height_before}, after {height_after}"
+    );
+}
+
+#[test]
+fn tooltip_height_adds_each_left_fontstring_row() {
+    let env = WowLuaEnv::new().unwrap();
+    let (one_row, two_rows, three_rows): (f64, f64, f64) = env
+        .eval(
+            r#"
+            GameTooltip:ClearLines()
+            GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
+            GameTooltip:AddLine("Repeated row")
+            GameTooltip:Show()
+            local one = GameTooltip:GetHeight()
+            GameTooltip:AddLine("Repeated row")
+            GameTooltip:Show()
+            local two = GameTooltip:GetHeight()
+            GameTooltip:AddLine("Repeated row")
+            GameTooltip:Show()
+            return one, two, GameTooltip:GetHeight()
+            "#,
+        )
+        .unwrap();
+    let second_row = two_rows - one_row;
+    let third_row = three_rows - two_rows;
+    assert!(second_row > 0.0, "one row {one_row}, two rows {two_rows}");
+    assert!(
+        third_row > 0.0,
+        "two rows {two_rows}, three rows {three_rows}"
+    );
+    assert!(
+        (second_row - third_row).abs() < 0.01,
+        "second row {second_row}, third row {third_row}"
     );
 }
 
