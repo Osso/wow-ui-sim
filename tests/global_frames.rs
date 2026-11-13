@@ -455,56 +455,6 @@ fn test_alert_frame_queued_subsystem_tracks_queue_and_priority() {
 }
 
 #[test]
-fn test_edit_mode_default_position_follows_system_info_without_override() {
-    let env = env();
-    let (before_init, before_default, after_init, after_default, reset_default): (
-        bool,
-        bool,
-        bool,
-        bool,
-        bool,
-    ) = env
-        .eval(
-            r#"
-        local frame = CreateFrame("Frame", "EditModeFallbackFrame", UIParent)
-        local beforeInit = frame:IsInitialized()
-        local beforeDefault = frame:IsInDefaultPosition()
-
-        frame.systemInfo = { isInDefaultPosition = true }
-        local afterInit = frame:IsInitialized()
-        local afterDefault = frame:IsInDefaultPosition()
-
-        frame.systemInfo.isInDefaultPosition = false
-        return beforeInit, beforeDefault, afterInit, afterDefault, frame:IsInDefaultPosition()
-    "#,
-        )
-        .unwrap();
-
-    assert!(!before_init);
-    assert!(!before_default);
-    assert!(after_init);
-    assert!(after_default);
-    assert!(!reset_default);
-}
-
-#[test]
-fn test_edit_mode_manager_initialized_follows_layout_info_without_override() {
-    let env = env();
-    let (before, after): (bool, bool) = env
-        .eval(
-            r#"
-        local before = EditModeManagerFrame:IsInitialized()
-        EditModeManagerFrame.layoutInfo = { layouts = {} }
-        return before, EditModeManagerFrame:IsInitialized()
-    "#,
-        )
-        .unwrap();
-
-    assert!(!before);
-    assert!(after);
-}
-
-#[test]
 fn test_container_frame_container_has_container_frames() {
     let env = env();
     let is_table: bool = env

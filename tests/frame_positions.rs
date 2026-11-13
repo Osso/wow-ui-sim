@@ -109,13 +109,15 @@ const POSITION_TESTS: &[TestCase] = &[
     ("player_frame",               "PlayerFrame",                    268.0,  850.0,  232.0, 100.0, 1.0),
     ("target_frame",               "TargetFrame",                   1100.0,  850.0,  232.0, 100.0, 1.0),
     ("focus_frame",                "FocusFrame",                    1320.0,  835.0, 232.0, 100.0, 1.0),
-    ("paladin_power_bar",          "PaladinPowerBarFrame",           314.0,  945.0,  150.0,  43.0, 1.0),
+    // VERIFIED in Retail source: PaladinPowerBarFrame inherits PlayerBottomManagedFrameTemplate without an EditMode system template, so the original OnShow -> AddManagedFrame path replaces its XML anchor with the player-container layout.
+    ("paladin_power_bar",          "PaladinPowerBarFrame",           341.5,  922.0,  150.0,  43.0, 1.0),
     ("party_frame",                "PartyFrame",                      22.0,  147.0,  120.0, 244.0, 1.0),
     ("compact_party_frame",        "CompactPartyFrame",               22.0,  147.0,   98.0, 234.0, 1.0),
     // HUD elements
     ("minimap",                    "Minimap",                       1391.0,   44.0,  198.0, 198.0, 1.0),
     ("minimap_cluster",            "MinimapCluster",                1360.0,    0.0,  240.0, 252.0, 1.0),
-    ("objective_tracker",          "ObjectiveTrackerFrame",         1335.0,  260.0,  260.0, 847.5, 1.0),
+    // VERIFIED from Retail source: the one-unit widget row and 10-unit spacing move the tracker down 11 and reduce its height by 11.
+    ("objective_tracker",          "ObjectiveTrackerFrame",         1335.0,  271.0,  260.0, 836.5, 1.0),
     ("bags_bar",                   "BagsBar",                       1386.0, 1104.0,  208.0,  47.0, 1.0),
     ("micro_button_bags_bar",      "MicroButtonAndBagsBar",         1362.0, 1114.0,  232.0,  80.0, 1.0),
     ("micro_menu",                 "MicroMenu",                     1265.0, 1154.0,  329.0,  40.0, 1.0),
@@ -236,9 +238,11 @@ fn expected_position(test: TestCase) -> TestCase {
             1.0,
         ),
         (ClientProfile::Mists, "paladin_power_bar") => {
-            // Mists/PaladinPowerBar.xml:49-51: 136x39, TOP to PlayerFrame
-            // BOTTOM (25,35). Classic/PlayerFrame.xml:14: height100.
-            // x = 268 + 232/2 + 25 - 136/2; y = 850 + 100 - 35.
+            // The XML template routes this plain frame through UIParent's managed-frame layout:
+            // PlayerFrameTemplates.xml:4-9 selects PlayerFrameBottomManagedFramesContainer;
+            // PlayerFrame.xml:381-387 gives it width160 and TOP at PlayerFrame BOTTOM (10,36).
+            // PaladinPowerBar.xml:54-55 adds leftPadding30/topPadding1. LayoutFrame.lua:347-349
+            // centers with a +15 x offset and -1 y offset, preserving the XML rect (341,915).
             (name, "PaladinPowerBar", 341.0, 915.0, 136.0, 39.0, 1.0)
         }
         (ClientProfile::Mists, "bags_bar") => {
@@ -398,6 +402,27 @@ fn assert_chat_edit_box_layout(env: &WowLuaEnv) {
     );
 }
 
+fn assert_below_minimap_widget_container_layout(env: &WowLuaEnv) {
+    env.exec(
+        r#"
+        local widgetContainer = UIWidgetBelowMinimapContainerFrame
+        assert(widgetContainer:IsShown(), "below-minimap widget container is shown")
+        assert(widgetContainer:GetParent() == RightManagedFrameContainer, "widget container parent")
+        assert(widgetContainer.IsInDefaultPosition == nil, "plain managed widget container has no EditMode method")
+        assert(widgetContainer.layoutIndex == 1, "widget container is first in layout order")
+        assert(widgetContainer:GetNumWidgetsShowing() == 0, "empty widget container")
+        assert(widgetContainer:GetHeight() == 1, "empty resize-layout frame uses the source default size")
+
+        local widgetIsLaidOut = false
+        for _, child in ipairs(RightManagedFrameContainer:GetLayoutChildren()) do
+            widgetIsLaidOut = widgetIsLaidOut or child == widgetContainer
+        end
+        assert(widgetIsLaidOut, "plain widget container participates in managed layout")
+        "#,
+    )
+    .expect("plain below-minimap widget container must participate in managed layout");
+}
+
 fn assert_objective_tracker_layout(env: &WowLuaEnv) {
     let (container_x, container_y, container_width, container_height) =
         frame_rect(env, "RightManagedFrameContainer");
@@ -405,9 +430,9 @@ fn assert_objective_tracker_layout(env: &WowLuaEnv) {
         env,
         "ObjectiveTrackerFrame",
         container_x,
-        container_y + 15.0,
+        container_y + 26.0,
         container_width,
-        container_height - 15.0,
+        container_height - 26.0,
         1.0,
     );
 }
@@ -726,6 +751,14 @@ fn assert_layout_state(env: &WowLuaEnv, test: &str) {
             assert_mists_chat_frame_position_inputs(env);
         }
     }
+    if test == "objective_tracker"
+        && matches!(
+            ACTIVE,
+            ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
+        )
+    {
+        assert_below_minimap_widget_container_layout(env);
+    }
     let assertion = match (ACTIVE, test) {
         (
             ClientProfile::Mists | ClientProfile::Era | ClientProfile::Anniversary,
@@ -821,11 +854,11 @@ fn assert_layout_state(env: &WowLuaEnv, test: &str) {
         }
         (ClientProfile::Mists, "paladin_power_bar") => {
             r#"
-            assert(PaladinPowerBar:GetParent() == PlayerFrame)
+            assert(PaladinPowerBar:GetParent() == PlayerFrameBottomManagedFramesContainer)
             assert(PaladinPowerBar:GetWidth() == 136 and PaladinPowerBar:GetHeight() == 39)
             local point, relative, relativePoint, x, y = PaladinPowerBar:GetPoint(1)
-            assert(point == "TOP" and relative == PlayerFrame and relativePoint == "BOTTOM")
-            assert(x == 25 and y == 35)
+            assert(point == "TOP" and relative == PlayerFrameBottomManagedFramesContainer and relativePoint == "TOP")
+            assert(x == 15 and y == -1)
             "#
         }
         (ClientProfile::Retail, "objective_tracker") => {
@@ -833,8 +866,10 @@ fn assert_layout_state(env: &WowLuaEnv, test: &str) {
             assert(ObjectiveTrackerFrame:IsInDefaultPosition(), "tracker default-position state")
             assert(ObjectiveTrackerFrame:GetParent() == RightManagedFrameContainer, "tracker parent")
             local _, relative, _, _, offsetY = ObjectiveTrackerFrame:GetPoint(1)
-            assert(relative == RightManagedFrameContainer and offsetY == 0, "tracker anchor")
-            assert(math.abs(ObjectiveTrackerFrame:GetHeight() - RightManagedFrameContainer:GetHeight()) < 0.001, "tracker height")
+            assert(relative == RightManagedFrameContainer and offsetY == -11,
+                "one-unit widget row plus ten-unit container spacing")
+            assert(math.abs(ObjectiveTrackerFrame:GetHeight() - (RightManagedFrameContainer:GetHeight() - 11)) < 0.001,
+                "tracker height follows the preceding managed widget row")
             "#
         }
         (ClientProfile::Ptr | ClientProfile::WowForever, "objective_tracker") => {
@@ -842,8 +877,10 @@ fn assert_layout_state(env: &WowLuaEnv, test: &str) {
             assert(ObjectiveTrackerFrame:IsInDefaultPosition(), "tracker default-position state")
             assert(ObjectiveTrackerFrame:GetParent() == RightManagedFrameContainer, "tracker parent")
             local _, relative, _, _, offsetY = ObjectiveTrackerFrame:GetPoint(1)
-            assert(relative == RightManagedFrameContainer and offsetY == -15, "tracker native top padding")
-            assert(math.abs(ObjectiveTrackerFrame:GetHeight() - (RightManagedFrameContainer:GetHeight() - 15)) < 0.001, "tracker native top-padded height")
+            assert(relative == RightManagedFrameContainer and offsetY == -26,
+                "one-unit widget row, ten-unit spacing, and fifteen-unit top padding")
+            assert(math.abs(ObjectiveTrackerFrame:GetHeight() - (RightManagedFrameContainer:GetHeight() - 26)) < 0.001,
+                "tracker height follows its managed top padding and preceding widget row")
             "#
         }
         _ => return,
