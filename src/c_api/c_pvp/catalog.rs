@@ -1,4 +1,6 @@
 //! Explicit PvP catalog/eligibility snapshots; queue requests use the existing queue.
+use std::collections::BTreeMap;
+
 use crate::lua_api::methods::{
     borrow_state, create_string, create_table, table_set, val_to_string,
 };
@@ -25,9 +27,19 @@ pub struct BattlegroundInfo {
     pub is_training_ground: bool,
 }
 
-/// INFERRED empty/disabled defaults. Acquisition, matchmaking and rewards are not fabricated.
+/// INFERRED mapping from a local UI declaration; native field mapping is unknown.
+#[derive(Debug, Clone, Default)]
+pub struct HonorRewardInfo {
+    pub honor_level_name: String,
+    pub badge_file_data_id: u32,
+    pub achievement_rewarded_id: u32,
+}
+
+/// INFERRED empty/disabled defaults; no reward records are fabricated.
 #[derive(Debug, Default)]
 pub struct PvpCatalog {
+    /// Host-supplied reward rows keyed by honor level; empty by default.
+    pub honor_rewards: BTreeMap<i32, HonorRewardInfo>,
     pub battlegrounds: Vec<BattlegroundInfo>,
     pub training_enabled: bool,
     pub training_eligible: bool,

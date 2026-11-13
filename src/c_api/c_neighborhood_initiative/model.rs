@@ -8,6 +8,8 @@ pub struct NeighborhoodInitiativeState {
     pub active_neighborhood: String,
     pub viewing_neighborhood: String,
     pub neighborhoods: BTreeMap<String, NeighborhoodInitiativeInfo>,
+    /// Host-supplied XP and used-XP inputs, keyed by neighborhood GUID.
+    pub house_experience: BTreeMap<String, HouseExperienceInput>,
     pub activity_logs: BTreeMap<String, InitiativeActivityLogInfo>,
     pub required_level: i32,
     /// Entitlement is separate from the level gate, as the dashboard probes both.
@@ -23,6 +25,7 @@ impl Default for NeighborhoodInitiativeState {
             active_neighborhood: String::new(),
             viewing_neighborhood: String::new(),
             neighborhoods: BTreeMap::new(),
+            house_experience: BTreeMap::new(),
             activity_logs: BTreeMap::new(),
             // INFERRED: unconfigured host policy permits level 1; no native default claimed.
             required_level: 1,
@@ -31,6 +34,13 @@ impl Default for NeighborhoodInitiativeState {
             pending_requests: BTreeMap::new(),
         }
     }
+}
+
+/// Supplied XP values for the verified available-house-XP calculation.
+#[derive(Clone, Copy, Debug, Default)]
+pub struct HouseExperienceInput {
+    pub total_xp: u32,
+    pub used_xp: u32,
 }
 
 #[derive(Clone, Debug, Default, Serialize)]
