@@ -262,6 +262,7 @@ fn tainted_secretwrap_does_not_reject_a_marked_number() {
         r#"
         local marked = secretwrap(136243)
         local function addon()
+            assert(not issecure(), 'secretwrap probe must run with a tainted source')
             local ok, err = pcall(secretwrap, marked)
             assert(ok, err)
         end
