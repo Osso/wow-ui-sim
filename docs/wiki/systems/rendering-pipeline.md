@@ -108,6 +108,18 @@ Follow-ups `4e344ab4f` and `1ecc0c98c` cache cumulative offsets only for one ren
 
 The [font-source contract](../../specs/font-sources.md) separates simulator file-loading policy from native evidence. Resolved addon font files must remain under their canonical AddOns root, including when paths contain symlinks. The missing-file native assertion is currently optional; the combined-tree runtime gate has not run.
 
+## Inline icons in text
+
+Text may hold texture escapes, `|Tpath-or-fileID:height:width:offsetX:offsetY:texWidth:texHeight:left:right:top:bottom:r:g:b|t`, and atlas escapes, `|A:atlas:height:width:offsetX:offsetY:r:g:b|a` (Blizzard's `CreateAtlasMarkup` writes the colon after `|A`; without it the escape parses the same). Every field after the path or atlas name is optional. `sim_render::inline_markup` splits a string into text pieces, with colors and hyperlinks stripped as by `strip_wow_markup`, and icons. A texture escape without a height takes no room; a height of 0 is the height of one line of text, and a missing or zero width is the icon's height. An atlas escape without a width, or with a width of 0, is a square one line high whatever its height. Offsets are in UI units with y up, the texel rectangle becomes texture coordinates of `texWidth`×`texHeight`, and the 0–255 color tints the icon.
+
+FontStrings, their color segments and GameTooltip lines that hold an icon are laid out piece by piece (`src/render/glyph/inline_emit.rs`): text pieces are shaped and drawn as before, each icon becomes a textured quad as wide as it is, a line is as high as its text or its tallest icon with text and icons centered on it, and word wrap may move an icon to the next line. An atlas draws its own `@crop:` region of the atlas file; a file ID resolves through the interface manifest; an unknown atlas or file ID draws nothing but keeps its room. Text without icons takes the unchanged paths.
+
+`WowFontSystem::measure_markup_width` measures the first line with the icons' widths; `GetStringWidth`, FontString auto-width and GameTooltip width selection use it, so a tooltip line with icons is as wide as its text plus its icons. `WowFontSystem::measure_markup_height` makes a text of icons alone one line high and raises each line to its tallest icon; `GetStringHeight` and the tooltip line heights use it. Word wrap is measured on the text without the icons.
+
+**Client measurement** (contributor, WoW Forever 1.60.1 build 70938, `FontString` with `Fonts\FRIZQT__.TTF` at 12, where `X` measures 10.54 × 12.30): `|T…:12|t` and `|A:…:12:12|a` are 11.95 wide; `|T…:0|t`, `|T…:0:0|t`, `|A:…:12:0|a` and `|A:…:0:0|a` are 12.30, the line height; `|T…|t` without a size is 0 wide; `|A:…:24:0|a` draws a square one line high; `X` with a 32-high icon is 31.86 high; `|TInterface\Buttons\WHITE8X8:1:110|t` alone is 109.53 × 12.30. The simulator's line height is `ceil(1.2 × size)` (15 for 12), so its size-0 icons are 15. Typed into the chat, `|` arrives as `||` and the escape as text; the probes build it with `"\124"`.
+
+**UNVERIFIED native claims:** Retail sizes (only Forever was measured), the small shrink of explicit sizes (11.95 for 12, 31.86 for 32, not modeled), an atlas escape with a width but no height, and the vertical centering of text next to a tall icon beyond the probe's screenshot.
+
 ## FontString smooth scaling
 
 `0624da720` adds independent `Frame.font_string_smooth_scaling`, shared fractional line-height shaping, mode-keyed caches, and ordinary/runtime/inherited XML handling under retail 12.0.5+. `3c8b48012` adds wrapped render/cache measurement assertions. Contract, inferred-policy boundaries, RED provenance, current GREEN status, earlier XML epoch gap, and future native recorder live in [FontString smooth scaling](../../specs/fontstring-smooth-scaling.md). No native/GPU visual proof is claimed.
@@ -128,6 +140,9 @@ The headless path is implemented in `src/render/headless.rs` and uses the same W
 ## Sources
 
 - [font.rs](../../../src/render/font.rs) — CASC fonts, addon fonts and the pinned fallback family
+- [inline_markup.rs](../../../crates/sim-render/src/inline_markup.rs) — inline `|T`/`|A` escape fields, sizes and first-line width
+- [inline_emit.rs](../../../src/render/glyph/inline_emit.rs) — inline icon layout and quads
+- [TextureUtil.lua](https://github.com/Gethe/wow-ui-source/blob/live/Interface/AddOns/Blizzard_SharedXMLBase/TextureUtil.lua) — `CreateTextureMarkup` and `CreateAtlasMarkup`, the escape formats Blizzard writes
 - [FontString smooth scaling](../../specs/fontstring-smooth-scaling.md) — inferred height policy, tests, scope and future native probe
 
 - [rendering-pipeline.md](../../rendering-pipeline.md) — QuadBatch, shaders, atlas, hit testing, alpha, text
