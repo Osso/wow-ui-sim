@@ -8,6 +8,7 @@
     )
 ))]
 
+// PRESERVATION: the selected ChatFrame owner replaces the bootstrap filter before its consumer runs.
 #[test]
 fn selected_chat_message_consumer_runs_original_filter_owner() {
     crate::common::blizzard_addon_harness::with_blizzard_addon_smoke_shape(
@@ -59,6 +60,7 @@ fn selected_chat_message_consumer_runs_original_filter_owner() {
     feature = "client-ptr",
     feature = "client-wowforever"
 ))]
+// PRESERVATION: Communities consumes the original ChatFrameUtil color and local-ID owners.
 #[test]
 fn selected_communities_consumer_uses_original_channel_color_and_local_id() {
     crate::common::blizzard_addon_harness::with_blizzard_addon_smoke_shape(
@@ -136,6 +138,7 @@ fn selected_communities_consumer_uses_original_channel_color_and_local_id() {
     feature = "client-ptr",
     feature = "client-wowforever"
 ))]
+// PRESERVATION: the original CombatLogProcessor inbound owner serves the selected ChatConfig consumer.
 #[test]
 fn selected_combat_log_preview_uses_original_inbound_owner() {
     crate::common::blizzard_addon_harness::with_blizzard_addon_smoke_shape(

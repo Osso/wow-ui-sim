@@ -8,6 +8,7 @@
     )
 ))]
 
+// RED: the former post-load fanout adds an art update that the original OnEvent does not perform.
 #[test]
 fn selected_actionbar_event_consumer_uses_original_fanout() {
     crate::common::blizzard_addon_harness::with_blizzard_addon_smoke_shape(
