@@ -8,13 +8,14 @@ use crate::lua_api::frame::methods::methods_helpers::{
 };
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, frame_id_from_stack, val_to_string};
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
-use rilua::LuaResult;
-#[cfg(feature = "retail-12-1-0")]
-use rilua::Val;
 use rilua::vm::{gc::arena::GcRef, state::LuaState, table::Table};
+use rilua::{LuaResult, Val};
 
 /// `GetRolesetNames` result for a frame without tags.
 const ROLELESS: &str = "roleless";
+
+/// INFERRED from the native optional-string argument convention.
+const SET_ROLESETS_USAGE: &str = "Usage: self:SetRolesets([rolesetsString])";
 
 pub(super) fn register(state: &mut LuaState, table: GcRef<Table>) -> LuaResult<()> {
     table_set_rust_fn_static(state, table, "AddRoleset", add_roleset)?;
@@ -49,6 +50,15 @@ fn roleset_arg(state: &LuaState) -> Option<String> {
     val_to_string(state, stack_val(state, 2))
 }
 
+fn set_rolesets_arg(state: &LuaState) -> LuaResult<Option<String>> {
+    match stack_val(state, 2) {
+        Val::Nil => Ok(None),
+        Val::Num(number) => Ok(Some(number.to_string())),
+        value @ Val::Str(_) => Ok(val_to_string(state, value)),
+        _ => Err(rilua::runtime_error(SET_ROLESETS_USAGE)),
+    }
+}
+
 fn add_roleset(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
     if !can_change_protected_state_for(state, id) {
@@ -68,7 +78,7 @@ fn add_roleset(state: &mut LuaState) -> LuaResult<u32> {
 /// `SetRolesets("a,b")` assigns comma-separated tags; nil clears them.
 fn set_rolesets(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
-    let names = roleset_arg(state).map(|list| split_roleset_list(&list));
+    let names = set_rolesets_arg(state)?.map(|list| split_roleset_list(&list));
     if !can_change_protected_state_for(state, id) {
         emit_addon_action_blocked(state, id, "SetRolesets");
         return Ok(0);
