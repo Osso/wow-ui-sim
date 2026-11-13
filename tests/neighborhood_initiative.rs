@@ -1,3 +1,5 @@
+#![cfg(feature = "client-retail")]
+
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 fn env() -> WowLuaEnv {
