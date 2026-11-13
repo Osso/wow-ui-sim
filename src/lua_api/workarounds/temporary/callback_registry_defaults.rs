@@ -87,12 +87,6 @@ if type(EventRegistry) ~= "table" then
   EventRegistry:OnLoad()
 end
 
-if type(EventRegistry.RegisterFrameEventAndCallback) ~= "function" then
-  function EventRegistry:RegisterFrameEventAndCallback(eventName, callback, owner)
-    return self:RegisterCallback(eventName, callback, owner)
-  end
-end
-
 if type(CVarCallbackRegistry) ~= "table" then
   CVarCallbackRegistry = CreateFromMixins(CallbackRegistryMixin)
   CVarCallbackRegistry:OnLoad()
@@ -256,7 +250,6 @@ mod tests {
             .eval(
                 r#"
                 if type(CallbackRegistryMixin.RegisterCallback) ~= "function" then return "register" end
-                if type(EventRegistry.RegisterFrameEventAndCallback) ~= "function" then return "frame_event" end
                 if type(CVarCallbackRegistry.SetCVarCachable) ~= "function" then return "cvar" end
                 if type(CallbackRegistrantMixin.AddStaticEventMethod) ~= "function" then return "registrant" end
 

@@ -158,3 +158,6 @@ wrath_legacy_lod_retail_preservation
 
 # lt-2897: original Retail consumer regression; explicitly requested optional.
 objective_tracker_original_animation
+
+# lt-2897 B(a): ownership/preservation diagnostic, not claimed RED.
+quest_helper_load_ownership

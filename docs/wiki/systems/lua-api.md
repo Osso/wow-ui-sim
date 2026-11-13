@@ -577,7 +577,7 @@ C_Timer (After, NewTimer, NewTicker), C_Map (stub), C_Item (`IsConsumableItem`, 
 
 **Guild management** — `C_GuildInfo.Invite(name)`, `Uninvite(name)`, `Promote(name)`, and `Leave()` share the state-backed handlers used by the deprecated `GuildInvite`, `GuildUninvite`, `GuildPromote`, and `GuildLeave` globals. They update the simulated guild roster/identity and emit the existing roster event behavior. Other `C_GuildInfo` management methods, including `Demote`, `Disband`, `SetLeader`, and `RemoveFromGuild`, remain unsupported because their distinct rank, leadership, disband, or GUID-backed semantics are not modeled.
 
-**Profession specialization boundary** — The temporary `C_ProfSpecs` fixture reports `SkillLineHasSpecialization(164) == true` for the modeled Blacksmithing skill line and `false` for unrelated skill line 165. It does not claim authoritative profession specialization-tree behavior: `GetChildrenForPath()` and the backing path/tree state remain unmodeled, so the full Professions specialization-panel integration test is explicitly ignored rather than supplied with guessed node data.
+**Profession specialization boundary** — The temporary `C_ProfSpecs` fixture reports `SkillLineHasSpecialization(164) == true` for the modeled Blacksmithing skill line and `false` for unrelated skill line 165. It does not claim authoritative profession specialization-tree behavior: `GetChildrenForPath()` and the backing path/tree state remain unmodeled. **VERIFIED locally:** the full Professions specialization-panel integration test stays active only under `optional-tests`; do not supply guessed node data.
 
 **Pet-battle breed quality boundary** — Temporary Lua-owned `C_PetBattles` sample state seeds the five displayed pets with `Enum.BattlePetBreedQuality.Rare` (`3`). `GetBreedQuality(owner, petIndex)` returns that numeric seed or `0` for an absent pet, letting current `PetBattleFrame` OnLoad render rarity without a nil value. This is not a pet-battle model: ownership, breeding, capture, combat outcomes, and live battle data remain unmodeled.
 
@@ -903,3 +903,14 @@ remain in a separate droppable inferred registration, replacing only its old
 zoom no-op. Camera profile/model rendering effects remain unmodeled. The
 unseeded customization collector is unchanged pending native evidence, so
 camera API progress is not a claim of end-to-end character creation success.
+
+
+## Host category camera zoom (R83d)
+
+Retail/Forever host categories require an explicit signed32 camera zoom and
+always publish it numerically, including zero. The original customization
+consumer retains the supplied value and applies the existing setter's 0..100
+clamp; default coverage uses original customize-entry and category-selection
+methods (#712), stopping short of the unrelated zone-choice API gap. See the [R83d contract](../../specs/character-creation-submit.md#r83d-mandatory-host-category-camera-zoom-679690701).
+No DB2 adapter, PTR category publisher, unseeded category change, or pre-choice
+nil/empty assertion is included. Native category data remains unmodeled.

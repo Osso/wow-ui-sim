@@ -143,7 +143,12 @@ fn p1207_binding_ignores_replaced_duration_methods() {
         Duration:SetTimeFromStart(100, 0)
         assert(Binding:GetFormattedText() == 'zero')
         Binding:SetZeroDurationText(nil)
-        assert(not Binding:CanFormatText())
+        if type(Binding.SetTextColorCurve) == 'function' then
+            -- VERIFIED R17: a live duration and nonempty format keep formatting available.
+            assert(Binding:CanFormatText())
+        else
+            assert(not Binding:CanFormatText())
+        end
     "#,
     )
     .unwrap();
@@ -228,18 +233,29 @@ fn p1207_binding_rejects_forged_fontstring_without_storing_it() {
 fn p1207_binding_invalid_setters_reject_before_mutation() {
     let env = binding_environment();
     env.exec(r#"
+        -- VERIFIED R17 (docs/specs/duration-text-binding.md): rejected setters
+        -- preserve both formatted output and readiness.
+        local function rejectsWithoutChangingOutput(name, ...)
+            local beforeText = Binding:GetFormattedText()
+            local beforeCanFormat = Binding:CanFormatText()
+            local ok = pcall(Binding[name], Binding, ...)
+            assert(not ok, name .. ' accepted invalid input')
+            assert(Binding:GetFormattedText() == beforeText, name .. ' changed formatted text')
+            assert(Binding:CanFormatText() == beforeCanFormat, name .. ' changed CanFormatText')
+        end
         Binding:SetExpiredText('keep'); Binding:SetZeroDurationText('keep-zero')
+        rejectsWithoutChangingOutput('Assign', {})
         for _, name in ipairs({'SetDuration','SetFontString','SetTimeModifier','SetUpdateInterval','SetEnabled','SetFormatter'}) do
-            assert(not pcall(Binding[name], Binding), name .. ' accepted missing input')
-            assert(not pcall(Binding[name], Binding, nil), name .. ' accepted nil')
-            assert(not pcall(Binding[name], Binding, {}), name .. ' accepted table')
+            rejectsWithoutChangingOutput(name)
+            rejectsWithoutChangingOutput(name, nil)
+            rejectsWithoutChangingOutput(name, {})
         end
         for _, value in ipairs({-1, math.huge, -math.huge, 0/0, '0.25', false}) do
-            assert(not pcall(Binding.SetUpdateInterval, Binding, value))
+            rejectsWithoutChangingOutput('SetUpdateInterval', value)
         end
-        assert(not pcall(Binding.SetTimeModifier, Binding, 1.5))
-        assert(not pcall(Binding.SetExpiredText, Binding, 12))
-        assert(not pcall(Binding.SetZeroDurationText, Binding, false))
+        rejectsWithoutChangingOutput('SetTimeModifier', 1.5)
+        rejectsWithoutChangingOutput('SetExpiredText', 12)
+        rejectsWithoutChangingOutput('SetZeroDurationText', false)
         assert(Binding:GetDuration() == Duration and Binding:GetFontString() == Label)
         assert(Binding:GetTimeModifier() == 0 and Binding:GetUpdateInterval() == 1 and Binding:IsEnabled())
         assert(Binding:GetExpiredText() == 'keep' and Binding:GetZeroDurationText() == 'keep-zero')
@@ -249,8 +265,7 @@ fn p1207_binding_invalid_setters_reject_before_mutation() {
         getmetatable(formatter).__index = {FormatNumber = function() error('formatter boundary') end}
         local strictFormatter = type(Binding.SetTextColorCurve) == 'function'
         if strictFormatter then
-            assert(not pcall(Binding.SetFormatter, Binding, formatter))
-            assert(Binding:GetFormattedText() == '6s')
+            rejectsWithoutChangingOutput('SetFormatter', formatter)
         else
             Binding:SetFormatter(formatter)
             local ok, errorValue = pcall(Binding.GetFormattedText, Binding)
@@ -261,7 +276,7 @@ fn p1207_binding_invalid_setters_reject_before_mutation() {
             local invalid = newproxy(true)
             getmetatable(invalid).__index = {FormatNumber=callback}
             if strictFormatter then
-                assert(not pcall(Binding.SetFormatter, Binding, invalid))
+                rejectsWithoutChangingOutput('SetFormatter', invalid)
             else
                 Binding:SetFormatter(invalid)
                 assert(not pcall(Binding.GetFormattedText, Binding))
