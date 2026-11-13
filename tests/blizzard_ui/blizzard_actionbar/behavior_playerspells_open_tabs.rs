@@ -1,19 +1,9 @@
-use crate::common::blizzard_addon_harness::with_blizzard_addon_smoke_shape;
-
 // PRESERVATION: FrameXMLUtil's selected owner supplies the open helpers before
 // UIPanels_Game registers the item-reference consumers that call them.
 #[test]
 fn selected_itemref_open_helpers_do_not_toggle_visible_tabs() {
-    with_blizzard_addon_smoke_shape(
-        &["Blizzard_UIPanels_Game", "Blizzard_PlayerSpells"],
-        &[],
-        |env, loaded| {
-            assert!(
-                loaded.iter().any(|name| name == "Blizzard_PlayerSpells"),
-                "the LoadOnDemand PlayerSpells owner must load"
-            );
-
-            let (talents_open, specializations_open): (bool, bool) = env
+    super::behavior_assisted_combat_tooltip::with_player_spells_loaded(|env| {
+        let (talents_open, specializations_open): (bool, bool) = env
                 .eval(
                     r#"
                     assert(C_AddOns.IsAddOnLoaded("Blizzard_FrameXMLUtil"),
@@ -82,14 +72,13 @@ fn selected_itemref_open_helpers_do_not_toggle_visible_tabs() {
                 )
                 .expect("the selected ItemRef consumers must open PlayerSpells tabs");
 
-            assert!(
-                talents_open,
-                "the original talent link must leave the already-open talent tab visible"
-            );
-            assert!(
-                specializations_open,
-                "the original specialization link must leave the already-open specialization tab visible"
-            );
-        },
-    );
+        assert!(
+            talents_open,
+            "the original talent link must leave the already-open talent tab visible"
+        );
+        assert!(
+            specializations_open,
+            "the original specialization link must leave the already-open specialization tab visible"
+        );
+    });
 }

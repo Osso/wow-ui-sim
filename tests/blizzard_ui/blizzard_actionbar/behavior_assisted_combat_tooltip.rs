@@ -4,11 +4,11 @@
 use crate::common::blizzard_addon_harness::with_blizzard_addon_smoke_shape;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
-fn with_player_spells_loaded<F>(assertions: F)
+pub(super) fn with_player_spells_loaded<F>(assertions: F)
 where
     F: FnOnce(&WowLuaEnv),
 {
-    with_blizzard_addon_smoke_shape(&[], &[], |env, _| {
+    with_blizzard_addon_smoke_shape(&["Blizzard_UIPanels_Game"], &[], |env, _| {
         let loaded_before: bool = env
             .eval("return C_AddOns.IsAddOnLoaded('Blizzard_PlayerSpells')")
             .expect("PlayerSpells load state should be available");
