@@ -21,6 +21,7 @@ pub use sim_render::texture;
 pub use crate::BlendMode;
 pub use crate::font::WowFontSystem;
 
+pub use sim_render::inline_markup;
 pub use sim_render::strip_wow_markup;
 
 #[cfg(feature = "gui")]

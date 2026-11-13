@@ -988,3 +988,40 @@ fn retail_settings_registration_preserves_canvas_visibility() {
         .expect("registration must preserve the shown state of each original canvas");
     }
 }
+
+#[cfg(all(feature = "client-retail", feature = "optional-tests"))]
+#[test]
+fn retail_settings_category_switch_preserves_unrelated_canvas() {
+    test_timeout! {
+        let env = load_full_game_ui();
+        env.exec(
+            r#"
+            assert(C_AddOns.IsAddOnLoaded("Blizzard_Settings_Shared"))
+            local function register(name)
+                local frame = CreateFrame("Frame", nil, UIParent)
+                frame:Hide()
+                local category, layout = Settings.RegisterCanvasLayoutCategory(frame, name)
+                Settings.RegisterAddOnCategory(category)
+                assert(SettingsPanel:GetLayout(category) == layout)
+                return frame, category
+            end
+            local oldFrame, old = register("Old canvas")
+            local newFrame, new = register("New canvas")
+            local unrelatedFrame = register("Unrelated canvas")
+
+            Settings.OpenToCategory(old:GetID())
+            assert(SettingsPanel:IsShown())
+            assert(SettingsPanel:GetCurrentCategory() == old)
+            assert(oldFrame:IsShown())
+            unrelatedFrame:Show()
+
+            Settings.OpenToCategory(new:GetID())
+            assert(SettingsPanel:GetCurrentCategory() == new)
+            assert(not oldFrame:IsShown(), "the old selected canvas must be hidden")
+            assert(newFrame:IsShown(), "the new selected canvas must be shown")
+            assert(unrelatedFrame:IsShown(), "an unrelated canvas must not be swept")
+            "#,
+        )
+        .expect("switch the selected canvas through the original Settings panel");
+    }
+}
