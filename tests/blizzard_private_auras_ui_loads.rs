@@ -160,7 +160,10 @@ fn secure_private_auras_loads_tooltip_processor_from_secure_dependency() {
                  and type(rawget(__secureenv, 'Mixin')) == 'function' \
                  and type(rawget(__secureenv, 'CreateFromMixins')) == 'function' \
                  and type(rawget(__secureenv, 'C_Timer')) == 'table' \
+                 and rawget(__secureenv, 'C_Timer') ~= rawget(_G, 'C_Timer') \
                  and type(rawget(rawget(__secureenv, 'C_Timer'), 'After')) == 'function' \
+                 and type(rawget(__secureenv, 'C_StoreSecure')) == 'table' \
+                 and rawget(__secureenv, 'C_StoreSecure') ~= rawget(_G, 'C_StoreSecure') \
                  and type(rawget(__secureenv, 'Enum')) == 'table' \
                  and rawget(__secureenv, 'Enum') ~= rawget(_G, 'Enum') \
                  and rawget(__secureenv, '__secure_env_ordinary_only_probe') == nil",
