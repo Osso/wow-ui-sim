@@ -28,6 +28,8 @@ pub struct QuestLogEntry {
     /// Supplied faction restriction mask used by `GetQuestFactionGroup`.
     pub faction_mask: Option<i32>,
     pub is_world_quest: bool,
+    /// R88e.2 explicit flags on this row; independent of world-quest status.
+    pub info_flags: crate::c_api::c_quest_log::QuestInfoEntryFlags,
     pub is_replayable: bool,
     pub is_flagged_completed: bool,
     pub map_id: Option<i32>,
@@ -114,8 +116,6 @@ pub struct QuestLogState {
     /// Supplied chapter IDs in campaign order.
     pub campaign_chapter_ids: HashMap<i32, Vec<i32>>,
     pub entries: Vec<QuestLogEntry>,
-    /// R88e.2 supplied flags on filtered log rows, indexed by their quest ID.
-    pub info_entry_flags: HashMap<i32, crate::c_api::c_quest_log::QuestInfoEntryFlags>,
     /// R88e.2 quest-record autocomplete flags, independent of active log rows.
     pub info_record_autocomplete: HashMap<i32, bool>,
     /// Results of separate native category and list lookups, not log flags.
@@ -235,7 +235,6 @@ impl QuestLogState {
     pub fn seeded() -> Self {
         Self {
             campaign_ids: HashMap::new(),
-            info_entry_flags: HashMap::new(),
             info_record_autocomplete: HashMap::new(),
             task_category_five: HashSet::new(),
             task_record_values: HashMap::new(),
@@ -286,6 +285,7 @@ fn ordinary_offer_entry(quest_id: i32, offer: &GossipQuestRow) -> QuestLogEntry 
         is_account_quest: None,
         faction_mask: None,
         is_world_quest: false,
+        info_flags: Default::default(),
         is_replayable: false,
         is_flagged_completed: false,
         map_id: crate::quest_poi_blobs::get_quest_blobs(offer.quest_id)
@@ -324,6 +324,7 @@ fn seed_quest_defaults() -> QuestLogEntry {
         is_account_quest: None,
         faction_mask: None,
         is_world_quest: false,
+        info_flags: Default::default(),
         is_replayable: false,
         is_flagged_completed: false,
         map_id: Some(2248),
@@ -367,6 +368,10 @@ fn earthen_relic_recovery_entry() -> QuestLogEntry {
         quest_id: 90101,
         title: "Earthen Relic Recovery".into(),
         is_world_quest: true,
+        info_flags: crate::c_api::c_quest_log::QuestInfoEntryFlags {
+            is_task: true,
+            is_bounty: false,
+        },
         is_replayable: true,
         waypoint: Some((0.62, 0.58)),
         tag_id: Some(2),
@@ -379,6 +384,10 @@ fn glittering_geodes_entry() -> QuestLogEntry {
         quest_id: 90001,
         title: "Glittering Geodes".into(),
         is_world_quest: true,
+        info_flags: crate::c_api::c_quest_log::QuestInfoEntryFlags {
+            is_task: true,
+            is_bounty: false,
+        },
         is_replayable: true,
         map_id: Some(2025),
         waypoint: Some((0.52, 0.63)),

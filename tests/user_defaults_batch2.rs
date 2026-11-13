@@ -262,8 +262,9 @@ fn retail_quest_log_r88e2_original_consumers_read_independent_flags() {
                 entry.is_world_quest = false;
                 entry.is_complete = false;
             }
-            quests.info_entry_flags.insert(ids[0], QuestInfoEntryFlags { is_task: true, is_bounty: false });
-            quests.info_entry_flags.insert(ids[1], QuestInfoEntryFlags { is_task: false, is_bounty: true });
+            quests.entries[0].info_flags = QuestInfoEntryFlags { is_task: true, is_bounty: false };
+            quests.entries[1].info_flags = QuestInfoEntryFlags { is_task: false, is_bounty: true };
+            quests.entries[2].info_flags = QuestInfoEntryFlags::default();
             quests.info_record_autocomplete.insert(ids[2], true);
             quests.info_record_autocomplete.insert(0, true);
             ids

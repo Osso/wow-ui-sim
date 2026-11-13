@@ -7,7 +7,7 @@ use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::methods::{
     borrow_state, create_string, create_table, table_set, val_to_string,
 };
-use crate::lua_api::sim_substates::{QuestLogEntry, QuestLogState};
+use crate::lua_api::sim_substates::QuestLogEntry;
 use crate::lua_api::workarounds::update_campaign_headers;
 use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
@@ -42,13 +42,9 @@ pub(crate) fn register_info_queries(state: &mut LuaState) -> LuaResult<()> {
     Ok(())
 }
 
-fn info_entry_flags(quests: &QuestLogState, entry: &QuestLogEntry) -> QuestInfoEntryFlags {
+fn info_entry_flags(entry: &QuestLogEntry) -> QuestInfoEntryFlags {
     if ACTIVE == ClientProfile::Retail {
-        quests
-            .info_entry_flags
-            .get(&entry.quest_id)
-            .copied()
-            .unwrap_or_default()
+        entry.info_flags
     } else {
         QuestInfoEntryFlags {
             is_task: entry.is_world_quest,
@@ -63,7 +59,7 @@ fn is_quest_task(state: &mut LuaState) -> LuaResult<u32> {
         let sim = borrow_state(state)?;
         let quests = &sim.quest_log_entries;
         if let Some(entry) = quests.entries.iter().find(|entry| entry.quest_id == id) {
-            info_entry_flags(quests, entry).is_task
+            info_entry_flags(entry).is_task
         } else if quests.task_category_five.contains(&id) {
             quests.task_list_lookup_matches.contains(&id)
         } else if let Some(value) = quests.task_record_values.get(&id) {
@@ -120,7 +116,7 @@ fn get_info(state: &mut LuaState) -> LuaResult<u32> {
                     .get(&entry.quest_id)
                     .copied()
                     .unwrap_or(0);
-                let flags = info_entry_flags(quests, &entry);
+                let flags = info_entry_flags(&entry);
                 let prior_flag = crate::c_api::quest_objectives::ENABLED
                     && quests.readiness.auto_complete.contains(&entry.quest_id);
                 let auto_complete = if ACTIVE == ClientProfile::Retail {
@@ -532,9 +528,12 @@ mod r88e2_tests {
                 (101_004, 5),
                 (101_005, 2),
             ]);
-            let row = &quests.entries[0];
-            quests.task_category_five.insert(row.quest_id);
-            quests.task_list_lookup_matches.insert(row.quest_id);
+            let id = quests.entries[0].quest_id;
+            quests.task_category_five.insert(id);
+            quests.task_list_lookup_matches.insert(id);
+            let mut duplicate = quests.entries[0].clone();
+            duplicate.info_flags.is_task = true;
+            quests.entries.push(duplicate);
         }
         env.exec(
             r#"
@@ -547,6 +546,8 @@ mod r88e2_tests {
             assert(not C_QuestLog.IsQuestTask(101007))
             local row = C_QuestLog.GetInfo(2)
             assert(not row.isTask and not C_QuestLog.IsQuestTask(row.questID))
+            local last = C_QuestLog.GetNumQuestLogEntries()
+            assert(C_QuestLog.GetInfo(last).isTask)
         "#,
         )
         .unwrap();
