@@ -49,11 +49,19 @@ Epoch `20261010T183739Z`: [bounded independent attribution report](https://githu
 
 **VERIFIED:** the earlier `3/20` observation came from the active addon-enable configuration, which enabled only three compatible EllesmereUI directories; it did not show that the other 17 failed to load. A read-only staging directory and temporary `WOW_SIM_ADDONS_TXT` enabled all 20 installed Retail-compatible, non-LOD EllesmereUI addons without changing installed addon files or SavedVariables.
 
-**VERIFIED:** `EllesmereUI_UICore.lua:1499` calls `IsUsingGamepad()` before the following `C_GamePad` expression. The simulator registers its existing `IsUsingGamepad` implementation only under `client-wowforever` in `src/lua_api/globals/real/mod.rs`; that implementation reads the existing `InputInterfaceStyle` model. The pinned Retail `InputDocumentation.lua` declares `IsUsingGamepad` as a boolean-returning function. The focused Retail consumer test at `tests/retail_ellesmere_core_gamepad_consumer.rs` reproduces `attempt to call a nil value`; commit `fdf247810` adds this test only and makes no runtime change.
+**VERIFIED (pre-fix baseline):** `EllesmereUI_UICore.lua:1499` calls `IsUsingGamepad()` before the following `C_GamePad` expression. The baseline simulator registered its existing `IsUsingGamepad` implementation only under `client-wowforever`; the pinned Retail `InputDocumentation.lua` declares a non-nil boolean return. The Retail consumer test at `tests/retail_ellesmere_core_gamepad_consumer.rs` reproduced the missing-global call before this lane added the Retail/PTR producer.
 
-**VERIFIED:** a local diagnostic addon that supplies only `IsUsingGamepad = function() return false end` lets all 20 EllesmereUI addons reach loaded state while without defining or replacing `C_GamePad`. No `C_GamePad` error occurs on this short-circuited path. One addon still reports a load-time Lua error at `EllesmereUI_Profiles.lua:3159` when LibSharedMedia rejects an existing addon media path through `C_UIFileAsset.IsKnownFile`.
+**VERIFIED (pre-fix baseline):** a local diagnostic addon that supplied only `IsUsingGamepad = function() return false end` let all 20 EllesmereUI addons reach loaded state without defining or replacing `C_GamePad`; the load still rejected an addon-local media path through `C_UIFileAsset.IsKnownFile`.
 
-**VERIFIED:** under `retail-12-0-7`, `src/c_api/c_ui_file_asset.rs` accepts shipped IDs or normalized membership in `known_loose_asset_paths`; `src/lua_api/state.rs` initializes that set empty, and no writer to that set was found in `src/`. The pinned `UIFileAssetAPIDocumentation.lua` says known files may be shipped assets or known loose files, and says loose-file existence or openability is not checked. **UNKNOWN:** whether Retail treats these EllesmereUI addon-local paths as known loose assets, and the native path-normalization rules. No asset behavior was changed.
+### Native contract and post-fix Retail run (2026-11-12)
+
+**VERIFIED (G1, Retail 12.1.5.70688):** `IsUsingGamepad` reads a gamepad-input timestamp that starts at zero, does not read mouse time, and reads state different from `C_GamePad.IsEnabled`; one direct timestamp writer exists, but its conditions remain unknown.
+
+**VERIFIED (G1c, Retail 12.1.5.70688):** `C_UIFileAsset.IsKnownFile` tests two in-memory tables by resolved file ID; `IsLooseFile` reads a nonzero marker from the first table. Paths are upper-cased, `/` becomes `\\`, exact misses retry a `.BLP` path, ID zero returns false, and neither predicate checks disk state.
+
+**INFERRED (simulator policy):** Retail/PTR use an empty-default last-input timestamp and `GamePadOverlapMouseMs`; no writer, event, or mouse reset is modeled. **INFERRED (simulator policy):** before add-on Lua runs, the loader indexes regular files under that add-on's root in `known_loose_asset_paths`. **UNKNOWN:** whether native Retail asset tables include loose files from add-on roots, and the exact native table identities.
+
+**VERIFIED (isolated Retail run at code SHA `6845ba42e`):** all 20 installed EllesmereUI add-ons loaded, with zero load-time Lua errors; post-startup `lua-errors` reported three unique errors across 72 occurrences: missing `GetLandingPageGarrisonType` in Blizzard minimap code (1), `SetNamePlateHitTestInsets requires an untainted caller` (1), and secret access without an untainted caller (70). The captured error set contained no `IsUsingGamepad` nil call or LibSharedMedia asset rejection.
 
 ### Issue #22 symptoms
 
@@ -68,13 +76,15 @@ The following observations come from isolated 1600x1200 or 3840x2160 simulator r
 | e. Dim/under-bar health text | **VERIFIED:** sampled health text had alpha 1, white color, `OVERLAY` draw layer and frame level 5, above the Health `ARTWORK` layer at level 5. The dim/under-bar symptom was not reproduced. |
 | f. Detached keybind row | **VERIFIED:** the HotKey anchor span measured 55 px while its resolved text width was 37 px after the local probe resized/anchored the button. **UNVERIFIED:** visible detachment; the button was hidden in the sampled tree. |
 
-**VERIFIED:** the Retail `--lib --test integration --no-run` build at `fdf247810` completed with zero warnings, the focused existing `C_UIFileAsset` listfile test passed 1/1, and the new Ellesmere consumer test remains RED on the missing global. These results do not prove native gamepad or loose-file behavior. G1/G1b/G1c native questions remain open; no production fix or full visual acceptance is claimed.
+**VERIFIED (baseline at `fdf247810`):** the Retail consumer test was RED on the missing global. **VERIFIED (post-fix at `6845ba42e`):** the Retail `--lib --test integration --no-run` build completed with zero warnings; six targeted tests passed 1/1 each, including the original consumer and add-on-file pre-load boundary. A later seven-profile compile receipt is tracked in the lane handoff; neither compile nor startup output establishes full native parity or visual acceptance.
 
 ### Retail follow-up sources
 
-- [Retail input consumer test](../../../tests/retail_ellesmere_core_gamepad_consumer.rs) — exact missing-global boundary.
-- [Input interface registration](../../../src/lua_api/globals/real/mod.rs) — profile gate for the existing model.
-- [C_UIFileAsset implementation](../../../src/c_api/c_ui_file_asset.rs) and [state fields](../../../src/lua_api/state/sim_state.rs) — current shipped/loose lookup inputs.
+- [Retail input consumer test](../../../tests/retail_ellesmere_core_gamepad_consumer.rs) — original missing-global and loaded-addon asset boundaries.
+- [Input API contract](../../specs/is-using-gamepad.md) — VERIFIED timestamp facts and the separate INFERRED CVar window.
+- [Asset API contract](../../specs/patch-12-0-7-vehicle-sound-assets.md) — G1c facts and UNKNOWN native addon-file catalog membership.
+- [Input interface registration](../../../src/lua_api/globals/real/mod.rs) — Retail/PTR and Forever profile gates.
+- [C_UIFileAsset implementation](../../../src/c_api/c_ui_file_asset.rs), [loader registration](../../../src/loader/addon.rs), and [state fields](../../../src/lua_api/state/sim_state.rs) — current shipped/loose lookup inputs.
 - `/syncthing/World of Warcraft/_retail_/Interface/AddOns/EllesmereUI/EllesmereUI_UICore.lua`, `EllesmereUI_Profiles.lua`, and `Libs/LibSharedMedia-3.0/LibSharedMedia-3.0.lua` — installed read-only addon sources.
 - `/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/InputDocumentation.lua` and `UIFileAssetAPIDocumentation.lua` — pinned Retail declarations.
 - `/var/tmp/osso/ellesmere-core-enabled-baseline-dump.log`, `/var/tmp/osso/ellesmere-core-input-only-baseline.log`, and `/var/tmp/osso/ellesmere-core-unlock-1600-dumptree.log` — local diagnostic outputs.

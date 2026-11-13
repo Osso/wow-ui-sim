@@ -1,6 +1,6 @@
 # Retail 12.0.7 vehicle aura, Mythic+ sound permission and known-asset inputs
 
-B23/B24/B28 bounded host-input slice integrated on `p1207-r6`. The [retained 12.0.7 source](../../data/patch-api/sources/12.0.7-api-changes.txt) states the vehicle aura marker and out-of-combat Mythic+ sound permission changes and adds the UI asset namespace. Later cached declarations supply signature context, not historical/native proof. B27 IMPORTANT removal is excluded because cached Blizzard Lua republishes that entry.
+B23/B24/B28 bounded host-input slice integrated on `p1207-r6`. The [retained 12.0.7 source](../../data/patch-api/sources/12.0.7-api-changes.txt) states the vehicle aura marker and out-of-combat Mythic+ sound permission changes and adds the UI asset namespace. Later cached declarations supply signature context, not 12.0.7 proof. Separate Retail 12.1.5.70688 native evidence now verifies the asset predicate and path behavior below; applicability to earlier patches remains unknown. B27 IMPORTANT removal is excluded because cached Blizzard Lua republishes that entry.
 
 | Source row | Query / change | Explicit input | Returns |
 |---|---|---|---|
@@ -32,12 +32,12 @@ Cached `UIFileAssetAPIDocumentation.lua:29,45` declares `AllowedWhenUntainted`; 
 
 ### Known-asset host catalog candidate — B28
 
-- [ ] Under `retail-12-0-7`, predicates read explicit per-environment catalogs; `GetFileID` results do not fabricate shipped membership. `GetFileID` remains unchanged.
-- [ ] VERIFIED (Retail 12.1.5.70688): `IsKnownFile` is true when either runtime table contains the resolved file ID. `IsLooseFile` is true when the first table's marker is nonzero, independently of `IsKnownFile`'s second-table lookup.
-- [ ] VERIFIED (Retail 12.1.5.70688): string paths are upper-cased and `/` becomes `\\`; an exact lookup miss retries with the final extension replaced by `.BLP`, or `.BLP` appended when no extension exists. A resolved file ID of zero returns false for both predicates.
-- [ ] VERIFIED (Retail 12.1.5.70688): these predicates do not check the disk. A known loose-file marker does not prove that the loose file exists or can be opened.
-- [ ] INFERRED simulator representation: `known_shipped_asset_ids` models the second table; the normalized `known_loose_asset_paths` catalog models first-table path entries and markers. Exact native backing structures remain UNKNOWN.
-- [ ] INFERRED: regular files under each loaded addon's root are inserted into the loose-path catalog before its Lua files run. Whether native runtime tables include addon loose files is UNKNOWN.
+- [x] Under `retail-12-0-7`, predicates read explicit per-environment catalogs; `GetFileID` results do not fabricate shipped membership. `GetFileID` remains unchanged.
+- [x] VERIFIED (Retail 12.1.5.70688): `IsKnownFile` is true when either runtime table contains the resolved file ID. `IsLooseFile` is true when the first table's marker is nonzero, independently of `IsKnownFile`'s second-table lookup.
+- [x] VERIFIED (Retail 12.1.5.70688): string paths are upper-cased and `/` becomes `\\`; an exact lookup miss retries with the final extension replaced by `.BLP`, or `.BLP` appended when no extension exists. A resolved file ID of zero returns false for both predicates.
+- [x] VERIFIED (Retail 12.1.5.70688): these predicates do not check the disk. A known loose-file marker does not prove that the loose file exists or can be opened.
+- [x] INFERRED simulator representation: `known_shipped_asset_ids` models the second table; the normalized `known_loose_asset_paths` catalog models first-table path entries and markers. Exact native backing structures remain UNKNOWN.
+- [x] INFERRED: regular files under each loaded addon's root are inserted into the loose-path catalog before its Lua files run. Whether native runtime tables include addon loose files is UNKNOWN.
 - [ ] Host changes and revocations are visible without recreating the environment. Another environment remains empty and unaffected.
 - [ ] Both queries authenticate every original argument and every extra with `rilua::table_security::unwrap_secret` before validating any. Secure authentic secrets work; tainted authentic secrets fail, including extras after a malformed public first argument. Caller taint and input secrecy remain unchanged.
 - [ ] INFERRED: reuse GetFileID's positive integral u32 boundary and mandatory number/string type; invalid numeric domains return false, invalid types error, authenticated extras are ignored. No numeric-string coercion.
@@ -52,7 +52,7 @@ Cached `UIFileAssetAPIDocumentation.lua:29,45` declares `AllowedWhenUntainted`; 
 
 ## Implementation inventory
 
-- `src/lua_api/state/sim_state.rs`, `src/lua_api/state.rs` — feature-gated empty host catalogs and controlled vehicle source set.
+- `src/lua_api/state/sim_state.rs`, `src/lua_api/state.rs` — feature-gated empty-default catalogs and controlled vehicle source set.
 - `src/lua_api/globals/auras.rs` — classify copied aura DTOs from live ownership inputs before publication/filtering.
 - `src/c_api/private_aura_sounds/add.rs` — epoch-gated M+/combat permission predicate; existing authentication and registration preserved.
 - `src/c_api/c_ui_file_asset.rs` — authenticated catalog predicates and loaded-addon path catalog writer; prior epoch implementation remains statically separate, never a fallback.
@@ -66,7 +66,7 @@ Existing-test changes: restricted M+ denial fixture in `tests/private_aura_sound
 
 ## Known gaps (current cycle)
 
-- [ ] Targeted default-profile compilation and RED/GREEN are proven. Strict earlier/current-only epochs, full cached-consumer startup and native parity remain unproved; alternate features and startup CLI were excluded from integration.
+- [x] Targeted Retail compilation and the original consumer test pass. The isolated load also reached all 20 installed EllesmereUI add-ons; remaining Lua errors and native-parity limits are recorded in the investigation page.
 - [ ] The pinned API documentation declares the C_UIFileAsset surface, but native asset-table identities and catalog acquisition remain unknown. The 12.1.5 byte evidence does not prove identical behavior in every earlier patch.
 - [ ] Selected-root reconciliation and completeness of the loaded-addon loose-path catalog remain unproved; do not claim complete native B28 parity.
 
@@ -75,5 +75,5 @@ Existing-test changes: restricted M+ denial fixture in `tests/private_aura_sound
 - B27 `source-context-004`: cached `Blizzard_FrameXMLUtil/AuraUtil.lua:270–286` overwrites `AuraFilters` and publishes `Important = "IMPORTANT"`. No vendor patches, post-load cleanup, parser reinterpretation or knowingly failing full-load test. Requires epoch-pinned cache reconciliation first.
 - Native vehicle ownership/GUID aliasing, source-token reuse and ownership history; only declared live source-token relationships are modeled.
 - Sound playback, sound eligibility service, new allocator/removal policy and automatic context acquisition; existing modeled registration state is retained.
-- Complete client asset catalog, filesystem discovery, addon root acquisition/reconciliation, CASC availability and historical/native behavior. B28 is a host-input candidate, not a loader compatibility claim.
+- Complete client asset catalog, discovery outside a loaded add-on root, root reconciliation, CASC availability and earlier-patch behavior. B28 is a bounded loaded-addon catalog model, not complete native parity.
 - GetFileID reimplementation, source ledger/capability promotion, older-profile broad parity and GUI execution.
