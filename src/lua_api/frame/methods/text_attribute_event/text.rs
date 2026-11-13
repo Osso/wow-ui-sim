@@ -389,10 +389,6 @@ pub(crate) fn refresh_auto_text_height_after_width_change(state: &mut LuaState, 
 }
 
 pub(crate) fn update_auto_text_width(state: &mut LuaState, id: u64) {
-    if apply_anchor_pinned_width(state, id) {
-        return;
-    }
-
     let should_update = {
         let Ok(sim) = borrow_state(state) else {
             return;
@@ -429,66 +425,6 @@ pub(crate) fn update_auto_text_width(state: &mut LuaState, id: u64) {
     sim.widgets.mark_rect_dirty(id);
     drop(sim);
     crate::lua_api::frame::methods::core_state::size::mark_nearest_layout_parent_dirty(state, id);
-}
-
-/// If the frame's anchors pin both horizontal edges, set its width from their
-/// current resolved span and clear `width_is_text_auto` so word-wrap works.
-/// Returns true when handling the frame, false if anchors do not pin both edges.
-fn apply_anchor_pinned_width(state: &mut LuaState, id: u64) -> bool {
-    let Some(pinned_width) = anchor_pinned_horizontal_width(state, id) else {
-        return false;
-    };
-    let Ok(mut sim) = borrow_state_mut(state) else {
-        return true;
-    };
-    let Some(frame) = sim.widgets.get(id) else {
-        return true;
-    };
-    let width_changed = (frame.width - pinned_width).abs() > 0.5;
-    let auto_flag_changed = frame.width_is_text_auto;
-    if !width_changed && !auto_flag_changed {
-        return true;
-    }
-    let Some(frame) = sim.widgets.get_mut_visual(id) else {
-        return true;
-    };
-    frame.width = pinned_width;
-    frame.width_is_text_auto = false;
-    sim.widgets.mark_rect_dirty(id);
-    true
-}
-
-fn anchor_pinned_horizontal_width(state: &mut LuaState, id: u64) -> Option<f32> {
-    let (left_target, right_target) = {
-        let sim = borrow_state(state).ok()?;
-        let frame = sim.widgets.get(id)?;
-        if frame.anchors.len() < 2 {
-            return None;
-        }
-
-        let mut left_target = None;
-        let mut right_target = None;
-        for anchor in &frame.anchors {
-            let target_id = anchor
-                .relative_to_id
-                .map(|target_id| target_id as u64)
-                .or(frame.parent_id)?;
-            if anchor.point.pins_left_edge() && left_target.is_none() {
-                left_target = Some(target_id);
-            } else if anchor.point.pins_right_edge() && right_target.is_none() {
-                right_target = Some(target_id);
-            }
-        }
-        (left_target?, right_target?)
-    };
-    if left_target != right_target {
-        return None;
-    }
-
-    let (rect, effective_scale, _) =
-        crate::lua_api::rect_geometry::resolve_queryable_rect(state, id).ok()??;
-    let width = rect.width / effective_scale;
-    (width > 0.0).then_some(width)
 }
 
 pub(crate) fn refresh_text_measurements(state: &mut LuaState, id: u64) {

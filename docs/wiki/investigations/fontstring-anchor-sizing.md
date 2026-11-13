@@ -33,7 +33,8 @@
 
 ## Simulator implementation and tests
 
-- **VERIFIED (code history):** commits `eea53dc30` (`INFERRED: resolve FontString widths from anchors`) and `b96986e58` (`INFERRED: derive pinned width from FontString rect`) contain the inferred two-edge width model. Commit `4f89b465e` (`INFERRED: preserve FontString height reads`) separately preserves stored FontString height reads. These commits remain individually droppable; their subjects identify the native-evidence status.
+- **VERIFIED (code history):** `eea53dc30` (`INFERRED: resolve FontString widths from anchors`) removes the stored-size shortcut from resolved width reads; `b96986e58` (`INFERRED: derive pinned width from FontString rect`) refined the temporary stored-width rewrite. The L1c follow-up removes that rewrite and the `SetPoint()` text-measurement refresh because they could impose UNKNOWN wrapping behavior. Commit `4f89b465e` (`INFERRED: preserve FontString height reads`) separately preserves stored FontString height reads. Each remaining inferred behavior stays in a separate commit with an `INFERRED` subject.
+- **VERIFIED (simulator code):** two-edge `GetWidth()` reads use the resolved rectangle. `SetPoint()` no longer rewrites stored text width or refreshes wrapped-text measurements. The simulator does not clear a text-width cache on `SetPoint()` or parent resize.
 - **VERIFIED (simulator tests):** default tests observe the resolved rectangle through `GetLeft()` and `GetRight()` when stored width conflicts with the anchor span, and after a parent size change. They do not assert the inferred public `GetWidth()` result or inspect internal width flags.
 - **INFERRED (simulator tests):** tests behind `optional-tests` cover `GetWidth()` reporting the span and the single-anchor text-width fallback. Each test cites L1c.
 - **UNKNOWN:** these simulator tests do not establish native renderer wrapping width, native text-cache invalidation, or native behavior outside Retail 12.1.5.70688.

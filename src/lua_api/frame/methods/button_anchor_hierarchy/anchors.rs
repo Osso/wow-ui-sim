@@ -475,13 +475,6 @@ pub(super) fn set_point(state: &mut LuaState) -> LuaResult<u32> {
     apply_set_point(&mut sim, id, request)?;
     drop(sim);
     update_point_secret_origin(state, id, point, secret)?;
-    let is_font_string = borrow_state(state)?
-        .widgets
-        .get(id)
-        .is_some_and(|frame| frame.widget_type == crate::widget::WidgetType::FontString);
-    if is_font_string {
-        super::super::text_attribute_event::refresh_text_measurements(state, id);
-    }
     Ok(0)
 }
 
