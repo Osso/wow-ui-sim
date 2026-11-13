@@ -741,21 +741,20 @@ fn world_map_provider_pins_keep_original_backref_ownership() {
 
     env.apply_post_load_workarounds();
 
-    let highlight_still_unassociated: bool = env
+    let new_highlight_stays_unassociated: bool = env
         .eval(
             r#"
-            for provider in pairs(WorldMapFrame.dataProviders) do
-                if provider.OnAdded == MapHighlightDataProviderMixin.OnAdded then
-                    return provider.pin:GetDataProvider() == nil
-                end
-            end
-            return false
+            local provider = CreateFromMixins(MapHighlightDataProviderMixin)
+            WorldMapFrame:AddDataProvider(provider)
+            local staysUnassociated = provider.pin:GetDataProvider() == nil
+            WorldMapFrame:RemoveDataProvider(provider)
+            return staysUnassociated
             "#,
         )
-        .expect("post-load MapHighlight pin ownership should be readable");
+        .expect("original AddDataProvider callback and pin acquisition should run");
 
     assert!(
-        highlight_still_unassociated,
-        "MapHighlightDataProviderMixin.OnAdded and its acquired pin do not assign a data provider"
+        new_highlight_stays_unassociated,
+        "MapCanvasMixin:AddDataProvider must not assign a back-reference that the original provider does not set"
     );
 }
