@@ -141,10 +141,24 @@ fn secure_private_auras_loads_tooltip_processor_from_secure_dependency() {
         })
         .cloned()
         .collect();
+    let registration_snapshot: (String, String, String, String, String) = env
+        .eval(
+            r#"
+                local ordinary = rawget(_G, 'TooltipDataProcessor')
+                local secure = rawget(__secureenv, 'TooltipDataProcessor')
+                return type(ordinary), type(secure),
+                    type(secure and secure.AddTooltipPostCall),
+                    type(rawget(__secureenv, 'C_Timer')),
+                    type(rawget(__secureenv, 'C_StoreSecure'))
+            "#,
+        )
+        .expect("secure registration snapshot should evaluate");
     assert!(
         load_errors.is_empty(),
-        "PrivateAurasUI must load without tooltip errors when defaults are disabled:\n  {}",
-        load_errors.join("\n  ")
+        "PrivateAurasUI must load without tooltip errors when defaults are disabled:\n  {}\n\
+         registration snapshot (ordinary/secure/processor callback/C_Timer/C_StoreSecure): {:?}",
+        load_errors.join("\n  "),
+        registration_snapshot
     );
 
     let original_processor: bool = env
