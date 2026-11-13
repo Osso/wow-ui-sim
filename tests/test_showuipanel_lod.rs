@@ -566,7 +566,6 @@ fn settings_open_to_interface_category_opens_settings_panel() {
 }
 
 #[cfg(feature = "optional-tests")]
-#[ignore = "UNKNOWN: GetChildrenForPath and profession-tree inputs are not modeled."]
 #[test]
 fn professions_frame_loads_and_populates_specialization_tab() {
     test_timeout! {
