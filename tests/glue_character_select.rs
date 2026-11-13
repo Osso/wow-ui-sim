@@ -1421,6 +1421,21 @@ fn ptr_character_creation_camera_zoom_getter_is_glue_only_and_reads_no_arguments
 
 #[test]
 #[cfg(feature = "client-ptr")]
+fn ptr_character_creation_camera_zoom_getter_reads_host_stored_value() {
+    let env = WowLuaEnv::new().unwrap();
+    env.set_screen_mode(ScreenKind::CharacterCreate);
+    for zoom in [17, 83] {
+        env.state().borrow_mut().character_create_camera_zoom = zoom;
+        let read: i32 = env
+            .eval("return C_CharacterCreation.GetCurrentCameraZoom()")
+            .unwrap();
+        assert_eq!(read, zoom);
+    }
+    // Stored-value identity is VERIFIED; no default or exact return-count assertion.
+}
+
+#[test]
+#[cfg(feature = "client-ptr")]
 fn ptr_character_creation_interaction_write_and_no_model_visibility() {
     let env = WowLuaEnv::new().unwrap();
     env.set_screen_mode(ScreenKind::CharacterCreate);

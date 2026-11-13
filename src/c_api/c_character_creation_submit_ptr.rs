@@ -89,10 +89,10 @@ fn update_camera_zoom_registration(
 }
 
 fn get_current_camera_zoom(state: &mut LuaState) -> LuaResult<u32> {
-    let _zoom = borrow_state(state)?.character_create_camera_zoom;
-    // VERIFIED-only scaffold: single-number Lua return bridge is INFERRED (R83)
-    // and is deliberately deferred to its separate droppable commit.
-    Ok(0)
+    let zoom = borrow_state(state)?.character_create_camera_zoom;
+    // INFERRED (R83): one numeric return; VERIFIED storage read is not model distance.
+    state.push(Val::Num(f64::from(zoom)));
+    Ok(1)
 }
 
 // Existence INFERRED from unguarded consumer calls; catalog UNKNOWN (R78c Q1).

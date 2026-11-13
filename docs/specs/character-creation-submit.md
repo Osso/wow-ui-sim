@@ -269,3 +269,12 @@ policy returns one result; nil/userdata and tables at policy value 1 are never
 marked. Other marking depends on unmodeled frame-policy checks. Per #285 this
 slice continues returning one plain table and adds no secret/marking behavior;
 field order and unsorted record traversal are unchanged.
+
+### PTR R83 droppable getter return bridge
+
+A separate **INFERRED (R83)** commit enables the single-number Lua return and
+labels the existing shared zero initialization as INFERRED for PTR. No test
+asserts the initial value or return count. Tests seed nonzero host zoom values
+and check only the VERIFIED stored-value identity. Existing RF initialization
+and all setter behavior are unchanged; the PTR setter's reader/Usage behavior
+still awaits clarification. This commit alone is not a modeled setter claim.
