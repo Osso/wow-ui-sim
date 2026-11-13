@@ -228,3 +228,103 @@ fn aura_options_support_the_real_custom_button_public_initializer() {
         );
     });
 }
+
+#[cfg(all(feature = "optional-tests", feature = "client-retail"))]
+#[test]
+fn retail_aura_container_apply_icon_accepts_tainted_secret_file_id() {
+    crate::common::blizzard_addon_harness::with_blizzard_addon_closure(
+        &["Blizzard_AuraContainer"],
+        &[],
+        |env, loaded| {
+            assert!(loaded.iter().any(|name| name == "Blizzard_AuraContainer"));
+            env.exec_maybe_secure(
+                r#"
+                local mixin = assert(CustomAuraButtonPrivateMixin)
+                local texture = CreateFrame('Frame'):CreateTexture()
+                local button = { icon = { element = texture } }
+                local auraData = { icon = secretwrap(136243) }
+                assert(issecretvalue(auraData.icon))
+
+                local function addonApplyIcon()
+                    mixin.ApplyIcon(button, 'player', auraData)
+                end
+                debug.setobjecttaint(addonApplyIcon, 'AuraKit')
+                addonApplyIcon()
+
+                assert(texture:GetTextureFileID() == 136243,
+                    'the original ApplyIcon consumer must pass its marked file ID to SetTexture')
+                assert(texture:GetTexture() == 136243,
+                    'the accepted texture value must remain stored on the region')
+                "#,
+                true,
+            )
+            .expect("Retail AuraContainer ApplyIcon must accept a tainted secret file ID");
+        },
+    );
+}
+
+#[cfg(all(feature = "optional-tests", feature = "client-retail"))]
+#[test]
+fn retail_aura_container_apply_icon_accepts_revoked_secret_file_id() {
+    crate::common::blizzard_addon_harness::with_blizzard_addon_closure(
+        &["Blizzard_AuraContainer"],
+        &[],
+        |env, loaded| {
+            assert!(loaded.iter().any(|name| name == "Blizzard_AuraContainer"));
+            env.exec_maybe_secure(
+                r#"
+                local mixin = assert(CustomAuraButtonPrivateMixin)
+                local texture = CreateFrame('Frame'):CreateTexture()
+                local button = { icon = { element = texture } }
+                local auraData = { icon = secretwrap(136243) }
+
+                local function secureRefresh()
+                    assert(issecure() and canaccesssecrets())
+                    dropsecretaccess()
+                    assert(issecure() and not canaccesssecrets())
+                    mixin.ApplyIcon(button, 'player', auraData)
+                end
+                secureRefresh()
+
+                assert(texture:GetTextureFileID() == 136243,
+                    'SetTexture must accept the marked file ID after secret access is revoked')
+                "#,
+                true,
+            )
+            .expect("Retail AuraContainer ApplyIcon must accept a marked file ID after revocation");
+        },
+    );
+}
+
+#[cfg(all(feature = "optional-tests", feature = "client-retail"))]
+#[test]
+fn retail_aura_container_apply_icon_accepts_tainted_secret_nil() {
+    crate::common::blizzard_addon_harness::with_blizzard_addon_closure(
+        &["Blizzard_AuraContainer"],
+        &[],
+        |env, loaded| {
+            assert!(loaded.iter().any(|name| name == "Blizzard_AuraContainer"));
+            env.exec_maybe_secure(
+                r#"
+                local mixin = assert(CustomAuraButtonPrivateMixin)
+                local texture = CreateFrame('Frame'):CreateTexture()
+                texture:SetTexture(135907)
+                local button = { icon = { element = texture } }
+                local auraData = { icon = secretwrap(nil) }
+                assert(issecretvalue(auraData.icon))
+
+                local function addonApplyIcon()
+                    mixin.ApplyIcon(button, 'player', auraData)
+                end
+                debug.setobjecttaint(addonApplyIcon, 'AuraKit')
+                addonApplyIcon()
+
+                assert(texture:GetTexture() == nil,
+                    'SetTexture must accept a marked nil and clear the icon')
+                "#,
+                true,
+            )
+            .expect("Retail AuraContainer ApplyIcon must accept a tainted marked nil");
+        },
+    );
+}

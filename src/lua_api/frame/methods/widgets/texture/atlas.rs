@@ -294,10 +294,36 @@ fn button_texture_should_show(
     }
 }
 
+fn unwrap_set_texture_input(state: &LuaState, value: Val) -> LuaResult<(Val, bool)> {
+    if !cfg!(feature = "forbidden-aspects") {
+        return crate::lua_api::frame::methods::secret_origin::unwrap_input(state, value);
+    }
+    if !rilua::table_security::is_secret_value(state, value) {
+        return crate::lua_api::frame::methods::secret_origin::unwrap_input(state, value);
+    }
+    match rilua::table_security::secret_payload_kind(state, value) {
+        Some(rilua::table_security::SecretPayloadKind::Number) => {
+            let value =
+                rilua::table_security::inspect_host_secret_number(state, value, |number| {
+                    Ok(Val::Num(number))
+                })?;
+            Ok((value, true))
+        }
+        Some(rilua::table_security::SecretPayloadKind::Nil) => Ok((Val::Nil, true)),
+        Some(rilua::table_security::SecretPayloadKind::String)
+            if !rilua::api::state_is_secure(state) =>
+        {
+            Err(runtime_error(
+                "Cannot set texture to a secret string value.",
+            ))
+        }
+        _ => crate::lua_api::frame::methods::secret_origin::unwrap_input(state, value),
+    }
+}
+
 pub(super) fn set_texture(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
-    let (texture_val, secret) =
-        crate::lua_api::frame::methods::secret_origin::unwrap_input(state, stack_val(state, 2))?;
+    let (texture_val, secret) = unwrap_set_texture_input(state, stack_val(state, 2))?;
     let resolved = resolve_texture_value(state, texture_val);
     if secret && resolved.is_none() {
         return Err(runtime_error(
@@ -308,12 +334,22 @@ pub(super) fn set_texture(state: &mut LuaState) -> LuaResult<u32> {
         state.push(Val::Bool(false));
         return Ok(1);
     };
-    let (success, texture_source_dimensions) = {
+    let (success, texture_source_dimensions, prevents_secret_values) = {
         let sim = borrow_state(state)?;
         let success = texture_source_resolves(path.as_deref(), file_data_id, &sim);
         let dimensions = load_texture_dimensions_for_slice_assignment(&sim, id, path.as_deref());
-        (success, dimensions)
+        let prevents_secret_values = secret
+            && sim
+                .widgets
+                .get(id)
+                .is_some_and(|frame| frame.prevent_secret_values);
+        (success, dimensions, prevents_secret_values)
     };
+    if prevents_secret_values {
+        return Err(runtime_error(
+            "Attempt to set secret values on an object that prevents secret values",
+        ));
+    }
     let horiz_tile = opt_bool(state, 3);
     let vert_tile = opt_bool(state, 4);
     let mut sim = borrow_state_mut(state)?;

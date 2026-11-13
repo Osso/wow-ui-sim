@@ -1,3 +1,7 @@
+## [2026-11-13] fix | EllesmereUI AuraKit secret texture error
+
+Updated [full third-party startup](investigations/full-addon-startup-2026-10-10.md#aurakit-secret-texture-error-r88c-2026-11-13) and the [secret aura contract](../specs/secret-auras.md) after the R88c call-shape trace. **VERIFIED (Retail code SHA `39ca0bc72d9539563288b79e622feeeb4a9282bb`):** the 20-addon run is clean and the five requested profile builds report zero warnings. **INFERRED:** revoked numeric input and tainted secret nil are accepted by `SetTexture`; nil clears the texture. Getter and render parity remain open.
+
 ## [2026-11-13] implementation | Garrison landing-page visibility
 
 Updated [full third-party startup](investigations/full-addon-startup-2026-10-10.md#garrison-minimap-button-visibility-r88e1-2026-11-13) and the [Retail garrison contract](../specs/garrison-landing-page-type.md) with R88e.1. **VERIFIED (Retail 12.1.5 build 70688):** missing records return false, non-111 records return their flag, type 111 uses PlayerCondition 105386 and nonzero player state, and lookup uses the low byte without an enum check. **VERIFIED (20-addon Retail run at simulator SHA `2a03dbee7`):** one AuraKit secret-access error remains (70 occurrences); the Minimap error is absent. **INFERRED:** the player-state value is the covenant ID; the simulator's 105386 result is a false-default host input.
