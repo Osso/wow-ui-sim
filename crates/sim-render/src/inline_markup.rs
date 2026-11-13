@@ -187,6 +187,9 @@ fn next_icon_escape(text: &str) -> Option<(usize, &'static str)> {
 
 fn parse_texture_escape(body: &str) -> Option<InlineIcon> {
     let fields: Vec<&str> = body.split(':').collect();
+    if fields.len() < 2 {
+        return None;
+    }
     let path = fields[0].trim();
     if path.is_empty() {
         return None;
@@ -228,6 +231,9 @@ fn parse_texture_escape(body: &str) -> Option<InlineIcon> {
 fn parse_atlas_escape(body: &str) -> Option<InlineIcon> {
     let body = body.strip_prefix(':')?;
     let fields: Vec<&str> = body.split(':').collect();
+    if fields.len() < 3 {
+        return None;
+    }
     let name = fields[0].trim();
     if name.is_empty() {
         return None;
