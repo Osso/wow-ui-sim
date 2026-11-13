@@ -160,3 +160,22 @@ Retail library boundary checks that pre-UI bootstrap does not publish either
 location helper, leaves existing helpers unchanged, and separately preserves the
 unresolved best-item helper. Missing native catalogs must remain blockers, not
 be seeded to manufacture a passing consumer.
+
+## Retail container parentArray ownership
+
+The next C slice removes only the Retail bootstrap ContainerFrameContainer/
+ContainerFrames table scaffold. Locale globals and legacy item-info forwarding
+are unchanged; their unresolved native/legacy contracts are not settled by this
+cleanup. Other profiles retain the scaffold pending independent ownership proof.
+
+The optional `stub_c_container_frame_ownership` selector loads actual startup,
+verifies selected Mainline UIPanels and original Lua enumerators, then checks the
+XML owner's UIParent and all six real bag instances' parent/parentArray identities.
+It calls original OnCombinedBagSettingChanged across false/true/false/true/false:
+original container enumeration alternates six/seven members and original bag
+enumeration alternates individual bags/combined frame. Owner and array identity
+remain stable. No fake frames, membership-table mutation, native provider,
+manual event or post-load repair is used. Baseline da31ffbf118 passed one exact
+selector with no recorded startup diagnostics. This is original-owner/removal
+PRESERVATION, not producer RED. A Retail library boundary separately proves no
+bootstrap owner/array synthesis and preserves other legacy wrappers.
