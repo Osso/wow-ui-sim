@@ -301,10 +301,6 @@ fn unwrap_set_texture_input(state: &LuaState, value: Val) -> LuaResult<(Val, boo
     if !rilua::table_security::is_secret_value(state, value) {
         return crate::lua_api::frame::methods::secret_origin::unwrap_input(state, value);
     }
-    if rilua::api::state_is_secure(state) {
-        return crate::lua_api::frame::methods::secret_origin::unwrap_input(state, value);
-    }
-
     match rilua::table_security::secret_payload_kind(state, value) {
         Some(rilua::table_security::SecretPayloadKind::Number) => {
             let value =
@@ -313,9 +309,14 @@ fn unwrap_set_texture_input(state: &LuaState, value: Val) -> LuaResult<(Val, boo
                 })?;
             Ok((value, true))
         }
-        Some(rilua::table_security::SecretPayloadKind::String) => Err(runtime_error(
-            "Cannot set texture to a secret string value.",
-        )),
+        Some(rilua::table_security::SecretPayloadKind::Nil) => Ok((Val::Nil, true)),
+        Some(rilua::table_security::SecretPayloadKind::String)
+            if !rilua::api::state_is_secure(state) =>
+        {
+            Err(runtime_error(
+                "Cannot set texture to a secret string value.",
+            ))
+        }
         _ => crate::lua_api::frame::methods::secret_origin::unwrap_input(state, value),
     }
 }
