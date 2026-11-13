@@ -67,18 +67,26 @@ fn selected_communities_consumer_uses_original_channel_color_and_local_id() {
     crate::common::blizzard_addon_harness::with_blizzard_addon_smoke_shape(
         &["Blizzard_Communities"],
         &[],
-        |env, loaded| {
-            let owner_position = loaded
+        |env, _loaded| {
+            let addon_order: Vec<String> = env
+                .state()
+                .borrow()
+                .addons
+                .iter()
+                .filter(|addon| addon.loaded)
+                .map(|addon| addon.folder_name.clone())
+                .collect();
+            let owner_position = addon_order
                 .iter()
                 .position(|name| name == "Blizzard_ChatFrameBase")
                 .expect("ChatFrameBase must load");
-            let consumer_position = loaded
+            let consumer_position = addon_order
                 .iter()
                 .position(|name| name == "Blizzard_Communities")
                 .expect("Communities must load");
             assert!(
                 owner_position < consumer_position,
-                "ChatFrameBase must load before Communities: {loaded:?}"
+                "ChatFrameBase must load before Communities: {addon_order:?}"
             );
             env.exec(
                 r#"
