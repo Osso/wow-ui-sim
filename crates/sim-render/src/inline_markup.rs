@@ -89,13 +89,13 @@ pub fn split_inline_markup(text: &str) -> Vec<InlinePiece> {
         push_text(&mut pieces, &rest[..start]);
         let body_start = start + 2;
         let Some(body_len) = rest[body_start..].find('|') else {
-            push_text(&mut pieces, &rest[..start + 1]);
+            push_text(&mut pieces, &rest[start..start + 1]);
             rest = &rest[start + 1..];
             continue;
         };
         let marker_start = body_start + body_len;
         if !rest[marker_start..].starts_with(close) {
-            push_text(&mut pieces, &rest[..start + 1]);
+            push_text(&mut pieces, &rest[start..start + 1]);
             rest = &rest[start + 1..];
             continue;
         }
