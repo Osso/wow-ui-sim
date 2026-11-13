@@ -3700,3 +3700,7 @@ Updated addon-loading and the CASC contract: unit-test startup must reject stale
 ## 2026-11-12 — R82 hyperlink dispatch
 
 Updated the [unit-link investigation](investigations/att-unit-hyperlink-tooltip.md) and identity spec: removed guessed GUID lookup, documented typed substring dispatch and linked the [R82 contract](../specs/tooltip-hyperlink.md). Native UNKNOWN miss shape remains separate from simulator preservation tests.
+
+## 2026-11-12 — FontString anchor-derived width
+
+Added [FontString anchor sizing](investigations/fontstring-anchor-sizing.md). The simulator tests cover resolved width for two opposite horizontal anchors; native sizing remains INFERRED, and the six-symptom EllesmereUI reproduction remains incomplete.
