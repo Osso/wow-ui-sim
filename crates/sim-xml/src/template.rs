@@ -588,7 +588,6 @@ pub fn resolve_texture_inheritance(texture: &TextureXml) -> TextureXml {
     merged.parent_array = texture.parent_array.clone();
     merged.is_virtual = texture.is_virtual;
     merged.inherits = texture.inherits.clone();
-    merged.anchors = texture.anchors.clone();
     merged.animations = texture.animations.clone();
     merged.scripts = texture.scripts.clone();
     merged.masked_textures = texture.masked_textures.clone();
@@ -619,6 +618,7 @@ fn merge_texture_fields(dst: &mut TextureXml, src: &TextureXml) {
     merge_opt!(hidden);
     merge_opt!(alpha);
     merge_opt!(set_all_points);
+    merge_opt!(anchors);
     merge_opt!(mixin);
     merge_texture_key_values(dst, src);
     merge_texture_blend_mode(dst, src);

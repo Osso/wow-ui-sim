@@ -23,11 +23,11 @@ These policies are authorized informed guesses. They are not claims about native
 - [x] Nil and zero remain distinct in both optional key positions. Context/treasure inputs accept only nil or finite integral u32 numbers; reject coercion, negative, fractional, nonfinite and overflowing values. Preserve existing arg1 u32 positive/zero behavior rather than creating a new itemID policy.
 - [x] Both context positions nil/omitted use the existing base catalog exactly unless an explicit `(itemID,None,None)` override exists. Any present context/treasure requires an exact supplied key; absent combinations return a fresh empty Item DTO. No cross-context, nearest-level, scaling or default-catalog fallback for explicit misses.
 - [x] Missing catalog IDs remain empty even when the override map contains their key. Never manufacture a catalog item, name, slot or stat budget from map entries.
-- [x] For known items, clone catalog `ItemInfo` ephemerally and change **only `item_level`**. Existing builder supplies item-level and estimated stat lines, retaining name, quality/color, slot, binding, budgets and every other DTO value. Full DTO comparisons use semantic RGBA, not color-method identity.
+- [x] For known items, clone catalog `ItemInfo` ephemerally and change **only `item_level`**. The shared builder supplies item-level lines and the [R80 final-stat inputs](tooltip-item-r80.md), retaining name, quality/color, slot, binding and every other DTO value. Full DTO comparisons use semantic RGBA, not color-method identity.
 - [x] Distinct contexts1/2 and treasure levels70/80 select explicit test levels601/602/603/604. These numbers are test data only; contexts are not arithmetic inputs, replacement item IDs or acquisition metadata.
 - [x] Query reads leave map inputs, source catalog, player-class input and caller objects unchanged. Fresh DTOs/lines/colors and empty misses are independent; result mutation cannot affect inputs or other results. Live host replace/clear affects later reads only; environments remain isolated.
 
-Known catalog fixture211995 is `Entombed Seraph's Sabatons`, base level571, quality4, Feet, bind-on-pickup, with existing Strength/Stamina/Mastery/Versatility budget estimates. Tests establish the base through public `wow_ui_sim::items::get_item`, then assert concrete names, line types, slot, binding, levels, colors and rounded stat values. The existing finite catalog and stat heuristic are bounded simulator behavior, **not native variant acquisition or complete item stat parity**.
+Known catalog fixture211995 is `Entombed Seraph's Sabatons`, base level571, quality4, Feet, bind-on-pickup. Tests establish the catalog through public `wow_ui_sim::items::get_item` and supply independent final Strength/Stamina/Mastery/Versatility amounts at each selected level. Missing final inputs omit exactly those four stat rows. These fixture inputs are **not native variant acquisition or complete item stat parity**.
 
 ## How it works
 
@@ -49,7 +49,7 @@ Known catalog fixture211995 is `Entombed Seraph's Sabatons`, base level571, qual
 
 `tests/tooltip_item_context.rs`: **24 substantive real-API tests**, discovered by existing grouped integration harness; no new Cargo target. Base controls, independent context/treasure outputs, nil/default override, nil-versus-zero, holes/misses, seeded unknown ID, strict domain, ignored quality, read-only inputs, freshness/mutation, live replacement/clear, isolation, public-tainted calls, secure authentic NUM/NIL/quality, secure invalid contexts, all-four-position denial ordering and rooted GC/recovery.
 
-Positive context/security probes demand meaningful variants; a denial cannot substitute for producer proof. No query/callback is replaced. Expected stat output follows existing armor budget rounding with fixed fixture percentages, not a fake query. DTO comparisons normalize only level/stat texts to compare every unchanged field semantically.
+Positive context/security probes demand meaningful variants; a denial cannot substitute for producer proof. No query/callback is replaced. Expected stat output matches explicit final-amount fixtures under the [R80 contract](tooltip-item-r80.md), not a calculated budget or a fake query. DTO comparisons normalize only level/stat texts to compare every unchanged field semantically.
 
 ## Recorded compiled RED — 2026-10-02
 

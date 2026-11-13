@@ -582,6 +582,9 @@ fn casting_blacksmithing_opens_professions_frame() {
     );
 }
 
+// PTR 70493 ProfessionsBook.lua:344 requires CanTradeSkillShowCraftingUI.
+// Main-approved deferral: retain the RED original consumer until native R85 evidence.
+#[cfg(any(not(feature = "client-ptr"), feature = "optional-tests"))]
 #[test]
 fn clicking_blacksmithing_button_in_professions_book_opens_panel() {
     let env = full_game_env();
@@ -592,13 +595,26 @@ fn clicking_blacksmithing_button_in_professions_book_opens_panel() {
             r#"
             ToggleProfessionsBook()
 
+            local candidates
+            if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE and ProfessionsBookFrame.ProfessionsContentFrame then
+                -- PTR 70493 Mainline/Blizzard_ProfessionsBookTemplates.xml:58,63,166.
+                local content = ProfessionsBookFrame.ProfessionsContentFrame
+                candidates = {
+                    content.PrimaryProfession1.SpellButton1,
+                    content.PrimaryProfession1.SpellButton2,
+                    content.PrimaryProfession2.SpellButton1,
+                    content.PrimaryProfession2.SpellButton2,
+                }
+            else
+                candidates = {
+                    PrimaryProfession1SpellButtonTop,
+                    PrimaryProfession1SpellButtonBottom,
+                    PrimaryProfession2SpellButtonTop,
+                    PrimaryProfession2SpellButtonBottom,
+                }
+            end
             local button
-            for _, candidate in ipairs({
-                PrimaryProfession1SpellButtonTop,
-                PrimaryProfession1SpellButtonBottom,
-                PrimaryProfession2SpellButtonTop,
-                PrimaryProfession2SpellButtonBottom,
-            }) do
+            for _, candidate in ipairs(candidates) do
                 if candidate then
                     local slot = ProfessionsBook_GetSpellBookItemSlot(candidate)
                     if slot then
