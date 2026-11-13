@@ -71,7 +71,16 @@ pub(crate) fn register_c_battle_net_surface(state: &mut LuaState) -> LuaResult<(
     )?;
     #[cfg(feature = "retail-12-0-0")]
     super::addon_messages::register_bnet_chat(state, table_ref)?;
-    register_friend_query_methods(state, table_ref)
+    register_friend_query_methods(state, table_ref)?;
+    // Forever BattleNetDocumentation.lua:11-15; F4 Q1 feature-state result.
+    #[cfg(feature = "client-wowforever")]
+    table_set_rust_fn_static(
+        state,
+        table_ref,
+        "AreFriendTagsEnabled",
+        c_bnet_are_friend_tags_enabled,
+    )?;
+    Ok(())
 }
 
 fn register_texture_methods(state: &mut LuaState, table_ref: BattleNetTable) -> LuaResult<()> {
@@ -207,6 +216,13 @@ fn register_patch_12_1_friend_query_methods(
 #[cfg(feature = "retail-12-1-0")]
 fn c_bnet_feature_enabled(state: &mut LuaState) -> LuaResult<u32> {
     state.push(Val::Bool(true));
+    Ok(1)
+}
+
+#[cfg(feature = "client-wowforever")]
+fn c_bnet_are_friend_tags_enabled(state: &mut LuaState) -> LuaResult<u32> {
+    let enabled = borrow_state(state)?.bnet_friend_tags_enabled;
+    state.push(Val::Bool(enabled));
     Ok(1)
 }
 

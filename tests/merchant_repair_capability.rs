@@ -34,6 +34,15 @@ fn merchant_repair_default_and_bootstrap() {
 }
 
 #[test]
+fn sell_all_junk_feature_is_registered_on_merchant_frame_only() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        "assert(type(C_MerchantFrame.IsSellAllJunkEnabled) == 'function'); assert(C_MerchantFrame.IsSellAllJunkEnabled() == false); assert(C_PetJournal.IsSellAllJunkEnabled == nil)",
+    )
+    .unwrap();
+}
+
+#[test]
 fn merchant_repair_requires_open_and_configured_capability() {
     let env = WowLuaEnv::new().unwrap();
     env.exec(CLOSED_QUERY).unwrap();
