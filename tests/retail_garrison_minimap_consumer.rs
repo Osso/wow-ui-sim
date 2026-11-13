@@ -26,8 +26,9 @@ fn retail_minimap_refresh_uses_the_landing_page_garrison_type() {
         FrameUtil.RegisterFrameForEvents = function() end
 
         local visibilityCalls = 0
-        C_Garrison.IsLandingPageMinimapButtonVisible = function()
+        C_Garrison.IsLandingPageMinimapButtonVisible = function(garrisonType)
             visibilityCalls = visibilityCalls + 1
+            assert(type(garrisonType) == 'number')
             return false
         end
 
@@ -38,7 +39,13 @@ fn retail_minimap_refresh_uses_the_landing_page_garrison_type() {
 
         button:RefreshButton()
         assert(visibilityCalls == 1, "original minimap refresh must query landing-page visibility")
-        assert(button.hidden, "the original consumer must keep a hidden garrison button hidden")
+
+        local function resultShape(...)
+            return select('#', ...), type((...))
+        end
+        local returnCount, returnType = resultShape(C_Garrison.GetLandingPageGarrisonType())
+        assert(returnCount == 1 and returnType == 'number',
+            "C_Garrison.GetLandingPageGarrisonType must return one number")
         "#,
     )
     .expect("original Blizzard Minimap refresh must query the landing-page garrison type");
