@@ -171,8 +171,8 @@ do
         end
         if not retail then
             ensure_settings_preview(settingsPanel, "AccessibilityFontPreview")
+            ensure_settings_preview(settingsPanel, "QuestTextPreview")
         end
-        ensure_settings_preview(settingsPanel, "QuestTextPreview")
     end
 
     local categories = rawget(Settings, "_categories")
