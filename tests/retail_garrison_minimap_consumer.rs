@@ -63,6 +63,14 @@ fn retail_minimap_refresh_uses_landing_page_visibility_records() {
             "a matched non-111 record must return its false state flag")
         assert(not C_Garrison.IsLandingPageMinimapButtonVisible(8),
             "a missing record must return false")
+        local function resultShape(...)
+            return select('#', ...), type((...))
+        end
+        local returnCount, returnType = resultShape(
+            C_Garrison.IsLandingPageMinimapButtonVisible(8)
+        )
+        assert(returnCount == 1 and returnType == 'boolean',
+            "the visibility query must return one boolean")
         "#,
     )
     .expect("a matching landing-page record must show the Minimap button");
