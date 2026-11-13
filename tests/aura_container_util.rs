@@ -228,3 +228,37 @@ fn aura_options_support_the_real_custom_button_public_initializer() {
         );
     });
 }
+
+#[cfg(all(feature = "optional-tests", feature = "client-retail"))]
+#[test]
+fn retail_aura_container_apply_icon_accepts_tainted_secret_file_id() {
+    crate::common::blizzard_addon_harness::with_blizzard_addon_closure(
+        &["Blizzard_AuraContainer"],
+        &[],
+        |env, loaded| {
+            assert!(loaded.iter().any(|name| name == "Blizzard_AuraContainer"));
+            env.exec_maybe_secure(
+                r#"
+                local mixin = assert(CustomAuraButtonPrivateMixin)
+                local texture = CreateFrame('Frame'):CreateTexture()
+                local button = { icon = { element = texture } }
+                local auraData = { icon = secretwrap(136243) }
+                assert(issecretvalue(auraData.icon))
+
+                local function addonApplyIcon()
+                    securecallfunction(mixin.ApplyIcon, button, 'player', auraData)
+                end
+                debug.setobjecttaint(addonApplyIcon, 'AuraKit')
+                addonApplyIcon()
+
+                assert(texture:GetTextureFileID() == 136243,
+                    'the original ApplyIcon consumer must pass its marked file ID to SetTexture')
+                assert(texture:GetTexture() == 136243,
+                    'the accepted texture value must remain stored on the region')
+                "#,
+                true,
+            )
+            .expect("Retail AuraContainer ApplyIcon must accept a tainted secret file ID");
+        },
+    );
+}

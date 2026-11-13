@@ -176,7 +176,12 @@ fn aura_secret_texture_replaces_and_clears_without_plain_readout() {
             for _, method in ipairs({'GetTexture','GetTextureFileID','GetTextureFilePath','GetAtlas'}) do
                 assert(not pcall(texture[method], texture), method)
             end
-            assert(not pcall(texture.SetTexture, texture, wrapped))
+            assert(pcall(texture.SetTexture, texture, wrapped),
+                'SetTexture must accept a marked file ID from tainted code')
+            local pathOk, pathError = pcall(texture.SetTexture, texture,
+                secretwrap('Interface\\Icons\\Spell_Holy_FlashHeal'))
+            assert(not pathOk and pathError == 'Cannot set texture to a secret string value.',
+                'a tainted secret texture path must keep the native string error')
         end
         debug.setobjecttaint(addon, 'SecretTextureProbe')
         addon()
