@@ -21,8 +21,8 @@ pub enum InlineIconSource {
 /// One `|T...|t` or `|A...|a` escape.
 ///
 /// `|Tpath:height:width:offsetX:offsetY:texWidth:texHeight:left:right:top:bottom:r:g:b|t`
-/// and `|A:atlas:height:width:offsetX:offsetY:r:g:b|a` (the colon after `|A`
-/// is optional). Every field after the path or atlas name may be left out.
+/// and `|A:atlas:height:width:offsetX:offsetY:r:g:b|a`. The atlas colon is
+/// required. Optional fields depend on the escape type.
 #[derive(Debug, Clone, PartialEq)]
 pub struct InlineIcon {
     pub source: InlineIconSource,
@@ -80,18 +80,26 @@ pub fn has_inline_icons(text: &str) -> bool {
 
 /// Split `text` into text pieces (colors, hyperlinks and other escapes
 /// removed, as by [`strip_wow_markup`]) and icons, in reading order. Empty
-/// text pieces are left out. An escape without its closing `|t`/`|a` ends
-/// the string, as the client draws nothing after it.
+/// text pieces are left out. If the first pipe after an opening tag is not
+/// its matching closing marker, the opening pipe goes to ordinary text handling.
 pub fn split_inline_markup(text: &str) -> Vec<InlinePiece> {
     let mut pieces = Vec::new();
     let mut rest = text;
     while let Some((start, close)) = next_icon_escape(rest) {
         push_text(&mut pieces, &rest[..start]);
         let body_start = start + 2;
-        let Some(body_len) = rest[body_start..].find(close) else {
-            return pieces;
+        let Some(body_len) = rest[body_start..].find('|') else {
+            push_text(&mut pieces, &rest[..start + 1]);
+            rest = &rest[start + 1..];
+            continue;
         };
-        let body = &rest[body_start..body_start + body_len];
+        let marker_start = body_start + body_len;
+        if !rest[marker_start..].starts_with(close) {
+            push_text(&mut pieces, &rest[..start + 1]);
+            rest = &rest[start + 1..];
+            continue;
+        }
+        let body = &rest[body_start..marker_start];
         let icon = if close == "|t" {
             parse_texture_escape(body)
         } else {
@@ -100,7 +108,7 @@ pub fn split_inline_markup(text: &str) -> Vec<InlinePiece> {
         if let Some(icon) = icon {
             pieces.push(InlinePiece::Icon(icon));
         }
-        rest = &rest[body_start + body_len + 2..];
+        rest = &rest[marker_start + 2..];
     }
     push_text(&mut pieces, rest);
     pieces
@@ -218,7 +226,7 @@ fn parse_texture_escape(body: &str) -> Option<InlineIcon> {
 }
 
 fn parse_atlas_escape(body: &str) -> Option<InlineIcon> {
-    let body = body.strip_prefix(':').unwrap_or(body);
+    let body = body.strip_prefix(':')?;
     let fields: Vec<&str> = body.split(':').collect();
     let name = fields[0].trim();
     if name.is_empty() {
