@@ -7,11 +7,6 @@ use crate::client_profile::{ACTIVE, ClientProfile};
 
 const SHARED: &str = r#"
 C_CombatAudioAlert = C_CombatAudioAlert or {}
--- Missing combat-audio playback enablement policy; numeric settings alone do
--- not establish that the playback service is available or enabled.
-if rawget(C_CombatAudioAlert, "IsEnabled") == nil then
-    function C_CombatAudioAlert.IsEnabled() return false end
-end
 "#;
 
 const MODERN: &str = r#"
