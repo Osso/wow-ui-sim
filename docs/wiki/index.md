@@ -1,3 +1,7 @@
+## [2026-11-13] fix | EllesmereUI AuraKit secret texture error
+
+[Full third-party startup](investigations/full-addon-startup-2026-10-10.md#aurakit-secret-texture-error-r88c-2026-11-13) and the [secret aura contract](../specs/secret-auras.md) record the R88c boundary, original `ApplyIcon` call path and simulator fix. **VERIFIED (Retail code SHA `39ca0bc72d9539563288b79e622feeeb4a9282bb`):** all 20 add-ons loaded and `lua-errors` returned `[]`; five profile compile receipts have zero warnings. **INFERRED:** revoked numeric and tainted nil inputs pass the `SetTexture` check; nil clears the texture. Getter marking and rendering remain INFERRED/UNKNOWN.
+
 ## [2026-11-13] system | Mandatory host category camera zoom
 
 [Lua API](systems/lua-api.md#host-category-camera-zoom-r83d) records R83d's
@@ -4827,3 +4831,5 @@ category/option numbering, small-list stable ties, and unchanged unknown collect
 and choice-order boundaries. See the [spec](../specs/character-creation-submit.md#r79br79c-host-finalizer-305-314-319).
 
 - 2026-11-13: Retail TokenTracker startup ownership: corrected low-level-loader fixture, baseline preservation and Retail-only stale repair removal; see [consumer selection](investigations/consumer-selection-and-red-proof.md#retail-token-tracker-startup-ownership).
+
+- 2026-11-13: [Retail TransmogUtil location ownership](investigations/consumer-selection-and-red-proof.md#retail-transmogutil-location-ownership): original startup-cache/consumer preservation; best-item helper and native slot provenance remain separate.
