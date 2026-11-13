@@ -83,16 +83,96 @@ fn explicit_secret_aspects_accumulate_without_affecting_other_frames() {
     .expect("explicit secret aspects retain each added bit independently");
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-0"))]
 #[test]
-fn explicit_secret_aspects_union_with_existing_derived_state() {
+fn explicit_secret_aspects_reflect_recorded_bits_on_retail() {
+    let env = env();
+    env.exec(
+        "SecretAspectProtectedFrame = CreateFrame('Frame', 'SecretAspectProtectedFrame') \
+         SecretAspectPreventFrame = CreateFrame('Frame', 'SecretAspectPreventFrame') \
+         SecretAspectEmptyPreventFrame = CreateFrame('Frame', 'SecretAspectEmptyPreventFrame')",
+    )
+    .expect("create protected-state and prevent-secret fixtures");
+    env.exec("SecretAspectPreventFrame:AddSecretAspect(32768)")
+        .expect("seed an existing recorded aspect");
+    // SetPreventSecretValues was removed in 12.0.1; prevent-secret state is host input.
+    let set_prevent = |env: &wow_ui_sim::lua_api::WowLuaEnv, name: &str, on: bool| {
+        let mut state = env.state().borrow_mut();
+        let id = state.widgets.get_id_by_name(name).unwrap();
+        state.widgets.get_mut(id).unwrap().prevent_secret_values = on;
+    };
+    set_prevent(&env, "SecretAspectPreventFrame", true);
+    set_prevent(&env, "SecretAspectEmptyPreventFrame", true);
+    {
+        let mut state = env.state().borrow_mut();
+        let id = state
+            .widgets
+            .get_id_by_name("SecretAspectProtectedFrame")
+            .unwrap();
+        state.widgets.get_mut(id).unwrap().is_protected = true;
+    }
+    env.exec(
+        r#"
+        -- VERIFIED — Retail WM61 S6: aspect queries read recorded sets. Prevention
+        -- blocks additions and preserves recorded bits; see docs/specs/secret-auras.md.
+        local frame = SecretAspectPreventFrame
+        assert(not frame:HasSecretAspect(1))
+        assert(frame:HasSecretAspect(32768) and frame:HasAnySecretAspect())
+        pcall(frame.AddSecretAspect, frame, 8)
+        assert(frame:HasSecretAspect(32768) and not frame:HasSecretAspect(8))
+
+        local empty = SecretAspectEmptyPreventFrame
+        assert(not empty:HasSecretAspect(1) and not empty:HasAnySecretAspect())
+        pcall(empty.AddSecretAspect, empty, 8)
+        assert(not empty:HasSecretAspect(8) and not empty:HasAnySecretAspect())
+
+        local protected = SecretAspectProtectedFrame
+        assert(protected:IsProtected())
+        assert(not protected:HasSecretAspect(1) and not protected:HasAnySecretAspect())
+        protected:AddSecretAspect(32768)
+        assert(not protected:HasSecretAspect(1) and protected:HasSecretAspect(32768))
+        "#,
+    )
+    .expect("recorded aspects remain separate from prevention and protection");
+    set_prevent(&env, "SecretAspectPreventFrame", false);
+    set_prevent(&env, "SecretAspectEmptyPreventFrame", false);
+    env.exec(
+        r#"
+        local frame = SecretAspectPreventFrame
+        frame:AddSecretAspect(8)
+        frame:AddSecretAspect(8)
+        assert(frame:HasSecretAspect(32768) and frame:HasSecretAspect(8))
+
+        local empty = SecretAspectEmptyPreventFrame
+        empty:AddSecretAspect(8)
+        assert(empty:HasSecretAspect(8) and empty:HasAnySecretAspect())
+
+        local protected = SecretAspectProtectedFrame
+        assert(protected:IsProtected())
+        assert(protected:HasSecretAspect(32768))
+        local forbidden = CreateFrame("Frame")
+        forbidden:SetForbidden()
+        assert(forbidden:IsForbidden())
+        forbidden:AddSecretAspect(8)
+        assert(forbidden:HasSecretAspect(8) and forbidden:IsForbidden())
+        "#,
+    )
+    .expect("explicit aspect writes succeed after prevention is disabled");
+}
+
+#[cfg(all(
+    feature = "optional-tests",
+    feature = "client-retail",
+    feature = "retail-12-1-0"
+))]
+#[test]
+fn secret_value_state_correlations_remain_unknown() {
     let env = env();
     env.exec(
         "SecretAspectProtectedFrame = CreateFrame('Frame', 'SecretAspectProtectedFrame') \
          SecretAspectPreventFrame = CreateFrame('Frame', 'SecretAspectPreventFrame')",
     )
-    .expect("create protected-state and prevent-secret fixtures");
-    // SetPreventSecretValues was removed in 12.0.1; prevent-secret state is host input.
+    .expect("create security-state fixtures");
     let set_prevent = |env: &wow_ui_sim::lua_api::WowLuaEnv, on: bool| {
         let mut state = env.state().borrow_mut();
         let id = state
@@ -112,40 +192,30 @@ fn explicit_secret_aspects_union_with_existing_derived_state() {
     }
     env.exec(
         r#"
+        -- UNKNOWN — WM61 S6 / R18 do not establish these query/state relationships.
         local frame = SecretAspectPreventFrame
-        assert(frame:HasSecretAspect(1) and frame:HasAnySecretAspect())
-        assert(frame:HasSecretValues() and frame:IsAnchoringSecret())
-        frame:AddSecretAspect(8)
-        assert(frame:HasSecretAspect(1) and frame:HasSecretAspect(8))
+        assert(frame:HasSecretValues())
+        assert(frame:IsAnchoringSecret())
         "#,
     )
-    .expect("explicit masks union with prevent-secret state");
+    .expect("recorded UNKNOWN prevention correlations");
     set_prevent(&env, false);
     env.exec(
         r#"
-        local frame = SecretAspectPreventFrame
-        assert(not frame:HasSecretAspect(1))
-        assert(frame:HasSecretAspect(8) and frame:HasSecretValues())
-        assert(not frame:IsAnchoringSecret())
-
+        -- UNKNOWN — WM61 S6 / R18 do not establish these query/state relationships.
+        assert(not SecretAspectPreventFrame:IsAnchoringSecret())
         local protected = SecretAspectProtectedFrame
-        assert(protected:IsProtected())
-        assert(protected:HasSecretAspect(1) and protected:HasAnySecretAspect())
         assert(not protected:HasSecretValues())
         protected:AddSecretAspect(32768)
-        assert(protected:HasSecretAspect(1) and protected:HasSecretAspect(32768))
-        assert(protected:HasSecretValues() and protected:IsProtected())
-
+        assert(protected:HasSecretValues())
         local forbidden = CreateFrame("Frame")
         forbidden:SetForbidden()
-        assert(forbidden:HasSecretAspect(1) and forbidden:HasAnySecretAspect())
         assert(not forbidden:HasSecretValues())
         forbidden:AddSecretAspect(8)
-        assert(forbidden:HasSecretAspect(1) and forbidden:HasSecretAspect(8))
-        assert(forbidden:HasSecretValues() and forbidden:IsForbidden())
+        assert(forbidden:HasSecretValues())
         "#,
     )
-    .expect("explicit masks do not replace protected, forbidden, or prevent-secret state");
+    .expect("recorded UNKNOWN protected and forbidden correlations");
 }
 
 #[cfg(feature = "retail-12-1-0")]
