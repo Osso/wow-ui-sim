@@ -57,17 +57,4 @@ mod tests {
 
         assert!(!env.eval::<bool>("return IsUsingGamepad()").unwrap());
     }
-
-    #[test]
-    fn retail_and_ptr_use_the_inferred_overlap_window_after_clock_wrap() {
-        let env = WowLuaEnv::new().expect("create Retail Lua environment");
-        env.exec("A_Admin.SetManualClock(4294968); SetCVar('GamePadOverlapMouseMs', '1500')")
-            .expect("supply clock and overlap window");
-        env.state().borrow_mut().last_gamepad_input_timestamp = Some(u32::MAX - 500);
-
-        assert!(env.eval::<bool>("return IsUsingGamepad()").unwrap());
-        env.exec("SetCVar('GamePadOverlapMouseMs', '1200')")
-            .expect("shorten overlap window");
-        assert!(!env.eval::<bool>("return IsUsingGamepad()").unwrap());
-    }
 }

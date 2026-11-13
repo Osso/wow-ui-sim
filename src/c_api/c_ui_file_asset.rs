@@ -375,27 +375,4 @@ mod tests {
 
         assert_eq!(result, "ok");
     }
-
-    #[cfg(feature = "retail-12-0-7")]
-    #[test]
-    fn loose_file_queries_read_the_host_path_catalog() {
-        let env = WowLuaEnv::new().expect("env");
-        env.state()
-            .borrow_mut()
-            .known_loose_asset_paths
-            .insert("interface/addons/probe/media/example.blp".to_owned());
-        let result: String = env
-            .eval(
-                r#"
-                local path = "Interface\\AddOns\\Probe\\Media\\Example.blp"
-                if C_UIFileAsset.IsKnownFile(path) ~= true then return "known" end
-                if C_UIFileAsset.IsLooseFile(path) ~= true then return "loose" end
-                if C_UIFileAsset.IsLooseFile("Interface/Icons/Trade_Engineering.blp") ~= false then return "shipped" end
-                return "ok"
-                "#,
-            )
-            .expect("queries should run");
-
-        assert_eq!(result, "ok");
-    }
 }

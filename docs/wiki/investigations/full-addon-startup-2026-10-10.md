@@ -76,11 +76,11 @@ The following observations come from isolated 1600x1200 or 3840x2160 simulator r
 | e. Dim/under-bar health text | **VERIFIED:** sampled health text had alpha 1, white color, `OVERLAY` draw layer and frame level 5, above the Health `ARTWORK` layer at level 5. The dim/under-bar symptom was not reproduced. |
 | f. Detached keybind row | **VERIFIED:** the HotKey anchor span measured 55 px while its resolved text width was 37 px after the local probe resized/anchored the button. **UNVERIFIED:** visible detachment; the button was hidden in the sampled tree. |
 
-**VERIFIED (baseline at `fdf247810`):** the Retail consumer test was RED on the missing global. **VERIFIED (post-fix at `6845ba42e`):** the Retail `--lib --test integration --no-run` build completed with zero warnings; six targeted tests passed 1/1 each, including the original consumer and add-on-file pre-load boundary. A later seven-profile compile receipt is tracked in the lane handoff; neither compile nor startup output establishes full native parity or visual acceptance.
+**VERIFIED (baseline at `fdf247810`):** the Retail consumer test was RED on the missing global. **VERIFIED (Retail, 2026-11-12):** the path-normalization/`.BLP` retry unit test, gamepad default-false unit test, and original consumer test each passed 1/1; the Retail `--lib --test integration --no-run` build completed with zero warnings. The separate 20/20 add-on startup is runtime evidence for the INFERRED loader catalog, not a test of native addon-file membership.
 
 ### Retail follow-up sources
 
-- [Retail input consumer test](../../../tests/retail_ellesmere_core_gamepad_consumer.rs) — original missing-global and loaded-addon asset boundaries.
+- [Retail input consumer test](../../../tests/retail_ellesmere_core_gamepad_consumer.rs) — original missing-global boundary.
 - [Input API contract](../../specs/is-using-gamepad.md) — VERIFIED timestamp facts and the separate INFERRED CVar window.
 - [Asset API contract](../../specs/patch-12-0-7-vehicle-sound-assets.md) — G1c facts and UNKNOWN native addon-file catalog membership.
 - [Input interface registration](../../../src/lua_api/globals/real/mod.rs) — Retail/PTR and Forever profile gates.
