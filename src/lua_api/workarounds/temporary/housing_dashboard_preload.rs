@@ -8,13 +8,6 @@
 use crate::lua_api::LoaderEnv;
 
 const HOUSING_DASHBOARD_PRELOAD_WORKAROUND_LUA: &str = r#"
-HousingTutorialUtil = HousingTutorialUtil or {}
-if type(HousingTutorialUtil.BoughtHouseQuestComplete) ~= "function" then
-    function HousingTutorialUtil.BoughtHouseQuestComplete()
-        return true
-    end
-end
-
 if type(C_Housing) == "table" then
     local function set_default(key, fn)
         if rawget(C_Housing, key) == nil then
