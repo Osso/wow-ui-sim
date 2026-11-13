@@ -35,8 +35,12 @@ impl RecipeFavorites {
 }
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
-    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail
-        || !cfg!(feature = "retail-12-1-5")
+    // PTR 70493 ProfessionsRecipeSchematicForm.lua:469 consumes IsRecipeFavorite.
+    // Same contract as Retail WM83; INFERRED for PTR pending native evidence.
+    if !matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+    ) || !cfg!(feature = "retail-12-1-5")
     {
         return Ok(());
     }

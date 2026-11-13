@@ -1,3 +1,11 @@
+## [2026-11-12] correction | R82 hyperlink routing
+
+[Hyperlink routing](investigations/att-unit-hyperlink-tooltip.md) records the removal of guessed unit-GUID rows and links the R82/R82b request contract, explicit display inputs and INFERRED catalog boundary.
+
+## [2026-11-12] investigation | PTR spellbook texture anchors
+
+[XML templates](systems/xml-template-system.md#texture-template-anchor-inheritance) records the discarded inherited anchor field, generic resolver correction, and concrete XML/runtime half-page geometry tests.
+
 ## [2026-11-12] investigation | Inline XML tooltip operands
 
 [Inline XML method arguments](investigations/xml-inline-method-arguments.md) records the zero-vararg parser misclassification, source-faithful parameter-prefix installation, and the separately approved RaidFrame AddLine fixture correction.
@@ -5,6 +13,10 @@
 ## [2026-11-12] implementation | R73 PvP talent annotations
 
 [Tooltip data](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) links the [R73 contract](../specs/tooltip-pvp-talent.md). VERIFIED: eight exact tests pass, including seven original-hover outcomes and supplied slot/group fields. Combat precedes grant and later unlock, and supplied rest permission replaces the unproved XP-state mapping. UNKNOWN: opaque native predicates and inspect internals remain unmodelled.
+
+## [2026-11-12] correction | R80 ordinary item tooltip stats
+
+The [item tooltip contract](../specs/tooltip-item-r80.md) records the VERIFIED admitted native stat helper without wiring it to the UNKNOWN ordinary item-mod producer. Shared item builders now omit unsupplied stats and accept final host amounts and optional top-level metadata. Retail 639 tooltip-related integration cases and all 2263 lib cases pass in bounded partitions, including unchanged standalone-Lua and serializer regressions. PTR/Forever exact proofs are recorded separately in the lane report.
 
 > Proof receipts live untracked under `~/.local/state/wow-ui-sim`. The `data/patch-api/evidence` and `data/test-perf/evidence` trees were removed on 2026-11-08; historical links below are records, not live paths. Recover a file with `git show c011c1d95:<path>`.
 
@@ -22,6 +34,10 @@
 ## [2026-11-11] correction | Addon loading phases and LoadWith followers
 
 [Addon loading](systems/addon-loading.md#blizzard-addon-load-order) records R64 startup phases, `LoadManagers`, optional-before-required ordering, R64b/c follower behavior, and R70 PTR phase/mask evidence. Retail/Forever use the verified follower path. PTR uses an INFERRED child-list model; native parser linkage remains UNKNOWN, and tests seed the list directly. The simulator models PTR `CharacterCreate` as an INFERRED phase-two Glue root and loads its required chain before its files, without ordering it against PTRFeedbackGlue.
+
+## [2026-11-12] implementation | R81 spell tooltip composition
+
+[Tooltip data](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) links the R81 contract, neutral host-helper inputs and native evidence limits. VERIFIED: the five original-consumer tests reject the base and pass with the producer; Retail passes 2263 lib / 641 tooltip integration cases, PTR passes 81 / 10 touched integration/lib cases, and Forever passes 23 / 10 available touched cases, with zero-warning final builds. Native 70688 evidence is not a serialized-output certificate for other builds.
 
 ## [2026-11-11] implementation | Glue login submission
 
