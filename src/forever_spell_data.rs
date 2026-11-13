@@ -60,7 +60,7 @@ pub fn generate(
         table.rows.retain(|row| selected.contains(&row.spell_id));
         table.rows.sort_by_key(|row| (row.spell_id, row.record_id));
         let found: BTreeSet<_> = table.rows.iter().map(|row| row.spell_id).collect();
-        if found != *selected {
+        if name != "SpellPower" && found != *selected {
             let missing: Vec<_> = selected.difference(&found).collect();
             return Err(format!("{name}: missing selected spell IDs {missing:?}"));
         }
@@ -186,16 +186,40 @@ mod tests {
                 .unwrap_err()
                 .contains("zero-filled")
         );
-        let mut missing = tables();
-        missing
+        for name in ["Spell", "SpellName", "SpellMisc", "SpellEffect"] {
+            let mut missing = tables();
+            missing
+                .get_mut(name)
+                .unwrap()
+                .rows
+                .retain(|row| row.spell_id != 9);
+            let error = generate(&selected, missing).unwrap_err();
+            assert!(
+                error.starts_with(&format!("{name}: missing selected spell IDs")),
+                "{name}: {error}"
+            );
+        }
+    }
+
+    #[test]
+    fn missing_spell_power_row_means_no_cost() {
+        let selected = BTreeSet::from([3, 9]);
+        let mut source_tables = tables();
+        source_tables
             .get_mut("SpellPower")
             .unwrap()
             .rows
             .retain(|row| row.spell_id != 9);
-        assert!(
-            generate(&selected, missing)
-                .unwrap_err()
-                .contains("missing selected")
+
+        let bytes = generate(&selected, source_tables).unwrap();
+        let output: serde_json::Value = serde_json::from_slice(&bytes).unwrap();
+        assert_eq!(
+            output["tables"]["SpellName"]["rows"]
+                .as_array()
+                .unwrap()
+                .len(),
+            2
         );
+        assert_eq!(output["tables"]["SpellPower"]["rows"], json!([{"ID": 3}]));
     }
 }
