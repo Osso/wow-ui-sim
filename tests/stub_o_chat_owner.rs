@@ -76,10 +76,12 @@ fn missing_system_metadata_does_not_invent_yellow_retirement_red() {
     env.exec(
         r#"
         local output = CreateFrame('ScrollingMessageFrame', 'StubOMissingSystemOutput', UIParent)
-        local saved = ChatTypeInfo.SYSTEM
-        ChatTypeInfo.SYSTEM = nil -- explicit invalid-input probe, not a native default
+        local saved = ChatTypeInfo
+        -- Original ChatFrameSetup/ImportAllListsToHash moves values into a proxy.
+        -- Replace the Lua table explicitly; clearing its raw SYSTEM slot is not absence.
+        ChatTypeInfo = {} -- explicit invalid-input probe, not a native default
         local ok = pcall(ChatFrameUtil.DisplaySystemMessage, output, 'must not fabricate yellow')
-        ChatTypeInfo.SYSTEM = saved
+        ChatTypeInfo = saved
         assert(not ok, 'SP76 yellow fallback concealed missing original metadata')
         assert(output:GetNumMessages() == 0, 'fallback emitted a fabricated SYSTEM message')
     "#,
