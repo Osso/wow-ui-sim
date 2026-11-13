@@ -166,6 +166,7 @@ fn modeled_c_account_services_returns_disabled_save_result() {
 }
 
 post_wrath_ui_fixture! {
+#[cfg(feature = "retail-12-1-0")]
 #[test]
 fn modeled_c_battle_net_reports_enabled_retail_friend_features() {
     let env = env();
@@ -176,5 +177,16 @@ fn modeled_c_battle_net_reports_enabled_retail_friend_features() {
         .unwrap();
     assert!(friend_tags_enabled, "retail friend tags should be enabled");
     assert!(list_supported, "the Battle.net friend list should be supported");
+}
+
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn forever_battle_net_friend_tags_are_registered_and_default_disabled() {
+    let env = env();
+    let (kind, enabled): (String, bool) = env
+        .eval("return type(C_BattleNet.AreFriendTagsEnabled), C_BattleNet.AreFriendTagsEnabled()")
+        .unwrap();
+    assert_eq!(kind, "function");
+    assert!(!enabled);
 }
 }

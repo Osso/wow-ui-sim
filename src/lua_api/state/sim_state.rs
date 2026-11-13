@@ -836,6 +836,9 @@ pub struct SimState {
     pub guild_bank_tabs: Vec<GuildBankTab>,
     pub merchant_frame_open: bool,
     pub merchant_repair_capable: bool,
+    /// Forever feature-state input; false is the native image-load default, not a CVar.
+    #[cfg(feature = "client-wowforever")]
+    pub merchant_sell_all_junk_feature_enabled: bool,
     pub tabard_frame_open: bool,
     pub trainer_frame_open: bool,
     pub socket_frame_open: bool,
@@ -937,6 +940,9 @@ pub struct SimState {
     #[cfg(any(feature = "retail-12-0-7", feature = "retail-12-1-0"))]
     pub quest_hub_dragonriding_races: HashMap<i32, Vec<i32>>,
     pub bnet_friends: Vec<BnetFriend>,
+    /// Forever feature-state input; false is the native image-load default, not a CVar.
+    #[cfg(feature = "client-wowforever")]
+    pub bnet_friend_tags_enabled: bool,
     pub bnet_friend_invites: Vec<BnetFriendInvite>,
     pub bnet_appear_offline: bool,
     /// INFERRED local broadcast input; no network service or persistence.
