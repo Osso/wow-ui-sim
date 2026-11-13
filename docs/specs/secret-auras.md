@@ -94,7 +94,7 @@ Clean-room reports: `H/native-evidence-70688/secrets/` (S0–S11, S15, S18, and 
 | S3 | AuraData types | VERIFIED (types), INFERRED (fields) | Four AuraData types, four accessors, a swappable provider; field-level marking is WM61 S3 |
 | S4 | helper surface | VERIFIED (surface) | The restricted helper set is closed; behaviour reads blocked |
 | S4s7a | `securecopy` | EMULATED | One result on success; secret scalars stay secret; tainted arguments rejected |
-| S4s7b | `CreateSecureDelegate` | INFERRED + EMULATED | One C closure with three upvalues; invocation captures argument provenance |
+| S4s7b | `CreateSecureDelegate` | VERIFIED (bounded helper regions) + EMULATED | Construction gate, source selection, shallow argument provenance and callback wrapping; complete return and target behavior remain unknown |
 | S5 | operations on secrets | VERIFIED (check), UNKNOWN (modes) | Marked operands consult one shared check; mode 0 rejects without a taint source |
 | S6 | sinks and aspects | VERIFIED (strings only) | Three argument diagnostics; the text aspect is 8 (WM61 S6) |
 | S7, S7a | wrap/unwrap | EMULATED | Both are variadic transforms, one result per argument |
@@ -233,7 +233,7 @@ Threat secrecy still follows the supplied `threat_state_restricted` input. Its n
 
 Source: `native-evidence-70688/secrets/S13-restriction-surface-summary.md` (behavioural specs only; builds 12.1.5.70688, Forever 70707, 12.1.7 PTR).
 
-- VERIFIED, all three builds: the restricted helper set is closed. It has 25 names: 24 at permission class 7 and `GetForbiddenObjectTable` at class 6. The set is `canaccessallvalues`, `canaccesssecrets`, `canaccesstable`, `canaccessvalue`, `hasanysecretvalues`, `issecrettable`, `issecretvalue`, `mapvalues`, `scrub`, `scrubsecretvalues`, `secretunwrap`, `secretwrap`, `securecopy`, `CreateFromMixins`, `CreateSecureDelegate`, `Mixin`, `RegisterEventCallback`, `RegisterUnitEventCallback`, `UnregisterEventCallback`, `UnregisterUnitEventCallback`, `dropsecretaccess`, `dumpobject`, `securecallmethod`, `settablesecurity` and `GetForbiddenObjectTable`. The simulator registers all 25. `securecopy` and `CreateSecureDelegate` are still temporary fallbacks; the secure-helpers lane replaces them. One implementation is correct for every pinned build.
+- VERIFIED, all three builds: the restricted helper set is closed. It has 25 names: 24 at permission class 7 and `GetForbiddenObjectTable` at class 6. The set is `canaccessallvalues`, `canaccesssecrets`, `canaccesstable`, `canaccessvalue`, `hasanysecretvalues`, `issecrettable`, `issecretvalue`, `mapvalues`, `scrub`, `scrubsecretvalues`, `secretunwrap`, `secretwrap`, `securecopy`, `CreateFromMixins`, `CreateSecureDelegate`, `Mixin`, `RegisterEventCallback`, `RegisterUnitEventCallback`, `UnregisterEventCallback`, `UnregisterUnitEventCallback`, `dropsecretaccess`, `dumpobject`, `securecallmethod`, `settablesecurity` and `GetForbiddenObjectTable`. The simulator registers all 25. See the separate [secure-helpers contract](secure-helpers.md) for modeled behavior. One implementation is correct for every pinned build.
 - VERIFIED: `GetAddOnRestrictionState(type)` returns one byte of a per-type state array, and `IsAddOnRestrictionActive(type)` is `state[type] == 2`. See [restricted-actions-state](restricted-actions-state.md).
 - VERIFIED structure, two builds: `canaccessvalue` returns its fallback `1` when the argument is missing or fails its check. INFERRED meaning: fail-open (access allowed). The simulator matches this: `canaccessvalue()` returns `true`. Do not apply one fail-closed default to the whole surface.
 - VERIFIED, three builds: `CreateSecureDelegate`, `secretunwrap` and `settablesecurity` refuse while a native singleton is set. They report an error and return `nil`; they do not raise. `secretwrap` has no guard. The singleton and its writer are native UNKNOWN, so the simulator does not model this refusal.
@@ -245,7 +245,7 @@ Source: `native-evidence-70688/secrets/S13-restriction-surface-summary.md` (beha
 - [ ] Native S1 §7 describes a generic indexed state-byte predicate path comparing the byte to 2. The mapping of restriction indices and any pairing of a particular predicate with a getter remain unverified; existing `GetSpellCastSecrecy` and `ShouldUnitSpellCastBeSecret` are computed independently.
 
 - [ ] Complete accessor-to-AuraData publication and the remaining secret-operation behavior are UNKNOWN; see the WM61 boundaries below.
-- [ ] Restricted-helper refusal guard (`CreateSecureDelegate`, `secretunwrap`, `settablesecurity` return `nil` while a native singleton is set): not modelled; the singleton is UNKNOWN.
+- [ ] Restricted-helper refusal guard (the separate singleton-based `CreateSecureDelegate`, `secretunwrap` and `settablesecurity` path returns `nil`): not modelled; the singleton is UNKNOWN. See [secure helpers](secure-helpers.md) for the tainted-construction gate.
 - [ ] Production restriction inputs and transitions (WM61 S1).
 - [ ] Per-field AuraData secrecy (WM61 S3).
 - [ ] General operation rules for secrets in tainted code (after S4).

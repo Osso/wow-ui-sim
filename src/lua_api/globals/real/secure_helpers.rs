@@ -152,8 +152,8 @@ fn call_with_original_taint(state: &mut LuaState) -> LuaResult<u32> {
     call_through(state, original, taint, |_, value| value)
 }
 
-/// The source a delegate invocation captures before its body clears taint
-/// (S4s7b §2). `None` becomes a nil upvalue, which clears taint at the call.
+/// Capture a source for a later taint-scoped call; nil clears taint at that boundary.
+/// (S4s7b §§1–2).
 fn capture_execution_source(state: &mut LuaState) -> Val {
     let origin = rilua::api::stack_taint_origin(state).map(str::to_owned);
     match origin {
@@ -163,12 +163,13 @@ fn capture_execution_source(state: &mut LuaState) -> Val {
 }
 
 /// Every function-valued delegate argument is replaced with a wrapper that
-/// calls the original under the source captured at invocation time (S4s7b §2).
+/// calls the original under the source present before wrapper creation (S4s7b §2).
 /// The code does not check whether the argument is untrusted.
-fn wrap_delegate_argument(state: &mut LuaState, value: Val, source: Val) -> Val {
+fn wrap_delegate_argument(state: &mut LuaState, value: Val) -> Val {
     if !matches!(value, Val::Function(_)) {
         return value;
     }
+    let source = capture_execution_source(state);
     new_rust_closure(
         state,
         call_with_captured_source,
@@ -177,51 +178,81 @@ fn wrap_delegate_argument(state: &mut LuaState, value: Val, source: Val) -> Val 
     )
 }
 
+fn captured_source(state: &LuaState, value: Val) -> Option<String> {
+    let Val::Str(origin) = value else {
+        return None;
+    };
+    state
+        .gc
+        .string_arena
+        .get(origin)
+        .map(|origin| String::from_utf8_lossy(origin.data()).into_owned())
+}
+
 fn call_with_captured_source(state: &mut LuaState) -> LuaResult<u32> {
     let upvalues = current_upvalues(state)?;
-    let taint = match upvalues[1] {
-        Val::Str(origin) => state
-            .gc
-            .string_arena
-            .get(origin)
-            .map(|origin| String::from_utf8_lossy(origin.data()).into_owned()),
-        _ => None,
-    };
+    let taint = captured_source(state, upvalues[1]);
     call_through(state, upvalues[0], taint, |_, value| value)
 }
 
 fn create_secure_delegate(state: &mut LuaState) -> LuaResult<u32> {
+    if current_stack_taint(state).is_some_and(|source| !source.is_empty()) {
+        return Ok(0);
+    }
+
     let func = arg(state, 0);
+    if func.is_nil() {
+        return Err(runtime_error(format!(
+            "bad argument #1 to 'CreateSecureDelegate' (function expected, got {})",
+            func.type_name()
+        )));
+    }
+    rilua::table_security::unwrap_secret(state, func)?;
     if !matches!(func, Val::Function(_)) {
         return Err(runtime_error(format!(
             "bad argument #1 to 'CreateSecureDelegate' (function expected, got {})",
             func.type_name()
         )));
     }
+
     let options = arg(state, 1);
     check_options_type(options, "CreateSecureDelegate")?;
     let wrap = bool_option(state, options, "wrapUntrustedFunctions", true);
+    let source = capture_execution_source(state);
     let delegate = new_rust_closure(
         state,
         invoke_secure_delegate,
         "SecureDelegate",
-        vec![func, Val::Bool(wrap)],
+        vec![func, Val::Bool(wrap), source],
     );
     state.push(delegate);
     Ok(1)
 }
 
-fn invoke_secure_delegate(state: &mut LuaState) -> LuaResult<u32> {
-    let mut upvalues = current_upvalues(state)?;
-    let args: Vec<_> = (state.base..state.top)
+fn wrap_delegate_arguments(state: &mut LuaState, wrap_functions: bool) -> Vec<Val> {
+    let arguments: Vec<_> = (state.base..state.top)
         .map(|index| state.stack_get(index))
         .collect();
-    upvalues.push(capture_execution_source(state));
+    if wrap_functions {
+        arguments
+            .into_iter()
+            .map(|value| wrap_delegate_argument(state, value))
+            .collect()
+    } else {
+        arguments
+    }
+}
+
+fn invoke_secure_delegate(state: &mut LuaState) -> LuaResult<u32> {
+    let upvalues = current_upvalues(state)?;
+    let wrap = matches!(upvalues[1], Val::Bool(true));
+    let args = wrap_delegate_arguments(state, wrap);
+    let source = upvalues.get(2).copied().unwrap_or(Val::Nil);
     let target = new_rust_closure(
         state,
         call_secure_delegate_target,
         "SecureDelegateTarget",
-        upvalues,
+        vec![upvalues[0], source],
     );
     state.push(target);
     match protected_lua_pcall_state(state, target, &args) {
@@ -241,15 +272,8 @@ fn invoke_secure_delegate(state: &mut LuaState) -> LuaResult<u32> {
 
 fn call_secure_delegate_target(state: &mut LuaState) -> LuaResult<u32> {
     let upvalues = current_upvalues(state)?;
-    let wrap = matches!(upvalues[1], Val::Bool(true));
-    let source = upvalues.get(2).copied().unwrap_or(Val::Nil);
-    call_through(state, upvalues[0], None, |state, value| {
-        if wrap {
-            wrap_delegate_argument(state, value, source)
-        } else {
-            value
-        }
-    })
+    let source = captured_source(state, upvalues[1]);
+    call_through(state, upvalues[0], source, |_, value| value)
 }
 
 struct SecureCopy {
