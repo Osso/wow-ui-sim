@@ -44,7 +44,7 @@ Evidence levels used below:
 
 ### Widget sinks and aspects
 - [ ] Widget methods apply their `SecretArguments` mode. STRING names three modes: never allowed, not allowed, and only allowed during untainted execution.
-- [ ] Under tainted execution, a marked string passed to `Texture:SetTexture` raises `Cannot set texture to a secret string value.` (**VERIFIED — R88c Q1, Retail 12.1.5.70688**; full native error context is UNKNOWN).
+- [x] Under tainted execution, a marked string passed to `Texture:SetTexture` raises `Cannot set texture to a secret string value.` (**VERIFIED — R88c Q1, Retail 12.1.5.70688**; full native error context is UNKNOWN).
 - [ ] Apply `SecretArgumentsAddAspect` and `SecretReturnsForAspect` according to the bounded WM61 S6 findings below; complete getter publication remains UNKNOWN.
 - [ ] Shipped aura buttons can pass secret duration, text, icon, visibility and geometry to their widgets and render correctly (UI).
 
@@ -255,6 +255,7 @@ This table records established contradictions in the audited S2–S9 helper, aur
 - `src/c_api/c_unit_auras.rs`, `c_unit_aura_*.rs`, `aura_duration.rs`: aura queries and per-function guards.
 - `src/lua_api/globals/security/{secret_values,value_access}.rs`: helpers and the wrap/unwrap bridge.
 - `src/lua_api/frame/methods/{secret_origin.rs,misc/secret.rs}`: widget sinks and aspects.
+- `src/lua_api/frame/methods/widgets/texture/atlas.rs`: texture setters and atlas behavior.
 - `src/lua_api/globals/admin.rs`, `admin_events.rs`: admin event dispatch taint.
 - `rilua/src/{table_security.rs,stdlib/taint.rs}`: VM secret wrappers and taint.
 
@@ -266,6 +267,10 @@ This table records established contradictions in the audited S2–S9 helper, aur
 
 - `tests/spell_casting.rs::forever_spell_cast_secrecy_uses_supplied_unit_and_control_guids_in_casting_bar` checks Forever's default, host-supplied GUID ownership, argument errors, and the original `CastingBarMixin:IsInterruptable` consumer.
 - `tests/spell_casting.rs::casting_bar_original_interruptibility_uses_cast_secrecy_predicate` checks the original consumer on Retail and PTR.
+- `tests/aura_secret_display.rs::tainted_secret_texture_string_reports_native_error` checks the VERIFIED tainted-string diagnostic.
+- `tests/aura_secret_display.rs::aura_secret_texture_replaces_and_clears_without_plain_readout` checks secret texture input and getter behavior under `optional-tests`.
+- `tests/aura_secret_display.rs::tainted_secret_texture_target_reports_prevention_error` checks the inferred prevention behavior under `optional-tests`.
+- `tests/aura_container_util.rs::retail_aura_container_apply_icon_accepts_tainted_secret_file_id` exercises the original Retail `ApplyIcon` consumer under `optional-tests`.
 
 ## Casting and threat predicate surface
 
