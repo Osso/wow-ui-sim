@@ -1569,8 +1569,8 @@ fn ptr_character_creation_submit_real_controls_do_not_invent_outcome() {
             .first().map(|error| error.lines().next().unwrap_or_default().to_owned());
         if let Some(first_error) = first_error {
             const EXPECTED_PTR_STOP: &str = concat!(
-                "...rd_CharacterCreate/Mainline/Blizzard_CharacterCreate.lua:812: ",
-                "attempt to call field 'GetCurrentCameraZoom' (a nil value)"
+                "bad argument #1 to 'SetCameraZoomLevel' ",
+                "(Usage: C_CharacterCreation.SetCameraZoomLevel(zoomLevel [, keepCustomZoom]))"
             );
             assert_eq!(first_error, EXPECTED_PTR_STOP, "unexpected PTR first error");
             panic!("PTR real Create-button reachability RED: {first_error}");

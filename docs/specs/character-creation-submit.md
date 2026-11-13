@@ -313,3 +313,17 @@ The R83b reader and R83c changed-only marker clearing remain VERIFIED. Wider
 camera-profile effects are unmodeled. Getter initial zero and single numeric
 return remain the earlier separate R83 inferred policy, never count/default
 assertions. Unseeded category data remains unchanged pending the collector.
+
+
+### Current PTR real-control boundary after R83b/R83c
+
+The optional real-button test now passes the missing getter/interaction/visibility
+calls and stops at exactly:
+`bad argument #1 to 'SetCameraZoomLevel' (Usage: C_CharacterCreation.SetCameraZoomLevel(zoomLevel [, keepCustomZoom]))`.
+The unchanged guessed category provider supplies no cameraZoomLevel to the real
+PTR Blizzard_CustomizationUI.lua:664 consumer, just as in the RF R79 boundary.
+The test asserts this complete first line and then deliberately fails; it does
+not suppress the error or claim full submit GREEN. It remains optional until a
+native-evidenced collector supplies the categories. The setter is not weakened,
+and no camera value is added to invented categories. Four focused PTR camera
+selectors pass with the separate inferred bridge applied.
