@@ -7,12 +7,6 @@
 const ASSISTED_COMBAT_MANAGER_DEFAULTS_LUA: &str = r#"
 AssistedCombatManager = type(AssistedCombatManager) == "table" and AssistedCombatManager or {}
 
-if rawget(AssistedCombatManager, "ShouldHighlightSpellbookSpell") == nil then
-  function AssistedCombatManager:ShouldHighlightSpellbookSpell(_spellID)
-    return false
-  end
-end
-
 "#;
 
 const ASSISTED_COMBAT_MANAGER_OWNER_FALLBACK_LUA: &str = r#"
@@ -41,6 +35,12 @@ end
 
 if rawget(AssistedCombatManager, "SetCanHighlightSpellbookSpells") == nil then
   function AssistedCombatManager:SetCanHighlightSpellbookSpells(_enabled)
+  end
+end
+
+if rawget(AssistedCombatManager, "ShouldHighlightSpellbookSpell") == nil then
+  function AssistedCombatManager:ShouldHighlightSpellbookSpell(_spellID)
+    return false
   end
 end
 "#;
@@ -90,11 +90,15 @@ mod tests {
         let has_highlight_fallback: bool = env
             .eval("return type(AssistedCombatManager.SetCanHighlightSpellbookSpells) == 'function'")
             .expect("highlight fallback availability probe should run");
+        let has_spell_highlight_fallback: bool = env
+            .eval("return type(AssistedCombatManager.ShouldHighlightSpellbookSpell) == 'function'")
+            .expect("spell highlight fallback availability probe should run");
         assert_eq!(has_action_spell_id_fallback, expected_owner_fallback);
         assert_eq!(has_action_spell_fallback, expected_owner_fallback);
         assert_eq!(has_description_fallback, expected_owner_fallback);
         assert_eq!(has_tooltip_fallback, expected_owner_fallback);
         assert_eq!(has_highlight_fallback, expected_owner_fallback);
+        assert_eq!(has_spell_highlight_fallback, expected_owner_fallback);
 
         let result: String = env
             .eval(
@@ -109,7 +113,9 @@ mod tests {
                 if type(AssistedCombatManager.GetActionSpellDescription) == "function"
                     and AssistedCombatManager:GetActionSpellDescription() ~= ""
                 then return "description" end
-                if AssistedCombatManager:ShouldHighlightSpellbookSpell(116) ~= false then return "highlight" end
+                if type(AssistedCombatManager.ShouldHighlightSpellbookSpell) == "function"
+                    and AssistedCombatManager:ShouldHighlightSpellbookSpell(116) ~= false
+                then return "highlight" end
                 if type(AssistedCombatManager.SetCanHighlightSpellbookSpells) == "function" then
                     AssistedCombatManager:SetCanHighlightSpellbookSpells(true)
                 end
