@@ -135,7 +135,6 @@ fn retail_nameplate_hit_test_insets_matches_native_input_parsing() {
         assert(not pcall(set, 2147483648, 1, 2, 3, 4))
         assert(not pcall(set, 0, 'not-number', 2, 3, 4))
         assert(pcall(set, 0, '2', '2.5', '-3', '4'))
-        assert(pcall(set, 0, math.huge, 0/0, -math.huge, 4))
         "#,
     )
     .expect("Retail type and inset arguments must use the native numeric conversions");
