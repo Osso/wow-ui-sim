@@ -775,12 +775,14 @@ fn measure_text_height(state: &LuaState, id: u64, wrap_width: Option<f32>) -> f6
     height as f64 * text_scale
 }
 
+/// Return FontString-local width; R88d verifies native cached width is divided by FontString scale.
 pub(super) fn get_string_width(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
     state.push(Val::Num(measure_text_width(state, id)));
     Ok(1)
 }
 
+/// Return FontString-local height; R88d verifies native cached height is divided by FontString scale.
 pub(super) fn get_string_height(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
     let wrap_width = {

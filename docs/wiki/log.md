@@ -2,9 +2,9 @@
 
 Updated [full third-party startup](investigations/full-addon-startup-2026-10-10.md#garrison-minimap-button-visibility-r88e1-2026-11-13) and the [Retail garrison contract](../specs/garrison-landing-page-type.md) with R88e.1. **VERIFIED (Retail 12.1.5 build 70688):** missing records return false, non-111 records return their flag, type 111 uses PlayerCondition 105386 and nonzero player state, and lookup uses the low byte without an enum check. **VERIFIED (20-addon Retail run at simulator SHA `2a03dbee7`):** one AuraKit secret-access error remains (70 occurrences); the Minimap error is absent. **INFERRED:** the player-state value is the covenant ID; the simulator's 105386 result is a false-default host input.
 
-## [2026-11-13] docs | Inline texture and atlas icons
+## [2026-11-13] correction | Inline texture and atlas icon evidence
 
-[Rendering pipeline](systems/rendering-pipeline.md#inline-icons-in-text) records how `|T` and `|A` escapes are parsed, laid out, drawn and measured, with icon sizes and line heights from a contributor measurement on WoW Forever 1.60.1; tests live in `crates/sim-render/src/inline_markup.rs`, `src/render/glyph/inline_emit.rs` and `tests/inline_icon_width.rs`.
+[Rendering pipeline](systems/rendering-pipeline.md#inline-icons-in-text) separates VERIFIED Retail 12.1.5.70688 R88d/R88e.6/R88e.7 parser, measurement, line-height and row-layout findings from INFERRED Forever explicit sizes. Runtime scale inputs, caller-metric identity, vertical-mode defaults/mapping, snap operand/advance effect, tooltip snap use, and oversized single-icon wrapping remain UNKNOWN. Tests cover parser rules, FontString scale division, accepted width and GameTooltip left-region row heights.
 
 ## [2026-11-13] system | Mandatory host category camera zoom
 
