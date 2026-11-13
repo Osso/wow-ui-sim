@@ -300,6 +300,7 @@ macro_rules! frame_defaults {
             is_protected: false,
             prevent_secret_values: false,
             explicit_secret_aspects: 0,
+            is_anchoring_secret: false,
             tooltip_owner_id: None,
             blocking_loads_requested: false,
             vertex_offsets: None,

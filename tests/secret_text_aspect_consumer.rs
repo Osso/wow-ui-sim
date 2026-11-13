@@ -1,5 +1,5 @@
 //! WM61 S6 Text aspect through the selected CompactUnitFrame consumer.
-#![cfg(feature = "client-retail")]
+#![cfg(any(feature = "client-retail", feature = "client-ptr"))]
 
 use crate::common::blizzard_addon_harness::{
     blizzard_ui_dir, load_blizzard_addon_closure_into_env, new_blizzard_addon_env,
@@ -35,6 +35,8 @@ fn compact_unit_name_marks_text_aspect_for_secret_identity() {
         consumer(frame)
         assert(frame.name:HasSecretAspect(8), 'secret text must mark Text aspect 8')
         assert(frame.name:HasAnySecretAspect())
+        assert(not frame.name:IsPreventingSecretValues(), 'Text aspect is not prevention')
+        assert(not frame.name:IsAnchoringSecret(), 'Text aspect is not anchoring secrecy')
         "#,
     )
     .unwrap();

@@ -26,25 +26,40 @@ pub(crate) fn get_hyperlink(state: &mut LuaState) -> LuaResult<u32> {
         HyperlinkRequest::Item(request) => tooltip_for_item_hyperlink(state, &request.link)?,
         HyperlinkRequest::Spell(request) => tooltip_for_link_spell(state, request.spell_id),
         HyperlinkRequest::Currency { id, quantity } => {
-            let Some(currency) = i32::try_from(id)
-                .ok()
-                .and_then(crate::lua_api::globals::currency_data::get_currency_by_id)
-            else {
-                return crate::c_api::tooltip_data::unknown_getter_failure();
-            };
-            let tooltip = tooltip_for_currency(state, currency, Some(quantity));
-            // R82 Q3 currency title is type 0, not a spell-name line.
-            let lines = crate::lua_api::methods::table_get(state, tooltip, "lines");
-            if let Val::Table(lines) = lines {
-                let line = state
-                    .gc
-                    .tables
-                    .get(lines)
-                    .map(|lines| lines.get_int(1))
-                    .unwrap_or(Val::Nil);
-                restore_plain_line_type(state, line);
+            if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+                let Some(currency_id) = i32::try_from(id).ok() else {
+                    return crate::c_api::tooltip_data::unknown_getter_failure();
+                };
+                let Some(tooltip) = crate::c_api::c_tooltip_info_currency::build_currency_tooltip(
+                    state,
+                    currency_id,
+                    Some(quantity),
+                )?
+                else {
+                    return crate::c_api::tooltip_data::unknown_getter_failure();
+                };
+                tooltip
+            } else {
+                let Some(currency) = i32::try_from(id)
+                    .ok()
+                    .and_then(crate::lua_api::globals::currency_data::get_currency_by_id)
+                else {
+                    return crate::c_api::tooltip_data::unknown_getter_failure();
+                };
+                let tooltip = tooltip_for_currency(state, currency, Some(quantity));
+                // R82 Q3 currency title is type 0, not a spell-name line.
+                let lines = crate::lua_api::methods::table_get(state, tooltip, "lines");
+                if let Val::Table(lines) = lines {
+                    let line = state
+                        .gc
+                        .tables
+                        .get(lines)
+                        .map(|lines| lines.get_int(1))
+                        .unwrap_or(Val::Nil);
+                    restore_plain_line_type(state, line);
+                }
+                tooltip
             }
-            tooltip
         }
         // R82 proves the service's false result, not a synchronous server response.
         HyperlinkRequest::Trade { .. } => {
