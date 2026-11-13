@@ -243,11 +243,15 @@ end
 C_Reputation.RequestFactionParagonPreloadRewardData = function()
 end
 
-C_Reputation.IsFactionActive = function()
-    return true
+if C_Reputation.IsFactionActive == nil then
+    C_Reputation.IsFactionActive = function()
+        return true
+    end
 end
 
-C_Reputation.SetFactionActive = function()
+if C_Reputation.SetFactionActive == nil then
+    C_Reputation.SetFactionActive = function()
+    end
 end
 
 C_Reputation.ToggleFactionAtWar = function()

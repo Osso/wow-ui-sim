@@ -311,6 +311,18 @@ fn register_reputation_namespace(lua: &mut rilua::Lua) -> crate::Result<()> {
             "IsAccountWideReputation",
             crate::c_api::c_reputation::is_account_wide_reputation,
         )?;
+        table_set_rust_fn_static(
+            lua.state_mut(),
+            reputation_ref,
+            "IsFactionActive",
+            crate::c_api::c_reputation::is_faction_active,
+        )?;
+        table_set_rust_fn_static(
+            lua.state_mut(),
+            reputation_ref,
+            "SetFactionActive",
+            crate::c_api::c_reputation::set_faction_active,
+        )?;
     }
     LuaApiMut::set_global_val(lua, "C_Reputation", reputation)?;
     Ok(())

@@ -110,6 +110,81 @@ pub(crate) fn is_account_wide_reputation(state: &mut LuaState) -> LuaResult<u32>
     Ok(1)
 }
 
+fn read_faction_sort_index(state: &mut LuaState, usage: &str) -> LuaResult<u32> {
+    let index = read_required_number(state, usage)?;
+    if index < 0.0 || index > f64::from(u32::MAX) {
+        return Err(runtime_error(format!(
+            "outside of expected range 0 to {}",
+            u32::MAX
+        )));
+    }
+    if !index.is_finite() {
+        return Err(runtime_error(usage));
+    }
+    Ok(index as u32)
+}
+
+fn reputation_faction_at_index(state: &mut LuaState, index: u32) -> Val {
+    let Ok(index) = i32::try_from(index) else {
+        return Val::Nil;
+    };
+    let global = Val::Table(state.global);
+    let reputation_state = table_get_static(state, global, "__wow_reputation_state");
+    let rows = table_get_static(state, reputation_state, "factions");
+    integer_table_value(state, rows, index)
+}
+
+// INFERRED (R88f.A.80-A.81): reputationIndex is the scenario row's
+// representation of the adjacent-build ReputationIndex field.
+fn has_valid_activity_reputation_index(state: &mut LuaState, row: Val) -> bool {
+    let Val::Num(index) = table_get_static(state, row, "reputationIndex") else {
+        return false;
+    };
+    index.is_finite() && index.fract() == 0.0 && (0.0..=999.0).contains(&index)
+}
+
+// INFERRED fixture input: isInactive records the status marker. Native refresh
+// and packet submission are not modeled in this seeded-state surface.
+pub(crate) fn is_faction_active(state: &mut LuaState) -> LuaResult<u32> {
+    const USAGE: &str = "Usage: local isActive = C_Reputation.IsFactionActive(factionSortIndex)";
+    let index = read_faction_sort_index(state, USAGE)?;
+    let row = reputation_faction_at_index(state, index);
+    let active = if row == Val::Nil || !has_valid_activity_reputation_index(state, row) {
+        true
+    } else {
+        !matches!(table_get_static(state, row, "isInactive"), Val::Bool(true))
+    };
+    state.push(Val::Bool(active));
+    Ok(1)
+}
+
+// INFERRED fixture input: canSetInactive and isInactive select the modeled
+// local status row; native network submission and refresh effects remain unknown.
+pub(crate) fn set_faction_active(state: &mut LuaState) -> LuaResult<u32> {
+    const USAGE: &str = "Usage: C_Reputation.SetFactionActive(factionSortIndex, setActive)";
+    let index = read_faction_sort_index(state, USAGE)?;
+    let active_value = read_allowed_argument(state, stack_val(state, 2), USAGE)?;
+    if matches!(active_value, Val::Nil) {
+        return Err(runtime_error(USAGE));
+    }
+    let set_active = !matches!(active_value, Val::Bool(false));
+    let row = reputation_faction_at_index(state, index);
+    let faction_id = table_get_static(state, row, "factionID");
+    let can_set_inactive = matches!(
+        table_get_static(state, row, "canSetInactive"),
+        Val::Bool(true)
+    );
+    if row == Val::Nil
+        || !matches!(faction_id, Val::Num(id) if id != 0.0)
+        || !can_set_inactive
+        || !has_valid_activity_reputation_index(state, row)
+    {
+        return Ok(0);
+    }
+    table_set_static(state, row, "isInactive", Val::Bool(!set_active));
+    Ok(0)
+}
+
 // VERIFIED (Retail 12.1.5.70688, R88f.A.72): nil is required-argument
 // failure; non-nil ordinary values use Lua truthiness after secret access checks.
 pub(crate) fn set_legacy_reputations_shown(state: &mut LuaState) -> LuaResult<u32> {
