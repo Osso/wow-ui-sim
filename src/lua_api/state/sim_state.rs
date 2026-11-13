@@ -9,6 +9,9 @@ pub(crate) struct RegisteredLoadWith {
 
 pub struct SimState {
     pub hyperlink_tooltip: crate::c_api::c_tooltip_info_hyperlink::inputs::HyperlinkTooltipInputs,
+    /// INFERRED host input for the opaque crafting-UI helper; not player state.
+    pub trade_skill_crafting_ui_inputs:
+        crate::c_api::c_trade_skill_crafting_ui::TradeSkillCraftingUiInputs,
     /// Selected loot specialization; zero follows the active specialization.
     pub loot_specialization: u32,
     pub(crate) loot_spec_window: Option<(std::time::Instant, u8)>,
