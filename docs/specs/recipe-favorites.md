@@ -20,9 +20,9 @@ PTR 70493 `Blizzard_ProfessionsTemplates/Blizzard_ProfessionsRecipeSchematicForm
 consumes `IsRecipeFavorite` during original crafting-form initialization.
 **VERIFIED:** this consumer needs the API.
 
-**UNKNOWN (PTR 12.1.7.70668):** Native publication of
-`HasFavoriteOrderRecipes` is not established. Its simulator registration is
-**INFERRED** from the PTR 70493 consumers
+**VERIFIED (Retail WM83):** `HasFavoriteOrderRecipes` is registered on Retail.
+**UNKNOWN (PTR 12.1.7.70668):** Native publication is not established. Its PTR
+simulator registration is **INFERRED** from the PTR 70493 consumers
 `TradeSkillUIDocumentation.lua:897` and
 `ProfessionsCrafterOrderPage.lua:434,523`; the handler body does not prove
 publication.

@@ -41,13 +41,24 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     }
     let namespace = super::ensure_namespace(state, "C_TradeSkillUI")?;
     table_set_rust_fn_static(state, namespace, "IsRecipeFavorite", is_recipe_favorite)?;
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        // VERIFIED (Retail WM83): HasFavoriteOrderRecipes is registered on Retail.
+        table_set_rust_fn_static(
+            state,
+            namespace,
+            "HasFavoriteOrderRecipes",
+            has_favorite_order_recipes,
+        )?;
+    }
     table_set_rust_fn_static(state, namespace, "SetRecipeFavorite", set_recipe_favorite)
 }
 
 pub(crate) fn register_has_favorite_order_recipes(state: &mut LuaState) -> LuaResult<()> {
     // INFERRED (PTR R85; publication UNKNOWN): retain for PTR 70493 consumers
     // TradeSkillUIDocumentation.lua:897 and ProfessionsCrafterOrderPage.lua:434,523.
-    if !supports_recipe_favorite_apis() {
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Ptr
+        || !cfg!(feature = "retail-12-1-5")
+    {
         return Ok(());
     }
     let namespace = super::ensure_namespace(state, "C_TradeSkillUI")?;
