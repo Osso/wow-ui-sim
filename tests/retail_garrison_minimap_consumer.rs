@@ -5,9 +5,10 @@ use crate::common::blizzard_addon_harness::{
 };
 
 #[test]
-fn retail_minimap_refresh_uses_the_landing_page_garrison_type() {
+fn retail_minimap_refresh_stops_at_unmodeled_visibility_query() {
     let ui = blizzard_ui_dir();
     let env = new_blizzard_addon_env(&ui);
+    // Stop at the missing visibility predicate; do not claim full refresh success.
     wow_ui_sim::xml::register_intrinsic_templates();
 
     let loaded = load_blizzard_addon_closure_into_env(
@@ -29,7 +30,7 @@ fn retail_minimap_refresh_uses_the_landing_page_garrison_type() {
         C_Garrison.IsLandingPageMinimapButtonVisible = function(garrisonType)
             visibilityCalls = visibilityCalls + 1
             assert(type(garrisonType) == 'number')
-            return false
+            error('stop at unmodeled C_Garrison.IsLandingPageMinimapButtonVisible')
         end
 
         local button = setmetatable({
@@ -37,8 +38,12 @@ fn retail_minimap_refresh_uses_the_landing_page_garrison_type() {
             Hide = function(self) self.hidden = true end,
         }, { __index = ExpansionLandingPageMinimapButtonMixin })
 
-        button:RefreshButton()
-        assert(visibilityCalls == 1, "original minimap refresh must query landing-page visibility")
+        local ok, err = pcall(function() button:RefreshButton() end)
+        assert(not ok and tostring(err):find(
+            'stop at unmodeled C_Garrison.IsLandingPageMinimapButtonVisible', 1, true
+        ))
+        assert(visibilityCalls == 1,
+            "original minimap refresh must reach the unmodeled visibility query")
 
         local function resultShape(...)
             return select('#', ...), type((...))
@@ -48,5 +53,5 @@ fn retail_minimap_refresh_uses_the_landing_page_garrison_type() {
             "C_Garrison.GetLandingPageGarrisonType must return one number")
         "#,
     )
-    .expect("original Blizzard Minimap refresh must query the landing-page garrison type");
+    .expect("Minimap must reach the numeric garrison type query before the known blocker");
 }

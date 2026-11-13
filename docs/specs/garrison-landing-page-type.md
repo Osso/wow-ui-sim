@@ -5,7 +5,7 @@
 ## What it must do
 
 - [ ] Publish `C_Garrison.GetLandingPageGarrisonType` for Retail. **VERIFIED (Retail 12.1.5 build 70688):** the native member takes no arguments and returns exactly one number on normal completion.
-- [ ] Keep the original `Blizzard_Minimap` refresh consumer callable. Its visibility helper must receive a numeric type, and the consumer call must not raise a Lua error.
+- [ ] The original `Blizzard_Minimap` refresh path must complete without a Lua error once its required `C_Garrison` members are modeled. The current test stops after the native type query, before the separately blocked visibility predicate.
 - [ ] **VERIFIED (Retail 12.1.5 build 70688):** the empty or unmatched native helper path returns one number, `0`. Do not infer that every no-page state uses this path.
 - [ ] **INFERRED (simulator policy):** the neutral host input starts at `0`. This does not prove that `0` is the native no-active-page sentinel in every state.
 
@@ -23,13 +23,14 @@
 
 ## Tests asserting this spec
 
-- `tests/retail_garrison_minimap_consumer.rs::retail_minimap_refresh_uses_the_landing_page_garrison_type`
+- `tests/retail_garrison_minimap_consumer.rs::retail_minimap_refresh_stops_at_unmodeled_visibility_query`
 
 ## Known gaps (current cycle)
 
 - [ ] **UNKNOWN (Retail 12.1.5 build 70688):** The state that selects each nonzero landing-page type and the functions that write that state are not established. Keep selection unmodeled.
-- [ ] The test verifies registration, one numeric return and the original consumer call. It does not assert the inferred zero host default or native selection behavior.
+- [ ] **VERIFIED (20-addon Retail run at production-code SHA `bc01ba60cdb7b844bf88adba7ff2cb6e809b665f`):** after `GetLandingPageGarrisonType` returns, the original Minimap call fails on the missing `C_Garrison.IsLandingPageMinimapButtonVisible` member. **VERIFIED (local Retail UI cache; exact build UNKNOWN):** its generated declaration takes a number and returns a boolean. **UNKNOWN:** its native predicate and result. This is a separate blocker; do not register a production stub.
+- [ ] The consumer test verifies the numeric type query and stops at the visibility member. It does not claim that the full `RefreshButton` path passes or assert the inferred zero host default.
 
 ## Out of scope
 
-Non-Retail publication, nonzero selection rules, garrison lifecycle state, and any mapping from the native garrison database table to active selection.
+Non-Retail publication, nonzero selection rules, garrison lifecycle state, the separate `IsLandingPageMinimapButtonVisible` predicate, and any mapping from the native garrison database table to active selection.
