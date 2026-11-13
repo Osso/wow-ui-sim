@@ -4789,3 +4789,9 @@ is reused; original-consumer runtime RED/GREEN remains unexecuted.
 
 ## [2026-11-13] correction | Forever store availability
 [Store API availability](systems/store-api-availability.md) records R87: Forever shares the server-mirrored `bpayStoreEnable` query and false default in Game/Glue. Shop 2 and update-event parity remain outside the evidence.
+
+### Character-customization host finalizer (R79b/R79c)
+
+[[lua-api]] records Retail/Forever neutral stored-key sorting, independent 1-based
+category/option numbering, small-list stable ties, and unchanged unknown collector
+and choice-order boundaries. See the [spec](../specs/character-creation-submit.md#r79br79c-host-finalizer-305-314-319).
