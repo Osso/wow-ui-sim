@@ -957,3 +957,34 @@ fn family_placeholder_resolves_profile_selected_mainline_entries() {
         );
     }
 }
+
+#[cfg(all(feature = "client-retail", feature = "optional-tests"))]
+#[test]
+fn retail_settings_registration_preserves_canvas_visibility() {
+    test_timeout! {
+        let env = load_full_game_ui();
+        env.exec(
+            r#"
+            assert(C_AddOns.IsAddOnLoaded("Blizzard_Settings_Shared"))
+            assert(not SettingsPanel:IsShown())
+            local parentFrame = CreateFrame("Frame", nil, UIParent)
+            local childFrame = CreateFrame("Frame", nil, UIParent)
+            parentFrame:Show()
+            childFrame:Show()
+            assert(parentFrame:IsShown() and childFrame:IsShown())
+
+            local parent, layout =
+                Settings.RegisterCanvasLayoutCategory(parentFrame, "Retail canvas parent")
+            local child, childLayout =
+                Settings.RegisterCanvasLayoutSubcategory(parent, childFrame, "Retail canvas child")
+            assert(layout:GetFrame() == parentFrame)
+            assert(childLayout:GetFrame() == childFrame)
+            assert(SettingsPanel:GetLayout(parent) == layout)
+            assert(SettingsPanel:GetLayout(child) == childLayout)
+            assert(parentFrame:IsShown(), "original category registration must not hide the canvas")
+            assert(childFrame:IsShown(), "original subcategory registration must not hide the canvas")
+            "#,
+        )
+        .expect("registration must preserve the shown state of each original canvas");
+    }
+}
