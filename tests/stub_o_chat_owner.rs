@@ -64,18 +64,10 @@ fn original_system_consumer_uses_loaded_metadata_preservation() {
         local output = CreateFrame('ScrollingMessageFrame', 'StubOSystemOutput', UIParent)
         ChatFrameUtil.DisplaySystemMessage(output, 'SP76 original SYSTEM metadata')
         assert(output:GetNumMessages() == 1)
+        local text, r, g, b = output:GetMessageInfo(1)
+        assert(text == 'SP76 original SYSTEM metadata')
+        assert(r == info.r and g == info.g and b == info.b, 'original message retains loaded SYSTEM color')
     "#).unwrap();
-    let (r, g, b): (f64, f64, f64) = env
-        .eval("return ChatTypeInfo.SYSTEM.r, ChatTypeInfo.SYSTEM.g, ChatTypeInfo.SYSTEM.b")
-        .unwrap();
-    let state = env.state().borrow();
-    let id = state.widgets.get_id_by_name("StubOSystemOutput").unwrap();
-    let message = &state.message_frames[&id].messages[0];
-    assert_eq!(message.text, "SP76 original SYSTEM metadata");
-    assert_eq!(
-        (message.r, message.g, message.b),
-        (r as f32, g as f32, b as f32)
-    );
 }
 
 #[test]
