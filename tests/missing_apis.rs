@@ -389,7 +389,13 @@ fn test_get_build_info() {
 #[cfg(feature = "optional-tests")]
 #[test]
 fn test_settings_api() {
-    let env = WowLuaEnv::new().unwrap();
+    let ui = wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap();
+    let (env, loaded) = crate::common::blizzard_addon_harness::build_blizzard_addon_closure_env(
+        &ui,
+        &["Blizzard_Settings_Shared"],
+        &[],
+    );
+    assert!(loaded.iter().any(|name| name == "Blizzard_Settings_Shared"));
 
     env.exec(
         r#"
