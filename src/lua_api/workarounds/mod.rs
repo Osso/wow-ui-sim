@@ -453,7 +453,6 @@ fn apply_feature_progression_defaults(lua: &mut rilua::Lua) -> crate::Result<()>
     temporary::quest_progress_requirements::apply_bootstrap(lua)?;
     temporary::reincarnation_defaults::apply_bootstrap(lua)?;
     temporary::scenario_defaults::apply_bootstrap(lua)?;
-    temporary::seconds_formatter_defaults::apply_bootstrap(lua)?;
     temporary::scripted_animation_effect_defaults::apply_bootstrap(lua)?;
     temporary::shared_xml_utility_defaults::apply_bootstrap(lua)?;
     temporary::spell_book_static_defaults::apply_bootstrap(lua)
@@ -461,7 +460,6 @@ fn apply_feature_progression_defaults(lua: &mut rilua::Lua) -> crate::Result<()>
 
 fn apply_feature_model_defaults(lua: &mut rilua::Lua) -> crate::Result<()> {
     temporary::sound_driver_defaults::apply_bootstrap(lua)?;
-    temporary::static_model_info_defaults::apply_bootstrap(lua)?;
     temporary::static_popup_defaults::apply_bootstrap(lua)?;
     temporary::taxi_map_defaults::apply_bootstrap(lua)?;
     temporary::texture_file_data_defaults::apply_bootstrap(lua)?;
