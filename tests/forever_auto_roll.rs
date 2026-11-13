@@ -274,20 +274,21 @@ fn assert_default_lifecycle(env: &WowLuaEnv) {
         r#"
         assert(AutoRollDB.enabled == true and AutoRollDB.debugMode == false)
         assert(AutoRollDB.defaultRollMode == 2 and AutoRollDB.fallbackRollMode == 5)
-        assert(AutoRollDB.version == 1 and AutoRollDB.autoCloseLootWindow == true)
+        -- VERIFIED: local AutoRoll 1.2 has no version default and defines 15 raid IDs.
+        assert(AutoRollDB.version == nil and AutoRollDB.autoCloseLootWindow == true)
         local enabled = {2296, 2450, 2481, 2522, 2569, 2549}
-        local disabled = {2649, 2650, 2651}
+        local disabled = {2657, 2769, 2810, 2912, 2939, 2913, 1592, 2987, 3004}
         for _, id in ipairs(enabled) do assert(AutoRollDB.raidSettings[id] == true) end
         for _, id in ipairs(disabled) do assert(AutoRollDB.raidSettings[id] == false) end
         local count = 0
         for _ in pairs(AutoRollDB.raidSettings) do count = count + 1 end
-        assert(count == 9)
+        assert(count == 15)
         assert(AutoRollFrame:IsEventRegistered('ADDON_LOADED'))
         assert(AutoRollFrame:IsEventRegistered('START_LOOT_ROLL'))
         assert(Settings.GetSetting('AutoRoll_enabled'):GetValue() == true)
         assert(Settings.GetSetting('AutoRoll_defaultRollMode'):GetValue() == 2)
         assert(Settings.GetSetting('AutoRoll_raid_2522'):GetValue() == true)
-        assert(Settings.GetSetting('AutoRoll_raid_2649'):GetValue() == false)
+        assert(Settings.GetSetting('AutoRoll_raid_2657'):GetValue() == false)
         assert(A_Admin.GetLastLootRollChoice() == nil)
         assert(#GetActiveLootRollIDs() == 0)
         "#,
@@ -390,7 +391,7 @@ fn forever_auto_roll_unsupported_raid_leaves_produced_roll_untouched() {
 
 #[test]
 fn forever_auto_roll_default_disabled_nerubar_leaves_produced_roll_untouched() {
-    let (env, setup) = load_auto_roll_in_configured_world(2649, "Nerub-ar Palace");
+    let (env, setup) = load_auto_roll_in_configured_world(2657, "Nerub-ar Palace");
     start_real_loot_roll(&env, 44);
     assert_untouched_roll(&env, 44);
     assert_consumed_path_checkpoint(&env, &setup);
