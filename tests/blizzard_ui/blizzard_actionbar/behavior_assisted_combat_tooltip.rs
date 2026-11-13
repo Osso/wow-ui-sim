@@ -136,7 +136,7 @@ fn spellbook_rotation_tooltip_uses_original_action_description() {
             "the LoadOnDemand PlayerSpells consumer must load"
         );
 
-        let contains_description: bool = env
+        let (contains_description, passed_description): (bool, String) = env
             .eval(
                 r#"
                 assert(C_AddOns.IsAddOnLoaded("Blizzard_ActionBar"),
@@ -159,23 +159,23 @@ fn spellbook_rotation_tooltip_uses_original_action_description() {
                 local expected = "supplied assisted-combat description"
                 AssistedCombatManager.spellDescription = expected
                 AssistedCombatManager.rotationSpells = {}
-                GameTooltip:ClearLines()
-                AssistedCombatRotationSpellFrameMixin.ShowTooltip()
-
-                for index = 1, GameTooltip:NumLines() do
-                    local line = _G["GameTooltipTextLeft" .. index]
-                    if line and line:GetText() == expected then
-                        return true
-                    end
+                local originalAddNormalLine = GameTooltip_AddNormalLine
+                local passedDescription
+                GameTooltip_AddNormalLine = function(tooltip, text, ...)
+                    passedDescription = text
+                    return originalAddNormalLine(tooltip, text, ...)
                 end
-                return false
+                AssistedCombatRotationSpellFrameMixin.ShowTooltip()
+                GameTooltip_AddNormalLine = originalAddNormalLine
+                return passedDescription == expected, tostring(passedDescription)
                 "#,
             )
             .expect("the selected spellbook tooltip consumer must execute");
 
-        assert!(
-            contains_description,
-            "the original tooltip consumer must show the supplied manager description"
+        assert_eq!(
+            contains_description, true,
+            "the original tooltip consumer must pass the supplied manager description; got {passed_description:?}"
         );
+        assert_eq!(passed_description, "supplied assisted-combat description");
     });
 }
