@@ -488,6 +488,12 @@ fn blizzard_help_plate_virtual_templates_do_not_publish_as_globals(env: &WowLuaE
 #[test]
 fn help_plate_tooltip_rotates_real_arrow_texture_geometry() {
     let env = WowLuaEnv::new().expect("Lua environment should initialize");
+    let texture_util_source =
+        std::fs::read_to_string(blizzard_ui_dir().join("Blizzard_SharedXMLBase/TextureUtil.lua"))
+            .expect("Retail Blizzard SharedXMLBase TextureUtil.lua should be present");
+    env.exec(&texture_util_source)
+        .expect("original SharedXMLBase TextureUtil provider should load");
+
     let consumer_source = std::fs::read_to_string(help_plate_dir().join("Blizzard_HelpPlate.lua"))
         .expect("Retail Blizzard_HelpPlate.lua should be present");
     env.exec(&consumer_source)
