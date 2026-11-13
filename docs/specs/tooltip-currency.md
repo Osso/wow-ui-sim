@@ -16,7 +16,7 @@ Retail 12.1.5 currency tooltips publish R84/R84b `C_TooltipInfo` data through th
 
 - [x] Populated payloads use type 5 and a data-instance ID, include the currency ID only when it is nonzero, and omit top-level quantity.
 - [x] The first supplied CurrencyContainer text row matching currency ID and signed quantity wins; bounds are inclusive and maximum zero is unbounded. No match uses ordinary currency text.
-- [x] Rows are left-only. Account labels follow their verified flag/field gates and order. The description is the only wrapped row.
+- [x] Currency title, account labels and description use type 0; numeric rows use type 14 and the spacer uses type 1. Rows are left-only. Account labels follow their verified flag/field gates and order. The description is the only wrapped row.
 - [x] The XP row uses the getter's amount and ends the producer before spacer or cap rows.
 - [x] A supplied local currency record with Flags_0 bit 22 clear permits the spacer and cap section; bit 22 suppresses both.
 - [x] Weekly and total/season rows follow their verified maximum-source, scaling, flag and seasonal-exclusivity rules.

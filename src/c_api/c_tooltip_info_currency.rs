@@ -5,6 +5,7 @@ use std::collections::HashMap;
 use crate::c_api::tooltip_getter_args::one_based_index;
 use crate::lua_api::globals::missing_surface::tooltip_info::{
     append_line, compose_tooltip, global_text, item_quality_color, named_color,
+    restore_plain_line_type,
 };
 use crate::lua_api::methods::{
     borrow_state, call_function_state, create_string, table_get, table_set, val_to_string,
@@ -151,24 +152,28 @@ fn append_currency_text_rows(
     text: (&str, &str),
 ) -> LuaResult<(f64, f64, f64)> {
     let (title, description) = text;
-    append_line(
+    append_plain_currency_line(
         state,
         tooltip,
-        LINE_TYPE_PLAIN,
         title,
-        Some(item_quality_color(currency.quality as u8)),
+        item_quality_color(currency.quality as u8),
     );
     let normal_color = required_color(state, "NORMAL_FONT_COLOR")?;
     append_account_rows(state, tooltip, inputs)?;
-    let description_line = append_line(
-        state,
-        tooltip,
-        LINE_TYPE_PLAIN,
-        description,
-        Some(normal_color),
-    );
+    let description_line = append_plain_currency_line(state, tooltip, description, normal_color);
     table_set(state, description_line, "wrapText", Val::Bool(true));
     Ok(normal_color)
+}
+
+fn append_plain_currency_line(
+    state: &mut LuaState,
+    tooltip: Val,
+    text: &str,
+    color: (f64, f64, f64),
+) -> Val {
+    let line = append_line(state, tooltip, LINE_TYPE_PLAIN, text, Some(color));
+    restore_plain_line_type(state, line);
+    line
 }
 
 fn append_account_rows(
@@ -199,7 +204,7 @@ fn append_account_rows(
 fn append_account_label(state: &mut LuaState, tooltip: Val, key: &str) -> LuaResult<()> {
     let text = required_global_text(state, key)?;
     let color = required_color(state, "ACCOUNT_WIDE_FONT_COLOR")?;
-    append_line(state, tooltip, LINE_TYPE_PLAIN, &text, Some(color));
+    append_plain_currency_line(state, tooltip, &text, color);
     Ok(())
 }
 
