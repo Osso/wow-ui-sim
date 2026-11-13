@@ -73,7 +73,6 @@ static GLOBAL_NIL_STUBS: &[&str] = &[
     "SetView",
     // SetWatchedFaction is SimState-backed in faction_probes.rs, not a stub.
     "ShowingCinematic",
-    "ShowUIPanel",
     "SortBags",
     "SortReagentBag",
     "SwitchAchievementSearchTab",
