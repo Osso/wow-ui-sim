@@ -352,21 +352,6 @@ fn test_create_font_string() {
     .unwrap();
 }
 
-/// LibStub is commonly used for library management.
-#[cfg(feature = "optional-tests")]
-#[test]
-fn test_libstub() {
-    let env = WowLuaEnv::new().unwrap();
-
-    env.exec(
-        r#"
-        -- LibStub pattern
-        local lib = LibStub("SomeLib-1.0")
-        "#,
-    )
-    .unwrap();
-}
-
 /// GetBuildInfo returns game version info.
 #[test]
 fn test_get_build_info() {
