@@ -327,3 +327,9 @@ not suppress the error or claim full submit GREEN. It remains optional until a
 native-evidenced collector supplies the categories. The setter is not weakened,
 and no camera value is added to invented categories. Four focused PTR camera
 selectors pass with the separate inferred bridge applied.
+
+Coordinator #438 confirms this PTR category boundary belongs to a later native-
+evidence slice: preserve the guessed provider and exact optional RED. At
+32f3146fa the optional PTR character-creation selectors report seven passes and
+one deliberate RED; its exact first-line assertion succeeds before the explicit
+panic. This is bounded API/preservation proof, not submit success.
