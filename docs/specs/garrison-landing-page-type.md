@@ -1,0 +1,35 @@
+# Retail garrison landing-page type
+
+`C_Garrison.GetLandingPageGarrisonType` supplies the garrison type read by the original Blizzard Minimap refresh path. **VERIFIED (local Retail UI cache; exact client build UNKNOWN):** its generated API documentation has no declaration for this member. **VERIFIED (Retail 12.1.5 build 70688):** native code registers the member under `C_Garrison`. The simulator exposes a neutral host input; it does not select a garrison from character or expansion state. See the [EllesmereUI startup investigation](../wiki/investigations/full-addon-startup-2026-10-10.md#garrison-landing-page-type-r88a-2026-11-13).
+
+## What it must do
+
+- [ ] Publish `C_Garrison.GetLandingPageGarrisonType` for Retail. **VERIFIED (Retail 12.1.5 build 70688):** the native member takes no arguments and returns exactly one number on normal completion.
+- [ ] Keep the original `Blizzard_Minimap` refresh consumer callable. Its visibility helper must receive a numeric type, and the consumer call must not raise a Lua error.
+- [ ] **VERIFIED (Retail 12.1.5 build 70688):** the empty or unmatched native helper path returns one number, `0`. Do not infer that every no-page state uses this path.
+- [ ] **INFERRED (simulator policy):** the neutral host input starts at `0`. This does not prove that `0` is the native no-active-page sentinel in every state.
+
+## How it works
+
+- [Lua API architecture](../wiki/systems/lua-api.md)
+- [EllesmereUI startup investigation](../wiki/investigations/full-addon-startup-2026-10-10.md#garrison-landing-page-type-r88a-2026-11-13)
+
+## Implementation inventory
+
+- `src/c_api/c_garrison_landing_page.rs`: Retail query and neutral host-input read.
+- `src/c_api/mod.rs`: Retail-gated namespace module registration.
+- `src/lua_api/state/sim_state.rs`: per-environment host input and inferred zero default.
+- `tests/retail_garrison_minimap_consumer.rs`: original Blizzard Minimap consumer test.
+
+## Tests asserting this spec
+
+- `tests/retail_garrison_minimap_consumer.rs::retail_minimap_refresh_uses_the_landing_page_garrison_type`
+
+## Known gaps (current cycle)
+
+- [ ] **UNKNOWN (Retail 12.1.5 build 70688):** The state that selects each nonzero landing-page type and the functions that write that state are not established. Keep selection unmodeled.
+- [ ] The test verifies registration, one numeric return and the original consumer call. It does not assert the inferred zero host default or native selection behavior.
+
+## Out of scope
+
+Non-Retail publication, nonzero selection rules, garrison lifecycle state, and any mapping from the native garrison database table to active selection.
