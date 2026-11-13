@@ -1,4 +1,5 @@
 //! Collect at the host DTO's actual Lua color-callback boundary.
+use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 fn collect_in_colors(env: &WowLuaEnv) {
@@ -75,9 +76,38 @@ fn unit_parent_survives_color_collection() {
 fn currency_parent_survives_color_collection() {
     let env = WowLuaEnv::new().unwrap();
     collect_in_colors(&env);
-    // WM97 DQ6: composition carries quantity as data; the name line keeps the
-    // allocated color parent that must survive collection.
-    env.exec("local t = C_TooltipInfo.GetCurrencyByID(2245, 99); assert(t.id == 2245 and t.quantity == 99); assert(#t.lines == 1 and t.lines[1].leftText == 'Valorstones'); assert(t.lines[1].leftColor ~= nil and colorCalls > 0)").unwrap();
+    let retail_tooltip = ACTIVE == ClientProfile::Retail;
+    env.exec(&format!("R84RetailCurrencyTooltip = {retail_tooltip}"))
+        .unwrap();
+    // WM97 DQ6: the title's allocated color parent must survive collection.
+    // VERIFIED — R84 Q2/Q4: Retail emits title/description rows and omits top-level
+    // quantity for an amount. See docs/specs/tooltip-currency.md.
+    env.exec(
+        r#"
+        local t = C_TooltipInfo.GetCurrencyByID(2245, 99)
+        assert(t.id == 2245)
+        if R84RetailCurrencyTooltip then
+            assert(t.quantity == nil, 'R84 Q4: amount must not populate top-level quantity')
+            local currency = C_CurrencyInfo.GetCurrencyInfo(2245)
+            assert(t.lines[1].leftText == 'Valorstones' and not t.lines[1].wrapText,
+                'R84 Q2: title is the unwrapped first row')
+            local hasDescription = false
+            for index = 2, #t.lines do
+                local line = t.lines[index]
+                if line.leftText == currency.description and line.wrapText == true then
+                    hasDescription = true
+                    break
+                end
+            end
+            assert(hasDescription, 'R84 Q2: wrapped description row follows the title')
+        else
+            assert(t.quantity == 99)
+            assert(#t.lines == 1 and t.lines[1].leftText == 'Valorstones')
+        end
+        assert(t.lines[1].leftColor ~= nil and colorCalls > 0)
+        "#,
+    )
+    .unwrap();
 }
 
 #[test]
