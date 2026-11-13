@@ -116,7 +116,8 @@ const POSITION_TESTS: &[TestCase] = &[
     // HUD elements
     ("minimap",                    "Minimap",                       1391.0,   44.0,  198.0, 198.0, 1.0),
     ("minimap_cluster",            "MinimapCluster",                1360.0,    0.0,  240.0, 252.0, 1.0),
-    ("objective_tracker",          "ObjectiveTrackerFrame",         1335.0,  260.0,  260.0, 847.5, 1.0),
+    // VERIFIED from Retail source: the one-unit widget container and 10-unit spacing reduce the managed tracker height by 11.
+    ("objective_tracker",          "ObjectiveTrackerFrame",         1335.0,  260.0,  260.0, 836.5, 1.0),
     ("bags_bar",                   "BagsBar",                       1386.0, 1104.0,  208.0,  47.0, 1.0),
     ("micro_button_bags_bar",      "MicroButtonAndBagsBar",         1362.0, 1114.0,  232.0,  80.0, 1.0),
     ("micro_menu",                 "MicroMenu",                     1265.0, 1154.0,  329.0,  40.0, 1.0),
@@ -399,6 +400,27 @@ fn assert_chat_edit_box_layout(env: &WowLuaEnv) {
     );
 }
 
+fn assert_below_minimap_widget_container_layout(env: &WowLuaEnv) {
+    env.exec(
+        r#"
+        local widgetContainer = UIWidgetBelowMinimapContainerFrame
+        assert(widgetContainer:IsShown(), "below-minimap widget container is shown")
+        assert(widgetContainer:GetParent() == RightManagedFrameContainer, "widget container parent")
+        assert(widgetContainer.IsInDefaultPosition == nil, "plain managed widget container has no EditMode method")
+        assert(widgetContainer.layoutIndex == 1, "widget container is first in layout order")
+        assert(widgetContainer:GetNumWidgetsShowing() == 0, "empty widget container")
+        assert(widgetContainer:GetHeight() == 1, "empty resize-layout frame uses the source default size")
+
+        local widgetIsLaidOut = false
+        for _, child in ipairs(RightManagedFrameContainer:GetLayoutChildren()) do
+            widgetIsLaidOut = widgetIsLaidOut or child == widgetContainer
+        end
+        assert(widgetIsLaidOut, "plain widget container participates in managed layout")
+        "#,
+    )
+    .expect("plain below-minimap widget container must participate in managed layout");
+}
+
 fn assert_objective_tracker_layout(env: &WowLuaEnv) {
     let (container_x, container_y, container_width, container_height) =
         frame_rect(env, "RightManagedFrameContainer");
@@ -406,9 +428,9 @@ fn assert_objective_tracker_layout(env: &WowLuaEnv) {
         env,
         "ObjectiveTrackerFrame",
         container_x,
-        container_y + 15.0,
+        container_y + 26.0,
         container_width,
-        container_height - 15.0,
+        container_height - 26.0,
         1.0,
     );
 }
@@ -727,6 +749,14 @@ fn assert_layout_state(env: &WowLuaEnv, test: &str) {
             assert_mists_chat_frame_position_inputs(env);
         }
     }
+    if test == "objective_tracker"
+        && matches!(
+            ACTIVE,
+            ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
+        )
+    {
+        assert_below_minimap_widget_container_layout(env);
+    }
     let assertion = match (ACTIVE, test) {
         (
             ClientProfile::Mists | ClientProfile::Era | ClientProfile::Anniversary,
@@ -833,24 +863,11 @@ fn assert_layout_state(env: &WowLuaEnv, test: &str) {
             r#"
             assert(ObjectiveTrackerFrame:IsInDefaultPosition(), "tracker default-position state")
             assert(ObjectiveTrackerFrame:GetParent() == RightManagedFrameContainer, "tracker parent")
-
-            local widgetContainer = UIWidgetBelowMinimapContainerFrame
-            assert(widgetContainer:IsShown(), "below-minimap widget container is shown")
-            assert(widgetContainer:GetParent() == RightManagedFrameContainer, "widget container parent")
-            assert(widgetContainer.IsInDefaultPosition == nil, "plain managed widget container has no EditMode method")
-            assert(widgetContainer:GetNumWidgetsShowing() == 0, "empty widget container")
-            assert(widgetContainer:GetHeight() == 1, "empty resize-layout frame uses the source default size")
-
-            local widgetIsLaidOut = false
-            for _, child in ipairs(RightManagedFrameContainer:GetLayoutChildren()) do
-                widgetIsLaidOut = widgetIsLaidOut or child == widgetContainer
-            end
-            assert(widgetIsLaidOut, "plain widget container participates in managed layout")
-
             local _, relative, _, _, offsetY = ObjectiveTrackerFrame:GetPoint(1)
             assert(relative == RightManagedFrameContainer and offsetY == -11,
                 "one-unit widget row plus ten-unit container spacing")
-            assert(math.abs(ObjectiveTrackerFrame:GetHeight() - RightManagedFrameContainer:GetHeight()) < 0.001, "tracker height")
+            assert(math.abs(ObjectiveTrackerFrame:GetHeight() - (RightManagedFrameContainer:GetHeight() - 11)) < 0.001,
+                "tracker height follows the preceding managed widget row")
             "#
         }
         (ClientProfile::Ptr | ClientProfile::WowForever, "objective_tracker") => {
@@ -858,8 +875,10 @@ fn assert_layout_state(env: &WowLuaEnv, test: &str) {
             assert(ObjectiveTrackerFrame:IsInDefaultPosition(), "tracker default-position state")
             assert(ObjectiveTrackerFrame:GetParent() == RightManagedFrameContainer, "tracker parent")
             local _, relative, _, _, offsetY = ObjectiveTrackerFrame:GetPoint(1)
-            assert(relative == RightManagedFrameContainer and offsetY == -15, "tracker native top padding")
-            assert(math.abs(ObjectiveTrackerFrame:GetHeight() - (RightManagedFrameContainer:GetHeight() - 15)) < 0.001, "tracker native top-padded height")
+            assert(relative == RightManagedFrameContainer and offsetY == -26,
+                "one-unit widget row, ten-unit spacing, and fifteen-unit top padding")
+            assert(math.abs(ObjectiveTrackerFrame:GetHeight() - (RightManagedFrameContainer:GetHeight() - 26)) < 0.001,
+                "tracker height follows its managed top padding and preceding widget row")
             "#
         }
         _ => return,
