@@ -1361,11 +1361,8 @@ fn assert_no_new_character_create_lua_errors(env: &WowLuaEnv, errors_before: usi
 }
 
 #[test]
-#[cfg(all(
-    feature = "optional-tests",
-    any(feature = "client-retail", feature = "client-wowforever")
-))]
-fn character_creation_default_starting_zone_reaches_customize_screen() {
+#[cfg(all(feature = "optional-tests", feature = "client-retail"))]
+fn retail_character_creation_default_starting_zone_reaches_customize_screen() {
     test_timeout! {
         let env = load_blizzard_screen(ScreenKind::CharacterSelect);
         let errors_before = enter_character_create_for_starting_zone_test(&env);
@@ -1385,6 +1382,46 @@ fn character_creation_default_starting_zone_reaches_customize_screen() {
             assert(type(first) == "table" and second == nil)
             assert(first.zoneName == "" and first.zoneImageAtlas == nil)
             assert(first.isNPE == false)
+        "##).unwrap();
+    }
+}
+
+#[test]
+#[cfg(all(feature = "optional-tests", feature = "client-wowforever"))]
+fn forever_character_creation_default_starting_zone_stops_at_self_found_gap() {
+    // Decomp question: what is IsSelfFoundAllowed's registration and return
+    // behavior in Forever build 1.60.1.70707?
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+        let errors_before = enter_character_create_for_starting_zone_test(&env);
+        let forward_result = env.exec(r#"
+            local button = CharacterCreateFrame.ForwardButton
+            local click = button:GetScript("OnClick")
+            assert(type(click) == "function" and button:IsEnabled())
+            click(button, "LeftButton")
+        "#);
+        let errors = env.state().borrow().lua_errors[errors_before..].to_vec();
+        let observed = format!("{forward_result:?}\n{errors:#?}");
+        assert!(
+            observed.contains(
+                "Blizzard_CharacterCreate.lua:3084: attempt to call field 'IsSelfFoundAllowed' (a nil value)"
+            ),
+            "Camelot should stop at the unmodeled self-found query after starting-zone setup: {observed}"
+        );
+        assert!(
+            !observed.contains("GetStartingZoneChoices"),
+            "the starting-zone consumer must complete before the self-found gap: {observed}"
+        );
+        env.exec(r##"
+            local function pack(...) return { n = select("#", ...), ... } end
+            local choices = pack(C_CharacterCreation.GetStartingZoneChoices())
+            assert(choices.n == 2)
+            local first, second = choices[1], choices[2]
+            assert(type(first) == "table" and second == nil)
+            assert(first.zoneName == "" and first.zoneImageAtlas == nil)
+            assert(first.isNPE == false)
+            local zone = CharacterCreateFrame.ZoneChoiceFrame
+            assert(zone.useNPE == false and not zone:ShouldShow())
         "##).unwrap();
     }
 }
@@ -1420,7 +1457,6 @@ fn retail_character_creation_two_starting_zone_choices_reach_forward_consumer() 
             assert(zone:ShouldShow() and zone.useNPE == true)
             assert(zone.NormalStartingZone.ZoneNameButton.Label:GetText() == "Fixture Zone")
         "##).unwrap();
-
     }
 }
 
