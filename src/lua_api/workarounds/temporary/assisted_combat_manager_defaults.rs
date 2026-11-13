@@ -25,11 +25,6 @@ if rawget(AssistedCombatManager, "GetActionSpellDescription") == nil then
   end
 end
 
-if rawget(AssistedCombatManager, "SetCanHighlightSpellbookSpells") == nil then
-  function AssistedCombatManager:SetCanHighlightSpellbookSpells(_enabled)
-  end
-end
-
 if rawget(AssistedCombatManager, "ShouldHighlightSpellbookSpell") == nil then
   function AssistedCombatManager:ShouldHighlightSpellbookSpell(_spellID)
     return false
@@ -38,9 +33,14 @@ end
 
 "#;
 
-const ASSISTED_COMBAT_MANAGER_TOOLTIP_FALLBACK_LUA: &str = r#"
+const ASSISTED_COMBAT_MANAGER_OWNER_FALLBACK_LUA: &str = r#"
 if rawget(AssistedCombatManager, "AddSpellTooltipLine") == nil then
   function AssistedCombatManager:AddSpellTooltipLine(_tooltip, _spellID, _overriddenSpellID)
+  end
+end
+
+if rawget(AssistedCombatManager, "SetCanHighlightSpellbookSpells") == nil then
+  function AssistedCombatManager:SetCanHighlightSpellbookSpells(_enabled)
   end
 end
 "#;
@@ -57,7 +57,7 @@ fn profile_has_original_assisted_combat_owner() -> bool {
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(ASSISTED_COMBAT_MANAGER_DEFAULTS_LUA)?;
     if !profile_has_original_assisted_combat_owner() {
-        lua.exec(ASSISTED_COMBAT_MANAGER_TOOLTIP_FALLBACK_LUA)?;
+        lua.exec(ASSISTED_COMBAT_MANAGER_OWNER_FALLBACK_LUA)?;
     }
     Ok(())
 }
@@ -74,11 +74,15 @@ mod tests {
             super::apply_bootstrap(&mut lua).expect("assisted combat defaults should apply");
         }
 
-        let expected_tooltip_fallback = !super::profile_has_original_assisted_combat_owner();
+        let expected_owner_fallback = !super::profile_has_original_assisted_combat_owner();
         let has_tooltip_fallback: bool = env
             .eval("return type(AssistedCombatManager.AddSpellTooltipLine) == 'function'")
             .expect("tooltip fallback availability probe should run");
-        assert_eq!(has_tooltip_fallback, expected_tooltip_fallback);
+        let has_highlight_fallback: bool = env
+            .eval("return type(AssistedCombatManager.SetCanHighlightSpellbookSpells) == 'function'")
+            .expect("highlight fallback availability probe should run");
+        assert_eq!(has_tooltip_fallback, expected_owner_fallback);
+        assert_eq!(has_highlight_fallback, expected_owner_fallback);
 
         let result: String = env
             .eval(
@@ -88,7 +92,9 @@ mod tests {
                 if AssistedCombatManager:GetActionSpellID() ~= 0 then return "spell_id" end
                 if AssistedCombatManager:GetActionSpellDescription() ~= "" then return "description" end
                 if AssistedCombatManager:ShouldHighlightSpellbookSpell(116) ~= false then return "highlight" end
-                AssistedCombatManager:SetCanHighlightSpellbookSpells(true)
+                if type(AssistedCombatManager.SetCanHighlightSpellbookSpells) == "function" then
+                    AssistedCombatManager:SetCanHighlightSpellbookSpells(true)
+                end
                 if type(AssistedCombatManager.AddSpellTooltipLine) == "function" then
                     AssistedCombatManager:AddSpellTooltipLine({}, 116, nil)
                 end
