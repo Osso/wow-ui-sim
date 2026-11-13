@@ -10,6 +10,9 @@ mod prefork;
 mod prefork_full_ui_preload;
 #[path = "common/workload_gate_core.rs"]
 mod prefork_workload_gate;
+#[cfg(all(feature = "client-retail", feature = "optional-tests"))]
+#[path = "test_c_map_user_waypoint.rs"]
+mod test_c_map_user_waypoint;
 #[cfg(feature = "client-retail")]
 #[path = "test_keybindings_panels_detail.rs"]
 mod test_keybindings_panels_detail;
@@ -181,6 +184,11 @@ const BYTECODE_FIXTURE_CASES: &[Case<BytecodeFixtureState>] = &[Case::new(
 
 #[cfg(feature = "client-retail")]
 const MANUAL_FULL_UI_CASES: &[Case<WowLuaEnv>] = &[
+    #[cfg(feature = "optional-tests")]
+    Case::new(
+        "test_c_map_user_waypoint::world_map_provider_sets_and_refreshes_user_waypoint",
+        test_c_map_user_waypoint::world_map_provider_sets_and_refreshes_user_waypoint,
+    ),
     Case::new(
         "test_keybindings_panels_detail::world_map_campaign_headers_refresh_on_show",
         test_keybindings_panels_detail::world_map_campaign_headers_refresh_on_show,
