@@ -1,3 +1,7 @@
+## [2026-11-13] fix | Inline icon right-edge advance
+
+[Rendering pipeline](systems/rendering-pipeline.md#inline-icons-in-text) records R88f.L.2: the FontString cursor advances from the snapped absolute icon right edge, while tooltip snap behavior remains UNKNOWN. The fractional-edge `GetStringWidth` regression records simulator coverage.
+
 ## [2026-11-13] system | C_Map user waypoint
 
 [User waypoint model](systems/c-map-user-waypoint.md) links the [contract](../specs/c-map-user-waypoint.md), original Retail provider, one session-scoped state and six API methods. **VERIFIED (Retail 12.1.5.70688):** normalized-point validation, shared replacement and the original consumer path. **VERIFIED (Retail prefork test):** `HandleClick` stores the waypoint before the separate missing `C_SuperTrack.SetSuperTrackedUserWaypoint` call at line 101. **INFERRED:** session-only ownership, same-map-only position lookup and nonzero-ID map eligibility. **UNKNOWN:** persistence, cross-map projection and callback/event identity. Retail/PTR/Forever declarations are profile-gated; Mists does not declare these methods; Wrath is compile-only.

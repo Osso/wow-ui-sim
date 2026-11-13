@@ -69,13 +69,15 @@ pub(crate) struct InlineLine {
 
 /// Lay the runs out in lines and emit their glyph and icon quads.
 ///
-/// R88e.6 verifies taller-icon line-height growth. R88e.7 verifies a snap on
-/// the FontString horizontal edge; its exact operand and advance effect remain UNKNOWN.
+/// R88e.6 verifies taller-icon line-height growth. R88f.L.2 verifies that
+/// FontString drawing snaps each icon's absolute right edge and advances later text
+/// from that cursor. Tooltip use remains UNKNOWN and does not enable the snap.
 pub fn emit_inline_markup_quads(
     batch: &mut QuadBatch,
     font_system: &mut WowFontSystem,
     glyph_atlas: &mut GlyphAtlas,
     request: &InlineTextRequest<'_>,
+    snap_icon_edge: bool,
 ) {
     let Some(line_height) = line_height_for_font_size(request.font_size, request.smooth_scaling)
     else {
@@ -99,8 +101,9 @@ pub fn emit_inline_markup_quads(
     let mut y = top;
     for (line, &height) in lines.iter().zip(&heights) {
         let x = line_start_x(request.bounds, request.justify_h, line.width);
+        let mut cursor = x;
         for placed in &line.items {
-            let item_x = x + placed.x;
+            let item_x = if snap_icon_edge { cursor } else { x + placed.x };
             match &placed.item {
                 InlineItem::Text { text, color } => {
                     let bounds = Rectangle::new(
@@ -116,6 +119,9 @@ pub fn emit_inline_markup_quads(
                         bounds,
                         *color,
                     );
+                    if snap_icon_edge {
+                        cursor += placed.width;
+                    }
                 }
                 InlineItem::Icon(icon) => {
                     // INFERRED simulator placement: mode 1 centers on the caller metric,
@@ -128,6 +134,12 @@ pub fn emit_inline_markup_quads(
                         Size::new(placed.width, placed.height),
                     );
                     push_inline_icon(batch, icon, bounds, request.alpha);
+                    if snap_icon_edge {
+                        cursor = crate::render::inline_markup::snap_icon_right_edge(
+                            item_x,
+                            placed.width,
+                        );
+                    }
                 }
             }
         }
@@ -277,8 +289,8 @@ fn emit_text_piece(
 
 /// Push the icon's textured quad. Its texture loads like any other texture
 /// path; unknown atlas and file IDs draw no quad in this simulator, while
-/// their native result remains UNKNOWN (R88d). R88e.7 verifies a FontString
-/// horizontal-edge snap after width scaling; its operand and advance effect remain UNKNOWN.
+/// their native result remains UNKNOWN (R88d). R88f.L.2 verifies that the
+/// FontString path snaps the absolute right edge while keeping this quad's width unchanged.
 pub(crate) fn push_inline_icon(
     batch: &mut QuadBatch,
     icon: &InlineIcon,
