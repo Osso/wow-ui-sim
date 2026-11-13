@@ -906,6 +906,8 @@ pub struct SimState {
     pub mount_item_relations: HashMap<i32, i32>,
     pub equipment_manager: EquipmentManagerState,
     pub maps: HashMap<i32, MapData>,
+    /// INFERRED session-only storage because waypoint ownership/persistence are UNKNOWN.
+    pub(crate) user_waypoint: Option<crate::c_api::c_map::UserWaypoint>,
     /// Explicit per-map hideIcons input; absence is not a native unknown-ID claim.
     pub map_display_hide_icons: HashMap<i32, bool>,
     /// Explicit continent/world rectangles; never guessed from map art pixels.
