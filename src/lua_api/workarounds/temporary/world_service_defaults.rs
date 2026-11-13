@@ -24,10 +24,6 @@ C_PlayerInfo = C_PlayerInfo or {}
 C_QuestLog = C_QuestLog or {}
 -- Missing hybrid-minimap world presentation capability.
 install(C_Minimap, "ShouldUseHybridMinimap", function() return false end)
--- Missing honor-level reward catalog. The documented result is optional.
-install(C_PvP, "GetHonorRewardInfo", function(honorLevel) return nil end)
--- Missing per-expansion landing-page unlock snapshot.
-install(C_PlayerInfo, "IsExpansionLandingPageUnlockedForPlayer", function(expansionID) return false end)
 -- Missing covenant-calling membership metadata; ordinary quest/world-quest
 -- membership is not evidence of calling membership.
 install(C_QuestLog, "IsQuestCalling", function(questID) return false end)

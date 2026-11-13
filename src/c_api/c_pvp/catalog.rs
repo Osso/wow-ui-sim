@@ -51,6 +51,9 @@ pub struct PvpCatalog {
 }
 
 pub(super) fn register(state: &mut LuaState, ns: GcRef<Table>) -> LuaResult<()> {
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        table_set_rust_fn_static(state, ns, "GetHonorRewardInfo", get_honor_reward_info)?;
+    }
     if matches!(
         crate::client_profile::ACTIVE,
         crate::client_profile::ClientProfile::Retail
@@ -71,6 +74,46 @@ pub(super) fn register(state: &mut LuaState, ns: GcRef<Table>) -> LuaResult<()> 
         table_set_rust_fn_static(state, ns, name, function)?;
     }
     Ok(())
+}
+
+fn get_honor_reward_info(state: &mut LuaState) -> LuaResult<u32> {
+    let honor_level = crate::c_api::helpers::read_untainted_signed32_argument(
+        state,
+        1,
+        "GetHonorRewardInfo",
+        "Usage: local rewardInfo = C_PvP.GetHonorRewardInfo(honorLevel)",
+    )?;
+    let reward = borrow_state(state)?
+        .pvp_catalog
+        .honor_rewards
+        .range(..=honor_level)
+        .next_back()
+        .map(|(_, reward)| reward.clone());
+    let Some(reward) = reward else {
+        // UNKNOWN native empty-catalog return; preserve the existing one-nil simulator result.
+        state.push(Val::Nil);
+        return Ok(1);
+    };
+
+    // INFERRED one-record output fields follow the local Retail UI declaration; native mapping and
+    // return count remain unknown.
+    let result = create_table(state);
+    let name = create_string(state, &reward.honor_level_name);
+    table_set(state, result, "honorLevelName", name);
+    table_set(
+        state,
+        result,
+        "badgeFileDataID",
+        Val::Num(f64::from(reward.badge_file_data_id)),
+    );
+    table_set(
+        state,
+        result,
+        "achievementRewardedID",
+        Val::Num(f64::from(reward.achievement_rewarded_id)),
+    );
+    state.push(result);
+    Ok(1)
 }
 
 fn read_id(state: &LuaState) -> LuaResult<u32> {
