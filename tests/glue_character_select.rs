@@ -1388,30 +1388,26 @@ fn retail_character_creation_default_starting_zone_reaches_customize_screen() {
 
 #[test]
 #[cfg(all(feature = "optional-tests", feature = "client-wowforever"))]
-fn forever_character_creation_default_starting_zone_stops_at_self_found_gap() {
-    // Decomp question: what is IsSelfFoundAllowed's registration and return
-    // behavior in Forever build 1.60.1.70707?
+fn forever_character_creation_default_starting_zone_reaches_customize_screen() {
     test_timeout! {
         let env = load_blizzard_screen(ScreenKind::CharacterSelect);
         let errors_before = enter_character_create_for_starting_zone_test(&env);
-        let forward_result = env.exec(r#"
-            local button = CharacterCreateFrame.ForwardButton
-            local click = button:GetScript("OnClick")
-            assert(type(click) == "function" and button:IsEnabled())
-            click(button, "LeftButton")
-        "#);
-        let errors = env.state().borrow().lua_errors[errors_before..].to_vec();
-        let observed = format!("{forward_result:?}\n{errors:#?}");
-        assert!(
-            observed.contains(
-                "Blizzard_CharacterCreate.lua:3084: attempt to call field 'IsSelfFoundAllowed' (a nil value)"
-            ),
-            "Camelot should stop at the unmodeled self-found query after starting-zone setup: {observed}"
-        );
-        assert!(
-            !observed.contains("GetStartingZoneChoices"),
-            "the starting-zone consumer must complete before the self-found gap: {observed}"
-        );
+        click_character_create_forward(&env);
+        assert_no_new_character_create_lua_errors(&env, errors_before);
+
+        let next_step: (bool, bool, bool) = env.eval(r#"
+            local zone = CharacterCreateFrame.ZoneChoiceFrame
+            return CharCustomizeFrame:IsShown(), zone.useNPE, zone:ShouldShow()
+        "#).unwrap();
+        assert_eq!(next_step, (true, false, false));
+        let (self_found_allowed, return_count): (bool, i64) = env
+            .eval(r##"
+                local function pack(...) return { n = select("#", ...), ... } end
+                local result = pack(C_GameRules.IsSelfFoundAllowed())
+                return result[1], result.n
+            "##)
+            .unwrap();
+        assert_eq!((self_found_allowed, return_count), (false, 1));
         env.exec(r##"
             local function pack(...) return { n = select("#", ...), ... } end
             local choices = pack(C_CharacterCreation.GetStartingZoneChoices())
@@ -1420,8 +1416,6 @@ fn forever_character_creation_default_starting_zone_stops_at_self_found_gap() {
             assert(type(first) == "table" and second == nil)
             assert(first.zoneName == "" and first.zoneImageAtlas == nil)
             assert(first.isNPE == false)
-            local zone = CharacterCreateFrame.ZoneChoiceFrame
-            assert(zone.useNPE == false and not zone:ShouldShow())
         "##).unwrap();
     }
 }

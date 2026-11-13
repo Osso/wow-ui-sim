@@ -25,13 +25,12 @@
 ## Tests asserting this spec
 
 - `tests/glue_character_select.rs::retail_character_creation_default_starting_zone_reaches_customize_screen`
-- `tests/glue_character_select.rs::forever_character_creation_default_starting_zone_stops_at_self_found_gap`
+- `tests/glue_character_select.rs::forever_character_creation_default_starting_zone_reaches_customize_screen`
 - `tests/glue_character_select.rs::retail_character_creation_two_starting_zone_choices_reach_forward_consumer`
 - `tests/glue_character_select.rs::retail_character_creation_npe_restriction_skips_zone_choice`
 
 ## Known gaps (current cycle)
 
-- [ ] Forever Camelot reaches `GetStartingZoneChoices`, then stops at the unregistered `C_GameRules.IsSelfFoundAllowed` call in `Blizzard_CharacterCreate.lua:3084`; its native behavior is a separate task.
 - [ ] PTR behavior has no separate native evidence; use the shared Retail projection only as the labelled inference above.
 
 ## Out of scope
