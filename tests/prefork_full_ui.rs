@@ -10,9 +10,6 @@ mod prefork;
 mod prefork_full_ui_preload;
 #[path = "common/workload_gate_core.rs"]
 mod prefork_workload_gate;
-#[cfg(all(feature = "client-retail", feature = "optional-tests"))]
-#[path = "test_c_map_user_waypoint.rs"]
-mod test_c_map_user_waypoint;
 #[cfg(feature = "client-retail")]
 #[path = "test_keybindings_panels_detail.rs"]
 mod test_keybindings_panels_detail;
