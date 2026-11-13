@@ -61,6 +61,21 @@ pub(super) fn c_tooltip_get_bag_item(state: &mut LuaState) -> LuaResult<u32> {
 pub(super) fn c_tooltip_get_currency_by_id(state: &mut LuaState) -> LuaResult<u32> {
     let currency_id = i32::from_stack(state, 1)?;
     let amount = Option::<i32>::from_stack(state, 2)?;
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        let tooltip = match crate::c_api::c_tooltip_info_currency::build_currency_tooltip(
+            state,
+            currency_id,
+            Some(amount.unwrap_or(0)),
+        )? {
+            Some(tooltip) => tooltip,
+            None => {
+                use super::super::TOOLTIP_TYPE_CURRENCY;
+                empty_tooltip(state, TOOLTIP_TYPE_CURRENCY)
+            }
+        };
+        state.push(tooltip);
+        return Ok(1);
+    }
     let tooltip = currency_data::get_currency_by_id(currency_id)
         .map(|currency| tooltip_for_currency(state, currency, amount))
         .unwrap_or_else(|| {
@@ -453,6 +468,11 @@ pub(super) fn c_tooltip_get_hyperlink(state: &mut LuaState) -> LuaResult<u32> {
     let link = String::from_stack(state, 1)?;
     let tooltip = if let Some(item_id) = parse_prefixed_id(&link, "item") {
         tooltip_for_item_link(state, &link, item_id)?
+    } else if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail
+        && link.contains("currency:")
+    {
+        crate::c_api::c_tooltip_info_currency::currency_hyperlink_tooltip(state, &link)?
+            .unwrap_or(Val::Nil)
     } else if let Some(spell_id) = parse_prefixed_id(&link, "spell") {
         tooltip_for_spell_hyperlink(state, spell_id)
     } else if let Some(guid) = link.strip_prefix("unit:") {
@@ -593,6 +613,9 @@ pub(super) fn c_tooltip_get_quest_item(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 pub(super) fn c_tooltip_get_quest_log_currency(state: &mut LuaState) -> LuaResult<u32> {
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        return crate::c_api::c_tooltip_info_currency::get_quest_log_currency(state);
+    }
     let _currency_type = Option::<i32>::from_stack(state, 1)?;
     let _index = Option::<i32>::from_stack(state, 2)?;
     state.push(Val::Nil);

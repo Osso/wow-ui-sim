@@ -36,7 +36,7 @@ pub(super) fn color_table(state: &mut LuaState, r: f64, g: f64, b: f64, a: f64) 
     }
 }
 
-pub(super) fn push_tooltip_line(
+pub(crate) fn push_tooltip_line(
     state: &mut LuaState,
     lines: Val,
     index: i64,
@@ -167,7 +167,7 @@ pub(super) fn create_identified_tooltip(state: &mut LuaState, tooltip_type: f64,
     tooltip
 }
 
-pub(super) fn item_quality_color(quality: u8) -> (f64, f64, f64) {
+pub(crate) fn item_quality_color(quality: u8) -> (f64, f64, f64) {
     match quality {
         0 => (0.62, 0.62, 0.62),
         1 => (1.0, 1.0, 1.0),
