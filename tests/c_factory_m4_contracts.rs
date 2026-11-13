@@ -225,6 +225,27 @@ mod forever {
         "assert(type(C_Secrets.ShouldUnitIdentityBeSecret) == 'function'); C_Secrets.ShouldUnitIdentityBeSecret('party1')"
     );
     contract!(
+        invitation_candidates_validates_required_club_id,
+        r#"
+        local getCandidates = C_Club.GetInvitationCandidates
+        assert(type(getCandidates) == 'function')
+        local ok, message = pcall(getCandidates)
+        local usage = 'Usage: local candidates = C_Club.GetInvitationCandidates([filter, maxResults, cursorPosition, allowFullMatch], clubId)'
+        assert(not ok and string.find(message, usage, 1, true), tostring(message))
+        ok, message = pcall(getCandidates, nil, nil, nil, nil, {})
+        assert(not ok and string.find(message, usage, 1, true), tostring(message))
+        "#
+    );
+    #[cfg(feature = "optional-tests")]
+    #[test]
+    fn invitation_candidates_return_inferred_empty_table() {
+        let env = WowLuaEnv::new().unwrap();
+        env.exec(
+            "local rows = C_Club.GetInvitationCandidates(nil, nil, nil, nil, 'unknown-club'); assert(type(rows) == 'table' and next(rows) == nil)",
+        )
+        .unwrap();
+    }
+    contract!(
         can_trade_skill_show_crafting_ui_is_registered,
         "assert(type(C_TradeSkillUI.CanTradeSkillShowCraftingUI) == 'function')"
     );

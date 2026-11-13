@@ -218,23 +218,21 @@ fn install_popup_call_observer(env: &WowLuaEnv) {
             end
         end
         debug.sethook(observer, 'c')
-        -- Calibration precedes world/local TOC/lifecycle. Invoke the actual cached
-        -- nil closures, not replacement functions or popup/vendor callbacks.
+        -- Calibrate the hook with known functions. Do not call the cached C_ APIs
+        -- with placeholder arguments.
         local outerTaint = debug.getstacktaint()
         local calibrate = function()
             local before = debug.getstacktaint()
             assert(before == 'AutoRollFixtureCalibration')
-            assert(invite.autoCompleteSource(nil, nil, nil, nil, 0) == nil)
-            assert(hardcore() == nil)
             assert(witness() == 'observer witness' and nativeWitness(-7) == 7)
             assert(debug.getstacktaint() == before, 'observer changed caller taint')
         end
         debug.setobjecttaint(calibrate, 'AutoRollFixtureCalibration')
         calibrate()
         assert(debug.getstacktaint() == outerTaint, 'calibration taint escaped caller')
-        assert(counts[club] == 1 and counts[hardcore] == 1
+        assert(counts[club] == 0 and counts[hardcore] == 0
             and counts[witness] == 1 and counts[nativeWitness] == 1,
-            'call hook must observe cached Lua and native functions by identity')
+            'calibration must not call the cached C_ APIs')
         __AutoRollFixtureAssertPopupIsolation = function()
             local hook, mask = debug.gethook()
             assert(hook == observer and mask == 'c', 'observer must stay installed')
@@ -245,7 +243,7 @@ fn install_popup_call_observer(env: &WowLuaEnv) {
             assert(debug.getstacktaint() == taintBefore)
             assert(rawget(C_Club, 'GetInvitationCandidates') == club)
             assert(rawget(C_GameRules, 'IsHardcoreActive') == hardcore)
-            assert(counts[club] == 1 and counts[hardcore] == 1,
+            assert(counts[club] == 0 and counts[hardcore] == 0,
                 'excluded popup queries called after calibration')
             assert(StaticPopupDialogs.INVITE_COMMUNITY_MEMBER == invite)
             assert(invite.autoCompleteSource == club)
