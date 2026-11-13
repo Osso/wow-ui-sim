@@ -1317,9 +1317,12 @@ fn character_creation_submit_real_controls_wait_for_host_result() {
 ))]
 fn character_creation_default_starting_zone_reaches_customize_screen() {
     test_timeout! {
+        use wow_ui_sim::c_api::c_character_creation_customizations::Category;
+
         let env = load_blizzard_screen(ScreenKind::CharacterSelect);
-        // Keep this test on the navigation path; do not exercise the separate R79 provider gap.
-        env.state().borrow_mut().character_customizations = Some(Vec::new());
+        // This host fixture is not native customization data; its explicit zoom
+        // lets the original Forward path reach the starting-zone consumer.
+        env.state().borrow_mut().character_customizations = Some(vec![Category::new(0)]);
         env.exec(r#"
             GlueParent_SetScreen("charcreate")
             assert(CharacterCreateFrame:IsShown())
