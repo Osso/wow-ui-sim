@@ -1,4 +1,4 @@
-//! Retail legacy macro getter shape from 12.1.5.70688 R88l.19–23.
+//! Retail legacy macro getter shape from 12.1.5.70688 R88l.18–23.
 //! The simulator supplies records, not the native icon enumeration machinery.
 
 use crate::c_api::parse_numeric_string;
@@ -11,7 +11,14 @@ use rilua::{LuaApiMut, LuaResult, Val};
 
 const MACRO_INFO_SLOTS: usize = 240;
 
+// INFERRED R88l.18 ingress: account/character are the tab partitions observed
+// in Retail MacroFrame:SetAccountMacros/SetCharacterMacros, not labels proved
+// by the native getter. Use those documented UI sizes without changing writers.
+const ACCOUNT_SLOTS: usize = 120;
+const CHARACTER_SLOTS: usize = 30;
+
 pub(crate) fn register(lua: &mut rilua::Lua) -> crate::Result<()> {
+    LuaApiMut::register_function(lua, "GetNumMacros", get_num_macros)?;
     LuaApiMut::register_function(lua, "GetMacroInfo", get_macro_info)?;
     for (name, handler) in [
         ("GetLooseMacroIcons", get_loose_spell_icons as rilua::RustFn),
@@ -22,6 +29,22 @@ pub(crate) fn register(lua: &mut rilua::Lua) -> crate::Result<()> {
         LuaApiMut::register_function(lua, name, handler)?;
     }
     Ok(())
+}
+
+fn get_num_macros(state: &mut LuaState) -> LuaResult<u32> {
+    let (account, character) = {
+        let sim = borrow_state(state)?;
+        let occupied = |rows: &[MacroInfo]| rows.iter().filter(|row| is_occupied(row)).count();
+        let split = sim.macros.len().min(ACCOUNT_SLOTS);
+        let end = sim.macros.len().min(ACCOUNT_SLOTS + CHARACTER_SLOTS);
+        (
+            occupied(&sim.macros[..split]),
+            occupied(&sim.macros[split..end]),
+        )
+    };
+    state.push(Val::Num(account as f64));
+    state.push(Val::Num(character as f64));
+    Ok(2)
 }
 
 fn get_macro_info(state: &mut LuaState) -> LuaResult<u32> {

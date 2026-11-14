@@ -4,9 +4,6 @@
 //! established. Retail's verified globals are registered over the macro model.
 
 const COMMON_LUA: &str = r#"
-if GetNumMacros == nil then
-    function GetNumMacros() return 2, 1 end
-end
 if GetMacroBody == nil then
     function GetMacroBody(index)
         local _, _, body = GetMacroInfo(index)
@@ -25,6 +22,9 @@ end
 
 #[cfg(not(feature = "client-retail"))]
 const LEGACY_FIXTURES_LUA: &str = r#"
+if GetNumMacros == nil then
+    function GetNumMacros() return 2, 1 end
+end
 if GetMacroInfo == nil then
     function GetMacroInfo(index)
         if index == 1 then
