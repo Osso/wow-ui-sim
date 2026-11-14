@@ -1,5 +1,5 @@
-//! R88n.5r geometry-local clamp state. Unknown anchor propagation predicates
-//! remain host-supplied; movement flags are not aliases for suppression.
+//! R88n.5r geometry-local clamp state. q3 verifies anchor propagation predicates;
+//! their implementation is deferred (#1169), leaving explicit host input.
 use super::WidgetRegistry;
 use rustc_hash::FxHashSet;
 

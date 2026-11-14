@@ -27,7 +27,7 @@ Base 5401e68f89e49e1fe847b9ff0aaedaf6068cfed0, dot/clamp-suppression-r88n5r.
 | Notification callback conditional on saved access/object state; propagation distinct from rect queue | bounds.rs:71-86 | MISSING explicit notification input/state. Actual predicate/traversal not supplied |
 | Required bool truthiness and required four dimensions with numeric strings; zero-value setters | drag_input.rs:223; bounds.rs:73-76 | Setter arity MATCH; bounds missing args default0 CONTRADICTED; required bool errors/Usage need exact readers |
 
-Questions needed before inventing public producer behavior:
+Historical pre-edit questions (answered by q3; implementation deferred #1169):
 1. Predicate producing suppression Boolean from changed anchor state, dependent combination/traversal, and one concrete original consumer call sequence with expected transitions (including unchanged StartMoving).
 2. Exact public-to-native dimension conversion and anchor-coordinate/dimension rounding arithmetic; is current algebra in public units equivalent? Current offset rounding is not independently proof that final anchor coordinates are rounded.
 3. Exact conditional inset pre-store notification predicate (saved access + object state), target/dependent/ancestor propagation, and enable-policy predicate. Until supplied, these must remain explicit neutral host seams, not unconditional setters/movement toggles.
@@ -36,29 +36,29 @@ Questions needed before inventing public producer behavior:
 
 The model now has a dedicated per-region bit and explicit Boolean writer,
 effective clamp reads and compare-before-write, set-backed queued dependent
-geometry updates. The identified anchor clear routes remain pending the distinct
-propagation-state predicate and are not wired directly to the suppression bit. Generic construction clears
+geometry updates. The identified anchor clear routes and distinct propagation-state
+predicate are VERIFIED by q3; implementation is deferred by agreement (#1169),
+not wired directly to the suppression bit. Generic construction clears
 the bit. Retail overflow uses ordered later-edge precedence; other profile
 behavior is unchanged. Required ordinary setter argument/return contracts are
 covered. No renderer or tooltip-only adjustment is introduced.
 
 Four `screen_clamp_state::` selectors use explicit host suppression input to
 verify conditional effective-state/queue behavior, unchanged user-placement
-behavior, already-dirty dependent invalidation, and setter contracts. They do not assert an unknown movement producer. The original
+behavior, already-dirty dependent invalidation, and setter contracts. They do not prove the deferred public propagation producer. The original
 Retail GameTooltip helper source is checked; the new oversize selector feeds two
 different widths and checks exact right/top pinning, unchanged size and unequal
 outputs, rejecting a constant/no-op clamp. No test execution is claimed here.
 
-The native follow-up is still required for the three questions above. In
-particular this candidate does not equate suppression with is_moving, invent an
-anchor-state combination, or reinterpret unit/rounding arithmetic without
-native evidence. Inset notification propagation remains pending, not silently
-replaced with rectangle dirtiness. The alias-aware writer census and renderer
-pixel snapping remain UNKNOWN.
+Native q3 answers (#1168) now VERIFY propagation, conversion/rounding and
+notification/policy behavior. Simulator implementation is deferred by agreement
+(#1169), not UNKNOWN native behavior. This bounded candidate retains neutral
+producer/notification seams. Public-unit numerical equivalence, loaded-owner
+state, exhaustive writer census and final renderer snapping remain unproved.
 
 ## Sources
 
-- lt-5c7c native comment1105, R88n.5r-q1/q2.
+- lt-5c7c native comment1105, R88n.5r-q1/q2; #1168 q3 and #1169 deferral.
 - [[layout-system]] and [layout reference](../../layout-system.md).
 
 Review clarification: requesting propagation clear is not proof of an unconditional

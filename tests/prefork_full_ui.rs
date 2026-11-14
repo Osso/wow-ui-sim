@@ -94,6 +94,8 @@ struct CachePathSnapshot {
 static BYTECODE_CHILD_SETUP_RAN: AtomicBool = AtomicBool::new(false);
 
 const CONFORMANCE_CASES: &[Case<ConformanceState>] = &[
+    Case::new("conformance::proc_stat_parser", proc_stat_parser),
+    Case::new("conformance::proc_stat_read_errors", proc_stat_read_errors),
     Case::new("conformance::filtering_and_listing", filtering_and_listing),
     #[cfg(feature = "client-retail")]
     Case::new(
@@ -1575,24 +1577,7 @@ fn wait_for_direct_children(parent_pid: libc::pid_t, expected: usize) -> Vec<lib
                 .map(|value| value.parse().expect("parse driver child pid"))
                 .collect::<Vec<_>>(),
             Err(error) if error.kind() == std::io::ErrorKind::NotFound => {
-                // CONFIG_PROC_CHILDREN is optional. stat's PPID is field 4:
-                // the second whitespace-delimited field after the final ')'.
-                std::fs::read_dir("/proc")
-                    .expect("enumerate processes")
-                    .filter_map(Result::ok)
-                    .filter_map(|entry| {
-                        let pid = entry.file_name().to_str()?.parse::<libc::pid_t>().ok()?;
-                        // Processes may disappear while the directory is scanned.
-                        let stat = std::fs::read_to_string(entry.path().join("stat")).ok()?;
-                        let (_, fields) = stat.rsplit_once(')')?;
-                        let ppid = fields
-                            .split_whitespace()
-                            .nth(1)?
-                            .parse::<libc::pid_t>()
-                            .ok()?;
-                        (ppid == parent_pid).then_some(pid)
-                    })
-                    .collect()
+                proc_stat_children(parent_pid)
             }
             Err(error) => panic!("read driver children: {error}"),
         };
@@ -1602,6 +1587,83 @@ fn wait_for_direct_children(parent_pid: libc::pid_t, expected: usize) -> Vec<lib
         std::thread::sleep(Duration::from_millis(5));
     }
     panic!("driver did not start {expected} children before resource failure");
+}
+
+fn disappeared(error: &std::io::Error) -> bool {
+    matches!(error.raw_os_error(), Some(libc::ENOENT | libc::ESRCH))
+}
+
+fn parse_stat_ppid(stat: &str) -> Result<libc::pid_t, String> {
+    let (_, fields) = stat
+        .rsplit_once(')')
+        .ok_or("missing comm closing parenthesis")?;
+    // PPID is field 4 overall, second token after comm (which may contain ')').
+    fields
+        .split_whitespace()
+        .nth(1)
+        .ok_or("missing PPID")?
+        .parse()
+        .map_err(|error| format!("invalid PPID: {error}"))
+}
+
+fn read_stat_ppid(path: &Path) -> Result<Option<libc::pid_t>, String> {
+    match std::fs::read_to_string(path) {
+        Ok(stat) => parse_stat_ppid(&stat)
+            .map(Some)
+            .map_err(|error| format!("{}: {error}", path.display())),
+        Err(error) if disappeared(&error) => Ok(None),
+        Err(error) => Err(format!("{}: {error}", path.display())),
+    }
+}
+
+fn proc_stat_children(parent_pid: libc::pid_t) -> Vec<libc::pid_t> {
+    let mut children = Vec::new();
+    for entry in std::fs::read_dir("/proc").expect("enumerate /proc") {
+        let entry = match entry {
+            Ok(entry) => entry,
+            Err(error) if disappeared(&error) => continue,
+            Err(error) => panic!("read /proc directory entry: {error}"),
+        };
+        let name = entry.file_name();
+        let Some(name) = name
+            .to_str()
+            .filter(|name| name.bytes().all(|b| b.is_ascii_digit()))
+        else {
+            continue;
+        };
+        let pid = name
+            .parse::<libc::pid_t>()
+            .unwrap_or_else(|error| panic!("{}: invalid PID: {error}", entry.path().display()));
+        let ppid =
+            read_stat_ppid(&entry.path().join("stat")).unwrap_or_else(|error| panic!("{error}"));
+        if ppid == Some(parent_pid) {
+            children.push(pid);
+        }
+    }
+    children
+}
+
+fn proc_stat_parser(_state: &ConformanceState) {
+    assert_eq!(
+        parse_stat_ppid("123 (worker ) with spaces)) S 42 1 2").unwrap(),
+        42
+    );
+    assert!(parse_stat_ppid("123 no delimiter").is_err());
+    assert!(parse_stat_ppid("123 (worker) S bogus").is_err());
+}
+
+fn proc_stat_read_errors(_state: &ConformanceState) {
+    let dir = TempDir::new().expect("create stat test directory");
+    let missing = dir.path().join("gone/stat");
+    assert_eq!(read_stat_ppid(&missing).unwrap(), None);
+    assert!(disappeared(&std::io::Error::from_raw_os_error(libc::ESRCH)));
+    let unexpected = read_stat_ppid(dir.path()).expect_err("directory read must fail");
+    assert!(unexpected.contains(&dir.path().display().to_string()));
+    assert!(unexpected.contains("directory"), "{unexpected}");
+    let malformed = dir.path().join("stat");
+    std::fs::write(&malformed, "123 (worker) S invalid").unwrap();
+    let error = read_stat_ppid(&malformed).unwrap_err();
+    assert!(error.contains(&malformed.display().to_string()) && error.contains("invalid PPID"));
 }
 
 fn lower_nofile_limit(pid: libc::pid_t) {
