@@ -120,13 +120,12 @@ fn find_base_recipe(
 ) -> Option<(i32, &RecipeRankTooltipRecord)> {
     let mut current_id = recipe_id;
     let mut visited = HashSet::new();
+    // INFERRED: cycles return no result; nonpositive parent IDs are this simulator's base sentinel.
     loop {
-        // INFERRED: reject cyclic parent input; native cycle behavior is unverified.
         if !visited.insert(current_id) {
             return None;
         }
         let record = cache.get(current_id)?;
-        // INFERRED: this simulator uses nonpositive parent IDs as the base sentinel.
         if record.parent_recipe_id <= 0 {
             return Some((current_id, record));
         }
@@ -139,15 +138,15 @@ fn collect_rank_rows(
     cache: &RecipeRankTooltipCache,
     base_id: i32,
 ) -> Option<Vec<PreparedRank>> {
+    // INFERRED: cycles/missing successors stop traversal; ranks start at one, empty descriptions
+    // are omitted, and an empty chain is a miss.
     let mut ranks = Vec::new();
     let mut current_id = base_id;
     let mut visited = HashSet::new();
     loop {
-        // INFERRED: cyclic successor input ends this simulator's partial rank walk.
         if !visited.insert(current_id) {
             break;
         }
-        // INFERRED: a missing successor record or spell ends this simulator's partial chain.
         let Some(record) = cache.get(current_id) else {
             break;
         };
@@ -158,21 +157,17 @@ fn collect_rank_rows(
             sim,
             record.spell_id,
         );
-        // INFERRED: the simulator assigns display ranks from one in traversal order.
         let number = i32::try_from(ranks.len() + 1).ok()?;
-        // INFERRED: omit a rank's description when the shared resolver returns empty text.
         ranks.push(PreparedRank {
             number,
             description: (!description.is_empty()).then_some(description),
             next_rank_source: record.next_rank_source.clone(),
         });
-        // INFERRED: nonpositive successor IDs terminate this simulator's chain.
         if record.next_recipe_id <= 0 {
             break;
         }
         current_id = record.next_recipe_id;
     }
-    // INFERRED: no valid successor rows make this simulator producer miss.
     (!ranks.is_empty()).then_some(ranks)
 }
 

@@ -180,6 +180,19 @@ fn add_recipe_selector_fixture(env: &WowLuaEnv) {
     );
 }
 
+fn add_inferred_rank_presentation_fixture(env: &WowLuaEnv) {
+    add_recipe_pair(
+        env,
+        RECIPE_RANK_BASE,
+        RECIPE_RANK_NEXT,
+        SPELL_A,
+        SPELL_B,
+        Some("Host recipe label"),
+        Some("Host supplied next-rank source"),
+    );
+    install_rank_test_helpers(env);
+}
+
 #[test]
 fn recipe_id_selects_distinct_chains_through_original_tooltip_accessor() {
     let env = original_tooltip_handler_env();
@@ -254,16 +267,7 @@ fn rank_threshold_changes_description_colors_through_original_accessor() {
 fn inferred_recipe_rank_presentation_uses_supplied_labels_and_source() {
     // INFERRED coverage: exact title, RGB packing, wrapping, localization, and source rows.
     let env = original_tooltip_handler_env();
-    add_recipe_pair(
-        &env,
-        RECIPE_RANK_BASE,
-        RECIPE_RANK_NEXT,
-        SPELL_A,
-        SPELL_B,
-        Some("Host recipe label"),
-        Some("Host supplied next-rank source"),
-    );
-    install_rank_test_helpers(&env);
+    add_inferred_rank_presentation_fixture(&env);
 
     env.exec(&format!(
         r#"
