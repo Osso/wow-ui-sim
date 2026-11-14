@@ -286,10 +286,12 @@ fn retail_map_world_position_probe_covers_zone_maps_under_azeroth() {
         end
 
         local pending = {{947}}
+        local nextPending = 1
         local visited = {{}}
         local zoneCount = 0
-        while #pending > 0 do
-            local mapID = table.remove(pending)
+        while nextPending <= #pending do
+            local mapID = pending[nextPending]
+            nextPending = nextPending + 1
             if not visited[mapID] then
                 visited[mapID] = true
                 local info = C_Map.GetMapInfo(mapID)
@@ -314,13 +316,13 @@ fn retail_map_world_position_probe_covers_zone_maps_under_azeroth() {
                 end
 
                 local children = childrenByParent[mapID] or {{}}
-                for index = #children, 1, -1 do
+                for index = 1, #children do
                     pending[#pending + 1] = children[index]
                 end
             end
         end
         assert(zoneCount == {zone_count}, "probe did not visit every Zone below Azeroth")
-        assert(visited[7], "Mulgore (uiMapID 7) must be reachable from Cosmic")
+        assert(visited[7], "Mulgore (uiMapID 7) must be reachable from Azeroth")
         "#
     );
     env.eval::<()>(&script)
