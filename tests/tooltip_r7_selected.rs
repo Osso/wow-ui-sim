@@ -192,6 +192,53 @@ fn slotted_keystone_api_and_tooltip_accessor_use_the_selected_guid() {
 }
 
 #[test]
+fn has_slotted_keystone_tracks_guid_without_resolving_the_item() {
+    let env = tooltip_full_env_helpers::load_full_env_without_post_load();
+    let (group_finder_loaded, group_finder_reason): (bool, Option<String>) = env
+        .eval(r#"return C_AddOns.LoadAddOn("Blizzard_GroupFinder")"#)
+        .unwrap();
+    assert!(
+        group_finder_loaded,
+        "Blizzard_GroupFinder load failed: {group_finder_reason:?}"
+    );
+    let (challenges_loaded, challenges_reason): (bool, Option<String>) = env
+        .eval(r#"return C_AddOns.LoadAddOn("Blizzard_ChallengesUI")"#)
+        .unwrap();
+    assert!(
+        challenges_loaded,
+        "Blizzard_ChallengesUI load failed: {challenges_reason:?}"
+    );
+    env.exec(
+        r##"
+        assert(PVEFrame, "selected GroupFinder path creates PVEFrame")
+        assert(debug.getinfo(ChallengesKeystoneSlotMixin.OnEnter, "S").source
+            :find("Blizzard_ChallengesUI.lua", 1, true))
+        local count, hasSelection = select("#", C_ChallengeMode.HasSlottedKeystone("ignored")),
+            C_ChallengeMode.HasSlottedKeystone("ignored")
+        assert(count == 1 and type(hasSelection) == "boolean" and not hasSelection)
+    "##,
+    )
+    .unwrap();
+
+    env.state().borrow_mut().keystone.selected_guid = Some("Item-0-3-1728".to_string());
+    env.exec(
+        r##"
+        local count, hasSelection = select("#", C_ChallengeMode.HasSlottedKeystone("ignored")),
+            C_ChallengeMode.HasSlottedKeystone("ignored")
+        assert(count == 1 and hasSelection)
+        assert(select("#", C_TooltipInfo.GetSlottedKeystone()) == 0)
+        local button = CreateFrame("Button", nil, UIParent)
+        ChallengesKeystoneSlotMixin.OnEnter(button)
+    "##,
+    )
+    .unwrap();
+    env.exec("C_ChallengeMode.ClearKeystone()")
+        .expect("existing selection clear should execute");
+    env.exec("assert(not C_ChallengeMode.HasSlottedKeystone())")
+        .expect("cleared selection should be absent");
+}
+
+#[test]
 fn round7_selected_getter_misses_keep_the_verified_result_arities() {
     let env = WowLuaEnv::new().unwrap();
     env.exec(
