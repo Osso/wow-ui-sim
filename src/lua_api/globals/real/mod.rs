@@ -4,6 +4,7 @@
 //! state/behavior. Unmodeled compatibility defaults belong under
 //! `lua_api::workarounds::{temporary,permanent}` instead.
 
+pub(crate) mod achievement_eligibility;
 pub mod action_bar_state;
 pub mod action_highlights;
 pub(crate) mod ambiguate;
