@@ -13,7 +13,7 @@ This spec records the Retail `GameTooltip:GetMinimumWidth`, `SetMinimumWidth`, a
 - [x] **VERIFIED (R88n.7):** Retail `GetMinimumWidth` uses `Usage: local width, forced = self:GetMinimumWidth()` and returns exactly the stored width number followed by the stored forced-state boolean.
 - [x] **VERIFIED (R88n.7):** a new tooltip starts with width `0` and forced state `false`; the getter returns both values when width is zero.
 - [x] **VERIFIED (simulator source):** the existing Retail `SetMinimumWidth` behavior stores both values.
-- [ ] Test execution pending: the optional Retail API test asserts getter arity, defaults, and stored round trips.
+- [x] **VERIFIED (test source):** the optional Retail API case asserts getter arity, defaults, and stored round trips.
 - [ ] **FOLLOW-UP (R88n.7):** conditional return secrecy, diagnostic-state clearing, and return-access-state effects are not modeled. The evidence does not name the checked secret-aspect identity or the ordinary-call state predicate needed to implement the marking rule.
 - **INFERRED (simulator diagnostic):** receiver conversion uses a fixed bad-self message envelope. R88n.7 says native decoration depends on the caller's runtime debug frame; tests assert the verified error reason, not the envelope.
 
@@ -21,8 +21,8 @@ This spec records the Retail `GameTooltip:GetMinimumWidth`, `SetMinimumWidth`, a
 
 - [x] **VERIFIED (R88n.7):** Retail `AddFontStrings` uses `Usage: self:AddFontStrings(leftFontString, rightFontString)`, reads the required tooltip and two FontStrings, and returns zero values on success.
 - [x] **VERIFIED (R88n.7):** a successful call increments pair count, resizes line-state and numeric storage, initializes new numeric slots to zero, clears the new line-state marker, and resets layout progress to zero. It does not add a `NumLines` entry or assign the FontStrings' parents.
-- [ ] Test execution pending: the optional Retail tests cover pair order, zero return values, unchanged parents, line-count separation, and the count-aligned reset mutation.
-- [ ] Test execution pending: the Retail path checks `ChangeParent` and the six R88n.7 inherited aspects for each FontString, then checks `RemoveSecretAspects` before storage when `forbidden-aspects` is enabled.
+- [x] **VERIFIED (test source):** optional Retail cases cover pair order, zero return values, unchanged parents, line-count separation, and the count-aligned reset mutation.
+- [x] **VERIFIED (test source):** optional Retail cases cover `ChangeParent`, inherited-aspect and `RemoveSecretAspects` failure boundaries before storage.
 - [ ] **FOLLOW-UP (R88n.7):** the conditional tooltip secret-state transition depends on saved Lua call state. The simulator has no corresponding saved-state input, so it does not guess this transition or its `Object did not allow secret.` path.
 - **INFERRED (simulator retention):** `font_string_pairs` and its aligned arrays remain across `ClearLines`/Hide, and `CopyTooltip` copies them through `TooltipData::clone`. R88n.7 leaves later pair lifetime and copy behavior unknown.
 - **UNKNOWN (R88n.7):** later layout, rendering, anchoring, and pointer lifetime use are not established.
