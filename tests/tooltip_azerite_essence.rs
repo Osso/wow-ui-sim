@@ -14,8 +14,8 @@ use wow_ui_sim::screen::ScreenKind;
 const ESSENCE_TWO: i32 = 2;
 const ESSENCE_THREE: i32 = 3;
 
-// Raw column candidates from the exact-build DB2 export. These tests do not
-// assert the INFERRED role-to-column mapping.
+// Raw spell-column candidates from the exact-build DB2 export do not certify
+// the INFERRED spell-role mapping. Source-column checks are also INFERRED.
 const ESSENCE_TWO_RANK_ONE_CANDIDATES: [u32; 4] = [293_019, 294_668, 293_019, 294_668];
 const ESSENCE_TWO_RANK_TWO_CANDIDATES: [u32; 4] = [294_653, 294_687, 298_080, 298_082];
 const ESSENCE_THREE_RANK_ONE_CANDIDATES: [u32; 4] = [293_031, 294_910, 293_031, 294_910];
@@ -343,7 +343,7 @@ fn retail_azerite_essence_original_consumer_selects_exact_essence_and_rank() {
             'Alliance source selection must not use the Horde source column')
         "#
     ))
-    .expect("the original essence consumer should publish its supplied Alliance source");
+    .expect("the original consumer should exercise the INFERRED Alliance source mapping");
 
     env.state().borrow_mut().player.race_index = horde_race;
     env.exec(&format!(
@@ -357,7 +357,7 @@ fn retail_azerite_essence_original_consumer_selects_exact_essence_and_rank() {
             'Horde source selection must not use the Alliance source column')
         "#
     ))
-    .expect("the original essence consumer should publish its supplied Horde source");
+    .expect("the original consumer should exercise the INFERRED Horde source mapping");
 
     env.state().borrow_mut().player.race_index = alliance_race;
     env.exec(&format!(
@@ -375,7 +375,7 @@ fn retail_azerite_essence_original_consumer_selects_exact_essence_and_rank() {
             'a missing exact next-rank record must preserve the no-values result')
         "#
     ))
-    .expect("the original essence consumer should preserve the rank-zero source stage");
+    .expect("the original consumer should exercise the INFERRED rank-zero source mapping");
 
     {
         let mut state = env.state().borrow_mut();
