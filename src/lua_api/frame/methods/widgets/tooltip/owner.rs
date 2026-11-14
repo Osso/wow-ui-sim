@@ -592,18 +592,18 @@ fn frame_global_or_ref_local(state: &mut LuaState, id: u64) -> LuaResult<Val> {
 }
 
 pub(super) fn add_font_strings(state: &mut LuaState) -> LuaResult<u32> {
-    let tooltip_id = super::line_data::tooltip_method_receiver_id(
+    let tooltip_id = super::line_data::require_tooltip_method_receiver(
         state,
         1,
         "AddFontStrings",
         super::line_data::ADD_FONT_STRINGS_USAGE,
     )?;
-    let left_id = super::line_data::font_string_id_from_stack(
+    let left_id = super::line_data::require_font_string_argument(
         state,
         2,
         super::line_data::ADD_FONT_STRINGS_USAGE,
     )?;
-    let right_id = super::line_data::font_string_id_from_stack(
+    let right_id = super::line_data::require_font_string_argument(
         state,
         3,
         super::line_data::ADD_FONT_STRINGS_USAGE,
