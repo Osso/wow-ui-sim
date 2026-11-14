@@ -3,6 +3,8 @@
 //! These values keep Blizzard startup code and addon probes working until the
 //! simulator has a real color registry surface.
 
+use rilua::LuaApiMut;
+
 const COLOR_DEFAULTS_LUA: &str = r#"
 local function __wow_make_color(r, g, b, a)
   local color = {
