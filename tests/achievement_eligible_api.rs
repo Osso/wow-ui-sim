@@ -172,3 +172,27 @@ fn setup_tree_fixtures(env: &WowLuaEnv) {
     ];
     inputs.world_states.extend([(0, 0), (1, 0)]);
 }
+
+#[test]
+fn achievement_eligible_api_uses_supported_secret_access_policy() {
+    let env = env_with_records();
+    env.exec(
+        r#"
+        local function require_usage(value)
+            local ok, err = pcall(IsAchievementEligible, value)
+            local expected = "Usage: IsAchievementEligible(achievementID)"
+            assert(not ok and tostring(err):sub(-#expected) == expected)
+        end
+        local number, text = secretwrap(-12.9), secretwrap("-12.9")
+        assert(issecretvalue(number) and issecretvalue(text))
+        assert(IsAchievementEligible(number) == false, "readable marked number")
+        require_usage(text)
+        local function with_revoked_access()
+            dropsecretaccess()
+            require_usage(number)
+        end
+        with_revoked_access()
+        "#,
+    )
+    .expect("R88o.1 applies numeric readability and does not parse a marked string");
+}
