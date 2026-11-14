@@ -3814,3 +3814,5 @@ Added [FontString anchor sizing](investigations/fontstring-anchor-sizing.md). Th
 - 2026-11-13: [Retail container parentArray ownership](investigations/consumer-selection-and-red-proof.md#retail-container-parentarray-ownership): original six XML bags and repeated real enumerator membership preserve Retail-only scaffold removal.
 
 - 2026-11-13: Documented Retail UiMapPoint original constructor ownership, preservation selector, and separate waypoint API prerequisites (lt-6c8e).
+
+- 2026-11-13: Recorded inventory O original Lua/XML ownership retirement, chat history preservation, journal/panel/navigation consumer proof and deferred native/conditional boundaries in [[lua-owned-fallback-retirement]].

@@ -74,27 +74,6 @@ const LUA_SOURCE_PATCHES: &[LuaSourcePatch] = &[
         }],
     },
     LuaSourcePatch {
-        suffix: "/ChatFrameUtil.lua",
-        operations: &[
-            LuaSourcePatchOp::Replace {
-                from: "local info = ChatTypeInfo[\"SYSTEM\"];",
-                to: "local info = ChatTypeInfo[\"SYSTEM\"] or { r = 1, g = 1, b = 0, id = 1 };",
-            },
-            LuaSourcePatchOp::ReplaceOnce {
-                from: "previousValue:Hide();",
-                to: "if type(previousValue.Hide) == \"function\" then previousValue:Hide(); end",
-            },
-            LuaSourcePatchOp::ReplaceOnce {
-                from: "FCFClickAnywhereButton_UpdateState(previousValue.chatFrame.clickAnywhereButton);",
-                to: "if previousValue.chatFrame and previousValue.chatFrame.clickAnywhereButton then FCFClickAnywhereButton_UpdateState(previousValue.chatFrame.clickAnywhereButton); end",
-            },
-            LuaSourcePatchOp::ReplaceOnce {
-                from: "FCFClickAnywhereButton_UpdateState(editBox.chatFrame.clickAnywhereButton);",
-                to: "if editBox.chatFrame and editBox.chatFrame.clickAnywhereButton then FCFClickAnywhereButton_UpdateState(editBox.chatFrame.clickAnywhereButton); end",
-            },
-        ],
-    },
-    LuaSourcePatch {
         suffix: "/Deprecated_ArenaUI.lua",
         operations: &[
             LuaSourcePatchOp::ReplaceOnce {
@@ -112,24 +91,10 @@ const LUA_SOURCE_PATCHES: &[LuaSourcePatch] = &[
         ],
     },
     LuaSourcePatch {
-        suffix: "/Blizzard_CodeOfConduct.lua",
-        operations: &[LuaSourcePatchOp::Replace {
-            from: "ChatFrameUtil.AddSystemMessage(ONLINE_SAFETY_NOTICE);",
-            to: "-- suppressed in the simulator to keep chat history tests stable",
-        }],
-    },
-    LuaSourcePatch {
         suffix: "/VoiceChatTranscriptionFrame.lua",
         operations: &[LuaSourcePatchOp::Replace {
             from: "chatInfo = ChatTypeInfo[chatType];",
             to: "chatInfo = ChatTypeInfo[chatType] or ChatTypeInfo.SYSTEM or { r = 1, g = 1, b = 0, id = 1 };",
-        }],
-    },
-    LuaSourcePatch {
-        suffix: "/EventUtil.lua",
-        operations: &[LuaSourcePatchOp::Replace {
-            from: "callback();",
-            to: "if type(callback) == \"function\" then callback(); end",
         }],
     },
     LuaSourcePatch {
@@ -221,13 +186,6 @@ const LUA_SOURCE_PATCHES: &[LuaSourcePatch] = &[
         ],
     },
     LuaSourcePatch {
-        suffix: "/MinimalSlider.lua",
-        operations: &[LuaSourcePatchOp::Replace {
-            from: "self.Slider.Thumb:SetAlpha(alpha);",
-            to: "if self.Slider and self.Slider.Thumb then self.Slider.Thumb:SetAlpha(alpha); end",
-        }],
-    },
-    LuaSourcePatch {
         suffix: "/FloatingChatFrame.lua",
         operations: &[
             LuaSourcePatchOp::Replace {
@@ -265,19 +223,6 @@ const LUA_SOURCE_PATCHES: &[LuaSourcePatch] = &[
             LuaSourcePatchOp::Replace {
                 from: "button:GetFontString():SetTextColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);",
                 to: "do local fontString = __wow_ensure_chat_tab_font_string(button); if fontString then fontString:SetTextColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b); end end",
-            },
-        ],
-    },
-    LuaSourcePatch {
-        suffix: "/MenuTemplates.lua",
-        operations: &[
-            LuaSourcePatchOp::Replace {
-                from: "function DropdownTextMixin:UpdateText()\n\tself.Text:SetText(self:GetUpdateText());",
-                to: "local function __wow_ensure_dropdown_text_font_string(self)\n\tif self.Text then\n\t\treturn self.Text;\n\tend\n\tif not MenuVariants or type(MenuVariants.CreateFontString) ~= \"function\" then\n\t\treturn nil;\n\tend\n\tlocal ok, fontString = pcall(MenuVariants.CreateFontString, self);\n\tif not ok or fontString == nil then\n\t\treturn nil;\n\tend\n\tself.Text = fontString;\n\treturn fontString;\nend\n\nfunction DropdownTextMixin:UpdateText()\n\tlocal text = __wow_ensure_dropdown_text_font_string(self);\n\tif not text then\n\t\treturn;\n\tend\n\ttext:SetText(self:GetUpdateText());",
-            },
-            LuaSourcePatchOp::ReplaceOnce {
-                from: "local newWidth = self.Text:GetUnboundedStringWidth();",
-                to: "local newWidth = text:GetUnboundedStringWidth();",
             },
         ],
     },
