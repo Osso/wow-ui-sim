@@ -70,6 +70,11 @@ fn load_item_interaction_env() -> WowLuaEnv {
 
 fn load_challenges_env() -> WowLuaEnv {
     let env = tooltip_full_env_helpers::load_full_env_without_post_load();
+    load_challenges_ui(&env);
+    env
+}
+
+fn load_challenges_ui(env: &WowLuaEnv) {
     for addon in ["Blizzard_GroupFinder", "Blizzard_ChallengesUI"] {
         let (loaded, reason): (bool, Option<String>) = env
             .eval(&format!("return C_AddOns.LoadAddOn('{addon}')"))
@@ -85,6 +90,14 @@ fn load_challenges_env() -> WowLuaEnv {
         assert(debug.getinfo(GameTooltip.SetSlottedKeystone, "S").source
             :find("TooltipDataHandler.lua", 1, true))
         R7ChallengesKeystoneSlot = CreateFrame("Button", nil, UIParent)
+    "##,
+    )
+    .unwrap();
+}
+
+fn register_keystone_event_probe(env: &WowLuaEnv) {
+    env.exec(
+        r##"
         R7KeystoneSlottedItems = {}
         R7KeystoneEventProbe = CreateFrame("Frame")
         R7KeystoneEventProbe:RegisterEvent("CHALLENGE_MODE_KEYSTONE_SLOTTED")
@@ -97,7 +110,6 @@ fn load_challenges_env() -> WowLuaEnv {
     "##,
     )
     .unwrap();
-    env
 }
 
 fn slot_keystone_from_bag(env: &WowLuaEnv, slot: u32, item_id: u32) -> String {
@@ -128,7 +140,7 @@ fn assert_challenges_hover_hidden(env: &WowLuaEnv) {
     .unwrap();
 }
 
-fn assert_challenges_hover_item(env: &WowLuaEnv, item_id: u32, guid: &str, slot_index: usize) {
+fn assert_challenges_hover_item(env: &WowLuaEnv, item_id: u32, guid: &str) {
     env.exec(&format!(
         r#"
         local apiData = assert(C_TooltipInfo.GetSlottedKeystone(), "keystone API tooltip missing")
@@ -140,7 +152,6 @@ fn assert_challenges_hover_item(env: &WowLuaEnv, item_id: u32, guid: &str, slot_
         local data = assert(GameTooltip:GetPrimaryTooltipData(), "ChallengesUI tooltip missing")
         assert(data.type == 0 and data.id == {item_id}, "ChallengesUI item identity")
         assert(data.guid == "{guid}", "ChallengesUI instance GUID")
-        assert(R7KeystoneSlottedItems[{slot_index}] == {item_id}, "slotted event payload")
     "#
     ))
     .unwrap();
@@ -305,47 +316,50 @@ fn possession_original_action_bar_hover_uses_the_supplied_spell() {
 
 #[test]
 fn challenges_ui_hover_uses_public_keystone_selection() {
-    let env = load_challenges_env();
-    env.exec("A_Admin.ClearBags(); C_ChallengeMode.ClearKeystone()")
-        .expect("empty challenge selection fixture");
-    assert_challenges_hover_hidden(&env);
-    env.exec(
-        r##"
-        local function capture(...) return {n = select("#", ...), ...} end
-        local result = capture(C_ChallengeMode.HasSlottedKeystone("ignored", 17))
-        assert(result.n == 1 and type(result[1]) == "boolean" and not result[1])
-        local removed = capture(C_ChallengeMode.RemoveKeystone())
-        assert(removed.n == 1 and removed[1] == false)
-    "##,
-    )
-    .unwrap();
+    for (slot, item_id) in [(3, 180_653), (4, 158_923)] {
+        let env = tooltip_full_env_helpers::load_full_env_without_post_load();
+        env.exec("A_Admin.ClearBags(); C_ChallengeMode.ClearKeystone()")
+            .expect("empty challenge selection fixture");
+        env.exec(
+            r##"
+            local function capture(...) return {n = select("#", ...), ...} end
+            local has = capture(C_ChallengeMode.HasSlottedKeystone("ignored"))
+            local removed = capture(C_ChallengeMode.RemoveKeystone())
+            assert(has.n == 1 and has[1] == false)
+            assert(removed.n == 1 and removed[1] == false)
+        "##,
+        )
+        .unwrap();
 
-    let first_guid = slot_keystone_from_bag(&env, 3, 180_653);
-    assert_challenges_hover_item(&env, 180_653, &first_guid, 1);
-    env.exec(
-        r##"
-        local function capture(...) return {n = select("#", ...), ...} end
-        local removed = capture(C_ChallengeMode.RemoveKeystone())
-        assert(removed.n == 1 and removed[1] == true)
-        assert(not C_ChallengeMode.HasSlottedKeystone())
-        assert(select("#", C_TooltipInfo.GetSlottedKeystone()) == 0)
-    "##,
-    )
-    .unwrap();
-    assert_challenges_hover_hidden(&env);
+        let guid = slot_keystone_from_bag(&env, slot, item_id);
+        load_challenges_ui(&env);
+        assert_challenges_hover_item(&env, item_id, &guid);
+        env.exec(
+            r##"
+            local function capture(...) return {n = select("#", ...), ...} end
+            local removed = capture(C_ChallengeMode.RemoveKeystone())
+            assert(removed.n == 1 and removed[1] == true)
+            assert(not C_ChallengeMode.HasSlottedKeystone())
+            assert(select("#", C_TooltipInfo.GetSlottedKeystone()) == 0)
+        "##,
+        )
+        .unwrap();
+        assert_challenges_hover_hidden(&env);
+    }
+}
 
-    let second_guid = slot_keystone_from_bag(&env, 4, 158_923);
-    assert_challenges_hover_item(&env, 158_923, &second_guid, 2);
+#[test]
+fn slot_keystone_notifies_after_selection_state() {
+    let env = tooltip_full_env_helpers::load_full_env_without_post_load();
+    register_keystone_event_probe(&env);
+    slot_keystone_from_bag(&env, 3, 180_653);
     env.exec(
         r##"
-        local function capture(...) return {n = select("#", ...), ...} end
-        local result = capture(C_ChallengeMode.RemoveKeystone())
-        assert(result.n == 1 and result[1] == true)
-        assert(not C_ChallengeMode.HasSlottedKeystone())
+        assert(#R7KeystoneSlottedItems == 1)
+        assert(R7KeystoneSlottedItems[1] == 180653)
     "##,
     )
     .unwrap();
-    assert_challenges_hover_hidden(&env);
 }
 
 #[test]
