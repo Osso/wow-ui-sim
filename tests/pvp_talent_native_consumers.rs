@@ -142,8 +142,9 @@ fn player_spells_talent_sort_uses_catalog_unlock_levels() {
                             end,
                         },
                     }
+                    list.Update = PvPTalentListMixin.Update
                     local ok, err = pcall(function()
-                        PvPTalentListMixin:Update(list)
+                        list:Update()
                     end)
                     local first = provider and provider:Find(1)
                     local second = provider and provider:Find(2)
