@@ -44,6 +44,20 @@ This is static staging, not observed RED/GREEN or runtime selection proof. Histo
 
 **VERIFIED (R88n.3/R88n.3a):** the indexed quest resolves through quest-ID request context to a cache record; the primary special-item ID and conditional candidate IDs come from that cache record, then inventory lookup resolves an existing item object. Its tooltip request carries item ID, owner GUID and item GUID. **VERIFIED (repository):** separate empty-by-default host inputs represent index-to-quest context, cache IDs/marker, and the selected inventory object. The producer checks that the selected ID is in the primary field or enabled candidate list and validates its current bag item object before shared composition. It does not model candidate predicates or upstream writers. **UNKNOWN:** cache/invalidation and inventory/object creation routes, candidate predicates, and owner-GUID effects in output. Native party/objective state writers also remain UNKNOWN.
 
+## Retail tooltip serializer field consumers
+
+**VERIFIED (Retail cache and selected TOCs):** `Blizzard_SharedXMLGame.toc:4,9-10` selects `TooltipDataHandler.lua` for Game/mainline. `Blizzard_UIPanels_Game_Mainline.toc:5-6,33` selects the Retail MerchantFrame source. **VERIFIED (optional test):** the fixture checks game-screen discovery and original Lua-source provenance for `TooltipDataRules` and `GameTooltip:SetItemByID`.
+
+**VERIFIED (Retail 12.1.5.70688, R88n.4b):** the original rules read top-level `repairCost` and battle-pet fields, and read `price`/`maxPrice` from a type-11 line. **PRESERVATION (optional tests):** `tests/tooltip_serializer_fields.rs` passes distinct synthetic values through the selected original `ProcessInfo` rules; this does not establish a producer for those fields. **INFERRED (simulator policy):** the selected `SetItemByID` path maps positive `ItemInfo.sell_price` to a type-11 line's `price`; no `maxPrice` is emitted. The native eligibility predicate, line order and `maxPrice` source remain UNKNOWN.
+
+### R88n.3b quest-cache callback seam
+
+**VERIFIED (Retail native):** an unready quest-cache lookup saves callback/context entries; cache removal copies and invokes them after unlinking the old record. **VERIFIED (simulator source):** `QuestSpecialItemInputs` stores only index-to-quest, cache-record and selected-object maps; it has no pending callback or removal route. The special-item seam remains UNKNOWN, so this lane adds no async behavior.
+
+### R88n.4b LFG message seam
+
+**VERIFIED (Retail native):** the LFG reward callback receives the enclosing decoded message, not one `JamLFGLockListSlot` element. **VERIFIED (simulator source):** the reward getter reads host-supplied `LfgTooltipRewardGroup` snapshots; this seam has no decoded message or callback argument to correct. The incoming-message route remains UNKNOWN and unchanged.
+
 ## Applicable registration and standalone RED
 
 Register consumer tests only on evidenced applicable profiles, using the established file-level `#![cfg(any(feature = "client-…"))]` pattern or `post_wrath_ui_fixture!` when its six non-Wrath profiles match the consumer. The macro is defined in `tests/common/profile_fixtures.rs`; it is not a universal applicability predicate. Never return success at runtime for an inapplicable profile: libtest reports a vacuous PASS, even if stderr says N/A.

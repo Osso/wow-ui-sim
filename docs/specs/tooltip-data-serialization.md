@@ -20,6 +20,7 @@ publication is not expanded by this change.
 - [x] Both sides take that same RGB publication: a supplied right side publishes the packed color, not the raw factory color.
 - [x] Populated identity omits zero `id`; later common identity assignments append ordered type-19 rows with `tooltipType`, nonzero-only `tooltipID`, empty left text and supplied left color.
 - [x] Original `ProcessInfo`, GameTooltip line handlers and TooltipUtil retain their payloads; presentation parses inline markup independently.
+- [x] Retail item tooltips with a positive catalog sell price emit integer `price` on a type-11 `SellPrice` line. Mapping `ItemInfo.sell_price` to that field is **INFERRED**; the producer does not invent `maxPrice`.
 
 ## Evidence limits
 
@@ -38,6 +39,20 @@ WM72 establishes that empty strings on both sides append no displayed row and
 right-only rows can exist. It does not add TooltipData fields or imply geometry
 changes here.
 
+**VERIFIED (Retail 12.1.5.70688, R88n.4b):** `repairCost` and the seven
+battle-pet fields are top-level TooltipData fields. `price` and `maxPrice`
+belong on a line of type 11. **VERIFIED (simulator model):** item catalog rows
+contain `sell_price`, and `C_Item.GetItemInfo` returns it. **INFERRED (simulator
+policy):** the Retail item builder publishes a positive `sell_price` as
+`price` on a type-11 line. It does not infer `maxPrice` from stack capacity or
+LFG reward quantity. **UNKNOWN:** native positive-price eligibility and the
+source/meaning of `maxPrice`.
+
+The current simulator has no repair-cost input or battle-pet tooltip snapshot.
+`battlePetSpeciesID` on Auction House `ItemKey` data is not a TooltipData
+producer. These fields remain absent. No price or pet values are added without
+a corresponding tooltip input.
+
 ## Proof
 
 - `tests/tooltip_data_identity.rs` drives the original accessors only:
@@ -49,6 +64,7 @@ changes here.
   proves the double-line header publishes the same packed, alpha-free RGB on its right side.
 - `tests/tooltip_d56_serialization.rs`: direct getters and original consumers.
 - `src/c_api/tooltip_data_tests.rs`: nested identity order and present/absent sides.
+- `tests/tooltip_serializer_fields.rs`: selected Retail consumers read top-level repair/pet fields and line-level `price`/`maxPrice`; the original `SetItemByID` path checks the inferred backed `price` projection.
 - Existing tooltip builder, GC and presentation tests remain regression coverage.
 
 **Proved:** the shared publication helpers (`stamp_instance`, `publish_rgb`,

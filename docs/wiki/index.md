@@ -1,3 +1,7 @@
+## [2026-11-14] implementation | Retail tooltip serializer field boundary
+
+[Tooltip data](systems/lua-api.md#retail-tooltipdata-field-boundary-r88n4b) links the [serialization contract](../specs/tooltip-data-serialization.md) and [consumer/seam evidence](investigations/consumer-selection-and-red-proof.md#retail-tooltip-serializer-field-consumers). **VERIFIED (R88n.4b):** top-level repair/pet fields and type-11 price fields. **INFERRED:** positive item sell-price projection; `maxPrice` remains absent without a quantity/range input.
+
 ## [2026-11-14] fix | Forever tooltip cached lines
 
 [Tooltip owner lifecycle](investigations/tooltip-owner-lifecycle.md#r88n5-forever-clearlines-cache-boundary) records R88n.5. **VERIFIED (Forever 1.60.1.70707):** `ClearLines` resets cached left/right FontString text for active rows only; the optional API test proves inactive entries are untouched, and the original selected `TooltipDataHandler.ProcessInfo` test preserves reprocessing and reuse. Retail attachments and owner pairs remain VERIFIED; PTR parity is INFERRED. Clipping, draw order, nonzero extra-inset writers and post-anchor clamping remain UNKNOWN.

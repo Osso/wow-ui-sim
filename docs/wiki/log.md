@@ -1,3 +1,7 @@
+## [2026-11-14] investigation | Retail tooltip serializer boundary
+
+Updated [tooltip data serialization](../specs/tooltip-data-serialization.md), [Lua API](systems/lua-api.md#retail-tooltipdata-field-boundary-r88n4b), and [consumer selection](investigations/consumer-selection-and-red-proof.md#retail-tooltip-serializer-field-consumers). **VERIFIED (R88n.4b):** repair and battle-pet fields are top-level; `price` and `maxPrice` belong on type 11. **INFERRED:** Retail projects positive `ItemInfo.sell_price` to `price`; `maxPrice`, repair cost and pet values remain unmodeled. Quest-cache callbacks and the LFG whole-message callback have no matching simulator route to fix.
+
 ## [2026-11-14] fix | Retail screen clamping
 
 Updated [layout-system](systems/layout-system.md#screen-clamping) and the [layout reference](../layout-system.md#screen-clamping) with R88n.5r. **VERIFIED (Retail 12.1.5.70688):** generic rect resolution uses scaled insets before rect storage/notification on queued and synchronous routes; GameTooltip inherits its enable bit from `SharedTooltipTemplate`; row setup creates no per-row clip. The original consumer selector failed at test commit `bcb35d79a` and passed at implementation commit `3a27c7d52`. **UNKNOWN:** suppression-state identity, setter-only cache invalidation, exact rounding, oversized-frame behavior, and order relative to snapping.
