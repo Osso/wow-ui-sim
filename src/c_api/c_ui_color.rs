@@ -6,7 +6,7 @@ use crate::lua_api::methods::{table_set_num, table_set_static};
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
-use rilua::{LuaResult, Val, runtime_error};
+use rilua::{LuaApiMut, LuaResult, Val, runtime_error};
 
 use sim_data_profile::global_colors_retail::{GlobalColorRow, RETAIL_GLOBAL_COLORS};
 
