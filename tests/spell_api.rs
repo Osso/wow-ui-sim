@@ -236,6 +236,27 @@ fn selected_spellbook_item_invalid_numeric_slot_has_verified_zero_value_arity() 
     assert_eq!(result_count, 0);
 }
 
+#[cfg(feature = "client-retail")]
+#[test]
+fn selected_spellbook_item_past_player_fixture_has_verified_zero_value_arity() {
+    let env = env();
+    // The slot is chosen from the simulator's contiguous player-book fixture;
+    // this does not claim that the same numeric slot is absent in native data.
+    let result_count: i32 = env
+        .eval(
+            r##"
+            local slot = 1
+            while C_SpellBook.GetSpellBookItemInfo(slot, Enum.SpellBookSpellBank.Player) do
+                slot = slot + 1
+            end
+            return select("#", IsSelectedSpellBookItem(slot, "player"))
+            "##,
+        )
+        .unwrap();
+
+    assert_eq!(result_count, 0);
+}
+
 #[test]
 fn test_spellbook_namespace_functions_survive_gc() {
     let env = env();
