@@ -42,6 +42,10 @@ fn assert_forever_tooltip_consumer_selected() {
     let body = std::fs::read_to_string(&toc).unwrap();
     assert!(body.contains("## AllowLoad: Game"));
     assert!(body.contains("Tooltip\\TooltipDataHandler.lua"));
+    let tooltip_toc = wow_ui_sim::loader::find_toc_file(&addons.join("Blizzard_GameTooltip"))
+        .expect("profile-selected Blizzard_GameTooltip TOC");
+    let tooltip_body = std::fs::read_to_string(tooltip_toc).unwrap();
+    assert!(tooltip_body.contains("GameTooltip.xml"));
 }
 
 /// The profile-selected consumer TOC loads the tooltip XML body, and the same
