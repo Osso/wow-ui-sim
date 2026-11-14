@@ -157,19 +157,19 @@ fn get_item_interaction_item(state: &mut LuaState) -> LuaResult<u32> {
         (interaction.interaction_type, input)
     };
 
+    let Some(selected_guid) = input.selected_item_guid.as_deref() else {
+        return no_values();
+    };
+    if item_for_owned_guid(state, selected_guid).is_none() {
+        return no_values();
+    }
+
     if interaction_kind != ITEM_INTERACTION_CLEANSE_KIND
         && interaction_kind != ITEM_INTERACTION_CONVERSION_KIND
     {
         let tooltip = empty_item_interaction_tooltip(state);
         state.push(tooltip);
         return Ok(1);
-    }
-
-    let Some(selected_guid) = input.selected_item_guid.as_deref() else {
-        return no_values();
-    };
-    if item_for_owned_guid(state, selected_guid).is_none() {
-        return no_values();
     }
 
     let tooltip = if interaction_kind == ITEM_INTERACTION_CLEANSE_KIND {
