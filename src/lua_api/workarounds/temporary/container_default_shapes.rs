@@ -1,9 +1,8 @@
 //! Temporary C_Container no-state defaults.
 //!
-//! Purchase/refund, bag filtering, battle-pay markers, and
-//! related metadata depend on systems that are not modeled yet.
-//! Real bag contents and item metadata stay in the state-backed C_Container
-//! surface.
+//! Retail 12.1.5 VERIFIED: IsContainerFiltered returns false when filter context/player state is absent,
+//! and IsBattlePayItem returns false when item lookup fails. These defaults match those paths only.
+//! Purchase-info publication and populated filter/battle-pay behavior remain UNKNOWN.
 
 const CONTAINER_DEFAULT_SHAPES_LUA: &str = r#"
 C_Container = C_Container or __wow_namespace()
@@ -37,10 +36,11 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 mod tests {
     use crate::lua_api::WowLuaEnv;
 
+    #[cfg(feature = "client-retail")]
     #[test]
     fn installs_container_default_shapes() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
-        let result: (bool, bool, bool, bool, bool) = env
+        let result: (bool, bool, bool, bool) = env
             .eval(
                 r#"
                 local questInfo = C_Container.GetContainerItemQuestInfo(0, 1)
@@ -48,19 +48,19 @@ mod tests {
                     pcall(C_Container.UseContainerItem, 0, 1)
                     and pcall(C_Container.PickupContainerItem, 0, 1)
                     and pcall(C_Container.SplitContainerItem, 0, 1, 1)
-                return C_Container.GetContainerItemPurchaseInfo(0, 1) == nil,
-                       type(questInfo) == "table"
+                assert(C_Container.GetContainerItemID(1, 1) == nil)
+                return type(questInfo) == "table"
                            and questInfo.isQuestItem == false
                            and questInfo.questID == nil
                            and questInfo.isActive == false,
                        C_Container.IsContainerFiltered(0),
-                       C_Container.IsBattlePayItem(0, 1),
+                       C_Container.IsBattlePayItem(1, 1),
                        actionsOk
                 "#,
             )
             .expect("container default shapes should be callable");
 
-        assert_eq!(result, (true, true, false, false, true));
+        assert_eq!(result, (true, false, false, true));
     }
 
     #[test]

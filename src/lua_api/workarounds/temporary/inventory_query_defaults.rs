@@ -20,6 +20,21 @@ if GetInventoryItemsForSlot == nil then
 end
 "#;
 
+// Retail 12.1.5: an empty inventory slot returns zero values (VERIFIED).
+// PTR may share this native path (INFERRED); keep this change Retail-only.
+const RETAIL_INVENTORY_QUERY_DEFAULTS_LUA: &str = r#"
+if IsInventoryItemProfessionBag == nil then
+    function IsInventoryItemProfessionBag(unit, slot)
+        if unit == "player" and type(slot) == "number" and slot % 1 == 0
+                and GetInventoryItemID(unit, slot) == nil then
+            return
+        end
+        return false
+    end
+end
+
+"#;
+
 const INVENTORY_QUERY_DEFAULTS_LUA: &str = r#"
 if IsInventoryItemProfessionBag == nil then
     function IsInventoryItemProfessionBag(_unit, _slot)
@@ -35,7 +50,13 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     }
     #[cfg(not(feature = "retail-12-0-0"))]
     lua.exec(LEGACY_RELIC_QUERY_LUA)?;
-    lua.exec(INVENTORY_QUERY_DEFAULTS_LUA)?;
+    let defaults = if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail
+    {
+        RETAIL_INVENTORY_QUERY_DEFAULTS_LUA
+    } else {
+        INVENTORY_QUERY_DEFAULTS_LUA
+    };
+    lua.exec(defaults)?;
     Ok(())
 }
 
@@ -64,16 +85,22 @@ mod tests {
     fn installs_unmodeled_profession_bag_default() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
 
-        let result: (String, bool) = env
+        let result: (String, i64) = env
             .eval(
-                r#"
+                r##"
                 return type(IsInventoryItemProfessionBag),
-                       IsInventoryItemProfessionBag("player", 20)
-                "#,
+                       select("#", IsInventoryItemProfessionBag("player", 20))
+                "##,
             )
             .expect("profession bag fallback probe should run");
 
-        assert_eq!(result, ("function".to_string(), false));
+        let expected_returns =
+            if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+                0
+            } else {
+                1
+            };
+        assert_eq!(result, ("function".to_string(), expected_returns));
     }
 
     #[test]

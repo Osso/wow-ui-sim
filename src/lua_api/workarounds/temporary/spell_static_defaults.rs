@@ -1,9 +1,10 @@
 //! Temporary `C_Spell` static/default fallbacks.
 //!
 //! The Rust `C_Spell` surface owns state-backed spell metadata, links, costs,
-//! cooldowns, charges, and flyout data. These defaults cover unmodeled
-//! override, visibility, and Maw power-border state until those domains are
-//! modeled.
+//! cooldowns, charges, and flyout data. Retail 12.1.5 VERIFIED: GetOverrideSpell
+//! returns its input when resolver context, mapping, or eligibility is absent.
+//! Candidate resolution remains UNKNOWN. Visibility output/publication on context
+//! failure also remains UNKNOWN; its existing tuple is a temporary seam.
 
 use rilua::LuaApiMut;
 
@@ -64,6 +65,7 @@ mod tests {
 
         #[cfg(not(feature = "retail-12-0-7"))]
         {
+            // Retail 12.1.5 VERIFIED: no resolver context returns the input spell ID.
             assert_eq!(override_id, 116);
             assert!(maw_atlas_is_nil);
             assert!(charge_is_nil);

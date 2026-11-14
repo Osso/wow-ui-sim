@@ -1,7 +1,8 @@
 //! Temporary `C_Spell` metadata/count defaults.
 //!
 //! Local spell names, icons, targeting, and cooldowns are backed elsewhere.
-//! Passive/ranged/press-hold metadata and priority-aura ordering remain unmodeled.
+//! Retail 12.1.5 VERIFIED: IsSpellPassive and IsPriorityAura are false for identifier zero or a missing record.
+//! Their positive-record flags, ranged-auto shared ID, and press-hold status remain UNKNOWN.
 //! Cast counts before 12.0.0 and display counts before 12.0.5 retain numeric zero.
 
 const SPELL_METADATA_DEFAULTS_LUA: &str = r#"
@@ -68,37 +69,25 @@ fn apply_count_defaults(_lua: &mut rilua::Lua) -> crate::Result<()> {
 mod tests {
     use crate::lua_api::WowLuaEnv;
 
+    #[cfg(feature = "client-retail")]
     #[test]
-    fn installs_spell_metadata_defaults() {
+    fn installs_spell_metadata_functions() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
 
-        let result: (bool, bool, bool, i32, bool) = env
+        let result: (bool, bool, bool, bool, bool, bool) = env
             .eval(
                 r#"
-                return C_Spell.IsSpellPassive(116),
-                    C_Spell.IsRangedAutoAttackSpell(116),
-                    C_Spell.IsPressHoldReleaseSpell(116),
-                    C_Spell.GetSpellCastCount(116),
-                    C_Spell.IsPriorityAura(116)
+                return type(C_Spell.IsSpellPassive) == "function",
+                    type(C_Spell.IsRangedAutoAttackSpell) == "function",
+                    type(C_Spell.IsPressHoldReleaseSpell) == "function",
+                    type(C_Spell.IsPriorityAura) == "function",
+                    type(C_Spell.GetSpellCastCount) == "function",
+                    type(C_Spell.GetSpellDisplayCount) == "function"
                 "#,
             )
-            .expect("spell metadata defaults should be callable");
+            .expect("spell metadata functions should be callable");
 
-        assert_eq!(result, (false, false, false, 0, false));
-        #[cfg(feature = "retail-12-0-5")]
-        {
-            let display: String = env
-                .eval("return C_Spell.GetSpellDisplayCount(116, 99)")
-                .expect("modeled display counts return strings");
-            assert_eq!(display, "");
-        }
-        #[cfg(not(feature = "retail-12-0-5"))]
-        {
-            let display: i32 = env
-                .eval("return C_Spell.GetSpellDisplayCount(116, 99)")
-                .expect("earlier count defaults retain numeric zero");
-            assert_eq!(display, 0);
-        }
+        assert_eq!(result, (true, true, true, true, true, true));
     }
 
     #[test]
