@@ -616,6 +616,83 @@ fn blizzard_game_tooltip_main_tooltip_uses_uiparent_with_tooltip_strata(env: &Wo
 }
 }
 
+#[cfg(feature = "optional-tests")]
+prefork_full_ui_case! {
+fn retail_game_tooltip_default_anchor_clamps_with_scaled_insets(env: &WowLuaEnv) {
+    let original_consumer: (bool, bool) = env
+        .eval(
+            "return C_AddOns.IsAddOnLoaded('Blizzard_SharedXML'), \
+                    type(GameTooltip_SetDefaultAnchor) == 'function' and \
+                    GameTooltip:IsClampedToScreen()",
+        )
+        .expect("loaded Retail tooltip consumer probes should succeed");
+    assert_eq!(original_consumer, (true, true));
+
+    env.exec(
+        r#"
+        GameTooltipDefaultContainer:SetClampedToScreen(false)
+        GameTooltipDefaultContainer:ClearAllPoints()
+        GameTooltipDefaultContainer:SetPoint("TOPLEFT", UIParent, "TOPLEFT", -20, 20)
+        GameTooltip_SetDefaultAnchor(GameTooltip, UIParent)
+        GameTooltip:SetSize(100, 50)
+        GameTooltip:SetScale(2)
+        GameTooltip:SetClampRectInsets(0, 0, 0, 0)
+        "#,
+    )
+    .expect("original default-anchor helper should place GameTooltip");
+
+    let before_insets: (f64, f64, f64, f64) = env
+        .eval("return GameTooltip:GetBoundsRect()")
+        .expect("synchronous bounds query should resolve the tooltip rect");
+    assert_eq!(before_insets, (0.0, 334.0, 100.0, 50.0));
+
+    env.exec("GameTooltip:SetClampRectInsets(4, 6, 8, 10)")
+        .expect("clamp insets should update on the loaded tooltip");
+    let after_insets: (f64, f64, f64, f64) = env
+        .eval("return GameTooltip:GetBoundsRect()")
+        .expect("inset update should resolve on the synchronous layout route");
+    assert_eq!(after_insets, (-4.0, 326.0, 100.0, 50.0));
+
+    env.exec(
+        r#"
+        GameTooltipDefaultContainer:ClearAllPoints()
+        GameTooltipDefaultContainer:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", 30, -30)
+        GameTooltip_SetDefaultAnchor(GameTooltip, UIParent)
+        "#,
+    )
+    .expect("original helper should re-anchor at the opposite screen corner");
+    let tooltip_id = env
+        .state()
+        .borrow()
+        .widgets
+        .get_id_by_name("GameTooltip")
+        .expect("loaded GameTooltip should have a widget ID");
+    {
+        let mut state = env.state().borrow_mut();
+        state.widgets.mark_rect_dirty(tooltip_id);
+        state.ensure_layout_rects();
+    }
+    let queued_rect: (f64, f64, f64, f64) = env
+        .eval("return GameTooltip:GetBoundsRect()")
+        .expect("queued layout should publish the clamped tooltip rect");
+    assert_eq!(queued_rect, (406.0, -10.0, 100.0, 50.0));
+
+    env.exec(
+        r#"
+        GameTooltip:SetClampedToScreen(false)
+        GameTooltipDefaultContainer:ClearAllPoints()
+        GameTooltipDefaultContainer:SetPoint("TOPLEFT", UIParent, "TOPLEFT", -20, 20)
+        GameTooltip_SetDefaultAnchor(GameTooltip, UIParent)
+        "#,
+    )
+    .expect("original helper should re-anchor the disabled tooltip");
+    let unclamped_rect: (f64, f64, f64, f64) = env
+        .eval("return GameTooltip:GetBoundsRect()")
+        .expect("disabled tooltip bounds query should resolve");
+    assert_eq!(unclamped_rect, (-10.0, 344.0, 100.0, 50.0));
+}
+}
+
 #[test]
 #[cfg(feature = "optional-tests")]
 fn retail_game_tooltip_preserves_shared_nineslice() {
