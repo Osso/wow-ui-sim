@@ -304,58 +304,92 @@ fn load_addon_internal_body(
     secure_load_path: &mut HashSet<String>,
     result: &mut LoadResult,
 ) -> Result<(), LoadError> {
-    let secure = pass.is_secure_load();
-    let secure_dependency = pass == EnvironmentPass::SecureDependency;
-    let wrath_saved_variables =
-        crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Wrath;
-    let saved_vars_mgr = if secure_dependency {
-        None
-    } else if wrath_saved_variables {
-        saved_vars_mgr
-    } else {
-        maybe_init_saved_variables(env, toc, folder_name, saved_vars_mgr, result)
-    };
+    let saved_vars_mgr =
+        prepare_saved_variables(env, toc, folder_name, saved_vars_mgr, pass, result);
     let ctx = build_addon_context(env, toc, folder_name)?;
     let loading_guard =
         begin_addon_load_in_environment(env, folder_name, toc, pass.use_secure_env(&ctx))?;
 
-    if secure {
+    if pass.is_secure_load() {
         load_secure_dependencies(env, toc, result, secure_load_path)?;
     }
     let nil_symbol_access_start = env.state().borrow().nil_symbol_accesses.len();
     let addon_name = result.name.clone();
-
     load_addon_files(env, toc, folder_name, &ctx, pass, result);
+    apply_addon_post_load(env, toc, folder_name, &ctx, pass, saved_vars_mgr, result);
+    finish_addon_load(
+        env,
+        loading_guard,
+        &addon_name,
+        nil_symbol_access_start,
+        result,
+    );
+    Ok(())
+}
+
+fn prepare_saved_variables<'a>(
+    env: &LoaderEnv<'_>,
+    toc: &TocFile,
+    folder_name: &str,
+    saved_vars_mgr: Option<&'a mut SavedVariablesManager>,
+    pass: EnvironmentPass,
+    result: &mut LoadResult,
+) -> Option<&'a mut SavedVariablesManager> {
+    if pass == EnvironmentPass::SecureDependency {
+        return None;
+    }
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Wrath {
+        saved_vars_mgr
+    } else {
+        maybe_init_saved_variables(env, toc, folder_name, saved_vars_mgr, result)
+    }
+}
+
+fn apply_addon_post_load(
+    env: &LoaderEnv<'_>,
+    toc: &TocFile,
+    folder_name: &str,
+    ctx: &AddonContext<'_>,
+    pass: EnvironmentPass,
+    saved_vars_mgr: Option<&mut SavedVariablesManager>,
+    result: &mut LoadResult,
+) {
     if pass == EnvironmentPass::Normal {
-        maybe_replay_blizzard_lua_in_secure_env(env, toc, folder_name, &ctx, result);
+        maybe_replay_blizzard_lua_in_secure_env(env, toc, folder_name, ctx, result);
     }
-    if !secure_dependency {
-        if folder_name == "Blizzard_FrameXML" {
-            load_modified_click_defaults(env, toc, result);
-        }
-        if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Wrath {
-            load_conventional_bindings(env, toc, &ctx, result);
-        } else {
-            read_conventional_binding_metadata(env, toc, folder_name, result);
-        }
-        if wrath_saved_variables {
-            maybe_init_saved_variables(env, toc, folder_name, saved_vars_mgr, result);
-        } else {
-            maybe_restore_clobbered_saved_variables(env, folder_name, saved_vars_mgr);
-        }
-        apply_blizzard_post_load_patches(env, folder_name, result);
+    if pass == EnvironmentPass::SecureDependency {
+        return;
     }
+    if folder_name == "Blizzard_FrameXML" {
+        load_modified_click_defaults(env, toc, result);
+    }
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Wrath {
+        load_conventional_bindings(env, toc, ctx, result);
+        maybe_init_saved_variables(env, toc, folder_name, saved_vars_mgr, result);
+    } else {
+        read_conventional_binding_metadata(env, toc, folder_name, result);
+        maybe_restore_clobbered_saved_variables(env, folder_name, saved_vars_mgr);
+    }
+    apply_blizzard_post_load_patches(env, folder_name, result);
+}
+
+fn finish_addon_load(
+    env: &LoaderEnv<'_>,
+    loading_guard: LoadingAddonGuard,
+    addon_name: &str,
+    nil_symbol_access_start: usize,
+    result: &mut LoadResult,
+) {
     let addon_index = loading_guard.addon_index();
     append_nil_symbol_diagnostics(
         env,
         addon_index,
-        &addon_name,
+        addon_name,
         nil_symbol_access_start,
         result,
     );
     append_pending_nested_addon_diagnostics(env, addon_index, result);
     loading_guard.commit_loaded();
-    Ok(())
 }
 
 fn load_secure_dependencies(
@@ -368,64 +402,125 @@ fn load_secure_dependencies(
     let Some(addon_root) = toc.addon_dir.parent() else {
         return Ok(());
     };
-    let dependencies = toc
-        .optional_deps_for_screen(screen)
+    for (name, required) in secure_dependency_names(toc, screen) {
+        load_secure_dependency(
+            env,
+            addon_root,
+            screen,
+            &name,
+            required,
+            result,
+            secure_load_path,
+        )?;
+    }
+    Ok(())
+}
+
+fn secure_dependency_names(
+    toc: &TocFile,
+    screen: crate::screen::ScreenKind,
+) -> Vec<(String, bool)> {
+    toc.optional_deps_for_screen(screen)
         .into_iter()
         .map(|name| (name, false))
         .chain(
             toc.dependencies_for_screen(screen)
                 .into_iter()
                 .map(|name| (name, true)),
-        );
+        )
+        .collect()
+}
 
-    for (dependency, required) in dependencies {
-        let Some(dependency_path) = super::find_toc_file(&addon_root.join(&dependency)) else {
-            continue;
-        };
-        let dependency_toc = match TocFile::from_file(&dependency_path) {
-            Ok(toc) => toc,
-            Err(error) if required => return Err(LoadError::Toc(error)),
-            Err(error) => {
-                tracing::warn!("Cannot read optional secure dependency {dependency}: {error}");
-                continue;
-            }
-        };
-        if !dependency_toc.allows_screen(screen) {
-            if required {
-                return Err(LoadError::DepWrongActiveInterface(dependency));
-            }
-            continue;
+fn load_secure_dependency(
+    env: &LoaderEnv<'_>,
+    addon_root: &Path,
+    screen: crate::screen::ScreenKind,
+    dependency: &str,
+    required: bool,
+    result: &mut LoadResult,
+    secure_load_path: &mut HashSet<String>,
+) -> Result<(), LoadError> {
+    let Some(dependency_toc) =
+        read_secure_dependency_toc(addon_root, dependency, required, screen)?
+    else {
+        return Ok(());
+    };
+    let folder_name = addon_folder_name(&dependency_toc);
+    let ordinary_loaded = addon_loaded_in_environment(env, folder_name, false);
+    if !dependency_toc.is_secure_env() && !ordinary_loaded {
+        load_dependency_ordinary_pass(
+            env,
+            &dependency_toc,
+            dependency,
+            required,
+            result,
+            secure_load_path,
+        )?;
+    }
+
+    let secure_pass = if ordinary_loaded || !dependency_toc.is_secure_env() {
+        EnvironmentPass::SecureDependency
+    } else {
+        EnvironmentPass::Secure
+    };
+    let secure_result =
+        load_addon_internal_with_pass(env, &dependency_toc, None, secure_pass, secure_load_path);
+    record_dependency_result(result, dependency, required, secure_result, "secure")
+}
+
+fn load_dependency_ordinary_pass(
+    env: &LoaderEnv<'_>,
+    toc: &TocFile,
+    dependency: &str,
+    required: bool,
+    result: &mut LoadResult,
+    secure_load_path: &mut HashSet<String>,
+) -> Result<(), LoadError> {
+    let normal_result =
+        load_addon_internal_with_pass(env, toc, None, EnvironmentPass::Normal, secure_load_path);
+    record_dependency_result(result, dependency, required, normal_result, "ordinary")
+}
+
+fn read_secure_dependency_toc(
+    addon_root: &Path,
+    dependency: &str,
+    required: bool,
+    screen: crate::screen::ScreenKind,
+) -> Result<Option<TocFile>, LoadError> {
+    let Some(path) = super::find_toc_file(&addon_root.join(dependency)) else {
+        return Ok(None);
+    };
+    let toc = match TocFile::from_file(&path) {
+        Ok(toc) => toc,
+        Err(error) if required => return Err(LoadError::Toc(error)),
+        Err(error) => {
+            tracing::warn!("Cannot read optional secure dependency {dependency}: {error}");
+            return Ok(None);
         }
+    };
+    if toc.allows_screen(screen) {
+        return Ok(Some(toc));
+    }
+    if required {
+        Err(LoadError::DepWrongActiveInterface(dependency.to_string()))
+    } else {
+        Ok(None)
+    }
+}
 
-        let dependency_folder = addon_folder_name(&dependency_toc);
-        let ordinary_loaded = addon_loaded_in_environment(env, dependency_folder, false);
-        if !dependency_toc.is_secure_env() && !ordinary_loaded {
-            match load_addon_internal_with_pass(
-                env,
-                &dependency_toc,
-                None,
-                EnvironmentPass::Normal,
-                secure_load_path,
-            ) {
-                Ok(nested) if required => append_dependency_result(result, nested),
-                Ok(nested) => log_optional_dependency_result(result, &dependency, nested),
-                Err(error) if required => return Err(error),
-                Err(error) => tracing::warn!(
-                    "Optional secure dependency {dependency} ordinary load failed: {error}"
-                ),
-            }
-        }
-
-        let pass = if ordinary_loaded || !dependency_toc.is_secure_env() {
-            EnvironmentPass::SecureDependency
-        } else {
-            EnvironmentPass::Secure
-        };
-        match load_addon_internal_with_pass(env, &dependency_toc, None, pass, secure_load_path) {
-            Ok(nested) if required => append_dependency_result(result, nested),
-            Ok(nested) => log_optional_dependency_result(result, &dependency, nested),
-            Err(error) if required => return Err(error),
-            Err(error) => tracing::warn!("Optional secure dependency {dependency} failed: {error}"),
+fn record_dependency_result(
+    parent: &mut LoadResult,
+    dependency: &str,
+    required: bool,
+    result: Result<LoadResult, LoadError>,
+    pass: &str,
+) -> Result<(), LoadError> {
+    match result {
+        Ok(nested) if required => append_dependency_result(parent, nested),
+        Ok(nested) => log_optional_dependency_result(parent, dependency, nested),
+        Err(error) if required => return Err(error),
+        Err(error) => {
+            tracing::warn!("Optional secure dependency {dependency} {pass} load failed: {error}")
         }
     }
     Ok(())
