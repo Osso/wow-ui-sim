@@ -111,7 +111,7 @@ fn r88e5_trade_money_consumer_uses_supplied_offer_and_cursor_state(env: &WowLuaE
 
     let restriction: (bool, i32, bool) = env
         .eval(
-            r#"
+            r##"
             C_TradeInfo._state = { pickupTradeMoneyRestricted = true }
             local restrictedCall = pcall(function()
                 return C_TradeInfo.PickupTradeMoney(nil)
@@ -122,7 +122,7 @@ fn r88e5_trade_money_consumer_uses_supplied_offer_and_cursor_state(env: &WowLuaE
                 C_TradeInfo.PickupTradeMoney(nil)
             end)
             return restrictedCall, restrictedReturns, ordinaryNilAccepted
-            "#,
+            "##,
         )
         .expect("trade restriction and argument paths should be observable");
     assert_eq!(restriction, (true, 0, false));
