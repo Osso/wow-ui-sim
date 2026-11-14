@@ -1,6 +1,6 @@
 ## [2026-11-14] implementation | GameTooltip minimum width and font strings
 
-Updated the [GameTooltip method contract](../specs/game-tooltip-methods.md), [Lua API](systems/lua-api.md#game-tooltip-minimum-width-and-font-strings), and [consumer-selection investigation](investigations/consumer-selection-and-red-proof.md#gametooltip-minimum-width-consumer) with R88n.7. **VERIFIED (Retail 12.1.5.70688):** `GetMinimumWidth` returns the stored number and forced boolean; `AddFontStrings` stores a pair and returns zero values without adding a `NumLines` entry. The selected `GameTooltip_InsertFrame` consumer is PRESERVATION because its scalar comparison observes only the first getter result. **UNKNOWN:** later pair layout/rendering use.
+Updated the [GameTooltip method contract](../specs/game-tooltip-methods.md), [Lua API](systems/lua-api.md#game-tooltip-minimum-width-and-font-strings), and [consumer-selection investigation](investigations/consumer-selection-and-red-proof.md#gametooltip-minimum-width-consumer) with R88n.7. **VERIFIED (Retail 12.1.5.70688):** `GetMinimumWidth` returns the stored number and forced boolean; `AddFontStrings` stores a pair and returns zero values without adding a `NumLines` entry. The selected `GameTooltip_InsertFrame` consumer is PRESERVATION because its scalar comparison observes only the first getter result. **INFERRED:** PTR/Forever applicability follows the shared registration path; native behavior is not independently proved. **UNKNOWN:** later pair layout/rendering use.
 
 ## [2026-11-14] fix | Retail screen clamping
 

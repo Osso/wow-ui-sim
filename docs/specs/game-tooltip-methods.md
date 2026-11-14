@@ -1,6 +1,6 @@
 # GameTooltip methods
 
-This spec records the `GameTooltip` minimum-width and FontString-pair contracts implemented by `src/lua_api/frame/methods/widgets/tooltip/`; the [Lua API wiki](../wiki/systems/lua-api.md#game-tooltip-minimum-width-and-font-strings) describes the current model. Native evidence is R88n.7 for Retail 12.1.5.70688.
+This spec records the `GameTooltip` minimum-width and FontString-pair contracts implemented by `src/lua_api/frame/methods/widgets/tooltip/`; the [Lua API wiki](../wiki/systems/lua-api.md#game-tooltip-minimum-width-and-font-strings) describes the current model. Native evidence is R88n.7 for Retail 12.1.5.70688. **INFERRED:** PTR and Forever share this method-registration path; R88n.7 does not independently prove their behavior.
 
 ## What it must do
 
