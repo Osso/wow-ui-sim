@@ -88,8 +88,13 @@ fn load_full_game_ui() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
     env.set_screen_size(1024.0, 768.0);
     env.set_screen_mode(ScreenKind::Game);
-    // Keep the existing compatibility fallback in place for this consumer-only
-    // gate; original producer identity is deferred to lt-635e.
+    env.exec(
+        "rawset(_G, 'TooltipDataProcessor', nil); \
+         rawset(_G, 'AddTooltipDataAccessor', nil); \
+         rawset(__secureenv, 'TooltipDataProcessor', nil); \
+         rawset(__secureenv, 'AddTooltipDataAccessor', nil)",
+    )
+    .expect("disable the TooltipDataProcessor fallback before loading addons");
 
     {
         let mut state = env.state().borrow_mut();
@@ -123,7 +128,7 @@ fn secure_private_auras_tooltip_consumer_runs_without_errors() {
         loaded,
         "normal Retail startup must load Blizzard_PrivateAurasUI"
     );
-    let snapshot_names_remain_private: bool = env
+    let secure_environment_has_no_snapshot_only_globals: bool = env
         .eval(
             r#"
                 return type(rawget(_G, 'debug')) == 'table'
@@ -132,10 +137,10 @@ fn secure_private_auras_tooltip_consumer_runs_without_errors() {
                     and rawget(__secureenv, 'coroutine') == nil
             "#,
         )
-        .expect("secure snapshot visibility query should succeed");
+        .expect("secure environment visibility query should succeed");
     assert!(
-        snapshot_names_remain_private,
-        "snapshot-only debug and coroutine must stay out of published secureenv"
+        secure_environment_has_no_snapshot_only_globals,
+        "debug and coroutine must stay out of the fixed secure environment"
     );
 
     let load_errors: Vec<String> = env
@@ -148,6 +153,7 @@ fn secure_private_auras_tooltip_consumer_runs_without_errors() {
                 || message.contains("PrivateAurasTooltip")
                 || message.contains("TooltipDataProcessor")
                 || message.contains("TextureUtil.lua")
+                || message.contains("TooltipDataHandler.lua")
         })
         .cloned()
         .collect();
@@ -160,10 +166,41 @@ fn secure_private_auras_tooltip_consumer_runs_without_errors() {
             "#,
         )
         .expect("secure registration snapshot should evaluate");
+    let producer_source: (String, String, String, bool) = env
+        .eval(
+            r#"
+                local processor = rawget(__secureenv, 'TooltipDataProcessor')
+                local accessor = rawget(__secureenv, 'AddTooltipDataAccessor')
+                local source = type(accessor) == 'function'
+                    and debug.getinfo(accessor, 'S').source or ''
+                return type(processor),
+                    type(processor and rawget(processor, 'AllTypes')),
+                    source,
+                    processor ~= rawget(_G, 'TooltipDataProcessor')
+            "#,
+        )
+        .expect("secure TooltipDataProcessor producer provenance should evaluate");
     assert!(
         load_errors.is_empty(),
         "PrivateAuras dependencies and the PrivateAurasTooltip consumer must load without errors:\n  {}",
         load_errors.join("\n  ")
+    );
+    assert_eq!(
+        producer_source.0, "table",
+        "secure dependency must define TooltipDataProcessor"
+    );
+    assert_eq!(
+        producer_source.1, "string",
+        "the original producer must define AllTypes"
+    );
+    assert!(
+        producer_source.2.contains("TooltipDataHandler.lua"),
+        "secure AddTooltipDataAccessor must come from TooltipDataHandler.lua, got {}",
+        producer_source.2
+    );
+    assert!(
+        producer_source.3,
+        "secure execution must create its own TooltipDataProcessor table"
     );
     assert_eq!(
         registration_snapshot.0, "function",
