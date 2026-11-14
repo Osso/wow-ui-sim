@@ -216,7 +216,7 @@ fn execute_compiled_lua_file(
     chunk_name: &str,
     use_replay_environment: bool,
 ) -> Result<rilua::Val, LoadError> {
-    prepare_addon_function(state, &func, ctx, use_replay_environment)?;
+    prepare_addon_function_with_environment(state, &func, ctx, use_replay_environment)?;
     let result = if ctx.taint {
         execute_budgeted_addon_file(state, func, ctx, chunk_name)
     } else {
@@ -228,6 +228,14 @@ fn execute_compiled_lua_file(
 }
 
 pub(crate) fn prepare_addon_function(
+    state: &mut LuaState,
+    func: &rilua::Function,
+    ctx: &AddonContext,
+) -> Result<(), LoadError> {
+    prepare_addon_function_with_environment(state, func, ctx, false)
+}
+
+fn prepare_addon_function_with_environment(
     state: &mut LuaState,
     func: &rilua::Function,
     ctx: &AddonContext,
