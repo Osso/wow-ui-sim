@@ -157,6 +157,15 @@ fn lfg_shortage_reward_consumer_selects_distinct_currency_tiers() {
 #[test]
 fn lfg_reward_getters_return_no_values_without_ready_reward_data() {
     let env = WowLuaEnv::new().expect("Retail Lua environment should initialize");
+    env.exec(&format!(
+        r#"
+        assert(select('#', C_TooltipInfo.GetLFGDungeonReward({DUNGEON_ID}, 1)) == 0,
+            'empty default reward input must not fabricate an ordinary reward')
+        assert(select('#', C_TooltipInfo.GetLFGDungeonShortageReward({DUNGEON_ID}, 1, 1)) == 0,
+            'empty default reward input must not fabricate a shortage reward')
+        "#
+    ))
+    .expect("empty default LFG reward input should remain empty");
     let group = reward_group(&env);
     env.state()
         .borrow_mut()
