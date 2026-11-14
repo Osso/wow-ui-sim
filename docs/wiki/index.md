@@ -8,6 +8,10 @@
 records the Retail original MicroMenu consumer and narrow bootstrap boundary.
 The default-state selector is PRESERVATION, not native availability or RED.
 
+## [2026-11-13] system | User waypoint supertracking
+
+[SuperTrack state](systems/super-track-state.md#user-waypoint-supertracking) and [C_Map user waypoint](systems/c-map-user-waypoint.md#original-consumer-boundary) record R88i.3/R88j.5/R88j.6 and the selected original World Map consumers. **VERIFIED (Retail 12.1.5.70688):** user-waypoint enable clears the four named selections and their modeled flags, preserves corpse tracking, and `IsSuperTrackingAnything` includes user-waypoint tracking. The quest/content/map-pin getters read separate flags; content ID zero can be present; ClearAll clears modeled flags and retains saved content/map-pin values and waypoint coordinates. **VERIFIED (optional Retail tests):** the original click passes line 101, the original pin reads the true flag, and the direct flag-writer rows pass. **INFERRED:** flags and selections remain in agreement from a consistent start. **UNKNOWN:** two getterless flags, exact return arity and named-event effects. Set-map-pin, quest and vignette validation awaits R88j.8.
+
 ## [2026-11-13] fix | Inline icon right-edge advance
 
 [Rendering pipeline](systems/rendering-pipeline.md#inline-icons-in-text) records R88f.L.2: the FontString cursor advances from the snapped absolute icon right edge, while tooltip snap behavior remains UNKNOWN. The fractional-edge `GetStringWidth` regression records simulator coverage.
