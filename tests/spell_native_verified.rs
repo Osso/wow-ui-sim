@@ -264,33 +264,6 @@ fn retail_spell_cast_count_accepts_numeric_strings_and_truncates_fractions() {
 }
 
 #[test]
-fn inferred_admin_spell_changes_update_the_ranged_identifier() {
-    let env = load_selected_consumers(
-        &["Blizzard_SharedTalentUI", "Blizzard_ActionBar"],
-        "SpellSearchUtil.GetActionbarStatusForSpellBookItemInfo",
-        "Blizzard_SpellSearch/Blizzard_SpellSearchUtil.lua",
-    );
-    // INFERRED simulator wiring: A_Admin spell changes exercise the verified metadata writer.
-    env.exec(
-        r#"
-        assert(C_Spell.IsRangedAutoAttackSpell(0) == true)
-        A_Admin.LearnSpell(235450)
-        assert(C_Spell.IsRangedAutoAttackSpell(235450) == true)
-        A_Admin.LearnSpell(11426)
-        assert(C_Spell.IsRangedAutoAttackSpell(235450) == false)
-        assert(C_Spell.IsRangedAutoAttackSpell(11426) == true)
-        A_Admin.UnlearnSpell(235450)
-        assert(C_Spell.IsRangedAutoAttackSpell(11426) == true)
-        A_Admin.UnlearnSpell(11426)
-        assert(C_Spell.IsRangedAutoAttackSpell(0) == true)
-        A_Admin.LearnSpell(116)
-        assert(C_Spell.IsRangedAutoAttackSpell(0) == true)
-        "#,
-    )
-    .expect("the inferred admin input path updates only metadata-selected IDs");
-}
-
-#[test]
 fn inferred_default_spell_context_uses_the_active_player_inventory() {
     let env = WowLuaEnv::new().expect("real spell namespace");
     {

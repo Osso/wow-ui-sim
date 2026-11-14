@@ -1333,3 +1333,30 @@ pub(crate) fn push_spell_loss_of_control_snapshot(
     };
     super::loss_of_control::push_loss_of_control_info(state, &info, restricted)
 }
+
+#[cfg(all(test, feature = "retail-12-1-5"))]
+mod ranged_auto_attack_tests {
+    use super::{clear_ranged_auto_attack_spell, record_ranged_auto_attack_spell};
+    use crate::lua_api::state::SimState;
+
+    #[test]
+    fn ranged_metadata_writer_and_equal_id_removal_follow_verified_rules() {
+        let mut sim = SimState::default();
+        assert_eq!(sim.ranged_auto_attack_spell_id, 0);
+
+        record_ranged_auto_attack_spell(&mut sim, 116);
+        assert_eq!(sim.ranged_auto_attack_spell_id, 0);
+
+        record_ranged_auto_attack_spell(&mut sim, 235450);
+        assert_eq!(sim.ranged_auto_attack_spell_id, 235450);
+        clear_ranged_auto_attack_spell(&mut sim, 11426);
+        assert_eq!(sim.ranged_auto_attack_spell_id, 235450);
+
+        record_ranged_auto_attack_spell(&mut sim, 11426);
+        assert_eq!(sim.ranged_auto_attack_spell_id, 11426);
+        clear_ranged_auto_attack_spell(&mut sim, 235450);
+        assert_eq!(sim.ranged_auto_attack_spell_id, 11426);
+        clear_ranged_auto_attack_spell(&mut sim, 11426);
+        assert_eq!(sim.ranged_auto_attack_spell_id, 0);
+    }
+}
