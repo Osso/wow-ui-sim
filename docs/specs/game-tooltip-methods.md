@@ -42,6 +42,7 @@ This spec records the `GameTooltip` minimum-width and FontString-pair contracts 
 
 ## Out of scope
 
-- `AddFontStrings` parent-change, forbidden-aspect and secret-state permission checks are not implemented by this slice; the tests do not claim their parity.
+- **VERIFIED (R88n.7):** native `GetMinimumWidth` applies conditional result secrecy and changes diagnostic/access state; this slice does not model those effects.
+- **VERIFIED (R88n.7):** native `AddFontStrings` checks parent-change and secret/forbidden-aspect permissions; this slice does not implement those checks.
 - The later layout, rendering, anchoring and lifetime use of stored FontString pairs is UNKNOWN. This slice stores the pair and does not invent those effects.
 - `SetMinimumWidth` argument coercion beyond the existing implementation is not changed here.
