@@ -177,7 +177,7 @@ mod tests {
                     },
                 }
 
-                FriendsFrameInviteTemplateMixin:OnLoad(button)
+                FriendsFrameInviteTemplateMixin.OnLoad(button)
                 callbacks[2]()
                 button.inviteIndex = 2
                 callbacks[2]()
