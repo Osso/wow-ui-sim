@@ -1,4 +1,4 @@
-use crate::lua_bridge::table_set_rust_fn_unpaired;
+use crate::lua_bridge::{table_set_rust_fn, table_set_rust_fn_unpaired};
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
@@ -163,9 +163,8 @@ pub(crate) fn register_unknown_namespace_function(
     member: &str,
     function: rilua::RustFn,
 ) -> LuaResult<()> {
-    let (ordinary, secure) = ensure_namespace_pair(state, namespace)?;
-    table_set_rust_fn_unpaired(state, ordinary, member, function)?;
-    table_set_rust_fn_unpaired(state, secure, member, function)
+    let (ordinary, _) = ensure_namespace_pair(state, namespace)?;
+    table_set_rust_fn(state, ordinary, member, function)
 }
 
 pub(crate) fn ensure_namespace_pair(
