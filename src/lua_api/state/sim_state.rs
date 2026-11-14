@@ -328,8 +328,6 @@ pub struct SimState {
     pub item_interaction_tooltip_input: Option<crate::c_api::ItemInteractionTooltipInput>,
     /// Host-supplied shared possession spell ID; no possession writer is modeled.
     pub possession_spell_id: Option<u32>,
-    /// Host-supplied currently slotted keystone GUID; no slot writer is modeled.
-    pub slotted_keystone_guid: Option<String>,
     pub major_factions: HashMap<i64, MajorFactionData>,
     pub major_faction_renown_levels: HashMap<i64, Vec<RenownLevelInfo>>,
     /// Explicit pair-keyed reward inputs only; no fabricated default rows.

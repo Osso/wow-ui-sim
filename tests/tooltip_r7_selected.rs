@@ -40,8 +40,10 @@ fn set_interaction_input(
 fn cleansing_rows(title: &str, detail: &str) -> Vec<ItemInteractionTooltipLine> {
     [title, detail]
         .into_iter()
-        .map(|text| ItemInteractionTooltipLine {
+        .enumerate()
+        .map(|(index, text)| ItemInteractionTooltipLine {
             left_text: text.to_string(),
+            left_color: (index == 1).then_some((0.12, 1.0, 0.0)),
             ..Default::default()
         })
         .collect()
@@ -80,7 +82,9 @@ fn item_interaction_original_consumers_use_supplied_kind_payloads() {
         local data = assert(GameTooltip:GetPrimaryTooltipData(), "cleansing tooltip missing")
         assert(data.type == 20 and data.id == nil, "verified cleansing identity")
         assert(data.lines[1].leftText == "Fixture title A")
+        assert(data.lines[1].leftColor == nil, "omitted host color stays absent")
         assert(data.lines[2].leftText == "Fixture cleansing row A")
+        assert(math.abs(data.lines[2].leftColor.g - 1) < 0.001)
     "#,
     )
     .unwrap();
@@ -98,7 +102,9 @@ fn item_interaction_original_consumers_use_supplied_kind_payloads() {
         local data = assert(GameTooltip:GetPrimaryTooltipData(), "second cleansing tooltip missing")
         assert(data.type == 20 and data.id == nil)
         assert(data.lines[1].leftText == "Fixture title B")
+        assert(data.lines[1].leftColor == nil, "omitted host color stays absent")
         assert(data.lines[2].leftText == "Fixture cleansing row B")
+        assert(math.abs(data.lines[2].leftColor.g - 1) < 0.001)
     "#,
     )
     .unwrap();
@@ -147,42 +153,28 @@ fn possession_original_action_bar_hover_uses_the_supplied_spell() {
 }
 
 #[test]
-fn slotted_keystone_original_challenges_hover_uses_the_supplied_guid() {
+fn slotted_keystone_api_and_tooltip_accessor_use_the_selected_guid() {
     let env = tooltip_full_env_helpers::load_full_env_without_post_load();
-    let (group_finder_loaded, group_finder_reason): (bool, Option<String>) = env
-        .eval(r#"return C_AddOns.LoadAddOn("Blizzard_GroupFinder")"#)
-        .unwrap();
-    assert!(
-        group_finder_loaded,
-        "Blizzard_GroupFinder load failed: {group_finder_reason:?}"
-    );
-    let (loaded, reason): (bool, Option<String>) = env
-        .eval(r#"return C_AddOns.LoadAddOn("Blizzard_ChallengesUI")"#)
-        .unwrap();
-    assert!(loaded, "Blizzard_ChallengesUI load failed: {reason:?}");
     env.exec(
         r#"
-        assert(C_AddOns.IsAddOnLoaded("Blizzard_GroupFinder"))
-        assert(PVEFrame, "selected GroupFinder path creates PVEFrame")
-        assert(C_AddOns.IsAddOnLoaded("Blizzard_ChallengesUI"))
-        assert(debug.getinfo(ChallengesKeystoneSlotMixin.OnEnter, "S").source
-            :find("Blizzard_ChallengesUI.lua", 1, true))
-        C_ChallengeMode = C_ChallengeMode or {}
-        C_ChallengeMode.HasSlottedKeystone = function() return true end
+        assert(debug.getinfo(GameTooltip.SetSlottedKeystone, "S").source
+            :find("TooltipDataHandler.lua", 1, true))
     "#,
     )
     .unwrap();
 
     for (slot, item_id) in [(3, 1728), (4, 231_268)] {
         let guid = add_bag_item(&env, 0, slot, item_id);
-        env.state().borrow_mut().slotted_keystone_guid = Some(guid.clone());
+        env.state().borrow_mut().keystone.selected_guid = Some(guid.clone());
         env.exec(&format!(
             r#"
-            local button = CreateFrame("Button", nil, UIParent)
-            ChallengesKeystoneSlotMixin.OnEnter(button)
-            local data = assert(GameTooltip:GetPrimaryTooltipData(), "keystone tooltip missing")
-            assert(data.type == 0 and data.id == {item_id}, "slotted item identity")
-            assert(data.guid == "{guid}", "selected instance GUID")
+            local apiData = assert(C_TooltipInfo.GetSlottedKeystone(), "keystone API tooltip missing")
+            assert(apiData.type == 0 and apiData.id == {item_id}, "API item identity")
+            assert(apiData.guid == "{guid}", "API instance GUID")
+            GameTooltip:SetSlottedKeystone()
+            local data = assert(GameTooltip:GetPrimaryTooltipData(), "accessor tooltip missing")
+            assert(data.type == 0 and data.id == {item_id}, "accessor item identity")
+            assert(data.guid == "{guid}", "accessor instance GUID")
         "#
         ))
         .unwrap();
@@ -201,7 +193,31 @@ fn round7_selected_getter_misses_keep_the_verified_result_arities() {
     "##,
     )
     .unwrap();
+    env.state().borrow_mut().possession_spell_id = Some(0);
+    env.exec(r##"assert(select("#", C_TooltipInfo.GetPossession(1)) == 0)"##)
+        .unwrap();
+    env.state().borrow_mut().keystone.selected_guid = Some("Item-0-1-1".to_string());
+    env.exec(r##"assert(select("#", C_TooltipInfo.GetSlottedKeystone()) == 0)"##)
+        .unwrap();
+    env.state().borrow_mut().possession_spell_id = None;
+    env.state().borrow_mut().keystone.selected_guid = None;
 
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.item_interaction = Some(ItemInteractionInfo {
+            interaction_type: 2,
+            ..Default::default()
+        });
+        sim.item_interaction_tooltip_input = Some(ItemInteractionTooltipInput {
+            selected_item_guid: Some("Item-0-1-1".to_string()),
+            ..Default::default()
+        });
+    }
+    env.exec(r##"assert(select("#", C_TooltipInfo.GetItemInteractionItem()) == 0)"##)
+        .unwrap();
+    env.state().borrow_mut().item_interaction_tooltip_input = None;
+    env.exec(r##"assert(select("#", C_TooltipInfo.GetItemInteractionItem()) == 0)"##)
+        .unwrap();
     {
         let mut sim = env.state().borrow_mut();
         sim.item_interaction = Some(ItemInteractionInfo {
