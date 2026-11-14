@@ -126,7 +126,8 @@ fn battle_pet_consumer_reads_top_level_tooltip_fields() {
             battlePetName = "Probe Pet",
             lines = {},
         }
-        assert(GameTooltip:ProcessInfo({tooltipData = data}))
+        GameTooltip:ProcessInfo({tooltipData = data})
+        assert(type(observed) == "table", "BattlePet rule must consume the tooltip data")
         assert(#observed == 7, "BattlePet rule must forward seven top-level fields")
         assert(observed[1] == 41 and observed[2] == 7 and observed[3] == 3)
         assert(observed[4] == 521 and observed[5] == 47 and observed[6] == 39)
