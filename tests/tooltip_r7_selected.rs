@@ -206,13 +206,66 @@ fn item_interaction_conversion_original_consumer_uses_distinct_output_ids() {
 }
 
 #[test]
-fn zero_conversion_output_preserves_the_unmodeled_native_gap() {
-    // PRESERVATION only: native unresolved-item payload is UNKNOWN pending R88o.2 q1.
+fn zero_conversion_output_publishes_verified_unresolved_item_shape() {
     let env = load_item_interaction_env();
     let selected_guid = add_bag_item(&env, 0, 3, 128_910);
     set_interaction_input(&env, 4, &selected_guid, Some(0), Vec::new());
-    env.exec(r##"assert(select("#", C_TooltipInfo.GetItemInteractionItem()) == 0)"##)
-        .expect("unverified unresolved-item content must not publish a fabricated tooltip");
+    env.exec(
+        r##"
+        local function capture(...) return {n = select("#", ...), ...} end
+        local function assertPayload(expectedText)
+            local result = capture(C_TooltipInfo.GetItemInteractionItem())
+            assert(
+                result.n == 1 and type(result[1]) == "table",
+                "zero conversion output must publish one TooltipData table"
+            )
+            local data = result[1]
+            assert(type(data.dataInstanceID) == "number", "result must carry dataInstanceID")
+            assert(data.id == nil and data.type == nil, "result omits top-level id and type")
+            local dataFields = 0
+            for key in pairs(data) do
+                dataFields = dataFields + 1
+                assert(key == "lines" or key == "dataInstanceID")
+            end
+            assert(dataFields == 2 and type(data.lines) == "table", "result has only lines and dataInstanceID")
+
+            if expectedText == nil then
+                assert(next(data.lines) == nil, "absent localization appends no line")
+                return
+            end
+
+            local line = assert(data.lines[1])
+            assert(line.type == 41 and line.leftText == expectedText, "retrieving line uses type 41 and supplied localization")
+            assert(line.rightText == nil and line.rightColor == nil, "retrieving line has no right-side fields")
+            local lineFields = 0
+            for key in pairs(line) do
+                lineFields = lineFields + 1
+                assert(key == "type" or key == "leftText" or key == "leftColor")
+            end
+            assert(lineFields == 3, "retrieving line has only type, leftText, and leftColor")
+
+            local color = assert(line.leftColor)
+            assert(type(rawget(color, "r")) == "number", "error color publishes red")
+            assert(type(rawget(color, "g")) == "number", "error color publishes green")
+            assert(type(rawget(color, "b")) == "number", "error color publishes blue")
+            assert(rawget(color, "a") == nil, "error color omits alpha")
+            local r, g, b = color:GetRGB()
+            local er, eg, eb = 1, 0, 1
+            if ERROR_COLOR ~= nil then er, eg, eb = ERROR_COLOR:GetRGB() end
+            assert(math.abs(r - er) < 0.001)
+            assert(math.abs(g - eg) < 0.001)
+            assert(math.abs(b - eb) < 0.001)
+        end
+
+        local retrievingText = RETRIEVING_ITEM_INFO
+        if retrievingText ~= nil then assertPayload(retrievingText) end
+        RETRIEVING_ITEM_INFO = nil
+        assertPayload(nil)
+        RETRIEVING_ITEM_INFO = retrievingText
+        if retrievingText == nil then assertPayload(nil) end
+    "##,
+    )
+    .expect("zero conversion output publishes only the q1 unresolved-item fields");
 }
 
 #[test]
