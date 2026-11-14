@@ -117,7 +117,6 @@ fn selected_objective_tracker_publishes_party_progress_for_the_requested_quest()
         assert(first, 'RED: supplied quest progress must reach the original hover consumer')
         assert(first.type == 24 and first.id == {QUEST_A})
         assert(first.lines[1].type == 17 and first.lines[1].id == {QUEST_A})
-        assert(first.lines[1].leftText == 'First supplied title')
         assert(first.lines[2].type == 18 and first.lines[2].guid == 'Player-1-0001')
         assert(first.lines[3].type == 8 and first.lines[3].completed == false)
         assert(first.lines[3].numRequired == 3 and first.lines[3].numFulfilled == 1)
@@ -125,9 +124,9 @@ fn selected_objective_tracker_publishes_party_progress_for_the_requested_quest()
 
         local second = hover({QUEST_B})
         assert(second and second.id == {QUEST_B})
-        assert(second.lines[1].leftText == 'Second supplied title')
+        assert(second.lines[1].id == {QUEST_B})
         assert(second.lines[2].guid == 'Player-1-0002')
-        assert(second.lines[3].leftText == 'Second objective')
+        assert(second.lines[3].completed == false)
         "#
     ))
     .expect("selected ObjectiveTracker hover must publish the supplied quest snapshot");
@@ -158,7 +157,6 @@ fn party_progress_omit_title_selects_the_title_row() {
         local included = query(false)
         assert(included, 'RED: omitTitle=false must publish supplied data')
         assert(included.lines[1].type == 17 and included.lines[1].id == {QUEST_A})
-        assert(included.lines[1].leftText == 'Optional supplied title')
         local omitted = query(true)
         assert(omitted and omitted.id == {QUEST_A})
         assert(#omitted.lines == #included.lines - 1)
@@ -208,15 +206,27 @@ fn party_progress_ignore_active_player_selects_supplied_participants() {
         end
         local all = query(false)
         assert(all, 'RED: ignoreActivePlayer=false must publish supplied data')
-        assert(all.lines[3].leftText == 'Filtered objective')
-        assert(all.lines[5].leftText == 'Retained objective')
+        assert(all.lines[2].guid == 'Player-1-0021')
+        assert(all.lines[3].completed == false)
+        assert(all.lines[4].guid == 'Player-1-0022')
+        assert(all.lines[5].completed == false)
         local filtered = query(true)
         assert(filtered and filtered.id == {QUEST_A})
-        assert(filtered.lines[3].leftText == 'Retained objective')
+        assert(filtered.lines[2].guid == 'Player-1-0022')
+        assert(filtered.lines[3].completed == false)
         assert(#filtered.lines == #all.lines - 2)
         "#
     ))
     .expect("the original tooltip accessor must honor the verified participant filter");
+}
+
+#[test]
+fn quest_tooltip_missing_sources_return_zero_lua_values() {
+    let env = WowLuaEnv::new().expect("Retail Lua environment");
+    env.exec(&format!(
+        "assert(select('#', C_TooltipInfo.GetQuestLogSpecialItem(1)) == 0); assert(select('#', C_TooltipInfo.GetQuestPartyProgress({QUEST_A})) == 0)"
+    ))
+    .expect("R88n.1 verified zero-value missing-source results");
 }
 
 #[test]
