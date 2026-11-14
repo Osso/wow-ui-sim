@@ -28,8 +28,6 @@ const FIND_FLYOUT_SLOT_USAGE: &str =
 const FIND_BASE_SPELL_USAGE: &str =
     "Usage: local baseSpellID = C_SpellBook.FindBaseSpellByID(spellID)";
 const AUTO_CAST_USAGE: &str = "Usage: local autoCastAllowed, autoCastEnabled = C_SpellBook.GetSpellBookItemAutoCast(spellBookItem)";
-const LOSS_OF_CONTROL_USAGE: &str = "Usage: local lossOfControlInfo = C_SpellBook.GetSpellBookItemLossOfControlCooldownInfo(spellBookItem)";
-
 pub(crate) fn register_c_spell_book(state: &mut LuaState) -> LuaResult<()> {
     let table_ref = ensure_namespace(state, "C_SpellBook")?;
     register_spell_book_skill_line_queries(state, table_ref)?;
@@ -634,12 +632,12 @@ fn c_spell_book_get_spell_book_item_cooldown_duration(state: &mut LuaState) -> L
 ))]
 mod cooldown_query {
     use super::{
-        LOSS_OF_CONTROL_USAGE, LuaResult, LuaState, Val, cooldown_spell_for_book_entry,
-        read_spell_book_item_arguments,
+        LuaResult, LuaState, Val, cooldown_spell_for_book_entry, read_spell_book_item_arguments,
     };
 
     const COOLDOWN_API: &str = "C_SpellBook.GetSpellBookItemCooldown";
     const LOSS_OF_CONTROL_API: &str = "C_SpellBook.GetSpellBookItemLossOfControlCooldownInfo";
+    const LOSS_OF_CONTROL_USAGE: &str = "Usage: local lossOfControlInfo = C_SpellBook.GetSpellBookItemLossOfControlCooldownInfo(spellBookItem)";
 
     fn authenticate_book_selector(state: &LuaState, position: i32, api: &str) -> LuaResult<Val> {
         rilua::table_security::unwrap_secret(state, crate::lua_bridge::stack_val(state, position))
