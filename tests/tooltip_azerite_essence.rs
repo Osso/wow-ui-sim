@@ -118,7 +118,16 @@ end
 
 fn original_azerite_tooltip_env() -> WowLuaEnv {
     let ui = blizzard_ui_dir();
-    let selected = wow_ui_sim::loader::discover_blizzard_addons_for_screen(&ui, ScreenKind::Game);
+    assert_azerite_ui_selected(&ui);
+    let env = load_selected_azerite_tooltip_addons(&ui);
+    load_original_azerite_consumers(&env, &ui);
+    env.exec(ESSENCE_LUA_HELPERS)
+        .expect("Azerite selector test helpers should load");
+    env
+}
+
+fn assert_azerite_ui_selected(ui: &std::path::Path) {
+    let selected = wow_ui_sim::loader::discover_blizzard_addons_for_screen(ui, ScreenKind::Game);
     assert!(
         selected
             .iter()
@@ -127,7 +136,7 @@ fn original_azerite_tooltip_env() -> WowLuaEnv {
     );
 
     let selected_ui = wow_ui_sim::loader::discover_blizzard_addon_closure_for_screen_with_overrides(
-        &ui,
+        ui,
         ScreenKind::Game,
         &["Blizzard_AzeriteEssenceUI"],
         &[],
@@ -138,13 +147,15 @@ fn original_azerite_tooltip_env() -> WowLuaEnv {
             .any(|(name, _)| name == "Blizzard_AzeriteEssenceUI"),
         "the Game load-on-demand closure must select Blizzard_AzeriteEssenceUI"
     );
+}
 
-    let env = new_blizzard_addon_env(&ui);
+fn load_selected_azerite_tooltip_addons(ui: &std::path::Path) -> WowLuaEnv {
+    let env = new_blizzard_addon_env(ui);
     env.exec("UIPanelWindows = UIPanelWindows or {}")
         .expect("the selected UI environment must provide UIPanelWindows");
-    let shared = load_blizzard_addon_closure_into_env(
+    let loaded = load_blizzard_addon_closure_into_env(
         &env,
-        &ui,
+        ui,
         &[
             "Blizzard_SharedXMLGame",
             "Blizzard_FrameXMLBase",
@@ -154,14 +165,17 @@ fn original_azerite_tooltip_env() -> WowLuaEnv {
         &[],
     );
     assert!(
-        shared.iter().any(|name| name == "Blizzard_SharedXMLGame"),
+        loaded.iter().any(|name| name == "Blizzard_SharedXMLGame"),
         "selected Game TOCs must load Blizzard_SharedXMLGame"
     );
     assert!(
-        shared.iter().any(|name| name == "Blizzard_GameTooltip"),
+        loaded.iter().any(|name| name == "Blizzard_GameTooltip"),
         "the selected GameTooltip addon must attach its native handler mixin"
     );
+    env
+}
 
+fn load_original_azerite_consumers(env: &WowLuaEnv, ui: &std::path::Path) {
     let source_path = ui.join("Blizzard_AzeriteEssenceUI/Blizzard_AzeriteEssenceUI.lua");
     let source = std::fs::read_to_string(source_path)
         .expect("the selected Azerite UI source must be present in the profile cache");
@@ -170,6 +184,10 @@ fn original_azerite_tooltip_env() -> WowLuaEnv {
         "@Interface/AddOns/Blizzard_AzeriteEssenceUI/Blizzard_AzeriteEssenceUI.lua",
     )
     .expect("the original Azerite UI mixins should load without its unrelated Bootstrap/XML");
+    assert_original_azerite_consumer_sources(env);
+}
+
+fn assert_original_azerite_consumer_sources(env: &WowLuaEnv) {
     env.exec(
         r#"
         local buttonSource = debug.getinfo(AzeriteEssenceButtonMixin.OnEnter, 'S').source
@@ -182,10 +200,7 @@ fn original_azerite_tooltip_env() -> WowLuaEnv {
         assert(slotGetterSource:find('TooltipDataHandler.lua', 1, true), slotGetterSource)
         "#,
     )
-    .expect("the original Azerite UI consumers and TooltipDataHandler accessors should load");
-    env.exec(ESSENCE_LUA_HELPERS)
-        .expect("Azerite selector test helpers should load");
-    env
+    .expect("the original Azerite consumers and accessors should load");
 }
 
 fn lua_number_array(values: &[u32]) -> String {
