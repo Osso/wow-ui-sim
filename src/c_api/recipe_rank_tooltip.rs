@@ -30,4 +30,8 @@ impl RecipeRankTooltipCache {
     pub(crate) fn get(&self, recipe_id: i32) -> Option<&RecipeRankTooltipRecord> {
         self.entries.get(&recipe_id)
     }
+
+    pub(crate) fn clear(&mut self) {
+        self.entries.clear();
+    }
 }

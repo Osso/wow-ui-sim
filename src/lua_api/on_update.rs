@@ -64,6 +64,10 @@ fn begin_tick(state: &mut LuaState, elapsed: f64) -> crate::Result<()> {
             .recipe_filter_update_pending,
     );
     if pending {
+        if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+            // Retail R88n.4b: mirror the native dirty-state rebuild clear.
+            borrow_state_mut(state)?.recipe_rank_tooltip_cache.clear();
+        }
         super::script_helpers::fire_named_event_state(state, "TRADE_SKILL_LIST_UPDATE", &[]);
     }
     super::globals::real::loot_specialization::apply_pending(state)?;
