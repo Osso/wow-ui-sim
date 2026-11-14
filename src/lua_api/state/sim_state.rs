@@ -666,6 +666,7 @@ pub struct SimState {
     pub item_upgrade_eligibility: crate::c_api::item_upgrade_eligibility::ItemUpgradeEligibility,
     pub loading_addon_index: Option<u16>,
     pub loading_addon_stack: Vec<u16>,
+    pub loading_addon_secure_env: Option<bool>,
     pub executing_addon_index: Option<u16>,
     pub loading_nil_symbol_environment: Option<NilSymbolEnvironment>,
     pub loading_forbidden: bool,
