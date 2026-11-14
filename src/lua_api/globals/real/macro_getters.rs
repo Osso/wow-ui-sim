@@ -13,6 +13,12 @@ mod inferred_selection;
 
 use inferred_selection::{by_name, is_occupied};
 
+// Both registration and the compatibility bootstrap use this publication decision.
+pub(crate) const USE_MODELED_MACRO_GETTERS: bool = matches!(
+    crate::client_profile::ACTIVE,
+    crate::client_profile::ClientProfile::Retail
+);
+
 const MACRO_INFO_SLOTS: usize = 240;
 
 // INFERRED R88l.18 ingress: account/character are the tab partitions observed
@@ -22,6 +28,9 @@ const ACCOUNT_SLOTS: usize = 120;
 const CHARACTER_SLOTS: usize = 30;
 
 pub(crate) fn register(lua: &mut rilua::Lua) -> crate::Result<()> {
+    if !USE_MODELED_MACRO_GETTERS {
+        return Ok(());
+    }
     LuaApiMut::register_function(lua, "GetNumMacros", get_num_macros)?;
     LuaApiMut::register_function(lua, "GetMacroInfo", get_macro_info)?;
     for (name, handler) in [

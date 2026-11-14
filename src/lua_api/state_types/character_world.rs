@@ -708,7 +708,6 @@ pub struct MacroInfo {
 
 /// Host-supplied macro picker inputs. Empty represents an unmodeled source,
 /// not an observation of the installed client. Catalog rows are already filtered.
-#[cfg(feature = "client-retail")]
 #[derive(Debug, Default)]
 pub struct MacroIconInputs {
     pub loose_spells: Vec<Option<String>>,

@@ -3,6 +3,8 @@
 //! Older profiles retain the setup fixtures until their getter contracts are
 //! established. Retail's verified globals are registered over the macro model.
 
+use crate::lua_api::globals::real::macro_getters::USE_MODELED_MACRO_GETTERS;
+
 const COMMON_LUA: &str = r#"
 if GetMacroBody == nil then
     function GetMacroBody(index)
@@ -20,7 +22,6 @@ if rawget(C_Macro, "GetNumMacros") == nil then
 end
 "#;
 
-#[cfg(not(feature = "client-retail"))]
 const LEGACY_FIXTURES_LUA: &str = r#"
 if GetNumMacros == nil then
     function GetNumMacros() return 2, 1 end
@@ -99,7 +100,6 @@ if rawget(C_Macro, "GetSelectedMacroIcon") == nil then
 end
 "#;
 
-#[cfg(feature = "client-retail")]
 const RETAIL_UNKNOWN_LUA: &str = r#"
 -- UNKNOWN in R88l.18–23; do not give these independent getters demo data.
 if rawget(C_Macro, "GetMacroName") == nil then
@@ -112,10 +112,11 @@ end
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(COMMON_LUA)?;
-    #[cfg(feature = "client-retail")]
-    lua.exec(RETAIL_UNKNOWN_LUA)?;
-    #[cfg(not(feature = "client-retail"))]
-    lua.exec(LEGACY_FIXTURES_LUA)?;
+    lua.exec(if USE_MODELED_MACRO_GETTERS {
+        RETAIL_UNKNOWN_LUA
+    } else {
+        LEGACY_FIXTURES_LUA
+    })?;
     Ok(())
 }
 

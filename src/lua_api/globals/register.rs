@@ -284,7 +284,6 @@ fn register_social_and_world_verbs(lua: &mut rilua::Lua) -> crate::Result<()> {
     super::battlefield_verbs::register_all(lua)?;
     super::channel_verbs::register_all(lua)?;
     super::spell_macro_verbs::register_all(lua)?;
-    #[cfg(feature = "client-retail")]
     super::real::macro_getters::register(lua)?;
     super::chat_window_verbs::register_all(lua)?;
     super::offer_verbs::register_all(lua)?;
