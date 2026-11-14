@@ -296,12 +296,17 @@ fn retail_azerite_essence_original_consumer_selects_exact_essence_and_rank() {
     env.exec(&format!(
         r#"
         local activeMinor = AzeriteTestShowEssence({ESSENCE_THREE}, 2)
-        local rankOneCount = AzeriteTestSpellCount(
-            AzeriteTestSpellIDs(activeMinor, {essence_three_rank_one}))
-        local rankTwoCount = AzeriteTestSpellCount(
-            AzeriteTestSpellIDs(activeMinor, {essence_three_rank_two}))
+        local rankOneIDs = AzeriteTestSpellIDs(activeMinor, {essence_three_rank_one})
+        local rankTwoIDs = AzeriteTestSpellIDs(activeMinor, {essence_three_rank_two})
+        local rankOneCount = AzeriteTestSpellCount(rankOneIDs)
+        local rankTwoCount = AzeriteTestSpellCount(rankTwoIDs)
+        local displayed = {}
+        for _, line in ipairs(activeMinor.lines) do
+            table.insert(displayed, tostring(line.leftText))
+        end
         assert(rankOneCount == 1 and rankTwoCount == 1,
-            'an active minor essence must use a rank-one passive and rank-two main block')
+            'active minor rank-one=' .. rankOneCount .. ' rank-two=' .. rankTwoCount
+                .. ' lines=' .. table.concat(displayed, ' / '))
         "#
     ))
     .expect("the original essence consumer should split active minor spell ranks");
