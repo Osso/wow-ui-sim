@@ -110,9 +110,22 @@ pub(crate) fn world_map_provider_sets_and_refreshes_user_waypoint(env: &WowLuaEn
         point = C_Map.GetUserWaypoint()
         __assert_user_waypoint(point, 2248, 0.25, 0.75, nil)
 
-        local ok, err = pcall(C_SuperTrack.SetSuperTrackedUserWaypoint, nil)
-        assert(not ok and err:find(
-            "Usage: C_SuperTrack.SetSuperTrackedUserWaypoint(superTracked)", 1, true))
+        C_SuperTrack.SetSuperTrackedQuestID(78)
+        local changesBeforeNoOp = changes
+        assert(select('#', C_SuperTrack.SetSuperTrackedUserWaypoint(true)) == 0)
+        assert(changes == changesBeforeNoOp)
+        assert(C_SuperTrack.GetSuperTrackedQuestID() == 78,
+            "an unchanged true request must not clear another target")
+        C_SuperTrack.SetSuperTrackedUserWaypoint(false)
+        C_SuperTrack.SetSuperTrackedUserWaypoint("")
+        assert(C_SuperTrack.IsSuperTrackingUserWaypoint() == true,
+            "a non-nil non-false value must be true")
+
+        local usage = "Usage: C_SuperTrack.SetSuperTrackedUserWaypoint(superTracked)"
+        local missingOK, missingError = pcall(C_SuperTrack.SetSuperTrackedUserWaypoint)
+        assert(not missingOK and missingError:find(usage, 1, true))
+        local nilOK, nilError = pcall(C_SuperTrack.SetSuperTrackedUserWaypoint, nil)
+        assert(not nilOK and nilError:find(usage, 1, true))
         C_SuperTrack.SetSuperTrackedUserWaypoint(false)
         assert(C_SuperTrack.IsSuperTrackingUserWaypoint() == false)
         __assert_user_waypoint(C_Map.GetUserWaypoint(), 2248, 0.25, 0.75, nil)
