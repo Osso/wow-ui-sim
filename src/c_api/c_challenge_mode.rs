@@ -106,14 +106,12 @@ fn slot_keystone(state: &mut LuaState) -> LuaResult<u32> {
     if borrow_state(state)?.item_info(item_id).is_none() {
         return Ok(0);
     }
-    if !clear_and_validate_cursor_keystone(state, item_id)? {
+    let location = KeystoneLocation::Bag(bag, slot);
+    if !clear_and_validate_cursor_keystone(state, item_id, location)? {
         return Ok(0);
     }
 
-    // SIMULATOR GAP (R88o.2 q2): map-modifier/current-map validation and its
-    // native error are not modeled; this lane needs the resolved key identity.
     let guid = item_guid_for_bag_slot(bag, slot, item_id);
-    let location = KeystoneLocation::Bag(bag, slot);
     set_selected_keystone(state, guid, location, item_id)?;
 
     // VERIFIED (R88o.2 q2): the query callback requests this event after the
@@ -126,13 +124,74 @@ fn slot_keystone(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
-fn clear_and_validate_cursor_keystone(state: &mut LuaState, item_id: u32) -> LuaResult<bool> {
+fn clear_and_validate_cursor_keystone(
+    state: &mut LuaState,
+    item_id: u32,
+    location: KeystoneLocation,
+) -> LuaResult<bool> {
     crate::lua_api::globals::real::cursor_model::clear_retaining_equip_lock(state)?;
     let sim = borrow_state(state)?;
+    if !keystone_context_available(&sim) || sim.item_info(item_id).is_none() {
+        return Ok(false);
+    }
+    let class_matches = item_id_is_keystone(item_id);
+    let map_matches = class_matches && keystone_matches_current_map(&sim, location, item_id);
+    drop(sim);
+    if map_matches {
+        return Ok(true);
+    }
+
+    clear_candidate_selection_lock(state, location)?;
+    // SIMULATOR GAP (R88o.2 q2): code 1013 is verified, but its native
+    // publication route and exact text are unknown; do not emit guessed text.
+    Ok(false)
+}
+
+fn keystone_context_available(sim: &crate::lua_api::SimState) -> bool {
     // INFERRED (R88o.2 q2/q3): `PlayerState::present` proxies opaque-context
     // availability; it does not establish the native context's identity.
-    let context_available = sim.player.present;
-    Ok(context_available && sim.item_info(item_id).is_some() && item_id_is_keystone(item_id))
+    sim.player.present
+}
+
+fn keystone_matches_current_map(
+    sim: &crate::lua_api::SimState,
+    location: KeystoneLocation,
+    item_id: u32,
+) -> bool {
+    let challenge_id = sim
+        .keystone
+        .item_modifiers
+        .get(&location)
+        .filter(|(observed_id, _)| *observed_id == item_id)
+        .and_then(|(_, modifiers)| modifiers.iter().find(|(kind, _)| *kind == 17))
+        .map_or(0, |(_, value)| *value);
+    let maps = sim_data::map_challenge_modes::MAPS;
+    maps.binary_search_by_key(&challenge_id, |row| row.0)
+        .ok()
+        .is_some_and(|index| {
+            u32::from(maps[index].1) == sim.keystone.current_map_selector.unwrap_or(0)
+        })
+}
+
+fn clear_candidate_selection_lock(
+    state: &mut LuaState,
+    location: KeystoneLocation,
+) -> LuaResult<()> {
+    let unlocked = {
+        let mut sim = borrow_state_mut(state)?;
+        let was_locked = sim.keystone.is_locked(location);
+        sim.keystone.reason_one_locks.remove(&location);
+        let is_locked = sim.keystone.is_locked(location);
+        (was_locked && !is_locked && location_exists(&sim, location)).then_some(location)
+    };
+    if let Some(location) = unlocked {
+        crate::c_api::item_spell::item_equip::dispatch_lock_transition(
+            state,
+            item_slot(location),
+            false,
+        )?;
+    }
+    Ok(())
 }
 
 fn cursor_keystone_item(state: &LuaState) -> LuaResult<Option<(i32, i32, u32)>> {
@@ -256,20 +315,7 @@ fn can_use_keystone_in_current_map(state: &mut LuaState) -> LuaResult<u32> {
             rilua::runtime_error("CanUseKeystoneInCurrentMap requires an existing item")
         })?;
     let sim = borrow_state(state)?;
-    let challenge_id = sim
-        .keystone
-        .item_modifiers
-        .get(&location)
-        .filter(|(observed_id, _)| *observed_id == item_id)
-        .and_then(|(_, modifiers)| modifiers.iter().find(|(kind, _)| *kind == 17))
-        .map_or(0, |(_, value)| *value);
-    let maps = sim_data::map_challenge_modes::MAPS;
-    let result = maps
-        .binary_search_by_key(&challenge_id, |row| row.0)
-        .ok()
-        .is_some_and(|index| {
-            u32::from(maps[index].1) == sim.keystone.current_map_selector.unwrap_or(0)
-        });
+    let result = keystone_matches_current_map(&sim, location, item_id);
     drop(sim);
     state.push(Val::Bool(result));
     Ok(1)
