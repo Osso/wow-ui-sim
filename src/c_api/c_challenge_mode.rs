@@ -133,6 +133,8 @@ fn clear_and_validate_cursor_keystone(state: &mut LuaState, item_id: u32) -> Lua
 }
 
 fn cursor_keystone_item(state: &LuaState) -> LuaResult<Option<(i32, i32, u32)>> {
+    // INFERRED (R88o.2 q2): this bag cursor maps the native owned-item GUID,
+    // source-container GUID and source slot; other cursor inputs are not modeled.
     let sim = borrow_state(state)?;
     let Some(CursorInfo::Item {
         item_id,
