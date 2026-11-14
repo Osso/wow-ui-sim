@@ -1,9 +1,9 @@
 //! End-to-end fenv isolation tests for secureenv.
 //!
-//! Secureenv is a shallow copy of `_G` retargeted onto the function
-//! environment of chunks marked `[LoadIntoEnvironment secure]`. Writes
-//! from secure code to env-level bindings must stay in secureenv — they
-//! must not replicate to `_G`, because `_G` is what insecure addons see.
+//! Secureenv is a shared table seeded from the fixed 39-name base and used
+//! as the function environment of chunks marked `[LoadIntoEnvironment
+//! secure]`. Table-valued base globals are shallow-copied into separate root
+//! tables; later writes stay in the environment where they occur.
 //! These tests exercise the property via the real load path (`mark_secure`
 //! → `call_function`).
 //!
@@ -229,44 +229,34 @@ fn exec_maybe_secure_false_matches_exec() {
 }
 
 #[test]
-fn shared_table_mutation_propagates_both_ways() {
+fn secure_base_library_mutations_stay_in_separate_tables() {
     let env = env();
 
-    let (shared_key, from_g): (String, String) = env
+    env.exec_rilua_secure(
+        r#"
+            rawset(math, "__secureenv_table_probe", "secure")
+        "#,
+    )
+    .unwrap();
+
+    let public_value_type: String = env
+        .eval("return type(rawget(math, '__secureenv_table_probe'))")
+        .unwrap();
+    assert_eq!(public_value_type, "nil");
+
+    env.exec("rawset(math, '__secureenv_table_probe', 'global')")
+        .unwrap();
+    let (secure_value, public_value): (String, String) = env
         .eval(
             r#"
-            local sharedKey
-            for key, value in pairs(__secureenv) do
-                if type(key) == "string"
-                   and key ~= "_G"
-                   and type(value) == "table"
-                   and rawget(_G, key) == value then
-                    sharedKey = key
-                    break
-                end
-            end
-            if not sharedKey then
-                return "", "missing"
-            end
-
-            local mutate = function()
-                rawget(_G, sharedKey).secureenvSharedContainer = "from-secure"
-            end
-            debug.setfenv(mutate, __secureenv)
-            mutate()
-            return sharedKey, tostring(rawget(_G, sharedKey).secureenvSharedContainer)
+            return rawget(rawget(__secureenv, "math"), "__secureenv_table_probe"),
+                   rawget(rawget(_G, "math"), "__secureenv_table_probe")
             "#,
         )
         .unwrap();
 
-    assert!(
-        !shared_key.is_empty(),
-        "expected one table shared by the shallow copy"
-    );
-    assert_eq!(
-        from_g, "from-secure",
-        "mutations to a table still shared after initialization should be visible from _G"
-    );
+    assert_eq!(secure_value, "secure");
+    assert_eq!(public_value, "global");
 }
 
 /// Read a global through a function whose fenv is secureenv, mirroring how
@@ -367,57 +357,41 @@ fn secure_write_severs_the_link_to_global_env() {
 }
 
 #[test]
-fn global_copied_at_creation_is_frozen_against_later_g_rebind() {
-    // A primitive global present at secureenv creation was copied
-    // into secureenv's own slot. Re-binding it on _G later does NOT change
-    // the secure read — the copy is decoupled.
+fn copied_base_function_is_frozen_against_later_g_rebind() {
     let env = env();
 
-    // Discover a primitive global that exists in BOTH envs' own slots with
-    // equal value (i.e. it was copied at creation). pairs() walks raw keys,
-    // so it ignores the __index metatable and yields only copied keys.
-    let key: String = env
+    let initially_copied: bool = env
         .eval(
-            r#"
-            for k, v in pairs(__secureenv) do
-                if (type(v) == "number" or type(v) == "string")
-                   and type(k) == "string"
-                   and rawget(_G, k) == v then
-                    return k
-                end
-            end
-            return ""
-            "#,
+            "return type(rawget(__secureenv, 'geterrorhandler')) == 'function' \
+             and rawget(__secureenv, 'geterrorhandler') == rawget(_G, 'geterrorhandler')",
         )
         .unwrap();
     assert!(
-        !key.is_empty(),
-        "expected at least one copied primitive global at creation"
+        initially_copied,
+        "geterrorhandler is part of the fixed secure base"
     );
 
-    // Rebind the _G slot to a sentinel string the original could not equal.
-    let probe = format!(
-        r#"
-            local sentinel = "__frozen_sentinel__"
-            rawset(_G, {key:?}, sentinel)
+    env.exec("rawset(_G, 'geterrorhandler', '__global_rebound__')")
+        .unwrap();
+    let (secure_type, public_type, secure_kept_copy): (String, String, bool) = env
+        .eval(
+            r#"
             local result
-            local probe = function() result = rawget(__secureenv, {key:?}) end
+            local probe = function() result = geterrorhandler end
+            debug.setfenv(probe, __secureenv)
             probe()
-            return tostring(result), tostring(rawget(_G, {key:?})), tostring(result == sentinel)
+            return type(result), type(rawget(_G, "geterrorhandler")),
+                   result == rawget(__secureenv, "geterrorhandler")
             "#,
-    );
-    let (secure_value, g_value, secure_equals_sentinel): (String, String, String) =
-        env.eval(&probe).unwrap();
+        )
+        .unwrap();
 
-    assert_eq!(
-        g_value, "__frozen_sentinel__",
-        "_G rebind must have applied"
+    assert_eq!(secure_type, "function");
+    assert_eq!(public_type, "string");
+    assert!(
+        secure_kept_copy,
+        "secureenv must keep its initial function value"
     );
-    assert_eq!(
-        secure_equals_sentinel, "false",
-        "secureenv's copied value (key {key}) must NOT follow the _G rebind"
-    );
-    assert_ne!(secure_value, "__frozen_sentinel__");
 }
 
 #[test]
