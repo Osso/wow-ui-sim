@@ -88,14 +88,14 @@ fn ptr_original_achievement_ui_and_tracker_read_supplied_ids() {
             "Blizzard_AchievementObjectiveTracker.lua",
         ),
     ]);
-    let kind: u32 = env
+    let kind: i32 = env
         .eval("return Enum.ContentTrackingType.Achievement")
         .unwrap();
     env.state()
         .borrow_mut()
         .content_tracking
         .tracked_ids_by_type
-        .insert(kind, vec![6]);
+        .insert(u32::try_from(kind).unwrap(), vec![6]);
     env.exec(
         r#"
         AchievementFrameAchievements_UpdateTrackedAchievements()
@@ -113,7 +113,7 @@ fn ptr_original_combat_audio_manager_completes_startup_without_manager() {
         "Blizzard_CombatAudioAlertManager.lua",
     )]);
     {
-        let mut sim = env.state().borrow_mut();
+        let sim = env.state().borrow();
         assert!(sim.sound_manager.is_none());
         sim.cvars.set_imported("CAAEnabled", "1");
     }
@@ -130,11 +130,12 @@ fn ptr_original_combat_audio_manager_completes_startup_without_manager() {
 #[test]
 fn ptr_original_aura_util_uses_supplied_visibility() {
     let env = startup(&[("Blizzard_FrameXMLUtil", "AuraUtil.lua")]);
-    let (in_combat, out_of_combat): (u8, u8) = env
+    let (in_combat, out_of_combat): (i32, i32) = env
         .eval("return Enum.SpellAuraVisibilityType.RaidInCombat, Enum.SpellAuraVisibilityType.RaidOutOfCombat")
         .unwrap();
     let mut visibility = HashMap::new();
     for selector in [in_combat, out_of_combat] {
+        let selector = u8::try_from(selector).unwrap();
         visibility.insert((19750, selector), (true, false, true));
         visibility.insert((642, selector), (true, true, false));
     }
