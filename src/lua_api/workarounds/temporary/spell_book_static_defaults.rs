@@ -52,7 +52,10 @@ if rawget(C_SpellBook, "GetSpellBookItemLossOfControlCooldownInfo") == nil then
 end
 
 if rawget(_G, "GetCallPetSpellInfo") == nil then
-    function GetCallPetSpellInfo(_spellID)
+    function GetCallPetSpellInfo(spellID)
+        if type(spellID) ~= "number" then
+            error("Usage: GetCallPetSpellInfo(spellID)", 0)
+        end
     end
 end
 "#;
