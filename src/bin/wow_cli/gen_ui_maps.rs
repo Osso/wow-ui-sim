@@ -154,7 +154,7 @@ fn parse_ui_map_row(
 
 #[derive(Debug, Clone, Copy, PartialEq)]
 struct UiMapAssignmentRow {
-    map_id: u32,
+    map_id: i32,
     order_index: u32,
     ui_min: [f32; 2],
     ui_max: [f32; 2],
@@ -213,6 +213,12 @@ fn parse_assignment_row(
             .parse()
             .map_err(|_| format!("UiMapAssignment.csv row {row}: invalid {name}: {value:?}"))
     };
+    let signed_integer = |index: usize, name: &str| -> Result<i32, String> {
+        let value = field(index, name)?;
+        value
+            .parse()
+            .map_err(|_| format!("UiMapAssignment.csv row {row}: invalid {name}: {value:?}"))
+    };
     let float = |index: usize, name: &str| -> Result<f32, String> {
         let value = field(index, name)?;
         let number = value
@@ -228,7 +234,7 @@ fn parse_assignment_row(
 
     let ui_map_id = integer(columns.ui_map_id, "UiMapID")?;
     let assignment = UiMapAssignmentRow {
-        map_id: integer(columns.map_id, "MapID")?,
+        map_id: signed_integer(columns.map_id, "MapID")?,
         order_index: integer(columns.order_index, "OrderIndex")?,
         ui_min: [
             float(columns.ui_min[0], "UiMin_0")?,
@@ -301,7 +307,7 @@ fn write_assignment_file(
     writeln!(out)?;
     writeln!(out, "#[derive(Debug, Clone, Copy, PartialEq)]")?;
     writeln!(out, "pub struct UiMapAssignment {{")?;
-    writeln!(out, "    pub map_id: u32,")?;
+    writeln!(out, "    pub map_id: i32,")?;
     writeln!(out, "    pub order_index: u32,")?;
     writeln!(out, "    pub ui_min: [f32; 2],")?;
     writeln!(out, "    pub ui_max: [f32; 2],")?;
@@ -381,6 +387,15 @@ mod tests {
                 .unwrap_err();
         assert!(error.contains("row 42"), "{error}");
         assert!(error.contains("nonfinite Region_0"), "{error}");
+    }
+
+    #[test]
+    fn assignment_parser_preserves_negative_map_ids() {
+        let header = "UiMapID,OrderIndex,MapID,UiMin_0,UiMin_1,UiMax_0,UiMax_1,Region_0,Region_1,Region_2,Region_3,Region_4,Region_5";
+        let columns = find_assignment_columns(header).unwrap();
+        let row = "1148,2,-1,0,0,1,1,-1,-2,-1000000,3,4,1000000";
+        let (_, assignment) = parse_assignment_row(&columns, row, 9).unwrap();
+        assert_eq!(assignment.map_id, -1);
     }
 
     #[test]
