@@ -67,10 +67,14 @@ fn observe(env: &WowLuaEnv, style: &str) {
             local source = debug.getinfo(tracker.LayoutContents, "S").source
             assert(source:find("Blizzard_AchievementObjectiveTracker.lua", 1, true), source)
             assert(GetAchievementNumCriteria(6) == 0, "exercise original single/zero criteria branch")
-            tracker:LayoutContents()
+            -- Run the real module layout lifecycle with a positive viewport budget.
+            tracker:Update(400, false)
             local block = assert(tracker:GetExistingBlock(6), "host-tracked objective was not rendered")
+            assert(block:IsShown(), "objective block was not shown by original layout")
             local line = assert(block.usedLines[1], "original block has no objective row")
-            assert(line.Text:GetText():find("Reach level 10.", 1, true), "wrong objective text")
+            local description = select(8, GetAchievementInfo(6))
+            assert(type(description) == "string" and description ~= "", "missing catalog description")
+            assert(line.Text:GetText():find(description, 1, true), "wrong objective text")
             local expected = OBJECTIVE_TRACKER_COLOR["{style}"]
             local actual = line.Text.colorStyle
             assert(actual == expected or actual == expected.reverse, "wrong eligibility color style")
