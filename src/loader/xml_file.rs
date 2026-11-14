@@ -1,8 +1,8 @@
 //! XML file loading and element processing.
 
 use crate::lua_api::LoaderEnv;
-use crate::lua_api::globals::security::mark_secure_state;
-use crate::lua_api::methods::{create_string, registry_get, table_get_static, table_set_static};
+use crate::lua_api::globals::security::{mark_secure_replay_state, secure_replay_env_table};
+use crate::lua_api::methods::{create_string, table_get_static, table_set_static};
 use crate::lua_api::script_helpers::call_error_handler_state;
 use crate::xml::{FrameXml, XmlElement, parse_xml_file};
 use rilua::{Function, LuaApiMut, Val};
@@ -16,7 +16,7 @@ use super::file_diagnostics::{
     is_recorded_xml_failure, record_file_diagnostic, uses_wrath_file_diagnostics,
 };
 use super::helpers::resolve_path_with_fallback;
-use super::lua_file::load_lua_file;
+use super::lua_file::{load_lua_file, load_secure_environment_lua_file};
 use super::xml_frame::create_frame_from_xml;
 
 /// Load an XML file, processing its elements.
@@ -379,7 +379,7 @@ fn scoped_script_env(env: &LoaderEnv<'_>, ctx: &AddonContext) -> Result<Val, Loa
         ));
     };
     env.with_state(|state| {
-        let fallback = scoped_script_fallback_env(state, ctx.use_secure_env);
+        let fallback = scoped_script_fallback_env(state, ctx.use_secure_env)?;
         ensure_scoped_script_env_fallback(state, env_ref, fallback);
         Ok::<(), crate::Error>(())
     })
@@ -387,14 +387,16 @@ fn scoped_script_env(env: &LoaderEnv<'_>, ctx: &AddonContext) -> Result<Val, Loa
     Ok(ctx.table)
 }
 
-fn scoped_script_fallback_env(state: &mut rilua::vm::state::LuaState, use_secure_env: bool) -> Val {
+fn scoped_script_fallback_env(
+    state: &mut rilua::vm::state::LuaState,
+    use_secure_env: bool,
+) -> crate::Result<Val> {
     if use_secure_env {
-        let secureenv = registry_get(state, "__secureenv");
-        if matches!(secureenv, Val::Table(_)) {
-            return secureenv;
-        }
+        return secure_replay_env_table(state)
+            .map(Val::Table)
+            .map_err(crate::Error::from);
     }
-    Val::Table(state.global)
+    Ok(Val::Table(state.global))
 }
 
 fn ensure_scoped_script_env_fallback(
@@ -526,7 +528,7 @@ fn mark_inline_script_secure(
     }
 
     env.with_state(|state| {
-        mark_secure_state(state, func).map_err(|e| {
+        mark_secure_replay_state(state, func).map_err(|e| {
             call_error_handler_state(state, &e.to_string());
             LoadError::Lua(e.to_string())
         })
@@ -599,7 +601,11 @@ fn load_xml_lua_file(
     timing: &mut LoadTiming,
     warnings: &mut Vec<String>,
 ) -> Result<(), LoadError> {
-    let result = load_lua_file(env, path, ctx, timing);
+    let result = if ctx.use_secure_env {
+        load_secure_environment_lua_file(env, path, ctx, timing)
+    } else {
+        load_lua_file(env, path, ctx, timing)
+    };
     if uses_wrath_file_diagnostics() && matches!(&result, Err(LoadError::IoWithPath { .. })) {
         record_file_diagnostic(warnings, ctx, path, "Error loading");
     }

@@ -30,6 +30,7 @@ fn toc_multiannotations_load_files_in_order_with_secure_environment() {
          ## UseSecureEnvironment: 1\n\
          Before.lua\n\
          Secure.lua\t\t[Bootstrap] [LoadIntoEnvironment secure]\n\
+         Secure.xml\n\
          After.lua\n",
     )
     .unwrap();
@@ -44,6 +45,23 @@ fn toc_multiannotations_load_files_in_order_with_secure_environment() {
          assert(type(debug) == 'table' and type(coroutine) == 'table'); \
          addon.order[#addon.order+1] = 'secure'; annotationSecureValue = 37; \
          annotationSecureSnapshotRead = true",
+    )
+    .unwrap();
+    std::fs::write(
+        root.path().join("Secure.xml"),
+        "<Ui>\n\
+         <Frame name=\"AnnotationProbeFrame\">\n\
+         <Scripts>\n\
+         <OnLoad>assert(type(debug) == 'table' and type(coroutine) == 'table'); annotationSecureXmlInlineRead = true</OnLoad>\n\
+         <OnLoad file=\"SecureXmlScript.lua\"/>\n\
+         </Scripts>\n\
+         </Frame>\n\
+         </Ui>",
+    )
+    .unwrap();
+    std::fs::write(
+        root.path().join("SecureXmlScript.lua"),
+        "assert(type(debug) == 'table' and type(coroutine) == 'table'); annotationSecureXmlFileRead = true",
     )
     .unwrap();
     std::fs::write(
@@ -69,12 +87,14 @@ fn toc_multiannotations_load_files_in_order_with_secure_environment() {
     let result = wow_ui_sim::loader::load_addon(&env.loader_env(), &toc).unwrap();
     assert!(result.warnings.is_empty(), "{:?}", result.warnings);
 
-    let secure_file_results: (bool, bool, bool, bool, bool, bool, bool) = env
+    let secure_file_results: (bool, bool, bool, bool, bool, bool, bool, bool, bool) = env
         .eval(
             r#"
                 return rawget(__secureenv, 'annotationSecureValue') == 37,
                     rawget(__secureenv, 'annotationSecureSnapshotRead') == true,
                     rawget(__secureenv, 'annotationLoadComplete') == true,
+                    rawget(__secureenv, 'annotationSecureXmlInlineRead') == true,
+                    rawget(__secureenv, 'annotationSecureXmlFileRead') == true,
                     rawget(_G, 'annotationSecureValue') == nil,
                     rawget(_G, 'annotationSecureSnapshotRead') == nil,
                     rawget(__secureenv, 'debug') == nil,
@@ -82,7 +102,10 @@ fn toc_multiannotations_load_files_in_order_with_secure_environment() {
             "#,
         )
         .unwrap();
-    assert_eq!(secure_file_results, (true, true, true, true, true, true, true));
+    assert_eq!(
+        secure_file_results,
+        (true, true, true, true, true, true, true, true, true)
+    );
 }
 
 #[test]

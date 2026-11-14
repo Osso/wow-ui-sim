@@ -44,7 +44,7 @@ pub use secure_env::{
 };
 pub(crate) use secure_env::{
     mark_secure_replay_state, register_function_in_both_environments, secure_env_table,
-    set_secure_env_key_state,
+    secure_replay_env_table, set_secure_env_key_state,
 };
 
 #[cfg(feature = "retail-12-1-0")]

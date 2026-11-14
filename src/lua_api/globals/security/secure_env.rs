@@ -244,7 +244,7 @@ pub fn create_secure_replay_environment(lua: &mut rilua::Lua) -> LuaResult<()> {
     Ok(())
 }
 
-fn secure_replay_env_table(
+pub(crate) fn secure_replay_env_table(
     state: &mut LuaState,
 ) -> LuaResult<rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>> {
     match registry_get(state, "__secureenv_replay") {
