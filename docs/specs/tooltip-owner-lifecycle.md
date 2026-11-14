@@ -52,6 +52,13 @@ native anchor geometry, default anchors, or Hide-clears-lines behavior.
   Silently hiding during same-owner `SetOwner` bypasses that later cleanup and
   retains a previous successful tooltip's data.
 
+### Forever ClearLines cached text
+
+- [ ] **VERIFIED (Forever 1.60.1.70707, R88n.5):** `ClearLines` clears text on
+  cached left and right FontStrings for active rows only; it does not visit
+  unused cached entries. Cached line arrays remain available for reuse. The
+  direct test and original-consumer preservation test are pending.
+
 The `tooltip_bag_child` original-consumer regression stays unchanged. It rejects
 an unmatched equip slot after two successful distinct item selections; no
 fixture `Hide` or replacement consumer masks the lifecycle failure. Sizing,
@@ -82,16 +89,15 @@ attachments, other profiles and getter selection are unchanged by this extension
 
 - `tests/tooltip_basic.rs` — owner replacement, hidden explicit hide, SetText, append, spell payload, and existing ownership controls.
 - `tests/tooltip_lifecycle_owner_lane.rs` — same-owner clear, notification count, and reassignment through the shared tooltip templates.
-- `tests/tooltip_owner_clear_consumer.rs` — clear notification count and order through the cached `GameTooltip.xml` handlers and `TooltipDataHandler.lua` reprocessing; the original `OnTooltipCleared` cleanup must release inserted frames; Forever owner-reassignment lifecycle.
+- `tests/tooltip_owner_clear_consumer.rs` — clear notification count and order through the cached `GameTooltip.xml` handlers and `TooltipDataHandler.lua` reprocessing; the original `OnTooltipCleared` cleanup must release inserted frames; Forever owner-reassignment and optional R88n.5 active-row cache tests.
 
 ## Known gaps (current cycle)
 
 - [ ] Native execution and callback observation order remain unverified: the
       evidence is static native analysis, and no live-client observation exists
       for the notification's registered-callback lifetime.
-- [ ] Forever does not reset its pooled line FontStrings on clear. Its line
-      FontStrings come from tooltip XML and are recorded for clear-time reset
-      only on Wrath/Retail/PTR, so no Forever native evidence covers the reset.
+- [ ] Complete optional Forever API and original `TooltipDataHandler` test proof
+      for the verified active-row cached-text reset boundary.
 
 ## Out of scope
 

@@ -1,7 +1,9 @@
 # Tooltip owner anchors
 
 `GameTooltip:SetOwner(owner, anchor, xOffset, yOffset)` placement contract for
-Retail/PTR, from the Retail 12.1.5 / 70688 native decode WM63 O17 §1. The
+Retail, from the Retail 12.1.5 / 70688 native decode WM63 O17 §1. The point
+pairs and defaults are **VERIFIED for Retail**; PTR shares the implementation,
+but native PTR applicability is **INFERRED**, not independently verified. The
 lifecycle half (clear, hide, reassignment) is a
 [separate spec](tooltip-owner-lifecycle.md). Screen clamping is not modelled:
 the native final rendered rectangle after clamping is UNKNOWN, so no anchor
