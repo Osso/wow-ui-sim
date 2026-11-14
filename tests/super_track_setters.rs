@@ -25,7 +25,15 @@ fn original_poi_button_click_reselects_the_supplied_map_pin() {
             "#,
         )
         .unwrap();
-        assert_eq!(env.state().borrow().super_track.map_pin, Some((0, 4801)));
+        let sim = env.state().borrow();
+        assert_eq!(sim.super_track.map_pin, Some((0, 4801)));
+        assert!(
+            sim.lua_errors
+                .iter()
+                .all(|error| !error.contains("POIButton.lua:504")),
+            "original callback failed: {:?}",
+            sim.lua_errors
+        );
     });
 }
 
@@ -33,7 +41,11 @@ fn original_poi_button_click_reselects_the_supplied_map_pin() {
 fn original_poi_button_click_clears_tracking_for_empty_vignette() {
     with_blizzard_addon_closure(&["Blizzard_POIButton"], &[], |env, loaded| {
         assert!(loaded.iter().any(|name| name == "Blizzard_POIButton"));
-        env.state().borrow_mut().super_track.vignette = Some("Vignette-fixture-1".into());
+        {
+            let mut sim = env.state().borrow_mut();
+            sim.super_track.vignette = Some("Vignette-fixture-1".into());
+            sim.super_track.vignette_tracking = true;
+        }
         env.exec(
             r#"
             assert(C_SuperTrack.IsSuperTrackingAnything())
@@ -45,6 +57,9 @@ fn original_poi_button_click_clears_tracking_for_empty_vignette() {
             "#,
         )
         .unwrap();
+        let state = env.state().borrow();
+        assert_eq!(state.super_track.vignette.as_deref(), Some(""));
+        assert!(!state.super_track.vignette_tracking);
     });
 }
 

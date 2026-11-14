@@ -16,13 +16,18 @@ pub struct SuperTrackState {
     pub map_pin_saved: (i32, i32),
     pub map_pin_tracking: bool,
     pub vignette: Option<String>,
+    /// Retail vignette tracking is independent from the stored GUID.
+    pub vignette_tracking: bool,
     /// User-waypoint tracking flag; the two native getterless flags stay unmodeled.
     pub user_waypoint: bool,
     /// INFERRED simulator default false; VERIFIED preserved when waypoint tracking starts.
     pub corpse: bool,
 }
 
-use super::helpers::{bad_argument, ensure_namespace, validate_supplied_relation_id};
+use super::helpers::{
+    bad_argument, ensure_namespace, parse_numeric_string, validate_supplied_relation_id,
+};
+use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::globals::state_backed_queries::dispatch_event_now;
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, create_string};
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
@@ -49,6 +54,11 @@ const METHODS: &[(&str, RustFn)] = &[
     ("IsSuperTrackingUserWaypoint", is_user_waypoint),
 ];
 
+const MAP_PIN_USAGE: &str = "Usage: C_SuperTrack.SetSuperTrackedMapPin(type, typeID)";
+const VIGNETTE_USAGE: &str = "Usage: C_SuperTrack.SetSuperTrackedVignette(vignetteGUID)";
+const QUEST_USAGE: &str = "Usage: C_SuperTrack.SetSuperTrackedQuestID(questID)";
+const SIGNED_ID_RANGE: &str = "outside of expected range -2147483648 to 2147483647";
+
 const USER_WAYPOINT_SET_FUNCTION: &str = "C_SuperTrack.SetSuperTrackedUserWaypoint";
 const USER_WAYPOINT_SET_USAGE: &str =
     "Usage: C_SuperTrack.SetSuperTrackedUserWaypoint(superTracked)";
@@ -57,6 +67,10 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     let namespace = ensure_namespace(state, "C_SuperTrack")?;
     for &(name, function) in METHODS {
         table_set_rust_fn_static(state, namespace, name, function)?;
+    }
+    if ACTIVE == ClientProfile::Retail {
+        table_set_rust_fn_static(state, namespace, "SetSuperTrackedMapPin", set_map_pin)?;
+        table_set_rust_fn_static(state, namespace, "SetSuperTrackedVignette", set_vignette)?;
     }
     Ok(())
 }
@@ -107,7 +121,12 @@ fn map_pin(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn vignette(state: &mut LuaState) -> LuaResult<u32> {
-    let guid = borrow_state(state)?.super_track.vignette.clone();
+    let guid = borrow_state(state)?
+        .super_track
+        .vignette
+        .as_ref()
+        .filter(|guid| ACTIVE != ClientProfile::Retail || !guid.is_empty())
+        .cloned();
     let value = guid.map_or(Val::Nil, |guid| create_string(state, &guid));
     state.push(value);
     Ok(1)
@@ -147,7 +166,11 @@ fn anything(state: &mut LuaState) -> LuaResult<u32> {
             tracked.quest_tracking,
             tracked.content_tracking,
             tracked.map_pin_tracking,
-            tracked.vignette.is_some(),
+            if ACTIVE == ClientProfile::Retail {
+                tracked.vignette_tracking
+            } else {
+                tracked.vignette.is_some()
+            },
             tracked.user_waypoint,
             tracked.corpse,
         ]
@@ -166,13 +189,21 @@ fn publish_change(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn set_quest(state: &mut LuaState) -> LuaResult<u32> {
-    // Pre-existing argument acceptance; native validation is UNKNOWN pending R88j.8.
-    let id = supplied_id(state, 1)?;
+    // R88j.8 verifies parsing and the changed-result path, but not sufficient
+    // conditions across all validator routes. Keep existing ID acceptance.
+    let id = if ACTIVE == ClientProfile::Retail {
+        read_required_id(state, 1, QUEST_USAGE)?
+    } else {
+        supplied_id(state, 1)?
+    };
     {
         let mut sim = borrow_state_mut(state)?;
         let tracked = &mut sim.super_track;
         let saved_id = tracked.quest_id.unwrap_or(0);
-        // R88j.6: equal IDs skip flag repair; zero clears only quest tracking.
+        // Equal results skip the Retail update, including its change helper.
+        if saved_id == id && ACTIVE == ClientProfile::Retail {
+            return Ok(0);
+        }
         if saved_id != id {
             tracked.quest_id = (id != 0).then_some(id);
             if id == 0 {
@@ -184,10 +215,131 @@ fn set_quest(state: &mut LuaState) -> LuaResult<u32> {
                 tracked.content = None;
                 tracked.map_pin = None;
                 tracked.vignette = None;
+                tracked.vignette_tracking = false;
             }
         }
     }
+    // Existing simulator policy for the quest consumer; native event UNKNOWN.
     publish_change(state)
+}
+
+fn set_map_pin(state: &mut LuaState) -> LuaResult<u32> {
+    let kind = read_map_pin_kind(state)?;
+    let id = read_required_id(state, 2, MAP_PIN_USAGE)?;
+    let selection = (kind, id);
+    let mut sim = borrow_state_mut(state)?;
+    if sim.super_track.map_pin == Some(selection) || !map_pin_has_supplied_row(&sim, kind, id) {
+        return Ok(0);
+    }
+    let tracked = &mut sim.super_track;
+    tracked.map_pin = Some(selection);
+    tracked.map_pin_saved = selection;
+    tracked.map_pin_tracking = true;
+    tracked.quest_id = None;
+    tracked.quest_tracking = false;
+    tracked.content = None;
+    tracked.content_tracking = false;
+    tracked.vignette = None;
+    tracked.vignette_tracking = false;
+    finish_setter_without_native_bridge()
+}
+
+fn map_pin_has_supplied_row(_sim: &crate::lua_api::SimState, _kind: i32, _id: i32) -> bool {
+    // No native table identity, reserved-row metadata, or request pipeline is known.
+    false
+}
+
+fn set_vignette(state: &mut LuaState) -> LuaResult<u32> {
+    let value = read_argument(state, 1, VIGNETTE_USAGE)?;
+    let text = match value {
+        Val::Num(number) => number.to_string(),
+        Val::Str(_) => match val_to_string(state, value) {
+            Some(text) => text,
+            None => return Ok(0), // Unmodeled GUID input, not a known empty GUID.
+        },
+        _ => return Err(setter_argument_error(state, 1, VIGNETTE_USAGE)),
+    };
+    // Only the unambiguous empty representation is known here. Full GUID
+    // grammar/opaque aliases and the nonzero object and record route are UNKNOWN.
+    if !text.is_empty() {
+        return Ok(0);
+    }
+    let mut sim = borrow_state_mut(state)?;
+    let tracked = &mut sim.super_track;
+    if tracked.vignette.as_deref().unwrap_or_default().is_empty() {
+        return Ok(0);
+    }
+    tracked.vignette = Some(text);
+    tracked.vignette_tracking = false;
+    finish_setter_without_native_bridge()
+}
+
+// R88j.8 calls a tracking-change helper after a committed change. Its native
+// event/publication effects are UNKNOWN, so no guessed event is fired.
+fn finish_setter_without_native_bridge() -> LuaResult<u32> {
+    Ok(0)
+}
+
+fn read_argument(state: &LuaState, index: usize, usage: &str) -> LuaResult<Val> {
+    let value = stack_val(state, index as i32);
+    // AllowedWhenUntainted is the access mode available in the simulator.
+    let value = rilua::table_security::unwrap_secret(state, value).map_err(|_| {
+        setter_argument_error(
+            state,
+            index,
+            &format!("{usage}. Secret values are only allowed during untainted execution for this argument."),
+        )
+    })?;
+    if value.is_nil() {
+        Err(setter_argument_error(state, index, usage))
+    } else {
+        Ok(value)
+    }
+}
+
+fn setter_argument_error(state: &LuaState, index: usize, detail: &str) -> rilua::LuaError {
+    if rilua::vm::debug_info::getfuncname(state, state.ci, &state.gc.string_arena).is_none() {
+        return rilua::runtime_error(format!("bad argument #{index} ({detail})"));
+    }
+    rilua::stdlib::arg_error(state, index, detail)
+}
+
+fn numeric_argument(state: &LuaState, value: Val) -> Option<f64> {
+    match value {
+        Val::Num(number) => Some(number),
+        Val::Str(handle) => {
+            let text = state.gc.string_arena.get(handle)?;
+            parse_numeric_string(text.data())
+        }
+        _ => None,
+    }
+}
+
+fn signed_range_contains(number: f64) -> bool {
+    (f64::from(i32::MIN)..=f64::from(i32::MAX)).contains(&number)
+}
+
+fn read_required_id(state: &LuaState, index: usize, usage: &str) -> LuaResult<i32> {
+    let value = read_argument(state, index, usage)?;
+    numeric_argument(state, value)
+        .filter(|number| signed_range_contains(*number))
+        .map(|number| number.trunc() as i32)
+        .ok_or_else(|| setter_argument_error(state, index, &format!("{SIGNED_ID_RANGE} - {usage}")))
+}
+
+fn read_map_pin_kind(state: &LuaState) -> LuaResult<i32> {
+    let value = read_argument(state, 1, MAP_PIN_USAGE)?;
+    let number = numeric_argument(state, value).unwrap_or(0.0);
+    if !signed_range_contains(number) {
+        return Err(rilua::runtime_error(format!(
+            "integer overflow attempting to store {number:.6}"
+        )));
+    }
+    let kind = number.trunc() as i32;
+    if !(0..=4).contains(&kind) {
+        return Err(setter_argument_error(state, 1, MAP_PIN_USAGE));
+    }
+    Ok(kind)
 }
 
 fn set_content(state: &mut LuaState) -> LuaResult<u32> {
@@ -203,6 +355,7 @@ fn set_content(state: &mut LuaState) -> LuaResult<u32> {
         tracked.map_pin_tracking = false;
         tracked.map_pin = None;
         tracked.vignette = None;
+        tracked.vignette_tracking = false;
     }
     publish_change(state)
 }
@@ -263,6 +416,7 @@ fn set_user_waypoint(state: &mut LuaState) -> LuaResult<u32> {
         sim.super_track.content = None;
         sim.super_track.map_pin = None;
         sim.super_track.vignette = None;
+        sim.super_track.vignette_tracking = false;
     }
     sim.super_track.user_waypoint = should_track;
     // UNKNOWN (R88i.3): event dispatch is not proved; do not fire SUPER_TRACKING_CHANGED.

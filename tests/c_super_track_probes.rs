@@ -43,6 +43,7 @@ fn supplied_map_pin_and_vignette_are_observable_and_clearable() {
         state.super_track.map_pin_saved = (0, 201);
         state.super_track.map_pin_tracking = true;
         state.super_track.vignette = Some("Vignette-fixture-1".into());
+        state.super_track.vignette_tracking = true;
     }
     env.exec(
         r#"
@@ -76,6 +77,7 @@ fn retail_supertrack_flags_follow_verified_setter_updates() {
         state.super_track.map_pin_saved = (2, 25);
         state.super_track.map_pin_tracking = true;
         state.super_track.vignette = Some("Vignette-fixture-1".into());
+        state.super_track.vignette_tracking = true;
     }
 
     env.exec(
