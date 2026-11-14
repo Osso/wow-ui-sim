@@ -81,10 +81,12 @@ pub(super) fn patch_character_create_defaults(env: &crate::lua_api::WowLuaEnv) {
     temporary::character_create_defaults::patch(env);
 }
 
+#[cfg(not(feature = "client-retail"))]
 pub(super) fn patch_character_frame_title_refresh(env: &crate::lua_api::WowLuaEnv) {
     refresh_character_frame_surface(env);
 }
 
+#[cfg(not(feature = "client-retail"))]
 pub(super) fn refresh_character_frame_surface(env: &crate::lua_api::WowLuaEnv) {
     temporary::character_frame_surface_refresh::patch(env);
 }

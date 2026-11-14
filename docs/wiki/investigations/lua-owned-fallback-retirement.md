@@ -69,9 +69,16 @@ real PLAYER_ENTERING_WORLD without resetting the one-shot guard. The original
 event legitimately hides the outer panel; the retained active-subframe title
 must still remain authored. Before the fix both titles became the player name
 (Uther in this host fixture). The narrow Retail policy removes that forced
-name assignment; remaining OnShow/RefreshDisplay and slot-refresh bridges are
-not retired without separate evidence. Non-Retail title assignment ordering
-and failure behavior remain unchanged.
+name assignment in the first tranche. A separately proved follow-up now omits
+the entire Retail surface bridge from post-load and post-event registration:
+original XML OnShow and RefreshDisplay identities survive both hooks, and the
+original slot consumer preserves equipped/empty equipment changes, world-entry
+close/reopen and Reputation/PaperDoll transitions. The same existing host head
+item is removed/restored; no item, callback, frame or output sink is fabricated.
+The callback-identity selector fails before retirement, while slot output is
+independent PRESERVATION evidence. Extra title/slot replay and direct icon writes
+are no longer used on Retail. Other profiles retain the historical bridge;
+Retail evidence does not establish their lifecycle.
 
 The five J selectors and three touched surface unit tests pass. Fourteen of
 fifteen existing character-select/reputation regressions pass;
@@ -88,7 +95,7 @@ secure/public binding remain unresolved, not blanket removable fallbacks.
 
 - [Selected-name original consumers](../../../tests/stub_j_selected_name.rs)
 - [CharacterFrame title consumers](../../../tests/stub_j_character_title.rs)
-- [Remaining character surface bridge](../../../src/lua_api/workarounds/temporary/character_frame_surface_refresh.rs)
+- [Non-Retail character surface bridge](../../../src/lua_api/workarounds/temporary/character_frame_surface_refresh.rs)
 
 ## Sources
 
