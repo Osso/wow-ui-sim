@@ -1,3 +1,7 @@
+## [2026-11-13] system | User waypoint supertracking
+
+Updated [SuperTrack state](systems/super-track-state.md#user-waypoint-supertracking), [C_Map waypoint system](systems/c-map-user-waypoint.md#original-consumer-boundary), and both contracts with R88i.3/R88j.5. **VERIFIED (Retail 12.1.5.70688):** the setter preserves corpse tracking, clears the four modeled selections on valid enable, and `IsSuperTrackingAnything` includes the user-waypoint flag; ClearAll clears modeled flags without erasing the saved point. **VERIFIED (optional Retail prefork test):** the original click passes line 101 and the original pin consumer reads the true flag. **UNKNOWN:** two getterless flags, getter-to-selection relationships, return arities, and named-event effects.
+
 ## [2026-11-13] fix | Inline icon right-edge advance
 
 Updated [Rendering pipeline](systems/rendering-pipeline.md#inline-icons-in-text) with R88f.L.2's absolute-right-edge snap and the tooltip boundary. A fractional scaled-edge `GetStringWidth` test exercises snapped cursor advance.

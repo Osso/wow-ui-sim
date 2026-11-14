@@ -22,7 +22,7 @@ This contract defines the session-scoped user waypoint consumed by Blizzard's Re
 - [ ] **INFERRED:** `CanSetUserWaypointOnMap` returns true for a nonzero signed map ID and false for zero. Native map categories and allowed-ID rules are UNKNOWN.
 - [ ] **INFERRED:** `SetUserWaypoint` returns one Boolean named `wasSet`; exact native return publication is UNKNOWN in R88h.1.
 - [ ] **UNKNOWN:** The exact `z` conversion predicate and waypoint-change callback identity/event are not established. The simulator accepts finite numeric z values and dispatches no event.
-- [ ] **VERIFIED (Retail 12.1.5.70688):** the original provider click reaches `C_SuperTrack.SetSuperTrackedUserWaypoint(false)` at line 101, and the original pin consumer reads `IsSuperTrackingUserWaypoint()` at line 134. The setter's selection changes and neutral return/event seams are specified in [SuperTrack state](super-track-state.md).
+- [x] **VERIFIED (Retail 12.1.5.70688; optional original-consumer test):** the original provider click passes `C_SuperTrack.SetSuperTrackedUserWaypoint(false)` at line 101. The original pin consumer reads `IsSuperTrackingUserWaypoint()` at line 134 and selects the tracked atlas after a true transition. The setter's state changes and neutral return/event seams are specified in [SuperTrack state](super-track-state.md).
 
 ### Profile boundary
 
@@ -51,7 +51,7 @@ This contract defines the session-scoped user waypoint consumed by Blizzard's Re
 - [ ] Native account/character ownership, persistence and waypoint-change callback/event remain UNKNOWN.
 - [ ] Cross-map projection and native map-category eligibility remain UNKNOWN; the simulator uses the labeled nonzero-ID policy.
 - [ ] PTR and Forever behavior is not separately asserted. Mists and Wrath receive compile-only receipts.
-- [ ] **VERIFIED (Retail prefork test):** before the super-track producer is added, the original `HandleClick` stores the point and then errors at `WaypointLocationDataProvider.lua:101` because `C_SuperTrack.SetSuperTrackedUserWaypoint` is nil. The updated consumer test is pending GREEN verification.
+- [ ] **UNKNOWN:** exact setter/getter return arity and the native named-event effect remain open; see [SuperTrack state](super-track-state.md#known-gaps-current-cycle).
 
 ## Out of scope
 

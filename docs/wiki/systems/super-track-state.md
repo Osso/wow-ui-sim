@@ -1,14 +1,24 @@
 # SuperTrack state
 
-CF-2 stages environment-owned tracked targets and quest-log-owned highlight rows for the original Blizzard_QuestSuperTracking consumer. Content cache/listener restoration is verified below; broader quest/highlight acceptance remains pending. [Contract](../../specs/super-track-state.md).
+CF-2 models environment-owned tracked targets and quest-log-owned highlight rows for original Blizzard consumers. The user-waypoint tracking flag, corpse flag and their original World Map consumer are now modeled separately from the stored waypoint. [Contract](../../specs/super-track-state.md).
 
 ## Ownership and publication
 
-`SimState.super_track` holds `SuperTrackState { quest_id, content, map_pin, vignette }`; every field defaults to None. `c_api::c_super_track` owns the API endpoints. `QuestLogState.additional_highlights` holds supplied QuestAdditionalHighlights rows keyed by quest ID; no parallel quest log or fabricated row exists. `c_api::c_quest_log` projects the five fields in documented order.
+`SimState.super_track` holds `SuperTrackState { quest_id, content, map_pin, vignette, user_waypoint, corpse }`. The four selection fields default to None; the booleans default to false as simulator inputs, not native initial-state claims. `c_api::c_super_track` owns the API endpoints. `QuestLogState.additional_highlights` holds supplied QuestAdditionalHighlights rows keyed by quest ID; no parallel quest log or fabricated row exists. `c_api::c_quest_log` projects the five fields in documented order.
 
 `c_api/mod.rs::supports_super_tracking` selects Retail/PTR/Forever once at runtime, alongside the existing C_QuestLog registration. Modeled target installers were removed from temporary defaults and world-service defaults. Only the unsupported highest-priority nil query remains temporary, with retirement tied to native priority modeling. It is not inferred priority behavior.
 
-Mutators commit state, release the borrow, then synchronously dispatch SUPER_TRACKING_CHANGED. The original manager refreshes its cache and publishes Supertracking.OnChanged. Per-category replacement, clear(quest setter 0), and clear-all are modeled without inventing cross-target exclusivity. Equal-write notifications and synchronous timing are simulator policies, not native evidence.
+Existing modeled mutators commit state, release the borrow, then dispatch SUPER_TRACKING_CHANGED as pre-existing simulator policy. The new user-waypoint setter dispatches no event. Native named-event effects remain UNKNOWN; ClearAllSuperTracked keeps its existing simulator dispatch. Per-category replacement, clear(quest setter 0), and clear-all are modeled without inventing cross-target exclusivity.
+
+## User waypoint supertracking
+
+**VERIFIED (Retail 12.1.5.70688, R88i.3/R88j.5):** `SetSuperTrackedUserWaypoint` checks a required non-nil argument, applies Lua truthiness, and returns early when the requested flag is unchanged. On a changed true request with a valid saved waypoint, the native handler clears the quest, content, map-pin, vignette, user-waypoint and one getterless flag, then sets user-waypoint tracking true. It preserves corpse tracking and one other getterless flag. A changed false request or an invalid point clears only the user-waypoint flag; it does not change the saved map or coordinates.
+
+**VERIFIED (Retail 12.1.5.70688):** `IsSuperTrackingCorpse` reads a flag that the waypoint setter preserves. `IsSuperTrackingAnything` includes user-waypoint tracking and checks all eight native flags. Native `ClearAllSuperTracked` clears all eight flags and the four selections but preserves the saved waypoint coordinates. The simulator models corpse and user-waypoint flags plus existing selections; the two getterless flags remain unmodeled. **UNKNOWN (R88j.6 pending):** the relationship between native quest/content/map-pin boolean getters and the simulator's optional selection fields.
+
+**VERIFIED (optional Retail prefork case):** the selected `WaypointLocationDataProvider.lua` click path passes line 101, and its original pin `OnAcquired` consumer reads the true user-waypoint flag to select the tracked atlas. The test also checks that the setter does not dispatch SUPER_TRACKING_CHANGED, that ClearAllSuperTracked clears modeled flags, and that the saved waypoint remains available afterward. The setter/getter use neutral zero/one result seams; their exact native return arity and named-event effects remain UNKNOWN. The simulator preserves ClearAllSuperTracked's pre-existing event dispatch; native event identity is UNKNOWN.
+
+**VERIFIED (Retail, PTR and Forever declarations):** their pinned `SuperTrackManagerDocumentation.lua` files publish the user-waypoint and corpse queries. The behavior above is verified only for Retail; no PTR or Forever behavior is claimed.
 
 ## Consumer selection and observations
 
@@ -42,6 +52,9 @@ Raw full-message keys and counts have no additions, removals or changes; these a
 
 ## Sources
 
+- [User waypoint system](c-map-user-waypoint.md) — stored point, original provider and setter boundaries.
+- [SuperTrack implementation](../../../src/c_api/c_super_track.rs) — modeled selection, corpse and user-waypoint state.
+- [Optional original-consumer test](../../../tests/test_c_map_user_waypoint.rs) — click, pin acquisition, transitions and saved-point preservation.
 - [Restored original-consumer tests](../../../tests/cf2_supertracking_restored.rs) — exact selectors and supplied transitions.
 
 - [Contract and staged tests](../../specs/super-track-state.md)
