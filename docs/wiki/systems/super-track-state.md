@@ -4,7 +4,7 @@ CF-2 models environment-owned tracked targets and quest-log-owned highlight rows
 
 ## Ownership and publication
 
-`SimState.super_track` holds `SuperTrackState { quest_id, quest_tracking, content, content_saved, content_tracking, map_pin, map_pin_saved, map_pin_tracking, vignette, user_waypoint, corpse }`. Quest/content/map-pin tracking flags are separate from saved IDs and selection presence. Content and map-pin saved type/ID pairs survive selection removal; their `Option` fields represent selection presence. Boolean defaults are simulator inputs, not native initial-state claims. `c_api::c_super_track` owns the registered endpoints. `QuestLogState.additional_highlights` holds supplied QuestAdditionalHighlights rows keyed by quest ID; no parallel quest log or fabricated row exists. `c_api::c_quest_log` projects the five fields in documented order.
+`SimState.super_track` holds `SuperTrackState { quest_id, quest_tracking, content, content_saved, content_tracking, map_pin, map_pin_saved, map_pin_tracking, vignette, vignette_tracking, user_waypoint, corpse }`. Quest/content/map-pin tracking flags are separate from saved IDs and selection presence. Content and map-pin saved type/ID pairs survive selection removal; their `Option` fields represent selection presence. Boolean defaults are simulator inputs, not native initial-state claims. `c_api::c_super_track` owns the registered endpoints. `QuestLogState.additional_highlights` holds supplied QuestAdditionalHighlights rows keyed by quest ID; no parallel quest log or fabricated row exists. `c_api::c_quest_log` projects the five fields in documented order.
 
 `c_api/mod.rs::supports_super_tracking` selects Retail/PTR/Forever once at runtime, alongside the existing C_QuestLog registration. Modeled target installers were removed from temporary defaults and world-service defaults. Only the unsupported highest-priority nil query remains temporary, with retirement tied to native priority modeling. It is not inferred priority behavior.
 
@@ -18,17 +18,17 @@ Existing modeled mutators commit state, release the borrow, then dispatch SUPER_
 
 ### Quest, content and map-pin writers
 
-**VERIFIED (Retail 12.1.5.70688, R88j.6):** a changed quest ID of zero clears only the quest flag. A changed nonzero quest ID sets it, clears content/map-pin flags and selections, and clears the vignette GUID. An equal quest ID does not repair a flag. Input acceptance for the quest setter remains UNKNOWN pending R88j.8; the simulator keeps its pre-existing parser.
+**VERIFIED (Retail 12.1.5.70688, R88j.6):** a changed quest ID of zero clears only the quest flag. A changed nonzero quest ID sets it, clears content/map-pin flags and selections, and clears the vignette GUID. An equal quest ID does not repair a flag. R88j.8 verifies Retail argument conversion and the equal-result bypass; incomplete nested acceptance does not justify changing the existing simulator ID policy.
 
 **VERIFIED (Retail 12.1.5.70688, R88j.6):** setting content stores a present type/ID pair, including ID zero, enables the content flag, and clears quest/map-pin flags and selections. Clearing content disables its flag and removes selection presence while keeping saved type/ID values.
 
-**VERIFIED (Retail 12.1.5.70688, R88j.6):** clearing a map pin disables its flag and removes selection presence only when that flag is true; it keeps saved type/ID values. With the flag already false, the native path leaves the selection unchanged. `SetSuperTrackedMapPin` and `SetSuperTrackedVignette` direct updates are known, but the simulator does not publish these setters until their acceptance rules are known (R88j.8).
+**VERIFIED (Retail 12.1.5.70688, R88j.6):** clearing a map pin disables its flag and removes selection presence only when that flag is true; it keeps saved type/ID values. With the flag already false, the native path leaves the selection unchanged. Retail now publishes both setters. See the [R88j.8 contract](../../specs/super-track-state.md#r88j8-retail-setter-scope) for changed-pair acceptance, the empty-GUID route and supported backing inputs.
 
 **VERIFIED (optional Retail prefork case):** the selected `WaypointLocationDataProvider.lua` click path passes line 101, and its original pin `OnAcquired` consumer reads the true user-waypoint flag to select the tracked atlas. The test also checks that the setter does not dispatch SUPER_TRACKING_CHANGED, that ClearAllSuperTracked clears modeled flags, and that the saved waypoint remains available afterward. The setter/getter use neutral zero/one result seams; their exact native return arity and named-event effects remain UNKNOWN. The simulator preserves ClearAllSuperTracked's pre-existing event dispatch; native event identity is UNKNOWN.
 
 **VERIFIED (Retail, PTR and Forever declarations):** their pinned `SuperTrackManagerDocumentation.lua` files publish the quest, content, map-pin, corpse and user-waypoint flag queries. The behavior above is verified only for Retail; no PTR or Forever behavior is claimed.
 
-**UNKNOWN (R88j.8 pending):** acceptance rules for `SetSuperTrackedMapPin`, `SetSuperTrackedQuestID`, and `SetSuperTrackedVignette` remain incomplete. The simulator keeps the existing quest parser and does not add map-pin or vignette setter producers before those rules arrive. The pre-existing ClearAllSuperTracked simulator dispatch remains; native named-event effects are UNKNOWN.
+**UNKNOWN (R88j.8):** the formal native map data tables, full quest acceptance rule, nonzero vignette object/cache row and flag, general GUID parser/opaque alias lookup, public setter arities and named helper effects. New map and vignette paths fire no guessed event; changed Retail quest selections retain the pre-existing simulator notification policy.
 
 ## Consumer selection and observations
 

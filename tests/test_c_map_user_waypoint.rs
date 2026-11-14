@@ -67,6 +67,7 @@ pub(crate) fn world_map_provider_sets_and_refreshes_user_waypoint(env: &WowLuaEn
         state.super_track.map_pin_saved = (0, 201);
         state.super_track.map_pin_tracking = true;
         state.super_track.vignette = Some("Vignette-fixture-1".into());
+        state.super_track.vignette_tracking = true;
         state.super_track.corpse = true;
     }
 
