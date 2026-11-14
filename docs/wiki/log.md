@@ -1,6 +1,14 @@
+## [2026-11-14] correction | Inventory name-adapter evidence
+
+[Inventory/purchase getters](investigations/inventory-purchase-getters.md) separates the INFERRED one-based host slot-name adapter from VERIFIED numeric/packing tests. Retail publications use ACTIVE profile checks; state comments and GUID-kind predicate documentation are corrected.
+
+## [2026-11-14] implementation | Inventory candidates and purchase records
+
+[Inventory/purchase getters](investigations/inventory-purchase-getters.md) records R88k.1/.2 packed-key publication and refund records, empty host seams, selected consumer tests and explicit remaining VM limits.
+
 ## [2026-11-14] implementation | Retail Azerite Essence tooltip selection
 
-Updated the [Round 7 contract](../specs/tooltip-r7-getters.md), [Lua API](systems/lua-api.md#azerite-essence-tooltip-selection-r88n2), and [consumer-selection evidence](investigations/consumer-selection-and-red-proof.md#retail-azerite-essence-tooltip-consumers). R88n.2 exact-rank and slot rules are implemented; the column mapping is INFERRED and isolated, while source and requirement lines remain UNKNOWN.
+Updated the [Round 7 contract](../specs/tooltip-r7-getters.md), [Lua API](systems/lua-api.md#azerite-essence-tooltip-selection-r88n2), and [consumer-selection evidence](investigations/consumer-selection-and-red-proof.md#retail-azerite-essence-tooltip-consumers). R88n.2 selectors are implemented; the column mapping is INFERRED and isolated, while source and requirement lines remain UNKNOWN.
 
 ## [2026-11-14] investigation | Retail tooltip serializer boundary
 

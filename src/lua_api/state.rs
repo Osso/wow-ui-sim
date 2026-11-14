@@ -1,4 +1,5 @@
 //! Shared state types for the WoW Lua API.
+use super::state_types::MacroIconInputs;
 pub use crate::c_api::c_character_services::CharacterServicesState;
 use crate::cvars::CVarStorage;
 use crate::event::{EventQueue, ScriptRegistry};
@@ -702,6 +703,8 @@ macro_rules! build_empty_sim_state {
             #[cfg(feature = "client-wowforever")]
             stable_reads: crate::c_api::c_stable_info::forever::StableReadState::default(),
             merchant_items: Vec::new(),
+            purchase_inputs: Default::default(),
+            inventory_candidates: Default::default(),
             merchant_links: Default::default(),
             // No extended-cost record is observed until the host supplies one.
             merchant_offer_costs: HashMap::new(),
@@ -849,6 +852,7 @@ macro_rules! build_empty_sim_state {
             battlefield_minimap_visible: false,
             chat_channels: Vec::new(),
             macros: Vec::new(),
+            macro_icons: MacroIconInputs::default(),
             running_macro: None,
             chat_windows: ::std::collections::HashMap::new(),
             chat_type_colors: ::std::collections::HashMap::new(),

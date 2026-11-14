@@ -276,6 +276,8 @@ mod c_scrapping_machine;
 pub mod c_shared_character_services;
 pub mod c_super_track;
 pub(crate) mod challenge_run;
+pub mod container_purchase;
+mod container_purchase_args;
 pub mod container_quest;
 pub mod engraving_inputs;
 pub mod external_event_url;
