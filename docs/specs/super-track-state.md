@@ -5,9 +5,9 @@ CF-2 supplies tracked targets through `src/c_api/c_super_track.rs` and per-quest
 ## What it must do
 
 - [ ] Register the modeled namespace on Retail, PTR and Forever beside C_QuestLog through one shared runtime profile predicate; preserve unrelated namespace members.
-- [ ] **VERIFIED (Retail 12.1.5.70688):** `SetSuperTrackedUserWaypoint` requires a non-nil argument, checks secret access first, uses Lua truthiness, and is a no-op when the stored flag already matches. A changed true value requires a valid stored waypoint and clears the quest, content, map-pin and vignette selections; false or an invalid waypoint clears only the user-waypoint flag. The getter reads that flag. Setter/getter return counts use neutral 0/1 seams; event behavior and the identities of six cleared native flags remain UNKNOWN, so this setter dispatches no event and models no unnamed flags.
-- [ ] Start with absent quest/content/map-pin/vignette. Untracked quest returns nil: **documented-optional representation**, not established native sentinel parity. Pair queries return no results when absent; populated zero enum values remain valid.
-- [ ] Round-trip quest and content selection, replace targets within each category and clear them; quest setter argument 0 clears. Clear-all removes all supported targets. IsSuperTrackingAnything reflects supported stored targets without priority arbitration.
+- [ ] **VERIFIED (Retail 12.1.5.70688):** `SetSuperTrackedUserWaypoint` requires a non-nil argument, checks secret access first, uses Lua truthiness, and is a no-op when the stored flag already matches. A changed true value with a valid point clears the quest, content, map-pin, vignette, and user-waypoint flags plus one unnamed flag, then sets user-waypoint tracking. It preserves corpse tracking and one unnamed flag. A changed false value or invalid point clears only user-waypoint tracking; the saved point stays unchanged. `IsSuperTrackingUserWaypoint`, `IsSuperTrackingCorpse`, and `IsSuperTrackingAnything` expose the modeled flags. `IsSuperTrackingAnything` includes user-waypoint tracking. `ClearAllSuperTracked` clears modeled flags and selections but preserves the saved waypoint. Setter/getter return counts use neutral 0/1 seams. The two unnamed flags, getter-to-selection relationships, return arity, and named-event effects remain UNKNOWN; the new setter dispatches no event.
+- [ ] Start with absent quest/content/map-pin/vignette selections and false simulator defaults for corpse and user-waypoint flags; native initial flag values are UNKNOWN. Untracked quest returns nil: **documented-optional representation**, not established native sentinel parity. Pair queries return no results when absent; populated zero enum values remain valid.
+- [ ] Round-trip quest and content selection, replace targets within each category and clear them; quest setter argument 0 clears. Clear-all removes modeled target selections and modeled flags without changing the saved waypoint. IsSuperTrackingAnything reflects modeled selections, corpse and user-waypoint state; two getterless native flags remain unmodeled.
 - [ ] Publish committed state to the original selected Blizzard_QuestSuperTracking consumer through SUPER_TRACKING_CHANGED; its cached quest/content/highlight outputs must change and clear, including matching/nonmatching turn-in/watch events and eligible/ineligible auto-track branches.
 - [ ] Return the five highlight outputs from the supplied per-quest row. **VERIFIED locally (WM71, Retail 12.1.5.70688):** a numeric cache miss or no selected POI returns map ID 0 and four false flags. A selected POI can return a nonzero map ID even when all flags are false. Zero/no quest produces defaults with the observed empty zero-key cache (**INFERRED**). Missing, nil, nonconvertible and out-of-range arguments error; finite in-range numbers truncate toward zero. Numeric coercion is attempted; exact string grammar is **UNKNOWN**. Secret access is AllowedWhenUntainted. No direct super-tracked-ID check exists; universal quest-log membership is **UNKNOWN**. Native flag masks for world, elite, dungeons and treasures are 8, 64, 16 and 32 respectively.
 
@@ -20,7 +20,7 @@ CF-2 supplies tracked targets through `src/c_api/c_super_track.rs` and per-quest
 - `src/c_api/c_super_track.rs` — SuperTrackState and modeled getters/mutators.
 - `src/c_api/c_quest_log.rs` — QuestAdditionalHighlights supplied-row projection.
 - `src/c_api/mod.rs` — shared runtime Retail/PTR/Forever publication predicate.
-- `src/lua_api/state{,/sim_state}.rs` — environment-owned `super_track`, all fields None by default.
+- `src/lua_api/state{,/sim_state}.rs` — environment-owned `super_track`, with absent selections and false simulator flag defaults.
 - `src/lua_api/sim_substates/quest_log.rs` — quest-log-owned additional_highlights rows, empty by default.
 - `src/lua_api/workarounds/temporary/super_track_defaults.rs` — only unsupported priority query remains; no target fallback installers.
 
@@ -29,18 +29,19 @@ CF-2 supplies tracked targets through `src/c_api/c_super_track.rs` and per-quest
 - `tests/cf2_supertrack_consumers.rs` — five original-consumer selectors, each with state transitions; original complete chunk loaded via selected TOC, no consumer/API replacements.
 - `tests/cf2_supertracking_restored.rs` — restored content shape and original listener-time cache transitions on Retail/PTR/Forever.
 - `tests/c_super_track_probes.rs` — public shapes after bootstrap, supplied map-pin/vignette state and empty highlight output for quests without a row.
+- `tests/test_c_map_user_waypoint.rs` — optional Retail original-consumer flow, waypoint flag, corpse preservation, clear-all and aggregate queries.
 - Existing `tests/c_factory_m4_contracts.rs` absent-target assertions remain preservation, not producer RED.
 
 ## Known gaps (current cycle)
 
 - [ ] Execute the remaining quest/highlight packet beyond the content-only restoration below. Its broader historical staging claims are not established by the restored selectors.
-- [ ] Verify native `ClearAllSuperTracked` interaction with the user-waypoint flag; verify the six-of-eight native flag identities and exact setter/getter return arity and event contract.
+- [ ] Verify the exact setter/getter return arity and named-event effects. R88j.5 leaves two getterless native flags unmodeled and R88j.6 is pending for the getter-to-selection relationship. Clear-all keeps its pre-existing simulator event dispatch; native event identity remains UNKNOWN.
 - [ ] Native untracked quest sentinel, live quest POI cache state and selection, event timing/deduplication and cross-target coupling remain unestablished. Mutation calls synchronously notify after releasing the state borrow. WM71 evidence: `native-evidence-70688/WM71-quest-additional-highlights.md` (local handoff).
 - [ ] IsQuestTask is currently coupled to the static world-quest catalog. World/task rejection is covered together; independent task-only classification remains held, not mocked.
 
 ## Out of scope
 
-Corpse, scenario/party targets, priority arbitration, persistence, broader map-provider catalogs and user-facing map-pin/vignette setters. Existing highest-priority query remains a temporary unsupported nil response, retired only when native arbitration is modeled; namespace is not fully modeled. PTR readiness=false is preservation, not readiness RED.
+Scenario/party targets, priority arbitration, persistence, broader map-provider catalogs and user-facing map-pin/vignette setters. Existing highest-priority query remains a temporary unsupported nil response, retired only when native arbitration is modeled; namespace is not fully modeled. PTR readiness=false is preservation, not readiness RED.
 
 ## Deferred supertracking coverage restoration
 

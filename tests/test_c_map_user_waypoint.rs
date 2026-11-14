@@ -62,6 +62,7 @@ pub(crate) fn world_map_provider_sets_and_refreshes_user_waypoint(env: &WowLuaEn
         state.super_track.content = Some((0, 101));
         state.super_track.map_pin = Some((0, 201));
         state.super_track.vignette = Some("Vignette-fixture-1".into());
+        state.super_track.corpse = true;
     }
 
     env.exec("__c_map_user_waypoint_provider:HandleClick()")
@@ -104,6 +105,9 @@ pub(crate) fn world_map_provider_sets_and_refreshes_user_waypoint(env: &WowLuaEn
         assert(select('#', C_SuperTrack.GetSuperTrackedContent()) == 0)
         assert(select('#', C_SuperTrack.GetSuperTrackedMapPin()) == 0)
         assert(C_SuperTrack.GetSuperTrackedVignette() == nil)
+        assert(C_SuperTrack.IsSuperTrackingCorpse() == true,
+            "the original corpse-tracking flag must survive waypoint selection")
+        assert(C_SuperTrack.IsSuperTrackingAnything() == true)
         WaypointLocationPinMixin.OnAcquired(provider.pin)
         assert(provider.pin.atlas == "Waypoint-MapPin-Tracked",
             "the original pin consumer must read the true user-waypoint flag")
@@ -128,6 +132,22 @@ pub(crate) fn world_map_provider_sets_and_refreshes_user_waypoint(env: &WowLuaEn
         assert(not nilOK and nilError:find(usage, 1, true))
         C_SuperTrack.SetSuperTrackedUserWaypoint(false)
         assert(C_SuperTrack.IsSuperTrackingUserWaypoint() == false)
+        __assert_user_waypoint(C_Map.GetUserWaypoint(), 2248, 0.25, 0.75, nil)
+
+        C_SuperTrack.ClearAllSuperTracked()
+        assert(C_SuperTrack.IsSuperTrackingUserWaypoint() == false)
+        assert(C_SuperTrack.IsSuperTrackingCorpse() == false)
+        assert(C_SuperTrack.IsSuperTrackingAnything() == false)
+        __assert_user_waypoint(C_Map.GetUserWaypoint(), 2248, 0.25, 0.75, nil)
+
+        C_SuperTrack.SetSuperTrackedUserWaypoint(true)
+        assert(C_SuperTrack.IsSuperTrackingUserWaypoint() == true)
+        assert(C_SuperTrack.IsSuperTrackingCorpse() == false)
+        assert(C_SuperTrack.IsSuperTrackingAnything() == true,
+            "IsSuperTrackingAnything must include only user-waypoint tracking")
+        C_SuperTrack.ClearAllSuperTracked()
+        assert(C_SuperTrack.IsSuperTrackingUserWaypoint() == false)
+        assert(C_SuperTrack.IsSuperTrackingAnything() == false)
         __assert_user_waypoint(C_Map.GetUserWaypoint(), 2248, 0.25, 0.75, nil)
 
         C_Map.SetUserWaypoint({

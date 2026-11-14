@@ -6,9 +6,10 @@ pub struct SuperTrackState {
     pub content: Option<(i32, i32)>,
     pub map_pin: Option<(i32, i32)>,
     pub vignette: Option<String>,
-    /// UNKNOWN (R88i.3): native clears six of eight tracking flags; their
-    /// identities and the two surviving flags remain unmodeled.
+    /// User-waypoint tracking flag; the two native getterless flags stay unmodeled.
     pub user_waypoint: bool,
+    /// VERIFIED (Retail 12.1.5.70688): preserved when user-waypoint tracking starts.
+    pub corpse: bool,
 }
 
 use super::helpers::{bad_argument, ensure_namespace, validate_supplied_relation_id};
@@ -25,6 +26,7 @@ const METHODS: &[(&str, RustFn)] = &[
     ("GetSuperTrackedMapPin", map_pin),
     ("GetSuperTrackedVignette", vignette),
     ("IsSuperTrackingAnything", anything),
+    ("IsSuperTrackingCorpse", corpse),
     ("SetSuperTrackedQuestID", set_quest),
     ("SetSuperTrackedContent", set_content),
     ("ClearSuperTrackedContent", clear_content),
@@ -82,6 +84,14 @@ fn vignette(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+fn corpse(state: &mut LuaState) -> LuaResult<u32> {
+    let is_tracking = borrow_state(state)?.super_track.corpse;
+    state.push(Val::Bool(is_tracking));
+    Ok(1)
+}
+
+/// UNKNOWN: getter-to-selection relationships remain unproved; two native getterless
+/// flags are also not represented in this aggregate (R88j.5/R88j.6).
 fn anything(state: &mut LuaState) -> LuaResult<u32> {
     let active = {
         let sim = borrow_state(state)?;
@@ -91,6 +101,8 @@ fn anything(state: &mut LuaState) -> LuaResult<u32> {
             tracked.content.is_some(),
             tracked.map_pin.is_some(),
             tracked.vignette.is_some(),
+            tracked.user_waypoint,
+            tracked.corpse,
         ]
         .into_iter()
         .any(|active| active)
@@ -99,8 +111,8 @@ fn anything(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-/// Simulator policy: publish after releasing the state borrow, on every mutation call.
-/// Native timing, equal-write deduplication and cross-target arbitration are unknown.
+/// Pre-existing simulator dispatch of SUPER_TRACKING_CHANGED; the native named-event
+/// effect is UNKNOWN (R88j.5).
 fn publish_change(state: &mut LuaState) -> LuaResult<u32> {
     dispatch_event_now(state, "SUPER_TRACKING_CHANGED", &[])?;
     Ok(0)
@@ -129,15 +141,8 @@ fn clear_map_pin(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn clear_all(state: &mut LuaState) -> LuaResult<u32> {
-    {
-        let user_waypoint = borrow_state(state)?.super_track.user_waypoint;
-        let mut sim = borrow_state_mut(state)?;
-        // UNKNOWN: preserve the new flag until its native ClearAll interaction is known.
-        sim.super_track = SuperTrackState {
-            user_waypoint,
-            ..SuperTrackState::default()
-        };
-    }
+    // Reset every modeled flag; the two native getterless flags have no state fields.
+    borrow_state_mut(state)?.super_track = SuperTrackState::default();
     publish_change(state)
 }
 
@@ -154,7 +159,8 @@ fn set_user_waypoint(state: &mut LuaState) -> LuaResult<u32> {
         .is_some_and(|waypoint| waypoint.is_valid());
     let should_track = requested && waypoint_is_valid;
     if should_track {
-        // VERIFIED: these four stored selections are cleared on a valid transition.
+        // VERIFIED: clear four selections; the changed flag is already false here.
+        // A getterless native flag remains unmodeled; corpse tracking is preserved.
         sim.super_track.quest_id = None;
         sim.super_track.content = None;
         sim.super_track.map_pin = None;
