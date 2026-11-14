@@ -1,4 +1,6 @@
 //! Shared state types for the WoW Lua API.
+#[cfg(feature = "client-retail")]
+use super::state_types::MacroIconInputs;
 pub use crate::c_api::c_character_services::CharacterServicesState;
 use crate::cvars::CVarStorage;
 use crate::event::{EventQueue, ScriptRegistry};
@@ -849,6 +851,8 @@ macro_rules! build_empty_sim_state {
             battlefield_minimap_visible: false,
             chat_channels: Vec::new(),
             macros: Vec::new(),
+            #[cfg(feature = "client-retail")]
+            macro_icons: MacroIconInputs::default(),
             running_macro: None,
             chat_windows: ::std::collections::HashMap::new(),
             chat_type_colors: ::std::collections::HashMap::new(),

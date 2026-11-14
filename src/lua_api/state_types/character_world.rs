@@ -706,6 +706,17 @@ pub struct MacroInfo {
     pub body: String,
 }
 
+/// Host-supplied macro picker inputs. Empty represents an unmodeled source,
+/// not an observation of the installed client. Catalog rows are already filtered.
+#[cfg(feature = "client-retail")]
+#[derive(Debug, Default)]
+pub struct MacroIconInputs {
+    pub loose_spells: Vec<Option<String>>,
+    pub loose_items: Vec<Option<String>>,
+    pub spells: Vec<i32>,
+    pub items: Vec<i32>,
+}
+
 /// A single guild rank row. `name` is the display name; `flags` is a bag of
 /// arbitrary permission booleans — callers iterate and index by flag name
 /// (WoW's real API returns a dense numeric-keyed table of flag values).

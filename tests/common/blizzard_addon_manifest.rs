@@ -86,7 +86,7 @@ pub const BLIZZARD_ADDON_SMOKE_TARGETS: &[BlizzardAddonSmokeTarget<'static>] = &
                 return "selected_tab=" .. tostring(PanelTemplates_GetSelectedTab(MacroFrame))
             end
             local accountCount = select(1, GetNumMacros())
-            if type(accountCount) ~= "number" or accountCount < 1 then
+            if type(accountCount) ~= "number" or MacroFrame.MacroSelector.numMacros ~= accountCount then
                 return "account_count=" .. tostring(accountCount)
             end
             return "ok"
