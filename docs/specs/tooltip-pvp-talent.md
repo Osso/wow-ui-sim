@@ -9,8 +9,10 @@ VERIFIED: Retail `C_TooltipInfo.GetPvpTalent` uses the PvP talent row to build s
 - [x] VERIFIED: Retail registers `GetPvpTalent`; PTR remains unchanged. Retail's `GameTooltip:SetPvpTalent` reaches it through Blizzard's original accessor.
 - [ ] VERIFIED: Forever registers `GetPvpTalent`; its missing-record result and argument conversion are covered by the optional Forever test.
 - [ ] VERIFIED: Forever requires a signed-32 talent ID; numeric strings are accepted and fractions truncate toward zero after range validation. Omitted/nil optional inputs are accepted, `isInspect` uses Lua truth conversion, and the supplied group index uses Forever's `luaIndex` reader.
+- [ ] UNKNOWN (Forever): R88n.8 does not define the result when the decremented, truncated `groupIndex` is outside signed-32 range. The Rust saturating cast is only a neutral placeholder, not native-parity evidence.
 - [ ] VERIFIED: Forever Usage is `Usage: local data = C_TooltipInfo.GetPvpTalent(talentID [, isInspect, groupIndex, talentIndex])`.
 - [ ] VERIFIED: A missing Forever `PvpTalent` record returns zero Lua values. The simulator has no Forever catalog and does not publish Retail rows.
+- [ ] INFERRED (Forever simulator input): Any supplied relation from `talentID` to `SpellID` is a host-side model only; R88n.8 does not prove the field mapping or a native writer. Keep it empty by default and do not seed guessed rows.
 - [ ] UNKNOWN: Secret-value errors, all invalid argument diagnostics and the complete wrapped Usage error. The optional test checks that the Usage text is present for missing required input.
 - [x] VERIFIED: Retail starts with generated `SpellID`, `OverridesSpellID`, `LevelRequired`, and category `TalentSlotMask` rows; tests check actual default rows and neutral host-only grant/eligibility inputs. The local export is installed build 12.1.5.70783, not the selected 12.1.5.70575 pin.
 
@@ -63,7 +65,7 @@ VERIFIED: Retail `C_TooltipInfo.GetPvpTalent` uses the PvP talent row to build s
 ## Known gaps (current cycle)
 
 - [ ] UNKNOWN (Retail): The native final Lua result for zero talent ID, failed base-spell presence, missing player or missing resolved spell-name row. The simulator uses the shared EMULATED zero-value seam for these Retail paths.
-- [ ] INFERRED (Forever): The indexed client-state block represents the current local player's PvP talent selection. The simulator has no Forever catalog or writer and returns no values for its empty catalog; populated player-state behavior is not modeled or tested.
+- [ ] INFERRED (Forever simulator input): A supplied `talentID`-to-`SpellID` map is a host-side relation only; R88n.8 does not establish that field mapping or its native writer. Keep the map empty by default and do not seed guessed talent rows. This does not establish current-player selection, inspect behavior, or native populated-record parity.
 - [ ] UNKNOWN: Whether the native base-spell presence provider can report `SpellID` zero as present. This path is not modeled or tested.
 - [ ] UNKNOWN: The native spell override ranking walk's exact ranked IDs, map writers and precedence among talent, aura and SpellReplace sources. The host supplies the resolved ID; this implementation does not infer the walk.
 - [ ] UNKNOWN: Native alignment of the installed 12.1.5.70783 rows with selected build 12.1.5.70575, the effect-parameter decoder, essence lookup, inspect lifecycle, additional progression restrictions and remaining eligibility failure reasons. Grant and eligibility outcomes remain host-only; absent inputs do not fabricate lines.

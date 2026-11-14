@@ -29,9 +29,12 @@ not established.
 
 - **VERIFIED (Forever R88n.8):** each argument accepts ordinary numbers and
   convertible numeric strings in 0..=4294967295, checks range before subtracting
-  one, then truncates the result to signed 32-bit. This is not unsigned wrapping.
+  one, then converts the result to signed 32-bit. This is not unsigned wrapping.
   Zero passes range validation but becomes a negative selection and selects no
   offer or cost.
+- **UNKNOWN (Forever):** R88n.8 does not state the result when the decremented,
+  truncated value is outside signed-32 range. Rust's saturating float-to-integer
+  cast is only a neutral placeholder, not native-parity evidence.
 - Retail/PTR keep the existing numeric-only `luaIndex` reader; this lane does not
   change their conversion.
 - The index counter advances between the two reads, so the second read addresses
@@ -88,11 +91,12 @@ not established.
 - The item class comes from the resident item base record
   (`item_spec_derive::item_class`), the same record the item-specification
   builder reads; the sparse lookup is `crate::items::get_item`.
-- Item costs reuse the shared item producer; currency costs reuse the shared
-  currency producer with an explicit zero quantity.
-- Registration: `src/c_api/c_tooltip_info_merchant_cost.rs` reuses the Retail
-  producer on Retail/PTR and Forever. Retail/PTR compile under
-  `retail-12-1-5`; Forever uses `client_profile::ACTIVE`.
+- Item costs reuse the shared item producer. Currency costs use the shared
+  currency producer with an explicit zero quantity on Retail/PTR only; Forever
+  keeps its no-tooltip path for selected currency costs.
+- Registration: `src/c_api/c_tooltip_info_merchant_cost.rs` shares item-cost
+  production on Retail/PTR and Forever. Retail/PTR compile under `retail-12-1-5`;
+  Forever uses `client_profile::ACTIVE`.
 
 ### Deliberately not implemented
 

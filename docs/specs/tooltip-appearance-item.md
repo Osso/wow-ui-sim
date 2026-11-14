@@ -17,6 +17,10 @@
   required signed-32 ID, including numeric strings and fractions truncated toward
   zero after range validation; its Usage text is
   `Usage: local data = C_TooltipInfo.GetItemByItemModifiedAppearanceID(itemModifiedAppearanceID)`.
+- **INFERRED (Forever simulator input):** a supplied source relation maps the
+  getter's `itemModifiedAppearanceID` to an `itemID`. R88n.8 does not prove this
+  field mapping or a native writer. Keep the input map empty by default; do not
+  seed guessed rows.
 - **VERIFIED (repository):** the simulator returns zero because its Forever source model is absent.
 - **UNKNOWN:** native failure results outside the verified missing-record path,
   as bounded by WM94 (`native-evidence-70688/WM94-tooltipinfo-getters.md`).
