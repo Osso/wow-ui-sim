@@ -178,6 +178,12 @@ fn secure_private_auras_tooltip_consumer_runs_without_errors() {
             "#,
         )
         .expect("secure tooltip mixin snapshot should evaluate");
+    let template_method_binders: (String, String) = env
+        .eval(
+            "return type(rawget(_G, '__wow_bind_xml_method')), \
+             type(rawget(__secureenv, '__wow_bind_xml_method'))",
+        )
+        .expect("template method binder visibility should be observable");
     let tooltip_callback_globals: (String, String, String, String) = env
         .eval(
             r#"
@@ -233,7 +239,7 @@ fn secure_private_auras_tooltip_consumer_runs_without_errors() {
     );
     assert!(
         load_errors.is_empty(),
-        "PrivateAuras dependencies and the PrivateAurasTooltip consumer must load without errors:\n  {}\nsecure dependencies: {secure_dependency_states:?}\nsecure mixins: {secure_mixin_snapshot:?}\ntooltip callbacks: {tooltip_callback_globals:?}\ntooltip method: {tooltip_method_probe:?}\nproducer: {producer_source:?}\nregistrations: {registration_snapshot:?}",
+        "PrivateAuras dependencies and the PrivateAurasTooltip consumer must load without errors:\n  {}\nsecure dependencies: {secure_dependency_states:?}\nsecure mixins: {secure_mixin_snapshot:?}\ntooltip callbacks: {tooltip_callback_globals:?}\ntooltip method: {tooltip_method_probe:?}\nproducer: {producer_source:?}\nregistrations: {registration_snapshot:?}\ntemplate method binders: {template_method_binders:?}",
         load_errors.join("\n  ")
     );
     assert_eq!(
