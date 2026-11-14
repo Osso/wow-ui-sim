@@ -236,6 +236,17 @@ fn retail_map_assignment_projects_mulgore_center() {
 
 #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
 #[test]
+fn retail_map_assignment_with_negative_map_id_returns_nothing() {
+    let env = env();
+    let result_count: i32 = env
+        .eval("return select('#', C_Map.GetWorldPosFromMapPos(2311, {x=0.5, y=0.5}))")
+        .unwrap();
+
+    assert_eq!(result_count, 0);
+}
+
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[test]
 fn retail_map_assignment_uses_first_order_for_overlapping_rows() {
     let env = env();
     let (instance_id, x, y): (i32, f64, f64) = env
@@ -294,17 +305,45 @@ fn retail_map_world_position_probe_covers_zone_maps_under_azeroth() {
     let mut pending = vec![947];
     let mut visited = HashSet::new();
     let mut zone_count = 0;
+    let mut no_world_zone_ids = Vec::new();
     while let Some(map_id) = pending.pop() {
         if !visited.insert(map_id) {
             continue;
         }
         if map_types.get(&map_id) == Some(&3) {
             zone_count += 1;
+            let has_world_assignment =
+                sim_data_profile::ui_map_assignments::get_ui_map_assignments(map_id)
+                    .and_then(|assignments| {
+                        assignments
+                            .iter()
+                            .filter(|assignment| {
+                                let ui_min_x = f64::from(assignment.ui_min[0]);
+                                let ui_min_y = f64::from(assignment.ui_min[1]);
+                                let ui_max_x = f64::from(assignment.ui_max[0]);
+                                let ui_max_y = f64::from(assignment.ui_max[1]);
+                                0.5 >= ui_min_x
+                                    && 0.5 <= ui_max_x
+                                    && 0.5 >= ui_min_y
+                                    && 0.5 <= ui_max_y
+                            })
+                            .min_by_key(|assignment| assignment.order_index)
+                    })
+                    .is_some_and(|assignment| assignment.map_id >= 0);
+            if !has_world_assignment {
+                no_world_zone_ids.push(map_id);
+            }
         }
         if let Some(children) = children_by_parent.get(&map_id) {
             pending.extend(children);
         }
     }
+    let no_world_zone_count = no_world_zone_ids.len();
+    let no_world_map_ids = no_world_zone_ids
+        .iter()
+        .map(|map_id| format!("[{map_id}] = true"))
+        .collect::<Vec<_>>()
+        .join(",");
 
     let map_rows = map_rows
         .iter()
@@ -322,6 +361,7 @@ fn retail_map_world_position_probe_covers_zone_maps_under_azeroth() {
     let script = format!(
         r#"
         local mapRows = {{{map_rows}}}
+        local noWorldMapIDs = {{{no_world_map_ids}}}
         local childrenByParent = {{}}
         local mapTypes = {{}}
         for _, row in ipairs(mapRows) do
@@ -343,6 +383,7 @@ fn retail_map_world_position_probe_covers_zone_maps_under_azeroth() {
         local nextPending = 1
         local visited = {{}}
         local zoneCount = 0
+        local noWorldZoneCount = 0
         while nextPending <= #pending do
             local mapID = pending[nextPending]
             nextPending = nextPending + 1
@@ -353,20 +394,36 @@ fn retail_map_world_position_probe_covers_zone_maps_under_azeroth() {
 
                 if mapTypes[mapID] == 3 then
                     zoneCount = zoneCount + 1
-                    local instanceID, worldPos = C_Map.GetWorldPosFromMapPos(
-                        mapID,
-                        CreateVector2D(0.5, 0.5)
+                    local resultCount = select(
+                        '#',
+                        C_Map.GetWorldPosFromMapPos(mapID, CreateVector2D(0.5, 0.5))
                     )
-                    assert(
-                        type(instanceID) == "number",
-                        "GetWorldPosFromMapPos returned no instance for uiMapID " .. mapID
-                    )
-                    assert(
-                        type(worldPos) == "table"
-                            and type(worldPos.x) == "number"
-                            and type(worldPos.y) == "number",
-                        "GetWorldPosFromMapPos returned no vector for uiMapID " .. mapID
-                    )
+                    if noWorldMapIDs[mapID] then
+                        noWorldZoneCount = noWorldZoneCount + 1
+                        assert(
+                            resultCount == 0,
+                            "unmapped assignment returned values for uiMapID " .. mapID
+                        )
+                    else
+                        assert(
+                            resultCount == 2,
+                            "GetWorldPosFromMapPos returned no result for uiMapID " .. mapID
+                        )
+                        local instanceID, worldPos = C_Map.GetWorldPosFromMapPos(
+                            mapID,
+                            CreateVector2D(0.5, 0.5)
+                        )
+                        assert(
+                            type(instanceID) == "number",
+                            "GetWorldPosFromMapPos returned no instance for uiMapID " .. mapID
+                        )
+                        assert(
+                            type(worldPos) == "table"
+                                and type(worldPos.x) == "number"
+                                and type(worldPos.y) == "number",
+                            "GetWorldPosFromMapPos returned no vector for uiMapID " .. mapID
+                        )
+                    end
                 end
 
                 local children = childrenByParent[mapID] or {{}}
@@ -376,6 +433,10 @@ fn retail_map_world_position_probe_covers_zone_maps_under_azeroth() {
             end
         end
         assert(zoneCount == {zone_count}, "probe did not visit every Zone below Azeroth")
+        assert(
+            noWorldZoneCount == {no_world_zone_count},
+            "probe did not visit every Zone without a world assignment"
+        )
         assert(visited[7], "Mulgore (uiMapID 7) must be reachable from Azeroth")
         "#
     );
