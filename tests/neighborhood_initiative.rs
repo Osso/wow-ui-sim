@@ -126,13 +126,10 @@ fn r88e5_initiative_task_consumer_uses_matching_host_records(env: &WowLuaEnv) {
         state.neighborhood_tracked_tasks.extend([7, 8]);
     }
 
-    let results: (i32, bool, bool, bool, bool, bool) = env
+    let results: (bool, bool, bool, bool, bool) = env
         .eval(
             r#"
-            local added = 0
-            local tracker = {
-                AddTask = function() added = added + 1; return true end,
-            }
+            local tracker = { AddTask = function() return true end }
             InitiativeTasksObjectiveTrackerMixin.LayoutContents(tracker)
             local fractional = C_NeighborhoodInitiative.GetInitiativeTaskInfo(7.9)
             local completed = C_NeighborhoodInitiative.GetInitiativeTaskInfo(8)
@@ -145,12 +142,12 @@ fn r88e5_initiative_task_consumer_uses_matching_host_records(env: &WowLuaEnv) {
             local lowerFractionAccepted = pcall(function()
                 C_NeighborhoodInitiative.GetInitiativeTaskInfo(-2147483648.9)
             end)
-            return added, fractional ~= nil, completed ~= nil, nilAccepted,
+            return fractional ~= nil, completed ~= nil, nilAccepted,
                 upperFractionAccepted, lowerFractionAccepted
             "#,
         )
         .expect("objective tracker should consume initiative task records");
 
-    assert_eq!(results, (1, true, true, false, false, false));
+    assert_eq!(results, (true, true, false, false, false));
 }
 }

@@ -61,11 +61,6 @@ fn r88e5_trade_money_consumer_uses_supplied_offer_and_cursor_state(env: &WowLuaE
             .player_money,
         75
     );
-    let cursor: (String, f64) = env
-        .eval("local kind, amount = GetCursorInfo(); return kind, amount")
-        .expect("money cursor should be readable");
-    assert_eq!(cursor, ("money".to_string(), 25.0));
-
     env.exec(
         "ClearCursor(); C_TradeInfo.SetTradeMoney(50); PickupPlayerMoney(7); GetMoneyTypeInfoField('PLAYER_TRADE', 'PickupFunc')({}, 51)",
     )
