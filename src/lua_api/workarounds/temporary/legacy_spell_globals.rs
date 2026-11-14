@@ -49,7 +49,10 @@ if IsPressHoldReleaseSpell == nil and C_Spell ~= nil then
     end
 end
 if IsSelectedSpellBookItem == nil then
-    function IsSelectedSpellBookItem(_slotIndex, _unit)
+    function IsSelectedSpellBookItem(slotIndex, _unit)
+        if type(slotIndex) == "number" and slotIndex <= 0 then
+            return
+        end
         return false
     end
 end
