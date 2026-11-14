@@ -238,6 +238,10 @@ fn selected_quest_item_hover_uses_host_supplied_owned_item() {
     let env = selected_objective_tracker();
     {
         let mut sim = env.state().borrow_mut();
+        assert_ne!(
+            sim.quest_log_entries.entries[0].quest_id, QUEST_A,
+            "fixture keeps quest-cache identity separate from the quest-log row"
+        );
         let inputs = &mut sim.quest_log_entries.quest_special_item_inputs;
         inputs.quest_ids_by_log_index.insert(1, QUEST_A);
         inputs.quest_ids_by_log_index.insert(2, QUEST_B);
@@ -304,6 +308,27 @@ fn selected_quest_item_hover_uses_host_supplied_owned_item() {
     env.state().borrow_mut().bag_items.remove(&(0, 2));
     env.exec("assert(select('#', C_TooltipInfo.GetQuestLogSpecialItem(1)) == 0)")
         .expect("a missing selected item object returns exactly zero values");
+
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.bag_items.insert((0, 2), bag_item(ITEM_A));
+        sim.quest_log_entries
+            .quest_special_item_inputs
+            .cached_quest_records
+            .get_mut(&QUEST_A)
+            .unwrap()
+            .special_item_id = Some(ITEM_B);
+        sim.quest_log_entries
+            .quest_special_item_inputs
+            .cached_quest_records
+            .get_mut(&QUEST_B)
+            .unwrap()
+            .has_candidate_items = false;
+    }
+    env.exec(
+        "assert(select('#', C_TooltipInfo.GetQuestLogSpecialItem(1)) == 0); assert(select('#', C_TooltipInfo.GetQuestLogSpecialItem(2)) == 0)"
+    )
+    .expect("selected objects must match the primary or enabled candidate cache IDs");
 }
 
 fn bag_item(item_id: u32) -> BagItem {

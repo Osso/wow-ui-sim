@@ -27,13 +27,6 @@ pub struct QuestSpecialItemCacheRecord {
 }
 
 #[derive(Debug, Clone, Copy)]
-pub struct QuestSpecialItemSelection {
-    pub item_id: u32,
-    pub bag: i32,
-    pub slot: i32,
-}
-
-#[derive(Debug, Clone, Copy)]
 pub struct QuestSpecialItemObject {
     pub item_id: u32,
     /// Existing simulator bag location for the selected object.

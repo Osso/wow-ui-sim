@@ -143,9 +143,6 @@ pub struct QuestLogState {
     /// Host inputs for quest-ID request context, quest-cache fields and the
     /// selected inventory object. Native writer routes are not inferred.
     pub quest_special_item_inputs: crate::c_api::quest_special_item::QuestSpecialItemInputs,
-    /// Previous pre-resolved selection seam, retained until the producer swap.
-    pub resolved_quest_special_items:
-        HashMap<i32, crate::c_api::quest_special_item::QuestSpecialItemSelection>,
     pub additional_highlights: HashMap<i32, crate::c_api::c_quest_log::QuestAdditionalHighlights>,
     /// Build-12340 manual append order; IDs survive row reorder until log refresh.
     #[cfg(feature = "client-wrath")]
@@ -255,7 +252,6 @@ impl QuestLogState {
             party_quest_ids: HashMap::new(),
             party_progress: HashMap::new(),
             quest_special_item_inputs: Default::default(),
-            resolved_quest_special_items: HashMap::new(),
             entries: vec![
                 lost_expedition_entry(),
                 defending_the_gates_entry(),

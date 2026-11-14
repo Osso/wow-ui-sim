@@ -1,6 +1,6 @@
 ## [2026-11-14] investigation | Retail quest tooltip consumers
 
-Updated [consumer selection and RED proof](investigations/consumer-selection-and-red-proof.md#retail-quest-tooltip-consumers-and-host-input-seams) and the [Round 7 getter contract](../specs/tooltip-r7-getters.md). **VERIFIED (Retail 12.1.5.70688, R88n.1):** both getters return exactly zero Lua values on missing-source and failed-producer paths. **VERIFIED (R88n.3):** the special-item producer selects an owned object and passes item/owner/item GUIDs; cache, inventory/object, and party/objective writers remain UNKNOWN and use empty host inputs.
+Updated [consumer selection and RED proof](investigations/consumer-selection-and-red-proof.md#retail-quest-tooltip-consumers-and-host-input-seams) and the [Round 7 getter contract](../specs/tooltip-r7-getters.md). **VERIFIED (Retail 12.1.5.70688, R88n.1):** both getters return exactly zero Lua values on missing-source and failed-producer paths. **VERIFIED (R88n.3/R88n.3a):** the special-item getter resolves the indexed quest through request context and cache fields before selecting an inventory object. Cache/invalidation, inventory/object and party/objective writers remain UNKNOWN and use empty host inputs.
 
 ## [2026-11-14] fix | Original character and store lifecycle ownership
 

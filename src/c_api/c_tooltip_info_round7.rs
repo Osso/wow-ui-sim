@@ -150,17 +150,21 @@ fn get_possession(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn publish_quest_log_special_item(state: &mut LuaState) -> LuaResult<u32> {
-    // Retail TooltipInfoDocumentation.lua:817; selection and object inputs are
-    // host-supplied because the native cache and inventory writers are unknown.
+    // Retail TooltipInfoDocumentation.lua:817; host inputs separate quest-ID
+    // context, cache IDs and the selected object because native writers are unknown.
     let quest_index = tooltip_getter_args::round7_signed(state, 1, QUEST_SPECIAL_USAGE)?;
     if ACTIVE != ClientProfile::Retail {
         return no_values();
     }
-    let selection = find_quest_special_item_selection(state, quest_index);
-    let Some(selection) = selection else {
+    let selected_object = find_quest_special_item_object(state, quest_index);
+    let Some(selected_object) = selected_object else {
         return no_values();
     };
-    let guid = item_guid_for_bag_slot(selection.bag, selection.slot, selection.item_id);
+    let guid = item_guid_for_bag_slot(
+        selected_object.bag,
+        selected_object.slot,
+        selected_object.item_id,
+    );
     let Some((item_id, item)) = item_for_owned_guid(state, &guid) else {
         return no_values();
     };
@@ -293,17 +297,22 @@ fn active_essence_for_slot(state: &LuaState, slot: i32) -> Option<i32> {
         .and_then(|milestone| milestone.active_essence_id)
 }
 
-fn find_quest_special_item_selection(
+fn find_quest_special_item_object(
     state: &LuaState,
     quest_index: i32,
-) -> Option<crate::c_api::quest_special_item::QuestSpecialItemSelection> {
-    let index = usize::try_from(quest_index.checked_sub(1)?).ok()?;
+) -> Option<crate::c_api::quest_special_item::QuestSpecialItemObject> {
     let sim = borrow_state(state).ok()?;
-    let quest = sim.quest_log_entries.entries.get(index)?;
-    sim.quest_log_entries
-        .resolved_quest_special_items
-        .get(&quest.quest_id)
-        .copied()
+    let inputs = &sim.quest_log_entries.quest_special_item_inputs;
+    let quest_id = *inputs.quest_ids_by_log_index.get(&quest_index)?;
+    let cache_record = inputs.cached_quest_records.get(&quest_id)?;
+    let selected_object = *inputs.selected_item_objects.get(&quest_id)?;
+    let primary_id_matches = cache_record.special_item_id == Some(selected_object.item_id)
+        && selected_object.item_id != 0;
+    let candidate_id_matches = cache_record.has_candidate_items
+        && cache_record
+            .candidate_item_ids
+            .contains(&Some(selected_object.item_id));
+    (primary_id_matches || candidate_id_matches).then_some(selected_object)
 }
 
 fn item_for_owned_guid(state: &LuaState, guid: &str) -> Option<(u32, &'static ItemInfo)> {
