@@ -39,6 +39,34 @@ fn set_pvp_talent_locked_returns_no_values() {
 }
 
 #[test]
+fn required_pvp_talent_arguments_report_verified_usage_strings() {
+    let env = WowLuaEnv::new().expect("create PvP talent API environment");
+
+    let results: (bool, bool, bool, bool, bool) = env
+        .eval(
+            r#"
+            local function hasUsageError(call, usage)
+                local ok, message = pcall(call)
+                return not ok and string.find(message, usage, 1, true) ~= nil
+            end
+            return hasUsageError(function() C_SpecializationInfo.GetPvpTalentUnlockLevel() end,
+                    "Usage: local requiredLevel = C_SpecializationInfo.GetPvpTalentUnlockLevel(talentID)"),
+                hasUsageError(function() C_SpecializationInfo.GetPvpTalentSlotUnlockLevel() end,
+                    "Usage: local requiredLevel = C_SpecializationInfo.GetPvpTalentSlotUnlockLevel(talentIndex)"),
+                hasUsageError(function() C_SpecializationInfo.IsPvpTalentLocked() end,
+                    "Usage: local locked = C_SpecializationInfo.IsPvpTalentLocked(talentID)"),
+                hasUsageError(function() C_SpecializationInfo.SetPvpTalentLocked() end,
+                    "Usage: C_SpecializationInfo.SetPvpTalentLocked(talentID, locked)"),
+                hasUsageError(function() C_SpecializationInfo.SetPvpTalentLocked(123, nil) end,
+                    "Usage: C_SpecializationInfo.SetPvpTalentLocked(talentID, locked)")
+            "#,
+        )
+        .expect("query required PvP talent argument diagnostics");
+
+    assert_eq!(results, (true, true, true, true, true));
+}
+
+#[test]
 fn pvp_talent_unlock_level_is_nil_when_catalog_row_is_missing() {
     let env = WowLuaEnv::new().expect("create PvP talent API environment");
     env.state().borrow_mut().pvp_talent_tooltip.catalog.clear();
@@ -85,7 +113,7 @@ fn player_spells_locked_talent_consumer_clears_only_the_selected_lock() {
                         and not C_SpecializationInfo.IsPvpTalentLocked(secondTalentID)
 
                     C_SpecializationInfo.SetPvpTalentLocked(firstTalentID, true)
-                    C_SpecializationInfo.SetPvpTalentLocked(secondTalentID + 0.9, 1)
+                    C_SpecializationInfo.SetPvpTalentLocked(tostring(secondTalentID + 0.9), 1)
                     local bothLocked = C_SpecializationInfo.IsPvpTalentLocked(firstTalentID + 0.9)
                         and C_SpecializationInfo.IsPvpTalentLocked(secondTalentID)
 
