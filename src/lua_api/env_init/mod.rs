@@ -219,7 +219,7 @@ fn enable_taint_and_wrap_loadstring(lua: &mut rilua::Lua) -> crate::Result<()> {
     Ok(())
 }
 
-fn publish_retail_secure_template_method_binder(lua: &mut rilua::Lua) -> crate::Result<()> {
+fn publish_retail_secure_template_method_binder(lua: &mut rilua::Lua) -> LuaResult<()> {
     if !crate::client_profile::is_active_retail_12_1_5() {
         return Ok(());
     }
