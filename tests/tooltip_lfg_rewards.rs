@@ -8,7 +8,7 @@ use crate::common::blizzard_addon_harness::{
     blizzard_ui_dir, load_blizzard_addon_closure_into_env, new_blizzard_addon_env,
 };
 use wow_ui_sim::lua_api::WowLuaEnv;
-use wow_ui_sim::lua_api::state_types::{LfgTooltipReward, LfgTooltipRewardGroup};
+use wow_ui_sim::lua_api::state::{LfgTooltipReward, LfgTooltipRewardGroup};
 use wow_ui_sim::screen::ScreenKind;
 
 const DUNGEON_ID: i32 = 1203;
