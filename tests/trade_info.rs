@@ -11,13 +11,12 @@ fn r88e5_trade_offer_warning_consumer_reads_shared_host_value(env: &WowLuaEnv) {
     let results: (bool, bool, bool, bool) = env
         .eval(
             r#"
-            C_SecureTransfer = C_SecureTransfer or {}
-            C_SecureTransfer._state = C_SecureTransfer._state or {}
-            C_SecureTransfer._state.shouldShowTradeOfferWarning = true
+            C_TradeInfo._state = C_TradeInfo._state or {}
+            C_TradeInfo._state.shouldShowTradeOfferWarning = true
             TradeFrame_UpdateWarnings()
             local tradeShown = TradeFrameTradeButton.warningTooltip ~= nil
             local tradeValue = C_TradeInfo.ShouldShowTradeOfferWarning()
-            C_SecureTransfer._state.shouldShowTradeOfferWarning = false
+            C_TradeInfo._state.shouldShowTradeOfferWarning = false
             TradeFrame_UpdateWarnings()
             local tradeHidden = TradeFrameTradeButton.warningTooltip == nil
             local tradeFalse = C_TradeInfo.ShouldShowTradeOfferWarning()
@@ -32,10 +31,11 @@ fn r88e5_trade_offer_warning_consumer_reads_shared_host_value(env: &WowLuaEnv) {
     let getters: (bool, bool, bool, bool) = api_env
         .eval(
             r#"
-            C_SecureTransfer._state.shouldShowTradeOfferWarning = true
+            C_TradeInfo._state = C_TradeInfo._state or {}
+            C_TradeInfo._state.shouldShowTradeOfferWarning = true
             local tradeTrue = C_TradeInfo.ShouldShowTradeOfferWarning()
             local secureTrue = C_SecureTransfer.ShouldShowTradeOfferWarning()
-            C_SecureTransfer._state.shouldShowTradeOfferWarning = false
+            C_TradeInfo._state.shouldShowTradeOfferWarning = false
             local tradeFalse = C_TradeInfo.ShouldShowTradeOfferWarning()
             local secureFalse = C_SecureTransfer.ShouldShowTradeOfferWarning()
             return tradeTrue, secureTrue, tradeFalse, secureFalse
