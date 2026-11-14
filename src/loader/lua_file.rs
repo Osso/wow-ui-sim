@@ -200,13 +200,11 @@ fn execute_lua_file(
 ) -> Result<rilua::Val, LoadError> {
     let call_start = Instant::now();
     let exec_result = env.with_state(|state| {
-        execute_compiled_lua_file_with_environment(
-            state,
-            func,
-            ctx,
-            chunk_name,
-            use_replay_environment,
-        )
+        if use_replay_environment {
+            execute_compiled_lua_file_with_environment(state, func, ctx, chunk_name, true)
+        } else {
+            execute_compiled_lua_file(state, func, ctx, chunk_name)
+        }
     });
     let call_elapsed = call_start.elapsed();
     timing.lua_call_time += call_elapsed;
