@@ -49,6 +49,14 @@ Layout branches on `anchors.len()` (`src/iced_app/layout.rs`):
 
 `set_screen_size(width, height)` deliberately sets both pairs one-to-one. `set_display_size(width, height)` retains physical pixels and derives the base canvas from Blizzard PixelUtil's 768-unit reference height. Frame effective scale remains independent of both inputs.
 
+## Screen clamping
+
+**VERIFIED (Retail 12.1.5.70688, R88n.5r):** The generic rect resolver clamps enabled frames after requested geometry is resolved and before the rect is stored or rect-change notification is sent. Queued layout and synchronous dirty-rect queries use the same calculation. Screen extents and per-frame `(left, right, top, bottom)` insets are combined after multiplying insets by effective scale. In top-left `LayoutRect` coordinates, the bounds are `x >= -left × scale`, `x + width <= screenWidth - right × scale`, `y >= top × scale`, and `y + height <= screenHeight + bottom × scale`.
+
+**VERIFIED (Retail 12.1.5.70688, original UI):** `GameTooltip` inherits `clampedToScreen="true"`; the simulator uses the generic enable flag, not a tooltip-specific rule. See the [original consumer fixture](../../../tests/blizzard_game_tooltip_loads.rs).
+
+**UNKNOWN (R88n.5r-q1):** The native suppression-state identity and producer are not established; the simulator seam stays neutral and never suppresses. Exact rounding, oversized-frame behavior, and order relative to snapping remain UNKNOWN and unchanged. Setter-only cache invalidation is also UNKNOWN; the verified clamp reads insets during rect resolution.
+
 ## Coordinate System
 
 | Context | Origin | Y direction |
@@ -75,3 +83,4 @@ Special case: `UIParent` (id=1 or name="UIParent") always fills the base canvas.
 - [[rendering-pipeline]] — consumes LayoutRect and applies presentation transforms for render/input geometry
 - [[frame-position-baseline-drift]] — causal replay needs both display metrics and EditMode inputs
 - [[ptr-pixel-rounding-probe]] — PTR native pixel-rounding semantics await live evidence
+- [[consumer-selection-and-red-proof]] — selected original UI consumers and independent RED selectors

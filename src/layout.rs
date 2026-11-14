@@ -690,12 +690,23 @@ fn maybe_clamp_frame_rect(
     screen_height: f32,
 ) {
     if should_clamp_frame_to_screen(frame) && rect.width > 0.0 && rect.height > 0.0 {
-        clamp_rect_to_screen(rect, screen_width, screen_height);
+        clamp_rect_to_screen(
+            rect,
+            screen_width,
+            screen_height,
+            frame.clamp_rect_insets,
+            frame.effective_scale,
+        );
     }
 }
 
 fn should_clamp_frame_to_screen(frame: &crate::widget::Frame) -> bool {
-    frame.clamped_to_screen || frame.widget_type == WidgetType::GameTooltip
+    frame.clamped_to_screen && !screen_clamping_suppressed()
+}
+
+/// R88n.5r-q1 has not identified the native suppression state. Keep this seam neutral.
+fn screen_clamping_suppressed() -> bool {
+    false
 }
 
 pub fn compute_frame_rect(
@@ -708,16 +719,39 @@ pub fn compute_frame_rect(
     compute_frame_rect_cached(registry, id, screen_width, screen_height, &mut cache).rect
 }
 
-fn clamp_rect_to_screen(rect: &mut LayoutRect, screen_w: f32, screen_h: f32) {
-    rect.x = clamp_axis_to_viewport(rect.x, rect.width, screen_w);
-    rect.y = clamp_axis_to_viewport(rect.y, rect.height, screen_h);
-}
+fn clamp_rect_to_screen(
+    rect: &mut LayoutRect,
+    screen_w: f32,
+    screen_h: f32,
+    (left, right, top, bottom): (f32, f32, f32, f32),
+    effective_scale: f32,
+) {
+    let left_edge = -left * effective_scale;
+    let right_edge = screen_w - right * effective_scale;
+    let top_edge = top * effective_scale;
+    let bottom_edge = screen_h + bottom * effective_scale;
 
-fn clamp_axis_to_viewport(position: f32, size: f32, viewport_size: f32) -> f32 {
-    if size >= viewport_size {
-        0.0
+    if rect.width >= screen_w {
+        rect.x = 0.0;
     } else {
-        position.clamp(0.0, viewport_size - size)
+        if rect.x < left_edge {
+            rect.x = left_edge;
+        }
+        if rect.x + rect.width > right_edge {
+            rect.x = right_edge - rect.width;
+        }
+    }
+
+    if rect.height >= screen_h {
+        rect.y = 0.0;
+    } else {
+        // Native checks the bottom boundary before the top boundary.
+        if rect.y + rect.height > bottom_edge {
+            rect.y = bottom_edge - rect.height;
+        }
+        if rect.y < top_edge {
+            rect.y = top_edge;
+        }
     }
 }
 

@@ -19,7 +19,6 @@ local function returnFalse(_spellID)
 end
 
 installSpellDefault("IsSpellPassive", returnFalse)
-installSpellDefault("IsRangedAutoAttackSpell", returnFalse)
 installSpellDefault("IsPressHoldReleaseSpell", returnFalse)
 
 installSpellDefault("IsPriorityAura", returnFalse)
@@ -69,7 +68,7 @@ fn apply_count_defaults(_lua: &mut rilua::Lua) -> crate::Result<()> {
 mod tests {
     use crate::lua_api::WowLuaEnv;
 
-    #[cfg(feature = "client-retail")]
+    #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
     #[test]
     fn installs_spell_metadata_functions() {
         let env = WowLuaEnv::new().expect("lua env should initialize");

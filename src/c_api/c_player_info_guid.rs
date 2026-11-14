@@ -25,7 +25,9 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
 
     let namespace = ensure_namespace(state, "C_PlayerInfo")?;
     table_set_rust_fn_static(state, namespace, "GUIDIsPlayer", guid_is_player)?;
-    if ACTIVE == ClientProfile::Retail {
+    if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr) {
+        // PTR 70493 PlayerInfoDocumentation.lua:233–245 declares this query.
+        // Reuse its existing supplied Midnight unlock state (INFERRED).
         table_set_rust_fn_static(
             state,
             namespace,

@@ -64,6 +64,11 @@ fn begin_tick(state: &mut LuaState, elapsed: f64) -> crate::Result<()> {
             .recipe_filter_update_pending,
     );
     if pending {
+        if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+            // VERIFIED (simulator): filter notifications clear before dispatch and do not rebuild rows.
+            // INFERRED: mapping this trigger/tick to the native rebuild clear is a model assumption.
+            borrow_state_mut(state)?.recipe_rank_tooltip_cache.clear();
+        }
         super::script_helpers::fire_named_event_state(state, "TRADE_SKILL_LIST_UPDATE", &[]);
     }
     super::globals::real::loot_specialization::apply_pending(state)?;

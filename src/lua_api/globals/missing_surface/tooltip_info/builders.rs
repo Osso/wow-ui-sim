@@ -14,6 +14,8 @@ use crate::lua_bridge::stack_val;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
+const LINE_TYPE_SELL_PRICE: f64 = 11.0;
+
 #[cfg(all(test, any(feature = "profile-retail", feature = "client-ptr")))]
 #[path = "builder_contract_tests.rs"]
 mod builder_contract_tests;
@@ -475,6 +477,22 @@ fn push_item_name_line(state: &mut LuaState, lines: Val, item: &items::ItemInfo)
     );
 }
 
+/// INFERRED: Retail's positive catalog sell price supplies a SellPrice line.
+/// The native eligibility predicate and `maxPrice` input remain UNKNOWN.
+fn push_retail_sell_price_line(state: &mut LuaState, lines: Val, index: i64, price: u32) {
+    if price == 0 || crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
+        return;
+    }
+
+    let saved_top = state.top;
+    state.push(lines);
+    let line = create_table(state);
+    set_table_array(state, lines, index, line);
+    table_set(state, line, "type", Val::Num(LINE_TYPE_SELL_PRICE));
+    table_set(state, line, "price", Val::Num(f64::from(price)));
+    state.top = saved_top;
+}
+
 fn tooltip_detail_color(state: &mut LuaState) -> (f64, f64, f64) {
     global_color_or_fallback(state, b"HIGHLIGHT_FONT_COLOR", (1.0, 0.82, 0.0))
 }
@@ -773,6 +791,7 @@ pub(super) fn populate_item_tooltip_lines(
         publish_item_metadata(state, tooltip, &input);
         push_item_stat_lines(state, lines, &input.stats, &mut next_index);
     }
+    push_retail_sell_price_line(state, lines, next_index, item.sell_price);
     state.top = saved_top;
 }
 

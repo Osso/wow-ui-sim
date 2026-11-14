@@ -103,6 +103,7 @@ pub(crate) fn register_interaction_tables(state: &mut LuaState) -> LuaResult<()>
         super::c_combat_log::register_restriction(state)?;
         super::c_limited_input::register(state)?;
     }
+    super::combat_audio_enabled::register(state)?;
     #[cfg(feature = "retail-12-0-0")]
     super::c_combat_audio_alert::register(state)?;
     #[cfg(feature = "retail-12-0-0")]

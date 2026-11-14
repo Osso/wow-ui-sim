@@ -2,11 +2,11 @@
 
 Validation artifacts for supported client profiles.
 
-## PTR 70493 authenticated-source capture — 2026-10-24
+## PTR 70493 authenticated-source capture — 2026-11-14
 
-[`ptr-lua-errors.json`](ptr-lua-errors.json) is the exact stock `lua-errors` stdout captured at `e50a145a34246d32807b7ebb463c8fd04b538780` after merging master `7e786472d` into the source lane. Build `wowt 12.1.7.70493`, Interface 120107; 4,578 source files match pinned decoded size/hash. [Metadata](ptr-lua-errors.meta.json) binds build/CDN/install/Gethe identity, manifest/index/mapping/cache-provenance hashes, sealed ELF, child-only environment, unchanged source/CVar guards and retained service result.
+[`ptr-lua-errors.json`](ptr-lua-errors.json) is the exact stock `lua-errors` stdout captured at `0214e7d83c8f1f23b3525a7e0b1fd00148c0997a` (lt-7f57). Build `wowt 12.1.7.70493`, Interface 120107, owner-pinned cache. [Metadata](ptr-lua-errors.meta.json) binds the source, profile manifest/index, authenticated cache provenance, binary, and child-only CVar environment.
 
-**FAILING inventory: 432 records / 612 occurrences, exit 1.** Parent accepted the reduction from 434/614: exactly the Minimap `IsInsideHouse` nil error and its ScriptErrors presentation disappear (one occurrence each), explained by master's house-interior implementation (`e3a61a390`). Independent comparison confirms no additions, changed counts or remaining-order changes. This is not clean startup or I4/panel/native acceptance. The error list is byte-identical captured stdout (SHA256 `2281134d2e6bcc216f6ad59689a96bb2cc177b76a99673b6ad454ee320fb11f6`), not hand edited. Capture receipt: `~/.local/state/wow-ui-sim/verification/p1217-merged/ptr-stock-map/receipt.json`; comparison and reconciliation receipts remain beside that capture. No build or runtime was repeated for reconciliation; later source merges are not covered by this capture. Previous 69594 baseline remains in Git at `1edff1749e4b6e0ac59358ae0f76dfe180f7b0de`; no renamed copy was added. Historical re-pin/control sections below retain their original source epochs and do not describe this 70493 capture.
+**CLEAN stock: 0 records / 0 occurrences, exit 0.** Immediate baseline `af5225577dd5e9817b2114149a9a66bcefcf495c` had 20 records / 274 occurrences, including ScriptErrors echoes. The existing simulator-backed honor reward, achievement tracked IDs, combat audio, spell visibility, and Midnight unlock APIs are now published on PTR from its pinned declarations. The former 432-record 2026-10-24 inventory remains available in Git history; this is a stock result, not native, rendered, panel, or full-suite acceptance.
 
 ## rilua re-pin baseline refresh — 2026-10-17
 
@@ -166,12 +166,17 @@ That capture's historical metadata bound the observation to source, manifest has
 
 ## Forever Lua Errors
 
+The 2026-11-14 capture records the owner-pinned Linux Game-screen run for `wowf 1.60.1.70707` at `2ea03fb7123d79525ca9ee6bde8db0feedb286c4` (lt-b573), whose tree is exactly reproduced by the retained per-API commit `a6b43c5c65b87279081f6fc61f2572ee3397dea7`. [Raw JSON](wowforever-lua-errors.json) and [metadata](wowforever-lua-errors.meta.json) bind the exact stock command, copied CVars, verified cache and artifacts.
+
+**CLEAN stock: 0 records / 0 occurrences, exit 0.** Immediate baseline `b6a1079940a25527adb0544a0db3d0d52a747aa1` had 18 records / 262 occurrences, including ScriptErrors echoes. The existing honor reward, tracked content, combat audio availability and spell visibility APIs are now published on Forever from pinned declarations. This is not enabled combat audio, populated single-criterion, native, rendered or full-suite acceptance.
+
+### Historical 70707 Windows capture
+
 The 2026-11-02 capture uses the 70707 retarget worktree based on `eb548efc0`
 with matching `wowf 1.60.1.70707` UI inputs: **4 records / 4 occurrences,
 exit1; startup is not clean.** The raw stdout SHA-256 is
 `c7c80c6c2b80fda00632c192bc48692f8d6006d1df11f90dec8fb7a346571033`.
-[Metadata](wowforever-lua-errors.meta.json) records the source snapshot, sealed
-binary, cache identity and capture guards.
+The JSON and metadata at `116f2dfff` record that historical source snapshot, sealed binary, cache identity and capture guards.
 
 All four records still concern missing `C_PetInfo.IsPetOrderMoveToPending`, now
 at `Blizzard_GamepadActionBars/MainActionBarFrame.lua:246`: OnLoad and OnEvent
@@ -189,10 +194,9 @@ are under `docs/local/70707/baseline-capture/`.
 Verified Windows game-screen capture on 2026-11-02 at runtime source
 `2e48a2960`, using the installed `wowf 1.60.1.70634` UI cache:
 **4 records / 4 occurrences, exit1; startup is not clean.**
-`wowforever-lua-errors.json` is byte-identical captured stdout (SHA256
+The archived JSON at `bf8a02806` is byte-identical captured stdout (SHA256
 `bd2c211638d3bfac11ad63bb8d5e5db8cd9ba47d90481f3afbaa181a7a0ab0d1`).
-[Metadata](wowforever-lua-errors.meta.json) records the command, binary hash,
-cache provenance, CVar guards and all four record classifications.
+The metadata at that revision records the command, binary hash, cache provenance, CVar guards and all four record classifications.
 
 All four records concern missing `C_PetInfo.IsPetOrderMoveToPending` at
 `Blizzard_GamepadActionBars/MainActionBarFrame.lua:244`: one OnLoad failure and

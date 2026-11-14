@@ -243,7 +243,6 @@ pub struct SimState {
     /// Explicit per-item supplied quality; independent of recipe inputs, initially empty.
     pub crafted_item_quality:
         HashMap<u32, crate::c_api::c_trade_skill_quality::CraftingQualityInfo>,
-    #[cfg(feature = "retail-12-0-0")]
     pub pvp_catalog: crate::c_api::c_pvp::catalog::PvpCatalog,
     #[cfg(feature = "retail-12-0-0")]
     pub prey_inputs: crate::c_api::c_prey::PreyInputs,
@@ -437,6 +436,7 @@ pub struct SimState {
     pub spell_trade_skill_links: HashMap<u32, String>,
     pub spell_id_aliases: HashMap<String, u32>,
     pub spell_tooltip_inputs: HashMap<u32, crate::c_api::spell_tooltip::SpellTooltipInput>,
+    pub recipe_rank_tooltip_cache: crate::c_api::recipe_rank_tooltip::RecipeRankTooltipCache,
     pub aura_tooltip_inputs: HashMap<i32, crate::c_api::spell_tooltip::AuraTooltipInput>,
     pub spell_tooltip_cost_contexts:
         HashMap<u32, crate::c_api::spell_tooltip_cost::SpellTooltipCostContext>,
@@ -642,9 +642,18 @@ pub struct SimState {
     pub gcd: Option<(f64, f64)>,
     pub spell_cooldowns: HashMap<u32, SpellCooldownState>,
     pub spell_charges: HashMap<u32, crate::c_api::charge_state::SpellChargeState>,
-    /// Explicit spell-keyed C_Spell count input; no inventory or casting derivation.
+    /// Explicit ranged identifier input; zero is the pre-runtime image value, not a login claim.
+    pub ranged_auto_attack_spell_id: u32,
+    /// Host null override; None uses the INFERRED active-player context.
+    pub spell_cast_context_is_null: Option<bool>,
+    /// Explicit simulator input for older C_Spell and spellbook count queries.
     #[cfg(feature = "retail-12-0-0")]
     pub spell_cast_counts: HashMap<u32, u32>,
+    /// Generic verified selector pairs; native SpellReagents field mapping is not modeled.
+    #[cfg(feature = "retail-12-0-5")]
+    pub spell_reagent_pairs: HashMap<u32, Vec<(i32, i32)>>,
+    /// Host-supplied visibility rows; a missing row publishes three false values on success.
+    pub spell_visibility_results: Option<HashMap<(u32, u8), (bool, bool, bool)>>,
     /// Explicit cooldown-output policy input, independent of combat and unit stats.
     pub cooldowns_restricted: bool,
     /// Explicit spell-keyed maximum aura stack input; empty means undeclared, never applied stacks.
@@ -872,6 +881,8 @@ pub struct SimState {
     #[cfg(feature = "client-wowforever")]
     pub stable_reads: crate::c_api::c_stable_info::forever::StableReadState,
     pub merchant_items: Vec<u32>,
+    /// Explicit R88l.2 link/selection seams, keyed by existing merchant slot.
+    pub merchant_links: crate::lua_api::globals::real::merchant_item_link::MerchantLinks,
     /// Explicit extended-cost records keyed by zero-based merchant slot; a
     /// missing key is not an observed record (decomp Round 6 §2b).
     pub merchant_offer_costs: HashMap<u32, MerchantCostRecord>,

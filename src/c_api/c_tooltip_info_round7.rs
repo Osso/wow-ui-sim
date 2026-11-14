@@ -380,10 +380,20 @@ fn publish_quest_party_progress(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn get_recipe_rank_info(state: &mut LuaState) -> LuaResult<u32> {
-    let _recipe_id = tooltip_getter_args::round7_signed(state, 1, RECIPE_RANK_USAGE)?;
-    let _rank = tooltip_getter_args::round7_signed(state, 2, RECIPE_RANK_USAGE)?;
-    // RecipeEntry is a crafting-panel output record, not the native parent / rank chain.
-    no_values()
+    let recipe_id = tooltip_getter_args::round7_signed(state, 1, RECIPE_RANK_USAGE)?;
+    let rank = tooltip_getter_args::round7_signed(state, 2, RECIPE_RANK_USAGE)?;
+    if crate::client_profile::ACTIVE != ClientProfile::Retail {
+        return no_values();
+    }
+    let Some(data) =
+        crate::lua_api::globals::missing_surface::tooltip_info::build_recipe_rank_info(
+            state, recipe_id, rank,
+        )?
+    else {
+        return no_values();
+    };
+    state.push(data);
+    Ok(1)
 }
 
 fn get_runeforge_result_item(state: &mut LuaState) -> LuaResult<u32> {

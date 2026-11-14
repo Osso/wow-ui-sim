@@ -43,6 +43,10 @@ native-duration unit thresholds. They do not use spell tooltip composition.
 
 **VERIFIED (optional Retail integration tests):** the original `ChallengesKeystoneSlotMixin:OnEnter` consumer shows two distinct selected item/GUID pairs through `GetSlottedKeystone`; a separate test proves the slotted event callback sees selected state. **SIMULATOR GAP:** the original event handler's `GetSlottedKeystoneInfo` call is not modeled, so the hover test selects before loading that event listener. Current-map validation, removal cursor transfer, and complete external update/close/clear routes remain unmodeled or UNKNOWN.
 
+
+
+**VERIFIED (Retail 12.1.5.70688, R88n.4):** `GetRecipeRankInfo` follows supplied parent/successor records, checks spell-store presence, applies the qualitative rank threshold to description colors, and publishes top-level TooltipData type 17 with the requested recipe ID; 17 is not a line type. **INFERRED (simulator):** it passes text-line type 0 to the shared builder. **VERIFIED (R88n.4a):** native rebuild retains duplicate cache keys, inserts new keys, appends/counts/grows the display vector, and projects favorite/crafting-order flags before row copy. **VERIFIED (simulator):** the empty-by-default host cache models first-key retention and lookup only; it does not model the native vector or flags. **VERIFIED (R88n.4b):** the native clear routine has direct callers for trade-skill initialization and rebuild, and dirty state can reach rebuild. **INFERRED (simulator routes):** `OpenTradeSkill` and profession-spell redirection share an initialization helper that clears the host cache; changed recipe filters drain on `begin_tick`, which clears before `TRADE_SKILL_LIST_UPDATE` but does not rebuild rows. **INFERRED (presentation):** color globals and packed RGB, one-based ranks and comparison boundary, the `": "` label delimiter, `TRADESKILL_RANK_HEADER` and `TRADESKILL_NEXT_RANK_HEADER`, blank separators, source placement, `wrapText=true`, cycle handling, and missing-input failure predicates. **PRESERVATION:** zero-arity miss coverage does not establish producer selection; R88n.1 verifies failed-producer arity. Missing-parent/base-spell/color-global predicates are INFERRED. **UNKNOWN:** complete row semantics, upstream data acquisition, all external clear triggers, learned-status meaning and player/faction source lookup. See the [Round 7 tooltip contract](../../specs/tooltip-r7-getters.md).
+
 For `C_Item.GetItemNumSockets`, VERIFIED: Retail/PTR/Forever reject a secret input from tainted execution and can read it from an untainted caller. UNKNOWN: the native publication helper's enable byte and mode do not establish whether the returned count receives a secret tag; the simulator does not claim that policy.
 
 Retail/PTR supplied loot and buyback slots feed the existing item tooltip builder.
@@ -67,6 +71,18 @@ default unchanged; the new presentation operations register only on Retail/PTR.
 Original MerchantFrame buyback hover and the three presentation tests pass on
 both profiles. The full PTR tooltip/library runs retain the same failures as
 the source-matched master baseline; this is not a clean PTR startup claim.
+
+### Retail TooltipData field boundary (R88n.4b)
+
+**VERIFIED (Retail 12.1.5.70688, R88n.4b):** `repairCost` and battle-pet
+fields are TooltipData-level; `price` and `maxPrice` belong on a type-11
+`SellPrice` line. See the [serialization contract](../../specs/tooltip-data-serialization.md).
+**VERIFIED (simulator):** the item catalog supplies `ItemInfo.sell_price`.
+**INFERRED (simulator policy):** Retail emits a positive catalog value as line
+`price`; `maxPrice` stays absent because the tooltip input has no current stack
+quantity or range. Repair cost and battle-pet tooltip fields stay absent because
+those inputs are not modeled. See the [consumer investigation](../investigations/consumer-selection-and-red-proof.md#retail-tooltip-serializer-field-consumers)
+for TOC selection, tests and the quest-cache/LFG seam boundaries.
 
 ## Cursor modes and ActionBar transitions
 
@@ -239,6 +255,10 @@ Shared publisher immediately roots one public table: restricted `startTime`, `du
 Historical pre-producer `e5d11e497` RED: **27 selected, 5 PASS / 22 FAIL**, exit101; 28 authored includes one inverse-gated earlier/Forever test excluded from this run. Five unrestricted spell interval controls pass. Failures reach book0 versus real312/330/310 intervals, disabled shape, ignored bank/offspec/public parsing, authentic-secret conversion and false secrecy metadata. Positive book payload precedes guard credit; downstream opacity/copy/root/GC is not independently RED-proven. Supplied compilation exited0 in **511.677244s, zero diagnostics**; execution **5.977233s**. At that dated producer checkpoint GREEN/acceptance were pending; the historical 192/155/14/1,362 IDs/73 capabilities totals are not current accounting. Spec authored2026-10-02; observed Git author/committer2026-10-02T19:25:49-05:00 and supplied build/run observations remain separate provenance, not native field dates.
 
 [Independent537+541 bounded acceptance](../../specs/spell-book-cooldown-outputs.md#independent-bounded-acceptance--2026-10-02), recorded by `758cdf49c`, supersedes pending claims for exact305/322 outputs only. Current meaningful intervals, book selector/offspec boundaries, trusted-host NUM payloads and Lua opacity/copy/root/GC behavior pass. Modern/legacy grouping equivalence is proved; scopedfmt/check exit0, 27 refreshed + 135 inherited = 162 unique Retail PASS/one ignored, inherited startup `[]`. Post-grouping Forever compile0/legacy1 PASS refreshes one original identity; original64 PASS/1 FAIL/1 ignored retained without duplicate credit. Mask-quad failure makes the whole filter non-green: no cooldown call, applicability rejected, causal preexistence UNRESOLVED. Acceptance checkpoint188 pending/159 bounded/14 partial/1 metadata,362 IDs/75 capabilities. Inferred policies remain explicit; nominal/native types, SpellIdentifier input, future fixture, pet/full banks/UI remain unproved. Dirty-combined/globalfmt1/historical502 failure retained; broader goal open.
+
+## Retail 12.1.5 spell count, visibility, and ranged-ID routes
+
+The [spell count contract](../../specs/spell-count-outputs.md) records R88k.3–.6 and R88m.1–.3. **VERIFIED (Retail 12.1.5.70688):** `GetSpellCastCount` checks Spell-store membership, returns one number, and uses the first eight eligible reagent limits; `GetSpellDisplayCount` selects cast mode from nonzero reagent IDs with positive quantities, including ID -2, before charge mode. **VERIFIED (Retail 12.1.5.70688):** the ranged-auto-attack query compares one shared ID, the metadata mask is 16,777,216, removal clears only an equal ID, and visibility failure/success publish zero or three values. **INFERRED:** `A_Admin.LearnSpell`/`UnlearnSpell` supply scenario update/removal inputs, and the shared context defaults to the active-player model. **UNKNOWN:** native dispatcher meanings, SpellReagents field mapping, alternate inventory modes/inclusion, visibility data tables, and context lifecycle. **VERIFIED (optional tests at code SHA `438ec83e8`):** the selected Retail SpellSearch, CooldownViewer, SpellFlyout, and AuraUtil consumers and direct API contracts pass; all five profile compile receipts report zero warnings, and Retail `lua-errors` is `[]`. The spec and lane report retain the complete proof matrix.
 
 ## Retail 12.0.5 spell cast and display-count outputs
 
