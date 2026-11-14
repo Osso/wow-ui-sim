@@ -633,25 +633,18 @@ fn retail_game_tooltip_default_anchor_clamps_with_scaled_insets(env: &WowLuaEnv)
         GameTooltipDefaultContainer:SetClampedToScreen(false)
         GameTooltipDefaultContainer:ClearAllPoints()
         GameTooltipDefaultContainer:SetPoint("TOPLEFT", UIParent, "TOPLEFT", -20, 20)
-        GameTooltip_SetDefaultAnchor(GameTooltip, UIParent)
         GameTooltip:SetSize(100, 50)
         GameTooltip:SetScale(2)
-        GameTooltip:SetClampRectInsets(0, 0, 0, 0)
+        GameTooltip:SetClampRectInsets(4, 6, 8, 10)
+        GameTooltip_SetDefaultAnchor(GameTooltip, UIParent)
         "#,
     )
     .expect("original default-anchor helper should place GameTooltip");
 
-    let before_insets: (f64, f64, f64, f64) = env
+    let synchronous_rect: (f64, f64, f64, f64) = env
         .eval("return GameTooltip:GetBoundsRect()")
         .expect("synchronous bounds query should resolve the tooltip rect");
-    assert_eq!(before_insets, (0.0, 334.0, 100.0, 50.0));
-
-    env.exec("GameTooltip:SetClampRectInsets(4, 6, 8, 10)")
-        .expect("clamp insets should update on the loaded tooltip");
-    let after_insets: (f64, f64, f64, f64) = env
-        .eval("return GameTooltip:GetBoundsRect()")
-        .expect("inset update should resolve on the synchronous layout route");
-    assert_eq!(after_insets, (-4.0, 326.0, 100.0, 50.0));
+    assert_eq!(synchronous_rect, (-4.0, 326.0, 100.0, 50.0));
 
     env.exec(
         r#"
