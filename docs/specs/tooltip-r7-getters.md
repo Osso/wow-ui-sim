@@ -9,6 +9,10 @@ The Round 7 `C_TooltipInfo` getters use native argument readers and tooltip buil
 - [x] On Retail 12.1.5 (70688), missing-source calls to `GetQuestLogSpecialItem` and `GetQuestPartyProgress` return exactly zero Lua values, not `nil` or a tooltip table (R88n.1).
 - [x] Retail LFG reward getters read only ready, host-supplied reward groups keyed by dungeon ID and type; ordinary entries and shortage tiers use their selected indexes, and empty or unready input does not fabricate rewards.
 - [x] Use each LFG entry's currency discriminator to select the shared currency or item tooltip builder, not the numeric ID range.
+- [x] On Retail 12.1.5 (70688), `GetRecipeRankInfo` follows supplied parent records to the base recipe, follows successor records whose spells exist, and publishes type 17 with the requested recipe ID.
+- [x] `GetRecipeRankInfo` renders available spell descriptions as wrapped rows and uses the supplied rank as a display threshold for normal versus disabled color.
+- [x] Optional recipe labels and next-rank source text use only host-supplied strings; the simulator does not synthesize a recipe catalogue or source lookup.
+- [x] Retail recipe-rank misses for an absent recipe, required parent, or base spell return exactly zero Lua values (R88n.1).
 - [x] For `GetRuneforgeResultItem`, resolve the supplied GUID to an owned modeled item instance, preserve its identity, apply the supplied displayed level, and use the shared item tooltip builder when no unmodeled power/modifiers are requested.
 - [x] `C_Item.GetItemNumSockets` must reject a secret `itemInfo` argument from a tainted caller on Retail/PTR/Forever with the modeled native `AllowedWhenUntainted` error; an untainted caller may read the argument.
 - [x] On Retail, `GetQuestLogSpecialItem` resolves the one-based index through host-supplied quest-ID request context, reads primary/candidate item IDs from a separate host-supplied cache record, and uses only a host-supplied selected inventory object whose ID matches that record. It uses the shared item builder and publishes the selected instance GUID.
@@ -24,6 +28,8 @@ The Round 7 `C_TooltipInfo` getters use native argument readers and tooltip buil
 ## Implementation inventory
 
 - `src/c_api/c_tooltip_info_round7.rs` — Round 7 publication, arguments, missing-state decisions and owned-item runeforge path.
+- `src/c_api/recipe_rank_tooltip.rs` and `src/lua_api/globals/missing_surface/tooltip_info/recipe_rank.rs` — empty-by-default recipe display-cache input and shared rank tooltip composition.
+- `src/lua_api/state/sim_state.rs` — host-supplied recipe rank cache storage.
 - `src/c_api/quest_party_progress.rs` — host-supplied party-progress snapshot input.
 - `src/c_api/quest_special_item.rs` — separate host inputs for index-to-quest context, cache item IDs and the selected inventory object.
 - `src/lua_api/sim_substates/quest_log.rs` — empty-by-default party snapshots and quest special-item inputs.
@@ -36,6 +42,7 @@ The Round 7 `C_TooltipInfo` getters use native argument readers and tooltip buil
 ## Tests asserting this spec
 
 - `tests/tooltip_round7.rs` — registration, argument conversion, usage errors, original accessor miss paths, secret rejection and populated owned runeforge item instances.
+- `tests/tooltip_recipe_rank_info.rs` — original `TooltipDataHandler` accessor selectors, cache duplicate retention, wrapped threshold-colored descriptions and exact miss arity.
 - `tests/tooltip_quest_party_progress.rs` — selected ObjectiveTracker consumers, original tooltip accessor selectors, exact missing-source counts, and supplied owned-item selection.
 - `tests/tooltip_lfg_rewards.rs` — selected GroupFinder reward consumers, distinct ordinary/shortage entries and API-level no-value misses.
 - `src/c_api/c_tooltip_info_round7.rs::tests::populated_azerite_selection_misses_without_rank_spell_data` — the existing current-rank/active-slot state is populated, while the missing rank-to-spell producer retains the no-values result.
@@ -43,7 +50,8 @@ The Round 7 `C_TooltipInfo` getters use native argument readers and tooltip buil
 
 ## Known gaps (current cycle)
 
-- [ ] Azerite state supplies current essence ranks and active slots, but the rank-to-spell tooltip catalogue is absent; the getters return no values after resolving only the modeled selection. Possession spell/context, recipe rank chain, selected item-interaction descriptors and slotted-keystone GUID state are also not modeled; these getters return no values.
+- [ ] Azerite state supplies current essence ranks and active slots, but the rank-to-spell tooltip catalogue is absent; the getters return no values after resolving only the modeled selection. Possession spell/context, selected item-interaction descriptors and slotted-keystone GUID state are also not modeled; these getters return no values.
+- [ ] The native recipe-cache population writer, complete external invalidation triggers, learned-status semantics and player/faction source lookup remain unknown. R88n.4b verifies direct clear callers at trade-skill initialization and rebuild; simulator clearing on its corresponding routes is pending. Recipe source text and labels are explicit host inputs; specialization wording is not derived.
 - [ ] `GetQuestLogSpecialItem` keeps quest-ID context, quest-cache fields, and the selected inventory object as separate empty-by-default host inputs. The upstream cache, inventory/object writers, candidate predicates, and invalidation routes remain UNKNOWN. The native owner-GUID request context is not consumed by the shared simulator item builder.
 - [ ] `GetQuestPartyProgress` has no native progress-tree writer or party-progress query service. Its host-supplied snapshots start empty; member/objective values are not derived. R88n.3 confirms the writer routes remain UNKNOWN. **UNKNOWN:** Native return shape when a successful query has no output rows (for example, `omitTitle=true` with every participant filtered); this simulator returns zero values when its supplied snapshot emits no rows.
 - [ ] Native getter-specific RGB/data-instance publication beyond the shared builder is not independently established; the Retail implementation reuses the existing shared serializer.
@@ -55,6 +63,6 @@ The Round 7 `C_TooltipInfo` getters use native argument readers and tooltip buil
 
 ## Out of scope
 
-- Inventing state, catalogs, candidate predicates, party-progress rows, or tooltip lines for absent producer inputs.
+- Inventing state, catalogs, candidate predicates, party-progress rows, recipe labels, specialization text, source lookups, or tooltip lines for absent producer inputs.
 - Synthesizing LFG reward snapshots or guessing the incoming packet/cache lifecycle.
 - Changing the native `GetItemNumSockets` count calculation or claiming a result-tag rule without its enable/mode semantics.

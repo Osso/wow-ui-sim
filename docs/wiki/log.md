@@ -3840,3 +3840,7 @@ Recorded verified requirement/request branches and separately inferred data mapp
 ## 2026-11-14 | J character-label retirement
 
 Added original CharacterSelect label and CharacterFrame active-subframe title evidence to [Lua-owned fallback retirement](investigations/lua-owned-fallback-retirement.md#j-original-character-labels-and-titles), with bounded Retail-only scope and remaining native/owner limitations.
+
+## 2026-11-14 | Retail recipe-rank tooltip
+
+Recorded the original `TooltipDataHandler` accessor, verified Retail parent/successor and rank-threshold behavior, the empty host cache and exact no-value miss boundary in [Lua API](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) and the [Round 7 tooltip contract](../specs/tooltip-r7-getters.md). Native cache writers, invalidation and player/faction source lookup remain unknown.

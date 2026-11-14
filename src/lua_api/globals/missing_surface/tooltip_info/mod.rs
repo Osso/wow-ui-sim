@@ -1,5 +1,6 @@
 mod builders;
 mod probes;
+mod recipe_rank;
 mod sources;
 mod spell;
 mod unit;
@@ -14,6 +15,7 @@ use builders::{
     ensure_pet_info_state, get_pet_tamers_for_map, get_spell_for_pet_action, is_pet_action_passive,
 };
 use probes::*;
+pub(crate) use recipe_rank::build_recipe_rank_info;
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;

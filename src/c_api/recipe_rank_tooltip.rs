@@ -26,4 +26,8 @@ impl RecipeRankTooltipCache {
     pub fn insert(&mut self, recipe_id: i32, record: RecipeRankTooltipRecord) {
         self.entries.entry(recipe_id).or_insert(record);
     }
+
+    pub(crate) fn get(&self, recipe_id: i32) -> Option<&RecipeRankTooltipRecord> {
+        self.entries.get(&recipe_id)
+    }
 }
