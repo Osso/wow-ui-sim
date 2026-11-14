@@ -690,7 +690,24 @@ fn world_map_provider_pins_keep_original_backref_ownership() {
     let (env, loaded) = build_blizzard_addon_closure_env(
         &ui,
         blizzard_addon_manifest::WORLD_MAP_SMOKE_ROOTS,
-        blizzard_addon_manifest::WORLD_MAP_SMOKE_OVERRIDES,
+        &[
+            BlizzardAddonOverride {
+                addon: "Blizzard_SharedMapDataProviders",
+                // These two owners are needed while provider Lua chunks load.
+                extra_roots: &["Blizzard_SharedXML", "Blizzard_ChatFrameBase"],
+            },
+            BlizzardAddonOverride {
+                addon: "Blizzard_WorldMap",
+                // FogOfWarFrameTemplate must exist before WorldMap acquires its pin.
+                extra_roots: &["Blizzard_UIPanels_Game"],
+            },
+        ],
+    );
+
+    assert!(
+        env.state().borrow().lua_errors.is_empty(),
+        "Retail WorldMap fixture emitted Lua errors: {:?}",
+        env.state().borrow().lua_errors,
     );
 
     for addon in [
