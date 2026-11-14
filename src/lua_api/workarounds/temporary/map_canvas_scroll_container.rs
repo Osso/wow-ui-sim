@@ -503,14 +503,15 @@ for _, mapName in ipairs({ "WorldMapFrame", "BattlefieldMapFrame" }) do
 end
 __wow_patch_world_map_display_state(WorldMapFrame)
 
-if type(ToggleWorldMap) == "function" and not rawget(_G, "__wow_toggle_world_map_refresh_patched") then
-  if not preserve_original_world_map_owners then
-    local originalToggleWorldMap = ToggleWorldMap
-    ToggleWorldMap = function(...)
-      local result = originalToggleWorldMap(...)
-      __wow_refresh_world_map_canvas()
-      return result
-    end
+if not preserve_original_world_map_owners
+  and type(ToggleWorldMap) == "function"
+  and not rawget(_G, "__wow_toggle_world_map_refresh_patched")
+then
+  local originalToggleWorldMap = ToggleWorldMap
+  ToggleWorldMap = function(...)
+    local result = originalToggleWorldMap(...)
+    __wow_refresh_world_map_canvas()
+    return result
   end
 
   if type(OpenWorldMap) == "function" then
@@ -529,8 +530,8 @@ end
 pub(crate) fn patch(env: &LoaderEnv<'_>) -> Result<(), crate::Error> {
     if ACTIVE == ClientProfile::Retail {
         // Retail MapCanvas loads before the WorldMap XML frame and its original
-        // QuestLogOwnerMixin. Preserve the original display-state and toggle
-        // functions; OpenWorldMap and the other canvas repairs stay unchanged.
+        // QuestLogOwnerMixin. Keep the original display-state and map verbs;
+        // their consumers run after WorldMap owns them. Other repairs stay.
         env.exec_with_args(
             MAP_CANVAS_SCROLL_CONTAINER_WORKAROUND_LUA,
             &[GeneratedChunkArg::String(
