@@ -306,10 +306,30 @@ fn micro_menu_character_button_opens_character_frame(env: &WowLuaEnv) {
 
 prefork_full_ui_case! {
 fn micro_menu_game_menu_button_opens_game_menu(env: &WowLuaEnv) {
+    env.exec("A_Admin.SetMouseOverFrame(MainMenuMicroButton)")
+        .expect("mouse-over fixture should select MainMenuMicroButton");
     click_button(&env, "MainMenuMicroButton").expect("MainMenuMicroButton click failed");
     assert!(
         frame_is_shown(&env, "GameMenuFrame"),
         "GameMenuFrame should be shown after clicking MainMenuMicroButton"
+    );
+}
+}
+
+#[cfg(all(feature = "client-retail", feature = "optional-tests"))]
+prefork_full_ui_case! {
+fn retail_main_menu_click_without_mouseover_keeps_game_menu_hidden(env: &WowLuaEnv) {
+    env.exec("HideUIPanel(GameMenuFrame); A_Admin.SetMouseOverFrame(nil)")
+        .expect("outside-click fixture should reset panel and mouse focus");
+    let hovered: bool = env
+        .eval("return MainMenuMicroButton:IsMouseOver()")
+        .expect("button hover state should be queryable");
+    assert!(!hovered, "the simulated click must start outside the button");
+
+    click_button(&env, "MainMenuMicroButton").expect("MainMenuMicroButton click should dispatch");
+    assert!(
+        !frame_is_shown(env, "GameMenuFrame"),
+        "the selected Blizzard OnClick handler must ignore a click outside its button"
     );
 }
 }

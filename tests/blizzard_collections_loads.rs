@@ -134,6 +134,24 @@ fn blizzard_collections_top_level_frames_are_defined(env: &WowLuaEnv) {
 }
 }
 
+#[cfg(all(feature = "client-retail", feature = "optional-tests"))]
+prefork_full_ui_case! {
+fn retail_original_mount_flyout_consumer_does_not_suppress_missing_popup_error(env: &WowLuaEnv) {
+    load_addon(&env.loader_env(), &collections_toc())
+        .expect("Blizzard_Collections should load before its Retail consumer runs");
+    env.exec("MountJournal.ToggleDynamicFlightFlyoutButton.popup = nil")
+        .expect("fixture should remove only the flyout popup reference");
+
+    let error = env
+        .exec("MountJournal.ToggleDynamicFlightFlyoutButton:OnPopupToggled()")
+        .expect_err("the original Blizzard consumer dereferences its required popup child");
+    assert!(
+        error.to_string().contains("popup"),
+        "the original consumer should report its missing popup access: {error}"
+    );
+}
+}
+
 prefork_full_ui_case! {
 fn warband_scene_footer_controls_do_not_overlap(env: &WowLuaEnv) {
 

@@ -606,6 +606,26 @@ fn modified_click_xml_default_and_set_round_trip() {
     assert_eq!(updated, "CTRL");
 }
 
+#[cfg(all(feature = "client-retail", feature = "optional-tests"))]
+#[test]
+fn retail_original_modified_click_setting_returns_nil_for_unknown_action() {
+    let env = load_full_game_ui();
+    let is_nil: bool = env
+        .eval(
+            r#"
+            local setting = CreateFromMixins(ModifiedClickSettingMixin)
+            setting:Init("stub-n-unknown-action", "STUB_N_UNKNOWN_ACTION", "NONE")
+            return setting:GetValueDerived() == nil
+            "#,
+        )
+        .expect("selected Blizzard ModifiedClickSetting consumer should read the action");
+
+    assert!(
+        is_nil,
+        "the original settings consumer must preserve nil for an unknown modified-click action"
+    );
+}
+
 #[test]
 fn modified_item_click_routes_by_action_and_modifier() {
     let env = load_full_game_ui();
