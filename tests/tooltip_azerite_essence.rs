@@ -16,12 +16,89 @@ mod tooltip_full_env_helpers;
 
 const ESSENCE_TWO: i32 = 2;
 const ESSENCE_THREE: i32 = 3;
-const RANK_ONE_MAJOR: u32 = 293_019;
-const RANK_ONE_MINOR: u32 = 294_668;
-const RANK_TWO_MAJOR_ACTUAL: u32 = 298_080;
-const RANK_TWO_MINOR_ACTUAL: u32 = 298_082;
-const ESSENCE_THREE_RANK_TWO_MAJOR_ACTUAL: u32 = 300_009;
-const ESSENCE_THREE_RANK_TWO_MINOR_ACTUAL: u32 = 300_012;
+
+// Raw column candidates from the exact-build DB2 export. These tests do not
+// assert the INFERRED role-to-column mapping.
+const ESSENCE_TWO_RANK_ONE_CANDIDATES: [u32; 4] = [293_019, 294_668, 293_019, 294_668];
+const ESSENCE_TWO_RANK_TWO_CANDIDATES: [u32; 4] = [294_653, 294_687, 298_080, 298_082];
+const ESSENCE_THREE_RANK_ONE_CANDIDATES: [u32; 4] = [293_031, 294_910, 293_031, 294_910];
+const ESSENCE_THREE_RANK_TWO_CANDIDATES: [u32; 4] = [294_906, 294_919, 300_009, 300_012];
+
+const ESSENCE_LUA_HELPERS: &str = r#"
+function AzeriteTestSpellNames(data, candidateIDs)
+    local selected = {}
+    for _, spellID in ipairs(candidateIDs) do
+        local spell = C_TooltipInfo.GetSpellByID(spellID)
+        assert(spell and spell.lines[1] and spell.lines[1].leftText,
+            'DB2 spell fixture must have a spell name: ' .. spellID)
+        local name = spell.lines[1].leftText
+        for _, line in ipairs(data.lines) do
+            if line.leftText == name then
+                selected[name] = true
+                break
+            end
+        end
+    end
+    return selected
+end
+
+function AzeriteTestSpellCount(names)
+    local count = 0
+    for _ in pairs(names) do
+        count = count + 1
+    end
+    return count
+end
+
+function AzeriteTestSameSpellNames(left, right)
+    for name in pairs(left) do
+        if not right[name] then return false end
+    end
+    for name in pairs(right) do
+        if not left[name] then return false end
+    end
+    return true
+end
+
+function AzeriteTestAssertSpellCount(data, candidates, expected, message)
+    local names = AzeriteTestSpellNames(data, candidates)
+    assert(AzeriteTestSpellCount(names) == expected, message)
+    return names
+end
+
+function AzeriteTestShowEssence(essenceID, rank)
+    local button = setmetatable(
+        { essenceID = essenceID, rank = rank },
+        { __index = AzeriteEssenceButtonMixin }
+    )
+    button:OnEnter()
+    local info = GameTooltip:GetPrimaryTooltipInfo()
+    local data = GameTooltip:GetPrimaryTooltipData()
+    assert(data, 'RED: selected essence/rank must publish tooltip data')
+    assert(info and info.getterName == 'GetAzeriteEssence',
+        'original Azerite essence accessor must run')
+    assert(data.type == 8 and data.id == essenceID,
+        'essence data must preserve type 8 and its essence ID')
+    return data
+end
+
+function AzeriteTestShowSlot(milestoneID, slot, isMajorSlot)
+    local button = setmetatable({
+        milestoneID = milestoneID,
+        slot = slot,
+        isMajorSlot = isMajorSlot,
+        isDraggable = false,
+    }, { __index = AzeriteMilestoneSlotMixin })
+    button:OnEnter()
+    local info = GameTooltip:GetPrimaryTooltipInfo()
+    local data = GameTooltip:GetPrimaryTooltipData()
+    assert(data and data.type == 8,
+        'slot must publish type-8 essence tooltip data')
+    assert(info and info.getterName == 'GetAzeriteEssenceSlot',
+        'original Azerite slot accessor must run')
+    return data
+end
+"#;
 
 fn original_azerite_tooltip_env() -> WowLuaEnv {
     let ui = blizzard_ui_dir();
@@ -36,12 +113,12 @@ fn original_azerite_tooltip_env() -> WowLuaEnv {
     let env = tooltip_full_env_helpers::setup_full_env();
     let loaded =
         load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_AzeriteEssenceUI"], &[]);
-    for addon in ["Blizzard_AzeriteEssenceUI"] {
-        assert!(
-            loaded.iter().any(|name| name == addon),
-            "{addon}: {loaded:?}"
-        );
-    }
+    assert!(
+        loaded
+            .iter()
+            .any(|name| name == "Blizzard_AzeriteEssenceUI"),
+        "selected Azerite Essence UI must load: {loaded:?}"
+    );
     env.exec(
         r#"
         assert(C_AddOns.IsAddOnLoaded('Blizzard_SharedXMLGame'))
@@ -56,8 +133,19 @@ fn original_azerite_tooltip_env() -> WowLuaEnv {
         assert(slotGetterSource:find('TooltipDataHandler.lua', 1, true), slotGetterSource)
         "#,
     )
-    .expect("selected Azerite UI and TooltipDataHandler consumers should load");
+    .expect("the selected Azerite UI and TooltipDataHandler consumers should load");
+    env.exec(ESSENCE_LUA_HELPERS)
+        .expect("Azerite selector test helpers should load");
     env
+}
+
+fn lua_number_array(values: &[u32]) -> String {
+    let values = values
+        .iter()
+        .map(u32::to_string)
+        .collect::<Vec<_>>()
+        .join(", ");
+    format!("{{{values}}}")
 }
 
 fn seed_essence(env: &WowLuaEnv, id: i32, rank: i32) {
@@ -102,68 +190,45 @@ fn retail_azerite_essence_original_consumer_selects_exact_essence_and_rank() {
     seed_essence(&env, ESSENCE_TWO, 1);
     seed_essence(&env, ESSENCE_THREE, 1);
 
+    let essence_two_rank_one = lua_number_array(&ESSENCE_TWO_RANK_ONE_CANDIDATES);
+    let essence_two_rank_two = lua_number_array(&ESSENCE_TWO_RANK_TWO_CANDIDATES);
+    let essence_three_rank_two = lua_number_array(&ESSENCE_THREE_RANK_TWO_CANDIDATES);
     env.exec(&format!(
         r#"
-        local function spellName(spellID)
-            local data = C_TooltipInfo.GetSpellByID(spellID)
-            assert(data and data.lines[1] and data.lines[1].leftText,
-                'DB2 spell fixture must have a spell name: ' .. spellID)
-            return data.lines[1].leftText
-        end
-        local function hasSpell(data, spellID)
-            local name = spellName(spellID)
-            for _, line in ipairs(data.lines) do
-                if line.leftText == name then return true end
-            end
-            return false
-        end
-        local function showEssence(essenceID, rank)
-            local button = setmetatable({{ essenceID = essenceID, rank = rank }},
-                {{ __index = AzeriteEssenceButtonMixin }})
-            button:OnEnter()
-            local info = GameTooltip:GetPrimaryTooltipInfo()
-            local data = GameTooltip:GetPrimaryTooltipData()
-            assert(data, 'RED: selected essence/rank must publish tooltip data')
-            assert(info and info.getterName == 'GetAzeriteEssence',
-                'original Azerite essence accessor must run')
-            assert(data.type == 8 and data.id == essenceID,
-                'essence data must preserve type 8 and its essence ID')
-            return data
-        end
-
-        local rankOne = showEssence({ESSENCE_TWO}, 1)
-        assert(hasSpell(rankOne, {RANK_ONE_MAJOR}) and hasSpell(rankOne, {RANK_ONE_MINOR}),
-            'rank one must select its two actual spells')
-        assert(not hasSpell(rankOne, {RANK_TWO_MAJOR_ACTUAL})
-            and not hasSpell(rankOne, {RANK_TWO_MINOR_ACTUAL}),
-            'rank one must not fall through to rank two')
+        local rankOne = AzeriteTestShowEssence({ESSENCE_TWO}, 1)
+        assert(rankOne.id == {ESSENCE_TWO})
+        local rankOneNames = AzeriteTestAssertSpellCount(
+            rankOne, {essence_two_rank_one}, 2, 'rank one must produce both spell blocks')
 
         -- The player-state rank is 1; this original UI passes rank 2 explicitly.
-        local rankTwo = showEssence({ESSENCE_TWO}, 2)
-        assert(hasSpell(rankTwo, {RANK_TWO_MAJOR_ACTUAL})
-            and hasSpell(rankTwo, {RANK_TWO_MINOR_ACTUAL}),
-            'the supplied rank must select the exact rank-two spells')
-        assert(not hasSpell(rankTwo, {RANK_ONE_MAJOR})
-            and not hasSpell(rankTwo, {RANK_ONE_MINOR}),
-            'the supplied rank must bypass current-rank selection')
+        local rankTwo = AzeriteTestShowEssence({ESSENCE_TWO}, 2)
+        assert(rankTwo.id == {ESSENCE_TWO})
+        local rankTwoNames = AzeriteTestAssertSpellCount(
+            rankTwo, {essence_two_rank_two}, 2, 'rank two must produce both spell blocks')
+        assert(not AzeriteTestSameSpellNames(rankOneNames, rankTwoNames),
+            'different exact ranks must select different spells')
 
-        local otherEssence = showEssence({ESSENCE_THREE}, 2)
-        assert(hasSpell(otherEssence, {ESSENCE_THREE_RANK_TWO_MAJOR_ACTUAL})
-            and hasSpell(otherEssence, {ESSENCE_THREE_RANK_TWO_MINOR_ACTUAL}),
-            'a second essence must select its own rank-two spells')
+        local otherEssence = AzeriteTestShowEssence({ESSENCE_THREE}, 2)
+        local otherNames = AzeriteTestAssertSpellCount(
+            otherEssence, {essence_three_rank_two}, 2,
+            'the second essence must produce both spell blocks')
+        assert(not AzeriteTestSameSpellNames(rankTwoNames, otherNames),
+            'different essence IDs must select different spells')
 
         local currentRank = C_TooltipInfo.GetAzeriteEssence({ESSENCE_TWO})
         assert(currentRank and currentRank.type == 8 and currentRank.id == {ESSENCE_TWO})
-        assert(hasSpell(currentRank, {RANK_ONE_MAJOR}) and hasSpell(currentRank, {RANK_ONE_MINOR}),
+        local currentNames = AzeriteTestSpellNames(currentRank, {essence_two_rank_one})
+        assert(AzeriteTestSameSpellNames(rankOneNames, currentNames),
             'an omitted rank must use the current player rank')
 
         local zeroRank = C_TooltipInfo.GetAzeriteEssence({ESSENCE_TWO}, 0)
         assert(zeroRank and zeroRank.type == 8 and zeroRank.id == {ESSENCE_TWO})
-        assert(hasSpell(zeroRank, {RANK_ONE_MAJOR}) and hasSpell(zeroRank, {RANK_ONE_MINOR}),
+        local zeroNames = AzeriteTestSpellNames(zeroRank, {essence_two_rank_one})
+        assert(AzeriteTestSameSpellNames(rankOneNames, zeroNames),
             'rank zero must select rank one')
 
         assert(select('#', C_TooltipInfo.GetAzeriteEssence({ESSENCE_TWO}, 5)) == 0,
-            'a missing exact rank must not select the lower rank')
+            'a missing exact rank must not select a lower rank')
         "#
     ))
     .expect("the original Azerite essence consumer must select the DB2 essence and rank");
@@ -173,19 +238,17 @@ fn retail_azerite_essence_original_consumer_selects_exact_essence_and_rank() {
         .azerite_essence
         .essences
         .remove(&ESSENCE_TWO);
+    let essence_two_rank_one = lua_number_array(&ESSENCE_TWO_RANK_ONE_CANDIDATES);
     env.exec(&format!(
         r#"
-        local data = C_TooltipInfo.GetAzeriteEssence({ESSENCE_TWO})
-        assert(data and data.type == 8 and data.id == {ESSENCE_TWO},
+        local listMiss = C_TooltipInfo.GetAzeriteEssence({ESSENCE_TWO})
+        assert(listMiss and listMiss.type == 8 and listMiss.id == {ESSENCE_TWO},
             'a player-list miss must still use rank one')
-        local rankOneMajor = C_TooltipInfo.GetSpellByID({RANK_ONE_MAJOR}).lines[1].leftText
-        local rankOneMinor = C_TooltipInfo.GetSpellByID({RANK_ONE_MINOR}).lines[1].leftText
-        local foundMajor, foundMinor = false, false
-        for _, line in ipairs(data.lines) do
-            foundMajor = foundMajor or line.leftText == rankOneMajor
-            foundMinor = foundMinor or line.leftText == rankOneMinor
-        end
-        assert(foundMajor and foundMinor, 'list miss rank zero must be raised to rank one')
+        local listMissNames = AzeriteTestSpellNames(listMiss, {essence_two_rank_one})
+        local rankOne = C_TooltipInfo.GetAzeriteEssence({ESSENCE_TWO}, 1)
+        local rankOneNames = AzeriteTestSpellNames(rankOne, {essence_two_rank_one})
+        assert(AzeriteTestSameSpellNames(listMissNames, rankOneNames),
+            'a list miss rank zero must be raised to rank one')
         "#
     ))
     .expect("a missing essence from a present player rank list should use rank one");
@@ -199,46 +262,27 @@ fn retail_azerite_essence_slot_original_consumer_applies_verified_modes() {
     seed_milestone(&env, 101, 0, ESSENCE_TWO);
     seed_milestone(&env, 102, 1, ESSENCE_THREE);
 
+    let essence_two_rank_one = lua_number_array(&ESSENCE_TWO_RANK_ONE_CANDIDATES);
+    let essence_two_rank_two = lua_number_array(&ESSENCE_TWO_RANK_TWO_CANDIDATES);
+    let essence_three_rank_one = lua_number_array(&ESSENCE_THREE_RANK_ONE_CANDIDATES);
+    let essence_three_rank_two = lua_number_array(&ESSENCE_THREE_RANK_TWO_CANDIDATES);
     env.exec(&format!(
         r#"
-        local function hasSpell(data, spellID)
-            local name = C_TooltipInfo.GetSpellByID(spellID).lines[1].leftText
-            for _, line in ipairs(data.lines) do
-                if line.leftText == name then return true end
-            end
-            return false
-        end
-        local function showSlot(milestoneID, slot, isMajorSlot)
-            local button = setmetatable({{
-                milestoneID = milestoneID,
-                slot = slot,
-                isMajorSlot = isMajorSlot,
-                isDraggable = false,
-            }}, {{ __index = AzeriteMilestoneSlotMixin }})
-            button:OnEnter()
-            local info = GameTooltip:GetPrimaryTooltipInfo()
-            local data = GameTooltip:GetPrimaryTooltipData()
-            assert(data and data.type == 8,
-                'slot must publish type-8 essence tooltip data')
-            assert(info and info.getterName == 'GetAzeriteEssenceSlot',
-                'original Azerite slot accessor must run')
-            return data
-        end
-
-        local majorSlot = showSlot(101, 0, true)
+        local majorSlot = AzeriteTestShowSlot(101, 0, true)
         assert(majorSlot.id == {ESSENCE_TWO})
-        assert(hasSpell(majorSlot, {RANK_ONE_MAJOR})
-            and hasSpell(majorSlot, {RANK_ONE_MINOR}),
-            'slot zero keeps main and passive rank-one description spells')
-        assert(not hasSpell(majorSlot, {RANK_TWO_MAJOR_ACTUAL}),
-            'active major slot uses the rank-one description spell')
+        AzeriteTestAssertSpellCount(majorSlot, {essence_two_rank_one}, 2,
+            'slot zero must keep main and passive rank-one spell blocks')
+        assert(AzeriteTestSpellCount(
+            AzeriteTestSpellNames(majorSlot, {essence_two_rank_two})) == 0,
+            'active major slot must use rank-one description spells')
 
-        local passiveSlot = showSlot(102, 1, false)
+        local passiveSlot = AzeriteTestShowSlot(102, 1, false)
         assert(passiveSlot.id == {ESSENCE_THREE})
-        assert(hasSpell(passiveSlot, 294910),
-            'a passive slot keeps its rank-one minor description spell')
-        assert(not hasSpell(passiveSlot, {ESSENCE_THREE_RANK_TWO_MAJOR_ACTUAL}),
-            'nonzero slots omit the main-power block')
+        AzeriteTestAssertSpellCount(passiveSlot, {essence_three_rank_one}, 1,
+            'a nonzero slot must keep its passive rank-one spell block')
+        assert(AzeriteTestSpellCount(
+            AzeriteTestSpellNames(passiveSlot, {essence_three_rank_two})) == 0,
+            'nonzero slots must omit the main-power block')
         "#
     ))
     .expect("the original Azerite slot consumer must select its active essence and mode");
