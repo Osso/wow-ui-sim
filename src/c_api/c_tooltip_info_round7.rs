@@ -146,53 +146,63 @@ fn get_item_interaction_item(state: &mut LuaState) -> LuaResult<u32> {
     if ACTIVE != ClientProfile::Retail {
         return no_values();
     }
-    let (interaction_kind, input) = {
-        let sim = borrow_state(state)?;
-        let Some(interaction) = sim.item_interaction.as_ref() else {
-            return no_values();
-        };
-        let Some(input) = sim.item_interaction_tooltip_input.clone() else {
-            return no_values();
-        };
-        (interaction.interaction_type, input)
-    };
-
-    let Some(selected_guid) = input.selected_item_guid.as_deref() else {
+    let Some((interaction_kind, input)) = selected_item_interaction(state)? else {
         return no_values();
     };
-    if item_for_owned_guid(state, selected_guid).is_none() {
-        return no_values();
-    }
-
-    if interaction_kind != ITEM_INTERACTION_CLEANSE_KIND
-        && interaction_kind != ITEM_INTERACTION_CONVERSION_KIND
-    {
-        let tooltip = empty_item_interaction_tooltip(state);
-        state.push(tooltip);
-        return Ok(1);
-    }
-
-    let tooltip = if interaction_kind == ITEM_INTERACTION_CLEANSE_KIND {
-        if input.cleansing_rows.is_empty() {
-            return no_values();
+    let tooltip = match interaction_kind {
+        ITEM_INTERACTION_CLEANSE_KIND if !input.cleansing_rows.is_empty() => {
+            build_item_interaction_cleansing_tooltip(state, &input.cleansing_rows)
         }
-        build_item_interaction_cleansing_tooltip(state, &input.cleansing_rows)
-    } else {
-        let Some(output_item_id) = input.conversion_output_item_id else {
-            return no_values();
-        };
-        if output_item_id == 0 {
-            build_unresolved_conversion_item_tooltip(state)
-        } else {
-            let output_item = borrow_state(state)?.item_info(output_item_id).cloned();
-            let Some(output_item) = output_item else {
+        ITEM_INTERACTION_CLEANSE_KIND => return no_values(),
+        ITEM_INTERACTION_CONVERSION_KIND => {
+            let Some(tooltip) = conversion_output_tooltip(state, &input)? else {
                 return no_values();
             };
-            tooltip_for_item_context(state, output_item_id, Some(&output_item))
+            tooltip
         }
+        _ => empty_item_interaction_tooltip(state),
     };
     state.push(tooltip);
     Ok(1)
+}
+
+fn selected_item_interaction(
+    state: &LuaState,
+) -> LuaResult<Option<(i32, ItemInteractionTooltipInput)>> {
+    let sim = borrow_state(state)?;
+    let Some(interaction) = sim.item_interaction.as_ref() else {
+        return Ok(None);
+    };
+    let Some(input) = sim.item_interaction_tooltip_input.clone() else {
+        return Ok(None);
+    };
+    let Some(selected_guid) = input.selected_item_guid.as_deref() else {
+        return Ok(None);
+    };
+    if item_for_owned_guid(state, selected_guid).is_none() {
+        return Ok(None);
+    }
+    Ok(Some((interaction.interaction_type, input)))
+}
+
+fn conversion_output_tooltip(
+    state: &mut LuaState,
+    input: &ItemInteractionTooltipInput,
+) -> LuaResult<Option<Val>> {
+    let Some(output_item_id) = input.conversion_output_item_id else {
+        return Ok(None);
+    };
+    if output_item_id == 0 {
+        return Ok(Some(build_unresolved_conversion_item_tooltip(state)));
+    }
+    let Some(output_item) = borrow_state(state)?.item_info(output_item_id).cloned() else {
+        return Ok(None);
+    };
+    Ok(Some(tooltip_for_item_context(
+        state,
+        output_item_id,
+        Some(&output_item),
+    )))
 }
 
 fn empty_item_interaction_tooltip(state: &mut LuaState) -> Val {
