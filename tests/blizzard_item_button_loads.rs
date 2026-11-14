@@ -610,20 +610,34 @@ fn modified_click_xml_default_and_set_round_trip() {
 #[test]
 fn retail_original_modified_click_setting_returns_nil_for_unknown_action() {
     let env = load_full_game_ui();
-    let is_nil: bool = env
+    let (unknown_is_nil, unknown_result_count, clear_result_count, cleared_binding): (
+        bool,
+        i64,
+        i64,
+        String,
+    ) = env
         .eval(
             r#"
-            local setting = CreateFromMixins(ModifiedClickSettingMixin)
-            setting:Init("stub-n-unknown-action", "STUB_N_UNKNOWN_ACTION", "NONE")
-            return setting:GetValueDerived() == nil
+            local unknown = CreateFromMixins(ModifiedClickSettingMixin)
+            unknown:Init("stub-n-unknown-action", "STUB_N_UNKNOWN_ACTION", "NONE")
+            local unknownValue = unknown:GetValueDerived()
+
+            local chatLink = CreateFromMixins(ModifiedClickSettingMixin)
+            chatLink:Init("CHATLINK", "CHATLINK", "NONE")
+            local clearResults = select("#", chatLink:SetValueDerived(nil))
+            return unknownValue == nil, select("#", unknown:GetValueDerived()),
+                clearResults, GetModifiedClick("CHATLINK")
             "#,
         )
-        .expect("selected Blizzard ModifiedClickSetting consumer should read the action");
+        .expect("selected Blizzard ModifiedClickSetting consumer should read and clear actions");
 
     assert!(
-        is_nil,
+        unknown_is_nil,
         "the original settings consumer must preserve nil for an unknown modified-click action"
     );
+    assert_eq!(unknown_result_count, 1, "unknown action returns one nil");
+    assert_eq!(clear_result_count, 0, "SetModifiedClick returns no values");
+    assert_eq!(cleared_binding, "NONE", "nil binding clears the known action");
 }
 
 #[test]
