@@ -2,25 +2,74 @@
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 
-use sim_data_profile::global_colors_retail::{GlobalColorRow, RETAIL_GLOBAL_COLORS};
+struct PinnedGlobalColorSample {
+    tag: &'static str,
+    packed_argb: u32,
+    channels: (f64, f64, f64, f64),
+}
+
+// Count and sample literals are pinned 70783 snapshot expectations, not native-catalog
+// parity.
+// The 361-row count follows the CSV under the inferred feed/dedup rules.
+// Source: data/db2/retail-12.1.5.70783/GlobalColor.csv
+// SHA-256: e5fe982cf72c9d77af9d5a82360e0a06537b10daf9940c6a56705674029b38c2
+// Channel literals use the R88o.3 f32 conversion; applying it to 70783 is INFERRED.
+const PINNED_GLOBAL_COLOR_SAMPLES: &[PinnedGlobalColorSample] = &[
+    PinnedGlobalColorSample {
+        tag: "AREA_DESCRIPTION_FONT_COLOR",
+        packed_argb: 0xffffffff,
+        channels: (1.0, 1.0, 1.0, 1.0),
+    },
+    PinnedGlobalColorSample {
+        tag: "HOUSING_REWARD_TOAST_LABEL_FONT_COLOR",
+        packed_argb: 0xffdfbd99,
+        channels: (
+            0.874509871006012,
+            0.7411764860153198,
+            0.6000000238418579,
+            1.0,
+        ),
+    },
+    PinnedGlobalColorSample {
+        tag: "INVASION_DESCRIPTION_FONT_COLOR",
+        packed_argb: 0xfffff809,
+        channels: (1.0, 0.9725490808486938, 0.03529411926865578, 1.0),
+    },
+    PinnedGlobalColorSample {
+        tag: "INVASION_FONT_COLOR",
+        packed_argb: 0xffc7ff00,
+        channels: (0.7803922295570374, 1.0, 0.0, 1.0),
+    },
+    PinnedGlobalColorSample {
+        tag: "PURE_RED_COLOR",
+        packed_argb: 0xffcc0000,
+        channels: (0.8000000715255737, 0.0, 0.0, 1.0),
+    },
+    PinnedGlobalColorSample {
+        tag: "REFUND_TOOLTIP_COLOR",
+        packed_argb: 0xff00ccff,
+        channels: (0.0, 0.8000000715255737, 1.0, 1.0),
+    },
+    PinnedGlobalColorSample {
+        tag: "ZULJARRA_MAJOR_FACTION_COLOR",
+        packed_argb: 0x0054e6aa,
+        channels: (
+            0.3294117748737335,
+            0.9019608497619629,
+            0.6666666865348816,
+            0.0,
+        ),
+    },
+    PinnedGlobalColorSample {
+        tag: "Prey Toast Text Color",
+        packed_argb: 0x00ff2b2b,
+        channels: (1.0, 0.16862745583057404, 0.16862745583057404, 0.0),
+    },
+];
 
 #[test]
 fn retail_c_uicolor_get_colors_matches_the_deduplicated_catalog() {
-    assert_eq!(RETAIL_GLOBAL_COLORS.len(), 361);
-    assert_strict_tag_order(RETAIL_GLOBAL_COLORS);
-    assert_sample_row("AREA_DESCRIPTION_FONT_COLOR", 56, 0xffffffff);
-    assert_sample_row("HOUSING_REWARD_TOAST_LABEL_FONT_COLOR", 328, 0xffdfbd99);
-    assert_sample_row("INVASION_DESCRIPTION_FONT_COLOR", 58, 0xfffff809);
-    assert_sample_row("INVASION_FONT_COLOR", 57, 0xffc7ff00);
-    assert_sample_row("PURE_RED_COLOR", 30, 0xffcc0000);
-    assert_sample_row("REFUND_TOOLTIP_COLOR", 145, 0xff00ccff);
-    assert_sample_row("ZULJARRA_MAJOR_FACTION_COLOR", 409, 0x0054e6aa);
-    assert_sample_row("Prey Toast Text Color", 387, 0x00ff2b2b);
-
     let env = WowLuaEnv::new().expect("Lua environment should initialize");
-    assert_color_mixin_error(&env, "ColorMixin = nil");
-    assert_color_mixin_error(&env, "ColorMixin = false");
-
     let result: String = env
         .eval(
             r##"
@@ -71,6 +120,10 @@ fn retail_c_uicolor_get_colors_matches_the_deduplicated_catalog() {
 
     assert_eq!(result, "ok", "GetColors API contract failure: {result}");
 
+    for sample in PINNED_GLOBAL_COLOR_SAMPLES {
+        assert_sample_row(&env, sample);
+    }
+
     let returned_tags: String = env
         .eval(
             r#"
@@ -81,14 +134,12 @@ fn retail_c_uicolor_get_colors_matches_the_deduplicated_catalog() {
         )
         .expect("catalog tags should be readable");
     let returned_tags = returned_tags.split('\0').collect::<Vec<_>>();
-    let expected_tags = RETAIL_GLOBAL_COLORS
-        .iter()
-        .map(|row| row.base_tag)
-        .collect::<Vec<_>>();
     assert_eq!(
-        returned_tags, expected_tags,
-        "API rows must follow native tag order"
+        returned_tags.len(),
+        361,
+        "pinned snapshot row count changed"
     );
+    assert_strict_tag_order(&returned_tags);
 
     let (red, green, blue, alpha): (f64, f64, f64, f64) = env
         .eval(
@@ -102,8 +153,10 @@ fn retail_c_uicolor_get_colors_matches_the_deduplicated_catalog() {
             "#,
         )
         .expect("sample color channels should be readable");
-    let expected_channels = channels_from_argb(0x0054e6aa);
+    let expected_channels = sample_channels("ZULJARRA_MAJOR_FACTION_COLOR");
     assert_eq!((red, green, blue, alpha), expected_channels);
+    assert_color_mixin_error(&env, "ColorMixin = nil");
+    assert_color_mixin_error(&env, "ColorMixin = false");
 }
 
 prefork_full_ui_case! {
@@ -123,7 +176,7 @@ fn retail_color_lua_publishes_catalog_globals_and_codes_in_both_environments(env
     let secure_rgba: (f64, f64, f64, f64) = env
         .eval("local c = __secureenv.ZULJARRA_MAJOR_FACTION_COLOR; return c.r, c.g, c.b, c.a")
         .expect("secure color channels should be readable");
-    let expected_rgba = channels_from_argb(0x0054e6aa);
+    let expected_rgba = sample_channels("ZULJARRA_MAJOR_FACTION_COLOR");
     assert_eq!(global_rgba, expected_rgba);
     assert_eq!(secure_rgba, expected_rgba);
 
@@ -153,31 +206,43 @@ fn assert_color_mixin_error(env: &WowLuaEnv, setup: &str) {
     );
 }
 
-fn assert_sample_row(tag: &str, id: u32, packed_color: u32) {
-    let row = RETAIL_GLOBAL_COLORS
-        .iter()
-        .find(|row| row.base_tag == tag)
-        .unwrap_or_else(|| panic!("deduplicated catalog has no {tag}"));
-    assert_eq!(row.id, id, "unexpected winning DB2 row for {tag}");
+fn assert_sample_row(env: &WowLuaEnv, sample: &PinnedGlobalColorSample) {
+    let query = format!(
+        r#"
+        for _, row in ipairs(C_UIColor.GetColors()) do
+          if row.baseTag == {tag:?} then
+            return row.color.r, row.color.g, row.color.b, row.color.a
+          end
+        end
+        return -1, -1, -1, -1
+        "#,
+        tag = sample.tag
+    );
+    let actual: (f64, f64, f64, f64) = env
+        .eval(&query)
+        .expect("pinned sample color channels should be readable");
     assert_eq!(
-        row.packed_color, packed_color,
-        "unexpected packed color for {tag}"
+        actual, sample.channels,
+        "unexpected channels for pinned row {} packed 0x{:08x}",
+        sample.tag, sample.packed_argb
     );
 }
 
-fn assert_strict_tag_order(rows: &[GlobalColorRow]) {
-    for pair in rows.windows(2) {
+fn assert_strict_tag_order(tags: &[&str]) {
+    for pair in tags.windows(2) {
         assert!(
-            pair[0].base_tag.as_bytes() < pair[1].base_tag.as_bytes(),
-            "catalog tags are not strictly byte-sorted: {:?}, {:?}",
-            pair[0].base_tag,
-            pair[1].base_tag
+            pair[0].as_bytes() < pair[1].as_bytes(),
+            "API tags are not strictly byte-sorted: {:?}, {:?}",
+            pair[0],
+            pair[1]
         );
     }
 }
 
-fn channels_from_argb(packed_color: u32) -> (f64, f64, f64, f64) {
-    let [alpha, red, green, blue] = packed_color.to_be_bytes();
-    let channel = |byte| f64::from(f32::from(byte) * (1.0_f32 / 255.0_f32));
-    (channel(red), channel(green), channel(blue), channel(alpha))
+fn sample_channels(tag: &str) -> (f64, f64, f64, f64) {
+    PINNED_GLOBAL_COLOR_SAMPLES
+        .iter()
+        .find(|sample| sample.tag == tag)
+        .unwrap_or_else(|| panic!("no pinned color sample for {tag}"))
+        .channels
 }

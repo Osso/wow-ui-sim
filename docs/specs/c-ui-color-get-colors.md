@@ -22,7 +22,7 @@
 - **VERIFIED (native Retail 12.1.5.70688):** keep the first inserted row for each equal key; discard later duplicates.
 - **VERIFIED (native Retail 12.1.5.70688):** do not filter empty tags or row flags. Before initialization, the source cursor skips invalid index entries and entries that resolve to no row or its excluded row; these cursor skips are not content filters.
 - **VERIFIED (native Retail 12.1.5.70688):** export the unique rows in ascending tag-key order, not feed order.
-- **VERIFIED (local CASC Retail 12.1.5.70783):** the pinned CSV has 367 decoded rows and no unreadable records. **VERIFIED (simulator generated data and API test):** the static export has 361 tags, and the six duplicate tags and simulator-selected winners are asserted. **INFERRED (applying 70688 rules to 70783):** native output matches only if its cursor skips no additional rows absent from the merged CSV.
+- **VERIFIED (local CASC Retail 12.1.5.70783):** the pinned CSV has 367 decoded rows and no unreadable records. **VERIFIED (generator output):** the simulator export has 361 tags under its feed and deduplication rules. The API test pins the expected count and eight literal tag/packed-ARGB sample rows from the CSV, with expected f32 channel values, then checks strict byte-sorted output; these are snapshot assertions, not proof of native 70783 parity. **INFERRED (applying 70688 rules to 70783):** native output matches only if its cursor skips no additional rows absent from the merged CSV.
 
 ### Records and colors
 
@@ -49,7 +49,7 @@
 
 ## Tests
 
-- `tests/c_ui_color_globalcolor.rs` — optional API test for dual publication, ignored arguments, fresh tables, mixin error/copy, 361 rows, sample DB2 winners, ARGB channels, and tag order.
+- `tests/c_ui_color_globalcolor.rs` — optional API test for dual publication, ignored arguments, fresh tables, mixin error/copy, count 361, eight literal tag/packed-ARGB sample rows from the pinned CSV with expected f32 channels, and strict tag order. It does not treat generated implementation data as its oracle or assert row IDs through the API.
 - The same file uses `prefork_full_ui_case!` to test the original `Color.lua` consumer after Retail startup in both environments.
 - `src/lua_api/workarounds/temporary/color_defaults.rs` — PTR unit test verifies the existing non-Retail five-row fallback.
 - `src/bin/wow_cli/gen_global_colors.rs` — unit test for main-before-auxiliary duplicate selection, empty-tag preservation, and unsigned-byte ordering.

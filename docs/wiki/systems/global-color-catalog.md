@@ -16,7 +16,7 @@
 
 **VERIFIED (native Retail 12.1.5.70688):** `C_UIColor.GetColors` is flag 3 and ignores arguments. It returns one fresh dense array table, with one record per exported entry. Each record has the tag and a fresh color table copied from `ColorMixin`; the builder writes `r`, `g`, `b`, and `a` from ARGB bytes. Each byte becomes f32 and is multiplied by the f32 reciprocal of 255 before publication as a Lua number. Alpha comes from the packed value.
 
-**VERIFIED (local Retail 12.1.5.70783 DB2):** 367 source rows contain six duplicate keys. **VERIFIED (simulator generated data and API test):** the static catalog has 361 tags and the API test asserts these simulator-selected winners: `AREA_DESCRIPTION_FONT_COLOR` ID 56, `HOUSING_REWARD_TOAST_LABEL_FONT_COLOR` ID 328, `INVASION_DESCRIPTION_FONT_COLOR` ID 58, `INVASION_FONT_COLOR` ID 57, `PURE_RED_COLOR` ID 30, and `REFUND_TOOLTIP_COLOR` ID 145.
+**VERIFIED (local Retail 12.1.5.70783 CSV):** 367 source rows contain six duplicate keys. **VERIFIED (generator output):** the simulator export has 361 tags under its feed and deduplication rules. The API test uses literal pinned-snapshot expectations for count 361 and eight tag/packed-ARGB sample rows with expected f32 channels, and checks strict tag-byte ordering; these assertions are not proof of native 70783 parity and do not assert DB2 row IDs through the API.
 
 **VERIFIED (CSV exporter and generator source):** the merged CSV does not preserve invalid-index or excluded-row cursor state, and the generator treats every decoded row as eligible. **UNKNOWN (70783 cursor mapping):** native 70688 evidence does not identify any matching 70783 row IDs. **INFERRED (native 12.1.5.70688 rules applied to local 12.1.5.70783 data):** native output has the same 361 rows and winners only if no additional cursor skips apply. **UNKNOWN (Retail 12.1.5.70688):** the actual loaded color catalog and its external update schedule are runtime state; the pinned 70783 snapshot is not proof of the current live cache.
 
@@ -24,7 +24,7 @@
 
 **VERIFIED (active Retail UI cache):** `Blizzard_SharedXMLBase.toc` has `AllowLoad: Both` and lists `Color.lua`. That file calls `C_UIColor.GetColors()`, creates a `Color` object for each entry, then writes `baseTag` and `baseTag .. "_CODE"` into `GetCurrentEnvironment()`.
 
-**VERIFIED (simulator source and optional tests):** the simulator registers the Retail C API after secure-environment creation in [`c_ui_color.rs`](../../../src/c_api/c_ui_color.rs). It stores the same namespace member in `_G` and `__secureenv`; the API test checks function identity, fresh results, copied mixin members, sample DB2 winners, channel values, and tag ordering. The original `Color.lua` test checks a catalog-only color global and its `_CODE` value in both environments after normal startup.
+**VERIFIED (simulator source and optional tests):** the simulator registers the Retail C API after secure-environment creation in [`c_ui_color.rs`](../../../src/c_api/c_ui_color.rs). It stores the same namespace member in `_G` and `__secureenv`; the API test checks function identity, fresh results, copied mixin members, literal pinned tag/packed-ARGB samples with expected channels, and tag ordering. It does not use generated implementation data as the expected-value oracle. The original `Color.lua` test checks a catalog-only color global and its `_CODE` value in both environments after normal startup.
 
 ### Profile boundary and preservation
 

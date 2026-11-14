@@ -6,6 +6,7 @@
   "root_content_key": "01a40491e0e9fd3d5e542bd7821cd499",
   "encoding_content_key": "6b8cf81a721a9eea0538c75a8eb7fc38",
   "table": "GlobalColor",
+  "distribution_note": "Derived from Blizzard client data via local CASC; handled like other generated data/ tables. Schema attribution: WoWDBDefs GlobalColor.dbd, SHA-256 d93eeb797dcffa7dc111199b20957888bbe38de0758b8b6c57fd5378cad26555.",
   "file_data_id": 4328468,
   "authenticated_local_root_md5": "a62d733c8e49cc79c46e4ebc7057e020",
   "resolved_encoding_key": "b07a23a2deb0ddd575f98d776c8541c9",
