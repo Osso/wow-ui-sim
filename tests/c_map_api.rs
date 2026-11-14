@@ -333,6 +333,54 @@ fn retail_map_assignment_uses_nearest_center_for_overlapping_rows() {
     assert_eq!(instance_id, 530, "MapID-to-map-number mapping is INFERRED");
 }
 
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[test]
+fn retail_world_to_map_argument_errors_include_exact_usage() {
+    let env = env();
+    env.eval::<()>(
+        r#"
+        local usage = "Usage: local uiMapID, mapPosition = C_Map.GetMapPosFromWorldPos(continentID, worldPosition [, overrideUiMapID])"
+        local function expectUsage(...)
+            local ok, message = pcall(C_Map.GetMapPosFromWorldPos, ...)
+            assert(not ok, "invalid world-to-map arguments must raise an argument error")
+            assert(string.find(tostring(message), usage, 1, true), tostring(message))
+        end
+        expectUsage("bad", {x=0, y=400}, 2248)
+        expectUsage(42)
+        expectUsage(42, nil, 2248)
+        expectUsage(42, 42, 2248)
+        expectUsage(42, {x="0", y=400}, 2248)
+        expectUsage(42, {x=0, y=400}, "bad")
+        "#,
+    )
+    .unwrap();
+}
+
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[test]
+fn retail_world_to_map_truncates_fractional_ids() {
+    let env = env();
+    env.state().borrow_mut().map_world_rects.insert(
+        2248,
+        wow_ui_sim::c_api::map_world_coordinates::MapWorldRect {
+            continent_id: 42,
+            left: -200.0,
+            right: 600.0,
+            top: 100.0,
+            bottom: 500.0,
+        },
+    );
+    env.eval::<()>(
+        r#"
+        local id, point = C_Map.GetMapPosFromWorldPos(42.9, {x=0, y=400}, 2248.9)
+        assert(id == 2248 and point.x == 0.25 and point.y == 0.75)
+        local autoID, autoPoint = C_Map.GetMapPosFromWorldPos(42.9, {x=0, y=400}, nil)
+        assert(autoID == 2248 and autoPoint.x == 0.25 and autoPoint.y == 0.75)
+        "#,
+    )
+    .unwrap();
+}
+
 #[cfg(all(
     feature = "optional-tests",
     feature = "profile-retail",
