@@ -145,13 +145,17 @@ fn player_spells_talent_sort_uses_catalog_unlock_levels() {
                         slotIndex = 1,
                         ScrollBox = { SetDataProvider = function() end },
                     }
-                    PvPTalentListMixin:Update(list)
-                    return inserted[1].talentID, inserted[2].talentID
+                    local ok, err = pcall(function()
+                        PvPTalentListMixin:Update(list)
+                    end)
+                    local first = inserted[1] and inserted[1].talentID or -1
+                    local second = inserted[2] and inserted[2].talentID or -1
+                    return ok, tostring(err), #inserted, first, second
                     "#,
                 )
-                .expect("sort selected Player Spells talents by supplied unlock levels");
+                .expect("run the selected Player Spells talent-list consumer");
 
-            assert_eq!(result, (901, 900));
+            assert_eq!(result, (true, "nil".to_string(), 2, 901, 900));
         },
     );
 }
