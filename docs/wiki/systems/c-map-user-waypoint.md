@@ -20,7 +20,7 @@ The Retail `WaypointLocationDataProvider` calls `GetUserWaypointPositionForMap` 
 
 **VERIFIED (optional Retail prefork test):** the original `HandleClick` completes past line 101 and leaves the point readable. The test invokes the original pin `OnAcquired` method after enabling supertracking and observes the tracked atlas. It also checks no named event from the new setter, corpse-flag preservation, ClearAllSuperTracked clearing the modeled flags, and unchanged saved map/coordinates.
 
-**INFERRED:** PTR shares the Retail implementation path; the test makes no PTR-specific behavioral assertion. **UNKNOWN:** whether the Retail behavior is identical on PTR or Forever. Native setter/getter return arity, event effects, and getter-to-selection relationships remain UNKNOWN; see [SuperTrack state](super-track-state.md#user-waypoint-supertracking).
+**INFERRED:** PTR shares the Retail implementation path; the test makes no PTR-specific behavioral assertion. **UNKNOWN:** whether the Retail behavior is identical on PTR or Forever. Native setter/getter return arity and named-event effects remain UNKNOWN. R88j.6 verifies separate quest/content/map-pin flags; agreement with their selections is only INFERRED from a consistent start. See [SuperTrack state](super-track-state.md#user-waypoint-supertracking).
 
 ## Sources
 
