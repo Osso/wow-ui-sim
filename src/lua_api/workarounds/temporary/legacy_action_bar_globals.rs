@@ -11,9 +11,6 @@ end
 
 BaseActionButtonMixin = BaseActionButtonMixin or {}
 
-local function __wow_legacy_action_bar_noop()
-end
-
 ActionButtonUtil.ActionBarActionStatus = ActionButtonUtil.ActionBarActionStatus or {
   NotMissing = 1,
   MissingFromAllBars = 2,
@@ -22,26 +19,6 @@ ActionButtonUtil.ActionBarActionStatus = ActionButtonUtil.ActionBarActionStatus 
 }
 
 ActionButtonUtil.ActionBarButtonNames = ActionButtonUtil.ActionBarButtonNames or {}
-
-if ActionButtonUtil.ShowAllActionButtonGrids == nil then
-  ActionButtonUtil.ShowAllActionButtonGrids = __wow_legacy_action_bar_noop
-end
-
-if ActionButtonUtil.HideAllActionButtonGrids == nil then
-  ActionButtonUtil.HideAllActionButtonGrids = __wow_legacy_action_bar_noop
-end
-
-if ActionButtonUtil.SetAllQuickKeybindButtonHighlights == nil then
-  ActionButtonUtil.SetAllQuickKeybindButtonHighlights = __wow_legacy_action_bar_noop
-end
-
-if ActionButtonUtil.ShowAllQuickKeybindButtonHighlights == nil then
-  ActionButtonUtil.ShowAllQuickKeybindButtonHighlights = __wow_legacy_action_bar_noop
-end
-
-if ActionButtonUtil.HideAllQuickKeybindButtonHighlights == nil then
-  ActionButtonUtil.HideAllQuickKeybindButtonHighlights = __wow_legacy_action_bar_noop
-end
 
 if ActionButtonUtil.GetActionBarStatusForSpell == nil then
   function ActionButtonUtil.GetActionBarStatusForSpell(_spellID, _excludeNonPlayerBars, _excludeSpecialPlayerBars)
@@ -162,8 +139,38 @@ __wow_legacy_action_bar_forward("HasExtraActionBar", "HasExtraActionBar")
 __wow_legacy_action_bar_forward("IsPossessBarVisible", "IsPossessBarVisible")
 "#;
 
+#[cfg(not(feature = "client-retail"))]
+const ACTION_BUTTON_QUICK_KEYBIND_DEFAULTS_LUA: &str = r#"
+local function __wow_legacy_action_bar_noop()
+end
+
+if ActionButtonUtil.ShowAllActionButtonGrids == nil then
+  ActionButtonUtil.ShowAllActionButtonGrids = __wow_legacy_action_bar_noop
+end
+
+if ActionButtonUtil.HideAllActionButtonGrids == nil then
+  ActionButtonUtil.HideAllActionButtonGrids = __wow_legacy_action_bar_noop
+end
+
+if ActionButtonUtil.SetAllQuickKeybindButtonHighlights == nil then
+  ActionButtonUtil.SetAllQuickKeybindButtonHighlights = __wow_legacy_action_bar_noop
+end
+
+if ActionButtonUtil.ShowAllQuickKeybindButtonHighlights == nil then
+  ActionButtonUtil.ShowAllQuickKeybindButtonHighlights = __wow_legacy_action_bar_noop
+end
+
+if ActionButtonUtil.HideAllQuickKeybindButtonHighlights == nil then
+  ActionButtonUtil.HideAllQuickKeybindButtonHighlights = __wow_legacy_action_bar_noop
+end
+
+"#;
+
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(LEGACY_ACTION_BAR_GLOBALS_LUA)?;
+    // Normal Retail QuickKeybind starts hidden, then uses the eager ActionBar owner.
+    #[cfg(not(feature = "client-retail"))]
+    lua.exec(ACTION_BUTTON_QUICK_KEYBIND_DEFAULTS_LUA)?;
     #[cfg(feature = "client-mists")]
     lua.exec(MISTS_LEGACY_ACTION_BAR_GLOBALS_LUA)?;
     Ok(())
@@ -241,17 +248,23 @@ mod tests {
                 if type(ActionButtonSpellAlertManager.HasAlert) ~= "function" then return "missing_has_alert" end
                 if type(ActionButtonSpellAlertManager.ShowAlert) ~= "function" then return "missing_show_alert" end
                 if type(ActionButtonSpellAlertManager.HideAlert) ~= "function" then return "missing_hide_alert" end
-                ActionButtonUtil.ShowAllActionButtonGrids()
-                ActionButtonUtil.HideAllActionButtonGrids()
-                ActionButtonUtil.SetAllQuickKeybindButtonHighlights()
-                ActionButtonUtil.ShowAllQuickKeybindButtonHighlights()
-                ActionButtonUtil.HideAllQuickKeybindButtonHighlights()
                 return "ok"
                 "#,
             )
             .expect("ActionButtonUtil defaults should run");
 
         assert_eq!(result, "ok");
+        #[cfg(not(feature = "client-retail"))]
+        env.exec(
+            r#"
+                ActionButtonUtil.ShowAllActionButtonGrids()
+                ActionButtonUtil.HideAllActionButtonGrids()
+                ActionButtonUtil.SetAllQuickKeybindButtonHighlights()
+                ActionButtonUtil.ShowAllQuickKeybindButtonHighlights()
+                ActionButtonUtil.HideAllQuickKeybindButtonHighlights()
+        "#,
+        )
+        .expect("non-Retail quick-keybind defaults remain callable");
     }
 
     #[test]
