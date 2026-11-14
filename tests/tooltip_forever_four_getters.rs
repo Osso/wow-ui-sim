@@ -1,9 +1,9 @@
 #![cfg(all(feature = "client-wowforever", feature = "optional-tests"))]
 
+use crate::common::blizzard_addon_harness::{
+    blizzard_ui_dir, load_blizzard_addon_closure_into_env, new_blizzard_addon_env,
+};
 use wow_ui_sim::lua_api::WowLuaEnv;
-
-#[path = "tooltip_full_env_helpers.rs"]
-mod tooltip_full_env_helpers;
 
 const PVP_TALENT_USAGE: &str = "Usage: local data = C_TooltipInfo.GetPvpTalent(talentID [, isInspect, groupIndex, talentIndex])";
 const APPEARANCE_USAGE: &str =
@@ -99,11 +99,14 @@ fn forever_outfit_getter_handles_zero_and_missing_saved_names() {
 
 #[test]
 fn forever_spellbook_outfit_consumer_uses_the_selected_tooltip_getter() {
-    let env = tooltip_full_env_helpers::load_full_env_without_post_load();
+    let ui = blizzard_ui_dir();
+    let env = new_blizzard_addon_env(&ui);
+    crate::common::supply_empty_forever_spellbook_outfits(&env);
+    crate::common::panel_fixtures::load_panel_addons(&env);
+    let loaded = load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_PlayerSpells"], &[]);
+    assert!(loaded.iter().any(|addon| addon == "Blizzard_PlayerSpells"));
     env.exec(
         r#"
-        assert(C_AddOns.LoadAddOn('Blizzard_PlayerSpells'),
-            'the Forever PlayerSpells addon must load')
         assert(type(SpellBookOutfitItemMixin) == 'table'
             and type(SpellBookOutfitItemMixin.OnIconEnter) == 'function',
             'the selected SpellBook outfit consumer must load')
