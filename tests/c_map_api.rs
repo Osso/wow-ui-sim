@@ -225,48 +225,110 @@ fn retail_map_assignment_projects_mulgore_center() {
         .unwrap();
 
     assert_eq!(result_count, 2);
-    assert_eq!(instance_id, 1);
+    assert_eq!(instance_id, 1, "MapID-to-map-number mapping is INFERRED");
     assert!((x - -1985.4150390625).abs() < 0.01, "{x}");
     assert!((y - -520.830078125).abs() < 0.01, "{y}");
     let outside_count: i32 = env
         .eval("return select('#', C_Map.GetWorldPosFromMapPos(7, {x=-0.01, y=0.5}))")
         .unwrap();
-    assert_eq!(outside_count, 0);
+    assert_eq!(
+        outside_count, 2,
+        "outside assignments use the nearest candidate"
+    );
+    let missing_map_count: i32 = env
+        .eval("return select('#', C_Map.GetWorldPosFromMapPos(999999, {x=0.5, y=0.5}))")
+        .unwrap();
+    assert_eq!(missing_map_count, 0);
 }
 
 #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
 #[test]
-fn retail_map_assignment_with_negative_map_id_returns_nothing() {
+fn retail_map_position_truncates_fractional_map_id_toward_zero() {
+    let env = env();
+    let (result_count, instance_id): (i32, i32) = env
+        .eval(
+            r#"
+            local resultCount = select('#', C_Map.GetWorldPosFromMapPos(7.9, {x=0.5, y=0.5}))
+            local instanceID = C_Map.GetWorldPosFromMapPos(7.9, {x=0.5, y=0.5})
+            return resultCount, instanceID
+            "#,
+        )
+        .unwrap();
+
+    assert_eq!(result_count, 2);
+    assert_eq!(instance_id, 1, "MapID-to-map-number mapping is INFERRED");
+}
+
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[test]
+fn retail_map_position_errors_include_usage_message() {
+    let env = env();
+    env.eval::<()>(
+        r#"
+        local usage = "Usage: local continentID, worldPosition = C_Map.GetWorldPosFromMapPos(uiMapID, mapPosition)"
+        local function expectUsage(...)
+            local ok, message = pcall(C_Map.GetWorldPosFromMapPos, ...)
+            assert(not ok, "invalid mapPosition must raise an argument error")
+            assert(string.find(tostring(message), usage, 1, true), tostring(message))
+        end
+        expectUsage(7)
+        expectUsage(7, nil)
+        expectUsage(7, 42)
+        expectUsage(7, {x=0.5})
+        expectUsage(7, {x="0.5", y=0.5})
+        "#,
+    )
+    .unwrap();
+}
+
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[test]
+fn retail_map_position_extrapolates_from_nearest_outside_assignment() {
+    let env = env();
+    let (result_count, instance_id): (i32, i32) = env
+        .eval(
+            r#"
+            local resultCount = select('#', C_Map.GetWorldPosFromMapPos(7, {x=1.5, y=0.5}))
+            local instanceID = C_Map.GetWorldPosFromMapPos(7, {x=1.5, y=0.5})
+            return resultCount, instanceID
+            "#,
+        )
+        .unwrap();
+
+    assert_eq!(result_count, 2);
+    assert_eq!(instance_id, 1, "MapID-to-map-number mapping is INFERRED");
+}
+
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[test]
+fn retail_negative_map_id_has_no_area_table_continent_source() {
     let env = env();
     let result_count: i32 = env
         .eval("return select('#', C_Map.GetWorldPosFromMapPos(2311, {x=0.5, y=0.5}))")
         .unwrap();
 
-    assert_eq!(result_count, 0);
+    assert_eq!(
+        result_count, 0,
+        "negative MapID cannot resolve without AreaTable.ContinentID (INFERRED seam)"
+    );
 }
 
 #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
 #[test]
-fn retail_map_assignment_uses_first_order_for_overlapping_rows() {
+fn retail_map_assignment_uses_nearest_center_for_overlapping_rows() {
     let env = env();
-    let (instance_id, x, y): (i32, f64, f64) = env
+    let (result_count, instance_id): (i32, i32) = env
         .eval(
             r#"
             local resultCount = select('#', C_Map.GetWorldPosFromMapPos(12, {x=0.3, y=0.2}))
-            assert(resultCount == 2, "overlapping map assignments should resolve a world position")
-            local instanceID, worldPos = C_Map.GetWorldPosFromMapPos(12, {x=0.3, y=0.2})
-            local x, y = worldPos:GetXY()
-            return instanceID, x, y
+            local instanceID = C_Map.GetWorldPosFromMapPos(12, {x=0.3, y=0.2})
+            return resultCount, instanceID
             "#,
         )
         .unwrap();
 
-    assert_eq!(
-        instance_id, 1,
-        "lowest OrderIndex assignment wins (INFERRED)"
-    );
-    assert!((x - -4864.00380859375).abs() < 0.01, "{x}");
-    assert!((y - -12373.239453125).abs() < 0.01, "{y}");
+    assert_eq!(result_count, 2);
+    assert_eq!(instance_id, 530, "MapID-to-map-number mapping is INFERRED");
 }
 
 #[cfg(all(
@@ -313,23 +375,25 @@ fn retail_map_world_position_probe_covers_zone_maps_under_azeroth() {
         if map_types.get(&map_id) == Some(&3) {
             zone_count += 1;
             let has_world_assignment =
-                sim_data_profile::ui_map_assignments::get_ui_map_assignments(map_id)
-                    .and_then(|assignments| {
-                        assignments
-                            .iter()
-                            .filter(|assignment| {
-                                let ui_min_x = f64::from(assignment.ui_min[0]);
-                                let ui_min_y = f64::from(assignment.ui_min[1]);
-                                let ui_max_x = f64::from(assignment.ui_max[0]);
-                                let ui_max_y = f64::from(assignment.ui_max[1]);
-                                0.5 >= ui_min_x
-                                    && 0.5 <= ui_max_x
-                                    && 0.5 >= ui_min_y
-                                    && 0.5 <= ui_max_y
-                            })
-                            .min_by_key(|assignment| assignment.order_index)
-                    })
-                    .is_some_and(|assignment| assignment.map_id >= 0);
+                sim_data_profile::ui_map_assignments::get_ui_map_assignments(map_id).is_some_and(
+                    |assignments| {
+                        assignments.iter().any(|assignment| {
+                            let ui_min_x = f64::from(assignment.ui_min[0]);
+                            let ui_min_y = f64::from(assignment.ui_min[1]);
+                            let ui_max_x = f64::from(assignment.ui_max[0]);
+                            let ui_max_y = f64::from(assignment.ui_max[1]);
+                            let ui_width = ui_max_x - ui_min_x;
+                            let ui_height = ui_max_y - ui_min_y;
+                            ui_width >= f64::from(f32::EPSILON)
+                                && ui_height >= f64::from(f32::EPSILON)
+                                && 0.5 >= ui_min_x
+                                && 0.5 <= ui_max_x
+                                && 0.5 >= ui_min_y
+                                && 0.5 <= ui_max_y
+                                && assignment.map_id >= 0
+                        })
+                    },
+                );
             if !has_world_assignment {
                 no_world_zone_ids.push(map_id);
             }
