@@ -29,6 +29,7 @@ pub(super) fn patch_chat_voice_button_surface(env: &crate::lua_api::WowLuaEnv) {
     temporary::chat_voice_button_surface::patch(env);
 }
 
+#[cfg(not(feature = "client-retail"))]
 pub(super) fn patch_game_time_defaults(env: &crate::lua_api::WowLuaEnv) {
     temporary::game_time_calendar_invites::patch(env);
 }
