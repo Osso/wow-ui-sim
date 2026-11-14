@@ -71,13 +71,13 @@ pub(crate) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResu
             state,
             namespace,
             "GetQuestLogSpecialItem",
-            get_quest_log_special_item,
+            publish_quest_log_special_item,
         )?;
         table_set_rust_fn_static(
             state,
             namespace,
             "GetQuestPartyProgress",
-            get_quest_party_progress,
+            publish_quest_party_progress,
         )?;
         table_set_rust_fn_static(state, namespace, "GetRecipeRankInfo", get_recipe_rank_info)?;
         table_set_rust_fn_static(
@@ -149,26 +149,14 @@ fn get_possession(state: &mut LuaState) -> LuaResult<u32> {
     no_values()
 }
 
-fn get_quest_log_special_item(state: &mut LuaState) -> LuaResult<u32> {
+fn publish_quest_log_special_item(state: &mut LuaState) -> LuaResult<u32> {
     // Retail TooltipInfoDocumentation.lua:817; selection and object inputs are
     // host-supplied because the native cache and inventory writers are unknown.
     let quest_index = tooltip_getter_args::round7_signed(state, 1, QUEST_SPECIAL_USAGE)?;
     if ACTIVE != ClientProfile::Retail {
         return no_values();
     }
-    let selection = {
-        let sim = borrow_state(state)?;
-        quest_index
-            .checked_sub(1)
-            .and_then(|index| usize::try_from(index).ok())
-            .and_then(|index| sim.quest_log_entries.entries.get(index))
-            .and_then(|entry| {
-                sim.quest_log_entries
-                    .resolved_quest_special_items
-                    .get(&entry.quest_id)
-            })
-            .copied()
-    };
+    let selection = find_quest_special_item_selection(state, quest_index);
     let Some(selection) = selection else {
         return no_values();
     };
@@ -183,7 +171,7 @@ fn get_quest_log_special_item(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-fn get_quest_party_progress(state: &mut LuaState) -> LuaResult<u32> {
+fn publish_quest_party_progress(state: &mut LuaState) -> LuaResult<u32> {
     // Retail TooltipInfoDocumentation.lua:833; only the Retail 70688
     // populated output is evidenced for this implementation.
     let quest_id = tooltip_getter_args::round7_signed(state, 1, QUEST_PARTY_USAGE)?;
@@ -303,6 +291,19 @@ fn active_essence_for_slot(state: &LuaState, slot: i32) -> Option<i32> {
         .iter()
         .find(|milestone| milestone.slot == Some(slot))
         .and_then(|milestone| milestone.active_essence_id)
+}
+
+fn find_quest_special_item_selection(
+    state: &LuaState,
+    quest_index: i32,
+) -> Option<crate::c_api::quest_special_item::QuestSpecialItemSelection> {
+    let index = usize::try_from(quest_index.checked_sub(1)?).ok()?;
+    let sim = borrow_state(state).ok()?;
+    let quest = sim.quest_log_entries.entries.get(index)?;
+    sim.quest_log_entries
+        .resolved_quest_special_items
+        .get(&quest.quest_id)
+        .copied()
 }
 
 fn item_for_owned_guid(state: &LuaState, guid: &str) -> Option<(u32, &'static ItemInfo)> {

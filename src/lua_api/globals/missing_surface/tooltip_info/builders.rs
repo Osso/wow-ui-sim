@@ -142,7 +142,12 @@ pub(super) fn empty_tooltip(state: &mut LuaState, tooltip_type: f64) -> Val {
     tooltip
 }
 
-/// WM94: build the verified party-progress line shapes from an explicit host snapshot.
+const TOOLTIP_TYPE_QUEST_PARTY_PROGRESS: f64 = 24.0;
+const LINE_TYPE_QUEST_TITLE: f64 = 17.0;
+const LINE_TYPE_PARTICIPANT_HEADING: f64 = 18.0;
+const LINE_TYPE_QUEST_PROGRESS: f64 = 8.0;
+
+/// WM94: build verified party-progress rows from an explicit host snapshot.
 pub(crate) fn build_quest_party_progress_tooltip(
     state: &mut LuaState,
     quest_id: i32,
@@ -151,90 +156,170 @@ pub(crate) fn build_quest_party_progress_tooltip(
     snapshot: &crate::c_api::quest_party_progress::QuestPartyProgressSnapshot,
 ) -> LuaResult<Option<Val>> {
     let has_title = !omit_title && snapshot.title.is_some();
-    let has_participant_rows = snapshot.participants.iter().any(|participant| {
-        let included = !ignore_active_player || !participant.exclude_when_ignoring_active_player;
-        included && (participant.heading.is_some() || !participant.rows.is_empty())
-    });
+    let has_participant_rows = snapshot
+        .participants
+        .iter()
+        .any(|participant| participant_has_included_content(participant, ignore_active_player));
     if !has_title && !has_participant_rows {
         return Ok(None);
     }
 
     let saved_top = state.top;
-    let tooltip = empty_tooltip(state, 24.0);
+    let tooltip = empty_tooltip(state, TOOLTIP_TYPE_QUEST_PARTY_PROGRESS);
     state.push(tooltip);
     table_set(state, tooltip, "id", Val::Num(f64::from(quest_id)));
     stamp_data_instance(state, tooltip);
     let lines = table_get(state, tooltip, "lines");
-    let mut index = 1;
-
-    if !omit_title {
-        if let Some(title) = &snapshot.title {
-            let line = push_tooltip_line(
-                state,
-                lines,
-                index,
-                17.0,
-                &title.text,
-                Some(title.color),
-                false,
-            );
-            table_set(state, line, "id", Val::Num(f64::from(quest_id)));
-            index += 1;
-        }
-    }
-
-    for participant in &snapshot.participants {
-        if ignore_active_player && participant.exclude_when_ignoring_active_player {
-            continue;
-        }
-        if let Some(heading) = &participant.heading {
-            let line = push_tooltip_line(
-                state,
-                lines,
-                index,
-                18.0,
-                &heading.name,
-                Some(heading.color),
-                false,
-            );
-            let guid = create_string(state, &heading.guid);
-            table_set(state, line, "guid", guid);
-            index += 1;
-        }
-        for row in &participant.rows {
-            let line =
-                push_tooltip_line(state, lines, index, 8.0, &row.text, Some(row.color), false);
-            table_set(state, line, "completed", Val::Bool(row.completed));
-            if let Some(num_required) = row.num_required {
-                table_set(
-                    state,
-                    line,
-                    "numRequired",
-                    Val::Num(f64::from(num_required)),
-                );
-            }
-            if let Some(num_fulfilled) = row.num_fulfilled {
-                table_set(
-                    state,
-                    line,
-                    "numFulfilled",
-                    Val::Num(f64::from(num_fulfilled)),
-                );
-            }
-            if let Some(progress_bar_percent) = row.progress_bar_percent {
-                table_set(
-                    state,
-                    line,
-                    "progressBarPercent",
-                    Val::Num(progress_bar_percent),
-                );
-            }
-            index += 1;
-        }
-    }
-
+    append_quest_party_progress_lines(
+        state,
+        lines,
+        quest_id,
+        omit_title,
+        ignore_active_player,
+        snapshot,
+    );
     state.top = saved_top;
     Ok(Some(tooltip))
+}
+
+fn participant_has_included_content(
+    participant: &crate::c_api::quest_party_progress::QuestPartyProgressParticipant,
+    ignore_active_player: bool,
+) -> bool {
+    let is_included = !ignore_active_player || !participant.exclude_when_ignoring_active_player;
+    let has_content = participant.heading.is_some() || !participant.rows.is_empty();
+    is_included && has_content
+}
+
+fn append_quest_party_progress_lines(
+    state: &mut LuaState,
+    lines: Val,
+    quest_id: i32,
+    omit_title: bool,
+    ignore_active_player: bool,
+    snapshot: &crate::c_api::quest_party_progress::QuestPartyProgressSnapshot,
+) {
+    let mut index = append_quest_party_progress_title(state, lines, quest_id, omit_title, snapshot);
+    for participant in &snapshot.participants {
+        if participant_has_included_content(participant, ignore_active_player) {
+            index = append_quest_party_participant(state, lines, index, participant);
+        }
+    }
+}
+
+fn append_quest_party_progress_title(
+    state: &mut LuaState,
+    lines: Val,
+    quest_id: i32,
+    omit_title: bool,
+    snapshot: &crate::c_api::quest_party_progress::QuestPartyProgressSnapshot,
+) -> i64 {
+    if omit_title {
+        return 1;
+    }
+    let Some(title) = &snapshot.title else {
+        return 1;
+    };
+    let line = push_tooltip_line(
+        state,
+        lines,
+        1,
+        LINE_TYPE_QUEST_TITLE,
+        &title.text,
+        Some(title.color),
+        false,
+    );
+    table_set(state, line, "id", Val::Num(f64::from(quest_id)));
+    2
+}
+
+fn append_quest_party_participant(
+    state: &mut LuaState,
+    lines: Val,
+    index: i64,
+    participant: &crate::c_api::quest_party_progress::QuestPartyProgressParticipant,
+) -> i64 {
+    let index = append_quest_party_heading(state, lines, index, participant);
+    append_quest_progress_rows(state, lines, index, participant)
+}
+
+fn append_quest_party_heading(
+    state: &mut LuaState,
+    lines: Val,
+    index: i64,
+    participant: &crate::c_api::quest_party_progress::QuestPartyProgressParticipant,
+) -> i64 {
+    let Some(heading) = &participant.heading else {
+        return index;
+    };
+    let line = push_tooltip_line(
+        state,
+        lines,
+        index,
+        LINE_TYPE_PARTICIPANT_HEADING,
+        &heading.name,
+        Some(heading.color),
+        false,
+    );
+    let guid = create_string(state, &heading.guid);
+    table_set(state, line, "guid", guid);
+    index + 1
+}
+
+fn append_quest_progress_rows(
+    state: &mut LuaState,
+    lines: Val,
+    index: i64,
+    participant: &crate::c_api::quest_party_progress::QuestPartyProgressParticipant,
+) -> i64 {
+    let mut index = index;
+    for row in &participant.rows {
+        append_quest_progress_row(state, lines, index, row);
+        index += 1;
+    }
+    index
+}
+
+fn append_quest_progress_row(
+    state: &mut LuaState,
+    lines: Val,
+    index: i64,
+    row: &crate::c_api::quest_party_progress::QuestPartyProgressRow,
+) {
+    let line = push_tooltip_line(
+        state,
+        lines,
+        index,
+        LINE_TYPE_QUEST_PROGRESS,
+        &row.text,
+        Some(row.color),
+        false,
+    );
+    table_set(state, line, "completed", Val::Bool(row.completed));
+    if let Some(num_required) = row.num_required {
+        table_set(
+            state,
+            line,
+            "numRequired",
+            Val::Num(f64::from(num_required)),
+        );
+    }
+    if let Some(num_fulfilled) = row.num_fulfilled {
+        table_set(
+            state,
+            line,
+            "numFulfilled",
+            Val::Num(f64::from(num_fulfilled)),
+        );
+    }
+    if let Some(progress_bar_percent) = row.progress_bar_percent {
+        table_set(
+            state,
+            line,
+            "progressBarPercent",
+            Val::Num(progress_bar_percent),
+        );
+    }
 }
 
 /// WM94: totems have two plain lines and identity type 18 with zero native ID.
