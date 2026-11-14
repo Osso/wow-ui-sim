@@ -189,17 +189,22 @@ fn secure_private_auras_loads_tooltip_processor_from_secure_dependency() {
         message.contains("Blizzard_PrivateAurasUI.lua:298")
             && message.contains("attempt to call a nil value")
     });
-    let copy_table_is_secure = registration_snapshot.8 == "function";
-    let frame_metatable_is_secure = registration_snapshot.9 == "function";
-    let missing_bootstrap_helper = !copy_table_is_secure || !frame_metatable_is_secure;
     assert!(
-        expected_consumer_gap && missing_bootstrap_helper,
+        expected_consumer_gap,
         "Retail must stop at the original PrivateAurasUI.lua:298 helper-visibility boundary;\
          errors: {}\nregistration snapshot\
          (ordinary/secure/processor callback/C_Timer/C_StoreSecure/CreateFrame/C_UIColor/\
          CreateSecureDelegate/CopyTable/GetFrameMetatable): {:?}",
         load_errors.join("\n  "),
         registration_snapshot
+    );
+    assert_eq!(
+        registration_snapshot.8, "function",
+        "SharedXMLBase TableUtil.lua must provide CopyTable in secureenv"
+    );
+    assert_eq!(
+        registration_snapshot.9, "nil",
+        "unmodeled GetFrameMetatable must remain absent from secureenv"
     );
 
     let original_processor: bool = env
