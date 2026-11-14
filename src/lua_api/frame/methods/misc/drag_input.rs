@@ -8,6 +8,7 @@ use crate::lua_api::methods::{
 };
 use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
 use crate::widget::AnchorPoint;
+use crate::widget::clamp_geometry::{COORDINATE_ROOT, uses_retail_clamp_producers};
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
@@ -148,10 +149,13 @@ pub fn start_moving(state: &mut LuaState) -> LuaResult<u32> {
         return Ok(0);
     }
     let mut sim = borrow_state_mut(state)?;
-    if let Some(frame) = sim.widgets.get_mut_visual(id)
-        && frame.movable
-    {
-        frame.is_moving = true;
+    if sim.widgets.get(id).is_some_and(|frame| frame.movable) {
+        if uses_retail_clamp_producers() {
+            anchor_movement_to_coordinate_root(&mut sim, id);
+        }
+        if let Some(frame) = sim.widgets.get_mut_visual(id) {
+            frame.is_moving = true;
+        }
         sim.set_active_drag_frame(Some(id));
     }
     Ok(0)
@@ -184,6 +188,16 @@ pub fn stop_moving_or_sizing(state: &mut LuaState) -> LuaResult<u32> {
         return Ok(0);
     }
     let mut sim = borrow_state_mut(state)?;
+    if uses_retail_clamp_producers()
+        && sim.active_drag_frame == Some(id)
+        && sim
+            .widgets
+            .get(id)
+            .is_some_and(|frame| frame.is_moving || frame.is_sizing)
+        && !has_special_movement_context(&sim.widgets, id)
+    {
+        anchor_movement_to_coordinate_root(&mut sim, id);
+    }
     if let Some(frame) = sim.widgets.get_mut_visual(id) {
         if frame.is_moving || frame.is_sizing {
             frame.user_placed = true;
@@ -195,6 +209,51 @@ pub fn stop_moving_or_sizing(state: &mut LuaState) -> LuaResult<u32> {
         sim.set_active_drag_frame(None);
     }
     Ok(0)
+}
+
+fn has_special_movement_context(widgets: &crate::widget::WidgetRegistry, id: u64) -> bool {
+    let mut ancestor = widgets.get(id).and_then(|frame| frame.parent_id);
+    while let Some(frame) = ancestor.and_then(|id| widgets.get(id)) {
+        if frame.clamp_special_movement_context {
+            return true;
+        }
+        ancestor = frame.parent_id;
+    }
+    false
+}
+
+fn anchor_movement_to_coordinate_root(sim: &mut crate::lua_api::SimState, id: u64) {
+    // Read layout without an eager script/rect notification. Retain its
+    // position and size when replacing any opposing anchors with one point.
+    let mut cache = crate::layout::LayoutCache::default();
+    let layout = crate::layout::compute_frame_rect_cached(
+        &sim.widgets,
+        id,
+        sim.screen_width,
+        sim.screen_height,
+        &mut cache,
+    );
+    if layout.rect_valid
+        && layout.eff_scale.is_finite()
+        && layout.eff_scale > 0.0
+        && let Some(frame) = sim.widgets.get_mut_for_anchor_edit(id)
+    {
+        let scale = layout.eff_scale;
+        frame.clear_all_points();
+        frame.set_size(layout.rect.width / scale, layout.rect.height / scale);
+        frame.set_point(
+            AnchorPoint::TopLeft,
+            Some(COORDINATE_ROOT),
+            AnchorPoint::TopLeft,
+            layout.rect.x / scale,
+            -layout.rect.y / scale,
+        );
+        sim.widgets.resolve_named_anchor_targets_for_frame(id);
+        sim.widgets.mark_anchor_rect_dirty(id);
+    }
+    // Also covers an accepted movement with no resolved geometry. This equal
+    // request cannot repeat the suppression write on an already false frame.
+    sim.widgets.request_anchor_propagation(id, false);
 }
 
 pub fn set_user_placed(state: &mut LuaState) -> LuaResult<u32> {

@@ -113,6 +113,7 @@ macro_rules! frame_defaults {
             // Neutral simulator state, not a claim about any loaded owner.
             anchor_propagation: false,
             anchor_propagation_guard: false,
+            clamp_special_movement_context: false,
             is_moving: false,
             is_sizing: false,
             sizing_point: crate::widget::AnchorPoint::BottomRight,

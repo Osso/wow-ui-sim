@@ -213,6 +213,8 @@ pub struct Frame {
     pub anchor_propagation: bool,
     /// True stops propagation as well as the entire branch below this region.
     pub anchor_propagation_guard: bool,
+    /// INFERRED host seam; native special parent-chain contexts are UNKNOWN.
+    pub clamp_special_movement_context: bool,
     pub is_moving: bool,
     /// Whether the frame is currently being resized via StartSizing.
     pub is_sizing: bool,
