@@ -56,39 +56,50 @@ fn r88e5_initiative_enabled_dashboard_reads_host_value(env: &WowLuaEnv) {
         ensure_loaded(env, dependency);
     }
     ensure_loaded(env, "Blizzard_HousingDashboard");
-    env.state()
-        .borrow_mut()
-        .housing
-        .initiative
-        .player_has_access = true;
+    {
+        let mut state = env.state().borrow_mut();
+        state.housing.initiative.player_has_access = true;
+        state.housing.initiative.enabled = Some(true);
+    }
 
-    let enabled: bool = env
+    let enabled: (bool, bool) = env
         .eval(
             r#"
-            C_NeighborhoodInitiative._state = { initiativeEnabled = true }
-            local accepted
-            local tabs = {
-                SetTabShown = function() end,
-                SetTabEnabled = function(_, tabID, value)
-                    if tabID == 2 then accepted = value end
-                end,
-            }
-            local dashboard = {
-                houseUpgradeTabID = 1,
-                endeavorTabID = 2,
-                TabSystem = tabs,
-            }
-            function dashboard:IsTabAvailable() return true end
-            function dashboard:GetTab() return self.houseUpgradeTabID end
-            function dashboard:SetToDefaultAvailableTab() end
+            function _G.__r88e5UpdateInitiativeTabs()
+                local accepted
+                local tabs = {
+                    SetTabShown = function() end,
+                    SetTabEnabled = function(_, tabID, value)
+                        if tabID == 2 then accepted = value end
+                    end,
+                }
+                local dashboard = {
+                    houseUpgradeTabID = 1,
+                    endeavorTabID = 2,
+                    TabSystem = tabs,
+                }
+                function dashboard:IsTabAvailable() return true end
+                function dashboard:GetTab() return self.houseUpgradeTabID end
+                function dashboard:SetToDefaultAvailableTab() end
 
-            HousingDashboardHouseInfoContentFrameMixin.UpdateTabs(dashboard)
-            return accepted
+                HousingDashboardHouseInfoContentFrameMixin.UpdateTabs(dashboard)
+                return accepted
+            end
+            return __r88e5UpdateInitiativeTabs(),
+                C_NeighborhoodInitiative.IsInitiativeEnabled()
             "#,
         )
-        .expect("housing dashboard should consume initiative enablement");
+        .expect("housing dashboard and C API should consume initiative enablement");
 
-    assert!(enabled);
+    assert_eq!(enabled, (true, true));
+
+    env.state().borrow_mut().housing.initiative.enabled = Some(false);
+    let disabled: (bool, bool) = env
+        .eval(
+            "return __r88e5UpdateInitiativeTabs(), C_NeighborhoodInitiative.IsInitiativeEnabled()",
+        )
+        .expect("disabled host value should reach the dashboard and C API");
+    assert_eq!(disabled, (false, false));
 }
 }
 

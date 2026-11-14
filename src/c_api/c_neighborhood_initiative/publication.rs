@@ -26,6 +26,12 @@ pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResu
         table_set_rust_fn_static(
             state,
             namespace,
+            "IsInitiativeEnabled",
+            is_initiative_enabled,
+        )?;
+        table_set_rust_fn_static(
+            state,
+            namespace,
             "GetInitiativeTaskInfo",
             get_initiative_task_info,
         )?;
@@ -54,6 +60,17 @@ pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResu
         table_set_rust_fn_static(state, namespace, name, callback)?;
     }
     Ok(())
+}
+
+/// INFERRED — this host value stands in for the initiative owner's enabled field.
+/// The native value source, initialization and absent-input result are unknown.
+fn is_initiative_enabled(state: &mut LuaState) -> LuaResult<u32> {
+    let enabled = borrow_state(state)?.housing.initiative.enabled;
+    if let Some(enabled) = enabled {
+        state.push(Val::Bool(enabled));
+        return Ok(1);
+    }
+    Ok(0)
 }
 
 /// VERIFIED query — only matching active/viewed neighborhoods are searched;
