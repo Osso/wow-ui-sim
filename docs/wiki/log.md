@@ -1,3 +1,9 @@
+## [2026-11-14] investigation | AdventureGuideUtil original availability
+
+[AdventureGuideUtil availability](investigations/adventureguide-original-availability.md)
+records the Retail original MicroMenu consumer and narrow bootstrap boundary.
+The default-state selector is PRESERVATION, not native availability or RED.
+
 ## [2026-11-13] fix | Inline icon right-edge advance
 
 Updated [Rendering pipeline](systems/rendering-pipeline.md#inline-icons-in-text) with R88f.L.2's absolute-right-edge snap and the tooltip boundary. A fractional scaled-edge `GetStringWidth` test exercises snapped cursor advance.

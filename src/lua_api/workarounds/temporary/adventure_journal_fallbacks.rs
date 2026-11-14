@@ -53,7 +53,9 @@ end
 if type(AdventureGuideUtil) ~= "table" then
     AdventureGuideUtil = {}
 end
-if rawget(AdventureGuideUtil, "IsAvailable") == nil then
+-- Retail original FrameXMLUtil owns availability before the MicroMenu consumer.
+-- Other profiles retain bootstrap behavior until their ownership is proven.
+if retainAvailabilityFallback and rawget(AdventureGuideUtil, "IsAvailable") == nil then
     function AdventureGuideUtil.IsAvailable()
         local kioskEnabled = Kiosk and Kiosk.IsEnabled and Kiosk.IsEnabled()
         return not kioskEnabled and C_AdventureJournal.CanBeShown()
@@ -96,7 +98,11 @@ end
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
-    lua.exec(ADVENTURE_JOURNAL_FALLBACKS_LUA)?;
+    let retain_fallback =
+        crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail;
+    lua.exec(&format!(
+        "local retainAvailabilityFallback = {retain_fallback}\n{ADVENTURE_JOURNAL_FALLBACKS_LUA}"
+    ))?;
     Ok(())
 }
 
@@ -135,8 +141,6 @@ mod tests {
                 if C_AdventureJournal.GetReward(1) ~= nil then return "reward" end
                 C_AdventureJournal.ActivateEntry(1)
 
-                if AdventureGuideUtil.IsAvailable() ~= true then return "available" end
-                if AdventureGuideUtil.OpenHyperLink("journal", "1", "2", "3") ~= false then return "link" end
                 if AdventureGuideUtil.GetCurrentJournalInstance() ~= nil then return "current" end
                 if AdventureGuideUtil.IsInInstance(1) ~= false then return "instance" end
                 return "ok"
@@ -145,6 +149,20 @@ mod tests {
             .expect("adventure journal fallback shape probe should run");
 
         assert_eq!(result, "ok");
+        if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+            let missing: bool = env
+                .eval("return rawget(AdventureGuideUtil, 'IsAvailable') == nil")
+                .expect("Retail waits for the original Game helper");
+            assert!(missing);
+        } else {
+            env.exec(
+                r#"
+                assert(AdventureGuideUtil.IsAvailable() == true)
+                assert(AdventureGuideUtil.OpenHyperLink("journal", "1", "2", "3") == false)
+            "#,
+            )
+            .expect("non-Retail bootstrap behavior unchanged");
+        }
     }
 
     #[test]
