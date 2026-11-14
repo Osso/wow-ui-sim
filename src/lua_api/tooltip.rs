@@ -182,6 +182,7 @@ pub struct TooltipData {
     pub custom_word_wrap_min_width: Option<f32>,
     pub min_width: f32,
     pub force_min_width: bool,
+    pub font_string_pairs: Vec<(u64, u64)>,
     /// Right, bottom, left, top, in layout units.
     pub padding: [f32; 4],
     pub anchored_left_lines: usize,
@@ -344,6 +345,7 @@ impl Default for TooltipData {
             custom_word_wrap_min_width: None,
             min_width: 0.0,
             force_min_width: false,
+            font_string_pairs: Vec::new(),
             padding: [0.0; 4],
             anchored_left_lines: 0,
             spell_id: None,
