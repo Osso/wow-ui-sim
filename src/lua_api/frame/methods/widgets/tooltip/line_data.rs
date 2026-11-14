@@ -10,7 +10,7 @@ use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, create_string, ensure_not_fully_locked_down,
     frame_id_from_stack, frame_id_from_stack_unrestricted, frame_ref, table_get, val_to_string,
 };
-use crate::lua_api::tooltip::{TooltipLine, TooltipTextSegment};
+use crate::lua_api::tooltip::{TooltipLine, TooltipTextSegment, inferred};
 use crate::lua_bridge::{IntoStack, stack_val};
 use crate::widget::WidgetType;
 use rilua::vm::state::LuaState;
@@ -39,18 +39,7 @@ pub(super) fn clear_lines(state: &mut LuaState) -> LuaResult<u32> {
                 .copied()
                 .collect()
         };
-        // INFERRED: ClearLines retains FontString pairs and their auxiliary state.
-        td.lines.clear();
-        td.anchored_left_lines = 0;
-        td.extra_inset = 0.0;
-        if wrath {
-            td.min_width = 0.0;
-            td.wrath_texture_rows.clear();
-        }
-        td.spell_id = None;
-        td.unit_token = None;
-        td.unit_name = None;
-        td.unit_guid = None;
+        inferred::inferred_clear_lines_preserving_font_string_state(td, wrath);
         line_ids
     };
     clear_cached_tooltip_line_text(&mut sim, &line_ids);
@@ -484,30 +473,33 @@ fn require_tooltip_object(
     if matches!(value, Val::Nil) {
         return Err(runtime_error(usage));
     }
-    // INFERRED: this fixed bad-self envelope is a simulator policy. R88n.7 says
-    // native decoration depends on the caller's runtime debug frame.
-    let conversion_error = |reason: &str| match method_name {
-        Some(name) => runtime_error(format!("calling '{name}' on bad self ({reason})")),
-        None => runtime_error(format!("{usage} - {reason}")),
-    };
-    let id = frame_id_from_stack_unrestricted(state, index)
-        .map_err(|_| conversion_error(frame_conversion_reason(value)))?;
-    ensure_not_fully_locked_down(state, id)
-        .map_err(|error| conversion_error(&error.to_string()))?;
-    crate::c_api::unit_aura_access::ensure_script_object_accessible(state, id)
-        .map_err(|error| conversion_error(&error.to_string()))?;
+    let id = frame_id_from_stack_unrestricted(state, index).map_err(|_| {
+        inferred::inferred_bad_self_error(method_name, usage, frame_conversion_reason(value))
+    })?;
+    ensure_not_fully_locked_down(state, id).map_err(|error| {
+        inferred::inferred_bad_self_error(method_name, usage, &error.to_string())
+    })?;
+    crate::c_api::unit_aura_access::ensure_script_object_accessible(state, id).map_err(
+        |error| inferred::inferred_bad_self_error(method_name, usage, &error.to_string()),
+    )?;
 
     let actual_type = {
         let sim = borrow_state(state)?;
         sim.widgets.get(id).map(|frame| frame.widget_type)
     };
     let Some(actual_type) = actual_type else {
-        return Err(conversion_error(
+        return Err(inferred::inferred_bad_self_error(
+            method_name,
+            usage,
             "Attempt to find 'this' in non-framescript object",
         ));
     };
     if actual_type != expected_type {
-        return Err(conversion_error("Wrong object type for function"));
+        return Err(inferred::inferred_bad_self_error(
+            method_name,
+            usage,
+            "Wrong object type for function",
+        ));
     }
     Ok(id)
 }

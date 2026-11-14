@@ -10,7 +10,7 @@ use crate::lua_api::methods::{
     get_or_create_frame_fields, table_set,
 };
 use crate::lua_api::script_helpers::collect_lua_error;
-use crate::lua_api::tooltip::{TooltipLine, build_cursor_anchor};
+use crate::lua_api::tooltip::{TooltipLine, build_cursor_anchor, inferred};
 use crate::lua_bridge::stack_val;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
@@ -428,11 +428,11 @@ pub(super) fn copy_tooltip(state: &mut LuaState) -> LuaResult<u32> {
     let Ok(source_id) = frame_id_from_stack(state, 2) else {
         return Ok(0);
     };
-    // INFERRED: cloning copies FontString widget IDs and their auxiliary state;
-    // R88n.7 does not establish native pair-copy or later lifetime behavior.
     let source = {
         let sim = borrow_state(state)?;
-        sim.tooltips.get(&source_id).cloned()
+        sim.tooltips
+            .get(&source_id)
+            .map(inferred::inferred_copy_tooltip_source_with_font_string_state)
     };
     let Some(source) = source else {
         return Ok(0);

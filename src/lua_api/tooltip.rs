@@ -1,5 +1,7 @@
 //! Tooltip state data structures.
 
+pub(crate) mod inferred;
+
 use crate::widget::{Anchor, AnchorPoint};
 
 /// Inline texture/atlas icon embedded in a tooltip line.
@@ -183,8 +185,7 @@ pub struct TooltipData {
     pub min_width: f32,
     pub force_min_width: bool,
     /// FontString widget IDs supplied to `GameTooltip:AddFontStrings`.
-    /// INFERRED: this model keeps IDs and aligned state across ClearLines/Hide
-    /// and copies them through CopyTooltip; R88n.7 does not establish pair lifetime/copy.
+    /// Lifecycle policies are isolated in [`inferred`].
     pub font_string_pairs: Vec<(u64, u64)>,
     /// Cleared marker state, indexed by stored FontString pair.
     /// `bool` is the simulator representation; native element type is unknown.
