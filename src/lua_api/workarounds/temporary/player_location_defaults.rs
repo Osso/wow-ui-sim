@@ -104,11 +104,36 @@ if PlayerLocation == nil then
       channelID = channelID,
     })
   end
+
+  __wow_temporary_player_location_defaults = PlayerLocation
 end
+"#;
+
+const REMOVE_PLAYER_LOCATION_DEFAULTS_LUA: &str = r#"
+if rawget(_G, "__wow_temporary_player_location_defaults") == rawget(_G, "PlayerLocation") then
+  rawset(_G, "PlayerLocation", nil)
+end
+rawset(_G, "__wow_temporary_player_location_defaults", nil)
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(PLAYER_LOCATION_DEFAULTS_LUA)?;
+    Ok(())
+}
+
+pub(crate) fn update_for_screen_mode(
+    lua: &mut rilua::Lua,
+    screen: crate::screen::ScreenKind,
+) -> crate::Result<()> {
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
+        return Ok(());
+    }
+
+    if screen.is_glue() {
+        return apply_bootstrap(lua);
+    }
+
+    lua.exec(REMOVE_PLAYER_LOCATION_DEFAULTS_LUA)?;
     Ok(())
 }
 
