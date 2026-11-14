@@ -1,4 +1,4 @@
-//! Retail trade warning state supplied by the simulator host.
+//! Retail trade state supplied by the host; the PTR path is inferred from Retail.
 
 use super::helpers::{ensure_namespace, global_val};
 use crate::lua_api::globals::real::cursor_model;
@@ -12,7 +12,10 @@ const MAX_MONEY_AMOUNT: f64 = 9_007_199_254_740_991.0;
 const CURSOR_MONEY_LIMIT: u64 = 100_000_000_000;
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
-    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
+    if !matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+    ) {
         return Ok(());
     }
 

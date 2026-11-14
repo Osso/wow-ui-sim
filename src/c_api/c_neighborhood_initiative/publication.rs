@@ -23,6 +23,12 @@ pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResu
             "GetAvailableHouseXP",
             get_available_house_xp,
         )?;
+    }
+    // VERIFIED for Retail; INFERRED for PTR, which shares the Retail UI path.
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+    ) {
         table_set_rust_fn_static(
             state,
             namespace,
