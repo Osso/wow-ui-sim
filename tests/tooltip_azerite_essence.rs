@@ -25,45 +25,56 @@ const ESSENCE_THREE_RANK_ONE_CANDIDATES: [u32; 4] = [293_031, 294_910, 293_031, 
 const ESSENCE_THREE_RANK_TWO_CANDIDATES: [u32; 4] = [294_906, 294_919, 300_009, 300_012];
 
 const ESSENCE_LUA_HELPERS: &str = r#"
-function AzeriteTestSpellNames(data, candidateIDs)
-    local selected = {}
-    for _, spellID in ipairs(candidateIDs) do
-        local spell = C_TooltipInfo.GetSpellByID(spellID)
-        assert(spell and spell.lines[1] and spell.lines[1].leftText,
-            'DB2 spell fixture must have a spell name: ' .. spellID)
-        local name = spell.lines[1].leftText
-        for _, line in ipairs(data.lines) do
-            if line.leftText == name then
-                selected[name] = true
+function AzeriteTestContainsSpell(data, spellID)
+    local spell = C_TooltipInfo.GetSpellByID(spellID)
+    if not spell or not spell.lines then return false end
+    for start = 1, #data.lines - #spell.lines + 1 do
+        local matches = true
+        for offset, expected in ipairs(spell.lines) do
+            local actual = data.lines[start + offset - 1]
+            if not actual or actual.leftText ~= expected.leftText
+                or actual.rightText ~= expected.rightText then
+                matches = false
                 break
             end
+        end
+        if matches then return true end
+    end
+    return false
+end
+
+function AzeriteTestSpellIDs(data, candidateIDs)
+    local selected = {}
+    for _, spellID in ipairs(candidateIDs) do
+        if AzeriteTestContainsSpell(data, spellID) then
+            selected[spellID] = true
         end
     end
     return selected
 end
 
-function AzeriteTestSpellCount(names)
+function AzeriteTestSpellCount(spellIDs)
     local count = 0
-    for _ in pairs(names) do
+    for _ in pairs(spellIDs) do
         count = count + 1
     end
     return count
 end
 
-function AzeriteTestSameSpellNames(left, right)
-    for name in pairs(left) do
-        if not right[name] then return false end
+function AzeriteTestSameSpellIDs(left, right)
+    for spellID in pairs(left) do
+        if not right[spellID] then return false end
     end
-    for name in pairs(right) do
-        if not left[name] then return false end
+    for spellID in pairs(right) do
+        if not left[spellID] then return false end
     end
     return true
 end
 
 function AzeriteTestAssertSpellCount(data, candidates, expected, message)
-    local names = AzeriteTestSpellNames(data, candidates)
-    assert(AzeriteTestSpellCount(names) == expected, message)
-    return names
+    local spellIDs = AzeriteTestSpellIDs(data, candidates)
+    assert(AzeriteTestSpellCount(spellIDs) == expected, message)
+    return spellIDs
 end
 
 function AzeriteTestShowEssence(essenceID, rank)
@@ -149,7 +160,9 @@ fn lua_number_array(values: &[u32]) -> String {
 }
 
 fn seed_essence(env: &WowLuaEnv, id: i32, rank: i32) {
-    env.state().borrow_mut().azerite_essence.essences.insert(
+    let mut state = env.state().borrow_mut();
+    state.player.present = true;
+    state.azerite_essence.essences.insert(
         id,
         AzeriteEssenceInfo {
             id,
@@ -197,34 +210,34 @@ fn retail_azerite_essence_original_consumer_selects_exact_essence_and_rank() {
         r#"
         local rankOne = AzeriteTestShowEssence({ESSENCE_TWO}, 1)
         assert(rankOne.id == {ESSENCE_TWO})
-        local rankOneNames = AzeriteTestAssertSpellCount(
+        local rankOneIDs = AzeriteTestAssertSpellCount(
             rankOne, {essence_two_rank_one}, 2, 'rank one must produce both spell blocks')
 
         -- The player-state rank is 1; this original UI passes rank 2 explicitly.
         local rankTwo = AzeriteTestShowEssence({ESSENCE_TWO}, 2)
         assert(rankTwo.id == {ESSENCE_TWO})
-        local rankTwoNames = AzeriteTestAssertSpellCount(
+        local rankTwoIDs = AzeriteTestAssertSpellCount(
             rankTwo, {essence_two_rank_two}, 2, 'rank two must produce both spell blocks')
-        assert(not AzeriteTestSameSpellNames(rankOneNames, rankTwoNames),
-            'different exact ranks must select different spells')
+        assert(not AzeriteTestSameSpellIDs(rankOneIDs, rankTwoIDs),
+            'different exact ranks must select different spell records')
 
         local otherEssence = AzeriteTestShowEssence({ESSENCE_THREE}, 2)
-        local otherNames = AzeriteTestAssertSpellCount(
+        local otherIDs = AzeriteTestAssertSpellCount(
             otherEssence, {essence_three_rank_two}, 2,
             'the second essence must produce both spell blocks')
-        assert(not AzeriteTestSameSpellNames(rankTwoNames, otherNames),
-            'different essence IDs must select different spells')
+        assert(not AzeriteTestSameSpellIDs(rankTwoIDs, otherIDs),
+            'different essence IDs must select different spell records')
 
         local currentRank = C_TooltipInfo.GetAzeriteEssence({ESSENCE_TWO})
         assert(currentRank and currentRank.type == 8 and currentRank.id == {ESSENCE_TWO})
-        local currentNames = AzeriteTestSpellNames(currentRank, {essence_two_rank_one})
-        assert(AzeriteTestSameSpellNames(rankOneNames, currentNames),
+        local currentIDs = AzeriteTestSpellIDs(currentRank, {essence_two_rank_one})
+        assert(AzeriteTestSameSpellIDs(rankOneIDs, currentIDs),
             'an omitted rank must use the current player rank')
 
         local zeroRank = C_TooltipInfo.GetAzeriteEssence({ESSENCE_TWO}, 0)
         assert(zeroRank and zeroRank.type == 8 and zeroRank.id == {ESSENCE_TWO})
-        local zeroNames = AzeriteTestSpellNames(zeroRank, {essence_two_rank_one})
-        assert(AzeriteTestSameSpellNames(rankOneNames, zeroNames),
+        local zeroIDs = AzeriteTestSpellIDs(zeroRank, {essence_two_rank_one})
+        assert(AzeriteTestSameSpellIDs(rankOneIDs, zeroIDs),
             'rank zero must select rank one')
 
         assert(select('#', C_TooltipInfo.GetAzeriteEssence({ESSENCE_TWO}, 5)) == 0,
@@ -258,10 +271,10 @@ fn retail_azerite_essence_original_consumer_selects_exact_essence_and_rank() {
         local listMiss = C_TooltipInfo.GetAzeriteEssence({ESSENCE_TWO})
         assert(listMiss and listMiss.type == 8 and listMiss.id == {ESSENCE_TWO},
             'a player-list miss must still use rank one')
-        local listMissNames = AzeriteTestSpellNames(listMiss, {essence_two_rank_one})
+        local listMissIDs = AzeriteTestSpellIDs(listMiss, {essence_two_rank_one})
         local rankOne = C_TooltipInfo.GetAzeriteEssence({ESSENCE_TWO}, 1)
-        local rankOneNames = AzeriteTestSpellNames(rankOne, {essence_two_rank_one})
-        assert(AzeriteTestSameSpellNames(listMissNames, rankOneNames),
+        local rankOneIDs = AzeriteTestSpellIDs(rankOne, {essence_two_rank_one})
+        assert(AzeriteTestSameSpellIDs(listMissIDs, rankOneIDs),
             'a list miss rank zero must be raised to rank one')
 
         local savedFormat = format
@@ -294,7 +307,7 @@ fn retail_azerite_essence_slot_original_consumer_applies_verified_modes() {
         AzeriteTestAssertSpellCount(majorSlot, {essence_two_rank_one}, 2,
             'slot zero must keep main and passive rank-one spell blocks')
         assert(AzeriteTestSpellCount(
-            AzeriteTestSpellNames(majorSlot, {essence_two_rank_two})) == 0,
+            AzeriteTestSpellIDs(majorSlot, {essence_two_rank_two})) == 0,
             'active major slot must use rank-one description spells')
 
         local passiveSlot = AzeriteTestShowSlot(102, 1, false)
@@ -302,7 +315,7 @@ fn retail_azerite_essence_slot_original_consumer_applies_verified_modes() {
         AzeriteTestAssertSpellCount(passiveSlot, {essence_three_rank_one}, 1,
             'a nonzero slot must keep its passive rank-one spell block')
         assert(AzeriteTestSpellCount(
-            AzeriteTestSpellNames(passiveSlot, {essence_three_rank_two})) == 0,
+            AzeriteTestSpellIDs(passiveSlot, {essence_three_rank_two})) == 0,
             'nonzero slots must omit the main-power block')
         "#
     ))
