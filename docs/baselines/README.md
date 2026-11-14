@@ -166,12 +166,17 @@ That capture's historical metadata bound the observation to source, manifest has
 
 ## Forever Lua Errors
 
+The 2026-11-14 capture records the owner-pinned Linux Game-screen run for `wowf 1.60.1.70707` at `2ea03fb7123d79525ca9ee6bde8db0feedb286c4` (lt-b573), whose tree is exactly reproduced by the retained per-API commit `a6b43c5c65b87279081f6fc61f2572ee3397dea7`. [Raw JSON](wowforever-lua-errors.json) and [metadata](wowforever-lua-errors.meta.json) bind the exact stock command, copied CVars, verified cache and artifacts.
+
+**CLEAN stock: 0 records / 0 occurrences, exit 0.** Immediate baseline `b6a1079940a25527adb0544a0db3d0d52a747aa1` had 18 records / 262 occurrences, including ScriptErrors echoes. The existing honor reward, tracked content, combat audio availability and spell visibility APIs are now published on Forever from pinned declarations. This is not enabled combat audio, populated single-criterion, native, rendered or full-suite acceptance.
+
+### Historical 70707 Windows capture
+
 The 2026-11-02 capture uses the 70707 retarget worktree based on `eb548efc0`
 with matching `wowf 1.60.1.70707` UI inputs: **4 records / 4 occurrences,
 exit1; startup is not clean.** The raw stdout SHA-256 is
 `c7c80c6c2b80fda00632c192bc48692f8d6006d1df11f90dec8fb7a346571033`.
-[Metadata](wowforever-lua-errors.meta.json) records the source snapshot, sealed
-binary, cache identity and capture guards.
+The JSON and metadata at `116f2dfff` record that historical source snapshot, sealed binary, cache identity and capture guards.
 
 All four records still concern missing `C_PetInfo.IsPetOrderMoveToPending`, now
 at `Blizzard_GamepadActionBars/MainActionBarFrame.lua:246`: OnLoad and OnEvent
@@ -189,10 +194,9 @@ are under `docs/local/70707/baseline-capture/`.
 Verified Windows game-screen capture on 2026-11-02 at runtime source
 `2e48a2960`, using the installed `wowf 1.60.1.70634` UI cache:
 **4 records / 4 occurrences, exit1; startup is not clean.**
-`wowforever-lua-errors.json` is byte-identical captured stdout (SHA256
+The archived JSON at `bf8a02806` is byte-identical captured stdout (SHA256
 `bd2c211638d3bfac11ad63bb8d5e5db8cd9ba47d90481f3afbaa181a7a0ab0d1`).
-[Metadata](wowforever-lua-errors.meta.json) records the command, binary hash,
-cache provenance, CVar guards and all four record classifications.
+The metadata at that revision records the command, binary hash, cache provenance, CVar guards and all four record classifications.
 
 All four records concern missing `C_PetInfo.IsPetOrderMoveToPending` at
 `Blizzard_GamepadActionBars/MainActionBarFrame.lua:244`: one OnLoad failure and

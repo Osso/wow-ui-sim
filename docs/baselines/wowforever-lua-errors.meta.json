@@ -1,28 +1,29 @@
 {
   "schema": 1,
   "profile": "wowforever",
-  "capture_time_utc": "2026-11-02T17:04:06Z",
-  "runtime_source_revision": "eb548efc03014a87ffd812da73bba4774cf118e6",
-  "features": "sound,gui,casc,client-wowforever,tools",
-  "target": "x86_64-pc-windows-msvc",
+  "capture_time_utc": "2026-11-14T15:44:54Z",
+  "runtime_source_revision": "2ea03fb7123d79525ca9ee6bde8db0feedb286c4",
+  "features": "sound,gui,casc,client-wowforever,optional-tests",
+  "target": "x86_64-unknown-linux-gnu",
   "command": [
-    "C:\\Repositories\\wow-ui-sim\\.claude\\worktrees\\forever-70707\\docs\\local\\70707\\bin\\wow-sim.exe",
-    "--session-wtf-path",
-    "C:\\Repositories\\wow-ui-sim\\.claude\\worktrees\\forever-70707\\docs\\local\\70707\\baseline-capture\\session",
+    "timeout",
+    "90",
+    "wow-sim",
     "--no-addons",
     "--no-saved-vars",
     "lua-errors"
   ],
-  "binary_sha256": "6b39bb34ff927f10d171dffbfe4629fb56781c014f5e4ebb2f59505718a5adbb",
-  "baseline_sha256": "c7c80c6c2b80fda00632c192bc48692f8d6006d1df11f90dec8fb7a346571033",
-  "messages": 4,
-  "occurrences": 4,
+  "binary_sha256": "8eb825f9dc7ff5a28802d99b3d5f383692cd403c5d79c459df5420d912205b83",
+  "cargo_stdout_sha256": "59b6eb3f034b50459b93743c62b9f733407b4f51eb359ba8b75e63b1d23489ff",
+  "baseline_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+  "baseline_transform": "none; byte-identical captured stdout including trailing LF",
+  "messages": 0,
+  "occurrences": 0,
   "result": {
-    "exit_code": 1,
-    "elapsed_seconds": 8.414
+    "exit_code": 0
   },
-  "startup_clean": false,
-  "disposition": "Failing simulator game-screen startup inventory; no clean-startup or native-parity claim.",
+  "startup_clean": true,
+  "disposition": "CLEAN 70707 stock startup only; no native, rendered, full-suite, enabled audio, populated single-criterion or addon acceptance claim.",
   "provenance": {
     "schema": "1",
     "profile": "wowforever",
@@ -30,90 +31,36 @@
     "version": "1.60.1.70707",
     "build_key": "7feb61f3c994bcb168526b8db521514a",
     "install_key": "",
-    "manifest_sha256": "dab42f71be89763eba40119a39fbf4a33faf6037f953945a8ad2d062fdff789e",
+    "manifest_sha256": "55e3e3846c9dc112f4a593d2d854ba78f210739e5ada9a176785883b4d735264",
     "locale": "enUS",
     "content_filter": "none",
     "source": "casc-local-or-gethe-md5",
     "fallback": "none",
     "gethe_version": "1.60.1.70707",
-    "gethe_revision": "aff0d8cd53bf4d9ef1c1dd2786b94461a276fb16",
-    "gethe_file": "{\"path\":\"Blizzard_LoadLocale/LoadLocale.lua\",\"fdid\":5612369,\"ckey\":\"2e4d4433534c95ee111c0e1a88863c01\",\"gethe_revision\":\"aff0d8cd53bf4d9ef1c1dd2786b94461a276fb16\",\"source\":\"gethe\"}"
+    "gethe_revision": "aff0d8cd53bf4d9ef1c1dd2786b94461a276fb16"
   },
-  "provenance_sha256": "3465d8fe5106bcfd3eb8cc59b555e35f696deaf1b38278f07d632bc3a62b53fa",
-  "original_cvar_sha256": "d1175eab186a9399a5786605d53a30c7c23c35cda4dad2b8f9579704a3684ea9",
-  "original_cvar_stat_hash_unchanged": true,
-  "cvar_isolation": "Byte-exact current persisted CVar copies seeded into child-only XDG_DATA_HOME/wow-sim/cvars.json and the explicit isolated session/cvars.json; original size/stat/hash unchanged.",
-  "runtime_cache": "Completed strict Windows 1.60.1.70707 cache with matching pin, Gethe revision and manifest. Cache acquisition used a separate CLI with a local parser patch and verified CRLF handling. The capture executable used committed dependencies with WOW_SIM_CASC=0 and no version override. Cache completion/provenance guards were unchanged; the full cache was not independently sealed.",
-  "capture_evidence": {
-    "stdout": "docs/local/70707/baseline-capture/current-lua-errors.json",
-    "stderr": "docs/local/70707/baseline-capture/current.stderr.log",
-    "receipt": "docs/local/70707/baseline-capture/summary.json",
-    "previous_json": "docs/local/70707/baseline-capture/before-committed-wowforever-lua-errors.json",
-    "previous_metadata": "docs/local/70707/baseline-capture/before-committed-wowforever-lua-errors.meta.json"
-  },
-  "build_evidence": "docs/local/70707/build-evidence.json",
+  "provenance_sha256": "b3081ac30a20fcb3cb5657b46dfaafda990cc6efcfddbec976490174eb3e0dba",
+  "owner_ui_checksum_manifest_sha256": "53d7a3ab9cb2e4139d3b4b69ae9b7d76592ca71b9dcf715130ebe8505d65a61b",
+  "owner_spell_cache_sha256": "baafb9369a8214a5d793fba12cadec875f7f4a0c4ff8e569d6faac21b2bcac7b",
+  "cvar_isolation": "Fresh isolated XDG data/config; byte-exact copy of cvars.json; no sound override or runtime cache downloads.",
+  "source_entries_verified": 4493,
   "before_after": {
-    "before_messages": 4,
-    "before_occurrences": 4,
-    "after_messages": 4,
-    "after_occurrences": 4,
-    "added_messages": 4,
-    "removed_messages": 4,
-    "unchanged_messages": 0,
-    "scope": "Exact raw message comparison; source and UI build both changed, so not controlled fix attribution.",
-    "net_occurrence_delta": 0
+    "before_runtime_source_revision": "b6a1079940a25527adb0544a0db3d0d52a747aa1",
+    "before_raw_sha256": "61de54109c39e77d9ae739adaf1d637f94c1062c23ad443c231cfa4e8c5ea1fe",
+    "before_messages": 18,
+    "before_occurrences": 262,
+    "after_messages": 0,
+    "after_occurrences": 0,
+    "scope": "Exact raw diagnostic keys/counts, treating ScriptErrors echoes as separate records."
   },
-  "classifications": [
-    {
-      "record": 1,
-      "message_sha256": "2816767a864470b922a1a0c52a7e11c353f9d689e4dd658500b0788377e41623",
-      "symbol": "C_PetInfo.IsPetOrderMoveToPending",
-      "classification": "missing simulator API",
-      "reporting": "underlying startup error",
-      "phase": "OnLoad",
-      "count": 1,
-      "reason": "The selected 70707 GamepadMainActionBarFrame consumer calls this missing method at MainActionBarFrame.lua:246.",
-      "evidence": "docs/local/70707/baseline-capture/current-lua-errors.json"
-    },
-    {
-      "record": 2,
-      "message_sha256": "c5845eb0042178be3360e33fb53bd0c765da3fcfdac077d7700ecbee6d217873",
-      "symbol": "C_PetInfo.IsPetOrderMoveToPending",
-      "classification": "missing simulator API",
-      "reporting": "Blizzard_ScriptErrors re-report",
-      "phase": "OnLoad",
-      "count": 1,
-      "reason": "The selected 70707 GamepadMainActionBarFrame consumer calls this missing method at MainActionBarFrame.lua:246.",
-      "evidence": "docs/local/70707/baseline-capture/current-lua-errors.json"
-    },
-    {
-      "record": 3,
-      "message_sha256": "e28f00b1af0603335041efa7c9cee37af189040ccf0742c093572ae30a531ec8",
-      "symbol": "C_PetInfo.IsPetOrderMoveToPending",
-      "classification": "missing simulator API",
-      "reporting": "underlying startup error",
-      "phase": "OnEvent",
-      "count": 1,
-      "reason": "The selected 70707 GamepadMainActionBarFrame consumer calls this missing method at MainActionBarFrame.lua:246.",
-      "evidence": "docs/local/70707/baseline-capture/current-lua-errors.json"
-    },
-    {
-      "record": 4,
-      "message_sha256": "d5548bc0c396cad726e45c6e9827e838d9657c952f43738c9896f9653f245cb7",
-      "symbol": "C_PetInfo.IsPetOrderMoveToPending",
-      "classification": "missing simulator API",
-      "reporting": "Blizzard_ScriptErrors re-report",
-      "phase": "OnEvent",
-      "count": 1,
-      "reason": "The selected 70707 GamepadMainActionBarFrame consumer calls this missing method at MainActionBarFrame.lua:246.",
-      "evidence": "docs/local/70707/baseline-capture/current-lua-errors.json"
-    }
-  ],
-  "runtime_source_state": "Staged 70707 retarget worktree at this base; the base revision alone does not identify the retarget source. See source snapshot and build evidence.",
-  "runtime_source_snapshot": {
-    "sha256": "26ea3e01ed34934b2fd68fc9a008fe5dc28e8f911df18a5d5306e50feda72970",
-    "files": 30016,
-    "evidence": "docs/local/70707/baseline-capture/source-files.json",
-    "unchanged_during_capture": true
-  }
+  "previous_baseline": {
+    "commit": "116f2dfff2f305a26e621831b8cdb31b40406aa0",
+    "runtime_source_revision": "eb548efc03014a87ffd812da73bba4774cf118e6",
+    "baseline_sha256": "c7c80c6c2b80fda00632c192bc48692f8d6006d1df11f90dec8fb7a346571033",
+    "messages": 4,
+    "occurrences": 4,
+    "note": "Historical and separate 70707 Windows capture; the pet errors were absent from the immediate lt-b573 baseline before any edits."
+  },
+  "runtime_source_tree": "b1651bd3042b687dd59ee5fe48bea0540c6de1af",
+  "equivalent_source_commit_on_branch": "a6b43c5c65b87279081f6fc61f2572ee3397dea7"
 }
