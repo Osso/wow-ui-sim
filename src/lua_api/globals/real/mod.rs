@@ -71,6 +71,7 @@ pub mod lfd_lock_requests;
 pub mod locale_info;
 pub mod loot_method;
 pub mod loot_specialization;
+pub(crate) mod macro_getters;
 pub mod math_extensions;
 pub(crate) mod merchant_affordability;
 pub mod merchant_buyback;

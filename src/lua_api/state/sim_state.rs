@@ -1072,6 +1072,7 @@ pub struct SimState {
     pub battlefield_minimap_visible: bool,
     pub chat_channels: Vec<ChatChannel>,
     pub macros: Vec<MacroInfo>,
+    pub macro_icons: MacroIconInputs,
     pub running_macro: Option<u32>,
     pub chat_windows: ::std::collections::HashMap<i32, ChatWindow>,
     pub chat_type_colors: ::std::collections::HashMap<String, (f32, f32, f32)>,
