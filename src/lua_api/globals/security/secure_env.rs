@@ -461,6 +461,11 @@ mod tests {
                 local secureTooltipDataType = secureEnum and rawget(secureEnum, "TooltipDataType")
                 local secureBit = rawget(secure, "bit")
                 local ordinaryBit = rawget(_G, "bit")
+                local function secureCopiesGlobalFunction(name)
+                    local globalFunction = rawget(_G, name)
+                    return type(globalFunction) == "function"
+                        and rawget(secure, name) == globalFunction
+                end
                 local result = {
                     type(rawget(secure, "assert")) == "function",
                     type(secureEnum) == "table"
@@ -474,12 +479,9 @@ mod tests {
                     type(secureBit) == "table"
                         and secureBit ~= ordinaryBit
                         and secureBit.band == ordinaryBit.band,
-                    type(rawget(secure, "strjoin")) == "function"
-                        and rawget(secure, "strjoin") == rawget(_G, "strjoin")
-                        and type(rawget(secure, "strsplit")) == "function"
-                        and rawget(secure, "strsplit") == rawget(_G, "strsplit")
-                        and type(rawget(secure, "time")) == "function"
-                        and rawget(secure, "time") == rawget(_G, "time"),
+                    secureCopiesGlobalFunction("strjoin")
+                        and secureCopiesGlobalFunction("strsplit")
+                        and secureCopiesGlobalFunction("time"),
                 }
                 rawset(math, probe, before)
                 return result[1], result[2], result[3], result[4], result[5], result[6], result[7]
