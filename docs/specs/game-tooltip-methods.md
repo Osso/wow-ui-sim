@@ -1,24 +1,36 @@
 # GameTooltip methods
 
-This spec records the `GameTooltip` minimum-width and FontString-pair contracts implemented by `src/lua_api/frame/methods/widgets/tooltip/`; the [Lua API wiki](../wiki/systems/lua-api.md#game-tooltip-minimum-width-and-font-strings) describes the current model. Native evidence is R88n.7 for Retail 12.1.5.70688. **INFERRED:** PTR and Forever share this method-registration path; R88n.7 does not independently prove their behavior.
+This spec records the Retail `GameTooltip:GetMinimumWidth`, `SetMinimumWidth`, and `AddFontStrings` behavior. Native evidence is R88n.7 for Retail 12.1.5.70688. The pinned declaration is `Blizzard_APIDocumentationGenerated/FrameAPITooltipDocumentation.lua:10,47,94`.
 
-## What it must do
+## Profile scope
 
-### Minimum width
+- **VERIFIED (simulator history, `b6a107994`):** only Retail uses the R88n.7 implementation. The `ClientProfile::ACTIVE` branches preserve the pre-lane getter in `line_data.rs` and `AddFontStrings` behavior in `owner.rs` for PTR, Forever, Mists, and Wrath.
+- The API tests are optional and compile only with `client-retail`, `retail-12-1-5`, and `forbidden-aspects`. They do not assert native behavior for PTR, Forever, Mists, or Wrath.
+- **UNKNOWN:** this spec does not certify native behavior outside Retail 12.1.5.70688.
 
-- [x] On Retail 12.1.5.70688, `GetMinimumWidth` uses `Usage: local width, forced = self:GetMinimumWidth()` and returns exactly the stored width as a number, then the stored forced state as a boolean.
-- [x] A new `GameTooltip` starts with minimum width `0` and forced state `false`; `SetMinimumWidth(width, force)` stores both values for the getter to return.
-- [x] A missing or nil getter receiver raises an error with the exact Usage text. Tested non-table, non-framescript and wrong-class conversions use the exact native error reasons recorded by R88n.7.
+## Minimum width
 
-### FontString pairs
+- [x] **VERIFIED (R88n.7):** Retail `GetMinimumWidth` uses `Usage: local width, forced = self:GetMinimumWidth()` and returns exactly the stored width number followed by the stored forced-state boolean.
+- [x] **VERIFIED (R88n.7):** a new tooltip starts with width `0` and forced state `false`; the getter returns both values when width is zero.
+- [x] **VERIFIED (simulator source):** the existing Retail `SetMinimumWidth` behavior stores both values.
+- [ ] Test execution pending: the optional Retail API test asserts getter arity, defaults, and stored round trips.
+- [ ] **FOLLOW-UP (R88n.7):** conditional return secrecy, diagnostic-state clearing, and return-access-state effects are not modeled. The evidence does not name the checked secret-aspect identity or the ordinary-call state predicate needed to implement the marking rule.
+- **INFERRED (simulator diagnostic):** receiver conversion uses a fixed bad-self message envelope. R88n.7 says native decoration depends on the caller's runtime debug frame; tests assert the verified error reason, not the envelope.
 
-- [x] `AddFontStrings` uses `Usage: self:AddFontStrings(leftFontString, rightFontString)`, reads a tooltip and two FontStrings, and returns zero values on success.
-- [x] A successful call stores the supplied left/right pair. Stored pair count is separate from `NumLines`; adding a pair does not add a populated tooltip line.
-- [x] Tested receiver and FontString conversion failures use the native reasons and Usage formatting recorded by R88n.7.
+## FontString pairs
 
-### Original consumer
+- [x] **VERIFIED (R88n.7):** Retail `AddFontStrings` uses `Usage: self:AddFontStrings(leftFontString, rightFontString)`, reads the required tooltip and two FontStrings, and returns zero values on success.
+- [x] **VERIFIED (R88n.7):** a successful call increments pair count, resizes line-state and numeric storage, initializes new numeric slots to zero, clears the new line-state marker, and resets layout progress to zero. It does not add a `NumLines` entry or assign the FontStrings' parents.
+- [ ] Test execution pending: the optional Retail tests cover pair order, zero return values, unchanged parents, line-count separation, and the count-aligned reset mutation.
+- [ ] Test execution pending: the Retail path checks `ChangeParent` and the six R88n.7 inherited aspects for each FontString, then checks `RemoveSecretAspects` before storage when `forbidden-aspects` is enabled.
+- [ ] **FOLLOW-UP (R88n.7):** the conditional tooltip secret-state transition depends on saved Lua call state. The simulator has no corresponding saved-state input, so it does not guess this transition or its `Object did not allow secret.` path.
+- **INFERRED (simulator retention):** `font_string_pairs` and its aligned arrays remain across `ClearLines`/Hide, and `CopyTooltip` copies them through `TooltipData::clone`. R88n.7 leaves later pair lifetime and copy behavior unknown.
+- **UNKNOWN (R88n.7):** later layout, rendering, anchoring, and pointer lifetime use are not established.
 
-- [x] The selected Retail `GameTooltip_InsertFrame` consumer continues to use the first `GetMinimumWidth` result and can raise the stored width for an inserted frame.
+## Original consumers
+
+- **PRESERVATION (verified Retail selection):** `Blizzard_SharedXML.toc:154` selects `SharedTooltipTemplates.lua`; `GameTooltip_InsertFrame` uses `GetMinimumWidth()` as one scalar, so it observes only the first result. Its test preserves that consumer but is not a RED selector for getter arity.
+- **VERIFIED (Retail cache search):** searching the pinned Retail `AddOns` tree found only the generated `AddFontStrings` declaration at `Blizzard_APIDocumentationGenerated/FrameAPITooltipDocumentation.lua:10`, not a Lua caller. The direct API test remains the producer test; no consumer is manufactured.
 
 ## How it works
 
@@ -27,22 +39,8 @@ This spec records the `GameTooltip` minimum-width and FontString-pair contracts 
 
 ## Implementation inventory
 
-- `src/lua_api/frame/methods/widgets/tooltip/line_data.rs` — minimum-width getter/setter and method argument conversion.
-- `src/lua_api/frame/methods/widgets/tooltip/owner.rs` — `AddFontStrings` pair storage.
-- `src/lua_api/tooltip.rs` — tooltip width flags and stored FontString pairs.
-
-## Tests asserting this spec
-
-- `tests/tooltip_minimum_width.rs` — API arity, defaults, round-trip, pair storage, `NumLines` separation and conversion errors.
-- `tests/tooltip_minimum_width.rs::retail_shared_tooltip_insert_frame_preserves_minimum_width_consumer` — optional Retail consumer preservation test.
-
-## Known gaps (current cycle)
-
-- None within the contract tested here.
-
-## Out of scope
-
-- **VERIFIED (R88n.7):** native `GetMinimumWidth` applies conditional result secrecy and changes diagnostic/access state; this slice does not model those effects.
-- **VERIFIED (R88n.7):** native `AddFontStrings` checks parent-change and secret/forbidden-aspect permissions; this slice does not implement those checks.
-- The later layout, rendering, anchoring and lifetime use of stored FontString pairs is UNKNOWN. This slice stores the pair and does not invent those effects.
-- `SetMinimumWidth` argument coercion beyond the existing implementation is not changed here.
+- `src/lua_api/frame/methods/widgets/tooltip/line_data.rs` — profile-preserved getter, Retail getter, and argument conversion.
+- `src/lua_api/frame/methods/widgets/tooltip/owner.rs` — profile-preserved legacy behavior and Retail `AddFontStrings` checks/storage.
+- `src/lua_api/frame/methods/forbidden_aspects.rs` — the Retail `AddFontStrings` parent-change aspect check.
+- `src/lua_api/tooltip.rs` — width fields, pair IDs, and count-aligned mutation state.
+- `tests/tooltip_minimum_width.rs` — optional Retail-only API and preservation probes.

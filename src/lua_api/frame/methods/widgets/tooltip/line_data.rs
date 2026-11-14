@@ -39,6 +39,7 @@ pub(super) fn clear_lines(state: &mut LuaState) -> LuaResult<u32> {
                 .copied()
                 .collect()
         };
+        // INFERRED: ClearLines retains FontString pairs and their auxiliary state.
         td.lines.clear();
         td.anchored_left_lines = 0;
         td.extra_inset = 0.0;
@@ -483,6 +484,8 @@ fn require_tooltip_object(
     if matches!(value, Val::Nil) {
         return Err(runtime_error(usage));
     }
+    // INFERRED: this fixed bad-self envelope is a simulator policy. R88n.7 says
+    // native decoration depends on the caller's runtime debug frame.
     let conversion_error = |reason: &str| match method_name {
         Some(name) => runtime_error(format!("calling '{name}' on bad self ({reason})")),
         None => runtime_error(format!("{usage} - {reason}")),
@@ -529,7 +532,22 @@ pub(super) fn set_minimum_width(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 pub(super) fn get_minimum_width(state: &mut LuaState) -> LuaResult<u32> {
+    // Keep the pre-lane one-result behavior on profiles without Retail R88n.7 evidence.
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
+        let id = frame_id_from_stack(state, 1)?;
+        let width = {
+            let sim = borrow_state(state)?;
+            sim.tooltips
+                .get(&id)
+                .map(|tooltip| tooltip.min_width as f64)
+                .unwrap_or(0.0)
+        };
+        return width.into_stack(state);
+    }
+
     let id = require_tooltip_method_receiver(state, 1, "GetMinimumWidth", GET_MINIMUM_WIDTH_USAGE)?;
+    // R88n.7's conditional result secrecy and diagnostic/access-state changes
+    // depend on runtime state that the simulator does not currently represent.
     let (width, forced) = borrow_state(state)?
         .tooltips
         .get(&id)
