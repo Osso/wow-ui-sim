@@ -13,17 +13,30 @@ Communities dependency leads to FrameXMLUtil. The actual `EJMicroButton` XML
 frame mixes in `EJMicroButtonMixin`; its `UpdateDisplay` calls the original
 helper at line 1605, enabling the button at lines 1610–1611 when available.
 
-The fallback is omitted only for Retail. Namespace allocation, all eight
+The fallback is omitted only for Retail Game bootstrap. Retail Glue screens
+retain their previous availability fallback through the screen-selection hook.
+Returning to Game removes only the recorded fallback identity, never an original
+or replacement function. Namespace allocation, all eight
 C_AdventureJournal fallbacks, the four other AdventureGuideUtil functions,
-and every non-Retail fallback remain unchanged. The retained hyperlink
-fallback is not independently proven: its Game consumer normally runs after
-the original owner. No vendor Lua is changed.
+and every non-Retail fallback remain textually unchanged. A synthetic Retail
+Game call to the retained OpenHyperLink fallback before the original owner loads
+now errors instead of returning false, because IsAvailable is absent. This is an
+intentional unsupported pre-owner boundary, accepted by main in tracker #962.
+The source search found no shipped consumer doing this: the sole original
+OpenHyperLink callsite is ItemRefHandlers.lua:95 in Game-only UIPanels, whose
+TOC explicitly depends on FrameXMLUtil. No vendor Lua is changed.
 
 ## Proof boundary
 
 `tests/stub_l_adventureguide_ownership.rs` uses normal selected Game startup,
 checks selected TOCs and loaded records, original helper/consumer source and
-mixin identity, and empty unfiltered diagnostics. It repeatedly disables the
+mixin identity, and empty unfiltered diagnostics. Before UIPanels' first normal
+load it checks original FrameXMLUtil availability ownership and that the journal
+handler is not yet registered; afterward the original SetItemRef/LinkUtil
+entrypoints and journal registration are present. Glue discovery excludes both
+FrameXMLUtil and UIPanels_Game. This is load-order proof, not full hyperlink
+behavior coverage: native EJ_HandleLinkPath currently yields no results, so no
+requested journal-instance selection is claimed. It repeatedly disables the
 real XML button and invokes its original callback to restore enabled state.
 The before-change selector passed with empty startup diagnostics.
 
@@ -36,7 +49,10 @@ runtime receipts must be checked for the exact candidate; historical baseline
 success is not final-candidate acceptance.
 
 Bootstrap tests check the Retail helper is absent before original loading,
-with other-profile behavior retained. The synthetic startup helper probe
+with other-profile behavior retained. Boundary tests preserve Login,
+CharacterSelect and CharacterCreate availability and hyperlink defaults, then
+check Game removes only the owned fallback. A replacement-function fixture tests
+identity safety only; it is not a native-behavior or original-consumer proof. The synthetic startup helper probe
 now reflects that ownership boundary rather than requiring the removed shim.
 
 ## Sources

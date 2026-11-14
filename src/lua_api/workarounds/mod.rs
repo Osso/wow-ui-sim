@@ -180,6 +180,13 @@ pub(crate) fn apply_temporary_bootstrap(lua: &mut rilua::Lua) -> crate::Result<(
     apply_temporary_namespace_bootstrap(lua)
 }
 
+pub(crate) fn update_adventureguide_for_screen(
+    lua: &mut rilua::Lua,
+    screen: crate::screen::ScreenKind,
+) -> crate::Result<()> {
+    temporary::adventure_journal_fallbacks::update_for_screen_mode(lua, screen)
+}
+
 pub(crate) fn update_player_location_for_screen(
     lua: &mut rilua::Lua,
     screen: crate::screen::ScreenKind,

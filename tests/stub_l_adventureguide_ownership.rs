@@ -15,9 +15,25 @@ fn original_micromenu_preserves_adventureguide_is_available() {
     let env = new_blizzard_addon_env(&ui);
     register_load_with_addons(&env.loader_env(), &discover_all_blizzard_addons(&ui));
     let startup = discover_blizzard_startup_addons_for_screen(&ui, ScreenKind::Game);
+    // The original hyperlink consumer and helper are Game-only, absent in Glue.
+    for screen in [
+        ScreenKind::Login,
+        ScreenKind::CharacterSelect,
+        ScreenKind::CharacterCreate,
+    ] {
+        let glue = discover_blizzard_startup_addons_for_screen(&ui, screen);
+        assert!(!glue.iter().any(|a| matches!(
+            a.name.as_str(),
+            "Blizzard_FrameXMLUtil" | "Blizzard_UIPanels_Game"
+        )));
+    }
     for (name, toc_name) in [
         ("Blizzard_FrameXMLUtil", "Blizzard_FrameXMLUtil.toc"),
         ("Blizzard_MicroMenu", "Blizzard_MicroMenu_Mainline.toc"),
+        (
+            "Blizzard_UIPanels_Game",
+            "Blizzard_UIPanels_Game_Mainline.toc",
+        ),
     ] {
         let addon = startup
             .iter()
@@ -28,6 +44,7 @@ fn original_micromenu_preserves_adventureguide_is_available() {
     // Match wow_sim/addon_loading.rs: register LoadWith, normal startup
     // discovery/kinds/order, skip already-loaded followers, restore cleanup.
     // No manual events, post-load workaround, source override or fake frame.
+    let mut hyperlink_owner_checked = false;
     for addon in startup {
         let loaded = env
             .state()
@@ -35,6 +52,18 @@ fn original_micromenu_preserves_adventureguide_is_available() {
             .addons
             .iter()
             .any(|a| a.folder_name == addon.name && a.loaded);
+        if addon.name == "Blizzard_UIPanels_Game" {
+            assert!(!loaded, "observe UIPanels before its first normal load");
+            env.exec(
+                r#"
+                assert(debug.getinfo(AdventureGuideUtil.IsAvailable, 'S').source:gsub('\\', '/')
+                    :find('Blizzard_FrameXMLUtil/AdventureGuideUtil.lua', 1, true))
+                assert(not LinkUtil.IsLinkHandlerRegistered(LinkTypes.AdventureGuide))
+            "#,
+            )
+            .expect("original availability owner before ItemRefHandlers executes");
+            hyperlink_owner_checked = true;
+        }
         if !loaded {
             load_startup_addon(&env.loader_env(), &addon.toc_path, addon.kind, None)
                 .unwrap_or_else(|e| panic!("startup {}: {e}", addon.name));
@@ -43,7 +72,12 @@ fn original_micromenu_preserves_adventureguide_is_available() {
             env.restore_post_cleanup_globals();
         }
     }
-    for name in ["Blizzard_FrameXMLUtil", "Blizzard_MicroMenu"] {
+    assert!(hyperlink_owner_checked);
+    for name in [
+        "Blizzard_FrameXMLUtil",
+        "Blizzard_MicroMenu",
+        "Blizzard_UIPanels_Game",
+    ] {
         assert!(
             env.state()
                 .borrow()
@@ -63,6 +97,10 @@ fn original_micromenu_preserves_adventureguide_is_available() {
             return debug.getinfo(fn, 'S').source:gsub('\\', '/')
         end
         assert(owner(AdventureGuideUtil.IsAvailable):find('Blizzard_FrameXMLUtil/AdventureGuideUtil.lua',1,true))
+        assert(owner(AdventureGuideUtil.OpenHyperLink):find('Blizzard_FrameXMLUtil/AdventureGuideUtil.lua',1,true))
+        assert(owner(SetItemRef):find('Blizzard_UIPanels_Game/Mainline/ItemRef.lua',1,true))
+        assert(owner(LinkUtil.ProcessLink):find('Blizzard_SharedXML/LinkUtil.lua',1,true))
+        assert(LinkUtil.IsLinkHandlerRegistered(LinkTypes.AdventureGuide))
         assert(type(EJMicroButton)=='table')
         assert(owner(EJMicroButton.UpdateDisplay):find('Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua',1,true))
         assert(EJMicroButton.UpdateDisplay == EJMicroButtonMixin.UpdateDisplay)

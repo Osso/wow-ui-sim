@@ -1,3 +1,7 @@
+- L follow-up: retain AdventureGuide availability on Retail Glue; prove Game
+  owner precedes ItemRefHandlers and disclose unsupported pre-owner hyperlink
+  calls, per coordinator #962. See [[adventureguide-original-availability]].
+
 ## [2026-11-14] investigation | AdventureGuideUtil original availability
 
 [AdventureGuideUtil availability](investigations/adventureguide-original-availability.md)
