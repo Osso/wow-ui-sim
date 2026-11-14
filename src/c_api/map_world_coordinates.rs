@@ -17,6 +17,29 @@ pub struct MapWorldRect {
 }
 
 impl MapWorldRect {
+    pub(super) fn unproject(&self, normalized_x: f64, normalized_y: f64) -> Option<(f64, f64)> {
+        let coordinates = [
+            self.left,
+            self.right,
+            self.top,
+            self.bottom,
+            normalized_x,
+            normalized_y,
+        ];
+        if !coordinates.into_iter().all(f64::is_finite) {
+            return None;
+        }
+        let width = self.right - self.left;
+        let height = self.bottom - self.top;
+        let inside = (0.0..=1.0).contains(&normalized_x) && (0.0..=1.0).contains(&normalized_y);
+        if !inside || width == 0.0 || height == 0.0 {
+            return None;
+        }
+        let x = self.left + normalized_x * width;
+        let y = self.top + normalized_y * height;
+        (x.is_finite() && y.is_finite()).then_some((x, y))
+    }
+
     fn project(&self, continent: i32, x: f64, y: f64) -> Option<(f64, f64)> {
         let coordinates = [self.left, self.right, self.top, self.bottom, x, y];
         let finite = coordinates.into_iter().all(f64::is_finite);
@@ -35,6 +58,9 @@ impl MapWorldRect {
     }
 }
 
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+const GET_MAP_POS_USAGE: &str = "Usage: local uiMapID, mapPosition = C_Map.GetMapPosFromWorldPos(continentID, worldPosition [, overrideUiMapID])";
+
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     let namespace = ensure_namespace(state, "C_Map")?;
     table_set_rust_fn_static(state, namespace, "GetMapPosFromWorldPos", get_map_pos)
@@ -42,6 +68,11 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
 
 fn read_coordinate(state: &mut LuaState, vector: Val, key: &str) -> LuaResult<f64> {
     let Val::Num(value) = table_get(state, vector, key) else {
+        #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+        return Err(runtime_error(format!(
+            "{GET_MAP_POS_USAGE}: worldPosition.{key} must be a number"
+        )));
+        #[cfg(not(all(feature = "profile-retail", feature = "retail-12-1-5")))]
         return Err(runtime_error(format!(
             "worldPosition.{key} must be a number"
         )));
@@ -49,14 +80,37 @@ fn read_coordinate(state: &mut LuaState, vector: Val, key: &str) -> LuaResult<f6
     Ok(value)
 }
 
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+fn read_retail_map_id(state: &LuaState, index: i32) -> LuaResult<i32> {
+    let value = f64::from_stack(state, index).map_err(|_| runtime_error(GET_MAP_POS_USAGE))?;
+    if !value.is_finite() || value < f64::from(i32::MIN) || value > f64::from(i32::MAX) {
+        return Err(runtime_error(GET_MAP_POS_USAGE));
+    }
+    Ok(value.trunc() as i32)
+}
+
 fn get_map_pos(state: &mut LuaState) -> LuaResult<u32> {
+    #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+    let continent = read_retail_map_id(state, 1)?;
+    #[cfg(not(all(feature = "profile-retail", feature = "retail-12-1-5")))]
     let continent = i32::from_stack(state, 1)?;
     let vector = stack_val(state, 2);
     if !matches!(vector, Val::Table(_)) {
+        #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+        return Err(runtime_error(format!(
+            "{GET_MAP_POS_USAGE}: worldPosition must be a vector2 table"
+        )));
+        #[cfg(not(all(feature = "profile-retail", feature = "retail-12-1-5")))]
         return Err(runtime_error("worldPosition must be a vector2 table"));
     }
     let x = read_coordinate(state, vector, "x")?;
     let y = read_coordinate(state, vector, "y")?;
+    #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+    let override_id = match stack_val(state, 3) {
+        Val::Nil => None,
+        _ => Some(read_retail_map_id(state, 3)?),
+    };
+    #[cfg(not(all(feature = "profile-retail", feature = "retail-12-1-5")))]
     let override_id = Option::<i32>::from_stack(state, 3)?;
     let position = find_map_position(state, continent, x, y, override_id)?;
     let Some((id, (x, y))) = position else {

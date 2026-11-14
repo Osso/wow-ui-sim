@@ -59,6 +59,11 @@ pub mod cvar_info;
 )]
 pub mod item_effects;
 
+#[rustfmt::skip]
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[path = "../data/ui_map_assignments_retail.rs"]
+pub mod ui_map_assignments;
+
 #[cfg(feature = "aura-containers")]
 #[path = "../data/spell_aura_secrecy.rs"]
 pub mod spell_aura_secrecy;

@@ -284,8 +284,10 @@ enum GenerateTarget {
     Traits,
     /// Generate crates/sim-data/data/zones.rs from AreaTable CSV
     Zones,
-    /// Generate crates/sim-data/data/ui_maps.rs from UiMap CSV
+    /// Generate crates/sim-data/data/ui_maps.rs and Retail UiMapAssignment data
     UiMaps,
+    /// Regenerate Retail UiMapAssignment rows from data/db2/retail-12.1.5.70783
+    UiMapAssignments,
     /// Generate crates/sim-data/data/map_art.rs from UiMap* DB2 CSVs
     MapArt,
     /// Generate crates/sim-data/data/quest_ui_map.rs from QuestPOIBlob CSV
@@ -401,6 +403,7 @@ fn run_generator(target: GenerateTarget) {
         GenerateTarget::Traits => gen_traits::run(),
         GenerateTarget::Zones => gen_zones::run(),
         GenerateTarget::UiMaps => gen_ui_maps::run(),
+        GenerateTarget::UiMapAssignments => gen_ui_maps::run_assignments(),
         GenerateTarget::MapArt => gen_map_art::run(),
         GenerateTarget::QuestPoi => gen_quest_poi::run(),
         GenerateTarget::EncounterJournal => gen_encounter_journal::run(),

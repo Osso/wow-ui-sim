@@ -204,8 +204,423 @@ fn test_get_world_pos_from_map_pos_returns_instance_and_vector() {
         .unwrap();
 
     assert!(instance_id >= 0);
-    assert!(x > 0.0);
-    assert!(y > 0.0);
+    assert!(x.is_finite());
+    assert!(y.is_finite());
+}
+
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[test]
+fn retail_map_assignment_projects_mulgore_center() {
+    let env = env();
+    let (result_count, instance_id, x, y): (i32, i32, f64, f64) = env
+        .eval(
+            r#"
+            local resultCount = select('#', C_Map.GetWorldPosFromMapPos(7, {x=0.5, y=0.5}))
+            assert(resultCount == 2, "Mulgore assignment should return continent and world position")
+            local instanceID, worldPos = C_Map.GetWorldPosFromMapPos(7, {x=0.5, y=0.5})
+            local x, y = worldPos:GetXY()
+            return resultCount, instanceID, x, y
+            "#,
+        )
+        .unwrap();
+
+    assert_eq!(result_count, 2);
+    assert_eq!(instance_id, 1, "MapID-to-map-number mapping is INFERRED");
+    assert!((x - -1985.4150390625).abs() < 0.01, "{x}");
+    assert!((y - -520.830078125).abs() < 0.01, "{y}");
+    let outside_count: i32 = env
+        .eval("return select('#', C_Map.GetWorldPosFromMapPos(7, {x=-0.01, y=0.5}))")
+        .unwrap();
+    assert_eq!(
+        outside_count, 2,
+        "outside assignments use the nearest candidate"
+    );
+    let missing_map_count: i32 = env
+        .eval("return select('#', C_Map.GetWorldPosFromMapPos(999999, {x=0.5, y=0.5}))")
+        .unwrap();
+    assert_eq!(missing_map_count, 0);
+}
+
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[test]
+fn retail_explicit_map_world_rect_precedes_assignment_catalog() {
+    let env = env();
+    let mut map = env.state().borrow().maps.get(&84).unwrap().clone();
+    map.ui_map_id = 999_999;
+    map.name = "Explicit rectangle fixture".into();
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.maps.insert(999_999, map);
+        sim.map_world_rects.insert(
+            999_999,
+            wow_ui_sim::c_api::map_world_coordinates::MapWorldRect {
+                continent_id: 42,
+                left: -200.0,
+                right: 600.0,
+                top: 100.0,
+                bottom: 500.0,
+            },
+        );
+    }
+    let (result_count, continent_id, x, y): (i32, i32, f64, f64) = env
+        .eval(
+            r#"
+            local function capture(...)
+                local count = select('#', ...)
+                local continentID, position = ...
+                if not position then return count, -1, 0, 0 end
+                return count, continentID, position.x, position.y
+            end
+            return capture(C_Map.GetWorldPosFromMapPos(999999, {x=0.25, y=0.75}))
+            "#,
+        )
+        .unwrap();
+
+    assert_eq!(result_count, 2);
+    assert_eq!(continent_id, 42);
+    assert_eq!((x, y), (0.0, 400.0));
+}
+
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[test]
+fn retail_map_position_truncates_fractional_map_id_toward_zero() {
+    let env = env();
+    let (result_count, instance_id): (i32, i32) = env
+        .eval(
+            r#"
+            local resultCount = select('#', C_Map.GetWorldPosFromMapPos(7.9, {x=0.5, y=0.5}))
+            local instanceID = C_Map.GetWorldPosFromMapPos(7.9, {x=0.5, y=0.5})
+            return resultCount, instanceID
+            "#,
+        )
+        .unwrap();
+
+    assert_eq!(result_count, 2);
+    assert_eq!(instance_id, 1, "MapID-to-map-number mapping is INFERRED");
+}
+
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[test]
+fn retail_map_position_errors_include_usage_message() {
+    let env = env();
+    env.eval::<()>(
+        r#"
+        local usage = "Usage: local continentID, worldPosition = C_Map.GetWorldPosFromMapPos(uiMapID, mapPosition)"
+        local function expectUsage(...)
+            local ok, message = pcall(C_Map.GetWorldPosFromMapPos, ...)
+            assert(not ok, "invalid mapPosition must raise an argument error")
+            assert(string.find(tostring(message), usage, 1, true), tostring(message))
+        end
+        local badMapOK, badMapError = pcall(C_Map.GetWorldPosFromMapPos, "bad", {x=0.5, y=0.5})
+        assert(not badMapOK and string.find(tostring(badMapError), usage, 1, true))
+        expectUsage(7)
+        expectUsage(7, nil)
+        expectUsage(7, 42)
+        expectUsage(7, {x=0.5})
+        expectUsage(7, {x="0.5", y=0.5})
+        "#,
+    )
+    .unwrap();
+}
+
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[test]
+fn retail_map_position_extrapolates_from_nearest_outside_assignment() {
+    let env = env();
+    let (result_count, instance_id): (i32, i32) = env
+        .eval(
+            r#"
+            local resultCount = select('#', C_Map.GetWorldPosFromMapPos(7, {x=1.5, y=0.5}))
+            local instanceID = C_Map.GetWorldPosFromMapPos(7, {x=1.5, y=0.5})
+            return resultCount, instanceID
+            "#,
+        )
+        .unwrap();
+
+    assert_eq!(result_count, 2);
+    assert_eq!(instance_id, 1, "MapID-to-map-number mapping is INFERRED");
+}
+
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[test]
+fn retail_negative_map_id_has_no_area_table_continent_source() {
+    let env = env();
+    let result_count: i32 = env
+        .eval("return select('#', C_Map.GetWorldPosFromMapPos(2311, {x=0.5, y=0.5}))")
+        .unwrap();
+
+    assert_eq!(
+        result_count, 0,
+        "negative MapID cannot resolve without AreaTable.ContinentID (INFERRED seam)"
+    );
+}
+
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[test]
+fn retail_map_assignment_uses_nearest_center_for_overlapping_rows() {
+    let env = env();
+    let (result_count, instance_id): (i32, i32) = env
+        .eval(
+            r#"
+            local resultCount = select('#', C_Map.GetWorldPosFromMapPos(12, {x=0.3, y=0.2}))
+            local instanceID = C_Map.GetWorldPosFromMapPos(12, {x=0.3, y=0.2})
+            return resultCount, instanceID
+            "#,
+        )
+        .unwrap();
+
+    assert_eq!(result_count, 2);
+    assert_eq!(instance_id, 530, "MapID-to-map-number mapping is INFERRED");
+}
+
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[test]
+fn retail_world_to_map_argument_errors_include_exact_usage() {
+    let env = env();
+    env.eval::<()>(
+        r#"
+        local usage = "Usage: local uiMapID, mapPosition = C_Map.GetMapPosFromWorldPos(continentID, worldPosition [, overrideUiMapID])"
+        local function expectUsage(...)
+            local ok, message = pcall(C_Map.GetMapPosFromWorldPos, ...)
+            assert(not ok, "invalid world-to-map arguments must raise an argument error")
+            assert(string.find(tostring(message), usage, 1, true), tostring(message))
+        end
+        expectUsage("bad", {x=0, y=400}, 2248)
+        expectUsage(42)
+        expectUsage(42, nil, 2248)
+        expectUsage(42, 42, 2248)
+        expectUsage(42, {x="0", y=400}, 2248)
+        expectUsage(42, {x=0, y=400}, "bad")
+        "#,
+    )
+    .unwrap();
+}
+
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[test]
+fn retail_world_to_map_truncates_fractional_ids() {
+    let env = env();
+    env.state().borrow_mut().map_world_rects.insert(
+        2248,
+        wow_ui_sim::c_api::map_world_coordinates::MapWorldRect {
+            continent_id: 42,
+            left: -200.0,
+            right: 600.0,
+            top: 100.0,
+            bottom: 500.0,
+        },
+    );
+    env.eval::<()>(
+        r#"
+        local id, point = C_Map.GetMapPosFromWorldPos(42.9, {x=0, y=400}, 2248.9)
+        assert(id == 2248 and point.x == 0.25 and point.y == 0.75)
+        local autoID, autoPoint = C_Map.GetMapPosFromWorldPos(42.9, {x=0, y=400}, nil)
+        assert(autoID == 2248 and autoPoint.x == 0.25 and autoPoint.y == 0.75)
+        "#,
+    )
+    .unwrap();
+}
+
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[test]
+fn retail_map_assignment_uses_inferred_swapped_axis_formula() {
+    let env = env();
+    let (continent_id, x, y): (i32, f64, f64) = env
+        .eval(
+            r#"
+            local continentID, position = C_Map.GetWorldPosFromMapPos(7, {x=0.2, y=0.4})
+            local x, y = position:GetXY()
+            return continentID, x, y
+            "#,
+        )
+        .unwrap();
+
+    assert_eq!(continent_id, 1);
+    assert!(
+        (x - -1622.08203125).abs() < 0.01,
+        "INFERRED Region_3-to-Region_0 interpolation on map y: {x}"
+    );
+    assert!(
+        (y - 1114.169921875).abs() < 0.01,
+        "INFERRED Region_4-to-Region_1 interpolation on map x: {y}"
+    );
+}
+
+#[cfg(all(
+    feature = "optional-tests",
+    feature = "profile-retail",
+    feature = "retail-12-1-5"
+))]
+#[test]
+fn retail_map_world_position_probe_covers_zone_maps_under_azeroth() {
+    let env = env();
+    use std::collections::{HashMap, HashSet};
+
+    const MAP_ID_LIMIT: u32 = 10_000;
+    let mut map_rows = (0..MAP_ID_LIMIT)
+        .filter_map(|map_id| {
+            sim_data::ui_maps::get_ui_map(map_id)
+                .map(|info| (map_id, info.parent_map_id, info.map_type))
+        })
+        .collect::<Vec<_>>();
+    assert_eq!(
+        map_rows.len(),
+        sim_data::ui_maps::UI_MAP_DB.len(),
+        "update MAP_ID_LIMIT if the generated UI map IDs exceed it"
+    );
+    map_rows.sort_unstable_by_key(|(map_id, _, _)| *map_id);
+
+    let mut children_by_parent = HashMap::<u32, Vec<u32>>::new();
+    let mut map_types = HashMap::<u32, u32>::new();
+    for &(map_id, parent_map_id, map_type) in &map_rows {
+        children_by_parent
+            .entry(parent_map_id)
+            .or_default()
+            .push(map_id);
+        map_types.insert(map_id, map_type);
+    }
+    let mut pending = vec![947];
+    let mut visited = HashSet::new();
+    let mut zone_count = 0;
+    let mut no_world_zone_ids = Vec::new();
+    while let Some(map_id) = pending.pop() {
+        if !visited.insert(map_id) {
+            continue;
+        }
+        if map_types.get(&map_id) == Some(&3) {
+            zone_count += 1;
+            let has_world_assignment =
+                sim_data_profile::ui_map_assignments::get_ui_map_assignments(map_id).is_some_and(
+                    |assignments| {
+                        assignments.iter().any(|assignment| {
+                            let ui_min_x = f64::from(assignment.ui_min[0]);
+                            let ui_min_y = f64::from(assignment.ui_min[1]);
+                            let ui_max_x = f64::from(assignment.ui_max[0]);
+                            let ui_max_y = f64::from(assignment.ui_max[1]);
+                            let ui_width = ui_max_x - ui_min_x;
+                            let ui_height = ui_max_y - ui_min_y;
+                            ui_width >= f64::from(f32::EPSILON)
+                                && ui_height >= f64::from(f32::EPSILON)
+                                && 0.5 >= ui_min_x
+                                && 0.5 <= ui_max_x
+                                && 0.5 >= ui_min_y
+                                && 0.5 <= ui_max_y
+                                && assignment.map_id >= 0
+                        })
+                    },
+                );
+            if !has_world_assignment {
+                no_world_zone_ids.push(map_id);
+            }
+        }
+        if let Some(children) = children_by_parent.get(&map_id) {
+            pending.extend(children);
+        }
+    }
+    let no_world_zone_count = no_world_zone_ids.len();
+    let no_world_map_ids = no_world_zone_ids
+        .iter()
+        .map(|map_id| format!("[{map_id}] = true"))
+        .collect::<Vec<_>>()
+        .join(",");
+
+    let map_rows = map_rows
+        .iter()
+        .map(|(map_id, parent_map_id, map_type)| format!("{{{map_id},{parent_map_id},{map_type}}}"))
+        .collect::<Vec<_>>()
+        .join(",");
+
+    let vector_source_path = wow_ui_sim::client_profile::blizzard_ui_addons_dir()
+        .join("Blizzard_SharedXML/Vector2D.lua");
+    let vector_source = std::fs::read_to_string(&vector_source_path)
+        .unwrap_or_else(|error| panic!("read {}: {error}", vector_source_path.display()));
+    env.exec(&vector_source)
+        .expect("execute original Blizzard Vector2D.lua");
+
+    let script = format!(
+        r#"
+        local mapRows = {{{map_rows}}}
+        local noWorldMapIDs = {{{no_world_map_ids}}}
+        local childrenByParent = {{}}
+        local mapTypes = {{}}
+        for _, row in ipairs(mapRows) do
+            local mapID, parentMapID, mapType = row[1], row[2], row[3]
+            mapTypes[mapID] = mapType
+            local children = childrenByParent[parentMapID]
+            if not children then
+                children = {{}}
+                childrenByParent[parentMapID] = children
+            end
+            children[#children + 1] = mapID
+        end
+
+        for _, children in pairs(childrenByParent) do
+            table.sort(children)
+        end
+
+        local pending = {{947}}
+        local nextPending = 1
+        local visited = {{}}
+        local zoneCount = 0
+        local noWorldZoneCount = 0
+        while nextPending <= #pending do
+            local mapID = pending[nextPending]
+            nextPending = nextPending + 1
+            if not visited[mapID] then
+                visited[mapID] = true
+                local info = C_Map.GetMapInfo(mapID)
+                assert(info and info.mapID == mapID, "missing map info for " .. mapID)
+
+                if mapTypes[mapID] == 3 then
+                    zoneCount = zoneCount + 1
+                    local resultCount = select(
+                        '#',
+                        C_Map.GetWorldPosFromMapPos(mapID, CreateVector2D(0.5, 0.5))
+                    )
+                    if noWorldMapIDs[mapID] then
+                        noWorldZoneCount = noWorldZoneCount + 1
+                        assert(
+                            resultCount == 0,
+                            "unmapped assignment returned values for uiMapID " .. mapID
+                        )
+                    else
+                        assert(
+                            resultCount == 2,
+                            "GetWorldPosFromMapPos returned no result for uiMapID " .. mapID
+                        )
+                        local instanceID, worldPos = C_Map.GetWorldPosFromMapPos(
+                            mapID,
+                            CreateVector2D(0.5, 0.5)
+                        )
+                        assert(
+                            type(instanceID) == "number",
+                            "GetWorldPosFromMapPos returned no instance for uiMapID " .. mapID
+                        )
+                        assert(
+                            type(worldPos) == "table"
+                                and type(worldPos.x) == "number"
+                                and type(worldPos.y) == "number",
+                            "GetWorldPosFromMapPos returned no vector for uiMapID " .. mapID
+                        )
+                    end
+                end
+
+                local children = childrenByParent[mapID] or {{}}
+                for index = 1, #children do
+                    pending[#pending + 1] = children[index]
+                end
+            end
+        end
+        assert(zoneCount == {zone_count}, "probe did not visit every Zone below Azeroth")
+        assert(
+            noWorldZoneCount == {no_world_zone_count},
+            "probe did not visit every Zone without a world assignment"
+        )
+        assert(visited[7], "Mulgore (uiMapID 7) must be reachable from Azeroth")
+        "#
+    );
+    env.eval::<()>(&script)
+        .expect("run HBD-style Retail map-position probe");
 }
 
 // ============================================================================
