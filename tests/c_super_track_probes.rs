@@ -59,6 +59,20 @@ fn supplied_map_pin_and_vignette_are_observable_and_clearable() {
     .unwrap();
 }
 
+#[cfg(feature = "client-retail")]
+#[test]
+fn retail_supertrack_flag_getters_are_published() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        assert(type(C_SuperTrack.IsSuperTrackingQuest) == "function")
+        assert(type(C_SuperTrack.IsSuperTrackingContent) == "function")
+        assert(type(C_SuperTrack.IsSuperTrackingMapPin) == "function")
+        "#,
+    )
+    .unwrap();
+}
+
 #[test]
 fn unsupplied_highlights_return_the_empty_set() {
     let env = WowLuaEnv::new().unwrap();
