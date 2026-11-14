@@ -115,8 +115,13 @@ fn forever_spellbook_outfit_consumer_uses_the_selected_tooltip_getter() {
     let ui = blizzard_ui_dir();
     let env = new_blizzard_addon_env(&ui);
     crate::common::supply_empty_forever_spellbook_outfits(&env);
-    crate::common::panel_fixtures::load_panel_addons(&env);
-    let loaded = load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_PlayerSpells"], &[]);
+    let loaded = load_blizzard_addon_closure_into_env(
+        &env,
+        &ui,
+        &["Blizzard_GameTooltip", "Blizzard_PlayerSpells"],
+        &[],
+    );
+    assert!(loaded.iter().any(|addon| addon == "Blizzard_GameTooltip"));
     assert!(loaded.iter().any(|addon| addon == "Blizzard_PlayerSpells"));
     env.exec(
         r#"
