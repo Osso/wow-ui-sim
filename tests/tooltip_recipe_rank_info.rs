@@ -12,7 +12,7 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
 
 const SPELL_A: u32 = 19_750;
-const SPELL_B: u32 = 467_911;
+const SPELL_B: u32 = 375_576;
 const RECIPE_A_BASE: i32 = 990_701;
 const RECIPE_A_NEXT: i32 = 990_702;
 const RECIPE_B_BASE: i32 = 990_711;
