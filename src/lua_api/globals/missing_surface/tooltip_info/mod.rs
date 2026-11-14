@@ -113,9 +113,8 @@ fn register_c_tooltip_info(state: &mut LuaState) -> LuaResult<()> {
         crate::c_api::c_tooltip_info_item_context::register(state, table_ref)?;
         crate::c_api::c_tooltip_info_outfit::register(state, table_ref)?;
     }
-    // Decomp Round 6 §2 decodes the merchant extended-cost selection block for
-    // Retail 12.1.5; Forever's block is undecoded, so the getter stays off the
-    // Forever surface.
+    // Retail and PTR use the Retail 12.1.5 index reader. Forever registration
+    // below shares the producer and supplies its verified argument reader.
     #[cfg(feature = "retail-12-1-5")]
     {
         if matches!(
@@ -136,6 +135,13 @@ fn register_c_tooltip_info(state: &mut LuaState) -> LuaResult<()> {
     }
     #[cfg(feature = "client-retail")]
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        crate::c_api::c_tooltip_info_pvp_talent::register(state, table_ref)?;
+    }
+    #[cfg(feature = "client-wowforever")]
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
+        crate::c_api::c_tooltip_info_appearance::register(state, table_ref)?;
+        crate::c_api::c_tooltip_info_merchant_cost::register(state, table_ref)?;
+        crate::c_api::c_tooltip_info_outfit::register(state, table_ref)?;
         crate::c_api::c_tooltip_info_pvp_talent::register(state, table_ref)?;
     }
     Ok(())

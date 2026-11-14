@@ -8,6 +8,8 @@ The Lua API layer bridges Lua addon code with the Rust simulation engine. It pro
 
 The [PvP talent tooltip contract](../../specs/tooltip-pvp-talent.md) owns the `GetPvpTalent` catalog inputs and native UNKNOWNs. **VERIFIED:** the [generated catalog provenance](../../../data/pvp-talents/retail-12.1.5.70783/provenance.json) records installed Retail build 12.1.5.70783; this does not establish parity with the selected 12.1.5.70575 runtime pin. VERIFIED: R73 annotation tests drive the original slot hover for level-lock/selection and original list-template hover for unselected candidates; the panel harness opens the list but does not realize virtualized rows. Slot records take documented fields and supplied values; selected IDs share the active group. Permission and opaque eligibility/grant outcomes remain host-supplied; absent inputs preserve neutral output. UNKNOWN: progression, talent/GUID restriction, indirect Flags reads, final player-state helper and inspect internals remain unmodelled.
 
+**VERIFIED (Forever 1.60.1.70707, R88n.8):** `GetPvpTalent` is declared at `TooltipInfoDocumentation.lua:726-743`; its required signed-32 ID and optional truthy `isInspect` input are accepted, and a missing `PvpTalent` record returns zero values. The simulator does not publish Retail catalog rows on Forever. **INFERRED:** the native indexed block is current local-player PvP selection; no populated Forever player-state mapping is implemented.
+
 The [R80 item tooltip contract](../../specs/tooltip-item-r80.md) separates VERIFIED native helper evidence from the UNKNOWN ordinary item-mod amount producer. Item builders omit unsupplied stats and use ordered final amounts from `SimState.item_tooltip_inputs`, keyed by item ID and resolved level. Optional identity/status fields remain top-level. The old level/slot/class estimate is removed; native line ordering and retained stat type/color are not claimed as verified.
 
 [Spell tooltip composition](../../specs/tooltip-spell-composition.md) owns the R81 outer-row contract. VERIFIED by source inspection: host inputs in `src/c_api/spell_tooltip.rs` replace the fixed cooldown, aura-duration and slot-key recipes; cost and cast inputs no longer come from guessed spell tables. The shared producer keeps the existing title/description behavior, resolves direct overrides, and gives spell links their own cast context without suppressing cost/range. Native evidence is partial Retail 70688; selected Retail 70575 and other profiles are not native-output certifications. UNKNOWN helper formulas, Azerite gates and later rows stay host-supplied or unmodelled. Tests and source citations are recorded in the private lane report.
@@ -20,9 +22,29 @@ Retail/PTR/Forever. The item generator includes child IDs automatically; absent
 pinned ItemSparse rows remain explicit catalog misses. Native selector parity
 and miss arity are not claimed.
 [Modified-appearance tooltips](../../specs/tooltip-appearance-item.md) reuse the
-existing Retail/PTR source model and shared item-link parser. Forever model
-promotion is separate. New missing-source paths use one named UNKNOWN seam with
-an explicit zero-return simulator policy, not asserted native arity.
+existing Retail/PTR source model and shared item-link parser. **VERIFIED (Forever
+1.60.1.70707, R88n.8):** the getter is registered, accepts the signed-32 numeric
+reader, and returns zero values on a missing `ItemModifiedAppearance` record.
+Forever lacks that source model, so populated appearance selection is
+**PRESERVATION**, not producer RED.
+
+[Outfit tooltips](../../specs/tooltip-outfit.md) register `GetOutfit` on Forever
+and reuse the title builder. **VERIFIED (R88n.8):** ID zero returns no values;
+a nonzero ID with no saved-name record returns one TooltipData table with an
+empty name. **VERIFIED (selected consumer):** the Forever Camelot
+`Blizzard_PlayerSpells.toc:31-34` selects the SpellBook template and item XML;
+`Blizzard_SpellBookItem.lua:877-888` calls `SetOutfit`, and
+`TooltipDataHandler.lua:603` maps it to `GetOutfit`. The optional test loads this
+profile-selected closure and invokes the original method. This consumer result is
+**PRESERVATION** because only the missing-name path is modeled. **INFERRED:**
+mapping the native current-player saved-name record to Forever's supplied outfit
+list; that mapping is isolated in its own commit.
+
+[Merchant-cost tooltips](../../specs/tooltip-merchant-cost-item.md) reuse the
+Retail extended-cost producer on Forever. **VERIFIED (R88n.8):** missing offer,
+`ItemExtendedCost`, or eligible cost returns zero values; selection scans
+`ItemSparse`/`Item` data. The simulator does not model separate merchant
+availability/filter inputs, so that selection gate remains **UNKNOWN**.
 [Totem tooltips](../../specs/tooltip-totem.md) use stored names and the WM94
 wrapping-clock/rate pipeline, with one named nearest-even emulation seam and
 native-duration unit thresholds. They do not use spell tooltip composition.

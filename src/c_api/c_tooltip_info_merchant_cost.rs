@@ -6,8 +6,8 @@
 //! costs first, then its surviving currency costs, so `costIndex` is a
 //! zero-based ordinal over that sequence and not a record position.
 //!
-//! The selection block is decoded for Retail 12.1.5 only; Forever's block is
-//! undecoded, so this getter is registered for Retail and PTR.
+//! The same stored offer and extended-cost inputs feed the Retail and Forever
+//! getter. Forever's argument conversion follows R88n.8.
 
 use crate::c_api::tooltip_getter_args;
 use crate::lua_api::globals::missing_surface::tooltip_info::{
@@ -20,6 +20,9 @@ use rilua::LuaResult;
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
+
+#[cfg(feature = "client-wowforever")]
+const USAGE: &str = "Usage: local data = C_TooltipInfo.GetMerchantCostItem(slot, costIndex)";
 
 pub(crate) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
     table_set_rust_fn_static(
@@ -39,9 +42,19 @@ enum MerchantCost {
     Currency(u32),
 }
 
+#[cfg(feature = "retail-12-1-5")]
+fn read_merchant_index(state: &LuaState, position: i32) -> LuaResult<Option<usize>> {
+    tooltip_getter_args::lua_index(state, position)
+}
+
+#[cfg(feature = "client-wowforever")]
+fn read_merchant_index(state: &LuaState, position: i32) -> LuaResult<Option<usize>> {
+    tooltip_getter_args::forever_lua_index(state, position, USAGE)
+}
+
 fn get_merchant_cost_item(state: &mut LuaState) -> LuaResult<u32> {
-    let slot = tooltip_getter_args::lua_index(state, 1)?;
-    let cost_index = tooltip_getter_args::lua_index(state, 2)?;
+    let slot = read_merchant_index(state, 1)?;
+    let cost_index = read_merchant_index(state, 2)?;
     let selected = match (slot, cost_index) {
         (Some(slot), Some(cost_index)) => select_cost(state, slot, cost_index),
         _ => None,

@@ -4,9 +4,10 @@
 one entry of a merchant offer's extended-cost record.
 
 Evidence: decomp Round 6 §2 ("the loot and merchant-cost tooltip getters"),
-Retail 12.1.5 build 70688. Labels follow that answer: **VERIFIED** is proved from
-the client image, **INFERRED** follows from verified facts or from the shipped UI
-Lua whose build is not verified, **UNKNOWN** is not established.
+Retail 12.1.5 build 70688, and R88n.8 for Forever 1.60.1.70707. **VERIFIED**
+labels identify facts proved by a pinned client image; **INFERRED** labels identify
+conclusions from those facts or shipped UI Lua; **UNKNOWN** identifies behavior
+not established.
 
 ## Surface
 
@@ -14,8 +15,10 @@ Lua whose build is not verified, **UNKNOWN** is not established.
   with `slot` and `costIndex` (`luaIndex`), `MayReturnNothing = true`,
   `SecretArguments = "AllowedWhenUntainted"` and a non-nilable `TooltipData`
   return (VERIFIED for the pinned Retail/PTR documentation).
-- Forever's documentation declares the member too, but Forever's extended-cost
-  selection block is undecoded, so this getter is **not** registered on Forever.
+- Forever's `TooltipInfoDocumentation.lua:586` also declares the getter with
+  `MayReturnNothing`, `AllowedWhenUntainted`, and two required `luaIndex` inputs
+  (VERIFIED). The simulator registers the same producer on Forever; PTR remains
+  unchanged.
 - The equivalent of `GameTooltip:SetMerchantCostItem` is this getter:
   `TooltipDataHandler.lua:581` maps the accessor to `GetMerchantCostItem`, and the
   tooltip reader has exactly one caller in the image, the getter callback
@@ -24,26 +27,30 @@ Lua whose build is not verified, **UNKNOWN** is not established.
 
 ## Arguments
 
-- Both arguments are read by the shared `luaIndex` reader: each must be a number
-  in the closed range 0 to 4294967295 and is converted to a zero-based value by
-  subtracting one, then truncating toward zero (VERIFIED for the Forever reader;
-  INFERRED for 12.1.5 from the same reader family and reason strings).
+- **VERIFIED (Forever R88n.8):** each argument accepts ordinary numbers and
+  convertible numeric strings in 0..=4294967295, checks range before subtracting
+  one, then truncates the result to signed 32-bit. This is not unsigned wrapping.
+  Zero passes range validation but becomes a negative selection and selects no
+  offer or cost.
+- Retail/PTR keep the existing numeric-only `luaIndex` reader; this lane does not
+  change their conversion.
 - The index counter advances between the two reads, so the second read addresses
   argument 2 whether or not the first succeeded (VERIFIED).
 - Usage text: `Usage: local data = C_TooltipInfo.GetMerchantCostItem(slot, costIndex)`
   (VERIFIED, identical in both images).
-- Wrong type, an out-of-domain number, or a missing argument is an argument
-  error built from the reason `outside of expected range 0 to 4294967295`, a
-  value description, ` - ` and the usage string, with the three secret-policy
-  suffixes for tainted values (VERIFIED for the reason strings and their
-  composition; the appended value description and the final Lua wrapping are
-  UNKNOWN).
+- **VERIFIED (Forever R88n.8):** missing/nil, unsupported types, and values
+  outside the accepted range take the argument-error route. The exact Usage text
+  is verified; the complete wrapped error string and secret-policy suffixes are
+  **UNKNOWN**.
 - There is no per-argument range check against the offer (VERIFIED).
 
 ## Selection
 
-- The record is scanned for up to five item-cost entries and then up to five
-  currency-cost entries (VERIFIED, complete decode of the selection block).
+- **VERIFIED (Retail Round 6):** the record is scanned for up to five item-cost
+  entries and then up to five currency-cost entries.
+- **VERIFIED (Forever R88n.8):** the selected offer list is bounded by its stored
+  count and applies availability and filter checks. Each offer supplies an
+  `ItemExtendedCost` lookup; the item scan uses `ItemSparse` and `Item`.
 - An entry leaves the selectable sequence when its identity is zero, when an
   item's sparse-item lookup fails, when an item row is missing, or when an item
   row's numeric class field equals 10 — the money cost class (VERIFIED for the
@@ -65,12 +72,11 @@ Lua whose build is not verified, **UNKNOWN** is not established.
   quantity passed to the currency builder is explicitly zero rather than the
   extended-cost amount (VERIFIED). The currency line is emitted with a zero owner
   GUID (VERIFIED); the post-title currency rows are UNKNOWN.
-- Absence has three verified causes that reach one exit: the slot does not
-  resolve to a merchant offer, the offer has no extended-cost record, or
-  `costIndex` exceeds the selectable count (VERIFIED). The native exit raises
-  when a pending error message exists and otherwise continues to a site that was
-  not decoded, so the no-message return arity is INFERRED from the documented
-  `MayReturnNothing` (UNKNOWN byte level).
+- **VERIFIED (Forever R88n.8):** no selected offer, no extended-cost identifier,
+  no matching `ItemExtendedCost` record, no selected eligible cost, or a false
+  selected producer returns exactly zero Lua values on normal completion.
+- Retail's pending-error raise branch and no-message native return arity remain
+  **UNKNOWN**; the existing simulator miss seam returns no values.
 
 ## Simulator implementation
 
@@ -85,13 +91,15 @@ Lua whose build is not verified, **UNKNOWN** is not established.
   builder reads; the sparse lookup is `crate::items::get_item`.
 - Item costs reuse the shared item producer; currency costs reuse the shared
   currency producer with an explicit zero quantity.
-- Registration: `src/c_api/c_tooltip_info_merchant_cost.rs`, Retail and PTR only,
-  behind the `retail-12-1-5` epoch feature.
+- Registration: `src/c_api/c_tooltip_info_merchant_cost.rs` reuses the Retail
+  producer on Retail/PTR and Forever. Retail/PTR compile under
+  `retail-12-1-5`; Forever uses `client_profile::ACTIVE`.
 
 ### Deliberately not implemented
 
 - The pending-error raise arm: the simulator models no merchant-cost error text,
-  so every miss returns no values. The native text is UNKNOWN.
+  so every miss returns no values. Its native text remains UNKNOWN; the verified
+  Forever missing-source arms complete with zero Lua values.
 - The item-producer and post-title currency line sequences: UNKNOWN, so this path
   emits the existing shared producers' lines unchanged.
 - `dataInstanceID` stability across calls: the shared builder stamps every call.
@@ -108,13 +116,20 @@ Lua whose build is not verified, **UNKNOWN** is not established.
 
 ## Test coverage
 
-`tests/tooltip_merchant_cost_item.rs` (Retail and PTR):
+`tests/tooltip_merchant_cost_item.rs` (Retail/PTR) and the optional Forever
+cases in `tests/tooltip_forever_four_getters.rs`:
 
 - the original MoneyFrame consumer `SmallDenominationTemplate_OnEnter`
   (`MerchantFrame`/`MoneyFrame.lua:448`) forwards `self.index`/`self.item`
   through the `SetMerchantCostItem` accessor and shows the selected item cost;
 - ordinals skip an empty identity and an unresolvable item identity, item costs
   come before currency costs, and the currency quantity is zero;
-- a miss (no offer, no record, a purely monetary record, a cost index past the
-  selectable count, index 0) returns no values and leaves the frame's tooltip
+- Retail: misses (no offer, no record, a purely monetary record, a cost index
+  past the selectable count, index 0) return no values and leave frame tooltip
   data unset.
+- Forever: registration, string/fraction arguments, no offer, no extended-cost
+  record and no selected cost each produce the verified zero-value miss result.
+
+**UNKNOWN (Forever simulator):** the offer availability/filter inputs are not
+represented separately. The current producer consumes only supplied merchant
+items and extended-cost records; no missing eligibility state is fabricated.
