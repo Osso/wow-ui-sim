@@ -5,11 +5,14 @@
 ))]
 
 use crate::common::blizzard_addon_harness::{
-    blizzard_ui_dir, load_blizzard_addon_closure_into_env, new_blizzard_addon_env,
+    blizzard_ui_dir, load_blizzard_addon_closure_into_env,
 };
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::lua_api::state::{AzeriteEssenceInfo, AzeriteEssenceMilestoneInfo};
 use wow_ui_sim::screen::ScreenKind;
+
+#[path = "tooltip_full_env_helpers.rs"]
+mod tooltip_full_env_helpers;
 
 const ESSENCE_TWO: i32 = 2;
 const ESSENCE_THREE: i32 = 3;
@@ -30,22 +33,10 @@ fn original_azerite_tooltip_env() -> WowLuaEnv {
         "selected Game TOCs must include Blizzard_SharedXMLGame"
     );
 
-    let env = new_blizzard_addon_env(&ui);
-    let loaded = load_blizzard_addon_closure_into_env(
-        &env,
-        &ui,
-        &[
-            "Blizzard_SharedXMLGame",
-            "Blizzard_GameTooltip",
-            "Blizzard_AzeriteEssenceUI",
-        ],
-        &[],
-    );
-    for addon in [
-        "Blizzard_SharedXMLGame",
-        "Blizzard_GameTooltip",
-        "Blizzard_AzeriteEssenceUI",
-    ] {
+    let env = tooltip_full_env_helpers::setup_full_env();
+    let loaded =
+        load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_AzeriteEssenceUI"], &[]);
+    for addon in ["Blizzard_AzeriteEssenceUI"] {
         assert!(
             loaded.iter().any(|name| name == addon),
             "{addon}: {loaded:?}"
