@@ -1,3 +1,7 @@
+## [2026-11-14] investigation | Retail secure tooltip color route
+
+[Taint system](systems/taint-system.md#dual-lua-environment) records the verified `Color.lua` → `GetCurrentEnvironment()` → `C_UIColor.GetColors()` route. **VERIFIED (simulator at `7f81a8853`):** secure file loading and environment selection pass; the current temporary `GetColors` payload lacks `TOOLTIP_DEFAULT_BACKGROUND_COLOR`, so the fallback-disabled PrivateAuras test remains RED. **UNVERIFIED:** whether Retail's `GlobalColor` export contains that tag. Do not dual-publish or add guessed catalog data; this catalog work is outside the lane.
+
 ## [2026-11-13] system | Secure environment and dependency replay
 
 [Taint system](systems/taint-system.md#dual-lua-environment) and [addon loading](systems/addon-loading.md#secure-dependency-replay-and-library-allowlist) record R88g/R88i and the fixed 39-name secure base. **VERIFIED (Retail simulator test, fallback cleared):** the original `TooltipDataProcessor`, `CopyTable`, and `GetFrameMetatable` reach secureenv; the next observed errors are `TextureUtil.lua:122` (`Constants` nil) and `PrivateAurasUI.lua:1398` (`TextureKitConstants` nil). R88i.1 verifies the native pair-list route for `GetFrameMetatable`; the Retail fallback remains until all cited consumers pass.
