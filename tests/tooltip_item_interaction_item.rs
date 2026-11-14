@@ -62,6 +62,15 @@ fn original_item_interaction_slot_distinguishes_absent_failed_and_empty_lines() 
     env.exec("assert(GameTooltip:GetPrimaryTooltipData() == nil, 'absent object')")
         .unwrap();
 
+    // Run misses before showing the empty-lines payload: a physically hidden
+    // tooltip can retain its last handler data without firing OnHide again.
+    for kind in [2, 4] {
+        supply_object(&env, Some(kind));
+        trigger_original_slot(&env);
+        env.exec("assert(GameTooltip:GetPrimaryTooltipData() == nil, 'no producer payload')")
+            .unwrap();
+    }
+
     supply_object(&env, Some(3));
     trigger_original_slot(&env);
     env.exec(
@@ -74,13 +83,6 @@ fn original_item_interaction_slot_distinguishes_absent_failed_and_empty_lines() 
         "#,
     )
     .unwrap();
-
-    for kind in [2, 4] {
-        supply_object(&env, Some(kind));
-        trigger_original_slot(&env);
-        env.exec("assert(GameTooltip:GetPrimaryTooltipData() == nil, 'no producer payload')")
-            .unwrap();
-    }
 }
 
 #[test]
