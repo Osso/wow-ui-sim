@@ -216,6 +216,7 @@ fn register_frame_context_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
     super::real::merchant_buyback::register_all(lua)?;
     super::real::merchant_affordability::register_all(lua)?;
     super::real::merchant_item_link::register_all(lua)?;
+    super::real::inventory_candidates::register_all(lua)?;
     super::real::guild_logo::register_all(lua)?;
     super::guild_control::register_all(lua)?;
     super::targeting_verbs::register_all(lua)?;
@@ -245,6 +246,7 @@ fn register_core_surfaces(lua: &mut rilua::Lua) -> crate::Result<()> {
     super::lfg_list::register_all(lua)?;
     super::real::locale_info::register_all(lua)?;
     super::missing_surface::register_all(lua)?;
+    super::real::achievement_eligibility::register(lua)?;
     crate::c_api::encoding_util::register(lua.state_mut())?;
     super::quest_surface::register_all(lua)?;
     #[cfg(any(
@@ -284,6 +286,7 @@ fn register_social_and_world_verbs(lua: &mut rilua::Lua) -> crate::Result<()> {
     super::battlefield_verbs::register_all(lua)?;
     super::channel_verbs::register_all(lua)?;
     super::spell_macro_verbs::register_all(lua)?;
+    super::real::macro_getters::register(lua)?;
     super::chat_window_verbs::register_all(lua)?;
     super::offer_verbs::register_all(lua)?;
     super::trade_verbs::register_all(lua)?;

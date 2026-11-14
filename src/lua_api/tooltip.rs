@@ -1,5 +1,7 @@
 //! Tooltip state data structures.
 
+pub(crate) mod inferred;
+
 use crate::widget::{Anchor, AnchorPoint};
 
 /// Inline texture/atlas icon embedded in a tooltip line.
@@ -182,6 +184,17 @@ pub struct TooltipData {
     pub custom_word_wrap_min_width: Option<f32>,
     pub min_width: f32,
     pub force_min_width: bool,
+    /// FontString widget IDs supplied to `GameTooltip:AddFontStrings`.
+    /// Lifecycle policies are isolated in [`inferred`].
+    pub font_string_pairs: Vec<(u64, u64)>,
+    /// Cleared marker state, indexed by stored FontString pair.
+    /// `bool` is the simulator representation; native element type is unknown.
+    pub font_string_line_states: Vec<bool>,
+    /// Parallel zero-initialized numeric slots, indexed by stored pair.
+    /// `f64` is the simulator representation; native element type is unknown.
+    pub font_string_numeric_slots: Vec<f64>,
+    /// Native AddFontStrings resets this progress count to zero. Its later use is unknown.
+    pub font_string_layout_progress: usize,
     /// Right, bottom, left, top, in layout units.
     pub padding: [f32; 4],
     pub anchored_left_lines: usize,
@@ -223,6 +236,16 @@ pub(crate) struct TooltipWidthRow {
 }
 
 impl TooltipData {
+    /// Append a pair and apply R88n.7's count-aligned storage resets.
+    pub(crate) fn append_font_string_pair(&mut self, left_id: u64, right_id: u64) {
+        self.font_string_pairs.push((left_id, right_id));
+        let pair_count = self.font_string_pairs.len();
+        self.font_string_line_states.resize(pair_count, false);
+        self.font_string_numeric_slots.resize(pair_count, 0.0);
+        self.font_string_line_states[pair_count - 1] = false;
+        self.font_string_layout_progress = 0;
+    }
+
     /// Attachments across the whole tooltip; the native limit is 30 (WM63 S8L).
     pub(crate) fn attachment_count(&self) -> usize {
         self.lines.iter().map(|line| line.attachments().len()).sum()
@@ -344,6 +367,10 @@ impl Default for TooltipData {
             custom_word_wrap_min_width: None,
             min_width: 0.0,
             force_min_width: false,
+            font_string_pairs: Vec::new(),
+            font_string_line_states: Vec::new(),
+            font_string_numeric_slots: Vec::new(),
+            font_string_layout_progress: 0,
             padding: [0.0; 4],
             anchored_left_lines: 0,
             spell_id: None,

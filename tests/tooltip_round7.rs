@@ -32,6 +32,30 @@ fn tooltip_round7_registration_matches_native_profile_evidence() {
     }
 }
 
+#[cfg(all(
+    feature = "optional-tests",
+    any(feature = "client-ptr", feature = "client-wowforever")
+))]
+#[test]
+fn item_interaction_tooltip_preserves_ptr_and_forever_boundaries() {
+    use wow_ui_sim::c_api::ItemInteractionTooltipInput;
+    use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
+    use wow_ui_sim::lua_api::WowLuaEnv;
+
+    let env = WowLuaEnv::new().unwrap();
+    env.state().borrow_mut().item_interaction_tooltip_input =
+        Some(ItemInteractionTooltipInput {
+            object_kind: Some(3),
+            ..Default::default()
+        });
+    let check = if ACTIVE == ClientProfile::Ptr {
+        "assert(rawget(C_TooltipInfo, 'GetItemInteractionItem') == nil)"
+    } else {
+        "assert(select('#', C_TooltipInfo.GetItemInteractionItem()) == 0)"
+    };
+    env.exec(check).unwrap();
+}
+
 tooltip_selection_getters_fixture! {
     use rilua::LuaApiMut;
     use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};

@@ -4,6 +4,7 @@
 //! state/behavior. Unmodeled compatibility defaults belong under
 //! `lua_api::workarounds::{temporary,permanent}` instead.
 
+pub(crate) mod achievement_eligibility;
 pub mod action_bar_state;
 pub mod action_highlights;
 pub(crate) mod ambiguate;
@@ -71,6 +72,7 @@ pub mod lfd_lock_requests;
 pub mod locale_info;
 pub mod loot_method;
 pub mod loot_specialization;
+pub(crate) mod macro_getters;
 pub mod math_extensions;
 pub(crate) mod merchant_affordability;
 pub mod merchant_buyback;
@@ -196,3 +198,5 @@ pub mod wrath_voice;
 pub mod xp_honor_rest;
 
 pub mod wrath_currency;
+
+pub mod inventory_candidates;

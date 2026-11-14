@@ -41,10 +41,12 @@ const RUNEFORGE_USAGE: &str = concat!(
     "itemGUID, itemLevel [, powerID, modifiers])",
 );
 
-/// Host-supplied selected item and final item-interaction tooltip payload.
-/// Native selection writers and cleansing/conversion calculations are not modeled.
+/// One empty-by-default host input for selected item-interaction tooltip state.
+/// Native SetPendingItem lifecycle and cleansing/conversion calculations are not modeled.
 #[derive(Clone, Debug, Default)]
 pub struct ItemInteractionTooltipInput {
+    /// Selected object kind for the R88n.1 result-shape path.
+    pub object_kind: Option<i32>,
     pub selected_item_guid: Option<String>,
     pub conversion_output_item_id: Option<u32>,
     pub cleansing_rows: Vec<ItemInteractionTooltipLine>,
@@ -143,9 +145,25 @@ fn get_azerite_essence_slot(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn get_item_interaction_item(state: &mut LuaState) -> LuaResult<u32> {
+    // Only Retail's result paths are verified. Keep the other profiles' behavior.
     if ACTIVE != ClientProfile::Retail {
         return no_values();
     }
+    let object_kind = borrow_state(state)?
+        .item_interaction_tooltip_input
+        .as_ref()
+        .and_then(|input| input.object_kind);
+    if let Some(kind) = object_kind {
+        if matches!(kind, 2 | 4) {
+            // These producers are unmodeled; preserve their verified failure result.
+            return no_values();
+        }
+        // This branch bypasses the builder, so no dataInstanceID is added (R88n.1).
+        let tooltip = empty_item_interaction_tooltip(state);
+        state.push(tooltip);
+        return Ok(1);
+    }
+
     let Some((interaction_kind, input)) = selected_item_interaction(state)? else {
         return no_values();
     };

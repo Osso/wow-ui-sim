@@ -1,6 +1,50 @@
+## [2026-11-14] implementation | Item-interaction TooltipData boundary
+
+[Round 7 tooltip getters](../specs/tooltip-r7-getters.md) records R88n.1's absent and failed producer no-values paths and the other-kind empty-lines table. The Retail host seam has no writer or seed; the original ItemInteraction tooltip path and separate API shape tests distinguish these cases.
+
+## [2026-11-14] implementation | Achievement eligibility and tracker colors
+
+[Achievement eligibility](../specs/achievement-eligibility.md) records R88o.1's Retail argument/Boolean contract, missing record/group versus null tree, and supplied cache comparisons. Original tracker #6 uses the zero-visible branch; positive visible counts use a different per-criterion getter. PTR/Forever binding is inferred from their selected original Lua. New simulator input stays empty by default; no event substitutes or live cache writer claims.
+
+## [2026-11-14] investigation | Screen-clamp state and evidence gaps
+
+[Screen-clamp suppression](investigations/screen-clamp-suppression.md) records the pre-edit R88n.5r-q1/q2 gap table, unambiguous model corrections, and pending native propagation/unit/notification questions. No movement-to-suppression alias is inferred.
+
+## [2026-11-14] correction | Inventory name-adapter evidence
+
+[Inventory/purchase getters](investigations/inventory-purchase-getters.md) separates the INFERRED one-based host slot-name adapter from VERIFIED numeric/packing tests. Retail publications use ACTIVE profile checks; state comments and GUID-kind predicate documentation are corrected.
+
+## [2026-11-14] implementation | Inventory candidates and purchase records
+
+[Inventory/purchase getters](investigations/inventory-purchase-getters.md) records R88k.1/.2 packed-key publication and refund records, empty host seams, selected consumer tests and explicit remaining VM limits.
+
+## [2026-11-14] test | GameTooltip method contracts (pre-review-fix)
+
+**VERIFIED (Retail code SHA `4969fe0214412988f0131ae96a9f4a14c9229012`):** the original minimum-width arity/default/round-trip, pair-storage/`NumLines` separation, and conversion-error tests passed; the selected `GameTooltip_InsertFrame` preservation test passed. **PRESERVATION:** its scalar selector observes only the first getter result. These tests predate the review correction that gates producer probes as optional and removes unproved bad-self decoration assertions.
+
+## [2026-11-14] evidence boundary | GameTooltip method security
+
+**VERIFIED (R88n.7, Retail 12.1.5.70688):** the getter's conditional result secrecy and diagnostic/access effects, and the AddFontStrings parent-change/secret-aspect checks. **VERIFIED (simulator model):** the Retail method checks ChangeParent, the six inherited aspects and RemoveSecretAspects before storage. **UNKNOWN (simulator parity):** the getter's call-state secrecy/diagnostic effects and AddFontStrings' saved-call secret-state transition remain unmodeled because their required runtime state is not represented.
+
+## [2026-11-14] implementation | GameTooltip minimum width and font strings
+
+Updated the [GameTooltip method contract](../specs/game-tooltip-methods.md), [Lua API](systems/lua-api.md#game-tooltip-minimum-width-and-font-strings), and [consumer-selection investigation](investigations/consumer-selection-and-red-proof.md#gametooltip-minimum-width-consumer) with R88n.7. **VERIFIED (Retail 12.1.5.70688):** `GetMinimumWidth` returns the stored number and forced boolean; `AddFontStrings` appends a pair, resets count-aligned state, and returns zero values without adding a `NumLines` entry. **VERIFIED (simulator history, `b6a107994`):** non-Retail profiles keep their pre-lane behavior. **PRESERVATION:** the selected `GameTooltip_InsertFrame` selector reads only the first getter result. **INFERRED:** pair retention across ClearLines/Hide and copying through CopyTooltip. **UNKNOWN:** later pair use and the unmodeled call-secret effects.
+
+## [2026-11-14] correction | GlobalColor test oracle
+
+Updated the [catalog contract](../specs/c-ui-color-get-colors.md) and [system page](systems/global-color-catalog.md). The API test now uses literal snapshot expectations instead of the generated catalog as its oracle. **VERIFIED (pinned Retail 12.1.5.70783 CSV):** the eight sample tag/packed values are pinned source facts. **INFERRED:** count 361 follows the snapshot under the inferred feed/dedup rules; applying native 12.1.5.70688 behavior to 70783 remains inferred, and cursor exclusions remain unknown.
+
+## [2026-11-14] system | Retail GlobalColor catalog
+
+Added [GlobalColor catalog](systems/global-color-catalog.md) and the [Retail API contract](../specs/c-ui-color-get-colors.md). **VERIFIED (local CASC Retail 12.1.5.70783):** FileDataID 4328468 contains 367 decoded rows with no unreadable records. **VERIFIED (native Retail 12.1.5.70688, R88o.3):** `GetColors` uses flag 3, ignores arguments, copies `ColorMixin`, decodes ARGB with f32 reciprocal multiplication, keeps first tag collisions, applies no empty-tag/flag filters, and exports in tag-byte order. **VERIFIED (simulator generated catalog):** the static export has 361 tags. **VERIFIED (CSV exporter):** the CSV omits invalid-index and excluded-row state. **UNKNOWN (70783 cursor mapping):** native 70688 evidence identifies no corresponding 70783 row IDs. **INFERRED (70688 rules applied to 70783):** native output matches only if no additional cursor skips apply. **PRESERVATION:** hand-set Retail colors remain until every consumer's load order is proved. **UNKNOWN:** live cache contents and update schedule.
+
+## [2026-11-14] implementation | Forever tooltip getter publication
+
+Updated the [modified-appearance](../specs/tooltip-appearance-item.md), [merchant-cost](../specs/tooltip-merchant-cost-item.md), [outfit](../specs/tooltip-outfit.md), and [PvP talent](../specs/tooltip-pvp-talent.md) contracts, plus the [Lua API](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation), with R88n.8. **VERIFIED (Forever 1.60.1.70707):** the four getters register; all five targeted optional tests pass, including the selected SpellBook consumer. That consumer result is **PRESERVATION**, since populated source rows are absent. **INFERRED:** `SimState.forever_outfits` supplies saved names. **UNKNOWN:** native writers, populated appearance/PvP data, and merchant availability/filter inputs.
+
 ## [2026-11-14] implementation | Retail selected tooltip getters
 
-Updated the [Round 7 contract](../specs/tooltip-r7-getters.md) and [tooltip-data system](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation). **VERIFIED (Retail 12.1.5.70688, R88o.2 q1/q2/q3):** unresolved conversion output shape, SlotKeystone cursor-clear/selection/event order and map/modifier rejection, plus RemoveKeystone Boolean/category guards. **INFERRED (simulator representation):** bag cursor fields project native GUID/source fields, `PlayerState::present` proxies opaque-context availability, and selected item-ID/location caches preserve lookup/staging state. **SIMULATOR GAP:** native error code 1013 publication/text, mode/associated GUID, full item-data/resource notifications and later lock effects, and the original `OnKeystoneSlotted` consumer's `GetSlottedKeystoneInfo` dependency remain unmodeled. q4/q5 external routes remain follow-ups; all selected test paths use host inputs.
+Updated the [Round 7 contract](../specs/tooltip-r7-getters.md) and [tooltip-data system](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation). **VERIFIED (Retail 12.1.5.70688, R88o.2 q1/q2/q3):** unresolved conversion output shape, SlotKeystone cursor-clear/selection/event order and map/modifier rejection, plus RemoveKeystone Boolean/category guards. **INFERRED (simulator representation):** bag cursor fields project native GUID/source fields, `PlayerState::present` proxies opaque-context availability, and selected item-ID/location caches preserve lookup/staging state. **SIMULATOR GAP:** native error code 1013 publication/text, mode/associated GUID, full item-data/resource notifications and later lock effects, and the original `OnKeystoneSlotted` consumer's `GetSlottedKeystoneInfo` dependency remain unmodeled. the simulator does not model the verified q4 `SetPendingItem` lifecycle; q5 external possession routes and other item-interaction routes remain UNKNOWN. Selected tests use host inputs.
 
 ## [2026-11-14] investigation | Retail tooltip serializer boundary
 

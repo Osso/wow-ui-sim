@@ -323,7 +323,7 @@ pub struct SimState {
     /// Explicit DamageMeter snapshots; combat publication is blocked pending secrecy.
     pub damage_meter: crate::c_api::c_damage_meter::DamageMeterInput,
     pub item_interaction: Option<crate::c_api::c_item_interaction::ItemInteractionInfo>,
-    /// Host-supplied selected item, final cleansing rows, and conversion output ID.
+    /// One host-supplied item-interaction tooltip input; native writers are not modeled.
     pub item_interaction_tooltip_input: Option<crate::c_api::ItemInteractionTooltipInput>,
     /// Host-supplied shared possession spell ID; no possession writer is modeled.
     pub possession_spell_id: Option<u32>,
@@ -362,6 +362,9 @@ pub struct SimState {
         feature = "client-anniversary"
     ))]
     pub transmog_appearance_sources: HashMap<i64, AppearanceSourceInfo>,
+    /// INFERRED host relation from Forever appearance IDs to item IDs; empty by default.
+    #[cfg(feature = "client-wowforever")]
+    pub forever_appearance_item_ids: HashMap<i32, u32>,
     /// Supplied source IDs marked new; acquisition and clearing policy is unknown.
     pub transmog_new_sources: HashSet<i64>,
     /// Explicit (slot, type, option) inputs only; no viewed-outfit synthesis.
@@ -718,6 +721,9 @@ pub struct SimState {
     /// Retail GetPvpTalent catalog and state inputs; all maps are host-supplied.
     #[cfg(feature = "client-retail")]
     pub pvp_talent_tooltip: crate::c_api::c_tooltip_info_pvp_talent::PvpTalentTooltipInputs,
+    /// INFERRED host relation from Forever PvP talent IDs to spell IDs; empty by default.
+    #[cfg(feature = "client-wowforever")]
+    pub forever_pvp_talent_spell_ids: HashMap<i32, u32>,
     pub player_xp: PlayerXpState,
     pub bind_location: String,
     pub pvp_honor: PvpHonorState,
@@ -881,6 +887,11 @@ pub struct SimState {
     #[cfg(feature = "client-wowforever")]
     pub stable_reads: crate::c_api::c_stable_info::forever::StableReadState,
     pub merchant_items: Vec<u32>,
+    /// R88k.2 native item identities, counts and default-empty purchase records.
+    pub purchase_inputs: crate::c_api::container_purchase::PurchaseInputs,
+    /// R88k.1 accepted candidate/link inputs; native filter writers stay unknown.
+    pub inventory_candidates:
+        crate::lua_api::globals::real::inventory_candidates::InventoryCandidates,
     /// Explicit R88l.2 link/selection seams, keyed by existing merchant slot.
     pub merchant_links: crate::lua_api::globals::real::merchant_item_link::MerchantLinks,
     /// Explicit extended-cost records keyed by zero-based merchant slot; a
@@ -941,6 +952,7 @@ pub struct SimState {
     /// Explicit bounty-set membership in supplied order; no inferred/default catalog.
     pub bounty_set_maps: HashMap<i32, Vec<i32>>,
     pub achievements: HashMap<i32, AchievementInfo>,
+    pub achievement_eligibility: AchievementEligibilityInputs,
     /// Explicit supplied relations; no native catalog or inferred chain.
     pub achievement_superceding: HashMap<i32, Vec<i32>>,
     pub calendar_now: crate::c_api::c_calendar::CivilDateTime,
@@ -1071,6 +1083,7 @@ pub struct SimState {
     pub battlefield_minimap_visible: bool,
     pub chat_channels: Vec<ChatChannel>,
     pub macros: Vec<MacroInfo>,
+    pub macro_icons: MacroIconInputs,
     pub running_macro: Option<u32>,
     pub chat_windows: ::std::collections::HashMap<i32, ChatWindow>,
     pub chat_type_colors: ::std::collections::HashMap<String, (f32, f32, f32)>,

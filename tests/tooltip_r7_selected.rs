@@ -32,6 +32,7 @@ fn set_interaction_input(
         ..Default::default()
     });
     sim.item_interaction_tooltip_input = Some(ItemInteractionTooltipInput {
+        object_kind: None,
         selected_item_guid: Some(selected_item_guid.to_string()),
         conversion_output_item_id,
         cleansing_rows,

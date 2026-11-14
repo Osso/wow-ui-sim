@@ -186,6 +186,28 @@ pub(crate) fn lua_index(state: &LuaState, position: i32) -> LuaResult<Option<usi
     Ok(usize::try_from((number - 1.0) as i64).ok())
 }
 
+/// Forever's `luaIndex` reader accepts numeric strings and converts the
+/// decremented value to signed 32-bit before selecting an ordinal (R88n.8).
+/// R88n.8 does not define the result outside signed-32 range; Rust's saturating
+/// cast below is only a neutral placeholder, not evidence of native parity.
+#[cfg(feature = "client-wowforever")]
+pub(crate) fn forever_lua_index(
+    state: &LuaState,
+    position: i32,
+    usage: &str,
+) -> LuaResult<Option<usize>> {
+    let value = allowed_when_untainted(state, position, tooltip_api_name(usage))?;
+    let number =
+        numeric_argument(state, value).ok_or_else(|| rilua::runtime_error(usage.to_string()))?;
+    if !number.is_finite() || !(0.0..=f64::from(u32::MAX)).contains(&number) {
+        return Err(rilua::runtime_error(format!(
+            "outside of expected range 0 to 4294967295 - {usage}"
+        )));
+    }
+    let index = (number - 1.0).trunc() as i32;
+    Ok(usize::try_from(index).ok())
+}
+
 /// Optional boolean flag; a missing/nil value defaults false and a present value
 /// uses Lua truthiness (WM94 §6), after the shared secret-access check.
 /// Optional boolean flag; a missing/nil value defaults false and a present value

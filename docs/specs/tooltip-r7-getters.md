@@ -7,6 +7,8 @@ The Round 7 `C_TooltipInfo` getters use native argument readers and tooltip buil
 - [x] Publish all eleven getters on Retail 12.1.5 (70688) and Forever 1.60.1 (70707); publish only `GetAzeriteEssence` and `GetAzeriteEssenceSlot` on PTR 12.1.7 (70668), as established in Round 7.
 - [x] Use each getter's exact usage string, signed/unsigned conversion, optional argument, byte-slot, GUID, table and secret-argument rules from Round 7.
 - [x] On Retail 12.1.5 (70688), missing-source calls to `GetQuestLogSpecialItem` and `GetQuestPartyProgress` return exactly zero Lua values, not `nil` or a tooltip table (R88n.1).
+- [x] On Retail 12.1.5 (70688), `GetItemInteractionItem` returns zero values for a missing object or a failed kind-2/4 producer. A supplied object of any other kind returns one table with exactly one field, `lines`, containing an empty table. This path bypasses the builder and does not add `dataInstanceID` (VERIFIED, R88n.1).
+- [x] The simulator uses one empty-by-default host input for item-interaction tooltip state, beside the dialog data. It carries the selected-object kind, selected GUID, and any host-supplied final cleansing rows or conversion output ID. The native `SetPendingItem` lifecycle and producer calculations are not modeled; a missing kind-2/4 producer retains the verified zero-value result. Registration and argument handling are unchanged; PTR remains unpublished and Forever retains its no-value result.
 - [x] Retail LFG reward getters read only ready, host-supplied reward groups keyed by dungeon ID and type; ordinary entries and shortage tiers use their selected indexes, and empty or unready input does not fabricate rewards.
 - [x] Use each LFG entry's currency discriminator to select the shared currency or item tooltip builder, not the numeric ID range.
 - [x] On Retail 12.1.5 (70688), `GetRecipeRankInfo` follows supplied parent records to the base recipe, follows successor records whose spells exist, and publishes top-level TooltipData type 17 with the requested recipe ID (R88n.4).
@@ -43,6 +45,7 @@ The Round 7 `C_TooltipInfo` getters use native argument readers and tooltip buil
 - `src/c_api/quest_special_item.rs` — separate host inputs for index-to-quest context, cache item IDs and the selected inventory object.
 - `src/lua_api/sim_substates/quest_log.rs` — empty-by-default party snapshots and quest special-item inputs.
 - `src/lua_api/globals/missing_surface/tooltip_info/builders.rs` — shared tooltip-row and D56 publication path for supplied Retail party-progress data.
+- `src/c_api/c_tooltip_info_round7.rs` and `src/lua_api/state/sim_state.rs` — one empty-by-default item-interaction tooltip input for object kind, selected GUID, and host-supplied final producer values.
 - `src/c_api/tooltip_getter_args.rs` — shared native-style argument checks.
 - `src/c_api/item_spell/c_item.rs` — `GetItemNumSockets` secret argument gate.
 - `src/lua_api/globals/missing_surface/tooltip_info/mod.rs` — modern tooltip registration and Round 7 builder bridges.
@@ -54,6 +57,7 @@ The Round 7 `C_TooltipInfo` getters use native argument readers and tooltip buil
 ## Tests asserting this spec
 
 - `tests/tooltip_round7.rs` — registration, argument conversion, usage errors, original accessor miss paths, secret rejection and populated owned runeforge item instances.
+- `tests/tooltip_item_interaction_item.rs` — Retail-selected ItemInteraction slot through the original GameTooltip and TooltipDataHandler, and a separate exact Lua return-count and shape check.
 - `tests/tooltip_recipe_rank_info.rs` — VERIFIED recipe-ID selection and qualitative threshold behavior through the original accessor; the concrete rank-1/rank-2 boundary and exact presentation are INFERRED coverage; simulator-route tests are INFERRED; the zero-value miss test is PRESERVATION.
 - `tests/tooltip_quest_party_progress.rs` — selected ObjectiveTracker consumers, original tooltip accessor selectors, exact missing-source counts, and supplied owned-item selection.
 - `tests/tooltip_lfg_rewards.rs` — selected GroupFinder reward consumers, distinct ordinary/shortage entries and API-level no-value misses.
@@ -75,7 +79,8 @@ The Round 7 `C_TooltipInfo` getters use native argument readers and tooltip buil
 ## Known gaps (current cycle)
 
 - [ ] Azerite state supplies current essence ranks and active slots, but the rank-to-spell tooltip catalogue is absent; the getters return no values after resolving only the modeled selection.
-- [ ] Possession spell/context, selected item-interaction descriptors, and slotted-keystone GUID input routes remain empty-by-default host inputs; complete external writers are UNKNOWN.
+- [ ] Possession spell and external slotted-keystone selection updates remain empty-by-default host inputs; complete external writers are UNKNOWN.
+- [ ] Complete native item-interaction selection routes, external lifecycle events, and successful kind-2/4 producer payloads remain UNKNOWN; R88o.2 q4 verifies local setter/clear operations, detailed below. The simulator does not invent writers, events, or payloads.
 - [ ] Complete recipe display-row semantics, upstream acquisition, external clear triggers, learned-status meaning and player/faction source lookup remain UNKNOWN; see [Recipe-rank evidence boundary](#recipe-rank-evidence-boundary). Recipe source text and labels are host inputs; specialization wording is not derived.
 - [ ] `GetQuestLogSpecialItem` keeps quest-ID context, quest-cache fields, and the selected inventory object as separate empty-by-default host inputs. The upstream cache, inventory/object writers, candidate predicates, and invalidation routes remain UNKNOWN. The native owner-GUID request context is not consumed by the shared simulator item builder.
 - [ ] `GetQuestPartyProgress` has no native progress-tree writer or party-progress query service. Its host-supplied snapshots start empty; member/objective values are not derived. R88n.3 confirms the writer routes remain UNKNOWN. **UNKNOWN:** Native return shape when a successful query has no output rows (for example, `omitTitle=true` with every participant filtered); this simulator returns zero values when its supplied snapshot emits no rows.
