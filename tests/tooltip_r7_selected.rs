@@ -149,12 +149,21 @@ fn possession_original_action_bar_hover_uses_the_supplied_spell() {
 #[test]
 fn slotted_keystone_original_challenges_hover_uses_the_supplied_guid() {
     let env = tooltip_full_env_helpers::load_full_env_without_post_load();
+    let (group_finder_loaded, group_finder_reason): (bool, Option<String>) = env
+        .eval(r#"return C_AddOns.LoadAddOn("Blizzard_GroupFinder")"#)
+        .unwrap();
+    assert!(
+        group_finder_loaded,
+        "Blizzard_GroupFinder load failed: {group_finder_reason:?}"
+    );
     let (loaded, reason): (bool, Option<String>) = env
         .eval(r#"return C_AddOns.LoadAddOn("Blizzard_ChallengesUI")"#)
         .unwrap();
     assert!(loaded, "Blizzard_ChallengesUI load failed: {reason:?}");
     env.exec(
         r#"
+        assert(C_AddOns.IsAddOnLoaded("Blizzard_GroupFinder"))
+        assert(PVEFrame, "selected GroupFinder path creates PVEFrame")
         assert(C_AddOns.IsAddOnLoaded("Blizzard_ChallengesUI"))
         assert(debug.getinfo(ChallengesKeystoneSlotMixin.OnEnter, "S").source
             :find("Blizzard_ChallengesUI.lua", 1, true))
@@ -189,7 +198,8 @@ fn round7_selected_getter_misses_keep_the_verified_result_arities() {
         assert(select("#", C_TooltipInfo.GetPossession(1)) == 0)
         assert(select("#", C_TooltipInfo.GetPossession(2)) == 0)
         assert(select("#", C_TooltipInfo.GetSlottedKeystone()) == 0)
-    "#)
+    "##,
+    )
     .unwrap();
 
     {
@@ -200,7 +210,8 @@ fn round7_selected_getter_misses_keep_the_verified_result_arities() {
         });
         sim.item_interaction_tooltip_input = Some(ItemInteractionTooltipInput::default());
     }
-    env.exec(r#"
+    env.exec(
+        r##"
         local count, data = select("#", C_TooltipInfo.GetItemInteractionItem()),
             C_TooltipInfo.GetItemInteractionItem()
         assert(count == 1 and type(data) == "table")
