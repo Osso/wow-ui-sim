@@ -244,8 +244,8 @@ fn blizzard_deprecated_spell_script_wrapper_closures_are_not_identity_equal_to_c
 }
 }
 
-prefork_full_ui_case! {
 #[cfg(feature = "client-retail")]
+prefork_full_ui_case! {
 fn blizzard_deprecated_spell_script_visibility_wrapper_translates_string_keys(env: &WowLuaEnv) {
     let translated: bool = env
         .eval(
