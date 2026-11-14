@@ -11,7 +11,7 @@ use std::collections::HashMap;
 
 use crate::common::blizzard_addon_harness::{blizzard_ui_dir, build_blizzard_addon_closure_env};
 use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
-use wow_ui_sim::loader::discover_blizzard_addons_for_screen;
+use wow_ui_sim::loader::discover_blizzard_startup_addons_for_screen;
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::toc::TocFile;
@@ -19,9 +19,9 @@ use wow_ui_sim::toc::TocFile;
 fn load_selected_consumer(root: &str, function: &str, source_suffix: &str) -> WowLuaEnv {
     assert_eq!(ACTIVE, ClientProfile::Retail);
     let ui_dir = blizzard_ui_dir();
-    let startup_addons = discover_blizzard_addons_for_screen(&ui_dir, ScreenKind::Game);
+    let startup_addons = discover_blizzard_startup_addons_for_screen(&ui_dir, ScreenKind::Game);
     assert!(
-        startup_addons.iter().any(|(name, _)| name == root),
+        startup_addons.iter().any(|addon| addon.name == root),
         "{root} must be selected by Retail Game-screen addon discovery"
     );
 
@@ -47,11 +47,11 @@ fn ranged_auto_attack_api_compares_the_shared_identifier() {
     let toc_path = ui_dir.join("Blizzard_SpellSearch/Blizzard_SpellSearch.toc");
     let toc = TocFile::from_file(&toc_path).expect("Retail SpellSearch TOC");
     assert!(toc.is_load_on_demand());
-    let startup_addons = discover_blizzard_addons_for_screen(&ui_dir, ScreenKind::Game);
+    let startup_addons = discover_blizzard_startup_addons_for_screen(&ui_dir, ScreenKind::Game);
     assert!(
         !startup_addons
             .iter()
-            .any(|(name, _)| name == "Blizzard_SpellSearch")
+            .any(|addon| addon.name == "Blizzard_SpellSearch")
     );
 
     let env = WowLuaEnv::new().expect("Retail C_Spell surface");
