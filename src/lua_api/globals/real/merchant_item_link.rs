@@ -48,7 +48,7 @@ pub struct MerchantNamedLink {
     pub label: Option<String>,
 }
 
-fn get_merchant_item_link(state: &mut LuaState) -> LuaResult<u32> {
+fn merchant_index(state: &mut LuaState) -> LuaResult<Option<usize>> {
     let value = rilua::table_security::unwrap_secret(state, stack_val(state, 1))?;
     let number = match value {
         Val::Num(n) => Some(n),
@@ -65,7 +65,11 @@ fn get_merchant_item_link(state: &mut LuaState) -> LuaResult<u32> {
             "integer overflow attempting to store {number:.6}"
         )));
     }
-    let Some(index) = usize::try_from((number.trunc() as i32).wrapping_sub(1)).ok() else {
+    Ok(usize::try_from((number.trunc() as i32).wrapping_sub(1)).ok())
+}
+
+fn get_merchant_item_link(state: &mut LuaState) -> LuaResult<u32> {
+    let Some(index) = merchant_index(state)? else {
         return Ok(0);
     };
     let sim = borrow_state(state)?;
@@ -81,24 +85,37 @@ fn get_merchant_item_link(state: &mut LuaState) -> LuaResult<u32> {
     };
     let offer = sim.merchant_links.offers.get(&slot).cloned();
     drop(sim);
-    let text = match offer {
+    let Some(text) = merchant_link_text(item_id, offer) else {
+        return Ok(0);
+    };
+    let value = text
+        .as_deref()
+        .map(|s| create_string(state, s))
+        .unwrap_or(Val::Nil);
+    state.push(value);
+    Ok(1)
+}
+
+/// Outer None is a failed offer/record; inner None is selected builder no-text.
+fn merchant_link_text(item_id: u32, offer: Option<MerchantLinkOffer>) -> Option<Option<String>> {
+    Some(match offer {
         None | Some(MerchantLinkOffer::Item { .. }) => {
             if item_id == 0 || crate::items::get_item(item_id).is_none() {
-                return Ok(0);
+                return None;
             }
             match offer {
                 Some(MerchantLinkOffer::Item { fields: None }) => None,
                 Some(MerchantLinkOffer::Item {
                     fields: Some(fields),
                 }) => crate::c_api::item_spell::item_link_with_fields(item_id, &fields),
-                // Twelve unnamed fixed fields from the native template. No
-                // bonus lists are supplied by the existing merchant model.
-                _ => crate::c_api::item_spell::item_link_with_fields(item_id, &[0; 12]),
+                // INFERRED adapter: absent host builder inputs remain unresolved.
+                // Never infer the native variable lists or trailing fields.
+                _ => None,
             }
         }
         Some(MerchantLinkOffer::Currency { record }) => {
             let Some(r) = record else {
-                return Ok(0);
+                return None;
             };
             r.label.map(|label| {
                 format!(
@@ -109,7 +126,7 @@ fn get_merchant_item_link(state: &mut LuaState) -> LuaResult<u32> {
         }
         Some(MerchantLinkOffer::Spell { record } | MerchantLinkOffer::ResolvedSpell { record }) => {
             let Some(r) = record else {
-                return Ok(0);
+                return None;
             };
             r.label.map(|label| {
                 format!(
@@ -118,14 +135,8 @@ fn get_merchant_item_link(state: &mut LuaState) -> LuaResult<u32> {
                 )
             })
         }
-        Some(MerchantLinkOffer::Unsupported | MerchantLinkOffer::Missing) => return Ok(0),
-    };
-    let value = text
-        .as_deref()
-        .map(|s| create_string(state, s))
-        .unwrap_or(Val::Nil);
-    state.push(value);
-    Ok(1)
+        Some(MerchantLinkOffer::Unsupported | MerchantLinkOffer::Missing) => return None,
+    })
 }
 
 pub(crate) fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {

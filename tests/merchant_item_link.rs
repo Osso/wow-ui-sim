@@ -1,4 +1,5 @@
-//! R88l.2 VERIFIED API branches; explicit host seams are not native writers.
+//! VERIFIED R88l.2 conditional API branches plus separately labeled INFERRED
+//! simulator adapters/serialization fixtures, not complete native offer payloads.
 #![cfg(all(feature = "client-retail", feature = "optional-tests"))]
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::lua_api::globals::real::merchant_item_link::{
@@ -25,18 +26,31 @@ fn merchant_item_link_arguments_and_arity() {
         end
     "#).unwrap();
     env.state().borrow_mut().merchant_items = vec![6948];
+    // INFERRED fixture makes numeric-string/truncation equivalence non-vacuous.
+    env.state().borrow_mut().merchant_links.offers.insert(
+        0,
+        Offer::Item {
+            fields: Some(vec![80, 0, 7]),
+        },
+    );
     env.exec(
         r#"
         assert(select('#',GetMerchantItemLink(1,'ignored'))==1)
         assert(GetMerchantItemLink('1')==GetMerchantItemLink(1.9))
         assert(select('#',GetMerchantItemLink(-0.9))==0)
-        local s=GetMerchantItemLink(1)
-        assert(s:find('|Hitem:6948:',1,true))
-        assert(not s:find(':0:',1,true) and not s:find(':80:',1,true))
-        assert(s:find('|h[Hearthstone]|h|r',1,true))
+        assert(type(GetMerchantItemLink(1))=='string')
     "#,
     )
     .unwrap();
+}
+
+/// INFERRED adapter: no host data does not invent a native payload.
+#[test]
+fn merchant_item_link_absent_builder_data_remains_unresolved() {
+    let env = WowLuaEnv::new().unwrap();
+    env.state().borrow_mut().merchant_items = vec![6948];
+    env.exec("assert(select('#',GetMerchantItemLink(1))==1); assert(GetMerchantItemLink(1)==nil)")
+        .unwrap();
 }
 
 #[test]
@@ -79,8 +93,9 @@ fn merchant_item_link_misses_and_builder_nil_are_distinct() {
         .unwrap();
 }
 
+/// INFERRED simulator serialization only: five fields are not a complete native link.
 #[test]
-fn merchant_item_link_explicit_builder_fields_and_special_paths() {
+fn merchant_item_link_inferred_synthetic_item_serialization() {
     let env = WowLuaEnv::new().unwrap();
     env.state().borrow_mut().merchant_items = vec![6948];
     env.state().borrow_mut().merchant_links.offers.insert(
@@ -91,12 +106,22 @@ fn merchant_item_link_explicit_builder_fields_and_special_paths() {
     );
     env.exec("assert(GetMerchantItemLink(1):find('|Hitem:6948::10:100:-2:|h',1,true))")
         .unwrap();
-    let record = MerchantNamedLink {
+}
+
+fn supplied_record() -> MerchantNamedLink {
+    MerchantNamedLink {
         id: 42,
         second: 7,
         color: "TOKEN".into(),
         label: Some("Supplied record".into()),
-    };
+    }
+}
+
+#[test]
+fn merchant_item_link_currency_template() {
+    let env = WowLuaEnv::new().unwrap();
+    env.state().borrow_mut().merchant_items = vec![6948];
+    let record = supplied_record();
     env.state().borrow_mut().merchant_links.offers.insert(
         0,
         Offer::Currency {
@@ -105,6 +130,13 @@ fn merchant_item_link_explicit_builder_fields_and_special_paths() {
     );
     env.exec("assert(GetMerchantItemLink(1)=='|cnTOKEN:|Hcurrency:42:7|h[Supplied record]|h|r')")
         .unwrap();
+}
+
+#[test]
+fn merchant_item_link_spell_templates() {
+    let env = WowLuaEnv::new().unwrap();
+    env.state().borrow_mut().merchant_items = vec![6948];
+    let record = supplied_record();
     for offer in [
         Offer::Spell {
             record: Some(record.clone()),
@@ -121,9 +153,15 @@ fn merchant_item_link_explicit_builder_fields_and_special_paths() {
         env.exec("assert(GetMerchantItemLink(1)=='|cTOKEN|Hspell:42:7|h[Supplied record]|h|r')")
             .unwrap();
     }
+}
+
+#[test]
+fn merchant_item_link_special_builder_no_text() {
+    let env = WowLuaEnv::new().unwrap();
+    env.state().borrow_mut().merchant_items = vec![6948];
     let missing_text = MerchantNamedLink {
         label: None,
-        ..record
+        ..supplied_record()
     };
     env.state().borrow_mut().merchant_links.offers.insert(
         0,

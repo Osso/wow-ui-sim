@@ -1,3 +1,7 @@
+## [2026-11-14] correction | Merchant builder evidence boundary
+
+[Merchant item links](investigations/merchant-item-link.md) now requires explicit host item payloads. Missing data remains an INFERRED unresolved/no-text seam. Synthetic serializer fixtures are not complete native link evidence; the original consumer explicitly compares distinct results. Shared formatter behavior is unchanged.
+
 ## [2026-11-14] implementation | Merchant item-link publication
 
 [Merchant item links](investigations/merchant-item-link.md) records R88l.2 Retail validation, arity, shared link formatting and explicit host-selected offer seams. Native raw-row ordering/writers remain unknown; no non-Retail publication is added.

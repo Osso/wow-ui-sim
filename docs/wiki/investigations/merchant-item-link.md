@@ -18,7 +18,7 @@ The existing `merchant_items` collection remains the host's **selected offer
 ordering**, not a newly invented replica of raw native storage. `merchant_links`
 adds explicit host availability/rejection inputs and per-slot builder records.
 It does not infer the native raw-row filtering/renumbering algorithm or server
-writer. An empty override map preserves the existing item-only collection;
+writer. INFERRED adapter: an empty override map selects an unresolved item builder;
 there are no seeded currency/spell offers. The two special spell paths are
 represented separately; the resolving path requires the host's resolved record.
 No event or completion callback is installed.
@@ -27,9 +27,10 @@ Item records must exist in the shared item database. The shared item-link
 formatter now accepts unnamed positional fields, compacts complete zero fields,
 and supplies the existing quality token/name. Its old helper still supplies its
 historical level/spec fields unchanged for existing callers. The merchant route
-instead supplies twelve empty fixed fields when it has no extra field data,
-never the historical hardcoded level80/spec70. A host can supply actual positional
-fields; this is not a claim to know their complete names or native writers.
+requires explicit positional builder fields. INFERRED adapter: absent builder
+data returns one nil for a valid item record, rather than synthesizing a native
+payload. Hosts may supply any values, including 80; no field meanings, bonus
+lists, tail fields or complete native payloads are inferred.
 Currency and spell formatting follows the literal native templates using only
 host-supplied record data. Missing record and missing builder text are distinct.
 
@@ -37,10 +38,15 @@ host-supplied record data. Missing record and missing builder text are distinct.
 
 `tests/merchant_item_link.rs` covers argument diagnostics, truncation, extra
 arguments, result arity, missing/ineligible records and explicit builder text.
-These are API tests of VERIFIED publication facts, not native producer tests.
+Argument and conditional result branches are VERIFIED publication facts.
+The explicitly labeled short item fixture is an INFERRED simulator serialization
+contract only, not a VERIFIED complete native link. Currency/spell fixtures test
+the supplied template families, not acquisition of native offer data.
 `merchant_item_link_original_consumer_stores_distinct_item_links` invokes the
 original selected Retail Game `MerchantFrame_Update` through normal startup and
-checks two distinct existing item IDs in the original item button's link field.
+supplies explicit INFERRED builder fixtures for two existing item IDs, checks
+both in the original item button's link field, and explicitly compares the two
+results for inequality.
 It rejects a constant/nil/no-op producer. The earlier affordability test no longer
 expects the missing-global boundary at line329 and checks the stored link.
 These tests do not claim unrelated later MerchantFrame presentation is complete.

@@ -232,10 +232,18 @@ fn merchant_r88i5_original_consumer_calls_requirement_failure_and_skip() {
 #[test]
 fn merchant_item_link_original_consumer_stores_distinct_item_links() {
     let env = retail_game_startup_env();
+    env.exec("MerchantLinkPreviousFixture = nil").unwrap();
     for id in [6948, 2840] {
         {
             let mut sim = env.state().borrow_mut();
             sim.merchant_items = vec![id];
+            // INFERRED serialization fixture, not a native complete payload.
+            sim.merchant_links.offers.insert(
+                0,
+                wow_ui_sim::lua_api::globals::real::merchant_item_link::MerchantLinkOffer::Item {
+                    fields: Some(vec![0, 80, 0, 7]),
+                },
+            );
             sim.merchant_frame_open = true;
             sim.player.present = true;
             sim.merchant_offer_costs
@@ -253,6 +261,8 @@ fn merchant_item_link_original_consumer_stores_distinct_item_links() {
             assert(ok or not tostring(err):find('MerchantFrame.lua:329:', 1, true), tostring(err))
             local link = MerchantItem1ItemButton.link
             assert(type(link) == 'string' and link:find('|Hitem:{id}:', 1, true), tostring(link))
+            assert(link ~= MerchantLinkPreviousFixture, 'constant producer across distinct inputs')
+            MerchantLinkPreviousFixture = link
         "#
         ))
         .unwrap();
