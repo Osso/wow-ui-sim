@@ -21,18 +21,22 @@ pub struct ContentTrackingState {
 }
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
-    if ACTIVE != ClientProfile::Retail {
+    if !matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr) {
         return Ok(());
     }
 
     let namespace = ensure_namespace(state, "C_ContentTracking")?;
+    // PTR 70493 ContentTrackingDocumentation.lua:151–163 declares GetTrackedIDs.
+    // Its application to the existing host list model is INFERRED.
     table_set_rust_fn_static(state, namespace, "GetTrackedIDs", get_tracked_ids)?;
-    table_set_rust_fn_static(state, namespace, "IsTracking", is_tracking)
+    if ACTIVE == ClientProfile::Retail {
+        table_set_rust_fn_static(state, namespace, "IsTracking", is_tracking)?;
+    }
+    Ok(())
 }
 
 /// The decoded Retail reader uses zero when Lua numeric conversion fails.
-fn tracking_type(state: &LuaState, index: i32) -> u32 {
-    let value = stack_val(state, index);
+fn tracking_type(state: &LuaState, value: Val) -> u32 {
     let number = match value {
         Val::Num(number) => Some(number),
         Val::Str(reference) => state
@@ -48,7 +52,14 @@ fn tracking_type(state: &LuaState, index: i32) -> u32 {
 
 fn get_tracked_ids(state: &mut LuaState) -> LuaResult<u32> {
     // INFERRED declaration shape: one ID table; an empty host list remains empty.
-    let trackable_type = tracking_type(state, 1);
+    let argument = stack_val(state, 1);
+    let argument = if ACTIVE == ClientProfile::Ptr {
+        // The newly published PTR declaration is AllowedWhenUntainted.
+        rilua::table_security::unwrap_secret(state, argument)?
+    } else {
+        argument
+    };
+    let trackable_type = tracking_type(state, argument);
     let ids = borrow_state(state)?
         .content_tracking
         .tracked_ids_by_type
@@ -70,7 +81,7 @@ fn get_tracked_ids(state: &mut LuaState) -> LuaResult<u32> {
 
 fn is_tracking(state: &mut LuaState) -> LuaResult<u32> {
     // INFERRED declaration shape: one boolean result.
-    let trackable_type = tracking_type(state, 1);
+    let trackable_type = tracking_type(state, stack_val(state, 1));
     let trackable_id = read_untainted_signed32_argument(
         state,
         2,
