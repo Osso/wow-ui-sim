@@ -515,8 +515,14 @@ macro_rules! build_empty_sim_state {
             gcd: $runtime.gcd,
             spell_cooldowns: $collections.spell_cooldowns,
             spell_charges: ::std::collections::HashMap::new(),
+            ranged_auto_attack_spell_id: 0,
+            #[cfg(feature = "retail-12-0-0")]
+            spell_cast_context_is_null: None,
             #[cfg(feature = "retail-12-0-0")]
             spell_cast_counts: ::std::collections::HashMap::new(),
+            #[cfg(feature = "retail-12-0-5")]
+            spell_reagent_pairs: ::std::collections::HashMap::new(),
+            spell_visibility_results: None,
             cooldowns_restricted: false,
             #[cfg(feature = "retail-12-0-5")]
             spell_max_cumulative_aura_applications: ::std::collections::HashMap::new(),

@@ -14,6 +14,8 @@
 //! - `GetSpellLink(spellID)` → spell hyperlink string or nil.
 //! - `GetSpellName(spellID)` → localized name, or no values on a catalog miss.
 //! - `IsAutoAttackSpell(spellID)` → true for spell 6603.
+//! - Retail 12.1.5 `IsRangedAutoAttackSpell` compares the shared ranged-ID input.
+//! - Retail 12.1.5 `GetVisibilityInfo` publishes host-supplied rows or the verified miss result.
 //! - `IsSpellHelpful(spellID)` → true for self-targeted spells.
 //! - `IsSpellHarmful(spellID)` → true for known non-self-targeted spells.
 //! - `GetMountFromSpell(spellID)` → scans `world.mounts` for matching spell
@@ -52,6 +54,19 @@ type SpellScriptFn = fn(&mut LuaState) -> LuaResult<u32>;
 
 const SPELL_INFO_HASH_FIELDS: usize = 7;
 const SPELL_COOLDOWN_HASH_FIELDS: usize = 5;
+#[cfg(feature = "retail-12-1-5")]
+const RANGED_AUTO_ATTACK_ATTRIBUTE_MASK: u32 = 16_777_216;
+#[cfg(feature = "retail-12-1-5")]
+const VISIBILITY_API: &str = "C_Spell.GetVisibilityInfo";
+#[cfg(feature = "retail-12-1-5")]
+const VISIBILITY_USAGE: &str = "Usage: local hasCustom, alwaysShowMine, showForMySpec = C_Spell.GetVisibilityInfo(spellID, visibilityType)";
+#[cfg(feature = "retail-12-1-5")]
+const RANGED_AUTO_ATTACK_API: &str = "C_Spell.IsRangedAutoAttackSpell";
+#[cfg(feature = "retail-12-1-5")]
+const RANGED_AUTO_ATTACK_USAGE: &str =
+    "Usage: local isRangedAutoAttack = C_Spell.IsRangedAutoAttackSpell(spellIdentifier)";
+#[cfg(feature = "retail-12-1-5")]
+const MAX_VISIBILITY_TYPE: u8 = 2;
 
 pub(crate) fn uses_r17_duration_behavior() -> bool {
     use crate::client_profile::ClientProfile;
@@ -93,6 +108,16 @@ pub(crate) fn register_c_spell_surface(state: &mut LuaState) -> LuaResult<()> {
     )?;
     register_spell_methods(state, ns, SPELL_QUERY_METHODS)?;
     register_spell_methods(state, ns, SPELL_BOOLEAN_METHODS)?;
+    #[cfg(feature = "retail-12-1-5")]
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        table_set_rust_fn_static(
+            state,
+            ns,
+            "IsRangedAutoAttackSpell",
+            is_ranged_auto_attack_spell,
+        )?;
+        table_set_rust_fn_static(state, ns, "GetVisibilityInfo", get_visibility_info)?;
+    }
     #[cfg(feature = "retail-12-0-0")]
     super::c_spell_classification::register(state)?;
     if cfg!(feature = "client-mists") {
@@ -892,6 +917,159 @@ fn is_spell_data_cached(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+#[cfg(feature = "retail-12-1-5")]
+fn is_ranged_auto_attack_spell(state: &mut LuaState) -> LuaResult<u32> {
+    let spell_id = read_retail_spell_identifier(
+        state,
+        stack_val(state, 1),
+        RANGED_AUTO_ATTACK_API,
+        RANGED_AUTO_ATTACK_USAGE,
+    )?;
+    let matches_shared_id = match spell_id {
+        Some(spell_id) => borrow_state(state)?.ranged_auto_attack_spell_id == spell_id,
+        None => false,
+    };
+    state.push(Val::Bool(matches_shared_id));
+    Ok(1)
+}
+
+#[cfg(feature = "retail-12-1-5")]
+pub(crate) fn read_retail_spell_identifier(
+    state: &LuaState,
+    value: Val,
+    api: &str,
+    usage: &str,
+) -> LuaResult<Option<u32>> {
+    if value == Val::Nil {
+        return Err(super::helpers::bad_argument(1, api, usage));
+    }
+    match value {
+        Val::Num(number) => parse_retail_spell_number(number, api, usage),
+        Val::Str(reference) => {
+            if let Some(spell_id) = read_spell_identifier_value(state, value)? {
+                return Ok(Some(spell_id));
+            }
+            let text = state
+                .gc
+                .string_arena
+                .get(reference)
+                .and_then(|string| super::helpers::parse_numeric_string(string.data()));
+            text.map_or(Ok(None), |number| {
+                parse_retail_spell_number(number, api, usage)
+            })
+        }
+        _ => Err(super::helpers::bad_argument(1, api, usage)),
+    }
+}
+
+#[cfg(feature = "retail-12-1-5")]
+fn parse_retail_spell_number(number: f64, api: &str, usage: &str) -> LuaResult<Option<u32>> {
+    if !number.is_finite() || number < f64::from(i32::MIN) || number > f64::from(i32::MAX) {
+        return Err(super::helpers::bad_argument(1, api, usage));
+    }
+    Ok(u32::try_from(number.trunc() as i32).ok())
+}
+
+#[cfg(feature = "retail-12-1-5")]
+pub(crate) fn record_ranged_auto_attack_spell(sim: &mut crate::lua_api::SimState, spell_id: u32) {
+    let metadata_selects_ranged_id = SPELL_DB
+        .get(&spell_id)
+        .and_then(|spell| spell.attributes_9)
+        .is_some_and(|attributes| attributes & RANGED_AUTO_ATTACK_ATTRIBUTE_MASK != 0);
+    if metadata_selects_ranged_id {
+        sim.ranged_auto_attack_spell_id = spell_id;
+    }
+}
+
+#[cfg(feature = "retail-12-1-5")]
+pub(crate) fn clear_ranged_auto_attack_spell(sim: &mut crate::lua_api::SimState, spell_id: u32) {
+    if sim.ranged_auto_attack_spell_id == spell_id {
+        sim.ranged_auto_attack_spell_id = 0;
+    }
+}
+
+#[cfg(feature = "retail-12-1-5")]
+pub(crate) fn spell_context_is_null(sim: &crate::lua_api::SimState) -> bool {
+    // INFERRED: the shared Retail context resolves to the active player by default.
+    sim.spell_cast_context_is_null.unwrap_or(false)
+}
+
+#[cfg(feature = "retail-12-1-5")]
+fn get_visibility_info(state: &mut LuaState) -> LuaResult<u32> {
+    let spell_id = super::helpers::read_untainted_signed32_argument(
+        state,
+        1,
+        VISIBILITY_API,
+        VISIBILITY_USAGE,
+    )?;
+    let visibility_type = read_visibility_type(state)?;
+    let result = {
+        let sim = borrow_state(state)?;
+        if spell_context_is_null(&sim) {
+            None
+        } else {
+            let lookup_id = u32::try_from(spell_id).ok();
+            Some(
+                lookup_id
+                    .and_then(|id| {
+                        sim.spell_visibility_results
+                            .as_ref()
+                            .and_then(|results| results.get(&(id, visibility_type)).copied())
+                    })
+                    .unwrap_or((false, false, false)),
+            )
+        }
+    };
+    let Some((has_custom, always_show_mine, show_for_my_spec)) = result else {
+        return Ok(0);
+    };
+    state.push(Val::Bool(has_custom));
+    state.push(Val::Bool(always_show_mine));
+    state.push(Val::Bool(show_for_my_spec));
+    Ok(3)
+}
+
+#[cfg(feature = "retail-12-1-5")]
+fn read_visibility_type(state: &LuaState) -> LuaResult<u8> {
+    let value = stack_val(state, 2);
+    if value == Val::Nil {
+        return Err(super::helpers::bad_argument(
+            2,
+            VISIBILITY_API,
+            VISIBILITY_USAGE,
+        ));
+    }
+    if rilua::table_security::is_secret_value(state, value) {
+        let reason = format!(
+            "{VISIBILITY_USAGE}. Secret values are only allowed during untainted execution for this argument."
+        );
+        return Err(super::helpers::bad_argument(2, VISIBILITY_API, &reason));
+    }
+    let number = match value {
+        Val::Num(number) => Some(number),
+        Val::Str(reference) => state
+            .gc
+            .string_arena
+            .get(reference)
+            .and_then(|string| super::helpers::parse_numeric_string(string.data())),
+        _ => None,
+    }
+    .unwrap_or(0.0);
+    if !number.is_finite() || number < f64::from(i32::MIN) || number > f64::from(i32::MAX) {
+        let reason = format!("integer overflow attempting to store {number}");
+        return Err(super::helpers::bad_argument(2, VISIBILITY_API, &reason));
+    }
+    let visibility_type = (number.trunc() as i32) as u8;
+    if visibility_type > MAX_VISIBILITY_TYPE {
+        return Err(super::helpers::bad_argument(
+            2,
+            VISIBILITY_API,
+            VISIBILITY_USAGE,
+        ));
+    }
+    Ok(visibility_type)
+}
+
 /// `C_Spell.IsSelfBuff(spellID)` → `bool`.
 ///
 /// Returns true when `implicit_target == 1` (TARGET_UNIT_CASTER / Self).
@@ -1174,4 +1352,31 @@ pub(crate) fn push_spell_loss_of_control_snapshot(
         return Ok(1);
     };
     super::loss_of_control::push_loss_of_control_info(state, &info, restricted)
+}
+
+#[cfg(all(test, feature = "retail-12-1-5"))]
+mod ranged_auto_attack_tests {
+    use super::{clear_ranged_auto_attack_spell, record_ranged_auto_attack_spell};
+    use crate::lua_api::state::SimState;
+
+    #[test]
+    fn ranged_metadata_writer_and_equal_id_removal_follow_verified_rules() {
+        let mut sim = SimState::default();
+        assert_eq!(sim.ranged_auto_attack_spell_id, 0);
+
+        record_ranged_auto_attack_spell(&mut sim, 116);
+        assert_eq!(sim.ranged_auto_attack_spell_id, 0);
+
+        record_ranged_auto_attack_spell(&mut sim, 235450);
+        assert_eq!(sim.ranged_auto_attack_spell_id, 235450);
+        clear_ranged_auto_attack_spell(&mut sim, 11426);
+        assert_eq!(sim.ranged_auto_attack_spell_id, 235450);
+
+        record_ranged_auto_attack_spell(&mut sim, 11426);
+        assert_eq!(sim.ranged_auto_attack_spell_id, 11426);
+        clear_ranged_auto_attack_spell(&mut sim, 235450);
+        assert_eq!(sim.ranged_auto_attack_spell_id, 11426);
+        clear_ranged_auto_attack_spell(&mut sim, 11426);
+        assert_eq!(sim.ranged_auto_attack_spell_id, 0);
+    }
 }

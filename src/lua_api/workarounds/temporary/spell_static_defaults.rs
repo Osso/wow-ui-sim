@@ -3,8 +3,8 @@
 //! The Rust `C_Spell` surface owns state-backed spell metadata, links, costs,
 //! cooldowns, charges, and flyout data. Retail 12.1.5 VERIFIED: GetOverrideSpell
 //! returns its input when resolver context, mapping, or eligibility is absent.
-//! Candidate resolution remains UNKNOWN. Visibility output/publication on context
-//! failure also remains UNKNOWN; its existing tuple is a temporary seam.
+//! Candidate resolution remains UNKNOWN. GetVisibilityInfo is registered by the
+//! Retail C API producer; its neutral result input lives in SimState.
 
 use rilua::LuaApiMut;
 
@@ -15,12 +15,6 @@ C_Spell = C_Spell or __wow_namespace()
 if rawget(C_Spell, "GetOverrideSpell") == nil then
     function C_Spell.GetOverrideSpell(spellID)
         return spellID
-    end
-end
-
-if rawget(C_Spell, "GetVisibilityInfo") == nil then
-    function C_Spell.GetVisibilityInfo(_spellID)
-        return false, true, false
     end
 end
 

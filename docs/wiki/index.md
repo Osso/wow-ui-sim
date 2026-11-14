@@ -13,6 +13,9 @@
 ## [2026-11-14] fix | Original character labels and titles
 
 [Lua-owned fallback retirement](investigations/lua-owned-fallback-retirement.md#j-original-character-labels-and-titles) records J selected-name ownership and original Reputation/Currency titles, actual first post-event semantics, unchanged legacy paths, and deferred native/creation-owned items.
+## [2026-11-14] implementation | Retail spell count and query routes
+
+[Spell count contract](../specs/spell-count-outputs.md) and [Lua API](systems/lua-api.md#retail-1215-spell-count-visibility-and-ranged-id-routes) record R88k/R88m. **VERIFIED (Retail 12.1.5.70688):** Spell-store cast gates, eight-pair reagent limits, reagent-before-charge display mode, ranged-ID comparison/writer/removal, and visibility return arity. **INFERRED:** A_Admin spell changes supply ranged-ID inputs and the shared context is the active player. **UNKNOWN:** native dispatcher names, SpellReagents schema, alternate inventory modes/inclusion, visibility tables, and context lifecycle. **VERIFIED (optional tests at code SHA `438ec83e8`):** selected original consumers and API contracts pass; the five profile compile receipts have zero warnings and Retail `lua-errors` is `[]`.
 
 ## [2026-11-14] implementation | Merchant requirements and LFD requests
 
@@ -30,7 +33,7 @@ The default-state selector is PRESERVATION, not native availability or RED.
 
 ## [2026-11-13] system | User waypoint supertracking
 
-[SuperTrack state](systems/super-track-state.md#user-waypoint-supertracking) and [C_Map user waypoint](systems/c-map-user-waypoint.md#original-consumer-boundary) record R88i.3/R88j.5/R88j.6 and the selected original World Map consumers. **VERIFIED (Retail 12.1.5.70688):** user-waypoint enable clears the four named selections and their modeled flags, preserves corpse tracking, and `IsSuperTrackingAnything` includes user-waypoint tracking. The quest/content/map-pin getters read separate flags; content ID zero can be present; ClearAll clears modeled flags and retains saved content/map-pin values and waypoint coordinates. **VERIFIED (optional Retail tests):** the original click passes line 101, the original pin reads the true flag, and the direct flag-writer rows pass. **INFERRED:** flags and selections remain in agreement from a consistent start. **UNKNOWN:** two getterless flags, exact return arity and named-event effects. Set-map-pin, quest and vignette validation awaits R88j.8.
+[SuperTrack state](systems/super-track-state.md#user-waypoint-supertracking) and [C_Map user waypoint](systems/c-map-user-waypoint.md#original-consumer-boundary) record R88i.3/R88j.5/R88j.6 and the selected original World Map consumers. **VERIFIED (Retail 12.1.5.70688):** user-waypoint enable clears the four named selections and their modeled flags, preserves corpse tracking, and `IsSuperTrackingAnything` includes user-waypoint tracking. The quest/content/map-pin getters read separate flags; content ID zero can be present; ClearAll clears modeled flags and retains saved content/map-pin values and waypoint coordinates. **VERIFIED (optional Retail tests):** the original click passes line 101, the original pin reads the true flag, and the direct flag-writer rows pass. **INFERRED:** flags and selections remain in agreement from a consistent start. **UNKNOWN:** two getterless flags, exact return arity and named-event effects. R88j.8 additionally covers Retail map-pin and vignette setters and signed quest input parsing. [Setter scope and bounds](../specs/super-track-state.md#r88j8-retail-setter-scope).
 
 ## [2026-11-13] fix | Inline icon right-edge advance
 
