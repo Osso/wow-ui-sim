@@ -54,10 +54,11 @@ native anchor geometry, default anchors, or Hide-clears-lines behavior.
 
 ### Forever ClearLines cached text
 
-- [ ] **VERIFIED (Forever 1.60.1.70707, R88n.5):** `ClearLines` clears text on
+- [x] **VERIFIED (Forever 1.60.1.70707, R88n.5):** `ClearLines` clears text on
   cached left and right FontStrings for active rows only; it does not visit
   unused cached entries. Cached line arrays remain available for reuse. The
-  direct test and original-consumer preservation test are pending.
+  optional API test checks active and inactive cached text; the original
+  `TooltipDataHandler` preservation test checks reprocessing and FontString reuse.
 
 The `tooltip_bag_child` original-consumer regression stays unchanged. It rejects
 an unmatched equip slot after two successful distinct item selections; no
@@ -96,8 +97,6 @@ attachments, other profiles and getter selection are unchanged by this extension
 - [ ] Native execution and callback observation order remain unverified: the
       evidence is static native analysis, and no live-client observation exists
       for the notification's registered-callback lifetime.
-- [ ] Complete optional Forever API and original `TooltipDataHandler` test proof
-      for the verified active-row cached-text reset boundary.
 
 ## Out of scope
 
