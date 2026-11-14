@@ -16,7 +16,7 @@ use std::io::{BufRead, BufReader, Write};
 use std::path::Path;
 
 const RETAIL_ASSIGNMENT_CSV: &str = "data/db2/retail-12.1.5.70783/UiMapAssignment.csv";
-const RETAIL_ASSIGNMENT_OUTPUT: &str = "crates/sim-data/data/ui_map_assignments.rs";
+const RETAIL_ASSIGNMENT_OUTPUT: &str = "crates/sim-data-profile/data/ui_map_assignments_retail.rs";
 
 pub fn run() -> Result<(), Box<dyn std::error::Error>> {
     let wow_data = wow_data_dir();
@@ -158,7 +158,8 @@ struct UiMapAssignmentRow {
     order_index: u32,
     ui_min: [f32; 2],
     ui_max: [f32; 2],
-    region: [f32; 6],
+    region_min: [f32; 2],
+    region_max: [f32; 2],
 }
 
 struct AssignmentColumns {
@@ -167,7 +168,8 @@ struct AssignmentColumns {
     map_id: usize,
     ui_min: [usize; 2],
     ui_max: [usize; 2],
-    region: [usize; 6],
+    region_min: [usize; 2],
+    region_max: [usize; 2],
 }
 
 fn find_assignment_columns(header: &str) -> Result<AssignmentColumns, String> {
@@ -184,14 +186,8 @@ fn find_assignment_columns(header: &str) -> Result<AssignmentColumns, String> {
         map_id: index("MapID")?,
         ui_min: [index("UiMin_0")?, index("UiMin_1")?],
         ui_max: [index("UiMax_0")?, index("UiMax_1")?],
-        region: [
-            index("Region_0")?,
-            index("Region_1")?,
-            index("Region_2")?,
-            index("Region_3")?,
-            index("Region_4")?,
-            index("Region_5")?,
-        ],
+        region_min: [index("Region_0")?, index("Region_1")?],
+        region_max: [index("Region_3")?, index("Region_4")?],
     })
 }
 
@@ -244,13 +240,13 @@ fn parse_assignment_row(
             float(columns.ui_max[0], "UiMax_0")?,
             float(columns.ui_max[1], "UiMax_1")?,
         ],
-        region: [
-            float(columns.region[0], "Region_0")?,
-            float(columns.region[1], "Region_1")?,
-            float(columns.region[2], "Region_2")?,
-            float(columns.region[3], "Region_3")?,
-            float(columns.region[4], "Region_4")?,
-            float(columns.region[5], "Region_5")?,
+        region_min: [
+            float(columns.region_min[0], "Region_0")?,
+            float(columns.region_min[1], "Region_1")?,
+        ],
+        region_max: [
+            float(columns.region_max[0], "Region_3")?,
+            float(columns.region_max[1], "Region_4")?,
         ],
     };
     Ok((ui_map_id, assignment))
@@ -290,7 +286,7 @@ fn write_assignment_file(
 ) -> std::io::Result<()> {
     writeln!(
         out,
-        "//! Auto-generated Retail UiMapAssignment data from a CASC DB2 export."
+        "//! Auto-generated Retail UiMapAssignment vector2 fields from a CASC DB2 export."
     )?;
     writeln!(
         out,
@@ -311,7 +307,8 @@ fn write_assignment_file(
     writeln!(out, "    pub order_index: u32,")?;
     writeln!(out, "    pub ui_min: [f32; 2],")?;
     writeln!(out, "    pub ui_max: [f32; 2],")?;
-    writeln!(out, "    pub region: [f32; 6],")?;
+    writeln!(out, "    pub region_min: [f32; 2],")?;
+    writeln!(out, "    pub region_max: [f32; 2],")?;
     writeln!(out, "}}")?;
     writeln!(out)?;
     writeln!(
@@ -323,22 +320,21 @@ fn write_assignment_file(
         for row in rows {
             let ui_min = row.ui_min.map(|value| format!("{value:?}f32"));
             let ui_max = row.ui_max.map(|value| format!("{value:?}f32"));
-            let region = row.region.map(|value| format!("{value:?}f32"));
+            let region_min = row.region_min.map(|value| format!("{value:?}f32"));
+            let region_max = row.region_max.map(|value| format!("{value:?}f32"));
             writeln!(
                 out,
-                "        UiMapAssignment {{ map_id: {}, order_index: {}, ui_min: [{}, {}], ui_max: [{}, {}], region: [{}, {}, {}, {}, {}, {}] }},",
+                "        UiMapAssignment {{ map_id: {}, order_index: {}, ui_min: [{}, {}], ui_max: [{}, {}], region_min: [{}, {}], region_max: [{}, {}] }},",
                 row.map_id,
                 row.order_index,
                 ui_min[0],
                 ui_min[1],
                 ui_max[0],
                 ui_max[1],
-                region[0],
-                region[1],
-                region[2],
-                region[3],
-                region[4],
-                region[5],
+                region_min[0],
+                region_min[1],
+                region_max[0],
+                region_max[1],
             )?;
         }
         writeln!(out, "    ]),")?;
@@ -366,7 +362,8 @@ mod tests {
     fn assignment_parser_uses_named_columns_and_preserves_db2_values() {
         let header = "MapID,UiMapID,OrderIndex,UiMin_0,UiMin_1,UiMax_0,UiMax_1,Region_0,Region_1,Region_2,Region_3,Region_4,Region_5";
         let columns = find_assignment_columns(header).unwrap();
-        let row = "1,7,0,0,0,1,1,-3802.08008,-3245.83008,-1000000,-168.75,2204.16992,1000000";
+        let row =
+            "1,7,0,0,0,1,1,-3802.08008,-3245.83008,unused-z-min,-168.75,2204.16992,unused-z-max";
         let (ui_map_id, assignment) = parse_assignment_row(&columns, row, 2).unwrap();
 
         assert_eq!(ui_map_id, 7);
@@ -374,8 +371,8 @@ mod tests {
         assert_eq!(assignment.order_index, 0);
         assert_eq!(assignment.ui_min, [0.0, 0.0]);
         assert_eq!(assignment.ui_max, [1.0, 1.0]);
-        assert_eq!(assignment.region[0], -3802.08008);
-        assert_eq!(assignment.region[5], 1_000_000.0);
+        assert_eq!(assignment.region_min, [-3802.08008, -3245.83008]);
+        assert_eq!(assignment.region_max, [-168.75, 2204.16992]);
     }
 
     #[test]
