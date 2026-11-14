@@ -29,6 +29,7 @@ pub(crate) mod experience_preset;
 #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 pub(crate) mod c_tooltip_info_pvp_brawl;
 pub(crate) mod c_tooltip_info_round7;
+pub use c_tooltip_info_round7::{ItemInteractionTooltipInput, ItemInteractionTooltipLine};
 pub(crate) mod c_tooltip_info_totem;
 pub(crate) mod c_tooltip_info_weekly;
 pub mod chr_select_screen_data;

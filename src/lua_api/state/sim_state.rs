@@ -324,6 +324,12 @@ pub struct SimState {
     /// Explicit DamageMeter snapshots; combat publication is blocked pending secrecy.
     pub damage_meter: crate::c_api::c_damage_meter::DamageMeterInput,
     pub item_interaction: Option<crate::c_api::c_item_interaction::ItemInteractionInfo>,
+    /// Host-supplied selected object and final rows for Round 7 item-interaction tooltips.
+    pub item_interaction_tooltip_input: Option<crate::c_api::ItemInteractionTooltipInput>,
+    /// Host-supplied shared possession spell ID; no possession writer is modeled.
+    pub possession_spell_id: Option<u32>,
+    /// Host-supplied currently slotted keystone GUID; no slot writer is modeled.
+    pub slotted_keystone_guid: Option<String>,
     pub major_factions: HashMap<i64, MajorFactionData>,
     pub major_faction_renown_levels: HashMap<i64, Vec<RenownLevelInfo>>,
     /// Explicit pair-keyed reward inputs only; no fabricated default rows.

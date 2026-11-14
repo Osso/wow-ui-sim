@@ -38,6 +38,24 @@ const RUNEFORGE_USAGE: &str = concat!(
     "itemGUID, itemLevel [, powerID, modifiers])",
 );
 
+/// Host-supplied current item-interaction selection and final cleansing rows.
+/// Native selection writers and cleansing-row inputs are not modeled here.
+#[derive(Clone, Debug, Default)]
+pub struct ItemInteractionTooltipInput {
+    pub selected_item_guid: Option<String>,
+    pub conversion_output_item_id: Option<u32>,
+    pub cleansing_rows: Vec<ItemInteractionTooltipLine>,
+}
+
+/// Final cleansing row data supplied by the host; no row values or styles are inferred.
+#[derive(Clone, Debug, Default)]
+pub struct ItemInteractionTooltipLine {
+    pub line_type: f64,
+    pub left_text: String,
+    pub left_color: Option<(f64, f64, f64)>,
+    pub wrap: bool,
+}
+
 pub(crate) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
     let is_ptr = ACTIVE == ClientProfile::Ptr;
     table_set_rust_fn_static(state, namespace, "GetAzeriteEssence", get_azerite_essence)?;
