@@ -1,3 +1,7 @@
+## [2026-11-14] fix | Retail screen clamping
+
+Updated [layout-system](systems/layout-system.md#screen-clamping) and the [layout reference](../layout-system.md#screen-clamping) with R88n.5r's generic rect-resolution clamp, scaled insets, shared queued/synchronous path, and UNKNOWN suppression, rounding, oversized-frame, and snapping boundaries. The original GameTooltip consumer selector and final receipts are pending.
+
 ## [2026-11-14] investigation | Forever tooltip cached lines
 
 Updated the [tooltip lifecycle investigation](investigations/tooltip-owner-lifecycle.md#r88n5-forever-clearlines-cache-boundary) and contract with R88n.5. **VERIFIED (Forever 1.60.1.70707):** ClearLines resets cached left/right text for active rows, not inactive cache entries. Optional API and selected `TooltipDataHandler.ProcessInfo` preservation tests pass. PTR applicability for Retail layout facts remains INFERRED; clipping, order, nonzero extra-inset writers and clamping remain UNKNOWN.
