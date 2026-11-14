@@ -31,7 +31,13 @@ pub(crate) fn register(lua: &mut rilua::Lua) -> crate::Result<()> {
 }
 
 fn published_for_active_profile() -> bool {
-    ACTIVE == ClientProfile::Retail
+    // INFERRED for PTR/Forever: each selected ObjectiveTracker TOC loads
+    // Blizzard_AchievementObjectiveTracker.lua, whose zero-visible branch
+    // calls this same legacy global. Native verification applies only to Retail.
+    matches!(
+        ACTIVE,
+        ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
+    )
 }
 
 fn get_eligibility(state: &mut LuaState) -> LuaResult<u32> {
