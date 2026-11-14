@@ -185,16 +185,6 @@ fn push_supplied_item_interaction_line(
     state.top = saved_top;
 }
 
-/// Publish the shared item identity for a supplied unresolved conversion result.
-pub(crate) fn unresolved_item_tooltip(state: &mut LuaState) -> Val {
-    let saved_top = state.top;
-    let tooltip = empty_tooltip(state, TOOLTIP_TYPE_ITEM);
-    state.push(tooltip);
-    stamp_data_instance(state, tooltip);
-    state.top = saved_top;
-    tooltip
-}
-
 const TOOLTIP_TYPE_QUEST_PARTY_PROGRESS: f64 = 24.0;
 const LINE_TYPE_QUEST_TITLE: f64 = 17.0;
 const LINE_TYPE_PARTICIPANT_HEADING: f64 = 18.0;

@@ -11,7 +11,6 @@ use crate::lua_api::methods::{
 use crate::lua_bridge::table_set_rust_fn_static;
 pub(crate) use builders::{
     build_item_interaction_cleansing_tooltip, build_quest_party_progress_tooltip,
-    unresolved_item_tooltip,
 };
 use builders::{
     ensure_pet_info_state, get_pet_tamers_for_map, get_spell_for_pet_action, is_pet_action_passive,

@@ -7,7 +7,7 @@ use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::items::{self, ItemInfo};
 use crate::lua_api::globals::missing_surface::tooltip_info::{
     build_item_interaction_cleansing_tooltip, build_quest_party_progress_tooltip,
-    tooltip_for_item_context, tooltip_for_spell, unresolved_item_tooltip,
+    tooltip_for_item_context, tooltip_for_spell,
 };
 use crate::lua_api::methods::{borrow_state, create_string, create_table, table_set};
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
@@ -182,14 +182,14 @@ fn get_item_interaction_item(state: &mut LuaState) -> LuaResult<u32> {
             return no_values();
         };
         if output_item_id == 0 {
-            unresolved_item_tooltip(state)
-        } else {
-            let output_item = borrow_state(state)?.item_info(output_item_id).cloned();
-            let Some(output_item) = output_item else {
-                return no_values();
-            };
-            tooltip_for_item_context(state, output_item_id, Some(&output_item))
+            // NATIVE GAP (R88o.2 q1 pending): do not publish an unverified tooltip payload.
+            return no_values();
         }
+        let output_item = borrow_state(state)?.item_info(output_item_id).cloned();
+        let Some(output_item) = output_item else {
+            return no_values();
+        };
+        tooltip_for_item_context(state, output_item_id, Some(&output_item))
     };
     state.push(tooltip);
     Ok(1)
