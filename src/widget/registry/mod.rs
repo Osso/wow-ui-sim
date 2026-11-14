@@ -52,6 +52,8 @@ pub struct WidgetRegistry {
     current_dirty_source: RefCell<Option<RenderDirtySource>>,
     /// Reverse index: target_id -> set of frame IDs anchored to it.
     pub(super) anchor_dependents: FxHashMap<u64, FxHashSet<u64>>,
+    /// Retail notification/propagation order, separate from the dirty index.
+    pub(super) ordered_anchor_dependents: FxHashMap<u64, Vec<u64>>,
     /// Forward index: frame_id -> set of target IDs it is anchored to.
     pub(super) frame_anchor_targets: FxHashMap<u64, FxHashSet<u64>>,
     /// Frames with `rect_dirty = true`, for fast lookup in `ensure_layout_rects`.
@@ -103,6 +105,7 @@ impl WidgetRegistry {
                 Self::INITIAL_CAPACITY,
                 Default::default(),
             ),
+            ordered_anchor_dependents: FxHashMap::default(),
             frame_anchor_targets: FxHashMap::with_capacity_and_hasher(
                 Self::INITIAL_CAPACITY,
                 Default::default(),

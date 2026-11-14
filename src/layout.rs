@@ -425,12 +425,30 @@ pub fn compute_frame_rect_cached(
     // for the recursive leg, then the outer frame result overwrites it.
     cache.insert(id, missing_frame_layout());
 
-    let result = registry
-        .get(id)
-        .map(|frame| {
-            resolve_uncached_frame_layout(registry, id, frame, screen_width, screen_height, cache)
-        })
-        .unwrap_or_else(missing_frame_layout);
+    let result = if id == crate::widget::clamp_geometry::COORDINATE_ROOT as u64
+        && crate::widget::clamp_geometry::uses_retail_clamp_producers()
+    {
+        CachedFrameLayout {
+            rect: full_screen_rect(screen_width, screen_height),
+            rect_valid: true,
+            anchor_invalidated: false,
+            eff_scale: 1.0,
+        }
+    } else {
+        registry
+            .get(id)
+            .map(|frame| {
+                resolve_uncached_frame_layout(
+                    registry,
+                    id,
+                    frame,
+                    screen_width,
+                    screen_height,
+                    cache,
+                )
+            })
+            .unwrap_or_else(missing_frame_layout)
+    };
 
     cache_layout_result(cache, id, result)
 }

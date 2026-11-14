@@ -420,7 +420,8 @@ pub(crate) fn build_cursor_anchor(
         return Anchor {
             point,
             relative_to: None,
-            relative_to_id: None,
+            relative_to_id: crate::widget::clamp_geometry::uses_retail_clamp_producers()
+                .then_some(crate::widget::clamp_geometry::COORDINATE_ROOT),
             relative_point: AnchorPoint::BottomLeft,
             x_offset: mx / scale + x_offset,
             y_offset: (screen_height - my) / scale + y_offset,
