@@ -1,3 +1,7 @@
+## [2026-11-14] investigation | Retail quest tooltip consumers
+
+[Consumer selection and RED proof](investigations/consumer-selection-and-red-proof.md#retail-quest-tooltip-consumers-and-supplied-party-progress) links the [Round 7 getter contract](../specs/tooltip-r7-getters.md), the selected Retail consumers, R88n.1 miss results and the host-supplied party-progress boundary.
+
 ## [2026-11-14] fix | Original character and store lifecycle ownership
 
 [Lua-owned fallback retirement](investigations/lua-owned-fallback-retirement.md#j-original-character-labels-and-titles) records the separately proved Retail CharacterFrame bridge and StoreUI escape guard removals, real equipment/reopen/attribute consumers, and unchanged non-Retail/native-unknown boundaries.

@@ -4,7 +4,9 @@
 use crate::c_api::tooltip_getter_args;
 use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::items::{self, ItemInfo};
-use crate::lua_api::globals::missing_surface::tooltip_info::tooltip_for_item_context;
+use crate::lua_api::globals::missing_surface::tooltip_info::{
+    build_quest_party_progress_tooltip, tooltip_for_item_context,
+};
 use crate::lua_api::methods::{borrow_state, create_string, table_set};
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::vm::gc::arena::GcRef;
@@ -148,18 +150,41 @@ fn get_possession(state: &mut LuaState) -> LuaResult<u32> {
 
 fn get_quest_log_special_item(state: &mut LuaState) -> LuaResult<u32> {
     let _quest_index = tooltip_getter_args::round7_signed(state, 1, QUEST_SPECIAL_USAGE)?;
-    // Quest-log special items require the native player's item-object relation;
-    // quest_log_entries alone is not an equivalent selector.
+    // QuestLogEntry has no special-item relation, and the simulator has no
+    // player item-object lookup equivalent to the native object store.
     no_values()
 }
 
 fn get_quest_party_progress(state: &mut LuaState) -> LuaResult<u32> {
-    let _quest_id = tooltip_getter_args::round7_signed(state, 1, QUEST_PARTY_USAGE)?;
-    let _omit_title = tooltip_getter_args::round7_optional_bool(state, 2, QUEST_PARTY_USAGE)?;
-    let _ignore_active_player =
+    // Retail TooltipInfoDocumentation.lua:833; only the Retail 70688
+    // populated output is evidenced for this implementation.
+    let quest_id = tooltip_getter_args::round7_signed(state, 1, QUEST_PARTY_USAGE)?;
+    let omit_title = tooltip_getter_args::round7_optional_bool(state, 2, QUEST_PARTY_USAGE)?;
+    let ignore_active_player =
         tooltip_getter_args::round7_optional_bool(state, 3, QUEST_PARTY_USAGE)?;
-    // There is no quest-progress service or party objective snapshot model.
-    no_values()
+    if ACTIVE != ClientProfile::Retail {
+        return no_values();
+    }
+    let snapshot = borrow_state(state)?
+        .quest_log_entries
+        .party_progress
+        .get(&quest_id)
+        .cloned();
+    let Some(snapshot) = snapshot else {
+        return no_values();
+    };
+    let Some(data) = build_quest_party_progress_tooltip(
+        state,
+        quest_id,
+        omit_title,
+        ignore_active_player,
+        &snapshot,
+    )?
+    else {
+        return no_values();
+    };
+    state.push(data);
+    Ok(1)
 }
 
 fn get_recipe_rank_info(state: &mut LuaState) -> LuaResult<u32> {

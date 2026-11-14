@@ -142,6 +142,101 @@ pub(super) fn empty_tooltip(state: &mut LuaState, tooltip_type: f64) -> Val {
     tooltip
 }
 
+/// WM94: build the verified party-progress line shapes from an explicit host snapshot.
+pub(crate) fn build_quest_party_progress_tooltip(
+    state: &mut LuaState,
+    quest_id: i32,
+    omit_title: bool,
+    ignore_active_player: bool,
+    snapshot: &crate::c_api::quest_party_progress::QuestPartyProgressSnapshot,
+) -> LuaResult<Option<Val>> {
+    let has_title = !omit_title && snapshot.title.is_some();
+    let has_participant_rows = snapshot.participants.iter().any(|participant| {
+        let included = !ignore_active_player || !participant.exclude_when_ignoring_active_player;
+        included && (participant.heading.is_some() || !participant.rows.is_empty())
+    });
+    if !has_title && !has_participant_rows {
+        return Ok(None);
+    }
+
+    let saved_top = state.top;
+    let tooltip = empty_tooltip(state, 24.0);
+    state.push(tooltip);
+    table_set(state, tooltip, "id", Val::Num(f64::from(quest_id)));
+    stamp_data_instance(state, tooltip);
+    let lines = table_get(state, tooltip, "lines");
+    let mut index = 1;
+
+    if !omit_title {
+        if let Some(title) = &snapshot.title {
+            let line = push_tooltip_line(
+                state,
+                lines,
+                index,
+                17.0,
+                &title.text,
+                Some(title.color),
+                false,
+            );
+            table_set(state, line, "id", Val::Num(f64::from(quest_id)));
+            index += 1;
+        }
+    }
+
+    for participant in &snapshot.participants {
+        if ignore_active_player && participant.exclude_when_ignoring_active_player {
+            continue;
+        }
+        if let Some(heading) = &participant.heading {
+            let line = push_tooltip_line(
+                state,
+                lines,
+                index,
+                18.0,
+                &heading.name,
+                Some(heading.color),
+                false,
+            );
+            let guid = create_string(state, &heading.guid);
+            table_set(state, line, "guid", guid);
+            index += 1;
+        }
+        for row in &participant.rows {
+            let line =
+                push_tooltip_line(state, lines, index, 8.0, &row.text, Some(row.color), false);
+            table_set(state, line, "completed", Val::Bool(row.completed));
+            if let Some(num_required) = row.num_required {
+                table_set(
+                    state,
+                    line,
+                    "numRequired",
+                    Val::Num(f64::from(num_required)),
+                );
+            }
+            if let Some(num_fulfilled) = row.num_fulfilled {
+                table_set(
+                    state,
+                    line,
+                    "numFulfilled",
+                    Val::Num(f64::from(num_fulfilled)),
+                );
+            }
+            if let Some(progress_bar_percent) = row.progress_bar_percent {
+                table_set(
+                    state,
+                    line,
+                    "progressBarPercent",
+                    Val::Num(progress_bar_percent),
+                );
+            }
+            index += 1;
+        }
+    }
+
+    state.top = saved_top;
+    Ok(Some(tooltip))
+}
+
 /// WM94: totems have two plain lines and identity type 18 with zero native ID.
 pub(super) fn tooltip_for_totem_text(
     state: &mut LuaState,

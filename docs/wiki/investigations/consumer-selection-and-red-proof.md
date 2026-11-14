@@ -32,6 +32,18 @@ The unchanged `cf2_pvp_completion` selector invokes the normal XML-created frame
 
 This is static staging, not observed RED/GREEN or runtime selection proof. Historical PTR cache evidence predates the current 12.1.7 pin. Future PTR execution must first synchronize and verify a lane-private matching cache and use it in every phase; old cache evidence cannot establish current PTR selection. See the contract for bounded native gaps and the handoff for source-bound replay.
 
+## Retail quest tooltip consumers and supplied party progress
+
+**VERIFIED (Retail 12.1.5 cache and selected TOCs):** `Blizzard_ObjectiveTracker.toc:10,35` loads `Blizzard_ObjectiveTrackerShared.lua` and `Blizzard_QuestObjectiveTracker.lua`; the original item-button `OnEnter` at `Blizzard_ObjectiveTrackerShared.lua:88-91` calls `SetQuestLogSpecialItem`, and `QuestObjectiveTrackerMixin:OnBlockHeaderEnter` at `Blizzard_QuestObjectiveTracker.lua:116-121` calls `SetQuestPartyProgress`. `Blizzard_UIPanels_Game_Mainline.toc:75` selects `Mainline/QuestMapFrame.lua`, whose original call at line 2198 also uses `SetQuestPartyProgress`. `TooltipDataHandler.lua:536,589` maps these setters to `GetQuestLogSpecialItem` and `GetQuestPartyProgress`; the pinned declarations are `TooltipInfoDocumentation.lua:817,833`.
+
+**VERIFIED (runtime fixture):** `tests/tooltip_quest_party_progress.rs` loads the discovered `Blizzard_ObjectiveTracker` dependency closure, checks the loaded original function sources, and invokes the original header hover and `GameTooltip` accessors. The initial producer-only RED run on test-seam commit `00ce7a683` listed one exact test per selector and failed because the current party-progress getter returned zero values. The red transcripts and CVar hashes are in the lane handoff evidence.
+
+**VERIFIED (Retail 12.1.5.70688, WM94/R88n.1):** successful party-progress data uses top-level type 24 and quest ID; the optional title row has type 17 and the quest ID; supplied participant headings use type 18 with GUID; status/objective rows use type 8 with `completed`, with optional objective counts and progress percentage. Missing-source and failed-producer paths return exactly zero Lua values.
+
+**VERIFIED (repository):** `QuestPartyProgressSnapshot` is empty by default. The host supplies title, participant headings, row content, colors and the participant marker consumed by `ignoreActivePlayer`; the simulator does not derive a party-progress tree, objective state or active-player identity. The shared tooltip builder serializes the supplied data. **UNKNOWN:** getter-specific native D56 color/instance parity is not separately proved.
+
+**UNKNOWN (R88n.3 pending):** native state writers and the exact participant classification remain unavailable. **VERIFIED (repository):** `GetQuestLogSpecialItem` has no modeled quest-to-item object relation or player item-object store, so its verified zero-value missing-source behavior remains, with no populated path; the original item hover is preservation, not producer RED.
+
 ## Applicable registration and standalone RED
 
 Register consumer tests only on evidenced applicable profiles, using the established file-level `#![cfg(any(feature = "client-…"))]` pattern or `post_wrath_ui_fixture!` when its six non-Wrath profiles match the consumer. The macro is defined in `tests/common/profile_fixtures.rs`; it is not a universal applicability predicate. Never return success at runtime for an inapplicable profile: libtest reports a vacuous PASS, even if stderr says N/A.

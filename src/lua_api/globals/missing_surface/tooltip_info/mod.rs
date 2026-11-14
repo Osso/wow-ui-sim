@@ -9,6 +9,7 @@ use crate::lua_api::methods::{
     call_function_state, create_string, table_get, table_set, val_to_string,
 };
 use crate::lua_bridge::table_set_rust_fn_static;
+pub(crate) use builders::build_quest_party_progress_tooltip;
 use builders::{
     ensure_pet_info_state, get_pet_tamers_for_map, get_spell_for_pet_action, is_pet_action_passive,
 };
