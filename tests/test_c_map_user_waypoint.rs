@@ -59,8 +59,13 @@ pub(crate) fn world_map_provider_sets_and_refreshes_user_waypoint(env: &WowLuaEn
     {
         let mut state = env.state().borrow_mut();
         state.super_track.quest_id = Some(77);
+        state.super_track.quest_tracking = true;
         state.super_track.content = Some((0, 101));
+        state.super_track.content_saved = (0, 101);
+        state.super_track.content_tracking = true;
         state.super_track.map_pin = Some((0, 201));
+        state.super_track.map_pin_saved = (0, 201);
+        state.super_track.map_pin_tracking = true;
         state.super_track.vignette = Some("Vignette-fixture-1".into());
         state.super_track.corpse = true;
     }
@@ -82,6 +87,9 @@ pub(crate) fn world_map_provider_sets_and_refreshes_user_waypoint(env: &WowLuaEn
         C_SuperTrack.SetSuperTrackedUserWaypoint(true)
         assert(C_SuperTrack.IsSuperTrackingUserWaypoint() == false,
             "true without a valid waypoint must leave the flag false")
+        assert(C_SuperTrack.IsSuperTrackingQuest() == true)
+        assert(C_SuperTrack.IsSuperTrackingContent() == true)
+        assert(C_SuperTrack.IsSuperTrackingMapPin() == true)
 
         provider:HandleClick()
         point = C_Map.GetUserWaypoint()
@@ -105,6 +113,9 @@ pub(crate) fn world_map_provider_sets_and_refreshes_user_waypoint(env: &WowLuaEn
         assert(select('#', C_SuperTrack.GetSuperTrackedContent()) == 0)
         assert(select('#', C_SuperTrack.GetSuperTrackedMapPin()) == 0)
         assert(C_SuperTrack.GetSuperTrackedVignette() == nil)
+        assert(C_SuperTrack.IsSuperTrackingQuest() == false)
+        assert(C_SuperTrack.IsSuperTrackingContent() == false)
+        assert(C_SuperTrack.IsSuperTrackingMapPin() == false)
         assert(C_SuperTrack.IsSuperTrackingCorpse() == true,
             "the original corpse-tracking flag must survive waypoint selection")
         assert(C_SuperTrack.IsSuperTrackingAnything() == true)
@@ -115,6 +126,9 @@ pub(crate) fn world_map_provider_sets_and_refreshes_user_waypoint(env: &WowLuaEn
         __assert_user_waypoint(point, 2248, 0.25, 0.75, nil)
 
         C_SuperTrack.SetSuperTrackedQuestID(78)
+        assert(C_SuperTrack.IsSuperTrackingQuest() == true)
+        assert(C_SuperTrack.IsSuperTrackingContent() == false)
+        assert(C_SuperTrack.IsSuperTrackingMapPin() == false)
         local changesBeforeNoOp = changes
         assert(select('#', C_SuperTrack.SetSuperTrackedUserWaypoint(true)) == 0)
         assert(changes == changesBeforeNoOp)
@@ -136,6 +150,9 @@ pub(crate) fn world_map_provider_sets_and_refreshes_user_waypoint(env: &WowLuaEn
 
         C_SuperTrack.ClearAllSuperTracked()
         assert(C_SuperTrack.IsSuperTrackingUserWaypoint() == false)
+        assert(C_SuperTrack.IsSuperTrackingQuest() == false)
+        assert(C_SuperTrack.IsSuperTrackingContent() == false)
+        assert(C_SuperTrack.IsSuperTrackingMapPin() == false)
         assert(C_SuperTrack.IsSuperTrackingCorpse() == false)
         assert(C_SuperTrack.IsSuperTrackingAnything() == false)
         __assert_user_waypoint(C_Map.GetUserWaypoint(), 2248, 0.25, 0.75, nil)
