@@ -53,7 +53,6 @@ end
 
 if rawget(_G, "GetCallPetSpellInfo") == nil then
     function GetCallPetSpellInfo(_spellID)
-        return nil, nil
     end
 end
 "#;
