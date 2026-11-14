@@ -152,7 +152,7 @@ const CREATE_SECURE_REPLAY_ENV_LUA: &str = r##"
         end,
     })
     return replayEnv
-\t"##;
+    "##;
 
 pub(crate) fn secure_env_table(
     state: &mut LuaState,
