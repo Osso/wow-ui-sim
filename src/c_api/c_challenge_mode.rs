@@ -14,11 +14,11 @@ use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 use std::collections::{BTreeMap, BTreeSet};
 
+mod inferred;
+
 const CHALLENGE_MAP_ITEM_MODIFIER_ID: u32 = 17;
 const UNSPECIFIED_CHALLENGE_MODE_ID: u32 = 0;
 const ABSENT_CURRENT_MAP_ID: u32 = 0;
-/// INFERRED simulator cursor projection for one selected Keystone item.
-const KEYSTONE_CURSOR_STACK_COUNT: i32 = 1;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum KeystoneLocation {
@@ -324,40 +324,26 @@ fn stage_removed_keystone_cursor(
     }
 
     crate::lua_api::globals::real::cursor_model::clear_retaining_equip_lock(state)?;
-    if !has_nonzero_guid_category(guid) {
+    if !inferred::inferred_guid_category_is_nonzero(guid) {
         return Ok(());
     }
-    let (Some(item_id), Some(origin)) =
-        (selected_item_id, selected_cursor_origin(selected_location))
-    else {
+    let (Some(item_id), Some(origin)) = (
+        selected_item_id,
+        inferred::inferred_selected_bag_cursor_origin(selected_location),
+    ) else {
         return Ok(());
     };
 
-    // INFERRED simulator projection: the selected bag location stands for the
-    // native associated GUID; its full identity and cursor source mode are unknown.
     crate::lua_api::globals::real::cursor_model::place(
         state,
         CursorInfo::Item {
             owned_identity: None,
             item_id,
-            stack_count: KEYSTONE_CURSOR_STACK_COUNT,
+            stack_count: inferred::inferred_keystone_cursor_stack_count(),
             origin,
             applied_transmog: None,
         },
     )
-}
-
-fn has_nonzero_guid_category(guid: &str) -> bool {
-    // INFERRED simulator representation: Item is nonzero; a leading 0 is zero.
-    guid.split_once('-')
-        .is_some_and(|(category, _)| !category.is_empty() && category != "0")
-}
-
-fn selected_cursor_origin(location: Option<KeystoneLocation>) -> Option<CursorItemOrigin> {
-    match location {
-        Some(KeystoneLocation::Bag(bag, slot)) => Some(CursorItemOrigin::Bag { bag, slot }),
-        _ => None,
-    }
 }
 
 fn item_slot(location: KeystoneLocation) -> ItemSlot {

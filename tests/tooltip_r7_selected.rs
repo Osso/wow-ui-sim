@@ -117,6 +117,7 @@ fn register_keystone_event_probe(env: &WowLuaEnv) {
     .unwrap();
 }
 
+// INFERRED fixture: this bag cursor stands in for native item/source GUID fields.
 fn slot_keystone_from_bag(env: &WowLuaEnv, slot: u32, item_id: u32) -> String {
     let guid = add_bag_item(env, 0, slot, item_id);
     {
@@ -327,6 +328,7 @@ fn possession_original_action_bar_hover_uses_the_supplied_spell() {
     }
 }
 
+// INFERRED model coverage: selection uses the simulator's bag-cursor projection.
 #[test]
 fn challenges_ui_hover_uses_public_keystone_selection() {
     for (slot, item_id) in [(3, 180_653), (4, 158_923)] {
@@ -361,6 +363,7 @@ fn challenges_ui_hover_uses_public_keystone_selection() {
     }
 }
 
+// INFERRED model coverage: selection uses the simulator's bag-cursor projection.
 #[test]
 fn slot_keystone_notifies_after_selection_state() {
     for (slot, item_id) in [(3, 180_653), (4, 158_923)] {
@@ -385,6 +388,7 @@ fn slot_keystone_notifies_after_selection_state() {
     }
 }
 
+// SUPPLEMENTARY, INFERRED model coverage: this constructs the simulator's bag cursor directly.
 #[test]
 fn slot_keystone_leaves_unresolved_cursor_untouched() {
     let env = tooltip_full_env_helpers::load_full_env_without_post_load();
@@ -411,6 +415,7 @@ fn slot_keystone_leaves_unresolved_cursor_untouched() {
     .unwrap();
 }
 
+// SUPPLEMENTARY, INFERRED model coverage: this is rejection-only and uses the context proxy.
 #[test]
 fn slot_keystone_rejects_unmatched_or_missing_inputs_before_publication() {
     let cases = [
@@ -469,6 +474,7 @@ fn slot_keystone_rejects_unmatched_or_missing_inputs_before_publication() {
     }
 }
 
+// SUPPLEMENTARY, INFERRED model coverage: one positive case cannot reject fixed staged output.
 #[test]
 fn remove_keystone_stages_item_for_nonzero_guid_category() {
     let env = tooltip_full_env_helpers::load_full_env_without_post_load();
@@ -485,33 +491,63 @@ fn remove_keystone_stages_item_for_nonzero_guid_category() {
     .unwrap();
 }
 
+// INFERRED model coverage: both GUID strings, staged count and bag origin are simulator projections.
 #[test]
 fn remove_keystone_zero_category_clears_cursor_without_staging() {
-    let env = tooltip_full_env_helpers::load_full_env_without_post_load();
-    env.exec(
-        r##"
-        A_Admin.AddBagItem(0, 4, 6948, 1)
-        C_Container.PickupContainerItem(0, 4)
-        assert(select(2, GetCursorInfo()) == 6948)
-        "##,
-    )
-    .unwrap();
-    {
-        let mut sim = env.state().borrow_mut();
-        // Nonempty selection with a zero GUID category reaches the helper guard.
-        sim.keystone.selected_guid = Some("0-0-0-158923".to_string());
-        sim.keystone.cursor_stage_permission = Some(true);
+    for (selected_guid, should_stage) in [("0-0-0-158923", false), ("Item-0-3-158923", true)] {
+        let env = tooltip_full_env_helpers::load_full_env_without_post_load();
+        env.exec(
+            r##"
+            A_Admin.AddBagItem(0, 3, 158923, 1)
+            A_Admin.AddBagItem(0, 4, 6948, 1)
+            C_Container.PickupContainerItem(0, 4)
+            "##,
+        )
+        .unwrap();
+        {
+            let mut sim = env.state().borrow_mut();
+            sim.keystone.selected_guid = Some(selected_guid.to_string());
+            sim.keystone.selected_item_id = Some(158_923);
+            sim.keystone.selected_location = Some(KeystoneLocation::Bag(0, 3));
+            sim.keystone.cursor_stage_permission = Some(true);
+            sim.player.present = true;
+        }
+        env.exec(
+            r##"
+            local kind, itemID = GetCursorInfo()
+            assert(kind == "item" and itemID == 6948)
+            assert(C_ChallengeMode.RemoveKeystone())
+            assert(not C_ChallengeMode.HasSlottedKeystone())
+            "##,
+        )
+        .unwrap();
+
+        if should_stage {
+            env.exec(
+                r##"
+                local kind, itemID = GetCursorInfo()
+                assert(kind == "item" and itemID == 158923)
+                "##,
+            )
+            .unwrap();
+            let staged_cursor = env.state().borrow().cursor_item.clone();
+            assert!(matches!(
+                staged_cursor,
+                Some(CursorInfo::Item {
+                    item_id: 158_923,
+                    stack_count: 1,
+                    origin: CursorItemOrigin::Bag { bag: 0, slot: 3 },
+                    ..
+                })
+            ));
+        } else {
+            env.exec("assert(GetCursorInfo() == nil)").unwrap();
+            assert!(env.state().borrow().cursor_item.is_none());
+        }
     }
-    env.exec(
-        r##"
-        assert(C_ChallengeMode.RemoveKeystone())
-        assert(not C_ChallengeMode.HasSlottedKeystone())
-        assert(GetCursorInfo() == nil)
-        "##,
-    )
-    .unwrap();
 }
 
+// SUPPLEMENTARY, INFERRED model coverage: all combinations deny through the context/permission proxies.
 #[test]
 fn remove_keystone_stage_gate_denial_preserves_cursor_and_clears_selection() {
     for (permission, context_present) in [(None, true), (Some(false), true), (Some(true), false)] {
@@ -541,6 +577,7 @@ fn remove_keystone_stage_gate_denial_preserves_cursor_and_clears_selection() {
     }
 }
 
+// SUPPLEMENTARY: the empty-selection path does not exercise nonempty staging.
 #[test]
 fn remove_keystone_without_selection_preserves_cursor() {
     let env = tooltip_full_env_helpers::load_full_env_without_post_load();
