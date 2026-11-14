@@ -2,6 +2,10 @@
 
 [Achievement eligibility](../specs/achievement-eligibility.md) records R88o.1's Retail argument/Boolean contract, missing record/group versus null tree, and supplied cache comparisons. Original tracker #6 uses the zero-visible branch; positive visible counts use a different per-criterion getter. PTR/Forever binding is inferred from their selected original Lua. New simulator input stays empty by default; no event substitutes or live cache writer claims.
 
+## [2026-11-14] investigation | Screen-clamp state and evidence gaps
+
+[Screen-clamp suppression](investigations/screen-clamp-suppression.md) records the pre-edit R88n.5r-q1/q2 gap table, unambiguous model corrections, and pending native propagation/unit/notification questions. No movement-to-suppression alias is inferred.
+
 ## [2026-11-14] correction | Inventory name-adapter evidence
 
 [Inventory/purchase getters](investigations/inventory-purchase-getters.md) separates the INFERRED one-based host slot-name adapter from VERIFIED numeric/packing tests. Retail publications use ACTIVE profile checks; state comments and GUID-kind predicate documentation are corrected.

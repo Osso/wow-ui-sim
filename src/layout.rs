@@ -701,12 +701,7 @@ fn maybe_clamp_frame_rect(
 }
 
 fn should_clamp_frame_to_screen(frame: &crate::widget::Frame) -> bool {
-    frame.clamped_to_screen && !screen_clamping_suppressed()
-}
-
-/// R88n.5r-q1 has not identified the native suppression state. Keep this seam neutral.
-fn screen_clamping_suppressed() -> bool {
-    false
+    frame.effective_screen_clamp()
 }
 
 pub fn compute_frame_rect(
@@ -731,7 +726,9 @@ fn clamp_rect_to_screen(
     let top_edge = top * effective_scale;
     let bottom_edge = screen_h + bottom * effective_scale;
 
-    if rect.width >= screen_w {
+    if rect.width >= screen_w
+        && crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail
+    {
         rect.x = 0.0;
     } else {
         if rect.x < left_edge {
@@ -742,7 +739,9 @@ fn clamp_rect_to_screen(
         }
     }
 
-    if rect.height >= screen_h {
+    if rect.height >= screen_h
+        && crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail
+    {
         rect.y = 0.0;
     } else {
         // Native checks the bottom boundary before the top boundary.

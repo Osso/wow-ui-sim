@@ -619,6 +619,7 @@ fn blizzard_game_tooltip_main_tooltip_uses_uiparent_with_tooltip_strata(env: &Wo
 #[cfg(feature = "optional-tests")]
 prefork_full_ui_case! {
 fn retail_game_tooltip_default_anchor_clamps_with_scaled_insets(env: &WowLuaEnv) {
+    env.exec("assert(debug.getinfo(GameTooltip_SetDefaultAnchor,'S').source:find('SharedTooltipTemplates.lua',1,true))").unwrap();
     let original_consumer: (bool, bool) = env
         .eval(
             "return C_AddOns.IsAddOnLoaded('Blizzard_SharedXML'), \
@@ -720,4 +721,30 @@ fn retail_game_tooltip_preserves_shared_nineslice() {
             .iter()
             .any(|error| error.contains("SharedTooltipTemplates.lua"))
     );
+}
+
+#[cfg(all(feature = "client-retail", feature = "optional-tests"))]
+prefork_full_ui_case! {
+fn retail_original_tooltip_oversize_pins_later_edges(env: &WowLuaEnv) {
+    env.exec(r#"
+        assert(C_AddOns.IsAddOnLoaded('Blizzard_SharedXML'))
+        assert(debug.getinfo(GameTooltip_SetDefaultAnchor,'S').source:find('SharedTooltipTemplates.lua',1,true))
+        GameTooltipDefaultContainer:SetClampedToScreen(false)
+        GameTooltipDefaultContainer:ClearAllPoints()
+        GameTooltipDefaultContainer:SetPoint('TOPLEFT',UIParent,'TOPLEFT',-20,20)
+        GameTooltip:SetScale(2)
+        GameTooltip:SetClampedToScreen(true)
+        GameTooltip:SetClampRectInsets(4,6,8,10)
+        local previousLeft
+        for _,width in ipairs({800,900}) do
+            GameTooltip:SetSize(width,600)
+            GameTooltip_SetDefaultAnchor(GameTooltip,UIParent)
+            local left,bottom,w,h=GameTooltip:GetBoundsRect()
+            assert(w==width and h==600)
+            assert(left==506-width and bottom==-224, tostring(left)..','..tostring(bottom))
+            assert(left~=previousLeft, 'constant/no-op oversize producer')
+            previousLeft=left
+        end
+    "#).unwrap();
+}
 }
