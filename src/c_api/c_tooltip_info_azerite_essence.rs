@@ -12,7 +12,10 @@ use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::globals::missing_surface::tooltip_info::{
     append_line, append_spell_to_tooltip, compose_tooltip, item_quality_color,
 };
-use crate::lua_api::methods::{borrow_state, call_function_state, create_string, val_to_string};
+use crate::lua_api::methods::{
+    borrow_state, call_function_state, create_string, table_set, val_to_string,
+};
+use crate::lua_api::state::RACE_DATA;
 use crate::lua_bridge::table_set_rust_fn_static;
 use rilua::vm::{gc::arena::GcRef, state::LuaState, table::Table};
 use rilua::{LuaResult, Val};
@@ -46,8 +49,19 @@ fn get_azerite_essence(state: &mut LuaState) -> LuaResult<u32> {
     let Some(essence) = essence_record(essence_id) else {
         return no_values();
     };
-    let Some(rank) = selected_rank(state, essence_id, requested_rank) else {
+    let Some((source_rank, rank)) = selected_ranks(state, essence_id, requested_rank) else {
         return no_values();
+    };
+    let Some(next_rank) = source_rank.checked_add(1) else {
+        return no_values();
+    };
+    let source_stage = if next_rank == 4 {
+        None
+    } else {
+        let Some(power) = power_record(essence_id, next_rank) else {
+            return no_values();
+        };
+        Some((next_rank, power))
     };
     let Some(rank_one_power) = power_record(essence_id, 1) else {
         return no_values();
@@ -79,6 +93,7 @@ fn get_azerite_essence(state: &mut LuaState) -> LuaResult<u32> {
         Some((essence.name, rank)),
         Some(main_spell),
         passive_spell,
+        source_stage,
     )
 }
 
@@ -95,7 +110,7 @@ fn get_azerite_essence_slot(state: &mut LuaState) -> LuaResult<u32> {
     let Some(essence_id) = active_essence_for_slot(state, i32::from(slot)) else {
         return no_values();
     };
-    let Some(rank) = selected_rank(state, essence_id, None) else {
+    let Some((_, rank)) = selected_ranks(state, essence_id, None) else {
         return no_values();
     };
     let Some(_essence) = essence_record(essence_id) else {
@@ -118,7 +133,7 @@ fn get_azerite_essence_slot(state: &mut LuaState) -> LuaResult<u32> {
         rank_one_power,
         AzeriteEssenceSpellSelector::MinorDescription,
     );
-    publish_essence_tooltip(state, essence_id, None, main_spell, passive_spell)
+    publish_essence_tooltip(state, essence_id, None, main_spell, passive_spell, None)
 }
 
 fn publish_essence_tooltip(
@@ -127,6 +142,7 @@ fn publish_essence_tooltip(
     heading: Option<(&str, u32)>,
     main_spell: Option<u32>,
     passive_spell: u32,
+    source_stage: Option<(u32, &'static AzeriteEssencePowerRecord)>,
 ) -> LuaResult<u32> {
     let tooltip = compose_tooltip(
         state,
@@ -155,6 +171,11 @@ fn publish_essence_tooltip(
     }
     if let Err(error) = append_spell_to_tooltip(state, tooltip, passive_spell) {
         return failed_producer(state, error);
+    }
+    if let Some((next_rank, power)) = source_stage {
+        if let Err(error) = append_source_lines(state, tooltip, next_rank, power) {
+            return failed_producer(state, error);
+        }
     }
     state.push(tooltip);
     Ok(1)
@@ -191,11 +212,12 @@ fn power_record(essence_id: i32, rank: u32) -> Option<&'static AzeriteEssencePow
     AZERITE_ESSENCE_POWERS.get(index)
 }
 
-fn selected_rank(state: &LuaState, essence_id: i32, requested: Option<u32>) -> Option<u32> {
-    match requested {
-        Some(rank) => Some(rank.max(1)),
-        None => player_rank_or_list_miss(state, essence_id),
-    }
+fn selected_ranks(state: &LuaState, essence_id: i32, requested: Option<u32>) -> Option<(u32, u32)> {
+    let source_rank = match requested {
+        Some(rank) => rank,
+        None => player_rank_or_list_miss(state, essence_id)?,
+    };
+    Some((source_rank, source_rank.max(1)))
 }
 
 fn player_rank_or_list_miss(state: &LuaState, essence_id: i32) -> Option<u32> {
@@ -205,7 +227,56 @@ fn player_rank_or_list_miss(state: &LuaState, essence_id: i32) -> Option<u32> {
         return None;
     }
     let rank = essences.get(&essence_id).map_or(0, |essence| essence.rank);
-    Some(u32::try_from(rank).ok()?.max(1))
+    u32::try_from(rank).ok()
+}
+
+// R88n.2 does not establish the order of inline power rows or the gray selector.
+fn append_source_lines(
+    state: &mut LuaState,
+    tooltip: Val,
+    next_rank: u32,
+    power: &AzeriteEssencePowerRecord,
+) -> LuaResult<()> {
+    let Some(source) = source_for_current_faction(state, power) else {
+        return Ok(());
+    };
+    if source.is_empty() {
+        return Ok(());
+    }
+
+    let heading_key = if next_rank == 1 {
+        "SOURCE"
+    } else {
+        "TOOLTIP_TALENT_NEXT_RANK"
+    };
+    let heading_value = crate::c_api::global_val(state, heading_key);
+    let heading = val_to_string(state, heading_value).ok_or_else(|| {
+        rilua::runtime_error(format!(
+            "localized Azerite source heading {heading_key} returned no text"
+        ))
+    })?;
+    append_line(state, tooltip, LINE_TYPE_ESSENCE_HEADING, &heading, None);
+    let source_line = append_line(state, tooltip, LINE_TYPE_ESSENCE_HEADING, source, None);
+    table_set(state, source_line, "wrapText", Val::Bool(true));
+    Ok(())
+}
+
+// INFERRED: map the modeled race faction to the matching DB2 source column.
+// R88n.2 does not identify this selector or define missing-source behavior.
+fn source_for_current_faction(
+    state: &LuaState,
+    power: &AzeriteEssencePowerRecord,
+) -> Option<&'static str> {
+    let sim = borrow_state(state).ok()?;
+    if !sim.player.present {
+        return None;
+    }
+    let (_, _, faction) = RACE_DATA.get(sim.player.race_index)?;
+    match *faction {
+        "Alliance" => Some(power.source_alliance),
+        "Horde" => Some(power.source_horde),
+        _ => None,
+    }
 }
 
 fn active_slot_roles(state: &LuaState, essence_id: i32) -> LuaResult<(bool, bool)> {

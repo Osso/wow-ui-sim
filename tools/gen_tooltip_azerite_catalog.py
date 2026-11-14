@@ -16,6 +16,8 @@ ESSENCE_COLUMNS = ("ID", "Name_lang")
 POWER_COLUMNS = (
     "AzeriteEssenceID",
     "Tier",
+    "SourceAlliance_lang",
+    "SourceHorde_lang",
     "MajorPowerDescription",
     "MinorPowerDescription",
     "MajorPowerActual",
@@ -83,6 +85,8 @@ def generate():
         (
             read_integer(row, "AzeriteEssencePower", "AzeriteEssenceID"),
             read_integer(row, "AzeriteEssencePower", "Tier"),
+            row["SourceAlliance_lang"],
+            row["SourceHorde_lang"],
             read_integer(row, "AzeriteEssencePower", "MajorPowerDescription"),
             read_integer(row, "AzeriteEssencePower", "MinorPowerDescription"),
             read_integer(row, "AzeriteEssencePower", "MajorPowerActual"),
@@ -102,7 +106,8 @@ def generate():
         "//! Generated Azerite Essence tooltip catalog. Do not edit manually.",
         "//! Regenerate with `python3 tools/gen_tooltip_azerite_catalog.py`.",
         f"//! Source: Wago DB2 exact-build CSV exports for Retail {BUILD} ({LOCALE}).",
-        "//! Spell fields retain their DB2 column names; selector mapping is separate.",
+        "//! DB2 spell and source fields retain their names; selector mappings are separate.",
+        "//! The source faction selector is INFERRED from modeled player faction.",
         f"//! AzeriteEssence.csv SHA-256: {hashlib.sha256(essence_path.read_bytes()).hexdigest()}.",
         f"//! AzeriteEssencePower.csv SHA-256: {hashlib.sha256(power_path.read_bytes()).hexdigest()}.",
         "",
@@ -131,6 +136,8 @@ def generate():
             "pub(crate) struct AzeriteEssencePowerRecord {",
             "    pub(crate) essence_id: u32,",
             "    pub(crate) rank: u32,",
+            "    pub(crate) source_alliance: &'static str,",
+            "    pub(crate) source_horde: &'static str,",
             "    pub(crate) major_power_description: u32,",
             "    pub(crate) minor_power_description: u32,",
             "    pub(crate) major_power_actual: u32,",
@@ -140,12 +147,23 @@ def generate():
             "pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[",
         ]
     )
-    for essence_id, rank, major_description, minor_description, major_actual, minor_actual in powers:
+    for (
+        essence_id,
+        rank,
+        source_alliance,
+        source_horde,
+        major_description,
+        minor_description,
+        major_actual,
+        minor_actual,
+    ) in powers:
         lines.extend(
             [
                 "    AzeriteEssencePowerRecord {",
                 f"        essence_id: {essence_id},",
                 f"        rank: {rank},",
+                f"        source_alliance: {rust_string(source_alliance)},",
+                f"        source_horde: {rust_string(source_horde)},",
                 f"        major_power_description: {major_description},",
                 f"        minor_power_description: {minor_description},",
                 f"        major_power_actual: {major_actual},",

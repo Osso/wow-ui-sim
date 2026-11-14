@@ -1,7 +1,8 @@
 //! Generated Azerite Essence tooltip catalog. Do not edit manually.
 //! Regenerate with `python3 tools/gen_tooltip_azerite_catalog.py`.
 //! Source: Wago DB2 exact-build CSV exports for Retail 12.1.5.70391 (enUS).
-//! Spell fields retain their DB2 column names; selector mapping is separate.
+//! DB2 spell and source fields retain their names; selector mappings are separate.
+//! The source faction selector is INFERRED from modeled player faction.
 //! AzeriteEssence.csv SHA-256: f5472f1f89ee50e22fd6ddab7b3d7bfc95cc3f1f52523a312ad8046d5c389bb3.
 //! AzeriteEssencePower.csv SHA-256: 6e95aea7d88efd19c58ebb54c6f4732dd7863bd1962c08ed4eca545d2192e016.
 
@@ -130,6 +131,8 @@ pub(crate) static AZERITE_ESSENCES: &[AzeriteEssenceCatalogRecord] = &[
 pub(crate) struct AzeriteEssencePowerRecord {
     pub(crate) essence_id: u32,
     pub(crate) rank: u32,
+    pub(crate) source_alliance: &'static str,
+    pub(crate) source_horde: &'static str,
     pub(crate) major_power_description: u32,
     pub(crate) minor_power_description: u32,
     pub(crate) major_power_actual: u32,
@@ -140,6 +143,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 2,
         rank: 1,
+        source_alliance: "The Eternal Palace Raid|n|cFFFFD200Combine:|r Aqueous Reliquary|n|cFFFFD200Drop:|r Radiance of Azshara, the Queen's Court or Queen Azshara",
+        source_horde: "",
         major_power_description: 293019,
         minor_power_description: 294668,
         major_power_actual: 293019,
@@ -148,6 +153,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 2,
         rank: 2,
+        source_alliance: "The Eternal Palace Raid|n|cFFFFD200Combine:|r Aqueous Reliquary|n|cFFFFD200Drop:|r Radiance of Azshara, the Queen's Court or Queen Azshara",
+        source_horde: "",
         major_power_description: 294653,
         minor_power_description: 294687,
         major_power_actual: 298080,
@@ -156,6 +163,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 2,
         rank: 3,
+        source_alliance: "The Eternal Palace Raid|n|cFFFFD200Combine:|r Aqueous Reliquary|n|cFFFFD200Drop:|r Radiance of Azshara, the Queen's Court or Queen Azshara",
+        source_horde: "",
         major_power_description: 294650,
         minor_power_description: 294688,
         major_power_actual: 298081,
@@ -164,6 +173,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 2,
         rank: 4,
+        source_alliance: "The Eternal Palace Raid|n|cFFFFD200Drop:|r Queen Azshara - Mythic",
+        source_horde: "",
         major_power_description: 294655,
         minor_power_description: 294689,
         major_power_actual: 298081,
@@ -172,6 +183,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 3,
         rank: 1,
+        source_alliance: "Battlegrounds|n|cFFFFD200Quest:|r \"Storming the Battlefields\"|n|cFFFFD200Turn-In NPC:|r Marshal Gabriel|n|cFFFFD200Location:|r Ashvane Docks, Boralus",
+        source_horde: "Battlegrounds|n|cFFFFD200Quest:|r \"Storming the Battlefields\"|n|cFFFFD200Turn-In NPC:|r Xander Silberman|n|cFFFFD200Location:|r Mugambala",
         major_power_description: 293031,
         minor_power_description: 294910,
         major_power_actual: 293031,
@@ -180,6 +193,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 3,
         rank: 2,
+        source_alliance: "Battlegrounds|n|cFFFFD200Achievement:|r \"Battlefield Brawler\"|n|cFFFFD200Vendor:|r Marshal Gabriel|n|cFFFFD200Location:|r Ashvane Docks, Boralus|n|cFFFFD200Cost:|r 25 Mark of Honor",
+        source_horde: "Battlegrounds|n|cFFFFD200Achievement:|r \"Battlefield Brawler\"|n|cFFFFD200Vendor:|r Xander Silberman|n|cFFFFD200Location:|r Mugambala|n|cFFFFD200Cost:|r 25 Mark of Honor",
         major_power_description: 294906,
         minor_power_description: 294919,
         major_power_actual: 300009,
@@ -188,6 +203,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 3,
         rank: 3,
+        source_alliance: "Battlegrounds|n|cFFFFD200Achievement:|r \"Battlefield Tactician\"|n|cFFFFD200Vendor:|r Marshal Gabriel|n|cFFFFD200Location:|r Ashvane Docks, Boralus|n|cFFFFD200Cost:|r 25 Mark of Honor",
+        source_horde: "Battlegrounds|n|cFFFFD200Achievement:|r \"Battlefield Tactician\"|n|cFFFFD200Vendor:|r Xander Silberman|n|cFFFFD200Location:|r Mugambala|n|cFFFFD200Cost:|r 25 Mark of Honor",
         major_power_description: 294907,
         minor_power_description: 294920,
         major_power_actual: 300010,
@@ -196,6 +213,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 3,
         rank: 4,
+        source_alliance: "Battlegrounds|n|cFFFFD200Achievement:|r \"Battlefield Master\"|n|cFFFFD200Vendor:|r Marshal Gabriel|n|cFFFFD200Location:|r Ashvane Docks, Boralus",
+        source_horde: "Battlegrounds|n|cFFFFD200Achievement:|r \"Battlefield Master\"|n|cFFFFD200Vendor:|r Xander Silberman|n|cFFFFD200Location:|r Mugambala",
         major_power_description: 294908,
         minor_power_description: 294922,
         major_power_actual: 300010,
@@ -204,6 +223,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 4,
         rank: 1,
+        source_alliance: "Island Expeditions|n|cFFFFD200Quest:|r \"Azerite for the Alliance\"|n|cFFFFD200Turn-In NPC:|r Flynn Fairwind|n|cFFFFD200Location:|r Boralus Docks|n",
+        source_horde: "Island Expeditions|n|cFFFFD200Quest:|r \"Azerite for the Horde\"|n|cFFFFD200Turn-In NPC:|r Captain Rez'okun|n|cFFFFD200Location:|r Port of Zandalar",
         major_power_description: 295186,
         minor_power_description: 295078,
         major_power_actual: 295186,
@@ -212,6 +233,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 4,
         rank: 2,
+        source_alliance: "Island Expeditions|n|cFFFFD200Combine:|r Fragments of Zem'lan's Lost Treasure Map|n|cFFFFD200Drop:|r Island Expeditions|n|cFFFFD200Mission Table:|r \"Lost Treasure of the Pirate King\"|n|cFFFFD200Location:|r Boralus Docks",
+        source_horde: "Island Expeditions|n|cFFFFD200Combine:|r Fragments of Zem'lan's Lost Treasure Map|n|cFFFFD200Drop:|r Island Expeditions|n|cFFFFD200Mission Table:|r \"Lost Treasure of the Pirate King\"|n|cFFFFD200Location:|r Port of Zandalar",
         major_power_description: 295209,
         minor_power_description: 295208,
         major_power_actual: 298628,
@@ -220,6 +243,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 4,
         rank: 3,
+        source_alliance: "Island Expeditions|n|cFFFFD200Collect:|r Worldvein Intelligence Reports|n|cFFFFD200Quest Reward:|r \"Azerite for the Alliance\"|n|cFFFFD200Turn-In NPC:|r Flynn Fairwind|n|cFFFFD200Mission Table:|r \"Tracking the Worldvein\"|n|cFFFFD200Location:|r Boralus Docks",
+        source_horde: "Island Expeditions|n|cFFFFD200Collect:|r Worldvein Intelligence Reports|n|cFFFFD200Quest Reward:|r \"Azerite for the Alliance\"|n|cFFFFD200Turn-In NPC:|r Captain Rez'okun|n|cFFFFD200Mission Table:|r \"Tracking the Worldvein\"|n|cFFFFD200Location:|r Port of Zandalar",
         major_power_description: 295160,
         minor_power_description: 295165,
         major_power_actual: 299334,
@@ -228,6 +253,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 4,
         rank: 4,
+        source_alliance: "Island Expeditions|n|cFFFFD200Quest:|r \"Azerite for the Alliance\"|n|cFFFFD200Turn-In NPC:|r Flynn Fairwind|n|cFFFFD200Mission Table:|r \"The Last Worldvein\"|n|cFFFFD200Location:|r Boralus Docks|n",
+        source_horde: "Island Expeditions|n|cFFFFD200Quest:|r \"Azerite for the Horde\"|n|cFFFFD200Turn-In NPC:|r Captain Rez'okun|n|cFFFFD200Mission Table:|r \"The Last Worldvein\"|n|cFFFFD200Location:|r Port of Zandalar",
         major_power_description: 295210,
         minor_power_description: 295166,
         major_power_actual: 299334,
@@ -236,6 +263,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 5,
         rank: 1,
+        source_alliance: "Mythic Dungeons|n|cFFFFD200Combine:|r Focused Life Anima|n|cFFFFD200Drop:|r Dungeon End Bosses",
+        source_horde: "",
         major_power_description: 295258,
         minor_power_description: 295246,
         major_power_actual: 295258,
@@ -244,6 +273,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 5,
         rank: 2,
+        source_alliance: "Mythic Dungeons|n|cFFFFD200Combine:|r Focused Life Anima|n|cFFFFD200Drop:|r Dungeon End Bosses",
+        source_horde: "",
         major_power_description: 295262,
         minor_power_description: 295251,
         major_power_actual: 299336,
@@ -252,6 +283,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 5,
         rank: 3,
+        source_alliance: "Mythic Dungeons|n|cFFFFD200Combine:|r Focused Life Anima|n|cFFFFD200Drop:|r Dungeon End Bosses",
+        source_horde: "",
         major_power_description: 295263,
         minor_power_description: 295252,
         major_power_actual: 299338,
@@ -260,6 +293,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 5,
         rank: 4,
+        source_alliance: "Mythic + Dungeons|n|cFFFFD200Season:|r 3 or Later|n|cFFFFD200Achievement:|r \"Battle for Azeroth Keystone Master\"|n|cFFFFD200Vendor:|r Thaumaturge Vashreen|n|cFFFFD200Location:|r Tradewinds Market in Boralus",
+        source_horde: "Mythic + Dungeons|n|cFFFFD200Season:|r 3 or Later|n|cFFFFD200Achievement:|r \"Battle for Azeroth Keystone Master\"|n|cFFFFD200Vendor:|r Thaumaturge Vashreen|n|cFFFFD200Location:|r Grand Bazzar in Dazar'alor",
         major_power_description: 295264,
         minor_power_description: 295253,
         major_power_actual: 299338,
@@ -268,6 +303,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 6,
         rank: 1,
+        source_alliance: "Mechagon|n|cFFFFD200Reputation:|r Rustbolt Resistance - Friendly|n|cFFFFD200Vendor:|r Stolen Royal Vendorbot|n|cFFFFD200Location:|r Rustbolt|n|cFFFFD200Cost:|r 1 Galvanic Oscillators and 2 SPARE Part Crates",
+        source_horde: "",
         major_power_description: 295337,
         minor_power_description: 295293,
         major_power_actual: 295337,
@@ -276,6 +313,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 6,
         rank: 2,
+        source_alliance: "Mechagon|n|cFFFFD200Reputation:|r Rustbolt Resistance - Honored|n|cFFFFD200Vendor:|r Stolen Royal Vendorbot|n|cFFFFD200Location:|r Rustbolt|n|cFFFFD200Cost:|r 5 Galvanic Oscillators and 10 SPARE Part Crates",
+        source_horde: "",
         major_power_description: 295364,
         minor_power_description: 295363,
         major_power_actual: 299345,
@@ -284,6 +323,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 6,
         rank: 3,
+        source_alliance: "Mechagon|n|cFFFFD200Reputation:|r Rustbolt Resistance - Revered|n|cFFFFD200Vendor:|r Stolen Royal Vendorbot|n|cFFFFD200Location:|r Rustbolt|n|cFFFFD200Cost:|r 8 Galvanic Oscillators and 20 SPARE Part Crates",
+        source_horde: "",
         major_power_description: 295352,
         minor_power_description: 295351,
         major_power_actual: 299347,
@@ -292,6 +333,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 6,
         rank: 4,
+        source_alliance: "Mechagon|n|cFFFFD200Reputation:|r Rustbolt Supplies|n|cFFFFD200Vendor:|r Stolen Royal Vendorbot|n|cFFFFD200Location:|r Rustbolt",
+        source_horde: "",
         major_power_description: 295358,
         minor_power_description: 295333,
         major_power_actual: 299347,
@@ -300,6 +343,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 7,
         rank: 1,
+        source_alliance: "Mythic Dungeons|n|cFFFFD200Combine:|r Focused Life Anima|n|cFFFFD200Drop:|r Dungeon End Bosses",
+        source_horde: "",
         major_power_description: 294926,
         minor_power_description: 294964,
         major_power_actual: 294926,
@@ -308,6 +353,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 7,
         rank: 2,
+        source_alliance: "Mythic Dungeons|n|cFFFFD200Combine:|r Focused Life Anima|n|cFFFFD200Drop:|r Dungeon End Bosses",
+        source_horde: "",
         major_power_description: 295307,
         minor_power_description: 294970,
         major_power_actual: 300002,
@@ -316,6 +363,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 7,
         rank: 3,
+        source_alliance: "Mythic Dungeons|n|cFFFFD200Combine:|r Focused Life Anima|n|cFFFFD200Drop:|r Dungeon End Bosses",
+        source_horde: "",
         major_power_description: 294945,
         minor_power_description: 294969,
         major_power_actual: 300003,
@@ -324,6 +373,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 7,
         rank: 4,
+        source_alliance: "Mythic + Dungeons|n|cFFFFD200Season:|r 3 or Later|n|cFFFFD200Achievement:|r \"Battle for Azeroth Keystone Master\"|n|cFFFFD200Vendor:|r Thaumaturge Vashreen|n|cFFFFD200Location:|r Tradewinds Market in Boralus",
+        source_horde: "Mythic + Dungeons|n|cFFFFD200Season:|r 3 or Later|n|cFFFFD200Achievement:|r \"Battle for Azeroth Keystone Master\"|n|cFFFFD200Vendor:|r Thaumaturge Vashreen|n|cFFFFD200Location:|r Grand Bazzar in Dazar'alor",
         major_power_description: 295306,
         minor_power_description: 294972,
         major_power_actual: 300003,
@@ -332,6 +383,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 12,
         rank: 1,
+        source_alliance: "Dragon Aspects|n|cFFFFD200Quest:|r \"MOTHER Knows Best\"|n|cFFFFD200Questgiver:|r Magni Bronzebeard|n|cFFFFD200Location:|r Chamber of Heart",
+        source_horde: "",
         major_power_description: 295373,
         minor_power_description: 295365,
         major_power_actual: 295373,
@@ -340,6 +393,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 12,
         rank: 2,
+        source_alliance: "Dragon Aspects|n|cFFFFD200Heart Level:|r 54|n|cFFFFD200Quest:|r \"In Darkness, I Dream\"|n|cFFFFD200Questgiver:|r Kalec|n|cFFFFD200Location:|r Chamber of Heart",
+        source_horde: "",
         major_power_description: 295377,
         minor_power_description: 295372,
         major_power_actual: 299349,
@@ -348,6 +403,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 12,
         rank: 3,
+        source_alliance: "Dragon Aspects|n|cFFFFD200Heart Level:|r 60|n|cFFFFD200Quest:|r \"Investigate the Highlands\"|n|cFFFFD200Questgiver:|r Kalec|n|cFFFFD200Location:|r Chamber of Heart",
+        source_horde: "",
         major_power_description: 295379,
         minor_power_description: 295369,
         major_power_actual: 299353,
@@ -356,6 +413,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 12,
         rank: 4,
+        source_alliance: "Dragon Aspects|n|cFFFFD200Heart Level:|r 70|n|cFFFFD200Quest:|r \"A Bolt from the Blue\"|n|cFFFFD200Questgiver:|r Kalec|n|cFFFFD200Location:|r Chamber of Heart",
+        source_horde: "",
         major_power_description: 295380,
         minor_power_description: 295381,
         major_power_actual: 299353,
@@ -364,6 +423,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 13,
         rank: 1,
+        source_alliance: "Mechagon|n|cFFFFD200Reputation:|r Rustbolt Resistance - Friendly|n|cFFFFD200Vendor:|r Stolen Royal Vendorbot|n|cFFFFD200Location:|r Rustbolt|n|cFFFFD200Cost:|r 1 Galvanic Oscillators and 2 SPARE Part Crates",
+        source_horde: "",
         major_power_description: 295746,
         minor_power_description: 295750,
         major_power_actual: 295746,
@@ -372,6 +433,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 13,
         rank: 2,
+        source_alliance: "Mechagon|n|cFFFFD200Reputation:|r Rustbolt Resistance - Honored|n|cFFFFD200Vendor:|r Stolen Royal Vendorbot|n|cFFFFD200Location:|r Rustbolt|n|cFFFFD200Cost:|r 5 Galvanic Oscillators and 10 SPARE Part Crates",
+        source_horde: "",
         major_power_description: 295747,
         minor_power_description: 295844,
         major_power_actual: 300015,
@@ -380,6 +443,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 13,
         rank: 3,
+        source_alliance: "Mechagon|n|cFFFFD200Reputation:|r Rustbolt Resistance - Revered|n|cFFFFD200Vendor:|r Stolen Royal Vendorbot|n|cFFFFD200Location:|r Rustbolt|n|cFFFFD200Cost:|r 8 Galvanic Oscillators and 20 SPARE Part Crates",
+        source_horde: "",
         major_power_description: 295748,
         minor_power_description: 295846,
         major_power_actual: 300016,
@@ -388,6 +453,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 13,
         rank: 4,
+        source_alliance: "Mechagon|n|cFFFFD200Reputation:|r Rustbolt Supplies|n|cFFFFD200Vendor:|r Stolen Royal Vendorbot|n|cFFFFD200Location:|r Rustbolt",
+        source_horde: "",
         major_power_description: 295749,
         minor_power_description: 295845,
         major_power_actual: 300016,
@@ -396,6 +463,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 14,
         rank: 1,
+        source_alliance: "The Eternal Palace Raid|n|cFFFFD200Combine:|r Aqueous Reliquary|n|cFFFFD200Drop:|r Radiance of Azshara, the Queen's Court or Queen Azshara",
+        source_horde: "",
         major_power_description: 295840,
         minor_power_description: 295834,
         major_power_actual: 295840,
@@ -404,6 +473,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 14,
         rank: 2,
+        source_alliance: "The Eternal Palace Raid|n|cFFFFD200Combine:|r Aqueous Reliquary|n|cFFFFD200Drop:|r Radiance of Azshara, the Queen's Court or Queen Azshara",
+        source_horde: "",
         major_power_description: 295841,
         minor_power_description: 295836,
         major_power_actual: 299355,
@@ -412,6 +483,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 14,
         rank: 3,
+        source_alliance: "The Eternal Palace Raid|n|cFFFFD200Combine:|r Aqueous Reliquary|n|cFFFFD200Drop:|r Radiance of Azshara, the Queen's Court or Queen Azshara",
+        source_horde: "",
         major_power_description: 295843,
         minor_power_description: 295837,
         major_power_actual: 299358,
@@ -420,6 +493,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 14,
         rank: 4,
+        source_alliance: "The Eternal Palace Raid|n|cFFFFD200Drop:|r Queen Azshara - Mythic",
+        source_horde: "",
         major_power_description: 295892,
         minor_power_description: 295839,
         major_power_actual: 299358,
@@ -428,6 +503,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 15,
         rank: 1,
+        source_alliance: "War Mode|n|cFFFFD200Quest:|r \"Drowning the Horde\"|n|cFFFFD200Questgiver:|r Crafticus Mindbender|n|cFFFFD200Location:|r Mezzamere",
+        source_horde: "War Mode|n|cFFFFD200Quest:|r \"Drowning the Alliance\"|n|cFFFFD200Questgiver:|r Dazzerian|n|cFFFFD200Location:|r Newhome",
         major_power_description: 302731,
         minor_power_description: 302916,
         major_power_actual: 302731,
@@ -436,6 +513,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 15,
         rank: 2,
+        source_alliance: "War Mode|n|cFFFFD200Achievement:|r \"Fighting on Two Fronts\"|n|cFFFFD200Vendor:|r Crafticus Mindbender|n|cFFFFD200Location:|r Mezzamere|n|cFFFFD200Cost:|r 20 Nazjatar Battle Commendations",
+        source_horde: "War Mode|n|cFFFFD200Achievement:|r \"Fighting on Two Fronts\"|n|cFFFFD200Vendor:|r Dazzerian|n|cFFFFD200Location:|r Newhome|n|cFFFFD200Cost:|r 20 Nazjatar Battle Commendations",
         major_power_description: 302778,
         minor_power_description: 302957,
         major_power_actual: 302982,
@@ -444,6 +523,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 15,
         rank: 3,
+        source_alliance: "War Mode|n|cFFFFD200Collect:|r Call to Arms Distinction|n|cFFFFD200Quest:|r Weekly Call to Arms|n|cFFFFD200Vendor:|r Crafticus Mindbender|n|cFFFFD200Location:|r Mezzamere|n|cFFFFD200Cost:|r 10 Call to Arms Distinctions and 50 Nazjatar Battle Commendations",
+        source_horde: "War Mode|n|cFFFFD200Collect:|r Call to Arms Distinction|n|cFFFFD200Quest:|r Weekly Call to Arms|n|cFFFFD200Vendor:|r Dazzerian|n|cFFFFD200Location:|r Newhome|n|cFFFFD200Cost:|r 10 Call to Arms Distinctions and 50 Nazjatar Battle Commendations",
         major_power_description: 302780,
         minor_power_description: 302961,
         major_power_actual: 302983,
@@ -452,6 +533,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 15,
         rank: 4,
+        source_alliance: "War Mode|n|cFFFFD200Achievement:|r \"Supplying the Assassins\"|n|cFFFFD200Vendor:|r Crafticus Mindbender|n|cFFFFD200Location:|r Mezzamere",
+        source_horde: "War Mode|n|cFFFFD200Achievement:|r \"Supplying the Assassins\"|n|cFFFFD200Vendor:|r Dazzerian|n|cFFFFD200Location:|r Newhome",
         major_power_description: 302910,
         minor_power_description: 302962,
         major_power_actual: 302983,
@@ -460,6 +543,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 16,
         rank: 1,
+        source_alliance: "Horrific Visions of N'Zoth|n|cFFFFD200Drop:|r|nThrall or Alleria's Cursed Chests|n|cFFFFD200Location:|r Chamber of Heart",
+        source_horde: "",
         major_power_description: 296036,
         minor_power_description: 293030,
         major_power_actual: 296036,
@@ -468,6 +553,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 16,
         rank: 2,
+        source_alliance: "Horrific Visions of N'Zoth|n|cFFFFD200Drop:|r|nCorrupted Chests from the Lost Areas|n|cFFFFD200Location:|r Chamber of Heart",
+        source_horde: "",
         major_power_description: 296038,
         minor_power_description: 296031,
         major_power_actual: 310425,
@@ -476,6 +563,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 16,
         rank: 3,
+        source_alliance: "Horrific Visions of N'Zoth|n|cFFFFD200Combine:|r Spark of Unwavering Strength |n|cFFFFD200Drop:|r|nCorrupted Chests from the Corrupted and Lost Areas|n|cFFFFD200Location:|r Chamber of Heart",
+        source_horde: "",
         major_power_description: 296104,
         minor_power_description: 296032,
         major_power_actual: 310442,
@@ -484,6 +573,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 16,
         rank: 4,
+        source_alliance: "Horrific Visions of N'Zoth|n|cFFFFD200Achievement:|r|n\"Through the Depths of Visions\"|n|cFFFFD200NPC:|r Wrathion|n|cFFFFD200Location:|r Chamber of Heart",
+        source_horde: "",
         major_power_description: 299542,
         minor_power_description: 299544,
         major_power_actual: 310442,
@@ -492,6 +583,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 17,
         rank: 1,
+        source_alliance: "Nazjatar|n|cFFFFD200Reputation:|r Ankoan - Friendly|n|cFFFFD200Vendor:|r Speaker Utia|n|cFFFFD200Location:|r Mezzamere|n|cFFFFD200Cost:|r 10 Prismatic Manapearls",
+        source_horde: "Nazjatar|n|cFFFFD200Reputation:|r Unshackled - Friendly|n|cFFFFD200Vendor:|r Atolia Seapearl|n|cFFFFD200Location:|r Newhome|n|cFFFFD200Cost:|r 10 Prismatic Manapearls",
         major_power_description: 296072,
         minor_power_description: 296050,
         major_power_actual: 296072,
@@ -500,6 +593,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 17,
         rank: 2,
+        source_alliance: "Nazjatar|n|cFFFFD200Reputation:|r Ankoan - Honored|n|cFFFFD200Vendor:|r Speaker Utia|n|cFFFFD200Location:|r Mezzamere|n|cFFFFD200Cost:|r 25 Prismatic Manapearls",
+        source_horde: "Nazjatar|n|cFFFFD200Reputation:|r Unshackled - Honored|n|cFFFFD200Vendor:|r Atolia Seapearl|n|cFFFFD200Location:|r Newhome|n|cFFFFD200Cost:|r 25 Prismatic Manapearls",
         major_power_description: 296074,
         minor_power_description: 296067,
         major_power_actual: 299875,
@@ -508,6 +603,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 17,
         rank: 3,
+        source_alliance: "Nazjatar|n|cFFFFD200Reputation:|r Ankoan - Revered|n|cFFFFD200Vendor:|r Speaker Utia|n|cFFFFD200Location:|r Mezzamere|n|cFFFFD200Cost:|r 50 Prismatic Manapearls",
+        source_horde: "Nazjatar|n|cFFFFD200Reputation:|r Unshackled - Revered|n|cFFFFD200Vendor:|r Atolia Seapearl|n|cFFFFD200Location:|r Newhome|n|cFFFFD200Cost:|r 50 Prismatic Manapearls",
         major_power_description: 296075,
         minor_power_description: 296062,
         major_power_actual: 299876,
@@ -516,6 +613,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 17,
         rank: 4,
+        source_alliance: "Nazjatar|n|cFFFFD200Reputation:|r Ankoan Supplies|n|cFFFFD200Vendor:|r Speaker Utia|n|cFFFFD200Location:|r Mezzamere",
+        source_horde: "Nazjatar|n|cFFFFD200Reputation:|r Unshackled Supplies|n|cFFFFD200Vendor:|r Atolia Seapearl|n|cFFFFD200Location:|r Newhome",
         major_power_description: 299522,
         minor_power_description: 299523,
         major_power_actual: 299876,
@@ -524,6 +623,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 18,
         rank: 1,
+        source_alliance: "Battlegrounds|n|cFFFFD200Quest:|r \"Storming the Battlefields\"|n|cFFFFD200Turn-In NPC:|r Marshal Gabriel|n|cFFFFD200Location:|r Ashvane Docks, Boralus",
+        source_horde: "Battlegrounds|n|cFFFFD200Quest:|r \"Storming the Battlefields\"|n|cFFFFD200Turn-In NPC:|r Xander Silberman|n|cFFFFD200Location:|r Mugambala",
         major_power_description: 296094,
         minor_power_description: 296081,
         major_power_actual: 296094,
@@ -532,6 +633,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 18,
         rank: 2,
+        source_alliance: "Battlegrounds|n|cFFFFD200Achievement:|r \"Battlefield Brawler\"|n|cFFFFD200Vendor:|r Marshal Gabriel|n|cFFFFD200Location:|r Ashvane Docks, Boralus|n|cFFFFD200Cost:|r 25 Mark of Honor",
+        source_horde: "Battlegrounds|n|cFFFFD200Achievement:|r \"Battlefield Brawler\"|n|cFFFFD200Vendor:|r Xander Silberman|n|cFFFFD200Location:|r Mugambala|n|cFFFFD200Cost:|r 25 Mark of Honor",
         major_power_description: 296102,
         minor_power_description: 296091,
         major_power_actual: 299882,
@@ -540,6 +643,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 18,
         rank: 3,
+        source_alliance: "Battlegrounds|n|cFFFFD200Achievement:|r \"Battlefield Tactician\"|n|cFFFFD200Vendor:|r Marshal Gabriel|n|cFFFFD200Location:|r Ashvane Docks, Boralus|n|cFFFFD200Cost:|r 25 Mark of Honor",
+        source_horde: "Battlegrounds|n|cFFFFD200Achievement:|r \"Battlefield Tactician\"|n|cFFFFD200Vendor:|r Xander Silberman|n|cFFFFD200Location:|r Mugambala|n|cFFFFD200Cost:|r 25 Mark of Honor",
         major_power_description: 296103,
         minor_power_description: 296089,
         major_power_actual: 299883,
@@ -548,6 +653,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 18,
         rank: 4,
+        source_alliance: "Battlegrounds|n|cFFFFD200Achievement:|r \"Battlefield Master\"|n|cFFFFD200Vendor:|r Marshal Gabriel|n|cFFFFD200Location:|r Ashvane Docks, Boralus",
+        source_horde: "Battlegrounds|n|cFFFFD200Achievement:|r \"Battlefield Master\"|n|cFFFFD200Vendor:|r Xander Silberman|n|cFFFFD200Location:|r Mugambala",
         major_power_description: 299518,
         minor_power_description: 299519,
         major_power_actual: 299883,
@@ -556,6 +663,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 19,
         rank: 1,
+        source_alliance: "Mechagon|n|cFFFFD200Reputation:|r Rustbolt Resistance - Friendly|n|cFFFFD200Vendor:|r Stolen Royal Vendorbot|n|cFFFFD200Location:|r Rustbolt|n|cFFFFD200Cost:|r 1 Galvanic Oscillators and 2 SPARE Part Crates",
+        source_horde: "",
         major_power_description: 296197,
         minor_power_description: 296136,
         major_power_actual: 296197,
@@ -564,6 +673,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 19,
         rank: 2,
+        source_alliance: "Mechagon|n|cFFFFD200Reputation:|r Rustbolt Resistance - Honored|n|cFFFFD200Vendor:|r Stolen Royal Vendorbot|n|cFFFFD200Location:|r Rustbolt|n|cFFFFD200Cost:|r 5 Galvanic Oscillators and 10 SPARE Part Crates",
+        source_horde: "",
         major_power_description: 296200,
         minor_power_description: 296192,
         major_power_actual: 299932,
@@ -572,6 +683,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 19,
         rank: 3,
+        source_alliance: "Mechagon|n|cFFFFD200Reputation:|r Rustbolt Resistance - Revered|n|cFFFFD200Vendor:|r Stolen Royal Vendorbot|n|cFFFFD200Location:|r Rustbolt|n|cFFFFD200Cost:|r 8 Galvanic Oscillators and 20 SPARE Part Crates",
+        source_horde: "",
         major_power_description: 296201,
         minor_power_description: 296193,
         major_power_actual: 299933,
@@ -580,6 +693,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 19,
         rank: 4,
+        source_alliance: "Mechagon|n|cFFFFD200Reputation:|r Rustbolt Supplies|n|cFFFFD200Vendor:|r Stolen Royal Vendorbot|n|cFFFFD200Location:|r Rustbolt",
+        source_horde: "",
         major_power_description: 299529,
         minor_power_description: 299530,
         major_power_actual: 299933,
@@ -588,6 +703,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 20,
         rank: 1,
+        source_alliance: "Mythic Dungeons|n|cFFFFD200Combine:|r Focused Life Anima|n|cFFFFD200Drop:|r Dungeon End Bosses",
+        source_horde: "",
         major_power_description: 293032,
         minor_power_description: 296207,
         major_power_actual: 293032,
@@ -596,6 +713,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 20,
         rank: 2,
+        source_alliance: "Mythic Dungeons|n|cFFFFD200Combine:|r Focused Life Anima|n|cFFFFD200Drop:|r Dungeon End Bosses",
+        source_horde: "",
         major_power_description: 296220,
         minor_power_description: 296213,
         major_power_actual: 299943,
@@ -604,6 +723,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 20,
         rank: 3,
+        source_alliance: "Mythic Dungeons|n|cFFFFD200Combine:|r Focused Life Anima|n|cFFFFD200Drop:|r Dungeon End Bosses",
+        source_horde: "",
         major_power_description: 296221,
         minor_power_description: 296214,
         major_power_actual: 299944,
@@ -612,6 +733,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 20,
         rank: 4,
+        source_alliance: "Mythic + Dungeons|n|cFFFFD200Season:|r 3 or Later|n|cFFFFD200Achievement:|r \"Battle for Azeroth Keystone Master\"|n|cFFFFD200Vendor:|r Thaumaturge Vashreen|n|cFFFFD200Location:|r Tradewinds Market in Boralus",
+        source_horde: "Mythic + Dungeons|n|cFFFFD200Season:|r 3 or Later|n|cFFFFD200Achievement:|r \"Battle for Azeroth Keystone Master\"|n|cFFFFD200Vendor:|r Thaumaturge Vashreen|n|cFFFFD200Location:|r Grand Bazzar in Dazar'alor",
         major_power_description: 299520,
         minor_power_description: 299521,
         major_power_actual: 299944,
@@ -620,6 +743,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 21,
         rank: 1,
+        source_alliance: "The Eternal Palace Raid|n|cFFFFD200Combine:|r Aqueous Reliquary|n|cFFFFD200Drop:|r Radiance of Azshara, the Queen's Court or Queen Azshara",
+        source_horde: "",
         major_power_description: 296230,
         minor_power_description: 303448,
         major_power_actual: 296230,
@@ -628,6 +753,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 21,
         rank: 2,
+        source_alliance: "The Eternal Palace Raid|n|cFFFFD200Combine:|r Aqueous Reliquary|n|cFFFFD200Drop:|r Radiance of Azshara, the Queen's Court or Queen Azshara",
+        source_horde: "",
         major_power_description: 303472,
         minor_power_description: 303463,
         major_power_actual: 299958,
@@ -636,6 +763,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 21,
         rank: 3,
+        source_alliance: "The Eternal Palace Raid|n|cFFFFD200Combine:|r Aqueous Reliquary|n|cFFFFD200Drop:|r Radiance of Azshara, the Queen's Court or Queen Azshara",
+        source_horde: "",
         major_power_description: 296232,
         minor_power_description: 303460,
         major_power_actual: 299959,
@@ -644,6 +773,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 21,
         rank: 4,
+        source_alliance: "The Eternal Palace Raid|n|cFFFFD200Drop:|r Queen Azshara - Mythic",
+        source_horde: "",
         major_power_description: 299559,
         minor_power_description: 299560,
         major_power_actual: 299959,
@@ -652,6 +783,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 22,
         rank: 1,
+        source_alliance: "Operation: Mechagon|n|cFFFFD200Drop:|r King Mechagon",
+        source_horde: "",
         major_power_description: 296325,
         minor_power_description: 296320,
         major_power_actual: 296325,
@@ -660,6 +793,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 22,
         rank: 2,
+        source_alliance: "Operation: Mechagon|n|cFFFFD200Tinkering:|r Perfectly Timed Differential Blueprint|n|cFFFFD200Drop:|r King Mechagon",
+        source_horde: "",
         major_power_description: 296326,
         minor_power_description: 296321,
         major_power_actual: 299368,
@@ -668,6 +803,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 22,
         rank: 3,
+        source_alliance: "Operation: Mechagon|n|cFFFFD200Combine:|r Progression Sprockets|n|cFFFFD200Drop:|r King Mechagon",
+        source_horde: "",
         major_power_description: 303342,
         minor_power_description: 296322,
         major_power_actual: 299370,
@@ -676,6 +813,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 22,
         rank: 4,
+        source_alliance: "Operation: Mechagon (Mythic)|n|cFFFFD200Achievement:|r \"Hertz Locker\"|n|cFFFFD200Gossip:|r Prince Erazmin|n|cFFFFD200Location:|r Rustbolt",
+        source_horde: "",
         major_power_description: 296328,
         minor_power_description: 296324,
         major_power_actual: 299370,
@@ -684,6 +823,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 23,
         rank: 1,
+        source_alliance: "Battlegrounds|n|cFFFFD200Quest:|r \"Storming the Battlefields\"|n|cFFFFD200Turn-In NPC:|r Marshal Gabriel|n|cFFFFD200Location:|r Ashvane Docks, Boralus",
+        source_horde: "Battlegrounds|n|cFFFFD200Quest:|r \"Storming the Battlefields\"|n|cFFFFD200Turn-In NPC:|r Xander Silberman|n|cFFFFD200Location:|r Mugambala",
         major_power_description: 297108,
         minor_power_description: 297147,
         major_power_actual: 297108,
@@ -692,6 +833,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 23,
         rank: 2,
+        source_alliance: "Battlegrounds|n|cFFFFD200Achievement:|r \"Battlefield Brawler\"|n|cFFFFD200Vendor:|r Marshal Gabriel|n|cFFFFD200Location:|r Ashvane Docks, Boralus|n|cFFFFD200Cost:|r 25 Mark of Honor",
+        source_horde: "Battlegrounds|n|cFFFFD200Achievement:|r \"Battlefield Brawler\"|n|cFFFFD200Vendor:|r Xander Silberman|n|cFFFFD200Location:|r Mugambala|n|cFFFFD200Cost:|r 25 Mark of Honor",
         major_power_description: 297120,
         minor_power_description: 297177,
         major_power_actual: 298273,
@@ -700,6 +843,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 23,
         rank: 3,
+        source_alliance: "Battlegrounds|n|cFFFFD200Achievement:|r \"Battlefield Tactician\"|n|cFFFFD200Vendor:|r Marshal Gabriel|n|cFFFFD200Location:|r Ashvane Docks, Boralus|n|cFFFFD200Cost:|r 25 Mark of Honor",
+        source_horde: "Battlegrounds|n|cFFFFD200Achievement:|r \"Battlefield Tactician\"|n|cFFFFD200Vendor:|r Xander Silberman|n|cFFFFD200Location:|r Mugambala|n|cFFFFD200Cost:|r 25 Mark of Honor",
         major_power_description: 297122,
         minor_power_description: 297178,
         major_power_actual: 298277,
@@ -708,6 +853,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 23,
         rank: 4,
+        source_alliance: "Battlegrounds|n|cFFFFD200Achievement:|r \"Battlefield Master\"|n|cFFFFD200Vendor:|r Marshal Gabriel|n|cFFFFD200Location:|r Ashvane Docks, Boralus",
+        source_horde: "Battlegrounds|n|cFFFFD200Achievement:|r \"Battlefield Master\"|n|cFFFFD200Vendor:|r Xander Silberman|n|cFFFFD200Location:|r Mugambala",
         major_power_description: 298182,
         minor_power_description: 298183,
         major_power_actual: 298277,
@@ -716,6 +863,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 24,
         rank: 1,
+        source_alliance: "Vale of Eternal Blossoms |n|cFFFFD200Quest chain begins with:|r|n\"It's Never Easy\" |n|cFFFFD200Quest chain ends with:|r|n\"Restored Hope\"|n|cFFFFD200Questgiver:|r Magni Bronzebeard|n|cFFFFD200Location:|r Chamber of Heart",
+        source_horde: "",
         major_power_description: 297375,
         minor_power_description: 297411,
         major_power_actual: 297375,
@@ -724,6 +873,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 24,
         rank: 2,
+        source_alliance: "Vale of Eternal Blossoms |n|cFFFFD200Combine:|r Breath of Everlasting Spirit |n|cFFFFD200Quest:|r|nFirst of the week Vision of Darkness Daily |n|cFFFFD200Questgiver:|r Darktalon Agent |n|cFFFFD200Location:|r|nNear Visions of Darkness Portals in Uldum or Vale of Eternal Blossoms",
+        source_horde: "",
         major_power_description: 297546,
         minor_power_description: 297542,
         major_power_actual: 298309,
@@ -732,6 +883,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 24,
         rank: 3,
+        source_alliance: "Vale of Eternal Blossoms|n|cFFFFD200Reputation:|r Rajani - Revered|n|cFFFFD200Vendor:|r Zhang Ku|n|cFFFFD200Location:|r Silent Sanctuary|n|cFFFFD200Cost:|r 50 Corrupted Mementos",
+        source_horde: "",
         major_power_description: 297547,
         minor_power_description: 297544,
         major_power_actual: 298312,
@@ -740,6 +893,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 24,
         rank: 4,
+        source_alliance: "Vale of Eternal Blossoms |n|cFFFFD200Reputation:|r Rajani Supplies|n|cFFFFD200Vendor:|r Zhang Ku |n|cFFFFD200Location:|r Silent Sanctuary",
+        source_horde: "",
         major_power_description: 298184,
         minor_power_description: 298185,
         major_power_actual: 298312,
@@ -748,6 +903,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 25,
         rank: 1,
+        source_alliance: "Nazjatar|n|cFFFFD200Reputation:|r Ankoan - Friendly|n|cFFFFD200Vendor:|r Speaker Utia|n|cFFFFD200Location:|r Mezzamere|n|cFFFFD200Cost:|r 10 Prismatic Manapearls",
+        source_horde: "Nazjatar|n|cFFFFD200Reputation:|r Unshackled - Friendly|n|cFFFFD200Vendor:|r Atolia Seapearl|n|cFFFFD200Location:|r Newhome|n|cFFFFD200Cost:|r 10 Prismatic Manapearls",
         major_power_description: 298168,
         minor_power_description: 298193,
         major_power_actual: 298168,
@@ -756,6 +913,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 25,
         rank: 2,
+        source_alliance: "Nazjatar|n|cFFFFD200Reputation:|r Ankoan - Honored|n|cFFFFD200Vendor:|r Speaker Utia|n|cFFFFD200Location:|r Mezzamere|n|cFFFFD200Cost:|r 25 Prismatic Manapearls",
+        source_horde: "Nazjatar|n|cFFFFD200Reputation:|r Unshackled - Honored|n|cFFFFD200Vendor:|r Atolia Seapearl|n|cFFFFD200Location:|r Newhome|n|cFFFFD200Cost:|r 25 Prismatic Manapearls",
         major_power_description: 298169,
         minor_power_description: 298351,
         major_power_actual: 299273,
@@ -764,6 +923,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 25,
         rank: 3,
+        source_alliance: "Nazjatar|n|cFFFFD200Reputation:|r Ankoan - Revered|n|cFFFFD200Vendor:|r Speaker Utia|n|cFFFFD200Location:|r Mezzamere|n|cFFFFD200Cost:|r 50 Prismatic Manapearls",
+        source_horde: "Nazjatar|n|cFFFFD200Reputation:|r Unshackled - Revered|n|cFFFFD200Vendor:|r Atolia Seapearl|n|cFFFFD200Location:|r Newhome|n|cFFFFD200Cost:|r 50 Prismatic Manapearls",
         major_power_description: 298174,
         minor_power_description: 298352,
         major_power_actual: 299275,
@@ -772,6 +933,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 25,
         rank: 4,
+        source_alliance: "Nazjatar|n|cFFFFD200Reputation:|r Ankoan Supplies|n|cFFFFD200Vendor:|r Speaker Utia|n|cFFFFD200Location:|r Mezzamere",
+        source_horde: "Nazjatar|n|cFFFFD200Reputation:|r Unshackled Supplies|n|cFFFFD200Vendor:|r Atolia Seapearl|n|cFFFFD200Location:|r Newhome",
         major_power_description: 298186,
         minor_power_description: 298353,
         major_power_actual: 299275,
@@ -780,6 +943,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 27,
         rank: 1,
+        source_alliance: "Nazjatar|n|cFFFFD200Quest:|r \"A Brief Respite\"|n|cFFFFD200Questgiver:|r Lady Jaina Proudmoore|n|cFFFFD200Location:|r Mezzamere",
+        source_horde: "Nazjatar|n|cFFFFD200Quest:|r \"Down into Nazjatar\"|n|cFFFFD200Questgiver:|r Lor'themar Theron|n|cFFFFD200Location:|r Newhome",
         major_power_description: 298357,
         minor_power_description: 298268,
         major_power_actual: 298357,
@@ -788,6 +953,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 27,
         rank: 2,
+        source_alliance: "Nazjatar|n|cFFFFD200Quest:|r \"Friends In Need\"|n|cFFFFD200Questgiver:|r Lady Jaina Proudmoore|n|cFFFFD200Location:|r Mezzamere",
+        source_horde: "Nazjatar|n|cFFFFD200Quest:|r \"Down But Not Out\"|n|cFFFFD200Questgiver:|r Lor'themar The'ron|n|cFFFFD200Location:|r Newhome",
         major_power_description: 298376,
         minor_power_description: 298337,
         major_power_actual: 299372,
@@ -796,6 +963,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 27,
         rank: 3,
+        source_alliance: "Nazjatar|n|cFFFFD200Achievement:|r \"Nautical Battlefield Training\"|n|cFFFFD200Vendor:|r Speaker Utia|n|cFFFFD200Location:|r Mezzamere|n|cFFFFD200Cost:|r 50 Prismatic Manapearls",
+        source_horde: "Nazjatar|n|cFFFFD200Achievement:|r \"Nautical Battlefield Training\"|n|cFFFFD200Vendor:|r Atolia Seapearl|n|cFFFFD200Location:|r Newhome|n|cFFFFD200Cost:|r 50 Prismatic Manapearls",
         major_power_description: 298377,
         minor_power_description: 298339,
         major_power_actual: 299374,
@@ -804,6 +973,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 27,
         rank: 4,
+        source_alliance: "Nazjatar|n|cFFFFD200Achievement:|r \"Aqua Team Murder Force\"|n|cFFFFD200Vendor:|r Speaker Utia|n|cFFFFD200Location:|r Mezzamere",
+        source_horde: "Nazjatar|n|cFFFFD200Achievement:|r \"Aqua Team Murder Force\"|n|cFFFFD200Vendor:|r Atolia Seapearl|n|cFFFFD200Location:|r Newhome",
         major_power_description: 298405,
         minor_power_description: 298404,
         major_power_actual: 299374,
@@ -812,6 +983,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 28,
         rank: 1,
+        source_alliance: "Nazjatar|n|cFFFFD200Reputation:|r Ankoan - Friendly|n|cFFFFD200Vendor:|r Speaker Utia|n|cFFFFD200Location:|r Mezzamere|n|cFFFFD200Cost:|r 10 Prismatic Manapearls",
+        source_horde: "Nazjatar|n|cFFFFD200Reputation:|r Unshackled - Friendly|n|cFFFFD200Vendor:|r Atolia Seapearl|n|cFFFFD200Location:|r Newhome|n|cFFFFD200Cost:|r 10 Prismatic Manapearls",
         major_power_description: 298452,
         minor_power_description: 298407,
         major_power_actual: 298452,
@@ -820,6 +993,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 28,
         rank: 2,
+        source_alliance: "Nazjatar|n|cFFFFD200Reputation:|r Ankoan - Honored|n|cFFFFD200Vendor:|r Speaker Utia|n|cFFFFD200Location:|r Mezzamere|n|cFFFFD200Cost:|r 25 Prismatic Manapearls",
+        source_horde: "Nazjatar|n|cFFFFD200Reputation:|r Unshackled - Honored|n|cFFFFD200Vendor:|r Atolia Seapearl|n|cFFFFD200Location:|r Newhome|n|cFFFFD200Cost:|r 25 Prismatic Manapearls",
         major_power_description: 298455,
         minor_power_description: 298448,
         major_power_actual: 299376,
@@ -828,6 +1003,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 28,
         rank: 3,
+        source_alliance: "Nazjatar|n|cFFFFD200Reputation:|r Ankoan - Revered|n|cFFFFD200Vendor:|r Speaker Utia|n|cFFFFD200Location:|r Mezzamere|n|cFFFFD200Cost:|r 50 Prismatic Manapearls",
+        source_horde: "Nazjatar|n|cFFFFD200Reputation:|r Unshackled - Revered|n|cFFFFD200Vendor:|r Atolia Seapearl|n|cFFFFD200Location:|r Newhome|n|cFFFFD200Cost:|r 50 Prismatic Manapearls",
         major_power_description: 298456,
         minor_power_description: 298449,
         major_power_actual: 299378,
@@ -836,6 +1013,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 28,
         rank: 4,
+        source_alliance: "Nazjatar|n|cFFFFD200Reputation:|r Ankoan Supplies|n|cFFFFD200Vendor:|r Speaker Utia|n|cFFFFD200Location:|r Mezzamere",
+        source_horde: "Nazjatar|n|cFFFFD200Reputation:|r Unshackled Supplies|n|cFFFFD200Vendor:|r Atolia Seapearl|n|cFFFFD200Location:|r Newhome",
         major_power_description: 298457,
         minor_power_description: 298450,
         major_power_actual: 299378,
@@ -844,6 +1023,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 32,
         rank: 1,
+        source_alliance: "Rated PVP|n|cFFFFD200Season:|r Season 3 or later|n|cFFFFD200Cost:|r 250 Honor|n|cFFFFD200Vendor:|r Marshal Gabriel|n|cFFFFD200Location:|r Ashvane Docks, Boralus",
+        source_horde: "Rated PVP|n|cFFFFD200Season:|r Season 3 or later|n|cFFFFD200Cost:|r 250 Honor|n|cFFFFD200Vendor:|r Xander Silberman|n|cFFFFD200Location:|r Mugambala",
         major_power_description: 303823,
         minor_power_description: 304081,
         major_power_actual: 303823,
@@ -852,6 +1033,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 32,
         rank: 2,
+        source_alliance: "Rated PVP|n|cFFFFD200Season:|r Season 3 or later|n|cFFFFD200Rating:|r 1000+ in Previous Week |n|cFFFFD200Cost:|r 500 Honor|n|cFFFFD200Vendor:|r Marshal Gabriel|n|cFFFFD200Location:|r Ashvane Docks, Boralus",
+        source_horde: "Rated PVP|n|cFFFFD200Season:|r Season 3 or later|n|cFFFFD200Rating:|r 1000+ in Previous Week |n|cFFFFD200Cost:|r 500 Honor |n|cFFFFD200Vendor:|r Xander Silbermant|n|cFFFFD200Location:|r Mugambala",
         major_power_description: 304086,
         minor_power_description: 304055,
         major_power_actual: 304088,
@@ -860,6 +1043,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 32,
         rank: 3,
+        source_alliance: "Rated PVP|n|cFFFFD200Season:|r Season 3 or later|n|cFFFFD200Rating:|r 1400+ in Previous Week|n|cFFFFD200Cost:|r 1000 Honor|n|cFFFFD200Vendor:|r Marshal Gabriel|n|cFFFFD200Location:|r Ashvane Docks Boralus",
+        source_horde: "Rated PVP|n|cFFFFD200Season:|r Season 3 or later|n|cFFFFD200Rating:|r 1400+ in Previous Week|n|cFFFFD200Cost:|r 1000 Honor|n|cFFFFD200Vendor:|r Xander Silberman|n|cFFFFD200Location:|r Mugambala",
         major_power_description: 303892,
         minor_power_description: 304125,
         major_power_actual: 304121,
@@ -868,6 +1053,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 32,
         rank: 4,
+        source_alliance: "Rated PVP|n|cFFFFD200Season:|r Season 3 or later|n|cFFFFD200Rating:|r 2400+|n|cFFFFD200Drop:|r War Chest|n|cFFFFD200Location:|r Ashvane Docks Boralus",
+        source_horde: "Rated PVP|n|cFFFFD200Season:|r Season 3 or later|n|cFFFFD200Rating:|r 2400+|n|cFFFFD200Drop:|r War Chest|n|cFFFFD200Location:|r Mugambala",
         major_power_description: 303894,
         minor_power_description: 304533,
         major_power_actual: 304121,
@@ -876,6 +1063,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 33,
         rank: 1,
+        source_alliance: "Vale of Eternal Blossoms |n|cFFFFD200Quest chain begins with:|r|n\"It's Never Easy\" |n|cFFFFD200Quest chain ends with:|r|n\"Restored Hope\"|n|cFFFFD200Questgiver:|r Magni Bronzebeard|n|cFFFFD200Location:|r Chamber of Heart",
+        source_horde: "",
         major_power_description: 295046,
         minor_power_description: 295164,
         major_power_actual: 295046,
@@ -884,6 +1073,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 33,
         rank: 2,
+        source_alliance: "Vale of Eternal Blossoms |n|cFFFFD200Combine:|r Breath of Everlasting Spirit |n|cFFFFD200Quest:|r|nFirst of the week Vision of Darkness Daily |n|cFFFFD200Questgiver:|r Darktalon Agent |n|cFFFFD200Location:|r|nNear Visions of Darkness Portals in Uldum or Vale of Eternal Blossoms",
+        source_horde: "",
         major_power_description: 295098,
         minor_power_description: 295349,
         major_power_actual: 299984,
@@ -892,6 +1083,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 33,
         rank: 3,
+        source_alliance: "Vale of Eternal Blossoms|n|cFFFFD200Reputation:|r Rajani - Revered|n|cFFFFD200Vendor:|r Zhang Ku|n|cFFFFD200Location:|r Silent Sanctuary|n|cFFFFD200Cost:|r 50 Corrupted Mementos",
+        source_horde: "",
         major_power_description: 295119,
         minor_power_description: 295353,
         major_power_actual: 299988,
@@ -900,6 +1093,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 33,
         rank: 4,
+        source_alliance: "Vale of Eternal Blossoms |n|cFFFFD200Reputation:|r Rajani Supplies|n|cFFFFD200Vendor:|r Zhang Ku |n|cFFFFD200Location:|r Silent Sanctuary",
+        source_horde: "",
         major_power_description: 295308,
         minor_power_description: 295309,
         major_power_actual: 299988,
@@ -908,6 +1103,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 34,
         rank: 1,
+        source_alliance: "Horrific Visions of N'Zoth|n|cFFFFD200Drop:|r|nThrall or Alleria's Cursed Chests|n|cFFFFD200Location:|r Chamber of Heart",
+        source_horde: "",
         major_power_description: 310592,
         minor_power_description: 310603,
         major_power_actual: 310592,
@@ -916,6 +1113,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 34,
         rank: 2,
+        source_alliance: "Horrific Visions of N'Zoth|n|cFFFFD200Drop:|r|nCorrupted Chests from the Lost Areas|n|cFFFFD200Location:|r Chamber of Heart",
+        source_horde: "",
         major_power_description: 310597,
         minor_power_description: 310605,
         major_power_actual: 310601,
@@ -924,6 +1123,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 34,
         rank: 3,
+        source_alliance: "Horrific Visions of N'Zoth|n|cFFFFD200Combine:|r Spark of Unwavering Strength |n|cFFFFD200Drop:|r|nCorrupted Chests from the Corrupted and Lost Areas|n|cFFFFD200Location:|r Chamber of Heart",
+        source_horde: "",
         major_power_description: 310599,
         minor_power_description: 310606,
         major_power_actual: 310602,
@@ -932,6 +1133,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 34,
         rank: 4,
+        source_alliance: "Horrific Visions of N'Zoth|n|cFFFFD200Achievement:|r|n\"Through the Depths of Visions\"|n|cFFFFD200NPC:|r Wrathion|n|cFFFFD200Location:|r Chamber of Heart",
+        source_horde: "",
         major_power_description: 310600,
         minor_power_description: 310609,
         major_power_actual: 310602,
@@ -940,6 +1143,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 35,
         rank: 1,
+        source_alliance: "Uldum |n|cFFFFD200Quest chain begins with:|r |n\"A Titanic Problem\" |n|cFFFFD200Quest quest reward on:|r |n\"Surfacing Threats\"|n|cFFFFD200Questgiver:|r King Phaoris|n|cFFFFD200Location:|r Ramkahen",
+        source_horde: "",
         major_power_description: 310690,
         minor_power_description: 310712,
         major_power_actual: 310690,
@@ -948,6 +1153,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 35,
         rank: 2,
+        source_alliance: "Uldum|n|cFFFFD200Combine:|r Breath of Everlasting Spirit |n|cFFFFD200Quest:|r |nFirst of the week Vision of Darkness Daily|n|cFFFFD200Questgiver:|r Darktalon Agent |n|cFFFFD200Location:|rNear Visions of Darkness Portals in Uldum or Vale of Eternal Blossoms",
+        source_horde: "",
         major_power_description: 310705,
         minor_power_description: 311166,
         major_power_actual: 311194,
@@ -956,6 +1163,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 35,
         rank: 3,
+        source_alliance: "Uldum|n|cFFFFD200Reputation:|r Uldum Accord - Revered|n|cFFFFD200Vendor:|r Provisioner Qorra|n|cFFFFD200Location:|r Ramkahen|n|cFFFFD200Cost:|r 50 Corrupted Mementos",
+        source_horde: "",
         major_power_description: 310710,
         minor_power_description: 311167,
         major_power_actual: 311195,
@@ -964,6 +1173,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 35,
         rank: 4,
+        source_alliance: "Uldum |n|cFFFFD200Reputation:|r Uldum Accord Supplies|n|cFFFFD200Vendor:|r Provisioner Qorra|n|cFFFFD200Location:|r Ramkahen",
+        source_horde: "",
         major_power_description: 310711,
         minor_power_description: 311177,
         major_power_actual: 311195,
@@ -972,6 +1183,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 36,
         rank: 1,
+        source_alliance: "Horrific Visions of N'Zoth|n|cFFFFD200Drop:|r|nThrall or Alleria's Cursed Chests|n|cFFFFD200Location:|r Chamber of Heart",
+        source_horde: "",
         major_power_description: 311203,
         minor_power_description: 311210,
         major_power_actual: 311203,
@@ -980,6 +1193,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 36,
         rank: 2,
+        source_alliance: "Horrific Visions of N'Zoth|n|cFFFFD200Drop:|r|nCorrupted Chests from the Lost Areas|n|cFFFFD200Location:|r Chamber of Heart",
+        source_horde: "",
         major_power_description: 311206,
         minor_power_description: 311211,
         major_power_actual: 311302,
@@ -988,6 +1203,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 36,
         rank: 3,
+        source_alliance: "Horrific Visions of N'Zoth|n|cFFFFD200Combine:|r Spark of Unwavering Strength |n|cFFFFD200Drop:|r|nCorrupted Chests from the Corrupted and Lost Areas|n|cFFFFD200Location:|r Chamber of Heart",
+        source_horde: "",
         major_power_description: 311207,
         minor_power_description: 311212,
         major_power_actual: 311303,
@@ -996,6 +1213,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 36,
         rank: 4,
+        source_alliance: "Horrific Visions of N'Zoth|n|cFFFFD200Achievement:|r|n\"Through the Depths of Visions\"|n|cFFFFD200NPC:|r Wrathion|n|cFFFFD200Location:|r Chamber of Heart",
+        source_horde: "",
         major_power_description: 311209,
         minor_power_description: 311213,
         major_power_actual: 311303,
@@ -1004,6 +1223,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 37,
         rank: 1,
+        source_alliance: "Ny'alotha Raid|n|cFFFFD200Combine:|r |nEncrypted Ny'alothan Texts|n|cFFFFD200Drop:|r |nThe Prophet Skitra, Ra'den the Despoiled, Vexiona, Il'gynoth, Corruption Reborn or N'Zoth, the Corruptor.",
+        source_horde: "",
         major_power_description: 312725,
         minor_power_description: 312771,
         major_power_actual: 312725,
@@ -1012,6 +1233,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 37,
         rank: 2,
+        source_alliance: "Ny'alotha Raid|n|cFFFFD200Combine:|r |nEncrypted Ny'alothan Texts|n|cFFFFD200Drop:|r |nThe Prophet Skitra, Ra'den the Despoiled, Vexiona, Il'gynoth, Corruption Reborn or N'Zoth, the Corruptor.",
+        source_horde: "",
         major_power_description: 312764,
         minor_power_description: 312773,
         major_power_actual: 313921,
@@ -1020,6 +1243,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 37,
         rank: 3,
+        source_alliance: "Ny'alotha Raid|n|cFFFFD200Combine:|r |nEncrypted Ny'alothan Texts|n|cFFFFD200Drop:|r |nThe Prophet Skitra, Ra'den the Despoiled, Vexiona, Il'gynoth, Corruption Reborn or N'Zoth, the Corruptor.",
+        source_horde: "",
         major_power_description: 312768,
         minor_power_description: 312774,
         major_power_actual: 313922,
@@ -1028,6 +1253,8 @@ pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[
     AzeriteEssencePowerRecord {
         essence_id: 37,
         rank: 4,
+        source_alliance: "Ny'alotha Raid|n|cFFFFD200Drop:|r |nN'Zoth, the Corruptor - Mythic",
+        source_horde: "",
         major_power_description: 312770,
         minor_power_description: 312775,
         major_power_actual: 313922,
