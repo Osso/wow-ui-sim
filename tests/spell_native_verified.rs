@@ -11,7 +11,7 @@ use std::collections::HashMap;
 use crate::common::blizzard_addon_harness::{blizzard_ui_dir, build_blizzard_addon_closure_env};
 use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
 use wow_ui_sim::loader::discover_blizzard_startup_addons_for_screen;
-use wow_ui_sim::lua_api::WowLuaEnv;
+use wow_ui_sim::lua_api::{WowLuaEnv, state::BagItem};
 use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::toc::TocFile;
 
@@ -41,6 +41,20 @@ fn load_selected_consumers(roots: &[&str], function: &str, source_suffix: &str) 
     ))
     .expect("selected consumer source must be loaded from the pinned cache");
     env
+}
+
+fn add_bag_stack(env: &WowLuaEnv, slot: i32, item_id: u32, stack_count: i32) {
+    env.state().borrow_mut().bag_items.insert(
+        (0, slot),
+        BagItem {
+            owned_identity: None,
+            item_id,
+            stack_count,
+            hyperlink: None,
+            durability: None,
+            applied_transmog: None,
+        },
+    );
 }
 
 #[test]
@@ -97,6 +111,8 @@ fn ranged_auto_attack_spell_consumer_uses_the_shared_identifier() {
             'matching spell status=' .. tostring(status(31337)))
         assert(status(31338) == statuses.MissingFromAllBars,
             'different spell status=' .. tostring(status(31338)))
+        assert(C_Spell.IsRangedAutoAttackSpell(31337) == true)
+        assert(C_Spell.IsRangedAutoAttackSpell(31338) == false)
         "#,
     )
     .expect("the original SpellSearch consumer must exempt only the shared ranged spell ID");
@@ -120,9 +136,10 @@ fn cast_count_null_context_returns_zero_through_cooldown_viewer() {
     );
     {
         let mut state = env.state().borrow_mut();
-        state.spell_cast_counts.insert(19_750, 7);
+        state.spell_reagent_pairs.insert(19_750, vec![(31_001, 1)]);
         state.spell_cast_context_is_null = Some(true);
     }
+    add_bag_stack(&env, 1, 31_001, 7);
 
     env.exec(
         r#"
@@ -150,7 +167,110 @@ fn cast_count_null_context_returns_zero_through_cooldown_viewer() {
         assert(R88KCooldownItem.count == 7 and R88KCooldownItem.shown == true)
         "#,
     )
-    .expect("a supplied completed count remains visible when the context is non-null");
+    .expect("the explicit non-null context reads the supplied reagent inventory");
+}
+
+#[test]
+fn cast_count_uses_the_eight_reagent_minimum_at_the_api_boundary() {
+    let env = WowLuaEnv::new().expect("real spell namespace");
+    {
+        let mut state = env.state().borrow_mut();
+        state.spell_cast_context_is_null = Some(false);
+        state.spell_cast_counts.insert(19_750, 99);
+        state.spell_reagent_pairs.insert(
+            19_750,
+            vec![
+                (31_001, 2),
+                (31_002, 3),
+                (0, 1),
+                (-2, 1),
+                (31_003, 0),
+                (31_004, -1),
+                (31_005, 2),
+                (31_006, 1),
+                (31_007, 1),
+            ],
+        );
+    }
+    for (slot, item_id, count) in [
+        (1, 31_001, 9),
+        (2, 31_002, 10),
+        (3, 31_005, 20),
+        (4, 31_006, 99),
+        (5, 31_007, 0),
+    ] {
+        add_bag_stack(&env, slot, item_id, count);
+    }
+
+    let (arity, count): (i64, i64) = env
+        .eval("return select('#', C_Spell.GetSpellCastCount(19750)), C_Spell.GetSpellCastCount(19750)")
+        .expect("cast count must publish a number");
+    assert_eq!((arity, count), (1, 3));
+
+    {
+        let mut state = env.state().borrow_mut();
+        state
+            .spell_reagent_pairs
+            .insert(19_750, vec![(0, 1), (-2, 1)]);
+    }
+    let empty: i64 = env
+        .eval("return C_Spell.GetSpellCastCount(19750)")
+        .expect("no eligible reagent limit returns numeric zero");
+    assert_eq!(empty, 0);
+
+    {
+        let mut state = env.state().borrow_mut();
+        state
+            .spell_reagent_pairs
+            .insert(999_999_999, vec![(31_001, 1)]);
+        state.spell_cast_counts.insert(999_999_999, 11);
+    }
+    let missing_spell: i64 = env
+        .eval("return C_Spell.GetSpellCastCount(999999999)")
+        .expect("a Spell-store miss returns numeric zero");
+    assert_eq!(missing_spell, 0);
+}
+
+#[test]
+fn inferred_admin_spell_changes_update_the_ranged_identifier() {
+    let env = load_selected_consumers(
+        &["Blizzard_SharedTalentUI", "Blizzard_ActionBar"],
+        "SpellSearchUtil.GetActionbarStatusForSpellBookItemInfo",
+        "Blizzard_SpellSearch/Blizzard_SpellSearchUtil.lua",
+    );
+    // INFERRED simulator wiring: A_Admin spell changes exercise the verified metadata writer.
+    env.exec(
+        r#"
+        assert(C_Spell.IsRangedAutoAttackSpell(0) == true)
+        A_Admin.LearnSpell(235450)
+        assert(C_Spell.IsRangedAutoAttackSpell(235450) == true)
+        A_Admin.LearnSpell(11426)
+        assert(C_Spell.IsRangedAutoAttackSpell(235450) == false)
+        assert(C_Spell.IsRangedAutoAttackSpell(11426) == true)
+        A_Admin.UnlearnSpell(235450)
+        assert(C_Spell.IsRangedAutoAttackSpell(11426) == true)
+        A_Admin.UnlearnSpell(11426)
+        assert(C_Spell.IsRangedAutoAttackSpell(0) == true)
+        A_Admin.LearnSpell(116)
+        assert(C_Spell.IsRangedAutoAttackSpell(0) == true)
+        "#,
+    )
+    .expect("the inferred admin input path updates only metadata-selected IDs");
+}
+
+#[test]
+fn inferred_default_spell_context_uses_the_active_player_inventory() {
+    let env = WowLuaEnv::new().expect("real spell namespace");
+    {
+        let mut state = env.state().borrow_mut();
+        assert_eq!(state.spell_cast_context_is_null, None);
+        state.spell_reagent_pairs.insert(19_750, vec![(31_001, 2)]);
+    }
+    add_bag_stack(&env, 1, 31_001, 10);
+    let count: i64 = env
+        .eval("return C_Spell.GetSpellCastCount(19750)")
+        .expect("the inferred active-player context reads the current bag inventory");
+    assert_eq!(count, 5);
 }
 
 fn assert_spell_flyout_text(env: &WowLuaEnv, expected: &str) {
@@ -208,8 +328,8 @@ fn display_count_uses_verified_reagent_mode_before_charge_mode() {
     )
     .unwrap();
 
-    // Reagent -2 qualifies for display-mode selection even though the later cast helper excludes it.
-    assert_spell_flyout_text(&env, "7");
+    // VERIFIED: reagent -2 selects display cast mode, then the cast helper excludes it.
+    assert_spell_flyout_text(&env, "0");
 
     {
         let mut state = env.state().borrow_mut();
@@ -250,14 +370,20 @@ fn visibility_info_failure_and_success_keep_distinct_return_shapes() {
         )
         .expect("Retail visibility enums");
 
-    env.state().borrow_mut().spell_visibility_results = None;
+    {
+        let mut state = env.state().borrow_mut();
+        state.spell_cast_context_is_null = Some(true);
+        state.spell_visibility_results = Some(HashMap::new());
+    }
     env.exec(&format!(
         "local count = select('#', C_Spell.GetVisibilityInfo(19750, {raid_out}))\n\
          assert(count == 0, 'null-context return count=' .. tostring(count))\n\
+         assert(C_Spell.GetSpellCastCount(19750) == 0)\n\
          assert(AuraUtil.ShouldDisplayDebuff('party1', 19750) == true)"
     ))
-    .expect("the null-context failure returns no values through AuraUtil");
+    .expect("the shared null context returns no visibility values through AuraUtil");
 
+    env.state().borrow_mut().spell_cast_context_is_null = Some(false);
     env.state().borrow_mut().spell_visibility_results = Some(HashMap::new());
     env.exec(&format!(
         r#"

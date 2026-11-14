@@ -1,5 +1,5 @@
-//! Batch67 exact301/309. Inferred provider/domain/privacy policies, no native parity.
-//! Scaffold only: compiled RED must precede any getter or publication change.
+//! Retail 12.1.5 reagent-count behavior plus bounded cast/display input controls.
+//! Unsupported metadata modes and full inventory inclusion rules remain unasserted.
 #![cfg(all(
     feature = "retail-12-0-5",
     any(feature = "profile-retail", feature = "client-ptr")
@@ -10,7 +10,8 @@ use rilua::table_security::{
 };
 use rilua::{LuaApiMut, Val};
 use wow_ui_sim::c_api::{ActionUseCountInfo, charge_state::SpellChargeState};
-use wow_ui_sim::lua_api::WowLuaEnv;
+use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
+use wow_ui_sim::lua_api::{WowLuaEnv, state::BagItem};
 
 const ASSERTIONS: &str = r#"
     function SCTainted(probe)
@@ -55,7 +56,14 @@ fn fixture(restricted: bool) -> WowLuaEnv {
     {
         let mut state = env.state().borrow_mut();
         assert!(state.spell_cast_counts.is_empty());
-        state.spell_cast_counts.extend([(19750, 7), (642, 2)]);
+        if ACTIVE == ClientProfile::Retail {
+            state.bag_items.clear();
+            state.spell_reagent_pairs.clear();
+            set_reagent_count(&mut state, 19750, 7);
+            set_reagent_count(&mut state, 642, 2);
+        } else {
+            state.spell_cast_counts.extend([(19750, 7), (642, 2)]);
+        }
         state.spell_id_aliases.clear();
         state.spell_id_aliases.extend([
             ("fixtureheal".into(), 19750),
@@ -94,11 +102,58 @@ fn populate_action_slots(state: &mut wow_ui_sim::lua_api::SimState) {
     ]);
 }
 
+fn reagent_item_id(spell_id: u32) -> u32 {
+    spell_id % i32::MAX as u32 + 1
+}
+
+fn set_reagent_count(state: &mut wow_ui_sim::lua_api::SimState, spell_id: u32, count: u32) {
+    let item_id = reagent_item_id(spell_id);
+    state
+        .spell_reagent_pairs
+        .insert(spell_id, vec![(item_id as i32, 1)]);
+    state.bag_items.retain(|_, item| item.item_id != item_id);
+
+    let mut remaining = count;
+    let mut slot = 1;
+    while remaining > 0 {
+        while state.bag_items.contains_key(&(0, slot)) {
+            slot += 1;
+        }
+        let stack_count = remaining.min(i32::MAX as u32);
+        state.bag_items.insert(
+            (0, slot),
+            BagItem {
+                owned_identity: None,
+                item_id,
+                stack_count: stack_count as i32,
+                hyperlink: None,
+                durability: None,
+                applied_transmog: None,
+            },
+        );
+        remaining -= stack_count;
+        slot += 1;
+    }
+}
+
 fn set_count(env: &WowLuaEnv, spell_id: u32, count: u32) {
-    env.state()
-        .borrow_mut()
-        .spell_cast_counts
-        .insert(spell_id, count);
+    let mut state = env.state().borrow_mut();
+    if ACTIVE == ClientProfile::Retail {
+        set_reagent_count(&mut state, spell_id, count);
+    } else {
+        state.spell_cast_counts.insert(spell_id, count);
+    }
+}
+
+fn clear_count(env: &WowLuaEnv, spell_id: u32) {
+    let mut state = env.state().borrow_mut();
+    if ACTIVE == ClientProfile::Retail {
+        let item_id = reagent_item_id(spell_id);
+        state.spell_reagent_pairs.remove(&spell_id);
+        state.bag_items.retain(|_, item| item.item_id != item_id);
+    } else {
+        state.spell_cast_counts.remove(&spell_id);
+    }
 }
 
 fn set_charge(env: &WowLuaEnv, current: u32, max: u32) {
@@ -339,13 +394,24 @@ fn alias_first_numeric_and_string_overrides_follow_caller_identity() {
 }
 
 #[test]
-fn public_numeric_identity_can_read_host_count_without_catalog_acquisition() {
+fn retail_cast_count_requires_spell_store_membership() {
     let env = fixture(false);
     set_count(&env, 880001, 11);
     set_count(&env, 0, 4);
-    for (id, count, text) in [("880001", 11, "11"), ("0", 4, "4")] {
-        cast_count(&env, id, count, false);
-        display(&env, id, text, false);
+    if ACTIVE == ClientProfile::Retail {
+        env.state()
+            .borrow_mut()
+            .spell_cast_counts
+            .insert(880001, 11);
+        for id in ["880001", "0"] {
+            cast_count(&env, id, 0, false);
+            display(&env, id, "0", false);
+        }
+    } else {
+        for (id, count, text) in [("880001", 11, "11"), ("0", 4, "4")] {
+            cast_count(&env, id, count, false);
+            display(&env, id, text, false);
+        }
     }
 }
 
@@ -367,7 +433,7 @@ fn unresolved_strings_never_reverse_numeric_keys_or_alias_values() {
 fn same_spell_two_slots_with_99_and_3_cannot_supply_spell_count_seven() {
     let env = fixture(false);
     positive(&env);
-    env.state().borrow_mut().spell_cast_counts.remove(&19750);
+    clear_count(&env, 19750);
     cast_count(&env, "19750", 0, false);
     display(&env, "19750", "", false);
     set_count(&env, 19750, 7);
@@ -380,7 +446,7 @@ fn same_spell_two_slots_with_99_and_3_cannot_supply_spell_count_seven() {
 fn missing_known_and_unknown_numeric_sources_return_zero_and_empty() {
     let env = fixture(false);
     positive(&env);
-    env.state().borrow_mut().spell_cast_counts.remove(&19750);
+    clear_count(&env, 19750);
     for id in ["19750", "880001", "4294967295"] {
         cast_count(&env, id, 0, false);
         display(&env, id, "", false);
@@ -404,7 +470,8 @@ fn count_replace_and_clear_are_live_without_cast_consumption() {
     set_count(&env, 19750, 12);
     cast_count(&env, "19750", 12, false);
     display(&env, "19750", "12", false);
-    env.state().borrow_mut().spell_cast_counts.clear();
+    clear_count(&env, 19750);
+    clear_count(&env, 642);
     cast_count(&env, "19750", 0, false);
     display(&env, "642", "", false);
     set_count(&env, 642, 8);
@@ -413,32 +480,68 @@ fn count_replace_and_clear_are_live_without_cast_consumption() {
 }
 
 #[test]
-fn typed_valid_charges_override_display_only_cast_stays_seven() {
+fn retail_reagent_mode_precedes_charge_mode_without_changing_cast_count() {
     let env = fixture(false);
     set_charge(&env, 3, 5);
     cast_count(&env, "19750", 7, false);
-    display(&env, "19750", "3", false);
+    if ACTIVE == ClientProfile::Retail {
+        display(&env, "19750", "7", false);
+        clear_count(&env, 19750);
+        display(&env, "19750", "3", false);
+    } else {
+        display(&env, "19750", "3", false);
+    }
     display(&env, "642", "2", false);
 }
 
 #[test]
 fn zero_max_is_ignored_and_charge_zero_updates_and_clear_are_live() {
     let env = fixture(false);
+    if ACTIVE == ClientProfile::Retail {
+        clear_count(&env, 19750);
+    }
     set_charge(&env, 3, 0);
-    display(&env, "19750", "7", false);
+    display(
+        &env,
+        "19750",
+        if ACTIVE == ClientProfile::Retail {
+            ""
+        } else {
+            "7"
+        },
+        false,
+    );
     set_charge(&env, 0, 5);
     display(&env, "19750", "0", false);
     set_charge(&env, 4, 5);
     display(&env, "19750", "4", false);
     env.state().borrow_mut().spell_charges.clear();
-    display(&env, "19750", "7", false);
-    cast_count(&env, "19750", 7, false);
+    display(
+        &env,
+        "19750",
+        if ACTIVE == ClientProfile::Retail {
+            ""
+        } else {
+            "7"
+        },
+        false,
+    );
+    cast_count(
+        &env,
+        "19750",
+        if ACTIVE == ClientProfile::Retail {
+            0
+        } else {
+            7
+        },
+        false,
+    );
 }
 
 #[test]
 fn charges_alone_never_supply_cast_counts() {
     let env = fixture(false);
-    env.state().borrow_mut().spell_cast_counts.remove(&19750);
+    clear_count(&env, 19750);
     set_charge(&env, 3, 5);
     cast_count(&env, "19750", 0, false);
     display(&env, "19750", "3", false);
@@ -466,8 +569,14 @@ fn strict_beyond_threshold_equality_fractional_negative_and_charge_quantity() {
         display(&env, args, expected, false);
     }
     set_charge(&env, 3, 5);
-    display(&env, "19750,3", "3", false);
-    display(&env, "19750,2.5", "*", false);
+    if ACTIVE == ClientProfile::Retail {
+        clear_count(&env, 19750);
+        display(&env, "19750,3", "3", false);
+        display(&env, "19750,2.5", "3", false);
+    } else {
+        display(&env, "19750,3", "3", false);
+        display(&env, "19750,2.5", "*", false);
+    }
 }
 
 #[test]
@@ -504,7 +613,7 @@ fn queries_are_read_only_and_environments_and_result_replacements_isolated() {
     let env = fixture(false);
     let other = fixture(false);
     set_charge(&env, 3, 5);
-    let (counts, charges, aliases, bars, slots) = {
+    let (counts, charges, aliases, bars, slots, reagents, bags) = {
         let state = env.state().borrow();
         (
             state.spell_cast_counts.clone(),
@@ -512,20 +621,31 @@ fn queries_are_read_only_and_environments_and_result_replacements_isolated() {
             state.spell_id_aliases.clone(),
             state.action_bars.clone(),
             state.action_use_counts.clone(),
+            state.spell_reagent_pairs.clone(),
+            state
+                .bag_items
+                .iter()
+                .map(|(slot, item)| (*slot, (item.item_id, item.stack_count)))
+                .collect::<std::collections::BTreeMap<_, _>>(),
         )
     };
-    env.exec(
+    let display_count = if ACTIVE == ClientProfile::Retail {
+        "7"
+    } else {
+        "3"
+    };
+    env.exec(&format!(
         r#"
         local c = C_Spell.GetSpellCastCount
         local d = C_Spell.GetSpellDisplayCount
         for i=1,8 do
             assert(c('fixtureheal')==7)
-            assert(d('fixtureheal')=='3')
+            assert(d('fixtureheal')=='{display_count}')
         end
         SCResult = 'replaced'
-        assert(d(19750)=='3')
-    "#,
-    )
+        assert(d(19750)=='{display_count}')
+    "#
+    ))
     .unwrap();
     {
         let state = env.state().borrow();
@@ -534,6 +654,13 @@ fn queries_are_read_only_and_environments_and_result_replacements_isolated() {
         assert_eq!(state.spell_id_aliases, aliases);
         assert_eq!(state.action_bars, bars);
         assert_eq!(state.action_use_counts, slots);
+        assert_eq!(state.spell_reagent_pairs, reagents);
+        let current_bags = state
+            .bag_items
+            .iter()
+            .map(|(slot, item)| (*slot, (item.item_id, item.stack_count)))
+            .collect::<std::collections::BTreeMap<_, _>>();
+        assert_eq!(current_bags, bags);
     }
     set_count(&env, 642, 9);
     positive(&other);
