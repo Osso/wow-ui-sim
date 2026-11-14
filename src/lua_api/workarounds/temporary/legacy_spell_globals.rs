@@ -49,8 +49,16 @@ if IsPressHoldReleaseSpell == nil and C_Spell ~= nil then
     end
 end
 if IsSelectedSpellBookItem == nil then
-    function IsSelectedSpellBookItem(slotIndex, _unit)
+    function IsSelectedSpellBookItem(slotIndex, bank)
         if type(slotIndex) == "number" and slotIndex <= 0 then
+            return
+        end
+        // The simulator's spellbook data has a contiguous player bank only.
+        if type(slotIndex) == "number"
+            and slotIndex % 1 == 0
+            and (type(bank) == "string" or type(bank) == "number")
+            and bank ~= "pet"
+            and C_SpellBook.GetSpellBookItemInfo(slotIndex) == nil then
             return
         end
         return false
