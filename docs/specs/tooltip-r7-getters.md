@@ -14,7 +14,7 @@ The Round 7 `C_TooltipInfo` getters use native argument readers and tooltip buil
 - [x] Optional recipe labels and next-rank source text use only host-supplied strings; the simulator does not synthesize a recipe catalogue or source lookup.
 - [x] Retail recipe-rank misses for an absent recipe, required parent, or base spell return exactly zero Lua values (R88n.1).
 - [x] Host cache insertion keeps the existing recipe record when the same recipe ID is supplied again (R88n.4a).
-- [ ] On Retail, clear the host cache on the modeled trade-skill initialization and dirty rebuild routes (R88n.4b).
+- [x] On Retail, clear the host cache on the modeled trade-skill initialization and dirty rebuild routes (R88n.4b).
 - [x] For `GetRuneforgeResultItem`, resolve the supplied GUID to an owned modeled item instance, preserve its identity, apply the supplied displayed level, and use the shared item tooltip builder when no unmodeled power/modifiers are requested.
 - [x] `C_Item.GetItemNumSockets` must reject a secret `itemInfo` argument from a tainted caller on Retail/PTR/Forever with the modeled native `AllowedWhenUntainted` error; an untainted caller may read the argument.
 - [x] On Retail, `GetQuestLogSpecialItem` resolves the one-based index through host-supplied quest-ID request context, reads primary/candidate item IDs from a separate host-supplied cache record, and uses only a host-supplied selected inventory object whose ID matches that record. It uses the shared item builder and publishes the selected instance GUID.
@@ -44,7 +44,7 @@ The Round 7 `C_TooltipInfo` getters use native argument readers and tooltip buil
 ## Tests asserting this spec
 
 - `tests/tooltip_round7.rs` — registration, argument conversion, usage errors, original accessor miss paths, secret rejection and populated owned runeforge item instances.
-- `tests/tooltip_recipe_rank_info.rs` — original `TooltipDataHandler` accessor selectors, cache duplicate retention, wrapped threshold-colored descriptions and exact miss arity.
+- `tests/tooltip_recipe_rank_info.rs` — original `TooltipDataHandler` accessor selectors, cache duplicate retention, wrapped threshold-colored descriptions, exact miss arity, and modeled initialization/rebuild cache clears.
 - `tests/tooltip_quest_party_progress.rs` — selected ObjectiveTracker consumers, original tooltip accessor selectors, exact missing-source counts, and supplied owned-item selection.
 - `tests/tooltip_lfg_rewards.rs` — selected GroupFinder reward consumers, distinct ordinary/shortage entries and API-level no-value misses.
 - `src/c_api/c_tooltip_info_round7.rs::tests::populated_azerite_selection_misses_without_rank_spell_data` — the existing current-rank/active-slot state is populated, while the missing rank-to-spell producer retains the no-values result.
@@ -53,7 +53,7 @@ The Round 7 `C_TooltipInfo` getters use native argument readers and tooltip buil
 ## Known gaps (current cycle)
 
 - [ ] Azerite state supplies current essence ranks and active slots, but the rank-to-spell tooltip catalogue is absent; the getters return no values after resolving only the modeled selection. Possession spell/context, selected item-interaction descriptors and slotted-keystone GUID state are also not modeled; these getters return no values.
-- [ ] The native recipe-cache population writer, complete external invalidation triggers, learned-status semantics and player/faction source lookup remain unknown. R88n.4b verifies direct clear callers at trade-skill initialization and rebuild but does not identify other external triggers. Recipe source text and labels are explicit host inputs; specialization wording is not derived.
+- [ ] The native recipe-cache population writer, complete external invalidation triggers, learned-status semantics and player/faction source lookup remain unknown. R88n.4b verifies two direct clear callers; the simulator clears only on its modeled initialization and dirty rebuild routes. Recipe source text and labels are explicit host inputs; specialization wording is not derived.
 - [ ] `GetQuestLogSpecialItem` keeps quest-ID context, quest-cache fields, and the selected inventory object as separate empty-by-default host inputs. The upstream cache, inventory/object writers, candidate predicates, and invalidation routes remain UNKNOWN. The native owner-GUID request context is not consumed by the shared simulator item builder.
 - [ ] `GetQuestPartyProgress` has no native progress-tree writer or party-progress query service. Its host-supplied snapshots start empty; member/objective values are not derived. R88n.3 confirms the writer routes remain UNKNOWN. **UNKNOWN:** Native return shape when a successful query has no output rows (for example, `omitTitle=true` with every participant filtered); this simulator returns zero values when its supplied snapshot emits no rows.
 - [ ] Native getter-specific RGB/data-instance publication beyond the shared builder is not independently established; the Retail implementation reuses the existing shared serializer.
