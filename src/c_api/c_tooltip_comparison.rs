@@ -1,11 +1,13 @@
 //! R88n.6 (Retail 70688): ordinary descriptor/object readers and result shape.
 //! Native callback publication and full guarded failures are outside this model.
 
+mod model;
+
 use crate::c_api::helpers::{bad_argument, ensure_namespace, parse_numeric_string};
 use crate::c_api::item_spell::{item_guid_for_bag_slot, parse_item_guid};
 use crate::lua_api::methods::{
-    borrow_state, ensure_not_fully_locked_down, frame_id_from_stack_unrestricted, table_get,
-    val_to_string,
+    borrow_state, create_string, create_table, ensure_not_fully_locked_down,
+    frame_id_from_stack_unrestricted, table_get, table_set, table_set_num, val_to_string,
 };
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use crate::widget::WidgetType;
@@ -197,29 +199,58 @@ fn compare_item(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn comparison_info(state: &mut LuaState) -> LuaResult<u32> {
-    let ComparisonItem {
-        identity,
-        override_level,
-    } = read_item(state, 1, Api::Info)?;
-    // The contract layer has no modeled comparison context yet.
-    match identity {
-        ItemIdentity::Guid { bag, slot, item_id } => {
-            let _ = (bag, slot, item_id, override_level);
+    let source = read_item(state, 1, Api::Info)?;
+    let Some(selection) = model::select(state, &source)? else {
+        return Ok(0);
+    };
+    publish_info(state, selection);
+    Ok(1)
+}
+
+fn publish_info(state: &mut LuaState, selection: model::Selection) {
+    let record = create_table(state);
+    state.push(record);
+    // VERIFIED: Single=0; the other native weapon methods are not inferred.
+    table_set(state, record, "method", Val::Num(0.0));
+    publish_hyperlink_field(state, &selection.item, |state, item| {
+        table_set(state, record, "item", item);
+    });
+    let additional = create_table(state);
+    table_set(state, record, "additionalItems", additional);
+    if let Val::Table(additional) = additional {
+        for (index, link) in selection.additional_items.into_iter().enumerate() {
+            publish_hyperlink_field(state, &link, |state, item| {
+                table_set_num(state, additional, (index + 1) as f64, item);
+            });
         }
-        ItemIdentity::Hyperlink(link) => drop((link, override_level)),
     }
-    Ok(0)
+}
+
+fn publish_hyperlink_field(
+    state: &mut LuaState,
+    link: &str,
+    attach: impl FnOnce(&mut LuaState, Val),
+) {
+    let item = create_table(state);
+    attach(state, item); // Root it in an already reachable result before allocating strings.
+    let link = create_string(state, link);
+    table_set(state, item, "hyperlink", link);
 }
 
 fn comparison_delta(state: &mut LuaState) -> LuaResult<u32> {
-    read_item(state, 1, Api::Delta)?;
-    read_item(state, 2, Api::Delta)?;
-    if !stack_val(state, 3).is_nil() {
-        read_item(state, 3, Api::Delta)?;
-    }
-    let _ = Api::Delta
+    let source = read_item(state, 1, Api::Delta)?;
+    let equipped = read_item(state, 2, Api::Delta)?;
+    let paired = if stack_val(state, 3).is_nil() {
+        None
+    } else {
+        Some(read_item(state, 3, Api::Delta)?)
+    };
+    let add_paired = Api::Delta
         .readable(state, stack_val(state, 4), 4)?
         .is_truthy();
-    // The contract layer has no modeled item-stat comparison yet.
-    Ok(0)
+    let Some(lines) = model::delta(state, &source, &equipped, paired.as_ref(), add_paired)? else {
+        return Ok(0);
+    };
+    crate::c_api::tooltip_data::push_string_lines(state, &lines);
+    Ok(1)
 }
