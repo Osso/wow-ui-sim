@@ -464,7 +464,7 @@ macro_rules! build_empty_sim_state {
             recipe_quality_inputs: Default::default(),
             recipe_source_text: Default::default(),
             crafted_item_quality: Default::default(),
-            #[cfg(feature = "retail-12-0-0")]
+            #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
             pvp_catalog: Default::default(),
             #[cfg(feature = "retail-12-0-0")]
             prey_inputs: Default::default(),

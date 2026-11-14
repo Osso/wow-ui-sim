@@ -49,7 +49,7 @@ mod brawl_info;
 #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 pub use brawl_info::{PvpBrawlInfo, SpecialEventBrawlInfo};
 
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 pub mod catalog;
 use crate::c_api::ensure_namespace;
 #[cfg(feature = "retail-12-1-0")]
@@ -122,7 +122,7 @@ pub(crate) fn register_c_pvp_surface(state: &mut LuaState) -> LuaResult<()> {
             war_mode::is_war_mode_desired,
         )?;
     }
-    #[cfg(feature = "retail-12-0-0")]
+    #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
     catalog::register(state, ns)?;
     #[cfg(any(
         all(

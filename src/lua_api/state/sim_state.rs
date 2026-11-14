@@ -243,7 +243,7 @@ pub struct SimState {
     /// Explicit per-item supplied quality; independent of recipe inputs, initially empty.
     pub crafted_item_quality:
         HashMap<u32, crate::c_api::c_trade_skill_quality::CraftingQualityInfo>,
-    #[cfg(feature = "retail-12-0-0")]
+    #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
     pub pvp_catalog: crate::c_api::c_pvp::catalog::PvpCatalog,
     #[cfg(feature = "retail-12-0-0")]
     pub prey_inputs: crate::c_api::c_prey::PreyInputs,

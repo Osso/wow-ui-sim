@@ -155,3 +155,30 @@ fn forever_original_aura_util_uses_supplied_visibility() {
     )
     .expect("original AuraUtil must consume the distinct host visibility rows");
 }
+
+// API-level backing check: Camelot's original UnitFrame only observes
+// publication, not the populated reward. Its style disables prestige and
+// PVPMatchTableOverrides.lua replaces the shared honor cell's texture lookup.
+#[test]
+fn forever_honor_reward_query_projects_supplied_rows() {
+    let env = WowLuaEnv::new().unwrap();
+    {
+        let mut sim = env.state().borrow_mut();
+        for (level, badge) in [(2, 202), (6, 606)] {
+            sim.pvp_catalog.honor_rewards.insert(
+                level,
+                wow_ui_sim::c_api::c_pvp::catalog::HonorRewardInfo {
+                    badge_file_data_id: badge,
+                    ..Default::default()
+                },
+            );
+        }
+    }
+    env.exec(
+        r#"
+        assert(C_PvP.GetHonorRewardInfo(2).badgeFileDataID == 202)
+        assert(C_PvP.GetHonorRewardInfo(6).badgeFileDataID == 606)
+        "#,
+    )
+    .expect("the shared honor query must project actual supplied rows");
+}
