@@ -130,34 +130,6 @@ pub(crate) fn pickup_container_item(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
-/// Return a bag cursor item to its original empty slot and clear the cursor.
-pub(crate) fn return_cursor_item_to_origin_bag(
-    state: &mut LuaState,
-    expected: (i32, i32, u32),
-) -> LuaResult<bool> {
-    {
-        let mut sim = borrow_state_mut(state)?;
-        let (bag, slot, item_id) = match sim.cursor_item.as_ref() {
-            Some(CursorInfo::Item {
-                item_id,
-                origin: CursorItemOrigin::Bag { bag, slot },
-                ..
-            }) => (*bag, *slot, *item_id),
-            _ => return Ok(false),
-        };
-        if (bag, slot, item_id) != expected || sim.bag_items.contains_key(&(bag, slot)) {
-            return Ok(false);
-        }
-        let Some(item) = read_cursor_bag_item(&sim) else {
-            return Ok(false);
-        };
-        item_upgrade_eligibility::swap_with_cursor(&mut sim, ItemSlot::Bag(bag, slot));
-        sim.bag_items.insert((bag, slot), item);
-    }
-    apply_cursor(state, None)?;
-    Ok(true)
-}
-
 /// Apply a transfer's resulting cursor through the shared clear/place model.
 fn apply_cursor(state: &mut LuaState, next: Option<CursorInfo>) -> LuaResult<()> {
     match next {

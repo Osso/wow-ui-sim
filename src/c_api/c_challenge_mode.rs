@@ -103,33 +103,38 @@ fn slot_keystone(state: &mut LuaState) -> LuaResult<u32> {
     let Some((bag, slot, item_id)) = cursor_keystone_item(state)? else {
         return Ok(0);
     };
-    if !crate::c_api::container_inventory::return_cursor_item_to_origin_bag(
-        state,
-        (bag, slot, item_id),
-    )? {
+    if borrow_state(state)?.item_info(item_id).is_none() {
         return Ok(0);
     }
+
+    crate::lua_api::globals::real::cursor_model::clear_retaining_equip_lock(state)?;
+
+    let has_context_and_item = {
+        let sim = borrow_state(state)?;
+        sim.player.present && sim.item_info(item_id).is_some()
+    };
+    if !has_context_and_item || !item_id_is_keystone(item_id) {
+        return Ok(0);
+    }
+
+    // SIMULATOR GAP (R88o.2 q2): map-modifier/current-map validation and its
+    // native error are not modeled; this lane needs the resolved key identity.
     let guid = item_guid_for_bag_slot(bag, slot, item_id);
     let location = KeystoneLocation::Bag(bag, slot);
     set_selected_keystone(state, guid, location, item_id)?;
 
-    // The native notification follows its item-data query; only publish when
-    // this simulator has the queried item record.
-    if borrow_state(state)?.item_info(item_id).is_some() {
-        crate::lua_api::globals::state_backed_queries::dispatch_event_now(
-            state,
-            "CHALLENGE_MODE_KEYSTONE_SLOTTED",
-            &[Val::Num(f64::from(item_id))],
-        )?;
-    }
+    // VERIFIED (R88o.2 q2): the query callback requests this event after the
+    // selection stores, including on a terminal no-row result.
+    crate::lua_api::globals::state_backed_queries::dispatch_event_now(
+        state,
+        "CHALLENGE_MODE_KEYSTONE_SLOTTED",
+        &[Val::Num(f64::from(item_id))],
+    )?;
     Ok(0)
 }
 
 fn cursor_keystone_item(state: &LuaState) -> LuaResult<Option<(i32, i32, u32)>> {
     let sim = borrow_state(state)?;
-    if !sim.player.present {
-        return Ok(None);
-    }
     let Some(CursorInfo::Item {
         item_id,
         origin: CursorItemOrigin::Bag { bag, slot },
@@ -138,7 +143,7 @@ fn cursor_keystone_item(state: &LuaState) -> LuaResult<Option<(i32, i32, u32)>> 
     else {
         return Ok(None);
     };
-    Ok(item_id_is_keystone(*item_id).then_some((*bag, *slot, *item_id)))
+    Ok(Some((*bag, *slot, *item_id)))
 }
 
 fn set_selected_keystone(
@@ -172,8 +177,8 @@ fn set_selected_keystone(
         sim.keystone.selected_guid = Some(guid);
         sim.keystone.selected_item_id = Some(item_id);
         sim.keystone.selected_location = Some(location);
-        // The native associated GUID and mode inputs are not modeled.
-        sim.keystone.selected_mode = None;
+        // VERIFIED (R88o.2 q2): native stores mode, selected GUID, then associated GUID.
+        // SIMULATOR GAP: mode and associated-GUID inputs are not modeled.
         (unlocked, locked)
     };
     if let Some(location) = unlocked {
@@ -194,11 +199,22 @@ fn set_selected_keystone(
 }
 
 fn remove_keystone(state: &mut LuaState) -> LuaResult<u32> {
-    // INFERRED (R88o.2 q3 pending): success means a selected GUID was cleared.
-    let removed = borrow_state(state)?.keystone.selected_guid.is_some();
-    if removed {
-        clear_keystone(state)?;
-    }
+    // VERIFIED (R88o.2 q3): the result and selection clear do not depend on
+    // whether cursor staging succeeds. Cursor transfer is outside this lane.
+    let removed = {
+        let mut sim = borrow_state_mut(state)?;
+        if sim.keystone.selected_guid.is_none() {
+            false
+        } else {
+            sim.keystone.selected_guid = None;
+            sim.keystone.selected_mode = None;
+            sim.keystone.selected_item_id = None;
+            sim.keystone.selected_location = None;
+            true
+        }
+    };
+    // Do not call clear_keystone: RemoveKeystone has no explicit unlock path.
+    // Omitted cursor staging returns for category zero; any nonzero category passes that guard.
     state.push(Val::Bool(removed));
     Ok(1)
 }
