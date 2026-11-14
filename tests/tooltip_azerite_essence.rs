@@ -367,6 +367,12 @@ fn retail_azerite_essence_original_consumer_selects_exact_essence_and_rank() {
             'original rank zero must select the source heading')
         assert(AzeriteTestFindLine(rankZero, 'Storming the Battlefields'),
             'original rank zero must use the exact rank-one source row')
+
+        local nextRankFour = AzeriteTestShowEssence({ESSENCE_THREE}, 3)
+        assert(not AzeriteTestFindLine(nextRankFour, 'Next rank:'),
+            'next rank four must disable the source stage')
+        assert(select('#', C_TooltipInfo.GetAzeriteEssence({ESSENCE_THREE}, 4)) == 0,
+            'a missing exact next-rank record must preserve the no-values result')
         "#
     ))
     .expect("the original essence consumer should preserve the rank-zero source stage");
