@@ -377,4 +377,3 @@ pub static RETAIL_GLOBAL_COLORS: &[GlobalColorRow] = &[
     GlobalColorRow { id: 109, base_tag: "YELLOW_THREAT_COLOR", packed_color: 0xffffff77 },
     GlobalColorRow { id: 409, base_tag: "ZULJARRA_MAJOR_FACTION_COLOR", packed_color: 0x0054e6aa },
 ];
-

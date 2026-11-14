@@ -310,7 +310,7 @@ fn write_global_color_rows(output: &mut File, rows: &[GlobalColorRow]) -> std::i
             row.packed_color
         )?;
     }
-    writeln!(output, "];\n")
+    writeln!(output, "];")
 }
 
 #[cfg(test)]
