@@ -20,6 +20,7 @@ pub enum KeystoneLocation {
 #[derive(Debug, Default)]
 pub struct KeystoneState {
     pub receptacle_guid: Option<String>,
+    /// Selected item instance; `None` represents no selected keystone.
     pub selected_guid: Option<String>,
     pub selected_location: Option<KeystoneLocation>,
     pub selected_mode: Option<i32>,
@@ -71,6 +72,7 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         get_challenge_completion_info,
     )?;
     if ACTIVE == ClientProfile::Retail {
+        table_set_rust_fn_static(state, namespace, "HasSlottedKeystone", has_slotted_keystone)?;
         table_set_rust_fn_static(state, namespace, "CloseKeystoneFrame", close_keystone_frame)?;
         table_set_rust_fn_static(state, namespace, "ClearKeystone", clear_keystone)?;
         table_set_rust_fn_static(
@@ -81,6 +83,13 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         )?;
     }
     Ok(())
+}
+
+fn has_slotted_keystone(state: &mut LuaState) -> LuaResult<u32> {
+    // R88n.4c-q1: GUID presence does not resolve or validate its item object.
+    let has_selected_guid = borrow_state(state)?.keystone.selected_guid.is_some();
+    state.push(Val::Bool(has_selected_guid));
+    Ok(1)
 }
 
 fn close_keystone_frame(state: &mut LuaState) -> LuaResult<u32> {

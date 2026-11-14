@@ -142,6 +142,59 @@ pub(super) fn empty_tooltip(state: &mut LuaState, tooltip_type: f64) -> Val {
     tooltip
 }
 
+const TOOLTIP_TYPE_ITEM_INTERACTION_CLEANSING: f64 = 20.0;
+
+/// Serialize only host-supplied rows for the native cleansing-preview identity.
+pub(crate) fn build_item_interaction_cleansing_tooltip(
+    state: &mut LuaState,
+    rows: &[crate::c_api::ItemInteractionTooltipLine],
+) -> Val {
+    let saved_top = state.top;
+    let tooltip = empty_tooltip(state, TOOLTIP_TYPE_ITEM_INTERACTION_CLEANSING);
+    state.push(tooltip);
+    stamp_data_instance(state, tooltip);
+    let lines = table_get(state, tooltip, "lines");
+    for (index, row) in rows.iter().enumerate() {
+        push_supplied_item_interaction_line(state, lines, index as i64 + 1, row);
+    }
+    state.top = saved_top;
+    tooltip
+}
+
+fn push_supplied_item_interaction_line(
+    state: &mut LuaState,
+    lines: Val,
+    index: i64,
+    row: &crate::c_api::ItemInteractionTooltipLine,
+) {
+    let saved_top = state.top;
+    state.push(lines);
+    let line = create_table(state);
+    set_table_array(state, lines, index, line);
+    let line_type = remap_line_type(state, row.line_type, row.left_color);
+    table_set(state, line, "type", Val::Num(line_type));
+    let color = row.left_color.map_or(Val::Nil, |(r, g, b)| {
+        let color = color_table(state, r, g, b, 1.0);
+        crate::c_api::tooltip_data::publish_rgb(state, color, (r, g, b));
+        color
+    });
+    crate::c_api::tooltip_data::publish_side(state, line, false, Some(&row.left_text), color);
+    if row.wrap {
+        table_set(state, line, "wrapText", Val::Bool(true));
+    }
+    state.top = saved_top;
+}
+
+/// Publish the shared item identity for a supplied unresolved conversion result.
+pub(crate) fn unresolved_item_tooltip(state: &mut LuaState) -> Val {
+    let saved_top = state.top;
+    let tooltip = empty_tooltip(state, TOOLTIP_TYPE_ITEM);
+    state.push(tooltip);
+    stamp_data_instance(state, tooltip);
+    state.top = saved_top;
+    tooltip
+}
+
 const TOOLTIP_TYPE_QUEST_PARTY_PROGRESS: f64 = 24.0;
 const LINE_TYPE_QUEST_TITLE: f64 = 17.0;
 const LINE_TYPE_PARTICIPANT_HEADING: f64 = 18.0;

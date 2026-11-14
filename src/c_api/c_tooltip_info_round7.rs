@@ -6,9 +6,10 @@ use crate::c_api::tooltip_getter_args;
 use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::items::{self, ItemInfo};
 use crate::lua_api::globals::missing_surface::tooltip_info::{
-    build_quest_party_progress_tooltip, tooltip_for_item_context,
+    build_item_interaction_cleansing_tooltip, build_quest_party_progress_tooltip,
+    tooltip_for_item_context, tooltip_for_spell, unresolved_item_tooltip,
 };
-use crate::lua_api::methods::{borrow_state, create_string, table_set};
+use crate::lua_api::methods::{borrow_state, create_string, create_table, table_set};
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
@@ -24,6 +25,8 @@ const LFG_SHORTAGE_USAGE: &str = concat!(
     "Usage: local data = C_TooltipInfo.GetLFGDungeonShortageReward(",
     "dungeonID, shortageSeverity, lootIndex)",
 );
+const ITEM_INTERACTION_CLEANSE_KIND: i32 = 2;
+const ITEM_INTERACTION_CONVERSION_KIND: i32 = 4;
 const POSSESSION_USAGE: &str = "Usage: local data = C_TooltipInfo.GetPossession(slot)";
 const QUEST_SPECIAL_USAGE: &str =
     "Usage: local data = C_TooltipInfo.GetQuestLogSpecialItem(questIndex)";
@@ -38,8 +41,8 @@ const RUNEFORGE_USAGE: &str = concat!(
     "itemGUID, itemLevel [, powerID, modifiers])",
 );
 
-/// Host-supplied current item-interaction selection and final cleansing rows.
-/// Native selection writers and cleansing-row inputs are not modeled here.
+/// Host-supplied selected item and final item-interaction tooltip payload.
+/// Native selection writers and cleansing/conversion calculations are not modeled.
 #[derive(Clone, Debug, Default)]
 pub struct ItemInteractionTooltipInput {
     pub selected_item_guid: Option<String>,
@@ -139,10 +142,67 @@ fn get_azerite_essence_slot(state: &mut LuaState) -> LuaResult<u32> {
     no_values()
 }
 
-fn get_item_interaction_item(_state: &mut LuaState) -> LuaResult<u32> {
-    // Current interaction state contains dialog text and cost, not the selected
-    // object descriptor or the kind-2/kind-4 payload inputs.
-    no_values()
+fn get_item_interaction_item(state: &mut LuaState) -> LuaResult<u32> {
+    if ACTIVE != ClientProfile::Retail {
+        return no_values();
+    }
+    let (interaction_kind, input) = {
+        let sim = borrow_state(state)?;
+        let Some(interaction) = sim.item_interaction.as_ref() else {
+            return no_values();
+        };
+        let Some(input) = sim.item_interaction_tooltip_input.clone() else {
+            return no_values();
+        };
+        (interaction.interaction_type, input)
+    };
+
+    if interaction_kind != ITEM_INTERACTION_CLEANSE_KIND
+        && interaction_kind != ITEM_INTERACTION_CONVERSION_KIND
+    {
+        let tooltip = empty_item_interaction_tooltip(state);
+        state.push(tooltip);
+        return Ok(1);
+    }
+
+    let Some(selected_guid) = input.selected_item_guid.as_deref() else {
+        return no_values();
+    };
+    if item_for_owned_guid(state, selected_guid).is_none() {
+        return no_values();
+    }
+
+    let tooltip = if interaction_kind == ITEM_INTERACTION_CLEANSE_KIND {
+        if input.cleansing_rows.is_empty() {
+            return no_values();
+        }
+        build_item_interaction_cleansing_tooltip(state, &input.cleansing_rows)
+    } else {
+        let Some(output_item_id) = input.conversion_output_item_id else {
+            return no_values();
+        };
+        if output_item_id == 0 {
+            unresolved_item_tooltip(state)
+        } else {
+            let output_item = borrow_state(state)?.item_info(output_item_id).cloned();
+            let Some(output_item) = output_item else {
+                return no_values();
+            };
+            tooltip_for_item_context(state, output_item_id, Some(&output_item))
+        }
+    };
+    state.push(tooltip);
+    Ok(1)
+}
+
+fn empty_item_interaction_tooltip(state: &mut LuaState) -> Val {
+    let saved_top = state.top;
+    let tooltip = create_table(state);
+    state.push(tooltip);
+    let lines = create_table(state);
+    table_set(state, tooltip, "lines", lines);
+    state.top = saved_top;
+    tooltip
 }
 
 fn get_lfg_dungeon_reward(state: &mut LuaState) -> LuaResult<u32> {
@@ -234,11 +294,21 @@ fn publish_lfg_tooltip_reward(
 
 fn get_possession(state: &mut LuaState) -> LuaResult<u32> {
     let slot = tooltip_getter_args::round7_signed(state, 1, POSSESSION_USAGE)?;
-    if slot != 0 {
+    let Some(slot_index) = slot.checked_sub(1) else {
+        return no_values();
+    };
+    if slot_index != 0 || ACTIVE != ClientProfile::Retail {
         return no_values();
     }
-    // The simulator has no possession-spell/context state.
-    no_values()
+    let Some(spell_id) = borrow_state(state)?.possession_spell_id else {
+        return no_values();
+    };
+    if crate::spells::get_spell(spell_id).is_none() {
+        return no_values();
+    }
+    let tooltip = tooltip_for_spell(state, spell_id);
+    state.push(tooltip);
+    Ok(1)
 }
 
 fn publish_quest_log_special_item(state: &mut LuaState) -> LuaResult<u32> {
@@ -365,9 +435,21 @@ fn build_runeforge_result_data(
     Some(data)
 }
 
-fn get_slotted_keystone(_state: &mut LuaState) -> LuaResult<u32> {
-    // The slotted GUID is not represented in simulator state.
-    no_values()
+fn get_slotted_keystone(state: &mut LuaState) -> LuaResult<u32> {
+    if ACTIVE != ClientProfile::Retail {
+        return no_values();
+    }
+    let Some(guid) = borrow_state(state)?.keystone.selected_guid.clone() else {
+        return no_values();
+    };
+    let Some((item_id, item)) = item_for_owned_guid(state, &guid) else {
+        return no_values();
+    };
+    let tooltip = tooltip_for_item_context(state, item_id, Some(item));
+    let guid = create_string(state, &guid);
+    table_set(state, tooltip, "guid", guid);
+    state.push(tooltip);
+    Ok(1)
 }
 
 fn current_essence_rank(state: &LuaState, essence_id: i32) -> Option<u32> {

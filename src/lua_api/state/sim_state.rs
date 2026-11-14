@@ -324,7 +324,7 @@ pub struct SimState {
     /// Explicit DamageMeter snapshots; combat publication is blocked pending secrecy.
     pub damage_meter: crate::c_api::c_damage_meter::DamageMeterInput,
     pub item_interaction: Option<crate::c_api::c_item_interaction::ItemInteractionInfo>,
-    /// Host-supplied selected object and final rows for Round 7 item-interaction tooltips.
+    /// Host-supplied selected item, final cleansing rows, and conversion output ID.
     pub item_interaction_tooltip_input: Option<crate::c_api::ItemInteractionTooltipInput>,
     /// Host-supplied shared possession spell ID; no possession writer is modeled.
     pub possession_spell_id: Option<u32>,
