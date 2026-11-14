@@ -20,8 +20,8 @@ Display formatting/maximum and secret-output behavior remain Retail125-scoped. O
 
 ### Retail 12.1.5 count sources and gates
 
-- [ ] **VERIFIED (Retail 12.1.5.70688):** on the checked normal-return route, `GetSpellCastCount` publishes one number. A Spell-store miss, null context, or absent limit returns numeric 0. A valid reagent with insufficient inventory can also set the limit to 0.
-- [ ] **VERIFIED (Retail 12.1.5.70688):** the ordinary reagent path checks at most eight identifier/quantity pairs. It skips IDs 0 and -2 and signed quantities less than or equal to 0. For each remaining pair, it divides inventory count by quantity using integer division and selects the smallest limit.
+- [x] **VERIFIED (Retail 12.1.5.70688):** on the checked normal-return route, `GetSpellCastCount` publishes one number. A Spell-store miss, null context, or absent limit returns numeric 0. A valid reagent with insufficient inventory can also set the limit to 0.
+- [x] **VERIFIED (Retail 12.1.5.70688):** the ordinary reagent path checks at most eight identifier/quantity pairs. It skips IDs 0 and -2 and signed quantities less than or equal to 0. For each remaining pair, it divides inventory count by quantity using integer division and selects the smallest limit.
 - [ ] The simulator uses the generated `SPELL_DB` as its Spell-store membership input. `spell_reagent_pairs` is a host-supplied seam with an empty default because the simulator has no SpellReagents catalog rows.
 - [ ] The Retail 12.1.5 simulator count reads only ordinary `bag_items` stacks. The complete native inventory inclusion rules remain UNKNOWN; no claim is made about equipped, bank, or other containers.
 - [ ] **VERIFIED (Retail 12.1.5.70688):** count-policy statuses affect restricted-result handling only, not the calculated number. The simulator's explicit `cooldowns_restricted` input does not model the complete native status/runtime-policy mapping.
@@ -29,21 +29,23 @@ Display formatting/maximum and secret-output behavior remain Retail125-scoped. O
 - [ ] **VERIFIED (Retail 12.1.5.70688):** a separate active-record limit can lower a reagent limit. That backing state is not modeled; the active-record count byte and linked schema remain UNKNOWN.
 - [ ] Older profiles retain the explicit `spell_cast_counts` simulator input. Retail spellbook queries may also read that input; Retail 12.1.5 `C_Spell.GetSpellCastCount` does not.
 - [ ] Retail 12.1.5 cast counts do not come from charge state or action-slot use counts.
-- [ ] **INFERRED:** the shared Retail context resolves to the active player by default. `spell_cast_context_is_null = Some(true)` is a host-supplied null-context scenario; no login or lifecycle claim follows.
+- [x] **VERIFIED (Retail 12.1.5.70688; optional API test):** cast and display selectors accept ordinary numbers and numeric-convertible strings in the signed 32-bit range, then truncate toward zero. The simulator keeps its existing alias-first resolution before numeric-string parsing; full native override, link/name, and secret-mode rules remain UNKNOWN.
+- [ ] **VERIFIED (Retail 12.1.5.70688):** missing or readable nil required spell selectors take an argument-error route; their exact secret-nil and guard behavior remains separate.
+- [x] **INFERRED:** the shared Retail context resolves to the active player by default. `spell_cast_context_is_null = Some(true)` is a host-supplied null-context scenario; no login or lifecycle claim follows.
 
 ### Retail 12.1.5 display mode and formatting
 
-- [ ] **VERIFIED (Retail 12.1.5.70688):** a nonzero reagent ID with positive quantity in any of the first eight pairs selects cast-count display mode, including ID -2. If no pair qualifies or the row is missing, display mode uses charges.
+- [x] **VERIFIED (Retail 12.1.5.70688):** a nonzero reagent ID with positive quantity in any of the first eight pairs selects cast-count display mode, including ID -2. If no pair qualifies or the row is missing, display mode uses charges.
 - [ ] **VERIFIED (Retail 12.1.5.70688):** cast mode displays the cast count as decimal text, replacing it only when count exceeds the signed maximum. Defaults are 9999 and `*`; equality keeps digits. It returns one string, including for an empty result.
 - [ ] **VERIFIED (Retail 12.1.5.70688):** charge mode displays current charges only when maximum charges exceed 1. Otherwise it returns an empty string. Charge mode ignores the display maximum and replacement string. A missing Spell record leaves charge output empty.
 - [x] The Retail `SpellFlyoutPopupButtonMixin:UpdateCount` consumer accepts an ordinary numeric-string `maxDisplayCount` and passes a string to `SetText`; see `tests/blizzard_ui/blizzard_actionbar/behavior_spell_flyout.rs::spell_flyout_count_accepts_numeric_string_display_limit`.
-- [ ] Retail numeric-input conversion, secret access, guard-error decoration, and opaque VM type behavior remain bounded separately in this spec; they are not inferred from the count formula.
+- [ ] Secret-access details, exact guard-error decoration, and opaque VM type behavior remain bounded separately in this spec; they are not inferred from the count formula.
 
 ### Authentication and partial input parity
 
-- [ ] Cast uses the strict public identifier helper except the Retail125/PTR [numeric-secret selector extension](secret-selector-count-usability.md). That bounded path preserves alias-first lookup and independent output restriction; all non-numeric secrets retain conservative rejection before model access. Public tainted calls remain allowed.
-- [ ] Full native cast `AllowedWhenTainted` parity remains unproven. The [numeric-secret subset](secret-selector-count-usability.md) does not widen string/other secret payloads or the shared public reader; output-predicate coverage remains independent.
-- [ ] Display authenticates all three original VM arguments, in argument order, before type validation or model lookup. Secure secret NUM/STRING identifiers resolve via Value-based alias extraction; secret NUM threshold, STR replacement and NIL defaults authenticate. No stack mutation.
+- [ ] Retail 12.1.5 cast keeps the bounded [numeric-secret selector subset](secret-selector-count-usability.md); other secret kinds remain conservatively rejected. Exact native `AllowedWhenTainted` access modes and all guard states are UNKNOWN.
+- [ ] Retail 12.1.5 display authenticates all three original VM arguments, in argument order, before identifier conversion, maximum parsing, or model lookup. Secure authenticated identifiers resolve without stack mutation; tainted secret inputs remain rejected.
+- [ ] Older-profile count APIs retain the existing strict public reader. Output-restriction policy is separate from selector permission.
 - [ ] Tainted authentic secret arguments of all six kinds (NUM, STR, NIL, BOOL, ordinary table, frame-backed table) deny at their positions before invalid public identifiers, unresolved identifiers or missing sources. No blanket ban on public tainted calls, no nil-callback guard.
 - [ ] Secure wrong-type authenticated display inputs report public API/position without payload. Denial preserves caller trust, frame/table state, secrecy metadata, roots, copies and allocation identity through GC; secure reads recover afterward.
 
@@ -56,10 +58,15 @@ Display formatting/maximum and secret-output behavior remain Retail125-scoped. O
 - [ ] Tainted public callers can obtain private results but cannot add, concatenate, compute string length or expose private payload through opaque observations/errors. No secret BOOL equality under taint.
 - [ ] Tainted copies preserve secret roots/allocation identity through GC. Live flag-off gives new ordinary results; old wrappers remain private.
 
+### Related Retail visibility query
+
+- [x] **VERIFIED (Retail 12.1.5.70688):** `GetVisibilityInfo` publishes zero values when its shared context query fails and three Booleans on success. A successful table miss publishes false, false, false.
+- [ ] The simulator uses an explicit null-context override and host-supplied visibility rows. The native visibility tables and specialization-context selector remain UNKNOWN.
+
 ### Related Retail ranged-auto-attack identifier
 
-- [ ] **VERIFIED (Retail 12.1.5.70688):** `C_Spell.IsRangedAutoAttackSpell` compares its resolved identifier with one shared ranged-ID field. The field starts at zero in the initial image; zero therefore compares true before runtime writes.
-- [ ] **VERIFIED (Retail 12.1.5.70688):** the update writer stores an ID when its Spell record has `attributes_9 & 16_777_216 != 0`. Removal clears only when the removed ID equals the stored ID.
+- [x] **VERIFIED (Retail 12.1.5.70688):** `C_Spell.IsRangedAutoAttackSpell` compares its resolved identifier with one shared ranged-ID field. The field starts at zero in the initial image; zero therefore compares true before runtime writes.
+- [x] **VERIFIED (Retail 12.1.5.70688):** the update writer stores an ID when its Spell record has `attributes_9 & 16_777_216 != 0`. Removal clears only when the removed ID equals the stored ID.
 - [ ] The simulator reads the existing catalog `attributes_9` bit and exposes `ranged_auto_attack_spell_id` as a simulator state input. The exact DB2 column identity remains UNKNOWN.
 - [ ] **INFERRED:** `A_Admin.LearnSpell` and `A_Admin.UnlearnSpell` supply simulator writer inputs. They are not names for the unknown native dispatcher cases.
 - [ ] **UNKNOWN:** the dispatcher case meanings, additional spell-list update trigger, and update order at login remain unresolved. No native event name is assigned.
@@ -74,7 +81,7 @@ Display formatting/maximum and secret-output behavior remain Retail125-scoped. O
 
 - `src/lua_api/state/sim_state.rs` and `src/lua_api/state.rs`: older explicit count input, INFERRED active-player context with a host null override, empty-default host reagent pairs, and host visibility rows.
 - `src/c_api/c_spell_counts.rs`: profile-specific cast/display producers. Retail 12.1.5 uses the Spell catalog gate, shared context predicate, first-eight reagent limits, bag stacks, and verified reagent-before-charge display mode. Unsupported metadata modes, inventory inclusion, active records, and full policy secrecy remain seams.
-- `src/c_api/c_spell.rs`: Retail 12.1.5 registration for `IsRangedAutoAttackSpell` and `GetVisibilityInfo`; shared ranged-ID comparison, metadata-mask writer, equal-ID removal, and visibility output publication.
+- `src/c_api/c_spell.rs`: Retail 12.1.5 spell-identifier conversion; registration for `IsRangedAutoAttackSpell` and `GetVisibilityInfo`; shared ranged-ID comparison, metadata-mask writer, equal-ID removal, and visibility output publication.
 - `src/lua_api/globals/admin.rs`: INFERRED Retail host wiring from `A_Admin.LearnSpell`/`UnlearnSpell` into the verified ranged-ID writer and remover; no native dispatcher labels.
 - `src/lua_api/workarounds/temporary/spell_metadata_defaults.rs` and `spell_static_defaults.rs`: the replaced Retail defaults are no longer published.
 - `src/c_api/c_action_bar_counts.rs`: shared count formatter and replacement/maximum parsers.
@@ -125,7 +132,7 @@ Accounting promotes only301/309: **190 pending/157 bounded/14 partial/1 metadata
 - [ ] The shared context's native class, lifecycle, login availability, and complete writer history remain UNKNOWN.
 - [ ] The visibility data tables and specialization-context selector are not modeled; results are host-supplied.
 - [ ] Ranged-ID dispatcher meanings and list-update trigger remain UNKNOWN; no event names are inferred.
-- [ ] Full native argument conversion, all secret-access modes, error decoration, and all guard states remain unmodeled.
+- [ ] Full native override/link/name resolution, all secret-access modes, exact guard-error decoration, and all guard states remain unmodeled.
 - [ ] The simulator's bool output-restriction input does not reproduce the native count-policy status/runtime-value matrix.
 
 ## Out of scope

@@ -1,3 +1,7 @@
+## [2026-11-14] implementation | Retail spell count and query routes
+
+[Spell count contract](../specs/spell-count-outputs.md) and [Lua API](systems/lua-api.md#retail-1215-spell-count-visibility-and-ranged-id-routes) record R88k/R88m. **VERIFIED (Retail 12.1.5.70688):** Spell-store cast gates, eight-pair reagent limits, reagent-before-charge display mode, ranged-ID comparison/writer/removal, and visibility return arity. **INFERRED:** A_Admin spell changes supply ranged-ID inputs and the shared context is the active player. **UNKNOWN:** native dispatcher names, SpellReagents schema, alternate inventory modes/inclusion, visibility tables, and context lifecycle. **VERIFIED (optional tests at code SHA `438ec83e8`):** selected original consumers and API contracts pass; the five profile compile receipts have zero warnings and Retail `lua-errors` is `[]`.
+
 ## [2026-11-14] implementation | Merchant requirements and LFD requests
 
 [Merchant/LFG boundaries](investigations/merchant-lfg-r88i.md) separates R88i.5/R88i.6 verified gates and request behavior from inferred faction/rating mapping, provisional party arity, and unknown throttle/event timing.
