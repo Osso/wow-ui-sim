@@ -27,11 +27,22 @@
 #[path = "tooltip_full_env_helpers.rs"]
 mod tooltip_full_env_helpers;
 
-#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
 use tooltip_full_env_helpers::setup_full_env;
 
 #[cfg(all(feature = "client-wowforever", feature = "optional-tests"))]
-use wow_ui_sim::lua_api::WowLuaEnv;
+fn assert_forever_tooltip_consumer_selected() {
+    let addons = wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap();
+    let toc = wow_ui_sim::loader::find_toc_file(&addons.join("Blizzard_SharedXMLGame"))
+        .expect("profile-selected Blizzard_SharedXMLGame TOC");
+    let body = std::fs::read_to_string(&toc).unwrap();
+    assert!(body.contains("## AllowLoad: Game"));
+    assert!(body.contains("Tooltip\\TooltipDataHandler.lua"));
+}
 
 /// The profile-selected consumer TOC loads the tooltip XML body, and the same
 /// file list selects it at runtime (Retail: `_Mainline` TOC; PTR: unified TOC).
@@ -273,7 +284,8 @@ fn tooltip_owner_clear_forever_owner_reassignment_lifecycle() {
 #[cfg(all(feature = "client-wowforever", feature = "optional-tests"))]
 #[test]
 fn tooltip_clear_lines_forever_clears_only_active_cached_text() {
-    let env = WowLuaEnv::new().expect("WowLuaEnv init");
+    let env = setup_full_env();
+    assert_forever_tooltip_consumer_selected();
     env.exec(
         r#"
         local tip = GameTooltip
@@ -294,6 +306,7 @@ fn tooltip_clear_lines_forever_clears_only_active_cached_text() {
 
         tip:AddLine("only active row")
         local active = tip:GetLeftLine(1)
+        assert(active == first, "ClearLines retains cached FontStrings for reuse")
         second_left:SetText("inactive left")
         second_right:SetText("inactive right")
         tip:ClearLines()

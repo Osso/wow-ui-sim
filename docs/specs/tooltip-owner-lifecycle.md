@@ -90,7 +90,7 @@ attachments, other profiles and getter selection are unchanged by this extension
 
 - `tests/tooltip_basic.rs` — owner replacement, hidden explicit hide, SetText, append, spell payload, and existing ownership controls.
 - `tests/tooltip_lifecycle_owner_lane.rs` — same-owner clear, notification count, and reassignment through the shared tooltip templates.
-- `tests/tooltip_owner_clear_consumer.rs` — clear notification count and order through the cached `GameTooltip.xml` handlers and `TooltipDataHandler.lua` reprocessing; the original `OnTooltipCleared` cleanup must release inserted frames; Forever owner-reassignment and optional R88n.5 active-row cache tests.
+- `tests/tooltip_owner_clear_consumer.rs` — clear notification count and order through the cached `GameTooltip.xml` handlers and `TooltipDataHandler.lua` reprocessing; the original `OnTooltipCleared` cleanup must release inserted frames; Forever owner-reassignment and optional R88n.5 active-row cache tests on the profile-selected full-UI environment.
 
 ## Known gaps (current cycle)
 

@@ -332,3 +332,35 @@ fn tooltip_attachment_cap_is_per_tooltip_and_clear_releases_it() {
     )
     .unwrap();
 }
+
+#[cfg(all(feature = "optional-tests", feature = "client-retail"))]
+#[test]
+fn tooltip_attachments_r88n5_preserved_on_loaded_game_tooltip() {
+    let env = env_with_helpers();
+    env.exec(
+        r#"
+        local tip = GameTooltip
+        assert(tip and tip:GetName() == "GameTooltip")
+        assert(TooltipDataRules, "the original tooltip rules are loaded")
+        tip:SetOwner(UIParent, "ANCHOR_NONE")
+        tip:ClearLines()
+        tip:AddTexture(134400)
+        tip:AddAtlas("groupfinder-icon-friend")
+        assert(tip:NumLines() == 0 and TTAttachedCount(tip) == 0,
+            "attachments without a row have no effect")
+
+        tip:AddLine("first")
+        tip:AddTexture(134400)
+        tip:AddAtlas("groupfinder-icon-friend")
+        tip:AddLine("last")
+        tip:AddTexture(134400)
+        tip:Show()
+        assert(tip:NumLines() == 2, "attachments do not create rows")
+        assert(#TTAttached(tip, tip:GetLeftLine(1)) == 2,
+            "multiple attachments share their selected row")
+        assert(#TTAttached(tip, tip:GetLeftLine(2)) == 1,
+            "new attachments select the last existing row")
+        "#,
+    )
+    .unwrap();
+}
