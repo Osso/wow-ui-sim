@@ -88,13 +88,8 @@ fn load_full_game_ui() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
     env.set_screen_size(1024.0, 768.0);
     env.set_screen_mode(ScreenKind::Game);
-    env.exec(
-        "rawset(_G, 'TooltipDataProcessor', nil); \
-         rawset(_G, 'AddTooltipDataAccessor', nil); \
-         rawset(__secureenv, 'TooltipDataProcessor', nil); \
-         rawset(__secureenv, 'AddTooltipDataAccessor', nil)",
-    )
-    .expect("disable tooltip data processor defaults before addon startup");
+    // Keep the existing compatibility fallback in place for this consumer-only
+    // gate; original producer identity is deferred to lt-635e.
 
     {
         let mut state = env.state().borrow_mut();

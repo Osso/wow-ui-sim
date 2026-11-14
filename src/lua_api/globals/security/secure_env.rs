@@ -322,9 +322,14 @@ mod tests {
                 local probe = "__secure_env_copy_probe"
                 local before = rawget(math, probe)
                 rawset(math, probe, true)
+                local secureEnum = rawget(secure, "Enum")
+                local secureTooltipDataType = secureEnum and rawget(secureEnum, "TooltipDataType")
                 local result = {
                     type(rawget(secure, "assert")) == "function",
-                    rawget(secure, "Enum") == nil,
+                    type(secureEnum) == "table"
+                        and secureEnum ~= Enum
+                        and type(secureTooltipDataType) == "table"
+                        and type(rawget(secureTooltipDataType, "Unit")) == "number",
                     rawget(secure, "TooltipDataProcessor") == nil,
                     rawget(secure, "math") ~= math,
                     rawget(secure, "math").abs == math.abs
