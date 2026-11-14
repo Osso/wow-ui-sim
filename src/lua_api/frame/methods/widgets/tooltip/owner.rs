@@ -2,6 +2,7 @@
 
 use super::super::shared::{opt_bool, opt_f32, opt_string};
 use super::content::{fire_tooltip_script, fire_tooltip_script_with_args};
+use super::line_frames::sync_tooltip_line_frame;
 #[cfg(feature = "forbidden-aspects")]
 use crate::lua_api::frame::methods::forbidden_aspects;
 use crate::lua_api::methods::{
