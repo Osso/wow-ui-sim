@@ -1,5 +1,9 @@
 use super::*;
 
+fn secure_library_replay_enabled() -> bool {
+    crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail
+}
+
 #[test]
 fn toc_loads_non_utf8_lua_bytes_unchanged() {
     let addon = tempfile::tempdir().unwrap();
@@ -602,7 +606,7 @@ RuntimeCycleB.lua
 }
 
 #[test]
-fn blizzard_lua_files_replay_into_secure_environment() {
+fn blizzard_lua_files_follow_profile_secure_replay_policy() {
     let env = WowLuaEnv::new().unwrap();
     let temp_root = std::env::temp_dir().join("wow-sim-secure-replay-test");
     let addon_dir = temp_root.join("Blizzard_SharedXMLBase");
@@ -629,26 +633,34 @@ GlobalOnly.lua [AllowLoadEnvironment Global]
     );
 
     let result = load_addon_from_toc(&env.loader_env(), &toc).unwrap();
-    assert_eq!(result.lua_files, 3);
+    let replayed = secure_library_replay_enabled();
+    assert_eq!(result.lua_files, if replayed { 3 } else { 2 });
 
-    let (global_marker, secure_marker, global_only_type): (String, String, String) = env
+    let (global_marker, secure_value_type, global_only_type, secure_global_only_type): (
+        String,
+        String,
+        String,
+        String,
+    ) = env
         .eval(
             r#"
             return _G.ReplayLibraryValue.marker,
-                   __secureenv.ReplayLibraryValue.marker,
+                   type(rawget(__secureenv, "ReplayLibraryValue")),
+                   type(rawget(_G, "ReplayGlobalOnlyValue")),
                    type(rawget(__secureenv, "ReplayGlobalOnlyValue"))
             "#,
         )
         .unwrap();
     assert_eq!(global_marker, "shared");
-    assert_eq!(secure_marker, "shared");
-    assert_eq!(global_only_type, "nil");
+    assert_eq!(secure_value_type, if replayed { "table" } else { "nil" });
+    assert_eq!(global_only_type, "string");
+    assert_eq!(secure_global_only_type, "nil");
 
     std::fs::remove_dir_all(&temp_root).ok();
 }
 
 #[test]
-fn blizzard_frame_xml_util_replays_aura_comparators_into_secure_environment() {
+fn blizzard_frame_xml_util_replay_follows_profile_policy() {
     let env = WowLuaEnv::new().unwrap();
     env.exec("AuraUtil = { bootstrap = true }").unwrap();
 
@@ -686,13 +698,18 @@ AuraUtil.lua
             "#,
         )
         .unwrap();
+    let expected_secure_type = if secure_library_replay_enabled() {
+        "function"
+    } else {
+        "nil"
+    };
     assert_eq!(
         comparator_types,
         (
             "function".into(),
+            expected_secure_type.into(),
             "function".into(),
-            "function".into(),
-            "function".into()
+            expected_secure_type.into()
         )
     );
 
@@ -700,7 +717,7 @@ AuraUtil.lua
 }
 
 #[test]
-fn blizzard_game_tooltip_lua_replays_into_secure_environment() {
+fn blizzard_game_tooltip_replay_follows_profile_policy() {
     let env = WowLuaEnv::new().unwrap();
     let temp_root = std::env::temp_dir().join("wow-sim-game-tooltip-secure-replay-test");
     let addon_dir = temp_root.join("Blizzard_GameTooltip");
@@ -721,24 +738,28 @@ GameTooltip.lua
     );
 
     let result = load_addon_from_toc(&env.loader_env(), &toc).unwrap();
-    assert_eq!(result.lua_files, 2);
+    let replayed = secure_library_replay_enabled();
+    assert_eq!(result.lua_files, if replayed { 2 } else { 1 });
 
-    let (global_type, secure_result): (String, String) = env
+    let (global_type, secure_type, secure_result): (String, String, String) = env
         .eval(
             r#"
-            return type(_G.GameTooltip_OnLoad),
-                   __secureenv.GameTooltip_OnLoad()
+            local secure = rawget(__secureenv, "GameTooltip_OnLoad")
+            return type(rawget(_G, "GameTooltip_OnLoad")),
+                   type(secure),
+                   secure and secure() or ""
             "#,
         )
         .unwrap();
     assert_eq!(global_type, "function");
-    assert_eq!(secure_result, "secure-visible");
+    assert_eq!(secure_type, if replayed { "function" } else { "nil" });
+    assert_eq!(secure_result, if replayed { "secure-visible" } else { "" });
 
     std::fs::remove_dir_all(&temp_root).ok();
 }
 
 #[test]
-fn blizzard_async_request_lua_replays_into_secure_environment() {
+fn blizzard_async_request_replay_follows_profile_policy() {
     let env = WowLuaEnv::new().unwrap();
     let temp_root = std::env::temp_dir().join("wow-sim-async-request-secure-replay-test");
     let addon_dir = temp_root.join("Blizzard_AsyncRequest");
@@ -759,18 +780,22 @@ Blizzard_AsyncRequest.lua
     );
 
     let result = load_addon_from_toc(&env.loader_env(), &toc).unwrap();
-    assert_eq!(result.lua_files, 2);
+    let replayed = secure_library_replay_enabled();
+    assert_eq!(result.lua_files, if replayed { 2 } else { 1 });
 
-    let (global_marker, secure_marker): (String, String) = env
+    let (global_marker, secure_type, secure_marker): (String, String, String) = env
         .eval(
             r#"
+            local secure = rawget(__secureenv, "AsyncRequests")
             return _G.AsyncRequests.marker,
-                   __secureenv.AsyncRequests.marker
+                   type(secure),
+                   secure and secure.marker or ""
             "#,
         )
         .unwrap();
     assert_eq!(global_marker, "secure-visible");
-    assert_eq!(secure_marker, "secure-visible");
+    assert_eq!(secure_type, if replayed { "table" } else { "nil" });
+    assert_eq!(secure_marker, if replayed { "secure-visible" } else { "" });
 
     std::fs::remove_dir_all(&temp_root).ok();
 }
@@ -902,7 +927,7 @@ Frame.xml
 }
 
 #[test]
-fn blizzard_shared_xml_lua_replays_into_secure_environment() {
+fn blizzard_shared_xml_replay_follows_profile_policy() {
     let env = WowLuaEnv::new().unwrap();
     let temp_root = std::env::temp_dir().join("wow-sim-sharedxml-secure-replay-test");
     let addon_dir = temp_root.join("Blizzard_SharedXML");
@@ -923,18 +948,22 @@ LoopingSoundEffect.lua
     );
 
     let result = load_addon_from_toc(&env.loader_env(), &toc).unwrap();
-    assert_eq!(result.lua_files, 2);
+    let replayed = secure_library_replay_enabled();
+    assert_eq!(result.lua_files, if replayed { 2 } else { 1 });
 
-    let (global_type, secure_result): (String, String) = env
+    let (global_type, secure_type, secure_result): (String, String, String) = env
         .eval(
             r#"
-            return type(_G.CreateLoopingSoundEffectEmitter),
-                   __secureenv.CreateLoopingSoundEffectEmitter()
+            local secure = rawget(__secureenv, "CreateLoopingSoundEffectEmitter")
+            return type(rawget(_G, "CreateLoopingSoundEffectEmitter")),
+                   type(secure),
+                   secure and secure() or ""
             "#,
         )
         .unwrap();
     assert_eq!(global_type, "function");
-    assert_eq!(secure_result, "secure-visible");
+    assert_eq!(secure_type, if replayed { "function" } else { "nil" });
+    assert_eq!(secure_result, if replayed { "secure-visible" } else { "" });
 
     std::fs::remove_dir_all(&temp_root).ok();
 }

@@ -957,6 +957,12 @@ fn maybe_replay_blizzard_lua_in_secure_env(
 }
 
 pub(super) fn is_secure_replay_library_addon(folder_name: &str) -> bool {
+    // Retail secure loads use the shared dependency pass; preserve the legacy
+    // replay path for the other profiles.
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        return false;
+    }
+
     // These Classic colors consume public FrameXML masks, absent in secureenv.
     if folder_name == "Blizzard_CombatLogBase"
         && matches!(
