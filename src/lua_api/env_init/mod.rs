@@ -61,8 +61,15 @@ pub(super) fn init_lua_state(
     super::globals::security::register_environment_helpers(lua)?;
     super::globals::missing_surface::register_secure_environment_base_globals(lua)?;
     LuaApiMut::register_function(lua, "forceinsecure", forceinsecure)?;
-    // INFERRED: create the shared secure table before native registration, because the
-    // native registrar order relative to the 39-name copy is UNKNOWN.
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail
+        && crate::client_profile::ACTIVE_RETAIL_API_EPOCH
+            == crate::client_profile::RetailApiEpoch::Retail12_1_5
+    {
+        // R88n.11 part 1 verifies that the constructor shallow-copies `bit` from `_G`.
+        crate::lua_api::globals::compat_overrides::install_bit_library(lua)?;
+    }
+    // R88n.10/R88n.11 part 1 verify that Constants and Enum values are installed
+    // after the constructor. The order of other native registrars remains UNKNOWN.
     super::globals::security::create_secure_environment(lua)?;
     super::globals::real::mixins::register(lua)?;
     publish_unknown_bootstrap_globals(lua)?;

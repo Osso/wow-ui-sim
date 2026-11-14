@@ -637,3 +637,44 @@ fn retail_c_timer_dual_members_are_registered_in_both_namespace_tables() {
 
     assert_eq!(result, vec![true, true, true, true, true, true, true]);
 }
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn retail_native_constants_and_enum_tables_are_separate() {
+    let env = env();
+
+    env.exec(
+        r#"
+        local publicConstants = rawget(_G, "Constants")
+        local secureConstants = rawget(__secureenv, "Constants")
+        assert(type(publicConstants) == "table")
+        assert(type(secureConstants) == "table")
+        assert(not rawequal(publicConstants, secureConstants))
+
+        local publicRoles = rawget(publicConstants, "LFG_ROLEConstants")
+        local secureRoles = rawget(secureConstants, "LFG_ROLEConstants")
+        assert(type(publicRoles) == "table")
+        assert(type(secureRoles) == "table")
+        assert(not rawequal(publicRoles, secureRoles))
+        assert(rawget(publicRoles, "LFG_ROLE_ANY") == 3)
+        assert(rawget(secureRoles, "LFG_ROLE_ANY") == 3)
+        assert(rawget(publicRoles, "LFG_ROLE_NO_ROLE") == -1)
+        assert(rawget(secureRoles, "LFG_ROLE_NO_ROLE") == -1)
+
+        local publicEnum = rawget(_G, "Enum")
+        local secureEnum = rawget(__secureenv, "Enum")
+        assert(type(publicEnum) == "table")
+        assert(type(secureEnum) == "table")
+        assert(not rawequal(publicEnum, secureEnum))
+
+        local publicPingStates = rawget(publicEnum, "PingSetTargetState")
+        local securePingStates = rawget(secureEnum, "PingSetTargetState")
+        assert(type(publicPingStates) == "table")
+        assert(type(securePingStates) == "table")
+        assert(not rawequal(publicPingStates, securePingStates))
+        assert(rawget(publicPingStates, "Ok") == 0)
+        assert(rawget(securePingStates, "Ok") == 0)
+        "#,
+    )
+    .expect("native Constants and Enum installers must create separate tables");
+}

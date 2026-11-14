@@ -450,7 +450,7 @@ mod tests {
     #[test]
     fn secure_environment_uses_fixed_base_and_shallow_table_copies() {
         let env = WowLuaEnv::new().expect("lua env");
-        let result: (bool, bool, bool, bool, bool) = env
+        let result: (bool, bool, bool, bool, bool, bool) = env
             .eval(
                 r#"
                 local secure = __secureenv
@@ -459,6 +459,8 @@ mod tests {
                 rawset(math, probe, true)
                 local secureEnum = rawget(secure, "Enum")
                 local secureTooltipDataType = secureEnum and rawget(secureEnum, "TooltipDataType")
+                local secureBit = rawget(secure, "bit")
+                local ordinaryBit = rawget(_G, "bit")
                 local result = {
                     type(rawget(secure, "assert")) == "function",
                     type(secureEnum) == "table"
@@ -469,13 +471,126 @@ mod tests {
                     rawget(secure, "math") ~= math,
                     rawget(secure, "math").abs == math.abs
                         and rawget(rawget(secure, "math"), probe) == nil,
+                    type(secureBit) == "table"
+                        and secureBit ~= ordinaryBit
+                        and secureBit.band == ordinaryBit.band,
                 }
                 rawset(math, probe, before)
-                return result[1], result[2], result[3], result[4], result[5]
+                return result[1], result[2], result[3], result[4], result[5], result[6]
                 "#,
             )
             .expect("secure environment base probe");
 
-        assert_eq!(result, (true, true, true, true, true));
+        assert_eq!(result, (true, true, true, true, true, true));
+    }
+
+    #[test]
+    fn secure_environment_contains_exact_verified_base_list() {
+        // R88n.11 part 1: exact Retail 12.1.5.70688 constructor copy list.
+        const VERIFIED_BASE_NAMES: [&str; 39] = [
+            "assert",
+            "bit",
+            "date",
+            "error",
+            "forceinsecure",
+            "GetCurrentEnvironment",
+            "geterrorhandler",
+            "getfenv",
+            "GetGlobalEnvironment",
+            "getmetatable",
+            "ipairs",
+            "issecure",
+            "math",
+            "next",
+            "pairs",
+            "pcall",
+            "pcallwithenv",
+            "rawget",
+            "rawset",
+            "securecall",
+            "securecallfunction",
+            "secureexecuterange",
+            "select",
+            "setfenv",
+            "setmetatable",
+            "string",
+            "strcmputf8i",
+            "strconcat",
+            "strjoin",
+            "strlenutf8",
+            "strsplit",
+            "table",
+            "time",
+            "tonumber",
+            "tostring",
+            "type",
+            "unpack",
+            "IsInGlobalEnvironment",
+            "SwapToGlobalEnvironment",
+        ];
+        let env = WowLuaEnv::new().expect("lua env");
+        let names = VERIFIED_BASE_NAMES
+            .iter()
+            .map(|name| format!("{name:?}"))
+            .collect::<Vec<_>>()
+            .join(", ");
+        let missing_secure_members: Vec<String> = env
+            .eval(&format!(
+                r#"
+                    local names = {{ {names} }}
+                    local missing = {{}}
+                    for _, name in ipairs(names) do
+                        if rawget(_G, name) ~= nil and rawget(__secureenv, name) == nil then
+                            missing[#missing + 1] = name
+                        end
+                    end
+                    return missing
+                "#
+            ))
+            .expect("compare installed base globals");
+        assert!(
+            missing_secure_members.is_empty(),
+            "ordinary base globals missing from secureenv: {missing_secure_members:?}"
+        );
+
+        env.exec(&format!(
+            r#"
+                local names = {{ {names} }}
+                for _, name in ipairs(names) do
+                    if rawget(_G, name) == nil then rawset(_G, name, true) end
+                end
+                rawset(_G, "coroutine", {{}})
+                rawset(_G, "os", {{}})
+                rawset(_G, "__secureenv", nil)
+            "#
+        ))
+        .expect("seed constructor inputs");
+
+        super::create_secure_environment(&mut env.rilua_mut())
+            .expect("recreate secure environment from seeded globals");
+
+        let (mut actual, excluded_standard_libraries): (Vec<String>, bool) = env
+            .eval(
+                r#"
+                local names = {}
+                for name in pairs(__secureenv) do
+                    names[#names + 1] = name
+                end
+                return names,
+                    rawget(__secureenv, "coroutine") == nil
+                        and rawget(__secureenv, "os") == nil
+                "#,
+            )
+            .expect("read secure-environment base");
+        let mut expected = VERIFIED_BASE_NAMES
+            .iter()
+            .map(|name| (*name).to_string())
+            .collect::<Vec<_>>();
+        expected.push("_G".to_string());
+        expected.sort_unstable();
+        actual.sort_unstable();
+
+        assert_eq!(actual, expected);
+        assert!(excluded_standard_libraries);
     }
 }

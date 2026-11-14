@@ -217,6 +217,17 @@ Enum.PingSetTargetStateMeta = {
 const MISSING_CONSTANTS_LUA: &str = include_str!("../globals/enum_data/missing_constants.lua");
 const CONSTANTS_VALUES_LUA: &str = include_str!("../globals/enum_data/constants_values.lua");
 const COMPAT_CONSTANTS_LUA: &str = include_str!("../globals/enum_data/compat_constants.lua");
+// R88n.10 verifies these native-installed Retail values in both environments.
+const NATIVE_CONSTANTS_LUA: &str = r#"
+Constants = Constants or {}
+local roles = rawget(Constants, "LFG_ROLEConstants")
+if type(roles) ~= "table" then
+    roles = {}
+    rawset(Constants, "LFG_ROLEConstants", roles)
+end
+roles.LFG_ROLE_ANY = 3
+roles.LFG_ROLE_NO_ROLE = -1
+"#;
 const RETAIL_12_0_0_POST_COMPAT_CONSTANT_OVERRIDES_LUA: &str = r#"
 LE_WORLD_ELAPSED_TIMER_TYPE_CHALLENGE_MODE = nil
 LE_WORLD_ELAPSED_TIMER_TYPE_NONE = nil
@@ -263,13 +274,13 @@ pub(crate) fn init_enum_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
             crate::c_api::set_namespace_member(state, values, variant, Val::Num(value as f64))?;
         }
     }
-    exec_enum_source_in_both_environments(lua, MISSING_ENUMS_LUA)?;
+    exec_source_in_both_environments(lua, MISSING_ENUMS_LUA)?;
     #[cfg(feature = "retail-12-1-5")]
-    exec_enum_source_in_both_environments(lua, RETAIL_12_1_5_ENUM_OVERRIDES_LUA)?;
+    exec_source_in_both_environments(lua, RETAIL_12_1_5_ENUM_OVERRIDES_LUA)?;
     if ACTIVE_RETAIL_API_EPOCH == RetailApiEpoch::Retail12_0_0 {
-        exec_enum_source_in_both_environments(lua, RETAIL_12_0_0_ENUM_OVERRIDES_LUA)?;
+        exec_source_in_both_environments(lua, RETAIL_12_0_0_ENUM_OVERRIDES_LUA)?;
     }
-    exec_enum_source_in_both_environments(lua, COMPAT_ENUMS_LUA)?;
+    exec_source_in_both_environments(lua, COMPAT_ENUMS_LUA)?;
     crate::c_api::ptr_edit_mode_enums::register(lua.state_mut());
     #[cfg(feature = "retail-12-0-5")]
     crate::c_api::patch_12_0_5_enums::register(lua.state_mut());
@@ -279,7 +290,7 @@ pub(crate) fn init_enum_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
         crate::c_api::forever_finite_constants::register_player_swing_type(lua.state_mut());
     }
     if ACTIVE_RETAIL_API_EPOCH == RetailApiEpoch::Retail12_0_0 {
-        exec_enum_source_in_both_environments(lua, RETAIL_12_0_0_POST_COMPAT_ENUM_OVERRIDES_LUA)?;
+        exec_source_in_both_environments(lua, RETAIL_12_0_0_POST_COMPAT_ENUM_OVERRIDES_LUA)?;
     }
     #[cfg(feature = "on-update-modes")]
     crate::c_api::on_update_modes::register(lua.state_mut());
@@ -289,9 +300,11 @@ pub(crate) fn init_enum_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
         let enum_table = ensure_global_table(state, "Enum");
         crate::c_api::c_unit_auras::register_sound_trigger_enum(state, enum_table);
     }
+    exec_source_in_both_environments(lua, NATIVE_CONSTANTS_LUA)?;
+    // LFG roles are the only Constants members verified for native secure publication.
+    // Keep the generated, missing, and compatibility datasets ordinary-only.
     lua.exec(
         r#"
-        Constants = Constants or {}
         setmetatable(Constants, {
             __index = function(t, key)
                 local value = {}
@@ -332,7 +345,7 @@ pub(crate) fn init_enum_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
     Ok(())
 }
 
-fn exec_enum_source_in_both_environments(lua: &mut rilua::Lua, source: &str) -> crate::Result<()> {
+fn exec_source_in_both_environments(lua: &mut rilua::Lua, source: &str) -> crate::Result<()> {
     use rilua::LuaApiMut;
 
     lua.exec(source)?;
