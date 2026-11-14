@@ -74,6 +74,7 @@ const POST_LOAD_WORKAROUNDS: &[WorkaroundStep] = &[
         label: "patch_chat_voice_button_surface",
         apply: patch_chat_voice_button_surface,
     },
+    #[cfg(not(feature = "client-retail"))]
     WorkaroundStep {
         label: "patch_character_select_selected_name",
         apply: patch_character_select_selected_name,
