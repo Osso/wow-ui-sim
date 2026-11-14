@@ -253,6 +253,16 @@ If both edges aren't defined and frame has no explicit size, width/height = 0. Z
 ### Scale Factor
 Effective scale is the product of frame's scale and all parent scales (`methods_core.rs:111-123`).
 
+### Screen Clamping
+
+**VERIFIED (Retail 12.1.5.70688, R88n.5r):** The generic rectangle resolver clamps an enabled frame after it resolves requested geometry and before it stores the rect or sends rect-change notification. Queued layout and synchronous dirty-rect queries reach the same clamp calculation.
+
+**VERIFIED (Retail 12.1.5.70688, R88n.5r):** The native clamp uses screen-coordinate width and height with the frame's `(left, right, top, bottom)` insets multiplied by effective scale. In WoW coordinates the frame bounds are `left >= -leftInset × scale`, `right <= screenWidth - rightInset × scale`, `bottom >= -bottomInset × scale`, and `top <= screenHeight - topInset × scale`. The equivalent top-left `LayoutRect` bounds are `x >= -leftInset × scale`, `x + width <= screenWidth - rightInset × scale`, `y >= topInset × scale`, and `y + height <= screenHeight + bottomInset × scale`.
+
+**VERIFIED (Retail 12.1.5.70688, original UI):** `GameTooltip` inherits `clampedToScreen="true"`; simulator layout therefore uses the frame's enable flag and does not special-case tooltip types. See the [original consumer fixture](../tests/blizzard_game_tooltip_loads.rs).
+
+**UNKNOWN (R88n.5r-q1):** The native suppression-state identity and producer are not established; the simulator seam remains neutral and never suppresses. Exact rounding, behavior when a frame is larger than the screen, and order relative to snapping remain UNKNOWN and unchanged. Whether changing insets alone invalidates cached geometry is also UNKNOWN; the verified clamp reads them when rect resolution runs.
+
 ---
 
 ## Coordinate System Details
