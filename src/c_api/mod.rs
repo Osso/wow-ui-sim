@@ -9,8 +9,6 @@ pub mod c_guild_info;
 pub mod c_heirloom;
 pub mod c_recruit_a_friend;
 pub(crate) mod c_tooltip_comparison;
-#[cfg(feature = "retail-12-0-5")]
-pub(crate) mod c_tooltip_info_appearance;
 pub(crate) mod c_tooltip_info_artifact_item;
 pub(crate) mod c_tooltip_info_artifact_power;
 pub(crate) mod c_tooltip_info_azerite_essence;
@@ -24,10 +22,12 @@ pub mod c_tooltip_info_hyperlink;
 pub(crate) mod c_tooltip_info_inventory_by_id;
 pub(crate) mod c_tooltip_info_item_key;
 pub(crate) mod c_tooltip_info_loot;
-#[cfg(feature = "retail-12-1-5")]
+#[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
 pub(crate) mod c_tooltip_info_merchant_cost;
 pub(crate) mod experience_preset;
 pub(crate) mod tooltip_azerite_catalog_data;
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
+pub(crate) mod tooltip_info_retail_epoch_and_forever;
 // The pinned TooltipInfoDocumentation.lua:710 declares GetPvpBrawl on Retail,
 // PTR and Forever; the supplied-brawl model is compiled for the same profiles.
 #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
@@ -332,9 +332,7 @@ pub(crate) mod c_tooltip_info_aura_instance;
 pub(crate) mod c_tooltip_info_indexed_aura;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_tooltip_info_item_context;
-#[cfg(feature = "retail-12-0-5")]
-pub(crate) mod c_tooltip_info_outfit;
-#[cfg(feature = "client-retail")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub mod c_tooltip_info_pvp_talent;
 pub(crate) mod c_tooltip_info_socketed_relic;
 #[cfg(feature = "retail-12-0-5")]
@@ -421,6 +419,7 @@ pub mod c_toy_box_info;
 pub mod c_transmog_outfit_info;
 pub mod c_transmog_sets;
 pub(crate) mod c_ui;
+pub(crate) mod c_ui_color;
 pub mod c_ui_file_asset;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_unit_aura_altered_form;

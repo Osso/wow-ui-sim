@@ -261,7 +261,11 @@ Effective scale is the product of frame's scale and all parent scales (`methods_
 
 **VERIFIED (Retail 12.1.5.70688, original UI):** `GameTooltip` inherits `clampedToScreen="true"`; simulator layout therefore uses the frame's enable flag and does not special-case tooltip types. See the [original consumer fixture](../tests/blizzard_game_tooltip_loads.rs).
 
-**UNKNOWN (R88n.5r-q1):** The native suppression-state identity and producer are not established; the simulator seam remains neutral and never suppresses. Exact rounding, behavior when a frame is larger than the screen, and order relative to snapping remain UNKNOWN and unchanged. Whether changing insets alone invalidates cached geometry is also UNKNOWN; the verified clamp reads them when rect resolution runs.
+**VERIFIED (Retail 12.1.5.70688, R88n.5r-q1/q2):** Suppression is a dedicated per-region bit, distinct from movement and user placement. The effective query is enabled AND not suppressed; unchanged effective enable requests do not write or queue. Accepted changes and explicit suppression writes queue geometry and dependent rectangles, never synchronously resolve. The native ClearAllPoints/final-ClearPoint propagation-clear routes are identified, and q3 verifies their distinct propagation-state predicate; simulator transitions are deferred by agreement (#1169). They are not wired directly to the suppression bit. Oversized rectangles retain size and follow left/bottom/right/top correction precedence, so the later right/top edges win rather than centering or resetting the position.
+
+**VERIFIED ordinary inset path:** All four numeric dimensions are required (numeric-convertible strings accepted), and successful setters return zero values. Insets store without an unconditional rectangle queue. Existing anchor-input/dimension rounding happens before clamping, and clamping adds no final rounding.
+
+**VERIFIED native, deferred implementation:** R88n.5r-q3 (tracker #1168) supplies the anchor-propagation predicate, native unit/rounding arithmetic and notification/enable-policy rules. Their simulator implementation is deferred by agreement (#1169); movement is not substituted for propagation. Public-unit numerical equivalence, loaded-owner state, the exhaustive writer census and final renderer snapping remain unproved. Current explicit-host suppression tests are conditional API proof, not public producer proof. See the screen-clamp gap investigation.
 
 ---
 

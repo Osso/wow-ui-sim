@@ -124,6 +124,7 @@ pub(super) fn init_lua_state(
     // retain them. Insecure addon code that reads through `_G` sees nil
     // after the cleanup below.
     super::globals::security::create_secure_environment(lua)?;
+    crate::c_api::c_ui_color::register(lua)?;
     #[cfg(feature = "forbidden-aspects")]
     super::script_object_transfer::install(lua)?;
     enable_taint_and_wrap_loadstring(lua)?;

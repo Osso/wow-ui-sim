@@ -263,6 +263,7 @@ macro_rules! build_empty_sim_state {
             barber_shop: BarberShopState::default(),
             damage_meter: crate::c_api::c_damage_meter::DamageMeterInput::default(),
             item_interaction: None,
+            item_interaction_tooltip_object: None,
             major_factions: HashMap::new(),
             major_faction_renown_levels: HashMap::new(),
             major_faction_renown_rewards: HashMap::new(),
@@ -282,6 +283,8 @@ macro_rules! build_empty_sim_state {
                 feature = "client-anniversary"
             ))]
             transmog_appearance_sources: HashMap::new(),
+            #[cfg(feature = "client-wowforever")]
+            forever_appearance_item_ids: HashMap::new(),
             transmog_new_sources: HashSet::new(),
             #[cfg(any(
                 feature = "retail-12-0-0",
@@ -574,6 +577,8 @@ macro_rules! build_empty_sim_state {
             #[cfg(feature = "client-retail")]
             pvp_talent_tooltip:
                 crate::c_api::c_tooltip_info_pvp_talent::PvpTalentTooltipInputs::default(),
+            #[cfg(feature = "client-wowforever")]
+            forever_pvp_talent_spell_ids: HashMap::new(),
             player_xp: PlayerXpState::default(),
             bind_location: "Stormwind City".into(),
             pvp_honor: PvpHonorState::default(),
@@ -752,6 +757,7 @@ macro_rules! build_empty_sim_state {
             map_world_rects: HashMap::new(),
             bounty_set_maps: HashMap::new(),
             achievements: default_achievements(),
+            achievement_eligibility: AchievementEligibilityInputs::default(),
             achievement_superceding: HashMap::new(),
             calendar_now: Default::default(),
             calendar_displayed_month: Default::default(),
@@ -974,14 +980,15 @@ use super::game_data::{
     default_major_factions, default_model_scenes, default_party, default_player_buffs,
 };
 pub use super::state_types::{
-    AchievementComparisonData, AchievementGuildRep, AchievementInfo, AchievementSearchState,
-    AchievementStatistic, AddonEnableSnapshot, AddonInfo, AddonPerformanceMessageKey,
-    AddonRuntimeMetrics, AppFrameMetrics, AppliedTransmog, AreaPoiInfo, AuctionBrowseResult,
-    AuctionItemClassFilter, AuctionReplicateItem, AuctionRowInfo, AuctionSellQuote,
-    AuctionSellQuoteKind, AuctionSortSpec, AzeriteEssenceInfo, AzeriteEssenceMilestoneInfo,
-    AzeriteEssenceState, BagItem, BarberShopAlternateFormRace, BarberShopCategory,
-    BarberShopCharacterData, BarberShopOption, BarberShopState, BidAuction, BnetFriend,
-    BnetFriendInvite, BnetGameAccount, BrowseQuery, CharacterNameSeparator, ChatBubble,
+    AchievementComparisonData, AchievementEligibilityCriterion, AchievementEligibilityInputs,
+    AchievementEligibilityNode, AchievementEligibilityOperation, AchievementGuildRep,
+    AchievementInfo, AchievementSearchState, AchievementStatistic, AddonEnableSnapshot, AddonInfo,
+    AddonPerformanceMessageKey, AddonRuntimeMetrics, AppFrameMetrics, AppliedTransmog, AreaPoiInfo,
+    AuctionBrowseResult, AuctionItemClassFilter, AuctionReplicateItem, AuctionRowInfo,
+    AuctionSellQuote, AuctionSellQuoteKind, AuctionSortSpec, AzeriteEssenceInfo,
+    AzeriteEssenceMilestoneInfo, AzeriteEssenceState, BagItem, BarberShopAlternateFormRace,
+    BarberShopCategory, BarberShopCharacterData, BarberShopOption, BarberShopState, BidAuction,
+    BnetFriend, BnetFriendInvite, BnetGameAccount, BrowseQuery, CharacterNameSeparator, ChatBubble,
     CommodityPurchaseQuote, CommoditySearchResultInfo, CommoditySearchResults, CraftingState,
     CurrencyInfo, CursorInfo, CursorItemOrigin, DeathRecapEntry, DeathRecapEventInfo,
     EquipmentManagerState, EquipmentSet, EquippedItem, GreatVaultActivity, GroupMemberCountsMember,

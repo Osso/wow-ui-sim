@@ -246,6 +246,7 @@ fn register_core_surfaces(lua: &mut rilua::Lua) -> crate::Result<()> {
     super::lfg_list::register_all(lua)?;
     super::real::locale_info::register_all(lua)?;
     super::missing_surface::register_all(lua)?;
+    super::real::achievement_eligibility::register(lua)?;
     crate::c_api::encoding_util::register(lua.state_mut())?;
     super::quest_surface::register_all(lua)?;
     #[cfg(any(

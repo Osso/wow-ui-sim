@@ -8,7 +8,9 @@ use crate::items::{self, ItemInfo};
 use crate::lua_api::globals::missing_surface::tooltip_info::{
     build_quest_party_progress_tooltip, tooltip_for_item_context,
 };
-use crate::lua_api::methods::{borrow_state, create_string, table_set};
+use crate::lua_api::methods::{
+    borrow_state, create_string, create_table, create_table_with_fields, table_set,
+};
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
@@ -83,10 +85,25 @@ pub(crate) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResu
     Ok(())
 }
 
-fn get_item_interaction_item(_state: &mut LuaState) -> LuaResult<u32> {
-    // Current interaction state contains dialog text and cost, not the selected
-    // object descriptor or the kind-2/kind-4 payload inputs.
-    no_values()
+fn get_item_interaction_item(state: &mut LuaState) -> LuaResult<u32> {
+    // Only Retail's result paths are verified. Keep the other profiles' behavior.
+    if ACTIVE != ClientProfile::Retail {
+        return no_values();
+    }
+    let object = borrow_state(state)?.item_interaction_tooltip_object;
+    let Some(object) = object else {
+        return no_values();
+    };
+    if matches!(object.kind, 2 | 4) {
+        // These producers are unmodeled; preserve their verified failure result.
+        return no_values();
+    }
+
+    // This branch bypasses the builder, so no dataInstanceID is added (R88n.1).
+    let lines = create_table(state);
+    let tooltip = create_table_with_fields(state, &[("lines", lines)]);
+    state.push(tooltip);
+    Ok(1)
 }
 
 fn get_lfg_dungeon_reward(state: &mut LuaState) -> LuaResult<u32> {
