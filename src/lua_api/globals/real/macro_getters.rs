@@ -75,10 +75,20 @@ fn by_index(rows: &[MacroInfo], number: f64) -> Option<&MacroInfo> {
     rows.get(index).filter(|row| is_occupied(row))
 }
 
-// A zero resolved ID is the known nil branch. Numeric host IDs are stored
-// as text by the existing macro model.
+// INFERRED simulator representation adapter, not a claim about the native icon helper.
+// Existing host macros can store either a numeric ID as text or a texture path.
 fn resolved_macro_icon(icon: &str) -> Option<u32> {
-    icon.parse().ok().filter(|id| *id != 0)
+    icon.parse()
+        .ok()
+        .or_else(|| crate::limited_listfile::lookup_texture_path(icon))
+        .or_else(|| {
+            (!icon.is_empty() && !icon.contains(['/', '\x5c']))
+                .then(|| {
+                    crate::limited_listfile::lookup_texture_path(&format!("Interface/Icons/{icon}"))
+                })
+                .flatten()
+        })
+        .filter(|id| *id != 0)
 }
 
 enum IconEntries {
