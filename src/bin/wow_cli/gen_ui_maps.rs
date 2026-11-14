@@ -155,7 +155,6 @@ fn parse_ui_map_row(
 #[derive(Debug, Clone, Copy, PartialEq)]
 struct UiMapAssignmentRow {
     map_id: i32,
-    order_index: u32,
     ui_min: [f32; 2],
     ui_max: [f32; 2],
     region_min: [f32; 2],
@@ -164,7 +163,6 @@ struct UiMapAssignmentRow {
 
 struct AssignmentColumns {
     ui_map_id: usize,
-    order_index: usize,
     map_id: usize,
     ui_min: [usize; 2],
     ui_max: [usize; 2],
@@ -182,7 +180,6 @@ fn find_assignment_columns(header: &str) -> Result<AssignmentColumns, String> {
     };
     Ok(AssignmentColumns {
         ui_map_id: index("UiMapID")?,
-        order_index: index("OrderIndex")?,
         map_id: index("MapID")?,
         ui_min: [index("UiMin_0")?, index("UiMin_1")?],
         ui_max: [index("UiMax_0")?, index("UiMax_1")?],
@@ -231,7 +228,6 @@ fn parse_assignment_row(
     let ui_map_id = integer(columns.ui_map_id, "UiMapID")?;
     let assignment = UiMapAssignmentRow {
         map_id: signed_integer(columns.map_id, "MapID")?,
-        order_index: integer(columns.order_index, "OrderIndex")?,
         ui_min: [
             float(columns.ui_min[0], "UiMin_0")?,
             float(columns.ui_min[1], "UiMin_1")?,
@@ -305,7 +301,6 @@ fn write_assignment_file(
     writeln!(out, "#[derive(Debug, Clone, Copy, PartialEq)]")?;
     writeln!(out, "pub struct UiMapAssignment {{")?;
     writeln!(out, "    pub map_id: i32,")?;
-    writeln!(out, "    pub order_index: u32,")?;
     writeln!(out, "    pub ui_min: [f32; 2],")?;
     writeln!(out, "    pub ui_max: [f32; 2],")?;
     writeln!(out, "    pub region_min: [f32; 2],")?;
@@ -325,9 +320,8 @@ fn write_assignment_file(
             let region_max = row.region_max.map(|value| format!("{value:?}f32"));
             writeln!(
                 out,
-                "        UiMapAssignment {{ map_id: {}, order_index: {}, ui_min: [{}, {}], ui_max: [{}, {}], region_min: [{}, {}], region_max: [{}, {}] }},",
+                "        UiMapAssignment {{ map_id: {}, ui_min: [{}, {}], ui_max: [{}, {}], region_min: [{}, {}], region_max: [{}, {}] }},",
                 row.map_id,
-                row.order_index,
                 ui_min[0],
                 ui_min[1],
                 ui_max[0],
@@ -361,15 +355,14 @@ mod tests {
 
     #[test]
     fn assignment_parser_uses_named_columns_and_preserves_db2_values() {
-        let header = "MapID,UiMapID,OrderIndex,UiMin_0,UiMin_1,UiMax_0,UiMax_1,Region_0,Region_1,Region_2,Region_3,Region_4,Region_5";
+        let header = "MapID,UiMapID,UiMin_0,UiMin_1,UiMax_0,UiMax_1,Region_0,Region_1,Region_2,Region_3,Region_4,Region_5";
         let columns = find_assignment_columns(header).unwrap();
         let row =
-            "1,7,0,0,0,1,1,-3802.08008,-3245.83008,unused-z-min,-168.75,2204.16992,unused-z-max";
+            "1,7,0,0,1,1,-3802.08008,-3245.83008,unused-z-min,-168.75,2204.16992,unused-z-max";
         let (ui_map_id, assignment) = parse_assignment_row(&columns, row, 2).unwrap();
 
         assert_eq!(ui_map_id, 7);
         assert_eq!(assignment.map_id, 1);
-        assert_eq!(assignment.order_index, 0);
         assert_eq!(assignment.ui_min, [0.0, 0.0]);
         assert_eq!(assignment.ui_max, [1.0, 1.0]);
         assert_eq!(assignment.region_min, [-3802.08008, -3245.83008]);
@@ -378,20 +371,23 @@ mod tests {
 
     #[test]
     fn assignment_parser_rejects_nonfinite_geometry() {
-        let header = "UiMapID,OrderIndex,MapID,UiMin_0,UiMin_1,UiMax_0,UiMax_1,Region_0,Region_1,Region_2,Region_3,Region_4,Region_5";
+        let header = "UiMapID,MapID,UiMin_0,UiMin_1,UiMax_0,UiMax_1,Region_0,Region_1,Region_2,Region_3,Region_4,Region_5";
         let columns = find_assignment_columns(header).unwrap();
-        let error =
-            parse_assignment_row(&columns, "7,0,1,0,0,1,1,NaN,0,-1000000,10,20,1000000", 42)
-                .unwrap_err();
+        let error = parse_assignment_row(
+            &columns,
+            "7,1,0,0,1,1,NaN,0,unused-z-min,10,20,unused-z-max",
+            42,
+        )
+        .unwrap_err();
         assert!(error.contains("row 42"), "{error}");
         assert!(error.contains("nonfinite Region_0"), "{error}");
     }
 
     #[test]
     fn assignment_parser_preserves_negative_map_ids() {
-        let header = "UiMapID,OrderIndex,MapID,UiMin_0,UiMin_1,UiMax_0,UiMax_1,Region_0,Region_1,Region_2,Region_3,Region_4,Region_5";
+        let header = "UiMapID,MapID,UiMin_0,UiMin_1,UiMax_0,UiMax_1,Region_0,Region_1,Region_2,Region_3,Region_4,Region_5";
         let columns = find_assignment_columns(header).unwrap();
-        let row = "1148,2,-1,0,0,1,1,-1,-2,-1000000,3,4,1000000";
+        let row = "1148,-1,0,0,1,1,-1,-2,unused-z-min,3,4,unused-z-max";
         let (_, assignment) = parse_assignment_row(&columns, row, 9).unwrap();
         assert_eq!(assignment.map_id, -1);
     }
