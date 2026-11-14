@@ -58,8 +58,7 @@ mod tests {
             should_replace_normal_cooldown: false,
         };
 
-        // Internal serializer contract only; this does not prove the C_SpellBook
-        // handler reaches this publisher (UNKNOWN in R88j.2 addendum).
+        // Publisher VERIFIED; handler-to-publisher edge UNKNOWN (R88j.1/.2 addendum).
         assert_eq!(push_loss_of_control_info(state, &info, false).unwrap(), 1);
         let table = state.stack_get(state.top - 1);
         assert!(matches!(table, Val::Table(_)));
