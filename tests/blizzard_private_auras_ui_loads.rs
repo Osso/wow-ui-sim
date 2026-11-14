@@ -138,10 +138,13 @@ fn secure_private_auras_loads_tooltip_processor_from_secure_dependency() {
             message.contains("Blizzard_PrivateAurasUI")
                 || message.contains("PrivateAurasTooltip")
                 || message.contains("TooltipDataProcessor")
+                || message.contains("TextureUtil.lua")
         })
         .cloned()
         .collect();
     let registration_snapshot: (
+        String,
+        String,
         String,
         String,
         String,
@@ -165,7 +168,9 @@ fn secure_private_auras_loads_tooltip_processor_from_secure_dependency() {
                     type(rawget(__secureenv, 'C_UIColor')),
                     type(rawget(__secureenv, 'CreateSecureDelegate')),
                     type(rawget(__secureenv, 'CopyTable')),
-                    type(rawget(__secureenv, 'GetFrameMetatable'))
+                    type(rawget(__secureenv, 'GetFrameMetatable')),
+                    type(rawget(__secureenv, 'Constants')),
+                    type(rawget(__secureenv, 'TextureKitConstants'))
             "#,
         )
         .expect("secure registration snapshot should evaluate");
@@ -185,16 +190,23 @@ fn secure_private_auras_loads_tooltip_processor_from_secure_dependency() {
         "the secure SharedXMLGame load must provide its original tooltip processor:\n  {}",
         tooltip_error_text
     );
+    let expected_dependency_gap = load_errors.iter().any(|message| {
+        message.contains("TextureUtil.lua:122")
+            && message.contains("Constants")
+            && message.contains("nil value")
+    });
     let expected_consumer_gap = load_errors.iter().any(|message| {
-        message.contains("Blizzard_PrivateAurasUI.lua:298")
-            && message.contains("attempt to call a nil value")
+        message.contains("Blizzard_PrivateAurasUI.lua:1398")
+            && message.contains("TextureKitConstants")
+            && message.contains("nil value")
     });
     assert!(
-        expected_consumer_gap,
-        "Retail must stop at the original PrivateAurasUI.lua:298 helper-visibility boundary;\
+        expected_dependency_gap && expected_consumer_gap,
+        "Retail must stop at the exact secure dependency and original consumer boundaries:\n\
+         TextureUtil.lua:122 requires Constants; PrivateAurasUI.lua:1398 requires TextureKitConstants.\
          errors: {}\nregistration snapshot\
          (ordinary/secure/processor callback/C_Timer/C_StoreSecure/CreateFrame/C_UIColor/\
-         CreateSecureDelegate/CopyTable/GetFrameMetatable): {:?}",
+         CreateSecureDelegate/CopyTable/GetFrameMetatable/Constants/TextureKitConstants): {:?}",
         load_errors.join("\n  "),
         registration_snapshot
     );
@@ -205,6 +217,14 @@ fn secure_private_auras_loads_tooltip_processor_from_secure_dependency() {
     assert_eq!(
         registration_snapshot.9, "function",
         "GetFrameMetatable must be published in secureenv"
+    );
+    assert_eq!(
+        registration_snapshot.10, "nil",
+        "Constants must remain the exact missing secure dependency input"
+    );
+    assert_eq!(
+        registration_snapshot.11, "nil",
+        "TextureKitConstants must remain the exact missing PrivateAurasUI input"
     );
 
     let original_processor: bool = env

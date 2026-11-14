@@ -717,7 +717,12 @@ fn register_system_globals(lua: &mut rilua::Lua) -> LuaResult<()> {
     install_xpcall(lua)?;
     LuaApiMut::register_function(lua, "securecall", securecall)?;
     LuaApiMut::register_function(lua, "seterrorhandler", seterrorhandler)?;
-    LuaApiMut::register_function(lua, "geterrorhandler", geterrorhandler)?;
+    // VERIFIED membership (BASELINE-39); dual publication fixes registration order.
+    crate::lua_api::globals::security::register_function_in_both_environments(
+        lua,
+        "geterrorhandler",
+        geterrorhandler,
+    )?;
     LuaApiMut::register_function(lua, "assertsafe", assertsafe)?;
     Ok(())
 }
