@@ -85,6 +85,7 @@ attachments, other profiles and getter selection are unchanged by this extension
 - `src/lua_api/frame/methods/widgets/tooltip/owner.rs` — tooltip ownership, internal hiding, and `FadeOut` delegation.
 - `src/lua_api/frame/methods/text_attribute_event/text.rs` — owned tooltip replacement text visibility.
 - `src/lua_api/frame/methods/widgets/tooltip/line_data.rs` and `content.rs` — append-without-show and payload-driven visibility.
+- `src/lua_api/frame/methods/widgets/tooltip/line_frames.rs` — resolve and record active cached FontString IDs, including existing Forever XML rows.
 
 ## Tests asserting this spec
 

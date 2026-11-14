@@ -56,7 +56,7 @@ Updated [layout-system](systems/layout-system.md#screen-clamping) and the [layou
 
 ## [2026-11-14] investigation | Forever tooltip cached lines
 
-Updated the [tooltip lifecycle investigation](investigations/tooltip-owner-lifecycle.md#r88n5-forever-clearlines-cache-boundary) and contract with R88n.5. **VERIFIED (Forever 1.60.1.70707):** ClearLines resets cached left/right text for active rows, not inactive cache entries. Optional API and selected `TooltipDataHandler.ProcessInfo` preservation tests pass. PTR applicability for Retail layout facts remains INFERRED; clipping, order, nonzero extra-inset writers and clamping remain UNKNOWN.
+Updated the [tooltip lifecycle investigation](investigations/tooltip-owner-lifecycle.md#r88n5-forever-clearlines-cache-boundary) and contract with R88n.5. **VERIFIED (Forever 1.60.1.70707 native):** ClearLines resets cached left/right text for active rows, not inactive cache entries. **VERIFIED (simulator):** the optional full-UI test was RED at `3ffa60125` because existing XML FontStrings were not recorded on Forever; it passes after `2a87492b8` adds that registration. The selected original `TooltipDataHandler.ProcessInfo` preservation test passes. PTR applicability for Retail layout facts remains INFERRED; clipping, order, nonzero extra-inset writers and clamping remain UNKNOWN.
 
 ## [2026-11-14] investigation | Retail quest tooltip consumers
 
