@@ -12,7 +12,7 @@ use rilua::vm::closure::{Closure, RustClosure};
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
-use rilua::{LuaResult, RustFn, Val};
+use rilua::{LuaResult, RustFn, Val, runtime_error};
 use serde::Serialize;
 
 pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
@@ -22,6 +22,24 @@ pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResu
             namespace,
             "GetAvailableHouseXP",
             get_available_house_xp,
+        )?;
+    }
+    // VERIFIED for Retail; INFERRED for PTR, which shares the Retail UI path.
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+    ) {
+        table_set_rust_fn_static(
+            state,
+            namespace,
+            "IsInitiativeEnabled",
+            is_initiative_enabled,
+        )?;
+        table_set_rust_fn_static(
+            state,
+            namespace,
+            "GetInitiativeTaskInfo",
+            get_initiative_task_info,
         )?;
     }
     for (name, callback) in [
@@ -48,6 +66,58 @@ pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResu
         table_set_rust_fn_static(state, namespace, name, callback)?;
     }
     Ok(())
+}
+
+/// INFERRED — this host value stands in for the initiative owner's enabled field.
+/// The native value source, initialization and absent-input result are unknown.
+/// A supplied value follows the inferred one-boolean declaration.
+fn is_initiative_enabled(state: &mut LuaState) -> LuaResult<u32> {
+    let enabled = borrow_state(state)?.housing.initiative.enabled;
+    if let Some(enabled) = enabled {
+        state.push(Val::Bool(enabled));
+        return Ok(1);
+    }
+    Ok(0)
+}
+
+/// VERIFIED query — only matching active/viewed neighborhoods are searched;
+/// completed and in-progress flags do not filter a matching task. Task fields
+/// follow the INFERRED local declaration and are copied from host records.
+fn get_initiative_task_info(state: &mut LuaState) -> LuaResult<u32> {
+    let id = read_initiative_task_id(state)?;
+    let task = {
+        let sim = borrow_state(state)?;
+        let initiative = &sim.housing.initiative;
+        if initiative.active_neighborhood.is_empty()
+            || initiative.active_neighborhood != initiative.viewing_neighborhood
+        {
+            None
+        } else {
+            initiative
+                .neighborhoods
+                .get(&initiative.viewing_neighborhood)
+                .and_then(|info| info.tasks.iter().find(|task| task.id == id))
+                .cloned()
+        }
+    };
+    // UNKNOWN native absent-result publication; preserve the existing one-nil simulator result.
+    push_record(state, task)
+}
+
+fn read_initiative_task_id(state: &LuaState) -> LuaResult<i32> {
+    let Some(id) = Option::<f64>::from_stack(state, 1)? else {
+        // VERIFIED — the native parser has a required-argument error path;
+        // exact error details are unknown.
+        return Err(runtime_error("GetInitiativeTaskInfo requires a task ID"));
+    };
+    if !id.is_finite() || id < f64::from(i32::MIN) || id > f64::from(i32::MAX) {
+        // INFERRED — the local runtime error represents conversion failure;
+        // native continuation is unknown.
+        return Err(runtime_error(
+            "GetInitiativeTaskInfo task ID is outside signed 32-bit range",
+        ));
+    }
+    Ok(id.trunc() as i32)
 }
 
 /// VERIFIED local result: no active neighborhood gives zero; otherwise subtract used XP,
