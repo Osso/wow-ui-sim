@@ -23,12 +23,19 @@ use rilua::{LuaResult, Val};
 const ESSENCE_USAGE: &str =
     "Usage: local data = C_TooltipInfo.GetAzeriteEssence(essenceID [, rank])";
 const ESSENCE_SLOT_USAGE: &str = "Usage: local data = C_TooltipInfo.GetAzeriteEssenceSlot(slot)";
+const MAX_ESSENCE_SLOT: u8 = 3;
+const SOURCE_STAGE_DISABLED_NEXT_RANK: u32 = 4;
 const TOOLTIP_TYPE_AZERITE_ESSENCE: f64 = 8.0;
-// INFERRED: R88n.2 establishes the heading content and quality rank, not the line type.
-const LINE_TYPE_ESSENCE_HEADING: f64 = 0.0;
+// INFERRED: R88n.2 establishes text content and rank color, not the text line type.
+const LINE_TYPE_ESSENCE_TEXT: f64 = 0.0;
 
 pub(crate) fn register_essence(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
-    table_set_rust_fn_static(state, namespace, "GetAzeriteEssence", get_azerite_essence)
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "GetAzeriteEssence",
+        produce_azerite_essence_tooltip,
+    )
 }
 
 pub(crate) fn register_slot(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
@@ -36,11 +43,11 @@ pub(crate) fn register_slot(state: &mut LuaState, namespace: GcRef<Table>) -> Lu
         state,
         namespace,
         "GetAzeriteEssenceSlot",
-        get_azerite_essence_slot,
+        produce_azerite_essence_slot_tooltip,
     )
 }
 
-fn get_azerite_essence(state: &mut LuaState) -> LuaResult<u32> {
+fn produce_azerite_essence_tooltip(state: &mut LuaState) -> LuaResult<u32> {
     let essence_id = tooltip_getter_args::round7_signed(state, 1, ESSENCE_USAGE)?;
     let requested_rank = tooltip_getter_args::round7_optional_unsigned(state, 2, ESSENCE_USAGE)?;
     if ACTIVE != ClientProfile::Retail {
@@ -52,41 +59,15 @@ fn get_azerite_essence(state: &mut LuaState) -> LuaResult<u32> {
     let Some((source_rank, rank)) = selected_ranks(state, essence_id, requested_rank) else {
         return no_values();
     };
-    let Some(next_rank) = source_rank.checked_add(1) else {
+    let Some((next_rank, source_power)) = source_stage_for_rank(essence_id, source_rank) else {
         return no_values();
     };
-    let source_stage = if next_rank == 4 {
-        None
-    } else {
-        let Some(power) = power_record(essence_id, next_rank) else {
-            return no_values();
-        };
-        Some((next_rank, power))
-    };
-    let Some(rank_one_power) = power_record(essence_id, 1) else {
+    let Some((rank_one_power, selected_power)) = required_power_records(essence_id, rank) else {
         return no_values();
     };
-    let Some(selected_power) = power_record(essence_id, rank) else {
-        return no_values();
-    };
-    let (is_major_active, is_active) = active_slot_roles(state, essence_id)?;
-
-    let main_spell = if is_major_active {
-        spell_for_selector(
-            rank_one_power,
-            AzeriteEssenceSpellSelector::MajorDescription,
-        )
-    } else {
-        spell_for_selector(selected_power, AzeriteEssenceSpellSelector::MajorActual)
-    };
-    let passive_spell = if is_active {
-        spell_for_selector(
-            rank_one_power,
-            AzeriteEssenceSpellSelector::MinorDescription,
-        )
-    } else {
-        spell_for_selector(selected_power, AzeriteEssenceSpellSelector::MinorActual)
-    };
+    let (main_spell, passive_spell) =
+        selected_essence_spell_ids(state, essence_id, rank_one_power, selected_power)?;
+    let source_stage = source_power.map(|power| (next_rank, power));
     publish_essence_tooltip(
         state,
         essence_id,
@@ -97,9 +78,9 @@ fn get_azerite_essence(state: &mut LuaState) -> LuaResult<u32> {
     )
 }
 
-fn get_azerite_essence_slot(state: &mut LuaState) -> LuaResult<u32> {
+fn produce_azerite_essence_slot_tooltip(state: &mut LuaState) -> LuaResult<u32> {
     let slot = tooltip_getter_args::round7_signed(state, 1, ESSENCE_SLOT_USAGE)? as u8;
-    if slot > 3 {
+    if slot > MAX_ESSENCE_SLOT {
         return Err(rilua::runtime_error(format!(
             "outside of expected range 0 to 3 - {ESSENCE_SLOT_USAGE}"
         )));
@@ -113,26 +94,9 @@ fn get_azerite_essence_slot(state: &mut LuaState) -> LuaResult<u32> {
     let Some((_, rank)) = selected_ranks(state, essence_id, None) else {
         return no_values();
     };
-    let Some(_essence) = essence_record(essence_id) else {
+    let Some((main_spell, passive_spell)) = slot_spell_ids(essence_id, rank, slot) else {
         return no_values();
     };
-    let Some(rank_one_power) = power_record(essence_id, 1) else {
-        return no_values();
-    };
-    let Some(_selected_power) = power_record(essence_id, rank) else {
-        return no_values();
-    };
-
-    let main_spell = (slot == 0).then(|| {
-        spell_for_selector(
-            rank_one_power,
-            AzeriteEssenceSpellSelector::MajorDescription,
-        )
-    });
-    let passive_spell = spell_for_selector(
-        rank_one_power,
-        AzeriteEssenceSpellSelector::MinorDescription,
-    );
     publish_essence_tooltip(state, essence_id, None, main_spell, passive_spell, None)
 }
 
@@ -149,36 +113,42 @@ fn publish_essence_tooltip(
         TOOLTIP_TYPE_AZERITE_ESSENCE,
         Some(f64::from(essence_id)),
     );
-    if let Some((name, rank)) = heading {
-        let text = match format_essence_heading(state, name, rank) {
-            Ok(text) => text,
-            Err(error) => return failed_producer(state, error),
-        };
-        let quality = (rank + 1) as u8;
-        let color = item_quality_color(quality);
-        append_line(
-            state,
-            tooltip,
-            LINE_TYPE_ESSENCE_HEADING,
-            &text,
-            Some(color),
-        );
-    }
-    if let Some(spell_id) = main_spell {
-        if let Err(error) = append_spell_to_tooltip(state, tooltip, spell_id) {
-            return failed_producer(state, error);
-        }
-    }
-    if let Err(error) = append_spell_to_tooltip(state, tooltip, passive_spell) {
+    if let Err(error) = append_essence_tooltip_rows(
+        state,
+        tooltip,
+        heading,
+        main_spell,
+        passive_spell,
+        source_stage,
+    ) {
         return failed_producer(state, error);
-    }
-    if let Some((next_rank, power)) = source_stage {
-        if let Err(error) = append_source_lines(state, tooltip, next_rank, power) {
-            return failed_producer(state, error);
-        }
     }
     state.push(tooltip);
     Ok(1)
+}
+
+fn append_essence_tooltip_rows(
+    state: &mut LuaState,
+    tooltip: Val,
+    heading: Option<(&str, u32)>,
+    main_spell: Option<u32>,
+    passive_spell: u32,
+    source_stage: Option<(u32, &'static AzeriteEssencePowerRecord)>,
+) -> LuaResult<()> {
+    if let Some((name, rank)) = heading {
+        let text = format_essence_heading(state, name, rank)?;
+        let quality = (rank + 1) as u8;
+        let color = item_quality_color(quality);
+        append_line(state, tooltip, LINE_TYPE_ESSENCE_TEXT, &text, Some(color));
+    }
+    if let Some(spell_id) = main_spell {
+        append_spell_to_tooltip(state, tooltip, spell_id)?;
+    }
+    append_spell_to_tooltip(state, tooltip, passive_spell)?;
+    if let Some((next_rank, power)) = source_stage {
+        append_source_lines(state, tooltip, next_rank, power)?;
+    }
+    Ok(())
 }
 
 fn format_essence_heading(state: &mut LuaState, name: &str, rank: u32) -> LuaResult<String> {
@@ -210,6 +180,72 @@ fn power_record(essence_id: i32, rank: u32) -> Option<&'static AzeriteEssencePow
         .binary_search_by_key(&key, |record| (record.essence_id, record.rank))
         .ok()?;
     AZERITE_ESSENCE_POWERS.get(index)
+}
+
+fn source_stage_for_rank(
+    essence_id: i32,
+    source_rank: u32,
+) -> Option<(u32, Option<&'static AzeriteEssencePowerRecord>)> {
+    let next_rank = source_rank.checked_add(1)?;
+    if next_rank == SOURCE_STAGE_DISABLED_NEXT_RANK {
+        return Some((next_rank, None));
+    }
+    Some((next_rank, Some(power_record(essence_id, next_rank)?)))
+}
+
+fn required_power_records(
+    essence_id: i32,
+    rank: u32,
+) -> Option<(
+    &'static AzeriteEssencePowerRecord,
+    &'static AzeriteEssencePowerRecord,
+)> {
+    Some((
+        power_record(essence_id, 1)?,
+        power_record(essence_id, rank)?,
+    ))
+}
+
+fn selected_essence_spell_ids(
+    state: &LuaState,
+    essence_id: i32,
+    rank_one_power: &AzeriteEssencePowerRecord,
+    selected_power: &AzeriteEssencePowerRecord,
+) -> LuaResult<(u32, u32)> {
+    let (is_major_active, is_active) = active_slot_roles(state, essence_id)?;
+    let main_spell = if is_major_active {
+        spell_for_selector(
+            rank_one_power,
+            AzeriteEssenceSpellSelector::MajorDescription,
+        )
+    } else {
+        spell_for_selector(selected_power, AzeriteEssenceSpellSelector::MajorActual)
+    };
+    let passive_spell = if is_active {
+        spell_for_selector(
+            rank_one_power,
+            AzeriteEssenceSpellSelector::MinorDescription,
+        )
+    } else {
+        spell_for_selector(selected_power, AzeriteEssenceSpellSelector::MinorActual)
+    };
+    Ok((main_spell, passive_spell))
+}
+
+fn slot_spell_ids(essence_id: i32, rank: u32, slot: u8) -> Option<(Option<u32>, u32)> {
+    essence_record(essence_id)?;
+    let (rank_one_power, _) = required_power_records(essence_id, rank)?;
+    let main_spell = (slot == 0).then(|| {
+        spell_for_selector(
+            rank_one_power,
+            AzeriteEssenceSpellSelector::MajorDescription,
+        )
+    });
+    let passive_spell = spell_for_selector(
+        rank_one_power,
+        AzeriteEssenceSpellSelector::MinorDescription,
+    );
+    Some((main_spell, passive_spell))
 }
 
 fn selected_ranks(state: &LuaState, essence_id: i32, requested: Option<u32>) -> Option<(u32, u32)> {
@@ -249,16 +285,20 @@ fn append_source_lines(
     } else {
         "TOOLTIP_TALENT_NEXT_RANK"
     };
-    let heading_value = crate::c_api::global_val(state, heading_key);
-    let heading = val_to_string(state, heading_value).ok_or_else(|| {
-        rilua::runtime_error(format!(
-            "localized Azerite source heading {heading_key} returned no text"
-        ))
-    })?;
-    append_line(state, tooltip, LINE_TYPE_ESSENCE_HEADING, &heading, None);
-    let source_line = append_line(state, tooltip, LINE_TYPE_ESSENCE_HEADING, source, None);
+    let heading = localized_source_heading(state, heading_key)?;
+    append_line(state, tooltip, LINE_TYPE_ESSENCE_TEXT, &heading, None);
+    let source_line = append_line(state, tooltip, LINE_TYPE_ESSENCE_TEXT, source, None);
     table_set(state, source_line, "wrapText", Val::Bool(true));
     Ok(())
+}
+
+fn localized_source_heading(state: &mut LuaState, key: &str) -> LuaResult<String> {
+    let value = crate::c_api::global_val(state, key);
+    val_to_string(state, value).ok_or_else(|| {
+        rilua::runtime_error(format!(
+            "localized Azerite source heading {key} returned no text"
+        ))
+    })
 }
 
 // INFERRED: map the modeled race faction to the matching DB2 source column.
