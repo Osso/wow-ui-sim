@@ -424,13 +424,25 @@ fn retail_cast_count_requires_spell_store_membership() {
 fn unresolved_strings_never_reverse_numeric_keys_or_alias_values() {
     let env = fixture(false);
     set_count(&env, 880001, 11);
-    for id in ["'880001'", "'unknown-spell'", "''"] {
+    if uses_retail_native_count_contract() {
+        cast_count(&env, "'880001'", 0, false);
+        display(&env, "'880001'", "0", false);
+    } else {
+        cast_count(&env, "'880001'", 0, false);
+        display(&env, "'880001'", "", false);
+    }
+    for id in ["'unknown-spell'", "''"] {
         cast_count(&env, id, 0, false);
         display(&env, id, "", false);
     }
     env.state().borrow_mut().spell_id_aliases.remove("19750");
-    cast_count(&env, "'19750'", 0, false);
-    display(&env, "'19750'", "", false);
+    if uses_retail_native_count_contract() {
+        cast_count(&env, "'19750'", 7, false);
+        display(&env, "'19750'", "7", false);
+    } else {
+        cast_count(&env, "'19750'", 0, false);
+        display(&env, "'19750'", "", false);
+    }
     cast_count(&env, "19750", 7, false);
 }
 
@@ -452,9 +464,19 @@ fn missing_known_and_unknown_numeric_sources_return_zero_and_empty() {
     let env = fixture(false);
     positive(&env);
     clear_count(&env, 19750);
-    for id in ["19750", "880001", "4294967295"] {
+    for id in ["19750", "880001"] {
         cast_count(&env, id, 0, false);
         display(&env, id, "", false);
+    }
+    if uses_retail_native_count_contract() {
+        env.exec(
+            "assert(not pcall(C_Spell.GetSpellCastCount, 4294967295)) \
+             assert(not pcall(C_Spell.GetSpellDisplayCount, 4294967295))",
+        )
+        .unwrap();
+    } else {
+        cast_count(&env, "4294967295", 0, false);
+        display(&env, "4294967295", "", false);
     }
 }
 
@@ -586,6 +608,7 @@ fn decimal_ascii_and_empty_unicode_replacement_preserve_exact_bytes() {
     display(&env, "19750", "1234", false);
 }
 
+#[cfg(not(all(feature = "profile-retail", feature = "retail-12-1-5")))]
 #[test]
 fn local_u32_width_preserves_max_quantity_and_exact_decimal() {
     let env = fixture(false);
@@ -654,6 +677,63 @@ fn queries_are_read_only_and_environments_and_result_replacements_isolated() {
     positive(&other);
 }
 
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[test]
+fn retail_identifier_conversion_matches_the_signed32_subset() {
+    let env = fixture(false);
+    if uses_retail_native_count_contract() {
+        cast_count(&env, "-1", 0, false);
+        cast_count(&env, "19750.5", 7, false);
+        display(&env, "19750.5", "7", false);
+        cast_count(&env, "'19750.5'", 7, false);
+        display(&env, "'19750.5'", "7", false);
+        env.exec(
+            r#"
+            for _,api in ipairs({'GetSpellCastCount','GetSpellDisplayCount'}) do
+                for _,value in ipairs({false, {}, SCFrame, 0/0, math.huge, -math.huge, 4294967296}) do
+                    local ok = pcall(C_Spell[api], value)
+                    assert(not ok, api .. ' accepted invalid value ' .. tostring(value))
+                end
+            end
+            "#,
+        )
+        .unwrap();
+        return;
+    }
+    positive(&env);
+    env.exec(
+        r#"
+        local function probe()
+            for _,api in ipairs({
+                'GetSpellCastCount',
+                'GetSpellDisplayCount',
+            }) do
+                SCReject(api,1,false)
+                SCReject(api,1,false,nil)
+                for _,v in ipairs({
+                    false,
+                    {},
+                    SCFrame,
+                    -1,
+                    19750.5,
+                    0/0,
+                    math.huge,
+                    -math.huge,
+                    4294967296,
+                    string.char(255),
+                }) do
+                    SCReject(api,1,false,v)
+                end
+            end
+        end
+        probe()
+        SCTainted(probe)
+    "#,
+    )
+    .unwrap();
+}
+
+#[cfg(not(all(feature = "profile-retail", feature = "retail-12-1-5")))]
 #[test]
 fn strict_public_identifier_utf8_u32_domain_in_secure_and_tainted_frames() {
     let env = fixture(false);

@@ -254,6 +254,13 @@ fn retail_spell_cast_count_accepts_numeric_strings_and_truncates_fractions() {
         )
         .expect("Retail spell identifiers accept numeric strings and truncate fractions");
     assert_eq!(counts, (5, 5));
+    let displays: (String, String) = env
+        .eval(
+            "return C_Spell.GetSpellDisplayCount('19750'), \
+             C_Spell.GetSpellDisplayCount(19750.9)",
+        )
+        .expect("display count uses the same Retail spell identifier conversion");
+    assert_eq!(displays, ("5".to_string(), "5".to_string()));
 }
 
 #[test]
