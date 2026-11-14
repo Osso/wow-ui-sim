@@ -6,6 +6,10 @@
 
 [Consumer selection and RED proof](investigations/consumer-selection-and-red-proof.md#retail-quest-tooltip-consumers-and-host-input-seams) links the [Round 7 getter contract](../specs/tooltip-r7-getters.md), selected Retail consumers, R88n.1 miss results, and host-supplied party/item inputs.
 
+## [2026-11-14] implementation | Retail recipe-rank tooltip
+
+The [Round 7 getter contract](../specs/tooltip-r7-getters.md) and [Lua API](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) record the selected original accessor, host-supplied recipe records, and the two modeled Retail cache-clear routes. Native cache population and complete external clear triggers remain UNKNOWN.
+
 ## [2026-11-14] fix | Original character and store lifecycle ownership
 
 [Lua-owned fallback retirement](investigations/lua-owned-fallback-retirement.md#j-original-character-labels-and-titles) records the separately proved Retail CharacterFrame bridge and StoreUI escape guard removals, real equipment/reopen/attribute consumers, and unchanged non-Retail/native-unknown boundaries.
