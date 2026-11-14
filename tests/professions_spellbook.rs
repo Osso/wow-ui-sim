@@ -34,6 +34,37 @@ fn professions_book_selection_consumer_preserves_invalid_slot_state() {
     }
 }
 
+#[cfg(feature = "client-retail")]
+#[test]
+fn professions_book_selection_consumer_preserves_positive_out_of_range_slot() {
+    test_timeout! {
+    with_blizzard_addon_startup_shape(&["Blizzard_ProfessionsBook"], &[], |env, loaded| {
+        assert!(loaded.iter().any(|name| name == "Blizzard_ProfessionsBook"));
+        let checked: bool = env
+            .eval(
+                r##"
+                local slot = 1
+                while C_SpellBook.GetSpellBookItemInfo(slot, Enum.SpellBookSpellBank.Player) do
+                    slot = slot + 1
+                end
+                assert(slot <= 1024)
+                local parent = { spellOffset = 0 }
+                local button = { checked = true, slot = slot }
+                function button:GetID() return self.slot end
+                function button:GetParent() return parent end
+                function button:SetChecked(value) self.checked = value end
+                ProfessionSpellButtonMixin.UpdateSelection(button)
+                return button.checked
+                "##,
+            )
+            .expect("the original ProfessionSpellButtonMixin consumer should run");
+
+        // Preservation only: `UpdateSelection` uses the return as a condition.
+        assert!(!checked);
+    });
+    }
+}
+
 #[test]
 fn test_blacksmithing_spell_exists() {
     let env = env();
