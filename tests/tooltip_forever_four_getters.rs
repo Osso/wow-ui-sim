@@ -115,23 +115,32 @@ fn forever_spellbook_outfit_consumer_uses_the_selected_tooltip_getter() {
     let ui = blizzard_ui_dir();
     let env = new_blizzard_addon_env(&ui);
     crate::common::supply_empty_forever_spellbook_outfits(&env);
-    let loaded = load_blizzard_addon_closure_into_env(
+    let tooltip_and_panel_addons = load_blizzard_addon_closure_into_env(
         &env,
         &ui,
-        &[
-            "Blizzard_GameTooltip",
-            "Blizzard_UIParentPanelManager",
-            "Blizzard_PlayerSpells",
-        ],
+        &["Blizzard_GameTooltip", "Blizzard_UIParentPanelManager"],
         &[],
     );
-    assert!(loaded.iter().any(|addon| addon == "Blizzard_GameTooltip"));
     assert!(
-        loaded
+        tooltip_and_panel_addons
+            .iter()
+            .any(|addon| addon == "Blizzard_GameTooltip")
+    );
+    assert!(
+        tooltip_and_panel_addons
             .iter()
             .any(|addon| addon == "Blizzard_UIParentPanelManager")
     );
-    assert!(loaded.iter().any(|addon| addon == "Blizzard_PlayerSpells"));
+    env.exec("assert(type(RegisterUIPanel) == 'function')")
+        .expect("panel manager must load before the selected SpellBook consumer");
+
+    let spellbook_addons =
+        load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_PlayerSpells"], &[]);
+    assert!(
+        spellbook_addons
+            .iter()
+            .any(|addon| addon == "Blizzard_PlayerSpells")
+    );
     env.exec(
         r#"
         assert(type(SpellBookOutfitItemMixin) == 'table'
