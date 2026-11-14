@@ -678,3 +678,108 @@ fn retail_native_constants_and_enum_tables_are_separate() {
     )
     .expect("native Constants and Enum installers must create separate tables");
 }
+
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+#[test]
+fn retail_r88n11b_members_share_functions_with_secure_namespaces() {
+    const MEMBERS: [(&str, &str); 37] = [
+        ("C_ClassColor", "GetClassColor"),
+        ("C_ColorUtil", "ConvertHSLToHSV"),
+        ("C_ColorUtil", "ConvertHSVToHSL"),
+        ("C_ColorUtil", "ConvertHSVToRGB"),
+        ("C_ColorUtil", "ConvertRGBToHSV"),
+        ("C_ColorUtil", "GenerateTextColorCode"),
+        ("C_ColorUtil", "WrapTextInColor"),
+        ("C_ColorUtil", "WrapTextInColorCode"),
+        ("C_CurveUtil", "CreateColorCurve"),
+        ("C_CurveUtil", "CreateCurve"),
+        ("C_CurveUtil", "EvaluateColorFromBoolean"),
+        ("C_CurveUtil", "EvaluateColorValueFromBoolean"),
+        ("C_CurveUtil", "EvaluateGameCurve"),
+        ("C_FunctionContainers", "CreateCallback"),
+        ("C_GameRules", "AutoConnectToGameModeRealm"),
+        ("C_GameRules", "DoesGameModeHavePromo"),
+        ("C_GameRules", "GetActiveGameMode"),
+        ("C_GameRules", "GetCurrentEventRealmQueues"),
+        ("C_GameRules", "GetCurrentGameModeDisplayInfo"),
+        ("C_GameRules", "GetCurrentGameModeRecordID"),
+        ("C_GameRules", "GetDisplayedGameModeRecordIDAtIndex"),
+        ("C_GameRules", "GetGameModeDisplayInfoByRecordID"),
+        ("C_GameRules", "GetGameModeGlueScreenName"),
+        ("C_GameRules", "GetGameModePromoGlobalString"),
+        ("C_GameRules", "GetGameRuleAsFloat"),
+        ("C_GameRules", "GetGameRuleAsFrameStrata"),
+        ("C_GameRules", "GetNumDisplayedGameModes"),
+        ("C_GameRules", "IsCharacterlessLoginActive"),
+        ("C_GameRules", "IsClassAllowedForGameMode"),
+        ("C_GameRules", "IsGameModeEnabled"),
+        ("C_GameRules", "IsGameRuleActive"),
+        ("C_GameRules", "IsMultiActionBarVisibilityForced"),
+        ("C_GameRules", "IsPersonalResourceDisplayEnabled"),
+        ("C_GameRules", "IsPlunderstorm"),
+        ("C_GameRules", "IsStandard"),
+        ("C_GameRules", "IsWoWHack"),
+        ("C_ScriptedAnimations", "GetAllScriptedAnimationEffects"),
+    ];
+    let entries = MEMBERS
+        .iter()
+        .map(|(namespace, member)| format!("{{{namespace:?}, {member:?}}}"))
+        .collect::<Vec<_>>()
+        .join(", ");
+    let env = env();
+    let (present, namespaces, missing, failures): (i64, i64, Vec<String>, Vec<String>) = env
+        .eval(&format!(
+            r#"
+                local entries = {{ {entries} }}
+                local present, seen, missing, failures = 0, {{}}, {{}}, {{}}
+                for _, entry in ipairs(entries) do
+                    local namespace, member = entry[1], entry[2]
+                    local public = rawget(_G, namespace)
+                    local secure = rawget(__secureenv, namespace)
+                    if type(public) ~= "table" then
+                        failures[#failures + 1] = namespace .. ": ordinary namespace missing"
+                    elseif type(secure) ~= "table" then
+                        failures[#failures + 1] = namespace .. ": secure namespace missing"
+                    elseif rawequal(public, secure) then
+                        failures[#failures + 1] = namespace .. ": namespace tables are shared"
+                    else
+                        seen[namespace] = true
+                        local publicValue = rawget(public, member)
+                        local secureValue = rawget(secure, member)
+                        if publicValue == nil then
+                            missing[#missing + 1] = namespace .. "." .. member
+                            if secureValue ~= nil then
+                                failures[#failures + 1] = namespace .. "." .. member .. ": secure-only value"
+                            end
+                        elseif type(publicValue) ~= "function" then
+                            failures[#failures + 1] = namespace .. "." .. member .. ": ordinary value is not a function"
+                        elseif not rawequal(publicValue, secureValue) then
+                            failures[#failures + 1] = namespace .. "." .. member .. ": values differ"
+                        else
+                            present = present + 1
+                        end
+                    end
+                end
+                local namespaceCount = 0
+                for _ in pairs(seen) do namespaceCount = namespaceCount + 1 end
+                table.sort(missing)
+                table.sort(failures)
+                return present, namespaceCount, missing, failures
+            "#
+        ))
+        .expect("R88n.11b namespace publication should be observable");
+
+    assert_eq!(
+        namespaces, 6,
+        "all verified namespace roots must be separate"
+    );
+    assert!(
+        present >= 32,
+        "expected every modeled member to publish; missing={missing:?}"
+    );
+    assert_eq!(present + missing.len() as i64, 37);
+    assert!(
+        failures.is_empty(),
+        "invalid secure publications: {failures:?}"
+    );
+}

@@ -139,6 +139,14 @@ pub(super) fn init_lua_state(
     // temporary: lt-635e. Keep the full snapshot private to secure-mode and replay chunks.
     super::globals::security::create_secure_replay_environment(lua)?;
     remove_sandbox_globals(lua)?;
+    let unmodeled_r88n_11b_members =
+        crate::c_api::publish_verified_secure_namespace_members(lua.state_mut())?;
+    if !unmodeled_r88n_11b_members.is_empty() {
+        tracing::debug!(
+            members = ?unmodeled_r88n_11b_members,
+            "R88n.11b namespace members have no simulator implementation"
+        );
+    }
     frames::init_frame_metatable(lua)?;
     trace_debug_getter_values(lua, "before_final_gc");
     finalize_bootstrap_gc(lua)?;

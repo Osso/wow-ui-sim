@@ -164,6 +164,37 @@ pub(crate) fn register_namespace_function_with_flags(
     Ok(())
 }
 
+/// Register one existing namespace value with its per-member native flags.
+pub(crate) fn register_namespace_value_with_flags(
+    state: &mut LuaState,
+    namespace: &str,
+    member: &str,
+    value: Val,
+    flags: u8,
+) -> LuaResult<()> {
+    let (publish_global, publish_secure) =
+        crate::lua_api::globals::security::native_registration_destinations(flags);
+    let global_parent = state.global;
+    let ordinary = publish_global.then(|| ensure_table_at_parent(state, global_parent, namespace));
+    let secure_parent = if publish_secure {
+        Some(crate::lua_api::globals::security::secure_env_table(state)?)
+    } else {
+        None
+    };
+    let secure = secure_parent.map(|parent| ensure_table_at_parent(state, parent, namespace));
+
+    if let (Some(ordinary), Some(secure)) = (ordinary, secure) {
+        crate::lua_bridge::set_namespace_peer(state, ordinary, secure)?;
+    }
+    if let Some(ordinary) = ordinary {
+        crate::lua_api::methods::table_set(state, Val::Table(ordinary), member, value);
+    }
+    if let Some(secure) = secure {
+        crate::lua_api::methods::table_set(state, Val::Table(secure), member, value);
+    }
+    Ok(())
+}
+
 /// Preserve an unclassified namespace entry on both sides of the current allowlist.
 pub(crate) fn register_unknown_namespace_function(
     state: &mut LuaState,

@@ -521,6 +521,7 @@ mod voice_provider_enum;
 
 pub(crate) mod c_tts_settings;
 mod helpers;
+mod secure_publication;
 pub(crate) use helpers::parse_numeric_string;
 #[cfg(feature = "retail-12-0-0")]
 mod patch_retired_members;
@@ -534,8 +535,8 @@ pub(crate) mod restricted_actions;
 pub(crate) use helpers::{
     ensure_enum_table, ensure_global_table, ensure_namespace, ensure_namespace_table_field,
     ensure_paired_table_field, global_val, mark_namespace_keys_removed,
-    register_namespace_function_with_flags, register_unknown_namespace_function, set_global_val,
-    set_namespace_member,
+    register_namespace_function_with_flags, register_namespace_value_with_flags,
+    register_unknown_namespace_function, set_global_val, set_namespace_member,
 };
 pub use permanent_shims::c_map_api;
 pub(crate) use registration::{
@@ -543,6 +544,7 @@ pub(crate) use registration::{
     register_map_environment_tables, register_map_prefix_tables, register_nameplate_tables,
     register_spell_and_widget_tables,
 };
+pub(crate) use secure_publication::publish_verified_secure_namespace_members;
 
 use rilua::LuaResult;
 use rilua::vm::state::LuaState;
