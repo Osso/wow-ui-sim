@@ -449,10 +449,14 @@ fn get_slotted_keystone(state: &mut LuaState) -> LuaResult<u32> {
     if ACTIVE != ClientProfile::Retail {
         return no_values();
     }
-    let Some(guid) = borrow_state(state)?.keystone.selected_guid.clone() else {
-        return no_values();
+    let (guid, selected_item_id) = {
+        let sim = borrow_state(state)?;
+        let Some(guid) = sim.keystone.selected_guid.clone() else {
+            return no_values();
+        };
+        (guid, sim.keystone.selected_item_id)
     };
-    let Some((item_id, item)) = item_for_owned_guid(state, &guid) else {
+    let Some((item_id, item)) = selected_keystone_item(state, &guid, selected_item_id) else {
         return no_values();
     };
     let tooltip = tooltip_for_item_context(state, item_id, Some(item));
@@ -460,6 +464,21 @@ fn get_slotted_keystone(state: &mut LuaState) -> LuaResult<u32> {
     table_set(state, tooltip, "guid", guid);
     state.push(tooltip);
     Ok(1)
+}
+
+fn selected_keystone_item(
+    state: &LuaState,
+    guid: &str,
+    selected_item_id: Option<u32>,
+) -> Option<(u32, &'static ItemInfo)> {
+    let Some(item_id) = selected_item_id else {
+        return item_for_owned_guid(state, guid);
+    };
+    let (_, _, guid_item_id) = crate::c_api::item_spell::parse_item_guid(guid)?;
+    if guid_item_id != item_id {
+        return None;
+    }
+    items::get_item(item_id).map(|item| (item_id, item))
 }
 
 fn current_essence_rank(state: &LuaState, essence_id: i32) -> Option<u32> {

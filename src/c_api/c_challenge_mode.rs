@@ -25,6 +25,8 @@ pub struct KeystoneState {
     pub receptacle_guid: Option<String>,
     /// Selected item instance; `None` represents no selected keystone.
     pub selected_guid: Option<String>,
+    /// INFERRED simulator cache for the resolved item behind the selected GUID.
+    pub selected_item_id: Option<u32>,
     pub selected_location: Option<KeystoneLocation>,
     pub selected_mode: Option<i32>,
     pub item_modifiers: BTreeMap<KeystoneLocation, (u32, Vec<(u32, u32)>)>,
@@ -109,7 +111,7 @@ fn slot_keystone(state: &mut LuaState) -> LuaResult<u32> {
     }
     let guid = item_guid_for_bag_slot(bag, slot, item_id);
     let location = KeystoneLocation::Bag(bag, slot);
-    set_selected_keystone(state, guid, location)?;
+    set_selected_keystone(state, guid, location, item_id)?;
 
     // The native notification follows its item-data query; only publish when
     // this simulator has the queried item record.
@@ -143,12 +145,14 @@ fn set_selected_keystone(
     state: &mut LuaState,
     guid: String,
     location: KeystoneLocation,
+    item_id: u32,
 ) -> LuaResult<()> {
     let (unlocked, locked) = {
         let mut sim = borrow_state_mut(state)?;
         let selected = sim.keystone.selected_guid.is_some();
         let same_selection = selected
             && sim.keystone.selected_guid.as_deref() == Some(guid.as_str())
+            && sim.keystone.selected_item_id == Some(item_id)
             && sim.keystone.selected_location == Some(location);
         let unlocked = if selected && !same_selection {
             sim.keystone.selected_location.filter(|old_location| {
@@ -166,6 +170,7 @@ fn set_selected_keystone(
             (!was_locked && sim.keystone.is_locked(location) && location_exists(&sim, location))
                 .then_some(location);
         sim.keystone.selected_guid = Some(guid);
+        sim.keystone.selected_item_id = Some(item_id);
         sim.keystone.selected_location = Some(location);
         // The native associated GUID and mode inputs are not modeled.
         sim.keystone.selected_mode = None;
@@ -282,6 +287,7 @@ fn clear_keystone(state: &mut LuaState) -> LuaResult<u32> {
     }
     let mut sim = borrow_state_mut(state)?;
     sim.keystone.selected_guid = None;
+    sim.keystone.selected_item_id = None;
     sim.keystone.selected_location = None;
     sim.keystone.selected_mode = None;
     Ok(0)
