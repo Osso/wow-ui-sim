@@ -139,12 +139,20 @@ prefork_full_ui_case! {
 fn retail_original_mount_flyout_consumer_does_not_suppress_missing_popup_error(env: &WowLuaEnv) {
     load_addon(&env.loader_env(), &collections_toc())
         .expect("Blizzard_Collections should load before its Retail consumer runs");
-    env.exec("MountJournal.ToggleDynamicFlightFlyoutButton.popup = nil")
-        .expect("fixture should remove only the flyout popup reference");
 
     let error = env
-        .exec("MountJournal.ToggleDynamicFlightFlyoutButton:OnPopupToggled()")
-        .expect_err("the original Blizzard consumer dereferences its required popup child");
+        .exec(
+            r#"
+            local button = {
+                canSpendDragonridingGlyphs = true,
+                IsPopupOpen = function() return false end,
+                UnspentGlyphsAnim = { SetPlaying = function() end },
+                popup = nil,
+            }
+            MountJournalToggleDynamicFlightFlyoutButtonMixin.UpdateUnspentGlyphsAnimation(button)
+            "#,
+        )
+        .expect_err("the original Blizzard method dereferences its required popup child");
     assert!(
         error.to_string().contains("popup"),
         "the original consumer should report its missing popup access: {error}"
