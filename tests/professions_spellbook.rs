@@ -1,9 +1,37 @@
 //! Tests for profession spells exposed through C_Spell and C_SpellBook.
 
+use crate::common::blizzard_addon_harness::with_blizzard_addon_startup_shape;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 fn env() -> WowLuaEnv {
     WowLuaEnv::new().expect("Failed to create Lua environment")
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn professions_book_selection_consumer_preserves_invalid_slot_state() {
+    test_timeout! {
+    with_blizzard_addon_startup_shape(&["Blizzard_ProfessionsBook"], &[], |env, loaded| {
+        assert!(loaded.iter().any(|name| name == "Blizzard_ProfessionsBook"));
+        let checked: bool = env
+            .eval(
+                r#"
+                local parent = { spellOffset = 0 }
+                local button = { checked = true }
+                function button:GetID() return 0 end
+                function button:GetParent() return parent end
+                function button:SetChecked(value) self.checked = value end
+                ProfessionSpellButtonMixin.UpdateSelection(button)
+                return button.checked
+                "#,
+            )
+            .expect("the original ProfessionSpellButtonMixin consumer should run");
+
+        // Preservation only: the original consumer at Blizzard_ProfessionsBook.lua:285
+        // uses the return as a condition, so zero results and false both leave it unchecked.
+        assert!(!checked);
+    });
+    }
 }
 
 #[test]

@@ -208,6 +208,17 @@ fn get_call_pet_spell_info_miss_has_verified_zero_value_arity() {
     assert_eq!(result_count, 0);
 }
 
+#[cfg(feature = "client-retail")]
+#[test]
+fn selected_spellbook_item_invalid_numeric_slot_has_verified_zero_value_arity() {
+    let env = env();
+    let result_count: i32 = env
+        .eval(r##"return select("#", IsSelectedSpellBookItem(0, "player"))"##)
+        .unwrap();
+
+    assert_eq!(result_count, 0);
+}
+
 #[test]
 fn test_spellbook_namespace_functions_survive_gc() {
     let env = env();
