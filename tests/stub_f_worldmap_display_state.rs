@@ -45,6 +45,16 @@ fn load_normal_game_worldmap() -> WowLuaEnv {
         "Blizzard_Minimap_Mainline.toc"
     );
 
+    let assert_early_world_map = || {
+        env.exec(
+            r#"
+            assert(WorldMapFrame == nil and QuestLogOwnerMixin == nil)
+            assert(debug.getinfo(ToggleWorldMap, "S").what == "C")
+            assert(OpenWorldMap == nil or debug.getinfo(OpenWorldMap, "S").what == "C")
+            "#,
+        )
+        .expect("only bootstrap verbs before the original WorldMap owner");
+    };
     for (index, addon) in startup.into_iter().enumerate() {
         let loaded = env
             .state()
@@ -54,8 +64,7 @@ fn load_normal_game_worldmap() -> WowLuaEnv {
             .any(|a| a.folder_name == addon.name && a.loaded);
         if index == canvas_index || index == world_index {
             assert!(!loaded, "observe the actual first load of {}", addon.name);
-            env.exec("assert(WorldMapFrame == nil and QuestLogOwnerMixin == nil and debug.getinfo(ToggleWorldMap, 'S').what == 'C')")
-                .expect("only the Rust ToggleWorldMap bootstrap while entering a prerequisite");
+            assert_early_world_map();
         }
         if !loaded {
             load_startup_addon(&env.loader_env(), &addon.toc_path, addon.kind, None)
@@ -65,8 +74,7 @@ fn load_normal_game_worldmap() -> WowLuaEnv {
             env.restore_post_cleanup_globals();
         }
         if index == canvas_index {
-            env.exec("assert(WorldMapFrame == nil and QuestLogOwnerMixin == nil and debug.getinfo(ToggleWorldMap, 'S').what == 'C')")
-                .expect("only the Rust ToggleWorldMap bootstrap at MapCanvas completion");
+            assert_early_world_map();
         }
     }
     env.sync_string_metatable_to_global_string();
@@ -207,6 +215,66 @@ fn original_minimap_zone_button_preserves_world_map_toggle() {
         .expect("dispatch M to close map");
     env.exec("assert(not WorldMapFrame:IsShown())")
         .expect("M closes the map");
+    assert!(
+        env.state().borrow().lua_errors.is_empty(),
+        "unfiltered errors: {:?}",
+        env.state().borrow().lua_errors
+    );
+}
+
+#[test]
+fn original_mappin_and_worldquest_link_preserve_world_map_open() {
+    let env = load_normal_game_worldmap();
+    env.exec(
+        r#"
+        local map = assert(WorldMapFrame)
+        local open = OpenWorldMap
+        local slash = assert(SlashCmdList[SLASH_COMMAND.MAPPIN])
+        local function source(fn)
+            return debug.getinfo(fn, "S").source:gsub('\\', '/')
+        end
+        assert(source(open):find("Blizzard_WorldMap/Blizzard_WorldMap.lua", 1, true))
+        assert(source(OpenMapToUserWaypoint):find("Blizzard_WorldMap/Blizzard_WorldMap.lua", 1, true))
+        assert(source(slash):find("Blizzard_SharedMapDataProviders/WaypointLocationDataProvider.lua", 1, true))
+        assert(source(SetItemRef):find("Blizzard_UIPanels_Game/Mainline/ItemRef.lua", 1, true))
+        assert(LinkUtil.IsLinkHandlerRegistered(LinkTypes.WorldQuest))
+        assert(C_AddOns.IsAddOnLoaded("Blizzard_WorldMap"))
+        assert(not map:IsShown() and not C_Map.HasUserWaypoint())
+
+        -- Original registered slash callback with ordinary user-entered values.
+        SetCVar("miniWorldMap", 1)
+        SetCVar("questLogOpen", 0)
+        slash("not-a-map 25 75")
+        assert(not C_Map.HasUserWaypoint() and not map:IsShown())
+        for _, case in ipairs({{2248, 25, 75}, {2214, 60, 40}}) do
+            local id, x, y = unpack(case)
+            assert(C_Map.GetMapInfo(id))
+            slash(("%d %d %d"):format(id, x, y))
+            local point = assert(C_Map.GetUserWaypoint())
+            local px, py = point.position:GetXY()
+            assert(point.uiMapID == id and px == x/100 and py == y/100)
+            assert(map:IsShown() and map:GetMapID() == id)
+            local pin = assert(map:EnumeratePinsByTemplate("WaypointLocationPinTemplate")())
+            local pinX, pinY = pin:GetPosition()
+            assert(pinX == px and pinY == py)
+            local scroll, child = map:GetCanvasContainer(), map:GetCanvas()
+            assert(child == scroll.Child and scroll.targetScale > 0)
+            assert(child:GetWidth() > 0 and child:GetHeight() > 0)
+            assert(OpenWorldMap == open)
+            ToggleWorldMap()
+            assert(not map:IsShown())
+        end
+
+        -- The stock WorldQuest link handler opens without a map argument.
+        SetItemRef("worldquest:1", "|Hworldquest:1|h[World Quest]|h", "LeftButton", DEFAULT_CHAT_FRAME)
+        assert(map:IsShown() and OpenWorldMap == open)
+        ToggleWorldMap()
+        assert(not map:IsShown())
+        C_Map.ClearUserWaypoint()
+        assert(not C_Map.HasUserWaypoint())
+        "#,
+    )
+    .expect("original slash and hyperlink handlers open the original map");
     assert!(
         env.state().borrow().lua_errors.is_empty(),
         "unfiltered errors: {:?}",
