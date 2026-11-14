@@ -1,4 +1,4 @@
-# Lua-owned fallback retirement (inventory O)
+# Lua-owned fallback retirement (inventories O and J)
 
 Original Blizzard Lua/XML owns the utility, registry and lifecycle behaviors in this investigation. Retiring simulator substitutes is not a native API implementation and must not be advertised as new decompiler evidence. Tracker lt-cbb9 contains the eleven-file synthesis and deferred native questions. The delivered scope separates original-consumer preservation from synthetic bootstrap retirement and residual follow-ups.
 
@@ -47,6 +47,48 @@ The merchant consumer candidate stopped at unmodeled ResetSetMerchantFilter afte
 - Generic Frame IsInDefaultPosition returns false without systemInfo and interferes with managed templates. Native method discovery identifies the simulator edit-mode methods as extras; separate task lt-8a50 owns removal. No synthetic systemInfo, override or ignored test hides that boundary here.
 - All seventeen tracking/trade/world-service native producers remain unchanged and queued for R88. Their empty/false/nil/zero fixtures are not native evidence. Classic-only and Forever-only questions must not inherit Retail answers without applicability proof.
 - Exact texture-filename and zone-story producer questions remain in the O synthesis.
+
+## J: original character labels and titles
+
+Tracker lt-a655 reuses accepted synthesis #603 and authorization #628. The
+Retail selected-name guard was retired from its registration/module, retaining
+other profiles unchanged. Actual CharacterSelect discovery selects
+`Blizzard_GlueXML_Mainline.toc`, whose original XML supplies the name label.
+Default host-roster and explicit empty-host-roster consumers preserve original
+formatting and absent-season tooltip clearing. Their behavior is PRESERVATION;
+the separate original-source identity assertion is retirement RED (the wrapper
+reported `=(string)` before removal). No missing label, callback substitution,
+synthetic season or character-creation action is introduced.
+
+The Retail final CharacterFrame title overwrite contradicted original
+`CharacterFrameMixin:UpdateTitle`: selected `Blizzard_UIPanels_Game_Mainline.toc`
+loads Mainline CharacterFrame Lua/XML, whose active Reputation/Token subframes
+own REPUTATION/CURRENCY titles. Each independent test uses genuine
+`ToggleCharacter`, verifies original source and title first, then fires the first
+real PLAYER_ENTERING_WORLD without resetting the one-shot guard. The original
+event legitimately hides the outer panel; the retained active-subframe title
+must still remain authored. Before the fix both titles became the player name
+(Uther in this host fixture). The narrow Retail policy removes that forced
+name assignment; remaining OnShow/RefreshDisplay and slot-refresh bridges are
+not retired without separate evidence. Non-Retail title assignment ordering
+and failure behavior remain unchanged.
+
+The five J selectors and three touched surface unit tests pass. Fourteen of
+fifteen existing character-select/reputation regressions pass;
+`show_ui_panel_locks_reputation_frame_layout` retains `character_not_shown`,
+independently reproduced with the sealed pre-J35106b01b binary and matching
+dylib. That baseline failure is not filtered or repaired by this tranche.
+Retail startup reports CLEAN with zero Lua errors; this is not a full-suite claim.
+
+No J native defaults were implemented. Kiosk, Perks, PrototypeDialog, legacy
+session/video behavior, promotion inventory and store-service semantics remain
+NATIVE/neutral-KEEP as synthesized. Creation/overlay/Enter World owners and
+covered R facts remain untouched. Authentication challenge parenting and
+secure/public binding remain unresolved, not blanket removable fallbacks.
+
+- [Selected-name original consumers](../../../tests/stub_j_selected_name.rs)
+- [CharacterFrame title consumers](../../../tests/stub_j_character_title.rs)
+- [Remaining character surface bridge](../../../src/lua_api/workarounds/temporary/character_frame_surface_refresh.rs)
 
 ## Sources
 

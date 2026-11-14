@@ -3824,3 +3824,7 @@ Added [FontString anchor sizing](investigations/fontstring-anchor-sizing.md). Th
 ## 2026-11-14 | Merchant/LFG R88i boundaries
 
 Recorded verified requirement/request branches and separately inferred data mappings in [merchant-lfg-r88i](investigations/merchant-lfg-r88i.md), with original-consumer and neutral-seam limits.
+
+## 2026-11-14 | J character-label retirement
+
+Added original CharacterSelect label and CharacterFrame active-subframe title evidence to [Lua-owned fallback retirement](investigations/lua-owned-fallback-retirement.md#j-original-character-labels-and-titles), with bounded Retail-only scope and remaining native/owner limitations.

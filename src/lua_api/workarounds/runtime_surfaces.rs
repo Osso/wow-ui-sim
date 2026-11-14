@@ -20,6 +20,7 @@ pub(super) fn patch_vignette_pin_template(env: &crate::lua_api::WowLuaEnv) {
     temporary::vignette_pin_template::patch(env);
 }
 
+#[cfg(not(feature = "client-retail"))]
 pub(super) fn patch_character_select_selected_name(env: &crate::lua_api::WowLuaEnv) {
     temporary::character_select_selected_name::patch(env);
 }
