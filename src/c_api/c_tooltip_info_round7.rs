@@ -1,6 +1,7 @@
 //! Round 7 `C_TooltipInfo` getters. Native-miss paths stay empty until the
 //! simulator has the state needed by the decoded producer.
 
+use crate::c_api::item_spell::item_guid_for_bag_slot;
 use crate::c_api::tooltip_getter_args;
 use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::items::{self, ItemInfo};
@@ -149,10 +150,37 @@ fn get_possession(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn get_quest_log_special_item(state: &mut LuaState) -> LuaResult<u32> {
-    let _quest_index = tooltip_getter_args::round7_signed(state, 1, QUEST_SPECIAL_USAGE)?;
-    // QuestLogEntry has no special-item relation, and the simulator has no
-    // player item-object lookup equivalent to the native object store.
-    no_values()
+    // Retail TooltipInfoDocumentation.lua:817; selection and object inputs are
+    // host-supplied because the native cache and inventory writers are unknown.
+    let quest_index = tooltip_getter_args::round7_signed(state, 1, QUEST_SPECIAL_USAGE)?;
+    if ACTIVE != ClientProfile::Retail {
+        return no_values();
+    }
+    let selection = {
+        let sim = borrow_state(state)?;
+        quest_index
+            .checked_sub(1)
+            .and_then(|index| usize::try_from(index).ok())
+            .and_then(|index| sim.quest_log_entries.entries.get(index))
+            .and_then(|entry| {
+                sim.quest_log_entries
+                    .resolved_quest_special_items
+                    .get(&entry.quest_id)
+            })
+            .copied()
+    };
+    let Some(selection) = selection else {
+        return no_values();
+    };
+    let guid = item_guid_for_bag_slot(selection.bag, selection.slot, selection.item_id);
+    let Some((item_id, item)) = item_for_owned_guid(state, &guid) else {
+        return no_values();
+    };
+    let data = tooltip_for_item_context(state, item_id, Some(item));
+    let guid = create_string(state, &guid);
+    table_set(state, data, "guid", guid);
+    state.push(data);
+    Ok(1)
 }
 
 fn get_quest_party_progress(state: &mut LuaState) -> LuaResult<u32> {
