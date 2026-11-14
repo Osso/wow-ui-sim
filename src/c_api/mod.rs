@@ -7,6 +7,7 @@ mod c_account_info;
 pub mod c_guild_info;
 pub mod c_heirloom;
 pub mod c_recruit_a_friend;
+pub(crate) mod c_tooltip_comparison;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_tooltip_info_appearance;
 pub(crate) mod c_tooltip_info_artifact_item;

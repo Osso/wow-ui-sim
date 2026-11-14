@@ -17,6 +17,18 @@ pub(crate) fn unknown_getter_failure() -> rilua::LuaResult<u32> {
     Ok(0)
 }
 
+/// Publish a successful string-line result, including an explicit empty table.
+pub(crate) fn push_string_lines(state: &mut LuaState, lines: &[String]) {
+    let array = create_table(state);
+    state.push(array);
+    if let Val::Table(array) = array {
+        for (index, line) in lines.iter().enumerate() {
+            let line = create_string(state, line);
+            crate::lua_api::methods::table_set_num(state, array, (index + 1) as f64, line);
+        }
+    }
+}
+
 pub(crate) fn enabled() -> bool {
     matches!(
         crate::client_profile::ACTIVE,

@@ -7,6 +7,7 @@ mod relic;
 mod scaling;
 mod tables;
 
+pub(crate) use link::parse_bounded_item_link;
 pub use link::{ParsedItemLink, parse_item_link};
 pub use relic::{RelicMetadata, RelicSlotType, instance_socket_extra, relic_metadata};
 
