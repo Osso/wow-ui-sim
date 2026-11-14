@@ -46,7 +46,9 @@ static GLOBAL_NIL_STUBS: &[&str] = &[
     "ReportCheating",
     "RequestInspectData",
     "RequestGuildPartyState",
+    #[cfg(not(feature = "client-retail"))]
     "RequestLFDPartyLockInfo",
+    #[cfg(not(feature = "client-retail"))]
     "RequestLFDPlayerLockInfo",
     "RequestPVPOptionsEnabled",
     "RequestPVPRewards",

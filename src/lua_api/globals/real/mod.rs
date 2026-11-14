@@ -66,6 +66,8 @@ pub(crate) mod legacy_guild_selection;
 pub mod legacy_skills;
 #[cfg(feature = "client-wrath")]
 pub(crate) mod legacy_sound;
+#[cfg(feature = "client-retail")]
+pub mod lfd_lock_requests;
 pub mod locale_info;
 pub mod loot_method;
 pub mod loot_specialization;

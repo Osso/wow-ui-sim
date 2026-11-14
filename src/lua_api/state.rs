@@ -633,6 +633,8 @@ macro_rules! build_empty_sim_state {
                 m.insert("enUS".to_string(), true);
                 m
             },
+            #[cfg(feature = "client-retail")]
+            lfd_lock_requests: Default::default(),
             lfg_roles: LfgRoleSelection::default(),
             lfd_dungeons: default_lfd_dungeons(),
             lfd_enabled_dungeons: ::std::collections::HashMap::new(),

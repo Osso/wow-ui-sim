@@ -785,6 +785,8 @@ pub struct SimState {
     pub lfg_next_application_id: u64,
     pub lfg_advanced_filter: LfgAdvancedFilter,
     pub lfg_language_filter: std::collections::HashMap<String, bool>,
+    #[cfg(feature = "client-retail")]
+    pub lfd_lock_requests: crate::lua_api::globals::real::lfd_lock_requests::LfdLockRequestState,
     pub lfg_roles: LfgRoleSelection,
     pub lfd_dungeons: Vec<LfdDungeonInfo>,
     pub lfd_enabled_dungeons: std::collections::HashMap<i32, bool>,

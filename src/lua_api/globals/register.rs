@@ -211,6 +211,8 @@ fn register_frame_context_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
     super::real::guild_invites::register_all(lua)?;
     #[cfg(feature = "client-wowforever")]
     super::real::merchant_repair::register_all(lua)?;
+    #[cfg(feature = "client-retail")]
+    super::real::lfd_lock_requests::register_all(lua)?;
     super::real::merchant_buyback::register_all(lua)?;
     super::real::merchant_affordability::register_all(lua)?;
     super::real::guild_logo::register_all(lua)?;
