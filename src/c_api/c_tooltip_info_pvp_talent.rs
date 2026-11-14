@@ -152,12 +152,15 @@ fn read_group_index(state: &LuaState, position: i32) -> LuaResult<Option<usize>>
 struct PvpTalentArguments {
     talent_id: i32,
     #[cfg(feature = "client-retail")]
+    retail: RetailPvpTalentArguments,
+}
+
+#[cfg(feature = "client-retail")]
+#[derive(Clone, Copy)]
+struct RetailPvpTalentArguments {
     is_inspect: bool,
-    #[cfg(feature = "client-retail")]
     group_was_supplied: bool,
-    #[cfg(feature = "client-retail")]
     parsed_group: Option<usize>,
-    #[cfg(feature = "client-retail")]
     talent_position: i32,
 }
 
@@ -171,10 +174,31 @@ struct RetailPvpTalentContext {
 fn read_pvp_talent_arguments(state: &LuaState) -> LuaResult<PvpTalentArguments> {
     let talent_id = round7_signed(state, 1, USAGE)?;
     #[cfg(feature = "client-wowforever")]
-    let is_inspect = crate::c_api::tooltip_getter_args::optional_bool(state, 2)?;
+    validate_forever_optional_pvp_talent_arguments(state)?;
     #[cfg(feature = "client-retail")]
-    let is_inspect = round7_optional_bool(state, 2, USAGE)?;
+    let retail = read_retail_pvp_talent_arguments(state)?;
 
+    Ok(PvpTalentArguments {
+        talent_id,
+        #[cfg(feature = "client-retail")]
+        retail,
+    })
+}
+
+#[cfg(feature = "client-wowforever")]
+fn validate_forever_optional_pvp_talent_arguments(state: &LuaState) -> LuaResult<()> {
+    let _is_inspect = crate::c_api::tooltip_getter_args::optional_bool(state, 2)?;
+    let group_value = allowed_when_untainted(state, 3, API_NAME)?;
+    if !group_value.is_nil() {
+        let _group_index = read_group_index(state, 3)?;
+    }
+    let _talent_position = read_talent_position(state)?;
+    Ok(())
+}
+
+#[cfg(feature = "client-retail")]
+fn read_retail_pvp_talent_arguments(state: &LuaState) -> LuaResult<RetailPvpTalentArguments> {
+    let is_inspect = round7_optional_bool(state, 2, USAGE)?;
     let group_value = allowed_when_untainted(state, 3, API_NAME)?;
     let group_was_supplied = !group_value.is_nil();
     let parsed_group = if group_was_supplied {
@@ -182,31 +206,21 @@ fn read_pvp_talent_arguments(state: &LuaState) -> LuaResult<PvpTalentArguments> 
     } else {
         None
     };
-    let talent_position = if stack_val(state, 4).is_nil() {
-        0
-    } else {
-        round7_signed(state, 4, USAGE)?
-    };
-
-    #[cfg(feature = "client-wowforever")]
-    let _unmodeled_arguments = (
+    let talent_position = read_talent_position(state)?;
+    Ok(RetailPvpTalentArguments {
         is_inspect,
         group_was_supplied,
         parsed_group,
-        talent_position,
-    );
-
-    Ok(PvpTalentArguments {
-        talent_id,
-        #[cfg(feature = "client-retail")]
-        is_inspect,
-        #[cfg(feature = "client-retail")]
-        group_was_supplied,
-        #[cfg(feature = "client-retail")]
-        parsed_group,
-        #[cfg(feature = "client-retail")]
         talent_position,
     })
+}
+
+fn read_talent_position(state: &LuaState) -> LuaResult<i32> {
+    if stack_val(state, 4).is_nil() {
+        Ok(0)
+    } else {
+        round7_signed(state, 4, USAGE)
+    }
 }
 
 fn get_pvp_talent(state: &mut LuaState) -> LuaResult<u32> {
@@ -278,10 +292,10 @@ fn compose_retail_pvp_talent(
 ) -> LuaResult<u32> {
     let tooltip = tooltip_for_spell(state, spell_id);
     append_replacement_line(state, tooltip, &context.record)?;
-    let local_group = if arguments.is_inspect {
+    let local_group = if arguments.retail.is_inspect {
         None
-    } else if arguments.group_was_supplied {
-        arguments.parsed_group
+    } else if arguments.retail.group_was_supplied {
+        arguments.retail.parsed_group
     } else {
         Some(context.active_group_index)
     };
@@ -289,8 +303,8 @@ fn compose_retail_pvp_talent(
         state,
         tooltip,
         arguments.talent_id,
-        arguments.talent_position,
-        arguments.is_inspect,
+        arguments.retail.talent_position,
+        arguments.retail.is_inspect,
         local_group,
         &context.record,
     )?;
