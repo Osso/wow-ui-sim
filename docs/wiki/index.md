@@ -2,6 +2,10 @@
 
 [Inventory/purchase getters](investigations/inventory-purchase-getters.md) records R88k.1/.2 packed-key publication and refund records, empty host seams, selected consumer tests and explicit remaining VM limits.
 
+## [2026-11-14] implementation | GameTooltip minimum width and font strings
+
+[GameTooltip method contract](../specs/game-tooltip-methods.md), [Lua API](systems/lua-api.md#game-tooltip-minimum-width-and-font-strings), and [consumer selection](investigations/consumer-selection-and-red-proof.md#gametooltip-minimum-width-consumer) record R88n.7. **VERIFIED (Retail 12.1.5.70688):** the getter returns stored width and forced state; `AddFontStrings` appends a pair and resets its line-state, numeric slot, and layout-progress state without adding a `NumLines` entry. **VERIFIED (simulator history, `b6a107994`):** `ACTIVE` preserves pre-lane behavior outside Retail. **PRESERVATION:** the selected `GameTooltip_InsertFrame` consumer observes only the first getter result. **INFERRED:** pair retention across ClearLines/Hide and copying through CopyTooltip. **UNKNOWN:** later pair layout/rendering use and native parity outside Retail.
+
 ## [2026-11-14] implementation | Retail tooltip serializer field boundary
 
 [Tooltip data](systems/lua-api.md#retail-tooltipdata-field-boundary-r88n4b) links the [serialization contract](../specs/tooltip-data-serialization.md) and [consumer/seam evidence](investigations/consumer-selection-and-red-proof.md#retail-tooltip-serializer-field-consumers). **VERIFIED (R88n.4b):** top-level repair/pet fields and type-11 price fields. **INFERRED:** positive item sell-price projection; `maxPrice` remains absent without a quantity/range input.

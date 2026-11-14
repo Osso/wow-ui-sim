@@ -6,6 +6,18 @@
 
 [Inventory/purchase getters](investigations/inventory-purchase-getters.md) records R88k.1/.2 packed-key publication and refund records, empty host seams, selected consumer tests and explicit remaining VM limits.
 
+## [2026-11-14] test | GameTooltip method contracts (pre-review-fix)
+
+**VERIFIED (Retail code SHA `4969fe0214412988f0131ae96a9f4a14c9229012`):** the original minimum-width arity/default/round-trip, pair-storage/`NumLines` separation, and conversion-error tests passed; the selected `GameTooltip_InsertFrame` preservation test passed. **PRESERVATION:** its scalar selector observes only the first getter result. These tests predate the review correction that gates producer probes as optional and removes unproved bad-self decoration assertions.
+
+## [2026-11-14] evidence boundary | GameTooltip method security
+
+**VERIFIED (R88n.7, Retail 12.1.5.70688):** the getter's conditional result secrecy and diagnostic/access effects, and the AddFontStrings parent-change/secret-aspect checks. **VERIFIED (simulator model):** the Retail method checks ChangeParent, the six inherited aspects and RemoveSecretAspects before storage. **UNKNOWN (simulator parity):** the getter's call-state secrecy/diagnostic effects and AddFontStrings' saved-call secret-state transition remain unmodeled because their required runtime state is not represented.
+
+## [2026-11-14] implementation | GameTooltip minimum width and font strings
+
+Updated the [GameTooltip method contract](../specs/game-tooltip-methods.md), [Lua API](systems/lua-api.md#game-tooltip-minimum-width-and-font-strings), and [consumer-selection investigation](investigations/consumer-selection-and-red-proof.md#gametooltip-minimum-width-consumer) with R88n.7. **VERIFIED (Retail 12.1.5.70688):** `GetMinimumWidth` returns the stored number and forced boolean; `AddFontStrings` appends a pair, resets count-aligned state, and returns zero values without adding a `NumLines` entry. **VERIFIED (simulator history, `b6a107994`):** non-Retail profiles keep their pre-lane behavior. **PRESERVATION:** the selected `GameTooltip_InsertFrame` selector reads only the first getter result. **INFERRED:** pair retention across ClearLines/Hide and copying through CopyTooltip. **UNKNOWN:** later pair use and the unmodeled call-secret effects.
+
 ## [2026-11-14] investigation | Retail tooltip serializer boundary
 
 Updated [tooltip data serialization](../specs/tooltip-data-serialization.md), [Lua API](systems/lua-api.md#retail-tooltipdata-field-boundary-r88n4b), and [consumer selection](investigations/consumer-selection-and-red-proof.md#retail-tooltip-serializer-field-consumers). **VERIFIED (R88n.4b):** repair and battle-pet fields are top-level; `price` and `maxPrice` belong on type 11. **INFERRED:** Retail projects positive `ItemInfo.sell_price` to `price`; `maxPrice`, repair cost and pet values remain unmodeled. Quest-cache callbacks and the LFG whole-message callback have no matching simulator route to fix.
