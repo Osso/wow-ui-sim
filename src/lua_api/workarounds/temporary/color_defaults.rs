@@ -3,6 +3,8 @@
 //! These values keep Blizzard startup code and addon probes working until the
 //! simulator has a real color registry surface.
 
+use rilua::LuaApiMut;
+
 const COLOR_DEFAULTS_LUA: &str = r#"
 local function __wow_make_color(r, g, b, a)
   local color = {
@@ -217,7 +219,9 @@ fn register_secure_ui_color_fallback(lua: &mut rilua::Lua) -> crate::Result<()> 
     }
 
     let state = lua.state_mut();
-    let (ordinary, secure) = crate::c_api::ensure_namespace_pair(state, "C_UIColor")?;
+    let ordinary = crate::c_api::ensure_namespace(state, "C_UIColor")?;
+    let secure = crate::lua_bridge::namespace_peer(state, ordinary)?
+        .ok_or_else(|| rilua::runtime_error("C_UIColor secure namespace peer missing"))?;
     let get_colors =
         crate::lua_api::methods::table_get_static(state, rilua::Val::Table(ordinary), "GetColors");
     let secure_get_colors =
