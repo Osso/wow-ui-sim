@@ -107,6 +107,12 @@ fn forever_spellbook_outfit_consumer_uses_the_selected_tooltip_getter() {
         assert(type(SpellBookOutfitItemMixin) == 'table'
             and type(SpellBookOutfitItemMixin.OnIconEnter) == 'function',
             'the selected SpellBook outfit consumer must load')
+        local source = debug.getinfo(SpellBookOutfitItemMixin.OnIconEnter, 'S')
+        local path = source.source:gsub('\\', '/')
+        local suffix = 'SpellBook/Blizzard_SpellBookItem.lua'
+        assert(source.what == 'Lua' and path:sub(-#suffix) == suffix
+            and source.linedefined == 877,
+            'the consumer must come from the selected Blizzard Lua source')
         local button = {
             Button = CreateFrame('Button', nil, UIParent),
             GetOutfitID = function() return 42 end,
