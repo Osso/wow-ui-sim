@@ -1,3 +1,7 @@
+## [2026-11-14] implementation | Retail q3 screen clamp producers
+
+[Screen clamp suppression](investigations/screen-clamp-suppression.md) records q3 anchor dependency propagation, the guarded coordinate root, native-unit conversion and rounding, and separate inset notifications and restriction policy. The remaining q4 inputs are host seams, not native defaults.
+
 ## [2026-11-14] implementation | Item-interaction TooltipData boundary
 
 [Round 7 tooltip getters](../specs/tooltip-r7-getters.md) records R88n.1's absent and failed producer no-values paths and the other-kind empty-lines table. The Retail host seam has no writer or seed; the original ItemInteraction tooltip path and separate API shape tests distinguish these cases.
