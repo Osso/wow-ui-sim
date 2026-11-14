@@ -6,15 +6,15 @@
 
 ### API
 
-- [ ] For a Retail UI map position inside a supported assignment's `UiMin`/`UiMax` bounds, return the selected `MapID` as `continentID` and a world-position `vector2`.
-- [ ] Return no values when no Retail assignment covers the position or the selected assignment has a negative `MapID`.
-- [ ] An explicit, valid `MapWorldRect` for a known map takes precedence over the Retail assignment table and maps normalized x/y from left/top to right/bottom.
-- [ ] **INFERRED:** map each axis linearly from `UiMin`/`UiMax` to the `Region` x/y endpoints, include assignment bounds, and select the matching row with the lowest `OrderIndex`. Native transform and overlap selection remain unverified.
+- [x] For a Retail UI map position inside a supported assignment's `UiMin`/`UiMax` bounds, return the selected `MapID` as `continentID` and a world-position `vector2`.
+- [x] Return no values when no Retail assignment covers the position or the selected assignment has a negative `MapID`.
+- [x] An explicit, valid `MapWorldRect` for a known map takes precedence over the Retail assignment table and maps normalized x/y from left/top to right/bottom.
+- [x] **INFERRED:** map each axis linearly from `UiMin`/`UiMax` to the `Region` x/y endpoints, include assignment bounds, and select the matching row with the lowest `OrderIndex`. Native transform and overlap selection remain unverified.
 
 ### Data scope
 
 - [ ] Compile the `UiMapAssignment` catalog only for the current Retail 12.1.5 profile; do not use it for PTR, Forever, Mists, or other profiles without matching exports.
-- [ ] Store only `MapID`, `OrderIndex`, `UiMin`, `UiMax`, and the `Region` x/y endpoints required by this vector2 projection.
+- [x] Store only `MapID`, `OrderIndex`, `UiMin`, `UiMax`, and the `Region` x/y endpoints required by this vector2 projection.
 
 ## How it works
 
@@ -31,7 +31,7 @@
 
 ## Tests asserting this spec
 
-- `tests/c_map_api.rs`: Mulgore projection, overlapping-row choice, and descendant-Zone probe.
+- `tests/c_map_api.rs`: Mulgore projection, negative `MapID`, overlapping-row choice, and descendant-Zone probe.
 - `tests/patch_8_0_1_map_coordinates.rs`: explicit rectangle precedence and bounds.
 
 ## Known gaps (current cycle)
