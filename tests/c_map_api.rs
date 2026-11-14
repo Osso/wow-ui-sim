@@ -271,6 +271,8 @@ fn retail_map_position_errors_include_usage_message() {
             assert(not ok, "invalid mapPosition must raise an argument error")
             assert(string.find(tostring(message), usage, 1, true), tostring(message))
         end
+        local badMapOK, badMapError = pcall(C_Map.GetWorldPosFromMapPos, "bad", {x=0.5, y=0.5})
+        assert(not badMapOK and string.find(tostring(badMapError), usage, 1, true))
         expectUsage(7)
         expectUsage(7, nil)
         expectUsage(7, 42)
