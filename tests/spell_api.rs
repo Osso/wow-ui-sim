@@ -210,6 +210,23 @@ fn get_call_pet_spell_info_miss_has_verified_zero_value_arity() {
 
 #[cfg(feature = "client-retail")]
 #[test]
+fn get_call_pet_spell_info_non_numeric_input_uses_verified_usage() {
+    let env = env();
+    let (succeeded, error): (bool, String) = env
+        .eval(
+            r#"
+            local succeeded, message = pcall(GetCallPetSpellInfo, "not-a-number")
+            return succeeded, tostring(message)
+            "#,
+        )
+        .unwrap();
+
+    assert!(!succeeded);
+    assert_eq!(error, "Usage: GetCallPetSpellInfo(spellID)");
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
 fn selected_spellbook_item_invalid_numeric_slot_has_verified_zero_value_arity() {
     let env = env();
     let result_count: i32 = env
