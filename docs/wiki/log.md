@@ -1,6 +1,6 @@
 ## [2026-11-14] fix | Retail screen clamping
 
-Updated [layout-system](systems/layout-system.md#screen-clamping) and the [layout reference](../layout-system.md#screen-clamping) with R88n.5r's generic rect-resolution clamp, scaled insets, shared queued/synchronous path, and UNKNOWN suppression, rounding, oversized-frame, and snapping boundaries. The original GameTooltip consumer selector and final receipts are pending.
+Updated [layout-system](systems/layout-system.md#screen-clamping) and the [layout reference](../layout-system.md#screen-clamping) with R88n.5r. **VERIFIED (Retail 12.1.5.70688):** generic rect resolution uses scaled insets before rect storage/notification on queued and synchronous routes; GameTooltip inherits its enable bit from `SharedTooltipTemplate`; row setup creates no per-row clip. The original consumer selector failed at test commit `bcb35d79a` and passed at implementation commit `3a27c7d52`. **UNKNOWN:** suppression-state identity, setter-only cache invalidation, exact rounding, oversized-frame behavior, and order relative to snapping.
 
 ## [2026-11-14] investigation | Forever tooltip cached lines
 
