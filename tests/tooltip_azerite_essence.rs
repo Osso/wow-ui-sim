@@ -123,9 +123,9 @@ fn retail_azerite_essence_original_consumer_selects_exact_essence_and_rank() {
             button:OnEnter()
             local info = GameTooltip:GetPrimaryTooltipInfo()
             local data = GameTooltip:GetPrimaryTooltipData()
+            assert(data, 'RED: selected essence/rank must publish tooltip data')
             assert(info and info.getterName == 'GetAzeriteEssence',
                 'original Azerite essence accessor must run')
-            assert(data, 'RED: selected essence/rank must publish tooltip data')
             assert(data.type == 8 and data.id == essenceID,
                 'essence data must preserve type 8 and its essence ID')
             return data
@@ -218,10 +218,10 @@ fn retail_azerite_essence_slot_original_consumer_applies_verified_modes() {
             button:OnEnter()
             local info = GameTooltip:GetPrimaryTooltipInfo()
             local data = GameTooltip:GetPrimaryTooltipData()
-            assert(info and info.getterName == 'GetAzeriteEssenceSlot',
-                'original Azerite slot accessor must run')
             assert(data and data.type == 8,
                 'slot must publish type-8 essence tooltip data')
+            assert(info and info.getterName == 'GetAzeriteEssenceSlot',
+                'original Azerite slot accessor must run')
             return data
         end
 
