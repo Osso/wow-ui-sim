@@ -141,7 +141,16 @@ fn secure_private_auras_loads_tooltip_processor_from_secure_dependency() {
         })
         .cloned()
         .collect();
-    let registration_snapshot: (String, String, String, String, String, String, String) = env
+    let registration_snapshot: (
+        String,
+        String,
+        String,
+        String,
+        String,
+        String,
+        String,
+        String,
+    ) = env
         .eval(
             r#"
                 local ordinary = rawget(_G, 'TooltipDataProcessor')
@@ -151,14 +160,15 @@ fn secure_private_auras_loads_tooltip_processor_from_secure_dependency() {
                     type(rawget(__secureenv, 'C_Timer')),
                     type(rawget(__secureenv, 'C_StoreSecure')),
                     type(rawget(__secureenv, 'CreateFrame')),
-                    type(rawget(__secureenv, 'C_UIColor'))
+                    type(rawget(__secureenv, 'C_UIColor')),
+                    type(rawget(__secureenv, 'CreateSecureDelegate'))
             "#,
         )
         .expect("secure registration snapshot should evaluate");
     assert!(
         load_errors.is_empty(),
         "PrivateAurasUI must load without tooltip errors when defaults are disabled:\n  {}\n\
-         registration snapshot (ordinary/secure/processor callback/C_Timer/C_StoreSecure/CreateFrame/C_UIColor): {:?}",
+         registration snapshot (ordinary/secure/processor callback/C_Timer/C_StoreSecure/CreateFrame/C_UIColor/CreateSecureDelegate): {:?}",
         load_errors.join("\n  "),
         registration_snapshot
     );
@@ -182,6 +192,7 @@ fn secure_private_auras_loads_tooltip_processor_from_secure_dependency() {
                  and rawget(__secureenv, 'C_StoreSecure') ~= rawget(_G, 'C_StoreSecure') \
                  and type(rawget(rawget(__secureenv, 'C_StoreSecure'), 'GetProductGroups')) == 'function' \
                  and type(rawget(__secureenv, 'CreateFrame')) == 'function' \
+                 and type(rawget(__secureenv, 'CreateSecureDelegate')) == 'function' \
                  and type(rawget(__secureenv, 'C_UIColor')) == 'table' \
                  and rawget(__secureenv, 'C_UIColor') ~= rawget(_G, 'C_UIColor') \
                  and type(rawget(rawget(__secureenv, 'C_UIColor'), 'GetColors')) == 'function' \
