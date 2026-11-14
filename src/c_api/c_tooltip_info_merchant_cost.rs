@@ -10,9 +10,9 @@
 //! getter. Forever's argument conversion follows R88n.8.
 
 use crate::c_api::tooltip_getter_args;
-use crate::lua_api::globals::missing_surface::tooltip_info::{
-    tooltip_for_cost_currency, tooltip_for_item_context,
-};
+#[cfg(feature = "retail-12-1-5")]
+use crate::lua_api::globals::missing_surface::tooltip_info::tooltip_for_cost_currency;
+use crate::lua_api::globals::missing_surface::tooltip_info::tooltip_for_item_context;
 use crate::lua_api::methods::borrow_state;
 use crate::lua_api::state::MerchantCostRecord;
 use crate::lua_bridge::table_set_rust_fn_static;
@@ -65,11 +65,14 @@ fn get_merchant_cost_item(state: &mut LuaState) -> LuaResult<u32> {
             state.push(tooltip);
             Ok(1)
         }
+        #[cfg(feature = "retail-12-1-5")]
         Some(MerchantCost::Currency(currency_id)) => {
             let tooltip = tooltip_for_cost_currency(state, currency_id);
             state.push(tooltip);
             Ok(1)
         }
+        #[cfg(feature = "client-wowforever")]
+        Some(MerchantCost::Currency(_)) => emulated_missing_tooltip(),
         None => emulated_missing_tooltip(),
     }
 }

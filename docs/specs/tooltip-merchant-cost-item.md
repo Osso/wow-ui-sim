@@ -68,10 +68,9 @@ not established.
   (VERIFIED).
 - Item cost: the shared item producer sets identity type 0 (`Item`) and the item
   ID (VERIFIED); the ordered line sequence of that producer is UNKNOWN.
-- Currency cost: identity type 5 (`Currency`) and the currency ID, and the
-  quantity passed to the currency builder is explicitly zero rather than the
-  extended-cost amount (VERIFIED). The currency line is emitted with a zero owner
-  GUID (VERIFIED); the post-title currency rows are UNKNOWN.
+- **VERIFIED (Retail):** currency cost uses identity type 5 (`Currency`) and the
+  currency ID, with quantity zero and a zero owner GUID. Post-title rows are
+  UNKNOWN.
 - **VERIFIED (Forever R88n.8):** no selected offer, no extended-cost identifier,
   no matching `ItemExtendedCost` record, no selected eligible cost, or a false
   selected producer returns exactly zero Lua values on normal completion.
@@ -102,6 +101,10 @@ not established.
   Forever missing-source arms complete with zero Lua values.
 - The item-producer and post-title currency line sequences: UNKNOWN, so this path
   emits the existing shared producers' lines unchanged.
+- **VERIFIED (simulator):** Forever does not publish a Currency tooltip when a
+  selected cost needs the Retail-only currency builder; it returns zero values
+  instead of fabricating that result. **INFERRED (R88n.8):** the second native
+  cost-entry set represents currency costs.
 - `dataInstanceID` stability across calls: the shared builder stamps every call.
 
 ### Reachability gaps in the resident data
