@@ -51,11 +51,14 @@ fn read_outfit_id(state: &LuaState) -> LuaResult<f64> {
 #[cfg(feature = "client-wowforever")]
 fn read_outfit_name(state: &LuaState, id: f64) -> LuaResult<Option<String>> {
     // INFERRED: the supplied Forever outfit snapshot represents the native saved-name records.
-    let name = borrow_state(state)?
+    let sim = borrow_state(state)?;
+    let outfits = sim
         .forever_outfits
         .as_ref()
-        .and_then(|outfits| outfits.as_ref())
-        .and_then(|entries| entries.iter().find(|entry| entry.outfit_id as f64 == id))
+        .and_then(|outfits| outfits.as_ref());
+    let saved_outfit =
+        outfits.and_then(|entries| entries.iter().find(|entry| entry.outfit_id as f64 == id));
+    let name = saved_outfit
         .map(|entry| entry.name.clone())
         .unwrap_or_default();
     Ok(Some(name))
