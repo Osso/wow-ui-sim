@@ -8,6 +8,9 @@ use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
 use rilua::{LuaResult, Val};
 
+mod secure_registry;
+use secure_registry::resolve_mixin_methods;
+
 /// VERIFIED (R88k.7): Retail `Mixin` and `CreateFromMixins` use flags value 7.
 const MIXIN_FLAGS: u8 = 7;
 
@@ -55,7 +58,7 @@ fn apply_mixins(
 }
 
 fn apply_mixin(state: &mut LuaState, object: Val, mixin: Val) -> LuaResult<()> {
-    let Val::Table(methods_ref) = mixin else {
+    let Val::Table(methods_ref) = resolve_mixin_methods(state, mixin) else {
         return Ok(());
     };
     let Some(methods) = state.gc.tables.get(methods_ref) else {
