@@ -134,7 +134,12 @@ pub(crate) fn world_map_provider_sets_and_refreshes_user_waypoint(env: &WowLuaEn
         assert(changes == changesBeforeNoOp)
         assert(C_SuperTrack.GetSuperTrackedQuestID() == 78,
             "an unchanged true request must not clear another target")
+        local changesBeforeDisable = changes
         C_SuperTrack.SetSuperTrackedUserWaypoint(false)
+        assert(changes == changesBeforeDisable)
+        assert(C_SuperTrack.IsSuperTrackingUserWaypoint() == false)
+        assert(C_SuperTrack.IsSuperTrackingQuest() == true)
+        assert(C_SuperTrack.GetSuperTrackedQuestID() == 78)
         C_SuperTrack.SetSuperTrackedUserWaypoint("")
         assert(C_SuperTrack.IsSuperTrackingUserWaypoint() == true,
             "a non-nil non-false value must be true")
