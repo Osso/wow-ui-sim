@@ -1,6 +1,10 @@
-## [2026-11-14] investigation | Retail secure tooltip color route
+## [2026-11-14] investigation | Retail secure tooltip color route — merged catalog
 
-Updated [taint system](systems/taint-system.md#dual-lua-environment) with the current fallback-disabled PrivateAuras diagnosis. **VERIFIED (simulator at `7f81a8853`):** `Color.lua` runs in secureenv, `GetCurrentEnvironment()` returns its `_G`, and the current `C_UIColor.GetColors()` payload lacks the tag used by `SharedTooltipTemplates.lua:57`. **UNVERIFIED:** whether Retail's `GlobalColor` export contains `TOOLTIP_DEFAULT_BACKGROUND_COLOR`. No direct publication or guessed catalog data was added; catalog modeling remains outside this lane.
+Updated [taint system](systems/taint-system.md#dual-lua-environment) with the merged catalog state. **VERIFIED (simulator source at `a941395885655f56edfcc1f57cac3fa1f0c853c7`):** the generated Retail catalog contains `TOOLTIP_DEFAULT_BACKGROUND_COLOR`, and `C_UIColor.GetColors` is registered through flag 3. **UNVERIFIED at that SHA:** the fallback-disabled PrivateAuras acceptance has not yet run against this data.
+
+## [2026-11-14] investigation | Retail secure tooltip color route — pre-merge
+
+**VERIFIED (simulator at `7f81a8853`):** `Color.lua` ran in secureenv, `GetCurrentEnvironment()` returned its `_G`, and the old `C_UIColor.GetColors()` payload lacked the tag used by `SharedTooltipTemplates.lua:57`; the fallback-disabled test was RED. **UNVERIFIED at that pre-merge SHA:** whether Retail's `GlobalColor` export contained `TOOLTIP_DEFAULT_BACKGROUND_COLOR`. No direct publication or guessed catalog row was added.
 
 ## [2026-11-13] system | Secure environment and dependency replay
 
