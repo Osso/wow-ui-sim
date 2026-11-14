@@ -5,14 +5,11 @@
 ))]
 
 use crate::common::blizzard_addon_harness::{
-    blizzard_ui_dir, load_blizzard_addon_closure_into_env,
+    blizzard_ui_dir, load_blizzard_addon_closure_into_env, new_blizzard_addon_env,
 };
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::lua_api::state::{AzeriteEssenceInfo, AzeriteEssenceMilestoneInfo};
 use wow_ui_sim::screen::ScreenKind;
-
-#[path = "tooltip_full_env_helpers.rs"]
-mod tooltip_full_env_helpers;
 
 const ESSENCE_TWO: i32 = 2;
 const ESSENCE_THREE: i32 = 3;
@@ -121,30 +118,54 @@ fn original_azerite_tooltip_env() -> WowLuaEnv {
         "selected Game TOCs must include Blizzard_SharedXMLGame"
     );
 
-    let env = tooltip_full_env_helpers::setup_full_env();
-    let loaded =
-        load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_AzeriteEssenceUI"], &[]);
-    assert!(
-        loaded
-            .iter()
-            .any(|name| name == "Blizzard_AzeriteEssenceUI"),
-        "selected Azerite Essence UI must load: {loaded:?}"
+    let selected_ui = wow_ui_sim::loader::discover_blizzard_addon_closure_for_screen_with_overrides(
+        &ui,
+        ScreenKind::Game,
+        &["Blizzard_AzeriteEssenceUI"],
+        &[],
     );
+    assert!(
+        selected_ui
+            .iter()
+            .any(|(name, _)| name == "Blizzard_AzeriteEssenceUI"),
+        "the Game load-on-demand closure must select Blizzard_AzeriteEssenceUI"
+    );
+
+    let env = new_blizzard_addon_env(&ui);
+    env.exec("UIPanelWindows = UIPanelWindows or {}")
+        .expect("the selected UI environment must provide UIPanelWindows");
+    let shared = load_blizzard_addon_closure_into_env(
+        &env,
+        &ui,
+        &["Blizzard_SharedXMLGame", "Blizzard_FrameXMLBase"],
+        &[],
+    );
+    assert!(
+        shared.iter().any(|name| name == "Blizzard_SharedXMLGame"),
+        "selected Game TOCs must load Blizzard_SharedXMLGame"
+    );
+
+    let source_path = ui.join("Blizzard_AzeriteEssenceUI/Blizzard_AzeriteEssenceUI.lua");
+    let source = std::fs::read_to_string(source_path)
+        .expect("the selected Azerite UI source must be present in the profile cache");
+    env.exec_named(
+        &source,
+        "@Interface/AddOns/Blizzard_AzeriteEssenceUI/Blizzard_AzeriteEssenceUI.lua",
+    )
+    .expect("the original Azerite UI mixins should load without its unrelated Bootstrap/XML");
     env.exec(
         r#"
-        assert(C_AddOns.IsAddOnLoaded('Blizzard_SharedXMLGame'))
-        assert(C_AddOns.IsAddOnLoaded('Blizzard_AzeriteEssenceUI'))
-        local buttonSource = debug.getinfo(AzeriteEssenceButtonMixin.OnEnter, 'S').source:gsub('\\', '/')
+        local buttonSource = debug.getinfo(AzeriteEssenceButtonMixin.OnEnter, 'S').source
         assert(buttonSource:find('Blizzard_AzeriteEssenceUI.lua', 1, true), buttonSource)
-        local slotSource = debug.getinfo(AzeriteMilestoneSlotMixin.OnEnter, 'S').source:gsub('\\', '/')
+        local slotSource = debug.getinfo(AzeriteMilestoneSlotMixin.OnEnter, 'S').source
         assert(slotSource:find('Blizzard_AzeriteEssenceUI.lua', 1, true), slotSource)
-        local essenceSource = debug.getinfo(GameTooltip.SetAzeriteEssence, 'S').source:gsub('\\', '/')
-        local slotGetterSource = debug.getinfo(GameTooltip.SetAzeriteEssenceSlot, 'S').source:gsub('\\', '/')
+        local essenceSource = debug.getinfo(GameTooltip.SetAzeriteEssence, 'S').source
+        local slotGetterSource = debug.getinfo(GameTooltip.SetAzeriteEssenceSlot, 'S').source
         assert(essenceSource:find('TooltipDataHandler.lua', 1, true), essenceSource)
         assert(slotGetterSource:find('TooltipDataHandler.lua', 1, true), slotGetterSource)
         "#,
     )
-    .expect("the selected Azerite UI and TooltipDataHandler consumers should load");
+    .expect("the original Azerite UI consumers and TooltipDataHandler accessors should load");
     env.exec(ESSENCE_LUA_HELPERS)
         .expect("Azerite selector test helpers should load");
     env
