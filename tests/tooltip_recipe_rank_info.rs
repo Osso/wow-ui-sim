@@ -262,3 +262,54 @@ fn recipe_rank_misses_return_zero_lua_values() {
     )
     .expect("R88n.1 recipe misses must return exactly zero values");
 }
+
+#[test]
+fn trade_skill_initialization_clears_recipe_rank_cache() {
+    let env = WowLuaEnv::new().expect("Retail Lua environment should initialize");
+    add_recipe(
+        &mut env.state().borrow_mut().recipe_rank_tooltip_cache,
+        991_731,
+        0,
+        0,
+        SPELL_A,
+        None,
+        None,
+    );
+    env.exec(
+        "assert(select('#', C_TooltipInfo.GetRecipeRankInfo(991731, 1)) == 1, 'fixture recipe must be visible before initialization')",
+    )
+    .expect("host recipe record should populate the tooltip before initialization");
+
+    env.exec("assert(C_TradeSkillUI.OpenTradeSkill(164))")
+        .expect("Retail trade-skill initialization route should run");
+    env.exec(
+        "assert(select('#', C_TooltipInfo.GetRecipeRankInfo(991731, 1)) == 0, 'trade-skill initialization must clear the recipe cache')",
+    )
+    .expect("the native trade-skill initialization route clears recipe display cache");
+}
+
+#[test]
+fn trade_skill_rebuild_clears_recipe_rank_cache() {
+    let env = WowLuaEnv::new().expect("Retail Lua environment should initialize");
+    add_recipe(
+        &mut env.state().borrow_mut().recipe_rank_tooltip_cache,
+        991_741,
+        0,
+        0,
+        SPELL_A,
+        None,
+        None,
+    );
+    env.exec(
+        "assert(select('#', C_TooltipInfo.GetRecipeRankInfo(991741, 1)) == 1, 'fixture recipe must be visible before rebuild')",
+    )
+    .expect("host recipe record should populate the tooltip before rebuild");
+
+    env.exec("C_TradeSkillUI.SetRecipeItemNameFilter('sharpening')")
+        .expect("a changed recipe filter must mark the list dirty");
+    wow_ui_sim::startup::fire_one_on_update_tick(&env);
+    env.exec(
+        "assert(select('#', C_TooltipInfo.GetRecipeRankInfo(991741, 1)) == 0, 'trade-skill rebuild must clear the recipe cache')",
+    )
+    .expect("the native dirty-state rebuild route clears recipe display cache");
+}
