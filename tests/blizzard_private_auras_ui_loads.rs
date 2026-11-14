@@ -166,6 +166,32 @@ fn secure_private_auras_tooltip_consumer_runs_without_errors() {
             "#,
         )
         .expect("secure registration snapshot should evaluate");
+    let secure_mixin_snapshot: (String, String, String, String) = env
+        .eval(
+            r#"
+                local privateAura = rawget(__secureenv, 'PrivateAurasTooltipMixin')
+                local gameTooltip = rawget(__secureenv, 'GameTooltipDataMixin')
+                return type(privateAura),
+                    type(privateAura and rawget(privateAura, 'OnLoad_PrivateAuraTooltip')),
+                    type(gameTooltip),
+                    type(gameTooltip and rawget(gameTooltip, 'OnLoad'))
+            "#,
+        )
+        .expect("secure tooltip mixin snapshot should evaluate");
+    let secure_dependency_states: Vec<(String, bool)> = {
+        let state = env.state().borrow();
+        private_auras_dependencies()
+            .into_iter()
+            .map(|name| {
+                let loaded = state
+                    .addons
+                    .iter()
+                    .find(|addon| addon.folder_name == name)
+                    .is_some_and(|addon| addon.is_loaded_in_environment(true));
+                (name.to_string(), loaded)
+            })
+            .collect()
+    };
     let producer_source: (String, String, String, bool) = env
         .eval(
             r#"
@@ -181,8 +207,12 @@ fn secure_private_auras_tooltip_consumer_runs_without_errors() {
         )
         .expect("secure TooltipDataProcessor producer provenance should evaluate");
     assert!(
+        secure_dependency_states.iter().all(|(_, loaded)| *loaded),
+        "every PrivateAurasUI dependency must complete a secure load: {secure_dependency_states:?}"
+    );
+    assert!(
         load_errors.is_empty(),
-        "PrivateAuras dependencies and the PrivateAurasTooltip consumer must load without errors:\n  {}",
+        "PrivateAuras dependencies and the PrivateAurasTooltip consumer must load without errors:\n  {}\nsecure dependencies: {secure_dependency_states:?}\nsecure mixins: {secure_mixin_snapshot:?}\nproducer: {producer_source:?}\nregistrations: {registration_snapshot:?}",
         load_errors.join("\n  ")
     );
     assert_eq!(
