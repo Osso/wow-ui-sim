@@ -15,6 +15,8 @@ use rilua::{LuaResult, Val};
 use std::collections::{BTreeMap, BTreeSet};
 
 const CHALLENGE_MAP_ITEM_MODIFIER_ID: u32 = 17;
+const UNSPECIFIED_CHALLENGE_MODE_ID: u32 = 0;
+const ABSENT_CURRENT_MAP_ID: u32 = 0;
 /// INFERRED simulator cursor projection for one selected Keystone item.
 const KEYSTONE_CURSOR_STACK_COUNT: i32 = 1;
 
@@ -175,12 +177,16 @@ fn keystone_matches_current_map(
                 .find(|(kind, _)| *kind == CHALLENGE_MAP_ITEM_MODIFIER_ID)
         })
         // VERIFIED (R88o.2 q2): an absent modifier uses lookup key zero.
-        .map_or(0, |(_, value)| *value);
+        .map_or(UNSPECIFIED_CHALLENGE_MODE_ID, |(_, value)| *value);
     let maps = sim_data::map_challenge_modes::MAPS;
     maps.binary_search_by_key(&challenge_id, |row| row.0)
         .ok()
         .is_some_and(|index| {
-            u32::from(maps[index].1) == sim.keystone.current_map_selector.unwrap_or(0)
+            u32::from(maps[index].1)
+                == sim
+                    .keystone
+                    .current_map_selector
+                    .unwrap_or(ABSENT_CURRENT_MAP_ID)
         })
 }
 
@@ -342,6 +348,7 @@ fn stage_removed_keystone_cursor(
 }
 
 fn has_nonzero_guid_category(guid: &str) -> bool {
+    // INFERRED simulator representation: Item is nonzero; a leading 0 is zero.
     guid.split_once('-')
         .is_some_and(|(category, _)| !category.is_empty() && category != "0")
 }
