@@ -1,6 +1,5 @@
 //! Optional Retail tests for the bounded R88k native routes.
-//! Ranged auto-attack is API-level VERIFIED; no runtime-selected consumer exists because
-//! the original SpellSearch TOC is LoadOnDemand. Other tests invoke selected Retail consumers.
+//! The LoD SpellSearch consumer is runtime-selected through SharedTalentUI's startup dependency.
 #![cfg(all(
     feature = "client-retail",
     feature = "retail-12-0-5",
@@ -16,17 +15,21 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::toc::TocFile;
 
-fn load_selected_consumer(root: &str, function: &str, source_suffix: &str) -> WowLuaEnv {
+fn load_selected_consumers(roots: &[&str], function: &str, source_suffix: &str) -> WowLuaEnv {
     assert_eq!(ACTIVE, ClientProfile::Retail);
     let ui_dir = blizzard_ui_dir();
     let startup_addons = discover_blizzard_startup_addons_for_screen(&ui_dir, ScreenKind::Game);
-    assert!(
-        startup_addons.iter().any(|addon| addon.name == root),
-        "{root} must be selected by Retail Game-screen addon discovery"
-    );
+    for root in roots {
+        assert!(
+            startup_addons.iter().any(|addon| addon.name == *root),
+            "{root} must be selected by Retail Game-screen addon discovery"
+        );
+    }
 
-    let (env, loaded) = build_blizzard_addon_closure_env(&ui_dir, &[root], &[]);
-    assert!(loaded.iter().any(|name| name == root));
+    let (env, loaded) = build_blizzard_addon_closure_env(&ui_dir, roots, &[]);
+    for root in roots {
+        assert!(loaded.iter().any(|name| name == root));
+    }
     env.exec(&format!(
         r#"
         local fn = {function}
@@ -41,37 +44,77 @@ fn load_selected_consumer(root: &str, function: &str, source_suffix: &str) -> Wo
 }
 
 #[test]
-fn ranged_auto_attack_api_compares_the_shared_identifier() {
-    // API-level VERIFIED; no runtime-selected consumer: Blizzard_SpellSearch.toc is LoD.
+fn ranged_auto_attack_spell_consumer_uses_the_shared_identifier() {
     let ui_dir = blizzard_ui_dir();
-    let toc_path = ui_dir.join("Blizzard_SpellSearch/Blizzard_SpellSearch.toc");
-    let toc = TocFile::from_file(&toc_path).expect("Retail SpellSearch TOC");
-    assert!(toc.is_load_on_demand());
-    let startup_addons = discover_blizzard_startup_addons_for_screen(&ui_dir, ScreenKind::Game);
+    let search_toc =
+        TocFile::from_file(&ui_dir.join("Blizzard_SpellSearch/Blizzard_SpellSearch.toc"))
+            .expect("Retail SpellSearch TOC");
+    let shared_toc =
+        TocFile::from_file(&ui_dir.join("Blizzard_SharedTalentUI/Blizzard_SharedTalentUI.toc"))
+            .expect("Retail SharedTalentUI TOC");
+    assert!(search_toc.is_load_on_demand());
+    assert!(!shared_toc.is_load_on_demand());
     assert!(
-        !startup_addons
+        shared_toc
+            .dependencies()
             .iter()
-            .any(|addon| addon.name == "Blizzard_SpellSearch")
+            .any(|dependency| dependency == "Blizzard_SpellSearch")
     );
+    let startup_addons = discover_blizzard_startup_addons_for_screen(&ui_dir, ScreenKind::Game);
+    for name in ["Blizzard_SharedTalentUI", "Blizzard_SpellSearch"] {
+        assert!(startup_addons.iter().any(|addon| addon.name == name));
+    }
 
-    let env = WowLuaEnv::new().expect("Retail C_Spell surface");
-    env.state().borrow_mut().ranged_auto_attack_spell_id = 31_337;
+    let env = load_selected_consumers(
+        &["Blizzard_SharedTalentUI", "Blizzard_ActionBar"],
+        "SpellSearchUtil.GetActionbarStatusForSpellBookItemInfo",
+        "Blizzard_SpellSearch/Blizzard_SpellSearchUtil.lua",
+    );
+    assert_eq!(env.state().borrow().ranged_auto_attack_spell_id, 0);
+    let search_loaded: bool = env
+        .eval("return C_AddOns.IsAddOnLoaded('Blizzard_SpellSearch')")
+        .expect("SpellSearch is the selected SharedTalentUI dependency");
+    assert!(search_loaded);
+    {
+        let mut state = env.state().borrow_mut();
+        state.action_bars.clear();
+        state.ranged_auto_attack_spell_id = 31_337;
+    }
     env.exec(
         r#"
-        local matching = C_Spell.IsRangedAutoAttackSpell(31337)
-        local different = C_Spell.IsRangedAutoAttackSpell(31338)
-        assert(select('#', C_Spell.IsRangedAutoAttackSpell(31337)) == 1)
-        assert(type(matching) == 'boolean' and matching)
-        assert(type(different) == 'boolean' and not different)
+        local itemType = Enum.SpellBookItemType.Spell
+        local function status(spellID)
+            return SpellSearchUtil.GetActionbarStatusForSpellBookItemInfo({
+                itemType = itemType,
+                isPassive = false,
+                isOffSpec = false,
+                spellID = spellID,
+                actionID = spellID,
+            })
+        end
+        local statuses = ActionButtonUtil.ActionBarActionStatus
+        assert(status(31337) == statuses.NotMissing,
+            'matching spell status=' .. tostring(status(31337)))
+        assert(status(31338) == statuses.MissingFromAllBars,
+            'different spell status=' .. tostring(status(31338)))
         "#,
     )
-    .expect("the query compares against the explicitly supplied shared identifier");
+    .expect("the original SpellSearch consumer must exempt only the shared ranged spell ID");
+
+    env.state().borrow_mut().ranged_auto_attack_spell_id = 0;
+    env.exec(
+        r#"
+        assert(C_Spell.IsRangedAutoAttackSpell(0) == true,
+            'the verified initial shared identifier is zero')
+        "#,
+    )
+    .expect("identifier zero matches the verified initial zero value");
 }
 
 #[test]
 fn cast_count_null_context_returns_zero_through_cooldown_viewer() {
-    let env = load_selected_consumer(
-        "Blizzard_CooldownViewer",
+    let env = load_selected_consumers(
+        &["Blizzard_CooldownViewer"],
         "CooldownViewerCooldownItemMixin.CacheChargeValues",
         "Blizzard_CooldownViewer/CooldownViewer.lua",
     );
@@ -92,7 +135,8 @@ fn cast_count_null_context_returns_zero_through_cooldown_viewer() {
             end,
         }
         CooldownViewerCooldownItemMixin.CacheChargeValues(R88KCooldownItem)
-        assert(R88KCooldownItem.count == 0 and R88KCooldownItem.shown == false)
+        assert(R88KCooldownItem.count == 0 and R88KCooldownItem.shown == false,
+            'count=' .. tostring(R88KCooldownItem.count) .. ', shown=' .. tostring(R88KCooldownItem.shown))
         assert(select('#', C_Spell.GetSpellCastCount(19750)) == 1)
         assert(type(C_Spell.GetSpellCastCount(19750)) == 'number')
         "#,
@@ -113,16 +157,20 @@ fn assert_spell_flyout_text(env: &WowLuaEnv, expected: &str) {
     env.exec("R88KSpellCount.calls = 0; SpellFlyoutPopupButtonMixin.UpdateCount(R88KSpellButton)")
         .expect("the original SpellFlyout UpdateCount method must execute");
     env.exec(&format!(
-        "assert(R88KSpellCount.calls == 1 and R88KSpellCount.arguments == 1)\n\
-         assert(R88KSpellCount.kind == 'string' and R88KSpellCount.value == {expected:?})"
+        r#"
+        assert(R88KSpellCount.calls == 1 and R88KSpellCount.arguments == 1,
+            'calls=' .. tostring(R88KSpellCount.calls) .. ', args=' .. tostring(R88KSpellCount.arguments))
+        assert(R88KSpellCount.kind == 'string' and R88KSpellCount.value == {expected:?},
+            'kind=' .. tostring(R88KSpellCount.kind) .. ', value=' .. tostring(R88KSpellCount.value))
+        "#
     ))
     .expect("the original consumer must receive exactly one display string");
 }
 
 #[test]
 fn display_count_uses_verified_reagent_mode_before_charge_mode() {
-    let env = load_selected_consumer(
-        "Blizzard_ActionBar",
+    let env = load_selected_consumers(
+        &["Blizzard_ActionBar"],
         "SpellFlyoutPopupButtonMixin.UpdateCount",
         "Blizzard_ActionBar/Shared/SpellFlyout.lua",
     );
@@ -190,8 +238,8 @@ fn display_count_uses_verified_reagent_mode_before_charge_mode() {
 
 #[test]
 fn visibility_info_failure_and_success_keep_distinct_return_shapes() {
-    let env = load_selected_consumer(
-        "Blizzard_FrameXMLUtil",
+    let env = load_selected_consumers(
+        &["Blizzard_FrameXMLUtil"],
         "AuraUtil.ShouldDisplayDebuff",
         "Blizzard_FrameXMLUtil/AuraUtil.lua",
     );
@@ -204,7 +252,8 @@ fn visibility_info_failure_and_success_keep_distinct_return_shapes() {
 
     env.state().borrow_mut().spell_visibility_results = None;
     env.exec(&format!(
-        "assert(select('#', C_Spell.GetVisibilityInfo(19750, {raid_out})) == 0)\n\
+        "local count = select('#', C_Spell.GetVisibilityInfo(19750, {raid_out}))\n\
+         assert(count == 0, 'null-context return count=' .. tostring(count))\n\
          assert(AuraUtil.ShouldDisplayDebuff('party1', 19750) == true)"
     ))
     .expect("the null-context failure returns no values through AuraUtil");
