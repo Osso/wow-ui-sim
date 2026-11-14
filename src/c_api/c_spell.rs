@@ -116,6 +116,14 @@ pub(crate) fn register_c_spell_surface(state: &mut LuaState) -> LuaResult<()> {
             "IsRangedAutoAttackSpell",
             is_ranged_auto_attack_spell,
         )?;
+    }
+    #[cfg(feature = "retail-12-1-5")]
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+    ) {
+        // PTR 70493 SpellDocumentation.lua:657–673 declares this query.
+        // Reusing the existing visibility host-input model on PTR is INFERRED.
         table_set_rust_fn_static(state, ns, "GetVisibilityInfo", get_visibility_info)?;
     }
     #[cfg(feature = "retail-12-0-0")]
