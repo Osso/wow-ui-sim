@@ -8,6 +8,7 @@ use wow_ui_sim::c_api::{
     c_item_interaction::ItemInteractionInfo,
 };
 use wow_ui_sim::lua_api::WowLuaEnv;
+use wow_ui_sim::lua_api::state::{CursorInfo, CursorItemOrigin};
 
 fn add_bag_item(env: &WowLuaEnv, bag: u32, slot: u32, item_id: u32) -> String {
     env.exec(&format!("A_Admin.AddBagItem({bag}, {slot}, {item_id}, 1)"))
@@ -382,6 +383,32 @@ fn slot_keystone_notifies_after_selection_state() {
         ))
         .unwrap();
     }
+}
+
+#[test]
+fn slot_keystone_leaves_unresolved_cursor_untouched() {
+    let env = tooltip_full_env_helpers::load_full_env_without_post_load();
+    register_keystone_event_probe(&env);
+    assert!(env.state().borrow().item_info(999_999).is_none());
+    env.state().borrow_mut().cursor_item = Some(CursorInfo::Item {
+        owned_identity: None,
+        item_id: 999_999,
+        stack_count: 1,
+        origin: CursorItemOrigin::Bag { bag: 0, slot: 3 },
+        applied_transmog: None,
+    });
+    env.exec(
+        r##"
+        assert(select("#", C_ChallengeMode.SlotKeystone()) == 0)
+        assert(CursorHasItem())
+        local kind, itemID = GetCursorInfo()
+        assert(kind == "item" and itemID == 999999)
+        assert(not C_ChallengeMode.HasSlottedKeystone())
+        assert(select("#", C_TooltipInfo.GetSlottedKeystone()) == 0)
+        assert(#R7KeystoneSlottedState == 0)
+        "##,
+    )
+    .unwrap();
 }
 
 #[test]
