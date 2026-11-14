@@ -1,10 +1,13 @@
 //! Round 7 `C_TooltipInfo` getters. Native-miss paths stay empty until the
 //! simulator has the state needed by the decoded producer.
 
+use crate::c_api::item_spell::item_guid_for_bag_slot;
 use crate::c_api::tooltip_getter_args;
 use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::items::{self, ItemInfo};
-use crate::lua_api::globals::missing_surface::tooltip_info::tooltip_for_item_context;
+use crate::lua_api::globals::missing_surface::tooltip_info::{
+    build_quest_party_progress_tooltip, tooltip_for_item_context,
+};
 use crate::lua_api::methods::{borrow_state, create_string, table_set};
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::vm::gc::arena::GcRef;
@@ -68,13 +71,13 @@ pub(crate) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResu
             state,
             namespace,
             "GetQuestLogSpecialItem",
-            get_quest_log_special_item,
+            publish_quest_log_special_item,
         )?;
         table_set_rust_fn_static(
             state,
             namespace,
             "GetQuestPartyProgress",
-            get_quest_party_progress,
+            publish_quest_party_progress,
         )?;
         table_set_rust_fn_static(state, namespace, "GetRecipeRankInfo", get_recipe_rank_info)?;
         table_set_rust_fn_static(
@@ -146,20 +149,62 @@ fn get_possession(state: &mut LuaState) -> LuaResult<u32> {
     no_values()
 }
 
-fn get_quest_log_special_item(state: &mut LuaState) -> LuaResult<u32> {
-    let _quest_index = tooltip_getter_args::round7_signed(state, 1, QUEST_SPECIAL_USAGE)?;
-    // Quest-log special items require the native player's item-object relation;
-    // quest_log_entries alone is not an equivalent selector.
-    no_values()
+fn publish_quest_log_special_item(state: &mut LuaState) -> LuaResult<u32> {
+    // Retail TooltipInfoDocumentation.lua:817; host inputs separate quest-ID
+    // context, cache IDs and the selected object because native writers are unknown.
+    let quest_index = tooltip_getter_args::round7_signed(state, 1, QUEST_SPECIAL_USAGE)?;
+    if ACTIVE != ClientProfile::Retail {
+        return no_values();
+    }
+    let selected_object = find_quest_special_item_object(state, quest_index);
+    let Some(selected_object) = selected_object else {
+        return no_values();
+    };
+    let guid = item_guid_for_bag_slot(
+        selected_object.bag,
+        selected_object.slot,
+        selected_object.item_id,
+    );
+    let Some((item_id, item)) = item_for_owned_guid(state, &guid) else {
+        return no_values();
+    };
+    let data = tooltip_for_item_context(state, item_id, Some(item));
+    let guid = create_string(state, &guid);
+    table_set(state, data, "guid", guid);
+    state.push(data);
+    Ok(1)
 }
 
-fn get_quest_party_progress(state: &mut LuaState) -> LuaResult<u32> {
-    let _quest_id = tooltip_getter_args::round7_signed(state, 1, QUEST_PARTY_USAGE)?;
-    let _omit_title = tooltip_getter_args::round7_optional_bool(state, 2, QUEST_PARTY_USAGE)?;
-    let _ignore_active_player =
+fn publish_quest_party_progress(state: &mut LuaState) -> LuaResult<u32> {
+    // Retail TooltipInfoDocumentation.lua:833; only the Retail 70688
+    // populated output is evidenced for this implementation.
+    let quest_id = tooltip_getter_args::round7_signed(state, 1, QUEST_PARTY_USAGE)?;
+    let omit_title = tooltip_getter_args::round7_optional_bool(state, 2, QUEST_PARTY_USAGE)?;
+    let ignore_active_player =
         tooltip_getter_args::round7_optional_bool(state, 3, QUEST_PARTY_USAGE)?;
-    // There is no quest-progress service or party objective snapshot model.
-    no_values()
+    if ACTIVE != ClientProfile::Retail {
+        return no_values();
+    }
+    let snapshot = borrow_state(state)?
+        .quest_log_entries
+        .party_progress
+        .get(&quest_id)
+        .cloned();
+    let Some(snapshot) = snapshot else {
+        return no_values();
+    };
+    let Some(data) = build_quest_party_progress_tooltip(
+        state,
+        quest_id,
+        omit_title,
+        ignore_active_player,
+        &snapshot,
+    )?
+    else {
+        return no_values();
+    };
+    state.push(data);
+    Ok(1)
 }
 
 fn get_recipe_rank_info(state: &mut LuaState) -> LuaResult<u32> {
@@ -250,6 +295,24 @@ fn active_essence_for_slot(state: &LuaState, slot: i32) -> Option<i32> {
         .iter()
         .find(|milestone| milestone.slot == Some(slot))
         .and_then(|milestone| milestone.active_essence_id)
+}
+
+fn find_quest_special_item_object(
+    state: &LuaState,
+    quest_index: i32,
+) -> Option<crate::c_api::quest_special_item::QuestSpecialItemObject> {
+    let sim = borrow_state(state).ok()?;
+    let inputs = &sim.quest_log_entries.quest_special_item_inputs;
+    let quest_id = *inputs.quest_ids_by_log_index.get(&quest_index)?;
+    let cache_record = inputs.cached_quest_records.get(&quest_id)?;
+    let selected_object = *inputs.selected_item_objects.get(&quest_id)?;
+    let primary_id_matches = cache_record.special_item_id == Some(selected_object.item_id)
+        && selected_object.item_id != 0;
+    let candidate_id_matches = cache_record.has_candidate_items
+        && cache_record
+            .candidate_item_ids
+            .contains(&Some(selected_object.item_id));
+    (primary_id_matches || candidate_id_matches).then_some(selected_object)
 }
 
 fn item_for_owned_guid(state: &LuaState, guid: &str) -> Option<(u32, &'static ItemInfo)> {

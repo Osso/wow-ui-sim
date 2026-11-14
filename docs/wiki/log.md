@@ -2,6 +2,10 @@
 
 Updated the [tooltip lifecycle investigation](investigations/tooltip-owner-lifecycle.md#r88n5-forever-clearlines-cache-boundary) and contract with R88n.5. **VERIFIED (Forever 1.60.1.70707):** ClearLines resets cached left/right text for active rows, not inactive cache entries. Optional API and selected `TooltipDataHandler.ProcessInfo` preservation tests pass. PTR applicability for Retail layout facts remains INFERRED; clipping, order, nonzero extra-inset writers and clamping remain UNKNOWN.
 
+## [2026-11-14] investigation | Retail quest tooltip consumers
+
+Updated [consumer selection and RED proof](investigations/consumer-selection-and-red-proof.md#retail-quest-tooltip-consumers-and-host-input-seams) and the [Round 7 getter contract](../specs/tooltip-r7-getters.md). **VERIFIED (Retail 12.1.5.70688, R88n.1):** both getters return exactly zero Lua values on missing-source and failed-producer paths. **VERIFIED (R88n.3/R88n.3a):** the special-item getter resolves the indexed quest through request context and cache fields before selecting an inventory object. Cache/invalidation, inventory/object and party/objective writers remain UNKNOWN and use empty host inputs. Native return arity for a successful party query with no rows also remains UNKNOWN; the simulator emits no values for that host-supplied empty result.
+
 ## [2026-11-14] fix | Original character and store lifecycle ownership
 
 [Lua-owned fallback retirement](investigations/lua-owned-fallback-retirement.md#j-original-character-labels-and-titles) records the separately proved Retail CharacterFrame bridge and StoreUI escape guard removals, real equipment/reopen/attribute consumers, and unchanged non-Retail/native-unknown boundaries.
