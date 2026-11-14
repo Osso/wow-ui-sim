@@ -21,13 +21,16 @@ pub struct ContentTrackingState {
 }
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
-    if !matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr) {
+    if !matches!(
+        ACTIVE,
+        ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
+    ) {
         return Ok(());
     }
 
     let namespace = ensure_namespace(state, "C_ContentTracking")?;
-    // PTR 70493 ContentTrackingDocumentation.lua:151–163 declares GetTrackedIDs.
-    // Its application to the existing host list model is INFERRED.
+    // PTR 70493 and Forever 70707 ContentTrackingDocumentation.lua:151–163
+    // declare GetTrackedIDs. Sharing the host list model is INFERRED.
     table_set_rust_fn_static(state, namespace, "GetTrackedIDs", get_tracked_ids)?;
     if ACTIVE == ClientProfile::Retail {
         table_set_rust_fn_static(state, namespace, "IsTracking", is_tracking)?;
@@ -53,8 +56,8 @@ fn tracking_type(state: &LuaState, value: Val) -> u32 {
 fn get_tracked_ids(state: &mut LuaState) -> LuaResult<u32> {
     // INFERRED declaration shape: one ID table; an empty host list remains empty.
     let argument = stack_val(state, 1);
-    let argument = if ACTIVE == ClientProfile::Ptr {
-        // The newly published PTR declaration is AllowedWhenUntainted.
+    let argument = if matches!(ACTIVE, ClientProfile::Ptr | ClientProfile::WowForever) {
+        // The PTR and Forever declarations are AllowedWhenUntainted.
         rilua::table_security::unwrap_secret(state, argument)?
     } else {
         argument

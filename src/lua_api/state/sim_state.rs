@@ -243,7 +243,6 @@ pub struct SimState {
     /// Explicit per-item supplied quality; independent of recipe inputs, initially empty.
     pub crafted_item_quality:
         HashMap<u32, crate::c_api::c_trade_skill_quality::CraftingQualityInfo>,
-    #[cfg(feature = "retail-12-0-0")]
     pub pvp_catalog: crate::c_api::c_pvp::catalog::PvpCatalog,
     #[cfg(feature = "retail-12-0-0")]
     pub prey_inputs: crate::c_api::c_prey::PreyInputs,
@@ -642,7 +641,6 @@ pub struct SimState {
     /// Explicit ranged identifier input; zero is the pre-runtime image value, not a login claim.
     pub ranged_auto_attack_spell_id: u32,
     /// Host null override; None uses the INFERRED active-player context.
-    #[cfg(feature = "retail-12-0-0")]
     pub spell_cast_context_is_null: Option<bool>,
     /// Explicit simulator input for older C_Spell and spellbook count queries.
     #[cfg(feature = "retail-12-0-0")]
@@ -879,6 +877,8 @@ pub struct SimState {
     #[cfg(feature = "client-wowforever")]
     pub stable_reads: crate::c_api::c_stable_info::forever::StableReadState,
     pub merchant_items: Vec<u32>,
+    /// Explicit R88l.2 link/selection seams, keyed by existing merchant slot.
+    pub merchant_links: crate::lua_api::globals::real::merchant_item_link::MerchantLinks,
     /// Explicit extended-cost records keyed by zero-based merchant slot; a
     /// missing key is not an observed record (decomp Round 6 §2b).
     pub merchant_offer_costs: HashMap<u32, MerchantCostRecord>,

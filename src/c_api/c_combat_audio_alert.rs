@@ -21,14 +21,6 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
         crate::client_profile::ACTIVE,
         crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
     ) {
-        // PTR 70493 CombatAudioAlertDocumentation.lua:112 declares this query.
-        // Reusing the Retail manager/CVar-backed behavior on PTR is INFERRED.
-        table_set_rust_fn_static(state, namespace, "IsEnabled", is_enabled)?;
-    }
-    if matches!(
-        crate::client_profile::ACTIVE,
-        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
-    ) {
         // Retail CombatAudioAlertDocumentation.lua:11-23 and 121-133.
         table_set_rust_fn_static(
             state,
@@ -60,21 +52,6 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
         table_set_rust_fn_static(state, namespace, "SetSpecSetting", set_spec_setting)?;
     }
     Ok(())
-}
-
-/// VERIFIED (R88f.L.3, Retail 12.1.5.70688): an unavailable manager gives false;
-/// otherwise `IsEnabled` reads `CAAEnabled` and returns false if that CVar is absent.
-fn is_enabled(state: &mut LuaState) -> LuaResult<u32> {
-    let enabled = {
-        let sim = borrow_state(state)?;
-        sim.sound_manager.is_some()
-            && sim
-                .cvars
-                .cached_integer_nonzero("CAAEnabled")
-                .unwrap_or(false)
-    };
-    state.push(Val::Bool(enabled));
-    Ok(1)
 }
 
 fn add_known_target(state: &mut LuaState) -> LuaResult<u32> {

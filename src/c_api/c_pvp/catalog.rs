@@ -51,20 +51,26 @@ pub struct PvpCatalog {
 }
 
 pub(super) fn register(state: &mut LuaState, ns: GcRef<Table>) -> LuaResult<()> {
-    if matches!(
-        crate::client_profile::ACTIVE,
-        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
-    ) {
-        // PTR 70493 PvpInfoDocumentation.lua:386,1723 declares the same surface.
-        // PTR reuses the existing supplied catalog and argument policy (INFERRED).
-        table_set_rust_fn_static(state, ns, "GetHonorRewardInfo", get_honor_reward_info)?;
+    use crate::client_profile::{ACTIVE, ClientProfile};
+    // Compile the supplied catalog independently from profile epochs. Keep
+    // the historical Retail-epoch publications, plus only honor on Forever.
+    if !cfg!(feature = "retail-12-0-0") && ACTIVE != ClientProfile::WowForever {
+        return Ok(());
     }
     if matches!(
-        crate::client_profile::ACTIVE,
-        crate::client_profile::ClientProfile::Retail
-            | crate::client_profile::ClientProfile::Ptr
-            | crate::client_profile::ClientProfile::WowForever
+        ACTIVE,
+        ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
     ) {
+        // PTR 70493 and Forever 70707 PvpInfoDocumentation.lua:386,1723
+        // declare the same surface. Sharing the supplied catalog is INFERRED.
+        table_set_rust_fn_static(state, ns, "GetHonorRewardInfo", get_honor_reward_info)?;
+    }
+    if ACTIVE == ClientProfile::WowForever {
+        // Only honor rewards are needed by the Forever consumers. Preserve
+        // the previously selected battleground, rated and training surfaces.
+        return Ok(());
+    }
+    if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr) {
         table_set_rust_fn_static(state, ns, "CanPlayerUseRatedPVPUI", rated_eligible)?;
     }
     for (name, function) in [

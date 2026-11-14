@@ -6,6 +6,14 @@ Added [GlobalColor catalog](systems/global-color-catalog.md) and the [Retail API
 
 Updated [tooltip data serialization](../specs/tooltip-data-serialization.md), [Lua API](systems/lua-api.md#retail-tooltipdata-field-boundary-r88n4b), and [consumer selection](investigations/consumer-selection-and-red-proof.md#retail-tooltip-serializer-field-consumers). **VERIFIED (R88n.4b):** repair and battle-pet fields are top-level; `price` and `maxPrice` belong on type 11. **INFERRED:** Retail projects positive `ItemInfo.sell_price` to `price`; `maxPrice`, repair cost and pet values remain unmodeled. Quest-cache callbacks and the LFG whole-message callback have no matching simulator route to fix.
 
+## [2026-11-14] correction | Merchant builder evidence boundary
+
+[Merchant item links](investigations/merchant-item-link.md) now requires explicit host item payloads. Missing data remains an INFERRED unresolved/no-text seam. Synthetic serializer fixtures are not complete native link evidence; the original consumer explicitly compares distinct results. Shared formatter behavior is unchanged.
+
+## [2026-11-14] implementation | Merchant item-link publication
+
+[Merchant item links](investigations/merchant-item-link.md) records R88l.2 Retail validation, arity, shared link formatting and explicit host-selected offer seams. Native raw-row ordering/writers remain unknown; no non-Retail publication is added.
+
 ## [2026-11-14] fix | Retail screen clamping
 
 Updated [layout-system](systems/layout-system.md#screen-clamping) and the [layout reference](../layout-system.md#screen-clamping) with R88n.5r. **VERIFIED (Retail 12.1.5.70688):** generic rect resolution uses scaled insets before rect storage/notification on queued and synchronous routes; GameTooltip inherits its enable bit from `SharedTooltipTemplate`; row setup creates no per-row clip. The original consumer selector failed at test commit `bcb35d79a` and passed at implementation commit `3a27c7d52`. **UNKNOWN:** suppression-state identity, setter-only cache invalidation, exact rounding, oversized-frame behavior, and order relative to snapping.
