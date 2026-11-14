@@ -29,7 +29,7 @@ use super::helpers::{
 };
 use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::globals::state_backed_queries::dispatch_event_now;
-use crate::lua_api::methods::{borrow_state, borrow_state_mut, create_string};
+use crate::lua_api::methods::{borrow_state, borrow_state_mut, create_string, val_to_string};
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::vm::closure::RustFn;
 use rilua::vm::state::LuaState;
