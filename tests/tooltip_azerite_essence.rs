@@ -137,12 +137,21 @@ fn original_azerite_tooltip_env() -> WowLuaEnv {
     let shared = load_blizzard_addon_closure_into_env(
         &env,
         &ui,
-        &["Blizzard_SharedXMLGame", "Blizzard_FrameXMLBase"],
+        &[
+            "Blizzard_SharedXMLGame",
+            "Blizzard_FrameXMLBase",
+            "Blizzard_GameTooltip",
+            "Blizzard_LoadLocale",
+        ],
         &[],
     );
     assert!(
         shared.iter().any(|name| name == "Blizzard_SharedXMLGame"),
         "selected Game TOCs must load Blizzard_SharedXMLGame"
+    );
+    assert!(
+        shared.iter().any(|name| name == "Blizzard_GameTooltip"),
+        "the selected GameTooltip addon must attach its native handler mixin"
     );
 
     let source_path = ui.join("Blizzard_AzeriteEssenceUI/Blizzard_AzeriteEssenceUI.lua");
