@@ -206,6 +206,16 @@ fn item_interaction_conversion_original_consumer_uses_distinct_output_ids() {
 }
 
 #[test]
+fn zero_conversion_output_preserves_the_unmodeled_native_gap() {
+    // PRESERVATION only: native unresolved-item payload is UNKNOWN pending R88o.2 q1.
+    let env = load_item_interaction_env();
+    let selected_guid = add_bag_item(&env, 0, 3, 128_910);
+    set_interaction_input(&env, 4, &selected_guid, Some(0), Vec::new());
+    env.exec(r##"assert(select("#", C_TooltipInfo.GetItemInteractionItem()) == 0)"##)
+        .expect("unverified unresolved-item content must not publish a fabricated tooltip");
+}
+
+#[test]
 fn possession_original_action_bar_hover_uses_the_supplied_spell() {
     let env = tooltip_full_env_helpers::load_full_env_without_post_load();
     env.exec(
