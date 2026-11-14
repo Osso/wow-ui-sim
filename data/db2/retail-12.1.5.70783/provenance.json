@@ -1,0 +1,26 @@
+{
+  "build": "12.1.5.70783",
+  "product": "wow",
+  "build_key": "bc493ecb2898766c0f8947a99b4b3d65",
+  "source": "Local CASC via wow-cli casc extract-fdid; exported with game-engine/scripts/export_db2_csv.py",
+  "file_data_id": 1957219,
+  "community_listfile_entry": "1957219;dbfilesclient/uimapassignment.db2",
+  "community_listfile_sha256": "25e1d7515d3fb130d28609b8224ab58ccd7cc5e416525168fea80161104bb6e8",
+  "layout": "C9CC8DFB",
+  "db2_sha256": "631e3f6a5f8fd9320980a22348348661ef286c99a8b27908072ccf13d4bcbefe",
+  "definitions": {
+    "source": "WoWDBDefs tag 202611101512",
+    "file": "definitions/UiMapAssignment.dbd",
+    "sha256": "7bbbea7078bf3babacfc53773a21b36d426451de47fd294fe81089fd9f15c974"
+  },
+  "unreadable_records": 0,
+  "rows": 22780,
+  "unique_ids": 22780,
+  "unique_ui_map_ids": 1956,
+  "csv_sha256": "c1129671ecb9d562ef5c10d2f4d03e66e4e2b4727dcfe592f63147ccab89ad6c",
+  "selected_simulator_pin": {
+    "build": "12.1.5.70575",
+    "build_key": "d718abcc42604d8efbd35aecfa5bb75b"
+  },
+  "pin_applicability": "INFERRED: both are Retail 12.1.5; exact UiMapAssignment parity between 70783 and 70575 is unverified."
+}
