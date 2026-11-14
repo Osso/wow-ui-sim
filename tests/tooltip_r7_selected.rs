@@ -284,6 +284,13 @@ fn round7_selected_getter_misses_keep_the_verified_result_arities() {
     env.state().borrow_mut().item_interaction_tooltip_input = None;
     env.exec(r##"assert(select("#", C_TooltipInfo.GetItemInteractionItem()) == 0)"##)
         .unwrap();
+}
+
+#[test]
+fn unsupported_item_interaction_kind_requires_resolved_item() {
+    let env = load_item_interaction_env();
+    env.exec("A_Admin.ClearBags()")
+        .expect("absent and unresolved fixtures start without bag items");
     {
         let mut sim = env.state().borrow_mut();
         sim.item_interaction = Some(ItemInteractionInfo {
@@ -292,6 +299,24 @@ fn round7_selected_getter_misses_keep_the_verified_result_arities() {
         });
         sim.item_interaction_tooltip_input = Some(ItemInteractionTooltipInput::default());
     }
+    env.exec(r##"assert(select("#", C_TooltipInfo.GetItemInteractionItem()) == 0)"##)
+        .expect("unsupported kind with no selected object returns no values");
+
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.item_interaction_tooltip_input = Some(ItemInteractionTooltipInput {
+            selected_item_guid: Some("Item-0-3-1728".to_string()),
+            ..Default::default()
+        });
+    }
+    env.exec(r##"assert(select("#", C_TooltipInfo.GetItemInteractionItem()) == 0)"##)
+        .expect("unsupported kind with unresolved selected GUID returns no values");
+
+    let selected_guid = add_bag_item(&env, 0, 3, 1728);
+    env.state().borrow_mut().item_interaction_tooltip_input = Some(ItemInteractionTooltipInput {
+        selected_item_guid: Some(selected_guid),
+        ..Default::default()
+    });
     env.exec(
         r##"
         local count, data = select("#", C_TooltipInfo.GetItemInteractionItem()),
@@ -307,5 +332,5 @@ fn round7_selected_getter_misses_keep_the_verified_result_arities() {
         assert(fields == 1, "unsupported-kind result has exactly one field")
     "##,
     )
-    .unwrap();
+    .expect("existing unsupported-kind object preserves its exact native result shape");
 }
