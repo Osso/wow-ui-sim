@@ -214,10 +214,18 @@ fn retail_map_world_position_probe_covers_zone_maps_under_cosmic() {
     let env = env();
     use std::collections::{HashMap, HashSet};
 
-    let mut map_rows = sim_data::ui_maps::UI_MAP_DB
-        .iter()
-        .map(|(&map_id, info)| (map_id, info.parent_map_id, info.map_type))
+    const MAP_ID_LIMIT: u32 = 10_000;
+    let mut map_rows = (0..MAP_ID_LIMIT)
+        .filter_map(|map_id| {
+            sim_data::ui_maps::get_ui_map(map_id)
+                .map(|info| (map_id, info.parent_map_id, info.map_type))
+        })
         .collect::<Vec<_>>();
+    assert_eq!(
+        map_rows.len(),
+        sim_data::ui_maps::UI_MAP_DB.len(),
+        "update MAP_ID_LIMIT if the generated UI map IDs exceed it"
+    );
     map_rows.sort_unstable_by_key(|(map_id, _, _)| *map_id);
 
     let mut children_by_parent = HashMap::<u32, Vec<u32>>::new();
@@ -308,7 +316,7 @@ fn retail_map_world_position_probe_covers_zone_maps_under_cosmic() {
         assert(visited[7], "Mulgore (uiMapID 7) must be reachable from Cosmic")
         "#
     );
-    env.eval::<()>(script)
+    env.eval::<()>(&script)
         .expect("run HBD-style Retail map-position probe");
 }
 
