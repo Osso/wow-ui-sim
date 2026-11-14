@@ -15,6 +15,8 @@ use rilua::{LuaResult, Val};
 use std::collections::{BTreeMap, BTreeSet};
 
 const CHALLENGE_MAP_ITEM_MODIFIER_ID: u32 = 17;
+/// INFERRED simulator cursor projection for one selected Keystone item.
+const KEYSTONE_CURSOR_STACK_COUNT: i32 = 1;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum KeystoneLocation {
@@ -31,6 +33,8 @@ pub struct KeystoneState {
     pub selected_item_id: Option<u32>,
     pub selected_location: Option<KeystoneLocation>,
     pub selected_mode: Option<i32>,
+    /// Host-supplied result of the keystone cursor-staging permission gate.
+    pub cursor_stage_permission: Option<bool>,
     pub item_modifiers: BTreeMap<KeystoneLocation, (u32, Vec<(u32, u32)>)>,
     pub current_map_selector: Option<u32>,
     pub reason_one_locks: BTreeSet<KeystoneLocation>,
@@ -271,24 +275,82 @@ fn update_keystone_selection_state(
 }
 
 fn remove_keystone(state: &mut LuaState) -> LuaResult<u32> {
-    // VERIFIED (R88o.2 q3): the result and selection clear do not depend on
-    // whether cursor staging succeeds. Cursor transfer is outside this lane.
-    let removed = {
-        let mut sim = borrow_state_mut(state)?;
-        if sim.keystone.selected_guid.is_none() {
-            false
-        } else {
-            sim.keystone.selected_guid = None;
-            sim.keystone.selected_mode = None;
-            sim.keystone.selected_item_id = None;
-            sim.keystone.selected_location = None;
-            true
-        }
+    let selected = {
+        let sim = borrow_state(state)?;
+        sim.keystone.selected_guid.clone().map(|guid| {
+            (
+                guid,
+                sim.keystone.selected_item_id,
+                sim.keystone.selected_location,
+            )
+        })
     };
+    let Some((guid, item_id, location)) = selected else {
+        state.push(Val::Bool(false));
+        return Ok(1);
+    };
+
+    stage_removed_keystone_cursor(state, &guid, item_id, location)?;
+    {
+        let mut sim = borrow_state_mut(state)?;
+        sim.keystone.selected_guid = None;
+        sim.keystone.selected_mode = None;
+        sim.keystone.selected_item_id = None;
+        sim.keystone.selected_location = None;
+    }
     // Do not call clear_keystone: RemoveKeystone has no explicit unlock path.
-    // Omitted cursor staging returns for category zero; any nonzero category passes that guard.
-    state.push(Val::Bool(removed));
+    state.push(Val::Bool(true));
     Ok(1)
+}
+
+fn stage_removed_keystone_cursor(
+    state: &mut LuaState,
+    guid: &str,
+    selected_item_id: Option<u32>,
+    selected_location: Option<KeystoneLocation>,
+) -> LuaResult<()> {
+    let permission_granted = {
+        let sim = borrow_state(state)?;
+        keystone_context_available(&sim) && sim.keystone.cursor_stage_permission == Some(true)
+    };
+    if !permission_granted {
+        return Ok(());
+    }
+
+    crate::lua_api::globals::real::cursor_model::clear_retaining_equip_lock(state)?;
+    if !has_nonzero_guid_category(guid) {
+        return Ok(());
+    }
+    let (Some(item_id), Some(origin)) =
+        (selected_item_id, selected_cursor_origin(selected_location))
+    else {
+        return Ok(());
+    };
+
+    // INFERRED simulator projection: the selected bag location stands for the
+    // native associated GUID; its full identity and cursor source mode are unknown.
+    crate::lua_api::globals::real::cursor_model::place(
+        state,
+        CursorInfo::Item {
+            owned_identity: None,
+            item_id,
+            stack_count: KEYSTONE_CURSOR_STACK_COUNT,
+            origin,
+            applied_transmog: None,
+        },
+    )
+}
+
+fn has_nonzero_guid_category(guid: &str) -> bool {
+    guid.split_once('-')
+        .is_some_and(|(category, _)| !category.is_empty() && category != "0")
+}
+
+fn selected_cursor_origin(location: Option<KeystoneLocation>) -> Option<CursorItemOrigin> {
+    match location {
+        Some(KeystoneLocation::Bag(bag, slot)) => Some(CursorItemOrigin::Bag { bag, slot }),
+        _ => None,
+    }
 }
 
 fn item_slot(location: KeystoneLocation) -> ItemSlot {
