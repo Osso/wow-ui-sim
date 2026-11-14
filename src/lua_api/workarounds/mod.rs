@@ -180,6 +180,13 @@ pub(crate) fn apply_temporary_bootstrap(lua: &mut rilua::Lua) -> crate::Result<(
     apply_temporary_namespace_bootstrap(lua)
 }
 
+pub(crate) fn update_player_location_for_screen(
+    lua: &mut rilua::Lua,
+    screen: crate::screen::ScreenKind,
+) -> crate::Result<()> {
+    temporary::player_location_defaults::update_for_screen_mode(lua, screen)
+}
+
 fn apply_temporary_state_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     temporary::garrison_mission_lists::apply_bootstrap(lua)?;
     apply_runtime_state_bootstrap(lua)?;

@@ -166,6 +166,11 @@ impl WowLuaEnv {
     /// Select which UI surface should be loaded.
     pub fn set_screen_mode(&self, screen_kind: ScreenKind) {
         self.state.borrow_mut().set_screen_kind(screen_kind);
+        crate::lua_api::workarounds::update_player_location_for_screen(
+            &mut self.lua.borrow_mut(),
+            screen_kind,
+        )
+        .expect("PlayerLocation workaround should follow screen mode");
         crate::c_api::c_character_services::update_queued_upgrade_registration(
             self.lua.borrow_mut().state_mut(),
             screen_kind,
