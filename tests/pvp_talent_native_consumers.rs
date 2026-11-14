@@ -122,7 +122,7 @@ fn player_spells_talent_sort_uses_catalog_unlock_levels() {
                 sim.pvp_talent_tooltip.catalog.insert(901, earlier_unlock);
             }
 
-            let result: (i32, i32) = env
+            let result: (bool, String, i32, i32, i32) = env
                 .eval(
                     r#"
                     C_SpecializationInfo.GetPvpTalentInfo = function()
