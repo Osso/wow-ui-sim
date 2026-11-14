@@ -45,41 +45,60 @@ fn selected_tooltip_env() -> WowLuaEnv {
     env
 }
 
+/// INFERRED simulator policy: only positive catalog prices create a SellPrice row.
 #[test]
 fn selected_item_accessor_publishes_backed_sell_price_on_line_11() {
     let env = selected_tooltip_env();
     env.exec(
         r#"
-        local itemID = 184318
-        local expectedPrice = select(11, C_Item.GetItemInfo(itemID))
-        assert(type(expectedPrice) == "number" and expectedPrice > 0,
-            "fixture item must have a supplied sell price")
+        local cases = {
+            {itemID = 184318, price = select(11, C_Item.GetItemInfo(184318))},
+            {itemID = 164374, price = select(11, C_Item.GetItemInfo(164374))},
+            {itemID = 163924, price = select(11, C_Item.GetItemInfo(163924))},
+        }
+        assert(cases[1].price == 1 and cases[2].price == 50 and cases[3].price == 0,
+            'fixtures must have two distinct positive prices and one zero price')
+        assert(cases[1].price ~= cases[2].price,
+            'producer must distinguish the two backed positive prices')
 
         local displayedPrice
+        GameTooltip.isShopping = false
         GameTooltip_OnTooltipAddMoney = function(_, price)
             displayedPrice = price
         end
-        GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
-        GameTooltip:SetItemByID(itemID)
+        GameTooltip:SetOwner(UIParent, 'ANCHOR_NONE')
 
-        local data = GameTooltip:GetPrimaryTooltipData()
-        assert(data and data.type == Enum.TooltipDataType.Item,
-            "the original SetItemByID accessor must publish item TooltipData")
-        local sellPriceLine
-        for _, line in ipairs(data.lines) do
-            if line.type == Enum.TooltipDataLineType.SellPrice then
-                sellPriceLine = line
-                break
+        for _, case in ipairs(cases) do
+            displayedPrice = nil
+            GameTooltip:SetItemByID(case.itemID)
+            local data = GameTooltip:GetPrimaryTooltipData()
+            assert(data and data.type == Enum.TooltipDataType.Item,
+                'the original SetItemByID accessor must publish item TooltipData')
+            local sellPriceLine
+            for _, line in ipairs(data.lines) do
+                if line.type == Enum.TooltipDataLineType.SellPrice then
+                    sellPriceLine = line
+                    break
+                end
+            end
+            if case.price > 0 then
+                assert(sellPriceLine, 'backed positive price must use a type-11 line')
+                assert(sellPriceLine.price == case.price,
+                    'SellPrice line must use this item’s catalog price')
+                assert(displayedPrice == case.price,
+                    'original SellPrice consumer must receive this item’s price')
+            else
+                assert(sellPriceLine == nil,
+                    'the INFERRED positive-only rule omits a zero-price line')
+                assert(displayedPrice == nil,
+                    'zero catalog price must not reach the money consumer')
             end
         end
-        assert(sellPriceLine, "backed sell price must use a type-11 line")
-        assert(sellPriceLine.price == expectedPrice,
-            "SellPrice line must use the existing item sell-price value")
-        assert(displayedPrice == expectedPrice,
-            "the original SellPrice line consumer must receive the published price")
         "#,
     )
-    .expect("the original item accessor should publish the catalog sell price");
+    .expect(
+        "the original item accessor should publish distinct backed prices only for positive values",
+    );
 }
 
 #[test]
