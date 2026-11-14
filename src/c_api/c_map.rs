@@ -531,11 +531,6 @@ fn c_map_get_world_pos_from_map_pos(state: &mut LuaState) -> LuaResult<u32> {
         )
     };
 
-    #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
-    if ui_map_table_entry(ui_map_id).is_none() {
-        return Ok(0);
-    }
-
     // Explicit simulator rectangles take precedence over generated Retail assignments.
     if map_is_known {
         if let Some(rect) = explicit_rect {
@@ -554,6 +549,11 @@ fn c_map_get_world_pos_from_map_pos(state: &mut LuaState) -> LuaResult<u32> {
             state.push(world_pos);
             return Ok(2);
         }
+    }
+
+    #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+    if ui_map_table_entry(ui_map_id).is_none() {
+        return Ok(0);
     }
 
     #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
