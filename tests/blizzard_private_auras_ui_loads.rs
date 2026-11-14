@@ -203,8 +203,8 @@ fn secure_private_auras_loads_tooltip_processor_from_secure_dependency() {
         "SharedXMLBase TableUtil.lua must provide CopyTable in secureenv"
     );
     assert_eq!(
-        registration_snapshot.9, "nil",
-        "unmodeled GetFrameMetatable must remain absent from secureenv"
+        registration_snapshot.9, "function",
+        "GetFrameMetatable must be published in secureenv"
     );
 
     let original_processor: bool = env
@@ -227,6 +227,8 @@ fn secure_private_auras_loads_tooltip_processor_from_secure_dependency() {
                  and type(rawget(rawget(__secureenv, 'C_StoreSecure'), 'GetProductGroups')) == 'function' \
                  and type(rawget(__secureenv, 'CreateFrame')) == 'function' \
                  and type(rawget(__secureenv, 'CreateSecureDelegate')) == 'function' \
+                 and type(rawget(__secureenv, 'GetFrameMetatable')) == 'function' \
+                 and type(GetFrameMetatable().__index) == 'table' \
                  and type(rawget(__secureenv, 'C_UIColor')) == 'table' \
                  and rawget(__secureenv, 'C_UIColor') ~= rawget(_G, 'C_UIColor') \
                  and type(rawget(rawget(__secureenv, 'C_UIColor'), 'GetColors')) == 'function' \

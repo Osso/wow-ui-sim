@@ -40,6 +40,17 @@ pub fn create_frame(state: &mut LuaState) -> LuaResult<u32> {
     create_frame_from_args(state, args)
 }
 
+fn get_frame_metatable(state: &mut LuaState) -> LuaResult<u32> {
+    let frame_metatable = crate::lua_api::methods::registry_get(state, "__rilua_frame_mt");
+    if !matches!(frame_metatable, Val::Table(_)) {
+        return Err(runtime_error(
+            "GetFrameMetatable: frame metatable is not initialized",
+        ));
+    }
+    state.push(frame_metatable);
+    Ok(1)
+}
+
 fn create_frame_from_args(state: &mut LuaState, mut args: CreateFrameArgs) -> LuaResult<u32> {
     ensure_untainted_creation_allowed(state, &args.frame_type)?;
     let (parent_id, parent_explicit) =
@@ -356,6 +367,12 @@ pub fn register_global_frames(lua: &mut rilua::Lua) -> LuaResult<()> {
 pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     super::loader_script_bindings::register_all(lua)?;
     super::security::register_function_in_both_environments(lua, "CreateFrame", create_frame)?;
+    // VERIFIED (R88i.1): native pair-list registration has no per-name flag.
+    super::security::register_function_in_both_environments(
+        lua,
+        "GetFrameMetatable",
+        get_frame_metatable,
+    )?;
     #[cfg(feature = "retail-12-1-5")]
     LuaApiMut::register_function(
         lua,
