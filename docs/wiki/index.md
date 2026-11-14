@@ -8,7 +8,7 @@
 
 ## [2026-11-14] implementation | Retail recipe-rank tooltip
 
-The [Round 7 getter contract](../specs/tooltip-r7-getters.md) and [Lua API](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) record the selected original accessor, host-supplied recipe records, and the two modeled Retail cache-clear routes. Native cache population and complete external clear triggers remain UNKNOWN.
+The [Round 7 getter contract](../specs/tooltip-r7-getters.md) and [Lua API](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) record VERIFIED native local rebuild/vector/flag steps, INFERRED simulator-route and presentation choices, and UNKNOWN complete row semantics, upstream acquisition, external clear triggers, and source lookup.
 
 ## [2026-11-14] fix | Original character and store lifecycle ownership
 

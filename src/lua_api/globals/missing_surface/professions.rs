@@ -117,7 +117,8 @@ pub(crate) fn open_trade_skill_for_skill_line(
         return Ok(false);
     }
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
-        // INFERRED native mapping: this helper serves OpenTradeSkill and profession-spell redirection.
+        // VERIFIED (simulator): OpenTradeSkill and profession-spell redirection share this helper.
+        // INFERRED: mapping this helper to the native initialization clear is a model assumption.
         borrow_state_mut(state)?.recipe_rank_tooltip_cache.clear();
     }
 

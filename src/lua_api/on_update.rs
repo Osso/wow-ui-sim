@@ -65,7 +65,8 @@ fn begin_tick(state: &mut LuaState, elapsed: f64) -> crate::Result<()> {
     );
     if pending {
         if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
-            // INFERRED simulator route: a filter notification clears before dispatch; it does not rebuild rows.
+            // VERIFIED (simulator): filter notifications clear before dispatch and do not rebuild rows.
+            // INFERRED: mapping this trigger/tick to the native rebuild clear is a model assumption.
             borrow_state_mut(state)?.recipe_rank_tooltip_cache.clear();
         }
         super::script_helpers::fire_named_event_state(state, "TRADE_SKILL_LIST_UPDATE", &[]);
