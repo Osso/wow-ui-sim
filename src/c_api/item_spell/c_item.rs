@@ -73,10 +73,27 @@ pub(crate) fn parse_item_id_key(state: &LuaState, value: Val) -> Option<u32> {
 }
 
 pub(crate) fn item_link_for_id(item_id: u32) -> Option<String> {
+    item_link_with_fields(
+        item_id,
+        &[0, 0, 0, 0, 0, 0, 0, 80, 70, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    )
+}
+
+/// Shared item-link formatter with explicit, unnamed payload fields.
+/// R88l.2: complete colon-delimited zero fields are compacted; unknown
+/// fields are supplied as zero, not invented level/spec/bonus values.
+pub(crate) fn item_link_with_fields(item_id: u32, fields: &[i64]) -> Option<String> {
     let item = items::get_item(item_id)?;
+    let mut payload = item_id.to_string();
+    for field in fields {
+        payload.push(':');
+        if *field != 0 {
+            payload.push_str(&field.to_string());
+        }
+    }
     Some(format!(
-        "|cnIQ{}:|Hitem:{}::::::::80:70:::::::::|h[{}]|h|r",
-        item.quality, item_id, item.name
+        "|cnIQ{}:|Hitem:{}|h[{}]|h|r",
+        item.quality, payload, item.name
     ))
 }
 

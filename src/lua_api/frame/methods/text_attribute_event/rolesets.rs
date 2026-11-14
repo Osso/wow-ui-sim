@@ -14,7 +14,7 @@ use rilua::{LuaResult, Val};
 /// `GetRolesetNames` result for a frame without tags.
 const ROLELESS: &str = "roleless";
 
-/// INFERRED from the native optional-string argument convention.
+/// VERIFIED (R88f.L.1, Forever 1.60.1.70707): the optional-string type gate reports this usage text.
 const SET_ROLESETS_USAGE: &str = "Usage: self:SetRolesets([rolesetsString])";
 
 pub(super) fn register(state: &mut LuaState, table: GcRef<Table>) -> LuaResult<()> {
@@ -78,7 +78,7 @@ fn add_roleset(state: &mut LuaState) -> LuaResult<u32> {
 /// `SetRolesets("a,b")` assigns comma-separated tags; nil clears them.
 fn set_rolesets(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
-    // INFERRED: a missing or nil argument follows the empty-string path.
+    // VERIFIED (R88f.L.1, Forever 1.60.1.70707): omitted and nil arguments take the optional-empty path.
     let names = match set_rolesets_arg(state)? {
         Some(list) => split_roleset_list(&list),
         None => split_roleset_list(""),

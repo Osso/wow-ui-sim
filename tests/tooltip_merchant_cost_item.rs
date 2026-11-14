@@ -26,6 +26,7 @@ fn seed_offer_costs(env: &WowLuaEnv) {
         MerchantCostRecord {
             item_costs: [6948, 0, 159, 0, 0],
             currency_costs: [2245, 0, 1792, 0, 0],
+            ..MerchantCostRecord::default()
         },
     );
 }
@@ -76,6 +77,7 @@ fn merchant_cost_ordinals_skip_absent_and_unresolvable_entries() {
             // 999999 has no resident item, so it never consumes an ordinal.
             item_costs: [0, 6948, 999999, 159, 0],
             currency_costs: [0, 2245, 0, 0, 0],
+            ..MerchantCostRecord::default()
         },
     );
     drop(state);
@@ -113,6 +115,7 @@ fn merchant_cost_misses_produce_no_tooltip_data() {
         MerchantCostRecord {
             item_costs: [6948, 0, 0, 0, 0],
             currency_costs: [0, 0, 0, 0, 0],
+            ..MerchantCostRecord::default()
         },
     );
     // Slot 2 is a purely monetary offer: no item or currency entry survives, so

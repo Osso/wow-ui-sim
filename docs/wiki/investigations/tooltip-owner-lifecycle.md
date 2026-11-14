@@ -10,6 +10,10 @@ The shared explicit visibility path clears both `Frame.tooltip_owner_id` and `To
 
 The proof ledger records normal `gui,client-wrath` grouped integration at `1e9674bcd`: `tooltip_basic::` is GREEN 62/62. Independent format/check pass; check has no warnings. Wider filters initially passed 75 and failed seven instances. Five failures came from three fixtures assuming `SetOwner` showed the tooltip; `12734d0ae` explicitly shows populated tooltips before sizing/cursor tracking, and independent focused reruns pass 5/5. The other two instances are one full-UI case requiring absent `BuffFrame.UpdateAuras`; it remains failing, without preexisting attribution or a full-green claim. This establishes the simulator contract at that revision. The current GameTooltip API page is an independent documentation source for owner, replacement-text, and append visibility behavior, but it is not native execution. No native Wrath result exists. No claim is made about callback order or an effectively hidden tooltip whose ancestor is hidden.
 
+## R88n.5 Forever ClearLines cache boundary
+
+**VERIFIED (Forever 1.60.1.70707):** `ClearLines` clears the text of cached left and right FontStrings for active rows only; it does not visit inactive cache entries. The simulator limits this reset to active rows only on Forever and retains the existing behavior for other profiles. **VERIFIED (optional integration tests):** the API test confirms that active text clears while held inactive left and right references keep their text, and the original selected `TooltipDataHandler.ProcessInfo` consumer still replaces content and reuses its active FontString. PTR applicability for the separate Retail layout facts remains **INFERRED**. Clipping, draw order, nonzero extra-inset writers, and post-anchor clamping remain **UNKNOWN** and are unchanged.
+
 ## Coverage matrix
 
 | Behavior | Evidence | Status |
@@ -19,6 +23,8 @@ The proof ledger records normal `gui,client-wrath` grouped integration at `1e967
 | Payload population still shows after `SetOwner`; `ClearLines()` retains owner | Same 62/62 batch | Simulator-source GREEN |
 | Direct `Hide`, `SetShown(false)`, and `FadeOut` release owner even when already hidden | Same 62/62 batch | Simulator-source GREEN |
 | Ordinary `Frame:Hide()` leaves tooltip ownership alone | Same 62/62 batch | Simulator-source GREEN |
+| Forever `ClearLines` clears active cached left/right text only | Optional `tooltip_owner_clear_consumer` API test | R88n.5 contract PASS |
+| Original Forever `TooltipDataHandler.ProcessInfo` reprocesses and reuses active FontString | Selected TOC plus optional original-consumer test | Preservation PASS |
 | Native Wrath behavior | No native execution | Unverified |
 | Callback order and ancestor-driven effective hiding | Not tested or claimed; internal `SetOwner`/`SetText` visibility changes bypass visibility script dispatch | Unverified lifecycle edges, not native parity |
 | Format/check and corrected visible fixtures | Independent normal-profile checks pass; five corrected sizing/cursor fixture instances pass | Scoped PASS; unrelated test-file length finding retained |
@@ -26,11 +32,13 @@ The proof ledger records normal `gui,client-wrath` grouped integration at `1e967
 
 ## Sources
 
-- [Tooltip owner lifecycle spec](../../specs/tooltip-owner-lifecycle.md) — contract and exclusions, including the current GameTooltip API reference.
+- [Tooltip owner lifecycle spec](../../specs/tooltip-owner-lifecycle.md) — owner contract, exclusions, and verified Forever cached-text boundary.
 - [Visibility transition](../../../src/lua_api/frame/methods/core_state/visibility.rs) — direct explicit-hide owner release at `1e9674bcd`.
 - [Tooltip owner methods](../../../src/lua_api/frame/methods/widgets/tooltip/owner.rs) — owner retention across internal `SetOwner` hiding and `FadeOut` delegation at `1e9674bcd`.
 - [Text methods](../../../src/lua_api/frame/methods/text_attribute_event/text.rs) and [tooltip content](../../../src/lua_api/frame/methods/widgets/tooltip/content.rs) — replacement-text and payload visibility at `1e9674bcd`.
-- [Tooltip line data](../../../src/lua_api/frame/methods/widgets/tooltip/line_data.rs) — append-without-show behavior at `1e9674bcd`.
+- [Tooltip line data](../../../src/lua_api/frame/methods/widgets/tooltip/line_data.rs) — append behavior and Forever active-row ClearLines reset.
+- [Tooltip attachment spec](../../specs/tooltip-attachments.md) and [owner-anchor spec](../../specs/tooltip-owner-anchors.md) — Retail contract and PTR applicability labels.
+- [Tooltip owner-clear tests](../../../tests/tooltip_owner_clear_consumer.rs) — optional Forever API and original-consumer proof.
 - [Tooltip tests](../../../tests/tooltip_basic.rs) — grouped `tooltip_basic::` source proof at `1e9674bcd`.
 - `/tmp/wrath-tooltip-content-lifecycle-proof.md` and its full referenced logs — exact RED/GREEN commands and 62/62 result.
 - [GameTooltip API reference](https://warcraft.wiki.gg/wiki/UIOBJECT_GameTooltip) — independent API documentation, not native execution.

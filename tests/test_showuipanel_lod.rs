@@ -24,6 +24,22 @@ fn show_macro_frame_loads_and_populates_selector() {
                 .expect("native macro lazy loader, selection and populated rows");
             return;
         }
+        #[cfg(feature = "client-retail")]
+        {
+            let mut sim = env.state().borrow_mut();
+            sim.macros.resize_with(121, Default::default);
+            for (index, name, icon, body) in [
+                (0, "Raid Beacon", "134400", "/rw Stack on star"),
+                (1, "Ready", "132212", "/readycheck"),
+                (120, "Crusader", "135890", "/cast Crusader Aura"),
+            ] {
+                sim.macros[index] = wow_ui_sim::lua_api::state::MacroInfo {
+                    name: name.into(),
+                    icon: icon.into(),
+                    body: body.into(),
+                };
+            }
+        }
         env.exec(
             "Constants.MacroConsts = { MAX_ACCOUNT_MACROS = 120, MAX_CHARACTER_MACROS = 30 }",
         )

@@ -3,12 +3,14 @@
 use super::super::shared::{opt_bool, opt_f32, opt_string};
 use super::content::{fire_tooltip_script, fire_tooltip_script_with_args};
 use super::line_frames::sync_tooltip_line_frame;
+#[cfg(feature = "forbidden-aspects")]
+use crate::lua_api::frame::methods::forbidden_aspects;
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, create_string, frame_id_from_stack, frame_ref,
     get_or_create_frame_fields, table_set,
 };
 use crate::lua_api::script_helpers::collect_lua_error;
-use crate::lua_api::tooltip::{TooltipLine, build_cursor_anchor};
+use crate::lua_api::tooltip::{TooltipLine, build_cursor_anchor, inferred};
 use crate::lua_bridge::stack_val;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
@@ -428,7 +430,9 @@ pub(super) fn copy_tooltip(state: &mut LuaState) -> LuaResult<u32> {
     };
     let source = {
         let sim = borrow_state(state)?;
-        sim.tooltips.get(&source_id).cloned()
+        sim.tooltips
+            .get(&source_id)
+            .map(inferred::inferred_copy_tooltip_source_with_font_string_state)
     };
     let Some(source) = source else {
         return Ok(0);
@@ -592,18 +596,79 @@ fn frame_global_or_ref_local(state: &mut LuaState, id: u64) -> LuaResult<Val> {
     frame_ref(state, id)
 }
 
-pub(super) fn add_font_strings(_state: &mut LuaState) -> LuaResult<u32> {
-    let tooltip_id = frame_id_from_stack(_state, 1)?;
+pub(super) fn add_font_strings(state: &mut LuaState) -> LuaResult<u32> {
+    // Keep the pre-lane behavior on profiles without Retail R88n.7 evidence.
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
+        return add_font_strings_for_legacy_profiles(state);
+    }
+
+    let (tooltip_id, left_id, right_id) = resolve_add_font_string_arguments(state)?;
+    #[cfg(feature = "forbidden-aspects")]
+    check_add_font_string_permissions(state, tooltip_id, left_id, right_id)?;
+    // R88n.7's saved-call secret-state transition has no simulator state input.
+    // Do not infer that transition from taint or from a FontString's flags.
+    store_font_string_pair(state, tooltip_id, left_id, right_id)
+}
+
+fn resolve_add_font_string_arguments(state: &LuaState) -> LuaResult<(u64, u64, u64)> {
+    let usage = super::line_data::ADD_FONT_STRINGS_USAGE;
+    let tooltip_id =
+        super::line_data::require_tooltip_method_receiver(state, 1, "AddFontStrings", usage)?;
+    let left_id = super::line_data::require_font_string_argument(state, 2, usage)?;
+    let right_id = super::line_data::require_font_string_argument(state, 3, usage)?;
+    Ok((tooltip_id, left_id, right_id))
+}
+
+#[cfg(feature = "forbidden-aspects")]
+fn check_add_font_string_permissions(
+    state: &mut LuaState,
+    tooltip_id: u64,
+    left_id: u64,
+    right_id: u64,
+) -> LuaResult<()> {
+    for font_string_id in [left_id, right_id] {
+        forbidden_aspects::ensure_add_font_strings_parent_change_allowed(
+            state,
+            font_string_id,
+            tooltip_id,
+        )?;
+    }
+    for font_string_id in [left_id, right_id] {
+        forbidden_aspects::ensure_forbidden_aspect_absent(
+            state,
+            font_string_id,
+            "RemoveSecretAspects",
+        )?;
+    }
+    Ok(())
+}
+
+fn store_font_string_pair(
+    state: &mut LuaState,
+    tooltip_id: u64,
+    left_id: u64,
+    right_id: u64,
+) -> LuaResult<u32> {
+    borrow_state_mut(state)?
+        .tooltips
+        .entry(tooltip_id)
+        .or_default()
+        .append_font_string_pair(left_id, right_id);
+    Ok(0)
+}
+
+fn add_font_strings_for_legacy_profiles(state: &mut LuaState) -> LuaResult<u32> {
+    let tooltip_id = frame_id_from_stack(state, 1)?;
     let line_count = {
-        let sim = borrow_state(_state)?;
+        let sim = borrow_state(state)?;
         sim.tooltips
             .get(&tooltip_id)
-            .map(|td| td.lines.len())
+            .map(|tooltip| tooltip.lines.len())
             .unwrap_or(0)
     };
     for line_index in 1..=line_count {
-        let _ = sync_tooltip_line_frame(_state, tooltip_id, false, line_index)?;
-        let _ = sync_tooltip_line_frame(_state, tooltip_id, true, line_index)?;
+        let _ = sync_tooltip_line_frame(state, tooltip_id, false, line_index)?;
+        let _ = sync_tooltip_line_frame(state, tooltip_id, true, line_index)?;
     }
     Ok(0)
 }

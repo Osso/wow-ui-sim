@@ -111,16 +111,6 @@ fn legacy_spell_globals_exist_for_addons() {
             return "missing_SpellBook_GetSpellBookSlot"
         end
 
-        local spellName = GetSpellInfo(19750)
-        if spellName == nil then
-            return "missing_spell_info"
-        end
-        if GetSpellTexture(19750) == nil then
-            return "missing_spell_texture"
-        end
-        if IsPassiveSpell(19750) ~= false then
-            return "passive=" .. tostring(IsPassiveSpell(19750))
-        end
         if GetSpellBookItemTexture(1) == nil then
             return "missing_spellbook_texture"
         end

@@ -234,10 +234,20 @@ fn original_supertrack_accept_offer_and_auto_track() {
         let env = original_consumer();
         supply_quests(&env);
         let offer: i32 = env.eval("return Enum.SuperTrackingMapPinType.QuestOffer").unwrap();
-        env.state().borrow_mut().super_track.map_pin = Some((offer, 70001));
+        {
+            let mut state = env.state().borrow_mut();
+            state.super_track.map_pin = Some((offer, 70001));
+            state.super_track.map_pin_saved = (offer, 70001);
+            state.super_track.map_pin_tracking = true;
+        }
         env.fire_event_with_args("QUEST_ACCEPTED", &[rilua::Val::Num(70001.0)]).unwrap();
         env.exec("assert(cf2_manager.superTrackedMapPinType == nil and cf2_manager.superTrackedQuestID == 70001)").unwrap();
-        env.state().borrow_mut().super_track.map_pin = Some((offer, 70002));
+        {
+            let mut state = env.state().borrow_mut();
+            state.super_track.map_pin = Some((offer, 70002));
+            state.super_track.map_pin_saved = (offer, 70002);
+            state.super_track.map_pin_tracking = true;
+        }
         env.fire_event_with_args("QUEST_ACCEPTED", &[rilua::Val::Num(70001.0)]).unwrap();
         env.exec(r#"
             local kind, id = C_SuperTrack.GetSuperTrackedMapPin()

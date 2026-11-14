@@ -4,6 +4,7 @@
 //! state/behavior. Unmodeled compatibility defaults belong under
 //! `lua_api::workarounds::{temporary,permanent}` instead.
 
+pub(crate) mod achievement_eligibility;
 pub mod action_bar_state;
 pub mod action_highlights;
 pub(crate) mod ambiguate;
@@ -30,10 +31,10 @@ pub(crate) mod glue_background;
 pub(crate) mod glue_connection;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) mod glue_enter_world;
-#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-pub(crate) mod glue_save_character_order;
 #[cfg(any(feature = "client-ptr", feature = "client-wowforever"))]
 pub mod glue_feature_status;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod glue_save_character_order;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) mod glue_selection;
 pub mod glyph_state;
@@ -66,13 +67,19 @@ pub(crate) mod legacy_guild_selection;
 pub mod legacy_skills;
 #[cfg(feature = "client-wrath")]
 pub(crate) mod legacy_sound;
+#[cfg(feature = "client-retail")]
+pub mod lfd_lock_requests;
 pub mod locale_info;
 pub mod loot_method;
 pub mod loot_specialization;
+pub(crate) mod macro_getters;
 pub mod math_extensions;
+pub(crate) mod merchant_affordability;
 pub mod merchant_buyback;
+pub mod merchant_item_link;
 #[cfg(feature = "client-wowforever")]
 pub mod merchant_repair;
+mod merchant_requirements;
 pub(crate) mod mixins;
 pub mod modifier_keys;
 pub mod mouse_probes;
@@ -192,3 +199,5 @@ pub mod wrath_voice;
 pub mod xp_honor_rest;
 
 pub mod wrath_currency;
+
+pub mod inventory_candidates;

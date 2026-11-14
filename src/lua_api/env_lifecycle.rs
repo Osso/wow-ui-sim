@@ -136,6 +136,9 @@ impl WowLuaEnv {
         };
         let registered = manager.registered_addons();
         let state = self.state.borrow();
+        if state.save_failed_addons {
+            return Ok(());
+        }
         let mut failures: Vec<_> = state
             .addon_initialization_failures
             .iter()
@@ -169,8 +172,11 @@ impl WowLuaEnv {
     }
 
     pub(super) fn addon_save_exclusions(&self) -> std::collections::HashSet<String> {
-        self.state
-            .borrow()
+        let state = self.state.borrow();
+        if state.save_failed_addons {
+            return std::collections::HashSet::new();
+        }
+        state
             .addon_initialization_failures
             .keys()
             .cloned()

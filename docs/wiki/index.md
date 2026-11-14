@@ -5,10 +5,84 @@
 ## [2026-11-13] system | Secure environment and dependency replay
 
 [Taint system](systems/taint-system.md#dual-lua-environment) and [addon loading](systems/addon-loading.md#secure-dependency-replay-and-library-allowlist) record R88g/R88i and the fixed 39-name secure base. **VERIFIED (Retail simulator test, fallback cleared):** the original `TooltipDataProcessor`, `CopyTable`, and `GetFrameMetatable` reach secureenv; the next observed errors are `TextureUtil.lua:122` (`Constants` nil) and `PrivateAurasUI.lua:1398` (`TextureKitConstants` nil). R88i.1 verifies the native pair-list route for `GetFrameMetatable`; the Retail fallback remains until all cited consumers pass.
+## [2026-11-14] implementation | Achievement eligibility and tracker colors
+
+[Achievement eligibility](../specs/achievement-eligibility.md) records R88o.1's Retail argument/Boolean contract, missing record/group versus null tree, and supplied cache comparisons. Original tracker #6 uses the zero-visible branch; positive visible counts use a different per-criterion getter. PTR/Forever binding is inferred from their selected original Lua. New simulator input stays empty by default; no event substitutes or live cache writer claims.
+
+## [2026-11-14] implementation | Inventory candidates and purchase records
+
+[Inventory/purchase getters](investigations/inventory-purchase-getters.md) records R88k.1/.2 packed-key publication and refund records, empty host seams, selected consumer tests and explicit remaining VM limits.
+
+## [2026-11-14] implementation | GameTooltip minimum width and font strings
+
+[GameTooltip method contract](../specs/game-tooltip-methods.md), [Lua API](systems/lua-api.md#game-tooltip-minimum-width-and-font-strings), and [consumer selection](investigations/consumer-selection-and-red-proof.md#gametooltip-minimum-width-consumer) record R88n.7. **VERIFIED (Retail 12.1.5.70688):** the getter returns stored width and forced state; `AddFontStrings` appends a pair and resets its line-state, numeric slot, and layout-progress state without adding a `NumLines` entry. **VERIFIED (simulator history, `b6a107994`):** `ACTIVE` preserves pre-lane behavior outside Retail. **PRESERVATION:** the selected `GameTooltip_InsertFrame` consumer observes only the first getter result. **INFERRED:** pair retention across ClearLines/Hide and copying through CopyTooltip. **UNKNOWN:** later pair layout/rendering use and native parity outside Retail.
+
+## [2026-11-14] system | Retail GlobalColor catalog
+
+[GlobalColor catalog](systems/global-color-catalog.md) links the [Retail `C_UIColor.GetColors` contract](../specs/c-ui-color-get-colors.md) and pinned source provenance. **VERIFIED (local CASC Retail 12.1.5.70783):** FileDataID 4328468 contains 367 decoded rows with no unreadable records. **VERIFIED (native Retail 12.1.5.70688, R88o.3):** `GetColors` uses flag 3, ignores arguments, copies `ColorMixin`, decodes ARGB with f32 reciprocal multiplication, keeps first tag collisions, applies no empty-tag/flag filters, and exports in tag-byte order. **VERIFIED (simulator generated catalog):** the static export has 361 tags. **VERIFIED (CSV exporter):** the CSV omits invalid-index and excluded-row state. **UNKNOWN (70783 cursor mapping):** native 70688 evidence identifies no corresponding 70783 row IDs. **INFERRED (70688 rules applied to 70783):** native output matches only if no additional cursor skips apply. **PRESERVATION:** hand-set Retail colors remain until every consumer's load order is proved. **UNKNOWN:** live cache contents and update schedule.
+
+## [2026-11-14] implementation | Retail tooltip serializer field boundary
+
+[Tooltip data](systems/lua-api.md#retail-tooltipdata-field-boundary-r88n4b) links the [serialization contract](../specs/tooltip-data-serialization.md) and [consumer/seam evidence](investigations/consumer-selection-and-red-proof.md#retail-tooltip-serializer-field-consumers). **VERIFIED (R88n.4b):** top-level repair/pet fields and type-11 price fields. **INFERRED:** positive item sell-price projection; `maxPrice` remains absent without a quantity/range input.
+
+## [2026-11-14] implementation | Merchant item-link publication
+
+[Merchant item links](investigations/merchant-item-link.md) records R88l.2 Retail validation, arity, shared link formatting and explicit host-selected offer seams. Native raw-row ordering/writers remain unknown; no non-Retail publication is added.
+
+## [2026-11-14] fix | Forever tooltip cached lines
+
+[Tooltip owner lifecycle](investigations/tooltip-owner-lifecycle.md#r88n5-forever-clearlines-cache-boundary) records R88n.5. **VERIFIED (Forever 1.60.1.70707):** `ClearLines` resets cached left/right FontString text for active rows only; the optional API test proves inactive entries are untouched, and the original selected `TooltipDataHandler.ProcessInfo` test preserves reprocessing and reuse. Retail attachments and owner pairs remain VERIFIED; PTR parity is INFERRED. Clipping, draw order, nonzero extra-inset writers and post-anchor clamping remain UNKNOWN.
+
+## [2026-11-14] investigation | Retail quest tooltip consumers
+
+[Consumer selection and RED proof](investigations/consumer-selection-and-red-proof.md#retail-quest-tooltip-consumers-and-host-input-seams) links the [Round 7 getter contract](../specs/tooltip-r7-getters.md), selected Retail consumers, R88n.1 miss results, and host-supplied party/item inputs.
+
+## [2026-11-14] implementation | Retail recipe-rank tooltip
+
+The [Round 7 getter contract](../specs/tooltip-r7-getters.md) and [Lua API](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) record VERIFIED native local rebuild/vector/flag steps, INFERRED simulator-route and presentation choices, and UNKNOWN complete row semantics, upstream acquisition, external clear triggers, and source lookup.
+
+## [2026-11-14] fix | Original character and store lifecycle ownership
+
+[Lua-owned fallback retirement](investigations/lua-owned-fallback-retirement.md#j-original-character-labels-and-titles) records the separately proved Retail CharacterFrame bridge and StoreUI escape guard removals, real equipment/reopen/attribute consumers, and unchanged non-Retail/native-unknown boundaries.
+
+## [2026-11-14] fix | Original character labels and titles
+
+[Lua-owned fallback retirement](investigations/lua-owned-fallback-retirement.md#j-original-character-labels-and-titles) records J selected-name ownership and original Reputation/Currency titles, actual first post-event semantics, unchanged legacy paths, and deferred native/creation-owned items.
+## [2026-11-14] implementation | Retail spell count and query routes
+
+[Spell count contract](../specs/spell-count-outputs.md) and [Lua API](systems/lua-api.md#retail-1215-spell-count-visibility-and-ranged-id-routes) record R88k/R88m. **VERIFIED (Retail 12.1.5.70688):** Spell-store cast gates, eight-pair reagent limits, reagent-before-charge display mode, ranged-ID comparison/writer/removal, and visibility return arity. **INFERRED:** A_Admin spell changes supply ranged-ID inputs and the shared context is the active player. **UNKNOWN:** native dispatcher names, SpellReagents schema, alternate inventory modes/inclusion, visibility tables, and context lifecycle. **VERIFIED (optional tests at code SHA `438ec83e8`):** selected original consumers and API contracts pass; the five profile compile receipts have zero warnings and Retail `lua-errors` is `[]`.
+
+## [2026-11-14] implementation | Merchant requirements and LFD requests
+
+[Merchant/LFG boundaries](investigations/merchant-lfg-r88i.md) separates R88i.5/R88i.6 verified gates and request behavior from inferred faction/rating mapping, provisional party arity, and unknown throttle/event timing.
+
+## [2026-11-14] implementation | Retail map world positions
+
+[Patch 8.0.1 API audit](investigations/patch-8-0-1-api-audit.md#retail-map-world-position) links the [map world-position contract](../specs/map-world-position.md). **VERIFIED (R88i.41):** nearest-center forward selection, bounds, signed-ID truncation, plain-table positions, result arity and exact Usage strings. **INFERRED:** 70783/70575 data parity and the swapped/reversed transform; negative-`MapID` AreaTable fallback remains unavailable.
+
+## [2026-11-14] investigation | AdventureGuideUtil original availability
+
+[AdventureGuideUtil availability](investigations/adventureguide-original-availability.md)
+records the Retail original MicroMenu consumer and narrow bootstrap boundary.
+The default-state selector is PRESERVATION, not native availability or RED.
+
+## [2026-11-13] system | User waypoint supertracking
+
+[SuperTrack state](systems/super-track-state.md#user-waypoint-supertracking) and [C_Map user waypoint](systems/c-map-user-waypoint.md#original-consumer-boundary) record R88i.3/R88j.5/R88j.6 and the selected original World Map consumers. **VERIFIED (Retail 12.1.5.70688):** user-waypoint enable clears the four named selections and their modeled flags, preserves corpse tracking, and `IsSuperTrackingAnything` includes user-waypoint tracking. The quest/content/map-pin getters read separate flags; content ID zero can be present; ClearAll clears modeled flags and retains saved content/map-pin values and waypoint coordinates. **VERIFIED (optional Retail tests):** the original click passes line 101, the original pin reads the true flag, and the direct flag-writer rows pass. **INFERRED:** flags and selections remain in agreement from a consistent start. **UNKNOWN:** two getterless flags, exact return arity and named-event effects. R88j.8 additionally covers Retail map-pin and vignette setters and signed quest input parsing. [Setter scope and bounds](../specs/super-track-state.md#r88j8-retail-setter-scope).
+
+## [2026-11-13] fix | Inline icon right-edge advance
+
+[Rendering pipeline](systems/rendering-pipeline.md#inline-icons-in-text) records R88f.L.2: the FontString cursor advances from the snapped absolute icon right edge, while tooltip snap behavior remains UNKNOWN. The fractional-edge `GetStringWidth` regression records simulator coverage.
 
 ## [2026-11-13] system | C_Map user waypoint
 
 [User waypoint model](systems/c-map-user-waypoint.md) links the [contract](../specs/c-map-user-waypoint.md), original Retail provider, one session-scoped state and six API methods. **VERIFIED (Retail 12.1.5.70688):** normalized-point validation, shared replacement and the original consumer path. **VERIFIED (Retail prefork test):** `HandleClick` stores the waypoint before the separate missing `C_SuperTrack.SetSuperTrackedUserWaypoint` call at line 101. **INFERRED:** session-only ownership, same-map-only position lookup and nonzero-ID map eligibility. **UNKNOWN:** persistence, cross-map projection and callback/event identity. Retail/PTR/Forever declarations are profile-gated; Mists does not declare these methods; Wrath is compile-only.
+
+## [2026-11-13] investigation | UiMapPoint original ownership
+
+[UiMapPoint ownership](investigations/uimap-point-original-ownership.md) records
+the Retail-only constructor preservation boundary, unchanged other-profile
+fallbacks, and the separate unmodeled waypoint prerequisites.
 
 ## [2026-11-13] fix | EllesmereUI AuraKit secret texture error
 
@@ -4304,7 +4378,7 @@ The sixteen retail 12.0.0 `Enum.EditModeDamageMeterSetting.*` and `Enum.EditMode
 
 | Page | Summary |
 |------|---------|
-| [[layout-system]] | AnchorPoint enum (9 positions), single vs multi-anchor resolution, coordinate system (top-left screen / bottom-left Lua), SetPoint API, cycle detection |
+| [[layout-system]] | AnchorPoint enum, single/multi-anchor resolution, coordinate systems, SetPoint, cycle detection, and Retail screen clamping with scaled frame insets and shared queued/synchronous resolution |
 | [[rendering-pipeline]] | QuadBatch (60-byte QuadVertex), five-tier RGBA GPU atlas plus glyph/BC1/BC3 bindings, WGSL shaders, mask resolution, presentation-only ScrollFrame geometry/clips with traversal-local offset reuse, strata/level sorting, monotonic top-level show segments, alpha propagation, hit testing, [bounded FontString smooth scaling](../specs/fontstring-smooth-scaling.md), inline `|T`/`|A` icons in text |
 | [[widget-system]] | Frame struct (~140 fields), WidgetType enum (18 types), WidgetRegistry storage accounting, lazy boxed model-family state, verified bounded ColorSelect RGB/XML/unchanged-Retail-consumer proof, requested offsets, designated-child ownership, presentation-only ScrollFrame geometry, default children, button text rendering, three-slice pattern, and 3D no-op boundary |
 | [[simple-html]] | Frame-owned styles, shared block shaping/height/glyph hit regions, actual XML frame-name role application, and bounded original-consumer proof |
@@ -4351,6 +4425,7 @@ The sixteen retail 12.0.0 `Enum.EditModeDamageMeterSetting.*` and `Enum.EditMode
 | [[lib-test-failure-sweep-2026-06]] | Nine accumulated lib-test failures: ScriptErrors missing from runtime foundations inverted the SharedXMLBase load order; `hooksecurefunc(C_AddOns, "LoadAddOn")` is silently refused so post-load repairs must use `apply_blizzard_post_load_patches`; two more pieces of code lost in the classic rebase; duplicated `== nil`-guarded Lua installers drifting; tests stale against deliberate semantic changes |
 | [[test-runtime-optimization]] | Commit `e1f9b210b` verifies an ordered `BlizzardAddonOverride` closure for `Blizzard_SharedMapDataProviders`: 18/18 tests, 85–86% wall-time reduction, lower RSS, and fresh mutable `WowLuaEnv` isolation |
 | [[store-secure-pool-constructors]] | Retail Store blank/red cards came from `__secureenv.CreateFramePoolCollection` retaining the simulator fallback after `Blizzard_SharedXMLBase` replaced `_G` with Blizzard's proxy-backed constructor; secure replay of SharedXMLBase Lua now populates secureenv directly |
+| [[lua-owned-fallback-retirement]] | Inventory O: original utility, chat, journal, panel and startup-navigation ownership; bootstrap retirement and explicit native/deferred boundaries |
 | [[post-load-workaround-audit]] | Retail post-load workaround audit: duplicate loader hooks retired, remaining hooks classified with temporary rationale and retirement paths |
 | [[action-button-icon-mask]] | Action-bar and active SpellBook icons vanish when black-RGB opaque masks are sampled as RGB; renderer now uses alpha for all mask coverage, proved with action-style, SpellBook, and CircleMask pixels |
 | [[action-bar-spell-icons]] | 4 bugs: SetDrawLayer no-op, draw order, sublevel ignored, textureSubLevel not parsed |

@@ -1,6 +1,6 @@
 # C_Map user waypoint
 
-The Retail `WaypointLocationDataProvider` calls `GetUserWaypointPositionForMap` when it refreshes, `CanSetUserWaypointOnMap` and `SetUserWaypoint` when it handles a placement click, and `ClearUserWaypoint` when the existing pin is clicked. **VERIFIED:** the simulator stores one `UserWaypoint` on `SimState` and registers six `C_Map` methods for Retail, PTR and WoW Forever. **VERIFIED:** the pinned Mists `MapDocumentation.lua` does not contain these six names, so the simulator does not publish them on Mists.
+The Retail `WaypointLocationDataProvider` calls `GetUserWaypointPositionForMap` when it refreshes, `CanSetUserWaypointOnMap` and `SetUserWaypoint` when it handles a placement click, and `ClearUserWaypoint` when the existing pin is clicked. **VERIFIED:** the simulator stores one `UserWaypoint` on `SimState` and registers six `C_Map` methods for Retail, PTR and WoW Forever. **VERIFIED:** the pinned Mists `MapDocumentation.lua` does not contain these six names, so the simulator does not publish them on Mists. `C_SuperTrack` separately stores whether that point is selected for supertracking; the flag does not alter the saved point.
 
 ## Content
 
@@ -16,18 +16,19 @@ The Retail `WaypointLocationDataProvider` calls `GetUserWaypointPositionForMap` 
 
 ### Original consumer boundary
 
-**VERIFIED:** the Retail manifest selects `Blizzard_SharedMapDataProviders_Mainline.toc`; that TOC permits Game/mainline loading and includes `WaypointLocationDataProvider.xml`, which loads the original Lua provider. The provider calls `GetUserWaypointPositionForMap` at line 57 and `CanSetUserWaypointOnMap`/`SetUserWaypoint` at lines 91/100. The prefork test loads this addon and invokes its original `RefreshAllData` and `HandleClick` methods. **VERIFIED (Retail prefork test):** `HandleClick` stores the waypoint, then errors at line 101 because `C_SuperTrack.SetSuperTrackedUserWaypoint` is nil; this separate API is outside the C_Map task.
+**VERIFIED:** the Retail manifest selects `Blizzard_SharedMapDataProviders_Mainline.toc`; that TOC permits Game/mainline loading and includes `WaypointLocationDataProvider.xml`, which loads the original Lua provider. The provider calls `GetUserWaypointPositionForMap` at line 57 and `CanSetUserWaypointOnMap`/`SetUserWaypoint` at lines 91/100. Its click handler calls `C_SuperTrack.SetSuperTrackedUserWaypoint(false)` at line 101; its original pin `OnAcquired` method reads `IsSuperTrackingUserWaypoint()` at line 134.
 
-**INFERRED:** PTR shares the Retail implementation path; the tests make no PTR-specific behavioral assertions. **UNKNOWN:** whether the Retail handler behavior is identical on PTR or Forever.
+**VERIFIED (optional Retail prefork test):** the original `HandleClick` completes past line 101 and leaves the point readable. The test invokes the original pin `OnAcquired` method after enabling supertracking and observes the tracked atlas. It also checks no named event from the new setter, corpse-flag preservation, ClearAllSuperTracked clearing the modeled flags, and unchanged saved map/coordinates.
 
-**VERIFIED (Retail prefork test):** after the expected `HandleClick` blocker, the stored point remains readable, and the original `RefreshAllData` displays it. The test also sets a point directly through `C_Map`, checks the refreshed pin, then clears it through `C_Map` and checks that a later refresh removes the pin.
+**INFERRED:** PTR shares the Retail implementation path; the test makes no PTR-specific behavioral assertion. **UNKNOWN:** whether the Retail behavior is identical on PTR or Forever. Native setter/getter return arity and named-event effects remain UNKNOWN. R88j.6 verifies separate quest/content/map-pin flags; agreement with their selections is only INFERRED from a consistent start. See [SuperTrack state](super-track-state.md#user-waypoint-supertracking).
 
 ## Sources
 
 - [C_Map user-waypoint contract](../../specs/c-map-user-waypoint.md) — required API behavior and explicit UNKNOWN/INFERRED boundaries.
 - [C_Map registration](../../../src/c_api/c_map.rs) and [waypoint handlers](../../../src/c_api/c_map/user_waypoint.rs) — current Rust model.
 - [SimState](../../../src/lua_api/state/sim_state.rs) and [state initialization](../../../src/lua_api/state.rs) — session storage and empty default.
-- [Original-consumer test](../../../tests/test_c_map_user_waypoint.rs) — Retail provider calls, replacement and refresh behavior.
+- [Original-consumer test](../../../tests/test_c_map_user_waypoint.rs) — Retail provider click, original pin tracking consumer, replacement and refresh behavior.
+- [SuperTrack state](super-track-state.md#user-waypoint-supertracking) — native flag behavior and evidence limits.
 - [Retail Blizzard UI manifest](../../../data/blizzard-ui-files/retail.txt) — selected profile file list.
 - [Lua API](lua-api.md) — broader C_Map surface.
 - [Mists corpse map position](mists-corpse-map-position.md) — separate map-position query and supplied-state boundary.
@@ -35,5 +36,6 @@ The Retail `WaypointLocationDataProvider` calls `GetUserWaypointPositionForMap` 
 ## See Also
 
 - [[lua-api]] — C_Map API surface.
+- [[super-track-state]] — the separate tracked-waypoint flag and SuperTrack consumers.
 - [[mists-corpse-map-position]] — a separate original WorldMap position consumer.
 - [[client-profiles]] — profile selection and cache layout.

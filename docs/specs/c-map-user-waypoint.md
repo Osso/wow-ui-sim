@@ -1,6 +1,6 @@
 # C_Map user waypoint
 
-This contract defines the session-scoped user waypoint consumed by Blizzard's Retail `WaypointLocationDataProvider`. The state and API implementation live in `src/c_api/c_map.rs` and `src/c_api/c_map/user_waypoint.rs`; see the [system page](../wiki/systems/c-map-user-waypoint.md) for the current model and evidence limits.
+This contract defines the session-scoped user waypoint consumed by Blizzard's Retail `WaypointLocationDataProvider` and its separate super-tracking flag. The state and API implementation live in `src/c_api/c_map.rs`, `src/c_api/c_map/user_waypoint.rs` and `src/c_api/c_super_track.rs`; see the [system page](../wiki/systems/c-map-user-waypoint.md) for the current model and evidence limits.
 
 ## What it must do
 
@@ -22,6 +22,7 @@ This contract defines the session-scoped user waypoint consumed by Blizzard's Re
 - [ ] **INFERRED:** `CanSetUserWaypointOnMap` returns true for a nonzero signed map ID and false for zero. Native map categories and allowed-ID rules are UNKNOWN.
 - [ ] **INFERRED:** `SetUserWaypoint` returns one Boolean named `wasSet`; exact native return publication is UNKNOWN in R88h.1.
 - [ ] **UNKNOWN:** The exact `z` conversion predicate and waypoint-change callback identity/event are not established. The simulator accepts finite numeric z values and dispatches no event.
+- [x] **VERIFIED (Retail 12.1.5.70688; optional original-consumer test):** the original provider click passes `C_SuperTrack.SetSuperTrackedUserWaypoint(false)` at line 101. The original pin consumer reads `IsSuperTrackingUserWaypoint()` at line 134 and selects the tracked atlas after a true transition. The setter's state changes and neutral return/event seams are specified in [SuperTrack state](super-track-state.md).
 
 ### Profile boundary
 
@@ -50,9 +51,9 @@ This contract defines the session-scoped user waypoint consumed by Blizzard's Re
 - [ ] Native account/character ownership, persistence and waypoint-change callback/event remain UNKNOWN.
 - [ ] Cross-map projection and native map-category eligibility remain UNKNOWN; the simulator uses the labeled nonzero-ID policy.
 - [ ] PTR and Forever behavior is not separately asserted. Mists and Wrath receive compile-only receipts.
-- [ ] **VERIFIED (Retail prefork test):** the original `HandleClick` stores the point, then errors at `WaypointLocationDataProvider.lua:101` because `C_SuperTrack.SetSuperTrackedUserWaypoint` is nil; that separate API is out of scope.
+- [ ] **UNKNOWN:** exact setter/getter return arity and the native named-event effect remain open; see [SuperTrack state](super-track-state.md#known-gaps-current-cycle).
 
 ## Out of scope
 
-- Cross-map coordinate projection, persisted waypoint state, `USER_WAYPOINT_UPDATED`, `C_SuperTrack.SetSuperTrackedUserWaypoint`, and other waypoint APIs such as hyperlink parsing.
+- Cross-map coordinate projection, persisted waypoint state, `USER_WAYPOINT_UPDATED`, and other waypoint APIs such as hyperlink parsing.
 - Mists publication, because the pinned Mists API documentation does not declare these six methods.

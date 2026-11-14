@@ -198,6 +198,7 @@ fn blizzard_deprecated_spell_script_get_spell_queue_window_aliases_share_the_sam
 }
 }
 
+#[cfg(feature = "retail-12-1-5")]
 prefork_full_ui_case! {
 fn blizzard_deprecated_spell_script_installs_three_wrapper_closures(env: &WowLuaEnv) {
 
@@ -218,11 +219,12 @@ fn blizzard_deprecated_spell_script_installs_three_wrapper_closures(env: &WowLua
          (string→Enum lookup wrapper that maps `\"RAID_INCOMBAT\"` / `\"RAID_OUTOFCOMBAT\"` / \
          `\"ENEMY_TARGET\"` to Enum.SpellAuraVisibilityType variants \
          (RaidInCombat / RaidOutOfCombat / EnemyTarget) before delegating to \
-         the temporary C_Spell.GetVisibilityInfo visibility shim)"
+         the Retail C_Spell.GetVisibilityInfo producer)"
     );
 }
 }
 
+#[cfg(feature = "retail-12-1-5")]
 prefork_full_ui_case! {
 fn blizzard_deprecated_spell_script_wrapper_closures_are_not_identity_equal_to_c_spell(env: &WowLuaEnv) {
 
@@ -244,27 +246,25 @@ fn blizzard_deprecated_spell_script_wrapper_closures_are_not_identity_equal_to_c
 }
 }
 
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
 prefork_full_ui_case! {
 fn blizzard_deprecated_spell_script_visibility_wrapper_translates_string_keys(env: &WowLuaEnv) {
-
     let translated: bool = env
         .eval(
-            "do \
-                local hasCustom, alwaysShowMine, showForMySpec = \
-                    SpellGetVisibilityInfo(0, 'RAID_INCOMBAT') \
-                return hasCustom == false and alwaysShowMine == true and showForMySpec == false \
-            end",
+            "local observedType \
+             local original = C_Spell.GetVisibilityInfo \
+             C_Spell.GetVisibilityInfo = function(spellID, visibilityType) \
+                 observedType = visibilityType \
+                 return original(spellID, visibilityType) \
+             end \
+             SpellGetVisibilityInfo(0, 'RAID_INCOMBAT') \
+             return observedType == Enum.SpellAuraVisibilityType.RaidInCombat",
         )
         .expect("string-keyed visibility-info call should succeed");
     assert!(
         translated,
-        "Calling SpellGetVisibilityInfo(0, 'RAID_INCOMBAT') must return the canonical \
-         (false, true, false) tuple from the temporary C_Spell.GetVisibilityInfo shim. \
-         The wrapper translates `'RAID_INCOMBAT'` → Enum.SpellAuraVisibilityType.RaidInCombat \
-         via the local visiblityTypeLookup table at lines 24-28, then forwards to the \
-         registered Rust impl. The (hasCustom=false, alwaysShowMine=true, \
-         showForMySpec=false) tuple is the permissive default for spells without \
-         visibility overrides"
+        "The selected Retail wrapper translates 'RAID_INCOMBAT' to \
+         Enum.SpellAuraVisibilityType.RaidInCombat before calling C_Spell.GetVisibilityInfo"
     );
 }
 }

@@ -243,7 +243,6 @@ pub struct SimState {
     /// Explicit per-item supplied quality; independent of recipe inputs, initially empty.
     pub crafted_item_quality:
         HashMap<u32, crate::c_api::c_trade_skill_quality::CraftingQualityInfo>,
-    #[cfg(feature = "retail-12-0-0")]
     pub pvp_catalog: crate::c_api::c_pvp::catalog::PvpCatalog,
     #[cfg(feature = "retail-12-0-0")]
     pub prey_inputs: crate::c_api::c_prey::PreyInputs,
@@ -433,6 +432,7 @@ pub struct SimState {
     pub spell_trade_skill_links: HashMap<u32, String>,
     pub spell_id_aliases: HashMap<String, u32>,
     pub spell_tooltip_inputs: HashMap<u32, crate::c_api::spell_tooltip::SpellTooltipInput>,
+    pub recipe_rank_tooltip_cache: crate::c_api::recipe_rank_tooltip::RecipeRankTooltipCache,
     pub aura_tooltip_inputs: HashMap<i32, crate::c_api::spell_tooltip::AuraTooltipInput>,
     pub spell_tooltip_cost_contexts:
         HashMap<u32, crate::c_api::spell_tooltip_cost::SpellTooltipCostContext>,
@@ -638,9 +638,18 @@ pub struct SimState {
     pub gcd: Option<(f64, f64)>,
     pub spell_cooldowns: HashMap<u32, SpellCooldownState>,
     pub spell_charges: HashMap<u32, crate::c_api::charge_state::SpellChargeState>,
-    /// Explicit spell-keyed C_Spell count input; no inventory or casting derivation.
+    /// Explicit ranged identifier input; zero is the pre-runtime image value, not a login claim.
+    pub ranged_auto_attack_spell_id: u32,
+    /// Host null override; None uses the INFERRED active-player context.
+    pub spell_cast_context_is_null: Option<bool>,
+    /// Explicit simulator input for older C_Spell and spellbook count queries.
     #[cfg(feature = "retail-12-0-0")]
     pub spell_cast_counts: HashMap<u32, u32>,
+    /// Generic verified selector pairs; native SpellReagents field mapping is not modeled.
+    #[cfg(feature = "retail-12-0-5")]
+    pub spell_reagent_pairs: HashMap<u32, Vec<(i32, i32)>>,
+    /// Host-supplied visibility rows; a missing row publishes three false values on success.
+    pub spell_visibility_results: Option<HashMap<(u32, u8), (bool, bool, bool)>>,
     /// Explicit cooldown-output policy input, independent of combat and unit stats.
     pub cooldowns_restricted: bool,
     /// Explicit spell-keyed maximum aura stack input; empty means undeclared, never applied stacks.
@@ -786,8 +795,13 @@ pub struct SimState {
     pub lfg_next_application_id: u64,
     pub lfg_advanced_filter: LfgAdvancedFilter,
     pub lfg_language_filter: std::collections::HashMap<String, bool>,
+    #[cfg(feature = "client-retail")]
+    pub lfd_lock_requests: crate::lua_api::globals::real::lfd_lock_requests::LfdLockRequestState,
     pub lfg_roles: LfgRoleSelection,
     pub lfd_dungeons: Vec<LfdDungeonInfo>,
+    /// Host-supplied LFG tooltip reward cache; empty and not ready by default.
+    pub lfg_tooltip_rewards_ready: bool,
+    pub lfg_tooltip_reward_groups: Vec<LfgTooltipRewardGroup>,
     pub lfd_enabled_dungeons: std::collections::HashMap<i32, bool>,
     pub photo_sharing_authorized: bool,
     pub photo_sharing_enabled: bool,
@@ -864,9 +878,22 @@ pub struct SimState {
     #[cfg(feature = "client-wowforever")]
     pub stable_reads: crate::c_api::c_stable_info::forever::StableReadState,
     pub merchant_items: Vec<u32>,
+    /// R88k.2 native item identities, counts and default-empty purchase records.
+    pub purchase_inputs: crate::c_api::container_purchase::PurchaseInputs,
+    /// R88k.1 accepted candidate/link inputs; native filter writers stay unknown.
+    pub inventory_candidates:
+        crate::lua_api::globals::real::inventory_candidates::InventoryCandidates,
+    /// Explicit R88l.2 link/selection seams, keyed by existing merchant slot.
+    pub merchant_links: crate::lua_api::globals::real::merchant_item_link::MerchantLinks,
     /// Explicit extended-cost records keyed by zero-based merchant slot; a
     /// missing key is not an observed record (decomp Round 6 §2b).
     pub merchant_offer_costs: HashMap<u32, MerchantCostRecord>,
+    /// R88i.5 scenario categories keyed by zero-based offer slot; no key is category0.
+    pub merchant_offer_categories: HashMap<u32, i32>,
+    /// Explicit category-1 ItemSparse records; absence remains unobserved.
+    pub merchant_item_requirements: HashMap<u32, MerchantItemRequirement>,
+    /// INFERRED player rating mapping keyed by signed cost-record mode.
+    pub merchant_player_ratings: HashMap<i32, i32>,
     #[cfg(feature = "retail-12-0-7")]
     pub merchant_currencies: Vec<i32>,
     pub merchant_buyback_items: Vec<crate::lua_api::globals::real::merchant_buyback::BuybackItem>,
@@ -916,6 +943,7 @@ pub struct SimState {
     /// Explicit bounty-set membership in supplied order; no inferred/default catalog.
     pub bounty_set_maps: HashMap<i32, Vec<i32>>,
     pub achievements: HashMap<i32, AchievementInfo>,
+    pub achievement_eligibility: AchievementEligibilityInputs,
     /// Explicit supplied relations; no native catalog or inferred chain.
     pub achievement_superceding: HashMap<i32, Vec<i32>>,
     pub calendar_now: crate::c_api::c_calendar::CivilDateTime,
@@ -1046,6 +1074,7 @@ pub struct SimState {
     pub battlefield_minimap_visible: bool,
     pub chat_channels: Vec<ChatChannel>,
     pub macros: Vec<MacroInfo>,
+    pub macro_icons: MacroIconInputs,
     pub running_macro: Option<u32>,
     pub chat_windows: ::std::collections::HashMap<i32, ChatWindow>,
     pub chat_type_colors: ::std::collections::HashMap<String, (f32, f32, f32)>,
@@ -1156,6 +1185,9 @@ pub struct SimState {
     pub ui_reload_requested: bool,
     pub(crate) session_lifecycle: super::super::env_lifecycle::SessionLifecycle,
     pub(crate) addon_initialization_failures: HashMap<String, String>,
+    /// Opt-in client parity (`WOW_SIM_SAVE_FAILED_ADDONS`): initialization failures stay
+    /// diagnostics and the failed owners' SavedVariables are saved, as the client saves them.
+    pub save_failed_addons: bool,
     /// Explicit host-supplied cinematic playback state; no playback engine implied.
     pub cinematic_active: bool,
     /// World entry is distinct from IsLoggedIn; supplied/transitioned by the owner.

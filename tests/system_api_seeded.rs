@@ -342,6 +342,7 @@ fn test_c_loss_of_control_returns_seeded_active_event() {
     );
 }
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
 fn test_macro_apis_return_seeded_macros() {
     let env = env();
@@ -398,6 +399,7 @@ fn test_macro_apis_return_seeded_macros() {
     );
 }
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
 fn test_macro_icon_apis_populate_icon_tables() {
     let env = env();

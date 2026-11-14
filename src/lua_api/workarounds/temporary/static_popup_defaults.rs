@@ -16,6 +16,10 @@ if StaticPopup_Show == nil then
     end
 end
 
+"#;
+
+#[cfg(not(feature = "client-retail"))]
+const STATIC_POPUP_CONDITION_DEFAULT_LUA: &str = r#"
 if StaticPopup_AddShowCondition == nil then
     function StaticPopup_AddShowCondition()
     end
@@ -24,6 +28,9 @@ end
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(STATIC_POPUP_DEFAULTS_LUA)?;
+    // Retail's Both-screen StaticPopup owner loads before GameDialog registers its condition.
+    #[cfg(not(feature = "client-retail"))]
+    lua.exec(STATIC_POPUP_CONDITION_DEFAULT_LUA)?;
     Ok(())
 }
 
@@ -40,16 +47,17 @@ mod tests {
                 r#"
                 if type(StaticPopup_Show) ~= "function" then return "show_type" end
                 if type(StaticPopup_Hide) ~= "function" then return "hide_type" end
-                if type(StaticPopup_AddShowCondition) ~= "function" then return "condition_type" end
                 if StaticPopup_Show("TEST") ~= nil then return "show_value" end
                 if StaticPopup_Hide("TEST") ~= nil then return "hide_value" end
-                if StaticPopup_AddShowCondition("TEST", function() return true end) ~= nil then return "condition_value" end
                 return "ok"
                 "#,
             )
             .expect("StaticPopup defaults probe should run");
 
         assert_eq!(result, "ok");
+        #[cfg(not(feature = "client-retail"))]
+        env.exec("assert(type(StaticPopup_AddShowCondition) == 'function'); assert(StaticPopup_AddShowCondition() == nil)")
+            .expect("non-Retail condition fallback remains callable");
     }
 
     #[test]

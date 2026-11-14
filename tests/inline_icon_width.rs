@@ -28,6 +28,37 @@ fn atlas_icon_adds_its_width() {
     );
 }
 
+// VERIFIED R88f.L.2: the absolute right edge, not the icon width, is snapped.
+#[test]
+fn atlas_icon_snaps_absolute_right_edge_before_following_text() {
+    let env = WowLuaEnv::new().unwrap();
+    let (prefix, suffix, total): (f64, f64, f64) = env
+        .eval(
+            r#"
+            local fs = UIParent:CreateFontString(nil, "ARTWORK")
+            fs:SetFont("Fonts\\FRIZQT__.TTF", 13.7, "")
+            fs:SetTextScale(1.3)
+            fs:SetText("W")
+            local prefix = fs:GetStringWidth()
+            fs:SetText("i")
+            local suffix = fs:GetStringWidth()
+            fs:SetText("W|A:hud-backpack:10:10.25|ai")
+            return prefix, suffix, fs:GetStringWidth()
+            "#,
+        )
+        .unwrap();
+    let unsnapped_right_edge = prefix + 10.25 * 1.3;
+    let expected = (unsnapped_right_edge + 0.5).floor() + suffix;
+    assert!(
+        (unsnapped_right_edge - unsnapped_right_edge.round()).abs() > 0.1,
+        "fixture right edge must be fractional: {unsnapped_right_edge}"
+    );
+    assert!(
+        (total - expected).abs() < 0.01,
+        "prefix {prefix}, suffix {suffix}, total {total}, expected {expected}"
+    );
+}
+
 // VERIFIED R88d: zero height uses the caller metric; mapping it to line height is INFERRED.
 #[test]
 fn texture_zero_height_uses_inferred_line_metric() {

@@ -7,6 +7,8 @@ use std::collections::{BTreeMap, BTreeSet};
 pub struct NeighborhoodInitiativeState {
     pub active_neighborhood: String,
     pub viewing_neighborhood: String,
+    /// INFERRED Retail owner input; native source and initial value are unknown.
+    pub enabled: Option<bool>,
     pub neighborhoods: BTreeMap<String, NeighborhoodInitiativeInfo>,
     /// Host-supplied XP and used-XP inputs, keyed by neighborhood GUID.
     pub house_experience: BTreeMap<String, HouseExperienceInput>,
@@ -24,6 +26,7 @@ impl Default for NeighborhoodInitiativeState {
         Self {
             active_neighborhood: String::new(),
             viewing_neighborhood: String::new(),
+            enabled: None,
             neighborhoods: BTreeMap::new(),
             house_experience: BTreeMap::new(),
             activity_logs: BTreeMap::new(),

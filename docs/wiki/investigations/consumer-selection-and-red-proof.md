@@ -14,6 +14,14 @@ Lessons learned on 2026-10-23: cached Blizzard source is not proof of a runtime-
 
 The upgrade/store audit found the same trap: cached Mainline upgrade calls were not selected on Mists/Era/Anniversary, and cached shared secure-store source was absent from the selected Retail/PTR/Forever TOC.
 
+## GameTooltip minimum-width consumer
+
+**VERIFIED (Retail 12.1.5 cache and selected TOCs):** `Blizzard_SharedXML.toc:154` selects `SharedTooltipTemplates.lua`; the original `GameTooltip_InsertFrame` is defined there at line 197. Its line 213 comparison reads `tooltipFrame:GetMinimumWidth()` as one scalar value and may then call `SetMinimumWidth(frameWidth)`. `Blizzard_GameTooltip/Blizzard_GameTooltip_Mainline.toc:5,8` selects `Mainline/GameTooltip.lua`, whose original bodies call the helper at lines 568 and 605.
+
+**PRESERVATION:** this consumer cannot distinguish the corrected two-result getter from the old one-result getter because the comparison observes only the first result. The optional test calls the original helper and checks its width update; it is not a RED selector for getter arity. **VERIFIED (Retail AddOns cache search):** searching `AddFontStrings` found only the generated API declaration at `Blizzard_APIDocumentationGenerated/FrameAPITooltipDocumentation.lua:10`; no runtime-selected Lua caller was found. The direct API test remains producer proof for pair storage, not consumer RED.
+
+**UNKNOWN (R88n.7):** how stored FontString pairs are used by later layout or rendering remains unproved. See the [GameTooltip method contract](../../specs/game-tooltip-methods.md).
+
 ## Casting bar secrecy predicate
 
 Retail's `Blizzard_UIPanels_Game_Mainline.toc:6,10` selects `Shared/CastingBarFrame.lua`. Its `IsInterruptable` method calls the locally captured predicate through lines 2 and 5. The consumer test verifies source provenance and the XML-created player bar before exercising both bar types. Its Retail RED is the nil call at line 5. Because both output cases also pass with a constant-false predicate, this is missing-publication and consumer-preservation proof, not proof of a native trigger. The [contract](../../specs/secret-auras.md#casting-and-threat-predicate-surface) records the unknown behavior and validation limits.
@@ -31,6 +39,32 @@ The [completion contract](../../specs/pvp-match-completion.md) uses the existing
 The unchanged `cf2_pvp_completion` selector invokes the normal XML-created frame's installed script. It checks original method identity and Lua-file provenance, then observes exactly one call to that original method. Incomplete/active/completed/reset snapshots assert all eight actual event registrations, hidden presentation and no new Lua errors. Constant true contradicts snapshot 1; constant false and zero-return/nil no-ops contradict snapshot 3. Missing publication can error at the original completion call. The catalog and locklist selectors are preservation only, not independent producer RED.
 
 This is static staging, not observed RED/GREEN or runtime selection proof. Historical PTR cache evidence predates the current 12.1.7 pin. Future PTR execution must first synchronize and verify a lane-private matching cache and use it in every phase; old cache evidence cannot establish current PTR selection. See the contract for bounded native gaps and the handoff for source-bound replay.
+
+## Retail quest tooltip consumers and host input seams
+
+**VERIFIED (Retail 12.1.5 cache and selected TOCs):** `Blizzard_ObjectiveTracker.toc:10,35` loads `Blizzard_ObjectiveTrackerShared.lua` and `Blizzard_QuestObjectiveTracker.lua`; the original item-button `OnEnter` at `Blizzard_ObjectiveTrackerShared.lua:88-91` calls `SetQuestLogSpecialItem`, and `QuestObjectiveTrackerMixin:OnBlockHeaderEnter` at `Blizzard_QuestObjectiveTracker.lua:116-121` calls `SetQuestPartyProgress`. `Blizzard_UIPanels_Game_Mainline.toc:75` selects `Mainline/QuestMapFrame.lua`, whose original call at line 2198 also uses `SetQuestPartyProgress`. `TooltipDataHandler.lua:536,589` maps these setters to `GetQuestLogSpecialItem` and `GetQuestPartyProgress`; the pinned declarations are `TooltipInfoDocumentation.lua:817,833`.
+
+**VERIFIED (runtime fixture):** `tests/tooltip_quest_party_progress.rs` loads the discovered `Blizzard_ObjectiveTracker` dependency closure, checks the loaded original function sources, and invokes both original hover methods and `GameTooltip` accessors. Party selectors listed one exact test each and failed against the no-value producer at test-seam commit `00ce7a683`; the host-selected item hover also failed against the no-value producer at test commit `1f08da4d0`. Red transcripts and CVar hashes are in the lane handoff evidence.
+
+**VERIFIED (Retail 12.1.5.70688, WM94/R88n.1):** successful party-progress data uses top-level type 24 and quest ID; the optional title row has type 17 and the quest ID; supplied participant headings use type 18 with GUID; status/objective rows use type 8 with `completed`, with optional objective counts and progress percentage. Missing-source and failed-producer paths return exactly zero Lua values.
+
+**VERIFIED (repository):** `QuestPartyProgressSnapshot` is empty by default. The host supplies title, participant headings, row content, colors and the participant marker consumed by `ignoreActivePlayer`; the simulator does not derive a party-progress tree, objective state or active-player identity. The shared tooltip builder serializes the supplied data. **UNKNOWN:** getter-specific native D56 color/instance parity and return arity for a successful zero-row composition are not separately proved. The simulator returns zero values when its supplied snapshot emits no rows.
+
+**VERIFIED (R88n.3/R88n.3a):** the indexed quest resolves through quest-ID request context to a cache record; the primary special-item ID and conditional candidate IDs come from that cache record, then inventory lookup resolves an existing item object. Its tooltip request carries item ID, owner GUID and item GUID. **VERIFIED (repository):** separate empty-by-default host inputs represent index-to-quest context, cache IDs/marker, and the selected inventory object. The producer checks that the selected ID is in the primary field or enabled candidate list and validates its current bag item object before shared composition. It does not model candidate predicates or upstream writers. **UNKNOWN:** cache/invalidation and inventory/object creation routes, candidate predicates, and owner-GUID effects in output. Native party/objective state writers also remain UNKNOWN.
+
+## Retail tooltip serializer field consumers
+
+**VERIFIED (Retail cache and selected TOCs):** `Blizzard_SharedXMLGame.toc:4,9-10` selects `TooltipDataHandler.lua` for Game/mainline. `Blizzard_UIPanels_Game_Mainline.toc:5-6,33` selects the Retail MerchantFrame source. **VERIFIED (optional test):** the fixture checks game-screen discovery and original Lua-source provenance for `TooltipDataRules` and `GameTooltip:SetItemByID`.
+
+**VERIFIED (Retail 12.1.5.70688, R88n.4b):** the original rules read top-level `repairCost` and battle-pet fields, and read `price`/`maxPrice` from a type-11 line. **PRESERVATION (optional tests):** `tests/tooltip_serializer_fields.rs` passes distinct synthetic values through the selected original `ProcessInfo` rules; this does not establish a producer for those fields. **INFERRED (simulator policy):** the selected `SetItemByID` path maps positive `ItemInfo.sell_price` to a type-11 line's `price`; no `maxPrice` is emitted. The native eligibility predicate, line order and `maxPrice` source remain UNKNOWN.
+
+### R88n.3b quest-cache callback seam
+
+**VERIFIED (Retail native):** an unready quest-cache lookup saves callback/context entries; cache removal copies and invokes them after unlinking the old record. **VERIFIED (simulator source):** `QuestSpecialItemInputs` stores only index-to-quest, cache-record and selected-object maps; it has no pending callback or removal route. The special-item seam remains UNKNOWN, so this lane adds no async behavior.
+
+### R88n.4b LFG message seam
+
+**VERIFIED (Retail native):** the LFG reward callback receives the enclosing decoded message, not one `JamLFGLockListSlot` element. **VERIFIED (simulator source):** the reward getter reads host-supplied `LfgTooltipRewardGroup` snapshots; this seam has no decoded message or callback argument to correct. The incoming-message route remains UNKNOWN and unchanged.
 
 ## Applicable registration and standalone RED
 

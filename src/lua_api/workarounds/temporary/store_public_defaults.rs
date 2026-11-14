@@ -32,6 +32,7 @@ end
 
 "#;
 
+#[cfg(not(feature = "client-retail"))]
 const STORE_FRAME_ESCAPE_DEFAULTS_LUA: &str = r#"
 if type(StoreFrame_EscapePressed) == "function" and not rawget(_G, "__wow_store_frame_escape_wrapped") then
     local originalEscapePressed = StoreFrame_EscapePressed
@@ -59,6 +60,7 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     Ok(())
 }
 
+#[cfg(not(feature = "client-retail"))]
 pub(crate) fn patch(env: &crate::lua_api::WowLuaEnv) {
     let _ = env.exec(STORE_FRAME_ESCAPE_DEFAULTS_LUA);
 }

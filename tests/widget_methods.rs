@@ -374,6 +374,29 @@ fn test_clamped_to_screen_set_get() {
     assert!(clamped);
 }
 
+#[cfg(all(feature = "client-retail", feature = "optional-tests"))]
+#[test]
+fn retail_clamp_setters_return_zero_values() {
+    let env = WowLuaEnv::new().unwrap();
+
+    env.exec(
+        r##"
+        local frame = CreateFrame("Frame", "ClampSetterReturns", UIParent)
+        assert(select("#", frame:SetClampedToScreen(true)) == 0)
+        assert(frame:IsClampedToScreen())
+        assert(select("#", frame:SetClampedToScreen(false)) == 0)
+        assert(not frame:IsClampedToScreen())
+        assert(select("#", frame:SetClampRectInsets(1, 2, 3, 4)) == 0)
+        local left, right, top, bottom = frame:GetClampRectInsets()
+        assert(left == 1 and right == 2 and top == 3 and bottom == 4)
+        assert(select("#", frame:SetClampRectInsets(5, 6, 7, 8)) == 0)
+        left, right, top, bottom = frame:GetClampRectInsets()
+        assert(left == 5 and right == 6 and top == 7 and bottom == 8)
+        "##,
+    )
+    .unwrap();
+}
+
 // ============================================================================
 // StartSizing / StopMovingOrSizing / Resize bounds
 // ============================================================================

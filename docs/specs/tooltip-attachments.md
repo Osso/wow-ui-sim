@@ -1,6 +1,6 @@
-# Tooltip texture and atlas attachments (Retail/PTR)
+# Tooltip texture and atlas attachments (Retail; PTR inferred)
 
-`GameTooltip:AddTexture` and `AddAtlas` on Retail and PTR attach images to the last existing text row and reserve layout space for them. The contract follows native evidence WM63 S8L (anchors, settings, cap) and WM84 (reservation groups, overflow, row inset) for Retail 12.1.5 / 70688. Source: `src/lua_api/frame/methods/widgets/tooltip/attachments.rs`, with layout in `src/iced_app/tooltip.rs` and `src/lua_api/frame/methods/widgets/tooltip/sizing.rs`. Wrath template slots and the separate texture rows of the other profiles are unchanged. This supersedes the U1 policy in [tooltip-path-separator](tooltip-path-separator.md).
+`GameTooltip:AddTexture` and `AddAtlas` on Retail attach images to the last existing text row and reserve layout space for them. This contract is **VERIFIED for Retail 12.1.5 / 70688** by WM63 S8L and WM84. The implementation shares the path with PTR, but native PTR applicability is **INFERRED**, not independently verified. Source: `src/lua_api/frame/methods/widgets/tooltip/attachments.rs`, with layout in `src/iced_app/tooltip.rs` and `src/lua_api/frame/methods/widgets/tooltip/sizing.rs`. Wrath template slots and the separate texture rows of the other profiles are unchanged. This supersedes the U1 policy in [tooltip-path-separator](tooltip-path-separator.md).
 
 ## What it must do
 
@@ -23,8 +23,7 @@
 
 ### Row inset
 
-- [x] Store each row's inset as its explicit inset plus the tooltip-wide extra inset: `AddLine` argument 7, `AddDoubleLine` argument 11, `SetText` zero. Attachments do not change it.
-- [x] ClearLines sets the extra inset to zero; a later row has no inset from an earlier row.
+- [x] For Retail, store each row's inset as its explicit argument plus the current tooltip-wide extra inset: `AddLine` argument 7, `AddDoubleLine` argument 11, and `SetText` contributes explicit inset zero. Construction and `ClearLines` set the extra inset to zero. No nonzero writer is established, so nonzero values remain UNKNOWN; attachments do not change the inset.
 
 ## How it works
 

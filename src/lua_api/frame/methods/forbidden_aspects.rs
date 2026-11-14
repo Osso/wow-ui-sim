@@ -261,6 +261,63 @@ pub(crate) fn ensure_forbidden_aspects_already_owned(
     )))
 }
 
+/// R88n.7 checks these inherited aspects for AddFontStrings parent changes.
+#[cfg(all(feature = "forbidden-aspects", feature = "forbidden-animation-aspects"))]
+const ADD_FONT_STRINGS_PARENT_ASPECTS: &[&str] = &[
+    "UntrustedScriptExecution",
+    "UntrustedLayoutScriptExecution",
+    "AlwaysPropagateInput",
+    "ScriptedInput",
+    "QueryFocus",
+    "QueryAnimationProgress",
+];
+
+#[cfg(all(
+    feature = "forbidden-aspects",
+    not(feature = "forbidden-animation-aspects")
+))]
+const ADD_FONT_STRINGS_PARENT_ASPECTS: &[&str] = &[
+    "UntrustedScriptExecution",
+    "UntrustedLayoutScriptExecution",
+    "AlwaysPropagateInput",
+    "ScriptedInput",
+    "QueryFocus",
+];
+
+/// Check the native ChangeParent restriction without assigning a new parent.
+#[cfg(feature = "forbidden-aspects")]
+pub(crate) fn ensure_add_font_strings_parent_change_allowed(
+    state: &mut LuaState,
+    child_id: u64,
+    tooltip_id: u64,
+) -> LuaResult<()> {
+    ensure_forbidden_aspect_absent(state, child_id, "ChangeParent")?;
+    let (child_aspects, tooltip_aspects) = {
+        let sim = borrow_state(state)?;
+        let child_aspects = sim
+            .widgets
+            .get(child_id)
+            .map_or(0, |frame| frame.forbidden_aspects);
+        let tooltip_aspects = sim
+            .widgets
+            .get(tooltip_id)
+            .map_or(0, |frame| frame.forbidden_aspects);
+        (child_aspects, tooltip_aspects)
+    };
+    let mut gained_aspects = 0;
+    for aspect_name in ADD_FONT_STRINGS_PARENT_ASPECTS {
+        let aspect = resolve_aspect(state, aspect_name)?;
+        gained_aspects |= tooltip_aspects & aspect & !child_aspects;
+    }
+    if gained_aspects == 0 {
+        return Ok(());
+    }
+    Err(runtime_error(format!(
+        "Reparenting disallowed as child object would inherit forbidden aspects: {}",
+        aspect_names(gained_aspects)
+    )))
+}
+
 /// Best-guess slot content: the gained aspects' `Enum.ForbiddenAspect` names, in bit
 /// order, joined by ", ". The native slot content is UNKNOWN.
 #[cfg(feature = "forbidden-aspects")]

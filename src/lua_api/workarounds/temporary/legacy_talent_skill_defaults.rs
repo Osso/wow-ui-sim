@@ -68,6 +68,21 @@ end
 "#;
 
 const LEGACY_TALENT_SKILL_DEFAULTS_LUA: &str = r#"
+if rawget(_G, "GetTalentInfoBySpecialization") == nil then
+    function GetTalentInfoBySpecialization(_specIndex, _tier, _column)
+        return nil
+    end
+end
+
+if rawget(_G, "GetArenaOpponentSpec") == nil then
+    function GetArenaOpponentSpec(_opponentIndex)
+        return 0
+    end
+end
+
+"#;
+
+const LEGACY_PVP_TALENT_SLOT_INFO_DEFAULT_LUA: &str = r#"
 local function numberArgument(value)
     if type(value) == "number" then
         return value
@@ -78,12 +93,6 @@ end
 
 local function isValidPvpTalentSlot(slotIndex)
     return slotIndex == 1 or slotIndex == 2 or slotIndex == 3
-end
-
-if rawget(_G, "GetTalentInfoBySpecialization") == nil then
-    function GetTalentInfoBySpecialization(_specIndex, _tier, _column)
-        return nil
-    end
 end
 
 if rawget(_G, "GetPvpTalentSlotInfo") == nil then
@@ -101,13 +110,6 @@ if rawget(_G, "GetPvpTalentSlotInfo") == nil then
         }
     end
 end
-
-if rawget(_G, "GetArenaOpponentSpec") == nil then
-    function GetArenaOpponentSpec(_opponentIndex)
-        return 0
-    end
-end
-
 "#;
 
 #[cfg(not(any(
@@ -140,6 +142,10 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
         lua.exec(LEGACY_TALENT_ROW_DEFAULTS_LUA)?;
     }
     lua.exec(LEGACY_TALENT_SKILL_DEFAULTS_LUA)?;
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
+        // Retail registers no legacy global alias for this slot query.
+        lua.exec(LEGACY_PVP_TALENT_SLOT_INFO_DEFAULT_LUA)?;
+    }
     #[cfg(not(any(
         feature = "client-wrath",
         feature = "client-era",
@@ -154,6 +160,7 @@ mod tests {
     use crate::lua_api::WowLuaEnv;
 
     retail_removed_legacy_globals_fixture! {
+    #[cfg(feature = "client-ptr")]
     #[test]
     fn installs_legacy_talent_skill_default_shapes() {
         let env = WowLuaEnv::new().expect("lua env should initialize");

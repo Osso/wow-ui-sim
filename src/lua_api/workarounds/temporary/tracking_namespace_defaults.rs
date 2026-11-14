@@ -40,11 +40,11 @@ mod tests {
             .eval(
                 r#"
                 if type(C_ContentTracking) ~= "table" then return "content-tracking-namespace" end
-                if C_NeighborhoodInitiative.IsInitiativeEnabled() ~= false then return "enabled" end
+                if type(C_NeighborhoodInitiative.IsInitiativeEnabled) ~= "function" then return "enabled" end
                 local tasks = C_NeighborhoodInitiative.GetTrackedInitiativeTasks()
                 if type(tasks) ~= "table" then return "tasks" end
                 if type(tasks.trackedIDs) ~= "table" or #tasks.trackedIDs ~= 0 then return "ids" end
-                if C_NeighborhoodInitiative.GetInitiativeTaskInfo(1) ~= nil then return "info" end
+                if type(C_NeighborhoodInitiative.GetInitiativeTaskInfo) ~= "function" then return "info" end
                 if C_NeighborhoodInitiative.RemoveTrackedInitiativeTask(1) ~= nil then return "remove" end
                 if C_NeighborhoodInitiative.AddTrackedInitiativeTask(1) ~= nil then return "add" end
                 return "ok"

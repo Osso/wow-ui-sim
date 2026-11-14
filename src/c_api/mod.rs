@@ -7,6 +7,7 @@ mod c_account_info;
 pub mod c_guild_info;
 pub mod c_heirloom;
 pub mod c_recruit_a_friend;
+pub(crate) mod c_tooltip_comparison;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_tooltip_info_appearance;
 pub(crate) mod c_tooltip_info_artifact_item;
@@ -56,9 +57,12 @@ pub(crate) mod ptr_i4_game_rules;
 pub mod ptr_store_override;
 pub(crate) mod quest_difficulty;
 pub mod quest_objectives;
+pub mod quest_party_progress;
 pub mod quest_readiness;
 pub(crate) mod quest_reward_currencies;
 pub(crate) mod quest_reward_spells;
+pub mod quest_special_item;
+pub mod recipe_rank_tooltip;
 pub(crate) mod tooltip_data;
 pub(crate) mod tooltip_power_catalog_data;
 pub mod trait_group_currency;
@@ -269,6 +273,8 @@ mod c_scrapping_machine;
 pub mod c_shared_character_services;
 pub mod c_super_track;
 pub(crate) mod challenge_run;
+pub mod container_purchase;
+mod container_purchase_args;
 pub mod container_quest;
 pub mod engraving_inputs;
 pub mod external_event_url;
@@ -330,6 +336,7 @@ pub mod c_tooltip_info_pvp_talent;
 pub(crate) mod c_tooltip_info_socketed_relic;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_tooltip_info_spell_mount;
+pub(crate) mod c_trade_info;
 pub(crate) mod c_trade_skill_cooldown;
 pub mod c_trade_skill_crafting_ui;
 pub(crate) mod c_trade_skill_favorites;
@@ -411,6 +418,7 @@ pub mod c_toy_box_info;
 pub mod c_transmog_outfit_info;
 pub mod c_transmog_sets;
 pub(crate) mod c_ui;
+pub(crate) mod c_ui_color;
 pub mod c_ui_file_asset;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_unit_aura_altered_form;
@@ -472,6 +480,7 @@ pub use c_ping_texture_kits::PingTextureKits;
 #[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
 mod c_cvar_readiness;
 pub mod c_loss_of_control;
+mod combat_audio_enabled;
 #[cfg(not(feature = "client-wrath"))]
 mod combat_audio_throttle;
 #[cfg(feature = "client-mists")]

@@ -134,7 +134,8 @@ mod tests {
                 r#"
                 C_SecureTransfer._state.mailInfo = { target = "Alt", sendMoney = "123" }
                 C_SecureTransfer._state.tradePartner = "Merchant"
-                C_SecureTransfer._state.shouldShowTradeOfferWarning = true
+                C_TradeInfo._state = C_TradeInfo._state or {}
+                C_TradeInfo._state.shouldShowTradeOfferWarning = true
                 C_SecureTransfer._state.housingPurchaseCost = "4500"
                 C_SecureTransfer._state.housingPurchaseQuantity = "3"
                 C_SecureTransfer._state.housingVCPurchaseProductID = "77"

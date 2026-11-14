@@ -29,11 +29,11 @@ fn neighborhood_initiative_defaults_have_empty_tracked_ids_shape() {
     let result: String = env
         .eval(
             r#"
-            if C_NeighborhoodInitiative.IsInitiativeEnabled() ~= false then return "enabled" end
+            if type(C_NeighborhoodInitiative.IsInitiativeEnabled) ~= "function" then return "enabled" end
             local tracked = C_NeighborhoodInitiative.GetTrackedInitiativeTasks()
             if type(tracked) ~= "table" then return "tracked-table" end
             if type(tracked.trackedIDs) ~= "table" or #tracked.trackedIDs ~= 0 then return "ids" end
-            if C_NeighborhoodInitiative.GetInitiativeTaskInfo(1) ~= nil then return "info" end
+            if type(C_NeighborhoodInitiative.GetInitiativeTaskInfo) ~= "function" then return "info" end
             if C_NeighborhoodInitiative.RemoveTrackedInitiativeTask(1) ~= nil then return "remove" end
             if C_NeighborhoodInitiative.AddTrackedInitiativeTask(1) ~= nil then return "add" end
             return "ok"

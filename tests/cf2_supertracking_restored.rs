@@ -20,15 +20,16 @@ fn load_observed_consumer() -> WowLuaEnv {
     let toc = TocFile::from_file(&toc_path).unwrap();
     assert!(toc.allows_screen(ScreenKind::Game));
     assert!(!toc.is_game_type_restricted());
-    assert!(toc.files.iter().any(|file| {
-        file == std::path::Path::new("Mainline/Blizzard_QuestSuperTracking.lua")
-    }));
+    assert!(
+        toc.files.iter().any(|file| {
+            file == std::path::Path::new("Mainline/Blizzard_QuestSuperTracking.lua")
+        })
+    );
     eprintln!("Selected supertracking TOC: {}", toc_path.display());
     let env = new_blizzard_addon_env(&ui);
     load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_SharedXMLGame"], &[]);
     register_cache_observer(&env);
-    let loaded =
-        load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_FrameXMLUtil"], &[]);
+    let loaded = load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_FrameXMLUtil"], &[]);
     assert!(loaded.iter().any(|name| name == "Blizzard_FrameXMLUtil"));
     assert_listener_snapshot(&env, None, 1);
     env
@@ -107,7 +108,12 @@ fn original_supertracking_pair_shape_restored() {
         .into_iter()
         .enumerate()
     {
-        env.state().borrow_mut().super_track.content = pair;
+        let mut state = env.state().borrow_mut();
+        state.super_track.content = pair;
+        if let Some(pair) = pair {
+            state.super_track.content_saved = pair;
+        }
+        state.super_track.content_tracking = pair.is_some();
         let errors_before = env.state().borrow().lua_errors.len();
         env.fire_event("SUPER_TRACKING_CHANGED").unwrap();
         assert_eq!(env.state().borrow().lua_errors.len(), errors_before);
@@ -151,7 +157,8 @@ fn original_supertracking_refresh_publishes_cache_to_listeners_restored() {
     .enumerate()
     {
         let errors_before = env.state().borrow().lua_errors.len();
-        env.exec(mutation).expect("mutate supplied supertracking state");
+        env.exec(mutation)
+            .expect("mutate supplied supertracking state");
         assert_eq!(env.state().borrow().lua_errors.len(), errors_before);
         assert_listener_snapshot(&env, pair, index + 2);
         assert_eq!(env.state().borrow().super_track.content, pair);

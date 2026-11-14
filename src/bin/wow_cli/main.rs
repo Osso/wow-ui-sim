@@ -12,6 +12,7 @@
 //!   wow-cli extract-textures         # Extract textures to WebP (standalone)
 //!   wow-cli convert-texture foo.BLP  # Convert single BLP to WebP (standalone)
 //!   wow-cli generate spells          # Regenerate crates/sim-data/data/spells.rs from CSVs
+//!   wow-cli generate global-colors   # Regenerate Retail GlobalColor DB2 rows
 //!   wow-cli startup-intern-stats      # Measure startup intern-string churn
 //!   wow-cli global-slot-coverage      # Report Track 3 slot coverage after bootstrap
 
@@ -20,6 +21,7 @@ mod csv_util;
 mod gen_atlas;
 mod gen_currencies;
 mod gen_encounter_journal;
+mod gen_global_colors;
 mod gen_global_strings;
 mod gen_items;
 mod gen_manifest;
@@ -278,14 +280,18 @@ enum GenerateTarget {
     Currencies,
     /// Generate crates/sim-data-profile/data/global_strings.rs from GlobalStrings CSV
     GlobalStrings,
+    /// Generate Retail GlobalColor rows from the pinned local DB2 CSV
+    GlobalColors,
     /// Generate crates/sim-data/data/manifest_interface_data.rs from ManifestInterfaceData CSV
     Manifest,
     /// Generate crates/sim-data/data/traits.rs from Trait* CSVs
     Traits,
     /// Generate crates/sim-data/data/zones.rs from AreaTable CSV
     Zones,
-    /// Generate crates/sim-data/data/ui_maps.rs from UiMap CSV
+    /// Generate crates/sim-data/data/ui_maps.rs and Retail UiMapAssignment data
     UiMaps,
+    /// Regenerate Retail UiMapAssignment rows from data/db2/retail-12.1.5.70783
+    UiMapAssignments,
     /// Generate crates/sim-data/data/map_art.rs from UiMap* DB2 CSVs
     MapArt,
     /// Generate crates/sim-data/data/quest_ui_map.rs from QuestPOIBlob CSV
@@ -397,10 +403,12 @@ fn run_generator(target: GenerateTarget) {
         GenerateTarget::Atlas(options) => gen_atlas::run(options),
         GenerateTarget::Currencies => gen_currencies::run(),
         GenerateTarget::GlobalStrings => gen_global_strings::run(),
+        GenerateTarget::GlobalColors => gen_global_colors::run(),
         GenerateTarget::Manifest => gen_manifest::run(),
         GenerateTarget::Traits => gen_traits::run(),
         GenerateTarget::Zones => gen_zones::run(),
         GenerateTarget::UiMaps => gen_ui_maps::run(),
+        GenerateTarget::UiMapAssignments => gen_ui_maps::run_assignments(),
         GenerateTarget::MapArt => gen_map_art::run(),
         GenerateTarget::QuestPoi => gen_quest_poi::run(),
         GenerateTarget::EncounterJournal => gen_encounter_journal::run(),

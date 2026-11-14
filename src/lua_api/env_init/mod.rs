@@ -70,6 +70,7 @@ pub(super) fn init_lua_state(
     // R88n.10/R88n.11 part 1 verify that Constants and Enum values are installed
     // after the constructor. The order of other native registrars remains UNKNOWN.
     super::globals::security::create_secure_environment(lua)?;
+    crate::c_api::c_ui_color::register(lua)?;
     publish_retail_secure_template_method_binder(lua)?;
     super::globals::real::mixins::register(lua)?;
     publish_unknown_bootstrap_globals(lua)?;

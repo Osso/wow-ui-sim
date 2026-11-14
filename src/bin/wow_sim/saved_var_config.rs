@@ -197,6 +197,12 @@ fn should_skip_saved_vars(no_saved_vars_arg: bool) -> bool {
             .unwrap_or(false)
 }
 
+/// `WOW_SIM_SAVE_FAILED_ADDONS=1` saves addons whose load raised errors, as the client does.
+pub fn save_failed_addons() -> bool {
+    std::env::var("WOW_SIM_SAVE_FAILED_ADDONS")
+        .is_ok_and(|value| value == "1" || value.eq_ignore_ascii_case("true"))
+}
+
 #[cfg(test)]
 mod tests {
     use super::selected_name;

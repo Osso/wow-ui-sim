@@ -30,11 +30,14 @@ mod tooltip_full_env_helpers;
 #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 use tooltip_full_env_helpers::setup_full_env;
 
+#[cfg(all(feature = "client-wowforever", feature = "optional-tests"))]
+use wow_ui_sim::lua_api::WowLuaEnv;
+
 /// The profile-selected consumer TOC loads the tooltip XML body, and the same
 /// file list selects it at runtime (Retail: `_Mainline` TOC; PTR: unified TOC).
 #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 fn assert_tooltip_consumer_selected() {
-    use wow_ui_sim::client_profile::{ClientProfile, ACTIVE};
+    use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
 
     let addons = wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap();
     let toc = wow_ui_sim::loader::find_toc_file(&addons.join("Blizzard_GameTooltip"))
@@ -263,4 +266,82 @@ fn tooltip_owner_clear_forever_owner_reassignment_lifecycle() {
         "#,
     )
     .expect("Forever owner reassignment lifecycle");
+}
+
+/// R88n.5: Forever ClearLines empties cached text for active rows, but it does
+/// not visit unused cached rows that callers still hold by FontString reference.
+#[cfg(all(feature = "client-wowforever", feature = "optional-tests"))]
+#[test]
+fn tooltip_clear_lines_forever_clears_only_active_cached_text() {
+    let env = WowLuaEnv::new().expect("WowLuaEnv init");
+    env.exec(
+        r#"
+        local tip = GameTooltip
+        tip:AddLine("first")
+        tip:AddDoubleLine("second left", "second right")
+        local first = tip:GetLeftLine(1)
+        local second_left = tip:GetLeftLine(2)
+        local second_right = tip:GetRightLine(2)
+        local function empty(line)
+            local text = line:GetText()
+            return text == nil or text == ""
+        end
+
+        tip:ClearLines()
+        assert(empty(first), "active left line text is cleared")
+        assert(empty(second_left), "active second-row left text is cleared")
+        assert(empty(second_right), "active second-row right text is cleared")
+
+        tip:AddLine("only active row")
+        local active = tip:GetLeftLine(1)
+        second_left:SetText("inactive left")
+        second_right:SetText("inactive right")
+        tip:ClearLines()
+        assert(empty(active), "the active row is cleared")
+        assert(second_left:GetText() == "inactive left", "unused left cache entry is untouched")
+        assert(second_right:GetText() == "inactive right", "unused right cache entry is untouched")
+        "#,
+    )
+    .expect("Forever ClearLines active cached text contract");
+}
+
+/// PRESERVATION: the profile-selected TooltipDataHandler still clears old
+/// active rows and publishes the replacement through its original ProcessInfo.
+#[cfg(all(feature = "client-wowforever", feature = "optional-tests"))]
+#[test]
+fn tooltip_clear_lines_forever_preserves_original_processor_reprocessing() {
+    let env = tooltip_full_env_helpers::setup_full_env();
+    let addons = wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap();
+    let toc = wow_ui_sim::loader::find_toc_file(&addons.join("Blizzard_SharedXMLGame"))
+        .expect("profile-selected Blizzard_SharedXMLGame TOC");
+    let toc_body = std::fs::read_to_string(&toc).unwrap();
+    assert!(toc_body.contains("## AllowLoad: Game"), "selected Game TOC");
+    assert!(
+        toc_body.contains("Tooltip\\TooltipDataHandler.lua"),
+        "selected TOC loads TooltipDataHandler.lua: {}",
+        toc.display()
+    );
+
+    env.exec(
+        r#"
+        assert(TooltipDataHandlerMixin and type(TooltipDataHandlerMixin.ProcessInfo) == "function",
+            "original TooltipDataHandler mixin is loaded")
+        assert(GameTooltip.ProcessInfo == TooltipDataHandlerMixin.ProcessInfo,
+            "GameTooltip uses the original ProcessInfo method")
+        assert(GameTooltip:ProcessInfo({ tooltipData = { lines = {
+            { leftText = "old first" },
+            { leftText = "old second" },
+        } } }))
+        local cached_first = GameTooltip:GetLeftLine(1)
+        assert(cached_first:GetText() == "old first")
+
+        assert(GameTooltip:ProcessInfo({ tooltipData = { lines = {
+            { leftText = "replacement" },
+        } } }))
+        assert(GameTooltip:NumLines() == 1, "original processor replaces the old rows")
+        assert(GameTooltip:GetLeftLine(1) == cached_first, "active FontString remains pooled")
+        assert(cached_first:GetText() == "replacement", "replacement content is visible")
+        "#,
+    )
+    .expect("original Forever TooltipDataHandler reprocessing");
 }

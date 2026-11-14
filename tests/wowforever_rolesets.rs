@@ -40,7 +40,7 @@ fn combat_log_rolesets_preserve_membership_and_frame_isolation() {
         C_Roleset.ApplyRolesetFilters({ "roleless" }, {})
         assert(button:IsVisible(), "clearing does not store roleless")
 
-        -- INFERRED: the optional-string convention rejects a table with the verified usage text.
+        -- VERIFIED (R88f.L.1, Forever 1.60.1.70707): a table reaches the usage-error path.
         local ok, message = pcall(function() button:SetRolesets({}) end)
         assert(not ok and message == "Usage: self:SetRolesets([rolesetsString])", "SetRolesets reports the verified usage text")
     "#,

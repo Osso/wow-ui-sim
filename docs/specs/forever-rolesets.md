@@ -9,7 +9,7 @@ Frame rolesets control which frames match `C_Roleset` filters. Forever's CombatL
 - [x] Return `GetRolesetNames` as a one-based array of names, not a name-to-boolean table.
 - [x] Split `SetRolesets` input at commas, trim ASCII spaces, and skip empty parts.
 - [x] An empty-string `SetRolesets` call clears stored membership without storing `roleless`.
-- [x] Report `Usage: self:SetRolesets([rolesetsString])` for a table argument. **INFERRED:** the non-string, non-number trigger follows the native optional-string convention; only the usage text is verified.
+- [x] For a valid receiver, report `Usage: self:SetRolesets([rolesetsString])` when an accessible non-nil argument is neither a string nor a number. **VERIFIED (R88f.L.1, Forever 1.60.1.70707):** the checked table case reaches the Lua error path with this text.
 
 ## How it works
 
@@ -23,12 +23,12 @@ Frame rolesets control which frames match `C_Roleset` filters. Forever's CombatL
 
 ## Tests asserting this spec
 
-- `tests/wowforever_rolesets.rs` — Forever CombatLog roleset membership, array results, parsing, filtering, clearing, and the inferred usage-error trigger.
+- `tests/wowforever_rolesets.rs` — Forever CombatLog roleset membership, array results, parsing, filtering, clearing, and the verified table-trigger usage error.
 - `tests/patch_12_1_0_rolesets.rs` — Retail 12.1 roleset filtering and lifecycle.
 
 ## Known gaps (current cycle)
 
-- [ ] Decomp evidence for the `SetRolesets` usage-error trigger condition.
+- [ ] Invalid receiver behavior and extra-argument handling remain UNKNOWN.
 
 ## Out of scope
 

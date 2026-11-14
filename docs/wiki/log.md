@@ -5,6 +5,91 @@ Updated [taint system](systems/taint-system.md#dual-lua-environment) with the cu
 ## [2026-11-13] system | Secure environment and dependency replay
 
 Updated [taint system](systems/taint-system.md#dual-lua-environment) and [addon loading](systems/addon-loading.md#secure-dependency-replay-and-library-allowlist) with R88g/R88i and the fixed 39-name secure base. **VERIFIED (Retail simulator test, fallback cleared):** secureenv receives the original `TooltipDataProcessor`, `CopyTable`, and `GetFrameMetatable`; the next observed boundary is `TextureUtil.lua:122` (`Constants` nil), followed by `PrivateAurasUI.lua:1398` (`TextureKitConstants` nil). R88i.1 verifies the native pair-list route for `GetFrameMetatable`. `geterrorhandler` dual publication now follows BASELINE-39 membership. The Retail tooltip fallback remains until all cited consumers pass.
+## [2026-11-14] implementation | Achievement eligibility and tracker colors
+
+[Achievement eligibility](../specs/achievement-eligibility.md) records R88o.1's Retail argument/Boolean contract, missing record/group versus null tree, and supplied cache comparisons. Original tracker #6 uses the zero-visible branch; positive visible counts use a different per-criterion getter. PTR/Forever binding is inferred from their selected original Lua. New simulator input stays empty by default; no event substitutes or live cache writer claims.
+
+## [2026-11-14] correction | Inventory name-adapter evidence
+
+[Inventory/purchase getters](investigations/inventory-purchase-getters.md) separates the INFERRED one-based host slot-name adapter from VERIFIED numeric/packing tests. Retail publications use ACTIVE profile checks; state comments and GUID-kind predicate documentation are corrected.
+
+## [2026-11-14] implementation | Inventory candidates and purchase records
+
+[Inventory/purchase getters](investigations/inventory-purchase-getters.md) records R88k.1/.2 packed-key publication and refund records, empty host seams, selected consumer tests and explicit remaining VM limits.
+
+## [2026-11-14] test | GameTooltip method contracts (pre-review-fix)
+
+**VERIFIED (Retail code SHA `4969fe0214412988f0131ae96a9f4a14c9229012`):** the original minimum-width arity/default/round-trip, pair-storage/`NumLines` separation, and conversion-error tests passed; the selected `GameTooltip_InsertFrame` preservation test passed. **PRESERVATION:** its scalar selector observes only the first getter result. These tests predate the review correction that gates producer probes as optional and removes unproved bad-self decoration assertions.
+
+## [2026-11-14] evidence boundary | GameTooltip method security
+
+**VERIFIED (R88n.7, Retail 12.1.5.70688):** the getter's conditional result secrecy and diagnostic/access effects, and the AddFontStrings parent-change/secret-aspect checks. **VERIFIED (simulator model):** the Retail method checks ChangeParent, the six inherited aspects and RemoveSecretAspects before storage. **UNKNOWN (simulator parity):** the getter's call-state secrecy/diagnostic effects and AddFontStrings' saved-call secret-state transition remain unmodeled because their required runtime state is not represented.
+
+## [2026-11-14] implementation | GameTooltip minimum width and font strings
+
+Updated the [GameTooltip method contract](../specs/game-tooltip-methods.md), [Lua API](systems/lua-api.md#game-tooltip-minimum-width-and-font-strings), and [consumer-selection investigation](investigations/consumer-selection-and-red-proof.md#gametooltip-minimum-width-consumer) with R88n.7. **VERIFIED (Retail 12.1.5.70688):** `GetMinimumWidth` returns the stored number and forced boolean; `AddFontStrings` appends a pair, resets count-aligned state, and returns zero values without adding a `NumLines` entry. **VERIFIED (simulator history, `b6a107994`):** non-Retail profiles keep their pre-lane behavior. **PRESERVATION:** the selected `GameTooltip_InsertFrame` selector reads only the first getter result. **INFERRED:** pair retention across ClearLines/Hide and copying through CopyTooltip. **UNKNOWN:** later pair use and the unmodeled call-secret effects.
+
+## [2026-11-14] correction | GlobalColor test oracle
+
+Updated the [catalog contract](../specs/c-ui-color-get-colors.md) and [system page](systems/global-color-catalog.md). The API test now uses literal snapshot expectations instead of the generated catalog as its oracle. **VERIFIED (pinned Retail 12.1.5.70783 CSV):** the eight sample tag/packed values are pinned source facts. **INFERRED:** count 361 follows the snapshot under the inferred feed/dedup rules; applying native 12.1.5.70688 behavior to 70783 remains inferred, and cursor exclusions remain unknown.
+
+## [2026-11-14] system | Retail GlobalColor catalog
+
+Added [GlobalColor catalog](systems/global-color-catalog.md) and the [Retail API contract](../specs/c-ui-color-get-colors.md). **VERIFIED (local CASC Retail 12.1.5.70783):** FileDataID 4328468 contains 367 decoded rows with no unreadable records. **VERIFIED (native Retail 12.1.5.70688, R88o.3):** `GetColors` uses flag 3, ignores arguments, copies `ColorMixin`, decodes ARGB with f32 reciprocal multiplication, keeps first tag collisions, applies no empty-tag/flag filters, and exports in tag-byte order. **VERIFIED (simulator generated catalog):** the static export has 361 tags. **VERIFIED (CSV exporter):** the CSV omits invalid-index and excluded-row state. **UNKNOWN (70783 cursor mapping):** native 70688 evidence identifies no corresponding 70783 row IDs. **INFERRED (70688 rules applied to 70783):** native output matches only if no additional cursor skips apply. **PRESERVATION:** hand-set Retail colors remain until every consumer's load order is proved. **UNKNOWN:** live cache contents and update schedule.
+
+## [2026-11-14] investigation | Retail tooltip serializer boundary
+
+Updated [tooltip data serialization](../specs/tooltip-data-serialization.md), [Lua API](systems/lua-api.md#retail-tooltipdata-field-boundary-r88n4b), and [consumer selection](investigations/consumer-selection-and-red-proof.md#retail-tooltip-serializer-field-consumers). **VERIFIED (R88n.4b):** repair and battle-pet fields are top-level; `price` and `maxPrice` belong on type 11. **INFERRED:** Retail projects positive `ItemInfo.sell_price` to `price`; `maxPrice`, repair cost and pet values remain unmodeled. Quest-cache callbacks and the LFG whole-message callback have no matching simulator route to fix.
+
+## [2026-11-14] correction | Merchant builder evidence boundary
+
+[Merchant item links](investigations/merchant-item-link.md) now requires explicit host item payloads. Missing data remains an INFERRED unresolved/no-text seam. Synthetic serializer fixtures are not complete native link evidence; the original consumer explicitly compares distinct results. Shared formatter behavior is unchanged.
+
+## [2026-11-14] implementation | Merchant item-link publication
+
+[Merchant item links](investigations/merchant-item-link.md) records R88l.2 Retail validation, arity, shared link formatting and explicit host-selected offer seams. Native raw-row ordering/writers remain unknown; no non-Retail publication is added.
+
+## [2026-11-14] fix | Retail screen clamping
+
+Updated [layout-system](systems/layout-system.md#screen-clamping) and the [layout reference](../layout-system.md#screen-clamping) with R88n.5r. **VERIFIED (Retail 12.1.5.70688):** generic rect resolution uses scaled insets before rect storage/notification on queued and synchronous routes; GameTooltip inherits its enable bit from `SharedTooltipTemplate`; row setup creates no per-row clip. The original consumer selector failed at test commit `bcb35d79a` and passed at implementation commit `3a27c7d52`. **UNKNOWN:** suppression-state identity, setter-only cache invalidation, exact rounding, oversized-frame behavior, and order relative to snapping.
+
+## [2026-11-14] investigation | Forever tooltip cached lines
+
+Updated the [tooltip lifecycle investigation](investigations/tooltip-owner-lifecycle.md#r88n5-forever-clearlines-cache-boundary) and contract with R88n.5. **VERIFIED (Forever 1.60.1.70707):** ClearLines resets cached left/right text for active rows, not inactive cache entries. Optional API and selected `TooltipDataHandler.ProcessInfo` preservation tests pass. PTR applicability for Retail layout facts remains INFERRED; clipping, order, nonzero extra-inset writers and clamping remain UNKNOWN.
+
+## [2026-11-14] investigation | Retail quest tooltip consumers
+
+Updated [consumer selection and RED proof](investigations/consumer-selection-and-red-proof.md#retail-quest-tooltip-consumers-and-host-input-seams) and the [Round 7 getter contract](../specs/tooltip-r7-getters.md). **VERIFIED (Retail 12.1.5.70688, R88n.1):** both getters return exactly zero Lua values on missing-source and failed-producer paths. **VERIFIED (R88n.3/R88n.3a):** the special-item getter resolves the indexed quest through request context and cache fields before selecting an inventory object. Cache/invalidation, inventory/object and party/objective writers remain UNKNOWN and use empty host inputs. Native return arity for a successful party query with no rows also remains UNKNOWN; the simulator emits no values for that host-supplied empty result.
+
+## [2026-11-14] fix | Original character and store lifecycle ownership
+
+[Lua-owned fallback retirement](investigations/lua-owned-fallback-retirement.md#j-original-character-labels-and-titles) records the separately proved Retail CharacterFrame bridge and StoreUI escape guard removals, real equipment/reopen/attribute consumers, and unchanged non-Retail/native-unknown boundaries.
+
+## [2026-11-14] implementation | Retail spell count and query routes
+
+Updated [Lua API](systems/lua-api.md#retail-1215-spell-count-visibility-and-ranged-id-routes) and the [spell count contract](../specs/spell-count-outputs.md) for R88k/R88m. **VERIFIED (Retail 12.1.5.70688):** cast count uses Spell-store membership and the first eight eligible reagent limits; display selects cast mode before charges using its distinct reagent selector; ranged-ID comparison, metadata-mask writer, equal-ID clear, and visibility success/failure arity are recorded. **INFERRED:** A_Admin LearnSpell/UnlearnSpell wiring and active-player context default. **UNKNOWN:** dispatcher meanings, SpellReagents field mapping, alternate inventory modes/inclusion, visibility tables, and context lifecycle. **VERIFIED (optional tests at code SHA `438ec83e8`):** selected original consumers and API-level tests pass; five profile compile receipts have zero warnings; Retail `lua-errors` returns `[]`.
+
+## [2026-11-14] implementation | Retail map world positions
+
+Updated the [map world-position contract](../specs/map-world-position.md) and the [implementation investigation](investigations/patch-8-0-1-api-audit.md#retail-map-world-position) with R88i.41. **VERIFIED (R88i.41, Retail 12.1.5.70688):** both functions' signed-ID parsing, plain-table positions, exact Usage strings, forward result arity, inclusive UI bounds, epsilon rejection, nearest-center selection, and outside extrapolation. **INFERRED:** 70783/70575 data parity, the swapped/reversed forward formula, positive `MapID` output, and CSV-order ties. **VERIFIED (repository):** the generator reads 22,780 rows and emits only the fields used by the forward vector. **VERIFIED (targeted generator tests):** all three changed assignment-parser cases pass. **VERIFIED (repository model):** `AreaInfo` lacks `ContinentID`; negative-`MapID` fallback remains unimplemented. Native inverse assignment ranking and parent promotion remain out of scope.
+
+## [2026-11-14] investigation | AdventureGuideUtil original availability
+
+[AdventureGuideUtil availability](investigations/adventureguide-original-availability.md)
+records the Retail original MicroMenu consumer and narrow bootstrap boundary.
+The default-state selector is PRESERVATION, not native availability or RED.
+
+- L follow-up: retain AdventureGuide availability on Retail Glue; prove Game
+  owner precedes ItemRefHandlers and disclose unsupported pre-owner hyperlink
+  calls, per coordinator #962. See [[adventureguide-original-availability]].
+
+## [2026-11-13] system | User waypoint supertracking
+
+Updated [SuperTrack state](systems/super-track-state.md#user-waypoint-supertracking), [C_Map waypoint system](systems/c-map-user-waypoint.md#original-consumer-boundary), and both contracts with R88i.3/R88j.5/R88j.6. **VERIFIED (Retail 12.1.5.70688):** separate quest/content/map-pin flags, content ID-zero presence, direct setter/clear effects, corpse preservation, aggregate user-waypoint inclusion, and ClearAll selection/flag reset are recorded. **VERIFIED (optional Retail tests):** original WaypointLocationDataProvider click and pin consumers pass; focused flag transition tests pass. **INFERRED:** getter flags match selections from a consistent start. **UNKNOWN:** two getterless flags, exact return arities, named-event effects, and SetSuperTrackedMapPin/SetSuperTrackedVignette acceptance (R88j.8 pending).
+
+## [2026-11-13] fix | Inline icon right-edge advance
+
+Updated [Rendering pipeline](systems/rendering-pipeline.md#inline-icons-in-text) with R88f.L.2's absolute-right-edge snap and the tooltip boundary. A fractional scaled-edge `GetStringWidth` test exercises snapped cursor advance.
 
 ## [2026-11-13] system | C_Map user waypoint
 
@@ -3802,3 +3887,19 @@ Added [FontString anchor sizing](investigations/fontstring-anchor-sizing.md). Th
 - 2026-11-13: C Transmog location slice: baseline original startup/cache consumer passed; remove only Retail synthetic location helpers, keep other profiles and unresolved best-item helper unchanged. See consumer-selection investigation.
 
 - 2026-11-13: [Retail container parentArray ownership](investigations/consumer-selection-and-red-proof.md#retail-container-parentarray-ownership): original six XML bags and repeated real enumerator membership preserve Retail-only scaffold removal.
+
+- 2026-11-13: Documented Retail UiMapPoint original constructor ownership, preservation selector, and separate waypoint API prerequisites (lt-6c8e).
+
+- 2026-11-13: Recorded inventory O original Lua/XML ownership retirement, chat history preservation, journal/panel/navigation consumer proof and deferred native/conditional boundaries in [[lua-owned-fallback-retirement]].
+
+## 2026-11-14 | Merchant/LFG R88i boundaries
+
+Recorded verified requirement/request branches and separately inferred data mappings in [merchant-lfg-r88i](investigations/merchant-lfg-r88i.md), with original-consumer and neutral-seam limits.
+
+## 2026-11-14 | J character-label retirement
+
+Added original CharacterSelect label and CharacterFrame active-subframe title evidence to [Lua-owned fallback retirement](investigations/lua-owned-fallback-retirement.md#j-original-character-labels-and-titles), with bounded Retail-only scope and remaining native/owner limitations.
+
+## 2026-11-14 | Retail recipe-rank tooltip
+
+Updated the [Lua API](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) and [Round 7 contract](../specs/tooltip-r7-getters.md) with the selected `TooltipDataHandler` accessor and evidence limits. **VERIFIED (R88n.4):** the getter uses top-level TooltipData type 17 and the requested recipe ID; text-line type 0 is INFERRED simulator serialization. **VERIFIED (R88n.4a):** native rebuild retains duplicate keys, inserts new keys, appends/counts/grows the display vector, and projects favorite/crafting-order flags before row copy; the simulator cache models key retention and lookup only. **VERIFIED (R88n.4b):** native clear has direct initialization and rebuild callers, and dirty state can reach rebuild. **INFERRED (simulator routes):** `OpenTradeSkill` and profession-spell redirection share a clearing helper; a changed filter clears at `begin_tick` before event dispatch, without rebuilding rows. **INFERRED (presentation):** exact color globals/RGB, rank numbering/boundary, label delimiter, localization keys, blank separators, source placement, wrapping, cycle handling and missing-input failure predicates. **PRESERVATION:** zero-value miss coverage does not prove producer selection. **UNKNOWN:** complete row semantics, upstream acquisition, external clear triggers, learned-status meaning and player/faction source lookup.

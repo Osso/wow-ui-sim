@@ -295,6 +295,7 @@ fn emit_widget_inline_text_quads(
             outline: f.font_outline,
             alpha: layout.alpha,
         },
+        true,
     );
 }
 

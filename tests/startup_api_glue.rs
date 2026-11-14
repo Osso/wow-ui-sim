@@ -89,7 +89,7 @@ fn glue_runtime_helpers_exist_with_safe_defaults() {
                    type(GetServerName()),
                    location:IsUnit(),
                    location:IsValid(),
-                   AdventureGuideUtil.IsAvailable(),
+                   rawget(AdventureGuideUtil, "IsAvailable") ~= nil and AdventureGuideUtil.IsAvailable() or false,
                    DifficultyUtil.GetDifficultyName(DifficultyUtil.ID.DungeonNormal),
                    DifficultyUtil.GetMaxPlayers(DifficultyUtil.ID.DungeonNormal),
                    type(PlayerSpellsUtil),
@@ -112,7 +112,11 @@ fn glue_runtime_helpers_exist_with_safe_defaults() {
     assert_eq!(server_name_type, "nil");
     assert!(player_location_kind);
     assert!(player_location_valid);
-    assert!(adventure_guide_available);
+    assert_eq!(
+        adventure_guide_available,
+        wow_ui_sim::client_profile::ACTIVE != wow_ui_sim::client_profile::ClientProfile::Retail,
+        "Retail waits for the original Game helper; other profiles retain bootstrap"
+    );
     assert!(!dungeon_normal_name.is_empty());
     assert_eq!(dungeon_normal_max_players, 5.0);
     assert_eq!(player_spells_util_type, "table");

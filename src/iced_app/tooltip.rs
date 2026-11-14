@@ -1114,6 +1114,7 @@ fn emit_inline_tooltip_text(
             outline: TextOutline::None,
             alpha: segment_run.color[3],
         },
+        false,
     );
 }
 

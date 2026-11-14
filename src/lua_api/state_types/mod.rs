@@ -1,5 +1,6 @@
 //! Plain data types used by SimState.
 
+mod achievement_eligibility;
 pub mod auction_house;
 pub mod azerite_essence;
 pub mod barber_shop;
@@ -7,6 +8,7 @@ pub mod character_world;
 pub mod collections;
 pub mod crafting;
 pub mod group_member_counts;
+pub mod lfg_rewards;
 pub mod loot_history;
 pub mod mythic_plus_scenario;
 pub mod player_choice;
@@ -16,6 +18,7 @@ pub mod social;
 pub mod wow_token;
 
 pub use crate::lua_api::timer_layout::RiluaPendingTimer as PendingTimer;
+pub use achievement_eligibility::*;
 pub use azerite_essence::{AzeriteEssenceInfo, AzeriteEssenceMilestoneInfo, AzeriteEssenceState};
 pub use barber_shop::{
     BarberShopAlternateFormRace, BarberShopCategory, BarberShopCharacterData, BarberShopOption,
@@ -25,6 +28,7 @@ pub use character_world::*;
 pub use collections::*;
 pub use crafting::*;
 pub use group_member_counts::{GroupMemberCountsMember, GroupMemberCountsState};
+pub use lfg_rewards::{LfgTooltipReward, LfgTooltipRewardGroup};
 pub use loot_history::LootHistoryState;
 pub use mythic_plus_scenario::{
     DeathRecapEntry, DeathRecapEventInfo, KillingBlowInfo, MythicPlusAffix, MythicPlusRun,
