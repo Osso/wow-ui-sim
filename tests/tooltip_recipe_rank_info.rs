@@ -196,6 +196,9 @@ fn rank_threshold_changes_description_colors_through_original_accessor() {
         assert(secondDescription and secondDescription ~= '', 'spell B fixture has no description')
         local normalR, normalG, normalB = NORMAL_FONT_COLOR:GetRGB()
         local disabledR, disabledG, disabledB = DISABLED_FONT_COLOR:GetRGB()
+        local function packedColor(value)
+            return math.floor(value * 255 + 0.5) * 0.003921568859368563
+        end
 
         local learned = query(1)
         assert(learned, 'RED: rank must control the supplied descriptions')
@@ -207,12 +210,12 @@ fn rank_threshold_changes_description_colors_through_original_accessor() {
             'first description is missing or unwrapped: ' .. tostring(firstDescription))
         assert(learnedSecond and learnedSecond.wrapText == true,
             'second description is missing or unwrapped: ' .. tostring(secondDescription))
-        assert(math.abs(learnedFirst.leftColor.r - normalR) < 0.001, 'first description red channel')
-        assert(math.abs(learnedFirst.leftColor.g - normalG) < 0.001, 'first description green channel')
-        assert(math.abs(learnedFirst.leftColor.b - normalB) < 0.001, 'first description blue channel')
-        assert(math.abs(learnedSecond.leftColor.r - disabledR) < 0.001, 'second description red channel')
-        assert(math.abs(learnedSecond.leftColor.g - disabledG) < 0.001, 'second description green channel')
-        assert(math.abs(learnedSecond.leftColor.b - disabledB) < 0.001, 'second description blue channel')
+        assert(math.abs(learnedFirst.leftColor.r - packedColor(normalR)) < 0.000001, 'first description red channel')
+        assert(math.abs(learnedFirst.leftColor.g - packedColor(normalG)) < 0.000001, 'first description green channel')
+        assert(math.abs(learnedFirst.leftColor.b - packedColor(normalB)) < 0.000001, 'first description blue channel')
+        assert(math.abs(learnedSecond.leftColor.r - packedColor(disabledR)) < 0.000001, 'second description red channel')
+        assert(math.abs(learnedSecond.leftColor.g - packedColor(disabledG)) < 0.000001, 'second description green channel')
+        assert(math.abs(learnedSecond.leftColor.b - packedColor(disabledB)) < 0.000001, 'second description blue channel')
         assert(findText(learned, TRADESKILL_NEXT_RANK_HEADER), 'missing next-rank header')
         assert(findText(learned, 'Host supplied next-rank source'), 'missing supplied source text')
 
@@ -220,9 +223,9 @@ fn rank_threshold_changes_description_colors_through_original_accessor() {
         assert(allRanks and allRanks.id == {RECIPE_RANK_BASE}, 'rank 2 query must retain recipe identity')
         local allRanksSecond = findText(allRanks, secondDescription)
         assert(allRanksSecond, 'rank 2 query must include the second description')
-        assert(math.abs(allRanksSecond.leftColor.r - normalR) < 0.001, 'rank 2 description red channel')
-        assert(math.abs(allRanksSecond.leftColor.g - normalG) < 0.001, 'rank 2 description green channel')
-        assert(math.abs(allRanksSecond.leftColor.b - normalB) < 0.001, 'rank 2 description blue channel')
+        assert(math.abs(allRanksSecond.leftColor.r - packedColor(normalR)) < 0.000001, 'rank 2 description red channel')
+        assert(math.abs(allRanksSecond.leftColor.g - packedColor(normalG)) < 0.000001, 'rank 2 description green channel')
+        assert(math.abs(allRanksSecond.leftColor.b - packedColor(normalB)) < 0.000001, 'rank 2 description blue channel')
         assert(not findText(allRanks, TRADESKILL_NEXT_RANK_HEADER), 'no next rank exists above rank 2')
         assert(not findText(allRanks, 'Host supplied next-rank source'), 'no source row exists above rank 2')
         "#
