@@ -273,9 +273,6 @@ fn load_assignment_rows(
     if assignments.is_empty() {
         return Err(format!("{}: no UiMapAssignment rows", path.display()).into());
     }
-    for rows in assignments.values_mut() {
-        rows.sort_by_key(|assignment| assignment.order_index);
-    }
     let row_count = assignments.values().map(Vec::len).sum();
     Ok((assignments, row_count))
 }
@@ -299,6 +296,10 @@ fn write_assignment_file(
     writeln!(
         out,
         "//! INFERRED applicability: 70783 assignments match the selected 70575 Retail pin; exact parity is unverified."
+    )?;
+    writeln!(
+        out,
+        "//! INFERRED tie order: preserve CSV row order; native assignment visitation order is unknown."
     )?;
     writeln!(out)?;
     writeln!(out, "#[derive(Debug, Clone, Copy, PartialEq)]")?;
