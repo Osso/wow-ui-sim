@@ -1,3 +1,7 @@
+## [2026-11-14] implementation | Forever tooltip getter publication
+
+Updated the [modified-appearance](../specs/tooltip-appearance-item.md), [merchant-cost](../specs/tooltip-merchant-cost-item.md), [outfit](../specs/tooltip-outfit.md), and [PvP talent](../specs/tooltip-pvp-talent.md) contracts, plus the [Lua API](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation), with R88n.8. **VERIFIED (Forever 1.60.1.70707):** the four getters register; all five targeted optional tests pass, including the selected SpellBook consumer. That consumer result is **PRESERVATION**, since populated source rows are absent. **INFERRED:** `SimState.forever_outfits` supplies saved names. **UNKNOWN:** native writers, populated appearance/PvP data, and merchant availability/filter inputs.
+
 ## [2026-11-14] fix | Retail screen clamping
 
 Updated [layout-system](systems/layout-system.md#screen-clamping) and the [layout reference](../layout-system.md#screen-clamping) with R88n.5r. **VERIFIED (Retail 12.1.5.70688):** generic rect resolution uses scaled insets before rect storage/notification on queued and synchronous routes; GameTooltip inherits its enable bit from `SharedTooltipTemplate`; row setup creates no per-row clip. The original consumer selector failed at test commit `bcb35d79a` and passed at implementation commit `3a27c7d52`. **UNKNOWN:** suppression-state identity, setter-only cache invalidation, exact rounding, oversized-frame behavior, and order relative to snapping.

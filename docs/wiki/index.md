@@ -1,3 +1,7 @@
+## [2026-11-14] implementation | Forever tooltip getter publication
+
+The [modified-appearance](../specs/tooltip-appearance-item.md), [merchant-cost](../specs/tooltip-merchant-cost-item.md), [outfit](../specs/tooltip-outfit.md), and [PvP talent](../specs/tooltip-pvp-talent.md) contracts and [Lua API](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) record R88n.8. **VERIFIED (Forever 1.60.1.70707):** the four getters register; tested missing-source results, argument handling, outfit zero/missing-name behavior, and the selected SpellBook consumer pass. The consumer is **PRESERVATION** because populated source records are not modeled. **INFERRED:** saved names map from `SimState.forever_outfits`. **UNKNOWN:** populated appearance/PvP records, native saved-outfit writers, and merchant availability/filter state.
+
 ## [2026-11-14] fix | Forever tooltip cached lines
 
 [Tooltip owner lifecycle](investigations/tooltip-owner-lifecycle.md#r88n5-forever-clearlines-cache-boundary) records R88n.5. **VERIFIED (Forever 1.60.1.70707):** `ClearLines` resets cached left/right FontString text for active rows only; the optional API test proves inactive entries are untouched, and the original selected `TooltipDataHandler.ProcessInfo` test preserves reprocessing and reuse. Retail attachments and owner pairs remain VERIFIED; PTR parity is INFERRED. Clipping, draw order, nonzero extra-inset writers and post-anchor clamping remain UNKNOWN.
