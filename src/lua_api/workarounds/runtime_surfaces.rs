@@ -48,6 +48,11 @@ pub(super) fn patch_container_frame_token_tracker(env: &crate::lua_api::WowLuaEn
     temporary::container_frame_token_tracker::patch(env);
 }
 
+#[cfg(not(feature = "client-retail"))]
+pub(super) fn patch_paging_controls_page_text(env: &crate::lua_api::WowLuaEnv) {
+    temporary::paging_controls_page_text::patch(env);
+}
+
 pub(super) fn patch_achievement_display_set_achievements(env: &crate::lua_api::WowLuaEnv) {
     permanent::reapply_achievement_display_after_blizzard_load(env);
 }

@@ -103,6 +103,11 @@ const POST_LOAD_WORKAROUNDS: &[WorkaroundStep] = &[
         label: "ensure_adventure_map_frame_surface",
         apply: ensure_adventure_map_frame_surface,
     },
+    #[cfg(not(feature = "client-retail"))]
+    WorkaroundStep {
+        label: "patch_paging_controls_page_text",
+        apply: patch_paging_controls_page_text,
+    },
     WorkaroundStep {
         label: "patch_talent_edge_frame_level_sync",
         apply: patch_talent_edge_frame_level_sync,
@@ -609,6 +614,10 @@ fn patch_runtime_core_addon_surfaces(env: &crate::lua_api::LoaderEnv<'_>, addon_
             | "Blizzard_VoiceToggleButton"
     ) {
         temporary::chat_voice_button_surface::patch_loader(env);
+    }
+    #[cfg(not(feature = "client-retail"))]
+    if addon_name == "Blizzard_PagedContent" {
+        temporary::paging_controls_page_text::patch_loader(env);
     }
     if matches!(
         addon_name,
