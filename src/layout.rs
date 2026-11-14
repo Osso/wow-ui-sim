@@ -237,8 +237,10 @@ fn resolve_anchor_target(
         relative_rect.height,
     );
     (
-        anchor_x + registry.round_layout_value(frame, anchor.x_offset) * frame.effective_scale,
-        anchor_y - registry.round_layout_value(frame, anchor.y_offset) * frame.effective_scale,
+        anchor_x
+            + registry.round_layout_displacement(frame, anchor.x_offset) * frame.effective_scale,
+        anchor_y
+            - registry.round_layout_displacement(frame, anchor.y_offset) * frame.effective_scale,
     )
 }
 
@@ -304,7 +306,7 @@ fn compute_rect_from_edges(
         edges.left_x,
         edges.right_x,
         edges.center_x,
-        registry.round_layout_value(frame, frame.width),
+        registry.round_layout_dimension(frame, frame.width),
         scale,
         parent_rect.x,
         parent_rect.width,
@@ -313,7 +315,7 @@ fn compute_rect_from_edges(
         edges.top_y,
         edges.bottom_y,
         edges.center_y,
-        registry.round_layout_value(frame, frame.height),
+        registry.round_layout_dimension(frame, frame.height),
         scale,
         parent_rect.y,
         parent_rect.height,
@@ -386,8 +388,8 @@ fn resolve_single_anchor(
     cache: &mut LayoutCache,
 ) -> LayoutRect {
     let anchor = &frame.anchors[0];
-    let width = registry.round_layout_value(frame, frame.width) * eff_scale;
-    let height = registry.round_layout_value(frame, frame.height) * eff_scale;
+    let width = registry.round_layout_dimension(frame, frame.width) * eff_scale;
+    let height = registry.round_layout_dimension(frame, frame.height) * eff_scale;
 
     let relative_rect = if let Some(rel_id) = anchor.relative_to_id {
         compute_frame_rect_cached(registry, rel_id as u64, screen_width, screen_height, cache).rect
@@ -659,8 +661,8 @@ fn anchorless_rect(
     if let Some(rect) = layout_slider_thumb::slider_thumb_rect(registry, frame, parent_rect) {
         return rect;
     }
-    let width = registry.round_layout_value(frame, frame.width) * scale;
-    let height = registry.round_layout_value(frame, frame.height) * scale;
+    let width = registry.round_layout_dimension(frame, frame.width) * scale;
+    let height = registry.round_layout_dimension(frame, frame.height) * scale;
     if width == 0.0 && height == 0.0 && is_statusbar_bar_child(registry, frame) {
         return parent_rect;
     }
@@ -739,14 +741,33 @@ fn clamp_rect_to_screen(
     (left, right, top, bottom): (f32, f32, f32, f32),
     effective_scale: f32,
 ) {
+    use crate::widget::clamp_geometry::{inset_to_public, uses_retail_clamp_producers};
+
+    let [left, right, top, bottom] = [left, right, top, bottom].map(inset_to_public);
     let left_edge = -left * effective_scale;
     let right_edge = screen_w - right * effective_scale;
     let top_edge = top * effective_scale;
     let bottom_edge = screen_h + bottom * effective_scale;
 
-    if rect.width >= screen_w
-        && crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail
-    {
+    if uses_retail_clamp_producers() {
+        // Y grows downward in LayoutRect, so the native bottom correction
+        // moves y up and the top correction moves y down.
+        if rect.x < left_edge {
+            rect.x = left_edge;
+        }
+        if rect.y + rect.height > bottom_edge {
+            rect.y = bottom_edge - rect.height;
+        }
+        if rect.x + rect.width > right_edge {
+            rect.x = right_edge - rect.width;
+        }
+        if rect.y < top_edge {
+            rect.y = top_edge;
+        }
+        return;
+    }
+
+    if rect.width >= screen_w {
         rect.x = 0.0;
     } else {
         if rect.x < left_edge {
@@ -757,9 +778,7 @@ fn clamp_rect_to_screen(
         }
     }
 
-    if rect.height >= screen_h
-        && crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail
-    {
+    if rect.height >= screen_h {
         rect.y = 0.0;
     } else {
         // Native checks the bottom boundary before the top boundary.

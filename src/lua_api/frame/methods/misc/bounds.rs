@@ -5,6 +5,7 @@ use crate::lua_api::frame::methods::methods_helpers::{
 };
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, frame_id_from_stack};
 use crate::lua_bridge::{FromStack, IntoStack, stack_val, table_set_rust_fn_static};
+use crate::widget::clamp_geometry::{inset_to_public, inset_to_storage};
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
@@ -61,10 +62,9 @@ pub fn get_clamp_rect_insets(state: &mut LuaState) -> LuaResult<u32> {
         .get(id)
         .map(|f| f.clamp_rect_insets)
         .unwrap_or((0.0, 0.0, 0.0, 0.0));
-    state.push(Val::Num(left as f64));
-    state.push(Val::Num(right as f64));
-    state.push(Val::Num(top as f64));
-    state.push(Val::Num(bottom as f64));
+    for stored in [left, right, top, bottom] {
+        state.push(Val::Num(f64::from(inset_to_public(stored))));
+    }
     Ok(4)
 }
 
@@ -74,6 +74,7 @@ pub fn set_clamp_rect_insets(state: &mut LuaState) -> LuaResult<u32> {
     let right = clamp_dimension(state, 3)?;
     let top = clamp_dimension(state, 4)?;
     let bottom = clamp_dimension(state, 5)?;
+    let [left, right, top, bottom] = [left, right, top, bottom].map(inset_to_storage);
     if !can_change_protected_state_for(state, id) {
         emit_addon_action_blocked(state, id, "SetClampRectInsets");
         return Ok(0);
