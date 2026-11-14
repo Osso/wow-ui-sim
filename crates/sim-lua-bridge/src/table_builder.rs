@@ -157,7 +157,7 @@ pub fn table_set_rust_fn(
     func: RustFn,
 ) -> LuaResult<()> {
     let key_ref = state.gc.intern_string(name.as_bytes());
-    install_rust_fn(state, table_ref, key_ref, name, func)
+    install_rust_fn(state, table_ref, key_ref, name, func, true)
 }
 
 /// Same as [`table_set_rust_fn`] but routes the key through
@@ -172,7 +172,21 @@ pub fn table_set_rust_fn_static(
 ) -> LuaResult<()> {
     let name_bytes: &'static [u8] = name.as_bytes();
     let key_ref = state.gc.intern_string_static(name_bytes);
-    install_rust_fn(state, table_ref, key_ref, name, func)
+    install_rust_fn(state, table_ref, key_ref, name, func, true)
+}
+
+/// Register a `RustFn` in only the requested namespace table.
+///
+/// Unlike [`table_set_rust_fn`], this does not mirror the write to a paired
+/// namespace. Use it when the caller has already selected the destinations.
+pub fn table_set_rust_fn_unpaired(
+    state: &mut LuaState,
+    table_ref: GcRef<RiluaTable>,
+    name: &str,
+    func: RustFn,
+) -> LuaResult<()> {
+    let key_ref = state.gc.intern_string(name.as_bytes());
+    install_rust_fn(state, table_ref, key_ref, name, func, false)
 }
 
 fn install_rust_fn(
@@ -181,6 +195,7 @@ fn install_rust_fn(
     key_ref: GcRef<rilua::vm::string::LuaString>,
     name: &str,
     func: RustFn,
+    mirror_namespace_peer: bool,
 ) -> LuaResult<()> {
     let key = Val::Str(key_ref);
     let closure = Closure::Rust(RustClosure::new(func, name));
@@ -189,7 +204,12 @@ fn install_rust_fn(
     state.ensure_stack(stack_slot + 1);
     state.stack_set(stack_slot, Val::Function(closure_ref));
     state.top = stack_slot + 1;
-    let result = table_set_namespace_member(state, table_ref, key, Val::Function(closure_ref));
+    let value = Val::Function(closure_ref);
+    let result = if mirror_namespace_peer {
+        table_set_namespace_member(state, table_ref, key, value)
+    } else {
+        set_table_member(state, table_ref, key, value)
+    };
     state.top = stack_slot;
     result
 }

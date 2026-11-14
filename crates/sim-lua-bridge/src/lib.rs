@@ -38,3 +38,4 @@ pub use table_builder::set_namespace_peer;
 pub use table_builder::table_set_namespace_member;
 pub use table_builder::table_set_rust_fn;
 pub use table_builder::table_set_rust_fn_static;
+pub use table_builder::table_set_rust_fn_unpaired;

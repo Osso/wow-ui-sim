@@ -1,4 +1,4 @@
-use crate::lua_bridge::table_set_rust_fn;
+use crate::lua_bridge::table_set_rust_fn_unpaired;
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
@@ -148,12 +148,24 @@ pub(crate) fn register_namespace_function_with_flags(
         crate::lua_bridge::set_namespace_peer(state, ordinary, secure)?;
     }
     if let Some(ordinary) = ordinary {
-        table_set_rust_fn(state, ordinary, member, function)?;
+        table_set_rust_fn_unpaired(state, ordinary, member, function)?;
     }
     if let Some(secure) = secure {
-        table_set_rust_fn(state, secure, member, function)?;
+        table_set_rust_fn_unpaired(state, secure, member, function)?;
     }
     Ok(())
+}
+
+/// Preserve an unclassified namespace entry on both sides of the current allowlist.
+pub(crate) fn register_unknown_namespace_function(
+    state: &mut LuaState,
+    namespace: &str,
+    member: &str,
+    function: rilua::RustFn,
+) -> LuaResult<()> {
+    let (ordinary, secure) = ensure_namespace_pair(state, namespace)?;
+    table_set_rust_fn_unpaired(state, ordinary, member, function)?;
+    table_set_rust_fn_unpaired(state, secure, member, function)
 }
 
 pub(crate) fn ensure_namespace_pair(
@@ -231,7 +243,7 @@ fn ensure_table_at_parent(state: &mut LuaState, parent: GcRef<Table>, name: &str
 
 #[cfg(test)]
 mod tests {
-    use super::register_namespace_function_with_flags;
+    use super::{ensure_namespace_pair, register_namespace_function_with_flags};
     use crate::lua_api::WowLuaEnv;
     use crate::lua_api::methods::{registry_get, table_get_static};
     use rilua::vm::state::LuaState;
@@ -292,6 +304,50 @@ mod tests {
                 true, false, false, true, true, true, true, true, true, false, false
             ]
         );
+    }
+
+    #[test]
+    fn flag_destinations_do_not_mirror_into_an_existing_namespace_peer() {
+        let env = WowLuaEnv::new().expect("lua env");
+        {
+            let mut lua = env.rilua_mut();
+            let state = lua.state_mut();
+            let _ = ensure_namespace_pair(state, "existingpairedflagnamespace")
+                .expect("create paired namespace");
+            register_namespace_function_with_flags(
+                state,
+                "existingpairedflagnamespace",
+                "ordinaryonly",
+                flag_probe,
+                1,
+            )
+            .expect("register ordinary-only member");
+            register_namespace_function_with_flags(
+                state,
+                "existingpairedflagnamespace",
+                "secureonly",
+                flag_probe,
+                2,
+            )
+            .expect("register secure-only member");
+        }
+
+        let result: Vec<bool> = env
+            .eval(
+                r#"
+                local public = rawget(_G, "existingpairedflagnamespace")
+                local secure = rawget(__secureenv, "existingpairedflagnamespace")
+                return {
+                    type(rawget(public, "ordinaryonly")) == "function",
+                    rawget(secure, "ordinaryonly") == nil,
+                    rawget(public, "secureonly") == nil,
+                    type(rawget(secure, "secureonly")) == "function",
+                }
+                "#,
+            )
+            .expect("paired namespace flag probe");
+
+        assert_eq!(result, vec![true, true, true, true]);
     }
 
     #[test]

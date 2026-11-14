@@ -443,20 +443,29 @@ fn register_c_timer(lua: &mut rilua::Lua) -> LuaResult<()> {
             timer_after,
             C_TIMER_AFTER_FLAGS,
         )?;
-    }
-    let c_timer_ref = crate::c_api::ensure_namespace(state, "C_Timer")?;
-    let builder = TableBuilder::from_table(state, c_timer_ref);
-    let builder = if retail {
-        builder
     } else {
-        // UNKNOWN outside Retail: keep the current ordinary-only registration.
-        builder.set_function("After", timer_after)?
-    };
-    let _ = builder
-        .set_function("NewTimerID", timer_new_timer_id)?
-        .set_function("NewTicker", timer_new_ticker)?
-        .set_function("NewTimer", timer_new_timer)?
-        .build();
+        // UNKNOWN outside Retail: preserve the current dual allowlist entry.
+        crate::c_api::register_unknown_namespace_function(state, "C_Timer", "After", timer_after)?;
+    }
+    // UNKNOWN (R88k.7): sibling methods have no verified flags; preserve their dual allowlist.
+    crate::c_api::register_unknown_namespace_function(
+        state,
+        "C_Timer",
+        "NewTimerID",
+        timer_new_timer_id,
+    )?;
+    crate::c_api::register_unknown_namespace_function(
+        state,
+        "C_Timer",
+        "NewTicker",
+        timer_new_ticker,
+    )?;
+    crate::c_api::register_unknown_namespace_function(
+        state,
+        "C_Timer",
+        "NewTimer",
+        timer_new_timer,
+    )?;
     #[cfg(feature = "timed-signal-maps")]
     crate::c_api::timed_signal_map::register_c_timer_timed_signal_map(state)?;
     #[cfg(not(feature = "timed-signal-maps"))]
@@ -464,6 +473,7 @@ fn register_c_timer(lua: &mut rilua::Lua) -> LuaResult<()> {
         // Keep namespace lookup from fabricating an unsupported factory.
         use crate::lua_api::methods::{create_table, table_set_static};
 
+        let c_timer_ref = crate::c_api::ensure_namespace(state, "C_Timer")?;
         let removed = create_table(state);
         table_set_static(state, removed, "NewTimedSignalMap", Val::Bool(true));
         table_set_static(

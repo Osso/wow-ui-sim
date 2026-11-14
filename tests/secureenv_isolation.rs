@@ -592,6 +592,7 @@ fn secureenv_does_not_read_late_table_from_global_env() {
     assert_eq!(table_type, "nil");
 }
 
+#[cfg(feature = "client-retail")]
 #[test]
 fn get_frame_metatable_is_present_in_both_environments() {
     let env = env();

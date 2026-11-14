@@ -2,7 +2,7 @@
 
 use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::globals::security::register_native_function_with_flags;
-use crate::lua_api::methods::{create_table, registry_get, table_get_static};
+use crate::lua_api::methods::create_table;
 use crate::lua_bridge::stack_val;
 use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
@@ -55,7 +55,7 @@ fn apply_mixins(
 }
 
 fn apply_mixin(state: &mut LuaState, object: Val, mixin: Val) -> LuaResult<()> {
-    let Val::Table(methods_ref) = resolve_mixin_methods(state, mixin) else {
+    let Val::Table(methods_ref) = mixin else {
         return Ok(());
     };
     let Some(methods) = state.gc.tables.get(methods_ref) else {
@@ -82,87 +82,4 @@ fn collect_mixin_entries(methods: &Table) -> Vec<(Val, Val)> {
         .into_iter()
         .filter(|(_, value)| !matches!(value, Val::Nil));
     array_entries.chain(hash_entries).collect()
-}
-
-fn resolve_mixin_methods(state: &mut LuaState, mixin: Val) -> Val {
-    if !matches!(mixin, Val::Table(_)) {
-        return mixin;
-    }
-
-    let secure_env = registry_get(state, "__secureenv");
-    let secure_registry = table_get_static(state, secure_env, "__secureMixinMethods");
-    let secure_methods = raw_table_get(state, secure_registry, mixin);
-    if matches!(secure_methods, Val::Table(_)) {
-        return secure_methods;
-    }
-
-    let global = Val::Table(state.global);
-    let public_registry = table_get_static(state, global, "__secureMixinMethods");
-    let public_methods = raw_table_get(state, public_registry, mixin);
-    if matches!(public_methods, Val::Table(_)) {
-        return public_methods;
-    }
-
-    mixin
-}
-
-fn raw_table_get(state: &LuaState, table: Val, key: Val) -> Val {
-    let Val::Table(table_ref) = table else {
-        return Val::Nil;
-    };
-    state
-        .gc
-        .tables
-        .get(table_ref)
-        .map(|table| table.get(key, &state.gc.string_arena))
-        .unwrap_or(Val::Nil)
-}
-
-#[cfg(test)]
-mod tests {
-    use crate::lua_api::WowLuaEnv;
-
-    #[cfg(feature = "client-retail")]
-    #[test]
-    fn secure_mixins_use_the_secure_registry_and_initialize_the_result() {
-        let env = WowLuaEnv::new().expect("lua env");
-        env.exec_rilua_secure(
-            r#"
-            __secureMixinMethods = setmetatable({}, { __mode = "k" })
-            local mixin = { publicField = true }
-            __secureMixinMethods[mixin] = {
-                secureField = true,
-                Init = function(self, value) self.initialized = value end,
-            }
-
-            local mixed = {}
-            Mixin(mixed, mixin)
-            secureMixinProbeMixin = mixed.secureField == true and mixed.publicField == nil
-
-            local created = CreateFromMixins(mixin)
-            secureMixinProbeCreate = created.secureField == true and created.publicField == nil
-
-            "#,
-        )
-        .expect("execute secure mixin probe");
-
-        let result: (bool, bool, String, String, bool) = env
-            .eval(
-                r#"
-                local initialized = CreateAndInitFromMixin({
-                    Init = function(self, value) self.value = value end,
-                }, 17)
-                return __secureenv.secureMixinProbeMixin,
-                       __secureenv.secureMixinProbeCreate,
-                       type(CreateAndInitFromMixin),
-                       type(rawget(__secureenv, "CreateAndInitFromMixin")),
-                       initialized.value == 17
-                "#,
-            )
-            .expect("read secure mixin probe");
-        assert_eq!(
-            result,
-            (true, true, "function".to_owned(), "nil".to_owned(), true)
-        );
-    }
 }

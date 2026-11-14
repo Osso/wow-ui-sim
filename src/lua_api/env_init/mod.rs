@@ -65,6 +65,7 @@ pub(super) fn init_lua_state(
     // native registrar order relative to the 39-name copy is UNKNOWN.
     super::globals::security::create_secure_environment(lua)?;
     super::globals::real::mixins::register(lua)?;
+    publish_unknown_bootstrap_globals(lua)?;
     enums::init_enum_globals(lua)?;
     frames::init_frame_metatable(lua)?;
     // register_globals calls gc_stop at its entry; finalize_bootstrap_gc
@@ -200,6 +201,21 @@ fn enable_taint_and_wrap_loadstring(lua: &mut rilua::Lua) -> crate::Result<()> {
         LuaApiMut::set_global_val(lua, "loadstring_untainted", original_loadstring)?;
     }
     LuaApiMut::register_function(lua, "loadstring", tainting_loadstring)?;
+    Ok(())
+}
+
+fn publish_unknown_bootstrap_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
+    // UNKNOWN (R88k.7): retain existing secure bootstrap values where no Retail native entry replaces them.
+    let names: &[&str] =
+        if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+            &["CreateAndInitFromMixin"]
+        } else {
+            &["Mixin", "CreateFromMixins", "CreateAndInitFromMixin"]
+        };
+    for name in names {
+        let value = LuaApiMut::get_global_val(lua, name);
+        super::globals::security::set_secure_env_key_state(lua.state_mut(), name, value)?;
+    }
     Ok(())
 }
 
