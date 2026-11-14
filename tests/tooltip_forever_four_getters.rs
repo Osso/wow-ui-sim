@@ -6,8 +6,10 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 mod tooltip_full_env_helpers;
 
 const PVP_TALENT_USAGE: &str = "Usage: local data = C_TooltipInfo.GetPvpTalent(talentID [, isInspect, groupIndex, talentIndex])";
-const APPEARANCE_USAGE: &str = "Usage: local data = C_TooltipInfo.GetItemByItemModifiedAppearanceID(itemModifiedAppearanceID)";
-const MERCHANT_COST_USAGE: &str = "Usage: local data = C_TooltipInfo.GetMerchantCostItem(slot, costIndex)";
+const APPEARANCE_USAGE: &str =
+    "Usage: local data = C_TooltipInfo.GetItemByItemModifiedAppearanceID(itemModifiedAppearanceID)";
+const MERCHANT_COST_USAGE: &str =
+    "Usage: local data = C_TooltipInfo.GetMerchantCostItem(slot, costIndex)";
 const OUTFIT_USAGE: &str = "Usage: local data = C_TooltipInfo.GetOutfit(outfitID)";
 
 fn assert_usage_error(env: &WowLuaEnv, call: &str, usage: &str) {
