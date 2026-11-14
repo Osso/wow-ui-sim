@@ -118,10 +118,19 @@ fn forever_spellbook_outfit_consumer_uses_the_selected_tooltip_getter() {
     let loaded = load_blizzard_addon_closure_into_env(
         &env,
         &ui,
-        &["Blizzard_GameTooltip", "Blizzard_PlayerSpells"],
+        &[
+            "Blizzard_GameTooltip",
+            "Blizzard_UIParentPanelManager",
+            "Blizzard_PlayerSpells",
+        ],
         &[],
     );
     assert!(loaded.iter().any(|addon| addon == "Blizzard_GameTooltip"));
+    assert!(
+        loaded
+            .iter()
+            .any(|addon| addon == "Blizzard_UIParentPanelManager")
+    );
     assert!(loaded.iter().any(|addon| addon == "Blizzard_PlayerSpells"));
     env.exec(
         r#"
