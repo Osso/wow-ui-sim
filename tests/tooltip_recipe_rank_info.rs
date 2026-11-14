@@ -20,6 +20,43 @@ const RECIPE_B_NEXT: i32 = 990_712;
 const RECIPE_RANK_BASE: i32 = 990_721;
 const RECIPE_RANK_NEXT: i32 = 990_722;
 
+const RANK_TEST_HELPERS: &str = r#"
+function RecipeRankTestQuery(recipeID, rank)
+    GameTooltip:SetOwner(UIParent, 'ANCHOR_NONE')
+    GameTooltip:SetRecipeRankInfo(recipeID, rank)
+    return GameTooltip:GetPrimaryTooltipData()
+end
+
+function RecipeRankTestDescription(spellID)
+    local spell = C_TooltipInfo.GetSpellByID(spellID)
+    local description = spell.lines[#spell.lines].leftText
+    assert(description and description ~= '', 'spell fixture has no description')
+    return description
+end
+
+function RecipeRankTestFindText(data, text)
+    for index, line in ipairs(data.lines) do
+        if line.leftText == text then return line, index end
+    end
+end
+
+function RecipeRankTestColorsDiffer(left, right)
+    return math.abs(left.r - right.r) > 0.000001
+        or math.abs(left.g - right.g) > 0.000001
+        or math.abs(left.b - right.b) > 0.000001
+end
+
+function RecipeRankTestAssertPackedColor(line, color)
+    local red, green, blue = color:GetRGB()
+    local function packed(value)
+        return math.floor(value * 255 + 0.5) * 0.003921568859368563
+    end
+    assert(math.abs(line.leftColor.r - packed(red)) < 0.000001, 'red channel')
+    assert(math.abs(line.leftColor.g - packed(green)) < 0.000001, 'green channel')
+    assert(math.abs(line.leftColor.b - packed(blue)) < 0.000001, 'blue channel')
+end
+"#;
+
 fn original_tooltip_handler_env() -> WowLuaEnv {
     let ui = blizzard_ui_dir();
     let selected = wow_ui_sim::loader::discover_blizzard_addons_for_screen(&ui, ScreenKind::Game);
@@ -54,6 +91,11 @@ fn assert_original_accessor(env: &WowLuaEnv) {
         "#,
     )
     .expect("the selected TooltipDataHandler accessor must be loaded");
+}
+
+fn install_rank_test_helpers(env: &WowLuaEnv) {
+    env.exec(RANK_TEST_HELPERS)
+        .expect("recipe-rank Lua test helpers should load");
 }
 
 fn add_recipe(
@@ -107,20 +149,18 @@ fn add_recipe_pair(
     );
 }
 
-#[test]
-fn recipe_id_selects_distinct_chains_through_original_tooltip_accessor() {
-    let env = original_tooltip_handler_env();
+fn add_recipe_selector_fixture(env: &WowLuaEnv) {
     add_recipe_pair(
-        &env,
+        env,
         RECIPE_A_BASE,
         RECIPE_A_NEXT,
         SPELL_A,
         SPELL_B,
-        Some("Host recipe label"),
+        None,
         None,
     );
     add_recipe_pair(
-        &env,
+        env,
         RECIPE_B_BASE,
         RECIPE_B_NEXT,
         SPELL_B,
@@ -128,6 +168,7 @@ fn recipe_id_selects_distinct_chains_through_original_tooltip_accessor() {
         None,
         None,
     );
+
     add_recipe(
         &mut env.state().borrow_mut().recipe_rank_tooltip_cache,
         RECIPE_A_BASE,
@@ -137,30 +178,37 @@ fn recipe_id_selects_distinct_chains_through_original_tooltip_accessor() {
         None,
         None,
     );
+}
+
+#[test]
+fn recipe_id_selects_distinct_chains_through_original_tooltip_accessor() {
+    let env = original_tooltip_handler_env();
+    add_recipe_selector_fixture(&env);
+    install_rank_test_helpers(&env);
 
     env.exec(&format!(
         r#"
-        local function query(recipeID)
-            GameTooltip:SetOwner(UIParent, 'ANCHOR_NONE')
-            GameTooltip:SetRecipeRankInfo(recipeID, 2)
-            return GameTooltip:GetPrimaryTooltipData()
-        end
-        local first = query({RECIPE_A_NEXT})
+        local descriptionA = RecipeRankTestDescription({SPELL_A})
+        local descriptionB = RecipeRankTestDescription({SPELL_B})
+        local first = RecipeRankTestQuery({RECIPE_A_NEXT}, 2)
         assert(first, 'RED: recipeID must publish its supplied recipe chain')
         assert(first.type == Enum.TooltipDataType.RecipeRankInfo)
         assert(first.id == {RECIPE_A_NEXT})
-        local firstName = C_TooltipInfo.GetSpellByID({SPELL_A}).lines[1].leftText
-        assert(first.lines[1].leftText == 'Host recipe label: ' .. firstName)
+        local firstA, firstAIndex = RecipeRankTestFindText(first, descriptionA)
+        local firstB, firstBIndex = RecipeRankTestFindText(first, descriptionB)
+        assert(firstA and firstB and firstAIndex < firstBIndex,
+            'first recipe chain or retained duplicate differs')
 
-        local second = query({RECIPE_B_NEXT})
+        local second = RecipeRankTestQuery({RECIPE_B_NEXT}, 2)
         assert(second and second.type == Enum.TooltipDataType.RecipeRankInfo)
         assert(second.id == {RECIPE_B_NEXT})
-        local secondName = C_TooltipInfo.GetSpellByID({SPELL_B}).lines[1].leftText
-        assert(second.lines[1].leftText == secondName)
-        assert(first.lines[1].leftText ~= second.lines[1].leftText)
+        local secondA, secondAIndex = RecipeRankTestFindText(second, descriptionA)
+        local secondB, secondBIndex = RecipeRankTestFindText(second, descriptionB)
+        assert(secondA and secondB and secondBIndex < secondAIndex,
+            'second recipe ID must select its distinct chain')
         "#
     ))
-    .expect("the original tooltip accessor must select the requested recipe chain");
+    .expect("the original accessor must select the requested recipe chain");
 }
 
 #[test]
@@ -173,72 +221,86 @@ fn rank_threshold_changes_description_colors_through_original_accessor() {
         SPELL_A,
         SPELL_B,
         None,
-        Some("Host supplied next-rank source"),
+        None,
     );
+    install_rank_test_helpers(&env);
 
     env.exec(&format!(
         r#"
-        local function query(rank)
-            GameTooltip:SetOwner(UIParent, 'ANCHOR_NONE')
-            GameTooltip:SetRecipeRankInfo({RECIPE_RANK_BASE}, rank)
-            return GameTooltip:GetPrimaryTooltipData()
-        end
-        local function findText(data, text)
-            for _, line in ipairs(data.lines) do
-                if line.leftText == text then return line end
-            end
-        end
-        local firstSpell = C_TooltipInfo.GetSpellByID({SPELL_A})
-        local secondSpell = C_TooltipInfo.GetSpellByID({SPELL_B})
-        local firstDescription = firstSpell.lines[#firstSpell.lines].leftText
-        local secondDescription = secondSpell.lines[#secondSpell.lines].leftText
-        assert(firstDescription and firstDescription ~= '', 'spell A fixture has no description')
-        assert(secondDescription and secondDescription ~= '', 'spell B fixture has no description')
-        local normalR, normalG, normalB = NORMAL_FONT_COLOR:GetRGB()
-        local disabledR, disabledG, disabledB = DISABLED_FONT_COLOR:GetRGB()
-        local function packedColor(value)
-            return math.floor(value * 255 + 0.5) * 0.003921568859368563
-        end
-
-        local learned = query(1)
-        assert(learned, 'RED: rank must control the supplied descriptions')
-        assert(learned.type == Enum.TooltipDataType.RecipeRankInfo, 'recipe rank type')
-        assert(learned.id == {RECIPE_RANK_BASE}, 'recipe ID')
-        local learnedFirst = findText(learned, firstDescription)
-        local learnedSecond = findText(learned, secondDescription)
-        assert(learnedFirst and learnedFirst.wrapText == true,
-            'first description is missing or unwrapped: ' .. tostring(firstDescription))
-        assert(learnedSecond and learnedSecond.wrapText == true,
-            'second description is missing or unwrapped: ' .. tostring(secondDescription))
-        assert(math.abs(learnedFirst.leftColor.r - packedColor(normalR)) < 0.000001, 'first description red channel')
-        assert(math.abs(learnedFirst.leftColor.g - packedColor(normalG)) < 0.000001, 'first description green channel')
-        assert(math.abs(learnedFirst.leftColor.b - packedColor(normalB)) < 0.000001, 'first description blue channel')
-        assert(math.abs(learnedSecond.leftColor.r - packedColor(disabledR)) < 0.000001, 'second description red channel')
-        assert(math.abs(learnedSecond.leftColor.g - packedColor(disabledG)) < 0.000001, 'second description green channel')
-        assert(math.abs(learnedSecond.leftColor.b - packedColor(disabledB)) < 0.000001, 'second description blue channel')
-        assert(findText(learned, TRADESKILL_NEXT_RANK_HEADER), 'missing next-rank header')
-        assert(findText(learned, 'Host supplied next-rank source'), 'missing supplied source text')
-
-        local allRanks = query(2)
-        assert(allRanks and allRanks.id == {RECIPE_RANK_BASE}, 'rank 2 query must retain recipe identity')
-        local allRanksSecond = findText(allRanks, secondDescription)
-        assert(allRanksSecond, 'rank 2 query must include the second description')
-        assert(math.abs(allRanksSecond.leftColor.r - packedColor(normalR)) < 0.000001, 'rank 2 description red channel')
-        assert(math.abs(allRanksSecond.leftColor.g - packedColor(normalG)) < 0.000001, 'rank 2 description green channel')
-        assert(math.abs(allRanksSecond.leftColor.b - packedColor(normalB)) < 0.000001, 'rank 2 description blue channel')
-        assert(not findText(allRanks, TRADESKILL_NEXT_RANK_HEADER), 'no next rank exists above rank 2')
-        assert(not findText(allRanks, 'Host supplied next-rank source'), 'no source row exists above rank 2')
+        local descriptionA = RecipeRankTestDescription({SPELL_A})
+        local descriptionB = RecipeRankTestDescription({SPELL_B})
+        local rankOne = RecipeRankTestQuery({RECIPE_RANK_BASE}, 1)
+        local rankTwo = RecipeRankTestQuery({RECIPE_RANK_BASE}, 2)
+        assert(rankOne and rankTwo, 'RED: rank must change supplied description colors')
+        assert(rankOne.type == Enum.TooltipDataType.RecipeRankInfo)
+        assert(rankTwo.type == Enum.TooltipDataType.RecipeRankInfo)
+        assert(rankOne.id == {RECIPE_RANK_BASE} and rankTwo.id == {RECIPE_RANK_BASE})
+        local rankOneA = RecipeRankTestFindText(rankOne, descriptionA)
+        local rankOneB = RecipeRankTestFindText(rankOne, descriptionB)
+        local rankTwoA = RecipeRankTestFindText(rankTwo, descriptionA)
+        local rankTwoB = RecipeRankTestFindText(rankTwo, descriptionB)
+        assert(rankOneA and rankOneB and rankTwoA and rankTwoB,
+            'rank threshold must retain both supplied descriptions')
+        assert(not RecipeRankTestColorsDiffer(rankOneA.leftColor, rankTwoA.leftColor),
+            'first description remains on the same side of the threshold')
+        assert(RecipeRankTestColorsDiffer(rankOneB.leftColor, rankTwoB.leftColor),
+            'second description changes color across the threshold')
         "#
     ))
-    .expect("the original tooltip accessor must apply the rank display threshold");
+    .expect("the original accessor must apply the rank display threshold");
 }
 
 #[test]
-fn recipe_rank_misses_return_zero_lua_values() {
+fn inferred_recipe_rank_presentation_uses_supplied_labels_and_source() {
+    // INFERRED coverage: exact title, RGB packing, wrapping, localization, and source rows.
+    let env = original_tooltip_handler_env();
+    add_recipe_pair(
+        &env,
+        RECIPE_RANK_BASE,
+        RECIPE_RANK_NEXT,
+        SPELL_A,
+        SPELL_B,
+        Some("Host recipe label"),
+        Some("Host supplied next-rank source"),
+    );
+    install_rank_test_helpers(&env);
+
+    env.exec(&format!(
+        r#"
+        local baseName = C_TooltipInfo.GetSpellByID({SPELL_A}).lines[1].leftText
+        local descriptionA = RecipeRankTestDescription({SPELL_A})
+        local descriptionB = RecipeRankTestDescription({SPELL_B})
+        local rankOne = RecipeRankTestQuery({RECIPE_RANK_BASE}, 1)
+        local title = 'Host recipe label: ' .. baseName
+        assert(rankOne and rankOne.lines[1].leftText == title)
+        local descriptionOne = RecipeRankTestFindText(rankOne, descriptionA)
+        local descriptionTwo = RecipeRankTestFindText(rankOne, descriptionB)
+        assert(descriptionOne and descriptionOne.wrapText == true)
+        assert(descriptionTwo and descriptionTwo.wrapText == true)
+        RecipeRankTestAssertPackedColor(descriptionOne, NORMAL_FONT_COLOR)
+        RecipeRankTestAssertPackedColor(descriptionTwo, DISABLED_FONT_COLOR)
+        assert(RecipeRankTestFindText(rankOne, TRADESKILL_NEXT_RANK_HEADER))
+        assert(RecipeRankTestFindText(rankOne, 'Host supplied next-rank source'))
+
+        local rankTwo = RecipeRankTestQuery({RECIPE_RANK_BASE}, 2)
+        local descriptionAtRankTwo = RecipeRankTestFindText(rankTwo, descriptionB)
+        assert(descriptionAtRankTwo)
+        RecipeRankTestAssertPackedColor(descriptionAtRankTwo, NORMAL_FONT_COLOR)
+        assert(not RecipeRankTestFindText(rankTwo, TRADESKILL_NEXT_RANK_HEADER))
+        assert(not RecipeRankTestFindText(rankTwo, 'Host supplied next-rank source'))
+        "#
+    ))
+    .expect("the simulator's inferred recipe-rank presentation should remain stable");
+}
+
+#[test]
+fn preserve_recipe_rank_zero_values_for_failed_producer() {
+    // PRESERVATION: R88n.1 verifies zero values after a failed producer, not these selectors.
     let env = WowLuaEnv::new().expect("Retail Lua environment should initialize");
     env.exec("assert(select('#', C_TooltipInfo.GetRecipeRankInfo(999701, 1)) == 0)")
-        .expect("an absent recipe must return zero values");
+        .expect("an absent recipe must preserve the zero-value result");
 
+    // INFERRED producer predicates: missing-parent and missing-base-spell paths are not specified.
     add_recipe(
         &mut env.state().borrow_mut().recipe_rank_tooltip_cache,
         999_702,
@@ -260,16 +322,17 @@ fn recipe_rank_misses_return_zero_lua_values() {
     env.exec(
         r#"
         assert(select('#', C_TooltipInfo.GetRecipeRankInfo(999702, 1)) == 0,
-            'a missing required parent must return zero values')
+            'inferred missing-parent path should preserve zero values')
         assert(select('#', C_TooltipInfo.GetRecipeRankInfo(999704, 1)) == 0,
-            'a missing initial spell name must return zero values')
+            'inferred missing-base-spell path should preserve zero values')
         "#,
     )
-    .expect("R88n.1 recipe misses must return exactly zero values");
+    .expect("the simulator's inferred missing-input predicates should remain stable");
 }
 
 #[test]
-fn trade_skill_initialization_clears_recipe_rank_cache() {
+fn inferred_simulator_route_open_trade_skill_clears_recipe_rank_cache() {
+    // INFERRED simulator-route coverage: the native direct caller does not prove this API trigger.
     let env = WowLuaEnv::new().expect("Retail Lua environment should initialize");
     add_recipe(
         &mut env.state().borrow_mut().recipe_rank_tooltip_cache,
@@ -281,20 +344,21 @@ fn trade_skill_initialization_clears_recipe_rank_cache() {
         None,
     );
     env.exec(
-        "assert(select('#', C_TooltipInfo.GetRecipeRankInfo(991731, 1)) == 1, 'fixture recipe must be visible before initialization')",
+        "assert(select('#', C_TooltipInfo.GetRecipeRankInfo(991731, 1)) == 1, 'fixture must be visible before initialization')",
     )
     .expect("host recipe record should populate the tooltip before initialization");
 
     env.exec("assert(C_TradeSkillUI.OpenTradeSkill(164))")
-        .expect("Retail trade-skill initialization route should run");
+        .expect("the simulator OpenTradeSkill route should run");
     env.exec(
-        "assert(select('#', C_TooltipInfo.GetRecipeRankInfo(991731, 1)) == 0, 'trade-skill initialization must clear the recipe cache')",
+        "assert(select('#', C_TooltipInfo.GetRecipeRankInfo(991731, 1)) == 0, 'modeled initialization route must clear the recipe cache')",
     )
-    .expect("the native trade-skill initialization route clears recipe display cache");
+    .expect("the simulator initialization route should clear the cache");
 }
 
 #[test]
-fn trade_skill_rebuild_clears_recipe_rank_cache() {
+fn inferred_simulator_route_dirty_filter_update_clears_recipe_rank_cache() {
+    // INFERRED simulator-route coverage: the filter/tick correspondence is not native-proved.
     let env = WowLuaEnv::new().expect("Retail Lua environment should initialize");
     add_recipe(
         &mut env.state().borrow_mut().recipe_rank_tooltip_cache,
@@ -306,15 +370,15 @@ fn trade_skill_rebuild_clears_recipe_rank_cache() {
         None,
     );
     env.exec(
-        "assert(select('#', C_TooltipInfo.GetRecipeRankInfo(991741, 1)) == 1, 'fixture recipe must be visible before rebuild')",
+        "assert(select('#', C_TooltipInfo.GetRecipeRankInfo(991741, 1)) == 1, 'fixture must be visible before update')",
     )
-    .expect("host recipe record should populate the tooltip before rebuild");
+    .expect("host recipe record should populate the tooltip before update");
 
     env.exec("C_TradeSkillUI.SetRecipeItemNameFilter('sharpening')")
-        .expect("a changed recipe filter must mark the list dirty");
+        .expect("the changed filter should mark the simulator update pending");
     wow_ui_sim::startup::fire_one_on_update_tick(&env);
     env.exec(
-        "assert(select('#', C_TooltipInfo.GetRecipeRankInfo(991741, 1)) == 0, 'trade-skill rebuild must clear the recipe cache')",
+        "assert(select('#', C_TooltipInfo.GetRecipeRankInfo(991741, 1)) == 0, 'modeled filter-update route must clear the recipe cache')",
     )
-    .expect("the native dirty-state rebuild route clears recipe display cache");
+    .expect("the simulator's deferred filter notification route should clear the cache");
 }

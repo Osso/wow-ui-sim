@@ -117,7 +117,7 @@ pub(crate) fn open_trade_skill_for_skill_line(
         return Ok(false);
     }
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
-        // Retail R88n.4b: mirror the native trade-skill initialization clear.
+        // INFERRED native mapping: this helper serves OpenTradeSkill and profession-spell redirection.
         borrow_state_mut(state)?.recipe_rank_tooltip_cache.clear();
     }
 

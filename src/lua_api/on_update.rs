@@ -65,7 +65,7 @@ fn begin_tick(state: &mut LuaState, elapsed: f64) -> crate::Result<()> {
     );
     if pending {
         if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
-            // Retail R88n.4b: mirror the native dirty-state rebuild clear.
+            // INFERRED simulator route: a filter notification clears before dispatch; it does not rebuild rows.
             borrow_state_mut(state)?.recipe_rank_tooltip_cache.clear();
         }
         super::script_helpers::fire_named_event_state(state, "TRADE_SKILL_LIST_UPDATE", &[]);
