@@ -55,7 +55,11 @@ Layout branches on `anchors.len()` (`src/iced_app/layout.rs`):
 
 **VERIFIED (Retail 12.1.5.70688, original UI):** `GameTooltip` inherits `clampedToScreen="true"`; the simulator uses the generic enable flag, not a tooltip-specific rule. See the [original consumer fixture](../../../tests/blizzard_game_tooltip_loads.rs).
 
-**UNKNOWN (R88n.5r-q1):** The native suppression-state identity and producer are not established; the simulator seam stays neutral and never suppresses. Exact rounding, oversized-frame behavior, and order relative to snapping remain UNKNOWN and unchanged. Setter-only cache invalidation is also UNKNOWN; the verified clamp reads insets during rect resolution.
+**VERIFIED (Retail 12.1.5.70688, R88n.5r-q1/q2):** Suppression is a dedicated per-region bit, distinct from movement and user placement. The effective query is enabled AND not suppressed; unchanged effective enable requests do not write or queue. Accepted changes and explicit suppression writes queue geometry and dependent rectangles, never synchronously resolve. The native ClearAllPoints/final-ClearPoint propagation-clear routes are identified, but their suppression transitions remain pending the distinct propagation-state predicate. They are not wired directly to the suppression bit. Oversized rectangles retain size and follow left/bottom/right/top correction precedence, so the later right/top edges win rather than centering or resetting the position.
+
+**VERIFIED ordinary inset path:** All four numeric dimensions are required (numeric-convertible strings accepted), and successful setters return zero values. Insets store without an unconditional rectangle queue. Existing anchor-input/dimension rounding happens before clamping, and clamping adds no final rounding.
+
+**Pending native detail:** The suppression Boolean's anchor-propagation predicate, its dependent-state combination, the native unit/rounding arithmetic, and the conditional pre-store notification/enable-policy predicates need the focused follow-up in lt-5c7c. Movement is not inferred to toggle suppression. The exact final renderer snapping order remains UNKNOWN. Current explicit-host suppression tests are conditional API proof, not proof of a native movement producer. See the screen-clamp gap investigation.
 
 ## Coordinate System
 

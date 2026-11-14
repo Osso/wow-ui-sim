@@ -207,6 +207,8 @@ pub struct Frame {
     pub highlight_locked: bool,
     pub ignoring_children_for_bounds: bool,
     pub clamped_to_screen: bool,
+    /// R88n.5r dedicated geometry bit; not equivalent to moving/user placement.
+    pub screen_clamp_suppressed: bool,
     pub is_moving: bool,
     /// Whether the frame is currently being resized via StartSizing.
     pub is_sizing: bool,
@@ -785,6 +787,12 @@ impl Frame {
         } else {
             self.anchors.push(anchor);
         }
+    }
+
+    pub fn effective_screen_clamp(&self) -> bool {
+        self.clamped_to_screen
+            && (crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail
+                || !self.screen_clamp_suppressed)
     }
 
     pub fn clear_all_points(&mut self) {
