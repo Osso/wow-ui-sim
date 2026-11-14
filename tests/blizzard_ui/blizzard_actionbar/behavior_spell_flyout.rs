@@ -57,6 +57,22 @@ fn spell_flyout_toggle_shows_populates_and_hides_from_same_button() {
 
 #[cfg(feature = "client-retail")]
 #[test]
+fn spell_flyout_consumer_preserves_slots_without_call_pet_catalog() {
+    test_timeout! {
+    with_blizzard_addon_startup_shape(&[ROOT], &[], |env, loaded| {
+        assert!(loaded.iter().any(|name| name == ROOT));
+        seed_spell_flyout(env);
+        install_test_flyout_button(env);
+        toggle_spell_flyout(env);
+        // Preservation only: SpellFlyout.lua:270 tests the first result's
+        // truthiness, so zero values and two nils have the same consumer effect.
+        assert_flyout_shown_with_seeded_spells(env);
+    });
+    }
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
 fn spell_flyout_count_accepts_numeric_string_display_limit() {
     test_timeout! {
     with_blizzard_addon_startup_shape(&[ROOT], &[], |env, _loaded| {

@@ -195,21 +195,17 @@ fn test_spellbook_has_pet_spells() {
     assert!(!has);
 }
 
+#[cfg(feature = "client-retail")]
 #[test]
-fn test_get_call_pet_spell_info_defaults_to_no_pet_spell() {
+fn get_call_pet_spell_info_miss_has_verified_zero_value_arity() {
     let env = env();
-    let (is_function, first_is_nil, second_is_nil): (bool, bool, bool) = env
-        .eval(
-            r#"
-            local spellID, texture = GetCallPetSpellInfo(1)
-            return type(GetCallPetSpellInfo) == "function", spellID == nil, texture == nil
-            "#,
-        )
+    // The simulator has no call-pet membership source. This checks only the
+    // verified miss shape; it makes no claim that spell ID 1 misses natively.
+    let result_count: i32 = env
+        .eval(r#"return select("#", GetCallPetSpellInfo(1))"#)
         .unwrap();
 
-    assert!(is_function);
-    assert!(first_is_nil);
-    assert!(second_is_nil);
+    assert_eq!(result_count, 0);
 }
 
 #[test]
