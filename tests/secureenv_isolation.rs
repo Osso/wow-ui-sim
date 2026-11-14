@@ -614,20 +614,26 @@ fn get_frame_metatable_is_present_in_both_environments() {
 
 #[cfg(feature = "client-retail")]
 #[test]
-fn retail_c_timer_after_is_registered_in_both_namespace_tables() {
+fn retail_c_timer_dual_members_are_registered_in_both_namespace_tables() {
     let env = env();
 
-    let result: (bool, bool, bool) = env
+    let result: Vec<bool> = env
         .eval(
             r#"
             local public = rawget(_G, "C_Timer")
             local secure = rawget(__secureenv, "C_Timer")
-            return type(public) == "table" and type(rawget(public, "After")) == "function",
-                   type(secure) == "table" and type(rawget(secure, "After")) == "function",
-                   public ~= secure
+            local function hasFunction(table, member)
+                return type(table) == "table" and type(rawget(table, member)) == "function"
+            end
+            return {
+                hasFunction(public, "After"), hasFunction(secure, "After"),
+                hasFunction(public, "NewTicker"), hasFunction(secure, "NewTicker"),
+                hasFunction(public, "NewTimer"), hasFunction(secure, "NewTimer"),
+                public ~= secure,
+            }
             "#,
         )
         .unwrap();
 
-    assert_eq!(result, (true, true, true));
+    assert_eq!(result, vec![true, true, true, true, true, true, true]);
 }
