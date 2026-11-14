@@ -5,6 +5,15 @@ use wow_ui_sim::c_api::c_neighborhood_initiative::model::{
 };
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+fn ensure_loaded(env: &WowLuaEnv, addon: &str) {
+    let loaded: bool = env
+        .eval(&format!("return C_AddOns.IsAddOnLoaded('{addon}')"))
+        .expect("Blizzard addon load state should be queryable");
+    if !loaded {
+        crate::common::load_required_blizzard_addon(env, &crate::common::blizzard_ui_dir(), addon);
+    }
+}
+
 fn env() -> WowLuaEnv {
     WowLuaEnv::new().expect("Failed to create Lua environment")
 }
@@ -38,8 +47,15 @@ fn neighborhood_initiative_available_house_xp_defaults_to_zero() {
 #[cfg(feature = "optional-tests")]
 prefork_full_ui_case! {
 fn r88e5_initiative_enabled_dashboard_reads_host_value(env: &WowLuaEnv) {
-    env.exec("C_AddOns.LoadAddOn('Blizzard_HousingDashboard')")
-        .expect("Retail housing dashboard should load");
+    for dependency in [
+        "Blizzard_HousingTemplates",
+        "Blizzard_HousingModelPreview",
+        "Blizzard_FrameXMLUtil",
+        "Blizzard_HousingBlueprint",
+    ] {
+        ensure_loaded(env, dependency);
+    }
+    ensure_loaded(env, "Blizzard_HousingDashboard");
     env.state()
         .borrow_mut()
         .housing
@@ -79,8 +95,16 @@ fn r88e5_initiative_enabled_dashboard_reads_host_value(env: &WowLuaEnv) {
 #[cfg(feature = "optional-tests")]
 prefork_full_ui_case! {
 fn r88e5_initiative_task_consumer_uses_matching_host_records(env: &WowLuaEnv) {
-    env.exec("C_AddOns.LoadAddOn('Blizzard_ObjectiveTracker')")
-        .expect("Retail objective tracker should load");
+    for dependency in [
+        "Blizzard_MawBuffs",
+        "Blizzard_TieredEntranceTraits",
+        "Blizzard_TransmogShared",
+        "Blizzard_ManagedFrameSystem",
+        "Blizzard_UIWidgets",
+    ] {
+        ensure_loaded(env, dependency);
+    }
+    ensure_loaded(env, "Blizzard_ObjectiveTracker");
 
     {
         let mut state = env.state().borrow_mut();

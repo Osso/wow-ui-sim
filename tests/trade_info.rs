@@ -1,10 +1,21 @@
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+fn ensure_loaded(env: &WowLuaEnv, addon: &str) {
+    let loaded: bool = env
+        .eval(&format!("return C_AddOns.IsAddOnLoaded('{addon}')"))
+        .expect("Blizzard addon load state should be queryable");
+    if !loaded {
+        crate::common::load_required_blizzard_addon(env, &crate::common::blizzard_ui_dir(), addon);
+    }
+}
+
 #[cfg(feature = "optional-tests")]
 prefork_full_ui_case! {
 fn r88e5_trade_offer_warning_consumer_reads_shared_host_value(env: &WowLuaEnv) {
-    env.exec("C_AddOns.LoadAddOn('Blizzard_UIPanels_Game')")
-        .expect("Retail trade panel should load");
+    let trade_panel_loaded: bool = env
+        .eval("return C_AddOns.IsAddOnLoaded('Blizzard_UIPanels_Game')")
+        .expect("Retail trade panel load state should be queryable");
+    assert!(trade_panel_loaded, "Retail UIPanels_Game is selected at startup");
 
     let results: (bool, bool, bool, bool, bool, bool) = env
         .eval(
@@ -40,12 +51,13 @@ fn r88e5_trade_offer_warning_consumer_reads_shared_host_value(env: &WowLuaEnv) {
 #[cfg(feature = "optional-tests")]
 prefork_full_ui_case! {
 fn r88e5_trade_money_consumer_uses_supplied_offer_and_cursor_state(env: &WowLuaEnv) {
-    env.exec("C_AddOns.LoadAddOn('Blizzard_MoneyFrame')")
-        .expect("Retail money frame should load");
+    ensure_loaded(env, "Blizzard_SharedXMLBase");
+    ensure_loaded(env, "Blizzard_SharedXML");
+    ensure_loaded(env, "Blizzard_MoneyFrame");
     env.state().borrow_mut().player.money = 1_000;
 
     env.exec(
-        "InitiateTrade('Partner'); C_TradeInfo.SetTradeMoney(100); MoneyTypeInfo.PLAYER_TRADE.PickupFunc(MoneyTypeInfo.PLAYER_TRADE, 25.9)",
+        "InitiateTrade('Partner'); C_TradeInfo.SetTradeMoney(100); GetMoneyTypeInfoField('PLAYER_TRADE', 'PickupFunc')({}, 25.9)",
     )
     .expect("MoneyFrame trade pickup consumer should run");
     assert_eq!(
@@ -63,7 +75,7 @@ fn r88e5_trade_money_consumer_uses_supplied_offer_and_cursor_state(env: &WowLuaE
     assert_eq!(cursor, ("money".to_string(), 25.0));
 
     env.exec(
-        "ClearCursor(); C_TradeInfo.SetTradeMoney(50); PickupPlayerMoney(7); MoneyTypeInfo.PLAYER_TRADE.PickupFunc(MoneyTypeInfo.PLAYER_TRADE, 51)",
+        "ClearCursor(); C_TradeInfo.SetTradeMoney(50); PickupPlayerMoney(7); GetMoneyTypeInfoField('PLAYER_TRADE', 'PickupFunc')({}, 51)",
     )
     .expect("over-offer pickup should return through the original consumer");
     let state = env.state().borrow();
@@ -82,7 +94,7 @@ fn r88e5_trade_money_consumer_uses_supplied_offer_and_cursor_state(env: &WowLuaE
     assert_eq!(cursor, ("money".to_string(), 7.0));
 
     env.exec(
-        "ClearCursor(); C_TradeInfo.SetTradeMoney(100000000001); MoneyTypeInfo.PLAYER_TRADE.PickupFunc(MoneyTypeInfo.PLAYER_TRADE, 100000000000)",
+        "ClearCursor(); C_TradeInfo.SetTradeMoney(100000000001); GetMoneyTypeInfoField('PLAYER_TRADE', 'PickupFunc')({}, 100000000000)",
     )
     .expect("cursor-limit pickup should return through the original consumer");
     assert_eq!(
