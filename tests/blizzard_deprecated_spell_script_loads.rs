@@ -198,6 +198,7 @@ fn blizzard_deprecated_spell_script_get_spell_queue_window_aliases_share_the_sam
 }
 }
 
+#[cfg(feature = "retail-12-1-5")]
 prefork_full_ui_case! {
 fn blizzard_deprecated_spell_script_installs_three_wrapper_closures(env: &WowLuaEnv) {
 
@@ -218,11 +219,12 @@ fn blizzard_deprecated_spell_script_installs_three_wrapper_closures(env: &WowLua
          (string→Enum lookup wrapper that maps `\"RAID_INCOMBAT\"` / `\"RAID_OUTOFCOMBAT\"` / \
          `\"ENEMY_TARGET\"` to Enum.SpellAuraVisibilityType variants \
          (RaidInCombat / RaidOutOfCombat / EnemyTarget) before delegating to \
-         the temporary C_Spell.GetVisibilityInfo visibility shim)"
+         the Retail C_Spell.GetVisibilityInfo producer)"
     );
 }
 }
 
+#[cfg(feature = "retail-12-1-5")]
 prefork_full_ui_case! {
 fn blizzard_deprecated_spell_script_wrapper_closures_are_not_identity_equal_to_c_spell(env: &WowLuaEnv) {
 
@@ -244,7 +246,7 @@ fn blizzard_deprecated_spell_script_wrapper_closures_are_not_identity_equal_to_c
 }
 }
 
-#[cfg(feature = "client-retail")]
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
 prefork_full_ui_case! {
 fn blizzard_deprecated_spell_script_visibility_wrapper_translates_string_keys(env: &WowLuaEnv) {
     let translated: bool = env
