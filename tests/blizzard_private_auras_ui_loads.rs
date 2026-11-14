@@ -150,6 +150,8 @@ fn secure_private_auras_loads_tooltip_processor_from_secure_dependency() {
         String,
         String,
         String,
+        String,
+        String,
     ) = env
         .eval(
             r#"
@@ -161,14 +163,41 @@ fn secure_private_auras_loads_tooltip_processor_from_secure_dependency() {
                     type(rawget(__secureenv, 'C_StoreSecure')),
                     type(rawget(__secureenv, 'CreateFrame')),
                     type(rawget(__secureenv, 'C_UIColor')),
-                    type(rawget(__secureenv, 'CreateSecureDelegate'))
+                    type(rawget(__secureenv, 'CreateSecureDelegate')),
+                    type(rawget(__secureenv, 'CopyTable')),
+                    type(rawget(__secureenv, 'GetFrameMetatable'))
             "#,
         )
         .expect("secure registration snapshot should evaluate");
+    let tooltip_errors: Vec<_> = load_errors
+        .iter()
+        .filter(|message| {
+            message.contains("TooltipDataProcessor") || message.contains("TooltipDataRules.lua")
+        })
+        .collect();
+    let tooltip_error_text = tooltip_errors
+        .iter()
+        .map(|message| message.as_str())
+        .collect::<Vec<_>>()
+        .join("\n  ");
     assert!(
-        load_errors.is_empty(),
-        "PrivateAurasUI must load without tooltip errors when defaults are disabled:\n  {}\n\
-         registration snapshot (ordinary/secure/processor callback/C_Timer/C_StoreSecure/CreateFrame/C_UIColor/CreateSecureDelegate): {:?}",
+        tooltip_errors.is_empty(),
+        "the secure SharedXMLGame load must provide its original tooltip processor:\n  {}",
+        tooltip_error_text
+    );
+    let expected_consumer_gap = load_errors.iter().any(|message| {
+        message.contains("Blizzard_PrivateAurasUI.lua:298")
+            && message.contains("attempt to call a nil value")
+    });
+    let copy_table_is_secure = registration_snapshot.8 == "function";
+    let frame_metatable_is_secure = registration_snapshot.9 == "function";
+    let missing_bootstrap_helper = !copy_table_is_secure || !frame_metatable_is_secure;
+    assert!(
+        expected_consumer_gap && missing_bootstrap_helper,
+        "Retail must stop at the original PrivateAurasUI.lua:298 helper-visibility boundary;\
+         errors: {}\nregistration snapshot\
+         (ordinary/secure/processor callback/C_Timer/C_StoreSecure/CreateFrame/C_UIColor/\
+         CreateSecureDelegate/CopyTable/GetFrameMetatable): {:?}",
         load_errors.join("\n  "),
         registration_snapshot
     );
