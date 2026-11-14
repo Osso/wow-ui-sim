@@ -89,6 +89,12 @@ pub fn register_c_specialization_info(state: &mut LuaState) -> LuaResult<()> {
         #[cfg(feature = "client-retail")]
         {
             super::c_tooltip_info_pvp_talent::register_slot_info(state, t_ref)?;
+            table_set_rust_fn_static(
+                state,
+                t_ref,
+                "GetPvpTalentUnlockLevel",
+                get_pvp_talent_unlock_level,
+            )?;
             table_set_rust_fn_static(state, t_ref, "IsPvpTalentLocked", is_pvp_talent_locked)?;
             table_set_rust_fn_static(state, t_ref, "SetPvpTalentLocked", set_pvp_talent_locked)?;
         }
@@ -146,11 +152,32 @@ pub fn register_c_specialization_info(state: &mut LuaState) -> LuaResult<()> {
     Ok(())
 }
 
+// INFERRED: the generated 12.1.5.70783 PvpTalent catalog supplies unlock levels.
 // temporary: Usage text UNKNOWN pending R88j.9.
+#[cfg(feature = "client-retail")]
+const GET_PVP_TALENT_UNLOCK_LEVEL_USAGE: &str = "C_SpecializationInfo.GetPvpTalentUnlockLevel(...)";
 #[cfg(feature = "client-retail")]
 const IS_PVP_TALENT_LOCKED_USAGE: &str = "C_SpecializationInfo.IsPvpTalentLocked(...)";
 #[cfg(feature = "client-retail")]
 const SET_PVP_TALENT_LOCKED_USAGE: &str = "C_SpecializationInfo.SetPvpTalentLocked(...)";
+
+#[cfg(feature = "client-retail")]
+fn get_pvp_talent_unlock_level(state: &mut LuaState) -> LuaResult<u32> {
+    let talent_id = read_untainted_signed32_argument(
+        state,
+        1,
+        "C_SpecializationInfo.GetPvpTalentUnlockLevel",
+        GET_PVP_TALENT_UNLOCK_LEVEL_USAGE,
+    )?;
+    let required_level = borrow_state(state)?
+        .pvp_talent_tooltip
+        .catalog
+        .get(&talent_id)
+        .map(|record| record.level_required);
+    let result = required_level.map_or(Val::Nil, |level| Val::Num(f64::from(level)));
+    state.push(result);
+    Ok(1)
+}
 
 #[cfg(feature = "client-retail")]
 fn is_pvp_talent_locked(state: &mut LuaState) -> LuaResult<u32> {
