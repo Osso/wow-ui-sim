@@ -55,6 +55,8 @@ type SpellScriptFn = fn(&mut LuaState) -> LuaResult<u32>;
 const SPELL_INFO_HASH_FIELDS: usize = 7;
 const SPELL_COOLDOWN_HASH_FIELDS: usize = 5;
 #[cfg(feature = "retail-12-1-5")]
+const RANGED_AUTO_ATTACK_ATTRIBUTE_MASK: u32 = 16_777_216;
+#[cfg(feature = "retail-12-1-5")]
 const VISIBILITY_API: &str = "C_Spell.GetVisibilityInfo";
 #[cfg(feature = "retail-12-1-5")]
 const VISIBILITY_USAGE: &str = "Usage: local hasCustom, alwaysShowMine, showForMySpec = C_Spell.GetVisibilityInfo(spellID, visibilityType)";
@@ -966,6 +968,24 @@ fn parse_retail_spell_number(number: f64, api: &str, usage: &str) -> LuaResult<O
         return Err(super::helpers::bad_argument(1, api, usage));
     }
     Ok(u32::try_from(number.trunc() as i32).ok())
+}
+
+#[cfg(feature = "retail-12-1-5")]
+pub(crate) fn record_ranged_auto_attack_spell(sim: &mut crate::lua_api::SimState, spell_id: u32) {
+    let metadata_selects_ranged_id = SPELL_DB
+        .get(&spell_id)
+        .and_then(|spell| spell.attributes_9)
+        .is_some_and(|attributes| attributes & RANGED_AUTO_ATTACK_ATTRIBUTE_MASK != 0);
+    if metadata_selects_ranged_id {
+        sim.ranged_auto_attack_spell_id = spell_id;
+    }
+}
+
+#[cfg(feature = "retail-12-1-5")]
+pub(crate) fn clear_ranged_auto_attack_spell(sim: &mut crate::lua_api::SimState, spell_id: u32) {
+    if sim.ranged_auto_attack_spell_id == spell_id {
+        sim.ranged_auto_attack_spell_id = 0;
+    }
 }
 
 #[cfg(feature = "retail-12-1-5")]

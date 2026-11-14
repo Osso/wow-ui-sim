@@ -55,6 +55,14 @@ Display formatting/maximum and secret-output behavior remain Retail125-scoped. O
 - [ ] Tainted public callers can obtain private results but cannot add, concatenate, compute string length or expose private payload through opaque observations/errors. No secret BOOL equality under taint.
 - [ ] Tainted copies preserve secret roots/allocation identity through GC. Live flag-off gives new ordinary results; old wrappers remain private.
 
+### Related Retail ranged-auto-attack identifier
+
+- [ ] **VERIFIED (Retail 12.1.5.70688):** `C_Spell.IsRangedAutoAttackSpell` compares its resolved identifier with one shared ranged-ID field. The field starts at zero in the initial image; zero therefore compares true before runtime writes.
+- [ ] **VERIFIED (Retail 12.1.5.70688):** the update writer stores an ID when its Spell record has `attributes_9 & 16_777_216 != 0`. Removal clears only when the removed ID equals the stored ID.
+- [ ] The simulator reads the existing catalog `attributes_9` bit and exposes `ranged_auto_attack_spell_id` as a simulator state input. The exact DB2 column identity remains UNKNOWN.
+- [ ] **INFERRED:** `A_Admin.LearnSpell` and `A_Admin.UnlearnSpell` supply simulator writer inputs. They are not names for the unknown native dispatcher cases.
+- [ ] **UNKNOWN:** the dispatcher case meanings, additional spell-list update trigger, and update order at login remain unresolved. No native event name is assigned.
+
 ## How it works
 
 - [Lua API architecture](../lua-api.md)
@@ -65,7 +73,8 @@ Display formatting/maximum and secret-output behavior remain Retail125-scoped. O
 
 - `src/lua_api/state/sim_state.rs` and `src/lua_api/state.rs`: older explicit count input, Retail 12.1.5 null-context override, empty-default host reagent pairs, and host visibility rows.
 - `src/c_api/c_spell_counts.rs`: profile-specific cast/display producers. Retail 12.1.5 uses the Spell catalog gate, shared context predicate, first-eight reagent limits, bag stacks, and verified reagent-before-charge display mode. Unsupported metadata modes, inventory inclusion, active records, and full policy secrecy remain seams.
-- `src/c_api/c_spell.rs`: Retail 12.1.5 registration for `IsRangedAutoAttackSpell` and `GetVisibilityInfo`; shared ranged ID comparison and visibility output publication.
+- `src/c_api/c_spell.rs`: Retail 12.1.5 registration for `IsRangedAutoAttackSpell` and `GetVisibilityInfo`; shared ranged-ID comparison, metadata-mask writer, equal-ID removal, and visibility output publication.
+- `src/lua_api/globals/admin.rs`: INFERRED Retail host wiring from `A_Admin.LearnSpell`/`UnlearnSpell` into the verified ranged-ID writer and remover; no native dispatcher labels.
 - `src/lua_api/workarounds/temporary/spell_metadata_defaults.rs` and `spell_static_defaults.rs`: the replaced Retail defaults are no longer published.
 - `src/c_api/c_action_bar_counts.rs`: shared count formatter and replacement/maximum parsers.
 - `tests/spell_native_verified.rs`: optional Retail 12.1.5 API and original-consumer tests, including explicitly labeled INFERRED host mappings.
