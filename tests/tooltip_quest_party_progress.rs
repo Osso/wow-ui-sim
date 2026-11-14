@@ -6,7 +6,7 @@ use wow_ui_sim::c_api::quest_party_progress::{
     QuestPartyProgressHeading, QuestPartyProgressParticipant, QuestPartyProgressRow,
     QuestPartyProgressSnapshot, QuestPartyProgressText,
 };
-use wow_ui_sim::c_api::quest_special_item::QuestSpecialItemSelection;
+use wow_ui_sim::c_api::quest_special_item::{QuestSpecialItemCacheRecord, QuestSpecialItemObject};
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::lua_api::state::BagItem;
 
@@ -238,22 +238,35 @@ fn selected_quest_item_hover_uses_host_supplied_owned_item() {
     let env = selected_objective_tracker();
     {
         let mut sim = env.state().borrow_mut();
-        let mut first = sim.quest_log_entries.entries[0].clone();
-        first.quest_id = QUEST_A;
-        let mut second = first.clone();
-        second.quest_id = QUEST_B;
-        sim.quest_log_entries.entries = vec![first, second];
-        sim.quest_log_entries.resolved_quest_special_items.insert(
+        let inputs = &mut sim.quest_log_entries.quest_special_item_inputs;
+        inputs.quest_ids_by_log_index.insert(1, QUEST_A);
+        inputs.quest_ids_by_log_index.insert(2, QUEST_B);
+        inputs.cached_quest_records.insert(
             QUEST_A,
-            QuestSpecialItemSelection {
+            QuestSpecialItemCacheRecord {
+                special_item_id: Some(ITEM_A),
+                ..Default::default()
+            },
+        );
+        inputs.cached_quest_records.insert(
+            QUEST_B,
+            QuestSpecialItemCacheRecord {
+                has_candidate_items: true,
+                candidate_item_ids: [Some(ITEM_B), None, None, None],
+                ..Default::default()
+            },
+        );
+        inputs.selected_item_objects.insert(
+            QUEST_A,
+            QuestSpecialItemObject {
                 item_id: ITEM_A,
                 bag: 0,
                 slot: 2,
             },
         );
-        sim.quest_log_entries.resolved_quest_special_items.insert(
+        inputs.selected_item_objects.insert(
             QUEST_B,
-            QuestSpecialItemSelection {
+            QuestSpecialItemObject {
                 item_id: ITEM_B,
                 bag: 0,
                 slot: 3,

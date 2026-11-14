@@ -140,8 +140,10 @@ pub struct QuestLogState {
     /// Native party-progress service snapshots; empty until supplied by the host.
     pub party_progress:
         HashMap<i32, crate::c_api::quest_party_progress::QuestPartyProgressSnapshot>,
-    /// Host-supplied resolved item objects keyed by quest ID. Cache and
-    /// inventory/object writers are not inferred.
+    /// Host inputs for quest-ID request context, quest-cache fields and the
+    /// selected inventory object. Native writer routes are not inferred.
+    pub quest_special_item_inputs: crate::c_api::quest_special_item::QuestSpecialItemInputs,
+    /// Previous pre-resolved selection seam, retained until the producer swap.
     pub resolved_quest_special_items:
         HashMap<i32, crate::c_api::quest_special_item::QuestSpecialItemSelection>,
     pub additional_highlights: HashMap<i32, crate::c_api::c_quest_log::QuestAdditionalHighlights>,
@@ -252,6 +254,7 @@ impl QuestLogState {
             bounties_by_set: HashMap::new(),
             party_quest_ids: HashMap::new(),
             party_progress: HashMap::new(),
+            quest_special_item_inputs: Default::default(),
             resolved_quest_special_items: HashMap::new(),
             entries: vec![
                 lost_expedition_entry(),
