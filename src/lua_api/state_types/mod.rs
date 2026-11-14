@@ -7,6 +7,7 @@ pub mod character_world;
 pub mod collections;
 pub mod crafting;
 pub mod group_member_counts;
+pub mod lfg_rewards;
 pub mod loot_history;
 pub mod mythic_plus_scenario;
 pub mod player_choice;
@@ -25,6 +26,7 @@ pub use character_world::*;
 pub use collections::*;
 pub use crafting::*;
 pub use group_member_counts::{GroupMemberCountsMember, GroupMemberCountsState};
+pub use lfg_rewards::{LfgTooltipReward, LfgTooltipRewardGroup};
 pub use loot_history::LootHistoryState;
 pub use mythic_plus_scenario::{
     DeathRecapEntry, DeathRecapEventInfo, KillingBlowInfo, MythicPlusAffix, MythicPlusRun,
