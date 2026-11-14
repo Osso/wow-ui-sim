@@ -128,6 +128,19 @@ fn secure_private_auras_loads_tooltip_processor_from_secure_dependency() {
         loaded,
         "normal Retail startup must load Blizzard_PrivateAurasUI"
     );
+    let replay_snapshot_is_private: bool = env
+        .eval(
+            r#"
+                local consumer = function() return debug end
+                debug.setfenv(consumer, __secureenv)
+                return consumer() == nil and rawget(__secureenv, "debug") == nil
+            "#,
+        )
+        .expect("secure consumer snapshot visibility query should succeed");
+    assert!(
+        replay_snapshot_is_private,
+        "snapshot-only debug must stay out of the published secure environment after replay"
+    );
 
     let load_errors: Vec<String> = env
         .state()
@@ -190,20 +203,21 @@ fn secure_private_auras_loads_tooltip_processor_from_secure_dependency() {
         "the secure SharedXMLGame load must provide its original tooltip processor:\n  {}",
         tooltip_error_text
     );
-    let expected_dependency_gap = load_errors.iter().any(|message| {
-        message.contains("TextureUtil.lua:122")
-            && message.contains("Constants")
-            && message.contains("nil value")
-    });
+    let replay_dependency_errors: Vec<_> = load_errors
+        .iter()
+        .filter(|message| {
+            message.contains("TextureUtil.lua:122")
+                || message.contains("Blizzard_PrivateAurasUI.lua:1398")
+        })
+        .collect();
     let expected_consumer_gap = load_errors.iter().any(|message| {
-        message.contains("Blizzard_PrivateAurasUI.lua:1398")
-            && message.contains("TextureKitConstants")
-            && message.contains("nil value")
+        message.contains("PrivateAurasTooltip.lua:1")
+            && message.contains("attempt to call a nil value")
     });
     assert!(
-        expected_dependency_gap && expected_consumer_gap,
-        "Retail must stop at the exact secure dependency and original consumer boundaries:\n\
-         TextureUtil.lua:122 requires Constants; PrivateAurasUI.lua:1398 requires TextureKitConstants.\
+        replay_dependency_errors.is_empty() && expected_consumer_gap,
+        "temporary: lt-635e replay must resolve the snapshot before the consumer boundary:\n\
+         TextureUtil replay uses Constants; the consumer still stops at PrivateAurasTooltip.lua:1.\
          errors: {}\nregistration snapshot\
          (ordinary/secure/processor callback/C_Timer/C_StoreSecure/CreateFrame/C_UIColor/\
          CreateSecureDelegate/CopyTable/GetFrameMetatable/Constants/TextureKitConstants): {:?}",
@@ -223,8 +237,8 @@ fn secure_private_auras_loads_tooltip_processor_from_secure_dependency() {
         "Constants must remain the exact missing secure dependency input"
     );
     assert_eq!(
-        registration_snapshot.11, "nil",
-        "TextureKitConstants must remain the exact missing PrivateAurasUI input"
+        registration_snapshot.11, "table",
+        "TextureKitConstants defined during secure replay must be exported"
     );
 
     let original_processor: bool = env

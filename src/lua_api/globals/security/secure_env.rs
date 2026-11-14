@@ -52,6 +52,108 @@ const CREATE_SECURE_ENV_LUA: &str = r##"
     return secureenv
 	"##;
 
+// temporary: lt-635e. Keep the old full snapshot private to legacy replay.
+const CREATE_SECURE_REPLAY_ENV_LUA: &str = r##"
+    local genv = _G
+    local secureenv = rawget(genv, "__secureenv")
+    if type(secureenv) ~= "table" then
+        error("secure replay environment requires initialized secureenv")
+    end
+
+    local debugTable = rawget(genv, "debug")
+    local logNilSymbolAccess = rawget(genv, "__wow_log_nil_symbol_access")
+    local snapshot = {}
+    for key, value in pairs(genv) do
+        if key ~= "__secureenv" then
+            snapshot[key] = value
+        end
+    end
+    if type(snapshot.Enum) == "table" then
+        local enumCopy = {}
+        for key, value in pairs(snapshot.Enum) do
+            enumCopy[key] = value
+        end
+        snapshot.Enum = enumCopy
+    end
+
+    local replayEnv = {}
+    local values = {}
+    local assigned = {}
+    local enumeration = {}
+    local originalRawget = rawget
+    local originalRawset = rawset
+    local originalPairs = pairs
+    local originalNext = next
+
+    local function assign(key, value)
+        assigned[key] = true
+        values[key] = value
+        enumeration[key] = value
+        secureenv[key] = value
+    end
+
+    local function replayRawget(target, key)
+        if target ~= replayEnv then
+            return originalRawget(target, key)
+        end
+        if assigned[key] then
+            return originalRawget(values, key)
+        end
+        return originalRawget(snapshot, key)
+    end
+
+    local function replayRawset(target, key, value)
+        if target ~= replayEnv then
+            return originalRawset(target, key, value)
+        end
+        assign(key, value)
+        return target
+    end
+
+    local function replayPairs(target)
+        if target == replayEnv then
+            return originalPairs(enumeration)
+        end
+        return originalPairs(target)
+    end
+
+    local function replayNext(target, key)
+        if target == replayEnv then
+            return originalNext(enumeration, key)
+        end
+        return originalNext(target, key)
+    end
+
+    snapshot.rawget = replayRawget
+    snapshot.rawset = replayRawset
+    snapshot.pairs = replayPairs
+    snapshot.next = replayNext
+    snapshot._G = replayEnv
+    for key, value in originalPairs(snapshot) do
+        enumeration[key] = value
+    end
+
+    setmetatable(replayEnv, {
+        __index = function(_, key)
+            if assigned[key] then
+                return values[key]
+            end
+            local value = snapshot[key]
+            if value == nil and type(logNilSymbolAccess) == "function" then
+                local isGlobalIndex = debugTable and debugTable.isglobalindex
+                if type(isGlobalIndex) == "function" and isGlobalIndex() then
+                    logNilSymbolAccess("__secureenv_replay", key)
+                end
+            end
+            return value
+        end,
+        __newindex = function(_, key, value)
+            assign(key, value)
+        end,
+    })
+    return replayEnv
+\t"##;
+
 pub(crate) fn secure_env_table(
     state: &mut LuaState,
 ) -> LuaResult<rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>> {
@@ -112,6 +214,54 @@ pub fn create_secure_environment(lua: &mut rilua::Lua) -> LuaResult<()> {
         LuaApiMut::set_global_val(lua, "C_PingSecure", Val::Nil)?;
     }
     Ok(())
+}
+
+/// Create the temporary full-snapshot environment used only by legacy replay.
+///
+/// Snapshot-only names remain private. Replay assignments are published to the
+/// strict secure environment by the replay table's write path.
+// temporary: lt-635e
+pub fn create_secure_replay_environment(lua: &mut rilua::Lua) -> LuaResult<()> {
+    if matches!(
+        registry_get(lua.state_mut(), "__secureenv_replay"),
+        Val::Table(_)
+    ) {
+        return Ok(());
+    }
+
+    let chunk = LuaApiMut::load(lua, CREATE_SECURE_REPLAY_ENV_LUA)?;
+    let replay_env = lua
+        .call_function(&chunk, &[])?
+        .into_iter()
+        .next()
+        .ok_or_else(|| runtime_error("create_secure_replay_environment: missing return value"))?;
+    let Val::Table(_) = replay_env else {
+        return Err(runtime_error(
+            "create_secure_replay_environment: expected replay table",
+        ));
+    };
+    registry_set(lua.state_mut(), "__secureenv_replay", replay_env);
+    Ok(())
+}
+
+fn secure_replay_env_table(
+    state: &mut LuaState,
+) -> LuaResult<rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>> {
+    match registry_get(state, "__secureenv_replay") {
+        Val::Table(table_ref) => Ok(table_ref),
+        _ => Err(runtime_error("secure replay environment not initialized")),
+    }
+}
+
+/// Mark a compiled function for the temporary legacy replay environment.
+// temporary: lt-635e
+pub(crate) fn mark_secure_replay_state(
+    state: &mut LuaState,
+    func: &rilua::Function,
+) -> LuaResult<()> {
+    let replay_env_ref = secure_replay_env_table(state)?;
+    let replay_env = rilua::Table::from_gc_ref(replay_env_ref);
+    rilua::api::state_set_fenv(state, func, &replay_env)
 }
 
 /// Mark a compiled function as running under the secure environment.

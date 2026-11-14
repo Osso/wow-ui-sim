@@ -1,7 +1,7 @@
 //! Lua file loading functionality.
 
 use crate::lua_api::LoaderEnv;
-use crate::lua_api::globals::security::mark_secure_state;
+use crate::lua_api::globals::security::{mark_secure_replay_state, mark_secure_state};
 use crate::lua_api::methods::create_string;
 use crate::lua_api::script_helpers::call_error_handler_state;
 use crate::lua_api::taint::stamp_addon_taint_state;
@@ -23,6 +23,26 @@ pub fn load_lua_file(
     ctx: &AddonContext,
     timing: &mut LoadTiming,
 ) -> Result<(), LoadError> {
+    load_lua_file_with_environment(env, path, ctx, timing, false)
+}
+
+// temporary: lt-635e. Use only for EnvironmentPass::SecureReplay.
+pub(crate) fn load_secure_replay_lua_file(
+    env: &LoaderEnv<'_>,
+    path: &Path,
+    ctx: &AddonContext,
+    timing: &mut LoadTiming,
+) -> Result<(), LoadError> {
+    load_lua_file_with_environment(env, path, ctx, timing, true)
+}
+
+fn load_lua_file_with_environment(
+    env: &LoaderEnv<'_>,
+    path: &Path,
+    ctx: &AddonContext,
+    timing: &mut LoadTiming,
+    use_replay_environment: bool,
+) -> Result<(), LoadError> {
     let io_start = Instant::now();
     let bytes = std::fs::read(path).map_err(|e| LoadError::io_with_path(path, e))?;
     timing.io_time += io_start.elapsed();
@@ -37,7 +57,7 @@ pub fn load_lua_file(
     } else {
         None
     };
-    let execution = execute_lua_file(env, func, ctx, &chunk_name, timing);
+    let execution = execute_lua_file(env, func, ctx, &chunk_name, timing, use_replay_environment);
     if let Some(module) = module {
         complete_addon_module(env, module, &execution)?;
     }
@@ -176,10 +196,12 @@ fn execute_lua_file(
     ctx: &AddonContext,
     chunk_name: &str,
     timing: &mut LoadTiming,
+    use_replay_environment: bool,
 ) -> Result<rilua::Val, LoadError> {
     let call_start = Instant::now();
-    let exec_result =
-        env.with_state(|state| execute_compiled_lua_file(state, func, ctx, chunk_name));
+    let exec_result = env.with_state(|state| {
+        execute_compiled_lua_file(state, func, ctx, chunk_name, use_replay_environment)
+    });
     let call_elapsed = call_start.elapsed();
     timing.lua_call_time += call_elapsed;
     timing.lua_exec_time += call_elapsed;
@@ -192,8 +214,9 @@ fn execute_compiled_lua_file(
     func: rilua::Function,
     ctx: &AddonContext,
     chunk_name: &str,
+    use_replay_environment: bool,
 ) -> Result<rilua::Val, LoadError> {
-    prepare_addon_function(state, &func, ctx)?;
+    prepare_addon_function(state, &func, ctx, use_replay_environment)?;
     let result = if ctx.taint {
         execute_budgeted_addon_file(state, func, ctx, chunk_name)
     } else {
@@ -208,12 +231,15 @@ pub(crate) fn prepare_addon_function(
     state: &mut LuaState,
     func: &rilua::Function,
     ctx: &AddonContext,
+    use_replay_environment: bool,
 ) -> Result<(), LoadError> {
     if ctx.taint {
         stamp_addon_taint_state(state, func, ctx.name)
             .map_err(|e| report_lua_load_error(state, e))?;
     }
-    if ctx.use_secure_env {
+    if use_replay_environment {
+        mark_secure_replay_state(state, func).map_err(|e| report_lua_load_error(state, e))?;
+    } else if ctx.use_secure_env {
         mark_secure_state(state, func).map_err(|e| report_lua_load_error(state, e))?;
     }
     crate::lua_api::loader_env::apply_loading_scoped_fenv_state(state, func)

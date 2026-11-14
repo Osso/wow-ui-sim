@@ -129,6 +129,8 @@ pub(super) fn init_lua_state(
     super::script_object_transfer::install(lua)?;
     enable_taint_and_wrap_loadstring(lua)?;
     crate::loader::precompiled::init(lua)?;
+    // temporary: lt-635e. Preserve the old full snapshot for the legacy replay pass.
+    super::globals::security::create_secure_replay_environment(lua)?;
     remove_sandbox_globals(lua)?;
     frames::init_frame_metatable(lua)?;
     trace_debug_getter_values(lua, "before_final_gc");

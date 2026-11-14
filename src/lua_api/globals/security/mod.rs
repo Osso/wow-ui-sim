@@ -39,10 +39,12 @@ mod value_access;
 
 pub use loader_env::{compile_chunk_rilua, exec_chunk_rilua};
 pub use secure_env::{
-    create_secure_environment, mark_secure, mark_secure_state, set_in_both_envs_rilua,
+    create_secure_environment, create_secure_replay_environment, mark_secure, mark_secure_state,
+    set_in_both_envs_rilua,
 };
 pub(crate) use secure_env::{
-    register_function_in_both_environments, secure_env_table, set_secure_env_key_state,
+    mark_secure_replay_state, register_function_in_both_environments, secure_env_table,
+    set_secure_env_key_state,
 };
 
 #[cfg(feature = "retail-12-1-0")]
