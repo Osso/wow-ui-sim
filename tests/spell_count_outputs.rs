@@ -997,7 +997,12 @@ fn restricted_positive_cast_and_charge_display_have_real_num_str_payloads() {
     display(&env, "19750", "7", true);
     set_charge(&env, 3, 5);
     cast_count(&env, "19750", 7, true);
-    display(&env, "19750", "3", true);
+    let expected_display = if uses_retail_native_count_contract() {
+        "7" // Retail reagent mode takes precedence over charge display.
+    } else {
+        "3"
+    };
+    display(&env, "19750", expected_display, true);
     display(&env, "19750,2,'é雪'", "é雪", true);
 }
 
