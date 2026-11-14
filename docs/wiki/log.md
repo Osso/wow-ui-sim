@@ -8,7 +8,7 @@
 
 ## [2026-11-14] implementation | Retail Azerite Essence tooltip selection
 
-Updated the [Round 7 contract](../specs/tooltip-r7-getters.md), [Lua API](systems/lua-api.md#azerite-essence-tooltip-selection-r88n2), and [consumer-selection evidence](investigations/consumer-selection-and-red-proof.md#retail-azerite-essence-tooltip-consumers). R88n.2 selectors are implemented; the column mapping is INFERRED and isolated, while source and requirement lines remain UNKNOWN.
+Updated the [Round 7 contract](../specs/tooltip-r7-getters.md), [Lua API](systems/lua-api.md#azerite-essence-tooltip-selection-r88n2), and [consumer-selection evidence](investigations/consumer-selection-and-red-proof.md#retail-azerite-essence-tooltip-consumers). R88n.2 essence/rank/slot selectors and the bounded next-rank source stage are implemented. **VERIFIED (test SHA `0204a94c7829a641d74a7c162a4c95db37d64da0`):** three targeted original-consumer/API tests pass. Spell and source-column mappings are INFERRED; empty-source behavior, inline-row order, gray selection and requirement rows remain UNKNOWN.
 
 ## [2026-11-14] investigation | Retail tooltip serializer boundary
 

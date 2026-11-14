@@ -33,7 +33,15 @@ native-duration unit thresholds. They do not use spell tooltip composition.
 
 **VERIFIED (Retail 12.1.5.70688, R88n.2):** `GetAzeriteEssence` requires the essence row plus exact selected-rank and rank-one rows, raises rank zero to one, and publishes TooltipData type 8 with the essence ID. An explicit rank bypasses current-rank selection. `GetAzeriteEssenceSlot` uses zero-based slots; slot zero keeps main and passive powers, while the other slots keep only passive power. The original Retail selectors are `Blizzard_AzeriteEssenceUI.lua:866-869,1256-1265` through `TooltipDataHandler.lua:564-565`.
 
-**VERIFIED (simulator data):** the generated catalog uses the 12.1.5.70391 `AzeriteEssence.csv` and `AzeriteEssencePower.csv` Wago exact-build DB2 exports; provenance records their hashes and 28/112 rows. Current rank and active-slot inputs remain `C_AzeriteEssence` state. **INFERRED:** the four native spell roles map to the similarly named DB2 columns; this binding is isolated from the rank and slot rules. **UNKNOWN:** faction-specific source rows and the full requirement-line expansion are not emitted. See the [Round 7 contract](../../specs/tooltip-r7-getters.md#what-it-must-do) and the [consumer investigation](../investigations/consumer-selection-and-red-proof.md#retail-azerite-essence-tooltip-consumers).
+**VERIFIED (Retail 12.1.5.70688, R88n.2):** the main block uses its rank-one description only when the essence is active in the major slot; otherwise it uses selected-rank actual text. The passive block uses its rank-one description whenever the essence is active in any slot; otherwise it uses selected-rank actual text.
+
+**VERIFIED (Retail 12.1.5.70688, R88n.2):** the source-stage next rank comes from the original requested/current rank, not the rank normalized for spell lookup. Next rank four disables the stage; every other next rank requires an exact power row. Next rank one uses a source heading and requires nonempty source text. Higher next ranks use a next-rank heading followed by source text. Source text wraps when emitted. The slot getter omits this stage.
+
+**VERIFIED (simulator data):** the generated catalog uses the 12.1.5.70391 `AzeriteEssence.csv` and `AzeriteEssencePower.csv` Wago exact-build DB2 exports; provenance records their hashes and 28/112 rows. Current rank and active-slot inputs remain `C_AzeriteEssence` state. **INFERRED:** the four spell roles map to similarly named DB2 columns, and modeled `RACE_DATA` faction selects the Alliance or Horde source column; global-string keys and text-row type are also simulator policy.
+
+**VERIFIED (Retail 12.1.5.70688, R88n.2):** higher-next-rank paths can add available major/minor description rows with line type 5 and wrapping. **UNKNOWN:** their relative order, the `powerState="gray"` predicate, missing/empty source behavior, and requirement-row expansion. The simulator emits no inline power or requirement rows. It omits an unavailable source without claiming native parity.
+
+**VERIFIED (optional Retail tests at test SHA `0204a94c7829a641d74a7c162a4c95db37d64da0`):** three targeted original-consumer/API tests pass for essence/rank selection, source-stage edges, slot modes and zero-value misses. See the [Round 7 contract](../../specs/tooltip-r7-getters.md#what-it-must-do) and the [consumer investigation](../investigations/consumer-selection-and-red-proof.md#retail-azerite-essence-tooltip-consumers).
 
 ### Other Round 7 getter notes
 
@@ -738,6 +746,9 @@ The [owning contract](../../specs/wrath-friends-legacy.md) records static12340 p
 - [Retail currency tooltip contract](../../specs/tooltip-currency.md) — R84/R84b verified rows, explicit host inputs and UNKNOWNs.
 - [c_tooltip_info_currency.rs](../../../src/c_api/c_tooltip_info_currency.rs) — shared Retail currency producer; text-row type restoration keeps verified type-0 rows after color remapping.
 - [tooltip_info/builders.rs](../../../src/lua_api/globals/missing_surface/tooltip_info/builders.rs) — shared line builder and color-based type remapping.
+- [Round 7 tooltip contract](../../specs/tooltip-r7-getters.md) — native signatures, getter behavior and explicit unknowns.
+- [Azerite selector](../../../src/c_api/azerite_essence_spell_selector.rs) — isolated inferred spell-column mapping.
+- [Azerite catalog provenance](../../../data/db2/retail-12.1.5.70391/tooltip-azerite-catalog-provenance.json) — exact-build DB2 hashes and row counts.
 
 - [Wrath action callback queries](../../specs/wrath-action-callback-queries.md) — native projections, shared snapshot boundary and bounded proof
 

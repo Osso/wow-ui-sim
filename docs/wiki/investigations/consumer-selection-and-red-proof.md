@@ -52,13 +52,17 @@ This is static staging, not observed RED/GREEN or runtime selection proof. Histo
 
 ## Retail Azerite Essence tooltip consumers
 
-**VERIFIED (Retail 12.1.5 cache):** `data/blizzard-ui-files/retail.txt:879-882` lists the load-on-demand Azerite Essence UI files, and `retail.txt:3447` lists `Blizzard_SharedXMLGame/Tooltip/TooltipDataHandler.lua`. The selected Game TOC allows `Blizzard_SharedXMLGame` and loads the handler; the UI TOC marks the Azerite panel load-on-demand. **VERIFIED (pinned API docs):** `TooltipInfoDocumentation.lua:69-95` declares `GetAzeriteEssence` and `GetAzeriteEssenceSlot`. **VERIFIED (original Lua):** `Blizzard_AzeriteEssenceUI.lua:866-869` calls `SetAzeriteEssence`; its slot hover at `1256-1265` calls `SetAzeriteEssenceSlot`; `TooltipDataHandler.lua:564-565` maps both setters to those getters.
+**VERIFIED (Retail 12.1.5 cache):** `data/blizzard-ui-files/retail.txt:879-882` lists the Azerite Essence UI files, `Blizzard_AzeriteEssenceUI.toc:1-3` marks the UI load-on-demand, and `retail.txt:3447` lists `Blizzard_SharedXMLGame/Tooltip/TooltipDataHandler.lua`. Game-screen discovery includes `Blizzard_SharedXMLGame`; the Azerite test discovers the UI addon's TOC dependency closure with that addon as an explicit LOD root. **VERIFIED (pinned API docs):** `TooltipInfoDocumentation.lua:69-95` declares `GetAzeriteEssence` and `GetAzeriteEssenceSlot`. **VERIFIED (original Lua):** `Blizzard_AzeriteEssenceUI.lua:866-869` calls `SetAzeriteEssence`; its slot hover at `1256-1265` calls `SetAzeriteEssenceSlot`; `TooltipDataHandler.lua:564-565` maps both setters to those getters.
 
-**VERIFIED (Retail 12.1.5.70688, R88n.1/R88n.2):** successful composition requires the essence, exact selected-rank and rank-one records, preserves TooltipData type 8 and essence ID, and returns zero values on the listed missing-source/failure paths. The ordinary getter selects main/passive spells from active-slot state; slot zero includes both blocks and the other slots omit the main block.
+**VERIFIED (Retail 12.1.5.70688, R88n.1/R88n.2):** successful composition requires the essence, exact selected-rank and rank-one records, preserves TooltipData type 8 and essence ID, and returns zero values on the listed missing-source/failure paths. The main block uses rank-one description only in the active major slot; the passive block uses rank-one description whenever active in any slot. Otherwise, both use selected-rank actual text. Slot zero includes both blocks; other slots omit the main block.
 
-**VERIFIED (pre-producer optional test at code SHA `fb8d4fe08501fe65fc9e9c24db7bc420431d2a00`):** the test fixture loads the full Retail UI, then the original load-on-demand Azerite UI closure, and checks original method sources before it calls each `OnEnter`. **RED:** `tests/tooltip_azerite_essence.rs::retail_azerite_essence_original_consumer_selects_exact_essence_and_rank` fails at line 77 because the original consumer receives no TooltipData; `retail_azerite_essence_slot_original_consumer_applies_verified_modes` fails at line 96 for the same no-value producer. Their rank and essence comparisons reject constant output when the producer is present. **PRESERVATION:** the zero-value miss test passes against the no-op producer and does not establish selector behavior.
+**VERIFIED (Retail 12.1.5.70688, R88n.2):** the source-stage next rank is computed from the original requested/current rank. Next rank four disables the stage; every other next rank requires an exact power row. Next rank one selects a source heading and requires nonempty source text; higher next ranks select a next-rank heading followed by source text. Source text wraps when emitted. The slot getter omits this stage.
 
-**VERIFIED (repository data):** `AzeriteEssence.csv` and `AzeriteEssencePower.csv` are exact-build 12.1.5.70391 Wago DB2 CSV exports, with hashes and row counts in `data/db2/retail-12.1.5.70391/tooltip-azerite-catalog-provenance.json`. **INFERRED:** the four native spell roles map to the similarly named 70391 columns; the mapping is isolated in `src/c_api/azerite_essence_spell_selector.rs`. **UNKNOWN:** faction-specific source-column selection, next-rank source rows, and the full requirement-localization expansion are not emitted; no missing native input or row contract is fabricated.
+**VERIFIED (test fixture at `tests/tooltip_azerite_essence.rs:129-204`, test SHA `0204a94c7829a641d74a7c162a4c95db37d64da0`):** Game-screen discovery selects `Blizzard_SharedXMLGame`, the Azerite UI closure selects its load-on-demand addon, and the fixture loads the native GameTooltip/TooltipDataHandler source before it executes the original `Blizzard_AzeriteEssenceUI.lua` file. `debug.getinfo` checks both original `OnEnter` methods and both original accessor methods. The fixture does not load the full UI bootstrap or Azerite XML.
+
+**RED (no-op producer, test tree `06f389052fb109bae1e782c2050698e229c13fdb`, no-op base `fb8d4fe08501fe65fc9e9c24db7bc420431d2a00`):** the original essence consumer fails with `RED: selected essence/rank must publish tooltip data`; the slot consumer fails because it cannot publish type-8 data. **RED (source-stage gap, code SHA `adf40e1152227ad2e5d4cf0aff56c8437a410033`):** the original essence consumer fails at `rank one must show the next-rank source heading`. **GREEN (targeted tests at `0204a94c7829a641d74a7c162a4c95db37d64da0`):** the three exact-list Retail tests pass for essence/rank and source-stage selection, slot modes, and zero-value arity. **PRESERVATION:** the zero-value miss test also passes against the no-op producer; it proves only the miss arity, not producer selection.
+
+**VERIFIED (repository data):** `AzeriteEssence.csv` and `AzeriteEssencePower.csv` are exact-build 12.1.5.70391 Wago DB2 CSV exports, with hashes and row counts in `data/db2/retail-12.1.5.70391/tooltip-azerite-catalog-provenance.json`. **INFERRED:** the four native spell roles map to similarly named 70391 columns; the mapping is isolated in `src/c_api/azerite_essence_spell_selector.rs`. Selecting Alliance/Horde source text from modeled `RACE_DATA` faction is also INFERRED. **UNKNOWN:** missing/empty source behavior, inline major/minor row order, the `powerState="gray"` predicate, and requirement-row expansion. The simulator emits no inline power or requirement rows and makes no native-parity claim for unavailable source text.
 
 ### R88n.3b quest-cache callback seam
 
@@ -120,11 +124,15 @@ The historical deferred `api_shape_stable_active_list.rs` is absent from master 
 - [Forever manifest](../../../data/blizzard-ui-files/wowforever.txt) — synchronized inputs, not runtime selection.
 - [Forever constants](../../../src/c_api/forever_finite_constants.rs) — StableUI prerequisite mismatch.
 - [Profile fixtures](../../../tests/common/profile_fixtures.rs) — compile-time registration mechanism.
+- [Retail Blizzard UI manifest](../../../data/blizzard-ui-files/retail.txt) — source-file and addon selection inputs.
+- [Round 7 tooltip contract](../../specs/tooltip-r7-getters.md) — API contract and bounded evidence.
+- [Azerite catalog provenance](../../../data/db2/retail-12.1.5.70391/tooltip-azerite-catalog-provenance.json) — exact-build DB2 inputs.
 
 ## See Also
 
 - [[addon-loading]] — runtime loading and dependency closure.
 - [[blizzard-ui-test-lanes]] — unit versus addon-bootstrap boundaries.
+- [[lua-api]] — C API contracts and implementation boundaries.
 
 ## CF-2 party minimum staging
 

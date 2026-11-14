@@ -4,7 +4,7 @@
 
 ## [2026-11-14] implementation | Retail Azerite Essence tooltip selection
 
-[Round 7 contract](../specs/tooltip-r7-getters.md) and [Lua API](systems/lua-api.md#azerite-essence-tooltip-selection-r88n2) record R88n.2 selectors, the exact-build DB2 catalog, original-consumer tests, the separate INFERRED column mapping, and unmodeled source/requirement lines.
+[Round 7 contract](../specs/tooltip-r7-getters.md) and [Lua API](systems/lua-api.md#azerite-essence-tooltip-selection-r88n2) record the exact-build DB2 catalog, original-consumer RED/GREEN/PRESERVATION evidence, and the next-rank source stage. Spell/source column mappings remain INFERRED; inline-row order, gray selection, empty-source behavior and requirement rows remain UNKNOWN.
 
 ## [2026-11-14] implementation | Retail tooltip serializer field boundary
 
