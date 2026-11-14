@@ -584,7 +584,7 @@ fn lua_errors_reports_enabled_addon_with_missing_required_dependency() {
             .iter()
             .find(|addon| addon.folder_name == "DependentAddon")
             .expect("registered dependent addon")
-            .loaded,
+            .is_loaded(),
         "addon with a missing required dependency should not load"
     );
     drop(state);
@@ -662,7 +662,7 @@ fn load_summary_counts_file_event_and_nested_lua_failures_once_per_addon() {
             state
                 .addons
                 .iter()
-                .any(|addon| addon.folder_name == name && addon.loaded),
+                .any(|addon| addon.folder_name == name && addon.is_loaded()),
             "loaded state must be preserved for {name}"
         );
     }
@@ -672,7 +672,7 @@ fn load_summary_counts_file_event_and_nested_lua_failures_once_per_addon() {
             .iter()
             .find(|addon| addon.folder_name == "MissingDependency")
             .unwrap()
-            .loaded
+            .is_loaded()
     );
     assert_eq!(stats.success_count, 4);
     assert_eq!(

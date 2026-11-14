@@ -110,6 +110,87 @@ fn toc_multiannotations_load_files_in_order_with_secure_environment() {
 }
 
 #[test]
+fn secure_addon_loads_nonsecure_dependency_in_ordinary_then_secure_environment() {
+    let env = env();
+    let root = tempfile::tempdir().unwrap();
+    let dependency_dir = root.path().join("DependencyProbe");
+    let consumer_dir = root.path().join("SecureConsumerProbe");
+    std::fs::create_dir_all(&dependency_dir).unwrap();
+    std::fs::create_dir_all(&consumer_dir).unwrap();
+    std::fs::write(
+        dependency_dir.join("DependencyProbe.toc"),
+        "## Title: DependencyProbe\nDependency.lua\n",
+    )
+    .unwrap();
+    std::fs::write(
+        dependency_dir.join("Dependency.lua"),
+        "dependencyLoadCount = (dependencyLoadCount or 0) + 1; \
+         dependencyToken = 'secure-visible'",
+    )
+    .unwrap();
+    let consumer_toc = consumer_dir.join("SecureConsumerProbe.toc");
+    std::fs::write(
+        &consumer_toc,
+        "## Title: SecureConsumerProbe\n\
+         ## UseSecureEnvironment: 1\n\
+         ## Dependencies: DependencyProbe\n\
+         Consumer.lua\n",
+    )
+    .unwrap();
+    std::fs::write(
+        consumer_dir.join("Consumer.lua"),
+        "assert(rawget(_G, 'dependencyLoadCount') == 1); \
+         assert(rawget(_G, 'dependencyToken') == 'secure-visible'); \
+         secureConsumerSawDependency = true",
+    )
+    .unwrap();
+
+    let result = wow_ui_sim::loader::load_addon(&env.loader_env(), &consumer_toc).unwrap();
+    assert!(result.warnings.is_empty(), "{:?}", result.warnings);
+    let observed: (i32, i32, bool, bool, bool, bool) = env
+        .eval(
+            r#"
+                return rawget(_G, 'dependencyLoadCount') or 0,
+                    rawget(__secureenv, 'dependencyLoadCount') or 0,
+                    rawget(_G, 'dependencyToken') == 'secure-visible',
+                    rawget(__secureenv, 'dependencyToken') == 'secure-visible',
+                    rawget(__secureenv, 'secureConsumerSawDependency') == true,
+                    C_AddOns.IsAddOnLoaded('SecureConsumerProbe') == true
+            "#,
+        )
+        .unwrap();
+    assert_eq!(observed, (1, 1, true, true, true, true));
+
+    {
+        let state = env.state().borrow();
+        let dependency = state
+            .addons
+            .iter()
+            .find(|addon| addon.folder_name == "DependencyProbe")
+            .expect("dependency load state");
+        assert!(dependency.loaded);
+        assert!(dependency.secure_loaded);
+        let consumer = state
+            .addons
+            .iter()
+            .find(|addon| addon.folder_name == "SecureConsumerProbe")
+            .expect("consumer load state");
+        assert!(!consumer.loaded);
+        assert!(consumer.secure_loaded);
+    }
+
+    let second_load = wow_ui_sim::loader::load_addon(&env.loader_env(), &consumer_toc).unwrap();
+    assert_eq!(second_load.lua_files, 0);
+    let counts: (i32, i32) = env
+        .eval(
+            "return rawget(_G, 'dependencyLoadCount'), \
+             rawget(__secureenv, 'dependencyLoadCount')",
+        )
+        .unwrap();
+    assert_eq!(counts, (1, 1));
+}
+
+#[test]
 fn secure_primitive_write_stays_inside_secureenv() {
     let env = env();
 

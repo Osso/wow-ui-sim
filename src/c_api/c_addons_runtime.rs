@@ -359,7 +359,7 @@ fn is_addon_loaded_by_name(state: &LuaState, addon_name: &str) -> bool {
             sim.addons
                 .iter()
                 .find(|addon| addon.folder_name == addon_name)
-                .map(|addon| addon.loaded)
+                .map(|addon| addon.is_loaded_in_environment(addon.use_secure_env))
         })
         .unwrap_or(false)
 }

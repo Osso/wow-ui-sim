@@ -253,7 +253,7 @@ fn validate_required_dependency_screens(
             .borrow()
             .addons
             .iter()
-            .any(|addon| addon.folder_name == dependency && addon.loaded);
+            .any(|addon| addon.folder_name == dependency && addon.is_loaded());
         if is_loaded || !checked.insert(dependency.clone()) {
             continue;
         }

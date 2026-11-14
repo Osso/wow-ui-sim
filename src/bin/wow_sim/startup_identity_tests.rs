@@ -315,7 +315,7 @@ fn assert_startup_selection_error(root: &Path, expected: &str) {
         .borrow()
         .addons
         .iter()
-        .map(|addon| (addon.folder_name.clone(), addon.loaded))
+        .map(|addon| (addon.folder_name.clone(), addon.is_loaded()))
         .collect();
     let result = initialize_and_load_env(&args, ScreenKind::Game, env);
     let error = match result {
@@ -327,7 +327,7 @@ fn assert_startup_selection_error(root: &Path, expected: &str) {
         .borrow()
         .addons
         .iter()
-        .map(|addon| (addon.folder_name.clone(), addon.loaded))
+        .map(|addon| (addon.folder_name.clone(), addon.is_loaded()))
         .collect();
     assert_eq!(
         final_addons, initial_addons,

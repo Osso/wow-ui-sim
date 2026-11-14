@@ -129,8 +129,10 @@ pub struct AddonInfo {
     pub notes: String,
     /// Whether the addon is currently enabled.
     pub enabled: bool,
-    /// Whether the addon was successfully loaded.
+    /// Whether the addon completed an ordinary-environment load.
     pub loaded: bool,
+    /// Whether the addon completed a secure-environment load.
+    pub secure_loaded: bool,
     /// Load on demand flag.
     pub load_on_demand: bool,
     /// Whether parsed addon XML contains named binding definitions.
@@ -157,6 +159,20 @@ pub struct AddonInfo {
     pub default_enabled: bool,
 }
 
+impl AddonInfo {
+    pub fn is_loaded(&self) -> bool {
+        self.loaded || self.secure_loaded
+    }
+
+    pub fn is_loaded_in_environment(&self, secure: bool) -> bool {
+        if secure {
+            self.secure_loaded
+        } else {
+            self.loaded
+        }
+    }
+}
+
 impl Default for AddonInfo {
     fn default() -> Self {
         Self {
@@ -166,6 +182,7 @@ impl Default for AddonInfo {
             notes: String::new(),
             enabled: false,
             loaded: false,
+            secure_loaded: false,
             load_on_demand: false,
             contains_bindings: false,
             bootstrap_loaded: false,

@@ -99,11 +99,12 @@ impl<'a> LoaderEnv<'a> {
 
     fn loading_addon_uses_secure_env(&self) -> bool {
         let state = self.state.borrow();
-        state
-            .loading_addon_index
-            .and_then(|idx| state.addons.get(idx as usize))
-            .map(|addon| addon.use_secure_env)
-            .unwrap_or(false)
+        state.loading_addon_secure_env.unwrap_or_else(|| {
+            state
+                .loading_addon_index
+                .and_then(|idx| state.addons.get(idx as usize))
+                .is_some_and(|addon| addon.use_secure_env)
+        })
     }
 
     pub fn exec(&self, code: &str) -> Result<()> {
