@@ -23,14 +23,12 @@ pub(crate) fn bad_argument(index: i32, function: &str, reason: &str) -> rilua::L
     rilua::runtime_error(format!("bad argument #{index} to '{function}' ({reason})"))
 }
 
-/// Native shared signed 32-bit converter (WM87, WM88) for AllowedWhenUntainted
-/// arguments: required, inclusive bounds checked before truncation.
-pub(crate) fn read_untainted_signed32_argument(
+fn read_untainted_value(
     state: &LuaState,
     index: i32,
     function: &str,
     usage: &str,
-) -> LuaResult<i32> {
+) -> LuaResult<(Val, bool)> {
     let original = crate::lua_bridge::stack_val(state, index);
     if matches!(original, Val::Nil) {
         return Err(bad_argument(index, function, usage));
@@ -42,6 +40,18 @@ pub(crate) fn read_untainted_signed32_argument(
         );
         bad_argument(index, function, &denied)
     })?;
+    Ok((value, marked))
+}
+
+/// Read one required, untainted value using the shared argument-error format.
+/// The signed-32 and truthiness converters use this same absence and access path.
+pub(crate) fn read_untainted_signed32_argument(
+    state: &LuaState,
+    index: i32,
+    function: &str,
+    usage: &str,
+) -> LuaResult<i32> {
+    let (value, marked) = read_untainted_value(state, index, function, usage)?;
     let number = match value {
         Val::Num(number) => Some(number),
         Val::Str(reference) if !marked => state
@@ -64,6 +74,20 @@ pub(crate) fn read_untainted_signed32_argument(
         .filter(in_range)
         .map(|number| number.trunc() as i32)
         .ok_or_else(range_error)
+}
+
+#[cfg(feature = "client-retail")]
+pub(crate) fn read_untainted_truthy_argument(
+    state: &LuaState,
+    index: i32,
+    function: &str,
+    usage: &str,
+) -> LuaResult<bool> {
+    let (value, _) = read_untainted_value(state, index, function, usage)?;
+    if matches!(value, Val::Nil) {
+        return Err(bad_argument(index, function, usage));
+    }
+    Ok(!matches!(value, Val::Bool(false)))
 }
 
 /// Reject nonnumeric inputs; unrepresented numeric identities cannot match supplied rows.

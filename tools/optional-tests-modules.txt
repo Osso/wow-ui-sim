@@ -161,3 +161,6 @@ objective_tracker_original_animation
 
 # lt-2897 B(a): ownership/preservation diagnostic, not claimed RED.
 quest_helper_load_ownership
+
+# lt-2162: verified PvP talent API branches and the selected Player Spells consumer.
+pvp_talent_native_consumers
