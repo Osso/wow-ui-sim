@@ -12,7 +12,7 @@ use crate::lua_api::loader_env::GeneratedChunkArg;
 
 const MAP_CANVAS_SCROLL_CONTAINER_WORKAROUND_LUA: &str = r#"
 local options = ...
-local preserve_original_display_state = options and options[1] == "preserve_original_display_state"
+local preserve_original_world_map_owners = options and options[1] == "preserve_original_world_map_owners"
 
 if type(ClearCachedActivitiesForPlayer) ~= "function" then
   function ClearCachedActivitiesForPlayer() end
@@ -288,7 +288,7 @@ local function __wow_patch_live_map_canvas(frame)
 end
 
 local function __wow_patch_world_map_display_state(frame)
-  if preserve_original_display_state then
+  if preserve_original_world_map_owners then
     return
   end
   if type(frame) ~= "table" or type(frame.SetDisplayState) ~= "function" then
@@ -504,11 +504,13 @@ end
 __wow_patch_world_map_display_state(WorldMapFrame)
 
 if type(ToggleWorldMap) == "function" and not rawget(_G, "__wow_toggle_world_map_refresh_patched") then
-  local originalToggleWorldMap = ToggleWorldMap
-  ToggleWorldMap = function(...)
-    local result = originalToggleWorldMap(...)
-    __wow_refresh_world_map_canvas()
-    return result
+  if not preserve_original_world_map_owners then
+    local originalToggleWorldMap = ToggleWorldMap
+    ToggleWorldMap = function(...)
+      local result = originalToggleWorldMap(...)
+      __wow_refresh_world_map_canvas()
+      return result
+    end
   end
 
   if type(OpenWorldMap) == "function" then
@@ -527,11 +529,12 @@ end
 pub(crate) fn patch(env: &LoaderEnv<'_>) -> Result<(), crate::Error> {
     if ACTIVE == ClientProfile::Retail {
         // Retail MapCanvas loads before the WorldMap XML frame and its original
-        // QuestLogOwnerMixin. The original owner handles display transitions.
+        // QuestLogOwnerMixin. Preserve the original display-state and toggle
+        // functions; OpenWorldMap and the other canvas repairs stay unchanged.
         env.exec_with_args(
             MAP_CANVAS_SCROLL_CONTAINER_WORKAROUND_LUA,
             &[GeneratedChunkArg::String(
-                "preserve_original_display_state".into(),
+                "preserve_original_world_map_owners".into(),
             )],
         )
     } else {

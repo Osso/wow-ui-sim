@@ -6,11 +6,11 @@ use wow_ui_sim::loader::{
     discover_all_blizzard_addons, discover_blizzard_startup_addons_for_screen, load_startup_addon,
     register_load_with_addons,
 };
+use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::collect_lua_error_startup;
 
-#[test]
-fn original_worldmap_display_state_controls_preserve_canvas_geometry() {
+fn load_normal_game_worldmap() -> WowLuaEnv {
     let ui = blizzard_ui_dir();
     let env = new_blizzard_addon_env(&ui);
     register_load_with_addons(&env.loader_env(), &discover_all_blizzard_addons(&ui));
@@ -36,6 +36,15 @@ fn original_worldmap_display_state_controls_preserve_canvas_geometry() {
         "Blizzard_WorldMap_Mainline.toc"
     );
 
+    let minimap = startup
+        .iter()
+        .find(|a| a.name == "Blizzard_Minimap")
+        .expect("Minimap is selected for normal Retail Game startup");
+    assert_eq!(
+        minimap.toc_path.file_name().unwrap(),
+        "Blizzard_Minimap_Mainline.toc"
+    );
+
     for (index, addon) in startup.into_iter().enumerate() {
         let loaded = env
             .state()
@@ -45,8 +54,8 @@ fn original_worldmap_display_state_controls_preserve_canvas_geometry() {
             .any(|a| a.folder_name == addon.name && a.loaded);
         if index == canvas_index || index == world_index {
             assert!(!loaded, "observe the actual first load of {}", addon.name);
-            env.exec("assert(WorldMapFrame == nil and QuestLogOwnerMixin == nil)")
-                .expect("no WorldMap owner/consumer while entering a prerequisite");
+            env.exec("assert(WorldMapFrame == nil and QuestLogOwnerMixin == nil and debug.getinfo(ToggleWorldMap, 'S').what == 'C')")
+                .expect("only the Rust ToggleWorldMap bootstrap while entering a prerequisite");
         }
         if !loaded {
             load_startup_addon(&env.loader_env(), &addon.toc_path, addon.kind, None)
@@ -56,14 +65,19 @@ fn original_worldmap_display_state_controls_preserve_canvas_geometry() {
             env.restore_post_cleanup_globals();
         }
         if index == canvas_index {
-            env.exec("assert(WorldMapFrame == nil and QuestLogOwnerMixin == nil)")
-                .expect("MapCanvas completion precedes WorldMap ownership");
+            env.exec("assert(WorldMapFrame == nil and QuestLogOwnerMixin == nil and debug.getinfo(ToggleWorldMap, 'S').what == 'C')")
+                .expect("only the Rust ToggleWorldMap bootstrap at MapCanvas completion");
         }
     }
     env.sync_string_metatable_to_global_string();
     env.apply_post_load_workarounds();
     collect_lua_error_startup(&env);
+    env
+}
 
+#[test]
+fn original_worldmap_display_state_controls_preserve_canvas_geometry() {
+    let env = load_normal_game_worldmap();
     env.exec(
         r#"
         local map = assert(WorldMapFrame)
@@ -131,6 +145,68 @@ fn original_worldmap_display_state_controls_preserve_canvas_geometry() {
         "#,
     )
     .expect("original display-state controls and canvas geometry preserve behavior");
+    assert!(
+        env.state().borrow().lua_errors.is_empty(),
+        "unfiltered errors: {:?}",
+        env.state().borrow().lua_errors
+    );
+}
+
+#[test]
+fn original_minimap_zone_button_preserves_world_map_toggle() {
+    let env = load_normal_game_worldmap();
+    env.exec(
+        r#"
+        local map = assert(WorldMapFrame)
+        local button = assert(MinimapCluster.ZoneTextButton)
+        local owner = ToggleWorldMap
+        local function source(fn)
+            return debug.getinfo(fn, "S").source:gsub('\\', '/')
+        end
+        assert(source(owner):find("Blizzard_WorldMap/Blizzard_WorldMap.lua", 1, true))
+        assert(button.OnClick == MinimapZoneTextButtonMixin.OnClick)
+        assert(source(button.OnClick):find("Blizzard_Minimap/Mainline/Minimap.lua", 1, true))
+        assert(type(button:GetScript("OnClick")) == "function")
+        assert(button:IsVisible() and button:IsEnabled())
+        assert(GetBindingKey("TOGGLEWORLDMAP") == "M", "normal M binding")
+        assert(not map:IsShown())
+
+        SetCVar("miniWorldMap", 1)
+        SetCVar("questLogOpen", 0)
+        local savedMapID, savedW, savedH
+        for i = 1, 2 do
+            button:Click("LeftButton")
+            assert(map:IsShown() and map:IsMinimized() and not map.QuestLog:IsShown())
+            assert(ToggleWorldMap == owner)
+            local scroll, child = map:GetCanvasContainer(), map:GetCanvas()
+            assert(child == scroll.Child)
+            local mapID, w, h = map:GetMapID(), scroll:GetWidth(), scroll:GetHeight()
+            assert(mapID > 0 and w > 0 and h > 0)
+            assert(child:GetWidth() > 0 and child:GetHeight() > 0 and scroll.currentScale > 0)
+            if i == 1 then
+                savedMapID, savedW, savedH = mapID, w, h
+            else
+                assert(mapID == savedMapID and w == savedW and h == savedH)
+            end
+            assert(button:IsVisible() and button:IsEnabled())
+            button:Click("LeftButton")
+            assert(not map:IsShown() and ToggleWorldMap == owner)
+        end
+        SetCVar("miniWorldMap", 0)
+        "#,
+    )
+    .expect("original minimap zone-text clicks toggle the original map owner");
+    // The simulator's normal M dispatch models the same TOGGLEWORLDMAP
+    // action named in Retail Bindings_Standard.xml; the XML button above
+    // independently proves an original Blizzard Lua consumer.
+    env.send_key_press("M", None)
+        .expect("dispatch M to open map");
+    env.exec("assert(WorldMapFrame:IsShown() and WorldMapFrame:IsMaximized())")
+        .expect("M opens the maximized map");
+    env.send_key_press("M", None)
+        .expect("dispatch M to close map");
+    env.exec("assert(not WorldMapFrame:IsShown())")
+        .expect("M closes the map");
     assert!(
         env.state().borrow().lua_errors.is_empty(),
         "unfiltered errors: {:?}",
