@@ -1,8 +1,8 @@
 //! Temporary PvP talent defaults for `C_SpecializationInfo`.
 //!
-//! Core specialization data is modeled by `c_api::c_spec`; PvP talent rows,
-//! selections, and lock state are not seeded yet. These inert defaults keep
-//! Blizzard talent code loadable until real PvP talent state exists.
+//! Core specialization data and Retail lock state are modeled by `c_api::c_spec`;
+//! PvP talent rows and selections are not seeded yet. These defaults keep
+//! Blizzard talent code loadable while those data sources remain unmodeled.
 
 const PVP_TALENT_DEFAULTS_LUA: &str = r#"
 C_SpecializationInfo = C_SpecializationInfo or __wow_namespace()
@@ -81,22 +81,6 @@ if rawget(C_SpecializationInfo, "GetPvpTalentSlotUnlockLevel") == nil then
 end
 "#;
 
-const PVP_TALENT_SLOT_UNLOCK_LEVEL_RETAIL_LUA: &str = r#"
-if rawget(C_SpecializationInfo, "GetPvpTalentSlotUnlockLevel") == nil then
-    function C_SpecializationInfo.GetPvpTalentSlotUnlockLevel(_slotIndex)
-        return nil
-    end
-end
-"#;
-
-fn pvp_talent_slot_unlock_level_defaults_lua() -> &'static str {
-    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
-        PVP_TALENT_SLOT_UNLOCK_LEVEL_RETAIL_LUA
-    } else {
-        PVP_TALENT_SLOT_UNLOCK_LEVEL_DEFAULTS_LUA
-    }
-}
-
 const PVP_SLOT_DEFAULTS_LUA: &str = r#"
 local function numberArgument(value)
     return type(value) == "number" and value or nil
@@ -124,8 +108,8 @@ end
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(PVP_TALENT_DEFAULTS_LUA)?;
-    lua.exec(pvp_talent_slot_unlock_level_defaults_lua())?;
     if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
+        lua.exec(PVP_TALENT_SLOT_UNLOCK_LEVEL_DEFAULTS_LUA)?;
         lua.exec(PVP_SLOT_DEFAULTS_LUA)?;
     }
     Ok(())
@@ -133,8 +117,8 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 
 pub(crate) fn patch_loader(env: &crate::lua_api::LoaderEnv<'_>) {
     let _ = env.exec(PVP_TALENT_DEFAULTS_LUA);
-    let _ = env.exec(pvp_talent_slot_unlock_level_defaults_lua());
     if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
+        let _ = env.exec(PVP_TALENT_SLOT_UNLOCK_LEVEL_DEFAULTS_LUA);
         let _ = env.exec(PVP_SLOT_DEFAULTS_LUA);
     }
 }
