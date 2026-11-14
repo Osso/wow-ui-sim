@@ -25,7 +25,7 @@ pub(super) fn clear_lines(state: &mut LuaState) -> LuaResult<u32> {
     let line_ids = {
         let td = sim.tooltips.entry(id).or_default();
         let active_line_count = td.lines.len();
-        let line_ids = if forever {
+        let line_ids: Vec<u64> = if forever {
             td.left_line_ids
                 .iter()
                 .take(active_line_count)
