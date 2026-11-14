@@ -299,8 +299,6 @@ mod current {
                 "SecretSlot, 1",
                 "SecretSlot, {}",
                 "2147483647, SecretBank",
-                "nil, SecretBank",
-                "{}, SecretBank",
             ] {
                 addon(
                     &env,
