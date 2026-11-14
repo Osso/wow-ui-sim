@@ -43,6 +43,7 @@ pub(crate) mod campaign_covenant_defaults;
 pub(crate) mod catalog_shop_inbound_globals;
 pub(crate) mod catalog_shop_product_card_defaults;
 pub(crate) mod character_create_defaults;
+#[cfg(not(feature = "client-retail"))]
 pub(crate) mod character_frame_surface_refresh;
 #[cfg(not(feature = "client-retail"))]
 pub(crate) mod character_select_selected_name;

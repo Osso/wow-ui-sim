@@ -38,6 +38,18 @@ fn original_character_env() -> WowLuaEnv {
         }
     }
     env.sync_string_metatable_to_global_string();
+    env.exec(
+        r#"
+        -- Capture actual XML script and Lua method owners before simulator hooks.
+        JOriginalCharacterOnShow = CharacterFrame:GetScript("OnShow")
+        JOriginalCharacterRefreshDisplay = CharacterFrame.RefreshDisplay
+        assert(type(JOriginalCharacterOnShow) == "function")
+        assert(JOriginalCharacterRefreshDisplay == CharacterFrameMixin.RefreshDisplay)
+        assert(debug.getinfo(JOriginalCharacterRefreshDisplay).source:find(
+            "Blizzard_UIPanels_Game/Mainline/CharacterFrame.lua", 1, true))
+    "#,
+    )
+    .unwrap();
     env.apply_post_load_workarounds();
     assert!(!env.state().borrow().post_event_workarounds_applied);
     env.exec(r#"
@@ -105,4 +117,141 @@ fn original_reputation_title_survives_first_post_event_refresh() {
 #[test]
 fn original_currency_title_survives_first_post_event_refresh() {
     exercise_title("TokenFrame", "CURRENCY");
+}
+
+// Ownership retirement RED, distinct from the populated preservation test below.
+fn assert_original_display_callbacks(env: &WowLuaEnv) {
+    env.exec(
+        r#"
+        assert(CharacterFrame:GetScript("OnShow") == JOriginalCharacterOnShow,
+            "simulator must not replace original CharacterFrame XML OnShow")
+        assert(CharacterFrame.RefreshDisplay == JOriginalCharacterRefreshDisplay,
+            "simulator must not replace original CharacterFrame RefreshDisplay")
+        assert(rawget(_G, "__wow_character_frame_onshow_wrapper") == nil)
+        assert(rawget(_G, "__wow_character_frame_refresh_display_wrapper") == nil)
+    "#,
+    )
+    .unwrap();
+}
+
+#[test]
+fn original_character_display_callbacks_survive_postload_and_world_entry() {
+    let env = original_character_env();
+    // Current bridge fails here even where its extra refreshes happen to
+    // preserve visible output. Do not mislabel this as a native behavior RED.
+    assert_original_display_callbacks(&env);
+    env.exec("ToggleCharacter('PaperDollFrame', true)").unwrap();
+    env.fire_event("PLAYER_ENTERING_WORLD").unwrap();
+    assert!(env.state().borrow().post_event_workarounds_applied);
+    assert_original_display_callbacks(&env);
+}
+
+fn assert_original_slot_presentation(env: &WowLuaEnv, equipped: bool) {
+    env.exec(&format!(
+        r#"
+        assert(CharacterFrame:IsShown() and PaperDollFrame:IsShown())
+        assert(CharacterFrame.activeSubframe == "PaperDollFrame")
+        assert(CharacterFrame.TitleContainer.TitleText:GetText() == UnitPVPName("player"))
+        local slot = CharacterHeadSlot
+        assert(slot.icon == JHeadIcon, "original icon identity")
+        assert(slot:IsEventRegistered("PLAYER_EQUIPMENT_CHANGED"),
+            "original slot OnShow must register equipment refresh")
+        local texture = GetInventoryItemTexture("player", slot:GetID())
+        if {equipped} then
+            assert(texture ~= nil, "existing equipped item must have a texture")
+            assert(slot.icon:GetTexture() == texture, "original equipped slot texture")
+        else
+            assert(texture == nil, "host scenario removed the equipped item")
+            assert(slot.backgroundTextureName ~= nil, "XML/OnLoad owns empty-slot background")
+            assert(slot.icon:GetTexture() == slot.backgroundTextureName,
+                "original empty-slot texture")
+            assert(not slot.Cooldown:IsShown(), "empty slot clears cooldown")
+        end
+    "#
+    ))
+    .unwrap();
+}
+
+fn assert_no_character_owner_errors(env: &WowLuaEnv) {
+    for error in &env.state().borrow().lua_error_records {
+        println!("J slot retained diagnostic: {}", error.message);
+        assert!(
+            !error.message.contains("CharacterFrame.lua")
+                && !error.message.contains("PaperDollFrame.lua"),
+            "{}",
+            error.message
+        );
+    }
+}
+
+/// PRESERVATION through original slot events and open/reopen lifecycle. The
+/// existing modeled head item is moved out/back; no new item/native API is
+/// fabricated, and no original callback is replaced or invoked by a fake sink.
+#[test]
+fn original_character_slot_refreshes_equipped_empty_and_reopened_states() {
+    let env = original_character_env();
+    let original_head = env
+        .state()
+        .borrow()
+        .player
+        .equipped_items
+        .get(&1)
+        .expect("SETUP: existing modeled head item required")
+        .clone();
+    env.exec(
+        r#"
+        assert(CharacterHeadSlot:GetID() == 1)
+        for _, callback in ipairs({PaperDollItemSlotButton_Update,
+            PaperDollItemSlotButton_OnShow, PaperDollItemSlotButton_OnEvent}) do
+            assert(debug.getinfo(callback).source:find(
+                "Blizzard_UIPanels_Game/Mainline/PaperDollFrame.lua", 1, true))
+        end
+        ToggleCharacter("PaperDollFrame", true)
+    "#,
+    )
+    .unwrap();
+    assert_original_slot_presentation(&env, true);
+    env.fire_event("PLAYER_ENTERING_WORLD").unwrap();
+    // The original world-entry lifecycle legitimately closes the panel.
+    // Reopen through its original controller, never force frame visibility.
+    env.exec("assert(not CharacterFrame:IsShown(), 'world-entry lifecycle closes panel'); ToggleCharacter('PaperDollFrame', true)")
+        .unwrap();
+    assert_original_slot_presentation(&env, true);
+
+    // Actual registered original OnEvent refreshes the now-empty visible slot.
+    env.state().borrow_mut().player.equipped_items.remove(&1);
+    env.fire_event_with_args(
+        "PLAYER_EQUIPMENT_CHANGED",
+        &[rilua::Val::Num(1.0), rilua::Val::Bool(false)],
+    )
+    .unwrap();
+    assert_original_slot_presentation(&env, false);
+    env.exec("ToggleCharacter('PaperDollFrame'); assert(not CharacterFrame:IsShown())")
+        .unwrap();
+
+    // Change the same existing item while hidden; reopening must be sufficient
+    // to refresh through original child OnShow, not a post-event replay.
+    env.state()
+        .borrow_mut()
+        .player
+        .equipped_items
+        .insert(1, original_head.clone());
+    env.exec("ToggleCharacter('PaperDollFrame', true)").unwrap();
+    assert_original_slot_presentation(&env, true);
+    env.exec("ToggleCharacter('ReputationFrame', true); assert(CharacterFrame.activeSubframe == 'ReputationFrame')").unwrap();
+    env.state().borrow_mut().player.equipped_items.remove(&1);
+    env.exec("ToggleCharacter('PaperDollFrame', true)").unwrap();
+    assert_original_slot_presentation(&env, false);
+    env.state()
+        .borrow_mut()
+        .player
+        .equipped_items
+        .insert(1, original_head);
+    env.fire_event_with_args(
+        "PLAYER_EQUIPMENT_CHANGED",
+        &[rilua::Val::Num(1.0), rilua::Val::Bool(true)],
+    )
+    .unwrap();
+    assert_original_slot_presentation(&env, true);
+    assert_no_character_owner_errors(&env);
 }

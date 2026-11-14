@@ -61,6 +61,7 @@ pub(super) fn patch_talent_edge_frame_level_sync(env: &crate::lua_api::WowLuaEnv
 }
 
 pub(super) fn patch_catalog_shop_product_card_defaults(env: &crate::lua_api::WowLuaEnv) {
+    #[cfg(not(feature = "client-retail"))]
     temporary::store_public_defaults::patch(env);
     temporary::catalog_shop_product_card_defaults::patch(env);
 }
@@ -81,10 +82,12 @@ pub(super) fn patch_character_create_defaults(env: &crate::lua_api::WowLuaEnv) {
     temporary::character_create_defaults::patch(env);
 }
 
+#[cfg(not(feature = "client-retail"))]
 pub(super) fn patch_character_frame_title_refresh(env: &crate::lua_api::WowLuaEnv) {
     refresh_character_frame_surface(env);
 }
 
+#[cfg(not(feature = "client-retail"))]
 pub(super) fn refresh_character_frame_surface(env: &crate::lua_api::WowLuaEnv) {
     temporary::character_frame_surface_refresh::patch(env);
 }

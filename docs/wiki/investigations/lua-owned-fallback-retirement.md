@@ -69,16 +69,34 @@ real PLAYER_ENTERING_WORLD without resetting the one-shot guard. The original
 event legitimately hides the outer panel; the retained active-subframe title
 must still remain authored. Before the fix both titles became the player name
 (Uther in this host fixture). The narrow Retail policy removes that forced
-name assignment; remaining OnShow/RefreshDisplay and slot-refresh bridges are
-not retired without separate evidence. Non-Retail title assignment ordering
-and failure behavior remain unchanged.
+name assignment in the first tranche. A separately proved follow-up now omits
+the entire Retail surface bridge from post-load and post-event registration:
+original XML OnShow and RefreshDisplay identities survive both hooks, and the
+original slot consumer preserves equipped/empty equipment changes, world-entry
+close/reopen and Reputation/PaperDoll transitions. The same existing host head
+item is removed/restored; no item, callback, frame or output sink is fabricated.
+The callback-identity selector fails before retirement, while slot output is
+independent PRESERVATION evidence. Extra title/slot replay and direct icon writes
+are no longer used on Retail. Other profiles retain the historical bridge;
+Retail evidence does not establish their lifecycle.
 
-The five J selectors and three touched surface unit tests pass. Fourteen of
+The first tranche passed five J selectors and three touched surface unit tests.
+The follow-up adds original character callbacks/slot lifecycle and StoreUI escape
+coverage. Fourteen of
 fifteen existing character-select/reputation regressions pass;
 `show_ui_panel_locks_reputation_frame_layout` retains `character_not_shown`,
 independently reproduced with the sealed pre-J35106b01b binary and matching
 dylib. That baseline failure is not filtered or repaired by this tranche.
 Retail startup reports CLEAN with zero Lua errors; this is not a full-suite claim.
+
+The follow-up also omits the Retail `StoreFrame_EscapePressed` load guard.
+Actual `Blizzard_StoreUI.toc` selects the Mainline shared XML, inbound function
+and secure `OnAttributeChanged` callback. Hidden/default escape goes through
+original inbound action publication and original XML-bound secure handling,
+which publishes `escaperesult=false`; no frame or callback is fabricated and
+no purchase/service operation runs. This behavior is PRESERVATION; a separate
+original inbound source identity assertion is retirement RED. Other profiles
+retain their guard and all store-service native defaults remain untouched.
 
 No J native defaults were implemented. Kiosk, Perks, PrototypeDialog, legacy
 session/video behavior, promotion inventory and store-service semantics remain
@@ -88,7 +106,8 @@ secure/public binding remain unresolved, not blanket removable fallbacks.
 
 - [Selected-name original consumers](../../../tests/stub_j_selected_name.rs)
 - [CharacterFrame title consumers](../../../tests/stub_j_character_title.rs)
-- [Remaining character surface bridge](../../../src/lua_api/workarounds/temporary/character_frame_surface_refresh.rs)
+- [Store escape original consumers](../../../tests/stub_j_store_escape.rs)
+- [Non-Retail character surface bridge](../../../src/lua_api/workarounds/temporary/character_frame_surface_refresh.rs)
 
 ## Sources
 
