@@ -637,6 +637,8 @@ macro_rules! build_empty_sim_state {
             lfd_lock_requests: Default::default(),
             lfg_roles: LfgRoleSelection::default(),
             lfd_dungeons: default_lfd_dungeons(),
+            lfg_tooltip_rewards_ready: false,
+            lfg_tooltip_reward_groups: Vec::new(),
             lfd_enabled_dungeons: ::std::collections::HashMap::new(),
             photo_sharing_authorized: false,
             photo_sharing_enabled: false,

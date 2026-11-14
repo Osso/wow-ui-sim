@@ -789,6 +789,9 @@ pub struct SimState {
     pub lfd_lock_requests: crate::lua_api::globals::real::lfd_lock_requests::LfdLockRequestState,
     pub lfg_roles: LfgRoleSelection,
     pub lfd_dungeons: Vec<LfdDungeonInfo>,
+    /// Host-supplied LFG tooltip reward cache; empty and not ready by default.
+    pub lfg_tooltip_rewards_ready: bool,
+    pub lfg_tooltip_reward_groups: Vec<LfgTooltipRewardGroup>,
     pub lfd_enabled_dungeons: std::collections::HashMap<i32, bool>,
     pub photo_sharing_authorized: bool,
     pub photo_sharing_enabled: bool,
