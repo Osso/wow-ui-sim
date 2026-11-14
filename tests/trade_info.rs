@@ -1,21 +1,12 @@
 use wow_ui_sim::lua_api::WowLuaEnv;
 
-fn ensure_loaded(env: &WowLuaEnv, addon: &str) {
-    let loaded: bool = env
-        .eval(&format!("return C_AddOns.IsAddOnLoaded('{addon}')"))
-        .expect("Blizzard addon load state should be queryable");
-    if !loaded {
-        crate::common::load_required_blizzard_addon(env, &crate::common::blizzard_ui_dir(), addon);
-    }
-}
-
 #[cfg(feature = "optional-tests")]
 prefork_full_ui_case! {
 fn r88e5_trade_offer_warning_consumer_reads_shared_host_value(env: &WowLuaEnv) {
-    let trade_panel_loaded: bool = env
-        .eval("return C_AddOns.IsAddOnLoaded('Blizzard_UIPanels_Game')")
-        .expect("Retail trade panel load state should be queryable");
-    assert!(trade_panel_loaded, "Retail UIPanels_Game is selected at startup");
+    let loaded: (bool, bool) = env
+        .eval("return C_AddOns.IsAddOnLoaded('Blizzard_UIPanels_Game'), C_AddOns.IsAddOnLoaded('Blizzard_MoneyFrame')")
+        .expect("Retail trade and money addons should have load state");
+    assert_eq!(loaded, (true, true));
 
     let results: (bool, bool, bool, bool, bool, bool) = env
         .eval(
@@ -51,9 +42,10 @@ fn r88e5_trade_offer_warning_consumer_reads_shared_host_value(env: &WowLuaEnv) {
 #[cfg(feature = "optional-tests")]
 prefork_full_ui_case! {
 fn r88e5_trade_money_consumer_uses_supplied_offer_and_cursor_state(env: &WowLuaEnv) {
-    ensure_loaded(env, "Blizzard_SharedXMLBase");
-    ensure_loaded(env, "Blizzard_SharedXML");
-    ensure_loaded(env, "Blizzard_MoneyFrame");
+    let money_picker_type: String = env
+        .eval("return type(GetMoneyTypeInfoField)")
+        .expect("MoneyFrame consumer accessor should be queryable");
+    assert_eq!(money_picker_type, "function");
     env.state().borrow_mut().player.money = 1_000;
 
     env.exec(

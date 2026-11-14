@@ -95,16 +95,10 @@ fn r88e5_initiative_enabled_dashboard_reads_host_value(env: &WowLuaEnv) {
 #[cfg(feature = "optional-tests")]
 prefork_full_ui_case! {
 fn r88e5_initiative_task_consumer_uses_matching_host_records(env: &WowLuaEnv) {
-    for dependency in [
-        "Blizzard_MawBuffs",
-        "Blizzard_TieredEntranceTraits",
-        "Blizzard_TransmogShared",
-        "Blizzard_ManagedFrameSystem",
-        "Blizzard_UIWidgets",
-    ] {
-        ensure_loaded(env, dependency);
-    }
-    ensure_loaded(env, "Blizzard_ObjectiveTracker");
+    let tracker_loaded: bool = env
+        .eval("return C_AddOns.IsAddOnLoaded('Blizzard_ObjectiveTracker')")
+        .expect("Retail objective tracker load state should be queryable");
+    assert!(tracker_loaded, "ObjectiveTracker has no LoD or profile exclusion");
 
     {
         let mut state = env.state().borrow_mut();
