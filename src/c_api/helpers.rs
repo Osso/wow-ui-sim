@@ -440,6 +440,26 @@ mod tests {
         assert_eq!(result, (true, true, true));
     }
 
+    #[cfg(feature = "client-retail")]
+    #[test]
+    fn retail_unknown_c_timer_new_timer_id_preserves_function_identity() {
+        let env = WowLuaEnv::new().expect("lua env");
+        let preserves_identity: bool = env
+            .eval(
+                r#"
+                local public = rawget(_G, "C_Timer")
+                local secure = rawget(__secureenv, "C_Timer")
+                return type(public) == "table"
+                    and type(secure) == "table"
+                    and type(rawget(public, "NewTimerID")) == "function"
+                    and rawequal(rawget(public, "NewTimerID"), rawget(secure, "NewTimerID"))
+                "#,
+            )
+            .expect("unknown C_Timer function identity probe");
+
+        assert!(preserves_identity);
+    }
+
     #[test]
     fn namespace_secure_publication_requires_an_existing_secure_table() {
         let mut lua = rilua::Lua::new().expect("lua state");
