@@ -213,6 +213,15 @@ fn has_slotted_keystone_tracks_guid_without_resolving_the_item() {
         assert(PVEFrame, "selected GroupFinder path creates PVEFrame")
         assert(debug.getinfo(ChallengesKeystoneSlotMixin.OnEnter, "S").source
             :find("Blizzard_ChallengesUI.lua", 1, true))
+    "##,
+    )
+    .unwrap();
+    env.exec("A_Admin.ClearBags()")
+        .expect("unresolved item fixture starts with empty bags");
+    env.exec("assert(C_Item.GetItemGUID({bagID=0, slotIndex=3}) == nil)")
+        .expect("selected GUID has no current item object");
+    env.exec(
+        r##"
         local count, hasSelection = select("#", C_ChallengeMode.HasSlottedKeystone("ignored")),
             C_ChallengeMode.HasSlottedKeystone("ignored")
         assert(count == 1 and type(hasSelection) == "boolean" and not hasSelection)
