@@ -49,8 +49,7 @@ fn cleansing_rows(title: &str, detail: &str) -> Vec<ItemInteractionTooltipLine> 
         .collect()
 }
 
-#[test]
-fn item_interaction_original_consumers_use_supplied_kind_payloads() {
+fn load_item_interaction_env() -> WowLuaEnv {
     let env = tooltip_full_env_helpers::load_full_env_without_post_load();
     let (loaded, reason): (bool, Option<String>) = env
         .eval(r#"return C_AddOns.LoadAddOn("Blizzard_ItemInteractionUI")"#)
@@ -66,7 +65,12 @@ fn item_interaction_original_consumers_use_supplied_kind_payloads() {
     "#,
     )
     .unwrap();
+    env
+}
 
+#[test]
+fn item_interaction_cleansing_original_consumer_uses_distinct_supplied_rows() {
+    let env = load_item_interaction_env();
     let selected_guid = add_bag_item(&env, 0, 3, 128_910);
     set_interaction_input(
         &env,
@@ -108,6 +112,12 @@ fn item_interaction_original_consumers_use_supplied_kind_payloads() {
     "#,
     )
     .unwrap();
+}
+
+#[test]
+fn item_interaction_conversion_original_consumer_uses_distinct_output_ids() {
+    let env = load_item_interaction_env();
+    let selected_guid = add_bag_item(&env, 0, 3, 128_910);
 
     for output_item_id in [1728, 231_268] {
         set_interaction_input(&env, 4, &selected_guid, Some(output_item_id), Vec::new());
