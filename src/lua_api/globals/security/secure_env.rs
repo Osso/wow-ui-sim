@@ -333,7 +333,7 @@ pub(crate) fn register_native_function_if_missing_with_flags(
     }
 }
 
-pub(crate) fn publish_global_value_with_flags(
+fn publish_global_value_with_flags(
     lua: &mut rilua::Lua,
     name: &str,
     value: Val,
