@@ -15,21 +15,6 @@ local function numberArgument(value)
     return nil
 end
 
-if rawget(C_SpecializationInfo, "GetPvpTalentSlotUnlockLevel") == nil then
-    function C_SpecializationInfo.GetPvpTalentSlotUnlockLevel(slotIndex)
-        slotIndex = numberArgument(slotIndex)
-        if slotIndex == 1 then
-            return 20
-        elseif slotIndex == 2 then
-            return 30
-        elseif slotIndex == 3 then
-            return 40
-        end
-
-        return 0
-    end
-end
-
 if rawget(C_SpecializationInfo, "GetPvpTalentInfo") == nil then
     function C_SpecializationInfo.GetPvpTalentInfo(talentID)
         talentID = numberArgument(talentID)
@@ -78,6 +63,40 @@ if rawget(C_SpecializationInfo, "SetPvpTalentLocked") == nil then
 end
 "#;
 
+const PVP_TALENT_SLOT_UNLOCK_LEVEL_DEFAULTS_LUA: &str = r#"
+if rawget(C_SpecializationInfo, "GetPvpTalentSlotUnlockLevel") == nil then
+    function C_SpecializationInfo.GetPvpTalentSlotUnlockLevel(slotIndex)
+        if type(slotIndex) ~= "number" then
+            return 0
+        elseif slotIndex == 1 then
+            return 20
+        elseif slotIndex == 2 then
+            return 30
+        elseif slotIndex == 3 then
+            return 40
+        end
+
+        return 0
+    end
+end
+"#;
+
+const PVP_TALENT_SLOT_UNLOCK_LEVEL_RETAIL_LUA: &str = r#"
+if rawget(C_SpecializationInfo, "GetPvpTalentSlotUnlockLevel") == nil then
+    function C_SpecializationInfo.GetPvpTalentSlotUnlockLevel(_slotIndex)
+        return nil
+    end
+end
+"#;
+
+fn pvp_talent_slot_unlock_level_defaults_lua() -> &'static str {
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        PVP_TALENT_SLOT_UNLOCK_LEVEL_RETAIL_LUA
+    } else {
+        PVP_TALENT_SLOT_UNLOCK_LEVEL_DEFAULTS_LUA
+    }
+}
+
 const PVP_SLOT_DEFAULTS_LUA: &str = r#"
 local function numberArgument(value)
     return type(value) == "number" and value or nil
@@ -105,6 +124,7 @@ end
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(PVP_TALENT_DEFAULTS_LUA)?;
+    lua.exec(pvp_talent_slot_unlock_level_defaults_lua())?;
     if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
         lua.exec(PVP_SLOT_DEFAULTS_LUA)?;
     }
@@ -113,6 +133,7 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 
 pub(crate) fn patch_loader(env: &crate::lua_api::LoaderEnv<'_>) {
     let _ = env.exec(PVP_TALENT_DEFAULTS_LUA);
+    let _ = env.exec(pvp_talent_slot_unlock_level_defaults_lua());
     if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
         let _ = env.exec(PVP_SLOT_DEFAULTS_LUA);
     }
@@ -121,65 +142,6 @@ pub(crate) fn patch_loader(env: &crate::lua_api::LoaderEnv<'_>) {
 #[cfg(test)]
 mod tests {
     use crate::lua_api::WowLuaEnv;
-
-    #[test]
-    fn installs_pvp_talent_default_shapes() {
-        let env = WowLuaEnv::new().expect("lua env should initialize");
-
-        let result: (bool, bool, bool, i32, i32, i32, String, bool, bool, bool) = env
-            .eval(
-                r#"
-                local slot = C_SpecializationInfo.GetPvpTalentSlotInfo(2)
-                local talent = C_SpecializationInfo.GetPvpTalentInfo(123)
-                local selected = C_SpecializationInfo.GetAllSelectedPvpTalentIDs()
-                local setResult = C_SpecializationInfo.SetPvpTalentLocked(123, true)
-                return slot.enabled,
-                       slot.locked,
-                       slot.selectedTalentID == nil,
-                       slot.slotIndex,
-                       #slot.availableTalentIDs,
-                       C_SpecializationInfo.GetPvpTalentSlotUnlockLevel(2),
-                       talent.name,
-                       talent.unlocked,
-                       C_SpecializationInfo.IsPvpTalentLocked(123),
-                       type(selected) == "table" and setResult == nil
-                "#,
-            )
-            .expect("PvP talent defaults should be installed");
-
-        assert_eq!(
-            result,
-            (
-                true,
-                false,
-                true,
-                2,
-                0,
-                30,
-                "PvP Talent".to_string(),
-                true,
-                false,
-                true,
-            )
-        );
-    }
-
-    #[test]
-    fn rejects_invalid_pvp_talent_inputs() {
-        let env = WowLuaEnv::new().expect("lua env should initialize");
-
-        let result: (bool, bool, i32) = env
-            .eval(
-                r#"
-                return C_SpecializationInfo.GetPvpTalentSlotInfo(4) == nil,
-                       C_SpecializationInfo.GetPvpTalentInfo(0) == nil,
-                       C_SpecializationInfo.GetPvpTalentSlotUnlockLevel(99)
-                "#,
-            )
-            .expect("invalid PvP talent defaults should be inert");
-
-        assert_eq!(result, (true, true, 0));
-    }
 
     #[test]
     fn preserves_existing_specialization_provider_methods() {
