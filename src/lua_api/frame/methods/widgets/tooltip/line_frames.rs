@@ -81,6 +81,7 @@ fn ensure_tooltip_line_id(
             crate::client_profile::ClientProfile::Wrath
                 | crate::client_profile::ClientProfile::Retail
                 | crate::client_profile::ClientProfile::Ptr
+                | crate::client_profile::ClientProfile::WowForever
         ) {
             let mut sim = borrow_state_mut(state)?;
             record_tooltip_line_child_id(&mut sim, tooltip_id, existing_id, right_side, line_index);
