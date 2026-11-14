@@ -1,7 +1,6 @@
-//! Temporary UI color defaults.
+//! Temporary color utilities and non-Retail UI color defaults.
 //!
-//! These values keep Blizzard startup code and addon probes working until the
-//! simulator has a real color registry surface.
+//! Retail `C_UIColor.GetColors` is implemented in `c_api` from GlobalColor DB2.
 
 const COLOR_DEFAULTS_LUA: &str = r#"
 local function __wow_make_color(r, g, b, a)
@@ -66,20 +65,6 @@ local function __wow_color_merge_namespace(existing, defaults)
   end
   return namespace
 end
-
-C_UIColor = __wow_color_merge_namespace(C_UIColor, {
-  GetColors = function()
-    return {
-      { baseTag = "HIGHLIGHT_FONT_COLOR", color = { r = 1, g = 1, b = 1, a = 1 } },
-      { baseTag = "PLAYER_FACTION_COLOR_HORDE", color = { r = 1, g = 0.1, b = 0.1, a = 1 } },
-      { baseTag = "PLAYER_FACTION_COLOR_ALLIANCE", color = { r = 0.2, g = 0.4, b = 1, a = 1 } },
-      { baseTag = "NORMAL_FONT_COLOR", color = { r = 1, g = 0.82, b = 0, a = 1 } },
-      -- Blizzard_Professions panels look up the tradeskill experience bar
-      -- fill color by baseTag in the C_UIColor.GetColors() return value.
-      { baseTag = "TRADESKILL_EXPERIENCE_COLOR", color = { r = 0.25, g = 0.25, b = 0.75, a = 1 } },
-    }
-  end,
-})
 
 QuestDifficultyColors = QuestDifficultyColors or {}
 QuestDifficultyColors.trivial = QuestDifficultyColors.trivial or { r = 0.50, g = 0.50, b = 0.50 }
@@ -205,8 +190,27 @@ C_PvP = __wow_color_merge_namespace(C_PvP, {
 })
 "#;
 
+const NON_RETAIL_UI_COLOR_DEFAULTS_LUA: &str = r#"
+C_UIColor = __wow_color_merge_namespace(C_UIColor, {
+  GetColors = function()
+    return {
+      { baseTag = "HIGHLIGHT_FONT_COLOR", color = { r = 1, g = 1, b = 1, a = 1 } },
+      { baseTag = "PLAYER_FACTION_COLOR_HORDE", color = { r = 1, g = 0.1, b = 0.1, a = 1 } },
+      { baseTag = "PLAYER_FACTION_COLOR_ALLIANCE", color = { r = 0.2, g = 0.4, b = 1, a = 1 } },
+      { baseTag = "NORMAL_FONT_COLOR", color = { r = 1, g = 0.82, b = 0, a = 1 } },
+      -- Blizzard_Professions panels look up the tradeskill experience bar
+      -- fill color by baseTag in the C_UIColor.GetColors() return value.
+      { baseTag = "TRADESKILL_EXPERIENCE_COLOR", color = { r = 0.25, g = 0.25, b = 0.75, a = 1 } },
+    }
+  end,
+})
+"#;
+
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(COLOR_DEFAULTS_LUA)?;
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
+        lua.exec(NON_RETAIL_UI_COLOR_DEFAULTS_LUA)?;
+    }
     Ok(())
 }
 
@@ -221,14 +225,6 @@ mod tests {
         let result: String = env
             .eval(
                 r#"
-                if type(C_UIColor.GetColors) ~= "function" then return "ui_colors" end
-                local foundTradeskillColor = false
-                for _, entry in ipairs(C_UIColor.GetColors()) do
-                  if entry.baseTag == "TRADESKILL_EXPERIENCE_COLOR" then
-                    foundTradeskillColor = entry.color.b == 0.75
-                  end
-                end
-                if not foundTradeskillColor then return "tradeskill" end
                 if C_ColorUtil.GenerateTextColorCode({ r = 1, g = 0.5, b = 0 }) ~= "ffff7f00" then return "text_code" end
                 if C_ColorUtil.WrapTextInColorCode("Ready", "ff112233") ~= "|cff112233Ready|r" then return "wrap" end
                 local color = CreateColor(0.25, 0.5, 0.75, 0.8)
@@ -247,6 +243,32 @@ mod tests {
             .expect("color defaults probe should run");
 
         assert_eq!(result, "ok");
+    }
+
+    #[test]
+    fn nonretail_uicolor_fallback_keeps_its_existing_rows() {
+        if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+            return;
+        }
+
+        let env = WowLuaEnv::new().expect("lua env should initialize");
+        let preserves_fallback: bool = env
+            .eval(
+                r#"
+                local colors = C_UIColor.GetColors()
+                local found = {}
+                for _, entry in ipairs(colors) do found[entry.baseTag] = true end
+                return #colors == 5
+                    and found.HIGHLIGHT_FONT_COLOR
+                    and found.PLAYER_FACTION_COLOR_HORDE
+                    and found.PLAYER_FACTION_COLOR_ALLIANCE
+                    and found.NORMAL_FONT_COLOR
+                    and found.TRADESKILL_EXPERIENCE_COLOR
+                "#,
+            )
+            .expect("non-Retail color fallback probe should run");
+
+        assert!(preserves_fallback);
     }
 
     #[cfg(feature = "retail-12-0-0")]

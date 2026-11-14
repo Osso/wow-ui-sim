@@ -568,6 +568,10 @@ The four-producer pre-fix run at `080833f1d` selected 28 cases: 1 PASS / 27 genu
 
 ## C_* Namespaces
 
+### Retail GlobalColor catalog
+
+[Retail `C_UIColor.GetColors`](global-color-catalog.md) records the generated Retail DB2 snapshot, dual-environment publication, and native/runtime evidence limits.
+
 ### Binary addon encoding
 
 C_EncodingUtil provides Base64, compression and CBOR transformations over raw
