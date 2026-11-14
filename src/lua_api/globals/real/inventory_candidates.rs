@@ -13,9 +13,12 @@ const USAGE: &str = "Usage: GetInventoryItemsForSlot(slot, returnTable, [\"trans
 
 #[derive(Debug, Clone, Default)]
 pub struct InventoryCandidates {
+    /// INFERRED host adapter: supplied name IDs are one-based; native stored
+    /// identifier numbering is not established by R88k.1. Empty by default.
     pub slot_names: HashMap<String, u32>,
     pub carried_enabled: bool,
     pub carried_count: u32,
+    /// Supplied native predicate: GUID kind is nonzero, not arbitrary GUID bytes.
     pub interaction_guid_nonzero: bool,
     /// Slots having both selected item and required record for transmog mode.
     pub transmog_ready_slots: HashSet<u32>,
@@ -86,6 +89,7 @@ fn read_slot(state: &LuaState) -> LuaResult<Option<u32>> {
             .find_map(|(key, id)| key.eq_ignore_ascii_case(&name).then_some(id))
         {
             if id != 0 {
+                // INFERRED one-based host adapter, not verified native numbering.
                 return Ok(Some(id - 1));
             }
         }
@@ -167,7 +171,7 @@ fn write_candidates(
 }
 
 pub(crate) fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
-    if cfg!(feature = "client-retail") {
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
         LuaApiMut::register_function(
             lua,
             "GetInventoryItemsForSlot",

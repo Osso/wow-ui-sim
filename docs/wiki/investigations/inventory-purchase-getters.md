@@ -8,7 +8,8 @@ normal-return refund query. Both APIs are now modeled for Retail only.
 
 `GetInventoryItemsForSlot` accepts numeric conversion (subtract one, truncate to
 signed64, test low unsigned32 against 0–29), or a case-insensitive supplied slot
-name. An invalid numeric slot returns zero values before checking the table.
+name. Native name identifier numbering is not established; see the separate
+INFERRED adapter below. An invalid numeric slot returns zero values before checking the table.
 An accepted slot requires a table and uses the exact general Usage reason.
 The optional mode compares ASCII case-insensitively through its first NUL.
 Absent player, or missing selected-item/record preconditions for transmog mode,
@@ -17,7 +18,8 @@ returns zero values. Completion returns the same table, even for an empty scan.
 Accepted candidates replace packed-location-plus-one keys without clearing
 unrelated entries. A selected link builder with no text removes its key.
 Equipment, carried, bag0–3 and conditional bank5–10 keys use the supplied native
-formulas. Carried enable/count and interaction/transmog bank gating are explicit.
+formulas. Carried enable/count and interaction-GUID-kind/transmog bank gating are explicit. The supplied
+interaction Boolean means nonzero GUID kind, not nonzero arbitrary GUID bytes.
 Actual writes check tainted-access and frozen-table restrictions; empty scans do
 not invoke those write guards. No event or asynchronous completion is invented.
 
@@ -34,6 +36,15 @@ with exactly money, itemCount, refundSeconds, currencyCount, hasEnchants. Quanti
 count positive entries among five slots rather than summing. Refund seconds use
 expiration minus refund clock plus7200. Modification checks continue after a
 failed flags test and do not suppress the refund table.
+
+## INFERRED slot-name adapter
+
+The host `slot_names` map uses one-based identifiers and maps a nonzero ID to
+internal ID minus one. This is an INFERRED simulator adapter, not a VERIFIED
+native numbering rule. R88k.1 proves case-insensitive lookup and a nonzero usable
+identifier but does not establish that stored identifier's numbering. The map
+is empty by default. `inventory_purchase_inferred::` tests this adapter separately;
+VERIFIED numeric slot tests do not use a named-slot fixture.
 
 ## UNKNOWN host seams and limitations
 

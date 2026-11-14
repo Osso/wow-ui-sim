@@ -17,11 +17,6 @@ fn candidate(location: Location, link: Option<&str>) -> InventoryCandidate {
 fn inventory_slot_arguments_and_table_identity() {
     let env = WowLuaEnv::new().unwrap();
     env.state().borrow_mut().player.present = true;
-    env.state()
-        .borrow_mut()
-        .inventory_candidates
-        .slot_names
-        .insert("HeadSlot".into(), 1);
     env.exec(
         r#"
         local usage = 'Usage: GetInventoryItemsForSlot(slot, returnTable, ["transmogrify"])'
@@ -34,7 +29,7 @@ fn inventory_slot_arguments_and_table_identity() {
         assert(select('#',GetInventoryItemsForSlot(0,false))==0)
         assert(select('#',GetInventoryItemsForSlot(31,false))==0)
         local t={sentinel=42}
-        for _, slot in ipairs({1,'1',1.9,4294967297,'hEaDsLoT'}) do
+        for _, slot in ipairs({1,'1',1.9,4294967297}) do
             assert(select('#',GetInventoryItemsForSlot(slot,t))==1)
             assert(GetInventoryItemsForSlot(slot,t,nil,'ignored')==t and t.sentinel==42)
         end
@@ -46,9 +41,7 @@ fn inventory_slot_arguments_and_table_identity() {
         .unwrap();
 }
 
-#[test]
-fn inventory_packed_keys_replace_preserve_and_remove() {
-    let env = WowLuaEnv::new().unwrap();
+fn seed_packed_candidates(env: &WowLuaEnv) {
     {
         let mut sim = env.state().borrow_mut();
         sim.player.present = true;
@@ -66,6 +59,12 @@ fn inventory_packed_keys_replace_preserve_and_remove() {
             ],
         );
     }
+}
+
+#[test]
+fn inventory_packed_keys_replace_preserve_and_remove() {
+    let env = WowLuaEnv::new().unwrap();
+    seed_packed_candidates(&env);
     env.exec(
         r#"
         t={[1048577]='remove',[1048595]='replace',sentinel='keep'}

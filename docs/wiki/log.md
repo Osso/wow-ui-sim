@@ -1,3 +1,7 @@
+## [2026-11-14] correction | Inventory name-adapter evidence
+
+[Inventory/purchase getters](investigations/inventory-purchase-getters.md) separates the INFERRED one-based host slot-name adapter from VERIFIED numeric/packing tests. Retail publications use ACTIVE profile checks; state comments and GUID-kind predicate documentation are corrected.
+
 ## [2026-11-14] implementation | Inventory candidates and purchase records
 
 [Inventory/purchase getters](investigations/inventory-purchase-getters.md) records R88k.1/.2 packed-key publication and refund records, empty host seams, selected consumer tests and explicit remaining VM limits.
