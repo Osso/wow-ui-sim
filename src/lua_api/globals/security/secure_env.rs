@@ -450,7 +450,7 @@ mod tests {
     #[test]
     fn secure_environment_uses_fixed_base_and_shallow_table_copies() {
         let env = WowLuaEnv::new().expect("lua env");
-        let result: (bool, bool, bool, bool, bool, bool) = env
+        let result: (bool, bool, bool, bool, bool, bool, bool) = env
             .eval(
                 r#"
                 local secure = __secureenv
@@ -474,14 +474,20 @@ mod tests {
                     type(secureBit) == "table"
                         and secureBit ~= ordinaryBit
                         and secureBit.band == ordinaryBit.band,
+                    type(rawget(secure, "strjoin")) == "function"
+                        and rawget(secure, "strjoin") == rawget(_G, "strjoin")
+                        and type(rawget(secure, "strsplit")) == "function"
+                        and rawget(secure, "strsplit") == rawget(_G, "strsplit")
+                        and type(rawget(secure, "time")) == "function"
+                        and rawget(secure, "time") == rawget(_G, "time"),
                 }
                 rawset(math, probe, before)
-                return result[1], result[2], result[3], result[4], result[5], result[6]
+                return result[1], result[2], result[3], result[4], result[5], result[6], result[7]
                 "#,
             )
             .expect("secure environment base probe");
 
-        assert_eq!(result, (true, true, true, true, true, true));
+        assert_eq!(result, (true, true, true, true, true, true, true));
     }
 
     #[test]

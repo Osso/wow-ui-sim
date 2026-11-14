@@ -61,6 +61,7 @@ pub(super) fn init_lua_state(
     super::globals::security::register_environment_helpers(lua)?;
     super::globals::missing_surface::register_secure_environment_base_globals(lua)?;
     LuaApiMut::register_function(lua, "forceinsecure", forceinsecure)?;
+    crate::lua_api::workarounds::register_secure_environment_base(lua)?;
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail
         && crate::client_profile::ACTIVE_RETAIL_API_EPOCH
             == crate::client_profile::RetailApiEpoch::Retail12_1_5

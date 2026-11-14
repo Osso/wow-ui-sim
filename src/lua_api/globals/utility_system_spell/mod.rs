@@ -682,6 +682,12 @@ fn register_system_tables(state: &mut LuaState) -> LuaResult<()> {
     Ok(())
 }
 
+pub(crate) fn register_secure_environment_base_globals(lua: &mut rilua::Lua) -> LuaResult<()> {
+    LuaApiMut::register_function(lua, "strsplit", strsplit)?;
+    LuaApiMut::register_function(lua, "strjoin", strjoin)?;
+    Ok(())
+}
+
 fn register_utility_globals(lua: &mut rilua::Lua) -> LuaResult<()> {
     LuaApiMut::register_function(lua, "wipe", wipe)?;
     LuaApiMut::register_function(lua, "tinsert", tinsert)?;
@@ -693,8 +699,6 @@ fn register_utility_globals(lua: &mut rilua::Lua) -> LuaResult<()> {
     LuaApiMut::register_function(lua, "getglobal", getglobal)?;
     LuaApiMut::register_function(lua, "setglobal", setglobal)?;
     LuaApiMut::register_function(lua, "nop", nop)?;
-    LuaApiMut::register_function(lua, "strsplit", strsplit)?;
-    LuaApiMut::register_function(lua, "strjoin", strjoin)?;
     Ok(())
 }
 

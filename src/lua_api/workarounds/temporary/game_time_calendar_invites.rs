@@ -5,7 +5,7 @@
 
 use crate::lua_api::WowLuaEnv;
 
-const GAME_TIME_BOOTSTRAP_LUA: &str = r#"
+const GAME_TIME_SECURE_ENVIRONMENT_BASE_LUA: &str = r#"
 local function __wow_normalize_time_table(dateTable)
     if type(dateTable) ~= "table" then
         return dateTable
@@ -41,7 +41,9 @@ if time == nil then
         return math.floor(GetTime())
     end
 end
+"#;
 
+const GAME_TIME_BOOTSTRAP_LUA: &str = r#"
 if GetTimePreciseSec == nil then
     function GetTimePreciseSec()
         return GetTime()
@@ -70,7 +72,13 @@ if type(GameTimeFrame) == "table" and GameTimeFrame.pendingCalendarInvites == ni
 end
 "#;
 
+pub(crate) fn register_secure_environment_base(lua: &mut rilua::Lua) -> crate::Result<()> {
+    lua.exec(GAME_TIME_SECURE_ENVIRONMENT_BASE_LUA)?;
+    Ok(())
+}
+
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
+    lua.exec(GAME_TIME_SECURE_ENVIRONMENT_BASE_LUA)?;
     lua.exec(GAME_TIME_BOOTSTRAP_LUA)?;
     Ok(())
 }

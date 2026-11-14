@@ -29,6 +29,7 @@ pub(crate) use temporary::wrath_startup_defaults;
 
 pub(crate) use temporary::client_info_defaults::CLASSIC_EXPANSION_LEVEL;
 pub(crate) use temporary::environment_cleanup_restore::restore_post_cleanup_globals;
+pub(crate) use temporary::game_time_calendar_invites::register_secure_environment_base;
 #[cfg(not(feature = "retail-12-0-0"))]
 pub(crate) use temporary::party_ai_legacy::unit_in_party_is_ai;
 pub(crate) use temporary::pet_spec_catalog_default::default_catalog as default_pet_spec_catalog;
