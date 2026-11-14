@@ -1,10 +1,10 @@
 //! Secure environment (secure_env.rs counterpart).
 //!
-//! `create_secure_environment` and `mark_secure` mirror the old mlua
-//! secureenv path: create a shallow copy of `_G`, give it its own `Enum`,
-//! expose it as `__secureenv`, and retarget secure addon chunks to that env.
-//! Secureenv is deliberately separate from `_G`; later `_G` writes are not
-//! visible unless a Blizzard bridge explicitly copies them into secureenv.
+//! `create_secure_environment` seeds one shared secure table from the fixed
+//! 39-name native base, then `mark_secure` retargets secure addon chunks to it.
+//! Table-valued base entries are shallow-copied. This is not a full `_G` copy
+//! or a live overlay; later globals need secure registration or secure file
+//! execution to appear in the table.
 
 use rilua::vm::state::LuaState;
 use rilua::{LuaApiMut, LuaResult, Val, runtime_error};

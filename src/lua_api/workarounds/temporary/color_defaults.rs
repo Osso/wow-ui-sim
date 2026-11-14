@@ -214,6 +214,8 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 }
 
 fn register_secure_ui_color_fallback(lua: &mut rilua::Lua) -> crate::Result<()> {
+    // VERIFIED (R88g.2): native C_UIColor.GetColors is registered in both
+    // environments. This temporary payload remains simulator policy.
     if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
         return Ok(());
     }

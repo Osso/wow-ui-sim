@@ -26,6 +26,7 @@ const DEFAULT_MAX_TRAVERSAL_DEPTH: f64 = 100.0;
 /// Registers only missing globals: post-cleanup restoration calls this again
 /// after `Blizzard_EnvironmentCleanup` nils `CreateSecureDelegate`.
 pub(crate) fn register(lua: &mut rilua::Lua) -> LuaResult<()> {
+    // INFERRED (R88g.2): this native global uses the dual-registration path.
     if ACTIVE != ClientProfile::Wrath
         && LuaApiMut::get_global_val(lua, "CreateSecureDelegate") == Val::Nil
     {
