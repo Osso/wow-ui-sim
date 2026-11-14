@@ -15,10 +15,10 @@ The Round 7 `C_TooltipInfo` getters use native argument readers and tooltip buil
 - [x] On Retail, `GetQuestPartyProgress` publishes only an explicit host-supplied snapshot with type 24 and quest ID, the optional type-17 title row, supplied type-18 participant headings, and type-8 status/objective rows. The host supplies row text, colors, and participant-filter classification; no party/objective values are seeded.
 - [x] `omitTitle` omits the supplied title row, and `ignoreActivePlayer` filters only participant groups marked by the host.
 - [x] Tests exercise original selected consumers, the original `TooltipDataHandler` accessors, argument errors, exact zero-value misses, and backed runeforge instances.
-- [ ] On Retail, `GetItemInteractionItem` returns zero values without a supplied selected object; an existing object with a kind other than 2 or 4 returns exactly `{lines = {}}` without `dataInstanceID`. Kinds 2 and 4 use only supplied selected-item and payload inputs with shared builders (R88n.1/.4/.4a).
-- [ ] On Retail, `GetPossession(1)` uses the host-supplied shared possession spell ID and shared spell builder; other slots and missing spell state return zero values (R88n.1/.4, WM96 §8).
-- [ ] On Retail, `C_ChallengeMode.HasSlottedKeystone` returns one Boolean from `KeystoneState.selected_guid` presence and ignores arguments; a nonzero GUID returns true even when its item object cannot resolve (R88n.4c-q1).
-- [ ] On Retail, `GetSlottedKeystone` resolves only `KeystoneState.selected_guid` when it identifies a modeled owned bag item, uses the shared item builder, and publishes that GUID; missing or unresolved objects return zero values (R88n.1/.4/.4c-q1). The original TooltipDataHandler accessor and ChallengesUI hover must use the same state.
+- [x] On Retail, `GetItemInteractionItem` returns zero values without a supplied selected object; an existing object with a kind other than 2 or 4 returns exactly `{lines = {}}` without `dataInstanceID`. Kinds 2 and 4 use only supplied selected-item and payload inputs with shared builders (R88n.1/.4/.4a).
+- [x] On Retail, `GetPossession(1)` uses the host-supplied shared possession spell ID and shared spell builder; other slots and missing spell state return zero values (R88n.1/.4, WM96 §8).
+- [x] On Retail, `C_ChallengeMode.HasSlottedKeystone` returns one Boolean from `KeystoneState.selected_guid` presence and ignores arguments; a nonzero GUID returns true even when its item object cannot resolve (R88n.4c-q1).
+- [x] On Retail, `GetSlottedKeystone` resolves only `KeystoneState.selected_guid` when it identifies a modeled owned bag item, uses the shared item builder, and publishes that GUID; missing or unresolved objects return zero values (R88n.1/.4/.4c-q1). The original TooltipDataHandler accessor and ChallengesUI hover use the same state.
 
 ## How it works
 

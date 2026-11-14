@@ -1,3 +1,7 @@
+## [2026-11-14] implementation | Retail selected tooltip getters
+
+[Tooltip-data system](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) and the [Round 7 contract](../specs/tooltip-r7-getters.md) cover `GetItemInteractionItem`, `GetPossession`, `GetSlottedKeystone`, and `HasSlottedKeystone`. **VERIFIED (Retail 12.1.5.70688; R88n.1/.4/.4a/.4b/.4c-q1):** native producer branches, result arities, and the selected-GUID presence check are established. **UNKNOWN:** complete incoming update routes and the unmodeled cleansing, conversion, possession-cooldown, and keystone-specific output inputs.
+
 ## [2026-11-14] fix | Forever tooltip cached lines
 
 [Tooltip owner lifecycle](investigations/tooltip-owner-lifecycle.md#r88n5-forever-clearlines-cache-boundary) records R88n.5. **VERIFIED (Forever 1.60.1.70707):** `ClearLines` resets cached left/right FontString text for active rows only; the optional API test proves inactive entries are untouched, and the original selected `TooltipDataHandler.ProcessInfo` test preserves reprocessing and reuse. Retail attachments and owner pairs remain VERIFIED; PTR parity is INFERRED. Clipping, draw order, nonzero extra-inset writers and post-anchor clamping remain UNKNOWN.

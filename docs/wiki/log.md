@@ -1,3 +1,7 @@
+## [2026-11-14] implementation | Retail selected tooltip getters
+
+Updated the [Round 7 getter contract](../specs/tooltip-r7-getters.md) and [tooltip-data system](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation). **VERIFIED (Retail 12.1.5.70688, R88n.4c-q1):** `HasSlottedKeystone` checks the stored selected GUID without resolving the item; the original ChallengesUI hover path is covered without a guard stub. **VERIFIED (targeted optional Retail integration tests, producer commit `8f5b491e1`):** six selected-consumer/API tests pass, each after an exact one-test listing and with a fresh CVar copy. **UNKNOWN:** complete external item-update and selection routes, plus unmodeled cleansing, conversion-preview, possession-cooldown, and keystone-specific output fields.
+
 ## [2026-11-14] investigation | Forever tooltip cached lines
 
 Updated the [tooltip lifecycle investigation](investigations/tooltip-owner-lifecycle.md#r88n5-forever-clearlines-cache-boundary) and contract with R88n.5. **VERIFIED (Forever 1.60.1.70707):** ClearLines resets cached left/right text for active rows, not inactive cache entries. Optional API and selected `TooltipDataHandler.ProcessInfo` preservation tests pass. PTR applicability for Retail layout facts remains INFERRED; clipping, order, nonzero extra-inset writers and clamping remain UNKNOWN.

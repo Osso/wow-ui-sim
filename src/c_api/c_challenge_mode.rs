@@ -86,7 +86,7 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
 }
 
 fn has_slotted_keystone(state: &mut LuaState) -> LuaResult<u32> {
-    // R88n.4c-q1: GUID presence does not resolve or validate its item object.
+    // VERIFIED (R88n.4c-q1): GUID presence does not resolve or validate its item object.
     let has_selected_guid = borrow_state(state)?.keystone.selected_guid.is_some();
     state.push(Val::Bool(has_selected_guid));
     Ok(1)
