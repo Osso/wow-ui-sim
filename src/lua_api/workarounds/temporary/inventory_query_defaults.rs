@@ -73,7 +73,11 @@ mod tests {
             .expect("inventory slot lookup type probe should run");
         assert_eq!(function_type, "function");
 
-        if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Wrath {
+        if !matches!(
+            crate::client_profile::ACTIVE,
+            crate::client_profile::ClientProfile::Wrath
+                | crate::client_profile::ClientProfile::Retail
+        ) {
             let is_nil: bool = env
                 .eval("return GetInventoryItemsForSlot(1) == nil")
                 .expect("inventory slot lookup fallback probe should run");

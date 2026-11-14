@@ -44,6 +44,9 @@ pub(crate) fn register_c_container(state: &mut LuaState) -> LuaResult<()> {
     let table_ref = ensure_namespace(state, "C_Container")?;
     register_container_query_methods(state, table_ref)?;
     crate::c_api::container_quest::register(state)?;
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        crate::c_api::container_purchase::register(state)?;
+    }
     crate::c_api::container_inventory::register(state)
 }
 

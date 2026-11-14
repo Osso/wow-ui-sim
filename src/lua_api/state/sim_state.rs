@@ -877,6 +877,11 @@ pub struct SimState {
     #[cfg(feature = "client-wowforever")]
     pub stable_reads: crate::c_api::c_stable_info::forever::StableReadState,
     pub merchant_items: Vec<u32>,
+    /// R88k.2 native item identities, counts and default-empty purchase records.
+    pub purchase_inputs: crate::c_api::container_purchase::PurchaseInputs,
+    /// R88k.1 accepted candidate/link inputs; native filter writers stay unknown.
+    pub inventory_candidates:
+        crate::lua_api::globals::real::inventory_candidates::InventoryCandidates,
     /// Explicit R88l.2 link/selection seams, keyed by existing merchant slot.
     pub merchant_links: crate::lua_api::globals::real::merchant_item_link::MerchantLinks,
     /// Explicit extended-cost records keyed by zero-based merchant slot; a

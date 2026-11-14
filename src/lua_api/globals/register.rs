@@ -216,6 +216,7 @@ fn register_frame_context_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
     super::real::merchant_buyback::register_all(lua)?;
     super::real::merchant_affordability::register_all(lua)?;
     super::real::merchant_item_link::register_all(lua)?;
+    super::real::inventory_candidates::register_all(lua)?;
     super::real::guild_logo::register_all(lua)?;
     super::guild_control::register_all(lua)?;
     super::targeting_verbs::register_all(lua)?;
