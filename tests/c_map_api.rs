@@ -204,11 +204,65 @@ fn test_get_world_pos_from_map_pos_returns_instance_and_vector() {
         .unwrap();
 
     assert!(instance_id >= 0);
-    assert!(x > 0.0);
-    assert!(y > 0.0);
+    assert!(x.is_finite());
+    assert!(y.is_finite());
 }
 
-#[cfg(all(feature = "optional-tests", feature = "profile-retail"))]
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[test]
+fn retail_map_assignment_projects_mulgore_center() {
+    let env = env();
+    let (result_count, instance_id, x, y): (i32, i32, f64, f64) = env
+        .eval(
+            r#"
+            local resultCount = select('#', C_Map.GetWorldPosFromMapPos(7, {x=0.5, y=0.5}))
+            assert(resultCount == 2, "Mulgore assignment should return continent and world position")
+            local instanceID, worldPos = C_Map.GetWorldPosFromMapPos(7, {x=0.5, y=0.5})
+            local x, y = worldPos:GetXY()
+            return resultCount, instanceID, x, y
+            "#,
+        )
+        .unwrap();
+
+    assert_eq!(result_count, 2);
+    assert_eq!(instance_id, 1);
+    assert!((x - -1985.4150390625).abs() < 0.01, "{x}");
+    assert!((y - -520.830078125).abs() < 0.01, "{y}");
+    let outside_count: i32 = env
+        .eval("return select('#', C_Map.GetWorldPosFromMapPos(7, {x=-0.01, y=0.5}))")
+        .unwrap();
+    assert_eq!(outside_count, 0);
+}
+
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[test]
+fn retail_map_assignment_uses_first_order_for_overlapping_rows() {
+    let env = env();
+    let (instance_id, x, y): (i32, f64, f64) = env
+        .eval(
+            r#"
+            local resultCount = select('#', C_Map.GetWorldPosFromMapPos(12, {x=0.3, y=0.2}))
+            assert(resultCount == 2, "overlapping map assignments should resolve a world position")
+            local instanceID, worldPos = C_Map.GetWorldPosFromMapPos(12, {x=0.3, y=0.2})
+            local x, y = worldPos:GetXY()
+            return instanceID, x, y
+            "#,
+        )
+        .unwrap();
+
+    assert_eq!(
+        instance_id, 1,
+        "lowest OrderIndex assignment wins (INFERRED)"
+    );
+    assert!((x - -4864.00380859375).abs() < 0.01, "{x}");
+    assert!((y - -12373.239453125).abs() < 0.01, "{y}");
+}
+
+#[cfg(all(
+    feature = "optional-tests",
+    feature = "profile-retail",
+    feature = "retail-12-1-5"
+))]
 #[test]
 fn retail_map_world_position_probe_covers_zone_maps_under_azeroth() {
     let env = env();

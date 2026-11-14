@@ -3,13 +3,52 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 #[test]
 fn patch_8_0_1_world_position_requires_a_real_projection() {
     let env = WowLuaEnv::new().unwrap();
-    let published: bool = env.eval("return type(rawget(C_Map, 'GetMapPosFromWorldPos')) == 'function'").unwrap();
-    assert!(published, "inverse projection has no raw-published implementation");
-    let count: i32 = env.eval("return select('#', C_Map.GetMapPosFromWorldPos(42, {x=0,y=400}, 2248))").unwrap();
+    let published: bool = env
+        .eval("return type(rawget(C_Map, 'GetMapPosFromWorldPos')) == 'function'")
+        .unwrap();
+    assert!(
+        published,
+        "inverse projection has no raw-published implementation"
+    );
+    let count: i32 = env
+        .eval("return select('#', C_Map.GetMapPosFromWorldPos(42, {x=0,y=400}, 2248))")
+        .unwrap();
     assert_eq!(count, 0);
 }
 
 // Explicit world-rectangle fixtures, not native map geography parity.
+
+#[test]
+fn patch_8_0_1_map_position_to_world_prefers_explicit_rectangle() {
+    let env = WowLuaEnv::new().unwrap();
+    env.state().borrow_mut().map_world_rects.insert(
+        2248,
+        wow_ui_sim::c_api::map_world_coordinates::MapWorldRect {
+            continent_id: 42,
+            left: -200.0,
+            right: 600.0,
+            top: 100.0,
+            bottom: 500.0,
+        },
+    );
+    let (continent_id, x, y): (i32, f64, f64) = env
+        .eval(
+            r#"
+            local id, worldPos = C_Map.GetWorldPosFromMapPos(2248, {x=0.25, y=0.75})
+            local x, y = worldPos:GetXY()
+            return id, x, y
+            "#,
+        )
+        .unwrap();
+
+    assert_eq!(continent_id, 42);
+    assert_eq!(x, 0.0);
+    assert_eq!(y, 400.0);
+    let outside_count: i32 = env
+        .eval("return select('#', C_Map.GetWorldPosFromMapPos(2248, {x=1.01, y=0.75}))")
+        .unwrap();
+    assert_eq!(outside_count, 0);
+}
 
 #[test]
 fn patch_8_0_1_world_position_projects_into_explicit_map_rectangles() {
@@ -43,13 +82,21 @@ fn patch_8_0_1_world_position_projects_into_explicit_map_rectangles() {
     )
     .unwrap();
     // Rectangle updates change output; no cached/fabricated map result.
-    env.state().borrow_mut().map_world_rects.get_mut(&2248).unwrap().right = 200.0;
+    env.state()
+        .borrow_mut()
+        .map_world_rects
+        .get_mut(&2248)
+        .unwrap()
+        .right = 200.0;
     let x: f64 = env
         .eval("local _, p = C_Map.GetMapPosFromWorldPos(42, {x=0,y=400}, 2248); return p.x")
         .unwrap();
     assert_eq!(x, 0.5);
     let rectangle = env.state().borrow().map_world_rects[&2248];
-    env.state().borrow_mut().map_world_rects.insert(84, rectangle);
+    env.state()
+        .borrow_mut()
+        .map_world_rects
+        .insert(84, rectangle);
     env.eval::<()>(
         r#"
         assert(select('#', C_Map.GetMapPosFromWorldPos(42, {x=0,y=400})) == 0)
@@ -58,8 +105,18 @@ fn patch_8_0_1_world_position_projects_into_explicit_map_rectangles() {
         "#,
     )
     .unwrap();
-    env.state().borrow_mut().map_world_rects.get_mut(&84).unwrap().left = 200.0;
-    env.state().borrow_mut().map_world_rects.get_mut(&84).unwrap().right = -200.0;
+    env.state()
+        .borrow_mut()
+        .map_world_rects
+        .get_mut(&84)
+        .unwrap()
+        .left = 200.0;
+    env.state()
+        .borrow_mut()
+        .map_world_rects
+        .get_mut(&84)
+        .unwrap()
+        .right = -200.0;
     env.eval::<()>(
         r#"
         local id, p = C_Map.GetMapPosFromWorldPos(42, {x=100,y=400}, 84)
@@ -69,7 +126,12 @@ fn patch_8_0_1_world_position_projects_into_explicit_map_rectangles() {
         "#,
     )
     .unwrap();
-    env.state().borrow_mut().map_world_rects.get_mut(&84).unwrap().right = 200.0;
+    env.state()
+        .borrow_mut()
+        .map_world_rects
+        .get_mut(&84)
+        .unwrap()
+        .right = 200.0;
     let degenerate: i32 = env
         .eval("return select('#', C_Map.GetMapPosFromWorldPos(42, {x=200,y=400}, 84))")
         .unwrap();
