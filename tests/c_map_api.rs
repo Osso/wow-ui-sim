@@ -381,6 +381,31 @@ fn retail_world_to_map_truncates_fractional_ids() {
     .unwrap();
 }
 
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[test]
+fn retail_map_assignment_uses_inferred_swapped_axis_formula() {
+    let env = env();
+    let (continent_id, x, y): (i32, f64, f64) = env
+        .eval(
+            r#"
+            local continentID, position = C_Map.GetWorldPosFromMapPos(7, {x=0.2, y=0.4})
+            local x, y = position:GetXY()
+            return continentID, x, y
+            "#,
+        )
+        .unwrap();
+
+    assert_eq!(continent_id, 1);
+    assert!(
+        (x - -1622.08203125).abs() < 0.01,
+        "INFERRED Region_3-to-Region_0 interpolation on map y: {x}"
+    );
+    assert!(
+        (y - 1114.169921875).abs() < 0.01,
+        "INFERRED Region_4-to-Region_1 interpolation on map x: {y}"
+    );
+}
+
 #[cfg(all(
     feature = "optional-tests",
     feature = "profile-retail",
