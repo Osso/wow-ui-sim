@@ -128,6 +128,11 @@ fn player_spells_talent_sort_uses_catalog_unlock_levels() {
                     C_SpecializationInfo.GetPvpTalentInfo = function()
                         return { unlocked = false }
                     end
+                    local slotInfo = C_SpecializationInfo.GetPvpTalentSlotInfo(1)
+                    assert(slotInfo and #slotInfo.availableTalentIDs == 2,
+                        "host-supplied slot data should reach Player Spells")
+                    assert(C_SpecializationInfo.GetPvpTalentUnlockLevel(900) == 60)
+                    assert(C_SpecializationInfo.GetPvpTalentUnlockLevel(901) == 50)
                     local inserted = {}
                     CreateDataProvider = function()
                         return {
