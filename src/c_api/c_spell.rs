@@ -56,16 +56,16 @@ const SPELL_INFO_HASH_FIELDS: usize = 7;
 const SPELL_COOLDOWN_HASH_FIELDS: usize = 5;
 #[cfg(feature = "retail-12-1-5")]
 const RANGED_AUTO_ATTACK_ATTRIBUTE_MASK: u32 = 16_777_216;
-#[cfg(feature = "retail-12-1-5")]
+#[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
 const VISIBILITY_API: &str = "C_Spell.GetVisibilityInfo";
-#[cfg(feature = "retail-12-1-5")]
+#[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
 const VISIBILITY_USAGE: &str = "Usage: local hasCustom, alwaysShowMine, showForMySpec = C_Spell.GetVisibilityInfo(spellID, visibilityType)";
 #[cfg(feature = "retail-12-1-5")]
 const RANGED_AUTO_ATTACK_API: &str = "C_Spell.IsRangedAutoAttackSpell";
 #[cfg(feature = "retail-12-1-5")]
 const RANGED_AUTO_ATTACK_USAGE: &str =
     "Usage: local isRangedAutoAttack = C_Spell.IsRangedAutoAttackSpell(spellIdentifier)";
-#[cfg(feature = "retail-12-1-5")]
+#[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
 const MAX_VISIBILITY_TYPE: u8 = 2;
 
 pub(crate) fn uses_r17_duration_behavior() -> bool {
@@ -117,13 +117,15 @@ pub(crate) fn register_c_spell_surface(state: &mut LuaState) -> LuaResult<()> {
             is_ranged_auto_attack_spell,
         )?;
     }
-    #[cfg(feature = "retail-12-1-5")]
+    #[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
     if matches!(
         crate::client_profile::ACTIVE,
-        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::Ptr
+            | crate::client_profile::ClientProfile::WowForever
     ) {
-        // PTR 70493 SpellDocumentation.lua:657–673 declares this query.
-        // Reusing the existing visibility host-input model on PTR is INFERRED.
+        // PTR 70493 :657–673 and Forever 70707 :640–656 in their generated
+        // SpellDocumentation.lua declare this query. Sharing inputs is INFERRED.
         table_set_rust_fn_static(state, ns, "GetVisibilityInfo", get_visibility_info)?;
     }
     #[cfg(feature = "retail-12-0-0")]
@@ -996,13 +998,13 @@ pub(crate) fn clear_ranged_auto_attack_spell(sim: &mut crate::lua_api::SimState,
     }
 }
 
-#[cfg(feature = "retail-12-1-5")]
+#[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
 pub(crate) fn spell_context_is_null(sim: &crate::lua_api::SimState) -> bool {
     // INFERRED: the shared Retail context resolves to the active player by default.
     sim.spell_cast_context_is_null.unwrap_or(false)
 }
 
-#[cfg(feature = "retail-12-1-5")]
+#[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
 fn get_visibility_info(state: &mut LuaState) -> LuaResult<u32> {
     let spell_id = super::helpers::read_untainted_signed32_argument(
         state,
@@ -1037,7 +1039,7 @@ fn get_visibility_info(state: &mut LuaState) -> LuaResult<u32> {
     Ok(3)
 }
 
-#[cfg(feature = "retail-12-1-5")]
+#[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
 fn read_visibility_type(state: &LuaState) -> LuaResult<u8> {
     let value = stack_val(state, 2);
     if value == Val::Nil {

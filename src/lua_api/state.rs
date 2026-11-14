@@ -515,7 +515,7 @@ macro_rules! build_empty_sim_state {
             spell_cooldowns: $collections.spell_cooldowns,
             spell_charges: ::std::collections::HashMap::new(),
             ranged_auto_attack_spell_id: 0,
-            #[cfg(feature = "retail-12-0-0")]
+            #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
             spell_cast_context_is_null: None,
             #[cfg(feature = "retail-12-0-0")]
             spell_cast_counts: ::std::collections::HashMap::new(),
