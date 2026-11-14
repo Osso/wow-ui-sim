@@ -954,3 +954,89 @@ fn retail_r88n11b_private_aura_members_are_secure_only() {
         "invalid secure-only members: {failures:?}"
     );
 }
+
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+#[test]
+fn retail_r88n11b_c_texture_members_share_functions_with_secure_namespace() {
+    const MEMBERS: [&str; 11] = [
+        "ClearTitleIconTexture",
+        "GetAtlasElementID",
+        "GetAtlasElements",
+        "GetAtlasExists",
+        "GetAtlasID",
+        "GetAtlasInfo",
+        "GetFilenameFromFileDataID",
+        "GetTitleIconTexture",
+        "IsTitleIconTextureReady",
+        "SetTitleIconTexture",
+        "SetURLTexture",
+    ];
+    let members = MEMBERS
+        .iter()
+        .map(|member| format!("{member:?}"))
+        .collect::<Vec<_>>()
+        .join(", ");
+    let (present, missing, failures, roots_are_separate): (i64, Vec<String>, Vec<String>, bool) =
+        env()
+            .eval(&format!(
+                r#"
+                local public = rawget(_G, "C_Texture")
+                local secure = rawget(__secureenv, "C_Texture")
+                local failures, missing = {{}}, {{}}
+                if type(public) ~= "table" then
+                    failures[#failures + 1] = "ordinary namespace missing"
+                end
+                if type(secure) ~= "table" then
+                    failures[#failures + 1] = "secure namespace missing"
+                end
+                if #failures > 0 then
+                    return 0, missing, failures, false
+                end
+                local rootsAreSeparate = not rawequal(public, secure)
+                if not rootsAreSeparate then
+                    failures[#failures + 1] = "namespace tables are shared"
+                end
+                local present = 0
+                for _, member in ipairs({{{members}}}) do
+                    local publicValue = rawget(public, member)
+                    local secureValue = rawget(secure, member)
+                    if type(publicValue) == "function" and rawequal(publicValue, secureValue) then
+                        present = present + 1
+                    elseif publicValue == nil and secureValue == nil then
+                        missing[#missing + 1] = "C_Texture." .. member
+                    else
+                        failures[#failures + 1] = member .. ": values are not paired functions"
+                    end
+                end
+                table.sort(missing)
+                table.sort(failures)
+                return present, missing, failures, rootsAreSeparate
+            "#
+            ))
+            .expect("R88n.11b C_Texture publication should be observable");
+
+    assert!(
+        roots_are_separate,
+        "C_Texture namespaces must remain separate"
+    );
+    assert_eq!(present, 3, "publish existing flag-3 functions only");
+    assert_eq!(
+        missing,
+        vec![
+            "C_Texture.ClearTitleIconTexture".to_string(),
+            "C_Texture.GetAtlasElementID".to_string(),
+            "C_Texture.GetAtlasElements".to_string(),
+            "C_Texture.GetAtlasID".to_string(),
+            "C_Texture.GetTitleIconTexture".to_string(),
+            "C_Texture.IsTitleIconTextureReady".to_string(),
+            "C_Texture.SetTitleIconTexture".to_string(),
+            "C_Texture.SetURLTexture".to_string(),
+        ],
+        "unimplemented members must remain absent"
+    );
+    assert_eq!(present + missing.len() as i64, MEMBERS.len() as i64);
+    assert!(
+        failures.is_empty(),
+        "invalid C_Texture routes: {failures:?}"
+    );
+}

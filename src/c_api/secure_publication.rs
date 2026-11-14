@@ -8,7 +8,7 @@ use rilua::{LuaResult, Val, runtime_error};
 // R88n.11b, Retail 12.1.5.70688; the verified TSV SHA-256 is
 // bd06ccc2a4606f359ee5d430a2eb4d6a1f648946495b968f61cb2419e96621a9.
 // Flags are listed per member; this inventory does not cover every C_* route.
-const VERIFIED_R88N_11B_MEMBERS: [(&str, &str, u8); 37] = [
+const VERIFIED_R88N_11B_MEMBERS: [(&str, &str, u8); 48] = [
     ("C_ClassColor", "GetClassColor", 3),
     ("C_ColorUtil", "ConvertHSLToHSV", 3),
     ("C_ColorUtil", "ConvertHSVToHSL", 3),
@@ -46,6 +46,17 @@ const VERIFIED_R88N_11B_MEMBERS: [(&str, &str, u8); 37] = [
     ("C_GameRules", "IsStandard", 3),
     ("C_GameRules", "IsWoWHack", 3),
     ("C_ScriptedAnimations", "GetAllScriptedAnimationEffects", 3),
+    ("C_Texture", "ClearTitleIconTexture", 3),
+    ("C_Texture", "GetAtlasElementID", 3),
+    ("C_Texture", "GetAtlasElements", 3),
+    ("C_Texture", "GetAtlasExists", 3),
+    ("C_Texture", "GetAtlasID", 3),
+    ("C_Texture", "GetAtlasInfo", 3),
+    ("C_Texture", "GetFilenameFromFileDataID", 3),
+    ("C_Texture", "GetTitleIconTexture", 3),
+    ("C_Texture", "IsTitleIconTextureReady", 3),
+    ("C_Texture", "SetTitleIconTexture", 3),
+    ("C_Texture", "SetURLTexture", 3),
 ];
 
 // R88n.11b marks these Retail 12.1.5.70688 members secure-only (flag 2).
