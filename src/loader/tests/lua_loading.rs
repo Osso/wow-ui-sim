@@ -691,10 +691,11 @@ AuraUtil.lua
     let comparator_types: (String, String, String, String) = env
         .eval(
             r#"
+            local secureAuraUtil = rawget(__secureenv, "AuraUtil")
             return type(rawget(_G, "AuraUtil").DefaultAuraCompare),
-                   type(rawget(__secureenv, "AuraUtil").DefaultAuraCompare),
+                   type(secureAuraUtil and secureAuraUtil.DefaultAuraCompare),
                    type(rawget(_G, "AuraUtil").UnitFrameDebuffComparator),
-                   type(rawget(__secureenv, "AuraUtil").UnitFrameDebuffComparator)
+                   type(secureAuraUtil and secureAuraUtil.UnitFrameDebuffComparator)
             "#,
         )
         .unwrap();
