@@ -469,7 +469,7 @@ fn slot_keystone_leaves_unresolved_cursor_untouched() {
 fn assert_slot_keystone_rejection_case(
     item_id: u32,
     modifier_id: Option<u32>,
-    map_id: Option<i32>,
+    map_id: Option<u32>,
     context_present: bool,
     seed_lock: bool,
 ) {
