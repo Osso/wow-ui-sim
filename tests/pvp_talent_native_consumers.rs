@@ -38,16 +38,73 @@ fn set_pvp_talent_locked_returns_no_values() {
 }
 
 #[test]
-fn player_spells_slot_tooltip_preserves_enabled_slot_consumer() {
+fn pvp_talent_unlock_level_is_nil_when_catalog_row_is_missing() {
+    let env = WowLuaEnv::new().expect("create PvP talent API environment");
+    env.state().borrow_mut().pvp_talent_tooltip.catalog.clear();
+
+    let result: Option<i32> = env
+        .eval("return C_SpecializationInfo.GetPvpTalentUnlockLevel(123)")
+        .expect("query PvP talent unlock level");
+
+    assert_eq!(result, None);
+}
+
+#[test]
+fn player_spells_locked_talent_consumer_clears_only_the_selected_lock() {
     with_blizzard_addon_closure(
         &["Blizzard_GameTooltip", "Blizzard_PlayerSpells"],
         &[],
         |env, loaded| {
             assert!(loaded.iter().any(|name| name == "Blizzard_PlayerSpells"));
 
-            let shown: bool = env
+            let result: (bool, bool, bool, bool, bool, bool) = env
                 .eval(
                     r#"
+                    local firstTalentID, secondTalentID = 123, 456
+                    local startsUnlocked = not C_SpecializationInfo.IsPvpTalentLocked(firstTalentID)
+                        and not C_SpecializationInfo.IsPvpTalentLocked(secondTalentID)
+
+                    C_SpecializationInfo.SetPvpTalentLocked(firstTalentID, true)
+                    C_SpecializationInfo.SetPvpTalentLocked(secondTalentID, 1)
+                    local bothLocked = C_SpecializationInfo.IsPvpTalentLocked(firstTalentID)
+                        and C_SpecializationInfo.IsPvpTalentLocked(secondTalentID)
+
+                    local button = {
+                        talentID = firstTalentID,
+                        talentInfo = { unlocked = true },
+                        New = { Hide = function(self) self.hidden = true end },
+                        NewGlow = { Hide = function(self) self.hidden = true end },
+                    }
+                    PvPTalentListButtonMixin.OnEnter(button)
+                    local consumerClearedFirst = not C_SpecializationInfo.IsPvpTalentLocked(firstTalentID)
+                    local secondRemainsLocked = C_SpecializationInfo.IsPvpTalentLocked(secondTalentID)
+                    local indicatorHidden = button.New.hidden and button.NewGlow.hidden
+
+                    C_SpecializationInfo.SetPvpTalentLocked(secondTalentID, false)
+                    local falseRemovedSecond = not C_SpecializationInfo.IsPvpTalentLocked(secondTalentID)
+                    return startsUnlocked, bothLocked, consumerClearedFirst,
+                        secondRemainsLocked, indicatorHidden, falseRemovedSecond
+                    "#,
+                )
+                .expect("run the selected Player Spells lock consumer");
+
+            assert_eq!(result, (true, true, true, true, true, true));
+        },
+    );
+}
+
+#[test]
+fn player_spells_slot_consumer_works_without_legacy_alias() {
+    with_blizzard_addon_closure(
+        &["Blizzard_GameTooltip", "Blizzard_PlayerSpells"],
+        &[],
+        |env, loaded| {
+            assert!(loaded.iter().any(|name| name == "Blizzard_PlayerSpells"));
+
+            let (has_legacy_alias, shown): (bool, bool) = env
+                .eval(
+                    r#"
+                    local hasLegacyAlias = rawget(_G, "GetPvpTalentSlotInfo") ~= nil
                     local parent = CreateFrame("Frame")
                     function parent:AcknowledgeNewNotification() end
 
@@ -57,11 +114,15 @@ fn player_spells_slot_tooltip_preserves_enabled_slot_consumer() {
                     function slot:IsInspecting() return false end
 
                     PvPTalentSlotButtonMixin.OnEnter(slot)
-                    return GameTooltip:IsShown()
+                    return hasLegacyAlias, GameTooltip:IsShown()
                     "#,
                 )
                 .expect("run the selected Player Spells slot-tooltip consumer");
 
+            assert!(
+                !has_legacy_alias,
+                "Retail has no legacy slot-info global alias"
+            );
             assert!(shown, "the enabled-slot tooltip consumer should complete");
         },
     );
