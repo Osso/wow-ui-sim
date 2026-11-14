@@ -210,7 +210,7 @@ fn game_tooltip_method_conversion_errors_include_verified_reasons() {
 #[test]
 fn game_tooltip_add_font_strings_checks_change_parent_before_storage() {
     let env = WowLuaEnv::new().unwrap();
-    let (tooltip_id, left_id, right_id) = create_font_string_pair(&env);
+    let (tooltip_id, _, right_id) = create_font_string_pair(&env);
     set_forbidden_aspect(&env, right_id, "ChangeParent");
 
     let error = attempt_tainted_add_font_strings(&env);
