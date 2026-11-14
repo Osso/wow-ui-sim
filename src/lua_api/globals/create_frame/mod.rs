@@ -366,13 +366,23 @@ pub fn register_global_frames(lua: &mut rilua::Lua) -> LuaResult<()> {
 /// onto the rilua Lua state.
 pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     super::loader_script_bindings::register_all(lua)?;
-    super::security::register_function_in_both_environments(lua, "CreateFrame", create_frame)?;
-    // VERIFIED (R88i.1): native pair-list registration has no per-name flag.
-    super::security::register_function_in_both_environments(
-        lua,
-        "GetFrameMetatable",
-        get_frame_metatable,
-    )?;
+    // UNKNOWN (R88k.7): retained secure allowlist entry; native flags are not established.
+    super::security::register_unknown_allowlist_function(lua, "CreateFrame", create_frame)?;
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        // VERIFIED (R88k.7): Retail native pair-list registration has no per-name flag.
+        super::security::register_pair_list_function(
+            lua,
+            "GetFrameMetatable",
+            get_frame_metatable,
+        )?;
+    } else {
+        // UNKNOWN outside Retail: retain the current secure allowlist.
+        super::security::register_unknown_allowlist_function(
+            lua,
+            "GetFrameMetatable",
+            get_frame_metatable,
+        )?;
+    }
     #[cfg(feature = "retail-12-1-5")]
     LuaApiMut::register_function(
         lua,

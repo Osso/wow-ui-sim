@@ -43,6 +43,9 @@ use std::time::{Duration, Instant};
 /// Maximum allowed timer duration in seconds ((2^32 - 1) / 1000).
 const MAX_TIMER_SECS: f64 = (u32::MAX as f64) / 1000.0;
 
+/// VERIFIED (R88k.7): Retail C_Timer.After uses flags value 3.
+const C_TIMER_AFTER_FLAGS: u8 = 3;
+
 /// Registry key for the timer callback storage table.
 const TIMER_CALLBACKS_KEY: &str = "__rilua_timer_callbacks";
 
@@ -430,10 +433,26 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
 
 /// Register the `C_Timer` global table with the three timer functions.
 fn register_c_timer(lua: &mut rilua::Lua) -> LuaResult<()> {
+    let retail = crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail;
     let state = lua.state_mut();
+    if retail {
+        crate::c_api::register_namespace_function_with_flags(
+            state,
+            "C_Timer",
+            "After",
+            timer_after,
+            C_TIMER_AFTER_FLAGS,
+        )?;
+    }
     let c_timer_ref = crate::c_api::ensure_namespace(state, "C_Timer")?;
-    let _ = TableBuilder::from_table(state, c_timer_ref)
-        .set_function("After", timer_after)?
+    let builder = TableBuilder::from_table(state, c_timer_ref);
+    let builder = if retail {
+        builder
+    } else {
+        // UNKNOWN outside Retail: keep the current ordinary-only registration.
+        builder.set_function("After", timer_after)?
+    };
+    let _ = builder
         .set_function("NewTimerID", timer_new_timer_id)?
         .set_function("NewTicker", timer_new_ticker)?
         .set_function("NewTimer", timer_new_timer)?

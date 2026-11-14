@@ -3,8 +3,6 @@
 //! These values keep Blizzard startup code and addon probes working until the
 //! simulator has a real color registry surface.
 
-use rilua::LuaApiMut;
-
 const COLOR_DEFAULTS_LUA: &str = r#"
 local function __wow_make_color(r, g, b, a)
   local color = {
@@ -69,6 +67,7 @@ local function __wow_color_merge_namespace(existing, defaults)
   return namespace
 end
 
+-- VERIFIED (R88k.7): native C_UIColor.GetColors uses flags 3; this Lua fallback is not that handler and stays ordinary-only.
 C_UIColor = __wow_color_merge_namespace(C_UIColor, {
   GetColors = function()
     return {
@@ -209,34 +208,6 @@ C_PvP = __wow_color_merge_namespace(C_PvP, {
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(COLOR_DEFAULTS_LUA)?;
-    register_secure_ui_color_fallback(lua)?;
-    Ok(())
-}
-
-fn register_secure_ui_color_fallback(lua: &mut rilua::Lua) -> crate::Result<()> {
-    // VERIFIED (R88g.2): native C_UIColor.GetColors is registered in both
-    // environments. This temporary payload remains simulator policy.
-    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
-        return Ok(());
-    }
-
-    let state = lua.state_mut();
-    let ordinary = crate::c_api::ensure_namespace(state, "C_UIColor")?;
-    let secure = crate::lua_bridge::namespace_peer(state, ordinary)?
-        .ok_or_else(|| rilua::runtime_error("C_UIColor secure namespace peer missing"))?;
-    let get_colors =
-        crate::lua_api::methods::table_get_static(state, rilua::Val::Table(ordinary), "GetColors");
-    let secure_get_colors =
-        crate::lua_api::methods::table_get_static(state, rilua::Val::Table(secure), "GetColors");
-    if matches!(get_colors, rilua::Val::Function(_)) && matches!(secure_get_colors, rilua::Val::Nil)
-    {
-        crate::lua_api::methods::table_set_static(
-            state,
-            rilua::Val::Table(secure),
-            "GetColors",
-            get_colors,
-        );
-    }
     Ok(())
 }
 
@@ -252,6 +223,7 @@ mod tests {
             .eval(
                 r#"
                 if type(C_UIColor.GetColors) ~= "function" then return "ui_colors" end
+                if rawget(__secureenv, "C_UIColor") ~= nil then return "secure_color_fallback" end
                 local foundTradeskillColor = false
                 for _, entry in ipairs(C_UIColor.GetColors()) do
                   if entry.baseTag == "TRADESKILL_EXPERIENCE_COLOR" then

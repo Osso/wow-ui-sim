@@ -40,10 +40,11 @@ mod value_access;
 pub use loader_env::{compile_chunk_rilua, exec_chunk_rilua};
 pub use secure_env::{
     create_secure_environment, create_secure_replay_environment, mark_secure, mark_secure_state,
-    set_in_both_envs_rilua,
 };
 pub(crate) use secure_env::{
-    mark_secure_replay_state, register_function_in_both_environments, secure_env_table,
+    mark_secure_replay_state, native_registration_destinations,
+    register_native_function_with_flags, register_pair_list_function,
+    register_simulator_secure_helper, register_unknown_allowlist_function, secure_env_table,
     secure_replay_env_table, set_secure_env_key_state,
 };
 
@@ -55,24 +56,25 @@ pub(crate) fn register_environment_helpers(lua: &mut rilua::Lua) -> LuaResult<()
     environment::register_environment_helpers(lua)
 }
 
-/// Register all security-related globals into both global environments.
+/// Register security globals through their classified publication routes.
 pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
-    secure_env::register_function_in_both_environments(
+    // UNKNOWN (R88k.7): retained secure allowlist entries; native flags are not established.
+    secure_env::register_unknown_allowlist_function(
         lua,
         "securecallmethod",
         securecallmethod::securecallmethod,
     )?;
-    secure_env::register_function_in_both_environments(
+    secure_env::register_unknown_allowlist_function(
         lua,
         "issecurevariable",
         value_access::issecurevariable_override,
     )?;
-    secure_env::register_function_in_both_environments(
+    secure_env::register_simulator_secure_helper(
         lua,
         "__sim_mark_secret_value",
         value_access::mark_secret_values,
     )?;
-    secure_env::register_function_in_both_environments(
+    secure_env::register_simulator_secure_helper(
         lua,
         "__sim_mark_slot_taint",
         value_access::mark_slot_taint,
@@ -83,7 +85,8 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     secret_values::register_scrub_fallbacks(lua)?;
     secure_handler::register_secure_handler_stubs(lua)?;
     state_drivers::register_state_driver_stubs(lua)?;
-    secure_env::register_function_in_both_environments(
+    // UNKNOWN (R88k.7): retained secure allowlist entry; native flags are not established.
+    secure_env::register_unknown_allowlist_function(
         lua,
         "SecureCmdOptionParse",
         cmd_option::secure_cmd_option_parse,
@@ -97,7 +100,8 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
 fn register_if_missing(lua: &mut rilua::Lua, name: &str, func: rilua::RustFn) -> LuaResult<()> {
     let existing = LuaApiMut::get_global_val(lua, name);
     if existing == Val::Nil {
-        secure_env::register_function_in_both_environments(lua, name, func)?;
+        // UNKNOWN (R88k.7): preserve the existing allowlist entry without inferring flags.
+        secure_env::register_unknown_allowlist_function(lua, name, func)?;
     }
     Ok(())
 }

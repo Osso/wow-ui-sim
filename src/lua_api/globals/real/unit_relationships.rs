@@ -32,9 +32,8 @@ fn unit_is_player_controlled_or_group_member(state: &mut LuaState) -> LuaResult<
 }
 
 pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
-    // INFERRED (Retail 12.1.5.70688): Blizzard_AuraContainer.toc:7 selects secure,
-    // and Blizzard_AuraContainerUtil.lua:70 calls this global.
-    crate::lua_api::globals::security::register_function_in_both_environments(
+    // UNKNOWN (R88k.7): publication and flags are unproved; retain the current allowlist entry.
+    crate::lua_api::globals::security::register_unknown_allowlist_function(
         lua,
         "UnitIsPlayerControlledOrGroupMember",
         unit_is_player_controlled_or_group_member,

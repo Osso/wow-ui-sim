@@ -1,3 +1,4 @@
+use crate::lua_bridge::table_set_rust_fn;
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
@@ -122,6 +123,39 @@ pub(crate) fn ensure_namespace(
     ensure_namespace_pair(state, name).map(|(ordinary, _)| ordinary)
 }
 
+pub(crate) fn register_namespace_function_with_flags(
+    state: &mut LuaState,
+    namespace: &str,
+    member: &str,
+    function: rilua::RustFn,
+    flags: u8,
+) -> LuaResult<()> {
+    let (publish_global, publish_secure) =
+        crate::lua_api::globals::security::native_registration_destinations(flags);
+    let global_parent = state.global;
+    let ordinary = publish_global.then(|| ensure_table_at_parent(state, global_parent, namespace));
+    let secure_parent = if publish_secure {
+        match crate::lua_api::methods::registry_get(state, "__secureenv") {
+            Val::Table(parent) => Some(parent),
+            _ => None,
+        }
+    } else {
+        None
+    };
+    let secure = secure_parent.map(|parent| ensure_table_at_parent(state, parent, namespace));
+
+    if let (Some(ordinary), Some(secure)) = (ordinary, secure) {
+        crate::lua_bridge::set_namespace_peer(state, ordinary, secure)?;
+    }
+    if let Some(ordinary) = ordinary {
+        table_set_rust_fn(state, ordinary, member, function)?;
+    }
+    if let Some(secure) = secure {
+        table_set_rust_fn(state, secure, member, function)?;
+    }
+    Ok(())
+}
+
 pub(crate) fn ensure_namespace_pair(
     state: &mut LuaState,
     name: &str,
@@ -193,6 +227,104 @@ fn ensure_table_at_parent(state: &mut LuaState, parent: GcRef<Table>, name: &str
     }
     state.gc.barrier_back(parent);
     table_ref
+}
+
+#[cfg(test)]
+mod tests {
+    use super::register_namespace_function_with_flags;
+    use crate::lua_api::WowLuaEnv;
+    use crate::lua_api::methods::{registry_get, table_get_static};
+    use rilua::vm::state::LuaState;
+    use rilua::{LuaApiMut, LuaResult, Val};
+
+    fn flag_probe(state: &mut LuaState) -> LuaResult<u32> {
+        state.push(Val::Bool(true));
+        Ok(1)
+    }
+
+    #[test]
+    fn namespace_flags_select_tables_and_members() {
+        let env = WowLuaEnv::new().expect("lua env");
+        {
+            let mut lua = env.rilua_mut();
+            for (namespace, flags) in [
+                ("flagnamespaceordinary", 1),
+                ("flagnamespacesecure", 2),
+                ("flagnamespaceboth", 3),
+                ("flagnamespacebothseven", 7),
+                ("flagnamespaceneither", 4),
+            ] {
+                register_namespace_function_with_flags(
+                    &mut lua, namespace, "probe", flag_probe, flags,
+                )
+                .expect("register flagged namespace member");
+            }
+        }
+
+        let result: Vec<bool> = env
+            .eval(
+                r#"
+                local function has(parent, namespace)
+                    local table = rawget(parent, namespace)
+                    return type(table) == "table" and type(rawget(table, "probe")) == "function"
+                end
+                local public = rawget(_G, "flagnamespaceboth")
+                local secure = rawget(__secureenv, "flagnamespaceboth")
+                return {
+                    has(_G, "flagnamespaceordinary"), has(__secureenv, "flagnamespaceordinary"),
+                    has(_G, "flagnamespacesecure"), has(__secureenv, "flagnamespacesecure"),
+                    has(_G, "flagnamespaceboth"), has(__secureenv, "flagnamespaceboth"),
+                    public ~= secure,
+                    has(_G, "flagnamespacebothseven"), has(__secureenv, "flagnamespacebothseven"),
+                    has(_G, "flagnamespaceneither"), has(__secureenv, "flagnamespaceneither"),
+                }
+                "#,
+            )
+            .expect("namespace flag destination probe");
+
+        assert_eq!(
+            result,
+            vec![
+                true, false, false, true, true, true, true, true, true, false, false
+            ]
+        );
+    }
+
+    #[test]
+    fn namespace_secure_publication_requires_an_existing_secure_table() {
+        let mut lua = rilua::Lua::new().expect("lua state");
+        register_namespace_function_with_flags(
+            lua.state_mut(),
+            "secureonlywithoutenv",
+            "probe",
+            flag_probe,
+            2,
+        )
+        .expect("register secure-only namespace member");
+        register_namespace_function_with_flags(
+            lua.state_mut(),
+            "bothwithoutenv",
+            "probe",
+            flag_probe,
+            3,
+        )
+        .expect("register dual namespace member");
+
+        assert!(matches!(
+            LuaApiMut::get_global_val(&mut lua, "secureonlywithoutenv"),
+            Val::Nil
+        ));
+        let ordinary = LuaApiMut::get_global_val(&mut lua, "bothwithoutenv");
+        assert!(matches!(ordinary, Val::Table(_)));
+        assert!(matches!(
+            table_get_static(lua.state_mut(), ordinary, "probe"),
+            Val::Function(_)
+        ));
+        assert!(!matches!(
+            registry_get(lua.state_mut(), "__secureenv"),
+            Val::Table(_)
+        ));
+    }
 }
 
 /// Keep ordinary namespace lookup from fabricating retired members.

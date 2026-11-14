@@ -10,6 +10,9 @@ use rilua::vm::state::LuaState;
 use rilua::{LuaApiMut, LuaResult, Val, runtime_error};
 
 use crate::lua_api::methods::{registry_get, registry_set};
+use crate::lua_bridge::table_set_rust_fn;
+
+const NATIVE_REGISTRATION_FLAG_MODULUS: u8 = 4;
 
 const CREATE_SECURE_ENV_LUA: &str = r##"
     local genv = _G
@@ -283,34 +286,166 @@ pub fn mark_secure_state(state: &mut LuaState, func: &rilua::Function) -> LuaRes
     rilua::api::state_set_fenv(state, func, &secureenv)
 }
 
-/// Set a key in both the global table and secureenv.
-///
-/// Used for names that must stay visible in secure code even after cleanup
-/// strips them from `_G`.
-pub fn set_in_both_envs_rilua(lua: &mut rilua::Lua, key: &str, val: Val) -> LuaResult<()> {
-    LuaApiMut::set_global_val(lua, key, val)?;
+/// Return the two publication destinations for a flag-bearing native entry.
+pub(crate) const fn native_registration_destinations(flags: u8) -> (bool, bool) {
+    match flags % NATIVE_REGISTRATION_FLAG_MODULUS {
+        0 => (false, false),
+        1 => (true, false),
+        2 => (false, true),
+        _ => (true, true),
+    }
+}
+
+/// Register one flag-bearing native function. Secure publication requires an
+/// existing table at the shared `__secureenv` registry key.
+pub(crate) fn register_native_function_with_flags(
+    lua: &mut rilua::Lua,
+    name: &str,
+    function: rilua::RustFn,
+    flags: u8,
+) -> LuaResult<()> {
+    let (publish_global, publish_secure) = native_registration_destinations(flags);
     let state = lua.state_mut();
-    let secureenv_ref = secure_env_table(state)?;
-    let key_ref = state.gc.intern_string(key.as_bytes());
+    let global_ref = state.global;
+    if publish_global {
+        table_set_rust_fn(state, global_ref, name, function)?;
+    }
+    if publish_secure && let Val::Table(secureenv_ref) = registry_get(state, "__secureenv") {
+        table_set_rust_fn(state, secureenv_ref, name, function)?;
+    }
+    Ok(())
+}
+
+fn set_secure_env_value_if_present(state: &mut LuaState, name: &str, value: Val) -> LuaResult<()> {
+    let Val::Table(secureenv_ref) = registry_get(state, "__secureenv") else {
+        return Ok(());
+    };
+    let key_ref = state.gc.intern_string(name.as_bytes());
     let secureenv = rilua::Table::from_gc_ref(secureenv_ref);
-    secureenv.raw_set(state, Val::Str(key_ref), val)?;
+    secureenv.raw_set(state, Val::Str(key_ref), value)?;
     state.gc.barrier_back(secureenv_ref);
     Ok(())
 }
 
-pub(crate) fn register_function_in_both_environments(
+fn register_rust_function_and_secure_copy(
     lua: &mut rilua::Lua,
     name: &str,
     function: rilua::RustFn,
 ) -> LuaResult<()> {
     LuaApiMut::register_function(lua, name, function)?;
     let value = LuaApiMut::get_global_val(lua, name);
-    set_in_both_envs_rilua(lua, name, value)
+    set_secure_env_value_if_present(lua.state_mut(), name, value)
+}
+
+/// Preserve a current dual-publication entry whose native flags are UNKNOWN.
+pub(crate) fn register_unknown_allowlist_function(
+    lua: &mut rilua::Lua,
+    name: &str,
+    function: rilua::RustFn,
+) -> LuaResult<()> {
+    register_rust_function_and_secure_copy(lua, name, function)
+}
+
+/// Register a native pair-list entry with no per-name flags.
+pub(crate) fn register_pair_list_function(
+    lua: &mut rilua::Lua,
+    name: &str,
+    function: rilua::RustFn,
+) -> LuaResult<()> {
+    register_rust_function_and_secure_copy(lua, name, function)
+}
+
+/// Publish a simulator-only helper to both environments. This is not a native
+/// registration or evidence of a WoW global.
+pub(crate) fn register_simulator_secure_helper(
+    lua: &mut rilua::Lua,
+    name: &str,
+    function: rilua::RustFn,
+) -> LuaResult<()> {
+    register_rust_function_and_secure_copy(lua, name, function)
 }
 
 #[cfg(test)]
 mod tests {
+    use super::{register_native_function_with_flags, register_pair_list_function, registry_get};
     use crate::lua_api::WowLuaEnv;
+    use rilua::vm::state::LuaState;
+    use rilua::{LuaApiMut, LuaResult, Val};
+
+    fn flag_probe(state: &mut LuaState) -> LuaResult<u32> {
+        state.push(Val::Bool(true));
+        Ok(1)
+    }
+
+    #[test]
+    fn native_global_flags_select_publication_destinations() {
+        let env = WowLuaEnv::new().expect("lua env");
+        {
+            let mut lua = env.rilua_mut();
+            for (name, flags) in [
+                ("flagordinary", 1),
+                ("flagsecure", 2),
+                ("flagboth", 3),
+                ("flagbothseven", 7),
+                ("flagneither", 4),
+            ] {
+                register_native_function_with_flags(&mut lua, name, flag_probe, flags)
+                    .expect("register flagged function");
+            }
+        }
+
+        let result: Vec<bool> = env
+            .eval(
+                r#"
+                local function exists(table, name)
+                    return type(rawget(table, name)) == "function"
+                end
+                return {
+                    exists(_G, "flagordinary"), exists(__secureenv, "flagordinary"),
+                    exists(_G, "flagsecure"), exists(__secureenv, "flagsecure"),
+                    exists(_G, "flagboth"), exists(__secureenv, "flagboth"),
+                    exists(_G, "flagbothseven"), exists(__secureenv, "flagbothseven"),
+                    exists(_G, "flagneither"), exists(__secureenv, "flagneither"),
+                }
+                "#,
+            )
+            .expect("flag destination probe");
+
+        assert_eq!(
+            result,
+            vec![
+                true, false, false, true, true, true, true, true, false, false
+            ]
+        );
+    }
+
+    #[test]
+    fn secure_flag_publication_requires_an_existing_secure_table() {
+        let mut lua = rilua::Lua::new().expect("lua state");
+        register_native_function_with_flags(&mut lua, "secureonlywithoutenv", flag_probe, 2)
+            .expect("register secure-only function");
+        register_native_function_with_flags(&mut lua, "bothwithoutenv", flag_probe, 3)
+            .expect("register dual function");
+        register_pair_list_function(&mut lua, "pairwithoutenv", flag_probe)
+            .expect("register pair-list function");
+
+        assert!(matches!(
+            LuaApiMut::get_global_val(&mut lua, "secureonlywithoutenv"),
+            Val::Nil
+        ));
+        assert!(matches!(
+            LuaApiMut::get_global_val(&mut lua, "bothwithoutenv"),
+            Val::Function(_)
+        ));
+        assert!(matches!(
+            LuaApiMut::get_global_val(&mut lua, "pairwithoutenv"),
+            Val::Function(_)
+        ));
+        assert!(!matches!(
+            registry_get(lua.state_mut(), "__secureenv"),
+            Val::Table(_)
+        ));
+    }
 
     #[test]
     fn secure_environment_uses_fixed_base_and_shallow_table_copies() {

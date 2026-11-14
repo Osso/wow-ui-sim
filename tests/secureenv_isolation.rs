@@ -591,3 +591,39 @@ fn secureenv_does_not_read_late_table_from_global_env() {
 
     assert_eq!(table_type, "nil");
 }
+
+#[test]
+fn get_frame_metatable_is_present_in_both_environments() {
+    let env = env();
+
+    let result: (bool, bool) = env
+        .eval(
+            r#"
+            return type(rawget(_G, "GetFrameMetatable")) == "function",
+                   type(rawget(__secureenv, "GetFrameMetatable")) == "function"
+            "#,
+        )
+        .unwrap();
+
+    assert_eq!(result, (true, true));
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn retail_c_timer_after_is_registered_in_both_namespace_tables() {
+    let env = env();
+
+    let result: (bool, bool, bool) = env
+        .eval(
+            r#"
+            local public = rawget(_G, "C_Timer")
+            local secure = rawget(__secureenv, "C_Timer")
+            return type(public) == "table" and type(rawget(public, "After")) == "function",
+                   type(secure) == "table" and type(rawget(secure, "After")) == "function",
+                   public ~= secure
+            "#,
+        )
+        .unwrap();
+
+    assert_eq!(result, (true, true, true));
+}

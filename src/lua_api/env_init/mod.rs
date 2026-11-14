@@ -64,7 +64,7 @@ pub(super) fn init_lua_state(
     // INFERRED: create the shared secure table before native registration, because the
     // native registrar order relative to the 39-name copy is UNKNOWN.
     super::globals::security::create_secure_environment(lua)?;
-    publish_bootstrap_native_globals(lua)?;
+    super::globals::real::mixins::register(lua)?;
     enums::init_enum_globals(lua)?;
     frames::init_frame_metatable(lua)?;
     // register_globals calls gc_stop at its entry; finalize_bootstrap_gc
@@ -200,14 +200,6 @@ fn enable_taint_and_wrap_loadstring(lua: &mut rilua::Lua) -> crate::Result<()> {
         LuaApiMut::set_global_val(lua, "loadstring_untainted", original_loadstring)?;
     }
     LuaApiMut::register_function(lua, "loadstring", tainting_loadstring)?;
-    Ok(())
-}
-
-fn publish_bootstrap_native_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
-    for name in ["Mixin", "CreateFromMixins", "CreateAndInitFromMixin"] {
-        let value = LuaApiMut::get_global_val(lua, name);
-        super::globals::security::set_in_both_envs_rilua(lua, name, value)?;
-    }
     Ok(())
 }
 

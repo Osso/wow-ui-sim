@@ -21,16 +21,16 @@ use std::collections::HashMap;
 
 const DEFAULT_MAX_TRAVERSAL_DEPTH: f64 = 100.0;
 
-/// Publish both globals on the profiles whose generated docs declare them.
+/// Maintain the current secure allowlist on profiles whose generated docs declare these names.
 ///
-/// Registers only missing globals: post-cleanup restoration calls this again
-/// after `Blizzard_EnvironmentCleanup` nils `CreateSecureDelegate`.
+/// Native secure-publication flags remain UNKNOWN. Registration also restores a missing
+/// `CreateSecureDelegate` after `Blizzard_EnvironmentCleanup` clears it.
 pub(crate) fn register(lua: &mut rilua::Lua) -> LuaResult<()> {
-    // INFERRED (R88g.2): this native global uses the dual-registration path.
+    // UNKNOWN (R88k.7): retain this current allowlist entry; native flags are not established.
     if ACTIVE != ClientProfile::Wrath
         && LuaApiMut::get_global_val(lua, "CreateSecureDelegate") == Val::Nil
     {
-        crate::lua_api::globals::security::register_function_in_both_environments(
+        crate::lua_api::globals::security::register_unknown_allowlist_function(
             lua,
             "CreateSecureDelegate",
             create_secure_delegate,

@@ -73,6 +73,7 @@ pub mod math_extensions;
 pub mod merchant_buyback;
 #[cfg(feature = "client-wowforever")]
 pub mod merchant_repair;
+pub(crate) mod mixins;
 pub mod modifier_keys;
 pub mod mouse_probes;
 #[cfg(feature = "client-wowforever")]
