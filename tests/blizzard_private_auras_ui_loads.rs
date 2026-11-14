@@ -204,6 +204,66 @@ fn secure_private_auras_tooltip_consumer_runs_without_errors() {
             "#,
         )
         .expect("secure tooltip method probe should evaluate");
+    env.exec_rilua_secure(
+        r#"
+            rawset(
+                _G,
+                '__private_auras_current_environment_is_self',
+                GetCurrentEnvironment() == _G
+            )
+        "#,
+    )
+    .expect("secure current-environment probe should execute");
+    let (create_color_source, create_color_type, create_color_uses_secure_environment): (
+        String,
+        String,
+        bool,
+    ) = env
+        .eval(
+            r#"
+                local createColor = rawget(__secureenv, 'CreateColor')
+                local source = type(createColor) == 'function'
+                    and debug.getinfo(createColor, 'S').source or ''
+                return source,
+                    type(createColor),
+                    type(createColor) == 'function' and debug.getfenv(createColor) == __secureenv
+            "#,
+        )
+        .expect("secure CreateColor environment query should evaluate");
+    let current_environment_is_secure: bool = env
+        .eval("return rawget(__secureenv, '__private_auras_current_environment_is_self') == true")
+        .expect("secure current-environment result should evaluate");
+    let (
+        secure_get_colors_type,
+        secure_tradeskill_color_type,
+        secure_tooltip_background_type,
+        ordinary_tooltip_background_type,
+        has_tradeskill_record,
+        has_tooltip_background_record,
+    ): (String, String, String, String, bool, bool) = env
+        .eval(
+            r#"
+                local secureColors = rawget(__secureenv, 'C_UIColor')
+                local getColors = secureColors and rawget(secureColors, 'GetColors')
+                local hasTradeskillRecord = false
+                local hasTooltipBackgroundRecord = false
+                if type(getColors) == 'function' then
+                    for _, dbColor in ipairs(getColors()) do
+                        hasTradeskillRecord = hasTradeskillRecord
+                            or dbColor.baseTag == 'TRADESKILL_EXPERIENCE_COLOR'
+                        hasTooltipBackgroundRecord = hasTooltipBackgroundRecord
+                            or dbColor.baseTag == 'TOOLTIP_DEFAULT_BACKGROUND_COLOR'
+                    end
+                end
+                return type(getColors),
+                    type(rawget(__secureenv, 'TRADESKILL_EXPERIENCE_COLOR')),
+                    type(rawget(__secureenv, 'TOOLTIP_DEFAULT_BACKGROUND_COLOR')),
+                    type(rawget(_G, 'TOOLTIP_DEFAULT_BACKGROUND_COLOR')),
+                    hasTradeskillRecord,
+                    hasTooltipBackgroundRecord
+            "#,
+        )
+        .expect("secure C_UIColor color catalog query should evaluate");
     let secure_dependency_states: Vec<(String, bool)> = {
         let state = env.state().borrow();
         private_auras_dependencies()
@@ -239,8 +299,24 @@ fn secure_private_auras_tooltip_consumer_runs_without_errors() {
     );
     assert!(
         load_errors.is_empty(),
-        "PrivateAuras dependencies and the PrivateAurasTooltip consumer must load without errors:\n  {}\nsecure dependencies: {secure_dependency_states:?}\nsecure mixins: {secure_mixin_snapshot:?}\ntooltip callbacks: {tooltip_callback_globals:?}\ntooltip method: {tooltip_method_probe:?}\nproducer: {producer_source:?}\nregistrations: {registration_snapshot:?}\ntemplate method binders: {template_method_binders:?}",
+        "PrivateAuras dependencies and the PrivateAurasTooltip consumer must load without errors:\n  {}\nsecure dependencies: {secure_dependency_states:?}\nsecure mixins: {secure_mixin_snapshot:?}\ntooltip callbacks: {tooltip_callback_globals:?}\ntooltip method: {tooltip_method_probe:?}\ncolor route: Color.lua source={create_color_source:?}, secure function={create_color_uses_secure_environment}, current environment={current_environment_is_secure}, GetColors={secure_get_colors_type}, tradeskill={secure_tradeskill_color_type}/{has_tradeskill_record}, tooltip={secure_tooltip_background_type}/{ordinary_tooltip_background_type}/{has_tooltip_background_record}\nproducer: {producer_source:?}\nregistrations: {registration_snapshot:?}\ntemplate method binders: {template_method_binders:?}",
         load_errors.join("\n  ")
+    );
+    assert_eq!(
+        create_color_type, "function",
+        "SharedXMLBase Color.lua must define CreateColor in the secure environment"
+    );
+    assert!(
+        create_color_uses_secure_environment,
+        "CreateColor must use the shared secure environment"
+    );
+    assert!(
+        current_environment_is_secure,
+        "GetCurrentEnvironment must return the secure environment from secure code"
+    );
+    assert!(
+        has_tradeskill_record,
+        "the existing C_UIColor color record must be published by Color.lua"
     );
     assert_eq!(
         producer_source.0, "table",
