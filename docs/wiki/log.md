@@ -1,3 +1,7 @@
+## [2026-11-14] implementation | Item-interaction TooltipData boundary
+
+[Round 7 tooltip getters](../specs/tooltip-r7-getters.md) records R88n.1's absent and failed producer no-values paths and the other-kind empty-lines table. The Retail host seam has no writer or seed; the original ItemInteraction tooltip path and separate API shape tests distinguish these cases.
+
 ## [2026-11-14] implementation | Achievement eligibility and tracker colors
 
 [Achievement eligibility](../specs/achievement-eligibility.md) records R88o.1's Retail argument/Boolean contract, missing record/group versus null tree, and supplied cache comparisons. Original tracker #6 uses the zero-visible branch; positive visible counts use a different per-criterion getter. PTR/Forever binding is inferred from their selected original Lua. New simulator input stays empty by default; no event substitutes or live cache writer claims.
