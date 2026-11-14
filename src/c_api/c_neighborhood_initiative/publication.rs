@@ -70,6 +70,7 @@ pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResu
 
 /// INFERRED — this host value stands in for the initiative owner's enabled field.
 /// The native value source, initialization and absent-input result are unknown.
+/// A supplied value follows the inferred one-boolean declaration.
 fn is_initiative_enabled(state: &mut LuaState) -> LuaResult<u32> {
     let enabled = borrow_state(state)?.housing.initiative.enabled;
     if let Some(enabled) = enabled {
@@ -105,9 +106,13 @@ fn get_initiative_task_info(state: &mut LuaState) -> LuaResult<u32> {
 
 fn read_initiative_task_id(state: &LuaState) -> LuaResult<i32> {
     let Some(id) = Option::<f64>::from_stack(state, 1)? else {
+        // VERIFIED — the native parser has a required-argument error path;
+        // exact error details are unknown.
         return Err(runtime_error("GetInitiativeTaskInfo requires a task ID"));
     };
     if !id.is_finite() || id < f64::from(i32::MIN) || id > f64::from(i32::MAX) {
+        // INFERRED — the local runtime error represents conversion failure;
+        // native continuation is unknown.
         return Err(runtime_error(
             "GetInitiativeTaskInfo task ID is outside signed 32-bit range",
         ));

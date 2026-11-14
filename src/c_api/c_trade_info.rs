@@ -42,15 +42,17 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     )
 }
 
-/// VERIFIED — both Retail getters read one host-supplied client-local value.
+/// VERIFIED — both Retail getters read the same client-local warning value.
+/// INFERRED — this simulator stores the host input under `C_TradeInfo._state`.
 /// Retail `Blizzard_EnvironmentCleanup/EnvironmentCleanup.lua:6` clears
-/// `C_SecureTransfer` after login, so the slot lives under the persistent
-/// `C_TradeInfo._state` namespace. Its absence keeps the existing simulator
-/// false result; this does not claim a native initial value.
+/// `C_SecureTransfer` after login, so the input uses the persistent
+/// `C_TradeInfo` namespace. An absent input keeps the existing simulator false
+/// result; this does not claim a native initial value.
 fn should_show_trade_offer_warning(state: &mut LuaState) -> LuaResult<u32> {
     let namespace = global_val(state, "C_TradeInfo");
     let state_table = table_get(state, namespace, "_state");
     let value = table_get(state, state_table, "shouldShowTradeOfferWarning");
+    // INFERRED — publish the declared boolean result from the host input.
     state.push(Val::Bool(value == Val::Bool(true)));
     Ok(1)
 }
@@ -74,30 +76,37 @@ fn pickup_trade_money(state: &mut LuaState) -> LuaResult<u32> {
     {
         let mut sim = borrow_state_mut(state)?;
         let Some(trade) = sim.active_trade.as_mut() else {
-            // UNKNOWN native no-trade result; there is no supplied local offer.
+            // INFERRED — return no values without a host-supplied trade;
+            // native no-trade behavior is unknown.
             return Ok(0);
         };
         if amount > trade.player_money {
             // VERIFIED — an amount above the offer skips removal and cursor handling.
+            // INFERRED — this simulator returns no values; native response is unknown.
             return Ok(0);
         }
         if amount > 0 {
             trade.player_money -= amount;
-            // VERIFIED counter increment has no simulator field; its lifetime is unknown.
+            // UNKNOWN — packet submission, trade flag, optional hook and
+            // change counter are not modeled.
         }
     }
 
     // VERIFIED — update the offer before attempting the cursor setter.
     set_trade_money_cursor(state, amount)?;
-    // UNKNOWN — the complete native success return count is not established.
+    // INFERRED — the simulator returns no values on success; native return count is unknown.
     Ok(0)
 }
 
 fn read_money_amount(state: &LuaState) -> LuaResult<u64> {
     let Some(amount) = Option::<f64>::from_stack(state, 1)? else {
+        // VERIFIED — the native parser has a required-argument error path;
+        // exact error details are unknown.
         return Err(runtime_error("PickupTradeMoney requires a money amount"));
     };
     if !amount.is_finite() || !(0.0..=MAX_MONEY_AMOUNT).contains(&amount) {
+        // VERIFIED — the converter rejects this numeric range.
+        // INFERRED — this simulator surfaces conversion failure as a Lua error.
         return Err(runtime_error(
             "PickupTradeMoney amount is outside the supported money range",
         ));

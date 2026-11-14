@@ -44,6 +44,9 @@ fn neighborhood_initiative_available_house_xp_defaults_to_zero() {
     );
 }
 
+// VERIFIED: The Retail dashboard consumes the owner getter.
+// INFERRED: The test supplies owner state through the simulator; native source
+// and initial value are unknown.
 #[cfg(feature = "optional-tests")]
 prefork_full_ui_case! {
 fn r88e5_initiative_enabled_dashboard_reads_host_value(env: &WowLuaEnv) {
@@ -103,6 +106,10 @@ fn r88e5_initiative_enabled_dashboard_reads_host_value(env: &WowLuaEnv) {
 }
 }
 
+// VERIFIED: Matching active/viewed records are published without status filtering,
+// and successful IDs are range-checked before truncation.
+// INFERRED: Record shape follows an unpinned declaration; out-of-range errors
+// are simulator policy.
 #[cfg(feature = "optional-tests")]
 prefork_full_ui_case! {
 fn r88e5_initiative_task_consumer_uses_matching_host_records(env: &WowLuaEnv) {

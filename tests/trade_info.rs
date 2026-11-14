@@ -1,5 +1,7 @@
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+// VERIFIED: Retail getters share the client-local flag.
+// INFERRED: `_state` is this simulator's host input; its initial native value is unknown.
 #[cfg(feature = "optional-tests")]
 prefork_full_ui_case! {
 fn r88e5_trade_offer_warning_consumer_reads_shared_host_value(env: &WowLuaEnv) {
@@ -46,6 +48,10 @@ fn r88e5_trade_offer_warning_consumer_reads_shared_host_value(env: &WowLuaEnv) {
 }
 }
 
+// VERIFIED: Restriction precedes parsing, valid money truncates, an over-offer skips
+// removal, and the cursor limit is exclusive.
+// INFERRED: The test supplies host restriction and cursor state.
+// UNKNOWN: Packet, hook, flag, and full success/error outcomes are not modeled.
 #[cfg(feature = "optional-tests")]
 prefork_full_ui_case! {
 fn r88e5_trade_money_consumer_uses_supplied_offer_and_cursor_state(env: &WowLuaEnv) {
