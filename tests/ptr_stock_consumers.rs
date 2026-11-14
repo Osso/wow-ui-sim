@@ -4,7 +4,7 @@
 use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 use wow_ui_sim::loader::{discover_blizzard_addons_for_screen, load_addon};
-use wow_ui_sim::lua_api::WowLuaEnv;
+use wow_ui_sim::lua_api::{WowLuaEnv, state::AchievementInfo};
 use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::toc::TocFile;
 
@@ -91,16 +91,36 @@ fn ptr_original_achievement_ui_and_tracker_read_supplied_ids() {
     let kind: i32 = env
         .eval("return Enum.ContentTrackingType.Achievement")
         .unwrap();
-    env.state()
-        .borrow_mut()
-        .content_tracking
-        .tracked_ids_by_type
-        .insert(u32::try_from(kind).unwrap(), vec![6]);
+    {
+        // Reuse the earned-reputation achievement and real criteria data
+        // from achievements_api. The independent single-criteria eligibility
+        // provider is not modeled and is not reached in stock startup.
+        let mut sim = env.state().borrow_mut();
+        sim.achievements.insert(
+            948,
+            AchievementInfo {
+                achievement_id: 948,
+                name: "Ambassador of the Alliance".into(),
+                points: 10,
+                description: "Earn exalted reputation with alliance cities.".into(),
+                flags: 0,
+                icon: 0,
+                reward_text: String::new(),
+                is_guild: false,
+                is_statistic: false,
+                reward_item_id: None,
+            },
+        );
+        sim.content_tracking
+            .tracked_ids_by_type
+            .insert(u32::try_from(kind).unwrap(), vec![948]);
+    }
     env.exec(
         r#"
         AchievementFrameAchievements_UpdateTrackedAchievements()
         AchievementObjectiveTracker:LayoutContents()
-        assert(AchievementObjectiveTracker:GetExistingBlock(6) ~= nil)
+        assert(GetAchievementNumCriteria(948) > 1)
+        assert(AchievementObjectiveTracker:GetExistingBlock(948) ~= nil)
         "#,
     )
     .expect("original AchievementUI and tracker must read the supplied tracked row");
