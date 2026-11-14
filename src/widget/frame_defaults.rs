@@ -110,6 +110,9 @@ macro_rules! frame_defaults {
             ignoring_children_for_bounds: false,
             clamped_to_screen: false,
             screen_clamp_suppressed: false,
+            // Neutral simulator state, not a claim about any loaded owner.
+            anchor_propagation: false,
+            anchor_propagation_guard: false,
             is_moving: false,
             is_sizing: false,
             sizing_point: crate::widget::AnchorPoint::BottomRight,

@@ -209,6 +209,10 @@ pub struct Frame {
     pub clamped_to_screen: bool,
     /// R88n.5r dedicated geometry bit; not equivalent to moving/user placement.
     pub screen_clamp_suppressed: bool,
+    /// Last requested/effective anchor propagation state, distinct from suppression.
+    pub anchor_propagation: bool,
+    /// True stops propagation as well as the entire branch below this region.
+    pub anchor_propagation_guard: bool,
     pub is_moving: bool,
     /// Whether the frame is currently being resized via StartSizing.
     pub is_sizing: bool,
