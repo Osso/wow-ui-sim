@@ -62,7 +62,7 @@ fn pvp_talent_unlock_level_publishes_one_integer_for_a_row_without_a_player() {
 
     let result: (i32, String) = env
         .eval(
-            "local value = C_SpecializationInfo.GetPvpTalentUnlockLevel(777); return select('#', C_SpecializationInfo.GetPvpTalentUnlockLevel(777)), type(value)",
+            "local value = C_SpecializationInfo.GetPvpTalentUnlockLevel(777.9); return select('#', C_SpecializationInfo.GetPvpTalentUnlockLevel(777.9)), type(value)",
         )
         .expect("query unlock level for a catalog row without a player");
 
@@ -85,8 +85,8 @@ fn player_spells_locked_talent_consumer_clears_only_the_selected_lock() {
                         and not C_SpecializationInfo.IsPvpTalentLocked(secondTalentID)
 
                     C_SpecializationInfo.SetPvpTalentLocked(firstTalentID, true)
-                    C_SpecializationInfo.SetPvpTalentLocked(secondTalentID, 1)
-                    local bothLocked = C_SpecializationInfo.IsPvpTalentLocked(firstTalentID)
+                    C_SpecializationInfo.SetPvpTalentLocked(secondTalentID + 0.9, 1)
+                    local bothLocked = C_SpecializationInfo.IsPvpTalentLocked(firstTalentID + 0.9)
                         and C_SpecializationInfo.IsPvpTalentLocked(secondTalentID)
 
                     local button = {
