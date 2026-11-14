@@ -142,6 +142,35 @@ pub(super) fn empty_tooltip(state: &mut LuaState, tooltip_type: f64) -> Val {
     tooltip
 }
 
+/// VERIFIED (R88o.2 q1): serialize an unresolved conversion result without an item identity.
+pub(crate) fn build_unresolved_conversion_item_tooltip(state: &mut LuaState) -> Val {
+    let saved_top = state.top;
+    let tooltip = create_table(state);
+    state.push(tooltip);
+    let lines = create_table(state);
+    table_set(state, tooltip, "lines", lines);
+    stamp_data_instance(state, tooltip);
+
+    if let Some(text) = super::global_text(state, "RETRIEVING_ITEM_INFO") {
+        let line = create_table(state);
+        set_table_array(state, lines, 1, line);
+        table_set(state, line, "type", Val::Num(41.0));
+        let text = create_string(state, &text);
+        table_set(state, line, "leftText", text);
+
+        let rgb = global_color(state, b"ERROR_COLOR").unwrap_or((1.0, 0.0, 1.0));
+        let color = color_table(state, rgb.0, rgb.1, rgb.2, 1.0);
+        for (key, value) in [("r", rgb.0), ("g", rgb.1), ("b", rgb.2)] {
+            table_set(state, color, key, Val::Num(value));
+        }
+        table_set(state, color, "a", Val::Nil);
+        table_set(state, line, "leftColor", color);
+    }
+
+    state.top = saved_top;
+    tooltip
+}
+
 const TOOLTIP_TYPE_ITEM_INTERACTION_CLEANSING: f64 = 20.0;
 
 /// Serialize only host-supplied rows for the native cleansing-preview identity.
