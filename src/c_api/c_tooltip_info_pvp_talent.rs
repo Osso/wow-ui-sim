@@ -187,6 +187,8 @@ fn read_pvp_talent_arguments(state: &LuaState) -> LuaResult<PvpTalentArguments> 
 
 #[cfg(feature = "client-wowforever")]
 fn validate_forever_optional_pvp_talent_arguments(state: &LuaState) -> LuaResult<()> {
+    // Forever's supplied source map indexes only talent ID. Other selectors are
+    // validated, but they do not select records.
     let _is_inspect = crate::c_api::tooltip_getter_args::optional_bool(state, 2)?;
     let group_value = allowed_when_untainted(state, 3, API_NAME)?;
     if !group_value.is_nil() {

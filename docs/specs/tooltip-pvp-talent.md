@@ -7,12 +7,12 @@ VERIFIED: Retail `C_TooltipInfo.GetPvpTalent` uses the PvP talent row to build s
 ### Registration and inputs
 
 - [x] VERIFIED: Retail registers `GetPvpTalent`; PTR remains unchanged. Retail's `GameTooltip:SetPvpTalent` reaches it through Blizzard's original accessor.
-- [ ] VERIFIED: Forever registers `GetPvpTalent`; its missing-record result and argument conversion are covered by the optional Forever test.
-- [ ] VERIFIED: Forever requires a signed-32 talent ID; numeric strings are accepted and fractions truncate toward zero after range validation. Omitted/nil optional inputs are accepted, `isInspect` uses Lua truth conversion, and the supplied group index uses Forever's `luaIndex` reader.
+- [x] VERIFIED: Forever registers `GetPvpTalent`; its missing-record result and argument conversion are covered by the optional Forever test.
+- [x] VERIFIED: Forever requires a signed-32 talent ID; numeric strings are accepted and fractions truncate toward zero after range validation. Omitted/nil optional inputs are accepted, `isInspect` uses Lua truth conversion, and the supplied group index uses Forever's `luaIndex` reader.
 - [ ] UNKNOWN (Forever): R88n.8 does not define the result when the decremented, truncated `groupIndex` is outside signed-32 range. The Rust saturating cast is only a neutral placeholder, not native-parity evidence.
-- [ ] VERIFIED: Forever Usage is `Usage: local data = C_TooltipInfo.GetPvpTalent(talentID [, isInspect, groupIndex, talentIndex])`.
-- [ ] VERIFIED: A missing Forever `PvpTalent` record returns zero Lua values. The simulator has no Forever catalog and does not publish Retail rows.
-- [ ] INFERRED (Forever simulator input): `SimState.forever_pvp_talent_spell_ids` is an empty-by-default host map from `talentID` to `SpellID` and uses the shared spell-tooltip producer. R88n.8 does not prove this field mapping, a native writer or populated native-record parity.
+- [x] VERIFIED: Forever Usage is `Usage: local data = C_TooltipInfo.GetPvpTalent(talentID [, isInspect, groupIndex, talentIndex])`.
+- [x] VERIFIED: A missing Forever `PvpTalent` record returns zero Lua values. The simulator has no Forever catalog and does not publish Retail rows.
+- [x] INFERRED (Forever simulator input): `SimState.forever_pvp_talent_spell_ids` is an empty-by-default host map from `talentID` to `SpellID` and uses the shared spell-tooltip producer. R88n.8 does not prove this field mapping, a native writer or populated native-record parity.
 - [ ] UNKNOWN: Secret-value errors, all invalid argument diagnostics and the complete wrapped Usage error. The optional test checks that the Usage text is present for missing required input.
 - [x] VERIFIED: Retail starts with generated `SpellID`, `OverridesSpellID`, `LevelRequired`, and category `TalentSlotMask` rows; tests check actual default rows and neutral host-only grant/eligibility inputs. The local export is installed build 12.1.5.70783, not the selected 12.1.5.70575 pin.
 

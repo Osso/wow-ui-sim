@@ -18,7 +18,7 @@
   required signed-32 ID, including numeric strings and fractions truncated toward
   zero after range validation; its Usage text is
   `Usage: local data = C_TooltipInfo.GetItemByItemModifiedAppearanceID(itemModifiedAppearanceID)`.
-- [ ] **INFERRED (Forever simulator input):** `SimState.forever_appearance_item_ids`
+- [x] **INFERRED (Forever simulator input):** `SimState.forever_appearance_item_ids`
   is an empty-by-default host map from the getter's appearance ID to an item ID.
   A hit uses the shared item tooltip producer. R88n.8 does not prove this field
   mapping, a native writer or populated native-record parity.
