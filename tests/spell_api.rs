@@ -202,7 +202,7 @@ fn get_call_pet_spell_info_miss_has_verified_zero_value_arity() {
     // The simulator has no call-pet membership source. This checks only the
     // verified miss shape; it makes no claim that spell ID 1 misses natively.
     let result_count: i32 = env
-        .eval(r#"return select("#", GetCallPetSpellInfo(1))"#)
+        .eval(r##"return select("#", GetCallPetSpellInfo(1))"##)
         .unwrap();
 
     assert_eq!(result_count, 0);
