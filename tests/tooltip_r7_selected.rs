@@ -109,7 +109,7 @@ fn item_interaction_original_consumers_use_supplied_kind_payloads() {
             r#"
             ItemInteractionFrame.interactionType = Enum.UIItemInteractionType.ItemConversion
             ItemInteractionFrame.itemLocation = {{}}
-            ItemInteractionItemConversionOutputSlotMixin:OnEnter(
+            ItemInteractionItemConversionOutputSlotMixin.OnEnter(
                 ItemInteractionFrame.ItemConversionFrame.ItemConversionOutputSlot)
             local data = assert(GameTooltip:GetPrimaryTooltipData(), "conversion tooltip missing")
             assert(data.type == 0 and data.id == {output_item_id}, "conversion output identity")
@@ -137,7 +137,7 @@ fn possession_original_action_bar_hover_uses_the_supplied_spell() {
             r#"
             local button = CreateFrame("Button", nil, UIParent)
             button:SetID(1)
-            PossessButtonMixin:OnEnter(button)
+            PossessButtonMixin.OnEnter(button)
             local data = assert(GameTooltip:GetPrimaryTooltipData(), "possession tooltip missing")
             assert(data.type == 1 and data.id == {spell_id}, "possession spell identity")
         "#
@@ -170,7 +170,7 @@ fn slotted_keystone_original_challenges_hover_uses_the_supplied_guid() {
         env.exec(&format!(
             r#"
             local button = CreateFrame("Button", nil, UIParent)
-            ChallengesKeystoneSlotMixin:OnEnter(button)
+            ChallengesKeystoneSlotMixin.OnEnter(button)
             local data = assert(GameTooltip:GetPrimaryTooltipData(), "keystone tooltip missing")
             assert(data.type == 0 and data.id == {item_id}, "slotted item identity")
             assert(data.guid == "{guid}", "selected instance GUID")
