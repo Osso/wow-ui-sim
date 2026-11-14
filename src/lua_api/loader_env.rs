@@ -1,7 +1,7 @@
 //! Lightweight loader environment for addon loading.
 
 use super::env::WowLuaEnv;
-use super::globals::security::mark_secure_replay_state;
+use super::globals::security::mark_secure_state;
 use super::methods::create_string;
 use crate::Result;
 use crate::lua_api::methods::create_table;
@@ -130,8 +130,7 @@ impl<'a> LoaderEnv<'a> {
             let func = Self::load_dynamic_chunk_without_slots(state, code, "loader-exec")?;
             if use_loading_environment {
                 if self.loading_addon_uses_secure_env() {
-                    // temporary: lt-635e. Generated secure chunks share the private snapshot.
-                    mark_secure_replay_state(state, &func)?;
+                    mark_secure_state(state, &func)?;
                 }
                 apply_loading_scoped_fenv_state(state, &func)?;
             }

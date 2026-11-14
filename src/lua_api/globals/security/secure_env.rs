@@ -219,10 +219,10 @@ pub fn create_secure_environment(lua: &mut rilua::Lua) -> LuaResult<()> {
     Ok(())
 }
 
-/// Create the temporary full-snapshot environment used by secure-mode and replay chunks.
+/// Create the temporary full-snapshot environment used by explicit secure replays.
 ///
-/// Snapshot-only names remain private. Secure-mode and replay assignments are
-/// published to the strict secure environment by the snapshot table's write path.
+/// Snapshot-only names remain private. Replay assignments are published to the
+/// strict secure environment by the snapshot table's write path.
 // temporary: lt-635e
 pub fn create_secure_replay_environment(lua: &mut rilua::Lua) -> LuaResult<()> {
     if matches!(

@@ -212,7 +212,7 @@ fn secure_private_auras_tooltip_consumer_runs_without_errors() {
             })
             .collect()
     };
-    let producer_source: (String, String, String, bool) = env
+    let producer_source: (String, String, String, bool, bool) = env
         .eval(
             r#"
                 local processor = rawget(__secureenv, 'TooltipDataProcessor')
@@ -222,7 +222,8 @@ fn secure_private_auras_tooltip_consumer_runs_without_errors() {
                 return type(processor),
                     type(processor and rawget(processor, 'AllTypes')),
                     source,
-                    processor ~= rawget(_G, 'TooltipDataProcessor')
+                    processor ~= rawget(_G, 'TooltipDataProcessor'),
+                    type(accessor) == 'function' and debug.getfenv(accessor) == __secureenv
             "#,
         )
         .expect("secure TooltipDataProcessor producer provenance should evaluate");
@@ -251,6 +252,10 @@ fn secure_private_auras_tooltip_consumer_runs_without_errors() {
     assert!(
         producer_source.3,
         "secure execution must create its own TooltipDataProcessor table"
+    );
+    assert!(
+        producer_source.4,
+        "the dependency accessor function must use the shared secure table as its environment"
     );
     assert_eq!(
         registration_snapshot.0, "function",

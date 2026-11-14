@@ -19,7 +19,7 @@ use super::error::LoadError;
 use super::file_diagnostics::{
     is_recorded_xml_failure, record_file_diagnostic, uses_wrath_file_diagnostics,
 };
-use super::lua_file::{load_lua_file, load_secure_environment_lua_file};
+use super::lua_file::{load_lua_file, load_secure_replay_lua_file};
 use super::xml_file::load_xml_file;
 use super::{LoadResult, LoadTiming};
 use nil_symbol_reports::{append_nil_symbol_diagnostics, enter_nil_symbol_environment};
@@ -1023,7 +1023,7 @@ fn load_addon_file(
     }
 
     match file.extension().and_then(|ext| ext.to_str()).unwrap_or("") {
-        "lua" => load_addon_lua_file(env, ctx, result, file),
+        "lua" => load_addon_lua_file(env, ctx, result, file, pass),
         "xml" if pass.loads_xml() => load_addon_xml_file(env, ctx, result, file),
         "xml" => {}
         _ => result
@@ -1037,10 +1037,10 @@ fn load_addon_lua_file(
     ctx: &AddonContext<'_>,
     result: &mut LoadResult,
     file: &std::path::Path,
+    pass: EnvironmentPass,
 ) {
-    // temporary: lt-635e. Secure-mode and replay chunks share the private snapshot.
-    let load_result = if ctx.use_secure_env {
-        load_secure_environment_lua_file(env, file, ctx, &mut result.timing)
+    let load_result = if pass == EnvironmentPass::SecureReplay {
+        load_secure_replay_lua_file(env, file, ctx, &mut result.timing)
     } else {
         load_lua_file(env, file, ctx, &mut result.timing)
     };

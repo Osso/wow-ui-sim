@@ -164,7 +164,8 @@ fn secure_addon_loads_nonsecure_dependency_in_ordinary_then_secure_environment()
     std::fs::write(
         dependency_dir.join("Dependency.lua"),
         "dependencyLoadCount = (dependencyLoadCount or 0) + 1; \
-         dependencyToken = 'secure-visible'",
+         dependencyToken = 'secure-visible'; \
+         function getDependencyToken() return dependencyToken end",
     )
     .unwrap();
     let consumer_toc = consumer_dir.join("SecureConsumerProbe.toc");
@@ -178,8 +179,10 @@ fn secure_addon_loads_nonsecure_dependency_in_ordinary_then_secure_environment()
     .unwrap();
     std::fs::write(
         consumer_dir.join("Consumer.lua"),
-        "assert(rawget(_G, 'dependencyLoadCount') == 1); \
-         assert(rawget(_G, 'dependencyToken') == 'secure-visible'); \
+        "assert(rawget(_G, 'debug') == nil); \
+         assert(rawget(_G, 'coroutine') == nil); \
+         assert(getfenv(getDependencyToken) == _G); \
+         assert(getDependencyToken() == 'secure-visible'); \
          secureConsumerSawDependency = true",
     )
     .unwrap();
