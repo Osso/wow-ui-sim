@@ -62,6 +62,7 @@ pub mod quest_readiness;
 pub(crate) mod quest_reward_currencies;
 pub(crate) mod quest_reward_spells;
 pub mod quest_special_item;
+pub mod recipe_rank_tooltip;
 pub(crate) mod tooltip_data;
 pub(crate) mod tooltip_power_catalog_data;
 pub mod trait_group_currency;
@@ -476,6 +477,7 @@ pub use c_ping_texture_kits::PingTextureKits;
 #[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
 mod c_cvar_readiness;
 pub mod c_loss_of_control;
+mod combat_audio_enabled;
 #[cfg(not(feature = "client-wrath"))]
 mod combat_audio_throttle;
 #[cfg(feature = "client-mists")]

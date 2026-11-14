@@ -352,6 +352,7 @@ macro_rules! build_empty_sim_state {
             spell_trade_skill_links: HashMap::new(),
             spell_id_aliases: HashMap::new(),
             spell_tooltip_inputs: HashMap::new(),
+            recipe_rank_tooltip_cache: Default::default(),
             aura_tooltip_inputs: HashMap::new(),
             spell_tooltip_cost_contexts: HashMap::new(),
             #[cfg(feature = "retail-12-0-5")]
@@ -464,7 +465,6 @@ macro_rules! build_empty_sim_state {
             recipe_quality_inputs: Default::default(),
             recipe_source_text: Default::default(),
             crafted_item_quality: Default::default(),
-            #[cfg(feature = "retail-12-0-0")]
             pvp_catalog: Default::default(),
             #[cfg(feature = "retail-12-0-0")]
             prey_inputs: Default::default(),
@@ -515,7 +515,6 @@ macro_rules! build_empty_sim_state {
             spell_cooldowns: $collections.spell_cooldowns,
             spell_charges: ::std::collections::HashMap::new(),
             ranged_auto_attack_spell_id: 0,
-            #[cfg(feature = "retail-12-0-0")]
             spell_cast_context_is_null: None,
             #[cfg(feature = "retail-12-0-0")]
             spell_cast_counts: ::std::collections::HashMap::new(),
@@ -703,6 +702,7 @@ macro_rules! build_empty_sim_state {
             #[cfg(feature = "client-wowforever")]
             stable_reads: crate::c_api::c_stable_info::forever::StableReadState::default(),
             merchant_items: Vec::new(),
+            merchant_links: Default::default(),
             // No extended-cost record is observed until the host supplies one.
             merchant_offer_costs: HashMap::new(),
             merchant_offer_categories: HashMap::new(),

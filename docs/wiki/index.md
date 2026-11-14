@@ -2,6 +2,14 @@
 
 The [modified-appearance](../specs/tooltip-appearance-item.md), [merchant-cost](../specs/tooltip-merchant-cost-item.md), [outfit](../specs/tooltip-outfit.md), and [PvP talent](../specs/tooltip-pvp-talent.md) contracts and [Lua API](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) record R88n.8. **VERIFIED (Forever 1.60.1.70707):** the four getters register; tested missing-source results, argument handling, outfit zero/missing-name behavior, and the selected SpellBook consumer pass. The consumer is **PRESERVATION** because populated source records are not modeled. **INFERRED:** saved names map from `SimState.forever_outfits`. **UNKNOWN:** populated appearance/PvP records, native saved-outfit writers, and merchant availability/filter state.
 
+## [2026-11-14] implementation | Retail tooltip serializer field boundary
+
+[Tooltip data](systems/lua-api.md#retail-tooltipdata-field-boundary-r88n4b) links the [serialization contract](../specs/tooltip-data-serialization.md) and [consumer/seam evidence](investigations/consumer-selection-and-red-proof.md#retail-tooltip-serializer-field-consumers). **VERIFIED (R88n.4b):** top-level repair/pet fields and type-11 price fields. **INFERRED:** positive item sell-price projection; `maxPrice` remains absent without a quantity/range input.
+
+## [2026-11-14] implementation | Merchant item-link publication
+
+[Merchant item links](investigations/merchant-item-link.md) records R88l.2 Retail validation, arity, shared link formatting and explicit host-selected offer seams. Native raw-row ordering/writers remain unknown; no non-Retail publication is added.
+
 ## [2026-11-14] fix | Forever tooltip cached lines
 
 [Tooltip owner lifecycle](investigations/tooltip-owner-lifecycle.md#r88n5-forever-clearlines-cache-boundary) records R88n.5. **VERIFIED (Forever 1.60.1.70707):** `ClearLines` resets cached left/right FontString text for active rows only; the optional API test proves inactive entries are untouched, and the original selected `TooltipDataHandler.ProcessInfo` test preserves reprocessing and reuse. Retail attachments and owner pairs remain VERIFIED; PTR parity is INFERRED. Clipping, draw order, nonzero extra-inset writers and post-anchor clamping remain UNKNOWN.
@@ -9,6 +17,10 @@ The [modified-appearance](../specs/tooltip-appearance-item.md), [merchant-cost](
 ## [2026-11-14] investigation | Retail quest tooltip consumers
 
 [Consumer selection and RED proof](investigations/consumer-selection-and-red-proof.md#retail-quest-tooltip-consumers-and-host-input-seams) links the [Round 7 getter contract](../specs/tooltip-r7-getters.md), selected Retail consumers, R88n.1 miss results, and host-supplied party/item inputs.
+
+## [2026-11-14] implementation | Retail recipe-rank tooltip
+
+The [Round 7 getter contract](../specs/tooltip-r7-getters.md) and [Lua API](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) record VERIFIED native local rebuild/vector/flag steps, INFERRED simulator-route and presentation choices, and UNKNOWN complete row semantics, upstream acquisition, external clear triggers, and source lookup.
 
 ## [2026-11-14] fix | Original character and store lifecycle ownership
 

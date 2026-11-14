@@ -2,6 +2,18 @@
 
 Updated the [modified-appearance](../specs/tooltip-appearance-item.md), [merchant-cost](../specs/tooltip-merchant-cost-item.md), [outfit](../specs/tooltip-outfit.md), and [PvP talent](../specs/tooltip-pvp-talent.md) contracts, plus the [Lua API](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation), with R88n.8. **VERIFIED (Forever 1.60.1.70707):** the four getters register; all five targeted optional tests pass, including the selected SpellBook consumer. That consumer result is **PRESERVATION**, since populated source rows are absent. **INFERRED:** `SimState.forever_outfits` supplies saved names. **UNKNOWN:** native writers, populated appearance/PvP data, and merchant availability/filter inputs.
 
+## [2026-11-14] investigation | Retail tooltip serializer boundary
+
+Updated [tooltip data serialization](../specs/tooltip-data-serialization.md), [Lua API](systems/lua-api.md#retail-tooltipdata-field-boundary-r88n4b), and [consumer selection](investigations/consumer-selection-and-red-proof.md#retail-tooltip-serializer-field-consumers). **VERIFIED (R88n.4b):** repair and battle-pet fields are top-level; `price` and `maxPrice` belong on type 11. **INFERRED:** Retail projects positive `ItemInfo.sell_price` to `price`; `maxPrice`, repair cost and pet values remain unmodeled. Quest-cache callbacks and the LFG whole-message callback have no matching simulator route to fix.
+
+## [2026-11-14] correction | Merchant builder evidence boundary
+
+[Merchant item links](investigations/merchant-item-link.md) now requires explicit host item payloads. Missing data remains an INFERRED unresolved/no-text seam. Synthetic serializer fixtures are not complete native link evidence; the original consumer explicitly compares distinct results. Shared formatter behavior is unchanged.
+
+## [2026-11-14] implementation | Merchant item-link publication
+
+[Merchant item links](investigations/merchant-item-link.md) records R88l.2 Retail validation, arity, shared link formatting and explicit host-selected offer seams. Native raw-row ordering/writers remain unknown; no non-Retail publication is added.
+
 ## [2026-11-14] fix | Retail screen clamping
 
 Updated [layout-system](systems/layout-system.md#screen-clamping) and the [layout reference](../layout-system.md#screen-clamping) with R88n.5r. **VERIFIED (Retail 12.1.5.70688):** generic rect resolution uses scaled insets before rect storage/notification on queued and synchronous routes; GameTooltip inherits its enable bit from `SharedTooltipTemplate`; row setup creates no per-row clip. The original consumer selector failed at test commit `bcb35d79a` and passed at implementation commit `3a27c7d52`. **UNKNOWN:** suppression-state identity, setter-only cache invalidation, exact rounding, oversized-frame behavior, and order relative to snapping.
@@ -3852,3 +3864,7 @@ Recorded verified requirement/request branches and separately inferred data mapp
 ## 2026-11-14 | J character-label retirement
 
 Added original CharacterSelect label and CharacterFrame active-subframe title evidence to [Lua-owned fallback retirement](investigations/lua-owned-fallback-retirement.md#j-original-character-labels-and-titles), with bounded Retail-only scope and remaining native/owner limitations.
+
+## 2026-11-14 | Retail recipe-rank tooltip
+
+Updated the [Lua API](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) and [Round 7 contract](../specs/tooltip-r7-getters.md) with the selected `TooltipDataHandler` accessor and evidence limits. **VERIFIED (R88n.4):** the getter uses top-level TooltipData type 17 and the requested recipe ID; text-line type 0 is INFERRED simulator serialization. **VERIFIED (R88n.4a):** native rebuild retains duplicate keys, inserts new keys, appends/counts/grows the display vector, and projects favorite/crafting-order flags before row copy; the simulator cache models key retention and lookup only. **VERIFIED (R88n.4b):** native clear has direct initialization and rebuild callers, and dirty state can reach rebuild. **INFERRED (simulator routes):** `OpenTradeSkill` and profession-spell redirection share a clearing helper; a changed filter clears at `begin_tick` before event dispatch, without rebuilding rows. **INFERRED (presentation):** exact color globals/RGB, rank numbering/boundary, label delimiter, localization keys, blank separators, source placement, wrapping, cycle handling and missing-input failure predicates. **PRESERVATION:** zero-value miss coverage does not prove producer selection. **UNKNOWN:** complete row semantics, upstream acquisition, external clear triggers, learned-status meaning and player/faction source lookup.
