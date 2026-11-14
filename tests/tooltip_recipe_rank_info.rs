@@ -224,6 +224,8 @@ fn recipe_id_selects_distinct_chains_through_original_tooltip_accessor() {
     .expect("the original accessor must select the requested recipe chain");
 }
 
+/// VERIFIED: the supplied rank qualitatively selects normal or disabled description color.
+/// INFERRED coverage: this test uses ranks 1 and 2 as its concrete comparison boundary.
 #[test]
 fn rank_threshold_changes_description_colors_through_original_accessor() {
     let env = original_tooltip_handler_env();

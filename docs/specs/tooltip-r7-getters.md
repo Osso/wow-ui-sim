@@ -10,7 +10,7 @@ The Round 7 `C_TooltipInfo` getters use native argument readers and tooltip buil
 - [x] Retail LFG reward getters read only ready, host-supplied reward groups keyed by dungeon ID and type; ordinary entries and shortage tiers use their selected indexes, and empty or unready input does not fabricate rewards.
 - [x] Use each LFG entry's currency discriminator to select the shared currency or item tooltip builder, not the numeric ID range.
 - [x] On Retail 12.1.5 (70688), `GetRecipeRankInfo` follows supplied parent records to the base recipe, follows successor records whose spells exist, and publishes top-level TooltipData type 17 with the requested recipe ID (R88n.4).
-- [x] `GetRecipeRankInfo` uses the supplied rank threshold to select normal versus disabled description color (R88n.4). Exact color globals, RGB packing, rank numbering/boundary, and text-row wrapping are INFERRED simulator policy.
+- [x] The supplied rank qualitatively selects normal versus disabled description color (VERIFIED, R88n.4). The selector's concrete rank-1/rank-2 boundary is INFERRED coverage; exact color globals, RGB packing, rank numbering, and text-row wrapping are also INFERRED simulator policy.
 - [x] Optional recipe labels and next-rank source text use only host-supplied strings; the simulator does not synthesize a recipe catalogue or source lookup.
 - [x] R88n.1 verifies zero Lua values after a failed recipe-rank producer. The absent-recipe preservation case is tested; choosing missing parent/base spell or color globals as failure predicates is INFERRED simulator policy.
 - [x] Host cache insertion keeps the existing recipe record when the same recipe ID is supplied again (R88n.4a); the simulator cache models only key retention and lookup.
@@ -20,7 +20,7 @@ The Round 7 `C_TooltipInfo` getters use native argument readers and tooltip buil
 - [x] On Retail, `GetQuestLogSpecialItem` resolves the one-based index through host-supplied quest-ID request context, reads primary/candidate item IDs from a separate host-supplied cache record, and uses only a host-supplied selected inventory object whose ID matches that record. It uses the shared item builder and publishes the selected instance GUID.
 - [x] On Retail, `GetQuestPartyProgress` publishes only an explicit host-supplied snapshot with type 24 and quest ID, the optional type-17 title row, supplied type-18 participant headings, and type-8 status/objective rows. The host supplies row text, colors, and participant-filter classification; no party/objective values are seeded.
 - [x] `omitTitle` omits the supplied title row, and `ignoreActivePlayer` filters only participant groups marked by the host.
-- [x] Tests exercise original selected consumers, verified recipe-ID/rank selectors through the original accessor, explicitly INFERRED presentation and simulator-route coverage, the PRESERVATION miss case, argument errors, and backed runeforge instances.
+- [x] Tests exercise original selected consumers, the VERIFIED recipe-ID selector and qualitative rank-threshold behavior through the original accessor, the INFERRED concrete rank-1/rank-2 boundary and presentation, inferred simulator routes, the PRESERVATION miss case, argument errors, and backed runeforge instances.
 
 ## How it works
 
@@ -44,7 +44,7 @@ The Round 7 `C_TooltipInfo` getters use native argument readers and tooltip buil
 ## Tests asserting this spec
 
 - `tests/tooltip_round7.rs` — registration, argument conversion, usage errors, original accessor miss paths, secret rejection and populated owned runeforge item instances.
-- `tests/tooltip_recipe_rank_info.rs` — verified recipe-ID/rank selectors through the original accessor; separate INFERRED presentation and simulator-route tests; a PRESERVATION zero-value miss test with inferred missing-parent/base-spell predicates.
+- `tests/tooltip_recipe_rank_info.rs` — VERIFIED recipe-ID selection and qualitative threshold behavior through the original accessor; the concrete rank-1/rank-2 boundary and exact presentation are INFERRED coverage; simulator-route tests are INFERRED; the zero-value miss test is PRESERVATION.
 - `tests/tooltip_quest_party_progress.rs` — selected ObjectiveTracker consumers, original tooltip accessor selectors, exact missing-source counts, and supplied owned-item selection.
 - `tests/tooltip_lfg_rewards.rs` — selected GroupFinder reward consumers, distinct ordinary/shortage entries and API-level no-value misses.
 - `src/c_api/c_tooltip_info_round7.rs::tests::populated_azerite_selection_misses_without_rank_spell_data` — the existing current-rank/active-slot state is populated, while the missing rank-to-spell producer retains the no-values result.
