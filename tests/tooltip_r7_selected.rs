@@ -103,7 +103,15 @@ fn load_challenges_env() -> WowLuaEnv {
 fn slot_keystone_from_bag(env: &WowLuaEnv, slot: u32, item_id: u32) -> String {
     let guid = add_bag_item(env, 0, slot, item_id);
     env.exec(&format!(
-        "C_Container.PickupContainerItem(0, {slot}); assert(CursorHasItem()); C_ChallengeMode.SlotKeystone()"
+        r##"
+        C_Container.PickupContainerItem(0, {slot})
+        assert(CursorHasItem())
+        local count = select("#", C_ChallengeMode.SlotKeystone())
+        assert(count == 0, "SlotKeystone returns no Lua values")
+        assert(not CursorHasItem(), "SlotKeystone clears the cursor")
+        assert(C_Item.GetItemGUID({{bagID = 0, slotIndex = {slot}}}) == nil,
+            "cursor clear does not restore the source item")
+        "##
     ))
     .unwrap();
     guid
@@ -306,16 +314,24 @@ fn challenges_ui_hover_uses_public_keystone_selection() {
         local function capture(...) return {n = select("#", ...), ...} end
         local result = capture(C_ChallengeMode.HasSlottedKeystone("ignored", 17))
         assert(result.n == 1 and type(result[1]) == "boolean" and not result[1])
+        local removed = capture(C_ChallengeMode.RemoveKeystone())
+        assert(removed.n == 1 and removed[1] == false)
     "##,
     )
     .unwrap();
 
     let first_guid = slot_keystone_from_bag(&env, 3, 180_653);
     assert_challenges_hover_item(&env, 180_653, &first_guid, 1);
-    env.exec("C_ChallengeMode.ClearKeystone()")
-        .expect("clear first selected keystone");
-    env.exec(r#"assert(not C_ChallengeMode.HasSlottedKeystone())"#)
-        .unwrap();
+    env.exec(
+        r##"
+        local function capture(...) return {n = select("#", ...), ...} end
+        local removed = capture(C_ChallengeMode.RemoveKeystone())
+        assert(removed.n == 1 and removed[1] == true)
+        assert(not C_ChallengeMode.HasSlottedKeystone())
+        assert(select("#", C_TooltipInfo.GetSlottedKeystone()) == 0)
+    "##,
+    )
+    .unwrap();
     assert_challenges_hover_hidden(&env);
 
     let second_guid = slot_keystone_from_bag(&env, 4, 158_923);
@@ -324,7 +340,7 @@ fn challenges_ui_hover_uses_public_keystone_selection() {
         r##"
         local function capture(...) return {n = select("#", ...), ...} end
         local result = capture(C_ChallengeMode.RemoveKeystone())
-        assert(result.n == 1 and type(result[1]) == "boolean")
+        assert(result.n == 1 and result[1] == true)
         assert(not C_ChallengeMode.HasSlottedKeystone())
     "##,
     )
@@ -346,22 +362,19 @@ fn has_slotted_keystone_tracks_guid_without_resolving_the_item() {
     )
     .unwrap();
 
-    slot_keystone_from_bag(&env, 3, 180_653);
+    env.state().borrow_mut().keystone.selected_guid = Some("Item-0-3-999999".to_string());
     env.exec(
         r##"
         local function capture(...) return {n = select("#", ...), ...} end
         local result = capture(C_ChallengeMode.HasSlottedKeystone("ignored", 17))
         assert(result.n == 1 and type(result[1]) == "boolean" and result[1])
-        A_Admin.ClearBags()
-        assert(C_ChallengeMode.HasSlottedKeystone())
         assert(select("#", C_TooltipInfo.GetSlottedKeystone()) == 0)
+        local removed = capture(C_ChallengeMode.RemoveKeystone())
+        assert(removed.n == 1 and removed[1] == true)
+        assert(not C_ChallengeMode.HasSlottedKeystone())
     "##,
     )
     .unwrap();
-    env.exec("C_ChallengeMode.ClearKeystone()")
-        .expect("existing selection clear should execute");
-    env.exec("assert(not C_ChallengeMode.HasSlottedKeystone())")
-        .expect("cleared selection should be absent");
 }
 
 #[test]
