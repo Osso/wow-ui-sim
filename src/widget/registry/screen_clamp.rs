@@ -50,6 +50,61 @@ impl WidgetRegistry {
         self.queue_clamp_geometry(id);
     }
 
+    /// Pre-store notification; never touches the layout or rectangle queue.
+    pub(crate) fn notify_clamp_inset_secret_value(&mut self, id: u64) {
+        let Some(frame) = self.widgets.get_mut(&id) else {
+            return;
+        };
+        if frame.clamp_secret_notified {
+            return;
+        }
+        frame.clamp_secret_notified = true;
+
+        // The pinned native answer establishes geometry propagation for the
+        // GameTooltip callback, not the callbacks of every other Frame type.
+        if frame.widget_type != crate::widget::WidgetType::GameTooltip {
+            return;
+        }
+        let mut pending = vec![id];
+        while let Some(region_id) = pending.pop() {
+            if self.mark_clamp_notification_geometry(region_id)
+                && let Some(dependents) = self.ordered_anchor_dependents.get(&region_id)
+            {
+                pending.extend(dependents.iter().rev().copied());
+            }
+        }
+    }
+
+    fn mark_clamp_notification_geometry(&mut self, id: u64) -> bool {
+        let Some(frame) = self.widgets.get_mut(&id) else {
+            return false;
+        };
+        if frame.clamp_geometry_notified {
+            return false;
+        }
+        frame.clamp_geometry_notified = true;
+        if frame.widget_type == crate::widget::WidgetType::GameTooltip
+            && frame.clamp_notification_ancestor_eligible
+            && frame.clamp_notification_ancestor_gate
+        {
+            let ancestor = frame.parent_id;
+            self.mark_clamp_boundary_parent(ancestor);
+        }
+        true
+    }
+
+    fn mark_clamp_boundary_parent(&mut self, mut ancestor: Option<u64>) {
+        while let Some(region) = ancestor.and_then(|id| self.widgets.get(&id)) {
+            ancestor = region.parent_id;
+            if region.clamp_notification_boundary {
+                if let Some(parent) = ancestor.and_then(|id| self.widgets.get_mut(&id)) {
+                    parent.clamp_ancestor_notified = true;
+                }
+                return;
+            }
+        }
+    }
+
     /// Accepted enable change compares against effective, not stored, state.
     pub fn set_screen_clamp_enabled(&mut self, id: u64, enabled: bool) {
         let Some(frame) = self.widgets.get_mut(&id) else {

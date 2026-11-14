@@ -5,7 +5,9 @@ use crate::lua_api::frame::methods::methods_helpers::{
 };
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, frame_id_from_stack};
 use crate::lua_bridge::{FromStack, IntoStack, stack_val, table_set_rust_fn_static};
-use crate::widget::clamp_geometry::{inset_to_public, inset_to_storage};
+use crate::widget::clamp_geometry::{
+    inset_to_public, inset_to_storage, uses_retail_clamp_producers,
+};
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
@@ -74,13 +76,28 @@ pub fn set_clamp_rect_insets(state: &mut LuaState) -> LuaResult<u32> {
     let right = clamp_dimension(state, 3)?;
     let top = clamp_dimension(state, 4)?;
     let bottom = clamp_dimension(state, 5)?;
-    let [left, right, top, bottom] = [left, right, top, bottom].map(inset_to_storage);
+    let insets = [left, right, top, bottom].map(inset_to_storage);
     if !can_change_protected_state_for(state, id) {
         emit_addon_action_blocked(state, id, "SetClampRectInsets");
         return Ok(0);
     }
     let mut sim = borrow_state_mut(state)?;
+    if uses_retail_clamp_producers() && sim.clamp_inset_saved_access != 0 {
+        if let Some(frame) = sim.widgets.get(id)
+            && frame.prevent_secret_values
+        {
+            return Err(super::drag_input::clamp_method_error(
+                state,
+                frame,
+                "SetClampRectInsets",
+                "SetSecretValues",
+                "Attempt to set secret values on an object that prevents secret values",
+            ));
+        }
+        sim.widgets.notify_clamp_inset_secret_value(id);
+    }
     if let Some(frame) = sim.widgets.get_mut_visual(id) {
+        let [left, right, top, bottom] = insets;
         frame.clamp_rect_insets = (left, right, top, bottom);
     }
     Ok(0)

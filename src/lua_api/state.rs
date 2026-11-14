@@ -144,6 +144,7 @@ macro_rules! build_empty_sim_state {
             party_countdown_request: None,
             quest_portrait_state: None,
             tooltips: $collections.tooltips,
+            clamp_inset_saved_access: 0,
             item_overrides: ::std::collections::HashMap::new(),
             #[cfg(feature = "retail-12-0-0")]
             item_stats: crate::c_api::ItemStatsState::default(),

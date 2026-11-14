@@ -215,6 +215,16 @@ pub struct Frame {
     pub anchor_propagation_guard: bool,
     /// INFERRED host seam; native special parent-chain contexts are UNKNOWN.
     pub clamp_special_movement_context: bool,
+    /// Explicit UNKNOWN native input; not combat, protected or forbidden state.
+    pub clamp_restricted_region: bool,
+    /// Host-supplied inputs for the UNKNOWN GameTooltip ancestor predicate.
+    pub clamp_notification_ancestor_eligible: bool,
+    pub clamp_notification_ancestor_gate: bool,
+    pub clamp_notification_boundary: bool,
+    /// Separate R88n.5r-q3.3 marks, independent from layout invalidation.
+    pub clamp_secret_notified: bool,
+    pub clamp_geometry_notified: bool,
+    pub clamp_ancestor_notified: bool,
     pub is_moving: bool,
     /// Whether the frame is currently being resized via StartSizing.
     pub is_sizing: bool,

@@ -279,30 +279,70 @@ pub fn is_user_placed(state: &mut LuaState) -> LuaResult<u32> {
 
 pub fn set_clamped_to_screen(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
-    let retail = crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail;
+    let retail = uses_retail_clamp_producers();
     let clamped = clamp_enable_argument(state, retail)?;
-    if retail
-        && borrow_state(state)?
-            .widgets
-            .get(id)
-            .is_some_and(|f| f.effective_screen_clamp() == clamped)
-    {
-        return Ok(0);
+    if retail {
+        return set_retail_clamp_enabled(state, id, clamped);
     }
     if !can_change_protected_state_for(state, id) {
         emit_addon_action_blocked(state, id, "SetClampedToScreen");
         return Ok(0);
     }
+
     let mut sim = borrow_state_mut(state)?;
-    if retail {
-        sim.widgets.set_screen_clamp_enabled(id, clamped);
-    } else {
-        if let Some(frame) = sim.widgets.get_mut_visual(id) {
-            frame.clamped_to_screen = clamped;
-        }
-        sim.widgets.mark_rect_dirty(id);
+    if let Some(frame) = sim.widgets.get_mut_visual(id) {
+        frame.clamped_to_screen = clamped;
     }
+    sim.widgets.mark_rect_dirty(id);
     Ok(0)
+}
+
+fn set_retail_clamp_enabled(state: &LuaState, id: u64, clamped: bool) -> LuaResult<u32> {
+    let mut sim = borrow_state_mut(state)?;
+    let Some(frame) = sim.widgets.get(id) else {
+        return Ok(0);
+    };
+    if frame.effective_screen_clamp() == clamped {
+        return Ok(0);
+    }
+    // Q3.3 checks a separate restricted-region Frame-carrier state, not the
+    // generic combat/protection predicate used by the other profiles.
+    if clamped && frame.clamp_restricted_region && has_clamp_frame_carrier(frame) {
+        return Err(clamp_method_error(
+            state,
+            frame,
+            "SetClampedToScreen",
+            "ClampedToScreen",
+            "Can't clamp restricted regions",
+        ));
+    }
+    sim.widgets.set_screen_clamp_enabled(id, clamped);
+    Ok(0)
+}
+
+fn has_clamp_frame_carrier(frame: &crate::widget::Frame) -> bool {
+    use crate::widget::WidgetType;
+    !matches!(
+        frame.widget_type,
+        WidgetType::FontString | WidgetType::Texture | WidgetType::Line
+    )
+}
+
+pub(super) fn clamp_method_error(
+    state: &LuaState,
+    frame: &crate::widget::Frame,
+    method: &str,
+    action: &str,
+    reason: &str,
+) -> rilua::LuaError {
+    let frame_type = frame.widget_type.as_str();
+    let name = frame.name.as_deref().unwrap_or(frame_type);
+    let origin = rilua::api::stack_taint_origin(state)
+        .map(|source| format!("Lua Taint: {source}"))
+        .unwrap_or_else(|| "No Lua Taint".to_owned());
+    rilua::runtime_error(format!(
+        "{name}:{method}(): Action[{action}] failed because[{reason}]: attempted from: {frame_type}:{method}.\n{origin}",
+    ))
 }
 
 fn clamp_enable_argument(state: &LuaState, retail: bool) -> LuaResult<bool> {

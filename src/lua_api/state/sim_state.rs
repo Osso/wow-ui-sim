@@ -151,6 +151,9 @@ pub struct SimState {
     #[cfg(feature = "client-wrath")]
     pub who_routing: crate::c_api::who_routing::WhoRouting,
     pub tooltips: HashMap<u64, TooltipData>,
+    /// INFERRED host-supplied saved access byte for inset notifications.
+    /// The native source is UNKNOWN; not inferred from secret args or taint.
+    pub clamp_inset_saved_access: u8,
     /// Explicit host-supplied item metadata, taking precedence over the generated catalog.
     pub item_overrides: HashMap<u32, crate::items::ItemInfo>,
     /// Explicit exact-link fixtures only; initially empty, no catalog producer.
