@@ -255,7 +255,11 @@ mod tests {
                 ("flagnamespaceneither", 4),
             ] {
                 register_namespace_function_with_flags(
-                    &mut lua, namespace, "probe", flag_probe, flags,
+                    lua.state_mut(),
+                    namespace,
+                    "probe",
+                    flag_probe,
+                    flags,
                 )
                 .expect("register flagged namespace member");
             }

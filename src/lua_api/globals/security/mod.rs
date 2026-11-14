@@ -44,8 +44,8 @@ pub use secure_env::{
 pub(crate) use secure_env::{
     mark_secure_replay_state, native_registration_destinations,
     register_native_function_with_flags, register_pair_list_function,
-    register_simulator_secure_helper, register_unknown_allowlist_function, secure_env_table,
-    secure_replay_env_table, set_secure_env_key_state,
+    register_unknown_allowlist_function, secure_env_table, secure_replay_env_table,
+    set_secure_env_key_state,
 };
 
 #[cfg(feature = "retail-12-1-0")]

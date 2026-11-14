@@ -5,6 +5,7 @@ use crate::lua_api::globals::security::register_native_function_with_flags;
 use crate::lua_api::methods::{create_table, registry_get, table_get_static};
 use crate::lua_bridge::stack_val;
 use rilua::vm::state::LuaState;
+use rilua::vm::table::Table;
 use rilua::{LuaResult, Val};
 
 /// VERIFIED (R88k.7): Retail `Mixin` and `CreateFromMixins` use flags value 7.
@@ -61,25 +62,26 @@ fn apply_mixin(state: &mut LuaState, object: Val, mixin: Val) -> LuaResult<()> {
         return Ok(());
     };
 
-    let mut entries = methods
+    for (key, value) in collect_mixin_entries(methods) {
+        state.settable(object, key, value)?;
+    }
+    Ok(())
+}
+
+fn collect_mixin_entries(methods: &Table) -> Vec<(Val, Val)> {
+    let array_entries = methods
         .array_slice()
         .iter()
         .copied()
         .enumerate()
-        .filter(|(_, value)| !matches!(value, Val::Nil))
-        .map(|(index, value)| (Val::Num((index + 1) as f64), value))
-        .collect::<Vec<_>>();
-    entries.extend(
-        methods
-            .hash_entries()
-            .into_iter()
-            .filter(|(_, value)| !matches!(value, Val::Nil)),
-    );
-
-    for (key, value) in entries {
-        state.settable(object, key, value)?;
-    }
-    Ok(())
+        .filter_map(|(index, value)| {
+            (!matches!(value, Val::Nil)).then_some((Val::Num((index + 1) as f64), value))
+        });
+    let hash_entries = methods
+        .hash_entries()
+        .into_iter()
+        .filter(|(_, value)| !matches!(value, Val::Nil));
+    array_entries.chain(hash_entries).collect()
 }
 
 fn resolve_mixin_methods(state: &mut LuaState, mixin: Val) -> Val {
