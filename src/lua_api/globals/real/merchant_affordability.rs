@@ -41,7 +41,7 @@ fn read_merchant_index(state: &LuaState) -> LuaResult<i32> {
     Ok(number.trunc() as i32)
 }
 
-fn merchant_offer_affordability(state: &LuaState, index: i32) -> LuaResult<Option<bool>> {
+fn merchant_offer_affordability(state: &mut LuaState, index: i32) -> LuaResult<Option<bool>> {
     let Some(slot) = usize::try_from(index.wrapping_sub(1)).ok() else {
         return Ok(None);
     };
@@ -55,6 +55,25 @@ fn merchant_offer_affordability(state: &LuaState, index: i32) -> LuaResult<Optio
     let Some(slot_key) = u32::try_from(slot).ok() else {
         return Ok(None);
     };
+    let category = sim
+        .merchant_offer_categories
+        .get(&slot_key)
+        .copied()
+        .unwrap_or(0);
+    let item_requirement = sim.merchant_item_requirements.get(&item_id).copied();
+    drop(sim);
+    // R88i.5 is Retail evidence; leave other client profiles unchanged.
+    if cfg!(feature = "client-retail") {
+        let outcome = super::merchant_requirements::item_gate(
+            category,
+            item_requirement.as_ref(),
+            |id, required| super::merchant_requirements::reputation_test(state, id, required),
+        );
+        if outcome != Some(true) {
+            return Ok(outcome);
+        }
+    }
+    let sim = borrow_state(state)?;
     let Some(costs) = sim.merchant_offer_costs.get(&slot_key) else {
         return Ok(None);
     };
@@ -73,8 +92,12 @@ fn is_offer_affordable(sim: &SimState, costs: &MerchantCostRecord) -> bool {
         .iter()
         .zip(costs.currency_cost_amounts)
         .all(|(&currency_id, required)| has_required_currency_amount(sim, currency_id, required));
-    // INFERRED: no host input describes the additional native record requirement.
-    let other_record_requirements = true;
+    let other_record_requirements = !cfg!(feature = "client-retail")
+        || super::merchant_requirements::cost_gate(
+            costs.requirement_value,
+            costs.requirement_mode,
+            |required, mode| super::merchant_requirements::rating_test(sim, required, mode),
+        );
 
     has_money && has_required_items && has_required_currencies && other_record_requirements
 }

@@ -1,3 +1,7 @@
+## [2026-11-14] implementation | Merchant requirements and LFD requests
+
+[Merchant/LFG boundaries](investigations/merchant-lfg-r88i.md) separates R88i.5/R88i.6 verified gates and request behavior from inferred faction/rating mapping, provisional party arity, and unknown throttle/event timing.
+
 ## [2026-11-14] implementation | Retail map world positions
 
 [Patch 8.0.1 API audit](investigations/patch-8-0-1-api-audit.md#retail-map-world-position) links the [map world-position contract](../specs/map-world-position.md). **VERIFIED (R88i.41):** nearest-center forward selection, bounds, signed-ID truncation, plain-table positions, result arity and exact Usage strings. **INFERRED:** 70783/70575 data parity and the swapped/reversed transform; negative-`MapID` AreaTable fallback remains unavailable.

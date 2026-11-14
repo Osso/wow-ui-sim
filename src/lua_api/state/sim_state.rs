@@ -868,6 +868,12 @@ pub struct SimState {
     /// Explicit extended-cost records keyed by zero-based merchant slot; a
     /// missing key is not an observed record (decomp Round 6 §2b).
     pub merchant_offer_costs: HashMap<u32, MerchantCostRecord>,
+    /// R88i.5 scenario categories keyed by zero-based offer slot; no key is category0.
+    pub merchant_offer_categories: HashMap<u32, i32>,
+    /// Explicit category-1 ItemSparse records; absence remains unobserved.
+    pub merchant_item_requirements: HashMap<u32, MerchantItemRequirement>,
+    /// INFERRED player rating mapping keyed by signed cost-record mode.
+    pub merchant_player_ratings: HashMap<i32, i32>,
     #[cfg(feature = "retail-12-0-7")]
     pub merchant_currencies: Vec<i32>,
     pub merchant_buyback_items: Vec<crate::lua_api::globals::real::merchant_buyback::BuybackItem>,
