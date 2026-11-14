@@ -129,7 +129,10 @@ fn slot_keystone(state: &mut LuaState) -> LuaResult<u32> {
 fn clear_and_validate_cursor_keystone(state: &mut LuaState, item_id: u32) -> LuaResult<bool> {
     crate::lua_api::globals::real::cursor_model::clear_retaining_equip_lock(state)?;
     let sim = borrow_state(state)?;
-    Ok(sim.player.present && sim.item_info(item_id).is_some() && item_id_is_keystone(item_id))
+    // INFERRED (R88o.2 q2/q3): `PlayerState::present` proxies opaque-context
+    // availability; it does not establish the native context's identity.
+    let context_available = sim.player.present;
+    Ok(context_available && sim.item_info(item_id).is_some() && item_id_is_keystone(item_id))
 }
 
 fn cursor_keystone_item(state: &LuaState) -> LuaResult<Option<(i32, i32, u32)>> {
