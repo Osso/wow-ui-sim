@@ -2,6 +2,10 @@
 
 [GameTooltip method contract](../specs/game-tooltip-methods.md), [Lua API](systems/lua-api.md#game-tooltip-minimum-width-and-font-strings), and [consumer selection](investigations/consumer-selection-and-red-proof.md#gametooltip-minimum-width-consumer) record R88n.7. **VERIFIED (Retail 12.1.5.70688):** the getter returns stored width and forced state; `AddFontStrings` stores a pair without adding a `NumLines` entry. **PRESERVATION:** the selected `GameTooltip_InsertFrame` consumer observes only the first getter result. **INFERRED:** PTR/Forever applicability follows the shared registration path. **UNKNOWN:** later pair layout/rendering use.
 
+## [2026-11-14] implementation | Retail tooltip serializer field boundary
+
+[Tooltip data](systems/lua-api.md#retail-tooltipdata-field-boundary-r88n4b) links the [serialization contract](../specs/tooltip-data-serialization.md) and [consumer/seam evidence](investigations/consumer-selection-and-red-proof.md#retail-tooltip-serializer-field-consumers). **VERIFIED (R88n.4b):** top-level repair/pet fields and type-11 price fields. **INFERRED:** positive item sell-price projection; `maxPrice` remains absent without a quantity/range input.
+
 ## [2026-11-14] fix | Forever tooltip cached lines
 
 [Tooltip owner lifecycle](investigations/tooltip-owner-lifecycle.md#r88n5-forever-clearlines-cache-boundary) records R88n.5. **VERIFIED (Forever 1.60.1.70707):** `ClearLines` resets cached left/right FontString text for active rows only; the optional API test proves inactive entries are untouched, and the original selected `TooltipDataHandler.ProcessInfo` test preserves reprocessing and reuse. Retail attachments and owner pairs remain VERIFIED; PTR parity is INFERRED. Clipping, draw order, nonzero extra-inset writers and post-anchor clamping remain UNKNOWN.
@@ -9,6 +13,10 @@
 ## [2026-11-14] investigation | Retail quest tooltip consumers
 
 [Consumer selection and RED proof](investigations/consumer-selection-and-red-proof.md#retail-quest-tooltip-consumers-and-host-input-seams) links the [Round 7 getter contract](../specs/tooltip-r7-getters.md), selected Retail consumers, R88n.1 miss results, and host-supplied party/item inputs.
+
+## [2026-11-14] implementation | Retail recipe-rank tooltip
+
+The [Round 7 getter contract](../specs/tooltip-r7-getters.md) and [Lua API](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) record VERIFIED native local rebuild/vector/flag steps, INFERRED simulator-route and presentation choices, and UNKNOWN complete row semantics, upstream acquisition, external clear triggers, and source lookup.
 
 ## [2026-11-14] fix | Original character and store lifecycle ownership
 

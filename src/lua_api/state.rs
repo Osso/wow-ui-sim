@@ -352,6 +352,7 @@ macro_rules! build_empty_sim_state {
             spell_trade_skill_links: HashMap::new(),
             spell_id_aliases: HashMap::new(),
             spell_tooltip_inputs: HashMap::new(),
+            recipe_rank_tooltip_cache: Default::default(),
             aura_tooltip_inputs: HashMap::new(),
             spell_tooltip_cost_contexts: HashMap::new(),
             #[cfg(feature = "retail-12-0-5")]
