@@ -359,7 +359,6 @@ fn apply_core_foundation_state_defaults(lua: &mut rilua::Lua) -> crate::Result<(
     temporary::tooltip_data_processor_defaults::apply_bootstrap(lua)?;
     #[cfg(not(feature = "client-wrath"))]
     temporary::startup_service_capability_defaults::apply_bootstrap(lua)?;
-    temporary::ui_widget_manager_defaults::apply_bootstrap(lua)?;
     Ok(())
 }
 
@@ -451,7 +450,6 @@ fn apply_feature_progression_defaults(lua: &mut rilua::Lua) -> crate::Result<()>
     temporary::quest_progress_requirements::apply_bootstrap(lua)?;
     temporary::reincarnation_defaults::apply_bootstrap(lua)?;
     temporary::scenario_defaults::apply_bootstrap(lua)?;
-    temporary::seconds_formatter_defaults::apply_bootstrap(lua)?;
     temporary::scripted_animation_effect_defaults::apply_bootstrap(lua)?;
     temporary::shared_xml_utility_defaults::apply_bootstrap(lua)?;
     temporary::spell_book_static_defaults::apply_bootstrap(lua)
@@ -459,7 +457,6 @@ fn apply_feature_progression_defaults(lua: &mut rilua::Lua) -> crate::Result<()>
 
 fn apply_feature_model_defaults(lua: &mut rilua::Lua) -> crate::Result<()> {
     temporary::sound_driver_defaults::apply_bootstrap(lua)?;
-    temporary::static_model_info_defaults::apply_bootstrap(lua)?;
     temporary::static_popup_defaults::apply_bootstrap(lua)?;
     temporary::taxi_map_defaults::apply_bootstrap(lua)?;
     temporary::texture_file_data_defaults::apply_bootstrap(lua)?;
@@ -474,7 +471,6 @@ fn apply_feature_ui_defaults(lua: &mut rilua::Lua) -> crate::Result<()> {
     temporary::trade_skill_ui_fallbacks::apply_bootstrap(lua)?;
     temporary::transmog_util_defaults::apply_bootstrap(lua)?;
     temporary::campaign_covenant_defaults::apply_bootstrap(lua)?;
-    temporary::ui_parent_panel_toggles::apply_bootstrap(lua)?;
     temporary::ui_frame_manager_defaults::apply_bootstrap(lua)
 }
 
@@ -639,9 +635,6 @@ fn patch_runtime_journal_addon_surfaces(env: &crate::lua_api::LoaderEnv<'_>, add
     if addon_name == "Blizzard_Collections" {
         patch_toggle_collections_journal_for_runtime_addon_load(env);
         temporary::collections_journal_namespace::patch(env);
-    }
-    if addon_name == "Blizzard_EncounterJournal" {
-        patch_toggle_encounter_journal_for_runtime_addon_load(env);
     }
     if addon_name == "Blizzard_AdventureMap" {
         ensure_adventure_map_frame_surface_for_runtime_addon_load(env);

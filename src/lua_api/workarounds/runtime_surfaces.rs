@@ -1,7 +1,6 @@
 use super::*;
 
 pub(super) fn patch_ui_parent_panel_toggles(env: &crate::lua_api::WowLuaEnv) {
-    temporary::ui_parent_panel_toggles::patch(env);
     temporary::main_menu_microbutton_click::patch(env);
 }
 
@@ -104,14 +103,7 @@ pub(super) fn patch_map_exploration_pin_mixin_for_runtime_addon_load(
 pub(super) fn patch_toggle_collections_journal_for_runtime_addon_load(
     env: &crate::lua_api::LoaderEnv<'_>,
 ) {
-    temporary::ui_parent_panel_toggles::patch_collections_journal_loader(env);
     temporary::mount_journal_dynamic_flight_popup::patch(env);
-}
-
-pub(super) fn patch_toggle_encounter_journal_for_runtime_addon_load(
-    env: &crate::lua_api::LoaderEnv<'_>,
-) {
-    temporary::ui_parent_panel_toggles::patch_encounter_journal_loader(env);
 }
 
 pub(super) fn ensure_adventure_map_frame_surface(env: &crate::lua_api::WowLuaEnv) {

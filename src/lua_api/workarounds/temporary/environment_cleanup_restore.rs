@@ -18,7 +18,7 @@ pub(crate) fn restore_post_cleanup_globals(
     super::debug_environment_defaults::apply_bootstrap(lua)?;
     crate::lua_api::globals::real::secure_helpers::register(lua)?;
     super::gamepad_cursor_control_defaults::apply_bootstrap(lua)?;
-    super::ui_parent_panel_toggles::apply_bootstrap(lua)
+    Ok(())
 }
 
 #[cfg(test)]

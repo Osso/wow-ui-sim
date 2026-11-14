@@ -620,7 +620,7 @@ fn seconds_formatter_defaults_are_not_runtime_bootstrap_fallbacks() {
     for fallback in ["SecondsFormatter", "SecondsFormatterMixin"] {
         assert!(
             !bootstrap.contains(fallback),
-            "{fallback} defaults must live in the explicit temporary seconds formatter workaround boundary, not runtime bootstrap"
+            "{fallback} must be owned by original Blizzard Lua, not runtime bootstrap"
         );
     }
 }
