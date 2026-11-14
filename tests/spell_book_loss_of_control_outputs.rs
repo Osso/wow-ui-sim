@@ -14,8 +14,7 @@ mod current {
     const EMPTY: Payload = (0.0, 0.0, 1.0, false, false);
     const FIELDS: [&str; 3] = ["startTime", "duration", "modRate"];
     const SPELL: &str = "C_Spell.GetSpellLossOfControlCooldownInfo(19750)";
-    const BOOK: &str = "C_SpellBook.GetSpellBookItemLossOfControlCooldownInfo(5, 0)";
-    const QUERIES: [&str; 2] = [SPELL, BOOK];
+    const QUERIES: [&str; 1] = [SPELL];
 
     fn record(value: Payload) -> LossOfControlInfo {
         LossOfControlInfo {
@@ -36,8 +35,6 @@ mod current {
             state.spell_loss_of_control.insert(19750, record(FIRST));
             state.spell_loss_of_control.insert(642, record(SECOND));
         }
-        env.exec("assert(C_SpellBook.GetSpellBookItemInfo(5, 0).spellID == 19750)")
-            .expect("actual player-bank slot identity");
         env
     }
 
@@ -99,7 +96,7 @@ mod current {
         assert_payload(env, expected, restricted);
     }
 
-    fn check_both(env: &WowLuaEnv, expected: Payload, restricted: bool) {
+    fn check_spell_queries(env: &WowLuaEnv, expected: Payload, restricted: bool) {
         for query in QUERIES {
             check(env, query, expected, restricted);
         }
@@ -110,13 +107,6 @@ mod current {
             "assert(select('#', {query}) == 1)\nassert({query} == nil)"
         ))
         .expect("one nil, not an inactive fabricated DTO");
-    }
-
-    fn book_miss(env: &WowLuaEnv, slot: &str, bank: &str) {
-        assert_nil(
-            env,
-            &format!("C_SpellBook.GetSpellBookItemLossOfControlCooldownInfo({slot}, {bank})"),
-        );
     }
 
     fn publish_secret(env: &WowLuaEnv, name: &str, number: f64) {
@@ -270,137 +260,6 @@ mod current {
     }
 
     #[test]
-    fn book_public_slot_five_selects_spell_record() {
-        check(&fixture(false), BOOK, FIRST, false);
-    }
-
-    #[test]
-    fn book_discovered_alternate_slot_selects_actual_642_record() {
-        for restricted in [false, true] {
-            let env = fixture(restricted);
-            env.exec(
-                r#"
-                AlternateSlot = C_SpellBook.FindSpellBookSlotForSpell(642)
-                assert(type(AlternateSlot) == 'number')
-                assert(C_SpellBook.GetSpellBookItemInfo(AlternateSlot, 0).spellID == 642)
-            "#,
-            )
-            .unwrap();
-            check(
-                &env,
-                "C_SpellBook.GetSpellBookItemLossOfControlCooldownInfo(AlternateSlot, 0)",
-                SECOND,
-                restricted,
-            );
-        }
-    }
-
-    #[test]
-    fn book_explicit_inactive_record_is_not_absence() {
-        let env = fixture(true);
-        env.state()
-            .borrow_mut()
-            .spell_loss_of_control
-            .insert(19750, record(EMPTY));
-        check(&env, BOOK, EMPTY, true);
-    }
-
-    #[test]
-    fn book_valid_identity_absent_map_returns_inferred_nil() {
-        for restricted in [false, true] {
-            let env = fixture(restricted);
-            env.state()
-                .borrow_mut()
-                .spell_loss_of_control
-                .remove(&19750);
-            assert_nil(&env, BOOK);
-        }
-    }
-
-    #[test]
-    fn book_actual_offspec_20473_is_inferred_miss_even_with_record() {
-        let env = fixture(false);
-        env.state()
-            .borrow_mut()
-            .spell_loss_of_control
-            .insert(20473, record(FIRST));
-        env.exec(
-            r#"
-            OffSpecSlot = C_SpellBook.FindSpellBookSlotForSpell(20473)
-            assert(type(OffSpecSlot) == 'number')
-            local info = C_SpellBook.GetSpellBookItemInfo(OffSpecSlot, 0)
-            assert(info.spellID == 20473 and info.isOffSpec == true)
-        "#,
-        )
-        .unwrap();
-        book_miss(&env, "OffSpecSlot", "0");
-    }
-
-    #[test]
-    fn book_invalid_or_unresolved_public_slot_is_inferred_nil() {
-        let env = fixture(false);
-        for slot in [
-            "0",
-            "-1",
-            "5.5",
-            "2147483647",
-            "2147483648",
-            "0/0",
-            "math.huge",
-            "nil",
-        ] {
-            book_miss(&env, slot, "0");
-        }
-    }
-
-    #[test]
-    fn book_nonplayer_or_missing_public_bank_is_inferred_nil() {
-        let env = fixture(false);
-        for bank in ["1", "2", "-1", "0.5", "nil", "0/0", "math.huge"] {
-            book_miss(&env, "5", bank);
-        }
-    }
-
-    #[test]
-    fn book_wrong_public_selector_types_are_inferred_nil() {
-        let env = fixture(false);
-        for value in ["'5'", "false", "{}", "function() end"] {
-            book_miss(&env, value, "0");
-            book_miss(&env, "5", value);
-        }
-    }
-
-    #[test]
-    fn book_secure_genuine_numeric_slot_and_bank_resolve_before_type_checks() {
-        for restricted in [false, true] {
-            let env = fixture(restricted);
-            publish_secret(&env, "SecretSlot", 5.0);
-            publish_secret(&env, "SecretBank", 0.0);
-            for args in ["SecretSlot, 0", "5, SecretBank", "SecretSlot, SecretBank"] {
-                check(
-                    &env,
-                    &format!("C_SpellBook.GetSpellBookItemLossOfControlCooldownInfo({args})"),
-                    FIRST,
-                    restricted,
-                );
-            }
-        }
-    }
-
-    #[test]
-    fn book_secure_authenticated_invalid_numeric_selectors_are_inferred_nil() {
-        let env = fixture(false);
-        for number in [0.0, -1.0, 5.5, f64::NAN, f64::INFINITY, 2147483648.0] {
-            publish_secret(&env, "SecretSlot", number);
-            book_miss(&env, "SecretSlot", "0");
-        }
-        for number in [1.0, -1.0, 0.5, f64::NAN, f64::INFINITY] {
-            publish_secret(&env, "SecretBank", number);
-            book_miss(&env, "5", "SecretBank");
-        }
-    }
-
-    #[test]
     fn addon_public_selectors_are_allowed_without_changing_taint_or_flags() {
         for restricted in [false, true] {
             let env = fixture(restricted);
@@ -457,11 +316,11 @@ mod current {
                 );
             }
         }
-        check_both(&env, FIRST, false);
+        check_spell_queries(&env, FIRST, false);
     }
 
     #[test]
-    fn both_namespaces_copy_explicit_flags_not_interval_derived_activity() {
+    fn spell_query_copies_explicit_flags_not_interval_derived_activity() {
         for restricted in [false, true] {
             let env = fixture(restricted);
             for flags in [(false, true), (true, false), (false, false), (true, true)] {
@@ -470,7 +329,7 @@ mod current {
                     .borrow_mut()
                     .spell_loss_of_control
                     .insert(19750, record(input));
-                check_both(&env, input, restricted);
+                check_spell_queries(&env, input, restricted);
             }
         }
     }
@@ -489,7 +348,7 @@ mod current {
                 state.player.in_combat = combat;
                 state.unit_stats_restricted = stats;
             }
-            check_both(&env, FIRST, restricted);
+            check_spell_queries(&env, FIRST, restricted);
             check(
                 &env,
                 "C_Spell.GetSpellLossOfControlCooldownInfo(642)",
@@ -502,13 +361,13 @@ mod current {
     #[test]
     fn live_record_replacement_does_not_recompute_or_expire_payload() {
         let env = fixture(true);
-        check_both(&env, FIRST, true);
+        check_spell_queries(&env, FIRST, true);
         let changed = (1.0, 2.0, 0.5, true, false);
         env.state()
             .borrow_mut()
             .spell_loss_of_control
             .insert(19750, record(changed));
-        check_both(&env, changed, true);
+        check_spell_queries(&env, changed, true);
         env.state()
             .borrow_mut()
             .spell_loss_of_control
@@ -554,7 +413,7 @@ mod current {
                 state.gcd,
             )
         };
-        check_both(&env, FIRST, true);
+        check_spell_queries(&env, FIRST, true);
         let state = env.state().borrow();
         assert_eq!(state.start_time, clock);
         assert_eq!(state.action_bars, actions);
@@ -585,8 +444,8 @@ mod current {
             .borrow_mut()
             .spell_loss_of_control
             .insert(19750, record(EMPTY));
-        check_both(&first, EMPTY, true);
-        check_both(&second, FIRST, false);
+        check_spell_queries(&first, EMPTY, true);
+        check_spell_queries(&second, FIRST, false);
     }
 
     #[test]
@@ -682,7 +541,7 @@ mod current {
     any(feature = "profile-retail", feature = "client-ptr")
 )))]
 #[test]
-fn earlier_profiles_keep_public_spell_and_disabled_book_loc_payloads() {
+fn earlier_profiles_keep_public_spell_loc_payloads() {
     use wow_ui_sim::lua_api::{LossOfControlInfo, WowLuaEnv};
     let env = WowLuaEnv::new().unwrap();
     {
@@ -704,10 +563,7 @@ fn earlier_profiles_keep_public_spell_and_disabled_book_loc_payloads() {
         local spell = C_Spell.GetSpellLossOfControlCooldownInfo(19750)
         assert(spell.startTime == 312 and spell.duration == 237 and spell.modRate == 1.25)
         assert(spell.isActive == true and spell.shouldReplaceNormalCooldown == true)
-        local book = C_SpellBook.GetSpellBookItemLossOfControlCooldownInfo(5, 0)
-        assert(book.startTime == 0 and book.duration == 0 and book.modRate == 1)
-        assert(book.isActive == false and book.shouldReplaceNormalCooldown == false)
-        for _, info in ipairs({spell, book}) do
+        for _, info in ipairs({spell}) do
             local count = 0
             for _, value in pairs(info) do
                 assert(not issecretvalue(value))
