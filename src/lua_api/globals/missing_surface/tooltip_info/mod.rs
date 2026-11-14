@@ -239,16 +239,6 @@ pub(crate) fn tooltip_for_socketed_relic_context(
     builders::tooltip_for_socketed_relic(state, item_id, item, relic)
 }
 
-/// Bounded bridge for the Retail-only PvP talent producer; no identifier parsing here.
-#[cfg(feature = "client-retail")]
-pub(crate) fn tooltip_for_spell_identifier(
-    state: &mut LuaState,
-    spell_id: Option<u32>,
-    is_mount: bool,
-) -> rilua::Val {
-    tooltip_for_spell_identifier_options(state, spell_id, is_mount, false, false)
-}
-
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) fn tooltip_for_spell_identifier_options(
     state: &mut LuaState,
