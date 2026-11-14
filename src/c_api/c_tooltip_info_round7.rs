@@ -128,16 +128,90 @@ fn get_item_interaction_item(_state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn get_lfg_dungeon_reward(state: &mut LuaState) -> LuaResult<u32> {
-    let _dungeon_id = tooltip_getter_args::round7_signed(state, 1, LFG_REWARD_USAGE)?;
-    let _reward_index = tooltip_getter_args::round7_signed(state, 2, LFG_REWARD_USAGE)?;
-    no_values()
+    let dungeon_id = tooltip_getter_args::round7_signed(state, 1, LFG_REWARD_USAGE)?;
+    let reward_index = tooltip_getter_args::round7_signed(state, 2, LFG_REWARD_USAGE)?;
+    if crate::client_profile::ACTIVE != ClientProfile::Retail {
+        return no_values();
+    }
+    let Some(reward) = lfg_tooltip_reward(state, dungeon_id, reward_index, None) else {
+        return no_values();
+    };
+    publish_lfg_tooltip_reward(state, reward)
 }
 
 fn get_lfg_dungeon_shortage_reward(state: &mut LuaState) -> LuaResult<u32> {
-    let _dungeon_id = tooltip_getter_args::round7_signed(state, 1, LFG_SHORTAGE_USAGE)?;
-    let _severity = tooltip_getter_args::round7_signed(state, 2, LFG_SHORTAGE_USAGE)? as u8;
-    let _reward_index = tooltip_getter_args::round7_signed(state, 3, LFG_SHORTAGE_USAGE)?;
-    no_values()
+    let dungeon_id = tooltip_getter_args::round7_signed(state, 1, LFG_SHORTAGE_USAGE)?;
+    let severity = tooltip_getter_args::round7_signed(state, 2, LFG_SHORTAGE_USAGE)?;
+    let reward_index = tooltip_getter_args::round7_signed(state, 3, LFG_SHORTAGE_USAGE)?;
+    if crate::client_profile::ACTIVE != ClientProfile::Retail {
+        return no_values();
+    }
+    let tier = severity.wrapping_sub(1) as u8;
+    if tier > 2 {
+        return no_values();
+    }
+    let Some(reward) = lfg_tooltip_reward(state, dungeon_id, reward_index, Some(tier)) else {
+        return no_values();
+    };
+    publish_lfg_tooltip_reward(state, reward)
+}
+
+fn lfg_tooltip_reward(
+    state: &LuaState,
+    dungeon_id: i32,
+    reward_index: i32,
+    shortage_tier: Option<u8>,
+) -> Option<crate::lua_api::state::LfgTooltipReward> {
+    let index = usize::try_from(reward_index.wrapping_sub(1)).ok()?;
+    let sim = crate::lua_api::methods::borrow_state(state).ok()?;
+    if !sim.lfg_tooltip_rewards_ready {
+        return None;
+    }
+    let dungeon = sim
+        .lfd_dungeons
+        .iter()
+        .find(|dungeon| dungeon.dungeon_id == dungeon_id)?;
+    let group = sim.lfg_tooltip_reward_groups.iter().find(|group| {
+        group.dungeon_id == dungeon.dungeon_id && group.dungeon_type_id == dungeon.type_id
+    })?;
+    let rewards = match shortage_tier {
+        Some(tier) => group.shortage_rewards.get(usize::from(tier))?,
+        None => &group.rewards,
+    };
+    rewards.get(index).cloned()
+}
+
+fn publish_lfg_tooltip_reward(
+    state: &mut LuaState,
+    reward: crate::lua_api::state::LfgTooltipReward,
+) -> LuaResult<u32> {
+    let tooltip = if reward.is_currency {
+        let Ok(currency_id) = i32::try_from(reward.reward_id) else {
+            return no_values();
+        };
+        let Some(currency) =
+            crate::lua_api::globals::currency_data::get_currency_by_id(currency_id)
+        else {
+            return no_values();
+        };
+        crate::lua_api::globals::missing_surface::tooltip_info::tooltip_for_currency(
+            state,
+            currency,
+            Some(reward.quantity),
+        )
+    } else {
+        // Native item-quantity effects are UNKNOWN; the shared sim item builder has no
+        // quantity input.
+        let Some(item) = crate::lua_api::methods::borrow_state(state)
+            .ok()
+            .and_then(|sim| sim.item_info(reward.reward_id).cloned())
+        else {
+            return no_values();
+        };
+        tooltip_for_item_context(state, reward.reward_id, Some(&item))
+    };
+    state.push(tooltip);
+    Ok(1)
 }
 
 fn get_possession(state: &mut LuaState) -> LuaResult<u32> {
