@@ -191,8 +191,9 @@ C_PvP = __wow_color_merge_namespace(C_PvP, {
 "#;
 
 const NON_RETAIL_UI_COLOR_DEFAULTS_LUA: &str = r#"
-C_UIColor = __wow_color_merge_namespace(C_UIColor, {
-  GetColors = function()
+local namespace = type(C_UIColor) == "table" and C_UIColor or {}
+if rawget(namespace, "GetColors") == nil then
+  namespace.GetColors = function()
     return {
       { baseTag = "HIGHLIGHT_FONT_COLOR", color = { r = 1, g = 1, b = 1, a = 1 } },
       { baseTag = "PLAYER_FACTION_COLOR_HORDE", color = { r = 1, g = 0.1, b = 0.1, a = 1 } },
@@ -202,8 +203,9 @@ C_UIColor = __wow_color_merge_namespace(C_UIColor, {
       -- fill color by baseTag in the C_UIColor.GetColors() return value.
       { baseTag = "TRADESKILL_EXPERIENCE_COLOR", color = { r = 0.25, g = 0.25, b = 0.75, a = 1 } },
     }
-  end,
-})
+  end
+end
+C_UIColor = namespace
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
