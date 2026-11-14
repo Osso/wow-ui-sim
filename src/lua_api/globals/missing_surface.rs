@@ -71,7 +71,6 @@ pub(crate) fn item_link_for_id(item_id: u32) -> Option<String> {
 
 pub(crate) fn register_secure_environment_base_globals(lua: &mut rilua::Lua) -> LuaResult<()> {
     register_string_globals(lua)?;
-    super::utility_system_spell::register_secure_environment_base_globals(lua)?;
     install_date_alias(lua)
 }
 

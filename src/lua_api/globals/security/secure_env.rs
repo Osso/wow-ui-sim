@@ -450,7 +450,7 @@ mod tests {
     #[test]
     fn secure_environment_uses_fixed_base_and_shallow_table_copies() {
         let env = WowLuaEnv::new().expect("lua env");
-        let result: (bool, bool, bool, bool, bool, bool, bool) = env
+        let result: (bool, bool, bool, bool, bool, bool) = env
             .eval(
                 r#"
                 local secure = __secureenv
@@ -461,11 +461,6 @@ mod tests {
                 local secureTooltipDataType = secureEnum and rawget(secureEnum, "TooltipDataType")
                 local secureBit = rawget(secure, "bit")
                 local ordinaryBit = rawget(_G, "bit")
-                local function secureCopiesGlobalFunction(name)
-                    local globalFunction = rawget(_G, name)
-                    return type(globalFunction) == "function"
-                        and rawget(secure, name) == globalFunction
-                end
                 local result = {
                     type(rawget(secure, "assert")) == "function",
                     type(secureEnum) == "table"
@@ -479,19 +474,40 @@ mod tests {
                     type(secureBit) == "table"
                         and secureBit ~= ordinaryBit
                         and secureBit.band == ordinaryBit.band,
-                    secureCopiesGlobalFunction("strjoin")
-                        and secureCopiesGlobalFunction("strsplit")
-                        and secureCopiesGlobalFunction("time"),
                 }
                 rawset(math, probe, before)
-                return result[1], result[2], result[3], result[4], result[5], result[6], result[7]
+                return result[1], result[2], result[3], result[4], result[5], result[6]
                 "#,
             )
             .expect("secure environment base probe");
 
-        assert_eq!(result, (true, true, true, true, true, true, true));
+        assert_eq!(result, (true, true, true, true, true, true));
     }
 
+    #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+    #[test]
+    fn secure_environment_copies_retail_base_functions() {
+        let env = WowLuaEnv::new().expect("lua env");
+        let copied: bool = env
+            .eval(
+                r#"
+                    local secure = __secureenv
+                    local function secureCopiesGlobalFunction(name)
+                        local globalFunction = rawget(_G, name)
+                        return type(globalFunction) == "function"
+                            and rawget(secure, name) == globalFunction
+                    end
+                    return secureCopiesGlobalFunction("strjoin")
+                        and secureCopiesGlobalFunction("strsplit")
+                        and secureCopiesGlobalFunction("time")
+                "#,
+            )
+            .expect("retail secure base functions should be readable");
+
+        assert!(copied);
+    }
+
+    #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
     #[test]
     fn secure_environment_contains_exact_verified_base_list() {
         // R88n.11 part 1: exact Retail 12.1.5.70688 constructor copy list.

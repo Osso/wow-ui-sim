@@ -61,12 +61,10 @@ pub(super) fn init_lua_state(
     super::globals::security::register_environment_helpers(lua)?;
     super::globals::missing_surface::register_secure_environment_base_globals(lua)?;
     LuaApiMut::register_function(lua, "forceinsecure", forceinsecure)?;
-    crate::lua_api::workarounds::register_secure_environment_base(lua)?;
-    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail
-        && crate::client_profile::ACTIVE_RETAIL_API_EPOCH
-            == crate::client_profile::RetailApiEpoch::Retail12_1_5
-    {
-        // R88n.11 part 1 verifies that the constructor shallow-copies `bit` from `_G`.
+    if crate::client_profile::is_active_retail_12_1_5() {
+        // R88n.11 part 1 verifies these values are copied from ordinary `_G`.
+        super::globals::utility_system_spell::register_secure_environment_base_globals(lua)?;
+        crate::lua_api::workarounds::register_secure_environment_base(lua)?;
         crate::lua_api::globals::compat_overrides::install_bit_library(lua)?;
     }
     // R88n.10/R88n.11 part 1 verify that Constants and Enum values are installed

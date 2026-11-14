@@ -699,6 +699,10 @@ fn register_utility_globals(lua: &mut rilua::Lua) -> LuaResult<()> {
     LuaApiMut::register_function(lua, "getglobal", getglobal)?;
     LuaApiMut::register_function(lua, "setglobal", setglobal)?;
     LuaApiMut::register_function(lua, "nop", nop)?;
+    if !crate::client_profile::is_active_retail_12_1_5() {
+        LuaApiMut::register_function(lua, "strsplit", strsplit)?;
+        LuaApiMut::register_function(lua, "strjoin", strjoin)?;
+    }
     Ok(())
 }
 
