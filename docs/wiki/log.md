@@ -3820,3 +3820,7 @@ Added [FontString anchor sizing](investigations/fontstring-anchor-sizing.md). Th
 - 2026-11-13: Documented Retail UiMapPoint original constructor ownership, preservation selector, and separate waypoint API prerequisites (lt-6c8e).
 
 - 2026-11-13: Recorded inventory O original Lua/XML ownership retirement, chat history preservation, journal/panel/navigation consumer proof and deferred native/conditional boundaries in [[lua-owned-fallback-retirement]].
+
+## 2026-11-14 | Merchant/LFG R88i boundaries
+
+Recorded verified requirement/request branches and separately inferred data mappings in [merchant-lfg-r88i](investigations/merchant-lfg-r88i.md), with original-consumer and neutral-seam limits.

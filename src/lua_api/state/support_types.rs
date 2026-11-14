@@ -8,10 +8,23 @@ use super::*;
 pub struct MerchantCostRecord {
     /// Offer price in copper, supplied by the host scenario.
     pub price: u64,
+    /// R88i.5: nonzero value enables the signed-mode gated requirement test.
+    /// INFERRED field identity: RequiredArenaRating.
+    pub requirement_value: u32,
+    /// INFERRED field identity: ArenaBracket. Native eligible range is 0..9.
+    pub requirement_mode: i32,
     pub item_costs: [u32; 5],
     pub item_cost_counts: [u32; 5],
     pub currency_costs: [u32; 5],
     pub currency_cost_amounts: [u32; 5],
+}
+
+/// R88i.5 category-1 ItemSparse requirement fields supplied by the host.
+/// Names MinFactionID/MinReputation and their reputation mapping are INFERRED.
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub struct MerchantItemRequirement {
+    pub requirement_id: u32,
+    pub required_value: i32,
 }
 
 /// Scenario-supplied Wrath talent tab data.

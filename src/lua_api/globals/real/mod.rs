@@ -66,11 +66,14 @@ pub(crate) mod legacy_guild_selection;
 pub mod legacy_skills;
 #[cfg(feature = "client-wrath")]
 pub(crate) mod legacy_sound;
+#[cfg(feature = "client-retail")]
+pub mod lfd_lock_requests;
 pub mod locale_info;
 pub mod loot_method;
 pub mod loot_specialization;
 pub mod math_extensions;
 pub(crate) mod merchant_affordability;
+mod merchant_requirements;
 pub mod merchant_buyback;
 #[cfg(feature = "client-wowforever")]
 pub mod merchant_repair;

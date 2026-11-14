@@ -633,6 +633,8 @@ macro_rules! build_empty_sim_state {
                 m.insert("enUS".to_string(), true);
                 m
             },
+            #[cfg(feature = "client-retail")]
+            lfd_lock_requests: Default::default(),
             lfg_roles: LfgRoleSelection::default(),
             lfd_dungeons: default_lfd_dungeons(),
             lfd_enabled_dungeons: ::std::collections::HashMap::new(),
@@ -695,6 +697,9 @@ macro_rules! build_empty_sim_state {
             merchant_items: Vec::new(),
             // No extended-cost record is observed until the host supplies one.
             merchant_offer_costs: HashMap::new(),
+            merchant_offer_categories: HashMap::new(),
+            merchant_item_requirements: HashMap::new(),
+            merchant_player_ratings: HashMap::new(),
             #[cfg(feature = "retail-12-0-7")]
             merchant_currencies: Vec::new(),
             // Explicit empty buyback scenario; not a native account-state default.
