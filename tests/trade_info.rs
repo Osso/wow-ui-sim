@@ -17,7 +17,6 @@ fn r88e5_trade_offer_warning_consumer_reads_shared_host_value(env: &WowLuaEnv) {
             TradeFrame_UpdateWarnings()
             local tradeShown = TradeFrameTradeButton.warningTooltip ~= nil
             local tradeValue = C_TradeInfo.ShouldShowTradeOfferWarning()
-
             C_SecureTransfer._state.shouldShowTradeOfferWarning = false
             TradeFrame_UpdateWarnings()
             local tradeHidden = TradeFrameTradeButton.warningTooltip == nil
@@ -50,6 +49,10 @@ fn r88e5_trade_offer_warning_consumer_reads_shared_host_value(env: &WowLuaEnv) {
 #[cfg(feature = "optional-tests")]
 prefork_full_ui_case! {
 fn r88e5_trade_money_consumer_uses_supplied_offer_and_cursor_state(env: &WowLuaEnv) {
+    let money_frame_loaded: bool = env
+        .eval("return C_AddOns.IsAddOnLoaded('Blizzard_MoneyFrame')")
+        .expect("Retail money frame load state should be queryable");
+    assert!(money_frame_loaded, "Retail MoneyFrame is selected at startup");
     let money_picker_type: String = env
         .eval("return type(GetMoneyTypeInfoField)")
         .expect("MoneyFrame consumer accessor should be queryable");
@@ -105,5 +108,23 @@ fn r88e5_trade_money_consumer_uses_supplied_offer_and_cursor_state(env: &WowLuaE
         .eval("return (GetCursorInfo())")
         .expect("cursor state should be readable");
     assert_eq!(cursor_type, None);
+
+    let restriction: (bool, i32, bool) = env
+        .eval(
+            r#"
+            C_TradeInfo._state = { pickupTradeMoneyRestricted = true }
+            local restrictedCall = pcall(function()
+                return C_TradeInfo.PickupTradeMoney(nil)
+            end)
+            local restrictedReturns = select("#", C_TradeInfo.PickupTradeMoney(nil))
+            C_TradeInfo._state.pickupTradeMoneyRestricted = false
+            local ordinaryNilAccepted = pcall(function()
+                C_TradeInfo.PickupTradeMoney(nil)
+            end)
+            return restrictedCall, restrictedReturns, ordinaryNilAccepted
+            "#,
+        )
+        .expect("trade restriction and argument paths should be observable");
+    assert_eq!(restriction, (true, 0, false));
 }
 }
