@@ -990,8 +990,8 @@ pub(crate) fn clear_ranged_auto_attack_spell(sim: &mut crate::lua_api::SimState,
 
 #[cfg(feature = "retail-12-1-5")]
 pub(crate) fn spell_context_is_null(sim: &crate::lua_api::SimState) -> bool {
-    // An absent host override does not establish a non-null context.
-    sim.spell_cast_context_is_null.unwrap_or(true)
+    // INFERRED: the shared Retail context resolves to the active player by default.
+    sim.spell_cast_context_is_null.unwrap_or(false)
 }
 
 #[cfg(feature = "retail-12-1-5")]

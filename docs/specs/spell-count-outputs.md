@@ -29,6 +29,7 @@ Display formatting/maximum and secret-output behavior remain Retail125-scoped. O
 - [ ] **VERIFIED (Retail 12.1.5.70688):** a separate active-record limit can lower a reagent limit. That backing state is not modeled; the active-record count byte and linked schema remain UNKNOWN.
 - [ ] Older profiles retain the explicit `spell_cast_counts` simulator input. Retail spellbook queries may also read that input; Retail 12.1.5 `C_Spell.GetSpellCastCount` does not.
 - [ ] Retail 12.1.5 cast counts do not come from charge state or action-slot use counts.
+- [ ] **INFERRED:** the shared Retail context resolves to the active player by default. `spell_cast_context_is_null = Some(true)` is a host-supplied null-context scenario; no login or lifecycle claim follows.
 
 ### Retail 12.1.5 display mode and formatting
 
@@ -71,7 +72,7 @@ Display formatting/maximum and secret-output behavior remain Retail125-scoped. O
 
 ## Implementation inventory
 
-- `src/lua_api/state/sim_state.rs` and `src/lua_api/state.rs`: older explicit count input, Retail 12.1.5 null-context override, empty-default host reagent pairs, and host visibility rows.
+- `src/lua_api/state/sim_state.rs` and `src/lua_api/state.rs`: older explicit count input, INFERRED active-player context with a host null override, empty-default host reagent pairs, and host visibility rows.
 - `src/c_api/c_spell_counts.rs`: profile-specific cast/display producers. Retail 12.1.5 uses the Spell catalog gate, shared context predicate, first-eight reagent limits, bag stacks, and verified reagent-before-charge display mode. Unsupported metadata modes, inventory inclusion, active records, and full policy secrecy remain seams.
 - `src/c_api/c_spell.rs`: Retail 12.1.5 registration for `IsRangedAutoAttackSpell` and `GetVisibilityInfo`; shared ranged-ID comparison, metadata-mask writer, equal-ID removal, and visibility output publication.
 - `src/lua_api/globals/admin.rs`: INFERRED Retail host wiring from `A_Admin.LearnSpell`/`UnlearnSpell` into the verified ranged-ID writer and remover; no native dispatcher labels.
@@ -121,7 +122,7 @@ Accounting promotes only301/309: **190 pending/157 bounded/14 partial/1 metadata
 - [ ] Exact SpellReagents field-to-pair mapping and catalog-backed reagent data remain unavailable; tests use host-supplied pairs.
 - [ ] Metadata mask 32/2 field identities, alternate-helper inputs, and complete inventory inclusion rules remain UNKNOWN.
 - [ ] The verified active-record count limit is not implemented because the simulator has no corresponding active-record state.
-- [ ] The shared context's native class, lifecycle, login availability, and complete writer history remain UNKNOWN. The active-player mapping is INFERRED and isolated in its own commit.
+- [ ] The shared context's native class, lifecycle, login availability, and complete writer history remain UNKNOWN.
 - [ ] The visibility data tables and specialization-context selector are not modeled; results are host-supplied.
 - [ ] Ranged-ID dispatcher meanings and list-update trigger remain UNKNOWN; no event names are inferred.
 - [ ] Full native argument conversion, all secret-access modes, error decoration, and all guard states remain unmodeled.
