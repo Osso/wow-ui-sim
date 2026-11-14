@@ -263,6 +263,7 @@ macro_rules! build_empty_sim_state {
             barber_shop: BarberShopState::default(),
             damage_meter: crate::c_api::c_damage_meter::DamageMeterInput::default(),
             item_interaction: None,
+            item_interaction_tooltip_object: None,
             major_factions: HashMap::new(),
             major_faction_renown_levels: HashMap::new(),
             major_faction_renown_rewards: HashMap::new(),

@@ -323,6 +323,9 @@ pub struct SimState {
     /// Explicit DamageMeter snapshots; combat publication is blocked pending secrecy.
     pub damage_meter: crate::c_api::c_damage_meter::DamageMeterInput,
     pub item_interaction: Option<crate::c_api::c_item_interaction::ItemInteractionInfo>,
+    /// Host-supplied selected tooltip object; no default object or simulated writer.
+    pub item_interaction_tooltip_object:
+        Option<crate::c_api::c_item_interaction::ItemInteractionTooltipObject>,
     pub major_factions: HashMap<i64, MajorFactionData>,
     pub major_faction_renown_levels: HashMap<i64, Vec<RenownLevelInfo>>,
     /// Explicit pair-keyed reward inputs only; no fabricated default rows.
