@@ -106,14 +106,7 @@ fn slot_keystone(state: &mut LuaState) -> LuaResult<u32> {
     if borrow_state(state)?.item_info(item_id).is_none() {
         return Ok(0);
     }
-
-    crate::lua_api::globals::real::cursor_model::clear_retaining_equip_lock(state)?;
-
-    let has_context_and_item = {
-        let sim = borrow_state(state)?;
-        sim.player.present && sim.item_info(item_id).is_some()
-    };
-    if !has_context_and_item || !item_id_is_keystone(item_id) {
+    if !clear_and_validate_cursor_keystone(state, item_id)? {
         return Ok(0);
     }
 
@@ -131,6 +124,12 @@ fn slot_keystone(state: &mut LuaState) -> LuaResult<u32> {
         &[Val::Num(f64::from(item_id))],
     )?;
     Ok(0)
+}
+
+fn clear_and_validate_cursor_keystone(state: &mut LuaState, item_id: u32) -> LuaResult<bool> {
+    crate::lua_api::globals::real::cursor_model::clear_retaining_equip_lock(state)?;
+    let sim = borrow_state(state)?;
+    Ok(sim.player.present && sim.item_info(item_id).is_some() && item_id_is_keystone(item_id))
 }
 
 fn cursor_keystone_item(state: &LuaState) -> LuaResult<Option<(i32, i32, u32)>> {
@@ -152,35 +151,7 @@ fn set_selected_keystone(
     location: KeystoneLocation,
     item_id: u32,
 ) -> LuaResult<()> {
-    let (unlocked, locked) = {
-        let mut sim = borrow_state_mut(state)?;
-        let selected = sim.keystone.selected_guid.is_some();
-        let same_selection = selected
-            && sim.keystone.selected_guid.as_deref() == Some(guid.as_str())
-            && sim.keystone.selected_item_id == Some(item_id)
-            && sim.keystone.selected_location == Some(location);
-        let unlocked = if selected && !same_selection {
-            sim.keystone.selected_location.filter(|old_location| {
-                let before = sim.keystone.is_locked(*old_location);
-                sim.keystone.reason_one_locks.remove(old_location);
-                let after = sim.keystone.is_locked(*old_location);
-                before && !after && location_exists(&sim, *old_location)
-            })
-        } else {
-            None
-        };
-        let was_locked = sim.keystone.is_locked(location);
-        sim.keystone.reason_one_locks.insert(location);
-        let locked =
-            (!was_locked && sim.keystone.is_locked(location) && location_exists(&sim, location))
-                .then_some(location);
-        sim.keystone.selected_guid = Some(guid);
-        sim.keystone.selected_item_id = Some(item_id);
-        sim.keystone.selected_location = Some(location);
-        // VERIFIED (R88o.2 q2): native stores mode, selected GUID, then associated GUID.
-        // SIMULATOR GAP: mode and associated-GUID inputs are not modeled.
-        (unlocked, locked)
-    };
+    let (unlocked, locked) = update_keystone_selection_state(state, guid, location, item_id)?;
     if let Some(location) = unlocked {
         crate::c_api::item_spell::item_equip::dispatch_lock_transition(
             state,
@@ -196,6 +167,41 @@ fn set_selected_keystone(
         )?;
     }
     Ok(())
+}
+
+fn update_keystone_selection_state(
+    state: &mut LuaState,
+    guid: String,
+    location: KeystoneLocation,
+    item_id: u32,
+) -> LuaResult<(Option<KeystoneLocation>, Option<KeystoneLocation>)> {
+    let mut sim = borrow_state_mut(state)?;
+    let selected = sim.keystone.selected_guid.is_some();
+    let same_selection = selected
+        && sim.keystone.selected_guid.as_deref() == Some(guid.as_str())
+        && sim.keystone.selected_item_id == Some(item_id)
+        && sim.keystone.selected_location == Some(location);
+    let unlocked = if selected && !same_selection {
+        sim.keystone.selected_location.filter(|old_location| {
+            let before = sim.keystone.is_locked(*old_location);
+            sim.keystone.reason_one_locks.remove(old_location);
+            let after = sim.keystone.is_locked(*old_location);
+            before && !after && location_exists(&sim, *old_location)
+        })
+    } else {
+        None
+    };
+    let was_locked = sim.keystone.is_locked(location);
+    sim.keystone.reason_one_locks.insert(location);
+    let locked =
+        (!was_locked && sim.keystone.is_locked(location) && location_exists(&sim, location))
+            .then_some(location);
+    sim.keystone.selected_guid = Some(guid);
+    sim.keystone.selected_item_id = Some(item_id);
+    sim.keystone.selected_location = Some(location);
+    // VERIFIED (R88o.2 q2): native stores mode, selected GUID, then associated GUID.
+    // SIMULATOR GAP: mode and associated-GUID inputs are not modeled.
+    Ok((unlocked, locked))
 }
 
 fn remove_keystone(state: &mut LuaState) -> LuaResult<u32> {
