@@ -702,6 +702,7 @@ macro_rules! build_empty_sim_state {
             #[cfg(feature = "client-wowforever")]
             stable_reads: crate::c_api::c_stable_info::forever::StableReadState::default(),
             merchant_items: Vec::new(),
+            merchant_links: Default::default(),
             // No extended-cost record is observed until the host supplies one.
             merchant_offer_costs: HashMap::new(),
             merchant_offer_categories: HashMap::new(),

@@ -30,10 +30,10 @@ pub(crate) mod glue_background;
 pub(crate) mod glue_connection;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) mod glue_enter_world;
-#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-pub(crate) mod glue_save_character_order;
 #[cfg(any(feature = "client-ptr", feature = "client-wowforever"))]
 pub mod glue_feature_status;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod glue_save_character_order;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) mod glue_selection;
 pub mod glyph_state;
@@ -73,10 +73,11 @@ pub mod loot_method;
 pub mod loot_specialization;
 pub mod math_extensions;
 pub(crate) mod merchant_affordability;
-mod merchant_requirements;
 pub mod merchant_buyback;
+pub mod merchant_item_link;
 #[cfg(feature = "client-wowforever")]
 pub mod merchant_repair;
+mod merchant_requirements;
 pub mod modifier_keys;
 pub mod mouse_probes;
 #[cfg(feature = "client-wowforever")]

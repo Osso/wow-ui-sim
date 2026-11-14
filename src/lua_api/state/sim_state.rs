@@ -877,6 +877,8 @@ pub struct SimState {
     #[cfg(feature = "client-wowforever")]
     pub stable_reads: crate::c_api::c_stable_info::forever::StableReadState,
     pub merchant_items: Vec<u32>,
+    /// Explicit R88l.2 link/selection seams, keyed by existing merchant slot.
+    pub merchant_links: crate::lua_api::globals::real::merchant_item_link::MerchantLinks,
     /// Explicit extended-cost records keyed by zero-based merchant slot; a
     /// missing key is not an observed record (decomp Round 6 §2b).
     pub merchant_offer_costs: HashMap<u32, MerchantCostRecord>,
