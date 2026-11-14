@@ -638,9 +638,19 @@ pub struct SimState {
     pub gcd: Option<(f64, f64)>,
     pub spell_cooldowns: HashMap<u32, SpellCooldownState>,
     pub spell_charges: HashMap<u32, crate::c_api::charge_state::SpellChargeState>,
+    /// Explicit ranged identifier input; zero is the pre-runtime image value, not a login claim.
+    pub ranged_auto_attack_spell_id: u32,
+    /// Explicit result of the native cast-context null check; None leaves identity and timing unknown.
+    #[cfg(feature = "retail-12-0-0")]
+    pub spell_cast_context_is_null: Option<bool>,
     /// Explicit spell-keyed C_Spell count input; no inventory or casting derivation.
     #[cfg(feature = "retail-12-0-0")]
     pub spell_cast_counts: HashMap<u32, u32>,
+    /// Generic verified selector pairs; native SpellReagents field mapping is not modeled.
+    #[cfg(feature = "retail-12-0-5")]
+    pub spell_reagent_pairs: HashMap<u32, Vec<(i32, i32)>>,
+    /// Supplied visibility query results; None represents an explicitly null context in a scenario.
+    pub spell_visibility_results: Option<HashMap<(u32, u8), (bool, bool, bool)>>,
     /// Explicit cooldown-output policy input, independent of combat and unit stats.
     pub cooldowns_restricted: bool,
     /// Explicit spell-keyed maximum aura stack input; empty means undeclared, never applied stacks.
