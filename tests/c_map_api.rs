@@ -210,7 +210,7 @@ fn test_get_world_pos_from_map_pos_returns_instance_and_vector() {
 
 #[cfg(all(feature = "optional-tests", feature = "profile-retail"))]
 #[test]
-fn retail_map_world_position_probe_covers_zone_maps_under_cosmic() {
+fn retail_map_world_position_probe_covers_zone_maps_under_azeroth() {
     let env = env();
     use std::collections::{HashMap, HashSet};
 
@@ -237,7 +237,7 @@ fn retail_map_world_position_probe_covers_zone_maps_under_cosmic() {
             .push(map_id);
         map_types.insert(map_id, map_type);
     }
-    let mut pending = vec![946];
+    let mut pending = vec![947];
     let mut visited = HashSet::new();
     let mut zone_count = 0;
     while let Some(map_id) = pending.pop() {
@@ -285,7 +285,7 @@ fn retail_map_world_position_probe_covers_zone_maps_under_cosmic() {
             table.sort(children)
         end
 
-        local pending = {{946}}
+        local pending = {{947}}
         local visited = {{}}
         local zoneCount = 0
         while #pending > 0 do
@@ -319,7 +319,7 @@ fn retail_map_world_position_probe_covers_zone_maps_under_cosmic() {
                 end
             end
         end
-        assert(zoneCount == {zone_count}, "probe did not visit every Zone below Cosmic")
+        assert(zoneCount == {zone_count}, "probe did not visit every Zone below Azeroth")
         assert(visited[7], "Mulgore (uiMapID 7) must be reachable from Cosmic")
         "#
     );
