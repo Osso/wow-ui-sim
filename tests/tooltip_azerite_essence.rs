@@ -8,7 +8,7 @@ use crate::common::blizzard_addon_harness::{
     blizzard_ui_dir, load_blizzard_addon_closure_into_env, new_blizzard_addon_env,
 };
 use wow_ui_sim::lua_api::WowLuaEnv;
-use wow_ui_sim::lua_api::state::{AzeriteEssenceInfo, AzeriteEssenceMilestoneInfo};
+use wow_ui_sim::lua_api::state::{AzeriteEssenceInfo, AzeriteEssenceMilestoneInfo, RACE_DATA};
 use wow_ui_sim::screen::ScreenKind;
 
 const ESSENCE_TWO: i32 = 2;
@@ -72,6 +72,14 @@ function AzeriteTestAssertSpellCount(data, candidates, expected, message)
     local spellIDs = AzeriteTestSpellIDs(data, candidates)
     assert(AzeriteTestSpellCount(spellIDs) == expected, message)
     return spellIDs
+end
+
+function AzeriteTestFindLine(data, text)
+    for _, line in ipairs(data.lines) do
+        if line.leftText and string.find(line.leftText, text, 1, true) then
+            return line
+        end
+    end
 end
 
 function AzeriteTestShowEssence(essenceID, rank)
@@ -207,6 +215,13 @@ fn seed_essence(env: &WowLuaEnv, id: i32, rank: i32) {
     );
 }
 
+fn race_index_for_faction(faction: &str) -> usize {
+    RACE_DATA
+        .iter()
+        .position(|(_, _, candidate)| *candidate == faction)
+        .expect("race data should provide each Azerite faction")
+}
+
 fn seed_milestone(env: &WowLuaEnv, milestone_id: i32, slot: i32, essence_id: i32) {
     env.state()
         .borrow_mut()
@@ -311,6 +326,50 @@ fn retail_azerite_essence_original_consumer_selects_exact_essence_and_rank() {
     ))
     .expect("the original essence consumer should split active minor spell ranks");
     env.state().borrow_mut().azerite_essence.milestones.clear();
+
+    let alliance_race = race_index_for_faction("Alliance");
+    let horde_race = race_index_for_faction("Horde");
+    env.state().borrow_mut().player.race_index = alliance_race;
+    env.exec(&format!(
+        r#"
+        local alliance = AzeriteTestShowEssence({ESSENCE_THREE}, 1)
+        assert(AzeriteTestFindLine(alliance, 'Next rank:'),
+            'rank one must show the next-rank source heading')
+        local source = AzeriteTestFindLine(alliance, 'Battlefield Brawler')
+        assert(source and source.wrapText == true
+            and source.leftText:find('Marshal Gabriel', 1, true),
+            'the Alliance source must come from the DB2 rank-two row and wrap')
+        assert(not AzeriteTestFindLine(alliance, 'Xander Silberman'),
+            'Alliance source selection must not use the Horde source column')
+        "#
+    ))
+    .expect("the original essence consumer should publish its supplied Alliance source");
+
+    env.state().borrow_mut().player.race_index = horde_race;
+    env.exec(&format!(
+        r#"
+        local horde = AzeriteTestShowEssence({ESSENCE_THREE}, 1)
+        local source = AzeriteTestFindLine(horde, 'Battlefield Brawler')
+        assert(source and source.wrapText == true
+            and source.leftText:find('Xander Silberman', 1, true),
+            'the Horde source must come from the DB2 rank-two row and wrap')
+        assert(not AzeriteTestFindLine(horde, 'Marshal Gabriel'),
+            'Horde source selection must not use the Alliance source column')
+        "#
+    ))
+    .expect("the original essence consumer should publish its supplied Horde source");
+
+    env.state().borrow_mut().player.race_index = alliance_race;
+    env.exec(&format!(
+        r#"
+        local rankZero = AzeriteTestShowEssence({ESSENCE_THREE}, 0)
+        assert(AzeriteTestFindLine(rankZero, 'Source:'),
+            'original rank zero must select the source heading')
+        assert(AzeriteTestFindLine(rankZero, 'Storming the Battlefields'),
+            'original rank zero must use the exact rank-one source row')
+        "#
+    ))
+    .expect("the original essence consumer should preserve the rank-zero source stage");
 
     {
         let mut state = env.state().borrow_mut();
