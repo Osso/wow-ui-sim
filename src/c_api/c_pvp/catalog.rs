@@ -51,7 +51,12 @@ pub struct PvpCatalog {
 }
 
 pub(super) fn register(state: &mut LuaState, ns: GcRef<Table>) -> LuaResult<()> {
-    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+    ) {
+        // PTR 70493 PvpInfoDocumentation.lua:386,1723 declares the same surface.
+        // PTR reuses the existing supplied catalog and argument policy (INFERRED).
         table_set_rust_fn_static(state, ns, "GetHonorRewardInfo", get_honor_reward_info)?;
     }
     if matches!(
