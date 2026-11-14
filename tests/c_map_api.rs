@@ -258,6 +258,13 @@ fn retail_map_world_position_probe_covers_zone_maps_under_cosmic() {
         .collect::<Vec<_>>()
         .join(",");
 
+    let vector_source_path = wow_ui_sim::client_profile::blizzard_ui_addons_dir()
+        .join("Blizzard_SharedXML/Vector2D.lua");
+    let vector_source = std::fs::read_to_string(&vector_source_path)
+        .unwrap_or_else(|error| panic!("read {}: {error}", vector_source_path.display()));
+    env.exec(&vector_source)
+        .expect("execute original Blizzard Vector2D.lua");
+
     let script = format!(
         r#"
         local mapRows = {{{map_rows}}}
