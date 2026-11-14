@@ -2,7 +2,7 @@
 //! The LoD SpellSearch consumer is runtime-selected through SharedTalentUI's startup dependency.
 #![cfg(all(
     feature = "client-retail",
-    feature = "retail-12-0-5",
+    feature = "retail-12-1-5",
     feature = "optional-tests"
 ))]
 
@@ -206,6 +206,13 @@ fn cast_count_uses_the_eight_reagent_minimum_at_the_api_boundary() {
         .eval("return select('#', C_Spell.GetSpellCastCount(19750)), C_Spell.GetSpellCastCount(19750)")
         .expect("cast count must publish a number");
     assert_eq!((arity, count), (1, 3));
+    let converted: (i64, i64) = env
+        .eval(
+            "return C_Spell.GetSpellCastCount('19750'), \
+             C_Spell.GetSpellCastCount(19750.9)",
+        )
+        .expect("Retail spell identifiers accept numeric strings and truncate fractions");
+    assert_eq!(converted, (3, 3));
 
     {
         let mut state = env.state().borrow_mut();

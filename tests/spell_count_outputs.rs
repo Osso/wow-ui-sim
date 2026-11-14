@@ -51,12 +51,17 @@ const ASSERTIONS: &str = r#"
     }
 "#;
 
+fn uses_retail_native_count_contract() -> bool {
+    cfg!(feature = "retail-12-1-5") && ACTIVE == ClientProfile::Retail
+}
+
 fn fixture(restricted: bool) -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("real spell namespace");
     {
         let mut state = env.state().borrow_mut();
         assert!(state.spell_cast_counts.is_empty());
-        if ACTIVE == ClientProfile::Retail {
+        if uses_retail_native_count_contract() {
+            state.spell_cast_context_is_null = Some(false);
             state.bag_items.clear();
             state.spell_reagent_pairs.clear();
             set_reagent_count(&mut state, 19750, 7);
@@ -138,7 +143,7 @@ fn set_reagent_count(state: &mut wow_ui_sim::lua_api::SimState, spell_id: u32, c
 
 fn set_count(env: &WowLuaEnv, spell_id: u32, count: u32) {
     let mut state = env.state().borrow_mut();
-    if ACTIVE == ClientProfile::Retail {
+    if uses_retail_native_count_contract() {
         set_reagent_count(&mut state, spell_id, count);
     } else {
         state.spell_cast_counts.insert(spell_id, count);
@@ -147,7 +152,7 @@ fn set_count(env: &WowLuaEnv, spell_id: u32, count: u32) {
 
 fn clear_count(env: &WowLuaEnv, spell_id: u32) {
     let mut state = env.state().borrow_mut();
-    if ACTIVE == ClientProfile::Retail {
+    if uses_retail_native_count_contract() {
         let item_id = reagent_item_id(spell_id);
         state.spell_reagent_pairs.remove(&spell_id);
         state.bag_items.retain(|_, item| item.item_id != item_id);
@@ -398,7 +403,7 @@ fn retail_cast_count_requires_spell_store_membership() {
     let env = fixture(false);
     set_count(&env, 880001, 11);
     set_count(&env, 0, 4);
-    if ACTIVE == ClientProfile::Retail {
+    if uses_retail_native_count_contract() {
         env.state()
             .borrow_mut()
             .spell_cast_counts
@@ -484,7 +489,7 @@ fn retail_reagent_mode_precedes_charge_mode_without_changing_cast_count() {
     let env = fixture(false);
     set_charge(&env, 3, 5);
     cast_count(&env, "19750", 7, false);
-    if ACTIVE == ClientProfile::Retail {
+    if uses_retail_native_count_contract() {
         display(&env, "19750", "7", false);
         clear_count(&env, 19750);
         display(&env, "19750", "3", false);
@@ -497,45 +502,28 @@ fn retail_reagent_mode_precedes_charge_mode_without_changing_cast_count() {
 #[test]
 fn zero_max_is_ignored_and_charge_zero_updates_and_clear_are_live() {
     let env = fixture(false);
-    if ACTIVE == ClientProfile::Retail {
+    if uses_retail_native_count_contract() {
         clear_count(&env, 19750);
     }
     set_charge(&env, 3, 0);
-    display(
-        &env,
-        "19750",
-        if ACTIVE == ClientProfile::Retail {
-            ""
-        } else {
-            "7"
-        },
-        false,
-    );
+    let no_usable_charge = if uses_retail_native_count_contract() {
+        ""
+    } else {
+        "7"
+    };
+    display(&env, "19750", no_usable_charge, false);
     set_charge(&env, 0, 5);
     display(&env, "19750", "0", false);
     set_charge(&env, 4, 5);
     display(&env, "19750", "4", false);
     env.state().borrow_mut().spell_charges.clear();
-    display(
-        &env,
-        "19750",
-        if ACTIVE == ClientProfile::Retail {
-            ""
-        } else {
-            "7"
-        },
-        false,
-    );
-    cast_count(
-        &env,
-        "19750",
-        if ACTIVE == ClientProfile::Retail {
-            0
-        } else {
-            7
-        },
-        false,
-    );
+    display(&env, "19750", no_usable_charge, false);
+    let cast_count_without_reagent = if uses_retail_native_count_contract() {
+        0
+    } else {
+        7
+    };
+    cast_count(&env, "19750", cast_count_without_reagent, false);
 }
 
 #[test]
@@ -569,7 +557,7 @@ fn strict_beyond_threshold_equality_fractional_negative_and_charge_quantity() {
         display(&env, args, expected, false);
     }
     set_charge(&env, 3, 5);
-    if ACTIVE == ClientProfile::Retail {
+    if uses_retail_native_count_contract() {
         clear_count(&env, 19750);
         display(&env, "19750,3", "3", false);
         display(&env, "19750,2.5", "3", false);
@@ -629,7 +617,7 @@ fn queries_are_read_only_and_environments_and_result_replacements_isolated() {
                 .collect::<std::collections::BTreeMap<_, _>>(),
         )
     };
-    let display_count = if ACTIVE == ClientProfile::Retail {
+    let display_count = if uses_retail_native_count_contract() {
         "7"
     } else {
         "3"
