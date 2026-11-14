@@ -443,10 +443,9 @@ fn slot_keystone_rejects_unmatched_or_missing_inputs_before_publication() {
 }
 
 #[test]
-fn remove_keystone_stages_only_with_permission_and_nonzero_guid_category() {
+fn remove_keystone_stages_item_for_nonzero_guid_category() {
     let env = tooltip_full_env_helpers::load_full_env_without_post_load();
-    let item_id = 158_923;
-    slot_keystone_from_bag(&env, 3, item_id);
+    slot_keystone_from_bag(&env, 3, 158_923);
     env.state().borrow_mut().keystone.cursor_stage_permission = Some(true);
     env.exec(
         r##"
@@ -457,58 +456,84 @@ fn remove_keystone_stages_only_with_permission_and_nonzero_guid_category() {
         "##,
     )
     .unwrap();
+}
 
-    let zero_category = tooltip_full_env_helpers::load_full_env_without_post_load();
-    zero_category
-        .exec(
-            r##"
+#[test]
+fn remove_keystone_zero_category_clears_cursor_without_staging() {
+    let env = tooltip_full_env_helpers::load_full_env_without_post_load();
+    env.exec(
+        r##"
         A_Admin.AddBagItem(0, 4, 6948, 1)
         C_Container.PickupContainerItem(0, 4)
         assert(select(2, GetCursorInfo()) == 6948)
         "##,
-        )
-        .unwrap();
+    )
+    .unwrap();
     {
-        let mut sim = zero_category.state().borrow_mut();
+        let mut sim = env.state().borrow_mut();
+        // Nonempty selection with a zero GUID category reaches the helper guard.
         sim.keystone.selected_guid = Some("0-0-0-158923".to_string());
         sim.keystone.cursor_stage_permission = Some(true);
     }
-    zero_category
-        .exec(
-            r##"
+    env.exec(
+        r##"
         assert(C_ChallengeMode.RemoveKeystone())
         assert(not C_ChallengeMode.HasSlottedKeystone())
         assert(GetCursorInfo() == nil)
         "##,
-        )
-        .unwrap();
+    )
+    .unwrap();
+}
 
-    for permission in [None, Some(false)] {
-        let unavailable_permission = tooltip_full_env_helpers::load_full_env_without_post_load();
-        unavailable_permission
-            .exec(
-                r##"
+#[test]
+fn remove_keystone_stage_gate_denial_preserves_cursor_and_clears_selection() {
+    for (permission, context_present) in [(None, true), (Some(false), true), (Some(true), false)] {
+        let env = tooltip_full_env_helpers::load_full_env_without_post_load();
+        env.exec(
+            r##"
             A_Admin.AddBagItem(0, 4, 6948, 1)
             C_Container.PickupContainerItem(0, 4)
             "##,
-            )
-            .unwrap();
+        )
+        .unwrap();
         {
-            let mut sim = unavailable_permission.state().borrow_mut();
+            let mut sim = env.state().borrow_mut();
             sim.keystone.selected_guid = Some("Item-0-3-158923".to_string());
             sim.keystone.cursor_stage_permission = permission;
+            sim.player.present = context_present;
         }
-        unavailable_permission
-            .exec(
-                r##"
+        env.exec(
+            r##"
             assert(C_ChallengeMode.RemoveKeystone())
             assert(not C_ChallengeMode.HasSlottedKeystone())
             local kind, cursorItemID = GetCursorInfo()
             assert(kind == "item" and cursorItemID == 6948)
             "##,
-            )
-            .unwrap();
+        )
+        .unwrap();
     }
+}
+
+#[test]
+fn remove_keystone_without_selection_preserves_cursor() {
+    let env = tooltip_full_env_helpers::load_full_env_without_post_load();
+    env.exec(
+        r##"
+        A_Admin.AddBagItem(0, 4, 6948, 1)
+        C_Container.PickupContainerItem(0, 4)
+        "##,
+    )
+    .unwrap();
+    env.state().borrow_mut().keystone.cursor_stage_permission = Some(true);
+    env.exec(
+        r##"
+        assert(not C_ChallengeMode.RemoveKeystone())
+        assert(not C_ChallengeMode.HasSlottedKeystone())
+        local kind, cursorItemID = GetCursorInfo()
+        assert(kind == "item" and cursorItemID == 6948)
+        "##,
+    )
+    .unwrap();
 }
 
 #[test]
