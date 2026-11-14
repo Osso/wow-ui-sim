@@ -40,6 +40,8 @@ fn assert_selected(addons: &[(String, PathBuf)], addon: &str, source: &str) {
     );
 }
 
+// PRESERVATION: Camelot does not consume the award record. The original
+// delegates depend on publication, so a constant callable could pass.
 #[test]
 fn forever_original_pvp_indicators_load_with_the_camelot_style() {
     let env = startup(&[
@@ -62,6 +64,8 @@ fn forever_original_pvp_indicators_load_with_the_camelot_style() {
     .expect("original Camelot style must provide the player and target indicator delegates");
 }
 
+// PRESERVATION: this single #948 snapshot proves original tracker wiring,
+// but a constant {948} also passes without reading the tracked list.
 #[test]
 fn forever_original_achievement_ui_and_tracker_read_supplied_ids() {
     let env = startup(&[
@@ -112,6 +116,8 @@ fn forever_original_achievement_ui_and_tracker_read_supplied_ids() {
     .expect("original AchievementUI and tracker must read the supplied tracked row");
 }
 
+// PRESERVATION: the unavailable-manager branch tests captured publication
+// and initialization, not an enabled result; a constant false would pass.
 #[test]
 fn forever_original_combat_audio_manager_completes_startup_without_manager() {
     let env = startup(&[(
@@ -133,6 +139,8 @@ fn forever_original_combat_audio_manager_completes_startup_without_manager() {
     .expect("original manager must honor unavailable audio backing without aborting startup");
 }
 
+// PRODUCER-SENSITIVE: the same original party caster yields different
+// results for two supplied spell rows. A constant triple cannot pass.
 #[test]
 fn forever_original_aura_util_uses_supplied_visibility() {
     let env = startup(&[("Blizzard_FrameXMLUtil", "AuraUtil.lua")]);
@@ -156,7 +164,7 @@ fn forever_original_aura_util_uses_supplied_visibility() {
     .expect("original AuraUtil must consume the distinct host visibility rows");
 }
 
-// API-level backing check: Camelot's original UnitFrame only observes
+// PRODUCER-SENSITIVE API-level backing check, not original-consumer RED: Camelot's original UnitFrame only observes
 // publication, not the populated reward. Its style disables prestige and
 // PVPMatchTableOverrides.lua replaces the shared honor cell's texture lookup.
 #[test]
