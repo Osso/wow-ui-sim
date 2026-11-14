@@ -461,9 +461,15 @@ fn unsupported_item_interaction_kind_requires_resolved_item() {
         r##"
         local count, data = select("#", C_TooltipInfo.GetItemInteractionItem()),
             C_TooltipInfo.GetItemInteractionItem()
-        assert(count == 1 and type(data) == "table")
-        assert(type(data.lines) == "table" and next(data.lines) == nil)
-        assert(data.dataInstanceID == nil)
+        assert(
+            count == 1 and type(data) == "table",
+            "resolved unsupported kind returns one TooltipData table"
+        )
+        assert(
+            type(data.lines) == "table" and next(data.lines) == nil,
+            "unsupported-kind lines are empty"
+        )
+        assert(data.dataInstanceID == nil, "unsupported-kind result has no dataInstanceID")
         local fields = 0
         for key in pairs(data) do
             fields = fields + 1
