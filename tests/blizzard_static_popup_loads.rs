@@ -855,3 +855,68 @@ fn show_helper_globals_are_functions() {
     let env = load_full_ui_for(ScreenKind::Game);
     show_helper_globals_are_functions::run(&env);
 }
+
+#[test]
+#[cfg(all(feature = "client-retail", feature = "optional-tests"))]
+fn retail_static_popup_original_death_condition_survives_startup() {
+    use wow_ui_sim::loader::{
+        discover_all_blizzard_addons, discover_blizzard_startup_addons_for_screen,
+        register_load_with_addons,
+    };
+    let ui = blizzard_ui_dir();
+    let env = fresh_env(ScreenKind::Game);
+    env.exec("assert(StaticPopup_AddShowCondition == nil)")
+        .expect("no simulator condition registration default");
+    let startup = discover_blizzard_startup_addons_for_screen(&ui, ScreenKind::Game);
+    let owner = startup
+        .iter()
+        .position(|a| a.name == "Blizzard_StaticPopup")
+        .unwrap();
+    let consumer = startup
+        .iter()
+        .position(|a| a.name == "Blizzard_StaticPopup_Game")
+        .unwrap();
+    assert!(
+        owner < consumer,
+        "GameDialog TOC requires the Both-screen owner"
+    );
+    assert_eq!(
+        startup[owner].toc_path.file_name().unwrap(),
+        "Blizzard_StaticPopup.toc"
+    );
+    assert_eq!(
+        startup[consumer].toc_path.file_name().unwrap(),
+        "Blizzard_StaticPopup_Game.toc"
+    );
+    register_load_with_addons(&env.loader_env(), &discover_all_blizzard_addons(&ui));
+    crate::common::load_game_startup_inventory(&env);
+    env.apply_post_load_workarounds();
+    wow_ui_sim::startup::fire_startup_events_for_screen(&env, ScreenKind::Game);
+    env.exec(r#"
+        local function original(fn, suffix, line)
+            local info = debug.getinfo(fn, "S")
+            assert(info.source:gsub(string.char(92), '/'):find(suffix, 1, true))
+            assert(info.linedefined == line)
+        end
+        original(StaticPopup_AddShowCondition, "Blizzard_StaticPopup/StaticPopup.lua", 24)
+        original(GameEvent.HandleAuctionHouseDisabled, "Blizzard_Game/Mainline/EventImplementation.lua", 463)
+        assert(not UnitIsDeadOrGhost("player"))
+        GameEvent.HandleAuctionHouseDisabled()
+        assert(StaticPopup_Visible("AUCTION_HOUSE_DISABLED"))
+        StaticPopup_Hide("AUCTION_HOUSE_DISABLED")
+        assert(not StaticPopup_Visible("AUCTION_HOUSE_DISABLED"))
+    "#).expect("original live-player auction-house warning opens and closes");
+    env.state().borrow_mut().player.health = 0;
+    env.exec(
+        r#"
+        assert(UnitIsDeadOrGhost("player"))
+        -- GameDialog.lua:844-849 registered the real death predicate at load.
+        GameEvent.HandleAuctionHouseDisabled()
+        assert(not StaticPopup_Visible("AUCTION_HOUSE_DISABLED"))
+        local popup = StaticPopup_Show("CONFIRM_DELETE_EQUIPMENT_SET", "fixture")
+        assert(popup and popup:IsShown(), "stock whileDead dialog is allowed")
+        StaticPopup_Hide("CONFIRM_DELETE_EQUIPMENT_SET")
+    "#,
+    )
+    .expect("original death predicate blocks only dialogs without whileDead");
+}
