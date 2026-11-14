@@ -9,10 +9,14 @@
 //! seeded `SimState.maps` does not carry, so an addon that names the
 //! destination of a teleport by its map gets "Dornogal", not "Map 2339".
 
-use super::csv_util::{escape_str, parse_csv_line, wow_data_dir};
+use super::csv_util::{escape_str, parse_csv_line, read_csv_records, wow_data_dir};
+use std::collections::BTreeMap;
 use std::fs::File;
 use std::io::{BufRead, BufReader, Write};
 use std::path::Path;
+
+const RETAIL_ASSIGNMENT_CSV: &str = "data/db2/retail-12.1.5.70783/UiMapAssignment.csv";
+const RETAIL_ASSIGNMENT_OUTPUT: &str = "crates/sim-data/data/ui_map_assignments.rs";
 
 pub fn run() -> Result<(), Box<dyn std::error::Error>> {
     let wow_data = wow_data_dir();
@@ -31,6 +35,22 @@ pub fn run() -> Result<(), Box<dyn std::error::Error>> {
     write_tests(&mut out)?;
 
     println!("Generated {} ui map entries ({} skipped)", count, skipped);
+    println!("Output: {}", output_path.display());
+    run_assignments()?;
+    Ok(())
+}
+
+pub fn run_assignments() -> Result<(), Box<dyn std::error::Error>> {
+    let csv_path = Path::new(RETAIL_ASSIGNMENT_CSV);
+    println!(
+        "Loading Retail UiMapAssignment from {}...",
+        csv_path.display()
+    );
+    let (assignments, row_count) = load_assignment_rows(csv_path)?;
+    let output_path = Path::new(RETAIL_ASSIGNMENT_OUTPUT);
+    let mut out = File::create(output_path)?;
+    write_assignment_file(&mut out, &assignments)?;
+    println!("Generated {} UiMapAssignment rows", row_count);
     println!("Output: {}", output_path.display());
     Ok(())
 }
@@ -132,9 +152,236 @@ fn parse_ui_map_row(
     Ok(Some((id, value)))
 }
 
+#[derive(Debug, Clone, Copy, PartialEq)]
+struct UiMapAssignmentRow {
+    map_id: u32,
+    order_index: u32,
+    ui_min: [f32; 2],
+    ui_max: [f32; 2],
+    region: [f32; 6],
+}
+
+struct AssignmentColumns {
+    ui_map_id: usize,
+    order_index: usize,
+    map_id: usize,
+    ui_min: [usize; 2],
+    ui_max: [usize; 2],
+    region: [usize; 6],
+}
+
+fn find_assignment_columns(header: &str) -> Result<AssignmentColumns, String> {
+    let fields = parse_csv_line(header);
+    let index = |name: &str| {
+        fields
+            .iter()
+            .position(|field| field == name)
+            .ok_or_else(|| format!("UiMapAssignment.csv has no {name} column"))
+    };
+    Ok(AssignmentColumns {
+        ui_map_id: index("UiMapID")?,
+        order_index: index("OrderIndex")?,
+        map_id: index("MapID")?,
+        ui_min: [index("UiMin_0")?, index("UiMin_1")?],
+        ui_max: [index("UiMax_0")?, index("UiMax_1")?],
+        region: [
+            index("Region_0")?,
+            index("Region_1")?,
+            index("Region_2")?,
+            index("Region_3")?,
+            index("Region_4")?,
+            index("Region_5")?,
+        ],
+    })
+}
+
+fn parse_assignment_row(
+    columns: &AssignmentColumns,
+    line: &str,
+    row: usize,
+) -> Result<(u32, UiMapAssignmentRow), String> {
+    let fields = parse_csv_line(line);
+    let field = |index: usize, name: &str| {
+        fields
+            .get(index)
+            .map(String::as_str)
+            .ok_or_else(|| format!("UiMapAssignment.csv row {row}: missing {name} (short row)"))
+    };
+    let integer = |index: usize, name: &str| -> Result<u32, String> {
+        let value = field(index, name)?;
+        value
+            .parse()
+            .map_err(|_| format!("UiMapAssignment.csv row {row}: invalid {name}: {value:?}"))
+    };
+    let float = |index: usize, name: &str| -> Result<f32, String> {
+        let value = field(index, name)?;
+        let number = value
+            .parse::<f32>()
+            .map_err(|_| format!("UiMapAssignment.csv row {row}: invalid {name}: {value:?}"))?;
+        if !number.is_finite() {
+            return Err(format!(
+                "UiMapAssignment.csv row {row}: nonfinite {name}: {value:?}"
+            ));
+        }
+        Ok(number)
+    };
+
+    let ui_map_id = integer(columns.ui_map_id, "UiMapID")?;
+    let assignment = UiMapAssignmentRow {
+        map_id: integer(columns.map_id, "MapID")?,
+        order_index: integer(columns.order_index, "OrderIndex")?,
+        ui_min: [
+            float(columns.ui_min[0], "UiMin_0")?,
+            float(columns.ui_min[1], "UiMin_1")?,
+        ],
+        ui_max: [
+            float(columns.ui_max[0], "UiMax_0")?,
+            float(columns.ui_max[1], "UiMax_1")?,
+        ],
+        region: [
+            float(columns.region[0], "Region_0")?,
+            float(columns.region[1], "Region_1")?,
+            float(columns.region[2], "Region_2")?,
+            float(columns.region[3], "Region_3")?,
+            float(columns.region[4], "Region_4")?,
+            float(columns.region[5], "Region_5")?,
+        ],
+    };
+    Ok((ui_map_id, assignment))
+}
+
+fn load_assignment_rows(
+    path: &Path,
+) -> Result<(BTreeMap<u32, Vec<UiMapAssignmentRow>>, usize), Box<dyn std::error::Error>> {
+    let file = File::open(path)?;
+    let records = read_csv_records(BufReader::new(file))?;
+    let header = records
+        .first()
+        .ok_or_else(|| format!("{}: missing CSV header", path.display()))?;
+    let columns =
+        find_assignment_columns(header).map_err(|error| format!("{}: {error}", path.display()))?;
+    let mut assignments = BTreeMap::<u32, Vec<UiMapAssignmentRow>>::new();
+
+    for (index, line) in records.iter().enumerate().skip(1) {
+        let row_number = index + 1;
+        let (ui_map_id, assignment) = parse_assignment_row(&columns, line, row_number)
+            .map_err(|error| format!("{}: {error}", path.display()))?;
+        assignments.entry(ui_map_id).or_default().push(assignment);
+    }
+    if assignments.is_empty() {
+        return Err(format!("{}: no UiMapAssignment rows", path.display()).into());
+    }
+    for rows in assignments.values_mut() {
+        rows.sort_by_key(|assignment| assignment.order_index);
+    }
+    let row_count = assignments.values().map(Vec::len).sum();
+    Ok((assignments, row_count))
+}
+
+fn write_assignment_file(
+    out: &mut File,
+    assignments: &BTreeMap<u32, Vec<UiMapAssignmentRow>>,
+) -> std::io::Result<()> {
+    writeln!(
+        out,
+        "//! Auto-generated Retail UiMapAssignment data from a CASC DB2 export."
+    )?;
+    writeln!(
+        out,
+        "//! Do not edit manually - regenerate with: wow-cli generate ui-map-assignments"
+    )?;
+    writeln!(
+        out,
+        "//! VERIFIED source: data/db2/retail-12.1.5.70783/provenance.json."
+    )?;
+    writeln!(
+        out,
+        "//! INFERRED applicability: 70783 assignments match the selected 70575 Retail pin; exact parity is unverified."
+    )?;
+    writeln!(out)?;
+    writeln!(out, "#[derive(Debug, Clone, Copy, PartialEq)]")?;
+    writeln!(out, "pub struct UiMapAssignment {{")?;
+    writeln!(out, "    pub map_id: u32,")?;
+    writeln!(out, "    pub order_index: u32,")?;
+    writeln!(out, "    pub ui_min: [f32; 2],")?;
+    writeln!(out, "    pub ui_max: [f32; 2],")?;
+    writeln!(out, "    pub region: [f32; 6],")?;
+    writeln!(out, "}}")?;
+    writeln!(out)?;
+    writeln!(
+        out,
+        "pub static UI_MAP_ASSIGNMENTS: &[(u32, &'static [UiMapAssignment])] = &["
+    )?;
+    for (ui_map_id, rows) in assignments {
+        writeln!(out, "    ({ui_map_id}, &[")?;
+        for row in rows {
+            let ui_min = row.ui_min.map(|value| format!("{value:?}f32"));
+            let ui_max = row.ui_max.map(|value| format!("{value:?}f32"));
+            let region = row.region.map(|value| format!("{value:?}f32"));
+            writeln!(
+                out,
+                "        UiMapAssignment {{ map_id: {}, order_index: {}, ui_min: [{}, {}], ui_max: [{}, {}], region: [{}, {}, {}, {}, {}, {}] }},",
+                row.map_id,
+                row.order_index,
+                ui_min[0],
+                ui_min[1],
+                ui_max[0],
+                ui_max[1],
+                region[0],
+                region[1],
+                region[2],
+                region[3],
+                region[4],
+                region[5],
+            )?;
+        }
+        writeln!(out, "    ]),")?;
+    }
+    writeln!(out, "];")?;
+    writeln!(out)?;
+    writeln!(
+        out,
+        "pub fn get_ui_map_assignments(ui_map_id: u32) -> Option<&'static [UiMapAssignment]> {{"
+    )?;
+    writeln!(
+        out,
+        "    let index = UI_MAP_ASSIGNMENTS.binary_search_by_key(&ui_map_id, |(id, _)| *id).ok()?;"
+    )?;
+    writeln!(out, "    Some(UI_MAP_ASSIGNMENTS[index].1)")?;
+    writeln!(out, "}}")?;
+    Ok(())
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn assignment_parser_uses_named_columns_and_preserves_db2_values() {
+        let header = "MapID,UiMapID,OrderIndex,UiMin_0,UiMin_1,UiMax_0,UiMax_1,Region_0,Region_1,Region_2,Region_3,Region_4,Region_5";
+        let columns = find_assignment_columns(header).unwrap();
+        let row = "1,7,0,0,0,1,1,-3802.08008,-3245.83008,-1000000,-168.75,2204.16992,1000000";
+        let (ui_map_id, assignment) = parse_assignment_row(&columns, row, 2).unwrap();
+
+        assert_eq!(ui_map_id, 7);
+        assert_eq!(assignment.map_id, 1);
+        assert_eq!(assignment.order_index, 0);
+        assert_eq!(assignment.ui_min, [0.0, 0.0]);
+        assert_eq!(assignment.ui_max, [1.0, 1.0]);
+        assert_eq!(assignment.region[0], -3802.08008);
+        assert_eq!(assignment.region[5], 1_000_000.0);
+    }
+
+    #[test]
+    fn assignment_parser_rejects_nonfinite_geometry() {
+        let header = "UiMapID,OrderIndex,MapID,UiMin_0,UiMin_1,UiMax_0,UiMax_1,Region_0,Region_1,Region_2,Region_3,Region_4,Region_5";
+        let columns = find_assignment_columns(header).unwrap();
+        let error =
+            parse_assignment_row(&columns, "7,0,1,0,0,1,1,NaN,0,-1000000,10,20,1000000", 42)
+                .unwrap_err();
+        assert!(error.contains("row 42"), "{error}");
+        assert!(error.contains("nonfinite Region_0"), "{error}");
+    }
 
     #[test]
     fn malformed_numeric_fields_are_rejected() {
