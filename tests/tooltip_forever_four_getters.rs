@@ -4,6 +4,7 @@ use crate::common::blizzard_addon_harness::{
     blizzard_ui_dir, load_blizzard_addon_closure_into_env, new_blizzard_addon_env,
 };
 use wow_ui_sim::lua_api::WowLuaEnv;
+use wow_ui_sim::lua_api::state::MerchantCostRecord;
 
 const PVP_TALENT_USAGE: &str = "Usage: local data = C_TooltipInfo.GetPvpTalent(talentID [, isInspect, groupIndex, talentIndex])";
 const APPEARANCE_USAGE: &str =
@@ -59,11 +60,22 @@ fn forever_appearance_getter_returns_no_values_for_missing_records() {
 #[test]
 fn forever_merchant_cost_getter_returns_no_values_without_an_offer() {
     let env = WowLuaEnv::new().unwrap();
+    {
+        let mut state = env.state().borrow_mut();
+        state.merchant_items = vec![6948, 159];
+        state
+            .merchant_offer_costs
+            .insert(1, MerchantCostRecord::default());
+    }
     env.exec(
         r#"
         local getter = C_TooltipInfo.GetMerchantCostItem
         assert(type(getter) == 'function', 'GetMerchantCostItem must be registered')
         assert(select('#', getter('1.8', '1.8')) == 0,
+            'an offer without an extended-cost record must return zero values')
+        assert(select('#', getter(2, 1)) == 0,
+            'an extended-cost record with no selected cost must return zero values')
+        assert(select('#', getter(3, 1)) == 0,
             'a missing merchant offer must return zero values')
         assert(select('#', getter(0, 1)) == 0,
             'zero selects no offer or cost')
@@ -80,6 +92,7 @@ fn forever_merchant_cost_getter_returns_no_values_without_an_offer() {
 #[test]
 fn forever_outfit_getter_handles_zero_and_missing_saved_names() {
     let env = WowLuaEnv::new().unwrap();
+    env.state().borrow_mut().forever_outfits = Some(Some(Vec::new()));
     env.exec(
         r#"
         local getter = C_TooltipInfo.GetOutfit
