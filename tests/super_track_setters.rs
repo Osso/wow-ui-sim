@@ -99,3 +99,83 @@ fn super_track_setters_use_r88j_8_argument_details() {
     )
     .unwrap();
 }
+
+// The source is inferred; the selected POIButton action and change/rejection
+// effects use real host state and are independently specified by R88j.8.
+#[test]
+fn original_poi_button_click_accepts_a_supplied_area_row_and_keeps_it_on_miss() {
+    use wow_ui_sim::c_api::c_area_poi_info::AreaPoiInfo;
+
+    with_blizzard_addon_closure(&["Blizzard_POIButton"], &[], |env, _| {
+        {
+            let mut sim = env.state().borrow_mut();
+            sim.area_pois.insert(
+                4801,
+                AreaPoiInfo {
+                    area_poi_id: 4801,
+                    name: "Supplied POI".into(),
+                    ui_map_id: None,
+                    position: (0.5, 0.5),
+                    atlas_name: None,
+                    description: None,
+                    faction_id: None,
+                    icon_widget_set: None,
+                    linked_ui_map_id: None,
+                    is_current_event: false,
+                    should_glow: false,
+                    is_suppressible: false,
+                    is_locked: false,
+                    seconds_left: None,
+                },
+            );
+            sim.super_track.quest_id = Some(3001);
+            sim.super_track.quest_tracking = true;
+            sim.super_track.corpse = true;
+        }
+        env.exec(
+            r#"
+            local function click(areaPOI)
+                local button = CreateFrame("Button", nil, UIParent, "POIButtonTemplate")
+                button:SetAreaPOIID(areaPOI)
+                button:GetScript("OnClick")(button, "LeftButton")
+            end
+            click(4801)
+            local kind, id = C_SuperTrack.GetSuperTrackedMapPin()
+            assert(kind == Enum.SuperTrackingMapPinType.AreaPOI and id == 4801)
+            assert(not C_SuperTrack.IsSuperTrackingQuest())
+            assert(C_SuperTrack.IsSuperTrackingCorpse())
+            click(4802)
+            local kindAfter, idAfter = C_SuperTrack.GetSuperTrackedMapPin()
+            assert(kindAfter == kind and idAfter == id)
+            "#,
+        )
+        .unwrap();
+    });
+}
+
+// API-level: the ready-quest projection uses the simulator's existing
+// resolved record input; it is not native request/cache identity evidence.
+#[test]
+fn super_track_map_pin_uses_only_the_supplied_resolved_quest_record() {
+    let env = WowLuaEnv::new().unwrap();
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.quest_log_entries
+            .quest_special_item_inputs
+            .cached_quest_records
+            .insert(4801, Default::default());
+    }
+    env.exec(
+        r#"
+        C_SuperTrack.SetSuperTrackedMapPin("1.9", "4801.5")
+        local kind, id = C_SuperTrack.GetSuperTrackedMapPin()
+        assert(kind == 1 and id == 4801)
+        for _, candidate in ipairs({{1, 4802}, {1, 0}, {2, 4801}, {3, 4801}, {4, 4801}}) do
+            C_SuperTrack.SetSuperTrackedMapPin(candidate[1], candidate[2])
+            local newKind, newID = C_SuperTrack.GetSuperTrackedMapPin()
+            assert(newKind == kind and newID == id)
+        end
+        "#,
+    )
+    .unwrap();
+}

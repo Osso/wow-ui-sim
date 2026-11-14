@@ -244,9 +244,28 @@ fn set_map_pin(state: &mut LuaState) -> LuaResult<u32> {
     finish_setter_without_native_bridge()
 }
 
-fn map_pin_has_supplied_row(_sim: &crate::lua_api::SimState, _kind: i32, _id: i32) -> bool {
-    // No native table identity, reserved-row metadata, or request pipeline is known.
-    false
+fn map_pin_has_supplied_row(sim: &crate::lua_api::SimState, kind: i32, id: i32) -> bool {
+    if id <= 0 {
+        // Kind 1 requires a positive ID; table sentinel metadata is UNKNOWN.
+        return false;
+    }
+    match kind {
+        // INFERRED: original Retail POIButton uses selector 0 with IDs supplied
+        // by the existing AreaPOI source. This does not identify a native DB2.
+        0 => sim
+            .area_pois
+            .get(&id)
+            .is_some_and(|row| row.area_poi_id == id),
+        // INFERRED: this input contains copies of already resolved quest
+        // records. Absence/pending stays neutral: no native request is simulated.
+        1 => sim
+            .quest_log_entries
+            .quest_special_item_inputs
+            .cached_quest_records
+            .contains_key(&id),
+        // UNKNOWN: no identified table inputs for these native validators.
+        _ => false,
+    }
 }
 
 fn set_vignette(state: &mut LuaState) -> LuaResult<u32> {
