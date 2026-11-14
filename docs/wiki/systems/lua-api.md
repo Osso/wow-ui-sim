@@ -36,9 +36,9 @@ empty name. **VERIFIED (selected consumer):** the Forever Camelot
 `Blizzard_SpellBookItem.lua:877-888` calls `SetOutfit`, and
 `TooltipDataHandler.lua:603` maps it to `GetOutfit`. The optional test loads this
 profile-selected closure and invokes the original method. This consumer result is
-**PRESERVATION** because only the missing-name path is modeled. **INFERRED:**
-mapping the native current-player saved-name record to Forever's supplied outfit
-list; that mapping is isolated in its own commit.
+**PRESERVATION** because only the missing-name path is modeled. **INFERRED:** the producer maps the native saved-name record to the existing
+`SimState.forever_outfits` snapshot. No test asserts populated names; native
+player association, writers and update events remain UNKNOWN.
 
 [Merchant-cost tooltips](../../specs/tooltip-merchant-cost-item.md) reuse the
 Retail extended-cost producer on Forever. **VERIFIED (R88n.8):** missing offer,

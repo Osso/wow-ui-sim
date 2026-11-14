@@ -10,6 +10,7 @@
 - [ ] **VERIFIED (R88n.8):** accept finite numbers and convertible numeric strings in 0..=4294967295, validate before truncating toward zero, and use `Usage: local data = C_TooltipInfo.GetOutfit(outfitID)` for argument errors.
 - [ ] **VERIFIED (R88n.8):** outfit ID zero returns zero Lua values.
 - [ ] **VERIFIED (R88n.8):** a nonzero ID without a saved-name record returns one TooltipData table built with an empty name.
+- [ ] **INFERRED:** a matching row in the simulator's `forever_outfits` snapshot supplies the saved name used by this getter.
 - [ ] The optional Forever contract test checks registration, the zero-ID path, a nonzero missing-name result, and the original SpellBook outfit consumer.
 
 ### Retail compatibility
@@ -23,7 +24,8 @@
 
 ## Implementation inventory
 
-- `src/c_api/c_tooltip_info_outfit.rs` — profile-specific ID conversion and TooltipData publication.
+- `src/c_api/c_tooltip_info_outfit.rs` — profile-specific ID conversion, name lookup and TooltipData publication.
+- `src/c_api/forever_outfits.rs` and `src/lua_api/state/sim_state.rs` — existing supplied Forever outfit snapshot reused by the inferred name lookup.
 - `src/c_api/mod.rs` — compiles the producer for Retail-family clients and Forever.
 - `src/lua_api/globals/missing_surface/tooltip_info/mod.rs` — registers the getter on Retail/PTR and Forever.
 - `src/c_api/tooltip_getter_args.rs` — Forever unsigned numeric conversion.
@@ -35,7 +37,7 @@
 
 ## Known gaps (current cycle)
 
-- [ ] **INFERRED:** the native accessor's saved-name record is the current player's outfit state. The simulator's `forever_outfits` input is not yet connected to this getter in the verified implementation. Any populated-name mapping must stay in a separate inferred commit and must not claim native producer parity.
+- [ ] **INFERRED:** the native accessor's saved-name record is the current player's outfit state, and `SimState.forever_outfits` is the matching simulator input. The populated-name path has no test because the lane asserts only verified native facts; writer, persistence and update-event parity remain unknown.
 - [ ] **UNKNOWN:** native TooltipData line layout and other fields beyond the verified empty-name table path.
 
 ## Out of scope

@@ -1,5 +1,5 @@
 //! Outfit-name tooltip; no fabricated slot summaries.
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 use crate::lua_api::methods::borrow_state;
 use crate::lua_api::methods::{create_string, create_table, table_set};
 #[cfg(feature = "retail-12-0-5")]
@@ -49,9 +49,16 @@ fn read_outfit_id(state: &LuaState) -> LuaResult<f64> {
 }
 
 #[cfg(feature = "client-wowforever")]
-fn read_outfit_name(_state: &LuaState, _id: f64) -> LuaResult<Option<String>> {
-    // R88n.8: a nonzero ID without a saved-name record uses the empty-name builder path.
-    Ok(Some(String::new()))
+fn read_outfit_name(state: &LuaState, id: f64) -> LuaResult<Option<String>> {
+    // INFERRED: the supplied Forever outfit snapshot represents the native saved-name records.
+    let name = borrow_state(state)?
+        .forever_outfits
+        .as_ref()
+        .and_then(|outfits| outfits.as_ref())
+        .and_then(|entries| entries.iter().find(|entry| entry.outfit_id as f64 == id))
+        .map(|entry| entry.name.clone())
+        .unwrap_or_default();
+    Ok(Some(name))
 }
 
 #[cfg(feature = "retail-12-0-5")]
