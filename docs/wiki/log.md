@@ -1,3 +1,7 @@
+## [2026-11-14] implementation | Retail map world positions
+
+Added the [map world-position contract](../specs/map-world-position.md) and linked the [implementation investigation](investigations/patch-8-0-1-api-audit.md#retail-map-world-position). **VERIFIED (repository provenance):** assignment rows were exported from Retail 12.1.5.70783; **INFERRED:** parity with selected 70575 data and native projection/overlap behavior.
+
 ## [2026-11-13] fix | Inline icon right-edge advance
 
 Updated [Rendering pipeline](systems/rendering-pipeline.md#inline-icons-in-text) with R88f.L.2's absolute-right-edge snap and the tooltip boundary. A fractional scaled-edge `GetStringWidth` test exercises snapped cursor advance.

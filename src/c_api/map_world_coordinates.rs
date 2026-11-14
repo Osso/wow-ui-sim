@@ -17,6 +17,29 @@ pub struct MapWorldRect {
 }
 
 impl MapWorldRect {
+    pub(super) fn unproject(&self, normalized_x: f64, normalized_y: f64) -> Option<(f64, f64)> {
+        let coordinates = [
+            self.left,
+            self.right,
+            self.top,
+            self.bottom,
+            normalized_x,
+            normalized_y,
+        ];
+        if !coordinates.into_iter().all(f64::is_finite) {
+            return None;
+        }
+        let width = self.right - self.left;
+        let height = self.bottom - self.top;
+        let inside = (0.0..=1.0).contains(&normalized_x) && (0.0..=1.0).contains(&normalized_y);
+        if !inside || width == 0.0 || height == 0.0 {
+            return None;
+        }
+        let x = self.left + normalized_x * width;
+        let y = self.top + normalized_y * height;
+        (x.is_finite() && y.is_finite()).then_some((x, y))
+    }
+
     fn project(&self, continent: i32, x: f64, y: f64) -> Option<(f64, f64)> {
         let coordinates = [self.left, self.right, self.top, self.bottom, x, y];
         let finite = coordinates.into_iter().all(f64::is_finite);

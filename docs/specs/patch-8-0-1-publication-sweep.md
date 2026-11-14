@@ -20,7 +20,7 @@ Audit Warcraft Wiki page 149302, revision 1463362 (2023-07-20T21:26:53Z), refetc
 - [x] Project a finite point inside an explicit known map's world rectangle into normalized coordinates; preserve reversed axes. Return map ID plus a vector exposing x/y/GetXY.
 - [x] Honor continent and override ID. No matching rectangle, out-of-bounds point, degenerate/nonfinite rectangle or overlapping automatic matches returns no values.
 - [x] Rectangle mutations affect later queries; environments remain isolated.
-- [ ] Native automatic selection among overlapping map hierarchies, secret-argument parity and real geography capture remain unproven. Existing `GetWorldPosFromMapPos` art-based approximation is not a round-trip oracle for these new explicit inputs and remains outside this change.
+- [ ] Native automatic selection among overlapping map hierarchies, secret-argument parity and real geography capture remain unproven. The current Retail forward projection is described in the [map world-position contract](map-world-position.md); it is not a round-trip oracle for explicit rectangle fixtures or proof of pinned-data parity.
 
 ## Proof
 
