@@ -1,6 +1,7 @@
 #![cfg(all(feature = "client-retail", feature = "optional-tests"))]
 
 use crate::common::blizzard_addon_harness::with_blizzard_addon_closure;
+use wow_ui_sim::c_api::c_tooltip_info_pvp_talent::PvpTalentTooltipRecord;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 #[test]
@@ -47,6 +48,25 @@ fn pvp_talent_unlock_level_is_nil_when_catalog_row_is_missing() {
         .expect("query PvP talent unlock level");
 
     assert_eq!(result, None);
+}
+
+#[test]
+fn pvp_talent_unlock_level_publishes_one_integer_for_a_row_without_a_player() {
+    let env = WowLuaEnv::new().expect("create PvP talent API environment");
+    env.state().borrow_mut().player.present = false;
+    env.state()
+        .borrow_mut()
+        .pvp_talent_tooltip
+        .catalog
+        .insert(777, PvpTalentTooltipRecord::default());
+
+    let result: (i32, String) = env
+        .eval(
+            "local value = C_SpecializationInfo.GetPvpTalentUnlockLevel(777); return select('#', C_SpecializationInfo.GetPvpTalentUnlockLevel(777)), type(value)",
+        )
+        .expect("query unlock level for a catalog row without a player");
+
+    assert_eq!(result, (1, "number".to_string()));
 }
 
 #[test]
