@@ -942,6 +942,7 @@ pub struct SimState {
     /// Explicit bounty-set membership in supplied order; no inferred/default catalog.
     pub bounty_set_maps: HashMap<i32, Vec<i32>>,
     pub achievements: HashMap<i32, AchievementInfo>,
+    pub achievement_eligibility: AchievementEligibilityInputs,
     /// Explicit supplied relations; no native catalog or inferred chain.
     pub achievement_superceding: HashMap<i32, Vec<i32>>,
     pub calendar_now: crate::c_api::c_calendar::CivilDateTime,

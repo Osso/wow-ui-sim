@@ -1,5 +1,6 @@
 //! Plain data types used by SimState.
 
+mod achievement_eligibility;
 pub mod auction_house;
 pub mod azerite_essence;
 pub mod barber_shop;
@@ -17,6 +18,7 @@ pub mod social;
 pub mod wow_token;
 
 pub use crate::lua_api::timer_layout::RiluaPendingTimer as PendingTimer;
+pub use achievement_eligibility::*;
 pub use azerite_essence::{AzeriteEssenceInfo, AzeriteEssenceMilestoneInfo, AzeriteEssenceState};
 pub use barber_shop::{
     BarberShopAlternateFormRace, BarberShopCategory, BarberShopCharacterData, BarberShopOption,
