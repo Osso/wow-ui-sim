@@ -6,19 +6,19 @@ This spec records the `GameTooltip` minimum-width and FontString-pair contracts 
 
 ### Minimum width
 
-- [ ] On Retail 12.1.5.70688, `GetMinimumWidth` uses `Usage: local width, forced = self:GetMinimumWidth()` and returns exactly the stored width as a number, then the stored forced state as a boolean.
-- [ ] A new `GameTooltip` starts with minimum width `0` and forced state `false`; `SetMinimumWidth(width, force)` stores both values for the getter to return.
-- [ ] A missing or nil getter receiver raises an error with the exact Usage text. Tested non-table, non-framescript and wrong-class conversions use the exact native error reasons recorded by R88n.7.
+- [x] On Retail 12.1.5.70688, `GetMinimumWidth` uses `Usage: local width, forced = self:GetMinimumWidth()` and returns exactly the stored width as a number, then the stored forced state as a boolean.
+- [x] A new `GameTooltip` starts with minimum width `0` and forced state `false`; `SetMinimumWidth(width, force)` stores both values for the getter to return.
+- [x] A missing or nil getter receiver raises an error with the exact Usage text. Tested non-table, non-framescript and wrong-class conversions use the exact native error reasons recorded by R88n.7.
 
 ### FontString pairs
 
-- [ ] `AddFontStrings` uses `Usage: self:AddFontStrings(leftFontString, rightFontString)`, reads a tooltip and two FontStrings, and returns zero values on success.
-- [ ] A successful call stores the supplied left/right pair. Stored pair count is separate from `NumLines`; adding a pair does not add a populated tooltip line.
-- [ ] Tested receiver and FontString conversion failures use the native reasons and Usage formatting recorded by R88n.7.
+- [x] `AddFontStrings` uses `Usage: self:AddFontStrings(leftFontString, rightFontString)`, reads a tooltip and two FontStrings, and returns zero values on success.
+- [x] A successful call stores the supplied left/right pair. Stored pair count is separate from `NumLines`; adding a pair does not add a populated tooltip line.
+- [x] Tested receiver and FontString conversion failures use the native reasons and Usage formatting recorded by R88n.7.
 
 ### Original consumer
 
-- [ ] The selected Retail `GameTooltip_InsertFrame` consumer continues to use the first `GetMinimumWidth` result and can raise the stored width for an inserted frame.
+- [x] The selected Retail `GameTooltip_InsertFrame` consumer continues to use the first `GetMinimumWidth` result and can raise the stored width for an inserted frame.
 
 ## How it works
 
@@ -38,7 +38,7 @@ This spec records the `GameTooltip` minimum-width and FontString-pair contracts 
 
 ## Known gaps (current cycle)
 
-- [ ] Run the targeted API and preservation tests, five zero-warning compile receipts, and the Retail `lua-errors` check before handoff.
+- None within the contract tested here.
 
 ## Out of scope
 

@@ -1,3 +1,7 @@
+## [2026-11-14] test | GameTooltip method contracts
+
+**VERIFIED (Retail code SHA `dbed6165c15a61307ad9a430a614d7f32410d2ad`):** the minimum-width arity/default/round-trip, FontString-pair storage/`NumLines` separation, and conversion-error tests pass; the selected `GameTooltip_InsertFrame` consumer preservation test passes. The consumer selector is PRESERVATION, not a producer RED. Each test ran alone with a 90-second cap and a fresh CVar copy (SHA-256 `8d1709049bc9acdbed0465889701a0e370667ef18cf06b71db479b3972aa350c`); the source file's atime and contents stayed unchanged.
+
 ## [2026-11-14] implementation | GameTooltip minimum width and font strings
 
 Updated the [GameTooltip method contract](../specs/game-tooltip-methods.md), [Lua API](systems/lua-api.md#game-tooltip-minimum-width-and-font-strings), and [consumer-selection investigation](investigations/consumer-selection-and-red-proof.md#gametooltip-minimum-width-consumer) with R88n.7. **VERIFIED (Retail 12.1.5.70688):** `GetMinimumWidth` returns the stored number and forced boolean; `AddFontStrings` stores a pair and returns zero values without adding a `NumLines` entry. The selected `GameTooltip_InsertFrame` consumer is PRESERVATION because its scalar comparison observes only the first getter result. **INFERRED:** PTR/Forever applicability follows the shared registration path; native behavior is not independently proved. **UNKNOWN:** later pair layout/rendering use.
