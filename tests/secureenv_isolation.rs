@@ -50,11 +50,10 @@ fn toc_multiannotations_load_files_in_order_with_secure_environment() {
     std::fs::write(
         root.path().join("Secure.xml"),
         "<Ui>\n\
+         <Script file=\"SecureXmlScript.lua\"/>\n\
+         <Script>assert(type(debug) == 'table' and type(coroutine) == 'table'); annotationSecureXmlInlineRead = true</Script>\n\
          <Frame name=\"AnnotationProbeFrame\">\n\
-         <Scripts>\n\
-         <OnLoad>assert(type(debug) == 'table' and type(coroutine) == 'table'); annotationSecureXmlInlineRead = true</OnLoad>\n\
-         <OnLoad file=\"SecureXmlScript.lua\"/>\n\
-         </Scripts>\n\
+         <Size x=\"20\" y=\"20\"/>\n\
          </Frame>\n\
          </Ui>",
     )
@@ -86,6 +85,8 @@ fn toc_multiannotations_load_files_in_order_with_secure_environment() {
 
     let result = wow_ui_sim::loader::load_addon(&env.loader_env(), &toc).unwrap();
     assert!(result.warnings.is_empty(), "{:?}", result.warnings);
+    let lua_errors = env.state().borrow().lua_errors.clone();
+    assert!(lua_errors.is_empty(), "{:?}", lua_errors);
 
     let secure_file_results: (bool, bool, bool, bool, bool, bool, bool, bool, bool) = env
         .eval(

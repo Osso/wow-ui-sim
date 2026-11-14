@@ -55,7 +55,7 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 - `src/bin/wow_sim/addon_loading.rs` — registers packaged follower declarations before Blizzard startup, registers third-party declarations, and skips startup roots already loaded by followers.
 - `src/c_api/c_addons.rs` — exposes startup follower processing through the runtime loader.
 - `src/c_api/c_addons_runtime.rs` — resolves runtime dependencies and submits `LoadWith` followers.
-- `src/loader/lua_file.rs`, `src/loader/xml_file.rs`, `src/lua_api/globals/security/secure_env.rs` — execute secure-mode Lua/XML chunks with the temporary private snapshot and publish their assignments.
+- `src/loader/lua_file.rs`, `src/loader/xml_file.rs`, `src/lua_api/loader_env.rs`, `src/lua_api/globals/security/secure_env.rs` — execute secure-mode file and generated Lua/XML chunks with the temporary private snapshot and publish their assignments.
 - `src/lua_api/state/sim_state.rs` — holds ordered registered follower declarations and the resolved target-to-follower index.
 - `src/lua_api/state.rs` — initializes the registration vector and follower index.
 - `src/lua_api/state/ui_reload.rs` — clears the follower index on UI reload.
