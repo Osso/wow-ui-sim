@@ -75,7 +75,7 @@ pub const RETAIL_API_INTERFACE_VERSION: u32 = ACTIVE_RETAIL_API_EPOCH.interface_
 
 pub const ACTIVE_INTERFACE_VERSION: u32 = ACTIVE.interface_version();
 
-pub const fn is_active_retail_12_1_5() -> bool {
+pub fn is_active_retail_12_1_5() -> bool {
     ACTIVE == ClientProfile::Retail && ACTIVE_RETAIL_API_EPOCH == RetailApiEpoch::Retail12_1_5
 }
 
