@@ -243,6 +243,46 @@ fn retail_map_assignment_projects_mulgore_center() {
 
 #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
 #[test]
+fn retail_explicit_map_world_rect_precedes_assignment_catalog() {
+    let env = env();
+    let mut map = env.state().borrow().maps.get(&84).unwrap().clone();
+    map.ui_map_id = 999_999;
+    map.name = "Explicit rectangle fixture".into();
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.maps.insert(999_999, map);
+        sim.map_world_rects.insert(
+            999_999,
+            wow_ui_sim::c_api::map_world_coordinates::MapWorldRect {
+                continent_id: 42,
+                left: -200.0,
+                right: 600.0,
+                top: 100.0,
+                bottom: 500.0,
+            },
+        );
+    }
+    let (result_count, continent_id, x, y): (i32, i32, f64, f64) = env
+        .eval(
+            r#"
+            local function capture(...)
+                local count = select('#', ...)
+                local continentID, position = ...
+                if not position then return count, -1, 0, 0 end
+                return count, continentID, position.x, position.y
+            end
+            return capture(C_Map.GetWorldPosFromMapPos(999999, {x=0.25, y=0.75}))
+            "#,
+        )
+        .unwrap();
+
+    assert_eq!(result_count, 2);
+    assert_eq!(continent_id, 42);
+    assert_eq!((x, y), (0.0, 400.0));
+}
+
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[test]
 fn retail_map_position_truncates_fractional_map_id_toward_zero() {
     let env = env();
     let (result_count, instance_id): (i32, i32) = env
