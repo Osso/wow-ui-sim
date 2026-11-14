@@ -205,14 +205,20 @@ fn assert_result(env: &WowLuaEnv, number: Option<u32>, text: &str, restricted: b
     );
     let payload = rilua::table_security::unwrap_secret(lua.state_mut(), value)
         .expect("trusted host authentication");
-    let expected = match number {
-        Some(count) => Val::Num(f64::from(count)),
-        None => Val::Str(lua.state_mut().gc.intern_string(text.as_bytes())),
-    };
-    assert_eq!(
-        payload, expected,
-        "actual ValNum/ValStr UTF8 payload; no secret nominal Lua type claim"
-    );
+    match (payload, number) {
+        (Val::Num(actual), Some(expected)) => assert_eq!(actual, f64::from(expected)),
+        (Val::Str(actual), None) => assert_eq!(
+            lua.state_mut()
+                .gc
+                .string_arena
+                .get(actual)
+                .expect("actual Lua string payload")
+                .data(),
+            text.as_bytes(),
+            "actual ValNum/ValStr UTF8 payload; no secret nominal Lua type claim"
+        ),
+        (actual, expected) => panic!("unexpected payload {actual:?} for {expected:?}"),
+    }
 }
 
 fn display(env: &WowLuaEnv, arguments: &str, expected: &str, restricted: bool) {
