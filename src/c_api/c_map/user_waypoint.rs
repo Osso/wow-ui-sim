@@ -48,7 +48,7 @@ pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResu
 
 fn set_user_waypoint(state: &mut LuaState) -> LuaResult<u32> {
     let waypoint = read_waypoint(state)?;
-    let was_set = user_waypoint_is_valid(&waypoint) && can_set_map(waypoint.ui_map_id);
+    let was_set = waypoint.is_valid() && can_set_map(waypoint.ui_map_id);
     if was_set {
         borrow_state_mut(state)?.user_waypoint = Some(waypoint);
         call_optional_waypoint_change_callback(state)?;
@@ -61,7 +61,7 @@ fn set_user_waypoint(state: &mut LuaState) -> LuaResult<u32> {
 
 fn get_user_waypoint(state: &mut LuaState) -> LuaResult<u32> {
     let waypoint = borrow_state(state)?.user_waypoint;
-    let Some(waypoint) = waypoint.filter(user_waypoint_is_valid) else {
+    let Some(waypoint) = waypoint.filter(UserWaypoint::is_valid) else {
         // The API permits no return; invalid stored points are not serialized.
         return Ok(0);
     };
@@ -74,7 +74,7 @@ fn get_user_waypoint(state: &mut LuaState) -> LuaResult<u32> {
 fn get_user_waypoint_position_for_map(state: &mut LuaState) -> LuaResult<u32> {
     let map_id = read_untainted_signed32_argument(state, 1, POSITION_FUNCTION, POSITION_USAGE)?;
     let waypoint = borrow_state(state)?.user_waypoint;
-    let Some(waypoint) = waypoint.filter(user_waypoint_is_valid) else {
+    let Some(waypoint) = waypoint.filter(UserWaypoint::is_valid) else {
         return Ok(0);
     };
     if waypoint.ui_map_id != map_id {
@@ -90,7 +90,7 @@ fn get_user_waypoint_position_for_map(state: &mut LuaState) -> LuaResult<u32> {
 fn has_user_waypoint(state: &mut LuaState) -> LuaResult<u32> {
     let waypoint = borrow_state(state)?.user_waypoint;
     state.push(Val::Bool(
-        waypoint.is_some_and(|waypoint| user_waypoint_is_valid(&waypoint)),
+        waypoint.is_some_and(|waypoint| waypoint.is_valid()),
     ));
     Ok(1)
 }
@@ -100,7 +100,7 @@ fn clear_user_waypoint(state: &mut LuaState) -> LuaResult<u32> {
         let mut sim = borrow_state_mut(state)?;
         sim.user_waypoint
             .take()
-            .is_some_and(|waypoint| user_waypoint_is_valid(&waypoint))
+            .is_some_and(|waypoint| waypoint.is_valid())
     };
     if had_valid_waypoint {
         call_optional_waypoint_change_callback(state)?;
@@ -196,14 +196,6 @@ fn point_conversion_error() -> rilua::LuaError {
     // INFERRED suffix: R88h.1 establishes the `%s - %s` composition and Usage,
     // but not the second operand's exact text.
     bad_argument(1, SET_FUNCTION, &format!("{SET_USAGE} - invalid point"))
-}
-
-fn user_waypoint_is_valid(waypoint: &UserWaypoint) -> bool {
-    waypoint.ui_map_id != 0 && is_normalized(waypoint.x) && is_normalized(waypoint.y)
-}
-
-fn is_normalized(value: f64) -> bool {
-    value.is_finite() && (0.0..=1.0).contains(&value)
 }
 
 fn create_ui_map_point(state: &mut LuaState, waypoint: UserWaypoint) -> LuaResult<Val> {

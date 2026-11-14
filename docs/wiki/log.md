@@ -12,6 +12,10 @@ The default-state selector is PRESERVATION, not native availability or RED.
   owner precedes ItemRefHandlers and disclose unsupported pre-owner hyperlink
   calls, per coordinator #962. See [[adventureguide-original-availability]].
 
+## [2026-11-13] system | User waypoint supertracking
+
+Updated [SuperTrack state](systems/super-track-state.md#user-waypoint-supertracking), [C_Map waypoint system](systems/c-map-user-waypoint.md#original-consumer-boundary), and both contracts with R88i.3/R88j.5/R88j.6. **VERIFIED (Retail 12.1.5.70688):** separate quest/content/map-pin flags, content ID-zero presence, direct setter/clear effects, corpse preservation, aggregate user-waypoint inclusion, and ClearAll selection/flag reset are recorded. **VERIFIED (optional Retail tests):** original WaypointLocationDataProvider click and pin consumers pass; focused flag transition tests pass. **INFERRED:** getter flags match selections from a consistent start. **UNKNOWN:** two getterless flags, exact return arities, named-event effects, and SetSuperTrackedMapPin/SetSuperTrackedVignette acceptance (R88j.8 pending).
+
 ## [2026-11-13] fix | Inline icon right-edge advance
 
 Updated [Rendering pipeline](systems/rendering-pipeline.md#inline-icons-in-text) with R88f.L.2's absolute-right-edge snap and the tooltip boundary. A fractional scaled-edge `GetStringWidth` test exercises snapped cursor advance.

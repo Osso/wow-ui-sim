@@ -40,6 +40,8 @@ fn supplied_map_pin_and_vignette_are_observable_and_clearable() {
     {
         let mut state = env.state().borrow_mut();
         state.super_track.map_pin = Some((0, 201));
+        state.super_track.map_pin_saved = (0, 201);
+        state.super_track.map_pin_tracking = true;
         state.super_track.vignette = Some("Vignette-fixture-1".into());
     }
     env.exec(
@@ -57,6 +59,109 @@ fn supplied_map_pin_and_vignette_are_observable_and_clearable() {
     "#,
     )
     .unwrap();
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn retail_supertrack_flags_follow_verified_setter_updates() {
+    let env = WowLuaEnv::new().unwrap();
+    {
+        let mut state = env.state().borrow_mut();
+        state.super_track.quest_id = Some(50);
+        state.super_track.quest_tracking = true;
+        state.super_track.content = Some((1, 0));
+        state.super_track.content_saved = (1, 0);
+        state.super_track.content_tracking = true;
+        state.super_track.map_pin = Some((2, 25));
+        state.super_track.map_pin_saved = (2, 25);
+        state.super_track.map_pin_tracking = true;
+        state.super_track.vignette = Some("Vignette-fixture-1".into());
+    }
+
+    env.exec(
+        r#"
+        assert(C_SuperTrack.IsSuperTrackingQuest())
+        assert(C_SuperTrack.IsSuperTrackingContent())
+        assert(C_SuperTrack.IsSuperTrackingMapPin())
+
+        C_SuperTrack.SetSuperTrackedQuestID(0)
+        assert(not C_SuperTrack.IsSuperTrackingQuest())
+        assert(C_SuperTrack.IsSuperTrackingContent())
+        assert(C_SuperTrack.IsSuperTrackingMapPin())
+        assert(C_SuperTrack.GetSuperTrackedQuestID() == nil)
+        local contentType, contentID = C_SuperTrack.GetSuperTrackedContent()
+        assert(contentType == 1 and contentID == 0)
+        local pinType, pinID = C_SuperTrack.GetSuperTrackedMapPin()
+        assert(pinType == 2 and pinID == 25)
+
+        C_SuperTrack.SetSuperTrackedQuestID(51)
+        assert(C_SuperTrack.IsSuperTrackingQuest())
+        assert(not C_SuperTrack.IsSuperTrackingContent())
+        assert(not C_SuperTrack.IsSuperTrackingMapPin())
+        assert(select('#', C_SuperTrack.GetSuperTrackedContent()) == 0)
+        assert(select('#', C_SuperTrack.GetSuperTrackedMapPin()) == 0)
+        assert(C_SuperTrack.GetSuperTrackedVignette() == nil)
+
+        C_SuperTrack.SetSuperTrackedContent(0, 0)
+        assert(not C_SuperTrack.IsSuperTrackingQuest())
+        assert(C_SuperTrack.IsSuperTrackingContent())
+        assert(not C_SuperTrack.IsSuperTrackingMapPin())
+        local zeroType, zeroID = C_SuperTrack.GetSuperTrackedContent()
+        assert(zeroType == 0 and zeroID == 0)
+        C_SuperTrack.ClearSuperTrackedContent()
+        assert(not C_SuperTrack.IsSuperTrackingContent())
+        assert(select('#', C_SuperTrack.GetSuperTrackedContent()) == 0)
+        "#,
+    )
+    .unwrap();
+
+    assert_eq!(
+        env.state().borrow().super_track.content_saved,
+        (0, 0),
+        "clearing a content selection must retain its saved values"
+    );
+
+    {
+        let mut state = env.state().borrow_mut();
+        state.super_track.map_pin = Some((3, 33));
+        state.super_track.map_pin_saved = (3, 33);
+        state.super_track.map_pin_tracking = false;
+    }
+    env.exec("C_SuperTrack.ClearSuperTrackedMapPin()").unwrap();
+    {
+        let state = env.state().borrow();
+        assert_eq!(state.super_track.map_pin, Some((3, 33)));
+        assert_eq!(state.super_track.map_pin_saved, (3, 33));
+    }
+
+    env.state().borrow_mut().super_track.map_pin_tracking = true;
+    env.exec(
+        r#"
+        local pinType, pinID = C_SuperTrack.GetSuperTrackedMapPin()
+        assert(pinType == 3 and pinID == 33)
+        C_SuperTrack.ClearSuperTrackedMapPin()
+        assert(not C_SuperTrack.IsSuperTrackingMapPin())
+        assert(select('#', C_SuperTrack.GetSuperTrackedMapPin()) == 0)
+        "#,
+    )
+    .unwrap();
+    env.exec(
+        r#"
+        C_SuperTrack.ClearAllSuperTracked()
+        assert(not C_SuperTrack.IsSuperTrackingQuest())
+        assert(not C_SuperTrack.IsSuperTrackingContent())
+        assert(not C_SuperTrack.IsSuperTrackingMapPin())
+        assert(not C_SuperTrack.IsSuperTrackingCorpse())
+        assert(not C_SuperTrack.IsSuperTrackingAnything())
+        assert(select('#', C_SuperTrack.GetSuperTrackedContent()) == 0)
+        assert(select('#', C_SuperTrack.GetSuperTrackedMapPin()) == 0)
+        "#,
+    )
+    .unwrap();
+    let state = env.state().borrow();
+    assert_eq!(state.super_track.content_saved, (0, 0));
+    assert_eq!(state.super_track.map_pin, None);
+    assert_eq!(state.super_track.map_pin_saved, (3, 33));
 }
 
 #[test]
