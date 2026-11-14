@@ -147,11 +147,19 @@ pub(crate) fn register_namespace_function_with_flags(
     if let (Some(ordinary), Some(secure)) = (ordinary, secure) {
         crate::lua_bridge::set_namespace_peer(state, ordinary, secure)?;
     }
-    if let Some(ordinary) = ordinary {
-        table_set_rust_fn_unpaired(state, ordinary, member, function)?;
-    }
-    if let Some(secure) = secure {
-        table_set_rust_fn_unpaired(state, secure, member, function)?;
+    match (ordinary, secure) {
+        (Some(ordinary), Some(secure)) => {
+            table_set_rust_fn_unpaired(state, ordinary, member, function)?;
+            let value = crate::lua_api::methods::table_get(state, Val::Table(ordinary), member);
+            crate::lua_api::methods::table_set(state, Val::Table(secure), member, value);
+        }
+        (Some(ordinary), None) => {
+            table_set_rust_fn_unpaired(state, ordinary, member, function)?;
+        }
+        (None, Some(secure)) => {
+            table_set_rust_fn_unpaired(state, secure, member, function)?;
+        }
+        (None, None) => {}
     }
     Ok(())
 }
@@ -347,6 +355,34 @@ mod tests {
             .expect("paired namespace flag probe");
 
         assert_eq!(result, vec![true, true, true, true]);
+    }
+
+    #[cfg(feature = "client-retail")]
+    #[test]
+    fn retail_c_timer_dual_publication_preserves_function_identity() {
+        let env = WowLuaEnv::new().expect("lua env");
+        {
+            let mut lua = env.rilua_mut();
+            let state = lua.state_mut();
+            for member in ["After", "NewTicker", "NewTimer"] {
+                register_namespace_function_with_flags(state, "C_Timer", member, flag_probe, 3)
+                    .expect("register dual-published C_Timer member");
+            }
+        }
+
+        let result: (bool, bool, bool) = env
+            .eval(
+                r#"
+                local public = rawget(_G, "C_Timer")
+                local secure = rawget(__secureenv, "C_Timer")
+                return rawequal(rawget(public, "After"), rawget(secure, "After")),
+                    rawequal(rawget(public, "NewTicker"), rawget(secure, "NewTicker")),
+                    rawequal(rawget(public, "NewTimer"), rawget(secure, "NewTimer"))
+                "#,
+            )
+            .expect("C_Timer function identity probe");
+
+        assert_eq!(result, (true, true, true));
     }
 
     #[test]

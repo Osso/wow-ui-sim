@@ -43,8 +43,8 @@ use std::time::{Duration, Instant};
 /// Maximum allowed timer duration in seconds ((2^32 - 1) / 1000).
 const MAX_TIMER_SECS: f64 = (u32::MAX as f64) / 1000.0;
 
-/// VERIFIED (R88k.7): Retail C_Timer.After uses flags value 3.
-const C_TIMER_AFTER_FLAGS: u8 = 3;
+/// VERIFIED (R88n.9): Retail After, NewTicker, and NewTimer use flags value 3.
+const C_TIMER_DUAL_ENV_FLAGS: u8 = 3;
 
 /// Registry key for the timer callback storage table.
 const TIMER_CALLBACKS_KEY: &str = "__rilua_timer_callbacks";
@@ -435,37 +435,16 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
 fn register_c_timer(lua: &mut rilua::Lua) -> LuaResult<()> {
     let retail = crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail;
     let state = lua.state_mut();
-    if retail {
-        crate::c_api::register_namespace_function_with_flags(
-            state,
-            "C_Timer",
-            "After",
-            timer_after,
-            C_TIMER_AFTER_FLAGS,
-        )?;
-    } else {
-        // UNKNOWN outside Retail: preserve the current dual allowlist entry.
-        crate::c_api::register_unknown_namespace_function(state, "C_Timer", "After", timer_after)?;
-    }
-    // UNKNOWN (R88k.7): sibling methods have no verified flags; preserve their dual allowlist.
+    register_c_timer_member(state, retail, "After", timer_after)?;
+    // UNKNOWN: NewTimerID has no verified registration flags.
     crate::c_api::register_unknown_namespace_function(
         state,
         "C_Timer",
         "NewTimerID",
         timer_new_timer_id,
     )?;
-    crate::c_api::register_unknown_namespace_function(
-        state,
-        "C_Timer",
-        "NewTicker",
-        timer_new_ticker,
-    )?;
-    crate::c_api::register_unknown_namespace_function(
-        state,
-        "C_Timer",
-        "NewTimer",
-        timer_new_timer,
-    )?;
+    register_c_timer_member(state, retail, "NewTicker", timer_new_ticker)?;
+    register_c_timer_member(state, retail, "NewTimer", timer_new_timer)?;
     #[cfg(feature = "timed-signal-maps")]
     crate::c_api::timed_signal_map::register_c_timer_timed_signal_map(state)?;
     #[cfg(not(feature = "timed-signal-maps"))]
@@ -491,6 +470,25 @@ fn register_c_timer(lua: &mut rilua::Lua) -> LuaResult<()> {
 ///
 /// Callers that build the frame metatable should copy these entries onto it
 /// (or set `__rilua_layout_fns` as a fallback `__index` delegate).
+fn register_c_timer_member(
+    state: &mut LuaState,
+    retail: bool,
+    member: &str,
+    function: rilua::RustFn,
+) -> LuaResult<()> {
+    if retail {
+        crate::c_api::register_namespace_function_with_flags(
+            state,
+            "C_Timer",
+            member,
+            function,
+            C_TIMER_DUAL_ENV_FLAGS,
+        )
+    } else {
+        crate::c_api::register_unknown_namespace_function(state, "C_Timer", member, function)
+    }
+}
+
 fn register_layout_globals(lua: &mut rilua::Lua) -> LuaResult<()> {
     let state = lua.state_mut();
 

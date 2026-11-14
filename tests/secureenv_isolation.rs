@@ -631,23 +631,3 @@ fn retail_c_timer_after_is_registered_in_both_namespace_tables() {
 
     assert_eq!(result, (true, true, true));
 }
-
-// PRESERVATION: the previous paired C_Timer registration shared one function value.
-#[test]
-fn unknown_c_timer_sibling_preserves_paired_function_identity() {
-    let env = env();
-
-    let same_function: bool = env
-        .eval(
-            r#"
-            local public = rawget(_G, "C_Timer")
-            local secure = rawget(__secureenv, "C_Timer")
-            return type(rawget(public, "NewTimer")) == "function"
-                and type(rawget(secure, "NewTimer")) == "function"
-                and rawequal(rawget(public, "NewTimer"), rawget(secure, "NewTimer"))
-            "#,
-        )
-        .unwrap();
-
-    assert!(same_function);
-}
