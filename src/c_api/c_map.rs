@@ -75,6 +75,16 @@ pub(crate) struct UserWaypoint {
     pub(crate) z: Option<f64>,
 }
 
+impl UserWaypoint {
+    pub(crate) fn is_valid(&self) -> bool {
+        self.ui_map_id != 0 && is_normalized_coordinate(self.x) && is_normalized_coordinate(self.y)
+    }
+}
+
+fn is_normalized_coordinate(value: f64) -> bool {
+    value.is_finite() && (0.0..=1.0).contains(&value)
+}
+
 const MAP_ART_LAYER_HASH_FIELDS: usize = 7;
 
 const C_MAP_METHODS: &[(&str, RustLuaFn)] = &[

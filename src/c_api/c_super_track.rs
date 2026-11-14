@@ -6,9 +6,12 @@ pub struct SuperTrackState {
     pub content: Option<(i32, i32)>,
     pub map_pin: Option<(i32, i32)>,
     pub vignette: Option<String>,
+    /// UNKNOWN (R88i.3): native clears six of eight tracking flags; their
+    /// identities and the two surviving flags remain unmodeled.
+    pub user_waypoint: bool,
 }
 
-use super::helpers::{ensure_namespace, validate_supplied_relation_id};
+use super::helpers::{bad_argument, ensure_namespace, validate_supplied_relation_id};
 use crate::lua_api::globals::state_backed_queries::dispatch_event_now;
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, create_string};
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
@@ -27,7 +30,13 @@ const METHODS: &[(&str, RustFn)] = &[
     ("ClearSuperTrackedContent", clear_content),
     ("ClearSuperTrackedMapPin", clear_map_pin),
     ("ClearAllSuperTracked", clear_all),
+    ("SetSuperTrackedUserWaypoint", set_user_waypoint),
+    ("IsSuperTrackingUserWaypoint", is_user_waypoint),
 ];
+
+const USER_WAYPOINT_SET_FUNCTION: &str = "C_SuperTrack.SetSuperTrackedUserWaypoint";
+const USER_WAYPOINT_SET_USAGE: &str =
+    "Usage: C_SuperTrack.SetSuperTrackedUserWaypoint(superTracked)";
 
 pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     let namespace = ensure_namespace(state, "C_SuperTrack")?;
@@ -120,6 +129,74 @@ fn clear_map_pin(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn clear_all(state: &mut LuaState) -> LuaResult<u32> {
-    borrow_state_mut(state)?.super_track = SuperTrackState::default();
+    {
+        let user_waypoint = borrow_state(state)?.super_track.user_waypoint;
+        let mut sim = borrow_state_mut(state)?;
+        // UNKNOWN: preserve the new flag until its native ClearAll interaction is known.
+        sim.super_track = SuperTrackState {
+            user_waypoint,
+            ..SuperTrackState::default()
+        };
+    }
     publish_change(state)
+}
+
+fn set_user_waypoint(state: &mut LuaState) -> LuaResult<u32> {
+    let requested = read_user_waypoint_flag(state)?;
+    let mut sim = borrow_state_mut(state)?;
+    if sim.super_track.user_waypoint == requested {
+        // UNKNOWN (R88i.3): the implementation uses the neutral zero-value seam.
+        return Ok(0);
+    }
+
+    let waypoint_is_valid = sim
+        .user_waypoint
+        .is_some_and(|waypoint| waypoint.is_valid());
+    let should_track = requested && waypoint_is_valid;
+    if should_track {
+        // VERIFIED: these four stored selections are cleared on a valid transition.
+        sim.super_track.quest_id = None;
+        sim.super_track.content = None;
+        sim.super_track.map_pin = None;
+        sim.super_track.vignette = None;
+    }
+    sim.super_track.user_waypoint = should_track;
+    // UNKNOWN (R88i.3): event dispatch is not proved; do not fire SUPER_TRACKING_CHANGED.
+    Ok(0)
+}
+
+fn is_user_waypoint(state: &mut LuaState) -> LuaResult<u32> {
+    let is_tracking = borrow_state(state)?.super_track.user_waypoint;
+    state.push(Val::Bool(is_tracking));
+    // UNKNOWN (R88i.3): the implementation uses one boolean as the neutral return seam.
+    Ok(1)
+}
+
+fn read_user_waypoint_flag(state: &LuaState) -> LuaResult<bool> {
+    let value = stack_val(state, 1);
+    if rilua::table_security::is_secret_value(state, value)
+        && !rilua::table_security::can_access_secrets(state)
+    {
+        return Err(user_waypoint_secret_argument_error());
+    }
+    let value = rilua::table_security::unwrap_secret(state, value)
+        .map_err(|_| user_waypoint_secret_argument_error())?;
+    if matches!(value, Val::Nil) {
+        return Err(bad_argument(
+            1,
+            USER_WAYPOINT_SET_FUNCTION,
+            USER_WAYPOINT_SET_USAGE,
+        ));
+    }
+    Ok(!matches!(value, Val::Bool(false)))
+}
+
+fn user_waypoint_secret_argument_error() -> rilua::LuaError {
+    bad_argument(
+        1,
+        USER_WAYPOINT_SET_FUNCTION,
+        &format!(
+            "{USER_WAYPOINT_SET_USAGE}. Secret values are only allowed during untainted execution for this argument."
+        ),
+    )
 }
