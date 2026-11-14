@@ -48,6 +48,8 @@ use crate::lua_api::state::MapData;
 #[cfg(feature = "retail-12-1-0")]
 use crate::lua_bridge::val_to_i32;
 use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+use rilua::runtime_error;
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
@@ -508,9 +510,19 @@ fn c_map_get_map_children_info(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+const GET_WORLD_POS_USAGE: &str =
+    "Usage: local continentID, worldPosition = C_Map.GetWorldPosFromMapPos(uiMapID, mapPosition)";
+
 fn c_map_get_world_pos_from_map_pos(state: &mut LuaState) -> LuaResult<u32> {
+    #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+    let ui_map_id = read_retail_map_id(state, 1)?;
+    #[cfg(not(all(feature = "profile-retail", feature = "retail-12-1-5")))]
     let ui_map_id = i32::from_stack(state, 1)?;
+
     let normalized_pos = stack_val(state, 2);
+    #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+    let map_position = read_world_map_position(state, normalized_pos)?;
     let (map_is_known, explicit_rect) = {
         let sim = borrow_state(state)?;
         (
@@ -519,9 +531,17 @@ fn c_map_get_world_pos_from_map_pos(state: &mut LuaState) -> LuaResult<u32> {
         )
     };
 
+    #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+    if ui_map_table_entry(ui_map_id).is_none() {
+        return Ok(0);
+    }
+
     // Explicit simulator rectangles take precedence over generated Retail assignments.
     if map_is_known {
         if let Some(rect) = explicit_rect {
+            #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+            let (normalized_x, normalized_y) = map_position;
+            #[cfg(not(all(feature = "profile-retail", feature = "retail-12-1-5")))]
             let Some((normalized_x, normalized_y)) = normalized_coordinates(state, normalized_pos)
             else {
                 return Ok(0);
@@ -539,7 +559,7 @@ fn c_map_get_world_pos_from_map_pos(state: &mut LuaState) -> LuaResult<u32> {
     #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
     {
         let Some((continent_id, x, y)) =
-            retail_map_assignment_world_position(state, ui_map_id, normalized_pos)
+            retail_map_assignment_world_position(ui_map_id, map_position)
         else {
             return Ok(0);
         };
@@ -564,30 +584,99 @@ fn c_map_get_world_pos_from_map_pos(state: &mut LuaState) -> LuaResult<u32> {
     }
 }
 
-/// INFERRED: map-space bounds and Region x/y endpoints define a linear
-/// projection; the lowest-OrderIndex matching row is selected. Region's first
-/// and second axes map directly to world x and y, consistent with MapWorldRect.
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+fn read_retail_map_id(state: &LuaState, index: i32) -> LuaResult<i32> {
+    let value = f64::from_stack(state, index)
+        .map_err(|_| runtime_error(format!("{GET_WORLD_POS_USAGE}: invalid uiMapID")))?;
+    if !value.is_finite() || value < f64::from(i32::MIN) || value > f64::from(i32::MAX) {
+        return Err(runtime_error(format!(
+            "{GET_WORLD_POS_USAGE}: invalid uiMapID"
+        )));
+    }
+    Ok(value.trunc() as i32)
+}
+
+#[cfg(not(all(feature = "profile-retail", feature = "retail-12-1-5")))]
+fn normalized_coordinates(state: &mut LuaState, position: Val) -> Option<(f64, f64)> {
+    let Val::Num(x) = table_get(state, position, "x") else {
+        return None;
+    };
+    let Val::Num(y) = table_get(state, position, "y") else {
+        return None;
+    };
+    (x.is_finite() && y.is_finite()).then_some((x, y))
+}
+
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+fn read_world_map_position(state: &mut LuaState, position: Val) -> LuaResult<(f64, f64)> {
+    let Val::Table(_) = position else {
+        return Err(runtime_error(GET_WORLD_POS_USAGE));
+    };
+    let Val::Num(x) = table_get(state, position, "x") else {
+        return Err(runtime_error(GET_WORLD_POS_USAGE));
+    };
+    let Val::Num(y) = table_get(state, position, "y") else {
+        return Err(runtime_error(GET_WORLD_POS_USAGE));
+    };
+    Ok((x, y))
+}
+
+/// VERIFIED: choose the containing row nearest its UI-rectangle centre, or the
+/// nearest centre when no row contains the point. CSV-order tie visitation is
+/// INFERRED because the native iterator's row order is unknown.
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+fn select_retail_map_assignment(
+    assignments: &[sim_data_profile::ui_map_assignments::UiMapAssignment],
+    x: f64,
+    y: f64,
+) -> Option<&sim_data_profile::ui_map_assignments::UiMapAssignment> {
+    let mut containing = None;
+    let mut nearest = None;
+    let epsilon = f64::from(f32::EPSILON);
+
+    for assignment in assignments {
+        let min_x = f64::from(assignment.ui_min[0]);
+        let min_y = f64::from(assignment.ui_min[1]);
+        let max_x = f64::from(assignment.ui_max[0]);
+        let max_y = f64::from(assignment.ui_max[1]);
+        let span_x = max_x - min_x;
+        let span_y = max_y - min_y;
+        if span_x < epsilon || span_y < epsilon {
+            continue;
+        }
+
+        let center_x = min_x + span_x * 0.5;
+        let center_y = min_y + span_y * 0.5;
+        let delta_x = x - center_x;
+        let delta_y = y - center_y;
+        let distance_squared = delta_x * delta_x + delta_y * delta_y;
+        let inside = x >= min_x && x <= max_x && y >= min_y && y <= max_y;
+        let best = if inside {
+            &mut containing
+        } else {
+            &mut nearest
+        };
+        if best
+            .as_ref()
+            .is_none_or(|(_, best_distance)| distance_squared < *best_distance)
+        {
+            *best = Some((assignment, distance_squared));
+        }
+    }
+
+    containing.or(nearest).map(|(assignment, _)| assignment)
+}
+
 #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
 fn retail_map_assignment_world_position(
-    state: &mut LuaState,
     ui_map_id: i32,
-    normalized_pos: Val,
+    (x, y): (f64, f64),
 ) -> Option<(i32, f64, f64)> {
     let ui_map_id = u32::try_from(ui_map_id).ok()?;
-    let (x, y) = normalized_coordinates(state, normalized_pos)?;
     let assignments = sim_data_profile::ui_map_assignments::get_ui_map_assignments(ui_map_id)?;
-    let assignment = assignments
-        .iter()
-        .filter(|assignment| {
-            let ui_min_x = f64::from(assignment.ui_min[0]);
-            let ui_min_y = f64::from(assignment.ui_min[1]);
-            let ui_max_x = f64::from(assignment.ui_max[0]);
-            let ui_max_y = f64::from(assignment.ui_max[1]);
-            x >= ui_min_x && x <= ui_max_x && y >= ui_min_y && y <= ui_max_y
-        })
-        .min_by_key(|assignment| assignment.order_index)?;
+    let assignment = select_retail_map_assignment(assignments, x, y)?;
 
-    // INFERRED: a negative MapID marks a row without a world-position result.
+    // INFERRED seam: the current AreaInfo model has no ContinentID for negative MapIDs.
     if assignment.map_id < 0 {
         return None;
     }
@@ -596,18 +685,11 @@ fn retail_map_assignment_world_position(
     let ui_height = f64::from(assignment.ui_max[1]) - f64::from(assignment.ui_min[1]);
     let world_width = f64::from(assignment.region_max[0]) - f64::from(assignment.region_min[0]);
     let world_height = f64::from(assignment.region_max[1]) - f64::from(assignment.region_min[1]);
-    if [ui_width, ui_height, world_width, world_height]
-        .into_iter()
-        .any(|span| !span.is_finite() || span == 0.0)
-    {
-        return None;
-    }
-
     let local_x = (x - f64::from(assignment.ui_min[0])) / ui_width;
     let local_y = (y - f64::from(assignment.ui_min[1])) / ui_height;
     let world_x = f64::from(assignment.region_min[0]) + local_x * world_width;
     let world_y = f64::from(assignment.region_min[1]) + local_y * world_height;
-    (world_x.is_finite() && world_y.is_finite()).then_some((assignment.map_id, world_x, world_y))
+    Some((assignment.map_id, world_x, world_y))
 }
 
 #[cfg(not(all(feature = "profile-retail", feature = "retail-12-1-5")))]
@@ -619,16 +701,6 @@ fn map_world_size(ui_map_id: i32) -> (f64, f64) {
         return (1000.0, 1000.0);
     };
     (layer.layer_width as f64, layer.layer_height as f64)
-}
-
-fn normalized_coordinates(state: &mut LuaState, position: Val) -> Option<(f64, f64)> {
-    let Val::Num(x) = table_get(state, position, "x") else {
-        return None;
-    };
-    let Val::Num(y) = table_get(state, position, "y") else {
-        return None;
-    };
-    (x.is_finite() && y.is_finite()).then_some((x, y))
 }
 
 #[cfg(not(all(feature = "profile-retail", feature = "retail-12-1-5")))]
