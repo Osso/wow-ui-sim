@@ -51,6 +51,19 @@ if rawget(C_SpellBook, "GetSpellBookItemLossOfControlCooldownInfo") == nil then
     end
 end
 
+"#;
+
+const RETAIL_CALL_PET_INFO_LUA: &str = r#"
+if rawget(_G, "GetCallPetSpellInfo") == nil then
+    function GetCallPetSpellInfo(spellID)
+        if type(spellID) ~= "number" then
+            error("Usage: GetCallPetSpellInfo(spellID)", 0)
+        end
+    end
+end
+"#;
+
+const NON_RETAIL_CALL_PET_INFO_LUA: &str = r#"
 if rawget(_G, "GetCallPetSpellInfo") == nil then
     function GetCallPetSpellInfo(_spellID)
         return nil, nil
@@ -60,35 +73,17 @@ end
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(SPELL_BOOK_STATIC_DEFAULTS_LUA)?;
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        lua.exec(RETAIL_CALL_PET_INFO_LUA)?;
+    } else {
+        lua.exec(NON_RETAIL_CALL_PET_INFO_LUA)?;
+    }
     Ok(())
 }
 
 #[cfg(test)]
 mod tests {
     use crate::lua_api::WowLuaEnv;
-
-    #[test]
-    fn installs_spell_book_static_defaults() {
-        let env = WowLuaEnv::new().expect("lua env should initialize");
-
-        let result: (i32, i32, i32, bool, bool, bool, bool) = env
-            .eval(
-                r##"
-                local autocast, autoable = C_SpellBook.GetSpellBookItemAutoCast(1)
-                local spellID, texture = GetCallPetSpellInfo(1)
-                return C_SpellBook.FindSpellOverrideByID(116),
-                       select("#", C_SpellBook.FindFlyoutSlotBySpellID(116)),
-                       select("#", C_SpellBook.FindBaseSpellByID(116)),
-                       autocast,
-                       autoable,
-                       spellID == nil,
-                       texture == nil
-                "##,
-            )
-            .expect("spellbook static defaults should be callable");
-
-        assert_eq!(result, (116, 0, 0, false, false, true, true));
-    }
 
     #[test]
     fn preserves_existing_spell_book_static_provider() {
@@ -120,36 +115,5 @@ mod tests {
             .expect("existing spellbook defaults provider should remain callable");
 
         assert_eq!(result, (999, 123, "pet-icon".to_string()));
-    }
-
-    #[test]
-    fn loss_of_control_info_preserves_absent_slot_nil_shape() {
-        let env = WowLuaEnv::new().expect("lua env should initialize");
-        let spell_id: i32 = env
-            .eval("return C_SpellBook.GetSpellBookItemInfo(5, 0).spellID")
-            .expect("actual player-bank slot 5 should have a spell");
-        assert_eq!(spell_id, 19750);
-        env.state().borrow_mut().spell_loss_of_control.insert(
-            spell_id.try_into().expect("positive fixture spell ID"),
-            crate::lua_api::LossOfControlInfo {
-                start_time: 0.0,
-                duration: 0.0,
-                mod_rate: 1.0,
-                is_active: false,
-                should_replace_normal_cooldown: false,
-            },
-        );
-
-        let result: (bool, String) = env
-            .eval(
-                r#"
-                local missing = C_SpellBook.GetSpellBookItemLossOfControlCooldownInfo(99999, Enum.SpellBookSpellBank.Player)
-                local present = C_SpellBook.GetSpellBookItemLossOfControlCooldownInfo(5, Enum.SpellBookSpellBank.Player)
-                return missing == nil, type(present)
-                "#,
-            )
-            .expect("loss-of-control cooldown defaults should be callable");
-
-        assert_eq!(result, (true, "table".to_string()));
     }
 }

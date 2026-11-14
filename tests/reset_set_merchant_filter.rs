@@ -130,3 +130,96 @@ fn merchant_frame_on_show_resets_the_filter_without_return_values() {
     )
     .expect("original Retail MerchantFrame_OnShow should reach the reset");
 }
+
+/// Original consumer invocation with explicit simulator inputs, not
+/// evidence for inferred faction field names or rating comparison direction.
+#[cfg(feature = "optional-tests")]
+#[test]
+fn merchant_r88i5_original_consumer_calls_requirement_failure_and_skip() {
+    use wow_ui_sim::lua_api::state::MerchantItemRequirement;
+    let env = retail_game_startup_env();
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.merchant_items = vec![6948];
+        sim.merchant_frame_open = true;
+        sim.player.present = true;
+        sim.player.money = 100;
+        sim.merchant_offer_costs
+            .insert(0, MerchantCostRecord::default());
+        sim.merchant_offer_categories.insert(0, 1);
+        sim.merchant_item_requirements
+            .insert(6948, MerchantItemRequirement::default());
+    }
+    env.exec(
+        r#"
+        assert(debug.getinfo(MerchantFrame_UpdateMerchantInfo).source:find(
+            'Blizzard_UIPanels_Game/Mainline/MerchantFrame.lua', 1, true))
+        MerchantFrame.selectedTab = 1
+        MerchantFrame.lastTab = 1
+        MerchantFrame.page = 1
+        local nativeAffordability = CanAffordMerchantItem
+        local function pack(...) return { n = select('#', ...), ... } end
+        CanAffordMerchantItem = function(...)
+            local result = pack(nativeAffordability(...))
+            MerchantRequirementObserved = { result = result, caller = debug.getinfo(2).source }
+            return unpack(result, 1, result.n)
+        end
+        function CheckMerchantRequirementResult(expectFailure)
+            MerchantRequirementObserved = nil
+            local ok, err = pcall(MerchantFrame_Update)
+            assert(not ok and tostring(err):find('MerchantFrame.lua:329:', 1, true), tostring(err))
+            local observed = MerchantRequirementObserved
+            assert(observed and observed.caller:find(
+                'Blizzard_UIPanels_Game/Mainline/MerchantFrame.lua', 1, true))
+            assert(observed.result.n == 1)
+            assert(observed.result[1] == not expectFailure)
+        end
+        CheckMerchantRequirementResult(false)
+    "#,
+    )
+    .unwrap();
+    // INFERRED adapter: an empty faction table represents the missing owner.
+    // VERIFIED publication for a missing native owner is exactly one false.
+    env.exec("__wow_reputation_state.factions = {}").unwrap();
+    env.state()
+        .borrow_mut()
+        .merchant_item_requirements
+        .get_mut(&6948)
+        .unwrap()
+        .requirement_id = 42;
+    env.exec("assert(select('#', CanAffordMerchantItem(1)) == 1); assert(CanAffordMerchantItem(1) == false); CheckMerchantRequirementResult(true)").unwrap();
+    // VERIFIED: zero ID skips the owner/test; missing item record returns no values.
+    env.state()
+        .borrow_mut()
+        .merchant_item_requirements
+        .get_mut(&6948)
+        .unwrap()
+        .requirement_id = 0;
+    env.exec("assert(CanAffordMerchantItem(1)); CheckMerchantRequirementResult(false)")
+        .unwrap();
+    env.state()
+        .borrow_mut()
+        .merchant_item_requirements
+        .remove(&6948);
+    env.exec("assert(select('#', CanAffordMerchantItem(1)) == 0)")
+        .unwrap();
+    // INFERRED adapter fixture: absent rating rejects; test claims only the
+    // original Lua call to that supplied simulator outcome.
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.merchant_offer_categories.insert(0, 0);
+        let cost = sim.merchant_offer_costs.get_mut(&0).unwrap();
+        cost.requirement_value = 1;
+        cost.requirement_mode = 0;
+    }
+    env.exec("CheckMerchantRequirementResult(true)").unwrap();
+    // VERIFIED cost gating: signed modes outside0..8 skip the requirement.
+    env.state()
+        .borrow_mut()
+        .merchant_offer_costs
+        .get_mut(&0)
+        .unwrap()
+        .requirement_mode = -1;
+    env.exec("assert(CanAffordMerchantItem(1)); CheckMerchantRequirementResult(false)")
+        .unwrap();
+}
