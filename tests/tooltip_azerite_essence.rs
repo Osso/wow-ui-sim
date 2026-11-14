@@ -276,6 +276,36 @@ fn retail_azerite_essence_original_consumer_selects_exact_essence_and_rank() {
     ))
     .expect("the original Azerite essence consumer must select the DB2 essence and rank");
 
+    seed_milestone(&env, 103, 0, ESSENCE_TWO);
+    env.exec(&format!(
+        r#"
+        local activeMajor = AzeriteTestShowEssence({ESSENCE_TWO}, 2)
+        local rankOneIDs = AzeriteTestSpellIDs(activeMajor, {essence_two_rank_one})
+        local rankTwoIDs = AzeriteTestSpellIDs(activeMajor, {essence_two_rank_two})
+        assert(AzeriteTestSpellCount(rankOneIDs) == 2,
+            'an active major essence must use both rank-one description blocks')
+        assert(AzeriteTestSpellCount(rankTwoIDs) == 0,
+            'an active major essence must not use selected-rank actual blocks')
+        "#
+    ))
+    .expect("the original essence consumer should select rank-one active descriptions");
+
+    env.state().borrow_mut().azerite_essence.milestones.clear();
+    seed_milestone(&env, 104, 1, ESSENCE_THREE);
+    env.exec(&format!(
+        r#"
+        local activeMinor = AzeriteTestShowEssence({ESSENCE_THREE}, 2)
+        local rankOneCount = AzeriteTestSpellCount(
+            AzeriteTestSpellIDs(activeMinor, {essence_three_rank_one}))
+        local rankTwoCount = AzeriteTestSpellCount(
+            AzeriteTestSpellIDs(activeMinor, {essence_three_rank_two}))
+        assert(rankOneCount == 1 and rankTwoCount == 1,
+            'an active minor essence must use a rank-one passive and rank-two main block')
+        "#
+    ))
+    .expect("the original essence consumer should split active minor spell ranks");
+    env.state().borrow_mut().azerite_essence.milestones.clear();
+
     {
         let mut state = env.state().borrow_mut();
         state.player.present = false;
