@@ -489,3 +489,62 @@ fn blizzard_minimap_publishes_garrison_helper_functions(env: &WowLuaEnv) {
     }
 }
 }
+
+#[test]
+#[cfg(feature = "optional-tests")]
+fn retail_original_minimap_owns_calendar_invite_initialization_and_refresh() {
+    use wow_ui_sim::loader::{
+        discover_all_blizzard_addons, discover_blizzard_startup_addons_for_screen,
+        register_load_with_addons,
+    };
+    let env = WowLuaEnv::new().expect("create normal Retail Game environment");
+    let ui = blizzard_ui_dir();
+    env.state().borrow_mut().addon_base_paths = vec![ui.clone()];
+    let startup = discover_blizzard_startup_addons_for_screen(&ui, ScreenKind::Game);
+    let owner = startup
+        .iter()
+        .find(|a| a.name == "Blizzard_Minimap")
+        .unwrap();
+    assert_eq!(
+        owner.toc_path.file_name().unwrap(),
+        "Blizzard_Minimap_Mainline.toc"
+    );
+    register_load_with_addons(&env.loader_env(), &discover_all_blizzard_addons(&ui));
+    crate::common::load_game_startup_inventory(&env);
+
+    // Before post-load workarounds and PLAYER_ENTERING_WORLD, XML OnLoad has already run.
+    env.exec(
+        r#"
+        local function original(fn, line)
+            local info = debug.getinfo(fn, "S")
+            assert(info.source:gsub(string.char(92), '/'):find(
+                'Blizzard_Minimap/Mainline/GameTime.lua', 1, true), info.source)
+            assert(info.linedefined == line)
+        end
+        original(GameTimeFrame:GetScript('OnLoad'), 36)
+        original(GameTimeFrame:GetScript('OnEvent'), 60)
+        assert(GameTimeFrame.pendingCalendarInvites == 0)
+        assert(GameTimeFrame:IsEventRegistered('PLAYER_ENTERING_WORLD'))
+        assert(GameTimeFrame:IsEventRegistered('CALENDAR_UPDATE_PENDING_INVITES'))
+    "#,
+    )
+    .expect("selected original Minimap XML OnLoad owns the invite count before startup events");
+    env.apply_post_load_workarounds();
+    fire_startup_events_for_screen(&env, ScreenKind::Game);
+
+    for _ in 0..2 {
+        let error_count = env.state().borrow().lua_errors.len();
+        env.fire_event("CALENDAR_UPDATE_PENDING_INVITES").unwrap();
+        env.exec(
+            r#"
+            assert(C_Calendar.GetNumPendingInvites() == 0, "modeled no-invite state")
+            assert(GameTimeFrame.pendingCalendarInvites == 0, "original counter")
+            assert(GameTimeFrame.flashInvite == false, "original flash disabled")
+            assert(not GameTimeCalendarInvitesTexture:IsShown(), "original invite texture hidden")
+            assert(not GameTimeCalendarInvitesGlow:IsShown(), "original invite glow hidden")
+        "#,
+        )
+        .expect("stock invite event preserves the modeled no-invite state");
+        assert_eq!(env.state().borrow().lua_errors.len(), error_count);
+    }
+}
