@@ -157,8 +157,6 @@ pub(crate) mod c_click_bindings;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_click_bindings_spell;
 pub mod c_club;
-#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
-mod combat_audio_enabled;
 #[cfg(feature = "retail-12-0-0")]
 pub(crate) mod c_combat_audio_alert;
 #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
@@ -478,6 +476,7 @@ pub use c_ping_texture_kits::PingTextureKits;
 #[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
 mod c_cvar_readiness;
 pub mod c_loss_of_control;
+mod combat_audio_enabled;
 #[cfg(not(feature = "client-wrath"))]
 mod combat_audio_throttle;
 #[cfg(feature = "client-mists")]

@@ -8,10 +8,12 @@ use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
 pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
-    if !matches!(
-        ACTIVE,
-        ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
-    ) {
+    let publishes_enabled = match ACTIVE {
+        ClientProfile::Retail | ClientProfile::Ptr => cfg!(feature = "retail-12-0-0"),
+        ClientProfile::WowForever => true,
+        _ => false,
+    };
+    if !publishes_enabled {
         return Ok(());
     }
 

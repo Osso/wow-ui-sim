@@ -464,7 +464,6 @@ macro_rules! build_empty_sim_state {
             recipe_quality_inputs: Default::default(),
             recipe_source_text: Default::default(),
             crafted_item_quality: Default::default(),
-            #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
             pvp_catalog: Default::default(),
             #[cfg(feature = "retail-12-0-0")]
             prey_inputs: Default::default(),
@@ -515,7 +514,6 @@ macro_rules! build_empty_sim_state {
             spell_cooldowns: $collections.spell_cooldowns,
             spell_charges: ::std::collections::HashMap::new(),
             ranged_auto_attack_spell_id: 0,
-            #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
             spell_cast_context_is_null: None,
             #[cfg(feature = "retail-12-0-0")]
             spell_cast_counts: ::std::collections::HashMap::new(),

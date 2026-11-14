@@ -243,7 +243,6 @@ pub struct SimState {
     /// Explicit per-item supplied quality; independent of recipe inputs, initially empty.
     pub crafted_item_quality:
         HashMap<u32, crate::c_api::c_trade_skill_quality::CraftingQualityInfo>,
-    #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
     pub pvp_catalog: crate::c_api::c_pvp::catalog::PvpCatalog,
     #[cfg(feature = "retail-12-0-0")]
     pub prey_inputs: crate::c_api::c_prey::PreyInputs,
@@ -641,7 +640,6 @@ pub struct SimState {
     /// Explicit ranged identifier input; zero is the pre-runtime image value, not a login claim.
     pub ranged_auto_attack_spell_id: u32,
     /// Host null override; None uses the INFERRED active-player context.
-    #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
     pub spell_cast_context_is_null: Option<bool>,
     /// Explicit simulator input for older C_Spell and spellbook count queries.
     #[cfg(feature = "retail-12-0-0")]

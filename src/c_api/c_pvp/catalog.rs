@@ -52,6 +52,11 @@ pub struct PvpCatalog {
 
 pub(super) fn register(state: &mut LuaState, ns: GcRef<Table>) -> LuaResult<()> {
     use crate::client_profile::{ACTIVE, ClientProfile};
+    // Compile the supplied catalog independently from profile epochs. Keep
+    // the historical Retail-epoch publications, plus only honor on Forever.
+    if !cfg!(feature = "retail-12-0-0") && ACTIVE != ClientProfile::WowForever {
+        return Ok(());
+    }
     if matches!(
         ACTIVE,
         ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
@@ -65,12 +70,7 @@ pub(super) fn register(state: &mut LuaState, ns: GcRef<Table>) -> LuaResult<()> 
         // the previously selected battleground, rated and training surfaces.
         return Ok(());
     }
-    if matches!(
-        crate::client_profile::ACTIVE,
-        crate::client_profile::ClientProfile::Retail
-            | crate::client_profile::ClientProfile::Ptr
-            | crate::client_profile::ClientProfile::WowForever
-    ) {
+    if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr) {
         table_set_rust_fn_static(state, ns, "CanPlayerUseRatedPVPUI", rated_eligible)?;
     }
     for (name, function) in [
