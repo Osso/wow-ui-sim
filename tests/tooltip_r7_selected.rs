@@ -4,7 +4,7 @@
 mod tooltip_full_env_helpers;
 
 use wow_ui_sim::c_api::{
-    ItemInteractionTooltipInput, ItemInteractionTooltipLine,
+    ItemInteractionTooltipInput, ItemInteractionTooltipLine, c_challenge_mode::KeystoneLocation,
     c_item_interaction::ItemInteractionInfo,
 };
 use wow_ui_sim::lua_api::WowLuaEnv;
@@ -98,14 +98,18 @@ fn load_challenges_ui(env: &WowLuaEnv) {
 fn register_keystone_event_probe(env: &WowLuaEnv) {
     env.exec(
         r##"
-        R7KeystoneSlottedItems = {}
+        R7KeystoneSlottedState = {}
         R7KeystoneEventProbe = CreateFrame("Frame")
         R7KeystoneEventProbe:RegisterEvent("CHALLENGE_MODE_KEYSTONE_SLOTTED")
         R7KeystoneEventProbe:SetScript("OnEvent", function(_, _, itemID)
             local data = C_TooltipInfo.GetSlottedKeystone()
             assert(C_ChallengeMode.HasSlottedKeystone())
             assert(data and data.id == itemID)
-            table.insert(R7KeystoneSlottedItems, itemID)
+            table.insert(R7KeystoneSlottedState, {
+                eventItemID = itemID,
+                tooltipItemID = data.id,
+                guid = data.guid,
+            })
         end)
     "##,
     )
@@ -114,6 +118,14 @@ fn register_keystone_event_probe(env: &WowLuaEnv) {
 
 fn slot_keystone_from_bag(env: &WowLuaEnv, slot: u32, item_id: u32) -> String {
     let guid = add_bag_item(env, 0, slot, item_id);
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.keystone.item_modifiers.insert(
+            KeystoneLocation::Bag(0, slot as i32),
+            (item_id, vec![(17, 2)]),
+        );
+        sim.keystone.current_map_selector = Some(960);
+    }
     env.exec(&format!(
         r##"
         C_Container.PickupContainerItem(0, {slot})
@@ -350,16 +362,152 @@ fn challenges_ui_hover_uses_public_keystone_selection() {
 
 #[test]
 fn slot_keystone_notifies_after_selection_state() {
+    for (slot, item_id) in [(3, 180_653), (4, 158_923)] {
+        let env = tooltip_full_env_helpers::load_full_env_without_post_load();
+        register_keystone_event_probe(&env);
+        let guid = slot_keystone_from_bag(&env, slot, item_id);
+        env.exec(&format!(
+            r##"
+            assert(#R7KeystoneSlottedState == 1)
+            local selected = R7KeystoneSlottedState[1]
+            assert(selected.eventItemID == {item_id})
+            assert(selected.tooltipItemID == {item_id})
+            assert(selected.guid == "{guid}")
+            local removed = C_ChallengeMode.RemoveKeystone()
+            assert(removed == true and not C_ChallengeMode.HasSlottedKeystone())
+            assert(select("#", C_TooltipInfo.GetSlottedKeystone()) == 0)
+            assert(select("#", C_ChallengeMode.SlotKeystone()) == 0)
+            assert(#R7KeystoneSlottedState == 1)
+            "##
+        ))
+        .unwrap();
+    }
+}
+
+#[test]
+fn slot_keystone_rejects_unmatched_or_missing_inputs_before_publication() {
+    let cases = [
+        (158_923, Some(2), Some(961), true, true),
+        (158_923, Some(999_999), Some(960), true, false),
+        (158_923, None, Some(960), true, false),
+        (158_923, Some(2), None, true, false),
+        (158_923, Some(2), Some(960), false, false),
+        (6_948, Some(2), Some(960), true, false),
+    ];
+
+    for (index, (item_id, modifier_id, map_id, context_present, seed_lock)) in
+        cases.into_iter().enumerate()
+    {
+        let env = tooltip_full_env_helpers::load_full_env_without_post_load();
+        register_keystone_event_probe(&env);
+        let slot = 3;
+        add_bag_item(&env, 0, slot, item_id);
+        env.exec(&format!("C_Container.PickupContainerItem(0, {slot})"))
+            .unwrap();
+        {
+            let mut sim = env.state().borrow_mut();
+            let location = KeystoneLocation::Bag(0, slot as i32);
+            if let Some(modifier_id) = modifier_id {
+                sim.keystone
+                    .item_modifiers
+                    .insert(location, (item_id, vec![(17, modifier_id)]));
+            }
+            sim.keystone.current_map_selector = map_id;
+            sim.player.present = context_present;
+            if seed_lock {
+                sim.keystone.reason_one_locks.insert(location);
+            }
+        }
+
+        env.exec(
+            r##"
+            assert(select("#", C_ChallengeMode.SlotKeystone()) == 0)
+            assert(not CursorHasItem())
+            assert(not C_ChallengeMode.HasSlottedKeystone())
+            assert(select("#", C_TooltipInfo.GetSlottedKeystone()) == 0)
+            assert(#R7KeystoneSlottedState == 0)
+            "##,
+        )
+        .unwrap();
+
+        if index == 0 {
+            env.exec(&format!(
+                r#"
+                A_Admin.AddBagItem(0, {slot}, 6948, 1)
+                assert(not C_Item.IsLocked(ItemLocation:CreateFromBagAndSlot(0, {slot})))
+                "#
+            ))
+            .unwrap();
+        }
+    }
+}
+
+#[test]
+fn remove_keystone_stages_only_with_permission_and_nonzero_guid_category() {
     let env = tooltip_full_env_helpers::load_full_env_without_post_load();
-    register_keystone_event_probe(&env);
-    slot_keystone_from_bag(&env, 3, 180_653);
+    let item_id = 158_923;
+    slot_keystone_from_bag(&env, 3, item_id);
+    env.state().borrow_mut().keystone.cursor_stage_permission = Some(true);
     env.exec(
         r##"
-        assert(#R7KeystoneSlottedItems == 1)
-        assert(R7KeystoneSlottedItems[1] == 180653)
-    "##,
+        assert(C_ChallengeMode.RemoveKeystone())
+        assert(not C_ChallengeMode.HasSlottedKeystone())
+        local kind, cursorItemID = GetCursorInfo()
+        assert(kind == "item" and cursorItemID == 158923)
+        "##,
     )
     .unwrap();
+
+    let zero_category = tooltip_full_env_helpers::load_full_env_without_post_load();
+    zero_category
+        .exec(
+            r##"
+        A_Admin.AddBagItem(0, 4, 6948, 1)
+        C_Container.PickupContainerItem(0, 4)
+        assert(select(2, GetCursorInfo()) == 6948)
+        "##,
+        )
+        .unwrap();
+    {
+        let mut sim = zero_category.state().borrow_mut();
+        sim.keystone.selected_guid = Some("0-0-0-158923".to_string());
+        sim.keystone.cursor_stage_permission = Some(true);
+    }
+    zero_category
+        .exec(
+            r##"
+        assert(C_ChallengeMode.RemoveKeystone())
+        assert(not C_ChallengeMode.HasSlottedKeystone())
+        assert(GetCursorInfo() == nil)
+        "##,
+        )
+        .unwrap();
+
+    for permission in [None, Some(false)] {
+        let unavailable_permission = tooltip_full_env_helpers::load_full_env_without_post_load();
+        unavailable_permission
+            .exec(
+                r##"
+            A_Admin.AddBagItem(0, 4, 6948, 1)
+            C_Container.PickupContainerItem(0, 4)
+            "##,
+            )
+            .unwrap();
+        {
+            let mut sim = unavailable_permission.state().borrow_mut();
+            sim.keystone.selected_guid = Some("Item-0-3-158923".to_string());
+            sim.keystone.cursor_stage_permission = permission;
+        }
+        unavailable_permission
+            .exec(
+                r##"
+            assert(C_ChallengeMode.RemoveKeystone())
+            local kind, cursorItemID = GetCursorInfo()
+            assert(kind == "item" and cursorItemID == 6948)
+            "##,
+            )
+            .unwrap();
+    }
 }
 
 #[test]
