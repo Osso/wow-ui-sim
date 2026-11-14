@@ -617,7 +617,7 @@ fn retail_original_modified_click_setting_returns_nil_for_unknown_action() {
         String,
     ) = env
         .eval(
-            r#"
+            r##"
             local unknown = CreateFromMixins(ModifiedClickSettingMixin)
             unknown:Init("stub-n-unknown-action", "STUB_N_UNKNOWN_ACTION", "NONE")
             local unknownValue = unknown:GetValueDerived()
@@ -627,7 +627,7 @@ fn retail_original_modified_click_setting_returns_nil_for_unknown_action() {
             local clearResults = select("#", chatLink:SetValueDerived(nil))
             return unknownValue == nil, select("#", unknown:GetValueDerived()),
                 clearResults, GetModifiedClick("CHATLINK")
-            "#,
+            "##,
         )
         .expect("selected Blizzard ModifiedClickSetting consumer should read and clear actions");
 
@@ -637,7 +637,10 @@ fn retail_original_modified_click_setting_returns_nil_for_unknown_action() {
     );
     assert_eq!(unknown_result_count, 1, "unknown action returns one nil");
     assert_eq!(clear_result_count, 0, "SetModifiedClick returns no values");
-    assert_eq!(cleared_binding, "NONE", "nil binding clears the known action");
+    assert_eq!(
+        cleared_binding, "NONE",
+        "nil binding clears the known action"
+    );
 }
 
 #[test]
