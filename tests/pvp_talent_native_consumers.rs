@@ -133,24 +133,22 @@ fn player_spells_talent_sort_uses_catalog_unlock_levels() {
                         "host-supplied slot data should reach Player Spells")
                     assert(C_SpecializationInfo.GetPvpTalentUnlockLevel(900) == 60)
                     assert(C_SpecializationInfo.GetPvpTalentUnlockLevel(901) == 50)
-                    local inserted = {}
-                    CreateDataProvider = function()
-                        return {
-                            Insert = function(_, talent)
-                                table.insert(inserted, talent)
-                            end,
-                        }
-                    end
+                    local provider
                     local list = {
                         slotIndex = 1,
-                        ScrollBox = { SetDataProvider = function() end },
+                        ScrollBox = {
+                            SetDataProvider = function(_, value)
+                                provider = value
+                            end,
+                        },
                     }
                     local ok, err = pcall(function()
                         PvPTalentListMixin:Update(list)
                     end)
-                    local first = inserted[1] and inserted[1].talentID or -1
-                    local second = inserted[2] and inserted[2].talentID or -1
-                    return ok, tostring(err), #inserted, first, second
+                    local first = provider and provider:Find(1)
+                    local second = provider and provider:Find(2)
+                    return ok, tostring(err), provider and provider:GetSize() or 0,
+                        first and first.talentID or -1, second and second.talentID or -1
                     "#,
                 )
                 .expect("run the selected Player Spells talent-list consumer");
