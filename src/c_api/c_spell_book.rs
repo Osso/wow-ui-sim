@@ -832,15 +832,16 @@ fn c_spell_book_find_spell_override_by_id(state: &mut LuaState) -> LuaResult<u32
 }
 
 fn c_spell_book_find_flyout_slot_by_spell_id(state: &mut LuaState) -> LuaResult<u32> {
-    let _ = read_untainted_signed32_argument(
+    let _spell_id = read_untainted_signed32_argument(
         state,
         1,
         "C_SpellBook.FindFlyoutSlotBySpellID",
         FIND_FLYOUT_SLOT_USAGE,
     )?;
-    // The native handler-to-publisher edge is UNKNOWN; preserve the prior
-    // simulator zero-value result until that public path is resolved.
-    Ok(0)
+    // The simulator has no flyout-candidate list or flyout-kind book rows.
+    // R88j.10 verifies that the normal miss path publishes one numeric zero.
+    state.push(Val::Num(0.0));
+    Ok(1)
 }
 
 fn c_spell_book_find_base_spell_by_id(state: &mut LuaState) -> LuaResult<u32> {
