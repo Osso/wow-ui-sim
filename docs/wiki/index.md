@@ -1,6 +1,6 @@
 ## [2026-11-14] implementation | Retail selected tooltip getters
 
-[Tooltip-data system](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) and the [Round 7 contract](../specs/tooltip-r7-getters.md) cover `GetItemInteractionItem`, `GetPossession`, `GetSlottedKeystone`, and `HasSlottedKeystone`. **VERIFIED (Retail 12.1.5.70688; R88n.1/.4/.4a/.4b/.4c-q1):** native producer branches, result arities, and the selected-GUID presence check are established. **UNKNOWN:** complete incoming update routes and the unmodeled cleansing, conversion, possession-cooldown, and keystone-specific output inputs.
+[Tooltip-data system](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) and the [Round 7 contract](../specs/tooltip-r7-getters.md) cover the selected Retail tooltip getters and ChallengeMode writer inputs. **VERIFIED (R88o.2 q1/q2/q3):** unresolved conversion output shape, SlotKeystone cursor/notification order, RemoveKeystone Boolean result and selected-state clears. **INFERRED:** bag cursor fields project the native cursor input, and a selected item-ID cache keeps tooltip lookup available after cursor clear. **SIMULATOR GAP:** map validation, mode/associated GUID, removal cursor transfer, `GetSlottedKeystoneInfo`, and complete external item-interaction/possession routes remain unmodeled or UNKNOWN; q4/q5 stay follow-ups.
 
 ## [2026-11-14] fix | Forever tooltip cached lines
 
