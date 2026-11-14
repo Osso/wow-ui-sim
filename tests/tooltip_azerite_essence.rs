@@ -8,7 +8,7 @@ use crate::common::blizzard_addon_harness::{
     blizzard_ui_dir, load_blizzard_addon_closure_into_env, new_blizzard_addon_env,
 };
 use wow_ui_sim::lua_api::WowLuaEnv;
-use wow_ui_sim::lua_api::state_types::{AzeriteEssenceInfo, AzeriteEssenceMilestoneInfo};
+use wow_ui_sim::lua_api::state::{AzeriteEssenceInfo, AzeriteEssenceMilestoneInfo};
 use wow_ui_sim::screen::ScreenKind;
 
 const ESSENCE_TWO: i32 = 2;
@@ -127,8 +127,8 @@ fn retail_azerite_essence_original_consumer_selects_exact_essence_and_rank() {
             return false
         end
         local function showEssence(essenceID, rank)
-            local button = setmetatable({ essenceID = essenceID, rank = rank },
-                { __index = AzeriteEssenceButtonMixin })
+            local button = setmetatable({{ essenceID = essenceID, rank = rank }},
+                {{ __index = AzeriteEssenceButtonMixin }})
             button:OnEnter()
             local info = GameTooltip:GetPrimaryTooltipInfo()
             local data = GameTooltip:GetPrimaryTooltipData()
@@ -218,12 +218,12 @@ fn retail_azerite_essence_slot_original_consumer_applies_verified_modes() {
             return false
         end
         local function showSlot(milestoneID, slot, isMajorSlot)
-            local button = setmetatable({
+            local button = setmetatable({{
                 milestoneID = milestoneID,
                 slot = slot,
                 isMajorSlot = isMajorSlot,
                 isDraggable = false,
-            }, { __index = AzeriteMilestoneSlotMixin })
+            }}, {{ __index = AzeriteMilestoneSlotMixin }})
             button:OnEnter()
             local info = GameTooltip:GetPrimaryTooltipInfo()
             local data = GameTooltip:GetPrimaryTooltipData()
