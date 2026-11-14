@@ -22,12 +22,24 @@ fn seed(env: &WowLuaEnv, names: &[(&str, u32, &str)]) {
 #[test]
 fn macro_ui_uses_supplied_macro_counts_and_details() {
     let env = setup_env();
-    seed(&env, &[("NativeAlpha", 134400, "/say alpha")]);
+    let first = ("NativeAlpha", 134400, "/say alpha");
+    let second = ("NativeGamma", 134331, "/say gamma");
+    seed(&env, &[first]);
+    load_macro_ui(&env);
+    assert_selected_macro(&env, 1, first);
+
+    seed(&env, &[("NativeBeta", 132212, "/say beta"), second]);
+    env.exec("MacroFrame:Update(); MacroFrame:SelectMacro(2)")
+        .unwrap();
+    assert_selected_macro(&env, 2, second);
+    exercise_character_tab(&env);
+}
+
+fn load_macro_ui(env: &WowLuaEnv) {
     env.exec(
         r#"
         assert(not C_AddOns.IsAddOnLoaded("Blizzard_MacroUI"), "MacroUI starts load-on-demand")
-        -- Match the existing LoD fixture when the simulator lacks these unrelated
-        -- constants. The values are pinned MacroConstantsDocumentation.lua:10–11.
+        -- Pre-existing fixture prerequisite from pinned MacroConstantsDocumentation.lua:10–11.
         Constants.MacroConsts = {
             MAX_ACCOUNT_MACROS = 120, MAX_CHARACTER_MACROS = 30,
         }
@@ -36,47 +48,40 @@ fn macro_ui_uses_supplied_macro_counts_and_details() {
         local source = debug.getinfo(MacroFrame.Update, "S").source
         assert(source:find("Blizzard_MacroUI.lua", 1, true), source)
         MacroFrame:SelectMacro(1)
-        assert(MacroFrame.MacroSelector.numMacros == 1, "account HUD must use supplied count")
-        assert(MacroFrameSelectedMacroName:GetText() == "NativeAlpha", "selected title A")
-        assert(MacroFrameText:GetText() == "/say alpha", "selected body A")
-        assert(tonumber(MacroFrame.SelectedMacroButton.Icon:GetTexture()) == 134400, "selected icon A")
         "#,
     )
-    .expect("original MacroUI first host snapshot");
+    .expect("original MacroUI load-on-demand setup");
+}
 
-    seed(
-        &env,
-        &[
-            ("NativeBeta", 132212, "/say beta"),
-            ("NativeGamma", 134331, "/say gamma"),
-        ],
-    );
-    env.exec(
-        r#"
-        MacroFrame:Update()
-        MacroFrame:SelectMacro(2)
-        assert(MacroFrame.MacroSelector.numMacros == 2, "account HUD must update count")
-        assert(MacroFrameSelectedMacroName:GetText() == "NativeGamma", "selected title B")
-        assert(MacroFrameText:GetText() == "/say gamma", "selected body B")
-        assert(tonumber(MacroFrame.SelectedMacroButton.Icon:GetTexture()) == 134331, "selected icon B")
+fn assert_selected_macro(env: &WowLuaEnv, count: u32, record: (&str, u32, &str)) {
+    let observed: (f64, String, f64, String) = env
+        .eval(
+            r#"
+        return MacroFrame.MacroSelector.numMacros, MacroFrameSelectedMacroName:GetText(),
+            tonumber(MacroFrame.SelectedMacroButton.Icon:GetTexture()), MacroFrameText:GetText()
         "#,
-    )
-    .expect("original MacroUI second host snapshot");
+        )
+        .expect("original MacroUI count/title/icon/body");
+    assert_eq!(
+        observed,
+        (
+            f64::from(count),
+            record.0.into(),
+            f64::from(record.1),
+            record.2.into()
+        )
+    );
+}
+
+fn exercise_character_tab(env: &WowLuaEnv) {
+    let character = ("NativeCharacter", 132212, "/say character");
     {
         let mut sim = env.state().borrow_mut();
         sim.macros.resize_with(121, Default::default);
-        sim.macros[120] = macro_record("NativeCharacter", 132212, "/say character");
+        sim.macros[120] = macro_record(character.0, character.1, character.2);
     }
-    env.exec(
-        r#"
-        MacroFrame:ChangeTab(2)
-        assert(MacroFrame.MacroSelector.numMacros == 1, "character tab observes its own count")
-        assert(MacroFrameSelectedMacroName:GetText() == "NativeCharacter", "character tab consumes offset index")
-        assert(MacroFrameText:GetText() == "/say character", "character tab consumes body")
-        assert(tonumber(MacroFrame.SelectedMacroButton.Icon:GetTexture()) == 132212, "character tab consumes icon")
-        "#,
-    )
-    .expect("original MacroUI character tab reads its independent count and record");
+    env.exec("MacroFrame:ChangeTab(2)").unwrap();
+    assert_selected_macro(env, 1, character);
 }
 
 #[test]
@@ -118,7 +123,6 @@ fn macro_getter_ordinary_argument_and_return_contract() {
     let env = WowLuaEnv::new().expect("Lua environment");
     let mut records = vec![MacroInfo::default(); 241];
     records[0] = macro_record("Found", 134400, "");
-    records[0].icon = r"Interface\Icons\INV_Misc_QuestionMark".into();
     records[1] = macro_record("", 0, "/say empty name");
     records[120] = macro_record("Character", 132212, "/say character");
     records[239] = macro_record("Last", 0, "");
@@ -133,24 +137,68 @@ fn macro_getter_ordinary_argument_and_return_contract() {
         end
         local name, icon, body = tuple(GetMacroInfo(" 1.9 ", false))
         assert(name == "Found" and icon == 134400 and body == "")
-        assert(GetMacroInfo("0x1") == "Found")
         name, icon, body = tuple(GetMacroInfo("Found"))
         assert(name == "Found" and icon == 134400 and body == "")
         name, icon, body = tuple(GetMacroInfo(2))
         assert(name == "" and icon == nil and body == "/say empty name")
         assert(GetMacroInfo(240) == "Last")
-        for _, arg in ipairs({0, -1, 3, 241, true, {}, "unknown"}) do
+        for _, arg in ipairs({0, -1, 241, true, {}, "unmatched"}) do
             assert(select("#", GetMacroInfo(arg)) == 0, tostring(arg))
         end
         assert(select("#", GetMacroInfo(nil, true)) == 0)
         assert(select("#", GetMacroInfo()) == 0)
-
-        local account, character = GetNumMacros(false, {})
-        assert(select("#", GetNumMacros()) == 2 and type(account) == "number" and type(character) == "number")
-        -- The simulator's partition interpretation is inferred from the MacroUI tabs.
-        assert(account == 2 and character == 1)
-        assert(C_Macro.GetMacroName(1) == nil and C_Macro.GetSelectedMacroIcon(121) == nil)
         "##,
     )
-    .expect("R88l.18–19 ordinary argument/return shape; unknown C_Macro getters stay neutral");
+    .expect("R88l.19 ordinary selector/result shape");
+    assert_counter_snapshot(&env, (2, 1));
+    seed(
+        &env,
+        &[
+            ("First", 134400, ""),
+            ("Second", 132212, ""),
+            ("Third", 134331, ""),
+        ],
+    );
+    assert_counter_snapshot(&env, (3, 0));
+}
+
+fn assert_counter_snapshot(env: &WowLuaEnv, expected: (u32, u32)) {
+    let observed: (f64, f64) = env.eval(r##"
+        local account, character = GetNumMacros(false, {})
+        assert(select("#", GetNumMacros()) == 2 and type(account) == "number" and type(character) == "number")
+        return account, character
+        "##).expect("VERIFIED two numbers and ignored arguments");
+    assert_eq!(
+        observed,
+        (f64::from(expected.0), f64::from(expected.1)),
+        "INFERRED simulator account/character partition"
+    );
+}
+
+#[test]
+fn macro_getter_inferred_host_policies_and_unknown_seams() {
+    let env = WowLuaEnv::new().expect("Lua environment");
+    seed(
+        &env,
+        &[("CaseSensitive", 134400, ""), ("", 0, "/say partial")],
+    );
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.macros[0].icon = r"Interface\Icons\INV_Misc_QuestionMark".into();
+        sim.macros.push(MacroInfo::default());
+    }
+    env.exec(
+        r##"
+        assert(GetMacroInfo("0x1") == "CaseSensitive") -- host numeric parser
+        assert(GetMacroInfo(4294967297) == "CaseSensitive") -- chosen u32 wrap
+        assert(select("#", GetMacroInfo(9223372036854775808)) == 0) -- outside host i64 domain
+        local name, icon = GetMacroInfo("CaseSensitive") -- exact host bytes
+        assert(name == "CaseSensitive" and icon == 134400) -- host listfile
+        assert(select("#", GetMacroInfo("casesensitive")) == 0)
+        assert(GetMacroInfo(2) == "") -- partial record is occupied
+        assert(select("#", GetMacroInfo(3)) == 0) -- default host hole
+        assert(C_Macro.GetMacroName(1) == nil and C_Macro.GetSelectedMacroIcon(121) == nil)
+    "##,
+    )
+    .expect("INFERRED host selection/listfile policies and UNKNOWN nil seams");
 }

@@ -22,12 +22,24 @@ fn assert_original_empty_icon_source(env: &WowLuaEnv) {
 #[test]
 fn macro_icon_api_returns_reused_table_and_rejects_wrong_type() {
     let env = WowLuaEnv::new().expect("Lua environment");
-    {
-        let mut sim = env.state().borrow_mut();
-        sim.macro_icons.loose_spells =
-            vec![Some("host_alpha".into()), None, Some("host_beta".into())];
-        sim.macro_icons.items = vec![-45, 123];
+    assert_direct_icon_shapes(&env);
+    for n in 1..=2 {
+        let spell = format!("host_spell_{n}");
+        let item = format!("host_item_{n}");
+        let spell_id = 123 + n;
+        let item_id = -45 - n;
+        {
+            let mut sim = env.state().borrow_mut();
+            sim.macro_icons.loose_spells = vec![Some(spell.clone()), None, Some(item.clone())];
+            sim.macro_icons.loose_items = vec![Some(item.clone())];
+            sim.macro_icons.spells = vec![spell_id];
+            sim.macro_icons.items = vec![item_id];
+        }
+        assert_direct_icon_contents(&env, &spell, &item, spell_id, item_id);
     }
+}
+
+fn assert_direct_icon_shapes(env: &WowLuaEnv) {
     env.exec(
         r##"
         for _, name in ipairs({
@@ -40,23 +52,41 @@ fn macro_icon_api_returns_reused_table_and_rejects_wrong_type() {
                 assert(not ok and tostring(err):find("Usage: " .. name .. "([table])", 1, true),
                     name .. " accepted wrong argument or returned wrong Usage: " .. tostring(err))
             end
-            assert(select("#", getter()) == 1 and type(getter()) == "table", name)
-            assert(select("#", getter(nil, true)) == 1 and type(getter(nil, true)) == "table", name)
+            assert(select("#", getter()) == 1, name)
+            assert(select("#", getter(nil, true)) == 1, name)
+            local fresh, other = getter(), getter(nil, true)
+            assert(type(fresh) == "table" and type(other) == "table" and fresh ~= other, name)
             local output = {"existing", sentinel = true}
             assert(select("#", getter(output, false)) == 1, name)
             assert(getter(output, false) == output, name .. " did not reuse its output table")
             assert(output[1] == "existing" and output.sentinel, name .. " cleared the output")
         end
-        local out = {"existing"}
-        assert(GetLooseMacroIcons(out) == out)
-        assert(rawget(out, 1) == "existing" and rawget(out, 2) == "host_alpha")
-        assert(rawget(out, 3) == nil and rawget(out, 4) == "host_beta")
-        out = {"existing"}
-        assert(GetMacroItemIcons(out) == out)
-        assert(out[1] == "existing" and out[2] == -45 and out[3] == 123)
         "##,
     )
-    .expect("API-level VERIFIED argument, arity, and output table semantics from R88l.20–23");
+    .expect("R88l.20–23 ordinary argument, arity, and output table shapes");
+}
+
+fn assert_direct_icon_contents(
+    env: &WowLuaEnv,
+    spell: &str,
+    item: &str,
+    spell_id: i32,
+    item_id: i32,
+) {
+    env.exec(&format!(r#"
+        local function append(getter)
+            local out = {{"existing", sentinel = true}}
+            assert(getter(out, false) == out)
+            assert(out[1] == "existing" and out.sentinel)
+            return out
+        end
+        local out = append(GetLooseMacroIcons)
+        assert(rawget(out, 2) == "{spell}" and rawget(out, 3) == nil and rawget(out, 4) == "{item}", "loose spell contents")
+        assert(append(GetLooseMacroItemIcons)[2] == "{item}", "loose item contents")
+        assert(append(GetMacroIcons)[2] == {spell_id}, "spell catalog contents")
+        assert(append(GetMacroItemIcons)[2] == {item_id}, "item catalog contents")
+        "#))
+        .expect("all four getters must append two distinguishable host snapshots");
 }
 
 #[test]
