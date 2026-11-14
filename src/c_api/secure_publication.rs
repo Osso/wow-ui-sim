@@ -48,6 +48,23 @@ const VERIFIED_R88N_11B_MEMBERS: [(&str, &str, u8); 37] = [
     ("C_ScriptedAnimations", "GetAllScriptedAnimationEffects", 3),
 ];
 
+// R88n.11b marks these Retail 12.1.5.70688 members secure-only (flag 2).
+const VERIFIED_R88N_11B_PRIVATE_AURA_MEMBERS: [(&str, u8); 13] = [
+    ("AddPrivateAuraUpdateCallback", 2),
+    ("AnchorPrivateAura", 2),
+    ("GetAllPrivateAuraInstanceIDs", 2),
+    ("GetAllPrivateAuras", 2),
+    ("GetAuraDataByAuraInstanceIDPrivate", 2),
+    ("GetPrivateAuraAnchors", 2),
+    ("GetPrivateAuraCasterGUID", 2),
+    ("IsPrivateAuraFilteredOutByInstanceID", 2),
+    ("RemovePrivateAuraUpdateCallback", 2),
+    ("SetPrivateAuraAnchorAddedCallback", 2),
+    ("SetPrivateAuraAnchorRemovedCallback", 2),
+    ("SetPrivateRaidBossMessageCallback", 2),
+    ("SetPrivateWarningTextFrame", 2),
+];
+
 pub(crate) fn publish_verified_secure_namespace_members(
     state: &mut LuaState,
 ) -> LuaResult<Vec<String>> {
@@ -72,6 +89,42 @@ pub(crate) fn publish_verified_secure_namespace_members(
             value => {
                 return Err(runtime_error(format!(
                     "R88n.11b member {namespace}.{member} is {}, not a function",
+                    value.type_name()
+                )));
+            }
+        }
+    }
+    unmodeled.extend(publish_verified_private_aura_members(state)?);
+    Ok(unmodeled)
+}
+
+fn publish_verified_private_aura_members(state: &mut LuaState) -> LuaResult<Vec<String>> {
+    const NAMESPACE: &str = "C_UnitAurasPrivate";
+    let namespace_value = global_val(state, NAMESPACE);
+    let Val::Table(ordinary_namespace) = namespace_value else {
+        return Err(runtime_error(format!(
+            "R88n.11b ordinary namespace {NAMESPACE} is not registered"
+        )));
+    };
+
+    let mut unmodeled = Vec::new();
+    for (member, flags) in VERIFIED_R88N_11B_PRIVATE_AURA_MEMBERS {
+        let ordinary_namespace_value = Val::Table(ordinary_namespace);
+        let member_value = table_get(state, ordinary_namespace_value, member);
+        match member_value {
+            Val::Function(_) => {
+                register_namespace_value_with_flags(state, NAMESPACE, member, member_value, flags)?;
+                crate::lua_api::methods::table_set(
+                    state,
+                    ordinary_namespace_value,
+                    member,
+                    Val::Nil,
+                );
+            }
+            Val::Nil => unmodeled.push(format!("{NAMESPACE}.{member}")),
+            value => {
+                return Err(runtime_error(format!(
+                    "R88n.11b member {NAMESPACE}.{member} is {}, not a function",
                     value.type_name()
                 )));
             }

@@ -266,6 +266,7 @@ fn check_case(case: &ShapeCase) -> Vec<String> {
         }
     }
     let env = WowLuaEnv::new().expect("create struct shape environment");
+    crate::common::install_private_aura_api_alias(&env);
     (case.seed)(&env);
     match observe(&env, case, &fields) {
         Ok(found) => failures.extend(found),
@@ -293,7 +294,7 @@ const CASES: &[ShapeCase] = &[
             C_UnitAuras.AddPrivateAuraAnchor({
                 unitToken = "player", auraIndex = 1, parent = parent, showCountdownFrame = true,
             })
-            local anchors = C_UnitAurasPrivate.GetPrivateAuraAnchors("player")
+            local anchors = SecurePrivateAuras.GetPrivateAuraAnchors("player")
             return anchors[#anchors]
         "#,
         added: &["showDispelIcon", "showCooldownEdge", "showCooldownFrame"],
@@ -306,7 +307,7 @@ const CASES: &[ShapeCase] = &[
                 unitToken = "target", auraIndex = 2, parent = CreateFrame("Frame"),
                 showDispelIcon = true, showCooldownEdge = true, showCooldownFrame = true,
             })
-            local set = C_UnitAurasPrivate.GetPrivateAuraAnchors("target")[1]
+            local set = SecurePrivateAuras.GetPrivateAuraAnchors("target")[1]
             if not (set.showDispelIcon and set.showCooldownEdge and set.showCooldownFrame) then
                 return "explicit"
             end
@@ -329,7 +330,7 @@ const CASES: &[ShapeCase] = &[
                 unitToken = "player", auraIndex = 3, parent = CreateFrame("Frame"),
                 showCooldownFrame = true, showCooldownEdge = false, showDispelIcon = true,
             })
-            return C_UnitAurasPrivate.GetPrivateAuraAnchors("player")[1]
+            return SecurePrivateAuras.GetPrivateAuraAnchors("player")[1]
         "#,
         added: &["showDispelIcon", "showCooldownEdge", "showCooldownFrame"],
         removed: &["showCountdownFrame"],

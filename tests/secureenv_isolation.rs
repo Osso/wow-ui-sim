@@ -869,3 +869,88 @@ fn retail_r88n11b_members_share_functions_with_secure_namespaces() {
         "invalid secure publications: {failures:?}"
     );
 }
+
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+#[test]
+fn retail_r88n11b_private_aura_members_are_secure_only() {
+    const MEMBERS: [&str; 13] = [
+        "AddPrivateAuraUpdateCallback",
+        "AnchorPrivateAura",
+        "GetAllPrivateAuraInstanceIDs",
+        "GetAllPrivateAuras",
+        "GetAuraDataByAuraInstanceIDPrivate",
+        "GetPrivateAuraAnchors",
+        "GetPrivateAuraCasterGUID",
+        "IsPrivateAuraFilteredOutByInstanceID",
+        "RemovePrivateAuraUpdateCallback",
+        "SetPrivateAuraAnchorAddedCallback",
+        "SetPrivateAuraAnchorRemovedCallback",
+        "SetPrivateRaidBossMessageCallback",
+        "SetPrivateWarningTextFrame",
+    ];
+    let members = MEMBERS
+        .iter()
+        .map(|member| format!("{member:?}"))
+        .collect::<Vec<_>>()
+        .join(", ");
+    let (present, missing, failures, roots_are_separate): (i64, Vec<String>, Vec<String>, bool) =
+        env()
+            .eval(&format!(
+                r#"
+                local public = rawget(_G, "C_UnitAurasPrivate")
+                local secure = rawget(__secureenv, "C_UnitAurasPrivate")
+                local failures, missing = {{}}, {{}}
+                if type(public) ~= "table" then
+                    failures[#failures + 1] = "ordinary namespace missing"
+                end
+                if type(secure) ~= "table" then
+                    failures[#failures + 1] = "secure namespace missing"
+                end
+                if #failures > 0 then
+                    return 0, missing, failures, false
+                end
+                local rootsAreSeparate = not rawequal(public, secure)
+                if not rootsAreSeparate then
+                    failures[#failures + 1] = "namespace tables are shared"
+                end
+                local present = 0
+                for _, member in ipairs({{{members}}}) do
+                    local publicValue = rawget(public, member)
+                    local secureValue = rawget(secure, member)
+                    if type(secureValue) == "function" then
+                        present = present + 1
+                        if publicValue ~= nil then
+                            failures[#failures + 1] = member .. ": ordinary value is present"
+                        end
+                    elseif publicValue == nil and secureValue == nil then
+                        missing[#missing + 1] = "C_UnitAurasPrivate." .. member
+                    else
+                        failures[#failures + 1] = member .. ": member is not secure-only"
+                    end
+                end
+                table.sort(missing)
+                table.sort(failures)
+                return present, missing, failures, rootsAreSeparate
+            "#
+            ))
+            .expect("R88n.11b flag-2 publication should be observable");
+
+    assert!(
+        roots_are_separate,
+        "private aura namespaces must remain separate"
+    );
+    assert_eq!(
+        present, 12,
+        "all modeled flag-2 members must be secure-only"
+    );
+    assert_eq!(
+        missing,
+        vec!["C_UnitAurasPrivate.AnchorPrivateAura".to_string()],
+        "the unimplemented member must remain absent"
+    );
+    assert_eq!(present + missing.len() as i64, MEMBERS.len() as i64);
+    assert!(
+        failures.is_empty(),
+        "invalid secure-only members: {failures:?}"
+    );
+}

@@ -40,6 +40,17 @@ pub fn new_headless_cursor_env() -> WowLuaEnv {
     env
 }
 
+/// Expose the active profile's private-aura API route to Lua behavior fixtures.
+pub fn install_private_aura_api_alias(env: &WowLuaEnv) {
+    let namespace = if wow_ui_sim::client_profile::is_active_retail_12_1_5() {
+        "__secureenv.C_UnitAurasPrivate"
+    } else {
+        "C_UnitAurasPrivate"
+    };
+    env.exec(&format!("SecurePrivateAuras = {namespace}"))
+        .expect("install private-aura API fixture alias");
+}
+
 /// Run a test closure with a per-call timeout.
 /// Default 120s — enough for full Blizzard UI load + test logic.
 #[cfg(target_os = "linux")]

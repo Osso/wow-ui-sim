@@ -4,6 +4,7 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 
 fn seeded_env() -> WowLuaEnv {
     let env = WowLuaEnv::new().unwrap();
+    crate::common::install_private_aura_api_alias(&env);
     {
         let mut state = env.state().borrow_mut();
         let template = state.player.buffs[0].clone();
@@ -105,15 +106,13 @@ fn aura_instance_ids_private_queries_follow_existing_private_state() {
         C_UnitAurasPrivate._state.privateAurasByUnit.target = {
             { auraInstanceID = 905, spellID = 789 },
         }
-        for _, scope in ipairs({_G, __secureenv}) do
-            local query = scope.C_UnitAurasPrivate.GetAllPrivateAuraInstanceIDs
-            local ids = query('player')
-            assert(table.concat(ids, ',') == '903,901')
-            ids[1] = 0
-            assert(query('player')[1] == 903)
-            assert(table.concat(query('target'), ',') == '905')
-            assert(#query('missing-unit') == 0)
-        end
+        local query = SecurePrivateAuras.GetAllPrivateAuraInstanceIDs
+        local ids = query('player')
+        assert(table.concat(ids, ',') == '903,901')
+        ids[1] = 0
+        assert(query('player')[1] == 903)
+        assert(table.concat(query('target'), ',') == '905')
+        assert(#query('missing-unit') == 0)
     "#,
     )
     .unwrap();
@@ -143,15 +142,21 @@ fn aura_instance_ids_source_reports_filter_match_separately() {
 #[test]
 fn aura_instance_ids_public_and_secure_queries_follow_admin_aura_lifecycle() {
     let env = WowLuaEnv::new().unwrap();
+    crate::common::install_private_aura_api_alias(&env);
     env.state().borrow_mut().player.buffs.clear();
+    let expected_ordinary_query = if wow_ui_sim::client_profile::is_active_retail_12_1_5() {
+        "assert(C_UnitAurasPrivate.GetAllPrivateAuraInstanceIDs == nil)"
+    } else {
+        "assert(type(C_UnitAurasPrivate.GetAllPrivateAuraInstanceIDs) == 'function')"
+    };
+    env.exec(expected_ordinary_query)
+        .expect("private query follows the active profile's verified publication route");
     env.exec(
         r#"
         assert(C_UnitAuras == __secureenv.C_UnitAuras)
-        assert(C_UnitAurasPrivate == __secureenv.C_UnitAurasPrivate)
         A_Admin.AddBuff(19750, 'EUI acceptance aura', '135907', 30, 3)
         for _, scope in ipairs({_G, __secureenv}) do
             local public = scope.C_UnitAuras
-            local private = scope.C_UnitAurasPrivate
             local ids = public.GetUnitAuraInstanceIDs('player', 'HELPFUL')
             assert(type(ids) == 'table' and #ids == 1 and ids[1] == 1)
             assert(select('#', public.GetUnitAuraInstanceIDs('player', 'HELPFUL')) == 1)
@@ -160,10 +165,10 @@ fn aura_instance_ids_public_and_secure_queries_follow_admin_aura_lifecycle() {
             assert(aura.icon == 135907 and aura.applications == 3)
             local harmful = public.GetUnitAuraInstanceIDs('player', 'HARMFUL')
             assert(type(harmful) == 'table' and #harmful == 0)
-            local privateIDs = private.GetAllPrivateAuraInstanceIDs('player')
-            assert(type(privateIDs) == 'table' and #privateIDs == 0)
-            assert(select('#', private.GetAllPrivateAuraInstanceIDs('player')) == 1)
         end
+        local privateIDs = SecurePrivateAuras.GetAllPrivateAuraInstanceIDs('player')
+        assert(type(privateIDs) == 'table' and #privateIDs == 0)
+        assert(select('#', SecurePrivateAuras.GetAllPrivateAuraInstanceIDs('player')) == 1)
         A_Admin.RemoveBuff(19750)
         for _, scope in ipairs({_G, __secureenv}) do
             local ids = scope.C_UnitAuras.GetUnitAuraInstanceIDs('player', 'HELPFUL')
@@ -171,7 +176,7 @@ fn aura_instance_ids_public_and_secure_queries_follow_admin_aura_lifecycle() {
         end
         "#,
     )
-    .expect("shared namespaces enumerate real admin aura additions and removals");
+    .expect("public aura queries stay paired and private query uses its active route");
 }
 
 #[cfg(feature = "retail-12-1-0")]
