@@ -676,19 +676,22 @@ fn retail_map_assignment_world_position(
     let assignments = sim_data_profile::ui_map_assignments::get_ui_map_assignments(ui_map_id)?;
     let assignment = select_retail_map_assignment(assignments, x, y)?;
 
-    // INFERRED seam: the current AreaInfo model has no ContinentID for negative MapIDs.
+    // INFERRED: negative MapID requires AreaID -> AreaTable.ContinentID; AreaInfo lacks ContinentID.
     if assignment.map_id < 0 {
         return None;
     }
 
     let ui_width = f64::from(assignment.ui_max[0]) - f64::from(assignment.ui_min[0]);
     let ui_height = f64::from(assignment.ui_max[1]) - f64::from(assignment.ui_min[1]);
-    let world_width = f64::from(assignment.region_max[0]) - f64::from(assignment.region_min[0]);
-    let world_height = f64::from(assignment.region_max[1]) - f64::from(assignment.region_min[1]);
     let local_x = (x - f64::from(assignment.ui_min[0])) / ui_width;
     let local_y = (y - f64::from(assignment.ui_min[1])) / ui_height;
-    let world_x = f64::from(assignment.region_min[0]) + local_x * world_width;
-    let world_y = f64::from(assignment.region_min[1]) + local_y * world_height;
+
+    // INFERRED (R88i.41): world X blends Region_3 toward Region_0 by map Y;
+    // world Y blends Region_4 toward Region_1 by map X.
+    let world_x = f64::from(assignment.region_max[0])
+        + (f64::from(assignment.region_min[0]) - f64::from(assignment.region_max[0])) * local_y;
+    let world_y = f64::from(assignment.region_max[1])
+        + (f64::from(assignment.region_min[1]) - f64::from(assignment.region_max[1])) * local_x;
     Some((assignment.map_id, world_x, world_y))
 }
 

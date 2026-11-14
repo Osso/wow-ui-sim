@@ -1,6 +1,6 @@
 ## [2026-11-14] implementation | Retail map world positions
 
-[Patch 8.0.1 API audit](investigations/patch-8-0-1-api-audit.md#retail-map-world-position) links the [map world-position contract](../specs/map-world-position.md). **VERIFIED (repository provenance):** assignment data comes from Retail build 12.1.5.70783; **INFERRED:** parity with the selected 70575 pin and the projection/overlap rules.
+[Patch 8.0.1 API audit](investigations/patch-8-0-1-api-audit.md#retail-map-world-position) links the [map world-position contract](../specs/map-world-position.md). **VERIFIED (R88i.41):** nearest-center forward selection, bounds, signed-ID truncation, plain-table positions, result arity and exact Usage strings. **INFERRED:** 70783/70575 data parity and the swapped/reversed transform; negative-`MapID` AreaTable fallback remains unavailable.
 
 ## [2026-11-13] fix | Inline icon right-edge advance
 
