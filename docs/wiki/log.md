@@ -1,3 +1,7 @@
+## [2026-11-13] system | Secure environment and dependency replay
+
+Updated [taint system](systems/taint-system.md#dual-lua-environment) and [addon loading](systems/addon-loading.md#secure-dependency-replay-and-library-allowlist) with R88g/R88i and the fixed 39-name secure base. **VERIFIED (Retail simulator test, fallback cleared):** secureenv receives the original `TooltipDataProcessor`, `CopyTable`, and `GetFrameMetatable`; the next observed boundary is `TextureUtil.lua:122` (`Constants` nil), followed by `PrivateAurasUI.lua:1398` (`TextureKitConstants` nil). R88i.1 verifies the native pair-list route for `GetFrameMetatable`. `geterrorhandler` dual publication now follows BASELINE-39 membership. The Retail tooltip fallback remains until all cited consumers pass.
+
 ## [2026-11-13] system | C_Map user waypoint
 
 Added [the user waypoint model](systems/c-map-user-waypoint.md) and its [API contract](../specs/c-map-user-waypoint.md). **VERIFIED (Retail 12.1.5.70688):** the original Retail provider uses the six C_Map methods and accepts the tested normalized-point/replacement contract. **VERIFIED (Retail prefork test):** HandleClick stores the point, then reaches the separate missing C_SuperTrack method at line 101. **INFERRED:** session-only state, same-map-only position lookup and nonzero-ID map eligibility. **UNKNOWN:** persistence, cross-map projection and callback/event identity. Profile docs declare the methods for Retail/PTR/Forever, not Mists; Wrath remains compile-only.

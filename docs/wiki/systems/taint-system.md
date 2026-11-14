@@ -11,7 +11,7 @@ Full retail taint simulation remains out of scope. What the simulator does imple
 - **VM taint**: `debug.*taint*` helpers come from rilua; `issecure`, `securecall`, `issecurevariable` and `forceinsecure` follow Elune semantics
 - **securecallmethod()**: simulator-provided helper
 - **Secret values**: simulator-owned identity values and tainted `CallMethod` payloads/results are tracked by fallback accessors
-- **SecureHandler fallback**: `SecureHandlerSetFrameRef`, `SecureHandlerGetFrameRef`, `SecureHandlerExecute`, `SecureHandlerWrapScript`, and `SecureHandlerUnwrapScript` are backed by the Lua-side fallback in `src/lua_api/globals/security.rs`
+- **SecureHandler fallback**: `SecureHandlerSetFrameRef`, `SecureHandlerGetFrameRef`, `SecureHandlerExecute`, `SecureHandlerWrapScript`, and `SecureHandlerUnwrapScript` are backed by the Lua-side fallback in `src/lua_api/globals/security/`
 - **State/attribute drivers**: `RegisterStateDriver`, `UnregisterStateDriver`, `RegisterAttributeDriver`, `UnregisterAttributeDriver` store raw driver text in `SimState.secure_attribute_drivers` and eagerly apply the resolved state
 
 ## Protected Frame Gating (`src/lua_api/frame/methods/methods_helpers.rs`)
@@ -36,24 +36,30 @@ When blocked, callers emit `ADDON_ACTION_BLOCKED` via `emit_addon_action_blocked
 
 Retail 12.1.0 `frame_id_from_stack` (native script-object resolution) rejects tainted callers when the object carries `DenyTaintedAccessWhenAurasAreSecret` and `SimState.unit_auras_restricted` (auras secret) is set; the error is the client's fixed `Attempt to access forbidden object from code tainted by an AddOn` (template NATIVE; its use on this path best-guess, see [taint error text](../../specs/taint-error-text.md)). The restriction lifts as soon as auras become public again. `CanBeAccessedInContext` follows the same rule; `IsForbidden`, `CanBeAccessedInContext`, `HasAccessConstraints` and the access-restriction mask methods resolve through `frame_id_from_stack_unrestricted` so any caller can query them. Blizzard Lua owns the timing: the AuraContainer frame provider applies the restriction after `initializeFrame`, deferred to PLAYER_ENTERING_WORLD before login. The aura-secret state itself is an explicit input; combat/encounter/M+/PvP activation is not derived. Plain Lua field reads on the frame table are not gated, and the `forbidden` flag is still not enforced on method calls. Proof: `tests/patch_12_1_0_aura_access_restrictions.rs`.
 
-## Dual Lua Environment (`src/lua_api/globals/security.rs`)
+## Dual Lua Environment (`src/lua_api/globals/security/secure_env.rs`)
 
-Two environments share the same Lua state:
+Two environments share one Lua state:
 
-- **genv** (`_G`): addon code; `Blizzard_EnvironmentCleanup` nils secure APIs here
-- **secureenv**: shallow copy of `_G` at startup with no `__index = _G` fallback; retains secure APIs after cleanup; addons with `UseSecureEnvironment: 1` in TOC run here via `setfenv`
+- **genv** (`_G`): addon code; `Blizzard_EnvironmentCleanup` nils selected secure APIs here.
+- **secureenv** (`__secureenv`): one shared table for secure addon chunks, not one table per addon.
 
-The shallow copy preserves table references that existed at initialization: `tests/secureenv_isolation.rs::shared_table_mutation_propagates_both_ways` dynamically finds a table present in both environments and verifies a secure-side mutation through the shared reference is visible from `_G`. Primitive values and later `_G` bindings remain separate; later global tables are not visible to secureenv without explicit export.
+**VERIFIED (Retail 12.1.5.70688, R88g.1):** the client creates the shared environment before addon files, seeds it from exactly 39 names, shallow-copies values that are tables, and installs no `__index = _G` fallback. **INFERRED (R88g.1):** later globals added only to ordinary `_G` are not visible there by plain name. The native flag for a direct ordinary `_G` alias remains **UNKNOWN**.
+
+**VERIFIED (simulator source):** `create_secure_environment` uses the fixed 39-name base, gives secureenv its own `_G` reference, and has no ordinary-global fallback. **INFERRED (simulator source):** the table is created before later registrations because their native order relative to base construction is unknown. Selected native registrations use the C API namespace-pair helpers, the Enum builder, or a direct registration helper to publish into both environments. Missing namespace tables are created separately; ordinary namespaces are not copied into secureenv. The exact remaining direct global registrations are recorded in the lane report.
+
+**VERIFIED (Retail 12.1.5.70688, R88g.2):** the examined native registrars publish `Enum` members and `C_Timer.After`, `C_UIColor.GetColors`, `Mixin`, and `CreateFromMixins` into the shared secure environment when their native checks pass. **VERIFIED (simulator workaround):** Retail's temporary `C_UIColor` fallback publishes only its existing `GetColors` function into a separate secure namespace; its payload remains simulator policy, not native catalog data. **INFERRED (simulator registration):** `CreateSecureDelegate` is also published to secureenv for the SharedXMLGame consumer path. **VERIFIED (R88i.2 BASELINE-39; simulator source):** `geterrorhandler` is a copied base name; because simulator native registration follows secure-table construction, its registrar now publishes to both environments.
+
+**VERIFIED (Retail simulator run, fallback cleared):** secure dependency execution provides the original `TooltipDataProcessor` from `TooltipDataHandler.lua:177`; `CopyTable` and `GetFrameMetatable` are present in secureenv. R88i.1 verifies that `GetFrameMetatable` uses the native name/handler pair-list registration path without a per-name flag; the simulator publishes its Rust implementation through the shared helper. The next observed dependency error is `Blizzard_SharedXMLBase/TextureUtil.lua:122` (`Constants` is nil); the later `Blizzard_PrivateAurasUI.lua:1398` consumer then reports nil `TextureKitConstants`. **INFERRED:** `TextureUtil.lua` does not reach its assignment to `TextureKitConstants` at line 325 in this secure pass. This does not prove full PrivateAurasUI acceptance. **VERIFIED (current source):** the Retail TooltipDataProcessor fallback remains installed until all cited consumers pass through their original owners.
 
 Retail probe result, 2026-06-20: wrapping `_G.CooldownFrame_Set` and `_G.CooldownFrame_Clear` printed for normal CooldownViewer callers but did not print from `Blizzard_PrivateAurasUI` during a Mythic+ private-aura display. PrivateAurasUI is `UseSecureEnvironment: 1`, so its cooldown code did not reach the live `_G` override. That falsifies the simulator's previous `secureenv` metatable fallback model.
 
 Blizzard source also matches this: outbound bridge files explicitly capture `local secureEnv = GetCurrentEnvironment()`, call `SwapToGlobalEnvironment()`, then assign bridge tables back into `secureEnv` (for example `secureEnv.WowTokenOutbound = WowTokenOutbound`). In the current retail contract, inbound Wow Token callbacks and `RedeemFailed` publish to `_G`, while `WowTokenOutbound` is stored only in `__secureenv`; these are explicit source-level exports, not generic mirroring.
 
-For shared Blizzard libraries, publication into secureenv is an explicit loader allowlist, not generic global mirroring. The allowlist replays `Blizzard_CombatLogBase` and `Blizzard_CatalogShopSharedUtil` so secure consumers receive `CombatLogUtil` and `CatalogShopUtil`; focused tests verify both `_G` and `__secureenv` bindings. See [[addon-loading]] for the complete allowlist and replay lifecycle.
+For shared Blizzard libraries, secure dependency files run in the shared environment when the consumer uses `UseSecureEnvironment: 1`; selected non-secure consumers also use the explicit library allowlist. Neither path mirrors all of `_G`. See [[addon-loading]] for dependency replay, allowlist, and lifecycle details.
 
 `C_ClickBindings` has a per-environment interaction profile. Its unmodified defaults are inferred simulator policy, not native-probed behavior; `ExecuteBinding()` remains an inert temporary gap. The [click-binding interaction profile](../../specs/click-binding-interaction-profile.md) is the current contract and proof SSOT.
 
-`set_in_both_envs_rilua(key, value)` registers named frames in both environments so frame globals are visible from both.
+`set_in_both_envs_rilua(key, value)` writes one global value to ordinary `_G` and secureenv. The paired namespace helpers use separate namespace tables and write each native member to both tables.
 
 ## Runtime Taint Functions
 
@@ -65,7 +71,7 @@ Frame method `CallMethod` is registered in `src/lua_api/frame/methods/text_attri
 
 ## Secret Values
 
-`src/lua_api/globals/security.rs` provides fallback accessors for secret values:
+`src/lua_api/globals/security/` provides fallback accessors for secret values:
 
 - `issecretvalue(value)` returns true for values explicitly marked with the simulator secret marker, Elune-tainted functions, tables with tainted slots, and tables containing nested secret keys or values.
 - `canaccessvalue(value)`, `canaccessallvalues(...)`, and `canaccesstable(table)` return false when those same checks find a secret value.
@@ -75,7 +81,7 @@ Current simulator-owned secret values include party/raid identity strings return
 
 ## SecureHandler Fallback
 
-`src/lua_api/globals/security.rs` installs a Lua-side fallback for the SecureHandler APIs before `Blizzard_RestrictedAddOnEnvironment` arrives.
+`src/lua_api/globals/security/` installs a Lua-side fallback for the SecureHandler APIs before `Blizzard_RestrictedAddOnEnvironment` arrives.
 
 - `SecureHandlerSetFrameRef(frame, label, refFrame)` stores frame refs in weak-keyed registries
 - `SecureHandlerGetFrameRef(frame, label)` reads those stored refs back
@@ -142,7 +148,9 @@ Remaining audit gaps are branch-specific coverage gaps, not known missing implem
 
 - [protected-frame-enforcement.md](../../protected-frame-enforcement.md) — protected-frame behavior and remaining gaps
 - `src/lua_api/frame/methods/methods_helpers.rs` — protected-state gating and `ADDON_ACTION_BLOCKED`
-- `src/lua_api/globals/security.rs` — taint helpers, `securecallmethod`, SecureHandler fallback, state/attribute drivers, secure environment
+- `src/lua_api/globals/security/secure_env.rs` — fixed secure base, environment publication, and secure chunk retargeting
+- `src/c_api/helpers.rs` and `crates/sim-lua-bridge/src/table_builder.rs` — paired native namespace creation and member writes
+- `src/lua_api/globals/security/` — taint helpers, `securecallmethod`, SecureHandler fallback, state/attribute drivers
 - `src/c_api/c_click_bindings.rs` — modeled per-environment interaction profile
 - `src/lua_api/workarounds/temporary/click_bindings_defaults.rs` — inert `ExecuteBinding` and remaining temporary helpers
 - `src/lua_api/state.rs` — `secure_attribute_drivers` storage
@@ -151,6 +159,10 @@ Remaining audit gaps are branch-specific coverage gaps, not known missing implem
 - `tests/protected_frame_enforcement.rs` — combat lockdown coverage
 - `tests/secure_handler_fallback.rs` — SecureHandler fallback coverage
 - `tests/security_api.rs` — state driver and `securecallmethod` coverage
+- `tests/blizzard_private_auras_ui_loads.rs` — secure TooltipDataProcessor provenance and the exact `TextureUtil.lua:122` / `PrivateAurasUI.lua:1398` boundary
+- `src/loader/addon.rs` — secure dependency replay and the separate library allowlist
+- `src/lua_api/workarounds/temporary/color_defaults.rs` — Retail C_UIColor fallback payload publication
+- `src/lua_api/globals/real/secure_helpers.rs` — simulator `CreateSecureDelegate` registration
 - [Forever state dispatch](../../../tests/forever_secure_state_dispatch.rs) —
   selected vendor handle execution and pre-vendor fallback lifetime
 - [Pinned Forever secure handlers](https://github.com/Gethe/wow-ui-source/blob/aff0d8cd53bf4d9ef1c1dd2786b94461a276fb16/Interface/AddOns/Blizzard_RestrictedAddOnEnvironment/SecureHandlers.lua)
@@ -169,7 +181,7 @@ Removed/stale paths that older docs may mention:
 ## See Also
 
 - [[lua-api]] — Lua-facing compatibility surfaces and modeled boundaries
-- [[addon-loading]] — explicit secure replay allowlist and addon load lifecycle
+- [[addon-loading]] — dependency secure replay, the shared-library allowlist, and addon load lifecycle
 - [[post-load-workaround-audit]] — cleanup restoration ownership
 - [[event-system]] — ADDON_ACTION_BLOCKED event firing
 - [[frame-data-flow]] — frame is_protected field and Protect() method
