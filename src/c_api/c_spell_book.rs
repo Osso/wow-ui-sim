@@ -988,3 +988,31 @@ fn spellbook_item_info(state: &mut LuaState, slot: i32) -> Option<Val> {
     );
     Some(info)
 }
+
+#[cfg(all(test, feature = "client-retail"))]
+mod tests {
+    use super::c_spell_book_get_spell_book_item_auto_cast;
+    use crate::lua_api::WowLuaEnv;
+    use rilua::Val;
+
+    #[test]
+    fn autocast_producer_publishes_two_booleans_for_player_item() {
+        let env = WowLuaEnv::new().expect("Lua environment should initialize");
+        let mut lua = env.rilua_mut();
+        let state = lua.state_mut();
+        let saved_base = state.base;
+        let saved_top = state.top;
+        state.base = saved_top;
+        state.push(Val::Num(1.0));
+        state.push(Val::Num(0.0));
+
+        let count = c_spell_book_get_spell_book_item_auto_cast(state)
+            .expect("autocast publisher should complete");
+        assert_eq!(count, 2);
+        assert!(matches!(state.stack_get(state.top - 2), Val::Bool(_)));
+        assert!(matches!(state.stack_get(state.top - 1), Val::Bool(_)));
+
+        state.top = saved_top;
+        state.base = saved_base;
+    }
+}

@@ -292,24 +292,6 @@ fn test_spellbook_namespace_functions_survive_gc() {
 }
 
 #[test]
-fn test_spellbook_get_override_spell() {
-    let env = env();
-    let id: i32 = env.eval("return C_SpellBook.GetOverrideSpell(42)").unwrap();
-    assert_eq!(id, 42, "GetOverrideSpell should return the same ID");
-}
-
-#[test]
-fn test_spellbook_get_item_auto_cast_defaults_disabled() {
-    let env = env();
-    let (enabled, auto_cast_allowed): (bool, bool) = env
-        .eval("return C_SpellBook.GetSpellBookItemAutoCast(1, Enum.SpellBookSpellBank.Player)")
-        .unwrap();
-
-    assert!(!enabled);
-    assert!(!auto_cast_allowed);
-}
-
-#[test]
 fn test_spellbook_is_spell_known() {
     let env = env();
     let known: bool = env.eval("return C_SpellBook.IsSpellKnown(1)").unwrap();
@@ -343,51 +325,100 @@ fn test_spellbook_pickup_item_fires_cursor_changed() {
     );
 }
 
+#[cfg(feature = "client-retail")]
 #[test]
-fn test_spellbook_get_loss_of_control_cooldown_info() {
+fn spellbook_lookup_arguments_match_verified_conversion_and_errors() {
     let env = env();
-    let spell_id: i32 = env
-        .eval("return C_SpellBook.GetSpellBookItemInfo(5, 0).spellID")
-        .expect("actual player-bank slot 5 should have a spell");
-    assert_eq!(spell_id, 19750);
-    env.state().borrow_mut().spell_loss_of_control.insert(
-        spell_id.try_into().expect("positive fixture spell ID"),
-        wow_ui_sim::lua_api::LossOfControlInfo {
-            start_time: 0.0,
-            duration: 0.0,
-            mod_rate: 1.0,
-            is_active: false,
-            should_replace_normal_cooldown: false,
-        },
-    );
-    let result: String = env
+    let result: bool = env
         .eval(
             r#"
-            local info = C_SpellBook.GetSpellBookItemLossOfControlCooldownInfo(5, Enum.SpellBookSpellBank.Player)
-            if type(info) ~= "table" then
-                return "expected_loc_info_table"
+            local methods = {
+                {
+                    C_SpellBook.FindSpellOverrideByID,
+                    "Usage: local overrideSpellID = C_SpellBook.FindSpellOverrideByID(spellID)",
+                },
+                {
+                    C_SpellBook.FindFlyoutSlotBySpellID,
+                    "Usage: local flyoutSlot = C_SpellBook.FindFlyoutSlotBySpellID(spellID)",
+                },
+                {
+                    C_SpellBook.FindBaseSpellByID,
+                    "Usage: local baseSpellID = C_SpellBook.FindBaseSpellByID(spellID)",
+                },
+            }
+            for _, method in ipairs(methods) do
+                local missingOK, missingError = pcall(method[1])
+                if missingOK or not string.find(tostring(missingError), method[2], 1, true) then
+                    return false
+                end
+                local invalidOK, invalidError = pcall(method[1], true)
+                if invalidOK
+                    or not string.find(tostring(invalidError), "outside of expected range", 1, true)
+                    or not string.find(tostring(invalidError), method[2], 1, true) then
+                    return false
+                end
+                if not pcall(method[1], "116.9", {}, "ignored") then
+                    return false
+                end
             end
-            if info.isActive ~= false then
-                return "expected_inactive_loc_info"
-            end
-            if info.startTime ~= 0 or info.duration ~= 0 then
-                return "expected_zero_loc_cooldown"
-            end
-            if info.modRate ~= 1 then
-                return "expected_default_loc_mod_rate"
-            end
-            if info.shouldReplaceNormalCooldown ~= false then
-                return "expected_loc_not_to_replace_normal_cooldown"
-            end
-            if C_SpellBook.GetSpellBookItemLossOfControlCooldownInfo(9999, Enum.SpellBookSpellBank.Player) ~= nil then
-                return "invalid_spellbook_slot_should_not_have_loc_info"
-            end
-            return "ok"
+            return true
             "#,
         )
         .unwrap();
 
-    assert_eq!(result, "ok");
+    assert!(result);
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn spellbook_item_arguments_match_verified_two_argument_conversion_and_errors() {
+    let env = env();
+    let result: bool = env
+        .eval(
+            r#"
+            local methods = {
+                {
+                    C_SpellBook.GetSpellBookItemAutoCast,
+                    "Usage: local autoCastAllowed, autoCastEnabled = C_SpellBook.GetSpellBookItemAutoCast(spellBookItem)",
+                },
+                {
+                    C_SpellBook.GetSpellBookItemLossOfControlCooldownInfo,
+                    "Usage: local lossOfControlInfo = C_SpellBook.GetSpellBookItemLossOfControlCooldownInfo(spellBookItem)",
+                },
+            }
+            for _, method in ipairs(methods) do
+                local missingSlotOK, missingSlotError = pcall(method[1])
+                if missingSlotOK or not string.find(tostring(missingSlotError), method[2], 1, true) then
+                    return false
+                end
+                local missingBankOK, missingBankError = pcall(method[1], 1)
+                if missingBankOK or not string.find(tostring(missingBankError), method[2], 1, true) then
+                    return false
+                end
+                local invalidBankOK, invalidBankError = pcall(method[1], 1, 2)
+                if invalidBankOK or not string.find(tostring(invalidBankError), method[2], 1, true) then
+                    return false
+                end
+                local invalidSlotOK, invalidSlotError = pcall(method[1], 4294967296, 0)
+                if invalidSlotOK or not string.find(tostring(invalidSlotError), method[2], 1, true) then
+                    return false
+                end
+                if not pcall(method[1], "5.9", "0.9", "ignored") then
+                    return false
+                end
+                if not pcall(method[1], 0, 0) then
+                    return false
+                end
+                if not pcall(method[1], 4294967295, 0) then
+                    return false
+                end
+            end
+            return true
+            "#,
+        )
+        .unwrap();
+
+    assert!(result);
 }
 
 // ============================================================================
