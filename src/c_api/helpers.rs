@@ -76,6 +76,7 @@ pub(crate) fn read_untainted_signed32_argument(
         .ok_or_else(range_error)
 }
 
+#[cfg(feature = "client-retail")]
 pub(crate) fn read_untainted_truthy_argument(
     state: &LuaState,
     index: i32,

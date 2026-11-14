@@ -12,9 +12,9 @@ use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
 use rilua::{LuaResult, Val};
 
-use super::helpers::{
-    ensure_namespace, read_untainted_signed32_argument, read_untainted_truthy_argument,
-};
+use super::helpers::ensure_namespace;
+#[cfg(feature = "client-retail")]
+use super::helpers::{read_untainted_signed32_argument, read_untainted_truthy_argument};
 
 #[derive(Debug, Clone, Default)]
 pub struct PvpTalentState {
