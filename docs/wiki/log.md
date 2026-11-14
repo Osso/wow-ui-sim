@@ -1,3 +1,7 @@
+## [2026-11-14] implementation | Achievement eligibility and tracker colors
+
+[Achievement eligibility](../specs/achievement-eligibility.md) records R88o.1's Retail argument/Boolean contract, missing record/group versus null tree, and supplied cache comparisons. Original tracker #6 uses the zero-visible branch; positive visible counts use a different per-criterion getter. PTR/Forever binding is inferred from their selected original Lua. New simulator input stays empty by default; no event substitutes or live cache writer claims.
+
 ## [2026-11-14] correction | Inventory name-adapter evidence
 
 [Inventory/purchase getters](investigations/inventory-purchase-getters.md) separates the INFERRED one-based host slot-name adapter from VERIFIED numeric/packing tests. Retail publications use ACTIVE profile checks; state comments and GUID-kind predicate documentation are corrected.
