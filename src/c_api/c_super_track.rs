@@ -172,6 +172,7 @@ fn set_quest(state: &mut LuaState) -> LuaResult<u32> {
         let mut sim = borrow_state_mut(state)?;
         let tracked = &mut sim.super_track;
         let saved_id = tracked.quest_id.unwrap_or(0);
+        // R88j.6: equal IDs skip flag repair; zero clears only quest tracking.
         if saved_id != id {
             tracked.quest_id = (id != 0).then_some(id);
             if id == 0 {
