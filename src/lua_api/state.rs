@@ -281,6 +281,8 @@ macro_rules! build_empty_sim_state {
                 feature = "client-anniversary"
             ))]
             transmog_appearance_sources: HashMap::new(),
+            #[cfg(feature = "client-wowforever")]
+            forever_appearance_item_ids: HashMap::new(),
             transmog_new_sources: HashSet::new(),
             #[cfg(any(
                 feature = "retail-12-0-0",
@@ -573,6 +575,8 @@ macro_rules! build_empty_sim_state {
             #[cfg(feature = "client-retail")]
             pvp_talent_tooltip:
                 crate::c_api::c_tooltip_info_pvp_talent::PvpTalentTooltipInputs::default(),
+            #[cfg(feature = "client-wowforever")]
+            forever_pvp_talent_spell_ids: HashMap::new(),
             player_xp: PlayerXpState::default(),
             bind_location: "Stormwind City".into(),
             pvp_honor: PvpHonorState::default(),

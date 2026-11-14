@@ -23,12 +23,28 @@ fn assert_usage_error(env: &WowLuaEnv, call: &str, usage: &str) {
 }
 
 #[test]
-fn forever_pvp_talent_getter_returns_no_values_for_missing_records() {
+fn forever_pvp_talent_uses_supplied_spell_tooltips_and_misses_empty_records() {
     let env = WowLuaEnv::new().unwrap();
+    env.state()
+        .borrow_mut()
+        .forever_pvp_talent_spell_ids
+        .extend([(91_001, 116), (91_002, 133)]);
     env.exec(
         r#"
         local getter = C_TooltipInfo.GetPvpTalent
         assert(type(getter) == 'function', 'GetPvpTalent must be registered')
+        for _, case in ipairs({{91001, 116}, {91002, 133}}) do
+            local data = getter(case[1])
+            local expected = C_TooltipInfo.GetSpellByID(case[2])
+            assert(data and data.type == 1 and data.id == case[2],
+                'each supplied talent must publish its mapped spell identity')
+            assert(#data.lines == #expected.lines,
+                'supplied talent uses the shared spell tooltip lines')
+            for index, line in ipairs(expected.lines) do
+                assert(data.lines[index].leftText == line.leftText,
+                    'supplied talent preserves shared spell line text')
+            end
+        end
         assert(select('#', getter('2147483646.9', 0, '1.8', '2.9')) == 0,
             'a missing talent record must return zero values')
         "#,
@@ -38,13 +54,29 @@ fn forever_pvp_talent_getter_returns_no_values_for_missing_records() {
 }
 
 #[test]
-fn forever_appearance_getter_returns_no_values_for_missing_records() {
+fn forever_appearance_uses_supplied_item_tooltips_and_misses_empty_records() {
     let env = WowLuaEnv::new().unwrap();
+    env.state()
+        .borrow_mut()
+        .forever_appearance_item_ids
+        .extend([(90_001, 6948), (90_002, 159)]);
     env.exec(
         r#"
         local getter = C_TooltipInfo.GetItemByItemModifiedAppearanceID
         assert(type(getter) == 'function',
             'GetItemByItemModifiedAppearanceID must be registered')
+        for _, case in ipairs({{90001, 6948}, {90002, 159}}) do
+            local data = getter(case[1])
+            local expected = C_TooltipInfo.GetItemByID(case[2])
+            assert(data and data.type == 0 and data.id == case[2],
+                'each supplied appearance must publish its mapped item identity')
+            assert(#data.lines == #expected.lines and #data.lines > 0,
+                'supplied appearance uses the shared item tooltip lines')
+            for index, line in ipairs(expected.lines) do
+                assert(data.lines[index].leftText == line.leftText,
+                    'supplied appearance preserves shared item line text')
+            end
+        end
         assert(select('#', getter('2147483646.9')) == 0,
             'a missing ItemModifiedAppearance record must return zero values')
         "#,
@@ -110,8 +142,7 @@ fn forever_outfit_getter_handles_zero_and_missing_saved_names() {
     assert_usage_error(&env, "C_TooltipInfo.GetOutfit(nil)", OUTFIT_USAGE);
 }
 
-#[test]
-fn forever_spellbook_outfit_consumer_uses_the_selected_tooltip_getter() {
+fn load_spellbook_outfit_consumer() -> WowLuaEnv {
     let ui = blizzard_ui_dir();
     let env = new_blizzard_addon_env(&ui);
     crate::common::supply_empty_forever_spellbook_outfits(&env);
@@ -141,6 +172,10 @@ fn forever_spellbook_outfit_consumer_uses_the_selected_tooltip_getter() {
             .iter()
             .any(|addon| addon == "Blizzard_PlayerSpells")
     );
+    env
+}
+
+fn assert_selected_spellbook_outfit_source(env: &WowLuaEnv) {
     env.exec(
         r#"
         assert(type(SpellBookOutfitItemMixin) == 'table'
@@ -152,12 +187,28 @@ fn forever_spellbook_outfit_consumer_uses_the_selected_tooltip_getter() {
         assert(source.what == 'Lua' and path:sub(-#suffix) == suffix
             and source.linedefined == 877,
             'the consumer must come from the selected Blizzard Lua source')
+        "#,
+    )
+    .unwrap();
+}
+
+fn invoke_spellbook_outfit_consumer(env: &WowLuaEnv) {
+    env.exec(
+        r#"
         local button = {
             Button = CreateFrame('Button', nil, UIParent),
             GetOutfitID = function() return 42 end,
             GamepadAdjustTooltipAnchor = function() end,
         }
         SpellBookOutfitItemMixin.OnIconEnter(button)
+        "#,
+    )
+    .unwrap();
+}
+
+fn assert_spellbook_outfit_consumer_result(env: &WowLuaEnv) {
+    env.exec(
+        r#"
         local info = GameTooltip:GetPrimaryTooltipInfo()
         local data = GameTooltip:GetPrimaryTooltipData()
         assert(info and info.getterName == 'GetOutfit',
@@ -167,4 +218,12 @@ fn forever_spellbook_outfit_consumer_uses_the_selected_tooltip_getter() {
         "#,
     )
     .unwrap();
+}
+
+#[test]
+fn forever_spellbook_outfit_consumer_uses_the_selected_tooltip_getter() {
+    let env = load_spellbook_outfit_consumer();
+    assert_selected_spellbook_outfit_source(&env);
+    invoke_spellbook_outfit_consumer(&env);
+    assert_spellbook_outfit_consumer_result(&env);
 }

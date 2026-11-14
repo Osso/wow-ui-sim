@@ -358,6 +358,9 @@ pub struct SimState {
         feature = "client-anniversary"
     ))]
     pub transmog_appearance_sources: HashMap<i64, AppearanceSourceInfo>,
+    /// INFERRED host relation from Forever appearance IDs to item IDs; empty by default.
+    #[cfg(feature = "client-wowforever")]
+    pub forever_appearance_item_ids: HashMap<i32, u32>,
     /// Supplied source IDs marked new; acquisition and clearing policy is unknown.
     pub transmog_new_sources: HashSet<i64>,
     /// Explicit (slot, type, option) inputs only; no viewed-outfit synthesis.
@@ -714,6 +717,9 @@ pub struct SimState {
     /// Retail GetPvpTalent catalog and state inputs; all maps are host-supplied.
     #[cfg(feature = "client-retail")]
     pub pvp_talent_tooltip: crate::c_api::c_tooltip_info_pvp_talent::PvpTalentTooltipInputs,
+    /// INFERRED host relation from Forever PvP talent IDs to spell IDs; empty by default.
+    #[cfg(feature = "client-wowforever")]
+    pub forever_pvp_talent_spell_ids: HashMap<i32, u32>,
     pub player_xp: PlayerXpState,
     pub bind_location: String,
     pub pvp_honor: PvpHonorState,
