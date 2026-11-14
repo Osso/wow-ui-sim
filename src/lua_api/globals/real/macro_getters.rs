@@ -9,6 +9,10 @@ use rilua::table_security::{TableAccess, check_table_access, unwrap_secret};
 use rilua::vm::state::LuaState;
 use rilua::{LuaApiMut, LuaResult, Val};
 
+mod inferred_selection;
+
+use inferred_selection::{by_name, is_occupied};
+
 const MACRO_INFO_SLOTS: usize = 240;
 
 // INFERRED R88l.18 ingress: account/character are the tab partitions observed
@@ -54,20 +58,7 @@ fn get_macro_info(state: &mut LuaState) -> LuaResult<u32> {
     let row = {
         let sim = borrow_state(state)?;
         let rows = &sim.macros[..sim.macros.len().min(MACRO_INFO_SLOTS)];
-        match input {
-            Val::Num(number) => by_index(rows, number),
-            Val::Str(handle) => state.gc.string_arena.get(handle).and_then(|string| {
-                let bytes = string.data();
-                match parse_numeric_string(bytes) {
-                    Some(number) => by_index(rows, number),
-                    None => rows
-                        .iter()
-                        .find(|row| is_occupied(row) && row.name.as_bytes() == bytes),
-                }
-            }),
-            _ => None,
-        }
-        .cloned()
+        select_macro_record(state, rows, input).cloned()
     };
     let Some(row) = row else {
         return Ok(0);
@@ -81,21 +72,28 @@ fn get_macro_info(state: &mut LuaState) -> LuaResult<u32> {
     Ok(3)
 }
 
-// The host vector uses all-default rows for vacant slots. Empty stored strings on
-// a partially populated record still reach Lua as empty strings, not nil.
-fn is_occupied(row: &MacroInfo) -> bool {
-    !(row.name.is_empty() && row.icon.is_empty() && row.body.is_empty())
+fn select_macro_record<'a>(
+    state: &LuaState,
+    rows: &'a [MacroInfo],
+    input: Val,
+) -> Option<&'a MacroInfo> {
+    match input {
+        Val::Num(number) => by_index(rows, number),
+        Val::Str(handle) => select_string(rows, state.gc.string_arena.get(handle)?.data()),
+        _ => None,
+    }
+}
+
+fn select_string<'a>(rows: &'a [MacroInfo], bytes: &[u8]) -> Option<&'a MacroInfo> {
+    match parse_numeric_string(bytes) {
+        Some(number) => by_index(rows, number),
+        None => by_name(rows, bytes),
+    }
 }
 
 fn by_index(rows: &[MacroInfo], number: f64) -> Option<&MacroInfo> {
-    // Inputs outside the host's integer conversion domain have no modeled
-    // selection. Within it, preserve the observed unsigned one-based wrap.
-    const I64_LIMIT: f64 = (1_u64 << 63) as f64;
-    if !(-I64_LIMIT..I64_LIMIT).contains(&number) {
-        return None;
-    }
-    let index = (number.trunc() as i64 as u32).wrapping_sub(1) as usize;
-    rows.get(index).filter(|row| is_occupied(row))
+    rows.get(inferred_selection::index(number)?)
+        .filter(|row| is_occupied(row))
 }
 
 // INFERRED simulator representation adapter, not a claim about the native icon helper.
