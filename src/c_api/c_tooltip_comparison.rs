@@ -178,7 +178,13 @@ fn read_frame(state: &LuaState, index: i32, tooltip: bool) -> LuaResult<()> {
 }
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
-    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
+    use crate::client_profile::{ACTIVE, ClientProfile};
+    // Retail 70688 is verified; the matching PTR/Forever generated
+    // declarations justify publication only, not native behavioral parity.
+    if !matches!(
+        ACTIVE,
+        ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
+    ) {
         return Ok(());
     }
     let ns = ensure_namespace(state, "C_TooltipComparison")?;
