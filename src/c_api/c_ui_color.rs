@@ -8,7 +8,7 @@ use crate::lua_bridge::table_set_rust_fn_static;
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
-use rilua::{LuaResult, Val, runtime_error};
+use rilua::{LuaApiMut, LuaResult, Val, runtime_error};
 
 use sim_data_profile::global_colors_retail::{GlobalColorRow, RETAIL_GLOBAL_COLORS};
 
@@ -50,7 +50,7 @@ fn get_colors(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn find_color_mixin(state: &mut LuaState) -> LuaResult<GcRef<Table>> {
-    match crate::lua_api::globals::global_colors::global_value(state, "ColorMixin") {
+    match crate::lua_api::global_colors::global_value(state, "ColorMixin") {
         Val::Table(mixin) => Ok(mixin),
         _ => Err(runtime_error(COLOR_MIXIN_ERROR)),
     }
