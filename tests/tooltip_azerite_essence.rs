@@ -300,7 +300,7 @@ fn retail_azerite_essence_original_consumer_selects_exact_essence_and_rank() {
         local rankTwoIDs = AzeriteTestSpellIDs(activeMinor, {essence_three_rank_two})
         local rankOneCount = AzeriteTestSpellCount(rankOneIDs)
         local rankTwoCount = AzeriteTestSpellCount(rankTwoIDs)
-        local displayed = {}
+        local displayed = {{}}
         for _, line in ipairs(activeMinor.lines) do
             table.insert(displayed, tostring(line.leftText))
         end
