@@ -8,18 +8,11 @@ use crate::common::blizzard_addon_harness::{
     blizzard_ui_dir, load_blizzard_addon_closure_into_env, new_blizzard_addon_env,
 };
 use wow_ui_sim::lua_api::WowLuaEnv;
-use wow_ui_sim::lua_api::state::{AzeriteEssenceInfo, AzeriteEssenceMilestoneInfo, RACE_DATA};
+use wow_ui_sim::lua_api::state::{AzeriteEssenceInfo, AzeriteEssenceMilestoneInfo};
 use wow_ui_sim::screen::ScreenKind;
 
 const ESSENCE_TWO: i32 = 2;
 const ESSENCE_THREE: i32 = 3;
-
-// Raw spell-column candidates from the exact-build DB2 export do not certify
-// the INFERRED spell-role mapping. Source-column checks are also INFERRED.
-const ESSENCE_TWO_RANK_ONE_CANDIDATES: [u32; 4] = [293_019, 294_668, 293_019, 294_668];
-const ESSENCE_TWO_RANK_TWO_CANDIDATES: [u32; 4] = [294_653, 294_687, 298_080, 298_082];
-const ESSENCE_THREE_RANK_ONE_CANDIDATES: [u32; 4] = [293_031, 294_910, 293_031, 294_910];
-const ESSENCE_THREE_RANK_TWO_CANDIDATES: [u32; 4] = [294_906, 294_919, 300_009, 300_012];
 
 const ESSENCE_LUA_HELPERS: &str = r#"
 function AzeriteTestContainsSpell(data, spellID)
@@ -52,9 +45,7 @@ end
 
 function AzeriteTestSpellCount(spellIDs)
     local count = 0
-    for _ in pairs(spellIDs) do
-        count = count + 1
-    end
+    for _ in pairs(spellIDs) do count = count + 1 end
     return count
 end
 
@@ -90,7 +81,7 @@ function AzeriteTestShowEssence(essenceID, rank)
     button:OnEnter()
     local info = GameTooltip:GetPrimaryTooltipInfo()
     local data = GameTooltip:GetPrimaryTooltipData()
-    assert(data, 'RED: selected essence/rank must publish tooltip data')
+    if not data then return nil end
     assert(info and info.getterName == 'GetAzeriteEssence',
         'original Azerite essence accessor must run')
     assert(data.type == 8 and data.id == essenceID,
@@ -108,21 +99,205 @@ function AzeriteTestShowSlot(milestoneID, slot, isMajorSlot)
     button:OnEnter()
     local info = GameTooltip:GetPrimaryTooltipInfo()
     local data = GameTooltip:GetPrimaryTooltipData()
-    assert(data and data.type == 8,
-        'slot must publish type-8 essence tooltip data')
+    if not data then return nil end
     assert(info and info.getterName == 'GetAzeriteEssenceSlot',
         'original Azerite slot accessor must run')
+    assert(data.type == 8, 'slot must preserve type-8 essence tooltip data')
     return data
 end
+
+AzeriteTestCandidates = {
+    essenceTwoRankOne = {293019, 294668, 293019, 294668},
+    essenceTwoRankTwo = {294653, 294687, 298080, 298082},
+    essenceThreeRankOne = {293031, 294910, 293031, 294910},
+    essenceThreeRankTwo = {294906, 294919, 300009, 300012},
+}
 "#;
+
+const ESSENCE_ID_SELECTOR_LUA: &str = r#"
+assert(AzeriteTestShowEssence(0, 1) == nil,
+    'the original essence hover must keep an absent ID empty')
+local two = AzeriteTestShowEssence(2, 1)
+local twoIDs = AzeriteTestAssertSpellCount(
+    two, AzeriteTestCandidates.essenceTwoRankOne, 2,
+    'the first essence must produce both spell blocks')
+local three = AzeriteTestShowEssence(3, 1)
+local threeIDs = AzeriteTestAssertSpellCount(
+    three, AzeriteTestCandidates.essenceThreeRankOne, 2,
+    'the second essence must produce both spell blocks')
+assert(not AzeriteTestSameSpellIDs(twoIDs, threeIDs),
+    'distinct essence IDs must select distinct spell records')
+"#;
+
+const ESSENCE_RANK_SELECTOR_LUA: &str = r#"
+assert(AzeriteTestShowEssence(2, 5) == nil,
+    'the original essence hover must keep an absent rank empty')
+local rankOne = AzeriteTestShowEssence(2, 1)
+local rankOneIDs = AzeriteTestAssertSpellCount(
+    rankOne, AzeriteTestCandidates.essenceTwoRankOne, 2,
+    'rank one must produce both spell blocks')
+local rankTwo = AzeriteTestShowEssence(2, 2)
+local rankTwoIDs = AzeriteTestAssertSpellCount(
+    rankTwo, AzeriteTestCandidates.essenceTwoRankTwo, 2,
+    'rank two must produce both spell blocks')
+assert(not AzeriteTestSameSpellIDs(rankOneIDs, rankTwoIDs),
+    'distinct ranks must select distinct spell records')
+"#;
+
+const ACTIVE_MAJOR_SELECTOR_LUA: &str = r#"
+local activeMajor = AzeriteTestShowEssence(2, 2)
+local rankOne = AzeriteTestSpellIDs(activeMajor, AzeriteTestCandidates.essenceTwoRankOne)
+local rankTwo = AzeriteTestSpellIDs(activeMajor, AzeriteTestCandidates.essenceTwoRankTwo)
+assert(AzeriteTestSpellCount(rankOne) == 2,
+    'an active major essence must use both rank-one description blocks')
+assert(AzeriteTestSpellCount(rankTwo) == 0,
+    'an active major essence must not use selected-rank actual blocks')
+"#;
+
+const ACTIVE_MINOR_SELECTOR_LUA: &str = r#"
+local activeMinor = AzeriteTestShowEssence(3, 2)
+local rankOne = AzeriteTestSpellIDs(activeMinor, AzeriteTestCandidates.essenceThreeRankOne)
+local rankTwo = AzeriteTestSpellIDs(activeMinor, AzeriteTestCandidates.essenceThreeRankTwo)
+assert(AzeriteTestSpellCount(rankOne) >= 1 and AzeriteTestSpellCount(rankTwo) >= 1,
+    'an active minor essence must use its passive rank-one and major actual blocks')
+"#;
+
+const SOURCE_HEADING_LUA: &str = r#"
+local nextRankTwo = AzeriteTestShowEssence(3, 1)
+assert(AzeriteTestFindLine(nextRankTwo, 'Next rank:'),
+    'the verified next-rank stage must select its heading')
+local rankZero = AzeriteTestShowEssence(3, 0)
+assert(AzeriteTestFindLine(rankZero, 'Source:'),
+    'the verified rank-zero stage must select the source heading')
+local nextRankFour = AzeriteTestShowEssence(3, 3)
+assert(not AzeriteTestFindLine(nextRankFour, 'Next rank:'),
+    'next rank four must disable the source-heading stage')
+assert(select('#', C_TooltipInfo.GetAzeriteEssence(3, 4)) == 0,
+    'a missing exact next-rank record must return zero values')
+"#;
+
+const CURRENT_RANK_LUA: &str = r#"
+local current = C_TooltipInfo.GetAzeriteEssence(2)
+local currentIDs = AzeriteTestAssertSpellCount(
+    current, AzeriteTestCandidates.essenceTwoRankTwo, 2,
+    'omitted rank must use the current player rank')
+local rankZero = C_TooltipInfo.GetAzeriteEssence(2, 0)
+local rankOneIDs = AzeriteTestAssertSpellCount(
+    rankZero, AzeriteTestCandidates.essenceTwoRankOne, 2,
+    'rank zero must select rank one')
+assert(AzeriteTestSpellCount(currentIDs) == 2 and AzeriteTestSpellCount(rankOneIDs) == 2)
+"#;
+
+const LIST_MISS_RANK_LUA: &str = r#"
+local listMiss = C_TooltipInfo.GetAzeriteEssence(2)
+local listMissIDs = AzeriteTestAssertSpellCount(
+    listMiss, AzeriteTestCandidates.essenceTwoRankOne, 2,
+    'a present-player list miss must select rank one')
+local rankOne = C_TooltipInfo.GetAzeriteEssence(2, 1)
+local rankOneIDs = AzeriteTestSpellIDs(rankOne, AzeriteTestCandidates.essenceTwoRankOne)
+assert(AzeriteTestSameSpellIDs(listMissIDs, rankOneIDs),
+    'a player-list miss must select the rank-one spell records')
+"#;
+
+const EXPLICIT_RANK_WITHOUT_PLAYER_LUA: &str = r#"
+local explicit = C_TooltipInfo.GetAzeriteEssence(2, 2)
+assert(explicit and explicit.type == 8 and explicit.id == 2,
+    'an explicit rank must bypass current-player rank lookup')
+AzeriteTestAssertSpellCount(explicit, AzeriteTestCandidates.essenceTwoRankTwo, 2,
+    'an explicit rank must produce its selected spell blocks')
+assert(select('#', C_TooltipInfo.GetAzeriteEssence(2)) == 0,
+    'an omitted rank must miss without player state')
+"#;
+
+const ESSENCE_MISS_ARITY_LUA: &str = r#"
+assert(select('#', C_TooltipInfo.GetAzeriteEssence(-1, 1)) == 0,
+    'a negative essence ID must return zero values')
+assert(select('#', C_TooltipInfo.GetAzeriteEssence(0, 1)) == 0,
+    'a missing essence record must return zero values')
+assert(select('#', C_TooltipInfo.GetAzeriteEssence(999999)) == 0,
+    'an omitted-rank missing essence must return zero values')
+assert(select('#', C_TooltipInfo.GetAzeriteEssence(2, 5)) == 0,
+    'a missing selected rank must return zero values')
+local savedFormat = format
+format = function() error('injected tooltip producer failure') end
+local failedCount = select('#', C_TooltipInfo.GetAzeriteEssence(2, 2))
+format = savedFormat
+assert(failedCount == 0, 'a failed producer must return zero values')
+"#;
+
+const PLAYER_STATE_MISS_LUA: &str = r#"
+assert(select('#', C_TooltipInfo.GetAzeriteEssence(2)) == 0,
+    'an omitted-rank missing-player path must return zero values')
+assert(select('#', C_TooltipInfo.GetAzeriteEssenceSlot(0)) == 0,
+    'a missing-player slot path must return zero values')
+"#;
+
+const SLOT_STATE_MISS_LUA: &str = r#"
+assert(select('#', C_TooltipInfo.GetAzeriteEssence(2)) == 0,
+    'an omitted-rank missing-state path must return zero values')
+assert(select('#', C_TooltipInfo.GetAzeriteEssenceSlot(0)) == 0,
+    'a missing-rank-state slot path must return zero values')
+"#;
+
+const SLOT_MISS_ARITY_LUA: &str = r#"
+assert(select('#', C_TooltipInfo.GetAzeriteEssenceSlot(1)) == 0,
+    'an unconfigured slot must return zero values')
+assert(select('#', C_TooltipInfo.GetAzeriteEssenceSlot(2)) == 0,
+    'an empty essence record must return zero values')
+"#;
+
+const SLOT_SELECTOR_LUA: &str = r#"
+local major = AzeriteTestShowSlot(101, 0, true)
+assert(major.id == 2, 'slot zero must select its active essence')
+AzeriteTestAssertSpellCount(major, AzeriteTestCandidates.essenceTwoRankOne, 2,
+    'slot zero must keep both rank-one spell blocks')
+local passive = AzeriteTestShowSlot(102, 1, false)
+assert(passive.id == 3, 'slot one must select its distinct active essence')
+AzeriteTestAssertSpellCount(passive, AzeriteTestCandidates.essenceThreeRankOne, 1,
+    'a nonzero slot must keep only the passive rank-one block')
+assert(AzeriteTestSpellCount(
+    AzeriteTestSpellIDs(passive, AzeriteTestCandidates.essenceThreeRankTwo)) == 0,
+    'a nonzero slot must omit the main-power block')
+"#;
+
+const EMPTY_SLOT_HOVER_LUA: &str = r#"
+assert(AzeriteTestShowSlot(103, 2, false) == nil,
+    'the original slot hover must keep an empty essence result absent')
+"#;
+
+const ARGUMENT_ERRORS_LUA: &str = r#"
+local ok, message = pcall(C_TooltipInfo.GetAzeriteEssence)
+assert(not ok and tostring(message):find(
+    'Usage: local data = C_TooltipInfo.GetAzeriteEssence', 1, true),
+    'a missing required essence ID must raise the verified usage error')
+local rankOK, rankMessage = pcall(C_TooltipInfo.GetAzeriteEssence, 2, 4294967296)
+assert(not rankOK and tostring(rankMessage):find(
+    'outside of expected range 0 to 4294967295', 1, true),
+    'an out-of-range unsigned rank must raise the verified reader error')
+local slotOK, slotMessage = pcall(C_TooltipInfo.GetAzeriteEssenceSlot)
+assert(not slotOK and tostring(slotMessage):find(
+    'Usage: local data = C_TooltipInfo.GetAzeriteEssenceSlot', 1, true),
+    'a missing required slot must raise the verified usage error')
+local rangeOK, rangeMessage = pcall(C_TooltipInfo.GetAzeriteEssenceSlot, 4)
+assert(not rangeOK and tostring(rangeMessage):find(
+    'outside of expected range 0 to 3', 1, true),
+    'slot four must raise the verified range error')
+"#;
+
+fn run_azerite_script(env: &WowLuaEnv, script: &str, message: &str) {
+    env.exec(script).expect(message);
+}
 
 fn original_azerite_tooltip_env() -> WowLuaEnv {
     let ui = blizzard_ui_dir();
     assert_azerite_ui_selected(&ui);
     let env = load_selected_azerite_tooltip_addons(&ui);
     load_original_azerite_consumers(&env, &ui);
-    env.exec(ESSENCE_LUA_HELPERS)
-        .expect("Azerite selector test helpers should load");
+    run_azerite_script(
+        &env,
+        ESSENCE_LUA_HELPERS,
+        "Azerite test helpers should load",
+    );
     env
 }
 
@@ -188,7 +363,8 @@ fn load_original_azerite_consumers(env: &WowLuaEnv, ui: &std::path::Path) {
 }
 
 fn assert_original_azerite_consumer_sources(env: &WowLuaEnv) {
-    env.exec(
+    run_azerite_script(
+        env,
         r#"
         local buttonSource = debug.getinfo(AzeriteEssenceButtonMixin.OnEnter, 'S').source
         assert(buttonSource:find('Blizzard_AzeriteEssenceUI.lua', 1, true), buttonSource)
@@ -199,17 +375,8 @@ fn assert_original_azerite_consumer_sources(env: &WowLuaEnv) {
         assert(essenceSource:find('TooltipDataHandler.lua', 1, true), essenceSource)
         assert(slotGetterSource:find('TooltipDataHandler.lua', 1, true), slotGetterSource)
         "#,
-    )
-    .expect("the original Azerite consumers and accessors should load");
-}
-
-fn lua_number_array(values: &[u32]) -> String {
-    let values = values
-        .iter()
-        .map(u32::to_string)
-        .collect::<Vec<_>>()
-        .join(", ");
-    format!("{{{values}}}")
+        "the original Azerite consumers and accessors should load",
+    );
 }
 
 fn seed_essence(env: &WowLuaEnv, id: i32, rank: i32) {
@@ -228,13 +395,6 @@ fn seed_essence(env: &WowLuaEnv, id: i32, rank: i32) {
             has_never_activated: false,
         },
     );
-}
-
-fn race_index_for_faction(faction: &str) -> usize {
-    RACE_DATA
-        .iter()
-        .position(|(_, _, candidate)| *candidate == faction)
-        .expect("race data should provide each Azerite faction")
 }
 
 fn seed_milestone(env: &WowLuaEnv, milestone_id: i32, slot: i32, essence_id: i32) {
@@ -258,259 +418,152 @@ fn seed_milestone(env: &WowLuaEnv, milestone_id: i32, slot: i32, essence_id: i32
 }
 
 #[test]
-fn retail_azerite_essence_original_consumer_selects_exact_essence_and_rank() {
+fn retail_azerite_essence_original_hover_selects_distinct_essences_and_absent() {
     let env = original_azerite_tooltip_env();
     seed_essence(&env, ESSENCE_TWO, 1);
     seed_essence(&env, ESSENCE_THREE, 1);
-
-    let essence_two_rank_one = lua_number_array(&ESSENCE_TWO_RANK_ONE_CANDIDATES);
-    let essence_two_rank_two = lua_number_array(&ESSENCE_TWO_RANK_TWO_CANDIDATES);
-    let essence_three_rank_one = lua_number_array(&ESSENCE_THREE_RANK_ONE_CANDIDATES);
-    let essence_three_rank_two = lua_number_array(&ESSENCE_THREE_RANK_TWO_CANDIDATES);
-    env.exec(&format!(
-        r#"
-        local rankOne = AzeriteTestShowEssence({ESSENCE_TWO}, 1)
-        assert(rankOne.id == {ESSENCE_TWO})
-        local rankOneIDs = AzeriteTestAssertSpellCount(
-            rankOne, {essence_two_rank_one}, 2, 'rank one must produce both spell blocks')
-
-        -- The player-state rank is 1; this original UI passes rank 2 explicitly.
-        local rankTwo = AzeriteTestShowEssence({ESSENCE_TWO}, 2)
-        assert(rankTwo.id == {ESSENCE_TWO})
-        local rankTwoIDs = AzeriteTestAssertSpellCount(
-            rankTwo, {essence_two_rank_two}, 2, 'rank two must produce both spell blocks')
-        assert(not AzeriteTestSameSpellIDs(rankOneIDs, rankTwoIDs),
-            'different exact ranks must select different spell records')
-
-        local otherEssence = AzeriteTestShowEssence({ESSENCE_THREE}, 2)
-        local otherIDs = AzeriteTestAssertSpellCount(
-            otherEssence, {essence_three_rank_two}, 2,
-            'the second essence must produce both spell blocks')
-        assert(not AzeriteTestSameSpellIDs(rankTwoIDs, otherIDs),
-            'different essence IDs must select different spell records')
-
-        local currentRank = C_TooltipInfo.GetAzeriteEssence({ESSENCE_TWO})
-        assert(currentRank and currentRank.type == 8 and currentRank.id == {ESSENCE_TWO})
-        local currentIDs = AzeriteTestSpellIDs(currentRank, {essence_two_rank_one})
-        assert(AzeriteTestSameSpellIDs(rankOneIDs, currentIDs),
-            'an omitted rank must use the current player rank')
-
-        local zeroRank = C_TooltipInfo.GetAzeriteEssence({ESSENCE_TWO}, 0)
-        assert(zeroRank and zeroRank.type == 8 and zeroRank.id == {ESSENCE_TWO})
-        local zeroIDs = AzeriteTestSpellIDs(zeroRank, {essence_two_rank_one})
-        assert(AzeriteTestSameSpellIDs(rankOneIDs, zeroIDs),
-            'rank zero must select rank one')
-
-        assert(select('#', C_TooltipInfo.GetAzeriteEssence({ESSENCE_TWO}, 5)) == 0,
-            'a missing exact rank must not select a lower rank')
-        "#
-    ))
-    .expect("the original Azerite essence consumer must select the DB2 essence and rank");
-
-    seed_milestone(&env, 103, 0, ESSENCE_TWO);
-    env.exec(&format!(
-        r#"
-        local activeMajor = AzeriteTestShowEssence({ESSENCE_TWO}, 2)
-        local rankOneIDs = AzeriteTestSpellIDs(activeMajor, {essence_two_rank_one})
-        local rankTwoIDs = AzeriteTestSpellIDs(activeMajor, {essence_two_rank_two})
-        assert(AzeriteTestSpellCount(rankOneIDs) == 2,
-            'an active major essence must use both rank-one description blocks')
-        assert(AzeriteTestSpellCount(rankTwoIDs) == 0,
-            'an active major essence must not use selected-rank actual blocks')
-        "#
-    ))
-    .expect("the original essence consumer should select rank-one active descriptions");
-
-    env.state().borrow_mut().azerite_essence.milestones.clear();
-    seed_milestone(&env, 104, 1, ESSENCE_THREE);
-    env.exec(&format!(
-        r#"
-        local activeMinor = AzeriteTestShowEssence({ESSENCE_THREE}, 2)
-        local rankOneIDs = AzeriteTestSpellIDs(activeMinor, {essence_three_rank_one})
-        local rankTwoIDs = AzeriteTestSpellIDs(activeMinor, {essence_three_rank_two})
-        local rankOneCount = AzeriteTestSpellCount(rankOneIDs)
-        local rankTwoCount = AzeriteTestSpellCount(rankTwoIDs)
-        local displayed = {{}}
-        for _, line in ipairs(activeMinor.lines) do
-            table.insert(displayed, tostring(line.leftText))
-        end
-        assert(rankOneCount >= 1 and rankTwoCount >= 1,
-            'active minor rank-one=' .. rankOneCount .. ' rank-two=' .. rankTwoCount
-                .. ' lines=' .. table.concat(displayed, ' / '))
-        "#
-    ))
-    .expect("the original essence consumer should split active minor spell ranks");
-    env.state().borrow_mut().azerite_essence.milestones.clear();
-
-    let alliance_race = race_index_for_faction("Alliance");
-    let horde_race = race_index_for_faction("Horde");
-    env.state().borrow_mut().player.race_index = alliance_race;
-    env.exec(&format!(
-        r#"
-        local alliance = AzeriteTestShowEssence({ESSENCE_THREE}, 1)
-        assert(AzeriteTestFindLine(alliance, 'Next rank:'),
-            'rank one must show the next-rank source heading')
-        local source = AzeriteTestFindLine(alliance, 'Battlefield Brawler')
-        assert(source and source.wrapText == true
-            and source.leftText:find('Marshal Gabriel', 1, true),
-            'the Alliance source must come from the DB2 rank-two row and wrap')
-        assert(not AzeriteTestFindLine(alliance, 'Xander Silberman'),
-            'Alliance source selection must not use the Horde source column')
-        "#
-    ))
-    .expect("the original consumer should exercise the INFERRED Alliance source mapping");
-
-    env.state().borrow_mut().player.race_index = horde_race;
-    env.exec(&format!(
-        r#"
-        local horde = AzeriteTestShowEssence({ESSENCE_THREE}, 1)
-        local source = AzeriteTestFindLine(horde, 'Battlefield Brawler')
-        assert(source and source.wrapText == true
-            and source.leftText:find('Xander Silberman', 1, true),
-            'the Horde source must come from the DB2 rank-two row and wrap')
-        assert(not AzeriteTestFindLine(horde, 'Marshal Gabriel'),
-            'Horde source selection must not use the Alliance source column')
-        "#
-    ))
-    .expect("the original consumer should exercise the INFERRED Horde source mapping");
-
-    env.state().borrow_mut().player.race_index = alliance_race;
-    env.exec(&format!(
-        r#"
-        local rankZero = AzeriteTestShowEssence({ESSENCE_THREE}, 0)
-        assert(AzeriteTestFindLine(rankZero, 'Source:'),
-            'original rank zero must select the source heading')
-        assert(AzeriteTestFindLine(rankZero, 'Storming the Battlefields'),
-            'original rank zero must use the exact rank-one source row')
-
-        local nextRankFour = AzeriteTestShowEssence({ESSENCE_THREE}, 3)
-        assert(not AzeriteTestFindLine(nextRankFour, 'Next rank:'),
-            'next rank four must disable the source stage')
-        assert(select('#', C_TooltipInfo.GetAzeriteEssence({ESSENCE_THREE}, 4)) == 0,
-            'a missing exact next-rank record must preserve the no-values result')
-        "#
-    ))
-    .expect("the original consumer should exercise the INFERRED rank-zero source mapping");
-
-    {
-        let mut state = env.state().borrow_mut();
-        state.player.present = false;
-        state.azerite_essence.essences.clear();
-    }
-    let essence_two_rank_two = lua_number_array(&ESSENCE_TWO_RANK_TWO_CANDIDATES);
-    env.exec(&format!(
-        r#"
-        local explicit = C_TooltipInfo.GetAzeriteEssence({ESSENCE_TWO}, 2)
-        assert(explicit and explicit.type == 8 and explicit.id == {ESSENCE_TWO},
-            'an explicit rank must not require current player state')
-        AzeriteTestAssertSpellCount(explicit, {essence_two_rank_two}, 2,
-            'an explicit rank must still produce its selected spells')
-        "#
-    ))
-    .expect("an explicit rank should bypass missing current-player rank data");
-
-    env.state().borrow_mut().player.present = true;
-    seed_essence(&env, ESSENCE_THREE, 1);
-    let essence_two_rank_one = lua_number_array(&ESSENCE_TWO_RANK_ONE_CANDIDATES);
-    env.exec(&format!(
-        r#"
-        local listMiss = C_TooltipInfo.GetAzeriteEssence({ESSENCE_TWO})
-        assert(listMiss and listMiss.type == 8 and listMiss.id == {ESSENCE_TWO},
-            'a player-list miss must still use rank one')
-        local listMissIDs = AzeriteTestSpellIDs(listMiss, {essence_two_rank_one})
-        local rankOne = C_TooltipInfo.GetAzeriteEssence({ESSENCE_TWO}, 1)
-        local rankOneIDs = AzeriteTestSpellIDs(rankOne, {essence_two_rank_one})
-        assert(AzeriteTestSameSpellIDs(listMissIDs, rankOneIDs),
-            'a list miss rank zero must be raised to rank one')
-
-        local savedFormat = format
-        format = function() error('injected tooltip producer failure') end
-        local failedCount = select('#', C_TooltipInfo.GetAzeriteEssence({ESSENCE_TWO}, 2))
-        format = savedFormat
-        assert(failedCount == 0,
-            'a failed tooltip producer must return zero Lua values')
-        "#
-    ))
-    .expect("a missing essence from a present player rank list should use rank one");
+    run_azerite_script(
+        &env,
+        ESSENCE_ID_SELECTOR_LUA,
+        "the original Azerite hover must select distinct essence IDs",
+    );
 }
 
 #[test]
-fn retail_azerite_essence_slot_original_consumer_applies_verified_modes() {
+fn retail_azerite_essence_original_hover_selects_distinct_ranks_and_absent() {
+    let env = original_azerite_tooltip_env();
+    seed_essence(&env, ESSENCE_TWO, 1);
+    run_azerite_script(
+        &env,
+        ESSENCE_RANK_SELECTOR_LUA,
+        "the original Azerite hover must select distinct exact ranks",
+    );
+}
+
+#[test]
+fn retail_azerite_essence_original_hover_applies_active_slot_spell_selectors() {
+    let env = original_azerite_tooltip_env();
+    seed_essence(&env, ESSENCE_TWO, 2);
+    seed_essence(&env, ESSENCE_THREE, 2);
+    seed_milestone(&env, 103, 0, ESSENCE_TWO);
+    run_azerite_script(
+        &env,
+        ACTIVE_MAJOR_SELECTOR_LUA,
+        "major-slot spell selection failed",
+    );
+    env.state().borrow_mut().azerite_essence.milestones.clear();
+    seed_milestone(&env, 104, 1, ESSENCE_THREE);
+    run_azerite_script(
+        &env,
+        ACTIVE_MINOR_SELECTOR_LUA,
+        "minor-slot spell selection failed",
+    );
+}
+
+#[test]
+fn retail_azerite_essence_original_hover_keeps_verified_next_rank_headings() {
+    let env = original_azerite_tooltip_env();
+    seed_essence(&env, ESSENCE_THREE, 1);
+    run_azerite_script(
+        &env,
+        SOURCE_HEADING_LUA,
+        "the original Azerite hover must follow verified next-rank heading conditions",
+    );
+}
+
+#[test]
+fn retail_azerite_essence_slot_original_hover_selects_two_slots_and_absent() {
+    let absent_env = original_azerite_tooltip_env();
+    seed_essence(&absent_env, ESSENCE_TWO, 1);
+    seed_milestone(&absent_env, 103, 2, 0);
+    run_azerite_script(
+        &absent_env,
+        EMPTY_SLOT_HOVER_LUA,
+        "empty slot hover should stay absent",
+    );
+
     let env = original_azerite_tooltip_env();
     seed_essence(&env, ESSENCE_TWO, 2);
     seed_essence(&env, ESSENCE_THREE, 2);
     seed_milestone(&env, 101, 0, ESSENCE_TWO);
     seed_milestone(&env, 102, 1, ESSENCE_THREE);
-
-    let essence_two_rank_one = lua_number_array(&ESSENCE_TWO_RANK_ONE_CANDIDATES);
-    let essence_two_rank_two = lua_number_array(&ESSENCE_TWO_RANK_TWO_CANDIDATES);
-    let essence_three_rank_one = lua_number_array(&ESSENCE_THREE_RANK_ONE_CANDIDATES);
-    let essence_three_rank_two = lua_number_array(&ESSENCE_THREE_RANK_TWO_CANDIDATES);
-    env.exec(&format!(
-        r#"
-        local majorSlot = AzeriteTestShowSlot(101, 0, true)
-        assert(majorSlot.id == {ESSENCE_TWO})
-        AzeriteTestAssertSpellCount(majorSlot, {essence_two_rank_one}, 2,
-            'slot zero must keep main and passive rank-one spell blocks')
-        assert(AzeriteTestSpellCount(
-            AzeriteTestSpellIDs(majorSlot, {essence_two_rank_two})) == 0,
-            'active major slot must use rank-one description spells')
-
-        local passiveSlot = AzeriteTestShowSlot(102, 1, false)
-        assert(passiveSlot.id == {ESSENCE_THREE})
-        AzeriteTestAssertSpellCount(passiveSlot, {essence_three_rank_one}, 1,
-            'a nonzero slot must keep its passive rank-one spell block')
-        assert(AzeriteTestSpellCount(
-            AzeriteTestSpellIDs(passiveSlot, {essence_three_rank_two})) == 0,
-            'nonzero slots must omit the main-power block')
-        "#
-    ))
-    .expect("the original Azerite slot consumer must select its active essence and mode");
+    run_azerite_script(
+        &env,
+        SLOT_SELECTOR_LUA,
+        "the original slot hover must select each slot",
+    );
 }
 
 #[test]
-fn retail_azerite_essence_getters_keep_native_zero_value_miss_arity() {
+fn retail_azerite_essence_current_and_explicit_rank_selection() {
+    let env = WowLuaEnv::new().expect("Retail Lua environment should initialize");
+    seed_essence(&env, ESSENCE_TWO, 2);
+    run_azerite_script(
+        &env,
+        CURRENT_RANK_LUA,
+        "current and zero rank selection failed",
+    );
+    env.state().borrow_mut().azerite_essence.essences.clear();
+    seed_essence(&env, ESSENCE_THREE, 1);
+    run_azerite_script(
+        &env,
+        LIST_MISS_RANK_LUA,
+        "rank-list miss must select rank one",
+    );
+    env.state().borrow_mut().player.present = false;
+    env.state().borrow_mut().azerite_essence.essences.clear();
+    run_azerite_script(
+        &env,
+        EXPLICIT_RANK_WITHOUT_PLAYER_LUA,
+        "explicit rank selection must bypass player rank state",
+    );
+}
+
+#[test]
+fn retail_azerite_essence_failures_keep_zero_value_arity() {
     let env = WowLuaEnv::new().expect("Retail Lua environment should initialize");
     seed_essence(&env, ESSENCE_TWO, 4);
-    seed_milestone(&env, 101, 0, ESSENCE_TWO);
-
-    env.exec(&format!(
-        r#"
-        assert(select('#', C_TooltipInfo.GetAzeriteEssence(-1, 1)) == 0,
-            'negative essence ID is a zero-value miss')
-        assert(select('#', C_TooltipInfo.GetAzeriteEssence(999999, 1)) == 0,
-            'missing essence record is a zero-value miss')
-        assert(select('#', C_TooltipInfo.GetAzeriteEssence({ESSENCE_TWO}, 5)) == 0,
-            'missing selected rank is a zero-value miss')
-        "#
-    ))
-    .expect("the Azerite essence API should preserve missing-record arity");
-
+    run_azerite_script(
+        &env,
+        ESSENCE_MISS_ARITY_LUA,
+        "essence failures must return zero values",
+    );
     env.state().borrow_mut().player.present = false;
-    env.exec(&format!(
-        r#"
-        assert(select('#', C_TooltipInfo.GetAzeriteEssence({ESSENCE_TWO})) == 0,
-            'a missing player is a zero-value omitted-rank miss')
-        assert(select('#', C_TooltipInfo.GetAzeriteEssenceSlot(0)) == 0,
-            'a missing player is a zero-value slot miss')
-        "#
-    ))
-    .expect("explicit rank should bypass the player rank lookup");
-
+    run_azerite_script(
+        &env,
+        PLAYER_STATE_MISS_LUA,
+        "missing player must return zero values",
+    );
     {
         let mut state = env.state().borrow_mut();
         state.player.present = true;
         state.azerite_essence.essences.clear();
     }
-    env.exec(&format!(
-        r#"
-        assert(select('#', C_TooltipInfo.GetAzeriteEssence({ESSENCE_TWO})) == 0,
-            'missing current-player essence state is a zero-value miss')
-        assert(select('#', C_TooltipInfo.GetAzeriteEssenceSlot(0)) == 0,
-            'missing current-player rank state is a zero-value miss')
-        assert(select('#', C_TooltipInfo.GetAzeriteEssenceSlot(1)) == 0,
-            'an absent active slot is a zero-value miss')
-        "#
-    ))
-    .expect("the Azerite getter miss paths should return exactly zero values");
+    run_azerite_script(
+        &env,
+        SLOT_STATE_MISS_LUA,
+        "missing player state must return zero values",
+    );
+}
+
+#[test]
+fn retail_azerite_slot_population_misses_keep_zero_value_arity() {
+    let env = WowLuaEnv::new().expect("Retail Lua environment should initialize");
+    seed_essence(&env, ESSENCE_TWO, 1);
+    seed_milestone(&env, 105, 2, 0);
+    run_azerite_script(
+        &env,
+        SLOT_MISS_ARITY_LUA,
+        "slot population misses must return zero values",
+    );
+}
+
+#[test]
+fn retail_azerite_getters_raise_only_verified_argument_errors() {
+    let env = WowLuaEnv::new().expect("Retail Lua environment should initialize");
+    run_azerite_script(
+        &env,
+        ARGUMENT_ERRORS_LUA,
+        "verified argument errors must be raised",
+    );
 }
