@@ -2,6 +2,16 @@
 
 Updated the [map world-position contract](../specs/map-world-position.md) and the [implementation investigation](investigations/patch-8-0-1-api-audit.md#retail-map-world-position) with R88i.41. **VERIFIED (R88i.41, Retail 12.1.5.70688):** both functions' signed-ID parsing, plain-table positions, exact Usage strings, forward result arity, inclusive UI bounds, epsilon rejection, nearest-center selection, and outside extrapolation. **INFERRED:** 70783/70575 data parity, the swapped/reversed forward formula, positive `MapID` output, and CSV-order ties. **VERIFIED (repository):** the generator reads 22,780 rows and emits only the fields used by the forward vector. **VERIFIED (targeted generator tests):** all three changed assignment-parser cases pass. **VERIFIED (repository model):** `AreaInfo` lacks `ContinentID`; negative-`MapID` fallback remains unimplemented. Native inverse assignment ranking and parent promotion remain out of scope.
 
+## [2026-11-14] investigation | AdventureGuideUtil original availability
+
+[AdventureGuideUtil availability](investigations/adventureguide-original-availability.md)
+records the Retail original MicroMenu consumer and narrow bootstrap boundary.
+The default-state selector is PRESERVATION, not native availability or RED.
+
+- L follow-up: retain AdventureGuide availability on Retail Glue; prove Game
+  owner precedes ItemRefHandlers and disclose unsupported pre-owner hyperlink
+  calls, per coordinator #962. See [[adventureguide-original-availability]].
+
 ## [2026-11-13] fix | Inline icon right-edge advance
 
 Updated [Rendering pipeline](systems/rendering-pipeline.md#inline-icons-in-text) with R88f.L.2's absolute-right-edge snap and the tooltip boundary. A fractional scaled-edge `GetStringWidth` test exercises snapped cursor advance.

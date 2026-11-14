@@ -53,12 +53,6 @@ end
 if type(AdventureGuideUtil) ~= "table" then
     AdventureGuideUtil = {}
 end
-if rawget(AdventureGuideUtil, "IsAvailable") == nil then
-    function AdventureGuideUtil.IsAvailable()
-        local kioskEnabled = Kiosk and Kiosk.IsEnabled and Kiosk.IsEnabled()
-        return not kioskEnabled and C_AdventureJournal.CanBeShown()
-    end
-end
 if rawget(AdventureGuideUtil, "OpenJournalLink") == nil then
     function AdventureGuideUtil.OpenJournalLink(_journalType, _id, _difficultyID)
         if not EncounterJournal and type(EncounterJournal_LoadUI) == "function" then
@@ -95,8 +89,47 @@ if rawget(AdventureGuideUtil, "IsInInstance") == nil then
 end
 "#;
 
+const AVAILABILITY_FALLBACK_LUA: &str = r#"
+-- Retail original FrameXMLUtil owns availability before the MicroMenu consumer.
+-- Other profiles retain bootstrap behavior until their ownership is proven.
+if rawget(AdventureGuideUtil, "IsAvailable") == nil then
+    function AdventureGuideUtil.IsAvailable()
+        local kioskEnabled = Kiosk and Kiosk.IsEnabled and Kiosk.IsEnabled()
+        return not kioskEnabled and C_AdventureJournal.CanBeShown()
+    end
+    __wow_temporary_adventureguide_availability = AdventureGuideUtil.IsAvailable
+end
+"#;
+
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(ADVENTURE_JOURNAL_FALLBACKS_LUA)?;
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
+        lua.exec(AVAILABILITY_FALLBACK_LUA)?;
+    }
+    Ok(())
+}
+
+pub(crate) fn update_for_screen_mode(
+    lua: &mut rilua::Lua,
+    screen: crate::screen::ScreenKind,
+) -> crate::Result<()> {
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
+        return Ok(());
+    }
+    if screen.is_glue() {
+        lua.exec(AVAILABILITY_FALLBACK_LUA)?;
+        return Ok(());
+    }
+    // Remove only our Glue fallback, never the original Game owner.
+    lua.exec(
+        r#"
+        local fallback = rawget(_G, "__wow_temporary_adventureguide_availability")
+        if fallback ~= nil and rawget(AdventureGuideUtil, "IsAvailable") == fallback then
+            rawset(AdventureGuideUtil, "IsAvailable", nil)
+        end
+        rawset(_G, "__wow_temporary_adventureguide_availability", nil)
+    "#,
+    )?;
     Ok(())
 }
 
@@ -135,8 +168,6 @@ mod tests {
                 if C_AdventureJournal.GetReward(1) ~= nil then return "reward" end
                 C_AdventureJournal.ActivateEntry(1)
 
-                if AdventureGuideUtil.IsAvailable() ~= true then return "available" end
-                if AdventureGuideUtil.OpenHyperLink("journal", "1", "2", "3") ~= false then return "link" end
                 if AdventureGuideUtil.GetCurrentJournalInstance() ~= nil then return "current" end
                 if AdventureGuideUtil.IsInInstance(1) ~= false then return "instance" end
                 return "ok"
@@ -145,6 +176,63 @@ mod tests {
             .expect("adventure journal fallback shape probe should run");
 
         assert_eq!(result, "ok");
+        if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+            let missing: bool = env
+                .eval("return rawget(AdventureGuideUtil, 'IsAvailable') == nil")
+                .expect("Retail waits for the original Game helper");
+            assert!(missing);
+            env.exec(
+                r#"
+                local ok = pcall(AdventureGuideUtil.OpenHyperLink, "journal", "1", "2", "3")
+                assert(not ok)
+            "#,
+            )
+            .expect("pre-owner Game hyperlink call is explicitly unsupported");
+        } else {
+            env.exec(
+                r#"
+                assert(AdventureGuideUtil.IsAvailable() == true)
+                assert(AdventureGuideUtil.OpenHyperLink("journal", "1", "2", "3") == false)
+            "#,
+            )
+            .expect("non-Retail bootstrap behavior unchanged");
+        }
+    }
+
+    #[test]
+    fn availability_fallback_follows_screen_without_removing_other_owners() {
+        use crate::screen::ScreenKind;
+        let env = WowLuaEnv::new().expect("lua env");
+        for screen in [
+            ScreenKind::Login,
+            ScreenKind::CharacterSelect,
+            ScreenKind::CharacterCreate,
+        ] {
+            env.set_screen_mode(screen);
+            env.exec(
+                r#"
+                assert(AdventureGuideUtil.IsAvailable() == true)
+                assert(AdventureGuideUtil.OpenHyperLink("journal", "1", "2", "3") == false)
+            "#,
+            )
+            .expect("Glue retains its existing bootstrap behavior");
+            env.set_screen_mode(ScreenKind::Game);
+            let missing: bool = env
+                .eval("return rawget(AdventureGuideUtil, 'IsAvailable') == nil")
+                .expect("Game boundary");
+            assert_eq!(
+                missing,
+                crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail
+            );
+        }
+        env.set_screen_mode(ScreenKind::Login);
+        env.exec("AdventureGuideUtil.IsAvailable = function() return 'independent owner' end")
+            .expect("boundary-only owner identity fixture");
+        env.set_screen_mode(ScreenKind::Game);
+        let owner: String = env
+            .eval("return AdventureGuideUtil.IsAvailable()")
+            .expect("unrelated owner survives transition");
+        assert_eq!(owner, "independent owner");
     }
 
     #[test]
