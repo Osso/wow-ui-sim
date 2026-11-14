@@ -3,6 +3,18 @@
 //! Real WoW stores these in client CVar/input settings. The simulator only
 //! needs enough state for startup UI paths until input settings are modeled.
 
+const RETAIL_MODIFIED_CLICK_GETTER_LUA: &str = r#"
+if GetModifiedClick == nil then
+    function GetModifiedClick(action)
+        local actionType = type(action)
+        if actionType ~= "string" and actionType ~= "number" then
+            error('Usage: GetModifiedClick("action")', 2)
+        end
+        return rawget(_G, "__wow_modified_clicks")[tostring(action)]
+    end
+end
+"#;
+
 const MODIFIED_CLICK_DEFAULTS_LUA: &str = r#"
 if type(rawget(_G, "__wow_modified_clicks")) ~= "table" then
     rawset(_G, "__wow_modified_clicks", {})
@@ -31,6 +43,9 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
             end
         "#,
         )?;
+    }
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        lua.exec(RETAIL_MODIFIED_CLICK_GETTER_LUA)?;
     }
     lua.exec(MODIFIED_CLICK_DEFAULTS_LUA)?;
     Ok(())
