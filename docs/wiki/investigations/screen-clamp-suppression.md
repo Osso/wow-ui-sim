@@ -65,3 +65,12 @@ Review clarification: requesting propagation clear is not proof of an unconditio
 suppression=false write. The native writer runs when propagation state changes;
 that distinct state is not yet modeled. Direct public clear-bit wiring was withheld
 rather than inferred, including the corresponding initially proposed test.
+
+## Test-harness portability
+
+The cloud verification kernel lacks the optional `/proc/<pid>/task/<pid>/children`
+entry. The prefork conformance child-discovery helper falls back only on ENOENT
+to scanning numeric `/proc` entries and matching the PPID in `stat` (field 4,
+the second token after the final `)`). The fast path, deadline, child count,
+and full conformance admission remain unchanged. This is a test-harness
+portability fix, not tooltip behavior or native clamp evidence.

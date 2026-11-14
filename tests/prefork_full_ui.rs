@@ -1569,11 +1569,33 @@ fn wait_for_direct_children(parent_pid: libc::pid_t, expected: usize) -> Vec<lib
     let children_path = format!("/proc/{parent_pid}/task/{parent_pid}/children");
     let deadline = Instant::now() + RESOURCE_CHILD_WAIT;
     while Instant::now() < deadline {
-        let contents = std::fs::read_to_string(&children_path).expect("read driver children");
-        let children = contents
-            .split_whitespace()
-            .map(|value| value.parse().expect("parse driver child pid"))
-            .collect::<Vec<_>>();
+        let children = match std::fs::read_to_string(&children_path) {
+            Ok(contents) => contents
+                .split_whitespace()
+                .map(|value| value.parse().expect("parse driver child pid"))
+                .collect::<Vec<_>>(),
+            Err(error) if error.kind() == std::io::ErrorKind::NotFound => {
+                // CONFIG_PROC_CHILDREN is optional. stat's PPID is field 4:
+                // the second whitespace-delimited field after the final ')'.
+                std::fs::read_dir("/proc")
+                    .expect("enumerate processes")
+                    .filter_map(Result::ok)
+                    .filter_map(|entry| {
+                        let pid = entry.file_name().to_str()?.parse::<libc::pid_t>().ok()?;
+                        // Processes may disappear while the directory is scanned.
+                        let stat = std::fs::read_to_string(entry.path().join("stat")).ok()?;
+                        let (_, fields) = stat.rsplit_once(')')?;
+                        let ppid = fields
+                            .split_whitespace()
+                            .nth(1)?
+                            .parse::<libc::pid_t>()
+                            .ok()?;
+                        (ppid == parent_pid).then_some(pid)
+                    })
+                    .collect()
+            }
+            Err(error) => panic!("read driver children: {error}"),
+        };
         if children.len() >= expected {
             return children;
         }
