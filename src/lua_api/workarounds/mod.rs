@@ -58,6 +58,7 @@ const POST_LOAD_WORKAROUNDS: &[WorkaroundStep] = &[
         label: "init_edit_mode_layout",
         apply: init_edit_mode_layout,
     },
+    #[cfg(not(feature = "client-retail"))]
     WorkaroundStep {
         label: "patch_ui_parent_panel_toggles",
         apply: patch_ui_parent_panel_toggles,
@@ -104,6 +105,7 @@ const POST_LOAD_WORKAROUNDS: &[WorkaroundStep] = &[
         label: "ensure_adventure_map_frame_surface",
         apply: ensure_adventure_map_frame_surface,
     },
+    #[cfg(not(feature = "client-retail"))]
     WorkaroundStep {
         label: "patch_paging_controls_page_text",
         apply: patch_paging_controls_page_text,
@@ -616,6 +618,7 @@ fn patch_runtime_core_addon_surfaces(env: &crate::lua_api::LoaderEnv<'_>, addon_
     ) {
         temporary::chat_voice_button_surface::patch_loader(env);
     }
+    #[cfg(not(feature = "client-retail"))]
     if addon_name == "Blizzard_PagedContent" {
         temporary::paging_controls_page_text::patch_loader(env);
     }
@@ -636,6 +639,7 @@ fn patch_runtime_core_addon_surfaces(env: &crate::lua_api::LoaderEnv<'_>, addon_
 
 fn patch_runtime_journal_addon_surfaces(env: &crate::lua_api::LoaderEnv<'_>, addon_name: &str) {
     if addon_name == "Blizzard_Collections" {
+        #[cfg(not(feature = "client-retail"))]
         patch_toggle_collections_journal_for_runtime_addon_load(env);
         temporary::collections_journal_namespace::patch(env);
     }

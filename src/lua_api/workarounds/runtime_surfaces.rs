@@ -1,5 +1,6 @@
 use super::*;
 
+#[cfg(not(feature = "client-retail"))]
 pub(super) fn patch_ui_parent_panel_toggles(env: &crate::lua_api::WowLuaEnv) {
     temporary::main_menu_microbutton_click::patch(env);
 }
@@ -48,6 +49,7 @@ pub(super) fn patch_container_frame_token_tracker(env: &crate::lua_api::WowLuaEn
     temporary::container_frame_token_tracker::patch(env);
 }
 
+#[cfg(not(feature = "client-retail"))]
 pub(super) fn patch_paging_controls_page_text(env: &crate::lua_api::WowLuaEnv) {
     temporary::paging_controls_page_text::patch(env);
 }
@@ -104,6 +106,7 @@ pub(super) fn patch_map_exploration_pin_mixin_for_runtime_addon_load(
     temporary::map_exploration_pin::patch_for_runtime_addon_load(env);
 }
 
+#[cfg(not(feature = "client-retail"))]
 pub(super) fn patch_toggle_collections_journal_for_runtime_addon_load(
     env: &crate::lua_api::LoaderEnv<'_>,
 ) {

@@ -56,6 +56,15 @@ if type(C_PetJournal) == "table" then
     end
 end
 
+"#;
+
+pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
+    lua.exec(COLLECTIONS_FILTER_DEFAULTS_LUA)?;
+    Ok(())
+}
+
+#[cfg(not(feature = "client-retail"))]
+const COLLECTIONS_MOUNT_POPUP_GUARD_LUA: &str = r#"
 if type(MountJournalToggleDynamicFlightFlyoutButtonMixin) == "table"
     and type(MountJournalToggleDynamicFlightFlyoutButtonMixin.UpdateUnspentGlyphsAnimation) == "function"
     and not MountJournalToggleDynamicFlightFlyoutButtonMixin.__wow_popup_guard then
@@ -70,13 +79,10 @@ if type(MountJournalToggleDynamicFlightFlyoutButtonMixin) == "table"
 end
 "#;
 
-pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
-    lua.exec(COLLECTIONS_FILTER_DEFAULTS_LUA)?;
-    Ok(())
-}
-
 pub(crate) fn patch(env: &LoaderEnv<'_>) {
     let _ = env.exec(COLLECTIONS_JOURNAL_NAMESPACE_WORKAROUND_LUA);
+    #[cfg(not(feature = "client-retail"))]
+    let _ = env.exec(COLLECTIONS_MOUNT_POPUP_GUARD_LUA);
 }
 
 #[cfg(test)]

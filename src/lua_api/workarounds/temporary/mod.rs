@@ -118,6 +118,7 @@ pub(crate) mod lfg_legacy_defaults;
 pub(crate) mod lfg_lock_list;
 pub(crate) mod loot_journal_defaults;
 pub(crate) mod macro_defaults;
+#[cfg(not(feature = "client-retail"))]
 pub(crate) mod main_menu_microbutton_click;
 pub(crate) mod major_faction_display_defaults;
 pub(crate) mod map_art_help_text_defaults;
@@ -130,11 +131,13 @@ pub(crate) mod merchant_raid_defaults;
 pub(crate) mod minimap_tracking_defaults;
 pub(crate) mod misc_global_frame_defaults;
 pub(crate) mod modified_click_defaults;
+#[cfg(not(feature = "client-retail"))]
 pub(crate) mod mount_journal_dynamic_flight_popup;
 pub(crate) mod mythic_plus_cache_defaults;
 pub(crate) mod navigation_defaults;
 pub(crate) mod object_api_request_load_callbacks;
 pub(crate) mod objective_tracker_quest_header;
+#[cfg(not(feature = "client-retail"))]
 pub(crate) mod paging_controls_page_text;
 #[cfg(not(feature = "retail-12-0-0"))]
 pub(crate) mod party_ai_legacy;

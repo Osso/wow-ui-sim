@@ -134,6 +134,32 @@ fn blizzard_collections_top_level_frames_are_defined(env: &WowLuaEnv) {
 }
 }
 
+#[cfg(all(feature = "client-retail", feature = "optional-tests"))]
+prefork_full_ui_case! {
+fn retail_original_mount_flyout_consumer_does_not_suppress_missing_popup_error(env: &WowLuaEnv) {
+    env.exec("assert(C_AddOns.LoadAddOn('Blizzard_Collections'))")
+        .expect("Blizzard_Collections should load through its Retail runtime consumer path");
+
+    let error = env
+        .exec(
+            r#"
+            local button = {
+                canSpendDragonridingGlyphs = true,
+                IsPopupOpen = function() return false end,
+                UnspentGlyphsAnim = { SetPlaying = function() end },
+                popup = nil,
+            }
+            MountJournalToggleDynamicFlightFlyoutButtonMixin.UpdateUnspentGlyphsAnimation(button)
+            "#,
+        )
+        .expect_err("the original Blizzard method dereferences its required popup child");
+    assert!(
+        error.to_string().contains("popup"),
+        "the original consumer should report its missing popup access: {error}"
+    );
+}
+}
+
 prefork_full_ui_case! {
 fn warband_scene_footer_controls_do_not_overlap(env: &WowLuaEnv) {
 
