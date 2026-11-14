@@ -27,6 +27,7 @@ fn toc_multiannotations_load_files_in_order_with_secure_environment() {
     std::fs::write(
         &toc,
         "## Title: AnnotationProbe\n\
+         ## UseSecureEnvironment: 1\n\
          Before.lua\n\
          Secure.lua\t\t[Bootstrap] [LoadIntoEnvironment secure]\n\
          After.lua\n",
@@ -40,19 +41,48 @@ fn toc_multiannotations_load_files_in_order_with_secure_environment() {
     std::fs::write(
         root.path().join("Secure.lua"),
         "local _, addon = ...; assert(addon.order[1] == 'before'); \
-         addon.order[#addon.order+1] = 'secure'; annotationSecureValue = 37",
+         assert(type(debug) == 'table' and type(coroutine) == 'table'); \
+         addon.order[#addon.order+1] = 'secure'; annotationSecureValue = 37; \
+         annotationSecureSnapshotRead = true",
     )
     .unwrap();
     std::fs::write(
         root.path().join("After.lua"),
         "local _, addon = ...; assert(table.concat(addon.order, ',') == 'before,secure'); \
-         assert(rawget(_G, 'annotationSecureValue') == nil); \
-         assert(__secureenv.annotationSecureValue == 37); annotationLoadComplete = true",
+         assert(type(debug) == 'table' and type(coroutine) == 'table'); \
+         annotationLoadComplete = true",
     )
     .unwrap();
+
+    let snapshot_names_start_private: bool = env
+        .eval(
+            r#"
+                return type(rawget(_G, 'debug')) == 'table'
+                    and rawget(_G, 'coroutine') ~= nil
+                    and rawget(__secureenv, 'debug') == nil
+                    and rawget(__secureenv, 'coroutine') == nil
+            "#,
+        )
+        .unwrap();
+    assert!(snapshot_names_start_private);
+
     let result = wow_ui_sim::loader::load_addon(&env.loader_env(), &toc).unwrap();
     assert!(result.warnings.is_empty(), "{:?}", result.warnings);
-    env.exec("assert(annotationLoadComplete == true)").unwrap();
+
+    let secure_file_results: (bool, bool, bool, bool, bool, bool, bool) = env
+        .eval(
+            r#"
+                return rawget(__secureenv, 'annotationSecureValue') == 37,
+                    rawget(__secureenv, 'annotationSecureSnapshotRead') == true,
+                    rawget(__secureenv, 'annotationLoadComplete') == true,
+                    rawget(_G, 'annotationSecureValue') == nil,
+                    rawget(_G, 'annotationSecureSnapshotRead') == nil,
+                    rawget(__secureenv, 'debug') == nil,
+                    rawget(__secureenv, 'coroutine') == nil
+            "#,
+        )
+        .unwrap();
+    assert_eq!(secure_file_results, (true, true, true, true, true, true, true));
 }
 
 #[test]

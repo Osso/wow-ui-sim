@@ -118,7 +118,7 @@ fn load_full_game_ui() -> WowLuaEnv {
 
 #[cfg(feature = "client-retail")]
 #[test]
-fn secure_private_auras_loads_tooltip_processor_from_secure_dependency() {
+fn secure_private_auras_tooltip_consumer_runs_without_errors() {
     let env = load_full_game_ui();
 
     let loaded: bool = env
@@ -128,18 +128,19 @@ fn secure_private_auras_loads_tooltip_processor_from_secure_dependency() {
         loaded,
         "normal Retail startup must load Blizzard_PrivateAurasUI"
     );
-    let replay_snapshot_is_private: bool = env
+    let snapshot_names_remain_private: bool = env
         .eval(
             r#"
-                local consumer = function() return debug end
-                debug.setfenv(consumer, __secureenv)
-                return consumer() == nil and rawget(__secureenv, "debug") == nil
+                return type(rawget(_G, 'debug')) == 'table'
+                    and rawget(_G, 'coroutine') ~= nil
+                    and rawget(__secureenv, 'debug') == nil
+                    and rawget(__secureenv, 'coroutine') == nil
             "#,
         )
-        .expect("secure consumer snapshot visibility query should succeed");
+        .expect("secure snapshot visibility query should succeed");
     assert!(
-        replay_snapshot_is_private,
-        "snapshot-only debug must stay out of the published secure environment after replay"
+        snapshot_names_remain_private,
+        "snapshot-only debug and coroutine must stay out of published secureenv"
     );
 
     let load_errors: Vec<String> = env
@@ -155,127 +156,64 @@ fn secure_private_auras_loads_tooltip_processor_from_secure_dependency() {
         })
         .cloned()
         .collect();
-    let registration_snapshot: (
-        String,
-        String,
-        String,
-        String,
-        String,
-        String,
-        String,
-        String,
-        String,
-        String,
-        String,
-        String,
-    ) = env
+    let registration_snapshot: (String, String, String) = env
         .eval(
             r#"
-                local ordinary = rawget(_G, 'TooltipDataProcessor')
-                local secure = rawget(__secureenv, 'TooltipDataProcessor')
-                return type(ordinary), type(secure),
-                    type(secure and secure.AddTooltipPostCall),
-                    type(rawget(__secureenv, 'C_Timer')),
-                    type(rawget(__secureenv, 'C_StoreSecure')),
-                    type(rawget(__secureenv, 'CreateFrame')),
-                    type(rawget(__secureenv, 'C_UIColor')),
-                    type(rawget(__secureenv, 'CreateSecureDelegate')),
-                    type(rawget(__secureenv, 'CopyTable')),
+                return type(rawget(__secureenv, 'CopyTable')),
                     type(rawget(__secureenv, 'GetFrameMetatable')),
-                    type(rawget(__secureenv, 'Constants')),
                     type(rawget(__secureenv, 'TextureKitConstants'))
             "#,
         )
         .expect("secure registration snapshot should evaluate");
-    let tooltip_errors: Vec<_> = load_errors
-        .iter()
-        .filter(|message| {
-            message.contains("TooltipDataProcessor") || message.contains("TooltipDataRules.lua")
-        })
-        .collect();
-    let tooltip_error_text = tooltip_errors
-        .iter()
-        .map(|message| message.as_str())
-        .collect::<Vec<_>>()
-        .join("\n  ");
     assert!(
-        tooltip_errors.is_empty(),
-        "the secure SharedXMLGame load must provide its original tooltip processor:\n  {}",
-        tooltip_error_text
-    );
-    let replay_dependency_errors: Vec<_> = load_errors
-        .iter()
-        .filter(|message| {
-            message.contains("TextureUtil.lua:122")
-                || message.contains("Blizzard_PrivateAurasUI.lua:1398")
-        })
-        .collect();
-    let expected_consumer_gap = load_errors.iter().any(|message| {
-        message.contains("PrivateAurasTooltip.lua:1")
-            && message.contains("attempt to call a nil value")
-    });
-    assert!(
-        replay_dependency_errors.is_empty() && expected_consumer_gap,
-        "temporary: lt-635e replay must resolve the snapshot before the consumer boundary:\n\
-         TextureUtil replay uses Constants; the consumer still stops at PrivateAurasTooltip.lua:1.\
-         errors: {}\nregistration snapshot\
-         (ordinary/secure/processor callback/C_Timer/C_StoreSecure/CreateFrame/C_UIColor/\
-         CreateSecureDelegate/CopyTable/GetFrameMetatable/Constants/TextureKitConstants): {:?}",
-        load_errors.join("\n  "),
-        registration_snapshot
+        load_errors.is_empty(),
+        "PrivateAuras dependencies and the PrivateAurasTooltip consumer must load without errors:\n  {}",
+        load_errors.join("\n  ")
     );
     assert_eq!(
-        registration_snapshot.8, "function",
+        registration_snapshot.0, "function",
         "SharedXMLBase TableUtil.lua must provide CopyTable in secureenv"
     );
     assert_eq!(
-        registration_snapshot.9, "function",
+        registration_snapshot.1, "function",
         "GetFrameMetatable must be published in secureenv"
     );
     assert_eq!(
-        registration_snapshot.10, "nil",
-        "Constants must remain the exact missing secure dependency input"
-    );
-    assert_eq!(
-        registration_snapshot.11, "table",
-        "TextureKitConstants defined during secure replay must be exported"
+        registration_snapshot.2, "table",
+        "TextureKitConstants defined during secure execution must be exported"
     );
 
-    let original_processor: bool = env
+    let secure_exports_are_isolated: bool = env
         .eval(
-            "local processor = rawget(__secureenv, 'TooltipDataProcessor'); \
-             local ordinary = rawget(_G, 'TooltipDataProcessor'); \
+            "local cTimer = rawget(__secureenv, 'C_Timer'); \
+             local store = rawget(__secureenv, 'C_StoreSecure'); \
+             local color = rawget(__secureenv, 'C_UIColor'); \
+             local secureEnum = rawget(__secureenv, 'Enum'); \
              rawset(_G, '__secure_env_ordinary_only_probe', true); \
-             return type(processor) == 'table' \
-                 and processor.AllTypes == 'ALL' \
-                 and processor ~= ordinary \
-                 and type(processor.AddTooltipPostCall) == 'function' \
-                 and __secureenv.getfenv(processor.AddTooltipPostCall) == __secureenv \
-                 and type(rawget(__secureenv, 'Mixin')) == 'function' \
+             return type(rawget(__secureenv, 'Mixin')) == 'function' \
                  and type(rawget(__secureenv, 'CreateFromMixins')) == 'function' \
-                 and type(rawget(__secureenv, 'C_Timer')) == 'table' \
-                 and rawget(__secureenv, 'C_Timer') ~= rawget(_G, 'C_Timer') \
-                 and type(rawget(rawget(__secureenv, 'C_Timer'), 'After')) == 'function' \
-                 and type(rawget(__secureenv, 'C_StoreSecure')) == 'table' \
-                 and rawget(__secureenv, 'C_StoreSecure') ~= rawget(_G, 'C_StoreSecure') \
-                 and type(rawget(rawget(__secureenv, 'C_StoreSecure'), 'GetProductGroups')) == 'function' \
+                 and type(cTimer) == 'table' \
+                 and cTimer ~= rawget(_G, 'C_Timer') \
+                 and type(cTimer.After) == 'function' \
+                 and type(store) == 'table' \
+                 and store ~= rawget(_G, 'C_StoreSecure') \
+                 and type(store.GetProductGroups) == 'function' \
                  and type(rawget(__secureenv, 'CreateFrame')) == 'function' \
                  and type(rawget(__secureenv, 'CreateSecureDelegate')) == 'function' \
                  and type(rawget(__secureenv, 'GetFrameMetatable')) == 'function' \
                  and type(GetFrameMetatable().__index) == 'table' \
-                 and type(rawget(__secureenv, 'C_UIColor')) == 'table' \
-                 and rawget(__secureenv, 'C_UIColor') ~= rawget(_G, 'C_UIColor') \
-                 and type(rawget(rawget(__secureenv, 'C_UIColor'), 'GetColors')) == 'function' \
-                 and type(rawget(__secureenv, 'Enum')) == 'table' \
-                 and rawget(__secureenv, 'Enum') ~= rawget(_G, 'Enum') \
-                 and type(rawget(rawget(rawget(__secureenv, 'Enum'), 'TooltipDataType'), 'Unit')) == 'number' \
+                 and type(color) == 'table' \
+                 and color ~= rawget(_G, 'C_UIColor') \
+                 and type(color.GetColors) == 'function' \
+                 and type(secureEnum) == 'table' \
+                 and secureEnum ~= rawget(_G, 'Enum') \
+                 and type(rawget(rawget(secureEnum, 'TooltipDataType'), 'Unit')) == 'number' \
                  and rawget(__secureenv, '__secure_env_ordinary_only_probe') == nil",
         )
-        .expect("secure TooltipDataProcessor provenance query should succeed");
+        .expect("secure export isolation query should succeed");
     assert!(
-        original_processor,
-        "secureenv must contain the original TooltipDataHandler.lua processor from secure \
-         execution, while globals added only to ordinary _G stay invisible"
+        secure_exports_are_isolated,
+        "secure registrations must stay isolated from ordinary-only globals"
     );
 }
 

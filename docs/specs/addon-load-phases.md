@@ -25,6 +25,7 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 
 ### Runtime loading
 
+- [ ] Secure-mode addon files must resolve inherited global reads through the private snapshot during execution, without publishing inherited-only values to `__secureenv`; publish only names those chunks assign or reassign. Keep the published secure table at BASELINE-39 plus verified dual writes and secure-chunk assignments. This bridge is temporary (`lt-635e`).
 - [x] `C_AddOns.LoadAddOn` must attempt optional dependencies before required dependencies.
 - [x] An optional dependency failure must not stop the requested addon from loading.
 
@@ -54,6 +55,7 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 - `src/bin/wow_sim/addon_loading.rs` — registers packaged follower declarations before Blizzard startup, registers third-party declarations, and skips startup roots already loaded by followers.
 - `src/c_api/c_addons.rs` — exposes startup follower processing through the runtime loader.
 - `src/c_api/c_addons_runtime.rs` — resolves runtime dependencies and submits `LoadWith` followers.
+- `src/loader/lua_file.rs`, `src/lua_api/globals/security/secure_env.rs` — execute secure-mode chunks with the temporary private snapshot and publish their assignments.
 - `src/lua_api/state/sim_state.rs` — holds ordered registered follower declarations and the resolved target-to-follower index.
 - `src/lua_api/state.rs` — initializes the registration vector and follower index.
 - `src/lua_api/state/ui_reload.rs` — clears the follower index on UI reload.
@@ -63,10 +65,12 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 - `src/loader/tests/screen_selection.rs`
 - `tests/addon_runtime_dependencies.rs`
 - `src/c_api/c_addons_runtime_tests.rs`
+- `tests/secureenv_isolation.rs`, `tests/blizzard_private_auras_ui_loads.rs` — secure file snapshot reads, assignment publication, and PrivateAurasTooltip no-error behavior.
 
 ## Known gaps (current cycle)
 
 - [ ] UNKNOWN: PTR 12.1.7.70668 does not establish whether declaration parsing feeds the child-list resolver. The simulator applies the inferred resolver model; PTR tests do not assert parser linkage or duplicate suppression.
+- [ ] The original `TooltipDataProcessor` identity and its published secure-table provenance remain deferred to `lt-635e`; this lane verifies that the PrivateAurasTooltip consumer runs without errors.
 - [ ] UNKNOWN: PTR phase and demand fields are not mapped to cached TOC directives, and native live-list membership and sort direction are not established.
 - [ ] UNKNOWN: Native `LoadWith` behavior on Mists, Era, Anniversary, and Wrath. The simulator keeps their previous dispatch path.
 - [ ] INFERRED: a registered phase-three user addon may load early during an earlier target's follower loop. The resolver has no phase filter; tests do not assert this inference.

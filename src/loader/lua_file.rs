@@ -26,8 +26,8 @@ pub fn load_lua_file(
     load_lua_file_with_environment(env, path, ctx, timing, false)
 }
 
-// temporary: lt-635e. Use only for EnvironmentPass::SecureReplay.
-pub(crate) fn load_secure_replay_lua_file(
+// temporary: lt-635e. Secure-mode and replay chunks share the private snapshot.
+pub(crate) fn load_secure_environment_lua_file(
     env: &LoaderEnv<'_>,
     path: &Path,
     ctx: &AddonContext,
