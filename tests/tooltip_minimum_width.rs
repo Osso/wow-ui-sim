@@ -58,6 +58,9 @@ fn game_tooltip_method_conversion_errors_use_native_reasons() {
             1,
             true
         ), err)
+        ok, err = pcall(GameTooltip.GetMinimumWidth)
+        assert(not ok)
+        assert(err:find("Usage: local width, forced = self:GetMinimumWidth()", 1, true), err)
 
         local left = UIParent:CreateFontString("TooltipErrorLeft", "OVERLAY")
         local right = UIParent:CreateFontString("TooltipErrorRight", "OVERLAY")
@@ -65,6 +68,13 @@ fn game_tooltip_method_conversion_errors_use_native_reasons() {
         assert(not ok)
         assert(err:find(
             "calling 'AddFontStrings' on bad self (Attempt to find 'this' in non-framescript object)",
+            1,
+            true
+        ), err)
+        ok, err = pcall(GameTooltip.AddFontStrings, nil, left, right)
+        assert(not ok)
+        assert(err:find(
+            "Usage: self:AddFontStrings(leftFontString, rightFontString)",
             1,
             true
         ), err)
@@ -82,6 +92,13 @@ fn game_tooltip_method_conversion_errors_use_native_reasons() {
         assert(not ok)
         assert(err:find(
             "Usage: self:AddFontStrings(leftFontString, rightFontString) - Wrong object type for function",
+            1,
+            true
+        ), err)
+        ok, err = pcall(GameTooltip.AddFontStrings, GameTooltip, left)
+        assert(not ok)
+        assert(err:find(
+            "Usage: self:AddFontStrings(leftFontString, rightFontString)",
             1,
             true
         ), err)

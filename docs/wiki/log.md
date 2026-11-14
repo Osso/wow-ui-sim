@@ -1,3 +1,7 @@
+## [2026-11-14] implementation | GameTooltip minimum width and font strings
+
+Updated the [GameTooltip method contract](../specs/game-tooltip-methods.md), [Lua API](systems/lua-api.md#game-tooltip-minimum-width-and-font-strings), and [consumer-selection investigation](investigations/consumer-selection-and-red-proof.md#gametooltip-minimum-width-consumer) with R88n.7. **VERIFIED (Retail 12.1.5.70688):** `GetMinimumWidth` returns the stored number and forced boolean; `AddFontStrings` stores a pair and returns zero values without adding a `NumLines` entry. The selected `GameTooltip_InsertFrame` consumer is PRESERVATION because its scalar comparison observes only the first getter result. **UNKNOWN:** later pair layout/rendering use.
+
 ## [2026-11-14] fix | Retail screen clamping
 
 Updated [layout-system](systems/layout-system.md#screen-clamping) and the [layout reference](../layout-system.md#screen-clamping) with R88n.5r. **VERIFIED (Retail 12.1.5.70688):** generic rect resolution uses scaled insets before rect storage/notification on queued and synchronous routes; GameTooltip inherits its enable bit from `SharedTooltipTemplate`; row setup creates no per-row clip. The original consumer selector failed at test commit `bcb35d79a` and passed at implementation commit `3a27c7d52`. **UNKNOWN:** suppression-state identity, setter-only cache invalidation, exact rounding, oversized-frame behavior, and order relative to snapping.

@@ -1,3 +1,7 @@
+## [2026-11-14] implementation | GameTooltip minimum width and font strings
+
+[GameTooltip method contract](../specs/game-tooltip-methods.md), [Lua API](systems/lua-api.md#game-tooltip-minimum-width-and-font-strings), and [consumer selection](investigations/consumer-selection-and-red-proof.md#gametooltip-minimum-width-consumer) record R88n.7. **VERIFIED (Retail 12.1.5.70688):** the getter returns stored width and forced state; `AddFontStrings` stores a pair without adding a `NumLines` entry. **PRESERVATION:** the selected `GameTooltip_InsertFrame` consumer observes only the first getter result. **UNKNOWN:** later pair layout/rendering use.
+
 ## [2026-11-14] fix | Forever tooltip cached lines
 
 [Tooltip owner lifecycle](investigations/tooltip-owner-lifecycle.md#r88n5-forever-clearlines-cache-boundary) records R88n.5. **VERIFIED (Forever 1.60.1.70707):** `ClearLines` resets cached left/right FontString text for active rows only; the optional API test proves inactive entries are untouched, and the original selected `TooltipDataHandler.ProcessInfo` test preserves reprocessing and reuse. Retail attachments and owner pairs remain VERIFIED; PTR parity is INFERRED. Clipping, draw order, nonzero extra-inset writers and post-anchor clamping remain UNKNOWN.

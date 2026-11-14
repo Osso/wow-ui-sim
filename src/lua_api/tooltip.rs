@@ -182,6 +182,7 @@ pub struct TooltipData {
     pub custom_word_wrap_min_width: Option<f32>,
     pub min_width: f32,
     pub force_min_width: bool,
+    /// FontString pairs supplied to `GameTooltip:AddFontStrings`.
     pub font_string_pairs: Vec<(u64, u64)>,
     /// Right, bottom, left, top, in layout units.
     pub padding: [f32; 4],

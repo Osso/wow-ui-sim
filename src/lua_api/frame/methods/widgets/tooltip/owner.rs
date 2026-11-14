@@ -2,7 +2,6 @@
 
 use super::super::shared::{opt_bool, opt_f32, opt_string};
 use super::content::{fire_tooltip_script, fire_tooltip_script_with_args};
-use super::line_frames::sync_tooltip_line_frame;
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, create_string, frame_id_from_stack, frame_ref,
     get_or_create_frame_fields, table_set,
@@ -592,19 +591,30 @@ fn frame_global_or_ref_local(state: &mut LuaState, id: u64) -> LuaResult<Val> {
     frame_ref(state, id)
 }
 
-pub(super) fn add_font_strings(_state: &mut LuaState) -> LuaResult<u32> {
-    let tooltip_id = frame_id_from_stack(_state, 1)?;
-    let line_count = {
-        let sim = borrow_state(_state)?;
-        sim.tooltips
-            .get(&tooltip_id)
-            .map(|td| td.lines.len())
-            .unwrap_or(0)
-    };
-    for line_index in 1..=line_count {
-        let _ = sync_tooltip_line_frame(_state, tooltip_id, false, line_index)?;
-        let _ = sync_tooltip_line_frame(_state, tooltip_id, true, line_index)?;
-    }
+pub(super) fn add_font_strings(state: &mut LuaState) -> LuaResult<u32> {
+    let tooltip_id = super::line_data::tooltip_method_receiver_id(
+        state,
+        1,
+        "AddFontStrings",
+        super::line_data::ADD_FONT_STRINGS_USAGE,
+    )?;
+    let left_id = super::line_data::font_string_id_from_stack(
+        state,
+        2,
+        super::line_data::ADD_FONT_STRINGS_USAGE,
+    )?;
+    let right_id = super::line_data::font_string_id_from_stack(
+        state,
+        3,
+        super::line_data::ADD_FONT_STRINGS_USAGE,
+    )?;
+
+    borrow_state_mut(state)?
+        .tooltips
+        .entry(tooltip_id)
+        .or_default()
+        .font_string_pairs
+        .push((left_id, right_id));
     Ok(0)
 }
 

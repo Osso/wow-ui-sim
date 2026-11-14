@@ -7,14 +7,14 @@ use super::line_frames::{
 };
 use super::sizing::{refresh_tooltip_geometry, size_tooltip_on_native_trigger};
 use crate::lua_api::methods::{
-    borrow_state, borrow_state_mut, create_string, frame_id_from_stack, frame_ref, table_get,
-    val_to_string,
+    borrow_state, borrow_state_mut, create_string, ensure_not_fully_locked_down,
+    frame_id_from_stack, frame_id_from_stack_unrestricted, frame_ref, table_get, val_to_string,
 };
 use crate::lua_api::tooltip::{TooltipLine, TooltipTextSegment};
 use crate::lua_bridge::{IntoStack, stack_val};
 use crate::widget::WidgetType;
 use rilua::vm::state::LuaState;
-use rilua::{LuaResult, Val};
+use rilua::{LuaResult, Val, runtime_error};
 
 pub(super) fn clear_lines(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
@@ -444,6 +444,89 @@ pub(super) fn get_custom_line_spacing(state: &mut LuaState) -> LuaResult<u32> {
     }
 }
 
+pub(super) const GET_MINIMUM_WIDTH_USAGE: &str =
+    "Usage: local width, forced = self:GetMinimumWidth()";
+pub(super) const ADD_FONT_STRINGS_USAGE: &str =
+    "Usage: self:AddFontStrings(leftFontString, rightFontString)";
+
+pub(super) fn tooltip_method_receiver_id(
+    state: &LuaState,
+    index: i32,
+    method_name: &str,
+    usage: &str,
+) -> LuaResult<u64> {
+    let receiver = stack_val(state, index);
+    if matches!(receiver, Val::Nil) {
+        return Err(runtime_error(usage));
+    }
+
+    let id = frame_id_from_stack_unrestricted(state, index).map_err(|_| {
+        let reason = frame_conversion_reason(receiver);
+        runtime_error(format!("calling '{method_name}' on bad self ({reason})"))
+    })?;
+    ensure_not_fully_locked_down(state, id)
+        .map_err(|error| runtime_error(format!("calling '{method_name}' on bad self ({error})")))?;
+    crate::c_api::unit_aura_access::ensure_script_object_accessible(state, id)
+        .map_err(|error| runtime_error(format!("calling '{method_name}' on bad self ({error})")))?;
+
+    let widget_type = {
+        let sim = borrow_state(state)?;
+        sim.widgets.get(id).map(|frame| frame.widget_type)
+    };
+    let Some(widget_type) = widget_type else {
+        return Err(runtime_error(format!(
+            "calling '{method_name}' on bad self (Attempt to find 'this' in non-framescript object)"
+        )));
+    };
+    if widget_type != WidgetType::GameTooltip {
+        return Err(runtime_error(format!(
+            "calling '{method_name}' on bad self (Wrong object type for function)"
+        )));
+    }
+    Ok(id)
+}
+
+pub(super) fn font_string_id_from_stack(
+    state: &LuaState,
+    index: i32,
+    usage: &str,
+) -> LuaResult<u64> {
+    let argument = stack_val(state, index);
+    if matches!(argument, Val::Nil) {
+        return Err(runtime_error(usage));
+    }
+
+    let id = frame_id_from_stack_unrestricted(state, index)
+        .map_err(|_| runtime_error(format!("{usage} - {}", frame_conversion_reason(argument))))?;
+    ensure_not_fully_locked_down(state, id)
+        .map_err(|error| runtime_error(format!("{usage} - {error}")))?;
+    crate::c_api::unit_aura_access::ensure_script_object_accessible(state, id)
+        .map_err(|error| runtime_error(format!("{usage} - {error}")))?;
+
+    let widget_type = {
+        let sim = borrow_state(state)?;
+        sim.widgets.get(id).map(|frame| frame.widget_type)
+    };
+    let Some(widget_type) = widget_type else {
+        return Err(runtime_error(format!(
+            "{usage} - Attempt to find 'this' in non-framescript object"
+        )));
+    };
+    if widget_type != WidgetType::FontString {
+        return Err(runtime_error(format!(
+            "{usage} - Wrong object type for function"
+        )));
+    }
+    Ok(id)
+}
+
+fn frame_conversion_reason(value: Val) -> &'static str {
+    match value {
+        Val::Table(_) => "Attempt to find 'this' in non-framescript object",
+        _ => "Attempt to find 'this' in non-table object (used '.' instead of ':' ?)",
+    }
+}
+
 pub(super) fn set_minimum_width(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
     let width = val_to_f64(stack_val(state, 2)) as f32;
@@ -457,15 +540,15 @@ pub(super) fn set_minimum_width(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 pub(super) fn get_minimum_width(state: &mut LuaState) -> LuaResult<u32> {
-    let id = frame_id_from_stack(state, 1)?;
-    let sim = borrow_state(state)?;
-    let v = sim
+    let id = tooltip_method_receiver_id(state, 1, "GetMinimumWidth", GET_MINIMUM_WIDTH_USAGE)?;
+    let (width, forced) = borrow_state(state)?
         .tooltips
         .get(&id)
-        .map(|td| td.min_width as f64)
-        .unwrap_or(0.0);
-    drop(sim);
-    v.into_stack(state)
+        .map(|tooltip| (tooltip.min_width, tooltip.force_min_width))
+        .unwrap_or((0.0, false));
+    state.push(Val::Num(width as f64));
+    state.push(Val::Bool(forced));
+    Ok(2)
 }
 
 pub(super) fn set_allow_show_with_no_lines(state: &mut LuaState) -> LuaResult<u32> {

@@ -14,6 +14,14 @@ Lessons learned on 2026-10-23: cached Blizzard source is not proof of a runtime-
 
 The upgrade/store audit found the same trap: cached Mainline upgrade calls were not selected on Mists/Era/Anniversary, and cached shared secure-store source was absent from the selected Retail/PTR/Forever TOC.
 
+## GameTooltip minimum-width consumer
+
+**VERIFIED (Retail 12.1.5 cache and selected TOCs):** `Blizzard_SharedXML.toc:154` selects `SharedTooltipTemplates.lua`; the original `GameTooltip_InsertFrame` is defined there at line 197. Its line 213 comparison reads `tooltipFrame:GetMinimumWidth()` as one scalar value and may then call `SetMinimumWidth(frameWidth)`. `Blizzard_GameTooltip/Blizzard_GameTooltip_Mainline.toc:5,8` selects `Mainline/GameTooltip.lua`, whose original bodies call the helper at lines 568 and 605.
+
+**PRESERVATION:** this consumer cannot distinguish the corrected two-result getter from the old one-result getter because the comparison observes only the first result. The optional test calls the original helper and checks its width update; it is not a RED selector for getter arity. **VERIFIED (Retail cache search):** the `AddFontStrings` match was the generated API declaration at `Blizzard_APIDocumentationGenerated/FrameAPITooltipDocumentation.lua:10`; the search found no original Lua consumer. API-level tests are the proof boundary for the pair-storage contract.
+
+**UNKNOWN (R88n.7):** how stored FontString pairs are used by later layout or rendering remains unproved. See the [GameTooltip method contract](../../specs/game-tooltip-methods.md).
+
 ## Casting bar secrecy predicate
 
 Retail's `Blizzard_UIPanels_Game_Mainline.toc:6,10` selects `Shared/CastingBarFrame.lua`. Its `IsInterruptable` method calls the locally captured predicate through lines 2 and 5. The consumer test verifies source provenance and the XML-created player bar before exercising both bar types. Its Retail RED is the nil call at line 5. Because both output cases also pass with a constant-false predicate, this is missing-publication and consumer-preservation proof, not proof of a native trigger. The [contract](../../specs/secret-auras.md#casting-and-threat-predicate-surface) records the unknown behavior and validation limits.
