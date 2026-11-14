@@ -8,7 +8,7 @@ fn r88e5_trade_offer_warning_consumer_reads_shared_host_value(env: &WowLuaEnv) {
         .expect("Retail trade and money addons should have load state");
     assert_eq!(loaded, (true, true));
 
-    let results: (bool, bool, bool, bool, bool, bool) = env
+    let results: (bool, bool, bool, bool) = env
         .eval(
             r#"
             C_SecureTransfer = C_SecureTransfer or {}
@@ -17,25 +17,33 @@ fn r88e5_trade_offer_warning_consumer_reads_shared_host_value(env: &WowLuaEnv) {
             TradeFrame_UpdateWarnings()
             local tradeShown = TradeFrameTradeButton.warningTooltip ~= nil
             local tradeValue = C_TradeInfo.ShouldShowTradeOfferWarning()
-            local secureValue = false
-            if type(C_SecureTransfer.ShouldShowTradeOfferWarning) == "function" then
-                secureValue = C_SecureTransfer.ShouldShowTradeOfferWarning()
-            end
 
             C_SecureTransfer._state.shouldShowTradeOfferWarning = false
             TradeFrame_UpdateWarnings()
             local tradeHidden = TradeFrameTradeButton.warningTooltip == nil
             local tradeFalse = C_TradeInfo.ShouldShowTradeOfferWarning()
-            local secureFalse = false
-            if type(C_SecureTransfer.ShouldShowTradeOfferWarning) == "function" then
-                secureFalse = C_SecureTransfer.ShouldShowTradeOfferWarning()
-            end
-            return tradeValue, secureValue, tradeShown, tradeFalse, secureFalse, tradeHidden
+            return tradeValue, tradeShown, tradeFalse, tradeHidden
             "#,
         )
         .expect("Retail TradeFrame warning consumer should run");
 
-    assert_eq!(results, (true, true, true, false, false, true));
+    assert_eq!(results, (true, true, false, true));
+
+    let api_env = WowLuaEnv::new().expect("standalone API environment should initialize");
+    let getters: (bool, bool, bool, bool) = api_env
+        .eval(
+            r#"
+            C_SecureTransfer._state.shouldShowTradeOfferWarning = true
+            local tradeTrue = C_TradeInfo.ShouldShowTradeOfferWarning()
+            local secureTrue = C_SecureTransfer.ShouldShowTradeOfferWarning()
+            C_SecureTransfer._state.shouldShowTradeOfferWarning = false
+            local tradeFalse = C_TradeInfo.ShouldShowTradeOfferWarning()
+            local secureFalse = C_SecureTransfer.ShouldShowTradeOfferWarning()
+            return tradeTrue, secureTrue, tradeFalse, secureFalse
+            "#,
+        )
+        .expect("trade warning getters should share their supplied value");
+    assert_eq!(getters, (true, true, false, false));
 }
 }
 
