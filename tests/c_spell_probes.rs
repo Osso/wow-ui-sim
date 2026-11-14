@@ -527,7 +527,7 @@ fn test_get_mount_from_spell_unknown_returns_nil() {
 
 // ── GetVisibilityInfo ─────────────────────────────────────────────────────────
 
-#[cfg(feature = "client-retail")]
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
 #[test]
 fn test_get_visibility_info_is_registered() {
     let env = env();

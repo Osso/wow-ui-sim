@@ -643,13 +643,13 @@ pub struct SimState {
     /// Explicit result of the native cast-context null check; None leaves identity and timing unknown.
     #[cfg(feature = "retail-12-0-0")]
     pub spell_cast_context_is_null: Option<bool>,
-    /// Explicit spell-keyed C_Spell count input; no inventory or casting derivation.
+    /// Explicit simulator input for older C_Spell and spellbook count queries.
     #[cfg(feature = "retail-12-0-0")]
     pub spell_cast_counts: HashMap<u32, u32>,
     /// Generic verified selector pairs; native SpellReagents field mapping is not modeled.
     #[cfg(feature = "retail-12-0-5")]
     pub spell_reagent_pairs: HashMap<u32, Vec<(i32, i32)>>,
-    /// Supplied visibility query results; None represents an explicitly null context in a scenario.
+    /// Host-supplied visibility rows; a missing row publishes three false values on success.
     pub spell_visibility_results: Option<HashMap<(u32, u8), (bool, bool, bool)>>,
     /// Explicit cooldown-output policy input, independent of combat and unit stats.
     pub cooldowns_restricted: bool,
