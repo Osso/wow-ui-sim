@@ -233,11 +233,25 @@ fn retail_azerite_essence_original_consumer_selects_exact_essence_and_rank() {
     ))
     .expect("the original Azerite essence consumer must select the DB2 essence and rank");
 
-    env.state()
-        .borrow_mut()
-        .azerite_essence
-        .essences
-        .remove(&ESSENCE_TWO);
+    {
+        let mut state = env.state().borrow_mut();
+        state.player.present = false;
+        state.azerite_essence.essences.clear();
+    }
+    let essence_two_rank_two = lua_number_array(&ESSENCE_TWO_RANK_TWO_CANDIDATES);
+    env.exec(&format!(
+        r#"
+        local explicit = C_TooltipInfo.GetAzeriteEssence({ESSENCE_TWO}, 2)
+        assert(explicit and explicit.type == 8 and explicit.id == {ESSENCE_TWO},
+            'an explicit rank must not require current player state')
+        AzeriteTestAssertSpellCount(explicit, {essence_two_rank_two}, 2,
+            'an explicit rank must still produce its selected spells')
+        "#
+    ))
+    .expect("an explicit rank should bypass missing current-player rank data");
+
+    env.state().borrow_mut().player.present = true;
+    seed_essence(&env, ESSENCE_THREE, 1);
     let essence_two_rank_one = lua_number_array(&ESSENCE_TWO_RANK_ONE_CANDIDATES);
     env.exec(&format!(
         r#"
@@ -249,6 +263,13 @@ fn retail_azerite_essence_original_consumer_selects_exact_essence_and_rank() {
         local rankOneNames = AzeriteTestSpellNames(rankOne, {essence_two_rank_one})
         assert(AzeriteTestSameSpellNames(listMissNames, rankOneNames),
             'a list miss rank zero must be raised to rank one')
+
+        local savedFormat = format
+        format = function() error('injected tooltip producer failure') end
+        local failedCount = select('#', C_TooltipInfo.GetAzeriteEssence({ESSENCE_TWO}, 2))
+        format = savedFormat
+        assert(failedCount == 0,
+            'a failed tooltip producer must return zero Lua values')
         "#
     ))
     .expect("a missing essence from a present player rank list should use rank one");
@@ -306,7 +327,22 @@ fn retail_azerite_essence_getters_keep_native_zero_value_miss_arity() {
     ))
     .expect("the Azerite essence API should preserve missing-record arity");
 
-    env.state().borrow_mut().azerite_essence.essences.clear();
+    env.state().borrow_mut().player.present = false;
+    env.exec(&format!(
+        r#"
+        assert(select('#', C_TooltipInfo.GetAzeriteEssence({ESSENCE_TWO})) == 0,
+            'a missing player is a zero-value omitted-rank miss')
+        assert(select('#', C_TooltipInfo.GetAzeriteEssenceSlot(0)) == 0,
+            'a missing player is a zero-value slot miss')
+        "#
+    ))
+    .expect("explicit rank should bypass the player rank lookup");
+
+    {
+        let mut state = env.state().borrow_mut();
+        state.player.present = true;
+        state.azerite_essence.essences.clear();
+    }
     env.exec(&format!(
         r#"
         assert(select('#', C_TooltipInfo.GetAzeriteEssence({ESSENCE_TWO})) == 0,

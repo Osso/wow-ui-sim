@@ -1,3 +1,7 @@
+## [2026-11-14] implementation | Retail Azerite Essence tooltip selection
+
+[Round 7 contract](../specs/tooltip-r7-getters.md) and [Lua API](systems/lua-api.md#azerite-essence-tooltip-selection-r88n2) record R88n.2 selectors, the exact-build DB2 catalog, original-consumer RED tests, the separate INFERRED column mapping, and unmodeled source/requirement lines.
+
 ## [2026-11-14] implementation | Retail tooltip serializer field boundary
 
 [Tooltip data](systems/lua-api.md#retail-tooltipdata-field-boundary-r88n4b) links the [serialization contract](../specs/tooltip-data-serialization.md) and [consumer/seam evidence](investigations/consumer-selection-and-red-proof.md#retail-tooltip-serializer-field-consumers). **VERIFIED (R88n.4b):** top-level repair/pet fields and type-11 price fields. **INFERRED:** positive item sell-price projection; `maxPrice` remains absent without a quantity/range input.

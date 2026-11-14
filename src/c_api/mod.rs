@@ -3,6 +3,7 @@
 //! Real/state-backed surfaces live at the root of this module. Intentionally
 //! unsupported compatibility gaps stay isolated under `permanent_shims`.
 
+pub(crate) mod azerite_essence_spell_selector;
 mod c_account_info;
 pub mod c_guild_info;
 pub mod c_heirloom;
@@ -12,6 +13,7 @@ pub(crate) mod c_tooltip_comparison;
 pub(crate) mod c_tooltip_info_appearance;
 pub(crate) mod c_tooltip_info_artifact_item;
 pub(crate) mod c_tooltip_info_artifact_power;
+pub(crate) mod c_tooltip_info_azerite_essence;
 pub(crate) mod c_tooltip_info_azerite_power;
 pub(crate) mod c_tooltip_info_bag_child;
 pub(crate) mod c_tooltip_info_conduit;
@@ -25,6 +27,7 @@ pub(crate) mod c_tooltip_info_loot;
 #[cfg(feature = "retail-12-1-5")]
 pub(crate) mod c_tooltip_info_merchant_cost;
 pub(crate) mod experience_preset;
+pub(crate) mod tooltip_azerite_catalog_data;
 // The pinned TooltipInfoDocumentation.lua:710 declares GetPvpBrawl on Retail,
 // PTR and Forever; the supplied-brawl model is compiled for the same profiles.
 #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]

@@ -84,6 +84,7 @@ pub(super) fn resolved_spell_description(state: &LuaState, spell_id: u32) -> Str
 fn push_spell_tooltip_lines(
     state: &mut LuaState,
     lines: Val,
+    first_line: i64,
     spell_id: u32,
     spell_name: &str,
     is_link: bool,
@@ -95,8 +96,8 @@ fn push_spell_tooltip_lines(
             .cloned()
             .unwrap_or_default()
     };
-    push_spell_name_line(state, lines, 1, spell_name);
-    let mut index = 2;
+    push_spell_name_line(state, lines, first_line, spell_name);
+    let mut index = first_line + 1;
     // R81 Q1: replacement is the first ordinary detail row; zero skips lookup.
     if !input.suppress_replacement && input.overrides_spell_id != 0 {
         if let Some(replaced) = spells::get_spell(input.overrides_spell_id) {
@@ -199,6 +200,23 @@ fn spell_cast_text(
     }
 }
 
+pub(super) fn append_spell_to_tooltip(
+    state: &mut LuaState,
+    tooltip: Val,
+    spell_id: u32,
+) -> rilua::LuaResult<()> {
+    let Some(spell) = spells::get_spell(spell_id) else {
+        return Ok(());
+    };
+    let saved_top = state.top;
+    state.push(tooltip);
+    let lines = table_get(state, tooltip, "lines");
+    let first_line = tooltip_line_count(state, lines) + 1;
+    let result = push_spell_tooltip_lines(state, lines, first_line, spell_id, spell.name, false);
+    state.top = saved_top;
+    result
+}
+
 pub(super) fn tooltip_for_spell_id(state: &mut LuaState, spell_id: u32) -> Val {
     tooltip_for_spell_options(state, spell_id, false, false)
 }
@@ -234,7 +252,7 @@ fn tooltip_for_spell_source(state: &mut LuaState, spell_id: u32, is_link: bool) 
     state.push(tooltip);
     stamp_data_instance(state, tooltip);
     let lines = table_get(state, tooltip, "lines");
-    if let Err(error) = push_spell_tooltip_lines(state, lines, spell_id, spell.name, is_link) {
+    if let Err(error) = push_spell_tooltip_lines(state, lines, 1, spell_id, spell.name, is_link) {
         crate::lua_api::script_helpers::collect_lua_error(
             state,
             &format!("spell tooltip: {error}"),
