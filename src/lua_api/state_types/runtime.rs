@@ -139,8 +139,6 @@ pub struct AddonInfo {
     pub bootstrap_loaded: bool,
     /// Whether the addon loads Lua/XML chunks in the secure environment.
     pub use_secure_env: bool,
-    /// Whether the addon's files have executed in the shared secure environment.
-    pub secure_env_loaded: bool,
     /// Optional security status reported by `C_AddOns.GetAddOnSecurity`.
     pub security: Option<String>,
     /// Total load time in seconds (for profiler metrics).
@@ -172,7 +170,6 @@ impl Default for AddonInfo {
             contains_bindings: false,
             bootstrap_loaded: false,
             use_secure_env: false,
-            secure_env_loaded: false,
             security: None,
             load_time_secs: 0.0,
             runtime: AddonRuntimeMetrics::default(),

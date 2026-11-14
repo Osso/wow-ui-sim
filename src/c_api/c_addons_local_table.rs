@@ -38,15 +38,6 @@ pub(crate) fn retain_namespace(state: &mut LuaState, name: &str, namespace: Val,
     state.pop();
 }
 
-pub(crate) fn existing_namespace(state: &mut LuaState, name: &str) -> Option<Val> {
-    let records = registry_get(state, LOCAL_TABLES);
-    let record = table_get(state, records, name);
-    match table_get_static(state, record, "namespace") {
-        namespace @ Val::Table(_) => Some(namespace),
-        _ => None,
-    }
-}
-
 /// No target loading or fabricated namespace. Absence errors are modeled policy.
 pub(super) fn get_namespace(state: &mut LuaState, name: &str) -> LuaResult<Val> {
     require_loaded_addon(state, name)?;
