@@ -6,12 +6,16 @@ use wow_ui_sim::c_api::quest_party_progress::{
     QuestPartyProgressHeading, QuestPartyProgressParticipant, QuestPartyProgressRow,
     QuestPartyProgressSnapshot, QuestPartyProgressText,
 };
+use wow_ui_sim::c_api::quest_special_item::QuestSpecialItemSelection;
 use wow_ui_sim::lua_api::WowLuaEnv;
+use wow_ui_sim::lua_api::state::BagItem;
 
 const RED: (f64, f64, f64) = (1.0, 0.0, 0.0);
 const GREEN: (f64, f64, f64) = (0.0, 1.0, 0.0);
 const QUEST_A: i32 = 990_701;
 const QUEST_B: i32 = 990_702;
+const ITEM_A: u32 = 6948;
+const ITEM_B: u32 = 7005;
 
 fn selected_objective_tracker() -> WowLuaEnv {
     let cache = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path()
@@ -230,8 +234,34 @@ fn quest_tooltip_missing_sources_return_zero_lua_values() {
 }
 
 #[test]
-fn selected_quest_item_hover_preserves_the_unmodeled_item_relation() {
+fn selected_quest_item_hover_uses_host_supplied_owned_item() {
     let env = selected_objective_tracker();
+    {
+        let mut sim = env.state().borrow_mut();
+        let mut first = sim.quest_log_entries.entries[0].clone();
+        first.quest_id = QUEST_A;
+        let mut second = first.clone();
+        second.quest_id = QUEST_B;
+        sim.quest_log_entries.entries = vec![first, second];
+        sim.quest_log_entries.resolved_quest_special_items.insert(
+            QUEST_A,
+            QuestSpecialItemSelection {
+                item_id: ITEM_A,
+                bag: 0,
+                slot: 2,
+            },
+        );
+        sim.quest_log_entries.resolved_quest_special_items.insert(
+            QUEST_B,
+            QuestSpecialItemSelection {
+                item_id: ITEM_B,
+                bag: 0,
+                slot: 3,
+            },
+        );
+        sim.bag_items.insert((0, 2), bag_item(ITEM_A));
+        sim.bag_items.insert((0, 3), bag_item(ITEM_B));
+    }
     env.exec(
         r#"
         local function requireSource(fn, suffix)
@@ -241,13 +271,35 @@ fn selected_quest_item_hover_preserves_the_unmodeled_item_relation() {
         requireSource(QuestObjectiveItemButtonMixin.OnEnter,
             'Blizzard_ObjectiveTrackerShared.lua')
         requireSource(GameTooltip.SetQuestLogSpecialItem, 'TooltipDataHandler.lua')
-        local button = CreateFrame('Button')
-        button:SetAttribute('questLogIndex', 1)
-        GameTooltip:SetOwner(UIParent, 'ANCHOR_NONE')
-        QuestObjectiveItemButtonMixin.OnEnter(button)
-        assert(GameTooltip:GetPrimaryTooltipData() == nil,
-            'no special-item relation is supplied in this simulator state')
+        local function hover(index)
+            local button = CreateFrame('Button')
+            button:SetAttribute('questLogIndex', index)
+            GameTooltip:SetOwner(UIParent, 'ANCHOR_NONE')
+            QuestObjectiveItemButtonMixin.OnEnter(button)
+            return GameTooltip:GetPrimaryTooltipData()
+        end
+        local first = hover(1)
+        assert(first, 'RED: supplied quest item must reach the original hover consumer')
+        assert(first.id == 6948 and type(first.guid) == 'string')
+        local second = hover(2)
+        assert(second and second.id == 7005)
+        assert(type(second.guid) == 'string' and second.guid ~= first.guid)
         "#,
     )
-    .expect("the selected original hover remains callable without fabricated item state");
+    .expect("the selected original item hover must publish each supplied owned item");
+
+    env.state().borrow_mut().bag_items.remove(&(0, 2));
+    env.exec("assert(select('#', C_TooltipInfo.GetQuestLogSpecialItem(1)) == 0)")
+        .expect("a missing selected item object returns exactly zero values");
+}
+
+fn bag_item(item_id: u32) -> BagItem {
+    BagItem {
+        owned_identity: None,
+        item_id,
+        stack_count: 1,
+        hyperlink: None,
+        durability: None,
+        applied_transmog: None,
+    }
 }

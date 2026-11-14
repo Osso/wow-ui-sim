@@ -60,6 +60,7 @@ pub mod quest_party_progress;
 pub mod quest_readiness;
 pub(crate) mod quest_reward_currencies;
 pub(crate) mod quest_reward_spells;
+pub mod quest_special_item;
 pub(crate) mod tooltip_data;
 pub(crate) mod tooltip_power_catalog_data;
 pub mod trait_group_currency;
