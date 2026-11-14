@@ -137,6 +137,9 @@ pub struct QuestLogState {
     pub bounties_by_set: HashMap<i32, Vec<QuestBounty>>,
     /// Supplied active quest IDs keyed by represented party-member GUID.
     pub party_quest_ids: HashMap<String, HashSet<i32>>,
+    /// Native party-progress service snapshots; empty until supplied by the host.
+    pub party_progress:
+        HashMap<i32, crate::c_api::quest_party_progress::QuestPartyProgressSnapshot>,
     pub additional_highlights: HashMap<i32, crate::c_api::c_quest_log::QuestAdditionalHighlights>,
     /// Build-12340 manual append order; IDs survive row reorder until log refresh.
     #[cfg(feature = "client-wrath")]
@@ -244,6 +247,7 @@ impl QuestLogState {
             threat_entry_flags: HashMap::new(),
             bounties_by_set: HashMap::new(),
             party_quest_ids: HashMap::new(),
+            party_progress: HashMap::new(),
             entries: vec![
                 lost_expedition_entry(),
                 defending_the_gates_entry(),

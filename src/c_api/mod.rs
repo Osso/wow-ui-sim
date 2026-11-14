@@ -56,6 +56,7 @@ pub(crate) mod ptr_i4_game_rules;
 pub mod ptr_store_override;
 pub(crate) mod quest_difficulty;
 pub mod quest_objectives;
+pub mod quest_party_progress;
 pub mod quest_readiness;
 pub(crate) mod quest_reward_currencies;
 pub(crate) mod quest_reward_spells;
