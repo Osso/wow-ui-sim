@@ -239,6 +239,24 @@ fn cast_count_uses_the_eight_reagent_minimum_at_the_api_boundary() {
 }
 
 #[test]
+fn retail_spell_cast_count_accepts_numeric_strings_and_truncates_fractions() {
+    let env = WowLuaEnv::new().expect("real spell namespace");
+    {
+        let mut state = env.state().borrow_mut();
+        state.spell_cast_context_is_null = Some(false);
+        state.spell_reagent_pairs.insert(19_750, vec![(31_001, 2)]);
+    }
+    add_bag_stack(&env, 1, 31_001, 10);
+    let counts: (i64, i64) = env
+        .eval(
+            "return C_Spell.GetSpellCastCount('19750'), \
+             C_Spell.GetSpellCastCount(19750.9)",
+        )
+        .expect("Retail spell identifiers accept numeric strings and truncate fractions");
+    assert_eq!(counts, (5, 5));
+}
+
+#[test]
 fn inferred_admin_spell_changes_update_the_ranged_identifier() {
     let env = load_selected_consumers(
         &["Blizzard_SharedTalentUI", "Blizzard_ActionBar"],
