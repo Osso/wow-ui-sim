@@ -14,6 +14,8 @@ use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 use std::collections::{BTreeMap, BTreeSet};
 
+const CHALLENGE_MAP_ITEM_MODIFIER_ID: u32 = 17;
+
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum KeystoneLocation {
     Bag(i32, i32),
@@ -163,7 +165,12 @@ fn keystone_matches_current_map(
         .item_modifiers
         .get(&location)
         .filter(|(observed_id, _)| *observed_id == item_id)
-        .and_then(|(_, modifiers)| modifiers.iter().find(|(kind, _)| *kind == 17))
+        .and_then(|(_, modifiers)| {
+            modifiers
+                .iter()
+                .find(|(kind, _)| *kind == CHALLENGE_MAP_ITEM_MODIFIER_ID)
+        })
+        // VERIFIED (R88o.2 q2): an absent modifier uses lookup key zero.
         .map_or(0, |(_, value)| *value);
     let maps = sim_data::map_challenge_modes::MAPS;
     maps.binary_search_by_key(&challenge_id, |row| row.0)
