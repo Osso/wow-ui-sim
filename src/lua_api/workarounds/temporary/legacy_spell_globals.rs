@@ -53,7 +53,7 @@ if IsSelectedSpellBookItem == nil then
         if type(slotIndex) == "number" and slotIndex <= 0 then
             return
         end
-        // The simulator's spellbook data has a contiguous player bank only.
+        -- The simulator's spellbook data has a contiguous player bank only.
         if type(slotIndex) == "number"
             and slotIndex % 1 == 0
             and (type(bank) == "string" or type(bank) == "number")
