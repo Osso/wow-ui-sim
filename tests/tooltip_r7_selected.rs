@@ -502,6 +502,7 @@ fn remove_keystone_stages_only_with_permission_and_nonzero_guid_category() {
             .exec(
                 r##"
             assert(C_ChallengeMode.RemoveKeystone())
+            assert(not C_ChallengeMode.HasSlottedKeystone())
             local kind, cursorItemID = GetCursorInfo()
             assert(kind == "item" and cursorItemID == 6948)
             "##,
