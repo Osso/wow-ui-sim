@@ -12,7 +12,9 @@ use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
 use rilua::{LuaResult, Val};
 
-use super::helpers::{bad_argument, ensure_namespace, read_untainted_signed32_argument};
+use super::helpers::{
+    ensure_namespace, read_untainted_signed32_argument, read_untainted_truthy_argument,
+};
 
 #[derive(Debug, Clone, Default)]
 pub struct PvpTalentState {
@@ -227,19 +229,12 @@ fn set_pvp_talent_locked(state: &mut LuaState) -> LuaResult<u32> {
         "C_SpecializationInfo.SetPvpTalentLocked",
         SET_PVP_TALENT_LOCKED_USAGE,
     )?;
-    let locked_value = super::tooltip_getter_args::allowed_when_untainted(
+    let locked = read_untainted_truthy_argument(
         state,
         2,
         "C_SpecializationInfo.SetPvpTalentLocked",
+        SET_PVP_TALENT_LOCKED_USAGE,
     )?;
-    if locked_value.is_nil() {
-        return Err(bad_argument(
-            2,
-            "C_SpecializationInfo.SetPvpTalentLocked",
-            SET_PVP_TALENT_LOCKED_USAGE,
-        ));
-    }
-    let locked = !matches!(locked_value, Val::Bool(false));
     let mut sim = borrow_state_mut(state)?;
     if locked {
         sim.pvp_talents.locked_talent_ids.insert(talent_id);
