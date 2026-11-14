@@ -12,7 +12,7 @@ use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
 use rilua::{LuaResult, Val};
 
-use super::helpers::ensure_namespace;
+use super::helpers::{ensure_namespace, read_untainted_signed32_argument};
 
 #[derive(Debug, Clone, Default)]
 pub struct PvpTalentState {
@@ -20,6 +20,9 @@ pub struct PvpTalentState {
     pub failure_reason: String,
     pub has_unspent_slot: bool,
     pub has_new_talent: bool,
+    /// Simulator-session lock set; native lifetime, persistence and event effects are unknown.
+    #[cfg(feature = "client-retail")]
+    pub locked_talent_ids: std::collections::HashSet<i32>,
 }
 
 type LuaTableRef = GcRef<Table>;
@@ -84,7 +87,11 @@ pub fn register_c_specialization_info(state: &mut LuaState) -> LuaResult<()> {
     }
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
         #[cfg(feature = "client-retail")]
-        super::c_tooltip_info_pvp_talent::register_slot_info(state, t_ref)?;
+        {
+            super::c_tooltip_info_pvp_talent::register_slot_info(state, t_ref)?;
+            table_set_rust_fn_static(state, t_ref, "IsPvpTalentLocked", is_pvp_talent_locked)?;
+            table_set_rust_fn_static(state, t_ref, "SetPvpTalentLocked", set_pvp_talent_locked)?;
+        }
         table_set_rust_fn_static(
             state,
             t_ref,
@@ -137,6 +144,46 @@ pub fn register_c_specialization_info(state: &mut LuaState) -> LuaResult<()> {
         )?;
     }
     Ok(())
+}
+
+// temporary: Usage text UNKNOWN pending R88j.9.
+#[cfg(feature = "client-retail")]
+const IS_PVP_TALENT_LOCKED_USAGE: &str = "C_SpecializationInfo.IsPvpTalentLocked(...)";
+#[cfg(feature = "client-retail")]
+const SET_PVP_TALENT_LOCKED_USAGE: &str = "C_SpecializationInfo.SetPvpTalentLocked(...)";
+
+#[cfg(feature = "client-retail")]
+fn is_pvp_talent_locked(state: &mut LuaState) -> LuaResult<u32> {
+    let talent_id = read_untainted_signed32_argument(
+        state,
+        1,
+        "C_SpecializationInfo.IsPvpTalentLocked",
+        IS_PVP_TALENT_LOCKED_USAGE,
+    )?;
+    let locked = borrow_state(state)?
+        .pvp_talents
+        .locked_talent_ids
+        .contains(&talent_id);
+    state.push(Val::Bool(locked));
+    Ok(1)
+}
+
+#[cfg(feature = "client-retail")]
+fn set_pvp_talent_locked(state: &mut LuaState) -> LuaResult<u32> {
+    let talent_id = read_untainted_signed32_argument(
+        state,
+        1,
+        "C_SpecializationInfo.SetPvpTalentLocked",
+        SET_PVP_TALENT_LOCKED_USAGE,
+    )?;
+    let locked = !matches!(stack_val(state, 2), Val::Nil | Val::Bool(false));
+    let mut sim = borrow_state_mut(state)?;
+    if locked {
+        sim.pvp_talents.locked_talent_ids.insert(talent_id);
+    } else {
+        sim.pvp_talents.locked_talent_ids.remove(&talent_id);
+    }
+    Ok(0)
 }
 
 fn get_inspect_specialization(state: &mut LuaState) -> LuaResult<u32> {
