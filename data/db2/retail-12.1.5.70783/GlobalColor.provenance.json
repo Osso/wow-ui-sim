@@ -1,0 +1,82 @@
+{
+  "product": "wow",
+  "build": "12.1.5.70783",
+  "build_key": "bc493ecb2898766c0f8947a99b4b3d65",
+  "build_config_sha256": "5f126824a1e46de1c831a82b6cbd63fa8646f113fa9639c03e645cb5d4b1e993",
+  "root_content_key": "01a40491e0e9fd3d5e542bd7821cd499",
+  "encoding_content_key": "6b8cf81a721a9eea0538c75a8eb7fc38",
+  "table": "GlobalColor",
+  "distribution_note": "Derived from Blizzard client data via local CASC; handled like other generated data/ tables. Schema attribution: WoWDBDefs GlobalColor.dbd, SHA-256 d93eeb797dcffa7dc111199b20957888bbe38de0758b8b6c57fd5378cad26555.",
+  "file_data_id": 4328468,
+  "authenticated_local_root_md5": "a62d733c8e49cc79c46e4ebc7057e020",
+  "resolved_encoding_key": "b07a23a2deb0ddd575f98d776c8541c9",
+  "db2": {
+    "format": "WDC5",
+    "bytes": 14262,
+    "sha256": "aa23f7f48bf490e24f6dcb3c11b525279c0575f050ccc04682cb4f1af1159ef8",
+    "md5": "a62d733c8e49cc79c46e4ebc7057e020",
+    "table_hash": "B8BA5FB3",
+    "layout_hash": "760E0516",
+    "physical_records": 362,
+    "copy_records": 5,
+    "copy_record_pairs": [
+      {
+        "new_id": 173,
+        "source_id": 56
+      },
+      {
+        "new_id": 174,
+        "source_id": 57
+      },
+      {
+        "new_id": 175,
+        "source_id": 58
+      },
+      {
+        "new_id": 148,
+        "source_id": 145
+      },
+      {
+        "new_id": 355,
+        "source_id": 328
+      }
+    ]
+  },
+  "csv": {
+    "path": "data/db2/retail-12.1.5.70783/GlobalColor.csv",
+    "sha256": "e5fe982cf72c9d77af9d5a82360e0a06537b10daf9940c6a56705674029b38c2",
+    "rows": 367,
+    "unreadable_records": 0,
+    "columns": [
+      "ID",
+      "LuaConstantName",
+      "Color"
+    ],
+    "duplicate_lua_constant_names": {
+      "AREA_DESCRIPTION_FONT_COLOR": 2,
+      "HOUSING_REWARD_TOAST_LABEL_FONT_COLOR": 2,
+      "INVASION_DESCRIPTION_FONT_COLOR": 2,
+      "INVASION_FONT_COLOR": 2,
+      "PURE_RED_COLOR": 2,
+      "REFUND_TOOLTIP_COLOR": 2
+    },
+    "exported_sha256": "2c67645a098d53cb5b9820b1e5b142d94ae16f54aafeb8b8b95ae818885ca605",
+    "line_endings": "CRLF export normalized to LF; CSV records unchanged"
+  },
+  "reader": {
+    "description": "Existing local-CASC WDC5 export path; no decoder source was changed.",
+    "source_sha256": {
+      "db2_dbd.py": "c63288def52f98fb52ebad33a74f1bc0e181923adcb1d02238c97b99aa6c5989",
+      "export_db2_csv.py": "dbd6c8f1d1e1785b65dcb668063ec2832c25a765d957babcf229da1732340f18",
+      "db2_casc.py": "c225f08461d33bcad5436b14f8342878b5f891ea64b9fef4a08ca0bef52aba4b",
+      "GlobalColor.dbd": "d93eeb797dcffa7dc111199b20957888bbe38de0758b8b6c57fd5378cad26555"
+    }
+  },
+  "schema": {
+    "source": "https://raw.githubusercontent.com/wowdev/WoWDBDefs/master/definitions/GlobalColor.dbd",
+    "sha256": "d93eeb797dcffa7dc111199b20957888bbe38de0758b8b6c57fd5378cad26555",
+    "matched_layout_hash": "760E0516",
+    "repository_revision": "UNKNOWN; the retained source copy is hash-pinned, and its revision was not recorded"
+  },
+  "runtime_policy": "R88o.3 is VERIFIED for Retail 12.1.5.70688. Applying those native rules to this Retail 12.1.5.70783 DB2 snapshot is INFERRED. Native feed order is ascending main row ID, then ascending auxiliary copy ID; the first case-sensitive tag-byte key wins; no empty-tag or flag filter is applied; export order is ascending tag-byte key."
+}

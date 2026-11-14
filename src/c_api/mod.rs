@@ -418,6 +418,7 @@ pub mod c_toy_box_info;
 pub mod c_transmog_outfit_info;
 pub mod c_transmog_sets;
 pub(crate) mod c_ui;
+pub(crate) mod c_ui_color;
 pub mod c_ui_file_asset;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_unit_aura_altered_form;

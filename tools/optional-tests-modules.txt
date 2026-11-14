@@ -167,3 +167,6 @@ pvp_talent_native_consumers
 
 # lt-d778: Retail-only R88n.7 producer and preservation probes.
 tooltip_minimum_width
+
+# Retail GlobalColor API and original Color.lua consumer regression.
+c_ui_color_globalcolor
