@@ -12,13 +12,13 @@
 
 ### Native cache and `GetColors`
 
-**VERIFIED (native Retail 12.1.5.70688, R88o.3):** `GlobalColor` rows enter a tree keyed by `LuaConstantName`. The comparison is case-sensitive and compares unsigned bytes across the shared prefix, then uses string length. The first inserted row wins an equal key. Native visits main-index rows by ascending ID, then auxiliary entries by ascending ID; it skips invalid/unresolved source entries but applies no empty-tag or flag filter. Export walks the tree in ascending key order.
+**VERIFIED (native Retail 12.1.5.70688, R88o.3):** `GlobalColor` rows enter a tree keyed by `LuaConstantName`. The comparison is case-sensitive and compares unsigned bytes across the shared prefix, then uses string length. The first inserted row wins an equal key. Native visits main-index rows by ascending ID, then auxiliary entries by ascending ID; before initialization, its cursor skips invalid index entries and entries that resolve to no row or its excluded row. The initializer applies no empty-tag or flag filter. Export walks the tree in ascending key order.
 
 **VERIFIED (native Retail 12.1.5.70688):** `C_UIColor.GetColors` is flag 3 and ignores arguments. It returns one fresh dense array table, with one record per exported entry. Each record has the tag and a fresh color table copied from `ColorMixin`; the builder writes `r`, `g`, `b`, and `a` from ARGB bytes. Each byte becomes f32 and is multiplied by the f32 reciprocal of 255 before publication as a Lua number. Alpha comes from the packed value.
 
-**VERIFIED (local Retail 12.1.5.70783 DB2):** 367 source rows contain six duplicate keys. **INFERRED (native 12.1.5.70688 feed and dedup rules applied to the 70783 rows):** the generated catalog has 361 unique tags and keeps these first rows: `AREA_DESCRIPTION_FONT_COLOR` ID 56, `HOUSING_REWARD_TOAST_LABEL_FONT_COLOR` ID 328, `INVASION_DESCRIPTION_FONT_COLOR` ID 58, `INVASION_FONT_COLOR` ID 57, `PURE_RED_COLOR` ID 30, and `REFUND_TOOLTIP_COLOR` ID 145.
+**VERIFIED (local Retail 12.1.5.70783 DB2):** 367 source rows contain six duplicate keys. **VERIFIED (simulator generated data and API test):** the static catalog has 361 tags and the API test asserts these simulator-selected winners: `AREA_DESCRIPTION_FONT_COLOR` ID 56, `HOUSING_REWARD_TOAST_LABEL_FONT_COLOR` ID 328, `INVASION_DESCRIPTION_FONT_COLOR` ID 58, `INVASION_FONT_COLOR` ID 57, `PURE_RED_COLOR` ID 30, and `REFUND_TOOLTIP_COLOR` ID 145.
 
-**INFERRED:** applying native behavior evidenced on Retail 12.1.5.70688 to the GlobalColor DB2 extracted from Retail 12.1.5.70783 is valid. The version mapping is not directly verified. Runtime loaded catalog contents and external update schedule remain UNKNOWN.
+**VERIFIED (CSV exporter and generator source):** the merged CSV does not preserve invalid-index or excluded-row cursor state, and the generator treats every decoded row as eligible. **UNKNOWN (70783 cursor mapping):** native 70688 evidence does not identify any matching 70783 row IDs. **INFERRED (native 12.1.5.70688 rules applied to local 12.1.5.70783 data):** native output has the same 361 rows and winners only if no additional cursor skips apply. **UNKNOWN (Retail 12.1.5.70688):** the actual loaded color catalog and its external update schedule are runtime state; the pinned 70783 snapshot is not proof of the current live cache.
 
 ### Original Lua consumer
 
@@ -28,7 +28,7 @@
 
 ### Profile boundary and preservation
 
-**VERIFIED (simulator source):** Retail selects the generated 361-row catalog with `client_profile::ACTIVE`. **VERIFIED (simulator source and profile data inventory):** non-Retail profiles keep the existing temporary five-row fallback because their own GlobalColor datasets are not wired.
+**VERIFIED (simulator source):** Retail selects the generated 361-row catalog with `client_profile::ACTIVE`. **VERIFIED (simulator source and profile data inventory):** non-Retail profiles keep the existing temporary five-row fallback because their own GlobalColor datasets are not wired. **VERIFIED (PTR unit test):** the fallback still returns its five established tags after startup.
 
 **PRESERVATION:** `colors.rs` keeps its 43 hand-set names that also occur in the Retail catalog, plus `TOOLTIP_DEFAULT_COLOR` and `TOOLTIP_DEFAULT_BACKGROUND_COLOR`. **UNKNOWN:** no load-order proof shows that `Color.lua` runs before every consumer of every name. **VERIFIED (simulator source):** `classic_castbar_colors()` does not write the four classic cast-bar names on Retail.
 

@@ -20,9 +20,9 @@
 - **VERIFIED (native Retail 12.1.5.70688):** visit main row-ID entries by ascending ID, then auxiliary copy entries by ascending ID. Do not merge both phases into one ID sort.
 - **VERIFIED (native Retail 12.1.5.70688):** compare `LuaConstantName` keys case-sensitively as unsigned bytes. Compare the shared byte range first, then string length.
 - **VERIFIED (native Retail 12.1.5.70688):** keep the first inserted row for each equal key; discard later duplicates.
-- **VERIFIED (native Retail 12.1.5.70688):** do not filter empty tags or row flags. The source cursor skips invalid or unresolved entries before initialization.
+- **VERIFIED (native Retail 12.1.5.70688):** do not filter empty tags or row flags. Before initialization, the source cursor skips invalid index entries and entries that resolve to no row or its excluded row; these cursor skips are not content filters.
 - **VERIFIED (native Retail 12.1.5.70688):** export the unique rows in ascending tag-key order, not feed order.
-- **VERIFIED (local CASC Retail 12.1.5.70783):** the pinned CSV has 367 decoded rows. **INFERRED (applying 70688 feed and duplicate rules to the 70783 data):** the generated export has 361 tags. The six duplicate tags and simulator-selected winners are asserted in the tests.
+- **VERIFIED (local CASC Retail 12.1.5.70783):** the pinned CSV has 367 decoded rows and no unreadable records. **VERIFIED (simulator generated data and API test):** the static export has 361 tags, and the six duplicate tags and simulator-selected winners are asserted. **INFERRED (applying 70688 rules to 70783):** native output matches only if its cursor skips no additional rows absent from the merged CSV.
 
 ### Records and colors
 
@@ -51,9 +51,11 @@
 
 - `tests/c_ui_color_globalcolor.rs` — optional API test for dual publication, ignored arguments, fresh tables, mixin error/copy, 361 rows, sample DB2 winners, ARGB channels, and tag order.
 - The same file uses `prefork_full_ui_case!` to test the original `Color.lua` consumer after Retail startup in both environments.
+- `src/lua_api/workarounds/temporary/color_defaults.rs` — PTR unit test verifies the existing non-Retail five-row fallback.
 - `src/bin/wow_cli/gen_global_colors.rs` — unit test for main-before-auxiliary duplicate selection, empty-tag preservation, and unsigned-byte ordering.
 
 ## Runtime Unknowns
 
+- **VERIFIED (CSV exporter and generator source):** the merged CSV does not preserve invalid-index or excluded-row cursor state, and the generator treats every decoded row as eligible. **UNKNOWN (70783 cursor mapping):** native 70688 evidence does not identify any corresponding 70783 row IDs.
 - **UNKNOWN (Retail 12.1.5.70688):** the actual loaded GlobalColor catalog and its external update schedule are runtime state. The pinned 70783 snapshot is not proof of the current live cache.
 - Runtime DB2 decoding remains out of scope; the simulator uses a committed generated snapshot.
