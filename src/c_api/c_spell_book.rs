@@ -1140,7 +1140,7 @@ fn spellbook_item_info(state: &mut LuaState, slot: i32) -> Option<Val> {
 mod tests {
     use super::c_spell_book_get_spell_book_item_auto_cast;
     use crate::lua_api::WowLuaEnv;
-    use rilua::Val;
+    use rilua::{LuaApiMut, Val};
 
     #[test]
     fn autocast_internal_output_has_two_booleans() {

@@ -40,7 +40,7 @@ mod tests {
     use super::push_loss_of_control_info;
     use crate::lua_api::methods::table_get_static;
     use crate::lua_api::{LossOfControlInfo, WowLuaEnv};
-    use rilua::Val;
+    use rilua::{LuaApiMut, Val};
 
     #[test]
     fn verified_serializer_shape_has_five_fields_and_native_types() {
