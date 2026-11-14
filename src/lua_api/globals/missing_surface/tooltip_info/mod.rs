@@ -110,10 +110,12 @@ fn register_c_tooltip_info(state: &mut LuaState) -> LuaResult<()> {
             crate::client_profile::ClientProfile::Retail
                 | crate::client_profile::ClientProfile::Ptr
         ) {
-            crate::c_api::c_tooltip_info_appearance::register(state, table_ref)?;
+            crate::c_api::tooltip_info_retail_epoch_and_forever::c_tooltip_info_appearance::register(state, table_ref)?;
         }
         crate::c_api::c_tooltip_info_item_context::register(state, table_ref)?;
-        crate::c_api::c_tooltip_info_outfit::register(state, table_ref)?;
+        crate::c_api::tooltip_info_retail_epoch_and_forever::c_tooltip_info_outfit::register(
+            state, table_ref,
+        )?;
     }
     // Retail and PTR use the Retail 12.1.5 index reader. Forever registration
     // below shares the producer and supplies its verified argument reader.
@@ -141,9 +143,13 @@ fn register_c_tooltip_info(state: &mut LuaState) -> LuaResult<()> {
     }
     #[cfg(feature = "client-wowforever")]
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
-        crate::c_api::c_tooltip_info_appearance::register(state, table_ref)?;
+        crate::c_api::tooltip_info_retail_epoch_and_forever::c_tooltip_info_appearance::register(
+            state, table_ref,
+        )?;
         crate::c_api::c_tooltip_info_merchant_cost::register(state, table_ref)?;
-        crate::c_api::c_tooltip_info_outfit::register(state, table_ref)?;
+        crate::c_api::tooltip_info_retail_epoch_and_forever::c_tooltip_info_outfit::register(
+            state, table_ref,
+        )?;
         crate::c_api::c_tooltip_info_pvp_talent::register(state, table_ref)?;
     }
     Ok(())

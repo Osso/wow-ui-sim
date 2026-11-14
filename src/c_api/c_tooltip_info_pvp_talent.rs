@@ -1,22 +1,24 @@
-//! Retail `C_TooltipInfo.GetPvpTalent` composition and the Forever missing-catalog path.
+//! Retail `C_TooltipInfo.GetPvpTalent` composition and the Forever supplied-input path.
 //!
 //! R44-Q20, R53 and R56 establish the Retail success path. The Retail talent catalog
 //! is generated from the local-CASC export recorded in provenance; resolved
 //! spell IDs and eligibility/grant outcomes remain host inputs. Forever validates
-//! its arguments and takes a zero-value miss path without the Retail catalog.
+//! its arguments and composes only supplied talent-to-spell rows.
 
 #[cfg(feature = "client-retail")]
 use crate::c_api::tooltip_getter_args::lua_index;
-use crate::c_api::tooltip_getter_args::{
-    allowed_when_untainted, round7_optional_bool, round7_signed,
-};
+#[cfg(feature = "client-retail")]
+use crate::c_api::tooltip_getter_args::round7_optional_bool;
+use crate::c_api::tooltip_getter_args::{allowed_when_untainted, round7_signed};
+use crate::lua_api::globals::missing_surface::tooltip_info::tooltip_for_spell;
 #[cfg(feature = "client-retail")]
 use crate::lua_api::globals::missing_surface::tooltip_info::{
     append_line, format_global_numeric, format_global_text, global_text, named_color,
-    restore_plain_line_type, tooltip_for_spell_identifier,
+    restore_plain_line_type,
 };
+use crate::lua_api::methods::borrow_state;
 #[cfg(feature = "client-retail")]
-use crate::lua_api::methods::{borrow_state, table_set};
+use crate::lua_api::methods::table_set;
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::LuaResult;
 #[cfg(feature = "client-retail")]
@@ -146,14 +148,33 @@ fn read_group_index(state: &LuaState, position: i32) -> LuaResult<Option<usize>>
     crate::c_api::tooltip_getter_args::forever_lua_index(state, position, USAGE)
 }
 
-fn get_pvp_talent(state: &mut LuaState) -> LuaResult<u32> {
+#[derive(Clone, Copy)]
+struct PvpTalentArguments {
+    talent_id: i32,
+    #[cfg(feature = "client-retail")]
+    is_inspect: bool,
+    #[cfg(feature = "client-retail")]
+    group_was_supplied: bool,
+    #[cfg(feature = "client-retail")]
+    parsed_group: Option<usize>,
+    #[cfg(feature = "client-retail")]
+    talent_position: i32,
+}
+
+#[cfg(feature = "client-retail")]
+struct RetailPvpTalentContext {
+    record: PvpTalentTooltipRecord,
+    active_group_index: usize,
+    player_present: bool,
+}
+
+fn read_pvp_talent_arguments(state: &LuaState) -> LuaResult<PvpTalentArguments> {
     let talent_id = round7_signed(state, 1, USAGE)?;
-    let is_inspect =
-        if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
-            crate::c_api::tooltip_getter_args::optional_bool(state, 2)?
-        } else {
-            round7_optional_bool(state, 2, USAGE)?
-        };
+    #[cfg(feature = "client-wowforever")]
+    let is_inspect = crate::c_api::tooltip_getter_args::optional_bool(state, 2)?;
+    #[cfg(feature = "client-retail")]
+    let is_inspect = round7_optional_bool(state, 2, USAGE)?;
+
     let group_value = allowed_when_untainted(state, 3, API_NAME)?;
     let group_was_supplied = !group_value.is_nil();
     let parsed_group = if group_was_supplied {
@@ -168,65 +189,113 @@ fn get_pvp_talent(state: &mut LuaState) -> LuaResult<u32> {
     };
 
     #[cfg(feature = "client-wowforever")]
-    {
-        let _ = (
-            talent_id,
-            is_inspect,
-            group_was_supplied,
-            parsed_group,
-            talent_position,
-        );
-        return Ok(0);
-    }
+    let _unmodeled_arguments = (
+        is_inspect,
+        group_was_supplied,
+        parsed_group,
+        talent_position,
+    );
 
+    Ok(PvpTalentArguments {
+        talent_id,
+        #[cfg(feature = "client-retail")]
+        is_inspect,
+        #[cfg(feature = "client-retail")]
+        group_was_supplied,
+        #[cfg(feature = "client-retail")]
+        parsed_group,
+        #[cfg(feature = "client-retail")]
+        talent_position,
+    })
+}
+
+fn get_pvp_talent(state: &mut LuaState) -> LuaResult<u32> {
+    let arguments = read_pvp_talent_arguments(state)?;
+    #[cfg(feature = "client-wowforever")]
+    {
+        publish_forever_pvp_talent(state, arguments.talent_id)
+    }
     #[cfg(feature = "client-retail")]
     {
-        if talent_id == 0 {
-            return crate::c_api::tooltip_data::unknown_getter_failure();
-        }
-
-        let (record, active_group, player_present) = {
-            let sim = borrow_state(state)?;
-            (
-                sim.pvp_talent_tooltip.catalog.get(&talent_id).cloned(),
-                sim.pvp_talent_tooltip.active_group_index,
-                sim.player.present,
-            )
-        };
-        let Some(record) = record else {
-            return crate::c_api::tooltip_data::unknown_getter_failure();
-        };
-        if crate::spells::get_spell(record.spell_id).is_none() {
-            return crate::c_api::tooltip_data::unknown_getter_failure();
-        }
-
-        let resolved_spell_id = resolve_spell_id(state, record.spell_id, None)?;
-        if !player_present || crate::spells::get_spell(resolved_spell_id).is_none() {
-            // R53 confirms annotation continuation, but the public result is UNKNOWN.
-            return crate::c_api::tooltip_data::unknown_getter_failure();
-        }
-
-        let tooltip = tooltip_for_spell_identifier(state, Some(resolved_spell_id), false);
-        append_replacement_line(state, tooltip, &record)?;
-        let local_group = if is_inspect {
-            None
-        } else if group_was_supplied {
-            parsed_group
-        } else {
-            Some(active_group)
-        };
-        append_talent_annotation(
-            state,
-            tooltip,
-            talent_id,
-            talent_position,
-            is_inspect,
-            local_group,
-            &record,
-        )?;
-        state.push(tooltip);
-        Ok(1)
+        publish_retail_pvp_talent(state, arguments)
     }
+}
+
+#[cfg(feature = "client-wowforever")]
+fn publish_forever_pvp_talent(state: &mut LuaState, talent_id: i32) -> LuaResult<u32> {
+    let spell_id = borrow_state(state)?
+        .forever_pvp_talent_spell_ids
+        .get(&talent_id)
+        .copied();
+    let Some(spell_id) = spell_id else {
+        return Ok(0);
+    };
+    let tooltip = tooltip_for_spell(state, spell_id);
+    state.push(tooltip);
+    Ok(1)
+}
+
+#[cfg(feature = "client-retail")]
+fn publish_retail_pvp_talent(
+    state: &mut LuaState,
+    arguments: PvpTalentArguments,
+) -> LuaResult<u32> {
+    if arguments.talent_id == 0 {
+        return crate::c_api::tooltip_data::unknown_getter_failure();
+    }
+    let context = {
+        let sim = borrow_state(state)?;
+        sim.pvp_talent_tooltip
+            .catalog
+            .get(&arguments.talent_id)
+            .cloned()
+            .map(|record| RetailPvpTalentContext {
+                record,
+                active_group_index: sim.pvp_talent_tooltip.active_group_index,
+                player_present: sim.player.present,
+            })
+    };
+    let Some(context) = context else {
+        return crate::c_api::tooltip_data::unknown_getter_failure();
+    };
+    if crate::spells::get_spell(context.record.spell_id).is_none() {
+        return crate::c_api::tooltip_data::unknown_getter_failure();
+    }
+    let resolved_spell_id = resolve_spell_id(state, context.record.spell_id, None)?;
+    if !context.player_present || crate::spells::get_spell(resolved_spell_id).is_none() {
+        // R53 confirms annotation continuation, but the public result is UNKNOWN.
+        return crate::c_api::tooltip_data::unknown_getter_failure();
+    }
+    compose_retail_pvp_talent(state, arguments, context, resolved_spell_id)
+}
+
+#[cfg(feature = "client-retail")]
+fn compose_retail_pvp_talent(
+    state: &mut LuaState,
+    arguments: PvpTalentArguments,
+    context: RetailPvpTalentContext,
+    spell_id: u32,
+) -> LuaResult<u32> {
+    let tooltip = tooltip_for_spell(state, spell_id);
+    append_replacement_line(state, tooltip, &context.record)?;
+    let local_group = if arguments.is_inspect {
+        None
+    } else if arguments.group_was_supplied {
+        arguments.parsed_group
+    } else {
+        Some(context.active_group_index)
+    };
+    append_talent_annotation(
+        state,
+        tooltip,
+        arguments.talent_id,
+        arguments.talent_position,
+        arguments.is_inspect,
+        local_group,
+        &context.record,
+    )?;
+    state.push(tooltip);
+    Ok(1)
 }
 
 #[cfg(feature = "client-retail")]

@@ -1,5 +1,4 @@
 //! Outfit-name tooltip; no fabricated slot summaries.
-#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 use crate::lua_api::methods::borrow_state;
 use crate::lua_api::methods::{create_string, create_table, table_set};
 #[cfg(feature = "retail-12-0-5")]
@@ -84,7 +83,7 @@ fn publish_title(state: &mut LuaState, id: f64, name: &str) {
     let lines = create_table(state);
     table_set(state, result, "lines", lines);
     let title = create_table(state);
-    super::helpers::set_table_array(state, lines, 1, title);
+    crate::c_api::helpers::set_table_array(state, lines, 1, title);
     table_set(state, title, "type", Val::Num(0.0));
     let text = create_string(state, name);
     table_set(state, title, "leftText", text);

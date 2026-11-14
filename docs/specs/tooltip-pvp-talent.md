@@ -12,7 +12,7 @@ VERIFIED: Retail `C_TooltipInfo.GetPvpTalent` uses the PvP talent row to build s
 - [ ] UNKNOWN (Forever): R88n.8 does not define the result when the decremented, truncated `groupIndex` is outside signed-32 range. The Rust saturating cast is only a neutral placeholder, not native-parity evidence.
 - [ ] VERIFIED: Forever Usage is `Usage: local data = C_TooltipInfo.GetPvpTalent(talentID [, isInspect, groupIndex, talentIndex])`.
 - [ ] VERIFIED: A missing Forever `PvpTalent` record returns zero Lua values. The simulator has no Forever catalog and does not publish Retail rows.
-- [ ] INFERRED (Forever simulator input): Any supplied relation from `talentID` to `SpellID` is a host-side model only; R88n.8 does not prove the field mapping or a native writer. Keep it empty by default and do not seed guessed rows.
+- [ ] INFERRED (Forever simulator input): `SimState.forever_pvp_talent_spell_ids` is an empty-by-default host map from `talentID` to `SpellID` and uses the shared spell-tooltip producer. R88n.8 does not prove this field mapping, a native writer or populated native-record parity.
 - [ ] UNKNOWN: Secret-value errors, all invalid argument diagnostics and the complete wrapped Usage error. The optional test checks that the Usage text is present for missing required input.
 - [x] VERIFIED: Retail starts with generated `SpellID`, `OverridesSpellID`, `LevelRequired`, and category `TalentSlotMask` rows; tests check actual default rows and neutral host-only grant/eligibility inputs. The local export is installed build 12.1.5.70783, not the selected 12.1.5.70575 pin.
 
@@ -45,7 +45,7 @@ VERIFIED: Retail `C_TooltipInfo.GetPvpTalent` uses the PvP talent row to build s
 
 ## Implementation inventory
 
-- `src/c_api/c_tooltip_info_pvp_talent.rs` — shared registration, Retail catalog/producer, and Forever's validated zero-value miss path.
+- `src/c_api/c_tooltip_info_pvp_talent.rs` — argument parsing, Retail catalog/producer, and Forever's supplied spell-tooltip path.
 - `src/c_api/c_tooltip_info_pvp_talent_data.rs` — generated Retail catalog rows.
 - `tools/gen_pvp_talent_catalog.py` and `data/pvp-talents/retail-12.1.5.70783/` — projection generator, CSV and source provenance.
 - `src/c_api/tooltip_getter_args.rs` — shared numeric readers and Forever's numeric-string `luaIndex` conversion.
@@ -53,19 +53,19 @@ VERIFIED: Retail `C_TooltipInfo.GetPvpTalent` uses the PvP talent row to build s
 - `src/lua_api/globals/missing_surface/tooltip_info/spell.rs` — shared spell tooltip producer.
 - `src/c_api/c_spec.rs` — active PvP talent group and Retail slot-info registration.
 - `src/lua_api/workarounds/temporary/pvp_talent_defaults.rs` — preserves only the old no-host slot result pending native defaults; the modeled Retail slot producer replaces its Lua slot registration.
-- `src/lua_api/state/sim_state.rs` and `src/lua_api/state.rs` — Retail-only host inputs; Forever does not seed or store these records.
+- `src/lua_api/state/sim_state.rs` and `src/lua_api/state.rs` — Retail catalog inputs and the separate empty-by-default Forever spell-ID map.
 
 ## Tests asserting this spec
 
 - `tests/tooltip_pvp_talent.rs` — optional R73 tests drive original slot hover and the original list template hover (the panel harness does not realize virtualized list rows), with a pre-load pass-through spy, visible lines, mutually exclusive outcomes and primary getter metadata; supplied slot fields share group selection and preserve no-host defaults. Retail registration; original `GameTooltip:SetPvpTalent` accessor with a pass-through getter spy and visible line checks; generated default catalog values and neutral grant/eligibility inputs; spell identity, replacement line and suppression; local level, group, position, eligibility, combat and rest branches; item, essence and inspect grant branches.
 - `tests/tooltip_full_env_helpers.rs` — optional pre-addon setup hook installs the getter spy before `TooltipDataHandler` copies the namespace.
-- `tests/tooltip_forever_four_getters.rs` — optional Forever registration, argument acceptance, Usage text and missing-record zero-value path.
+- `tests/tooltip_forever_four_getters.rs` — optional Forever registration, argument acceptance, Usage text, two supplied-hit cases and a missing-record case.
 - `tools/test_gen_pvp_talent_catalog.py` — projected-column, row validation, and generated Rust output.
 
 ## Known gaps (current cycle)
 
 - [ ] UNKNOWN (Retail): The native final Lua result for zero talent ID, failed base-spell presence, missing player or missing resolved spell-name row. The simulator uses the shared EMULATED zero-value seam for these Retail paths.
-- [ ] INFERRED (Forever simulator input): A supplied `talentID`-to-`SpellID` map is a host-side relation only; R88n.8 does not establish that field mapping or its native writer. Keep the map empty by default and do not seed guessed talent rows. This does not establish current-player selection, inspect behavior, or native populated-record parity.
+- [ ] INFERRED (Forever): The simulator's supplied `talentID`-to-`SpellID` map does not establish current-player selection, native writers, inspect behavior or native populated-record parity. It remains empty by default; no talent rows are seeded.
 - [ ] UNKNOWN: Whether the native base-spell presence provider can report `SpellID` zero as present. This path is not modeled or tested.
 - [ ] UNKNOWN: The native spell override ranking walk's exact ranked IDs, map writers and precedence among talent, aura and SpellReplace sources. The host supplies the resolved ID; this implementation does not infer the walk.
 - [ ] UNKNOWN: Native alignment of the installed 12.1.5.70783 rows with selected build 12.1.5.70575, the effect-parameter decoder, essence lookup, inspect lifecycle, additional progression restrictions and remaining eligibility failure reasons. Grant and eligibility outcomes remain host-only; absent inputs do not fabricate lines.
@@ -79,11 +79,11 @@ VERIFIED: Retail `C_TooltipInfo.GetPvpTalent` uses the PvP talent row to build s
 
 ## Out of scope
 
-- PTR registration and behavior. Forever populated catalog, player-state writers and selected PvP UI consumers are not modeled.
+- PTR registration and behavior. Forever native catalog population, player-state writers and selected PvP UI consumers are not modeled; only explicit simulator inputs are available.
 - Native learning, progression and effect-list internals; host records expose only supplied outcomes.
 - Invented PvP talent, aura, essence, item-grant or resolved-spell rows.
 - Native miss-result parity and UNKNOWN eligibility failure messages.
 
 ## R73 evidence boundary
 
-VERIFIED: R73 describes Retail 12.1.5.70688 builder decisions; the catalog export remains labeled 12.1.5.70783. INFERRED: native field-name mapping (field 7 selects category, field 8 supplies the level, fields 3/4 feed ordinary spell/replacement content). No inferred-only producer behavior is added. UNKNOWN: native final miss results and inspect-unit details remain outside this change. The existing inspect seam is preserved, not extended.
+VERIFIED: R73 describes Retail 12.1.5.70688 builder decisions; the catalog export remains labeled 12.1.5.70783. INFERRED: native Retail field-name mapping (field 7 selects category, field 8 supplies the level, fields 3/4 feed ordinary spell/replacement content). The separate Forever talent-to-spell input mapping is also INFERRED and is not seeded. UNKNOWN: native final miss results and inspect-unit details remain outside this change. The existing Retail inspect seam is preserved, not extended.
