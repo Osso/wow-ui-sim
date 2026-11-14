@@ -3,7 +3,7 @@
 use crate::lua_api::methods::val_to_string;
 use crate::lua_bridge::stack_val;
 use rilua::vm::state::LuaState;
-use rilua::{LuaApiMut, LuaResult, Val};
+use rilua::{LuaResult, Val};
 
 fn is_controlled_or_group_token(unit: &str) -> bool {
     if matches!(unit, "player" | "pet" | "vehicle") {
@@ -32,7 +32,9 @@ fn unit_is_player_controlled_or_group_member(state: &mut LuaState) -> LuaResult<
 }
 
 pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
-    LuaApiMut::register_function(
+    // INFERRED (Retail 12.1.5.70688): Blizzard_AuraContainer.toc:7 selects secure,
+    // and Blizzard_AuraContainerUtil.lua:70 calls this global.
+    crate::lua_api::globals::security::register_function_in_both_environments(
         lua,
         "UnitIsPlayerControlledOrGroupMember",
         unit_is_player_controlled_or_group_member,
