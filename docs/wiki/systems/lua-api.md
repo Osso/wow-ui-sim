@@ -54,6 +54,18 @@ Original MerchantFrame buyback hover and the three presentation tests pass on
 both profiles. The full PTR tooltip/library runs retain the same failures as
 the source-matched master baseline; this is not a clean PTR startup claim.
 
+### Retail TooltipData field boundary (R88n.4b)
+
+**VERIFIED (Retail 12.1.5.70688, R88n.4b):** `repairCost` and battle-pet
+fields are TooltipData-level; `price` and `maxPrice` belong on a type-11
+`SellPrice` line. See the [serialization contract](../../specs/tooltip-data-serialization.md).
+**VERIFIED (simulator):** the item catalog supplies `ItemInfo.sell_price`.
+**INFERRED (simulator policy):** Retail emits a positive catalog value as line
+`price`; `maxPrice` stays absent because the tooltip input has no current stack
+quantity or range. Repair cost and battle-pet tooltip fields stay absent because
+those inputs are not modeled. See the [consumer investigation](../investigations/consumer-selection-and-red-proof.md#retail-tooltip-serializer-field-consumers)
+for TOC selection, tests and the quest-cache/LFG seam boundaries.
+
 ## Cursor modes and ActionBar transitions
 
 The [cursor model contract](../../specs/cursor-model.md) is the behavioral
