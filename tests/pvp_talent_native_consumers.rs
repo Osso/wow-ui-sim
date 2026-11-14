@@ -113,7 +113,7 @@ fn player_spells_locked_talent_consumer_clears_only_the_selected_lock() {
                         and not C_SpecializationInfo.IsPvpTalentLocked(secondTalentID)
 
                     C_SpecializationInfo.SetPvpTalentLocked(firstTalentID, true)
-                    C_SpecializationInfo.SetPvpTalentLocked(tostring(secondTalentID + 0.9), 1)
+                    C_SpecializationInfo.SetPvpTalentLocked(tostring(secondTalentID + 0.9), 0)
                     local bothLocked = C_SpecializationInfo.IsPvpTalentLocked(firstTalentID + 0.9)
                         and C_SpecializationInfo.IsPvpTalentLocked(secondTalentID)
 
