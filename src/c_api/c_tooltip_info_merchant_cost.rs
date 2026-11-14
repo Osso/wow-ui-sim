@@ -6,13 +6,13 @@
 //! costs first, then its surviving currency costs, so `costIndex` is a
 //! zero-based ordinal over that sequence and not a record position.
 //!
-//! The selection block is decoded for Retail 12.1.5 only; Forever's block is
-//! undecoded, so this getter is registered for Retail and PTR.
+//! The same stored offer and extended-cost inputs feed the Retail and Forever
+//! getter. Forever's argument conversion follows R88n.8.
 
 use crate::c_api::tooltip_getter_args;
-use crate::lua_api::globals::missing_surface::tooltip_info::{
-    tooltip_for_cost_currency, tooltip_for_item_context,
-};
+#[cfg(feature = "retail-12-1-5")]
+use crate::lua_api::globals::missing_surface::tooltip_info::tooltip_for_cost_currency;
+use crate::lua_api::globals::missing_surface::tooltip_info::tooltip_for_item_context;
 use crate::lua_api::methods::borrow_state;
 use crate::lua_api::state::MerchantCostRecord;
 use crate::lua_bridge::table_set_rust_fn_static;
@@ -20,6 +20,9 @@ use rilua::LuaResult;
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
+
+#[cfg(feature = "client-wowforever")]
+const USAGE: &str = "Usage: local data = C_TooltipInfo.GetMerchantCostItem(slot, costIndex)";
 
 pub(crate) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
     table_set_rust_fn_static(
@@ -36,12 +39,25 @@ const MONEY_ITEM_CLASS: u8 = 10;
 
 enum MerchantCost {
     Item(u32, &'static crate::items::ItemInfo),
+    #[cfg(feature = "retail-12-1-5")]
     Currency(u32),
+    #[cfg(feature = "client-wowforever")]
+    Currency,
+}
+
+#[cfg(feature = "retail-12-1-5")]
+fn read_merchant_index(state: &LuaState, position: i32) -> LuaResult<Option<usize>> {
+    tooltip_getter_args::lua_index(state, position)
+}
+
+#[cfg(feature = "client-wowforever")]
+fn read_merchant_index(state: &LuaState, position: i32) -> LuaResult<Option<usize>> {
+    tooltip_getter_args::forever_lua_index(state, position, USAGE)
 }
 
 fn get_merchant_cost_item(state: &mut LuaState) -> LuaResult<u32> {
-    let slot = tooltip_getter_args::lua_index(state, 1)?;
-    let cost_index = tooltip_getter_args::lua_index(state, 2)?;
+    let slot = read_merchant_index(state, 1)?;
+    let cost_index = read_merchant_index(state, 2)?;
     let selected = match (slot, cost_index) {
         (Some(slot), Some(cost_index)) => select_cost(state, slot, cost_index),
         _ => None,
@@ -52,11 +68,14 @@ fn get_merchant_cost_item(state: &mut LuaState) -> LuaResult<u32> {
             state.push(tooltip);
             Ok(1)
         }
+        #[cfg(feature = "retail-12-1-5")]
         Some(MerchantCost::Currency(currency_id)) => {
             let tooltip = tooltip_for_cost_currency(state, currency_id);
             state.push(tooltip);
             Ok(1)
         }
+        #[cfg(feature = "client-wowforever")]
+        Some(MerchantCost::Currency) => emulated_missing_tooltip(),
         None => emulated_missing_tooltip(),
     }
 }
@@ -87,12 +106,20 @@ fn selectable_costs(record: &MerchantCostRecord) -> impl Iterator<Item = Merchan
         .iter()
         .copied()
         .filter_map(selectable_item_cost);
+    #[cfg(feature = "retail-12-1-5")]
     let currency_costs = record
         .currency_costs
         .iter()
         .copied()
         .filter(|currency_id| *currency_id != 0)
         .map(MerchantCost::Currency);
+    #[cfg(feature = "client-wowforever")]
+    let currency_costs = record
+        .currency_costs
+        .iter()
+        .copied()
+        .filter(|currency_id| *currency_id != 0)
+        .map(|_| MerchantCost::Currency);
     item_costs.chain(currency_costs)
 }
 
