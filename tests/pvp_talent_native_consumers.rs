@@ -1,7 +1,7 @@
 #![cfg(all(feature = "client-retail", feature = "optional-tests"))]
 
 use crate::common::blizzard_addon_harness::with_blizzard_addon_closure;
-use wow_ui_sim::c_api::c_tooltip_info_pvp_talent::PvpTalentTooltipRecord;
+use wow_ui_sim::c_api::c_tooltip_info_pvp_talent::{PvpTalentSlotInput, PvpTalentTooltipRecord};
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 #[test]
@@ -95,6 +95,60 @@ fn pvp_talent_unlock_level_publishes_one_integer_for_a_row_without_a_player() {
         .expect("query unlock level for a catalog row without a player");
 
     assert_eq!(result, (1, "number".to_string()));
+}
+
+#[test]
+fn player_spells_talent_sort_uses_catalog_unlock_levels() {
+    with_blizzard_addon_closure(
+        &["Blizzard_GameTooltip", "Blizzard_PlayerSpells"],
+        &[],
+        |env, loaded| {
+            assert!(loaded.iter().any(|name| name == "Blizzard_PlayerSpells"));
+            {
+                let mut sim = env.state().borrow_mut();
+                sim.pvp_talent_tooltip.slots.insert(
+                    1,
+                    PvpTalentSlotInput {
+                        enabled: true,
+                        level: 60,
+                        available_talent_ids: vec![900, 901],
+                    },
+                );
+                let mut later_unlock = PvpTalentTooltipRecord::default();
+                later_unlock.level_required = 60;
+                sim.pvp_talent_tooltip.catalog.insert(900, later_unlock);
+                let mut earlier_unlock = PvpTalentTooltipRecord::default();
+                earlier_unlock.level_required = 50;
+                sim.pvp_talent_tooltip.catalog.insert(901, earlier_unlock);
+            }
+
+            let result: (i32, i32) = env
+                .eval(
+                    r#"
+                    C_SpecializationInfo.GetPvpTalentInfo = function()
+                        return { unlocked = false }
+                    end
+                    local inserted = {}
+                    CreateDataProvider = function()
+                        return {
+                            Insert = function(_, talent)
+                                table.insert(inserted, talent)
+                            end,
+                        }
+                    end
+                    local list = {
+                        slotIndex = 1,
+                        ScrollBox = { SetDataProvider = function() end },
+                    }
+                    PvPTalentListMixin:Update(list)
+                    return inserted[1].talentID, inserted[2].talentID
+                    "#,
+                )
+                .expect("sort selected Player Spells talents by supplied unlock levels");
+
+            assert_eq!(result, (901, 900));
+        },
+    );
 }
 
 #[test]
