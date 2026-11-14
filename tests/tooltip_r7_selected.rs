@@ -172,49 +172,83 @@ fn assert_challenges_hover_item(env: &WowLuaEnv, item_id: u32, guid: &str) {
     .unwrap();
 }
 
-#[test]
-fn item_interaction_cleansing_original_consumer_uses_distinct_supplied_rows() {
-    let env = load_item_interaction_env();
-    let selected_guid = add_bag_item(&env, 0, 3, 128_910);
-    set_interaction_input(
-        &env,
-        2,
-        &selected_guid,
-        None,
-        cleansing_rows("Fixture title A", "Fixture cleansing row A"),
-    );
+fn clear_item_interaction_input(env: &WowLuaEnv, interaction_type: i32) {
+    let mut sim = env.state().borrow_mut();
+    sim.item_interaction = Some(ItemInteractionInfo {
+        interaction_type,
+        ..Default::default()
+    });
+    sim.item_interaction_tooltip_input = None;
+}
+
+fn assert_cleansing_consumer_absent(env: &WowLuaEnv) {
+    clear_item_interaction_input(env, 2);
     env.exec(
         r#"
         ItemInteractionFrame.interactionType = Enum.UIItemInteractionType.CleanseCorruption
         ItemInteractionFrame:SetInputItemSlotTooltip(ItemInteractionFrame.ItemSlot, {})
-        local data = assert(GameTooltip:GetPrimaryTooltipData(), "cleansing tooltip missing")
-        assert(data.type == 20 and data.id == nil, "verified cleansing identity")
-        assert(data.lines[1].leftText == "Fixture title A")
-        assert(data.lines[1].leftColor == nil, "omitted host color stays absent")
-        assert(data.lines[2].leftText == "Fixture cleansing row A")
-        assert(math.abs(data.lines[2].leftColor.g - 1) < 0.001)
-    "#,
+        assert(GameTooltip:GetPrimaryTooltipData() == nil, "absent cleansing input publishes no data")
+        "#,
     )
     .unwrap();
+}
 
-    set_interaction_input(
-        &env,
-        2,
-        &selected_guid,
-        None,
-        cleansing_rows("Fixture title B", "Fixture cleansing row B"),
-    );
+fn assert_cleansing_consumer_rows(env: &WowLuaEnv, title: &str, detail: &str) {
+    env.exec(&format!(
+        r#"
+        ItemInteractionFrame.interactionType = Enum.UIItemInteractionType.CleanseCorruption
+        ItemInteractionFrame:SetInputItemSlotTooltip(ItemInteractionFrame.ItemSlot, {{}})
+        local data = assert(GameTooltip:GetPrimaryTooltipData(), "cleansing tooltip missing")
+        assert(data.type == 20 and data.id == nil, "verified cleansing identity")
+        assert(data.lines[1].leftText == "{title}")
+        assert(data.lines[1].leftColor == nil, "omitted host color stays absent")
+        assert(data.lines[2].leftText == "{detail}")
+        assert(math.abs(data.lines[2].leftColor.g - 1) < 0.001)
+        "#,
+    ))
+    .unwrap();
+}
+
+#[test]
+fn item_interaction_cleansing_original_consumer_uses_distinct_supplied_rows() {
+    let env = load_item_interaction_env();
+    let selected_guid = add_bag_item(&env, 0, 3, 128_910);
+    assert_cleansing_consumer_absent(&env);
+
+    for (title, detail) in [
+        ("Fixture title A", "Fixture cleansing row A"),
+        ("Fixture title B", "Fixture cleansing row B"),
+    ] {
+        set_interaction_input(&env, 2, &selected_guid, None, cleansing_rows(title, detail));
+        assert_cleansing_consumer_rows(&env, title, detail);
+    }
+}
+
+fn assert_conversion_consumer_absent(env: &WowLuaEnv) {
+    clear_item_interaction_input(env, 4);
     env.exec(
         r#"
-        ItemInteractionFrame:SetInputItemSlotTooltip(ItemInteractionFrame.ItemSlot, {})
-        local data = assert(GameTooltip:GetPrimaryTooltipData(), "second cleansing tooltip missing")
-        assert(data.type == 20 and data.id == nil)
-        assert(data.lines[1].leftText == "Fixture title B")
-        assert(data.lines[1].leftColor == nil, "omitted host color stays absent")
-        assert(data.lines[2].leftText == "Fixture cleansing row B")
-        assert(math.abs(data.lines[2].leftColor.g - 1) < 0.001)
-    "#,
+        ItemInteractionFrame.interactionType = Enum.UIItemInteractionType.ItemConversion
+        ItemInteractionFrame.itemLocation = {}
+        ItemInteractionItemConversionOutputSlotMixin.OnEnter(
+            ItemInteractionFrame.ItemConversionFrame.ItemConversionOutputSlot)
+        assert(GameTooltip:GetPrimaryTooltipData() == nil, "absent conversion input publishes no data")
+        "#,
     )
+    .unwrap();
+}
+
+fn assert_conversion_consumer_item(env: &WowLuaEnv, output_item_id: u32) {
+    env.exec(&format!(
+        r#"
+        ItemInteractionFrame.interactionType = Enum.UIItemInteractionType.ItemConversion
+        ItemInteractionFrame.itemLocation = {{}}
+        ItemInteractionItemConversionOutputSlotMixin.OnEnter(
+            ItemInteractionFrame.ItemConversionFrame.ItemConversionOutputSlot)
+        local data = assert(GameTooltip:GetPrimaryTooltipData(), "conversion tooltip missing")
+        assert(data.type == 0 and data.id == {output_item_id}, "conversion output identity")
+        "#
+    ))
     .unwrap();
 }
 
@@ -222,28 +256,15 @@ fn item_interaction_cleansing_original_consumer_uses_distinct_supplied_rows() {
 fn item_interaction_conversion_original_consumer_uses_distinct_output_ids() {
     let env = load_item_interaction_env();
     let selected_guid = add_bag_item(&env, 0, 3, 128_910);
+    assert_conversion_consumer_absent(&env);
 
     for output_item_id in [1728, 231_268] {
         set_interaction_input(&env, 4, &selected_guid, Some(output_item_id), Vec::new());
-        env.exec(&format!(
-            r#"
-            ItemInteractionFrame.interactionType = Enum.UIItemInteractionType.ItemConversion
-            ItemInteractionFrame.itemLocation = {{}}
-            ItemInteractionItemConversionOutputSlotMixin.OnEnter(
-                ItemInteractionFrame.ItemConversionFrame.ItemConversionOutputSlot)
-            local data = assert(GameTooltip:GetPrimaryTooltipData(), "conversion tooltip missing")
-            assert(data.type == 0 and data.id == {output_item_id}, "conversion output identity")
-        "#
-        ))
-        .unwrap();
+        assert_conversion_consumer_item(&env, output_item_id);
     }
 }
 
-#[test]
-fn zero_conversion_output_publishes_verified_unresolved_item_shape() {
-    let env = load_item_interaction_env();
-    let selected_guid = add_bag_item(&env, 0, 3, 128_910);
-    set_interaction_input(&env, 4, &selected_guid, Some(0), Vec::new());
+fn assert_zero_conversion_output_shape(env: &WowLuaEnv) {
     env.exec(
         r##"
         local function capture(...) return {n = select("#", ...), ...} end
@@ -302,6 +323,42 @@ fn zero_conversion_output_publishes_verified_unresolved_item_shape() {
     .expect("zero conversion output publishes only the q1 unresolved-item fields");
 }
 
+// SUPPLEMENTARY contract coverage: this calls C_TooltipInfo directly, not its original consumer.
+#[test]
+fn zero_conversion_output_publishes_verified_unresolved_item_shape() {
+    let env = load_item_interaction_env();
+    let selected_guid = add_bag_item(&env, 0, 3, 128_910);
+    set_interaction_input(&env, 4, &selected_guid, Some(0), Vec::new());
+    assert_zero_conversion_output_shape(&env);
+}
+
+fn assert_possession_consumer_absent(env: &WowLuaEnv) {
+    env.state().borrow_mut().possession_spell_id = None;
+    env.exec(
+        r#"
+        GameTooltip:Hide()
+        local button = CreateFrame("Button", nil, UIParent)
+        button:SetID(1)
+        PossessButtonMixin.OnEnter(button)
+        assert(GameTooltip:GetPrimaryTooltipData() == nil, "absent possession input publishes no data")
+        "#,
+    )
+    .unwrap();
+}
+
+fn assert_possession_consumer_spell(env: &WowLuaEnv, spell_id: u32) {
+    env.exec(&format!(
+        r#"
+        local button = CreateFrame("Button", nil, UIParent)
+        button:SetID(1)
+        PossessButtonMixin.OnEnter(button)
+        local data = assert(GameTooltip:GetPrimaryTooltipData(), "possession tooltip missing")
+        assert(data.type == 1 and data.id == {spell_id}, "possession spell identity")
+        "#
+    ))
+    .unwrap();
+}
+
 #[test]
 fn possession_original_action_bar_hover_uses_the_supplied_spell() {
     let env = tooltip_full_env_helpers::load_full_env_without_post_load();
@@ -313,19 +370,11 @@ fn possession_original_action_bar_hover_uses_the_supplied_spell() {
     "#,
     )
     .unwrap();
+    assert_possession_consumer_absent(&env);
 
     for spell_id in [116, 133] {
         env.state().borrow_mut().possession_spell_id = Some(spell_id);
-        env.exec(&format!(
-            r#"
-            local button = CreateFrame("Button", nil, UIParent)
-            button:SetID(1)
-            PossessButtonMixin.OnEnter(button)
-            local data = assert(GameTooltip:GetPrimaryTooltipData(), "possession tooltip missing")
-            assert(data.type == 1 and data.id == {spell_id}, "possession spell identity")
-        "#
-        ))
-        .unwrap();
+        assert_possession_consumer_spell(&env, spell_id);
     }
 }
 
@@ -364,7 +413,7 @@ fn challenges_ui_hover_uses_public_keystone_selection() {
     }
 }
 
-// INFERRED model coverage: selection uses the simulator's bag-cursor projection.
+// SUPPLEMENTARY, INFERRED: a test-defined event callback observes the public API, not an original consumer.
 #[test]
 fn slot_keystone_notifies_after_selection_state() {
     for (slot, item_id) in [(3, 180_653), (4, 158_923)] {
@@ -416,7 +465,55 @@ fn slot_keystone_leaves_unresolved_cursor_untouched() {
     .unwrap();
 }
 
-// SUPPLEMENTARY, INFERRED model coverage: this is rejection-only and uses the context proxy.
+// SUPPLEMENTARY, INFERRED model coverage: rejection cases use the context proxy.
+fn assert_slot_keystone_rejection_case(
+    item_id: u32,
+    modifier_id: Option<u32>,
+    map_id: Option<i32>,
+    context_present: bool,
+    seed_lock: bool,
+) {
+    let env = tooltip_full_env_helpers::load_full_env_without_post_load();
+    register_keystone_event_probe(&env);
+    let slot = 3;
+    add_bag_item(&env, 0, slot, item_id);
+    env.exec(&format!("C_Container.PickupContainerItem(0, {slot})"))
+        .unwrap();
+    {
+        let mut sim = env.state().borrow_mut();
+        let location = KeystoneLocation::Bag(0, slot as i32);
+        if let Some(modifier_id) = modifier_id {
+            sim.keystone
+                .item_modifiers
+                .insert(location, (item_id, vec![(17, modifier_id)]));
+        }
+        sim.keystone.current_map_selector = map_id;
+        sim.player.present = context_present;
+        if seed_lock {
+            sim.keystone.reason_one_locks.insert(location);
+        }
+    }
+    env.exec(
+        r##"
+        assert(select("#", C_ChallengeMode.SlotKeystone()) == 0)
+        assert(not CursorHasItem())
+        assert(not C_ChallengeMode.HasSlottedKeystone())
+        assert(select("#", C_TooltipInfo.GetSlottedKeystone()) == 0)
+        assert(#R7KeystoneSlottedState == 0)
+        "##,
+    )
+    .unwrap();
+    if seed_lock {
+        env.exec(&format!(
+            r#"
+            A_Admin.AddBagItem(0, {slot}, 6948, 1)
+            assert(not C_Item.IsLocked(ItemLocation:CreateFromBagAndSlot(0, {slot})))
+            "#
+        ))
+        .unwrap();
+    }
+}
+
 #[test]
 fn slot_keystone_rejects_unmatched_or_missing_inputs_before_publication() {
     let cases = [
@@ -427,51 +524,14 @@ fn slot_keystone_rejects_unmatched_or_missing_inputs_before_publication() {
         (158_923, Some(2), Some(960), false, false),
         (6_948, Some(2), Some(960), true, false),
     ];
-
-    for (index, (item_id, modifier_id, map_id, context_present, seed_lock)) in
-        cases.into_iter().enumerate()
-    {
-        let env = tooltip_full_env_helpers::load_full_env_without_post_load();
-        register_keystone_event_probe(&env);
-        let slot = 3;
-        add_bag_item(&env, 0, slot, item_id);
-        env.exec(&format!("C_Container.PickupContainerItem(0, {slot})"))
-            .unwrap();
-        {
-            let mut sim = env.state().borrow_mut();
-            let location = KeystoneLocation::Bag(0, slot as i32);
-            if let Some(modifier_id) = modifier_id {
-                sim.keystone
-                    .item_modifiers
-                    .insert(location, (item_id, vec![(17, modifier_id)]));
-            }
-            sim.keystone.current_map_selector = map_id;
-            sim.player.present = context_present;
-            if seed_lock {
-                sim.keystone.reason_one_locks.insert(location);
-            }
-        }
-
-        env.exec(
-            r##"
-            assert(select("#", C_ChallengeMode.SlotKeystone()) == 0)
-            assert(not CursorHasItem())
-            assert(not C_ChallengeMode.HasSlottedKeystone())
-            assert(select("#", C_TooltipInfo.GetSlottedKeystone()) == 0)
-            assert(#R7KeystoneSlottedState == 0)
-            "##,
-        )
-        .unwrap();
-
-        if index == 0 {
-            env.exec(&format!(
-                r#"
-                A_Admin.AddBagItem(0, {slot}, 6948, 1)
-                assert(not C_Item.IsLocked(ItemLocation:CreateFromBagAndSlot(0, {slot})))
-                "#
-            ))
-            .unwrap();
-        }
+    for (item_id, modifier_id, map_id, context_present, seed_lock) in cases {
+        assert_slot_keystone_rejection_case(
+            item_id,
+            modifier_id,
+            map_id,
+            context_present,
+            seed_lock,
+        );
     }
 }
 
@@ -492,59 +552,42 @@ fn remove_keystone_stages_item_for_nonzero_guid_category() {
     .unwrap();
 }
 
-// INFERRED model coverage: both GUID strings, staged count and bag origin are simulator projections.
-#[test]
-fn remove_keystone_zero_category_clears_cursor_without_staging() {
-    for (selected_guid, should_stage) in [("0-0-0-158923", false), ("Item-0-3-158923", true)] {
-        let env = tooltip_full_env_helpers::load_full_env_without_post_load();
-        env.exec(
-            r##"
-            A_Admin.AddBagItem(0, 3, 158923, 1)
-            A_Admin.AddBagItem(0, 4, 6948, 1)
-            C_Container.PickupContainerItem(0, 4)
-            "##,
-        )
-        .unwrap();
-        {
-            let mut sim = env.state().borrow_mut();
-            sim.keystone.selected_guid = Some(selected_guid.to_string());
-            sim.keystone.selected_item_id = Some(158_923);
-            sim.keystone.selected_location = Some(KeystoneLocation::Bag(0, 3));
-            sim.keystone.cursor_stage_permission = Some(true);
-            sim.player.present = true;
-        }
-        env.exec(
-            r##"
-            local kind, itemID = GetCursorInfo()
-            assert(kind == "item" and itemID == 6948)
-            assert(C_ChallengeMode.RemoveKeystone())
-            assert(not C_ChallengeMode.HasSlottedKeystone())
-            "##,
-        )
-        .unwrap();
+fn setup_keystone_removal_case(env: &WowLuaEnv, selected_guid: &str) {
+    env.exec(
+        r##"
+        A_Admin.AddBagItem(0, 3, 158923, 1)
+        A_Admin.AddBagItem(0, 4, 6948, 1)
+        C_Container.PickupContainerItem(0, 4)
+        "##,
+    )
+    .unwrap();
+    let mut sim = env.state().borrow_mut();
+    sim.keystone.selected_guid = Some(selected_guid.to_string());
+    sim.keystone.selected_item_id = Some(158_923);
+    sim.keystone.selected_location = Some(KeystoneLocation::Bag(0, 3));
+    sim.keystone.cursor_stage_permission = Some(true);
+    sim.player.present = true;
+}
 
-        if should_stage {
-            env.exec(
-                r##"
-                local kind, itemID = GetCursorInfo()
-                assert(kind == "item" and itemID == 158923)
-                "##,
-            )
-            .unwrap();
-            let staged_cursor = env.state().borrow().cursor_item.clone();
-            assert!(matches!(
-                staged_cursor,
-                Some(CursorInfo::Item {
-                    item_id: 158_923,
-                    stack_count: 1,
-                    origin: CursorItemOrigin::Bag { bag: 0, slot: 3 },
-                    ..
-                })
-            ));
-        } else {
-            env.exec("assert(GetCursorInfo() == nil)").unwrap();
-            assert!(env.state().borrow().cursor_item.is_none());
-        }
+fn assert_keystone_removal_result(env: &WowLuaEnv) {
+    env.exec(
+        r##"
+        local function capture(...) return {n = select("#", ...), ...} end
+        local removed = capture(C_ChallengeMode.RemoveKeystone())
+        assert(removed.n == 1 and removed[1] == true)
+        assert(not C_ChallengeMode.HasSlottedKeystone())
+        "##,
+    )
+    .unwrap();
+}
+
+// SUPPLEMENTARY direct API test: asserts only the verified Boolean and selection clear.
+#[test]
+fn remove_keystone_returns_true_and_clears_nonempty_selection() {
+    for selected_guid in ["0-0-0-158923", "Item-0-3-158923"] {
+        let env = tooltip_full_env_helpers::load_full_env_without_post_load();
+        setup_keystone_removal_case(&env, selected_guid);
+        assert_keystone_removal_result(&env);
     }
 }
 
@@ -601,6 +644,7 @@ fn remove_keystone_without_selection_preserves_cursor() {
     .unwrap();
 }
 
+// SUPPLEMENTARY contract test: this calls the public API directly.
 #[test]
 fn has_slotted_keystone_tracks_guid_without_resolving_the_item() {
     let env = load_challenges_env();
@@ -630,34 +674,40 @@ fn has_slotted_keystone_tracks_guid_without_resolving_the_item() {
     .unwrap();
 }
 
-#[test]
-fn round7_selected_getter_misses_keep_the_verified_result_arities() {
-    let env = WowLuaEnv::new().unwrap();
+fn assert_round7_tooltip_misses(env: &WowLuaEnv) {
     env.exec(
         r##"
         assert(select("#", C_TooltipInfo.GetItemInteractionItem()) == 0)
+        assert(select("#", C_TooltipInfo.GetSlottedKeystone()) == 0)
+        "##,
+    )
+    .unwrap();
+}
+
+fn assert_possession_tooltip_misses(env: &WowLuaEnv) {
+    env.exec(
+        r##"
         assert(select("#", C_TooltipInfo.GetPossession(1)) == 0)
         assert(select("#", C_TooltipInfo.GetPossession(2)) == 0)
-        assert(select("#", C_TooltipInfo.GetSlottedKeystone()) == 0)
-    "##,
+        "##,
     )
     .unwrap();
     env.state().borrow_mut().possession_spell_id = Some(0);
     env.exec(r##"assert(select("#", C_TooltipInfo.GetPossession(1)) == 0)"##)
         .unwrap();
     env.state().borrow_mut().possession_spell_id = None;
+}
 
-    {
-        let mut sim = env.state().borrow_mut();
-        sim.item_interaction = Some(ItemInteractionInfo {
-            interaction_type: 2,
-            ..Default::default()
-        });
-        sim.item_interaction_tooltip_input = Some(ItemInteractionTooltipInput {
+fn assert_item_interaction_tooltip_misses(env: &WowLuaEnv) {
+    env.state().borrow_mut().item_interaction = Some(ItemInteractionInfo {
+        interaction_type: 2,
+        ..Default::default()
+    });
+    env.state().borrow_mut().item_interaction_tooltip_input =
+        Some(ItemInteractionTooltipInput {
             selected_item_guid: Some("Item-0-1-1".to_string()),
             ..Default::default()
         });
-    }
     env.exec(r##"assert(select("#", C_TooltipInfo.GetItemInteractionItem()) == 0)"##)
         .unwrap();
     env.state().borrow_mut().item_interaction_tooltip_input = None;
@@ -665,37 +715,33 @@ fn round7_selected_getter_misses_keep_the_verified_result_arities() {
         .unwrap();
 }
 
+// PRESERVATION: these direct getter misses keep the verified zero-value boundary.
 #[test]
-fn unsupported_item_interaction_kind_requires_resolved_item() {
-    let env = load_item_interaction_env();
-    env.exec("A_Admin.ClearBags()")
-        .expect("absent and unresolved fixtures start without bag items");
-    {
-        let mut sim = env.state().borrow_mut();
-        sim.item_interaction = Some(ItemInteractionInfo {
-            interaction_type: 1,
-            ..Default::default()
-        });
-        sim.item_interaction_tooltip_input = Some(ItemInteractionTooltipInput::default());
-    }
-    env.exec(r##"assert(select("#", C_TooltipInfo.GetItemInteractionItem()) == 0)"##)
-        .expect("unsupported kind with no selected object returns no values");
+fn round7_selected_getter_misses_keep_the_verified_result_arities() {
+    let env = WowLuaEnv::new().unwrap();
+    assert_round7_tooltip_misses(&env);
+    assert_possession_tooltip_misses(&env);
+    assert_item_interaction_tooltip_misses(&env);
+}
 
-    {
-        let mut sim = env.state().borrow_mut();
-        sim.item_interaction_tooltip_input = Some(ItemInteractionTooltipInput {
-            selected_item_guid: Some("Item-0-3-1728".to_string()),
-            ..Default::default()
-        });
-    }
-    env.exec(r##"assert(select("#", C_TooltipInfo.GetItemInteractionItem()) == 0)"##)
-        .expect("unsupported kind with unresolved selected GUID returns no values");
-
-    let selected_guid = add_bag_item(&env, 0, 3, 1728);
-    env.state().borrow_mut().item_interaction_tooltip_input = Some(ItemInteractionTooltipInput {
-        selected_item_guid: Some(selected_guid),
+fn set_unsupported_item_interaction(env: &WowLuaEnv, selected_guid: Option<String>) {
+    let mut sim = env.state().borrow_mut();
+    sim.item_interaction = Some(ItemInteractionInfo {
+        interaction_type: 1,
         ..Default::default()
     });
+    sim.item_interaction_tooltip_input = Some(ItemInteractionTooltipInput {
+        selected_item_guid: selected_guid,
+        ..Default::default()
+    });
+}
+
+fn assert_unsupported_item_interaction_miss(env: &WowLuaEnv, reason: &str) {
+    env.exec(r##"assert(select("#", C_TooltipInfo.GetItemInteractionItem()) == 0)"##)
+        .expect(reason);
+}
+
+fn assert_resolved_unsupported_item_shape(env: &WowLuaEnv) {
     env.exec(
         r##"
         local count, data = select("#", C_TooltipInfo.GetItemInteractionItem()),
@@ -715,7 +761,23 @@ fn unsupported_item_interaction_kind_requires_resolved_item() {
             assert(key == "lines", "unsupported-kind result has only lines")
         end
         assert(fields == 1, "unsupported-kind result has exactly one field")
-    "##,
+        "##,
     )
     .expect("existing unsupported-kind object preserves its exact native result shape");
+}
+
+// SUPPLEMENTARY contract test: this calls C_TooltipInfo directly, not its original consumer.
+#[test]
+fn unsupported_item_interaction_kind_requires_resolved_item() {
+    let env = load_item_interaction_env();
+    env.exec("A_Admin.ClearBags()")
+        .expect("absent and unresolved fixtures start without bag items");
+    set_unsupported_item_interaction(&env, None);
+    assert_unsupported_item_interaction_miss(&env, "unsupported kind with no object");
+    set_unsupported_item_interaction(&env, Some("Item-0-3-1728".to_string()));
+    assert_unsupported_item_interaction_miss(&env, "unsupported kind with unresolved GUID");
+
+    let selected_guid = add_bag_item(&env, 0, 3, 1728);
+    set_unsupported_item_interaction(&env, Some(selected_guid));
+    assert_resolved_unsupported_item_shape(&env);
 }

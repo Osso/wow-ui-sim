@@ -36,6 +36,7 @@ fn tooltip_round7_registration_matches_native_profile_evidence() {
     feature = "optional-tests",
     any(feature = "client-ptr", feature = "client-wowforever")
 ))]
+// SUPPLEMENTARY profile-boundary contract test from lt-c2e4.
 #[test]
 fn item_interaction_tooltip_preserves_ptr_and_forever_boundaries() {
     use wow_ui_sim::c_api::ItemInteractionTooltipInput;

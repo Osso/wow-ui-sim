@@ -58,6 +58,7 @@ fn trigger_original_slot(env: &WowLuaEnv) {
     .expect("original interaction slot tooltip");
 }
 
+// SUPPLEMENTARY original-consumer boundary test; not one of the four payload selectors.
 #[test]
 fn original_item_interaction_slot_distinguishes_absent_failed_and_empty_lines() {
     let env = original_item_interaction();
@@ -88,6 +89,7 @@ fn original_item_interaction_slot_distinguishes_absent_failed_and_empty_lines() 
     .unwrap();
 }
 
+// SUPPLEMENTARY direct API contract test; its assertions remain unchanged.
 #[test]
 fn item_interaction_item_api_distinguishes_zero_results_and_empty_lines() {
     let env = WowLuaEnv::new().unwrap();
