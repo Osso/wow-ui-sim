@@ -42,16 +42,16 @@ fn toc_multiannotations_load_files_in_order_with_secure_environment() {
     std::fs::write(
         root.path().join("Secure.lua"),
         "local _, addon = ...; assert(addon.order[1] == 'before'); \
-         assert(type(debug) == 'table' and type(coroutine) == 'table'); \
+         assert(debug == nil and coroutine == nil, 'secure files use the fixed environment'); \
          addon.order[#addon.order+1] = 'secure'; annotationSecureValue = 37; \
-         annotationSecureSnapshotRead = true",
+         annotationSecureBaseOnly = true",
     )
     .unwrap();
     std::fs::write(
         root.path().join("Secure.xml"),
         "<Ui>\n\
          <Script file=\"SecureXmlScript.lua\"/>\n\
-         <Script>assert(type(debug) == 'table' and type(coroutine) == 'table'); annotationSecureXmlInlineRead = true</Script>\n\
+         <Script>assert(debug == nil and coroutine == nil, 'secure XML uses the fixed environment'); annotationSecureXmlInlineRead = true</Script>\n\
          <Frame name=\"AnnotationProbeFrame\">\n\
          <Size x=\"20\" y=\"20\"/>\n\
          </Frame>\n\
@@ -60,13 +60,13 @@ fn toc_multiannotations_load_files_in_order_with_secure_environment() {
     .unwrap();
     std::fs::write(
         root.path().join("SecureXmlScript.lua"),
-        "assert(type(debug) == 'table' and type(coroutine) == 'table'); annotationSecureXmlFileRead = true",
+        "assert(debug == nil and coroutine == nil, 'secure XML uses the fixed environment'); annotationSecureXmlFileRead = true",
     )
     .unwrap();
     std::fs::write(
         root.path().join("After.lua"),
         "local _, addon = ...; assert(table.concat(addon.order, ',') == 'before,secure'); \
-         assert(type(debug) == 'table' and type(coroutine) == 'table'); \
+         assert(debug == nil and coroutine == nil, 'secure files use the fixed environment'); \
          annotationLoadComplete = true",
     )
     .unwrap();
@@ -92,12 +92,12 @@ fn toc_multiannotations_load_files_in_order_with_secure_environment() {
         .eval(
             r#"
                 return rawget(__secureenv, 'annotationSecureValue') == 37,
-                    rawget(__secureenv, 'annotationSecureSnapshotRead') == true,
+                    rawget(__secureenv, 'annotationSecureBaseOnly') == true,
                     rawget(__secureenv, 'annotationLoadComplete') == true,
                     rawget(__secureenv, 'annotationSecureXmlInlineRead') == true,
                     rawget(__secureenv, 'annotationSecureXmlFileRead') == true,
                     rawget(_G, 'annotationSecureValue') == nil,
-                    rawget(_G, 'annotationSecureSnapshotRead') == nil,
+                    rawget(_G, 'annotationSecureBaseOnly') == nil,
                     rawget(__secureenv, 'debug') == nil,
                     rawget(__secureenv, 'coroutine') == nil
             "#,
