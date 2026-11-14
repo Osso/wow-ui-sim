@@ -178,6 +178,16 @@ fn secure_private_auras_tooltip_consumer_runs_without_errors() {
             "#,
         )
         .expect("secure tooltip mixin snapshot should evaluate");
+    let tooltip_callback_globals: (String, String, String, String) = env
+        .eval(
+            r#"
+                return type(rawget(__secureenv, 'GameTooltip_OnLoad')),
+                    type(rawget(__secureenv, 'SharedTooltip_OnLoad')),
+                    type(rawget(_G, 'GameTooltip_OnLoad')),
+                    type(rawget(_G, 'SharedTooltip_OnLoad'))
+            "#,
+        )
+        .expect("secure tooltip callback global snapshot should evaluate");
     let secure_dependency_states: Vec<(String, bool)> = {
         let state = env.state().borrow();
         private_auras_dependencies()
@@ -212,7 +222,7 @@ fn secure_private_auras_tooltip_consumer_runs_without_errors() {
     );
     assert!(
         load_errors.is_empty(),
-        "PrivateAuras dependencies and the PrivateAurasTooltip consumer must load without errors:\n  {}\nsecure dependencies: {secure_dependency_states:?}\nsecure mixins: {secure_mixin_snapshot:?}\nproducer: {producer_source:?}\nregistrations: {registration_snapshot:?}",
+        "PrivateAuras dependencies and the PrivateAurasTooltip consumer must load without errors:\n  {}\nsecure dependencies: {secure_dependency_states:?}\nsecure mixins: {secure_mixin_snapshot:?}\ntooltip callbacks: {tooltip_callback_globals:?}\nproducer: {producer_source:?}\nregistrations: {registration_snapshot:?}",
         load_errors.join("\n  ")
     );
     assert_eq!(
