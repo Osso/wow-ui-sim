@@ -178,12 +178,7 @@ fn update_keystone_selection_state(
     item_id: u32,
 ) -> LuaResult<(Option<KeystoneLocation>, Option<KeystoneLocation>)> {
     let mut sim = borrow_state_mut(state)?;
-    let selected = sim.keystone.selected_guid.is_some();
-    let same_selection = selected
-        && sim.keystone.selected_guid.as_deref() == Some(guid.as_str())
-        && sim.keystone.selected_item_id == Some(item_id)
-        && sim.keystone.selected_location == Some(location);
-    let unlocked = if selected && !same_selection {
+    let unlocked = if sim.keystone.selected_guid.is_some() {
         sim.keystone.selected_location.filter(|old_location| {
             let before = sim.keystone.is_locked(*old_location);
             sim.keystone.reason_one_locks.remove(old_location);
