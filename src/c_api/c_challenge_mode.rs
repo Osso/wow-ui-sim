@@ -290,22 +290,7 @@ fn clear_keystone(state: &mut LuaState) -> LuaResult<u32> {
         })
     };
     if let Some(location) = unlocked {
-        let args = match location {
-            KeystoneLocation::Bag(bag, slot) => {
-                vec![Val::Num(f64::from(bag)), Val::Num(f64::from(slot))]
-            }
-            KeystoneLocation::Equipment(slot) => vec![Val::Num(f64::from(slot))],
-        };
-        crate::lua_api::globals::state_backed_queries::dispatch_event_now(
-            state,
-            "ITEM_LOCK_CHANGED",
-            &args,
-        )?;
-        crate::lua_api::globals::state_backed_queries::dispatch_event_now(
-            state,
-            "ITEM_UNLOCKED",
-            &args,
-        )?;
+        dispatch_keystone_unlock_events(state, location)?;
     }
     let mut sim = borrow_state_mut(state)?;
     sim.keystone.selected_guid = None;
@@ -313,6 +298,24 @@ fn clear_keystone(state: &mut LuaState) -> LuaResult<u32> {
     sim.keystone.selected_location = None;
     sim.keystone.selected_mode = None;
     Ok(0)
+}
+
+fn dispatch_keystone_unlock_events(
+    state: &mut LuaState,
+    location: KeystoneLocation,
+) -> LuaResult<()> {
+    let args = match location {
+        KeystoneLocation::Bag(bag, slot) => {
+            vec![Val::Num(f64::from(bag)), Val::Num(f64::from(slot))]
+        }
+        KeystoneLocation::Equipment(slot) => vec![Val::Num(f64::from(slot))],
+    };
+    crate::lua_api::globals::state_backed_queries::dispatch_event_now(
+        state,
+        "ITEM_LOCK_CHANGED",
+        &args,
+    )?;
+    crate::lua_api::globals::state_backed_queries::dispatch_event_now(state, "ITEM_UNLOCKED", &args)
 }
 
 fn location_exists(sim: &crate::lua_api::SimState, location: KeystoneLocation) -> bool {
