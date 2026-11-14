@@ -90,8 +90,8 @@ fn corpse(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-/// UNKNOWN: getter-to-selection relationships remain unproved; two native getterless
-/// flags are also not represented in this aggregate (R88j.5/R88j.6).
+/// Aggregate the six modeled fields. The two native getterless flags remain unmodeled
+/// (R88j.5); getter-to-selection relationships are UNKNOWN (R88j.6).
 fn anything(state: &mut LuaState) -> LuaResult<u32> {
     let active = {
         let sim = borrow_state(state)?;
