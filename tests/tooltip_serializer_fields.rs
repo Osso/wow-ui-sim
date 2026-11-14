@@ -50,7 +50,7 @@ fn selected_item_accessor_publishes_backed_sell_price_on_line_11() {
     let env = selected_tooltip_env();
     env.exec(
         r#"
-        local itemID = 159
+        local itemID = 184318
         local expectedPrice = select(11, C_Item.GetItemInfo(itemID))
         assert(type(expectedPrice) == "number" and expectedPrice > 0,
             "fixture item must have a supplied sell price")
