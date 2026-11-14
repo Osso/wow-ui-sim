@@ -19,10 +19,26 @@ use rilua::{LuaResult, Val};
 pub(super) fn clear_lines(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
     let wrath = crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Wrath;
+    let forever = crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever;
     let mut sim = borrow_state_mut(state)?;
     let had_lines = sim.tooltips.get(&id).is_some_and(|td| !td.lines.is_empty());
     let line_ids = {
         let td = sim.tooltips.entry(id).or_default();
+        let active_line_count = td.lines.len();
+        let line_ids: Vec<u64> = if forever {
+            td.left_line_ids
+                .iter()
+                .take(active_line_count)
+                .chain(td.right_line_ids.iter().take(active_line_count))
+                .copied()
+                .collect()
+        } else {
+            td.left_line_ids
+                .iter()
+                .chain(&td.right_line_ids)
+                .copied()
+                .collect()
+        };
         td.lines.clear();
         td.anchored_left_lines = 0;
         td.extra_inset = 0.0;
@@ -34,11 +50,7 @@ pub(super) fn clear_lines(state: &mut LuaState) -> LuaResult<u32> {
         td.unit_token = None;
         td.unit_name = None;
         td.unit_guid = None;
-        td.left_line_ids
-            .iter()
-            .chain(&td.right_line_ids)
-            .copied()
-            .collect::<Vec<_>>()
+        line_ids
     };
     clear_cached_tooltip_line_text(&mut sim, &line_ids);
     super::attachments::release_tooltip_attachments(&mut sim, id);

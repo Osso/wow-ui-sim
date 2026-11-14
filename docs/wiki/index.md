@@ -1,3 +1,7 @@
+## [2026-11-14] fix | Forever tooltip cached lines
+
+[Tooltip owner lifecycle](investigations/tooltip-owner-lifecycle.md#r88n5-forever-clearlines-cache-boundary) records R88n.5. **VERIFIED (Forever 1.60.1.70707):** `ClearLines` resets cached left/right FontString text for active rows only; the optional API test proves inactive entries are untouched, and the original selected `TooltipDataHandler.ProcessInfo` test preserves reprocessing and reuse. Retail attachments and owner pairs remain VERIFIED; PTR parity is INFERRED. Clipping, draw order, nonzero extra-inset writers and post-anchor clamping remain UNKNOWN.
+
 ## [2026-11-14] fix | Original character and store lifecycle ownership
 
 [Lua-owned fallback retirement](investigations/lua-owned-fallback-retirement.md#j-original-character-labels-and-titles) records the separately proved Retail CharacterFrame bridge and StoreUI escape guard removals, real equipment/reopen/attribute consumers, and unchanged non-Retail/native-unknown boundaries.
