@@ -110,6 +110,45 @@ fn toc_multiannotations_load_files_in_order_with_secure_environment() {
 }
 
 #[test]
+fn secure_scoped_modifier_onload_resolves_secure_mixin() {
+    let env = env();
+    let root = tempfile::tempdir().unwrap();
+    let toc = root.path().join("SecureMixinProbe.toc");
+    std::fs::write(
+        &toc,
+        "## Title: SecureMixinProbe\n\
+         ## UseSecureEnvironment: 1\n\
+         Mixin.lua\n\
+         Mixin.xml\n",
+    )
+    .unwrap();
+    std::fs::write(
+        root.path().join("Mixin.lua"),
+        "SecureMixinProbe = { OnLoad = function() secureMixinProbeOnLoad = true end }",
+    )
+    .unwrap();
+    std::fs::write(
+        root.path().join("Mixin.xml"),
+        "<Ui><ScopedModifier forbidden=\"true\" hideFromGlobalEnv=\"true\">\
+         <Frame name=\"SecureMixinProbeFrame\" mixin=\"SecureMixinProbe\">\
+         <Scripts><OnLoad method=\"OnLoad\"/></Scripts>\
+         </Frame></ScopedModifier></Ui>",
+    )
+    .unwrap();
+
+    let result = wow_ui_sim::loader::load_addon(&env.loader_env(), &toc).unwrap();
+    assert!(result.warnings.is_empty(), "{:?}", result.warnings);
+    let observed: (bool, bool) = env
+        .eval(
+            "return rawget(__secureenv, 'secureMixinProbeOnLoad') == true, \
+             rawget(_G, 'secureMixinProbeOnLoad') == nil",
+        )
+        .unwrap();
+    assert_eq!(observed, (true, true));
+    assert!(env.state().borrow().lua_errors.is_empty());
+}
+
+#[test]
 fn secure_addon_loads_nonsecure_dependency_in_ordinary_then_secure_environment() {
     let env = env();
     let root = tempfile::tempdir().unwrap();
