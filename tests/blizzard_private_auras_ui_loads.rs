@@ -120,6 +120,34 @@ fn capture_secure_color_route_snapshot(env: &WowLuaEnv) -> SecureColorRouteSnaps
 }
 
 #[cfg(feature = "client-retail")]
+fn assert_secure_color_route(snapshot: &SecureColorRouteSnapshot) {
+    assert_eq!(
+        snapshot.create_color_type, "function",
+        "SharedXMLBase Color.lua must define CreateColor in the secure environment"
+    );
+    assert!(
+        snapshot.create_color_uses_secure_environment,
+        "CreateColor must use the shared secure environment"
+    );
+    assert!(
+        snapshot.current_environment_is_secure,
+        "GetCurrentEnvironment must return the secure environment from secure code"
+    );
+    assert_eq!(
+        snapshot.catalog.get_colors_type, "function",
+        "secure C_UIColor must expose the GetColors catalog"
+    );
+    assert_eq!(
+        snapshot.catalog.tradeskill_color_type, "table",
+        "Color.lua must publish an existing C_UIColor record to secureenv"
+    );
+    assert!(
+        snapshot.catalog.has_tradeskill_record,
+        "the existing C_UIColor color record must be published by Color.lua"
+    );
+}
+
+#[cfg(feature = "client-retail")]
 fn read_secure_create_color(env: &WowLuaEnv) -> (String, String, bool) {
     env.eval(
         r#"
@@ -353,30 +381,7 @@ fn secure_private_auras_tooltip_consumer_runs_without_errors() {
         "PrivateAuras dependencies and the PrivateAurasTooltip consumer must load without errors:\n  {}\nsecure dependencies: {secure_dependency_states:?}\nsecure mixins: {secure_mixin_snapshot:?}\ntooltip callbacks: {tooltip_callback_globals:?}\ntooltip method: {tooltip_method_probe:?}\ncolor route: {color_route_snapshot:?}\nproducer: {producer_source:?}\nregistrations: {registration_snapshot:?}\ntemplate method binders: {template_method_binders:?}",
         load_errors.join("\n  ")
     );
-    assert_eq!(
-        color_route_snapshot.create_color_type, "function",
-        "SharedXMLBase Color.lua must define CreateColor in the secure environment"
-    );
-    assert!(
-        color_route_snapshot.create_color_uses_secure_environment,
-        "CreateColor must use the shared secure environment"
-    );
-    assert!(
-        color_route_snapshot.current_environment_is_secure,
-        "GetCurrentEnvironment must return the secure environment from secure code"
-    );
-    assert_eq!(
-        color_route_snapshot.catalog.get_colors_type, "function",
-        "secure C_UIColor must expose the GetColors catalog"
-    );
-    assert_eq!(
-        color_route_snapshot.catalog.tradeskill_color_type, "table",
-        "Color.lua must publish an existing C_UIColor record to secureenv"
-    );
-    assert!(
-        color_route_snapshot.catalog.has_tradeskill_record,
-        "the existing C_UIColor color record must be published by Color.lua"
-    );
+    assert_secure_color_route(&color_route_snapshot);
     assert_eq!(
         producer_source.0, "table",
         "secure dependency must define TooltipDataProcessor"
