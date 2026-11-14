@@ -196,3 +196,5 @@ pub mod wrath_voice;
 pub mod xp_honor_rest;
 
 pub mod wrath_currency;
+
+pub mod inventory_candidates;
