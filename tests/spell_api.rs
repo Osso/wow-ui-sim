@@ -408,6 +408,43 @@ fn spellbook_item_arguments_match_verified_two_argument_conversion_and_errors() 
     assert!(result);
 }
 
+#[cfg(feature = "client-retail")]
+#[test]
+fn spellbook_flyout_lookup_miss_returns_one_numeric_zero() {
+    let env = env();
+    let result: (i32, String, i32) = env
+        .eval(
+            r##"
+            local count = select("#", C_SpellBook.FindFlyoutSlotBySpellID(0))
+            local value = C_SpellBook.FindFlyoutSlotBySpellID(0)
+            return count, type(value), value or -1
+            "##,
+        )
+        .expect("flyout lookup miss should be callable");
+
+    assert_eq!(result, (1, "number".to_string(), 0));
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn spellbook_autocast_supported_item_returns_two_false_booleans_without_flag_data() {
+    let env = env();
+    let result: (bool, i32, bool, bool, bool, bool) = env
+        .eval(
+            r##"
+            local item = C_SpellBook.GetSpellBookItemInfo(1, Enum.SpellBookSpellBank.Player)
+            local count = select("#", C_SpellBook.GetSpellBookItemAutoCast(1, Enum.SpellBookSpellBank.Player))
+            local allowed, enabled = C_SpellBook.GetSpellBookItemAutoCast(1, Enum.SpellBookSpellBank.Player)
+            return type(item) == "table", count,
+                   type(allowed) == "boolean", type(enabled) == "boolean",
+                   allowed, enabled
+            "##,
+        )
+        .expect("autocast query for a spellbook record should be callable");
+
+    assert_eq!(result, (true, 2, true, true, false, false));
+}
+
 // ============================================================================
 // C_Spell
 // ============================================================================
