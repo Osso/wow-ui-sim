@@ -17,7 +17,12 @@ pub struct CategorySettings {
 
 pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     let namespace = ensure_namespace(state, "C_CombatAudioAlert")?;
-    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+    ) {
+        // PTR 70493 CombatAudioAlertDocumentation.lua:112 declares this query.
+        // Reusing the Retail manager/CVar-backed behavior on PTR is INFERRED.
         table_set_rust_fn_static(state, namespace, "IsEnabled", is_enabled)?;
     }
     if matches!(
