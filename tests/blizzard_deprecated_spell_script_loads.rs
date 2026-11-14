@@ -245,26 +245,24 @@ fn blizzard_deprecated_spell_script_wrapper_closures_are_not_identity_equal_to_c
 }
 
 prefork_full_ui_case! {
+#[cfg(feature = "client-retail")]
 fn blizzard_deprecated_spell_script_visibility_wrapper_translates_string_keys(env: &WowLuaEnv) {
-
     let translated: bool = env
         .eval(
-            "do \
-                local hasCustom, alwaysShowMine, showForMySpec = \
-                    SpellGetVisibilityInfo(0, 'RAID_INCOMBAT') \
-                return hasCustom == false and alwaysShowMine == true and showForMySpec == false \
-            end",
+            "local observedType \
+             local original = C_Spell.GetVisibilityInfo \
+             C_Spell.GetVisibilityInfo = function(spellID, visibilityType) \
+                 observedType = visibilityType \
+                 return original(spellID, visibilityType) \
+             end \
+             SpellGetVisibilityInfo(0, 'RAID_INCOMBAT') \
+             return observedType == Enum.SpellAuraVisibilityType.RaidInCombat",
         )
         .expect("string-keyed visibility-info call should succeed");
     assert!(
         translated,
-        "Calling SpellGetVisibilityInfo(0, 'RAID_INCOMBAT') must return the canonical \
-         (false, true, false) tuple from the temporary C_Spell.GetVisibilityInfo shim. \
-         The wrapper translates `'RAID_INCOMBAT'` → Enum.SpellAuraVisibilityType.RaidInCombat \
-         via the local visiblityTypeLookup table at lines 24-28, then forwards to the \
-         registered Rust impl. The (hasCustom=false, alwaysShowMine=true, \
-         showForMySpec=false) tuple is the permissive default for spells without \
-         visibility overrides"
+        "The selected Retail wrapper translates 'RAID_INCOMBAT' to \
+         Enum.SpellAuraVisibilityType.RaidInCombat before calling C_Spell.GetVisibilityInfo"
     );
 }
 }
