@@ -8,7 +8,7 @@ pub struct SuperTrackState {
     pub vignette: Option<String>,
     /// User-waypoint tracking flag; the two native getterless flags stay unmodeled.
     pub user_waypoint: bool,
-    /// VERIFIED (Retail 12.1.5.70688): preserved when user-waypoint tracking starts.
+    /// INFERRED simulator default false; VERIFIED preserved when waypoint tracking starts.
     pub corpse: bool,
 }
 
