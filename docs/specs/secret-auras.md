@@ -56,6 +56,7 @@ Evidence levels used below:
 ### Helpers
 - [ ] `issecretvalue`, `issecrettable`, `hasanysecretvalues`, `canaccessvalue`, `canaccessallvalues`, `canaccesstable`, `canaccesssecrets`, `scrubsecretvalues`, `dropsecretaccess`, `secretwrap`, `secretunwrap` and the widget `HasSecretValues` / `HasSecretAspect` / `HasAnySecretAspect` / `IsPreventingSecretValues` / `IsAnchoringSecret` match the client's usage strings and return counts. Use the bounded S7/S7a/S18 contracts below: `issecretvalue()` is VERIFIED false, and `canaccessvalue()` is VERIFIED true. Do not treat the remaining incomplete contracts as implemented native behavior.
 - [x] `secretwrap` does not reject an already-marked numeric value from tainted code (**VERIFIED — R88c Q3, Retail 12.1.5.70688**); whether the returned value is marked depends on an **UNKNOWN** live gate, and marker output is **INFERRED** if that gate is enabled.
+- [ ] Retail 12.1.5.70688 flag-7 publication for `issecretvalue`, `canaccessvalue`, `canaccessallvalues`, `canaccesstable`, `scrub`, `scrubsecretvalues`, `secretwrap`, `secretunwrap`, `canaccesssecrets`, `hasanysecretvalues`, `dropsecretaccess` and `issecrettable` must place one shared function value in the ordinary and secure environments. This is a publication contract, not proof of complete helper behavior; see [addon load phases](addon-load-phases.md#runtime-loading).
 
 ## WM61 evidence (Retail 12.1.5 build 70688)
 

@@ -612,6 +612,32 @@ fn get_frame_metatable_is_present_in_both_environments() {
     assert_eq!(result, (true, true));
 }
 
+#[cfg(all(
+    feature = "client-retail",
+    feature = "retail-12-1-5",
+    feature = "timed-signal-maps"
+))]
+#[test]
+fn retail_r88n11b_timed_signal_map_shares_function_with_secure_namespace() {
+    let env = env();
+
+    let shared: bool = env
+        .eval(
+            r#"
+            local public = rawget(_G, "C_Timer")
+            local secure = rawget(__secureenv, "C_Timer")
+            local publicFactory = type(public) == "table" and rawget(public, "NewTimedSignalMap")
+            local secureFactory = type(secure) == "table" and rawget(secure, "NewTimedSignalMap")
+            return type(publicFactory) == "function"
+                and rawequal(publicFactory, secureFactory)
+                and not rawequal(public, secure)
+            "#,
+        )
+        .expect("R88n.11b NewTimedSignalMap publication should be observable");
+
+    assert!(shared);
+}
+
 #[cfg(feature = "client-retail")]
 #[test]
 fn retail_c_timer_dual_members_are_registered_in_both_namespace_tables() {
@@ -677,6 +703,57 @@ fn retail_native_constants_and_enum_tables_are_separate() {
         "#,
     )
     .expect("native Constants and Enum installers must create separate tables");
+}
+
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+#[test]
+fn retail_r88n11b_global_functions_share_values_with_secure_environment() {
+    const GLOBALS: [&str; 15] = [
+        "securecallmethod",
+        "issecretvalue",
+        "canaccessvalue",
+        "canaccessallvalues",
+        "canaccesstable",
+        "scrub",
+        "scrubsecretvalues",
+        "secretunwrap",
+        "canaccesssecrets",
+        "hasanysecretvalues",
+        "dropsecretaccess",
+        "issecrettable",
+        "CreateSecureDelegate",
+        "securecopy",
+        "secretwrap",
+    ];
+    let names = GLOBALS
+        .iter()
+        .map(|name| format!("{name:?}"))
+        .collect::<Vec<_>>()
+        .join(", ");
+    let failures: Vec<String> = env()
+        .eval(&format!(
+            r#"
+                local names = {{ {names} }}
+                local failures = {{}}
+                for _, name in ipairs(names) do
+                    local public = rawget(_G, name)
+                    local secure = rawget(__secureenv, name)
+                    if type(public) ~= "function" then
+                        failures[#failures + 1] = name .. ": ordinary function missing"
+                    elseif not rawequal(public, secure) then
+                        failures[#failures + 1] = name .. ": secure value differs"
+                    end
+                end
+                table.sort(failures)
+                return failures
+            "#
+        ))
+        .expect("R88n.11b global publication should be observable");
+
+    assert!(
+        failures.is_empty(),
+        "verified flag-7 globals must share one function value: {failures:?}"
+    );
 }
 
 #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
@@ -773,9 +850,18 @@ fn retail_r88n11b_members_share_functions_with_secure_namespaces() {
         namespaces, 6,
         "all verified namespace roots must be separate"
     );
-    assert!(
-        present >= 32,
-        "expected every modeled member to publish; missing={missing:?}"
+    assert_eq!(present, 31, "expected all modeled members to publish");
+    assert_eq!(
+        missing,
+        vec![
+            "C_CurveUtil.EvaluateGameCurve".to_string(),
+            "C_GameRules.AutoConnectToGameModeRealm".to_string(),
+            "C_GameRules.GetCurrentGameModeRecordID".to_string(),
+            "C_GameRules.GetGameModePromoGlobalString".to_string(),
+            "C_GameRules.IsCharacterlessLoginActive".to_string(),
+            "C_GameRules.IsClassAllowedForGameMode".to_string(),
+        ],
+        "only the six unimplemented simulator members should remain absent"
     );
     assert_eq!(present + missing.len() as i64, 37);
     assert!(

@@ -23,24 +23,39 @@ const DEFAULT_MAX_TRAVERSAL_DEPTH: f64 = 100.0;
 
 /// Maintain the current secure allowlist on profiles whose generated docs declare these names.
 ///
-/// Native secure-publication flags remain UNKNOWN. Registration also restores a missing
-/// `CreateSecureDelegate` after `Blizzard_EnvironmentCleanup` clears it.
+/// R88n.11b verifies Retail flag 7 for both globals. Other profiles retain their existing routes.
+/// Registration also restores a missing `CreateSecureDelegate` after cleanup clears it.
 pub(crate) fn register(lua: &mut rilua::Lua) -> LuaResult<()> {
-    // UNKNOWN (R88k.7): retain this current allowlist entry; native flags are not established.
-    if ACTIVE != ClientProfile::Wrath
-        && LuaApiMut::get_global_val(lua, "CreateSecureDelegate") == Val::Nil
-    {
-        crate::lua_api::globals::security::register_unknown_allowlist_function(
-            lua,
-            "CreateSecureDelegate",
-            create_secure_delegate,
-        )?;
+    if ACTIVE != ClientProfile::Wrath {
+        if crate::client_profile::is_active_retail_12_1_5() {
+            crate::lua_api::globals::security::register_native_function_if_missing_with_flags(
+                lua,
+                "CreateSecureDelegate",
+                create_secure_delegate,
+                7,
+            )?;
+        } else if LuaApiMut::get_global_val(lua, "CreateSecureDelegate") == Val::Nil {
+            crate::lua_api::globals::security::register_unknown_allowlist_function(
+                lua,
+                "CreateSecureDelegate",
+                create_secure_delegate,
+            )?;
+        }
     }
     if matches!(
         ACTIVE,
         ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
     ) {
-        register_if_missing(lua, "securecopy", securecopy)?;
+        if crate::client_profile::is_active_retail_12_1_5() {
+            crate::lua_api::globals::security::register_native_function_if_missing_with_flags(
+                lua,
+                "securecopy",
+                securecopy,
+                7,
+            )?;
+        } else {
+            register_if_missing(lua, "securecopy", securecopy)?;
+        }
     }
     Ok(())
 }

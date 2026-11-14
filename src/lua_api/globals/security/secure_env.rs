@@ -296,8 +296,8 @@ pub(crate) const fn native_registration_destinations(flags: u8) -> (bool, bool) 
     }
 }
 
-/// Register one flag-bearing native function. Secure publication requires an
-/// existing table at the shared `__secureenv` registry key.
+/// Register one flag-bearing native function. Dual publication reuses one function value;
+/// secure publication requires an existing table at the shared `__secureenv` registry key.
 pub(crate) fn register_native_function_with_flags(
     lua: &mut rilua::Lua,
     name: &str,
@@ -309,9 +309,42 @@ pub(crate) fn register_native_function_with_flags(
     let global_ref = state.global;
     if publish_global {
         table_set_rust_fn(state, global_ref, name, function)?;
-    }
-    if publish_secure && let Val::Table(secureenv_ref) = registry_get(state, "__secureenv") {
+        if publish_secure {
+            let value = crate::lua_api::methods::table_get(state, Val::Table(global_ref), name);
+            set_secure_env_value_if_present(state, name, value)?;
+        }
+    } else if publish_secure && let Val::Table(secureenv_ref) = registry_get(state, "__secureenv") {
         table_set_rust_fn(state, secureenv_ref, name, function)?;
+    }
+    Ok(())
+}
+
+/// Install a missing native function or publish the existing function value by its flags.
+pub(crate) fn register_native_function_if_missing_with_flags(
+    lua: &mut rilua::Lua,
+    name: &str,
+    function: rilua::RustFn,
+    flags: u8,
+) -> LuaResult<()> {
+    match LuaApiMut::get_global_val(lua, name) {
+        Val::Nil => register_native_function_with_flags(lua, name, function, flags),
+        existing @ Val::Function(_) => publish_global_value_with_flags(lua, name, existing, flags),
+        _ => Ok(()),
+    }
+}
+
+pub(crate) fn publish_global_value_with_flags(
+    lua: &mut rilua::Lua,
+    name: &str,
+    value: Val,
+    flags: u8,
+) -> LuaResult<()> {
+    let (publish_global, publish_secure) = native_registration_destinations(flags);
+    if publish_global {
+        LuaApiMut::set_global_val(lua, name, value)?;
+    }
+    if publish_secure {
+        set_secure_env_key_state(lua.state_mut(), name, value)?;
     }
     Ok(())
 }
@@ -367,7 +400,10 @@ pub(crate) fn register_simulator_secure_helper(
 
 #[cfg(test)]
 mod tests {
-    use super::{register_native_function_with_flags, register_pair_list_function, registry_get};
+    use super::{
+        register_native_function_if_missing_with_flags, register_native_function_with_flags,
+        register_pair_list_function, registry_get,
+    };
     use crate::lua_api::WowLuaEnv;
     use rilua::vm::state::LuaState;
     use rilua::{LuaApiMut, LuaResult, Val};
@@ -417,6 +453,68 @@ mod tests {
                 true, false, false, true, true, true, true, true, false, false
             ]
         );
+    }
+
+    #[test]
+    fn dual_native_global_flags_share_one_function_value() {
+        let env = WowLuaEnv::new().expect("lua env");
+        {
+            let mut lua = env.rilua_mut();
+            register_native_function_with_flags(&mut lua, "flagshared3", flag_probe, 3)
+                .expect("register flag-3 function");
+            register_native_function_with_flags(&mut lua, "flagshared7", flag_probe, 7)
+                .expect("register flag-7 function");
+        }
+
+        let shared: (bool, bool) = env
+            .eval(
+                r#"
+                local function shares_function_value(name)
+                    local ordinary = rawget(_G, name)
+                    local secure = rawget(__secureenv, name)
+                    return type(ordinary) == "function"
+                        and rawequal(ordinary, secure)
+                        and ordinary() == true
+                        and secure() == true
+                end
+                return shares_function_value("flagshared3"),
+                    shares_function_value("flagshared7")
+                "#,
+            )
+            .expect("shared function identity probe");
+
+        assert_eq!(shared, (true, true));
+    }
+
+    #[test]
+    fn flagged_missing_registration_preserves_an_existing_function() {
+        let env = WowLuaEnv::new().expect("lua env");
+        env.exec("flagpreserved = function() return 37 end")
+            .expect("install existing function");
+        {
+            let mut lua = env.rilua_mut();
+            register_native_function_if_missing_with_flags(
+                &mut lua,
+                "flagpreserved",
+                flag_probe,
+                7,
+            )
+            .expect("publish existing function");
+        }
+
+        let preserved: bool = env
+            .eval(
+                r#"
+                local ordinary = rawget(_G, "flagpreserved")
+                local secure = rawget(__secureenv, "flagpreserved")
+                return rawequal(ordinary, secure)
+                    and ordinary() == 37
+                    and secure() == 37
+                "#,
+            )
+            .expect("existing function identity probe");
+
+        assert!(preserved);
     }
 
     #[test]

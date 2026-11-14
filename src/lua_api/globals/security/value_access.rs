@@ -13,10 +13,10 @@ use super::register_if_missing;
 use super::secret_values::{mark_secret_value, table_is_secret, value_is_secret_shallow};
 
 pub(super) fn register_value_access_fallbacks(lua: &mut rilua::Lua) -> LuaResult<()> {
-    register_if_missing(lua, "issecretvalue", issecretvalue_fallback)?;
-    register_if_missing(lua, "canaccessvalue", canaccessvalue_fallback)?;
-    register_if_missing(lua, "canaccessallvalues", canaccessallvalues_fallback)?;
-    register_if_missing(lua, "canaccesstable", canaccesstable_fallback)?;
+    register_if_missing(lua, "issecretvalue", issecretvalue_fallback, 7)?;
+    register_if_missing(lua, "canaccessvalue", canaccessvalue_fallback, 7)?;
+    register_if_missing(lua, "canaccessallvalues", canaccessallvalues_fallback, 7)?;
+    register_if_missing(lua, "canaccesstable", canaccesstable_fallback, 7)?;
     Ok(())
 }
 

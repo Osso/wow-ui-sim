@@ -26,6 +26,7 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 ### Runtime loading
 
 - [ ] Secure-mode addon files must resolve inherited global reads through the private snapshot during execution, without publishing inherited-only values to `__secureenv`; publish only names those chunks assign or reassign. Keep the published secure table at BASELINE-39 plus verified dual writes and secure-chunk assignments. This bridge is temporary (`lt-635e`).
+- [ ] For the Retail 12.1.5.70688 R88n.11b namespace and security-global routes in this cycle, apply each verified member flag. When both environments are destinations, preserve one Lua function value across them. Keep values absent when the simulator has no implementation and keep flags UNKNOWN for names without evidence.
 - [x] `C_AddOns.LoadAddOn` must attempt optional dependencies before required dependencies.
 - [x] An optional dependency failure must not stop the requested addon from loading.
 
@@ -55,6 +56,7 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 - `src/bin/wow_sim/addon_loading.rs` — registers packaged follower declarations before Blizzard startup, registers third-party declarations, and skips startup roots already loaded by followers.
 - `src/c_api/c_addons.rs` — exposes startup follower processing through the runtime loader.
 - `src/c_api/c_addons_runtime.rs` — resolves runtime dependencies and submits `LoadWith` followers.
+- `src/c_api/helpers.rs`, `src/c_api/secure_publication.rs` — publish the R88n.11b namespace values implemented by the simulator.
 - `src/loader/lua_file.rs`, `src/loader/xml_file.rs`, `src/lua_api/loader_env.rs`, `src/lua_api/globals/security/secure_env.rs` — execute secure-mode file and generated Lua/XML chunks with the temporary private snapshot and publish their assignments.
 - `src/lua_api/state/sim_state.rs` — holds ordered registered follower declarations and the resolved target-to-follower index.
 - `src/lua_api/state.rs` — initializes the registration vector and follower index.
