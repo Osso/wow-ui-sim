@@ -67,6 +67,10 @@ fn assert_original_reward_consumer(env: &WowLuaEnv) {
         local source = debug.getinfo(LFGDungeonReadyDialogReward_OnEnter, 'S').source:gsub('\\', '/')
         assert(source:find('Blizzard_GroupFinder/Shared/LFGFrame.lua', 1, true), source)
         assert(GameTooltip.GetPrimaryTooltipInfo ~= nil, 'original TooltipDataHandler must be loaded')
+        local rewardSource = debug.getinfo(GameTooltip.SetLFGDungeonReward, 'S').source:gsub('\\', '/')
+        local shortageSource = debug.getinfo(GameTooltip.SetLFGDungeonShortageReward, 'S').source:gsub('\\', '/')
+        assert(rewardSource:find('TooltipDataHandler.lua', 1, true), rewardSource)
+        assert(shortageSource:find('TooltipDataHandler.lua', 1, true), shortageSource)
         "#,
     )
     .expect("selected original LFGFrame reward consumer should be present");
@@ -91,8 +95,8 @@ fn assert_primary_identity(env: &WowLuaEnv, getter_name: &str, tooltip_type: &st
         r#"
         local info = GameTooltip:GetPrimaryTooltipInfo()
         local data = GameTooltip:GetPrimaryTooltipData()
-        assert(info and info.getterName == '{getter_name}', 'TooltipDataHandler selected the wrong getter')
         assert(data, 'selected reward must publish tooltip data')
+        assert(info and info.getterName == '{getter_name}', 'TooltipDataHandler selected the wrong getter')
         assert(data.type == Enum.TooltipDataType.{tooltip_type}, 'reward tooltip type mismatch')
         assert(data.id == {reward_id}, 'reward tooltip identity mismatch')
         "#
