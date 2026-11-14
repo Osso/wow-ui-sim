@@ -493,6 +493,7 @@ fn configure_startup_state(
     // rather walk them once in a final full_gc than mark them on every
     // threshold hit.
     startup_trace::time_load_step("stop GC", || env.gc_stop());
+    env.state().borrow_mut().save_failed_addons = saved_var_config::save_failed_addons();
     let mut saved_vars = startup_trace::time_load_step("configure saved variables", || {
         saved_var_config::configure_saved_vars(
             args.no_saved_vars,

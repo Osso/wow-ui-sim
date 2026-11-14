@@ -62,6 +62,7 @@ macro_rules! build_empty_sim_state {
             ui_reload_requested: false,
             session_lifecycle: super::env_lifecycle::SessionLifecycle::Active,
             addon_initialization_failures: HashMap::new(),
+            save_failed_addons: false,
             cinematic_active: false,
             in_world: false,
             reload_allows_protected_actions: false,
