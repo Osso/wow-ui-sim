@@ -70,6 +70,7 @@ pub(super) fn init_lua_state(
     // R88n.10/R88n.11 part 1 verify that Constants and Enum values are installed
     // after the constructor. The order of other native registrars remains UNKNOWN.
     super::globals::security::create_secure_environment(lua)?;
+    publish_retail_secure_template_method_binder(lua)?;
     super::globals::real::mixins::register(lua)?;
     publish_unknown_bootstrap_globals(lua)?;
     enums::init_enum_globals(lua)?;
@@ -215,6 +216,26 @@ fn enable_taint_and_wrap_loadstring(lua: &mut rilua::Lua) -> crate::Result<()> {
         LuaApiMut::set_global_val(lua, "loadstring_untainted", original_loadstring)?;
     }
     LuaApiMut::register_function(lua, "loadstring", tainting_loadstring)?;
+    Ok(())
+}
+
+fn publish_retail_secure_template_method_binder(lua: &mut rilua::Lua) -> crate::Result<()> {
+    if !crate::client_profile::is_active_retail_12_1_5() {
+        return Ok(());
+    }
+
+    // Secure template factories use this simulator helper; it is not a native base name.
+    let binder = LuaApiMut::get_global_val(lua, "__wow_bind_xml_method");
+    if !matches!(binder, Val::Function(_)) {
+        return Err(runtime_error(
+            "secure template method binder is missing from ordinary globals",
+        ));
+    }
+    super::globals::security::set_secure_env_key_state(
+        lua.state_mut(),
+        "__wow_bind_xml_method",
+        binder,
+    )?;
     Ok(())
 }
 
