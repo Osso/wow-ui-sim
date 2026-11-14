@@ -1,3 +1,7 @@
+## [2026-11-14] fix | Original character labels and titles
+
+[Lua-owned fallback retirement](investigations/lua-owned-fallback-retirement.md#j-original-character-labels-and-titles) records J selected-name ownership and original Reputation/Currency titles, actual first post-event semantics, unchanged legacy paths, and deferred native/creation-owned items.
+
 ## [2026-11-14] implementation | Merchant requirements and LFD requests
 
 [Merchant/LFG boundaries](investigations/merchant-lfg-r88i.md) separates R88i.5/R88i.6 verified gates and request behavior from inferred faction/rating mapping, provisional party arity, and unknown throttle/event timing.
