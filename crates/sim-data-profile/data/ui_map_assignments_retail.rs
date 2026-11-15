@@ -7,6 +7,7 @@
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub struct UiMapAssignment {
     pub map_id: i32,
+    pub area_id: u32,
     pub ui_min: [f32; 2],
     pub ui_max: [f32; 2],
     pub region_min: [f32; 2],
