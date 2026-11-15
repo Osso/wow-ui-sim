@@ -2,7 +2,7 @@
 
 use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::globals::state_backed_queries::dispatch_event_now;
-use crate::lua_api::methods::{borrow_state, borrow_state_mut, table_get};
+use crate::lua_api::methods::{borrow_state_mut, table_get};
 use crate::lua_bridge::{FromStack, TableBuilder, stack_val};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
@@ -25,33 +25,13 @@ pub struct PossessionCandidateInput {
     pub classification_record_field: Option<u32>,
 }
 
-/// INFERRED current-player object input, empty until the host supplies it.
-#[derive(Clone, Debug)]
-pub struct PossessionObjectInput {
-    pub identity_first: u32,
-    pub identity_second: u32,
-    pub candidates: Vec<PossessionCandidateInput>,
-}
-
 pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
     if ACTIVE != ClientProfile::Retail {
         return Ok(builder);
     }
     builder
-        .set_function("SetPossessionObject", set_possession_object)?
         .set_function("SetPossessionSpellID", set_possession_spell_id_admin)?
         .set_function("UpdatePossessionPlayer", update_possession_player_admin)
-}
-
-fn set_possession_object(state: &mut LuaState) -> LuaResult<u32> {
-    let value = stack_val(state, 1);
-    let object = if matches!(value, Val::Nil) {
-        None
-    } else {
-        Some(read_object_input(state, value)?)
-    };
-    borrow_state_mut(state)?.possession_object = object;
-    Ok(0)
 }
 
 fn set_possession_spell_id_admin(state: &mut LuaState) -> LuaResult<u32> {
@@ -63,7 +43,18 @@ fn set_possession_spell_id_admin(state: &mut LuaState) -> LuaResult<u32> {
 fn update_possession_player_admin(state: &mut LuaState) -> LuaResult<u32> {
     let identity_first = u32::from_stack(state, 1)?;
     let identity_second = u32::from_stack(state, 2)?;
-    update_possession_player(state, identity_first, identity_second)?;
+    let candidate_input = stack_val(state, 3);
+    let candidates = if matches!(candidate_input, Val::Nil) {
+        None
+    } else {
+        Some(read_candidate_inputs(state, candidate_input)?)
+    };
+    update_possession_player(
+        state,
+        identity_first,
+        identity_second,
+        candidates.as_deref(),
+    )?;
     Ok(0)
 }
 
@@ -71,20 +62,15 @@ fn update_possession_player(
     state: &mut LuaState,
     identity_first: u32,
     identity_second: u32,
+    candidates: Option<&[PossessionCandidateInput]>,
 ) -> LuaResult<()> {
     if identity_first == 0 && identity_second == 0 {
         return write_possession_spell_id(state, 0);
     }
-    let object = borrow_state(state)?.possession_object.clone();
-    let Some(object) = object else {
+    let Some(candidates) = candidates else {
         return Ok(());
     };
-    if object.identity_first != identity_first || object.identity_second != identity_second {
-        return Ok(());
-    }
-    let Some(spell_id) =
-        first_accepted_spell(&object.candidates, (identity_first, identity_second))
-    else {
+    let Some(spell_id) = first_accepted_spell(candidates, (identity_first, identity_second)) else {
         return Ok(());
     };
     write_possession_spell_id(state, spell_id)
@@ -153,25 +139,14 @@ fn has_alternate_effect(candidate: &PossessionCandidateInput) -> bool {
             .any(|effect| ALTERNATE_POSSESSION_EFFECTS.contains(effect))
 }
 
-fn read_object_input(state: &mut LuaState, value: Val) -> LuaResult<PossessionObjectInput> {
-    if !matches!(value, Val::Table(_)) {
-        return Err(runtime_error(
-            "A_Admin.SetPossessionObject: expected table or nil",
-        ));
-    }
-    let identity_first = read_u32(table_get(state, value, "identityFirst"), "identityFirst")?;
-    let identity_second = read_u32(table_get(state, value, "identitySecond"), "identitySecond")?;
-    let candidate_list = table_get(state, value, "candidates");
-    let candidate_values = read_array(state, candidate_list)?;
-    let candidates = candidate_values
+fn read_candidate_inputs(
+    state: &mut LuaState,
+    value: Val,
+) -> LuaResult<Vec<PossessionCandidateInput>> {
+    read_array(state, value)?
         .into_iter()
         .map(|candidate| read_candidate_input(state, candidate))
-        .collect::<LuaResult<Vec<_>>>()?;
-    Ok(PossessionObjectInput {
-        identity_first,
-        identity_second,
-        candidates,
-    })
+        .collect()
 }
 
 fn read_candidate_input(state: &mut LuaState, value: Val) -> LuaResult<PossessionCandidateInput> {

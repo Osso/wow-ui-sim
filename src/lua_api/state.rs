@@ -265,7 +265,6 @@ macro_rules! build_empty_sim_state {
             item_interaction: None,
             item_interaction_tooltip_input: None,
             possession_spell_id: None,
-            possession_object: None,
             major_factions: HashMap::new(),
             major_faction_renown_levels: HashMap::new(),
             major_faction_renown_rewards: HashMap::new(),
