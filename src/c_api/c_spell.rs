@@ -75,6 +75,16 @@ pub(crate) fn uses_r17_duration_behavior() -> bool {
     }
 }
 
+fn item_cooldown_api_enabled() -> bool {
+    // Declared: Forever70707 SpellDocumentation:122-136, PTR70493:139-153.
+    // INFERRED: Forever reuses the existing PTR supplied-state behavior, not native policy.
+    matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Ptr
+            | crate::client_profile::ClientProfile::WowForever
+    )
+}
+
 pub(crate) fn register_c_spell_surface(state: &mut LuaState) -> LuaResult<()> {
     let ns = ensure_namespace(state, "C_Spell")?;
     // Retail SpellDocumentation.lua:879-892; Forever :948-961.
@@ -85,7 +95,7 @@ pub(crate) fn register_c_spell_surface(state: &mut LuaState) -> LuaResult<()> {
     ) {
         table_set_rust_fn_static(state, ns, "IsSpellInRange", is_spell_in_range)?;
     }
-    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Ptr {
+    if item_cooldown_api_enabled() {
         table_set_rust_fn_static(state, ns, "GetItemCooldown", get_item_cooldown)?;
     }
     if matches!(
@@ -163,12 +173,12 @@ const SPELL_QUERY_METHODS: &[(&str, SpellScriptFn)] = &[
     ("GetSpellName", get_spell_name),
     ("GetSpellCooldown", get_spell_cooldown),
     ("GetSpellCharges", get_spell_charges),
-    #[cfg(feature = "retail-12-0-0")]
+    #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
     (
         "GetSpellCastCount",
         super::c_spell_counts::get_spell_cast_count,
     ),
-    #[cfg(feature = "retail-12-0-5")]
+    #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
     (
         "GetSpellDisplayCount",
         super::c_spell_counts::get_spell_display_count,
@@ -942,7 +952,7 @@ fn is_ranged_auto_attack_spell(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-#[cfg(feature = "retail-12-1-5")]
+#[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
 pub(crate) fn read_retail_spell_identifier(
     state: &LuaState,
     value: Val,
@@ -971,7 +981,7 @@ pub(crate) fn read_retail_spell_identifier(
     }
 }
 
-#[cfg(feature = "retail-12-1-5")]
+#[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
 fn parse_retail_spell_number(number: f64, api: &str, usage: &str) -> LuaResult<Option<u32>> {
     if !number.is_finite() || number < f64::from(i32::MIN) || number > f64::from(i32::MAX) {
         return Err(super::helpers::bad_argument(1, api, usage));

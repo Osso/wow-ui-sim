@@ -92,6 +92,12 @@ pub struct AzeriteEssenceState {
     /// Iteration order for `GetEssences`. Tests can re-order this
     /// without touching the keyed map.
     pub essence_order: Vec<i32>,
+    /// Host-supplied result of the tooltip source faction-group selector.
+    /// None uses the first source because race-to-selector mapping is unknown.
+    pub source_faction_selector_result: Option<i32>,
+    /// Source-field overrides keyed by catalog `(essence_id, rank)`.
+    /// Tests use them to exercise empty-source rows without adding catalog records.
+    pub tooltip_source_overrides: HashMap<(i32, u32), (String, String)>,
     /// Currently-pending-activation essence id. `None` when no
     /// activation is queued.
     pub pending_activation_essence: Option<i32>,
@@ -121,6 +127,8 @@ impl Default for AzeriteEssenceState {
             milestones: Vec::new(),
             essences: HashMap::new(),
             essence_order: Vec::new(),
+            source_faction_selector_result: None,
+            tooltip_source_overrides: HashMap::new(),
             pending_activation_essence: None,
             num_unlocked: 0,
             is_at_forge: false,

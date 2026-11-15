@@ -73,6 +73,24 @@ function AzeriteTestFindLine(data, text)
     end
 end
 
+function AzeriteTestFindPowerLine(data, powerState)
+    for _, line in ipairs(data.lines) do
+        if line.powerState == powerState then return line end
+    end
+end
+
+function AzeriteTestFindEmptyPlainLine(data)
+    for _, line in ipairs(data.lines) do
+        if line.type == 0 and line.leftText == "" then return line end
+    end
+end
+
+function AzeriteTestLineIndex(data, target)
+    for index, line in ipairs(data.lines) do
+        if line == target then return index end
+    end
+end
+
 function AzeriteTestShowEssence(essenceID, rank)
     local button = setmetatable(
         { essenceID = essenceID, rank = rank },
@@ -164,16 +182,91 @@ assert(AzeriteTestSpellCount(rankOne) >= 1 and AzeriteTestSpellCount(rankTwo) >=
 
 const SOURCE_HEADING_LUA: &str = r#"
 local nextRankTwo = AzeriteTestShowEssence(3, 1)
-assert(AzeriteTestFindLine(nextRankTwo, 'Next rank:'),
+assert(AzeriteTestFindLine(nextRankTwo, 'Next Rank:'),
     'the verified next-rank stage must select its heading')
 local rankZero = AzeriteTestShowEssence(3, 0)
 assert(AzeriteTestFindLine(rankZero, 'Source:'),
     'the verified rank-zero stage must select the source heading')
 local nextRankFour = AzeriteTestShowEssence(3, 3)
-assert(not AzeriteTestFindLine(nextRankFour, 'Next rank:'),
+assert(not AzeriteTestFindLine(nextRankFour, 'Next Rank:'),
     'next rank four must disable the source-heading stage')
 assert(select('#', C_TooltipInfo.GetAzeriteEssence(3, 4)) == 0,
     'a missing exact next-rank record must return zero values')
+"#;
+
+const SOURCE_SELECTION_LUA: &str = r#"
+local fallback = AzeriteTestFindLine(AzeriteTestSourceFallback, 'Eternal Palace Raid')
+assert(fallback and fallback.wrapText == true,
+    'an empty second source field must use the first source')
+local second = AzeriteTestFindLine(AzeriteTestSourceZero, 'Xander Silberman')
+assert(second and second.wrapText == true,
+    'selector result zero must use the second source field')
+local first = AzeriteTestFindLine(AzeriteTestSourceOne, 'Marshal Gabriel')
+assert(first and first.wrapText == true,
+    'a nonzero selector result must use the first source field')
+local empty = AzeriteTestSourceEmpty
+assert(AzeriteTestFindLine(empty, 'Source:') == nil,
+    'an empty next-rank-one source must omit SOURCE')
+assert(AzeriteTestFindEmptyPlainLine(empty) == nil,
+    'an empty next-rank-one source must omit its description row')
+assert(AzeriteTestFindPowerLine(empty, 'major') == nil
+    and AzeriteTestFindPowerLine(empty, 'minor') == nil,
+    'next-rank one must not add inline power rows')
+assert(AzeriteTestSourceAbsent == false,
+    'an absent essence must stay absent')
+"#;
+
+const NEXT_RANK_INLINE_LUA: &str = r#"
+assert(AzeriteTestShowEssence(3, 4) == nil,
+    'an absent next-rank record must stay absent')
+local rankTwo = AzeriteTestShowEssence(2, 1)
+local rankThree = AzeriteTestShowEssence(3, 2)
+local function assertOrder(data, sourceText, majorSpell, minorSpell)
+    local heading = AzeriteTestFindLine(data, 'Next Rank:')
+    local source = AzeriteTestFindLine(data, sourceText)
+    local major = AzeriteTestFindPowerLine(data, 'major')
+    local minor = AzeriteTestFindPowerLine(data, 'minor')
+    local majorDescription = C_Spell.GetSpellDescription(majorSpell)
+    local minorDescription = C_Spell.GetSpellDescription(minorSpell)
+    assert(heading and source and major and minor,
+        'the next-rank rows must include heading, source, major and minor')
+    assert(type(majorDescription) == 'string' and majorDescription ~= ''
+        and major.type == 5 and major.wrapText == true
+        and major.leftText:find(majorDescription, 1, true),
+        'the available major description must be wrapped type 5 with major state')
+    assert(type(minorDescription) == 'string' and minorDescription ~= ''
+        and minor.type == 5 and minor.wrapText == true
+        and minor.leftText:find(minorDescription, 1, true),
+        'the available minor description must be wrapped type 5 with minor state')
+    assert(AzeriteTestLineIndex(data, heading) < AzeriteTestLineIndex(data, source)
+        and AzeriteTestLineIndex(data, source) < AzeriteTestLineIndex(data, major)
+        and AzeriteTestLineIndex(data, major) < AzeriteTestLineIndex(data, minor),
+        'next-rank row order must be heading, source, major, minor')
+end
+assertOrder(rankTwo, 'Eternal Palace Raid', 294653, 294687)
+assertOrder(rankThree, 'Battlegrounds', 294907, 294920)
+"#;
+
+const EMPTY_NEXT_RANK_SOURCE_LUA: &str = r#"
+assert(AzeriteTestShowEssence(3, 4) == nil,
+    'an absent next-rank record must stay absent')
+local nonempty = AzeriteTestShowEssence(2, 1)
+local empty = AzeriteTestShowEssence(3, 1)
+assert(AzeriteTestFindLine(nonempty, 'Eternal Palace Raid'),
+    'a distinct catalog source must stay visible')
+local heading = AzeriteTestFindLine(empty, 'Next Rank:')
+local source = AzeriteTestFindEmptyPlainLine(empty)
+assert(heading and source and source.wrapText == true,
+    'an empty higher-rank source must keep a wrapped type-0 row')
+assert(AzeriteTestLineIndex(empty, heading) < AzeriteTestLineIndex(empty, source),
+    'the empty source row must follow the next-rank heading')
+"#;
+
+const UNOWNED_INLINE_LUA: &str = r#"
+local data = AzeriteTestShowEssence(3, 2)
+assert(data and not AzeriteTestFindPowerLine(data, 'major')
+    and not AzeriteTestFindPowerLine(data, 'minor'),
+    'unowned essence must not add inline powers')
 "#;
 
 const CURRENT_RANK_LUA: &str = r#"
@@ -283,6 +376,54 @@ assert(not rangeOK and tostring(rangeMessage):find(
     'outside of expected range 0 to 3', 1, true),
     'slot four must raise the verified range error')
 "#;
+
+fn capture_source_variants(env: &WowLuaEnv) {
+    capture_absent_source(env);
+    set_source_selector_result(env, 0);
+    run_azerite_script(
+        env,
+        concat!(
+            "AzeriteTestSourceFallback = AzeriteTestShowEssence(2, 0); ",
+            "AzeriteTestSourceZero = AzeriteTestShowEssence(3, 0)"
+        ),
+        "the original Azerite hover should produce source candidates",
+    );
+    set_source_selector_result(env, 1);
+    run_azerite_script(
+        env,
+        "AzeriteTestSourceOne = AzeriteTestShowEssence(3, 0)",
+        "the original Azerite hover should use the supplied source selector",
+    );
+    override_tooltip_source(env, ESSENCE_THREE, 1);
+    run_azerite_script(
+        env,
+        "AzeriteTestSourceEmpty = AzeriteTestShowEssence(3, 0)",
+        "the original Azerite hover should accept empty source fields",
+    );
+}
+
+fn capture_absent_source(env: &WowLuaEnv) {
+    run_azerite_script(
+        env,
+        "AzeriteTestSourceAbsent = AzeriteTestShowEssence(999, 0) or false",
+        "the original Azerite hover should keep an absent essence empty",
+    );
+}
+
+fn set_source_selector_result(env: &WowLuaEnv, result: i32) {
+    env.state()
+        .borrow_mut()
+        .azerite_essence
+        .source_faction_selector_result = Some(result);
+}
+
+fn override_tooltip_source(env: &WowLuaEnv, essence_id: i32, rank: u32) {
+    env.state()
+        .borrow_mut()
+        .azerite_essence
+        .tooltip_source_overrides
+        .insert((essence_id, rank), (String::new(), String::new()));
+}
 
 fn run_azerite_script(env: &WowLuaEnv, script: &str, message: &str) {
     env.exec(script).expect(message);
@@ -468,6 +609,60 @@ fn retail_azerite_essence_original_hover_keeps_verified_next_rank_headings() {
         &env,
         SOURCE_HEADING_LUA,
         "the original Azerite hover must follow verified next-rank heading conditions",
+    );
+}
+
+#[test]
+fn retail_azerite_essence_original_hover_selects_verified_source_rows_and_absent() {
+    let env = original_azerite_tooltip_env();
+    seed_essence(&env, ESSENCE_TWO, 1);
+    seed_essence(&env, ESSENCE_THREE, 1);
+    capture_source_variants(&env);
+    run_azerite_script(
+        &env,
+        SOURCE_SELECTION_LUA,
+        "the original Azerite hover must select verified source rows",
+    );
+}
+
+#[test]
+fn retail_azerite_essence_original_hover_orders_next_rank_power_rows() {
+    let env = original_azerite_tooltip_env();
+    seed_essence(&env, ESSENCE_TWO, 1);
+    seed_essence(&env, ESSENCE_THREE, 2);
+    run_azerite_script(
+        &env,
+        NEXT_RANK_INLINE_LUA,
+        "the original Azerite hover must order next-rank power rows",
+    );
+    env.state()
+        .borrow_mut()
+        .azerite_essence
+        .essences
+        .get_mut(&ESSENCE_THREE)
+        .expect("the owned essence fixture must remain present")
+        .unlocked = false;
+    run_azerite_script(
+        &env,
+        UNOWNED_INLINE_LUA,
+        "the next-rank inline rows must use existing ownership state",
+    );
+}
+
+#[test]
+fn retail_azerite_essence_original_hover_keeps_empty_higher_rank_source_row() {
+    let env = original_azerite_tooltip_env();
+    seed_essence(&env, ESSENCE_TWO, 1);
+    seed_essence(&env, ESSENCE_THREE, 1);
+    env.state()
+        .borrow_mut()
+        .azerite_essence
+        .tooltip_source_overrides
+        .insert((ESSENCE_THREE, 2), (String::new(), String::new()));
+    run_azerite_script(
+        &env,
+        EMPTY_NEXT_RANK_SOURCE_LUA,
+        "the original Azerite hover must keep an empty higher-rank source row",
     );
 }
 

@@ -1,3 +1,19 @@
+## [2026-11-15] implementation | Forever item-cooldown publication
+
+[Forever item cooldown](../specs/forever-spell-item-cooldown.md) records matching pinned PTR/Forever declarations, narrow INFERRED publication, original Collections cooldown RED/GREEN and no-added-error proof. Retail absence and existing supplied-state policy remain unchanged.
+
+## [2026-11-15] investigation | Spell-count widths, inventory and inherited failures
+
+[Spell-count corrections](investigations/spell-count-r88p.md) records six executable historical boundaries, native-backed signed widths/storage traversal, isolated R88r numeric/secret corrections, and inferred Forever original-consumer coverage. Property decoding, detailed eligibility and exceptional-number outcomes remain explicit gaps.
+
+## [2026-11-15] revision | Possession writer evidence boundary
+
+[Round 7 contract](../specs/tooltip-r7-getters.md) and [Lua API](systems/lua-api.md#possession-state-writer-r88o2-q5) separate verified writer rules from the simulator's host projection. **VERIFIED (R88o.2-q5):** selection, ID writes and change-only event requests. **INFERRED (R88o.2-q5:13009–13010, 13016; R88n.4a:12570–12571):** current-player snapshot ownership and exact two-part object matching. Each effect selector tests absent input plus two distinct backed spell IDs.
+
+## [2026-11-14] implementation | Retail possession state writer
+
+[Round 7 contract](../specs/tooltip-r7-getters.md) and [Lua API](systems/lua-api.md#possession-state-writer-r88o2-q5) record R88o.2-q5. **VERIFIED (Retail 12.1.5.70688):** local possession writes, change-only event requests, candidate order and selector rules. **VERIFIED (simulator source):** empty-by-default host/admin inputs supply object and candidate data; the spell catalog supplies presence checks only. **INFERRED:** the collection belongs to current-player state. **UNKNOWN:** external triggers and candidate acquisition. **VERIFIED (test SHA `458beb9e5da674428a975e07f05b8d84a38ca650`):** all 24 selected Retail integration tests pass; five requested profile compile receipts have zero warnings.
+
 ## [2026-11-14] implementation | Achievement eligibility and tracker colors
 
 [Achievement eligibility](../specs/achievement-eligibility.md) records R88o.1's Retail argument/Boolean contract, missing record/group versus null tree, and supplied cache comparisons. Original tracker #6 uses the zero-visible branch; positive visible counts use a different per-criterion getter. PTR/Forever binding is inferred from their selected original Lua. New simulator input stays empty by default; no event substitutes or live cache writer claims.
@@ -34,9 +50,9 @@
 ## [2026-11-14] implementation | Forever tooltip getter publication
 
 The [modified-appearance](../specs/tooltip-appearance-item.md), [merchant-cost](../specs/tooltip-merchant-cost-item.md), [outfit](../specs/tooltip-outfit.md), and [PvP talent](../specs/tooltip-pvp-talent.md) contracts and [Lua API](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) record R88n.8. **VERIFIED (Forever 1.60.1.70707):** the four getters register; tested missing-source results, argument handling, outfit zero/missing-name behavior, and the selected SpellBook consumer pass. The consumer is **PRESERVATION** because populated source records are not modeled. **INFERRED:** saved names map from `SimState.forever_outfits`. **UNKNOWN:** populated appearance/PvP records, native saved-outfit writers, and merchant availability/filter state.
-## [2026-11-14] correction | Retail Azerite Essence tooltip selection
+## [2026-11-14] implementation | Retail Azerite Essence tooltip rows
 
-The [Round 7 contract](../specs/tooltip-r7-getters.md), [Lua API](systems/lua-api.md#azerite-essence-tooltip-selection-r88n2), and [consumer investigation](investigations/consumer-selection-and-red-proof.md#retail-azerite-essence-tooltip-consumers) record original-consumer selectors and verified builder timing. Spell-column mapping remains INFERRED; faction-to-source selection is UNKNOWN, so no source-description row is emitted. Inline-row order, gray selection, empty-source behavior and requirement rows remain UNKNOWN.
+The [Round 7 contract](../specs/tooltip-r7-getters.md), [Lua API](systems/lua-api.md#azerite-essence-tooltip-selection-r88n2), and [consumer investigation](investigations/consumer-selection-and-red-proof.md#retail-azerite-essence-tooltip-consumers) record R88p.p4 source and inline rows through the original Retail hover consumers. **VERIFIED (R88p.p4):** source fallback/selector choice, empty-source rows, and inline row order/type/state. **INFERRED:** race-to-selector mapping remains unimplemented because the available 70783 `ChrRaces.csv` lacks `FactionID` values and is not the 70575 runtime pin. **VERIFIED (generated catalog):** no rank above four exists, so gray is unreachable; requirement-row expansion remains UNKNOWN.
 
 ## [2026-11-14] implementation | Retail selected tooltip getters
 

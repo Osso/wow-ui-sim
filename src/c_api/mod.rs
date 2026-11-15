@@ -30,6 +30,7 @@ pub(crate) mod tooltip_azerite_catalog_data;
 pub(crate) mod tooltip_info_retail_epoch_and_forever;
 // The pinned TooltipInfoDocumentation.lua:710 declares GetPvpBrawl on Retail,
 // PTR and Forever; the supplied-brawl model is compiled for the same profiles.
+pub(crate) mod c_tooltip_info_possession;
 #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 pub(crate) mod c_tooltip_info_pvp_brawl;
 pub(crate) mod c_tooltip_info_round7;
@@ -318,7 +319,7 @@ pub(crate) mod c_spell_activation_overlay;
 pub mod c_spell_book;
 #[cfg(feature = "retail-12-0-0")]
 pub mod c_spell_classification;
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 pub(crate) mod c_spell_counts;
 pub mod c_spell_diminish;
 pub mod c_stable_info;
@@ -348,6 +349,8 @@ pub mod c_trade_skill_quality;
 mod c_trade_skill_source;
 #[cfg(feature = "client-mists")]
 pub(crate) mod mists_reputation_list;
+#[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
+pub mod spell_reagent_inventory;
 // The pinned classic TransmogItemsDocumentation.lua / TransmogOutfitInfoDocumentation.lua
 // declare these namespaces on Mists, Era and Anniversary, so the backing model
 // is compiled for those profiles together with the retail API epochs.
