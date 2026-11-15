@@ -273,62 +273,100 @@ fn item_interaction_conversion_original_consumer_uses_distinct_output_ids() {
 }
 
 fn assert_zero_conversion_output_shape(env: &WowLuaEnv) {
+    assert_zero_conversion_data_fields(env);
+    assert_zero_conversion_retrieving_line(env);
+    assert_zero_conversion_retrieving_color(env);
+    assert_zero_conversion_without_retrieving_text(env);
+}
+
+fn assert_zero_conversion_data_fields(env: &WowLuaEnv) {
     env.exec(
         r##"
         local function capture(...) return {n = select("#", ...), ...} end
-        local function assertPayload(expectedText)
-            local result = capture(C_TooltipInfo.GetItemInteractionItem())
-            assert(
-                result.n == 1 and type(result[1]) == "table",
-                "zero conversion output must publish one TooltipData table"
-            )
-            local data = result[1]
-            assert(type(data.dataInstanceID) == "number", "result must carry dataInstanceID")
-            assert(data.id == nil and data.type == nil, "result omits top-level id and type")
-            local dataFields = 0
-            for key in pairs(data) do
-                dataFields = dataFields + 1
-                assert(key == "lines" or key == "dataInstanceID")
-            end
-            assert(dataFields == 2 and type(data.lines) == "table", "result has only lines and dataInstanceID")
-
-            if expectedText == nil then
-                assert(next(data.lines) == nil, "absent localization appends no line")
-                return
-            end
-
-            local line = assert(data.lines[1])
-            assert(line.type == 41 and line.leftText == expectedText, "retrieving line uses type 41 and supplied localization")
-            assert(line.rightText == nil and line.rightColor == nil, "retrieving line has no right-side fields")
-            local lineFields = 0
-            for key in pairs(line) do
-                lineFields = lineFields + 1
-                assert(key == "type" or key == "leftText" or key == "leftColor")
-            end
-            assert(lineFields == 3, "retrieving line has only type, leftText, and leftColor")
-
-            local color = assert(line.leftColor)
-            assert(type(rawget(color, "r")) == "number", "error color publishes red")
-            assert(type(rawget(color, "g")) == "number", "error color publishes green")
-            assert(type(rawget(color, "b")) == "number", "error color publishes blue")
-            assert(rawget(color, "a") == nil, "error color omits alpha")
-            local r, g, b = color:GetRGB()
-            local er, eg, eb = 1, 0, 1
-            if ERROR_COLOR ~= nil then er, eg, eb = ERROR_COLOR:GetRGB() end
-            assert(math.abs(r - er) < 0.001)
-            assert(math.abs(g - eg) < 0.001)
-            assert(math.abs(b - eb) < 0.001)
+        local result = capture(C_TooltipInfo.GetItemInteractionItem())
+        assert(
+            result.n == 1 and type(result[1]) == "table",
+            "zero conversion output must publish one TooltipData table"
+        )
+        local data = result[1]
+        assert(type(data.dataInstanceID) == "number", "result must carry dataInstanceID")
+        assert(data.id == nil and data.type == nil, "result omits top-level id and type")
+        local fields = 0
+        for key in pairs(data) do
+            fields = fields + 1
+            assert(key == "lines" or key == "dataInstanceID")
         end
-
-        local retrievingText = RETRIEVING_ITEM_INFO
-        if retrievingText ~= nil then assertPayload(retrievingText) end
-        RETRIEVING_ITEM_INFO = nil
-        assertPayload(nil)
-        RETRIEVING_ITEM_INFO = retrievingText
-        if retrievingText == nil then assertPayload(nil) end
-    "##,
+        assert(fields == 2 and type(data.lines) == "table", "result has only lines and dataInstanceID")
+        "##,
     )
     .expect("zero conversion output publishes only the q1 unresolved-item fields");
+}
+
+fn assert_zero_conversion_retrieving_line(env: &WowLuaEnv) {
+    env.exec(
+        r##"
+        local expectedText = RETRIEVING_ITEM_INFO
+        if expectedText == nil then return end
+        local function capture(...) return {n = select("#", ...), ...} end
+        local result = capture(C_TooltipInfo.GetItemInteractionItem())
+        local line = assert(result[1].lines[1])
+        assert(line.type == 41 and line.leftText == expectedText)
+        assert(line.rightText == nil and line.rightColor == nil)
+        local fields = 0
+        for key in pairs(line) do
+            fields = fields + 1
+            assert(key == "type" or key == "leftText" or key == "leftColor")
+        end
+        assert(fields == 3, "retrieving line has only type, leftText, and leftColor")
+        "##,
+    )
+    .expect("retrieving conversion line uses the supplied localization");
+}
+
+fn assert_zero_conversion_retrieving_color(env: &WowLuaEnv) {
+    env.exec(
+        r##"
+        if RETRIEVING_ITEM_INFO == nil then return end
+        local function capture(...) return {n = select("#", ...), ...} end
+        local result = capture(C_TooltipInfo.GetItemInteractionItem())
+        local color = assert(result[1].lines[1].leftColor)
+        assert(type(rawget(color, "r")) == "number", "error color publishes red")
+        assert(type(rawget(color, "g")) == "number", "error color publishes green")
+        assert(type(rawget(color, "b")) == "number", "error color publishes blue")
+        assert(rawget(color, "a") == nil, "error color omits alpha")
+        local r, g, b = color:GetRGB()
+        local er, eg, eb = 1, 0, 1
+        if ERROR_COLOR ~= nil then er, eg, eb = ERROR_COLOR:GetRGB() end
+        assert(math.abs(r - er) < 0.001)
+        assert(math.abs(g - eg) < 0.001)
+        assert(math.abs(b - eb) < 0.001)
+        "##,
+    )
+    .expect("retrieving conversion line uses the error color");
+}
+
+fn assert_zero_conversion_without_retrieving_text(env: &WowLuaEnv) {
+    env.exec(
+        r##"
+        local previousText = RETRIEVING_ITEM_INFO
+        RETRIEVING_ITEM_INFO = nil
+        local function capture(...) return {n = select("#", ...), ...} end
+        local result = capture(C_TooltipInfo.GetItemInteractionItem())
+        assert(result.n == 1 and type(result[1]) == "table")
+        local data = result[1]
+        assert(type(data.dataInstanceID) == "number")
+        assert(data.id == nil and data.type == nil)
+        assert(type(data.lines) == "table" and next(data.lines) == nil)
+        local fields = 0
+        for key in pairs(data) do
+            fields = fields + 1
+            assert(key == "lines" or key == "dataInstanceID")
+        end
+        assert(fields == 2, "result has only lines and dataInstanceID")
+        RETRIEVING_ITEM_INFO = previousText
+        "##,
+    )
+    .expect("missing retrieval localization appends no conversion line");
 }
 
 // SUPPLEMENTARY contract coverage: this calls C_TooltipInfo directly, not its original consumer.
@@ -481,6 +519,26 @@ fn assert_slot_keystone_rejection_case(
     context_present: bool,
     seed_lock: bool,
 ) {
+    let (env, slot) = load_slot_keystone_rejection_fixture(
+        item_id,
+        modifier_id,
+        map_id,
+        context_present,
+        seed_lock,
+    );
+    assert_slot_keystone_rejection_not_published(&env);
+    if seed_lock {
+        assert_rejection_clears_seeded_item_lock(&env, slot);
+    }
+}
+
+fn load_slot_keystone_rejection_fixture(
+    item_id: u32,
+    modifier_id: Option<u32>,
+    map_id: Option<u32>,
+    context_present: bool,
+    seed_lock: bool,
+) -> (WowLuaEnv, u32) {
     let env = tooltip_full_env_helpers::load_full_env_without_post_load();
     register_keystone_event_probe(&env);
     let slot = 3;
@@ -501,6 +559,10 @@ fn assert_slot_keystone_rejection_case(
             sim.keystone.reason_one_locks.insert(location);
         }
     }
+    (env, slot)
+}
+
+fn assert_slot_keystone_rejection_not_published(env: &WowLuaEnv) {
     env.exec(
         r##"
         assert(select("#", C_ChallengeMode.SlotKeystone()) == 0)
@@ -511,15 +573,16 @@ fn assert_slot_keystone_rejection_case(
         "##,
     )
     .unwrap();
-    if seed_lock {
-        env.exec(&format!(
-            r#"
-            A_Admin.AddBagItem(0, {slot}, 6948, 1)
-            assert(not C_Item.IsLocked(ItemLocation:CreateFromBagAndSlot(0, {slot})))
-            "#
-        ))
-        .unwrap();
-    }
+}
+
+fn assert_rejection_clears_seeded_item_lock(env: &WowLuaEnv, slot: u32) {
+    env.exec(&format!(
+        r#"
+        A_Admin.AddBagItem(0, {slot}, 6948, 1)
+        assert(not C_Item.IsLocked(ItemLocation:CreateFromBagAndSlot(0, {slot})))
+        "#
+    ))
+    .unwrap();
 }
 
 #[test]
