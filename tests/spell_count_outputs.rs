@@ -1,6 +1,7 @@
 //! Retail 12.1.5 count widths, reagent traversal and bounded input controls.
 //! Property decoding and detailed native item eligibility remain unasserted.
 #![cfg(all(
+    feature = "optional-tests",
     feature = "retail-12-0-5",
     any(feature = "profile-retail", feature = "client-ptr")
 ))]
@@ -817,10 +818,10 @@ fn secure_display_authenticates_secret_numeric_string_identifier_and_defaults() 
     display(&env, "SCIdentifier,SCNil,SCNil", "7", false);
 }
 
-// R88k.5 line 11623 and R88p line 12450 (lt-67d2 #1226): access is
-// VERIFIED; authenticated fractional conversion remains UNKNOWN.
+// R88r.r1 (lt-67d2 #1239): accepted-number fractional conversion is VERIFIED.
+// Only the native metadata-source <=1 identifier conditional remains unmodeled.
 const WRONG_AUTHENTICATED_DISPLAY_TYPES: &str = r#"
-        -- UNKNOWN R88k.5 line 11623: authenticated fractional conversion.
+        -- VERIFIED R88r.r1: accepted-number conversion; metadata-source <=1 is unmodeled.
         for _,v in ipairs({
             SCNil,
             SCBool,
@@ -859,7 +860,7 @@ const NUMERIC_SECRET_CAST_ACCESS: &str = r#"
             assert(select('#',C_Spell.GetSpellCastCount(SCIdentifier))==1)
             assert(C_Spell.GetSpellCastCount(SCIdentifier)==7)
             assert(C_Spell.GetSpellCastCount(SCUnknown)==0)
-            -- UNKNOWN R88k.5 line 11623: no fractional-secret conversion claim.
+            -- VERIFIED R88r.r1: accepted-number conversion; metadata-source <=1 is unmodeled.
             for _,v in ipairs({SCReplacement,SCNil,SCBool,SCString,SCSecretTable,SCSecretFrame,SCAlias}) do
                 local ok,err=pcall(C_Spell.GetSpellCastCount,v)
                 assert(not ok)
