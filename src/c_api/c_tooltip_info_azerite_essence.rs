@@ -399,7 +399,8 @@ fn append_inline_power_row(
     };
     let line = append_line(state, tooltip, LINE_TYPE_POWER_DESCRIPTION, &text, None);
     table_set(state, line, "wrapText", Val::Bool(true));
-    table_set(state, line, "powerState", create_string(state, power_state));
+    let power_state = create_string(state, power_state);
+    table_set(state, line, "powerState", power_state);
     Ok(())
 }
 
