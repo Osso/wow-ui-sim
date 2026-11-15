@@ -456,7 +456,7 @@ fn secure_retail_scoped_handler_uses_only_the_given_environment() {
     .unwrap();
     std::fs::write(
         addon_dir.join("Setup.lua"),
-        "local _, addon = ...\naddon.ScopedAddonValue = 'addon-only'\n",
+        "local _, addon = ...\naddon.ScopedAddonValue = 'addon-only'\nScopedSetupObserved = addon.ScopedAddonValue\n",
     )
     .unwrap();
     std::fs::write(
@@ -486,20 +486,38 @@ fn secure_retail_scoped_handler_uses_only_the_given_environment() {
         load_result.warnings
     );
 
-    let (handler_ran, addon_value, secure_value): (bool, String, String) = env
+    let (setup_value, setup_is_secure, handler_ran, addon_value, secure_value): (
+        String,
+        bool,
+        bool,
+        String,
+        String,
+    ) = env
         .eval(
             r#"
+            local setupValue = rawget(__secureenv, "ScopedSetupObserved")
+            local setupIsSecure = setupValue == "addon-only"
+                and rawget(_G, "ScopedSetupObserved") == nil
             local frame = rawget(_G, "ScopedRetailSecureHandlerFrame")
                 or rawget(__secureenv, "ScopedRetailSecureHandlerFrame")
             if not frame then
-                return false, "", ""
+                return setupValue or "", setupIsSecure, false, "", ""
             end
-            return frame:GetAttribute("ObservedHandlerRan") == true,
+            return setupValue or "", setupIsSecure,
+                frame:GetAttribute("ObservedHandlerRan") == true,
                 frame:GetAttribute("ObservedAddonValue") or "",
                 frame:GetAttribute("ObservedSecureValue") or ""
             "#,
         )
         .unwrap();
+    assert_eq!(
+        setup_value, "addon-only",
+        "the TOC Lua file must populate the add-on table"
+    );
+    assert!(
+        setup_is_secure,
+        "the setup file should use the shared secure environment"
+    );
     assert!(handler_ran, "the XML OnLoad handler must run");
     assert_eq!(addon_value, "addon-only");
     assert_eq!(
