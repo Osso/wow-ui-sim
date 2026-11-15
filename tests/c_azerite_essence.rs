@@ -93,6 +93,7 @@ fn seeded_state() -> AzeriteEssenceState {
         has_never_activated: false,
         has_neck_equipped: true,
         neck_power_level: 75,
+        ..AzeriteEssenceState::default()
     }
 }
 
