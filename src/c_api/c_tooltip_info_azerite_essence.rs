@@ -10,9 +10,12 @@ use crate::c_api::tooltip_azerite_catalog_data::{
 use crate::c_api::tooltip_getter_args;
 use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::globals::missing_surface::tooltip_info::{
-    append_line, append_spell_to_tooltip, compose_tooltip, item_quality_color,
+    append_line, append_spell_to_tooltip, compose_tooltip, format_global_text, item_quality_color,
+    spell_description_text,
 };
-use crate::lua_api::methods::{borrow_state, call_function_state, create_string, val_to_string};
+use crate::lua_api::methods::{
+    borrow_state, call_function_state, create_string, table_set, val_to_string,
+};
 use crate::lua_bridge::table_set_rust_fn_static;
 use rilua::vm::{gc::arena::GcRef, state::LuaState, table::Table};
 use rilua::{LuaResult, Val};
@@ -23,8 +26,10 @@ const ESSENCE_SLOT_USAGE: &str = "Usage: local data = C_TooltipInfo.GetAzeriteEs
 const MAX_ESSENCE_SLOT: u8 = 3;
 const SOURCE_STAGE_DISABLED_NEXT_RANK: u32 = 4;
 const TOOLTIP_TYPE_AZERITE_ESSENCE: f64 = 8.0;
-// INFERRED: R88n.2 establishes text content and rank color, not the text line type.
+// Simulator policy for name and heading rows; their native line type is UNKNOWN.
 const LINE_TYPE_ESSENCE_TEXT: f64 = 0.0;
+const LINE_TYPE_SOURCE_DESCRIPTION: f64 = 0.0;
+const LINE_TYPE_POWER_DESCRIPTION: f64 = 5.0;
 
 pub(crate) fn register_essence(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
     table_set_rust_fn_static(
@@ -78,7 +83,7 @@ fn build_essence_tooltip(
     };
     let (main_spell, passive_spell) =
         selected_essence_spell_ids(state, essence_id, rank_one_power, selected_power)?;
-    let source_stage = (next_rank != SOURCE_STAGE_DISABLED_NEXT_RANK).then_some(next_rank);
+    let source_stage = source_stage_for_next_rank(essence_id, next_rank);
     publish_essence_tooltip(
         state,
         tooltip,
@@ -122,7 +127,7 @@ fn publish_essence_tooltip(
     heading: Option<(&str, u32)>,
     main_spell: Option<u32>,
     passive_spell: u32,
-    source_stage: Option<u32>,
+    source_stage: Option<(i32, u32)>,
 ) -> LuaResult<u32> {
     let saved_top = state.top;
     state.push(tooltip);
@@ -148,7 +153,7 @@ fn append_essence_tooltip_rows(
     heading: Option<(&str, u32)>,
     main_spell: Option<u32>,
     passive_spell: u32,
-    source_stage: Option<u32>,
+    source_stage: Option<(i32, u32)>,
 ) -> LuaResult<()> {
     if let Some((name, rank)) = heading {
         let text = format_essence_heading(state, name, rank)?;
@@ -160,8 +165,8 @@ fn append_essence_tooltip_rows(
         append_spell_to_tooltip(state, tooltip, spell_id)?;
     }
     append_spell_to_tooltip(state, tooltip, passive_spell)?;
-    if let Some(next_rank) = source_stage {
-        append_source_heading(state, tooltip, next_rank)?;
+    if let Some((essence_id, next_rank)) = source_stage {
+        append_next_rank_rows(state, tooltip, essence_id, next_rank)?;
     }
     Ok(())
 }
@@ -203,6 +208,10 @@ fn source_stage_for_rank(essence_id: i32, source_rank: u32) -> Option<u32> {
         power_record(essence_id, next_rank)?;
     }
     Some(next_rank)
+}
+
+fn source_stage_for_next_rank(essence_id: i32, next_rank: u32) -> Option<(i32, u32)> {
+    (next_rank != SOURCE_STAGE_DISABLED_NEXT_RANK).then_some((essence_id, next_rank))
 }
 
 fn required_power_records(
@@ -276,6 +285,122 @@ fn player_rank_or_list_miss(state: &LuaState, essence_id: i32) -> Option<u32> {
     }
     let rank = essences.get(&essence_id).map_or(0, |essence| essence.rank);
     u32::try_from(rank).ok()
+}
+
+fn append_next_rank_rows(
+    state: &mut LuaState,
+    tooltip: Val,
+    essence_id: i32,
+    next_rank: u32,
+) -> LuaResult<()> {
+    let Some(power) = power_record(essence_id, next_rank) else {
+        return Ok(());
+    };
+    let source = selected_source_text(state, power)?;
+    if next_rank == 1 {
+        if source.is_empty() {
+            return Ok(());
+        }
+        append_source_heading(state, tooltip, next_rank)?;
+        append_source_description(state, tooltip, &source);
+        return Ok(());
+    }
+    append_source_heading(state, tooltip, next_rank)?;
+    append_source_description(state, tooltip, &source);
+    append_next_rank_power_rows(state, tooltip, essence_id, next_rank, power)
+}
+
+fn selected_source_text(state: &LuaState, power: &AzeriteEssencePowerRecord) -> LuaResult<String> {
+    let sim = borrow_state(state)?;
+    let source_override = i32::try_from(power.essence_id).ok().and_then(|id| {
+        sim.azerite_essence
+            .tooltip_source_overrides
+            .get(&(id, power.rank))
+    });
+    let (first, second) = source_override
+        .map(|(first, second)| (first.as_str(), second.as_str()))
+        .unwrap_or((power.source_alliance, power.source_horde));
+    let use_second = sim.player.present
+        && !second.is_empty()
+        && sim.azerite_essence.source_faction_selector_result == Some(0);
+    Ok(if use_second { second } else { first }.to_owned())
+}
+
+fn append_source_description(state: &mut LuaState, tooltip: Val, source: &str) {
+    let line = append_line(state, tooltip, LINE_TYPE_SOURCE_DESCRIPTION, source, None);
+    table_set(state, line, "wrapText", Val::Bool(true));
+}
+
+fn append_next_rank_power_rows(
+    state: &mut LuaState,
+    tooltip: Val,
+    essence_id: i32,
+    next_rank: u32,
+    power: &AzeriteEssencePowerRecord,
+) -> LuaResult<()> {
+    if !player_owns_essence(state, essence_id)? {
+        return Ok(());
+    }
+    let (power_state, heading_key) = major_power_row_style(next_rank);
+    append_inline_power_row(
+        state,
+        tooltip,
+        power.major_power_description,
+        heading_key,
+        power_state,
+    )?;
+    if next_rank < SOURCE_STAGE_DISABLED_NEXT_RANK {
+        append_inline_power_row(
+            state,
+            tooltip,
+            power.minor_power_description,
+            Some("AZERITE_ESSENCE_TOOLTIP_PASSIVE_POWER_INLINE"),
+            "minor",
+        )?;
+    }
+    Ok(())
+}
+
+fn major_power_row_style(next_rank: u32) -> (&'static str, Option<&'static str>) {
+    if next_rank < SOURCE_STAGE_DISABLED_NEXT_RANK {
+        ("major", Some("AZERITE_ESSENCE_TOOLTIP_MAIN_POWER_INLINE"))
+    } else {
+        ("gray", None)
+    }
+}
+
+fn player_owns_essence(state: &LuaState, essence_id: i32) -> LuaResult<bool> {
+    let sim = borrow_state(state)?;
+    Ok(sim.player.present
+        && sim
+            .azerite_essence
+            .essences
+            .get(&essence_id)
+            .is_some_and(|essence| essence.unlocked))
+}
+
+fn append_inline_power_row(
+    state: &mut LuaState,
+    tooltip: Val,
+    spell_id: u32,
+    heading_key: Option<&str>,
+    power_state: &str,
+) -> LuaResult<()> {
+    if crate::spell_descriptions::get_spell_description(spell_id).is_none() {
+        return Ok(());
+    }
+    let description = spell_description_text(state, spell_id);
+    if description.is_empty() {
+        return Ok(());
+    }
+    let text = match heading_key {
+        Some(key) => format_global_text(state, key, &description)?,
+        None => description,
+    };
+    let line = append_line(state, tooltip, LINE_TYPE_POWER_DESCRIPTION, &text, None);
+    table_set(state, line, "wrapText", Val::Bool(true));
+    table_set(state, line, "powerState", create_string(state, power_state));
+    Ok(())
 }
 
 fn append_source_heading(state: &mut LuaState, tooltip: Val, next_rank: u32) -> LuaResult<()> {
