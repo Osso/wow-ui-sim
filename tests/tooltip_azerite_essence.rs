@@ -497,6 +497,11 @@ fn retail_azerite_essence_slot_original_hover_selects_two_slots_and_absent() {
 #[test]
 fn retail_azerite_essence_current_and_explicit_rank_selection() {
     let env = WowLuaEnv::new().expect("Retail Lua environment should initialize");
+    run_azerite_script(
+        &env,
+        ESSENCE_LUA_HELPERS,
+        "Azerite test helpers should load",
+    );
     seed_essence(&env, ESSENCE_TWO, 2);
     run_azerite_script(
         &env,
