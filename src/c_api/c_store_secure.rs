@@ -155,34 +155,37 @@ mod tests {
         }
 
         let env = WowLuaEnv::new().expect("Lua environment should initialize");
-        let (implemented, has_missing) = {
+        let (implemented, missing_members) = {
             let mut lua = env.rilua_mut();
             let state = lua.state_mut();
             let ordinary = crate::c_api::global_val(state, "C_StoreSecure");
             let secure = crate::lua_api::methods::registry_get(state, "__secureenv");
             let mut implemented = 0;
-            let mut has_missing = false;
+            let mut missing_members = Vec::new();
             for member in super::RETAIL_STORE_UI_FLAG_3_MEMBERS {
                 match table_get_static(state, ordinary, member) {
                     Val::Function(_) => {
                         implemented += 1;
                         if !matches!(table_get_static(state, secure, member), Val::Function(_)) {
-                            has_missing = true;
+                            missing_members.push(member.to_string());
                         }
                     }
                     Val::Nil => {}
-                    _ => has_missing = true,
+                    value => missing_members.push(format!(
+                        "{member} has ordinary value type {}",
+                        value.type_name()
+                    )),
                 }
             }
-            (implemented, has_missing)
+            (implemented, missing_members)
         };
         assert!(
             implemented > 1,
             "the verified Store UI inventory is not vacuous"
         );
         assert!(
-            !has_missing,
-            "implemented flag-3 members are missing from secure C_StoreSecure"
+            missing_members.is_empty(),
+            "implemented flag-3 members are missing from secure C_StoreSecure: {missing_members:?}"
         );
 
         env.exec_rilua_secure("SecureStoreProductListResult = C_StoreSecure.GetProductList()")
