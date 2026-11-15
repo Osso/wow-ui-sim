@@ -1161,6 +1161,48 @@ fn character_select_can_transition_to_character_create_without_lua_errors() {
     }
 }
 
+const RETAIL_CHARACTER_CREATE_PRESERVATION_LUA: &str = r#"
+local source = "Blizzard_CharacterCreate/"
+assert(debug.getinfo(CharacterCreateMixin.OnLoad, "S").source:find(source, 1, true))
+assert(debug.getinfo(CharacterCreateMixin.UpdateForwardButton, "S").source:find(source, 1, true))
+assert(debug.getinfo(CharacterCreateRaceAndClassMixin.SetCharacterRace, "S").source:find(source, 1, true))
+local frame = CharacterCreateFrame
+local race = frame.RaceAndClassFrame
+assert(#frame.BGTex == 4 and frame.BGTex[1]:GetObjectType() == "Texture")
+race:SetCharacterClass(1)
+race:SetCharacterRace(24)
+assert(race.selectedRaceData.fileName == "Pandaren")
+assert(math.abs(frame.BGTex[1]:GetAlpha() - 0.75) < 0.001)
+race:SetCharacterRace(2)
+assert(race.selectedRaceData.fileName == "Orc" and race.selectedFaction == "Horde")
+assert(math.abs(frame.BGTex[1]:GetAlpha() - 0.6) < 0.001)
+race:SetCharacterClass(12)
+assert(race.selectedClassData.fileName == "DEMONHUNTER")
+assert(math.abs(frame.BGTex[1]:GetAlpha() - 0.7) < 0.001)
+race:SetCharacterClass(6)
+assert(race.selectedClassData.fileName == "DEATHKNIGHT")
+assert(math.abs(frame.BGTex[1]:GetAlpha() - 0.8) < 0.001)
+assert(frame.BackButton:GetText() == BACK)
+assert(frame.ForwardButton:GetText() == CUSTOMIZE)
+"#;
+
+#[test]
+#[cfg(feature = "client-retail")]
+fn retail_character_create_transition_preserves_original_surfaces() {
+    test_timeout! {
+        let ui = blizzard_ui_dir();
+        let addons = discover_blizzard_addons_for_screen(&ui, ScreenKind::CharacterSelect);
+        let toc_path = addons.iter().find(|(name, _)| name == "Blizzard_CharacterCreate")
+            .map(|(_, path)| path).expect("Glue should select CharacterCreate");
+        let toc = wow_ui_sim::toc::TocFile::from_file(toc_path).expect("Glue TOC should parse");
+        assert!(toc.allows_screen(ScreenKind::CharacterSelect));
+        let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+        env.exec("GlueParent_SetScreen('charcreate')").expect("original screen transition should run");
+        run_extra_update_ticks(&env, 3);
+        env.exec(RETAIL_CHARACTER_CREATE_PRESERVATION_LUA).expect("original consumer state should be preserved");
+    }
+}
+
 #[test]
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn character_creation_interaction_records_native_byte_without_arguments() {
