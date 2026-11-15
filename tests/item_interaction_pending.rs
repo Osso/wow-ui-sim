@@ -12,6 +12,8 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 const ITEM_A: u32 = 128_910;
 const ITEM_B: u32 = 158_923;
 const CURSOR_ITEM: u32 = 6_948;
+const SET_PENDING_ITEM_USAGE: &str =
+    "Usage: local success = C_ItemInteraction.SetPendingItem([item])";
 
 fn pending_env(accepted_items: &[u32]) -> WowLuaEnv {
     let env = tooltip_full_env_helpers::load_full_env_without_post_load();
@@ -440,6 +442,85 @@ fn pending_item_close_ui_leaves_selection_unchanged() {
     env.exec("assert(#PendingHideEvents == 0)").unwrap();
     clear_from_original_slot(&env);
     assert_no_selected_tooltip(&env);
+}
+
+fn assert_present_location_usage_error_without_side_effects(env: &WowLuaEnv, location: &str) {
+    select_from_original_flyout(env, 1);
+    assert_item_locked(env, 1, true);
+    assert_item_locked(env, 2, false);
+    stage_cursor_item(env);
+    env.exec(&format!(
+        "InvalidPendingLocation = {location}; assert(InvalidPendingLocation ~= nil)"
+    ))
+    .unwrap();
+    clear_event_history(env);
+
+    let observations: (bool, bool, bool, bool, bool, bool, bool, bool) = env
+        .eval(&format!(
+            r##"
+            local selectedLocation = ItemLocation:CreateFromBagAndSlot(0, 1)
+            local otherLocation = ItemLocation:CreateFromBagAndSlot(0, 2)
+            local cursorTypeBefore, cursorIDBefore = GetCursorInfo()
+            local ok, result = pcall(C_ItemInteraction.SetPendingItem, InvalidPendingLocation)
+            local cursorTypeAfter, cursorIDAfter = GetCursorInfo()
+            local selectedCount = select("#", C_TooltipInfo.GetItemInteractionItem())
+            local selectedData = C_TooltipInfo.GetItemInteractionItem()
+            local hasSelectedItem = selectedCount == 1
+                and selectedData.lines[1].leftText == "Selected pending item"
+            return not ok,
+                not ok and tostring(result):find({SET_PENDING_ITEM_USAGE:?}, 1, true) ~= nil,
+                #PendingSelectionEvents == 0,
+                #PendingOrderEvents == 0,
+                C_Item.IsLocked(selectedLocation),
+                not C_Item.IsLocked(otherLocation),
+                hasSelectedItem,
+                CursorHasItem()
+                    and cursorTypeBefore == cursorTypeAfter
+                    and cursorIDBefore == cursorIDAfter
+            "##
+        ))
+        .unwrap();
+
+    assert_eq!(
+        observations,
+        (true, true, true, true, true, true, true, true)
+    );
+}
+
+#[test]
+fn empty_bag_item_location_raises_usage_without_side_effects() {
+    let env = pending_env(&[ITEM_A, ITEM_B]);
+    assert_present_location_usage_error_without_side_effects(
+        &env,
+        "ItemLocation:CreateFromBagAndSlot(0, 4)",
+    );
+}
+
+#[test]
+fn empty_equipment_item_location_raises_usage_without_side_effects() {
+    let env = pending_env(&[ITEM_A, ITEM_B]);
+    assert_present_location_usage_error_without_side_effects(
+        &env,
+        "ItemLocation:CreateFromEquipmentSlot(19)",
+    );
+}
+
+#[test]
+fn out_of_range_bag_item_location_raises_usage_without_side_effects() {
+    let env = pending_env(&[ITEM_A, ITEM_B]);
+    assert_present_location_usage_error_without_side_effects(
+        &env,
+        "ItemLocation:CreateFromBagAndSlot(17, 1)",
+    );
+}
+
+#[test]
+fn out_of_range_bag_slot_raises_usage_without_side_effects() {
+    let env = pending_env(&[ITEM_A, ITEM_B]);
+    assert_present_location_usage_error_without_side_effects(
+        &env,
+        "ItemLocation:CreateFromBagAndSlot(0, 99)",
+    );
 }
 
 fn assert_no_unlock_event(env: &WowLuaEnv) {
