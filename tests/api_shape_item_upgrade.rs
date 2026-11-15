@@ -175,12 +175,14 @@ fn item_upgrade_uses_shared_r88s_item_location_resolution() {
         let env = load_original_item_util();
         env.exec(
             r#"
-            local numericBag = {bagID = '0.9', slotIndex = '1.9'}
-            A_Admin.SetItemUpgradeEligibility(numericBag, true)
-            assert(C_ItemUpgrade.CanUpgradeItem(numericBag) == true)
+            A_Admin.SetItemUpgradeEligibility(firstLocation, true)
             local fractionalBag = {bagID = 0.9, slotIndex = 1.9}
             assert(ItemButtonUtil.GetItemContextMatchResultForItem(fractionalBag)
                 == ItemButtonUtil.ItemContextMatchResult.Match)
+
+            local numericBag = {bagID = '0.9', slotIndex = '1.9'}
+            A_Admin.SetItemUpgradeEligibility(numericBag, true)
+            assert(C_ItemUpgrade.CanUpgradeItem(numericBag) == true)
 
             A_Admin.EquipItem(101, 19019)
             local negativeBag = {bagID = '-2.9', slotIndex = '1.9'}
