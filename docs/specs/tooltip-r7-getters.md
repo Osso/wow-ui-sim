@@ -57,7 +57,7 @@ The Round 7 `C_TooltipInfo` getters use native argument readers and tooltip buil
 - `src/c_api/c_tooltip_info_round7.rs` — Round 7 publication, arguments, missing-state decisions and owned-item runeforge path.
 - `src/c_api/c_tooltip_info_azerite_essence.rs` — Retail essence/slot rank selection, type-8 composition, and the bounded next-rank source stage.
 - `src/c_api/azerite_essence_spell_selector.rs` — isolated INFERRED spell-role-to-column mapping.
-- `src/c_api/tooltip_azerite_catalog_data.rs` — generated essence, rank, spell and unused raw source-column data from the 12.1.5.70391 DB2 CSV inputs.
+- `src/c_api/tooltip_azerite_catalog_data.rs` — generated essence, rank, spell and raw source-column data from the 12.1.5.70391 DB2 CSV inputs.
 - `tools/gen_tooltip_azerite_catalog.py` and `data/db2/retail-12.1.5.70391/` — catalog generator, source tables and provenance.
 - `src/c_api/recipe_rank_tooltip.rs` and `src/lua_api/globals/missing_surface/tooltip_info/recipe_rank.rs` — empty-by-default recipe display-cache input and shared rank tooltip composition.
 - `src/lua_api/state/sim_state.rs` — host-supplied recipe rank cache storage.
@@ -78,7 +78,7 @@ The Round 7 `C_TooltipInfo` getters use native argument readers and tooltip buil
 
 - `tests/tooltip_round7.rs` — registration, argument conversion, usage errors, original accessor miss paths, secret rejection and populated owned runeforge item instances.
 - `tests/tooltip_item_interaction_item.rs` — SUPPLEMENTARY original-consumer and direct-API boundary tests for absent, failed, and unsupported object results; these are not payload selectors.
-- `tests/tooltip_azerite_essence.rs` — optional Retail tests drive the original Azerite UI for distinct essence, rank and slot selections plus an absent result per selector. Tests retain verified next-rank headings and do not assert faction-specific source text.
+- `tests/tooltip_azerite_essence.rs` — optional Retail tests drive the original Azerite UI for distinct essence, rank and slot selections plus an absent result per selector. Tests assert concrete first and second source strings, but do not assert the race/faction-to-selector mapping.
 - `tests/tooltip_recipe_rank_info.rs` — VERIFIED recipe-ID selection and qualitative threshold behavior through the original accessor; the concrete rank-1/rank-2 boundary and exact presentation are INFERRED coverage; simulator-route tests are INFERRED; the zero-value miss test is PRESERVATION.
 - `tests/tooltip_quest_party_progress.rs` — selected ObjectiveTracker consumers, original tooltip accessor selectors, exact missing-source counts, and supplied owned-item selection.
 - `tests/tooltip_lfg_rewards.rs` — selected GroupFinder reward consumers, distinct ordinary/shortage entries and API-level no-value misses.
