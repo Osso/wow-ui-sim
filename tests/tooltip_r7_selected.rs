@@ -567,6 +567,17 @@ fn possession_rescan_accepts_alternate_effect_51_with_classification_three() {
 }
 
 #[test]
+fn possession_rescan_runs_when_either_identity_part_is_nonzero() {
+    let env = load_possession_env();
+    for (identity, spell_id) in [((0, 22), 116), ((11, 0), 133)] {
+        let candidate = possession_candidate(spell_id, false, &[2], None, None);
+        set_possession_object(&env, identity, &[candidate]);
+        update_possession_player(&env, identity);
+        assert_possession_consumer_spell(&env, spell_id);
+    }
+}
+
+#[test]
 fn possession_rescan_keeps_old_id_for_absent_unresolved_or_rejected_inputs() {
     let env = load_possession_env();
     set_possession_spell_id(&env, 116);
