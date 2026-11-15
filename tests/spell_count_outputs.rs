@@ -52,8 +52,9 @@ const ASSERTIONS: &str = r#"
     }
 "#;
 
+// INFERRED: PTR uses the Retail R88p contract; no PTR native proof is claimed.
 fn uses_retail_native_count_contract() -> bool {
-    cfg!(feature = "retail-12-1-5") && ACTIVE == ClientProfile::Retail
+    cfg!(feature = "retail-12-1-5") && matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr)
 }
 
 fn fixture(restricted: bool) -> WowLuaEnv {
@@ -608,15 +609,22 @@ fn decimal_ascii_and_empty_unicode_replacement_preserve_exact_bytes() {
     display(&env, "19750", "1234", false);
 }
 
-#[cfg(not(all(feature = "profile-retail", feature = "retail-12-1-5")))]
+// INFERRED PTR applicability, isolated from the Retail evidence commit.
+#[cfg(feature = "client-ptr")]
 #[test]
-fn local_u32_width_preserves_max_quantity_and_exact_decimal() {
+fn inferred_ptr_signed_maximum_preserves_valid_count_decimal() {
     let env = fixture(false);
     set_count(&env, 19750, u32::MAX);
     cast_count(&env, "19750", u32::MAX, false);
-    display(&env, "19750,4294967295", "4294967295", false);
-    display(&env, "19750,4294967294.5,'limit'", "limit", false);
-    display(&env, "19750", "*", false);
+    env.exec("SCReject('GetSpellDisplayCount',2,false,19750,4294967295)")
+        .unwrap();
+    env.exec("SCReject('GetSpellDisplayCount',2,false,19750,4294967294.5)")
+        .unwrap();
+    set_count(&env, 19750, i32::MAX as u32);
+    display(&env, "19750,2147483647", "2147483647", false);
+    display(&env, "642,2147483647", "2", false);
+    clear_count(&env, 19750);
+    cast_count(&env, "19750", 0, false);
 }
 
 #[test]
@@ -677,7 +685,7 @@ fn queries_are_read_only_and_environments_and_result_replacements_isolated() {
     positive(&other);
 }
 
-#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[cfg(feature = "retail-12-1-5")]
 #[test]
 fn retail_identifier_conversion_matches_the_signed32_subset() {
     // R88k.5 line 11623 / R88p.p2: exceptional outcomes depend on UNKNOWN FP configuration.
@@ -704,41 +712,16 @@ fn retail_identifier_conversion_matches_the_signed32_subset() {
     .unwrap();
 }
 
-#[cfg(not(all(feature = "profile-retail", feature = "retail-12-1-5")))]
+// INFERRED PTR applicability of R88p.p2; old strict-u32 rejection contradicted it.
+#[cfg(feature = "client-ptr")]
 #[test]
-fn strict_public_identifier_utf8_u32_domain_in_secure_and_tainted_frames() {
+fn inferred_ptr_signed_identifiers_truncate_and_accept_negative_absence() {
     let env = fixture(false);
-    positive(&env);
-    env.exec(
-        r#"
-        local function probe()
-            for _,api in ipairs({
-                'GetSpellCastCount',
-                'GetSpellDisplayCount',
-            }) do
-                SCReject(api,1,false)
-                SCReject(api,1,false,nil)
-                for _,v in ipairs({
-                    false,
-                    {},
-                    SCFrame,
-                    -1,
-                    19750.5,
-                    0/0,
-                    math.huge,
-                    -math.huge,
-                    4294967296,
-                    string.char(255),
-                }) do
-                    SCReject(api,1,false,v)
-                end
-            end
-        end
-        probe()
-        SCTainted(probe)
-    "#,
-    )
-    .unwrap();
+    cast_count(&env, "19750.9", 7, false);
+    cast_count(&env, "642.9", 2, false);
+    cast_count(&env, "-1", 0, false);
+    display(&env, "19750.9", "7", false);
+    display(&env, "642.9", "2", false);
 }
 
 // VERIFIED R88k.5 line 11622 (lt-c3ed #1056, confirmed lt-67d2 #1226):
@@ -1095,7 +1078,7 @@ fn output_copy_gc_and_flag_off_keep_old_wrappers_private_and_new_public() {
     assert_eq!(metadata(&env, &["SCCast", "SCDisplay"]), before);
 }
 
-#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[cfg(feature = "retail-12-1-5")]
 #[test]
 fn r88p_signed_reagent_quantities_use_eight_eligible_pairs() {
     // VERIFIED R88p.p3: quantities narrow to i16 before eligibility and division.
@@ -1128,7 +1111,7 @@ fn r88p_signed_reagent_quantities_use_eight_eligible_pairs() {
     cast_count(&env, "19750", 0, false);
 }
 
-#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[cfg(feature = "retail-12-1-5")]
 #[test]
 fn r88p_default_reagent_traversal_excludes_bank_tabs() {
     // VERIFIED R88p.p3: mask 32 is required for both bank-tab groups.
@@ -1156,7 +1139,7 @@ fn r88p_default_reagent_traversal_excludes_bank_tabs() {
     cast_count(&env, "19750", 0, false);
 }
 
-#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[cfg(feature = "retail-12-1-5")]
 #[test]
 fn r88p_numeric_replacements_convert_without_replacing_count_output() {
     // VERIFIED R88k.5 publication/arguments #1056 bullet 3: numbers become text.
@@ -1167,7 +1150,7 @@ fn r88p_numeric_replacements_convert_without_replacing_count_output() {
     display(&env, "19750,6,17", "", false);
 }
 
-#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[cfg(feature = "retail-12-1-5")]
 #[test]
 fn r88p_cast_traversal_counts_carried_root_items() {
     let env = fixture(false);
@@ -1193,7 +1176,7 @@ fn r88p_cast_traversal_counts_carried_root_items() {
     cast_count(&env, "19750", 0, false);
 }
 
-#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[cfg(feature = "retail-12-1-5")]
 fn copy_reagent_stack(env: &WowLuaEnv, spell: u32, location: (i32, i32), count: i32) {
     let mut sim = env.state().borrow_mut();
     let mut item = sim
@@ -1206,7 +1189,7 @@ fn copy_reagent_stack(env: &WowLuaEnv, spell: u32, location: (i32, i32), count: 
     sim.bag_items.insert(location, item);
 }
 
-#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[cfg(feature = "retail-12-1-5")]
 fn reagent_masks(env: &WowLuaEnv, mask: u32) {
     let mut sim = env.state().borrow_mut();
     for spell in [19750, 642] {
@@ -1216,7 +1199,7 @@ fn reagent_masks(env: &WowLuaEnv, mask: u32) {
     }
 }
 
-#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[cfg(feature = "retail-12-1-5")]
 #[test]
 fn r88p_mask32_admits_bank_tabs_and_recursive_children_live() {
     let env = fixture(false);
@@ -1239,7 +1222,7 @@ fn r88p_mask32_admits_bank_tabs_and_recursive_children_live() {
     cast_count(&env, "19750", 0, false);
 }
 
-#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[cfg(feature = "retail-12-1-5")]
 #[test]
 fn r88p_mask2_without_properties_keeps_sum_then_divide() {
     let env = fixture(false);
@@ -1259,7 +1242,7 @@ fn r88p_mask2_without_properties_keeps_sum_then_divide() {
     cast_count(&env, "19750", 0, false);
 }
 
-#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[cfg(feature = "retail-12-1-5")]
 #[test]
 fn r88p_signed_maximum_fraction_defaults_and_trailing_cast_arguments() {
     let env = fixture(false);
@@ -1276,7 +1259,7 @@ fn r88p_signed_maximum_fraction_defaults_and_trailing_cast_arguments() {
     cast_count(&env, "-1", 0, false);
 }
 
-#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[cfg(feature = "retail-12-1-5")]
 fn reagent_container_info(spell: u32, slot: Option<i32>) -> wow_ui_sim::c_api::bag_info::BagInfo {
     wow_ui_sim::c_api::bag_info::BagInfo {
         num_slots: 16,
@@ -1289,7 +1272,7 @@ fn reagent_container_info(spell: u32, slot: Option<i32>) -> wow_ui_sim::c_api::b
     }
 }
 
-#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[cfg(feature = "retail-12-1-5")]
 fn equip_reagent_container(env: &WowLuaEnv, spell: u32, bag: i32, slot: i32) {
     let mut sim = env.state().borrow_mut();
     sim.bag_info
@@ -1306,7 +1289,7 @@ fn equip_reagent_container(env: &WowLuaEnv, spell: u32, bag: i32, slot: i32) {
     );
 }
 
-#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[cfg(feature = "retail-12-1-5")]
 #[test]
 fn r88p_bank_container_roots_are_filtered_and_not_double_counted() {
     let env = fixture(false);
@@ -1323,7 +1306,7 @@ fn r88p_bank_container_roots_are_filtered_and_not_double_counted() {
     cast_count(&env, "19750", 0, false);
 }
 
-#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[cfg(feature = "retail-12-1-5")]
 #[test]
 fn r88p_nested_containers_are_items_not_additional_roots() {
     let env = fixture(false);
@@ -1348,7 +1331,7 @@ fn r88p_nested_containers_are_items_not_additional_roots() {
     cast_count(&env, "19750", 0, false);
 }
 
-#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[cfg(feature = "retail-12-1-5")]
 #[test]
 fn r88p_cyclic_container_inputs_cannot_supply_reagent_counts() {
     // Simulator robustness only: native does not claim cyclic physical inventory.
@@ -1366,7 +1349,7 @@ fn r88p_cyclic_container_inputs_cannot_supply_reagent_counts() {
     cast_count(&env, "19750", 0, false);
 }
 
-#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[cfg(feature = "retail-12-1-5")]
 #[test]
 fn r88p_mode1_denial_uses_native_reason_before_maximum_conversion() {
     let env = secret_fixture();

@@ -39,7 +39,11 @@ const SPELL_REAGENT_PAIR_LIMIT: usize = 8;
 
 #[cfg(feature = "retail-12-1-5")]
 fn native_count_contract_enabled() -> bool {
-    crate::client_profile::ACTIVE == ClientProfile::Retail
+    // INFERRED: PTR applicability of the VERIFIED Retail R88p contract.
+    matches!(
+        crate::client_profile::ACTIVE,
+        ClientProfile::Retail | ClientProfile::Ptr
+    )
 }
 
 fn read_count_identifier(state: &LuaState, api: &str) -> LuaResult<Option<u32>> {

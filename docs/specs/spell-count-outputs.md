@@ -164,3 +164,7 @@ Native source: R88p.p2/p3, Retail 12.1.5.70688, verbatim in lt-67d2 #1207; R88k.
 - Root representation is deduplicated across equipment/BagInfo; parent-linked containers are items, not additional roots. Missing parents and cycles cannot provide reachable contents (simulator robustness, not native malformed-inventory claims).
 
 Four independent base-RED selectors cover signed16/eight-pair limits, default bank rejection, carried roots, and numeric replacements. Each includes two distinct backed results and absence. Later mask32/recursion/dedup/mask2 cases are additional coverage, not retroactive base-RED claims. Exact build/runtime receipts and historical bisect transcripts are supplied on the tracker, not committed.
+
+## PTR applicability (INFERRED, isolated commit)
+
+The explicit `ClientProfile::Ptr` branch reuses Retail R88p/R88k readers, reagent traversal and display-mode selection. This is inferred applicability, not PTR native proof. Its fixtures use actual reagent/inventory backing. The old unsigned maximum test now rejects values outside signed32 while retaining valid decimal/count controls; public identifiers use the represented signed/truncating subset rather than the contradicted strict-u32 subset. The original unknown-type/secret seams remain separate.
