@@ -227,3 +227,5 @@ pub(crate) mod wrath_arena_roster;
 #[cfg(feature = "client-wrath")]
 pub(crate) mod wrath_trade_skill_filters;
 pub(crate) mod zone_story_default;
+
+pub(crate) mod retail_spellbook_legacy;

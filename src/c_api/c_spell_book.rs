@@ -306,12 +306,16 @@ fn register_spell_book_owned_state_queries(
         "HasPetSpells",
         c_spell_book_has_pet_spells,
     )?;
-    table_set_rust_fn_static(
-        state,
-        table_ref,
-        "GetOverrideSpell",
-        c_spell_book_get_override_spell,
-    )?;
+    // R88m.4: no Retail-selected original consumer of this census-absent
+    // alias. Native publication outside the census remains UNKNOWN.
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
+        table_set_rust_fn_static(
+            state,
+            table_ref,
+            "GetOverrideSpell",
+            c_spell_book_get_override_spell,
+        )?;
+    }
     Ok(())
 }
 
@@ -659,6 +663,29 @@ mod cooldown_query {
         crate::c_api::c_spell::push_spell_cooldown_info(state, spell_id)
     }
 
+    fn get_retail_loss_of_control(state: &mut LuaState, slot: Val, bank: Val) -> LuaResult<u32> {
+        // R88m.4: rejected/missing items and failed queries publish no values.
+        // The existing player-book adapter cannot represent native pet rows,
+        // row kinds or rejected flags; its off-spec rejection is preserved.
+        let Some(spell_id) = cooldown_spell_for_book_entry(slot, bank).filter(|id| *id != 0) else {
+            return Ok(0);
+        };
+        let (info, restricted) = {
+            let sim = crate::lua_api::methods::borrow_state(state)?;
+            (
+                sim.spell_loss_of_control.get(&spell_id).cloned(),
+                crate::c_api::charge_state::cooldowns_are_restricted(&sim),
+            )
+        };
+        let Some(info) = info else {
+            return Ok(0);
+        };
+        // Supplied decoded query DTO: milliseconds-to-seconds conversion,
+        // active/replacement calculation and acquisition remain upstream
+        // model seams, not newly inferred values in this serializer.
+        crate::c_api::loss_of_control::push_loss_of_control_info(state, &info, restricted)
+    }
+
     pub(super) fn get_loss_of_control(state: &mut LuaState) -> LuaResult<u32> {
         let (slot, bank) = if crate::client_profile::ACTIVE
             == crate::client_profile::ClientProfile::Retail
@@ -672,6 +699,9 @@ mod cooldown_query {
                 authenticate_book_selector(state, 2, LOSS_OF_CONTROL_API)?,
             )
         };
+        if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+            return get_retail_loss_of_control(state, slot, bank);
+        }
         let Some(spell_id) = cooldown_spell_for_book_entry(slot, bank) else {
             state.push(Val::Nil);
             return Ok(1);
@@ -737,24 +767,30 @@ fn c_spell_book_get_spell_book_item_texture(state: &mut LuaState) -> LuaResult<u
 }
 
 fn c_spell_book_get_spell_book_item_auto_cast(state: &mut LuaState) -> LuaResult<u32> {
-    let slot = if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
         let (slot, bank) = read_spell_book_item_arguments(
             state,
             "C_SpellBook.GetSpellBookItemAutoCast",
             AUTO_CAST_USAGE,
         )?;
-        if bank == 0 {
-            i32::try_from(slot).ok()
-        } else {
-            None
+        // No ordered pet-book rows or spell-keyed snapshot flags are supplied.
+        // The membership HashSet and action-bar indices do not establish a pet
+        // book slot. Keep that gap explicit rather than manufacture an ordering.
+        let entry = (bank == 0)
+            .then(|| i32::try_from(slot).ok())
+            .flatten()
+            .and_then(spellbook_data::get_spell_at_slot);
+        let Some((_, entry, _)) = entry else {
+            return Ok(0);
+        };
+        if entry.spell_id == 0 || spells::get_spell(entry.spell_id).is_none() {
+            return Ok(0);
         }
+        // R88m.4 supported-record fallback: absent candidate/flag state is
+        // false/false. Native snapshot producers and action eligibility remain
+        // unmodeled; do not infer those flags from DB2 or unrelated bar slots.
     } else {
-        Some(i32::from_stack(state, 1)?)
-    };
-    if slot.and_then(spellbook_data::get_spell_at_slot).is_none() {
-        state.push(Val::Bool(false));
-        state.push(Val::Bool(false));
-        return Ok(2);
+        let _ = i32::from_stack(state, 1)?;
     }
     state.push(Val::Bool(false));
     state.push(Val::Bool(false));
@@ -769,7 +805,13 @@ fn read_spell_book_item_arguments(
     let slot = read_untainted_u32_argument(state, 1, function, usage)?;
     let bank = read_untainted_signed32_argument(state, 2, function, usage)?;
     if !matches!(bank, 0 | 1) {
-        return Err(bad_argument(2, function, usage));
+        return Err(bad_argument(
+            2,
+            function,
+            &format!(
+                "Invalid spellBank value {bank}. Must be an Enum.SpellBookSpellBank value. - {usage}"
+            ),
+        ));
     }
     Ok((slot, bank))
 }
@@ -816,16 +858,20 @@ fn read_untainted_u32_argument(
 }
 
 fn c_spell_book_find_spell_override_by_id(state: &mut LuaState) -> LuaResult<u32> {
-    let _ = read_untainted_signed32_argument(
+    let spell_id = read_untainted_signed32_argument(
         state,
         1,
         "C_SpellBook.FindSpellOverrideByID",
         FIND_SPELL_OVERRIDE_USAGE,
     )?;
-    // The native handler-to-publisher edge is UNKNOWN; preserve the prior
-    // simulator identity result until that public path is resolved.
-    let original = stack_val(state, 1);
-    state.push(original);
+    // R88m.4: no override link preserves the parsed ID, then Spell membership
+    // determines one signed number or one nil. The simulator has no native
+    // eligible-override map; do not infer links from identifier aliases.
+    state.push(if spells::get_spell(spell_id as u32).is_some() {
+        Val::Num(f64::from(spell_id))
+    } else {
+        Val::Nil
+    });
     Ok(1)
 }
 
@@ -843,15 +889,21 @@ fn c_spell_book_find_flyout_slot_by_spell_id(state: &mut LuaState) -> LuaResult<
 }
 
 fn c_spell_book_find_base_spell_by_id(state: &mut LuaState) -> LuaResult<u32> {
-    let _ = read_untainted_signed32_argument(
+    let spell_id = read_untainted_signed32_argument(
         state,
         1,
         "C_SpellBook.FindBaseSpellByID",
         FIND_BASE_SPELL_USAGE,
     )?;
-    // The native handler-to-publisher edge is UNKNOWN; preserve the prior
-    // simulator zero-value result until that public path is resolved.
-    Ok(0)
+    // R88m.4: the no-link path retains the input before the final record test.
+    // Native selected-context links are not modeled; the separate C_Spell
+    // BaseSpellRelationships fixture is not evidence for this resolver.
+    state.push(if spells::get_spell(spell_id as u32).is_some() {
+        Val::Num(f64::from(spell_id))
+    } else {
+        Val::Nil
+    });
+    Ok(1)
 }
 
 fn c_spell_book_get_spell_book_item_power_cost(state: &mut LuaState) -> LuaResult<u32> {
