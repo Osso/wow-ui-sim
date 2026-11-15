@@ -217,6 +217,11 @@ simulator-coverage error outside that envelope. This is not the native numeric
 range or native error contract, and no native conformance is claimed there.
 No saturating Rust conversion defines selection for those unsupported inputs.
 
+Behavior-neutral R45 factoring (lt-941b #1302): `SelectCharacter` now lives in
+`glue_select_character`, split into parser, slot resolution and store/event
+helpers of at most30 body lines. The producer and original Retail/Forever
+registration order are preserved; this commit does not enable it on PTR.
+
 Full-list processing resets selection to -1 before `CHARACTER_LIST_UPDATE`.
 The event's count includes empty and unresolved slots. A separate zero-based
 host saved-candidate input is unset by default because its native initial value
