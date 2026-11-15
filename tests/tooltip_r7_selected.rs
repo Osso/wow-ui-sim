@@ -422,7 +422,7 @@ fn possession_candidate(
     spell_id: u32,
     tested: bool,
     effects: &[u32],
-    identity_matches: bool,
+    candidate_identity: Option<(bool, u32, u32)>,
     classification_field: Option<u32>,
 ) -> String {
     let effects = effects
@@ -430,10 +430,12 @@ fn possession_candidate(
         .map(u32::to_string)
         .collect::<Vec<_>>()
         .join(",");
+    let (identity_type_present, identity_first, identity_second) =
+        candidate_identity.unwrap_or((false, 0, 0));
     let classification =
         classification_field.map_or_else(|| "nil".to_string(), |value| value.to_string());
     format!(
-        "{{spellID={spell_id}, tested={tested}, effects={{{effects}}}, identityMatches={identity_matches}, classificationField={classification}}}"
+        "{{spellID={spell_id}, tested={tested}, effects={{{effects}}}, identityTypePresent={identity_type_present}, comparedIdentityFirst={identity_first}, comparedIdentitySecond={identity_second}, classificationField={classification}}}"
     )
 }
 
@@ -467,7 +469,7 @@ fn set_possession_spell_id(env: &WowLuaEnv, spell_id: u32) {
 fn assert_possession_effect_selects_distinct_spells(
     env: &WowLuaEnv,
     effect: u32,
-    identity_matches: bool,
+    candidate_identity: Option<(bool, u32, u32)>,
     classification_field: Option<u32>,
 ) {
     for spell_id in [116, 133] {
@@ -475,7 +477,7 @@ fn assert_possession_effect_selects_distinct_spells(
             spell_id,
             false,
             &[effect],
-            identity_matches,
+            candidate_identity,
             classification_field,
         );
         set_possession_object(env, (11, 22), &[candidate]);
@@ -524,36 +526,42 @@ fn possession_original_action_bar_hover_uses_the_supplied_spell() {
 #[test]
 fn possession_rescan_accepts_direct_effect_two_for_distinct_spells() {
     let env = load_possession_env();
-    assert_possession_effect_selects_distinct_spells(&env, 2, false, None);
+    assert_possession_effect_selects_distinct_spells(&env, 2, None, None);
 }
 
 #[test]
 fn possession_rescan_accepts_direct_effect_six_for_distinct_spells() {
     let env = load_possession_env();
-    assert_possession_effect_selects_distinct_spells(&env, 6, false, None);
+    assert_possession_effect_selects_distinct_spells(&env, 6, None, None);
 }
 
 #[test]
 fn possession_rescan_requires_identity_match_for_effect_236() {
     let env = load_possession_env();
-    assert_possession_effect_selects_distinct_spells(&env, 236, true, None);
+    assert_possession_effect_selects_distinct_spells(&env, 236, Some((true, 11, 22)), None);
     set_possession_spell_id(&env, 116);
-    let rejected = possession_candidate(133, false, &[236], false, None);
-    set_possession_object(&env, (11, 22), &[rejected]);
-    update_possession_player(&env, (11, 22));
-    assert_possession_consumer_spell(&env, 116);
+    for identity in [
+        Some((true, 12, 22)),
+        Some((true, 11, 23)),
+        Some((false, 11, 22)),
+    ] {
+        let rejected = possession_candidate(133, false, &[236], identity, None);
+        set_possession_object(&env, (11, 22), &[rejected]);
+        update_possession_player(&env, (11, 22));
+        assert_possession_consumer_spell(&env, 116);
+    }
 }
 
 #[test]
 fn possession_rescan_accepts_alternate_effect_28_with_classification_three() {
     let env = load_possession_env();
-    assert_possession_effect_selects_distinct_spells(&env, 28, false, Some(3));
+    assert_possession_effect_selects_distinct_spells(&env, 28, None, Some(3));
 }
 
 #[test]
 fn possession_rescan_accepts_alternate_effect_51_with_classification_three() {
     let env = load_possession_env();
-    assert_possession_effect_selects_distinct_spells(&env, 51, false, Some(3));
+    assert_possession_effect_selects_distinct_spells(&env, 51, None, Some(3));
 }
 
 #[test]
@@ -570,11 +578,11 @@ fn possession_rescan_keeps_old_id_for_absent_unresolved_or_rejected_inputs() {
     assert_possession_consumer_spell(&env, 116);
 
     let rejected = [
-        possession_candidate(133, true, &[2], false, None),
-        possession_candidate(u32::MAX, false, &[2], false, None),
-        possession_candidate(133, false, &[], false, None),
-        possession_candidate(133, false, &[28], false, Some(2)),
-        possession_candidate(133, false, &[236], false, None),
+        possession_candidate(133, true, &[2], None, None),
+        possession_candidate(u32::MAX, false, &[2], None, None),
+        possession_candidate(133, false, &[], None, None),
+        possession_candidate(133, false, &[28], None, Some(2)),
+        possession_candidate(133, false, &[236], None, None),
     ];
     set_possession_object(&env, (11, 22), &rejected);
     update_possession_player(&env, (11, 22));
@@ -585,8 +593,8 @@ fn possession_rescan_keeps_old_id_for_absent_unresolved_or_rejected_inputs() {
 fn possession_rescan_uses_the_first_accepted_candidate() {
     let env = load_possession_env();
     let candidates = [
-        possession_candidate(133, false, &[2], false, None),
-        possession_candidate(116, false, &[6], false, None),
+        possession_candidate(133, false, &[2], None, None),
+        possession_candidate(116, false, &[6], None, None),
     ];
     set_possession_object(&env, (11, 22), &candidates);
     update_possession_player(&env, (11, 22));
@@ -616,7 +624,7 @@ fn possession_setter_rescan_and_clear_notify_only_after_id_changes() {
     set_possession_spell_id(&env, 133);
     assert_possession_event_ids(&env, &[116, 133]);
 
-    let candidate = possession_candidate(116, false, &[2], false, None);
+    let candidate = possession_candidate(116, false, &[2], None, None);
     set_possession_object(&env, (11, 22), &[candidate]);
     update_possession_player(&env, (11, 22));
     assert_possession_event_ids(&env, &[116, 133, 116]);
