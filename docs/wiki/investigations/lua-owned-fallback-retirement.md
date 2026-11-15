@@ -100,9 +100,46 @@ retain their guard and all store-service native defaults remain untouched.
 
 No J native defaults were implemented. Kiosk, Perks, PrototypeDialog, legacy
 session/video behavior, promotion inventory and store-service semantics remain
-NATIVE/neutral-KEEP as synthesized. Creation/overlay/Enter World owners and
-covered R facts remain untouched. Authentication challenge parenting and
-secure/public binding remain unresolved, not blanket removable fallbacks.
+NATIVE/neutral-KEEP as synthesized. The J tranche left CharacterCreate,
+overlay and Enter World owners untouched; QUEUE 462 records a separate
+Retail-only result below. Authentication challenge parenting and secure/public
+binding remain unresolved, not blanket removable fallbacks.
+
+## Retail character-create fallback retirement (QUEUE 462)
+
+**VERIFIED (Retail 12.1.5 cache):** `Blizzard_CharacterCreate.toc:2,5-6`
+allows Glue and selects the original CharacterCreate Lua and XML. The Retail
+integration probe discovers that TOC for `ScreenKind::CharacterSelect`, checks
+`allows_screen`, then follows `GlueParent_SetScreen('charcreate')`; it does not
+call CreateCharacter or submit a character.
+
+**VERIFIED (simulator root cause):** the four XML overlay textures inherit the
+virtual `CharacterCreateBackgroundOverlayTexture` template, which declares
+`parentArray="BGTex"` at XML:244. `resolve_texture_inheritance` previously
+replaced an inherited `parent_array` with the instance's `None`, so the actual
+XML children did not enter `CharacterCreateFrame.BGTex`. The fix merges this
+field through the texture template chain; the selected consumer now sees all
+four XML Texture objects.
+
+| Candidate | Retail disposition | Original-consumer preservation evidence |
+|---|---|---|
+| Selected-state seeds | **REMOVED (Retail only)** | `CharacterCreateRaceAndClassMixin:UpdateState` at Lua:1634-1674 reads the selected race and class. The test selects Pandaren and Orc, then Demon Hunter and Death Knight, and checks the resulting selected records and faction. |
+| Empty `BGTex` table | **REMOVED (Retail only)** | XML:244,252-274 owns the array and its four textures. The test checks four actual Texture objects and exercises the original overlay consumer. |
+| Back/Forward replay | **REMOVED (Retail only)** | Original `CharacterCreateMixin:OnLoad` sets the Back label at Lua:88, and `UpdateForwardButton` owns the forward label. The test checks each label with its original arrow atlas. |
+| Overlay alpha error fallback | **REMOVED (Retail only)** | Original `UpdateBackgroundOverlays` at Lua:404-423 selects alpha from class, race and faction. The test observes Pandaren 0.75, Horde Orc 0.6, Demon Hunter 0.7, and Death Knight 0.8. |
+
+**PRESERVATION:** `retail_character_create_transition_preserves_original_surfaces`
+passes through the selected CharacterSelect-to-CharacterCreate path both while
+the wrappers are present and after Retail retirement. The test checks outputs
+from two races and two classes; it does not fabricate catalog data. The
+hash-bound transcripts and build receipts are in the lane handoff, not in this
+tracked wiki.
+
+**VERIFIED (scope):** the workaround strings remain enabled for non-Retail
+profiles because this probe does not establish their consumer paths. No native
+API question is open for these four candidates: the observed failure was XML
+template inheritance, not a missing API. The auth secure/public binding,
+default parent and Submit semantics remain UNKNOWN and untouched.
 
 - [Selected-name original consumers](../../../tests/stub_j_selected_name.rs)
 - [CharacterFrame title consumers](../../../tests/stub_j_character_title.rs)

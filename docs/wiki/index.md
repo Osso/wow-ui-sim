@@ -6,6 +6,10 @@
 
 [Lua-owned fallback retirement](investigations/lua-owned-fallback-retirement.md#catalogshop-eager-ownership-in-partial-panel-fixtures-lt-05d0) records lt-05d0's exact first-bad commit and missing eager publisher in the reputation fixture. Original Game TOC dependencies and source ownership replace no simulator behavior; this is fixture correction and preservation, not native API evidence.
 
+## [2026-11-15] fix | Retail CharacterCreate fallback retirement
+
+**VERIFIED (Retail 12.1.5 cache and selected test):** the Glue TOC selects CharacterCreate Lua/XML, the inherited `BGTex` parent array now survives simulator template resolution, and four fallback wrappers are retired on Retail only. The [consumer-selection record](investigations/consumer-selection-and-red-proof.md#retail-charactercreate-consumer-selection) and [fallback inventory](investigations/lua-owned-fallback-retirement.md#retail-character-create-fallback-retirement-queue-462) preserve the selection proof and state outputs; auth, parent and Submit behavior remain unknown and untouched.
+
 ## [2026-11-14] investigation | Screen-clamp state and evidence gaps
 
 [Screen-clamp suppression](investigations/screen-clamp-suppression.md) records the pre-edit R88n.5r-q1/q2 gap table, unambiguous model corrections, and pending native propagation/unit/notification questions. No movement-to-suppression alias is inferred.

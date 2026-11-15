@@ -135,6 +135,8 @@ The historical deferred `api_shape_stable_active_list.rs` is absent from master 
 - [Retail Blizzard UI manifest](../../../data/blizzard-ui-files/retail.txt) — source-file and addon selection inputs.
 - [Round 7 tooltip contract](../../specs/tooltip-r7-getters.md) — API contract and bounded evidence.
 - [Azerite catalog provenance](../../../data/db2/retail-12.1.5.70391/tooltip-azerite-catalog-provenance.json) — exact-build DB2 inputs.
+- [Retail CharacterCreate probe](../../../tests/glue_character_select.rs) — selected Glue TOC and original consumer preservation.
+- [Texture inheritance resolver](../../../crates/sim-xml/src/template.rs) — inherited `parentArray` merge.
 
 ## See Also
 
@@ -231,3 +233,20 @@ manual event or post-load repair is used. Baseline da31ffbf118 passed one exact
 selector with no recorded startup diagnostics. This is original-owner/removal
 PRESERVATION, not producer RED. A Retail library boundary separately proves no
 bootstrap owner/array synthesis and preserves other legacy wrappers.
+
+## Retail CharacterCreate consumer selection
+
+**VERIFIED (Retail 12.1.5 cache):**
+`Blizzard_CharacterCreate.toc:2,5-6` selects the original Lua/XML on Glue. The
+`retail_character_create_transition_preserves_original_surfaces` test verifies
+the TOC selected by `discover_blizzard_addons_for_screen` for
+`ScreenKind::CharacterSelect`, then opens `charcreate` through
+`GlueParent_SetScreen`. It confirms original Lua source for `OnLoad`,
+`UpdateForwardButton`, and `SetCharacterRace`, plus four XML-created `BGTex`
+textures.
+
+**PRESERVATION:** the same consumer checks Pandaren/Orc and Demon Hunter/Death
+Knight selected records and the original 0.75/0.6/0.7/0.8 overlay alphas before
+and after Retail fallback retirement. The resolved `parentArray="BGTex"`
+template issue and candidate dispositions are recorded in [Lua-owned fallback
+retirement](lua-owned-fallback-retirement.md#retail-character-create-fallback-retirement-queue-462).

@@ -1,3 +1,7 @@
+## [2026-11-15] fix | Retail CharacterCreate fallback retirement
+
+Updated the [consumer-selection record](investigations/consumer-selection-and-red-proof.md#retail-charactercreate-consumer-selection), [fallback inventory](investigations/lua-owned-fallback-retirement.md#retail-character-create-fallback-retirement-queue-462), and [post-load workaround audit](investigations/post-load-workaround-audit.md#retail-glue-charactercreate-fallbacks). **VERIFIED (Retail 12.1.5 cache and test):** Glue selects the original CharacterCreate Lua/XML; inherited `BGTex` registration now works; selected-state, Back/Forward, and overlay-alpha wrappers are no longer installed on Retail. The preservation test checks two races and two classes before and after retirement. Non-Retail wrappers and the auth, default-parent, and Submit boundaries remain unchanged.
+
 ## [2026-11-15] correction | Retail tooltip sell-price contract
 
 Updated the [tooltip serialization contract](../specs/tooltip-data-serialization.md) and [Lua API](systems/lua-api.md#retail-sellprice-line-r88pp1). **VERIFIED (R88p.p1):** an initial zero price omits type 11; emitted rows have empty text, default color, and `maxPrice` initialized to -1. The original Retail `SetItemByID` test checks two distinct backed prices and a zero-price item. **INFERRED:** `ItemInfo.sell_price` proxies the native unit-price calculation and the native masks map to ItemSparse column names. **UNKNOWN/unmodeled:** flag/status/preview and prepared-quantity inputs are absent from `ItemInfo`.
