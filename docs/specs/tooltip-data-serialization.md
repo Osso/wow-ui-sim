@@ -20,7 +20,7 @@ publication is not expanded by this change.
 - [x] Both sides take that same RGB publication: a supplied right side publishes the packed color, not the raw factory color.
 - [x] Populated identity omits zero `id`; later common identity assignments append ordered type-19 rows with `tooltipType`, nonzero-only `tooltipID`, empty left text and supplied left color.
 - [x] Original `ProcessInfo`, GameTooltip line handlers and TooltipUtil retain their payloads; presentation parses inline markup independently.
-- [ ] The Retail `GameTooltip:SetItemByID` path emits a type-11 row for a nonzero backed catalog price with empty `leftText`, resolved default `leftColor`, `price`, and `maxPrice = -1` when no prepared quantity input exists. Mapping `ItemInfo.sell_price` to the native initial unit price is **INFERRED**.
+- [x] The Retail `GameTooltip:SetItemByID` path emits a type-11 row for a nonzero backed catalog price with empty `leftText`, resolved default `leftColor`, `price`, and `maxPrice = -1` when no prepared quantity input exists. Mapping `ItemInfo.sell_price` to the native initial unit price is **INFERRED**.
 
 ### Retail SellPrice behavior (R88p.p1)
 
