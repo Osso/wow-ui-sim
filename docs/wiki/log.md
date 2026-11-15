@@ -1,3 +1,7 @@
+## [2026-11-15] system | Retail R88t secure dependency and publisher contracts
+
+Updated the [add-on load-phase contract](../specs/addon-load-phases.md), [addon-loading system](systems/addon-loading.md#secure-dependency-replay-and-library-allowlist), and [taint system](systems/taint-system.md#dual-lua-environment) with R88t. **VERIFIED (Retail 12.1.5.70688):** dependency ordering, per-environment states, and the named publication routes. The ordinary-request failure-independence clause is **VERIFIED but untested** in the simulator because no evidence-backed ordinary-only failure input is known; transitive copying remains **UNKNOWN**.
+
 ## [2026-11-14] investigation | Retail secure tooltip color route — merged catalog
 
 Updated [taint system](systems/taint-system.md#dual-lua-environment) with the merged catalog state. **VERIFIED (simulator source at `a941395885655f56edfcc1f57cac3fa1f0c853c7`):** the generated Retail catalog contains `TOOLTIP_DEFAULT_BACKGROUND_COLOR`, and `C_UIColor.GetColors` is registered through flag 3. **UNVERIFIED at that SHA:** the fallback-disabled PrivateAuras acceptance has not yet run against this data.

@@ -190,6 +190,32 @@ C_PvP = __wow_color_merge_namespace(C_PvP, {
 })
 "#;
 
+// Retire this bridge when c_api owns the model; keep unimplemented members absent.
+// This forwards only existing temporary handlers. Retire it when c_api owns the C_ColorOverrides model.
+const SECURE_COLOR_OVERRIDE_PUBLICATION_LUA: &str = r#"
+local secureEnvironment = rawget(_G, "__secureenv")
+local ordinary = rawget(_G, "C_ColorOverrides")
+if type(secureEnvironment) ~= "table" or type(ordinary) ~= "table" then
+  return
+end
+
+local secure = rawget(secureEnvironment, "C_ColorOverrides")
+if type(secure) ~= "table" then
+  return
+end
+
+local function makeForwarder(handler)
+  return function(...) return handler(...) end
+end
+
+for _, member in ipairs({ "GetColorForQuality", "GetColorOverrideInfo" }) do
+  local handler = rawget(ordinary, member)
+  if type(handler) == "function" then
+    rawset(secure, member, makeForwarder(handler))
+  end
+end
+"#;
+
 const NON_RETAIL_UI_COLOR_DEFAULTS_LUA: &str = r#"
 local namespace = type(C_UIColor) == "table" and C_UIColor or {}
 if rawget(namespace, "GetColors") == nil then
@@ -210,6 +236,11 @@ C_UIColor = namespace
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(COLOR_DEFAULTS_LUA)?;
+    if crate::client_profile::is_active_retail_12_1_5() {
+        // R88t verifies separate tables; keep only existing temporary handlers in the secure namespace.
+        crate::c_api::ensure_namespace(lua.state_mut(), "C_ColorOverrides")?;
+        lua.exec(SECURE_COLOR_OVERRIDE_PUBLICATION_LUA)?;
+    }
     if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
         lua.exec(NON_RETAIL_UI_COLOR_DEFAULTS_LUA)?;
     }

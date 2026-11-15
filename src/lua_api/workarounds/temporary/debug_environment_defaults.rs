@@ -190,8 +190,27 @@ if debug ~= nil and debug.getfenv ~= nil then
 end
 "#;
 
+// Retire this temporary no-op when the native effect has a modeled simulator route.
+// This forwarding route retains the existing no-op. Retire it when the native effect has a modeled simulator route.
+const SECURE_ADD_SOURCE_LOCATION_EXCLUDE_LUA: &str = r#"
+local secureEnvironment = rawget(_G, "__secureenv")
+local ordinary = rawget(_G, "AddSourceLocationExclude")
+if type(secureEnvironment) == "table"
+    and type(ordinary) == "function"
+    and rawget(secureEnvironment, "AddSourceLocationExclude") == nil then
+  local function makeForwarder(handler)
+    return function(...) return handler(...) end
+  end
+  secureEnvironment.AddSourceLocationExclude = makeForwarder(ordinary)
+end
+"#;
+
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(DEBUG_ENVIRONMENT_DEFAULTS_LUA)?;
+    if crate::client_profile::is_active_retail_12_1_5() {
+        // R88t verifies flag-3 publication and separate function objects; its callback effect stays UNKNOWN.
+        lua.exec(SECURE_ADD_SOURCE_LOCATION_EXCLUDE_LUA)?;
+    }
     Ok(())
 }
 

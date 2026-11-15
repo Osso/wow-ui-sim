@@ -242,6 +242,7 @@ pub(crate) fn init_enum_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
     register_base_constants(lua)?;
     register_ptr_constant_overrides(lua)?;
     register_compat_constant_values(lua)?;
+    publish_retail_account_store_constants(lua)?;
 
     Ok(())
 }
@@ -389,6 +390,37 @@ fn register_compat_constant_values(lua: &mut rilua::Lua) -> crate::Result<()> {
     )?;
     if ACTIVE_RETAIL_API_EPOCH == RetailApiEpoch::Retail12_0_0 {
         lua.exec(RETAIL_12_0_0_POST_COMPAT_CONSTANT_OVERRIDES_LUA)?;
+    }
+    Ok(())
+}
+
+// R88t verifies direct, no-flag publication of only these AccountStoreConsts values.
+fn publish_retail_account_store_constants(lua: &mut rilua::Lua) -> crate::Result<()> {
+    if !crate::client_profile::is_active_retail_12_1_5() {
+        return Ok(());
+    }
+
+    const MEMBERS: &[&str] = &[
+        "PlunderstormStoreFrontID",
+        "WowhackStoreFrontID",
+        "PlunderstormPlunderCurrencyID",
+        "KegLegRenownCurrencyID",
+    ];
+
+    let state = lua.state_mut();
+    let constants = ensure_global_table(state, "Constants");
+    let Val::Table(account_store) = ensure_table_field(state, constants, "AccountStoreConsts")
+    else {
+        unreachable!("AccountStoreConsts must be a table");
+    };
+    for member in MEMBERS {
+        let value = crate::lua_api::methods::table_get(state, Val::Table(account_store), member);
+        if value.is_nil() {
+            return Err(crate::Error::Other(format!(
+                "missing ordinary Constants.AccountStoreConsts.{member} value"
+            )));
+        }
+        crate::c_api::set_namespace_member(state, Val::Table(account_store), member, value)?;
     }
     Ok(())
 }

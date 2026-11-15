@@ -4,11 +4,14 @@
 //! before other Blizzard modules can use it.
 
 use crate::lua_api::methods::create_table_with_capacity;
-use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
+use crate::lua_bridge::{stack_val, table_set_rust_fn_static, table_set_rust_fn_unpaired};
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
 use rilua::{LuaApiMut, LuaResult, Val, runtime_error};
+
+// R88t verifies flag 3 for the Retail table.count registration.
+const RETAIL_TABLE_COUNT_REGISTRATION_FLAGS: u8 = 3;
 
 pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     let state = lua.state_mut();
@@ -21,7 +24,29 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     table_set_rust_fn_static(state, table, "removevalue", remove_value)?;
     table_set_rust_fn_static(state, table, "keys", keys)?;
     table_set_rust_fn_static(state, table, "values", values)?;
+    if crate::client_profile::is_active_retail_12_1_5() {
+        // R88t verifies flag 3 and separate table-library and function objects.
+        register_secure_count(state)?;
+    }
     Ok(())
+}
+
+fn register_secure_count(state: &mut LuaState) -> LuaResult<()> {
+    let (_, publish_secure) = crate::lua_api::globals::security::native_registration_destinations(
+        RETAIL_TABLE_COUNT_REGISTRATION_FLAGS,
+    );
+    if !publish_secure {
+        return Ok(());
+    }
+    let Val::Table(secureenv) = crate::lua_api::methods::registry_get(state, "__secureenv") else {
+        return Ok(());
+    };
+    let Val::Table(secure_table) =
+        crate::lua_api::methods::table_get(state, Val::Table(secureenv), "table")
+    else {
+        return Err(runtime_error("secure table library is unavailable"));
+    };
+    table_set_rust_fn_unpaired(state, secure_table, "count", count)
 }
 
 pub(super) fn table_library(state: &mut LuaState) -> LuaResult<GcRef<Table>> {

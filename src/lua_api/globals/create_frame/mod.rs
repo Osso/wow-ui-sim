@@ -353,7 +353,28 @@ pub fn register_global_frames(lua: &mut rilua::Lua) -> LuaResult<()> {
     };
     for (id, name) in named_frames {
         let frame_val = frame_ref(state, id)?;
-        set_global_raw(state, &name, frame_val);
+        if name == "UIParent" && crate::client_profile::is_active_retail_12_1_5() {
+            publish_retail_ui_parent_name(state, frame_val)?;
+        } else {
+            set_global_raw(state, &name, frame_val);
+        }
+    }
+    Ok(())
+}
+
+/// Publish the Retail bootstrap UIParent name through the secure named-frame route.
+/// R88t verifies creation-policy flag 32, same-object publication, and preservation of existing names.
+fn publish_retail_ui_parent_name(state: &mut LuaState, frame: Val) -> LuaResult<()> {
+    let global = Val::Table(state.global);
+    if crate::lua_api::methods::table_get(state, global, "UIParent").is_nil() {
+        set_global_raw(state, "UIParent", frame.clone());
+    }
+
+    let Val::Table(secureenv) = crate::lua_api::methods::registry_get(state, "__secureenv") else {
+        return Ok(());
+    };
+    if crate::lua_api::methods::table_get(state, Val::Table(secureenv), "UIParent").is_nil() {
+        crate::lua_api::globals::security::set_secure_env_key_state(state, "UIParent", frame)?;
     }
     Ok(())
 }

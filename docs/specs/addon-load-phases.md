@@ -27,9 +27,18 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 
 - [ ] Secure-mode addon and dependency files must resolve global reads through the shared `__secureenv` by default. Ordinary-only globals such as `debug` and `coroutine` stay unavailable there, and per-file environment annotations remain effective.
 - [ ] Keep the temporary private snapshot only for explicit `SecureReplay` and generated XML loader paths in this cycle. After the original fallback-disabled PrivateAuras consumer passes, remove that bridge in its own commit; inherited-only values must not enter `__secureenv`.
-- [ ] For the Retail 12.1.5.70688 R88n.11b namespace and security-global routes in this cycle, apply each verified member flag. When both environments are destinations, preserve one Lua function value across them. Keep values absent when the simulator has no implementation and keep flags UNKNOWN for names without evidence.
+- [ ] For the Retail 12.1.5.70688 R88n.11b entries, apply each verified member flag and preserve one Lua function value only where R88n.11b proves it. Keep values absent when the simulator has no implementation and flags UNKNOWN without evidence; R88t's separate-function routes are specified below.
 - [x] `C_AddOns.LoadAddOn` must attempt optional dependencies before required dependencies.
 - [x] An optional dependency failure must not stop the requested addon from loading.
+
+### R88t secure dependency and named publication routes
+
+- [ ] VERIFIED (Retail 12.1.5.70688, R88t): ordinary and secure addon loaded states are separate. A secure request passes its effective mode to dependencies, including dependencies without their own secure directive; optional dependencies load before required dependencies, and dependencies load before the current addon's files.
+- [ ] VERIFIED (Retail 12.1.5.70688, R88t): for a dependency with no secure directive and no ordinary loaded state, the loader requests ordinary mode and then secure mode. If a mode is already loaded, the request can return without running its files again.
+- [ ] VERIFIED (Retail 12.1.5.70688, R88t): Retail flag 3 publishes `AddSourceLocationExclude` and `table.count` into both environments with separate function objects; the ordinary and secure table libraries are separate. The simulator must not infer the callback effect of its temporary `AddSourceLocationExclude` no-op.
+- [ ] VERIFIED (Retail 12.1.5.70688, R88t): flag 3 publishes the six named `C_ColorOverrides` members into separate namespace tables with separate function objects. The simulator may publish existing handlers only; it must not add placeholder methods without a backing model.
+- [ ] VERIFIED (Retail 12.1.5.70688, R88t): constant registration publishes separate `Constants` and `AccountStoreConsts` tables without a member flag. The four verified values are 1, 3, 3139, and 2814 for their named members.
+- [ ] VERIFIED (Retail 12.1.5.70688, R88t): the Retail UIParent bootstrap uses named-frame policy flag 32. If ordinary and secure `UIParent` names are empty, both receive the same frame-table object; each destination preserves an existing non-nil name.
 
 ### `LoadWith` followers
 
@@ -58,7 +67,12 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 - `src/c_api/c_addons.rs` — exposes startup follower processing through the runtime loader.
 - `src/c_api/c_addons_runtime.rs` — resolves runtime dependencies and submits `LoadWith` followers.
 - `src/c_api/helpers.rs`, `src/c_api/secure_publication.rs` — publish the R88n.11b namespace values implemented by the simulator.
+- `src/loader/addon.rs` — orders ordinary and secure dependency requests.
 - `src/loader/lua_file.rs`, `src/loader/xml_file.rs`, `src/lua_api/loader_env.rs`, `src/lua_api/globals/security/secure_env.rs` — execute secure files through the shared table and retain private replay only for selected replay paths and generated XML loader chunks.
+- `src/lua_api/env_init/enums.rs` — publishes the four verified `Constants.AccountStoreConsts` values.
+- `src/lua_api/globals/real/table_extensions.rs` — publishes Retail `table.count`.
+- `src/lua_api/globals/create_frame/mod.rs` — publishes the built-in `UIParent` name to secureenv.
+- `src/lua_api/workarounds/temporary/debug_environment_defaults.rs`, `src/lua_api/workarounds/temporary/color_defaults.rs` — publish only existing temporary handlers under the verified names.
 - `src/lua_api/state/sim_state.rs` — holds ordered registered follower declarations and the resolved target-to-follower index.
 - `src/lua_api/state.rs` — initializes the registration vector and follower index.
 - `src/lua_api/state/ui_reload.rs` — clears the follower index on UI reload.
@@ -68,11 +82,17 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 - `src/loader/tests/screen_selection.rs`
 - `tests/addon_runtime_dependencies.rs`
 - `src/c_api/c_addons_runtime_tests.rs`
-- `tests/secureenv_isolation.rs`, `tests/blizzard_private_auras_ui_loads.rs` — secure Lua/XML snapshot reads, assignment publication, and PrivateAurasTooltip no-error behavior.
+- `tests/secureenv_isolation.rs` — separate loaded states, dependency request order, and already-loaded mode behavior.
+- `tests/blizzard_private_auras_ui_loads.rs` — the original FrameFactory/Pools, AccountUtil, ColorManager, GameRulesUtil, and PrivateAurasTooltip consumers.
 
 ## Known gaps (current cycle)
 
 - [ ] UNKNOWN: PTR 12.1.7.70668 does not establish whether declaration parsing feeds the child-list resolver. The simulator applies the inferred resolver model; PTR tests do not assert parser linkage or duplicate suppression.
+- [ ] VERIFIED (R88t, native) but untested in the simulator: an ordinary dependency-request failure must not suppress the following secure request. No evidence-backed input currently makes only the ordinary request fail; a Lua file diagnostic is not proof of that request failure.
+- [ ] INFERRED (R88t): when neither mode was loaded and both default file paths complete, each default path executes in its requested environment. Do not claim this exact per-environment count as native parity.
+- [ ] UNKNOWN effect: `AddSourceLocationExclude` keeps its existing temporary no-op; tests assert publication only.
+- [ ] R88v pending: the simulator has no handlers for `ClearColorOverrides`, `GetDefaultColorForQuality`, `RemoveColorOverride`, or `SetColorOverride`; do not add placeholder methods.
+- [ ] UNKNOWN: transitive copying from ordinary globals into secureenv. The direct dependency helper does not add a blanket-copy route.
 - [ ] The original `TooltipDataProcessor` identity and its published secure-table provenance remain deferred to `lt-635e`; this lane verifies that the PrivateAurasTooltip consumer runs without errors.
 - [ ] UNKNOWN: PTR phase and demand fields are not mapped to cached TOC directives, and native live-list membership and sort direction are not established.
 - [ ] UNKNOWN: Native `LoadWith` behavior on Mists, Era, Anniversary, and Wrath. The simulator keeps their previous dispatch path.
@@ -86,3 +106,4 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 
 - Modeling mode-one dependency-chain-only traversal.
 - Asserting the inferred association between user AddOns-directory inputs and native phase three.
+- Adding a blanket ordinary-to-secure copy; transitive publication remains UNKNOWN.

@@ -499,7 +499,8 @@ fn load_secure_dependency_toc(
 ) -> Result<(), LoadError> {
     let folder_name = addon_folder_name(dependency_toc);
     let ordinary_loaded = addon_loaded_in_environment(env, folder_name, false);
-    load_ordinary_dependency_if_needed(
+    // R88t requires this secure request regardless of the ordinary request result.
+    let ordinary_result = load_ordinary_dependency_if_needed(
         env,
         dependency_toc,
         dependency,
@@ -507,14 +508,36 @@ fn load_secure_dependency_toc(
         ordinary_loaded,
         result,
         secure_load_path,
-    )?;
+    );
     let secure_result = load_dependency_in_secure_environment(
         env,
         dependency_toc,
         ordinary_loaded,
         secure_load_path,
     );
-    record_dependency_result(result, dependency, required, secure_result, "secure")
+    finish_secure_dependency_requests(result, dependency, required, ordinary_result, secure_result)
+}
+
+fn finish_secure_dependency_requests(
+    result: &mut LoadResult,
+    dependency: &str,
+    required: bool,
+    ordinary_result: Result<(), LoadError>,
+    secure_result: Result<LoadResult, LoadError>,
+) -> Result<(), LoadError> {
+    let secure_result =
+        record_dependency_result(result, dependency, required, secure_result, "secure");
+    match ordinary_result {
+        Ok(()) => secure_result,
+        Err(ordinary_error) => {
+            if let Err(secure_error) = secure_result {
+                tracing::warn!(
+                    "Secure dependency {dependency} request also failed after ordinary request: {secure_error}"
+                );
+            }
+            Err(ordinary_error)
+        }
+    }
 }
 
 fn load_dependency_in_secure_environment(
