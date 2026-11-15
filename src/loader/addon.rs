@@ -276,7 +276,7 @@ fn load_addon_internal_with_pass(
     if addon_loaded_in_environment(env, folder_name, secure) {
         return Ok(result);
     }
-    if secure && !secure_load_path.insert(folder_name.to_string()) {
+    if !enter_secure_load_path(secure, secure_load_path, folder_name) {
         return Ok(result);
     }
 
@@ -289,10 +289,22 @@ fn load_addon_internal_with_pass(
         secure_load_path,
         &mut result,
     );
+    leave_secure_load_path(secure, secure_load_path, folder_name);
+    load_result.map(|()| result)
+}
+
+fn enter_secure_load_path(
+    secure: bool,
+    secure_load_path: &mut HashSet<String>,
+    folder_name: &str,
+) -> bool {
+    !secure || secure_load_path.insert(folder_name.to_string())
+}
+
+fn leave_secure_load_path(secure: bool, secure_load_path: &mut HashSet<String>, folder_name: &str) {
     if secure {
         secure_load_path.remove(folder_name);
     }
-    load_result.map(|()| result)
 }
 
 fn load_addon_internal_body(
@@ -309,14 +321,37 @@ fn load_addon_internal_body(
     let ctx = build_addon_context(env, toc, folder_name)?;
     let loading_guard =
         begin_addon_load_in_environment(env, folder_name, toc, pass.use_secure_env(&ctx))?;
+    load_secure_dependencies_for_pass(env, toc, pass, result, secure_load_path)?;
+    load_addon_files_and_finish(env, toc, &ctx, pass, saved_vars_mgr, loading_guard, result);
+    Ok(())
+}
 
+fn load_secure_dependencies_for_pass(
+    env: &LoaderEnv<'_>,
+    toc: &TocFile,
+    pass: EnvironmentPass,
+    result: &mut LoadResult,
+    secure_load_path: &mut HashSet<String>,
+) -> Result<(), LoadError> {
     if pass.is_secure_load() {
         load_secure_dependencies(env, toc, result, secure_load_path)?;
     }
+    Ok(())
+}
+
+fn load_addon_files_and_finish(
+    env: &LoaderEnv<'_>,
+    toc: &TocFile,
+    ctx: &AddonContext<'_>,
+    pass: EnvironmentPass,
+    saved_vars_mgr: Option<&mut SavedVariablesManager>,
+    loading_guard: LoadingAddonGuard,
+    result: &mut LoadResult,
+) {
     let nil_symbol_access_start = env.state().borrow().nil_symbol_accesses.len();
     let addon_name = result.name.clone();
-    load_addon_files(env, toc, folder_name, &ctx, pass, result);
-    apply_addon_post_load(env, toc, folder_name, &ctx, pass, saved_vars_mgr, result);
+    load_addon_files(env, toc, ctx.name, ctx, pass, result);
+    apply_addon_post_load(env, toc, ctx.name, ctx, pass, saved_vars_mgr, result);
     finish_addon_load(
         env,
         loading_guard,
@@ -324,7 +359,6 @@ fn load_addon_internal_body(
         nil_symbol_access_start,
         result,
     );
-    Ok(())
 }
 
 fn prepare_saved_variables<'a>(
@@ -445,27 +479,85 @@ fn load_secure_dependency(
     else {
         return Ok(());
     };
-    let folder_name = addon_folder_name(&dependency_toc);
-    let ordinary_loaded = addon_loaded_in_environment(env, folder_name, false);
-    if !dependency_toc.is_secure_env() && !ordinary_loaded {
-        load_dependency_ordinary_pass(
-            env,
-            &dependency_toc,
-            dependency,
-            required,
-            result,
-            secure_load_path,
-        )?;
-    }
+    load_secure_dependency_toc(
+        env,
+        &dependency_toc,
+        dependency,
+        required,
+        result,
+        secure_load_path,
+    )
+}
 
-    let secure_pass = if ordinary_loaded || !dependency_toc.is_secure_env() {
+fn load_secure_dependency_toc(
+    env: &LoaderEnv<'_>,
+    dependency_toc: &TocFile,
+    dependency: &str,
+    required: bool,
+    result: &mut LoadResult,
+    secure_load_path: &mut HashSet<String>,
+) -> Result<(), LoadError> {
+    let folder_name = addon_folder_name(dependency_toc);
+    let ordinary_loaded = addon_loaded_in_environment(env, folder_name, false);
+    load_ordinary_dependency_if_needed(
+        env,
+        dependency_toc,
+        dependency,
+        required,
+        ordinary_loaded,
+        result,
+        secure_load_path,
+    )?;
+    let secure_result = load_dependency_in_secure_environment(
+        env,
+        dependency_toc,
+        ordinary_loaded,
+        secure_load_path,
+    );
+    record_dependency_result(result, dependency, required, secure_result, "secure")
+}
+
+fn load_dependency_in_secure_environment(
+    env: &LoaderEnv<'_>,
+    toc: &TocFile,
+    ordinary_loaded: bool,
+    secure_load_path: &mut HashSet<String>,
+) -> Result<LoadResult, LoadError> {
+    let secure_pass = secure_dependency_pass(ordinary_loaded, toc.is_secure_env());
+    load_addon_internal_with_pass(env, toc, None, secure_pass, secure_load_path)
+}
+
+fn load_ordinary_dependency_if_needed(
+    env: &LoaderEnv<'_>,
+    dependency_toc: &TocFile,
+    dependency: &str,
+    required: bool,
+    ordinary_loaded: bool,
+    result: &mut LoadResult,
+    secure_load_path: &mut HashSet<String>,
+) -> Result<(), LoadError> {
+    if dependency_toc.is_secure_env() || ordinary_loaded {
+        return Ok(());
+    }
+    load_dependency_ordinary_pass(
+        env,
+        dependency_toc,
+        dependency,
+        required,
+        result,
+        secure_load_path,
+    )
+}
+
+fn secure_dependency_pass(
+    ordinary_loaded: bool,
+    dependency_uses_secure_env: bool,
+) -> EnvironmentPass {
+    if ordinary_loaded || !dependency_uses_secure_env {
         EnvironmentPass::SecureDependency
     } else {
         EnvironmentPass::Secure
-    };
-    let secure_result =
-        load_addon_internal_with_pass(env, &dependency_toc, None, secure_pass, secure_load_path);
-    record_dependency_result(result, dependency, required, secure_result, "secure")
+    }
 }
 
 fn load_dependency_ordinary_pass(
@@ -718,19 +810,10 @@ fn begin_addon_load_in_environment(
     let mut state = env.state().borrow_mut();
     let previous_secure_env = state.loading_addon_secure_env.replace(secure_env);
     let entered = !state.loading_addon_stack.contains(&addon_idx);
-    if entered {
-        update_addon_metadata(&mut state, addon_idx, folder_name, toc);
-        #[cfg(feature = "retail-12-0-7")]
-        if let Err(error) = crate::c_api::c_ui_file_asset::register_loaded_addon_files(
-            &mut state,
-            folder_name,
-            &toc.addon_dir,
-        ) {
-            state.loading_addon_secure_env = previous_secure_env;
-            return Err(LoadError::io_with_path(&toc.addon_dir, error));
-        }
-        state.loading_addon_stack.push(addon_idx);
-        state.loading_addon_index = Some(addon_idx);
+    if entered && let Err(error) = prepare_addon_load_state(&mut state, addon_idx, folder_name, toc)
+    {
+        state.loading_addon_secure_env = previous_secure_env;
+        return Err(error);
     }
 
     Ok(LoadingAddonGuard {
@@ -740,6 +823,21 @@ fn begin_addon_load_in_environment(
         secure_env,
         previous_secure_env,
     })
+}
+
+fn prepare_addon_load_state(
+    state: &mut SimState,
+    addon_idx: u16,
+    folder_name: &str,
+    toc: &TocFile,
+) -> Result<(), LoadError> {
+    update_addon_metadata(state, addon_idx, folder_name, toc);
+    #[cfg(feature = "retail-12-0-7")]
+    crate::c_api::c_ui_file_asset::register_loaded_addon_files(state, folder_name, &toc.addon_dir)
+        .map_err(|error| LoadError::io_with_path(&toc.addon_dir, error))?;
+    state.loading_addon_stack.push(addon_idx);
+    state.loading_addon_index = Some(addon_idx);
+    Ok(())
 }
 
 fn update_addon_metadata(state: &mut SimState, addon_idx: u16, folder_name: &str, toc: &TocFile) {
@@ -802,31 +900,55 @@ fn load_addon_files(
     let bootstrap_loaded = bootstrap_has_loaded(env, folder_name);
 
     for (index, (file_rel, file)) in toc.files.iter().zip(toc.file_paths()).enumerate() {
-        if !loads_file_in_bootstrap_phase(pass, toc.file_is_bootstrap(index), bootstrap_loaded)
-            || !toc.file_allows_screen(index, env.state().borrow().screen_kind)
-            || should_skip_addon_file(toc, file_rel)
-        {
+        if !should_load_addon_file(env, toc, ctx, pass, bootstrap_loaded, index, file_rel) {
             continue;
         }
-        if pass.skips_explicit_environment() && toc.file_use_secure_env(index).is_some() {
-            continue;
-        }
-        if !toc.file_allows_environment(index, pass.use_secure_env(ctx)) {
-            continue;
-        }
-        let file_ctx = AddonContext {
-            name: ctx.name,
-            table: ctx.table,
-            addon_root: ctx.addon_root,
-            use_secure_env: toc
-                .file_use_secure_env(index)
-                .unwrap_or_else(|| pass.use_secure_env(ctx)),
-            taint: ctx.taint,
-        };
+        let file_ctx = addon_file_context(toc, ctx, index, pass);
         if std::env::var("WOW_SIM_VERBOSE").is_ok() {
             println!("  loading file {}", file_rel.display());
         }
         load_addon_file(env, &file_ctx, result, &file, pass);
+    }
+}
+
+fn should_load_addon_file(
+    env: &LoaderEnv<'_>,
+    toc: &TocFile,
+    ctx: &AddonContext,
+    pass: EnvironmentPass,
+    bootstrap_loaded: bool,
+    index: usize,
+    file_rel: &Path,
+) -> bool {
+    if !loads_file_in_bootstrap_phase(pass, toc.file_is_bootstrap(index), bootstrap_loaded) {
+        return false;
+    }
+    if !toc.file_allows_screen(index, env.state().borrow().screen_kind) {
+        return false;
+    }
+    if should_skip_addon_file(toc, file_rel) {
+        return false;
+    }
+    if pass.skips_explicit_environment() && toc.file_use_secure_env(index).is_some() {
+        return false;
+    }
+    toc.file_allows_environment(index, pass.use_secure_env(ctx))
+}
+
+fn addon_file_context<'a>(
+    toc: &TocFile,
+    ctx: &AddonContext<'a>,
+    index: usize,
+    pass: EnvironmentPass,
+) -> AddonContext<'a> {
+    AddonContext {
+        name: ctx.name,
+        table: ctx.table,
+        addon_root: ctx.addon_root,
+        use_secure_env: toc
+            .file_use_secure_env(index)
+            .unwrap_or_else(|| pass.use_secure_env(ctx)),
+        taint: ctx.taint,
     }
 }
 
@@ -956,6 +1078,18 @@ fn maybe_replay_blizzard_lua_in_secure_env(
     );
 }
 
+const SECURE_REPLAY_LIBRARY_ADDONS: &[&str] = &[
+    "Blizzard_SharedXMLBase",
+    "Blizzard_SharedXML",
+    "Blizzard_FrameXMLUtil",
+    "Blizzard_CombatLogBase",
+    "Blizzard_CatalogShopSharedTemplates",
+    "Blizzard_CatalogShopSharedUtil",
+    "Blizzard_AsyncRequest",
+    "Blizzard_GameTooltip",
+    "Blizzard_RaidWarning",
+];
+
 pub(super) fn is_secure_replay_library_addon(folder_name: &str) -> bool {
     // Retail secure loads use the shared dependency pass; preserve the legacy
     // replay path for the other profiles.
@@ -975,18 +1109,7 @@ pub(super) fn is_secure_replay_library_addon(folder_name: &str) -> bool {
         return false;
     }
 
-    matches!(
-        folder_name,
-        "Blizzard_SharedXMLBase"
-            | "Blizzard_SharedXML"
-            | "Blizzard_FrameXMLUtil"
-            | "Blizzard_CombatLogBase"
-            | "Blizzard_CatalogShopSharedTemplates"
-            | "Blizzard_CatalogShopSharedUtil"
-            | "Blizzard_AsyncRequest"
-            | "Blizzard_GameTooltip"
-            | "Blizzard_RaidWarning"
-    )
+    SECURE_REPLAY_LIBRARY_ADDONS.contains(&folder_name)
 }
 
 pub(super) fn should_skip_addon_file(toc: &TocFile, file_rel: &Path) -> bool {

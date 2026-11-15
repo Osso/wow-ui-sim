@@ -499,6 +499,8 @@ fn chained_handler_lua(
     new_handler: &str,
     (first, second): (&str, &str),
 ) -> String {
+    let secure_calls = secure_chained_calls(first, second);
+    let protected_calls = protected_chained_calls(first, second, handler_name);
     format!(
         r#"
         do
@@ -508,24 +510,35 @@ fn chained_handler_lua(
             if __old then
                 {target}:SetScript("{handler_name}", function(self, ...)
                     if securecall then
-                        securecall({first}, self, ...)
-                        securecall({second}, self, ...)
+                        {secure_calls}
                     else
-                        local __ok1, __err1 = pcall({first}, self, ...)
-                        local __ok2, __err2 = pcall({second}, self, ...)
-                        if not __ok1 then
-                            local name = self.GetName and self:GetName() or "?"
-                            __report("[script:{handler_name}] " .. name .. ": " .. tostring(__err1))
-                        end
-                        if not __ok2 then
-                            local name = self.GetName and self:GetName() or "?"
-                            __report("[script:{handler_name}] " .. name .. ": " .. tostring(__err2))
-                        end
+                        {protected_calls}
                     end
                 end)
             else
                 {target}:SetScript("{handler_name}", __new)
             end
+        end
+        "#
+    )
+}
+
+fn secure_chained_calls(first: &str, second: &str) -> String {
+    format!("securecall({first}, self, ...)\nsecurecall({second}, self, ...)")
+}
+
+fn protected_chained_calls(first: &str, second: &str, handler_name: &str) -> String {
+    format!(
+        r#"
+        local __ok1, __err1 = pcall({first}, self, ...)
+        local __ok2, __err2 = pcall({second}, self, ...)
+        if not __ok1 then
+            local name = self.GetName and self:GetName() or "?"
+            __report("[script:{handler_name}] " .. name .. ": " .. tostring(__err1))
+        end
+        if not __ok2 then
+            local name = self.GetName and self:GetName() or "?"
+            __report("[script:{handler_name}] " .. name .. ": " .. tostring(__err2))
         end
         "#
     )
