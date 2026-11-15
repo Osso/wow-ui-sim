@@ -213,6 +213,18 @@ fn publish_retail_secure_factory(lua: &mut rilua::Lua) -> crate::Result<()> {
         return Ok(());
     }
 
+    let secure_factory = create_retail_secure_factory(lua)?;
+    let secure_namespace = super::ensure_secure_namespace(lua.state_mut(), "C_StringUtil")?;
+    table_set_static(
+        lua.state_mut(),
+        Val::Table(secure_namespace),
+        "CreateSecondsFormatter",
+        secure_factory,
+    );
+    Ok(())
+}
+
+fn create_retail_secure_factory(lua: &mut rilua::Lua) -> crate::Result<Val> {
     let namespace = LuaApiMut::get_global_val(lua, "C_StringUtil");
     let factory = crate::lua_api::methods::table_get_static(
         lua.state_mut(),
@@ -225,15 +237,7 @@ fn publish_retail_secure_factory(lua: &mut rilua::Lua) -> crate::Result<()> {
         )
         .into());
     };
-    let secure_factory = create_secure_factory_wrapper(lua, factory)?;
-    let secure_namespace = super::ensure_secure_namespace(lua.state_mut(), "C_StringUtil")?;
-    table_set_static(
-        lua.state_mut(),
-        Val::Table(secure_namespace),
-        "CreateSecondsFormatter",
-        secure_factory,
-    );
-    Ok(())
+    create_secure_factory_wrapper(lua, factory)
 }
 
 fn create_secure_factory_wrapper(lua: &mut rilua::Lua, factory: Val) -> crate::Result<Val> {

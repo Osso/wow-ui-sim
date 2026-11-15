@@ -366,6 +366,12 @@ pub fn register_global_frames(lua: &mut rilua::Lua) -> LuaResult<()> {
 /// onto the rilua Lua state.
 pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     super::loader_script_bindings::register_all(lua)?;
+    register_frame_creation_globals(lua)?;
+    register_global_frame_queries(lua)?;
+    register_dropdown_globals(lua)
+}
+
+fn register_frame_creation_globals(lua: &mut rilua::Lua) -> LuaResult<()> {
     // UNKNOWN (R88k.7): retained secure allowlist entry; native flags are not established.
     super::security::register_unknown_allowlist_function(lua, "CreateFrame", create_frame)?;
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
@@ -389,14 +395,19 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
         "CreateFrameWithOptions",
         options::create_frame_with_options,
     )?;
-    LuaApiMut::register_function(lua, "CreateWindow", simple_window::create_window)?;
+    LuaApiMut::register_function(lua, "CreateWindow", simple_window::create_window)
+}
+
+fn register_global_frame_queries(lua: &mut rilua::Lua) -> LuaResult<()> {
     LuaApiMut::register_function(lua, "EnumerateFrames", enumerate_frames)?;
-    register_global_frames(lua)?;
+    register_global_frames(lua)
+}
+
+fn register_dropdown_globals(lua: &mut rilua::Lua) -> LuaResult<()> {
     dropdown_api::register_dropdown_constants(lua)?;
     dropdown_api::register_dropdown_mutators(lua)?;
     dropdown_api::register_dropdown_selections(lua)?;
-    dropdown_api::register_dropdown_queries(lua)?;
-    Ok(())
+    dropdown_api::register_dropdown_queries(lua)
 }
 
 // ---------------------------------------------------------------------------

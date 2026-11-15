@@ -2,6 +2,7 @@
 
 use super::{global_val, register_namespace_value_with_flags};
 use crate::lua_api::methods::table_get;
+use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
 
@@ -83,8 +84,17 @@ pub(crate) fn publish_verified_secure_namespace_members(
         return Ok(Vec::new());
     }
 
+    let mut unmodeled = publish_verified_namespace_members(state, &VERIFIED_R88N_11B_MEMBERS)?;
+    unmodeled.extend(publish_verified_private_aura_members(state)?);
+    Ok(unmodeled)
+}
+
+fn publish_verified_namespace_members(
+    state: &mut LuaState,
+    members: &[(&str, &str, u8)],
+) -> LuaResult<Vec<String>> {
     let mut unmodeled = Vec::new();
-    for (namespace, member, flags) in VERIFIED_R88N_11B_MEMBERS {
+    for &(namespace, member, flags) in members {
         let namespace_value = global_val(state, namespace);
         let Val::Table(_) = namespace_value else {
             return Err(runtime_error(format!(
@@ -105,41 +115,54 @@ pub(crate) fn publish_verified_secure_namespace_members(
             }
         }
     }
-    unmodeled.extend(publish_verified_private_aura_members(state)?);
     Ok(unmodeled)
 }
 
+const PRIVATE_AURA_NAMESPACE: &str = "C_UnitAurasPrivate";
+
 fn publish_verified_private_aura_members(state: &mut LuaState) -> LuaResult<Vec<String>> {
-    const NAMESPACE: &str = "C_UnitAurasPrivate";
-    let namespace_value = global_val(state, NAMESPACE);
+    let namespace_value = global_val(state, PRIVATE_AURA_NAMESPACE);
     let Val::Table(ordinary_namespace) = namespace_value else {
         return Err(runtime_error(format!(
-            "R88n.11b ordinary namespace {NAMESPACE} is not registered"
+            "R88n.11b ordinary namespace {PRIVATE_AURA_NAMESPACE} is not registered"
         )));
     };
 
     let mut unmodeled = Vec::new();
     for (member, flags) in VERIFIED_R88N_11B_PRIVATE_AURA_MEMBERS {
-        let ordinary_namespace_value = Val::Table(ordinary_namespace);
-        let member_value = table_get(state, ordinary_namespace_value, member);
-        match member_value {
-            Val::Function(_) => {
-                register_namespace_value_with_flags(state, NAMESPACE, member, member_value, flags)?;
-                crate::lua_api::methods::table_set(
-                    state,
-                    ordinary_namespace_value,
-                    member,
-                    Val::Nil,
-                );
-            }
-            Val::Nil => unmodeled.push(format!("{NAMESPACE}.{member}")),
-            value => {
-                return Err(runtime_error(format!(
-                    "R88n.11b member {NAMESPACE}.{member} is {}, not a function",
-                    value.type_name()
-                )));
-            }
+        if let Some(name) =
+            publish_verified_private_aura_member(state, ordinary_namespace, member, flags)?
+        {
+            unmodeled.push(name);
         }
     }
     Ok(unmodeled)
+}
+
+fn publish_verified_private_aura_member(
+    state: &mut LuaState,
+    ordinary_namespace: GcRef<rilua::vm::table::Table>,
+    member: &str,
+    flags: u8,
+) -> LuaResult<Option<String>> {
+    let namespace_value = Val::Table(ordinary_namespace);
+    let member_value = table_get(state, namespace_value, member);
+    match member_value {
+        Val::Function(_) => {
+            register_namespace_value_with_flags(
+                state,
+                PRIVATE_AURA_NAMESPACE,
+                member,
+                member_value,
+                flags,
+            )?;
+            crate::lua_api::methods::table_set(state, namespace_value, member, Val::Nil);
+            Ok(None)
+        }
+        Val::Nil => Ok(Some(format!("{PRIVATE_AURA_NAMESPACE}.{member}"))),
+        value => Err(runtime_error(format!(
+            "R88n.11b member {PRIVATE_AURA_NAMESPACE}.{member} is {}, not a function",
+            value.type_name()
+        ))),
+    }
 }

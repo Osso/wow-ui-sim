@@ -2,13 +2,23 @@
 use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::methods::{borrow_state, borrow_state_mut};
 use crate::lua_bridge::{FromStack, table_set_rust_fn};
+use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
+use rilua::vm::table::Table;
 use rilua::{LuaResult, Val};
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     if !matches!(ACTIVE, ClientProfile::Ptr | ClientProfile::WowForever) {
         return Ok(());
     }
+    let (namespace, enums) = register_shared_game_rules(state)?;
+    if ACTIVE == ClientProfile::Ptr {
+        register_ptr_game_rules(state, namespace, enums)?;
+    }
+    Ok(())
+}
+
+fn register_shared_game_rules(state: &mut LuaState) -> LuaResult<(GcRef<Table>, Val)> {
     let namespace = super::helpers::ensure_namespace(state, "C_GameRules")?;
     let functions: &[(&str, rilua::RustFn)] = &[
         ("IsSDHDToggleEnabled", is_sd_hd_toggle_enabled),
@@ -20,31 +30,37 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     }
     let enums = super::helpers::ensure_enum_table(state);
     register_usage_locations(state, enums);
-    if ACTIVE == ClientProfile::Ptr {
-        #[cfg(feature = "client-ptr")]
-        super::ptr_store_override::register(state)?;
-        let store = super::helpers::ensure_namespace(state, "C_StorePublic")?;
-        table_set_rust_fn(
-            state,
-            store,
-            "IsRewardsShopEnabled",
-            is_rewards_shop_enabled_store,
-        )?;
-        table_set_rust_fn(
-            state,
-            namespace,
-            "IsRewardsShopEnabled",
-            is_rewards_shop_enabled_rules,
-        )?;
-        table_set_rust_fn(state, namespace, "IsHardcoreActive", is_hardcore_active)?;
-        table_set_rust_fn(
-            state,
-            namespace,
-            "IsSelfFoundAllowed",
-            is_self_found_allowed,
-        )?;
-        register_recent_allies_categories(state, enums);
-    }
+    Ok((namespace, enums))
+}
+
+fn register_ptr_game_rules(
+    state: &mut LuaState,
+    namespace: GcRef<Table>,
+    enums: Val,
+) -> LuaResult<()> {
+    #[cfg(feature = "client-ptr")]
+    super::ptr_store_override::register(state)?;
+    let store = super::helpers::ensure_namespace(state, "C_StorePublic")?;
+    table_set_rust_fn(
+        state,
+        store,
+        "IsRewardsShopEnabled",
+        is_rewards_shop_enabled_store,
+    )?;
+    table_set_rust_fn(
+        state,
+        namespace,
+        "IsRewardsShopEnabled",
+        is_rewards_shop_enabled_rules,
+    )?;
+    table_set_rust_fn(state, namespace, "IsHardcoreActive", is_hardcore_active)?;
+    table_set_rust_fn(
+        state,
+        namespace,
+        "IsSelfFoundAllowed",
+        is_self_found_allowed,
+    )?;
+    register_recent_allies_categories(state, enums);
     Ok(())
 }
 

@@ -26,36 +26,48 @@ const DEFAULT_MAX_TRAVERSAL_DEPTH: f64 = 100.0;
 /// R88n.11b verifies Retail flag 7 for both globals. Other profiles retain their existing routes.
 /// Registration also restores a missing `CreateSecureDelegate` after cleanup clears it.
 pub(crate) fn register(lua: &mut rilua::Lua) -> LuaResult<()> {
-    if ACTIVE != ClientProfile::Wrath {
-        if crate::client_profile::is_active_retail_12_1_5() {
-            crate::lua_api::globals::security::register_native_function_if_missing_with_flags(
-                lua,
-                "CreateSecureDelegate",
-                create_secure_delegate,
-                7,
-            )?;
-        } else if LuaApiMut::get_global_val(lua, "CreateSecureDelegate") == Val::Nil {
-            crate::lua_api::globals::security::register_unknown_allowlist_function(
-                lua,
-                "CreateSecureDelegate",
-                create_secure_delegate,
-            )?;
-        }
+    register_create_secure_delegate(lua)?;
+    register_securecopy(lua)?;
+    Ok(())
+}
+
+fn register_create_secure_delegate(lua: &mut rilua::Lua) -> LuaResult<()> {
+    if ACTIVE == ClientProfile::Wrath {
+        return Ok(());
     }
-    if matches!(
+    if crate::client_profile::is_active_retail_12_1_5() {
+        crate::lua_api::globals::security::register_native_function_if_missing_with_flags(
+            lua,
+            "CreateSecureDelegate",
+            create_secure_delegate,
+            7,
+        )?;
+    } else if LuaApiMut::get_global_val(lua, "CreateSecureDelegate") == Val::Nil {
+        crate::lua_api::globals::security::register_unknown_allowlist_function(
+            lua,
+            "CreateSecureDelegate",
+            create_secure_delegate,
+        )?;
+    }
+    Ok(())
+}
+
+fn register_securecopy(lua: &mut rilua::Lua) -> LuaResult<()> {
+    if !matches!(
         ACTIVE,
         ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
     ) {
-        if crate::client_profile::is_active_retail_12_1_5() {
-            crate::lua_api::globals::security::register_native_function_if_missing_with_flags(
-                lua,
-                "securecopy",
-                securecopy,
-                7,
-            )?;
-        } else {
-            register_if_missing(lua, "securecopy", securecopy)?;
-        }
+        return Ok(());
+    }
+    if crate::client_profile::is_active_retail_12_1_5() {
+        crate::lua_api::globals::security::register_native_function_if_missing_with_flags(
+            lua,
+            "securecopy",
+            securecopy,
+            7,
+        )?;
+    } else {
+        register_if_missing(lua, "securecopy", securecopy)?;
     }
     Ok(())
 }

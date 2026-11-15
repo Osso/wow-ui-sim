@@ -435,6 +435,15 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
 fn register_c_timer(lua: &mut rilua::Lua) -> LuaResult<()> {
     let retail = crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail;
     let state = lua.state_mut();
+    register_c_timer_functions(state, retail)?;
+    #[cfg(feature = "timed-signal-maps")]
+    crate::c_api::timed_signal_map::register_c_timer_timed_signal_map(state)?;
+    #[cfg(not(feature = "timed-signal-maps"))]
+    mark_timed_signal_map_factory_removed(state)?;
+    Ok(())
+}
+
+fn register_c_timer_functions(state: &mut LuaState, retail: bool) -> LuaResult<()> {
     register_c_timer_member(state, retail, "After", timer_after)?;
     // UNKNOWN: NewTimerID has no verified registration flags.
     crate::c_api::register_unknown_namespace_function(
@@ -444,25 +453,23 @@ fn register_c_timer(lua: &mut rilua::Lua) -> LuaResult<()> {
         timer_new_timer_id,
     )?;
     register_c_timer_member(state, retail, "NewTicker", timer_new_ticker)?;
-    register_c_timer_member(state, retail, "NewTimer", timer_new_timer)?;
-    #[cfg(feature = "timed-signal-maps")]
-    crate::c_api::timed_signal_map::register_c_timer_timed_signal_map(state)?;
-    #[cfg(not(feature = "timed-signal-maps"))]
-    {
-        // Keep namespace lookup from fabricating an unsupported factory.
-        use crate::lua_api::methods::{create_table, table_set_static};
+    register_c_timer_member(state, retail, "NewTimer", timer_new_timer)
+}
 
-        let c_timer_ref = crate::c_api::ensure_namespace(state, "C_Timer")?;
-        let removed = create_table(state);
-        table_set_static(state, removed, "NewTimedSignalMap", Val::Bool(true));
-        table_set_static(
-            state,
-            Val::Table(c_timer_ref),
-            "__wow_removed_keys",
-            removed,
-        );
-    }
+#[cfg(not(feature = "timed-signal-maps"))]
+fn mark_timed_signal_map_factory_removed(state: &mut LuaState) -> LuaResult<()> {
+    // Keep namespace lookup from fabricating an unsupported factory.
+    use crate::lua_api::methods::{create_table, table_set_static};
 
+    let c_timer_ref = crate::c_api::ensure_namespace(state, "C_Timer")?;
+    let removed = create_table(state);
+    table_set_static(state, removed, "NewTimedSignalMap", Val::Bool(true));
+    table_set_static(
+        state,
+        Val::Table(c_timer_ref),
+        "__wow_removed_keys",
+        removed,
+    );
     Ok(())
 }
 

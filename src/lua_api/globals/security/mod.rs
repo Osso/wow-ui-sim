@@ -58,21 +58,31 @@ pub(crate) fn register_environment_helpers(lua: &mut rilua::Lua) -> LuaResult<()
 
 /// Register security globals through their classified publication routes.
 pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
+    register_secure_callmethod(lua)?;
+    register_secure_value_access(lua)?;
+    register_secure_handler_stubs(lua)?;
+    register_secure_command_option_parse(lua)
+}
+
+fn register_secure_callmethod(lua: &mut rilua::Lua) -> LuaResult<()> {
     if crate::client_profile::is_active_retail_12_1_5() {
         secure_env::register_native_function_with_flags(
             lua,
             "securecallmethod",
             securecallmethod::securecallmethod,
             7,
-        )?;
+        )
     } else {
         // R88n.11b verifies flag 7 only for Retail 12.1.5.
         secure_env::register_unknown_allowlist_function(
             lua,
             "securecallmethod",
             securecallmethod::securecallmethod,
-        )?;
+        )
     }
+}
+
+fn register_secure_value_access(lua: &mut rilua::Lua) -> LuaResult<()> {
     secure_env::register_unknown_allowlist_function(
         lua,
         "issecurevariable",
@@ -91,16 +101,21 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     value_access::register_value_access_fallbacks(lua)?;
     #[cfg(feature = "retail-12-0-0")]
     retail_secret_helpers::register(lua)?;
-    secret_values::register_scrub_fallbacks(lua)?;
+    secret_values::register_scrub_fallbacks(lua)
+}
+
+fn register_secure_handler_stubs(lua: &mut rilua::Lua) -> LuaResult<()> {
     secure_handler::register_secure_handler_stubs(lua)?;
-    state_drivers::register_state_driver_stubs(lua)?;
+    state_drivers::register_state_driver_stubs(lua)
+}
+
+fn register_secure_command_option_parse(lua: &mut rilua::Lua) -> LuaResult<()> {
     // UNKNOWN (R88k.7): retained secure allowlist entry; native flags are not established.
     secure_env::register_unknown_allowlist_function(
         lua,
         "SecureCmdOptionParse",
         cmd_option::secure_cmd_option_parse,
-    )?;
-    Ok(())
+    )
 }
 
 /// Register the fallback when nil; Retail also publishes an existing function by its verified flag.
