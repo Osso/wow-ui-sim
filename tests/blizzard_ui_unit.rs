@@ -9,6 +9,71 @@ mod tooltip_full_env_helpers;
 
 use tooltip_full_env_helpers::{refresh_aura_frames, setup_full_env};
 
+const COLOR_OVERRIDE_CONSUMER_LUA: &str = r#"
+local function assert_default_color(quality, expected)
+    local color = C_ColorOverrides.GetDefaultColorForQuality(quality)
+    assert(color.r == expected.r and color.g == expected.g)
+    assert(color.b == expected.b and color.a == expected.a)
+    local data = ColorManager.GetDefaultColorDataForItemQuality(quality)
+    assert(data.color.r == expected.r and data.color.g == expected.g)
+    assert(data.color.b == expected.b)
+end
+
+local function assert_rgba(color, red, green, blue, alpha)
+    assert(math.abs(color.r - red) < 0.000001)
+    assert(math.abs(color.g - green) < 0.000001)
+    assert(math.abs(color.b - blue) < 0.000001)
+    assert(math.abs(color.a - alpha) < 0.000001)
+end
+
+assert(type(ColorManager) == "table", "Retail Blizzard_Colors must be loaded")
+local poor = Enum.ItemQuality.Poor
+local epic = Enum.ItemQuality.Epic
+local poorType = ITEM_QUALITY_OVERRIDES[poor]
+local epicType = ITEM_QUALITY_OVERRIDES[epic]
+local commonType = ITEM_QUALITY_OVERRIDES[Enum.ItemQuality.Common]
+assert(poorType ~= nil and epicType ~= nil and commonType ~= nil)
+assert_default_color(poor, ITEM_POOR_COLOR)
+assert_default_color(epic, ITEM_EPIC_COLOR)
+assert(C_ColorOverrides.GetDefaultColorForQuality(256).r == ITEM_POOR_COLOR.r)
+assert(C_ColorOverrides.GetColorOverrideInfo(poorType) == nil)
+assert(C_ColorOverrides.GetColorOverrideInfo(epicType) == nil)
+assert(C_ColorOverrides.GetColorOverrideInfo(commonType) == nil)
+
+C_ColorOverrides.SetColorOverride(poorType, CreateColor(-1, 0.25, 2, 0.5))
+C_ColorOverrides.SetColorOverride(epicType, CreateColor(0.2, 0.4, 0.6, 0.8))
+local poorInfo = C_ColorOverrides.GetColorOverrideInfo(poorType)
+local epicInfo = C_ColorOverrides.GetColorOverrideInfo(epicType)
+assert(poorInfo.overrideType == poorType and epicInfo.overrideType == epicType)
+assert(poorInfo.overrideColor.a == nil and epicInfo.overrideColor.a == nil)
+assert(string.match(poorInfo.overrideColorString, "^[0-9a-f]+$"))
+assert_rgba(C_ColorOverrides.GetColorForQuality(poor), 0, 64 / 255, 1, 128 / 255)
+assert_rgba(C_ColorOverrides.GetColorForQuality(epic), 51 / 255, 102 / 255, 153 / 255, 204 / 255)
+ColorManager.UpdateColorData()
+assert_rgba(ColorManager.GetColorDataForItemQuality(poor).color, 0, 64 / 255, 1, 128 / 255)
+assert_rgba(ColorManager.GetColorDataForItemQuality(epic).color, 51 / 255, 102 / 255, 153 / 255, 204 / 255)
+assert_default_color(poor, ITEM_POOR_COLOR)
+
+C_ColorOverrides.RemoveColorOverride(poorType)
+assert(C_ColorOverrides.GetColorOverrideInfo(poorType) == nil)
+assert(C_ColorOverrides.GetColorOverrideInfo(epicType) ~= nil)
+C_ColorOverrides.RemoveColorOverride(epicType)
+assert(C_ColorOverrides.GetColorOverrideInfo(epicType) == nil)
+C_ColorOverrides.RemoveColorOverride(commonType)
+assert(C_ColorOverrides.GetColorOverrideInfo(poorType) == nil)
+
+C_ColorOverrides.SetColorOverride(poorType, CreateColor(0.1, 0.2, 0.3, 0.4))
+C_ColorOverrides.SetColorOverride(epicType, CreateColor(0.5, 0.6, 0.7, 0.8))
+C_ColorOverrides.ClearColorOverrides()
+assert(C_ColorOverrides.GetColorOverrideInfo(poorType) == nil)
+assert(C_ColorOverrides.GetColorOverrideInfo(epicType) == nil)
+ColorManager.UpdateColorData()
+assert_rgba(
+    ColorManager.GetColorDataForItemQuality(epic).color,
+    ITEM_EPIC_COLOR.r, ITEM_EPIC_COLOR.g, ITEM_EPIC_COLOR.b, ITEM_EPIC_COLOR.a
+)
+"#;
+
 #[test]
 fn original_color_manager_bag_quality_uses_default_without_override() {
     let env = tooltip_full_env_helpers::load_full_env_without_post_load();
@@ -25,6 +90,13 @@ fn original_color_manager_bag_quality_uses_default_without_override() {
         "#,
     )
     .expect("original ColorManager must use the default color without an override");
+}
+
+#[test]
+fn original_color_manager_tracks_globalcolor_defaults_and_color_overrides() {
+    let env = tooltip_full_env_helpers::load_full_env_without_post_load();
+    env.exec(COLOR_OVERRIDE_CONSUMER_LUA)
+        .expect("Retail ColorManager must publish GlobalColor defaults and supplied overrides");
 }
 
 fn open_character_panel(env: &wow_ui_sim::lua_api::WowLuaEnv) {
