@@ -31,6 +31,12 @@ fn load_original_item_util() -> WowLuaEnv {
         toc.metadata
     );
     let env = new_blizzard_addon_env(&ui);
+    // Explicit scenario count/mode evidence; this is not a native default.
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.r88s_inventory_inputs.inventory_count = Some(105);
+        sim.r88s_inventory_inputs.inventory_mode_active = Some(false);
+    }
     let loaded = load_blizzard_addon_closure_into_env(
         &env,
         &ui,
@@ -160,6 +166,31 @@ fn original_item_util_tracks_supplied_eligibility_movement_removal_and_isolation
         first.exec("CheckUpgrade(firstLocation, true)").unwrap();
         assert!(first.state().borrow().lua_errors.is_empty());
         assert!(second.state().borrow().lua_errors.is_empty());
+    });
+}
+
+#[test]
+fn item_upgrade_uses_shared_r88s_item_location_resolution() {
+    crate::common::with_timeout(90, || {
+        let env = load_original_item_util();
+        env.exec(
+            r#"
+            local numericBag = {bagID = '0.9', slotIndex = '1.9'}
+            A_Admin.SetItemUpgradeEligibility(numericBag, true)
+            assert(C_ItemUpgrade.CanUpgradeItem(numericBag) == true)
+
+            A_Admin.EquipItem(101, 19019)
+            local negativeBag = {bagID = '-2.9', slotIndex = '1.9'}
+            A_Admin.SetItemUpgradeEligibility(negativeBag, true)
+            assert(C_ItemUpgrade.CanUpgradeItem(negativeBag) == true)
+
+            A_Admin.EquipItem(16, 19019)
+            local equipmentFirst = {equipmentSlotIndex = '16.9', bagID = 0, slotIndex = 1}
+            A_Admin.SetItemUpgradeEligibility(equipmentFirst, true)
+            assert(C_ItemUpgrade.CanUpgradeItem(equipmentFirst) == true)
+        "#,
+        )
+        .expect("ItemUpgrade uses the shared R88s location reader");
     });
 }
 

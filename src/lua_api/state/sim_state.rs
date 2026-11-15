@@ -685,6 +685,8 @@ pub struct SimState {
     pub cursor_storage: crate::lua_api::globals::real::cursor_model::CursorStorage,
     pub container_actions: crate::c_api::container_actions::ContainerActions,
     pub item_upgrade_eligibility: crate::c_api::item_upgrade_eligibility::ItemUpgradeEligibility,
+    /// Explicit R88s inventory-bound evidence; missing values remain UNKNOWN.
+    pub r88s_inventory_inputs: crate::c_api::item_location::R88sInventoryInputs,
     pub loading_addon_index: Option<u16>,
     pub loading_addon_stack: Vec<u16>,
     pub executing_addon_index: Option<u16>,
