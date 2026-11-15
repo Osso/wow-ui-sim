@@ -475,16 +475,9 @@ fn missing_known_and_unknown_numeric_sources_return_zero_and_empty() {
         cast_count(&env, id, 0, false);
         display(&env, id, "", false);
     }
-    if uses_retail_native_count_contract() {
-        env.exec(
-            "assert(not pcall(C_Spell.GetSpellCastCount, 4294967295)) \
-             assert(not pcall(C_Spell.GetSpellDisplayCount, 4294967295))",
-        )
-        .unwrap();
-    } else {
-        cast_count(&env, "4294967295", 0, false);
-        display(&env, "4294967295", "", false);
-    }
+    // UNKNOWN R88p.p2 / lt-67d2 #1231: do not assert exceptional 4294967295
+    // conversion outcomes or the old maximum-style range error for identifiers.
+
 }
 
 #[test]
