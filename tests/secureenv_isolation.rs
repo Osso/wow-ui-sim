@@ -196,6 +196,7 @@ fn secure_addon_loads_nonsecure_dependency_in_ordinary_then_secure_environment()
          assert(getfenv(getDependencyToken) == _G); \
          assert(getDependencyToken() == 'secure-visible'); \
          table.insert(r88tSecureDependencyTrace, 'consumer:secure'); \
+         secureConsumerRunCount = (secureConsumerRunCount or 0) + 1; \
          secureConsumerSawDependency = true",
     )
     .unwrap();
@@ -218,11 +219,12 @@ fn secure_addon_loads_nonsecure_dependency_in_ordinary_then_secure_environment()
         ordinary_request < secure_request && secure_request < consumer,
         "ordinary request, secure request, and consumer must stay ordered: {trace}"
     );
-    let observed: (i32, i32, bool, bool, bool, bool) = env
+    let observed: (i32, i32, i32, bool, bool, bool, bool) = env
         .eval(
             r#"
                 return rawget(_G, 'dependencyLoadCount') or 0,
                     rawget(__secureenv, 'dependencyLoadCount') or 0,
+                    rawget(__secureenv, 'secureConsumerRunCount') or 0,
                     rawget(_G, 'dependencyToken') == 'secure-visible',
                     rawget(__secureenv, 'dependencyToken') == 'secure-visible',
                     rawget(__secureenv, 'secureConsumerSawDependency') == true,
@@ -234,12 +236,13 @@ fn secure_addon_loads_nonsecure_dependency_in_ordinary_then_secure_environment()
     let (
         ordinary_count,
         secure_count,
+        consumer_count,
         ordinary_token,
         secure_token,
         consumer_saw_dependency,
         consumer_loaded,
     ) = observed;
-    assert!(ordinary_count > 0 && secure_count > 0);
+    assert!(ordinary_count > 0 && secure_count > 0 && consumer_count > 0);
     assert_eq!(
         (
             ordinary_token,
@@ -268,13 +271,13 @@ fn secure_addon_loads_nonsecure_dependency_in_ordinary_then_secure_environment()
         assert!(consumer.secure_loaded);
     }
 
-    let counts_before: (i32, i32) = (ordinary_count, secure_count);
-    let second_load = wow_ui_sim::loader::load_addon(&env.loader_env(), &consumer_toc).unwrap();
-    assert_eq!(second_load.lua_files, 0);
-    let counts_after: (i32, i32) = env
+    let counts_before: (i32, i32, i32) = (ordinary_count, secure_count, consumer_count);
+    wow_ui_sim::loader::load_addon(&env.loader_env(), &consumer_toc).unwrap();
+    let counts_after: (i32, i32, i32) = env
         .eval(
             "return rawget(_G, 'dependencyLoadCount'), \
-             rawget(__secureenv, 'dependencyLoadCount')",
+             rawget(__secureenv, 'dependencyLoadCount'), \
+             rawget(__secureenv, 'secureConsumerRunCount')",
         )
         .unwrap();
     assert_eq!(counts_after, counts_before);
