@@ -65,7 +65,10 @@ fn register_pending_item_lifecycle(state: &mut LuaState, namespace: GcRef<Table>
 }
 
 fn pending_item_lifecycle_available() -> bool {
-    matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr)
+    matches!(
+        ACTIVE,
+        ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
+    )
 }
 
 fn get_info(state: &mut LuaState) -> LuaResult<u32> {
