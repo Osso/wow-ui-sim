@@ -397,6 +397,8 @@ fn retail_negative_map_id_uses_area_table_u16_and_projects_each_point() {
 #[test]
 fn retail_negative_map_ids_skip_missing_area_table_id_zero() {
     let env = env();
+    assert_eq!(sim_data_profile::area_table_retail::get_continent_id(0), None);
+    assert_eq!(sim_data_profile::area_table_retail::get_continent_id(14620), Some(2444));
     env.eval::<()>(
         r#"
         for _, uiMapID in ipairs({1408, 2311}) do
@@ -527,10 +529,22 @@ fn retail_map_has_valid_assignment_at_center(ui_map_id: u32) -> bool {
                     && RETAIL_MAP_PROBE_CENTER <= ui_max_x
                     && RETAIL_MAP_PROBE_CENTER >= ui_min_y
                     && RETAIL_MAP_PROBE_CENTER <= ui_max_y;
-                has_valid_span && contains_center && assignment.map_id >= 0
+                has_valid_span && contains_center && retail_assignment_has_map_number(assignment)
             })
         },
     )
+}
+
+#[cfg(all(
+    feature = "optional-tests",
+    feature = "profile-retail",
+    feature = "retail-12-1-5"
+))]
+fn retail_assignment_has_map_number(
+    assignment: &sim_data_profile::ui_map_assignments::UiMapAssignment,
+) -> bool {
+    assignment.map_id >= 0
+        || sim_data_profile::area_table_retail::get_continent_id(assignment.area_id).is_some()
 }
 
 #[cfg(all(
@@ -621,6 +635,23 @@ fn retail_zone_maps_below_3000_have_world_positions_at_player_login() {
     env.fire_event("PLAYER_LOGIN").unwrap();
     env.eval::<()>(&script)
         .expect("every Zone map has a position or a catalog-derived no-world result");
+}
+
+#[cfg(all(
+    feature = "optional-tests",
+    feature = "profile-retail",
+    feature = "retail-12-1-5"
+))]
+#[test]
+fn retail_zone_maps_without_assignment_rows_remain_unmapped() {
+    for ui_map_id in [997, 1158, 1523, 2107] {
+        let map = sim_data::ui_maps::get_ui_map(ui_map_id).unwrap();
+        assert_eq!(map.map_type, 3, "expected Zone map {ui_map_id}");
+        assert!(
+            sim_data_profile::ui_map_assignments::get_ui_map_assignments(ui_map_id).is_none(),
+            "Zone map {ui_map_id} must have no assignment rows"
+        );
+    }
 }
 
 #[cfg(all(

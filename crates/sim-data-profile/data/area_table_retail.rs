@@ -9,14 +9,16 @@ pub struct AreaTableRow {
     pub continent_id: u16,
 }
 
-pub static AREA_TABLE_RETAIL: &[AreaTableRow] = &[AreaTableRow {
-    id: 14620,
-    continent_id: 2444,
-}];
+#[rustfmt::skip]
+pub static AREA_TABLE_RETAIL: &[AreaTableRow] = &[
+    AreaTableRow {
+        id: 14620,
+        continent_id: 2444,
+    },
+];
 
+#[rustfmt::skip]
 pub fn get_continent_id(area_id: u32) -> Option<u16> {
-    let index = AREA_TABLE_RETAIL
-        .binary_search_by_key(&area_id, |row| row.id)
-        .ok()?;
+    let index = AREA_TABLE_RETAIL.binary_search_by_key(&area_id, |row| row.id).ok()?;
     Some(AREA_TABLE_RETAIL[index].continent_id)
 }

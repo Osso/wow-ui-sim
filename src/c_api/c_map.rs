@@ -756,50 +756,94 @@ fn read_world_map_position(state: &mut LuaState, position: Val) -> LuaResult<(f6
     Ok((x, y))
 }
 
-/// VERIFIED: choose the containing row nearest its UI-rectangle centre, or the
-/// nearest centre when no row contains the point. CSV-order tie visitation is
-/// INFERRED because the native iterator's row order is unknown.
+/// VERIFIED: choose the containing eligible row nearest its UI-rectangle centre,
+/// or the nearest centre when no row contains the point. CSV tie order is INFERRED.
 #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
 fn select_retail_map_assignment(
     assignments: &[sim_data_profile::ui_map_assignments::UiMapAssignment],
     x: f64,
     y: f64,
-) -> Option<&sim_data_profile::ui_map_assignments::UiMapAssignment> {
+) -> Option<(&sim_data_profile::ui_map_assignments::UiMapAssignment, i32)> {
     let mut containing = None;
     let mut nearest = None;
-    let epsilon = f64::from(f32::EPSILON);
-
     for assignment in assignments {
-        let min_x = f64::from(assignment.ui_min[0]);
-        let min_y = f64::from(assignment.ui_min[1]);
-        let max_x = f64::from(assignment.ui_max[0]);
-        let max_y = f64::from(assignment.ui_max[1]);
-        let span_x = max_x - min_x;
-        let span_y = max_y - min_y;
-        if span_x < epsilon || span_y < epsilon {
+        let Some(map_number) = assignment_map_number(
+            assignment,
+            sim_data_profile::area_table_retail::get_continent_id,
+        ) else {
             continue;
-        }
-
-        let center_x = min_x + span_x * 0.5;
-        let center_y = min_y + span_y * 0.5;
-        let delta_x = x - center_x;
-        let delta_y = y - center_y;
-        let distance_squared = delta_x * delta_x + delta_y * delta_y;
-        let inside = x >= min_x && x <= max_x && y >= min_y && y <= max_y;
+        };
+        let Some((inside, score)) = assignment_geometry_score(assignment, x, y) else {
+            continue;
+        };
         let best = if inside {
             &mut containing
         } else {
             &mut nearest
         };
-        if best
-            .as_ref()
-            .is_none_or(|(_, best_distance)| distance_squared < *best_distance)
-        {
-            *best = Some((assignment, distance_squared));
-        }
+        retain_closest_assignment(best, assignment, map_number, score);
     }
+    containing
+        .or(nearest)
+        .map(|(assignment, map_number, _)| (assignment, map_number))
+}
 
-    containing.or(nearest).map(|(assignment, _)| assignment)
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+fn assignment_map_number(
+    assignment: &sim_data_profile::ui_map_assignments::UiMapAssignment,
+    area_continent: impl FnOnce(u32) -> Option<u16>,
+) -> Option<i32> {
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
+        return None;
+    }
+    if assignment.map_id >= 0 {
+        return Some(assignment.map_id);
+    }
+    // VERIFIED: an unresolved AreaID disqualifies this row; INFERRED: map the u16 to ContinentID.
+    area_continent(assignment.area_id).map(i32::from)
+}
+
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+fn assignment_geometry_score(
+    assignment: &sim_data_profile::ui_map_assignments::UiMapAssignment,
+    x: f64,
+    y: f64,
+) -> Option<(bool, f64)> {
+    let min_x = f64::from(assignment.ui_min[0]);
+    let min_y = f64::from(assignment.ui_min[1]);
+    let max_x = f64::from(assignment.ui_max[0]);
+    let max_y = f64::from(assignment.ui_max[1]);
+    let span_x = max_x - min_x;
+    let span_y = max_y - min_y;
+    let epsilon = f64::from(f32::EPSILON);
+    if span_x < epsilon || span_y < epsilon {
+        return None;
+    }
+    let center_x = min_x + span_x * 0.5;
+    let center_y = min_y + span_y * 0.5;
+    let delta_x = x - center_x;
+    let delta_y = y - center_y;
+    let inside = x >= min_x && x <= max_x && y >= min_y && y <= max_y;
+    Some((inside, delta_x * delta_x + delta_y * delta_y))
+}
+
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+fn retain_closest_assignment<'a>(
+    best: &mut Option<(
+        &'a sim_data_profile::ui_map_assignments::UiMapAssignment,
+        i32,
+        f64,
+    )>,
+    assignment: &'a sim_data_profile::ui_map_assignments::UiMapAssignment,
+    map_number: i32,
+    score: f64,
+) {
+    if best
+        .as_ref()
+        .is_none_or(|(_, _, best_score)| score < *best_score)
+    {
+        *best = Some((assignment, map_number, score));
+    }
 }
 
 #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
@@ -809,25 +853,51 @@ fn retail_map_assignment_world_position(
 ) -> Option<(i32, f64, f64)> {
     let ui_map_id = u32::try_from(ui_map_id).ok()?;
     let assignments = sim_data_profile::ui_map_assignments::get_ui_map_assignments(ui_map_id)?;
-    let assignment = select_retail_map_assignment(assignments, x, y)?;
+    let (assignment, map_number) = select_retail_map_assignment(assignments, x, y)?;
+    let (world_x, world_y) = project_retail_assignment(assignment, x, y);
+    Some((map_number, world_x, world_y))
+}
 
-    // INFERRED: negative MapID requires AreaID -> AreaTable.ContinentID; AreaInfo lacks ContinentID.
-    if assignment.map_id < 0 {
-        return None;
-    }
-
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+fn project_retail_assignment(
+    assignment: &sim_data_profile::ui_map_assignments::UiMapAssignment,
+    x: f64,
+    y: f64,
+) -> (f64, f64) {
     let ui_width = f64::from(assignment.ui_max[0]) - f64::from(assignment.ui_min[0]);
     let ui_height = f64::from(assignment.ui_max[1]) - f64::from(assignment.ui_min[1]);
     let local_x = (x - f64::from(assignment.ui_min[0])) / ui_width;
     let local_y = (y - f64::from(assignment.ui_min[1])) / ui_height;
-
-    // INFERRED (R88i.41): world X blends Region_3 toward Region_0 by map Y;
-    // world Y blends Region_4 toward Region_1 by map X.
+    // INFERRED (R88i.41): world X blends Region_3 toward Region_0 by map Y.
     let world_x = f64::from(assignment.region_max[0])
         + (f64::from(assignment.region_min[0]) - f64::from(assignment.region_max[0])) * local_y;
     let world_y = f64::from(assignment.region_max[1])
         + (f64::from(assignment.region_min[1]) - f64::from(assignment.region_max[1])) * local_x;
-    Some((assignment.map_id, world_x, world_y))
+    (world_x, world_y)
+}
+
+#[cfg(all(
+    test,
+    feature = "optional-tests",
+    feature = "profile-retail",
+    feature = "retail-12-1-5"
+))]
+mod retail_assignment_tests {
+    use super::assignment_map_number;
+    use sim_data_profile::ui_map_assignments::UiMapAssignment;
+
+    #[test]
+    fn negative_assignment_accepts_zero_continent_number() {
+        let assignment = UiMapAssignment {
+            map_id: -1,
+            area_id: 7,
+            ui_min: [0.0, 0.0],
+            ui_max: [1.0, 1.0],
+            region_min: [0.0, 0.0],
+            region_max: [1.0, 1.0],
+        };
+        assert_eq!(assignment_map_number(&assignment, |_| Some(0)), Some(0));
+    }
 }
 
 #[cfg(not(all(feature = "profile-retail", feature = "retail-12-1-5")))]

@@ -118,29 +118,29 @@ fn write_header(out: &mut File) -> std::io::Result<()> {
     writeln!(out, "    pub continent_id: u16,")?;
     writeln!(out, "}}")?;
     writeln!(out)?;
+    writeln!(out, "#[rustfmt::skip]")?;
     writeln!(out, "pub static AREA_TABLE_RETAIL: &[AreaTableRow] = &[")
 }
 
 fn write_rows(out: &mut File, rows: &[AreaTableRow]) -> std::io::Result<()> {
     for row in rows {
-        writeln!(
-            out,
-            "    AreaTableRow {{ id: {}, continent_id: {} }},",
-            row.id, row.continent_id
-        )?;
+        writeln!(out, "    AreaTableRow {{")?;
+        writeln!(out, "        id: {},", row.id)?;
+        writeln!(out, "        continent_id: {},", row.continent_id)?;
+        writeln!(out, "    }},")?;
     }
     writeln!(out, "];\n")
 }
 
 fn write_lookup(out: &mut File) -> std::io::Result<()> {
+    writeln!(out, "#[rustfmt::skip]")?;
     writeln!(
         out,
         "pub fn get_continent_id(area_id: u32) -> Option<u16> {{"
     )?;
-    writeln!(
-        out,
-        "    let index = AREA_TABLE_RETAIL.binary_search_by_key(&area_id, |row| row.id).ok()?;"
-    )?;
+    writeln!(out, "    let index = AREA_TABLE_RETAIL")?;
+    writeln!(out, "        .binary_search_by_key(&area_id, |row| row.id)")?;
+    writeln!(out, "        .ok()?;")?;
     writeln!(out, "    Some(AREA_TABLE_RETAIL[index].continent_id)")?;
     writeln!(out, "}}")
 }
