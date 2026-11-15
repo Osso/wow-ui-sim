@@ -5,7 +5,7 @@ The Round 7 `C_TooltipInfo` getters use native argument readers and tooltip buil
 ## What it must do
 
 - [x] Publish all eleven getters on Retail 12.1.5 (70688) and Forever 1.60.1 (70707); publish only `GetAzeriteEssence` and `GetAzeriteEssenceSlot` on PTR 12.1.7 (70668), as established in Round 7.
-- [x] Use each getter's exact usage string, signed/unsigned conversion, optional argument, slot, GUID, table and secret-argument rules from Round 7. The slot tests cover the verified rejection of slot 4; they do not assert wide-value alias cases.
+- [x] Use each getter's exact usage string, signed/unsigned conversion, optional argument, slot, GUID, table and secret-argument rules from Round 7. The slot tests cover the verified rejection of slot 4. **UNKNOWN (native):** behavior for wide signed slot inputs that may be affected by the simulator's `u8` cast is not established; tests do not assert wide-value aliasing for inputs such as 256 or -256.
 - [x] Retail `GetAzeriteEssence` requires the essence record and exact selected-rank and rank-one records. It does not use a lower rank as a fallback; an explicit rank bypasses current-player rank lookup, and rank zero selects rank one (R88n.1/R88n.2).
 - [x] Without an explicit rank, `GetAzeriteEssence` and `GetAzeriteEssenceSlot` use current player rank data. A present rank-list miss supplies zero before rank-one selection. Missing player or player essence state returns zero Lua values (R88n.1/R88n.2).
 - [x] Failed tooltip formatters and missing Azerite essence/slot population inputs return exactly zero Lua values and do not publish a partial TooltipData result (R88n.1/R88n.4). Tests assert result arity only; they do not assert counter values.
