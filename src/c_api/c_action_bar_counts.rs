@@ -2,8 +2,9 @@
 //! Selection, strict domains and empty/zero privacy policies are inferred.
 
 use super::charge_state::{cooldowns_are_restricted, read_charge_input};
+use super::helpers::parse_replacement;
 use crate::lua_api::SimState;
-use crate::lua_api::methods::{borrow_state, create_string, val_to_string};
+use crate::lua_api::methods::{borrow_state, create_string};
 use crate::lua_bridge::stack_val;
 use rilua::table_security::{unwrap_secret, wrap_host_secret_number, wrap_host_secret_string};
 use rilua::vm::state::LuaState;
@@ -76,19 +77,6 @@ pub(crate) fn parse_maximum(value: Val, api: &str) -> LuaResult<f64> {
             "{api}: argument 2 requires a finite number or nil"
         ))),
     }
-}
-
-pub(crate) fn parse_replacement(state: &LuaState, value: Val, api: &str) -> LuaResult<String> {
-    if value == Val::Nil {
-        return Ok("*".to_owned());
-    }
-    val_to_string(state, value)
-        .filter(|text| !text.contains('\0'))
-        .ok_or_else(|| {
-            runtime_error(format!(
-                "{api}: argument 3 requires a UTF-8 NUL-free string or nil"
-            ))
-        })
 }
 
 fn matching_use_quantity(sim: &SimState, slot: u32, spell_id: Option<u32>) -> Option<u32> {

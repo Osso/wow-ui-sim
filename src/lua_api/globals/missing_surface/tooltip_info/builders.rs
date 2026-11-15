@@ -477,20 +477,18 @@ fn push_item_name_line(state: &mut LuaState, lines: Val, item: &items::ItemInfo)
     );
 }
 
-/// INFERRED: Retail's positive catalog sell price supplies a SellPrice line.
-/// The native eligibility predicate and `maxPrice` input remain UNKNOWN.
+/// VERIFIED (R88p.p1): eligible nonzero results build type-11 rows with an empty
+/// left side, resolved default color, and `maxPrice` initialized to -1.
+/// INFERRED: catalog `sell_price` stands in for the native initial unit price.
+/// UNKNOWN in this model: request mode, status, flags, preview, and quantity inputs.
 fn push_retail_sell_price_line(state: &mut LuaState, lines: Val, index: i64, price: u32) {
     if price == 0 || crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
         return;
     }
 
-    let saved_top = state.top;
-    state.push(lines);
-    let line = create_table(state);
-    set_table_array(state, lines, index, line);
-    table_set(state, line, "type", Val::Num(LINE_TYPE_SELL_PRICE));
+    let line = push_tooltip_line(state, lines, index, LINE_TYPE_SELL_PRICE, "", None, false);
     table_set(state, line, "price", Val::Num(f64::from(price)));
-    state.top = saved_top;
+    table_set(state, line, "maxPrice", Val::Num(-1.0));
 }
 
 fn tooltip_detail_color(state: &mut LuaState) -> (f64, f64, f64) {
