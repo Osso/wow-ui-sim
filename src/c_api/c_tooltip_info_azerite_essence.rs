@@ -203,7 +203,7 @@ fn power_record(essence_id: i32, rank: u32) -> Option<&'static AzeriteEssencePow
 }
 
 fn source_stage_for_rank(essence_id: i32, source_rank: u32) -> Option<u32> {
-    let next_rank = source_rank.checked_add(1)?;
+    let next_rank = source_rank.wrapping_add(1);
     if next_rank != SOURCE_STAGE_DISABLED_NEXT_RANK {
         power_record(essence_id, next_rank)?;
     }
@@ -408,7 +408,7 @@ fn append_source_heading(state: &mut LuaState, tooltip: Val, next_rank: u32) -> 
     let heading_key = if next_rank == 1 {
         "SOURCE"
     } else {
-        "TOOLTIP_TALENT_NEXT_RANK"
+        "NEXT_RANK_COLON"
     };
     let heading = localized_source_heading(state, heading_key)?;
     append_line(state, tooltip, LINE_TYPE_ESSENCE_TEXT, &heading, None);
