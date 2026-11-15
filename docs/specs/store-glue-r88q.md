@@ -14,7 +14,7 @@
 
 The original dispositions1283/1285 established these seams; the R88w sections below resolve individual contracts in separately verified changes:
 
-- Explicit empty-by-default resolved-GUID/alias input; no guessed GUID grammar and no claim that every unrecognized/noncanonical string is malformed. R88w.w2 is pending. Purchase states and queue-character records are separate inputs.
+- R88w.w2 resolves the bounded ASCII GUID grammar and exact Opaque alias branch as documented below. Unresolved forms remain neutral, not classified malformed. Purchase states and queue-character records remain separate host inputs.
 - Queue correlation is opaque host data. Simulator request counters do not establish native width, overflow or wire layout. No public packet name/opcode is invented.
 - Restriction metadata is explicit; Lua taint alone is not treated as native restricted-execution metadata. Secret helpers apply only to matching known contracts.
 - Completion values/flags and state>1 permission have neutral explicit inputs; their service meanings are UNKNOWN. Pending errors are host supplied and are not automatically cleared.
@@ -69,7 +69,7 @@ VERIFIED Retail 12.1.5.70688: `C_StoreSecure.GetVASErrors` normally returns one 
 
 The entry restriction's cause is UNKNOWN. Per #1310, `vas_errors_entry_rejected` is an explicit host input, default false; rejection returns zero Lua values before reading or modifying the shared list. It is not inferred from taint and emits no invented forbidden event. Later pending errors do not roll back completed source sorting/compaction. Native cleanup and allocation-release lifetime are not established as a Lua getter operation.
 
-The selected original consumer is `VASErrorData_GetCombinedMessage`, `Shared/VASErrorLookup.lua:365-380`, approved by #1310. Native facts are Retail-only; publication on the already-modeled PTR/Forever profiles retains the separately labeled inferred applicability boundary. The three reader selectors passed after their baseline RED runs; existing R88q selectors also passed. Error-event publication, callback copy gates, state-change arity, and GUID parsing are separate subsequent changes.
+The selected original consumer is `VASErrorData_GetCombinedMessage`, `Shared/VASErrorLookup.lua:365-380`, approved by #1310. Native facts are Retail-only; publication on the already-modeled PTR/Forever profiles retains the separately labeled inferred applicability boundary. The three reader selectors passed after their baseline RED runs; existing R88q selectors also passed. Error-event publication, callback copy gates, state-change arity, and GUID parsing were delivered in separate subsequent commits, documented below.
 
 The modeled profiles retire the unconditional empty-table `runtime_surface_bootstrap.lua` GetVASErrors override. Its scoped legacy branch remains for unmodeled profiles; the later nil-only fallback cannot overwrite this native reader.
 
@@ -77,7 +77,7 @@ The modeled profiles retire the unconditional empty-table `runtime_surface_boots
 
 VERIFIED Retail (#1308): every per-character path releases/resets the old shared list first (an empty new Vec in this bounded model). The explicit state0/1 removal route now copies precisely a nonempty vector whose first value is nonzero, preserving every later zero and signed32 code. Character matching is irrelevant to copying. Empty and first-zero lists leave it empty; the state>1 service route clears it without copying. The obsolete `copy_eligible` host argument is removed, not replaced with a guessed predicate.
 
-The earlier absent-character assertion that expected no copy solely because a host boolean was false is corrected in this commit: input `[88]` now yields `[88]` even with no character match, exactly as w4 states. Record/event assertions are retained. Purchase-error publication follows separately; this commit does not claim that event delivery is implemented.
+The earlier absent-character assertion that expected no copy solely because a host boolean was false is corrected in this commit: input `[88]` now yields `[88]` even with no character match, exactly as w4 states. Record/event assertions are retained. Purchase-error publication was added in the separate commit documented below.
 
 ## R88w.w1/w4 purchase-error event
 
@@ -90,3 +90,15 @@ The approved #1310 RED fixture adapter could install only the existing callbacks
 VERIFIED Retail (#1308): bulk replacement emits once after replacing the complete list, including empty replacement. State0/1 removal emits only after a matching record was removed. A state>1 update/addition emits only after the explicit native-predicate result permits it and the record is stored. All three `VAS_CHARACTER_STATE_CHANGED` sites now publish zero event-specific values. The obsolete host payload slices are removed from the host API.
 
 Per #1310, RED exercised the real former producer with its existing nonempty `[77]` host slice. GREEN removes only that obsolete adapter argument; the frozen record inputs, original-consumer/listener observations and assertions remain byte-identical. There is no test-supplied replacement publisher.
+
+## R88w.w2 bounded GUID argument reader
+
+VERIFIED Retail (#1308), with representation/UNKNOWN scope approved #1310: arguments use exact-case `Opaque-` plus a nonempty ASCII decimal suffix for the explicit u32-wrapping alias map. Missing or empty aliases resume ordinary parsing. Arbitrary text aliases have been removed. Ordinary default-ASCII prefix dispatch, bounded wrapping decimal/hex scanners, documented numeric limits, and the quoted Player/Party examples are implemented. Host records and queue requests compare parsed identities; queue response publication retains the host-supplied display string.
+
+The internal identity is symbolic `(kind, form, parsed fields)`, not a claimed native 128-bit packing. Player selector forms remain distinct representations, with no asserted native cross-form equality. Only the verified LMMParty/Party equivalence is introduced. Host inputs must have unique supported parsed identities; duplicate equivalent display-key precedence is not claimed. Unsupported/UNKNOWN input cannot match another UNKNOWN input or an empty record.
+
+UNKNOWN: nondefault locale/non-ASCII classification, embedded-NUL bounds, short matching `WOWGUID_` markers, unresolved sentinel priority/comparison length, separator-skip exceptions, exhausted-input behavior, WorldLayer progression, and unspecified final-stage rules remain neutral and untested. The explicit native empty-string case remains modeled; unresolved exhaustion inside typed field parsing is not asserted. Canonical hyphens and verified numeric limits do not establish a strict native grammar that rejects all other spellings. Only explicitly verified empty forms and definite default-marker mismatches yield the modeled empty identity.
+
+Prior R88q fixtures used arbitrary resolved text aliases while grammar was UNKNOWN. Their logical A/B/absent records now use valid Player strings; numeric argument 17/29 still verifies type acceptance and ignored extras but no longer invents raw-number alias lookup. Backed Opaque lookup uses the exact native prefix and typed keys. These corrections cite R88w.w2, not a weakening to accommodate producer failures.
+
+Five new optional original-consumer selectors independently exercise two distinct backed records plus absence before assertion: ordinary normalization, quoted Player examples, Party/LMMParty, Opaque wrapping/fallback, and bounded limits. Parser unit tests are supplemental coverage, not independent RED proofs. PTR/Forever applicability remains INFERRED under the previously isolated ACTIVE gate.

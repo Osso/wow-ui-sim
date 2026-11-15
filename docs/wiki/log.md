@@ -1,3 +1,7 @@
+## [2026-11-15] implementation | Store Glue R88w
+
+[Store Glue native contracts](../specs/store-glue-r88q.md) now include the non-consuming sorted shared-error reader, verified copy/event gates, zero-payload state notifications and bounded symbolic GUID parsing. UNKNOWN parsing seams remain neutral; PTR/Forever applicability remains separately INFERRED.
+
 ## [2026-11-15] implementation | Retail Store Glue R88q
 
 [Store Glue VAS state](../specs/store-glue-r88q.md) records native returning paths, explicit host receive seams, original Glue consumers and bounded fallback retirement.

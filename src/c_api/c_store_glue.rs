@@ -97,7 +97,7 @@ fn read_argument(state: &LuaState, name: &str, usage: &str) -> LuaResult<Val> {
     };
     Err(bad_argument(1, name, &format!("{usage}. {reason}")))
 }
-fn read_guid(state: &LuaState, name: &str, usage: &str) -> LuaResult<String> {
+fn read_guid(state: &LuaState, name: &str, usage: &str) -> LuaResult<super::store_guid::Outcome> {
     let value = read_argument(state, name, usage)?;
     let bytes = match value {
         Val::Num(number) => Val::Num(number).to_string().into_bytes(),
@@ -109,23 +109,11 @@ fn read_guid(state: &LuaState, name: &str, usage: &str) -> LuaResult<String> {
             .unwrap_or_default(),
         _ => return Err(bad_argument(1, name, usage)),
     };
-    // UNKNOWN native text grammar; supplied opaque aliases bypass that gap.
-    // Unresolved inputs use the neutral empty GUID, never a guessed accepted form.
-    Ok(borrow_state(state)?
-        .store_glue
-        .resolved_guid_aliases
-        .get(&bytes)
-        .cloned()
-        .unwrap_or_default())
+    Ok(borrow_state(state)?.store_glue.resolve_guid(&bytes))
 }
 fn get_purchase(state: &mut LuaState) -> LuaResult<u32> {
     let guid = read_guid(state, "GetVASPurchaseStateInfo", PURCHASE_USAGE)?;
-    let record = borrow_state(state)?
-        .store_glue
-        .purchase_states
-        .get(&guid)
-        .cloned()
-        .unwrap_or_default();
+    let record = borrow_state(state)?.store_glue.purchase_record(&guid);
     pending_error(state, "GetVASPurchaseStateInfo")?;
     state.push(Val::Num(f64::from(record.product_id)));
     state.push(Val::Num(f64::from(record.state)));

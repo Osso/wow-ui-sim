@@ -3,7 +3,7 @@ use crate::lua_api::WowLuaEnv;
 use rilua::Val;
 use std::collections::HashMap;
 
-/// Empty string represents the native empty GUID; nonempty strings are host identities.
+/// Host display text; ordinary parsing supplies lookup identity (R88w.w2, #1310).
 pub type StoreGuid = String;
 #[derive(Clone, Debug, Default)]
 pub struct VasPurchaseRecord {
@@ -33,8 +33,8 @@ pub struct StoreCallbacks {
 pub struct StoreGlueState {
     pub purchase_states: HashMap<StoreGuid, VasPurchaseRecord>,
     pub queue_characters: Vec<VasQueueCharacter>,
-    /// Resolved aliases are explicit inputs. General GUID grammar is UNKNOWN.
-    pub resolved_guid_aliases: HashMap<Vec<u8>, StoreGuid>,
+    /// VERIFIED exact-case Opaque- u32 aliases; missing/None resumes ordinary parsing.
+    pub opaque_guid_aliases: HashMap<u32, Option<super::store_guid::Identity>>,
     pub disconnect_on_logout: bool,
     pub vas_product_ready: bool,
     pub connection_present: bool,
@@ -54,6 +54,52 @@ pub struct StoreGlueState {
     pub secret_access_mode: Option<i32>,
 }
 impl StoreGlueState {
+    /// VERIFIED ordinary grammar; Opaque alias lookup belongs only to API arguments.
+    pub fn resolve_guid(&self, bytes: &[u8]) -> super::store_guid::Outcome {
+        use super::store_guid::{Outcome, opaque_key, parse};
+        if let Some(identity) = opaque_key(bytes)
+            .and_then(|key| self.opaque_guid_aliases.get(&key))
+            .and_then(Option::as_ref)
+        {
+            return Outcome::Known(identity.clone());
+        }
+        parse(bytes)
+    }
+    pub fn purchase_record(&self, guid: &super::store_guid::Outcome) -> VasPurchaseRecord {
+        self.purchase_states
+            .iter()
+            .find(|(text, _)| guid_matches(guid, text))
+            .map(|(_, record)| record.clone())
+            .unwrap_or_default()
+    }
+    pub fn remove_record(&mut self, text: &str) -> bool {
+        let guid = super::store_guid::parse(text.as_bytes());
+        let key = self
+            .purchase_states
+            .keys()
+            .find(|key| guid_matches(&guid, key))
+            .cloned();
+        key.is_some_and(|key| self.purchase_states.remove(&key).is_some())
+    }
+    pub fn insert_record(&mut self, text: StoreGuid, record: VasPurchaseRecord) -> bool {
+        // UNKNOWN host strings are not purchase identities and cannot match each other.
+        if matches!(
+            super::store_guid::parse(text.as_bytes()),
+            super::store_guid::Outcome::Unknown
+        ) {
+            return false;
+        }
+        self.remove_record(&text);
+        self.purchase_states.insert(text, record);
+        true
+    }
+    pub fn replace_records(&mut self, records: Vec<(StoreGuid, VasPurchaseRecord)>) {
+        self.purchase_states.clear();
+        for (text, record) in records {
+            self.insert_record(text, record);
+        }
+    }
+
     /// VERIFIED R88w.w1 (#1308): sort/compact before snapshot; retain source count.
     pub fn vas_errors_snapshot(&mut self) -> Vec<i32> {
         self.purchase_errors.sort_unstable();
@@ -68,8 +114,12 @@ impl StoreGlueState {
         self.purchase_errors[..distinct].to_vec()
     }
 
-    pub fn prepare_queue_request(&mut self, guid: &str) {
-        let Some(row) = self.queue_characters.iter().find(|row| row.guid == guid) else {
+    pub fn prepare_queue_request(&mut self, guid: &super::store_guid::Outcome) {
+        let Some(row) = self
+            .queue_characters
+            .iter()
+            .find(|row| guid_matches(guid, &row.guid))
+        else {
             return;
         };
         let correlation = row.correlation.clone();
@@ -161,7 +211,7 @@ pub fn receive_bulk(
     }
     let notify = {
         let mut sim = env.state().borrow_mut();
-        sim.store_glue.purchase_states = records.into_iter().collect();
+        sim.store_glue.replace_records(records);
         sim.store_glue.callbacks.state_changed
     };
     if notify {
@@ -196,7 +246,7 @@ pub fn receive_removal(env: &WowLuaEnv, guid: &str, errors: Vec<i32>) -> crate::
 fn remove_purchase_record(env: &WowLuaEnv, guid: &str) -> crate::Result<()> {
     let notify = {
         let mut sim = env.state().borrow_mut();
-        let removed = sim.store_glue.purchase_states.remove(guid).is_some();
+        let removed = sim.store_glue.remove_record(guid);
         removed && sim.store_glue.callbacks.state_changed
     };
     if notify {
@@ -221,8 +271,8 @@ pub fn receive_service_update(
     }
     let notify = {
         let mut sim = env.state().borrow_mut();
-        sim.store_glue.purchase_states.insert(guid, record);
-        sim.store_glue.callbacks.state_changed
+        let stored = sim.store_glue.insert_record(guid, record);
+        stored && sim.store_glue.callbacks.state_changed
     };
     if notify {
         env.fire_event_with_args("VAS_CHARACTER_STATE_CHANGED", &[])?;
@@ -241,4 +291,14 @@ pub enum RestrictedExecution {
         function: String,
         callback_present: bool,
     },
+}
+
+// UNKNOWN inputs never match, including another UNKNOWN or an explicit empty record.
+fn guid_matches(guid: &super::store_guid::Outcome, host: &str) -> bool {
+    use super::store_guid::{Outcome, parse};
+    match (guid, parse(host.as_bytes())) {
+        (Outcome::Known(left), Outcome::Known(right)) => *left == right,
+        (Outcome::KnownEmpty, Outcome::KnownEmpty) => true,
+        _ => false,
+    }
 }

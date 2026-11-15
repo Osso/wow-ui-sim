@@ -39,8 +39,12 @@ this retirement.
 `store_glue_state.rs` getters/request functions on modeled profiles with explicit
 empty host inputs and native-backed returning paths. Other profiles retain their
 compatibility surface. Product/group and unrelated Store compatibility remain
-outside this retirement. Unknown GUID parsing, response payloads and lifecycle
-routes are not filled with guessed behavior.
+outside this retirement. R88w also replaces the unconditional empty-table
+`C_StoreSecure.GetVASErrors` override in `runtime_surface_bootstrap.lua` on modeled
+profiles; its scoped legacy branch remains for other profiles. Shared-list copy,
+error/state notification payloads, and bounded ASCII GUID parsing now follow the
+native evidence. Unresolved GUID forms and service/lifecycle predicates remain
+neutral instead of receiving guessed behavior.
 
 ### Remaining temporary hooks
 
