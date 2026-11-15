@@ -34,7 +34,7 @@ const ASSERTIONS: &str = r#"
         assert(string.find(err, 'C_Spell.'..api, 1, true))
         assert(string.find(err, tostring(position), 1, true))
         assert(not string.find(err, 'PRIVATE-Count', 1, true))
-        local guard = string.find(err, 'requires an untainted caller', 1, true)
+        local guard = string.find(err, 'Secret values are only allowed during untainted execution for this argument.', 1, true)
         if denial then
             assert(guard)
         else
@@ -855,12 +855,10 @@ fn secure_display_authenticates_secret_numeric_string_identifier_and_defaults() 
     display(&env, "SCIdentifier,SCNil,SCNil", "7", false);
 }
 
-#[test]
-fn secure_display_wrong_authenticated_types_report_positions_without_payload() {
-    let env = secret_fixture();
-    env.exec(
-        r#"
-        SCReject('GetSpellDisplayCount',1,false,SCMax)
+// R88k.5 line 11623 and R88p line 12450 (lt-67d2 #1226): access is
+// VERIFIED; authenticated fractional conversion remains UNKNOWN.
+const WRONG_AUTHENTICATED_DISPLAY_TYPES: &str = r#"
+        -- UNKNOWN R88k.5 line 11623: authenticated fractional conversion.
         for _,v in ipairs({
             SCNil,
             SCBool,
@@ -885,9 +883,12 @@ fn secure_display_wrong_authenticated_types_report_positions_without_payload() {
         }) do
             SCReject('GetSpellDisplayCount',3,false,19750,6,v)
         end
-    "#,
-    )
-    .unwrap();
+    "#;
+
+#[test]
+fn secure_display_wrong_authenticated_types_report_positions_without_payload() {
+    let env = secret_fixture();
+    env.exec(WRONG_AUTHENTICATED_DISPLAY_TYPES).unwrap();
 }
 
 #[test]
@@ -901,7 +902,7 @@ fn cast_accepts_numeric_secrets_but_preserves_other_kind_rejection() {
             assert(select('#',C_Spell.GetSpellCastCount(SCIdentifier))==1)
             assert(C_Spell.GetSpellCastCount(SCIdentifier)==7)
             assert(C_Spell.GetSpellCastCount(SCUnknown)==0)
-            SCReject('GetSpellCastCount',1,false,SCMax)
+            -- UNKNOWN R88k.5 line 11623: no fractional-secret conversion claim.
             for _,v in ipairs({SCReplacement,SCNil,SCBool,SCString,SCSecretTable,SCSecretFrame,SCAlias}) do
                 local ok,err=pcall(C_Spell.GetSpellCastCount,v)
                 assert(not ok)
