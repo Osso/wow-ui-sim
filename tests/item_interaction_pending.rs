@@ -804,7 +804,7 @@ fn pending_item_unknown_inventory_count_rejects_equipment_locations() {
 
 #[test]
 fn pending_item_special_equipment_requires_mode_availability() {
-    for slot in [64, 69, 101, 105] {
+    for slot in (64..=69).chain(101..=105) {
         let env = pending_env(&[ITEM_A]);
         seed_equipped_items(&env, &[(slot, ITEM_A)]);
         set_r88s_inventory_inputs(&env, Some(105), Some(true), &[]);
