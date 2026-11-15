@@ -68,26 +68,31 @@ fn selected(state: &mut LuaState) -> LuaResult<u32> {
     if let Some(number) = numeric(state, first)
         && matches!(second, Val::Num(_) | Val::Str(_))
     {
-        let slot = signed_integer(number)?;
-        let pet = match second {
-            Val::Str(reference) => state
-                .gc
-                .string_arena
-                .get(reference)
-                .is_some_and(|value| value.data() == b"pet"),
-            _ => false,
-        };
-        // The existing adapter has only a contiguous player spell bank, no
-        // ordered pet bank. Do not reinterpret the unordered pet spell set.
-        if pet || slot < 1 || spellbook_data::get_spell_at_slot(slot).is_none() {
-            return Ok(0);
-        }
-        // Selection/effect caches are absent. Preserve the existing unselected
-        // seam for represented rows; no guessed SkillLineAbility predicate.
-        state.push(Val::Bool(false));
-        return Ok(1);
+        return selected_numeric_slot(state, number, second);
     }
     // The native locale/secondary-text variant store is not supplied. A missing
     // name lookup publishes zero results. Do not use numeric input as a spell ID.
     Ok(0)
+}
+
+fn selected_numeric_slot(state: &mut LuaState, number: f64, bank: Val) -> LuaResult<u32> {
+    let slot = signed_integer(number)?;
+    let pet_bank = match bank {
+        Val::Str(reference) => state
+            .gc
+            .string_arena
+            .get(reference)
+            .is_some_and(|value| value.data() == b"pet"),
+        _ => false,
+    };
+    // The existing adapter has only a contiguous player spell bank, no
+    // ordered pet bank. Do not reinterpret the unordered pet spell set.
+    let valid_player_slot = slot >= 1 && spellbook_data::get_spell_at_slot(slot).is_some();
+    if pet_bank || !valid_player_slot {
+        return Ok(0);
+    }
+    // Selection/effect caches are absent. Preserve the existing unselected
+    // seam for represented rows; no guessed SkillLineAbility predicate.
+    state.push(Val::Bool(false));
+    Ok(1)
 }

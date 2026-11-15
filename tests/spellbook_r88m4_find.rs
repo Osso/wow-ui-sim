@@ -18,6 +18,10 @@ fn env() -> WowLuaEnv {
         wow_ui_sim::spells::get_spell(u32::MAX).is_none(),
         "absent signed -1 row"
     );
+    assert!(
+        wow_ui_sim::spells::get_spell(133).is_some(),
+        "second existing catalog row"
+    );
     let env = WowLuaEnv::new().unwrap();
     env.exec(
         r#"
@@ -54,6 +58,9 @@ fn find_record_results_normalize_numeric_strings_and_fractions_red() {
             R88OneNumber(6603, method('6603'))
             R88OneNumber(6603, method(6603.875))
             R88OneNumber(6603, method('6603.875', 'ignored extra argument'))
+            R88OneNumber(133, method(133))
+            R88OneNumber(133, method('133.875'))
+            R88OneNil(method(2147483647))
         end
     "#).unwrap();
 }
@@ -67,6 +74,8 @@ fn find_missing_spell_record_returns_exactly_one_nil_red() {
             R88OneNil(method('2147483647'))
             R88OneNil(method(-1))
             R88OneNil(method('-1.875'))
+            R88OneNumber(6603, method('6603.875'))
+            R88OneNumber(133, method('133.875'))
         end
     "#).unwrap();
 }

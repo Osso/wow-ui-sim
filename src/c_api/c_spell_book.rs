@@ -663,6 +663,29 @@ mod cooldown_query {
         crate::c_api::c_spell::push_spell_cooldown_info(state, spell_id)
     }
 
+    fn get_retail_loss_of_control(state: &mut LuaState, slot: Val, bank: Val) -> LuaResult<u32> {
+        // R88m.4: rejected/missing items and failed queries publish no values.
+        // The existing player-book adapter cannot represent native pet rows,
+        // row kinds or rejected flags; its off-spec rejection is preserved.
+        let Some(spell_id) = cooldown_spell_for_book_entry(slot, bank).filter(|id| *id != 0) else {
+            return Ok(0);
+        };
+        let (info, restricted) = {
+            let sim = crate::lua_api::methods::borrow_state(state)?;
+            (
+                sim.spell_loss_of_control.get(&spell_id).cloned(),
+                crate::c_api::charge_state::cooldowns_are_restricted(&sim),
+            )
+        };
+        let Some(info) = info else {
+            return Ok(0);
+        };
+        // Supplied decoded query DTO: milliseconds-to-seconds conversion,
+        // active/replacement calculation and acquisition remain upstream
+        // model seams, not newly inferred values in this serializer.
+        crate::c_api::loss_of_control::push_loss_of_control_info(state, &info, restricted)
+    }
+
     pub(super) fn get_loss_of_control(state: &mut LuaState) -> LuaResult<u32> {
         let (slot, bank) = if crate::client_profile::ACTIVE
             == crate::client_profile::ClientProfile::Retail
@@ -677,29 +700,7 @@ mod cooldown_query {
             )
         };
         if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
-            // R88m.4: rejected/missing items and failed queries publish no values.
-            // The existing player-book adapter cannot represent native pet rows,
-            // row kinds or rejected flags; its off-spec rejection is preserved.
-            let Some(spell_id) = cooldown_spell_for_book_entry(slot, bank).filter(|id| *id != 0)
-            else {
-                return Ok(0);
-            };
-            let (info, restricted) = {
-                let sim = crate::lua_api::methods::borrow_state(state)?;
-                (
-                    sim.spell_loss_of_control.get(&spell_id).cloned(),
-                    crate::c_api::charge_state::cooldowns_are_restricted(&sim),
-                )
-            };
-            let Some(info) = info else {
-                return Ok(0);
-            };
-            // Supplied decoded query DTO: milliseconds-to-seconds conversion,
-            // active/replacement calculation and acquisition remain upstream
-            // model seams, not newly inferred values in this serializer.
-            return crate::c_api::loss_of_control::push_loss_of_control_info(
-                state, &info, restricted,
-            );
+            return get_retail_loss_of_control(state, slot, bank);
         }
         let Some(spell_id) = cooldown_spell_for_book_entry(slot, bank) else {
             state.push(Val::Nil);

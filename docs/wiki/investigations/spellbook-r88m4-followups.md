@@ -36,7 +36,9 @@ The pinned Retail UI cache (`Osso/wow-ui-sim-blizzard-ui@a1bb331b6`) was indepen
 
 `Blizzard_Deprecated/11_0_0_SpellBookAPITransitionGuide.lua` contains commented migration examples, not executable alias definitions. The selected `Blizzard_DeprecatedSpellBook` publishes six other wrappers, including Find APIs, not the four retired names.
 
-Optional API tests provide decisive `select('#', ...)` arity/error checks. Original selected consumers are explicitly **PRESERVATION**, not proof that a constant/no-op producer is rejected:
+The two Find selectors each cover two distinct present records (6603 and 133) plus absent records. Both AutoCast selectors independently pair a supported record (two Booleans) with missing items (zero results). Both LoC miss/supplied-query selectors independently pair failed queries (zero results) with a successful supplied DTO (one fresh table). These contrasting selectors reject constant/no-op producers in isolation. DTO serialization tests do not establish native acquisition or cooldown calculation. Other narrow error, secret-input, missing-state and alias-publication selectors are limited boundary or preservation evidence, not complete producer acceptance.
+
+Original selected consumers are explicitly **PRESERVATION**, not proof that a constant/no-op producer is rejected:
 
 - Actual PlayerSpells TOC → SpellBook item XML → `SpellBookItemMixin.UpdateAutoCast`, original paged items and open/close/reopen, without fabricated item data or callbacks. Hidden overlays with no candidate state also pass a false/false constant.
 - Actual deprecated Find wrappers preserve their original forwarding behavior.

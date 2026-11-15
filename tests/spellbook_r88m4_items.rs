@@ -27,6 +27,11 @@ fn supported_slot() -> (i32, u32) {
 #[test]
 fn autocast_missing_item_returns_zero_values() {
     let env = env();
+    assert_autocast_supported(&env);
+    assert_autocast_missing(&env);
+}
+
+fn assert_autocast_missing(env: &WowLuaEnv) {
     // No pet snapshot is supplied. Bank 1 is empty, not bank 0 or action slot 1.
     assert!(env.state().borrow().pet_spells.is_empty());
     for args in ["0, 0", "4294967295, 0", "1, 1", "'0.9', '0.9'"] {
@@ -40,6 +45,11 @@ fn autocast_missing_item_returns_zero_values() {
 #[test]
 fn autocast_supported_record_without_candidate_flags_returns_two_false_booleans() {
     let env = env();
+    assert_autocast_missing(&env);
+    assert_autocast_supported(&env);
+}
+
+fn assert_autocast_supported(env: &WowLuaEnv) {
     let (slot, _) = supported_slot();
     assert!(
         env.state()
@@ -62,6 +72,11 @@ fn autocast_supported_record_without_candidate_flags_returns_two_false_booleans(
 #[test]
 fn loss_of_control_missing_item_and_failed_query_return_zero_values() {
     let env = env();
+    assert_loss_of_control_missing(&env);
+    assert_loss_of_control_success(&env);
+}
+
+fn assert_loss_of_control_missing(env: &WowLuaEnv) {
     let (slot, _) = supported_slot();
     env.state().borrow_mut().spell_loss_of_control.clear();
     for args in [
@@ -95,6 +110,11 @@ fn loss_of_control_existing_offspec_rejection_preserves_zero_result() {
 #[test]
 fn loss_of_control_supplied_query_dto_preserves_one_fresh_table() {
     let env = env();
+    assert_loss_of_control_success(&env);
+    assert_loss_of_control_missing(&env);
+}
+
+fn assert_loss_of_control_success(env: &WowLuaEnv) {
     let (slot, spell_id) = supported_slot();
     env.state().borrow_mut().spell_loss_of_control.insert(
         spell_id,

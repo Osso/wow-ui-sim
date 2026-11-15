@@ -1,6 +1,6 @@
 ## [2026-11-14] investigation | Spellbook R88m.4 boundaries
 
-[Spellbook follow-ups](investigations/spellbook-r88m4-followups.md) records eleven API dispositions, Retail census-absent alias retirement, verified arity/input boundaries, explicit pet/link/selection/cooldown seams, and original consumer PRESERVATION versus API RED proof.
+[Spellbook follow-ups](investigations/spellbook-r88m4-followups.md) records eleven API dispositions, Retail census-absent alias retirement, verified arity/input boundaries, explicit pet/link/selection/cooldown seams, and original consumer PRESERVATION versus API RED proof. Follow-up review requires each decisive Find/AutoCast/LoC selector to include contrasting outcomes independently; narrow validation and no-data cases are labelled limited boundary evidence.
 
 ## [2026-11-14] correction | Inventory name-adapter evidence
 
