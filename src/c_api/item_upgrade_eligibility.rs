@@ -48,14 +48,15 @@ fn can_upgrade_item(state: &mut LuaState) -> LuaResult<u32> {
     };
     // Best guess, native UNKNOWN: without a supplied observation the item is
     // not upgradable, as for most items and for empty locations.
-    let sim = borrow_state(state)?;
-    let item_id = slot.item_id(&sim);
-    let eligible = sim
-        .item_upgrade_eligibility
-        .locations
-        .get(&slot)
-        .filter(|observation| Some(observation.item_id) == item_id)
-        .is_some_and(|observation| observation.eligible);
+    let eligible = {
+        let sim = borrow_state(state)?;
+        let item_id = slot.item_id(&sim);
+        sim.item_upgrade_eligibility
+            .locations
+            .get(&slot)
+            .filter(|observation| Some(observation.item_id) == item_id)
+            .is_some_and(|observation| observation.eligible)
+    };
     state.push(Val::Bool(eligible));
     Ok(1)
 }

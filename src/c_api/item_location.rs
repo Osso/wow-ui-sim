@@ -82,8 +82,10 @@ pub(crate) fn read_r88s_item_slot(
             .ok_or(ItemLocationReadError::Unavailable);
     }
 
-    let bag_id = location_integer_field(state, table_get(state, location, "bagID"))?;
-    let public_slot = location_integer_field(state, table_get(state, location, "slotIndex"))?;
+    let bag_value = table_get(state, location, "bagID");
+    let bag_id = location_integer_field(state, bag_value)?;
+    let slot_value = table_get(state, location, "slotIndex");
+    let public_slot = location_integer_field(state, slot_value)?;
     read_bag_slot(state, bag_id, public_slot).ok_or(ItemLocationReadError::Unavailable)
 }
 

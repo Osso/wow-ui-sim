@@ -3,7 +3,7 @@ use super::helpers::ensure_namespace;
 use crate::c_api::item_location::{ItemSlot, read_r88s_item_slot};
 use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::methods::{
-    borrow_state, borrow_state_mut, create_string, create_table, table_get, table_set,
+    borrow_state, borrow_state_mut, create_string, create_table, table_set,
 };
 use crate::lua_api::state::{CursorInfo, CursorItemOrigin, ItemLocationData};
 use crate::lua_bridge::table_set_rust_fn_static;
