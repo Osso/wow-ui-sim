@@ -3,12 +3,14 @@
 //! remain unmodeled. Output restriction is separate from inventory arithmetic.
 
 #[cfg(feature = "retail-12-0-5")]
-use super::c_action_bar_counts::{format_display_count, parse_replacement};
+use super::c_action_bar_counts::format_display_count;
 use super::c_spell::read_public_spell_identifier_at;
 use super::c_spell::read_spell_identifier_value;
 use super::charge_state::cooldowns_are_restricted;
 #[cfg(feature = "retail-12-0-5")]
 use super::charge_state::read_charge_input;
+#[cfg(feature = "retail-12-0-5")]
+use super::helpers::parse_replacement;
 #[cfg(feature = "retail-12-1-5")]
 use crate::client_profile::ClientProfile;
 use crate::lua_api::methods::borrow_state;

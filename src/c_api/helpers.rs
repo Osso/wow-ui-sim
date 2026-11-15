@@ -190,3 +190,17 @@ pub(crate) fn set_table_array(state: &mut LuaState, table: Val, index: i64, valu
     }
     state.gc.barrier_back(table_ref);
 }
+
+#[cfg(feature = "retail-12-0-5")]
+pub(crate) fn parse_replacement(state: &LuaState, value: Val, api: &str) -> LuaResult<String> {
+    if value == Val::Nil {
+        return Ok("*".to_owned());
+    }
+    crate::lua_api::methods::val_to_string(state, value)
+        .filter(|text| !text.contains('\0'))
+        .ok_or_else(|| {
+            rilua::runtime_error(format!(
+                "{api}: argument 3 requires a UTF-8 NUL-free string or nil"
+            ))
+        })
+}
