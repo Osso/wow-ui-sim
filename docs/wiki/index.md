@@ -1,6 +1,6 @@
 ## [2026-11-14] implementation | Retail possession state writer
 
-[Round 7 contract](../specs/tooltip-r7-getters.md) and [Lua API](systems/lua-api.md#possession-state-writer-r88o2-q5) record R88o.2-q5. **VERIFIED (Retail 12.1.5.70688):** local possession writes, change-only event requests, candidate order and selector rules. **VERIFIED (simulator source):** host/admin object and candidate inputs start empty; the spell catalog supplies presence checks only. **INFERRED:** the collection belongs to current-player state. **UNKNOWN:** external triggers, candidate acquisition, cooldown and number-display inputs.
+[Round 7 contract](../specs/tooltip-r7-getters.md) and [Lua API](systems/lua-api.md#possession-state-writer-r88o2-q5) record R88o.2-q5. **VERIFIED (Retail 12.1.5.70688):** local possession writes, change-only event requests, candidate order and selector rules. **VERIFIED (simulator source):** empty-by-default host/admin inputs supply object and candidate data; the spell catalog supplies presence checks only. **INFERRED:** the collection belongs to current-player state. **UNKNOWN:** external triggers and candidate acquisition. **VERIFIED (test SHA `458beb9e5da674428a975e07f05b8d84a38ca650`):** all 24 selected Retail integration tests pass; five requested profile compile receipts have zero warnings.
 
 ## [2026-11-14] implementation | Achievement eligibility and tracker colors
 
