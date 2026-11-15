@@ -30,6 +30,10 @@ The [modified-appearance](../specs/tooltip-appearance-item.md), [merchant-cost](
 
 The [Round 7 contract](../specs/tooltip-r7-getters.md), [Lua API](systems/lua-api.md#azerite-essence-tooltip-selection-r88n2), and [consumer investigation](investigations/consumer-selection-and-red-proof.md#retail-azerite-essence-tooltip-consumers) record original-consumer selectors and verified builder timing. Spell-column mapping remains INFERRED; faction-to-source selection is UNKNOWN, so no source-description row is emitted. Inline-row order, gray selection, empty-source behavior and requirement rows remain UNKNOWN.
 
+## [2026-11-14] implementation | Retail selected tooltip getters
+
+[Tooltip-data system](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) and the [Round 7 contract](../specs/tooltip-r7-getters.md) cover the selected Retail tooltip getters and ChallengeMode writer inputs. **VERIFIED (R88o.2 q1/q2/q3):** unresolved conversion output shape, SlotKeystone cursor/notification order and map/modifier rejection, and RemoveKeystone Boolean/category guards. **INFERRED:** bag cursor fields project native cursor inputs, `PlayerState::present` proxies opaque-context availability, and selected item-ID/location caches preserve simulator lookup and cursor staging. **SIMULATOR GAP:** native error code 1013 publication/text, mode/associated GUID, item-data/resource and later lock effects, `GetSlottedKeystoneInfo`, and the simulator does not model q4 `SetPendingItem` lifecycle; q5 external possession routes and other item-interaction routes remain UNKNOWN.
+
 ## [2026-11-14] implementation | Retail tooltip serializer field boundary
 
 [Tooltip data](systems/lua-api.md#retail-tooltipdata-field-boundary-r88n4b) links the [serialization contract](../specs/tooltip-data-serialization.md) and [consumer/seam evidence](investigations/consumer-selection-and-red-proof.md#retail-tooltip-serializer-field-consumers). **VERIFIED (R88n.4b):** top-level repair/pet fields and type-11 price fields. **INFERRED:** positive item sell-price projection; `maxPrice` remains absent without a quantity/range input.

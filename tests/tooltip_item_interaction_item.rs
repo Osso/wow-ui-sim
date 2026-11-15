@@ -5,13 +5,16 @@ use crate::common::blizzard_addon_harness::blizzard_ui_dir;
 
 #[path = "tooltip_full_env_helpers.rs"]
 mod tooltip_full_env_helpers;
-use wow_ui_sim::c_api::c_item_interaction::ItemInteractionTooltipObject;
+use wow_ui_sim::c_api::ItemInteractionTooltipInput;
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::toc::TocFile;
 
 fn supply_object(env: &WowLuaEnv, kind: Option<i32>) {
-    env.state().borrow_mut().item_interaction_tooltip_object =
-        kind.map(|kind| ItemInteractionTooltipObject { kind });
+    env.state().borrow_mut().item_interaction_tooltip_input =
+        kind.map(|kind| ItemInteractionTooltipInput {
+            object_kind: Some(kind),
+            ..Default::default()
+        });
 }
 
 fn original_item_interaction() -> WowLuaEnv {
@@ -55,6 +58,7 @@ fn trigger_original_slot(env: &WowLuaEnv) {
     .expect("original interaction slot tooltip");
 }
 
+// SUPPLEMENTARY original-consumer boundary test; not one of the four payload selectors.
 #[test]
 fn original_item_interaction_slot_distinguishes_absent_failed_and_empty_lines() {
     let env = original_item_interaction();
@@ -85,6 +89,7 @@ fn original_item_interaction_slot_distinguishes_absent_failed_and_empty_lines() 
     .unwrap();
 }
 
+// SUPPLEMENTARY direct API contract test; its assertions remain unchanged.
 #[test]
 fn item_interaction_item_api_distinguishes_zero_results_and_empty_lines() {
     let env = WowLuaEnv::new().unwrap();

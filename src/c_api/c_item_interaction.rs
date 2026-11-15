@@ -24,13 +24,6 @@ pub struct ItemInteractionInfo {
     pub drop_in_slot_sound_kit_id: Option<i32>,
 }
 
-/// INFERRED simulator input representation for the native selected object.
-/// The native selection actions and object lifetime are not modeled.
-#[derive(Clone, Copy, Debug)]
-pub struct ItemInteractionTooltipObject {
-    pub kind: i32,
-}
-
 pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     let ns = ensure_namespace(state, "C_ItemInteraction")?;
     table_set_rust_fn_static(state, ns, "GetItemInteractionInfo", get_info)

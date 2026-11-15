@@ -1,15 +1,24 @@
 //! Last challenge completion snapshot, independent of historical weekly bests.
 
 use crate::c_api::ensure_namespace;
+use crate::c_api::item_spell::{item_guid_for_bag_slot, item_id_is_keystone};
+use crate::c_api::item_upgrade_eligibility::ItemSlot;
 use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, create_string, create_table, create_table_with_capacity,
     table_set_static,
 };
+use crate::lua_api::state::{CursorInfo, CursorItemOrigin};
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 use std::collections::{BTreeMap, BTreeSet};
+
+mod inferred;
+
+const CHALLENGE_MAP_ITEM_MODIFIER_ID: u32 = 17;
+const UNSPECIFIED_CHALLENGE_MODE_ID: u32 = 0;
+const ABSENT_CURRENT_MAP_ID: u32 = 0;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum KeystoneLocation {
@@ -20,9 +29,14 @@ pub enum KeystoneLocation {
 #[derive(Debug, Default)]
 pub struct KeystoneState {
     pub receptacle_guid: Option<String>,
+    /// Selected item instance; `None` represents no selected keystone.
     pub selected_guid: Option<String>,
+    /// INFERRED simulator cache for the resolved item behind the selected GUID.
+    pub selected_item_id: Option<u32>,
     pub selected_location: Option<KeystoneLocation>,
     pub selected_mode: Option<i32>,
+    /// Host-supplied result of the keystone cursor-staging permission gate.
+    pub cursor_stage_permission: Option<bool>,
     pub item_modifiers: BTreeMap<KeystoneLocation, (u32, Vec<(u32, u32)>)>,
     pub current_map_selector: Option<u32>,
     pub reason_one_locks: BTreeSet<KeystoneLocation>,
@@ -71,6 +85,9 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         get_challenge_completion_info,
     )?;
     if ACTIVE == ClientProfile::Retail {
+        table_set_rust_fn_static(state, namespace, "HasSlottedKeystone", has_slotted_keystone)?;
+        table_set_rust_fn_static(state, namespace, "SlotKeystone", slot_keystone)?;
+        table_set_rust_fn_static(state, namespace, "RemoveKeystone", remove_keystone)?;
         table_set_rust_fn_static(state, namespace, "CloseKeystoneFrame", close_keystone_frame)?;
         table_set_rust_fn_static(state, namespace, "ClearKeystone", clear_keystone)?;
         table_set_rust_fn_static(
@@ -81,6 +98,259 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         )?;
     }
     Ok(())
+}
+
+fn has_slotted_keystone(state: &mut LuaState) -> LuaResult<u32> {
+    // VERIFIED (R88n.4c-q1): GUID presence does not resolve or validate its item object.
+    let has_selected_guid = borrow_state(state)?.keystone.selected_guid.is_some();
+    state.push(Val::Bool(has_selected_guid));
+    Ok(1)
+}
+
+fn slot_keystone(state: &mut LuaState) -> LuaResult<u32> {
+    let Some((bag, slot, item_id)) = cursor_keystone_item(state)? else {
+        return Ok(0);
+    };
+    if borrow_state(state)?.item_info(item_id).is_none() {
+        return Ok(0);
+    }
+    let location = KeystoneLocation::Bag(bag, slot);
+    if !clear_and_validate_cursor_keystone(state, item_id, location)? {
+        return Ok(0);
+    }
+
+    let guid = item_guid_for_bag_slot(bag, slot, item_id);
+    set_selected_keystone(state, guid, location, item_id)?;
+
+    // VERIFIED (R88o.2 q2): the query callback requests this event after the
+    // selection stores, including on a terminal no-row result.
+    crate::lua_api::globals::state_backed_queries::dispatch_event_now(
+        state,
+        "CHALLENGE_MODE_KEYSTONE_SLOTTED",
+        &[Val::Num(f64::from(item_id))],
+    )?;
+    Ok(0)
+}
+
+fn clear_and_validate_cursor_keystone(
+    state: &mut LuaState,
+    item_id: u32,
+    location: KeystoneLocation,
+) -> LuaResult<bool> {
+    crate::lua_api::globals::real::cursor_model::clear_retaining_equip_lock(state)?;
+    let sim = borrow_state(state)?;
+    if !keystone_context_available(&sim) || sim.item_info(item_id).is_none() {
+        return Ok(false);
+    }
+    let class_matches = item_id_is_keystone(item_id);
+    let map_matches = class_matches && keystone_matches_current_map(&sim, location, item_id);
+    drop(sim);
+    if map_matches {
+        return Ok(true);
+    }
+
+    clear_candidate_selection_lock(state, location)?;
+    // SIMULATOR GAP (R88o.2 q2): code 1013 is verified, but its native
+    // publication route and exact text are unknown; do not emit guessed text.
+    Ok(false)
+}
+
+fn keystone_context_available(sim: &crate::lua_api::SimState) -> bool {
+    // INFERRED (R88o.2 q2/q3): `PlayerState::present` proxies opaque-context
+    // availability; it does not establish the native context's identity.
+    sim.player.present
+}
+
+fn keystone_matches_current_map(
+    sim: &crate::lua_api::SimState,
+    location: KeystoneLocation,
+    item_id: u32,
+) -> bool {
+    let challenge_id = sim
+        .keystone
+        .item_modifiers
+        .get(&location)
+        .filter(|(observed_id, _)| *observed_id == item_id)
+        .and_then(|(_, modifiers)| {
+            modifiers
+                .iter()
+                .find(|(kind, _)| *kind == CHALLENGE_MAP_ITEM_MODIFIER_ID)
+        })
+        // VERIFIED (R88o.2 q2): an absent modifier uses lookup key zero.
+        .map_or(UNSPECIFIED_CHALLENGE_MODE_ID, |(_, value)| *value);
+    let maps = sim_data::map_challenge_modes::MAPS;
+    maps.binary_search_by_key(&challenge_id, |row| row.0)
+        .ok()
+        .is_some_and(|index| {
+            u32::from(maps[index].1)
+                == sim
+                    .keystone
+                    .current_map_selector
+                    .unwrap_or(ABSENT_CURRENT_MAP_ID)
+        })
+}
+
+fn clear_candidate_selection_lock(
+    state: &mut LuaState,
+    location: KeystoneLocation,
+) -> LuaResult<()> {
+    let unlocked = {
+        let mut sim = borrow_state_mut(state)?;
+        let was_locked = sim.keystone.is_locked(location);
+        sim.keystone.reason_one_locks.remove(&location);
+        let is_locked = sim.keystone.is_locked(location);
+        (was_locked && !is_locked && location_exists(&sim, location)).then_some(location)
+    };
+    if let Some(location) = unlocked {
+        crate::c_api::item_spell::item_equip::dispatch_lock_transition(
+            state,
+            item_slot(location),
+            false,
+        )?;
+    }
+    Ok(())
+}
+
+fn cursor_keystone_item(state: &LuaState) -> LuaResult<Option<(i32, i32, u32)>> {
+    // INFERRED (R88o.2 q2): this bag cursor maps the native owned-item GUID,
+    // source-container GUID and source slot; other cursor inputs are not modeled.
+    let sim = borrow_state(state)?;
+    let Some(CursorInfo::Item {
+        item_id,
+        origin: CursorItemOrigin::Bag { bag, slot },
+        ..
+    }) = sim.cursor_item.as_ref()
+    else {
+        return Ok(None);
+    };
+    Ok(Some((*bag, *slot, *item_id)))
+}
+
+fn set_selected_keystone(
+    state: &mut LuaState,
+    guid: String,
+    location: KeystoneLocation,
+    item_id: u32,
+) -> LuaResult<()> {
+    let (unlocked, locked) = update_keystone_selection_state(state, guid, location, item_id)?;
+    if let Some(location) = unlocked {
+        crate::c_api::item_spell::item_equip::dispatch_lock_transition(
+            state,
+            item_slot(location),
+            false,
+        )?;
+    }
+    if let Some(location) = locked {
+        crate::c_api::item_spell::item_equip::dispatch_lock_transition(
+            state,
+            item_slot(location),
+            true,
+        )?;
+    }
+    Ok(())
+}
+
+fn update_keystone_selection_state(
+    state: &mut LuaState,
+    guid: String,
+    location: KeystoneLocation,
+    item_id: u32,
+) -> LuaResult<(Option<KeystoneLocation>, Option<KeystoneLocation>)> {
+    let mut sim = borrow_state_mut(state)?;
+    let unlocked = if sim.keystone.selected_guid.is_some() {
+        sim.keystone.selected_location.filter(|old_location| {
+            let before = sim.keystone.is_locked(*old_location);
+            sim.keystone.reason_one_locks.remove(old_location);
+            let after = sim.keystone.is_locked(*old_location);
+            before && !after && location_exists(&sim, *old_location)
+        })
+    } else {
+        None
+    };
+    let was_locked = sim.keystone.is_locked(location);
+    sim.keystone.reason_one_locks.insert(location);
+    let locked =
+        (!was_locked && sim.keystone.is_locked(location) && location_exists(&sim, location))
+            .then_some(location);
+    sim.keystone.selected_guid = Some(guid);
+    sim.keystone.selected_item_id = Some(item_id);
+    sim.keystone.selected_location = Some(location);
+    // VERIFIED (R88o.2 q2): native stores mode, selected GUID, then associated GUID.
+    // SIMULATOR GAP: mode and associated-GUID inputs are not modeled.
+    Ok((unlocked, locked))
+}
+
+fn remove_keystone(state: &mut LuaState) -> LuaResult<u32> {
+    let selected = {
+        let sim = borrow_state(state)?;
+        sim.keystone.selected_guid.clone().map(|guid| {
+            (
+                guid,
+                sim.keystone.selected_item_id,
+                sim.keystone.selected_location,
+            )
+        })
+    };
+    let Some((guid, item_id, location)) = selected else {
+        state.push(Val::Bool(false));
+        return Ok(1);
+    };
+
+    stage_removed_keystone_cursor(state, &guid, item_id, location)?;
+    {
+        let mut sim = borrow_state_mut(state)?;
+        sim.keystone.selected_guid = None;
+        sim.keystone.selected_mode = None;
+        sim.keystone.selected_item_id = None;
+        sim.keystone.selected_location = None;
+    }
+    // Do not call clear_keystone: RemoveKeystone has no explicit unlock path.
+    state.push(Val::Bool(true));
+    Ok(1)
+}
+
+fn stage_removed_keystone_cursor(
+    state: &mut LuaState,
+    guid: &str,
+    selected_item_id: Option<u32>,
+    selected_location: Option<KeystoneLocation>,
+) -> LuaResult<()> {
+    let permission_granted = {
+        let sim = borrow_state(state)?;
+        keystone_context_available(&sim) && sim.keystone.cursor_stage_permission == Some(true)
+    };
+    if !permission_granted {
+        return Ok(());
+    }
+
+    crate::lua_api::globals::real::cursor_model::clear_retaining_equip_lock(state)?;
+    if !inferred::inferred_guid_category_is_nonzero(guid) {
+        return Ok(());
+    }
+    let (Some(item_id), Some(origin)) = (
+        selected_item_id,
+        inferred::inferred_selected_bag_cursor_origin(selected_location),
+    ) else {
+        return Ok(());
+    };
+
+    crate::lua_api::globals::real::cursor_model::place(
+        state,
+        CursorInfo::Item {
+            owned_identity: None,
+            item_id,
+            stack_count: inferred::inferred_keystone_cursor_stack_count(),
+            origin,
+            applied_transmog: None,
+        },
+    )
+}
+
+fn item_slot(location: KeystoneLocation) -> ItemSlot {
+    match location {
+        KeystoneLocation::Bag(bag, slot) => ItemSlot::Bag(bag, slot),
+        KeystoneLocation::Equipment(slot) => ItemSlot::Equipment(slot),
+    }
 }
 
 fn close_keystone_frame(state: &mut LuaState) -> LuaResult<u32> {
@@ -107,20 +377,7 @@ fn can_use_keystone_in_current_map(state: &mut LuaState) -> LuaResult<u32> {
             rilua::runtime_error("CanUseKeystoneInCurrentMap requires an existing item")
         })?;
     let sim = borrow_state(state)?;
-    let challenge_id = sim
-        .keystone
-        .item_modifiers
-        .get(&location)
-        .filter(|(observed_id, _)| *observed_id == item_id)
-        .and_then(|(_, modifiers)| modifiers.iter().find(|(kind, _)| *kind == 17))
-        .map_or(0, |(_, value)| *value);
-    let maps = sim_data::map_challenge_modes::MAPS;
-    let result = maps
-        .binary_search_by_key(&challenge_id, |row| row.0)
-        .ok()
-        .is_some_and(|index| {
-            u32::from(maps[index].1) == sim.keystone.current_map_selector.unwrap_or(0)
-        });
+    let result = keystone_matches_current_map(&sim, location, item_id);
     drop(sim);
     state.push(Val::Bool(result));
     Ok(1)
@@ -141,28 +398,32 @@ fn clear_keystone(state: &mut LuaState) -> LuaResult<u32> {
         })
     };
     if let Some(location) = unlocked {
-        let args = match location {
-            KeystoneLocation::Bag(bag, slot) => {
-                vec![Val::Num(f64::from(bag)), Val::Num(f64::from(slot))]
-            }
-            KeystoneLocation::Equipment(slot) => vec![Val::Num(f64::from(slot))],
-        };
-        crate::lua_api::globals::state_backed_queries::dispatch_event_now(
-            state,
-            "ITEM_LOCK_CHANGED",
-            &args,
-        )?;
-        crate::lua_api::globals::state_backed_queries::dispatch_event_now(
-            state,
-            "ITEM_UNLOCKED",
-            &args,
-        )?;
+        dispatch_keystone_unlock_events(state, location)?;
     }
     let mut sim = borrow_state_mut(state)?;
     sim.keystone.selected_guid = None;
+    sim.keystone.selected_item_id = None;
     sim.keystone.selected_location = None;
     sim.keystone.selected_mode = None;
     Ok(0)
+}
+
+fn dispatch_keystone_unlock_events(
+    state: &mut LuaState,
+    location: KeystoneLocation,
+) -> LuaResult<()> {
+    let args = match location {
+        KeystoneLocation::Bag(bag, slot) => {
+            vec![Val::Num(f64::from(bag)), Val::Num(f64::from(slot))]
+        }
+        KeystoneLocation::Equipment(slot) => vec![Val::Num(f64::from(slot))],
+    };
+    crate::lua_api::globals::state_backed_queries::dispatch_event_now(
+        state,
+        "ITEM_LOCK_CHANGED",
+        &args,
+    )?;
+    crate::lua_api::globals::state_backed_queries::dispatch_event_now(state, "ITEM_UNLOCKED", &args)
 }
 
 fn location_exists(sim: &crate::lua_api::SimState, location: KeystoneLocation) -> bool {
