@@ -166,7 +166,8 @@ fn create_texture_source_location_skips_excluded_callsite() {
         r##"
 local first = UIParent:CreateTexture()
 local firstLocation = first:GetSourceLocation()
-local returnCount = select("#", AddSourceLocationExclude("SourceLocationProbe.lua"))
+local secureAddSource = rawget(__secureenv, "AddSourceLocationExclude")
+local returnCount = select("#", secureAddSource("SourceLocationProbe.lua"))
 local firstAfterExclusion = first:GetSourceLocation()
 local excluded = UIParent:CreateTexture()
 local excludedLocation = excluded:GetSourceLocation()
