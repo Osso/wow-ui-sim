@@ -3,6 +3,7 @@ use super::super::addon::AddonContext;
 use super::super::lua_file::load_lua_file;
 use super::super::xml_file::load_xml_file;
 use crate::lua_api::WowLuaEnv;
+use crate::lua_api::methods::{create_string, table_set_static};
 use crate::xml::parse_xml_file;
 use rilua::LuaApi;
 
@@ -397,6 +398,8 @@ fn scoped_modifier_scripts_use_given_env_for_scripts_and_mixins() {
 #[test]
 fn scoped_modifier_scripts_use_secure_env_fallback_for_secure_addons() {
     let env = WowLuaEnv::new().unwrap();
+    // INFERRED — R88g.3.q2: this pre-construction write is visible through the
+    // shared secure-table reference used by the inline chunk.
     env.exec("__secureenv.ScopedSecureEnvOnlyValue = 'secure-fallback'")
         .unwrap();
 
@@ -428,4 +431,78 @@ fn scoped_modifier_scripts_use_secure_env_fallback_for_secure_addons() {
     )
     .unwrap();
     assert!(env.state().borrow().lua_errors.is_empty());
+}
+
+#[test]
+fn secure_retail_scoped_handler_uses_only_the_given_environment() {
+    if !crate::client_profile::is_active_retail_12_1_5() {
+        return;
+    }
+
+    let env = WowLuaEnv::new().unwrap();
+    env.exec("__secureenv.ScopedSecureOnlyValue = 'secure-only'")
+        .unwrap();
+    let temp_dir = std::env::temp_dir().join("wow-sim-test-retail-secure-handler-env");
+    std::fs::create_dir_all(&temp_dir).unwrap();
+    let xml_path = temp_dir.join("test.xml");
+    std::fs::write(
+        &xml_path,
+        r#"<Ui>
+            <ScopedModifier scriptsUseGivenEnv="true">
+                <Frame name="ScopedRetailSecureHandlerFrame">
+                    <Scripts>
+                        <OnLoad>
+                            self:SetAttribute("ObservedAddonValue", ScopedAddonValue)
+                            self:SetAttribute("ObservedSecureValue", ScopedSecureOnlyValue)
+                        </OnLoad>
+                    </Scripts>
+                </Frame>
+            </ScopedModifier>
+        </Ui>"#,
+    )
+    .unwrap();
+
+    let addon_table = env.create_addon_table().unwrap();
+    {
+        let mut lua = env.rilua_mut();
+        let state = lua.state_mut();
+        let addon_value = create_string(state, "addon-only");
+        table_set_static(state, addon_table, "ScopedAddonValue", addon_value);
+    }
+    let ctx = AddonContext::new(
+        env.lua(),
+        "TestSecureAddon",
+        addon_table,
+        &temp_dir,
+        true,
+        false,
+    )
+    .unwrap();
+
+    load_xml_file(
+        &env.loader_env(),
+        &xml_path,
+        &ctx,
+        &mut LoadTiming::default(),
+        &mut Vec::new(),
+    )
+    .unwrap();
+
+    let (addon_value, secure_value_is_nil): (String, bool) = env
+        .eval(
+            r#"
+            local frame = rawget(_G, "ScopedRetailSecureHandlerFrame")
+                or rawget(__secureenv, "ScopedRetailSecureHandlerFrame")
+            return frame:GetAttribute("ObservedAddonValue"),
+                frame:GetAttribute("ObservedSecureValue") == nil
+            "#,
+        )
+        .unwrap();
+    assert_eq!(addon_value, "addon-only");
+    assert!(
+        secure_value_is_nil,
+        "the handler must not fall back to __secureenv"
+    );
+    assert!(env.state().borrow().lua_errors.is_empty());
+    std::fs::remove_dir_all(&temp_dir).unwrap();
 }
