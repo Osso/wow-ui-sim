@@ -1,6 +1,7 @@
 //! Retail LFG reward writer from R88n.4/.4a/.4b (12.1.5.70688).
 //! Host decoding is explicit: no public packet identity or wire decoder is implied.
 
+use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::WowLuaEnv;
 use crate::lua_api::state::{LfgTooltipRewardGroup, SimState};
 
@@ -17,6 +18,9 @@ pub fn apply_decoded_message(
     env: &WowLuaEnv,
     message: DecodedLfgRewardMessage,
 ) -> crate::Result<()> {
+    if !retail_writer_enabled() {
+        return Ok(());
+    }
     {
         let mut sim = env.state().borrow_mut();
         rebuild_reward_groups(&mut sim, message);
@@ -52,4 +56,8 @@ fn replace_reward_group(groups: &mut Vec<LfgTooltipRewardGroup>, incoming: LfgTo
     // Vec length is the authoritative entry count; IDs/quantities/discriminators
     // remain exactly the decoded host entries, without catalog-derived invention.
     group.rewards = incoming.rewards;
+}
+
+fn retail_writer_enabled() -> bool {
+    ACTIVE == ClientProfile::Retail
 }

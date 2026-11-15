@@ -1,5 +1,9 @@
 //! Original selected GroupFinder consumer over decoded replacement messages.
-#![cfg(all(feature = "client-retail", feature = "optional-tests"))]
+#![cfg(all(
+    feature = "profile-retail",
+    feature = "retail-12-1-5",
+    feature = "optional-tests"
+))]
 use crate::common::blizzard_addon_harness::{
     blizzard_ui_dir, load_blizzard_addon_closure_into_env, new_blizzard_addon_env,
 };
