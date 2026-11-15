@@ -22,6 +22,7 @@ fn add_bag_item(env: &WowLuaEnv, bag: u32, slot: u32, item_id: u32) -> String {
 fn set_interaction_input(
     env: &WowLuaEnv,
     interaction_type: i32,
+    object_kind: i32,
     selected_item_guid: &str,
     conversion_output_item_id: Option<u32>,
     cleansing_rows: Vec<ItemInteractionTooltipLine>,
@@ -32,7 +33,7 @@ fn set_interaction_input(
         ..Default::default()
     });
     sim.item_interaction_tooltip_input = Some(ItemInteractionTooltipInput {
-        object_kind: None,
+        object_kind: Some(object_kind),
         selected_item_guid: Some(selected_item_guid.to_string()),
         conversion_output_item_id,
         cleansing_rows,
@@ -219,7 +220,14 @@ fn item_interaction_cleansing_original_consumer_uses_distinct_supplied_rows() {
         ("Fixture title A", "Fixture cleansing row A"),
         ("Fixture title B", "Fixture cleansing row B"),
     ] {
-        set_interaction_input(&env, 2, &selected_guid, None, cleansing_rows(title, detail));
+        set_interaction_input(
+            &env,
+            2,
+            2,
+            &selected_guid,
+            None,
+            cleansing_rows(title, detail),
+        );
         assert_cleansing_consumer_rows(&env, title, detail);
     }
 }
@@ -259,7 +267,7 @@ fn item_interaction_conversion_original_consumer_uses_distinct_output_ids() {
     assert_conversion_consumer_absent(&env);
 
     for output_item_id in [1728, 231_268] {
-        set_interaction_input(&env, 4, &selected_guid, Some(output_item_id), Vec::new());
+        set_interaction_input(&env, 4, 4, &selected_guid, Some(output_item_id), Vec::new());
         assert_conversion_consumer_item(&env, output_item_id);
     }
 }
@@ -328,7 +336,7 @@ fn assert_zero_conversion_output_shape(env: &WowLuaEnv) {
 fn zero_conversion_output_publishes_verified_unresolved_item_shape() {
     let env = load_item_interaction_env();
     let selected_guid = add_bag_item(&env, 0, 3, 128_910);
-    set_interaction_input(&env, 4, &selected_guid, Some(0), Vec::new());
+    set_interaction_input(&env, 4, 4, &selected_guid, Some(0), Vec::new());
     assert_zero_conversion_output_shape(&env);
 }
 
@@ -703,11 +711,10 @@ fn assert_item_interaction_tooltip_misses(env: &WowLuaEnv) {
         interaction_type: 2,
         ..Default::default()
     });
-    env.state().borrow_mut().item_interaction_tooltip_input =
-        Some(ItemInteractionTooltipInput {
-            selected_item_guid: Some("Item-0-1-1".to_string()),
-            ..Default::default()
-        });
+    env.state().borrow_mut().item_interaction_tooltip_input = Some(ItemInteractionTooltipInput {
+        selected_item_guid: Some("Item-0-1-1".to_string()),
+        ..Default::default()
+    });
     env.exec(r##"assert(select("#", C_TooltipInfo.GetItemInteractionItem()) == 0)"##)
         .unwrap();
     env.state().borrow_mut().item_interaction_tooltip_input = None;
@@ -724,13 +731,18 @@ fn round7_selected_getter_misses_keep_the_verified_result_arities() {
     assert_item_interaction_tooltip_misses(&env);
 }
 
-fn set_unsupported_item_interaction(env: &WowLuaEnv, selected_guid: Option<String>) {
+fn set_unsupported_item_interaction(
+    env: &WowLuaEnv,
+    object_kind: Option<i32>,
+    selected_guid: Option<String>,
+) {
     let mut sim = env.state().borrow_mut();
     sim.item_interaction = Some(ItemInteractionInfo {
         interaction_type: 1,
         ..Default::default()
     });
     sim.item_interaction_tooltip_input = Some(ItemInteractionTooltipInput {
+        object_kind,
         selected_item_guid: selected_guid,
         ..Default::default()
     });
@@ -772,12 +784,12 @@ fn unsupported_item_interaction_kind_requires_resolved_item() {
     let env = load_item_interaction_env();
     env.exec("A_Admin.ClearBags()")
         .expect("absent and unresolved fixtures start without bag items");
-    set_unsupported_item_interaction(&env, None);
+    set_unsupported_item_interaction(&env, None, None);
     assert_unsupported_item_interaction_miss(&env, "unsupported kind with no object");
-    set_unsupported_item_interaction(&env, Some("Item-0-3-1728".to_string()));
+    set_unsupported_item_interaction(&env, None, Some("Item-0-3-1728".to_string()));
     assert_unsupported_item_interaction_miss(&env, "unsupported kind with unresolved GUID");
 
     let selected_guid = add_bag_item(&env, 0, 3, 1728);
-    set_unsupported_item_interaction(&env, Some(selected_guid));
+    set_unsupported_item_interaction(&env, Some(1), Some(selected_guid));
     assert_resolved_unsupported_item_shape(&env);
 }
