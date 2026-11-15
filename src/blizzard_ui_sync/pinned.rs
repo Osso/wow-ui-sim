@@ -78,7 +78,7 @@ fn retail_build() -> crate::Result<&'static Build> {
                 "wow",
                 "12.1.5.70783",
                 "bc493ecb2898766c0f8947a99b4b3d65",
-                "8ecf609471cb2ea16667be9cc2b7a555",
+                "3363ac656da5f261cdc675ab28b2744c",
                 "e58758dc26b4c93c71f5fb65054f90c4",
                 "297d7aaaa736f346b3e036f38ee088eaf7f8c07f",
             ];
@@ -479,7 +479,7 @@ mod tests {
         assert_eq!(selected.product, "wow");
         assert_eq!(selected.version, "12.1.5.70783");
         assert_eq!(selected.build_key, "bc493ecb2898766c0f8947a99b4b3d65");
-        assert_eq!(selected.cdn_key, "8ecf609471cb2ea16667be9cc2b7a555");
+        assert_eq!(selected.cdn_key, "3363ac656da5f261cdc675ab28b2744c");
         assert_eq!(selected.install_key, "e58758dc26b4c93c71f5fb65054f90c4");
         assert_eq!(
             selected.gethe_revision,

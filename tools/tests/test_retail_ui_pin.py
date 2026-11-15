@@ -13,7 +13,7 @@ class RetailUiPinTests(unittest.TestCase):
         self.assertEqual(index["product"], "wow")
         self.assertEqual(index["version"], "12.1.5.70783")
         self.assertEqual(index["build_key"], "bc493ecb2898766c0f8947a99b4b3d65")
-        self.assertEqual(index["cdn_key"], "8ecf609471cb2ea16667be9cc2b7a555")
+        self.assertEqual(index["cdn_key"], "3363ac656da5f261cdc675ab28b2744c")
         self.assertEqual(index["install_key"], "e58758dc26b4c93c71f5fb65054f90c4")
         self.assertEqual(
             index["gethe_revision"], "297d7aaaa736f346b3e036f38ee088eaf7f8c07f"

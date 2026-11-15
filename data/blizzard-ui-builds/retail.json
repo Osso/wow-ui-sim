@@ -1,6 +1,6 @@
 {
   "build_key": "bc493ecb2898766c0f8947a99b4b3d65",
-  "cdn_key": "8ecf609471cb2ea16667be9cc2b7a555",
+  "cdn_key": "3363ac656da5f261cdc675ab28b2744c",
   "files": [
     {
       "archive": "502b9153cbce4cd21ffdc8984cef930d",
@@ -26883,12 +26883,12 @@
       "size": 1477
     },
     {
-      "archive": "57ce50e34891a0e2b94d52493dfbf6d0",
+      "archive": "94cc7ea780e99e2e5c5f06d1330e8608",
       "content_key": "d92a0eeeae0965ee69ce9317a22e1b21",
       "content_size": 27707,
       "encoding_key": "2b58ffbddf3e2a5e6e2fa2f8f4ef9408",
       "file_data_id": 4070223,
-      "offset": 268375954,
+      "offset": 54867714,
       "path": "Blizzard_PlayerChoice/Blizzard_PlayerChoiceOptionBase.lua",
       "size": 6213
     },
