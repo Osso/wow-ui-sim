@@ -178,6 +178,10 @@ sourceLocationProbeResults.excluded = excludedLocation
 
     let result = wow_ui_sim::loader::load_addon(&env.loader_env(), &toc).unwrap();
     assert!(result.warnings.is_empty(), "{:?}", result.warnings);
+    assert!(
+        result.lua_files > 0,
+        "the source probe Lua file must execute"
+    );
     let addon_loaded: bool = env
         .eval("return C_AddOns.IsAddOnLoaded('SourceLocationProbe')")
         .unwrap();
@@ -185,7 +189,7 @@ sourceLocationProbeResults.excluded = excludedLocation
     let lua_errors = env.state().borrow().lua_errors.clone();
     assert!(lua_errors.is_empty(), "probe Lua errors: {lua_errors:?}");
 
-    let (first, return_count, excluded): (Option<String>, i32, Option<String>) = env
+    let (first, return_count, excluded): (Option<String>, Option<i32>, Option<String>) = env
         .eval(
             "return sourceLocationProbeResults.first, sourceLocationProbeResults.returnCount, sourceLocationProbeResults.excluded",
         )
@@ -196,7 +200,11 @@ sourceLocationProbeResults.excluded = excludedLocation
             .is_some_and(|location| location.ends_with("SourceLocationProbe.lua:2")),
         "CreateTexture must capture its Lua file and line: {first:?}"
     );
-    assert_eq!(return_count, 0);
+    assert_eq!(
+        return_count,
+        Some(0),
+        "AddSourceLocationExclude returns no values"
+    );
     assert!(
         excluded
             .as_deref()
