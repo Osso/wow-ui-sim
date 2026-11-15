@@ -149,6 +149,47 @@ fn secure_scoped_modifier_onload_resolves_secure_mixin() {
 }
 
 #[test]
+fn create_texture_source_location_skips_excluded_callsite() {
+    let env = env();
+    let root = tempfile::tempdir().unwrap();
+    let toc = root.path().join("SourceLocationProbe.toc");
+    std::fs::write(
+        &toc,
+        "## Title: SourceLocationProbe\nSourceLocationProbe.lua\n",
+    )
+    .unwrap();
+    std::fs::write(
+        root.path().join("SourceLocationProbe.lua"),
+        r##"
+local first = UIParent:CreateTexture()
+local firstLocation = first:GetSourceLocation()
+local returnCount = select("#", AddSourceLocationExclude("SourceLocationProbe.lua"))
+local excluded = UIParent:CreateTexture()
+local excludedLocation = excluded:GetSourceLocation()
+sourceLocationProbeResults = { firstLocation, returnCount, excludedLocation }
+"##,
+    )
+    .unwrap();
+
+    let result = wow_ui_sim::loader::load_addon(&env.loader_env(), &toc).unwrap();
+    assert!(result.warnings.is_empty(), "{:?}", result.warnings);
+    let (first, return_count, excluded): (String, i32, String) = env
+        .eval(
+            "return sourceLocationProbeResults[1], sourceLocationProbeResults[2], sourceLocationProbeResults[3]",
+        )
+        .unwrap();
+    assert!(
+        first.ends_with("SourceLocationProbe.lua:2"),
+        "CreateTexture must capture its Lua file and line: {first}"
+    );
+    assert_eq!(return_count, 0);
+    assert!(
+        excluded.starts_with("UnknownFile:"),
+        "an excluded callsite without another file source uses UnknownFile: {excluded}"
+    );
+}
+
+#[test]
 fn secure_addon_loads_nonsecure_dependency_in_ordinary_then_secure_environment() {
     let env = env();
     let root = tempfile::tempdir().unwrap();

@@ -32,6 +32,8 @@ result. Nil is this simulator's empty-state policy, not native default proof.
 
 ## Known gaps (current cycle)
 
+- [ ] R88v.v1–v3 verify the native six-member `C_ColorOverrides` model, GlobalColor defaults, and `playerColorOverrides` persistence. That full stateful model is deferred to a follow-up; keep the four absent members absent and do not add partial handlers in this lane. The reload/logout chain and exact persisted-string encoding remain unverified here.
+
 Original pre-postload consumer RED at test `eab97a0f9` against the sealed
 `8c3f5646d` Retail library reaches ColorManager.lua:95 (missing query).
 Normal Retail library/binary `019ac27ff` passes the new consumer and both

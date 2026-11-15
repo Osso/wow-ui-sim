@@ -35,7 +35,8 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 
 - [ ] VERIFIED (Retail 12.1.5.70688, R88t): ordinary and secure addon loaded states are separate. A secure request passes its effective mode to dependencies, including dependencies without their own secure directive; optional dependencies load before required dependencies, and dependencies load before the current addon's files.
 - [ ] VERIFIED (Retail 12.1.5.70688, R88t): for a dependency with no secure directive and no ordinary loaded state, the loader requests ordinary mode and then secure mode. If a mode is already loaded, the request can return without running its files again.
-- [ ] VERIFIED (Retail 12.1.5.70688, R88t): Retail flag 3 publishes `AddSourceLocationExclude` and `table.count` into both environments with separate function objects; the ordinary and secure table libraries are separate. The simulator must not infer the callback effect of its temporary `AddSourceLocationExclude` no-op.
+- [ ] VERIFIED (Retail 12.1.5.70688, R88t): flag 3 publishes `AddSourceLocationExclude` and `table.count` into both environments with separate function objects; the ordinary and secure table libraries are separate.
+- [ ] VERIFIED (Retail 12.1.5.70688, R88v.v4): `AddSourceLocationExclude` accepts one string or number, adds a nonempty NUL-terminated copy to shared source-exclusion state, and returns zero values. Matching is a case-sensitive suffix check on file-source text. A template-free `CreateTexture` records the first non-excluded file source and line; `GetSourceLocation` returns the saved `file:line` text and does not rescan.
 - [ ] VERIFIED (Retail 12.1.5.70688, R88t): flag 3 publishes the six named `C_ColorOverrides` members into separate namespace tables with separate function objects. The simulator may publish existing handlers only; it must not add placeholder methods without a backing model.
 - [ ] VERIFIED (Retail 12.1.5.70688, R88t): constant registration publishes separate `Constants` and `AccountStoreConsts` tables without a member flag. The four verified values are 1, 3, 3139, and 2814 for their named members.
 - [ ] VERIFIED (Retail 12.1.5.70688, R88t): the Retail UIParent bootstrap uses named-frame policy flag 32. If ordinary and secure `UIParent` names are empty, both receive the same frame-table object; each destination preserves an existing non-nil name.
@@ -82,7 +83,7 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 - `src/loader/tests/screen_selection.rs`
 - `tests/addon_runtime_dependencies.rs`
 - `src/c_api/c_addons_runtime_tests.rs`
-- `tests/secureenv_isolation.rs` — separate loaded states, dependency request order, and already-loaded mode behavior.
+- `tests/secureenv_isolation.rs` — separate loaded states, dependency request order, already-loaded mode behavior, and the one-file source-location consumer.
 - `tests/blizzard_private_auras_ui_loads.rs` — the original FrameFactory/Pools, AccountUtil, ColorManager, GameRulesUtil, and PrivateAurasTooltip consumers.
 
 ## Known gaps (current cycle)
@@ -90,8 +91,8 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 - [ ] UNKNOWN: PTR 12.1.7.70668 does not establish whether declaration parsing feeds the child-list resolver. The simulator applies the inferred resolver model; PTR tests do not assert parser linkage or duplicate suppression.
 - [ ] VERIFIED (R88t, native) but untested in the simulator: an ordinary dependency-request failure must not suppress the following secure request. No evidence-backed input currently makes only the ordinary request fail; a Lua file diagnostic is not proof of that request failure.
 - [ ] INFERRED (R88t): when neither mode was loaded and both default file paths complete, each default path executes in its requested environment. Do not claim this exact per-environment count as native parity.
-- [ ] UNKNOWN effect: `AddSourceLocationExclude` keeps its existing temporary no-op; tests assert publication only.
-- [ ] R88v pending: the simulator has no handlers for `ClearColorOverrides`, `GetDefaultColorForQuality`, `RemoveColorOverride`, or `SetColorOverride`; do not add placeholder methods.
+- [ ] VERIFIED (R88v.v4) but untested: the native AddSourceLocationExclude callback uses one shared list; the simulator must store exclusions once for both environments. The two-file caller/wrapper comparison is INFERRED and must not be asserted.
+- [ ] Follow-up: the full R88v C_ColorOverrides model is deferred from this lane. Keep the four absent members (`ClearColorOverrides`, `GetDefaultColorForQuality`, `RemoveColorOverride`, and `SetColorOverride`) absent; do not add placeholders or partial handlers.
 - [ ] UNKNOWN: transitive copying from ordinary globals into secureenv. The direct dependency helper does not add a blanket-copy route.
 - [ ] The original `TooltipDataProcessor` identity and its published secure-table provenance remain deferred to `lt-635e`; this lane verifies that the PrivateAurasTooltip consumer runs without errors.
 - [ ] UNKNOWN: PTR phase and demand fields are not mapped to cached TOC directives, and native live-list membership and sort direction are not established.
