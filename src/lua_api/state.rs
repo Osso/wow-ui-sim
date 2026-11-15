@@ -589,6 +589,7 @@ macro_rules! build_empty_sim_state {
             world: super::state_types::seeded_world_state(),
             encounter_policy: Default::default(),
             bag_items: $collections.bag_items,
+            bag_item_repair_costs: HashMap::new(),
             item_equip: crate::c_api::item_spell::item_equip::ItemEquipState::default(),
             container_item_quests: HashMap::new(),
             bag_info: crate::c_api::bag_info::BagInfo::default_bags(),

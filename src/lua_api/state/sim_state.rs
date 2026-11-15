@@ -735,6 +735,9 @@ pub struct SimState {
     pub world: WorldState,
     pub encounter_policy: crate::c_api::c_instance_encounter::EncounterPolicy,
     pub bag_items: HashMap<(i32, i32), BagItem>,
+    /// Explicit Retail bag repair quotes; UNKNOWN calculation/writers stay unmodeled.
+    /// Empty by default; coordinates refer to the host-supplied bag snapshot.
+    pub bag_item_repair_costs: HashMap<(i32, i32), i32>,
     /// Owned-item identity, local equip requests and lock inputs.
     pub item_equip: crate::c_api::item_spell::item_equip::ItemEquipState,
     /// Host-supplied metadata keyed by item ID, not bag coordinates.
