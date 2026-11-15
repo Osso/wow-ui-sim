@@ -137,6 +137,11 @@ pub fn register_c_login(state: &mut LuaState) -> LuaResult<()> {
             submission::get_logon_queue_info,
         )?;
     }
+    // INFERRED PTR applicability of existing R43 producer (lt-941b #1299).
+    #[cfg(feature = "client-ptr")]
+    if ACTIVE == ClientProfile::Ptr {
+        crate::lua_api::globals::real::glue_connection::register(state)?;
+    }
     permanent_shims::c_login::register_c_login_defaults(state, ns)?;
     Ok(())
 }

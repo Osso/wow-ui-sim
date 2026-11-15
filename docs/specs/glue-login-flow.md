@@ -123,6 +123,16 @@ this comparison. Tests cover unready, zero/negative limits, absent GUIDs, equali
 and spare capacity. The nonempty UI fixture explicitly supplies readiness and
 limit 2; neither value is a native realm default.
 
+**INFERRED PTR applicability (lt-941b #1299):** the selected PTR
+`Blizzard_GlueXML/Mainline/CharacterSelect.lua:819` invokes
+`CanCreateCharacter()` directly before testing the undeleting state. PTR now
+registers only the existing R43 connection-backed producer under
+`client_profile::ACTIVE == Ptr`; its readiness/limit/nonempty-GUID calculation,
+argument handling, and existing publication policy are unchanged. This does not
+enable the Retail/Forever `C_Login` registration block, `SelectCharacter`,
+background/enter-world/order functions, or `IsCharacterListUpdatePending`.
+PTR native parity is not established; applicability reuses the cited R43 evidence.
+
 `GetGameModeGlueScreenName` is registered in Glue and Game. The original R43
 selected-realm interpretation is superseded by R60 below: both getters share
 temporary-override/currentGameMode-CVar selection and host rows. Nonempty row
