@@ -519,10 +519,10 @@ fn secure_retail_scoped_handler_uses_only_the_given_environment() {
         "the setup file should use the shared secure environment"
     );
     assert!(handler_ran, "the XML OnLoad handler must run");
-    assert_eq!(addon_value, "addon-only");
     assert_eq!(
         secure_value, "__nil",
         "the handler must not read __secureenv"
     );
+    assert_eq!(addon_value, "addon-only");
     assert!(env.state().borrow().lua_errors.is_empty());
 }
