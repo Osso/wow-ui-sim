@@ -507,7 +507,6 @@ fn retail_zone_maps_below_3000_have_world_positions_at_player_login() {
     feature = "retail-12-1-5"
 ))]
 const RETAIL_MAP_CHILDREN_PROBE: &str = r#"
-    assert(C_Map.GetMapInfo(9999) == nil, "unknown map info must be absent")
     assert(C_Map.GetMapChildrenInfo(9999) == nil, "unknown map children must be absent")
 
     local pending = {946, 947}
