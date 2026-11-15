@@ -137,11 +137,27 @@ the source-matched master baseline; this is not a clean PTR startup claim.
 fields are TooltipData-level; `price` and `maxPrice` belong on a type-11
 `SellPrice` line. See the [serialization contract](../../specs/tooltip-data-serialization.md).
 **VERIFIED (simulator):** the item catalog supplies `ItemInfo.sell_price`.
-**INFERRED (simulator policy):** Retail emits a positive catalog value as line
-`price`; `maxPrice` stays absent because the tooltip input has no current stack
-quantity or range. Repair cost and battle-pet tooltip fields stay absent because
-those inputs are not modeled. See the [consumer investigation](../investigations/consumer-selection-and-red-proof.md#retail-tooltip-serializer-field-consumers)
+**INFERRED (simulator policy):** `ItemInfo.sell_price` stands in for the initial
+unit-price calculation. Repair cost and battle-pet tooltip fields stay absent
+because those inputs are not modeled. See the [consumer investigation](../investigations/consumer-selection-and-red-proof.md#retail-tooltip-serializer-field-consumers)
 for TOC selection, tests and the quest-cache/LFG seam boundaries.
+
+### Retail SellPrice line (R88p.p1)
+
+**VERIFIED (Retail 12.1.5.70688):** a zero initial unit-price result adds no
+SellPrice row. Eligible rows use type 11, empty `leftText`, the resolved default
+`leftColor`, `price`, and `maxPrice`, which starts at -1. Eligibility also checks
+request mode, item-status suppression, sell-exclusion flags, and the interaction
+preview/exception flags. There is no quality, bound, quest, or merchant-open gate.
+
+**INFERRED:** the masks map to `ItemSparse.Flags_1` 4096 and `Flags_3` 524288;
+the preview exception maps to `Flags_3` 32768. These column names are not present
+in simulator `ItemInfo`, so the simulator does not apply those gates.
+**INFERRED (simulator policy):** the backed `sell_price` is the initial price
+proxy. **UNKNOWN/unmodeled:** per-instance refund/status records, prepared
+quantity recomputation, and calculated-price inputs beyond the stored catalog
+price. With no prepared quantity input, the emitted row keeps `maxPrice = -1`.
+See the [SellPrice contract](../../specs/tooltip-data-serialization.md#retail-sellprice-behavior-r88pp1).
 
 ## Cursor modes and ActionBar transitions
 
