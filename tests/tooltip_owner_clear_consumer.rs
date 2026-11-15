@@ -35,6 +35,9 @@ mod tooltip_full_env_helpers;
 use tooltip_full_env_helpers::setup_full_env;
 
 #[cfg(all(feature = "client-wowforever", feature = "optional-tests"))]
+use wow_ui_sim::lua_api::WowLuaEnv;
+
+#[cfg(all(feature = "client-wowforever", feature = "optional-tests"))]
 fn assert_forever_tooltip_consumer_selected() {
     let addons = wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap();
     let toc = wow_ui_sim::loader::find_toc_file(&addons.join("Blizzard_SharedXMLGame"))
@@ -250,9 +253,8 @@ fn tooltip_owner_clear_failed_lookup_reprocessing_notifies_once() {
 /// same owner keeps the tooltip shown and clears its lines, a different owner
 /// hides through the ordinary lifecycle before recording the new owner.
 ///
-/// The pooled line FontString is not asserted: Forever's line FontStrings come
-/// from its tooltip XML, and only Wrath/Retail/PTR record them for clear-time
-/// reset (no Forever native evidence covers that reset).
+/// The optional R88n.5 cache test separately checks Forever's XML-backed line
+/// FontStrings, active-text clearing and cache reuse.
 #[cfg(feature = "client-wowforever")]
 #[test]
 fn tooltip_owner_clear_forever_owner_reassignment_lifecycle() {
@@ -283,43 +285,77 @@ fn tooltip_owner_clear_forever_owner_reassignment_lifecycle() {
     .expect("Forever owner reassignment lifecycle");
 }
 
-/// R88n.5: Forever ClearLines empties cached text for active rows, but it does
-/// not visit unused cached rows that callers still hold by FontString reference.
+/// R88n.5: Forever ClearLines empties active cached text and retains inactive rows.
 #[cfg(all(feature = "client-wowforever", feature = "optional-tests"))]
 #[test]
 fn tooltip_clear_lines_forever_clears_only_active_cached_text() {
     let env = setup_full_env();
     assert_forever_tooltip_consumer_selected();
+    seed_forever_cached_lines(&env);
+    clear_forever_initial_rows(&env);
+    clear_forever_reused_row_and_check_inactive_cache(&env);
+}
+
+#[cfg(all(feature = "client-wowforever", feature = "optional-tests"))]
+fn seed_forever_cached_lines(env: &WowLuaEnv) {
     env.exec(
         r#"
         local tip = GameTooltip
         tip:AddLine("first")
         tip:AddDoubleLine("second left", "second right")
-        local first = tip:GetLeftLine(1)
-        local second_left = tip:GetLeftLine(2)
-        local second_right = tip:GetRightLine(2)
+        _G.R88n5First = tip:GetLeftLine(1)
+        _G.R88n5SecondLeft = tip:GetLeftLine(2)
+        _G.R88n5SecondRight = tip:GetRightLine(2)
+        "#,
+    )
+    .expect("seed distinct active Forever FontString text");
+}
+
+#[cfg(all(feature = "client-wowforever", feature = "optional-tests"))]
+fn clear_forever_initial_rows(env: &WowLuaEnv) {
+    env.exec(
+        r#"
         local function empty(line)
             local text = line:GetText()
             return text == nil or text == ""
         end
-
-        tip:ClearLines()
-        assert(empty(first), "active left line text is cleared")
-        assert(empty(second_left), "active second-row left text is cleared")
-        assert(empty(second_right), "active second-row right text is cleared")
-
-        tip:AddLine("only active row")
-        local active = tip:GetLeftLine(1)
-        assert(active == first, "ClearLines retains cached FontStrings for reuse")
-        second_left:SetText("inactive left")
-        second_right:SetText("inactive right")
-        tip:ClearLines()
-        assert(empty(active), "the active row is cleared")
-        assert(second_left:GetText() == "inactive left", "unused left cache entry is untouched")
-        assert(second_right:GetText() == "inactive right", "unused right cache entry is untouched")
+        assert(R88n5First:GetText() == "first", "first active left input")
+        assert(R88n5SecondLeft:GetText() == "second left", "second active left input")
+        assert(R88n5SecondRight:GetText() == "second right", "second active right input")
+        GameTooltip:ClearLines()
+        assert(empty(R88n5First), "first active left text is cleared")
+        assert(empty(R88n5SecondLeft), "second active left text is cleared")
+        assert(empty(R88n5SecondRight), "second active right text is cleared")
         "#,
     )
-    .expect("Forever ClearLines active cached text contract");
+    .expect("Forever ClearLines clears all populated active sides");
+}
+
+#[cfg(all(feature = "client-wowforever", feature = "optional-tests"))]
+fn clear_forever_reused_row_and_check_inactive_cache(env: &WowLuaEnv) {
+    env.exec(
+        r#"
+        local tip = GameTooltip
+        local function empty(line)
+            local text = line:GetText()
+            return text == nil or text == ""
+        end
+        tip:AddDoubleLine("second active left", "second active right")
+        local active_left, active_right = tip:GetLeftLine(1), tip:GetRightLine(1)
+        assert(active_left == R88n5First, "ClearLines retains cached FontStrings for reuse")
+        assert(active_left:GetText() == "second active left", "second backed active-left input")
+        assert(active_right:GetText() == "second active right", "second backed active-right input")
+        R88n5SecondLeft:SetText("inactive left")
+        R88n5SecondRight:SetText("inactive right")
+        assert(R88n5SecondLeft:GetText() == "inactive left")
+        assert(R88n5SecondRight:GetText() == "inactive right")
+        tip:ClearLines()
+        assert(empty(active_left) and empty(active_right), "second active row text is cleared")
+        assert(R88n5SecondLeft:GetText() == "inactive left", "inactive left cache survives")
+        assert(R88n5SecondRight:GetText() == "inactive right", "inactive right cache survives")
+        "#,
+    )
+    .expect("Forever ClearLines clears second active row and retains inactive text");
 }
 
 /// PRESERVATION: the profile-selected TooltipDataHandler still clears old
