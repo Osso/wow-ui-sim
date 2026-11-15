@@ -1,3 +1,7 @@
+## [2026-11-15] clarification | Retail screen clamp q4
+
+[Screen clamp suppression](investigations/screen-clamp-suppression.md#q4-clarification-1192) replaces interim inputs with the verified threshold, call-local read sample, separate ancestor flags, and existing Window and propagation paths.
+
 ## [2026-11-14] implementation | Retail q3 screen clamp producers
 
 [Screen clamp suppression](investigations/screen-clamp-suppression.md) records q3 anchor dependency propagation, the guarded coordinate root, native-unit conversion and rounding, and separate inset notifications and restriction policy. The remaining q4 inputs are host seams, not native defaults.

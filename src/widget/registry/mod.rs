@@ -395,6 +395,29 @@ impl WidgetRegistry {
         }
     }
 
+    /// Frame-family contexts terminate on their stored value; generic
+    /// regions delegate to their parent. Other native specializations are unknown.
+    pub(crate) fn has_window_movement_context(&self, mut current: Option<u64>) -> bool {
+        while let Some(frame) = current.and_then(|id| self.get(id)) {
+            if frame.has_frame_carrier() {
+                return frame.has_window_movement_context;
+            }
+            current = frame.parent_id;
+        }
+        false
+    }
+
+    pub(crate) fn copy_window_movement_context(&mut self, child: u64, parent: Option<u64>) {
+        if crate::widget::clamp_geometry::uses_retail_clamp_producers() {
+            let context = self.has_window_movement_context(parent);
+            if let Some(frame) = self.widgets.get_mut(&child)
+                && frame.has_frame_carrier()
+            {
+                frame.has_window_movement_context = context;
+            }
+        }
+    }
+
     /// Add a child to a parent widget.
     pub fn add_child(&mut self, parent_id: u64, child_id: u64) {
         let (parent_eff_alpha, parent_eff_scale) = self
@@ -420,10 +443,16 @@ impl WidgetRegistry {
                 child.parent_id = Some(parent_id);
             }
         }
-        if let Some(parent) = self.widgets.get_mut(&parent_id) {
-            if self.child_links.insert((parent_id, child_id)) {
-                parent.children.push(child_id);
-            }
+        let new_link = if let Some(parent) = self.widgets.get_mut(&parent_id)
+            && self.child_links.insert((parent_id, child_id))
+        {
+            parent.children.push(child_id);
+            true
+        } else {
+            false
+        };
+        if new_link {
+            self.copy_window_movement_context(child_id, Some(parent_id));
         }
         self.propagate_effective_alpha(child_id, parent_eff_alpha);
         self.propagate_effective_scale(child_id, parent_eff_scale);

@@ -72,17 +72,13 @@ pub fn get_clamp_rect_insets(state: &mut LuaState) -> LuaResult<u32> {
 
 pub fn set_clamp_rect_insets(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
-    let left = clamp_dimension(state, 2)?;
-    let right = clamp_dimension(state, 3)?;
-    let top = clamp_dimension(state, 4)?;
-    let bottom = clamp_dimension(state, 5)?;
-    let insets = [left, right, top, bottom].map(inset_to_storage);
+    let (insets, access_sample) = read_clamp_insets(state)?;
     if !can_change_protected_state_for(state, id) {
         emit_addon_action_blocked(state, id, "SetClampRectInsets");
         return Ok(0);
     }
     let mut sim = borrow_state_mut(state)?;
-    if uses_retail_clamp_producers() && sim.clamp_inset_saved_access != 0 {
+    if uses_retail_clamp_producers() && access_sample != 0 {
         if let Some(frame) = sim.widgets.get(id)
             && frame.prevent_secret_values
         {
@@ -101,6 +97,22 @@ pub fn set_clamp_rect_insets(state: &mut LuaState) -> LuaResult<u32> {
         frame.clamp_rect_insets = (left, right, top, bottom);
     }
     Ok(0)
+}
+
+fn read_clamp_insets(state: &LuaState) -> LuaResult<([f32; 4], u8)> {
+    let mut access = uses_retail_clamp_producers()
+        .then(|| borrow_state(state).map(|sim| sim.clamp_inset_access_input.begin()))
+        .transpose()?;
+    let mut insets = [0.0; 4];
+    for (position, inset) in insets.iter_mut().enumerate() {
+        // A denied or otherwise failed real read does not mark the host model.
+        *inset = inset_to_storage(clamp_dimension(state, position as i32 + 2)?);
+        if let Some(access) = &mut access {
+            access.accepted_dimension(position);
+        }
+    }
+    let sample = access.map_or(0, |mut access| access.sample_then_restore());
+    Ok((insets, sample))
 }
 
 fn clamp_dimension(state: &LuaState, index: i32) -> LuaResult<f32> {

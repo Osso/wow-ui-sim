@@ -212,9 +212,17 @@ fn ordinary_movement_equal_request_and_special_context_do_not_rewrite_suppressio
     );
 
     host_propagation(&env, "ClampQ3MoveContext", true);
-    set_host_frame(&env, "ClampQ3MoveContext", |frame| {
-        frame.clamp_special_movement_context = true
-    });
+    env.exec(
+        r#"
+        ClampQ3MoveContext:SetWindow({name='context'})
+        ClampQ3MoveSubject:SetParent(UIParent)
+        ClampQ3MoveSubject:SetParent(ClampQ3MoveContext)
+        -- Assignment copied the Window context; clearing the parent later
+        -- must not turn this Frame-family query into a recursive search.
+        ClampQ3MoveContext:SetWindow(nil)
+    "#,
+    )
+    .unwrap();
     env.exec(
         r#"
         ClampQ3MoveSubject:SetPoint('TOPLEFT',ClampQ3MoveContext,'TOPLEFT',2,-2)
@@ -301,7 +309,9 @@ fn restricted_clamp_enable_raises_without_writing_and_preserves_normal_arities()
     )
     .unwrap();
     set_host_frame(&env, "ClampQ3Restricted", |frame| {
-        frame.clamp_restricted_region = true
+        // Slot independently controls the q4.5 policy: do not substitute the
+        // suppression bit or effective clamp state.
+        frame.anchor_propagation = true
     });
     env.exec(r#"
         local f=ClampQ3Restricted
@@ -345,7 +355,22 @@ fn inset_notification_respects_saved_access_prevention_and_prior_marker() {
     )
     .unwrap();
     assert!(!inspect_frame(&env, "ClampQ3Notice", |f| f.clamp_secret_notified));
-    env.state().borrow_mut().clamp_inset_saved_access = 1;
+    env.state()
+        .borrow_mut()
+        .clamp_inset_access_input
+        .initial_byte = 9;
+    // Enabled tracking clears this pre-read byte. Without a marked read,
+    // even a preventing receiver accepts the ordinary dimension stores.
+    set_host_frame(&env, "ClampQ3Notice", |frame| {
+        frame.prevent_secret_values = true
+    });
+    env.exec("ClampQ3Notice:SetClampRectInsets(1,2,3,4)")
+        .unwrap();
+    assert!(!inspect_frame(&env, "ClampQ3Notice", |f| f.clamp_secret_notified));
+    env.state()
+        .borrow_mut()
+        .clamp_inset_access_input
+        .marked_reads[3] = true;
     set_host_frame(&env, "ClampQ3Notice", |frame| {
         frame.prevent_secret_values = true
     });
@@ -394,7 +419,10 @@ fn clamp_geometry_notification_stops_marked_subtrees_and_respects_ancestor_gate(
     "#,
     )
     .unwrap();
-    env.state().borrow_mut().clamp_inset_saved_access = 1;
+    env.state()
+        .borrow_mut()
+        .clamp_inset_access_input
+        .marked_reads[0] = true;
     set_host_frame(&env, "ClampQ3Boundary", |frame| {
         frame.clamp_notification_boundary = true
     });
@@ -408,15 +436,34 @@ fn clamp_geometry_notification_stops_marked_subtrees_and_respects_ancestor_gate(
         .unwrap();
     assert!(inspect_frame(&env, "ClampQ3Sibling", |f| f.clamp_geometry_notified));
     assert!(!inspect_frame(&env, "ClampQ3BelowCut", |f| f.clamp_geometry_notified));
-    assert!(!inspect_frame(&env, "ClampQ3Ancestor", |f| f.clamp_ancestor_notified));
+    assert!(!inspect_frame(&env, "ClampQ3Ancestor", |f| f
+        .clamp_parent_notification_byte
+        == 1));
     set_host_frame(&env, "ClampQ3Geometry", |frame| {
         frame.clamp_secret_notified = false;
         frame.clamp_geometry_notified = false;
-        frame.clamp_notification_ancestor_gate = true;
+        frame.clamp_geometry_aux.ancestor_notification_gate = true;
     });
     env.exec("ClampQ3Geometry:SetClampRectInsets(4,3,2,1)")
         .unwrap();
-    assert!(inspect_frame(&env, "ClampQ3Ancestor", |f| f.clamp_ancestor_notified));
-    assert!(!inspect_frame(&env, "ClampQ3Boundary", |f| f.clamp_ancestor_notified));
-    assert!(!inspect_frame(&env, "UIParent", |f| f.clamp_ancestor_notified));
+    assert!(inspect_frame(&env, "ClampQ3Ancestor", |f| f
+        .clamp_parent_notification_byte
+        == 1));
+    assert!(!inspect_frame(&env, "ClampQ3Boundary", |f| f
+        .clamp_parent_notification_byte
+        == 1));
+    assert!(!inspect_frame(&env, "UIParent", |f| f
+        .clamp_parent_notification_byte
+        == 1));
+
+    set_host_frame(&env, "ClampQ3Geometry", |frame| {
+        frame.clamp_secret_notified = false;
+        frame.clamp_geometry_notified = false;
+        frame.clamp_notification_boundary = true;
+    });
+    env.exec("ClampQ3Geometry:SetClampRectInsets(6,7,8,9)")
+        .unwrap();
+    assert!(inspect_frame(&env, "ClampQ3Boundary", |f| f
+        .clamp_parent_notification_byte
+        == 1));
 }

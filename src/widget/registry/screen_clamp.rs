@@ -85,10 +85,10 @@ impl WidgetRegistry {
         frame.clamp_geometry_notified = true;
         if frame.widget_type == crate::widget::WidgetType::GameTooltip
             && frame.clamp_notification_ancestor_eligible
-            && frame.clamp_notification_ancestor_gate
+            && frame.clamp_geometry_aux.ancestor_notification_gate
         {
-            let ancestor = frame.parent_id;
-            self.mark_clamp_boundary_parent(ancestor);
+            // Q4.3 checks the receiving Frame before its ancestors.
+            self.mark_clamp_boundary_parent(Some(id));
         }
         true
     }
@@ -98,7 +98,7 @@ impl WidgetRegistry {
             ancestor = region.parent_id;
             if region.clamp_notification_boundary {
                 if let Some(parent) = ancestor.and_then(|id| self.widgets.get_mut(&id)) {
-                    parent.clamp_ancestor_notified = true;
+                    parent.clamp_parent_notification_byte = 1;
                 }
                 return;
             }

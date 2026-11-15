@@ -194,7 +194,7 @@ pub fn stop_moving_or_sizing(state: &mut LuaState) -> LuaResult<u32> {
             .widgets
             .get(id)
             .is_some_and(|frame| frame.is_moving || frame.is_sizing)
-        && !has_special_movement_context(&sim.widgets, id)
+        && !sim.widgets.has_window_movement_context(Some(id))
     {
         anchor_movement_to_coordinate_root(&mut sim, id);
     }
@@ -209,17 +209,6 @@ pub fn stop_moving_or_sizing(state: &mut LuaState) -> LuaResult<u32> {
         sim.set_active_drag_frame(None);
     }
     Ok(0)
-}
-
-fn has_special_movement_context(widgets: &crate::widget::WidgetRegistry, id: u64) -> bool {
-    let mut ancestor = widgets.get(id).and_then(|frame| frame.parent_id);
-    while let Some(frame) = ancestor.and_then(|id| widgets.get(id)) {
-        if frame.clamp_special_movement_context {
-            return true;
-        }
-        ancestor = frame.parent_id;
-    }
-    false
 }
 
 fn anchor_movement_to_coordinate_root(sim: &mut crate::lua_api::SimState, id: u64) {
@@ -305,9 +294,9 @@ fn set_retail_clamp_enabled(state: &LuaState, id: u64, clamped: bool) -> LuaResu
     if frame.effective_screen_clamp() == clamped {
         return Ok(0);
     }
-    // Q3.3 checks a separate restricted-region Frame-carrier state, not the
-    // generic combat/protection predicate used by the other profiles.
-    if clamped && frame.clamp_restricted_region && has_clamp_frame_carrier(frame) {
+    // Q4.5 identifies the Frame-carrier policy state as geometry propagation.
+    // It is not suppression, enablement, combat, protection or forbidden state.
+    if clamped && frame.anchor_propagation && frame.has_frame_carrier() {
         return Err(clamp_method_error(
             state,
             frame,
@@ -318,14 +307,6 @@ fn set_retail_clamp_enabled(state: &LuaState, id: u64, clamped: bool) -> LuaResu
     }
     sim.widgets.set_screen_clamp_enabled(id, clamped);
     Ok(0)
-}
-
-fn has_clamp_frame_carrier(frame: &crate::widget::Frame) -> bool {
-    use crate::widget::WidgetType;
-    !matches!(
-        frame.widget_type,
-        WidgetType::FontString | WidgetType::Texture | WidgetType::Line
-    )
 }
 
 pub(super) fn clamp_method_error(

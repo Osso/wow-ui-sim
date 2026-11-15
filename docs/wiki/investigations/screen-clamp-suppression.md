@@ -111,3 +111,8 @@ public contract, exact f32 unit operations, comparison and queue rules.
   **INFERRED** and conditional on the fixture. Movement, API, guard/equal
   return, rounding and independent notification tests exercise the other
   bounded behavior without modifying Blizzard Lua.
+
+
+## q4 clarification (#1192)
+
+This follow-up replaces q3's interim scale, restricted-region, movement-context and saved-access inputs without widening the task. The exact threshold is f32 epsilon with a strict comparison. Inset tracking is modeled in a call-local simulator test seam (no live VM changes), with initialization, save/clear, four accepted reads, pre-restoration sample and restoration. Unmarked arguments do not become marked through taint labels. The receiving Frame participates in the boundary search; eligibility, the separate auxiliary gate word, boundary flag and the parent notification byte remain distinct. The restricted policy reads geometry propagation. The existing SetWindow and parent-assignment paths supply the geometry's stored Window-presence projection; no new public method or native constructor is introduced. Native special constructors in #1192 are not represented by the current simulator. StartSizing and complete unobserved writer inventories remain out of scope.
