@@ -1,8 +1,7 @@
-//! Temporary tooltip data processor defaults for partial addon loads.
+//! Temporary tooltip data processor defaults for non-Retail partial addon loads.
 //!
-//! Full game loads get the real `TooltipDataProcessor` from Blizzard SharedXML.
-//! These defaults keep minimal or isolated addon loads callable without hiding
-//! the fallback in the central runtime bootstrap.
+//! Retail does not install these defaults; full game loads get the real
+//! `TooltipDataProcessor` from Blizzard SharedXML.
 
 const TOOLTIP_DATA_PROCESSOR_DEFAULTS_LUA: &str = r#"
 local function tooltip_data_processor_noop()
@@ -35,31 +34,53 @@ mod tests {
     }
 
     #[test]
-    fn installs_minimal_tooltip_data_processor_defaults() {
+    fn tooltip_data_processor_defaults_follow_profile_policy() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
 
-        let result: (String, i32, String, String, bool) = env
-            .eval(
-                r#"
-                return type(TooltipDataProcessor),
-                       TooltipDataProcessor.AllTypes,
-                       type(TooltipDataProcessor.AddTooltipPostCall),
-                       type(TooltipDataProcessor.AddLinePostCall),
-                       AddTooltipDataAccessor() == nil
-                "#,
-            )
-            .expect("tooltip data processor default probe should run");
+        #[cfg(feature = "client-retail")]
+        {
+            let result: (String, String, String, String) = env
+                .eval(
+                    r#"
+                    return type(rawget(_G, "TooltipDataProcessor")),
+                           type(rawget(_G, "AddTooltipDataAccessor")),
+                           type(rawget(__secureenv, "TooltipDataProcessor")),
+                           type(rawget(__secureenv, "AddTooltipDataAccessor"))
+                    "#,
+                )
+                .expect("Retail tooltip data processor profile probe should run");
 
-        assert_eq!(
-            result,
-            (
-                "table".to_string(),
-                0,
-                "function".to_string(),
-                "function".to_string(),
-                true
-            )
-        );
+            assert_eq!(
+                result,
+                ("nil".into(), "nil".into(), "nil".into(), "nil".into())
+            );
+        }
+
+        #[cfg(not(feature = "client-retail"))]
+        {
+            let result: (String, i32, String, String, bool) = env
+                .eval(
+                    r#"
+                    return type(TooltipDataProcessor),
+                           TooltipDataProcessor.AllTypes,
+                           type(TooltipDataProcessor.AddTooltipPostCall),
+                           type(TooltipDataProcessor.AddLinePostCall),
+                           AddTooltipDataAccessor() == nil
+                    "#,
+                )
+                .expect("non-Retail tooltip data processor defaults should run");
+
+            assert_eq!(
+                result,
+                (
+                    "table".to_string(),
+                    0,
+                    "function".to_string(),
+                    "function".to_string(),
+                    true
+                )
+            );
+        }
     }
 
     #[test]
