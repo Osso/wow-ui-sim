@@ -585,7 +585,6 @@ pub fn resolve_texture_inheritance(texture: &TextureXml) -> TextureXml {
     // Preserve instance identity fields
     merged.name = texture.name.clone();
     merged.parent_key = texture.parent_key.clone();
-    merged.parent_array = texture.parent_array.clone();
     merged.is_virtual = texture.is_virtual;
     merged.inherits = texture.inherits.clone();
     merged.animations = texture.animations.clone();
@@ -618,6 +617,7 @@ fn merge_texture_fields(dst: &mut TextureXml, src: &TextureXml) {
     merge_opt!(hidden);
     merge_opt!(alpha);
     merge_opt!(set_all_points);
+    merge_opt!(parent_array);
     merge_opt!(anchors);
     merge_opt!(mixin);
     merge_texture_key_values(dst, src);
