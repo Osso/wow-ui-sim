@@ -2461,3 +2461,75 @@ fn retail_glue_tooltip_preserves_shared_nineslice() {
         assert!(!env.state().borrow().lua_errors.iter().any(|error| error.contains("SharedTooltipTemplates.lua")));
     }
 }
+
+// R88q original-consumer regression; inputs are explicit host fixtures.
+#[cfg(all(feature = "optional-tests", feature = "profile-retail"))]
+mod storeglue_r88q_tuple {
+    use super::*;
+
+    fn env_with_records() -> common::LockedEnv {
+        let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+        seed_purchase_records(&env);
+        env.exec(
+            "__wow_store_state.productsByID[189] = {productID=189, sharedData={name='Fixture B'}}",
+        )
+        .unwrap();
+        env.exec(
+            r#"
+            local source = debug.getinfo(CharacterSelectListUtil.GetVASInfoForGUID, 'S')
+            assert(source.source:find('CharacterSelectListUtil.lua', 1, true))
+            assert(source.linedefined == 573)
+        "#,
+        )
+        .unwrap();
+        env
+    }
+
+    // Host input adapter; identical GUID/product/state/error data to the RED fixture.
+    fn seed_purchase_records(env: &WowLuaEnv) {
+        use wow_ui_sim::c_api::store_glue_model::VasPurchaseRecord;
+        let mut sim = env.state().borrow_mut();
+        for (guid, product_id, state, errors) in [
+            ("fixture-vas-a", 2003, 3, vec![17, 0, -4]),
+            ("fixture-vas-b", 189, 4, vec![0, 29]),
+        ] {
+            sim.store_glue.purchase_states.insert(
+                guid.into(),
+                VasPurchaseRecord {
+                    product_id,
+                    state,
+                    errors,
+                },
+            );
+        }
+        for guid in ["fixture-vas-a", "fixture-vas-b", "fixture-vas-absent"] {
+            sim.store_glue
+                .resolved_guid_aliases
+                .insert(guid.as_bytes().to_vec(), guid.into());
+        }
+    }
+
+    #[test]
+    fn purchase_tuple_and_error_sentinel_reach_original_glue_consumer() {
+        test_timeout! {
+            let env = env_with_records();
+            env.exec(r#"
+                local function check(guid, productID, expectedState, expectedErrors)
+                    local consumerState, consumerErrors, consumerProduct =
+                        CharacterSelectListUtil.GetVASInfoForGUID(guid)
+                    local product, state, errors = C_StoreGlue.GetVASPurchaseStateInfo(guid)
+                    assert(select('#', C_StoreGlue.GetVASPurchaseStateInfo(guid)) == 3)
+                    assert(product == productID and state == expectedState)
+                    assert(type(errors) == 'table' and #errors == #expectedErrors)
+                    for i, value in ipairs(expectedErrors) do assert(errors[i] == value) end
+                    assert(consumerState == expectedState and #consumerErrors == #expectedErrors)
+                    for i, value in ipairs(expectedErrors) do assert(consumerErrors[i] == value) end
+                    if productID ~= 0 then assert(consumerProduct.productID == productID) end
+                end
+                check('fixture-vas-a', 2003, 3, {17,0,-4})
+                check('fixture-vas-b', 189, 4, {})
+                check('fixture-vas-absent', 0, 0, {})
+            "#).expect("R88q.q1 stored tuple/errors must reach original consumer");
+        }
+    }
+}
