@@ -6,6 +6,10 @@
 
 [Bag repair cost](../specs/bag-repair-cost.md) records R88n.4b positive-only top-level publication, empty host quotes, narrow ordinary-bag routing and original repair-mode money-line RED/GREEN. No price calculation, sell-price or battle-pet changes.
 
+## [2026-11-15] implementation | Retail quest-cache callbacks
+
+[Consumer selection and RED proof](investigations/consumer-selection-and-red-proof.md#retail-quest-tooltip-consumers-and-host-input-seams) and the [Round 7 getter contract](../specs/tooltip-r7-getters.md) record R88u callback storage, token deduplication, oldest-first arrival/removal modes, explicit host cache inputs, and the inferred TooltipInfo/autocomplete boundaries.
+
 ## [2026-11-15] implementation | Forever item-cooldown publication
 
 [Forever item cooldown](../specs/forever-spell-item-cooldown.md) records matching pinned PTR/Forever declarations, narrow INFERRED publication, original Collections cooldown RED/GREEN and no-added-error proof. Retail absence and existing supplied-state policy remain unchanged.

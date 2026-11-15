@@ -1,3 +1,7 @@
+## [2026-11-15] implementation | Retail quest-cache callbacks
+
+Updated [consumer selection and RED proof](investigations/consumer-selection-and-red-proof.md#retail-quest-tooltip-consumers-and-host-input-seams) and the [Round 7 getter contract](../specs/tooltip-r7-getters.md). **VERIFIED (R88u):** the quest-log callback saves the request token/context, deduplicates pending entries, invokes mode 0 on arrival and modes 1/4 on unready destruction, and queues argumentless `QUEST_LOG_UPDATE` on success. **VERIFIED (simulator):** the selected ObjectiveTracker hover test covers two distinct items, an absent index, host arrival/destruction, and no stale pending state. **INFERRED:** TooltipInfo's non-ready zero-result path and the conditional autocomplete quest-ID payload; tests assert neither return arity nor that payload.
+
 ## [2026-11-15] implementation | Retail LFG reward writer
 
 [LFG reward writer](../specs/lfg-reward-writer.md) records the verified enclosing-message writer, replacement readiness/groups/tiers, event ordering, original hover proof and transport/clear-route boundaries.
