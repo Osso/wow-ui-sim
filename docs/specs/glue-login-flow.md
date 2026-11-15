@@ -321,10 +321,19 @@ root also lacks `FloatingChatFrameGame.lua`, so a pin refresh will not add it.
 `3363ac656da5f261cdc675ab28b2744c`, 2026-11-15):** FDID `8547105` has no
 local root-resolution row, and the selected Gethe manifest omits
 `Blizzard_ChatFrameBase/Shared/FloatingChatFrameGame.lua`. The refreshed pin
-therefore does not supply that source. **UNKNOWN:** the native ordering,
-filtering, and visibility rule for Retail Glue Login; follow-up `lt-0de8`
-tracks that question. R62 narrows the unsupported Retail visibility assertion
-without changing runtime behavior.
+therefore does not supply that source. **VERIFIED (Retail 12.1.5.70783 TOC/Lua):**
+`Blizzard_ChatFrameBase.toc:12` allows the addon in both screens for Mainline,
+lines 41–43 select the shared and `[Family]` FloatingChatFrame sources, and the
+shared source defines `AllowChatFramesToShow` as true. The selected Mainline
+source calls that function at `FloatingChatFrame.lua:1869`; GlueParent's `login`
+screen record has no `allowChat` and its policy returns false at
+`GlueParent.lua:909–914`. The Retail test
+`glue_retail_chat_source_preserves_r62_verified_asset_facts` checks source facts;
+`login_boot_hides_non_login_frontend_frames` loads original Login addons but
+excludes Retail chat visibility assertions. **UNKNOWN:** which definition wins
+before the consumer runs and the final native visibility result. Follow-up
+`lt-0de8` tracks that question. R62 narrows the unsupported Retail visibility
+assertion without changing runtime behavior.
 
 
 ### R52 background lookup and supplied row boundary
