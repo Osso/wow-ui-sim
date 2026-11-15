@@ -673,6 +673,29 @@ fn pending_item_enforces_bag_availability_and_slot_counts() {
 }
 
 #[test]
+fn pending_item_equipment_location_requires_present_player() {
+    let env = pending_env(&[ITEM_A]);
+    seed_equipped_items(&env, &[(7, ITEM_A)]);
+    env.state().borrow_mut().player.present = false;
+    assert_present_location_usage_error_without_side_effects(
+        &env,
+        "ItemLocation:CreateFromEquipmentSlot(7)",
+    );
+}
+
+#[test]
+fn pending_item_negative_inventory_location_requires_present_player() {
+    let env = pending_env(&[ITEM_A, ITEM_B]);
+    add_pending_bag_item(&env, -2, 1, ITEM_A);
+    seed_equipped_items(&env, &[(101, ITEM_B)]);
+    env.state().borrow_mut().player.present = false;
+    assert_present_location_usage_error_without_side_effects(
+        &env,
+        "ItemLocation:CreateFromBagAndSlot(-2, 1)",
+    );
+}
+
+#[test]
 fn pending_item_rejects_wrapped_or_unmapped_negative_bag_ids() {
     let env = pending_env(&[ITEM_A, ITEM_B]);
     add_pending_bag_item(&env, -1, 1, ITEM_A);
