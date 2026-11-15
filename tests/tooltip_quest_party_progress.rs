@@ -40,7 +40,7 @@ function QuestSpecialItemHover(index)
     button:SetAttribute('questLogIndex', index)
     GameTooltip:Hide()
     GameTooltip:SetOwner(UIParent, 'ANCHOR_NONE')
-    QuestObjectiveItemButtonMixin:OnEnter(button)
+    QuestObjectiveItemButtonMixin.OnEnter(button)
     return GameTooltip:IsShown(), GameTooltip:GetPrimaryTooltipData()
 end
 "#;
