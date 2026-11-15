@@ -173,19 +173,30 @@ sourceLocationProbeResults = { firstLocation, returnCount, excludedLocation }
 
     let result = wow_ui_sim::loader::load_addon(&env.loader_env(), &toc).unwrap();
     assert!(result.warnings.is_empty(), "{:?}", result.warnings);
-    let (first, return_count, excluded): (String, i32, String) = env
+    let addon_loaded: bool = env
+        .eval("return C_AddOns.IsAddOnLoaded('SourceLocationProbe')")
+        .unwrap();
+    assert!(addon_loaded, "the source-location probe addon must load");
+    let lua_errors = env.state().borrow().lua_errors.clone();
+    assert!(lua_errors.is_empty(), "probe Lua errors: {lua_errors:?}");
+
+    let (first, return_count, excluded): (Option<String>, i32, Option<String>) = env
         .eval(
             "return sourceLocationProbeResults[1], sourceLocationProbeResults[2], sourceLocationProbeResults[3]",
         )
         .unwrap();
     assert!(
-        first.ends_with("SourceLocationProbe.lua:2"),
-        "CreateTexture must capture its Lua file and line: {first}"
+        first
+            .as_deref()
+            .is_some_and(|location| location.ends_with("SourceLocationProbe.lua:2")),
+        "CreateTexture must capture its Lua file and line: {first:?}"
     );
     assert_eq!(return_count, 0);
     assert!(
-        excluded.starts_with("UnknownFile:"),
-        "an excluded callsite without another file source uses UnknownFile: {excluded}"
+        excluded
+            .as_deref()
+            .is_some_and(|location| location.starts_with("UnknownFile:")),
+        "an excluded callsite without another file source uses UnknownFile: {excluded:?}"
     );
 }
 
