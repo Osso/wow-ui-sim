@@ -705,7 +705,8 @@ fn retail_map_world_position_zone_expectations(map_rows: &[(u32, u32, u32)]) -> 
         }
         if map_types.get(&map_id) == Some(&3) {
             zone_count += 1;
-            if !retail_map_has_valid_assignment_at_center(map_id) {
+            let has_world_assignment = retail_map_has_valid_assignment_at_center(map_id);
+            if !has_world_assignment {
                 no_world_zone_ids.push(map_id);
             }
         }
