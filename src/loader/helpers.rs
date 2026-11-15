@@ -504,7 +504,7 @@ fn chained_handler_lua(
         do
             local __old = {target}:GetScript("{handler_name}")
             local __new = {new_handler}
-            local __report = debug.getregistry()["__report_script_error"]
+            local __report = GetGlobalEnvironment().debug.getregistry()["__report_script_error"]
             if __old then
                 {target}:SetScript("{handler_name}", function(self, ...)
                     if securecall then

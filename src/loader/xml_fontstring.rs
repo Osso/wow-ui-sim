@@ -264,7 +264,7 @@ const IMMEDIATE_FONTSTRING_ONLOAD_LUA: &str = r#"
             if __onload then
                 local __ok, __err = pcall(__onload, fs)
                 if not __ok then
-                    local __report = debug.getregistry()["__report_script_error"]
+                    local __report = GetGlobalEnvironment().debug.getregistry()["__report_script_error"]
                     if __report then
                         local __name = fs.GetName and fs:GetName() or "?"
                         __report("[OnLoad] " .. tostring(__name) .. ": " .. tostring(__err))
