@@ -6,7 +6,8 @@ use rilua::RuntimeError;
 use rilua::Val;
 use rilua::vm::closure::{Closure, RustClosure, RustFn};
 use rilua::vm::gc::arena::GcRef;
-use rilua::vm::state::{LuaState, LuaString};
+use rilua::vm::state::LuaState;
+use rilua::vm::string::LuaString;
 use rilua::vm::table::Table as RiluaTable;
 use rilua::vm::value::Userdata;
 
