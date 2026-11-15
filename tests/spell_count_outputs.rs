@@ -1119,3 +1119,101 @@ fn output_copy_gc_and_flag_off_keep_old_wrappers_private_and_new_public() {
     .unwrap();
     assert_eq!(metadata(&env, &["SCCast", "SCDisplay"]), before);
 }
+
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[test]
+fn r88p_signed_reagent_quantities_use_eight_eligible_pairs() {
+    // VERIFIED R88p.p3: quantities narrow to i16 before eligibility and division.
+    let env = fixture(false);
+    set_count(&env, 19750, 15);
+    set_count(&env, 642, 8);
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.spell_reagent_pairs.insert(
+            19750,
+            [
+                [
+                    (0, 1),
+                    (-2, 1),
+                    (123, 32768),
+                    (reagent_item_id(19750) as i32, 65539),
+                ]
+                .as_slice(),
+                [(0, 1); 4].as_slice(),
+                [(123, 1)].as_slice(),
+            ]
+            .concat(),
+        );
+        sim.spell_reagent_pairs
+            .insert(642, vec![(reagent_item_id(642) as i32, 65538)]);
+    }
+    cast_count(&env, "19750", 5, false);
+    cast_count(&env, "642", 4, false);
+    clear_count(&env, 19750);
+    cast_count(&env, "19750", 0, false);
+}
+
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[test]
+fn r88p_default_reagent_traversal_excludes_bank_tabs() {
+    // VERIFIED R88p.p3: mask 32 is required for both bank-tab groups.
+    let env = fixture(false);
+    {
+        let mut sim = env.state().borrow_mut();
+        let first = sim
+            .bag_items
+            .values()
+            .find(|i| i.item_id == reagent_item_id(19750))
+            .unwrap()
+            .clone();
+        let second = sim
+            .bag_items
+            .values()
+            .find(|i| i.item_id == reagent_item_id(642))
+            .unwrap()
+            .clone();
+        sim.bag_items.insert((6, 1), first);
+        sim.bag_items.insert((12, 1), second);
+    }
+    cast_count(&env, "19750", 7, false);
+    cast_count(&env, "642", 2, false);
+    clear_count(&env, 19750);
+    cast_count(&env, "19750", 0, false);
+}
+
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[test]
+fn r88p_numeric_replacements_convert_without_replacing_count_output() {
+    // VERIFIED R88k.5 publication/arguments #1056 bullet 3: numbers become text.
+    let env = fixture(false);
+    display(&env, "19750,6,17", "17", false);
+    display(&env, "642,1,29", "29", false);
+    clear_count(&env, 19750);
+    display(&env, "19750,6,17", "", false);
+}
+
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[test]
+fn r88p_cast_traversal_counts_carried_root_items() {
+    let env = fixture(false);
+    let mut first = wow_ui_sim::lua_api::state::EquippedItem {
+        owned_identity: None,
+        item_id: 0,
+        enchant_id: 0,
+        gem_ids: [0; 3],
+        applied_transmog: None,
+    };
+    let mut second = first.clone();
+    first.item_id = reagent_item_id(19750);
+    second.item_id = reagent_item_id(642);
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.player.equipped_items.clear();
+        sim.player.equipped_items.insert(1, first);
+        sim.player.equipped_items.insert(2, second);
+    }
+    cast_count(&env, "19750", 8, false);
+    cast_count(&env, "642", 3, false);
+    clear_count(&env, 19750);
+    cast_count(&env, "19750", 0, false);
+}
