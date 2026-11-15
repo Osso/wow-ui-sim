@@ -78,6 +78,9 @@ fn setup_env() -> WowLuaEnv {
 
     let ui = blizzard_ui_dir();
     for name in PANEL_ADDONS {
+        if *name == "Blizzard_UIParentPanelManager" {
+            common::panel_fixtures::load_retail_catalog_shop(&env, &ui);
+        }
         // Retail's pinned manifest uses unsuffixed TOCs for several panel dependencies.
         let Some(toc_path) = wow_ui_sim::loader::find_toc_file(&ui.join(name)) else {
             continue;
@@ -812,6 +815,9 @@ fn startup_without_world_map_does_not_error_in_quest_map_refresh() {
 
         let ui = blizzard_ui_dir();
         for name in PANEL_ADDONS {
+        if *name == "Blizzard_UIParentPanelManager" {
+            common::panel_fixtures::load_retail_catalog_shop(&env, &ui);
+        }
             let Some(toc_path) = wow_ui_sim::loader::find_toc_file(&ui.join(name)) else {
                 continue;
             };

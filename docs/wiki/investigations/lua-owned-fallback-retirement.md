@@ -125,3 +125,30 @@ secure/public binding remain unresolved, not blanket removable fallbacks.
 
 - [[consumer-selection-and-red-proof]] — source selection versus executed mutation rejection
 - [[post-load-workaround-audit]] — remaining lifecycle ownership and retirement paths
+
+## CatalogShop eager ownership in partial panel fixtures (lt-05d0)
+
+The unchanged `test_showuipanel_reputation::show_ui_panel_locks_reputation_frame_layout`
+regression passes at `3ed26cab617c0887d0f0452d61ee54da67f01d90` and fails at its
+child `c36368269b70aae0f04ec2f75272ee035401c45d` and master `76d49160d`.
+Exact-selector bisection identifies `c36368269` (Retail fallback retirement) as
+the first bad commit. The failing original consumer is
+`Blizzard_UIParentPanelManager/Shared/UIParentPanelManager.lua:200`, which reads
+`CatalogShopInboundInterface.IsShown()` when Shop2 is enabled. The partial
+fixture omitted its eager publisher; this is not evidence of a missing native
+getter or a reason to restore a guessed interface.
+
+The pinned Game-eligible `Blizzard_CatalogShop.toc` has no LoadOnDemand flag and
+declares SharedXML, CatalogShopSharedUtil and CatalogShopSharedTemplates.
+GlueParent/StaticPopup_Glue are Glue-only dependencies. Load the original Game
+publisher after its dependencies and before the panel consumer, restricted to
+`client_profile::ACTIVE == ClientProfile::Retail`. The fixture asserts that
+`IsShown` and `SetShown` originate from `Blizzard_CatalogShop_Inbound.lua`.
+Existing geometry and behavior assertions remain unchanged. The exact
+reputation regression and all eight reputation selectors pass with this
+fixture-only correction; this is original-owner preservation, not new native
+behavior evidence. Other profiles retain their existing fixture behavior.
+
+Related sources: `tests/test_showuipanel_reputation.rs`,
+`tests/common/panel_fixtures.rs`, and the profile-scoped Retail CatalogShop TOC
+and original Inbound.lua. Runtime receipts are untracked.

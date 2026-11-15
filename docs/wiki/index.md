@@ -2,6 +2,10 @@
 
 [Achievement eligibility](../specs/achievement-eligibility.md) records R88o.1's Retail argument/Boolean contract, missing record/group versus null tree, and supplied cache comparisons. Original tracker #6 uses the zero-visible branch; positive visible counts use a different per-criterion getter. PTR/Forever binding is inferred from their selected original Lua. New simulator input stays empty by default; no event substitutes or live cache writer claims.
 
+## [2026-11-15] investigation | CatalogShop panel fixture ownership
+
+[Lua-owned fallback retirement](investigations/lua-owned-fallback-retirement.md#catalogshop-eager-ownership-in-partial-panel-fixtures-lt-05d0) records lt-05d0's exact first-bad commit and missing eager publisher in the reputation fixture. Original Game TOC dependencies and source ownership replace no simulator behavior; this is fixture correction and preservation, not native API evidence.
+
 ## [2026-11-14] investigation | Screen-clamp state and evidence gaps
 
 [Screen-clamp suppression](investigations/screen-clamp-suppression.md) records the pre-edit R88n.5r-q1/q2 gap table, unambiguous model corrections, and pending native propagation/unit/notification questions. No movement-to-suppression alias is inferred.
