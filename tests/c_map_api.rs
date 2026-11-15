@@ -349,18 +349,65 @@ fn retail_map_position_extrapolates_from_nearest_outside_assignment() {
     assert_eq!(instance_id, 1, "MapID-to-map-number mapping is INFERRED");
 }
 
-#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[cfg(all(
+    feature = "optional-tests",
+    feature = "profile-retail",
+    feature = "retail-12-1-5"
+))]
 #[test]
-fn retail_negative_map_id_has_no_area_table_continent_source() {
+fn retail_negative_map_id_uses_area_table_u16_and_projects_each_point() {
     let env = env();
-    let result_count: i32 = env
-        .eval("return select('#', C_Map.GetWorldPosFromMapPos(2311, {x=0.5, y=0.5}))")
+    let result: (i32, i32, f64, f64, i32, i32, f64, f64) = env
+        .eval(
+            r#"
+            local function capture_results(...)
+                local count = select('#', ...)
+                local mapID, position = ...
+                if not position then return count, -1, 0, 0 end
+                return count, mapID, position.x, position.y
+            end
+            local function capture(x, y)
+                return capture_results(C_Map.GetWorldPosFromMapPos(2147, {x=x, y=y}))
+            end
+            local center = {capture(0.5, 0.5)}
+            local other = {capture(0.25, 0.75)}
+            return center[1], center[2], center[3], center[4],
+                other[1], other[2], other[3], other[4]
+            "#,
+        )
         .unwrap();
 
-    assert_eq!(
-        result_count, 0,
-        "negative MapID cannot resolve without AreaTable.ContinentID (INFERRED seam)"
-    );
+    assert_eq!(result.0, 2);
+    assert_eq!(result.1, 2444, "AreaTable ID 14620 supplies the map number");
+    // INFERRED: expected coordinates use the axis-swapped transform over 70783 rows.
+    assert!((result.2 - -56.25).abs() < 0.01);
+    assert!((result.3 - 602.0996).abs() < 0.01);
+    assert_eq!(result.4, 2);
+    assert_eq!(result.5, 2444);
+    assert!((result.6 - -4302.085).abs() < 0.01);
+    assert!((result.7 - 6970.8496).abs() < 0.01);
+    assert_ne!((result.2, result.3), (result.6, result.7));
+}
+
+#[cfg(all(
+    feature = "optional-tests",
+    feature = "profile-retail",
+    feature = "retail-12-1-5"
+))]
+#[test]
+fn retail_negative_map_ids_skip_missing_area_table_id_zero() {
+    let env = env();
+    env.eval::<()>(
+        r#"
+        for _, uiMapID in ipairs({1408, 2311}) do
+            assert(
+                select('#', C_Map.GetWorldPosFromMapPos(uiMapID, {x=0.5, y=0.5})) == 0,
+                'missing AreaTable ID 0 must leave no result for ' .. uiMapID
+            )
+        end
+        "#,
+    )
+    .unwrap();
 }
 
 #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
