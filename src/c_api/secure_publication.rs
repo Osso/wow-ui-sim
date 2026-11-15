@@ -295,17 +295,18 @@ fn publish_to_both(
     previous_ordinary: Val,
     previous_secure: Val,
 ) -> LuaResult<bool> {
-    let ordinary_function = function_value(ordinary);
-    let secure_function = function_value(secure);
-    match (ordinary_function, secure_function) {
+    match (function_value(ordinary), function_value(secure)) {
         (Some(ordinary), Some(secure)) => {
-            let ordinary_changed = snapshot_changed(previous_ordinary, ordinary);
-            let secure_changed = snapshot_changed(previous_secure, secure);
-            if ordinary_changed && !secure_changed {
-                set_member_in_both(state, namespace, member, ordinary, flag)?;
-            } else if secure_changed && !ordinary_changed {
-                set_member_in_both(state, namespace, member, secure, flag)?;
-            }
+            update_changed_dual_handler(
+                state,
+                namespace,
+                member,
+                flag,
+                ordinary,
+                secure,
+                previous_ordinary,
+                previous_secure,
+            )?;
             Ok(true)
         }
         (Some(function), None) => {
@@ -321,14 +322,53 @@ fn publish_to_both(
             Ok(false)
         }
         (None, None) => {
-            if matches!(previous_ordinary, Val::Function(_))
-                || matches!(previous_secure, Val::Function(_))
-            {
-                remove_namespace_member(state, namespace, member, true, true)?;
-            }
+            remove_stale_secure_handler(
+                state,
+                namespace,
+                member,
+                previous_ordinary,
+                previous_secure,
+            )?;
             Ok(false)
         }
     }
+}
+
+fn update_changed_dual_handler(
+    state: &mut LuaState,
+    namespace: &str,
+    member: &str,
+    flag: u8,
+    ordinary: Val,
+    secure: Val,
+    previous_ordinary: Val,
+    previous_secure: Val,
+) -> LuaResult<()> {
+    let ordinary_changed = snapshot_changed(previous_ordinary, ordinary);
+    let secure_changed = snapshot_changed(previous_secure, secure);
+    let replacement = match (ordinary_changed, secure_changed) {
+        (true, false) => Some(ordinary),
+        (false, true) => Some(secure),
+        _ => None,
+    };
+    if let Some(replacement) = replacement {
+        set_member_in_both(state, namespace, member, replacement, flag)?;
+    }
+    Ok(())
+}
+
+fn remove_stale_secure_handler(
+    state: &mut LuaState,
+    namespace: &str,
+    member: &str,
+    previous_ordinary: Val,
+    previous_secure: Val,
+) -> LuaResult<()> {
+    if matches!(previous_ordinary, Val::Function(_)) || matches!(previous_secure, Val::Function(_))
+    {
+        remove_namespace_member(state, namespace, member, true, true)?;
+    }
+    Ok(())
 }
 
 fn publish_ordinary_only(
