@@ -151,6 +151,7 @@ fn secure_scoped_modifier_onload_resolves_secure_mixin() {
 #[test]
 fn create_texture_source_location_skips_excluded_callsite() {
     let env = env();
+    env.exec("sourceLocationProbeResults = {}").unwrap();
     let root = tempfile::tempdir().unwrap();
     let addon_dir = root.path().join("SourceLocationProbe");
     std::fs::create_dir_all(&addon_dir).unwrap();
@@ -168,7 +169,9 @@ local firstLocation = first:GetSourceLocation()
 local returnCount = select("#", AddSourceLocationExclude("SourceLocationProbe.lua"))
 local excluded = UIParent:CreateTexture()
 local excludedLocation = excluded:GetSourceLocation()
-sourceLocationProbeResults = { firstLocation, returnCount, excludedLocation }
+sourceLocationProbeResults.first = firstLocation
+sourceLocationProbeResults.returnCount = returnCount
+sourceLocationProbeResults.excluded = excludedLocation
 "##,
     )
     .unwrap();
@@ -184,7 +187,7 @@ sourceLocationProbeResults = { firstLocation, returnCount, excludedLocation }
 
     let (first, return_count, excluded): (Option<String>, i32, Option<String>) = env
         .eval(
-            "return sourceLocationProbeResults[1], sourceLocationProbeResults[2], sourceLocationProbeResults[3]",
+            "return sourceLocationProbeResults.first, sourceLocationProbeResults.returnCount, sourceLocationProbeResults.excluded",
         )
         .unwrap();
     assert!(
