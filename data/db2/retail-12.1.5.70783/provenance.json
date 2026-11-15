@@ -74,6 +74,7 @@
         ],
         "reason": "Only AreaIDs referenced by negative-MapID UiMapAssignment rows; retain ID and the required u16 field."
       }
-    }
+    },
+    "native_u16_mapping": "INFERRED: the native AreaTable unsigned-16 result corresponds to DBD ContinentID; generated Rust field name is continent_id."
   }
 }
