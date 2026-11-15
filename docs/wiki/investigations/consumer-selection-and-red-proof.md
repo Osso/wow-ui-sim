@@ -78,9 +78,21 @@ This is static staging, not observed RED/GREEN or runtime selection proof. Histo
 
 **VERIFIED (Retail 12.1.5.70688, R88p.p4):** other next-rank rows follow heading, source, major-or-gray, minor order. Inline rows use type 5, wrap, and carry `powerState`; minor rows require next rank below four. **VERIFIED (simulator source):** the producer reads generated source fields and spell-description data, and it gates inline rows on the modeled player's `unlocked` essence state. **VERIFIED (generated catalog):** no row has rank above four, so the gray branch is unreachable with current data because next rank four disables the stage. **UNKNOWN:** requirement-row expansion.
 
-### R88n.3b quest-cache callback seam
+### Retail quest-tooltip consumers and host-input seams
 
-**VERIFIED (Retail native):** an unready quest-cache lookup saves callback/context entries; cache removal copies and invokes them after unlinking the old record. **VERIFIED (simulator source):** `QuestSpecialItemInputs` stores only index-to-quest, cache-record and selected-object maps; it has no pending callback or removal route. The special-item seam remains UNKNOWN, so this lane adds no async behavior.
+**VERIFIED (Retail 12.1.5 cache and selected TOCs):** `Blizzard_ObjectiveTracker.toc` selects `Blizzard_ObjectiveTrackerShared.lua`; `QuestObjectiveItemButtonMixin:OnEnter` at lines 88–91 calls `GameTooltip:SetQuestLogSpecialItem`. `TooltipDataHandler.lua:536` maps that accessor to `C_TooltipInfo.GetQuestLogSpecialItem`, declared at `TooltipInfoDocumentation.lua:817`.
+
+#### R88n.3b and R88u quest-cache callback seam
+
+**VERIFIED (Retail 12.1.5.70688, R88u.u1–u2):** the quest key owns the pending list. Each entry saves the callback, a copy of the two-word request token, and opaque extra context. The ObjectiveTracker caller uses an empty extra context and the exact matching request token or the zero token. Duplicate checks first compare callback and context; an unmarked incoming token suppresses that match, while a marked token also requires both token words to match. Duplicate entries are skipped. Arrival calls unchanged entries oldest first with the quest key, saved token/context and mode 0, then clears the pending list. Whole-record destruction calls pending entries with mode 4; removal of an unready record first makes the mode-1 pass. The separate copy-and-remove callback route and token-cancellation/reissue route are not the pending lookup list.
+
+**VERIFIED (simulator source):** `QuestSpecialItemInputs` now contains explicit not-ready records, request-token inputs, pending callbacks and host-supplied arrival/destruction updates. `process_host_cache_updates` is Retail-gated; it does not infer arrival or destruction from a game event. The selected ObjectiveTracker getter stores its callback on an unready record. A successful mode-0 callback queues `QUEST_LOG_UPDATE` without Lua arguments and does not dispatch it inline.
+
+**VERIFIED (optional simulator tests):** original `QuestObjectiveItemButtonMixin:OnEnter` tests use two backed quest/item pairs and an absent log index. They assert hidden not-ready hovers, duplicate suppression, the queued no-payload update after host arrival, distinct item results on re-hover, and no update or stale cache/callback state after host destruction.
+
+**VERIFIED (Retail native, R88u.u3–u4):** the global `GetQuestLogSpecialItemInfo` returns zero values for the not-ready and missing-item paths; it does not report a separate readiness status. The ready callback queues an argumentless `QUEST_LOG_UPDATE` and makes no direct tooltip getter call. **INFERRED (native):** the initial not-ready `C_TooltipInfo.GetQuestLogSpecialItem` call returns zero values; the simulator's original-consumer test asserts tooltip visibility only, not result arity. **INFERRED (native):** the conditional `QUEST_AUTOCOMPLETE` numeric payload is the quest ID; the simulator condition is an empty-by-default host input and no test asserts the payload.
+
+**UNKNOWN or unmodeled:** the native cache writer, arrival/destruction trigger, initial request-helper side effect and pending-request flag, callback effects from the two quest-state helpers, token-specific cancellation/reissue, and any indirect later tooltip retry. The simulator leaves those routes host-driven or absent; it does not invent a trigger. See the [Round 7 getter contract](../../specs/tooltip-r7-getters.md) for the public behavior boundary.
 
 ### R88n.4b LFG message seam
 
