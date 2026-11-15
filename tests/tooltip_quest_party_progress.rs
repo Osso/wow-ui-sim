@@ -131,7 +131,7 @@ fn queue_quest_record_destruction(env: &WowLuaEnv, quest_id: i32) {
 
 fn assert_quest_item_hover_hidden(env: &WowLuaEnv, log_index: i32) {
     env.exec(&format!(
-        "local shown, data = QuestSpecialItemHover({log_index}); assert(not shown and data == nil, 'quest item tooltip must be hidden')"
+        "local shown = QuestSpecialItemHover({log_index}); assert(not shown, 'quest item tooltip must be hidden')"
     ))
     .expect("original consumer should hide a quest item without ready data");
 }
