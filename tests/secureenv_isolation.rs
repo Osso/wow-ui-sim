@@ -167,9 +167,11 @@ fn create_texture_source_location_skips_excluded_callsite() {
 local first = UIParent:CreateTexture()
 local firstLocation = first:GetSourceLocation()
 local returnCount = select("#", AddSourceLocationExclude("SourceLocationProbe.lua"))
+local firstAfterExclusion = first:GetSourceLocation()
 local excluded = UIParent:CreateTexture()
 local excludedLocation = excluded:GetSourceLocation()
 sourceLocationProbeResults.first = firstLocation
+sourceLocationProbeResults.firstAfterExclusion = firstAfterExclusion
 sourceLocationProbeResults.returnCount = returnCount
 sourceLocationProbeResults.excluded = excludedLocation
 "##,
@@ -189,9 +191,14 @@ sourceLocationProbeResults.excluded = excludedLocation
     let lua_errors = env.state().borrow().lua_errors.clone();
     assert!(lua_errors.is_empty(), "probe Lua errors: {lua_errors:?}");
 
-    let (first, return_count, excluded): (Option<String>, Option<i32>, Option<String>) = env
+    let (first, first_after_exclusion, return_count, excluded): (
+        Option<String>,
+        Option<String>,
+        Option<i32>,
+        Option<String>,
+    ) = env
         .eval(
-            "return sourceLocationProbeResults.first, sourceLocationProbeResults.returnCount, sourceLocationProbeResults.excluded",
+            "return sourceLocationProbeResults.first, sourceLocationProbeResults.firstAfterExclusion, sourceLocationProbeResults.returnCount, sourceLocationProbeResults.excluded",
         )
         .unwrap();
     assert!(
@@ -199,6 +206,10 @@ sourceLocationProbeResults.excluded = excludedLocation
             .as_deref()
             .is_some_and(|location| location.ends_with("SourceLocationProbe.lua:2")),
         "CreateTexture must capture its Lua file and line: {first:?}"
+    );
+    assert_eq!(
+        first_after_exclusion, first,
+        "stored locations do not rescan"
     );
     assert_eq!(
         return_count,
