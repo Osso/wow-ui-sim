@@ -2462,8 +2462,40 @@ fn retail_glue_tooltip_preserves_shared_nineslice() {
     }
 }
 
+// INFERRED applicability only; Retail consumer/assertion/input semantics are unchanged.
+#[cfg(feature = "optional-tests")]
+fn r88q_profile_active() -> bool {
+    use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
+    matches!(
+        ACTIVE,
+        ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
+    )
+}
+
+#[cfg(feature = "optional-tests")]
+fn seed_r88q_profile_expectations(env: &WowLuaEnv) {
+    use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
+    let line = match ACTIVE {
+        ClientProfile::Retail => 211,
+        ClientProfile::Ptr | ClientProfile::WowForever => 204,
+        _ => return,
+    };
+    let expected = format!(
+        "...ace/AddOns/Blizzard_GlueXML/Mainline/CharacterSelect.lua:{line}: attempt to call field 'DisconnectFromServer' (a nil value)"
+    );
+    env.exec(&format!("R88qExpectedDisconnectError = {expected:?}"))
+        .expect("seed exact pinned-profile missing-route diagnostic");
+}
+
 // R88q original-consumer regression; inputs are explicit host fixtures.
-#[cfg(all(feature = "optional-tests", feature = "profile-retail"))]
+#[cfg(all(
+    feature = "optional-tests",
+    any(
+        feature = "profile-retail",
+        feature = "client-ptr",
+        feature = "client-wowforever"
+    )
+))]
 mod storeglue_r88q_tuple {
     use super::*;
 
@@ -2596,7 +2628,7 @@ mod storeglue_r88q_host {
     #[test]
     fn shared_boolean_writers_drive_original_glue_show_and_update() {
         test_timeout! {
-            if wow_ui_sim::client_profile::ACTIVE != wow_ui_sim::client_profile::ClientProfile::Retail { return; }
+            if !r88q_profile_active() { return; }
             let env = fixture();
             assert_records(&env);
             assert_original_owners(&env);
@@ -2625,7 +2657,7 @@ mod storeglue_r88q_host {
     #[test]
     fn queue_requests_and_responses_drive_original_rows_and_event_owner() {
         test_timeout! {
-            if wow_ui_sim::client_profile::ACTIVE != wow_ui_sim::client_profile::ClientProfile::Retail { return; }
+            if !r88q_profile_active() { return; }
             let env = fixture();
             assert_records(&env);
             install_listener(&env);
@@ -2666,7 +2698,7 @@ mod storeglue_r88q_host {
     #[test]
     fn bulk_receive_replaces_before_original_glue_event_observation() {
         test_timeout! {
-            if wow_ui_sim::client_profile::ACTIVE != wow_ui_sim::client_profile::ClientProfile::Retail { return; }
+            if !r88q_profile_active() { return; }
             let env = fixture();
             assert_records(&env);
             install_listener(&env);
@@ -2683,7 +2715,7 @@ mod storeglue_r88q_host {
     #[test]
     fn removal_copies_separate_errors_before_post_removal_state_notification() {
         test_timeout! {
-            if wow_ui_sim::client_profile::ACTIVE != wow_ui_sim::client_profile::ClientProfile::Retail { return; }
+            if !r88q_profile_active() { return; }
             let env = fixture();
             assert_records(&env);
             install_listener(&env);
@@ -2743,7 +2775,7 @@ mod storeglue_r88q_host {
     #[test]
     fn completion_notification_is_zero_payload_and_not_proof_of_ready() {
         test_timeout! {
-            if wow_ui_sim::client_profile::ACTIVE != wow_ui_sim::client_profile::ClientProfile::Retail { return; }
+            if !r88q_profile_active() { return; }
             let env = fixture();
             assert_records(&env);
             exercise_initial_completion_consumer(&env);
@@ -2803,7 +2835,7 @@ const R88Q_LUA_06: &str = r#"
                 assert(not C_StoreGlue.GetDisconnectOnLogout())
                 C_StoreSecure.SetDisconnectOnLogout(0, 'ignored')
                 local disconnectBeforeShow = C_StoreGlue.GetDisconnectOnLogout()
-                local expectedError = "...ace/AddOns/Blizzard_GlueXML/Mainline/CharacterSelect.lua:211: attempt to call field 'DisconnectFromServer' (a nil value)"
+                local expectedError = R88qExpectedDisconnectError
                 local function expectedDisconnectError(message) return message == expectedError end
                 assert(not expectedDisconnectError(expectedError .. ' different'))
                 local shown, showError = pcall(CharacterSelectFrameMixin.OnShow, CharacterSelect)
@@ -2931,6 +2963,7 @@ const R88Q_REMOVAL_BEFORE: &str = r#"
 // Preserve the existing complete product 2003; supply only the absent fixture 189.
 #[cfg(feature = "optional-tests")]
 fn seed_r88q_product_inputs(env: &WowLuaEnv) {
+    seed_r88q_profile_expectations(env);
     env.exec(
         "__wow_store_state.productsByID[189] = {productID=189, sharedData={name='Fixture B'}}",
     )
@@ -3009,7 +3042,7 @@ mod storeglue_r88q_supplemental {
     use wow_ui_sim::c_api::store_glue_model::{RestrictedExecution, VasPurchaseRecord};
 
     fn active() -> bool {
-        wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::Retail
+        r88q_profile_active()
     }
     fn fixture() -> common::LockedEnv {
         let env = load_blizzard_screen(ScreenKind::CharacterSelect);

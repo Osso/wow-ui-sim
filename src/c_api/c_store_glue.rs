@@ -28,7 +28,12 @@ const PURCHASE_USAGE: &str =
 const QUEUE_USAGE: &str = "Usage: C_StoreGlue.RequestCharacterQueueTime(guid)";
 
 pub(crate) fn enabled() -> bool {
-    ACTIVE == ClientProfile::Retail
+    // INFERRED PTR/Forever: R88q Retail facts + selected unconditional Glue consumers.
+    // Their pinned generated Store declarations are absent (lt-941b #1283).
+    matches!(
+        ACTIVE,
+        ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
+    )
 }
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     if !enabled() {

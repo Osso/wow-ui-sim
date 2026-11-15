@@ -60,3 +60,5 @@ Coordinator1293 retains the pre-existing R79 `character_creation_submit_real_con
 ## INFERRED refresh relationship (separate commit)
 
 **INFERRED relationship:** refresh is asynchronous, based on request submission and separate receive callbacks. No proven one-to-one request/response correlation, response arrival, or ordering between independent receive types is claimed.
+
+PTR and Forever applicability is separately [INFERRED from their selected consumers](../store-glue-inferred-profiles.md), not native declaration parity.
