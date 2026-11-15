@@ -222,7 +222,8 @@ fn publish_retail_secure_factory(lua: &mut rilua::Lua) -> crate::Result<()> {
     let Val::Function(_) = factory else {
         return Err(runtime_error(
             "C_StringUtil.CreateSecondsFormatter must exist before secure publication",
-        ));
+        )
+        .into());
     };
     let secure_factory = create_secure_factory_wrapper(lua, factory)?;
     let secure_namespace = super::ensure_secure_namespace(lua.state_mut(), "C_StringUtil")?;
@@ -241,9 +242,9 @@ fn create_secure_factory_wrapper(lua: &mut rilua::Lua, factory: Val) -> crate::R
     let chunk = lua.load_bytes(WRAPPER, "@seconds-formatter-secure-factory")?;
     let wrappers = lua.call_function(&chunk, &[factory])?;
     let [secure_factory @ Val::Function(_)] = wrappers.as_slice() else {
-        return Err(runtime_error(
-            "secure SecondsFormatter factory wrapper was not created",
-        ));
+        return Err(
+            runtime_error("secure SecondsFormatter factory wrapper was not created").into(),
+        );
     };
     Ok(*secure_factory)
 }
