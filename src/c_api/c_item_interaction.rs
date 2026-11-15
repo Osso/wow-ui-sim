@@ -1,6 +1,6 @@
 //! Host-provided item-interaction frame data and pending-item lifecycle.
 use super::helpers::ensure_namespace;
-use crate::c_api::item_upgrade_eligibility::ItemSlot;
+use crate::c_api::item_location::{ItemSlot, read_r88s_item_slot};
 use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, create_string, create_table, table_get, table_set,
@@ -15,11 +15,6 @@ use rilua::{LuaResult, Val};
 const SET_PENDING_ITEM_USAGE: &str =
     "Usage: local success = C_ItemInteraction.SetPendingItem([item])";
 const ITEM_INTERACTION_CLOSE_SELECTOR: i32 = 44;
-const LAST_NATIVE_CONTAINER_INDEX: i32 = 15;
-const REINDEXED_CONTAINER_INDEX_START: i32 = 5;
-const REINDEXED_CONTAINER_INDEX_END: i32 = 10;
-const SPECIAL_PUBLIC_SLOT_COUNT: i32 = 5;
-const FIRST_SPECIAL_MAPPED_SLOT: i32 = 101;
 // INFERRED (simulator representation): this dedicated bit is not a native reason value.
 const ITEM_INTERACTION_SELECTION_LOCK_REASON: u32 = 2;
 
@@ -147,121 +142,14 @@ fn find_or_assign_pending_item(
     if location.is_nil() {
         return Ok(None);
     }
-    let slot = read_pending_item_slot(state, location.clone())
-        .ok_or_else(|| rilua::runtime_error(SET_PENDING_ITEM_USAGE))?;
+    let slot = read_r88s_item_slot(state, location.clone())
+        .map_err(|_| rilua::runtime_error(SET_PENDING_ITEM_USAGE))?;
     let Some((item_id, from_cursor)) = pending_item_at_location(state, slot)? else {
         return Err(rilua::runtime_error(SET_PENDING_ITEM_USAGE));
     };
     let identity = ensure_item_identity(state, slot, from_cursor)?
         .ok_or_else(|| rilua::runtime_error(SET_PENDING_ITEM_USAGE))?;
     Ok(Some(pending_item(item_id, slot, identity)))
-}
-
-// R88s pending parsing is intentionally separate from item-upgrade parsing.
-// SimState has no general inventory count or inventory-mode availability input.
-fn read_pending_item_slot(state: &mut LuaState, location: Val) -> Option<ItemSlot> {
-    if !matches!(location, Val::Table(_)) {
-        return None;
-    }
-    let equipment = table_get(state, location, "equipmentSlotIndex");
-    if let Some(number) = location_number(state, equipment) {
-        // INFERRED: PlayerState.present proxies the native player inventory object here.
-        if !borrow_state(state).ok()?.player.present {
-            return None;
-        }
-        let equipment_slot = location_integer(number)?;
-        if equipment_slot < 1 {
-            return None;
-        }
-        let equipment_index = equipment_slot.wrapping_sub(1);
-        return Some(ItemSlot::Equipment(equipment_index.wrapping_add(1)));
-    }
-    let bag_value = table_get(state, location, "bagID");
-    let bag = location_number(state, bag_value)?;
-    let slot_value = table_get(state, location, "slotIndex");
-    let slot = location_number(state, slot_value)?;
-    read_pending_bag_slot(state, location_integer(bag)?, location_integer(slot)?)
-}
-
-fn location_number(state: &LuaState, value: Val) -> Option<f64> {
-    match value {
-        Val::Num(number) => Some(number),
-        Val::Str(reference) => state
-            .gc
-            .string_arena
-            .get(reference)
-            .and_then(|string| crate::c_api::helpers::parse_numeric_string(string.data())),
-        _ => None,
-    }
-}
-
-fn location_integer(number: f64) -> Option<i32> {
-    if !number.is_finite() || number < f64::from(i32::MIN) || number > f64::from(i32::MAX) {
-        return None;
-    }
-    Some(number.trunc() as i32)
-}
-
-fn read_pending_bag_slot(state: &LuaState, bag_id: i32, public_slot: i32) -> Option<ItemSlot> {
-    if public_slot < 1 {
-        return None;
-    }
-    let bag_index = bag_id.wrapping_sub(1);
-    if bag_index == -1 {
-        return read_available_bag_slot(state, 0, public_slot);
-    }
-    if (0..=LAST_NATIVE_CONTAINER_INDEX).contains(&bag_index) {
-        return read_pending_container_slot(state, bag_index, public_slot);
-    }
-    read_pending_player_inventory_slot(state, bag_index, public_slot)
-}
-
-fn read_pending_container_slot(
-    state: &LuaState,
-    bag_index: i32,
-    public_slot: i32,
-) -> Option<ItemSlot> {
-    let bag = bag_index + 1;
-    let count = borrow_state(state).ok()?.bag_num_slots(bag);
-    let slot_index = public_slot.wrapping_sub(1);
-    if slot_index >= count {
-        return None;
-    }
-    if (REINDEXED_CONTAINER_INDEX_START..=REINDEXED_CONTAINER_INDEX_END).contains(&bag_index) {
-        if slot_index >= SPECIAL_PUBLIC_SLOT_COUNT {
-            return None;
-        }
-        return Some(ItemSlot::Bag(bag, FIRST_SPECIAL_MAPPED_SLOT + slot_index));
-    }
-    Some(ItemSlot::Bag(bag, slot_index + 1))
-}
-
-fn read_pending_player_inventory_slot(
-    state: &LuaState,
-    bag_index: i32,
-    public_slot: i32,
-) -> Option<ItemSlot> {
-    // INFERRED: negative inventory bags use the same active-player availability proxy.
-    if !borrow_state(state).ok()?.player.present {
-        return None;
-    }
-    match bag_index {
-        -3 | -4 => {
-            let slot_index = public_slot.wrapping_sub(1);
-            (slot_index < SPECIAL_PUBLIC_SLOT_COUNT)
-                .then_some(ItemSlot::Equipment(FIRST_SPECIAL_MAPPED_SLOT + slot_index))
-        }
-        index if index <= -5 => {
-            let slot_index = public_slot.wrapping_sub(1);
-            Some(ItemSlot::Equipment(slot_index + 1))
-        }
-        _ => None,
-    }
-}
-
-fn read_available_bag_slot(state: &LuaState, bag: i32, public_slot: i32) -> Option<ItemSlot> {
-    let count = borrow_state(state).ok()?.bag_num_slots(bag);
-    (public_slot <= count).then_some(ItemSlot::Bag(bag, public_slot))
 }
 
 fn pending_item_at_location(state: &LuaState, slot: ItemSlot) -> LuaResult<Option<(u32, bool)>> {

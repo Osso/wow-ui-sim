@@ -2,7 +2,7 @@
 
 use std::collections::HashMap;
 
-use crate::c_api::item_upgrade_eligibility::ItemSlot;
+use crate::c_api::item_location::ItemSlot;
 use crate::lua_api::state::{CursorInfo, SimState};
 
 /// Native flags and locally retained lock reasons for a single owned item.
@@ -334,7 +334,7 @@ pub(crate) fn is_locked_at(sim: &SimState, slot: ItemSlot) -> bool {
 pub(super) fn is_locked(state: &mut rilua::vm::state::LuaState) -> rilua::LuaResult<u32> {
     let location = crate::lua_bridge::stack_val(state, 1);
     let location = rilua::table_security::unwrap_secret(state, location)?;
-    let slot = crate::c_api::item_upgrade_eligibility::read_item_slot(state, location)
+    let slot = crate::c_api::item_location::read_numeric_item_slot(state, location)
         .ok_or_else(|| rilua::runtime_error("C_Item.IsLocked: expected item location"))?;
     let locked = is_locked_at(&*crate::lua_api::methods::borrow_state(state)?, slot);
     state.push(rilua::Val::Bool(locked));
