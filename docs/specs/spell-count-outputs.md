@@ -1,6 +1,6 @@
 # Spell count outputs
 
-Authored 2026-10-01; updated 2026-11-14. This spec covers `C_Spell.GetSpellCastCount` and `C_Spell.GetSpellDisplayCount`. The older Retail 12.0.0/12.0.5 simulator contracts below remain historical. **VERIFIED (Retail 12.1.5.70688):** cast count uses the client Spell store, a shared context, and reagent limits; display mode uses SpellReagents before charge state. The current simulator supplies reagent pairs and bag contents through `SimState`; it does not claim full native inventory inclusion or metadata-mode parity. C_* backing stays in `src/c_api/`. See [Lua API](../lua-api.md) for architecture.
+Authored 2026-10-01; updated 2026-11-15. This spec covers `C_Spell.GetSpellCastCount` and `C_Spell.GetSpellDisplayCount`. The older Retail 12.0.0/12.0.5 simulator contracts below remain historical. **VERIFIED (Retail 12.1.5.70688):** cast count uses the client Spell store, a shared context, and reagent limits; display mode uses SpellReagents before charge state. The simulator supplies reagent pairs, inventory and explicit metadata/containment inputs through `SimState`; native property decoding, detailed eligibility and active-record limits remain unmodeled. C_* backing stays in `src/c_api/`. See [Lua API](../lua-api.md) for architecture.
 
 The pinned API documentation declares cast argument secrecy as `AllowedWhenTainted`, display argument secrecy as `AllowedWhenUntainted`, and both outputs as `SecretWhenCooldownsRestricted`. It declares a default display maximum of 9999 and replacement string `*`. **VERIFIED (Retail 12.1.5.70688):** the native routes and calculation order described below add behavior that the signature documentation alone does not establish.
 
@@ -23,9 +23,9 @@ Display formatting/maximum and secret-output behavior remain Retail125-scoped. O
 - [x] **VERIFIED (Retail 12.1.5.70688):** on the checked normal-return route, `GetSpellCastCount` publishes one number. A Spell-store miss, null context, or absent limit returns numeric 0. A valid reagent with insufficient inventory can also set the limit to 0.
 - [x] **VERIFIED (Retail 12.1.5.70688):** the ordinary reagent path checks at most eight identifier/quantity pairs. It skips IDs 0 and -2 and signed quantities less than or equal to 0. For each remaining pair, it divides inventory count by quantity using integer division and selects the smallest limit.
 - [ ] The simulator uses the generated `SPELL_DB` as its Spell-store membership input. `spell_reagent_pairs` is a host-supplied seam with an empty default because the simulator has no SpellReagents catalog rows.
-- [ ] The Retail 12.1.5 simulator count reads only ordinary `bag_items` stacks. The complete native inventory inclusion rules remain UNKNOWN; no claim is made about equipped, bank, or other containers.
+- [x] **VERIFIED (R88p.p3):** ordinary traversal includes carried roots, backpack and carried bags; mask32 additionally admits character-bank and account-bank tabs. Child containers recurse. The simulator reads bag stacks, equipped roots and deduplicated bag-container roots. Host-supplied parent coordinates represent nested containers. Detailed native eligibility remains UNKNOWN.
 - [ ] **VERIFIED (Retail 12.1.5.70688):** count-policy statuses affect restricted-result handling only, not the calculated number. The simulator's explicit `cooldowns_restricted` input does not model the complete native status/runtime-policy mapping.
-- [ ] **VERIFIED (Retail 12.1.5.70688):** metadata mask 32 selects inventory mode 48, and mask 2 can select an alternate quantity-aware helper. Their field identities, SpellMisc association, alternate helper inputs, and full inventory rules remain UNKNOWN and are not modeled.
+- [ ] **VERIFIED (R88p.p3):** mask2 enables a property scan; only a qualifying property with signed magnitude greater than one selects per-item division followed by summation. Mask2 alone does not select that arithmetic. Property backing is absent, so the alternate helper stays an empty seam. Metadata field identities and active-record inputs remain UNKNOWN.
 - [ ] **VERIFIED (Retail 12.1.5.70688):** a separate active-record limit can lower a reagent limit. That backing state is not modeled; the active-record count byte and linked schema remain UNKNOWN.
 - [ ] Older profiles retain the explicit `spell_cast_counts` simulator input. Retail spellbook queries may also read that input; Retail 12.1.5 `C_Spell.GetSpellCastCount` does not.
 - [ ] Retail 12.1.5 cast counts do not come from charge state or action-slot use counts.
@@ -80,7 +80,7 @@ Display formatting/maximum and secret-output behavior remain Retail125-scoped. O
 ## Implementation inventory
 
 - `src/lua_api/state/sim_state.rs` and `src/lua_api/state.rs`: older explicit count input, INFERRED active-player context with a host null override, empty-default host reagent pairs, and host visibility rows.
-- `src/c_api/c_spell_counts.rs`: profile-specific cast/display producers. Retail 12.1.5 uses the Spell catalog gate, shared context predicate, first-eight reagent limits, bag stacks, and verified reagent-before-charge display mode. Unsupported metadata modes, inventory inclusion, active records, and full policy secrecy remain seams.
+- `src/c_api/c_spell_counts.rs`: profile-specific cast/display producers. Retail 12.1.5 uses the Spell catalog gate, shared context predicate, first-eight signed16 reagent limits, inventory traversal and verified reagent-before-charge display mode. Property inputs, detailed eligibility, active records and full policy secrecy remain seams. `src/c_api/spell_reagent_inventory.rs` owns metadata/containment inputs and storage selection.
 - `src/c_api/c_spell.rs`: Retail 12.1.5 spell-identifier conversion; registration for `IsRangedAutoAttackSpell` and `GetVisibilityInfo`; shared ranged-ID comparison, metadata-mask writer, equal-ID removal, and visibility output publication.
 - `src/lua_api/globals/admin.rs`: INFERRED Retail host wiring from `A_Admin.LearnSpell`/`UnlearnSpell` into the verified ranged-ID writer and remover; no native dispatcher labels.
 - `src/lua_api/workarounds/temporary/spell_metadata_defaults.rs` and `spell_static_defaults.rs`: the replaced Retail defaults are no longer published.
@@ -127,7 +127,7 @@ Accounting promotes only301/309: **190 pending/157 bounded/14 partial/1 metadata
 ## Known gaps (current cycle)
 
 - [ ] Exact SpellReagents field-to-pair mapping and catalog-backed reagent data remain unavailable; tests use host-supplied pairs.
-- [ ] Metadata mask 32/2 field identities, alternate-helper inputs, and complete inventory inclusion rules remain UNKNOWN.
+- [ ] Metadata mask32/2 field identities, alternate-helper property backing and detailed item eligibility remain UNKNOWN. Character/account-bank admission is proved; reagent-bank inclusion and remote fetch are not.
 - [ ] The verified active-record count limit is not implemented because the simulator has no corresponding active-record state.
 - [ ] The shared context's native class, lifecycle, login availability, and complete writer history remain UNKNOWN.
 - [ ] The visibility data tables and specialization-context selector are not modeled; results are host-supplied.
@@ -137,7 +137,7 @@ Accounting promotes only301/309: **190 pending/157 bounded/14 partial/1 metadata
 
 ## Out of scope
 
-No cast consumption, native SpellReagents data generation, alternate inventory helper, or active-record schema is added. Do not infer dispatcher names, metadata column identities, bank/equipment inclusion, or native visibility table fields. No Blizzard/vendor edits, VM changes, unrelated API rows, or push.
+No cast consumption, native SpellReagents data generation, alternate inventory helper, or active-record schema is added. Do not infer dispatcher names, metadata column identities, remote/reagent-bank inclusion, property qualification, or native visibility table fields. No Blizzard/vendor edits, VM changes, unrelated API rows, or push.
 
 ## Proof ledger
 
@@ -150,3 +150,17 @@ Main-reported pre-producer proof at `23ac1c89d`, integration artifact `a65bdce18
 At its 2026-10-02 checkpoint, the producer covered only source301/309 output deltas and used the empty-default explicit count map. That model is superseded for Retail 12.1.5 by the current R88k/R88m contract above; its bounded privacy and output evidence remains historical and does not prove reagent calculation, mode selection, active-record limits, or current-profile acceptance. Cast secret argument1 was rejected before aliases/model even for secure callers: no native AllowedWhenTainted input-permission credit, NeverSecret metadata claim, or full input/output privacy parity.
 
 This RED ledger records the historical pre-producer boundary, not the current acceptance status. Current scoped GREEN/check/security/readability and retained-row credit are recorded above; native parity remains unproved. Owned formatting uses `rustfmt --config skip_children=true`; no module traversal. Observed host Git/build timestamps remain distinct from the authored 2026-10-01 header; no RED timestamp is inferred or rewritten. No operations or push authorized.
+
+## R88p width and inventory correction (lt-67d2)
+
+Native source: R88p.p2/p3, Retail 12.1.5.70688, verbatim in lt-67d2 #1207; R88k.5 line11622 in lt-c3ed #1056 and lt-67d2 #1226.
+
+- **VERIFIED:** quantities narrow to signed16 before eligibility/division; only the first eight pairs participate. Cast mode skips IDs0/-2 and nonpositive quantities; display mode retains the separate nonzero-ID predicate.
+- **VERIFIED:** display maximum uses signed32 range validation before truncation, accepts numeric strings, and defaults to9999 for absent/readable nil. Negative maxima are valid. Ordinary numeric replacement values become VM-formatted text.
+- **VERIFIED:** modeled untainted-only secret access denies before ordinary conversion with the native Usage-based mode1 message. Other modes remain unsupported.
+- **UNKNOWN (lt-67d2 #1231):** floating-point exception configuration for exceptional/out-of-range identifiers. The count endpoints supply an unresolved identity outside the represented signed range, without a maximum-style range error, wrap or clamp; tests do not assert that neutral result.
+- **UNKNOWN:** complete numeric override and authenticated fractional-secret conversion rules. Earlier tests asserting their outcomes were removed in isolated commits per #1226, not replaced with invented conversion claims.
+- Explicit metadata and container-parent maps default empty. Existing inventory provides count backing; bank data is never fetched, no events are added, and absent property backing never selects alternate arithmetic.
+- Root representation is deduplicated across equipment/BagInfo; parent-linked containers are items, not additional roots. Missing parents and cycles cannot provide reachable contents (simulator robustness, not native malformed-inventory claims).
+
+Four independent base-RED selectors cover signed16/eight-pair limits, default bank rejection, carried roots, and numeric replacements. Each includes two distinct backed results and absence. Later mask32/recursion/dedup/mask2 cases are additional coverage, not retroactive base-RED claims. Exact build/runtime receipts and historical bisect transcripts are supplied on the tracker, not committed.

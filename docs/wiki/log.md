@@ -3931,3 +3931,7 @@ Recorded lt-05d0's exact parent/child bisection and original eager CatalogShop
 publisher omission in [Lua-owned fallback retirement](investigations/lua-owned-fallback-retirement.md#catalogshop-eager-ownership-in-partial-panel-fixtures-lt-05d0).
 The correction supplies original Game TOC dependencies only on ACTIVE Retail;
 assertions and retired simulator fallbacks are unchanged.
+
+## 2026-11-15 | lt-67d2 spell-count R88p correction
+
+Recorded exact historical first-failing boundaries and cache-freshness qualification; linked native R88k/R88p width, reagent/storage and error evidence to the corrected API tests and explicit UNKNOWN seams.

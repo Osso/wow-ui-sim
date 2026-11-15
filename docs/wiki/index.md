@@ -1,3 +1,7 @@
+## [2026-11-15] investigation | Spell-count widths, inventory and inherited failures
+
+[Spell-count corrections](investigations/spell-count-r88p.md) records six executable historical boundaries, native-backed signed widths/storage traversal, and isolated corrections of contradicted or unknown assertions. Property decoding, detailed eligibility and exceptional-number outcomes remain explicit gaps.
+
 ## [2026-11-14] implementation | Achievement eligibility and tracker colors
 
 [Achievement eligibility](../specs/achievement-eligibility.md) records R88o.1's Retail argument/Boolean contract, missing record/group versus null tree, and supplied cache comparisons. Original tracker #6 uses the zero-visible branch; positive visible counts use a different per-criterion getter. PTR/Forever binding is inferred from their selected original Lua. New simulator input stays empty by default; no event substitutes or live cache writer claims.

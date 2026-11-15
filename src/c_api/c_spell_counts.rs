@@ -1,6 +1,6 @@
 //! Retail 12.1.5 cast counts use the Spell catalog and ordinary reagent limits.
-//! Older profiles retain explicit count inputs; unsupported Retail metadata modes
-//! and inventory inclusion rules remain unmodeled. Output restriction is separate.
+//! Older profiles retain explicit count inputs; property and eligibility details
+//! remain unmodeled. Output restriction is separate from inventory arithmetic.
 
 #[cfg(feature = "retail-12-0-5")]
 use super::c_action_bar_counts::{format_display_count, parse_replacement};
@@ -37,6 +37,11 @@ const DEFAULT_DISPLAY_MAXIMUM: f64 = 9999.0;
 #[cfg(feature = "retail-12-1-5")]
 const SPELL_REAGENT_PAIR_LIMIT: usize = 8;
 
+#[cfg(feature = "retail-12-1-5")]
+fn native_count_contract_enabled() -> bool {
+    crate::client_profile::ACTIVE == ClientProfile::Retail
+}
+
 fn read_count_identifier(state: &LuaState, api: &str) -> LuaResult<Option<u32>> {
     let value = stack_val(state, 1);
     let enabled = cfg!(all(
@@ -61,22 +66,51 @@ fn read_count_identifier(state: &LuaState, api: &str) -> LuaResult<Option<u32>> 
 
 fn read_cast_count_identifier(state: &LuaState) -> LuaResult<Option<u32>> {
     #[cfg(feature = "retail-12-1-5")]
-    if crate::client_profile::ACTIVE == ClientProfile::Retail
+    if native_count_contract_enabled()
         && !rilua::table_security::is_secret_value(state, stack_val(state, 1))
     {
-        return super::c_spell::read_retail_spell_identifier(
-            state,
-            stack_val(state, 1),
-            CAST_API,
-            CAST_USAGE,
-        );
+        return read_native_count_identifier(state, stack_val(state, 1), CAST_API, CAST_USAGE);
     }
     read_count_identifier(state, CAST_API)
 }
 
+#[cfg(feature = "retail-12-1-5")]
+fn read_native_count_identifier(
+    state: &LuaState,
+    value: Val,
+    api: &str,
+    usage: &str,
+) -> LuaResult<Option<u32>> {
+    if !rilua::table_security::is_secret_value(state, stack_val(state, 1))
+        && unrepresented_count_number(state, value)?
+    {
+        // UNKNOWN FP exception configuration: no represented identity is supplied.
+        // This is not the maximum reader's range-error path or a wrap/clamp claim.
+        return Ok(None);
+    }
+    super::c_spell::read_retail_spell_identifier(state, value, api, usage)
+}
+
+#[cfg(feature = "retail-12-1-5")]
+fn unrepresented_count_number(state: &LuaState, value: Val) -> LuaResult<bool> {
+    if matches!(value, Val::Str(_)) && read_spell_identifier_value(state, value)?.is_some() {
+        return Ok(false); // Preserve the existing, not fully native-proven alias mapping.
+    }
+    let number = match value {
+        Val::Num(number) => Some(number),
+        Val::Str(reference) => state
+            .gc
+            .string_arena
+            .get(reference)
+            .and_then(|text| super::helpers::parse_numeric_string(text.data())),
+        _ => None,
+    };
+    Ok(number.is_some_and(|n| !(f64::from(i32::MIN)..=f64::from(i32::MAX)).contains(&n)))
+}
+
 fn cast_count_number(sim: &crate::lua_api::SimState, spell_id: Option<u32>) -> f64 {
     #[cfg(feature = "retail-12-1-5")]
-    if crate::client_profile::ACTIVE == ClientProfile::Retail {
+    if native_count_contract_enabled() {
         return spell_id.map_or(0.0, |id| retail_spell_cast_count(sim, id) as f64);
     }
     f64::from(
@@ -139,7 +173,7 @@ pub(crate) fn get_spell_display_count(state: &mut LuaState) -> LuaResult<u32> {
     let replacement_value = authenticate_argument(state, 3)?;
     let spell_id = read_display_identifier(state, identifier)?;
     let maximum = parse_display_maximum(state, maximum_value)?;
-    let replacement = parse_replacement(state, replacement_value, DISPLAY_API)?;
+    let replacement = parse_spell_replacement(state, replacement_value)?;
     let (display, restricted) = read_display_text(state, spell_id, maximum, &replacement)?;
     let result = if restricted {
         wrap_host_secret_string(state, &display)
@@ -153,13 +187,8 @@ pub(crate) fn get_spell_display_count(state: &mut LuaState) -> LuaResult<u32> {
 #[cfg(feature = "retail-12-0-5")]
 fn read_display_identifier(state: &LuaState, identifier: Val) -> LuaResult<Option<u32>> {
     #[cfg(feature = "retail-12-1-5")]
-    if crate::client_profile::ACTIVE == ClientProfile::Retail {
-        return super::c_spell::read_retail_spell_identifier(
-            state,
-            identifier,
-            DISPLAY_API,
-            DISPLAY_USAGE,
-        );
+    if native_count_contract_enabled() {
+        return read_native_count_identifier(state, identifier, DISPLAY_API, DISPLAY_USAGE);
     }
     validate_identifier(state, identifier)?;
     read_spell_identifier_value(state, identifier)
@@ -173,7 +202,7 @@ fn read_display_text(
     replacement: &str,
 ) -> LuaResult<(String, bool)> {
     #[cfg(feature = "retail-12-1-5")]
-    if crate::client_profile::ACTIVE == ClientProfile::Retail {
+    if native_count_contract_enabled() {
         return read_retail_display_text(state, spell_id, maximum, replacement);
     }
     let (quantity, restricted) = read_display_snapshot(state, spell_id)?;
@@ -193,11 +222,31 @@ fn parse_display_maximum(state: &LuaState, value: Val) -> LuaResult<f64> {
 }
 
 #[cfg(feature = "retail-12-0-5")]
+fn parse_spell_replacement(state: &LuaState, value: Val) -> LuaResult<String> {
+    // VERIFIED R88k.5 line 11622: ordinary numeric replacements convert to text.
+    #[cfg(feature = "retail-12-1-5")]
+    if native_count_contract_enabled() {
+        if let Val::Num(number) = value
+            && !rilua::table_security::is_secret_value(state, stack_val(state, 3))
+        {
+            return Ok(Val::Num(number).to_string());
+        }
+    }
+    parse_replacement(state, value, DISPLAY_API)
+}
+
+#[cfg(feature = "retail-12-0-5")]
 fn authenticate_argument(state: &LuaState, position: i32) -> LuaResult<Val> {
     unwrap_secret(state, stack_val(state, position)).map_err(|_| {
-        runtime_error(format!(
-            "{DISPLAY_API}: argument {position} requires an untainted caller"
-        ))
+        #[cfg(feature = "retail-12-1-5")]
+        if native_count_contract_enabled() {
+            // VERIFIED R88p.p2: modeled mode 1 denies before conversion.
+            let reason = format!(
+                "{DISPLAY_USAGE}. Secret values are only allowed during untainted execution for this argument."
+            );
+            return super::helpers::bad_argument(position, DISPLAY_API, &reason);
+        }
+        runtime_error(format!("{DISPLAY_API}: argument {position} requires an untainted caller"))
     })
 }
 
@@ -251,7 +300,7 @@ fn has_reagent_display_mode(sim: &crate::lua_api::SimState, spell_id: u32) -> bo
         pairs
             .iter()
             .take(SPELL_REAGENT_PAIR_LIMIT)
-            .any(|(reagent_id, quantity)| *reagent_id != 0 && *quantity > 0)
+            .any(|(reagent_id, quantity)| *reagent_id != 0 && (*quantity as i16) > 0)
     })
 }
 
@@ -274,9 +323,8 @@ fn retail_spell_cast_count(sim: &crate::lua_api::SimState, spell_id: u32) -> i64
     let Some(reagents) = sim.spell_reagent_pairs.get(&spell_id) else {
         return 0;
     };
-    // Only the ordinary inventory path is modeled. Metadata masks 2 and 32,
-    // alternate inventory counting, inclusion rules, and active-record limits
-    // have no matching SimState inputs and remain UNKNOWN.
+    // VERIFIED R88p.p3: eight pairs, signed16 quantities and ordinary limits.
+    // UNKNOWN: alternate-property backing and active-record limits stay absent.
     let limited_reagents = reagents.iter().take(SPELL_REAGENT_PAIR_LIMIT);
     let cast_limits =
         limited_reagents.filter_map(|(id, quantity)| reagent_cast_limit(sim, *id, *quantity));
@@ -290,20 +338,20 @@ fn reagent_cast_limit(
     reagent_id: i32,
     quantity: i32,
 ) -> Option<i64> {
+    let quantity = quantity as i16;
     if reagent_id == 0 || reagent_id == -2 || quantity <= 0 {
         return None;
+    }
+    if let Some(limit) = super::spell_reagent_inventory::alternate_limit(sim, reagent_id, quantity)
+    {
+        return Some(limit);
     }
     Some(matching_reagent_count(sim, reagent_id) / i64::from(quantity))
 }
 
 #[cfg(feature = "retail-12-1-5")]
 fn matching_reagent_count(sim: &crate::lua_api::SimState, reagent_id: i32) -> i64 {
-    let matching_items = sim
-        .bag_items
-        .values()
-        .filter(|item| i64::from(item.item_id) == i64::from(reagent_id));
-    let stack_counts = matching_items.map(|item| i64::from(item.stack_count));
-    stack_counts.sum::<i64>()
+    super::spell_reagent_inventory::matching_count(sim, reagent_id)
 }
 
 #[cfg(feature = "retail-12-0-5")]

@@ -1,5 +1,5 @@
-//! Retail 12.1.5 reagent-count behavior plus bounded cast/display input controls.
-//! Unsupported metadata modes and full inventory inclusion rules remain unasserted.
+//! Retail 12.1.5 count widths, reagent traversal and bounded input controls.
+//! Property decoding and detailed native item eligibility remain unasserted.
 #![cfg(all(
     feature = "retail-12-0-5",
     any(feature = "profile-retail", feature = "client-ptr")
@@ -34,7 +34,8 @@ const ASSERTIONS: &str = r#"
         assert(string.find(err, 'C_Spell.'..api, 1, true))
         assert(string.find(err, tostring(position), 1, true))
         assert(not string.find(err, 'PRIVATE-Count', 1, true))
-        local guard = string.find(err, 'Secret values are only allowed during untainted execution for this argument.', 1, true)
+        local guard = string.find(err, 'Secret values', 1, true)
+            or string.find(err, 'requires an untainted caller', 1, true)
         if denial then
             assert(guard)
         else
@@ -477,7 +478,6 @@ fn missing_known_and_unknown_numeric_sources_return_zero_and_empty() {
     }
     // UNKNOWN R88k.5 line 11623 / R88p.p2 (#1231): do not assert 4294967295
     // conversion outcomes or the old maximum-style range error for identifiers.
-
 }
 
 #[test]
@@ -785,7 +785,7 @@ fn finite_threshold_and_utf8_nul_free_cstring_validate_without_source() {
     display(&env, "880001,'6'", "", false);
     env.exec(INVALID_SPELL_COUNT_FORMAT_ARGUMENTS).unwrap();
     env.exec(r#"
-        for _,maximum in ipairs({4294967295, -2147483649}) do
+        for _,maximum in ipairs({4294967295, -2147483649, 2147483647.5, -2147483648.5}) do
             local ok,err = pcall(C_Spell.GetSpellDisplayCount, 19750, maximum)
             assert(not ok)
             assert(string.find(err, 'outside of expected range -2147483648 to 2147483647 - Usage:', 1, true))
@@ -855,12 +855,7 @@ fn secure_display_wrong_authenticated_types_report_positions_without_payload() {
     env.exec(WRONG_AUTHENTICATED_DISPLAY_TYPES).unwrap();
 }
 
-#[test]
-fn cast_accepts_numeric_secrets_but_preserves_other_kind_rejection() {
-    let env = secret_fixture();
-    let before = metadata(&env, &SECRETS);
-    env.exec(
-        r#"
+const NUMERIC_SECRET_CAST_ACCESS: &str = r#"
         local function probe()
             local taint=debug.getstacktaint()
             assert(select('#',C_Spell.GetSpellCastCount(SCIdentifier))==1)
@@ -879,9 +874,13 @@ fn cast_accepts_numeric_secrets_but_preserves_other_kind_rejection() {
         end
         probe()
         SCTainted(probe)
-    "#,
-    )
-    .unwrap();
+    "#;
+
+#[test]
+fn cast_accepts_numeric_secrets_but_preserves_other_kind_rejection() {
+    let env = secret_fixture();
+    let before = metadata(&env, &SECRETS);
+    env.exec(NUMERIC_SECRET_CAST_ACCESS).unwrap();
     assert_eq!(metadata(&env, &SECRETS), before);
     positive(&env);
 }
@@ -1192,4 +1191,197 @@ fn r88p_cast_traversal_counts_carried_root_items() {
     cast_count(&env, "642", 3, false);
     clear_count(&env, 19750);
     cast_count(&env, "19750", 0, false);
+}
+
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+fn copy_reagent_stack(env: &WowLuaEnv, spell: u32, location: (i32, i32), count: i32) {
+    let mut sim = env.state().borrow_mut();
+    let mut item = sim
+        .bag_items
+        .values()
+        .find(|i| i.item_id == reagent_item_id(spell))
+        .unwrap()
+        .clone();
+    item.stack_count = count;
+    sim.bag_items.insert(location, item);
+}
+
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+fn reagent_masks(env: &WowLuaEnv, mask: u32) {
+    let mut sim = env.state().borrow_mut();
+    for spell in [19750, 642] {
+        sim.spell_reagent_inventory
+            .metadata_masks
+            .insert(reagent_item_id(spell) as i32, mask);
+    }
+}
+
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[test]
+fn r88p_mask32_admits_bank_tabs_and_recursive_children_live() {
+    let env = fixture(false);
+    copy_reagent_stack(&env, 19750, (6, 1), 7);
+    copy_reagent_stack(&env, 642, (12, 1), 2);
+    copy_reagent_stack(&env, 19750, (50, 1), 5);
+    env.state()
+        .borrow_mut()
+        .spell_reagent_inventory
+        .container_parents
+        .insert(50, (6, 1));
+    cast_count(&env, "19750", 7, false);
+    cast_count(&env, "642", 2, false);
+    reagent_masks(&env, 32);
+    cast_count(&env, "19750", 19, false);
+    cast_count(&env, "642", 4, false);
+    env.state().borrow_mut().bag_items.remove(&(6, 1));
+    cast_count(&env, "19750", 7, false);
+    clear_count(&env, 19750);
+    cast_count(&env, "19750", 0, false);
+}
+
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[test]
+fn r88p_mask2_without_properties_keeps_sum_then_divide() {
+    let env = fixture(false);
+    set_count(&env, 19750, 2);
+    set_count(&env, 642, 3);
+    copy_reagent_stack(&env, 19750, (0, 90), 2);
+    copy_reagent_stack(&env, 642, (0, 91), 3);
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.spell_reagent_pairs.get_mut(&19750).unwrap()[0].1 = 3;
+        sim.spell_reagent_pairs.get_mut(&642).unwrap()[0].1 = 2;
+    }
+    reagent_masks(&env, 2);
+    cast_count(&env, "19750", 1, false);
+    cast_count(&env, "642", 3, false);
+    clear_count(&env, 19750);
+    cast_count(&env, "19750", 0, false);
+}
+
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[test]
+fn r88p_signed_maximum_fraction_defaults_and_trailing_cast_arguments() {
+    let env = fixture(false);
+    cast_count(&env, "19750.9, {}, 'ignored'", 7, false);
+    cast_count(&env, "642.9, false", 2, false);
+    display(&env, "19750,7.9", "7", false);
+    display(&env, "19750,2147483647", "7", false);
+    display(&env, "642,-2147483648", "*", false);
+    display(&env, "642,1.9", "*", false);
+    set_count(&env, 19750, 0);
+    display(&env, "19750,-1", "*", false);
+    display(&env, "19750,-0.5", "0", false);
+    display(&env, "19750,nil", "0", false);
+    cast_count(&env, "-1", 0, false);
+}
+
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+fn reagent_container_info(spell: u32, slot: Option<i32>) -> wow_ui_sim::c_api::bag_info::BagInfo {
+    wow_ui_sim::c_api::bag_info::BagInfo {
+        num_slots: 16,
+        family: 0,
+        name: None,
+        inventory_slot: slot,
+        item_id: Some(reagent_item_id(spell)),
+        hyperlink: None,
+        owned_identity: None,
+    }
+}
+
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+fn equip_reagent_container(env: &WowLuaEnv, spell: u32, bag: i32, slot: i32) {
+    let mut sim = env.state().borrow_mut();
+    sim.bag_info
+        .insert(bag, reagent_container_info(spell, Some(slot)));
+    sim.player.equipped_items.insert(
+        slot,
+        wow_ui_sim::lua_api::state::EquippedItem {
+            owned_identity: None,
+            item_id: reagent_item_id(spell),
+            enchant_id: 0,
+            gem_ids: [0; 3],
+            applied_transmog: None,
+        },
+    );
+}
+
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[test]
+fn r88p_bank_container_roots_are_filtered_and_not_double_counted() {
+    let env = fixture(false);
+    equip_reagent_container(&env, 19750, 6, 24);
+    equip_reagent_container(&env, 642, 12, 25);
+    cast_count(&env, "19750", 7, false);
+    cast_count(&env, "642", 2, false);
+    reagent_masks(&env, 32);
+    cast_count(&env, "19750", 8, false);
+    cast_count(&env, "642", 3, false);
+    env.state().borrow_mut().player.equipped_items.remove(&24);
+    cast_count(&env, "19750", 8, false);
+    clear_count(&env, 19750);
+    cast_count(&env, "19750", 0, false);
+}
+
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[test]
+fn r88p_nested_containers_are_items_not_additional_roots() {
+    let env = fixture(false);
+    copy_reagent_stack(&env, 19750, (6, 1), 1);
+    copy_reagent_stack(&env, 642, (1, 1), 2);
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.bag_info.insert(1, reagent_container_info(19750, None));
+        sim.spell_reagent_inventory
+            .container_parents
+            .insert(1, (6, 1));
+    }
+    cast_count(&env, "19750", 7, false);
+    cast_count(&env, "642", 2, false);
+    reagent_masks(&env, 32);
+    cast_count(&env, "19750", 8, false);
+    cast_count(&env, "642", 4, false);
+    env.state().borrow_mut().bag_items.remove(&(6, 1));
+    cast_count(&env, "19750", 7, false);
+    cast_count(&env, "642", 2, false);
+    clear_count(&env, 19750);
+    cast_count(&env, "19750", 0, false);
+}
+
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[test]
+fn r88p_cyclic_container_inputs_cannot_supply_reagent_counts() {
+    // Simulator robustness only: native does not claim cyclic physical inventory.
+    let env = fixture(false);
+    copy_reagent_stack(&env, 19750, (1, 90), 1);
+    copy_reagent_stack(&env, 642, (2, 90), 2);
+    env.state()
+        .borrow_mut()
+        .spell_reagent_inventory
+        .container_parents
+        .extend([(1, (2, 90)), (2, (1, 90))]);
+    cast_count(&env, "19750", 7, false);
+    cast_count(&env, "642", 2, false);
+    clear_count(&env, 19750);
+    cast_count(&env, "19750", 0, false);
+}
+
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[test]
+fn r88p_mode1_denial_uses_native_reason_before_maximum_conversion() {
+    let env = secret_fixture();
+    positive(&env);
+    cast_count(&env, "880001", 0, false);
+    env.exec(
+        r#"
+        SCTainted(function()
+            local ok,err = pcall(C_Spell.GetSpellDisplayCount, SCIdentifier, 4294967295)
+            assert(not ok)
+            -- R88p.p2: decoration/truncation is context-dependent; inspect a reason fragment.
+            assert(string.find(err, 'Secret values', 1, true))
+            assert(not string.find(err, 'outside of expected range', 1, true))
+        end)
+    "#,
+    )
+    .unwrap();
 }
