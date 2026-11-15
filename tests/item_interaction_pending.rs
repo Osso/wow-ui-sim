@@ -822,11 +822,10 @@ fn pending_item_inventory_count_bounds_equipment_locations() {
 fn pending_item_unknown_inventory_count_rejects_equipment_locations() {
     let env = pending_env(&[ITEM_A]);
     seed_equipped_items(&env, &[(7, ITEM_A)]);
+    set_r88s_inventory_inputs(&env, Some(105), Some(false), &[]);
+    prepare_invalid_location_case(&env, "ItemLocation:CreateFromEquipmentSlot(7)");
     set_r88s_inventory_inputs(&env, None, Some(false), &[]);
-    assert_present_location_usage_error_without_side_effects(
-        &env,
-        "ItemLocation:CreateFromEquipmentSlot(7)",
-    );
+    assert_prepared_present_location_usage_error_without_side_effects(&env);
 }
 
 #[test]
@@ -933,6 +932,10 @@ fn observe_present_location_effects(
 
 fn assert_present_location_usage_error_without_side_effects(env: &WowLuaEnv, location: &str) {
     prepare_invalid_location_case(env, location);
+    assert_prepared_present_location_usage_error_without_side_effects(env);
+}
+
+fn assert_prepared_present_location_usage_error_without_side_effects(env: &WowLuaEnv) {
     let (
         usage_error_raised,
         exact_usage_reason,
