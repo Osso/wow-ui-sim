@@ -391,6 +391,12 @@ payload, timing, repeat count and failures remain UNKNOWN; no synthetic
 CHAR_SELECT_BACKGROUND_MODEL_READY is emitted. Filename resolution and all
 indirect resource effects remain outside this bounded non-3D model.
 
+Behavior-neutral R52 factoring (lt-941b #1305): the original installer delegates
+the first two entries to a small background-only helper and retains both move
+entries afterward. Function pointers, order, Glue installation/Game removal,
+all producer bodies and active profiles remain unchanged. The existing PTR
+season-only screen refresh is extracted without enabling a new function.
+
 ### R54 independent automatic-boost session values
 
 Comment 82 supplies Forever 70707 and Retail 70688 evidence. Two optional session
