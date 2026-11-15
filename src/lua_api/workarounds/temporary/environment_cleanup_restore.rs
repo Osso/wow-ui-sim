@@ -26,7 +26,7 @@ mod tests {
     use crate::lua_api::WowLuaEnv;
 
     #[test]
-    fn post_cleanup_restore_preserves_seconds_formatter_functionality() {
+    fn post_cleanup_restore_preserves_seconds_formatter_namespace_and_factory() {
         let env = WowLuaEnv::new().expect("Lua environment should initialize");
         let expected = if cfg!(feature = "native-duration-formatting") {
             "12 seconds"
