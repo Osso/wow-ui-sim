@@ -72,11 +72,22 @@ fn read_count_identifier(state: &LuaState, api: &str) -> LuaResult<Option<u32>> 
 
 fn read_cast_count_identifier(state: &LuaState) -> LuaResult<Option<u32>> {
     #[cfg(feature = "retail-12-1-5")]
-    if native_count_contract_enabled()
-        && !rilua::table_security::is_secret_value(state, stack_val(state, 1))
-    {
-        return read_native_count_identifier(state, stack_val(state, 1), CAST_API, CAST_USAGE);
+    if native_count_contract_enabled() {
+        let value = stack_val(state, 1);
+        if rilua::table_security::secret_payload_kind(state, value)
+            == Some(rilua::table_security::SecretPayloadKind::Number)
+        {
+            // Preserve the existing cast numeric-secret access policy. R88r.r1
+            // changes conversion only, after authentic host inspection succeeds.
+            return rilua::table_security::inspect_host_secret_number(state, value, |number| {
+                read_native_count_identifier(state, Val::Num(number), CAST_API, CAST_USAGE)
+            });
+        }
+        if !rilua::table_security::is_secret_value(state, value) {
+            return read_native_count_identifier(state, value, CAST_API, CAST_USAGE);
+        }
     }
+    // Other secret kinds and older-profile readers keep their existing errors.
     read_count_identifier(state, CAST_API)
 }
 
@@ -87,9 +98,12 @@ fn read_native_count_identifier(
     api: &str,
     usage: &str,
 ) -> LuaResult<Option<u32>> {
-    if !rilua::table_security::is_secret_value(state, stack_val(state, 1))
-        && unrepresented_count_number(state, value)?
-    {
+    // R88r.r1: accepted secret numbers share ordinary signed conversion.
+    // UNKNOWN: native Lua metadata-source conditional <=1 gate is not modeled;
+    // do not substitute caller taint, wrapper presence or allocation identity.
+    let ordinary_or_number = !rilua::table_security::is_secret_value(state, stack_val(state, 1))
+        || matches!(value, Val::Num(_));
+    if ordinary_or_number && unrepresented_count_number(state, value)? {
         // UNKNOWN FP exception configuration: no represented identity is supplied.
         // This is not the maximum reader's range-error path or a wrap/clamp claim.
         return Ok(None);

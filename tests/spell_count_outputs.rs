@@ -1383,3 +1383,44 @@ fn r88p_mode1_denial_uses_native_reason_before_maximum_conversion() {
     )
     .unwrap();
 }
+
+// VERIFIED Retail R88r.r1, lt-67d2 #1239. PTR applicability remains INFERRED.
+
+#[cfg(feature = "retail-12-1-5")]
+fn publish_r88r_numbers(env: &WowLuaEnv, numbers: &[(&str, f64)]) {
+    let loader = env.loader_env();
+    let mut lua = loader.rilua_mut();
+    for &(name, number) in numbers {
+        let value = wrap_host_secret_number(lua.state_mut(), number);
+        publish(&mut *lua, name, value);
+    }
+}
+
+#[cfg(feature = "retail-12-1-5")]
+#[test]
+fn r88r_accepted_secret_identifiers_truncate_to_distinct_backed_spells() {
+    let env = secret_fixture();
+    publish_r88r_numbers(
+        &env,
+        &[
+            ("SRFirst", 19750.5),
+            ("SRSecond", 642.5),
+            ("SRAbsent", 880001.5),
+            ("SRSix", 6.5),
+        ],
+    );
+    // A host reagent row discriminates ID6 via display-mode selection, without a Spell row.
+    env.state()
+        .borrow_mut()
+        .spell_reagent_pairs
+        .insert(6, vec![(31003, 1)]);
+    assert!(wow_ui_sim::spells::get_spell(6).is_none());
+    cast_count(&env, "SRFirst", 7, false);
+    cast_count(&env, "SRSecond", 2, false);
+    cast_count(&env, "SRAbsent", 0, false);
+    display(&env, "SRFirst", "7", false);
+    display(&env, "SRSecond", "2", false);
+    display(&env, "SRAbsent", "", false);
+    display(&env, "SRSix", "0", false);
+    // No secret <=1 ID case: native Lua metadata-source condition is unmodeled.
+}

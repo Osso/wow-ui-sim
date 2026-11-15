@@ -159,7 +159,7 @@ Native source: R88p.p2/p3, Retail 12.1.5.70688, verbatim in lt-67d2 #1207; R88k.
 - **VERIFIED:** display maximum uses signed32 range validation before truncation, accepts numeric strings, and defaults to9999 for absent/readable nil. Negative maxima are valid. Ordinary numeric replacement values become VM-formatted text.
 - **VERIFIED:** modeled untainted-only secret access denies before ordinary conversion with the native Usage-based mode1 message. Other modes remain unsupported.
 - **UNKNOWN (lt-67d2 #1231):** floating-point exception configuration for exceptional/out-of-range identifiers. The count endpoints supply an unresolved identity outside the represented signed range, without a maximum-style range error, wrap or clamp; tests do not assert that neutral result.
-- **SUPERSEDED IN PART by R88r.r2 (#1239):** numeric-path replacement bypass is now VERIFIED. The earlier assertion removals remain historical commits; authenticated fractional-secret conversion is handled by the separate R88r.r1 change.
+- **SUPERSEDED IN PART by R88r.r2 (#1239):** numeric-path replacement bypass is now VERIFIED. The earlier assertion removals remain historical commits; R88r.r1 now verifies accepted secret-number identifier and maximum truncation. The native metadata-source conditional identifier guard remains UNKNOWN in the simulator; no <=1 identifier outcome is asserted.
 - Explicit metadata and container-parent maps default empty. Existing inventory provides count backing; bank data is never fetched, no events are added, and absent property backing never selects alternate arithmetic.
 - Root representation is deduplicated across equipment/BagInfo; parent-linked containers are items, not additional roots. Missing parents and cycles cannot provide reachable contents (simulator robustness, not native malformed-inventory claims).
 
@@ -172,3 +172,7 @@ The explicit `ClientProfile::Ptr` branch reuses Retail R88p/R88k readers, reagen
 ## R88r.r2 numeric/name-path separation
 
 VERIFIED Retail 12.1.5.70688, lt-67d2 #1239 (native answers lines13322–13340): numeric identifiers, numeric-convertible strings and recognized `spell:` identifier strings return before the name replacement resolver. Count-local parsing preserves this distinction without changing shared C_Spell alias resolution. Existing `spell_id_aliases` remains an empty-default host name-resolution/override seam; the semantic name “override map” is INFERRED and no overridden name-path result is asserted. The selector supplies conflicting numeric/link aliases, then observes two distinct backed IDs and a missing ID through both APIs. PTR/Forever reuse is inferred, not separate native proof.
+
+## Accepted secret numbers (R88r.r1)
+
+VERIFIED Retail 12.1.5.70688, lt-67d2 #1239, lines13322–13340: after successful access, spell identifiers use signed conversion toward zero, including 6.5→6. The native metadata-source conditional guard at <=1 is not modeled or asserted. This changes only the count-specific cast reader, not MaxCumulativeAuraApplications. Existing access policies remain bounded preservation rather than proof of all native modes. Authentic fractional selectors have two distinct reagent-backed results plus absence; a host reagent row at ID6 distinguishes display-mode routing without claiming a native Spell6 catalog row.
