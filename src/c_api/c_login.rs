@@ -151,7 +151,8 @@ fn register_ptr_glue_producers(state: &mut LuaState) -> LuaResult<()> {
     }
     crate::lua_api::globals::real::glue_connection::register(state)?;
     crate::lua_api::globals::real::glue_character_season::register(state)?;
-    crate::lua_api::globals::real::glue_select_character::register(state)
+    crate::lua_api::globals::real::glue_select_character::register(state)?;
+    crate::lua_api::globals::real::glue_background::register_background_only(state)
 }
 
 /// Update the Glue-only selected-superdistrict query and login-start state.

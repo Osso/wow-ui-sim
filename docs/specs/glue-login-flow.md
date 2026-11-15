@@ -384,7 +384,7 @@ strings are inferred; full grammar, nonfinite values and conversion overflow
 remain outside verified coverage.
 
 Both globals are Glue-only on Retail/Forever (normal scope is inferred from
-native installation). PTR is unchanged and UNKNOWN. The setter validates numeric
+native installation). The setter validates numeric
 file-ID or string input and returns zero values, but stores no fake observable
 background/selection state. Retail 3D work is omitted. Forever readiness-event
 payload, timing, repeat count and failures remain UNKNOWN; no synthetic
@@ -396,6 +396,16 @@ the first two entries to a small background-only helper and retains both move
 entries afterward. Function pointers, order, Glue installation/Game removal,
 all producer bodies and active profiles remain unchanged. The existing PTR
 season-only screen refresh is extracted without enabling a new function.
+
+**INFERRED PTR R52 applicability (lt-941b #1305):** selected PTR
+`Blizzard_GlueXML/Mainline/CharacterSelect/CharacterSelectUI.lua:379` reaches
+`SetCharSelectBackground(GetSelectBackgroundModel(selectedCharacterID))`.
+Only this existing producer pair is registered under `ACTIVE == Ptr`, using the
+same Glue-only install/Game removal policy. Retail/Forever retain all four
+existing installer entries in the same order. No background rows, native
+filename grammar, visual/3D state, readiness event or indirect effects are added.
+Generated declarations are absent; PTR applicability reuses R52 Retail evidence,
+not a native PTR finding. Model-transfer registration is not enabled here.
 
 ### R54 independent automatic-boost session values
 

@@ -25,7 +25,11 @@ pub mod event_callbacks;
 pub mod forever_stat_contributions;
 pub mod frame_level_helpers;
 pub(crate) mod game_clock;
-#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
 pub(crate) mod glue_background;
 #[cfg(any(
     feature = "client-retail",

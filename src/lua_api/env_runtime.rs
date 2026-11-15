@@ -526,6 +526,9 @@ fn register_ptr_screen_queries(env: &WowLuaEnv) {
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Ptr {
         let _ =
             super::globals::real::glue_character_season::register(env.lua.borrow_mut().state_mut());
+        let _ = super::globals::real::glue_background::register_background_only(
+            env.lua.borrow_mut().state_mut(),
+        );
     }
 }
 
