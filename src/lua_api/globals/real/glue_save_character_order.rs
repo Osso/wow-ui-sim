@@ -42,6 +42,14 @@ fn entry(_state: &LuaState, value: Val) -> Option<i32> {
 }
 
 fn save_character_order(state: &mut LuaState) -> LuaResult<u32> {
+    let Some((order, selected_slot)) = collect_character_order(state)? else {
+        return Ok(0);
+    };
+    store_character_order(state, order, selected_slot)?;
+    Ok(0)
+}
+
+fn collect_character_order(state: &mut LuaState) -> LuaResult<Option<(Vec<i32>, Option<usize>)>> {
     let Val::Table(table) = stack_val(state, 1) else {
         return Err(runtime_error(USAGE));
     };
@@ -50,13 +58,7 @@ fn save_character_order(state: &mut LuaState) -> LuaResult<u32> {
         .tables
         .get(table)
         .ok_or_else(|| runtime_error(USAGE))?;
-    let (roster_count, selected) = {
-        let sim = borrow_state(state)?;
-        (
-            slots_for_sim(&sim).len(),
-            sim.glue_login.selected_character_index,
-        )
-    };
+    let (roster_count, selected) = character_order_context(state)?;
     let mut order = Vec::new();
     let mut selected_slot = None;
     for raw_slot in 0..table.len(&state.gc.string_arena) {
@@ -68,18 +70,34 @@ fn save_character_order(state: &mut LuaState) -> LuaResult<u32> {
         if index < 0 || index as usize > roster_count {
             // The selected-before-abort CVar case is not established. Do not
             // publish an order or make an assertion about that ordering.
-            return Ok(0);
+            return Ok(None);
         }
         if i64::from(index) - 1 == selected {
             selected_slot = Some(raw_slot);
         }
         order.push(index);
     }
+    Ok(Some((order, selected_slot)))
+}
+
+fn character_order_context(state: &LuaState) -> LuaResult<(usize, i64)> {
+    let sim = borrow_state(state)?;
+    Ok((
+        slots_for_sim(&sim).len(),
+        sim.glue_login.selected_character_index,
+    ))
+}
+
+fn store_character_order(
+    state: &mut LuaState,
+    order: Vec<i32>,
+    selected_slot: Option<usize>,
+) -> LuaResult<()> {
     let mut sim = borrow_state_mut(state)?;
     if let Some(slot) = selected_slot {
         sim.cvars
             .set_temporary("lastCharacterIndex", &slot.to_string());
     }
     sim.glue_login.saved_character_order = order;
-    Ok(0)
+    Ok(())
 }
