@@ -95,21 +95,31 @@ fn setup_env() -> WowLuaEnv {
         return env;
     }
 
-    let ui = blizzard_ui_dir();
-    for (name, toc_path) in
-        discover_blizzard_addon_closure_for_screen(&ui, ScreenKind::Game, PANEL_ADDONS)
-    {
-        load_addon(&env.loader_env(), &toc_path)
-            .unwrap_or_else(|error| panic!("[load {name}] FAILED: {error}"));
-    }
-    load_lod_bootstrap(&env, &ui, "Blizzard_Collections");
-    load_lod_bootstrap(&env, &ui, "Blizzard_Professions");
+    load_panel_publishers(&env);
 
     env.apply_post_load_workarounds();
     env.exec(r#"CHARACTERFRAME_SUBFRAMES = { "PaperDollFrame", "ReputationFrame", "TokenFrame" }"#)
         .expect("character subframe fixture should restore cleanup-pruned constant");
     fire_startup_events(&env);
     env
+}
+
+fn load_panel_publishers(env: &WowLuaEnv) {
+    let ui = blizzard_ui_dir();
+    let mut roots = PANEL_ADDONS.to_vec();
+    if wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::Retail {
+        roots.push("Blizzard_HousingTutorials");
+    }
+    for (name, toc_path) in
+        discover_blizzard_addon_closure_for_screen(&ui, ScreenKind::Game, &roots)
+    {
+        load_addon(&env.loader_env(), &toc_path)
+            .unwrap_or_else(|error| panic!("[load {name}] FAILED: {error}"));
+    }
+    load_lod_bootstrap(env, &ui, "Blizzard_Collections");
+    load_lod_bootstrap(env, &ui, "Blizzard_Professions");
+
+    load_achievement_bootstrap(env, &ui);
 }
 
 fn load_lod_bootstrap(env: &WowLuaEnv, ui: &std::path::Path, addon_name: &str) {
@@ -136,6 +146,60 @@ fn load_lod_bootstrap(env: &WowLuaEnv, ui: &std::path::Path, addon_name: &str) {
     );
     env.exec(&source)
         .unwrap_or_else(|error| panic!("failed to load {}: {error}", path.display()));
+}
+
+fn load_achievement_bootstrap(env: &WowLuaEnv, ui: &std::path::Path) {
+    if wow_ui_sim::client_profile::ACTIVE != wow_ui_sim::client_profile::ClientProfile::Retail {
+        return;
+    }
+    let startup =
+        wow_ui_sim::loader::discover_blizzard_startup_addons_for_screen(ui, ScreenKind::Game);
+    assert_housing_startup_owner(&startup);
+    let addon = startup
+        .iter()
+        .find(|addon| addon.name == "Blizzard_AchievementUI")
+        .expect("normal Retail startup includes the original achievement bootstrap");
+    // Full startup promotes this owner via implicit prerequisites; the partial
+    // fixture needs only its original TOC bootstrap before the lazy toggle.
+    let toc = wow_ui_sim::toc::TocFile::from_file(&addon.toc_path).unwrap();
+    assert!(toc.is_load_on_demand() && toc.has_bootstrap_files());
+    wow_ui_sim::loader::load_addon_bootstrap_from_toc(&env.loader_env(), &toc)
+        .expect("original achievement bootstrap loads after eager TOC dependencies");
+}
+
+fn assert_housing_startup_owner(startup: &[wow_ui_sim::loader::StartupAddon]) {
+    let tutorials = startup
+        .iter()
+        .position(|addon| addon.name == "Blizzard_Tutorials")
+        .expect("original Tutorials dependency is selected");
+    let housing = startup
+        .iter()
+        .position(|addon| addon.name == "Blizzard_HousingTutorials")
+        .expect("standard Game housing tutorials are selected by normal Retail startup");
+    assert!(
+        tutorials < housing,
+        "original dependency precedes housing tutorial owner"
+    );
+    assert_eq!(
+        startup[housing].kind,
+        wow_ui_sim::loader::StartupAddonLoadKind::Full
+    );
+}
+
+fn assert_retail_provider(env: &WowLuaEnv, function: &str, suffix: &str) {
+    if wow_ui_sim::client_profile::ACTIVE != wow_ui_sim::client_profile::ClientProfile::Retail {
+        return;
+    }
+    env.exec(&format!(
+        r#"
+        local info = debug.getinfo({function}, 'S')
+        assert(info and info.what == 'Lua', 'original Lua provider required')
+        local source = info.source:gsub('\\', '/')
+        local suffix = {suffix:?}
+        assert(source:sub(-#suffix) == suffix, source)
+    "#
+    ))
+    .expect("selected original provider source ownership");
 }
 
 fn fire_startup_events(env: &WowLuaEnv) {
@@ -667,6 +731,8 @@ fn collections_mount_list_count_matches_displayed_mount_count() {
 fn toggle_achievement_frame_opens_and_closes_achievement_panel() {
     test_timeout! {
         let env = setup_env();
+        assert_retail_provider(&env, "ToggleAchievementFrame",
+            "Blizzard_AchievementUI/Blizzard_AchievementUI_Bootstrap.lua");
 
         if cfg!(feature = "client-wowforever") {
             // Pinned Blizzard_AchievementUI/Camelot/Blizzard_AchievementUI.lua:13
@@ -707,6 +773,8 @@ fn toggle_achievement_frame_opens_and_closes_achievement_panel() {
             "ok",
             "ToggleAchievementFrame() should open and close the achievement panel: {result}"
         );
+        assert_retail_provider(&env, "AchievementFrame_ToggleAchievementFrame",
+            "Blizzard_AchievementUI/Mainline/Blizzard_AchievementUI.lua");
     }
 }
 
@@ -760,11 +828,14 @@ fn toggle_encounter_journal_opens_and_closes_panel() {
 fn wrath_trade_skill_initial_selection_is_empty() {
     if cfg!(feature = "client-wrath") {
         let env = setup_env();
-        env.exec(r#"
+        env.exec(
+            r#"
             assert(GetTradeSkillSelectionIndex() == 0, "initial selection")
             SelectTradeSkill(1)
             assert(GetTradeSkillSelectionIndex() == 1, "selection changes")
-        "#).expect("initial selection is empty and changes");
+        "#,
+        )
+        .expect("initial selection is empty and changes");
     }
 }
 
@@ -1260,6 +1331,8 @@ post_wrath_ui_fixture! {
 fn housing_dashboard_loads_and_opens_panel() {
     test_timeout! {
         let env = setup_env();
+        assert_retail_provider(&env, "HousingTutorialUtil.BoughtHouseQuestComplete",
+            "Blizzard_HousingTutorials/Blizzard_HousingTutorialsUtil.lua");
         if cfg!(feature = "client-wowforever") {
             // Pinned Blizzard_HousingDashboard/Blizzard_HousingDashboard.toc:5 allows
             // `standard`; the Forever client mask is mainline+camelot
