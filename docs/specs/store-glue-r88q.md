@@ -18,7 +18,7 @@ The original dispositions1283/1285 established these seams; the R88w sections be
 - Queue correlation is opaque host data. Simulator request counters do not establish native width, overflow or wire layout. No public packet name/opcode is invented.
 - Restriction metadata is explicit; Lua taint alone is not treated as native restricted-execution metadata. Secret helpers apply only to matching known contracts.
 - Completion values/flags and state>1 permission have neutral explicit inputs; their service meanings are UNKNOWN. Pending errors are host supplied and are not automatically cleared.
-- R88w.w1 verifies zero purchase-error payload; event publication is pending its separate implementation step. Copy eligibility still uses the earlier neutral host input until the separate w4 change; neither pending behavior is claimed as implemented here.
+- R88w.w1 verifies zero purchase-error payload; event publication is pending its separate implementation step. The separate w4 native copy gate is now implemented; only event publication awaits its own change.
 - R88w.w3 verifies zero state-change payload. Removal of the earlier host payload seam and its zero-arity tests are a separate pending implementation step.
 - Cleanup failures, complete protected-wrapper exits, exhaustive lifecycle clears, and server behavior remain unmodeled rather than receiving guessed fallbacks.
 
@@ -72,3 +72,9 @@ The entry restriction's cause is UNKNOWN. Per #1310, `vas_errors_entry_rejected`
 The selected original consumer is `VASErrorData_GetCombinedMessage`, `Shared/VASErrorLookup.lua:365-380`, approved by #1310. Native facts are Retail-only; publication on the already-modeled PTR/Forever profiles retains the separately labeled inferred applicability boundary. The three reader selectors passed after their baseline RED runs; existing R88q selectors also passed. Error-event publication, callback copy gates, state-change arity, and GUID parsing are separate subsequent changes.
 
 The modeled profiles retire the unconditional empty-table `runtime_surface_bootstrap.lua` GetVASErrors override. Its scoped legacy branch remains for unmodeled profiles; the later nil-only fallback cannot overwrite this native reader.
+
+## R88w.w4 native shared-list copy gate
+
+VERIFIED Retail (#1308): every per-character path releases/resets the old shared list first (an empty new Vec in this bounded model). The explicit state0/1 removal route now copies precisely a nonempty vector whose first value is nonzero, preserving every later zero and signed32 code. Character matching is irrelevant to copying. Empty and first-zero lists leave it empty; the state>1 service route clears it without copying. The obsolete `copy_eligible` host argument is removed, not replaced with a guessed predicate.
+
+The earlier absent-character assertion that expected no copy solely because a host boolean was false is corrected in this commit: input `[88]` now yields `[88]` even with no character match, exactly as w4 states. Record/event assertions are retained. Purchase-error publication follows separately; this commit does not claim that event delivery is implemented.

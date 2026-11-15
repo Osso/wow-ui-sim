@@ -2720,14 +2720,15 @@ mod storeglue_r88q_host {
             assert_records(&env);
             install_listener(&env);
             env.exec(R88Q_REMOVAL_BEFORE).unwrap();
-            c_store_glue::receive_removal(&env, A, vec![51, 0], true, &[]).unwrap();
+            c_store_glue::receive_removal(&env, A, vec![51, 0], &[]).unwrap();
             assert_eq!(c_store_glue::purchase_errors(&env), vec![51, 0]);
             env.exec(R88Q_LUA_12).unwrap();
-            c_store_glue::receive_removal(&env, B, vec![-37], true, &[]).unwrap();
+            c_store_glue::receive_removal(&env, B, vec![-37], &[]).unwrap();
             assert_eq!(c_store_glue::purchase_errors(&env), vec![-37]);
             env.exec(R88Q_LUA_13).unwrap();
-            c_store_glue::receive_removal(&env, ABSENT, vec![88], false, &[]).unwrap();
-            assert!(c_store_glue::purchase_errors(&env).is_empty());
+            c_store_glue::receive_removal(&env, ABSENT, vec![88], &[]).unwrap();
+            // VERIFIED R88w.w4 supersedes the old neutral copy-eligibility input.
+            assert_eq!(c_store_glue::purchase_errors(&env), vec![88]);
             env.exec("assert(#R88qEvents == 2)").unwrap();
         }
     }
@@ -3669,7 +3670,7 @@ mod storeglue_r88w {
         }
         pub fn remove(env: &WowLuaEnv, guid: &str, state: i32, errors: Vec<i32>) {
             assert!(matches!(state, 0 | 1));
-            model::receive_removal(env, guid, errors, true, &[rilua::Val::Num(77.0)]).unwrap();
+            model::receive_removal(env, guid, errors, &[rilua::Val::Num(77.0)]).unwrap();
         }
         pub fn bulk(env: &WowLuaEnv, records: Vec<(String, VasPurchaseRecord)>) {
             model::receive_bulk(env, records, &[rilua::Val::Num(77.0)]).unwrap();

@@ -171,13 +171,12 @@ pub fn receive_bulk(
 }
 
 /// VERIFIED state0/1 clear-first, removal, then state-change notification.
-/// Error-copy eligibility is an UNKNOWN predicate supplied explicitly by the host.
+/// VERIFIED R88w.w4: this state0/1 path copies a nonempty, first-nonzero list.
 /// STORE_VAS_PURCHASE_ERROR is deliberately NOT dispatched: payload UNKNOWN (#1283).
 pub fn receive_removal(
     env: &WowLuaEnv,
     guid: &str,
     errors: Vec<i32>,
-    copy_eligible: bool,
     state_change_payload: &[Val],
 ) -> crate::Result<()> {
     if !super::c_store_glue::enabled() {
@@ -185,9 +184,9 @@ pub fn receive_removal(
     }
     {
         let mut sim = env.state().borrow_mut();
-        sim.store_glue.purchase_errors.clear();
-        // UNKNOWN copy predicate is an explicit host input; neutral default false.
-        if copy_eligible {
+        sim.store_glue.purchase_errors = Vec::new();
+        // R88w.w4: later zeros are retained, independently of character matching.
+        if errors.first().is_some_and(|value| *value != 0) {
             sim.store_glue.purchase_errors = errors;
         }
     }
@@ -221,7 +220,7 @@ pub fn receive_service_update(
     if !super::c_store_glue::enabled() {
         return Ok(());
     }
-    env.state().borrow_mut().store_glue.purchase_errors.clear();
+    env.state().borrow_mut().store_glue.purchase_errors = Vec::new();
     if permitted != Some(true) || record.state <= 1 {
         return Ok(());
     }
