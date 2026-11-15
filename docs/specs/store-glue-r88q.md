@@ -56,3 +56,7 @@ The original Retail OnShow resets the q2 Boolean before line211, then calls miss
 ## Existing preservation boundary
 
 Coordinator1293 retains the pre-existing R79 `character_creation_submit_real_controls_wait_for_host_result` RED outside StoreGlue scope. Report the existing suite as35/36 plus that known RED, never aggregate PASS. The assertion and SetCameraZoomLevel Usage diagnostic must stay unchanged; receipts compare their normalized failure-core SHA-256. R79/R79b customization collector joins remain UNKNOWN and tracked separately.
+
+## INFERRED refresh relationship (separate commit)
+
+**INFERRED relationship:** refresh is asynchronous, based on request submission and separate receive callbacks. No proven one-to-one request/response correlation, response arrival, or ordering between independent receive types is claimed.
