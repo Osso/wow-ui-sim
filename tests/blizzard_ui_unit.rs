@@ -11,12 +11,12 @@ use tooltip_full_env_helpers::{refresh_aura_frames, setup_full_env};
 
 const COLOR_OVERRIDE_CONSUMER_LUA: &str = r#"
 local function assert_default_color(quality, expected)
-    local color = C_ColorOverrides.GetDefaultColorForQuality(quality)
-    assert(color.r == expected.r and color.g == expected.g)
-    assert(color.b == expected.b and color.a == expected.a)
     local data = ColorManager.GetDefaultColorDataForItemQuality(quality)
     assert(data.color.r == expected.r and data.color.g == expected.g)
     assert(data.color.b == expected.b)
+    local color = C_ColorOverrides.GetDefaultColorForQuality(quality)
+    assert(color.r == expected.r and color.g == expected.g)
+    assert(color.b == expected.b and color.a == expected.a)
 end
 
 local function assert_rgba(color, red, green, blue, alpha)
@@ -94,9 +94,21 @@ fn original_color_manager_bag_quality_uses_default_without_override() {
 
 #[test]
 fn original_color_manager_tracks_globalcolor_defaults_and_color_overrides() {
-    let env = tooltip_full_env_helpers::load_full_env_without_post_load();
+    let env = load_color_override_consumer_env();
     env.exec(COLOR_OVERRIDE_CONSUMER_LUA)
         .expect("Retail ColorManager must publish GlobalColor defaults and supplied overrides");
+}
+
+fn load_color_override_consumer_env() -> wow_ui_sim::lua_api::WowLuaEnv {
+    let red_adapter = std::env::var("WOW_SIM_COLOR_OVERRIDES_RED").as_deref() == Ok("1");
+    tooltip_full_env_helpers::load_full_env_without_post_load_with_addon_hook(
+        move |env, addon_name| {
+            if red_adapter && addon_name == "Blizzard_Colors" {
+                env.exec("C_ColorOverrides.GetDefaultColorForQuality = nil")
+                    .expect("RED adapter should remove the producer before ColorManager loads");
+            }
+        },
+    )
 }
 
 fn open_character_panel(env: &wow_ui_sim::lua_api::WowLuaEnv) {
