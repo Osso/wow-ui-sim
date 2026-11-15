@@ -536,9 +536,18 @@ fn assert_bag_slot_locked(env: &WowLuaEnv, bag: i32, slot: i32, locked: bool) {
 
 #[test]
 fn pending_item_accepts_numeric_string_location_fields() {
-    let env = pending_env(&[ITEM_A]);
-    select_from_original_location(&env, "{bagID = '0', slotIndex = '1'}");
-    assert_item_locked(&env, 1, true);
+    let env = pending_env(&[ITEM_A, ITEM_B]);
+    select_from_original_location(&env, "{bagID = '1', slotIndex = '1'}");
+    assert_bag_slot_locked(&env, 1, 1, true);
+    let cleared: bool = env
+        .eval("return C_ItemInteraction.SetPendingItem(nil)")
+        .unwrap();
+    assert!(!cleared);
+
+    set_bag_slot_count(&env, 16, 1);
+    add_pending_bag_item(&env, 16, 1, ITEM_B);
+    select_from_original_location(&env, "{bagID = '16', slotIndex = '1'}");
+    assert_bag_slot_locked(&env, 16, 1, true);
 }
 
 #[test]
