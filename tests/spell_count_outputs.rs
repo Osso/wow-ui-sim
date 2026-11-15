@@ -1424,3 +1424,65 @@ fn r88r_accepted_secret_identifiers_truncate_to_distinct_backed_spells() {
     display(&env, "SRSix", "0", false);
     // No secret <=1 ID case: native Lua metadata-source condition is unmodeled.
 }
+#[cfg(feature = "retail-12-1-5")]
+#[test]
+fn r88r_secret_maxima_truncate_and_accept_one_zero_and_negative() {
+    let env = secret_fixture();
+    publish_r88r_numbers(
+        &env,
+        &[
+            ("SRMaximum", 6.5),
+            ("SROne", 1.0),
+            ("SRZero", 0.0),
+            ("SRNegative", -1.0),
+        ],
+    );
+    display(&env, "19750,SRMaximum", "*", false);
+    display(&env, "642,SRMaximum", "2", false);
+    display(&env, "880001,SRMaximum", "", false);
+    set_count(&env, 19750, 1);
+    display(&env, "19750,SROne", "1", false);
+    display(&env, "19750,SRZero", "*", false);
+    display(&env, "19750,SRNegative", "*", false);
+    set_count(&env, 19750, 0);
+    display(&env, "19750,SROne", "0", false);
+    display(&env, "19750,SRZero", "0", false);
+    display(&env, "19750,SRNegative", "*", false);
+}
+
+#[cfg(feature = "retail-12-1-5")]
+const R88R_SECRET_RANGE_AND_DENIAL: &str = r#"
+    for _,id in ipairs({19750, 642, 880001}) do
+        for _,maximum in ipairs({SRHigh, SRLow, SRHighFraction, SRLowFraction}) do
+            local ok,err = pcall(C_Spell.GetSpellDisplayCount, id, maximum)
+            assert(not ok)
+            assert(string.find(err, 'outside of expected range -2147483648 to 2147483647', 1, true))
+        end
+    end
+    SCTainted(function()
+        local ok,err = pcall(C_Spell.GetSpellDisplayCount, 19750, SRHigh)
+        assert(not ok)
+        assert(string.find(err, 'Secret values', 1, true))
+        assert(not string.find(err, 'outside of expected range', 1, true))
+    end)
+"#;
+
+#[cfg(feature = "retail-12-1-5")]
+#[test]
+fn r88r_secret_maximum_range_is_checked_before_truncation_after_access() {
+    let env = secret_fixture();
+    publish_r88r_numbers(
+        &env,
+        &[
+            ("SRHigh", 2147483648.0),
+            ("SRLow", -2147483649.0),
+            ("SRHighFraction", 2147483647.5),
+            ("SRLowFraction", -2147483648.5),
+            ("SRValid", 7.0),
+        ],
+    );
+    display(&env, "19750,SRValid", "7", false);
+    display(&env, "642,SRValid", "2", false);
+    display(&env, "880001,SRValid", "", false);
+    env.exec(R88R_SECRET_RANGE_AND_DENIAL).unwrap();
+}
