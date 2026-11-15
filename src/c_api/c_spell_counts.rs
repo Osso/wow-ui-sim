@@ -290,7 +290,7 @@ fn read_retail_display_text(
 
 #[cfg(feature = "retail-12-1-5")]
 fn read_retail_charge_display(sim: &crate::lua_api::SimState, spell_id: Option<u32>) -> String {
-    let existing_spell = spell_id.filter(|id| crate::spells::SPELL_DB.get(id).is_some());
+    let existing_spell = spell_id.filter(|id| crate::spells::get_spell(*id).is_some());
     let charge = existing_spell.and_then(|id| read_charge_input(sim, Some(id)));
     let multi_charge = charge.filter(|charge| charge.max_charges > 1);
     multi_charge
@@ -319,9 +319,7 @@ fn format_retail_cast_display(count: i64, maximum: f64, replacement: &str) -> St
 
 #[cfg(feature = "retail-12-1-5")]
 fn retail_spell_cast_count(sim: &crate::lua_api::SimState, spell_id: u32) -> i64 {
-    if crate::spells::SPELL_DB.get(&spell_id).is_none()
-        || super::c_spell::spell_context_is_null(sim)
-    {
+    if crate::spells::get_spell(spell_id).is_none() || super::c_spell::spell_context_is_null(sim) {
         return 0;
     }
     let Some(reagents) = sim.spell_reagent_pairs.get(&spell_id) else {
