@@ -89,6 +89,8 @@ fn initialize_bootstrap_registry_and_secure_base(
         super::globals::utility_system_spell::register_secure_environment_base_globals(lua)?;
         crate::lua_api::workarounds::register_secure_environment_base(lua)?;
         crate::lua_api::globals::compat_overrides::install_bit_library(lua)?;
+        super::globals::real::math_extensions::register_retail_fast_random_alias(lua)?;
+        crate::c_api::prepare_verified_string_library_copy(lua.state_mut());
     }
     Ok(())
 }
@@ -107,7 +109,6 @@ fn initialize_secure_environment_core(lua: &mut rilua::Lua) -> crate::Result<()>
 fn register_runtime_surface_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     trace_debug_getter_values(lua, "before_runtime_bootstrap");
     bootstrap::init_runtime_surface_bootstrap(lua)?;
-    crate::c_api::publish_simulator_store_secure_members(lua.state_mut())?;
     trace_debug_getter_values(lua, "after_runtime_bootstrap");
     #[cfg(feature = "retail-12-1-0")]
     super::globals::security::register_retail_secret_values(lua)?;
@@ -183,10 +184,10 @@ fn install_secure_runtime_surface(lua: &mut rilua::Lua) -> crate::Result<()> {
     super::globals::security::create_secure_replay_environment(lua)?;
     remove_sandbox_globals(lua)?;
     let unmodeled = crate::c_api::publish_verified_secure_namespace_members(lua.state_mut())?;
-    if !unmodeled.is_empty() {
+    if unmodeled > 0 {
         tracing::debug!(
-            members = ?unmodeled,
-            "R88n.11b namespace members have no simulator implementation"
+            unmodeled_members = unmodeled,
+            "R88y verified members have no simulator implementation"
         );
     }
     frames::init_frame_metatable(lua)

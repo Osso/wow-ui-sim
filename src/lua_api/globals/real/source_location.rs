@@ -8,7 +8,6 @@ use rilua::vm::state::LuaState;
 use rilua::{LuaApiMut, LuaResult, Val, runtime_error};
 
 const ADD_SOURCE_LOCATION_EXCLUDE: &str = "AddSourceLocationExclude";
-const ADD_SOURCE_LOCATION_EXCLUDE_FLAGS: u8 = 3;
 const ADD_SOURCE_LOCATION_EXCLUDE_USAGE: &str = "Usage: AddSourceLocationExclude(fileName)";
 const UNKNOWN_SOURCE_FILE: &str = "UnknownFile";
 const SOURCE_LINE_MODULUS: u32 = 65_536;
@@ -19,10 +18,10 @@ pub(crate) fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
         return Ok(());
     }
 
+    let flags = crate::c_api::verified_r88y_flag("_G", ADD_SOURCE_LOCATION_EXCLUDE)
+        .ok_or_else(|| runtime_error("R88y flag is missing for AddSourceLocationExclude"))?;
     let (publish_global, publish_secure) =
-        crate::lua_api::globals::security::native_registration_destinations(
-            ADD_SOURCE_LOCATION_EXCLUDE_FLAGS,
-        );
+        crate::lua_api::globals::security::native_registration_destinations(flags);
     if publish_global {
         LuaApiMut::register_function(
             lua,

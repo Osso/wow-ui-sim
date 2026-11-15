@@ -27,7 +27,9 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 
 - [ ] Secure-mode addon and dependency files must resolve global reads through the shared `__secureenv` by default. Ordinary-only globals such as `debug` and `coroutine` stay unavailable there, and per-file environment annotations remain effective.
 - [ ] Keep the temporary private snapshot only for explicit `SecureReplay` and generated XML loader paths in this cycle. After the original fallback-disabled PrivateAuras consumer passes, remove that bridge in its own commit; inherited-only values must not enter `__secureenv`.
-- [ ] For the Retail 12.1.5.70688 R88n.11b entries, apply each verified member flag and preserve one Lua function value only where R88n.11b proves it. Keep values absent when the simulator has no implementation and flags UNKNOWN without evidence; R88t's separate-function routes are specified below.
+- [ ] VERIFIED — Retail 12.1.5.70688 R88y.y1: use only the 6,554 VERIFIED rows from the pinned 6,763-row CSV (`3a8922d84756171f666fe79b61068d3344ce2db866250dede1de384fa9878f82`). Apply flags 1/2/3/6/7 to existing simulator functions only; keep absent implementations absent and exclude 209 INFERRED rows. Preserve each row's Game/Glue/both context; existing screen-aware registrars decide which members exist. Run publication after bootstrap and after screen registration so late or replaced flag-3 handlers reach secureenv. The additional actions for flags 6 and 7 remain UNKNOWN.
+- [ ] VERIFIED — Retail 12.1.5.70688 R88y.y2: install `string.concat`, `string.split`, and `string.join` from the existing `strconcat`, `strsplit`, and `strjoin` handlers before secure table-copy construction. Keep `fastrandom` on the existing base `math.random` handler and out of the secure base; leave the simulator's current `math.random` handler unchanged and do not assert random outputs. Keep `table.join` absent.
+- [ ] VERIFIED — Retail 12.1.5.70688 R88y.y3: on successful `SwapToGlobalEnvironment`, change the caller function environment to ordinary `_G` and return zero values. Preserve the conditional XML `addToSecureEnv` named-frame route. Do not add blanket global copying; `securecopy` behavior and frame-callback access remain UNKNOWN.
 - [x] `C_AddOns.LoadAddOn` must attempt optional dependencies before required dependencies.
 - [x] An optional dependency failure must not stop the requested addon from loading.
 
@@ -70,12 +72,15 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 - `src/bin/wow_sim/addon_loading.rs` — registers packaged follower declarations before Blizzard startup, registers third-party declarations, and skips startup roots already loaded by followers.
 - `src/c_api/c_addons.rs` — exposes startup follower processing through the runtime loader.
 - `src/c_api/c_addons_runtime.rs` — resolves runtime dependencies and submits `LoadWith` followers.
-- `src/c_api/helpers.rs`, `src/c_api/secure_publication.rs` — publish the R88n.11b namespace values implemented by the simulator.
+- `src/c_api/helpers.rs`, `src/c_api/secure_publication.rs`, and generated `src/c_api/secure_publication_data.rs` — route implemented members through verified R88y flags; the source CSV and generator are `data/secure-publication/retail-12-1-5-70688.csv` and `tools/gen_r88y_secure_publication.py`.
 - `src/loader/addon.rs` — orders ordinary and secure dependency requests.
 - `src/loader/lua_file.rs`, `src/loader/xml_file.rs`, `src/lua_api/loader_env.rs`, `src/lua_api/globals/security/secure_env.rs` — execute secure files through the shared table and retain private replay only for selected replay paths and generated XML loader chunks.
 - `src/lua_api/env_init/enums.rs` — publishes the four verified `Constants.AccountStoreConsts` values.
-- `src/lua_api/globals/real/table_extensions.rs` — publishes Retail `table.count`.
+- `src/lua_api/env_init/mod.rs`, `src/lua_api/env_runtime.rs` — install pre-copy library aliases and rerun verified publication after screen-specific registrations.
+- `src/lua_api/globals/real/math_extensions.rs`, `src/lua_api/globals/real/string_extensions.rs`, and `src/lua_api/globals/real/table_extensions.rs` — register implemented library extensions; R88y publication routes their verified flags. The Retail secure `table.count` handler retains the separately verified R88t identity.
+- `src/lua_api/globals/security/environment.rs`, `src/loader/tests/inline_script.rs` — implement and test the verified SwapToGlobalEnvironment and XML addToSecureEnv routes.
 - `src/lua_api/globals/create_frame/mod.rs` — publishes the built-in `UIParent` name to secureenv.
+- `src/lua_api/env_init/shared_bootstrap.lua` — retains the private `GetForbiddenObjectTable` closure while the verified flag-6 global is secure-only.
 - `src/lua_api/globals/real/source_location.rs` — registers AddSourceLocationExclude and selects a caller file/line from existing Lua call frames.
 - `src/lua_api/frame/methods/button_anchor_hierarchy/hierarchy.rs`, `src/lua_api/frame/methods/core_state/region.rs` — save and return texture source locations.
 - `src/lua_api/state/sim_state.rs`, `src/widget/frame.rs`, `src/widget/frame_defaults.rs`, `src/widget/frame_size.rs` — hold shared exclusions and per-texture source metadata.
@@ -91,6 +96,11 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 - `src/c_api/c_addons_runtime_tests.rs`
 - `tests/secureenv_isolation.rs` — separate loaded states, dependency request order, already-loaded mode behavior, and the one-file source-location consumer.
 - `tests/blizzard_private_auras_ui_loads.rs` — the original FrameFactory/Pools, AccountUtil, ColorManager, GameRulesUtil, and PrivateAurasTooltip consumers.
+- `src/c_api/secure_publication.rs` — verified-only R88y routing, absent implementations, and late flag-3 replacement after screen registration.
+- `src/lua_api/globals/security/secure_env.rs` — pre-copy string aliases, shallow library copies, and random-handler identity/membership.
+- `src/lua_api/globals/security/environment.rs` — successful `SwapToGlobalEnvironment` changes caller environment and returns zero values.
+- `src/lua_api/globals/real/table_extensions.rs` — separate ordinary/secure `table.count` handlers.
+- `src/loader/tests/inline_script.rs` — conditional XML `addToSecureEnv` named-frame publication.
 
 ## Known gaps (current cycle)
 

@@ -9,7 +9,7 @@ fn duration_binding_font_string_accepts_native_views_and_checks_taint() {
     env.exec(
         r#"
         local label = CreateFrame('Frame'):CreateFontString()
-        local forbidden = GetForbiddenObjectTable(label)
+        local forbidden = (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(label)
         assert(label ~= forbidden, 'FontString public and forbidden views are distinct')
         local binding = C_DurationUtil.CreateDurationTextBinding()
         binding:SetFontString(label)
@@ -223,11 +223,11 @@ fn duration_binding_rejects_full_lockdown_font_string_from_xml_scope() {
             assert(not ok and err == 'Attempt to access fully locked-down object.', tostring(err))
         end
         rejected(label)
-        rejected(GetForbiddenObjectTable(label))
+        rejected((__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(label))
         local addon = function(value) rejected(value) end
         debug.setobjecttaint(addon, 'FullLockdownProbe')
         addon(label)
-        addon(GetForbiddenObjectTable(label))
+        addon((__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(label))
         "#,
     )
     .expect("R18 full-lockdown state is inherited at creation and rejects all FontString views");
@@ -524,14 +524,14 @@ fn duration_binding_assignment_supports_actual_custom_aura_button_duration_text(
                     curve:AddPoint(60, CreateColor(1, 0.82, 0, 1))
                     local container = CreateFrame('AuraContainer', nil, UIParent, 'CustomAuraContainerTemplate')
                     local provider = __secureenv.AuraContainerUtil.CreateCustomFrameProvider(
-                        GetForbiddenObjectTable(container), {batchSize=1,
+                        (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(container), {batchSize=1,
                         templateNames={'CustomAuraButtonTemplate'}, initializeFrame=function(button)
                             local label = button:CreateFontString(nil, 'OVERLAY')
                             button:SetDurationText(label, {binding=source, textColor={
                                 curve=curve, property=Enum.DurationTextBindingProperty.RemainingDuration}})
-                            local privateButton = GetForbiddenObjectTable(button)
+                            local privateButton = (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(button)
                             local stored = privateButton.durationText.element
-                            assert(button:GetDurationText() == label and stored == GetForbiddenObjectTable(label))
+                            assert(button:GetDurationText() == label and stored == (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(label))
                             local ownedBinding = privateButton:GetDurationTextBinding()
                             assert(ownedBinding ~= source and ownedBinding:GetFontString() == stored)
                             assert(ownedBinding:GetUpdateInterval() == 0.25)

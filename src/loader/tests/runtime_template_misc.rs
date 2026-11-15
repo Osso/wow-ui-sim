@@ -156,8 +156,9 @@ fn test_partitioned_mixins_use_forbidden_object_table() {
     t.env
         .exec(
             r#"
-            assert(type(GetForbiddenObjectTable) == "function", "forbidden object table helper should exist")
-            local forbidden = GetForbiddenObjectTable(PartitionedFrame)
+            assert(type(__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable) == "function",
+                "forbidden object table helper should exist")
+            local forbidden = (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(PartitionedFrame)
             assert(type(forbidden) == "table", "forbidden partition should be a table")
             assert(forbidden ~= PartitionedFrame, "forbidden partition should be distinct from public frame")
             assert(PartitionedFrame.secret == nil, "KeyValues should not leak onto public partition")
@@ -194,7 +195,7 @@ fn test_partitioned_inbound_mixin_returns_public_object_views() {
                     return self.OwnedChild, self, "tail";
                 end
                 function PartitionedReturnInboundMixin:EchoViews(child, nested)
-                    assert(child == GetForbiddenObjectTable(child));
+                    assert(child == (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(child));
                     return child, nested;
                 end
             </Script>
@@ -216,9 +217,9 @@ fn test_partitioned_inbound_mixin_returns_public_object_views() {
         .exec(
             r#"
             local frame = PartitionedInboundReturnFrame
-            local forbidden = GetForbiddenObjectTable(frame)
+            local forbidden = (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(frame)
             assert(forbidden ~= frame, "forbidden partition should be distinct from public frame")
-            assert(forbidden.OwnedChild == GetForbiddenObjectTable(frame.OwnedChild),
+            assert(forbidden.OwnedChild == (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(frame.OwnedChild),
                 "private self should hold the forbidden child view")
             assert(frame:GetOwnedChild() == frame.OwnedChild,
                 "inbound result should publish the public object view")
@@ -306,7 +307,7 @@ fn test_partitioned_runtime_template_uses_forbidden_object_table() {
         .exec(
             r#"
             local frame = CreateFrame("Frame", "PartitionedRuntimeFrame", UIParent, "PartitionedRuntimeTemplate")
-            local forbidden = GetForbiddenObjectTable(frame)
+            local forbidden = (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(frame)
             assert(frame.secret == nil, "runtime template KeyValues should not leak onto public partition")
             assert(forbidden.secret == "template-hidden", "runtime template KeyValues should land on forbidden partition")
             assert(type(frame.ReadSecret) == "function", "runtime template inbound mixin should expose public delegate")
@@ -387,7 +388,7 @@ fn test_frame_literal_mixins_block_applies_mixins() {
     t.env
         .exec(
             r#"
-            local forbidden = GetForbiddenObjectTable(LiteralAuraContainer)
+            local forbidden = (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(LiteralAuraContainer)
             assert(LiteralAuraContainer.MarkInbound ~= nil, "literal Mixins block should apply first mixin")
             assert(LiteralAuraContainer.MarkPrivate == nil, "private secure mixin should not apply to public partition")
             assert(forbidden.MarkPrivate ~= nil, "private secure mixin should apply to forbidden partition")
@@ -535,11 +536,11 @@ fn test_partitioned_xml_method_script_uses_forbidden_object_table() {
         "private XML method script should not write to public frame",
     );
     t.assert_lua_true(
-        "return GetForbiddenObjectTable(PartitionedMethodFrame).loadedSecret == true",
+        "return (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(PartitionedMethodFrame).loadedSecret == true",
         "private XML method script should run with forbidden self",
     );
     t.assert_lua_true(
-        "return GetForbiddenObjectTable(PartitionedMethodFrame).eventSecret == 'XML_METHOD_PROBE'",
+        "return (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(PartitionedMethodFrame).eventSecret == 'XML_METHOD_PROBE'",
         "private XML event method should run with forbidden self",
     );
 }

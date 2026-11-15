@@ -38,14 +38,14 @@ mod state_drivers;
 mod value_access;
 
 pub use loader_env::{compile_chunk_rilua, exec_chunk_rilua};
-pub use secure_env::{
-    create_secure_environment, create_secure_replay_environment, mark_secure, mark_secure_state,
-};
 pub(crate) use secure_env::{
-    mark_secure_replay_state, native_registration_destinations,
+    SECURE_ENV_BASE_NAMES_KEY, mark_secure_replay_state, native_registration_destinations,
     register_native_function_if_missing_with_flags, register_native_function_with_flags,
     register_pair_list_function, register_unknown_allowlist_function, secure_env_table,
     secure_replay_env_table, set_secure_env_key_state,
+};
+pub use secure_env::{
+    create_secure_environment, create_secure_replay_environment, mark_secure, mark_secure_state,
 };
 
 #[cfg(feature = "retail-12-1-0")]
@@ -66,14 +66,12 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
 
 fn register_secure_callmethod(lua: &mut rilua::Lua) -> LuaResult<()> {
     if crate::client_profile::is_active_retail_12_1_5() {
-        secure_env::register_native_function_with_flags(
+        crate::c_api::register_global_function_from_r88y(
             lua,
             "securecallmethod",
             securecallmethod::securecallmethod,
-            7,
         )
     } else {
-        // R88n.11b verifies flag 7 only for Retail 12.1.5.
         secure_env::register_unknown_allowlist_function(
             lua,
             "securecallmethod",
@@ -118,20 +116,10 @@ fn register_secure_command_option_parse(lua: &mut rilua::Lua) -> LuaResult<()> {
     )
 }
 
-/// Register the fallback when nil; Retail also publishes an existing function by its verified flag.
-fn register_if_missing(
-    lua: &mut rilua::Lua,
-    name: &str,
-    func: rilua::RustFn,
-    retail_flags: u8,
-) -> LuaResult<()> {
+/// Register a fallback when nil; Retail uses the verified R88y destination flag.
+fn register_if_missing(lua: &mut rilua::Lua, name: &str, func: rilua::RustFn) -> LuaResult<()> {
     if crate::client_profile::is_active_retail_12_1_5() {
-        return secure_env::register_native_function_if_missing_with_flags(
-            lua,
-            name,
-            func,
-            retail_flags,
-        );
+        return crate::c_api::register_global_function_if_missing_from_r88y(lua, name, func);
     }
 
     if LuaApiMut::get_global_val(lua, name) == Val::Nil {

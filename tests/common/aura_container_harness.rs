@@ -25,7 +25,7 @@ const PRELUDE: &str = r#"
     function AuditParentIs(frame, parent)
         local expected = parent:GetObjectTable()
         if frame ~= frame:GetObjectTable() then
-            expected = GetForbiddenObjectTable(expected)
+            expected = (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(expected)
         end
         return frame:GetParent() == expected
     end

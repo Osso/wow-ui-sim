@@ -35,6 +35,7 @@ fn project_delegate_arguments(state: &mut LuaState) -> LuaResult<u32> {
 
 pub(crate) fn install(lua: &mut rilua::Lua) -> LuaResult<()> {
     let state = lua.state_mut();
+    // Bootstrap captures this before R88y flag-6 routing removes the ordinary global.
     let constructor = table_get(state, Val::Table(state.global), "GetForbiddenObjectTable");
     if !matches!(constructor, Val::Function(_)) {
         return Err(runtime_error(

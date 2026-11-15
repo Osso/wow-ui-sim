@@ -21,27 +21,17 @@ const SECRET_TAINT_MARKER: &str = "*** SimSecretValue ***";
 const LOADSTRING_SECRET_TAINT_MARKER: &str = "*** ForceTaint_Strong ***";
 
 pub(super) fn register_scrub_fallbacks(lua: &mut rilua::Lua) -> LuaResult<()> {
-    register_if_missing(lua, "scrub", scrub, 7)?;
-    register_if_missing(lua, "scrubsecretvalues", scrub_secret_values, 7)?;
-    register_if_missing(lua, "secretunwrap", secretunwrap_passthrough, 7)?;
+    register_if_missing(lua, "scrub", scrub)?;
+    register_if_missing(lua, "scrubsecretvalues", scrub_secret_values)?;
+    register_if_missing(lua, "secretunwrap", secretunwrap_passthrough)?;
     Ok(())
 }
 
 #[cfg(feature = "retail-12-1-0")]
 pub(crate) fn register_retail_secret_values(lua: &mut rilua::Lua) -> LuaResult<()> {
     if crate::client_profile::is_active_retail_12_1_5() {
-        super::secure_env::register_native_function_with_flags(
-            lua,
-            "secretwrap",
-            secretwrap_native,
-            7,
-        )?;
-        super::secure_env::register_native_function_with_flags(
-            lua,
-            "secretunwrap",
-            secretunwrap_native,
-            7,
-        )?;
+        crate::c_api::register_global_function_from_r88y(lua, "secretwrap", secretwrap_native)?;
+        crate::c_api::register_global_function_from_r88y(lua, "secretunwrap", secretunwrap_native)?;
     } else {
         LuaApiMut::register_function(lua, "secretwrap", secretwrap_native)?;
         LuaApiMut::register_function(lua, "secretunwrap", secretunwrap_native)?;

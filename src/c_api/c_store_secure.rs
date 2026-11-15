@@ -1,5 +1,5 @@
 //! Profile-specific group-list projection over the existing simulator Lua store table.
-//! Shapes follow cached Store consumers; native declarations are unavailable.
+//! R88y supplies publication flags, not Store API behavior or product-group shapes.
 
 use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::methods::{create_table, table_get_static};
@@ -12,80 +12,6 @@ use rilua::{LuaResult, Val};
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     let namespace = super::ensure_namespace(state, "C_StoreSecure")?;
     table_set_rust_fn_static(state, namespace, "GetProductGroups", get_product_groups)
-}
-
-// VERIFIED — R88g.3.q1, Retail 12.1.5.70688: every listed member uses flag 3.
-// The cached Store UI inventory is not build-verified.
-const RETAIL_STORE_UI_FLAG_3_MEMBERS: [&str; 43] = [
-    "AckFailure",
-    "ClearPreGeneratedExternalTransactionID",
-    "GetBnetTransferInfo",
-    "GetCharacterInfoByGUID",
-    "GetCharactersForRealm",
-    "GetConfirmationInfo",
-    "GetCurrencyID",
-    "GetCurrencyInfo",
-    "GetEligibleRacesForVASService",
-    "GetEntryInfo",
-    "GetFailureInfo",
-    "GetProductGroupInfo",
-    "GetProductGroups",
-    "GetProductInfo",
-    "GetProductList",
-    "GetProducts",
-    "GetPurchaseList",
-    "GetRealmList",
-    "GetUnrevokedBoostInfo",
-    "GetVASCompletionInfo",
-    "GetVASErrors",
-    "GetVASGuildMasterInfoForCharacterByGUID",
-    "GetVASRealmList",
-    "GetVasServiceType",
-    "GetWoWAccountGUIDFromName",
-    "HasDistributionList",
-    "HasDynamicPriceData",
-    "HasProductList",
-    "HasPurchaseInProgress",
-    "HasPurchaseList",
-    "IsAvailable",
-    "IsDynamicBundle",
-    "IsRegionLocked",
-    "OpenNydusLink",
-    "PurchaseProduct",
-    "PurchaseProductConfirm",
-    "PurchaseVASProduct",
-    "RequestAllDynamicPriceInfo",
-    "RequestCharacterGuildFollowInfo",
-    "RequestRealmGuildMasterInfo",
-    "SetDisconnectOnLogout",
-    "SetVASProductReady",
-    "ValidateBnetTransfer",
-];
-
-pub(crate) fn publish_simulator_members_to_secure(state: &mut LuaState) -> LuaResult<()> {
-    if !crate::client_profile::is_active_retail_12_1_5() {
-        return Ok(());
-    }
-
-    let namespace = super::global_val(state, "C_StoreSecure");
-    let Val::Table(_) = namespace else {
-        return Err(rilua::runtime_error(
-            "C_StoreSecure must be registered before secure publication",
-        ));
-    };
-    for member in RETAIL_STORE_UI_FLAG_3_MEMBERS {
-        let value = table_get_static(state, namespace, member);
-        if matches!(value, Val::Nil) {
-            continue;
-        }
-        if !matches!(value, Val::Function(_)) {
-            return Err(rilua::runtime_error(format!(
-                "C_StoreSecure.{member} must be a function"
-            )));
-        }
-        super::register_namespace_value_with_flags(state, "C_StoreSecure", member, value, 3)?;
-    }
-    Ok(())
 }
 
 fn get_product_groups(state: &mut LuaState) -> LuaResult<u32> {
@@ -145,7 +71,7 @@ mod tests {
     #[cfg(feature = "client-retail")]
     use crate::lua_api::methods::table_get_static;
     #[cfg(feature = "client-retail")]
-    use rilua::{LuaApiMut, Val};
+    use rilua::Val;
 
     #[cfg(feature = "client-retail")]
     #[test]
@@ -163,7 +89,12 @@ mod tests {
             let secure_namespace = table_get_static(state, secure_env, "C_StoreSecure");
             let mut implemented = 0;
             let mut missing_members = Vec::new();
-            for member in super::RETAIL_STORE_UI_FLAG_3_MEMBERS {
+            for &(namespace, member, flag, _) in
+                super::super::secure_publication_data::VERIFIED_MEMBERS
+            {
+                if namespace != "C_StoreSecure" || flag % 4 != 3 {
+                    continue;
+                }
                 match table_get_static(state, ordinary, member) {
                     Val::Function(_) => {
                         implemented += 1;

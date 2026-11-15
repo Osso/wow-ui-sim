@@ -18,7 +18,6 @@ end
 if SwapToGlobalEnvironment == nil then
   function SwapToGlobalEnvironment()
     setfenv(2, _G)
-    return _G
   end
 end
 "#;
@@ -55,20 +54,21 @@ mod tests {
         let env = WowLuaEnv::new().expect("lua env should initialize");
 
         env.exec_rilua_secure(
-            r#"
+            r##"
             local globalEnv = GetGlobalEnvironment()
             globalEnv.CapturedSecureEnv = GetCurrentEnvironment()
             globalEnv.BeforeSwapWasSecure = globalEnv.CapturedSecureEnv ~= globalEnv
-            SwapToGlobalEnvironment()
+            SwapToGlobalEnvironmentReturnCount = select("#", SwapToGlobalEnvironment())
             AfterSwapIsGlobal = GetCurrentEnvironment() == GetGlobalEnvironment()
             SwapProbeValue = "global-after-swap"
-            "#,
+            "##,
         )
         .expect("secure chunk should execute");
 
-        let (before_was_secure, after_is_global, global_value, secure_value): (
+        let (before_was_secure, after_is_global, return_count, global_value, secure_value): (
             bool,
             bool,
+            i64,
             String,
             String,
         ) = env
@@ -76,6 +76,7 @@ mod tests {
                 r#"
                 return BeforeSwapWasSecure,
                        AfterSwapIsGlobal,
+                       rawget(_G, "SwapToGlobalEnvironmentReturnCount"),
                        tostring(rawget(_G, "SwapProbeValue")),
                        tostring(rawget(CapturedSecureEnv, "SwapProbeValue"))
                 "#,
@@ -84,6 +85,7 @@ mod tests {
 
         assert!(before_was_secure);
         assert!(after_is_global);
+        assert_eq!(return_count, 0);
         assert_eq!(global_value, "global-after-swap");
         assert_eq!(secure_value, "nil");
     }

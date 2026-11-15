@@ -18,7 +18,15 @@ pub(crate) fn register(lua: &mut rilua::Lua) -> LuaResult<()> {
         return Ok(());
     }
 
-    // Flag 3 keeps distinct namespace tables and publishes one shared function value.
+    if crate::client_profile::is_active_retail_12_1_5() {
+        return crate::c_api::register_namespace_function_from_r88y(
+            lua.state_mut(),
+            "C_UIColor",
+            "GetColors",
+            get_colors,
+        );
+    }
+
     register_namespace_function_with_flags(lua.state_mut(), "C_UIColor", "GetColors", get_colors, 3)
 }
 

@@ -10,8 +10,8 @@ fn secure_xml_delegate_preserves_callback_and_caller_taint() {
         r#"
         local frame = CreateFrame('Frame')
         local child = CreateFrame('Cooldown', nil, frame)
-        local private = GetForbiddenObjectTable(frame)
-        local privateChild = GetForbiddenObjectTable(child)
+        local private = (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(frame)
+        local privateChild = (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(child)
         -- R12: secretwrap ignores Lua taint and follows global secret marking.
         local secretMarkingEnabled = issecretvalue(secretwrap(17))
         local observedCallback = false

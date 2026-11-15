@@ -43,8 +43,8 @@ use std::time::{Duration, Instant};
 /// Maximum allowed timer duration in seconds ((2^32 - 1) / 1000).
 const MAX_TIMER_SECS: f64 = (u32::MAX as f64) / 1000.0;
 
-/// VERIFIED (R88n.9): Retail After, NewTicker, and NewTimer use flags value 3.
-const C_TIMER_DUAL_ENV_FLAGS: u8 = 3;
+/// Earlier Retail profiles retain their pre-R88y dual-publication route.
+const LEGACY_RETAIL_TIMER_FLAGS: u8 = 3;
 
 /// Registry key for the timer callback storage table.
 const TIMER_CALLBACKS_KEY: &str = "__rilua_timer_callbacks";
@@ -483,13 +483,15 @@ fn register_c_timer_member(
     member: &str,
     function: rilua::RustFn,
 ) -> LuaResult<()> {
-    if retail {
+    if retail && crate::client_profile::is_active_retail_12_1_5() {
+        crate::c_api::register_namespace_function_from_r88y(state, "C_Timer", member, function)
+    } else if retail {
         crate::c_api::register_namespace_function_with_flags(
             state,
             "C_Timer",
             member,
             function,
-            C_TIMER_DUAL_ENV_FLAGS,
+            LEGACY_RETAIL_TIMER_FLAGS,
         )
     } else {
         crate::c_api::register_unknown_namespace_function(state, "C_Timer", member, function)

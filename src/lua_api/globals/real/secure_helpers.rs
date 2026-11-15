@@ -23,7 +23,7 @@ const DEFAULT_MAX_TRAVERSAL_DEPTH: f64 = 100.0;
 
 /// Maintain the current secure allowlist on profiles whose generated docs declare these names.
 ///
-/// R88n.11b verifies Retail flag 7 for both globals. Other profiles retain their existing routes.
+/// R88y supplies current Retail flags for both globals. Other profiles retain their existing routes.
 /// Registration also restores a missing `CreateSecureDelegate` after cleanup clears it.
 pub(crate) fn register(lua: &mut rilua::Lua) -> LuaResult<()> {
     register_create_secure_delegate(lua)?;
@@ -36,11 +36,10 @@ fn register_create_secure_delegate(lua: &mut rilua::Lua) -> LuaResult<()> {
         return Ok(());
     }
     if crate::client_profile::is_active_retail_12_1_5() {
-        crate::lua_api::globals::security::register_native_function_if_missing_with_flags(
+        crate::c_api::register_global_function_if_missing_from_r88y(
             lua,
             "CreateSecureDelegate",
             create_secure_delegate,
-            7,
         )?;
     } else if LuaApiMut::get_global_val(lua, "CreateSecureDelegate") == Val::Nil {
         crate::lua_api::globals::security::register_unknown_allowlist_function(
@@ -60,12 +59,7 @@ fn register_securecopy(lua: &mut rilua::Lua) -> LuaResult<()> {
         return Ok(());
     }
     if crate::client_profile::is_active_retail_12_1_5() {
-        crate::lua_api::globals::security::register_native_function_if_missing_with_flags(
-            lua,
-            "securecopy",
-            securecopy,
-            7,
-        )?;
+        crate::c_api::register_global_function_if_missing_from_r88y(lua, "securecopy", securecopy)?;
     } else {
         register_if_missing(lua, "securecopy", securecopy)?;
     }

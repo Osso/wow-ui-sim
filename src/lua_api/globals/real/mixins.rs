@@ -11,18 +11,28 @@ use rilua::{LuaResult, Val};
 mod secure_registry;
 use secure_registry::resolve_mixin_methods;
 
-/// VERIFIED (R88k.7): Retail `Mixin` and `CreateFromMixins` use flags value 7.
-const MIXIN_FLAGS: u8 = 7;
+/// Earlier Retail builds keep their existing flag route; R88y supplies the current flag.
+const LEGACY_RETAIL_MIXIN_FLAGS: u8 = 7;
 
 /// Register the verified Retail native entries. Bootstrap fallbacks stay ordinary-only.
 pub(crate) fn register(lua: &mut rilua::Lua) -> LuaResult<()> {
-    if ACTIVE == ClientProfile::Retail {
-        register_native_function_with_flags(lua, "Mixin", mixin, MIXIN_FLAGS)?;
+    if ACTIVE != ClientProfile::Retail {
+        return Ok(());
+    }
+    if crate::client_profile::is_active_retail_12_1_5() {
+        crate::c_api::register_global_function_from_r88y(lua, "Mixin", mixin)?;
+        crate::c_api::register_global_function_from_r88y(
+            lua,
+            "CreateFromMixins",
+            create_from_mixins,
+        )?;
+    } else {
+        register_native_function_with_flags(lua, "Mixin", mixin, LEGACY_RETAIL_MIXIN_FLAGS)?;
         register_native_function_with_flags(
             lua,
             "CreateFromMixins",
             create_from_mixins,
-            MIXIN_FLAGS,
+            LEGACY_RETAIL_MIXIN_FLAGS,
         )?;
     }
     Ok(())

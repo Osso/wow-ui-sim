@@ -8,44 +8,30 @@ use crate::lua_bridge::{stack_val, table_set_rust_fn_static, table_set_rust_fn_u
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
-use rilua::{LuaApiMut, LuaResult, Val, runtime_error};
-
-// R88t verifies flag 3 for the Retail table.count registration.
-const RETAIL_TABLE_COUNT_REGISTRATION_FLAGS: u8 = 3;
+use rilua::{LuaResult, Val, runtime_error};
 
 pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     let state = lua.state_mut();
     let table = table_library(state)?;
     table_set_rust_fn_static(state, table, "indexof", index_of)?;
     table_set_rust_fn_static(state, table, "contains", contains)?;
-    table_set_rust_fn_static(state, table, "count", count)?;
+    if crate::client_profile::is_active_retail_12_1_5() {
+        crate::c_api::register_namespace_function_from_r88y(state, "table", "count", count)?;
+        register_secure_count(state)?;
+    } else {
+        table_set_rust_fn_static(state, table, "count", count)?;
+    }
     table_set_rust_fn_static(state, table, "isempty", is_empty)?;
     table_set_rust_fn_static(state, table, "removeunordered", remove_unordered)?;
     table_set_rust_fn_static(state, table, "removevalue", remove_value)?;
     table_set_rust_fn_static(state, table, "keys", keys)?;
     table_set_rust_fn_static(state, table, "values", values)?;
-    if crate::client_profile::is_active_retail_12_1_5() {
-        // R88t verifies flag 3 and separate table-library and function objects.
-        register_secure_count(state)?;
-    }
     Ok(())
 }
 
 fn register_secure_count(state: &mut LuaState) -> LuaResult<()> {
-    let (_, publish_secure) = crate::lua_api::globals::security::native_registration_destinations(
-        RETAIL_TABLE_COUNT_REGISTRATION_FLAGS,
-    );
-    if !publish_secure {
-        return Ok(());
-    }
-    let Val::Table(secureenv) = crate::lua_api::methods::registry_get(state, "__secureenv") else {
-        return Ok(());
-    };
-    let Val::Table(secure_table) =
-        crate::lua_api::methods::table_get(state, Val::Table(secureenv), "table")
-    else {
-        return Err(runtime_error("secure table library is unavailable"));
-    };
+    let secure_table = crate::c_api::ensure_secure_namespace(state, "table")?;
+    // R88t verifies a distinct C function object for the secure table.count entry.
     table_set_rust_fn_unpaired(state, secure_table, "count", count)
 }
 
@@ -273,4 +259,32 @@ fn keys(state: &mut LuaState) -> LuaResult<u32> {
 
 fn values(state: &mut LuaState) -> LuaResult<u32> {
     keys_or_values(state, false)
+}
+
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+#[cfg(test)]
+mod tests {
+    use crate::lua_api::WowLuaEnv;
+
+    #[test]
+    fn retail_table_count_has_distinct_handlers_in_separate_library_tables() {
+        let env = WowLuaEnv::new().expect("lua env");
+        let result: (bool, bool, bool, bool, bool) = env
+            .eval(
+                r#"
+                local ordinary = rawget(table, "count")
+                local secureTable = rawget(__secureenv, "table")
+                local secure = type(secureTable) == "table" and rawget(secureTable, "count")
+                return type(ordinary) == "function",
+                    type(secure) == "function",
+                    type(secureTable) == "table" and not rawequal(table, secureTable)
+                        and not rawequal(ordinary, secure),
+                    type(rawget(table, "keys")) == "function"
+                        and type(rawget(secureTable, "keys")) == "function",
+                    rawget(table, "join") == nil and rawget(secureTable, "join") == nil
+                "#,
+            )
+            .expect("table.count copies should remain distinct");
+        assert_eq!(result, (true, true, true, true, true));
+    }
 }

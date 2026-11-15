@@ -7,25 +7,19 @@ use rilua::vm::state::LuaState;
 use rilua::{LuaApiMut, LuaResult, Val};
 
 pub(super) fn register(lua: &mut rilua::Lua) -> LuaResult<()> {
-    register_secret_helper(lua, "canaccesssecrets", canaccesssecrets, 7)?;
-    register_secret_helper(lua, "hasanysecretvalues", hasanysecretvalues, 7)?;
-    register_secret_helper(lua, "dropsecretaccess", dropsecretaccess, 7)?;
-    register_secret_helper(lua, "issecrettable", issecrettable, 7)
+    register_secret_helper(lua, "canaccesssecrets", canaccesssecrets)?;
+    register_secret_helper(lua, "hasanysecretvalues", hasanysecretvalues)?;
+    register_secret_helper(lua, "dropsecretaccess", dropsecretaccess)?;
+    register_secret_helper(lua, "issecrettable", issecrettable)
 }
 
 fn register_secret_helper(
     lua: &mut rilua::Lua,
     name: &str,
     function: rilua::RustFn,
-    retail_flags: u8,
 ) -> LuaResult<()> {
     if crate::client_profile::is_active_retail_12_1_5() {
-        crate::lua_api::globals::security::register_native_function_with_flags(
-            lua,
-            name,
-            function,
-            retail_flags,
-        )
+        crate::c_api::register_global_function_if_missing_from_r88y(lua, name, function)
     } else {
         LuaApiMut::register_function(lua, name, function)
     }

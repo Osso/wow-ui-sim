@@ -13,6 +13,7 @@ use crate::lua_api::methods::{registry_get, registry_set};
 use crate::lua_bridge::table_set_rust_fn;
 
 const NATIVE_REGISTRATION_FLAG_MODULUS: u8 = 4;
+pub(crate) const SECURE_ENV_BASE_NAMES_KEY: &str = "__secureenv_base_names";
 
 const CREATE_SECURE_ENV_LUA: &str = r##"
     local genv = _G
@@ -31,7 +32,9 @@ const CREATE_SECURE_ENV_LUA: &str = r##"
         "SwapToGlobalEnvironment",
     }
     local secureenv = {}
+    local baseNameSet = {}
     for _, name in ipairs(baseNames) do
+        baseNameSet[name] = true
         local value = rawget(genv, name)
         if type(value) == "table" then
             local clone = {}
@@ -52,7 +55,7 @@ const CREATE_SECURE_ENV_LUA: &str = r##"
             end
         end,
     })
-    return secureenv
+    return secureenv, baseNameSet
 	"##;
 
 // temporary: lt-635e. Keep the full snapshot private to secure-mode and replay chunks.
@@ -194,20 +197,23 @@ pub fn create_secure_environment(lua: &mut rilua::Lua) -> LuaResult<()> {
     }
 
     let chunk = LuaApiMut::load(lua, CREATE_SECURE_ENV_LUA)?;
-    let secureenv = lua
-        .call_function(&chunk, &[])?
-        .into_iter()
-        .next()
-        .ok_or_else(|| runtime_error("create_secure_environment: missing return value"))?;
-    let Val::Table(_) = secureenv else {
+    let mut values = lua.call_function(&chunk, &[])?;
+    let base_names = values
+        .pop()
+        .ok_or_else(|| runtime_error("create_secure_environment: missing base-name set"))?;
+    let secureenv = values
+        .pop()
+        .ok_or_else(|| runtime_error("create_secure_environment: missing secureenv table"))?;
+    if !matches!(secureenv, Val::Table(_)) || !matches!(base_names, Val::Table(_)) {
         return Err(runtime_error(
-            "create_secure_environment: expected secureenv table",
+            "create_secure_environment: expected secureenv table and base-name set",
         ));
-    };
+    }
 
     {
         let state = lua.state_mut();
         registry_set(state, "__secureenv", secureenv);
+        registry_set(state, SECURE_ENV_BASE_NAMES_KEY, base_names);
     }
     LuaApiMut::set_global_val(lua, "__secureenv", secureenv)?;
     Ok(())
@@ -597,6 +603,46 @@ mod tests {
             .expect("retail secure base functions should be readable");
 
         assert!(copied);
+    }
+
+    #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+    #[test]
+    fn secure_library_aliases_follow_base_copy_and_keep_random_identity() {
+        let env = WowLuaEnv::new().expect("lua env");
+        let contract: (bool, bool, bool, bool, bool, bool, bool, bool, bool, bool) = env
+            .eval(
+                r#"
+                local secure = __secureenv
+                local secureString = rawget(secure, "string")
+                local secureMath = rawget(secure, "math")
+                local secureTable = rawget(secure, "table")
+                return type(string.concat) == "function"
+                        and rawequal(string.concat, strconcat)
+                        and rawequal(secureString.concat, string.concat),
+                    type(string.split) == "function"
+                        and rawequal(string.split, strsplit)
+                        and rawequal(secureString.split, string.split),
+                    type(string.join) == "function"
+                        and rawequal(string.join, strjoin)
+                        and rawequal(secureString.join, string.join),
+                    secureString ~= string,
+                    secureMath ~= math and rawequal(secureMath.random, math.random),
+                    type(math.round) == "function"
+                        and type(secureMath.round) == "function",
+                    type(string.contains) == "function"
+                        and type(secureString.contains) == "function",
+                    type(table.count) == "function"
+                        and type(secureTable.count) == "function",
+                    type(fastrandom) == "function"
+                        and rawget(secure, "fastrandom") == nil,
+                    rawget(table, "join") == nil and rawget(secureTable, "join") == nil
+                "#,
+            )
+            .expect("verified library initialization routes should be observable");
+        assert_eq!(
+            contract,
+            (true, true, true, true, true, true, true, true, true, true)
+        );
     }
 
     #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]

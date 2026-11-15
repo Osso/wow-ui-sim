@@ -365,6 +365,9 @@ fn scoped_modifier_scripts_use_given_env_for_scripts_and_mixins() {
     let frame_added_to_secure_env: bool = env
         .eval("return __secureenv.ScopedSecureFrame == ScopedSecureFrame")
         .unwrap();
+    let frame_without_policy_absent_from_secure_env: bool = env
+        .eval("return __secureenv.ScopedHiddenFrame == nil")
+        .unwrap();
     let secure_only_frame_added_to_secure_env: bool = env
         .eval("return __secureenv.ScopedSecureOnlyFrame ~= nil")
         .unwrap();
@@ -384,6 +387,10 @@ fn scoped_modifier_scripts_use_given_env_for_scripts_and_mixins() {
     assert!(
         frame_added_to_secure_env,
         "addToSecureEnv should copy named scoped frames into secureenv"
+    );
+    assert!(
+        frame_without_policy_absent_from_secure_env,
+        "frames without addToSecureEnv should stay out of secureenv"
     );
     assert!(
         secure_only_frame_added_to_secure_env,

@@ -29,8 +29,8 @@ fn patch_12_1_0_aura_group_options_apply_additional_template_size_and_alpha() {
                 assert(frame:GetAlpha() == 0.5, 'additional alpha template applied before callback')
                 local icon = frame:CreateTexture(nil, 'BACKGROUND')
                 frame:SetIcon(icon)
-                local stored = GetForbiddenObjectTable(frame).icon.element
-                assert(frame:GetIcon() == icon and stored == GetForbiddenObjectTable(icon),
+                local stored = (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(frame).icon.element
+                assert(frame:GetIcon() == icon and stored == (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(icon),
                     'base CustomAuraButtonTemplate retained')
                 calls = calls + 1
             end,
@@ -65,8 +65,8 @@ fn patch_12_1_0_aura_group_options_initialize_each_native_button_without_extra_t
             local icon = frame:CreateTexture(nil, 'BACKGROUND')
             icon:SetAllPoints(frame)
             frame:SetIcon(icon)
-            local stored = GetForbiddenObjectTable(frame).icon.element
-            assert(frame:GetIcon() == icon and stored == GetForbiddenObjectTable(icon),
+            local stored = (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(frame).icon.element
+            assert(frame:GetIcon() == icon and stored == (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(icon),
                 'base CustomAuraButtonTemplate methods retained')
         end
         debug.setobjecttaint(initialize, 'AuditInitAddon')

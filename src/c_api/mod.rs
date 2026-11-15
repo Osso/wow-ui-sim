@@ -531,6 +531,7 @@ mod voice_provider_enum;
 pub(crate) mod c_tts_settings;
 mod helpers;
 mod secure_publication;
+mod secure_publication_data;
 pub(crate) use helpers::parse_numeric_string;
 #[cfg(feature = "retail-12-0-0")]
 mod patch_retired_members;
@@ -555,17 +556,17 @@ pub(crate) use registration::{
     register_map_environment_tables, register_map_prefix_tables, register_nameplate_tables,
     register_spell_and_widget_tables,
 };
-pub(crate) use secure_publication::publish_verified_secure_namespace_members;
+pub(crate) use secure_publication::{
+    prepare_verified_string_library_copy, publish_verified_secure_namespace_members,
+    register_global_function_from_r88y, register_global_function_if_missing_from_r88y,
+    register_namespace_function_from_r88y, verified_r88y_flag,
+};
 
 use rilua::LuaResult;
 use rilua::vm::state::LuaState;
 
 pub(crate) fn update_screen_registration(state: &mut LuaState) -> LuaResult<()> {
     c_character_creation_trial_boost::update_screen_registration(state)
-}
-
-pub(crate) fn publish_simulator_store_secure_members(state: &mut LuaState) -> LuaResult<()> {
-    c_store_secure::publish_simulator_members_to_secure(state)
 }
 
 fn supports_super_tracking() -> bool {

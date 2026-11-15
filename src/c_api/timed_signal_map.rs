@@ -37,14 +37,12 @@ pub(crate) struct DueTimedSignal {
 }
 
 pub(crate) fn register_c_timer_timed_signal_map(state: &mut LuaState) -> LuaResult<()> {
-    // R88n.11b verifies flag 3 for Retail; other profiles keep their current route.
     if crate::client_profile::is_active_retail_12_1_5() {
-        return crate::c_api::register_namespace_function_with_flags(
+        return crate::c_api::register_namespace_function_from_r88y(
             state,
             "C_Timer",
             "NewTimedSignalMap",
             new_timed_signal_map,
-            3,
         );
     }
 
