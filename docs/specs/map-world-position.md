@@ -15,6 +15,7 @@ Retail `C_Map.GetWorldPosFromMapPos` converts a UI-map point by using `UiMapAssi
 - [x] **VERIFIED (R88x):** a nonnegative `MapID` is the returned map number. For a negative `MapID`, look up the assignment's `AreaID` in `AreaTable`; skip the assignment if the lookup fails. After a successful lookup, accept the unsigned-16 value, including zero.
 - [x] **INFERRED (R88x and the 12.1.5.70783 DBD):** the native unsigned-16 result maps to the `ContinentID` column. The generated Rust field is named `continent_id`.
 - [x] **INFERRED (R88x plus the complete 12.1.5.70783 export):** UI maps 1408 and 2311 reference AreaID 0, but AreaTable has no ID 0 row. Their negative assignments therefore have no resolved map number under the verified skip rule. This conflicts with treating those maps as successful conversions.
+- [x] **VERIFIED (simulator HBD-style probe at source SHA `0e9b548b1d6e92939ccc3f4e84d48157ef3c89c3`):** the catalog-derived no-world Zone set below map 3000 is 997, 1158, 1408, 1523, 2107, and 2311. The four requested no-row zones are 997, 1158, 1523, and 2107; maps 1408 and 2311 each have only an unresolved negative assignment with AreaID 0. The four-only target conflicts with the complete 70783 table and the verified skip-on-lookup-failure rule.
 - [x] **VERIFIED (simulator contract):** an explicit `MapWorldRect` for a known map takes precedence over generated Retail assignment data.
 
 ### World to map argument boundary
