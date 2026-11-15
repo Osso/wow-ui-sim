@@ -60,6 +60,12 @@ pub(crate) fn clear_interaction_type(state: &mut LuaState, interaction_type: i32
         if let Some(event) = close_event_for_interaction(interaction_type) {
             fire_named_event_state(state, event, &[]);
         }
+        // PlayerInteractionManagerDocumentation.lua:95-103 declares the type payload.
+        fire_named_event_state(
+            state,
+            "PLAYER_INTERACTION_MANAGER_FRAME_HIDE",
+            &[rilua::Val::Num(f64::from(interaction_type))],
+        );
     }
     Ok(())
 }
