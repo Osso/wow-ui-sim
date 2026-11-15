@@ -21,7 +21,6 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     )
 }
 
-#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) fn register_model_ffx_only(state: &mut LuaState) -> LuaResult<()> {
     register_members(
         state,
@@ -120,7 +119,6 @@ fn set_background(state: &mut LuaState) -> LuaResult<u32> {
 // R58: native handlers read no arguments and return zero values. This is an
 // explicitly permitted 3D gap, not a claim of universally absent indirect
 // effects (especially the MapScene final update). ResetModel remains vendor Lua.
-#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn move_character_models(_state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }

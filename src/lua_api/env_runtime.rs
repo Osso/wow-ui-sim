@@ -529,6 +529,9 @@ fn register_ptr_screen_queries(env: &WowLuaEnv) {
         let _ = super::globals::real::glue_background::register_background_only(
             env.lua.borrow_mut().state_mut(),
         );
+        let _ = super::globals::real::glue_background::register_model_ffx_only(
+            env.lua.borrow_mut().state_mut(),
+        );
     }
 }
 

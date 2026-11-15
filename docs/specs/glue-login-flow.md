@@ -444,7 +444,7 @@ Comment 91 provides Retail 70688 and Forever 70707 evidence. Both
 MoveCharactersToModelFFXFrame and MoveCharactersToMapSceneFrame read no Lua
 arguments, perform no supplied-frame type checks, and return zero values.
 Ordinary ignored extra arguments and normal Glue-only scope are inferred from
-those handlers and registration. PTR is uninspected and unchanged.
+those handlers and registration. PTR native behavior remains uninspected.
 
 The coordinator explicitly permits registered Glue-only zero-result no-ops for
 these two model-transfer operations in the simulator without 3D rendering.
@@ -461,6 +461,16 @@ Behavior-neutral R58 factoring (lt-941b #1305): ModelFFX has its own installer
 helper using the exact existing bounded producer. The full Retail/Forever
 installer still publishes background getter, background setter, ModelFFX, then
 MapScene, with identical Glue/Game policy. No PTR route is added in this commit.
+
+**INFERRED PTR R58 ModelFFX applicability (lt-941b #1305):** the reached selected PTR
+`Blizzard_GlueXML/Mainline/CharacterSelect/CharacterSelectUI.lua:403` calls
+`MoveCharactersToModelFFXFrame()`. Only that existing bounded 3D-gap handler is
+published under `ACTIVE == Ptr`; its no-argument-read/zero-result behavior and
+Glue-only install/Game removal policy are unchanged. The alternative
+`MoveCharactersToMapSceneFrame` call at line392 is evidenced but unreached, not extended on PTR. Retail/Forever preserve both preexisting routes and
+the original four-entry registration order. Generated declarations are absent;
+no PTR native proof, rendering, indirect parenting/update effect or event is
+claimed from this applicability inference.
 
 ### R60 shared GameMode display selection and high-resolution capability
 
