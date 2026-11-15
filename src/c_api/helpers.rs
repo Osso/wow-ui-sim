@@ -159,23 +159,7 @@ pub(crate) fn register_namespace_function_with_flags(
     function: rilua::RustFn,
     flags: u8,
 ) -> LuaResult<()> {
-    let (publish_global, publish_secure) =
-        crate::lua_api::globals::security::native_registration_destinations(flags);
-    let global_parent = state.global;
-    let ordinary = publish_global.then(|| ensure_table_at_parent(state, global_parent, namespace));
-    let secure_parent = if publish_secure {
-        match crate::lua_api::methods::registry_get(state, "__secureenv") {
-            Val::Table(parent) => Some(parent),
-            _ => None,
-        }
-    } else {
-        None
-    };
-    let secure = secure_parent.map(|parent| ensure_table_at_parent(state, parent, namespace));
-
-    if let (Some(ordinary), Some(secure)) = (ordinary, secure) {
-        crate::lua_bridge::set_namespace_peer(state, ordinary, secure)?;
-    }
+    let (ordinary, secure) = ensure_namespace_tables_for_flags(state, namespace, flags)?;
     match (ordinary, secure) {
         (Some(ordinary), Some(secure)) => {
             table_set_rust_fn_unpaired(state, ordinary, member, function)?;
@@ -193,14 +177,11 @@ pub(crate) fn register_namespace_function_with_flags(
     Ok(())
 }
 
-/// Register one existing namespace value with its per-member native flags.
-pub(crate) fn register_namespace_value_with_flags(
+fn ensure_namespace_tables_for_flags(
     state: &mut LuaState,
     namespace: &str,
-    member: &str,
-    value: Val,
     flags: u8,
-) -> LuaResult<()> {
+) -> LuaResult<(Option<GcRef<Table>>, Option<GcRef<Table>>)> {
     let (publish_global, publish_secure) =
         crate::lua_api::globals::security::native_registration_destinations(flags);
     let global_parent = state.global;
@@ -218,6 +199,18 @@ pub(crate) fn register_namespace_value_with_flags(
     if let (Some(ordinary), Some(secure)) = (ordinary, secure) {
         crate::lua_bridge::set_namespace_peer(state, ordinary, secure)?;
     }
+    Ok((ordinary, secure))
+}
+
+/// Register one existing namespace value with its per-member native flags.
+pub(crate) fn register_namespace_value_with_flags(
+    state: &mut LuaState,
+    namespace: &str,
+    member: &str,
+    value: Val,
+    flags: u8,
+) -> LuaResult<()> {
+    let (ordinary, secure) = ensure_namespace_tables_for_flags(state, namespace, flags)?;
     if let Some(ordinary) = ordinary {
         crate::lua_api::methods::table_set(state, Val::Table(ordinary), member, value);
     }
