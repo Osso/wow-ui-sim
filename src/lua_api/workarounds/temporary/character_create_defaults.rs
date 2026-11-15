@@ -454,6 +454,7 @@ function C_CharacterCreation.GetAvailableCustomizations()
 end
 "#;
 
+#[cfg(not(feature = "client-retail"))]
 const CHARACTER_CREATE_DEFAULTS_WORKAROUND_LUA: &str = r#"
 local clear_altered_form_after_race_change = rawget(_G, "__wow_character_create_clear_altered_form_after_race_change")
 local clear_altered_form_when_race_has_no_model = rawget(_G, "__wow_character_create_clear_altered_form_when_race_has_no_model")
@@ -536,6 +537,7 @@ if type(CharacterCreateMixin) == "table" and type(CharacterCreateMixin.CreateCha
 end
 "#;
 
+#[cfg(not(feature = "client-retail"))]
 const CHARACTER_CREATE_DEFAULTS_WORKAROUND_TAIL_LUA: &str = r#"
 
 if type(CharacterCreateRaceAndClassMixin) == "table" and type(CharacterCreateRaceAndClassMixin.GetCreateCharacterFaction) == "function" and not rawget(_G, "__wow_character_create_faction_patched") then
@@ -663,6 +665,7 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 
 pub(crate) fn patch(env: &WowLuaEnv) {
     let source = [
+        #[cfg(not(feature = "client-retail"))]
         CHARACTER_CREATE_DEFAULTS_WORKAROUND_LUA,
         #[cfg(not(any(
             feature = "client-retail",
@@ -670,6 +673,7 @@ pub(crate) fn patch(env: &WowLuaEnv) {
             feature = "client-ptr"
         )))]
         CHARACTER_CREATION_SUBMIT_MIXIN_GUESS_LUA,
+        #[cfg(not(feature = "client-retail"))]
         CHARACTER_CREATE_DEFAULTS_WORKAROUND_TAIL_LUA,
     ]
     .concat();
@@ -681,6 +685,7 @@ mod tests {
     use super::*;
 
     #[test]
+    #[cfg(not(feature = "client-retail"))]
     fn seeds_initial_character_create_state_and_buttons() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
         env.exec(
@@ -868,6 +873,7 @@ mod tests {
     }
 
     #[test]
+    #[cfg(not(feature = "client-retail"))]
     fn background_overlay_fallback_sets_array_or_single_texture_alpha() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
         env.exec(
