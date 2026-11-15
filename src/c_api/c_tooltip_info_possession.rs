@@ -177,7 +177,8 @@ fn read_object_input(state: &mut LuaState, value: Val) -> LuaResult<PossessionOb
     }
     let identity_first = read_u32(table_get(state, value, "identityFirst"), "identityFirst")?;
     let identity_second = read_u32(table_get(state, value, "identitySecond"), "identitySecond")?;
-    let candidates = read_candidate_inputs(state, table_get(state, value, "candidates"))?;
+    let candidate_list = table_get(state, value, "candidates");
+    let candidates = read_candidate_inputs(state, candidate_list)?;
     Ok(PossessionObjectInput {
         identity_first,
         identity_second,
