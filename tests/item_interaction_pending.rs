@@ -111,7 +111,7 @@ fn select_from_original_flyout(env: &WowLuaEnv, slot: u32) {
         ItemInteractionFrame:SetDynamicFlyoutSettings()
         local button = ItemInteractionFrame.ItemConversionFrame.ItemConversionInputSlot
         button:SetItemLocation(ItemLocation:CreateFromBagAndSlot(0, {slot}))
-        PendingOrderEvents = {}
+        PendingOrderEvents = {{}}
         ItemInteractionFrame.flyoutSettings.onClickFunc(button)
         "#
     ))
