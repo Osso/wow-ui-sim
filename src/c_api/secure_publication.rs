@@ -295,43 +295,36 @@ fn publish_to_both(
     previous_ordinary: Val,
     previous_secure: Val,
 ) -> LuaResult<bool> {
-    match (function_value(ordinary), function_value(secure)) {
-        (Some(ordinary), Some(secure)) => {
-            update_changed_dual_handler(
-                state,
-                namespace,
-                member,
-                flag,
-                ordinary,
-                secure,
-                previous_ordinary,
-                previous_secure,
-            )?;
-            Ok(true)
-        }
-        (Some(function), None) => {
-            set_member_in_both(state, namespace, member, function, flag)?;
-            Ok(true)
-        }
-        (None, Some(function)) if !matches!(previous_ordinary, Val::Function(_)) => {
-            set_member_in_both(state, namespace, member, function, flag)?;
-            Ok(true)
-        }
-        (None, Some(_)) => {
-            remove_namespace_member(state, namespace, member, true, true)?;
-            Ok(false)
-        }
-        (None, None) => {
-            remove_stale_secure_handler(
-                state,
-                namespace,
-                member,
-                previous_ordinary,
-                previous_secure,
-            )?;
-            Ok(false)
-        }
+    let ordinary = function_value(ordinary);
+    let secure = function_value(secure);
+    if let (Some(ordinary), Some(secure)) = (ordinary, secure) {
+        update_changed_dual_handler(
+            state,
+            namespace,
+            member,
+            flag,
+            ordinary,
+            secure,
+            previous_ordinary,
+            previous_secure,
+        )?;
+        return Ok(true);
     }
+
+    let function = ordinary.or(secure);
+    if let Some(function) = function
+        && !(ordinary.is_none() && matches!(previous_ordinary, Val::Function(_)))
+    {
+        set_member_in_both(state, namespace, member, function, flag)?;
+        return Ok(true);
+    }
+
+    if secure.is_some() || matches!(previous_ordinary, Val::Function(_)) {
+        remove_namespace_member(state, namespace, member, true, true)?;
+    } else {
+        remove_stale_secure_handler(state, namespace, member, previous_ordinary, previous_secure)?;
+    }
+    Ok(false)
 }
 
 fn update_changed_dual_handler(
