@@ -132,6 +132,24 @@ fn select_from_original_location(env: &WowLuaEnv, location: &str) {
     .unwrap();
 }
 
+fn attempt_absent_from_original_location(env: &WowLuaEnv, location: &str) {
+    env.exec(&format!(
+        r#"
+        ItemInteractionFrame:SetupEquipmentFlyout(true)
+        ItemInteractionFrame:SetDynamicFlyoutSettings()
+        local button = ItemInteractionFrame.ItemConversionFrame.ItemConversionInputSlot
+        button.itemLocation = {location}
+        PendingOrderEvents = {{}}
+        local onClick = ItemInteractionFrame.flyoutSettings.onClickFunc
+        assert(debug.getinfo(onClick, "S").source:find("Blizzard_ItemInteractionUI.lua", 1, true))
+        local ok, reason = pcall(onClick, button)
+        assert(not ok and tostring(reason):find("SetPendingItem", 1, true))
+        assert(#PendingOrderEvents == 0)
+        "#
+    ))
+    .unwrap();
+}
+
 fn select_from_original_flyout(env: &WowLuaEnv, slot: u32) {
     select_from_original_location(
         env,
@@ -576,22 +594,20 @@ fn pending_item_truncates_location_fields_toward_zero() {
     select_from_original_location(&env, "ItemLocation:CreateFromBagAndSlot(-0.9, 2.9)");
     assert_bag_slot_locked(&env, 0, 2, true);
     assert_selected_tooltip(&env, 2);
-    let absent: bool = env
+    let cleared: bool = env
         .eval("return C_ItemInteraction.SetPendingItem(nil)")
         .unwrap();
-    assert!(!absent);
+    assert!(!cleared);
     assert_bag_slot_locked(&env, 0, 2, false);
     assert_no_selected_tooltip(&env);
 
     select_from_original_location(&env, "ItemLocation:CreateFromBagAndSlot(0.9, 1.9)");
     assert_bag_slot_locked(&env, 0, 1, true);
     assert_selected_tooltip(&env, 1);
-    let absent: bool = env
-        .eval("return C_ItemInteraction.SetPendingItem(nil)")
-        .unwrap();
-    assert!(!absent);
-    assert_bag_slot_locked(&env, 0, 1, false);
-    assert_no_selected_tooltip(&env);
+    attempt_absent_from_original_location(&env, "ItemLocation:CreateFromBagAndSlot(0.9, 4.9)");
+    assert_bag_slot_locked(&env, 0, 1, true);
+    assert_bag_slot_locked(&env, 0, 4, false);
+    assert_selected_tooltip(&env, 1);
 }
 
 #[test]
@@ -603,10 +619,10 @@ fn pending_item_uses_bag_fields_when_equipment_field_is_not_numeric() {
     );
     assert_bag_slot_locked(&env, 0, 1, true);
     assert_selected_tooltip(&env, 1);
-    let absent: bool = env
+    let cleared: bool = env
         .eval("return C_ItemInteraction.SetPendingItem(nil)")
         .unwrap();
-    assert!(!absent);
+    assert!(!cleared);
     assert_bag_slot_locked(&env, 0, 1, false);
     assert_no_selected_tooltip(&env);
 
@@ -616,12 +632,13 @@ fn pending_item_uses_bag_fields_when_equipment_field_is_not_numeric() {
     );
     assert_bag_slot_locked(&env, 0, 2, true);
     assert_selected_tooltip(&env, 2);
-    let absent: bool = env
-        .eval("return C_ItemInteraction.SetPendingItem(nil)")
-        .unwrap();
-    assert!(!absent);
-    assert_bag_slot_locked(&env, 0, 2, false);
-    assert_no_selected_tooltip(&env);
+    attempt_absent_from_original_location(
+        &env,
+        "(function() local location = ItemLocation:CreateEmpty(); location.equipmentSlotIndex = false; location.bagID = 0; location.slotIndex = 4; return location end)()",
+    );
+    assert_bag_slot_locked(&env, 0, 2, true);
+    assert_bag_slot_locked(&env, 0, 4, false);
+    assert_selected_tooltip(&env, 2);
 }
 
 #[test]
