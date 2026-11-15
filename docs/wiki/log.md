@@ -1,3 +1,7 @@
+## [2026-11-15] correction | Retail tooltip sell-price contract
+
+Updated the [tooltip serialization contract](../specs/tooltip-data-serialization.md) and [Lua API](systems/lua-api.md#retail-sellprice-line-r88pp1). **VERIFIED (R88p.p1):** an initial zero price omits type 11; emitted rows have empty text, default color, and `maxPrice` initialized to -1. The original Retail `SetItemByID` test checks two distinct backed prices and a zero-price item. **INFERRED:** `ItemInfo.sell_price` proxies the native unit-price calculation and the native masks map to ItemSparse column names. **UNKNOWN/unmodeled:** flag/status/preview and prepared-quantity inputs are absent from `ItemInfo`.
+
 ## [2026-11-14] implementation | Item-interaction TooltipData boundary
 
 [Round 7 tooltip getters](../specs/tooltip-r7-getters.md) records R88n.1's absent and failed producer no-values paths and the other-kind empty-lines table. The Retail host seam has no writer or seed; the original ItemInteraction tooltip path and separate API shape tests distinguish these cases.
@@ -9,6 +13,10 @@
 ## [2026-11-14] investigation | Screen-clamp state and evidence gaps
 
 [Screen-clamp suppression](investigations/screen-clamp-suppression.md) records the pre-edit R88n.5r-q1/q2 gap table, unambiguous model corrections, and pending native propagation/unit/notification questions. No movement-to-suppression alias is inferred.
+
+## [2026-11-14] investigation | Spellbook R88m.4 boundaries
+
+[Spellbook follow-ups](investigations/spellbook-r88m4-followups.md) records eleven API dispositions, Retail census-absent alias retirement, verified arity/input boundaries, explicit pet/link/selection/cooldown seams, and original consumer PRESERVATION versus API RED proof. Follow-up review requires each decisive Find/AutoCast/LoC selector to include contrasting outcomes independently; narrow validation and no-data cases are labelled limited boundary evidence.
 
 ## [2026-11-14] correction | Inventory name-adapter evidence
 

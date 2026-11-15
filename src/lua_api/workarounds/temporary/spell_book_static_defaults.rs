@@ -7,12 +7,6 @@
 const SPELL_BOOK_STATIC_DEFAULTS_LUA: &str = r#"
 C_SpellBook = C_SpellBook or __wow_namespace()
 
-if rawget(C_SpellBook, "GetOverrideSpell") == nil then
-    function C_SpellBook.GetOverrideSpell(spellID)
-        return spellID
-    end
-end
-
 if rawget(C_SpellBook, "FindSpellOverrideByID") == nil then
     function C_SpellBook.FindSpellOverrideByID(spellID)
         return spellID
@@ -53,12 +47,12 @@ end
 
 "#;
 
-const RETAIL_CALL_PET_INFO_LUA: &str = r#"
-if rawget(_G, "GetCallPetSpellInfo") == nil then
-    function GetCallPetSpellInfo(spellID)
-        if type(spellID) ~= "number" then
-            error("Usage: GetCallPetSpellInfo(spellID)", 0)
-        end
+// Match the Rust publication boundary; otherwise bootstrap resurrects the
+// retired Retail alias. Other clients retain their existing fallback.
+const NON_RETAIL_OVERRIDE_ALIAS_LUA: &str = r#"
+if rawget(C_SpellBook, "GetOverrideSpell") == nil then
+    function C_SpellBook.GetOverrideSpell(spellID)
+        return spellID
     end
 end
 "#;
@@ -74,8 +68,9 @@ end
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(SPELL_BOOK_STATIC_DEFAULTS_LUA)?;
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
-        lua.exec(RETAIL_CALL_PET_INFO_LUA)?;
+        super::retail_spellbook_legacy::register_call_pet(lua)?;
     } else {
+        lua.exec(NON_RETAIL_OVERRIDE_ALIAS_LUA)?;
         lua.exec(NON_RETAIL_CALL_PET_INFO_LUA)?;
     }
     Ok(())
