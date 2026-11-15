@@ -398,6 +398,27 @@ fn retail_negative_map_id_resolution_uses_verified_semantics() {
     assert!(result.8, "an absent AreaTable row must not raise");
 }
 
+#[cfg(all(
+    feature = "optional-tests",
+    feature = "profile-retail",
+    feature = "retail-12-1-5"
+))]
+#[test]
+fn retail_map_2147_inferred_continent_id_compatibility() {
+    let result = retail_negative_map_probe(&env());
+    assert_eq!(result.0, 2);
+    // INFERRED compatibility: R88x does not name the native unsigned-16 field.
+    assert_eq!(result.1, 2444, "INFERRED: AreaTable.ContinentID mapping");
+    // INFERRED: coordinates use the R88i.41 axis-swapped projection.
+    assert!((result.2 - -56.25).abs() < 0.01);
+    assert!((result.3 - 602.0996).abs() < 0.01);
+    assert_eq!(result.4, 2);
+    assert_eq!(result.5, 2444, "INFERRED: AreaTable.ContinentID mapping");
+    assert!((result.6 - -4302.085).abs() < 0.01);
+    assert!((result.7 - 6970.8496).abs() < 0.01);
+    assert_eq!(result.9, 0, "INFERRED: no eligible row returns no values");
+}
+
 #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
 #[test]
 fn retail_map_assignment_uses_nearest_center_for_overlapping_rows() {
