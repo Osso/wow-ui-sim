@@ -5,12 +5,12 @@
 //!
 //! - `state.active_player_interactions: HashSet<i32>` — the set of
 //!   `Enum.PlayerInteractionType` values whose corresponding NPC dialog is
-//!   currently open. `ClearInteraction(type)` removes the entry and fires
-//!   the matching close event so any addon listener observes the same
-//!   shape it would in a real client.
+//!   currently open. `ClearInteraction(type)` removes an active entry, fires
+//!   its mapped close event when present, then requests the generic manager-hide
+//!   notification with the interaction type outside Wrath.
 //!
-//! Only the close-event mapping the project currently consumes is wired
-//! up. New interaction types should add a row to
+//! Only the type-specific close-event mapping the project currently consumes
+//! is wired up. New interaction types should add a row to
 //! [`close_event_for_interaction`] when their addon code lands.
 
 use crate::c_api::helpers::ensure_namespace;
