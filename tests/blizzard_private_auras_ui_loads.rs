@@ -561,7 +561,7 @@ fn retail_secure_shared_xml_publishes_account_store_constants() {
         "the secure GameRulesUtil.lua AccountStoreConsts consumer must run: {consumer_errors:?}"
     );
 
-    let constants: (bool, bool, bool, bool, bool, f64, f64, f64, f64) = env
+    let constants: (bool, bool, bool, bool, bool, bool, f64, f64, f64, f64) = env
         .eval(
             r#"
             local ordinaryConstants = rawget(_G, "Constants")
