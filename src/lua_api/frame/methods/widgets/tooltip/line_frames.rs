@@ -76,19 +76,39 @@ fn ensure_tooltip_line_id(
     if let Some(existing_id) =
         find_existing_tooltip_line_id(state, tooltip_id, right_side, line_index)
     {
-        if matches!(
-            crate::client_profile::ACTIVE,
-            crate::client_profile::ClientProfile::Wrath
-                | crate::client_profile::ClientProfile::Retail
-                | crate::client_profile::ClientProfile::Ptr
-                | crate::client_profile::ClientProfile::WowForever
-        ) {
-            let mut sim = borrow_state_mut(state)?;
-            record_tooltip_line_child_id(&mut sim, tooltip_id, existing_id, right_side, line_index);
-        }
+        record_existing_tooltip_line_id(state, tooltip_id, existing_id, right_side, line_index)?;
         return Ok(Some(existing_id));
     }
+    create_tooltip_line_id(state, tooltip_id, right_side, line_index).map(Some)
+}
 
+fn record_existing_tooltip_line_id(
+    state: &mut LuaState,
+    tooltip_id: u64,
+    line_id: u64,
+    right_side: bool,
+    line_index: usize,
+) -> LuaResult<()> {
+    if !matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Wrath
+            | crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::Ptr
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        return Ok(());
+    }
+    let mut sim = borrow_state_mut(state)?;
+    record_tooltip_line_child_id(&mut sim, tooltip_id, line_id, right_side, line_index);
+    Ok(())
+}
+
+fn create_tooltip_line_id(
+    state: &mut LuaState,
+    tooltip_id: u64,
+    right_side: bool,
+    line_index: usize,
+) -> LuaResult<u64> {
     let name = tooltip_line_name(state, tooltip_id, right_side, line_index);
     let child_id = create_frame_instance(
         state,
@@ -100,12 +120,10 @@ fn ensure_tooltip_line_id(
         None,
     )?;
     apply_body_font_to_synthesized_line(state, tooltip_id, child_id, right_side, line_index)?;
-    {
-        let mut sim = borrow_state_mut(state)?;
-        configure_tooltip_line_child(&mut sim, child_id, right_side, line_index);
-        record_tooltip_line_child_id(&mut sim, tooltip_id, child_id, right_side, line_index);
-    }
-    Ok(Some(child_id))
+    let mut sim = borrow_state_mut(state)?;
+    configure_tooltip_line_child(&mut sim, child_id, right_side, line_index);
+    record_tooltip_line_child_id(&mut sim, tooltip_id, child_id, right_side, line_index);
+    Ok(child_id)
 }
 
 /// A tooltip declares two font slots: `textLeft1Font`/`textRight1Font` for row 1
