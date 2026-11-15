@@ -6,6 +6,14 @@
 
 Updated the [tooltip serialization contract](../specs/tooltip-data-serialization.md) and [Lua API](systems/lua-api.md#retail-sellprice-line-r88pp1). **VERIFIED (R88p.p1):** an initial zero price omits type 11; emitted rows have empty text, default color, and `maxPrice` initialized to -1. The original Retail `SetItemByID` test checks two distinct backed prices and a zero-price item. **INFERRED:** `ItemInfo.sell_price` proxies the native unit-price calculation and the native masks map to ItemSparse column names. **UNKNOWN/unmodeled:** flag/status/preview and prepared-quantity inputs are absent from `ItemInfo`.
 
+## [2026-11-15] revision | Possession writer evidence boundary
+
+Updated the [Round 7 contract](../specs/tooltip-r7-getters.md) and [Lua API](systems/lua-api.md#possession-state-writer-r88o2-q5). **VERIFIED (R88o.2-q5):** the candidate-selection and write/event core is separate from object association. **INFERRED (R88o.2-q5:13009–13010, 13016; R88n.4a:12570–12571):** current-player ownership and exact two-part identity matching project the native object-resolution path. Each of the five effect selectors now checks an absent input and two distinct spell IDs.
+
+## [2026-11-14] implementation | Retail possession state writer
+
+[Round 7 contract](../specs/tooltip-r7-getters.md) and [Lua API](systems/lua-api.md#possession-state-writer-r88o2-q5) record R88o.2-q5. **VERIFIED (Retail 12.1.5.70688):** local setter/rescan/clear order, change-only `UPDATE_POSSESS_BAR` requests, candidate filters and first-match selection. **VERIFIED (simulator source):** host/admin object and candidate inputs start empty; only spell-presence checks use the existing spell catalog. **INFERRED:** the candidate collection belongs to current-player state. **UNKNOWN:** external triggers, object acquisition, cooldown and number-display inputs remain unmodeled. **VERIFIED (RED at base `528080463b7052da0fe9f56bfba6fe0e2f8c7a7f`; test-only commit `e573c0d71b777eb621ed8ca42b64a1c06910ebb1`):** the original-consumer selector failed because `A_Admin.SetPossessionObject` was absent. **VERIFIED (GREEN at `458beb9e5da674428a975e07f05b8d84a38ca650`):** all 24 `tooltip_r7_selected` tests pass. **VERIFIED (compile receipts at the same implementation/test source):** Retail, PTR, Forever, Mists and Wrath `--lib --test integration --no-run` builds each report zero warnings.
+
 ## [2026-11-14] implementation | Item-interaction TooltipData boundary
 
 [Round 7 tooltip getters](../specs/tooltip-r7-getters.md) records R88n.1's absent and failed producer no-values paths and the other-kind empty-lines table. The Retail host seam has no writer or seed; the original ItemInteraction tooltip path and separate API shape tests distinguish these cases.

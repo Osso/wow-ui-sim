@@ -2,6 +2,14 @@
 
 [Spell-count corrections](investigations/spell-count-r88p.md) records six executable historical boundaries, native-backed signed widths/storage traversal, isolated R88r numeric/secret corrections, and inferred Forever original-consumer coverage. Property decoding, detailed eligibility and exceptional-number outcomes remain explicit gaps.
 
+## [2026-11-15] revision | Possession writer evidence boundary
+
+[Round 7 contract](../specs/tooltip-r7-getters.md) and [Lua API](systems/lua-api.md#possession-state-writer-r88o2-q5) separate verified writer rules from the simulator's host projection. **VERIFIED (R88o.2-q5):** selection, ID writes and change-only event requests. **INFERRED (R88o.2-q5:13009–13010, 13016; R88n.4a:12570–12571):** current-player snapshot ownership and exact two-part object matching. Each effect selector tests absent input plus two distinct backed spell IDs.
+
+## [2026-11-14] implementation | Retail possession state writer
+
+[Round 7 contract](../specs/tooltip-r7-getters.md) and [Lua API](systems/lua-api.md#possession-state-writer-r88o2-q5) record R88o.2-q5. **VERIFIED (Retail 12.1.5.70688):** local possession writes, change-only event requests, candidate order and selector rules. **VERIFIED (simulator source):** empty-by-default host/admin inputs supply object and candidate data; the spell catalog supplies presence checks only. **INFERRED:** the collection belongs to current-player state. **UNKNOWN:** external triggers and candidate acquisition. **VERIFIED (test SHA `458beb9e5da674428a975e07f05b8d84a38ca650`):** all 24 selected Retail integration tests pass; five requested profile compile receipts have zero warnings.
+
 ## [2026-11-14] implementation | Achievement eligibility and tracker colors
 
 [Achievement eligibility](../specs/achievement-eligibility.md) records R88o.1's Retail argument/Boolean contract, missing record/group versus null tree, and supplied cache comparisons. Original tracker #6 uses the zero-visible branch; positive visible counts use a different per-criterion getter. PTR/Forever binding is inferred from their selected original Lua. New simulator input stays empty by default; no event substitutes or live cache writer claims.
