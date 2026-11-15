@@ -2,6 +2,7 @@ use super::super::LoadTiming;
 use super::super::addon::AddonContext;
 use super::super::lua_file::load_lua_file;
 use super::super::xml_file::load_xml_file;
+use crate::loader::load_addon;
 use crate::lua_api::WowLuaEnv;
 use crate::lua_api::methods::{create_string, table_set_static};
 use crate::xml::parse_xml_file;
@@ -442,11 +443,25 @@ fn secure_retail_scoped_handler_uses_only_the_given_environment() {
     let env = WowLuaEnv::new().unwrap();
     env.exec("__secureenv.ScopedSecureOnlyValue = 'secure-only'")
         .unwrap();
-    let temp_dir = std::env::temp_dir().join("wow-sim-test-retail-secure-handler-env");
-    std::fs::create_dir_all(&temp_dir).unwrap();
-    let xml_path = temp_dir.join("test.xml");
+    let temp_dir = tempfile::tempdir().unwrap();
+    let addon_dir = temp_dir.path().join("TestSecureAddon");
+    std::fs::create_dir(&addon_dir).unwrap();
+    let toc_path = addon_dir.join("TestSecureAddon.toc");
     std::fs::write(
-        &xml_path,
+        &toc_path,
+        format!(
+            "## Interface: {}\n## UseSecureEnvironment: 1\nSetup.lua\nTestSecureAddon.xml\n",
+            crate::client_profile::RETAIL_API_INTERFACE_VERSION
+        ),
+    )
+    .unwrap();
+    std::fs::write(
+        addon_dir.join("Setup.lua"),
+        "local _, addon = ...\naddon.ScopedAddonValue = 'addon-only'\n",
+    )
+    .unwrap();
+    std::fs::write(
+        addon_dir.join("TestSecureAddon.xml"),
         r#"<Ui>
             <ScopedModifier scriptsUseGivenEnv="true">
                 <Frame name="ScopedRetailSecureHandlerFrame">
@@ -462,31 +477,7 @@ fn secure_retail_scoped_handler_uses_only_the_given_environment() {
     )
     .unwrap();
 
-    let addon_table = env.create_addon_table().unwrap();
-    {
-        let mut lua = env.rilua_mut();
-        let state = lua.state_mut();
-        let addon_value = create_string(state, "addon-only");
-        table_set_static(state, addon_table, "ScopedAddonValue", addon_value);
-    }
-    let ctx = AddonContext::new(
-        env.lua(),
-        "TestSecureAddon",
-        addon_table,
-        &temp_dir,
-        true,
-        false,
-    )
-    .unwrap();
-
-    load_xml_file(
-        &env.loader_env(),
-        &xml_path,
-        &ctx,
-        &mut LoadTiming::default(),
-        &mut Vec::new(),
-    )
-    .unwrap();
+    load_addon(&env.loader_env(), &toc_path).unwrap();
 
     let (addon_value, secure_value_is_nil): (String, bool) = env
         .eval(
@@ -504,5 +495,4 @@ fn secure_retail_scoped_handler_uses_only_the_given_environment() {
         "the handler must not fall back to __secureenv"
     );
     assert!(env.state().borrow().lua_errors.is_empty());
-    std::fs::remove_dir_all(&temp_dir).unwrap();
 }
