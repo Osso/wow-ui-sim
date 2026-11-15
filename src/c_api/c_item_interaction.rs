@@ -138,23 +138,39 @@ fn parse_pending_item(state: &mut LuaState, location: Val) -> LuaResult<Option<P
     }
     let slot = crate::c_api::item_upgrade_eligibility::read_item_slot(state, location.clone())
         .ok_or_else(|| rilua::runtime_error(SET_PENDING_ITEM_USAGE))?;
-    let Some((item_id, _)) = crate::c_api::item_spell::location_item(state, location) else {
+    let Some((item_id, from_cursor)) = pending_item_at_location(state, slot)? else {
         return selected_item_at_location(state, slot);
     };
-    let identity = ensure_item_identity(state, slot)?;
+    let identity = ensure_item_identity(state, slot, from_cursor)?;
     Ok(identity.map(|identity| pending_item(item_id, slot, identity)))
 }
 
-fn ensure_item_identity(state: &mut LuaState, slot: ItemSlot) -> LuaResult<Option<u64>> {
+fn pending_item_at_location(state: &LuaState, slot: ItemSlot) -> LuaResult<Option<(u32, bool)>> {
     if cursor_origin_matches(state, slot)? {
-        let mut sim = borrow_state_mut(state)?;
-        Ok(crate::c_api::item_spell::item_equip::ensure_cursor_identity(&mut sim))
-    } else {
-        let mut sim = borrow_state_mut(state)?;
-        Ok(crate::c_api::item_spell::item_equip::ensure_identity(
-            &mut sim, slot,
-        ))
+        let sim = borrow_state(state)?;
+        let Some(CursorInfo::Item { item_id, .. }) = sim.cursor_item.as_ref() else {
+            return Ok(None);
+        };
+        return Ok((*item_id != 0).then_some((*item_id, true)));
     }
+    let sim = borrow_state(state)?;
+    Ok(slot
+        .item_id(&sim)
+        .filter(|item_id| *item_id != 0)
+        .map(|item_id| (item_id, false)))
+}
+
+fn ensure_item_identity(
+    state: &mut LuaState,
+    slot: ItemSlot,
+    from_cursor: bool,
+) -> LuaResult<Option<u64>> {
+    let mut sim = borrow_state_mut(state)?;
+    Ok(if from_cursor {
+        crate::c_api::item_spell::item_equip::ensure_cursor_identity(&mut sim)
+    } else {
+        crate::c_api::item_spell::item_equip::ensure_identity(&mut sim, slot)
+    })
 }
 
 fn cursor_origin_matches(state: &LuaState, slot: ItemSlot) -> LuaResult<bool> {

@@ -66,7 +66,7 @@ fn load_original_item_interaction(env: &WowLuaEnv) {
 
 fn add_backed_items(env: &WowLuaEnv) {
     env.exec(&format!(
-        "A_Admin.ClearBags(); A_Admin.AddBagItem(0, 1, {ITEM_A}, 1); A_Admin.AddBagItem(0, 2, {ITEM_B}, 1); A_Admin.AddBagItem(0, 3, {CURSOR_ITEM}, 1)"
+        "A_Admin.ClearBags(); A_Admin.AddBagItem(0, 1, {ITEM_A}, 1); A_Admin.AddBagItem(0, 2, {ITEM_B}, 1); A_Admin.AddBagItem(0, 3, {CURSOR_ITEM}, 1); PendingLocationIDs = {{['0:1']={ITEM_A}, ['0:2']={ITEM_B}}}"
     ))
     .unwrap();
 }
@@ -86,8 +86,9 @@ fn install_event_probe(env: &WowLuaEnv) {
         PendingEventProbe:SetScript("OnEvent", function(_, event, location)
             table.insert(PendingOrderEvents, event)
             if event == "ITEM_INTERACTION_ITEM_SELECTION_UPDATED" then
-                table.insert(PendingSelectionEvents,
-                    location and C_Item.GetItemID(location) or false)
+                table.insert(PendingSelectionEvents, location
+                    and PendingLocationIDs[location.bagID .. ":" .. location.slotIndex]
+                    or false)
             end
         end)
         "#,

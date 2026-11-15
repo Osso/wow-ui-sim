@@ -71,7 +71,7 @@ The Round 7 `C_TooltipInfo` getters use native argument readers and tooltip buil
 - `src/c_api/c_item_interaction.rs` — pending-item lifecycle API and same-object selection state updates.
 - `src/c_api/c_tooltip_info_round7.rs` and `src/lua_api/state/sim_state.rs` — the shared empty-by-default item-interaction object, host acceptance observations, and producer values.
 - `src/c_api/tooltip_getter_args.rs` — shared native-style argument checks.
-- `src/c_api/item_spell/c_item.rs` — item-location resolution, including a cursor-held item at its source location, and the `GetItemNumSockets` secret argument gate.
+- `src/c_api/item_upgrade_eligibility.rs` — strict bag/equipment `ItemLocation` parsing and slot-to-item resolution used by the setter.
 - `src/c_api/item_spell/item_equip.rs` — owned-item identity and effective lock transitions reused by pending selection.
 - `src/c_api/c_player_interaction_manager.rs` and `src/lua_api/globals/inventory_verbs.rs` — generic interaction close and the existing cursor-clear operation.
 - `src/lua_api/globals/missing_surface/tooltip_info/mod.rs` — modern tooltip registration and Round 7 builder bridges.
