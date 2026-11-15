@@ -33,6 +33,15 @@ consumer evidence. The test and XML `parentArray` root-cause fix are recorded in
 Authentication parenting, secure/public binding and Submit behavior are outside
 this retirement.
 
+### Store Glue VAS fallback replacement
+
+[R88q Store Glue state](../../specs/store-glue-r88q.md) replaces the five guessed
+`store_glue_state.rs` getters/request functions on modeled profiles with explicit
+empty host inputs and native-backed returning paths. Other profiles retain their
+compatibility surface. Product/group and unrelated Store compatibility remain
+outside this retirement. Unknown GUID parsing, response payloads and lifecycle
+routes are not filled with guessed behavior.
+
 ### Remaining temporary hooks
 
 These hooks are not duplicate call paths in the current loader. They stay as

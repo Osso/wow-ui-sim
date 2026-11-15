@@ -2533,3 +2533,840 @@ mod storeglue_r88q_tuple {
         }
     }
 }
+
+// Host input structs are simulator seams, not claims about native packet names
+// or record acquisition. Tests invoke the original selected Glue consumers.
+#[cfg(feature = "optional-tests")]
+mod storeglue_r88q_host {
+    use super::r88q_routes::{
+        self as c_store_glue, CompletionInput, VasPurchaseRecord, VasQueueCharacter,
+    };
+    use super::*;
+
+    const A: &str = "fixture-vas-a";
+    const B: &str = "fixture-vas-b";
+    const ABSENT: &str = "fixture-vas-absent";
+
+    fn record(product_id: i32, state: i32, errors: &[i32]) -> VasPurchaseRecord {
+        VasPurchaseRecord {
+            product_id,
+            state,
+            errors: errors.to_vec(),
+        }
+    }
+
+    fn fixture() -> common::LockedEnv {
+        let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+        seed_r88q_product_inputs(&env);
+        c_store_glue::seed(
+            &env,
+            vec![
+                (A.into(), record(2003, 3, &[17, 0, -4])),
+                (B.into(), record(189, 4, &[0, 29])),
+            ],
+            vec![
+                VasQueueCharacter {
+                    guid: A.into(),
+                    correlation: vec![21],
+                },
+                VasQueueCharacter {
+                    guid: B.into(),
+                    correlation: vec![43],
+                },
+            ],
+            &[A, B, ABSENT],
+        );
+        assert_original_owners(&env);
+        env
+    }
+
+    fn assert_records(env: &WowLuaEnv) {
+        env.exec(R88Q_LUA_03).unwrap();
+    }
+
+    fn install_listener(env: &WowLuaEnv) {
+        c_store_glue::install_callbacks(env);
+        env.exec(R88Q_LUA_04).unwrap();
+    }
+
+    fn assert_original_owners(env: &WowLuaEnv) {
+        env.exec(R88Q_LUA_05).unwrap();
+    }
+
+    #[test]
+    fn shared_boolean_writers_drive_original_glue_show_and_update() {
+        test_timeout! {
+            if wow_ui_sim::client_profile::ACTIVE != wow_ui_sim::client_profile::ClientProfile::Retail { return; }
+            let env = fixture();
+            assert_records(&env);
+            assert_original_owners(&env);
+            env.exec(R88Q_LUA_06).unwrap();
+            assert_records(&env);
+            refresh_request_controls(&env);
+        }
+    }
+
+    // q5 request-side assertions are separate from response-event expectations.
+    fn refresh_request_controls(env: &WowLuaEnv) {
+        let before = c_store_glue::submission_count(env);
+        env.exec("assert(select('#', C_StoreGlue.UpdateVASPurchaseStates(nil, false, {})) == 0)")
+            .unwrap();
+        assert_eq!(c_store_glue::submission_count(env), before + 1);
+        c_store_glue::set_connection(env, false);
+        env.exec("C_StoreGlue.UpdateVASPurchaseStates()").unwrap();
+        assert_eq!(c_store_glue::submission_count(env), before + 1);
+        assert_records(env); // Request did not synchronously mutate either record or fabricate absence.
+    }
+
+    fn make_queue_rows(env: &WowLuaEnv) {
+        env.exec(R88Q_LUA_07).unwrap();
+    }
+
+    #[test]
+    fn queue_requests_and_responses_drive_original_rows_and_event_owner() {
+        test_timeout! {
+            if wow_ui_sim::client_profile::ACTIVE != wow_ui_sim::client_profile::ClientProfile::Retail { return; }
+            let env = fixture();
+            assert_records(&env);
+            install_listener(&env);
+            make_queue_rows(&env);
+            let request_counts = queue_requests(&env);
+            c_store_glue::receive_queue_response(&env, &[99], 91).unwrap();
+            c_store_glue::receive_queue_response(&env, &[21], -17).unwrap();
+            c_store_glue::receive_queue_response(&env, &[43], 29).unwrap();
+            env.exec(R88Q_LUA_08).unwrap();
+            assert_eq!(request_counts, [2, 2, 3, 3, 3]);
+        }
+    }
+
+    fn queue_requests(env: &WowLuaEnv) -> [u64; 5] {
+        env.exec(R88Q_LUA_09).unwrap();
+        let before = [
+            c_store_glue::request_sequence(env),
+            c_store_glue::submission_count(env) as u64,
+        ];
+        c_store_glue::set_record_state(env, A, 4);
+        env.exec("R88qRows['fixture-vas-a']:UpdateCharacterDisplayInfo()")
+            .unwrap();
+        let after = [
+            c_store_glue::request_sequence(env),
+            c_store_glue::submission_count(env) as u64,
+        ];
+        env.exec("C_StoreGlue.RequestCharacterQueueTime('fixture-vas-absent')")
+            .unwrap();
+        [
+            before[0],
+            before[1],
+            after[0],
+            after[1],
+            c_store_glue::request_sequence(env),
+        ]
+    }
+
+    #[test]
+    fn bulk_receive_replaces_before_original_glue_event_observation() {
+        test_timeout! {
+            if wow_ui_sim::client_profile::ACTIVE != wow_ui_sim::client_profile::ClientProfile::Retail { return; }
+            let env = fixture();
+            assert_records(&env);
+            install_listener(&env);
+            c_store_glue::receive_bulk(&env, vec![
+                (A.into(), record(189, 6, &[31, 0])),
+                (B.into(), record(2003, 2, &[-23])),
+            ], &[]).unwrap();
+            env.exec(R88Q_LUA_10).unwrap();
+            c_store_glue::receive_bulk(&env, vec![], &[]).unwrap();
+            env.exec(R88Q_LUA_11).unwrap();
+        }
+    }
+
+    #[test]
+    fn removal_copies_separate_errors_before_post_removal_state_notification() {
+        test_timeout! {
+            if wow_ui_sim::client_profile::ACTIVE != wow_ui_sim::client_profile::ClientProfile::Retail { return; }
+            let env = fixture();
+            assert_records(&env);
+            install_listener(&env);
+            env.exec(R88Q_REMOVAL_BEFORE).unwrap();
+            c_store_glue::receive_removal(&env, A, vec![51, 0], true, &[]).unwrap();
+            assert_eq!(c_store_glue::purchase_errors(&env), vec![51, 0]);
+            env.exec(R88Q_LUA_12).unwrap();
+            c_store_glue::receive_removal(&env, B, vec![-37], true, &[]).unwrap();
+            assert_eq!(c_store_glue::purchase_errors(&env), vec![-37]);
+            env.exec(R88Q_LUA_13).unwrap();
+            c_store_glue::receive_removal(&env, ABSENT, vec![88], false, &[]).unwrap();
+            assert!(c_store_glue::purchase_errors(&env).is_empty());
+            env.exec("assert(#R88qEvents == 2)").unwrap();
+        }
+    }
+
+    fn completion(first: i32, second: i32, first_flag: bool, second_flag: bool) -> CompletionInput {
+        CompletionInput {
+            first,
+            second,
+            first_flag,
+            second_flag,
+            data: vec![],
+        }
+    }
+
+    fn completion_gate_cases(env: &WowLuaEnv) {
+        for input in [
+            completion(0, 0, true, false),
+            completion(1, 9, true, false),
+            completion(1, 0, false, false),
+            completion(1, 0, true, true),
+        ] {
+            env.exec("C_StoreSecure.SetVASProductReady(false)").unwrap();
+            c_store_glue::receive_completion(env, input).unwrap();
+        }
+        c_store_glue::receive_completion(env, completion(7, 0, true, false)).unwrap();
+        c_store_glue::receive_completion(env, completion(0, 0, true, false)).unwrap();
+    }
+
+    // Insert immediately after fixture()/assert_records, before listener/receive helpers.
+    // Initial readiness is captured, then the ORIGINAL consumer runs before assertions.
+    // This does not call ClearVASProductReady or replace any API/consumer function.
+    fn exercise_initial_completion_consumer(env: &WowLuaEnv) {
+        env.exec(
+            r#"
+            local initialReady = C_StoreGlue.GetVASProductReady()
+            CharacterServicesMaster.pendingGuid = 'initial-not-ready'
+            CharacterSelectFrameMixin.OnUpdate(CharacterSelect, 0)
+            assert(not initialReady)
+            assert(CharacterServicesMaster.pendingGuid == 'initial-not-ready')
+        "#,
+        )
+        .unwrap();
+    }
+
+    #[test]
+    fn completion_notification_is_zero_payload_and_not_proof_of_ready() {
+        test_timeout! {
+            if wow_ui_sim::client_profile::ACTIVE != wow_ui_sim::client_profile::ClientProfile::Retail { return; }
+            let env = fixture();
+            assert_records(&env);
+            exercise_initial_completion_consumer(&env);
+            install_listener(&env);
+            assert_records(&env);
+            completion_gate_cases(&env);
+            env.exec(R88Q_LUA_14).unwrap();
+            assert_records(&env);
+        }
+    }
+}
+
+// Original consumer calls and assertions, unchanged while extracting constants.
+
+#[cfg(feature = "optional-tests")]
+const R88Q_LUA_03: &str = r#"
+            local stateA, errorsA, productA = CharacterSelectListUtil.GetVASInfoForGUID('fixture-vas-a')
+            local stateB, errorsB, productB = CharacterSelectListUtil.GetVASInfoForGUID('fixture-vas-b')
+            local stateNone, errorsNone = CharacterSelectListUtil.GetVASInfoForGUID('fixture-vas-absent')
+            assert(stateA == 3 and productA.productID == 2003 and #errorsA == 3)
+            assert(errorsA[1] == 17 and errorsA[2] == 0 and errorsA[3] == -4)
+            assert(stateB == 4 and productB.productID == 189 and #errorsB == 0)
+            assert(stateNone == 0 and type(errorsNone) == 'table' and #errorsNone == 0)
+        "#;
+
+#[cfg(feature = "optional-tests")]
+const R88Q_LUA_04: &str = r#"
+            R88qEvents = {}
+            R88qListener = CreateFrame('Frame')
+            for _, event in ipairs({'STORE_VAS_PURCHASE_COMPLETE', 'VAS_CHARACTER_QUEUE_STATUS_UPDATE',
+                    'VAS_CHARACTER_STATE_CHANGED'}) do
+                R88qListener:RegisterEvent(event)
+            end
+            R88qListener:SetScript('OnEvent', function(self, event, ...)
+                local pa, sa, ea = C_StoreGlue.GetVASPurchaseStateInfo('fixture-vas-a')
+                local pb, sb, eb = C_StoreGlue.GetVASPurchaseStateInfo('fixture-vas-b')
+                local pn, sn, en = C_StoreGlue.GetVASPurchaseStateInfo('fixture-vas-absent')
+                table.insert(R88qEvents, {event=event, argc=select('#',...), args={...},
+                    pa=pa, sa=sa, ea=ea, pb=pb, sb=sb, eb=eb, pn=pn, sn=sn, en=en,
+                    ready=C_StoreGlue.GetVASProductReady()})
+            end)
+        "#;
+
+#[cfg(feature = "optional-tests")]
+const R88Q_LUA_05: &str = r#"
+            for _, callback in ipairs({CharacterSelectFrameMixin.OnShow,
+                    CharacterSelectFrameMixin.OnUpdate, CharacterSelectFrameMixin.OnEvent}) do
+                assert(debug.getinfo(callback, 'S').source:find('CharacterSelect.lua', 1, true))
+            end
+            assert(debug.getinfo(CharacterSelectListUtil.GetVASInfoForGUID, 'S').source:
+                find('CharacterSelectListUtil.lua', 1, true))
+        "#;
+
+#[cfg(feature = "optional-tests")]
+const R88Q_LUA_06: &str = r#"
+                C_StoreSecure.SetDisconnectOnLogout(false)
+                assert(not C_StoreGlue.GetDisconnectOnLogout())
+                C_StoreSecure.SetDisconnectOnLogout(0, 'ignored')
+                local disconnectBeforeShow = C_StoreGlue.GetDisconnectOnLogout()
+                local expectedError = "...ace/AddOns/Blizzard_GlueXML/Mainline/CharacterSelect.lua:211: attempt to call field 'DisconnectFromServer' (a nil value)"
+                local function expectedDisconnectError(message) return message == expectedError end
+                assert(not expectedDisconnectError(expectedError .. ' different'))
+                local shown, showError = pcall(CharacterSelectFrameMixin.OnShow, CharacterSelect)
+                R88qMissingDisconnectError = showError
+                if not shown then assert(expectedDisconnectError(showError)) end
+                assert(disconnectBeforeShow)
+                assert(not C_StoreGlue.GetDisconnectOnLogout())
+                C_StoreSecure.SetVASProductReady(false)
+                CharacterServicesMaster.pendingGuid = 'untouched-when-not-ready'
+                CharacterSelectFrameMixin.OnUpdate(CharacterSelect, 0)
+                assert(CharacterServicesMaster.pendingGuid == 'untouched-when-not-ready')
+                C_StoreSecure.SetVASProductReady('')
+                local readyBeforeUpdate = C_StoreGlue.GetVASProductReady()
+                CharacterSelectFrameMixin.OnUpdate(CharacterSelect, 0)
+                assert(readyBeforeUpdate)
+                assert(CharacterServicesMaster.pendingGuid == nil)
+                assert(select('#', C_StoreGlue.ClearVASProductReady(false)) == 0)
+                assert(not C_StoreGlue.GetVASProductReady())
+            "#;
+
+#[cfg(feature = "optional-tests")]
+const R88Q_LUA_07: &str = r#"
+            R88qRows = {}
+            for index, guid in ipairs({'fixture-vas-a','fixture-vas-b','fixture-vas-absent'}) do
+                local row = CreateFrame('Button', nil, UIParent, 'CharacterSelectListCharacterTemplate')
+                row.characterID = index -- Explicit UI fixture row identity, not GUID acquisition.
+                local inner = row.InnerContent
+                inner.characterInfo = {guid=guid, name='Fixture', className='Warrior', classFilename='WARRIOR',
+                    experienceLevel=80, areaName='Fixture Zone'}
+                inner.isAccountLocked = false
+                R88qRows[guid] = inner
+                assert(debug.getinfo(inner.UpdateCharacterDisplayInfo, 'S').source:
+                    find('CharacterSelectListElements.lua', 1, true))
+            end
+        "#;
+
+#[cfg(feature = "optional-tests")]
+const R88Q_LUA_08: &str = r#"
+                assert(#R88qEvents == 2)
+                for i, expected in ipairs({{'fixture-vas-a',-17},{'fixture-vas-b',29}}) do
+                    local event = R88qEvents[i]
+                    assert(event.event == 'VAS_CHARACTER_QUEUE_STATUS_UPDATE' and event.argc == 2)
+                    assert(event.args[1] == expected[1] and event.args[2] == expected[2])
+                    assert(CharacterSelectUtil.GetVASQueueTime(expected[1]) == expected[2])
+                end
+                assert(CharacterSelectUtil.GetVASQueueTime('fixture-vas-absent') == nil)
+                local sa, ea, pa = CharacterSelectListUtil.GetVASInfoForGUID('fixture-vas-a')
+                local sb, eb, pb = CharacterSelectListUtil.GetVASInfoForGUID('fixture-vas-b')
+                local sn, en = CharacterSelectListUtil.GetVASInfoForGUID('fixture-vas-absent')
+                assert(sa == 4 and pa.productID == 2003 and ea[1] == 17 and ea[2] == 0 and ea[3] == -4)
+                assert(sb == 4 and pb.productID == 189 and #eb == 0)
+                assert(sn == 0 and type(en) == 'table' and #en == 0)
+            "#;
+
+#[cfg(feature = "optional-tests")]
+const R88Q_LUA_09: &str = r#"
+            R88qRows['fixture-vas-a']:UpdateCharacterDisplayInfo()
+            R88qRows['fixture-vas-b']:UpdateCharacterDisplayInfo()
+            R88qRows['fixture-vas-absent']:UpdateCharacterDisplayInfo()
+            R88qRows['fixture-vas-b']:UpdateCharacterDisplayInfo()
+            assert(#R88qEvents == 0)
+        "#;
+
+#[cfg(feature = "optional-tests")]
+const R88Q_LUA_10: &str = r#"
+                local stateA = CharacterSelectListUtil.GetVASInfoForGUID('fixture-vas-a')
+                local stateB = CharacterSelectListUtil.GetVASInfoForGUID('fixture-vas-b')
+                local stateAbsent = CharacterSelectListUtil.GetVASInfoForGUID('fixture-vas-absent')
+                assert(#R88qEvents == 1 and R88qEvents[1].event == 'VAS_CHARACTER_STATE_CHANGED')
+                local event = R88qEvents[1]
+                assert(event.pa == 189 and event.sa == 6 and event.ea[1] == 31 and event.ea[2] == 0)
+                assert(event.pb == 2003 and event.sb == 2 and event.eb[1] == -23)
+                assert(event.pn == 0 and event.sn == 0 and #event.en == 0)
+                assert(stateA == 6)
+                assert(stateB == 2 and stateAbsent == 0)
+            "#;
+
+#[cfg(feature = "optional-tests")]
+const R88Q_LUA_11: &str = r#"
+                assert(#R88qEvents == 2 and R88qEvents[2].event == 'VAS_CHARACTER_STATE_CHANGED')
+                assert(R88qEvents[2].pa == 0 and R88qEvents[2].sa == 0 and #R88qEvents[2].ea == 0)
+                assert(R88qEvents[2].pb == 0 and R88qEvents[2].sb == 0 and #R88qEvents[2].eb == 0)
+            "#;
+
+#[cfg(feature = "optional-tests")]
+const R88Q_LUA_12: &str = r#"
+                assert(#R88qEvents == 1 and R88qEvents[1].event == 'VAS_CHARACTER_STATE_CHANGED')
+                assert(R88qBeforeA[1] == 3 and R88qBeforeA[3].productID == 2003)
+                assert(R88qBeforeA[2][1] == 17 and R88qBeforeA[2][2] == 0 and R88qBeforeA[2][3] == -4)
+                assert(R88qBeforeB[1] == 4 and R88qBeforeB[3].productID == 189 and #R88qBeforeB[2] == 0)
+                assert(R88qBeforeAbsent[1] == 0 and #R88qBeforeAbsent[2] == 0)
+                local event = R88qEvents[1]
+                assert(event.pa == 0 and event.sa == 0 and #event.ea == 0)
+                assert(event.pb == 189 and event.sb == 4 and #event.eb == 0)
+                assert(event.pn == 0 and event.sn == 0 and #event.en == 0)
+            "#;
+
+#[cfg(feature = "optional-tests")]
+const R88Q_LUA_13: &str = r#"
+                assert(#R88qEvents == 2 and R88qEvents[2].event == 'VAS_CHARACTER_STATE_CHANGED')
+                assert(R88qEvents[2].pa == 0 and R88qEvents[2].pb == 0)
+            "#;
+
+#[cfg(feature = "optional-tests")]
+const R88Q_LUA_14: &str = r#"
+                CharacterServicesMaster.pendingGuid = 'completion-consumer-probe'
+                CharacterSelectFrameMixin.OnUpdate(CharacterSelect, 0)
+                assert(#R88qEvents == 6)
+                for _, event in ipairs(R88qEvents) do
+                    assert(event.event == 'STORE_VAS_PURCHASE_COMPLETE' and event.argc == 0)
+                end
+                for i=1,4 do assert(not R88qEvents[i].ready) end
+                assert(R88qEvents[5].ready and R88qEvents[6].ready)
+                assert(CharacterServicesMaster.pendingGuid == nil)
+            "#;
+
+#[cfg(feature = "optional-tests")]
+const R88Q_REMOVAL_BEFORE: &str = r#"
+    R88qBeforeA = {CharacterSelectListUtil.GetVASInfoForGUID('fixture-vas-a')}
+    R88qBeforeB = {CharacterSelectListUtil.GetVASInfoForGUID('fixture-vas-b')}
+    R88qBeforeAbsent = {CharacterSelectListUtil.GetVASInfoForGUID('fixture-vas-absent')}
+"#;
+
+// Shared RED/GREEN host product input for the original Glue consumer.
+// Preserve the existing complete product 2003; supply only the absent fixture 189.
+#[cfg(feature = "optional-tests")]
+fn seed_r88q_product_inputs(env: &WowLuaEnv) {
+    env.exec(
+        "__wow_store_state.productsByID[189] = {productID=189, sharedData={name='Fixture B'}}",
+    )
+    .expect("seed explicit host product input for original Glue consumers");
+}
+#[cfg(feature = "optional-tests")]
+mod r88q_routes {
+    pub use super::r88q_receive::{
+        receive_bulk, receive_completion, receive_queue_response, receive_removal,
+    };
+    use super::*;
+    pub use wow_ui_sim::c_api::store_glue_model::{
+        CompletionInput, VasPurchaseRecord, VasQueueCharacter,
+    };
+    pub fn seed(
+        env: &WowLuaEnv,
+        rows: Vec<(String, VasPurchaseRecord)>,
+        queues: Vec<VasQueueCharacter>,
+        aliases: &[&str],
+    ) {
+        let mut sim = env.state().borrow_mut();
+        let s = &mut sim.store_glue;
+        s.purchase_states = rows.into_iter().collect();
+        s.queue_characters = queues;
+        s.resolved_guid_aliases = aliases
+            .iter()
+            .map(|key| (key.as_bytes().to_vec(), (*key).into()))
+            .collect();
+        s.connection_present = true;
+        s.request_sequence = 0;
+        s.submissions.clear();
+    }
+    pub fn install_callbacks(env: &WowLuaEnv) {
+        let mut sim = env.state().borrow_mut();
+        let c = &mut sim.store_glue.callbacks;
+        c.purchase_complete = true;
+        c.queue_status = true;
+        c.state_changed = true;
+    }
+    pub fn request_sequence(env: &WowLuaEnv) -> u64 {
+        env.state().borrow().store_glue.request_sequence
+    }
+    pub fn submission_count(env: &WowLuaEnv) -> usize {
+        env.state().borrow().store_glue.submissions.len()
+    }
+    pub fn set_connection(env: &WowLuaEnv, present: bool) {
+        env.state().borrow_mut().store_glue.connection_present = present;
+    }
+    pub fn set_record_state(env: &WowLuaEnv, guid: &str, state: i32) {
+        env.state()
+            .borrow_mut()
+            .store_glue
+            .purchase_states
+            .get_mut(guid)
+            .unwrap()
+            .state = state;
+    }
+    pub fn purchase_errors(env: &WowLuaEnv) -> Vec<i32> {
+        env.state().borrow().store_glue.purchase_errors.clone()
+    }
+}
+
+#[cfg(feature = "optional-tests")]
+mod r88q_receive {
+    pub use wow_ui_sim::c_api::c_store_glue::{
+        receive_bulk, receive_completion, receive_queue_response, receive_removal,
+    };
+}
+// Supplemental direct API contract, not the frozen original-consumer RED selector.
+// Each independent fixture proves two distinct original consumer records plus
+// absence before exercising the supplementary contract.
+#[cfg(feature = "optional-tests")]
+mod storeglue_r88q_supplemental {
+    use super::*;
+    use rilua::LuaApiMut;
+    use wow_ui_sim::c_api::store_glue_model::{RestrictedExecution, VasPurchaseRecord};
+
+    fn active() -> bool {
+        wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::Retail
+    }
+    fn fixture() -> common::LockedEnv {
+        let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+        seed_r88q_product_inputs(&env);
+        seed(&env);
+        env.exec(R88Q_CONTRACT_RECORDS).unwrap();
+        env
+    }
+    fn seed(env: &WowLuaEnv) {
+        let mut sim = env.state().borrow_mut();
+        let s = &mut sim.store_glue;
+        s.purchase_states.clear();
+        for (guid, product_id, state, errors) in [
+            ("fixture-vas-a", 2003, 3, vec![17, 0, -4]),
+            ("fixture-vas-b", 189, 4, vec![0, 29]),
+            ("fixture-signed", -27, -9, vec![-8, 0, 9]),
+        ] {
+            s.purchase_states.insert(
+                guid.into(),
+                VasPurchaseRecord {
+                    product_id,
+                    state,
+                    errors,
+                },
+            );
+            s.resolved_guid_aliases
+                .insert(guid.as_bytes().to_vec(), guid.into());
+        }
+        seed_aliases(s);
+    }
+    fn seed_aliases(s: &mut wow_ui_sim::c_api::store_glue_model::StoreGlueState) {
+        for (alias, guid) in [
+            ("17", "fixture-vas-a"),
+            ("29", "fixture-vas-b"),
+            ("fixture-vas-absent", "fixture-vas-absent"),
+        ] {
+            s.resolved_guid_aliases
+                .insert(alias.as_bytes().to_vec(), guid.into());
+        }
+        s.pending_error = None;
+        s.restricted_execution = None;
+        s.secret_access_mode = None;
+    }
+    #[test]
+    fn supplemental_guid_arguments_signed_errors_and_dual_publication() {
+        test_timeout! {
+            if !active() { return; }
+            let env=fixture();
+            env.exec(R88Q_CONTRACT_ARGUMENTS).unwrap();
+            env.exec(R88Q_CONTRACT_SIGNED_PUBLICATION).unwrap();
+        }
+    }
+    #[test]
+    fn supplemental_execution_metadata_precedes_parser_and_store() {
+        test_timeout! {
+            if !active() { return; }
+            let env=fixture();
+            restrict(&env);
+            env.exec(R88Q_CONTRACT_RESTRICTED).unwrap();
+            let sim=env.state().borrow();
+            assert!(!sim.store_glue.vas_product_ready && sim.store_glue.disconnect_on_logout);
+        }
+    }
+    fn restrict(env: &WowLuaEnv) {
+        let mut sim = env.state().borrow_mut();
+        sim.store_glue.vas_product_ready = false;
+        sim.store_glue.disconnect_on_logout = true;
+        sim.store_glue.restricted_execution = Some(RestrictedExecution::Macro {
+            function: "host-restricted-call".into(),
+            callback_present: false,
+        });
+    }
+    #[test]
+    fn supplemental_pending_error_does_not_rollback_successful_store() {
+        test_timeout! {
+            if !active() { return; }
+            let env=fixture();
+            pending_ready(&env);
+            pending_disconnect(&env);
+            pending_clear(&env);
+            env.state().borrow_mut().store_glue.pending_error=None;
+            env.exec(R88Q_CONTRACT_RECORDS).unwrap();
+        }
+    }
+    fn set_pending(env: &WowLuaEnv) {
+        env.state().borrow_mut().store_glue.pending_error = Some("host-pending-message".into());
+    }
+    fn pending_ready(env: &WowLuaEnv) {
+        env.state().borrow_mut().store_glue.vas_product_ready = false;
+        set_pending(env);
+        env.exec("local ok,e=pcall(C_StoreSecure.SetVASProductReady,true); assert(not ok and e:find('SetVASProductReady(): host-pending-message',1,true))").unwrap();
+        assert!(env.state().borrow().store_glue.vas_product_ready);
+        assert!(env.state().borrow().store_glue.pending_error.is_some());
+    }
+    fn pending_disconnect(env: &WowLuaEnv) {
+        env.state().borrow_mut().store_glue.disconnect_on_logout = false;
+        set_pending(env);
+        env.exec("local ok,e=pcall(C_StoreSecure.SetDisconnectOnLogout,true); assert(not ok and e:find('SetDisconnectOnLogout(): host-pending-message',1,true))").unwrap();
+        assert!(env.state().borrow().store_glue.disconnect_on_logout);
+    }
+    fn pending_clear(env: &WowLuaEnv) {
+        env.state().borrow_mut().store_glue.vas_product_ready = true;
+        set_pending(env);
+        env.exec("local ok,e=pcall(C_StoreGlue.ClearVASProductReady); assert(not ok and e:find('ClearVASProductReady(): host-pending-message',1,true))").unwrap();
+        assert!(!env.state().borrow().store_glue.vas_product_ready);
+    }
+    #[test]
+    fn supplemental_secret_denials_use_only_explicit_access_metadata() {
+        test_timeout! {
+            if !active() { return; }
+            let env=fixture();
+            // None is a neutral host seam. No native behavior is asserted for it.
+            assert!(env.state().borrow().store_glue.secret_access_mode.is_none());
+            publish_secret(&env);
+            for (mode,reason) in [(0,"Secret values are not allowed"),(73,"Unknown secret access mode")] {
+                env.state().borrow_mut().store_glue.secret_access_mode=Some(mode);
+                env.exec(&format!("local ok,e=pcall(C_StoreGlue.GetVASPurchaseStateInfo,R88qSecret); assert(not ok and e:find({reason:?},1,true))")).unwrap();
+            }
+            env.state().borrow_mut().store_glue.secret_access_mode=Some(1);
+            env.exec(R88Q_CONTRACT_SECRET_MODE_ONE).unwrap();
+            env.state().borrow_mut().store_glue.secret_access_mode=None;
+            env.exec(R88Q_CONTRACT_RECORDS).unwrap();
+        }
+    }
+    fn seed_queue_inputs(env: &WowLuaEnv) {
+        use wow_ui_sim::c_api::store_glue_model::VasQueueCharacter;
+        let mut sim = env.state().borrow_mut();
+        let store = &mut sim.store_glue;
+        store.queue_characters = [("fixture-vas-a", 21), ("fixture-vas-b", 43), ("", 65)]
+            .into_iter()
+            .map(|(guid, byte)| VasQueueCharacter {
+                guid: guid.into(),
+                correlation: vec![byte],
+            })
+            .collect();
+        store.connection_present = false;
+        store.request_sequence = 0;
+        store.submissions.clear();
+        store.callbacks.queue_status = true;
+    }
+    fn assert_queue_counters(env: &WowLuaEnv, sequence: u64, submissions: usize) {
+        let sim = env.state().borrow();
+        assert_eq!(sim.store_glue.request_sequence, sequence);
+        assert_eq!(sim.store_glue.submissions.len(), submissions);
+    }
+    #[test]
+    fn supplemental_queue_matches_advance_while_disconnected_and_submit_on_reconnect() {
+        test_timeout! {
+            if !active() { return; }
+            let env = fixture();
+            seed_queue_inputs(&env);
+            env.exec("C_StoreGlue.RequestCharacterQueueTime('fixture-vas-a'); C_StoreGlue.RequestCharacterQueueTime('fixture-vas-a'); C_StoreGlue.RequestCharacterQueueTime('fixture-vas-b')").unwrap();
+            assert_queue_counters(&env, 3, 0);
+            env.exec("C_StoreGlue.RequestCharacterQueueTime('fixture-vas-absent')").unwrap();
+            assert_queue_counters(&env, 3, 0);
+            env.state().borrow_mut().store_glue.connection_present = true;
+            env.exec("C_StoreGlue.RequestCharacterQueueTime('fixture-vas-b'); C_StoreGlue.RequestCharacterQueueTime('fixture-vas-a'); C_StoreGlue.RequestCharacterQueueTime('fixture-vas-absent')").unwrap();
+            assert_queue_counters(&env, 5, 2);
+            assert_queue_submissions(&env);
+            env.exec(R88Q_CONTRACT_RECORDS).unwrap();
+        }
+    }
+    fn assert_queue_submissions(env: &WowLuaEnv) {
+        use wow_ui_sim::c_api::store_glue_model::StoreRequest;
+        let sim = env.state().borrow();
+        for (request, (expected, counter)) in
+            sim.store_glue.submissions.iter().zip([(43, 4), (21, 5)])
+        {
+            match request {
+                StoreRequest::Queue {
+                    correlation,
+                    sequence,
+                } => {
+                    assert_eq!(correlation, &vec![expected]);
+                    assert_eq!(*sequence, counter);
+                }
+                other => panic!("expected queue submission, got {other:?}"),
+            }
+        }
+    }
+    #[test]
+    fn supplemental_queue_response_empty_identity_is_nil_and_unmatched_is_silent() {
+        test_timeout! {
+            if !active() { return; }
+            let env = fixture();
+            seed_queue_inputs(&env);
+            env.exec(R88Q_CONTRACT_QUEUE_LISTENER).unwrap();
+            use wow_ui_sim::c_api::store_glue_model::receive_queue_response;
+            receive_queue_response(&env, &[99], 12).unwrap();
+            env.exec("assert(#R88qSupplementQueue == 0)").unwrap();
+            receive_queue_response(&env, &[21], -17).unwrap();
+            receive_queue_response(&env, &[43], 29).unwrap();
+            receive_queue_response(&env, &[65], -31).unwrap();
+            env.exec(R88Q_CONTRACT_QUEUE_RESULTS).unwrap();
+            env.exec(R88Q_CONTRACT_RECORDS).unwrap();
+        }
+    }
+    fn service_update(env: &WowLuaEnv, guid: &str, permitted: Option<bool>) {
+        use wow_ui_sim::c_api::store_glue_model::receive_service_update;
+        let record = VasPurchaseRecord {
+            product_id: 189,
+            state: 6,
+            errors: vec![-37, 0],
+        };
+        receive_service_update(env, guid.into(), record, permitted, &[]).unwrap();
+    }
+    #[test]
+    fn supplemental_service_update_requires_explicit_host_permission() {
+        test_timeout! {
+            if !active() { return; }
+            let env = fixture();
+            env.state().borrow_mut().store_glue.callbacks.state_changed = true;
+            env.exec(R88Q_CONTRACT_SERVICE_LISTENER).unwrap();
+            for permitted in [None, Some(false)] {
+                service_update(&env, "fixture-vas-a", permitted);
+                service_update(&env, "fixture-vas-b", permitted);
+                service_update(&env, "fixture-vas-absent", permitted);
+                env.exec(R88Q_CONTRACT_RECORDS).unwrap();
+                env.exec("assert(#R88qSupplementService == 0)").unwrap();
+            }
+            service_update(&env, "fixture-vas-a", Some(true));
+            service_update(&env, "fixture-vas-b", Some(true));
+            env.exec(R88Q_CONTRACT_SERVICE_RESULTS).unwrap();
+        }
+    }
+    fn publish_secret(env: &WowLuaEnv) {
+        let loader = env.loader_env();
+        let mut lua = loader.rilua_mut();
+        let value =
+            rilua::table_security::wrap_host_secret_string(lua.state_mut(), "fixture-vas-a");
+        lua.state_mut().push(value);
+        lua.set_global_val("R88qSecret", value).unwrap();
+        lua.state_mut().pop();
+    }
+}
+#[cfg(feature = "optional-tests")]
+const R88Q_CONTRACT_RECORDS: &str = r#"
+    local a, ae, ap = CharacterSelectListUtil.GetVASInfoForGUID('fixture-vas-a')
+    local b, be, bp = CharacterSelectListUtil.GetVASInfoForGUID('fixture-vas-b')
+    local n, ne = CharacterSelectListUtil.GetVASInfoForGUID('fixture-vas-absent')
+    assert(a==3 and ap.productID==2003 and ae[1]==17 and ae[2]==0 and ae[3]==-4)
+    assert(b==4 and bp.productID==189 and type(be)=='table' and #be==0)
+    assert(n==0 and type(ne)=='table' and #ne==0)
+"#;
+#[cfg(feature = "optional-tests")]
+const R88Q_CONTRACT_ARGUMENTS: &str = r#"
+    local function reject(...)
+        for _, api in ipairs({
+            {C_StoreGlue.GetVASPurchaseStateInfo,'Usage: local productID, state, errors = C_StoreGlue.GetVASPurchaseStateInfo(guid)'},
+            {C_StoreGlue.RequestCharacterQueueTime,'Usage: C_StoreGlue.RequestCharacterQueueTime(guid)'},
+        }) do
+            local ok,err=pcall(api[1],...)
+            assert(not ok and type(err)=='string' and err:find(api[2],1,true))
+        end
+    end
+    reject();reject(nil);reject(false);reject({});reject(function()end)
+    reject(coroutine.create(function()end))
+    if newproxy then reject(newproxy()) end -- Actual userdata only where the VM exposes it.
+    for _, args in ipairs({{17,2003,3},{29,189,4}}) do
+        local product,state,errors=C_StoreGlue.GetVASPurchaseStateInfo(args[1],false,{})
+        assert(product==args[2] and state==args[3] and type(errors)=='table')
+        assert(select('#',C_StoreGlue.RequestCharacterQueueTime(args[1],false,{}))==0)
+    end
+    for _, setter in ipairs({C_StoreSecure.SetDisconnectOnLogout,C_StoreSecure.SetVASProductReady}) do
+        assert(not pcall(setter));assert(not pcall(setter,nil))
+        for _, truthy in ipairs({0,'',{},true}) do assert(select('#',setter(truthy,'ignored'))==0) end
+        assert(select('#',setter(false))==0)
+    end
+"#;
+#[cfg(feature = "optional-tests")]
+const R88Q_CONTRACT_SIGNED_PUBLICATION: &str = r#"
+    assert(type(__secureenv)=='table')
+    assert(type(rawget(__secureenv,'C_StoreGlue'))=='table')
+    assert(type(rawget(__secureenv,'C_StoreSecure'))=='table')
+    for _, ns in ipairs({C_StoreGlue,__secureenv.C_StoreGlue}) do
+        local p,s,e=ns.GetVASPurchaseStateInfo('fixture-signed')
+        assert(p==-27 and s==-9 and #e==3 and e[1]==-8 and e[2]==0 and e[3]==9)
+        local pa,sa=ns.GetVASPurchaseStateInfo('fixture-vas-a')
+        local pb,sb=ns.GetVASPurchaseStateInfo('fixture-vas-b')
+        local pn,sn,en=ns.GetVASPurchaseStateInfo('fixture-vas-absent')
+        assert(pa==2003 and sa==3 and pb==189 and sb==4 and pn==0 and sn==0 and #en==0)
+        assert(type(ns.GetDisconnectOnLogout)=='function' and type(ns.GetVASProductReady)=='function')
+        assert(type(ns.ClearVASProductReady)=='function' and type(ns.RequestCharacterQueueTime)=='function')
+        assert(type(ns.UpdateVASPurchaseStates)=='function')
+        for _, name in ipairs({'GetVASPurchaseStateInfo','GetDisconnectOnLogout','GetVASProductReady',
+                'ClearVASProductReady','RequestCharacterQueueTime','UpdateVASPurchaseStates'}) do
+            assert(type(rawget(ns,name))=='function')
+        end
+    end
+    __secureenv.C_StoreSecure.SetVASProductReady(true)
+    assert(C_StoreGlue.GetVASProductReady(nil,{},false))
+    C_StoreGlue.ClearVASProductReady()
+    assert(not __secureenv.C_StoreGlue.GetVASProductReady())
+    __secureenv.C_StoreSecure.SetDisconnectOnLogout(true)
+    assert(C_StoreGlue.GetDisconnectOnLogout(false))
+    C_StoreSecure.SetDisconnectOnLogout(false)
+    assert(not __secureenv.C_StoreGlue.GetDisconnectOnLogout())
+"#;
+#[cfg(feature = "optional-tests")]
+const R88Q_CONTRACT_RESTRICTED: &str = r#"
+    -- Explicit restriction metadata, not Lua taint, must precede missing-argument errors.
+    assert(select('#',C_StoreSecure.SetVASProductReady())==0)
+    assert(select('#',C_StoreSecure.SetVASProductReady(true))==0)
+    assert(select('#',C_StoreSecure.SetDisconnectOnLogout(nil))==0)
+    assert(select('#',C_StoreSecure.SetDisconnectOnLogout(false))==0)
+"#;
+#[cfg(feature = "optional-tests")]
+const R88Q_CONTRACT_SECRET_MODE_ONE: &str = r#"
+    local p,s,e=C_StoreGlue.GetVASPurchaseStateInfo(R88qSecret)
+    assert(p==2003 and s==3 and e[1]==17)
+    local function denied()
+        local ok,err=pcall(C_StoreGlue.GetVASPurchaseStateInfo,R88qSecret)
+        assert(not ok and err:find('Secret values are only allowed during untainted execution',1,true))
+    end
+    debug.setobjecttaint(denied,'R88qContractFixture');denied()
+"#;
+
+#[cfg(feature = "optional-tests")]
+const R88Q_CONTRACT_QUEUE_LISTENER: &str = r#"
+    R88qSupplementQueue = {}
+    local frame = CreateFrame('Frame')
+    frame:RegisterEvent('VAS_CHARACTER_QUEUE_STATUS_UPDATE')
+    frame:SetScript('OnEvent', function(self, event, ...)
+        local guid, value = ...
+        table.insert(R88qSupplementQueue, {argc=select('#',...), guid=guid, value=value})
+    end)
+    R88qSupplementQueueFrame = frame
+"#;
+#[cfg(feature = "optional-tests")]
+const R88Q_CONTRACT_QUEUE_RESULTS: &str = r#"
+    assert(#R88qSupplementQueue == 3)
+    local a,b,empty = unpack(R88qSupplementQueue)
+    assert(a.argc==2 and a.guid=='fixture-vas-a' and a.value==-17)
+    assert(b.argc==2 and b.guid=='fixture-vas-b' and b.value==29)
+    assert(empty.argc==2 and empty.guid==nil and empty.value==-31)
+"#;
+#[cfg(feature = "optional-tests")]
+const R88Q_CONTRACT_SERVICE_LISTENER: &str = r#"
+    R88qSupplementService = {}
+    local frame = CreateFrame('Frame')
+    frame:RegisterEvent('VAS_CHARACTER_STATE_CHANGED')
+    frame:SetScript('OnEvent', function(self, event)
+        local a = CharacterSelectListUtil.GetVASInfoForGUID('fixture-vas-a')
+        local b = CharacterSelectListUtil.GetVASInfoForGUID('fixture-vas-b')
+        local absent = CharacterSelectListUtil.GetVASInfoForGUID('fixture-vas-absent')
+        table.insert(R88qSupplementService, {event=event, a=a, b=b, absent=absent})
+    end)
+    R88qSupplementServiceFrame = frame
+"#;
+#[cfg(feature = "optional-tests")]
+const R88Q_CONTRACT_SERVICE_RESULTS: &str = r#"
+    assert(#R88qSupplementService==2)
+    local first,second = unpack(R88qSupplementService)
+    assert(first.event=='VAS_CHARACTER_STATE_CHANGED' and first.a==6 and first.b==4 and first.absent==0)
+    assert(second.event=='VAS_CHARACTER_STATE_CHANGED' and second.a==6 and second.b==6 and second.absent==0)
+    for _,guid in ipairs({'fixture-vas-a','fixture-vas-b'}) do
+        local state,errors,product = CharacterSelectListUtil.GetVASInfoForGUID(guid)
+        assert(state==6 and product.productID==189 and #errors==2 and errors[1]==-37 and errors[2]==0)
+    end
+"#;

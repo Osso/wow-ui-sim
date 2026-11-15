@@ -81,6 +81,9 @@ end
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
+    if crate::c_api::c_store_glue::enabled() {
+        return Ok(());
+    }
     let bootstrap = lua.load_bytes(STORE_GLUE_STATE_LUA.as_bytes(), "@store-glue-state")?;
     lua.call_function(
         &bootstrap,
