@@ -165,6 +165,17 @@ C_ColorUtil = __wow_color_merge_namespace(C_ColorUtil, {
   end,
 })
 
+-- Preserve the master pre-secure namespace; Retail replaces the ordinary table
+-- after create_secure_environment snapshots these two members.
+C_ColorOverrides = __wow_color_merge_namespace(C_ColorOverrides, {
+  GetColorOverrideInfo = function(_overrideType)
+    return nil
+  end,
+  GetColorForQuality = function(_quality)
+    return CreateColor(1, 1, 1, 1)
+  end,
+})
+
 C_PvP = __wow_color_merge_namespace(C_PvP, {
   IsInBrawl = function()
     return false

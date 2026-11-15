@@ -5,18 +5,19 @@ use super::helpers::{bad_argument, parse_numeric_string, set_global_val};
 use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::globals::state_backed_queries::dispatch_event_now;
 use crate::lua_api::methods::{
-    create_table, registry_table_or_create, table_get, table_get_static, table_set,
-    table_set_static,
+    borrow_state, borrow_state_mut, create_table, registry_table_or_create, table_get,
+    table_get_static, table_set, table_set_static,
 };
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::table_security::{can_access_secrets, is_secret_value, unwrap_secret};
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
-use rilua::{LuaApiMut, LuaResult, Val};
+use rilua::{LuaApiMut, LuaResult, Val, runtime_error};
 use sim_data_profile::global_colors_retail::RETAIL_GLOBAL_COLORS;
 
 const REGISTRY_KEY: &str = "__wow_color_overrides";
+const PLAYER_COLOR_OVERRIDES_CVAR: &str = "playerColorOverrides";
 const OVERRIDE_TYPE_COUNT: u8 = 8;
 const MAX_OVERRIDE_TYPE: u8 = OVERRIDE_TYPE_COUNT - 1;
 const MAX_ITEM_QUALITY: u8 = 8;
@@ -49,6 +50,7 @@ const GET_DEFAULT_USAGE: &str =
     "Usage: local color = C_ColorOverrides.GetDefaultColorForQuality(quality)";
 const REMOVE_USAGE: &str = "Usage: C_ColorOverrides.RemoveColorOverride(overrideType)";
 const SET_USAGE: &str = "Usage: C_ColorOverrides.SetColorOverride(overrideType, color)";
+type PersistedOverride = [u8; 5];
 
 pub(crate) fn register(lua: &mut rilua::Lua) -> LuaResult<()> {
     if ACTIVE != ClientProfile::Retail {
@@ -72,11 +74,47 @@ pub(crate) fn register(lua: &mut rilua::Lua) -> LuaResult<()> {
     table_set_rust_fn_static(state, namespace, SET_FUNCTION, set_color_override)
 }
 
-fn clear_color_overrides(state: &mut LuaState) -> LuaResult<u32> {
+/// Save the current records to playerColorOverrides; lifecycle callers choose when.
+pub(crate) fn save_color_overrides(state: &mut LuaState) -> LuaResult<()> {
+    let records = collect_persisted_overrides(state);
+    let serialized = encode_persisted_overrides(&records)?;
+    let accepted = borrow_state_mut(state)?
+        .cvars
+        .set(PLAYER_COLOR_OVERRIDES_CVAR, &serialized);
+    if !accepted {
+        return Err(runtime_error(
+            "playerColorOverrides setting rejected the save",
+        ));
+    }
+    Ok(())
+}
+
+/// Load playerColorOverrides and replace active records; lifecycle stays external.
+pub(crate) fn load_color_overrides(state: &mut LuaState) -> LuaResult<()> {
+    let serialized = borrow_state(state)?
+        .cvars
+        .get(PLAYER_COLOR_OVERRIDES_CVAR)
+        .unwrap_or_default();
+    clear_override_records(state);
+    if serialized.is_empty() {
+        return Ok(());
+    }
+    let records = decode_persisted_overrides(&serialized)?;
+    for record in records {
+        restore_persisted_override(state, record)?;
+    }
+    Ok(())
+}
+
+fn clear_override_records(state: &mut LuaState) {
     let overrides = registry_table_or_create(state, REGISTRY_KEY);
     for override_type in 0..OVERRIDE_TYPE_COUNT {
         table_set(state, overrides, &override_type.to_string(), Val::Nil);
     }
+}
+
+fn clear_color_overrides(state: &mut LuaState) -> LuaResult<u32> {
+    clear_override_records(state);
     // INFERRED: the documented reset event names the native reset callback.
     dispatch_event_now(state, "COLOR_OVERRIDES_RESET", &[])?;
     // INFERRED: R88v's cleanup path supports zero Lua return values.
@@ -120,7 +158,17 @@ fn get_color_override_info(state: &mut LuaState) -> LuaResult<u32> {
         state.push(Val::Nil);
         return Ok(1);
     };
+    let info = build_color_override_info(state, record, override_type, packed_color)?;
+    state.push(info);
+    Ok(1)
+}
 
+fn build_color_override_info(
+    state: &mut LuaState,
+    record: Val,
+    override_type: u8,
+    packed_color: u32,
+) -> LuaResult<Val> {
     let stack_top = state.top;
     let override_color = build_color_table(state, packed_color, false)?;
     state.push(override_color);
@@ -136,8 +184,7 @@ fn get_color_override_info(state: &mut LuaState) -> LuaResult<u32> {
     let color_string = table_get_static(state, record, "colorString");
     table_set_static(state, info, "overrideColorString", color_string);
     state.top = stack_top;
-    state.push(info);
-    Ok(1)
+    Ok(info)
 }
 
 fn set_color_override(state: &mut LuaState) -> LuaResult<u32> {
@@ -275,6 +322,10 @@ fn pack_color(red: f32, green: f32, blue: f32, alpha: f32) -> u32 {
     let green = rounded_channel(green);
     let blue = rounded_channel(blue);
     let alpha = rounded_channel(alpha);
+    pack_color_bytes(red, green, blue, alpha)
+}
+
+fn pack_color_bytes(red: u8, green: u8, blue: u8, alpha: u8) -> u32 {
     (u32::from(alpha) << 24) | (u32::from(red) << 16) | (u32::from(green) << 8) | u32::from(blue)
 }
 
@@ -313,6 +364,44 @@ fn record_packed_color(state: &mut LuaState, record: Val) -> Option<u32> {
         return None;
     };
     (packed_color >= 0.0 && packed_color <= f64::from(u32::MAX)).then_some(packed_color as u32)
+}
+
+fn collect_persisted_overrides(state: &mut LuaState) -> Vec<PersistedOverride> {
+    (0..OVERRIDE_TYPE_COUNT)
+        .filter_map(|override_type| {
+            let record = read_override_record(state, override_type);
+            let [alpha, red, green, blue] = record_packed_color(state, record)?.to_be_bytes();
+            Some([override_type, red, green, blue, alpha])
+        })
+        .collect()
+}
+
+fn encode_persisted_overrides(records: &[PersistedOverride]) -> LuaResult<String> {
+    if records.is_empty() {
+        return Ok(String::new());
+    }
+    // INFERRED: JSON rows encode [overrideType, red, green, blue, alpha] bytes.
+    serde_json::to_string(records)
+        .map_err(|error| runtime_error(format!("serialize playerColorOverrides: {error}")))
+}
+
+fn decode_persisted_overrides(setting: &str) -> LuaResult<Vec<PersistedOverride>> {
+    serde_json::from_str(setting)
+        .map_err(|error| runtime_error(format!("parse playerColorOverrides: {error}")))
+}
+
+fn restore_persisted_override(
+    state: &mut LuaState,
+    [override_type, red, green, blue, alpha]: PersistedOverride,
+) -> LuaResult<()> {
+    if override_type > MAX_OVERRIDE_TYPE {
+        return Err(runtime_error(
+            "playerColorOverrides contains an invalid overrideType",
+        ));
+    }
+    let packed_color = pack_color_bytes(red, green, blue, alpha);
+    store_override_record(state, override_type, packed_color);
+    Ok(())
 }
 
 fn store_override_record(state: &mut LuaState, override_type: u8, packed_color: u32) {
@@ -392,6 +481,28 @@ mod tests {
     use crate::lua_api::methods::{registry_get, table_get_static};
     use rilua::LuaApiMut;
 
+    const INITIAL_OVERRIDES_LUA: &str = r#"
+        ColorMixin = {}
+        C_ColorOverrides.SetColorOverride(0, { r = 0.2, g = 0.4, b = 0.6, a = 0.8 })
+        C_ColorOverrides.SetColorOverride(5, { r = 0.1, g = 0.3, b = 0.5, a = 0.7 })
+    "#;
+    const MUTATE_BEFORE_LOAD_LUA: &str = r#"
+        ColorMixin = {}
+        C_ColorOverrides.SetColorOverride(0, { r = 1, g = 1, b = 1, a = 1 })
+        C_ColorOverrides.SetColorOverride(2, { r = 1, g = 0, b = 0, a = 1 })
+    "#;
+    const ASSERT_RESTORED_OVERRIDES_LUA: &str = r#"
+        local poor = C_ColorOverrides.GetColorForQuality(0)
+        local legendary = C_ColorOverrides.GetColorForQuality(5)
+        local stale = C_ColorOverrides.GetColorOverrideInfo(2)
+        if math.abs(poor.r - 51 / 255) > 0.000001 then return "poor_r" end
+        if math.abs(poor.a - 204 / 255) > 0.000001 then return "poor_a" end
+        if math.abs(legendary.g - 77 / 255) > 0.000001 then return "legendary_g" end
+        if math.abs(legendary.a - 179 / 255) > 0.000001 then return "legendary_a" end
+        if stale ~= nil then return "stale_type" end
+        return "ok"
+    "#;
+
     #[test]
     fn secure_color_override_namespace_matches_master_snapshot() {
         if ACTIVE != ClientProfile::Retail {
@@ -399,6 +510,7 @@ mod tests {
         }
         let env = WowLuaEnv::new().expect("Lua environment should initialize");
         let members = secure_color_override_member_names(&env);
+        // origin/master ffc9675 installs these two functions before the secure snapshot.
         assert_eq!(
             members,
             vec![
@@ -406,6 +518,55 @@ mod tests {
                 "GetColorOverrideInfo".to_owned(),
             ]
         );
+    }
+
+    #[test]
+    fn player_color_overrides_setting_roundtrips_and_replaces_active_records() {
+        if ACTIVE != ClientProfile::Retail {
+            return;
+        }
+        assert_eq!(roundtrip_player_color_overrides_setting(), "ok");
+    }
+
+    fn roundtrip_player_color_overrides_setting() -> String {
+        let session = tempfile::tempdir().expect("CVar session directory should create");
+        let session_path = session.path().to_path_buf();
+        let env = WowLuaEnv::with_session_wtf_path(session_path.clone())
+            .expect("Lua environment should initialize");
+        env.exec(INITIAL_OVERRIDES_LUA)
+            .expect("initial records should set");
+        save_player_color_overrides(&env);
+        assert_setting_contains_overrides(&env);
+
+        let restored = WowLuaEnv::with_session_wtf_path(session_path)
+            .expect("restored Lua environment should initialize");
+        restored
+            .exec(MUTATE_BEFORE_LOAD_LUA)
+            .expect("extra records should set");
+        load_player_color_overrides(&restored);
+        restored
+            .eval(ASSERT_RESTORED_OVERRIDES_LUA)
+            .expect("loaded records should be queryable")
+    }
+
+    fn save_player_color_overrides(env: &WowLuaEnv) {
+        let mut lua = env.rilua_mut();
+        save_color_overrides(lua.state_mut()).expect("setting save should succeed");
+    }
+
+    fn load_player_color_overrides(env: &WowLuaEnv) {
+        let mut lua = env.rilua_mut();
+        load_color_overrides(lua.state_mut()).expect("setting load should succeed");
+    }
+
+    fn assert_setting_contains_overrides(env: &WowLuaEnv) {
+        let saved = env
+            .state()
+            .borrow()
+            .cvars
+            .get(PLAYER_COLOR_OVERRIDES_CVAR)
+            .expect("save should write playerColorOverrides");
+        assert!(!saved.is_empty());
     }
 
     fn secure_color_override_member_names(env: &WowLuaEnv) -> Vec<String> {
