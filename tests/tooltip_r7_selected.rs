@@ -395,6 +395,7 @@ fn assert_possession_consumer_absent(env: &WowLuaEnv) {
 fn assert_possession_consumer_spell(env: &WowLuaEnv, spell_id: u32) {
     env.exec(&format!(
         r#"
+        GameTooltip:Hide()
         local button = CreateFrame("Button", nil, UIParent)
         button:SetID(1)
         PossessButtonMixin.OnEnter(button)
@@ -493,6 +494,7 @@ fn register_possession_event_probe(env: &WowLuaEnv) {
         R7PossessionEventProbe = CreateFrame("Frame")
         R7PossessionEventProbe:RegisterEvent("UPDATE_POSSESS_BAR")
         R7PossessionEventProbe:SetScript("OnEvent", function()
+            GameTooltip:Hide()
             local button = CreateFrame("Button", nil, UIParent)
             button:SetID(1)
             PossessButtonMixin.OnEnter(button)
