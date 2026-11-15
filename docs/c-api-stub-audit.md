@@ -156,15 +156,15 @@ glue-screen (login/character creation) or legacy/removed APIs.
 | GetSecondsUntilDailyReset | Stubbed |
 | GetSecondsUntilWeeklyReset | Stubbed |
 
-### C_ColorOverrides (`c_misc_api.rs`)
+### C_ColorOverrides (`src/c_api/c_color_overrides.rs`)
 | Function | Status |
 |----------|--------|
 | GetColorForQuality | Implemented |
 | GetDefaultColorForQuality | Implemented |
-| GetColorOverrideInfo | Stubbed |
-| ClearColorOverrides | Stubbed |
-| SetColorOverride | Stubbed |
-| RemoveColorOverride | Stubbed |
+| GetColorOverrideInfo | Implemented |
+| ClearColorOverrides | Implemented |
+| SetColorOverride | Implemented |
+| RemoveColorOverride | Implemented |
 
 ### C_TransmogCollection (`c_collection_api.rs`)
 | Function | Status |

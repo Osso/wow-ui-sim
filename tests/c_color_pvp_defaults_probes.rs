@@ -5,21 +5,6 @@ fn env() -> WowLuaEnv {
 }
 
 #[test]
-fn color_override_quality_defaults_to_white_color() {
-    let env = env();
-    let (r, g, b, a): (f64, f64, f64, f64) = env
-        .eval(
-            r#"
-            local color = C_ColorOverrides.GetColorForQuality(1)
-            return color.r, color.g, color.b, color.a
-            "#,
-        )
-        .expect("quality color should be queryable");
-
-    assert_eq!((r, g, b, a), (1.0, 1.0, 1.0, 1.0));
-}
-
-#[test]
 fn pvp_no_state_defaults_do_not_override_state_backed_pvp_methods() {
     let env = env();
     let result: String = env

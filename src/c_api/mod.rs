@@ -409,6 +409,7 @@ pub mod url_texture_inputs;
 ))]
 pub use c_transmog_collection::IllusionInfo;
 pub mod c_achievement_telemetry;
+pub(crate) mod c_color_overrides;
 pub mod c_social_contract_glue;
 #[cfg(feature = "retail-12-0-5")]
 pub mod c_spell_maw_powers;

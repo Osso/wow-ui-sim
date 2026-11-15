@@ -281,3 +281,13 @@ transition is not covered because the simulator reports a separate
 resolver test; this is not runtime Azerite consumer proof. The resolved
 `parentArray="BGTex"` issue and candidate dispositions are recorded in
 [Lua-owned fallback retirement](lua-owned-fallback-retirement.md#retail-character-create-fallback-retirement-queue-462).
+
+## Retail ColorManager and C_ColorOverrides
+
+**VERIFIED (Retail 12.1.5 cache):** `Blizzard_Colors/Blizzard_Colors.toc:3,8` sets `AllowLoad: Both` and selects `[Family]\\ColorManager.lua`. `data/blizzard-ui-files/retail.txt:1144-1146` includes the TOC and `Mainline/ColorManager.lua`; `src/toc/mod.rs:75-80` selects `mainline` for Retail. The full-environment helper loads `Blizzard_Colors` (`tests/tooltip_full_env_helpers.rs:12,94-111`), and the regression test observes the original `ColorManager` table.
+
+**VERIFIED (pinned Retail API documentation cache):** `ColorOverridesDocumentation.lua:5-74` declares the six `C_ColorOverrides` functions. `ColorOverrideConstantsDocumentation.lua:6-20` declares override types 0-7. `Blizzard_Colors/Mainline/ColorManager.lua:23,63-67,92-96` consumes `GetColorForQuality`, `GetDefaultColorForQuality`, and `GetColorOverrideInfo`.
+
+**VERIFIED (RED at test commit `589d1278958b6d14867abba6d6dfe6736cb91378`):** `original_color_manager_tracks_globalcolor_defaults_and_color_overrides` fails at `tests/blizzard_ui_unit.rs:99` because the original `ColorManager.GetDefaultColorDataForItemQuality` calls a missing `GetDefaultColorForQuality`. The exact Lua error is `attempt to call field 'GetDefaultColorForQuality' (a nil value)`. The full-environment setup also reports unrelated addon-load diagnostics; they precede the test assertion and are not attributed to this API.
+
+**INFERRED:** the native update/reset callbacks map to the documented synchronous `COLOR_OVERRIDE_UPDATED` and `COLOR_OVERRIDES_RESET` events; the local documentation cache build is unverified. **UNKNOWN:** the full `playerColorOverrides` save/load and reload/logout chain. The selected test does not assert event or persistence behavior.

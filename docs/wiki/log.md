@@ -1,3 +1,7 @@
+## [2026-11-15] implementation | Retail C_ColorOverrides state
+
+[Color overrides](systems/color-overrides.md) records the verified Retail state API and original ColorManager consumer. The generated GlobalColor row values, event callback names, and persistence lifecycle retain explicit INFERRED or UNKNOWN labels.
+
 ## [2026-11-15] investigation | ShowUIPanel toggle fixture owners
 
 [Toggle fixture owners](investigations/showuipanel-toggle-fixture-owners.md) records independent achievement/housing fallback-retirement boundaries, original TOC owner loading and untouched out-of-scope panel failures. No guessed fallback restored.

@@ -31,7 +31,7 @@ Default behavior for missing methods (returning nil/false/0) is provided directl
 | C_QuestLog | GetNumQuestLogEntries, GetInfo, quest ID lookups |
 | C_EditMode | GetLayouts, GetAccountSettings |
 | C_Reputation | GetFactionDataByID/Index, GetNumFactions |
-| C_ColorOverrides | GetColorForQuality, GetDefaultColorForQuality |
+| C_ColorOverrides (Retail) | ClearColorOverrides, GetColorForQuality, GetColorOverrideInfo, GetDefaultColorForQuality, RemoveColorOverride, SetColorOverride |
 | C_TransmogCollection | PlayerHasTransmog variants |
 
 ## Missing APIs (107 methods total)

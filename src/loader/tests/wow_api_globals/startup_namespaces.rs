@@ -6,26 +6,15 @@ retail_only_namespace_member_fixture! {
 #[test]
 fn test_bootstrap_fills_existing_namespace_defaults() {
     let env = WowLuaEnv::new().unwrap();
-    let (
-        trade_ty,
-        trade_value,
-        quest_ty,
-        quest_value,
-        color_ty,
-        hex_ty,
-        campaign_ty,
-        campaign_missing,
-    ): (String, i64, String, bool, String, String, String, bool) = env
+    let (trade_ty, trade_value, quest_ty, quest_value, campaign_ty, campaign_missing):
+        (String, i64, String, bool, String, bool) = env
         .eval(
             r#"
-            local color = C_ColorOverrides.GetColorForQuality(0)
             local campaign = C_CampaignInfo.GetCampaignInfo(290)
             return type(C_TradeSkillUI.GetProfessionSkillLineID),
                 C_TradeSkillUI.GetProfessionSkillLineID(7),
                 type(C_QuestLog.ReadyForTurnIn),
                 C_QuestLog.ReadyForTurnIn(42),
-                type(C_ColorOverrides.GetColorForQuality),
-                type(color and color.GenerateHexColorMarkup),
                 type(C_CampaignInfo.GetCampaignInfo),
                 campaign == nil
             "#,
@@ -36,10 +25,26 @@ fn test_bootstrap_fills_existing_namespace_defaults() {
     assert_eq!(trade_value, 7);
     assert_eq!(quest_ty, "function");
     assert!(!quest_value);
-    assert_eq!(color_ty, "function");
-    assert_eq!(hex_ty, "function");
     assert_eq!(campaign_ty, "function");
     assert!(campaign_missing);
+}
+
+#[test]
+fn test_bootstrap_registers_color_override_members() {
+    let env = WowLuaEnv::new().unwrap();
+    let (color_ty, default_color_ty, override_info_ty): (String, String, String) = env
+        .eval(
+            r#"
+            return type(C_ColorOverrides.GetColorForQuality),
+                type(C_ColorOverrides.GetDefaultColorForQuality),
+                type(C_ColorOverrides.GetColorOverrideInfo)
+            "#,
+        )
+        .unwrap();
+
+    assert_eq!(color_ty, "function");
+    assert_eq!(default_color_ty, "function");
+    assert_eq!(override_info_ty, "function");
 }
 }
 #[test]
