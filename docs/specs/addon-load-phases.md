@@ -33,13 +33,16 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 
 ### R88t secure dependency and named publication routes
 
-- [ ] VERIFIED (Retail 12.1.5.70688, R88t): ordinary and secure addon loaded states are separate. A secure request passes its effective mode to dependencies, including dependencies without their own secure directive; optional dependencies load before required dependencies, and dependencies load before the current addon's files.
-- [ ] VERIFIED (Retail 12.1.5.70688, R88t): for a dependency with no secure directive and no ordinary loaded state, the loader requests ordinary mode and then secure mode. If a mode is already loaded, the request can return without running its files again.
-- [ ] VERIFIED (Retail 12.1.5.70688, R88t): flag 3 publishes `AddSourceLocationExclude` and `table.count` into both environments with separate function objects; the ordinary and secure table libraries are separate.
-- [ ] VERIFIED (Retail 12.1.5.70688, R88v.v4): `AddSourceLocationExclude` accepts one string or number, adds a nonempty NUL-terminated copy to shared source-exclusion state, and returns zero values. Matching is a case-sensitive suffix check on file-source text. A template-free `CreateTexture` records the first non-excluded file source and line; `GetSourceLocation` returns the saved `file:line` text and does not rescan.
+- [x] VERIFIED (Retail 12.1.5.70688, R88t): ordinary and secure addon loaded states are separate. A secure request passes its effective mode to dependencies, including dependencies without their own secure directive; optional dependencies load before required dependencies, and dependencies load before the current addon's files.
+- [x] VERIFIED (Retail 12.1.5.70688, R88t): for a dependency with no secure directive and no ordinary loaded state, the loader requests ordinary mode and then secure mode. If a mode is already loaded, the request can return without running its files again.
+- [x] VERIFIED (Retail 12.1.5.70688, R88t): flag 3 publishes `AddSourceLocationExclude` and `table.count` into both environments with separate function objects; the ordinary and secure table libraries are separate.
+- [x] VERIFIED (Retail 12.1.5.70688, R88v.v4; `secureenv_isolation::create_texture_source_location_skips_excluded_callsite`): calling the secure `AddSourceLocationExclude` object with a string returns zero values and changes the source selected by ordinary `CreateTexture`. The first template-free texture returns its saved file and line after the exclusion list changes; excluding the only file frame makes the next texture return an `UnknownFile:` location.
+- [ ] VERIFIED (Retail 12.1.5.70688, R88v.v4): number arguments convert to text; input text stops at NUL; empty input adds nothing; duplicates are retained; secret denial and stack-overflow errors use the verified forms.
+- [ ] VERIFIED (Retail 12.1.5.70688, R88v.v4): source matching is case-sensitive and uses a file-text suffix; positive lines wrap modulo 65,536 and non-positive lines become zero.
 - [ ] VERIFIED (Retail 12.1.5.70688, R88t): flag 3 publishes the six named `C_ColorOverrides` members into separate namespace tables with separate function objects. The simulator may publish existing handlers only; it must not add placeholder methods without a backing model.
-- [ ] VERIFIED (Retail 12.1.5.70688, R88t): constant registration publishes separate `Constants` and `AccountStoreConsts` tables without a member flag. The four verified values are 1, 3, 3139, and 2814 for their named members.
-- [ ] VERIFIED (Retail 12.1.5.70688, R88t): the Retail UIParent bootstrap uses named-frame policy flag 32. If ordinary and secure `UIParent` names are empty, both receive the same frame-table object; each destination preserves an existing non-nil name.
+- [x] VERIFIED (Retail 12.1.5.70688, R88t): constant registration publishes separate `Constants` and `AccountStoreConsts` tables without a member flag. The four verified values are 1, 3, 3139, and 2814 for their named members.
+- [x] VERIFIED (Retail 12.1.5.70688, R88t): when ordinary and secure `UIParent` names are empty, both receive the same frame-table object through the Retail named-frame policy.
+- [ ] VERIFIED (Retail 12.1.5.70688, R88t): the Retail UIParent bootstrap uses named-frame policy flag 32 and each destination preserves an existing non-nil name.
 
 ### `LoadWith` followers
 
@@ -95,6 +98,8 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 - [ ] VERIFIED (R88t, native) but untested in the simulator: an ordinary dependency-request failure must not suppress the following secure request. No evidence-backed input currently makes only the ordinary request fail; a Lua file diagnostic is not proof of that request failure.
 - [ ] INFERRED (R88t): when neither mode was loaded and both default file paths complete, each default path executes in its requested environment. Do not claim this exact per-environment count as native parity.
 - [ ] UNKNOWN: the native cleanup caller for the shared exclusion list is not established; the simulator retains entries for the lifetime of `SimState`. The two-file caller/wrapper comparison remains INFERRED and is not asserted.
+- [ ] rilua exposes no per-argument secret mode and no fallible stack reservation; AddSourceLocationExclude therefore does not reproduce the verified mode-zero secret error or stack-overflow path.
+- [ ] The source test invokes the secure function object from an ordinary add-on and observes the effect through ordinary `CreateTexture`; it does not invoke the ordinary function object from secure add-on code.
 - [ ] Follow-up: the full R88v C_ColorOverrides model is deferred from this lane. Keep the four absent members (`ClearColorOverrides`, `GetDefaultColorForQuality`, `RemoveColorOverride`, and `SetColorOverride`) absent; do not add placeholders or partial handlers.
 - [ ] UNKNOWN: transitive copying from ordinary globals into secureenv. The direct dependency helper does not add a blanket-copy route.
 - [ ] The original `TooltipDataProcessor` identity and its published secure-table provenance remain deferred to `lt-635e`; this lane verifies that the PrivateAurasTooltip consumer runs without errors.

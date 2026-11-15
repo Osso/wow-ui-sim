@@ -1,6 +1,6 @@
 ## [2026-11-15] system | Retail R88t dependencies and R88v source attribution
 
-[Addon load phases](../specs/addon-load-phases.md) records R88t request order and named publication plus R88v source attribution. The ordinary-request failure-independence clause is VERIFIED natively but untested; transitive copying remains UNKNOWN. The one-file AddSource consumer was RED at `928d8c8fc` because `GetSourceLocation` returned nil; GREEN for the current implementation is pending. The full C_ColorOverrides stateful model is deferred to a follow-up. [Taint system](systems/taint-system.md#dual-lua-environment) records publication boundaries and current implementation.
+[Addon load phases](../specs/addon-load-phases.md) records R88t request order and named publication plus R88v source attribution. The ordinary-request failure-independence clause is VERIFIED natively but untested; transitive copying remains UNKNOWN. **VERIFIED (simulator test at `adf8d25f9`):** the one-file AddSource consumer returns a saved `file:line`, preserves it after the exclusion list changes, and returns `UnknownFile` for a later texture from the excluded file. The full C_ColorOverrides stateful model is deferred to a follow-up. [Taint system](systems/taint-system.md#dual-lua-environment) records publication boundaries and current implementation.
 
 ## [2026-11-14] investigation | Retail secure tooltip color route
 
