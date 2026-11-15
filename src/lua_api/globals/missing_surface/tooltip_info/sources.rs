@@ -58,7 +58,7 @@ fn tooltip_for_item_location(state: &mut LuaState, location: Val) -> Val {
     let bag = table_i32_field(state, location, "bagID");
     let slot = table_i32_field(state, location, "slotIndex");
     match (bag, slot) {
-        (Some(bag), Some(slot)) => tooltip_for_bag_item(state, bag, slot),
+        (Some(bag), Some(slot)) => compose_bag_item(state, bag, slot),
         _ => empty_tooltip(state, TOOLTIP_TYPE_ITEM),
     }
 }
@@ -103,6 +103,28 @@ pub(super) fn parse_spell_source(state: &mut LuaState, value: Val) -> Option<u32
 }
 
 pub(super) fn tooltip_for_bag_item(state: &mut LuaState, bag: i32, slot: i32) -> Val {
+    let tooltip = compose_bag_item(state, bag, slot);
+    // VERIFIED R88n.4b (Retail 12.1.5.70688): ordinary bag tooltips append
+    // a top-level integer repairCost only for a positive queried cost.
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        let cost = supplied_bag_repair_cost(state, bag, slot);
+        if let Some(cost) = cost.filter(|cost| *cost > 0) {
+            let saved_top = state.top;
+            state.push(tooltip);
+            table_set(state, tooltip, "repairCost", Val::Num(f64::from(cost)));
+            state.top = saved_top;
+        }
+    }
+    tooltip
+}
+
+fn supplied_bag_repair_cost(state: &LuaState, bag: i32, slot: i32) -> Option<i32> {
+    let sim = borrow_state(state).ok()?;
+    sim.get_bag_item(bag, slot)?;
+    sim.bag_item_repair_costs.get(&(bag, slot)).copied()
+}
+
+fn compose_bag_item(state: &mut LuaState, bag: i32, slot: i32) -> Val {
     let item_id = borrow_state(state)
         .ok()
         .and_then(|st| st.get_bag_item(bag, slot).map(|(item_id, _)| item_id))
