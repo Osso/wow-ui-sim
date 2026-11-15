@@ -197,7 +197,55 @@ pub(crate) fn register(lua: &mut rilua::Lua) -> crate::Result<()> {
     let result = lua.call_function(&function, &arguments);
     lua.state_mut().top = saved_top;
     retain_host_dispatch(lua.state_mut(), &result?)?;
+    if crate::client_profile::is_active_retail_12_1_5() {
+        publish_retail_secure_factory(lua)?;
+    }
     Ok(())
+}
+
+fn publish_retail_secure_factory(lua: &mut rilua::Lua) -> crate::Result<()> {
+    // VERIFIED — R88g.3.q3: native publication creates distinct function objects.
+    // This wrapper keeps one simulator configuration store without sharing identity.
+    if !matches!(
+        crate::lua_api::methods::registry_get(lua.state_mut(), "__secureenv"),
+        Val::Table(_)
+    ) {
+        return Ok(());
+    }
+
+    let namespace = LuaApiMut::get_global_val(lua, "C_StringUtil");
+    let factory = crate::lua_api::methods::table_get_static(
+        lua.state_mut(),
+        namespace,
+        "CreateSecondsFormatter",
+    );
+    let Val::Function(_) = factory else {
+        return Err(runtime_error(
+            "C_StringUtil.CreateSecondsFormatter must exist before secure publication",
+        ));
+    };
+    let secure_factory = create_secure_factory_wrapper(lua, factory)?;
+    let secure_namespace = super::ensure_secure_namespace(lua.state_mut(), "C_StringUtil")?;
+    table_set_static(
+        lua.state_mut(),
+        Val::Table(secure_namespace),
+        "CreateSecondsFormatter",
+        secure_factory,
+    );
+    Ok(())
+}
+
+fn create_secure_factory_wrapper(lua: &mut rilua::Lua, factory: Val) -> crate::Result<Val> {
+    const WRAPPER: &[u8] = b"local factory = ...\nreturn function(...) return factory(...) end";
+
+    let chunk = lua.load_bytes(WRAPPER, "@seconds-formatter-secure-factory")?;
+    let wrappers = lua.call_function(&chunk, &[factory])?;
+    let [secure_factory @ Val::Function(_)] = wrappers.as_slice() else {
+        return Err(runtime_error(
+            "secure SecondsFormatter factory wrapper was not created",
+        ));
+    };
+    Ok(*secure_factory)
 }
 
 fn bootstrap_callbacks(state: &mut LuaState) -> [Val; 6] {
