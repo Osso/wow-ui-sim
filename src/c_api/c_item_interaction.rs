@@ -129,13 +129,16 @@ fn set_pending_item(state: &mut LuaState) -> LuaResult<u32> {
         1,
         "C_ItemInteraction.SetPendingItem",
     )?;
-    let candidate = parse_pending_item(state, location.clone())?;
+    let candidate = find_or_assign_pending_item(state, location.clone())?;
     let success = update_pending_selection(state, candidate, location)?;
     state.push(Val::Bool(success));
     Ok(1)
 }
 
-fn parse_pending_item(state: &mut LuaState, location: Val) -> LuaResult<Option<PendingItem>> {
+fn find_or_assign_pending_item(
+    state: &mut LuaState,
+    location: Val,
+) -> LuaResult<Option<PendingItem>> {
     if location.is_nil() {
         return Ok(None);
     }
@@ -279,7 +282,7 @@ fn update_pending_selection(
         return Ok(false);
     };
     let kind = current_interaction_kind(state)?;
-    if !host_accepts_item(state, kind, candidate.item_id)? {
+    if !host_observes_item_acceptance(state, kind, candidate.item_id)? {
         fire_selection_updated(state, Val::Nil)?;
         return Ok(false);
     }
@@ -374,7 +377,7 @@ fn current_interaction_kind(state: &LuaState) -> LuaResult<i32> {
         .map_or(0, |info| info.interaction_type))
 }
 
-fn host_accepts_item(state: &LuaState, kind: i32, item_id: u32) -> LuaResult<bool> {
+fn host_observes_item_acceptance(state: &LuaState, kind: i32, item_id: u32) -> LuaResult<bool> {
     if !matches!(kind, 2 | 3 | 4) {
         return Ok(false);
     }

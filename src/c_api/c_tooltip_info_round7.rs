@@ -38,8 +38,8 @@ const RUNEFORGE_USAGE: &str = concat!(
     "itemGUID, itemLevel [, powerID, modifiers])",
 );
 
-/// One empty-by-default host input for selected item-interaction tooltip state.
-/// Native SetPendingItem lifecycle and cleansing/conversion calculations are not modeled.
+/// Empty-by-default host data for selected item-interaction and tooltip state.
+/// Native acceptance predicates and tooltip-row calculations are not modeled.
 #[derive(Clone, Debug, Default)]
 pub struct ItemInteractionTooltipInput {
     /// Selected object kind for the R88n.1 result-shape path.
