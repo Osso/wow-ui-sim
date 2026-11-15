@@ -7,6 +7,7 @@
 use std::collections::{HashMap, HashSet};
 
 use crate::client_profile::{ACTIVE, ClientProfile};
+use crate::event::{Event, EventArg};
 use crate::lua_api::state::SimState;
 
 #[derive(Debug, Clone, Default)]
@@ -25,6 +26,8 @@ pub struct QuestSpecialItemInputs {
     pub host_cache_updates: Vec<QuestSpecialItemCacheUpdate>,
     /// Pending callback entries, grouped by their owning quest-cache record.
     pub pending_callbacks: HashMap<i32, Vec<QuestSpecialItemPendingCallback>>,
+    /// INFERRED host condition for the conditional QUEST_AUTOCOMPLETE callback.
+    pub autocomplete_notification_quest_ids: HashSet<i32>,
 }
 
 impl QuestSpecialItemInputs {
@@ -163,7 +166,7 @@ fn invoke_pending_callbacks(
 
 fn quest_record_data_callback(
     sim: &mut SimState,
-    _quest_id: i32,
+    quest_id: i32,
     _token: QuestSpecialItemRequestToken,
     _extra_context: &[u8],
     mode: u8,
@@ -173,6 +176,14 @@ fn quest_record_data_callback(
         return;
     }
     queue_quest_log_update(sim);
+    if sim
+        .quest_log_entries
+        .quest_special_item_inputs
+        .autocomplete_notification_quest_ids
+        .contains(&quest_id)
+    {
+        queue_quest_autocomplete(sim, quest_id);
+    }
 }
 
 fn queue_quest_log_update(sim: &mut SimState) {
@@ -185,6 +196,14 @@ fn queue_quest_log_update(sim: &mut SimState) {
         return;
     }
     sim.events.push_simple("QUEST_LOG_UPDATE");
+}
+
+fn queue_quest_autocomplete(sim: &mut SimState, quest_id: i32) {
+    // INFERRED (R88u.u3): the numeric event payload is the quest key.
+    sim.events.push(Event {
+        name: "QUEST_AUTOCOMPLETE".to_owned(),
+        args: vec![EventArg::Number(f64::from(quest_id))],
+    });
 }
 
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
