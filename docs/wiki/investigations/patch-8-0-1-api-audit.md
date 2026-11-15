@@ -26,9 +26,17 @@ Pending prose: full chat migration; combat-log no-loadout/current-event timing; 
 
 ## Backing model, not shim
 
-`src/c_api/map_world_coordinates.rs` implements `C_Map.GetMapPosFromWorldPos` against environment-local `SimState.map_world_rects`, keyed by uiMapID. Each `MapWorldRect` carries continent identity and world-space extents. Only known maps with explicit finite, nondegenerate rectangles can produce output. Missing/outside/ambiguous inputs return no values. Rectangles begin empty; no native map geometry is fabricated from texture dimensions. Existing forward `GetWorldPosFromMapPos` art-based approximation remains outside this change and is **not** used as a native round-trip oracle.
+`src/c_api/map_world_coordinates.rs` implements `C_Map.GetMapPosFromWorldPos` against environment-local `SimState.map_world_rects`, keyed by uiMapID. Each `MapWorldRect` carries continent identity and world-space extents. Only known maps with explicit finite, nondegenerate rectangles can produce output. Missing/outside/ambiguous inputs return no values. Rectangles begin empty; no native map geometry is fabricated from texture dimensions. The current Retail forward projection uses profile-scoped assignment data; see [Retail map world-position](#retail-map-world-position).
 
 Fixture: continent 42, map 2248, rectangle x=[-200,600], y=[100,500], world point (0,400) → normalized (.25,.75). Changing right extent to 200 changes x to .5. A second overlapping map requires explicit override; reversed x extent maps (100,400) to .25. Independent environments have no snapshot. No registration-only placeholder or vendor monkey-patch supplies this behavior. [Spec](../../specs/patch-8-0-1-publication-sweep.md).
+
+## Retail map world-position
+
+The Retail 12.1.5 path reads the profile-scoped `UiMapAssignment` catalog and preserves explicit `MapWorldRect` precedence. **VERIFIED (repository provenance):** the 12.1.5.70783 CSV export has 22,780 readable rows; generated records retain signed `MapID`, `AreaID`, UI bounds, and Region X/Y endpoints but omit unused `OrderIndex`. **INFERRED:** the rows match the selected 12.1.5.70575 pin, and CSV order approximates the native iterator's first-visited tie rule.
+
+**VERIFIED (Retail 12.1.5.70688, R88i.41):** both conversion APIs accept signed-i32 IDs with truncation toward zero and plain position tables with numeric x/y fields; their exact Usage strings are `Usage: local continentID, worldPosition = C_Map.GetWorldPosFromMapPos(uiMapID, mapPosition)` and `Usage: local uiMapID, mapPosition = C_Map.GetMapPosFromWorldPos(continentID, worldPosition [, overrideUiMapID])`. The forward API returns two values on success and zero on its normal no-result path. It selects the containing row nearest the point to the UI-rectangle center, otherwise the nearest-center outside row, preserving the first visited row on ties. Bounds are inclusive; spans below single-precision epsilon are rejected; coordinates are not limited to 0..1 or clamped.
+
+**VERIFIED:** the axis association swaps and reverses both axes. **INFERRED:** world X blends Region_3 toward Region_0 by normalized map Y, and world Y blends Region_4 toward Region_1 by normalized map X. **VERIFIED (R88x):** a negative `MapID` uses `AreaID` to look up AreaTable; a failed lookup skips only that assignment, and a successful unsigned-16 value is not rejected when it is zero. **INFERRED:** this native u16 maps to DBD `ContinentID`. **VERIFIED (12.1.5.70783 export):** the complete AreaTable export has 10,046 readable rows and no ID 0; ID 14620 has `ContinentID` 2444. **VERIFIED (optional Retail tests at source SHA `0e9b548b1d6e92939ccc3f4e84d48157ef3c89c3`):** map 2147 resolves to 2444 and its point-dependent positions match the committed assignment row. **INFERRED (R88x plus 70783 data):** map IDs 1408 and 2311 reference absent AreaID 0 and therefore have no resolved map number; the 70783 evidence does not support treating them as successful conversions. **VERIFIED (70783 assignment rows and simulator HBD-style probe at source SHA `0e9b548b1d6e92939ccc3f4e84d48157ef3c89c3`):** the catalog-derived no-world Zone set below map 3000 is 997, 1158, 1408, 1523, 2107, and 2311. The four requested no-row zones have no assignment rows; 1408 and 2311 each have only a negative AreaID 0 row. Maps 1148 and 1149 have an earlier positive MapID 1861 row before their negative AreaID 0 row, while map 2147 resolves through AreaID 14620. Native inverse assignment ranking and parent promotion remain unmodeled; only the verified argument/Usage contract was added to `GetMapPosFromWorldPos`. See the [contract](../../specs/map-world-position.md) for the complete coverage and gap matrix.
 
 ## Retirement evidence
 
@@ -78,6 +86,9 @@ Integration onto master `b4ff281a5` replaces the 8.1.0 placeholder with its real
 
 ## Sources
 
+- [Map world-position contract](../../specs/map-world-position.md) — labeled R88i.41/R88x behavior, generated data scope, and unresolved AreaID 0 case.
+- [12.1.5.70783 DB2 provenance](../../../data/db2/retail-12.1.5.70783/provenance.json) — build key, FDID, listfile, layout, and reduced AreaTable row evidence.
+- [AreaTable definition](../../../data/db2/retail-12.1.5.70783/definitions/AreaTable.dbd) — source field name and unsigned-16 width in the matched layout.
 - [Party supplied-input runtime audit](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/8.0.1-session-2026-10-08/party-map-green-20261010/runtime-report.md) — bounded default-Retail GREEN and preserved RED/check/controller boundaries.
 
 - [Pinned source/provenance](../../../data/patch-api/sources/8.0.1-api-changes.provenance.json).

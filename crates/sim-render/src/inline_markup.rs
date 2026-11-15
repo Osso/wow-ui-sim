@@ -1,0 +1,598 @@
+//! Inline texture (`|T...|t`) and atlas (`|A...|a`) escapes in text.
+//!
+//! The client draws these escapes as images inside a line of text and
+//! reserves their width when it measures the string. This module splits a
+//! string into text and icon pieces and sizes the icons; drawing them is up
+//! to the renderer.
+
+use crate::strip_wow_markup;
+
+/// What an inline icon draws.
+#[derive(Debug, Clone, PartialEq)]
+pub enum InlineIconSource {
+    /// A texture path, e.g. `Interface\Icons\INV_Misc_QuestionMark`.
+    File(String),
+    /// A texture file data ID, written as a number in place of the path.
+    FileId(u32),
+    /// An atlas name.
+    Atlas(String),
+}
+
+/// One `|T...|t` or `|A...|a` escape.
+///
+/// `|Tpath:height:width:offsetX:offsetY:texWidth:texHeight:left:right:top:bottom:r:g:b|t`
+/// and `|A:atlas:height:width:offsetX:offsetY:r:g:b|a`. The atlas colon is
+/// required. Optional fields depend on the escape type.
+#[derive(Debug, Clone, PartialEq)]
+pub struct InlineIcon {
+    pub source: InlineIconSource,
+    /// Height in UI units as written; see [`InlineIcon::size`] for 0 and
+    /// missing values.
+    pub height: Option<f32>,
+    /// Width in UI units as written; see [`InlineIcon::size`].
+    pub width: Option<f32>,
+    /// Shift to the right, in UI units.
+    pub offset_x: f32,
+    /// Shift upwards, in UI units.
+    pub offset_y: f32,
+    /// Texture coordinates `(left, right, top, bottom)` in the 0..1 range,
+    /// from the texel rectangle of `|T` and the texture's size.
+    pub tex_coords: Option<(f32, f32, f32, f32)>,
+    /// Vertex color, each channel 0..1.
+    pub vertex_color: Option<[f32; 3]>,
+}
+
+impl InlineIcon {
+    /// Width and height in UI units next to text whose lines are
+    /// `line_height` units high.
+    ///
+    /// R88d verifies that nonpositive dimensions use the caller metric. This
+    /// maps that metric to `line_height`, INFERRED from Forever measurements;
+    /// R88d does not identify the metric as font height or line height.
+    /// R88e.6 verifies the explicit-size formula but leaves its runtime unit
+    /// count and caller scale UNKNOWN, so this code keeps the Forever size
+    /// mapping INFERRED instead of applying an unparameterized formula.
+    pub fn size(&self, line_height: f32) -> (f32, f32) {
+        let positive = |value: Option<f32>| value.filter(|value| *value > 0.0);
+        let height_uses_caller_metric = self.height.is_some_and(|height| height <= 0.0);
+        let height = positive(self.height).unwrap_or(line_height);
+
+        if matches!(self.source, InlineIconSource::Atlas(_)) {
+            return match self.width {
+                Some(width) if width > 0.0 && height_uses_caller_metric => (width * height, height),
+                Some(width) if width > 0.0 => (width, height),
+                Some(_) => (line_height, height),
+                None => (line_height, line_height),
+            };
+        }
+
+        let Some(raw_height) = self.height else {
+            return (0.0, 0.0);
+        };
+        let height = positive(Some(raw_height)).unwrap_or(line_height);
+        let width = match self.width {
+            None => height,
+            Some(width) if width > 0.0 && height_uses_caller_metric => width * height,
+            Some(width) if width > 0.0 => width,
+            Some(_) => line_height,
+        };
+        (width, height)
+    }
+}
+
+/// A piece of a string: text with every escape removed, or an icon.
+#[derive(Debug, Clone, PartialEq)]
+pub enum InlinePiece {
+    Text(String),
+    Icon(InlineIcon),
+}
+
+/// Whether `text` holds an inline texture or atlas escape.
+pub fn has_inline_icons(text: &str) -> bool {
+    text.contains("|T") || text.contains("|A")
+}
+
+/// Split `text` into text pieces (colors, hyperlinks and other escapes
+/// removed, as by [`strip_wow_markup`]) and icons, in reading order. Empty
+/// text pieces are left out. If the first pipe after an opening tag is not
+/// its matching closing marker, the opening pipe goes to ordinary text handling.
+pub fn split_inline_markup(text: &str) -> Vec<InlinePiece> {
+    let mut pieces = Vec::new();
+    let mut rest = text;
+    while let Some((start, close)) = next_icon_escape(rest) {
+        push_text(&mut pieces, &rest[..start]);
+        let body_start = start + 2;
+        let Some(body_len) = rest[body_start..].find('|') else {
+            push_text(&mut pieces, &rest[start..start + 1]);
+            rest = &rest[start + 1..];
+            continue;
+        };
+        let marker_start = body_start + body_len;
+        if !rest[marker_start..].starts_with(close) {
+            push_text(&mut pieces, &rest[start..start + 1]);
+            rest = &rest[start + 1..];
+            continue;
+        }
+        let body = &rest[body_start..marker_start];
+        let icon = if close == "|t" {
+            parse_texture_escape(body)
+        } else {
+            parse_atlas_escape(body)
+        };
+        if let Some(icon) = icon {
+            pieces.push(InlinePiece::Icon(icon));
+        }
+        rest = &rest[marker_start + 2..];
+    }
+    push_text(&mut pieces, rest);
+    pieces
+}
+
+/// Width of the first line of `text` (up to the first line break), with
+/// inline icons sized for lines of `line_height` units. R88e.6 verifies that
+/// accepted icon widths contribute to measured text width. `measure` gives
+/// the width of a text piece that holds no escapes.
+pub fn first_line_width(text: &str, line_height: f32, mut measure: impl FnMut(&str) -> f32) -> f32 {
+    let mut width = 0.0;
+    for piece in split_inline_markup(text) {
+        match piece {
+            InlinePiece::Text(text) => {
+                let (line, broken) = match text.split_once('\n') {
+                    Some((line, _)) => (line, true),
+                    None => (text.as_str(), false),
+                };
+                if !line.is_empty() {
+                    width += measure(line);
+                }
+                if broken {
+                    break;
+                }
+            }
+            InlinePiece::Icon(icon) => width += icon.size(line_height).0,
+        }
+    }
+    width
+}
+
+/// Width of a FontString's first line, with the icon cursor snapped after each
+/// icon. `measure` and the returned width use unscaled FontString units.
+pub fn first_line_width_fontstring(
+    text: &str,
+    line_height: f32,
+    text_scale: f32,
+    mut measure: impl FnMut(&str) -> f32,
+) -> f32 {
+    let mut cursor = 0.0;
+    for piece in split_inline_markup(text) {
+        match piece {
+            InlinePiece::Text(text) => {
+                let (line, broken) = match text.split_once('\n') {
+                    Some((line, _)) => (line, true),
+                    None => (text.as_str(), false),
+                };
+                if !line.is_empty() {
+                    cursor += measure(line) * text_scale;
+                }
+                if broken {
+                    break;
+                }
+            }
+            InlinePiece::Icon(icon) => {
+                let width = icon.size(line_height).0 * text_scale;
+                cursor = snap_icon_right_edge(cursor, width);
+            }
+        }
+    }
+    cursor / text_scale
+}
+
+/// Snap an icon's absolute right edge to the nearest pixel, with halves up.
+pub fn snap_icon_right_edge(x: f32, width: f32) -> f32 {
+    (x + width + 0.5).floor()
+}
+
+/// Height of each line of `text` (split at line breaks, without word wrap):
+/// `line_height`, or the tallest icon on the line when it is taller. R88e.6
+/// verifies that a taller accepted icon raises the stored line height.
+pub fn line_heights(text: &str, line_height: f32) -> Vec<f32> {
+    let mut heights = vec![line_height];
+    for piece in split_inline_markup(text) {
+        match piece {
+            InlinePiece::Text(text) => {
+                for _ in 0..text.matches('\n').count() {
+                    heights.push(line_height);
+                }
+            }
+            InlinePiece::Icon(icon) => {
+                let last = heights.last_mut().expect("one line at least");
+                *last = last.max(icon.size(line_height).1);
+            }
+        }
+    }
+    heights
+}
+
+fn push_text(pieces: &mut Vec<InlinePiece>, raw: &str) {
+    let text = strip_wow_markup(raw);
+    if !text.is_empty() {
+        pieces.push(InlinePiece::Text(text));
+    }
+}
+
+/// Byte offset of the next `|T` or `|A` and the escape that closes it. A
+/// doubled `||` is a literal bar, not the start of an escape.
+fn next_icon_escape(text: &str) -> Option<(usize, &'static str)> {
+    let bytes = text.as_bytes();
+    let mut i = 0;
+    while i + 1 < bytes.len() {
+        if bytes[i] == b'|' {
+            match bytes[i + 1] {
+                b'T' => return Some((i, "|t")),
+                b'A' => return Some((i, "|a")),
+                b'|' => i += 1,
+                _ => {}
+            }
+        }
+        i += 1;
+    }
+    None
+}
+
+fn parse_texture_escape(body: &str) -> Option<InlineIcon> {
+    let fields = read_fields(body);
+    if fields.len() < 2 {
+        return None;
+    }
+    let path = fields[0].trim();
+    if path.is_empty() {
+        return None;
+    }
+    let source = match path.parse::<u32>() {
+        Ok(id) => InlineIconSource::FileId(id),
+        Err(_) => InlineIconSource::File(path.to_string()),
+    };
+    let number = |index: usize| {
+        fields
+            .get(index)
+            .and_then(|field| field.trim().parse::<f32>().ok())
+    };
+    let integer = |index: usize| {
+        fields
+            .get(index)
+            .and_then(|field| parse_integer_field(field))
+    };
+    let tex_coords = match (integer(5), integer(6)) {
+        (Some(tex_width), Some(tex_height)) if tex_width > 0 && tex_height > 0 => {
+            match (integer(7), integer(8), integer(9), integer(10)) {
+                (Some(left), Some(right), Some(top), Some(bottom)) => Some((
+                    left as f32 / tex_width as f32,
+                    right as f32 / tex_width as f32,
+                    top as f32 / tex_height as f32,
+                    bottom as f32 / tex_height as f32,
+                )),
+                _ => None,
+            }
+        }
+        _ => None,
+    };
+    Some(InlineIcon {
+        source,
+        height: number(1),
+        width: number(2),
+        offset_x: number(3).unwrap_or(0.0),
+        offset_y: number(4).unwrap_or(0.0),
+        tex_coords,
+        vertex_color: vertex_color(integer(11), integer(12), integer(13)),
+    })
+}
+
+fn parse_atlas_escape(body: &str) -> Option<InlineIcon> {
+    let body = body.strip_prefix(':')?;
+    let fields = read_fields(body);
+    if fields.len() < 3 {
+        return None;
+    }
+    let name = fields[0].trim();
+    if name.is_empty() {
+        return None;
+    }
+    let number = |index: usize| {
+        fields
+            .get(index)
+            .and_then(|field| field.trim().parse::<f32>().ok())
+    };
+    let integer = |index: usize| {
+        fields
+            .get(index)
+            .and_then(|field| parse_integer_field(field))
+    };
+    Some(InlineIcon {
+        source: InlineIconSource::Atlas(name.to_string()),
+        height: number(1),
+        width: number(2),
+        offset_x: number(3).unwrap_or(0.0),
+        offset_y: number(4).unwrap_or(0.0),
+        tex_coords: None,
+        vertex_color: vertex_color(integer(5), integer(6), integer(7)),
+    })
+}
+
+/// Read colon-delimited fields, matching the native 31-byte field buffer.
+fn read_fields(body: &str) -> Vec<&str> {
+    body.split(':')
+        .map(|field| {
+            let mut end = field.len().min(31);
+            while !field.is_char_boundary(end) {
+                end -= 1;
+            }
+            &field[..end]
+        })
+        .collect()
+}
+
+fn parse_integer_field(field: &str) -> Option<i64> {
+    let field = field.trim();
+    if let Some(hex) = field
+        .strip_prefix("0x")
+        .or_else(|| field.strip_prefix("0X"))
+    {
+        i64::from_str_radix(hex, 16).ok()
+    } else {
+        field.parse().ok()
+    }
+}
+
+/// Escape colors are 0..255 per channel; all three must be given.
+fn vertex_color(r: Option<i64>, g: Option<i64>, b: Option<i64>) -> Option<[f32; 3]> {
+    let channel = |value: i64| (value as f32 / 255.0).clamp(0.0, 1.0);
+    Some([channel(r?), channel(g?), channel(b?)])
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    fn icon(source: InlineIconSource) -> InlineIcon {
+        InlineIcon {
+            source,
+            height: None,
+            width: None,
+            offset_x: 0.0,
+            offset_y: 0.0,
+            tex_coords: None,
+            vertex_color: None,
+        }
+    }
+
+    #[test]
+    fn splits_text_around_a_texture() {
+        let pieces = split_inline_markup("Icon|TInterface\\Icons\\Spell:16|tEnd");
+        assert_eq!(
+            pieces,
+            vec![
+                InlinePiece::Text("Icon".into()),
+                InlinePiece::Icon(InlineIcon {
+                    height: Some(16.0),
+                    ..icon(InlineIconSource::File("Interface\\Icons\\Spell".into()))
+                }),
+                InlinePiece::Text("End".into()),
+            ]
+        );
+    }
+
+    #[test]
+    fn markup_fields_are_limited_to_31_bytes() {
+        let long_name = "x".repeat(40);
+        let expected_name = "x".repeat(31);
+        let texture = split_inline_markup(&format!("|T{long_name}:12|t"));
+        let atlas = split_inline_markup(&format!("|A:{long_name}:12:16|a"));
+        assert!(matches!(
+            texture.as_slice(),
+            [InlinePiece::Icon(InlineIcon {
+                source: InlineIconSource::File(path),
+                ..
+            })] if path == &expected_name
+        ));
+        assert!(matches!(
+            atlas.as_slice(),
+            [InlinePiece::Icon(InlineIcon {
+                source: InlineIconSource::Atlas(name),
+                ..
+            })] if name == &expected_name
+        ));
+    }
+
+    #[test]
+    fn integer_fields_accept_hex_prefixes_and_keep_float_fields() {
+        let texture = split_inline_markup(
+            "|Tspell:12.5:20.25:1.5:-2.5:0X40:0x20:0x10:0x30:0x0:0x20:0xFF:0x00:0x33|t",
+        );
+        let atlas = split_inline_markup("|A:atlas:12.5:20.25:1.5:-2.5:0xFF:0x00:0x33|a");
+        let [InlinePiece::Icon(texture)] = texture.as_slice() else {
+            panic!("one texture expected: {texture:?}");
+        };
+        let [InlinePiece::Icon(atlas)] = atlas.as_slice() else {
+            panic!("one atlas expected: {atlas:?}");
+        };
+        assert_eq!((texture.height, texture.width), (Some(12.5), Some(20.25)));
+        assert_eq!((texture.offset_x, texture.offset_y), (1.5, -2.5));
+        assert_eq!(texture.tex_coords, Some((0.25, 0.75, 0.0, 1.0)));
+        assert_eq!(texture.vertex_color, Some([1.0, 0.0, 0.2]));
+        assert_eq!((atlas.height, atlas.width), (Some(12.5), Some(20.25)));
+        assert_eq!((atlas.offset_x, atlas.offset_y), (1.5, -2.5));
+        assert_eq!(atlas.vertex_color, Some([1.0, 0.0, 0.2]));
+    }
+
+    #[test]
+    fn reads_every_texture_field() {
+        let pieces = split_inline_markup("|T133784:12:20:1:-2:64:32:16:48:0:32:255:0:51|t");
+        let [InlinePiece::Icon(parsed)] = pieces.as_slice() else {
+            panic!("one icon expected: {pieces:?}");
+        };
+        assert_eq!(parsed.source, InlineIconSource::FileId(133784));
+        assert_eq!((parsed.height, parsed.width), (Some(12.0), Some(20.0)));
+        assert_eq!((parsed.offset_x, parsed.offset_y), (1.0, -2.0));
+        assert_eq!(parsed.tex_coords, Some((0.25, 0.75, 0.0, 1.0)));
+        assert_eq!(parsed.vertex_color, Some([1.0, 0.0, 0.2]));
+    }
+
+    #[test]
+    fn reads_atlas_with_required_colon() {
+        assert_eq!(
+            split_inline_markup("|A:hud-backpack:14:16:2:3|a"),
+            vec![InlinePiece::Icon(InlineIcon {
+                height: Some(14.0),
+                width: Some(16.0),
+                offset_x: 2.0,
+                offset_y: 3.0,
+                ..icon(InlineIconSource::Atlas("hud-backpack".into()))
+            })]
+        );
+    }
+
+    #[test]
+    fn atlas_without_colon_is_not_an_icon() {
+        let pieces = split_inline_markup("|Ahud-backpack:14:16:2:3|a");
+        assert!(
+            !pieces
+                .iter()
+                .any(|piece| matches!(piece, InlinePiece::Icon(_)))
+        );
+    }
+
+    #[test]
+    fn required_size_field_positions_reject_the_icon() {
+        for text in ["|Tspell|t", "|A:atlas|a", "|A:atlas:12|a"] {
+            let pieces = split_inline_markup(text);
+            assert!(
+                pieces
+                    .iter()
+                    .all(|piece| !matches!(piece, InlinePiece::Icon(_))),
+                "{text}: {pieces:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn wrong_closing_marker_does_not_form_an_icon() {
+        for text in ["|Tspell:12|a later |t", "|A:atlas:12:12|t later |a"] {
+            let pieces = split_inline_markup(text);
+            assert!(
+                pieces
+                    .iter()
+                    .all(|piece| !matches!(piece, InlinePiece::Icon(_))),
+                "{text}: {pieces:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn strips_other_markup_from_text_pieces() {
+        let pieces = split_inline_markup("|cFFFFD100Bags|r |A:hud-backpack:0:0|a |cnIQ3:3|r");
+        assert_eq!(
+            pieces,
+            vec![
+                InlinePiece::Text("Bags ".into()),
+                InlinePiece::Icon(InlineIcon {
+                    height: Some(0.0),
+                    width: Some(0.0),
+                    ..icon(InlineIconSource::Atlas("hud-backpack".into()))
+                }),
+                InlinePiece::Text(" 3".into()),
+            ]
+        );
+    }
+
+    #[test]
+    fn unterminated_escape_returns_its_opening_pipe_to_text() {
+        let pieces = split_inline_markup("Before|TInterface\\Icons\\Spell:16");
+        assert!(
+            pieces
+                .iter()
+                .all(|piece| !matches!(piece, InlinePiece::Icon(_)))
+        );
+        let text = pieces
+            .into_iter()
+            .filter_map(|piece| match piece {
+                InlinePiece::Text(text) => Some(text),
+                InlinePiece::Icon(_) => None,
+            })
+            .collect::<String>();
+        assert_eq!(text, "Before|TInterface\\Icons\\Spell:16");
+    }
+
+    #[test]
+    fn doubled_bar_is_not_an_escape() {
+        assert!(matches!(
+            split_inline_markup("a||Tb").as_slice(),
+            [InlinePiece::Text(_)]
+        ));
+    }
+
+    // INFERRED from Forever measurements: this maps the caller metric to line_height.
+    #[test]
+    fn texture_size_zero_uses_inferred_caller_metric() {
+        let texture = |height, width| InlineIcon {
+            height,
+            width,
+            ..icon(InlineIconSource::File("x".into()))
+        };
+        // R88d rejects a missing height position; None here is only a synthetic value.
+        assert_eq!(texture(None, None).size(15.0), (0.0, 0.0));
+        assert_eq!(texture(Some(0.0), None).size(15.0), (15.0, 15.0));
+        assert_eq!(texture(Some(0.0), Some(0.0)).size(15.0), (15.0, 15.0));
+        assert_eq!(texture(Some(20.0), None).size(15.0), (20.0, 20.0));
+        assert_eq!(texture(Some(1.0), Some(110.0)).size(15.0), (110.0, 1.0));
+    }
+
+    // R88d verifies the width rule; caller-metric-to-line-height mapping is INFERRED.
+    #[test]
+    fn nonpositive_width_uses_caller_metric_without_changing_height() {
+        let texture = |height, width| InlineIcon {
+            height,
+            width,
+            ..icon(InlineIconSource::File("x".into()))
+        };
+        let atlas = |height, width| InlineIcon {
+            height,
+            width,
+            ..icon(InlineIconSource::Atlas("x".into()))
+        };
+        assert_eq!(texture(Some(24.0), Some(0.0)).size(15.0), (15.0, 24.0));
+        assert_eq!(atlas(Some(24.0), Some(0.0)).size(15.0), (15.0, 24.0));
+        assert_eq!(texture(Some(0.0), Some(0.0)).size(15.0), (15.0, 15.0));
+        assert_eq!(atlas(Some(0.0), Some(0.0)).size(15.0), (15.0, 15.0));
+    }
+
+    #[test]
+    fn positive_width_uses_resolved_height_when_height_uses_metric() {
+        let texture = InlineIcon {
+            height: Some(0.0),
+            width: Some(2.0),
+            ..icon(InlineIconSource::File("x".into()))
+        };
+        let atlas = InlineIcon {
+            height: Some(0.0),
+            width: Some(2.0),
+            ..icon(InlineIconSource::Atlas("x".into()))
+        };
+        assert_eq!(texture.size(15.0), (30.0, 15.0));
+        assert_eq!(atlas.size(15.0), (30.0, 15.0));
+    }
+
+    #[test]
+    fn tall_icons_raise_their_line() {
+        assert_eq!(
+            line_heights("a|A:x:32:32|a b|nc|A:x:8:8|a|nd", 15.0),
+            vec![32.0, 15.0, 15.0]
+        );
+    }
+
+    #[test]
+    fn first_line_width_adds_icon_widths() {
+        let width = first_line_width("|A:a:14:14|a 3|nsecond |A:b:30:30|a", 12.0, |text| {
+            text.chars().count() as f32 * 5.0
+        });
+        assert_eq!(width, 14.0 + 2.0 * 5.0);
+    }
+}

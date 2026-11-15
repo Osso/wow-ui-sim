@@ -25,7 +25,10 @@ fn tooltip_spell_identity_survives_missing_local_metadata() {
         end
         local action = C_TooltipInfo.GetAction(5)
         assert(action.id == 45524, "action tooltip lost spell identity")
-        assert(#action.lines > 0, "action binding line should remain present")
+        -- R81 Q3: unsupported binding rows are omitted, even without catalog metadata.
+        for _, line in ipairs(action.lines) do
+            assert(not line.leftText:find('Key bound') and line.leftText ~= 'Not bound')
+        end
         assert(C_TooltipInfo.GetAction(999) == nil)
         "#,
     )
@@ -33,7 +36,7 @@ fn tooltip_spell_identity_survives_missing_local_metadata() {
 }
 
 #[test]
-fn hyperlink_unit_guid_uses_modeled_player_and_target_tooltips() {
+fn hyperlink_unit_guids_do_not_invent_lookup_rows() {
     let env = env();
     let target_guid = "Creature-0-0-0-0-12345-0000000000";
     {
@@ -62,45 +65,44 @@ fn hyperlink_unit_guid_uses_modeled_player_and_target_tooltips() {
     }
     env.exec(
         r#"
-        local player = C_TooltipInfo.GetHyperlink("unit:Player-1-00000001")
-        assert(player.type == Enum.TooltipDataType.Unit and player.guid == "Player-1-00000001")
-        assert(player.lines[1].leftText == "Uther")
-        local target = C_TooltipInfo.GetHyperlink("unit:Creature-0-0-0-0-12345-0000000000")
-        assert(target.type == Enum.TooltipDataType.Unit)
-        assert(target.guid == UnitGUID("target"))
-        assert(target.lines[1].leftText == "Quilboar")
-        assert(target.lines[2].leftText == "Level 10")
+        -- R82 Q2 UNKNOWN: GUID acceptance and native object lookup are not established.
+        -- Approved by main: remove guessed rows, without asserting native miss shape.
+        for _, guid in ipairs({'Player-1-00000001', 'Creature-0-0-0-0-12345-0000000000'}) do
+            local data = C_TooltipInfo.GetHyperlink('unit:' .. guid)
+            assert(not (type(data) == 'table' and data.lines and #data.lines > 0))
+        end
         "#,
     )
-    .expect("unit hyperlinks should resolve modeled GUIDs before consumer first-line access");
+    .expect("unit hyperlinks must not fabricate UNKNOWN object lookup rows");
 }
 
 #[test]
-fn missing_unit_hyperlink_returns_nil_for_att_shaped_retry() {
+fn missing_unit_hyperlink_does_not_invent_rows_on_retry() {
     let env = env();
     env.exec(
         r#"
+        -- R82 Q2 UNKNOWN object lookup; native miss arity/shape is not asserted.
+        -- Approved by main: preserve only the no-fabricated-data retry boundary.
         local guid = "Creature-0-0-0-0-98765-0000000000"
-        local function readName()
-            local tooltipData = C_TooltipInfo.GetHyperlink("unit:" .. guid)
-            if tooltipData and tooltipData.lines and tooltipData.lines[1] then
-                return tooltipData.lines[1].leftText
-            end
+        for _ = 1, 2 do
+            local data = C_TooltipInfo.GetHyperlink("unit:" .. guid)
+            assert(not (type(data) == 'table' and data.lines and #data.lines > 0))
         end
-        assert(readName() == nil)
-        assert(readName() == nil)
         "#,
     )
     .expect("missing GUID must not fabricate a tooltip on retry");
 }
 
 #[test]
-fn hyperlink_unsupported_and_malformed_links_return_nil_without_changing_item_spell() {
+fn hyperlink_unmodelled_links_do_not_invent_rows_or_change_item_spell() {
     let env = env();
     env.exec(
         r#"
+        -- R82 Q1/Q2 UNKNOWN: malformed cases and native miss shape remain unmodelled.
+        -- Approved by main: retain no-fabricated-data preservation and the controls.
         for _, link in ipairs({"unit:", "unit:not-a-guid", "unit:Creature-0-0-0-0-12-0000000000-extra", "quest:42", "|Hfoo:1|h[foo]|h", "|Hitem:bad|h[x]|h"}) do
-            assert(C_TooltipInfo.GetHyperlink(link) == nil, link)
+            local data = C_TooltipInfo.GetHyperlink(link)
+            assert(not (type(data) == 'table' and data.lines and #data.lines > 0), link)
         end
         local item = C_TooltipInfo.GetHyperlink("|Hitem:6948|h[Hearthstone]|h")
         assert(item.type == Enum.TooltipDataType.Item and item.lines[1].leftText == "Hearthstone")

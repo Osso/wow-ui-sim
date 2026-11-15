@@ -35,10 +35,6 @@ end
 -- retail Quest.lua, so provide a thin cache backed by the modeled C_QuestLog
 -- quest surface.
 if QuestCache == nil then
-  Enum = Enum or {}
-  Enum.QuestClassification = Enum.QuestClassification or {}
-  Enum.QuestClassification.Campaign = Enum.QuestClassification.Campaign or -1
-  Enum.QuestClassification.Calling = Enum.QuestClassification.Calling or -2
 
   local Quest = {}
   Quest.__index = Quest

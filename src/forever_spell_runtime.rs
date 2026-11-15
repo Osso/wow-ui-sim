@@ -99,6 +99,7 @@ fn keyed_rows<'a>(
     rows: &'a [BTreeMap<String, Value>],
     field: &str,
     selected: &BTreeSet<u32>,
+    require_complete: bool,
 ) -> Result<BTreeMap<u32, Vec<&'a BTreeMap<String, Value>>>, String> {
     let mut result: BTreeMap<u32, Vec<_>> = BTreeMap::new();
     for row in rows {
@@ -108,7 +109,7 @@ fn keyed_rows<'a>(
         }
         result.entry(id).or_default().push(row);
     }
-    if result.keys().copied().collect::<BTreeSet<_>>() != *selected {
+    if require_complete && result.keys().copied().collect::<BTreeSet<_>>() != *selected {
         return Err(format!("Forever spell cache is missing {field} records"));
     }
     Ok(result)
@@ -129,18 +130,30 @@ fn parse(data: FileData) -> Result<Catalog, String> {
         return Err("unsupported Forever spell cache schema or build".into());
     }
     let selected = crate::forever_spell_data::selected_ids()?;
-    let names = keyed_rows(table(&data, "SpellName", "782EE721")?, "ID", &selected)?;
-    let texts = keyed_rows(table(&data, "Spell", "E3D134FB")?, "ID", &selected)?;
-    let misc = keyed_rows(table(&data, "SpellMisc", "434B3607")?, "SpellID", &selected)?;
+    let names = keyed_rows(
+        table(&data, "SpellName", "782EE721")?,
+        "ID",
+        &selected,
+        true,
+    )?;
+    let texts = keyed_rows(table(&data, "Spell", "E3D134FB")?, "ID", &selected, true)?;
+    let misc = keyed_rows(
+        table(&data, "SpellMisc", "434B3607")?,
+        "SpellID",
+        &selected,
+        true,
+    )?;
     let effects = keyed_rows(
         table(&data, "SpellEffect", "5362E3D4")?,
         "SpellID",
         &selected,
+        true,
     )?;
     let costs = keyed_rows(
         table(&data, "SpellPower", "61AD223F")?,
         "SpellID",
         &selected,
+        false,
     )?;
     let mut spells = BTreeMap::new();
     let mut descriptions = BTreeMap::new();
@@ -169,8 +182,10 @@ fn parse(data: FileData) -> Result<Catalog, String> {
             },
         );
         descriptions.insert(id, text(texts, "Description_lang")?);
-        let mut ordered = costs[&id]
-            .iter()
+        let mut ordered = costs
+            .get(&id)
+            .into_iter()
+            .flatten()
             .map(|row| number(row, "OrderIndex").map(|order| (order, *row)))
             .collect::<Result<Vec<_>, _>>()?;
         ordered.sort_by_key(|(order, _)| *order);

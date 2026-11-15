@@ -208,6 +208,14 @@ impl<'a> LoaderEnv<'a> {
                 call_args.push(event_name);
                 call_args.extend_from_slice(args);
                 for handler in handlers {
+                    let previous_addon = {
+                        let mut sim = self.state.borrow_mut();
+                        let owner = sim
+                            .widgets
+                            .get(widget_id)
+                            .and_then(|frame| frame.owner_addon);
+                        std::mem::replace(&mut sim.executing_addon_index, owner)
+                    };
                     if let Err(error) = crate::lua_api::script_helpers::call_frame_handler_state(
                         state,
                         widget_id,
@@ -217,6 +225,7 @@ impl<'a> LoaderEnv<'a> {
                     ) {
                         call_error_handler_state(state, &error);
                     }
+                    self.state.borrow_mut().executing_addon_index = previous_addon;
                 }
                 Ok(())
             });

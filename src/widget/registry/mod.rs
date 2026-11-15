@@ -3,6 +3,7 @@
 mod anchor;
 mod anchor_edits;
 mod pixel_scale;
+mod screen_clamp;
 mod size_changes;
 
 #[cfg(feature = "client-wrath")]

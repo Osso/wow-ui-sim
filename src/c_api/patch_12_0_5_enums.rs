@@ -1,5 +1,6 @@
 //! Documented numeric publication; no downstream domain behavior implied.
 
+use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::methods::{table_get, table_set};
 use rilua::Val;
 use rilua::vm::state::LuaState;
@@ -13,6 +14,9 @@ pub(crate) fn register(state: &mut LuaState) {
     }
     #[cfg(feature = "client-retail")]
     publish_current_retail(state, enums);
+    if ACTIVE == ClientProfile::Ptr {
+        publish_ptr_loot_method_styles(state, enums);
+    }
 }
 
 pub(crate) fn refresh_metadata(state: &mut LuaState) {
@@ -25,6 +29,10 @@ pub(crate) fn refresh_metadata(state: &mut LuaState) {
     for &(name, _) in CURRENT_RETAIL_VALUES {
         let values = table_get(state, enums, name);
         publish_metadata(state, enums, name, values);
+    }
+    if ACTIVE == ClientProfile::Ptr {
+        let values = table_get(state, enums, "LootMethodStyles");
+        publish_metadata(state, enums, "LootMethodStyles", values);
     }
 }
 
@@ -41,6 +49,20 @@ fn publish_current_retail(state: &mut LuaState, enums: Val) {
         }
         publish_metadata(state, enums, name, values);
     }
+}
+
+fn publish_ptr_loot_method_styles(state: &mut LuaState, enums: Val) {
+    const MAINLINE_STYLE: i32 = 0;
+
+    let values = table_get(state, enums, "LootMethodStyles");
+    table_set(state, values, "PersonalOnly", Val::Nil);
+    table_set(
+        state,
+        values,
+        "Mainline",
+        Val::Num(f64::from(MAINLINE_STYLE)),
+    );
+    publish_metadata(state, enums, "LootMethodStyles", values);
 }
 
 fn publish_metadata(state: &mut LuaState, enums: Val, name: &str, values: Val) {

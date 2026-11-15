@@ -145,3 +145,123 @@ fn tooltip_owner_anchor_totem_button_enter_anchors_bottomright() {
     )
     .unwrap();
 }
+
+#[cfg(all(feature = "optional-tests", feature = "client-retail"))]
+#[test]
+fn tooltip_owner_r88n5_modes_are_preserved_on_loaded_game_tooltip() {
+    let env = tooltip_full_env_helpers::setup_full_env();
+    assert_loaded_retail_game_tooltip(&env);
+    assert_loaded_owner_anchor_pairs(&env);
+    assert_loaded_owner_defaults(&env);
+    assert_loaded_owner_preserve_and_none(&env);
+    assert_loaded_cursor_anchor_modes(&env);
+}
+
+#[cfg(all(feature = "optional-tests", feature = "client-retail"))]
+fn assert_loaded_retail_game_tooltip(env: &WowLuaEnv) {
+    let addons = wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap();
+    let toc = wow_ui_sim::loader::find_toc_file(&addons.join("Blizzard_GameTooltip"))
+        .expect("profile-selected GameTooltip TOC");
+    assert_eq!(
+        toc.file_name().unwrap(),
+        "Blizzard_GameTooltip_Mainline.toc"
+    );
+    let body = std::fs::read_to_string(toc).unwrap();
+    assert!(
+        body.contains("GameTooltip.xml"),
+        "selected TOC loads the UI"
+    );
+    env.exec("assert(GameTooltip and GameTooltip:GetName() == 'GameTooltip')")
+        .unwrap();
+}
+
+#[cfg(all(feature = "optional-tests", feature = "client-retail"))]
+fn assert_loaded_owner_anchor_pairs(env: &WowLuaEnv) {
+    let pairs = [
+        ("ANCHOR_LEFT", "BOTTOMRIGHT", "TOPLEFT"),
+        ("ANCHOR_RIGHT", "BOTTOMLEFT", "TOPRIGHT"),
+        ("ANCHOR_BOTTOMLEFT", "TOPRIGHT", "BOTTOMLEFT"),
+        ("ANCHOR_BOTTOM", "TOP", "BOTTOM"),
+        ("ANCHOR_BOTTOMRIGHT", "TOPLEFT", "BOTTOMRIGHT"),
+        ("ANCHOR_TOPLEFT", "BOTTOMLEFT", "TOPLEFT"),
+        ("ANCHOR_TOP", "BOTTOM", "TOP"),
+        ("ANCHOR_TOPRIGHT", "BOTTOMRIGHT", "TOPRIGHT"),
+    ];
+    for (mode, expected_point, expected_relative) in pairs {
+        let (point, relative, x, y): (String, String, f64, f64) = env
+            .eval(&format!("GameTooltip:SetOwner(UIParent, {mode:?}); local p, _, r, x, y = GameTooltip:GetPoint(1); return p, r, x, y"))
+            .unwrap();
+        assert_eq!(
+            (point.as_str(), relative.as_str()),
+            (expected_point, expected_relative)
+        );
+        assert_eq!((x, y), (0.0, 0.0), "{mode} defaults both offsets to zero");
+    }
+}
+
+#[cfg(all(feature = "optional-tests", feature = "client-retail"))]
+fn assert_loaded_owner_defaults(env: &WowLuaEnv) {
+    env.exec(
+        r#"
+        local owner = CreateFrame("Frame", "R88n5AnchorOwner", UIParent)
+        local function assert_left_default()
+            local p, _, r, x, y = GameTooltip:GetPoint(1)
+            assert(p == "BOTTOMRIGHT" and r == "TOPLEFT")
+            assert(x == 0 and y == 0 and GameTooltip:GetAnchorType() == "ANCHOR_LEFT")
+        end
+        GameTooltip:SetOwner(owner)
+        assert_left_default()
+        GameTooltip:SetOwner(owner, "")
+        assert_left_default()
+        GameTooltip:SetOwner(owner, "NOT_AN_ANCHOR")
+        assert_left_default()
+        "#,
+    )
+    .unwrap();
+}
+
+#[cfg(all(feature = "optional-tests", feature = "client-retail"))]
+fn assert_loaded_owner_preserve_and_none(env: &WowLuaEnv) {
+    env.exec(
+        r#"
+        local owner = CreateFrame("Frame", "R88n5Owner", UIParent)
+        GameTooltip:SetOwner(owner, "ANCHOR_RIGHT", 13, -9)
+        local point, relative, relativePoint, x, y = GameTooltip:GetPoint(1)
+        local other = CreateFrame("Frame", "R88n5OtherOwner", UIParent)
+        GameTooltip:SetOwner(other, "ANCHOR_PRESERVE")
+        local p2, relative2, r2, x2, y2 = GameTooltip:GetPoint(1)
+        assert(p2 == point and relative2 == relative and r2 == relativePoint)
+        assert(x2 == x and y2 == y and GameTooltip:GetOwner() == other)
+        GameTooltip:SetOwner(other, "ANCHOR_NONE")
+        assert(GameTooltip:GetPoint(1) == nil)
+        "#,
+    )
+    .unwrap();
+}
+
+#[cfg(all(feature = "optional-tests", feature = "client-retail"))]
+fn assert_loaded_cursor_anchor_modes(env: &WowLuaEnv) {
+    env.state()
+        .borrow_mut()
+        .set_mouse_position(Some((200.0, 300.0)));
+    env.exec(
+        r#"
+        GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR", 0, 0)
+        local point, _, _, x, y = GameTooltip:GetPoint(1)
+        GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR", 21, -13)
+        local point2, _, _, x2, y2 = GameTooltip:GetPoint(1)
+        assert(point == "BOTTOM" and point2 == point and x2 == x and y2 == y)
+
+        for _, mode in ipairs({ "ANCHOR_CURSOR_LEFT", "ANCHOR_CURSOR_RIGHT" }) do
+            GameTooltip:SetOwner(UIParent, mode, 0, 0)
+            local side, _, _, sx, sy = GameTooltip:GetPoint(1)
+            GameTooltip:SetOwner(UIParent, mode, 7, -11)
+            local side2, _, _, sx2, sy2 = GameTooltip:GetPoint(1)
+            local expected = mode == "ANCHOR_CURSOR_LEFT" and "BOTTOMRIGHT" or "BOTTOMLEFT"
+            assert(side == expected and side2 == side)
+            assert(math.abs(sx2 - sx - 7) < 0.01 and math.abs(sy2 - sy + 11) < 0.01)
+        end
+        "#,
+    )
+    .unwrap();
+}

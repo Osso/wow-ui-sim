@@ -27,6 +27,17 @@ skips registered output and reports an initialization error; a process with no
 registered output can close normally. Actual unowned/shared initialization
 failures still protect the incomplete environment.
 
+`WOW_SIM_SAVE_FAILED_ADDONS=1` opts out of owner protection for client parity: the
+client saves an addon whose files raised Lua errors or were missing from its folder.
+Owner failures then stay diagnostics, and finalization and reload save those owners.
+Failed declared inputs, shutdown-callback owner exclusions and unowned failures are
+unchanged.
+
+Startup event callback errors retain the frame owner's addon attribution, including
+when another addon is loading. Delivery restores the preceding executing owner
+after each callback. These failures remain diagnostic without persistence and
+count once per affected addon in the load summary.
+
 Ordinary event delivery finishes other listeners after a callback error. A failed
 shutdown or save attempt returns an error and leaves an intact environment
 retryable after repair. Successful finalization still runs only once.

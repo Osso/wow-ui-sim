@@ -175,6 +175,10 @@ fn test_edit_mode_layout_update_ignores_preset_layouts_during_startup() {
 
 /// Load all Blizzard addons and apply workarounds (no startup events).
 fn load_all_addons() -> WowLuaEnv {
+    load_all_addons_except(None)
+}
+
+fn load_all_addons_except(excluded: Option<&str>) -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
     env.set_screen_size(1024.0, 768.0);
     env.set_screen_mode(ScreenKind::Game);
@@ -182,6 +186,9 @@ fn load_all_addons() -> WowLuaEnv {
     let ui = blizzard_ui_dir();
     let addons = discover_blizzard_addons(&ui);
     for (name, toc_path) in &addons {
+        if Some(name.as_str()) == excluded {
+            continue;
+        }
         if let Err(e) = load_addon(&env.loader_env(), toc_path) {
             eprintln!("[load {name}] FAILED: {e}");
         }

@@ -337,6 +337,7 @@ These aliases build both `wow-sim` and `wow-cli` with `--release --no-default-fe
 - `WOW_SIM_DEBUG_ELEMENTS=1` - Show debug visualization: red borders around elements and green dots at anchor points
 - `WOW_SIM_DEBUG_BORDERS=1` - Show only red borders around elements
 - `WOW_SIM_DEBUG_ANCHORS=1` - Show only green dots at anchor points
+- `WOW_SIM_FALLBACK_FONT=<font file>` - Without CASC fonts, use this font file for every WoW font instead of the first system font, so text renders the same on every machine
 
 ### Timing Breakdown
 

@@ -11,8 +11,12 @@ const USAGE: &str = "Usage: local tabInfo = C_ProfSpecs.GetStateForTab(tabTreeID
 const TAB_STATE_LOCKED: i32 = 0;
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
-    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail
-        || !cfg!(feature = "retail-12-1-5")
+    // PTR 70493 ProfessionsSpecializationsTemplates.lua:144 consumes this API.
+    // Same contract as Retail WM87; INFERRED for PTR pending native evidence.
+    if !matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+    ) || !cfg!(feature = "retail-12-1-5")
     {
         return Ok(());
     }

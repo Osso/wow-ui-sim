@@ -4,7 +4,9 @@ use crate::c_api::ensure_namespace;
 use crate::c_api::helpers::bad_argument;
 use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::WowLuaEnv;
-use crate::lua_api::methods::{borrow_state, borrow_state_mut, table_set_static};
+use crate::lua_api::methods::{
+    borrow_state, borrow_state_mut, create_string, create_table, table_set_static,
+};
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use crate::screen::ScreenKind;
 use rilua::table_security::unwrap_secret;
@@ -12,6 +14,22 @@ use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
 use rilua::{LuaApiMut, LuaResult, Val};
+
+/// Host-supplied data for the normal starting-zone choice.
+#[derive(Clone, Debug, Default, PartialEq)]
+pub struct StartingZoneChoiceInput {
+    pub zone_name: String,
+    pub zone_image_atlas: Option<String>,
+}
+
+/// Host inputs for GetStartingZoneChoices. Defaults represent no supplied data.
+#[derive(Clone, Debug, Default, PartialEq)]
+pub struct StartingZoneChoicesInput {
+    /// None means no matching normal-zone record was supplied.
+    pub normal_choice: Option<StartingZoneChoiceInput>,
+    /// Applied only when a normal-zone record exists; None means no signal.
+    pub restricted_to_npe: Option<bool>,
+}
 
 const SET_IN_CHARACTER_CREATE_USAGE: &str =
     "Usage: C_CharacterCreation.SetInCharacterCreate(inCharacterCreate)";
@@ -67,8 +85,13 @@ fn update_registration(state: &mut LuaState, is_glue: bool) -> LuaResult<()> {
         _ => return Ok(()),
     };
 
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    super::c_character_creation_submit::update_registration(state, namespace, is_glue)?;
+    #[cfg(feature = "client-ptr")]
+    super::c_character_creation_submit_ptr::update_registration(state, namespace, is_glue)?;
     update_default_facing_registration(state, namespace, is_glue)?;
-    update_retail_and_forever_registration(state, namespace, is_glue)
+    update_retail_and_forever_registration(state, namespace, is_glue)?;
+    update_starting_zone_choices_registration(state, namespace, is_glue)
 }
 
 fn update_altered_form_model_helper(state: &mut LuaState, is_glue: bool) -> LuaResult<()> {
@@ -85,6 +108,36 @@ fn update_altered_form_model_helper(state: &mut LuaState, is_glue: bool) -> LuaR
             state,
             Val::Table(global),
             "__wow_character_create_has_altered_model",
+            Val::Nil,
+        );
+        Ok(())
+    }
+}
+
+fn update_starting_zone_choices_registration(
+    state: &mut LuaState,
+    namespace: GcRef<Table>,
+    is_glue: bool,
+) -> LuaResult<()> {
+    if !matches!(
+        ACTIVE,
+        ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
+    ) {
+        return Ok(());
+    }
+
+    if is_glue {
+        table_set_rust_fn_static(
+            state,
+            namespace,
+            "GetStartingZoneChoices",
+            get_starting_zone_choices,
+        )
+    } else {
+        table_set_static(
+            state,
+            Val::Table(namespace),
+            "GetStartingZoneChoices",
             Val::Nil,
         );
         Ok(())
@@ -226,6 +279,58 @@ fn register_character_create_preview_apis(
     )
 }
 
+/// VERIFIED for Retail 12.1.5.70688 and Forever 70707. PTR applicability is
+/// INFERRED from Retail behavior; no PTR-specific result assertions are made.
+fn get_starting_zone_choices(state: &mut LuaState) -> LuaResult<u32> {
+    let inputs = borrow_state(state)?
+        .character_create_starting_zone_choices
+        .clone();
+    let retail_projection = matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr);
+    let normal_choice_available = inputs.normal_choice.is_some();
+    let is_npe_restricted =
+        retail_projection && normal_choice_available && inputs.restricted_to_npe.unwrap_or(false);
+
+    let first_choice = if is_npe_restricted {
+        starting_zone_choice_table(state, "", None, true)
+    } else if let Some(normal_choice) = inputs.normal_choice.as_ref() {
+        starting_zone_choice_table(
+            state,
+            &normal_choice.zone_name,
+            normal_choice.zone_image_atlas.as_deref(),
+            false,
+        )
+    } else {
+        starting_zone_choice_table(state, "", None, false)
+    };
+    state.push(first_choice);
+
+    let second_choice = if retail_projection && normal_choice_available && !is_npe_restricted {
+        starting_zone_choice_table(state, "", None, true)
+    } else {
+        Val::Nil
+    };
+    state.push(second_choice);
+    Ok(2)
+}
+
+fn starting_zone_choice_table(
+    state: &mut LuaState,
+    zone_name: &str,
+    zone_image_atlas: Option<&str>,
+    is_npe: bool,
+) -> Val {
+    let stack_top = state.top;
+    let choice = create_table(state);
+    state.push(choice);
+    let zone_name = create_string(state, zone_name);
+    table_set_static(state, choice, "zoneName", zone_name);
+    let atlas = zone_image_atlas.map_or(Val::Nil, |name| create_string(state, name));
+    table_set_static(state, choice, "zoneImageAtlas", atlas);
+    table_set_static(state, choice, "isNPE", Val::Bool(is_npe));
+    state.top = stack_top;
+    choice
+}
+
 fn set_blur_enabled(state: &mut LuaState) -> LuaResult<u32> {
     let argument = stack_val(state, 1);
     if matches!(argument, Val::Nil) {
@@ -242,7 +347,10 @@ fn get_current_camera_zoom(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-fn set_camera_zoom_level(state: &mut LuaState) -> LuaResult<u32> {
+// R83b/R83c (#305/#320): PTR shares this verified signed32/clamp and
+// changed-only marker update with Retail/Forever. Its Lua installation and
+// ordinary return/second-argument truthiness policy remain separately inferred.
+pub(super) fn set_camera_zoom_level(state: &mut LuaState) -> LuaResult<u32> {
     let zoom = crate::c_api::helpers::read_untainted_signed32_argument(
         state,
         1,

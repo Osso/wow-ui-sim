@@ -19,8 +19,8 @@ const BLIZZARD_ADDONS: &[&str] = &[
     "Blizzard_LoadLocale",
     "Blizzard_Fonts_Shared",
     "Blizzard_HelpPlate",
-    // PTR GameMenuFrame:OnShow narrates before emitting GameMenuFrame.Shown.
-    #[cfg(feature = "client-ptr")]
+    // Retail GameMenuFrame.lua:70 and PTR OnShow both call NarrationUtil.
+    #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
     "Blizzard_Narration",
     "Blizzard_Menu",
     "Blizzard_AccessibilityTemplates",

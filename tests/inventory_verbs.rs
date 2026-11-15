@@ -606,3 +606,39 @@ fn get_cursor_info_reports_money_cursor() {
     assert_eq!(kind, "money");
     assert_eq!(copper as u64, 777);
 }
+
+#[cfg(feature = "client-ptr")]
+#[test]
+fn ptr_spell_and_action_pickups_report_native_cursor_tuple() {
+    let env = env();
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.action_bars.insert(1, 853);
+        sim.cursor_item = Some(CursorInfo::Spell { spell_id: 12345 });
+    }
+    env.exec(
+        r#"
+        local function assert_spell_cursor(expectedSpellID, expectedBookSlot)
+            assert(select('#', GetCursorInfo()) == 5, 'PTR spell cursor must return five values')
+            local kind, bookSlot, bookType, spellID, relatedID = GetCursorInfo()
+            assert(kind == "spell")
+            assert(bookSlot == expectedBookSlot)
+            assert(bookSlot == (C_SpellBook.FindSpellBookSlotForSpell(spellID) or 0))
+            assert(bookType == "spell")
+            assert(spellID == expectedSpellID)
+            assert(relatedID == nil)
+        end
+
+        assert_spell_cursor(12345, 0)
+        ClearCursor()
+
+        C_Spell.PickupSpell(853)
+        assert_spell_cursor(853, C_SpellBook.FindSpellBookSlotForSpell(853) or 0)
+        ClearCursor()
+
+        PickupAction(1)
+        assert_spell_cursor(853, C_SpellBook.FindSpellBookSlotForSpell(853) or 0)
+        "#,
+    )
+    .unwrap();
+}

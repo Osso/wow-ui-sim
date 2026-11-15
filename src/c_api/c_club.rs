@@ -1,6 +1,7 @@
 //! Guild club streams/messages and opaque community membership.
 pub use super::club_inputs::{receive_member, receive_member_removal};
 use super::helpers::{ensure_namespace, set_table_array};
+use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, create_string, create_table, table_get, table_set,
     val_to_string,
@@ -18,11 +19,20 @@ const GUILD_CLUB_CAPACITY: f64 = 1000.0;
 const GUILD_STREAM_ID: f64 = 1.0;
 const FIRST_MESSAGE_EPOCH: i64 = 1_700_000_000_000_000;
 const MESSAGE_EPOCH_STEP: i64 = 120_000_000;
+const INVITATION_CANDIDATES_USAGE: &str = "Usage: local candidates = C_Club.GetInvitationCandidates([filter, maxResults, cursorPosition, allowFullMatch], clubId)";
 
 pub(crate) fn register_club_info_surface(state: &mut LuaState) -> LuaResult<()> {
     let table_ref = ensure_namespace(state, "C_Club")?;
     super::club_members::register(state)?;
     register_club_status_methods(state, table_ref)?;
+    if ACTIVE == ClientProfile::WowForever {
+        table_set_rust_fn_static(
+            state,
+            table_ref,
+            "GetInvitationCandidates",
+            c_club_get_invitation_candidates,
+        )?;
+    }
     #[cfg(feature = "retail-12-1-0")]
     table_set_rust_fn_static(
         state,
@@ -38,6 +48,17 @@ pub(crate) fn register_club_info_surface(state: &mut LuaState) -> LuaResult<()> 
         c_club_send_battle_tag_friend_request,
     )?;
     Ok(())
+}
+
+/// VERIFIED: Forever 70707 registers the method and rejects an invalid club ID.
+/// INFERRED: valid calls return an empty table because no candidate state is supplied.
+fn c_club_get_invitation_candidates(state: &mut LuaState) -> LuaResult<u32> {
+    if super::club_members::string_arg(state, 5).is_err() {
+        return Err(runtime_error(INVITATION_CANDIDATES_USAGE));
+    }
+    let candidates = create_table(state);
+    state.push(candidates);
+    Ok(1)
 }
 
 /// Records a Battle.net friend request to a guild club member's account, once per

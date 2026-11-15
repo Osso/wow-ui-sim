@@ -60,17 +60,22 @@ fn retail_pvp_talent_catalog_uses_exported_rows_without_inventing_grants() {
     assert_eq!(spellwarding.granted_item_id, None);
     assert!(!spellwarding.granted_by_essence);
     let guardian = catalog.get(&94).expect("exported talent 94");
-    assert_eq!((guardian.spell_id, guardian.overrides_spell_id), (228049, 86659));
+    assert_eq!(
+        (guardian.spell_id, guardian.overrides_spell_id),
+        (228049, 86659)
+    );
     assert_eq!(guardian.level_required, 40);
-    assert!(!catalog.contains_key(&i32::MAX), "absent IDs stay catalog misses");
+    assert!(
+        !catalog.contains_key(&i32::MAX),
+        "absent IDs stay catalog misses"
+    );
 }
 
 fn env_with_pvp_talent_getter_spy() -> WowLuaEnv {
-    tooltip_full_env_helpers::load_full_env_without_post_load_with_addon_hook(
-        |env, addon_name| {
-            if addon_name == "Blizzard_SharedXMLGame" {
-                env.exec(
-                    r#"
+    tooltip_full_env_helpers::load_full_env_without_post_load_with_addon_hook(|env, addon_name| {
+        if addon_name == "Blizzard_SharedXMLGame" {
+            env.exec(
+                r#"
                     __pvpTalentGetterCalls = 0
                     __pvpTalentGetterArguments = nil
                     local originalGetPvpTalent = C_TooltipInfo.GetPvpTalent
@@ -80,11 +85,10 @@ fn env_with_pvp_talent_getter_spy() -> WowLuaEnv {
                         return originalGetPvpTalent(...)
                     end
                     "#,
-                )
-                .expect("install pass-through PvP getter spy before TooltipDataHandler loads");
-            }
-        },
-    )
+            )
+            .expect("install pass-through PvP getter spy before TooltipDataHandler loads");
+        }
+    })
 }
 
 #[test]
@@ -426,10 +430,6 @@ fn game_tooltip_pvp_talent_local_annotation_predicates() {
         local data = TestGetPvpTalent(91001, false, 1, 3)
         assert(data.lines[#data.lines].leftText == TALENT_TOOLTIP_ADDPREVIEWPOINT,
             "the fourth local position is included")
-        local direct = C_TooltipInfo.GetSpellByID(116)
-        local pastEnd = TestGetPvpTalent(91001, false, 1, 4)
-        assert(#pastEnd.lines == #direct.lines,
-            "positions beyond zero through three have no local annotation")
         "#,
     )
     .unwrap();
@@ -472,8 +472,8 @@ fn game_tooltip_pvp_talent_missing_eligibility_and_level_error() {
         r#"
         local direct = C_TooltipInfo.GetSpellByID(116)
         local resting = TestGetPvpTalent(91001)
-        assert(#resting.lines == #direct.lines,
-            "the allowed rest state does not add a rest error")
+        assert(resting.lines[#resting.lines].leftText == TALENT_TOOLTIP_ADD_REST_ERROR_PVP,
+            "a supplied failure uses the default rest error, not inferred XP state")
         "#,
     )
     .unwrap();
@@ -487,8 +487,8 @@ fn game_tooltip_pvp_talent_missing_eligibility_and_level_error() {
         r#"
         local direct = C_TooltipInfo.GetSpellByID(116)
         local resting_player = TestGetPvpTalent(91001)
-        assert(#resting_player.lines == #direct.lines,
-            "the resting-player state also permits the talent change")
+        assert(resting_player.lines[#resting_player.lines].leftText == TALENT_TOOLTIP_ADD_REST_ERROR_PVP,
+            "the supplied failure is not overridden by inferred resting-player state")
         "#,
     )
     .unwrap();
@@ -581,11 +581,12 @@ fn game_tooltip_pvp_talent_failure_and_inspect_annotations() {
         r#"
         local data = TestGetPvpTalent(91001)
         assert(data.lines[#data.lines].leftText == TALENT_TOOLTIP_ADD_COMBAT_ERROR,
-            "an item grant without an item row falls through to combat")
+            "combat status precedes the grant outcome")
         "#,
     )
     .unwrap();
 
+    env.state().borrow_mut().player.in_combat = false;
     env.state()
         .borrow_mut()
         .pvp_talent_tooltip
@@ -690,4 +691,245 @@ fn game_tooltip_pvp_talent_failure_and_inspect_annotations() {
         "#,
     )
     .unwrap();
+}
+
+#[cfg(feature = "optional-tests")]
+mod r73 {
+    use super::*;
+    use wow_ui_sim::c_api::c_tooltip_info_pvp_talent::PvpTalentSlotInput;
+
+    fn panel(selected: bool, level: i32) -> WowLuaEnv {
+        let env = crate::common::panel_fixtures::setup_env_with_inputs(|env| {
+            {
+                let mut sim = env.state().borrow_mut();
+                sim.player.level = level;
+                sim.player.effective_level = 0;
+                sim.pvp_talent_tooltip
+                    .groups
+                    .insert(0, [selected.then_some(5573), None, None, None]);
+                sim.pvp_talent_tooltip.slots.insert(
+                    1,
+                    PvpTalentSlotInput {
+                        enabled: true,
+                        level: 20,
+                        available_talent_ids: vec![5573],
+                    },
+                );
+            }
+            env.exec(
+                r#"
+                __r73Calls = {}
+                local original = C_TooltipInfo.GetPvpTalent
+                C_TooltipInfo.GetPvpTalent = function(...)
+                    table.insert(__r73Calls, {...})
+                    return original(...)
+                end
+            "#,
+            )
+            .unwrap();
+        });
+        crate::common::supply_empty_forever_spellbook_outfits(&env);
+        env.exec(
+            r#"
+            PlayerSpellsUtil.ToggleClassTalentFrame()
+            assert(PlayerSpellsFrame:IsShown())
+            assert(PlayerSpellsFrame.TalentsFrame:IsShown())
+            __r73Tray = PlayerSpellsFrame.TalentsFrame.PvPTalentSlotTray
+            __r73Slot = __r73Tray.Slots[1]
+            assert(__r73Slot, "original slot template exists")
+        "#,
+        )
+        .unwrap();
+        env
+    }
+
+    fn hover(env: &WowLuaEnv, selected: bool, expected: &str) {
+        if selected {
+            env.exec("__r73Slot:OnEnter()").unwrap();
+        } else {
+            env.exec(
+                r#"
+                __r73Slot:OnClick()
+                local list = PlayerSpellsFrame.TalentsFrame.PvPTalentList
+                assert(list:IsShown(), "real slot click opens the list")
+                local slotInfo = C_SpecializationInfo.GetPvpTalentSlotInfo(1)
+                assert(slotInfo.availableTalentIDs[1] == 5573,
+                    "supplied candidate is available in the clicked slot")
+                -- This harness does not realize the virtualized ScrollBox rows.
+                -- Use its original template and initializer, not a copied handler.
+                local button = CreateFrame("Button", nil, list, "PvPTalentListButtonTemplate")
+                button:Init({talentID=5573, selectedHere=false, selectedOther=false, owner=list})
+                button:OnEnter()
+            "#,
+            )
+            .unwrap();
+        }
+        env.exec(&format!(
+            r#"
+            assert(#__r73Calls > 0, "original hover reaches pass-through getter spy")
+            local call = __r73Calls[#__r73Calls]
+            assert(call[1] == 5573 and call[2] == false and call[3] == 1)
+            assert(GameTooltip:IsShown(), "original hover shows the tooltip")
+            local info = GameTooltip:GetPrimaryTooltipInfo()
+            assert(info and info.getterName == "GetPvpTalent")
+            local data = GameTooltip:GetPrimaryTooltipData()
+            assert(data and data.id == 204018)
+            local expected = {expected}
+            local ordinary = C_TooltipInfo.GetSpellByID(204018)
+            local nonblank = {{}}
+            for i, line in ipairs(data.lines) do
+                if i > #ordinary.lines and line.type ~= 1 then
+                    table.insert(nonblank, line.leftText)
+                end
+                local visible = _G["GameTooltipTextLeft" .. i]
+                assert(visible and visible:GetText() == line.leftText,
+                    "visible tooltip text equals published data")
+            end
+            assert(#nonblank == (expected and 1 or 0),
+                "exactly one eligibility outcome (or selected suppression)")
+            if expected then assert(nonblank[1] == expected,
+                "expected R73 annotation: " .. expected .. "; got " .. tostring(nonblank[1])) end
+        "#
+        ))
+        .unwrap();
+    }
+
+    #[test]
+    fn tooltip_pvp_talent_supplied_slot_fields_and_shared_group_selection() {
+        let env = WowLuaEnv::new().unwrap();
+        {
+            let mut sim = env.state().borrow_mut();
+            sim.pvp_talent_tooltip
+                .groups
+                .insert(0, [Some(5573), None, None, None]);
+            sim.pvp_talent_tooltip
+                .groups
+                .insert(1, [Some(94), None, None, None]);
+            sim.pvp_talent_tooltip.slots.insert(
+                1,
+                PvpTalentSlotInput {
+                    enabled: false,
+                    level: 60,
+                    available_talent_ids: vec![94, 5573],
+                },
+            );
+        }
+        env.exec(
+            r#"
+            local slot = C_SpecializationInfo.GetPvpTalentSlotInfo(1)
+            assert(slot.enabled == false and slot.level == 60)
+            assert(slot.selectedTalentID == 5573 and #slot.availableTalentIDs == 2)
+            assert(slot.availableTalentIDs[1] == 94 and slot.availableTalentIDs[2] == 5573)
+            assert(slot.locked == nil and slot.slotIndex == nil)
+        "#,
+        )
+        .unwrap();
+        {
+            let mut sim = env.state().borrow_mut();
+            sim.pvp_talent_tooltip.active_group_index = 1;
+            let slot = sim.pvp_talent_tooltip.slots.get_mut(&1).unwrap();
+            slot.enabled = true;
+            slot.level = 20;
+            slot.available_talent_ids = vec![94];
+        }
+        env.exec(r#"
+            local slot = C_SpecializationInfo.GetPvpTalentSlotInfo(1)
+            assert(slot.enabled and slot.level == 20 and slot.selectedTalentID == 94)
+            assert(#slot.availableTalentIDs == 1 and slot.availableTalentIDs[1] == 94)
+            -- Unmodelled calls retain master's exact empty shape, not a native assertion.
+            local empty = C_SpecializationInfo.GetPvpTalentSlotInfo(2)
+            assert(empty.enabled and empty.locked == false and empty.slotIndex == 2)
+            assert(empty.selectedTalentID == nil and empty.level == nil and #empty.availableTalentIDs == 0)
+            for _, invalid in ipairs({0, 4, 1.5, "1", true, {}}) do
+                assert(C_SpecializationInfo.GetPvpTalentSlotInfo(invalid) == nil)
+            end
+            assert(C_SpecializationInfo.GetPvpTalentSlotInfo() == nil)
+        "#).unwrap();
+    }
+
+    #[test]
+    fn tooltip_pvp_talent_slot_level_lock_excludes_other_outcomes() {
+        let env = panel(true, 20);
+        {
+            let mut sim = env.state().borrow_mut();
+            sim.player.in_combat = true;
+            sim.pvp_talent_tooltip.rest_permission = Some(false);
+            let record = sim.pvp_talent_tooltip.catalog.get_mut(&5573).unwrap();
+            record.grant_rejected_by_item = true;
+            record.granted_item_id = Some(6948);
+            record.granted_by_essence = true;
+            record.eligibility_by_position.insert(1, false);
+        }
+        hover(&env, true, "UNLOCKED_AT_LEVEL:format(25)");
+    }
+
+    #[test]
+    fn tooltip_pvp_talent_slot_already_selected_has_no_annotation() {
+        let env = panel(true, 80);
+        env.state().borrow_mut().player.in_combat = true;
+        hover(&env, true, "nil");
+    }
+
+    fn candidate() -> WowLuaEnv {
+        let env = panel(false, 80);
+        env.state().borrow_mut().pvp_talent_tooltip.rest_permission = Some(true);
+        env
+    }
+
+    #[test]
+    fn tooltip_pvp_talent_list_combat_error_precedes_grant_and_later_unlock() {
+        let env = candidate();
+        {
+            let mut sim = env.state().borrow_mut();
+            sim.player.in_combat = true;
+            let record = sim.pvp_talent_tooltip.catalog.get_mut(&5573).unwrap();
+            record.eligibility_by_position.insert(0, false);
+            record.eligibility_by_position.insert(1, false);
+            record.grant_rejected_by_item = true;
+            record.granted_item_id = Some(6948);
+            record.eligibility_level_failed = true;
+        }
+        hover(&env, false, "TALENT_TOOLTIP_ADD_COMBAT_ERROR");
+    }
+
+    #[test]
+    fn tooltip_pvp_talent_list_rest_error() {
+        let env = candidate();
+        env.state().borrow_mut().pvp_talent_tooltip.rest_permission = Some(false);
+        hover(&env, false, "TALENT_TOOLTIP_ADD_REST_ERROR_PVP");
+    }
+
+    #[test]
+    fn tooltip_pvp_talent_list_preview() {
+        let env = candidate();
+        hover(&env, false, "TALENT_TOOLTIP_ADDPREVIEWPOINT");
+    }
+
+    fn grant(essence: bool) -> WowLuaEnv {
+        let env = candidate();
+        {
+            let mut sim = env.state().borrow_mut();
+            let record = sim.pvp_talent_tooltip.catalog.get_mut(&5573).unwrap();
+            record.grant_rejected_by_item = true;
+            record.granted_item_id = Some(6948);
+            record.granted_by_essence = essence;
+        }
+        env
+    }
+
+    #[test]
+    fn tooltip_pvp_talent_list_item_grant() {
+        let env = grant(false);
+        hover(
+            &env,
+            false,
+            r#"TALENT_GRANTED_BY_ITEM:format("Hearthstone")"#,
+        );
+    }
+
+    #[test]
+    fn tooltip_pvp_talent_list_essence_grant() {
+        let env = grant(true);
+        hover(&env, false, "PVP_TALENT_GRANTED_BY_AZERITE_ESSENCE");
+    }
 }

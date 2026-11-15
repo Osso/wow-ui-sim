@@ -340,6 +340,31 @@ fn blizzard_paged_content_does_not_leak_virtual_templates_to_globals(env: &WowLu
 }
 }
 
+#[cfg(all(feature = "client-retail", feature = "optional-tests"))]
+prefork_full_ui_case! {
+fn retail_original_paging_consumer_keeps_hidden_page_text_unchanged(env: &WowLuaEnv) {
+    let (text, alpha): (String, f64) = env
+        .eval(
+            r#"
+            local controls = CreateFrame("Frame", nil, UIParent, "PagingControlsHorizontalTemplate")
+            controls.hideWhenSinglePage = true
+            controls.currentPage = 1
+            controls.maxPages = 1
+            controls.PageText:SetText("preserved")
+            controls:UpdateControls()
+            return controls.PageText:GetText() or "", controls:GetAlpha()
+            "#,
+        )
+        .expect("selected Blizzard paging consumer should update its controls");
+
+    assert_eq!(alpha, 0.0, "the original consumer hides single-page controls");
+    assert_eq!(
+        text, "preserved",
+        "the original UpdateControls leaves PageText unchanged when it hides the controls"
+    );
+}
+}
+
 prefork_full_ui_case! {
 fn blizzard_paged_content_frame_base_mixin_publishes_callback_event(env: &WowLuaEnv) {
 

@@ -21,7 +21,9 @@ const FIXTURE_MARKER_WAIT: Duration = Duration::from_secs(4);
 const CONCURRENCY_HOLD: Duration = Duration::from_millis(600);
 fn expected_timeout_child_limit() -> u32 {
     match std::env::var("WOW_SIM_TIMEOUT_CHILD_SLOTS") {
-        Ok(value) => value.parse().expect("configured timeout child limit is an integer"),
+        Ok(value) => value
+            .parse()
+            .expect("configured timeout child limit is an integer"),
         Err(std::env::VarError::NotPresent) => 2,
         Err(error) => panic!("read configured timeout child limit: {error}"),
     }
@@ -40,7 +42,10 @@ fn panic_failure_is_aggregated_and_later_sibling_runs() {
     let stdout = stdout(&output);
     let stderr = stderr(&output);
 
-    assert!(!output.status.success(), "panic fixture must report one failure");
+    assert!(
+        !output.status.success(),
+        "panic fixture must report one failure"
+    );
     assert!(
         sibling_marker.exists(),
         "later panic sibling did not execute\nstdout:\n{stdout}\nstderr:\n{stderr}"
@@ -48,13 +53,8 @@ fn panic_failure_is_aggregated_and_later_sibling_runs() {
     assert!(stdout.contains("timeout reexec panic stdout marker"));
     assert!(stderr.contains("timeout reexec panic stderr marker"));
     assert!(stdout.contains("timeout_reexec::fixtures::panic_case::b_records_completion ... ok"));
-    assert!(
-        stdout.contains("test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured;")
-    );
-    assert_final_failure_list(
-        &stdout,
-        "timeout_reexec::fixtures::panic_case::a_panics",
-    );
+    assert!(stdout.contains("test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured;"));
+    assert_final_failure_list(&stdout, "timeout_reexec::fixtures::panic_case::a_panics");
 }
 
 #[test]
@@ -76,7 +76,10 @@ fn timeout_kills_descendant_and_later_sibling_runs() {
         kill_process(descendant_pid);
     }
 
-    assert!(!output.status.success(), "timeout fixture must report one failure");
+    assert!(
+        !output.status.success(),
+        "timeout fixture must report one failure"
+    );
     assert!(
         sibling_marker.exists(),
         "later timeout sibling did not execute\nstdout:\n{stdout}\nstderr:\n{stderr}"
@@ -84,9 +87,7 @@ fn timeout_kills_descendant_and_later_sibling_runs() {
     assert!(stdout.contains("timeout reexec timeout stdout marker"));
     assert!(stderr.contains("timeout reexec timeout stderr marker"));
     assert!(stdout.contains("timeout_reexec::fixtures::timeout_case::b_records_completion ... ok"));
-    assert!(
-        stdout.contains("test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured;")
-    );
+    assert!(stdout.contains("test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured;"));
     assert!(
         stderr.contains("timed out after 1s"),
         "timeout reason was not forwarded\nstdout:\n{stdout}\nstderr:\n{stderr}"
@@ -117,7 +118,10 @@ fn nested_guards_execute_each_closure_once() {
         std::fs::read_to_string(&marker).expect("read nested closure marker"),
         "first\nsecond\n"
     );
-    assert!(fixture_stderr.is_empty(), "disabled inventory changed stderr: {fixture_stderr}");
+    assert!(
+        fixture_stderr.is_empty(),
+        "disabled inventory changed stderr: {fixture_stderr}"
+    );
     let entries: Vec<_> = std::fs::read_dir(temp.path())
         .expect("read fixture directory")
         .map(|entry| entry.expect("fixture entry").file_name())
@@ -126,7 +130,11 @@ fn nested_guards_execute_each_closure_once() {
 
     let inventory = temp.path().join("timeout-entry.txt");
     let recorded = run_inventory_fixture(&marker, Some(&inventory));
-    assert!(recorded.status.success(), "inventory fixture failed: {}", stderr(&recorded));
+    assert!(
+        recorded.status.success(),
+        "inventory fixture failed: {}",
+        stderr(&recorded)
+    );
     assert!(stderr(&recorded).is_empty());
     let without_timing = |text: String| {
         text.lines()
@@ -134,7 +142,10 @@ fn nested_guards_execute_each_closure_once() {
             .collect::<Vec<_>>()
             .join("\n")
     };
-    assert_eq!(without_timing(fixture_stdout), without_timing(stdout(&recorded)));
+    assert_eq!(
+        without_timing(fixture_stdout),
+        without_timing(stdout(&recorded))
+    );
     assert_eq!(
         std::fs::read_to_string(inventory).expect("read timeout entry inventory"),
         "timeout_reexec::fixtures::nested_case::nested_guards_run_both_closures\n"
@@ -179,7 +190,8 @@ fn assert_concurrency_fixture() {
     let (active, peak) = read_concurrency_state(&state_path);
     assert_eq!(active, 0, "all timeout children must release their slots");
     assert_eq!(
-        peak, expected_timeout_child_limit(),
+        peak,
+        expected_timeout_child_limit(),
         "timeout child peak exceeded the intended bound"
     );
 }
@@ -223,7 +235,10 @@ fn assert_permit_release_fixture() {
     let stdout = stdout(&output);
     let stderr = stderr(&output);
 
-    assert!(!output.status.success(), "permit-release fixture must time out once");
+    assert!(
+        !output.status.success(),
+        "permit-release fixture must time out once"
+    );
     assert!(
         temp.path().join("waiting-complete").exists(),
         "waiting timeout sibling did not run\nstdout:\n{stdout}\nstderr:\n{stderr}"
@@ -245,7 +260,11 @@ fn assert_permit_release_fixture() {
 fn run_inventory_fixture(marker: &Path, inventory: Option<&Path>) -> Output {
     let mut command = Command::new(std::env::current_exe().expect("integration test binary"));
     command
-        .args(["timeout_reexec::fixtures::nested_case::", "--test-threads=1", "--nocapture"])
+        .args([
+            "timeout_reexec::fixtures::nested_case::",
+            "--test-threads=1",
+            "--nocapture",
+        ])
         .current_dir(marker.parent().expect("fixture directory"))
         .env(FIXTURE_MODE_ENV, "nested")
         .env(SIBLING_MARKER_ENV, marker)
@@ -262,7 +281,8 @@ fn run_fixture(
     sibling_marker: &Path,
     descendant_pid_path: Option<&Path>,
 ) -> Output {
-    let mut command = Command::new(std::env::current_exe().expect("resolve integration test binary"));
+    let mut command =
+        Command::new(std::env::current_exe().expect("resolve integration test binary"));
     command
         .args([filter, "--test-threads=1", "--nocapture"])
         .env(FIXTURE_MODE_ENV, mode)
@@ -274,7 +294,8 @@ fn run_fixture(
 }
 
 fn run_concurrency_fixture(state_path: &Path) -> Output {
-    let mut command = Command::new(std::env::current_exe().expect("resolve integration test binary"));
+    let mut command =
+        Command::new(std::env::current_exe().expect("resolve integration test binary"));
     command
         .args([
             "timeout_reexec::fixtures::concurrency_case::",
@@ -287,7 +308,8 @@ fn run_concurrency_fixture(state_path: &Path) -> Output {
 }
 
 fn run_exact_selection_fixture(selected_marker: &Path, forbidden_marker: &Path) -> Output {
-    let mut command = Command::new(std::env::current_exe().expect("resolve integration test binary"));
+    let mut command =
+        Command::new(std::env::current_exe().expect("resolve integration test binary"));
     command
         .args([
             "timeout_reexec::fixtures::exact_selection_case::selected_target",
@@ -298,11 +320,14 @@ fn run_exact_selection_fixture(selected_marker: &Path, forbidden_marker: &Path) 
         .env(FIXTURE_MODE_ENV, "exact-selection")
         .env(EXACT_SELECTED_MARKER_ENV, selected_marker)
         .env(EXACT_FORBIDDEN_MARKER_ENV, forbidden_marker);
-    command.output().expect("run timeout exact-selection fixture")
+    command
+        .output()
+        .expect("run timeout exact-selection fixture")
 }
 
 fn run_permit_release_fixture(release_dir: &Path) -> Output {
-    let mut command = Command::new(std::env::current_exe().expect("resolve integration test binary"));
+    let mut command =
+        Command::new(std::env::current_exe().expect("resolve integration test binary"));
     command
         .args([
             "timeout_reexec::fixtures::permit_release_case::",
@@ -435,8 +460,9 @@ fn apply_concurrency_delta((active, peak): (u32, u32), delta: i32) -> (u32, u32)
 fn write_locked_concurrency_state(file: &mut File, (active, peak): (u32, u32)) {
     file.seek(SeekFrom::Start(0))
         .expect("rewind timeout concurrency state");
-    file.set_len(0).expect("truncate timeout concurrency state");
-    writeln!(file, "{active} {peak}").expect("write timeout concurrency state");
+    // Keep the fixed-width record intact if a timeout terminates this child.
+    file.write_all(format!("{active} {peak}\n").as_bytes())
+        .expect("write timeout concurrency state");
 }
 
 fn lock_exclusively(file: &File) {
@@ -641,8 +667,7 @@ mod fixtures {
 
     fn record_concurrency_window() {
         let state_path = PathBuf::from(
-            std::env::var_os(CONCURRENCY_STATE_ENV)
-                .expect("timeout concurrency state environment"),
+            std::env::var_os(CONCURRENCY_STATE_ENV).expect("timeout concurrency state environment"),
         );
         update_concurrency_state(&state_path, 1);
         thread::sleep(CONCURRENCY_HOLD);

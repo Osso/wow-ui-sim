@@ -1,6 +1,7 @@
 //! Reusable markup and GPU/canvas primitives, below runtime composition.
 pub use sim_texture::{self as texture_data, logging};
 pub mod font;
+pub mod inline_markup;
 pub use crate as render;
 #[cfg(feature = "gui")]
 pub use shader::{QuadBatch, QuadVertex, TextureRequest};

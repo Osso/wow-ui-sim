@@ -148,9 +148,6 @@ const SHOW_CHAT_FRAME_LUA: &str = r#"
                 C_ChatInfo.SendChatMessage = __wow_send_chat_message
             end
         end
-        if ChatFrame1.Clear then
-            ChatFrame1:Clear()
-        end
         ChatFrame1:ClearAllPoints()
         ChatFrame1:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", 35, 50)
         ChatFrame1:SetSize(430, 170)

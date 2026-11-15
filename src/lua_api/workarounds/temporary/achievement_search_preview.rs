@@ -1,7 +1,7 @@
-//! Temporary AchievementUI search/summary surface repairs.
+//! Temporary AchievementUI search-preview surface repair.
 //!
-//! Blizzard_AchievementUI expects the search-preview array and summary empty
-//! text state to be ready after the addon loads. Keep the repair in this
+//! Blizzard_AchievementUI expects the search-preview array to be ready
+//! after the addon loads. Keep the repair in this
 //! addon-specific temporary owner instead of the generic runtime bootstrap.
 
 const ACHIEVEMENT_SEARCH_PREVIEW_LUA: &str = r##"
@@ -42,51 +42,8 @@ local function patch_search_preview_selection()
     __wow_achievement_search_preview_patched = true
 end
 
-local function patch_summary_empty_text_overlap()
-    if rawget(_G, "__wow_achievement_summary_empty_text_patched") then
-        return
-    end
-    if type(AchievementFrameSummary_UpdateAchievements) ~= "function" then
-        return
-    end
-
-    local original = AchievementFrameSummary_UpdateAchievements
-    AchievementFrameSummary_UpdateAchievements = function(...)
-        local numAchievements = select(1, ...)
-        local results = { original(...) }
-
-        local emptyText = rawget(_G, "AchievementFrameSummaryAchievementsEmptyText")
-        local summary = rawget(_G, "AchievementFrameSummaryAchievements")
-        local buttons = summary and summary.buttons
-        local hasVisibleSummaryButton = false
-
-        if type(buttons) == "table" then
-            for _, button in ipairs(buttons) do
-                if (type(button) == "table" or type(button) == "userdata")
-                    and type(button.IsShown) == "function"
-                    and button:IsShown()
-                then
-                    hasVisibleSummaryButton = true
-                    break
-                end
-            end
-        end
-
-        if (type(emptyText) == "table" or type(emptyText) == "userdata")
-            and type(emptyText.SetShown) == "function"
-        then
-            emptyText:SetShown(numAchievements == 0 and not hasVisibleSummaryButton)
-        end
-
-        return unpack(results)
-    end
-
-    __wow_achievement_summary_empty_text_patched = true
-end
-
 ensure_search_previews()
 patch_search_preview_selection()
-patch_summary_empty_text_overlap()
 "##;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
@@ -94,7 +51,7 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     Ok(())
 }
 
-/// Re-apply the search/summary repairs after Blizzard_AchievementUI loads.
+/// Re-apply the search-preview repair after Blizzard_AchievementUI loads.
 /// Wired through `apply_blizzard_post_load_patches`; the Lua
 /// `hooksecurefunc(C_AddOns, "LoadAddOn", ...)` route no longer works because
 /// the shared bootstrap hooksecurefunc deliberately refuses that target.
@@ -136,6 +93,7 @@ mod tests {
                 AchievementFrameSummary_UpdateAchievements = function(numAchievements)
                     return numAchievements
                 end
+                originalSummary = AchievementFrameSummary_UpdateAchievements
             "#,
         )
         .expect("achievement fixture should install");
@@ -153,9 +111,10 @@ mod tests {
                 if selectionResult ~= "selected" or summaryResult ~= 0 then return "return" end
                 if calls[1] ~= 2 then return "selection" end
                 if previews[1] ~= "one" or previews[2] ~= "two" then return "previews" end
-                if AchievementFrameSummaryAchievementsEmptyText.shown ~= true then return "empty" end
+                if AchievementFrameSummaryAchievementsEmptyText.shown ~= nil then return "summary_changed" end
+                if AchievementFrameSummary_UpdateAchievements ~= originalSummary then return "summary_owner" end
                 if not __wow_achievement_search_preview_patched then return "search_patch" end
-                if not __wow_achievement_summary_empty_text_patched then return "summary_patch" end
+                if __wow_achievement_summary_empty_text_patched ~= nil then return "summary_patch" end
 
                 return "ok"
                 "#,

@@ -29,14 +29,6 @@ if type(GetFinalNameFromTextureKit) ~= "function" then
   end
 end
 
-if type(SetClampedTextureRotation) ~= "function" then
-  function SetClampedTextureRotation(texture, rotation)
-    if texture and type(texture.SetRotation) == "function" then
-      texture:SetRotation(rotation or 0)
-    end
-  end
-end
-
 if TextureKitConstants == nil then
   TextureKitConstants = {
     SetVisibility = true,
@@ -179,9 +171,6 @@ mod tests {
                 end, "a", "b")
                 if closure("c") ~= "abc" then return "closure" end
                 if GetMicroIconForRole("TANK") ~= "roleicon-tank" then return "role_icon" end
-                local rotated = 0
-                SetClampedTextureRotation({ SetRotation = function(_, value) rotated = value end }, 90)
-                if rotated ~= 90 then return "rotation" end
                 PingSystemInitializer({})
                 return "ok"
                 "#,
@@ -224,7 +213,6 @@ mod tests {
                 if GetOrCreateTableEntry() ~= "existing_entry" then return "overwrote_table_entry" end
                 if GenerateClosure() ~= "existing_closure" then return "overwrote_closure" end
                 if TextureKitConstants.UseAtlasSize ~= "existing_texture_constant" then return "overwrote_texture_constants" end
-                if type(SetClampedTextureRotation) ~= "function" then return "missing_rotation" end
                 if type(GetMicroIconForRole) ~= "function" then return "missing_role_icon" end
                 if type(PingSystemInitializer) ~= "function" then return "missing_ping" end
                 return "ok"

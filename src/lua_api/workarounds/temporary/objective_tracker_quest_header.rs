@@ -1,5 +1,7 @@
 //! Temporary Objective Tracker quest-header surface workaround.
 //!
+//! Legacy profiles retain the existing quest-header surface workaround.
+//! Retail uses the original selected Lua/XML animation without forced Stop/alpha.
 //! Startup can leave the quest header partially faded after its add animation.
 //! Keep this isolated until Objective Tracker layout/animation state is modeled
 //! closely enough that the Blizzard code reaches the same visible surface.
@@ -163,10 +165,17 @@ pcall(ensure_quest_header_text)
 "#;
 
 pub(crate) fn patch(env: &WowLuaEnv) {
-    let _ = env.exec(OBJECTIVE_TRACKER_QUEST_HEADER_WORKAROUND_LUA);
+    // Retail's original PlayAddAnimation restarts the XML AddAnim. Applying this
+    // surface override immediately stops that animation and forces terminal alphas.
+    // Do not replace the selected original consumer with a guessed presentation.
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
+        let _ = env.exec(OBJECTIVE_TRACKER_QUEST_HEADER_WORKAROUND_LUA);
+    }
 }
 
-#[cfg(test)]
+// These synthetic tests preserve only the unchanged legacy workaround, not
+// a native animation contract. Retail is covered by the original-consumer test.
+#[cfg(all(test, not(feature = "client-retail")))]
 mod tests {
     use super::*;
 

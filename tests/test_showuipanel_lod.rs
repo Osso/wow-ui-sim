@@ -24,6 +24,22 @@ fn show_macro_frame_loads_and_populates_selector() {
                 .expect("native macro lazy loader, selection and populated rows");
             return;
         }
+        #[cfg(feature = "client-retail")]
+        {
+            let mut sim = env.state().borrow_mut();
+            sim.macros.resize_with(121, Default::default);
+            for (index, name, icon, body) in [
+                (0, "Raid Beacon", "134400", "/rw Stack on star"),
+                (1, "Ready", "132212", "/readycheck"),
+                (120, "Crusader", "135890", "/cast Crusader Aura"),
+            ] {
+                sim.macros[index] = wow_ui_sim::lua_api::state::MacroInfo {
+                    name: name.into(),
+                    icon: icon.into(),
+                    body: body.into(),
+                };
+            }
+        }
         env.exec(
             "Constants.MacroConsts = { MAX_ACCOUNT_MACROS = 120, MAX_CHARACTER_MACROS = 30 }",
         )
@@ -132,6 +148,86 @@ fn show_mail_frame_loads_and_populates_inbox_rows() {
         "#).unwrap();
         assert_eq!(result, "ok", "ShowMailFrame should load the inbox panel and populate seeded inbox rows: {result}");
     }
+}
+
+#[cfg(all(feature = "client-retail", feature = "optional-tests"))]
+#[test]
+fn item_socketing_on_enter_preserves_existing_and_comparison_tooltips() {
+    let env = setup_env();
+    env.exec(
+        r#"
+        C_ItemSocketInfo._state.numSockets = 1
+        C_ItemSocketInfo._state.existingSockets = {
+            [1] = { name = "Existing Hearthstone", itemID = 6948 },
+        }
+        C_ItemSocketInfo._state.newSockets = {}
+        "#,
+    )
+    .expect("existing socket fixture should install");
+
+    let loaded: bool = env
+        .eval("return C_AddOns.LoadAddOn('Blizzard_ItemSocketingUI')")
+        .expect("selected Retail socketing addon should load");
+    assert!(
+        loaded,
+        "Retail loads the original on-demand socketing consumer"
+    );
+
+    env.exec(
+        r#"
+        local socket = ItemSocketingFrame.SocketingContainer.Socket1
+        assert(socket:GetID() == 1, "XML socket button carries its socket index")
+
+        local function assert_existing_gem_tooltip()
+            socket:GetScript("OnEnter")(socket)
+            assert(GameTooltip:GetOwner() == socket, "main tooltip owner is the socket")
+            assert(GameTooltip:IsOwned(socket), "main tooltip reports the socket owner")
+            local line = GameTooltip:GetLeftLine(1)
+            local text = line and line:GetText()
+            assert(text == "Hearthstone", "expected existing gem tooltip, got " .. tostring(text))
+            GameTooltip:Hide()
+        end
+
+        assert_existing_gem_tooltip()
+        "#,
+    )
+    .expect("original selected socket handler should show an existing gem");
+
+    env.apply_post_load_workarounds();
+
+    env.exec(
+        r#"
+        local socket = ItemSocketingFrame.SocketingContainer.Socket1
+        local function assert_existing_gem_tooltip()
+            socket:GetScript("OnEnter")(socket)
+            assert(GameTooltip:GetOwner() == socket, "main tooltip owner is the socket")
+            assert(GameTooltip:IsOwned(socket), "main tooltip reports the socket owner")
+            local line = GameTooltip:GetLeftLine(1)
+            local text = line and line:GetText()
+            assert(text == "Hearthstone", "expected existing gem tooltip, got " .. tostring(text))
+            GameTooltip:Hide()
+        end
+
+        assert_existing_gem_tooltip()
+
+        C_ItemSocketInfo._state.newSockets = {
+            [1] = { name = "Proposed Copper Bar", itemID = 2840 },
+        }
+        socket:GetScript("OnEnter")(socket)
+        assert(GameTooltip:GetOwner() == socket, "main tooltip owner is the socket")
+        assert(GameTooltip:IsOwned(socket), "main tooltip reports the socket owner")
+        assert(GameTooltip:GetLeftLine(1):GetText() == "Copper Bar",
+            "proposed gem uses the main tooltip")
+        assert(ShoppingTooltip1:IsShown(), "existing gem comparison tooltip is shown")
+        assert(ShoppingTooltip1:GetOwner() == GameTooltip,
+            "comparison tooltip owner is the main tooltip")
+        assert(ShoppingTooltip1:IsOwned(GameTooltip),
+            "comparison tooltip reports the main tooltip owner")
+        assert(ShoppingTooltip1:GetLeftLine(1):GetText() == "Hearthstone",
+            "comparison tooltip shows the existing gem")
+        "#,
+    )
+    .expect("post-load workaround must preserve the original socket consumer behavior");
 }
 
 #[test]
@@ -252,6 +348,11 @@ fn encounter_timeline_loads_and_populates_track_view_event_frames() {
                 return "encounter_timeline_missing"
             end
 
+            -- VERIFIED locally: the event store starts empty
+            -- (tests/p1207_remaining_timeline_color_event.rs); seed this test's event.
+            C_EncounterTimeline.AddScriptEvent({
+                spellID = 19750, iconFileID = 135907, duration = 10,
+            })
             EncounterTimeline:UpdateSystemSettingViewType()
             EncounterTimeline:SetExplicitlyShown(true)
             EncounterTimeline.TrackView:ActivateView()

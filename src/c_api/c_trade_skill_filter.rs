@@ -16,6 +16,13 @@ use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
 
+// INFERRED — the helper result and Forever SpellEffect input are not supplied,
+// so this native predicate's verified success chain cannot be established.
+fn can_trade_skill_show_crafting_ui(state: &mut LuaState) -> LuaResult<u32> {
+    state.push(Val::Bool(false));
+    Ok(1)
+}
+
 fn filters_show(filters: &RecipeListFilters, recipe: &RecipeEntry) -> bool {
     let learned_visible = if recipe.learned {
         filters.show_learned
@@ -84,6 +91,15 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     let extra: &[Method] = if mainline { MAINLINE_METHODS } else { &[] };
     for (name, func) in METHODS.iter().chain(extra) {
         table_set_rust_fn_static(state, table, name, *func)?;
+    }
+    if ACTIVE == ClientProfile::WowForever {
+        // Forever TradeSkillUIDocumentation.lua:26-39 declares this method.
+        table_set_rust_fn_static(
+            state,
+            table,
+            "CanTradeSkillShowCraftingUI",
+            can_trade_skill_show_crafting_ui,
+        )?;
     }
     Ok(())
 }

@@ -6,7 +6,6 @@
 
 const GLOBAL_PLACEHOLDER_TABLES_LUA: &str = r#"
 StaticPopupDialogs = StaticPopupDialogs or {}
-UIPanelWindows = UIPanelWindows or {}
 SOUNDKIT = SOUNDKIT or {}
 
 UISpecialFrames = UISpecialFrames or {}
@@ -41,7 +40,7 @@ mod tests {
             result,
             (
                 "table".to_string(),
-                "table".to_string(),
+                "nil".to_string(),
                 "table".to_string(),
                 true
             )

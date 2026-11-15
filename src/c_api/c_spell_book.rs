@@ -1,6 +1,7 @@
 //! `C_SpellBook` surface backed by spellbook data and `SimState`.
 
 use crate::c_api::ensure_namespace;
+use crate::c_api::helpers::{bad_argument, parse_numeric_string, read_untainted_signed32_argument};
 use crate::lua_api::globals::spellbook_data;
 use crate::lua_api::methods::{
     borrow_state, create_string, create_string_static, create_table, create_table_with_capacity,
@@ -20,7 +21,13 @@ use rilua::{LuaResult, Val};
 const CLASS_SKILL_LINE_INDEX: i32 = 2;
 const SPELLBOOK_SKILL_LINE_INFO_HASH_FIELDS: usize = 7;
 const SPELLBOOK_ITEM_INFO_HASH_FIELDS: usize = 9;
-
+const FIND_SPELL_OVERRIDE_USAGE: &str =
+    "Usage: local overrideSpellID = C_SpellBook.FindSpellOverrideByID(spellID)";
+const FIND_FLYOUT_SLOT_USAGE: &str =
+    "Usage: local flyoutSlot = C_SpellBook.FindFlyoutSlotBySpellID(spellID)";
+const FIND_BASE_SPELL_USAGE: &str =
+    "Usage: local baseSpellID = C_SpellBook.FindBaseSpellByID(spellID)";
+const AUTO_CAST_USAGE: &str = "Usage: local autoCastAllowed, autoCastEnabled = C_SpellBook.GetSpellBookItemAutoCast(spellBookItem)";
 pub(crate) fn register_c_spell_book(state: &mut LuaState) -> LuaResult<()> {
     let table_ref = ensure_namespace(state, "C_SpellBook")?;
     register_spell_book_skill_line_queries(state, table_ref)?;
@@ -234,6 +241,26 @@ fn register_spell_book_item_actions(
         "IsSpellInSpellBook",
         c_spell_book_is_spell_in_spell_book,
     )?;
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        table_set_rust_fn_static(
+            state,
+            table_ref,
+            "FindSpellOverrideByID",
+            c_spell_book_find_spell_override_by_id,
+        )?;
+        table_set_rust_fn_static(
+            state,
+            table_ref,
+            "FindFlyoutSlotBySpellID",
+            c_spell_book_find_flyout_slot_by_spell_id,
+        )?;
+        table_set_rust_fn_static(
+            state,
+            table_ref,
+            "FindBaseSpellByID",
+            c_spell_book_find_base_spell_by_id,
+        )?;
+    }
     Ok(())
 }
 
@@ -279,12 +306,16 @@ fn register_spell_book_owned_state_queries(
         "HasPetSpells",
         c_spell_book_has_pet_spells,
     )?;
-    table_set_rust_fn_static(
-        state,
-        table_ref,
-        "GetOverrideSpell",
-        c_spell_book_get_override_spell,
-    )?;
+    // R88m.4: no Retail-selected original consumer of this census-absent
+    // alias. Native publication outside the census remains UNKNOWN.
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
+        table_set_rust_fn_static(
+            state,
+            table_ref,
+            "GetOverrideSpell",
+            c_spell_book_get_override_spell,
+        )?;
+    }
     Ok(())
 }
 
@@ -604,10 +635,13 @@ fn c_spell_book_get_spell_book_item_cooldown_duration(state: &mut LuaState) -> L
     any(feature = "profile-retail", feature = "client-ptr")
 ))]
 mod cooldown_query {
-    use super::{LuaResult, LuaState, Val, cooldown_spell_for_book_entry};
+    use super::{
+        LuaResult, LuaState, Val, cooldown_spell_for_book_entry, read_spell_book_item_arguments,
+    };
 
     const COOLDOWN_API: &str = "C_SpellBook.GetSpellBookItemCooldown";
     const LOSS_OF_CONTROL_API: &str = "C_SpellBook.GetSpellBookItemLossOfControlCooldownInfo";
+    const LOSS_OF_CONTROL_USAGE: &str = "Usage: local lossOfControlInfo = C_SpellBook.GetSpellBookItemLossOfControlCooldownInfo(spellBookItem)";
 
     fn authenticate_book_selector(state: &LuaState, position: i32, api: &str) -> LuaResult<Val> {
         rilua::table_security::unwrap_secret(state, crate::lua_bridge::stack_val(state, position))
@@ -629,9 +663,45 @@ mod cooldown_query {
         crate::c_api::c_spell::push_spell_cooldown_info(state, spell_id)
     }
 
+    fn get_retail_loss_of_control(state: &mut LuaState, slot: Val, bank: Val) -> LuaResult<u32> {
+        // R88m.4: rejected/missing items and failed queries publish no values.
+        // The existing player-book adapter cannot represent native pet rows,
+        // row kinds or rejected flags; its off-spec rejection is preserved.
+        let Some(spell_id) = cooldown_spell_for_book_entry(slot, bank).filter(|id| *id != 0) else {
+            return Ok(0);
+        };
+        let (info, restricted) = {
+            let sim = crate::lua_api::methods::borrow_state(state)?;
+            (
+                sim.spell_loss_of_control.get(&spell_id).cloned(),
+                crate::c_api::charge_state::cooldowns_are_restricted(&sim),
+            )
+        };
+        let Some(info) = info else {
+            return Ok(0);
+        };
+        // Supplied decoded query DTO: milliseconds-to-seconds conversion,
+        // active/replacement calculation and acquisition remain upstream
+        // model seams, not newly inferred values in this serializer.
+        crate::c_api::loss_of_control::push_loss_of_control_info(state, &info, restricted)
+    }
+
     pub(super) fn get_loss_of_control(state: &mut LuaState) -> LuaResult<u32> {
-        let slot = authenticate_book_selector(state, 1, LOSS_OF_CONTROL_API)?;
-        let bank = authenticate_book_selector(state, 2, LOSS_OF_CONTROL_API)?;
+        let (slot, bank) = if crate::client_profile::ACTIVE
+            == crate::client_profile::ClientProfile::Retail
+        {
+            let (slot, bank) =
+                read_spell_book_item_arguments(state, LOSS_OF_CONTROL_API, LOSS_OF_CONTROL_USAGE)?;
+            (Val::Num(f64::from(slot)), Val::Num(f64::from(bank)))
+        } else {
+            (
+                authenticate_book_selector(state, 1, LOSS_OF_CONTROL_API)?,
+                authenticate_book_selector(state, 2, LOSS_OF_CONTROL_API)?,
+            )
+        };
+        if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+            return get_retail_loss_of_control(state, slot, bank);
+        }
         let Some(spell_id) = cooldown_spell_for_book_entry(slot, bank) else {
             state.push(Val::Nil);
             return Ok(1);
@@ -697,15 +767,143 @@ fn c_spell_book_get_spell_book_item_texture(state: &mut LuaState) -> LuaResult<u
 }
 
 fn c_spell_book_get_spell_book_item_auto_cast(state: &mut LuaState) -> LuaResult<u32> {
-    let slot = i32::from_stack(state, 1)?;
-    if spellbook_data::get_spell_at_slot(slot).is_none() {
-        state.push(Val::Bool(false));
-        state.push(Val::Bool(false));
-        return Ok(2);
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        let (slot, bank) = read_spell_book_item_arguments(
+            state,
+            "C_SpellBook.GetSpellBookItemAutoCast",
+            AUTO_CAST_USAGE,
+        )?;
+        // No ordered pet-book rows or spell-keyed snapshot flags are supplied.
+        // The membership HashSet and action-bar indices do not establish a pet
+        // book slot. Keep that gap explicit rather than manufacture an ordering.
+        let entry = (bank == 0)
+            .then(|| i32::try_from(slot).ok())
+            .flatten()
+            .and_then(spellbook_data::get_spell_at_slot);
+        let Some((_, entry, _)) = entry else {
+            return Ok(0);
+        };
+        if entry.spell_id == 0 || spells::get_spell(entry.spell_id).is_none() {
+            return Ok(0);
+        }
+        // R88m.4 supported-record fallback: absent candidate/flag state is
+        // false/false. Native snapshot producers and action eligibility remain
+        // unmodeled; do not infer those flags from DB2 or unrelated bar slots.
+    } else {
+        let _ = i32::from_stack(state, 1)?;
     }
     state.push(Val::Bool(false));
     state.push(Val::Bool(false));
     Ok(2)
+}
+
+fn read_spell_book_item_arguments(
+    state: &LuaState,
+    function: &str,
+    usage: &str,
+) -> LuaResult<(u32, i32)> {
+    let slot = read_untainted_u32_argument(state, 1, function, usage)?;
+    let bank = read_untainted_signed32_argument(state, 2, function, usage)?;
+    if !matches!(bank, 0 | 1) {
+        return Err(bad_argument(
+            2,
+            function,
+            &format!(
+                "Invalid spellBank value {bank}. Must be an Enum.SpellBookSpellBank value. - {usage}"
+            ),
+        ));
+    }
+    Ok((slot, bank))
+}
+
+fn read_untainted_u32_argument(
+    state: &LuaState,
+    index: i32,
+    function: &str,
+    usage: &str,
+) -> LuaResult<u32> {
+    let original = stack_val(state, index);
+    if matches!(original, Val::Nil) {
+        return Err(bad_argument(index, function, usage));
+    }
+    let marked = rilua::table_security::is_secret_value(state, original);
+    let value = rilua::table_security::unwrap_secret(state, original).map_err(|_| {
+        bad_argument(
+            index,
+            function,
+            &format!(
+                "{usage}. Secret values are only allowed during untainted execution for this argument."
+            ),
+        )
+    })?;
+    let number = match value {
+        Val::Num(number) => Some(number),
+        Val::Str(reference) if !marked => state
+            .gc
+            .string_arena
+            .get(reference)
+            .and_then(|string| parse_numeric_string(string.data())),
+        _ => None,
+    };
+    number
+        .filter(|number| number.is_finite() && (0.0..=f64::from(u32::MAX)).contains(number))
+        .map(|number| number.trunc() as u32)
+        .ok_or_else(|| {
+            bad_argument(
+                index,
+                function,
+                &format!("outside of expected range 0 to {} - {usage}", u32::MAX),
+            )
+        })
+}
+
+fn c_spell_book_find_spell_override_by_id(state: &mut LuaState) -> LuaResult<u32> {
+    let spell_id = read_untainted_signed32_argument(
+        state,
+        1,
+        "C_SpellBook.FindSpellOverrideByID",
+        FIND_SPELL_OVERRIDE_USAGE,
+    )?;
+    // R88m.4: no override link preserves the parsed ID, then Spell membership
+    // determines one signed number or one nil. The simulator has no native
+    // eligible-override map; do not infer links from identifier aliases.
+    state.push(if spells::get_spell(spell_id as u32).is_some() {
+        Val::Num(f64::from(spell_id))
+    } else {
+        Val::Nil
+    });
+    Ok(1)
+}
+
+fn c_spell_book_find_flyout_slot_by_spell_id(state: &mut LuaState) -> LuaResult<u32> {
+    let _spell_id = read_untainted_signed32_argument(
+        state,
+        1,
+        "C_SpellBook.FindFlyoutSlotBySpellID",
+        FIND_FLYOUT_SLOT_USAGE,
+    )?;
+    // The simulator has no flyout-candidate list or flyout-kind book rows.
+    // R88j.10 verifies that the normal miss path publishes one numeric zero.
+    state.push(Val::Num(0.0));
+    Ok(1)
+}
+
+fn c_spell_book_find_base_spell_by_id(state: &mut LuaState) -> LuaResult<u32> {
+    let spell_id = read_untainted_signed32_argument(
+        state,
+        1,
+        "C_SpellBook.FindBaseSpellByID",
+        FIND_BASE_SPELL_USAGE,
+    )?;
+    // R88m.4: the no-link path retains the input before the final record test.
+    // Native selected-context links are not modeled; the separate C_Spell
+    // BaseSpellRelationships fixture is not evidence for this resolver.
+    state.push(if spells::get_spell(spell_id as u32).is_some() {
+        Val::Num(f64::from(spell_id))
+    } else {
+        Val::Nil
+    });
+    Ok(1)
 }
 
 fn c_spell_book_get_spell_book_item_power_cost(state: &mut LuaState) -> LuaResult<u32> {
@@ -987,4 +1185,34 @@ fn spellbook_item_info(state: &mut LuaState, slot: i32) -> Option<Val> {
         Val::Num(skill_line_index as f64),
     );
     Some(info)
+}
+
+#[cfg(all(test, feature = "client-retail"))]
+mod tests {
+    use super::c_spell_book_get_spell_book_item_auto_cast;
+    use crate::lua_api::WowLuaEnv;
+    use rilua::{LuaApiMut, Val};
+
+    #[test]
+    fn autocast_internal_output_has_two_booleans() {
+        let env = WowLuaEnv::new().expect("Lua environment should initialize");
+        let mut lua = env.rilua_mut();
+        let state = lua.state_mut();
+        let saved_base = state.base;
+        let saved_top = state.top;
+        state.base = saved_top;
+        state.push(Val::Num(1.0));
+        state.push(Val::Num(0.0));
+
+        // Publisher VERIFIED; handler-to-publisher edge UNKNOWN (R88j.1/.2 addendum).
+        // This checks only the simulator's internal output, not the public return.
+        let count = c_spell_book_get_spell_book_item_auto_cast(state)
+            .expect("internal autocast output should complete");
+        assert_eq!(count, 2);
+        assert!(matches!(state.stack_get(state.top - 2), Val::Bool(_)));
+        assert!(matches!(state.stack_get(state.top - 1), Val::Bool(_)));
+
+        state.top = saved_top;
+        state.base = saved_base;
+    }
 }

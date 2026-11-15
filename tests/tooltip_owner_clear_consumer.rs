@@ -27,14 +27,35 @@
 #[path = "tooltip_full_env_helpers.rs"]
 mod tooltip_full_env_helpers;
 
-#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
 use tooltip_full_env_helpers::setup_full_env;
+
+#[cfg(all(feature = "client-wowforever", feature = "optional-tests"))]
+use wow_ui_sim::lua_api::WowLuaEnv;
+
+#[cfg(all(feature = "client-wowforever", feature = "optional-tests"))]
+fn assert_forever_tooltip_consumer_selected() {
+    let addons = wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap();
+    let toc = wow_ui_sim::loader::find_toc_file(&addons.join("Blizzard_SharedXMLGame"))
+        .expect("profile-selected Blizzard_SharedXMLGame TOC");
+    let body = std::fs::read_to_string(&toc).unwrap();
+    assert!(body.contains("## AllowLoad: Game"));
+    assert!(body.contains("Tooltip\\TooltipDataHandler.lua"));
+    let tooltip_toc = wow_ui_sim::loader::find_toc_file(&addons.join("Blizzard_GameTooltip"))
+        .expect("profile-selected Blizzard_GameTooltip TOC");
+    let tooltip_body = std::fs::read_to_string(tooltip_toc).unwrap();
+    assert!(tooltip_body.contains("GameTooltip.xml"));
+}
 
 /// The profile-selected consumer TOC loads the tooltip XML body, and the same
 /// file list selects it at runtime (Retail: `_Mainline` TOC; PTR: unified TOC).
 #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 fn assert_tooltip_consumer_selected() {
-    use wow_ui_sim::client_profile::{ClientProfile, ACTIVE};
+    use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
 
     let addons = wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap();
     let toc = wow_ui_sim::loader::find_toc_file(&addons.join("Blizzard_GameTooltip"))
@@ -232,9 +253,8 @@ fn tooltip_owner_clear_failed_lookup_reprocessing_notifies_once() {
 /// same owner keeps the tooltip shown and clears its lines, a different owner
 /// hides through the ordinary lifecycle before recording the new owner.
 ///
-/// The pooled line FontString is not asserted: Forever's line FontStrings come
-/// from its tooltip XML, and only Wrath/Retail/PTR record them for clear-time
-/// reset (no Forever native evidence covers that reset).
+/// The optional R88n.5 cache test separately checks Forever's XML-backed line
+/// FontStrings, active-text clearing and cache reuse.
 #[cfg(feature = "client-wowforever")]
 #[test]
 fn tooltip_owner_clear_forever_owner_reassignment_lifecycle() {
@@ -263,4 +283,118 @@ fn tooltip_owner_clear_forever_owner_reassignment_lifecycle() {
         "#,
     )
     .expect("Forever owner reassignment lifecycle");
+}
+
+/// R88n.5: Forever ClearLines empties active cached text and retains inactive rows.
+#[cfg(all(feature = "client-wowforever", feature = "optional-tests"))]
+#[test]
+fn tooltip_clear_lines_forever_clears_only_active_cached_text() {
+    let env = setup_full_env();
+    assert_forever_tooltip_consumer_selected();
+    seed_forever_cached_lines(&env);
+    clear_forever_initial_rows(&env);
+    clear_forever_reused_row_and_check_inactive_cache(&env);
+}
+
+#[cfg(all(feature = "client-wowforever", feature = "optional-tests"))]
+fn seed_forever_cached_lines(env: &WowLuaEnv) {
+    env.exec(
+        r#"
+        local tip = GameTooltip
+        tip:AddLine("first")
+        tip:AddDoubleLine("second left", "second right")
+        _G.R88n5First = tip:GetLeftLine(1)
+        _G.R88n5SecondLeft = tip:GetLeftLine(2)
+        _G.R88n5SecondRight = tip:GetRightLine(2)
+        "#,
+    )
+    .expect("seed distinct active Forever FontString text");
+}
+
+#[cfg(all(feature = "client-wowforever", feature = "optional-tests"))]
+fn clear_forever_initial_rows(env: &WowLuaEnv) {
+    env.exec(
+        r#"
+        local function empty(line)
+            local text = line:GetText()
+            return text == nil or text == ""
+        end
+        assert(R88n5First:GetText() == "first", "first active left input")
+        assert(R88n5SecondLeft:GetText() == "second left", "second active left input")
+        assert(R88n5SecondRight:GetText() == "second right", "second active right input")
+        GameTooltip:ClearLines()
+        assert(empty(R88n5First), "first active left text is cleared")
+        assert(empty(R88n5SecondLeft), "second active left text is cleared")
+        assert(empty(R88n5SecondRight), "second active right text is cleared")
+        "#,
+    )
+    .expect("Forever ClearLines clears all populated active sides");
+}
+
+#[cfg(all(feature = "client-wowforever", feature = "optional-tests"))]
+fn clear_forever_reused_row_and_check_inactive_cache(env: &WowLuaEnv) {
+    env.exec(
+        r#"
+        local tip = GameTooltip
+        local function empty(line)
+            local text = line:GetText()
+            return text == nil or text == ""
+        end
+        tip:AddDoubleLine("second active left", "second active right")
+        local active_left, active_right = tip:GetLeftLine(1), tip:GetRightLine(1)
+        assert(active_left == R88n5First, "ClearLines retains cached FontStrings for reuse")
+        assert(active_left:GetText() == "second active left", "second backed active-left input")
+        assert(active_right:GetText() == "second active right", "second backed active-right input")
+        R88n5SecondLeft:SetText("inactive left")
+        R88n5SecondRight:SetText("inactive right")
+        assert(R88n5SecondLeft:GetText() == "inactive left")
+        assert(R88n5SecondRight:GetText() == "inactive right")
+        tip:ClearLines()
+        assert(empty(active_left) and empty(active_right), "second active row text is cleared")
+        assert(R88n5SecondLeft:GetText() == "inactive left", "inactive left cache survives")
+        assert(R88n5SecondRight:GetText() == "inactive right", "inactive right cache survives")
+        "#,
+    )
+    .expect("Forever ClearLines clears second active row and retains inactive text");
+}
+
+/// PRESERVATION: the profile-selected TooltipDataHandler still clears old
+/// active rows and publishes the replacement through its original ProcessInfo.
+#[cfg(all(feature = "client-wowforever", feature = "optional-tests"))]
+#[test]
+fn tooltip_clear_lines_forever_preserves_original_processor_reprocessing() {
+    let env = tooltip_full_env_helpers::setup_full_env();
+    let addons = wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap();
+    let toc = wow_ui_sim::loader::find_toc_file(&addons.join("Blizzard_SharedXMLGame"))
+        .expect("profile-selected Blizzard_SharedXMLGame TOC");
+    let toc_body = std::fs::read_to_string(&toc).unwrap();
+    assert!(toc_body.contains("## AllowLoad: Game"), "selected Game TOC");
+    assert!(
+        toc_body.contains("Tooltip\\TooltipDataHandler.lua"),
+        "selected TOC loads TooltipDataHandler.lua: {}",
+        toc.display()
+    );
+
+    env.exec(
+        r#"
+        assert(TooltipDataHandlerMixin and type(TooltipDataHandlerMixin.ProcessInfo) == "function",
+            "original TooltipDataHandler mixin is loaded")
+        assert(GameTooltip.ProcessInfo == TooltipDataHandlerMixin.ProcessInfo,
+            "GameTooltip uses the original ProcessInfo method")
+        assert(GameTooltip:ProcessInfo({ tooltipData = { lines = {
+            { leftText = "old first" },
+            { leftText = "old second" },
+        } } }))
+        local cached_first = GameTooltip:GetLeftLine(1)
+        assert(cached_first:GetText() == "old first")
+
+        assert(GameTooltip:ProcessInfo({ tooltipData = { lines = {
+            { leftText = "replacement" },
+        } } }))
+        assert(GameTooltip:NumLines() == 1, "original processor replaces the old rows")
+        assert(GameTooltip:GetLeftLine(1) == cached_first, "active FontString remains pooled")
+        assert(cached_first:GetText() == "replacement", "replacement content is visible")
+        "#,
+    )
+    .expect("original Forever TooltipDataHandler reprocessing");
 }

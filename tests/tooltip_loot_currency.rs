@@ -10,6 +10,10 @@
 #[path = "tooltip_full_env_helpers.rs"]
 mod tooltip_full_env_helpers;
 
+use std::collections::HashMap;
+
+use wow_ui_sim::c_api::c_tooltip_info_currency::CurrencyTooltipInputs;
+use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::lua_api::state::{BagItem, LootSlot};
 
@@ -34,7 +38,7 @@ fn loot_fixture() -> WowLuaEnv {
 }
 
 /// `Blizzard_UIPanels_Game/Mainline/LootFrame.lua` (`LootFrameItemElementMixin:OnEnter`,
-/// Retail :342, PTR/Forever :620) reads `GetLootSlotType` and routes a currency
+/// Retail :348, PTR/Forever :620) reads `GetLootSlotType` and routes a currency
 /// slot to `GameTooltip:SetLootCurrency`, which the handler map at
 /// `Blizzard_SharedXMLGame/Tooltip/TooltipDataHandler.lua:557` maps to this
 /// getter.
@@ -55,10 +59,22 @@ fn tooltip_loot_currency_original_hover_selects_the_currency_slot() {
         local data = GameTooltip:GetPrimaryTooltipData()
         assert(info and info.getterName == 'GetLootCurrency', 'original hover must select GetLootCurrency')
         assert(data and data.type == Enum.TooltipDataType.Currency, 'loot currency data type')
-        assert(data and data.lines[1].leftText == 'Valorstones', 'loot currency name mismatch')
+        local currencyName = C_CurrencyInfo.GetCurrencyInfo(2245).name
+        assert(data and data.lines[1].leftText == currencyName and currencyName ~= '', 'loot currency name mismatch')
         "#,
     )
     .unwrap();
+    if ACTIVE == ClientProfile::Retail {
+        let r84_payload: bool = env
+            .eval(
+                "local data = GameTooltip:GetPrimaryTooltipData(); return data.id == 2245 and data.dataInstanceID ~= nil and data.quantity == nil and data.lines[1].rightText == nil and data.lines[1].rightColor == nil",
+            )
+            .unwrap();
+        assert!(
+            r84_payload,
+            "R84 §Q4: loot currency identity must omit top-level quantity"
+        );
+    }
 }
 
 /// Round 6-B §1(b): the loot-item reader requires kind `0` and the
@@ -78,7 +94,8 @@ fn tooltip_loot_currency_and_item_are_mutually_exclusive_per_slot() {
         assert(currency and currency.type == Enum.TooltipDataType.Currency, 'currency identity type')
         assert(currency and currency.id == 2245, 'currency identity id')
         assert(currency and #currency.lines > 0, 'currency tooltip lines')
-        assert(currency and currency.lines[1].leftText == 'Valorstones', 'currency name mismatch')
+        local currencyName = C_CurrencyInfo.GetCurrencyInfo(2245).name
+        assert(currency and currency.lines[1].leftText == currencyName and currencyName ~= '', 'currency name mismatch')
         local item = C_TooltipInfo.GetLootItem(1)
         assert(item and item.lines[1].leftText == 'Hearthstone', 'item slot still selects GetLootItem')
         "#,
@@ -91,10 +108,13 @@ fn tooltip_loot_currency_and_item_are_mutually_exclusive_per_slot() {
 #[test]
 fn tooltip_loot_currency_miss_and_argument_text() {
     let env = loot_fixture();
-    env.state().borrow_mut().loot_slots.push(LootSlot::Currency {
-        currency_id: 0,
-        quantity: 1,
-    });
+    env.state()
+        .borrow_mut()
+        .loot_slots
+        .push(LootSlot::Currency {
+            currency_id: 0,
+            quantity: 1,
+        });
     env.exec(
         r#"
         local getter = C_TooltipInfo.GetLootCurrency
@@ -112,6 +132,71 @@ fn tooltip_loot_currency_miss_and_argument_text() {
         assert(error_text(4294967296):find(range, 1, true), 'above the domain must report the range')
         assert(error_text('1'):find(usage, 1, true), 'wrong type must report the usage text')
         assert(error_text():find(usage, 1, true), 'missing argument must report the usage text')
+        "#,
+    )
+    .unwrap();
+}
+
+/// LootFrame.lua:348 routes the currency slot through SetLootCurrency.
+#[test]
+fn tooltip_loot_currency_normalizes_hundredths_for_the_xp_row() {
+    if ACTIVE != ClientProfile::Retail {
+        return;
+    }
+    let env = loot_fixture();
+    {
+        let mut state = env.state().borrow_mut();
+        state.loot_slots[1] = LootSlot::Currency {
+            currency_id: 2245,
+            quantity: 999,
+        };
+        state.currency_tooltip_inputs.insert(
+            2245,
+            CurrencyTooltipInputs {
+                flags_0: Some(1 << 3),
+                flags_1: Some(1 << 1),
+                field_11_xp_quest_difficulty: Some(1),
+                local_currency_record: Some(true),
+                formatted_numbers: HashMap::from([(9, "9".to_owned()), (999, "999".to_owned())]),
+                ..CurrencyTooltipInputs::default()
+            },
+        );
+    }
+    env.exec(
+        r#"
+        local button = CreateFrame('Button', nil, UIParent)
+        button.HighlightNameFrame = CreateFrame('Frame', nil, button)
+        button.GetItemSlotType = LootFrameElementMixin.GetItemSlotType
+        function button:GetSlotIndex() return self.slot end
+        button.slot = 2
+        LootFrameItemElementMixin.OnEnter(button)
+        local info = GameTooltip:GetPrimaryTooltipInfo()
+        local data = GameTooltip:GetPrimaryTooltipData()
+        assert(info and info.getterName == 'GetLootCurrency', 'loot hover must select GetLootCurrency')
+        assert(#data.lines == 3, 'XP row must end the producer')
+        assert(data.lines[3].type == 14, 'currency XP row type')
+        assert(data.lines[3].leftText == XP .. ': 9', 'loot amount must divide by 100 with signed truncation')
+        assert(data.quantity == nil, 'R84 §Q4: no top-level quantity')
+        "#,
+    )
+    .unwrap();
+
+    env.state()
+        .borrow_mut()
+        .currency_tooltip_inputs
+        .get_mut(&2245)
+        .expect("currency tooltip input")
+        .flags_0 = Some(0);
+    env.exec(
+        r#"
+        local button = CreateFrame('Button', nil, UIParent)
+        button.HighlightNameFrame = CreateFrame('Frame', nil, button)
+        button.GetItemSlotType = LootFrameElementMixin.GetItemSlotType
+        function button:GetSlotIndex() return self.slot end
+        button.slot = 2
+        LootFrameItemElementMixin.OnEnter(button)
+        local data = GameTooltip:GetPrimaryTooltipData()
+        assert(data.lines[3].leftText == XP .. ': 999', 'loot amount must stay unchanged when bit 3 is clear')
         "#,
     )
     .unwrap();

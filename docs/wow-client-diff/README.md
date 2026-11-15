@@ -13,7 +13,7 @@ Source files in this directory:
 - `diff_enums_missing.txt` / `diff_enums_missing_values.txt` / `diff_enums_extra.txt` — enum gaps
 - `diff_constants_missing.txt` / `diff_constants_wrong.txt` / `diff_constants_extra.txt` — constant gaps
 - `diff_global_functions_missing.txt` / `diff_global_functions_extra.txt` — global function gaps
-- `generated_data_refresh_manifest.json` — tracked hash/size manifest for the two large generated Lua data files; bulk refreshes must update this in the same commit
+- `generated_data_refresh_manifest.json` — tracked source/hash/size manifest for the two large generated Lua files and generated spells table; bulk refreshes must update it in the same commit
 
 ## Current Method Snapshot Refresh (2026-10-10)
 

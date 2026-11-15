@@ -733,3 +733,78 @@ fn ptr_game_menu_narration_completes_native_show_callbacks() {
         assert_eq!(result, (true, 1, true, 2));
     }
 }
+
+#[cfg(feature = "client-ptr")]
+#[test]
+fn ptr_store_disabled_without_override_leaves_game_menu_and_stores_unchanged() {
+    test_timeout! {
+        let env = setup_game_menu_env();
+        env.set_server_mirrored_cvar("bpayStoreEnable", "0").unwrap();
+        // R75 verifies that the override mirror defaults to false. Drive the
+        // real toggle: a missing override query must fail, not silently pass.
+        for shop2 in ["0", "1"] {
+            env.set_server_mirrored_cvar("shop2Enabled", shop2).unwrap();
+            let result: (bool, bool, bool) = env.eval(r#"
+                GameMenuFrame:Show()
+                assert(not StoreFrame:IsShown())
+                assert(not CatalogShopInboundInterface.IsShown())
+                ToggleStoreUI(G_GameMenuFrameContextKey)
+                return GameMenuFrame:IsShown(), StoreFrame:IsShown(),
+                    CatalogShopInboundInterface.IsShown()
+            "#).unwrap();
+            assert_eq!(result, (true, false, false));
+        }
+    }
+}
+
+#[cfg(feature = "client-ptr")]
+#[test]
+fn ptr_store_override_toggle_requires_a_matching_native_catalog_session() {
+    test_timeout! {
+        let env = setup_game_menu_env();
+        env.set_server_mirrored_cvar("bpayStoreEnable", "0").unwrap();
+        env.set_server_mirrored_cvar("shop2Enabled", "1").unwrap();
+        env.set_server_mirrored_cvar("rewardsShopOverrideEnabled", "1").unwrap();
+        env.state().borrow_mut().catalog_shop_interaction.session = b"session-A".to_vec();
+        env.state().borrow_mut().catalog_shop_interaction.mode = 2;
+        let wrong_mode: (bool, bool) = env.eval(r#"
+            GameMenuFrame:Show()
+            CatalogShopFrame.shoppingSessionUUIDStr = 'session-A'
+            ToggleStoreUI(G_GameMenuFrameContextKey)
+            return GameMenuFrame:IsShown(), CatalogShopInboundInterface.IsShown()
+        "#).unwrap();
+        assert_eq!(wrong_mode, (true, false));
+
+        env.state().borrow_mut().catalog_shop_interaction.mode = 3;
+        let wrong_sessions: (bool, bool, bool, bool) = env.eval(r#"
+            CatalogShopFrame.shoppingSessionUUIDStr = nil
+            ToggleStoreUI(G_GameMenuFrameContextKey)
+            local nilShown = CatalogShopInboundInterface.IsShown()
+            CatalogShopFrame.shoppingSessionUUIDStr = ''
+            ToggleStoreUI(G_GameMenuFrameContextKey)
+            local emptyShown = CatalogShopInboundInterface.IsShown()
+            CatalogShopFrame.shoppingSessionUUIDStr = 'session-B'
+            ToggleStoreUI(G_GameMenuFrameContextKey)
+            return nilShown, emptyShown, CatalogShopInboundInterface.IsShown(),
+                GameMenuFrame:IsShown()
+        "#).unwrap();
+        assert_eq!(wrong_sessions, (false, false, false, true));
+
+        // Even a valid session cannot bypass the earlier override-off gate.
+        env.set_server_mirrored_cvar("rewardsShopOverrideEnabled", "0").unwrap();
+        let override_off: bool = env.eval(r#"
+            CatalogShopFrame.shoppingSessionUUIDStr = 'session-A'
+            ToggleStoreUI(G_GameMenuFrameContextKey)
+            return CatalogShopInboundInterface.IsShown()
+        "#).unwrap();
+        assert!(!override_off);
+        env.set_server_mirrored_cvar("rewardsShopOverrideEnabled", "1").unwrap();
+        let valid: bool = env.eval(r#"
+            ToggleStoreUI(G_GameMenuFrameContextKey)
+            return CatalogShopInboundInterface.IsShown()
+        "#).unwrap();
+        assert!(valid);
+        env.exec("CatalogShopInboundInterface.SetShown(false, G_GameMenuFrameContextKey)").unwrap();
+        assert!(!env.eval::<bool>("return CatalogShopInboundInterface.IsShown()").unwrap());
+    }
+}

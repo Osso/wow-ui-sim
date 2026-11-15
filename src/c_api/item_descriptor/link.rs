@@ -14,13 +14,34 @@ pub struct ParsedItemLink {
     pub link_level: u32,
     pub request_context: u32,
     pub upgrade_mask: u32,
+    pub socket_bonus_groups: [Vec<u32>; 3],
     pub crafter_guid: String,
     pub trailing_scalar: u32,
 }
 
 /// Parse the first `item:` link and keep the descriptor's stored bonus/modifier order.
 pub fn parse_item_link(text: &str) -> Option<ParsedItemLink> {
-    let mut fields = text.get(text.find("item:")? + 5..)?.split(':');
+    let payload = text.get(text.find("item:")? + 5..)?;
+    parse_payload(payload, None)
+}
+
+/// A comparison identity may be a full rendered link. Strip display text
+/// and bound descriptor work to the caller's actual payload.
+pub(crate) fn parse_bounded_item_link(text: &str) -> Option<ParsedItemLink> {
+    let (_, text) = text.split_once("item:")?;
+    let payload = text.split(['|', '\0']).next()?;
+    parse_payload(
+        payload,
+        Some(payload.bytes().filter(|value| *value == b':').count() + 1),
+    )
+}
+
+fn within_payload(count: i32, field_budget: Option<usize>) -> bool {
+    field_budget.is_none_or(|budget| (count.max(0) as usize) <= budget)
+}
+
+fn parse_payload(payload: &str, field_budget: Option<usize>) -> Option<ParsedItemLink> {
+    let mut fields = payload.split(':');
     let mut field = || fields.next().unwrap_or("").to_owned();
     let item_id = parse_number(&field())?;
     if item_id == 0 {
@@ -55,6 +76,9 @@ pub fn parse_item_link(text: &str) -> Option<ParsedItemLink> {
     }
     if link.upgrade_mask == 0 {
         let pairs = parse_signed(&field());
+        if !within_payload(pairs, field_budget.map(|budget| budget / 2)) {
+            return None;
+        }
         for _ in 0..pairs.max(0) {
             let key = parse_number(&field())? as u8;
             let value = parse_number(&field())?;
@@ -68,10 +92,13 @@ pub fn parse_item_link(text: &str) -> Option<ParsedItemLink> {
             }
         }
     }
-    for _ in 0..3 {
+    for group in &mut link.socket_bonus_groups {
         let count = parse_signed(&field());
+        if !within_payload(count, field_budget) {
+            return None;
+        }
         for _ in 0..count.max(0) {
-            field();
+            group.push(parse_number(&field())?);
         }
     }
     link.crafter_guid = field();
@@ -108,7 +135,19 @@ fn parse_number(text: &str) -> Option<u32> {
 
 fn parse_signed(text: &str) -> i32 {
     match text.strip_prefix('-') {
-        Some(rest) => -parse_number(rest).map_or(0, |value| value as i32),
+        Some(rest) => parse_number(rest).map_or(0, |value| (value as i32).wrapping_neg()),
         None => parse_number(text).map_or(0, |value| value as i32),
+    }
+}
+
+#[cfg(test)]
+mod bounded_tests {
+    use super::*;
+
+    #[test]
+    fn comparison_link_uses_payload_and_rejects_unrepresented_declared_fields() {
+        let link = parse_bounded_item_link("|cnIQ3:|Hitem:211993|h[Catalog helm]|h|r").unwrap();
+        assert_eq!(link.descriptor.item_id, 211993);
+        assert!(parse_bounded_item_link("item:211993:0:0:0:0:0:0:0:0:0:0:0:30").is_none());
     }
 }

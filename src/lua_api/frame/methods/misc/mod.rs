@@ -11,7 +11,6 @@ pub mod attribute_stubs;
 pub mod bounds;
 pub mod drag_input;
 pub mod draw_layer;
-pub mod edit_mode;
 pub mod frame_buffer;
 pub mod frame_level;
 pub mod gamepad;
@@ -33,7 +32,6 @@ pub fn register_all(state: &mut LuaState, mt: GcRef<Table>) -> LuaResult<()> {
     gamepad::register(state, mt)?;
     alpha_gradient::register(state, mt)?;
     draw_layer::register(state, mt)?;
-    edit_mode::register(state, mt)?;
     frame_buffer::register(state, mt)?;
     bounds::register(state, mt)?;
     attribute_stubs::register(state, mt)?;

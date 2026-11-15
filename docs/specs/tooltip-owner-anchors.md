@@ -1,7 +1,9 @@
 # Tooltip owner anchors
 
 `GameTooltip:SetOwner(owner, anchor, xOffset, yOffset)` placement contract for
-Retail/PTR, from the Retail 12.1.5 / 70688 native decode WM63 O17 §1. The
+Retail, from the Retail 12.1.5 / 70688 native decode WM63 O17 §1. The point
+pairs and defaults are **VERIFIED for Retail**; PTR shares the implementation,
+but native PTR applicability is **INFERRED**, not independently verified. The
 lifecycle half (clear, hide, reassignment) is a
 [separate spec](tooltip-owner-lifecycle.md). Screen clamping is not modelled:
 the native final rendered rectangle after clamping is UNKNOWN, so no anchor
@@ -85,7 +87,9 @@ owner.
 
 - `tests/tooltip_owner_anchors.rs` — eight-mode point-pair table, zero
   displacements, absent/empty/unknown names, and the `TotemButtonMixin:OnEnter`
-  original consumer.
+  original consumer. Optional Retail `tooltip_owner_r88n5_modes_are_preserved_on_loaded_game_tooltip`
+  checks the full table, defaults, PRESERVE/NONE, and cursor offsets on the
+  profile-selected global `GameTooltip`.
 - `tests/tooltip_set_owner.rs` — `ANCHOR_NONE`, `ANCHOR_PRESERVE`, `RIGHT`
   offsets, the absent-name default count, and cursor following with a known
   mouse position.

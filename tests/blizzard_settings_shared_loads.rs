@@ -203,9 +203,17 @@ const PUBLIC_SETTINGS_FUNCTIONS: &[&str] = &[
 ];
 
 fn load_full_game_ui() -> WowLuaEnv {
+    load_full_game_ui_with_addon_registration(|_| {})
+}
+
+fn load_full_game_ui_with_addon_registration(register: impl FnOnce(&WowLuaEnv)) -> WowLuaEnv {
+    load_settings_ui(ScreenKind::Game, register)
+}
+
+fn load_settings_ui(screen: ScreenKind, register: impl FnOnce(&WowLuaEnv)) -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
     env.set_screen_size(1024.0, 768.0);
-    env.set_screen_mode(ScreenKind::Game);
+    env.set_screen_mode(screen);
 
     {
         let mut state = env.state().borrow_mut();
@@ -214,14 +222,15 @@ fn load_full_game_ui() -> WowLuaEnv {
 
     wow_ui_sim::xml::register_intrinsic_templates();
 
-    let addons = discover_blizzard_addons_for_screen(&blizzard_ui_dir(), ScreenKind::Game);
+    let addons = discover_blizzard_addons_for_screen(&blizzard_ui_dir(), screen);
     for (name, toc_path) in &addons {
         load_addon(&env.loader_env(), toc_path)
             .unwrap_or_else(|err| panic!("[load {name}] FAILED: {err}"));
     }
 
+    register(&env);
     env.apply_post_load_workarounds();
-    fire_startup_events_for_screen(&env, ScreenKind::Game);
+    fire_startup_events_for_screen(&env, screen);
     env
 }
 
@@ -890,4 +899,222 @@ fn settings_panel_registers_as_ui_panel_only_in_game_screen(env: &WowLuaEnv) {
          path is gated differently in the simulator's glue stub. Got: {kind}"
     );
 }
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn family_placeholder_resolves_profile_selected_mainline_entries() {
+    let toc = TocFile::from_file(&settings_shared_toc()).expect("TOC parses");
+
+    let mainline_files: Vec<String> = toc
+        .files
+        .iter()
+        .filter_map(|f| {
+            let s = f.to_string_lossy().into_owned();
+            if s.starts_with("Mainline/") {
+                Some(s)
+            } else {
+                None
+            }
+        })
+        .collect();
+    let expected_mainline_files: &[&str] = if toc_layout::forever() {
+        &[
+            "Mainline/Blizzard_SettingsPanelTemplates.xml",
+            "Mainline/GraphicsOverrides.lua",
+            "Mainline/AudioOverrides.lua",
+        ]
+    } else if toc_layout::unified_toc_tree() {
+        &[
+            "Mainline/NewDefinitions.lua",
+            "Mainline/Blizzard_SettingsPanelTemplates.xml",
+            "Mainline/GraphicsOverrides.lua",
+            "Mainline/AudioOverrides.lua",
+            "Mainline/LanguagesOverrides.lua",
+        ]
+    } else {
+        &[
+            "Mainline/NewDefinitions.lua",
+            "Mainline/Blizzard_SettingsPanelTemplates.xml",
+            "Mainline/GraphicsOverrides.lua",
+            "Mainline/AudioOverrides.lua",
+        ]
+    };
+    assert_eq!(
+        mainline_files,
+        expected_mainline_files
+            .iter()
+            .map(|file| file.to_string())
+            .collect::<Vec<_>>(),
+        "Resolved Mainline entries follow the active profile selectors; PTR TOC selects five \
+         entries, while Forever uses Camelot NewDefinitions and excludes LanguagesOverrides"
+    );
+
+    for expected in expected_mainline_files {
+        assert!(
+            mainline_files.iter().any(|file| file == *expected),
+            "Mainline body entry {expected} must be present after normalization"
+        );
+    }
+
+    if cfg!(feature = "client-wowforever") {
+        assert!(
+            toc.files
+                .iter()
+                .any(|file| file == "Camelot/NewDefinitions.lua"),
+            "Forever selects the Camelot NewDefinitions.lua entry"
+        );
+    }
+}
+
+#[cfg(all(feature = "client-retail", feature = "optional-tests"))]
+#[test]
+fn retail_settings_registration_preserves_canvas_visibility() {
+    test_timeout! {
+        let env = load_full_game_ui();
+        env.exec(
+            r#"
+            assert(C_AddOns.IsAddOnLoaded("Blizzard_Settings_Shared"))
+            assert(not SettingsPanel:IsShown())
+            local parentFrame = CreateFrame("Frame", nil, UIParent)
+            local childFrame = CreateFrame("Frame", nil, UIParent)
+            parentFrame:Show()
+            childFrame:Show()
+            assert(parentFrame:IsShown() and childFrame:IsShown())
+
+            local parent, layout =
+                Settings.RegisterCanvasLayoutCategory(parentFrame, "Retail canvas parent")
+            local child, childLayout =
+                Settings.RegisterCanvasLayoutSubcategory(parent, childFrame, "Retail canvas child")
+            assert(layout:GetFrame() == parentFrame)
+            assert(childLayout:GetFrame() == childFrame)
+            assert(SettingsPanel:GetLayout(parent) == layout)
+            assert(SettingsPanel:GetLayout(child) == childLayout)
+            assert(parentFrame:IsShown(), "original category registration must not hide the canvas")
+            assert(childFrame:IsShown(), "original subcategory registration must not hide the canvas")
+            "#,
+        )
+        .expect("registration must preserve the shown state of each original canvas");
+    }
+}
+
+#[cfg(all(feature = "client-retail", feature = "optional-tests"))]
+#[test]
+fn retail_settings_category_switch_preserves_unrelated_canvas() {
+    test_timeout! {
+        let env = load_full_game_ui();
+        env.exec(
+            r#"
+            assert(C_AddOns.IsAddOnLoaded("Blizzard_Settings_Shared"))
+            local function register(name)
+                local frame = CreateFrame("Frame", nil, UIParent)
+                frame:Hide()
+                local category, layout = Settings.RegisterCanvasLayoutCategory(frame, name)
+                Settings.RegisterAddOnCategory(category)
+                assert(SettingsPanel:GetLayout(category) == layout)
+                return frame, category
+            end
+            local oldFrame, old = register("Old canvas")
+            local newFrame, new = register("New canvas")
+            local unrelatedFrame = register("Unrelated canvas")
+
+            Settings.OpenToCategory(old:GetID())
+            assert(SettingsPanel:IsShown())
+            assert(SettingsPanel:GetCurrentCategory() == old)
+            assert(oldFrame:IsShown())
+            unrelatedFrame:Show()
+
+            Settings.OpenToCategory(new:GetID())
+            assert(SettingsPanel:GetCurrentCategory() == new)
+            assert(not oldFrame:IsShown(), "the old selected canvas must be hidden")
+            assert(newFrame:IsShown(), "the new selected canvas must be shown")
+            assert(unrelatedFrame:IsShown(), "an unrelated canvas must not be swept")
+            "#,
+        )
+        .expect("switch the selected canvas through the original Settings panel");
+    }
+}
+
+#[cfg(all(feature = "client-retail", feature = "optional-tests"))]
+#[test]
+fn retail_settings_startup_keeps_registered_canvas_visibility() {
+    test_timeout! {
+        let env = load_full_game_ui_with_addon_registration(|env| {
+            env.exec(r#"
+                assert(C_AddOns.IsAddOnLoaded("Blizzard_Settings_Shared"))
+                assert(not SettingsPanel:IsShown())
+                local frame = CreateFrame("Frame", "SettingsStartupCanvasProbe", UIParent)
+                frame:Show()
+                local category, layout = Settings.RegisterCanvasLayoutCategory(frame, "Startup canvas")
+                Settings.RegisterAddOnCategory(category)
+                assert(SettingsPanel:GetLayout(category) == layout and layout:GetFrame() == frame)
+                assert(frame:IsShown(), "the original registrar preserves visibility before post-load")
+            "#).expect("addon registration in the original Settings panel");
+        });
+        env.exec(r#"
+            assert(not SettingsPanel:IsShown())
+            assert(SettingsStartupCanvasProbe:IsShown(),
+                   "post-load must not hide a canvas the original registrar left shown")
+        "#).expect("normal startup must preserve original canvas registration visibility");
+    }
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn retail_settings_original_groups_register_in_game_and_glue() {
+    test_timeout! {
+        for screen in [ScreenKind::Game, ScreenKind::Login] {
+            let env = load_settings_ui(screen, |_| {});
+            env.exec(r#"
+                assert(C_AddOns.IsAddOnLoaded("Blizzard_Settings_Shared"))
+                assert(C_AddOns.IsAddOnLoaded("Blizzard_SettingsDefinitions_Shared"))
+                local groups = {}
+                for _, group in ipairs(SettingsPanel:GetCategoryList().groups) do
+                    groups[group.groupText] = group.order
+                end
+                local glue = C_Glue.IsOnGlueScreen()
+                assert(groups[SETTING_GROUP_SYSTEM] == (glue and 1 or 3))
+                assert(groups[SETTING_GROUP_ACCESSIBILITY] == 2)
+                if not glue then
+                    assert(groups[SETTING_GROUP_GAMEPLAY] == 1)
+                end
+            "#).expect("original Groups.lua must register the screen's group order");
+        }
+    }
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn retail_settings_original_font_preview_has_live_accessor() {
+    test_timeout! {
+        let env = load_full_game_ui();
+        env.exec(r#"
+            assert(C_AddOns.IsAddOnLoaded("Blizzard_SettingsDefinitions_Shared"))
+            local preview = SettingsPanel.AccessibilityFontPreview
+            assert(preview.RegisterWithSettingInitializer ==
+                   AccessibilitySettingsPreviewMixin.RegisterWithSettingInitializer)
+            assert(preview.SetValueAccessor == AccessibilitySettingsPreviewMixin.SetValueAccessor)
+            assert(preview.UpdatePreview == AccessibilityFontPreviewMixin.UpdatePreview)
+            assert(type(preview.accessor) == "function")
+            assert(preview:GetValue() == TextSizeManager:GetSettingValue())
+        "#).expect("original Text.lua must register the font preview accessor");
+    }
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn retail_settings_original_quest_preview_has_live_accessor() {
+    test_timeout! {
+        let env = load_full_game_ui();
+        env.exec(r#"
+            assert(C_AddOns.IsAddOnLoaded("Blizzard_SettingsDefinitions_Shared"))
+            local preview = SettingsPanel.QuestTextPreview
+            assert(preview.RegisterWithSettingInitializer ==
+                   AccessibilitySettingsPreviewMixin.RegisterWithSettingInitializer)
+            assert(preview.SetValueAccessor == AccessibilitySettingsPreviewMixin.SetValueAccessor)
+            assert(preview.UpdatePreview == QuestTextPreviewMixin.UpdatePreview)
+            assert(type(preview.accessor) == "function")
+            assert(preview:GetValue() == GetCVarNumberOrDefault("questTextContrast"))
+        "#).expect("original Text.lua must register the quest preview accessor");
+    }
 }

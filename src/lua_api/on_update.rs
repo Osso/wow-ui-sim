@@ -58,12 +58,18 @@ pub(crate) fn fire_state(
 
 fn begin_tick(state: &mut LuaState, elapsed: f64) -> crate::Result<()> {
     crate::c_api::c_trade_skill_favorites::drain_pending(state)?;
+    process_quest_special_item_cache_updates(state)?;
     let pending = std::mem::take(
         &mut borrow_state_mut(state)?
             .crafting
             .recipe_filter_update_pending,
     );
     if pending {
+        if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+            // VERIFIED (simulator): filter notifications clear before dispatch and do not rebuild rows.
+            // INFERRED: mapping this trigger/tick to the native rebuild clear is a model assumption.
+            borrow_state_mut(state)?.recipe_rank_tooltip_cache.clear();
+        }
         super::script_helpers::fire_named_event_state(state, "TRADE_SKILL_LIST_UPDATE", &[]);
     }
     super::globals::real::loot_specialization::apply_pending(state)?;
@@ -77,6 +83,12 @@ fn begin_tick(state: &mut LuaState, elapsed: f64) -> crate::Result<()> {
     }
     super::editbox_update::flush_state(state)?;
     super::script_helpers::reconcile_on_update_runtime_cache_if_dirty(state);
+    Ok(())
+}
+
+fn process_quest_special_item_cache_updates(state: &mut LuaState) -> crate::Result<()> {
+    let mut sim = borrow_state_mut(state)?;
+    crate::c_api::quest_special_item::process_host_cache_updates(&mut sim);
     Ok(())
 }
 

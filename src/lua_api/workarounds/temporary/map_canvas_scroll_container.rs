@@ -4,11 +4,16 @@
 //! the live frame, scroll container, canvas child, and map art sizing. Keep this
 //! isolated until MapCanvas XML/runtime construction matches Blizzard state.
 
+use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::LoaderEnv;
 #[cfg(test)]
 use crate::lua_api::WowLuaEnv;
+use crate::lua_api::loader_env::GeneratedChunkArg;
 
 const MAP_CANVAS_SCROLL_CONTAINER_WORKAROUND_LUA: &str = r#"
+local options = ...
+local preserve_original_world_map_owners = options and options[1] == "preserve_original_world_map_owners"
+
 if type(ClearCachedActivitiesForPlayer) ~= "function" then
   function ClearCachedActivitiesForPlayer() end
 end
@@ -283,6 +288,9 @@ local function __wow_patch_live_map_canvas(frame)
 end
 
 local function __wow_patch_world_map_display_state(frame)
+  if preserve_original_world_map_owners then
+    return
+  end
   if type(frame) ~= "table" or type(frame.SetDisplayState) ~= "function" then
     return
   end
@@ -495,7 +503,10 @@ for _, mapName in ipairs({ "WorldMapFrame", "BattlefieldMapFrame" }) do
 end
 __wow_patch_world_map_display_state(WorldMapFrame)
 
-if type(ToggleWorldMap) == "function" and not rawget(_G, "__wow_toggle_world_map_refresh_patched") then
+if not preserve_original_world_map_owners
+  and type(ToggleWorldMap) == "function"
+  and not rawget(_G, "__wow_toggle_world_map_refresh_patched")
+then
   local originalToggleWorldMap = ToggleWorldMap
   ToggleWorldMap = function(...)
     local result = originalToggleWorldMap(...)
@@ -517,13 +528,24 @@ end
     "#;
 
 pub(crate) fn patch(env: &LoaderEnv<'_>) -> Result<(), crate::Error> {
-    env.exec(MAP_CANVAS_SCROLL_CONTAINER_WORKAROUND_LUA)
+    if ACTIVE == ClientProfile::Retail {
+        // Retail MapCanvas loads before the WorldMap XML frame and its original
+        // QuestLogOwnerMixin. Keep the original display-state and map verbs;
+        // their consumers run after WorldMap owns them. Other repairs stay.
+        env.exec_with_args(
+            MAP_CANVAS_SCROLL_CONTAINER_WORKAROUND_LUA,
+            &[GeneratedChunkArg::String(
+                "preserve_original_world_map_owners".into(),
+            )],
+        )
+    } else {
+        env.exec(MAP_CANVAS_SCROLL_CONTAINER_WORKAROUND_LUA)
+    }
 }
 
 #[cfg(test)]
 pub(crate) fn patch_env(env: &WowLuaEnv) {
-    env.exec(MAP_CANVAS_SCROLL_CONTAINER_WORKAROUND_LUA)
-        .expect("MapCanvas scroll-container workaround should install");
+    patch(&env.loader_env()).expect("MapCanvas scroll-container workaround should install");
 }
 
 #[cfg(test)]

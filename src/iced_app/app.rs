@@ -456,12 +456,15 @@ impl App {
         if self.exit_requested() {
             return;
         }
-        let result = self.env.borrow_mut().service_reload(&mut self.saved_vars);
+        let result = self
+            .env
+            .borrow_mut()
+            .service_ui_transition(&mut self.saved_vars);
         match result {
             Ok(false) => return,
             Ok(true) => self.reset_reloaded_ui(),
             Err(error) => {
-                let message = format!("ReloadUI failed: {error}");
+                let message = format!("UI transition failed: {error}");
                 crate::logging::eprintln_elapsed(&message);
                 self.log_messages.push(message);
                 if !self.env.borrow().is_ui_environment_usable() {

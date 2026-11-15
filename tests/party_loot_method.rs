@@ -509,3 +509,33 @@ fn ptr_loot_method_style_rereads_rule_157_on_game_rules_changed() {
     )
     .expect("the event listener reads the updated loot-method style");
 }
+
+#[cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever",
+    feature = "client-mists",
+    feature = "client-era",
+    feature = "client-anniversary"
+))]
+#[test]
+fn loot_method_style_is_mainline_across_method_changes() {
+    let env = loot_env();
+    env.exec(
+        r#"
+        assert(select('#', C_PartyInfo.GetLootMethodStyle()) == 1)
+        assert(Enum.LootMethodStyles.Mainline == 0)
+        assert(Enum.LootMethodStyles.Vanilla == 1)
+        assert(Enum.LootMethodStyles.PersonalOnly == nil)
+        local styleMetadata = Enum.LootMethodStylesMeta
+        assert(styleMetadata.NumValues == 2)
+        assert(styleMetadata.MinValue == 0)
+        assert(styleMetadata.MaxValue == 1)
+        assert(C_PartyInfo.GetLootMethodStyle() == Enum.LootMethodStyles.Mainline)
+        assert(C_PartyInfo.SetLootMethod(0))
+        assert(C_PartyInfo.GetLootMethod() == 0)
+        assert(C_PartyInfo.GetLootMethodStyle() == Enum.LootMethodStyles.Mainline)
+        "#,
+    )
+    .expect("the Mainline loot style should match its published enum");
+}

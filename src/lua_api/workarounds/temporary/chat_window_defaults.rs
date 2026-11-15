@@ -31,30 +31,9 @@ if rawget(_G, "ChatFrame1") == nil and type(CreateFrame) == "function" then
   CreateFrame("ScrollingMessageFrame", "ChatFrame1", UIParent)
 end
 
-if ChatFrameUtil.ProcessMessageEventFilters == nil then
-  function ChatFrameUtil.ProcessMessageEventFilters(_frame, event, ...)
-    return false, event, ...
-  end
-end
-
 if ChatFrameUtil.GetChatWindowName == nil then
   function ChatFrameUtil.GetChatWindowName(index)
     return string.format("Chat Window %d", tonumber(index) or 1)
-  end
-end
-
-if ChatFrameUtil.GetCommunitiesChannelColor == nil then
-  function ChatFrameUtil.GetCommunitiesChannelColor(_clubId, streamId)
-    if tonumber(streamId) == 2 then
-      return 0.25, 0.75, 0.25
-    end
-    return 0.25, 1, 0.25
-  end
-end
-
-if ChatFrameUtil.GetCommunitiesChannelLocalID == nil then
-  function ChatFrameUtil.GetCommunitiesChannelLocalID(_clubId, _streamId)
-    return nil
   end
 end
 
@@ -199,17 +178,10 @@ mod tests {
                 end
                 if ChatTypeInfo.BN_WHISPER.id ~= 19 then return "bn_whisper" end
                 if GetChatTypeIndex("SAY") ~= 1 then return "chat_type_index" end
-                if type(ChatFrameUtil.ProcessMessageEventFilters) ~= "function" then return "filters_function" end
                 if type(ChatFrame1) ~= "table" then return "chat_frame1" end
                 if ChatFrame1:GetObjectType() ~= "ScrollingMessageFrame" then return "chat_frame1_type" end
                 if ChatFrameUtil.GetChatWindowName(3) ~= "Chat Window 3" then return "window_name" end
 
-                local filtered, event, message = ChatFrameUtil.ProcessMessageEventFilters(nil, "CHAT_MSG_SAY", "hello")
-                if filtered ~= false or event ~= "CHAT_MSG_SAY" or message ~= "hello" then return "filter_passthrough" end
-
-                local altR, altG, altB = ChatFrameUtil.GetCommunitiesChannelColor(nil, 2)
-                if altR ~= 0.25 or altG ~= 0.75 or altB ~= 0.25 then return "community_color" end
-                if ChatFrameUtil.GetCommunitiesChannelLocalID(nil, nil) ~= nil then return "community_local_id" end
 
                 local name, fontSize, r, g, b, alpha, shown, locked, docked = GetChatWindowInfo(2)
                 if name ~= "" or fontSize ~= 12 then return "info_shape" end

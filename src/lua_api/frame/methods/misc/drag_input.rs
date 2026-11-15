@@ -220,17 +220,44 @@ pub fn is_user_placed(state: &mut LuaState) -> LuaResult<u32> {
 
 pub fn set_clamped_to_screen(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
-    let clamped = bool::from_stack(state, 2)?;
+    let retail = crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail;
+    let clamped = clamp_enable_argument(state, retail)?;
+    if retail
+        && borrow_state(state)?
+            .widgets
+            .get(id)
+            .is_some_and(|f| f.effective_screen_clamp() == clamped)
+    {
+        return Ok(0);
+    }
     if !can_change_protected_state_for(state, id) {
         emit_addon_action_blocked(state, id, "SetClampedToScreen");
         return Ok(0);
     }
     let mut sim = borrow_state_mut(state)?;
-    if let Some(frame) = sim.widgets.get_mut_visual(id) {
-        frame.clamped_to_screen = clamped;
+    if retail {
+        sim.widgets.set_screen_clamp_enabled(id, clamped);
+    } else {
+        if let Some(frame) = sim.widgets.get_mut_visual(id) {
+            frame.clamped_to_screen = clamped;
+        }
+        sim.widgets.mark_rect_dirty(id);
     }
-    sim.widgets.mark_rect_dirty(id);
     Ok(0)
+}
+
+fn clamp_enable_argument(state: &LuaState, retail: bool) -> LuaResult<bool> {
+    let value = if retail {
+        rilua::table_security::unwrap_secret(state, stack_val(state, 2))?
+    } else {
+        stack_val(state, 2)
+    };
+    if retail && value.is_nil() {
+        return Err(rilua::runtime_error(
+            "Usage: self:SetClampedToScreen(clampedToScreen)",
+        ));
+    }
+    Ok(!matches!(value, Val::Nil | Val::Bool(false)))
 }
 
 pub fn is_clamped_to_screen(state: &mut LuaState) -> LuaResult<u32> {
@@ -238,7 +265,7 @@ pub fn is_clamped_to_screen(state: &mut LuaState) -> LuaResult<u32> {
     let clamped = borrow_state(state)?
         .widgets
         .get(id)
-        .map(|f| f.clamped_to_screen)
+        .map(|f| f.effective_screen_clamp())
         .unwrap_or(false);
     state.push(Val::Bool(clamped));
     Ok(1)

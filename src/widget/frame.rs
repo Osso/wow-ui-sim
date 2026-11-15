@@ -137,7 +137,7 @@ pub struct Frame {
     pub pass_through_buttons: HashSet<String>,
     /// Hit rect insets (left, right, top, bottom) — shrinks the clickable area.
     pub hit_rect_insets: (f32, f32, f32, f32),
-    /// Clamp rect insets (left, right, top, bottom) used by clamped dragging.
+    /// Clamp rect insets (left, right, top, bottom) applied during layout resolution.
     pub clamp_rect_insets: (f32, f32, f32, f32),
     /// Whether keyboard input is enabled for this frame.
     pub keyboard_enabled: bool,
@@ -207,6 +207,8 @@ pub struct Frame {
     pub highlight_locked: bool,
     pub ignoring_children_for_bounds: bool,
     pub clamped_to_screen: bool,
+    /// R88n.5r dedicated geometry bit; not equivalent to moving/user placement.
+    pub screen_clamp_suppressed: bool,
     pub is_moving: bool,
     /// Whether the frame is currently being resized via StartSizing.
     pub is_sizing: bool,
@@ -581,8 +583,12 @@ pub struct Frame {
     /// Whether this frame marks script-visible values as secret.
     pub prevent_secret_values: bool,
 
-    /// Secret-aspect bits explicitly added to this object, independent of derived state.
+    /// Secret-aspect bits explicitly recorded on this object.
     pub explicit_secret_aspects: u32,
+
+    /// Supplied anchoring secrecy, independent of prevention and recorded aspects.
+    /// WM61 S6 establishes the reader; native writers remain unknown.
+    pub is_anchoring_secret: bool,
 
     /// ID of the frame that owns this tooltip (set via `SetOwner`).
     ///
@@ -708,6 +714,11 @@ impl Frame {
             frame.frame_strata = FrameStrata::Tooltip;
             frame.has_fixed_frame_strata = true;
         }
+        // The client starts an EditBox's text at the left (`GetJustifyH()`
+        // is "LEFT" on a new box), unlike a FontString's CENTER.
+        if widget_type == WidgetType::EditBox {
+            frame.justify_h = TextJustify::Left;
+        }
         frame
     }
 
@@ -776,6 +787,12 @@ impl Frame {
         } else {
             self.anchors.push(anchor);
         }
+    }
+
+    pub fn effective_screen_clamp(&self) -> bool {
+        self.clamped_to_screen
+            && (crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail
+                || !self.screen_clamp_suppressed)
     }
 
     pub fn clear_all_points(&mut self) {

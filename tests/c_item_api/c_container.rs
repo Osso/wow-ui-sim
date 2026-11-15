@@ -258,16 +258,11 @@ fn test_c_container_backpack_disabled_flags_share_bag_slot_state() {
     );
 }
 
+#[cfg(feature = "client-retail")]
 #[test]
 fn test_c_container_default_shims_have_safe_shapes() {
     let env = env();
-    let (purchase_is_nil, quest_ok, filtered, battle_pay, actions_ok): (
-        bool,
-        bool,
-        bool,
-        bool,
-        bool,
-    ) = env
+    let (quest_ok, filtered, battle_pay, actions_ok): (bool, bool, bool, bool) = env
         .eval(
             r#"
             local questInfo = C_Container.GetContainerItemQuestInfo(0, 1)
@@ -275,19 +270,18 @@ fn test_c_container_default_shims_have_safe_shapes() {
                 pcall(C_Container.UseContainerItem, 0, 1)
                 and pcall(C_Container.PickupContainerItem, 0, 1)
                 and pcall(C_Container.SplitContainerItem, 0, 1, 1)
-            return C_Container.GetContainerItemPurchaseInfo(0, 1) == nil,
-                   type(questInfo) == "table"
+            assert(C_Container.GetContainerItemID(1, 1) == nil)
+            return type(questInfo) == "table"
                        and questInfo.isQuestItem == false
                        and questInfo.questID == nil
                        and questInfo.isActive == false,
                    C_Container.IsContainerFiltered(0),
-                   C_Container.IsBattlePayItem(0, 1),
+                   C_Container.IsBattlePayItem(1, 1),
                    actionsOk
             "#,
         )
         .unwrap();
 
-    assert!(purchase_is_nil);
     assert!(quest_ok);
     assert!(!filtered);
     assert!(!battle_pay);

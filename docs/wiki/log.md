@@ -1,3 +1,252 @@
+## [2026-11-15] implementation | Retail negative map assignments
+
+Updated the [Retail map-world-position investigation](investigations/patch-8-0-1-api-audit.md#retail-map-world-position) and [contract](../specs/map-world-position.md). **VERIFIED (R88x):** negative `MapID` rows look up `AreaID` in AreaTable, skip a row on lookup failure, and accept a resolved unsigned-16 value of zero. **VERIFIED (12.1.5.70783 export):** AreaID 14620 has value 2444; AreaID 0 is absent from the complete table. **INFERRED:** the native u16 is DBD `ContinentID`; maps 1408/2311 remain unresolved with the committed 70783 data. Retail tests at source SHA `0e9b548b1d6e92939ccc3f4e84d48157ef3c89c3` resolve map 2147 and distinguish two input points. **VERIFIED (70783 rows and simulator HBD-style probe):** the no-world Zone set below map 3000 is 997, 1158, 1408, 1523, 2107, and 2311; maps 1408/2311 have only AreaID 0 rows, which the complete AreaTable export cannot resolve. **VERIFIED:** the full c_map_api run had 65 passes and only `test_ui_map_point_create_from_coordinates` and `test_ui_map_point_create_from_vector` failed. **UNVERIFIED (per task brief; no master comparison):** those two failures predate this lane.
+
+## [2026-11-15] revision | Recipe-rank cache and keystone tooltip boundaries
+
+Updated the [Round 7 getter contract](../specs/tooltip-r7-getters.md) and [Lua API](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation). **VERIFIED (R88n.4a and simulator source):** recipe-cache insertion retains duplicate entries and makes distinct keys queryable; no native node layout is claimed. **VERIFIED (R88n.4/.4a):** keystone selection state, notification request, item-object lookup and shared item producer inputs are represented. **UNKNOWN:** exact keystone detail-row projection and whether recipe ranks use Azerite specialization wording; both exact decomp questions are recorded in the contract. The four wording keys belong to the Azerite requirement path and were not applied to recipe ranks.
+
+## [2026-11-15] investigation | ShowUIPanel toggle fixture owners
+
+[Toggle fixture owners](investigations/showuipanel-toggle-fixture-owners.md) records independent achievement/housing fallback-retirement boundaries, original TOC owner loading and untouched out-of-scope panel failures. No guessed fallback restored.
+
+## [2026-11-15] implementation | Retail quest-cache callbacks
+
+Updated [consumer selection and RED proof](investigations/consumer-selection-and-red-proof.md#retail-quest-tooltip-consumers-and-host-input-seams) and the [Round 7 getter contract](../specs/tooltip-r7-getters.md). **VERIFIED (R88u):** the quest-log callback saves the request token/context, deduplicates pending entries, invokes mode 0 on arrival and modes 1/4 on unready destruction, and queues argumentless `QUEST_LOG_UPDATE` on success. **VERIFIED (simulator):** the selected ObjectiveTracker hover test covers two distinct items, an absent index, host arrival/destruction, and no stale pending state. **INFERRED:** TooltipInfo's non-ready zero-result path and the conditional autocomplete quest-ID payload; tests assert neither return arity nor that payload.
+
+## [2026-11-15] implementation | Retail LFG reward writer
+
+[LFG reward writer](../specs/lfg-reward-writer.md) records the verified enclosing-message writer, replacement readiness/groups/tiers, event ordering, original hover proof and transport/clear-route boundaries.
+
+## [2026-11-15] implementation | Retail bag repair-cost projection
+
+[Bag repair cost](../specs/bag-repair-cost.md) records R88n.4b positive-only top-level publication, empty host quotes, narrow ordinary-bag routing and original repair-mode money-line RED/GREEN. No price calculation, sell-price or battle-pet changes.
+
+## [2026-11-15] fix | Retail CharacterCreate fallback retirement
+
+Updated the [consumer-selection record](investigations/consumer-selection-and-red-proof.md#retail-charactercreate-consumer-selection), [fallback inventory](investigations/lua-owned-fallback-retirement.md#retail-character-create-fallback-retirement-queue-462), and [post-load workaround audit](investigations/post-load-workaround-audit.md#retail-glue-charactercreate-fallbacks). **VERIFIED (Retail 12.1.5 cache and test):** Glue selects the original CharacterCreate Lua/XML; inherited `BGTex` registration works; the Retail-only fallback exclusion uses `client_profile::ACTIVE`. The preservation test checks Human/Alliance and Orc/Horde, all four ordered and unique XML texture identities, four alpha results per selection, and original navigation outputs in two modes without submission. A second resolver test covers the Azerite `Plugs` parentArray and instance override; it does not claim runtime Azerite coverage. Non-Retail wrappers and the auth, default-parent, and Submit boundaries remain unchanged.
+
+## [2026-11-15] implementation | Forever item-cooldown publication
+
+[Forever item cooldown](../specs/forever-spell-item-cooldown.md) records matching pinned PTR/Forever declarations, narrow INFERRED publication, original Collections cooldown RED/GREEN and no-added-error proof. Retail absence and existing supplied-state policy remain unchanged.
+
+## [2026-11-15] implementation | Spell-count R88r and Forever
+
+[Spell-count corrections](investigations/spell-count-r88p.md) records verified numeric-path replacement bypass and accepted-secret conversion, with inferred Forever applicability through original selected CooldownViewer Lua. Forever count defaults are retired; metadata-source guards and property decoding remain unmodeled.
+
+## [2026-11-15] correction | Retail tooltip sell-price contract
+
+Updated the [tooltip serialization contract](../specs/tooltip-data-serialization.md) and [Lua API](systems/lua-api.md#retail-sellprice-line-r88pp1). **VERIFIED (R88p.p1):** an initial zero price omits type 11; emitted rows have empty text, default color, and `maxPrice` initialized to -1. The original Retail `SetItemByID` test checks two distinct backed prices and a zero-price item. **INFERRED:** `ItemInfo.sell_price` proxies the native unit-price calculation and the native masks map to ItemSparse column names. **UNKNOWN/unmodeled:** flag/status/preview and prepared-quantity inputs are absent from `ItemInfo`.
+
+## [2026-11-15] revision | Possession writer evidence boundary
+
+Updated the [Round 7 contract](../specs/tooltip-r7-getters.md) and [Lua API](systems/lua-api.md#possession-state-writer-r88o2-q5). **VERIFIED (R88o.2-q5):** the candidate-selection and write/event core is separate from object association. **INFERRED (R88o.2-q5:13009–13010, 13016; R88n.4a:12570–12571):** current-player ownership and exact two-part identity matching project the native object-resolution path. Each of the five effect selectors now checks an absent input and two distinct spell IDs.
+
+## [2026-11-14] implementation | Retail possession state writer
+
+[Round 7 contract](../specs/tooltip-r7-getters.md) and [Lua API](systems/lua-api.md#possession-state-writer-r88o2-q5) record R88o.2-q5. **VERIFIED (Retail 12.1.5.70688):** local setter/rescan/clear order, change-only `UPDATE_POSSESS_BAR` requests, candidate filters and first-match selection. **VERIFIED (simulator source):** host/admin object and candidate inputs start empty; only spell-presence checks use the existing spell catalog. **INFERRED:** the candidate collection belongs to current-player state. **UNKNOWN:** external triggers, object acquisition, cooldown and number-display inputs remain unmodeled. **VERIFIED (RED at base `528080463b7052da0fe9f56bfba6fe0e2f8c7a7f`; test-only commit `e573c0d71b777eb621ed8ca42b64a1c06910ebb1`):** the original-consumer selector failed because `A_Admin.SetPossessionObject` was absent. **VERIFIED (GREEN at `458beb9e5da674428a975e07f05b8d84a38ca650`):** all 24 `tooltip_r7_selected` tests pass. **VERIFIED (compile receipts at the same implementation/test source):** Retail, PTR, Forever, Mists and Wrath `--lib --test integration --no-run` builds each report zero warnings.
+
+## [2026-11-14] implementation | Item-interaction TooltipData boundary
+
+[Round 7 tooltip getters](../specs/tooltip-r7-getters.md) records R88n.1's absent and failed producer no-values paths and the other-kind empty-lines table. The Retail host seam has no writer or seed; the original ItemInteraction tooltip path and separate API shape tests distinguish these cases.
+
+## [2026-11-14] implementation | Achievement eligibility and tracker colors
+
+[Achievement eligibility](../specs/achievement-eligibility.md) records R88o.1's Retail argument/Boolean contract, missing record/group versus null tree, and supplied cache comparisons. Original tracker #6 uses the zero-visible branch; positive visible counts use a different per-criterion getter. PTR/Forever binding is inferred from their selected original Lua. New simulator input stays empty by default; no event substitutes or live cache writer claims.
+
+## [2026-11-14] investigation | Screen-clamp state and evidence gaps
+
+[Screen-clamp suppression](investigations/screen-clamp-suppression.md) records the pre-edit R88n.5r-q1/q2 gap table, unambiguous model corrections, and pending native propagation/unit/notification questions. No movement-to-suppression alias is inferred.
+
+## [2026-11-14] investigation | Spellbook R88m.4 boundaries
+
+[Spellbook follow-ups](investigations/spellbook-r88m4-followups.md) records eleven API dispositions, Retail census-absent alias retirement, verified arity/input boundaries, explicit pet/link/selection/cooldown seams, and original consumer PRESERVATION versus API RED proof. Follow-up review requires each decisive Find/AutoCast/LoC selector to include contrasting outcomes independently; narrow validation and no-data cases are labelled limited boundary evidence.
+
+## [2026-11-14] correction | Inventory name-adapter evidence
+
+[Inventory/purchase getters](investigations/inventory-purchase-getters.md) separates the INFERRED one-based host slot-name adapter from VERIFIED numeric/packing tests. Retail publications use ACTIVE profile checks; state comments and GUID-kind predicate documentation are corrected.
+
+## [2026-11-14] implementation | Inventory candidates and purchase records
+
+[Inventory/purchase getters](investigations/inventory-purchase-getters.md) records R88k.1/.2 packed-key publication and refund records, empty host seams, selected consumer tests and explicit remaining VM limits.
+
+
+## [2026-11-14] test | GameTooltip method contracts (pre-review-fix)
+
+**VERIFIED (Retail code SHA `4969fe0214412988f0131ae96a9f4a14c9229012`):** the original minimum-width arity/default/round-trip, pair-storage/`NumLines` separation, and conversion-error tests passed; the selected `GameTooltip_InsertFrame` preservation test passed. **PRESERVATION:** its scalar selector observes only the first getter result. These tests predate the review correction that gates producer probes as optional and removes unproved bad-self decoration assertions.
+
+## [2026-11-14] evidence boundary | GameTooltip method security
+
+**VERIFIED (R88n.7, Retail 12.1.5.70688):** the getter's conditional result secrecy and diagnostic/access effects, and the AddFontStrings parent-change/secret-aspect checks. **VERIFIED (simulator model):** the Retail method checks ChangeParent, the six inherited aspects and RemoveSecretAspects before storage. **UNKNOWN (simulator parity):** the getter's call-state secrecy/diagnostic effects and AddFontStrings' saved-call secret-state transition remain unmodeled because their required runtime state is not represented.
+
+## [2026-11-14] implementation | GameTooltip minimum width and font strings
+
+Updated the [GameTooltip method contract](../specs/game-tooltip-methods.md), [Lua API](systems/lua-api.md#game-tooltip-minimum-width-and-font-strings), and [consumer-selection investigation](investigations/consumer-selection-and-red-proof.md#gametooltip-minimum-width-consumer) with R88n.7. **VERIFIED (Retail 12.1.5.70688):** `GetMinimumWidth` returns the stored number and forced boolean; `AddFontStrings` appends a pair, resets count-aligned state, and returns zero values without adding a `NumLines` entry. **VERIFIED (simulator history, `b6a107994`):** non-Retail profiles keep their pre-lane behavior. **PRESERVATION:** the selected `GameTooltip_InsertFrame` selector reads only the first getter result. **INFERRED:** pair retention across ClearLines/Hide and copying through CopyTooltip. **UNKNOWN:** later pair use and the unmodeled call-secret effects.
+
+## [2026-11-14] correction | GlobalColor test oracle
+
+Updated the [catalog contract](../specs/c-ui-color-get-colors.md) and [system page](systems/global-color-catalog.md). The API test now uses literal snapshot expectations instead of the generated catalog as its oracle. **VERIFIED (pinned Retail 12.1.5.70783 CSV):** the eight sample tag/packed values are pinned source facts. **INFERRED:** count 361 follows the snapshot under the inferred feed/dedup rules; applying native 12.1.5.70688 behavior to 70783 remains inferred, and cursor exclusions remain unknown.
+
+## [2026-11-14] system | Retail GlobalColor catalog
+
+Added [GlobalColor catalog](systems/global-color-catalog.md) and the [Retail API contract](../specs/c-ui-color-get-colors.md). **VERIFIED (local CASC Retail 12.1.5.70783):** FileDataID 4328468 contains 367 decoded rows with no unreadable records. **VERIFIED (native Retail 12.1.5.70688, R88o.3):** `GetColors` uses flag 3, ignores arguments, copies `ColorMixin`, decodes ARGB with f32 reciprocal multiplication, keeps first tag collisions, applies no empty-tag/flag filters, and exports in tag-byte order. **VERIFIED (simulator generated catalog):** the static export has 361 tags. **VERIFIED (CSV exporter):** the CSV omits invalid-index and excluded-row state. **UNKNOWN (70783 cursor mapping):** native 70688 evidence identifies no corresponding 70783 row IDs. **INFERRED (70688 rules applied to 70783):** native output matches only if no additional cursor skips apply. **PRESERVATION:** hand-set Retail colors remain until every consumer's load order is proved. **UNKNOWN:** live cache contents and update schedule.
+
+## [2026-11-14] implementation | Forever tooltip getter publication
+
+Updated the [modified-appearance](../specs/tooltip-appearance-item.md), [merchant-cost](../specs/tooltip-merchant-cost-item.md), [outfit](../specs/tooltip-outfit.md), and [PvP talent](../specs/tooltip-pvp-talent.md) contracts, plus the [Lua API](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation), with R88n.8. **VERIFIED (Forever 1.60.1.70707):** the four getters register; all five targeted optional tests pass, including the selected SpellBook consumer. That consumer result is **PRESERVATION**, since populated source rows are absent. **INFERRED:** `SimState.forever_outfits` supplies saved names. **UNKNOWN:** native writers, populated appearance/PvP data, and merchant availability/filter inputs.
+## [2026-11-14] correction | Retail Azerite Essence tooltip selection
+
+This earlier R88n-only note is superseded by the R88p.p4 update below. **VERIFIED (Retail 12.1.5.70688, R88n.2/R88n.4):** original-consumer selectors and builder timing remain. **VERIFIED (Retail 12.1.5.70688, R88p.p4):** source fallback/selector-result behavior, empty-source handling, and inline row order/type/state. The [Round 7 contract](../specs/tooltip-r7-getters.md), [Lua API](systems/lua-api.md#azerite-essence-tooltip-selection-r88n2), and [consumer-selection evidence](investigations/consumer-selection-and-red-proof.md#retail-azerite-essence-tooltip-consumers) now record the updated boundary.
+
+## [2026-11-14] implementation | Retail selected tooltip getters
+
+Updated the [Round 7 contract](../specs/tooltip-r7-getters.md) and [tooltip-data system](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation). **VERIFIED (Retail 12.1.5.70688, R88o.2 q1/q2/q3):** unresolved conversion output shape, SlotKeystone cursor-clear/selection/event order and map/modifier rejection, plus RemoveKeystone Boolean/category guards. **INFERRED (simulator representation):** bag cursor fields project native GUID/source fields, `PlayerState::present` proxies opaque-context availability, and selected item-ID/location caches preserve lookup/staging state. **SIMULATOR GAP:** native error code 1013 publication/text, mode/associated GUID, full item-data/resource notifications and later lock effects, and the original `OnKeystoneSlotted` consumer's `GetSlottedKeystoneInfo` dependency remain unmodeled. the simulator does not model the verified q4 `SetPendingItem` lifecycle; q5 external possession routes and other item-interaction routes remain UNKNOWN. Selected tests use host inputs.
+
+## [2026-11-14] investigation | Retail tooltip serializer boundary
+
+Updated [tooltip data serialization](../specs/tooltip-data-serialization.md), [Lua API](systems/lua-api.md#retail-tooltipdata-field-boundary-r88n4b), and [consumer selection](investigations/consumer-selection-and-red-proof.md#retail-tooltip-serializer-field-consumers). **VERIFIED (R88n.4b):** repair and battle-pet fields are top-level; `price` and `maxPrice` belong on type 11. **INFERRED:** Retail projects positive `ItemInfo.sell_price` to `price`; `maxPrice`, repair cost and pet values remain unmodeled. Quest-cache callbacks and the LFG whole-message callback have no matching simulator route to fix.
+
+## [2026-11-14] correction | Merchant builder evidence boundary
+
+[Merchant item links](investigations/merchant-item-link.md) now requires explicit host item payloads. Missing data remains an INFERRED unresolved/no-text seam. Synthetic serializer fixtures are not complete native link evidence; the original consumer explicitly compares distinct results. Shared formatter behavior is unchanged.
+
+## [2026-11-14] implementation | Merchant item-link publication
+
+[Merchant item links](investigations/merchant-item-link.md) records R88l.2 Retail validation, arity, shared link formatting and explicit host-selected offer seams. Native raw-row ordering/writers remain unknown; no non-Retail publication is added.
+
+## [2026-11-14] fix | Retail screen clamping
+
+Updated [layout-system](systems/layout-system.md#screen-clamping) and the [layout reference](../layout-system.md#screen-clamping) with R88n.5r. **VERIFIED (Retail 12.1.5.70688):** generic rect resolution uses scaled insets before rect storage/notification on queued and synchronous routes; GameTooltip inherits its enable bit from `SharedTooltipTemplate`; row setup creates no per-row clip. The original consumer selector failed at test commit `bcb35d79a` and passed at implementation commit `3a27c7d52`. **UNKNOWN:** suppression-state identity, setter-only cache invalidation, exact rounding, oversized-frame behavior, and order relative to snapping.
+
+## [2026-11-14] investigation | Forever tooltip cached lines
+
+Updated the [tooltip lifecycle investigation](investigations/tooltip-owner-lifecycle.md#r88n5-forever-clearlines-cache-boundary) and contract with R88n.5. **VERIFIED (Forever 1.60.1.70707 native):** ClearLines resets cached left/right text for active rows, not inactive cache entries. **VERIFIED (simulator):** the optional full-UI test was RED at `3ffa60125` because existing XML FontStrings were not recorded on Forever; it passes after `2a87492b8` adds that registration. The selected original `TooltipDataHandler.ProcessInfo` preservation test passes. PTR applicability for Retail layout facts remains INFERRED; clipping, order, nonzero extra-inset writers and clamping remain UNKNOWN.
+
+## [2026-11-14] investigation | Retail quest tooltip consumers
+
+Updated [consumer selection and RED proof](investigations/consumer-selection-and-red-proof.md#retail-quest-tooltip-consumers-and-host-input-seams) and the [Round 7 getter contract](../specs/tooltip-r7-getters.md). **VERIFIED (Retail 12.1.5.70688, R88n.1):** both getters return exactly zero Lua values on missing-source and failed-producer paths. **VERIFIED (R88n.3/R88n.3a):** the special-item getter resolves the indexed quest through request context and cache fields before selecting an inventory object. Cache/invalidation, inventory/object and party/objective writers remain UNKNOWN and use empty host inputs. Native return arity for a successful party query with no rows also remains UNKNOWN; the simulator emits no values for that host-supplied empty result.
+
+## [2026-11-14] fix | Original character and store lifecycle ownership
+
+[Lua-owned fallback retirement](investigations/lua-owned-fallback-retirement.md#j-original-character-labels-and-titles) records the separately proved Retail CharacterFrame bridge and StoreUI escape guard removals, real equipment/reopen/attribute consumers, and unchanged non-Retail/native-unknown boundaries.
+
+## [2026-11-14] implementation | Retail spell count and query routes
+
+Updated [Lua API](systems/lua-api.md#retail-1215-spell-count-visibility-and-ranged-id-routes) and the [spell count contract](../specs/spell-count-outputs.md) for R88k/R88m. **VERIFIED (Retail 12.1.5.70688):** cast count uses Spell-store membership and the first eight eligible reagent limits; display selects cast mode before charges using its distinct reagent selector; ranged-ID comparison, metadata-mask writer, equal-ID clear, and visibility success/failure arity are recorded. **INFERRED:** A_Admin LearnSpell/UnlearnSpell wiring and active-player context default. **UNKNOWN:** dispatcher meanings, SpellReagents field mapping, alternate inventory modes/inclusion, visibility tables, and context lifecycle. **VERIFIED (optional tests at code SHA `438ec83e8`):** selected original consumers and API-level tests pass; five profile compile receipts have zero warnings; Retail `lua-errors` returns `[]`.
+
+## [2026-11-14] implementation | Retail map world positions
+
+Updated the [map world-position contract](../specs/map-world-position.md) and the [implementation investigation](investigations/patch-8-0-1-api-audit.md#retail-map-world-position) with R88i.41. **VERIFIED (R88i.41, Retail 12.1.5.70688):** both functions' signed-ID parsing, plain-table positions, exact Usage strings, forward result arity, inclusive UI bounds, epsilon rejection, nearest-center selection, and outside extrapolation. **INFERRED:** 70783/70575 data parity, the swapped/reversed forward formula, positive `MapID` output, and CSV-order ties. **VERIFIED (repository):** the generator reads 22,780 rows and emits only the fields used by the forward vector. **VERIFIED (targeted generator tests):** all three changed assignment-parser cases pass. **VERIFIED (repository model):** `AreaInfo` lacks `ContinentID`; negative-`MapID` fallback remains unimplemented. Native inverse assignment ranking and parent promotion remain out of scope.
+
+## [2026-11-14] investigation | AdventureGuideUtil original availability
+
+[AdventureGuideUtil availability](investigations/adventureguide-original-availability.md)
+records the Retail original MicroMenu consumer and narrow bootstrap boundary.
+The default-state selector is PRESERVATION, not native availability or RED.
+
+- L follow-up: retain AdventureGuide availability on Retail Glue; prove Game
+  owner precedes ItemRefHandlers and disclose unsupported pre-owner hyperlink
+  calls, per coordinator #962. See [[adventureguide-original-availability]].
+
+## [2026-11-13] system | User waypoint supertracking
+
+Updated [SuperTrack state](systems/super-track-state.md#user-waypoint-supertracking), [C_Map waypoint system](systems/c-map-user-waypoint.md#original-consumer-boundary), and both contracts with R88i.3/R88j.5/R88j.6. **VERIFIED (Retail 12.1.5.70688):** separate quest/content/map-pin flags, content ID-zero presence, direct setter/clear effects, corpse preservation, aggregate user-waypoint inclusion, and ClearAll selection/flag reset are recorded. **VERIFIED (optional Retail tests):** original WaypointLocationDataProvider click and pin consumers pass; focused flag transition tests pass. **INFERRED:** getter flags match selections from a consistent start. **UNKNOWN:** two getterless flags, exact return arities, named-event effects, and SetSuperTrackedMapPin/SetSuperTrackedVignette acceptance (R88j.8 pending).
+
+## [2026-11-13] fix | Inline icon right-edge advance
+
+Updated [Rendering pipeline](systems/rendering-pipeline.md#inline-icons-in-text) with R88f.L.2's absolute-right-edge snap and the tooltip boundary. A fractional scaled-edge `GetStringWidth` test exercises snapped cursor advance.
+
+## [2026-11-13] system | C_Map user waypoint
+
+Added [the user waypoint model](systems/c-map-user-waypoint.md) and its [API contract](../specs/c-map-user-waypoint.md). **VERIFIED (Retail 12.1.5.70688):** the original Retail provider uses the six C_Map methods and accepts the tested normalized-point/replacement contract. **VERIFIED (Retail prefork test):** HandleClick stores the point, then reaches the separate missing C_SuperTrack method at line 101. **INFERRED:** session-only state, same-map-only position lookup and nonzero-ID map eligibility. **UNKNOWN:** persistence, cross-map projection and callback/event identity. Profile docs declare the methods for Retail/PTR/Forever, not Mists; Wrath remains compile-only.
+
+## [2026-11-13] fix | EllesmereUI AuraKit secret texture error
+
+Updated [full third-party startup](investigations/full-addon-startup-2026-10-10.md#aurakit-secret-texture-error-r88c-2026-11-13) and the [secret aura contract](../specs/secret-auras.md) after the R88c call-shape trace. **VERIFIED (Retail code SHA `39ca0bc72d9539563288b79e622feeeb4a9282bb`):** the 20-addon run is clean and the five requested profile builds report zero warnings. **INFERRED:** revoked numeric input and tainted secret nil are accepted by `SetTexture`; nil clears the texture. Getter and render parity remain open.
+
+## [2026-11-13] implementation | Garrison landing-page visibility
+
+Updated [full third-party startup](investigations/full-addon-startup-2026-10-10.md#garrison-minimap-button-visibility-r88e1-2026-11-13) and the [Retail garrison contract](../specs/garrison-landing-page-type.md) with R88e.1. **VERIFIED (Retail 12.1.5 build 70688):** missing records return false, non-111 records return their flag, type 111 uses PlayerCondition 105386 and nonzero player state, and lookup uses the low byte without an enum check. **VERIFIED (20-addon Retail run at simulator SHA `2a03dbee7`):** one AuraKit secret-access error remains (70 occurrences); the Minimap error is absent. **INFERRED:** the player-state value is the covenant ID; the simulator's 105386 result is a false-default host input.
+
+## [2026-11-13] correction | Inline texture and atlas icon evidence
+
+[Rendering pipeline](systems/rendering-pipeline.md#inline-icons-in-text) separates VERIFIED Retail 12.1.5.70688 R88d/R88e.6/R88e.7 parser, measurement, line-height and row-layout findings from INFERRED Forever explicit sizes. Runtime scale inputs, caller-metric identity, vertical-mode defaults/mapping, snap operand/advance effect, tooltip snap use, and oversized single-icon wrapping remain UNKNOWN. Tests cover parser rules, FontString scale division, accepted width and GameTooltip left-region row heights.
+
+## [2026-11-13] system | Mandatory host category camera zoom
+
+[Lua API](systems/lua-api.md#host-category-camera-zoom-r83d) records R83d's
+verified signed32 numeric publication, explicit zero, and original-consumer
+clamp coverage. RF host inputs only; no collector or PTR category changes.
+
+## [2026-11-13] system | PTR character-creation camera evidence
+
+[Lua API](systems/lua-api.md#ptr-character-creation-evidence-boundary) separates
+verified R78/R83 argument/state behavior from droppable inferred catalog and
+return bridges. The unseeded collector and end-to-end submit remain distinct.
+
+## [2026-11-13] investigation | EditMode Frame method ownership
+
+Added [the method-surface investigation](investigations/frame-editmode-method-surface.md)
+and corrected the earlier Mists claim that these methods belong on every Frame.
+VERIFIED: the Mists pre-change and current `frame_positions` runs fail the same
+four unrelated cases; the managed Paladin frame passes with mixin-scoped methods.
+
+## [2026-11-13] investigation | EllesmereUI core API boundary
+
+Updated [full third-party startup](investigations/full-addon-startup-2026-10-10.md#r88a-api-boundary-follow-up-2026-11-13) with R88a behavior, the lane's exact tests, and the post-fix 20-addon result. **VERIFIED (Retail run at code SHA `bc01ba60c`):** 20/20 add-ons loaded with zero load-time errors; two post-startup blockers remain, including `C_Garrison.IsLandingPageMinimapButtonVisible` and AuraKit. **INFERRED:** the neutral garrison input starts at zero. **UNKNOWN:** the visibility predicate and secret/restriction policies.
+
+## [2026-11-12] correction | FontString anchor-width evidence
+
+Updated [FontString anchor sizing](investigations/fontstring-anchor-sizing.md) with L1c labels. **VERIFIED (code):** the inferred stored-width rewrite and `SetPoint()` measurement refresh are removed so native-UNKNOWN wrapping is not modeled. **VERIFIED (test code):** default tests observe rectangle edges and SetWidth priority; **INFERRED (test code):** GetWidth and single-anchor assertions are optional; **UNKNOWN:** renderer wrapping width and text-cache invalidation remain unmodeled.
+
+## [2026-11-12] investigation | EllesmereUI native contracts and runtime result
+
+Updated [full third-party startup](investigations/full-addon-startup-2026-10-10.md#retail-ellesmereui-v98-load-reproduction-2026-11-12) with G1/G1c classifications and the post-fix load. **VERIFIED:** 20/20 installed addons loaded; `lua-errors` reported three unique post-startup errors across 72 occurrences. **INFERRED:** CVar-window behavior and pre-load catalog seeding. **UNKNOWN:** whether native tables include addon files.
+
+## [2026-11-12] investigation | Retail EllesmereUI v9.8 load boundary
+
+Updated [full third-party startup](investigations/full-addon-startup-2026-10-10.md#retail-ellesmereui-v98-load-reproduction-2026-11-12) with the original enabled-addon reproduction and issue #22 symptom limits; its former nil-global and asset rejection were baseline failures, not current results.
+
+## [2026-11-12] system | Secure delegate global
+
+Updated [Lua API](systems/lua-api.md#secure-delegate-global) and linked the [secure-helper contract](../specs/secure-helpers.md). Recorded S4s7b's emulated construction/invocation boundary, simulator inference labels, six-profile exact tests, and the separate optional Retail duration-object failure.
+
+## [2026-11-12] implementation | Retail currency tooltips
+
+Updated [Tooltip data](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) and the [R84/R84b contract](../specs/tooltip-currency.md). VERIFIED: Retail by-ID, quest, loot and currency-link consumers share the populated producer; source results and display values are explicit inputs. The verified type-0 rows are restored after the shared color remapper misclassifies them against placeholder colors. Retail passes 2264 library tests and 17 exact integrations; PTR and Forever pass zero-warning compile builds and eight exact integrations each. UNKNOWN resolver misses, conditional error row, balance formula and runtime number mode remain unmodeled.
+
+## [2026-11-12] review | Contributor font evidence and path containment
+
+The [font-source contract](../specs/font-sources.md) records canonical AddOns-root containment and explicit missing-font test failures. The [EditBox contract](../specs/editbox-text-font.md) separates the XML model from UNVERIFIED contributor native observations; those assertions remain optional pending independent profile evidence. Combined-tree compilation and runtime proof are pending slot availability.
+
+## [2026-11-12] investigation | EditBox text font and insets
+
+[EditBox text font, insets and justification](investigations/editbox-text-font.md) records the client checks, the three loader gaps and their fix, and the unmodeled font of `InputBoxInstructionsTemplate`'s instructions region.
+
+## [2026-11-12] docs | Addon fonts and pinned fallback
+
+[Rendering pipeline](systems/rendering-pipeline.md#font-sources) records addon font loading on first use and `WOW_SIM_FALLBACK_FONT`; tests live in `src/render/font.rs`.
+
+## [2026-11-12] investigation | Inline XML tooltip operands
+
+[Inline XML method arguments](investigations/xml-inline-method-arguments.md) records the zero-vararg parser misclassification, source-faithful parameter-prefix installation, and the separately approved RaidFrame AddLine fixture correction.
+
+## [2026-11-12] investigation | Forever integration fixtures
+
+Updated [Forever startup gaps](investigations/forever-startup-gaps.md#forever-70707-integration-fixture-differences) with the source-grounded fixture corrections, supplied item-overlay publication and independent eager-order audit for `forever-touched-15`. The original 15 exact failures were reproduced; targeted and final cross-profile proof is recorded in the private lane report.
+
+## [2026-11-12] correction | Bag fixture stages and insecure TOC screens
+
+Updated [frame-position investigation](investigations/frame-position-baseline-drift.md#bag-bar-test-application-stages--2026-11-12) with source-derived late-registration versus applied-preset anchors. Updated [addon loading](systems/addon-loading.md#screen-qualified-dependency-declarations) with VERIFIED R13 insecure-parser behavior and INFERRED third-party input-mode mapping; corrected the discovery expectation without changing the producer.
+
+## [2026-11-12] correction | R80 ordinary item tooltip stats
+
+The [item tooltip contract](../specs/tooltip-item-r80.md) records the VERIFIED admitted native stat helper without wiring it to the UNKNOWN ordinary item-mod producer. Shared item builders now omit unsupplied stats and accept final host amounts and optional top-level metadata. Retail 639 tooltip-related integration cases and all 2263 lib cases pass in bounded partitions, including unchanged standalone-Lua and serializer regressions. PTR/Forever exact proofs are recorded separately in the lane report.
+
+## [2026-11-12] implementation | R81 spell tooltip composition
+
+Updated [tooltip data](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) and the [contract](../specs/tooltip-spell-composition.md). VERIFIED R81 outer conditions use host-supplied helper outputs; fixed cooldowns, aura time and binding mapping are removed. VERIFIED: five original-consumer tests reject the base producer and pass with the change. Retail passes 2263 lib / 641 tooltip integration cases; PTR passes 81 integration / 10 lib touched cases; Forever passes 23 / 10 available touched cases. Final profile builds have zero warnings. UNKNOWN formulas and native build limits remain explicit.
+
 ## [2026-11-11] correction | Addon loading phases and LoadWith followers
 
 Updated [[addon-loading]] and the [phase contract](../specs/addon-load-phases.md) with R64 phases and R64b/c follower behavior, plus R70 PTR phase/mask evidence. Retail and Forever resolve followers without enable-state filtering and submit them through the generic loader; target `ADDON_LOADED` precedes follower requests, and one follower failure does not stop later submissions or change target success. PTR parser-to-child-list linkage remains UNKNOWN, so the simulator applies the INFERRED resolver model and tests a pre-populated child list only. R70 models cached PTR `CharacterCreate` as an INFERRED phase-two Glue root, loads its required chain before its files, and makes no relative-order claim against PTRFeedbackGlue.
@@ -3664,3 +3913,73 @@ VERIFIED (strict lifecycle probe): global CVar wrapper identities were unchanged
 ## 2026-11-11 — Glue login submission
 
 Updated [Forever Login Startup](investigations/forever-login-startup.md#login-submission-model-lt-a667-2026-11-11) with the lt-a667 flow and contract. Distinguished historical startup verification from pending submission acceptance; documented EditBox input, offline connection policy, host-empty roster/capacity, startup eligibility and the erroneous forced pre-login character-select refresh.
+
+
+## 2026-11-12 — Enter World host handover
+
+Added the [R74 handover contract](../specs/glue-login-flow.md#enter-world-host-handover-lt-81c7-r74) and linked the existing startup investigation. Documents verified selection/dispatch separately from host queueing, VM reconstruction, identity precedence and failure handling. R76 and runtime proof remain pending; no native lifecycle or consumer GREEN claim.
+
+## [2026-11-12] implementation | R73 PvP talent annotations
+
+VERIFIED: [tooltip data](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) now uses shared supplied slot selections and R73 alternative annotation dispatch. Eight exact tests pass on Retail, including original slot hover and original list-template hover; the native virtualized-row realization is not claimed. The [contract](../specs/tooltip-pvp-talent.md) separates host seams, installed 70783 catalog provenance, inferred field names and UNKNOWN native predicates.
+
+## 2026-11-12 — PTR spellbook anchors
+
+Updated [XML templates](systems/xml-template-system.md#texture-template-anchor-inheritance) and linked the [contract](../specs/texture-template-anchors.md). VERIFIED: PTR original locked spellbook and synthetic XML/runtime half-page tests change RED to GREEN after retaining inherited texture anchors. Profile preservation is pending.
+
+## 2026-11-12 — Unit-test cache isolation
+
+Updated addon-loading and the CASC contract: unit-test startup must reject stale/missing UI caches without auto-sync; normal startup remains unchanged. Recorded the concurrent Retail-pin overwrite incident and isolated reload-child regression.
+
+- 2026-11-13: Recorded lt-6cee/R87 Forever StorePublic registration/default boundary; no Shop 2/event parity inferred.
+
+## 2026-11-12 — R82 hyperlink dispatch
+
+Updated the [unit-link investigation](investigations/att-unit-hyperlink-tooltip.md) and identity spec: removed guessed GUID lookup, documented typed substring dispatch and linked the [R82 contract](../specs/tooltip-hyperlink.md). Native UNKNOWN miss shape remains separate from simulator preservation tests.
+
+## 2026-11-12 — FontString anchor-derived width
+
+Added [FontString anchor sizing](investigations/fontstring-anchor-sizing.md). The simulator tests cover resolved width for two opposite horizontal anchors; native sizing remains INFERRED, and the six-symptom EllesmereUI reproduction remains incomplete.
+
+- 2026-11-12: Folded secret-aura native reports and corrected prevention/aspect/anchoring conflation; see [Lua API](systems/lua-api.md#recorded-widget-secrecy) and the [contract](../specs/secret-auras.md).
+
+- 2026-11-13: Recorded lt-a912 R79b/R79c verified host finalization in [[lua-api]]
+  and the character-creation spec: sorted neutral keys, rewritten 1-based indices,
+  <=32 stable ties, no claim about larger tie order or the missing collector.
+
+- 2026-11-13: Retail TokenTracker startup ownership: corrected low-level-loader fixture, baseline preservation and Retail-only stale repair removal; see [consumer selection](investigations/consumer-selection-and-red-proof.md#retail-token-tracker-startup-ownership).
+
+- 2026-11-13: C Transmog location slice: baseline original startup/cache consumer passed; remove only Retail synthetic location helpers, keep other profiles and unresolved best-item helper unchanged. See consumer-selection investigation.
+
+- 2026-11-13: [Retail container parentArray ownership](investigations/consumer-selection-and-red-proof.md#retail-container-parentarray-ownership): original six XML bags and repeated real enumerator membership preserve Retail-only scaffold removal.
+
+- 2026-11-13: Documented Retail UiMapPoint original constructor ownership, preservation selector, and separate waypoint API prerequisites (lt-6c8e).
+
+- 2026-11-13: Recorded inventory O original Lua/XML ownership retirement, chat history preservation, journal/panel/navigation consumer proof and deferred native/conditional boundaries in [[lua-owned-fallback-retirement]].
+
+## 2026-11-14 | Merchant/LFG R88i boundaries
+
+Recorded verified requirement/request branches and separately inferred data mappings in [merchant-lfg-r88i](investigations/merchant-lfg-r88i.md), with original-consumer and neutral-seam limits.
+
+## 2026-11-14 | J character-label retirement
+
+Added original CharacterSelect label and CharacterFrame active-subframe title evidence to [Lua-owned fallback retirement](investigations/lua-owned-fallback-retirement.md#j-original-character-labels-and-titles), with bounded Retail-only scope and remaining native/owner limitations.
+
+## 2026-11-14 | Retail recipe-rank tooltip
+
+Updated the [Lua API](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) and [Round 7 contract](../specs/tooltip-r7-getters.md) with the selected `TooltipDataHandler` accessor and evidence limits. **VERIFIED (R88n.4):** the getter uses top-level TooltipData type 17 and the requested recipe ID; text-line type 0 is INFERRED simulator serialization. **VERIFIED (R88n.4a):** native rebuild retains duplicate keys, inserts new keys, appends/counts/grows the display vector, and projects favorite/crafting-order flags before row copy; the simulator cache models key retention and lookup only. **VERIFIED (R88n.4b):** native clear has direct initialization and rebuild callers, and dirty state can reach rebuild. **INFERRED (simulator routes):** `OpenTradeSkill` and profession-spell redirection share a clearing helper; a changed filter clears at `begin_tick` before event dispatch, without rebuilding rows. **INFERRED (presentation):** exact color globals/RGB, rank numbering/boundary, label delimiter, localization keys, blank separators, source placement, wrapping, cycle handling and missing-input failure predicates. **PRESERVATION:** zero-value miss coverage does not prove producer selection. **UNKNOWN:** complete row semantics, upstream acquisition, external clear triggers, learned-status meaning and player/faction source lookup.
+
+## 2026-11-14 | Retail Azerite tooltip rows
+
+Updated the [Round 7 contract](../specs/tooltip-r7-getters.md), [Lua API](systems/lua-api.md#azerite-essence-tooltip-selection-r88n2), and [consumer investigation](investigations/consumer-selection-and-red-proof.md#retail-azerite-essence-tooltip-consumers) from R88p.p4. **VERIFIED (Retail 12.1.5.70688, R88p.p4):** next-rank source behavior and major/minor row order, type, wrapping, and `powerState`. **VERIFIED (generated catalog):** 28 essences and 112 power rows; no rank above four, so gray is unreachable. **INFERRED (70391 export):** source fields map to Alliance/Horde columns. **VERIFIED (repository data):** the available Retail 12.1.5.70783 `ChrRaces.csv` has no `FactionID` column and is not the 12.1.5.70575 runtime pin; it does not support a race-to-selector mapping. The simulator keeps an explicit selector-result seam and a first-field default. **VERIFIED (optional Retail integration tests at `2fbc7adca`):** all 12 exact-listed Azerite tests pass, including the three new original-hover row selectors.
+
+## 2026-11-15 | CatalogShop partial-panel fixture ownership
+
+Recorded lt-05d0's exact parent/child bisection and original eager CatalogShop
+publisher omission in [Lua-owned fallback retirement](investigations/lua-owned-fallback-retirement.md#catalogshop-eager-ownership-in-partial-panel-fixtures-lt-05d0).
+The correction supplies original Game TOC dependencies only on ACTIVE Retail;
+assertions and retired simulator fallbacks are unchanged.
+
+## 2026-11-15 | lt-67d2 spell-count R88p correction
+
+Recorded exact historical first-failing boundaries and cache-freshness qualification; linked native R88k/R88p width, reagent/storage and error evidence to the corrected API tests and explicit UNKNOWN seams.

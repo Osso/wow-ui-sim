@@ -70,10 +70,10 @@ pub fn get_clamp_rect_insets(state: &mut LuaState) -> LuaResult<u32> {
 
 pub fn set_clamp_rect_insets(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
-    let left = f64::from_stack(state, 2).unwrap_or(0.0) as f32;
-    let right = f64::from_stack(state, 3).unwrap_or(0.0) as f32;
-    let top = f64::from_stack(state, 4).unwrap_or(0.0) as f32;
-    let bottom = f64::from_stack(state, 5).unwrap_or(0.0) as f32;
+    let left = clamp_dimension(state, 2)?;
+    let right = clamp_dimension(state, 3)?;
+    let top = clamp_dimension(state, 4)?;
+    let bottom = clamp_dimension(state, 5)?;
     if !can_change_protected_state_for(state, id) {
         emit_addon_action_blocked(state, id, "SetClampRectInsets");
         return Ok(0);
@@ -83,6 +83,25 @@ pub fn set_clamp_rect_insets(state: &mut LuaState) -> LuaResult<u32> {
         frame.clamp_rect_insets = (left, right, top, bottom);
     }
     Ok(0)
+}
+
+fn clamp_dimension(state: &LuaState, index: i32) -> LuaResult<f32> {
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
+        return Ok(f64::from_stack(state, index).unwrap_or(0.0) as f32);
+    }
+    let value = rilua::table_security::unwrap_secret(state, stack_val(state, index))?;
+    let number = match value {
+        Val::Num(number) => Some(number),
+        Val::Str(r) => state
+            .gc
+            .string_arena
+            .get(r)
+            .and_then(|s| crate::c_api::parse_numeric_string(s.data())),
+        _ => None,
+    };
+    number.map(|n| n as f32).ok_or_else(|| {
+        rilua::runtime_error("Usage: self:SetClampRectInsets(left, right, top, bottom)")
+    })
 }
 
 pub fn set_points_offset(state: &mut LuaState) -> LuaResult<u32> {

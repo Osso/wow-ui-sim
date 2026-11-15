@@ -62,7 +62,7 @@ fn load_runtime_addon_with_dependencies(
     );
     crate::loader::trace_load_addon(origin, format!("begin {addon_name}"));
     let (toc_path, toc, screen) = read_runtime_addon_toc(state, addon_name, origin)?;
-    let loading_guard = crate::loader::begin_addon_load(loader_env, addon_name, &toc);
+    let loading_guard = crate::loader::begin_addon_load(loader_env, addon_name, &toc)?;
     apply_mists_runtime_preload(loader_env, &toc, &toc_path, origin)?;
     load_runtime_addon_dependencies(state, loader_env, addon_name, &toc, screen, origin)?;
     let mut result =

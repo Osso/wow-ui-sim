@@ -4,15 +4,21 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::lua_api::state::SpellCooldownState;
 
 #[test]
-fn item_cooldown_projects_supplied_records_only_on_ptr() {
+fn item_cooldown_projects_supplied_records_on_ptr_and_forever() {
     let env = WowLuaEnv::new().unwrap();
-    if ACTIVE != ClientProfile::Ptr {
+    if !matches!(ACTIVE, ClientProfile::Ptr | ClientProfile::WowForever) {
         assert!(
             env.eval::<bool>("return rawget(C_Spell, 'GetItemCooldown') == nil")
                 .unwrap()
         );
         return;
     }
+    assert_populated_item_cooldown(&env);
+    assert_zero_item_cooldown(&env);
+    assert_removed_item_cooldown_and_isolation(&env);
+}
+
+fn assert_populated_item_cooldown(env: &WowLuaEnv) {
     env.exec("assert(C_Spell.GetItemCooldown(999999) == nil)")
         .unwrap();
     env.state().borrow_mut().item_cooldowns.insert(
@@ -35,6 +41,9 @@ fn item_cooldown_projects_supplied_records_only_on_ptr() {
     "#,
     )
     .unwrap();
+}
+
+fn assert_zero_item_cooldown(env: &WowLuaEnv) {
     env.state().borrow_mut().item_cooldowns.insert(
         6948,
         SpellCooldownState {
@@ -50,6 +59,9 @@ fn item_cooldown_projects_supplied_records_only_on_ptr() {
     "#,
     )
     .unwrap();
+}
+
+fn assert_removed_item_cooldown_and_isolation(env: &WowLuaEnv) {
     env.state().borrow_mut().item_cooldowns.remove(&6948);
     env.exec("assert(C_Spell.GetItemCooldown(6948) == nil)")
         .unwrap();

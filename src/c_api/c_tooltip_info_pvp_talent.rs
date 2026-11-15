@@ -1,33 +1,49 @@
-//! Retail `C_TooltipInfo.GetPvpTalent` composition.
+//! Retail `C_TooltipInfo.GetPvpTalent` composition and the Forever supplied-input path.
 //!
-//! R44-Q20, R53 and R56 establish the success path. The Retail talent catalog
+//! R44-Q20, R53 and R56 establish the Retail success path. The Retail talent catalog
 //! is generated from the local-CASC export recorded in provenance; resolved
-//! spell IDs and eligibility/grant outcomes remain host inputs. Native failure
-//! publication and override ranking remain unknown.
+//! spell IDs and eligibility/grant outcomes remain host inputs. Forever validates
+//! its arguments and composes only supplied talent-to-spell rows.
 
-use crate::c_api::tooltip_getter_args::{
-    allowed_when_untainted, lua_index, round7_optional_bool, round7_signed,
-};
+#[cfg(feature = "client-retail")]
+use crate::c_api::tooltip_getter_args::lua_index;
+#[cfg(feature = "client-retail")]
+use crate::c_api::tooltip_getter_args::round7_optional_bool;
+use crate::c_api::tooltip_getter_args::{allowed_when_untainted, round7_signed};
+use crate::lua_api::globals::missing_surface::tooltip_info::tooltip_for_spell;
+#[cfg(feature = "client-retail")]
 use crate::lua_api::globals::missing_surface::tooltip_info::{
     append_line, format_global_numeric, format_global_text, global_text, named_color,
-    restore_plain_line_type, tooltip_for_spell_identifier,
+    restore_plain_line_type,
 };
-use crate::lua_api::methods::{borrow_state, table_set};
+use crate::lua_api::methods::borrow_state;
+#[cfg(feature = "client-retail")]
+use crate::lua_api::methods::table_set;
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
+use rilua::LuaResult;
+#[cfg(feature = "client-retail")]
+use rilua::Val;
 use rilua::vm::{gc::arena::GcRef, state::LuaState, table::Table};
-use rilua::{LuaResult, Val};
+#[cfg(feature = "client-retail")]
 use std::collections::HashMap;
 
+#[cfg(feature = "client-retail")]
 include!("c_tooltip_info_pvp_talent_data.rs");
 
 const API_NAME: &str = "C_TooltipInfo.GetPvpTalent";
 const USAGE: &str = "Usage: local data = C_TooltipInfo.GetPvpTalent(talentID [, isInspect, groupIndex, talentIndex])";
+#[cfg(feature = "client-retail")]
 const PLAIN_LINE_TYPE: f64 = 0.0;
+#[cfg(feature = "client-retail")]
 const BLANK_LINE_TYPE: f64 = 1.0;
+#[cfg(feature = "client-retail")]
 const TALENT_POSITION_COUNT: i32 = 4;
+#[cfg(feature = "client-retail")]
 const SUPPRESSED_OVERRIDE_ATTRIBUTE: u32 = 32768;
+#[cfg(feature = "client-retail")]
 const BLANK_LINE_TEXT: &str = " ";
 
+#[cfg(feature = "client-retail")]
 /// One catalogued PvP talent row plus host-supplied eligibility and grant outcomes.
 #[derive(Clone, Debug, Default)]
 pub struct PvpTalentTooltipRecord {
@@ -50,6 +66,17 @@ pub struct PvpTalentTooltipRecord {
     pub eligibility_level_failed: bool,
 }
 
+#[cfg(feature = "client-retail")]
+/// Host-supplied values with the pinned Retail PvpTalentSlotInfo shape.
+/// SpecializationInfoDocumentation.lua:491-499; no native defaults are inferred.
+#[derive(Clone, Debug)]
+pub struct PvpTalentSlotInput {
+    pub enabled: bool,
+    pub level: i32,
+    pub available_talent_ids: Vec<i32>,
+}
+
+#[cfg(feature = "client-retail")]
 /// Host inputs used by the Retail PvP talent tooltip producer.
 #[derive(Clone, Debug)]
 pub struct PvpTalentTooltipInputs {
@@ -61,10 +88,15 @@ pub struct PvpTalentTooltipInputs {
     pub groups: HashMap<usize, [Option<i32>; TALENT_POSITION_COUNT as usize]>,
     /// Resolved spell outcomes supplied by the host; absent entries mean identity.
     pub resolved_spell_ids: HashMap<u32, u32>,
+    /// None leaves the eligibility result unmodelled; not a native default.
+    pub rest_permission: Option<bool>,
+    /// One-based UI slot records; selected IDs come from `groups`.
+    pub slots: HashMap<usize, PvpTalentSlotInput>,
     /// Granting items in the inspected-unit context, keyed by GUID and talent ID.
     pub inspect_grant_item_ids: HashMap<(String, i32), u32>,
 }
 
+#[cfg(feature = "client-retail")]
 impl Default for PvpTalentTooltipInputs {
     fn default() -> Self {
         let catalog = ROWS
@@ -95,6 +127,8 @@ impl Default for PvpTalentTooltipInputs {
             active_group_index: 0,
             groups: HashMap::new(),
             resolved_spell_ids: HashMap::new(),
+            rest_permission: None,
+            slots: HashMap::new(),
             inspect_grant_item_ids: HashMap::new(),
         }
     }
@@ -104,69 +138,183 @@ pub(crate) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResu
     table_set_rust_fn_static(state, namespace, "GetPvpTalent", get_pvp_talent)
 }
 
-fn get_pvp_talent(state: &mut LuaState) -> LuaResult<u32> {
+#[cfg(feature = "client-retail")]
+fn read_group_index(state: &LuaState, position: i32) -> LuaResult<Option<usize>> {
+    lua_index(state, position)
+}
+
+#[cfg(feature = "client-wowforever")]
+fn read_group_index(state: &LuaState, position: i32) -> LuaResult<Option<usize>> {
+    crate::c_api::tooltip_getter_args::forever_lua_index(state, position, USAGE)
+}
+
+#[derive(Clone, Copy)]
+struct PvpTalentArguments {
+    talent_id: i32,
+    #[cfg(feature = "client-retail")]
+    retail: RetailPvpTalentArguments,
+}
+
+#[cfg(feature = "client-retail")]
+#[derive(Clone, Copy)]
+struct RetailPvpTalentArguments {
+    is_inspect: bool,
+    group_was_supplied: bool,
+    parsed_group: Option<usize>,
+    talent_position: i32,
+}
+
+#[cfg(feature = "client-retail")]
+struct RetailPvpTalentContext {
+    record: PvpTalentTooltipRecord,
+    active_group_index: usize,
+    player_present: bool,
+}
+
+fn read_pvp_talent_arguments(state: &LuaState) -> LuaResult<PvpTalentArguments> {
     let talent_id = round7_signed(state, 1, USAGE)?;
+    #[cfg(feature = "client-wowforever")]
+    validate_forever_optional_pvp_talent_arguments(state)?;
+    #[cfg(feature = "client-retail")]
+    let retail = read_retail_pvp_talent_arguments(state)?;
+
+    Ok(PvpTalentArguments {
+        talent_id,
+        #[cfg(feature = "client-retail")]
+        retail,
+    })
+}
+
+#[cfg(feature = "client-wowforever")]
+fn validate_forever_optional_pvp_talent_arguments(state: &LuaState) -> LuaResult<()> {
+    // Forever's supplied source map indexes only talent ID. Other selectors are
+    // validated, but they do not select records.
+    let _is_inspect = crate::c_api::tooltip_getter_args::optional_bool(state, 2)?;
+    let group_value = allowed_when_untainted(state, 3, API_NAME)?;
+    if !group_value.is_nil() {
+        let _group_index = read_group_index(state, 3)?;
+    }
+    let _talent_position = read_talent_position(state)?;
+    Ok(())
+}
+
+#[cfg(feature = "client-retail")]
+fn read_retail_pvp_talent_arguments(state: &LuaState) -> LuaResult<RetailPvpTalentArguments> {
     let is_inspect = round7_optional_bool(state, 2, USAGE)?;
     let group_value = allowed_when_untainted(state, 3, API_NAME)?;
     let group_was_supplied = !group_value.is_nil();
     let parsed_group = if group_was_supplied {
-        lua_index(state, 3)?
+        read_group_index(state, 3)?
     } else {
         None
     };
-    let talent_position = if stack_val(state, 4).is_nil() {
-        0
+    let talent_position = read_talent_position(state)?;
+    Ok(RetailPvpTalentArguments {
+        is_inspect,
+        group_was_supplied,
+        parsed_group,
+        talent_position,
+    })
+}
+
+fn read_talent_position(state: &LuaState) -> LuaResult<i32> {
+    if stack_val(state, 4).is_nil() {
+        Ok(0)
     } else {
-        round7_signed(state, 4, USAGE)?
-    };
+        round7_signed(state, 4, USAGE)
+    }
+}
 
-    if talent_id == 0 {
+fn get_pvp_talent(state: &mut LuaState) -> LuaResult<u32> {
+    let arguments = read_pvp_talent_arguments(state)?;
+    #[cfg(feature = "client-wowforever")]
+    {
+        publish_forever_pvp_talent(state, arguments.talent_id)
+    }
+    #[cfg(feature = "client-retail")]
+    {
+        publish_retail_pvp_talent(state, arguments)
+    }
+}
+
+#[cfg(feature = "client-wowforever")]
+fn publish_forever_pvp_talent(state: &mut LuaState, talent_id: i32) -> LuaResult<u32> {
+    let spell_id = borrow_state(state)?
+        .forever_pvp_talent_spell_ids
+        .get(&talent_id)
+        .copied();
+    let Some(spell_id) = spell_id else {
+        return Ok(0);
+    };
+    let tooltip = tooltip_for_spell(state, spell_id);
+    state.push(tooltip);
+    Ok(1)
+}
+
+#[cfg(feature = "client-retail")]
+fn publish_retail_pvp_talent(
+    state: &mut LuaState,
+    arguments: PvpTalentArguments,
+) -> LuaResult<u32> {
+    if arguments.talent_id == 0 {
         return crate::c_api::tooltip_data::unknown_getter_failure();
     }
-
-    let (record, active_group, player_present) = {
+    let context = {
         let sim = borrow_state(state)?;
-        (
-            sim.pvp_talent_tooltip.catalog.get(&talent_id).cloned(),
-            sim.pvp_talent_tooltip.active_group_index,
-            sim.player.present,
-        )
+        sim.pvp_talent_tooltip
+            .catalog
+            .get(&arguments.talent_id)
+            .cloned()
+            .map(|record| RetailPvpTalentContext {
+                record,
+                active_group_index: sim.pvp_talent_tooltip.active_group_index,
+                player_present: sim.player.present,
+            })
     };
-    let Some(record) = record else {
+    let Some(context) = context else {
         return crate::c_api::tooltip_data::unknown_getter_failure();
     };
-    if crate::spells::get_spell(record.spell_id).is_none() {
+    if crate::spells::get_spell(context.record.spell_id).is_none() {
         return crate::c_api::tooltip_data::unknown_getter_failure();
     }
-
-    let resolved_spell_id = resolve_spell_id(state, record.spell_id, None)?;
-    if !player_present || crate::spells::get_spell(resolved_spell_id).is_none() {
+    let resolved_spell_id = resolve_spell_id(state, context.record.spell_id, None)?;
+    if !context.player_present || crate::spells::get_spell(resolved_spell_id).is_none() {
         // R53 confirms annotation continuation, but the public result is UNKNOWN.
         return crate::c_api::tooltip_data::unknown_getter_failure();
     }
+    compose_retail_pvp_talent(state, arguments, context, resolved_spell_id)
+}
 
-    let tooltip = tooltip_for_spell_identifier(state, Some(resolved_spell_id), false);
-    append_replacement_line(state, tooltip, &record)?;
-    let local_group = if is_inspect {
+#[cfg(feature = "client-retail")]
+fn compose_retail_pvp_talent(
+    state: &mut LuaState,
+    arguments: PvpTalentArguments,
+    context: RetailPvpTalentContext,
+    spell_id: u32,
+) -> LuaResult<u32> {
+    let tooltip = tooltip_for_spell(state, spell_id);
+    append_replacement_line(state, tooltip, &context.record)?;
+    let local_group = if arguments.retail.is_inspect {
         None
-    } else if group_was_supplied {
-        parsed_group
+    } else if arguments.retail.group_was_supplied {
+        arguments.retail.parsed_group
     } else {
-        Some(active_group)
+        Some(context.active_group_index)
     };
     append_talent_annotation(
         state,
         tooltip,
-        talent_id,
-        talent_position,
-        is_inspect,
+        arguments.talent_id,
+        arguments.retail.talent_position,
+        arguments.retail.is_inspect,
         local_group,
-        &record,
+        &context.record,
     )?;
     state.push(tooltip);
     Ok(1)
 }
 
+#[cfg(feature = "client-retail")]
 fn resolve_spell_id(
     state: &LuaState,
     spell_id: u32,
@@ -185,6 +333,7 @@ fn resolve_spell_id(
     })
 }
 
+#[cfg(feature = "client-retail")]
 fn append_replacement_line(
     state: &mut LuaState,
     tooltip: Val,
@@ -213,6 +362,7 @@ fn append_replacement_line(
     Ok(())
 }
 
+#[cfg(feature = "client-retail")]
 fn append_talent_annotation(
     state: &mut LuaState,
     tooltip: Val,
@@ -247,40 +397,32 @@ fn append_talent_annotation(
     if !(0..TALENT_POSITION_COUNT).contains(&talent_position) {
         return Ok(());
     }
-    let position_mask = 1_u8 << talent_position;
-    if record.category_position_mask & position_mask == 0 {
+    let position_mask = 1_u32 << (talent_position as u32 & 31);
+    if u32::from(record.category_position_mask) & position_mask == 0 {
         return Ok(());
     }
 
-    match record.eligibility_by_position.get(&talent_position) {
-        Some(true) => append_key_line(
-            state,
-            tooltip,
-            "TALENT_TOOLTIP_ADDPREVIEWPOINT",
-            "FRIENDLY_STATUS_COLOR",
-            true,
-        ),
-        Some(false) => {
-            if record.eligibility_level_failed {
-                append_unlock_line(state, tooltip, record.level_required, true)
-            } else {
-                append_local_failure_line(state, tooltip, context, record)
-            }
-        }
-        None => Ok(()),
+    let eligibility = record
+        .eligibility_by_position
+        .get(&talent_position)
+        .copied();
+    if eligibility.is_none() && context.rest_permission.is_none() {
+        return Ok(());
     }
+    append_local_eligibility_line(state, tooltip, context, record, eligibility)
 }
 
+#[cfg(feature = "client-retail")]
 #[derive(Clone, Copy)]
 struct LocalAnnotationContext {
     active_group_index: usize,
     player_level: i32,
     in_combat: bool,
-    is_resting: bool,
-    rest_state: i32,
+    rest_permission: Option<bool>,
     selected_talents: [Option<i32>; TALENT_POSITION_COUNT as usize],
 }
 
+#[cfg(feature = "client-retail")]
 fn local_annotation_context(
     state: &LuaState,
     group_index: usize,
@@ -301,12 +443,12 @@ fn local_annotation_context(
         active_group_index: sim.pvp_talent_tooltip.active_group_index,
         player_level,
         in_combat: sim.player.in_combat,
-        is_resting: sim.player.is_resting,
-        rest_state: sim.player_xp.rest_state,
+        rest_permission: sim.pvp_talent_tooltip.rest_permission,
         selected_talents,
     }))
 }
 
+#[cfg(feature = "client-retail")]
 fn append_unlock_line(
     state: &mut LuaState,
     tooltip: Val,
@@ -318,15 +460,15 @@ fn append_unlock_line(
     Ok(())
 }
 
-fn append_local_failure_line(
+#[cfg(feature = "client-retail")]
+fn append_local_eligibility_line(
     state: &mut LuaState,
     tooltip: Val,
     context: LocalAnnotationContext,
     record: &PvpTalentTooltipRecord,
+    eligibility: Option<bool>,
 ) -> LuaResult<()> {
-    if append_local_grant_line(state, tooltip, record)? {
-        return Ok(());
-    }
+    // R73: dispatch exactly one result, with combat before grant and unlock.
     if context.in_combat {
         return append_key_line(
             state,
@@ -336,7 +478,14 @@ fn append_local_failure_line(
             true,
         );
     }
-    if !rest_change_allowed(context) {
+    if record.grant_rejected_by_item {
+        append_local_grant_line(state, tooltip, record)?;
+        return Ok(());
+    }
+    if record.eligibility_level_failed {
+        return append_unlock_line(state, tooltip, record.level_required, true);
+    }
+    if eligibility == Some(false) || context.rest_permission == Some(false) {
         return append_key_line(
             state,
             tooltip,
@@ -345,15 +494,16 @@ fn append_local_failure_line(
             true,
         );
     }
-    // The R56 default for other helper failures is known, but those failure
-    // predicates are UNKNOWN and stay unmodelled.
-    Ok(())
+    append_key_line(
+        state,
+        tooltip,
+        "TALENT_TOOLTIP_ADDPREVIEWPOINT",
+        "FRIENDLY_STATUS_COLOR",
+        true,
+    )
 }
 
-fn rest_change_allowed(context: LocalAnnotationContext) -> bool {
-    (context.rest_state > 0 && !context.in_combat) || context.is_resting
-}
-
+#[cfg(feature = "client-retail")]
 fn append_local_grant_line(
     state: &mut LuaState,
     tooltip: Val,
@@ -385,6 +535,7 @@ fn append_local_grant_line(
     Ok(true)
 }
 
+#[cfg(feature = "client-retail")]
 fn append_inspect_grant_line(state: &mut LuaState, tooltip: Val, talent_id: i32) -> LuaResult<()> {
     let item_id = {
         let sim = borrow_state(state)?;
@@ -403,6 +554,7 @@ fn append_inspect_grant_line(state: &mut LuaState, tooltip: Val, talent_id: i32)
     append_item_grant_line(state, tooltip, item.name, "ITEM_LEGENDARY_COLOR")
 }
 
+#[cfg(feature = "client-retail")]
 fn append_item_grant_line(
     state: &mut LuaState,
     tooltip: Val,
@@ -414,6 +566,7 @@ fn append_item_grant_line(
     Ok(())
 }
 
+#[cfg(feature = "client-retail")]
 fn append_key_line(
     state: &mut LuaState,
     tooltip: Val,
@@ -427,6 +580,7 @@ fn append_key_line(
     Ok(())
 }
 
+#[cfg(feature = "client-retail")]
 fn append_colored_text_line(
     state: &mut LuaState,
     tooltip: Val,
@@ -442,7 +596,67 @@ fn append_colored_text_line(
     }
 }
 
+#[cfg(feature = "client-retail")]
 fn append_blank_line(state: &mut LuaState, tooltip: Val) {
     let color = named_color(state, "NORMAL_FONT_COLOR");
     append_line(state, tooltip, BLANK_LINE_TYPE, BLANK_LINE_TEXT, color);
+}
+
+// Retail SpecializationInfoDocumentation.lua:153-165,491-499.
+#[cfg(feature = "client-retail")]
+pub(crate) fn register_slot_info(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
+    table_set_rust_fn_static(state, namespace, "GetPvpTalentSlotInfo", get_slot_info)
+}
+
+#[cfg(feature = "client-retail")]
+fn get_slot_info(state: &mut LuaState) -> LuaResult<u32> {
+    use crate::lua_api::methods::create_table;
+    // Preserve the old no-host call behavior; native argument failures are UNKNOWN.
+    let value = allowed_when_untainted(state, 1, "C_SpecializationInfo.GetPvpTalentSlotInfo")?;
+    let ui_index = match value {
+        Val::Num(number)
+            if number.fract() == 0.0 && (1.0..=f64::from(u32::MAX)).contains(&number) =>
+        {
+            number as usize
+        }
+        _ => {
+            state.push(Val::Nil);
+            return Ok(1);
+        }
+    };
+    let index = ui_index - 1;
+    let (slot, selected) = {
+        let sim = borrow_state(state)?;
+        let inputs = &sim.pvp_talent_tooltip;
+        let selected = inputs
+            .groups
+            .get(&inputs.active_group_index)
+            .and_then(|group| group.get(index))
+            .copied()
+            .flatten();
+        (inputs.slots.get(&ui_index).cloned(), selected)
+    };
+    let result = if let Some(slot) = slot {
+        let result = create_table(state);
+        table_set(state, result, "enabled", Val::Bool(slot.enabled));
+        table_set(state, result, "level", Val::Num(f64::from(slot.level)));
+        if let Some(id) = selected {
+            table_set(state, result, "selectedTalentID", Val::Num(f64::from(id)));
+        }
+        let available = create_table(state);
+        for (position, id) in slot.available_talent_ids.iter().enumerate() {
+            super::helpers::set_table_array(
+                state,
+                available,
+                (position + 1) as i64,
+                Val::Num(f64::from(*id)),
+            );
+        }
+        table_set(state, result, "availableTalentIDs", available);
+        result
+    } else {
+        crate::lua_api::workarounds::pvp_slot_default(state, ui_index)
+    };
+    state.push(result);
+    Ok(1)
 }

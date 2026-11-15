@@ -3,7 +3,6 @@
 //! Migrates 18 entries off the namespace stub tables:
 //!
 //! - `GetBountySetInfoForMapID(mapID)` — nil (no bounty board data).
-//! - `GetInfo(logIndex)` — returns QuestInfo table or nil.
 //! - `GetNextWaypoint(questID)` — returns (x, y) or nothing.
 //! - `GetQuestDetailsTheme(questID)` — returns theme string or nil.
 //! - `GetQuestTagInfo(questID)` — returns QuestTagInfo table or nil.
@@ -34,7 +33,7 @@ use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
-const QUEST_LOG_HEADER_TITLE: &str = "Khaz Algar";
+use crate::c_api::c_quest_log::{QuestLogIndexKind, classify_quest_log_index};
 
 pub(super) fn register_quest_log_surface(state: &mut LuaState) -> LuaResult<()> {
     let ns = ensure_namespace(state, "C_QuestLog")?;
@@ -57,7 +56,6 @@ pub(super) fn register_quest_log_surface(state: &mut LuaState) -> LuaResult<()> 
 
 const C_QUEST_LOG_METHODS: &[(&'static str, rilua::vm::closure::RustFn)] = &[
     ("GetBountySetInfoForMapID", get_bounty_set_info_for_map_id),
-    ("GetInfo", get_info),
     ("GetMapForQuestPOIs", get_map_for_quest_pois),
     ("GetMaxNumQuests", get_max_num_quests),
     ("GetMaxNumQuestsCanAccept", get_max_num_quests),
@@ -90,131 +88,6 @@ fn get_bounty_set_info_for_map_id(state: &mut LuaState) -> LuaResult<u32> {
     // No bounty board data in the sim.
     state.push(Val::Nil);
     Ok(1)
-}
-
-fn get_info(state: &mut LuaState) -> LuaResult<u32> {
-    let log_index = i32::from_stack(state, 1)?;
-    if log_index < 1 {
-        return Ok(0);
-    }
-    let kind = {
-        let sim = borrow_state(state)?;
-        classify_quest_log_index(sim.quest_log_entries.entries.len(), log_index)
-    };
-    let Some(kind) = kind else { return Ok(0) };
-
-    let t = create_table(state);
-    match kind {
-        QuestLogIndexKind::Header => {
-            write_header_identity_fields(state, t, log_index);
-            write_header_constant_fields(state, t);
-        }
-        QuestLogIndexKind::Quest(quest_entry_index) => {
-            let entry = borrow_state(state)?
-                .quest_log_entries
-                .entries
-                .get(quest_entry_index)
-                .cloned();
-            let Some(entry) = entry else { return Ok(0) };
-            write_quest_identity_fields(state, t, &entry, log_index);
-            write_quest_classification_flags(state, t, &entry);
-            write_quest_constant_stub_fields(state, t, false);
-            let campaign = borrow_state(state)?
-                .quest_log_entries
-                .campaign_ids
-                .get(&entry.quest_id)
-                .copied()
-                .unwrap_or(0);
-            table_set(state, t, "campaignID", Val::Num(f64::from(campaign)));
-            let auto_complete = crate::c_api::quest_objectives::ENABLED
-                && borrow_state(state)?
-                    .quest_log_entries
-                    .readiness
-                    .auto_complete
-                    .contains(&entry.quest_id);
-            table_set(state, t, "isAutoComplete", Val::Bool(auto_complete));
-        }
-    }
-
-    state.push(t);
-    Ok(1)
-}
-
-#[derive(Clone, Copy)]
-enum QuestLogIndexKind {
-    Header,
-    Quest(usize),
-}
-
-fn classify_quest_log_index(entry_count: usize, log_index: i32) -> Option<QuestLogIndexKind> {
-    if entry_count == 0 || log_index < 1 {
-        return None;
-    }
-    if log_index == 1 {
-        return Some(QuestLogIndexKind::Header);
-    }
-    let quest_index = (log_index - 2) as usize;
-    (quest_index < entry_count).then_some(QuestLogIndexKind::Quest(quest_index))
-}
-
-fn write_header_identity_fields(state: &mut LuaState, t: Val, log_index: i32) {
-    table_set(state, t, "questID", Val::Num(0.0));
-    let title = create_string(state, QUEST_LOG_HEADER_TITLE);
-    table_set(state, t, "title", title);
-    table_set(state, t, "level", Val::Num(0.0));
-    table_set(state, t, "questLogIndex", Val::Num(log_index as f64));
-    table_set(state, t, "difficultyLevel", Val::Num(0.0));
-    table_set(state, t, "isComplete", Val::Bool(false));
-    table_set(state, t, "isFailed", Val::Bool(false));
-}
-
-fn write_quest_identity_fields(
-    state: &mut LuaState,
-    t: Val,
-    entry: &QuestLogEntry,
-    log_index: i32,
-) {
-    table_set(state, t, "questID", Val::Num(entry.quest_id as f64));
-    let title = create_string(state, &entry.title);
-    table_set(state, t, "title", title);
-    table_set(state, t, "level", Val::Num(entry.level as f64));
-    table_set(state, t, "questLogIndex", Val::Num(log_index as f64));
-    table_set(state, t, "difficultyLevel", Val::Num(entry.level as f64));
-    table_set(state, t, "isComplete", Val::Bool(entry.is_complete));
-    table_set(state, t, "isFailed", Val::Bool(entry.is_failed));
-}
-
-fn write_quest_classification_flags(state: &mut LuaState, t: Val, entry: &QuestLogEntry) {
-    table_set(state, t, "isMeta", Val::Bool(entry.is_meta));
-    table_set(state, t, "isWorldQuest", Val::Bool(entry.is_world_quest));
-    table_set(state, t, "isTask", Val::Bool(entry.is_world_quest));
-    table_set(state, t, "isOnMap", Val::Bool(entry.map_id.is_some()));
-}
-
-/// Fields that the sim always reports with a constant value — headers,
-/// bounty/story categories, POI flags, sort/scaling toggles, and the
-/// campaign/suggestedGroup identifiers we don't model.
-fn write_quest_constant_stub_fields(state: &mut LuaState, t: Val, is_header: bool) {
-    table_set(state, t, "isHeader", Val::Bool(is_header));
-    table_set(state, t, "isCollapsed", Val::Bool(false));
-    table_set(state, t, "isBounty", Val::Bool(false));
-    table_set(state, t, "isStory", Val::Bool(false));
-    table_set(state, t, "hasLocalPOI", Val::Bool(false));
-    table_set(state, t, "isHidden", Val::Bool(false));
-    table_set(state, t, "overridesSortOrder", Val::Bool(false));
-    table_set(state, t, "startEvent", Val::Bool(false));
-    table_set(state, t, "isScaling", Val::Bool(false));
-    table_set(state, t, "readyForTranslation", Val::Bool(false));
-    table_set(state, t, "suggestedGroup", Val::Num(0.0));
-}
-
-fn write_header_constant_fields(state: &mut LuaState, t: Val) {
-    table_set(state, t, "isAutoComplete", Val::Bool(false));
-    table_set(state, t, "isMeta", Val::Bool(false));
-    table_set(state, t, "isWorldQuest", Val::Bool(false));
-    table_set(state, t, "isTask", Val::Bool(false));
-    table_set(state, t, "isOnMap", Val::Bool(false));
-    write_quest_constant_stub_fields(state, t, true);
 }
 
 fn get_next_waypoint(state: &mut LuaState) -> LuaResult<u32> {

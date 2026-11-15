@@ -21,7 +21,6 @@ pub(crate) mod wrath_startup_defaults;
 pub(crate) mod account_store_set_storefront;
 pub(crate) mod achievement_search_preview;
 pub(crate) mod achievement_ui_access_defaults;
-pub(crate) mod action_bar_button_event_fanout;
 pub(crate) mod addon_compartment_defaults;
 pub(crate) mod addons_beta_policy_defaults;
 pub(crate) mod adventure_journal_fallbacks;
@@ -29,8 +28,6 @@ pub(crate) mod adventure_map_frame_surface;
 pub(crate) mod alert_frame_defaults;
 pub(crate) mod artifact_ui_show_panel_guard;
 pub(crate) mod assisted_combat_manager_defaults;
-pub(crate) mod auction_house_browse_results_event;
-pub(crate) mod auction_house_categories_refresh_count;
 pub(crate) mod auction_house_search_context_aliases;
 pub(crate) mod auth_challenge_frame_parent;
 pub(crate) mod auto_complete_defaults;
@@ -46,7 +43,9 @@ pub(crate) mod campaign_covenant_defaults;
 pub(crate) mod catalog_shop_inbound_globals;
 pub(crate) mod catalog_shop_product_card_defaults;
 pub(crate) mod character_create_defaults;
+#[cfg(not(feature = "client-retail"))]
 pub(crate) mod character_frame_surface_refresh;
+#[cfg(not(feature = "client-retail"))]
 pub(crate) mod character_select_selected_name;
 pub(crate) mod character_services_defaults;
 pub(crate) mod chat_voice_button_surface;
@@ -59,6 +58,7 @@ pub(crate) mod color_defaults;
 pub(crate) mod combat_log_state;
 pub(crate) mod configuration_warnings_defaults;
 pub(crate) mod container_default_shapes;
+#[cfg(not(feature = "client-retail"))]
 pub(crate) mod container_frame_token_tracker;
 pub(crate) mod container_portrait_texture;
 pub(crate) mod content_tracking_defaults;
@@ -106,7 +106,6 @@ pub(crate) mod inert_global_defaults;
 pub(crate) mod inventory_query_defaults;
 pub(crate) mod item_button_helper_defaults;
 pub(crate) mod item_quality_color_data_methods;
-pub(crate) mod item_socketing_tooltips;
 pub(crate) mod item_targeting_defaults;
 pub(crate) mod item_upgrade_availability_defaults;
 pub(crate) mod kiosk_namespace_defaults;
@@ -119,10 +118,10 @@ pub(crate) mod lfg_legacy_defaults;
 pub(crate) mod lfg_lock_list;
 pub(crate) mod loot_journal_defaults;
 pub(crate) mod macro_defaults;
+#[cfg(not(feature = "client-retail"))]
 pub(crate) mod main_menu_microbutton_click;
 pub(crate) mod major_faction_display_defaults;
 pub(crate) mod map_art_help_text_defaults;
-pub(crate) mod map_canvas_data_provider_pin;
 pub(crate) mod map_canvas_scroll_container;
 pub(crate) mod map_exploration_pin;
 pub(crate) mod map_group_defaults;
@@ -132,11 +131,13 @@ pub(crate) mod merchant_raid_defaults;
 pub(crate) mod minimap_tracking_defaults;
 pub(crate) mod misc_global_frame_defaults;
 pub(crate) mod modified_click_defaults;
+#[cfg(not(feature = "client-retail"))]
 pub(crate) mod mount_journal_dynamic_flight_popup;
 pub(crate) mod mythic_plus_cache_defaults;
 pub(crate) mod navigation_defaults;
 pub(crate) mod object_api_request_load_callbacks;
 pub(crate) mod objective_tracker_quest_header;
+#[cfg(not(feature = "client-retail"))]
 pub(crate) mod paging_controls_page_text;
 #[cfg(not(feature = "retail-12-0-0"))]
 pub(crate) mod party_ai_legacy;
@@ -171,7 +172,6 @@ pub(crate) mod restricted_actions_protected;
 pub(crate) mod scenario_defaults;
 pub(crate) mod script_bucket_throttle_limits;
 pub(crate) mod scripted_animation_effect_defaults;
-pub(crate) mod seconds_formatter_defaults;
 pub(crate) mod secure_reference_defaults;
 pub(crate) mod secure_transfer_state;
 pub(crate) mod secure_types_defaults;
@@ -194,7 +194,6 @@ pub(crate) mod startup_namespace_defaults;
 #[cfg(not(feature = "client-wrath"))]
 pub(crate) mod startup_service_capability_defaults;
 pub(crate) mod startup_windows;
-pub(crate) mod static_model_info_defaults;
 pub(crate) mod static_popup_defaults;
 pub(crate) mod store_glue_state;
 pub(crate) mod store_public_defaults;
@@ -203,6 +202,7 @@ pub(crate) mod talent_edge_frame_level_sync;
 pub(crate) mod taxi_map_defaults;
 pub(crate) mod texture_file_data_defaults;
 pub(crate) mod tooltip_data_processor_defaults;
+#[cfg(not(feature = "client-retail"))]
 pub(crate) mod tooltip_nineslice_surface;
 pub(crate) mod top_level_parent_defaults;
 pub(crate) mod tracking_namespace_defaults;
@@ -212,8 +212,6 @@ pub(crate) mod transmog_outfit_slot_defaults;
 pub(crate) mod transmog_sets_defaults;
 pub(crate) mod transmog_util_defaults;
 pub(crate) mod ui_frame_manager_defaults;
-pub(crate) mod ui_parent_panel_toggles;
-pub(crate) mod ui_widget_manager_defaults;
 pub(crate) mod uiparent_managed_frame_mixin;
 pub(crate) mod uiparent_onupdate_worklists;
 pub(crate) mod unit_auras_state;
@@ -229,3 +227,5 @@ pub(crate) mod wrath_arena_roster;
 #[cfg(feature = "client-wrath")]
 pub(crate) mod wrath_trade_skill_filters;
 pub(crate) mod zone_story_default;
+
+pub(crate) mod retail_spellbook_legacy;

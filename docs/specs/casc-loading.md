@@ -34,6 +34,11 @@ The simulator reads textures and fonts directly from a live WoW install via the 
 - [x] The runtime loads Lua source bytes into rilua; string literals retain their original bytes through source compilation and bytecode replay.
 - [x] XML, TOC and XSD cache validation still requires UTF-8. TOC and XML runtime text parsing is unchanged.
 
+### Unit-test startup cache isolation
+
+- [x] The `wow-sim` unit-test executable, including its reload-test child processes, must not automatically synchronize Blizzard UI sources. A missing or stale cache fails startup and identifies the expected Retail/PTR pin from the committed content index.
+- [x] Tests require an explicitly prepared matching cache. Invalid-cache startup must leave cache bytes unchanged. Normal non-test `wow-sim` startup retains automatic synchronization.
+
 ### Source sync transport
 
 - [ ] A sync operation reuses one CDN session and archive index set across file downloads instead of re-querying product metadata per file, then releases them before GUI startup.

@@ -30,7 +30,10 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         "DoesGroupHavePurchaseableProducts",
         query_group_eligibility,
     )?;
-    if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr) {
+    if matches!(
+        ACTIVE,
+        ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
+    ) {
         table_set_rust_fn_static(state, namespace, "IsEnabled", is_store_enabled)?;
     }
     Ok(())

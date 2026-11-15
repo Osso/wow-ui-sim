@@ -366,6 +366,7 @@ if rawget(C_CharacterCreation, "GetAvailableCustomizations") == nil then
         return character_create_categories()
     end
 end
+-- guessed; return bridge pending decomp (R78b)
 if rawget(C_CharacterCreation, "IsCharacterNameValid") == nil then
     function C_CharacterCreation.IsCharacterNameValid(_name)
         return true, ""
@@ -376,6 +377,15 @@ if rawget(C_CharacterCreation, "IsGuildNameValid") == nil then
         return true, ""
     end
 end
+"#;
+
+// guessed; native evidence pending for remaining legacy profiles
+#[cfg(not(any(
+    feature = "client-retail",
+    feature = "client-wowforever",
+    feature = "client-ptr"
+)))]
+const CHARACTER_CREATION_SUBMIT_GUESS_LUA: &str = r#"
 if rawget(C_CharacterCreation, "CreateCharacter") == nil then
     function C_CharacterCreation.CreateCharacter(name)
         if A_Admin and A_Admin.SetPlayerName then
@@ -383,6 +393,9 @@ if rawget(C_CharacterCreation, "CreateCharacter") == nil then
         end
     end
 end
+"#;
+
+const CHARACTER_CREATION_NAMESPACE_DEFAULTS_TAIL_LUA: &str = r#"
 
 function C_CharacterCreation.GetSelectedRace()
     return rawget(_G, "__wow_selected_race_id") or races[1].raceID
@@ -500,6 +513,15 @@ if characterCreateFrame ~= nil then
     __wow_seed_character_create_frame(characterCreateFrame)
 end
 
+"#;
+
+// guessed; native evidence pending for remaining legacy profiles
+#[cfg(not(any(
+    feature = "client-retail",
+    feature = "client-wowforever",
+    feature = "client-ptr"
+)))]
+const CHARACTER_CREATION_SUBMIT_MIXIN_GUESS_LUA: &str = r#"
 if type(CharacterCreateMixin) == "table" and type(CharacterCreateMixin.CreateCharacter) == "function" and not rawget(_G, "__wow_character_create_defaults_patched") then
     local originalCreateCharacter = CharacterCreateMixin.CreateCharacter
     function CharacterCreateMixin:CreateCharacter(...)
@@ -512,6 +534,9 @@ if type(CharacterCreateMixin) == "table" and type(CharacterCreateMixin.CreateCha
     end
     rawset(_G, "__wow_character_create_defaults_patched", true)
 end
+"#;
+
+const CHARACTER_CREATE_DEFAULTS_WORKAROUND_TAIL_LUA: &str = r#"
 
 if type(CharacterCreateRaceAndClassMixin) == "table" and type(CharacterCreateRaceAndClassMixin.GetCreateCharacterFaction) == "function" and not rawget(_G, "__wow_character_create_faction_patched") then
     local originalGetCreateCharacterFaction = CharacterCreateRaceAndClassMixin.GetCreateCharacterFaction
@@ -570,7 +595,18 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
         lua.exec("rawset(_G, '__wow_character_create_publish_racial_abilities', true)")?;
     }
-    lua.exec(CHARACTER_CREATION_NAMESPACE_DEFAULTS_LUA)?;
+    let source = [
+        CHARACTER_CREATION_NAMESPACE_DEFAULTS_LUA,
+        #[cfg(not(any(
+            feature = "client-retail",
+            feature = "client-wowforever",
+            feature = "client-ptr"
+        )))]
+        CHARACTER_CREATION_SUBMIT_GUESS_LUA,
+        CHARACTER_CREATION_NAMESPACE_DEFAULTS_TAIL_LUA,
+    ]
+    .concat();
+    lua.exec(&source)?;
     crate::c_api::c_character_creation_seen::install(lua)?;
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
         // User-approved offline cleanup: the excluded 3D preview has no choices.
@@ -606,9 +642,10 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Ptr {
         // Preserve the existing PTR scenario default; R61 did not prove PTR availability.
         lua.exec("function C_CharacterCreation.GetTrialBoostStartingLevel() return 0 end")?;
-        // PTR registration is UNKNOWN; retain the previous preview API fallbacks.
+        // R83b replaces only the PTR zoom fallback with a separately inferred
+        // Glue registration. Other preview API catalogs remain UNKNOWN.
         lua.exec(
-            "function C_CharacterCreation.SetSelectedPreviewGearType(gearType) end; function C_CharacterCreation.SetModelDressState(dressedState) end; function C_CharacterCreation.SetCameraZoomLevel(zoomLevel, keepCustomZoom) end; function C_CharacterCreation.SetBlurEnabled(enabled) end",
+            "function C_CharacterCreation.SetSelectedPreviewGearType(gearType) end; function C_CharacterCreation.SetModelDressState(dressedState) end; function C_CharacterCreation.SetBlurEnabled(enabled) end",
         )?;
         let state = lua.state_mut();
         let namespace = crate::c_api::ensure_namespace(state, "C_CharacterCreation")?;
@@ -625,7 +662,24 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 }
 
 pub(crate) fn patch(env: &WowLuaEnv) {
-    let _ = env.exec(CHARACTER_CREATE_DEFAULTS_WORKAROUND_LUA);
+    // The broad fallback strings stay shared; ACTIVE selects their installation.
+    let source = if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        String::new()
+    } else {
+        [
+            CHARACTER_CREATE_DEFAULTS_WORKAROUND_LUA,
+            // Keep the Submit-guess constant out of Retail, PTR and Forever.
+            #[cfg(not(any(
+                feature = "client-retail",
+                feature = "client-wowforever",
+                feature = "client-ptr"
+            )))]
+            CHARACTER_CREATION_SUBMIT_MIXIN_GUESS_LUA,
+            CHARACTER_CREATE_DEFAULTS_WORKAROUND_TAIL_LUA,
+        ]
+        .concat()
+    };
+    let _ = env.exec(&source);
 }
 
 #[cfg(test)]
@@ -633,6 +687,7 @@ mod tests {
     use super::*;
 
     #[test]
+    #[cfg(not(feature = "client-retail"))]
     fn seeds_initial_character_create_state_and_buttons() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
         env.exec(
@@ -705,6 +760,11 @@ mod tests {
     }
 
     #[test]
+    #[cfg(not(any(
+        feature = "client-retail",
+        feature = "client-wowforever",
+        feature = "client-ptr"
+    )))]
     fn create_character_wrapper_seeds_state_and_admin_name() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
         env.exec(
@@ -815,6 +875,7 @@ mod tests {
     }
 
     #[test]
+    #[cfg(not(feature = "client-retail"))]
     fn background_overlay_fallback_sets_array_or_single_texture_alpha() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
         env.exec(

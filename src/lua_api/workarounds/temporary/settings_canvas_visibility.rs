@@ -1,9 +1,7 @@
 //! Temporary Settings canvas visibility workaround.
 //!
-//! Real WoW registers Settings canvas categories without displaying their
-//! frames. Our simulated Settings surface can leave registered addon option
-//! frames visible at startup, so hide canvases on registration and only show
-//! the active category's canvas when opened.
+//! Preserve the existing visibility compatibility policy on non-Retail profiles.
+//! Retail leaves the original Settings registration, selection and startup intact.
 
 use crate::lua_api::WowLuaEnv;
 
@@ -132,7 +130,11 @@ __wow_hide_registered_settings_canvas_frames()
 "#;
 
 pub(crate) fn patch(env: &WowLuaEnv) {
-    let _ = env.exec(SETTINGS_CANVAS_LAYOUT_HIDE_LUA);
+    use crate::client_profile::{ACTIVE, ClientProfile};
+
+    if ACTIVE != ClientProfile::Retail {
+        let _ = env.exec(SETTINGS_CANVAS_LAYOUT_HIDE_LUA);
+    }
 }
 
 #[cfg(test)]
@@ -197,7 +199,8 @@ mod tests {
         )
         .expect("fake settings surface should install");
 
-        patch(&env);
+        env.exec(SETTINGS_CANVAS_LAYOUT_HIDE_LUA)
+            .expect("legacy visibility policy should install");
 
         let hidden_after_register: bool = env
             .eval(

@@ -1,69 +1,13 @@
 use crate::common;
 
-use std::path::PathBuf;
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::startup::fire_startup_events;
-
-fn blizzard_ui_dir() -> PathBuf {
-    wow_ui_sim::paths::default_blizzard_ui_addons_path()
-        .expect("Blizzard UI cache should be available")
-}
-
-const ACTION_BAR_ADDONS: &[&str] = &[
-    "Blizzard_SharedXMLBase",
-    "Blizzard_Colors",
-    "Blizzard_SharedXML",
-    "Blizzard_SharedXMLGame",
-    "Blizzard_UIPanelTemplates",
-    "Blizzard_FrameXMLBase",
-    "Blizzard_LoadLocale",
-    "Blizzard_Fonts_Shared",
-    "Blizzard_HelpPlate",
-    "Blizzard_AccessibilityTemplates",
-    "Blizzard_ObjectAPI",
-    "Blizzard_UIParent",
-    "Blizzard_TextStatusBar",
-    "Blizzard_MoneyFrame",
-    "Blizzard_POIButton",
-    "Blizzard_Flyout",
-    "Blizzard_StoreUI",
-    "Blizzard_MicroMenu",
-    "Blizzard_ManagedFrameSystem",
-    "Blizzard_GameMenuEsc",
-    "Blizzard_UIParentUtil",
-    "Blizzard_EditMode",
-    "Blizzard_GarrisonBase",
-    "Blizzard_GameTooltip",
-    "Blizzard_UIParentPanelManager",
-    "Blizzard_Settings_Shared",
-    "Blizzard_SettingsDefinitions_Shared",
-    "Blizzard_SettingsDefinitions_Frame",
-    "Blizzard_FrameXMLUtil",
-    "Blizzard_ItemButton",
-    "Blizzard_QuickKeybind",
-    "Blizzard_FrameXML",
-    "Blizzard_UIPanels_Game",
-    "Blizzard_MapCanvasSecureUtil",
-    "Blizzard_MapCanvas",
-    "Blizzard_SharedMapDataProviders",
-    "Blizzard_WorldMap",
-    "Blizzard_PingUI",
-    "Blizzard_ActionBar",
-];
 
 fn build_action_bar_env() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
     env.set_screen_size(1024.0, 768.0);
-    {
-        let mut state = env.state().borrow_mut();
-        state.addon_base_paths = vec![blizzard_ui_dir()];
-    }
-    if !common::load_classic_game_startup_inventory(&env) {
-        let ui = blizzard_ui_dir();
-        for addon_name in ACTION_BAR_ADDONS {
-            common::load_required_blizzard_addon(&env, &ui, addon_name);
-        }
-    }
+    common::panel_fixtures::seed_addon_search_paths(&env);
+    common::panel_fixtures::load_panel_addons(&env);
     env.apply_post_load_workarounds();
     fire_startup_events(&env);
     env

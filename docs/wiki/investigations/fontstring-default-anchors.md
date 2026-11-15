@@ -37,3 +37,4 @@ MessageFrame and ScrollingMessageFrame probes did not expose FontString regions 
 
 - [[xml-template-system]] - XML parsing and code generation overview
 - [[layout-system]] - anchor resolution behavior
+- [[fontstring-anchor-sizing]] - inferred width from opposite-edge anchors

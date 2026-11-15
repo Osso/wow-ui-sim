@@ -2,6 +2,14 @@
 
 The default `tests/frame_positions.rs` canvas (1600×1200) exposed obsolete raid-warning geometry and a renamed managed container. A live capture and causal replay also exposed simulator overrides that discarded custom ObjectiveTracker configuration. Those overrides are retired; the baseline now checks the supported geometry and native default-height relationship.
 
+## Bag-bar test application stages — 2026-11-12
+
+VERIFIED: the `tests/action_bar.rs` fixture loads BagsBar before startup only on PTR. Retail loads it inside `test_bag_bar_layout_locked`, after the startup layout pass. Both profiles' Mainline bag XML declares TOPRIGHT to MicroButtonAndBagsBar without an offset (Retail `MainMenuBarBagButtons.xml:44-48`; PTR `:12-16`). Both Standard preset constants specify Y=10 (Retail `EditModePresetLayoutConstants.lua:22-26`; PTR `:38-42`), projected by Mainline layouts (Retail `EditModePresetLayouts.lua:567-579`; PTR `:587-599`).
+
+VERIFIED: `Shared/EditModeSystemTemplates.lua:3-30` registers the system without applying its layout; `Shared/EditModeManager.lua:210-212` Retail / `:220-222` PTR only inserts it into the registry. The late-loaded Retail case therefore checks XML Y=0 **before the next layout update**, not native startup steady state. PTR checks the already-applied preset Y=10. `ApplySystemAnchor` at `Shared/EditModeSystemTemplates.lua:350-375` clears old points and applies the preset offsets divided by scale on both profiles. Native live-session late-addon event scheduling remains UNKNOWN.
+
+VERIFIED: the [baseline contract](../../specs/frame-position-profile-baselines.md#action-bar-fixture-stages) now requires explicit fixture-stage assertions and a separate both-profile selected-preset test that displaces the frame before invoking the original `ApplySystemAnchor`. This prevents a no-op application from passing. Proof receipts are in `~/.local/state/wow-ui-sim/handoff/master-preexisting-3/REPORT.md`; profile results must be read there rather than inferred from source.
+
 ## Exact fixture evidence
 
 The fixture loads all discovered Blizzard addons, runs normal startup plus post-event workarounds, waits two seconds, then runs three layout/timer ticks. It does not set a UI scale, SavedVariables, or Edit Mode fixture. Two fresh post-assertion diagnostics produced the same values in `/tmp/pi-frame-anchor-confirmed-{1,2}.stderr.log`.

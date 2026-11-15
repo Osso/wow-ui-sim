@@ -83,6 +83,8 @@ pub mod spec_display_spells;
 pub mod specializations;
 #[path = "../data/spell_descriptions.rs"]
 pub mod spell_descriptions;
+#[path = "../data/spell_effects.rs"]
+pub mod spell_effects;
 #[path = "../data/spell_power.rs"]
 pub mod spell_power;
 #[path = "../data/spells.rs"]

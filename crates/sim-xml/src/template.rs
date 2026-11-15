@@ -557,42 +557,40 @@ pub fn get_texture_template_size(name: &str) -> Option<(f32, f32)> {
 /// Returns a new `TextureXml` with inherited properties filled in.
 /// Instance properties override template properties (most-derived wins).
 pub fn resolve_texture_inheritance(texture: &TextureXml) -> TextureXml {
-    let Some(ref inherits) = texture.inherits else {
+    let Some(inherits) = texture.inherits.as_deref() else {
         return texture.clone();
     };
+    let templates = find_texture_templates(inherits);
+    merge_texture_template_chain(texture, &templates)
+}
 
-    let templates = with_texture_template_registry(|registry| {
-        let mut templates = Vec::new();
-        for parent_name in inherits.split(',').map(|s| s.trim()) {
-            if let Some(parent) = registry.get(parent_name) {
-                templates.push(parent.clone());
-            }
-        }
-        templates
-    });
+fn find_texture_templates(inherits: &str) -> Vec<TextureXml> {
+    with_texture_template_registry(|registry| {
+        inherits
+            .split(',')
+            .map(str::trim)
+            .filter_map(|name| registry.get(name).cloned())
+            .collect()
+    })
+}
 
-    if templates.is_empty() {
+fn merge_texture_template_chain(texture: &TextureXml, templates: &[TextureXml]) -> TextureXml {
+    let Some((base, derived)) = templates.split_first() else {
         return texture.clone();
-    }
-
-    // Start with first template as base, overlay subsequent templates, then instance
-    let mut merged = templates[0].clone();
-    for tmpl in &templates[1..] {
-        merge_texture_fields(&mut merged, tmpl);
+    };
+    let mut merged = base.clone();
+    for template in derived {
+        merge_texture_fields(&mut merged, template);
     }
     merge_texture_fields(&mut merged, texture);
 
-    // Preserve instance identity fields
     merged.name = texture.name.clone();
     merged.parent_key = texture.parent_key.clone();
-    merged.parent_array = texture.parent_array.clone();
     merged.is_virtual = texture.is_virtual;
     merged.inherits = texture.inherits.clone();
-    merged.anchors = texture.anchors.clone();
     merged.animations = texture.animations.clone();
     merged.scripts = texture.scripts.clone();
     merged.masked_textures = texture.masked_textures.clone();
-
     merged
 }
 
@@ -619,6 +617,8 @@ fn merge_texture_fields(dst: &mut TextureXml, src: &TextureXml) {
     merge_opt!(hidden);
     merge_opt!(alpha);
     merge_opt!(set_all_points);
+    merge_opt!(parent_array);
+    merge_opt!(anchors);
     merge_opt!(mixin);
     merge_texture_key_values(dst, src);
     merge_texture_blend_mode(dst, src);

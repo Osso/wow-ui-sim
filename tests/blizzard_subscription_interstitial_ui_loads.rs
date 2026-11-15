@@ -556,3 +556,35 @@ fn blizzard_subscriptioninterstitialui_toc_is_absent_from_classic_caches() {
     assert!(wow_ui_sim::loader::find_toc_file(&dir).is_none());
 }
 }
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn xml_lua_loading_matches_selected_toc() {
+    let toc = TocFile::from_file(&subscription_interstitial_toc()).expect("TOC parses");
+    let body: Vec<String> = toc
+        .files
+        .iter()
+        .map(|file| file.to_string_lossy().into_owned())
+        .collect();
+    let lua_index = body
+        .iter()
+        .position(|file| file.ends_with("Blizzard_SubscriptionInterstitialUI.lua"));
+    let xml_index = body
+        .iter()
+        .position(|file| file.ends_with("Blizzard_SubscriptionInterstitialUI.xml"));
+    if toc_layout::unified_toc_tree() {
+        assert!(
+            matches!((lua_index, xml_index), (Some(lua), Some(xml)) if lua < xml),
+            "Unified PTR TOC line 4 lists Lua before XML; no XML Script directive is needed"
+        );
+    } else {
+        let xml_path =
+            subscription_interstitial_dir().join("Blizzard_SubscriptionInterstitialUI.xml");
+        let raw = std::fs::read_to_string(&xml_path).expect("XML reads");
+        assert!(raw.contains("<Script file=\"Blizzard_SubscriptionInterstitialUI.lua\""));
+        assert!(
+            lua_index.is_none(),
+            "Retail TOC delegates Lua loading to XML"
+        );
+    }
+}

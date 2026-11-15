@@ -9,7 +9,6 @@ fn frame_helper_defaults_are_not_runtime_bootstrap_fallbacks() {
         "__wow_original_CreateFrame",
         "AddDataProvider",
         "RemoveDataProvider",
-        "IsInDefaultPosition",
     ] {
         assert!(
             !bootstrap.contains(symbol),

@@ -1013,3 +1013,32 @@ fn pet_battle_queue_ready_frame_materializes_from_mainline_special_xml() {
     pet_battle_queue_ready_frame_materializes_from_mainline_special_xml::run(&env);
 }
 }
+
+const R72_TYPED_TEMPLATES: &[(&str, &str)] = &[
+    ("StaticPopupButtonTemplate", "Button"),
+    ("StaticPopupTemplate", "Frame"),
+];
+
+prefork_full_ui_case! {
+fn xml_registers_button_and_full_dialog_virtual_templates(env: &WowLuaEnv) {
+    for (template, frame_type) in R72_TYPED_TEMPLATES {
+        let probe = format!(
+            "return CreateFrame({frame_type:?}, nil, UIParent, {template:?}) ~= nil"
+        );
+        let result: bool = env
+            .eval(&probe)
+            .unwrap_or_else(|err| panic!("template probe ({template}): {err}"));
+        assert!(
+            result,
+            "Virtual template {template} must materialize as {frame_type} from the selected XML"
+        );
+    }
+}
+}
+
+#[cfg(not(feature = "client-retail"))]
+#[test]
+fn xml_registers_button_and_full_dialog_virtual_templates() {
+    let env = load_full_ui_for(ScreenKind::Game);
+    xml_registers_button_and_full_dialog_virtual_templates::run(&env);
+}

@@ -14,6 +14,8 @@ use crate::lua_bridge::stack_val;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
+const LINE_TYPE_SELL_PRICE: f64 = 11.0;
+
 #[cfg(all(test, any(feature = "profile-retail", feature = "client-ptr")))]
 #[path = "builder_contract_tests.rs"]
 mod builder_contract_tests;
@@ -142,6 +144,258 @@ pub(super) fn empty_tooltip(state: &mut LuaState, tooltip_type: f64) -> Val {
     tooltip
 }
 
+/// VERIFIED (R88o.2 q1): serialize an unresolved conversion result without an item identity.
+pub(crate) fn build_unresolved_conversion_item_tooltip(state: &mut LuaState) -> Val {
+    let saved_top = state.top;
+    let tooltip = create_table(state);
+    state.push(tooltip);
+    let lines = create_table(state);
+    table_set(state, tooltip, "lines", lines);
+    stamp_data_instance(state, tooltip);
+
+    if let Some(text) = super::global_text(state, "RETRIEVING_ITEM_INFO") {
+        let line = create_table(state);
+        set_table_array(state, lines, 1, line);
+        table_set(state, line, "type", Val::Num(41.0));
+        let text = create_string(state, &text);
+        table_set(state, line, "leftText", text);
+
+        let rgb = global_color(state, b"ERROR_COLOR").unwrap_or((1.0, 0.0, 1.0));
+        let color = color_table(state, rgb.0, rgb.1, rgb.2, 1.0);
+        for (key, value) in [("r", rgb.0), ("g", rgb.1), ("b", rgb.2)] {
+            table_set(state, color, key, Val::Num(value));
+        }
+        table_set(state, color, "a", Val::Nil);
+        table_set(state, line, "leftColor", color);
+    }
+
+    state.top = saved_top;
+    tooltip
+}
+
+const TOOLTIP_TYPE_ITEM_INTERACTION_CLEANSING: f64 = 20.0;
+
+/// Serialize only host-supplied rows for the native cleansing-preview identity.
+pub(crate) fn build_item_interaction_cleansing_tooltip(
+    state: &mut LuaState,
+    rows: &[crate::c_api::ItemInteractionTooltipLine],
+) -> Val {
+    let saved_top = state.top;
+    let tooltip = empty_tooltip(state, TOOLTIP_TYPE_ITEM_INTERACTION_CLEANSING);
+    state.push(tooltip);
+    stamp_data_instance(state, tooltip);
+    let lines = table_get(state, tooltip, "lines");
+    for (index, row) in rows.iter().enumerate() {
+        push_supplied_item_interaction_line(state, lines, index as i64 + 1, row);
+    }
+    state.top = saved_top;
+    tooltip
+}
+
+fn push_supplied_item_interaction_line(
+    state: &mut LuaState,
+    lines: Val,
+    index: i64,
+    row: &crate::c_api::ItemInteractionTooltipLine,
+) {
+    let saved_top = state.top;
+    state.push(lines);
+    let line = create_table(state);
+    set_table_array(state, lines, index, line);
+    let line_type = remap_line_type(state, row.line_type, row.left_color);
+    table_set(state, line, "type", Val::Num(line_type));
+    let color = row.left_color.map_or(Val::Nil, |(r, g, b)| {
+        let color = color_table(state, r, g, b, 1.0);
+        crate::c_api::tooltip_data::publish_rgb(state, color, (r, g, b));
+        color
+    });
+    crate::c_api::tooltip_data::publish_side(state, line, false, Some(&row.left_text), color);
+    if row.wrap {
+        table_set(state, line, "wrapText", Val::Bool(true));
+    }
+    state.top = saved_top;
+}
+
+const TOOLTIP_TYPE_QUEST_PARTY_PROGRESS: f64 = 24.0;
+const LINE_TYPE_QUEST_TITLE: f64 = 17.0;
+const LINE_TYPE_PARTICIPANT_HEADING: f64 = 18.0;
+const LINE_TYPE_QUEST_PROGRESS: f64 = 8.0;
+
+/// WM94: build verified party-progress rows from an explicit host snapshot.
+pub(crate) fn build_quest_party_progress_tooltip(
+    state: &mut LuaState,
+    quest_id: i32,
+    omit_title: bool,
+    ignore_active_player: bool,
+    snapshot: &crate::c_api::quest_party_progress::QuestPartyProgressSnapshot,
+) -> LuaResult<Option<Val>> {
+    let has_title = !omit_title && snapshot.title.is_some();
+    let has_participant_rows = snapshot
+        .participants
+        .iter()
+        .any(|participant| participant_has_included_content(participant, ignore_active_player));
+    if !has_title && !has_participant_rows {
+        return Ok(None);
+    }
+
+    let saved_top = state.top;
+    let tooltip = empty_tooltip(state, TOOLTIP_TYPE_QUEST_PARTY_PROGRESS);
+    state.push(tooltip);
+    table_set(state, tooltip, "id", Val::Num(f64::from(quest_id)));
+    stamp_data_instance(state, tooltip);
+    let lines = table_get(state, tooltip, "lines");
+    append_quest_party_progress_lines(
+        state,
+        lines,
+        quest_id,
+        omit_title,
+        ignore_active_player,
+        snapshot,
+    );
+    state.top = saved_top;
+    Ok(Some(tooltip))
+}
+
+fn participant_has_included_content(
+    participant: &crate::c_api::quest_party_progress::QuestPartyProgressParticipant,
+    ignore_active_player: bool,
+) -> bool {
+    let is_included = !ignore_active_player || !participant.exclude_when_ignoring_active_player;
+    let has_content = participant.heading.is_some() || !participant.rows.is_empty();
+    is_included && has_content
+}
+
+fn append_quest_party_progress_lines(
+    state: &mut LuaState,
+    lines: Val,
+    quest_id: i32,
+    omit_title: bool,
+    ignore_active_player: bool,
+    snapshot: &crate::c_api::quest_party_progress::QuestPartyProgressSnapshot,
+) {
+    let mut index = append_quest_party_progress_title(state, lines, quest_id, omit_title, snapshot);
+    for participant in &snapshot.participants {
+        if participant_has_included_content(participant, ignore_active_player) {
+            index = append_quest_party_participant(state, lines, index, participant);
+        }
+    }
+}
+
+fn append_quest_party_progress_title(
+    state: &mut LuaState,
+    lines: Val,
+    quest_id: i32,
+    omit_title: bool,
+    snapshot: &crate::c_api::quest_party_progress::QuestPartyProgressSnapshot,
+) -> i64 {
+    if omit_title {
+        return 1;
+    }
+    let Some(title) = &snapshot.title else {
+        return 1;
+    };
+    let line = push_tooltip_line(
+        state,
+        lines,
+        1,
+        LINE_TYPE_QUEST_TITLE,
+        &title.text,
+        Some(title.color),
+        false,
+    );
+    table_set(state, line, "id", Val::Num(f64::from(quest_id)));
+    2
+}
+
+fn append_quest_party_participant(
+    state: &mut LuaState,
+    lines: Val,
+    index: i64,
+    participant: &crate::c_api::quest_party_progress::QuestPartyProgressParticipant,
+) -> i64 {
+    let index = append_quest_party_heading(state, lines, index, participant);
+    append_quest_progress_rows(state, lines, index, participant)
+}
+
+fn append_quest_party_heading(
+    state: &mut LuaState,
+    lines: Val,
+    index: i64,
+    participant: &crate::c_api::quest_party_progress::QuestPartyProgressParticipant,
+) -> i64 {
+    let Some(heading) = &participant.heading else {
+        return index;
+    };
+    let line = push_tooltip_line(
+        state,
+        lines,
+        index,
+        LINE_TYPE_PARTICIPANT_HEADING,
+        &heading.name,
+        Some(heading.color),
+        false,
+    );
+    let guid = create_string(state, &heading.guid);
+    table_set(state, line, "guid", guid);
+    index + 1
+}
+
+fn append_quest_progress_rows(
+    state: &mut LuaState,
+    lines: Val,
+    index: i64,
+    participant: &crate::c_api::quest_party_progress::QuestPartyProgressParticipant,
+) -> i64 {
+    let mut index = index;
+    for row in &participant.rows {
+        append_quest_progress_row(state, lines, index, row);
+        index += 1;
+    }
+    index
+}
+
+fn append_quest_progress_row(
+    state: &mut LuaState,
+    lines: Val,
+    index: i64,
+    row: &crate::c_api::quest_party_progress::QuestPartyProgressRow,
+) {
+    let line = push_tooltip_line(
+        state,
+        lines,
+        index,
+        LINE_TYPE_QUEST_PROGRESS,
+        &row.text,
+        Some(row.color),
+        false,
+    );
+    table_set(state, line, "completed", Val::Bool(row.completed));
+    if let Some(num_required) = row.num_required {
+        table_set(
+            state,
+            line,
+            "numRequired",
+            Val::Num(f64::from(num_required)),
+        );
+    }
+    if let Some(num_fulfilled) = row.num_fulfilled {
+        table_set(
+            state,
+            line,
+            "numFulfilled",
+            Val::Num(f64::from(num_fulfilled)),
+        );
+    }
+    if let Some(progress_bar_percent) = row.progress_bar_percent {
+        table_set(
+            state,
+            line,
+            "progressBarPercent",
+            Val::Num(progress_bar_percent),
+        );
+    }
+}
+
 /// WM94: totems have two plain lines and identity type 18 with zero native ID.
 pub(super) fn tooltip_for_totem_text(
     state: &mut LuaState,
@@ -167,7 +421,7 @@ pub(super) fn create_identified_tooltip(state: &mut LuaState, tooltip_type: f64,
     tooltip
 }
 
-pub(super) fn item_quality_color(quality: u8) -> (f64, f64, f64) {
+pub(crate) fn item_quality_color(quality: u8) -> (f64, f64, f64) {
     match quality {
         0 => (0.62, 0.62, 0.62),
         1 => (1.0, 1.0, 1.0),
@@ -221,6 +475,20 @@ fn push_item_name_line(state: &mut LuaState, lines: Val, item: &items::ItemInfo)
         Some(item_quality_color(item.quality)),
         false,
     );
+}
+
+/// VERIFIED (R88p.p1): eligible nonzero results build type-11 rows with an empty
+/// left side, resolved default color, and `maxPrice` initialized to -1.
+/// INFERRED: catalog `sell_price` stands in for the native initial unit price.
+/// UNKNOWN in this model: request mode, status, flags, preview, and quantity inputs.
+fn push_retail_sell_price_line(state: &mut LuaState, lines: Val, index: i64, price: u32) {
+    if price == 0 || crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
+        return;
+    }
+
+    let line = push_tooltip_line(state, lines, index, LINE_TYPE_SELL_PRICE, "", None, false);
+    table_set(state, line, "price", Val::Num(f64::from(price)));
+    table_set(state, line, "maxPrice", Val::Num(-1.0));
 }
 
 fn tooltip_detail_color(state: &mut LuaState) -> (f64, f64, f64) {
@@ -324,105 +592,17 @@ fn global_color_or_fallback(
     global_color(state, key).unwrap_or(fallback)
 }
 
-fn slot_budget_multiplier(inventory_type: u8) -> f64 {
-    match inventory_type {
-        1 | 3 | 5 | 6 | 7 | 8 | 9 | 10 => 2.0, // armor pieces
-        2 | 11 | 12 | 16 => 1.25,              // neck, rings, trinkets, cloak
-        13 | 17 | 21 => 2.7,                   // one-hand, two-hand, main hand
-        14 | 22 => 1.6,                        // shield/off hand
-        15 => 2.2,                             // ranged
-        _ => 1.0,
-    }
-}
-
-fn primary_stat_for_class(class_index: i32) -> i16 {
-    match class_index {
-        1 | 2 | 6 => 4,       // Strength classes
-        3 | 4 | 10 | 12 => 3, // Agility classes
-        _ => 5,               // Intellect classes
-    }
-}
-
-fn resolve_hybrid_stat_id(raw_stat_id: i16, class_index: i32) -> i16 {
-    let primary = primary_stat_for_class(class_index);
-    match raw_stat_id {
-        71 => primary, // Agi/Str/Int
-        72 => {
-            if primary == 4 {
-                4
-            } else {
-                3
-            }
-        } // Agi/Str
-        73 => {
-            if primary == 3 {
-                3
-            } else {
-                5
-            }
-        } // Agi/Int
-        74 => {
-            if primary == 4 {
-                4
-            } else {
-                5
-            }
-        } // Str/Int
-        _ => raw_stat_id,
-    }
-}
-
-fn stat_display_spec(stat_id: i16) -> Option<(&'static [u8], &'static str, f64)> {
-    match stat_id {
-        3 => Some((b"ITEM_MOD_AGILITY_SHORT", "Agility", 1.2)),
-        4 => Some((b"ITEM_MOD_STRENGTH_SHORT", "Strength", 1.2)),
-        5 => Some((b"ITEM_MOD_INTELLECT_SHORT", "Intellect", 1.2)),
-        7 => Some((b"ITEM_MOD_STAMINA_SHORT", "Stamina", 1.8)),
-        32 => Some((b"ITEM_MOD_CRIT_RATING_SHORT", "Critical Strike", 0.75)),
-        36 => Some((b"ITEM_MOD_HASTE_RATING_SHORT", "Haste", 0.75)),
-        40 => Some((b"ITEM_MOD_VERSATILITY", "Versatility", 0.75)),
-        49 => Some((b"ITEM_MOD_MASTERY_RATING_SHORT", "Mastery", 0.75)),
-        50 => Some((b"ITEM_MOD_EXTRA_ARMOR_SHORT", "Bonus Armor", 0.9)),
-        61 => Some((b"ITEM_MOD_CR_SPEED_SHORT", "Speed", 0.35)),
-        62 => Some((b"ITEM_MOD_CR_LIFESTEAL_SHORT", "Leech", 0.35)),
-        63 => Some((b"ITEM_MOD_CR_AVOIDANCE_SHORT", "Avoidance", 0.35)),
-        _ => None,
-    }
-}
-
-fn estimate_stat_value(item: &items::ItemInfo, stat_percent: u16, scale: f64) -> i32 {
-    let budget = f64::from(item.item_level) * slot_budget_multiplier(item.inventory_type);
-    let raw = budget * (f64::from(stat_percent) / 10_000.0) * scale;
-    raw.round().max(1.0) as i32
-}
-
 fn push_item_stat_lines(
     state: &mut LuaState,
     lines: Val,
-    item: &items::ItemInfo,
+    stats: &[crate::c_api::item_tooltip::ItemTooltipStat],
     next_index: &mut i64,
 ) {
     let stat_color = global_color_or_fallback(state, b"GREEN_FONT_COLOR", (0.12, 1.0, 0.0));
-    let class_index = borrow_state(state)
-        .ok()
-        .map(|sim| sim.player.class_index)
-        .unwrap_or(2);
-
-    for (&raw_stat_id, &stat_percent) in item
-        .stat_modifier_bonus_stat
-        .iter()
-        .zip(item.stat_percent_editor.iter())
-    {
-        if raw_stat_id < 0 || stat_percent == 0 {
-            continue;
-        }
-        let stat_id = resolve_hybrid_stat_id(raw_stat_id, class_index);
-        let Some((label_key, label_fallback, scale)) = stat_display_spec(stat_id) else {
-            continue;
-        };
-        let label = global_string_or_fallback(state, label_key, label_fallback);
-        let value = estimate_stat_value(item, stat_percent, scale);
-        let line_text = format!("+{value} {label}");
+    // R80 Q2: ordinary item-mod amounts are not proved by the admitted calculator.
+    // Keep the existing position, but publish only final amounts supplied by the host.
+    for stat in stats {
+        let line_text = format!("{:+} {}", stat.amount, stat.label);
         push_tooltip_line(
             state,
             lines,
@@ -433,6 +613,36 @@ fn push_item_stat_lines(
             false,
         );
         *next_index += 1;
+    }
+}
+
+fn publish_item_metadata(
+    state: &mut LuaState,
+    tooltip: Val,
+    input: &crate::c_api::item_tooltip::ItemTooltipInput,
+) {
+    for (key, value) in [("guid", &input.guid), ("hyperlink", &input.hyperlink)] {
+        if let Some(value) = value {
+            let value = create_string(state, value);
+            table_set(state, tooltip, key, value);
+        }
+    }
+    if let Some(level) = input.override_item_level.filter(|level| *level != 0) {
+        table_set(
+            state,
+            tooltip,
+            "overrideItemLevel",
+            Val::Num(f64::from(level)),
+        );
+    }
+    for (key, value) in [
+        ("isCorruptedItem", input.is_corrupted_item),
+        ("isAzeriteEmpoweredItem", input.is_azerite_empowered_item),
+        ("isAzeriteItem", input.is_azerite_item),
+    ] {
+        if let Some(value) = value {
+            table_set(state, tooltip, key, Val::Bool(value));
+        }
     }
 }
 
@@ -450,7 +660,7 @@ pub(super) fn tooltip_for_item_info(
 ) -> Val {
     let tooltip = create_identified_tooltip(state, TOOLTIP_TYPE_ITEM, item_id);
     stamp_data_instance(state, tooltip);
-    populate_item_tooltip_lines(state, tooltip, item);
+    populate_item_tooltip_lines(state, tooltip, item_id, item);
     tooltip
 }
 
@@ -557,6 +767,7 @@ fn format_global_string(
 pub(super) fn populate_item_tooltip_lines(
     state: &mut LuaState,
     tooltip: Val,
+    item_id: u32,
     item: &items::ItemInfo,
 ) {
     let saved_top = state.top;
@@ -568,7 +779,17 @@ pub(super) fn populate_item_tooltip_lines(
     let mut next_index = 3;
     push_item_equip_slot_line(state, lines, item.inventory_type, &mut next_index);
     push_item_binding_line(state, lines, &mut next_index, item);
-    push_item_stat_lines(state, lines, item, &mut next_index);
+    // A standalone Lua state has no host input provider: publish headers only.
+    let input = borrow_state(state).ok().and_then(|sim| {
+        sim.item_tooltip_inputs
+            .get(&(item_id, item.item_level))
+            .cloned()
+    });
+    if let Some(input) = input {
+        publish_item_metadata(state, tooltip, &input);
+        push_item_stat_lines(state, lines, &input.stats, &mut next_index);
+    }
+    push_retail_sell_price_line(state, lines, next_index, item.sell_price);
     state.top = saved_top;
 }
 

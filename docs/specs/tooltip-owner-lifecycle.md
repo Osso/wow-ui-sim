@@ -52,6 +52,14 @@ native anchor geometry, default anchors, or Hide-clears-lines behavior.
   Silently hiding during same-owner `SetOwner` bypasses that later cleanup and
   retains a previous successful tooltip's data.
 
+### Forever ClearLines cached text
+
+- [x] **VERIFIED (Forever 1.60.1.70707, R88n.5):** `ClearLines` clears text on
+  cached left and right FontStrings for active rows only; it does not visit
+  unused cached entries. Cached line arrays remain available for reuse. The
+  optional API test checks active and inactive cached text; the original
+  `TooltipDataHandler` preservation test checks reprocessing and FontString reuse.
+
 The `tooltip_bag_child` original-consumer regression stays unchanged. It rejects
 an unmatched equip slot after two successful distinct item selections; no
 fixture `Hide` or replacement consumer masks the lifecycle failure. Sizing,
@@ -77,21 +85,19 @@ attachments, other profiles and getter selection are unchanged by this extension
 - `src/lua_api/frame/methods/widgets/tooltip/owner.rs` — tooltip ownership, internal hiding, and `FadeOut` delegation.
 - `src/lua_api/frame/methods/text_attribute_event/text.rs` — owned tooltip replacement text visibility.
 - `src/lua_api/frame/methods/widgets/tooltip/line_data.rs` and `content.rs` — append-without-show and payload-driven visibility.
+- `src/lua_api/frame/methods/widgets/tooltip/line_frames.rs` — resolve and record active cached FontString IDs, including existing Forever XML rows.
 
 ## Tests asserting this spec
 
 - `tests/tooltip_basic.rs` — owner replacement, hidden explicit hide, SetText, append, spell payload, and existing ownership controls.
 - `tests/tooltip_lifecycle_owner_lane.rs` — same-owner clear, notification count, and reassignment through the shared tooltip templates.
-- `tests/tooltip_owner_clear_consumer.rs` — clear notification count and order through the cached `GameTooltip.xml` handlers and `TooltipDataHandler.lua` reprocessing; the original `OnTooltipCleared` cleanup must release inserted frames; Forever owner-reassignment lifecycle.
+- `tests/tooltip_owner_clear_consumer.rs` — clear notification count and order through the cached `GameTooltip.xml` handlers and `TooltipDataHandler.lua` reprocessing; the original `OnTooltipCleared` cleanup must release inserted frames; Forever owner-reassignment and optional R88n.5 active-row cache tests on the profile-selected full-UI environment.
 
 ## Known gaps (current cycle)
 
 - [ ] Native execution and callback observation order remain unverified: the
       evidence is static native analysis, and no live-client observation exists
       for the notification's registered-callback lifetime.
-- [ ] Forever does not reset its pooled line FontStrings on clear. Its line
-      FontStrings come from tooltip XML and are recorded for clear-time reset
-      only on Wrath/Retail/PTR, so no Forever native evidence covers the reset.
 
 ## Out of scope
 

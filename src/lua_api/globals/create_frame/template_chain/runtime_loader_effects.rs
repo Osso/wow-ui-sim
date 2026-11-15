@@ -96,6 +96,14 @@ fn apply_loader_frame_button_parts(
         parent_ref_name,
         inherits,
     )
+    .map_err(|error| rilua::runtime_error(error.to_string()))?;
+    crate::loader::editbox_font::apply_editbox_font_with_ref(
+        loader_env,
+        frame,
+        frame_name,
+        parent_ref_name,
+        inherits,
+    )
     .map_err(|error| rilua::runtime_error(error.to_string()))
 }
 

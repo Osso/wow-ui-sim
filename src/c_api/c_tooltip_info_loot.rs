@@ -78,7 +78,10 @@ fn get_loot_item(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn get_loot_currency(state: &mut LuaState) -> LuaResult<u32> {
-    // Round 6-B §1(a): the loot getters share the one-based index reader.
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        return crate::c_api::c_tooltip_info_currency::get_loot_currency(state);
+    }
+    // Round 6-B §1(a): the non-Retail loot getters share the one-based index reader.
     let index = one_based_index(
         state,
         1,

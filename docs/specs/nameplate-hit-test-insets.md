@@ -1,38 +1,41 @@
 # Nameplate hit-test inset configuration
 
-Retail 12.0.5 adds per-`Enum.NamePlateType` hit-test offsets. The cached official `Blizzard_APIDocumentationGenerated/NamePlateManagerDocumentation.lua` specifies the signatures and security annotations; [patch notes](../../data/patch-api/sources/12.0.5-api-changes.txt) announce the offset override. This contract models configuration only, not world nameplate interaction. See [Lua API architecture](../wiki/systems/lua-api.md).
+The Retail `C_NamePlateManager` API stores four hit-test inset values for each `Enum.NamePlateType`. The simulator models this configuration, setter and getter; it does not model nameplate objects or world hit testing. The lane findings are in the [EllesmereUI startup investigation](../wiki/investigations/full-addon-startup-2026-10-10.md#nameplate-inset-contract-r88a-2026-11-13).
 
 ## What it must do
 
-- [ ] Publish `C_NamePlateManager.GetNamePlateHitTestInsets(type)` and `SetNamePlateHitTestInsets(type, left, right, top, bottom)` under `retail-12-0-5`. Official `NamePlateConstantsDocumentation.lua` publishes Friendly=0 and Enemy=1.
-- [ ] Return exactly four `uiUnit` numbers in left/right/top/bottom order; independently retain each type's complete tuple. Setting `(2.5, -1.25, 3, 4)` preserves fractions and negative offsets; replacement replaces all four values and returns no values.
-- [ ] Default each tuple to `(0, 0, 0, 0)`, explicitly inferred simulator configuration, not a native-observed default. Reject unsupported/fractional/non-numeric types and missing/non-numeric/nonfinite inset values without mutation.
-- [ ] Honor getter `SecretArguments=AllowedWhenUntainted` through existing VM authentication; reject all setter secret arguments (`NotAllowed`). Infer the setter's `HasRestrictions` policy as an ordinary untainted-caller guard, without declassifying callers; failed writes leave all configuration unchanged.
-- [ ] Leave `C_NamePlate.GetNamePlateForUnit` nil and `GetNamePlates` empty. Do not invent plate frames or clamp stored offsets against fabricated bounds.
-
-Official prose says positive offsets decrease and negative offsets increase the hit area, with actual hit testing clamped to plate bounds. Configuration retains both signs. No plate-bounds model exists, so this change does not implement or claim that clamp.
+- [x] Publish `C_NamePlateManager.GetNamePlateHitTestInsets(type)` and `SetNamePlateHitTestInsets(type, left, right, top, bottom)` for Retail. The pinned local API documentation declares Friendly=0 and Enemy=1; its exact client build is UNKNOWN.
+- [x] **VERIFIED (pinned local Retail API documentation; exact client build UNKNOWN):** Return four values in left/right/top/bottom order and keep each type's tuple separate.
+- [x] **VERIFIED (Retail 12.1.5 build 70688):** The setter rejects a missing or nil type. For a non-nil type, failed numeric conversion selects type 0; successful conversion produces a signed 32-bit integer, and the parser accepts low-byte values 0 and 1. Values 256 and 257 therefore select Friendly and Enemy.
+- [x] **VERIFIED (Retail 12.1.5 build 70688):** Each inset must pass the native number check, which accepts numbers and values accepted by the native numeric coercer. The setter converts each value to single precision, multiplies by `1/1024`, then by single-precision `0.8`, and stores the float.
+- [x] **VERIFIED (Retail 12.1.5 build 70688):** A tainted caller is not rejected when no restriction-state pointer exists. The public setter must complete without a Lua error for ordinary inset numbers in this context.
+- [x] **INFERRED (simulator policy):** Each type starts with `(0, 0, 0, 0)`. This is not a native-observed default.
+- [x] Leave `C_NamePlate.GetNamePlateForUnit` nil and `GetNamePlates` empty. Do not create plate frames or clamp offsets against fabricated bounds.
 
 ## How it works
 
 - [Lua API architecture](../wiki/systems/lua-api.md)
+- [EllesmereUI startup investigation](../wiki/investigations/full-addon-startup-2026-10-10.md#nameplate-inset-contract-r88a-2026-11-13)
 
 ## Implementation inventory
 
-- `src/c_api/c_nameplate_manager.rs`: typed per-type inset storage, query/write validation, and namespace registration.
-- `src/c_api/mod.rs`, `src/c_api/registration.rs`: gated namespace publication.
-- `src/lua_api/state/sim_state.rs`, `src/lua_api/state.rs`: per-environment configuration and inferred zero default.
-- `tests/nameplate_hit_test_insets.rs`: grouped public-query and security behavior tests.
+- `src/c_api/c_nameplate_manager.rs`: per-type inset values, setter parsing and namespace registration.
+- `src/c_api/mod.rs`, `src/c_api/registration.rs`: feature-gated API registration.
+- `src/lua_api/state/sim_state.rs`, `src/lua_api/state.rs`: per-environment inset state and inferred zero default.
 
 ## Tests asserting this spec
 
-- `tests/nameplate_hit_test_insets.rs`: both published types, exact four-value arity, fractional/negative round trip, replacement/isolation, invalid inputs preserving state, secret/restricted callers, and no fabricated plates.
+- `tests/nameplate_hit_test_insets.rs::nameplate_hit_test_insets_store_scaled_values_per_type`
+- `tests/nameplate_hit_test_insets.rs::nameplate_hit_test_insets_errors_preserve_configuration`
+- `tests/nameplate_hit_test_insets.rs::retail_tainted_nameplate_hit_test_insets_succeeds_without_restriction_state`
+- `tests/nameplate_hit_test_insets.rs::retail_nameplate_hit_test_insets_matches_native_input_parsing`
 
 ## Known gaps (current cycle)
 
-- [ ] Native default probe: before any setter, call the getter twice each with Friendly=0 and Enemy=1; record all four results and client build.
-- [ ] Native allowed-caller probe: attempt setter `(0, 2.5, -1.25, 3, 4)` and `(1, 2.5, -1.25, 3, 4)` from ordinary addon code out of combat and in combat, then from an available trusted caller. Record errors and getter results; the ordinary restriction is inferred until this evidence exists.
-- [ ] Future real-bounds probe: once actual plate bounds are modeled, compare hit testing for `(2.5, -1.25, 3, 4)` and `(-1000, -1000, -1000, -1000)` at points just inside/outside all four plate edges. Native documentation establishes clamping, not an invented numeric bound.
+- [ ] **VERIFIED (Retail 12.1.5 build 70688):** The `HasRestrictions` gate blocks only when source metadata and a restriction-state pointer exist and the permission is false; a blocked call reports a blocked action and returns zero Lua values. **UNKNOWN (Retail 12.1.5 build 70688):** The permission's meaning is not established. **UNKNOWN in simulator:** this restriction gate and its state are not modeled.
+- [ ] **VERIFIED (Retail 12.1.5 build 70688):** Secret access depends on the argument mark, restriction-state pointer and mode. A clear mark or null pointer allows access; with a mark and pointer, mode 0 denies, mode 1 denies only for nonzero source metadata, and other modes allow. **VERIFIED (Retail 12.1.5 build 70688):** When the native `NotAllowed` gate denies an argument, its exact reason is `Usage: C_NamePlateManager.SetNamePlateHitTestInsets(type, left, right, top, bottom). Secret values are not allowed for this argument.` **UNKNOWN in simulator:** this conditional secret-argument policy is not modeled. Tests must not assert its denial.
+- [ ] **VERIFIED (simulator code):** The setter returns zero Lua values on normal calls. **UNKNOWN (Retail 12.1.5 build 70688):** The native setter writes four fields before a pending-error check, but the path from that check to normal return is not established; simulator return-count parity is unverified.
 
 ## Out of scope
 
-World hit-grid/rendered interaction, plate catalogs/creation, camera queries, simplified/size setters, guessed bounds, other-profile publication, native conformance, vendor changes, and broad verification gates.
+World hit testing, nameplate catalogs and bounds, camera queries, simplified/size setters, and non-Retail publication. The documentation's clamping statement does not provide numeric bounds for a simulator model.

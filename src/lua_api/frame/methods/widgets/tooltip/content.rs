@@ -192,23 +192,6 @@ fn set_displayed_unit(state: &mut LuaState, tooltip_id: u64, unit_token: String)
     Ok(())
 }
 
-fn parse_link_id(text: &str, prefix: &str) -> Option<u32> {
-    if let Some(tail) = text.strip_prefix(&format!("{prefix}:")) {
-        return tail
-            .split(':')
-            .next()
-            .and_then(|digits| digits.parse::<u32>().ok());
-    }
-    let needle = format!("|H{prefix}:");
-    let start = text.find(&needle)? + needle.len();
-    text[start..]
-        .chars()
-        .take_while(|ch| ch.is_ascii_digit())
-        .collect::<String>()
-        .parse::<u32>()
-        .ok()
-}
-
 pub(super) fn fire_tooltip_script(state: &mut LuaState, tooltip_id: u64, script_name: &str) {
     let Some(handler) = get_dispatch_script(state, tooltip_id, script_name) else {
         return;
@@ -464,39 +447,35 @@ pub(super) fn set_companion_pet(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 pub(super) fn set_hyperlink(state: &mut LuaState) -> LuaResult<u32> {
+    use crate::c_api::c_tooltip_info_hyperlink::parse::{HyperlinkRequest, parse};
     let tooltip_id = frame_id_from_stack(state, 1)?;
     let Some(link) = opt_string(state, 2) else {
         return Ok(0);
     };
-    if let Some(item_id) = parse_link_id(&link, "item") {
-        let has_lines = populate_tooltip_from_method(
-            state,
-            tooltip_id,
-            "GetItemByID",
-            &[Val::Num(item_id as f64)],
-            None,
-        )?;
-        if has_lines {
-            fire_tooltip_script(state, tooltip_id, "OnTooltipSetItem");
+    let request = parse(&link, None, None, false, 0);
+    let spell_id = match &request {
+        Some(HyperlinkRequest::Spell(spell)) => Some(spell.spell_id),
+        _ => None,
+    };
+    let args = [
+        create_string(state, &link),
+        stack_val(state, 3),
+        stack_val(state, 4),
+        stack_val(state, 5),
+    ];
+    let has_lines =
+        populate_tooltip_from_method(state, tooltip_id, "GetHyperlink", &args, spell_id)?;
+    if has_lines {
+        match request {
+            Some(HyperlinkRequest::Item(_)) => {
+                fire_tooltip_script(state, tooltip_id, "OnTooltipSetItem")
+            }
+            Some(HyperlinkRequest::Spell(_)) => {
+                fire_tooltip_script(state, tooltip_id, "OnTooltipSetSpell")
+            }
+            _ => {}
         }
-        return Ok(0);
     }
-    if let Some(spell_id) = parse_link_id(&link, "spell") {
-        let link_val = create_string(state, &link);
-        let has_lines = populate_tooltip_from_method(
-            state,
-            tooltip_id,
-            "GetHyperlink",
-            &[link_val],
-            Some(spell_id),
-        )?;
-        if has_lines {
-            fire_tooltip_script(state, tooltip_id, "OnTooltipSetSpell");
-        }
-        return Ok(0);
-    }
-    let link_val = create_string(state, &link);
-    let _ = populate_tooltip_from_method(state, tooltip_id, "GetHyperlink", &[link_val], None)?;
     Ok(0)
 }
 

@@ -54,6 +54,58 @@ fn spell_flyout_toggle_shows_populates_and_hides_from_same_button() {
     });
     }
 }
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn spell_flyout_consumer_preserves_slots_without_call_pet_catalog() {
+    test_timeout! {
+    with_blizzard_addon_startup_shape(&[ROOT], &[], |env, loaded| {
+        assert!(loaded.iter().any(|name| name == ROOT));
+        seed_spell_flyout(env);
+        install_test_flyout_button(env);
+        toggle_spell_flyout(env);
+        // Preservation only: SpellFlyout.lua:270 tests the first result's
+        // truthiness, so zero values and two nils have the same consumer effect.
+        assert_flyout_shown_with_seeded_spells(env);
+    });
+    }
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn spell_flyout_count_accepts_numeric_string_display_limit() {
+    test_timeout! {
+    with_blizzard_addon_startup_shape(&[ROOT], &[], |env, _loaded| {
+        let updated: bool = env
+            .eval(
+                r#"
+                local countText = {}
+                function countText:SetText(value)
+                    self.value = value
+                end
+                _G.SpellFlyoutNativeCountProbeCount = countText
+
+                local button = {
+                    spellID = 19750,
+                    maxDisplayCount = "9999",
+                }
+                function button:GetName()
+                    return "SpellFlyoutNativeCountProbe"
+                end
+
+                local succeeded = pcall(SpellFlyoutPopupButtonMixin.UpdateCount, button)
+                return succeeded and type(countText.value) == "string"
+                "#,
+            )
+            .expect("the selected Retail SpellFlyout consumer should run");
+
+        assert!(
+            updated,
+            "SpellFlyoutPopupButtonMixin:UpdateCount must accept a native numeric-string maximum"
+        );
+    });
+    }
+}
 }
 
 fn seed_spell_flyout(env: &WowLuaEnv) {
@@ -128,7 +180,7 @@ fn assert_flyout_hidden_by_default(env: &WowLuaEnv) {
     assert!(!is_shown, "SpellFlyout must start hidden");
 }
 
-#[cfg(not(feature = "client-ptr"))]
+#[cfg(not(any(feature = "client-ptr", feature = "client-wowforever")))]
 fn assert_flyout_shown_with_seeded_spells(env: &WowLuaEnv) {
     let (is_shown, first_id, second_id, third_visible): (bool, i64, i64, bool) = env
         .eval(
@@ -153,7 +205,9 @@ fn assert_flyout_shown_with_seeded_spells(env: &WowLuaEnv) {
     );
 }
 
-#[cfg(feature = "client-ptr")]
+// Forever Shared/SpellFlyout.lua:214-215,338-339 creates unnamed pooled
+// buttons in self.buttons, rather than Retail's numbered global buttons.
+#[cfg(any(feature = "client-ptr", feature = "client-wowforever"))]
 fn assert_flyout_shown_with_seeded_spells(env: &WowLuaEnv) {
     let (is_shown, button_count, first_id, second_id): (bool, i64, i64, i64) = env
         .eval(
@@ -170,7 +224,10 @@ fn assert_flyout_shown_with_seeded_spells(env: &WowLuaEnv) {
         .expect("SpellFlyout populated-button probe must run cleanly");
 
     assert!(is_shown, "first toggle must show SpellFlyout");
-    assert_eq!(button_count, 2, "flyout must render two seeded spell buttons");
+    assert_eq!(
+        button_count, 2,
+        "flyout must render two seeded spell buttons"
+    );
     assert_eq!(first_id, FIRST_SPELL_ID as i64);
     assert_eq!(second_id, SECOND_SPELL_ID as i64);
 }

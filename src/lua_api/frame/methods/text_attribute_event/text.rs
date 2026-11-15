@@ -79,7 +79,8 @@ pub(super) fn set_text(state: &mut LuaState) -> LuaResult<u32> {
         return Err(rilua::runtime_error("expected text, not userdata"));
     }
     let text = read_text_arg(state, value);
-    if secret && cfg!(feature = "client-retail") {
+    // INFERRED: PTR shares Retail's recorded Text-aspect model.
+    if secret && crate::lua_api::frame::methods::misc::secret::uses_recorded_secret_state() {
         mark_secret_text_aspect(state, id)?;
     }
     set_frame_text_value(state, id, text, secret)
@@ -388,10 +389,6 @@ pub(crate) fn refresh_auto_text_height_after_width_change(state: &mut LuaState, 
 }
 
 pub(crate) fn update_auto_text_width(state: &mut LuaState, id: u64) {
-    if apply_anchor_pinned_width(state, id) {
-        return;
-    }
-
     let should_update = {
         let Ok(sim) = borrow_state(state) else {
             return;
@@ -428,71 +425,6 @@ pub(crate) fn update_auto_text_width(state: &mut LuaState, id: u64) {
     sim.widgets.mark_rect_dirty(id);
     drop(sim);
     crate::lua_api::frame::methods::core_state::size::mark_nearest_layout_parent_dirty(state, id);
-}
-
-/// If the frame's anchors pin both its left and right edges, set its width from
-/// the relative frame's width and clear `width_is_text_auto` so word-wrap works.
-/// Returns true when handling the frame, false if anchors do not pin both edges.
-fn apply_anchor_pinned_width(state: &mut LuaState, id: u64) -> bool {
-    let Some(pinned_width) = anchor_pinned_horizontal_width(state, id) else {
-        return false;
-    };
-    let Ok(mut sim) = borrow_state_mut(state) else {
-        return true;
-    };
-    let Some(frame) = sim.widgets.get(id) else {
-        return true;
-    };
-    let width_changed = (frame.width - pinned_width).abs() > 0.5;
-    let auto_flag_changed = frame.width_is_text_auto;
-    if !width_changed && !auto_flag_changed {
-        return true;
-    }
-    let Some(frame) = sim.widgets.get_mut_visual(id) else {
-        return true;
-    };
-    frame.width = pinned_width;
-    frame.width_is_text_auto = false;
-    sim.widgets.mark_rect_dirty(id);
-    true
-}
-
-fn anchor_pinned_horizontal_width(state: &LuaState, id: u64) -> Option<f32> {
-    let sim = borrow_state(state).ok()?;
-    let frame = sim.widgets.get(id)?;
-    if frame.anchors.len() < 2 {
-        return None;
-    }
-
-    let mut left: Option<(u64, &crate::widget::Anchor)> = None;
-    let mut right: Option<(u64, &crate::widget::Anchor)> = None;
-    for anchor in &frame.anchors {
-        let target_id = anchor
-            .relative_to_id
-            .map(|i| i as u64)
-            .or(frame.parent_id)?;
-        if anchor.point.pins_left_edge() && left.is_none() {
-            left = Some((target_id, anchor));
-        } else if anchor.point.pins_right_edge() && right.is_none() {
-            right = Some((target_id, anchor));
-        }
-    }
-    let (left_target, left_anchor) = left?;
-    let (right_target, right_anchor) = right?;
-    if left_target != right_target {
-        return None;
-    }
-    let target = sim.widgets.get(left_target)?;
-    if target.width <= 0.0 {
-        return None;
-    }
-
-    let left_x =
-        target.width * left_anchor.relative_point.horizontal_factor() + left_anchor.x_offset;
-    let right_x =
-        target.width * right_anchor.relative_point.horizontal_factor() + right_anchor.x_offset;
-    let width = right_x - left_x;
-    (width > 0.0).then_some(width)
 }
 
 pub(crate) fn refresh_text_measurements(state: &mut LuaState, id: u64) {
@@ -728,7 +660,37 @@ fn frame_text_scale_value(state: &LuaState, id: u64) -> f64 {
 
 pub(super) fn measure_text_width(state: &LuaState, id: u64) -> f64 {
     let (text, font, font_size) = frame_text_measurement(state, id);
+    if let Some(markup) = frame_inline_icon_markup(state, id) {
+        // Inline |T/|A icons take their width in the line, scaled with the
+        // text like the glyphs around them.
+        let text_scale = frame_text_scale_value(state, id);
+        let line_height =
+            crate::render::font::line_height_for_font_size(font_size, false).unwrap_or(font_size);
+        let unscaled = crate::render::inline_markup::first_line_width_fontstring(
+            &markup,
+            line_height,
+            text_scale as f32,
+            |piece| {
+                (measure_width_in_frame_font(state, id, piece, font.as_deref(), font_size)
+                    / text_scale) as f32
+            },
+        );
+        return f64::from(unscaled) * text_scale;
+    }
     measure_width_in_frame_font(state, id, &text, font.as_deref(), font_size)
+}
+
+/// The measured text with its escapes, when it holds an inline icon.
+fn frame_inline_icon_markup(state: &LuaState, id: u64) -> Option<String> {
+    let sim = borrow_state(state).expect("sim state should exist");
+    let frame = sim.widgets.get(id)?;
+    let measurement_frame = frame
+        .children_keys
+        .get("Text")
+        .and_then(|&child_id| sim.widgets.get(child_id))
+        .unwrap_or(frame);
+    frame_text_value(&sim, measurement_frame, false)
+        .filter(|text| crate::render::inline_markup::has_inline_icons(text))
 }
 
 fn measure_width_in_frame_font(
@@ -767,9 +729,6 @@ pub(super) fn get_unbounded_string_width_for_text(state: &mut LuaState) -> LuaRe
 
 fn measure_text_height(state: &LuaState, id: u64, wrap_width: Option<f32>) -> f64 {
     let (text, font, font_size) = frame_text_measurement(state, id);
-    if text.is_empty() {
-        return 0.0;
-    }
     let text_scale = frame_text_scale_value(state, id);
     let (spacing, smooth_scaling) = borrow_state(state)
         .expect("sim state should exist")
@@ -777,29 +736,57 @@ fn measure_text_height(state: &LuaState, id: u64, wrap_width: Option<f32>) -> f6
         .get(id)
         .map(|frame| (frame.text_line_spacing, frame.font_string_smooth_scaling))
         .unwrap_or((0.0, false));
+    let markup = frame_inline_icon_markup(state, id);
+    if text.is_empty() && markup.is_none() {
+        return 0.0;
+    }
     if let Some(app) = state.app_data::<crate::lua_api::env::WowLuaAppData>()
         && let Some(font_system) = app.font_system.as_ref()
     {
-        return font_system.borrow_mut().measure_text_height(
-            &text,
-            font.as_deref(),
-            font_size,
-            wrap_width,
-            spacing,
-            smooth_scaling,
-        ) as f64
-            * text_scale;
+        let mut font_system = font_system.borrow_mut();
+        let height = match markup.as_deref() {
+            // Inline |T/|A icons: one line at least, lines raised to tall icons.
+            Some(markup) => font_system.measure_markup_height(
+                markup,
+                font.as_deref(),
+                font_size,
+                wrap_width,
+                spacing,
+                smooth_scaling,
+            ),
+            None => font_system.measure_text_height(
+                &text,
+                font.as_deref(),
+                font_size,
+                wrap_width,
+                spacing,
+                smooth_scaling,
+            ),
+        };
+        return height as f64 * text_scale;
     }
-    approximate_text_height(&text, font_size, wrap_width, spacing, smooth_scaling) as f64
-        * text_scale
+    let mut height = approximate_text_height(&text, font_size, wrap_width, spacing, smooth_scaling);
+    if let Some(markup) = markup
+        && let Some(line_height) =
+            crate::render::font::line_height_for_font_size(font_size, smooth_scaling)
+    {
+        let raised: f32 = crate::render::inline_markup::line_heights(&markup, line_height)
+            .iter()
+            .map(|line| line - line_height)
+            .sum();
+        height = height.max(line_height) + raised;
+    }
+    height as f64 * text_scale
 }
 
+/// Return FontString-local width; R88d verifies native cached width is divided by FontString scale.
 pub(super) fn get_string_width(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
     state.push(Val::Num(measure_text_width(state, id)));
     Ok(1)
 }
 
+/// Return FontString-local height; R88d verifies native cached height is divided by FontString scale.
 pub(super) fn get_string_height(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
     let wrap_width = {

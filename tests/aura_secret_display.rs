@@ -162,7 +162,7 @@ fn aura_secret_geometry_decodes_native_arguments_and_keeps_mixed_origins() {
     "#).unwrap();
 }
 
-#[cfg(feature = "forbidden-aspects")]
+#[cfg(all(feature = "forbidden-aspects", feature = "optional-tests"))]
 #[test]
 fn aura_secret_texture_replaces_and_clears_without_plain_readout() {
     let env = WowLuaEnv::new().unwrap();
@@ -176,7 +176,12 @@ fn aura_secret_texture_replaces_and_clears_without_plain_readout() {
             for _, method in ipairs({'GetTexture','GetTextureFileID','GetTextureFilePath','GetAtlas'}) do
                 assert(not pcall(texture[method], texture), method)
             end
-            assert(not pcall(texture.SetTexture, texture, wrapped))
+            assert(pcall(texture.SetTexture, texture, wrapped),
+                'SetTexture must accept a marked file ID from tainted code')
+            local pathOk, pathError = pcall(texture.SetTexture, texture,
+                secretwrap('Interface\\Icons\\Spell_Holy_FlashHeal'))
+            assert(not pathOk and pathError == 'Cannot set texture to a secret string value.',
+                'a tainted secret texture path must keep the native string error')
         end
         debug.setobjecttaint(addon, 'SecretTextureProbe')
         addon()
@@ -199,6 +204,73 @@ fn aura_secret_texture_replaces_and_clears_without_plain_readout() {
         debug.setobjecttaint(cleared, 'SecretTextureProbe')
         cleared()
     "#).unwrap();
+}
+
+#[cfg(all(feature = "optional-tests", feature = "client-retail"))]
+#[test]
+fn tainted_secret_texture_target_reports_prevention_error() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec("BlockedSecretTexture = CreateFrame('Frame'):CreateTexture()")
+        .unwrap();
+    let texture_id = crate::common::aura_container_harness::frame_id(&env, "BlockedSecretTexture");
+    env.state()
+        .borrow_mut()
+        .widgets
+        .get_mut(texture_id)
+        .expect("secret target texture exists")
+        .prevent_secret_values = true;
+
+    env.exec(
+        r#"
+        local function addon()
+            local ok, err = pcall(BlockedSecretTexture.SetTexture, BlockedSecretTexture,
+                secretwrap(136243))
+            assert(not ok)
+            assert(err == 'Attempt to set secret values on an object that prevents secret values', err)
+        end
+        debug.setobjecttaint(addon, 'SecretTextureProbe')
+        addon()
+        "#,
+    )
+    .unwrap();
+}
+
+#[cfg(all(feature = "optional-tests", feature = "client-retail"))]
+#[test]
+fn tainted_secret_texture_string_reports_native_error() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local texture = CreateFrame('Frame'):CreateTexture()
+        local function addon()
+            local ok, err = pcall(texture.SetTexture, texture,
+                secretwrap('Interface\\Icons\\Spell_Holy_FlashHeal'))
+            assert(not ok and err == 'Cannot set texture to a secret string value.', err)
+        end
+        debug.setobjecttaint(addon, 'SecretTextureStringProbe')
+        addon()
+        "#,
+    )
+    .unwrap();
+}
+
+#[cfg(all(feature = "optional-tests", feature = "client-retail"))]
+#[test]
+fn tainted_secretwrap_does_not_reject_a_marked_number() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local marked = secretwrap(136243)
+        local function addon()
+            assert(not issecure(), 'secretwrap probe must run with a tainted source')
+            local ok, err = pcall(secretwrap, marked)
+            assert(ok, err)
+        end
+        debug.setobjecttaint(addon, 'AuraKit')
+        addon()
+        "#,
+    )
+    .unwrap();
 }
 
 modern_engine_namespace_fixture! {

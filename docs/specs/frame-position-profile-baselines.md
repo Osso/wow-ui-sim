@@ -16,6 +16,11 @@
 - [x] Keep Retail clean and reduce failure names on PTR, Forever, Mists, Era and Anniversary relative to master `3ca96ba58`.
 - [x] Reconcile Forever bag, status-manager and managed-right geometry from pinned Camelot inputs; assert bag registration/dimensions/preset, keyboard-manager anchor, and the visible managed-child width bound before geometry. Do not treat the status manager as its Edit Mode child bars.
 
+## Action-bar fixture stages
+
+- [x] `tests/action_bar.rs` must distinguish a late-registered Retail BagsBar's XML anchor (Y=0 before the next layout update) from PTR's startup-applied preset anchor (Y=10).
+- [x] Retail and PTR must both apply the selected Modern Bags preset Y=10 after a non-default displacement. Assert preset selection and absence of saved-layout inputs before checking the applied anchor.
+
 ## How it works
 
 - [Source derivations and evidence boundary](../wiki/investigations/frame-position-baseline-drift.md)

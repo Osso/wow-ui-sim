@@ -4,9 +4,12 @@
 use super::helpers::read_untainted_signed32_argument;
 use super::helpers::{ensure_namespace, validate_supplied_relation_id};
 use crate::client_profile::{ACTIVE, ClientProfile};
-use crate::lua_api::methods::{borrow_state, val_to_string};
+use crate::lua_api::methods::{
+    borrow_state, create_string, create_table, table_set, val_to_string,
+};
+use crate::lua_api::sim_substates::QuestLogEntry;
 use crate::lua_api::workarounds::update_campaign_headers;
-use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
+use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
@@ -18,6 +21,205 @@ pub struct QuestAdditionalHighlights {
     pub world_quests_elite: bool,
     pub dungeons: bool,
     pub treasures: bool,
+}
+
+/// R88e.2 log-entry flags, separate from quest-record or category inputs.
+#[derive(Debug, Clone, Copy, Default)]
+pub struct QuestInfoEntryFlags {
+    pub is_task: bool,
+    pub is_bounty: bool,
+}
+
+const QUEST_LOG_HEADER_TITLE: &str = "Khaz Algar";
+
+pub(crate) fn register_info_queries(state: &mut LuaState) -> LuaResult<()> {
+    let namespace = ensure_namespace(state, "C_QuestLog")?;
+    table_set_rust_fn_static(state, namespace, "GetInfo", get_info)?;
+    if ACTIVE == ClientProfile::Retail {
+        table_set_rust_fn_static(state, namespace, "IsQuestTask", is_quest_task)?;
+        table_set_rust_fn_static(state, namespace, "IsQuestBounty", is_quest_bounty)?;
+    }
+    Ok(())
+}
+
+fn info_entry_flags(entry: &QuestLogEntry) -> QuestInfoEntryFlags {
+    if ACTIVE == ClientProfile::Retail {
+        entry.info_flags
+    } else {
+        QuestInfoEntryFlags {
+            is_task: entry.is_world_quest,
+            is_bounty: false,
+        }
+    }
+}
+
+fn is_quest_task(state: &mut LuaState) -> LuaResult<u32> {
+    let id = Option::<f64>::from_stack(state, 1)?.unwrap_or(0.0) as i32;
+    let result = {
+        let sim = borrow_state(state)?;
+        let quests = &sim.quest_log_entries;
+        if let Some(entry) = quests.entries.iter().find(|entry| entry.quest_id == id) {
+            info_entry_flags(entry).is_task
+        } else if quests.task_category_five.contains(&id) {
+            quests.task_list_lookup_matches.contains(&id)
+        } else if let Some(value) = quests.task_record_values.get(&id) {
+            matches!(value, 3 | 5)
+        } else {
+            quests.task_list_lookup_matches.contains(&id)
+        }
+    };
+    state.push(Val::Bool(result));
+    Ok(1)
+}
+
+fn is_quest_bounty(state: &mut LuaState) -> LuaResult<u32> {
+    let id = Option::<f64>::from_stack(state, 1)?.unwrap_or(0.0) as i32;
+    let result = borrow_state(state)?
+        .quest_log_entries
+        .bounty_category_matches
+        .contains(&id);
+    state.push(Val::Bool(result));
+    Ok(1)
+}
+
+fn get_info(state: &mut LuaState) -> LuaResult<u32> {
+    let log_index = i32::from_stack(state, 1)?;
+    // Native absent Lua return is UNKNOWN; keep the existing zero-return policy.
+    if log_index < 1 {
+        return Ok(0);
+    }
+    let kind = {
+        let sim = borrow_state(state)?;
+        classify_quest_log_index(sim.quest_log_entries.entries.len(), log_index)
+    };
+    let Some(kind) = kind else { return Ok(0) };
+
+    let t = create_table(state);
+    match kind {
+        QuestLogIndexKind::Header => {
+            write_header_identity_fields(state, t, log_index);
+            write_header_constant_fields(state, t);
+        }
+        QuestLogIndexKind::Quest(quest_entry_index) => {
+            let entry = borrow_state(state)?
+                .quest_log_entries
+                .entries
+                .get(quest_entry_index)
+                .cloned();
+            let Some(entry) = entry else { return Ok(0) };
+            write_quest_identity_fields(state, t, &entry, log_index);
+            let (campaign, flags, auto_complete) = {
+                let sim = borrow_state(state)?;
+                let quests = &sim.quest_log_entries;
+                let campaign = quests
+                    .campaign_ids
+                    .get(&entry.quest_id)
+                    .copied()
+                    .unwrap_or(0);
+                let flags = info_entry_flags(&entry);
+                let prior_flag = crate::c_api::quest_objectives::ENABLED
+                    && quests.readiness.auto_complete.contains(&entry.quest_id);
+                let auto_complete = if ACTIVE == ClientProfile::Retail {
+                    quests
+                        .info_record_autocomplete
+                        .get(&entry.quest_id)
+                        .copied()
+                        .unwrap_or(prior_flag)
+                } else {
+                    prior_flag
+                };
+                (campaign, flags, auto_complete)
+            };
+            write_quest_classification_flags(state, t, &entry);
+            write_quest_constant_stub_fields(state, t, false);
+            table_set(state, t, "isTask", Val::Bool(flags.is_task));
+            table_set(state, t, "isBounty", Val::Bool(flags.is_bounty));
+            table_set(state, t, "campaignID", Val::Num(f64::from(campaign)));
+            table_set(state, t, "isAutoComplete", Val::Bool(auto_complete));
+        }
+    }
+
+    state.push(t);
+    Ok(1)
+}
+
+#[derive(Clone, Copy)]
+pub(crate) enum QuestLogIndexKind {
+    Header,
+    Quest(usize),
+}
+
+pub(crate) fn classify_quest_log_index(
+    entry_count: usize,
+    log_index: i32,
+) -> Option<QuestLogIndexKind> {
+    if entry_count == 0 || log_index < 1 {
+        return None;
+    }
+    if log_index == 1 {
+        return Some(QuestLogIndexKind::Header);
+    }
+    let quest_index = (log_index - 2) as usize;
+    (quest_index < entry_count).then_some(QuestLogIndexKind::Quest(quest_index))
+}
+
+fn write_header_identity_fields(state: &mut LuaState, t: Val, log_index: i32) {
+    table_set(state, t, "questID", Val::Num(0.0));
+    let title = create_string(state, QUEST_LOG_HEADER_TITLE);
+    table_set(state, t, "title", title);
+    table_set(state, t, "level", Val::Num(0.0));
+    table_set(state, t, "questLogIndex", Val::Num(log_index as f64));
+    table_set(state, t, "difficultyLevel", Val::Num(0.0));
+    table_set(state, t, "isComplete", Val::Bool(false));
+    table_set(state, t, "isFailed", Val::Bool(false));
+}
+
+fn write_quest_identity_fields(
+    state: &mut LuaState,
+    t: Val,
+    entry: &QuestLogEntry,
+    log_index: i32,
+) {
+    table_set(state, t, "questID", Val::Num(entry.quest_id as f64));
+    let title = create_string(state, &entry.title);
+    table_set(state, t, "title", title);
+    table_set(state, t, "level", Val::Num(entry.level as f64));
+    table_set(state, t, "questLogIndex", Val::Num(log_index as f64));
+    table_set(state, t, "difficultyLevel", Val::Num(entry.level as f64));
+    table_set(state, t, "isComplete", Val::Bool(entry.is_complete));
+    table_set(state, t, "isFailed", Val::Bool(entry.is_failed));
+}
+
+fn write_quest_classification_flags(state: &mut LuaState, t: Val, entry: &QuestLogEntry) {
+    table_set(state, t, "isMeta", Val::Bool(entry.is_meta));
+    table_set(state, t, "isWorldQuest", Val::Bool(entry.is_world_quest));
+    table_set(state, t, "isOnMap", Val::Bool(entry.map_id.is_some()));
+}
+
+/// Fields that the sim always reports with a constant value — headers,
+/// bounty/story categories, POI flags, sort/scaling toggles, and the
+/// campaign/suggestedGroup identifiers we don't model.
+fn write_quest_constant_stub_fields(state: &mut LuaState, t: Val, is_header: bool) {
+    table_set(state, t, "isHeader", Val::Bool(is_header));
+    table_set(state, t, "isCollapsed", Val::Bool(false));
+    table_set(state, t, "isStory", Val::Bool(false));
+    table_set(state, t, "hasLocalPOI", Val::Bool(false));
+    table_set(state, t, "isHidden", Val::Bool(false));
+    table_set(state, t, "overridesSortOrder", Val::Bool(false));
+    table_set(state, t, "startEvent", Val::Bool(false));
+    table_set(state, t, "isScaling", Val::Bool(false));
+    table_set(state, t, "readyForTranslation", Val::Bool(false));
+    table_set(state, t, "suggestedGroup", Val::Num(0.0));
+}
+
+fn write_header_constant_fields(state: &mut LuaState, t: Val) {
+    table_set(state, t, "isBounty", Val::Bool(false));
+    table_set(state, t, "isAutoComplete", Val::Bool(false));
+    table_set(state, t, "isMeta", Val::Bool(false));
+    table_set(state, t, "isWorldQuest", Val::Bool(false));
+    table_set(state, t, "isTask", Val::Bool(false));
+    table_set(state, t, "isOnMap", Val::Bool(false));
+    write_quest_constant_stub_fields(state, t, true);
 }
 
 pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
@@ -303,4 +505,50 @@ fn additional_highlights(state: &mut LuaState) -> LuaResult<u32> {
     state.push(Val::Bool(row.dungeons));
     state.push(Val::Bool(row.treasures));
     Ok(5)
+}
+
+#[cfg(all(test, feature = "client-retail"))]
+mod r88e2_tests {
+    use crate::lua_api::WowLuaEnv;
+
+    #[test]
+    fn quest_task_no_row_uses_verified_lookup_priority() {
+        let env = WowLuaEnv::new().unwrap();
+        {
+            let mut sim = env.state().borrow_mut();
+            let quests = &mut sim.quest_log_entries;
+            quests.task_category_five.extend([101_001, 101_002]);
+            quests
+                .task_list_lookup_matches
+                .extend([101_001, 101_005, 101_006]);
+            quests.task_record_values.extend([
+                (101_002, 3),
+                (101_003, 3),
+                (101_004, 5),
+                (101_005, 2),
+            ]);
+            let id = quests.entries[0].quest_id;
+            quests.task_category_five.insert(id);
+            quests.task_list_lookup_matches.insert(id);
+            let mut duplicate = quests.entries[0].clone();
+            duplicate.info_flags.is_task = true;
+            quests.entries.push(duplicate);
+        }
+        env.exec(
+            r#"
+            assert(C_QuestLog.IsQuestTask(101001))
+            assert(not C_QuestLog.IsQuestTask(101002))
+            assert(C_QuestLog.IsQuestTask(101003))
+            assert(C_QuestLog.IsQuestTask(101004))
+            assert(not C_QuestLog.IsQuestTask(101005))
+            assert(C_QuestLog.IsQuestTask(101006))
+            assert(not C_QuestLog.IsQuestTask(101007))
+            local row = C_QuestLog.GetInfo(2)
+            assert(not row.isTask and not C_QuestLog.IsQuestTask(row.questID))
+            local last = C_QuestLog.GetNumQuestLogEntries()
+            assert(C_QuestLog.GetInfo(last).isTask)
+        "#,
+        )
+        .unwrap();
+    }
 }

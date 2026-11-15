@@ -673,6 +673,13 @@ fn test_other_tooltip_frames_exist() {
 #[test]
 fn test_copy_tooltip_copies_lines_and_spell_data_without_reowning() {
     let env = WowLuaEnv::new().unwrap();
+    // R81 Q2: keep the original copied-row count with a supplied final cast result.
+    env.state()
+        .borrow_mut()
+        .spell_tooltip_inputs
+        .entry(19750)
+        .or_default()
+        .cast_ms = Some(1500);
 
     env.exec(
         r#"

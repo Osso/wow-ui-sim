@@ -13,7 +13,9 @@ use keybindings_panels_detail::{
 #[cfg(feature = "client-wowforever")]
 #[test]
 fn forever_trait_currency_headers_match_groups_and_refresh_spent_values() {
-    use wow_ui_sim::c_api::trait_group_currency::{ConfigCurrencyInputs, CurrencyAmounts, RankedNode};
+    use wow_ui_sim::c_api::trait_group_currency::{
+        ConfigCurrencyInputs, CurrencyAmounts, RankedNode,
+    };
     use wow_ui_sim::c_api::trait_group_display::{GroupDisplayRow, SkillLineDisplay};
     test_timeout! {
         let env = setup_env();
@@ -84,31 +86,38 @@ fn forever_trait_currency_headers_match_groups_and_refresh_spent_values() {
 #[test]
 fn supplied_spellbook_rank_is_observed() {
     let env = wow_ui_sim::lua_api::WowLuaEnv::new().expect("create environment");
-    env.exec(r#"
+    env.exec(
+        r#"
         A_Admin.SetSpellBookItemLowRank(6603, true)
         A_Admin.SetSpellBookItemLowRank(8690, false)
         assert(C_SpellBook.IsSpellBookItemLowRank(1, 0) == true)
         assert(C_SpellBook.IsSpellBookItemLowRank(2, 0) == false)
-    "#).expect("supplied rank observations");
+    "#,
+    )
+    .expect("supplied rank observations");
 }
 
 #[cfg(any(feature = "client-ptr", feature = "client-wowforever"))]
 #[test]
 fn supplied_spec_selection_is_observed() {
     let env = wow_ui_sim::lua_api::WowLuaEnv::new().expect("create environment");
-    env.exec(r#"
+    env.exec(
+        r#"
         A_Admin.SetSpecSelectionEnabled(true)
         assert(C_SpecializationInfo.IsSpecSelectionEnabled(2) == true)
         A_Admin.SetSpecSelectionEnabled(false)
         assert(C_SpecializationInfo.IsSpecSelectionEnabled(2) == false)
-    "#).expect("supplied specialization observations");
+    "#,
+    )
+    .expect("supplied specialization observations");
 }
 
 #[cfg(any(feature = "client-ptr", feature = "client-wowforever"))]
 #[test]
 fn spellbook_rank_accepts_untainted_secret_arguments() {
     let env = wow_ui_sim::lua_api::WowLuaEnv::new().expect("create environment");
-    env.exec(r#"
+    env.exec(
+        r#"
         A_Admin.SetSpellBookItemLowRank(6603, true)
         local slot, bank = secretwrap(1), secretwrap(0)
         assert(C_SpellBook.IsSpellBookItemLowRank(slot, 0) == true)
@@ -119,28 +128,34 @@ fn spellbook_rank_accepts_untainted_secret_arguments() {
         debug.setobjecttaint(addon_bank, 'RankFixture')
         assert(not pcall(addon_slot))
         assert(not pcall(addon_bank))
-    "#).expect("AllowedWhenUntainted spellbook arguments");
+    "#,
+    )
+    .expect("AllowedWhenUntainted spellbook arguments");
 }
 
 #[cfg(any(feature = "client-ptr", feature = "client-wowforever"))]
 #[test]
 fn spec_selection_accepts_untainted_secret_argument() {
     let env = wow_ui_sim::lua_api::WowLuaEnv::new().expect("create environment");
-    env.exec(r#"
+    env.exec(
+        r#"
         A_Admin.SetSpecSelectionEnabled(true)
         local class = secretwrap(2)
         assert(C_SpecializationInfo.IsSpecSelectionEnabled(class) == true)
         local function addon() return C_SpecializationInfo.IsSpecSelectionEnabled(class) end
         debug.setobjecttaint(addon, 'SpecFixture')
         assert(not pcall(addon))
-    "#).expect("AllowedWhenUntainted specialization argument");
+    "#,
+    )
+    .expect("AllowedWhenUntainted specialization argument");
 }
 
 #[cfg(feature = "client-ptr")]
 #[test]
 fn ptr_spellbook_filter_uses_supplied_rank() {
     let env = setup_env();
-    env.send_key_press("S", None).expect("load spellbook through key binding");
+    env.send_key_press("S", None)
+        .expect("load spellbook through key binding");
     env.exec(r#"
         A_Admin.SetSpellBookItemLowRank(6603, true)
         assert(SpellBookFrameMixin.ShouldDisplaySpellBookItem(nil, false, false, true, true, 1, 0) == false)
@@ -155,8 +170,12 @@ fn ptr_spellbook_filter_uses_supplied_rank() {
 #[test]
 fn flyout_membership_accepts_untainted_secret_arguments() {
     let env = wow_ui_sim::lua_api::WowLuaEnv::new().expect("create environment");
-    env.state().borrow_mut().spellbook_loose_flyout_members.insert(6603);
-    env.exec(r#"
+    env.state()
+        .borrow_mut()
+        .spellbook_loose_flyout_members
+        .insert(6603);
+    env.exec(
+        r#"
         slot, bank = secretwrap(1), secretwrap(0)
         assert(C_SpellBook.IsSpellBookItemLooseFlyoutMember(slot, 0) == true)
         assert(C_SpellBook.IsSpellBookItemLooseFlyoutMember(1, bank) == true)
@@ -164,9 +183,17 @@ fn flyout_membership_accepts_untainted_secret_arguments() {
         function addon_bank() return C_SpellBook.IsSpellBookItemLooseFlyoutMember(1, bank) end
         debug.setobjecttaint(addon_slot, 'FlyoutFixture')
         debug.setobjecttaint(addon_bank, 'FlyoutFixture')
-    "#).expect("untainted secret arguments");
-    assert!(env.exec("addon_slot()").is_err(), "tainted secret slot must fail");
-    assert!(env.exec("addon_bank()").is_err(), "tainted secret bank must fail");
+    "#,
+    )
+    .expect("untainted secret arguments");
+    assert!(
+        env.exec("addon_slot()").is_err(),
+        "tainted secret slot must fail"
+    );
+    assert!(
+        env.exec("addon_bank()").is_err(),
+        "tainted secret bank must fail"
+    );
 }
 
 #[cfg(feature = "client-ptr")]
@@ -174,7 +201,10 @@ fn flyout_membership_accepts_untainted_secret_arguments() {
 fn ptr_spellbook_filter_uses_supplied_flyout_membership() {
     let env = setup_env();
     env.send_key_press("S", None).expect("load spellbook");
-    env.state().borrow_mut().spellbook_loose_flyout_members.insert(6603);
+    env.state()
+        .borrow_mut()
+        .spellbook_loose_flyout_members
+        .insert(6603);
     env.exec(r#"
         assert(SpellBookFrameMixin.ShouldDisplaySpellBookItem(nil, false, false, false, false, 1, 0) == false)
         assert(SpellBookFrameMixin.ShouldDisplaySpellBookItem(nil, false, false, false, false, 2, 0) == true)
@@ -201,18 +231,24 @@ fn ptr_item_context_uses_supplied_target_spell() {
 #[test]
 fn ptr_spec_tab_uses_supplied_spec_selection() {
     let env = setup_env();
-    env.send_key_press("S", None).expect("load player spells through key binding");
-    env.exec(r#"
+    env.send_key_press("S", None)
+        .expect("load player spells through key binding");
+    env.exec(
+        r#"
         A_Admin.SetSpecSelectionEnabled(true)
         assert(PlayerSpellsFrame:IsTabAvailable(PlayerSpellsFrame.specTabID) == true)
         A_Admin.SetSpecSelectionEnabled(false)
         assert(PlayerSpellsFrame:IsTabAvailable(PlayerSpellsFrame.specTabID) == false)
-    "#).expect("original specialization tab consumes supplied state");
+    "#,
+    )
+    .expect("original specialization tab consumes supplied state");
 }
 
 // These regressions use the ordered startup loader, not setup_env's injected
 // ClickBinding bootstrap, so Escape runs against production panel bookkeeping.
 post_wrath_ui_fixture! {
+// Camelot/Blizzard_PlayerSpellsFrame.lua:58-63 disables the top tab system.
+#[cfg(not(feature = "client-wowforever"))]
 #[test]
 fn specialization_escape_after_micro_button_and_tab_click_closes_panel() {
     test_timeout! {
@@ -229,6 +265,24 @@ fn specialization_escape_after_micro_button_and_tab_click_closes_panel() {
         assert_specialization_escape_closes_panel(&env);
     }
 }
+}
+
+// Camelot/Blizzard_PlayerSpellsFrame.lua:58-63 hides the top-level tabs;
+// Mainline/MainMenuBarMicroButtons.xml:130 supplies the separate talent button.
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn specialization_escape_after_camelot_micro_button_closes_panel() {
+    test_timeout! {
+        let env = setup_specialization_escape_env();
+        env.exec(r#"
+            local button = TalentMicroButton
+            assert(button and button:IsVisible(), "talent microbutton is visible")
+            button:GetScript("OnClick")(button, "LeftButton", false)
+            assert(PlayerSpellsFrame:IsShown(), "microbutton opens PlayerSpells")
+            PlayerSpellsUtil.OpenToClassSpecializationsTab()
+        "#).expect("open specialization without Camelot's hidden tab system");
+        assert_specialization_escape_closes_panel(&env);
+    }
 }
 
 post_wrath_ui_fixture! {
@@ -249,6 +303,7 @@ fn setup_specialization_escape_env() -> common::LockedEnv {
         use wow_ui_sim::screen::ScreenKind;
         let env = wow_ui_sim::lua_api::WowLuaEnv::new().expect("create specialization environment");
         env.set_screen_size(1600.0, 1200.0);
+        common::supply_empty_forever_spellbook_outfits(&env);
         let ui = wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("synced UI source");
         env.state().borrow_mut().addon_base_paths = vec![ui.clone()];
         env.gc_stop();

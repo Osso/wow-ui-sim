@@ -8,6 +8,8 @@ use crate::lua_bridge::FromStack;
 use rilua::vm::state::LuaState;
 use rilua::{LuaApiMut, LuaResult, Val};
 
+const SET_TABLE_SECURITY_USAGE: &str = "Usage: SetTableSecurityOption(table, option)";
+
 const PROTECTED: &[&str] = &[
     "AscendStop",
     "AssistUnit",
@@ -279,6 +281,15 @@ fn refuse_call(state: &mut LuaState) -> LuaResult<u32> {
 fn set_table_security(state: &mut LuaState) -> LuaResult<u32> {
     if refuse_tainted_caller(state)? {
         return Ok(0);
+    }
+    if let (Val::Table(_), Val::Num(option)) =
+        (state.stack_get(state.base), state.stack_get(state.base + 1))
+    {
+        let is_integer = option.is_finite() && option.fract() == 0.0;
+        let is_in_range = (0.0..=2.0).contains(&option);
+        if is_integer && !is_in_range {
+            return Err(rilua::runtime_error(SET_TABLE_SECURITY_USAGE));
+        }
     }
     let original = registry_get(state, "__sim_original_settablesecurity");
     let arguments: Vec<_> = (state.base..state.top)

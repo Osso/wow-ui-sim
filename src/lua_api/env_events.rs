@@ -242,6 +242,8 @@ impl WowLuaEnv {
     /// `STORE_STATUS_CHANGED` event with no payload and no `CVAR_UPDATE` on
     /// PTR 12.1.7 and in the limited Retail 12.1.5 comparison. `shop2Enabled`
     /// emits no Lua event on initialized paths; first-use behavior is UNKNOWN.
+    /// R75 PTR override input writes first, then posts STORE_STATUS_CHANGED.
+    /// Duplicate-write suppression is unknown; no equality policy is added.
     pub fn set_server_mirrored_cvar(&self, name: &str, value: &str) -> Result<()> {
         let previous_value = {
             let state = self.state();
@@ -263,7 +265,10 @@ impl WowLuaEnv {
             )
             && previous_value != value;
 
-        if store_status_changed {
+        let override_status_changed = crate::client_profile::ACTIVE
+            == crate::client_profile::ClientProfile::Ptr
+            && name.eq_ignore_ascii_case("rewardsShopOverrideEnabled");
+        if store_status_changed || override_status_changed {
             self.fire_event("STORE_STATUS_CHANGED")?;
         }
         Ok(())

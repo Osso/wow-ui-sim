@@ -135,7 +135,8 @@ fn unit_full_name(state: &mut LuaState) -> LuaResult<u32> {
     state.push(name);
     let second = match second.as_deref() {
         Some(value) => identity_output(state, value, secret),
-        None if forever && unit != "player" => unresolved_forever_non_player_full_name_second(),
+        None if forever && unit == "player" => identity_output(state, "", secret),
+        None if forever => unresolved_forever_non_player_full_name_second(),
         None => identity_output(state, SIM_REALM, secret),
     };
     state.push(second);

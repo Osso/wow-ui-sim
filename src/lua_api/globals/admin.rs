@@ -111,6 +111,7 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     let builder = crate::c_api::item_overlay::register_admin(builder)?;
     let builder = crate::c_api::c_minimap_quest_blob::register_admin(builder)?;
     let builder = crate::c_api::c_tooltip_info_weekly::register_admin(builder)?;
+    let builder = crate::c_api::c_tooltip_info_possession::register_admin(builder)?;
     let builder = builder.set_function(
         "SetHousingCatalogVariantStoredCount",
         crate::c_api::c_housing::catalog::set_variant_stored_count,
@@ -566,13 +567,25 @@ fn set_player_sex(state: &mut LuaState) -> LuaResult<u32> {
 
 fn learn_spell(state: &mut LuaState) -> LuaResult<u32> {
     let id = u32::from_stack(state, 1)?;
-    borrow_state_mut(state)?.known_spells.insert(id);
+    let mut sim = borrow_state_mut(state)?;
+    sim.known_spells.insert(id);
+    #[cfg(feature = "retail-12-1-5")]
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        // INFERRED host wiring: LearnSpell supplies a ranged-ID update input.
+        crate::c_api::c_spell::record_ranged_auto_attack_spell(&mut sim, id);
+    }
     Ok(0)
 }
 
 fn unlearn_spell(state: &mut LuaState) -> LuaResult<u32> {
     let id = u32::from_stack(state, 1)?;
-    borrow_state_mut(state)?.known_spells.remove(&id);
+    let mut sim = borrow_state_mut(state)?;
+    sim.known_spells.remove(&id);
+    #[cfg(feature = "retail-12-1-5")]
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        // INFERRED host wiring: UnlearnSpell supplies a ranged-ID removal input.
+        crate::c_api::c_spell::clear_ranged_auto_attack_spell(&mut sim, id);
+    }
     Ok(0)
 }
 

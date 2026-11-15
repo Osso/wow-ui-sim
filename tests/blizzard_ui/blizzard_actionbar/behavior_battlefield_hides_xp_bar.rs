@@ -56,6 +56,7 @@ fn assert_honor_can_show_from_battlefield(env: &WowLuaEnv) {
     );
 }
 
+#[cfg(not(feature = "client-wowforever"))]
 fn assert_cold_status_bars_are_experience_and_reputation(env: &WowLuaEnv) {
     let (length, first, second) = read_shown_bar_indices(env);
     assert_eq!(length, EXPECTED_CONTAINER_COUNT);
@@ -63,6 +64,45 @@ fn assert_cold_status_bars_are_experience_and_reputation(env: &WowLuaEnv) {
     assert_eq!(second, REPUTATION_BAR_INDEX);
 }
 
+// Forever Camelot/StatusTrackingBarConstants.lua:21-28 sets Exp=0,
+// Rep=2 and Honor=3. Shared/StatusTrackingManager.lua:61 sorts descending.
+#[cfg(feature = "client-wowforever")]
+fn assert_cold_status_bars_are_experience_and_reputation(env: &WowLuaEnv) {
+    assert_forever_bar_priorities(env);
+    assert_eq!(
+        read_shown_bar_indices(env),
+        (
+            EXPECTED_CONTAINER_COUNT,
+            REPUTATION_BAR_INDEX,
+            EXPERIENCE_BAR_INDEX
+        )
+    );
+}
+
+#[cfg(feature = "client-wowforever")]
+fn assert_battlefield_status_bars_are_experience_and_honor(env: &WowLuaEnv) {
+    assert_forever_bar_priorities(env);
+    assert_eq!(
+        read_shown_bar_indices(env),
+        (
+            EXPECTED_CONTAINER_COUNT,
+            HONOR_BAR_INDEX,
+            REPUTATION_BAR_INDEX
+        )
+    );
+}
+
+#[cfg(feature = "client-wowforever")]
+fn assert_forever_bar_priorities(env: &WowLuaEnv) {
+    let priorities: (i64, i64, i64) = env.eval(
+        "local p = StatusTrackingBarInfo.BarPriorities; local b = StatusTrackingBarInfo.BarsEnum; \
+         return p[b.Experience], p[b.Reputation], p[b.Honor]"
+    ).unwrap();
+    assert_eq!(priorities, (0, 2, 3));
+    assert!(priorities.2 > priorities.1 && priorities.1 > priorities.0);
+}
+
+#[cfg(not(feature = "client-wowforever"))]
 fn assert_battlefield_status_bars_are_experience_and_honor(env: &WowLuaEnv) {
     let (length, first, second) = read_shown_bar_indices(env);
     assert_eq!(length, EXPECTED_CONTAINER_COUNT);

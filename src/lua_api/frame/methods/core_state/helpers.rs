@@ -35,20 +35,20 @@ pub(super) fn frame_size(state: &mut LuaState, id: u64, raw: bool) -> LuaResult<
         return Ok(raw_frame_size(&sim, id));
     }
 
-    {
+    let stored_font_string_height = {
         let sim = borrow_state(state)?;
-        let is_font_string_with_measured_width = sim.widgets.get(id).is_some_and(|frame| {
-            frame.widget_type == crate::widget::WidgetType::FontString && frame.width > 0.0
-        });
-        if is_font_string_with_measured_width {
-            return Ok(sim.widgets.resolved_size(id));
-        }
-    }
-
+        sim.widgets
+            .get(id)
+            .filter(|frame| {
+                frame.widget_type == crate::widget::WidgetType::FontString && frame.width > 0.0
+            })
+            .map(|_| sim.widgets.stored_size(id).1)
+    };
     if let Some((rect, effective_scale, _)) =
         crate::lua_api::rect_geometry::resolve_queryable_rect(state, id)?
     {
-        return Ok((rect.width / effective_scale, rect.height / effective_scale));
+        let height = stored_font_string_height.unwrap_or(rect.height / effective_scale);
+        return Ok((rect.width / effective_scale, height));
     }
 
     Ok(borrow_state(state)?.widgets.stored_size(id))

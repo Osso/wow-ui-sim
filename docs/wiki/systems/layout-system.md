@@ -49,6 +49,18 @@ Layout branches on `anchors.len()` (`src/iced_app/layout.rs`):
 
 `set_screen_size(width, height)` deliberately sets both pairs one-to-one. `set_display_size(width, height)` retains physical pixels and derives the base canvas from Blizzard PixelUtil's 768-unit reference height. Frame effective scale remains independent of both inputs.
 
+## Screen clamping
+
+**VERIFIED (Retail 12.1.5.70688, R88n.5r):** The generic rect resolver clamps enabled frames after requested geometry is resolved and before the rect is stored or rect-change notification is sent. Queued layout and synchronous dirty-rect queries use the same calculation. Screen extents and per-frame `(left, right, top, bottom)` insets are combined after multiplying insets by effective scale. In top-left `LayoutRect` coordinates, the bounds are `x >= -left × scale`, `x + width <= screenWidth - right × scale`, `y >= top × scale`, and `y + height <= screenHeight + bottom × scale`.
+
+**VERIFIED (Retail 12.1.5.70688, original UI):** `GameTooltip` inherits `clampedToScreen="true"`; the simulator uses the generic enable flag, not a tooltip-specific rule. See the [original consumer fixture](../../../tests/blizzard_game_tooltip_loads.rs).
+
+**VERIFIED (Retail 12.1.5.70688, R88n.5r-q1/q2):** Suppression is a dedicated per-region bit, distinct from movement and user placement. The effective query is enabled AND not suppressed; unchanged effective enable requests do not write or queue. Accepted changes and explicit suppression writes queue geometry and dependent rectangles, never synchronously resolve. The native ClearAllPoints/final-ClearPoint propagation-clear routes are identified, and q3 verifies their distinct propagation-state predicate; simulator transitions are deferred by agreement (#1169). They are not wired directly to the suppression bit. Oversized rectangles retain size and follow left/bottom/right/top correction precedence, so the later right/top edges win rather than centering or resetting the position.
+
+**VERIFIED ordinary inset path:** All four numeric dimensions are required (numeric-convertible strings accepted), and successful setters return zero values. Insets store without an unconditional rectangle queue. Existing anchor-input/dimension rounding happens before clamping, and clamping adds no final rounding.
+
+**VERIFIED native, deferred implementation:** R88n.5r-q3 (tracker #1168) supplies the anchor-propagation predicate, native unit/rounding arithmetic and notification/enable-policy rules. Their simulator implementation is deferred by agreement (#1169); movement is not substituted for propagation. Public-unit numerical equivalence, loaded-owner state, the exhaustive writer census and final renderer snapping remain unproved. Current explicit-host suppression tests are conditional API proof, not public producer proof. See the screen-clamp gap investigation.
+
 ## Coordinate System
 
 | Context | Origin | Y direction |
@@ -75,3 +87,4 @@ Special case: `UIParent` (id=1 or name="UIParent") always fills the base canvas.
 - [[rendering-pipeline]] — consumes LayoutRect and applies presentation transforms for render/input geometry
 - [[frame-position-baseline-drift]] — causal replay needs both display metrics and EditMode inputs
 - [[ptr-pixel-rounding-probe]] — PTR native pixel-rounding semantics await live evidence
+- [[consumer-selection-and-red-proof]] — selected original UI consumers and independent RED selectors

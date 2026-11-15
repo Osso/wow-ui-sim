@@ -119,7 +119,8 @@ fn secure_transfer_queries_use_state() {
     ): (bool, String, String, i64, i64, i64, i64) = env
         .eval(
             r#"
-            C_SecureTransfer._state.shouldShowTradeOfferWarning = true
+            C_TradeInfo._state = C_TradeInfo._state or {}
+            C_TradeInfo._state.shouldShowTradeOfferWarning = true
             C_SecureTransfer._state.tradePartner = "Merchant-MoonGuard"
             C_SecureTransfer._state.mailInfo = {
                 target = "Alt-Illidan",

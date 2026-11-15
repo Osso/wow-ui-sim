@@ -46,7 +46,9 @@ static GLOBAL_NIL_STUBS: &[&str] = &[
     "ReportCheating",
     "RequestInspectData",
     "RequestGuildPartyState",
+    #[cfg(not(feature = "client-retail"))]
     "RequestLFDPartyLockInfo",
+    #[cfg(not(feature = "client-retail"))]
     "RequestLFDPlayerLockInfo",
     "RequestPVPOptionsEnabled",
     "RequestPVPRewards",
@@ -73,7 +75,6 @@ static GLOBAL_NIL_STUBS: &[&str] = &[
     "SetView",
     // SetWatchedFaction is SimState-backed in faction_probes.rs, not a stub.
     "ShowingCinematic",
-    "ShowUIPanel",
     "SortBags",
     "SortReagentBag",
     "SwitchAchievementSearchTab",

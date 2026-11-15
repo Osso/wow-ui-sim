@@ -196,10 +196,16 @@ fn test_unit_pvp_name_player_matches_unit_name() {
 #[test]
 fn test_unit_name_no_target() {
     let env = env();
-    let name: String = env
-        .eval("local n, r = UnitName('target'); return n")
-        .unwrap();
-    assert_eq!(name, "Unknown");
+    if cfg!(feature = "client-wowforever") {
+        // INFERRED: absent-target identity has no name or realm; this does not assert result count.
+        env.eval::<()>("local n, r = UnitName('target'); assert(n == nil and r == nil)")
+            .unwrap();
+    } else {
+        let name: String = env
+            .eval("local n, r = UnitName('target'); return n")
+            .unwrap();
+        assert_eq!(name, "Unknown");
+    }
 }
 
 #[test]
@@ -227,10 +233,16 @@ fn test_unit_name_unmodified_player() {
 #[test]
 fn test_unit_name_unmodified_no_target() {
     let env = env();
-    let name: String = env
-        .eval("local n, r = UnitNameUnmodified('target'); return n")
-        .unwrap();
-    assert_eq!(name, "Unknown");
+    if cfg!(feature = "client-wowforever") {
+        // INFERRED: absent-target identity has no name or realm; this does not assert result count.
+        env.eval::<()>("local n, r = UnitNameUnmodified('target'); assert(n == nil and r == nil)")
+            .unwrap();
+    } else {
+        let name: String = env
+            .eval("local n, r = UnitNameUnmodified('target'); return n")
+            .unwrap();
+        assert_eq!(name, "Unknown");
+    }
 }
 
 // ============================================================================
@@ -243,15 +255,26 @@ fn test_unit_full_name_player() {
     let (name, realm): (String, String) = env.eval("return UnitFullName('player')").unwrap();
     let player_name: String = env.eval("return UnitName('player')").unwrap();
     assert_eq!(name, player_name);
-    assert_eq!(realm, "SimRealm");
+    let expected_realm = if cfg!(feature = "client-wowforever") {
+        ""
+    } else {
+        "SimRealm"
+    };
+    assert_eq!(realm, expected_realm);
 }
 
 #[test]
 fn test_unit_full_name_no_target() {
     let env = env();
-    let (name, realm): (String, String) = env.eval("return UnitFullName('target')").unwrap();
-    assert_eq!(name, "Unknown");
-    assert_eq!(realm, "SimRealm");
+    if cfg!(feature = "client-wowforever") {
+        // INFERRED: absent-target identity has no name or realm; this does not assert result count.
+        env.eval::<()>("local n, r = UnitFullName('target'); assert(n == nil and r == nil)")
+            .unwrap();
+    } else {
+        let (name, realm): (String, String) = env.eval("return UnitFullName('target')").unwrap();
+        assert_eq!(name, "Unknown");
+        assert_eq!(realm, "SimRealm");
+    }
 }
 
 // ============================================================================

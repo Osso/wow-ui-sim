@@ -1,7 +1,7 @@
 use super::*;
 
+#[cfg(not(feature = "client-retail"))]
 pub(super) fn patch_ui_parent_panel_toggles(env: &crate::lua_api::WowLuaEnv) {
-    temporary::ui_parent_panel_toggles::patch(env);
     temporary::main_menu_microbutton_click::patch(env);
 }
 
@@ -21,6 +21,7 @@ pub(super) fn patch_vignette_pin_template(env: &crate::lua_api::WowLuaEnv) {
     temporary::vignette_pin_template::patch(env);
 }
 
+#[cfg(not(feature = "client-retail"))]
 pub(super) fn patch_character_select_selected_name(env: &crate::lua_api::WowLuaEnv) {
     temporary::character_select_selected_name::patch(env);
 }
@@ -29,14 +30,7 @@ pub(super) fn patch_chat_voice_button_surface(env: &crate::lua_api::WowLuaEnv) {
     temporary::chat_voice_button_surface::patch(env);
 }
 
-pub(super) fn patch_item_socketing_tooltips(env: &crate::lua_api::WowLuaEnv) {
-    temporary::item_socketing_tooltips::patch(env);
-}
-
-pub(super) fn patch_action_bar_button_event_fanout(env: &crate::lua_api::WowLuaEnv) {
-    temporary::action_bar_button_event_fanout::patch(env);
-}
-
+#[cfg(not(feature = "client-retail"))]
 pub(super) fn patch_game_time_defaults(env: &crate::lua_api::WowLuaEnv) {
     temporary::game_time_calendar_invites::patch(env);
 }
@@ -45,14 +39,17 @@ pub(super) fn patch_lfg_lock_list(env: &crate::lua_api::WowLuaEnv) {
     temporary::lfg_lock_list::patch(env);
 }
 
+#[cfg(not(feature = "client-retail"))]
 pub(super) fn patch_tooltip_nineslice_surface(env: &crate::lua_api::WowLuaEnv) {
     temporary::tooltip_nineslice_surface::patch(env);
 }
 
+#[cfg(not(feature = "client-retail"))]
 pub(super) fn patch_container_frame_token_tracker(env: &crate::lua_api::WowLuaEnv) {
     temporary::container_frame_token_tracker::patch(env);
 }
 
+#[cfg(not(feature = "client-retail"))]
 pub(super) fn patch_paging_controls_page_text(env: &crate::lua_api::WowLuaEnv) {
     temporary::paging_controls_page_text::patch(env);
 }
@@ -66,6 +63,7 @@ pub(super) fn patch_talent_edge_frame_level_sync(env: &crate::lua_api::WowLuaEnv
 }
 
 pub(super) fn patch_catalog_shop_product_card_defaults(env: &crate::lua_api::WowLuaEnv) {
+    #[cfg(not(feature = "client-retail"))]
     temporary::store_public_defaults::patch(env);
     temporary::catalog_shop_product_card_defaults::patch(env);
 }
@@ -82,18 +80,16 @@ pub(super) fn patch_map_exploration_pin_mixin(env: &crate::lua_api::WowLuaEnv) {
     temporary::map_exploration_pin::patch(env);
 }
 
-pub(super) fn patch_map_canvas_data_provider_attachment(env: &crate::lua_api::WowLuaEnv) {
-    temporary::map_canvas_data_provider_pin::patch(env);
-}
-
 pub(super) fn patch_character_create_defaults(env: &crate::lua_api::WowLuaEnv) {
     temporary::character_create_defaults::patch(env);
 }
 
+#[cfg(not(feature = "client-retail"))]
 pub(super) fn patch_character_frame_title_refresh(env: &crate::lua_api::WowLuaEnv) {
     refresh_character_frame_surface(env);
 }
 
+#[cfg(not(feature = "client-retail"))]
 pub(super) fn refresh_character_frame_surface(env: &crate::lua_api::WowLuaEnv) {
     temporary::character_frame_surface_refresh::patch(env);
 }
@@ -110,23 +106,11 @@ pub(super) fn patch_map_exploration_pin_mixin_for_runtime_addon_load(
     temporary::map_exploration_pin::patch_for_runtime_addon_load(env);
 }
 
+#[cfg(not(feature = "client-retail"))]
 pub(super) fn patch_toggle_collections_journal_for_runtime_addon_load(
     env: &crate::lua_api::LoaderEnv<'_>,
 ) {
-    temporary::ui_parent_panel_toggles::patch_collections_journal_loader(env);
     temporary::mount_journal_dynamic_flight_popup::patch(env);
-}
-
-pub(super) fn patch_toggle_encounter_journal_for_runtime_addon_load(
-    env: &crate::lua_api::LoaderEnv<'_>,
-) {
-    temporary::ui_parent_panel_toggles::patch_encounter_journal_loader(env);
-}
-
-pub(super) fn patch_map_canvas_data_provider_attachment_for_runtime_addon_load(
-    env: &crate::lua_api::LoaderEnv<'_>,
-) {
-    temporary::map_canvas_data_provider_pin::patch_for_runtime_addon_load(env);
 }
 
 pub(super) fn ensure_adventure_map_frame_surface(env: &crate::lua_api::WowLuaEnv) {
@@ -145,18 +129,6 @@ pub(super) fn patch_item_quality_color_data_methods(env: &crate::lua_api::Loader
 
 pub(super) fn patch_artifact_ui_show_panel_guard(env: &crate::lua_api::LoaderEnv<'_>) {
     temporary::artifact_ui_show_panel_guard::patch(env);
-}
-
-pub(super) fn patch_auction_house_categories_refresh_count(env: &crate::lua_api::LoaderEnv<'_>) {
-    temporary::auction_house_categories_refresh_count::patch(env);
-}
-
-pub(super) fn patch_auction_house_browse_results_event(env: &crate::lua_api::LoaderEnv<'_>) {
-    temporary::auction_house_browse_results_event::patch(env);
-}
-
-pub(super) fn patch_auction_house_browse_results_event_from_env(env: &crate::lua_api::WowLuaEnv) {
-    temporary::auction_house_browse_results_event::patch_env(env);
 }
 
 pub(super) fn patch_auction_house_search_context_aliases(env: &crate::lua_api::LoaderEnv<'_>) {

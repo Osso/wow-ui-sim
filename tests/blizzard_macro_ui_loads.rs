@@ -629,3 +629,48 @@ fn blizzard_macro_ui_publishes_macro_popup_frame_global_parented_to_macro_frame(
     );
 }
 }
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn mainline_macro_save_delegate_is_published_after_lod_load() {
+    let env = fresh_game_env();
+    let ui = blizzard_ui_dir();
+    for (name, toc_path) in discover_blizzard_addons_for_screen(&ui, ScreenKind::Game) {
+        if name == "Blizzard_MacroUI" {
+            // Startup selects only the Bootstrap entry, not the explicit LoD body.
+            crate::common::load_blizzard_addon_bootstrap(
+                &env,
+                &ui,
+                &name,
+                "Blizzard_MacroUI_Bootstrap.lua",
+            );
+        } else {
+            load_addon(&env.loader_env(), &toc_path)
+                .unwrap_or_else(|error| panic!("[load {name}] FAILED: {error}"));
+        }
+    }
+    env.apply_post_load_workarounds();
+    fire_startup_events_for_screen(&env, ScreenKind::Game);
+
+    let save_delegate_unpublished: bool = env
+        .eval("return MacroFrame_SaveMacro == nil")
+        .expect("startup MacroFrame_SaveMacro publication probe should succeed");
+    assert!(
+        save_delegate_unpublished,
+        "the selected LoadOnDemand TOC body must not publish MacroFrame_SaveMacro at startup"
+    );
+
+    load_addon(&env.loader_env(), &macro_ui_toc())
+        .expect("Blizzard_MacroUI should load through its selected TOC");
+
+    let lod_delegate_called: bool = env
+        .eval(
+            r#"
+            MacroFrame = { calls = 0, SaveMacro = function(self) self.calls = self.calls + 1 end }
+            MacroFrame_SaveMacro()
+            return MacroFrame.calls == 1
+            "#,
+        )
+        .expect("selected MacroFrame_SaveMacro delegate probe should succeed");
+    assert!(lod_delegate_called);
+}

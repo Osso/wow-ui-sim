@@ -100,6 +100,34 @@ Follow-ups `4e344ab4f` and `1ecc0c98c` cache cumulative offsets only for one ren
 
 `frame_collect` owns the shared `HitOrderKey`. Input must derive its spatial order from flattened render buckets, not a second raw strata/level sort, so a grouped child cannot steal input through a panel rendered above it. The GUI-only `hit_grid` module imports that key for spatial indexing; headless builds do not compile the grid or its GUI dependency tree. ScrollFrame presentation transforms and ancestor clips are shared with rendering, so cache-backed hit targets move and clip with presented content. Several system frames (UIParent, Minimap, WorldFrame, chat frames) are excluded.
 
+## Font sources
+
+`WowFontSystem` (`src/render/font.rs`) loads Blizzard's fonts (`Fonts\\FRIZQT__.TTF`, ...) from CASC at startup. A font file an addon ships (`Interface\\AddOns\\<Addon>\\...`) is loaded on first use from the AddOns directories, resolved ignoring case, and keeps the weight, style and stretch of its face, so a bold file of a family renders bold. `SetFont` with an addon path that names no file raises the client's error, `FontString:SetFont(): Invalid font asset (<path>): file not found`, and keeps the font (**UNVERIFIED native claim:** contributor observation on Forever 1.60.1; independent profile evidence is pending); a file that is not a font warns once and draws in the default font.
+
+`WowFontSystem` (`src/render/font.rs`) loads Blizzard's fonts (`Fonts\\FRIZQT__.TTF`, ...) from CASC at startup. Without CASC every Blizzard font path maps to one fallback family: the font file `WOW_SIM_FALLBACK_FONT` names, else the first system face. The first system face differs between operating systems, so renders compared across machines pin the fallback.
+
+The [font-source contract](../../specs/font-sources.md) separates simulator file-loading policy from native evidence. Resolved addon font files must remain under their canonical AddOns root, including when paths contain symlinks. The missing-file native assertion is currently optional; the combined-tree runtime gate has not run.
+
+## Inline icons in text
+
+`sim_render::inline_markup` parses texture escapes, `|Tpath-or-fileID:height:width:offsetX:offsetY:texWidth:texHeight:left:right:top:bottom:r:g:b|t`, and atlas escapes, `|A:atlas:height:width:offsetX:offsetY:r:g:b|a`, then splits text and icons for measurement and drawing.
+
+**VERIFIED (R88d, Retail 12.1.5.70688):** With icon markup enabled, the tokenizer routes `|T...|t` and `|A:...|a` to their handlers. Atlas markup requires the colon. The first pipe after an opening tag must begin its matching lowercase closing marker. A wrong or missing marker returns the opening pipe to ordinary text handling; a later match does not repair an earlier wrong marker. A recognized token with missing required fields is consumed without an icon. Texture markup requires a colon and height position; atlas markup requires height and width positions. An empty position is not the same as a missing position. Extra fields after blue are ignored.
+
+**VERIFIED (R88d, Retail 12.1.5.70688):** The field reader copies at most 31 bytes per field, excludes the separator colon and closing pipe, and advances past the colon. Heights, widths and offsets are floats. Texture dimensions, crop edges and RGB channels are integers; integer fields use hexadecimal after an initial `0x` or `0X`, and decimal otherwise. Missing optional texture fields leave initialized values unchanged; crop parsing stops when either texture dimension is nonpositive. The parser does not use atlas-native dimensions to fill size fields, and it does not check whether a resource exists. Empty or invalid numeric text and final drawing for unknown resources remain UNKNOWN.
+
+**VERIFIED (R88d, Retail 12.1.5.70688):** A missing texture width copies the resolved height. Nonpositive height and width use the caller metric; a nonpositive width does not have to copy height. An atlas with a nonpositive width uses the caller metric while retaining its resolved height. Positive width normally uses explicit-size scaling; when height selected the caller metric, positive width is multiplied by resolved height. **UNKNOWN (R88d):** The caller metric is not identified as font height or line height.
+
+**VERIFIED (R88e.6, Retail 12.1.5.70688):** The explicit-size calculation uses single-precision arithmetic and has no fixed 0.9957 multiplier. **UNKNOWN (R88e.6):** Its runtime unit count and caller scale are not fixed by the evidence. The simulator does not apply this formula. **INFERRED (Forever 1.60.1.70938):** Exact explicit-size results in the contributor tests retain the supplied measurements and do not establish Retail dimensions.
+
+**VERIFIED (R88e.6, Retail 12.1.5.70688):** Accepted icon width contributes to the checked FontString width-measurement path and to the wrap threshold. A taller accepted icon raises the stored line height. **VERIFIED (R88e.7, Retail 12.1.5.70688):** The FontString path snaps the icon's horizontal edge after multiplying width by drawing scale and adding 0.5 before floor. **VERIFIED (R88f.L.2, Retail 12.1.5.70688):** The snap uses the absolute right edge (`floor(x + scaled_width + 0.5)`), preserves the icon's unsnapped quad edges, and advances later text from the snapped cursor; this applies to texture and atlas icons. **UNKNOWN (R88f.L.2):** Tooltip use of the snap. Vertical mode 1 centers an icon against the caller metric; modes 0 and 2 keep different edges fixed. **UNKNOWN (R88e.6/R88e.7):** The default vertical mode, mapping to `JustifyV`, and the screen direction of those edges are not established. Behavior when an icon alone exceeds the wrap width is also UNKNOWN.
+
+**VERIFIED (R88d, Retail 12.1.5.70688):** Cached `GetStringWidth` and `GetStringHeight` results are divided by the FontString scale. **VERIFIED (R88e.6, Retail 12.1.5.70688):** The checked width-measurement path adds accepted icon width to text advance, and the wrap test uses that width. Tooltip wrapping measures renderer-provided segments and keeps the widest. GameTooltip layout adds the region height of each shown left FontString, with row spacing and attachment overflow where required. The cache-miss height producer and its treatment of inline icon height remain UNKNOWN.
+
+**Simulator policy:** `InlineIcon::size` maps the caller metric to the renderer's `line_height`, **INFERRED** from Forever measurements. The explicit-size formula's runtime unit count and caller scale remain UNKNOWN, so the simulator does not apply that formula. The renderer centers icons in its line box, but this is not proof of the native default vertical mode. **VERIFIED (simulator code and fractional-edge regression):** the FontString renderer and `GetStringWidth` measurement advance from the snapped absolute right edge; tooltip drawing and measurement do not snap because native tooltip behavior remains UNKNOWN. Unknown atlas and file IDs draw no quad in the simulator; their native result remains UNKNOWN.
+
+**INFERRED (Forever 1.60.1.70938):** At font size 12, `X` measures 10.54 × 12.30; explicit-size widths include 11.95 for size 12, 31.86 for size 32 and 109.53 for width 110. `|T…|t` without a height was measured at width 0, but R88d verifies that this token is rejected, not that Retail reports a numeric width. The measured `|A:…:24:0|a` square and all other exact sizes remain Forever observations, not Retail claims.
+
 ## FontString smooth scaling
 
 `0624da720` adds independent `Frame.font_string_smooth_scaling`, shared fractional line-height shaping, mode-keyed caches, and ordinary/runtime/inherited XML handling under retail 12.0.5+. `3c8b48012` adds wrapped render/cache measurement assertions. Contract, inferred-policy boundaries, RED provenance, current GREEN status, earlier XML epoch gap, and future native recorder live in [FontString smooth scaling](../../specs/fontstring-smooth-scaling.md). No native/GPU visual proof is claimed.
@@ -119,6 +147,11 @@ The headless path is implemented in `src/render/headless.rs` and uses the same W
 
 ## Sources
 
+- [font.rs](../../../src/render/font.rs) — CASC fonts, addon fonts and the pinned fallback family
+- [inline_markup.rs](../../../crates/sim-render/src/inline_markup.rs) — inline `|T`/`|A` escape fields, sizes and first-line width
+- [inline_emit.rs](../../../src/render/glyph/inline_emit.rs) — inline icon layout and quads
+- R88d / R88e.6 / R88e.7 / R88f.L.2 (Retail 12.1.5.70688) — byte-verified native parser, measurement and layout findings
+- [TextureUtil.lua](https://github.com/Gethe/wow-ui-source/blob/live/Interface/AddOns/Blizzard_SharedXMLBase/TextureUtil.lua) — `CreateTextureMarkup` and `CreateAtlasMarkup`, the escape formats Blizzard writes
 - [FontString smooth scaling](../../specs/fontstring-smooth-scaling.md) — inferred height policy, tests, scope and future native probe
 
 - [rendering-pipeline.md](../../rendering-pipeline.md) — QuadBatch, shaders, atlas, hit testing, alpha, text

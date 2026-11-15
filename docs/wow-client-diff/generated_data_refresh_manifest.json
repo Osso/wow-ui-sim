@@ -5,6 +5,9 @@
       "source": "~/Projects/wow/data/SpellMisc.csv",
       "source_build": "12.1.5.70391",
       "source_sha256": "99ca8265498bab7570fcd0614c35996d767ad6e1fd1cd338a563c07dd80bba86",
+      "sha256": "4db6d10ddd79318d5811881f00c974a36dd583158cfa4a7479d1004f5fc8cf10",
+      "bytes": 2750208,
+      "lines": 100525,
       "mode": "wow-cli generate spells --augment-attributes",
       "scope": "Attributes_9 only; 7057 records; all preexisting bytes preserved"
     },

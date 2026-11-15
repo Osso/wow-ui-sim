@@ -38,10 +38,7 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(RANGED_SLOT_CAPABILITY)?;
     if matches!(
         ACTIVE,
-        ClientProfile::Mists
-            | ClientProfile::Era
-            | ClientProfile::Anniversary
-            | ClientProfile::WowForever
+        ClientProfile::Mists | ClientProfile::Era | ClientProfile::Anniversary
     ) {
         lua.exec(HARDCORE_REALM_CAPABILITY)?;
     }

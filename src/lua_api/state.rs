@@ -1,4 +1,5 @@
 //! Shared state types for the WoW Lua API.
+use super::state_types::MacroIconInputs;
 pub use crate::c_api::c_character_services::CharacterServicesState;
 use crate::cvars::CVarStorage;
 use crate::event::{EventQueue, ScriptRegistry};
@@ -47,6 +48,8 @@ macro_rules! build_empty_sim_state {
                 crate::c_api::c_nameplate_manager::NamePlateHitTestInsets::default(),
             input_interface_style:
                 crate::c_api::c_input_interface_style::InputInterfaceStyle::default(),
+            #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+            last_gamepad_input_timestamp: None,
             video_capability_bytes: Default::default(),
             #[cfg(any(feature = "client-wowforever", feature = "client-ptr"))]
             gamepad_mapped_sticks: None,
@@ -60,6 +63,7 @@ macro_rules! build_empty_sim_state {
             ui_reload_requested: false,
             session_lifecycle: super::env_lifecycle::SessionLifecycle::Active,
             addon_initialization_failures: HashMap::new(),
+            save_failed_addons: false,
             cinematic_active: false,
             in_world: false,
             reload_allows_protected_actions: false,
@@ -113,8 +117,13 @@ macro_rules! build_empty_sim_state {
             pet_journal_hover: crate::c_api::c_pet_journal_hover::PetJournalHoverState::default(),
             anima_diversion: AnimaDiversionState::default(),
             garrison_talents: GarrisonTalentState::default(),
+            hyperlink_tooltip: Default::default(),
+            trade_skill_crafting_ui_inputs: Default::default(),
             #[cfg(feature = "client-retail")]
             garrison_trees: crate::c_api::c_garrison_trees::GarrisonTrees::default(),
+            #[cfg(feature = "client-retail")]
+            garrison_landing_page:
+                crate::c_api::c_garrison_landing_page::GarrisonLandingPage::default(),
             clipboard: ClipboardState::default(),
             chat_edit_open_state: None,
             #[cfg(feature = "retail-12-0-7")]
@@ -146,6 +155,7 @@ macro_rules! build_empty_sim_state {
             party_ai_guids: HashSet::new(),
             #[cfg(feature = "retail-12-0-5")]
             item_tooltip_levels: ::std::collections::HashMap::new(),
+            item_tooltip_inputs: ::std::collections::HashMap::new(),
             blocked_auras_by_unit: $collections.blocked_auras_by_unit,
             #[cfg(feature = "client-wowforever")]
             auras_secret_in_context: false,
@@ -253,6 +263,9 @@ macro_rules! build_empty_sim_state {
             barber_shop: BarberShopState::default(),
             damage_meter: crate::c_api::c_damage_meter::DamageMeterInput::default(),
             item_interaction: None,
+            item_interaction_tooltip_input: None,
+            possession_spell_id: None,
+            possession_object: None,
             major_factions: HashMap::new(),
             major_faction_renown_levels: HashMap::new(),
             major_faction_renown_rewards: HashMap::new(),
@@ -272,6 +285,8 @@ macro_rules! build_empty_sim_state {
                 feature = "client-anniversary"
             ))]
             transmog_appearance_sources: HashMap::new(),
+            #[cfg(feature = "client-wowforever")]
+            forever_appearance_item_ids: HashMap::new(),
             transmog_new_sources: HashSet::new(),
             #[cfg(any(
                 feature = "retail-12-0-0",
@@ -342,6 +357,9 @@ macro_rules! build_empty_sim_state {
             is_active_battlefield: false,
             spell_trade_skill_links: HashMap::new(),
             spell_id_aliases: HashMap::new(),
+            spell_tooltip_inputs: HashMap::new(),
+            recipe_rank_tooltip_cache: Default::default(),
+            aura_tooltip_inputs: HashMap::new(),
             spell_tooltip_cost_contexts: HashMap::new(),
             #[cfg(feature = "retail-12-0-5")]
             maw_powers: Default::default(),
@@ -453,7 +471,6 @@ macro_rules! build_empty_sim_state {
             recipe_quality_inputs: Default::default(),
             recipe_source_text: Default::default(),
             crafted_item_quality: Default::default(),
-            #[cfg(feature = "retail-12-0-0")]
             pvp_catalog: Default::default(),
             #[cfg(feature = "retail-12-0-0")]
             prey_inputs: Default::default(),
@@ -503,8 +520,15 @@ macro_rules! build_empty_sim_state {
             gcd: $runtime.gcd,
             spell_cooldowns: $collections.spell_cooldowns,
             spell_charges: ::std::collections::HashMap::new(),
+            ranged_auto_attack_spell_id: 0,
+            spell_cast_context_is_null: None,
             #[cfg(feature = "retail-12-0-0")]
             spell_cast_counts: ::std::collections::HashMap::new(),
+            #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
+            spell_reagent_pairs: ::std::collections::HashMap::new(),
+            #[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
+            spell_reagent_inventory: Default::default(),
+            spell_visibility_results: None,
             cooldowns_restricted: false,
             #[cfg(feature = "retail-12-0-5")]
             spell_max_cumulative_aura_applications: ::std::collections::HashMap::new(),
@@ -549,18 +573,23 @@ macro_rules! build_empty_sim_state {
             #[cfg(feature = "retail-12-0-5")]
             aura_entry_ids: crate::c_api::aura_entry_ids::AuraEntryIds::default(),
             unit_health_knowledge: HashMap::new(),
+            expansion_landing_page_unlocked: false,
+            content_tracking: Default::default(),
             player: PlayerState::seeded(),
             war_mode: crate::c_api::c_pvp::war_mode::WarModeState::default(),
             pvp_talents: crate::c_api::c_spec::PvpTalentState::default(),
             #[cfg(feature = "client-retail")]
             pvp_talent_tooltip:
                 crate::c_api::c_tooltip_info_pvp_talent::PvpTalentTooltipInputs::default(),
+            #[cfg(feature = "client-wowforever")]
+            forever_pvp_talent_spell_ids: HashMap::new(),
             player_xp: PlayerXpState::default(),
             bind_location: "Stormwind City".into(),
             pvp_honor: PvpHonorState::default(),
             world: super::state_types::seeded_world_state(),
             encounter_policy: Default::default(),
             bag_items: $collections.bag_items,
+            bag_item_repair_costs: HashMap::new(),
             item_equip: crate::c_api::item_spell::item_equip::ItemEquipState::default(),
             container_item_quests: HashMap::new(),
             bag_info: crate::c_api::bag_info::BagInfo::default_bags(),
@@ -583,6 +612,8 @@ macro_rules! build_empty_sim_state {
             housing_service_enabled: true,
             housing: HousingState::default(),
             catalog_shop_products: Default::default(),
+            #[cfg(feature = "client-ptr")]
+            catalog_shop_interaction: Default::default(),
             store_public_eligibility: Default::default(),
             housing_bundles: Default::default(),
             pet_battles: PetBattleState::default(),
@@ -618,8 +649,12 @@ macro_rules! build_empty_sim_state {
                 m.insert("enUS".to_string(), true);
                 m
             },
+            #[cfg(feature = "client-retail")]
+            lfd_lock_requests: Default::default(),
             lfg_roles: LfgRoleSelection::default(),
             lfd_dungeons: default_lfd_dungeons(),
+            lfg_tooltip_rewards_ready: false,
+            lfg_tooltip_reward_groups: Vec::new(),
             lfd_enabled_dungeons: ::std::collections::HashMap::new(),
             photo_sharing_authorized: false,
             photo_sharing_enabled: false,
@@ -641,6 +676,7 @@ macro_rules! build_empty_sim_state {
             quest_choice_response_id: None,
             quest_poi_map_id: None,
             selected_quest_log_id: None,
+            quest_currency_tooltip_results: HashMap::new(),
             quest_reward_spell_cache: HashMap::new(),
             quest_detail_reward_spells: None,
             #[cfg(feature = "retail-12-0-5")]
@@ -661,6 +697,8 @@ macro_rules! build_empty_sim_state {
             merchant_frame_open: false,
             // Inferred default scenario: no configured repair service.
             merchant_repair_capable: false,
+            #[cfg(feature = "client-wowforever")]
+            merchant_sell_all_junk_feature_enabled: false,
             tabard_frame_open: false,
             trainer_frame_open: false,
             socket_frame_open: false,
@@ -675,8 +713,14 @@ macro_rules! build_empty_sim_state {
             #[cfg(feature = "client-wowforever")]
             stable_reads: crate::c_api::c_stable_info::forever::StableReadState::default(),
             merchant_items: Vec::new(),
+            purchase_inputs: Default::default(),
+            inventory_candidates: Default::default(),
+            merchant_links: Default::default(),
             // No extended-cost record is observed until the host supplies one.
             merchant_offer_costs: HashMap::new(),
+            merchant_offer_categories: HashMap::new(),
+            merchant_item_requirements: HashMap::new(),
+            merchant_player_ratings: HashMap::new(),
             #[cfg(feature = "retail-12-0-7")]
             merchant_currencies: Vec::new(),
             // Explicit empty buyback scenario; not a native account-state default.
@@ -699,6 +743,7 @@ macro_rules! build_empty_sim_state {
             pet_actions: vec![PetActionSlot::default(); 10],
             glyph: GlyphState::default(),
             currency_info: super::globals::currency_data::seeded_currency_info_map(),
+            currency_tooltip_inputs: HashMap::new(),
             wrath_currency: super::globals::real::wrath_currency::CurrencyListState::default(),
             #[cfg(feature = "client-retail")]
             currency_list: crate::c_api::currency_list::CurrencyListState::default(),
@@ -712,10 +757,12 @@ macro_rules! build_empty_sim_state {
             mount_item_relations: HashMap::new(),
             equipment_manager: EquipmentManagerState::new(),
             maps: default_maps(),
+            user_waypoint: None,
             map_display_hide_icons: HashMap::new(),
             map_world_rects: HashMap::new(),
             bounty_set_maps: HashMap::new(),
             achievements: default_achievements(),
+            achievement_eligibility: AchievementEligibilityInputs::default(),
             achievement_superceding: HashMap::new(),
             calendar_now: Default::default(),
             calendar_displayed_month: Default::default(),
@@ -740,6 +787,8 @@ macro_rules! build_empty_sim_state {
             #[cfg(any(feature = "retail-12-0-7", feature = "retail-12-1-0"))]
             quest_hub_dragonriding_races: ::std::collections::HashMap::new(),
             bnet_friends: default_bnet_friends(),
+            #[cfg(feature = "client-wowforever")]
+            bnet_friend_tags_enabled: false,
             bnet_friend_invites: Vec::new(),
             bnet_appear_offline: false,
             #[cfg(feature = "retail-12-0-0")]
@@ -774,11 +823,19 @@ macro_rules! build_empty_sim_state {
             auction_should_auto_populate_price: true,
             wow_token: WowTokenState::default(),
             mythic_plus: MythicPlusState::default(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            character_creation: Default::default(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            character_customizations: None,
             name_reservation_feature_status: 0,
+            #[cfg(feature = "client-ptr")]
+            ptr_character_creation: Default::default(),
+            character_create_starting_zone_choices: Default::default(),
             character_create_facing_radians: 0.0,
             character_create_altered_form_races: ::std::collections::HashSet::new(),
             character_create_viewing_altered_form: false,
             character_create_blur_enabled: false,
+            // PTR initial zero is INFERRED (R83); existing RF policy is unchanged.
             character_create_camera_zoom: 0,
             character_create_camera_zoom_is_custom: false,
             character_create_default_facing_by_race_sex: ::std::collections::HashMap::new(),
@@ -806,6 +863,7 @@ macro_rules! build_empty_sim_state {
             battlefield_minimap_visible: false,
             chat_channels: Vec::new(),
             macros: Vec::new(),
+            macro_icons: MacroIconInputs::default(),
             running_macro: None,
             chat_windows: ::std::collections::HashMap::new(),
             chat_type_colors: ::std::collections::HashMap::new(),
@@ -927,31 +985,33 @@ use super::game_data::{
     default_major_factions, default_model_scenes, default_party, default_player_buffs,
 };
 pub use super::state_types::{
-    AchievementComparisonData, AchievementGuildRep, AchievementInfo, AchievementSearchState,
-    AchievementStatistic, AddonEnableSnapshot, AddonInfo, AddonPerformanceMessageKey,
-    AddonRuntimeMetrics, AppFrameMetrics, AppliedTransmog, AreaPoiInfo, AuctionBrowseResult,
-    AuctionItemClassFilter, AuctionReplicateItem, AuctionRowInfo, AuctionSellQuote,
-    AuctionSellQuoteKind, AuctionSortSpec, AzeriteEssenceInfo, AzeriteEssenceMilestoneInfo,
-    AzeriteEssenceState, BagItem, BarberShopAlternateFormRace, BarberShopCategory,
-    BarberShopCharacterData, BarberShopOption, BarberShopState, BidAuction, BnetFriend,
-    BnetFriendInvite, BnetGameAccount, BrowseQuery, CharacterNameSeparator, ChatBubble,
+    AchievementComparisonData, AchievementEligibilityCriterion, AchievementEligibilityInputs,
+    AchievementEligibilityNode, AchievementEligibilityOperation, AchievementGuildRep,
+    AchievementInfo, AchievementSearchState, AchievementStatistic, AddonEnableSnapshot, AddonInfo,
+    AddonPerformanceMessageKey, AddonRuntimeMetrics, AppFrameMetrics, AppliedTransmog, AreaPoiInfo,
+    AuctionBrowseResult, AuctionItemClassFilter, AuctionReplicateItem, AuctionRowInfo,
+    AuctionSellQuote, AuctionSellQuoteKind, AuctionSortSpec, AzeriteEssenceInfo,
+    AzeriteEssenceMilestoneInfo, AzeriteEssenceState, BagItem, BarberShopAlternateFormRace,
+    BarberShopCategory, BarberShopCharacterData, BarberShopOption, BarberShopState, BidAuction,
+    BnetFriend, BnetFriendInvite, BnetGameAccount, BrowseQuery, CharacterNameSeparator, ChatBubble,
     CommodityPurchaseQuote, CommoditySearchResultInfo, CommoditySearchResults, CraftingState,
     CurrencyInfo, CursorInfo, CursorItemOrigin, DeathRecapEntry, DeathRecapEventInfo,
     EquipmentManagerState, EquipmentSet, EquippedItem, GreatVaultActivity, GroupMemberCountsMember,
     GroupMemberCountsState, GuildBankRankPermissions, GuildBankTab, GuildMember, GuildRank,
     ItemSearchKey, ItemSearchResultInfo, ItemSearchResults, KillingBlowInfo, LfdDungeonInfo,
     LfgActivityGroupInfo, LfgActivityInfo, LfgAdvancedFilter, LfgApplication, LfgCategoryInfo,
-    LfgRoleSelection, LoadDiagnosticAttribution, LoadDiagnostics, LootHistoryState, LootRollInfo,
-    LootSlot, LuaErrorRecord, MacroInfo, MapChildRect, MapData, MapRect, MirrorTimer,
-    MissingRequirement, MissingRequirementKind, MovementState, MythicPlusAffix,
-    MythicPlusRatingMapSummary, MythicPlusRatingSummary, MythicPlusRun, MythicPlusState,
-    MythicPlusWeeklyBest, NilSymbolAccess, NilSymbolEnvironment, NilSymbolObservation,
-    NilSymbolObservationKind, OwnedAuction, OwnedKeystone, PendingTimer, PlayerChoiceInfo,
-    PlayerChoiceOptionButtonInfo, PlayerChoiceOptionInfo, PlayerChoiceOptionRewardInfo,
-    PlayerChoiceRewardCurrencyInfo, PlayerChoiceRewardItemInfo, PlayerChoiceRewardReputationInfo,
-    PlayerChoiceState, PlayerState, PlayerXpState, PvpHonorState, SEEDED_LOCAL_CHARACTER_GUID,
-    SEEDED_LOCAL_CHARACTER_NAME, ScenarioState, ScenarioStep, SecondaryPowerState, SocialFriend,
-    SocialRestrictionsState, SummonRequestState, TokenAuctionInfo, WorldState, WowTokenState,
+    LfgRoleSelection, LfgTooltipReward, LfgTooltipRewardGroup, LoadDiagnosticAttribution,
+    LoadDiagnostics, LootHistoryState, LootRollInfo, LootSlot, LuaErrorRecord, MacroInfo,
+    MapChildRect, MapData, MapRect, MirrorTimer, MissingRequirement, MissingRequirementKind,
+    MovementState, MythicPlusAffix, MythicPlusRatingMapSummary, MythicPlusRatingSummary,
+    MythicPlusRun, MythicPlusState, MythicPlusWeeklyBest, NilSymbolAccess, NilSymbolEnvironment,
+    NilSymbolObservation, NilSymbolObservationKind, OwnedAuction, OwnedKeystone, PendingTimer,
+    PlayerChoiceInfo, PlayerChoiceOptionButtonInfo, PlayerChoiceOptionInfo,
+    PlayerChoiceOptionRewardInfo, PlayerChoiceRewardCurrencyInfo, PlayerChoiceRewardItemInfo,
+    PlayerChoiceRewardReputationInfo, PlayerChoiceState, PlayerState, PlayerXpState, PvpHonorState,
+    SEEDED_LOCAL_CHARACTER_GUID, SEEDED_LOCAL_CHARACTER_NAME, ScenarioState, ScenarioStep,
+    SecondaryPowerState, SocialFriend, SocialRestrictionsState, SummonRequestState,
+    TokenAuctionInfo, WorldState, WowTokenState,
 };
 #[cfg(feature = "client-retail")]
 pub use super::state_types::{EffectiveAttackPower, PowerRegen, WeaponAttackPower};

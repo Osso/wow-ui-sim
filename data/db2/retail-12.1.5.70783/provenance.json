@@ -1,0 +1,80 @@
+{
+  "build": "12.1.5.70783",
+  "product": "wow",
+  "build_key": "bc493ecb2898766c0f8947a99b4b3d65",
+  "source": "Local CASC via wow-cli casc extract-fdid; exported with game-engine/scripts/export_db2_csv.py",
+  "file_data_id": 1957219,
+  "community_listfile_entry": "1957219;dbfilesclient/uimapassignment.db2",
+  "community_listfile_sha256": "25e1d7515d3fb130d28609b8224ab58ccd7cc5e416525168fea80161104bb6e8",
+  "layout": "C9CC8DFB",
+  "db2_sha256": "631e3f6a5f8fd9320980a22348348661ef286c99a8b27908072ccf13d4bcbefe",
+  "definitions": {
+    "source": "WoWDBDefs tag 202611101512",
+    "file": "definitions/UiMapAssignment.dbd",
+    "sha256": "7bbbea7078bf3babacfc53773a21b36d426451de47fd294fe81089fd9f15c974"
+  },
+  "unreadable_records": 0,
+  "rows": 22780,
+  "unique_ids": 22780,
+  "unique_ui_map_ids": 1956,
+  "csv_sha256": "c1129671ecb9d562ef5c10d2f4d03e66e4e2b4727dcfe592f63147ccab89ad6c",
+  "selected_simulator_pin": {
+    "build": "12.1.5.70575",
+    "build_key": "d718abcc42604d8efbd35aecfa5bb75b"
+  },
+  "pin_applicability": "INFERRED: both are Retail 12.1.5; exact UiMapAssignment parity between 70783 and 70575 is unverified.",
+  "area_table": {
+    "product": "wow",
+    "build": "12.1.5.70783",
+    "build_key": "bc493ecb2898766c0f8947a99b4b3d65",
+    "build_info_sha256": "21fc66dada3eeafae3145344d90c8bafb19db6126c1c50418fea36c747cade1e",
+    "source": "Local CASC via wow-cli casc extract-fdid; exported with game-engine/scripts/export_db2_csv.py",
+    "table": "AreaTable",
+    "file_data_id": 1353545,
+    "community_listfile_entry": "1353545;dbfilesclient/areatable.db2",
+    "community_listfile_sha256": "486bb1d1c5a87cc136c7824857a391ab0b07c6f50bbc724e104fc5f18e320741",
+    "layout": "5DB1A3FF",
+    "db2_bytes": 666482,
+    "db2_sha256": "d1cddfaff8a19db88ef5328cc79922f20a1e3fa27bb239c1c916251edceb4948",
+    "definitions": {
+      "source": "WoWDBDefs tag 202611101512",
+      "revision": "86c0801007bbcb767f4bc275413d24bc6b2d486c",
+      "file": "definitions/AreaTable.dbd",
+      "sha256": "f2dd3e9a686d783dcc6d9cba7db1226efc401571e1a3c27da578847d54dd7ae8"
+    },
+    "tact_keys": {
+      "source": "Local WoWDBDefs TACTKeys snapshot; read-only copy supplied through ASSET_RESOLVER_DATA_DIR",
+      "sha256": "6d83241ed776f9e74e27ed65d1ec52f1a1464a4e9b16bed497258fdd61020b52"
+    },
+    "full_export": {
+      "rows": 10046,
+      "unreadable_records": 0,
+      "csv_sha256": "63da94212becb722f1914b3777fa2b6e563c5cb540d64e32c138ad4b7f95fc2e"
+    },
+    "csv": {
+      "path": "data/db2/retail-12.1.5.70783/AreaTable.csv",
+      "sha256": "89e6ba0df597d8637beadcf4e504a422ac7595c93df49a5f63eb774160c105e3",
+      "rows": 1,
+      "unreadable_records": 0,
+      "columns": [
+        "ID",
+        "ContinentID"
+      ],
+      "reduction": {
+        "referenced_area_ids": [
+          0,
+          14620
+        ],
+        "present_area_ids": [
+          14620
+        ],
+        "source_export_columns": [
+          "ID",
+          "ContinentID"
+        ],
+        "reason": "Only AreaIDs referenced by negative-MapID UiMapAssignment rows; retain ID and the required u16 field."
+      }
+    },
+    "native_u16_mapping": "INFERRED: the native AreaTable unsigned-16 result corresponds to DBD ContinentID; generated Rust field name is continent_id."
+  }
+}

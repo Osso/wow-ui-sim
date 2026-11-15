@@ -499,3 +499,21 @@ fn blizzard_professions_customer_orders_registers_one_ui_panel_with_uiparent(env
     );
 }
 }
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn mainline_customer_orders_bootstrap_hide_wrapper_hides_the_open_frame() {
+    let env = load_full_game_ui();
+    load_customer_orders_with_deps(&env);
+    let result: (String, bool, bool) = env
+        .eval(
+            "local frame = ProfessionsCustomerOrdersFrame; local received; \
+             local original = HideUIPanel; \
+             HideUIPanel = function(value) received = value end; \
+             local callable = type(HideProfessionsCustomerOrdersFrame) == 'function'; \
+             HideProfessionsCustomerOrdersFrame(); HideUIPanel = original; \
+             return type(frame), callable, received == frame",
+        )
+        .expect("selected customer-orders bootstrap hide wrapper should run");
+    assert_eq!(result, ("table".to_string(), true, true));
+}

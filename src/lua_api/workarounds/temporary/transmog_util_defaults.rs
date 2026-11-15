@@ -1,10 +1,11 @@
 //! Temporary `TransmogUtil` location helpers.
 //!
-//! These are table-shaped compatibility defaults for Blizzard collection and
-//! wardrobe code. Real appearance/illusion state remains in the C_Transmog*
-//! surfaces; this module only supplies the small Lua utility object shape.
+//! Retail location helpers belong to the original selected TransmogShared Lua.
+//! Retain the historical location stand-ins only on other profiles pending their
+//! own ownership proof. The unrelated best-item helper remains unresolved.
 
-const TRANSMOG_UTIL_DEFAULTS_LUA: &str = r#"
+#[cfg(not(feature = "client-retail"))]
+const TRANSMOG_UTIL_LOCATION_DEFAULTS_LUA: &str = r#"
 local function __wow_make_transmog_util_location(slotName, slotID, transmogType, modification)
   local location = {
     slotName = tostring(slotName or ""),
@@ -59,6 +60,11 @@ if rawget(TransmogUtil, "CreateTransmogLocation") == nil then
     return __wow_make_transmog_util_location("", slotID, transmogType, modification)
   end
 end
+"#;
+
+// Ownership of this separate historical helper remains unresolved.
+const TRANSMOG_UTIL_BEST_ITEM_DEFAULT_LUA: &str = r#"
+TransmogUtil = type(TransmogUtil) == "table" and TransmogUtil or {}
 if rawget(TransmogUtil, "GetBestItemModifiedAppearanceID") == nil then
   function TransmogUtil.GetBestItemModifiedAppearanceID(_itemID)
     return nil
@@ -67,7 +73,9 @@ end
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
-    lua.exec(TRANSMOG_UTIL_DEFAULTS_LUA)?;
+    #[cfg(not(feature = "client-retail"))]
+    lua.exec(TRANSMOG_UTIL_LOCATION_DEFAULTS_LUA)?;
+    lua.exec(TRANSMOG_UTIL_BEST_ITEM_DEFAULT_LUA)?;
     Ok(())
 }
 
@@ -75,6 +83,7 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 mod tests {
     use crate::lua_api::WowLuaEnv;
 
+    #[cfg(not(feature = "client-retail"))]
     #[test]
     fn installs_transmog_util_location_defaults() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
@@ -102,5 +111,31 @@ mod tests {
             .expect("transmog defaults should be callable");
 
         assert_eq!(result, "ok");
+    }
+    #[cfg(feature = "client-retail")]
+    #[test]
+    fn retail_defers_locations_to_original_lua_and_keeps_best_item_separate() {
+        let env = WowLuaEnv::new().expect("environment");
+        env.exec(
+            r#"
+            assert(TransmogUtil.GetTransmogLocation == nil)
+            assert(TransmogUtil.CreateTransmogLocation == nil)
+            assert(type(TransmogUtil.GetBestItemModifiedAppearanceID) == 'function')
+            assert(TransmogUtil.GetBestItemModifiedAppearanceID(6948) == nil)
+            originalGet = function() return 'original get' end
+            originalCreate = function() return 'original create' end
+            TransmogUtil.GetTransmogLocation = originalGet
+            TransmogUtil.CreateTransmogLocation = originalCreate
+        "#,
+        )
+        .unwrap();
+        super::apply_bootstrap(&mut env.lua.borrow_mut()).unwrap();
+        env.exec(
+            r#"
+            assert(TransmogUtil.GetTransmogLocation == originalGet)
+            assert(TransmogUtil.CreateTransmogLocation == originalCreate)
+        "#,
+        )
+        .unwrap();
     }
 }

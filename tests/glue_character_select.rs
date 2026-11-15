@@ -1,5 +1,7 @@
 use crate::common;
 
+#[cfg(all(feature = "optional-tests", feature = "client-retail"))]
+use wow_ui_sim::c_api::c_character_creation::{StartingZoneChoiceInput, StartingZoneChoicesInput};
 use wow_ui_sim::loader::{discover_blizzard_addons_for_screen, load_addon};
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::paths::default_blizzard_ui_addons_path;
@@ -18,6 +20,159 @@ fn ptr_character_select_registers_undelete_event_on_load() {
             !errors.iter().any(|error| error.contains("[OnLoad] CharacterSelect:") && error.contains("RegisterEvent")),
             "CharacterSelect event registration failed: {errors:#?}"
         );
+    }
+}
+
+#[test]
+#[cfg(all(feature = "client-retail", feature = "optional-tests"))]
+fn retail_character_services_consumer_uses_test_display_provider() {
+    test_timeout! {
+        let ui = common::blizzard_addon_harness::blizzard_ui_dir();
+        let glue_dir = ui.join("Blizzard_GlueXML");
+        let toc_path = wow_ui_sim::loader::find_toc_file(&glue_dir)
+            .expect("GlueXML has a selected profile TOC");
+        let toc = wow_ui_sim::toc::TocFile::from_file(&toc_path)
+            .expect("selected GlueXML TOC parses");
+        assert!(toc.allows_screen(ScreenKind::CharacterSelect));
+        assert!(toc.files.iter().any(|file| {
+            file.file_name().is_some_and(|name| name == "CharacterServices.lua")
+        }));
+
+        common::blizzard_addon_harness::with_blizzard_addon_glue_smoke_shape(
+            &["Blizzard_GlueXML"],
+            &[],
+            |env, loaded| {
+                assert!(loaded.iter().any(|name| name == "Blizzard_GlueXML"));
+                env.exec(
+                    r#"
+                    local info = debug.getinfo(GetAvailableBoostTypesForCharacterByGUID, "S")
+                    assert(info and info.source:find("CharacterServices.lua", 1, true))
+
+                    local displayData = {
+                        level = 80,
+                        flowTitle = "Fixture Upgrade",
+                        iconTextureKit = "FixtureUpgrade",
+                    }
+                    C_SharedCharacterServices.GetUpgradeDistributions = function()
+                        return { [5] = { amount = 1 } }
+                    end
+                    C_CharacterServices.GetCharacterServiceDisplayData = function(boostType)
+                        assert(boostType == 5)
+                        return displayData
+                    end
+                    GetBasicCharacterInfo = function(guid)
+                        assert(guid == "fixture-character")
+                        return { experienceLevel = 60 }
+                    end
+                    GetServiceCharacterInfo = function(guid)
+                        assert(guid == "fixture-character")
+                        return {
+                            boostInProgress = false,
+                            isTrialBoost = false,
+                            isRevokedCharacterUpgrade = false,
+                            vasServiceInProgress = false,
+                        }
+                    end
+
+                    local function texture()
+                        return { SetAtlas = function(self, atlas) self.atlas = atlas end }
+                    end
+                    local function noop() end
+                    characterServiceButton = {
+                        Icon = texture(),
+                        Highlight = { Icon = texture() },
+                        Timer = { StartTimer = noop, StopTimer = noop },
+                        Ring = { Show = noop, Hide = noop },
+                        Number = { Show = noop, Hide = noop, SetText = noop },
+                        SetAlpha = noop,
+                        Show = noop,
+                    }
+                    CharacterSelect.VASPools = {
+                        Acquire = function(_, template)
+                            assert(template == "CharacterBoostTemplate")
+                            return characterServiceButton
+                        end,
+                        GetNumActive = function() return 1 end,
+                    }
+                    "#,
+                )
+                .expect("original character-service consumers should load with test providers");
+
+                let (available_count, boost_type, blocked_count, title, atlas):
+                    (i32, i32, i32, String, String) = env
+                    .eval(
+                        r#"
+                        local available = GetAvailableBoostTypesForCharacterByGUID("fixture-character")
+                        local available_count, boost_type = #available, available[1]
+                        C_CharacterServices.GetCharacterServiceDisplayData(5).level = 60
+                        local blocked = GetAvailableBoostTypesForCharacterByGUID("fixture-character")
+                        C_CharacterServices.GetCharacterServiceDisplayData(5).level = 80
+                        CharacterServicesMaster_UpdateBoostButtons(
+                            { { isVAS = false, serviceID = 5 } },
+                            { [5] = { amount = 1 } }
+                        )
+                        return available_count, boost_type, #blocked,
+                            CharacterVASMixin.NarrationGetName(characterServiceButton),
+                            characterServiceButton.Icon.atlas
+                        "#,
+                    )
+                    .expect("original character-service consumers should read the supplied fields");
+
+                assert_eq!(available_count, 1);
+                assert_eq!(boost_type, 5);
+                assert_eq!(blocked_count, 0, "the original filter must use displayData.level");
+                assert_eq!(title, "Fixture Upgrade");
+                assert_eq!(atlas, "FixtureUpgrade-small");
+
+                env.exec(
+                    "C_CharacterServices.GetCharacterServiceDisplayData = function() return nil end",
+                )
+                .expect("nil-provider fixture should install");
+                let nil_consumer = env
+                    .exec("GetAvailableBoostTypesForCharacterByGUID('fixture-character')");
+                assert!(
+                    nil_consumer.is_err(),
+                    "the original consumer dereferences flowData.level when a boost exists"
+                );
+            },
+        );
+    }
+}
+
+#[test]
+#[cfg(all(feature = "client-retail", feature = "optional-tests"))]
+fn retail_catalog_shop_owner_precedes_character_select_toggle() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+        let (owner_loaded, original_inbound): (bool, bool) = env
+            .eval(
+                r#"
+                local info = debug.getinfo(CatalogShopInboundInterface.SetShown, "S")
+                return C_AddOns.IsAddOnLoaded("Blizzard_CatalogShop"),
+                    info ~= nil and info.source:find("Blizzard_CatalogShop_Inbound.lua", 1, true) ~= nil
+                "#,
+            )
+            .expect("the selected CatalogShop inbound owner should be queryable");
+        assert!(owner_loaded);
+        assert!(original_inbound);
+
+        env.set_server_mirrored_cvar("shop2Enabled", "1")
+            .expect("Shop2 should be enabled for this fixture");
+        env.exec(
+            r#"
+            CharacterSelectUtil.IsStoreAvailable = function() return true end
+            ToggleStoreUI("character-select-probe")
+            "#,
+        )
+        .expect("original CharacterSelect toggle should call the CatalogShop inbound owner");
+
+        let (action, context_key): (String, String) = env
+            .eval(
+                "return CatalogShopFrame:GetAttribute('action'), CatalogShopFrame:GetAttribute('contextkey')",
+            )
+            .expect("CatalogShop action attributes should be readable");
+        assert_eq!(action, "Show");
+        assert_eq!(context_key, "character-select-probe");
     }
 }
 
@@ -1006,7 +1161,844 @@ fn character_select_can_transition_to_character_create_without_lua_errors() {
     }
 }
 
+const RETAIL_CHARACTER_CREATE_PRESERVATION_LUA: &str = r#"
+local source = "Blizzard_CharacterCreate/"
+assert(debug.getinfo(CharacterCreateMixin.OnLoad, "S").source:find(source, 1, true), "OnLoad source")
+assert(debug.getinfo(CharacterCreateMixin.UpdateForwardButton, "S").source:find(source, 1, true), "forward source")
+assert(debug.getinfo(CharacterCreateRaceAndClassMixin.SetCharacterRace, "S").source:find(source, 1, true), "race source")
+local frame = CharacterCreateFrame
+local race = frame.RaceAndClassFrame
+local overlayKeys = { "TopBackgroundOverlay", "LeftBackgroundOverlay", "RightBackgroundOverlay", "BottomBackgroundOverlay" }
+assert(#frame.BGTex == #overlayKeys, "XML BGTex array count: " .. tostring(#frame.BGTex))
+for index, key in ipairs(overlayKeys) do
+    local overlay = frame[key]
+    assert(overlay ~= nil, "missing XML overlay " .. key)
+    assert(rawequal(frame.BGTex[index], overlay), "BGTex order/identity at " .. index)
+    assert(overlay:GetObjectType() == "Texture", "XML BGTex element type at " .. index)
+    for previous = 1, index - 1 do
+        assert(not rawequal(frame.BGTex[index], frame.BGTex[previous]), "duplicate BGTex member at " .. index)
+    end
+end
+local function assertOverlayAlpha(expected, state)
+    for index = 1, #overlayKeys do
+        assert(math.abs(frame.BGTex[index]:GetAlpha() - expected) < 0.001, state .. " overlay alpha at " .. index)
+    end
+end
+race:SetCharacterClass(1)
+race:SetCharacterRace(1)
+assert(race.selectedRaceData.fileName == "Human", "selected Human record")
+assert(race.selectedFaction == "Alliance", "Human must select Alliance")
+race:SetCharacterRace(2)
+assert(race.selectedRaceData.fileName == "Orc", "selected Orc record")
+assert(race.selectedFaction == "Horde", "Orc must select Horde")
+race:SetCharacterRace(24)
+assert(race.selectedRaceData.fileName == "Pandaren", "selected Pandaren record")
+assertOverlayAlpha(0.75, "Pandaren")
+race:SetCharacterRace(2)
+assertOverlayAlpha(0.6, "Horde Orc")
+race:SetCharacterClass(12)
+assert(race.selectedClassData.fileName == "DEMONHUNTER", "selected Demon Hunter record")
+assertOverlayAlpha(0.7, "Demon Hunter")
+race:SetCharacterClass(6)
+assert(race.selectedClassData.fileName == "DEATHKNIGHT", "selected Death Knight record")
+assertOverlayAlpha(0.8, "Death Knight")
+local backSuffix = "  " .. BACK
+local backText = frame.BackButton:GetText()
+assert(backText:sub(-#backSuffix) == backSuffix, "Back must retain the original BACK string")
+assert(backText:find("common-icon-backarrow", 1, true), "Back must use the original back arrow")
+local classRaceMode = frame.currentMode
+assert(classRaceMode == 1, "original OnLoad must select class/race mode")
+local classRaceForward = frame.ForwardButton:GetText()
+assert(classRaceForward:sub(1, #CUSTOMIZE) == CUSTOMIZE, "class/race mode must use original CUSTOMIZE string")
+assert(classRaceForward:find("common-icon-forwardarrow", 1, true), "class/race mode must use the original forward arrow")
+-- CharacterCreate.lua defines class/race as 1 and customization as 2; exercise the original label updater without its camera transition.
+local customizeMode = classRaceMode + 1
+assert(customizeMode == 2, "source-defined mode order")
+frame.currentMode = customizeMode
+frame:UpdateForwardButton()
+local customizeForward = frame.ForwardButton:GetText()
+local customizeLabel = frame.ZoneChoiceFrame:ShouldShow() and NEXT or FINISH
+assert(customizeForward:sub(1, #customizeLabel) == customizeLabel, "customization mode must use its original forward string")
+assert(customizeLabel ~= CUSTOMIZE and customizeForward ~= classRaceForward, "forward label must change with the original mode")
+local customizeBack = frame.BackButton:GetText()
+assert(customizeBack:sub(-#backSuffix) == backSuffix, "Back label remains the original BACK string")
+assert(customizeBack:find("common-icon-backarrow", 1, true), "customization mode must retain the original back arrow")
+frame.currentMode = classRaceMode
+frame:UpdateForwardButton()
+assert(frame.currentMode == classRaceMode, "restore original class/race mode input")
+assert(frame.ForwardButton:GetText():sub(1, #CUSTOMIZE) == CUSTOMIZE, "class/race forward string must be restored")
+"#;
+
 #[test]
+#[cfg(feature = "client-retail")]
+fn retail_character_create_transition_preserves_original_surfaces() {
+    test_timeout! {
+        let ui = blizzard_ui_dir();
+        let addons = discover_blizzard_addons_for_screen(&ui, ScreenKind::CharacterSelect);
+        let toc_path = addons.iter().find(|(name, _)| name == "Blizzard_CharacterCreate")
+            .map(|(_, path)| path).expect("Glue should select CharacterCreate");
+        let toc = wow_ui_sim::toc::TocFile::from_file(toc_path).expect("Glue TOC should parse");
+        assert!(toc.allows_screen(ScreenKind::CharacterSelect));
+        let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+        env.exec("GlueParent_SetScreen('charcreate')").expect("original screen transition should run");
+        run_extra_update_ticks(&env, 3);
+        env.exec(RETAIL_CHARACTER_CREATE_PRESERVATION_LUA).expect("original consumer state should be preserved");
+    }
+}
+
+#[test]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn character_creation_interaction_records_native_byte_without_arguments() {
+    let env = WowLuaEnv::new().unwrap();
+    env.set_screen_mode(ScreenKind::CharacterCreate);
+    for arguments in ["", "nil", "false, {}, 17, 'unused'"] {
+        env.state()
+            .borrow_mut()
+            .character_creation
+            .interaction_state = 9;
+        let count: i32 = env
+            .eval(&format!(
+                "return select('#', C_CharacterCreation.OnPlayerInteraction({arguments}))"
+            ))
+            .unwrap();
+        assert_eq!(count, 0, "R78 Q8: no arguments read and zero returns");
+        assert_eq!(env.state().borrow().character_creation.interaction_state, 1);
+    }
+}
+
+#[test]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn character_creation_visual_kits_clear_without_a_model() {
+    let env = WowLuaEnv::new().unwrap();
+    env.set_screen_mode(ScreenKind::CharacterCreate);
+    for arguments in ["", "nil", "false, {}, 17, 'unused'"] {
+        {
+            let mut sim = env.state().borrow_mut();
+            sim.character_creation.visual_kit_active = true;
+            sim.character_creation.visual_kit_value = u64::MAX;
+        }
+        let count: i32 = env
+            .eval(&format!(
+                "return select('#', C_CharacterCreation.StopAllSpellVisualKitsOnCharacter({arguments}))"
+            ))
+            .unwrap();
+        assert_eq!(count, 0);
+        let sim = env.state().borrow();
+        assert!(!sim.character_creation.visual_kit_active);
+        assert_eq!(sim.character_creation.visual_kit_value, 0);
+    }
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn character_creation_hidden_state_validates_and_has_no_model_effect() {
+    let env = WowLuaEnv::new().unwrap();
+    env.set_screen_mode(ScreenKind::CharacterCreate);
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.events.drain();
+        sim.character_creation.interaction_state = 23;
+        sim.character_creation.visual_kit_active = true;
+        sim.character_creation.visual_kit_value = 55;
+    }
+    env.exec(r#"
+        __hiddenStateEvents = 0
+        local listener = CreateFrame("Frame")
+        listener:RegisterAllEvents()
+        listener:SetScript("OnEvent", function() __hiddenStateEvents = __hiddenStateEvents + 1 end)
+        local api = C_CharacterCreation.SetPlayerModelHiddenState
+        for _, invoke in ipairs({ function() api() end, function() api(nil) end }) do
+            local ok, err = pcall(invoke)
+            assert(not ok)
+            assert(string.find(err, "Usage: C_CharacterCreation.SetPlayerModelHiddenState(hiddenState)", 1, true))
+        end
+        for _, value in ipairs({false, true, 1, 0, "", {}, function() end}) do
+            assert(select('#', api(value)) == 0)
+        end
+        assert(__hiddenStateEvents == 0)
+    "#).unwrap();
+    let sim = env.state().borrow();
+    assert!(sim.events.is_empty());
+    assert!(sim.character_creation.last_call.is_none());
+    assert_eq!(sim.character_creation.interaction_state, 23);
+    assert!(sim.character_creation.visual_kit_active);
+    assert_eq!(sim.character_creation.visual_kit_value, 55);
+}
+
+#[cfg(all(
+    feature = "optional-tests",
+    any(feature = "client-retail", feature = "client-wowforever")
+))]
+fn submit_real_character_creation(env: &WowLuaEnv) {
+    let errors_before = env.state().borrow().lua_errors.len();
+    // Drive the same screen transition as the existing Glue tests, then the
+    // real edit box and inherited button script. Do not patch the mixin or
+    // invoke CreateCharacter directly. No server outcome is supplied here.
+    let submission = env.exec(
+        r#"
+        local original = C_CharacterCreation.CreateCharacter
+        assert(type(original) == "function")
+        __creationSubmitCalls = {}
+        C_CharacterCreation.CreateCharacter = function(...)
+            __creationSubmitCalls[#__creationSubmitCalls + 1] = { n = select('#', ...), ... }
+            return original(...)
+        end
+        GlueParent_SetScreen("charcreate")
+        assert(CharacterCreateFrame:IsShown())
+        local button = CharacterCreateFrame.ForwardButton
+        local click = button:GetScript("OnClick")
+        assert(type(click) == "function", "real ForwardButton must have OnClick")
+        assert(button:IsEnabled(), "initial customization navigation must be enabled")
+        click(button, "LeftButton")
+        CharacterCreateFrame.NameChoiceFrame.EditBox:SetText("Newhero")
+        for step = 1, 3 do
+            if CharacterCreateFrame.creatingCharacter then break end
+            assert(button:IsEnabled(), "real Create navigation must be enabled")
+            click(button, "LeftButton")
+        end
+        assert(CharacterCreateFrame.creatingCharacter == true,
+            "the real Create button must reach the submission consumer")
+    "#,
+    );
+    let first_error = env.state().borrow().lua_errors[errors_before..]
+        .first()
+        .map(|error| error.lines().next().unwrap_or_default().to_owned());
+    if let Some(first_error) = first_error {
+        const EXPECTED_R79_STOP: &str = concat!(
+            "bad argument #1 to 'SetCameraZoomLevel' ",
+            "(Usage: C_CharacterCreation.SetCameraZoomLevel(zoomLevel [, keepCustomZoom]))"
+        );
+        assert_eq!(
+            first_error, EXPECTED_R79_STOP,
+            "unexpected real-control first error"
+        );
+        // Assert the exact boundary, then remain RED: this is not error tolerance.
+        panic!("R79 real Create-button RED at verified first error: {first_error}");
+    }
+    submission.expect("real character creation controls should submit");
+    let observed: (i32, i32, String) = env
+        .eval(
+            r#"
+        local args = __creationSubmitCalls[1]
+        assert(args, "the pass-through spy must observe the real native call")
+        return #__creationSubmitCalls, args.n, args[1]
+    "#,
+        )
+        .unwrap();
+    assert_eq!(observed.0, 1);
+    assert_eq!(
+        observed.1,
+        if cfg!(feature = "client-wowforever") {
+            4
+        } else {
+            3
+        }
+    );
+    assert_eq!(observed.2, "Newhero");
+    env.exec(if cfg!(feature = "client-wowforever") {
+        r#"
+            local args = __creationSubmitCalls[1]
+            assert(args[2] == CharacterCreateFrame:GetSelectedSurname())
+            assert(args[3] == ZoneChoiceFrame.useNPE)
+            assert(args[4] == RaceAndClassFrame:GetCreateCharacterFaction())
+        "#
+    } else {
+        r#"
+            local args = __creationSubmitCalls[1]
+            assert(args[2] == ZoneChoiceFrame.useNPE)
+            assert(args[3] == RaceAndClassFrame:GetCreateCharacterFaction())
+        "#
+    })
+    .unwrap();
+    let sim = env.state().borrow();
+    let call = sim
+        .character_creation
+        .last_call
+        .as_ref()
+        .expect("host-only call record must observe the real submission");
+    assert_eq!(call.name, b"Newhero");
+    assert_eq!(call.surname.is_some(), cfg!(feature = "client-wowforever"));
+    assert!(
+        sim.lua_errors[errors_before..].is_empty(),
+        "new submit Lua errors: {:?}",
+        &sim.lua_errors[errors_before..]
+    );
+}
+
+#[test]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn character_creation_submit_argument_contract_and_usage() {
+    use wow_ui_sim::c_api::c_character_creation_submit::FactionArgument;
+    let env = WowLuaEnv::new().unwrap();
+    env.set_screen_mode(ScreenKind::CharacterCreate);
+    let forever = cfg!(feature = "client-wowforever");
+    let usage = if forever {
+        "Usage: C_CharacterCreation.CreateCharacter(name, surname, useNPE [, raceFaction])"
+    } else {
+        "Usage: C_CharacterCreation.CreateCharacter(name, useNPE [, raceFaction])"
+    };
+    for bad in ["nil", "false", "{}", "function() end"] {
+        let args = if forever {
+            format!("{bad}, 'Surname', false")
+        } else {
+            format!("{bad}, false")
+        };
+        assert_creation_usage(&env, &args, usage);
+        if forever {
+            assert_creation_usage(&env, &format!("'Name', {bad}, false"), usage);
+        }
+    }
+    for bad in ["false", "{}", "function() end"] {
+        let args = if forever {
+            format!("'Name', 'Surname', false, {bad}")
+        } else {
+            format!("'Name', false, {bad}")
+        };
+        assert_creation_usage(&env, &args, usage);
+    }
+    for suffix in ["", ", nil"] {
+        let arguments = if forever {
+            format!("'Name', 'Surname'{suffix}")
+        } else {
+            format!("'Name'{suffix}")
+        };
+        assert_creation_usage(&env, &arguments, usage);
+    }
+    for (truthy, expected) in [("false", false), ("0", true), ("''", true), ("{}", true)] {
+        let args = if forever {
+            format!("123, 456, {truthy}, 7, 'extra'")
+        } else {
+            format!("123, {truthy}, 7, 'extra'")
+        };
+        env.exec(&format!("C_CharacterCreation.CreateCharacter({args})"))
+            .unwrap();
+        let call = env
+            .state()
+            .borrow()
+            .character_creation
+            .last_call
+            .clone()
+            .unwrap();
+        assert_eq!(call.name, b"123");
+        assert_eq!(call.surname, forever.then(|| b"456".to_vec()));
+        assert_eq!(call.use_npe, expected);
+        assert_eq!(call.race_faction, Some(FactionArgument::Number(7.0)));
+    }
+    for faction in ["", ", nil", ", 'Alliance'"] {
+        let args = if forever {
+            format!("'Name', '', false{faction}")
+        } else {
+            format!("'Name', false{faction}")
+        };
+        env.exec(&format!("C_CharacterCreation.CreateCharacter({args})"))
+            .unwrap();
+        let call = env
+            .state()
+            .borrow()
+            .character_creation
+            .last_call
+            .clone()
+            .unwrap();
+        let expected =
+            (faction == ", 'Alliance'").then(|| FactionArgument::String(b"Alliance".to_vec()));
+        assert_eq!(call.race_faction, expected);
+    }
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn assert_creation_usage(env: &WowLuaEnv, arguments: &str, usage: &str) {
+    let error = env
+        .exec(&format!("C_CharacterCreation.CreateCharacter({arguments})"))
+        .expect_err("wrong argument type must raise Usage");
+    assert!(error.to_string().contains(usage), "{error}");
+}
+
+// Stays RED until the R79 DB2-backed customization provider lands; it runs
+// under optional-tests until then and returns to the normal suite when GREEN.
+#[test]
+#[cfg(all(
+    feature = "optional-tests",
+    any(feature = "client-retail", feature = "client-wowforever")
+))]
+fn character_creation_submit_real_controls_wait_for_host_result() {
+    // Current reachability RED (#228): customization category cameraZoomLevel is nil.
+    // Exact first line: bad argument #1 to 'SetCameraZoomLevel'
+    // (Usage: C_CharacterCreation.SetCameraZoomLevel(zoomLevel [, keepCustomZoom])).
+    // Do not tolerate/skip it or weaken the evidenced zoom argument gate.
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+        let original_name: String = env.eval("return UnitName('player')").unwrap();
+        let original_count: i32 = env.eval("return GetNumCharacters()").unwrap();
+
+        submit_real_character_creation(&env);
+        run_extra_update_ticks(&env, 3);
+        let pending_ui: (String, bool, String) = env.eval(r#"
+            return GlueParent.currentScreen, CharacterCreateFrame:IsShown(),
+                CharacterCreateFrame.NameChoiceFrame.EditBox:GetText()
+        "#).unwrap();
+        assert_eq!(pending_ui, ("charcreate".to_string(), true, "Newhero".to_string()),
+            "without a host result the real UI must remain on the submitted creation screen");
+
+        // lt-a912 requires server outcomes to be host-supplied, never invented.
+        // The old workaround instead renames the existing player immediately.
+        let current_name: String = env.eval("return UnitName('player')").unwrap();
+        assert_eq!(current_name, original_name,
+            "submission must not rename the existing player while awaiting a host result");
+        let current_count: i32 = env.eval("return GetNumCharacters()").unwrap();
+        assert_eq!(current_count, original_count,
+            "submission without a host result must not manufacture a roster entry");
+    }
+}
+
+#[cfg(all(
+    feature = "optional-tests",
+    any(feature = "client-retail", feature = "client-wowforever")
+))]
+fn enter_character_create_for_starting_zone_test(env: &WowLuaEnv) -> usize {
+    use wow_ui_sim::c_api::c_character_creation_customizations::Category;
+
+    // This host fixture is not native customization data; its explicit zoom
+    // lets the original Forward path reach the starting-zone consumer.
+    env.state().borrow_mut().character_customizations = Some(vec![Category::new(0)]);
+    env.exec(
+        r#"
+        GlueParent_SetScreen("charcreate")
+        assert(CharacterCreateFrame:IsShown())
+    "#,
+    )
+    .expect("the original CharacterCreate screen should open");
+    env.state().borrow().lua_errors.len()
+}
+
+#[cfg(all(
+    feature = "optional-tests",
+    any(feature = "client-retail", feature = "client-wowforever")
+))]
+fn click_character_create_forward(env: &WowLuaEnv) {
+    env.exec(
+        r#"
+        local button = CharacterCreateFrame.ForwardButton
+        local click = button:GetScript("OnClick")
+        assert(type(click) == "function" and button:IsEnabled())
+        click(button, "LeftButton")
+    "#,
+    )
+    .expect("the real Forward button should run");
+}
+
+#[cfg(all(
+    feature = "optional-tests",
+    any(feature = "client-retail", feature = "client-wowforever")
+))]
+fn assert_no_new_character_create_lua_errors(env: &WowLuaEnv, errors_before: usize) {
+    let errors = env.state().borrow().lua_errors[errors_before..].to_vec();
+    assert!(
+        errors.is_empty(),
+        "unexpected character-create Lua errors: {errors:#?}"
+    );
+}
+
+#[test]
+#[cfg(all(feature = "optional-tests", feature = "client-retail"))]
+fn retail_character_creation_default_starting_zone_reaches_customize_screen() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+        let errors_before = enter_character_create_for_starting_zone_test(&env);
+        click_character_create_forward(&env);
+        assert_no_new_character_create_lua_errors(&env, errors_before);
+
+        let next_step: (bool, bool, bool) = env.eval(r#"
+            local zone = CharacterCreateFrame.ZoneChoiceFrame
+            return CharCustomizeFrame:IsShown(), zone.useNPE, zone:ShouldShow()
+        "#).unwrap();
+        assert_eq!(next_step, (true, false, false));
+        env.exec(r##"
+            local function pack(...) return { n = select("#", ...), ... } end
+            local choices = pack(C_CharacterCreation.GetStartingZoneChoices())
+            assert(choices.n == 2)
+            local first, second = choices[1], choices[2]
+            assert(type(first) == "table" and second == nil)
+            assert(first.zoneName == "" and first.zoneImageAtlas == nil)
+            assert(first.isNPE == false)
+        "##).unwrap();
+    }
+}
+
+#[test]
+#[cfg(all(feature = "optional-tests", feature = "client-wowforever"))]
+fn forever_character_creation_default_starting_zone_reaches_customize_screen() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+        let errors_before = enter_character_create_for_starting_zone_test(&env);
+        click_character_create_forward(&env);
+        assert_no_new_character_create_lua_errors(&env, errors_before);
+
+        let next_step: (bool, bool, bool) = env.eval(r#"
+            local zone = CharacterCreateFrame.ZoneChoiceFrame
+            return CharCustomizeFrame:IsShown(), zone.useNPE, zone:ShouldShow()
+        "#).unwrap();
+        assert_eq!(next_step, (true, false, false));
+        let (self_found_allowed, return_count): (bool, i64) = env
+            .eval(r##"
+                local function pack(...) return { n = select("#", ...), ... } end
+                local result = pack(C_GameRules.IsSelfFoundAllowed())
+                return result[1], result.n
+            "##)
+            .unwrap();
+        assert_eq!((self_found_allowed, return_count), (false, 1));
+        env.exec(r##"
+            local function pack(...) return { n = select("#", ...), ... } end
+            local choices = pack(C_CharacterCreation.GetStartingZoneChoices())
+            assert(choices.n == 2)
+            local first, second = choices[1], choices[2]
+            assert(type(first) == "table" and second == nil)
+            assert(first.zoneName == "" and first.zoneImageAtlas == nil)
+            assert(first.isNPE == false)
+        "##).unwrap();
+    }
+}
+
+#[test]
+#[cfg(all(feature = "optional-tests", feature = "client-retail"))]
+fn retail_character_creation_two_starting_zone_choices_reach_forward_consumer() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+        let errors_before = enter_character_create_for_starting_zone_test(&env);
+        env.state().borrow_mut().character_create_starting_zone_choices = StartingZoneChoicesInput {
+            normal_choice: Some(StartingZoneChoiceInput {
+                zone_name: "Fixture Zone".to_string(),
+                zone_image_atlas: Some("charactercreate-startingzone-exilesreach".to_string()),
+            }),
+            restricted_to_npe: None,
+        };
+
+        click_character_create_forward(&env);
+        assert_no_new_character_create_lua_errors(&env, errors_before);
+        env.exec(r##"
+            local function pack(...) return { n = select("#", ...), ... } end
+            local choices = pack(C_CharacterCreation.GetStartingZoneChoices())
+            assert(choices.n == 2)
+            local first, second = choices[1], choices[2]
+            assert(type(first) == "table" and type(second) == "table")
+            assert(first.zoneName == "Fixture Zone")
+            assert(first.zoneImageAtlas == "charactercreate-startingzone-exilesreach")
+            assert(first.isNPE == false)
+            assert(second.zoneName == "" and second.zoneImageAtlas == nil)
+            assert(second.isNPE == true)
+            local zone = CharacterCreateFrame.ZoneChoiceFrame
+            assert(zone:ShouldShow() and zone.useNPE == true)
+            assert(zone.NormalStartingZone.ZoneNameButton.Label:GetText() == "Fixture Zone")
+        "##).unwrap();
+    }
+}
+
+#[test]
+#[cfg(all(feature = "optional-tests", feature = "client-retail"))]
+fn retail_character_creation_npe_restriction_skips_zone_choice() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+        let errors_before = enter_character_create_for_starting_zone_test(&env);
+        env.state().borrow_mut().character_create_starting_zone_choices = StartingZoneChoicesInput {
+            normal_choice: Some(StartingZoneChoiceInput {
+                zone_name: "Restricted Fixture Zone".to_string(),
+                zone_image_atlas: Some("charactercreate-startingzone-exilesreach".to_string()),
+            }),
+            restricted_to_npe: Some(true),
+        };
+
+        click_character_create_forward(&env);
+        assert_no_new_character_create_lua_errors(&env, errors_before);
+        env.exec(r##"
+            local function pack(...) return { n = select("#", ...), ... } end
+            local choices = pack(C_CharacterCreation.GetStartingZoneChoices())
+            assert(choices.n == 2)
+            local first, second = choices[1], choices[2]
+            assert(type(first) == "table" and second == nil)
+            assert(first.zoneName == "" and first.zoneImageAtlas == nil)
+            assert(first.isNPE == true)
+            local zone = CharacterCreateFrame.ZoneChoiceFrame
+            assert(zone.useNPE == true and not zone:ShouldShow())
+        "##).unwrap();
+    }
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn record_creation_results(env: &WowLuaEnv) {
+    env.exec(
+        r#"
+        __creationResults = {}
+        local listener = CreateFrame("Frame")
+        listener:RegisterEvent("CHARACTER_CREATION_RESULT")
+        listener:SetScript("OnEvent", function(_, _, ...)
+            __creationResults[#__creationResults + 1] = { n = select('#', ...), ... }
+        end)
+    "#,
+    )
+    .unwrap();
+}
+
+#[test]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn character_creation_host_result_handler_preservation_without_submit() {
+    test_timeout! {
+        use wow_ui_sim::c_api::c_character_creation_submit::deliver_result;
+        // Isolate the already-loaded real handler while submit is blocked by
+        // R78b. This is handler preservation, not an end-to-end Create GREEN.
+        let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+        record_creation_results(&env);
+        env.exec(r#"
+            assert(CharacterCreateFrame:IsEventRegistered("CHARACTER_CREATION_RESULT"))
+            SetCVar("showCreateCharacterRealmConfirmDialog", 1)
+        "#).unwrap();
+        let errors_before = env.state().borrow().lua_errors.len();
+        deliver_result(&env, Some("CHAR_CREATE_NAME_IN_USE"), Some("discarded-guid")).unwrap();
+        env.exec(r#"
+            local args = __creationResults[1]
+            assert(args.n == 3 and args[1] == false)
+            assert(args[2] == "CHAR_CREATE_NAME_IN_USE" and args[3] == nil)
+            local popup = StaticPopup_FindVisible("CHARACTER_CREATE_FAILURE")
+            assert(popup and popup:IsShown())
+            assert(type(CHAR_CREATE_NAME_IN_USE) == "string" and #CHAR_CREATE_NAME_IN_USE > 0)
+            assert(popup:GetTextFontString():GetText() == CHAR_CREATE_NAME_IN_USE)
+            StaticPopup_Hide("CHARACTER_CREATE_FAILURE")
+        "#).unwrap();
+        deliver_result(&env, None, Some("Player-1-00000042")).unwrap();
+        env.exec(r#"
+            local args = __creationResults[2]
+            assert(args.n == 3 and args[1] == true and args[2] == nil)
+            assert(args[3] == "Player-1-00000042")
+            assert(GetCVar("showCreateCharacterRealmConfirmDialog") == "0")
+            assert(GlueParent.currentScreen == "charselect")
+        "#).unwrap();
+        deliver_result(&env, Some(""), None).unwrap();
+        env.exec(r#"
+            assert(#__creationResults == 3)
+            local args = __creationResults[3]
+            assert(args.n == 3 and args[1] == true and args[2] == nil and args[3] == nil)
+        "#).unwrap();
+        let sim = env.state().borrow();
+        assert!(sim.lua_errors[errors_before..].is_empty(), "new result-handler errors: {:?}", &sim.lua_errors[errors_before..]);
+    }
+}
+
+#[test]
+#[cfg(feature = "client-ptr")]
+fn ptr_character_creation_verified_members_are_glue_only() {
+    let env = WowLuaEnv::new().unwrap();
+    for screen in [
+        ScreenKind::CharacterCreate,
+        ScreenKind::Game,
+        ScreenKind::Login,
+    ] {
+        env.set_screen_mode(screen);
+        let expected = if screen.is_glue() { "function" } else { "nil" };
+        let types: (String, String) = env
+            .eval(
+                r#"
+            return type(C_CharacterCreation.CreateCharacter),
+                type(C_CharacterCreation.StopAllSpellVisualKitsOnCharacter)
+        "#,
+            )
+            .unwrap();
+        assert_eq!(types, (expected.to_owned(), expected.to_owned()));
+        if screen.is_glue() {
+            // VERIFIED no-model/no-pending-error call, without a return-count claim.
+            env.exec("C_CharacterCreation.StopAllSpellVisualKitsOnCharacter()")
+                .unwrap();
+        }
+    }
+}
+
+#[test]
+#[cfg(feature = "client-ptr")]
+fn ptr_character_creation_camera_zoom_getter_is_glue_only_and_reads_no_arguments() {
+    let env = WowLuaEnv::new().unwrap();
+    for screen in [
+        ScreenKind::CharacterCreate,
+        ScreenKind::Game,
+        ScreenKind::Login,
+    ] {
+        env.set_screen_mode(screen);
+        let expected = if screen.is_glue() { "function" } else { "nil" };
+        assert_eq!(
+            env.eval::<String>("return type(C_CharacterCreation.GetCurrentCameraZoom)")
+                .unwrap(),
+            expected
+        );
+        if screen.is_glue() {
+            env.exec("C_CharacterCreation.GetCurrentCameraZoom(); C_CharacterCreation.GetCurrentCameraZoom(nil, {}, 'unused')").unwrap();
+        }
+    }
+}
+
+#[test]
+#[cfg(feature = "client-ptr")]
+fn ptr_character_creation_camera_zoom_getter_reads_host_stored_value() {
+    let env = WowLuaEnv::new().unwrap();
+    env.set_screen_mode(ScreenKind::CharacterCreate);
+    for zoom in [17, 83] {
+        env.state().borrow_mut().character_create_camera_zoom = zoom;
+        let read: i32 = env
+            .eval("return C_CharacterCreation.GetCurrentCameraZoom()")
+            .unwrap();
+        assert_eq!(read, zoom);
+    }
+    // Stored-value identity is VERIFIED; no default or exact return-count assertion.
+}
+
+#[test]
+#[cfg(feature = "client-ptr")]
+fn ptr_character_creation_interaction_write_and_no_model_visibility() {
+    let env = WowLuaEnv::new().unwrap();
+    env.set_screen_mode(ScreenKind::CharacterCreate);
+    // Calling the inferred catalog entries is fixture setup, not catalog proof.
+    for arguments in ["", "nil"] {
+        let error = env
+            .exec(&format!(
+                "C_CharacterCreation.SetPlayerModelHiddenState({arguments})"
+            ))
+            .expect_err("PTR hidden state requires a non-nil first argument");
+        assert!(
+            error
+                .to_string()
+                .contains("Usage: C_CharacterCreation.SetPlayerModelHiddenState(hiddenState)"),
+            "{error}"
+        );
+    }
+    env.state()
+        .borrow_mut()
+        .ptr_character_creation
+        .interaction_state = 42;
+    env.exec(
+        r#"
+        local events = 0
+        local listener = CreateFrame("Frame")
+        listener:RegisterAllEvents()
+        listener:SetScript("OnEvent", function() events = events + 1 end)
+        C_CharacterCreation.SetPlayerModelHiddenState(false)
+        C_CharacterCreation.SetPlayerModelHiddenState(true)
+        C_CharacterCreation.SetPlayerModelHiddenState(0)
+        C_CharacterCreation.SetPlayerModelHiddenState("")
+        C_CharacterCreation.SetPlayerModelHiddenState({})
+        assert(events == 0)
+        listener:UnregisterAllEvents()
+    "#,
+    )
+    .unwrap();
+    assert_eq!(
+        env.state()
+            .borrow()
+            .ptr_character_creation
+            .interaction_state,
+        42
+    );
+    env.exec("C_CharacterCreation.OnPlayerInteraction()")
+        .unwrap();
+    assert_eq!(
+        env.state()
+            .borrow()
+            .ptr_character_creation
+            .interaction_state,
+        1
+    );
+    // No Lua return count, inferred catalog, or nonexistent model-alpha claim.
+}
+
+#[test]
+#[cfg(feature = "client-ptr")]
+fn ptr_character_creation_submit_requires_three_non_nil_arguments() {
+    let env = WowLuaEnv::new().unwrap();
+    env.set_screen_mode(ScreenKind::CharacterCreate);
+    const USAGE: &str =
+        "Usage: C_CharacterCreation.CreateCharacter(name, surname, useNPE [, raceFaction])";
+    for arguments in [
+        "",
+        "nil, 'Surname', false",
+        "'Name'",
+        "'Name', nil, false",
+        "'Name', 'Surname'",
+        "'Name', 'Surname', nil",
+    ] {
+        let error = env
+            .exec(&format!("C_CharacterCreation.CreateCharacter({arguments})"))
+            .expect_err("PTR requires present, non-nil name, surname, and useNPE");
+        assert!(error.to_string().contains(USAGE), "{error}");
+    }
+    // R78 PTR verifies that missing/nil optional faction advances. Do not assert
+    // types, conversions, Lua return count, or native request fields here.
+    for arguments in ["'Name', 'Surname', false", "'Name', 'Surname', false, nil"] {
+        env.exec(&format!("C_CharacterCreation.CreateCharacter({arguments})"))
+            .unwrap();
+    }
+}
+
+#[test]
+#[cfg(all(feature = "client-ptr", feature = "optional-tests"))]
+fn ptr_character_creation_submit_real_controls_do_not_invent_outcome() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+        let original_name: String = env.eval("return UnitName('player')").unwrap();
+        let original_count: i32 = env.eval("return GetNumCharacters()").unwrap();
+        let errors_before = env.state().borrow().lua_errors.len();
+        let submission = env.exec(r#"
+            GlueParent_SetScreen("charcreate")
+            assert(CharacterCreateFrame:IsShown())
+            local original = C_CharacterCreation.CreateCharacter
+            __ptrCreateCalls = {}
+            C_CharacterCreation.CreateCharacter = function(...)
+                __ptrCreateCalls[#__ptrCreateCalls + 1] = { n = select('#', ...), ... }
+                return original(...)
+            end
+            __ptrCreateEvents = {}
+            local listener = CreateFrame("Frame")
+            listener:RegisterEvent("CHARACTER_CREATION_RESULT")
+            listener:RegisterEvent("CHARACTER_LIST_UPDATE")
+            listener:SetScript("OnEvent", function(_, event)
+                __ptrCreateEvents[#__ptrCreateEvents + 1] = event
+            end)
+            local button = CharacterCreateFrame.ForwardButton
+            local click = button:GetScript("OnClick")
+            assert(type(click) == "function" and button:IsEnabled())
+            click(button, "LeftButton")
+            CharacterCreateFrame.NameChoiceFrame.EditBox:SetText("Newhero")
+            CharacterCreateFrame.NameChoiceFrame.EditBoxSurname:SetText("Example")
+            for step = 1, 3 do
+                if CharacterCreateFrame.creatingCharacter then break end
+                assert(button:IsEnabled())
+                click(button, "LeftButton")
+            end
+            assert(CharacterCreateFrame.creatingCharacter == true,
+                "PTR real Create button must reach the submission consumer")
+            assert(#__ptrCreateCalls == 1)
+            local args = __ptrCreateCalls[1]
+            assert(args.n == 4 and args[1] == "Newhero")
+            assert(args[2] == CharacterCreateFrame:GetSelectedSurname())
+            assert(args[3] == ZoneChoiceFrame.useNPE)
+            assert(args[4] == RaceAndClassFrame:GetCreateCharacterFaction())
+            assert(#__ptrCreateEvents == 0, "submit must not invent result/list events")
+        "#);
+        let first_error = env.state().borrow().lua_errors[errors_before..]
+            .first().map(|error| error.lines().next().unwrap_or_default().to_owned());
+        if let Some(first_error) = first_error {
+            const EXPECTED_PTR_STOP: &str = concat!(
+                "bad argument #1 to 'SetCameraZoomLevel' ",
+                "(Usage: C_CharacterCreation.SetCameraZoomLevel(zoomLevel [, keepCustomZoom]))"
+            );
+            assert_eq!(first_error, EXPECTED_PTR_STOP, "unexpected PTR first error");
+            panic!("PTR real Create-button reachability RED: {first_error}");
+        }
+        submission.expect("PTR real controls must submit");
+        assert_eq!(env.eval::<String>("return UnitName('player')").unwrap(), original_name);
+        assert_eq!(env.eval::<i32>("return GetNumCharacters()").unwrap(), original_count);
+    }
+}
+
+#[test]
+#[cfg(not(any(
+    feature = "client-retail",
+    feature = "client-wowforever",
+    feature = "client-ptr"
+)))]
 fn character_create_action_updates_player_name_without_lua_errors() {
     test_timeout! {
         let env = load_blizzard_screen(ScreenKind::CharacterSelect);
@@ -1315,4 +2307,157 @@ fn ptr_trial_boost_zero_fallback_is_unchanged() {
 
     assert_eq!(game_level, 0);
     assert_eq!(glue_level, 0);
+}
+#[test]
+#[cfg(feature = "client-ptr")]
+fn ptr_character_creation_camera_zoom_setter_verified_inputs_and_clamp() {
+    let env = WowLuaEnv::new().unwrap();
+    env.set_screen_mode(ScreenKind::CharacterCreate);
+    for arguments in ["", "nil"] {
+        let error = env
+            .exec(&format!(
+                "C_CharacterCreation.SetCameraZoomLevel({arguments})"
+            ))
+            .expect_err("zoomLevel is required");
+        assert!(
+            error.to_string().contains(
+                "Usage: C_CharacterCreation.SetCameraZoomLevel(zoomLevel [, keepCustomZoom])"
+            ),
+            "{error}"
+        );
+    }
+    for zoom in ["2147483648", "-2147483649"] {
+        let error = env
+            .exec(&format!("C_CharacterCreation.SetCameraZoomLevel({zoom})"))
+            .expect_err("zoomLevel must fit signed int32");
+        assert!(
+            error
+                .to_string()
+                .contains("outside of expected range -2147483648 to 2147483647"),
+            "{error}"
+        );
+    }
+    for (input, expected) in [(17.9, 17), (-17.9, 0), (150.0, 100), (51.7, 51)] {
+        env.exec(&format!("C_CharacterCreation.SetCameraZoomLevel({input})"))
+            .unwrap();
+        assert_eq!(env.state().borrow().character_create_camera_zoom, expected);
+    }
+    for keep in ["", ", nil", ", false", ", true"] {
+        {
+            let mut sim = env.state().borrow_mut();
+            sim.character_create_camera_zoom = 63;
+            sim.character_create_camera_zoom_is_custom = true;
+        }
+        env.exec(&format!("C_CharacterCreation.SetCameraZoomLevel(24{keep})"))
+            .unwrap();
+        assert_eq!(
+            env.state().borrow().character_create_camera_zoom,
+            if keep == ", true" { 63 } else { 24 }
+        );
+    }
+    // No catalog, numeric-string/secret, truthy non-boolean, or return-count claim.
+}
+
+#[test]
+#[cfg(feature = "client-ptr")]
+fn ptr_character_creation_camera_zoom_marker_changes_only_with_zoom() {
+    let env = WowLuaEnv::new().unwrap();
+    env.set_screen_mode(ScreenKind::CharacterCreate);
+    // R83c #320: equal, changed, and explicitly preserved custom zoom.
+    for (requested, keep, expected_zoom, expected_custom) in [
+        (63, false, 63, true),
+        (24, false, 24, false),
+        (24, true, 63, true),
+    ] {
+        {
+            let mut sim = env.state().borrow_mut();
+            sim.character_create_camera_zoom = 63;
+            sim.character_create_camera_zoom_is_custom = true;
+        }
+        env.exec(&format!(
+            "C_CharacterCreation.SetCameraZoomLevel({requested}, {keep})"
+        ))
+        .unwrap();
+        let sim = env.state().borrow();
+        assert_eq!(sim.character_create_camera_zoom, expected_zoom);
+        assert_eq!(sim.character_create_camera_zoom_is_custom, expected_custom);
+    }
+}
+
+#[test]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn character_creation_category_zoom_through_original_consumer() {
+    test_timeout! {
+        use wow_ui_sim::c_api::c_character_creation_customizations::{Category, PublishedValue as V};
+        let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+        // Explicit host scenario, not a collector or native category-ID claim.
+        // R83d requires every host record to supply signed32 zoom explicitly.
+        env.state().borrow_mut().character_customizations = Some(
+            [-1, 0, 37, 101, 73]
+                .into_iter().enumerate().map(|(index, zoom)| Category {
+                    stored_order_key: index as i64,
+                    fields: vec![
+                        ("id".into(), V::Number(100.0 + index as f64)),
+                        ("name".into(), V::Text(format!("Host category {index}").into_bytes())),
+                        ("subcategory".into(), V::Boolean(false)),
+                        ("undressModel".into(), V::Boolean(false)),
+                        ("needsNativeFormCategory".into(), V::Boolean(false)),
+                    ],
+                    camera_zoom_level: zoom,
+                    camera_distance_offset: Some(0.0),
+                    ..Category::new(zoom)
+                }).collect()
+        );
+        let errors_before = env.state().borrow().lua_errors.len();
+        env.exec(r#"
+            GlueParent_SetScreen("charcreate")
+            -- Original customize-entry setup: Retail CharacterCreate.lua:540-544,
+            -- Forever Camelot CharacterCreate.lua:637-641; bounded scope approved #712.
+            local RaceAndClassFrame = CharacterCreateFrame.RaceAndClassFrame
+            assert(RaceAndClassFrame.selectedRaceData)
+            CharCustomizeFrame:SetSelectedData(RaceAndClassFrame.selectedRaceData,
+                RaceAndClassFrame.selectedSexID, C_CharacterCreation.IsViewingAlteredForm())
+            CharacterCreateFrame:UpdateCharCustomizationFrame(true)
+            local categories = CharCustomizeFrame:GetCategories()
+            assert(#categories == 5, "original consumer must receive seeded categories")
+            local inputs = {-1, 0, 37, 101, 73}
+            local expected = {0, 0, 37, 100, 73}
+            for index, category in ipairs(categories) do
+                assert(type(category.cameraZoomLevel) == "number",
+                    "R83d: every published category must have numeric cameraZoomLevel")
+                assert(category.cameraZoomLevel == inputs[index])
+                CharCustomizeFrame:SetSelectedSubcategory(nil)
+                CharCustomizeFrame:SetSelectedCategory(category, false)
+                local zoom = CharacterCreateFrame:GetCurrentCameraZoom()
+                assert(zoom == expected[index], "consumer must apply the 0-100 clamp")
+                assert(CharCustomizeFrame.SmallButtons.ZoomInButton:IsEnabled() == (zoom < 100))
+                assert(CharCustomizeFrame.SmallButtons.ZoomOutButton:IsEnabled() == (zoom > 0))
+            end
+        "#).expect("R83d original category consumer must publish numeric zoom and clamp it");
+        assert_eq!(env.state().borrow().lua_errors.len(), errors_before,
+            "original category consumer must not introduce Lua errors");
+    }
+}
+
+#[test]
+#[cfg(all(feature = "client-retail", feature = "optional-tests"))]
+fn retail_glue_tooltip_preserves_shared_nineslice() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+        env.exec(r#"
+            -- Mainline/GlueTooltip.xml:3,18 inherits SharedTooltipTemplate
+            -- and SharedTooltipTemplates.xml:19 supplies the NineSlice.
+            local source = debug.getinfo(SharedTooltip_SetBackdropStyle, 'S')
+            assert(source.source:gsub('\\', '/'):find('Blizzard_SharedXML/SharedTooltipTemplates.lua', 1, true))
+            assert(source.linedefined == 47)
+            local child = assert(GlueTooltip.NineSlice)
+            assert(child:GetParent() == GlueTooltip)
+            assert(child:IsUsingParentLevel() and child:GetFrameLevel() == GlueTooltip:GetFrameLevel())
+            SharedTooltip_SetBackdropStyle(GlueTooltip, nil, true)
+            assert(not child:IsShown())
+            SharedTooltip_SetBackdropStyle(GlueTooltip, nil, false)
+            assert(child:IsShown() and GlueTooltip.NineSlice == child)
+        "#).expect("original GlueTooltip backdrop should use its inherited NineSlice");
+        assert!(!env.state().borrow().lua_errors.iter().any(|error| error.contains("SharedTooltipTemplates.lua")));
+    }
 }

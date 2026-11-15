@@ -456,6 +456,35 @@ fn runtime_blizzard_ui_addons_path_with_setup() -> wow_ui_sim::Result<PathBuf> {
     )))
 }
 
+#[cfg(test)]
+fn recover_missing_blizzard_ui_addons_path(
+    missing_cache_error: wow_ui_sim::Error,
+) -> wow_ui_sim::Result<PathBuf> {
+    use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
+
+    let index = match ACTIVE {
+        ClientProfile::Retail => Some(include_str!("../../../data/blizzard-ui-builds/retail.json")),
+        ClientProfile::Ptr => Some(include_str!("../../../data/blizzard-ui-builds/ptr.json")),
+        _ => None,
+    };
+    let expected_pin = match index {
+        Some(index) => {
+            let index: serde_json::Value = serde_json::from_str(index).map_err(|cause| {
+                wow_ui_sim::Error::Other(format!("read expected UI pin: {cause}"))
+            })?;
+            index["version"]
+                .as_str()
+                .ok_or_else(|| wow_ui_sim::Error::Other("UI pin has no version".into()))?
+                .to_owned()
+        }
+        None => format!("{ACTIVE:?} profile manifest"),
+    };
+    Err(wow_ui_sim::Error::Other(format!(
+        "{missing_cache_error}; expected pin {expected_pin}; automatic Blizzard UI sync is disabled in tests; prepare the cache with `wow-cli casc sync-blizzard-ui` before testing"
+    )))
+}
+
+#[cfg(not(test))]
 fn recover_missing_blizzard_ui_addons_path(
     _missing_cache_error: wow_ui_sim::Error,
 ) -> wow_ui_sim::Result<PathBuf> {
@@ -739,22 +768,22 @@ fn run_dump_tree(
     command: DumpTreeCommand<'_>,
 ) {
     settle_headless_startup(env);
-    env.service_headless_reload(saved_vars)
-        .expect("dump-tree startup ReloadUI failed");
+    env.service_headless_ui_transition(saved_vars)
+        .expect("dump-tree startup UI transition failed");
     apply_delay_with_tick(env, command.delay);
-    env.service_headless_reload(saved_vars)
-        .expect("dump-tree delay ReloadUI failed");
+    env.service_headless_ui_transition(saved_vars)
+        .expect("dump-tree delay UI transition failed");
     if let Some(code) = command.exec_lua {
         let code = exec_lua::wrap_headless_exec_lua(code);
         if let Err(e) = env.exec_maybe_secure(&code, command.exec_lua_secure) {
             eprintln!("[exec-lua] error: {e}");
         }
     }
-    env.service_headless_reload(saved_vars)
-        .expect("dump-tree script ReloadUI failed");
+    env.service_headless_ui_transition(saved_vars)
+        .expect("dump-tree script UI transition failed");
     run_extra_update_ticks(env, 3);
-    env.service_headless_reload(saved_vars)
-        .expect("dump-tree timer ReloadUI failed");
+    env.service_headless_ui_transition(saved_vars)
+        .expect("dump-tree timer UI transition failed");
     update_dump_layout_rects(env);
     print_dump_tree(env, &command);
 }

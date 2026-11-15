@@ -180,6 +180,7 @@ fn specialization_class_id_preserves_non_retail_player_selection() {
 
 // ── PvP talents ───────────────────────────────────────────────────────────────
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
 fn get_pvp_talent_slot_info_returns_table_for_valid_slots() {
     let env = env();
@@ -197,6 +198,7 @@ fn get_pvp_talent_slot_info_returns_table_for_valid_slots() {
     assert_eq!(selected, 0);
 }
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
 fn get_pvp_talent_slot_info_nil_for_out_of_range_slot() {
     let env = env();

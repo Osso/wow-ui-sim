@@ -27,17 +27,48 @@ if GetSpellTexture == nil and C_Spell ~= nil then
 end
 "#;
 
-const LEGACY_SPELL_GLOBALS_LUA: &str = r#"
+// R88m.4 retirement is Retail-only: no selected original consumer calls these
+// aliases. Outside-census native publication is UNKNOWN, not disproved.
+const NON_RETAIL_SPELL_ALIASES_LUA: &str = r#"
 if GetSpellBookItemInfo == nil and C_SpellBook ~= nil then
     function GetSpellBookItemInfo(...)
         return C_SpellBook.GetSpellBookItemInfo(...)
     end
 end
+if IsPassiveSpell == nil then
+    function IsPassiveSpell(_spellID)
+        return false
+    end
+end
+"#;
+
+const LEGACY_SPELL_GLOBALS_LUA: &str = r#"
 if GetSpellBookItemTexture == nil and C_SpellBook ~= nil then
     function GetSpellBookItemTexture(...)
         return C_SpellBook.GetSpellBookItemTexture(...)
     end
 end
+if IsPressHoldReleaseSpell == nil and C_Spell ~= nil then
+    function IsPressHoldReleaseSpell(...)
+        return C_Spell.IsPressHoldReleaseSpell(...)
+    end
+end
+if SpellBook_GetSpellBookSlot == nil then
+    function SpellBook_GetSpellBookSlot(slot, _offset)
+        return slot
+    end
+end
+"#;
+
+const NON_RETAIL_SELECTED_SPELL_BOOK_ITEM_LUA: &str = r#"
+if IsSelectedSpellBookItem == nil then
+    function IsSelectedSpellBookItem(_slotIndex, _bank)
+        return false
+    end
+end
+"#;
+
+const NON_RETAIL_DEPRECATED_SPELL_BOOK_GLOBALS_LUA: &str = r#"
 if IsPlayerSpell == nil and C_SpellBook ~= nil then
     function IsPlayerSpell(spellID)
         return C_SpellBook.IsSpellKnown(spellID, Enum.SpellBookSpellBank.Player)
@@ -64,32 +95,19 @@ if FindBaseSpellByID == nil and C_SpellBook ~= nil then
         return C_SpellBook.FindBaseSpellByID(spellID)
     end
 end
-if IsPassiveSpell == nil then
-    function IsPassiveSpell(_spellID)
-        return false
-    end
-end
-if IsPressHoldReleaseSpell == nil and C_Spell ~= nil then
-    function IsPressHoldReleaseSpell(...)
-        return C_Spell.IsPressHoldReleaseSpell(...)
-    end
-end
-if IsSelectedSpellBookItem == nil then
-    function IsSelectedSpellBookItem(_slotIndex, _unit)
-        return false
-    end
-end
-if SpellBook_GetSpellBookSlot == nil then
-    function SpellBook_GetSpellBookSlot(slot, _offset)
-        return slot
-    end
-end
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     #[cfg(not(feature = "retail-12-0-0"))]
     lua.exec(PRE_12_0_0_SPELL_GLOBALS_LUA)?;
     lua.exec(LEGACY_SPELL_GLOBALS_LUA)?;
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        super::retail_spellbook_legacy::register_selected(lua)?;
+    } else {
+        lua.exec(NON_RETAIL_SPELL_ALIASES_LUA)?;
+        lua.exec(NON_RETAIL_SELECTED_SPELL_BOOK_ITEM_LUA)?;
+        lua.exec(NON_RETAIL_DEPRECATED_SPELL_BOOK_GLOBALS_LUA)?;
+    }
     Ok(())
 }
 
@@ -120,14 +138,9 @@ mod tests {
                 if type(FindBaseSpellByID) ~= "function" then return "base_spell" end
                 if type(GetSpellInfo) ~= "function" then return "spell_info" end
                 if type(GetSpellTexture) ~= "function" then return "spell_texture" end
-                if IsPassiveSpell(116) ~= false then return "passive" end
                 if type(IsPressHoldReleaseSpell) ~= "function" then return "press_hold_type" end
                 if IsPressHoldReleaseSpell(116) ~= false then return "press_hold_value" end
-                if IsSelectedSpellBookItem(1, "player") ~= false then return "selected_spellbook" end
                 if SpellBook_GetSpellBookSlot(3, 20) ~= 3 then return "slot" end
-                if FindSpellOverrideByID(116) ~= 116 then return "override_value" end
-                if select("#", FindFlyoutSlotBySpellID(116)) ~= 0 then return "flyout_value" end
-                if select("#", FindBaseSpellByID(116)) ~= 0 then return "base_value" end
                 return "ok"
                 "##,
             )

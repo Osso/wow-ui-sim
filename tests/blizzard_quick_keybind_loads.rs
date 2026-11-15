@@ -422,3 +422,83 @@ fn blizzard_quick_keybind_virtual_templates_not_in_global_env(env: &WowLuaEnv) {
     }
 }
 }
+
+#[test]
+#[cfg(all(feature = "client-retail", feature = "optional-tests"))]
+fn retail_quick_keybind_original_grid_and_highlights_survive_startup() {
+    use wow_ui_sim::loader::{
+        discover_blizzard_startup_addons_for_screen, register_load_with_addons,
+    };
+
+    let ui = blizzard_ui_dir();
+    let env = WowLuaEnv::new().expect("create Retail Game environment");
+    env.state().borrow_mut().addon_base_paths = vec![ui.clone()];
+    env.exec(
+        r#"
+        assert(ActionButtonUtil.ShowAllActionButtonGrids == nil)
+        assert(ActionButtonUtil.HideAllActionButtonGrids == nil)
+        assert(ActionButtonUtil.SetAllQuickKeybindButtonHighlights == nil)
+        assert(ActionButtonUtil.ShowAllQuickKeybindButtonHighlights == nil)
+        assert(ActionButtonUtil.HideAllQuickKeybindButtonHighlights == nil)
+    "#,
+    )
+    .expect("no simulator quick-keybind defaults");
+
+    let addons = discover_blizzard_startup_addons_for_screen(&ui, ScreenKind::Game);
+    for (name, toc) in [
+        ("Blizzard_ActionBar", "Blizzard_ActionBar.toc"),
+        ("Blizzard_QuickKeybind", "Blizzard_QuickKeybind.toc"),
+    ] {
+        assert_eq!(
+            addons
+                .iter()
+                .find(|a| a.name == name)
+                .unwrap()
+                .toc_path
+                .file_name()
+                .unwrap(),
+            toc
+        );
+    }
+    register_load_with_addons(&env.loader_env(), &discover_all_blizzard_addons(&ui));
+    crate::common::load_game_startup_inventory(&env);
+    env.apply_post_load_workarounds();
+    fire_startup_events_for_screen(&env, ScreenKind::Game);
+
+    env.exec(r#"
+        local function original(fn, path, line)
+            local info = debug.getinfo(fn, "S")
+            local source = info.source:gsub(string.char(92), '/')
+            assert(source:find(path, 1, true), source)
+            assert(info.linedefined == line, source .. ':' .. info.linedefined)
+        end
+        local owner = "Blizzard_ActionBar/Shared/ActionButtonUtil.lua"
+        original(ActionButtonUtil.ShowAllActionButtonGrids, owner, 42)
+        original(ActionButtonUtil.HideAllActionButtonGrids, owner, 47)
+        original(ActionButtonUtil.ShowAllQuickKeybindButtonHighlights, owner, 56)
+        original(ActionButtonUtil.HideAllQuickKeybindButtonHighlights, owner, 60)
+        original(ActionButtonUtil.SetAllQuickKeybindButtonHighlights,
+            "Blizzard_ActionBar/Mainline/ActionButtonUtilOverrides.lua", 16)
+        local quickbind = "Blizzard_QuickKeybind/QuickKeybind.lua"
+        original(QuickKeybindFrameMixin.OnShow, quickbind, 142)
+        original(QuickKeybindFrameMixin.OnHide, quickbind, 159)
+        local function hasGrid(bar)
+            return bit.band(bar.showAllButtons or 0, ACTION_BUTTON_SHOW_GRID_REASON_EVENT) ~= 0
+        end
+        local function check(active)
+            assert(hasGrid(MainActionBar) == active, "main bar grid")
+            assert(hasGrid(MultiBarBottomLeft) == active, "multi bar grid")
+            assert(ActionButton1.QuickKeybindHighlightTexture:IsShown() == active, "main button highlight")
+            assert(MultiBarBottomLeftButton1.QuickKeybindHighlightTexture:IsShown() == active,
+                "multi button highlight")
+        end
+        assert(not QuickKeybindFrame:IsShown(), "QuickKeybind.xml:89 starts hidden")
+        check(false)
+        QuickKeybindFrame:Show()
+        assert(KeybindFrames_InQuickKeybindMode())
+        check(true)
+        QuickKeybindFrame:Hide()
+        assert(not KeybindFrames_InQuickKeybindMode())
+        check(false)
+    "#).expect("the original QuickKeybind frame toggles grids and highlights");
+}

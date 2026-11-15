@@ -725,9 +725,23 @@ pub fn apply_xml_hit_rect_insets(state: &Rc<RefCell<SimState>>, frame_id: u64, f
     }
 }
 
-/// Apply text insets from instance XML.
-pub fn apply_xml_text_insets(state: &Rc<RefCell<SimState>>, frame_id: u64, frame: &FrameXml) {
-    if let Some(insets) = frame.text_insets()
+/// Apply text insets from instance XML, else from the nearest template in
+/// the chain that sets them (SearchBoxTemplate's `<TextInsets left="16"/>`).
+pub fn apply_xml_text_insets(
+    state: &Rc<RefCell<SimState>>,
+    frame_id: u64,
+    frame: &FrameXml,
+    inherits: &str,
+) {
+    let chain = (!inherits.is_empty()).then(|| crate::xml::get_template_chain(inherits));
+    let insets = frame.text_insets().cloned().or_else(|| {
+        chain
+            .as_ref()?
+            .iter()
+            .rev()
+            .find_map(|entry| entry.frame.text_insets().cloned())
+    });
+    if let Some(insets) = insets
         && let Some(frame) = state.borrow_mut().widgets.get_mut_visual(frame_id)
     {
         frame.editbox_text_insets = (insets.left(), insets.right(), insets.top(), insets.bottom());

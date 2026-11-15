@@ -1,15 +1,14 @@
-//! `C_Map` probe surface backed by `SimState.maps` +
-//! `SimState.player_map_position`.
+//! `C_Map` probe surface backed by `SimState.maps`, Retail UiMap data,
+//! and `SimState.player_map_position`.
 //!
 //! Migrates 7 entries off `NAMESPACE_NIL_STUBS`:
 //!
 //! - `C_Map.GetMapArtID(uiMapID)` — returns the `art_id` for the
 //!   seeded map, or nothing (retail `mayreturnnothing`).
 //! - `C_Map.GetMapInfo(uiMapID)` — returns a `UiMapDetails`-shaped
-//!   table for seeded maps. For valid-looking positive map IDs that are
-//!   not yet seeded, it returns a minimal generic map record instead of
-//!   crashing addon startup paths that walk retail UiMap.db2 IDs. Absurd
-//!   sentinel IDs still return nothing.
+//!   table for seeded maps and unseeded Retail UiMap records. Unknown
+//!   Retail IDs return nothing; other profiles retain generic details for
+//!   positive unseeded IDs.
 //! - `C_Map.GetMapInfoAtPosition(uiMapID, normalizedX, normalizedY)`
 //!   — resolves a normalized point on a parent map back to the leaf
 //!   zone whose `child_rects` entry contains the point. Returns
@@ -22,11 +21,10 @@
 //!   when `topMapID` is not an ancestor or any link in the chain
 //!   lacks a seeded `rect_on_parent`.
 //! - `C_Map.GetMapChildrenInfo(uiMapID, mapType?, allDescendants?)`
-//!   — returns the children as an array of `UiMapDetails` tables.
-//!   `mapType` filters by the UIMapType enum; `allDescendants`
-//!   recursively walks the subtree. Returns nothing when the map is
-//!   unknown, an empty array when it exists but has no children
-//!   matching the filter.
+//!   — returns seeded children and, on Retail, children from UiMap parent
+//!   links as `UiMapDetails` tables. `mapType` filters by the UIMapType
+//!   enum; `allDescendants` recursively walks the subtree. Unknown maps
+//!   return nothing; known maps with no matching children return an empty array.
 //! - `C_Map.GetPlayerMapPosition(uiMapID, unitToken)` — returns
 //!   `{x, y}` vector2 from `SimState.player_map_position` for any
 //!   known map, or matching explicit input for an active party member.
@@ -48,11 +46,15 @@ use crate::lua_api::state::MapData;
 #[cfg(feature = "retail-12-1-0")]
 use crate::lua_bridge::val_to_i32;
 use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+use rilua::runtime_error;
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
 use rilua::{LuaResult, Val};
 use std::collections::HashSet;
+
+mod user_waypoint;
 
 type LuaTableRef = GcRef<Table>;
 type RustLuaFn = rilua::vm::closure::RustFn;
@@ -62,6 +64,25 @@ type RustLuaFn = rilua::vm::closure::RustFn;
 pub struct UnitMapPosition {
     pub ui_map_id: i32,
     pub position: (f64, f64),
+}
+
+/// Session-only waypoint state; account/character ownership and persistence are UNKNOWN.
+#[derive(Clone, Copy, Debug)]
+pub(crate) struct UserWaypoint {
+    pub(crate) ui_map_id: i32,
+    pub(crate) x: f64,
+    pub(crate) y: f64,
+    pub(crate) z: Option<f64>,
+}
+
+impl UserWaypoint {
+    pub(crate) fn is_valid(&self) -> bool {
+        self.ui_map_id != 0 && is_normalized_coordinate(self.x) && is_normalized_coordinate(self.y)
+    }
+}
+
+fn is_normalized_coordinate(value: f64) -> bool {
+    value.is_finite() && (0.0..=1.0).contains(&value)
 }
 
 const MAP_ART_LAYER_HASH_FIELDS: usize = 7;
@@ -124,6 +145,7 @@ fn register_c_map_methods(state: &mut LuaState, table_ref: LuaTableRef) -> LuaRe
             c_map_get_map_display_info,
         )?;
     }
+    user_waypoint::register(state, table_ref)?;
     Ok(())
 }
 
@@ -291,7 +313,8 @@ fn c_map_get_map_info(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn should_return_generic_map_info(ui_map_id: i32) -> bool {
-    (1..=MAX_GENERIC_UI_MAP_ID).contains(&ui_map_id)
+    crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail
+        && (1..=MAX_GENERIC_UI_MAP_ID).contains(&ui_map_id)
 }
 
 fn c_map_get_map_info_at_position(state: &mut LuaState) -> LuaResult<u32> {
@@ -413,6 +436,107 @@ fn ui_map_table_entry(ui_map_id: i32) -> Option<&'static crate::ui_maps::UiMapIn
         .and_then(crate::ui_maps::get_ui_map)
 }
 
+enum MapInfoSource {
+    Seeded(MapData),
+    UiMap {
+        ui_map_id: i32,
+        info: &'static crate::ui_maps::UiMapInfo,
+    },
+}
+
+impl MapInfoSource {
+    fn map_type(&self) -> i32 {
+        match self {
+            Self::Seeded(map) => map.map_type,
+            Self::UiMap { info, .. } => info.map_type as i32,
+        }
+    }
+
+    fn push_details(self, state: &mut LuaState) -> Val {
+        match self {
+            Self::Seeded(map) => push_map_details_table(state, &map),
+            Self::UiMap { ui_map_id, info } => push_ui_map_table_details(state, ui_map_id, info),
+        }
+    }
+}
+
+fn map_info_source(
+    maps: &std::collections::HashMap<i32, MapData>,
+    ui_map_id: i32,
+) -> Option<MapInfoSource> {
+    if let Some(map) = maps.get(&ui_map_id) {
+        return Some(MapInfoSource::Seeded(map.clone()));
+    }
+    let info = ui_map_table_entry(ui_map_id)?;
+    Some(MapInfoSource::UiMap { ui_map_id, info })
+}
+
+type MapChildrenByParent = std::collections::HashMap<i32, Vec<i32>>;
+
+fn insert_map_child(children: &mut MapChildrenByParent, parent_id: i32, child_id: i32) {
+    let child_ids = children.entry(parent_id).or_default();
+    if !child_ids.contains(&child_id) {
+        child_ids.push(child_id);
+    }
+}
+
+fn append_explicit_map_children(
+    maps: &std::collections::HashMap<i32, MapData>,
+    children: &mut MapChildrenByParent,
+) {
+    for map in maps.values() {
+        children
+            .entry(map.ui_map_id)
+            .or_default()
+            .extend(map.child_map_ids.iter().copied());
+    }
+}
+
+fn append_seeded_map_parent_links(
+    maps: &std::collections::HashMap<i32, MapData>,
+    children: &mut MapChildrenByParent,
+) {
+    let mut parent_links = maps
+        .values()
+        .map(|map| (map.parent_map_id, map.ui_map_id))
+        .collect::<Vec<_>>();
+    parent_links.sort_unstable();
+    for (parent_id, child_id) in parent_links {
+        insert_map_child(children, parent_id, child_id);
+    }
+}
+
+fn append_ui_map_catalog_children(
+    maps: &std::collections::HashMap<i32, MapData>,
+    children: &mut MapChildrenByParent,
+) {
+    let mut parent_links = crate::ui_maps::UI_MAP_DB
+        .entries()
+        .filter_map(|(ui_map_id, info)| {
+            let ui_map_id = i32::try_from(*ui_map_id).ok()?;
+            if maps.contains_key(&ui_map_id) {
+                return None;
+            }
+            let parent_id = i32::try_from(info.parent_map_id).ok()?;
+            Some((parent_id, ui_map_id))
+        })
+        .collect::<Vec<_>>();
+    parent_links.sort_unstable();
+    for (parent_id, child_id) in parent_links {
+        insert_map_child(children, parent_id, child_id);
+    }
+}
+
+fn map_children_by_parent(maps: &std::collections::HashMap<i32, MapData>) -> MapChildrenByParent {
+    let mut children = MapChildrenByParent::new();
+    append_explicit_map_children(maps, &mut children);
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        append_seeded_map_parent_links(maps, &mut children);
+        append_ui_map_catalog_children(maps, &mut children);
+    }
+    children
+}
+
 fn push_ui_map_table_details(
     state: &mut LuaState,
     ui_map_id: i32,
@@ -444,27 +568,51 @@ fn collect_children(
     root: i32,
     all_descendants: bool,
     map_type_filter: Option<i32>,
-) -> Vec<MapData> {
-    let Some(root_map) = maps.get(&root) else {
-        return Vec::new();
-    };
+) -> Option<Vec<MapInfoSource>> {
+    map_info_source(maps, root)?;
+    let children_by_parent = map_children_by_parent(maps);
+    Some(collect_children_from_index(
+        maps,
+        &children_by_parent,
+        root,
+        all_descendants,
+        map_type_filter,
+    ))
+}
 
-    let mut out: Vec<MapData> = Vec::new();
-    let mut visited: HashSet<i32> = HashSet::new();
-    let mut frontier: Vec<i32> = root_map.child_map_ids.clone();
+fn append_map_children(
+    frontier: &mut Vec<i32>,
+    children_by_parent: &MapChildrenByParent,
+    parent_id: i32,
+) {
+    if let Some(children) = children_by_parent.get(&parent_id) {
+        frontier.extend(children.iter().copied());
+    }
+}
+
+fn collect_children_from_index(
+    maps: &std::collections::HashMap<i32, MapData>,
+    children_by_parent: &MapChildrenByParent,
+    root: i32,
+    all_descendants: bool,
+    map_type_filter: Option<i32>,
+) -> Vec<MapInfoSource> {
+    let mut out = Vec::new();
+    let mut visited = HashSet::new();
+    let mut frontier = children_by_parent.get(&root).cloned().unwrap_or_default();
 
     while let Some(child_id) = frontier.pop() {
         if !visited.insert(child_id) {
             continue;
         }
-        let Some(child) = maps.get(&child_id) else {
+        let Some(child) = map_info_source(maps, child_id) else {
             continue;
         };
-        if map_type_filter.is_none_or(|filter| child.map_type == filter) {
-            out.push(child.clone());
+        if map_type_filter.is_none_or(|filter| child.map_type() == filter) {
+            out.push(child);
         }
         if all_descendants {
-            frontier.extend(child.child_map_ids.iter().copied());
+            append_map_children(&mut frontier, children_by_parent, child_id);
         }
     }
 
@@ -478,41 +626,293 @@ fn c_map_get_map_children_info(state: &mut LuaState) -> LuaResult<u32> {
         _ => None,
     };
     let all_descendants = matches!(stack_val(state, 3), Val::Bool(true));
-
-    let children = {
-        let sim = borrow_state(state)?;
-        if !sim.maps.contains_key(&ui_map_id) {
-            return Ok(0);
-        }
-        collect_children(&sim.maps, ui_map_id, all_descendants, map_type_filter)
+    let children = collect_children(
+        &borrow_state(state)?.maps,
+        ui_map_id,
+        all_descendants,
+        map_type_filter,
+    );
+    let Some(children) = children else {
+        return Ok(0);
     };
 
     let array = create_table(state);
     for (index, child) in children.into_iter().enumerate() {
-        let entry = push_map_details_table(state, &child);
+        let entry = child.push_details(state);
         set_table_array(state, array, index as i64 + 1, entry);
     }
     state.push(array);
     Ok(1)
 }
 
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+const GET_WORLD_POS_USAGE: &str =
+    "Usage: local continentID, worldPosition = C_Map.GetWorldPosFromMapPos(uiMapID, mapPosition)";
+
 fn c_map_get_world_pos_from_map_pos(state: &mut LuaState) -> LuaResult<u32> {
+    #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+    let ui_map_id = read_retail_map_id(state, 1)?;
+    #[cfg(not(all(feature = "profile-retail", feature = "retail-12-1-5")))]
     let ui_map_id = i32::from_stack(state, 1)?;
+
     let normalized_pos = stack_val(state, 2);
-    if !borrow_state(state)?.maps.contains_key(&ui_map_id) {
+    #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+    let map_position = read_world_map_position(state, normalized_pos)?;
+    let (map_is_known, explicit_rect) = {
+        let sim = borrow_state(state)?;
+        (
+            sim.maps.contains_key(&ui_map_id),
+            sim.map_world_rects.get(&ui_map_id).copied(),
+        )
+    };
+
+    // Explicit simulator rectangles take precedence over generated Retail assignments.
+    if map_is_known {
+        if let Some(rect) = explicit_rect {
+            #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+            let (normalized_x, normalized_y) = map_position;
+            #[cfg(not(all(feature = "profile-retail", feature = "retail-12-1-5")))]
+            let Some((normalized_x, normalized_y)) = normalized_coordinates(state, normalized_pos)
+            else {
+                return Ok(0);
+            };
+            let Some((x, y)) = rect.unproject(normalized_x, normalized_y) else {
+                return Ok(0);
+            };
+            let world_pos = create_world_position_vector(state, x, y)?;
+            state.push(Val::Num(f64::from(rect.continent_id)));
+            state.push(world_pos);
+            return Ok(2);
+        }
+    }
+
+    #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+    if ui_map_table_entry(ui_map_id).is_none() {
         return Ok(0);
     }
 
-    let (width, height) = map_world_size(ui_map_id);
-    let x = normalized_coordinate(state, normalized_pos, "x") * width;
-    let y = normalized_coordinate(state, normalized_pos, "y") * height;
-    let world_pos = create_world_position_vector(state, x, y)?;
+    #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+    {
+        let Some((continent_id, x, y)) =
+            retail_map_assignment_world_position(ui_map_id, map_position)
+        else {
+            return Ok(0);
+        };
+        let world_pos = create_world_position_vector(state, x, y)?;
+        state.push(Val::Num(f64::from(continent_id)));
+        state.push(world_pos);
+        return Ok(2);
+    }
 
-    state.push(Val::Num(0.0));
-    state.push(world_pos);
-    Ok(2)
+    #[cfg(not(all(feature = "profile-retail", feature = "retail-12-1-5")))]
+    {
+        if !map_is_known {
+            return Ok(0);
+        }
+        let (width, height) = map_world_size(ui_map_id);
+        let x = normalized_coordinate(state, normalized_pos, "x") * width;
+        let y = normalized_coordinate(state, normalized_pos, "y") * height;
+        let world_pos = create_world_position_vector(state, x, y)?;
+        state.push(Val::Num(0.0));
+        state.push(world_pos);
+        Ok(2)
+    }
 }
 
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+fn read_retail_map_id(state: &LuaState, index: i32) -> LuaResult<i32> {
+    let value = f64::from_stack(state, index)
+        .map_err(|_| runtime_error(format!("{GET_WORLD_POS_USAGE}: invalid uiMapID")))?;
+    if !value.is_finite() || value < f64::from(i32::MIN) || value > f64::from(i32::MAX) {
+        return Err(runtime_error(format!(
+            "{GET_WORLD_POS_USAGE}: invalid uiMapID"
+        )));
+    }
+    Ok(value.trunc() as i32)
+}
+
+#[cfg(not(all(feature = "profile-retail", feature = "retail-12-1-5")))]
+fn normalized_coordinates(state: &mut LuaState, position: Val) -> Option<(f64, f64)> {
+    let Val::Num(x) = table_get(state, position, "x") else {
+        return None;
+    };
+    let Val::Num(y) = table_get(state, position, "y") else {
+        return None;
+    };
+    (x.is_finite() && y.is_finite()).then_some((x, y))
+}
+
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+fn read_world_map_position(state: &mut LuaState, position: Val) -> LuaResult<(f64, f64)> {
+    let Val::Table(_) = position else {
+        return Err(runtime_error(GET_WORLD_POS_USAGE));
+    };
+    let Val::Num(x) = table_get(state, position, "x") else {
+        return Err(runtime_error(GET_WORLD_POS_USAGE));
+    };
+    let Val::Num(y) = table_get(state, position, "y") else {
+        return Err(runtime_error(GET_WORLD_POS_USAGE));
+    };
+    Ok((x, y))
+}
+
+/// VERIFIED: choose the containing eligible row nearest its UI-rectangle centre,
+/// or the nearest centre when no row contains the point. CSV tie order is INFERRED.
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+fn select_retail_map_assignment(
+    assignments: &[sim_data_profile::ui_map_assignments::UiMapAssignment],
+    x: f64,
+    y: f64,
+) -> Option<(&sim_data_profile::ui_map_assignments::UiMapAssignment, i32)> {
+    let mut containing = None;
+    let mut nearest = None;
+    for assignment in assignments {
+        let Some(map_number) = assignment_map_number(
+            assignment,
+            sim_data_profile::area_table_retail::get_continent_id,
+        ) else {
+            continue;
+        };
+        let Some((inside, score)) = assignment_geometry_score(assignment, x, y) else {
+            continue;
+        };
+        let best = if inside {
+            &mut containing
+        } else {
+            &mut nearest
+        };
+        retain_closest_assignment(best, assignment, map_number, score);
+    }
+    containing
+        .or(nearest)
+        .map(|(assignment, map_number, _)| (assignment, map_number))
+}
+
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+fn assignment_map_number(
+    assignment: &sim_data_profile::ui_map_assignments::UiMapAssignment,
+    area_continent: impl FnOnce(u32) -> Option<u16>,
+) -> Option<i32> {
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
+        return None;
+    }
+    if assignment.map_id >= 0 {
+        return Some(assignment.map_id);
+    }
+    // VERIFIED: an unresolved AreaID disqualifies this row; INFERRED: map the u16 to ContinentID.
+    area_continent(assignment.area_id).map(i32::from)
+}
+
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+fn assignment_geometry_score(
+    assignment: &sim_data_profile::ui_map_assignments::UiMapAssignment,
+    x: f64,
+    y: f64,
+) -> Option<(bool, f64)> {
+    let min_x = f64::from(assignment.ui_min[0]);
+    let min_y = f64::from(assignment.ui_min[1]);
+    let max_x = f64::from(assignment.ui_max[0]);
+    let max_y = f64::from(assignment.ui_max[1]);
+    let span_x = max_x - min_x;
+    let span_y = max_y - min_y;
+    let epsilon = f64::from(f32::EPSILON);
+    if span_x < epsilon || span_y < epsilon {
+        return None;
+    }
+    let center_x = min_x + span_x * 0.5;
+    let center_y = min_y + span_y * 0.5;
+    let delta_x = x - center_x;
+    let delta_y = y - center_y;
+    let inside = x >= min_x && x <= max_x && y >= min_y && y <= max_y;
+    Some((inside, delta_x * delta_x + delta_y * delta_y))
+}
+
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+fn retain_closest_assignment<'a>(
+    best: &mut Option<(
+        &'a sim_data_profile::ui_map_assignments::UiMapAssignment,
+        i32,
+        f64,
+    )>,
+    assignment: &'a sim_data_profile::ui_map_assignments::UiMapAssignment,
+    map_number: i32,
+    score: f64,
+) {
+    if best
+        .as_ref()
+        .is_none_or(|(_, _, best_score)| score < *best_score)
+    {
+        *best = Some((assignment, map_number, score));
+    }
+}
+
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+fn retail_map_assignment_world_position(
+    ui_map_id: i32,
+    (x, y): (f64, f64),
+) -> Option<(i32, f64, f64)> {
+    let ui_map_id = u32::try_from(ui_map_id).ok()?;
+    let assignments = sim_data_profile::ui_map_assignments::get_ui_map_assignments(ui_map_id)?;
+    let (assignment, map_number) = select_retail_map_assignment(assignments, x, y)?;
+    let (world_x, world_y) = project_retail_assignment(assignment, x, y);
+    Some((map_number, world_x, world_y))
+}
+
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+fn project_retail_assignment(
+    assignment: &sim_data_profile::ui_map_assignments::UiMapAssignment,
+    x: f64,
+    y: f64,
+) -> (f64, f64) {
+    let ui_width = f64::from(assignment.ui_max[0]) - f64::from(assignment.ui_min[0]);
+    let ui_height = f64::from(assignment.ui_max[1]) - f64::from(assignment.ui_min[1]);
+    let local_x = (x - f64::from(assignment.ui_min[0])) / ui_width;
+    let local_y = (y - f64::from(assignment.ui_min[1])) / ui_height;
+    // INFERRED (R88i.41): world X blends Region_3 toward Region_0 by map Y.
+    let world_x = f64::from(assignment.region_max[0])
+        + (f64::from(assignment.region_min[0]) - f64::from(assignment.region_max[0])) * local_y;
+    let world_y = f64::from(assignment.region_max[1])
+        + (f64::from(assignment.region_min[1]) - f64::from(assignment.region_max[1])) * local_x;
+    (world_x, world_y)
+}
+
+#[cfg(all(
+    test,
+    feature = "optional-tests",
+    feature = "profile-retail",
+    feature = "retail-12-1-5"
+))]
+mod retail_assignment_tests {
+    use super::{assignment_map_number, select_retail_map_assignment};
+    use sim_data_profile::ui_map_assignments::UiMapAssignment;
+
+    fn negative_assignment(area_id: u32) -> UiMapAssignment {
+        UiMapAssignment {
+            map_id: -1,
+            area_id,
+            ui_min: [0.0, 0.0],
+            ui_max: [1.0, 1.0],
+            region_min: [0.0, 0.0],
+            region_max: [1.0, 1.0],
+        }
+    }
+
+    #[test]
+    fn negative_assignment_accepts_zero_continent_number() {
+        let assignment = negative_assignment(7);
+        assert_eq!(assignment_map_number(&assignment, |_| Some(0)), Some(0));
+    }
+
+    #[test]
+    fn unresolved_negative_assignment_skips_to_later_usable_row() {
+        let assignments = [negative_assignment(0), negative_assignment(14620)];
+        let (selected, map_number) = select_retail_map_assignment(&assignments, 0.5, 0.5).unwrap();
+        assert_eq!(selected.area_id, 14620);
+        assert!(u16::try_from(map_number).is_ok());
+    }
+}
+
+#[cfg(not(all(feature = "profile-retail", feature = "retail-12-1-5")))]
 fn map_world_size(ui_map_id: i32) -> (f64, f64) {
     let Some(map_art) = crate::map_art::get_map_art(ui_map_id as u32) else {
         return (1000.0, 1000.0);
@@ -523,6 +923,7 @@ fn map_world_size(ui_map_id: i32) -> (f64, f64) {
     (layer.layer_width as f64, layer.layer_height as f64)
 }
 
+#[cfg(not(all(feature = "profile-retail", feature = "retail-12-1-5")))]
 fn normalized_coordinate(state: &mut LuaState, position: Val, key: &str) -> f64 {
     match table_get(state, position, key) {
         Val::Num(value) => value.clamp(0.0, 1.0),

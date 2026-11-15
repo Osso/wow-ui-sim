@@ -16,7 +16,12 @@ pub enum ItemOverlayFlag {
 }
 
 fn supports_overlay() -> bool {
-    matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr)
+    // Forever 70707 ItemDocumentation.lua:1232,1247,1262,1293,1611 and
+    // SoulbindsDocumentation.lua:459 declare these same identity queries.
+    matches!(
+        ACTIVE,
+        ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
+    )
 }
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {

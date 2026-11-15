@@ -7,6 +7,8 @@ mod temporary;
 pub(crate) use temporary::legacy_talent_skill_defaults::get_legacy_talent_info;
 pub(crate) use temporary::lfg_encounters::get_search_result_encounter_info;
 pub(crate) use temporary::minimap_tracking_defaults::RETAIL_TRACKING_DEFAULT_MASK;
+#[cfg(feature = "client-retail")]
+pub(crate) use temporary::pvp_talent_defaults::pvp_slot_default;
 pub(crate) use temporary::quest_campaign_header_default::update_campaign_headers;
 
 #[cfg(feature = "client-wrath")]
@@ -42,12 +44,6 @@ pub(crate) use runtime_surfaces::{
     patch_unit_position_frame_mixin,
 };
 
-pub(crate) fn patch_action_bar_button_event_fanout_for_addon_load(
-    env: &crate::lua_api::LoaderEnv<'_>,
-) {
-    temporary::action_bar_button_event_fanout::patch_loader(env);
-}
-
 struct WorkaroundStep {
     label: &'static str,
     apply: fn(&crate::lua_api::WowLuaEnv),
@@ -62,6 +58,7 @@ const POST_LOAD_WORKAROUNDS: &[WorkaroundStep] = &[
         label: "init_edit_mode_layout",
         apply: init_edit_mode_layout,
     },
+    #[cfg(not(feature = "client-retail"))]
     WorkaroundStep {
         label: "patch_ui_parent_panel_toggles",
         apply: patch_ui_parent_panel_toggles,
@@ -78,10 +75,7 @@ const POST_LOAD_WORKAROUNDS: &[WorkaroundStep] = &[
         label: "patch_chat_voice_button_surface",
         apply: patch_chat_voice_button_surface,
     },
-    WorkaroundStep {
-        label: "patch_item_socketing_tooltips",
-        apply: patch_item_socketing_tooltips,
-    },
+    #[cfg(not(feature = "client-retail"))]
     WorkaroundStep {
         label: "patch_character_select_selected_name",
         apply: patch_character_select_selected_name,
@@ -90,6 +84,7 @@ const POST_LOAD_WORKAROUNDS: &[WorkaroundStep] = &[
         label: "patch_character_create_defaults",
         apply: patch_character_create_defaults,
     },
+    #[cfg(not(feature = "client-retail"))]
     WorkaroundStep {
         label: "patch_character_frame_title_refresh",
         apply: patch_character_frame_title_refresh,
@@ -107,17 +102,10 @@ const POST_LOAD_WORKAROUNDS: &[WorkaroundStep] = &[
         apply: patch_map_exploration_pin_mixin,
     },
     WorkaroundStep {
-        label: "patch_map_canvas_data_provider_attachment",
-        apply: patch_map_canvas_data_provider_attachment,
-    },
-    WorkaroundStep {
         label: "ensure_adventure_map_frame_surface",
         apply: ensure_adventure_map_frame_surface,
     },
-    WorkaroundStep {
-        label: "patch_action_bar_button_event_fanout",
-        apply: patch_action_bar_button_event_fanout,
-    },
+    #[cfg(not(feature = "client-retail"))]
     WorkaroundStep {
         label: "patch_paging_controls_page_text",
         apply: patch_paging_controls_page_text,
@@ -130,14 +118,20 @@ const POST_LOAD_WORKAROUNDS: &[WorkaroundStep] = &[
         label: "patch_catalog_shop_product_card_defaults",
         apply: patch_catalog_shop_product_card_defaults,
     },
+    // Retail Minimap GameTime.xml binds the original invite-count OnLoad.
+    #[cfg(not(feature = "client-retail"))]
     WorkaroundStep {
         label: "patch_game_time_defaults",
         apply: patch_game_time_defaults,
     },
+    // SharedTooltipArtTemplate owns both Retail tooltip children.
+    #[cfg(not(feature = "client-retail"))]
     WorkaroundStep {
         label: "patch_tooltip_nineslice_surface",
         apply: patch_tooltip_nineslice_surface,
     },
+    // Retail startup dispatches per-addon ADDON_LOADED and owns this XML frame.
+    #[cfg(not(feature = "client-retail"))]
     WorkaroundStep {
         label: "patch_container_frame_token_tracker",
         apply: patch_container_frame_token_tracker,
@@ -153,10 +147,6 @@ const POST_LOAD_WORKAROUNDS: &[WorkaroundStep] = &[
     WorkaroundStep {
         label: "patch_lfg_lock_list",
         apply: patch_lfg_lock_list,
-    },
-    WorkaroundStep {
-        label: "patch_auction_house_browse_results_event",
-        apply: patch_auction_house_browse_results_event_from_env,
     },
     WorkaroundStep {
         label: "patch_auction_house_search_context_aliases",
@@ -194,6 +184,20 @@ pub(crate) fn apply_permanent_bootstrap(lua: &mut rilua::Lua) -> crate::Result<(
 pub(crate) fn apply_temporary_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     apply_temporary_state_bootstrap(lua)?;
     apply_temporary_namespace_bootstrap(lua)
+}
+
+pub(crate) fn update_adventureguide_for_screen(
+    lua: &mut rilua::Lua,
+    screen: crate::screen::ScreenKind,
+) -> crate::Result<()> {
+    temporary::adventure_journal_fallbacks::update_for_screen_mode(lua, screen)
+}
+
+pub(crate) fn update_player_location_for_screen(
+    lua: &mut rilua::Lua,
+    screen: crate::screen::ScreenKind,
+) -> crate::Result<()> {
+    temporary::player_location_defaults::update_for_screen_mode(lua, screen)
 }
 
 fn apply_temporary_state_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
@@ -359,7 +363,6 @@ fn apply_core_foundation_state_defaults(lua: &mut rilua::Lua) -> crate::Result<(
     temporary::tooltip_data_processor_defaults::apply_bootstrap(lua)?;
     #[cfg(not(feature = "client-wrath"))]
     temporary::startup_service_capability_defaults::apply_bootstrap(lua)?;
-    temporary::ui_widget_manager_defaults::apply_bootstrap(lua)?;
     Ok(())
 }
 
@@ -451,7 +454,6 @@ fn apply_feature_progression_defaults(lua: &mut rilua::Lua) -> crate::Result<()>
     temporary::quest_progress_requirements::apply_bootstrap(lua)?;
     temporary::reincarnation_defaults::apply_bootstrap(lua)?;
     temporary::scenario_defaults::apply_bootstrap(lua)?;
-    temporary::seconds_formatter_defaults::apply_bootstrap(lua)?;
     temporary::scripted_animation_effect_defaults::apply_bootstrap(lua)?;
     temporary::shared_xml_utility_defaults::apply_bootstrap(lua)?;
     temporary::spell_book_static_defaults::apply_bootstrap(lua)
@@ -459,7 +461,6 @@ fn apply_feature_progression_defaults(lua: &mut rilua::Lua) -> crate::Result<()>
 
 fn apply_feature_model_defaults(lua: &mut rilua::Lua) -> crate::Result<()> {
     temporary::sound_driver_defaults::apply_bootstrap(lua)?;
-    temporary::static_model_info_defaults::apply_bootstrap(lua)?;
     temporary::static_popup_defaults::apply_bootstrap(lua)?;
     temporary::taxi_map_defaults::apply_bootstrap(lua)?;
     temporary::texture_file_data_defaults::apply_bootstrap(lua)?;
@@ -474,7 +475,6 @@ fn apply_feature_ui_defaults(lua: &mut rilua::Lua) -> crate::Result<()> {
     temporary::trade_skill_ui_fallbacks::apply_bootstrap(lua)?;
     temporary::transmog_util_defaults::apply_bootstrap(lua)?;
     temporary::campaign_covenant_defaults::apply_bootstrap(lua)?;
-    temporary::ui_parent_panel_toggles::apply_bootstrap(lua)?;
     temporary::ui_frame_manager_defaults::apply_bootstrap(lua)
 }
 
@@ -594,6 +594,7 @@ fn patch_post_event_frame_layout(env: &crate::lua_api::WowLuaEnv) {
 }
 
 fn refresh_post_event_surfaces(env: &crate::lua_api::WowLuaEnv) {
+    #[cfg(not(feature = "client-retail"))]
     refresh_character_frame_surface(env);
     patch_chat_voice_button_surface(env);
     patch_objective_tracker_quest_header(env);
@@ -617,6 +618,7 @@ fn patch_runtime_core_addon_surfaces(env: &crate::lua_api::LoaderEnv<'_>, addon_
     ) {
         temporary::chat_voice_button_surface::patch_loader(env);
     }
+    #[cfg(not(feature = "client-retail"))]
     if addon_name == "Blizzard_PagedContent" {
         temporary::paging_controls_page_text::patch_loader(env);
     }
@@ -637,11 +639,9 @@ fn patch_runtime_core_addon_surfaces(env: &crate::lua_api::LoaderEnv<'_>, addon_
 
 fn patch_runtime_journal_addon_surfaces(env: &crate::lua_api::LoaderEnv<'_>, addon_name: &str) {
     if addon_name == "Blizzard_Collections" {
+        #[cfg(not(feature = "client-retail"))]
         patch_toggle_collections_journal_for_runtime_addon_load(env);
         temporary::collections_journal_namespace::patch(env);
-    }
-    if addon_name == "Blizzard_EncounterJournal" {
-        patch_toggle_encounter_journal_for_runtime_addon_load(env);
     }
     if addon_name == "Blizzard_AdventureMap" {
         ensure_adventure_map_frame_surface_for_runtime_addon_load(env);
@@ -661,7 +661,11 @@ fn patch_runtime_feature_addon_surfaces(env: &crate::lua_api::LoaderEnv<'_>, add
     if addon_name == "Blizzard_AuthChallengeUI" {
         patch_auth_challenge_frame_parent(env);
     }
-    if addon_name == "Blizzard_AccountStore" {
+    // Retail's TOC loads Blizzard_AccountStore.lua before the frame XML.
+    // Preserve its setter: it updates the title and emits StoreFrontSet.
+    if addon_name == "Blizzard_AccountStore"
+        && crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail
+    {
         let _ = patch_account_store_set_storefront(env);
     }
     if addon_name == "Blizzard_CatalogShop" {
@@ -673,8 +677,6 @@ fn patch_runtime_feature_addon_surfaces(env: &crate::lua_api::LoaderEnv<'_>, add
 }
 
 fn patch_auction_house_runtime_surface(env: &crate::lua_api::LoaderEnv<'_>) {
-    patch_auction_house_categories_refresh_count(env);
-    patch_auction_house_browse_results_event(env);
     patch_auction_house_search_context_aliases(env);
 }
 
@@ -691,7 +693,6 @@ fn patch_runtime_map_addon_surfaces(env: &crate::lua_api::LoaderEnv<'_>, addon_n
     ) {
         patch_fog_of_war_pin_mixin_for_runtime_addon_load(env);
         patch_map_exploration_pin_mixin_for_runtime_addon_load(env);
-        patch_map_canvas_data_provider_attachment_for_runtime_addon_load(env);
     }
 }
 
@@ -828,6 +829,18 @@ mod tests {
         assert!(
             opened_canvas_visible_others_hidden,
             "opening a settings category should show only that category's canvas"
+        );
+    }
+}
+
+#[cfg(all(test, feature = "client-retail"))]
+mod retail_token_tracker_ownership_tests {
+    #[test]
+    fn original_startup_owns_token_tracker_without_repair_registration() {
+        assert!(
+            super::POST_LOAD_WORKAROUNDS
+                .iter()
+                .all(|step| step.label != "patch_container_frame_token_tracker")
         );
     }
 }

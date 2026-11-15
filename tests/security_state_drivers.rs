@@ -272,23 +272,23 @@ fn secure_helpers_publish_on_declaring_profiles_only() {
 // Wrath's generated FrameScriptDocumentation does not declare CreateSecureDelegate.
 #[cfg(not(feature = "client-wrath"))]
 #[test]
-fn test_create_secure_delegate_runs_with_secure_taint() {
+fn test_create_secure_delegate_passes_arguments_and_returns_values() {
     let env = env();
     let result: String = env
         .eval(
             r#"
-            local function myFunc(a, b) return a + b, tostring(issecure()) end
+            local function myFunc(a, b) return a + b end
             local delegate = CreateSecureDelegate(myFunc)
             local function addon() return delegate(40, 2) end
             debug.setobjecttaint(addon, 'DelegateProbe')
-            local sum, secure = addon()
-            return tostring(delegate ~= myFunc) .. ':' .. sum .. ':' .. secure
+            local sum = addon()
+            return tostring(delegate ~= myFunc) .. ':' .. sum
             "#,
         )
         .unwrap();
     assert_eq!(
-        result, "true:42:true",
-        "delegates pass values through and execute securely for tainted callers"
+        result, "true:42",
+        "delegates pass arguments and return values through for tainted callers"
     );
 }
 

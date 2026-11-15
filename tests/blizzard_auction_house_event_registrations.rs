@@ -14,8 +14,7 @@ local function expect(condition, message)
     end
 end
 
-local requiredEvents = {
-    "AUCTION_HOUSE_BROWSE_RESULTS_UPDATED",
+local requiredFrameEvents = {
     "ITEM_SEARCH_RESULTS_UPDATED",
     "COMMODITY_SEARCH_RESULTS_UPDATED",
     "OWNED_AUCTIONS_UPDATED",
@@ -26,17 +25,35 @@ local requiredEvents = {
 }
 
 AuctionHouseFrame:Show()
+local browseResults = AuctionHouseFrame.BrowseResultsFrame
+local itemBuy = AuctionHouseFrame.ItemBuyFrame
+browseResults:Show()
+itemBuy:SetItemKey(C_AuctionHouse.MakeItemKey(210935, 70))
+itemBuy:Show()
 
-for _, eventName in ipairs(requiredEvents) do
+for _, eventName in ipairs(requiredFrameEvents) do
     expect(AuctionHouseFrame:IsEventRegistered(eventName),
            "AuctionHouseFrame must register " .. eventName .. " after Show")
 end
+
+local browseEvent = "AUCTION_HOUSE_BROWSE_RESULTS_UPDATED"
+expect(not AuctionHouseFrame:IsEventRegistered(browseEvent),
+       "AuctionHouseFrame must not own browse-results updates")
+expect(browseResults:IsEventRegistered(browseEvent),
+       "BrowseResultsFrame must register browse-results updates on load")
+expect(itemBuy:IsEventRegistered(browseEvent),
+       "ItemBuyFrame must register browse-results updates while shown")
+
+itemBuy:Hide()
+expect(not itemBuy:IsEventRegistered(browseEvent),
+       "ItemBuyFrame must unregister browse-results updates when hidden")
 
 return table.concat(failures, "\n")
 "#;
 
 #[test]
-fn auction_house_frame_registers_runtime_events_after_show() {
+#[cfg(all(feature = "optional-tests", feature = "client-retail"))]
+fn auction_house_browse_updates_are_registered_by_the_subframes() {
     common::with_perf_lock(|| {
         common::with_timeout(240, || {
             let env = common::panel_fixtures::setup_env();

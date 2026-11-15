@@ -274,6 +274,56 @@ fn blizzard_deprecated_spell_book_load_deprecation_fallbacks_cvar_is_default_on(
 }
 }
 
+#[cfg(all(feature = "client-retail", feature = "optional-tests"))]
+#[test]
+fn deprecated_spell_book_wrapper_fallbacks_follow_original_cvar_gate() {
+    let env = WowLuaEnv::new().expect("Failed to create Lua environment");
+    env.set_screen_mode(ScreenKind::Game);
+
+    let ui = blizzard_ui_dir();
+    env.state().borrow_mut().addon_base_paths = vec![ui.clone()];
+    env.exec("SetCVar('loadDeprecationFallbacks', '0')")
+        .expect("fixture should disable Blizzard's deprecated spell wrappers");
+
+    let toc = deprecated_spell_book_toc();
+    load_addon(&env.loader_env(), &toc)
+        .expect("selected Blizzard deprecated spellbook addon should load");
+
+    let (loaded, cvar_disabled, fallbacks_absent, existing_global_callable): (
+        bool,
+        bool,
+        bool,
+        bool,
+    ) = env
+        .eval(
+            r#"
+            return C_AddOns.IsAddOnLoaded("Blizzard_DeprecatedSpellBook"),
+                   not GetCVarBool("loadDeprecationFallbacks"),
+                   IsPlayerSpell == nil
+                       and FindFlyoutSlotBySpellID == nil
+                       and FindSpellOverrideByID == nil
+                       and FindBaseSpellByID == nil,
+                   type(IsSpellKnownOrOverridesKnown) == "function"
+                       and type(IsSpellKnownOrOverridesKnown(116)) == "boolean"
+            "#,
+        )
+        .expect("deprecated spell wrapper state should be readable");
+
+    assert!(loaded, "the selected original addon ran");
+    assert!(
+        cvar_disabled,
+        "the original deprecation-fallback CVar stays off"
+    );
+    assert!(
+        fallbacks_absent,
+        "the four bootstrap-only globals stay absent when their selected owner declines to publish them"
+    );
+    assert!(
+        existing_global_callable,
+        "the existing IsSpellKnownOrOverridesKnown global remains available"
+    );
+}
+
 #[test]
 fn blizzard_deprecated_spell_book_has_no_xml_or_other_assets() {
     let dir = blizzard_ui_dir().join("Blizzard_DeprecatedSpellBook");

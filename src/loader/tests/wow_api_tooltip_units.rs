@@ -168,6 +168,13 @@ fn test_c_tooltip_info_get_world_loot_object_returns_spell_tooltip_with_world_lo
 #[test]
 fn test_c_tooltip_info_get_action_returns_spell_tooltip_for_spell_slots() {
     let env = WowLuaEnv::new().unwrap();
+    // R81 Q2: keep the original cost/cast positions using final host helper outputs.
+    {
+        let mut sim = env.state().borrow_mut();
+        let input = sim.spell_tooltip_inputs.entry(19750).or_default();
+        input.cost = Some("host MANA cost".into());
+        input.cast_ms = Some(1500);
+    }
     let has_expected_tooltips: bool = env
         .eval(
             r#"

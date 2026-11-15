@@ -591,6 +591,9 @@ fn apply_runtime_child_direct_properties_with_inherits(
     crate::lua_api::globals::template::direct::apply_xml_editbox_attributes(
         state, frame_id, frame, inherits,
     );
+    crate::lua_api::globals::template::direct::apply_xml_text_insets(
+        state, frame_id, frame, inherits,
+    );
     crate::lua_api::globals::template::direct::apply_xml_message_frame_attributes(
         state, frame_id, frame, inherits,
     );

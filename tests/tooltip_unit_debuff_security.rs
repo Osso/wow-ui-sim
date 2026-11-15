@@ -111,7 +111,7 @@ const ASSERTIONS: &str = r#"
         assert(data.lines[1].type == Enum.TooltipDataLineType.SpellName)
         assert(data.lines[1].leftText == name, 'concrete host aura identity')
         assert(data.lines[2].type == Enum.TooltipDataLineType.SpellName)
-        assert(data.lines[2].leftText == '1 hr', '3600s fixture; existing builder limitation')
+        assert(data.lines[2].leftText == 'host aura time', 'R81 Q4: supplied final display text')
         assert(data.lines[3].type == Enum.TooltipDataLineType.SpellDescription)
         assert(type(data.lines[3].leftText) == 'string' and #data.lines[3].leftText > 0)
         assert(data.lines[3].wrapText == true)
@@ -166,6 +166,14 @@ fn fixture_env() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("real tooltip namespace");
     {
         let mut state = env.state().borrow_mut();
+        // R81 Q4: preserve payload/security checks with explicit remaining text.
+        for id in [101, 102, 103, 200, 201, 202] {
+            state
+                .aura_tooltip_inputs
+                .entry(id)
+                .or_default()
+                .remaining_text = Some("host aura time".into());
+        }
         state.party_group_active = true;
         state.player.buffs = vec![
             aura(101, "Player helpful sentinel", true, true),

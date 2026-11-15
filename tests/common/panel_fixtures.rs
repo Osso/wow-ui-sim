@@ -67,7 +67,38 @@ pub const PANEL_ADDONS: &[&str] = &[
     "Blizzard_UnitFrame",
     "Blizzard_TokenUI",
     "Blizzard_Minimap",
+    // Forever EditModeSystemTemplates.lua:2467 reaches QueueStatusButton
+    // during action-bar transitions; QueueStatusFrame.toc is an eager root.
+    #[cfg(feature = "client-wowforever")]
+    "Blizzard_QueueStatusFrame",
 ];
+
+/// Retail's eager CatalogShop owns the interface read by ShowUIPanel. The
+/// pinned Game TOC declares SharedXML (already loaded), SharedUtil and
+/// SharedTemplates; Glue-only dependencies do not belong in this fixture.
+pub fn load_retail_catalog_shop(env: &WowLuaEnv, ui: &std::path::Path) {
+    if wow_ui_sim::client_profile::ACTIVE != wow_ui_sim::client_profile::ClientProfile::Retail {
+        return;
+    }
+    for name in [
+        "Blizzard_CatalogShopSharedUtil",
+        "Blizzard_CatalogShopSharedTemplates",
+        "Blizzard_CatalogShop",
+    ] {
+        crate::common::load_required_blizzard_addon(env, ui, name);
+    }
+    env.exec(
+        r#"
+        for _, name in ipairs({"IsShown", "SetShown"}) do
+            local info = debug.getinfo(CatalogShopInboundInterface[name], "S")
+            assert(info and info.source:find(
+                "Blizzard_CatalogShop/Blizzard_CatalogShop_Inbound.lua", 1, true),
+                "panel fixture requires original eager CatalogShop owner: " .. name)
+        end
+        "#,
+    )
+    .expect("Retail panel fixture must load original CatalogShop inbound publisher");
+}
 
 /// INFERRED eager root: native CharacterFrame hides TokenFrame on every tab switch.
 /// TokenUI has no LoadOnDemand directive in the native inventory.
@@ -78,7 +109,13 @@ pub fn load_wrath_panel_core(env: &WowLuaEnv) {
 }
 
 pub fn setup_env() -> WowLuaEnv {
+    setup_env_with_inputs(|_| {})
+}
+
+/// Supply host state or pass-through observers before Blizzard captures APIs.
+pub fn setup_env_with_inputs(supply: impl FnOnce(&WowLuaEnv)) -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
+    supply(&env);
     env.set_screen_size(1024.0, 768.0);
 
     seed_addon_search_paths(&env);

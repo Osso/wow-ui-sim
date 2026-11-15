@@ -3,8 +3,6 @@
 use super::ensure_namespace;
 use crate::lua_api::methods::{borrow_state, borrow_state_mut};
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
-#[cfg(feature = "retail-12-0-5")]
-use rilua::table_security::is_secret_value;
 use rilua::table_security::unwrap_secret;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
@@ -94,7 +92,7 @@ mod hit_test {
     #[derive(Debug, Default)]
     pub(crate) struct NamePlateHitTestInsets {
         // Inferred empty default, not a native-observed initial configuration.
-        by_type: [[f64; 4]; 2],
+        by_type: [[f32; 4]; 2],
     }
 
     pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
@@ -113,7 +111,7 @@ mod hit_test {
         )
     }
 
-    fn parse_name_plate_type(value: Val) -> LuaResult<usize> {
+    fn parse_get_name_plate_type(value: Val) -> LuaResult<usize> {
         match value {
             Val::Num(0.0) => Ok(0), // Enum.NamePlateType.Friendly
             Val::Num(1.0) => Ok(1), // Enum.NamePlateType.Enemy
@@ -126,48 +124,97 @@ mod hit_test {
     fn get_name_plate_hit_test_insets(state: &mut LuaState) -> LuaResult<u32> {
         // VM authentication implements AllowedWhenUntainted without clearing taint.
         let value = unwrap_secret(state, stack_val(state, 1))?;
-        let kind = parse_name_plate_type(value)?;
+        let kind = parse_get_name_plate_type(value)?;
         let insets = borrow_state(state)?.nameplate_hit_test_insets.by_type[kind];
         for value in insets {
-            state.push(Val::Num(value));
+            state.push(Val::Num(f64::from(value)));
         }
         Ok(4)
     }
 
-    fn require_setter_access(state: &LuaState) -> LuaResult<()> {
-        for index in 1..=5 {
-            if is_secret_value(state, stack_val(state, index)) {
-                return Err(rilua::runtime_error(
-                    "SetNamePlateHitTestInsets does not allow secret arguments",
-                ));
-            }
+    const UI_UNIT_SCALE: f32 = 1.0_f32 / 1024.0_f32;
+    const NAMEPLATE_INSET_SCALE: f32 = 0.8_f32;
+
+    fn parse_set_name_plate_type(state: &LuaState, value: Val) -> LuaResult<usize> {
+        if matches!(value, Val::Nil) {
+            return Err(rilua::runtime_error("NamePlateType is required"));
         }
-        // Inferred ordinary HasRestrictions policy, not native-verified access rules.
-        if !rilua::api::state_is_secure(state) {
+        let Some(number) = coerce_number(state, value) else {
+            return Ok(0);
+        };
+        if !number.is_finite() {
             return Err(rilua::runtime_error(
-                "SetNamePlateHitTestInsets requires an untainted caller",
+                "NamePlateType is outside the signed 32-bit range",
             ));
         }
-        Ok(())
+        if number < f64::from(i32::MIN) || number > f64::from(i32::MAX) {
+            return Err(rilua::runtime_error(
+                "NamePlateType is outside the signed 32-bit range",
+            ));
+        }
+        let signed_value = number as i32;
+        let low_byte = signed_value as u8;
+        match low_byte {
+            0 => Ok(0), // Enum.NamePlateType.Friendly
+            1 => Ok(1), // Enum.NamePlateType.Enemy
+            _ => Err(rilua::runtime_error(
+                "NamePlateType must be Friendly (0) or Enemy (1)",
+            )),
+        }
     }
 
-    fn read_inset(state: &LuaState, index: i32) -> LuaResult<f64> {
-        let Val::Num(value) = stack_val(state, index) else {
-            return Err(rilua::runtime_error(format!(
-                "SetNamePlateHitTestInsets argument {index} must be a finite number",
-            )));
-        };
-        if !value.is_finite() {
-            return Err(rilua::runtime_error(format!(
-                "SetNamePlateHitTestInsets argument {index} must be a finite number",
-            )));
+    fn coerce_number(state: &LuaState, value: Val) -> Option<f64> {
+        match value {
+            Val::Num(number) => Some(number),
+            Val::Str(_) => {
+                let text = crate::lua_api::methods::val_to_string(state, value)?;
+                parse_lua_number(&text)
+            }
+            _ => None,
         }
-        Ok(value)
+    }
+
+    fn parse_lua_number(text: &str) -> Option<f64> {
+        let text = text.trim_matches(|character: char| character.is_ascii_whitespace());
+        let (sign, unsigned) = if let Some(unsigned) = text.strip_prefix('-') {
+            (-1.0, unsigned)
+        } else if let Some(unsigned) = text.strip_prefix('+') {
+            (1.0, unsigned)
+        } else {
+            (1.0, text)
+        };
+        if let Some(hex) = unsigned
+            .strip_prefix("0x")
+            .or_else(|| unsigned.strip_prefix("0X"))
+        {
+            return u64::from_str_radix(hex, 16)
+                .ok()
+                .map(|number| sign * number as f64);
+        }
+        text.parse().ok()
+    }
+
+    fn read_inset(state: &LuaState, index: i32) -> LuaResult<f32> {
+        let value = coerce_number(state, stack_val(state, index)).ok_or_else(|| {
+            rilua::runtime_error(format!(
+                "SetNamePlateHitTestInsets argument {index} must be a number",
+            ))
+        })?;
+        let value = value as f32;
+        Ok(value * UI_UNIT_SCALE * NAMEPLATE_INSET_SCALE)
     }
 
     fn set_name_plate_hit_test_insets(state: &mut LuaState) -> LuaResult<u32> {
-        require_setter_access(state)?;
-        let kind = parse_name_plate_type(stack_val(state, 1))?;
+        // VERIFIED (Retail 12.1.5.70688): HasRestrictions blocks only when source
+        // metadata and a restriction-state pointer exist, and its permission is false.
+        // VERIFIED (Retail 12.1.5.70688): A secret argument passes when unmarked or
+        // when that pointer is null. With a mark and pointer, mode 0 denies, mode 1
+        // denies only for nonzero source metadata, and other modes allow.
+        // VERIFIED (Retail 12.1.5.70688): The exact native denial reason is:
+        // "Usage: C_NamePlateManager.SetNamePlateHitTestInsets(type, left, right, top, bottom). Secret values are not allowed for this argument."
+        // UNKNOWN in simulator: neither conditional access rule is modeled. The
+        // meaning of the native permission value is also UNKNOWN.
+        let kind = parse_set_name_plate_type(state, stack_val(state, 1))?;
         let insets = [
             read_inset(state, 2)?,
             read_inset(state, 3)?,

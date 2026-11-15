@@ -195,21 +195,53 @@ fn test_spellbook_has_pet_spells() {
     assert!(!has);
 }
 
+#[cfg(feature = "client-retail")]
 #[test]
-fn test_get_call_pet_spell_info_defaults_to_no_pet_spell() {
+fn get_call_pet_spell_info_non_numeric_input_uses_verified_usage() {
     let env = env();
-    let (is_function, first_is_nil, second_is_nil): (bool, bool, bool) = env
+    let (succeeded, error): (bool, String) = env
         .eval(
             r#"
-            local spellID, texture = GetCallPetSpellInfo(1)
-            return type(GetCallPetSpellInfo) == "function", spellID == nil, texture == nil
+            local succeeded, message = pcall(GetCallPetSpellInfo, "not-a-number")
+            return succeeded, tostring(message)
             "#,
         )
         .unwrap();
 
-    assert!(is_function);
-    assert!(first_is_nil);
-    assert!(second_is_nil);
+    assert!(!succeeded);
+    assert_eq!(error, "Usage: GetCallPetSpellInfo(spellID)");
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn selected_spellbook_item_invalid_numeric_slot_has_verified_zero_value_arity() {
+    let env = env();
+    let result_count: i32 = env
+        .eval(r##"return select("#", IsSelectedSpellBookItem(0, "player"))"##)
+        .unwrap();
+
+    assert_eq!(result_count, 0);
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn selected_spellbook_item_past_player_fixture_has_verified_zero_value_arity() {
+    let env = env();
+    // The slot is chosen from the simulator's contiguous player-book fixture;
+    // this does not claim that the same numeric slot is absent in native data.
+    let result_count: i32 = env
+        .eval(
+            r##"
+            local slot = 1
+            while C_SpellBook.GetSpellBookItemInfo(slot, Enum.SpellBookSpellBank.Player) do
+                slot = slot + 1
+            end
+            return select("#", IsSelectedSpellBookItem(slot, "player"))
+            "##,
+        )
+        .unwrap();
+
+    assert_eq!(result_count, 0);
 }
 
 #[test]
@@ -247,24 +279,6 @@ fn test_spellbook_namespace_functions_survive_gc() {
 }
 
 #[test]
-fn test_spellbook_get_override_spell() {
-    let env = env();
-    let id: i32 = env.eval("return C_SpellBook.GetOverrideSpell(42)").unwrap();
-    assert_eq!(id, 42, "GetOverrideSpell should return the same ID");
-}
-
-#[test]
-fn test_spellbook_get_item_auto_cast_defaults_disabled() {
-    let env = env();
-    let (enabled, auto_cast_allowed): (bool, bool) = env
-        .eval("return C_SpellBook.GetSpellBookItemAutoCast(1, Enum.SpellBookSpellBank.Player)")
-        .unwrap();
-
-    assert!(!enabled);
-    assert!(!auto_cast_allowed);
-}
-
-#[test]
 fn test_spellbook_is_spell_known() {
     let env = env();
     let known: bool = env.eval("return C_SpellBook.IsSpellKnown(1)").unwrap();
@@ -298,51 +312,137 @@ fn test_spellbook_pickup_item_fires_cursor_changed() {
     );
 }
 
+#[cfg(feature = "client-retail")]
 #[test]
-fn test_spellbook_get_loss_of_control_cooldown_info() {
+fn spellbook_lookup_arguments_match_verified_conversion_and_errors() {
     let env = env();
-    let spell_id: i32 = env
-        .eval("return C_SpellBook.GetSpellBookItemInfo(5, 0).spellID")
-        .expect("actual player-bank slot 5 should have a spell");
-    assert_eq!(spell_id, 19750);
-    env.state().borrow_mut().spell_loss_of_control.insert(
-        spell_id.try_into().expect("positive fixture spell ID"),
-        wow_ui_sim::lua_api::LossOfControlInfo {
-            start_time: 0.0,
-            duration: 0.0,
-            mod_rate: 1.0,
-            is_active: false,
-            should_replace_normal_cooldown: false,
-        },
-    );
-    let result: String = env
+    let result: bool = env
         .eval(
             r#"
-            local info = C_SpellBook.GetSpellBookItemLossOfControlCooldownInfo(5, Enum.SpellBookSpellBank.Player)
-            if type(info) ~= "table" then
-                return "expected_loc_info_table"
+            local methods = {
+                {
+                    C_SpellBook.FindSpellOverrideByID,
+                    "Usage: local overrideSpellID = C_SpellBook.FindSpellOverrideByID(spellID)",
+                },
+                {
+                    C_SpellBook.FindFlyoutSlotBySpellID,
+                    "Usage: local flyoutSlot = C_SpellBook.FindFlyoutSlotBySpellID(spellID)",
+                },
+                {
+                    C_SpellBook.FindBaseSpellByID,
+                    "Usage: local baseSpellID = C_SpellBook.FindBaseSpellByID(spellID)",
+                },
+            }
+            for _, method in ipairs(methods) do
+                local missingOK, missingError = pcall(method[1])
+                if missingOK or not string.find(tostring(missingError), method[2], 1, true) then
+                    return false
+                end
+                local invalidOK, invalidError = pcall(method[1], true)
+                if invalidOK
+                    or not string.find(tostring(invalidError), "outside of expected range", 1, true)
+                    or not string.find(tostring(invalidError), method[2], 1, true) then
+                    return false
+                end
+                if not pcall(method[1], "116.9", {}, "ignored") then
+                    return false
+                end
             end
-            if info.isActive ~= false then
-                return "expected_inactive_loc_info"
-            end
-            if info.startTime ~= 0 or info.duration ~= 0 then
-                return "expected_zero_loc_cooldown"
-            end
-            if info.modRate ~= 1 then
-                return "expected_default_loc_mod_rate"
-            end
-            if info.shouldReplaceNormalCooldown ~= false then
-                return "expected_loc_not_to_replace_normal_cooldown"
-            end
-            if C_SpellBook.GetSpellBookItemLossOfControlCooldownInfo(9999, Enum.SpellBookSpellBank.Player) ~= nil then
-                return "invalid_spellbook_slot_should_not_have_loc_info"
-            end
-            return "ok"
+            return true
             "#,
         )
         .unwrap();
 
-    assert_eq!(result, "ok");
+    assert!(result);
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn spellbook_item_arguments_match_verified_two_argument_conversion_and_errors() {
+    let env = env();
+    let result: bool = env
+        .eval(
+            r#"
+            local methods = {
+                {
+                    C_SpellBook.GetSpellBookItemAutoCast,
+                    "Usage: local autoCastAllowed, autoCastEnabled = C_SpellBook.GetSpellBookItemAutoCast(spellBookItem)",
+                },
+                {
+                    C_SpellBook.GetSpellBookItemLossOfControlCooldownInfo,
+                    "Usage: local lossOfControlInfo = C_SpellBook.GetSpellBookItemLossOfControlCooldownInfo(spellBookItem)",
+                },
+            }
+            for _, method in ipairs(methods) do
+                local missingSlotOK, missingSlotError = pcall(method[1])
+                if missingSlotOK or not string.find(tostring(missingSlotError), method[2], 1, true) then
+                    return false
+                end
+                local missingBankOK, missingBankError = pcall(method[1], 1)
+                if missingBankOK or not string.find(tostring(missingBankError), method[2], 1, true) then
+                    return false
+                end
+                local invalidBankOK, invalidBankError = pcall(method[1], 1, 2)
+                if invalidBankOK or not string.find(tostring(invalidBankError), method[2], 1, true) then
+                    return false
+                end
+                local invalidSlotOK, invalidSlotError = pcall(method[1], 4294967296, 0)
+                if invalidSlotOK or not string.find(tostring(invalidSlotError), method[2], 1, true) then
+                    return false
+                end
+                if not pcall(method[1], "5.9", "0.9", "ignored") then
+                    return false
+                end
+                for _, slot in ipairs({0, 4294967295}) do
+                    local ok, result = pcall(method[1], slot, 0)
+                    if not ok and string.find(tostring(result), "outside of expected range", 1, true) then
+                        return false
+                    end
+                end
+            end
+            return true
+            "#,
+        )
+        .unwrap();
+
+    assert!(result);
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn spellbook_flyout_lookup_miss_returns_one_numeric_zero() {
+    let env = env();
+    let result: (i32, String, i32) = env
+        .eval(
+            r##"
+            local count = select("#", C_SpellBook.FindFlyoutSlotBySpellID(0))
+            local value = C_SpellBook.FindFlyoutSlotBySpellID(0)
+            return count, type(value), value or -1
+            "##,
+        )
+        .expect("flyout lookup miss should be callable");
+
+    assert_eq!(result, (1, "number".to_string(), 0));
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn spellbook_autocast_supported_item_returns_two_false_booleans_without_flag_data() {
+    let env = env();
+    let result: (bool, i32, bool, bool, bool, bool) = env
+        .eval(
+            r##"
+            local item = C_SpellBook.GetSpellBookItemInfo(1, Enum.SpellBookSpellBank.Player)
+            local count = select("#", C_SpellBook.GetSpellBookItemAutoCast(1, Enum.SpellBookSpellBank.Player))
+            local allowed, enabled = C_SpellBook.GetSpellBookItemAutoCast(1, Enum.SpellBookSpellBank.Player)
+            return type(item) == "table", count,
+                   type(allowed) == "boolean", type(enabled) == "boolean",
+                   allowed, enabled
+            "##,
+        )
+        .expect("autocast query for a spellbook record should be callable");
+
+    assert_eq!(result, (true, 2, true, true, false, false));
 }
 
 // ============================================================================

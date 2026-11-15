@@ -1,6 +1,6 @@
-# PTR/Retail Store API availability
+# Store API availability
 
-`C_StorePublic.IsEnabled()` and `C_CatalogShop.IsShop2Enabled()` report the two store availability inputs used by the shipped GameMenu. This contract covers PTR 12.1.7 and the limited Retail 12.1.5 comparison in R38. See the [state model](../wiki/systems/store-api-availability.md).
+`C_StorePublic.IsEnabled()` and `C_CatalogShop.IsShop2Enabled()` report the two store availability inputs used by the shipped GameMenu. This contract covers PTR 12.1.7 and the limited Retail 12.1.5 comparison in R38, plus the narrow Forever 1.60.1 `IsEnabled` contract in R87 (tracker lt-6cee). See the [state model](../wiki/systems/store-api-availability.md).
 
 ## What it must do
 
@@ -46,3 +46,20 @@
 ## Out of scope
 
 Purchase transactions, account entitlements, server message transport, and legacy global `GetCVar` parity are not modeled by this contract.
+
+## Forever IsEnabled (R87, lt-6cee)
+
+- VERIFIED: Forever `C_StorePublic.IsEnabled()` reads only the server-mirrored
+  `bpayStoreEnable` input; its registered default is `0` (`false`).
+- VERIFIED: the function is registered in both Game and Glue environments.
+- The shared Rust query serves Retail, PTR and Forever. The old guessed `true`
+  fallback is not installed on those profiles. It remains unchanged for Mists,
+  Era, Anniversary and Wrath, which have no R87 evidence.
+- R87 does not establish Forever `shop2Enabled`, update events, argument errors,
+  or Lua CVar visibility. This change does not extend R38's claims to those paths.
+- The host setter supplies `bpayStoreEnable` without adding Forever event policy.
+  Tests cover the default and `false -> true -> false` values in Game and Glue,
+  plus the absence of the obsolete bootstrap fallback on evidenced profiles.
+
+Evidence: lt-6cee task description, R87 decompiled Retail 12.1.5 / Forever 1.60.1
+findings marked VERIFIED by the coordinator. No decompiled source was read here.

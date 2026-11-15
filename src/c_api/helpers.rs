@@ -23,14 +23,12 @@ pub(crate) fn bad_argument(index: i32, function: &str, reason: &str) -> rilua::L
     rilua::runtime_error(format!("bad argument #{index} to '{function}' ({reason})"))
 }
 
-/// Native shared signed 32-bit converter (WM87, WM88) for AllowedWhenUntainted
-/// arguments: required, inclusive bounds checked before truncation.
-pub(crate) fn read_untainted_signed32_argument(
+fn read_untainted_value(
     state: &LuaState,
     index: i32,
     function: &str,
     usage: &str,
-) -> LuaResult<i32> {
+) -> LuaResult<(Val, bool)> {
     let original = crate::lua_bridge::stack_val(state, index);
     if matches!(original, Val::Nil) {
         return Err(bad_argument(index, function, usage));
@@ -42,6 +40,18 @@ pub(crate) fn read_untainted_signed32_argument(
         );
         bad_argument(index, function, &denied)
     })?;
+    Ok((value, marked))
+}
+
+/// Read one required, untainted value using the shared argument-error format.
+/// The signed-32 and truthiness converters use this same absence and access path.
+pub(crate) fn read_untainted_signed32_argument(
+    state: &LuaState,
+    index: i32,
+    function: &str,
+    usage: &str,
+) -> LuaResult<i32> {
+    let (value, marked) = read_untainted_value(state, index, function, usage)?;
     let number = match value {
         Val::Num(number) => Some(number),
         Val::Str(reference) if !marked => state
@@ -64,6 +74,20 @@ pub(crate) fn read_untainted_signed32_argument(
         .filter(in_range)
         .map(|number| number.trunc() as i32)
         .ok_or_else(range_error)
+}
+
+#[cfg(feature = "client-retail")]
+pub(crate) fn read_untainted_truthy_argument(
+    state: &LuaState,
+    index: i32,
+    function: &str,
+    usage: &str,
+) -> LuaResult<bool> {
+    let (value, _) = read_untainted_value(state, index, function, usage)?;
+    if matches!(value, Val::Nil) {
+        return Err(bad_argument(index, function, usage));
+    }
+    Ok(!matches!(value, Val::Bool(false)))
 }
 
 /// Reject nonnumeric inputs; unrepresented numeric identities cannot match supplied rows.
@@ -165,4 +189,18 @@ pub(crate) fn set_table_array(state: &mut LuaState, table: Val, index: i64, valu
         let _ = table.raw_set(Val::Num(index as f64), value, &state.gc.string_arena);
     }
     state.gc.barrier_back(table_ref);
+}
+
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
+pub(crate) fn parse_replacement(state: &LuaState, value: Val, api: &str) -> LuaResult<String> {
+    if value == Val::Nil {
+        return Ok("*".to_owned());
+    }
+    crate::lua_api::methods::val_to_string(state, value)
+        .filter(|text| !text.contains('\0'))
+        .ok_or_else(|| {
+            rilua::runtime_error(format!(
+                "{api}: argument 3 requires a UTF-8 NUL-free string or nil"
+            ))
+        })
 }

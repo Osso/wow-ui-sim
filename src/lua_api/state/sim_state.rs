@@ -8,6 +8,10 @@ pub(crate) struct RegisteredLoadWith {
 }
 
 pub struct SimState {
+    pub hyperlink_tooltip: crate::c_api::c_tooltip_info_hyperlink::inputs::HyperlinkTooltipInputs,
+    /// INFERRED host input for the opaque crafting-UI helper; not player state.
+    pub trade_skill_crafting_ui_inputs:
+        crate::c_api::c_trade_skill_crafting_ui::TradeSkillCraftingUiInputs,
     /// Selected loot specialization; zero follows the active specialization.
     pub loot_specialization: u32,
     pub(crate) loot_spec_window: Option<(std::time::Instant, u8)>,
@@ -28,6 +32,9 @@ pub struct SimState {
     #[cfg(feature = "retail-12-0-5")]
     pub(crate) nameplate_hit_test_insets: crate::c_api::c_nameplate_manager::NamePlateHitTestInsets,
     pub(crate) input_interface_style: crate::c_api::c_input_interface_style::InputInterfaceStyle,
+    /// VERIFIED-neutral host seam for the last gamepad input timestamp; None maps to native zero.
+    #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+    pub last_gamepad_input_timestamp: Option<u32>,
     /// INFERRED host byte projection, independent of CVars and GPU detection.
     pub video_capability_bytes: crate::c_api::video_capabilities::VideoCapabilityBytes,
     /// Explicit mapped-stick input; None means no configured snapshot, not device absence.
@@ -81,6 +88,8 @@ pub struct SimState {
     pub garrison_talents: GarrisonTalentState,
     #[cfg(feature = "client-retail")]
     pub garrison_trees: crate::c_api::c_garrison_trees::GarrisonTrees,
+    #[cfg(feature = "client-retail")]
+    pub garrison_landing_page: crate::c_api::c_garrison_landing_page::GarrisonLandingPage,
     pub clipboard: ClipboardState,
     pub chat_edit_open_state: Option<ChatEditOpenState>,
     /// INFERRED explicit host ingress; empty per environment.
@@ -109,6 +118,10 @@ pub struct SimState {
     /// Writable session storage selected before any persisted state is loaded.
     pub session_wtf_path: PathBuf,
     pub cvars: CVarStorage,
+    /// INFERRED helper-result input for the Retail Midnight landing-page unlock; defaults locked.
+    pub expansion_landing_page_unlocked: bool,
+    /// Explicit host-supplied content-tracking lists; empty does not claim native initial state.
+    pub content_tracking: crate::c_api::c_content_tracking::ContentTrackingState,
     /// User-approved signed legacy gamma; simulator state only, never host gamma.
     #[cfg(feature = "client-wrath")]
     pub legacy_gamma: f64,
@@ -155,6 +168,8 @@ pub struct SimState {
     /// Explicit item-level overrides only; empty default, no native variant catalog.
     #[cfg(feature = "retail-12-0-5")]
     pub item_tooltip_levels: HashMap<crate::c_api::ItemTooltipContext, u16>,
+    /// R80 final item-mod amounts and metadata, keyed by item ID and resolved level.
+    pub item_tooltip_inputs: HashMap<(u32, u16), crate::c_api::item_tooltip::ItemTooltipInput>,
     pub blocked_auras_by_unit: HashMap<String, HashSet<i32>>,
     /// Explicit test scenario only; no combat or spell-secrecy inference.
     #[cfg(feature = "client-wowforever")]
@@ -228,7 +243,6 @@ pub struct SimState {
     /// Explicit per-item supplied quality; independent of recipe inputs, initially empty.
     pub crafted_item_quality:
         HashMap<u32, crate::c_api::c_trade_skill_quality::CraftingQualityInfo>,
-    #[cfg(feature = "retail-12-0-0")]
     pub pvp_catalog: crate::c_api::c_pvp::catalog::PvpCatalog,
     #[cfg(feature = "retail-12-0-0")]
     pub prey_inputs: crate::c_api::c_prey::PreyInputs,
@@ -309,6 +323,12 @@ pub struct SimState {
     /// Explicit DamageMeter snapshots; combat publication is blocked pending secrecy.
     pub damage_meter: crate::c_api::c_damage_meter::DamageMeterInput,
     pub item_interaction: Option<crate::c_api::c_item_interaction::ItemInteractionInfo>,
+    /// One host-supplied item-interaction tooltip input; native writers are not modeled.
+    pub item_interaction_tooltip_input: Option<crate::c_api::ItemInteractionTooltipInput>,
+    /// Shared possession spell ID; None represents unseeded host state.
+    pub possession_spell_id: Option<u32>,
+    /// INFERRED current-player object snapshot with host-supplied candidates.
+    pub possession_object: Option<crate::c_api::c_tooltip_info_possession::PossessionObjectInput>,
     pub major_factions: HashMap<i64, MajorFactionData>,
     pub major_faction_renown_levels: HashMap<i64, Vec<RenownLevelInfo>>,
     /// Explicit pair-keyed reward inputs only; no fabricated default rows.
@@ -344,6 +364,9 @@ pub struct SimState {
         feature = "client-anniversary"
     ))]
     pub transmog_appearance_sources: HashMap<i64, AppearanceSourceInfo>,
+    /// INFERRED host relation from Forever appearance IDs to item IDs; empty by default.
+    #[cfg(feature = "client-wowforever")]
+    pub forever_appearance_item_ids: HashMap<i32, u32>,
     /// Supplied source IDs marked new; acquisition and clearing policy is unknown.
     pub transmog_new_sources: HashSet<i64>,
     /// Explicit (slot, type, option) inputs only; no viewed-outfit synthesis.
@@ -417,6 +440,9 @@ pub struct SimState {
     pub is_active_battlefield: bool,
     pub spell_trade_skill_links: HashMap<u32, String>,
     pub spell_id_aliases: HashMap<String, u32>,
+    pub spell_tooltip_inputs: HashMap<u32, crate::c_api::spell_tooltip::SpellTooltipInput>,
+    pub recipe_rank_tooltip_cache: crate::c_api::recipe_rank_tooltip::RecipeRankTooltipCache,
+    pub aura_tooltip_inputs: HashMap<i32, crate::c_api::spell_tooltip::AuraTooltipInput>,
     pub spell_tooltip_cost_contexts:
         HashMap<u32, crate::c_api::spell_tooltip_cost::SpellTooltipCostContext>,
     /// Host-declared Maw power atlas/link strings by resolved spell ID; empty by default.
@@ -468,7 +494,7 @@ pub struct SimState {
     /// INFERRED explicit client catalog; GetFileID resolution does not imply membership.
     #[cfg(feature = "retail-12-0-7")]
     pub known_shipped_asset_ids: HashSet<u32>,
-    /// INFERRED normalized lowercase slash paths; host owns selected-root reconciliation.
+    /// INFERRED loaded-root file paths, normalized lowercase/slash; native table inclusion UNKNOWN.
     #[cfg(feature = "retail-12-0-7")]
     pub known_loose_asset_paths: HashSet<String>,
     /// INFERRED observable request input only; no eligibility response or event model.
@@ -621,9 +647,21 @@ pub struct SimState {
     pub gcd: Option<(f64, f64)>,
     pub spell_cooldowns: HashMap<u32, SpellCooldownState>,
     pub spell_charges: HashMap<u32, crate::c_api::charge_state::SpellChargeState>,
-    /// Explicit spell-keyed C_Spell count input; no inventory or casting derivation.
+    /// Explicit ranged identifier input; zero is the pre-runtime image value, not a login claim.
+    pub ranged_auto_attack_spell_id: u32,
+    /// Host null override; None uses the INFERRED active-player context.
+    pub spell_cast_context_is_null: Option<bool>,
+    /// Explicit simulator input for older C_Spell and spellbook count queries.
     #[cfg(feature = "retail-12-0-0")]
     pub spell_cast_counts: HashMap<u32, u32>,
+    /// Generic verified selector pairs; native SpellReagents field mapping is not modeled.
+    #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
+    pub spell_reagent_pairs: HashMap<u32, Vec<(i32, i32)>>,
+    /// Empty-default reagent metadata and nested-container input relationships.
+    #[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
+    pub spell_reagent_inventory: crate::c_api::spell_reagent_inventory::SpellReagentInventory,
+    /// Host-supplied visibility rows; a missing row publishes three false values on success.
+    pub spell_visibility_results: Option<HashMap<(u32, u8), (bool, bool, bool)>>,
     /// Explicit cooldown-output policy input, independent of combat and unit stats.
     pub cooldowns_restricted: bool,
     /// Explicit spell-keyed maximum aura stack input; empty means undeclared, never applied stacks.
@@ -688,12 +726,18 @@ pub struct SimState {
     /// Retail GetPvpTalent catalog and state inputs; all maps are host-supplied.
     #[cfg(feature = "client-retail")]
     pub pvp_talent_tooltip: crate::c_api::c_tooltip_info_pvp_talent::PvpTalentTooltipInputs,
+    /// INFERRED host relation from Forever PvP talent IDs to spell IDs; empty by default.
+    #[cfg(feature = "client-wowforever")]
+    pub forever_pvp_talent_spell_ids: HashMap<i32, u32>,
     pub player_xp: PlayerXpState,
     pub bind_location: String,
     pub pvp_honor: PvpHonorState,
     pub world: WorldState,
     pub encounter_policy: crate::c_api::c_instance_encounter::EncounterPolicy,
     pub bag_items: HashMap<(i32, i32), BagItem>,
+    /// Explicit Retail bag repair quotes; UNKNOWN calculation/writers stay unmodeled.
+    /// Empty by default; coordinates refer to the host-supplied bag snapshot.
+    pub bag_item_repair_costs: HashMap<(i32, i32), i32>,
     /// Owned-item identity, local equip requests and lock inputs.
     pub item_equip: crate::c_api::item_spell::item_equip::ItemEquipState,
     /// Host-supplied metadata keyed by item ID, not bag coordinates.
@@ -726,6 +770,9 @@ pub struct SimState {
     pub housing: HousingState,
     /// Explicit catalog shop product/display records; empty until host-seeded.
     pub catalog_shop_products: crate::c_api::c_catalog_shop_products::CatalogShopProducts,
+    /// R75 neutral host inputs; native mode/session writers remain unknown.
+    #[cfg(feature = "client-ptr")]
+    pub catalog_shop_interaction: crate::c_api::ptr_store_override::CatalogShopInteraction,
     /// One bundle record store; preserves the existing simulator storefront seed.
     pub housing_bundles: crate::c_api::c_housing_bundles::HousingBundles,
     pub pet_battles: PetBattleState,
@@ -765,8 +812,13 @@ pub struct SimState {
     pub lfg_next_application_id: u64,
     pub lfg_advanced_filter: LfgAdvancedFilter,
     pub lfg_language_filter: std::collections::HashMap<String, bool>,
+    #[cfg(feature = "client-retail")]
+    pub lfd_lock_requests: crate::lua_api::globals::real::lfd_lock_requests::LfdLockRequestState,
     pub lfg_roles: LfgRoleSelection,
     pub lfd_dungeons: Vec<LfdDungeonInfo>,
+    /// Host-supplied LFG tooltip reward cache; empty and not ready by default.
+    pub lfg_tooltip_rewards_ready: bool,
+    pub lfg_tooltip_reward_groups: Vec<LfgTooltipRewardGroup>,
     pub lfd_enabled_dungeons: std::collections::HashMap<i32, bool>,
     pub photo_sharing_authorized: bool,
     pub photo_sharing_enabled: bool,
@@ -791,6 +843,9 @@ pub struct SimState {
     pub quest_choice_response_id: Option<u32>,
     pub quest_poi_map_id: Option<i32>,
     pub selected_quest_log_id: Option<u32>,
+    /// Host-supplied `(questID, canonical type, zero-based source index) -> (currencyID, raw quantity)` results.
+    /// The source lists are not inferred from unrelated quest reward state.
+    pub quest_currency_tooltip_results: HashMap<(i32, String, usize), (i32, i32)>,
     /// Ready server-supplied quest reward spell candidates, in source order.
     pub quest_reward_spell_cache: std::collections::HashMap<u32, Vec<u32>>,
     /// Current detail quest and its three supplied spell slots.
@@ -819,6 +874,9 @@ pub struct SimState {
     pub guild_bank_tabs: Vec<GuildBankTab>,
     pub merchant_frame_open: bool,
     pub merchant_repair_capable: bool,
+    /// Forever feature-state input; false is the native image-load default, not a CVar.
+    #[cfg(feature = "client-wowforever")]
+    pub merchant_sell_all_junk_feature_enabled: bool,
     pub tabard_frame_open: bool,
     pub trainer_frame_open: bool,
     pub socket_frame_open: bool,
@@ -837,9 +895,22 @@ pub struct SimState {
     #[cfg(feature = "client-wowforever")]
     pub stable_reads: crate::c_api::c_stable_info::forever::StableReadState,
     pub merchant_items: Vec<u32>,
+    /// R88k.2 native item identities, counts and default-empty purchase records.
+    pub purchase_inputs: crate::c_api::container_purchase::PurchaseInputs,
+    /// R88k.1 accepted candidate/link inputs; native filter writers stay unknown.
+    pub inventory_candidates:
+        crate::lua_api::globals::real::inventory_candidates::InventoryCandidates,
+    /// Explicit R88l.2 link/selection seams, keyed by existing merchant slot.
+    pub merchant_links: crate::lua_api::globals::real::merchant_item_link::MerchantLinks,
     /// Explicit extended-cost records keyed by zero-based merchant slot; a
     /// missing key is not an observed record (decomp Round 6 §2b).
     pub merchant_offer_costs: HashMap<u32, MerchantCostRecord>,
+    /// R88i.5 scenario categories keyed by zero-based offer slot; no key is category0.
+    pub merchant_offer_categories: HashMap<u32, i32>,
+    /// Explicit category-1 ItemSparse records; absence remains unobserved.
+    pub merchant_item_requirements: HashMap<u32, MerchantItemRequirement>,
+    /// INFERRED player rating mapping keyed by signed cost-record mode.
+    pub merchant_player_ratings: HashMap<i32, i32>,
     #[cfg(feature = "retail-12-0-7")]
     pub merchant_currencies: Vec<i32>,
     pub merchant_buyback_items: Vec<crate::lua_api::globals::real::merchant_buyback::BuybackItem>,
@@ -857,6 +928,9 @@ pub struct SimState {
     pub pet_actions: Vec<PetActionSlot>,
     pub glyph: GlyphState,
     pub currency_info: HashMap<i32, CurrencyInfo>,
+    /// Explicit `CurrencyTypes` flags and local-record presence for Retail tooltips.
+    pub currency_tooltip_inputs:
+        HashMap<i32, crate::c_api::c_tooltip_info_currency::CurrencyTooltipInputs>,
     /// Explicit Wrath-only legacy categories; modern currency queries do not read this.
     pub wrath_currency: super::super::globals::real::wrath_currency::CurrencyListState,
     #[cfg(feature = "client-retail")]
@@ -877,6 +951,8 @@ pub struct SimState {
     pub mount_item_relations: HashMap<i32, i32>,
     pub equipment_manager: EquipmentManagerState,
     pub maps: HashMap<i32, MapData>,
+    /// INFERRED session-only storage because waypoint ownership/persistence are UNKNOWN.
+    pub(crate) user_waypoint: Option<crate::c_api::c_map::UserWaypoint>,
     /// Explicit per-map hideIcons input; absence is not a native unknown-ID claim.
     pub map_display_hide_icons: HashMap<i32, bool>,
     /// Explicit continent/world rectangles; never guessed from map art pixels.
@@ -884,6 +960,7 @@ pub struct SimState {
     /// Explicit bounty-set membership in supplied order; no inferred/default catalog.
     pub bounty_set_maps: HashMap<i32, Vec<i32>>,
     pub achievements: HashMap<i32, AchievementInfo>,
+    pub achievement_eligibility: AchievementEligibilityInputs,
     /// Explicit supplied relations; no native catalog or inferred chain.
     pub achievement_superceding: HashMap<i32, Vec<i32>>,
     pub calendar_now: crate::c_api::c_calendar::CivilDateTime,
@@ -917,6 +994,9 @@ pub struct SimState {
     #[cfg(any(feature = "retail-12-0-7", feature = "retail-12-1-0"))]
     pub quest_hub_dragonriding_races: HashMap<i32, Vec<i32>>,
     pub bnet_friends: Vec<BnetFriend>,
+    /// Forever feature-state input; false is the native image-load default, not a CVar.
+    #[cfg(feature = "client-wowforever")]
+    pub bnet_friend_tags_enabled: bool,
     pub bnet_friend_invites: Vec<BnetFriendInvite>,
     pub bnet_appear_offline: bool,
     /// INFERRED local broadcast input; no network service or persistence.
@@ -954,8 +1034,20 @@ pub struct SimState {
     pub auction_should_auto_populate_price: bool,
     pub wow_token: WowTokenState,
     pub mythic_plus: MythicPlusState,
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub character_creation: crate::c_api::c_character_creation_submit::CharacterCreationState,
+    /// None preserves the temporary collector; Some publishes host records (R79).
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub character_customizations:
+        Option<Vec<crate::c_api::c_character_creation_customizations::Category>>,
     /// Byte copied from Forever's Glue feature-status update.
     pub name_reservation_feature_status: u8,
+    #[cfg(feature = "client-ptr")]
+    pub ptr_character_creation:
+        crate::c_api::c_character_creation_submit_ptr::PtrCharacterCreationState,
+    /// Host inputs for starting-zone choices; defaults do not claim native initialization.
+    pub character_create_starting_zone_choices:
+        crate::c_api::c_character_creation::StartingZoneChoicesInput,
     /// Current character-create model facing in normalized radians.
     pub character_create_facing_radians: f32,
     /// Host-supplied race IDs with an altered character-create model.
@@ -999,6 +1091,7 @@ pub struct SimState {
     pub battlefield_minimap_visible: bool,
     pub chat_channels: Vec<ChatChannel>,
     pub macros: Vec<MacroInfo>,
+    pub macro_icons: MacroIconInputs,
     pub running_macro: Option<u32>,
     pub chat_windows: ::std::collections::HashMap<i32, ChatWindow>,
     pub chat_type_colors: ::std::collections::HashMap<String, (f32, f32, f32)>,
@@ -1109,6 +1202,9 @@ pub struct SimState {
     pub ui_reload_requested: bool,
     pub(crate) session_lifecycle: super::super::env_lifecycle::SessionLifecycle,
     pub(crate) addon_initialization_failures: HashMap<String, String>,
+    /// Opt-in client parity (`WOW_SIM_SAVE_FAILED_ADDONS`): initialization failures stay
+    /// diagnostics and the failed owners' SavedVariables are saved, as the client saves them.
+    pub save_failed_addons: bool,
     /// Explicit host-supplied cinematic playback state; no playback engine implied.
     pub cinematic_active: bool,
     /// World entry is distinct from IsLoggedIn; supplied/transitioned by the owner.

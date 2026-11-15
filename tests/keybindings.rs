@@ -351,26 +351,50 @@ fn c_keybindings_index_resolves_registry_rows() {
 
 #[test]
 fn modified_clicks_round_trip_through_runtime_surface() {
-    #[cfg(feature = "client-retail")]
-    let env = crate::common::blizzard_addon_harness::build_blizzard_addon_closure_env(
-        &crate::common::blizzard_addon_harness::blizzard_ui_dir(),
-        &["Blizzard_FrameXML"],
-        &[],
-    )
-    .0;
-    #[cfg(not(feature = "client-retail"))]
+    // loader/addon.rs:537 loads selected Bindings XML defaults; Forever
+    // Bindings_Camelot.xml:1533 supplies SELFCAST=ALT, not the bare environment.
+    #[cfg(any(
+        feature = "client-retail",
+        feature = "client-ptr",
+        feature = "client-wowforever"
+    ))]
+    let env = {
+        let (env, loaded) = crate::common::blizzard_addon_harness::build_blizzard_addon_closure_env(
+            &crate::common::blizzard_addon_harness::blizzard_ui_dir(),
+            &["Blizzard_FrameXML"],
+            &[],
+        );
+        assert!(loaded.iter().any(|name| name == "Blizzard_FrameXML"));
+        env
+    };
+    #[cfg(not(any(
+        feature = "client-retail",
+        feature = "client-ptr",
+        feature = "client-wowforever"
+    )))]
     let env = env();
-    let (default_self_cast, updated_self_cast, unknown_default): (String, String, String) = env
+    let (
+        default_self_cast,
+        default_focus_cast,
+        default_auto_loot,
+        updated_self_cast,
+        unknown_default,
+    ): (String, String, String, String, String) = env
         .eval(
             r#"
             local before = GetModifiedClick("SELFCAST")
+            local focus = GetModifiedClick("FOCUSCAST")
+            local autoLoot = GetModifiedClick("AUTOLOOTTOGGLE")
             SetModifiedClick("SELFCAST", "CTRL")
-            return before, GetModifiedClick("SELFCAST"), GetModifiedClick("UNKNOWN_ACTION")
+            return before, focus, autoLoot, GetModifiedClick("SELFCAST"),
+                   GetModifiedClick("UNKNOWN_ACTION")
             "#,
         )
         .unwrap();
 
     assert_eq!(default_self_cast, "ALT");
+    assert_eq!(default_focus_cast, "NONE");
+    assert_eq!(default_auto_loot, "SHIFT");
     assert_eq!(updated_self_cast, "CTRL");
     assert_eq!(unknown_default, "NONE");
 }

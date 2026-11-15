@@ -763,3 +763,49 @@ fn spellbook_hover_tooltip_is_sized_and_on_screen() {
     }
 }
 }
+
+#[test]
+fn spellbook_texture_templates_preserve_half_page_anchors() {
+    let env = WowLuaEnv::new().unwrap();
+    let directory = tempfile::tempdir().unwrap();
+    let toc = directory.path().join("BookAnchors.toc");
+    std::fs::write(&toc, "## Title: BookAnchors\nbook.xml\n").unwrap();
+    // PTR 70493 Mainline/SpellBook/Blizzard_SpellBookTemplates.xml:41-51.
+    std::fs::write(directory.path().join("book.xml"), r#"
+        <Ui xmlns="http://www.blizzard.com/wow/ui/">
+            <Texture name="LeftPageTemplate" virtual="true">
+                <Anchors><Anchor point="TOPLEFT" y="-51"/><Anchor point="BOTTOMRIGHT" relativePoint="BOTTOM"/></Anchors>
+            </Texture>
+            <Texture name="RightPageTemplate" virtual="true">
+                <Anchors><Anchor point="TOPLEFT" relativePoint="TOP" y="-51"/><Anchor point="BOTTOMRIGHT"/></Anchors>
+            </Texture>
+            <Frame name="BookAnchorTemplate" virtual="true">
+                <Size x="1000" y="600"/>
+                <Anchors><Anchor point="BOTTOMLEFT" relativeTo="UIParent"/></Anchors>
+                <Layers><Layer level="BACKGROUND">
+                    <Texture parentKey="Left" inherits="LeftPageTemplate"/>
+                    <Texture parentKey="Right" inherits="RightPageTemplate"/>
+                    <Texture parentKey="Override" inherits="LeftPageTemplate">
+                        <Anchors><Anchor point="TOPLEFT"/><Anchor point="BOTTOMRIGHT"/></Anchors>
+                    </Texture>
+                </Layer></Layers>
+            </Frame>
+            <Frame name="LoadedBook" inherits="BookAnchorTemplate"/>
+        </Ui>
+    "#).unwrap();
+    wow_ui_sim::loader::load_addon(&env.loader_env(), &toc).unwrap();
+    env.exec(r#"
+        local runtime = CreateFrame("Frame", "RuntimeBook", UIParent, "BookAnchorTemplate")
+        for _, book in ipairs({LoadedBook, runtime}) do
+            local l, b, w, h = book:GetRect()
+            assert(w == 1000 and h == 600)
+            local ll, lb, lw, lh = book.Left:GetRect()
+            local rl, rb, rw, rh = book.Right:GetRect()
+            assert(lw == 500 and rw == 500, "inherited backgrounds must be half-page width")
+            assert(lh == 549 and rh == 549, "inherited top inset must survive")
+            assert(ll == l and rl == ll + lw and lb == b and rb == b, "book halves must meet without a gap")
+            local _, _, ow, oh = book.Override:GetRect()
+            assert(ow == 1000 and oh == 600, "instance anchors must override template anchors")
+        end
+    "#).unwrap();
+}

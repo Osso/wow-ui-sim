@@ -111,16 +111,6 @@ if rawget(PlayerSpellsUtil, "ToggleClassTalentFrame") == nil then
         return PlayerSpellsUtil.TogglePlayerSpellsFrame(PlayerSpellsUtil.FrameTabs.ClassTalents, inspectUnit)
     end
 end
-if rawget(PlayerSpellsUtil, "OpenToClassTalentsTab") == nil then
-    function PlayerSpellsUtil.OpenToClassTalentsTab(inspectUnit)
-        return PlayerSpellsUtil.TogglePlayerSpellsFrame(PlayerSpellsUtil.FrameTabs.ClassTalents, inspectUnit)
-    end
-end
-if rawget(PlayerSpellsUtil, "OpenToClassSpecializationsTab") == nil then
-    function PlayerSpellsUtil.OpenToClassSpecializationsTab()
-        return PlayerSpellsUtil.TogglePlayerSpellsFrame(PlayerSpellsUtil.FrameTabs.ClassSpecializations)
-    end
-end
 if rawget(PlayerSpellsUtil, "ToggleSpellBookFrame") == nil then
     function PlayerSpellsUtil.ToggleSpellBookFrame(spellBookCategory)
         return PlayerSpellsUtil.TogglePlayerSpellsFrame(
@@ -139,6 +129,19 @@ end
 if TogglePlayerSpellsFrame == nil then
     function TogglePlayerSpellsFrame(suggestedTab, inspectUnit)
         return PlayerSpellsUtil.TogglePlayerSpellsFrame(suggestedTab, inspectUnit)
+    end
+end
+"#;
+
+const PLAYER_SPELLS_UTIL_OPEN_TAB_FALLBACK_LUA: &str = r#"
+if rawget(PlayerSpellsUtil, "OpenToClassTalentsTab") == nil then
+    function PlayerSpellsUtil.OpenToClassTalentsTab(inspectUnit)
+        return PlayerSpellsUtil.TogglePlayerSpellsFrame(PlayerSpellsUtil.FrameTabs.ClassTalents, inspectUnit)
+    end
+end
+if rawget(PlayerSpellsUtil, "OpenToClassSpecializationsTab") == nil then
+    function PlayerSpellsUtil.OpenToClassSpecializationsTab()
+        return PlayerSpellsUtil.TogglePlayerSpellsFrame(PlayerSpellsUtil.FrameTabs.ClassSpecializations)
     end
 end
 "#;
@@ -249,8 +252,20 @@ if PlayerSpellsFrame then
 end
 "#;
 
+fn profile_has_original_player_spells_util_owner() -> bool {
+    matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::Ptr
+            | crate::client_profile::ClientProfile::WowForever
+    )
+}
+
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(PLAYER_SPELLS_UTIL_BOOTSTRAP_LUA)?;
+    if !profile_has_original_player_spells_util_owner() {
+        lua.exec(PLAYER_SPELLS_UTIL_OPEN_TAB_FALLBACK_LUA)?;
+    }
     Ok(())
 }
 
@@ -278,6 +293,21 @@ mod tests {
             let mut lua = env.lua.borrow_mut();
             super::apply_bootstrap(&mut lua).expect("PlayerSpellsUtil bootstrap should apply");
         }
+
+        let has_open_talents_fallback: bool = env
+            .eval("return type(PlayerSpellsUtil.OpenToClassTalentsTab) == 'function'")
+            .expect("class-talent open fallback availability probe should run");
+        assert_eq!(
+            has_open_talents_fallback,
+            !super::profile_has_original_player_spells_util_owner()
+        );
+        let has_open_specializations_fallback: bool = env
+            .eval("return type(PlayerSpellsUtil.OpenToClassSpecializationsTab) == 'function'")
+            .expect("specialization open fallback availability probe should run");
+        assert_eq!(
+            has_open_specializations_fallback,
+            !super::profile_has_original_player_spells_util_owner()
+        );
 
         let result: String = env
             .eval(

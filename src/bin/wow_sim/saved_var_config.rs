@@ -56,6 +56,11 @@ pub fn configure_character_identity(
     env: &WowLuaEnv,
     source: Option<&SavedVariablesManager>,
 ) -> wow_ui_sim::Result<()> {
+    // Host selection wins after entry; the configured WTF/SavedVariables source
+    // remains unchanged rather than being retargeted to the selected roster name.
+    if env.has_host_world_entry_identity() {
+        return Ok(());
+    }
     if std::env::var_os("WOW_SIM_WTF_CHARACTER").is_none_or(|value| value.is_empty()) {
         return Ok(());
     }
@@ -190,6 +195,12 @@ fn should_skip_saved_vars(no_saved_vars_arg: bool) -> bool {
         || std::env::var("WOW_SIM_NO_SAVED_VARS")
             .map(|value| value == "1")
             .unwrap_or(false)
+}
+
+/// `WOW_SIM_SAVE_FAILED_ADDONS=1` saves addons whose load raised errors, as the client does.
+pub fn save_failed_addons() -> bool {
+    std::env::var("WOW_SIM_SAVE_FAILED_ADDONS")
+        .is_ok_and(|value| value == "1" || value.eq_ignore_ascii_case("true"))
 }
 
 #[cfg(test)]

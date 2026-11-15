@@ -6,7 +6,27 @@ The Lua API layer bridges Lua addon code with the Rust simulation engine. It pro
 
 ## Tooltip data and merchant cursor presentation
 
-The [PvP talent tooltip contract](../../specs/tooltip-pvp-talent.md) owns the `GetPvpTalent` catalog inputs and native UNKNOWNs. **VERIFIED:** the [generated catalog provenance](../../../data/pvp-talents/retail-12.1.5.70783/provenance.json) records installed Retail build 12.1.5.70783; this does not establish parity with the selected 12.1.5.70575 runtime pin. Grant and eligibility outcomes remain host-supplied. A direct original `GameTooltip:SetPvpTalent` test covers the getter; selected-slot UI behavior waits for R73.
+### GameTooltip minimum width and FontString pairs
+
+[GameTooltip methods](../../specs/game-tooltip-methods.md) records R88n.7 for Retail 12.1.5.70688. **VERIFIED (R88n.7):** Retail `GetMinimumWidth` uses `Usage: local width, forced = self:GetMinimumWidth()` and returns the stored width number followed by the stored forced boolean; constructor defaults are `0` and `false`. **VERIFIED (simulator source):** `SetMinimumWidth` stores both fields, and `TooltipData::row_wraps`, `double_column_reservation` and `select_content_width` already read the forced flag.
+
+**VERIFIED (simulator history, `b6a107994`):** `ACTIVE` selects the new Retail path; PTR, Forever, Mists and Wrath keep their pre-lane getter and `AddFontStrings` behavior. This preserves simulator behavior and does not claim native parity for those profiles. The API test module is optional, Retail 12.1.5-only, and requires `forbidden-aspects`.
+
+**VERIFIED (R88n.7):** Retail `AddFontStrings` uses `Usage: self:AddFontStrings(leftFontString, rightFontString)`, returns zero values, validates two FontStrings, appends a pair, resizes line-state and numeric storage, zeroes new numeric entries, clears the new marker and resets the progress count. **VERIFIED (simulator source):** the pair is stored separately from `NumLines`; the simulator represents native pointers as widget IDs, line markers as booleans and numeric slots as `f64`. **INFERRED (simulator retention):** `ClearLines`/Hide retain these fields and `CopyTooltip` copies them. R88n.7 does not establish later pointer lifetime or copy behavior.
+
+**VERIFIED (R88n.7 and simulator permission model):** the Retail path checks `ChangeParent`, the six listed inherited aspects and `RemoveSecretAspects` before storage. **UNKNOWN (simulator parity):** the saved-call secret-state transition is not represented. **VERIFIED (R88n.7), UNKNOWN (simulator parity):** getter conditional result secrecy and diagnostic/access-state effects remain unmodeled. R88n.7 does not identify the checked secret-aspect name or ordinary-call state predicate, and the Lua VM's taint/access state is not evidence for that predicate.
+
+**VERIFIED (Retail cache and TOC):** `Blizzard_SharedXML.toc:154` selects `SharedTooltipTemplates.lua`; `GameTooltip_InsertFrame` compares `GetMinimumWidth()` in scalar context at line 213. It observes only the first return, so the selector is PRESERVATION, not a RED test for getter arity. **VERIFIED (Retail AddOns cache search):** `AddFontStrings` appears only in the generated API declaration at `Blizzard_APIDocumentationGenerated/FrameAPITooltipDocumentation.lua:10`; no original Lua caller was found. The direct API test remains the producer proof.
+
+The [PvP talent tooltip contract](../../specs/tooltip-pvp-talent.md) owns the `GetPvpTalent` catalog inputs and native UNKNOWNs. **VERIFIED:** the [generated catalog provenance](../../../data/pvp-talents/retail-12.1.5.70783/provenance.json) records installed Retail build 12.1.5.70783; this does not establish parity with the selected 12.1.5.70575 runtime pin. VERIFIED: R73 annotation tests drive the original slot hover for level-lock/selection and original list-template hover for unselected candidates; the panel harness opens the list but does not realize virtualized rows. Slot records take documented fields and supplied values; selected IDs share the active group. Permission and opaque eligibility/grant outcomes remain host-supplied; absent inputs preserve neutral output. UNKNOWN: progression, talent/GUID restriction, indirect Flags reads, final player-state helper and inspect internals remain unmodelled.
+
+**VERIFIED (Forever 1.60.1.70707, R88n.8):** `GetPvpTalent` is declared at `TooltipInfoDocumentation.lua:726-743`; its required signed-32 ID and optional truthy `isInspect` input are accepted, and a missing `PvpTalent` record returns zero values. The simulator does not publish Retail catalog rows on Forever. **INFERRED:** the native indexed block is current local-player PvP selection; no populated Forever player-state mapping is implemented.
+
+The [R80 item tooltip contract](../../specs/tooltip-item-r80.md) separates VERIFIED native helper evidence from the UNKNOWN ordinary item-mod amount producer. Item builders omit unsupplied stats and use ordered final amounts from `SimState.item_tooltip_inputs`, keyed by item ID and resolved level. Optional identity/status fields remain top-level. The old level/slot/class estimate is removed; native line ordering and retained stat type/color are not claimed as verified.
+
+[Spell tooltip composition](../../specs/tooltip-spell-composition.md) owns the R81 outer-row contract. VERIFIED by source inspection: host inputs in `src/c_api/spell_tooltip.rs` replace the fixed cooldown, aura-duration and slot-key recipes; cost and cast inputs no longer come from guessed spell tables. The shared producer keeps the existing title/description behavior, resolves direct overrides, and gives spell links their own cast context without suppressing cost/range. Native evidence is partial Retail 70688; selected Retail 70575 and other profiles are not native-output certifications. UNKNOWN helper formulas, Azerite gates and later rows stay host-supplied or unmodelled. Tests and source citations are recorded in the private lane report.
+
+[Retail currency tooltips](../../specs/tooltip-currency.md) own the R84/R84b row and input contract. Retail by-ID, quest, loot and currency-link consumers share `c_api::c_tooltip_info_currency::build_currency_tooltip`; quest-source results and display inputs are supplied rather than inferred. The shared line builder can remap a verified type-0 row to 41 when placeholder colors collide, so the currency producer restores the verified row type. Resolver misses, conditional error rows, balance formulas and runtime number-format mode remain UNKNOWN.
 
 [Bag-child tooltips](../../specs/tooltip-bag-child.md) compose bag state with
 source-derived child-equipment rows and the existing item builder on
@@ -14,14 +34,99 @@ Retail/PTR/Forever. The item generator includes child IDs automatically; absent
 pinned ItemSparse rows remain explicit catalog misses. Native selector parity
 and miss arity are not claimed.
 [Modified-appearance tooltips](../../specs/tooltip-appearance-item.md) reuse the
-existing Retail/PTR source model and shared item-link parser. Forever model
-promotion is separate. New missing-source paths use one named UNKNOWN seam with
-an explicit zero-return simulator policy, not asserted native arity.
+existing Retail/PTR source model and shared item-link parser. **VERIFIED (Forever
+1.60.1.70707, R88n.8):** the getter is registered, accepts the signed-32 numeric
+reader, and returns zero values on a missing `ItemModifiedAppearance` record.
+Forever lacks that source model, so populated appearance selection is
+**PRESERVATION**, not producer RED.
+
+[Outfit tooltips](../../specs/tooltip-outfit.md) register `GetOutfit` on Forever
+and reuse the title builder. **VERIFIED (R88n.8):** ID zero returns no values;
+a nonzero ID with no saved-name record returns one TooltipData table with an
+empty name. **VERIFIED (selected consumer):** the Forever Camelot
+`Blizzard_PlayerSpells.toc:31-34` selects the SpellBook template and item XML;
+`Blizzard_SpellBookItem.lua:877-888` calls `SetOutfit`, and
+`TooltipDataHandler.lua:603` maps it to `GetOutfit`. The optional test loads this
+profile-selected closure and invokes the original method. This consumer result is
+**PRESERVATION** because only the missing-name path is modeled. **INFERRED:** the producer maps the native saved-name record to the existing
+`SimState.forever_outfits` snapshot. No test asserts populated names; native
+player association, writers and update events remain UNKNOWN.
+
+[Merchant-cost tooltips](../../specs/tooltip-merchant-cost-item.md) reuse the
+Retail extended-cost producer on Forever. **VERIFIED (R88n.8):** missing offer,
+`ItemExtendedCost`, or eligible cost returns zero values; selection scans
+`ItemSparse`/`Item` data. The simulator does not model separate merchant
+availability/filter inputs, so that selection gate remains **UNKNOWN**.
 [Totem tooltips](../../specs/tooltip-totem.md) use stored names and the WM94
 wrapping-clock/rate pipeline, with one named nearest-even emulation seam and
 native-duration unit thresholds. They do not use spell tooltip composition.
 
-[Round 7 tooltip getters](../../specs/tooltip-r7-getters.md) record Retail 70688 and Forever 70707 registration for all eleven names, with PTR 70668 registration only for the two Azerite Essence getters. VERIFIED: those getter readers use the Round 7 signed, optional unsigned, byte-slot, GUID and party-flag rules; unavailable backing data returns no Lua values instead of an invented DTO. The existing Azerite Essence state supplies the selected rank and active slot, but its rank-to-spell tooltip catalogue is absent. VERIFIED within simulator coverage: an owned bag-item GUID with no runeforge power/modifier arguments uses the shared item builder and publishes its supplied displayed level. The LFG, possession, quest-party/special-item, recipe-rank, item-interaction selection and slotted-keystone state or specialized producers remain unavailable.
+
+[Round 7 tooltip getters](../../specs/tooltip-r7-getters.md) record Retail 70688 and Forever 70707 registration for all eleven names, with PTR 70668 registration only for the two Azerite Essence getters. **VERIFIED (Retail 12.1.5.70688, R88n.1):** `GetQuestLogSpecialItem` and `GetQuestPartyProgress` return exactly zero Lua values on missing-source and failed-producer paths. Their argument readers retain the Round 7 signed, optional flag, byte-slot, GUID, and secret-input rules. **VERIFIED (simulator code):** Retail `GetQuestPartyProgress` serializes only explicit host snapshots through the shared tooltip builder; the input is empty by default and does not derive party or objective state. **UNKNOWN:** the native progress-tree writer, active-player classification, getter-specific shared-serializer parity, and native return arity for a successful query that produces no rows. The simulator returns zero values when its supplied snapshot emits no rows. **VERIFIED (simulator code):** Retail `GetQuestLogSpecialItem` uses separate empty-by-default inputs for quest-index request context, cache-record primary/candidate IDs, and the selected inventory object. It checks the selected object against those IDs and the current bag slot before using the shared item builder. **UNKNOWN:** native cache/inventory writers, candidate predicates, owner-GUID context, and getter-specific item-line parity.
+
+**VERIFIED (Retail 12.1.5.70688, R88n.1):** `C_TooltipInfo.GetItemInteractionItem` returns zero values when the object is absent or a kind-2/4 producer fails. Any other kind bypasses the builder and returns one table whose only field is an empty `lines` table, without `dataInstanceID`. **INFERRED (simulator input):** one empty-by-default `item_interaction_tooltip_input` beside dialog data carries object kind, selected GUID, and host-supplied cleansing/conversion values. **UNKNOWN:** complete native selection routes, external lifecycle events, and successful kind-2/4 producer payloads; R88o.2 q4 verifies local setter/clear operations, detailed below. Those kinds take the failure path in the simulator. The original Retail ItemInteraction UI slot dispatches through `GameTooltip:SetItemInteractionItem` and the selected TooltipDataHandler; publication on PTR and behavior on Forever are unchanged.
+
+[Round 7 tooltip getters](../../specs/tooltip-r7-getters.md) record Retail 70688 and Forever 70707 registration for all eleven names, with PTR 70668 registration only for the two Azerite Essence getters. **VERIFIED (Retail 12.1.5.70688, R88n.1):** `GetQuestLogSpecialItem` and `GetQuestPartyProgress` return exactly zero Lua values on missing-source and failed-producer paths. Their argument readers retain the Round 7 signed, optional flag, byte-slot, GUID, and secret-input rules. **VERIFIED (simulator code):** Retail `GetQuestPartyProgress` serializes only explicit host snapshots through the shared tooltip builder; the input is empty by default and does not derive party or objective state. **UNKNOWN:** the native progress-tree writer, active-player classification, getter-specific shared-serializer parity, and native return arity for a successful query that produces no rows. The simulator returns zero values when its supplied snapshot emits no rows. **VERIFIED (simulator code):** Retail `GetQuestLogSpecialItem` uses separate empty-by-default inputs for quest-index request context, cache-record primary/candidate IDs, and the selected inventory object. It checks the selected object against those IDs and the current bag slot before using the shared item builder. **UNKNOWN:** native cache/inventory writers, candidate predicates, owner-GUID context, and getter-specific item-line parity. The existing Azerite Essence state supplies the selected rank and active slot, but its rank-to-spell tooltip catalogue is absent. VERIFIED within simulator coverage: an owned bag-item GUID with no runeforge power/modifier arguments uses the shared item builder and publishes its supplied displayed level. LFG reward groups and item-interaction selection/payload remain empty-by-default host inputs; recipe rank chains remain unavailable. **VERIFIED (R88o.2 q4):** native `C_ItemInteraction.SetPendingItem` and its clear/reset lifecycle update the object read by the getter; the simulator does not model that lifecycle and keeps explicit selected-item input. **VERIFIED (R88o.2 q5):** local possession writes and rescans update one shared spell ID; complete external inputs and routes remain UNKNOWN, so the simulator keeps an empty-by-default host spell-ID input.
+
+**VERIFIED (Retail 12.1.5.70688; R88n.1/.4/.4a and R88o.2 q1):** a missing or unresolved item-interaction selection returns zero values; a resolved unsupported kind returns one table containing only an empty `lines` field; kinds 2 and 4 select cleansing and conversion producers; cleansing uses TooltipData type 20 and ID 0. For conversion output ID 0, q1 establishes one table with `lines` and incremented `dataInstanceID`, no top-level `id` or `type`, and a conditional type-41 retrieving-item line. Its color uses the named `ERROR_COLOR` or magenta default and publishes normalized RGB without alpha. The current counter value, localized words, and named color are not fixed by this branch.
+
+**VERIFIED (R88n.4b, R88o.2 q2/q3):** a native active-player item-update path reaches separate item-interaction and keystone writers, but complete external routes remain UNKNOWN. `SlotKeystone` reads the shared cursor item, skips cursor clear on a failed first item lookup, clears before deeper validation, stores selected state before the item-data query, requests the slotted event on a terminal no-row callback, and returns zero Lua values on the proved normal paths. `RemoveKeystone` returns one Boolean and clears selected state for a nonempty selected GUID regardless of cursor-stage success; its cursor helper has a zero/nonzero GUID-category guard and no explicit selection unlock. These local traces do not prove external triggers or full cursor/resource effects.
+
+**VERIFIED (simulator source):** the selected GUID, final cleansing rows, conversion output, and object kind use one empty-by-default host input; the possession spell ID starts empty and the Retail local writer updates it through host/admin entry points; external triggers remain UNKNOWN (R88o.2-q5). `HasSlottedKeystone` checks only `KeystoneState.selected_guid`; `GetSlottedKeystone` uses that same GUID. `SlotKeystone` checks the supplied item class/subclass, modifier kind 17, static challenge-map record and supplied current-map selector before storing selection or requesting the slotted event. A missing modifier uses key zero; a missing record or map mismatch rejects the candidate and clears its selection-lock reason. The first item-record miss leaves the cursor alone; after a first hit, the cursor clears before context and map validation. Context/map rejection returns no Lua values and publishes no slotted event. **INFERRED (q2 cursor-input projection, commit `15751ad33`):** bag cursor fields stand for native owned-item GUID, source-container GUID and source slot. **INFERRED (selected-object cache, commit `4807a3a49`):** `selected_item_id` retains the resolved item for tooltip lookup after cursor clear. **INFERRED (R88o.2 q2/q3):** `PlayerState::present` proxies availability of the opaque native context; it does not establish that context's identity. **SIMULATOR GAP:** native error code 1013 is known, but its publication route and exact text are unknown; no error event or message is synthesized.
+
+**VERIFIED (simulator source):** `RemoveKeystone` checks the optional host-supplied cursor permission result and context before clearing the previous cursor. Its guard flow uses a zero/nonzero category result, then the Boolean result and selected-state clear follow the staging attempt. **INFERRED (simulator representation):** three separate helpers interpret the textual GUID prefix (`"0-…"` means category zero), project a selected bag location to cursor origin, and choose a one-item stack count. These projections do not claim native GUID string formatting, associated-GUID identity, cursor source mode or stack count. A zero category clears the previous cursor but does not stage an item; a nonzero category can stage the selected bag item through the existing `CursorInfo::Item` model. The native associated GUID, item-data/resource notifications, complete permission writers and later lock effects remain unmodeled; `RemoveKeystone` does not call the simulator's explicit-unlock `ClearKeystone` helper.
+
+**VERIFIED (Retail 12.1.5.70688, R88n.4/.4a):** `GetSlottedKeystone` reads the selected GUID also used by `HasSlottedKeystone`, attempts an item-object lookup, then passes the resolved item ID and instance GUID to the shared item producer. Selection writes precede the item-data callback that requests `CHALLENGE_MODE_KEYSTONE_SLOTTED`; the notification callback is not the selected-GUID writer. **VERIFIED (simulator source):** the getter uses the shared item builder, publishes the GUID, and returns no tooltip when the selected item cannot resolve. **VERIFIED (selected original consumer test):** ChallengesUI shows the selected item tooltip with its ID and GUID, then shows no tooltip after selection clears. **VERIFIED (simulator event-probe test):** the slotting notification callback sees the selected item data.
+
+**VERIFIED (Retail 12.1.5.70688, R88n.4a):** native keystone content includes a resolved map title or generic keystone title, item power level, optional resilient level, and affix names. **UNKNOWN:** the exact `TooltipData` row/field projection, selection conditions, and backing inputs are not established by the answer; the simulator leaves these details absent rather than guessing. The exact decomp question is in the [Round 7 getter contract](../../specs/tooltip-r7-getters.md#known-gaps-current-cycle).
+
+**VERIFIED (Retail 12.1.5.70688, R88n.4a):** `FOR_SPECIALIZATION`, `REQUIRES_SPECIALIZATION`, `FOR_OR_SPECIALIZATIONS`, and `REQUIRES_OR_SPECIALIZATIONS` belong to Azerite requirement formatting. R88n.4a does not connect them to `GetRecipeRankInfo`; the contract records the exact unresolved question. **VERIFIED (simulator source):** the recipe cache keeps an existing duplicate key and makes a new key queryable; it does not reproduce native cache nodes or display-vector counts.
+
+**VERIFIED (Retail 12.1.5.70688, pinned API docs):** `TooltipInfoDocumentation.lua:851-864` declares `GetRecipeRankInfo`, and `:976-983` declares `GetSlottedKeystone`. The optional recipe-rank test runs through the selected `Blizzard_SharedXMLGame` `TooltipDataHandler` accessor; the selected ChallengesUI test invokes the original keystone hover method.
+
+**VERIFIED (R88n.4a/.4 and R88o.2 q5):** possession output reads one shared spell ID, cooldown timing, and a number-display setting. The simulator does not supply those possession detail inputs. The simulator does not model q4's verified `SetPendingItem` lifecycle.
+
+### Possession state writer (R88o.2-q5)
+
+**VERIFIED (Retail 12.1.5.70688, R88o.2-q5):** the setter and accepted rescan paths write the shared possession spell ID before requesting `UPDATE_POSSESS_BAR`, and request it only when old and new IDs differ. An active-player update with either identity part nonzero resolves the object before rescanning; failed resolution preserves the current ID. Two zero identity parts write zero and request the event only when the old ID was nonzero. The rescan keeps the old ID when the object or candidate collection is absent, or when no candidate is accepted. It skips tested candidates, missing spells and empty effect lists; effects 2 and 6 accept directly, effect 236 requires a present identity type and both identity parts to match, and effects 28 or 51 require the classification record field to equal 3. The first accepted candidate wins.
+
+**VERIFIED (simulator source):** Retail-only `A_Admin.SetPossessionObject`, `A_Admin.SetPossessionSpellID`, and `A_Admin.UpdatePossessionPlayer` are host/admin entry points. The object and ordered candidate inputs start absent; effect values, tested flags, candidate identity parts and classification fields are host-supplied. The spell catalog supplies only the spell-presence check. The public `C_TooltipInfo.GetPossession` getter continues to read the shared spell ID.
+
+**INFERRED (R88o.2-q5:13009–13010, 13016; R88n.4a:12570–12571):** the native candidate collection belongs to current-player state and the active-player path resolves an object before rescanning. The simulator projects this with exact equality on both host-supplied identity parts. This does not prove native ownership metadata or object schema.
+
+**UNKNOWN (R88o.2-q5):** external events, messages, packet names, candidate acquisition, and every upstream possession-update route remain untraced. The simulator does not invent them. Possession cooldown and number-display inputs remain unmodeled.
+
+**VERIFIED (pinned Retail source):** `TooltipInfoDocumentation.lua:694` declares `GetPossession`; `PossessActionBar.lua:104` calls `GameTooltip:SetPossession`, which `TooltipDataHandler.lua:572` maps to `GetPossession`. `ActionBarController.lua:33,85-87` registers and consumes `UPDATE_POSSESS_BAR`. **VERIFIED (optional test source):** the test invokes the original `PossessButtonMixin.OnEnter` path and checks distinct backed spell IDs. **VERIFIED (optional Retail integration tests):** each of the five possession effect selectors asserts an absent input and distinguishes spell IDs 116 and 133; the event probe reads updated state through the original tooltip consumer.
+
+**VERIFIED (pinned Retail source):** `ChallengeModeInfoDocumentation.lua:264` declares `HasSlottedKeystone`; `SlotKeystone` and `RemoveKeystone` are declared at lines 314 and 291. `Blizzard_ChallengesUI.lua:747-751` checks the predicate before `GameTooltip:SetSlottedKeystone`. Its separate `OnKeystoneSlotted` handler calls `GetSlottedKeystoneInfo` at line 685. **VERIFIED (R88n.4c-q1):** `HasSlottedKeystone` checks only selected-GUID presence, ignores arguments, and returns one Boolean; true does not prove the separate item lookup succeeds.
+
+**VERIFIED (R88o.2 q2/q3):** `SlotKeystone` clears the cursor before deeper validation, stores native mode/selected GUID/associated GUID in that order before the item-data query, and its callback requests `CHALLENGE_MODE_KEYSTONE_SLOTTED` even after terminal no-row. `RemoveKeystone` uses selected-GUID category zero/nonzero for its cursor-stage guard, then returns false for an empty GUID or true and clears the selected/associated GUID and mode for a nonempty GUID; it does not explicitly unlock the selection. **VERIFIED (simulator code):** `SlotKeystone` and `RemoveKeystone` update the state read by both selected tooltip and predicate; `CloseKeystoneFrame` only clears separate receptacle state. **INFERRED (simulator representation):** a selected item-ID cache keeps the resolved tooltip object available after the cursor clear.
+
+**VERIFIED (optional Retail integration tests):** four original-consumer selectors cover cleansing, conversion, possession-bar, and ChallengesUI; cleansing, conversion, and possession each compare absent backing with two distinct supplied values. The lt-c2e4 ItemInteraction consumer/API tests preserve absent, failed, and unsupported-object result boundaries but are not counted as payload selectors. Five direct API cases and the test-defined event probe are supplementary; map rejection, stage denial, no-selection, and unresolved-first-lookup tests are also supplementary. q2 cursor/context test inputs remain INFERRED; no test asserts q3 textual category, staged count, or output cursor-origin projections. **SIMULATOR GAP:** the original event handler's `GetSlottedKeystoneInfo` call is not modeled, so the hover test selects before loading that listener. Native error code 1013 publication/text, associated GUID/mode, item-data/resource notifications, later lock effects, and complete external update/close/clear routes remain unmodeled or UNKNOWN.
+
+### Azerite Essence tooltip selection (R88n.2)
+
+**VERIFIED (Retail 12.1.5.70688, R88n.2):** `GetAzeriteEssence` requires the essence row plus exact selected-rank and rank-one rows, raises rank zero to one, and publishes TooltipData type 8 with the essence ID. An explicit rank bypasses current-rank selection. `GetAzeriteEssenceSlot` uses zero-based slots; slot zero keeps main and passive powers, while the other slots keep only passive power. The original Retail selectors are `Blizzard_AzeriteEssenceUI.lua:866-869,1256-1265` through `TooltipDataHandler.lua:564-565`.
+
+**VERIFIED (Retail 12.1.5.70688, R88n.2):** the main block uses its rank-one description only when the essence is active in the major slot; otherwise it uses selected-rank actual text. The passive block uses its rank-one description whenever the essence is active in any slot; otherwise it uses selected-rank actual text.
+
+**VERIFIED (Retail 12.1.5.70688, R88n.4):** a negative essence ID misses before builder construction. Omitted-rank essence/player/player-state checks and essence population failures occur after construction. Slot player/player-state misses occur before construction; slot population failures occur after it. The simulator follows these boundaries. Tests assert zero-result arity only; they do not assert counter values or native counter sequencing.
+
+**VERIFIED (Retail 12.1.5.70688, R88p.p4):** the source-stage next rank is the original requested rank plus one using unsigned 32-bit arithmetic. Next rank four disables the stage; every other next rank requires an exact essence-and-rank row. At next rank one, an empty selected source omits `SOURCE` and its row; a nonempty source follows `SOURCE` and wraps. At other next ranks, the next-rank heading and source row remain, even when the source is empty; that empty row has type 0, empty `leftText`, and `wrapText=true`.
+
+**VERIFIED (Retail 12.1.5.70688, R88p.p4):** higher-rank output order is the next-rank heading, source row, major-or-gray row when available, then minor row when allowed and available. The inline rows use type 5, wrap, and carry their `powerState`; gray omits the major inline heading. **VERIFIED (simulator source):** the producer uses its existing spell-description data and Azerite essence `unlocked` state. The slot getter omits this stage.
+
+**VERIFIED (Retail 12.1.5.70688, R88p.p4):** no player or an empty second source field selects the first field; otherwise selector result zero selects the second field, and every nonzero result selects the first. **VERIFIED (simulator source):** the simulator accepts an explicit selector-result host input and uses the first field when it is absent. **INFERRED (70391 export):** the generated fields correspond to `SourceAlliance_lang` and `SourceHorde_lang`; the race-to-selector mapping is not implemented. **VERIFIED (repository data):** `RACE_DATA` stores faction labels, while the available 70783 `ChrRaces.csv` has only screen-data columns and is not the 70575 runtime pin.
+
+**VERIFIED (generated catalog):** the 12.1.5.70391 catalog has 28 essence rows and 112 power rows, with no power rank above four. The gray branch needs a rank above four because next rank four disables the stage, so current catalog data cannot reach gray. No row is fabricated. **UNKNOWN (R88p.p4):** requirement-row expansion. See the [Round 7 contract](../../specs/tooltip-r7-getters.md#what-it-must-do) for test coverage and the remaining race-mapping limit.
+
+See the [Round 7 contract](../../specs/tooltip-r7-getters.md#what-it-must-do) and the [consumer investigation](../investigations/consumer-selection-and-red-proof.md#retail-azerite-essence-tooltip-consumers) for the test scope and evidence boundaries.
+
+### Other Round 7 getter notes
+
+VERIFIED within simulator coverage: an owned bag-item GUID with no runeforge power/modifier arguments uses the shared item builder and publishes its supplied displayed level. LFG reward stores remain unavailable.
+
+**VERIFIED (Retail 12.1.5.70688, R88n.4):** `GetRecipeRankInfo` follows supplied parent/successor records, checks spell-store presence, applies the qualitative rank threshold to description colors, and publishes top-level TooltipData type 17 with the requested recipe ID; 17 is not a line type. **INFERRED (simulator):** it passes text-line type 0 to the shared builder. **VERIFIED (R88n.4a):** native rebuild retains duplicate cache keys, inserts new keys, appends/counts/grows the display vector, and projects favorite/crafting-order flags before row copy. **VERIFIED (simulator):** the empty-by-default host cache models first-key retention and lookup only; it does not model the native vector or flags. **VERIFIED (R88n.4b):** the native clear routine has direct callers for trade-skill initialization and rebuild, and dirty state can reach rebuild. **INFERRED (simulator routes):** `OpenTradeSkill` and profession-spell redirection share an initialization helper that clears the host cache; changed recipe filters drain on `begin_tick`, which clears before `TRADE_SKILL_LIST_UPDATE` but does not rebuild rows. **INFERRED (presentation):** color globals and packed RGB, one-based ranks and comparison boundary, the `": "` label delimiter, `TRADESKILL_RANK_HEADER` and `TRADESKILL_NEXT_RANK_HEADER`, blank separators, source placement, `wrapText=true`, cycle handling, and missing-input failure predicates. **PRESERVATION:** zero-arity miss coverage does not establish producer selection; R88n.1 verifies failed-producer arity. Missing-parent/base-spell/color-global predicates are INFERRED. **UNKNOWN:** complete row semantics, upstream data acquisition, all external clear triggers, learned-status meaning and player/faction source lookup. See the [Round 7 tooltip contract](../../specs/tooltip-r7-getters.md).
 
 For `C_Item.GetItemNumSockets`, VERIFIED: Retail/PTR/Forever reject a secret input from tainted execution and can read it from an untainted caller. UNKNOWN: the native publication helper's enable byte and mode do not establish whether the returned count receives a secret tag; the simulator does not claim that policy.
 
@@ -47,6 +152,34 @@ default unchanged; the new presentation operations register only on Retail/PTR.
 Original MerchantFrame buyback hover and the three presentation tests pass on
 both profiles. The full PTR tooltip/library runs retain the same failures as
 the source-matched master baseline; this is not a clean PTR startup claim.
+
+### Retail TooltipData field boundary (R88n.4b)
+
+**VERIFIED (Retail 12.1.5.70688, R88n.4b):** `repairCost` and battle-pet
+fields are TooltipData-level; `price` and `maxPrice` belong on a type-11
+`SellPrice` line. See the [serialization contract](../../specs/tooltip-data-serialization.md).
+**VERIFIED (simulator):** the item catalog supplies `ItemInfo.sell_price`.
+**INFERRED (simulator policy):** `ItemInfo.sell_price` stands in for the initial
+unit-price calculation. Repair cost and battle-pet tooltip fields stay absent
+because those inputs are not modeled. See the [consumer investigation](../investigations/consumer-selection-and-red-proof.md#retail-tooltip-serializer-field-consumers)
+for TOC selection, tests and the quest-cache/LFG seam boundaries.
+
+### Retail SellPrice line (R88p.p1)
+
+**VERIFIED (Retail 12.1.5.70688):** a zero initial unit-price result adds no
+SellPrice row. Eligible rows use type 11, empty `leftText`, the resolved default
+`leftColor`, `price`, and `maxPrice`, which starts at -1. Eligibility also checks
+request mode, item-status suppression, sell-exclusion flags, and the interaction
+preview/exception flags. There is no quality, bound, quest, or merchant-open gate.
+
+**INFERRED:** the masks map to `ItemSparse.Flags_1` 4096 and `Flags_3` 524288;
+the preview exception maps to `Flags_3` 32768. These column names are not present
+in simulator `ItemInfo`, so the simulator does not apply those gates.
+**INFERRED (simulator policy):** the backed `sell_price` is the initial price
+proxy. **UNKNOWN/unmodeled:** per-instance refund/status records, prepared
+quantity recomputation, and calculated-price inputs beyond the stored catalog
+price. With no prepared quantity input, the emitted row keeps `maxPrice = -1`.
+See the [SellPrice contract](../../specs/tooltip-data-serialization.md#retail-sellprice-behavior-r88pp1).
 
 ## Cursor modes and ActionBar transitions
 
@@ -97,6 +230,16 @@ RED/GREEN, checks and exact stock-preservation receipts.
 ## Factory-removal social inputs — 2026-10-21
 
 [The M3 contract](../../specs/c-factory-m3-social-inputs.md) owns profile scope and simulator policies. `c_api::c_guild_info` projects supplied numeric metadata plus existing guild-logo colors into independent DTOs; changing the legacy filename invalidates metadata rather than guessing a file ID. Named temporary social-service defaults cover capability systems that roster, listing and friend data do not model. Unknown members remain nil. Frozen original-consumer and fresh Retail RED precede integrated seven-profile GREEN. The [social contract](../../specs/c-factory-m3-social-inputs.md#bounded-proof--2026-10-21) links final proof and distinguishes newly reached residual queries from this batch.
+
+## Recorded widget secrecy
+
+The [secret-aura contract](../../specs/secret-auras.md#verified-contradiction-audit-at-e29763f8e) owns native evidence labels and remaining gaps. VERIFIED locally for Retail WM61 S6: recorded aspect queries, prevention and anchoring use distinct state. Retail/PTR `Frame.explicit_secret_aspects` feeds aspect queries without deriving bits from prevention, protected or forbidden flags. `Frame.is_anchoring_secret` is a separate host input; no native writer or second-set propagation is invented. Forever retains its separate compatibility behavior. API-level tests check independent state; original `CompactUnitFrame_UpdateName` supplies the positive Text-aspect consumer. Complete native Lua publication, clearing and event taint remain UNKNOWN.
+
+## Secure delegate global
+
+`CreateSecureDelegate` is published on all profiles except Wrath, while `securecopy` is limited to Retail, PTR and WoWForever, matching the pinned API declarations. **VERIFIED from S4s7b emulation:** construction rejects a nonempty execution source before dispatch and returns zero values if the reporting helper returns; the first argument is required and accessible. Invocation applies the captured source shallowly to arguments and the inner call, wraps every function-valued argument when wrapping is enabled, and restores the saved source after a normal return. Reporter effects, target security and complete result publication remain UNKNOWN. **VERIFIED locally:** exact construction, publication and passthrough tests pass on all six applicable profiles; the original Mixin consumer and securecopy tests pass on Retail, PTR and WoWForever. **INFERRED simulator choices:** numeric targets are accepted, and the simulator adds no second report. The focused Mixin test loads the original file directly; it does not establish a startup-selected consumer. The optional Retail `patch_12_0_1_tainted_secret_duration_object` case still fails at `Cooldown:SetCooldownFromDurationObject` with `secret-origin widget readout requires an untainted caller`; that test does not invoke `CreateSecureDelegate`.
+
+The [secure-helper contract](../../specs/secure-helpers.md) owns the evidence boundary and remaining gaps.
 
 ## C API numeric-secret selector boundaries
 
@@ -209,6 +352,10 @@ Shared publisher immediately roots one public table: restricted `startTime`, `du
 Historical pre-producer `e5d11e497` RED: **27 selected, 5 PASS / 22 FAIL**, exit101; 28 authored includes one inverse-gated earlier/Forever test excluded from this run. Five unrestricted spell interval controls pass. Failures reach book0 versus real312/330/310 intervals, disabled shape, ignored bank/offspec/public parsing, authentic-secret conversion and false secrecy metadata. Positive book payload precedes guard credit; downstream opacity/copy/root/GC is not independently RED-proven. Supplied compilation exited0 in **511.677244s, zero diagnostics**; execution **5.977233s**. At that dated producer checkpoint GREEN/acceptance were pending; the historical 192/155/14/1,362 IDs/73 capabilities totals are not current accounting. Spec authored2026-10-02; observed Git author/committer2026-10-02T19:25:49-05:00 and supplied build/run observations remain separate provenance, not native field dates.
 
 [Independent537+541 bounded acceptance](../../specs/spell-book-cooldown-outputs.md#independent-bounded-acceptance--2026-10-02), recorded by `758cdf49c`, supersedes pending claims for exact305/322 outputs only. Current meaningful intervals, book selector/offspec boundaries, trusted-host NUM payloads and Lua opacity/copy/root/GC behavior pass. Modern/legacy grouping equivalence is proved; scopedfmt/check exit0, 27 refreshed + 135 inherited = 162 unique Retail PASS/one ignored, inherited startup `[]`. Post-grouping Forever compile0/legacy1 PASS refreshes one original identity; original64 PASS/1 FAIL/1 ignored retained without duplicate credit. Mask-quad failure makes the whole filter non-green: no cooldown call, applicability rejected, causal preexistence UNRESOLVED. Acceptance checkpoint188 pending/159 bounded/14 partial/1 metadata,362 IDs/75 capabilities. Inferred policies remain explicit; nominal/native types, SpellIdentifier input, future fixture, pet/full banks/UI remain unproved. Dirty-combined/globalfmt1/historical502 failure retained; broader goal open.
+
+## Retail 12.1.5 spell count, visibility, and ranged-ID routes
+
+The [spell count contract](../../specs/spell-count-outputs.md) records R88k.3–.6 and R88m.1–.3. **VERIFIED (Retail 12.1.5.70688):** `GetSpellCastCount` checks Spell-store membership, returns one number, and uses the first eight eligible reagent limits; `GetSpellDisplayCount` selects cast mode from nonzero reagent IDs with positive quantities, including ID -2, before charge mode. **VERIFIED (Retail 12.1.5.70688):** the ranged-auto-attack query compares one shared ID, the metadata mask is 16,777,216, removal clears only an equal ID, and visibility failure/success publish zero or three values. **INFERRED:** `A_Admin.LearnSpell`/`UnlearnSpell` supply scenario update/removal inputs, and the shared context defaults to the active-player model. **UNKNOWN:** native dispatcher meanings, SpellReagents field mapping, alternate inventory modes/inclusion, visibility data tables, and context lifecycle. **VERIFIED (optional tests at code SHA `438ec83e8`):** the selected Retail SpellSearch, CooldownViewer, SpellFlyout, and AuraUtil consumers and direct API contracts pass; all five profile compile receipts report zero warnings, and Retail `lua-errors` is `[]`. The spec and lane report retain the complete proof matrix.
 
 ## Retail 12.0.5 spell cast and display-count outputs
 
@@ -534,6 +681,10 @@ The four-producer pre-fix run at `080833f1d` selected 28 cases: 1 PASS / 27 genu
 
 ## C_* Namespaces
 
+### Retail GlobalColor catalog
+
+[Retail `C_UIColor.GetColors`](global-color-catalog.md) records the generated Retail DB2 snapshot, dual-environment publication, and native/runtime evidence limits.
+
 ### Binary addon encoding
 
 C_EncodingUtil provides Base64, compression and CBOR transformations over raw
@@ -561,7 +712,7 @@ C_Timer (After, NewTimer, NewTicker), C_Map (stub), C_Item (`IsConsumableItem`, 
 
 **Guild management** — `C_GuildInfo.Invite(name)`, `Uninvite(name)`, `Promote(name)`, and `Leave()` share the state-backed handlers used by the deprecated `GuildInvite`, `GuildUninvite`, `GuildPromote`, and `GuildLeave` globals. They update the simulated guild roster/identity and emit the existing roster event behavior. Other `C_GuildInfo` management methods, including `Demote`, `Disband`, `SetLeader`, and `RemoveFromGuild`, remain unsupported because their distinct rank, leadership, disband, or GUID-backed semantics are not modeled.
 
-**Profession specialization boundary** — The temporary `C_ProfSpecs` fixture reports `SkillLineHasSpecialization(164) == true` for the modeled Blacksmithing skill line and `false` for unrelated skill line 165. It does not claim authoritative profession specialization-tree behavior: `GetChildrenForPath()` and the backing path/tree state remain unmodeled, so the full Professions specialization-panel integration test is explicitly ignored rather than supplied with guessed node data.
+**Profession specialization boundary** — The temporary `C_ProfSpecs` fixture reports `SkillLineHasSpecialization(164) == true` for the modeled Blacksmithing skill line and `false` for unrelated skill line 165. It does not claim authoritative profession specialization-tree behavior: `GetChildrenForPath()` and the backing path/tree state remain unmodeled. **VERIFIED locally:** the full Professions specialization-panel integration test stays active only under `optional-tests`; do not supply guessed node data.
 
 **Pet-battle breed quality boundary** — Temporary Lua-owned `C_PetBattles` sample state seeds the five displayed pets with `Enum.BattlePetBreedQuality.Rare` (`3`). `GetBreedQuality(owner, petIndex)` returns that numeric seed or `0` for an absent pet, letting current `PetBattleFrame` OnLoad render rarity without a nil value. This is not a pet-battle model: ownership, breeding, capture, combat outcomes, and live battle data remain unmodeled.
 
@@ -683,7 +834,7 @@ The [owning contract](../../specs/wrath-friends-legacy.md) records static12340 p
 
 ## Retail UiMap catalog
 
-`C_Map.GetMapInfo` checks seeded state first and then the Retail UiMap catalog. The [catalog contract](../../specs/ui-map-info-catalog.md) records the profile boundary, seed precedence, and data provenance limits. Other profiles do not use the Retail catalog.
+`C_Map.GetMapInfo` checks seeded state first and then the Retail UiMap catalog. The [catalog contract](../../specs/ui-map-info-catalog.md) records the profile boundary, seed precedence, and data provenance limits. Other profiles do not use the Retail catalog. The [C_Map user waypoint page](c-map-user-waypoint.md) records the separate session-state model and original WorldMap consumer boundary.
 
 ## Sources
 
@@ -691,6 +842,12 @@ The [owning contract](../../specs/wrath-friends-legacy.md) records static12340 p
 - [UiMap information catalog](../../specs/ui-map-info-catalog.md) — profile scope and provenance.
 - [Wrath legacy friends contract](../../specs/wrath-friends-legacy.md) — native tuple/selection evidence and simulator-policy limits.
 - [Retail unused currency contract](../../specs/currency-unused-mutations.md) — flag scope, original consumers and held grouping.
+- [Retail currency tooltip contract](../../specs/tooltip-currency.md) — R84/R84b verified rows, explicit host inputs and UNKNOWNs.
+- [c_tooltip_info_currency.rs](../../../src/c_api/c_tooltip_info_currency.rs) — shared Retail currency producer; text-row type restoration keeps verified type-0 rows after color remapping.
+- [tooltip_info/builders.rs](../../../src/lua_api/globals/missing_surface/tooltip_info/builders.rs) — shared line builder and color-based type remapping.
+- [Round 7 tooltip contract](../../specs/tooltip-r7-getters.md) — native signatures, getter behavior and explicit unknowns.
+- [Azerite selector](../../../src/c_api/azerite_essence_spell_selector.rs) — isolated inferred spell-column mapping.
+- [Azerite catalog provenance](../../../data/db2/retail-12.1.5.70391/tooltip-azerite-catalog-provenance.json) — exact-build DB2 hashes and row counts.
 
 - [Wrath action callback queries](../../specs/wrath-action-callback-queries.md) — native projections, shared snapshot boundary and bounded proof
 
@@ -847,3 +1004,51 @@ CVars or alternate producers exist; ordinary chat channel membership stays separ
 The [TTS contract](../../specs/c-factory-cf2-tts.md#staged-producer-contract-and-evidence-limits)
 owns default evidence, supported pairs, selection, UNKNOWN mappings and the approved
 non-native fresh=false/Mark=true persistent marker model. The [bounded integration proof](../investigations/cf2-tts-integration.md#bounded-verification) records exact original-consumer GREEN on six registered profiles, the corrected legacy oracle on all seven, stock-map deltas and warning gates. Native parity and full-suite acceptance remain unverified.
+
+## Host-seeded character-customization finalization (R79b/R79c)
+
+Retail and Forever's host-seeded `C_CharacterCreation.GetAvailableCustomizations`
+path sorts categories and each category's options by neutral `stored_order_key`
+inputs, then publishes 1-based `orderIndex` values per list. R79b/R79c answers on
+lt-a912 (#305/#314/#319) verify sorting, numbering and input-order ties for at most
+32 records. Larger lists use no extra tie-breaker; their exact tie order and the
+native depth-limit fallback are not modeled. Choice ordering and the collector
+remain unknown. Unseeded calls still use the unchanged temporary provider, so
+this does not unblock the real Create-button test. Icons enter after the gated
+lookup, and `currentChoiceIndex` is not assumed to select the first match.
+
+Sources: [character-creation spec](../../specs/character-creation-submit.md#r79br79c-host-finalizer-305-314-319),
+`src/c_api/c_character_creation_customizations.rs`, `tests/character_creation_publisher.rs`.
+
+INFERRED source identities (R79b #305; documentary-only plan approved #319):
+category keys originate from `OrderIndex`, option keys from `SecondaryOrderIndex`.
+These names do not define an implemented DB2 adapter or a verified source claim.
+
+
+## PTR character-creation evidence boundary
+
+The [character-creation contract](../../specs/character-creation-submit.md)
+separates verified PTR Glue CreateCharacter/StopAll registrations from inferred
+OnPlayerInteraction/SetPlayerModelHiddenState existence (R78c). No result/list
+payload or timing is invented, and host-only call observations do not rename a
+player or create a roster entry.
+
+R83 verifies the stored camera-zoom reader's Glue route; its single numeric
+return/default policy remains a separate inference. R83b/R83c verify the shared
+signed32 setter, 0..100 clamp, and changed-only custom-marker clearing. PTR
+setter installation and ordinary zero returns/non-boolean optional truthiness
+remain in a separate droppable inferred registration, replacing only its old
+zoom no-op. Camera profile/model rendering effects remain unmodeled. The
+unseeded customization collector is unchanged pending native evidence, so
+camera API progress is not a claim of end-to-end character creation success.
+
+
+## Host category camera zoom (R83d)
+
+Retail/Forever host categories require an explicit signed32 camera zoom and
+always publish it numerically, including zero. The original customization
+consumer retains the supplied value and applies the existing setter's 0..100
+clamp; default coverage uses original customize-entry and category-selection
+methods (#712), stopping short of the unrelated zone-choice API gap. See the [R83d contract](../../specs/character-creation-submit.md#r83d-mandatory-host-category-camera-zoom-679690701).
+No DB2 adapter, PTR category publisher, unseeded category change, or pre-choice
+nil/empty assertion is included. Native category data remains unmodeled.

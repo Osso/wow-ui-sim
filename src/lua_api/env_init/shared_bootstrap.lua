@@ -1194,18 +1194,6 @@ do
       end
     end
 
-    if frameIndex.IsInitialized == nil then
-      function frameIndex:IsInitialized()
-        return type(self.layoutInfo) == "table" or type(self.systemInfo) == "table"
-      end
-    end
-
-    if frameIndex.IsInDefaultPosition == nil then
-      function frameIndex:IsInDefaultPosition()
-        local info = self.systemInfo
-        return type(info) == "table" and info.isInDefaultPosition == true
-      end
-    end
   end
 end
 

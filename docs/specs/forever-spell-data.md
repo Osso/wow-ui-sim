@@ -10,13 +10,13 @@ The Forever profile uses a selected spell-data file derived from the pinned Fore
 - [ ] `wow-cli casc sync-forever-spells` writes the selected data to the Forever profile cache, using the installed Forever build when present or pinned CDN build 1.60.1.70685 otherwise.
 - [ ] The file contains only selected IDs, full table columns, layout hashes and unreadable-record counts.
 - [x] Forever runtime initialization fails with the generation command if the data file is missing. Bundled data or the profile cache supplies the file.
-- [ ] Selected spell names, ranks, icons, schools, targets, descriptions and power costs come from the Forever data. Retail behavior is unchanged.
+- [ ] Selected spell names, ranks, icons, schools, targets, descriptions and power costs come from the Forever data. A missing `SpellPower` row means no power-cost table; the required `Spell`, `SpellName`, `SpellMisc`, and `SpellEffect` rows remain complete. Retail behavior is unchanged.
 - [ ] Forever release packages and Docker images generate and bundle the pinned spell data beside the simulator.
 - [ ] When chunks are zero-filled, do not claim whole-file content-key verification; the strict Blizzard UI downloader remains unchanged.
 
 ## Source equivalence
 
-For build `1.60.1.70685`, local CASC and CDN generation each produced 189,706 bytes with SHA-256 `13122873d813481e85815946ddf964068b04132d4d2b2b44ba5ce61491595ad0`. Both outputs contain 72 selected spell IDs. On 2026-10-30, CDN generation through an HTTPS-only egress proxy, with discovery over HTTPS, reproduced the same 189,706 bytes and SHA-256. The selected rows were also compared with the matching DB2 CSV exports; all fields matched at float32 precision.
+Before the 24705/30754 additions, build `1.60.1.70685` local CASC and CDN generation each produced 189,706 bytes with SHA-256 `13122873d813481e85815946ddf964068b04132d4d2b2b44ba5ce61491595ad0`; both outputs contained 72 selected spell IDs. On 2026-10-30, CDN generation through an HTTPS-only egress proxy, with discovery over HTTPS, reproduced that output. The selected rows were also compared with the matching DB2 CSV exports; all fields matched at float32 precision.
 
 ## How it works
 
@@ -40,6 +40,7 @@ For build `1.60.1.70685`, local CASC and CDN generation each produced 189,706 by
 - `src/forever_spell_data.rs`: selection, deterministic output and zero-filled-range rejection.
 - `src/forever_db2.rs`: WDC5 name record and zero-fill rejection.
 - `tests/issue13_spell_range.rs`: missing-file failure and reporter lookup.
+- `tests/c_spell_probes.rs`: Forever spell metadata and cost-free spell queries.
 
 ## Known gaps (current cycle)
 

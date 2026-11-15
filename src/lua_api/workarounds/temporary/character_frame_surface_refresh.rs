@@ -2,7 +2,8 @@
 //!
 //! The character panel needs title and paper-doll slot refreshes after the
 //! Blizzard display hooks run. Keep this bridge isolated until those surfaces
-//! are driven by the normal frame lifecycle.
+//! are driven by the normal frame lifecycle. Retail title selection itself is
+//! owned by original CharacterFrameMixin:UpdateTitle, never forced to player name.
 
 use crate::lua_api::WowLuaEnv;
 
@@ -97,7 +98,8 @@ if type(PaperDollItemSlotButton_Update) == "function" then
     end
 end
 
-if type(CharacterFrame) == "table"
+if not preserveOriginalCharacterTitle
+    and type(CharacterFrame) == "table"
     and CharacterFrame.TitleContainer
     and CharacterFrame.TitleContainer.TitleText
     and type(CharacterFrame.TitleContainer.TitleText.SetText) == "function" then
@@ -117,7 +119,13 @@ end
 "#;
 
 pub(crate) fn patch(env: &WowLuaEnv) {
-    let _ = env.exec(CHARACTER_FRAME_SURFACE_REFRESH_WORKAROUND_LUA);
+    // A chunk-local policy preserves non-Retail ordering and error behavior;
+    // no public global or Blizzard source is changed.
+    let preserve_original_title = cfg!(feature = "client-retail");
+    let source = format!(
+        "local preserveOriginalCharacterTitle = {preserve_original_title}\n{CHARACTER_FRAME_SURFACE_REFRESH_WORKAROUND_LUA}"
+    );
+    let _ = env.exec(&source);
 }
 
 #[cfg(test)]
@@ -149,6 +157,7 @@ mod tests {
                 end,
                 UpdateTitle = function(self)
                     self.updateTitleCount = (self.updateTitleCount or 0) + 1
+                    self.TitleContainer.TitleText:SetText("original-title")
                 end,
                 RefreshDisplay = function(self)
                     self.refreshCount = (self.refreshCount or 0) + 1
@@ -219,7 +228,12 @@ mod tests {
 
         assert_eq!(refresh_count, 1);
         assert_eq!(title_count, 1);
-        assert_eq!(title_text, "Calia");
+        let expected_title = if cfg!(feature = "client-retail") {
+            "original-title"
+        } else {
+            "Calia"
+        };
+        assert_eq!(title_text, expected_title);
         assert_eq!(slot_updates, 4);
         assert_eq!(head_texture, "equipped-head");
         assert_eq!(neck_texture, "fallback-neck");

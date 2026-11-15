@@ -82,6 +82,17 @@ fn addon_load_failures_remain_diagnostic_without_persistence() {
         let mut stats = LoadStats::default();
         load_discovered_addons(&env, &addons, &mut None, None, &mut stats);
 
+        if name == "BrokenEvent" {
+            let state = env.state().borrow();
+            assert!(
+                state.lua_error_records.iter().any(|record| {
+                    record.addon_name.as_deref() == Some(name)
+                        && record.message.contains(expected_error)
+                }),
+                "event failure must retain its handler owner: {:?}",
+                state.lua_error_records
+            );
+        }
         assert!(stats.fail_count > 0 || stats.total_warnings > 0, "{name}");
         let diagnostics = format!("{:?}", env.state().borrow().lua_errors);
         if !diagnostics.contains(expected_error) {
@@ -89,6 +100,32 @@ fn addon_load_failures_remain_diagnostic_without_persistence() {
                 stats.total_warnings > 0 || stats.load_failed_addons.contains(name),
                 "{name}: {diagnostics}"
             );
+        }
+        if name == "BrokenEvent" {
+            let previous_owner = env
+                .state()
+                .borrow()
+                .addons
+                .iter()
+                .position(|addon| addon.folder_name == "__BuiltIn")
+                .expect("built-in owner") as u16;
+            env.state().borrow_mut().executing_addon_index = Some(previous_owner);
+            env.loader_env()
+                .fire_event_with_args("ADDON_LOADED", &[env.lua_string(name)])
+                .unwrap();
+            let state = env.state().borrow();
+            assert_eq!(state.executing_addon_index, Some(previous_owner));
+            assert_eq!(
+                state
+                    .lua_error_records
+                    .last()
+                    .unwrap()
+                    .addon_name
+                    .as_deref(),
+                Some(name)
+            );
+            drop(state);
+            env.state().borrow_mut().executing_addon_index = None;
         }
         env.finalize_session(&mut None).unwrap();
     }
@@ -168,6 +205,68 @@ fn reload_recovers_failed_addon_without_losing_healthy_saved_variables() {
         .exec(&std::fs::read_to_string(storage.join("HealthyOwner.lua")).unwrap())
         .unwrap();
     restored.exec("assert(BrokenDB.value == 'recovered edit' and HealthyDB.value == 'healthy unsaved edit')").unwrap();
+}
+
+#[test]
+fn save_failed_addons_saves_owners_with_lua_errors_or_missing_files_on_reload_and_finish() {
+    let temp = tempfile::tempdir().unwrap();
+    let broken_toc = write_addon_with_lua(
+        temp.path(),
+        "BrokenOwner",
+        "## SavedVariables: BrokenDB\n",
+        "BrokenDB = { value = 'set before error' }; error('owner initialization failed')",
+    );
+    let missing_toc = write_addon_with_lua(
+        temp.path(),
+        "MissingFileOwner",
+        "## SavedVariables: MissingFileDB\n",
+        "MissingFileDB = { value = 'set after missing file' }",
+    );
+    let toc = std::fs::read_to_string(&missing_toc).unwrap();
+    std::fs::write(
+        &missing_toc,
+        toc.replace("main.lua", "missing.lua\nmain.lua"),
+    )
+    .unwrap();
+    let storage = temp.path().join("saved");
+    let addons = vec![
+        ("BrokenOwner".into(), broken_toc),
+        ("MissingFileOwner".into(), missing_toc),
+    ];
+    let mut env = WowLuaEnv::new().unwrap();
+    env.state().borrow_mut().save_failed_addons = true;
+    let mut manager = Some(SavedVariablesManager::with_storage_dir(storage.clone()));
+    load_discovered_addons(&env, &addons, &mut manager, None, &mut LoadStats::default());
+    let diagnostics = format!("{:?}", env.state().borrow().lua_errors);
+    assert!(
+        diagnostics.contains("owner initialization failed"),
+        "{diagnostics}"
+    );
+    env.set_reload_loader(move |env, manager| {
+        load_discovered_addons(env, &addons, manager, None, &mut LoadStats::default());
+        Ok(())
+    });
+    let read_back = || {
+        let mut restored = rilua::Lua::new().unwrap();
+        for name in ["BrokenOwner", "MissingFileOwner"] {
+            restored
+                .exec(&std::fs::read_to_string(storage.join(format!("{name}.lua"))).unwrap())
+                .unwrap();
+        }
+        restored
+            .exec(
+                "assert(BrokenDB.value == 'set before error' \
+                 and MissingFileDB.value == 'set after missing file')",
+            )
+            .unwrap();
+    };
+
+    env.exec("ReloadUI()").unwrap();
+    assert!(env.service_reload(&mut manager).unwrap());
+    read_back();
+    std::fs::remove_dir_all(&storage).unwrap();
+    env.finalize_session(&mut manager).unwrap();
+    read_back();
 }
 
 #[test]
@@ -448,20 +547,18 @@ fn third_party_lod_discovery_preserves_screen_game_and_interface_filters() {
         "IncompatibleLazy",
         "## Interface: 999999\n## LoadOnDemand: 1\nmain.lua\n",
     );
+    // R13 (pr46-49-decomp-answers.md): insecure TOCs ignore AllowLoad and
+    // retain Game. Mapping ordinary third-party AddOns to this mode is INFERRED
+    // (R64 Q1); game-type and interface-version filters still apply.
     let game = scan_addons(temp.path(), &[], ScreenKind::Game);
     let glue = scan_addons(temp.path(), &[], ScreenKind::CharacterSelect);
     assert_eq!(
         game.iter()
             .map(|(name, _)| name.as_str())
             .collect::<Vec<_>>(),
-        ["GameLazy"]
+        ["GameLazy", "GlueLazy"]
     );
-    assert_eq!(
-        glue.iter()
-            .map(|(name, _)| name.as_str())
-            .collect::<Vec<_>>(),
-        ["GlueLazy"]
-    );
+    assert!(glue.is_empty(), "user addons must not enter Glue discovery");
 }
 
 #[cfg(feature = "retail-12-1-0")]
@@ -604,6 +701,18 @@ fn load_summary_counts_file_event_and_nested_lua_failures_once_per_addon() {
     assert!(recorded.contains("EventBroken"), "{recorded:?}");
     assert!(recorded.contains("NestedChild"), "{recorded:?}");
     assert!(recorded.contains("MissingDependency"), "{recorded:?}");
+    let event_errors: Vec<_> = state
+        .lua_error_records
+        .iter()
+        .filter(|record| record.message.contains("event failure"))
+        .collect();
+    assert_eq!(event_errors.len(), 2, "{event_errors:?}");
+    assert!(
+        event_errors
+            .iter()
+            .all(|record| record.addon_name.as_deref() == Some("EventBroken")),
+        "callbacks during another addon's load must retain their own owner: {event_errors:?}"
+    );
     for name in [
         "Healthy",
         "FileBroken",
