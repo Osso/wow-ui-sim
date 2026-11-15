@@ -1,10 +1,13 @@
 //! Host-supplied cache and object inputs for
 //! `C_TooltipInfo.GetQuestLogSpecialItem`.
 //!
-//! Quest-ID request context, cached quest fields, and the selected inventory
-//! object are separate because their native writers remain unknown.
+//! Cache writers remain host inputs. The Retail callback list models the
+//! verified request, arrival and record-destruction paths.
 
 use std::collections::{HashMap, HashSet};
+
+use crate::client_profile::{ACTIVE, ClientProfile};
+use crate::lua_api::state::SimState;
 
 #[derive(Debug, Clone, Default)]
 pub struct QuestSpecialItemInputs {
@@ -22,6 +25,166 @@ pub struct QuestSpecialItemInputs {
     pub host_cache_updates: Vec<QuestSpecialItemCacheUpdate>,
     /// Pending callback entries, grouped by their owning quest-cache record.
     pub pending_callbacks: HashMap<i32, Vec<QuestSpecialItemPendingCallback>>,
+}
+
+impl QuestSpecialItemInputs {
+    pub(crate) fn save_quest_record_callback(&mut self, quest_id: i32) {
+        let token = self
+            .request_tokens_by_quest_id
+            .get(&quest_id)
+            .copied()
+            .unwrap_or_default();
+        let incoming = QuestSpecialItemPendingCallback {
+            callback: QuestSpecialItemCallback::QuestRecordData,
+            token,
+            extra_context: Vec::new(),
+        };
+        let callbacks = self.pending_callbacks.entry(quest_id).or_default();
+        if callbacks
+            .iter()
+            .any(|saved| is_duplicate_callback(saved, &incoming))
+        {
+            return;
+        }
+        callbacks.push(incoming);
+    }
+}
+
+fn is_duplicate_callback(
+    saved: &QuestSpecialItemPendingCallback,
+    incoming: &QuestSpecialItemPendingCallback,
+) -> bool {
+    let same_callback_and_context =
+        saved.callback == incoming.callback && saved.extra_context == incoming.extra_context;
+    let token_matches =
+        !incoming.token.high_part_marker || saved.token.words == incoming.token.words;
+    same_callback_and_context && token_matches
+}
+
+const CALLBACK_MODE_READY: u8 = 0;
+const CALLBACK_MODE_UNREADY_REMOVAL: u8 = 1;
+const CALLBACK_MODE_DESTROYED: u8 = 4;
+
+pub(crate) fn process_host_cache_updates(sim: &mut SimState) {
+    if ACTIVE != ClientProfile::Retail {
+        return;
+    }
+    let updates = std::mem::take(
+        &mut sim
+            .quest_log_entries
+            .quest_special_item_inputs
+            .host_cache_updates,
+    );
+    for update in updates {
+        match update {
+            QuestSpecialItemCacheUpdate::RecordArrived {
+                quest_id,
+                record,
+                success,
+            } => process_record_arrival(sim, quest_id, record, success),
+            QuestSpecialItemCacheUpdate::RecordDestroyed { quest_id } => {
+                process_record_destruction(sim, quest_id)
+            }
+        }
+    }
+}
+
+fn process_record_arrival(
+    sim: &mut SimState,
+    quest_id: i32,
+    record: QuestSpecialItemCacheRecord,
+    success: bool,
+) {
+    let callbacks = {
+        let inputs = &mut sim.quest_log_entries.quest_special_item_inputs;
+        inputs.not_ready_cache_records.remove(&quest_id);
+        inputs.cached_quest_records.insert(quest_id, record);
+        inputs
+            .pending_callbacks
+            .get(&quest_id)
+            .cloned()
+            .unwrap_or_default()
+    };
+    invoke_pending_callbacks(sim, quest_id, &callbacks, CALLBACK_MODE_READY, success);
+    sim.quest_log_entries
+        .quest_special_item_inputs
+        .pending_callbacks
+        .remove(&quest_id);
+}
+
+fn process_record_destruction(sim: &mut SimState, quest_id: i32) {
+    let (was_not_ready, callbacks) = {
+        let inputs = &sim.quest_log_entries.quest_special_item_inputs;
+        (
+            inputs.not_ready_cache_records.contains(&quest_id),
+            inputs
+                .pending_callbacks
+                .get(&quest_id)
+                .cloned()
+                .unwrap_or_default(),
+        )
+    };
+    if was_not_ready {
+        invoke_pending_callbacks(
+            sim,
+            quest_id,
+            &callbacks,
+            CALLBACK_MODE_UNREADY_REMOVAL,
+            false,
+        );
+    }
+    invoke_pending_callbacks(sim, quest_id, &callbacks, CALLBACK_MODE_DESTROYED, false);
+    let inputs = &mut sim.quest_log_entries.quest_special_item_inputs;
+    inputs.pending_callbacks.remove(&quest_id);
+    inputs.not_ready_cache_records.remove(&quest_id);
+    inputs.cached_quest_records.remove(&quest_id);
+}
+
+fn invoke_pending_callbacks(
+    sim: &mut SimState,
+    quest_id: i32,
+    callbacks: &[QuestSpecialItemPendingCallback],
+    mode: u8,
+    success: bool,
+) {
+    for callback in callbacks {
+        match callback.callback {
+            QuestSpecialItemCallback::QuestRecordData => quest_record_data_callback(
+                sim,
+                quest_id,
+                callback.token,
+                &callback.extra_context,
+                mode,
+                success,
+            ),
+        }
+    }
+}
+
+fn quest_record_data_callback(
+    sim: &mut SimState,
+    _quest_id: i32,
+    _token: QuestSpecialItemRequestToken,
+    _extra_context: &[u8],
+    mode: u8,
+    success: bool,
+) {
+    if mode != CALLBACK_MODE_READY || !success {
+        return;
+    }
+    queue_quest_log_update(sim);
+}
+
+fn queue_quest_log_update(sim: &mut SimState) {
+    if sim
+        .events
+        .pending()
+        .iter()
+        .any(|event| event.name == "QUEST_LOG_UPDATE")
+    {
+        return;
+    }
+    sim.events.push_simple("QUEST_LOG_UPDATE");
 }
 
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
