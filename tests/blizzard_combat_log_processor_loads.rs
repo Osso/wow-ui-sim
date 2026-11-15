@@ -105,7 +105,7 @@ fn blizzard_combat_log_base_dependency_loads_util_into_secure_environment(env: &
                 and type(secureUtil) == 'table' \
                 and type(secureUtil.GenerateDamageResultString) == 'function'",
         )
-        .expect("CombatLogUtil secure replay query should succeed");
+        .expect("CombatLogUtil secure dependency query should succeed");
     assert!(
         util_loaded_from_secure_dependency,
         "Blizzard_CombatLogBase should publish CombatLogUtil in both _G and __secureenv"

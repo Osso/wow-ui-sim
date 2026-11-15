@@ -69,7 +69,7 @@ fn blizzard_catalog_shop_shared_util_secure_dependency_loads_helpers(env: &WowLu
                 and type(secureUtil.GetPlayerActorLabelTag) == 'function' \
                 and type(secureUtil.CreateDefaultProductDisplayData) == 'function'",
         )
-        .expect("CatalogShopUtil secure replay query should succeed");
+        .expect("CatalogShopUtil secure dependency query should succeed");
     assert!(
         helpers_loaded_from_secure_dependency,
         "Blizzard_CatalogShopSharedUtil should publish CatalogShopUtil helpers in both _G and __secureenv"
