@@ -353,7 +353,13 @@ indirect resource effects remain outside this bounded non-3D model.
 Comment 82 supplies Forever 70707 and Retail 70688 evidence. Two optional session
 values, boost type and GUID, start absent and are separate from active purchase
 and trial-service inputs. The getters/writers are installed in Game and Glue on
-Retail/Forever before the existing protected-global wrappers. PTR is unchanged.
+Retail/Forever before the existing protected-global wrappers. PTR publication of
+the same four members is INFERRED from R54 Retail VERIFIED evidence
+(`pr46-49-decomp-answers.md:4584`, coordinator lt-941b1296) and the selected PTR
+consumer calls at `CharacterSelect.lua:2153,2160-2161,2182-2183`. The latter two
+are explicit nil Set* calls already covered by the bounded R54 writer cases.
+Generated docs declare these APIs in no pinned cache. Producers, registration
+flags and protected refusal policy are unchanged.
 Tainted callers keep the existing report-and-return refusal without a combat
 condition; no new access rule is added.
 
