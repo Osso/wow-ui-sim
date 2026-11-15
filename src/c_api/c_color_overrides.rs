@@ -75,7 +75,7 @@ pub(crate) fn register(lua: &mut rilua::Lua) -> LuaResult<()> {
 }
 
 /// Save the current records to playerColorOverrides; lifecycle callers choose when.
-pub(crate) fn save_color_overrides(state: &mut LuaState) -> LuaResult<()> {
+pub fn save_color_overrides(state: &mut LuaState) -> LuaResult<()> {
     let records = collect_persisted_overrides(state);
     let serialized = encode_persisted_overrides(&records)?;
     let accepted = borrow_state_mut(state)?
@@ -90,7 +90,7 @@ pub(crate) fn save_color_overrides(state: &mut LuaState) -> LuaResult<()> {
 }
 
 /// Load playerColorOverrides and replace active records; lifecycle stays external.
-pub(crate) fn load_color_overrides(state: &mut LuaState) -> LuaResult<()> {
+pub fn load_color_overrides(state: &mut LuaState) -> LuaResult<()> {
     let serialized = borrow_state(state)?
         .cvars
         .get(PLAYER_COLOR_OVERRIDES_CVAR)
