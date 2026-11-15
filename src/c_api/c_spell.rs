@@ -163,12 +163,12 @@ const SPELL_QUERY_METHODS: &[(&str, SpellScriptFn)] = &[
     ("GetSpellName", get_spell_name),
     ("GetSpellCooldown", get_spell_cooldown),
     ("GetSpellCharges", get_spell_charges),
-    #[cfg(feature = "retail-12-0-0")]
+    #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
     (
         "GetSpellCastCount",
         super::c_spell_counts::get_spell_cast_count,
     ),
-    #[cfg(feature = "retail-12-0-5")]
+    #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
     (
         "GetSpellDisplayCount",
         super::c_spell_counts::get_spell_display_count,
@@ -942,7 +942,7 @@ fn is_ranged_auto_attack_spell(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-#[cfg(feature = "retail-12-1-5")]
+#[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
 pub(crate) fn read_retail_spell_identifier(
     state: &LuaState,
     value: Val,
@@ -971,7 +971,7 @@ pub(crate) fn read_retail_spell_identifier(
     }
 }
 
-#[cfg(feature = "retail-12-1-5")]
+#[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
 fn parse_retail_spell_number(number: f64, api: &str, usage: &str) -> LuaResult<Option<u32>> {
     if !number.is_finite() || number < f64::from(i32::MIN) || number > f64::from(i32::MAX) {
         return Err(super::helpers::bad_argument(1, api, usage));

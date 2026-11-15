@@ -653,8 +653,11 @@ pub struct SimState {
     #[cfg(feature = "retail-12-0-0")]
     pub spell_cast_counts: HashMap<u32, u32>,
     /// Generic verified selector pairs; native SpellReagents field mapping is not modeled.
-    #[cfg(feature = "retail-12-0-5")]
+    #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
     pub spell_reagent_pairs: HashMap<u32, Vec<(i32, i32)>>,
+    /// Empty-default reagent metadata and nested-container input relationships.
+    #[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
+    pub spell_reagent_inventory: crate::c_api::spell_reagent_inventory::SpellReagentInventory,
     /// Host-supplied visibility rows; a missing row publishes three false values on success.
     pub spell_visibility_results: Option<HashMap<(u32, u8), (bool, bool, bool)>>,
     /// Explicit cooldown-output policy input, independent of combat and unit stats.

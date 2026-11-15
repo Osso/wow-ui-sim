@@ -1,3 +1,7 @@
+## [2026-11-15] implementation | Spell-count R88r and Forever
+
+[Spell-count corrections](investigations/spell-count-r88p.md) records verified numeric-path replacement bypass and accepted-secret conversion, with inferred Forever applicability through original selected CooldownViewer Lua. Forever count defaults are retired; metadata-source guards and property decoding remain unmodeled.
+
 ## [2026-11-15] correction | Retail tooltip sell-price contract
 
 Updated the [tooltip serialization contract](../specs/tooltip-data-serialization.md) and [Lua API](systems/lua-api.md#retail-sellprice-line-r88pp1). **VERIFIED (R88p.p1):** an initial zero price omits type 11; emitted rows have empty text, default color, and `maxPrice` initialized to -1. The original Retail `SetItemByID` test checks two distinct backed prices and a zero-price item. **INFERRED:** `ItemInfo.sell_price` proxies the native unit-price calculation and the native masks map to ItemSparse column names. **UNKNOWN/unmodeled:** flag/status/preview and prepared-quantity inputs are absent from `ItemInfo`.
@@ -3935,3 +3939,7 @@ Recorded lt-05d0's exact parent/child bisection and original eager CatalogShop
 publisher omission in [Lua-owned fallback retirement](investigations/lua-owned-fallback-retirement.md#catalogshop-eager-ownership-in-partial-panel-fixtures-lt-05d0).
 The correction supplies original Game TOC dependencies only on ACTIVE Retail;
 assertions and retired simulator fallbacks are unchanged.
+
+## 2026-11-15 | lt-67d2 spell-count R88p correction
+
+Recorded exact historical first-failing boundaries and cache-freshness qualification; linked native R88k/R88p width, reagent/storage and error evidence to the corrected API tests and explicit UNKNOWN seams.

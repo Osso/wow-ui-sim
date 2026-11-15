@@ -523,8 +523,10 @@ macro_rules! build_empty_sim_state {
             spell_cast_context_is_null: None,
             #[cfg(feature = "retail-12-0-0")]
             spell_cast_counts: ::std::collections::HashMap::new(),
-            #[cfg(feature = "retail-12-0-5")]
+            #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
             spell_reagent_pairs: ::std::collections::HashMap::new(),
+            #[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
+            spell_reagent_inventory: Default::default(),
             spell_visibility_results: None,
             cooldowns_restricted: false,
             #[cfg(feature = "retail-12-0-5")]
