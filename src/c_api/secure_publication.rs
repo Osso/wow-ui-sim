@@ -297,33 +297,33 @@ fn publish_to_both(
 ) -> LuaResult<bool> {
     let ordinary = function_value(ordinary);
     let secure = function_value(secure);
-    if let (Some(ordinary), Some(secure)) = (ordinary, secure) {
-        update_changed_dual_handler(
-            state,
-            namespace,
-            member,
-            flag,
-            ordinary,
-            secure,
-            previous_ordinary,
-            previous_secure,
-        )?;
+    if let Some(ordinary) = ordinary {
+        if let Some(secure) = secure {
+            update_changed_dual_handler(
+                state,
+                namespace,
+                member,
+                flag,
+                ordinary,
+                secure,
+                previous_ordinary,
+                previous_secure,
+            )?;
+        } else {
+            set_member_in_both(state, namespace, member, ordinary, flag)?;
+        }
+        return Ok(true);
+    }
+    if let Some(secure) = secure {
+        if matches!(previous_ordinary, Val::Function(_)) {
+            remove_namespace_member(state, namespace, member, true, true)?;
+            return Ok(false);
+        }
+        set_member_in_both(state, namespace, member, secure, flag)?;
         return Ok(true);
     }
 
-    let function = ordinary.or(secure);
-    if let Some(function) = function
-        && !(ordinary.is_none() && matches!(previous_ordinary, Val::Function(_)))
-    {
-        set_member_in_both(state, namespace, member, function, flag)?;
-        return Ok(true);
-    }
-
-    if secure.is_some() || matches!(previous_ordinary, Val::Function(_)) {
-        remove_namespace_member(state, namespace, member, true, true)?;
-    } else {
-        remove_stale_secure_handler(state, namespace, member, previous_ordinary, previous_secure)?;
-    }
+    remove_stale_secure_handler(state, namespace, member, previous_ordinary, previous_secure)?;
     Ok(false)
 }
 
