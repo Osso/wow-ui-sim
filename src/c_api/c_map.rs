@@ -512,7 +512,6 @@ fn append_ui_map_catalog_children(
 ) {
     let mut parent_links = crate::ui_maps::UI_MAP_DB
         .entries()
-        .iter()
         .filter_map(|(ui_map_id, info)| {
             let ui_map_id = i32::try_from(*ui_map_id).ok()?;
             if maps.contains_key(&ui_map_id) {
