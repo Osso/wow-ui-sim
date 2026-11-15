@@ -74,18 +74,22 @@ fn install_event_probe(env: &WowLuaEnv) {
         r#"
         PendingSelectionEvents = {}
         PendingOrderEvents = {}
+        PendingHideEvents = {}
         PendingEventProbe = CreateFrame("Frame")
         for _, event in ipairs({
             "ITEM_INTERACTION_ITEM_SELECTION_UPDATED", "ITEM_LOCK_CHANGED",
             "ITEM_LOCKED", "ITEM_UNLOCKED", "CURSOR_CHANGED",
+            "PLAYER_INTERACTION_MANAGER_FRAME_HIDE",
         }) do
             PendingEventProbe:RegisterEvent(event)
         end
-        PendingEventProbe:SetScript("OnEvent", function(_, event, location)
+        PendingEventProbe:SetScript("OnEvent", function(_, event, payload)
             table.insert(PendingOrderEvents, event)
-            if event == "ITEM_INTERACTION_ITEM_SELECTION_UPDATED" then
-                table.insert(PendingSelectionEvents, location
-                    and PendingLocationIDs[location.bagID .. ":" .. location.slotIndex]
+            if event == "PLAYER_INTERACTION_MANAGER_FRAME_HIDE" then
+                table.insert(PendingHideEvents, payload)
+            elseif event == "ITEM_INTERACTION_ITEM_SELECTION_UPDATED" then
+                table.insert(PendingSelectionEvents, payload
+                    and PendingLocationIDs[payload.bagID .. ":" .. payload.slotIndex]
                     or false)
             end
         end)
@@ -130,7 +134,7 @@ fn clear_from_original_slot(env: &WowLuaEnv) {
 }
 
 fn clear_event_history(env: &WowLuaEnv) {
-    env.exec("PendingSelectionEvents = {}; PendingOrderEvents = {}")
+    env.exec("PendingSelectionEvents = {}; PendingOrderEvents = {}; PendingHideEvents = {}")
         .unwrap();
 }
 
@@ -426,7 +430,14 @@ fn pending_item_close_ui_leaves_selection_unchanged() {
         assert!(!state.active_player_interactions.contains(&44));
         assert!(state.active_player_interactions.contains(&43));
     }
-    env.exec("assert(#PendingSelectionEvents == 0)").unwrap();
+    env.exec(
+        "assert(#PendingSelectionEvents == 0 and #PendingHideEvents == 1 and PendingHideEvents[1] == 44)",
+    )
+    .unwrap();
+    clear_event_history(&env);
+    env.exec("C_ItemInteraction.CloseUI()")
+        .expect("inactive selector 44 does not request a hide notification");
+    env.exec("assert(#PendingHideEvents == 0)").unwrap();
     clear_from_original_slot(&env);
     assert_no_selected_tooltip(&env);
 }
