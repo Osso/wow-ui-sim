@@ -543,7 +543,7 @@ pub(crate) mod restricted_actions;
 
 pub(crate) use helpers::{
     ensure_enum_table, ensure_global_table, ensure_namespace, ensure_namespace_table_field,
-    ensure_paired_table_field, global_val, mark_namespace_keys_removed,
+    ensure_paired_table_field, ensure_secure_namespace, global_val, mark_namespace_keys_removed,
     register_namespace_function_with_flags, register_namespace_value_with_flags,
     register_unknown_namespace_function, set_global_val, set_namespace_member,
 };
@@ -560,6 +560,10 @@ use rilua::vm::state::LuaState;
 
 pub(crate) fn update_screen_registration(state: &mut LuaState) -> LuaResult<()> {
     c_character_creation_trial_boost::update_screen_registration(state)
+}
+
+pub(crate) fn publish_simulator_store_secure_members(state: &mut LuaState) -> LuaResult<()> {
+    c_store_secure::publish_simulator_members_to_secure(state)
 }
 
 fn supports_super_tracking() -> bool {

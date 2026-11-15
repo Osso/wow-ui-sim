@@ -147,6 +147,11 @@ pub(crate) fn ensure_namespace(
     ensure_namespace_pair(state, name).map(|(ordinary, _)| ordinary)
 }
 
+pub(crate) fn ensure_secure_namespace(state: &mut LuaState, name: &str) -> LuaResult<GcRef<Table>> {
+    let secure_parent = crate::lua_api::globals::security::secure_env_table(state)?;
+    Ok(ensure_table_at_parent(state, secure_parent, name))
+}
+
 pub(crate) fn register_namespace_function_with_flags(
     state: &mut LuaState,
     namespace: &str,

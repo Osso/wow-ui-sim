@@ -84,6 +84,7 @@ pub(super) fn init_lua_state(
     trace_debug_getter_values(lua, "after_globals_register");
     trace_debug_getter_values(lua, "before_runtime_bootstrap");
     bootstrap::init_runtime_surface_bootstrap(lua)?;
+    crate::c_api::publish_simulator_store_secure_members(lua.state_mut())?;
     trace_debug_getter_values(lua, "after_runtime_bootstrap");
     #[cfg(feature = "retail-12-1-0")]
     super::globals::security::register_retail_secret_values(lua)?;

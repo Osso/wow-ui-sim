@@ -14,6 +14,42 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     table_set_rust_fn_static(state, namespace, "GetProductGroups", get_product_groups)
 }
 
+pub(crate) fn publish_simulator_members_to_secure(state: &mut LuaState) -> LuaResult<()> {
+    if !crate::client_profile::is_active_retail_12_1_5() {
+        return Ok(());
+    }
+
+    // INFERRED (R88g.3-q1 pending): secure Retail Store UI needs this
+    // simulator-owned API surface.
+    let ordinary = super::global_val(state, "C_StoreSecure");
+    let Val::Table(ordinary) = ordinary else {
+        return Err(rilua::runtime_error(
+            "C_StoreSecure must be registered before secure publication",
+        ));
+    };
+    let secure = super::ensure_secure_namespace(state, "C_StoreSecure")?;
+    let members = state
+        .gc
+        .tables
+        .get(ordinary)
+        .ok_or_else(|| rilua::runtime_error("C_StoreSecure namespace is unavailable"))?
+        .hash_entries();
+
+    let strings = &state.gc.string_arena;
+    let secure_table = state
+        .gc
+        .tables
+        .get_mut(secure)
+        .ok_or_else(|| rilua::runtime_error("secure C_StoreSecure namespace is unavailable"))?;
+    for (key, value) in members {
+        if matches!(key, Val::Str(_)) && matches!(value, Val::Function(_)) {
+            secure_table.raw_set(key, value, strings)?;
+        }
+    }
+    state.gc.barrier_back(secure);
+    Ok(())
+}
+
 fn get_product_groups(state: &mut LuaState) -> LuaResult<u32> {
     let store = super::global_val(state, "__wow_store_state");
     let groups = table_get_static(state, store, "productGroups");
@@ -62,4 +98,26 @@ fn read_group_ids(state: &mut LuaState, groups: GcRef<Table>) -> LuaResult<Vec<V
             }
         })
         .collect()
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::lua_api::WowLuaEnv;
+
+    #[cfg(feature = "client-retail")]
+    #[test]
+    fn secure_store_ui_can_call_simulated_product_list() {
+        if !crate::client_profile::is_active_retail_12_1_5() {
+            return;
+        }
+
+        let env = WowLuaEnv::new().expect("Lua environment should initialize");
+        env.exec_rilua_secure("SecureStoreProductListResult = C_StoreSecure.GetProductList()")
+            .expect("secure Store UI can call the simulated product-list API");
+
+        let result: bool = env
+            .eval("return rawget(__secureenv, 'SecureStoreProductListResult') == true")
+            .expect("secure product-list result should be readable");
+        assert!(result);
+    }
 }
