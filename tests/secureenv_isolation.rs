@@ -156,6 +156,16 @@ fn secure_addon_loads_nonsecure_dependency_in_ordinary_then_secure_environment()
     let consumer_dir = root.path().join("SecureConsumerProbe");
     std::fs::create_dir_all(&dependency_dir).unwrap();
     std::fs::create_dir_all(&consumer_dir).unwrap();
+    env.exec(
+        r#"
+        local trace = {}
+        rawset(_G, "r88tSecureDependencyTrace", trace)
+        rawset(__secureenv, "r88tSecureDependencyTrace", trace)
+        rawset(_G, "r88tSecureEnvironment", __secureenv)
+        rawset(__secureenv, "r88tSecureEnvironment", __secureenv)
+        "#,
+    )
+    .unwrap();
     std::fs::write(
         dependency_dir.join("DependencyProbe.toc"),
         "## Title: DependencyProbe\nDependency.lua\n",
@@ -163,7 +173,9 @@ fn secure_addon_loads_nonsecure_dependency_in_ordinary_then_secure_environment()
     .unwrap();
     std::fs::write(
         dependency_dir.join("Dependency.lua"),
-        "dependencyLoadCount = (dependencyLoadCount or 0) + 1; \
+        "local mode = getfenv(1) == r88tSecureEnvironment and 'secure' or 'ordinary'; \
+         table.insert(r88tSecureDependencyTrace, 'dependency:' .. mode); \
+         dependencyLoadCount = (dependencyLoadCount or 0) + 1; \
          dependencyToken = 'secure-visible'; \
          function getDependencyToken() return dependencyToken end",
     )
@@ -183,12 +195,29 @@ fn secure_addon_loads_nonsecure_dependency_in_ordinary_then_secure_environment()
          assert(rawget(_G, 'coroutine') == nil); \
          assert(getfenv(getDependencyToken) == _G); \
          assert(getDependencyToken() == 'secure-visible'); \
+         table.insert(r88tSecureDependencyTrace, 'consumer:secure'); \
          secureConsumerSawDependency = true",
     )
     .unwrap();
 
     let result = wow_ui_sim::loader::load_addon(&env.loader_env(), &consumer_toc).unwrap();
     assert!(result.warnings.is_empty(), "{:?}", result.warnings);
+    let trace: String = env
+        .eval("return table.concat(r88tSecureDependencyTrace, ',')")
+        .unwrap();
+    let ordinary_request = trace
+        .find("dependency:ordinary")
+        .expect("ordinary dependency request should execute its file");
+    let secure_request = trace
+        .find("dependency:secure")
+        .expect("secure dependency request should execute its file");
+    let consumer = trace
+        .find("consumer:secure")
+        .expect("secure consumer file should execute after its dependency");
+    assert!(
+        ordinary_request < secure_request && secure_request < consumer,
+        "ordinary request, secure request, and consumer must stay ordered: {trace}"
+    );
     let observed: (i32, i32, bool, bool, bool, bool) = env
         .eval(
             r#"
@@ -249,63 +278,6 @@ fn secure_addon_loads_nonsecure_dependency_in_ordinary_then_secure_environment()
         )
         .unwrap();
     assert_eq!(counts_after, counts_before);
-}
-
-#[test]
-fn secure_dependency_request_runs_after_ordinary_file_diagnostics() {
-    let env = env();
-    let root = tempfile::tempdir().unwrap();
-    let dependency_dir = root.path().join("DependencyDiagnosticProbe");
-    let consumer_dir = root.path().join("SecureDependencyConsumerProbe");
-    std::fs::create_dir_all(&dependency_dir).unwrap();
-    std::fs::create_dir_all(&consumer_dir).unwrap();
-    env.exec(
-        r#"
-        local trace = {}
-        rawset(_G, "r88tSecureDependencyTrace", trace)
-        rawset(__secureenv, "r88tSecureDependencyTrace", trace)
-        rawset(_G, "r88tSecureEnvironment", __secureenv)
-        rawset(__secureenv, "r88tSecureEnvironment", __secureenv)
-        "#,
-    )
-    .unwrap();
-
-    std::fs::write(
-        dependency_dir.join("DependencyDiagnosticProbe.toc"),
-        "## Title: DependencyDiagnosticProbe\nDependency.lua\n",
-    )
-    .unwrap();
-    std::fs::write(
-        dependency_dir.join("Dependency.lua"),
-        "local mode = getfenv(1) == r88tSecureEnvironment and 'secure' or 'ordinary'; \
-         table.insert(r88tSecureDependencyTrace, 'dependency:' .. mode); \
-         if mode == 'ordinary' then error('ordinary file diagnostic') end",
-    )
-    .unwrap();
-    let consumer_toc = consumer_dir.join("SecureDependencyConsumerProbe.toc");
-    std::fs::write(
-        &consumer_toc,
-        "## Title: SecureDependencyConsumerProbe\n\
-         ## UseSecureEnvironment: 1\n\
-         ## Dependencies: DependencyDiagnosticProbe\n\
-         Consumer.lua\n",
-    )
-    .unwrap();
-    std::fs::write(
-        consumer_dir.join("Consumer.lua"),
-        "secureConsumerLoaded = true",
-    )
-    .unwrap();
-
-    // This file error is a Lua diagnostic, not evidence of a failed AddOn load request.
-    let _ = wow_ui_sim::loader::load_addon(&env.loader_env(), &consumer_toc);
-    let trace: String = env
-        .eval("return table.concat(r88tSecureDependencyTrace, ',')")
-        .unwrap();
-    assert!(
-        trace.contains("dependency:secure"),
-        "the secure dependency request must run after ordinary file diagnostics: {trace}"
-    );
 }
 
 #[test]
