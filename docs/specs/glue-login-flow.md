@@ -315,9 +315,16 @@ the two other failures are PTR feedback discovery/file-list expectations.
 Retail 70575 defines the always-true function in unfiltered shared
 FloatingChatFrame.lua:40, replacing GlueParent.lua:909's screen-aware policy.
 Comment 99 retracts the earlier stale-pin diagnosis: the installed 70783 CASC
-root also lacks FloatingChatFrameGame.lua, so a pin refresh will not fix this.
-The native ordering/filtering/visibility explanation is UNKNOWN pending R62.
-R62 below narrows the unsupported Retail visibility assertion without changing runtime behavior.
+root also lacks `FloatingChatFrameGame.lua`, so a pin refresh will not add it.
+**VERIFIED (local Retail 12.1.5.70783, build key
+`bc493ecb2898766c0f8947a99b4b3d65`, CDN key
+`3363ac656da5f261cdc675ab28b2744c`, 2026-11-15):** FDID `8547105` has no
+local root-resolution row, and the selected Gethe manifest omits
+`Blizzard_ChatFrameBase/Shared/FloatingChatFrameGame.lua`. The refreshed pin
+therefore does not supply that source. **UNKNOWN:** the native ordering,
+filtering, and visibility rule for Retail Glue Login; follow-up `lt-0de8`
+tracks that question. R62 narrows the unsupported Retail visibility assertion
+without changing runtime behavior.
 
 
 ### R52 background lookup and supplied row boundary

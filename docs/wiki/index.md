@@ -1,3 +1,7 @@
+## [2026-11-15] revision | Retail Blizzard UI 70783 CDN metadata
+
+[Client profiles](systems/client-profiles.md#runtime-cache) links the regenerated Retail 70783 identity and index. The 4,026-path manifest and the Retail patch-API cache hashes remain unchanged; the CDN key and one archive location changed. **VERIFIED (local CASC root):** FDID 8547105 remains absent. **UNKNOWN:** native Retail Glue Login chat visibility; see the [Glue Login contract](../specs/glue-login-flow.md#r62-retail-chat-evidence-boundary) and follow-up `lt-0de8`.
+
 ## [2026-11-15] revision | Recipe-rank cache and keystone tooltip boundaries
 
 [Round 7 getter contract](../specs/tooltip-r7-getters.md) and [Lua API](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) record R88n.4a cache insertion semantics and the modeled keystone selection/event/item-lookup path. **UNKNOWN:** exact keystone detail-row projection and whether recipe ranks use Azerite specialization wording; exact questions are recorded in the contract. The exact detail-row projection remains unmodeled.

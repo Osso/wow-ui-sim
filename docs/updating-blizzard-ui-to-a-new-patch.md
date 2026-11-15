@@ -50,7 +50,17 @@ python3 tools/gen_blizzard_ui_retail_index.py \
 python3 tools/gen_limited_listfile.py
 ```
 
-The local community listfile used for the November 12, 2026 pin has SHA256 `486bb1d1c5a87cc136c7824857a391ab0b07c6f50bbc724e104fc5f18e320741`. A new remote refresh was blocked by the listfile content scanner, so this pin used that existing local copy; it does not claim a fresh listfile release. The 70783 manifest does not contain `Blizzard_ChatFrameBase/Shared/FloatingChatFrameGame.lua`; the authenticated installed root also has no enUS FDID `8547105` entry. This does not establish Glue login behavior. See the lane report for exact hashes, source differences, baseline and runtime results.
+The local community listfile used for the November 12, 2026 pin has SHA256 `486bb1d1c5a87cc136c7824857a391ab0b07c6f50bbc724e104fc5f18e320741`. A new remote refresh was blocked by the listfile content scanner, so that pin used the existing local copy; it did not claim a fresh listfile release.
+
+### Retail 70783 metadata refresh — November 15, 2026
+
+**VERIFIED (read-only local CASC):** the selected `.build.info` row still identifies `wow` 12.1.5.70783 and build key `bc493ecb2898766c0f8947a99b4b3d65`, but its CDN key is now `3363ac656da5f261cdc675ab28b2744c`; the hash-verified CDN config SHA256 is `59a99ec2e2dfbbec29cf6d66fbe3cccc49153a7a928f25a4d4ef03c01165ee3c`.
+
+**VERIFIED (regenerated inputs):** the refreshed community listfile is 153,950,356 bytes with SHA256 `c95a29658b1274d8c7cb33f1d629ffe8be8b6dcb2b7bb9177414dcd5a48e0e21`. Gethe `live` revision `297d7aaaa736f346b3e036f38ee088eaf7f8c07f` and the refreshed mappings regenerate the same 4,026-path Retail manifest, SHA256 `4c597e051c5162c6b0c33b61ceb7cc9927925e7d59eb938bf6c097a1f8af3e3b`; the limited listfile remains 147,015 rows and byte-identical.
+
+**VERIFIED (index diff):** `retail.json` changes only the CDN key and the archive/offset for `Blizzard_PlayerChoice/Blizzard_PlayerChoiceOptionBase.lua`: archive `57ce50e34891a0e2b94d52493dfbf6d0` / offset `268375954` becomes `94cc7ea780e99e2e5c5f06d1330e8608` / offset `54867714`. Its FileDataID `4070223`, content key `d92a0eeeae0965ee69ce9317a22e1b21`, encoding key and decoded size remain unchanged; the private cached bytes match that content key. The three Retail `data/patch-api/*.json` target cache hashes remain unchanged because the Retail path manifest is unchanged.
+
+**VERIFIED (local Retail root):** FDID `8547105` has no resolution row, and the 70783 manifest still omits `Blizzard_ChatFrameBase/Shared/FloatingChatFrameGame.lua`. This pin does not add that file. **UNKNOWN:** the native Retail Glue Login chat visibility mechanism; see [the Glue Login contract](specs/glue-login-flow.md#r62-retail-chat-evidence-boundary) and follow-up `lt-0de8`.
 
 To retarget, select one exact installed Retail build, verify the `.build.info` identity and build/CDN config hashes, pin the matching immutable Gethe revision, refresh the community listfile when permitted, regenerate the manifest and CDN index, and verify the source keys and archive index records. Then sync to a private runtime cache, verify every downloaded range and decoded content key, capture the baseline from that matching isolated runtime, and update the pin and manifest together. Do not use Gethe content as a runtime fallback.
 
