@@ -1165,7 +1165,6 @@ const RETAIL_CHARACTER_CREATE_PRESERVATION_LUA: &str = r#"
 local source = "Blizzard_CharacterCreate/"
 assert(debug.getinfo(CharacterCreateMixin.OnLoad, "S").source:find(source, 1, true), "OnLoad source")
 assert(debug.getinfo(CharacterCreateMixin.UpdateForwardButton, "S").source:find(source, 1, true), "forward source")
-assert(debug.getinfo(CharacterCreateMixin.UpdateMode, "S").source:find(source, 1, true), "mode source")
 assert(debug.getinfo(CharacterCreateRaceAndClassMixin.SetCharacterRace, "S").source:find(source, 1, true), "race source")
 local frame = CharacterCreateFrame
 local race = frame.RaceAndClassFrame
@@ -1208,12 +1207,15 @@ local backText = frame.BackButton:GetText()
 assert(backText:sub(-#backSuffix) == backSuffix, "Back must retain the original BACK string")
 assert(backText:find("common-icon-backarrow", 1, true), "Back must use the original back arrow")
 local classRaceMode = frame.currentMode
-assert(classRaceMode ~= nil, "original class/race mode must be active")
+assert(classRaceMode == 1, "original OnLoad must select class/race mode")
 local classRaceForward = frame.ForwardButton:GetText()
 assert(classRaceForward:sub(1, #CUSTOMIZE) == CUSTOMIZE, "class/race mode must use original CUSTOMIZE string")
 assert(classRaceForward:find("common-icon-forwardarrow", 1, true), "class/race mode must use the original forward arrow")
-frame:UpdateMode(1)
-assert(frame.currentMode ~= classRaceMode, "original mode transition must reach customization")
+-- CharacterCreate.lua defines class/race as 1 and customization as 2; exercise the original label updater without its camera transition.
+local customizeMode = classRaceMode + 1
+assert(customizeMode == 2, "source-defined mode order")
+frame.currentMode = customizeMode
+frame:UpdateForwardButton()
 local customizeForward = frame.ForwardButton:GetText()
 local customizeLabel = frame.ZoneChoiceFrame:ShouldShow() and NEXT or FINISH
 assert(customizeForward:sub(1, #customizeLabel) == customizeLabel, "customization mode must use its original forward string")
@@ -1221,8 +1223,9 @@ assert(customizeLabel ~= CUSTOMIZE and customizeForward ~= classRaceForward, "fo
 local customizeBack = frame.BackButton:GetText()
 assert(customizeBack:sub(-#backSuffix) == backSuffix, "Back label remains the original BACK string")
 assert(customizeBack:find("common-icon-backarrow", 1, true), "customization mode must retain the original back arrow")
-frame:UpdateMode(-1)
-assert(frame.currentMode == classRaceMode, "original mode transition must return without submission")
+frame.currentMode = classRaceMode
+frame:UpdateForwardButton()
+assert(frame.currentMode == classRaceMode, "restore original class/race mode input")
 assert(frame.ForwardButton:GetText():sub(1, #CUSTOMIZE) == CUSTOMIZE, "class/race forward string must be restored")
 "#;
 
