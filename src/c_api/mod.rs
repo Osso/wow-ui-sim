@@ -678,3 +678,5 @@ fn register_token_texture_xml_tables(state: &mut LuaState) -> LuaResult<()> {
     c_ui_file_asset::register_c_ui_file_asset(state)?;
     c_xml_util::register_c_xml_util(state)
 }
+
+pub mod lfg_reward_writer;
