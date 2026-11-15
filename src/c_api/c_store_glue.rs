@@ -20,6 +20,7 @@ const GLUE: &[Member] = &[
     ("UpdateVASPurchaseStates", request_refresh),
 ];
 const SECURE: &[Member] = &[
+    ("GetVASErrors", get_vas_errors),
     ("SetDisconnectOnLogout", set_disconnect),
     ("SetVASProductReady", set_ready),
 ];
@@ -137,6 +138,21 @@ fn get_purchase(state: &mut LuaState) -> LuaResult<u32> {
     }
     Ok(3)
 }
+// VERIFIED R88w.w1 (#1308): rejection precedes source access; the cause is UNKNOWN.
+fn get_vas_errors(state: &mut LuaState) -> LuaResult<u32> {
+    if borrow_state(state)?.store_glue.vas_errors_entry_rejected {
+        return Ok(0);
+    }
+    let snapshot = borrow_state_mut(state)?.store_glue.vas_errors_snapshot();
+    pending_error(state, "GetVASErrors")?;
+    let errors = create_table(state);
+    state.push(errors);
+    for (index, value) in snapshot.into_iter().enumerate() {
+        set_table_array(state, errors, index as i64 + 1, Val::Num(f64::from(value)));
+    }
+    Ok(1)
+}
+
 fn get_disconnect(state: &mut LuaState) -> LuaResult<u32> {
     let value = borrow_state(state)?.store_glue.disconnect_on_logout;
     pending_error(state, "GetDisconnectOnLogout")?;

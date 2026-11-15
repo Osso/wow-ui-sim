@@ -1,4 +1,4 @@
-# Store Glue VAS state: R88q
+# Store Glue VAS state: R88q and R88w
 
 ## Native evidence and boundaries
 
@@ -12,14 +12,14 @@
 
 ## Neutral host seams and later questions
 
-Coordinator dispositions1283/1285 preserve the following unresolved boundaries:
+The original dispositions1283/1285 established these seams; the R88w sections below resolve individual contracts in separately verified changes:
 
 - Explicit empty-by-default resolved-GUID/alias input; no guessed GUID grammar and no claim that every unrecognized/noncanonical string is malformed. R88w.w2 is pending. Purchase states and queue-character records are separate inputs.
 - Queue correlation is opaque host data. Simulator request counters do not establish native width, overflow or wire layout. No public packet name/opcode is invented.
 - Restriction metadata is explicit; Lua taint alone is not treated as native restricted-execution metadata. Secret helpers apply only to matching known contracts.
 - Completion values/flags and state>1 permission have neutral explicit inputs; their service meanings are UNKNOWN. Pending errors are host supplied and are not automatically cleared.
-- `STORE_VAS_PURCHASE_ERROR` payload is UNKNOWN (pending R88w.w1): **do not dispatch this event at all**, including with an empty guessed payload. The separate error list is always cleared first; copy eligibility remains an explicit neutral false input pending R88w.w4. No unconditional error-copy claim is made.
-- `VAS_CHARACTER_STATE_CHANGED` payload shape is UNKNOWN pending R88w.w3. Tests establish name/order and callback-visible state only, not a zero-payload contract.
+- R88w.w1 verifies zero purchase-error payload; event publication is pending its separate implementation step. Copy eligibility still uses the earlier neutral host input until the separate w4 change; neither pending behavior is claimed as implemented here.
+- R88w.w3 verifies zero state-change payload. Removal of the earlier host payload seam and its zero-arity tests are a separate pending implementation step.
 - Cleanup failures, complete protected-wrapper exits, exhaustive lifecycle clears, and server behavior remain unmodeled rather than receiving guessed fallbacks.
 
 ## Selected original Retail consumers
@@ -62,3 +62,13 @@ Coordinator1293 retains the pre-existing R79 `character_creation_submit_real_con
 **INFERRED relationship:** refresh is asynchronous, based on request submission and separate receive callbacks. No proven one-to-one request/response correlation, response arrival, or ordering between independent receive types is claimed.
 
 PTR and Forever applicability is separately [INFERRED from their selected consumers](../store-glue-inferred-profiles.md), not native declaration parity.
+
+## R88w.w1 shared error reader (lt-941b #1308, disposition #1310)
+
+VERIFIED Retail 12.1.5.70688: `C_StoreSecure.GetVASErrors` normally returns one independent table of ascending distinct signed32 error numbers with consecutive one-based keys. Empty source produces an empty table. The reader sorts and compacts unique values into the existing source prefix before snapshotting and before its pending-error check. It retains source length/count/capacity, does not consume the source, and does not truncate duplicates from the stored vector. The returned table does not alias that storage. Per-character purchase-record errors remain separate.
+
+The entry restriction's cause is UNKNOWN. Per #1310, `vas_errors_entry_rejected` is an explicit host input, default false; rejection returns zero Lua values before reading or modifying the shared list. It is not inferred from taint and emits no invented forbidden event. Later pending errors do not roll back completed source sorting/compaction. Native cleanup and allocation-release lifetime are not established as a Lua getter operation.
+
+The selected original consumer is `VASErrorData_GetCombinedMessage`, `Shared/VASErrorLookup.lua:365-380`, approved by #1310. Native facts are Retail-only; publication on the already-modeled PTR/Forever profiles retains the separately labeled inferred applicability boundary. The three reader selectors passed after their baseline RED runs; existing R88q selectors also passed. Error-event publication, callback copy gates, state-change arity, and GUID parsing are separate subsequent changes.
+
+The modeled profiles retire the unconditional empty-table `runtime_surface_bootstrap.lua` GetVASErrors override. Its scoped legacy branch remains for unmodeled profiles; the later nil-only fallback cannot overwrite this native reader.

@@ -42,6 +42,8 @@ pub struct StoreGlueState {
     pub submissions: Vec<StoreRequest>,
     pub completion_data: Vec<u8>,
     pub purchase_errors: Vec<i32>,
+    /// UNKNOWN rejection cause; explicit host entry-check result (#1310), default false.
+    pub vas_errors_entry_rejected: bool,
     pub callbacks: StoreCallbacks,
     /// Host supplies/clears this; no inferred consume-on-read behavior.
     pub pending_error: Option<String>,
@@ -51,6 +53,20 @@ pub struct StoreGlueState {
     pub secret_access_mode: Option<i32>,
 }
 impl StoreGlueState {
+    /// VERIFIED R88w.w1 (#1308): sort/compact before snapshot; retain source count.
+    pub fn vas_errors_snapshot(&mut self) -> Vec<i32> {
+        self.purchase_errors.sort_unstable();
+        let mut distinct = 0;
+        for index in 0..self.purchase_errors.len() {
+            let value = self.purchase_errors[index];
+            if distinct == 0 || self.purchase_errors[distinct - 1] != value {
+                self.purchase_errors[distinct] = value;
+                distinct += 1;
+            }
+        }
+        self.purchase_errors[..distinct].to_vec()
+    }
+
     pub fn prepare_queue_request(&mut self, guid: &str) {
         let Some(row) = self.queue_characters.iter().find(|row| row.guid == guid) else {
             return;

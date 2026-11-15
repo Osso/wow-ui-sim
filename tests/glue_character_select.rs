@@ -3403,3 +3403,291 @@ const R88Q_CONTRACT_SERVICE_RESULTS: &str = r#"
         assert(state==6 and product.productID==189 and #errors==2 and errors[1]==-37 and errors[2]==0)
     end
 "#;
+
+// R88w native contracts exercised through selected original Glue consumers.
+// R88w consumer/assertion bodies stay identical across the thin host-route adapters.
+#[cfg(feature = "optional-tests")]
+mod storeglue_r88w {
+    use super::*;
+    use wow_ui_sim::c_api::store_glue_model::VasPurchaseRecord;
+    const A: &str = "Player-1-a1";
+    const B: &str = "Player-2-b2";
+    const N: &str = "Player-3-c3";
+    fn active() -> bool {
+        // VERIFIED Retail; INFERRED PTR/Forever applicability (#1283/#1306).
+        r88q_profile_active()
+    }
+    fn record(product_id: i32, state: i32, errors: &[i32]) -> VasPurchaseRecord {
+        VasPurchaseRecord {
+            product_id,
+            state,
+            errors: errors.to_vec(),
+        }
+    }
+    fn fixture() -> common::LockedEnv {
+        let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+        seed_r88q_product_inputs(&env);
+        {
+            let mut sim = env.state().borrow_mut();
+            let s = &mut sim.store_glue;
+            s.purchase_states = [
+                (A.into(), record(2003, 3, &[17, 0, -4])),
+                (B.into(), record(189, 4, &[0, 29])),
+            ]
+            .into_iter()
+            .collect();
+            s.purchase_errors = vec![91];
+        }
+        r88w_input::seed_guid_aliases(&env);
+        r88w_input::install_callbacks(&env);
+        env.exec(R88W_RECORDS).unwrap(); // Original consumer before assertions/routes.
+        env.exec(R88W_LISTENER).unwrap();
+        env
+    }
+    fn copied(env: &WowLuaEnv) -> Vec<i32> {
+        env.state().borrow().store_glue.purchase_errors.clone()
+    }
+    #[test]
+    fn error_notification_is_zero_payload_before_record_removal_including_lookup_miss() {
+        test_timeout! {
+            if !active() {return;}
+            let env=fixture();
+            r88w_input::remove(&env,A,0,vec![51,0,-4]);
+            env.exec("R88wCountAfterA=#R88wEvents").unwrap();
+            r88w_input::remove(&env,B,1,vec![-37,0]);
+            env.exec("R88wCountAfterB=#R88wEvents").unwrap();
+            r88w_input::remove(&env,N,0,vec![81]);
+            env.exec("assert(R88wCountAfterA==2); assert(R88wEvents[1].event=='STORE_VAS_PURCHASE_ERROR' and R88wEvents[1].argc==0 and R88wEvents[1].a==3 and R88wEvents[1].b==4); assert(R88wEvents[2].event=='VAS_CHARACTER_STATE_CHANGED' and R88wEvents[2].a==0 and R88wEvents[2].b==4)").unwrap();
+            env.exec("assert(R88wCountAfterB==4); assert(R88wEvents[3].event=='STORE_VAS_PURCHASE_ERROR' and R88wEvents[3].argc==0 and R88wEvents[3].b==4); assert(R88wEvents[4].event=='VAS_CHARACTER_STATE_CHANGED' and R88wEvents[4].b==0)").unwrap();
+            env.exec("assert(#R88wEvents==5); assert(R88wEvents[5].event=='STORE_VAS_PURCHASE_ERROR' and R88wEvents[5].argc==0 and R88wEvents[5].n==0)").unwrap();
+        }
+    }
+    #[test]
+    fn native_shared_error_copy_gate_replaces_and_clears_independently_of_record_match() {
+        test_timeout! {
+            if !active() {return;}
+            let env=fixture();
+            let mut snapshots=Vec::new();
+            for (state,errors) in [(0,vec![0,29]),(1,vec![51,0,-4]),(0,vec![-37]),(1,vec![]),(0,vec![19])] {
+                r88w_input::remove(&env,N,state,errors);
+                snapshots.push(copied(&env));
+                env.exec("R88wGateCounts=R88wGateCounts or {}; table.insert(R88wGateCounts,#R88wEvents)").unwrap();
+            }
+            r88w_input::service(&env,N,record(189,4,&[23]),None);
+            let cleared=copied(&env);
+            env.exec("table.insert(R88wGateCounts,#R88wEvents)").unwrap();
+            assert!(snapshots[0].is_empty());
+            env.exec("assert(R88wGateCounts[1]==0)").unwrap();
+            assert_eq!(snapshots[1],vec![51,0,-4]);
+            assert_eq!(snapshots[2],vec![-37]);
+            assert!(snapshots[3].is_empty());
+            assert!(cleared.is_empty());
+            env.exec(R88W_RECORDS).unwrap();
+        }
+    }
+    #[test]
+    fn bulk_state_changed_is_single_zero_payload_after_full_replacement_and_empty_list() {
+        test_timeout! {
+            if !active() {return;}
+            let env=fixture();
+            r88w_input::bulk(&env,vec![(A.into(),record(189,6,&[31])),(B.into(),record(2003,2,&[-23]))]);
+            env.exec("R88wBulkA=CharacterSelectListUtil.GetVASInfoForGUID('Player-1-a1'); R88wBulkB=CharacterSelectListUtil.GetVASInfoForGUID('Player-2-b2'); R88wBulkCount=#R88wEvents").unwrap();
+            r88w_input::bulk(&env,vec![]);
+            env.exec("assert(R88wBulkA==6 and R88wBulkB==2); assert(R88wBulkCount==1 and R88wEvents[1].argc==0 and R88wEvents[1].a==6 and R88wEvents[1].b==2 and R88wEvents[1].n==0)").unwrap();
+            env.exec("assert(#R88wEvents==2 and R88wEvents[2].argc==0 and R88wEvents[2].a==0 and R88wEvents[2].b==0)").unwrap();
+        }
+    }
+    #[test]
+    fn removal_state_changed_is_zero_payload_only_after_matching_removal() {
+        test_timeout! {
+            if !active() {return;}
+            let env=fixture();
+            r88w_input::remove(&env,N,0,vec![]);
+            r88w_input::remove(&env,A,0,vec![]);
+            r88w_input::remove(&env,B,1,vec![]);
+            env.exec("assert(#R88wEvents==2); for _,event in ipairs(R88wEvents) do assert(event.event=='VAS_CHARACTER_STATE_CHANGED' and event.argc==0 and event.n==0) end; assert(R88wEvents[1].a==0 and R88wEvents[1].b==4); assert(R88wEvents[2].a==0 and R88wEvents[2].b==0)").unwrap();
+        }
+    }
+    #[test]
+    fn service_state_changed_is_zero_payload_after_permitted_update_only() {
+        test_timeout! {
+            if !active() {return;}
+            let env=fixture();
+            r88w_input::service(&env,N,record(189,6,&[31]),None);
+            r88w_input::service(&env,A,record(189,6,&[31]),Some(true));
+            r88w_input::service(&env,B,record(2003,2,&[-23]),Some(true));
+            env.exec("assert(#R88wEvents==2); for _,event in ipairs(R88wEvents) do assert(event.event=='VAS_CHARACTER_STATE_CHANGED' and event.argc==0 and event.n==0) end; assert(R88wEvents[1].a==6 and R88wEvents[1].b==4); assert(R88wEvents[2].a==6 and R88wEvents[2].b==2)").unwrap();
+        }
+    }
+    fn probe_reader(env: &WowLuaEnv, label: &str, guid: &str, input: Vec<i32>) -> Vec<i32> {
+        env.state().borrow_mut().store_glue.purchase_errors = input;
+        env.exec(&format!("R88wProbeReader({label:?},{guid:?})"))
+            .unwrap();
+        copied(env)
+    }
+    #[test]
+    fn shared_error_reader_original_message_consumer_sees_sorted_unique_snapshots() {
+        test_timeout! {
+            if !active() {return;}
+            let env=fixture();
+            env.exec(R88W_READER_CAPTURE).unwrap();
+            let a=probe_reader(&env,"a",A,vec![-3,-7,-3]);
+            let b=probe_reader(&env,"b",B,vec![-2,-11,-2,-11]);
+            let absent=probe_reader(&env,"n",N,vec![]);
+            // Every original-consumer invocation and both direct reads ran before assertions.
+            env.exec(R88W_READER_ASSERT).unwrap();
+            assert_eq!(a.len(),3); assert_eq!(&a[..2],&[-7,-3]);
+            assert_eq!(b.len(),4); assert_eq!(&b[..2],&[-11,-2]);
+            assert!(absent.is_empty()); // Compacted tail values deliberately unspecified.
+            env.exec(R88W_RECORDS).unwrap();
+        }
+    }
+    #[test]
+    fn shared_error_reader_entry_rejection_returns_no_values_without_reading_source() {
+        test_timeout! {
+            if !active() {return;}
+            let env=fixture();
+            r88w_input::set_entry_rejected(&env,true);
+            let a=denied_probe(&env,A,vec![-3,-7,-3]);
+            let b=denied_probe(&env,B,vec![-2,-11,-2,-11]);
+            let n=denied_probe(&env,N,vec![]);
+            r88w_input::set_entry_rejected(&env,false);
+            env.exec("assert(#R88wDeniedResults==3); for _,r in ipairs(R88wDeniedResults) do assert(not r.original[1] and r.count[1] and r.count[2]==0) end").unwrap();
+            assert_eq!(a,vec![-3,-7,-3]);
+            assert_eq!(b,vec![-2,-11,-2,-11]);
+            assert!(n.is_empty());
+            env.exec(R88W_RECORDS).unwrap();
+        }
+    }
+    fn denied_probe(env: &WowLuaEnv, guid: &str, input: Vec<i32>) -> Vec<i32> {
+        env.state().borrow_mut().store_glue.purchase_errors = input;
+        env.exec(&format!("R88wDeniedResults=R88wDeniedResults or {{}}; table.insert(R88wDeniedResults,{{original={{pcall(VASErrorData_GetCombinedMessage,{guid:?})}},count={{pcall(function() return select('#',C_StoreSecure.GetVASErrors()) end)}}}})")).unwrap();
+        copied(env)
+    }
+    #[test]
+    fn shared_error_reader_sorts_source_before_pending_error_without_reducing_count() {
+        test_timeout! {
+            if !active() {return;}
+            let env=fixture();
+            let a=pending_probe(&env,A,vec![-3,-7,-3]);
+            let b=pending_probe(&env,B,vec![-2,-11,-2,-11]);
+            let n=pending_probe(&env,N,vec![]);
+            env.state().borrow_mut().store_glue.pending_error=None;
+            env.exec("for _,v in ipairs(R88wPendingResults) do assert(not v[1] and tostring(v[2]):find('host-reader-pending',1,true)) end; assert(#R88wPendingResults==3)").unwrap();
+            assert_eq!(a.len(),3); assert_eq!(&a[..2],&[-7,-3]);
+            assert_eq!(b.len(),4); assert_eq!(&b[..2],&[-11,-2]);
+            assert!(n.is_empty());
+            env.exec(R88W_RECORDS).unwrap();
+        }
+    }
+    fn pending_probe(env: &WowLuaEnv, guid: &str, input: Vec<i32>) -> Vec<i32> {
+        {
+            let mut sim = env.state().borrow_mut();
+            sim.store_glue.purchase_errors = input;
+            sim.store_glue.pending_error = Some("host-reader-pending".into());
+        }
+        env.exec(&format!("R88wPendingResults=R88wPendingResults or {{}}; table.insert(R88wPendingResults,{{pcall(VASErrorData_GetCombinedMessage,{guid:?})}})")).unwrap();
+        copied(env)
+    }
+
+    const R88W_LISTENER: &str = r#"
+    R88wEvents={}
+    local frame=CreateFrame('Frame')
+    frame:RegisterEvent('STORE_VAS_PURCHASE_ERROR')
+    frame:RegisterEvent('VAS_CHARACTER_STATE_CHANGED')
+    frame:SetScript('OnEvent',function(self,event,...)
+        local a=CharacterSelectListUtil.GetVASInfoForGUID('Player-1-a1')
+        local b=CharacterSelectListUtil.GetVASInfoForGUID('Player-2-b2')
+        local n=CharacterSelectListUtil.GetVASInfoForGUID('Player-3-c3')
+        table.insert(R88wEvents,{event=event,argc=select('#',...),a=a,b=b,n=n})
+    end)
+    R88wFrame=frame
+"#;
+    const R88W_READER_CAPTURE: &str = r#"
+    R88wReaderResults={}
+    function R88wProbeReader(label,guid)
+        local result={original={pcall(VASErrorData_GetCombinedMessage,guid)}}
+        local function read() return select('#',C_StoreSecure.GetVASErrors()), C_StoreSecure.GetVASErrors() end
+        result.first={pcall(read)}
+        result.second={pcall(read)}
+        if result.first[1] and type(result.first[3])=='table' then result.first[3][1]=999 end
+        result.independent={pcall(read)}
+        R88wReaderResults[label]=result
+    end
+"#;
+    const R88W_READER_ASSERT: &str = r#"
+    local source=debug.getinfo(VASErrorData_GetCombinedMessage,'S')
+    assert(source.source:find('VASErrorLookup.lua',1,true) and source.linedefined==365)
+    for _,case in ipairs({{'a',{-7,-3}},{'b',{-11,-2}},{'n',{}}}) do
+        local result=R88wReaderResults[case[1]]
+        local expected=case[2]
+        local messages={}
+        for _,value in ipairs(expected) do table.insert(messages,VASErrorData_GetMessage(value,nil)) end
+        local message=table.concat(messages,'\n')
+        if message=='' then message=BLIZZARD_STORE_VAS_ERROR_OTHER end
+        assert(result.original[1] and result.original[2]==message)
+        for _,snapshot in ipairs({result.second,result.independent}) do
+            assert(snapshot[1] and snapshot[2]==1 and type(snapshot[3])=='table')
+            assert(#snapshot[3]==#expected)
+            for i,value in ipairs(expected) do assert(snapshot[3][i]==value) end
+        end
+        assert(result.first[1] and result.first[2]==1 and type(result.first[3])=='table')
+    end
+"#;
+
+    const R88W_RECORDS: &str = r#"
+    local a, ae, ap = CharacterSelectListUtil.GetVASInfoForGUID('Player-1-a1')
+    local b, be, bp = CharacterSelectListUtil.GetVASInfoForGUID('Player-2-b2')
+    local n, ne = CharacterSelectListUtil.GetVASInfoForGUID('Player-3-c3')
+    assert(a==3 and ap.productID==2003 and ae[1]==17 and ae[2]==0 and ae[3]==-4)
+    assert(b==4 and bp.productID==189 and type(be)=='table' and #be==0)
+    assert(n==0 and type(ne)=='table' and #ne==0)
+"#;
+
+    mod r88w_input {
+        use super::*;
+        use wow_ui_sim::c_api::store_glue_model::{self as model, VasPurchaseRecord};
+        pub fn install_callbacks(env: &WowLuaEnv) {
+            env.state().borrow_mut().store_glue.callbacks.state_changed = true;
+            // No purchase_error field exists on this actual baseline; listener is installed.
+            // GREEN adapter additionally sets the new native callback-present seam true.
+        }
+        pub fn set_entry_rejected(env: &WowLuaEnv, rejected: bool) {
+            // #1310: actual neutral entry-check result, not a replacement getter.
+            env.state()
+                .borrow_mut()
+                .store_glue
+                .vas_errors_entry_rejected = rejected;
+        }
+        pub fn seed_guid_aliases(env: &WowLuaEnv) {
+            let mut sim = env.state().borrow_mut();
+            for guid in [A, B, N] {
+                sim.store_glue
+                    .resolved_guid_aliases
+                    .insert(guid.as_bytes().to_vec(), guid.into());
+            }
+        }
+        pub fn remove(env: &WowLuaEnv, guid: &str, state: i32, errors: Vec<i32>) {
+            assert!(matches!(state, 0 | 1));
+            model::receive_removal(env, guid, errors, true, &[rilua::Val::Num(77.0)]).unwrap();
+        }
+        pub fn bulk(env: &WowLuaEnv, records: Vec<(String, VasPurchaseRecord)>) {
+            model::receive_bulk(env, records, &[rilua::Val::Num(77.0)]).unwrap();
+        }
+        pub fn service(
+            env: &WowLuaEnv,
+            guid: &str,
+            record: VasPurchaseRecord,
+            permitted: Option<bool>,
+        ) {
+            model::receive_service_update(
+                env,
+                guid.into(),
+                record,
+                permitted,
+                &[rilua::Val::Num(77.0)],
+            )
+            .unwrap();
+        }
+    }
+}

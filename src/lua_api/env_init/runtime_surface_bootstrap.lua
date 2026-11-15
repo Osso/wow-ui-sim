@@ -561,8 +561,10 @@ end
 C_StoreSecure.GetLastProductListResponseError = function()
   return 0
 end
-C_StoreSecure.GetVASErrors = function()
-  return {}
+if not modeledStoreGlue then
+  C_StoreSecure.GetVASErrors = function()
+    return {}
+  end
 end
 C_StoreSecure.RequestRealmGuildMasterInfo = function(virtualRealmAddress)
   FireEvent("STORE_GUILD_MASTER_INFO_RECEIVED", virtualRealmAddress)
