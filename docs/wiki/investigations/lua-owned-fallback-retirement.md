@@ -123,17 +123,22 @@ four XML Texture objects.
 
 | Candidate | Retail disposition | Original-consumer preservation evidence |
 |---|---|---|
-| Selected-state seeds | **REMOVED (Retail only)** | `CharacterCreateRaceAndClassMixin:UpdateState` at Lua:1634-1674 reads the selected race and class. The test selects Pandaren and Orc, then Demon Hunter and Death Knight, and checks the resulting selected records and faction. |
-| Empty `BGTex` table | **REMOVED (Retail only)** | XML:244,252-274 owns the array and its four textures. The test checks four actual Texture objects and exercises the original overlay consumer. |
-| Back/Forward replay | **REMOVED (Retail only)** | Original `CharacterCreateMixin:OnLoad` sets the Back label at Lua:88, and `UpdateForwardButton` owns the forward label. The test checks each label with its original arrow atlas. |
-| Overlay alpha error fallback | **REMOVED (Retail only)** | Original `UpdateBackgroundOverlays` at Lua:404-423 selects alpha from class, race and faction. The test observes Pandaren 0.75, Horde Orc 0.6, Demon Hunter 0.7, and Death Knight 0.8. |
+| Selected-state seeds | **REMOVED (Retail only)** | `CharacterCreateRaceAndClassMixin:UpdateState` at Lua:1634-1674 reads the selected race and class. The test observes Human/Alliance and Orc/Horde, then Pandaren, Demon Hunter and Death Knight records through original setters. The contrasting faction outputs reject a constant faction producer. |
+| Empty `BGTex` table | **REMOVED (Retail only)** | XML:244,252-274 owns the array and its four textures. The test checks each array entry is the exact corresponding named child in XML order, each is a Texture, and no two entries share identity. It checks the original alpha update on every member. A second resolver input mirrors Azerite `AzeritePlugTexture` / `Plugs`; it checks inherited parentArray and explicit instance override. This is resolver coverage, not runtime Azerite UI coverage. |
+| Back/Forward replay | **REMOVED (Retail only)** | Original `CharacterCreateMixin:OnLoad` sets Back from `BACK` at Lua:88; the test checks that exact source value in class/race and customization modes. Original `UpdateForwardButton` changes the label from `CUSTOMIZE` in class/race mode to the original `NEXT` or `FINISH` value in customization mode, based on `ZoneChoiceFrame:ShouldShow`. The test reaches those states with original `UpdateMode`, without calling `NavForward`, CreateCharacter, or Submit. The distinct outputs reject constant forward labels. |
+| Overlay alpha error fallback | **REMOVED (Retail only)** | Original `UpdateBackgroundOverlays` at Lua:404-423 selects alpha from class, race and faction. The test observes Pandaren 0.75, Horde Orc 0.6, Demon Hunter 0.7, and Death Knight 0.8 on all four distinct XML textures. |
 
 **PRESERVATION:** `retail_character_create_transition_preserves_original_surfaces`
 passes through the selected CharacterSelect-to-CharacterCreate path both while
-the wrappers are present and after Retail retirement. The test checks outputs
-from two races and two classes; it does not fabricate catalog data. The
-hash-bound transcripts and build receipts are in the lane handoff, not in this
-tracked wiki.
+the wrappers are present and after Retail retirement. It checks three supplied
+race choices, two classes, four XML child identities/order, all four alpha
+outputs, and two original navigation modes without calling `NavForward`,
+CreateCharacter, or Submit. The Back label remains the exact `BACK` source value
+in both tested modes; the Forward label differs by mode. The resolver's second
+Azerite-shaped input checks general `parentArray` inheritance and instance
+precedence, but does not claim that the Azerite runtime consumer was loaded.
+The hash-bound transcripts and build receipts are in the lane handoff, not in
+this tracked wiki.
 
 **VERIFIED (scope):** the workaround strings remain enabled for non-Retail
 profiles because this probe does not establish their consumer paths. No native

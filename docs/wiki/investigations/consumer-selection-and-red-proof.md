@@ -245,8 +245,14 @@ the TOC selected by `discover_blizzard_addons_for_screen` for
 `UpdateForwardButton`, and `SetCharacterRace`, plus four XML-created `BGTex`
 textures.
 
-**PRESERVATION:** the same consumer checks Pandaren/Orc and Demon Hunter/Death
-Knight selected records and the original 0.75/0.6/0.7/0.8 overlay alphas before
-and after Retail fallback retirement. The resolved `parentArray="BGTex"`
-template issue and candidate dispositions are recorded in [Lua-owned fallback
-retirement](lua-owned-fallback-retirement.md#retail-character-create-fallback-retirement-queue-462).
+**PRESERVATION:** the same consumer checks Human/Alliance and Orc/Horde as
+distinct faction outputs; Pandaren/Orc and Demon Hunter/Death Knight records;
+and the original 0.75/0.6/0.7/0.8 alpha results on each of the four distinct
+`BGTex` children in XML order. Original `UpdateMode` reaches class/race and
+customization states without calling `NavForward` or CreateCharacter: Back is
+the exact `BACK` source string in both tested states, while Forward changes
+from `CUSTOMIZE` to the original `NEXT` or `FINISH` string. The second
+`parentArray` resolver input and explicit override are covered by a focused
+resolver test; this is not runtime Azerite consumer proof. The resolved
+`parentArray="BGTex"` issue and candidate dispositions are recorded in
+[Lua-owned fallback retirement](lua-owned-fallback-retirement.md#retail-character-create-fallback-retirement-queue-462).
