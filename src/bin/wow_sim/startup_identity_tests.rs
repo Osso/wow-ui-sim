@@ -303,37 +303,38 @@ fn explicit_session_restores_changes_after_process_restart() {
 }
 
 fn assert_startup_selection_error(root: &Path, expected: &str) {
-    let no_saved_vars = match std::env::var(CHILD_CASE).unwrap().as_str() {
-        "saved-vars" => false,
-        "no-saved-vars" => true,
-        case => panic!("unexpected selection failure case: {case}"),
-    };
-    let args = startup_args(root, no_saved_vars);
+    let args = startup_args(root, no_saved_vars_for_startup_identity_case());
     let env = WowLuaEnv::with_session_wtf_path(root.join("session")).unwrap();
     let state = env.state().clone();
-    let initial_addons: Vec<_> = state
-        .borrow()
-        .addons
-        .iter()
-        .map(|addon| (addon.folder_name.clone(), addon.is_loaded()))
-        .collect();
+    let addon_states = || {
+        state
+            .borrow()
+            .addons
+            .iter()
+            .map(|addon| (addon.folder_name.clone(), addon.is_loaded()))
+            .collect::<Vec<_>>()
+    };
+    let initial_addons = addon_states();
     let result = initialize_and_load_env(&args, ScreenKind::Game, env);
     let error = match result {
         Ok(_) => panic!("invalid explicit identity unexpectedly completed startup"),
         Err(error) => error.to_string(),
     };
     assert!(error.contains(expected), "{error}");
-    let final_addons: Vec<_> = state
-        .borrow()
-        .addons
-        .iter()
-        .map(|addon| (addon.folder_name.clone(), addon.is_loaded()))
-        .collect();
     assert_eq!(
-        final_addons, initial_addons,
+        addon_states(),
+        initial_addons,
         "addons ran before selection failed"
     );
     assert!(!root.join("session/SavedVariables").exists());
+}
+
+fn no_saved_vars_for_startup_identity_case() -> bool {
+    match std::env::var(CHILD_CASE).unwrap().as_str() {
+        "saved-vars" => false,
+        "no-saved-vars" => true,
+        case => panic!("unexpected selection failure case: {case}"),
+    }
 }
 
 #[test]
