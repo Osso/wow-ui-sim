@@ -11,10 +11,10 @@ Retail `C_Map.GetWorldPosFromMapPos` converts a UI-map point by using `UiMapAssi
 - [x] **VERIFIED:** return exactly two values after a successful conversion and zero values when no usable result exists.
 - [x] **VERIFIED:** select the eligible containing assignment nearest the point to its UI-rectangle center. If none contains the point, select the nearest-center outside candidate. Keep the first visited row on a tie.
 - [x] **VERIFIED:** include rectangle edges, reject a row when either UI span is below single-precision epsilon, do not require coordinates in `[0,1]`, and do not clamp the transform.
-- [ ] **INFERRED (R88i.41):** map Y controls world X, blending `Region_3` toward `Region_0`; map X controls world Y, blending `Region_4` toward `Region_1`.
-- [ ] **VERIFIED (R88x):** a nonnegative `MapID` is the returned map number. For a negative `MapID`, look up the assignment's `AreaID` in `AreaTable`; skip the assignment if the lookup fails. After a successful lookup, accept the unsigned-16 value, including zero.
-- [ ] **INFERRED (R88x and the 12.1.5.70783 DBD):** the native unsigned-16 result maps to the `ContinentID` column. The generated Rust field is named `continent_id`.
-- [ ] **INFERRED (R88x plus the complete 12.1.5.70783 export):** UI maps 1408 and 2311 reference AreaID 0, but AreaTable has no ID 0 row. Their negative assignments therefore have no resolved map number under the verified skip rule. This conflicts with treating those maps as successful conversions.
+- [x] **INFERRED (R88i.41):** map Y controls world X, blending `Region_3` toward `Region_0`; map X controls world Y, blending `Region_4` toward `Region_1`.
+- [x] **VERIFIED (R88x):** a nonnegative `MapID` is the returned map number. For a negative `MapID`, look up the assignment's `AreaID` in `AreaTable`; skip the assignment if the lookup fails. After a successful lookup, accept the unsigned-16 value, including zero.
+- [x] **INFERRED (R88x and the 12.1.5.70783 DBD):** the native unsigned-16 result maps to the `ContinentID` column. The generated Rust field is named `continent_id`.
+- [x] **INFERRED (R88x plus the complete 12.1.5.70783 export):** UI maps 1408 and 2311 reference AreaID 0, but AreaTable has no ID 0 row. Their negative assignments therefore have no resolved map number under the verified skip rule. This conflicts with treating those maps as successful conversions.
 - [x] **VERIFIED (simulator contract):** an explicit `MapWorldRect` for a known map takes precedence over generated Retail assignment data.
 
 ### World to map argument boundary

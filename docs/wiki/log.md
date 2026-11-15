@@ -1,3 +1,7 @@
+## [2026-11-15] implementation | Retail negative map assignments
+
+Updated the [Retail map-world-position investigation](investigations/patch-8-0-1-api-audit.md#retail-map-world-position) and [contract](../specs/map-world-position.md). **VERIFIED (R88x):** negative `MapID` rows look up `AreaID` in AreaTable, skip a row on lookup failure, and accept a resolved unsigned-16 value of zero. **VERIFIED (12.1.5.70783 export):** AreaID 14620 has value 2444; AreaID 0 is absent from the complete table. **INFERRED:** the native u16 is DBD `ContinentID`; maps 1408/2311 remain unresolved with the committed 70783 data. Retail tests at source SHA `0e9b548b1d6e92939ccc3f4e84d48157ef3c89c3` resolve map 2147 and distinguish two input points. **VERIFIED:** the full c_map_api run had 65 passes and only `test_ui_map_point_create_from_coordinates` and `test_ui_map_point_create_from_vector` failed. **UNVERIFIED (per task brief; no master comparison):** those two failures predate this lane.
+
 ## [2026-11-15] investigation | ShowUIPanel toggle fixture owners
 
 [Toggle fixture owners](investigations/showuipanel-toggle-fixture-owners.md) records independent achievement/housing fallback-retirement boundaries, original TOC owner loading and untouched out-of-scope panel failures. No guessed fallback restored.
