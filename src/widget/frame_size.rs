@@ -41,6 +41,7 @@ impl Frame {
     fn core_string_bytes(&self) -> usize {
         option_string_bytes(&self.object_type_name)
             + option_string_bytes(&self.name)
+            + option_string_bytes(&self.source_location)
             + option_string_bytes(&self.texture)
             + option_string_bytes(&self.text)
             + option_string_bytes(&self.font)

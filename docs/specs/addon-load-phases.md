@@ -73,6 +73,9 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 - `src/lua_api/env_init/enums.rs` — publishes the four verified `Constants.AccountStoreConsts` values.
 - `src/lua_api/globals/real/table_extensions.rs` — publishes Retail `table.count`.
 - `src/lua_api/globals/create_frame/mod.rs` — publishes the built-in `UIParent` name to secureenv.
+- `src/lua_api/globals/real/source_location.rs` — registers AddSourceLocationExclude and selects a caller file/line from existing Lua call frames.
+- `src/lua_api/frame/methods/button_anchor_hierarchy/hierarchy.rs`, `src/lua_api/frame/methods/core_state/region.rs` — save and return texture source locations.
+- `src/lua_api/state/sim_state.rs`, `src/widget/frame.rs`, `src/widget/frame_defaults.rs`, `src/widget/frame_size.rs` — hold shared exclusions and per-texture source metadata.
 - `src/lua_api/workarounds/temporary/debug_environment_defaults.rs`, `src/lua_api/workarounds/temporary/color_defaults.rs` — publish only existing temporary handlers under the verified names.
 - `src/lua_api/state/sim_state.rs` — holds ordered registered follower declarations and the resolved target-to-follower index.
 - `src/lua_api/state.rs` — initializes the registration vector and follower index.
@@ -91,7 +94,7 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 - [ ] UNKNOWN: PTR 12.1.7.70668 does not establish whether declaration parsing feeds the child-list resolver. The simulator applies the inferred resolver model; PTR tests do not assert parser linkage or duplicate suppression.
 - [ ] VERIFIED (R88t, native) but untested in the simulator: an ordinary dependency-request failure must not suppress the following secure request. No evidence-backed input currently makes only the ordinary request fail; a Lua file diagnostic is not proof of that request failure.
 - [ ] INFERRED (R88t): when neither mode was loaded and both default file paths complete, each default path executes in its requested environment. Do not claim this exact per-environment count as native parity.
-- [ ] VERIFIED (R88v.v4) but untested: the native AddSourceLocationExclude handler uses one shared list; the simulator must store exclusions once for both environments. The two-file caller/wrapper comparison is INFERRED and must not be asserted.
+- [ ] UNKNOWN: the native cleanup caller for the shared exclusion list is not established; the simulator retains entries for the lifetime of `SimState`. The two-file caller/wrapper comparison remains INFERRED and is not asserted.
 - [ ] Follow-up: the full R88v C_ColorOverrides model is deferred from this lane. Keep the four absent members (`ClearColorOverrides`, `GetDefaultColorForQuality`, `RemoveColorOverride`, and `SetColorOverride`) absent; do not add placeholders or partial handlers.
 - [ ] UNKNOWN: transitive copying from ordinary globals into secureenv. The direct dependency helper does not add a blanket-copy route.
 - [ ] The original `TooltipDataProcessor` identity and its published secure-table provenance remain deferred to `lt-635e`; this lane verifies that the PrivateAurasTooltip consumer runs without errors.

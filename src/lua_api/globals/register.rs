@@ -64,6 +64,7 @@ fn register_bootstrap_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
     LuaApiMut::register_function(lua, "GetTickTime", get_tick_time)?;
     super::strings::register_all_ui_strings(lua)?;
     super::security::register_all(lua)?;
+    super::real::source_location::register_all(lua)?;
     super::keybindings::register_all(lua)?;
     super::permanent_shims::register_all(lua.state_mut());
     super::action_bar_api::register_all(lua)?;

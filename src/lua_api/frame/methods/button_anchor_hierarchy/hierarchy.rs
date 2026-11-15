@@ -504,41 +504,92 @@ pub(super) fn create_vector_graphics(state: &mut LuaState) -> LuaResult<u32> {
     create_texture_like(state, Some("VectorGraphics"))
 }
 
-fn create_texture_like(state: &mut LuaState, object_type_name: Option<&str>) -> LuaResult<u32> {
-    use crate::widget::{Frame, WidgetType};
+struct TextureCreationOptions {
+    parent_id: u64,
+    name: Option<String>,
+    object_type_name: Option<&'static str>,
+    layer: Option<String>,
+    inherits: Option<String>,
+    sub_level: Option<i32>,
+    source_location: Option<String>,
+}
+
+fn create_texture_like(
+    state: &mut LuaState,
+    object_type_name: Option<&'static str>,
+) -> LuaResult<u32> {
+    let options = read_texture_creation_options(state, object_type_name)?;
+    let texture = build_texture_frame(&options);
+    register_texture_child(state, &options, texture)
+}
+
+fn read_texture_creation_options(
+    state: &mut LuaState,
+    object_type_name: Option<&'static str>,
+) -> LuaResult<TextureCreationOptions> {
     let parent_id = frame_id_from_stack(state, 1)?;
-    let name_raw: Option<String> = Option::<String>::from_stack(state, 2)?;
+    let raw_name = Option::<String>::from_stack(state, 2)?;
     let layer = opt_string(state, 3);
     if object_type_name.is_none() {
         validate_texture_draw_layer(layer.as_deref())?;
     }
     let inherits = opt_string(state, 4);
-    let sub_level = super::shared::opt_f32(state, 5).map(|n| n as i32);
+    let sub_level = super::shared::opt_f32(state, 5).map(|number| number as i32);
+    let source_location =
+        crate::lua_api::globals::real::source_location::capture_texture_source_location(
+            state,
+            object_type_name,
+        )?;
+    let name = resolve_child_name(state, raw_name, parent_id);
 
-    let name = resolve_child_name(state, name_raw, parent_id);
-    let mut texture = Frame::new(WidgetType::Texture, name.clone(), Some(parent_id));
-    if let Some(object_type_name) = object_type_name {
+    Ok(TextureCreationOptions {
+        parent_id,
+        name,
+        object_type_name,
+        layer,
+        inherits,
+        sub_level,
+        source_location,
+    })
+}
+
+fn build_texture_frame(options: &TextureCreationOptions) -> crate::widget::Frame {
+    use crate::widget::{Frame, WidgetType};
+
+    let mut texture = Frame::new(
+        WidgetType::Texture,
+        options.name.clone(),
+        Some(options.parent_id),
+    );
+    texture.source_location = options.source_location.clone();
+    if let Some(object_type_name) = options.object_type_name {
         texture.object_type_name = Some(object_type_name.to_string());
     }
-    apply_draw_layer(&mut texture, layer);
-    if let Some(inherits) = inherits.as_deref()
-        && let Some((width, height)) = crate::xml::get_texture_template_size(&inherits)
+    apply_draw_layer(&mut texture, options.layer.as_deref());
+    if let Some(inherits) = options.inherits.as_deref()
+        && let Some((width, height)) = crate::xml::get_texture_template_size(inherits)
     {
         texture.set_size(width, height);
     }
-    if let Some(sub_level) = sub_level {
+    if let Some(sub_level) = options.sub_level {
         texture.draw_sub_layer = sub_level;
     }
+    texture
+}
 
+fn register_texture_child(
+    state: &mut LuaState,
+    options: &TextureCreationOptions,
+    texture: crate::widget::Frame,
+) -> LuaResult<u32> {
     let child_id = texture.id;
-    register_child_with_strata(state, parent_id, child_id, texture)?;
-
-    if let Some(ref n) = name {
-        bind_named_child_global(state, n, child_id)?;
+    register_child_with_strata(state, options.parent_id, child_id, texture)?;
+    if let Some(name) = options.name.as_deref() {
+        bind_named_child_global(state, name, child_id)?;
     }
-    let val = frame_ref(state, child_id)?;
-    apply_texture_template_effects(state, val, inherits.as_deref())?;
-    state.push(val);
+    let texture_ref = frame_ref(state, child_id)?;
+    apply_texture_template_effects(state, texture_ref, options.inherits.as_deref())?;
+    state.push(texture_ref);
     Ok(1)
 }
 

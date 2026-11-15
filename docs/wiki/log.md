@@ -1,6 +1,6 @@
-## [2026-11-15] system | Retail R88t secure dependency and publisher contracts
+## [2026-11-15] system | Retail R88t dependencies and R88v source attribution
 
-Updated the [add-on load-phase contract](../specs/addon-load-phases.md), [addon-loading system](systems/addon-loading.md#secure-dependency-replay-and-library-allowlist), and [taint system](systems/taint-system.md#dual-lua-environment) with R88t. **VERIFIED (Retail 12.1.5.70688):** dependency ordering, per-environment states, and the named publication routes. The ordinary-request failure-independence clause is **VERIFIED but untested** in the simulator because no evidence-backed ordinary-only failure input is known; transitive copying remains **UNKNOWN**.
+Updated the [add-on load-phase contract](../specs/addon-load-phases.md) and [taint system](systems/taint-system.md#dual-lua-environment). **VERIFIED (Retail 12.1.5.70688):** R88t dependency order and named publication; R88v.v4 shared source-exclusion state, suffix matching, and `CreateTexture`/`GetSourceLocation` output. The one-file source consumer was RED at pre-implementation SHA `928d8c8fc`; final GREEN is pending. The complete R88v `C_ColorOverrides` stateful model is deferred to a follow-up. Ordinary-request failure-independence remains VERIFIED but untested; transitive copying remains UNKNOWN.
 
 ## [2026-11-14] investigation | Retail secure tooltip color route — merged catalog
 

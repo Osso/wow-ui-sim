@@ -1,6 +1,6 @@
-## [2026-11-15] system | Retail R88t secure dependencies and publication
+## [2026-11-15] system | Retail R88t dependencies and R88v source attribution
 
-[Addon load phases](../specs/addon-load-phases.md) and [addon loading](systems/addon-loading.md#secure-dependency-replay-and-library-allowlist) record R88t's dependency order and request modes. The ordinary-failure independence clause is VERIFIED natively but untested in the simulator; transitive copying remains UNKNOWN. [Taint system](systems/taint-system.md#dual-lua-environment) records per-name publication and the handler gaps.
+[Addon load phases](../specs/addon-load-phases.md) records R88t request order and named publication plus R88v source attribution. The ordinary-request failure-independence clause is VERIFIED natively but untested; transitive copying remains UNKNOWN. The one-file AddSource consumer was RED at `928d8c8fc` because `GetSourceLocation` returned nil; GREEN for the current implementation is pending. The full C_ColorOverrides stateful model is deferred to a follow-up. [Taint system](systems/taint-system.md#dual-lua-environment) records publication boundaries and current implementation.
 
 ## [2026-11-14] investigation | Retail secure tooltip color route
 

@@ -36,6 +36,7 @@ macro_rules! build_empty_sim_state {
                 $runtime.screen_width,
                 $runtime.screen_height,
             ),
+            source_location_exclusions: Vec::new(),
             events: EventQueue::default(),
             private_aura_anchors: crate::c_api::private_aura_anchors::PrivateAuraAnchors::default(),
             #[cfg(all(
