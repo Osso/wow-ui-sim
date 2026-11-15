@@ -644,11 +644,14 @@ fn retail_map_children_info_walks_generated_ui_map_tree() {
     feature = "profile-retail",
     feature = "retail-12-1-5"
 ))]
-#[test]
-fn retail_map_world_position_probe_covers_zone_maps_under_azeroth() {
-    let env = env();
-    use std::collections::{HashMap, HashSet};
+use std::collections::{HashMap, HashSet};
 
+#[cfg(all(
+    feature = "optional-tests",
+    feature = "profile-retail",
+    feature = "retail-12-1-5"
+))]
+fn retail_map_world_position_map_rows() -> Vec<(u32, u32, u32)> {
     const MAP_ID_LIMIT: u32 = 10_000;
     let mut map_rows = (0..MAP_ID_LIMIT)
         .filter_map(|map_id| {
@@ -662,16 +665,36 @@ fn retail_map_world_position_probe_covers_zone_maps_under_azeroth() {
         "update MAP_ID_LIMIT if the generated UI map IDs exceed it"
     );
     map_rows.sort_unstable_by_key(|(map_id, _, _)| *map_id);
+    map_rows
+}
 
+#[cfg(all(
+    feature = "optional-tests",
+    feature = "profile-retail",
+    feature = "retail-12-1-5"
+))]
+fn retail_map_world_position_hierarchy(
+    map_rows: &[(u32, u32, u32)],
+) -> (HashMap<u32, Vec<u32>>, HashMap<u32, u32>) {
     let mut children_by_parent = HashMap::<u32, Vec<u32>>::new();
     let mut map_types = HashMap::<u32, u32>::new();
-    for &(map_id, parent_map_id, map_type) in &map_rows {
+    for &(map_id, parent_map_id, map_type) in map_rows {
         children_by_parent
             .entry(parent_map_id)
             .or_default()
             .push(map_id);
         map_types.insert(map_id, map_type);
     }
+    (children_by_parent, map_types)
+}
+
+#[cfg(all(
+    feature = "optional-tests",
+    feature = "profile-retail",
+    feature = "retail-12-1-5"
+))]
+fn retail_map_world_position_zone_expectations(map_rows: &[(u32, u32, u32)]) -> (usize, Vec<u32>) {
+    let (children_by_parent, map_types) = retail_map_world_position_hierarchy(map_rows);
     let mut pending = vec![947];
     let mut visited = HashSet::new();
     let mut zone_count = 0;
@@ -682,8 +705,7 @@ fn retail_map_world_position_probe_covers_zone_maps_under_azeroth() {
         }
         if map_types.get(&map_id) == Some(&3) {
             zone_count += 1;
-            let has_world_assignment = retail_map_has_valid_assignment_at_center(map_id);
-            if !has_world_assignment {
+            if !retail_map_has_valid_assignment_at_center(map_id) {
                 no_world_zone_ids.push(map_id);
             }
         }
@@ -691,38 +713,65 @@ fn retail_map_world_position_probe_covers_zone_maps_under_azeroth() {
             pending.extend(children);
         }
     }
-    let no_world_zone_count = no_world_zone_ids.len();
-    let no_world_map_ids = no_world_zone_ids
-        .iter()
-        .map(|map_id| format!("[{map_id}] = true"))
-        .collect::<Vec<_>>()
-        .join(",");
+    (zone_count, no_world_zone_ids)
+}
 
-    let map_rows = map_rows
+#[cfg(all(
+    feature = "optional-tests",
+    feature = "profile-retail",
+    feature = "retail-12-1-5"
+))]
+fn retail_map_world_position_rows_literal(map_rows: &[(u32, u32, u32)]) -> String {
+    map_rows
         .iter()
         .map(|(map_id, parent_map_id, map_type)| format!("{{{map_id},{parent_map_id},{map_type}}}"))
         .collect::<Vec<_>>()
-        .join(",");
+        .join(",")
+}
 
+#[cfg(all(
+    feature = "optional-tests",
+    feature = "profile-retail",
+    feature = "retail-12-1-5"
+))]
+fn retail_map_world_position_no_world_literal(no_world_zone_ids: &[u32]) -> String {
+    no_world_zone_ids
+        .iter()
+        .map(|map_id| format!("[{map_id}] = true"))
+        .collect::<Vec<_>>()
+        .join(",")
+}
+
+#[cfg(all(
+    feature = "optional-tests",
+    feature = "profile-retail",
+    feature = "retail-12-1-5"
+))]
+fn retail_map_world_position_load_vector2d(env: &WowLuaEnv) {
     let vector_source_path = wow_ui_sim::client_profile::blizzard_ui_addons_dir()
         .join("Blizzard_SharedXML/Vector2D.lua");
     let vector_source = std::fs::read_to_string(&vector_source_path)
         .unwrap_or_else(|error| panic!("read {}: {error}", vector_source_path.display()));
     env.exec(&vector_source)
         .expect("execute original Blizzard Vector2D.lua");
+}
 
-    let script = format!(
-        r#"
-        local mapRows = {{{map_rows}}}
-        local noWorldMapIDs = {{{no_world_map_ids}}}
-        local childrenByParent = {{}}
-        local mapTypes = {{}}
+#[cfg(all(
+    feature = "optional-tests",
+    feature = "profile-retail",
+    feature = "retail-12-1-5"
+))]
+const RETAIL_MAP_WORLD_POSITION_TREE_PROBE: &str = r##"
+        local mapRows = {__MAP_ROWS__}
+        local noWorldMapIDs = {__NO_WORLD_MAP_IDS__}
+        local childrenByParent = {}
+        local mapTypes = {}
         for _, row in ipairs(mapRows) do
             local mapID, parentMapID, mapType = row[1], row[2], row[3]
             mapTypes[mapID] = mapType
             local children = childrenByParent[parentMapID]
             if not children then
-                children = {{}}
+                children = {}
                 childrenByParent[parentMapID] = children
             end
             children[#children + 1] = mapID
@@ -732,9 +781,9 @@ fn retail_map_world_position_probe_covers_zone_maps_under_azeroth() {
             table.sort(children)
         end
 
-        local pending = {{947}}
+        local pending = {947}
         local nextPending = 1
-        local visited = {{}}
+        local visited = {}
         local zoneCount = 0
         local noWorldZoneCount = 0
         while nextPending <= #pending do
@@ -779,19 +828,57 @@ fn retail_map_world_position_probe_covers_zone_maps_under_azeroth() {
                     end
                 end
 
-                local children = childrenByParent[mapID] or {{}}
+                local children = childrenByParent[mapID] or {}
                 for index = 1, #children do
                     pending[#pending + 1] = children[index]
                 end
             end
         end
-        assert(zoneCount == {zone_count}, "probe did not visit every Zone below Azeroth")
+        assert(zoneCount == __ZONE_COUNT__, "probe did not visit every Zone below Azeroth")
         assert(
-            noWorldZoneCount == {no_world_zone_count},
+            noWorldZoneCount == __NO_WORLD_ZONE_COUNT__,
             "probe did not visit every Zone without a world assignment"
         )
         assert(visited[7], "Mulgore (uiMapID 7) must be reachable from Azeroth")
-        "#
+        "##;
+
+#[cfg(all(
+    feature = "optional-tests",
+    feature = "profile-retail",
+    feature = "retail-12-1-5"
+))]
+fn retail_map_world_position_probe_script(
+    map_rows: &str,
+    no_world_map_ids: &str,
+    zone_count: usize,
+    no_world_zone_count: usize,
+) -> String {
+    RETAIL_MAP_WORLD_POSITION_TREE_PROBE
+        .replace("__MAP_ROWS__", map_rows)
+        .replace("__NO_WORLD_MAP_IDS__", no_world_map_ids)
+        .replace("__ZONE_COUNT__", &zone_count.to_string())
+        .replace("__NO_WORLD_ZONE_COUNT__", &no_world_zone_count.to_string())
+}
+
+#[cfg(all(
+    feature = "optional-tests",
+    feature = "profile-retail",
+    feature = "retail-12-1-5"
+))]
+#[test]
+fn retail_map_world_position_probe_covers_zone_maps_under_azeroth() {
+    let env = env();
+    let map_rows = retail_map_world_position_map_rows();
+    let (zone_count, no_world_zone_ids) = retail_map_world_position_zone_expectations(&map_rows);
+    let no_world_zone_count = no_world_zone_ids.len();
+    let no_world_map_ids = retail_map_world_position_no_world_literal(&no_world_zone_ids);
+    let map_rows = retail_map_world_position_rows_literal(&map_rows);
+    retail_map_world_position_load_vector2d(&env);
+    let script = retail_map_world_position_probe_script(
+        &map_rows,
+        &no_world_map_ids,
+        zone_count,
+        no_world_zone_count,
     );
     env.eval::<()>(&script)
         .expect("run HBD-style Retail map-position probe");
