@@ -776,12 +776,9 @@ fn strict_public_identifier_utf8_u32_domain_in_secure_and_tainted_frames() {
     .unwrap();
 }
 
-#[test]
-fn finite_threshold_and_utf8_nul_free_cstring_validate_without_source() {
-    let env = fixture(false);
-    positive(&env);
-    env.exec(
-        r#"
+// VERIFIED R88k.5 line 11622 (lt-c3ed #1056, confirmed lt-67d2 #1226):
+// numeric maximum strings and ordinary numeric replacement text are accepted.
+const INVALID_SPELL_COUNT_FORMAT_ARGUMENTS: &str = r#"
         local function probe()
             for _,id in ipairs({
                 19750,
@@ -790,7 +787,7 @@ fn finite_threshold_and_utf8_nul_free_cstring_validate_without_source() {
             }) do
                 for _,v in ipairs({
                     false,
-                    '6',
+                    'not-a-number',
                     {},
                     SCFrame,
                     0/0,
@@ -801,7 +798,6 @@ fn finite_threshold_and_utf8_nul_free_cstring_validate_without_source() {
                 end
                 for _,v in ipairs({
                     false,
-                    7,
                     {},
                     SCFrame,
                     'a\000b',
@@ -813,9 +809,23 @@ fn finite_threshold_and_utf8_nul_free_cstring_validate_without_source() {
         end
         probe()
         SCTainted(probe)
-    "#,
-    )
-    .unwrap();
+    "#;
+
+#[test]
+fn finite_threshold_and_utf8_nul_free_cstring_validate_without_source() {
+    let env = fixture(false);
+    positive(&env);
+    display(&env, "19750,'6'", "*", false);
+    display(&env, "642,'2'", "2", false);
+    display(&env, "880001,'6'", "", false);
+    env.exec(INVALID_SPELL_COUNT_FORMAT_ARGUMENTS).unwrap();
+    env.exec(r#"
+        for _,maximum in ipairs({4294967295, -2147483649}) do
+            local ok,err = pcall(C_Spell.GetSpellDisplayCount, 19750, maximum)
+            assert(not ok)
+            assert(string.find(err, 'outside of expected range -2147483648 to 2147483647 - Usage:', 1, true))
+        end
+    "#).unwrap();
 }
 
 #[test]
