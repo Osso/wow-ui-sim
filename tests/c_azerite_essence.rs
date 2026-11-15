@@ -309,10 +309,20 @@ fn pending_activation_lifecycle_fires_event_with_prev_and_new() {
     assert_eq!(first_new, 200);
     assert_eq!(second_prev, 200);
     assert!(second_new_nil);
-    let pending_after: bool = env
+}
+
+#[test]
+fn pending_activation_lifecycle_clears_pending_state() {
+    let env = WowLuaEnv::new().unwrap();
+    env.state().borrow_mut().azerite_essence = seeded_state();
+    env.exec("C_AzeriteEssence.SetPendingActivationEssence(200)")
+        .unwrap();
+    env.exec("C_AzeriteEssence.ClearPendingActivationEssence()")
+        .unwrap();
+    let pending: bool = env
         .eval("return C_AzeriteEssence.HasPendingActivationEssence()")
         .unwrap();
-    assert!(!pending_after);
+    assert!(!pending);
 }
 
 #[test]
@@ -332,7 +342,7 @@ fn clear_pending_activation_is_silent_when_already_clear() {
 }
 
 #[test]
-fn activate_essence_fires_activated_then_changed_and_clears_pending() {
+fn activate_essence_fires_activated_then_changed() {
     let env = WowLuaEnv::new().unwrap();
     env.state().borrow_mut().azerite_essence = seeded_state();
     env.exec("C_AzeriteEssence.SetPendingActivationEssence(200)")
@@ -347,22 +357,20 @@ fn activate_essence_fires_activated_then_changed_and_clears_pending() {
         "#,
         listener = ACTIVATED_LISTENER,
     );
-    let (
-        ok,
-        activated_count,
-        activated_essence,
-        activated_milestone,
-        changed_count,
-        changed_essence,
-        changed_rank,
-    ): (bool, i32, i32, i32, i32, i32, i32) = env.eval(&script).unwrap();
-    assert!(ok);
-    assert_eq!(activated_count, 1);
-    assert_eq!(activated_essence, 200);
-    assert_eq!(activated_milestone, 100);
-    assert_eq!(changed_count, 1);
-    assert_eq!(changed_essence, 200);
-    assert_eq!(changed_rank, 3);
+    let event_results: (bool, i32, i32, i32, i32, i32, i32) = env.eval(&script).unwrap();
+    assert_eq!(event_results, (true, 1, 200, 100, 1, 200, 3));
+}
+
+#[test]
+fn activate_essence_updates_state_and_clears_pending() {
+    let env = WowLuaEnv::new().unwrap();
+    env.state().borrow_mut().azerite_essence = seeded_state();
+    env.exec("C_AzeriteEssence.SetPendingActivationEssence(200)")
+        .unwrap();
+    let activated: bool = env
+        .eval("return C_AzeriteEssence.ActivateEssence(200, 100)")
+        .unwrap();
+    assert!(activated);
     let sim = env.state().borrow();
     assert_eq!(
         sim.azerite_essence.milestones[0].active_essence_id,
