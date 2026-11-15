@@ -89,58 +89,102 @@ fn push_spell_tooltip_lines(
     spell_name: &str,
     is_link: bool,
 ) -> rilua::LuaResult<()> {
-    let input = {
-        let sim = borrow_state(state).expect("spell tooltip requires simulator state");
-        sim.spell_tooltip_inputs
-            .get(&spell_id)
-            .cloned()
-            .unwrap_or_default()
-    };
+    let input = read_spell_tooltip_input(state, spell_id);
     push_spell_name_line(state, lines, first_line, spell_name);
-    let mut index = first_line + 1;
-    // R81 Q1: replacement is the first ordinary detail row; zero skips lookup.
-    if !input.suppress_replacement && input.overrides_spell_id != 0 {
-        if let Some(replaced) = spells::get_spell(input.overrides_spell_id) {
-            let text = super::format_global_text(state, "REPLACES_SPELL", replaced.name)?;
-            let color = spell_color_from_global(state, b"NORMAL_FONT_COLOR", (1.0, 0.82, 0.0));
-            let line = push_tooltip_line(state, lines, index, 0.0, &text, Some(color), false);
-            super::restore_plain_line_type(state, line);
-            index += 1;
-        }
+    let index = push_replacement_spell_line(state, lines, first_line + 1, &input)?;
+    let index = push_azerite_annotation_line(state, lines, index, &input);
+    let index = push_cost_range_lines(state, lines, index, spell_id, &input);
+    let index = push_cast_and_recast_lines(state, lines, index, &input, is_link)?;
+    let index = push_cooldown_line(state, lines, index, &input);
+    push_spell_description_line(state, lines, index, spell_id);
+    Ok(())
+}
+
+fn read_spell_tooltip_input(
+    state: &LuaState,
+    spell_id: u32,
+) -> crate::c_api::spell_tooltip::SpellTooltipInput {
+    let sim = borrow_state(state).expect("spell tooltip requires simulator state");
+    sim.spell_tooltip_inputs
+        .get(&spell_id)
+        .cloned()
+        .unwrap_or_default()
+}
+
+fn push_replacement_spell_line(
+    state: &mut LuaState,
+    lines: Val,
+    index: i64,
+    input: &crate::c_api::spell_tooltip::SpellTooltipInput,
+) -> rilua::LuaResult<i64> {
+    if input.suppress_replacement || input.overrides_spell_id == 0 {
+        return Ok(index);
     }
-    if let Some(text) = input
+    let Some(replaced) = spells::get_spell(input.overrides_spell_id) else {
+        return Ok(index);
+    };
+    let text = super::format_global_text(state, "REPLACES_SPELL", replaced.name)?;
+    let color = spell_color_from_global(state, b"NORMAL_FONT_COLOR", (1.0, 0.82, 0.0));
+    let line = push_tooltip_line(state, lines, index, 0.0, &text, Some(color), false);
+    super::restore_plain_line_type(state, line);
+    Ok(index + 1)
+}
+
+fn push_azerite_annotation_line(
+    state: &mut LuaState,
+    lines: Val,
+    index: i64,
+    input: &crate::c_api::spell_tooltip::SpellTooltipInput,
+) -> i64 {
+    let Some(text) = input
         .azerite_annotation
         .as_deref()
         .filter(|text| !text.is_empty())
-    {
-        let color = spell_color_from_global(state, b"AZERITE_ESSENCE_COLOR", (1.0, 0.82, 0.0));
-        let line = push_tooltip_line(state, lines, index, 0.0, text, Some(color), false);
-        super::restore_plain_line_type(state, line);
+    else {
+        return index;
+    };
+    let color = spell_color_from_global(state, b"AZERITE_ESSENCE_COLOR", (1.0, 0.82, 0.0));
+    let line = push_tooltip_line(state, lines, index, 0.0, text, Some(color), false);
+    super::restore_plain_line_type(state, line);
+    index + 1
+}
+
+fn push_cast_and_recast_lines(
+    state: &mut LuaState,
+    lines: Val,
+    mut index: i64,
+    input: &crate::c_api::spell_tooltip::SpellTooltipInput,
+    is_link: bool,
+) -> rilua::LuaResult<i64> {
+    if !input.cast_is_visible() {
+        return Ok(index);
+    }
+    if let Some(text) = spell_cast_text(state, input, is_link)? {
+        push_highlight_spell_line(state, lines, index, &text);
         index += 1;
     }
-    index = push_cost_range_lines(state, lines, index, spell_id, &input);
-    if input.cast_is_visible() {
-        // R81 Q2: supplied final helper duration, not catalog base time.
-        // The link flag reaches helper input selection, never the cost/range gates.
-        if let Some(text) = spell_cast_text(state, &input, is_link)? {
-            push_highlight_spell_line(state, lines, index, &text);
-            index += 1;
-        }
-        if let Some(text) = input.recast_text.as_deref().filter(|text| !text.is_empty()) {
-            push_highlight_spell_line(state, lines, index, text);
-            index += 1;
-        }
-    }
-    if let Some(text) = input
-        .cooldown_text
-        .as_deref()
-        .filter(|text| !text.is_empty())
-    {
+    if let Some(text) = input.recast_text.as_deref().filter(|text| !text.is_empty()) {
         push_highlight_spell_line(state, lines, index, text);
         index += 1;
     }
-    push_spell_description_line(state, lines, index, spell_id);
-    Ok(())
+    Ok(index)
+}
+
+fn push_cooldown_line(
+    state: &mut LuaState,
+    lines: Val,
+    index: i64,
+    input: &crate::c_api::spell_tooltip::SpellTooltipInput,
+) -> i64 {
+    let Some(text) = input
+        .cooldown_text
+        .as_deref()
+        .filter(|text| !text.is_empty())
+    else {
+        return index;
+    };
+    push_highlight_spell_line(state, lines, index, text);
+    index + 1
 }
 
 fn push_cost_range_lines(

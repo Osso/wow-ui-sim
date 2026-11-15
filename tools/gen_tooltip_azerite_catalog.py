@@ -29,7 +29,9 @@ def read_table(table, required_columns):
     path = DB2_DIR / f"{table}.csv"
     with path.open(newline="", encoding="utf-8-sig") as source:
         reader = csv.DictReader(source)
-        if not reader.fieldnames or not set(required_columns).issubset(reader.fieldnames):
+        if not reader.fieldnames or not set(required_columns).issubset(
+            reader.fieldnames
+        ):
             missing = sorted(set(required_columns) - set(reader.fieldnames or ()))
             raise ValueError(f"{path} is missing columns: {missing}")
         rows = list(reader)
@@ -63,25 +65,28 @@ def read_integer(row, table, column):
     try:
         return int(row[column])
     except (KeyError, ValueError) as error:
-        raise ValueError(f"invalid {table}.{column} value: {row.get(column)!r}") from error
+        raise ValueError(
+            f"invalid {table}.{column} value: {row.get(column)!r}"
+        ) from error
 
 
-def generate():
-    essence_path, essence_columns, essence_rows = read_table(
-        "AzeriteEssence", ESSENCE_COLUMNS
-    )
-    power_path, power_columns, power_rows = read_table(
-        "AzeriteEssencePower", POWER_COLUMNS
-    )
+def read_catalog_sources():
+    essence = read_table("AzeriteEssence", ESSENCE_COLUMNS)
+    power = read_table("AzeriteEssencePower", POWER_COLUMNS)
+    return (*essence, *power)
 
+
+def build_essences(rows):
     essences = sorted(
-        (read_integer(row, "AzeriteEssence", "ID"), row["Name_lang"])
-        for row in essence_rows
+        (read_integer(row, "AzeriteEssence", "ID"), row["Name_lang"]) for row in rows
     )
     if len({essence_id for essence_id, _ in essences}) != len(essences):
         raise ValueError("AzeriteEssence.csv has duplicate IDs")
+    return essences
 
-    powers = sorted(
+
+def build_powers(rows):
+    return sorted(
         (
             read_integer(row, "AzeriteEssencePower", "AzeriteEssenceID"),
             read_integer(row, "AzeriteEssencePower", "Tier"),
@@ -92,24 +97,29 @@ def generate():
             read_integer(row, "AzeriteEssencePower", "MajorPowerActual"),
             read_integer(row, "AzeriteEssencePower", "MinorPowerActual"),
         )
-        for row in power_rows
+        for row in rows
     )
+
+
+def validate_power_records(essences, powers):
     power_keys = [(essence_id, rank) for essence_id, rank, *_ in powers]
     if len(set(power_keys)) != len(power_keys):
         raise ValueError("AzeriteEssencePower.csv has duplicate essence/rank rows")
     essence_ids = {essence_id for essence_id, _ in essences}
-    unknown_essences = sorted({essence_id for essence_id, *_ in powers} - essence_ids)
-    if unknown_essences:
-        raise ValueError(f"AzeriteEssencePower.csv references unknown IDs: {unknown_essences}")
+    unknown = sorted({essence_id for essence_id, *_ in powers} - essence_ids)
+    if unknown:
+        raise ValueError(f"AzeriteEssencePower.csv references unknown IDs: {unknown}")
 
-    lines = [
+
+def render_header(essence_hash, power_hash):
+    return [
         "//! Generated Azerite Essence tooltip catalog. Do not edit manually.",
         "//! Regenerate with `python3 tools/gen_tooltip_azerite_catalog.py`.",
         f"//! Source: Wago DB2 exact-build CSV exports for Retail {BUILD} ({LOCALE}).",
-        "//! DB2 spell and source fields retain their names; selector mappings are separate.",
-        "//! The source faction selector is INFERRED from modeled player faction.",
-        f"//! AzeriteEssence.csv SHA-256: {hashlib.sha256(essence_path.read_bytes()).hexdigest()}.",
-        f"//! AzeriteEssencePower.csv SHA-256: {hashlib.sha256(power_path.read_bytes()).hexdigest()}.",
+        "//! Spell columns keep their DB2 names; selector mappings are separate.",
+        "//! Source text columns are preserved but unused; faction selection is UNKNOWN.",
+        f"//! AzeriteEssence.csv SHA-256: {essence_hash}.",
+        f"//! AzeriteEssencePower.csv SHA-256: {power_hash}.",
         "",
         "#[derive(Clone, Copy, Debug)]",
         "pub(crate) struct AzeriteEssenceCatalogRecord {",
@@ -119,35 +129,27 @@ def generate():
         "",
         "pub(crate) static AZERITE_ESSENCES: &[AzeriteEssenceCatalogRecord] = &[",
     ]
-    for essence_id, name in essences:
-        lines.extend(
-            [
-                "    AzeriteEssenceCatalogRecord {",
-                f"        id: {essence_id},",
-                f"        name: {rust_string(name)},",
-                "    },",
-            ]
-        )
-    lines.extend(
-        [
-            "];",
-            "",
-            "#[derive(Clone, Copy, Debug)]",
-            "pub(crate) struct AzeriteEssencePowerRecord {",
-            "    pub(crate) essence_id: u32,",
-            "    pub(crate) rank: u32,",
-            "    pub(crate) source_alliance: &'static str,",
-            "    pub(crate) source_horde: &'static str,",
-            "    pub(crate) major_power_description: u32,",
-            "    pub(crate) minor_power_description: u32,",
-            "    pub(crate) major_power_actual: u32,",
-            "    pub(crate) minor_power_actual: u32,",
-            "}",
-            "",
-            "pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[",
-        ]
-    )
-    for (
+
+
+def render_essence_record(record):
+    essence_id, name = record
+    return [
+        "    AzeriteEssenceCatalogRecord {",
+        f"        id: {essence_id},",
+        f"        name: {rust_string(name)},",
+        "    },",
+    ]
+
+
+def render_essence_section(essences):
+    lines = []
+    for record in essences:
+        lines.extend(render_essence_record(record))
+    return lines + ["];"]
+
+
+def render_power_record(record):
+    (
         essence_id,
         rank,
         source_alliance,
@@ -156,52 +158,105 @@ def generate():
         minor_description,
         major_actual,
         minor_actual,
-    ) in powers:
-        lines.extend(
-            [
-                "    AzeriteEssencePowerRecord {",
-                f"        essence_id: {essence_id},",
-                f"        rank: {rank},",
-                f"        source_alliance: {rust_string(source_alliance)},",
-                f"        source_horde: {rust_string(source_horde)},",
-                f"        major_power_description: {major_description},",
-                f"        minor_power_description: {minor_description},",
-                f"        major_power_actual: {major_actual},",
-                f"        minor_power_actual: {minor_actual},",
-                "    },",
-            ]
-        )
-    lines.append("];")
-    generated = "\n".join(lines) + "\n"
-    OUTPUT.write_text(generated, encoding="utf-8", newline="\n")
+    ) = record
+    return [
+        "    AzeriteEssencePowerRecord {",
+        f"        essence_id: {essence_id},",
+        f"        rank: {rank},",
+        f"        _source_alliance: {rust_string(source_alliance)},",
+        f"        _source_horde: {rust_string(source_horde)},",
+        f"        major_power_description: {major_description},",
+        f"        minor_power_description: {minor_description},",
+        f"        major_power_actual: {major_actual},",
+        f"        minor_power_actual: {minor_actual},",
+        "    },",
+    ]
 
-    provenance = {
+
+def render_power_section(powers):
+    lines = [
+        "#[derive(Clone, Copy, Debug)]",
+        "pub(crate) struct AzeriteEssencePowerRecord {",
+        "    pub(crate) essence_id: u32,",
+        "    pub(crate) rank: u32,",
+        "    pub(crate) _source_alliance: &'static str,",
+        "    pub(crate) _source_horde: &'static str,",
+        "    pub(crate) major_power_description: u32,",
+        "    pub(crate) minor_power_description: u32,",
+        "    pub(crate) major_power_actual: u32,",
+        "    pub(crate) minor_power_actual: u32,",
+        "}",
+        "",
+        "pub(crate) static AZERITE_ESSENCE_POWERS: &[AzeriteEssencePowerRecord] = &[",
+    ]
+    for record in powers:
+        lines.extend(render_power_record(record))
+    return lines + ["];"]
+
+
+def render_catalog(essences, powers, essence_hash, power_hash):
+    lines = render_header(essence_hash, power_hash)
+    lines.extend(render_essence_section(essences))
+    lines.extend(["", *render_power_section(powers)])
+    return "\n".join(lines) + "\n"
+
+
+def build_table_provenance(table, path, columns, rows):
+    return {
+        "url": f"https://wago.tools/db2/{table}/csv?build={BUILD}&locale={LOCALE}",
+        "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+        "rows": len(rows),
+        "columns": columns,
+    }
+
+
+def build_provenance(essence, power, generated):
+    essence_path, essence_columns, essence_rows = essence
+    power_path, power_columns, power_rows = power
+    return {
         "build": BUILD,
         "locale": LOCALE,
         "source": "Wago DB2 exact-build CSV exports",
         "tables": {
-            "AzeriteEssence.csv": {
-                "url": f"https://wago.tools/db2/AzeriteEssence/csv?build={BUILD}&locale={LOCALE}",
-                "sha256": hashlib.sha256(essence_path.read_bytes()).hexdigest(),
-                "rows": len(essence_rows),
-                "columns": essence_columns,
-            },
-            "AzeriteEssencePower.csv": {
-                "url": f"https://wago.tools/db2/AzeriteEssencePower/csv?build={BUILD}&locale={LOCALE}",
-                "sha256": hashlib.sha256(power_path.read_bytes()).hexdigest(),
-                "rows": len(power_rows),
-                "columns": power_columns,
-            },
+            "AzeriteEssence.csv": build_table_provenance(
+                "AzeriteEssence", essence_path, essence_columns, essence_rows
+            ),
+            "AzeriteEssencePower.csv": build_table_provenance(
+                "AzeriteEssencePower", power_path, power_columns, power_rows
+            ),
         },
         "generated_file": str(OUTPUT.relative_to(ROOT)),
-        "generated_sha256": hashlib.sha256(OUTPUT.read_bytes()).hexdigest(),
+        "generated_sha256": hashlib.sha256(generated.encode("utf-8")).hexdigest(),
     }
+
+
+def generate():
+    (
+        essence_path,
+        essence_columns,
+        essence_rows,
+        power_path,
+        power_columns,
+        power_rows,
+    ) = read_catalog_sources()
+    essence = essence_path, essence_columns, essence_rows
+    power = power_path, power_columns, power_rows
+    essences = build_essences(essence_rows)
+    powers = build_powers(power_rows)
+    validate_power_records(essences, powers)
+    essence_hash = hashlib.sha256(essence_path.read_bytes()).hexdigest()
+    power_hash = hashlib.sha256(power_path.read_bytes()).hexdigest()
+    generated = render_catalog(essences, powers, essence_hash, power_hash)
+    OUTPUT.write_text(generated, encoding="utf-8", newline="\n")
+    provenance = build_provenance(essence, power, generated)
     PROVENANCE.write_text(
         json.dumps(provenance, indent=2, ensure_ascii=False) + "\n",
         encoding="utf-8",
         newline="\n",
     )
-    print(f"Wrote {OUTPUT.relative_to(ROOT)} ({len(essences)} essences, {len(powers)} ranks)")
+    print(
+        f"Wrote {OUTPUT.relative_to(ROOT)} ({len(essences)} essences, {len(powers)} ranks)"
+    )
     print(f"Wrote {PROVENANCE.relative_to(ROOT)}")
 
 
