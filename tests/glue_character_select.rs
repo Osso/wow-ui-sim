@@ -1184,9 +1184,9 @@ race:SetCharacterClass(6)
 assert(race.selectedClassData.fileName == "DEATHKNIGHT", "selected Death Knight record")
 assert(math.abs(frame.BGTex[1]:GetAlpha() - 0.8) < 0.001, "Death Knight overlay alpha")
 local backText = frame.BackButton:GetText()
-assert(backText == BACK, string.format("BackButton text=%s expected=%s", tostring(backText), tostring(BACK)))
+assert(backText:find(BACK, 1, true) and backText:find("common-icon-backarrow", 1, true), "BackButton should show original label and arrow")
 local forwardText = frame.ForwardButton:GetText()
-assert(forwardText == CUSTOMIZE, string.format("ForwardButton text=%s expected=%s", tostring(forwardText), tostring(CUSTOMIZE)))
+assert(forwardText:find(CUSTOMIZE, 1, true) and forwardText:find("common-icon-forwardarrow", 1, true), "ForwardButton should show original label and arrow")
 "#;
 
 #[test]
