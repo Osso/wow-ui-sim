@@ -25,6 +25,9 @@ Retail `C_Map.GetWorldPosFromMapPos` converts a UI-map point to a map number and
 
 - Use the current Retail 12.1.5 `UiMapAssignment` export. The export is from build 12.1.5.70783; parity with the selected 12.1.5.70575 pin is **INFERRED**.
 - Store only `MapID`, `UiMin`, `UiMax`, and the X/Y world endpoints needed by the vector2 result. Preserve CSV row order as an **INFERRED** tie-visitation choice; native iterator order is unknown.
+- **VERIFIED (Retail 12.1.5.70783 export):** the named negative-`MapID` row subset is UI-map IDs `1148`, `1149`, `1408`, `2147`, and `2311`. This subset is not the no-world Zone set; some listed maps also have a valid nonnegative row or are not Zones.
+- **VERIFIED (R88i.41, merged in `1f07da6b2`):** `GetWorldPosFromMapPos` selects a row from `UiMapAssignment`; a UI map with no assignment rows returns nothing.
+- **VERIFIED (center-probe contract):** a no-world Zone has no assignment row with non-degenerate UI spans containing `(0.5, 0.5)` and a nonnegative `MapID`; tests derive this set from the catalog.
 - Do not claim assignment-data support for PTR, Forever, Mists, Wrath, Era, or Anniversary without matching profile data.
 
 ## Implementation inventory
@@ -37,7 +40,7 @@ Retail `C_Map.GetWorldPosFromMapPos` converts a UI-map point to a map number and
 
 ## Tests asserting this spec
 
-- `tests/c_map_api.rs`: Mulgore point, inferred off-center transform, overlap selection, outside extrapolation, signed-ID truncation, Usage errors, and negative-`MapID` gap.
+- `tests/c_map_api.rs`: Mulgore point, inferred off-center transform, overlap selection, outside extrapolation, signed-ID truncation, Usage errors, catalog-derived no-world Zone handling for IDs `1..=3000`, and the named negative-`MapID` subset above.
 - `tests/patch_8_0_1_map_coordinates.rs`: explicit rectangle precedence and bounds.
 
 ## Known gaps

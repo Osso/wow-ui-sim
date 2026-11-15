@@ -1,15 +1,14 @@
-//! `C_Map` probe surface backed by `SimState.maps` +
-//! `SimState.player_map_position`.
+//! `C_Map` probe surface backed by `SimState.maps`, Retail UiMap data,
+//! and `SimState.player_map_position`.
 //!
 //! Migrates 7 entries off `NAMESPACE_NIL_STUBS`:
 //!
 //! - `C_Map.GetMapArtID(uiMapID)` — returns the `art_id` for the
 //!   seeded map, or nothing (retail `mayreturnnothing`).
 //! - `C_Map.GetMapInfo(uiMapID)` — returns a `UiMapDetails`-shaped
-//!   table for seeded maps. For valid-looking positive map IDs that are
-//!   not yet seeded, it returns a minimal generic map record instead of
-//!   crashing addon startup paths that walk retail UiMap.db2 IDs. Absurd
-//!   sentinel IDs still return nothing.
+//!   table for seeded maps and unseeded Retail UiMap records. Unknown
+//!   Retail IDs return nothing; other profiles retain generic details for
+//!   positive unseeded IDs.
 //! - `C_Map.GetMapInfoAtPosition(uiMapID, normalizedX, normalizedY)`
 //!   — resolves a normalized point on a parent map back to the leaf
 //!   zone whose `child_rects` entry contains the point. Returns
@@ -22,11 +21,10 @@
 //!   when `topMapID` is not an ancestor or any link in the chain
 //!   lacks a seeded `rect_on_parent`.
 //! - `C_Map.GetMapChildrenInfo(uiMapID, mapType?, allDescendants?)`
-//!   — returns the children as an array of `UiMapDetails` tables.
-//!   `mapType` filters by the UIMapType enum; `allDescendants`
-//!   recursively walks the subtree. Returns nothing when the map is
-//!   unknown, an empty array when it exists but has no children
-//!   matching the filter.
+//!   — returns seeded children and, on Retail, children from UiMap parent
+//!   links as `UiMapDetails` tables. `mapType` filters by the UIMapType
+//!   enum; `allDescendants` recursively walks the subtree. Unknown maps
+//!   return nothing; known maps with no matching children return an empty array.
 //! - `C_Map.GetPlayerMapPosition(uiMapID, unitToken)` — returns
 //!   `{x, y}` vector2 from `SimState.player_map_position` for any
 //!   known map, or matching explicit input for an active party member.
@@ -315,7 +313,8 @@ fn c_map_get_map_info(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn should_return_generic_map_info(ui_map_id: i32) -> bool {
-    (1..=MAX_GENERIC_UI_MAP_ID).contains(&ui_map_id)
+    crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail
+        && (1..=MAX_GENERIC_UI_MAP_ID).contains(&ui_map_id)
 }
 
 fn c_map_get_map_info_at_position(state: &mut LuaState) -> LuaResult<u32> {
@@ -437,6 +436,107 @@ fn ui_map_table_entry(ui_map_id: i32) -> Option<&'static crate::ui_maps::UiMapIn
         .and_then(crate::ui_maps::get_ui_map)
 }
 
+enum MapInfoSource {
+    Seeded(MapData),
+    UiMap {
+        ui_map_id: i32,
+        info: &'static crate::ui_maps::UiMapInfo,
+    },
+}
+
+impl MapInfoSource {
+    fn map_type(&self) -> i32 {
+        match self {
+            Self::Seeded(map) => map.map_type,
+            Self::UiMap { info, .. } => info.map_type as i32,
+        }
+    }
+
+    fn push_details(self, state: &mut LuaState) -> Val {
+        match self {
+            Self::Seeded(map) => push_map_details_table(state, &map),
+            Self::UiMap { ui_map_id, info } => push_ui_map_table_details(state, ui_map_id, info),
+        }
+    }
+}
+
+fn map_info_source(
+    maps: &std::collections::HashMap<i32, MapData>,
+    ui_map_id: i32,
+) -> Option<MapInfoSource> {
+    if let Some(map) = maps.get(&ui_map_id) {
+        return Some(MapInfoSource::Seeded(map.clone()));
+    }
+    let info = ui_map_table_entry(ui_map_id)?;
+    Some(MapInfoSource::UiMap { ui_map_id, info })
+}
+
+type MapChildrenByParent = std::collections::HashMap<i32, Vec<i32>>;
+
+fn insert_map_child(children: &mut MapChildrenByParent, parent_id: i32, child_id: i32) {
+    let child_ids = children.entry(parent_id).or_default();
+    if !child_ids.contains(&child_id) {
+        child_ids.push(child_id);
+    }
+}
+
+fn append_explicit_map_children(
+    maps: &std::collections::HashMap<i32, MapData>,
+    children: &mut MapChildrenByParent,
+) {
+    for map in maps.values() {
+        children
+            .entry(map.ui_map_id)
+            .or_default()
+            .extend(map.child_map_ids.iter().copied());
+    }
+}
+
+fn append_seeded_map_parent_links(
+    maps: &std::collections::HashMap<i32, MapData>,
+    children: &mut MapChildrenByParent,
+) {
+    let mut parent_links = maps
+        .values()
+        .map(|map| (map.parent_map_id, map.ui_map_id))
+        .collect::<Vec<_>>();
+    parent_links.sort_unstable();
+    for (parent_id, child_id) in parent_links {
+        insert_map_child(children, parent_id, child_id);
+    }
+}
+
+fn append_ui_map_catalog_children(
+    maps: &std::collections::HashMap<i32, MapData>,
+    children: &mut MapChildrenByParent,
+) {
+    let mut parent_links = crate::ui_maps::UI_MAP_DB
+        .entries()
+        .filter_map(|(ui_map_id, info)| {
+            let ui_map_id = i32::try_from(*ui_map_id).ok()?;
+            if maps.contains_key(&ui_map_id) {
+                return None;
+            }
+            let parent_id = i32::try_from(info.parent_map_id).ok()?;
+            Some((parent_id, ui_map_id))
+        })
+        .collect::<Vec<_>>();
+    parent_links.sort_unstable();
+    for (parent_id, child_id) in parent_links {
+        insert_map_child(children, parent_id, child_id);
+    }
+}
+
+fn map_children_by_parent(maps: &std::collections::HashMap<i32, MapData>) -> MapChildrenByParent {
+    let mut children = MapChildrenByParent::new();
+    append_explicit_map_children(maps, &mut children);
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        append_seeded_map_parent_links(maps, &mut children);
+        append_ui_map_catalog_children(maps, &mut children);
+    }
+    children
+}
+
 fn push_ui_map_table_details(
     state: &mut LuaState,
     ui_map_id: i32,
@@ -468,27 +568,51 @@ fn collect_children(
     root: i32,
     all_descendants: bool,
     map_type_filter: Option<i32>,
-) -> Vec<MapData> {
-    let Some(root_map) = maps.get(&root) else {
-        return Vec::new();
-    };
+) -> Option<Vec<MapInfoSource>> {
+    map_info_source(maps, root)?;
+    let children_by_parent = map_children_by_parent(maps);
+    Some(collect_children_from_index(
+        maps,
+        &children_by_parent,
+        root,
+        all_descendants,
+        map_type_filter,
+    ))
+}
 
-    let mut out: Vec<MapData> = Vec::new();
-    let mut visited: HashSet<i32> = HashSet::new();
-    let mut frontier: Vec<i32> = root_map.child_map_ids.clone();
+fn append_map_children(
+    frontier: &mut Vec<i32>,
+    children_by_parent: &MapChildrenByParent,
+    parent_id: i32,
+) {
+    if let Some(children) = children_by_parent.get(&parent_id) {
+        frontier.extend(children.iter().copied());
+    }
+}
+
+fn collect_children_from_index(
+    maps: &std::collections::HashMap<i32, MapData>,
+    children_by_parent: &MapChildrenByParent,
+    root: i32,
+    all_descendants: bool,
+    map_type_filter: Option<i32>,
+) -> Vec<MapInfoSource> {
+    let mut out = Vec::new();
+    let mut visited = HashSet::new();
+    let mut frontier = children_by_parent.get(&root).cloned().unwrap_or_default();
 
     while let Some(child_id) = frontier.pop() {
         if !visited.insert(child_id) {
             continue;
         }
-        let Some(child) = maps.get(&child_id) else {
+        let Some(child) = map_info_source(maps, child_id) else {
             continue;
         };
-        if map_type_filter.is_none_or(|filter| child.map_type == filter) {
-            out.push(child.clone());
+        if map_type_filter.is_none_or(|filter| child.map_type() == filter) {
+            out.push(child);
         }
         if all_descendants {
-            frontier.extend(child.child_map_ids.iter().copied());
+            append_map_children(&mut frontier, children_by_parent, child_id);
         }
     }
 
@@ -502,18 +626,19 @@ fn c_map_get_map_children_info(state: &mut LuaState) -> LuaResult<u32> {
         _ => None,
     };
     let all_descendants = matches!(stack_val(state, 3), Val::Bool(true));
-
-    let children = {
-        let sim = borrow_state(state)?;
-        if !sim.maps.contains_key(&ui_map_id) {
-            return Ok(0);
-        }
-        collect_children(&sim.maps, ui_map_id, all_descendants, map_type_filter)
+    let children = collect_children(
+        &borrow_state(state)?.maps,
+        ui_map_id,
+        all_descendants,
+        map_type_filter,
+    );
+    let Some(children) = children else {
+        return Ok(0);
     };
 
     let array = create_table(state);
     for (index, child) in children.into_iter().enumerate() {
-        let entry = push_map_details_table(state, &child);
+        let entry = child.push_details(state);
         set_table_array(state, array, index as i64 + 1, entry);
     }
     state.push(array);

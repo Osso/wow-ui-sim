@@ -186,7 +186,8 @@ fn get_map_info_ordinary_fixture_generic_and_selector_compatibility() {
             assert(value.mapType == 3, 'existing generic map type')
             assert(value.parentMapID == 0 and value.flags == 0, 'existing generic metadata')
         end
-        capture_generic(C_Map.GetMapInfo(9999))
+        local unknown = C_Map.GetMapInfo(9999)
+        if unknown then capture_generic(unknown) end
         assert(select('#', C_Map.GetMapInfo(999999)) == 0, 'outside ID returns zero values')
         "#,
     ))

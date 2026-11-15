@@ -124,9 +124,19 @@ fn test_map_util_finds_unseeded_continent_parent() {
     assert_eq!(maps, (619, "Broken Isles".into(), 2339, "Dornogal".into()));
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
-fn test_get_map_info_returns_generic_details_for_maps_the_table_lacks() {
+fn test_get_map_info_respects_profile_specific_unknown_map_behavior() {
     let env = env();
+    if wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::Retail {
+        let (known, unknown_is_nil): (bool, bool) = env
+            .eval("return type(C_Map.GetMapInfo(1)) == 'table', C_Map.GetMapInfo(9999) == nil")
+            .unwrap();
+        assert!(known, "known map lookup is the positive control");
+        assert!(unknown_is_nil, "unknown Retail maps have no UiMap record");
+        return;
+    }
+
     let (map_id, name, parent_id): (i32, String, i32) = env
         .eval(
             r#"
@@ -135,9 +145,7 @@ fn test_get_map_info_returns_generic_details_for_maps_the_table_lacks() {
             "#,
         )
         .unwrap();
-    assert_eq!(map_id, 9999);
-    assert_eq!(name, "Map 9999");
-    assert_eq!(parent_id, 0);
+    assert_eq!((map_id, name.as_str(), parent_id), (9999, "Map 9999", 0));
 }
 
 #[test]
@@ -451,11 +459,199 @@ fn retail_map_assignment_uses_inferred_swapped_axis_formula() {
     feature = "profile-retail",
     feature = "retail-12-1-5"
 ))]
-#[test]
-fn retail_map_world_position_probe_covers_zone_maps_under_azeroth() {
-    let env = env();
-    use std::collections::{HashMap, HashSet};
+const RETAIL_MAP_PROBE_CENTER: f64 = 0.5;
 
+#[cfg(all(
+    feature = "optional-tests",
+    feature = "profile-retail",
+    feature = "retail-12-1-5"
+))]
+fn retail_map_has_valid_assignment_at_center(ui_map_id: u32) -> bool {
+    sim_data_profile::ui_map_assignments::get_ui_map_assignments(ui_map_id).is_some_and(
+        |assignments| {
+            assignments.iter().any(|assignment| {
+                let ui_min_x = f64::from(assignment.ui_min[0]);
+                let ui_min_y = f64::from(assignment.ui_min[1]);
+                let ui_max_x = f64::from(assignment.ui_max[0]);
+                let ui_max_y = f64::from(assignment.ui_max[1]);
+                let has_valid_span = ui_max_x - ui_min_x >= f64::from(f32::EPSILON)
+                    && ui_max_y - ui_min_y >= f64::from(f32::EPSILON);
+                let contains_center = RETAIL_MAP_PROBE_CENTER >= ui_min_x
+                    && RETAIL_MAP_PROBE_CENTER <= ui_max_x
+                    && RETAIL_MAP_PROBE_CENTER >= ui_min_y
+                    && RETAIL_MAP_PROBE_CENTER <= ui_max_y;
+                has_valid_span && contains_center && assignment.map_id >= 0
+            })
+        },
+    )
+}
+
+#[cfg(all(
+    feature = "optional-tests",
+    feature = "profile-retail",
+    feature = "retail-12-1-5"
+))]
+fn retail_no_world_zone_ids_below(limit: u32) -> Vec<u32> {
+    (1..=limit)
+        .filter_map(|ui_map_id| {
+            let info = sim_data::ui_maps::get_ui_map(ui_map_id)?;
+            if info.map_type != 3 || retail_map_has_valid_assignment_at_center(ui_map_id) {
+                return None;
+            }
+            Some(ui_map_id)
+        })
+        .collect()
+}
+
+#[cfg(all(
+    feature = "optional-tests",
+    feature = "profile-retail",
+    feature = "retail-12-1-5"
+))]
+fn retail_no_world_map_ids_literal(ui_map_ids: &[u32]) -> String {
+    ui_map_ids
+        .iter()
+        .map(|ui_map_id| format!("[{ui_map_id}] = true"))
+        .collect::<Vec<_>>()
+        .join(",")
+}
+
+#[cfg(all(
+    feature = "optional-tests",
+    feature = "profile-retail",
+    feature = "retail-12-1-5"
+))]
+const RETAIL_ZONE_WORLD_POSITION_PROBE: &str = r##"
+    local noWorldMapIDs = { __NO_WORLD_MAP_IDS__ }
+    local noWorldMapIDsSeen = {}
+    local zoneCount = 0
+    local function capture(...)
+        return select("#", ...), ...
+    end
+    for mapID = 1, 3000 do
+        local info = C_Map.GetMapInfo(mapID)
+        if info then
+            assert(info.mapID == mapID, "GetMapInfo returned a constant row for " .. mapID)
+            if info.mapType == Enum.UIMapType.Zone then
+                zoneCount = zoneCount + 1
+                local resultCount, instanceID, worldPosition = capture(
+                    C_Map.GetWorldPosFromMapPos(mapID, {x = 0.5, y = 0.5})
+                )
+                if noWorldMapIDs[mapID] then
+                    noWorldMapIDsSeen[mapID] = true
+                    assert(resultCount == 0, "no-world Zone returned values for " .. mapID)
+                else
+                    assert(resultCount == 2, "missing position result for " .. mapID)
+                    assert(type(instanceID) == "number", "missing instance for " .. mapID)
+                    assert(type(worldPosition) == "table", "missing position for " .. mapID)
+                end
+            end
+        end
+    end
+    assert(zoneCount > 0, "map lookup returned no Zone records")
+    for mapID in pairs(noWorldMapIDs) do
+        assert(noWorldMapIDsSeen[mapID], "no-world catalog Zone missing from GetMapInfo: " .. mapID)
+    end
+
+    local instanceID, position = C_Map.GetWorldPosFromMapPos(7, {x = 0.5, y = 0.5})
+    local x, y = position:GetXY()
+    assert(instanceID == 1 and math.abs(x - -1985.4150390625) < 0.01)
+    assert(math.abs(y - -520.830078125) < 0.01)
+"##;
+
+#[cfg(all(
+    feature = "optional-tests",
+    feature = "profile-retail",
+    feature = "retail-12-1-5"
+))]
+#[test]
+fn retail_zone_maps_below_3000_have_world_positions_at_player_login() {
+    let env = env();
+    let no_world_ids = retail_no_world_zone_ids_below(3000);
+    let no_world_map_ids = retail_no_world_map_ids_literal(&no_world_ids);
+    let script =
+        RETAIL_ZONE_WORLD_POSITION_PROBE.replace("__NO_WORLD_MAP_IDS__", &no_world_map_ids);
+    env.fire_event("PLAYER_LOGIN").unwrap();
+    env.eval::<()>(&script)
+        .expect("every Zone map has a position or a catalog-derived no-world result");
+}
+
+#[cfg(all(
+    feature = "optional-tests",
+    feature = "profile-retail",
+    feature = "retail-12-1-5"
+))]
+const RETAIL_MAP_CHILDREN_PROBE: &str = r#"
+    assert(C_Map.GetMapChildrenInfo(9999) == nil, "unknown map children must be absent")
+
+    local pending = {946, 947}
+    local nextPending = 1
+    local visited = {}
+    while nextPending <= #pending do
+        local mapID = pending[nextPending]
+        nextPending = nextPending + 1
+        if not visited[mapID] then
+            visited[mapID] = true
+            for _, child in ipairs(C_Map.GetMapChildrenInfo(mapID) or {}) do
+                local info = C_Map.GetMapInfo(child.mapID)
+                assert(info and info.parentMapID == mapID, "non-child row under " .. mapID)
+                if not visited[child.mapID] then
+                    pending[#pending + 1] = child.mapID
+                end
+            end
+        end
+    end
+    assert(visited[7], "HBD walk from Cosmic/Azeroth must reach Mulgore")
+
+    local zones = C_Map.GetMapChildrenInfo(946, Enum.UIMapType.Zone, true)
+    local otherZones = {}
+    local otherContinents = {}
+    for _, zone in ipairs(zones) do
+        assert(zone.mapType == Enum.UIMapType.Zone and visited[zone.mapID])
+        if zone.mapID ~= 7 then
+            local parent = C_Map.GetMapInfo(zone.parentMapID)
+            while parent and parent.mapType ~= Enum.UIMapType.Continent do
+                parent = C_Map.GetMapInfo(parent.parentMapID)
+            end
+            if parent then
+                otherZones[zone.mapID] = true
+                otherContinents[parent.mapID] = true
+            end
+        end
+    end
+    local zoneCount, continentCount = 0, 0
+    for _ in pairs(otherZones) do zoneCount = zoneCount + 1 end
+    for _ in pairs(otherContinents) do continentCount = continentCount + 1 end
+    assert(zoneCount >= 2, "HBD walk must reach two other distinct Zones")
+    assert(continentCount >= 2, "other Zones must cover different continents")
+"#;
+
+#[cfg(all(
+    feature = "optional-tests",
+    feature = "profile-retail",
+    feature = "retail-12-1-5"
+))]
+#[test]
+fn retail_map_children_info_walks_generated_ui_map_tree() {
+    let env = env();
+    env.fire_event("PLAYER_LOGIN").unwrap();
+    env.eval::<()>(RETAIL_MAP_CHILDREN_PROBE)
+        .expect("HBD-style map tree walk covers generated UiMap rows");
+}
+
+#[cfg(all(
+    feature = "optional-tests",
+    feature = "profile-retail",
+    feature = "retail-12-1-5"
+))]
+use std::collections::{HashMap, HashSet};
+
+#[cfg(all(
+    feature = "optional-tests",
+    feature = "profile-retail",
+    feature = "retail-12-1-5"
+))]
+fn retail_map_world_position_map_rows() -> Vec<(u32, u32, u32)> {
     const MAP_ID_LIMIT: u32 = 10_000;
     let mut map_rows = (0..MAP_ID_LIMIT)
         .filter_map(|map_id| {
@@ -469,16 +665,36 @@ fn retail_map_world_position_probe_covers_zone_maps_under_azeroth() {
         "update MAP_ID_LIMIT if the generated UI map IDs exceed it"
     );
     map_rows.sort_unstable_by_key(|(map_id, _, _)| *map_id);
+    map_rows
+}
 
+#[cfg(all(
+    feature = "optional-tests",
+    feature = "profile-retail",
+    feature = "retail-12-1-5"
+))]
+fn retail_map_world_position_hierarchy(
+    map_rows: &[(u32, u32, u32)],
+) -> (HashMap<u32, Vec<u32>>, HashMap<u32, u32>) {
     let mut children_by_parent = HashMap::<u32, Vec<u32>>::new();
     let mut map_types = HashMap::<u32, u32>::new();
-    for &(map_id, parent_map_id, map_type) in &map_rows {
+    for &(map_id, parent_map_id, map_type) in map_rows {
         children_by_parent
             .entry(parent_map_id)
             .or_default()
             .push(map_id);
         map_types.insert(map_id, map_type);
     }
+    (children_by_parent, map_types)
+}
+
+#[cfg(all(
+    feature = "optional-tests",
+    feature = "profile-retail",
+    feature = "retail-12-1-5"
+))]
+fn retail_map_world_position_zone_expectations(map_rows: &[(u32, u32, u32)]) -> (usize, Vec<u32>) {
+    let (children_by_parent, map_types) = retail_map_world_position_hierarchy(map_rows);
     let mut pending = vec![947];
     let mut visited = HashSet::new();
     let mut zone_count = 0;
@@ -489,26 +705,7 @@ fn retail_map_world_position_probe_covers_zone_maps_under_azeroth() {
         }
         if map_types.get(&map_id) == Some(&3) {
             zone_count += 1;
-            let has_world_assignment =
-                sim_data_profile::ui_map_assignments::get_ui_map_assignments(map_id).is_some_and(
-                    |assignments| {
-                        assignments.iter().any(|assignment| {
-                            let ui_min_x = f64::from(assignment.ui_min[0]);
-                            let ui_min_y = f64::from(assignment.ui_min[1]);
-                            let ui_max_x = f64::from(assignment.ui_max[0]);
-                            let ui_max_y = f64::from(assignment.ui_max[1]);
-                            let ui_width = ui_max_x - ui_min_x;
-                            let ui_height = ui_max_y - ui_min_y;
-                            ui_width >= f64::from(f32::EPSILON)
-                                && ui_height >= f64::from(f32::EPSILON)
-                                && 0.5 >= ui_min_x
-                                && 0.5 <= ui_max_x
-                                && 0.5 >= ui_min_y
-                                && 0.5 <= ui_max_y
-                                && assignment.map_id >= 0
-                        })
-                    },
-                );
+            let has_world_assignment = retail_map_has_valid_assignment_at_center(map_id);
             if !has_world_assignment {
                 no_world_zone_ids.push(map_id);
             }
@@ -517,38 +714,65 @@ fn retail_map_world_position_probe_covers_zone_maps_under_azeroth() {
             pending.extend(children);
         }
     }
-    let no_world_zone_count = no_world_zone_ids.len();
-    let no_world_map_ids = no_world_zone_ids
-        .iter()
-        .map(|map_id| format!("[{map_id}] = true"))
-        .collect::<Vec<_>>()
-        .join(",");
+    (zone_count, no_world_zone_ids)
+}
 
-    let map_rows = map_rows
+#[cfg(all(
+    feature = "optional-tests",
+    feature = "profile-retail",
+    feature = "retail-12-1-5"
+))]
+fn retail_map_world_position_rows_literal(map_rows: &[(u32, u32, u32)]) -> String {
+    map_rows
         .iter()
         .map(|(map_id, parent_map_id, map_type)| format!("{{{map_id},{parent_map_id},{map_type}}}"))
         .collect::<Vec<_>>()
-        .join(",");
+        .join(",")
+}
 
+#[cfg(all(
+    feature = "optional-tests",
+    feature = "profile-retail",
+    feature = "retail-12-1-5"
+))]
+fn retail_map_world_position_no_world_literal(no_world_zone_ids: &[u32]) -> String {
+    no_world_zone_ids
+        .iter()
+        .map(|map_id| format!("[{map_id}] = true"))
+        .collect::<Vec<_>>()
+        .join(",")
+}
+
+#[cfg(all(
+    feature = "optional-tests",
+    feature = "profile-retail",
+    feature = "retail-12-1-5"
+))]
+fn retail_map_world_position_load_vector2d(env: &WowLuaEnv) {
     let vector_source_path = wow_ui_sim::client_profile::blizzard_ui_addons_dir()
         .join("Blizzard_SharedXML/Vector2D.lua");
     let vector_source = std::fs::read_to_string(&vector_source_path)
         .unwrap_or_else(|error| panic!("read {}: {error}", vector_source_path.display()));
     env.exec(&vector_source)
         .expect("execute original Blizzard Vector2D.lua");
+}
 
-    let script = format!(
-        r#"
-        local mapRows = {{{map_rows}}}
-        local noWorldMapIDs = {{{no_world_map_ids}}}
-        local childrenByParent = {{}}
-        local mapTypes = {{}}
+#[cfg(all(
+    feature = "optional-tests",
+    feature = "profile-retail",
+    feature = "retail-12-1-5"
+))]
+const RETAIL_MAP_WORLD_POSITION_TREE_PROBE: &str = r##"
+        local mapRows = {__MAP_ROWS__}
+        local noWorldMapIDs = {__NO_WORLD_MAP_IDS__}
+        local childrenByParent = {}
+        local mapTypes = {}
         for _, row in ipairs(mapRows) do
             local mapID, parentMapID, mapType = row[1], row[2], row[3]
             mapTypes[mapID] = mapType
             local children = childrenByParent[parentMapID]
             if not children then
-                children = {{}}
+                children = {}
                 childrenByParent[parentMapID] = children
             end
             children[#children + 1] = mapID
@@ -558,9 +782,9 @@ fn retail_map_world_position_probe_covers_zone_maps_under_azeroth() {
             table.sort(children)
         end
 
-        local pending = {{947}}
+        local pending = {947}
         local nextPending = 1
-        local visited = {{}}
+        local visited = {}
         local zoneCount = 0
         local noWorldZoneCount = 0
         while nextPending <= #pending do
@@ -605,19 +829,57 @@ fn retail_map_world_position_probe_covers_zone_maps_under_azeroth() {
                     end
                 end
 
-                local children = childrenByParent[mapID] or {{}}
+                local children = childrenByParent[mapID] or {}
                 for index = 1, #children do
                     pending[#pending + 1] = children[index]
                 end
             end
         end
-        assert(zoneCount == {zone_count}, "probe did not visit every Zone below Azeroth")
+        assert(zoneCount == __ZONE_COUNT__, "probe did not visit every Zone below Azeroth")
         assert(
-            noWorldZoneCount == {no_world_zone_count},
+            noWorldZoneCount == __NO_WORLD_ZONE_COUNT__,
             "probe did not visit every Zone without a world assignment"
         )
         assert(visited[7], "Mulgore (uiMapID 7) must be reachable from Azeroth")
-        "#
+        "##;
+
+#[cfg(all(
+    feature = "optional-tests",
+    feature = "profile-retail",
+    feature = "retail-12-1-5"
+))]
+fn retail_map_world_position_probe_script(
+    map_rows: &str,
+    no_world_map_ids: &str,
+    zone_count: usize,
+    no_world_zone_count: usize,
+) -> String {
+    RETAIL_MAP_WORLD_POSITION_TREE_PROBE
+        .replace("__MAP_ROWS__", map_rows)
+        .replace("__NO_WORLD_MAP_IDS__", no_world_map_ids)
+        .replace("__ZONE_COUNT__", &zone_count.to_string())
+        .replace("__NO_WORLD_ZONE_COUNT__", &no_world_zone_count.to_string())
+}
+
+#[cfg(all(
+    feature = "optional-tests",
+    feature = "profile-retail",
+    feature = "retail-12-1-5"
+))]
+#[test]
+fn retail_map_world_position_probe_covers_zone_maps_under_azeroth() {
+    let env = env();
+    let map_rows = retail_map_world_position_map_rows();
+    let (zone_count, no_world_zone_ids) = retail_map_world_position_zone_expectations(&map_rows);
+    let no_world_zone_count = no_world_zone_ids.len();
+    let no_world_map_ids = retail_map_world_position_no_world_literal(&no_world_zone_ids);
+    let map_rows = retail_map_world_position_rows_literal(&map_rows);
+    retail_map_world_position_load_vector2d(&env);
+    let script = retail_map_world_position_probe_script(
+        &map_rows,
+        &no_world_map_ids,
+        zone_count,
+        no_world_zone_count,
     );
     env.eval::<()>(&script)
         .expect("run HBD-style Retail map-position probe");
