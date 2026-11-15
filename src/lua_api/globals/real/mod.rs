@@ -45,7 +45,11 @@ pub(crate) mod glue_enter_world;
 pub mod glue_feature_status;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) mod glue_save_character_order;
-#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
 pub(crate) mod glue_select_character;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) mod glue_selection;

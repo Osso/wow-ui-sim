@@ -222,6 +222,21 @@ Behavior-neutral R45 factoring (lt-941b #1302): `SelectCharacter` now lives in
 helpers of at most30 body lines. The producer and original Retail/Forever
 registration order are preserved; this commit does not enable it on PTR.
 
+**INFERRED PTR SelectCharacter applicability (lt-941b #1302):** the selected PTR
+`Blizzard_GlueXML/Mainline/CharacterSelect.lua:891` calls
+`SelectCharacter(selectedCharacterID)` after resolving a nonempty selected row.
+The separately committed neutral R45 producer in `glue_select_character` is
+registered on `ACTIVE == Ptr` only. Its parser, defensive unknown-range
+handling, roster normalization, unresolved/no-change exits, store-before-event
+ordering and zero-return behavior are unchanged. The Retail/Forever route still
+registers SelectCharacter before its existing season/background/entry/order
+chain. PTR retains its existing connection/season publication order and adds
+only this producer; no enclosing login/selection block or called downstream API
+is enabled. In particular `IsCharacterListUpdatePending` is unchanged.
+Generated declarations for this PTR Glue global are absent; applicability is
+based on the selected original consumer and R45 Retail evidence, not native PTR
+parity or a new argument/refusal policy.
+
 Full-list processing resets selection to -1 before `CHARACTER_LIST_UPDATE`.
 The event's count includes empty and unresolved slots. A separate zero-based
 host saved-candidate input is unset by default because its native initial value
