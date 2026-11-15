@@ -124,9 +124,19 @@ fn test_map_util_finds_unseeded_continent_parent() {
     assert_eq!(maps, (619, "Broken Isles".into(), 2339, "Dornogal".into()));
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
-fn test_get_map_info_returns_generic_details_for_maps_the_table_lacks() {
+fn test_get_map_info_respects_profile_specific_unknown_map_behavior() {
     let env = env();
+    if wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::Retail {
+        let (known, unknown_is_nil): (bool, bool) = env
+            .eval("return type(C_Map.GetMapInfo(1)) == 'table', C_Map.GetMapInfo(9999) == nil")
+            .unwrap();
+        assert!(known, "known map lookup is the positive control");
+        assert!(unknown_is_nil, "unknown Retail maps have no UiMap record");
+        return;
+    }
+
     let (map_id, name, parent_id): (i32, String, i32) = env
         .eval(
             r#"
@@ -135,9 +145,7 @@ fn test_get_map_info_returns_generic_details_for_maps_the_table_lacks() {
             "#,
         )
         .unwrap();
-    assert_eq!(map_id, 9999);
-    assert_eq!(name, "Map 9999");
-    assert_eq!(parent_id, 0);
+    assert_eq!((map_id, name.as_str(), parent_id), (9999, "Map 9999", 0));
 }
 
 #[test]
@@ -444,6 +452,117 @@ fn retail_map_assignment_uses_inferred_swapped_axis_formula() {
         (y - 1114.169921875).abs() < 0.01,
         "INFERRED Region_4-to-Region_1 interpolation on map x: {y}"
     );
+}
+
+#[cfg(all(
+    feature = "optional-tests",
+    feature = "profile-retail",
+    feature = "retail-12-1-5"
+))]
+const RETAIL_ZONE_WORLD_POSITION_PROBE: &str = r#"
+    local noWorldMapIDs = {
+        [1148] = true, [1149] = true, [1408] = true, [2147] = true, [2311] = true,
+    }
+    local zoneCount = 0
+    for mapID = 1, 3000 do
+        local info = C_Map.GetMapInfo(mapID)
+        if info then
+            assert(info.mapID == mapID, "GetMapInfo returned a constant row for " .. mapID)
+            if info.mapType == Enum.UIMapType.Zone then
+                zoneCount = zoneCount + 1
+                if not noWorldMapIDs[mapID] then
+                    local instanceID, worldPosition = C_Map.GetWorldPosFromMapPos(
+                        mapID, {x = 0.5, y = 0.5}
+                    )
+                    assert(type(instanceID) == "number", "missing instance for " .. mapID)
+                    assert(type(worldPosition) == "table", "missing position for " .. mapID)
+                end
+            end
+        end
+    end
+    assert(zoneCount > 0, "map lookup returned no Zone records")
+
+    local instanceID, position = C_Map.GetWorldPosFromMapPos(7, {x = 0.5, y = 0.5})
+    local x, y = position:GetXY()
+    assert(instanceID == 1 and math.abs(x - -1985.4150390625) < 0.01)
+    assert(math.abs(y - -520.830078125) < 0.01)
+"#;
+
+#[cfg(all(
+    feature = "optional-tests",
+    feature = "profile-retail",
+    feature = "retail-12-1-5"
+))]
+#[test]
+fn retail_zone_maps_below_3000_have_world_positions_at_player_login() {
+    let env = env();
+    env.fire_event("PLAYER_LOGIN").unwrap();
+    env.eval::<()>(RETAIL_ZONE_WORLD_POSITION_PROBE)
+        .expect("every real Zone map has a world-position instance");
+}
+
+#[cfg(all(
+    feature = "optional-tests",
+    feature = "profile-retail",
+    feature = "retail-12-1-5"
+))]
+const RETAIL_MAP_CHILDREN_PROBE: &str = r#"
+    assert(C_Map.GetMapInfo(9999) == nil, "unknown map info must be absent")
+    assert(C_Map.GetMapChildrenInfo(9999) == nil, "unknown map children must be absent")
+
+    local pending = {946, 947}
+    local nextPending = 1
+    local visited = {}
+    while nextPending <= #pending do
+        local mapID = pending[nextPending]
+        nextPending = nextPending + 1
+        if not visited[mapID] then
+            visited[mapID] = true
+            for _, child in ipairs(C_Map.GetMapChildrenInfo(mapID) or {}) do
+                local info = C_Map.GetMapInfo(child.mapID)
+                assert(info and info.parentMapID == mapID, "non-child row under " .. mapID)
+                if not visited[child.mapID] then
+                    pending[#pending + 1] = child.mapID
+                end
+            end
+        end
+    end
+    assert(visited[7], "HBD walk from Cosmic/Azeroth must reach Mulgore")
+
+    local zones = C_Map.GetMapChildrenInfo(946, Enum.UIMapType.Zone, true)
+    local otherZones = {}
+    local otherContinents = {}
+    for _, zone in ipairs(zones) do
+        assert(zone.mapType == Enum.UIMapType.Zone and visited[zone.mapID])
+        if zone.mapID ~= 7 then
+            local parent = C_Map.GetMapInfo(zone.parentMapID)
+            while parent and parent.mapType ~= Enum.UIMapType.Continent do
+                parent = C_Map.GetMapInfo(parent.parentMapID)
+            end
+            if parent then
+                otherZones[zone.mapID] = true
+                otherContinents[parent.mapID] = true
+            end
+        end
+    end
+    local zoneCount, continentCount = 0, 0
+    for _ in pairs(otherZones) do zoneCount = zoneCount + 1 end
+    for _ in pairs(otherContinents) do continentCount = continentCount + 1 end
+    assert(zoneCount >= 2, "HBD walk must reach two other distinct Zones")
+    assert(continentCount >= 2, "other Zones must cover different continents")
+"#;
+
+#[cfg(all(
+    feature = "optional-tests",
+    feature = "profile-retail",
+    feature = "retail-12-1-5"
+))]
+#[test]
+fn retail_map_children_info_walks_generated_ui_map_tree() {
+    let env = env();
+    env.fire_event("PLAYER_LOGIN").unwrap();
+    env.eval::<()>(RETAIL_MAP_CHILDREN_PROBE)
+        .expect("HBD-style map tree walk covers generated UiMap rows");
 }
 
 #[cfg(all(
