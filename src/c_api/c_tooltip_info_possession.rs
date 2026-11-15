@@ -161,7 +161,8 @@ fn read_object_input(state: &mut LuaState, value: Val) -> LuaResult<PossessionOb
     }
     let identity_first = read_u32(table_get(state, value, "identityFirst"), "identityFirst")?;
     let identity_second = read_u32(table_get(state, value, "identitySecond"), "identitySecond")?;
-    let candidate_values = read_array(state, table_get(state, value, "candidates"))?;
+    let candidate_list = table_get(state, value, "candidates");
+    let candidate_values = read_array(state, candidate_list)?;
     let candidates = candidate_values
         .into_iter()
         .map(|candidate| read_candidate_input(state, candidate))
@@ -198,7 +199,8 @@ fn read_candidate_input(state: &mut LuaState, value: Val) -> LuaResult<Possessio
 }
 
 fn read_effect_values(state: &mut LuaState, candidate: Val) -> LuaResult<Vec<u32>> {
-    read_array(state, table_get(state, candidate, "effects"))?
+    let effects = table_get(state, candidate, "effects");
+    read_array(state, effects)?
         .into_iter()
         .map(|effect| read_u32(effect, "effects"))
         .collect()
