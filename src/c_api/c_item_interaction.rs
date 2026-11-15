@@ -172,8 +172,10 @@ fn read_pending_item_slot(state: &mut LuaState, location: Val) -> Option<ItemSlo
         let equipment_index = equipment_slot.wrapping_sub(1);
         return Some(ItemSlot::Equipment(equipment_index.wrapping_add(1)));
     }
-    let bag = location_number(state, table_get(state, location, "bagID"))?;
-    let slot = location_number(state, table_get(state, location, "slotIndex"))?;
+    let bag_value = table_get(state, location, "bagID");
+    let bag = location_number(state, bag_value)?;
+    let slot_value = table_get(state, location, "slotIndex");
+    let slot = location_number(state, slot_value)?;
     read_pending_bag_slot(state, location_integer(bag)?, location_integer(slot)?)
 }
 
