@@ -3650,8 +3650,8 @@ mod storeglue_r88w {
         use wow_ui_sim::c_api::store_glue_model::{self as model, VasPurchaseRecord};
         pub fn install_callbacks(env: &WowLuaEnv) {
             env.state().borrow_mut().store_glue.callbacks.state_changed = true;
-            // No purchase_error field exists on this actual baseline; listener is installed.
-            // GREEN adapter additionally sets the new native callback-present seam true.
+            // #1310: actual callback-present seam, not a replacement event producer.
+            env.state().borrow_mut().store_glue.callbacks.purchase_error = true;
         }
         pub fn set_entry_rejected(env: &WowLuaEnv, rejected: bool) {
             // #1310: actual neutral entry-check result, not a replacement getter.

@@ -18,7 +18,7 @@ The original dispositions1283/1285 established these seams; the R88w sections be
 - Queue correlation is opaque host data. Simulator request counters do not establish native width, overflow or wire layout. No public packet name/opcode is invented.
 - Restriction metadata is explicit; Lua taint alone is not treated as native restricted-execution metadata. Secret helpers apply only to matching known contracts.
 - Completion values/flags and state>1 permission have neutral explicit inputs; their service meanings are UNKNOWN. Pending errors are host supplied and are not automatically cleared.
-- R88w.w1 verifies zero purchase-error payload; event publication is pending its separate implementation step. The separate w4 native copy gate is now implemented; only event publication awaits its own change.
+- R88w.w1/w4 resolve the earlier purchase-error payload and copy-gate questions: the implemented zero-payload notification and native copy gate are documented below.
 - R88w.w3 verifies zero state-change payload. Removal of the earlier host payload seam and its zero-arity tests are a separate pending implementation step.
 - Cleanup failures, complete protected-wrapper exits, exhaustive lifecycle clears, and server behavior remain unmodeled rather than receiving guessed fallbacks.
 
@@ -78,3 +78,9 @@ The modeled profiles retire the unconditional empty-table `runtime_surface_boots
 VERIFIED Retail (#1308): every per-character path releases/resets the old shared list first (an empty new Vec in this bounded model). The explicit state0/1 removal route now copies precisely a nonempty vector whose first value is nonzero, preserving every later zero and signed32 code. Character matching is irrelevant to copying. Empty and first-zero lists leave it empty; the state>1 service route clears it without copying. The obsolete `copy_eligible` host argument is removed, not replaced with a guessed predicate.
 
 The earlier absent-character assertion that expected no copy solely because a host boolean was false is corrected in this commit: input `[88]` now yields `[88]` even with no character match, exactly as w4 states. Record/event assertions are retained. Purchase-error publication follows separately; this commit does not claim that event delivery is implemented.
+
+## R88w.w1/w4 purchase-error event
+
+VERIFIED Retail (#1308): the state0/1 route clears/replaces the separate shared list using the w4 nonempty/first-nonzero gate, then emits `STORE_VAS_PURCHASE_ERROR` with exactly zero event-specific values when its callback is present. This occurs before looking up/removing a character record. A lookup miss therefore still copies and notifies; it does not emit a later removal state-change. Error and complete events both have zero payload, not codes or a GUID. The callback-present flag is explicit host input, default absent.
+
+The approved #1310 RED fixture adapter could install only the existing callbacks; GREEN adds the real purchase-error callback flag. The producer is never mocked. Frozen tests exercise two different backed records and a lookup miss before checking state/order/zero arity.

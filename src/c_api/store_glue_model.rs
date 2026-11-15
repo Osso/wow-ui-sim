@@ -25,6 +25,7 @@ pub enum StoreRequest {
 #[derive(Debug, Default)]
 pub struct StoreCallbacks {
     pub purchase_complete: bool,
+    pub purchase_error: bool,
     pub queue_status: bool,
     pub state_changed: bool,
 }
@@ -172,7 +173,7 @@ pub fn receive_bulk(
 
 /// VERIFIED state0/1 clear-first, removal, then state-change notification.
 /// VERIFIED R88w.w4: this state0/1 path copies a nonempty, first-nonzero list.
-/// STORE_VAS_PURCHASE_ERROR is deliberately NOT dispatched: payload UNKNOWN (#1283).
+/// R88w.w1/w4: gated zero-payload error notification precedes record search/removal.
 pub fn receive_removal(
     env: &WowLuaEnv,
     guid: &str,
@@ -182,13 +183,18 @@ pub fn receive_removal(
     if !super::c_store_glue::enabled() {
         return Ok(());
     }
-    {
+    let notify = {
         let mut sim = env.state().borrow_mut();
         sim.store_glue.purchase_errors = Vec::new();
-        // R88w.w4: later zeros are retained, independently of character matching.
         if errors.first().is_some_and(|value| *value != 0) {
             sim.store_glue.purchase_errors = errors;
+            sim.store_glue.callbacks.purchase_error
+        } else {
+            false
         }
+    };
+    if notify {
+        env.fire_event_with_args("STORE_VAS_PURCHASE_ERROR", &[])?;
     }
     remove_purchase_record(env, guid, state_change_payload)
 }
