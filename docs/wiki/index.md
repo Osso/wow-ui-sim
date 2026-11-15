@@ -1,3 +1,7 @@
+## [2026-11-15] investigation | ShowUIPanel toggle fixture owners
+
+[Toggle fixture owners](investigations/showuipanel-toggle-fixture-owners.md) records independent achievement/housing fallback-retirement boundaries, original TOC owner loading and untouched out-of-scope panel failures. No guessed fallback restored.
+
 ## [2026-11-15] implementation | Retail LFG reward writer
 
 [LFG reward writer](../specs/lfg-reward-writer.md) records the verified enclosing-message writer, replacement readiness/groups/tiers, event ordering, original hover proof and transport/clear-route boundaries.
