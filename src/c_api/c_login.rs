@@ -142,6 +142,11 @@ pub fn register_c_login(state: &mut LuaState) -> LuaResult<()> {
     if ACTIVE == ClientProfile::Ptr {
         crate::lua_api::globals::real::glue_connection::register(state)?;
     }
+    // INFERRED PTR R49 query only; do not register the enclosing selection surface.
+    #[cfg(feature = "client-ptr")]
+    if ACTIVE == ClientProfile::Ptr {
+        crate::lua_api::globals::real::glue_character_season::register(state)?;
+    }
     permanent_shims::c_login::register_c_login_defaults(state, ns)?;
     Ok(())
 }

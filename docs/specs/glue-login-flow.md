@@ -278,6 +278,19 @@ zero. The getter uses requested-GUID record resolution and never the selected
 character or active season. Glue-only exposure is INFERRED and profile-scoped.
 No extra events, GUID grammar, secret handling or other writers are invented.
 
+**INFERRED PTR applicability (lt-941b #1299):** the selected PTR
+`Blizzard_GlueXML/Mainline/CharacterSelect/CharacterSelectListElements.lua:815`
+calls `GetCharacterTimerunningSeasonID(guid)` on its supplied-GUID path. The
+existing R49 producer and its Glue-only installer are factored into
+`glue_character_season`; the Retail/Forever selection route delegates to that
+same helper. A separate `ACTIVE == Ptr` registration and screen-update route
+installs only this query. Existing argument checks, nil/nonzero return behavior,
+GUID matching, and Game removal policy are preserved. The enclosing selection,
+background, enter-world, order and login registration blocks remain unchanged;
+no new secret/refusal rule or `IsCharacterListUpdatePending` producer is added.
+PTR applicability is inferred from the cited Retail/Forever R49 facts, not a new
+PTR native finding.
+
 ### R50 preset writer and cached-integer projection
 
 Tracker lt-a667 comment 66 supplies Forever 70707 / PTR 70668 evidence.

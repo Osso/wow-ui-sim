@@ -32,6 +32,12 @@ pub(crate) mod glue_background;
     feature = "client-ptr",
     feature = "client-wowforever"
 ))]
+pub(crate) mod glue_character_season;
+#[cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
 pub(crate) mod glue_connection;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) mod glue_enter_world;
