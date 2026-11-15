@@ -2,7 +2,7 @@
 
 ## Scope
 
-PTR 12.1.7.70493 publishes only two formerly missing endpoints in this packet. Other profiles preserve their surfaces, including Forever's existing graveyard query. Profile selection uses `client_profile::ACTIVE`.
+PTR 12.1.7.70493 publishes only two formerly missing endpoints in this packet. The initial packet preserved other profiles, including Forever's existing graveyard query. [Forever item-cooldown publication](forever-spell-item-cooldown.md) later reuses this bounded model under an explicit declared-profile gate. Profile selection uses `client_profile::ACTIVE`.
 
 ## Supplied-state contract
 

@@ -1,3 +1,7 @@
+## [2026-11-15] implementation | Forever item-cooldown publication
+
+[Forever item cooldown](../specs/forever-spell-item-cooldown.md) records matching pinned PTR/Forever declarations, narrow INFERRED publication, original Collections cooldown RED/GREEN and no-added-error proof. Retail absence and existing supplied-state policy remain unchanged.
+
 ## [2026-11-15] implementation | Spell-count R88r and Forever
 
 [Spell-count corrections](investigations/spell-count-r88p.md) records verified numeric-path replacement bypass and accepted-secret conversion, with inferred Forever applicability through original selected CooldownViewer Lua. Forever count defaults are retired; metadata-source guards and property decoding remain unmodeled.

@@ -1,3 +1,7 @@
+## [2026-11-15] implementation | Forever item-cooldown publication
+
+[Forever item cooldown](../specs/forever-spell-item-cooldown.md) records matching pinned PTR/Forever declarations, narrow INFERRED publication, original Collections cooldown RED/GREEN and no-added-error proof. Retail absence and existing supplied-state policy remain unchanged.
+
 ## [2026-11-15] investigation | Spell-count widths, inventory and inherited failures
 
 [Spell-count corrections](investigations/spell-count-r88p.md) records six executable historical boundaries, native-backed signed widths/storage traversal, isolated R88r numeric/secret corrections, and inferred Forever original-consumer coverage. Property decoding, detailed eligibility and exceptional-number outcomes remain explicit gaps.
