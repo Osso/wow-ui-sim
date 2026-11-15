@@ -56,48 +56,83 @@ pub(super) fn init_lua_state(
     state: Rc<RefCell<SimState>>,
 ) -> crate::Result<()> {
     trace_debug_getter_values(lua, "init_entry");
-    registry::init_registry_tables(lua, &state)?;
-    bootstrap::init_shared_bootstrap(lua)?;
-    super::globals::security::register_environment_helpers(lua)?;
-    super::globals::missing_surface::register_secure_environment_base_globals(lua)?;
-    LuaApiMut::register_function(lua, "forceinsecure", forceinsecure)?;
-    if crate::client_profile::is_active_retail_12_1_5() {
-        // R88n.11 part 1 verifies these values are copied from ordinary `_G`.
-        super::globals::utility_system_spell::register_secure_environment_base_globals(lua)?;
-        crate::lua_api::workarounds::register_secure_environment_base(lua)?;
-        crate::lua_api::globals::compat_overrides::install_bit_library(lua)?;
-    }
-    // R88n.10/R88n.11 part 1 verify that Constants and Enum values are installed
-    // after the constructor. The order of other native registrars remains UNKNOWN.
-    super::globals::security::create_secure_environment(lua)?;
-    crate::c_api::c_ui_color::register(lua)?;
-    publish_retail_secure_template_method_binder(lua)?;
-    super::globals::real::mixins::register(lua)?;
-    publish_unknown_bootstrap_globals(lua)?;
-    enums::init_enum_globals(lua)?;
-    frames::init_frame_metatable(lua)?;
+    initialize_bootstrap_registry_and_secure_base(lua, &state)?;
+    initialize_secure_environment_core(lua)?;
     // register_globals calls gc_stop at its entry; finalize_bootstrap_gc
     // below restores the collector once bootstrap is complete. Between
     // those two points the mark phase is paused.
     trace_debug_getter_values(lua, "before_globals_register");
     super::globals::register_globals(lua, state.clone())?;
     trace_debug_getter_values(lua, "after_globals_register");
+    register_runtime_surface_bootstrap(lua)?;
+    register_permanent_bootstrap(lua)?;
+    register_temporary_bootstrap(lua)?;
+    register_runtime_api_functions(lua)?;
+    trace_debug_getter_values(lua, "before_profile_bootstrap");
+    register_profile_bootstrap(lua)?;
+    trace_debug_getter_values(lua, "after_profile_bootstrap");
+    install_secure_runtime_surface(lua)?;
+    finalize_lua_bootstrap(lua, &state)?;
+    Ok(())
+}
+
+fn initialize_bootstrap_registry_and_secure_base(
+    lua: &mut rilua::Lua,
+    state: &Rc<RefCell<SimState>>,
+) -> crate::Result<()> {
+    registry::init_registry_tables(lua, state)?;
+    bootstrap::init_shared_bootstrap(lua)?;
+    super::globals::security::register_environment_helpers(lua)?;
+    super::globals::missing_surface::register_secure_environment_base_globals(lua)?;
+    LuaApiMut::register_function(lua, "forceinsecure", forceinsecure)?;
+    if crate::client_profile::is_active_retail_12_1_5() {
+        super::globals::utility_system_spell::register_secure_environment_base_globals(lua)?;
+        crate::lua_api::workarounds::register_secure_environment_base(lua)?;
+        crate::lua_api::globals::compat_overrides::install_bit_library(lua)?;
+    }
+    Ok(())
+}
+
+fn initialize_secure_environment_core(lua: &mut rilua::Lua) -> crate::Result<()> {
+    // R88n.10/R88n.11 part 1 verify Constants and Enum are installed after creation.
+    super::globals::security::create_secure_environment(lua)?;
+    crate::c_api::c_ui_color::register(lua)?;
+    publish_retail_secure_template_method_binder(lua)?;
+    super::globals::real::mixins::register(lua)?;
+    publish_unknown_bootstrap_globals(lua)?;
+    enums::init_enum_globals(lua)?;
+    frames::init_frame_metatable(lua)
+}
+
+fn register_runtime_surface_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     trace_debug_getter_values(lua, "before_runtime_bootstrap");
     bootstrap::init_runtime_surface_bootstrap(lua)?;
     crate::c_api::publish_simulator_store_secure_members(lua.state_mut())?;
     trace_debug_getter_values(lua, "after_runtime_bootstrap");
     #[cfg(feature = "retail-12-1-0")]
     super::globals::security::register_retail_secret_values(lua)?;
+    Ok(())
+}
+
+fn register_permanent_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     trace_debug_getter_values(lua, "before_permanent_bootstrap");
     crate::lua_api::workarounds::apply_permanent_bootstrap(lua)?;
     trace_debug_getter_values(lua, "after_permanent_bootstrap");
     #[cfg(feature = "retail-12-0-7")]
     super::globals::real::performance_inputs::register(lua)?;
+    Ok(())
+}
+
+fn register_temporary_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     trace_debug_getter_values(lua, "before_temporary_bootstrap");
     #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
     crate::c_api::c_combat_log::register_filters(lua)?;
     crate::lua_api::workarounds::apply_temporary_bootstrap(lua)?;
     trace_debug_getter_values(lua, "after_temporary_bootstrap");
+    Ok(())
+}
+
+fn register_runtime_api_functions(lua: &mut rilua::Lua) -> crate::Result<()> {
     super::globals::real::heal_prediction::register(lua)?;
     super::globals::real::secure_helpers::register(lua)?;
     super::globals::real::totems::register(lua)?;
@@ -109,8 +144,10 @@ pub(super) fn init_lua_state(
     crate::c_api::c_click_bindings_spell::register(lua.state_mut())?;
     crate::c_api::c_curve_util::register(lua)?;
     crate::c_api::seconds_formatter::register(lua)?;
-    crate::c_api::duration_text_binding::register(lua)?;
-    trace_debug_getter_values(lua, "before_profile_bootstrap");
+    crate::c_api::duration_text_binding::register(lua)
+}
+
+fn register_profile_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     #[cfg(feature = "client-wrath")]
     {
         crate::wrath::compat_bootstrap::init(lua)?;
@@ -133,7 +170,10 @@ pub(super) fn init_lua_state(
     }
     #[cfg(feature = "client-wowforever")]
     rilua::table_security::register_table_security(lua)?;
-    trace_debug_getter_values(lua, "after_profile_bootstrap");
+    Ok(())
+}
+
+fn install_secure_runtime_surface(lua: &mut rilua::Lua) -> crate::Result<()> {
     super::globals::real::protected_globals::install(lua)?;
     #[cfg(feature = "forbidden-aspects")]
     super::script_object_transfer::install(lua)?;
@@ -142,15 +182,20 @@ pub(super) fn init_lua_state(
     // temporary: lt-635e. Keep the full snapshot private to secure-mode and replay chunks.
     super::globals::security::create_secure_replay_environment(lua)?;
     remove_sandbox_globals(lua)?;
-    let unmodeled_r88n_11b_members =
-        crate::c_api::publish_verified_secure_namespace_members(lua.state_mut())?;
-    if !unmodeled_r88n_11b_members.is_empty() {
+    let unmodeled = crate::c_api::publish_verified_secure_namespace_members(lua.state_mut())?;
+    if !unmodeled.is_empty() {
         tracing::debug!(
-            members = ?unmodeled_r88n_11b_members,
+            members = ?unmodeled,
             "R88n.11b namespace members have no simulator implementation"
         );
     }
-    frames::init_frame_metatable(lua)?;
+    frames::init_frame_metatable(lua)
+}
+
+fn finalize_lua_bootstrap(
+    lua: &mut rilua::Lua,
+    state: &Rc<RefCell<SimState>>,
+) -> crate::Result<()> {
     trace_debug_getter_values(lua, "before_final_gc");
     finalize_bootstrap_gc(lua)?;
     trace_debug_getter_values(lua, "after_final_gc");
@@ -165,7 +210,7 @@ pub(super) fn init_lua_state(
         freeze_globals::freeze_globals_with_live_shadow(lua)?;
     }
     install_global_slots(lua);
-    frames::mark_bootstrap_frame_placeholders(&state);
+    frames::mark_bootstrap_frame_placeholders(state);
     Ok(())
 }
 

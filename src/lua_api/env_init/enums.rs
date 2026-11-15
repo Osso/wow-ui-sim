@@ -235,52 +235,86 @@ LE_WORLD_ELAPSED_TIMER_TYPE_PROVING_GROUND = nil
 "#;
 
 pub(crate) fn init_enum_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
+    register_enum_data(lua)?;
+    register_enum_compatibility(lua)?;
+    register_profile_enum_values(lua)?;
+    register_native_constants(lua)?;
+    register_base_constants(lua)?;
+    register_ptr_constant_overrides(lua)?;
+    register_compat_constant_values(lua)?;
+
+    Ok(())
+}
+
+fn register_enum_data(lua: &mut rilua::Lua) -> crate::Result<()> {
+    register_explicit_enum_values(lua)?;
+    register_sequential_enum_values(lua)?;
+    register_ptr_vc_init_state(lua)
+}
+
+fn register_explicit_enum_values(lua: &mut rilua::Lua) -> crate::Result<()> {
+    let state = lua.state_mut();
+    let enum_table = ensure_global_table(state, "Enum");
+    for &(enum_name, entries) in EXPLICIT_ENUMS
+        .iter()
+        .chain(FOREVER_SHARED_ENUMS.0)
+        .chain(COMBAT_AUDIO_PULSE_ENUMS)
     {
-        let state = lua.state_mut();
-        let enum_table = ensure_global_table(state, "Enum");
-        for &(enum_name, entries) in EXPLICIT_ENUMS
-            .iter()
-            .chain(FOREVER_SHARED_ENUMS.0)
-            .chain(COMBAT_AUDIO_PULSE_ENUMS)
-        {
-            let enum_values = ensure_table_field(state, enum_table, enum_name);
-            for &(variant_name, value) in entries {
-                crate::c_api::set_namespace_member(
-                    state,
-                    enum_values,
-                    variant_name,
-                    Val::Num(value as f64),
-                )?;
-            }
-        }
-        for &(enum_name, entries) in SEQUENTIAL_ENUMS.iter().chain(FOREVER_SHARED_ENUMS.1) {
-            let enum_values = ensure_table_field(state, enum_table, enum_name);
-            for (index, &variant_name) in entries.iter().enumerate() {
-                crate::c_api::set_namespace_member(
-                    state,
-                    enum_values,
-                    variant_name,
-                    Val::Num(index as f64),
-                )?;
-            }
+        let enum_values = ensure_table_field(state, enum_table, enum_name);
+        for &(variant_name, value) in entries {
+            crate::c_api::set_namespace_member(
+                state,
+                enum_values,
+                variant_name,
+                Val::Num(value as f64),
+            )?;
         }
     }
-    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Ptr {
-        let state = lua.state_mut();
-        let enum_table = ensure_global_table(state, "Enum");
-        let (name, entries) = crate::lua_api::globals::enum_data::VC_INIT_STATE;
-        let values = ensure_table_field(state, enum_table, name);
-        for &(variant, value) in entries {
-            crate::c_api::set_namespace_member(state, values, variant, Val::Num(value as f64))?;
+    Ok(())
+}
+
+fn register_sequential_enum_values(lua: &mut rilua::Lua) -> crate::Result<()> {
+    let state = lua.state_mut();
+    let enum_table = ensure_global_table(state, "Enum");
+    for &(enum_name, entries) in SEQUENTIAL_ENUMS.iter().chain(FOREVER_SHARED_ENUMS.1) {
+        let enum_values = ensure_table_field(state, enum_table, enum_name);
+        for (index, &variant_name) in entries.iter().enumerate() {
+            crate::c_api::set_namespace_member(
+                state,
+                enum_values,
+                variant_name,
+                Val::Num(index as f64),
+            )?;
         }
     }
+    Ok(())
+}
+
+fn register_ptr_vc_init_state(lua: &mut rilua::Lua) -> crate::Result<()> {
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Ptr {
+        return Ok(());
+    }
+    let state = lua.state_mut();
+    let enum_table = ensure_global_table(state, "Enum");
+    let (name, entries) = crate::lua_api::globals::enum_data::VC_INIT_STATE;
+    let values = ensure_table_field(state, enum_table, name);
+    for &(variant, value) in entries {
+        crate::c_api::set_namespace_member(state, values, variant, Val::Num(value as f64))?;
+    }
+    Ok(())
+}
+
+fn register_enum_compatibility(lua: &mut rilua::Lua) -> crate::Result<()> {
     exec_source_in_both_environments(lua, MISSING_ENUMS_LUA)?;
     #[cfg(feature = "retail-12-1-5")]
     exec_source_in_both_environments(lua, RETAIL_12_1_5_ENUM_OVERRIDES_LUA)?;
     if ACTIVE_RETAIL_API_EPOCH == RetailApiEpoch::Retail12_0_0 {
         exec_source_in_both_environments(lua, RETAIL_12_0_0_ENUM_OVERRIDES_LUA)?;
     }
-    exec_source_in_both_environments(lua, COMPAT_ENUMS_LUA)?;
+    exec_source_in_both_environments(lua, COMPAT_ENUMS_LUA)
+}
+
+fn register_profile_enum_values(lua: &mut rilua::Lua) -> crate::Result<()> {
     crate::c_api::ptr_edit_mode_enums::register(lua.state_mut());
     #[cfg(feature = "retail-12-0-5")]
     crate::c_api::patch_12_0_5_enums::register(lua.state_mut());
@@ -300,7 +334,14 @@ pub(crate) fn init_enum_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
         let enum_table = ensure_global_table(state, "Enum");
         crate::c_api::c_unit_auras::register_sound_trigger_enum(state, enum_table);
     }
-    exec_source_in_both_environments(lua, NATIVE_CONSTANTS_LUA)?;
+    Ok(())
+}
+
+fn register_native_constants(lua: &mut rilua::Lua) -> crate::Result<()> {
+    exec_source_in_both_environments(lua, NATIVE_CONSTANTS_LUA)
+}
+
+fn register_base_constants(lua: &mut rilua::Lua) -> crate::Result<()> {
     // LFG roles are the only Constants members verified for native secure publication.
     // Keep the generated, missing, and compatibility datasets ordinary-only.
     lua.exec(
@@ -317,15 +358,20 @@ pub(crate) fn init_enum_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(MISSING_CONSTANTS_LUA)?;
     #[cfg(feature = "client-wowforever")]
     lua.exec("LE_UNIT_STAT_SPIRIT = 5")?;
-    lua.exec(CONSTANTS_VALUES_LUA)?;
-    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Ptr {
-        // PTR 12.1.7.70493 LevelConstantsDocumentation.lua:12; Retail omits this constant.
-        lua.exec("Constants.LevelConstsExposed.MIN_TALENT_LEVEL = 10")?;
-        // PTR CatalogShopConstantsDocumentation.lua:89.
-        lua.exec(
-            "Constants.CatalogShopVirtualCurrencyConstants.TALEBOUND_VC_CURRENCY_CODE = 'XZC'",
-        )?;
+    lua.exec(CONSTANTS_VALUES_LUA)
+}
+
+fn register_ptr_constant_overrides(lua: &mut rilua::Lua) -> crate::Result<()> {
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Ptr {
+        return Ok(());
     }
+    // PTR 12.1.7.70493 LevelConstantsDocumentation.lua:12; Retail omits this constant.
+    lua.exec("Constants.LevelConstsExposed.MIN_TALENT_LEVEL = 10")?;
+    // PTR CatalogShopConstantsDocumentation.lua:89.
+    lua.exec("Constants.CatalogShopVirtualCurrencyConstants.TALEBOUND_VC_CURRENCY_CODE = 'XZC'")
+}
+
+fn register_compat_constant_values(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(COMPAT_CONSTANTS_LUA)?;
     #[cfg(feature = "client-wowforever")]
     lua.exec(
