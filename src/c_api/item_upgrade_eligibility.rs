@@ -2,8 +2,7 @@
 
 use std::collections::HashMap;
 
-pub(crate) use crate::c_api::item_location::ItemSlot;
-use crate::c_api::item_location::{ItemLocationReadError, read_r88s_item_slot};
+use crate::c_api::item_location::{ItemLocationReadError, ItemSlot, read_r88s_item_slot};
 use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::methods::{borrow_state, borrow_state_mut};
 use crate::lua_api::state::{CursorInfo, CursorItemOrigin, SimState};
