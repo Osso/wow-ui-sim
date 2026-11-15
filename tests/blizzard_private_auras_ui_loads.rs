@@ -450,6 +450,185 @@ fn secure_private_auras_tooltip_consumer_runs_without_errors() {
     );
 }
 
+#[cfg(feature = "client-retail")]
+fn retail_full_ui_errors_from(env: &WowLuaEnv, markers: &[&str]) -> Vec<String> {
+    env.state()
+        .borrow()
+        .lua_errors
+        .iter()
+        .filter(|message| markers.iter().any(|marker| message.contains(marker)))
+        .cloned()
+        .collect()
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn retail_secure_shared_xmlbase_publishes_add_source_location_exclude() {
+    let env = load_full_game_ui();
+    let consumer_errors = retail_full_ui_errors_from(&env, &["FrameFactory.lua", "Pools.lua"]);
+    assert!(
+        consumer_errors.is_empty(),
+        "the secure SharedXMLBase consumers at FrameFactory.lua:64 and Pools.lua:866 must run: {consumer_errors:?}"
+    );
+
+    let published: (String, String, bool) = env
+        .eval(
+            r#"
+            local ordinary = rawget(_G, "AddSourceLocationExclude")
+            local secure = rawget(__secureenv, "AddSourceLocationExclude")
+            return type(ordinary), type(secure), not rawequal(ordinary, secure)
+            "#,
+        )
+        .expect("AddSourceLocationExclude publication probe");
+    assert_eq!(published, ("function".into(), "function".into(), true));
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn retail_secure_shared_xml_publishes_table_count_for_account_util() {
+    let env = load_full_game_ui();
+    let consumer_errors = retail_full_ui_errors_from(&env, &["AccountUtil.lua"]);
+    assert!(
+        consumer_errors.is_empty(),
+        "the secure AccountUtil.lua:129 table.count consumer must run: {consumer_errors:?}"
+    );
+
+    let published: (bool, bool, bool, bool, bool, bool, i32) = env
+        .eval(
+            r#"
+            local ordinary = rawget(_G, "table")
+            local secure = rawget(__secureenv, "table")
+            local ordinaryCount = type(ordinary) == "table" and rawget(ordinary, "count")
+            local secureCount = type(secure) == "table" and rawget(secure, "count")
+            local count = type(secureCount) == "function" and secureCount({ first = 1, second = 2 }) or -1
+            return type(ordinary) == "table",
+                type(secure) == "table",
+                ordinary ~= secure,
+                type(ordinaryCount) == "function",
+                type(secureCount) == "function",
+                not rawequal(ordinaryCount, secureCount),
+                count
+            "#,
+        )
+        .expect("table.count publication probe");
+    assert_eq!(published, (true, true, true, true, true, true, 2));
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn retail_secure_colors_publishes_existing_color_override_consumers() {
+    let env = load_full_game_ui();
+    let consumer_errors = retail_full_ui_errors_from(&env, &["ColorManager.lua"]);
+    assert!(
+        consumer_errors.is_empty(),
+        "the secure Blizzard_Colors ColorManager.lua consumer must run: {consumer_errors:?}"
+    );
+
+    let published: bool = env
+        .eval(
+            r#"
+            local ordinary = rawget(_G, "C_ColorOverrides")
+            local secure = rawget(__secureenv, "C_ColorOverrides")
+            if type(ordinary) ~= "table" or type(secure) ~= "table" or ordinary == secure then
+                return false
+            end
+            for _, name in ipairs({ "GetColorForQuality", "GetColorOverrideInfo" }) do
+                local ordinaryFunction = rawget(ordinary, name)
+                local secureFunction = rawget(secure, name)
+                if type(ordinaryFunction) ~= "function"
+                    or type(secureFunction) ~= "function"
+                    or rawequal(ordinaryFunction, secureFunction) then
+                    return false
+                end
+            end
+            return true
+            "#,
+        )
+        .expect("C_ColorOverrides publication probe");
+    assert!(
+        published,
+        "publish the existing C_ColorOverrides handlers separately"
+    );
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn retail_secure_shared_xml_publishes_account_store_constants() {
+    let env = load_full_game_ui();
+    let consumer_errors = retail_full_ui_errors_from(&env, &["GameRulesUtil.lua"]);
+    assert!(
+        consumer_errors.is_empty(),
+        "the secure GameRulesUtil.lua AccountStoreConsts consumer must run: {consumer_errors:?}"
+    );
+
+    let constants: (bool, bool, bool, bool, bool, f64, f64, f64, f64) = env
+        .eval(
+            r#"
+            local ordinaryConstants = rawget(_G, "Constants")
+            local secureConstants = rawget(__secureenv, "Constants")
+            local ordinary = type(ordinaryConstants) == "table"
+                and rawget(ordinaryConstants, "AccountStoreConsts")
+            local secure = type(secureConstants) == "table"
+                and rawget(secureConstants, "AccountStoreConsts")
+            return type(ordinaryConstants) == "table",
+                type(secureConstants) == "table",
+                ordinaryConstants ~= secureConstants,
+                type(ordinary) == "table",
+                type(secure) == "table",
+                not rawequal(ordinary, secure),
+                secure and secure.PlunderstormStoreFrontID or -1,
+                secure and secure.WowhackStoreFrontID or -1,
+                secure and secure.PlunderstormPlunderCurrencyID or -1,
+                secure and secure.KegLegRenownCurrencyID or -1
+            "#,
+        )
+        .expect("AccountStoreConsts publication probe");
+    assert_eq!(
+        constants,
+        (true, true, true, true, true, true, 1.0, 3.0, 3139.0, 2814.0)
+    );
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn retail_private_auras_xml_uses_the_shared_secure_uiparent_frame() {
+    let env = load_full_game_ui();
+    let consumer_errors = retail_full_ui_errors_from(&env, &["PrivateAurasTooltip"]);
+    assert!(
+        consumer_errors.is_empty(),
+        "the secure PrivateAurasTooltip.xml parent consumer must load: {consumer_errors:?}"
+    );
+
+    let published: (bool, bool, bool) = env
+        .eval(
+            r#"
+            local ordinary = rawget(_G, "UIParent")
+            local secure = rawget(__secureenv, "UIParent")
+            return type(ordinary) == "table",
+                type(secure) == "table",
+                rawequal(ordinary, secure)
+            "#,
+        )
+        .expect("UIParent named-frame publication probe");
+    assert_eq!(published, (true, true, true));
+
+    let state = env.state();
+    let state = state.borrow();
+    let ui_parent = state
+        .widgets
+        .get_id_by_name("UIParent")
+        .expect("the built-in UIParent frame");
+    let tooltip = state
+        .widgets
+        .get_id_by_name("PrivateAurasTooltip")
+        .expect("the original PrivateAurasTooltip XML frame");
+    assert_eq!(
+        state.widgets.get(tooltip).and_then(|frame| frame.parent_id),
+        Some(ui_parent),
+        "PrivateAurasTooltip.xml must parent its frame to the UIParent frame"
+    );
+}
+
 // Literal cached inputs absent from Wrath manifest1-382/cache; behavior cases stay enabled.
 post_wrath_ui_fixture! {
 #[test]

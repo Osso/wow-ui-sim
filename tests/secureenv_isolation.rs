@@ -233,6 +233,116 @@ fn secure_addon_loads_nonsecure_dependency_in_ordinary_then_secure_environment()
 }
 
 #[test]
+fn secure_dependency_attempts_secure_after_ordinary_failure_in_dependency_order() {
+    let env = env();
+    let root = tempfile::tempdir().unwrap();
+    let optional_dir = root.path().join("OptionalDependencyProbe");
+    let required_dir = root.path().join("RequiredDependencyProbe");
+    let consumer_dir = root.path().join("SecureDependencyConsumerProbe");
+    std::fs::create_dir_all(&optional_dir).unwrap();
+    std::fs::create_dir_all(&required_dir).unwrap();
+    std::fs::create_dir_all(&consumer_dir).unwrap();
+    env.exec(
+        r#"
+        local trace = {}
+        rawset(_G, "r88tSecureDependencyTrace", trace)
+        rawset(__secureenv, "r88tSecureDependencyTrace", trace)
+        rawset(_G, "r88tSecureEnvironment", __secureenv)
+        rawset(__secureenv, "r88tSecureEnvironment", __secureenv)
+        "#,
+    )
+    .unwrap();
+
+    std::fs::write(
+        optional_dir.join("OptionalDependencyProbe.toc"),
+        "## Title: OptionalDependencyProbe\nOptional.lua\n",
+    )
+    .unwrap();
+    std::fs::write(
+        optional_dir.join("Optional.lua"),
+        "local mode = getfenv(1) == r88tSecureEnvironment and 'secure' or 'ordinary'; \
+         table.insert(r88tSecureDependencyTrace, 'optional:' .. mode)",
+    )
+    .unwrap();
+    std::fs::write(
+        required_dir.join("RequiredDependencyProbe.toc"),
+        "## Title: RequiredDependencyProbe\nRequired.lua\n",
+    )
+    .unwrap();
+    std::fs::write(
+        required_dir.join("Required.lua"),
+        "local mode = getfenv(1) == r88tSecureEnvironment and 'secure' or 'ordinary'; \
+         table.insert(r88tSecureDependencyTrace, 'required:' .. mode); \
+         if mode == 'ordinary' then error('intentional ordinary dependency failure') end",
+    )
+    .unwrap();
+    let consumer_toc = consumer_dir.join("SecureDependencyConsumerProbe.toc");
+    std::fs::write(
+        &consumer_toc,
+        "## Title: SecureDependencyConsumerProbe\n\
+         ## UseSecureEnvironment: 1\n\
+         ## OptionalDeps: OptionalDependencyProbe\n\
+         ## Dependencies: RequiredDependencyProbe\n\
+         Consumer.lua\n",
+    )
+    .unwrap();
+    std::fs::write(
+        consumer_dir.join("Consumer.lua"),
+        "r88tSecureDependencyConsumerReached = true",
+    )
+    .unwrap();
+
+    let load_result = wow_ui_sim::loader::load_addon(&env.loader_env(), &consumer_toc);
+    assert!(
+        load_result.is_err(),
+        "the required dependency's ordinary failure must still stop its consumer"
+    );
+
+    let trace: String = env
+        .eval("return table.concat(r88tSecureDependencyTrace, ',')")
+        .unwrap();
+    let optional_ordinary = trace
+        .find("optional:ordinary")
+        .expect("optional dependency ordinary request");
+    let optional_secure = trace
+        .find("optional:secure")
+        .expect("optional dependency secure request");
+    let required_ordinary = trace
+        .find("required:ordinary")
+        .expect("required dependency ordinary request");
+    let required_secure = trace
+        .find("required:secure")
+        .expect("required dependency secure request after ordinary failure");
+    assert!(
+        optional_ordinary < optional_secure
+            && optional_secure < required_ordinary
+            && required_ordinary < required_secure,
+        "dependency requests must run optional before required and secure after ordinary: {trace}"
+    );
+
+    let required_states: (bool, bool) = {
+        let state = env.state().borrow();
+        let required = state
+            .addons
+            .iter()
+            .find(|addon| addon.folder_name == "RequiredDependencyProbe")
+            .expect("required dependency load state");
+        (required.loaded, required.secure_loaded)
+    };
+    assert_eq!(required_states, (false, true));
+    let consumer_reached: bool = env
+        .eval(
+            "return rawget(_G, 'r88tSecureDependencyConsumerReached') == true \
+             or rawget(__secureenv, 'r88tSecureDependencyConsumerReached') == true",
+        )
+        .unwrap();
+    assert!(
+        !consumer_reached,
+        "consumer files must not run after dependency failure"
+    );
+}
+
+#[test]
 fn secure_primitive_write_stays_inside_secureenv() {
     let env = env();
 
