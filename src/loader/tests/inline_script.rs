@@ -4,9 +4,8 @@ use super::super::lua_file::load_lua_file;
 use super::super::xml_file::load_xml_file;
 use crate::loader::load_addon;
 use crate::lua_api::WowLuaEnv;
-use crate::lua_api::methods::{create_string, table_set_static};
 use crate::xml::parse_xml_file;
-use rilua::{LuaApi, LuaApiMut};
+use rilua::LuaApi;
 
 #[test]
 fn test_parse_wowless_test_xml() {
@@ -457,7 +456,7 @@ fn secure_retail_scoped_handler_uses_only_the_given_environment() {
     .unwrap();
     std::fs::write(
         addon_dir.join("Setup.lua"),
-        "local _, addon = ...\naddon.ScopedAddonValue = 'addon-only'\n",
+        "local _, addon = ...\naddon.ScopedAddonValue = 'addon-only'\n__secureenv.ScopedSetupObserved = addon.ScopedAddonValue\n",
     )
     .unwrap();
     std::fs::write(
@@ -467,8 +466,9 @@ fn secure_retail_scoped_handler_uses_only_the_given_environment() {
                 <Frame name="ScopedRetailSecureHandlerFrame">
                     <Scripts>
                         <OnLoad>
-                            self:SetAttribute("ObservedAddonValue", ScopedAddonValue)
-                            self:SetAttribute("ObservedSecureValue", ScopedSecureOnlyValue)
+                            self:SetAttribute("ObservedHandlerRan", true)
+                            self:SetAttribute("ObservedAddonValue", ScopedAddonValue or "__nil")
+                            self:SetAttribute("ObservedSecureValue", ScopedSecureOnlyValue or "__nil")
                         </OnLoad>
                     </Scripts>
                 </Frame>
@@ -477,22 +477,39 @@ fn secure_retail_scoped_handler_uses_only_the_given_environment() {
     )
     .unwrap();
 
-    load_addon(&env.loader_env(), &toc_path).unwrap();
+    let load_result = load_addon(&env.loader_env(), &toc_path).unwrap();
+    assert_eq!(load_result.lua_files, 1, "the setup file must load");
+    assert_eq!(load_result.xml_files, 1, "the XML file must load");
+    assert!(
+        load_result.warnings.is_empty(),
+        "{:?}",
+        load_result.warnings
+    );
 
-    let (addon_value, secure_value_is_nil): (String, bool) = env
+    let (setup_value, handler_ran, addon_value, secure_value): (String, bool, String, String) = env
         .eval(
             r#"
             local frame = rawget(_G, "ScopedRetailSecureHandlerFrame")
                 or rawget(__secureenv, "ScopedRetailSecureHandlerFrame")
-            return frame:GetAttribute("ObservedAddonValue"),
-                frame:GetAttribute("ObservedSecureValue") == nil
+            if not frame then
+                return __secureenv.ScopedSetupObserved or "", false, "", ""
+            end
+            return __secureenv.ScopedSetupObserved or "",
+                frame:GetAttribute("ObservedHandlerRan") == true,
+                frame:GetAttribute("ObservedAddonValue") or "",
+                frame:GetAttribute("ObservedSecureValue") or ""
             "#,
         )
         .unwrap();
+    assert_eq!(
+        setup_value, "addon-only",
+        "the TOC Lua file must populate the add-on table"
+    );
+    assert!(handler_ran, "the XML OnLoad handler must run");
     assert_eq!(addon_value, "addon-only");
-    assert!(
-        secure_value_is_nil,
-        "the handler must not fall back to __secureenv"
+    assert_eq!(
+        secure_value, "__nil",
+        "the handler must not read __secureenv"
     );
     assert!(env.state().borrow().lua_errors.is_empty());
 }

@@ -107,6 +107,27 @@ impl<'a> LoaderEnv<'a> {
         })
     }
 
+    fn apply_generated_chunk_environment(
+        &self,
+        state: &mut LuaState,
+        func: &Function,
+    ) -> Result<()> {
+        let secure_addon = self.loading_addon_uses_secure_env();
+        if secure_addon {
+            // Keep the temporary bridge for generated XML loader chunks.
+            mark_secure_replay_state(state, func)?;
+        }
+        let preserve_secure_replay = secure_addon
+            && crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail
+            && super::methods::borrow_state(state)?
+                .loading_scoped_script_env
+                .is_some();
+        if preserve_secure_replay {
+            return Ok(());
+        }
+        apply_loading_scoped_fenv_state(state, func)
+    }
+
     pub fn exec(&self, code: &str) -> Result<()> {
         self.exec_chunk(code, true, &[])
     }
@@ -129,20 +150,7 @@ impl<'a> LoaderEnv<'a> {
         self.with_state(|state| {
             let func = Self::load_dynamic_chunk_without_slots(state, code, "loader-exec")?;
             if use_loading_environment {
-                let secure_addon = self.loading_addon_uses_secure_env();
-                if secure_addon {
-                    // Keep the temporary bridge for generated XML loader chunks.
-                    mark_secure_replay_state(state, &func)?;
-                }
-                let keep_secure_replay = secure_addon
-                    && crate::client_profile::ACTIVE
-                        == crate::client_profile::ClientProfile::Retail
-                    && super::methods::borrow_state(state)?
-                        .loading_scoped_script_env
-                        .is_some();
-                if !keep_secure_replay {
-                    apply_loading_scoped_fenv_state(state, &func)?;
-                }
+                self.apply_generated_chunk_environment(state, &func)?;
             }
             let args = if args.is_empty() {
                 Vec::new()
