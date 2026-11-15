@@ -439,22 +439,36 @@ fn possession_candidate(
     )
 }
 
+fn set_possession_object(env: &WowLuaEnv, identity: (u32, u32), candidates: &[String]) {
+    let candidates = candidates.join(",");
+    let object = format!(
+        "{{identityFirst={}, identitySecond={}, candidates={{{candidates}}}}}",
+        identity.0, identity.1
+    );
+    env.exec(&format!("A_Admin.SetPossessionObject({object})"))
+        .unwrap();
+}
+
+fn update_possession_player(env: &WowLuaEnv, identity: (u32, u32)) {
+    env.exec(&format!(
+        "A_Admin.UpdatePossessionPlayer({}, {})",
+        identity.0, identity.1
+    ))
+    .unwrap();
+}
+
 fn update_possession_player_with_candidates(
     env: &WowLuaEnv,
     identity: (u32, u32),
     candidates: &[String],
 ) {
-    let candidates = candidates.join(",");
-    env.exec(&format!(
-        "A_Admin.UpdatePossessionPlayer({}, {}, {{{}}})",
-        identity.0, identity.1, candidates
-    ))
-    .unwrap();
+    set_possession_object(env, identity, candidates);
+    update_possession_player(env, identity);
 }
 
 fn update_possession_player_without_candidates(env: &WowLuaEnv, identity: (u32, u32)) {
     env.exec(&format!(
-        "A_Admin.UpdatePossessionPlayer({}, {}, nil)",
+        "A_Admin.SetPossessionObject(nil); A_Admin.UpdatePossessionPlayer({}, {})",
         identity.0, identity.1
     ))
     .unwrap();
@@ -581,6 +595,10 @@ fn possession_rescan_keeps_old_id_for_absent_unresolved_or_rejected_inputs() {
     update_possession_player_without_candidates(&env, (11, 22));
     assert_possession_consumer_spell(&env, 116);
     update_possession_player_with_candidates(&env, (11, 22), &[]);
+    assert_possession_consumer_spell(&env, 116);
+    let unresolved_object_candidate = possession_candidate(133, false, &[2], None, None);
+    set_possession_object(&env, (12, 22), &[unresolved_object_candidate]);
+    update_possession_player(&env, (11, 22));
     assert_possession_consumer_spell(&env, 116);
 
     let rejected = [
