@@ -58,6 +58,7 @@ pub(crate) fn fire_state(
 
 fn begin_tick(state: &mut LuaState, elapsed: f64) -> crate::Result<()> {
     crate::c_api::c_trade_skill_favorites::drain_pending(state)?;
+    process_quest_special_item_cache_updates(state)?;
     let pending = std::mem::take(
         &mut borrow_state_mut(state)?
             .crafting
@@ -82,6 +83,12 @@ fn begin_tick(state: &mut LuaState, elapsed: f64) -> crate::Result<()> {
     }
     super::editbox_update::flush_state(state)?;
     super::script_helpers::reconcile_on_update_runtime_cache_if_dirty(state);
+    Ok(())
+}
+
+fn process_quest_special_item_cache_updates(state: &mut LuaState) -> crate::Result<()> {
+    let mut sim = borrow_state_mut(state)?;
+    crate::c_api::quest_special_item::process_host_cache_updates(&mut sim);
     Ok(())
 }
 

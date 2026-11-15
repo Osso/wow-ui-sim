@@ -9,7 +9,9 @@ use crate::lua_api::globals::missing_surface::tooltip_info::{
     build_item_interaction_cleansing_tooltip, build_quest_party_progress_tooltip,
     build_unresolved_conversion_item_tooltip, tooltip_for_item_context, tooltip_for_spell,
 };
-use crate::lua_api::methods::{borrow_state, create_string, create_table, table_set};
+use crate::lua_api::methods::{
+    borrow_state, borrow_state_mut, create_string, create_table, table_set,
+};
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
@@ -309,8 +311,22 @@ fn publish_quest_log_special_item(state: &mut LuaState) -> LuaResult<u32> {
     if ACTIVE != ClientProfile::Retail {
         return no_values();
     }
-    let selected_object = find_quest_special_item_object(state, quest_index);
-    let Some(selected_object) = selected_object else {
+    let Some((quest_id, is_not_ready)) = quest_cache_lookup_for_index(state, quest_index) else {
+        return no_values();
+    };
+    if is_not_ready {
+        borrow_state_mut(state)?
+            .quest_log_entries
+            .quest_special_item_inputs
+            .save_quest_record_callback(quest_id);
+        // INFERRED (R88u.u3/u4): no TooltipData is returned before record readiness.
+        return no_values();
+    }
+    publish_ready_quest_special_item(state, quest_id)
+}
+
+fn publish_ready_quest_special_item(state: &mut LuaState, quest_id: i32) -> LuaResult<u32> {
+    let Some(selected_object) = find_quest_special_item_object(state, quest_id) else {
         return no_values();
     };
     let guid = item_guid_for_bag_slot(
@@ -472,13 +488,21 @@ fn selected_keystone_item(
     items::get_item(item_id).map(|item| (item_id, item))
 }
 
-fn find_quest_special_item_object(
-    state: &LuaState,
-    quest_index: i32,
-) -> Option<crate::c_api::quest_special_item::QuestSpecialItemObject> {
+fn quest_cache_lookup_for_index(state: &LuaState, quest_index: i32) -> Option<(i32, bool)> {
     let sim = borrow_state(state).ok()?;
     let inputs = &sim.quest_log_entries.quest_special_item_inputs;
     let quest_id = *inputs.quest_ids_by_log_index.get(&quest_index)?;
+    let record_exists = inputs.cached_quest_records.contains_key(&quest_id);
+    let not_ready = record_exists && inputs.not_ready_cache_records.contains(&quest_id);
+    Some((quest_id, not_ready))
+}
+
+fn find_quest_special_item_object(
+    state: &LuaState,
+    quest_id: i32,
+) -> Option<crate::c_api::quest_special_item::QuestSpecialItemObject> {
+    let sim = borrow_state(state).ok()?;
+    let inputs = &sim.quest_log_entries.quest_special_item_inputs;
     let cache_record = inputs.cached_quest_records.get(&quest_id)?;
     let selected_object = *inputs.selected_item_objects.get(&quest_id)?;
     let primary_id_matches = cache_record.special_item_id == Some(selected_object.item_id)
