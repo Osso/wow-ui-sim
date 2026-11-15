@@ -389,19 +389,20 @@ fn actual_names_and_explicit_aliases_use_same_spell_counts() {
 }
 
 #[test]
-fn alias_first_numeric_and_string_overrides_follow_caller_identity() {
+fn ordinary_numeric_and_string_name_identifiers_read_backed_counts() {
     let env = fixture(false);
     positive(&env);
     env.state()
         .borrow_mut()
         .spell_id_aliases
         .insert("19750".into(), 642);
-    for id in ["19750", "'19750'"] {
-        cast_count(&env, id, 2, false);
-        display(&env, id, "2", false);
-    }
+    // UNKNOWN R88k.5 line 11623; lt-67d2 #1226 removes the unsupported
+    // numeric override assertion. Ordinary numeric-path controls ran above.
     cast_count(&env, "'fixtureheal'", 7, false);
     display(&env, "'fixtureheal'", "7", false);
+    cast_count(&env, "'divine shield'", 2, false);
+    display(&env, "'divine shield'", "2", false);
+    cast_count(&env, "'unknown-spell'", 0, false);
 }
 
 #[test]
