@@ -94,14 +94,40 @@ fn read_native_count_identifier(
         // This is not the maximum reader's range-error path or a wrap/clamp claim.
         return Ok(None);
     }
+    if let Some(identifier) = read_numeric_or_link_count_string(state, value, api, usage)? {
+        return Ok(identifier);
+    }
+    // INFERRED host name-resolution/override seam: existing spell_id_aliases is empty
+    // by default. No native candidate-map contents or overridden value are asserted.
     super::c_spell::read_retail_spell_identifier(state, value, api, usage)
 }
 
 #[cfg(feature = "retail-12-1-5")]
-fn unrepresented_count_number(state: &LuaState, value: Val) -> LuaResult<bool> {
-    if matches!(value, Val::Str(_)) && read_spell_identifier_value(state, value)?.is_some() {
-        return Ok(false); // Preserve the existing, not fully native-proven alias mapping.
+fn read_numeric_or_link_count_string(
+    state: &LuaState,
+    value: Val,
+    api: &str,
+    usage: &str,
+) -> LuaResult<Option<Option<u32>>> {
+    let Val::Str(reference) = value else {
+        return Ok(None);
+    };
+    let Some(text) = state.gc.string_arena.get(reference) else {
+        return Ok(None);
+    };
+    // VERIFIED R88r.r2: both string paths return before name replacement.
+    if let Some(number) = super::helpers::parse_numeric_string(text.data()) {
+        return super::c_spell::read_retail_spell_identifier(state, Val::Num(number), api, usage)
+            .map(Some);
     }
+    let parsed = std::str::from_utf8(text.data())
+        .ok()
+        .and_then(|text| super::item_spell::parse_prefixed_id(text, "spell"));
+    Ok(parsed.map(Some))
+}
+
+#[cfg(feature = "retail-12-1-5")]
+fn unrepresented_count_number(state: &LuaState, value: Val) -> LuaResult<bool> {
     let number = match value {
         Val::Num(number) => Some(number),
         Val::Str(reference) => state

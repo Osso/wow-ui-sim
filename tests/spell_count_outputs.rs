@@ -391,20 +391,35 @@ fn actual_names_and_explicit_aliases_use_same_spell_counts() {
 }
 
 #[test]
-fn ordinary_numeric_and_string_name_identifiers_read_backed_counts() {
+fn r88r_numeric_and_spell_text_identifiers_bypass_name_replacement() {
+    // VERIFIED Retail R88r.r2, lt-67d2 #1239; PTR applicability remains INFERRED.
     let env = fixture(false);
-    positive(&env);
-    env.state()
-        .borrow_mut()
-        .spell_id_aliases
-        .insert("19750".into(), 642);
-    // UNKNOWN R88k.5 line 11623; lt-67d2 #1226 removes the unsupported
-    // numeric override assertion. Ordinary numeric-path controls ran above.
-    cast_count(&env, "'fixtureheal'", 7, false);
-    display(&env, "'fixtureheal'", "7", false);
-    cast_count(&env, "'divine shield'", 2, false);
-    display(&env, "'divine shield'", "2", false);
-    cast_count(&env, "'unknown-spell'", 0, false);
+    if !uses_retail_native_count_contract() {
+        return;
+    }
+    for (id, wrong) in [(19750, 642), (642, 19750), (880001, 642)] {
+        for text in [
+            id.to_string(),
+            format!("spell:{id}"),
+            format!("|Hspell:{id}:0|h[x]|h"),
+        ] {
+            env.state()
+                .borrow_mut()
+                .spell_id_aliases
+                .insert(text, wrong);
+        }
+    }
+    for (id, count, text) in [(19750, 7, "7"), (642, 2, "2"), (880001, 0, "")] {
+        for input in [
+            id.to_string(),
+            format!("'{id}'"),
+            format!("'spell:{id}'"),
+            format!("'|Hspell:{id}:0|h[x]|h'"),
+        ] {
+            cast_count(&env, &input, count, false);
+            display(&env, &input, text, false);
+        }
+    }
 }
 
 #[test]

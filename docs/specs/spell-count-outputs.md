@@ -29,7 +29,7 @@ Display formatting/maximum and secret-output behavior remain Retail125-scoped. O
 - [ ] **VERIFIED (Retail 12.1.5.70688):** a separate active-record limit can lower a reagent limit. That backing state is not modeled; the active-record count byte and linked schema remain UNKNOWN.
 - [ ] Older profiles retain the explicit `spell_cast_counts` simulator input. Retail spellbook queries may also read that input; Retail 12.1.5 `C_Spell.GetSpellCastCount` does not.
 - [ ] Retail 12.1.5 cast counts do not come from charge state or action-slot use counts.
-- [x] **VERIFIED (Retail 12.1.5.70688; optional API test):** cast and display selectors accept ordinary numbers and numeric-convertible strings in the signed 32-bit range, then truncate toward zero. The simulator keeps its existing alias-first resolution before numeric-string parsing; full native override, link/name, and secret-mode rules remain UNKNOWN.
+- [x] **VERIFIED (Retail 12.1.5.70688; optional API test):** cast and display selectors accept ordinary numbers and numeric-convertible strings in the signed 32-bit range, then truncate toward zero. R88r.r2 confirms numeric, numeric-convertible string and recognized spell-text paths bypass name replacement. The name-map semantic interpretation remains INFERRED and its host seam empty by default; full secret-mode metadata remains UNKNOWN.
 - [ ] **VERIFIED (Retail 12.1.5.70688):** missing or readable nil required spell selectors take an argument-error route; their exact secret-nil and guard behavior remains separate.
 - [x] **INFERRED:** the shared Retail context resolves to the active player by default. `spell_cast_context_is_null = Some(true)` is a host-supplied null-context scenario; no login or lifecycle claim follows.
 
@@ -159,7 +159,7 @@ Native source: R88p.p2/p3, Retail 12.1.5.70688, verbatim in lt-67d2 #1207; R88k.
 - **VERIFIED:** display maximum uses signed32 range validation before truncation, accepts numeric strings, and defaults to9999 for absent/readable nil. Negative maxima are valid. Ordinary numeric replacement values become VM-formatted text.
 - **VERIFIED:** modeled untainted-only secret access denies before ordinary conversion with the native Usage-based mode1 message. Other modes remain unsupported.
 - **UNKNOWN (lt-67d2 #1231):** floating-point exception configuration for exceptional/out-of-range identifiers. The count endpoints supply an unresolved identity outside the represented signed range, without a maximum-style range error, wrap or clamp; tests do not assert that neutral result.
-- **UNKNOWN:** complete numeric override and authenticated fractional-secret conversion rules. Earlier tests asserting their outcomes were removed in isolated commits per #1226, not replaced with invented conversion claims.
+- **SUPERSEDED IN PART by R88r.r2 (#1239):** numeric-path replacement bypass is now VERIFIED. The earlier assertion removals remain historical commits; authenticated fractional-secret conversion is handled by the separate R88r.r1 change.
 - Explicit metadata and container-parent maps default empty. Existing inventory provides count backing; bank data is never fetched, no events are added, and absent property backing never selects alternate arithmetic.
 - Root representation is deduplicated across equipment/BagInfo; parent-linked containers are items, not additional roots. Missing parents and cycles cannot provide reachable contents (simulator robustness, not native malformed-inventory claims).
 
@@ -168,3 +168,7 @@ Four independent base-RED selectors cover signed16/eight-pair limits, default ba
 ## PTR applicability (INFERRED, isolated commit)
 
 The explicit `ClientProfile::Ptr` branch reuses Retail R88p/R88k readers, reagent traversal and display-mode selection. This is inferred applicability, not PTR native proof. Its fixtures use actual reagent/inventory backing. The old unsigned maximum test now rejects values outside signed32 while retaining valid decimal/count controls; public identifiers use the represented signed/truncating subset rather than the contradicted strict-u32 subset. The original unknown-type/secret seams remain separate.
+
+## R88r.r2 numeric/name-path separation
+
+VERIFIED Retail 12.1.5.70688, lt-67d2 #1239 (native answers lines13322–13340): numeric identifiers, numeric-convertible strings and recognized `spell:` identifier strings return before the name replacement resolver. Count-local parsing preserves this distinction without changing shared C_Spell alias resolution. Existing `spell_id_aliases` remains an empty-default host name-resolution/override seam; the semantic name “override map” is INFERRED and no overridden name-path result is asserted. The selector supplies conflicting numeric/link aliases, then observes two distinct backed IDs and a missing ID through both APIs. PTR/Forever reuse is inferred, not separate native proof.
