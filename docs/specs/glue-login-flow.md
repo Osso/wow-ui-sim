@@ -447,6 +447,11 @@ ResetModel is original Blizzard_GlueParent Lua (cached Retail lines 779–785,
 Forever 770–776), not a native API. It is not registered or replaced here.
 Failures in its frame-method calls require separate evidence.
 
+Behavior-neutral R58 factoring (lt-941b #1305): ModelFFX has its own installer
+helper using the exact existing bounded producer. The full Retail/Forever
+installer still publishes background getter, background setter, ModelFFX, then
+MapScene, with identical Glue/Game policy. No PTR route is added in this commit.
+
 ### R60 shared GameMode display selection and high-resolution capability
 
 Comment 100 corrects R43 using PTR70668/Retail70688/Forever70707 evidence.

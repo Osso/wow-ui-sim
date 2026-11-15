@@ -10,18 +10,24 @@ const SET_USAGE: &str = "Usage: SetCharSelectBackground(\"filename\" | file ID)"
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     register_background_only(state)?;
+    register_model_ffx_only(state)?;
     register_members(
         state,
-        &[
-            (
-                "MoveCharactersToModelFFXFrame",
-                move_character_models as rilua::RustFn,
-            ),
-            (
-                "MoveCharactersToMapSceneFrame",
-                move_character_models as rilua::RustFn,
-            ),
-        ],
+        &[(
+            "MoveCharactersToMapSceneFrame",
+            move_character_models as rilua::RustFn,
+        )],
+    )
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) fn register_model_ffx_only(state: &mut LuaState) -> LuaResult<()> {
+    register_members(
+        state,
+        &[(
+            "MoveCharactersToModelFFXFrame",
+            move_character_models as rilua::RustFn,
+        )],
     )
 }
 
