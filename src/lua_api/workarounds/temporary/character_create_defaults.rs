@@ -664,16 +664,13 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 }
 
 pub(crate) fn patch(env: &WowLuaEnv) {
+    #[cfg(feature = "client-retail")]
+    let source = String::new();
+    #[cfg(not(feature = "client-retail"))]
     let source = [
-        #[cfg(not(feature = "client-retail"))]
         CHARACTER_CREATE_DEFAULTS_WORKAROUND_LUA,
-        #[cfg(not(any(
-            feature = "client-retail",
-            feature = "client-wowforever",
-            feature = "client-ptr"
-        )))]
+        #[cfg(not(any(feature = "client-wowforever", feature = "client-ptr")))]
         CHARACTER_CREATION_SUBMIT_MIXIN_GUESS_LUA,
-        #[cfg(not(feature = "client-retail"))]
         CHARACTER_CREATE_DEFAULTS_WORKAROUND_TAIL_LUA,
     ]
     .concat();
