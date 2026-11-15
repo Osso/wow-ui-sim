@@ -384,3 +384,50 @@ fn publish_override_updated(state: &mut LuaState, override_type: u8) -> LuaResul
         &[Val::Num(f64::from(override_type))],
     )
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::lua_api::WowLuaEnv;
+    use crate::lua_api::methods::{registry_get, table_get_static};
+    use rilua::LuaApiMut;
+
+    #[test]
+    fn secure_color_override_namespace_matches_master_snapshot() {
+        if ACTIVE != ClientProfile::Retail {
+            return;
+        }
+        let env = WowLuaEnv::new().expect("Lua environment should initialize");
+        let members = secure_color_override_member_names(&env);
+        assert_eq!(
+            members,
+            vec![
+                "GetColorForQuality".to_owned(),
+                "GetColorOverrideInfo".to_owned(),
+            ]
+        );
+    }
+
+    fn secure_color_override_member_names(env: &WowLuaEnv) -> Vec<String> {
+        let mut lua = env.rilua_mut();
+        let state = lua.state_mut();
+        let secureenv = registry_get(state, "__secureenv");
+        let namespace = table_get_static(state, secureenv, "C_ColorOverrides");
+        let Val::Table(namespace) = namespace else {
+            return Vec::new();
+        };
+        let table = state.gc.tables.get(namespace).expect("namespace table");
+        let mut key = Val::Nil;
+        let mut members = Vec::new();
+        while let Some((next_key, _)) = table.next(key, &state.gc.string_arena).expect("next") {
+            if let Val::Str(string) = next_key {
+                if let Some(text) = state.gc.string_arena.get(string) {
+                    members.push(String::from_utf8_lossy(text.data()).into_owned());
+                }
+            }
+            key = next_key;
+        }
+        members.sort();
+        members
+    }
+}
