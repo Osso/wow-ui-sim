@@ -250,10 +250,13 @@ textures.
 **PRESERVATION:** the same consumer checks Human/Alliance and Orc/Horde as
 distinct faction outputs; Pandaren/Orc and Demon Hunter/Death Knight records;
 and the original 0.75/0.6/0.7/0.8 alpha results on each of the four distinct
-`BGTex` children in XML order. Original `UpdateMode` reaches class/race and
-customization states without calling `NavForward` or CreateCharacter: Back is
-the exact `BACK` source string in both tested states, while Forward changes
-from `CUSTOMIZE` to the original `NEXT` or `FINISH` string. The second
+`BGTex` children in XML order. The probe supplies the source-defined
+class/race and customization `currentMode` values to the original
+`UpdateForwardButton`: Back is the exact `BACK` source string in both inputs,
+while Forward changes from `CUSTOMIZE` to the original `NEXT` or `FINISH` string.
+It does not call `NavForward` or CreateCharacter. The full `UpdateMode`/`SetMode`
+transition is not covered because the simulator reports a separate
+`SetCameraZoomLevel` argument error; see the lane handoff. The second
 `parentArray` resolver input and explicit override are covered by a focused
 resolver test; this is not runtime Azerite consumer proof. The resolved
 `parentArray="BGTex"` issue and candidate dispositions are recorded in

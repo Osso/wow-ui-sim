@@ -125,18 +125,21 @@ four XML Texture objects.
 |---|---|---|
 | Selected-state seeds | **REMOVED (Retail only)** | `CharacterCreateRaceAndClassMixin:UpdateState` at Lua:1634-1674 reads the selected race and class. The test observes Human/Alliance and Orc/Horde, then Pandaren, Demon Hunter and Death Knight records through original setters. The contrasting faction outputs reject a constant faction producer. |
 | Empty `BGTex` table | **REMOVED (Retail only)** | XML:244,252-274 owns the array and its four textures. The test checks each array entry is the exact corresponding named child in XML order, each is a Texture, and no two entries share identity. It checks the original alpha update on every member. A second resolver input mirrors Azerite `AzeritePlugTexture` / `Plugs`; it checks inherited parentArray and explicit instance override. This is resolver coverage, not runtime Azerite UI coverage. |
-| Back/Forward replay | **REMOVED (Retail only)** | Original `CharacterCreateMixin:OnLoad` sets Back from `BACK` at Lua:88; the test checks that exact source value in class/race and customization modes. Original `UpdateForwardButton` changes the label from `CUSTOMIZE` in class/race mode to the original `NEXT` or `FINISH` value in customization mode, based on `ZoneChoiceFrame:ShouldShow`. The test reaches those states with original `UpdateMode`, without calling `NavForward`, CreateCharacter, or Submit. The distinct outputs reject constant forward labels. |
+| Back/Forward replay | **REMOVED (Retail only)** | Original `CharacterCreateMixin:OnLoad` sets Back from `BACK` at Lua:88; the test checks that exact source value in class/race and customization modes. Original `UpdateForwardButton` changes the label from `CUSTOMIZE` in class/race mode to the original `NEXT` or `FINISH` value in customization mode, based on `ZoneChoiceFrame:ShouldShow`. The test supplies the two source-defined `currentMode` values and invokes the original label updater directly; it does not execute `UpdateMode`/`SetMode`. A separate attempt to exercise that transition hit a simulator `SetCameraZoomLevel` argument error, recorded in the lane handoff. The probe does not call `NavForward`, CreateCharacter, or Submit. The distinct outputs reject constant forward labels. |
 | Overlay alpha error fallback | **REMOVED (Retail only)** | Original `UpdateBackgroundOverlays` at Lua:404-423 selects alpha from class, race and faction. The test observes Pandaren 0.75, Horde Orc 0.6, Demon Hunter 0.7, and Death Knight 0.8 on all four distinct XML textures. |
 
 **PRESERVATION:** `retail_character_create_transition_preserves_original_surfaces`
 passes through the selected CharacterSelect-to-CharacterCreate path both while
 the wrappers are present and after Retail retirement. It checks three supplied
 race choices, two classes, four XML child identities/order, all four alpha
-outputs, and two original navigation modes without calling `NavForward`,
-CreateCharacter, or Submit. The Back label remains the exact `BACK` source value
-in both tested modes; the Forward label differs by mode. The resolver's second
-Azerite-shaped input checks general `parentArray` inheritance and instance
-precedence, but does not claim that the Azerite runtime consumer was loaded.
+outputs, and the original label updater under two source-defined mode inputs;
+it does not call `NavForward`, CreateCharacter, or Submit. The test does not
+exercise the `UpdateMode`/`SetMode` transition because that path raises the
+separate simulator `SetCameraZoomLevel` argument error recorded in the lane
+handoff. The Back label remains the exact `BACK` source value in both tested
+inputs; the Forward label differs. The resolver's second Azerite-shaped input
+checks general `parentArray` inheritance and instance precedence, but does not
+claim that the Azerite runtime consumer was loaded.
 The hash-bound transcripts and build receipts are in the lane handoff, not in
 this tracked wiki.
 
