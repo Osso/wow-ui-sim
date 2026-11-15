@@ -475,7 +475,7 @@ fn missing_known_and_unknown_numeric_sources_return_zero_and_empty() {
         cast_count(&env, id, 0, false);
         display(&env, id, "", false);
     }
-    // UNKNOWN R88p.p2 / lt-67d2 #1231: do not assert exceptional 4294967295
+    // UNKNOWN R88k.5 line 11623 / R88p.p2 (#1231): do not assert 4294967295
     // conversion outcomes or the old maximum-style range error for identifiers.
 
 }
@@ -680,7 +680,7 @@ fn queries_are_read_only_and_environments_and_result_replacements_isolated() {
 #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
 #[test]
 fn retail_identifier_conversion_matches_the_signed32_subset() {
-    // R88p.p2: exceptional-number outcomes depend on UNKNOWN FP configuration.
+    // R88k.5 line 11623 / R88p.p2: exceptional outcomes depend on UNKNOWN FP configuration.
     // Keep only VERIFIED represented numbers and ordinary type errors.
     let env = fixture(false);
     cast_count(&env, "19750.5", 7, false);
