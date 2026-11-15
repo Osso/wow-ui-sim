@@ -22,6 +22,17 @@ The retirement criterion was exact duplicate call path, not visual symptom
 masking. The remaining runtime hooks still isolate the temporary Lua surfaces in
 `src/lua_api/workarounds/temporary/`.
 
+### Retail Glue CharacterCreate fallbacks
+
+**VERIFIED (Retail 12.1.5 cache and selector):** the original Glue-selected
+CharacterCreate Lua/XML owns selected-state updates, overlay textures and alpha,
+and Back/Forward labels. Retail no longer installs those fallback wrappers in
+`character_create_defaults.rs`; other profiles retain them pending separate
+consumer evidence. The test and XML `parentArray` root-cause fix are recorded in
+[Lua-owned fallback retirement](lua-owned-fallback-retirement.md#retail-character-create-fallback-retirement-queue-462).
+Authentication parenting, secure/public binding and Submit behavior are outside
+this retirement.
+
 ### Remaining temporary hooks
 
 These hooks are not duplicate call paths in the current loader. They stay as

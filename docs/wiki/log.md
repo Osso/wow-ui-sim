@@ -6,6 +6,10 @@
 
 [Bag repair cost](../specs/bag-repair-cost.md) records R88n.4b positive-only top-level publication, empty host quotes, narrow ordinary-bag routing and original repair-mode money-line RED/GREEN. No price calculation, sell-price or battle-pet changes.
 
+## [2026-11-15] fix | Retail CharacterCreate fallback retirement
+
+Updated the [consumer-selection record](investigations/consumer-selection-and-red-proof.md#retail-charactercreate-consumer-selection), [fallback inventory](investigations/lua-owned-fallback-retirement.md#retail-character-create-fallback-retirement-queue-462), and [post-load workaround audit](investigations/post-load-workaround-audit.md#retail-glue-charactercreate-fallbacks). **VERIFIED (Retail 12.1.5 cache and test):** Glue selects the original CharacterCreate Lua/XML; inherited `BGTex` registration works; the Retail-only fallback exclusion uses `client_profile::ACTIVE`. The preservation test checks Human/Alliance and Orc/Horde, all four ordered and unique XML texture identities, four alpha results per selection, and original navigation outputs in two modes without submission. A second resolver test covers the Azerite `Plugs` parentArray and instance override; it does not claim runtime Azerite coverage. Non-Retail wrappers and the auth, default-parent, and Submit boundaries remain unchanged.
+
 ## [2026-11-15] implementation | Forever item-cooldown publication
 
 [Forever item cooldown](../specs/forever-spell-item-cooldown.md) records matching pinned PTR/Forever declarations, narrow INFERRED publication, original Collections cooldown RED/GREEN and no-added-error proof. Retail absence and existing supplied-state policy remain unchanged.

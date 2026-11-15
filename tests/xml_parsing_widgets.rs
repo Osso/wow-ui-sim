@@ -251,6 +251,32 @@ fn test_parse_texture_alpha_mode_and_blend_mode_attributes() {
 }
 
 #[test]
+fn test_resolve_texture_inheritance_preserves_azerite_parent_array() {
+    // Mirrors the Retail AzeritePlugTexture parentArray declaration.
+    const TEMPLATE_NAME: &str = "AzeritePlugTexture";
+    register_texture_template(
+        TEMPLATE_NAME,
+        TextureXml {
+            parent_array: Some("Plugs".to_string()),
+            ..Default::default()
+        },
+    );
+
+    let inherited = resolve_texture_inheritance(&TextureXml {
+        inherits: Some(TEMPLATE_NAME.to_string()),
+        ..Default::default()
+    });
+    assert_eq!(inherited.parent_array.as_deref(), Some("Plugs"));
+
+    let overridden = resolve_texture_inheritance(&TextureXml {
+        inherits: Some(TEMPLATE_NAME.to_string()),
+        parent_array: Some("InstancePlugs".to_string()),
+        ..Default::default()
+    });
+    assert_eq!(overridden.parent_array.as_deref(), Some("InstancePlugs"));
+}
+
+#[test]
 fn test_resolve_texture_inheritance_carries_blend_mode_aliases() {
     let template_name = "CodexTextureBlendModeTemplate";
     register_texture_template(
