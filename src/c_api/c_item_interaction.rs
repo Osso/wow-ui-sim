@@ -145,10 +145,11 @@ fn find_or_assign_pending_item(
     let slot = crate::c_api::item_upgrade_eligibility::read_item_slot(state, location.clone())
         .ok_or_else(|| rilua::runtime_error(SET_PENDING_ITEM_USAGE))?;
     let Some((item_id, from_cursor)) = pending_item_at_location(state, slot)? else {
-        return selected_item_at_location(state, slot);
+        return Err(rilua::runtime_error(SET_PENDING_ITEM_USAGE));
     };
-    let identity = ensure_item_identity(state, slot, from_cursor)?;
-    Ok(identity.map(|identity| pending_item(item_id, slot, identity)))
+    let identity = ensure_item_identity(state, slot, from_cursor)?
+        .ok_or_else(|| rilua::runtime_error(SET_PENDING_ITEM_USAGE))?;
+    Ok(Some(pending_item(item_id, slot, identity)))
 }
 
 fn pending_item_at_location(state: &LuaState, slot: ItemSlot) -> LuaResult<Option<(u32, bool)>> {
@@ -193,30 +194,6 @@ fn cursor_origin_matches(state: &LuaState, slot: ItemSlot) -> LuaResult<bool> {
         (ItemSlot::Equipment(index), CursorItemOrigin::Equipped { slot: cursor_slot })
             if index == *cursor_slot
     ))
-}
-
-fn selected_item_at_location(state: &LuaState, slot: ItemSlot) -> LuaResult<Option<PendingItem>> {
-    let sim = borrow_state(state)?;
-    let Some(input) = sim.item_interaction_tooltip_input.as_ref() else {
-        return Ok(None);
-    };
-    let (Some(item_id), Some(identity), Some(location)) = (
-        input.selected_item_id,
-        input.selected_item_identity,
-        input.selected_item_location.as_ref(),
-    ) else {
-        return Ok(None);
-    };
-    if item_slot_from_location(location) != Some(slot) {
-        return Ok(None);
-    }
-    Ok(Some(PendingItem {
-        item_id,
-        slot,
-        identity,
-        guid: input.selected_item_guid.clone(),
-        location: location.clone(),
-    }))
 }
 
 fn pending_item(item_id: u32, slot: ItemSlot, identity: u64) -> PendingItem {
