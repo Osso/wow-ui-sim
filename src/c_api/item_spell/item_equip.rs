@@ -182,21 +182,28 @@ fn allocate_identity(sim: &SimState) -> Option<u64> {
         Some(CursorInfo::Item { owned_identity, .. }) => *owned_identity,
         _ => None,
     };
-    sim.bag_items
-        .values()
-        .filter_map(|item| item.owned_identity)
-        .chain(
-            sim.player
-                .equipped_items
-                .values()
-                .filter_map(|item| item.owned_identity),
-        )
-        .chain(sim.bag_info.values().filter_map(|bag| bag.owned_identity))
-        .chain(sim.item_equip.inputs.keys().copied())
-        .chain(cursor_id)
-        .chain([sim.item_equip.next_identity])
-        .max()?
-        .checked_add(1)
+    let greatest = [
+        sim.bag_items
+            .values()
+            .filter_map(|item| item.owned_identity)
+            .max(),
+        sim.player
+            .equipped_items
+            .values()
+            .filter_map(|item| item.owned_identity)
+            .max(),
+        sim.bag_info
+            .values()
+            .filter_map(|bag| bag.owned_identity)
+            .max(),
+        sim.item_equip.inputs.keys().copied().max(),
+        cursor_id,
+        Some(sim.item_equip.next_identity),
+    ]
+    .into_iter()
+    .flatten()
+    .max()?;
+    greatest.checked_add(1)
 }
 
 pub(crate) fn set_lock_reason(
