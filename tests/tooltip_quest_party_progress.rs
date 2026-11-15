@@ -6,7 +6,10 @@ use wow_ui_sim::c_api::quest_party_progress::{
     QuestPartyProgressHeading, QuestPartyProgressParticipant, QuestPartyProgressRow,
     QuestPartyProgressSnapshot, QuestPartyProgressText,
 };
-use wow_ui_sim::c_api::quest_special_item::{QuestSpecialItemCacheRecord, QuestSpecialItemObject};
+use wow_ui_sim::c_api::quest_special_item::{
+    QuestSpecialItemCacheRecord, QuestSpecialItemCacheUpdate, QuestSpecialItemCallback,
+    QuestSpecialItemObject, QuestSpecialItemRequestToken,
+};
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::lua_api::state::BagItem;
 
@@ -16,6 +19,153 @@ const QUEST_A: i32 = 990_701;
 const QUEST_B: i32 = 990_702;
 const ITEM_A: u32 = 6948;
 const ITEM_B: u32 = 7005;
+
+const QUEST_ITEM_HOVER_FIXTURE: &str = r#"
+local function requireSource(fn, suffix)
+    local source = debug.getinfo(fn, 'S').source:gsub('\\', '/')
+    assert(source:find(suffix, 1, true), source)
+end
+requireSource(QuestObjectiveItemButtonMixin.OnEnter, 'Blizzard_ObjectiveTrackerShared.lua')
+requireSource(GameTooltip.SetQuestLogSpecialItem, 'TooltipDataHandler.lua')
+QuestLogUpdateCount = 0
+local observer = CreateFrame('Frame')
+observer:RegisterEvent('QUEST_LOG_UPDATE')
+observer:SetScript('OnEvent', function(_, event, ...)
+    assert(event == 'QUEST_LOG_UPDATE')
+    assert(select('#', ...) == 0)
+    QuestLogUpdateCount = QuestLogUpdateCount + 1
+end)
+function QuestSpecialItemHover(index)
+    local button = CreateFrame('Button')
+    button:SetAttribute('questLogIndex', index)
+    GameTooltip:Hide()
+    GameTooltip:SetOwner(UIParent, 'ANCHOR_NONE')
+    QuestObjectiveItemButtonMixin.OnEnter(button)
+    return GameTooltip:IsShown(), GameTooltip:GetPrimaryTooltipData()
+end
+"#;
+
+fn prepare_quest_item_hover(env: &WowLuaEnv) {
+    env.exec(QUEST_ITEM_HOVER_FIXTURE)
+        .expect("original ObjectiveTracker hover consumer should load");
+    env.state().borrow_mut().events.drain();
+}
+
+fn supply_quest_special_item(
+    env: &WowLuaEnv,
+    log_index: i32,
+    quest_id: i32,
+    item_id: u32,
+    slot: i32,
+) {
+    let mut sim = env.state().borrow_mut();
+    let inputs = &mut sim.quest_log_entries.quest_special_item_inputs;
+    inputs.quest_ids_by_log_index.insert(log_index, quest_id);
+    inputs.cached_quest_records.insert(
+        quest_id,
+        QuestSpecialItemCacheRecord {
+            special_item_id: Some(item_id),
+            ..Default::default()
+        },
+    );
+    inputs.selected_item_objects.insert(
+        quest_id,
+        QuestSpecialItemObject {
+            item_id,
+            bag: 0,
+            slot,
+        },
+    );
+    sim.bag_items.insert((0, slot), bag_item(item_id));
+}
+
+fn mark_quest_record_not_ready(env: &WowLuaEnv, quest_id: i32) {
+    env.state()
+        .borrow_mut()
+        .quest_log_entries
+        .quest_special_item_inputs
+        .not_ready_cache_records
+        .insert(quest_id);
+}
+
+fn set_request_token(env: &WowLuaEnv, quest_id: i32, words: [u64; 2], marked: bool) {
+    env.state()
+        .borrow_mut()
+        .quest_log_entries
+        .quest_special_item_inputs
+        .request_tokens_by_quest_id
+        .insert(
+            quest_id,
+            QuestSpecialItemRequestToken {
+                words,
+                high_part_marker: marked,
+            },
+        );
+}
+
+fn queue_quest_record_arrival(env: &WowLuaEnv, quest_id: i32, item_id: u32) {
+    let record = QuestSpecialItemCacheRecord {
+        special_item_id: Some(item_id),
+        ..Default::default()
+    };
+    env.state()
+        .borrow_mut()
+        .quest_log_entries
+        .quest_special_item_inputs
+        .host_cache_updates
+        .push(QuestSpecialItemCacheUpdate::RecordArrived {
+            quest_id,
+            record,
+            success: true,
+        });
+}
+
+fn queue_quest_record_destruction(env: &WowLuaEnv, quest_id: i32) {
+    env.state()
+        .borrow_mut()
+        .quest_log_entries
+        .quest_special_item_inputs
+        .host_cache_updates
+        .push(QuestSpecialItemCacheUpdate::RecordDestroyed { quest_id });
+}
+
+fn assert_quest_item_hover_hidden(env: &WowLuaEnv, log_index: i32) {
+    env.exec(&format!(
+        "local shown = QuestSpecialItemHover({log_index}); assert(not shown, 'quest item tooltip must be hidden')"
+    ))
+    .expect("original consumer should hide a quest item without ready data");
+}
+
+fn assert_quest_item_hover_shows(env: &WowLuaEnv, log_index: i32, item_id: u32) {
+    env.exec(&format!(
+        "local shown, data = QuestSpecialItemHover({log_index}); assert(shown and data and data.id == {item_id}, 'hover must show its supplied item')"
+    ))
+    .expect("original consumer should show the selected supplied item");
+}
+
+fn assert_pending_callbacks(env: &WowLuaEnv, quest_id: i32, expected: usize) {
+    let count = env
+        .state()
+        .borrow()
+        .quest_log_entries
+        .quest_special_item_inputs
+        .pending_callbacks
+        .get(&quest_id)
+        .map(Vec::len)
+        .unwrap_or_default();
+    assert_eq!(count, expected, "quest {quest_id} pending callback count");
+}
+
+fn fire_queued_quest_updates(env: &WowLuaEnv) -> usize {
+    let events = env.state().borrow_mut().events.drain();
+    for event in &events {
+        assert_eq!(event.name, "QUEST_LOG_UPDATE");
+        assert!(event.args.is_empty());
+        env.fire_event(&event.name)
+            .expect("queued quest update should dispatch");
+    }
+    events.len()
+}
 
 fn selected_objective_tracker() -> WowLuaEnv {
     let cache = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path()
@@ -329,6 +479,103 @@ fn selected_quest_item_hover_uses_host_supplied_owned_item() {
         "assert(select('#', C_TooltipInfo.GetQuestLogSpecialItem(1)) == 0); assert(select('#', C_TooltipInfo.GetQuestLogSpecialItem(2)) == 0)"
     )
     .expect("selected objects must match the primary or enabled candidate cache IDs");
+}
+
+fn assert_pending_token(
+    env: &WowLuaEnv,
+    quest_id: i32,
+    entry_index: usize,
+    words: [u64; 2],
+    marked: bool,
+) {
+    let sim = env.state().borrow();
+    let entry = &sim
+        .quest_log_entries
+        .quest_special_item_inputs
+        .pending_callbacks[&quest_id][entry_index];
+    assert_eq!(entry.callback, QuestSpecialItemCallback::QuestRecordData);
+    assert_eq!(entry.token.words, words);
+    assert_eq!(entry.token.high_part_marker, marked);
+    assert!(entry.extra_context.is_empty());
+}
+
+fn exercise_quest_item_callback_dedup(env: &WowLuaEnv) {
+    set_request_token(env, QUEST_A, [11, 12], false);
+    assert_quest_item_hover_hidden(env, 1);
+    assert_pending_token(env, QUEST_A, 0, [11, 12], false);
+    set_request_token(env, QUEST_A, [31, 32], false);
+    assert_quest_item_hover_hidden(env, 1);
+    assert_pending_callbacks(env, QUEST_A, 1);
+    assert_pending_token(env, QUEST_A, 0, [11, 12], false);
+    set_request_token(env, QUEST_B, [21, 22], true);
+    assert_quest_item_hover_hidden(env, 2);
+    set_request_token(env, QUEST_B, [21, 23], true);
+    assert_quest_item_hover_hidden(env, 2);
+    assert_pending_callbacks(env, QUEST_B, 2);
+    assert_pending_token(env, QUEST_B, 0, [21, 22], true);
+    assert_pending_token(env, QUEST_B, 1, [21, 23], true);
+    assert_quest_item_hover_hidden(env, 2);
+    assert_pending_callbacks(env, QUEST_B, 2);
+}
+
+fn arrive_quest_item(env: &WowLuaEnv, index: i32, quest_id: i32, item_id: u32, count: i32) {
+    queue_quest_record_arrival(env, quest_id, item_id);
+    env.fire_on_update(0.0)
+        .expect("host quest-record arrival should run");
+    assert_eq!(fire_queued_quest_updates(env), 1);
+    assert_eq!(
+        env.eval::<i32>("return QuestLogUpdateCount").unwrap(),
+        count
+    );
+    assert_pending_callbacks(env, quest_id, 0);
+    assert_quest_item_hover_shows(env, index, item_id);
+}
+
+#[test]
+fn selected_objective_tracker_retries_quest_item_after_host_cache_arrival() {
+    let env = selected_objective_tracker();
+    prepare_quest_item_hover(&env);
+    supply_quest_special_item(&env, 1, QUEST_A, ITEM_A, 2);
+    supply_quest_special_item(&env, 2, QUEST_B, ITEM_B, 3);
+    mark_quest_record_not_ready(&env, QUEST_A);
+    mark_quest_record_not_ready(&env, QUEST_B);
+    exercise_quest_item_callback_dedup(&env);
+    assert_quest_item_hover_hidden(&env, 3);
+    arrive_quest_item(&env, 1, QUEST_A, ITEM_A, 1);
+    arrive_quest_item(&env, 2, QUEST_B, ITEM_B, 2);
+    assert_quest_item_hover_hidden(&env, 3);
+}
+
+#[test]
+fn selected_objective_tracker_cleans_callbacks_when_host_destroys_unready_records() {
+    let env = selected_objective_tracker();
+    prepare_quest_item_hover(&env);
+    supply_quest_special_item(&env, 1, QUEST_A, ITEM_A, 2);
+    supply_quest_special_item(&env, 2, QUEST_B, ITEM_B, 3);
+    mark_quest_record_not_ready(&env, QUEST_A);
+    mark_quest_record_not_ready(&env, QUEST_B);
+    assert_quest_item_hover_hidden(&env, 1);
+    assert_quest_item_hover_hidden(&env, 2);
+    assert_quest_item_hover_hidden(&env, 3);
+    assert_pending_callbacks(&env, QUEST_A, 1);
+    assert_pending_callbacks(&env, QUEST_B, 1);
+    queue_quest_record_destruction(&env, QUEST_A);
+    queue_quest_record_destruction(&env, QUEST_B);
+    env.fire_on_update(0.0)
+        .expect("host record destruction should run");
+    assert_eq!(fire_queued_quest_updates(&env), 0);
+    assert_pending_callbacks(&env, QUEST_A, 0);
+    assert_pending_callbacks(&env, QUEST_B, 0);
+    assert_quest_item_hover_hidden(&env, 1);
+    assert_quest_item_hover_hidden(&env, 2);
+    assert_quest_item_hover_hidden(&env, 3);
+    let inputs = &env
+        .state()
+        .borrow()
+        .quest_log_entries
+        .quest_special_item_inputs;
+    assert!(!inputs.cached_quest_records.contains_key(&QUEST_A));
+    assert!(!inputs.cached_quest_records.contains_key(&QUEST_B));
 }
 
 fn bag_item(item_id: u32) -> BagItem {

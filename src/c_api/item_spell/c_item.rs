@@ -506,13 +506,16 @@ fn is_item_keystone_by_id(state: &mut LuaState) -> LuaResult<u32> {
         _ => None,
     }
     .ok_or_else(|| rilua::runtime_error("Usage: C_Item.IsItemKeystoneByID(itemInfo)"))?;
-    let items = sim_data::item_categories::ITEMS;
-    let result = items
-        .binary_search_by_key(&(id as u32), |entry| entry.0)
-        .ok()
-        .is_some_and(|index| items[index].1 == 5 && items[index].2 == 1);
-    state.push(Val::Bool(result));
+    state.push(Val::Bool(item_id_is_keystone(id as u32)));
     Ok(1)
+}
+
+pub(crate) fn item_id_is_keystone(item_id: u32) -> bool {
+    let items = sim_data::item_categories::ITEMS;
+    items
+        .binary_search_by_key(&item_id, |entry| entry.0)
+        .ok()
+        .is_some_and(|index| items[index].1 == 5 && items[index].2 == 1)
 }
 
 pub(crate) fn c_item_is_item_in_range(state: &mut LuaState) -> LuaResult<u32> {

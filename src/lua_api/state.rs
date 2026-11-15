@@ -264,6 +264,9 @@ macro_rules! build_empty_sim_state {
             barber_shop: BarberShopState::default(),
             damage_meter: crate::c_api::c_damage_meter::DamageMeterInput::default(),
             item_interaction: None,
+            item_interaction_tooltip_input: None,
+            possession_spell_id: None,
+            possession_object: None,
             major_factions: HashMap::new(),
             major_faction_renown_levels: HashMap::new(),
             major_faction_renown_rewards: HashMap::new(),
@@ -283,6 +286,8 @@ macro_rules! build_empty_sim_state {
                 feature = "client-anniversary"
             ))]
             transmog_appearance_sources: HashMap::new(),
+            #[cfg(feature = "client-wowforever")]
+            forever_appearance_item_ids: HashMap::new(),
             transmog_new_sources: HashSet::new(),
             #[cfg(any(
                 feature = "retail-12-0-0",
@@ -520,8 +525,10 @@ macro_rules! build_empty_sim_state {
             spell_cast_context_is_null: None,
             #[cfg(feature = "retail-12-0-0")]
             spell_cast_counts: ::std::collections::HashMap::new(),
-            #[cfg(feature = "retail-12-0-5")]
+            #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
             spell_reagent_pairs: ::std::collections::HashMap::new(),
+            #[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
+            spell_reagent_inventory: Default::default(),
             spell_visibility_results: None,
             cooldowns_restricted: false,
             #[cfg(feature = "retail-12-0-5")]
@@ -576,12 +583,15 @@ macro_rules! build_empty_sim_state {
             #[cfg(feature = "client-retail")]
             pvp_talent_tooltip:
                 crate::c_api::c_tooltip_info_pvp_talent::PvpTalentTooltipInputs::default(),
+            #[cfg(feature = "client-wowforever")]
+            forever_pvp_talent_spell_ids: HashMap::new(),
             player_xp: PlayerXpState::default(),
             bind_location: "Stormwind City".into(),
             pvp_honor: PvpHonorState::default(),
             world: super::state_types::seeded_world_state(),
             encounter_policy: Default::default(),
             bag_items: $collections.bag_items,
+            bag_item_repair_costs: HashMap::new(),
             item_equip: crate::c_api::item_spell::item_equip::ItemEquipState::default(),
             container_item_quests: HashMap::new(),
             bag_info: crate::c_api::bag_info::BagInfo::default_bags(),

@@ -50,7 +50,11 @@ This is static staging, not observed RED/GREEN or runtime selection proof. Histo
 
 **VERIFIED (repository):** `QuestPartyProgressSnapshot` is empty by default. The host supplies title, participant headings, row content, colors and the participant marker consumed by `ignoreActivePlayer`; the simulator does not derive a party-progress tree, objective state or active-player identity. The shared tooltip builder serializes the supplied data. **UNKNOWN:** getter-specific native D56 color/instance parity and return arity for a successful zero-row composition are not separately proved. The simulator returns zero values when its supplied snapshot emits no rows.
 
-**VERIFIED (R88n.3/R88n.3a):** the indexed quest resolves through quest-ID request context to a cache record; the primary special-item ID and conditional candidate IDs come from that cache record, then inventory lookup resolves an existing item object. Its tooltip request carries item ID, owner GUID and item GUID. **VERIFIED (repository):** separate empty-by-default host inputs represent index-to-quest context, cache IDs/marker, and the selected inventory object. The producer checks that the selected ID is in the primary field or enabled candidate list and validates its current bag item object before shared composition. It does not model candidate predicates or upstream writers. **UNKNOWN:** cache/invalidation and inventory/object creation routes, candidate predicates, and owner-GUID effects in output. Native party/objective state writers also remain UNKNOWN.
+**VERIFIED (R88n.3/R88n.3a):** the indexed quest resolves through quest-ID request context to a cache record; the primary special-item ID and conditional candidate IDs come from that cache record, then inventory lookup resolves an existing item object. Its tooltip request carries item ID, owner GUID and item GUID. **VERIFIED (repository):** separate empty-by-default host inputs represent index-to-quest context, cache IDs/marker, and the selected inventory object. The producer checks that the selected ID is in the primary field or enabled candidate list and validates its current bag item object before shared composition. It does not model candidate predicates or upstream writers. **UNKNOWN:** cache writers/invalidation and inventory/object creation routes, candidate predicates, and owner-GUID effects in output. Native party/objective state writers also remain UNKNOWN.
+
+**VERIFIED (R88u, Retail 12.1.5.70688):** each pending cache entry stores `QuestRecordDataCallback`, a copied two-word request token and opaque caller context under the quest key; the original quest-log caller supplies an empty extra context and its matched token or zero. **VERIFIED (R88u):** duplicates require matching callback/context; an unmarked incoming token ignores token words, while a marked token also requires both words to match. Arrival invokes entries oldest first with the quest key, saved values and mode 0, then clears them. Unready destruction invokes oldest-first mode 1, then mode 4, and clears the record. **VERIFIED (R88u):** successful mode-0 processing queues argumentless `QUEST_LOG_UPDATE`; the callback does not directly call the tooltip getter or builder.
+
+**VERIFIED (simulator, `tests/tooltip_quest_party_progress.rs`):** explicit host inputs mark readiness and provide record arrival/destruction; the selected `QuestObjectiveItemButtonMixin:OnEnter` consumer hides while unready, shows two distinct supplied items after arrival, queues `QUEST_LOG_UPDATE`, and clears pending callbacks on destruction without a log update. The test does not assert TooltipInfo result arity or autocomplete payload values. **UNKNOWN (R88u):** upstream cache writer, request-helper side effects, token cancellation, the other quest-state helper effects and any indirect tooltip retry remain unresolved. **INFERRED (R88u.u3/u4):** the non-ready `C_TooltipInfo.GetQuestLogSpecialItem` call returns zero values. **INFERRED (R88u.u3):** the conditional `QUEST_AUTOCOMPLETE` value is the quest ID; the simulator keeps the condition host-supplied and empty by default.
 
 ## Retail tooltip serializer field consumers
 
@@ -58,9 +62,41 @@ This is static staging, not observed RED/GREEN or runtime selection proof. Histo
 
 **VERIFIED (Retail 12.1.5.70688, R88n.4b):** the original rules read top-level `repairCost` and battle-pet fields, and read `price`/`maxPrice` from a type-11 line. **PRESERVATION (optional tests):** `tests/tooltip_serializer_fields.rs` passes distinct synthetic values through the selected original `ProcessInfo` rules; this does not establish a producer for those fields. **INFERRED (simulator policy):** the selected `SetItemByID` path maps positive `ItemInfo.sell_price` to a type-11 line's `price`; no `maxPrice` is emitted. The native eligibility predicate, line order and `maxPrice` source remain UNKNOWN.
 
-### R88n.3b quest-cache callback seam
+## Retail Azerite Essence tooltip consumers
 
-**VERIFIED (Retail native):** an unready quest-cache lookup saves callback/context entries; cache removal copies and invokes them after unlinking the old record. **VERIFIED (simulator source):** `QuestSpecialItemInputs` stores only index-to-quest, cache-record and selected-object maps; it has no pending callback or removal route. The special-item seam remains UNKNOWN, so this lane adds no async behavior.
+**VERIFIED (Retail 12.1.5 cache):** `data/blizzard-ui-files/retail.txt:879-882` lists the Azerite Essence UI files, `Blizzard_AzeriteEssenceUI.toc:1-3` marks the UI load-on-demand, and `retail.txt:3447` lists `Blizzard_SharedXMLGame/Tooltip/TooltipDataHandler.lua`. Game-screen discovery includes `Blizzard_SharedXMLGame`; the Azerite test discovers the UI addon's TOC dependency closure with that addon as an explicit LOD root. **VERIFIED (pinned API docs):** `TooltipInfoDocumentation.lua:69-95` declares `GetAzeriteEssence` and `GetAzeriteEssenceSlot`. **VERIFIED (original Lua):** `Blizzard_AzeriteEssenceUI.lua:866-869` calls `SetAzeriteEssence`; its slot hover at `1256-1265` calls `SetAzeriteEssenceSlot`; `TooltipDataHandler.lua:564-565` maps both setters to those getters.
+
+**VERIFIED (Retail 12.1.5.70688, R88n.1/R88n.2):** successful composition requires the essence, exact selected-rank and rank-one records, preserves TooltipData type 8 and essence ID, and returns zero values on the listed missing-source/failure paths. The main block uses rank-one description only in the active major slot; the passive block uses rank-one description whenever active in any slot. Otherwise, both use selected-rank actual text. Slot zero includes both blocks; other slots omit the main block.
+
+**VERIFIED (Retail 12.1.5.70688, R88p.p4):** the source-stage next rank is the original requested rank plus one using unsigned 32-bit arithmetic. Next rank four disables the stage; other next ranks require an exact power row. Rank one omits `SOURCE` and its row for missing or empty selected text, and otherwise emits a wrapped source row after `SOURCE`. Other next ranks keep the heading and source row, including a wrapped type-0 empty row. The original slot consumer omits this stage.
+
+**VERIFIED (test fixture, `tests/tooltip_azerite_essence.rs`):** Game-screen discovery selects `Blizzard_SharedXMLGame`, the Azerite UI closure selects its load-on-demand addon, and the fixture loads the native GameTooltip/TooltipDataHandler source before it executes the original `Blizzard_AzeriteEssenceUI.lua` file. `debug.getinfo` checks both original `OnEnter` methods and both original accessor methods. The fixture does not load the full UI bootstrap or Azerite XML.
+
+**VERIFIED (saved historical receipts):** the no-op producer test tree `06f389052fb109bae1e782c2050698e229c13fdb` failed the original essence and slot hover selectors against no-op base `fb8d4fe08501fe65fc9e9c24db7bc420431d2a00`. The source-stage receipt at `adf40e1152227ad2e5d4cf0aff56c8437a410033` failed at the next-rank heading assertion; it does not prove faction-source selection. **VERIFIED (historical test commit `9565e57ab`):** its selectors use distinct backed IDs/ranks/slots plus absent cases, but do not assert source rows. **VERIFIED (R88p.p4 test additions):** current original-consumer selectors assert first/second source selection through the host seam, empty-source behavior, rank-two/rank-three inline ordering, row type/wrapping/state, and the owned-essence gate. They do not assert race-to-selector mapping, the unreachable gray row, requirements, wide-slot aliases, or counter values.
+
+**VERIFIED (repository data):** the 12.1.5.70391 Azerite exports contain 28 essence rows and 112 power rows; no power row has rank above four. **VERIFIED (Retail 12.1.5.70688, R88p.p4):** selector result zero chooses the second source field, every nonzero result chooses the first, and an empty second field or absent player uses the first. **INFERRED (70391 export):** the fields correspond to `SourceAlliance_lang` and `SourceHorde_lang`. **VERIFIED (repository state):** `RACE_DATA` carries faction labels, but the available 70783 `ChrRaces.csv` has no `FactionID` values and is not the pinned runtime export, so the simulator does not map race to selector result.
+
+**VERIFIED (Retail 12.1.5.70688, R88p.p4):** other next-rank rows follow heading, source, major-or-gray, minor order. Inline rows use type 5, wrap, and carry `powerState`; minor rows require next rank below four. **VERIFIED (simulator source):** the producer reads generated source fields and spell-description data, and it gates inline rows on the modeled player's `unlocked` essence state. **VERIFIED (generated catalog):** no row has rank above four, so the gray branch is unreachable with current data because next rank four disables the stage. **UNKNOWN:** requirement-row expansion.
+
+### Retail quest-tooltip consumers and host-input seams
+
+**VERIFIED (Retail 12.1.5 cache and selected TOCs):** `Blizzard_ObjectiveTracker.toc` selects `Blizzard_ObjectiveTrackerShared.lua`; `QuestObjectiveItemButtonMixin:OnEnter` at lines 88–91 calls `GameTooltip:SetQuestLogSpecialItem`. `TooltipDataHandler.lua:536` maps that accessor to `C_TooltipInfo.GetQuestLogSpecialItem`, declared at `TooltipInfoDocumentation.lua:817`.
+
+#### R88n.3b and R88u quest-cache callback seam
+
+**VERIFIED (Retail 12.1.5.70688, R88u.u1–u2):** the quest key owns the pending list. Each entry saves the callback, a copy of the two-word request token, and opaque extra context. The ObjectiveTracker caller uses an empty extra context and the exact matching request token or the zero token. Duplicate checks first compare callback and context; an unmarked incoming token suppresses that match, while a marked token also requires both token words to match. Duplicate entries are skipped. Arrival calls unchanged entries oldest first with the quest key, saved token/context and mode 0, then clears the pending list. Whole-record destruction calls pending entries with mode 4; removal of an unready record first makes the mode-1 pass. The separate copy-and-remove callback list and token-specific cancellation/reissue route are distinct verified native paths.
+
+**VERIFIED (Retail native, R88u.u1/u3):** the record's pending flag limits the initial request-helper call, not the number of pending entries; a null callback saves no entry. A not-ready lookup starts the request only when the request is not already pending. **SIMULATOR GAP:** the host seam does not model that pending flag or request-helper call/output.
+
+**VERIFIED (simulator source):** `QuestSpecialItemInputs` now contains explicit not-ready records, request-token inputs, pending callbacks and host-supplied arrival/destruction updates. `process_host_cache_updates` is Retail-gated; it does not infer arrival or destruction from a game event. The selected ObjectiveTracker getter stores its callback on an unready record. A successful mode-0 callback queues `QUEST_LOG_UPDATE` without Lua arguments and does not dispatch it inline.
+
+**VERIFIED (Retail native, R88u.u3):** on callback success, `QuestRecordDataCallback` also calls two quest-state helpers with the quest ID and sets an internal flag. **SIMULATOR GAP:** this lane models the notification but not those helper calls or the flag. The helper effects remain **UNKNOWN**.
+
+**VERIFIED (optional simulator tests):** original `QuestObjectiveItemButtonMixin:OnEnter` tests use two backed quest/item pairs and an absent log index. They assert hidden not-ready hovers, duplicate suppression, the queued no-payload update after host arrival, distinct item results on re-hover, and no update or stale cache/callback state after host destruction.
+
+**VERIFIED (Retail native, R88u.u3–u4):** the global `GetQuestLogSpecialItemInfo` returns zero values for the not-ready and missing-item paths; it does not report a separate readiness status. The ready callback queues an argumentless `QUEST_LOG_UPDATE` and makes no direct tooltip getter call. **INFERRED (native):** the initial not-ready `C_TooltipInfo.GetQuestLogSpecialItem` call returns zero values; the simulator's original-consumer test asserts tooltip visibility only, not result arity. **INFERRED (native):** the conditional `QUEST_AUTOCOMPLETE` numeric payload is the quest ID; the simulator condition is an empty-by-default host input and no test asserts the payload.
+
+**SIMULATOR GAP:** the native copy-and-remove callback route and token-specific cancellation/reissue path are not modeled; they are separate from the pending lookup list described above. **UNKNOWN (Retail native, R88n.3b/R88u.u4):** the concrete cache writer and its arrival/destruction triggers, and whether an installed indirect listener later requests the tooltip again. The simulator keeps cache arrival/destruction host-driven and does not invent a trigger. See the [Round 7 getter contract](../../specs/tooltip-r7-getters.md) for the public behavior boundary.
 
 ### R88n.4b LFG message seam
 
@@ -118,11 +154,17 @@ The historical deferred `api_shape_stable_active_list.rs` is absent from master 
 - [Forever manifest](../../../data/blizzard-ui-files/wowforever.txt) — synchronized inputs, not runtime selection.
 - [Forever constants](../../../src/c_api/forever_finite_constants.rs) — StableUI prerequisite mismatch.
 - [Profile fixtures](../../../tests/common/profile_fixtures.rs) — compile-time registration mechanism.
+- [Retail Blizzard UI manifest](../../../data/blizzard-ui-files/retail.txt) — source-file and addon selection inputs.
+- [Round 7 tooltip contract](../../specs/tooltip-r7-getters.md) — API contract and bounded evidence.
+- [Azerite catalog provenance](../../../data/db2/retail-12.1.5.70391/tooltip-azerite-catalog-provenance.json) — exact-build DB2 inputs.
+- [Retail CharacterCreate probe](../../../tests/glue_character_select.rs) — selected Glue TOC and original consumer preservation.
+- [Texture inheritance resolver](../../../crates/sim-xml/src/template.rs) — inherited `parentArray` merge.
 
 ## See Also
 
 - [[addon-loading]] — runtime loading and dependency closure.
 - [[blizzard-ui-test-lanes]] — unit versus addon-bootstrap boundaries.
+- [[lua-api]] — C API contracts and implementation boundaries.
 
 ## CF-2 party minimum staging
 
@@ -213,3 +255,29 @@ manual event or post-load repair is used. Baseline da31ffbf118 passed one exact
 selector with no recorded startup diagnostics. This is original-owner/removal
 PRESERVATION, not producer RED. A Retail library boundary separately proves no
 bootstrap owner/array synthesis and preserves other legacy wrappers.
+
+## Retail CharacterCreate consumer selection
+
+**VERIFIED (Retail 12.1.5 cache):**
+`Blizzard_CharacterCreate.toc:2,5-6` selects the original Lua/XML on Glue. The
+`retail_character_create_transition_preserves_original_surfaces` test verifies
+the TOC selected by `discover_blizzard_addons_for_screen` for
+`ScreenKind::CharacterSelect`, then opens `charcreate` through
+`GlueParent_SetScreen`. It confirms original Lua source for `OnLoad`,
+`UpdateForwardButton`, and `SetCharacterRace`, plus four XML-created `BGTex`
+textures.
+
+**PRESERVATION:** the same consumer checks Human/Alliance and Orc/Horde as
+distinct faction outputs; Pandaren/Orc and Demon Hunter/Death Knight records;
+and the original 0.75/0.6/0.7/0.8 alpha results on each of the four distinct
+`BGTex` children in XML order. The probe supplies the source-defined
+class/race and customization `currentMode` values to the original
+`UpdateForwardButton`: Back is the exact `BACK` source string in both inputs,
+while Forward changes from `CUSTOMIZE` to the original `NEXT` or `FINISH` string.
+It does not call `NavForward` or CreateCharacter. The full `UpdateMode`/`SetMode`
+transition is not covered because the simulator reports a separate
+`SetCameraZoomLevel` argument error; see the lane handoff. The second
+`parentArray` resolver input and explicit override are covered by a focused
+resolver test; this is not runtime Azerite consumer proof. The resolved
+`parentArray="BGTex"` issue and candidate dispositions are recorded in
+[Lua-owned fallback retirement](lua-owned-fallback-retirement.md#retail-character-create-fallback-retirement-queue-462).

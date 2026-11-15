@@ -3,7 +3,8 @@
 //! Local spell names, icons, targeting, and cooldowns are backed elsewhere.
 //! Retail 12.1.5 VERIFIED: IsSpellPassive and IsPriorityAura are false for identifier zero or a missing record.
 //! Their positive-record flags, ranged-auto shared ID, and press-hold status remain UNKNOWN.
-//! Cast counts before 12.0.0 and display counts before 12.0.5 retain numeric zero.
+//! Cast counts before 12.0.0 and display counts before 12.0.5 retain numeric zero, except Forever.
+//! Forever uses inferred modeled counts; neither count compatibility default is installed.
 
 const SPELL_METADATA_DEFAULTS_LUA: &str = r#"
 C_Spell = C_Spell or __wow_namespace()
@@ -24,7 +25,7 @@ installSpellDefault("IsPressHoldReleaseSpell", returnFalse)
 installSpellDefault("IsPriorityAura", returnFalse)
 "#;
 
-#[cfg(not(feature = "retail-12-0-0"))]
+#[cfg(not(any(feature = "retail-12-0-0", feature = "client-wowforever")))]
 const SPELL_CAST_COUNT_DEFAULT_LUA: &str = r#"
 local function installSpellDefault(name, fn)
     if rawget(C_Spell, name) == nil then
@@ -37,7 +38,7 @@ installSpellDefault("GetSpellCastCount", function(_spellID)
 end)
 "#;
 
-#[cfg(not(feature = "retail-12-0-5"))]
+#[cfg(not(any(feature = "retail-12-0-5", feature = "client-wowforever")))]
 const SPELL_DISPLAY_COUNT_DEFAULT_LUA: &str = r#"
 local function installSpellDefault(name, fn)
     if rawget(C_Spell, name) == nil then
@@ -57,9 +58,9 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 }
 
 fn apply_count_defaults(_lua: &mut rilua::Lua) -> crate::Result<()> {
-    #[cfg(not(feature = "retail-12-0-0"))]
+    #[cfg(not(any(feature = "retail-12-0-0", feature = "client-wowforever")))]
     _lua.exec(SPELL_CAST_COUNT_DEFAULT_LUA)?;
-    #[cfg(not(feature = "retail-12-0-5"))]
+    #[cfg(not(any(feature = "retail-12-0-5", feature = "client-wowforever")))]
     _lua.exec(SPELL_DISPLAY_COUNT_DEFAULT_LUA)?;
     Ok(())
 }

@@ -109,6 +109,7 @@ macro_rules! frame_defaults {
             highlight_locked: false,
             ignoring_children_for_bounds: false,
             clamped_to_screen: false,
+            screen_clamp_suppressed: false,
             is_moving: false,
             is_sizing: false,
             sizing_point: crate::widget::AnchorPoint::BottomRight,

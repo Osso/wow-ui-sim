@@ -325,6 +325,12 @@ pub struct SimState {
     /// Explicit DamageMeter snapshots; combat publication is blocked pending secrecy.
     pub damage_meter: crate::c_api::c_damage_meter::DamageMeterInput,
     pub item_interaction: Option<crate::c_api::c_item_interaction::ItemInteractionInfo>,
+    /// One host-supplied item-interaction tooltip input; native writers are not modeled.
+    pub item_interaction_tooltip_input: Option<crate::c_api::ItemInteractionTooltipInput>,
+    /// Shared possession spell ID; None represents unseeded host state.
+    pub possession_spell_id: Option<u32>,
+    /// INFERRED current-player object snapshot with host-supplied candidates.
+    pub possession_object: Option<crate::c_api::c_tooltip_info_possession::PossessionObjectInput>,
     pub major_factions: HashMap<i64, MajorFactionData>,
     pub major_faction_renown_levels: HashMap<i64, Vec<RenownLevelInfo>>,
     /// Explicit pair-keyed reward inputs only; no fabricated default rows.
@@ -360,6 +366,9 @@ pub struct SimState {
         feature = "client-anniversary"
     ))]
     pub transmog_appearance_sources: HashMap<i64, AppearanceSourceInfo>,
+    /// INFERRED host relation from Forever appearance IDs to item IDs; empty by default.
+    #[cfg(feature = "client-wowforever")]
+    pub forever_appearance_item_ids: HashMap<i32, u32>,
     /// Supplied source IDs marked new; acquisition and clearing policy is unknown.
     pub transmog_new_sources: HashSet<i64>,
     /// Explicit (slot, type, option) inputs only; no viewed-outfit synthesis.
@@ -648,8 +657,11 @@ pub struct SimState {
     #[cfg(feature = "retail-12-0-0")]
     pub spell_cast_counts: HashMap<u32, u32>,
     /// Generic verified selector pairs; native SpellReagents field mapping is not modeled.
-    #[cfg(feature = "retail-12-0-5")]
+    #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
     pub spell_reagent_pairs: HashMap<u32, Vec<(i32, i32)>>,
+    /// Empty-default reagent metadata and nested-container input relationships.
+    #[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
+    pub spell_reagent_inventory: crate::c_api::spell_reagent_inventory::SpellReagentInventory,
     /// Host-supplied visibility rows; a missing row publishes three false values on success.
     pub spell_visibility_results: Option<HashMap<(u32, u8), (bool, bool, bool)>>,
     /// Explicit cooldown-output policy input, independent of combat and unit stats.
@@ -717,12 +729,18 @@ pub struct SimState {
     /// Retail GetPvpTalent catalog and state inputs; all maps are host-supplied.
     #[cfg(feature = "client-retail")]
     pub pvp_talent_tooltip: crate::c_api::c_tooltip_info_pvp_talent::PvpTalentTooltipInputs,
+    /// INFERRED host relation from Forever PvP talent IDs to spell IDs; empty by default.
+    #[cfg(feature = "client-wowforever")]
+    pub forever_pvp_talent_spell_ids: HashMap<i32, u32>,
     pub player_xp: PlayerXpState,
     pub bind_location: String,
     pub pvp_honor: PvpHonorState,
     pub world: WorldState,
     pub encounter_policy: crate::c_api::c_instance_encounter::EncounterPolicy,
     pub bag_items: HashMap<(i32, i32), BagItem>,
+    /// Explicit Retail bag repair quotes; UNKNOWN calculation/writers stay unmodeled.
+    /// Empty by default; coordinates refer to the host-supplied bag snapshot.
+    pub bag_item_repair_costs: HashMap<(i32, i32), i32>,
     /// Owned-item identity, local equip requests and lock inputs.
     pub item_equip: crate::c_api::item_spell::item_equip::ItemEquipState,
     /// Host-supplied metadata keyed by item ID, not bag coordinates.

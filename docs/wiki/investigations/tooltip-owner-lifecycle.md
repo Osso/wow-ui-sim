@@ -12,7 +12,7 @@ The proof ledger records normal `gui,client-wrath` grouped integration at `1e967
 
 ## R88n.5 Forever ClearLines cache boundary
 
-**VERIFIED (Forever 1.60.1.70707):** `ClearLines` clears the text of cached left and right FontStrings for active rows only; it does not visit inactive cache entries. The simulator limits this reset to active rows only on Forever and retains the existing behavior for other profiles. **VERIFIED (optional integration tests):** the API test confirms that active text clears while held inactive left and right references keep their text, and the original selected `TooltipDataHandler.ProcessInfo` consumer still replaces content and reuses its active FontString. PTR applicability for the separate Retail layout facts remains **INFERRED**. Clipping, draw order, nonzero extra-inset writers, and post-anchor clamping remain **UNKNOWN** and are unchanged.
+**VERIFIED (Forever 1.60.1.70707 native):** `ClearLines` clears the text of cached left and right FontStrings for active rows only; it does not visit inactive cache entries. **VERIFIED (simulator regression and fix):** the full-UI preservation test failed at test commit `3ffa60125` because Forever did not record IDs when it reused existing XML line FontStrings. `ensure_tooltip_line_id` now records those IDs for Forever (`line_frames.rs`); the optional loaded-UI test passes 1/1 at test commit `f3fdeb2b9`, checks active left/right text and inactive cache retention, and confirms the profile-selected GameTooltip and SharedXMLGame TOCs. The selected original `TooltipDataHandler.ProcessInfo` test also passes and verifies FontString reuse. PTR applicability for separate Retail layout facts remains **INFERRED**. Clipping, draw order, nonzero extra-inset writers, and post-anchor clamping remain **UNKNOWN** and unchanged.
 
 ## Coverage matrix
 
@@ -23,7 +23,7 @@ The proof ledger records normal `gui,client-wrath` grouped integration at `1e967
 | Payload population still shows after `SetOwner`; `ClearLines()` retains owner | Same 62/62 batch | Simulator-source GREEN |
 | Direct `Hide`, `SetShown(false)`, and `FadeOut` release owner even when already hidden | Same 62/62 batch | Simulator-source GREEN |
 | Ordinary `Frame:Hide()` leaves tooltip ownership alone | Same 62/62 batch | Simulator-source GREEN |
-| Forever `ClearLines` clears active cached left/right text only | Optional `tooltip_owner_clear_consumer` API test | R88n.5 contract PASS |
+| Forever `ClearLines` clears active cached left/right text only | Optional full-UI test through the selected global `GameTooltip`; RED 0/1 at `3ffa60125`, GREEN 1/1 after ID registration fix | R88n.5 contract PASS |
 | Original Forever `TooltipDataHandler.ProcessInfo` reprocesses and reuses active FontString | Selected TOC plus optional original-consumer test | Preservation PASS |
 | Native Wrath behavior | No native execution | Unverified |
 | Callback order and ancestor-driven effective hiding | Not tested or claimed; internal `SetOwner`/`SetText` visibility changes bypass visibility script dispatch | Unverified lifecycle edges, not native parity |
@@ -37,6 +37,7 @@ The proof ledger records normal `gui,client-wrath` grouped integration at `1e967
 - [Tooltip owner methods](../../../src/lua_api/frame/methods/widgets/tooltip/owner.rs) — owner retention across internal `SetOwner` hiding and `FadeOut` delegation at `1e9674bcd`.
 - [Text methods](../../../src/lua_api/frame/methods/text_attribute_event/text.rs) and [tooltip content](../../../src/lua_api/frame/methods/widgets/tooltip/content.rs) — replacement-text and payload visibility at `1e9674bcd`.
 - [Tooltip line data](../../../src/lua_api/frame/methods/widgets/tooltip/line_data.rs) — append behavior and Forever active-row ClearLines reset.
+- [Tooltip line frames](../../../src/lua_api/frame/methods/widgets/tooltip/line_frames.rs) — find and record existing XML line FontStrings for active-row clearing.
 - [Tooltip attachment spec](../../specs/tooltip-attachments.md) and [owner-anchor spec](../../specs/tooltip-owner-anchors.md) — Retail contract and PTR applicability labels.
 - [Tooltip owner-clear tests](../../../tests/tooltip_owner_clear_consumer.rs) — optional Forever API and original-consumer proof.
 - [Tooltip tests](../../../tests/tooltip_basic.rs) — grouped `tooltip_basic::` source proof at `1e9674bcd`.

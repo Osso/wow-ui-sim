@@ -6,24 +6,26 @@ use crate::c_api::tooltip_getter_args;
 use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::items::{self, ItemInfo};
 use crate::lua_api::globals::missing_surface::tooltip_info::{
-    build_quest_party_progress_tooltip, tooltip_for_item_context,
+    build_item_interaction_cleansing_tooltip, build_quest_party_progress_tooltip,
+    build_unresolved_conversion_item_tooltip, tooltip_for_item_context, tooltip_for_spell,
 };
-use crate::lua_api::methods::{borrow_state, create_string, table_set};
+use crate::lua_api::methods::{
+    borrow_state, borrow_state_mut, create_string, create_table, table_set,
+};
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
 use rilua::{LuaResult, Val};
 
-const ESSENCE_USAGE: &str =
-    "Usage: local data = C_TooltipInfo.GetAzeriteEssence(essenceID [, rank])";
-const ESSENCE_SLOT_USAGE: &str = "Usage: local data = C_TooltipInfo.GetAzeriteEssenceSlot(slot)";
 const LFG_REWARD_USAGE: &str =
     "Usage: local data = C_TooltipInfo.GetLFGDungeonReward(dungeonID, lootIndex)";
 const LFG_SHORTAGE_USAGE: &str = concat!(
     "Usage: local data = C_TooltipInfo.GetLFGDungeonShortageReward(",
     "dungeonID, shortageSeverity, lootIndex)",
 );
+const ITEM_INTERACTION_CLEANSE_KIND: i32 = 2;
+const ITEM_INTERACTION_CONVERSION_KIND: i32 = 4;
 const POSSESSION_USAGE: &str = "Usage: local data = C_TooltipInfo.GetPossession(slot)";
 const QUEST_SPECIAL_USAGE: &str =
     "Usage: local data = C_TooltipInfo.GetQuestLogSpecialItem(questIndex)";
@@ -38,15 +40,30 @@ const RUNEFORGE_USAGE: &str = concat!(
     "itemGUID, itemLevel [, powerID, modifiers])",
 );
 
+/// One empty-by-default host input for selected item-interaction tooltip state.
+/// Native SetPendingItem lifecycle and cleansing/conversion calculations are not modeled.
+#[derive(Clone, Debug, Default)]
+pub struct ItemInteractionTooltipInput {
+    /// Selected object kind for the R88n.1 result-shape path.
+    pub object_kind: Option<i32>,
+    pub selected_item_guid: Option<String>,
+    pub conversion_output_item_id: Option<u32>,
+    pub cleansing_rows: Vec<ItemInteractionTooltipLine>,
+}
+
+/// Final cleansing row data supplied by the host; no row values or styles are inferred.
+#[derive(Clone, Debug, Default)]
+pub struct ItemInteractionTooltipLine {
+    pub line_type: f64,
+    pub left_text: String,
+    pub left_color: Option<(f64, f64, f64)>,
+    pub wrap: bool,
+}
+
 pub(crate) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
     let is_ptr = ACTIVE == ClientProfile::Ptr;
-    table_set_rust_fn_static(state, namespace, "GetAzeriteEssence", get_azerite_essence)?;
-    table_set_rust_fn_static(
-        state,
-        namespace,
-        "GetAzeriteEssenceSlot",
-        get_azerite_essence_slot,
-    )?;
+    crate::c_api::c_tooltip_info_azerite_essence::register_essence(state, namespace)?;
+    crate::c_api::c_tooltip_info_azerite_essence::register_slot(state, namespace)?;
     if !is_ptr {
         table_set_rust_fn_static(
             state,
@@ -91,40 +108,94 @@ pub(crate) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResu
     Ok(())
 }
 
-fn get_azerite_essence(state: &mut LuaState) -> LuaResult<u32> {
-    let essence_id = tooltip_getter_args::round7_signed(state, 1, ESSENCE_USAGE)?;
-    let requested_rank = tooltip_getter_args::round7_optional_unsigned(state, 2, ESSENCE_USAGE)?;
-    let selected_rank = requested_rank.or_else(|| current_essence_rank(state, essence_id));
-    if selected_rank.is_none() {
+fn get_item_interaction_item(state: &mut LuaState) -> LuaResult<u32> {
+    // Only Retail's result paths are verified. Keep the other profiles' behavior.
+    if ACTIVE != ClientProfile::Retail {
         return no_values();
     }
-    // The state supplies the selected rank, but the rank-to-spell tooltip
-    // catalogue and spell-block producer are not modelled.
-    no_values()
-}
-
-fn get_azerite_essence_slot(state: &mut LuaState) -> LuaResult<u32> {
-    let slot = tooltip_getter_args::round7_signed(state, 1, ESSENCE_SLOT_USAGE)? as u8;
-    if slot > 3 {
-        return Err(rilua::runtime_error(format!(
-            "outside of expected range 0 to 3 - {ESSENCE_SLOT_USAGE}"
-        )));
-    }
-    let Some(essence_id) = active_essence_for_slot(state, i32::from(slot)) else {
+    let Some(input) = borrow_state(state)?.item_interaction_tooltip_input.clone() else {
         return no_values();
     };
-    if current_essence_rank(state, essence_id).is_none() {
+    let Some(kind) = input.object_kind else {
         return no_values();
-    }
-    // The state supplies the selected slot and rank, but not the native
-    // rank-to-spell tooltip catalogue or producer.
-    no_values()
+    };
+    let Some(tooltip) = item_interaction_tooltip_for_kind(state, kind, &input)? else {
+        return no_values();
+    };
+    state.push(tooltip);
+    Ok(1)
 }
 
-fn get_item_interaction_item(_state: &mut LuaState) -> LuaResult<u32> {
-    // Current interaction state contains dialog text and cost, not the selected
-    // object descriptor or the kind-2/kind-4 payload inputs.
-    no_values()
+fn item_interaction_tooltip_for_kind(
+    state: &mut LuaState,
+    kind: i32,
+    input: &ItemInteractionTooltipInput,
+) -> LuaResult<Option<Val>> {
+    match kind {
+        ITEM_INTERACTION_CLEANSE_KIND => cleansing_item_interaction_tooltip(state, input),
+        ITEM_INTERACTION_CONVERSION_KIND => conversion_item_interaction_tooltip(state, input),
+        _ => Ok(Some(empty_item_interaction_tooltip(state))),
+    }
+}
+
+fn cleansing_item_interaction_tooltip(
+    state: &mut LuaState,
+    input: &ItemInteractionTooltipInput,
+) -> LuaResult<Option<Val>> {
+    if input.cleansing_rows.is_empty() || !item_interaction_source_is_owned(state, input) {
+        return Ok(None);
+    }
+    Ok(Some(build_item_interaction_cleansing_tooltip(
+        state,
+        &input.cleansing_rows,
+    )))
+}
+
+fn conversion_item_interaction_tooltip(
+    state: &mut LuaState,
+    input: &ItemInteractionTooltipInput,
+) -> LuaResult<Option<Val>> {
+    if !item_interaction_source_is_owned(state, input) {
+        return Ok(None);
+    }
+    conversion_output_tooltip(state, input)
+}
+
+fn item_interaction_source_is_owned(state: &LuaState, input: &ItemInteractionTooltipInput) -> bool {
+    input
+        .selected_item_guid
+        .as_deref()
+        .is_some_and(|guid| item_for_owned_guid(state, guid).is_some())
+}
+
+fn conversion_output_tooltip(
+    state: &mut LuaState,
+    input: &ItemInteractionTooltipInput,
+) -> LuaResult<Option<Val>> {
+    let Some(output_item_id) = input.conversion_output_item_id else {
+        return Ok(None);
+    };
+    if output_item_id == 0 {
+        return Ok(Some(build_unresolved_conversion_item_tooltip(state)));
+    }
+    let Some(output_item) = borrow_state(state)?.item_info(output_item_id).cloned() else {
+        return Ok(None);
+    };
+    Ok(Some(tooltip_for_item_context(
+        state,
+        output_item_id,
+        Some(&output_item),
+    )))
+}
+
+fn empty_item_interaction_tooltip(state: &mut LuaState) -> Val {
+    let saved_top = state.top;
+    let tooltip = create_table(state);
+    state.push(tooltip);
+    let lines = create_table(state);
+    table_set(state, tooltip, "lines", lines);
+    state.top = saved_top;
+    tooltip
 }
 
 fn get_lfg_dungeon_reward(state: &mut LuaState) -> LuaResult<u32> {
@@ -216,11 +287,21 @@ fn publish_lfg_tooltip_reward(
 
 fn get_possession(state: &mut LuaState) -> LuaResult<u32> {
     let slot = tooltip_getter_args::round7_signed(state, 1, POSSESSION_USAGE)?;
-    if slot != 0 {
+    let Some(slot_index) = slot.checked_sub(1) else {
+        return no_values();
+    };
+    if slot_index != 0 || ACTIVE != ClientProfile::Retail {
         return no_values();
     }
-    // The simulator has no possession-spell/context state.
-    no_values()
+    let Some(spell_id) = borrow_state(state)?.possession_spell_id else {
+        return no_values();
+    };
+    if crate::spells::get_spell(spell_id).is_none() {
+        return no_values();
+    }
+    let tooltip = tooltip_for_spell(state, spell_id);
+    state.push(tooltip);
+    Ok(1)
 }
 
 fn publish_quest_log_special_item(state: &mut LuaState) -> LuaResult<u32> {
@@ -230,8 +311,22 @@ fn publish_quest_log_special_item(state: &mut LuaState) -> LuaResult<u32> {
     if ACTIVE != ClientProfile::Retail {
         return no_values();
     }
-    let selected_object = find_quest_special_item_object(state, quest_index);
-    let Some(selected_object) = selected_object else {
+    let Some((quest_id, is_not_ready)) = quest_cache_lookup_for_index(state, quest_index) else {
+        return no_values();
+    };
+    if is_not_ready {
+        borrow_state_mut(state)?
+            .quest_log_entries
+            .quest_special_item_inputs
+            .save_quest_record_callback(quest_id);
+        // INFERRED (R88u.u3/u4): no TooltipData is returned before record readiness.
+        return no_values();
+    }
+    publish_ready_quest_special_item(state, quest_id)
+}
+
+fn publish_ready_quest_special_item(state: &mut LuaState, quest_id: i32) -> LuaResult<u32> {
+    let Some(selected_object) = find_quest_special_item_object(state, quest_id) else {
         return no_values();
     };
     let guid = item_guid_for_bag_slot(
@@ -357,37 +452,57 @@ fn build_runeforge_result_data(
     Some(data)
 }
 
-fn get_slotted_keystone(_state: &mut LuaState) -> LuaResult<u32> {
-    // The slotted GUID is not represented in simulator state.
-    no_values()
+fn get_slotted_keystone(state: &mut LuaState) -> LuaResult<u32> {
+    if ACTIVE != ClientProfile::Retail {
+        return no_values();
+    }
+    let (guid, selected_item_id) = {
+        let sim = borrow_state(state)?;
+        let Some(guid) = sim.keystone.selected_guid.clone() else {
+            return no_values();
+        };
+        (guid, sim.keystone.selected_item_id)
+    };
+    let Some((item_id, item)) = selected_keystone_item(state, &guid, selected_item_id) else {
+        return no_values();
+    };
+    let tooltip = tooltip_for_item_context(state, item_id, Some(item));
+    let guid = create_string(state, &guid);
+    table_set(state, tooltip, "guid", guid);
+    state.push(tooltip);
+    Ok(1)
 }
 
-fn current_essence_rank(state: &LuaState, essence_id: i32) -> Option<u32> {
-    borrow_state(state)
-        .ok()?
-        .azerite_essence
-        .essences
-        .get(&essence_id)
-        .and_then(|essence| u32::try_from(essence.rank).ok())
+fn selected_keystone_item(
+    state: &LuaState,
+    guid: &str,
+    selected_item_id: Option<u32>,
+) -> Option<(u32, &'static ItemInfo)> {
+    let Some(item_id) = selected_item_id else {
+        return item_for_owned_guid(state, guid);
+    };
+    let (_, _, guid_item_id) = crate::c_api::item_spell::parse_item_guid(guid)?;
+    if guid_item_id != item_id {
+        return None;
+    }
+    items::get_item(item_id).map(|item| (item_id, item))
 }
 
-fn active_essence_for_slot(state: &LuaState, slot: i32) -> Option<i32> {
-    borrow_state(state)
-        .ok()?
-        .azerite_essence
-        .milestones
-        .iter()
-        .find(|milestone| milestone.slot == Some(slot))
-        .and_then(|milestone| milestone.active_essence_id)
+fn quest_cache_lookup_for_index(state: &LuaState, quest_index: i32) -> Option<(i32, bool)> {
+    let sim = borrow_state(state).ok()?;
+    let inputs = &sim.quest_log_entries.quest_special_item_inputs;
+    let quest_id = *inputs.quest_ids_by_log_index.get(&quest_index)?;
+    let record_exists = inputs.cached_quest_records.contains_key(&quest_id);
+    let not_ready = record_exists && inputs.not_ready_cache_records.contains(&quest_id);
+    Some((quest_id, not_ready))
 }
 
 fn find_quest_special_item_object(
     state: &LuaState,
-    quest_index: i32,
+    quest_id: i32,
 ) -> Option<crate::c_api::quest_special_item::QuestSpecialItemObject> {
     let sim = borrow_state(state).ok()?;
     let inputs = &sim.quest_log_entries.quest_special_item_inputs;
-    let quest_id = *inputs.quest_ids_by_log_index.get(&quest_index)?;
     let cache_record = inputs.cached_quest_records.get(&quest_id)?;
     let selected_object = *inputs.selected_item_objects.get(&quest_id)?;
     let primary_id_matches = cache_record.special_item_id == Some(selected_object.item_id)

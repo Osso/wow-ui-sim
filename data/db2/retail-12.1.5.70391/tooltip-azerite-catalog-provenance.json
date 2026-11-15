@@ -1,0 +1,36 @@
+{
+  "build": "12.1.5.70391",
+  "locale": "enUS",
+  "source": "Wago DB2 exact-build CSV exports",
+  "tables": {
+    "AzeriteEssence.csv": {
+      "url": "https://wago.tools/db2/AzeriteEssence/csv?build=12.1.5.70391&locale=enUS",
+      "sha256": "f5472f1f89ee50e22fd6ddab7b3d7bfc95cc3f1f52523a312ad8046d5c389bb3",
+      "rows": 28,
+      "columns": [
+        "ID",
+        "Name_lang",
+        "Description_lang",
+        "SpecSetID"
+      ]
+    },
+    "AzeriteEssencePower.csv": {
+      "url": "https://wago.tools/db2/AzeriteEssencePower/csv?build=12.1.5.70391&locale=enUS",
+      "sha256": "6e95aea7d88efd19c58ebb54c6f4732dd7863bd1962c08ed4eca545d2192e016",
+      "rows": 112,
+      "columns": [
+        "ID",
+        "SourceAlliance_lang",
+        "SourceHorde_lang",
+        "AzeriteEssenceID",
+        "Tier",
+        "MajorPowerDescription",
+        "MinorPowerDescription",
+        "MajorPowerActual",
+        "MinorPowerActual"
+      ]
+    }
+  },
+  "generated_file": "src/c_api/tooltip_azerite_catalog_data.rs",
+  "generated_sha256": "67419222a05411174c976cd0996c07e5b103236eb78f55149ffd2907065b1a2c"
+}

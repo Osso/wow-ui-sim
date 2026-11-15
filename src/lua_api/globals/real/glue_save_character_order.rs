@@ -6,7 +6,6 @@ use crate::lua_api::methods::val_to_string;
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, table_set};
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
-use rilua::vm::table::Table;
 use rilua::{LuaResult, Val, runtime_error};
 
 const USAGE: &str = "Usage: SaveCharacterOrder(characterTranslationOrder)";
@@ -43,31 +42,23 @@ fn entry(_state: &LuaState, value: Val) -> Option<i32> {
 }
 
 fn save_character_order(state: &mut LuaState) -> LuaResult<u32> {
-    let Val::Table(table_ref) = stack_val(state, 1) else {
+    let Some((order, selected_slot)) = collect_character_order(state)? else {
+        return Ok(0);
+    };
+    store_character_order(state, order, selected_slot)?;
+    Ok(0)
+}
+
+fn collect_character_order(state: &mut LuaState) -> LuaResult<Option<(Vec<i32>, Option<usize>)>> {
+    let Val::Table(table) = stack_val(state, 1) else {
         return Err(runtime_error(USAGE));
     };
     let table = state
         .gc
         .tables
-        .get(table_ref)
+        .get(table)
         .ok_or_else(|| runtime_error(USAGE))?;
-    let Some((order, selected_slot)) = read_character_order(state, table)? else {
-        return Ok(0);
-    };
-    let mut sim = borrow_state_mut(state)?;
-    if let Some(slot) = selected_slot {
-        sim.cvars
-            .set_temporary("lastCharacterIndex", &slot.to_string());
-    }
-    sim.glue_login.saved_character_order = order;
-    Ok(0)
-}
-
-fn read_character_order(
-    state: &LuaState,
-    table: &Table,
-) -> LuaResult<Option<(Vec<i32>, Option<usize>)>> {
-    let (roster_count, selected) = read_character_roster_context(state)?;
+    let (roster_count, selected) = character_order_context(state)?;
     let mut order = Vec::new();
     let mut selected_slot = None;
     for raw_slot in 0..table.len(&state.gc.string_arena) {
@@ -89,10 +80,24 @@ fn read_character_order(
     Ok(Some((order, selected_slot)))
 }
 
-fn read_character_roster_context(state: &LuaState) -> LuaResult<(usize, i64)> {
+fn character_order_context(state: &LuaState) -> LuaResult<(usize, i64)> {
     let sim = borrow_state(state)?;
     Ok((
         slots_for_sim(&sim).len(),
         sim.glue_login.selected_character_index,
     ))
+}
+
+fn store_character_order(
+    state: &mut LuaState,
+    order: Vec<i32>,
+    selected_slot: Option<usize>,
+) -> LuaResult<()> {
+    let mut sim = borrow_state_mut(state)?;
+    if let Some(slot) = selected_slot {
+        sim.cvars
+            .set_temporary("lastCharacterIndex", &slot.to_string());
+    }
+    sim.glue_login.saved_character_order = order;
+    Ok(())
 }

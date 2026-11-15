@@ -71,6 +71,9 @@ fn setup_env() -> WowLuaEnv {
     if !common::load_classic_game_startup_inventory(&env) {
         let ui = blizzard_ui_dir();
         for addon_name in PANEL_ADDONS {
+            if *addon_name == "Blizzard_UIParentPanelManager" {
+                common::panel_fixtures::load_retail_catalog_shop(&env, &ui);
+            }
             common::load_required_blizzard_addon(&env, &ui, addon_name);
             if *addon_name == "Blizzard_UIParentPanelManager" {
                 load_ui_parent_panel_manager_global_pass(&env, &ui);

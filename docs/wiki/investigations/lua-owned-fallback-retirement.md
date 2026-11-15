@@ -100,9 +100,54 @@ retain their guard and all store-service native defaults remain untouched.
 
 No J native defaults were implemented. Kiosk, Perks, PrototypeDialog, legacy
 session/video behavior, promotion inventory and store-service semantics remain
-NATIVE/neutral-KEEP as synthesized. Creation/overlay/Enter World owners and
-covered R facts remain untouched. Authentication challenge parenting and
-secure/public binding remain unresolved, not blanket removable fallbacks.
+NATIVE/neutral-KEEP as synthesized. The J tranche left CharacterCreate,
+overlay and Enter World owners untouched; QUEUE 462 records a separate
+Retail-only result below. Authentication challenge parenting and secure/public
+binding remain unresolved, not blanket removable fallbacks.
+
+## Retail character-create fallback retirement (QUEUE 462)
+
+**VERIFIED (Retail 12.1.5 cache):** `Blizzard_CharacterCreate.toc:2,5-6`
+allows Glue and selects the original CharacterCreate Lua and XML. The Retail
+integration probe discovers that TOC for `ScreenKind::CharacterSelect`, checks
+`allows_screen`, then follows `GlueParent_SetScreen('charcreate')`; it does not
+call CreateCharacter or submit a character.
+
+**VERIFIED (simulator root cause):** the four XML overlay textures inherit the
+virtual `CharacterCreateBackgroundOverlayTexture` template, which declares
+`parentArray="BGTex"` at XML:244. `resolve_texture_inheritance` previously
+replaced an inherited `parent_array` with the instance's `None`, so the actual
+XML children did not enter `CharacterCreateFrame.BGTex`. The fix merges this
+field through the texture template chain; the selected consumer now sees all
+four XML Texture objects.
+
+| Candidate | Retail disposition | Original-consumer preservation evidence |
+|---|---|---|
+| Selected-state seeds | **REMOVED (Retail only)** | `CharacterCreateRaceAndClassMixin:UpdateState` at Lua:1634-1674 reads the selected race and class. The test observes Human/Alliance and Orc/Horde, then Pandaren, Demon Hunter and Death Knight records through original setters. The contrasting faction outputs reject a constant faction producer. |
+| Empty `BGTex` table | **REMOVED (Retail only)** | XML:244,252-274 owns the array and its four textures. The test checks each array entry is the exact corresponding named child in XML order, each is a Texture, and no two entries share identity. It checks the original alpha update on every member. A second resolver input mirrors Azerite `AzeritePlugTexture` / `Plugs`; it checks inherited parentArray and explicit instance override. This is resolver coverage, not runtime Azerite UI coverage. |
+| Back/Forward replay | **REMOVED (Retail only)** | Original `CharacterCreateMixin:OnLoad` sets Back from `BACK` at Lua:88; the test checks that exact source value in class/race and customization modes. Original `UpdateForwardButton` changes the label from `CUSTOMIZE` in class/race mode to the original `NEXT` or `FINISH` value in customization mode, based on `ZoneChoiceFrame:ShouldShow`. The test supplies the two source-defined `currentMode` values and invokes the original label updater directly; it does not execute `UpdateMode`/`SetMode`. A separate attempt to exercise that transition hit a simulator `SetCameraZoomLevel` argument error, recorded in the lane handoff. The probe does not call `NavForward`, CreateCharacter, or Submit. The distinct outputs reject constant forward labels. |
+| Overlay alpha error fallback | **REMOVED (Retail only)** | Original `UpdateBackgroundOverlays` at Lua:404-423 selects alpha from class, race and faction. The test observes Pandaren 0.75, Horde Orc 0.6, Demon Hunter 0.7, and Death Knight 0.8 on all four distinct XML textures. |
+
+**PRESERVATION:** `retail_character_create_transition_preserves_original_surfaces`
+passes through the selected CharacterSelect-to-CharacterCreate path both while
+the wrappers are present and after Retail retirement. It checks three supplied
+race choices, two classes, four XML child identities/order, all four alpha
+outputs, and the original label updater under two source-defined mode inputs;
+it does not call `NavForward`, CreateCharacter, or Submit. The test does not
+exercise the `UpdateMode`/`SetMode` transition because that path raises the
+separate simulator `SetCameraZoomLevel` argument error recorded in the lane
+handoff. The Back label remains the exact `BACK` source value in both tested
+inputs; the Forward label differs. The resolver's second Azerite-shaped input
+checks general `parentArray` inheritance and instance precedence, but does not
+claim that the Azerite runtime consumer was loaded.
+The hash-bound transcripts and build receipts are in the lane handoff, not in
+this tracked wiki.
+
+**VERIFIED (scope):** the workaround strings remain enabled for non-Retail
+profiles because this probe does not establish their consumer paths. No native
+API question is open for these four candidates: the observed failure was XML
+template inheritance, not a missing API. The auth secure/public binding,
+default parent and Submit semantics remain UNKNOWN and untouched.
 
 - [Selected-name original consumers](../../../tests/stub_j_selected_name.rs)
 - [CharacterFrame title consumers](../../../tests/stub_j_character_title.rs)
@@ -125,3 +170,30 @@ secure/public binding remain unresolved, not blanket removable fallbacks.
 
 - [[consumer-selection-and-red-proof]] — source selection versus executed mutation rejection
 - [[post-load-workaround-audit]] — remaining lifecycle ownership and retirement paths
+
+## CatalogShop eager ownership in partial panel fixtures (lt-05d0)
+
+The unchanged `test_showuipanel_reputation::show_ui_panel_locks_reputation_frame_layout`
+regression passes at `3ed26cab617c0887d0f0452d61ee54da67f01d90` and fails at its
+child `c36368269b70aae0f04ec2f75272ee035401c45d` and master `76d49160d`.
+Exact-selector bisection identifies `c36368269` (Retail fallback retirement) as
+the first bad commit. The failing original consumer is
+`Blizzard_UIParentPanelManager/Shared/UIParentPanelManager.lua:200`, which reads
+`CatalogShopInboundInterface.IsShown()` when Shop2 is enabled. The partial
+fixture omitted its eager publisher; this is not evidence of a missing native
+getter or a reason to restore a guessed interface.
+
+The pinned Game-eligible `Blizzard_CatalogShop.toc` has no LoadOnDemand flag and
+declares SharedXML, CatalogShopSharedUtil and CatalogShopSharedTemplates.
+GlueParent/StaticPopup_Glue are Glue-only dependencies. Load the original Game
+publisher after its dependencies and before the panel consumer, restricted to
+`client_profile::ACTIVE == ClientProfile::Retail`. The fixture asserts that
+`IsShown` and `SetShown` originate from `Blizzard_CatalogShop_Inbound.lua`.
+Existing geometry and behavior assertions remain unchanged. The exact
+reputation regression and all eight reputation selectors pass with this
+fixture-only correction; this is original-owner preservation, not new native
+behavior evidence. Other profiles retain their existing fixture behavior.
+
+Related sources: `tests/test_showuipanel_reputation.rs`,
+`tests/common/panel_fixtures.rs`, and the profile-scoped Retail CatalogShop TOC
+and original Inbound.lua. Runtime receipts are untracked.

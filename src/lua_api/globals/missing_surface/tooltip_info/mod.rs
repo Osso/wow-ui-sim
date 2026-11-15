@@ -10,7 +10,10 @@ use crate::lua_api::methods::{
     call_function_state, create_string, table_get, table_set, val_to_string,
 };
 use crate::lua_bridge::table_set_rust_fn_static;
-pub(crate) use builders::build_quest_party_progress_tooltip;
+pub(crate) use builders::{
+    build_item_interaction_cleansing_tooltip, build_quest_party_progress_tooltip,
+    build_unresolved_conversion_item_tooltip,
+};
 use builders::{
     ensure_pet_info_state, get_pet_tamers_for_map, get_spell_for_pet_action, is_pet_action_passive,
 };
@@ -110,14 +113,15 @@ fn register_c_tooltip_info(state: &mut LuaState) -> LuaResult<()> {
             crate::client_profile::ClientProfile::Retail
                 | crate::client_profile::ClientProfile::Ptr
         ) {
-            crate::c_api::c_tooltip_info_appearance::register(state, table_ref)?;
+            crate::c_api::tooltip_info_retail_epoch_and_forever::c_tooltip_info_appearance::register(state, table_ref)?;
         }
         crate::c_api::c_tooltip_info_item_context::register(state, table_ref)?;
-        crate::c_api::c_tooltip_info_outfit::register(state, table_ref)?;
+        crate::c_api::tooltip_info_retail_epoch_and_forever::c_tooltip_info_outfit::register(
+            state, table_ref,
+        )?;
     }
-    // Decomp Round 6 §2 decodes the merchant extended-cost selection block for
-    // Retail 12.1.5; Forever's block is undecoded, so the getter stays off the
-    // Forever surface.
+    // Retail and PTR use the Retail 12.1.5 index reader. Forever registration
+    // below shares the producer and supplies its verified argument reader.
     #[cfg(feature = "retail-12-1-5")]
     {
         if matches!(
@@ -138,6 +142,17 @@ fn register_c_tooltip_info(state: &mut LuaState) -> LuaResult<()> {
     }
     #[cfg(feature = "client-retail")]
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        crate::c_api::c_tooltip_info_pvp_talent::register(state, table_ref)?;
+    }
+    #[cfg(feature = "client-wowforever")]
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
+        crate::c_api::tooltip_info_retail_epoch_and_forever::c_tooltip_info_appearance::register(
+            state, table_ref,
+        )?;
+        crate::c_api::c_tooltip_info_merchant_cost::register(state, table_ref)?;
+        crate::c_api::tooltip_info_retail_epoch_and_forever::c_tooltip_info_outfit::register(
+            state, table_ref,
+        )?;
         crate::c_api::c_tooltip_info_pvp_talent::register(state, table_ref)?;
     }
     Ok(())
@@ -173,6 +188,15 @@ pub(crate) fn tooltip_for_link_spell(state: &mut LuaState, id: u32) -> Val {
 /// line set stay in one place.
 pub(crate) fn tooltip_for_spell(state: &mut LuaState, spell_id: u32) -> Val {
     spell::tooltip_for_spell_id(state, spell_id)
+}
+
+/// Append the common spell lines to an existing tooltip without replacing its identity.
+pub(crate) fn append_spell_to_tooltip(
+    state: &mut LuaState,
+    tooltip: Val,
+    spell_id: u32,
+) -> LuaResult<()> {
+    spell::append_spell_to_tooltip(state, tooltip, spell_id)
 }
 
 /// Feed a merchant currency cost through the existing currency payload builder.
@@ -225,16 +249,6 @@ pub(crate) fn tooltip_for_socketed_relic_context(
     relic: &crate::c_api::item_descriptor::RelicMetadata,
 ) -> LuaResult<rilua::Val> {
     builders::tooltip_for_socketed_relic(state, item_id, item, relic)
-}
-
-/// Bounded bridge for the Retail-only PvP talent producer; no identifier parsing here.
-#[cfg(feature = "client-retail")]
-pub(crate) fn tooltip_for_spell_identifier(
-    state: &mut LuaState,
-    spell_id: Option<u32>,
-    is_mount: bool,
-) -> rilua::Val {
-    tooltip_for_spell_identifier_options(state, spell_id, is_mount, false, false)
 }
 
 #[cfg(feature = "retail-12-0-5")]

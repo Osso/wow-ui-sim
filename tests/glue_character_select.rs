@@ -1161,6 +1161,91 @@ fn character_select_can_transition_to_character_create_without_lua_errors() {
     }
 }
 
+const RETAIL_CHARACTER_CREATE_PRESERVATION_LUA: &str = r#"
+local source = "Blizzard_CharacterCreate/"
+assert(debug.getinfo(CharacterCreateMixin.OnLoad, "S").source:find(source, 1, true), "OnLoad source")
+assert(debug.getinfo(CharacterCreateMixin.UpdateForwardButton, "S").source:find(source, 1, true), "forward source")
+assert(debug.getinfo(CharacterCreateRaceAndClassMixin.SetCharacterRace, "S").source:find(source, 1, true), "race source")
+local frame = CharacterCreateFrame
+local race = frame.RaceAndClassFrame
+local overlayKeys = { "TopBackgroundOverlay", "LeftBackgroundOverlay", "RightBackgroundOverlay", "BottomBackgroundOverlay" }
+assert(#frame.BGTex == #overlayKeys, "XML BGTex array count: " .. tostring(#frame.BGTex))
+for index, key in ipairs(overlayKeys) do
+    local overlay = frame[key]
+    assert(overlay ~= nil, "missing XML overlay " .. key)
+    assert(rawequal(frame.BGTex[index], overlay), "BGTex order/identity at " .. index)
+    assert(overlay:GetObjectType() == "Texture", "XML BGTex element type at " .. index)
+    for previous = 1, index - 1 do
+        assert(not rawequal(frame.BGTex[index], frame.BGTex[previous]), "duplicate BGTex member at " .. index)
+    end
+end
+local function assertOverlayAlpha(expected, state)
+    for index = 1, #overlayKeys do
+        assert(math.abs(frame.BGTex[index]:GetAlpha() - expected) < 0.001, state .. " overlay alpha at " .. index)
+    end
+end
+race:SetCharacterClass(1)
+race:SetCharacterRace(1)
+assert(race.selectedRaceData.fileName == "Human", "selected Human record")
+assert(race.selectedFaction == "Alliance", "Human must select Alliance")
+race:SetCharacterRace(2)
+assert(race.selectedRaceData.fileName == "Orc", "selected Orc record")
+assert(race.selectedFaction == "Horde", "Orc must select Horde")
+race:SetCharacterRace(24)
+assert(race.selectedRaceData.fileName == "Pandaren", "selected Pandaren record")
+assertOverlayAlpha(0.75, "Pandaren")
+race:SetCharacterRace(2)
+assertOverlayAlpha(0.6, "Horde Orc")
+race:SetCharacterClass(12)
+assert(race.selectedClassData.fileName == "DEMONHUNTER", "selected Demon Hunter record")
+assertOverlayAlpha(0.7, "Demon Hunter")
+race:SetCharacterClass(6)
+assert(race.selectedClassData.fileName == "DEATHKNIGHT", "selected Death Knight record")
+assertOverlayAlpha(0.8, "Death Knight")
+local backSuffix = "  " .. BACK
+local backText = frame.BackButton:GetText()
+assert(backText:sub(-#backSuffix) == backSuffix, "Back must retain the original BACK string")
+assert(backText:find("common-icon-backarrow", 1, true), "Back must use the original back arrow")
+local classRaceMode = frame.currentMode
+assert(classRaceMode == 1, "original OnLoad must select class/race mode")
+local classRaceForward = frame.ForwardButton:GetText()
+assert(classRaceForward:sub(1, #CUSTOMIZE) == CUSTOMIZE, "class/race mode must use original CUSTOMIZE string")
+assert(classRaceForward:find("common-icon-forwardarrow", 1, true), "class/race mode must use the original forward arrow")
+-- CharacterCreate.lua defines class/race as 1 and customization as 2; exercise the original label updater without its camera transition.
+local customizeMode = classRaceMode + 1
+assert(customizeMode == 2, "source-defined mode order")
+frame.currentMode = customizeMode
+frame:UpdateForwardButton()
+local customizeForward = frame.ForwardButton:GetText()
+local customizeLabel = frame.ZoneChoiceFrame:ShouldShow() and NEXT or FINISH
+assert(customizeForward:sub(1, #customizeLabel) == customizeLabel, "customization mode must use its original forward string")
+assert(customizeLabel ~= CUSTOMIZE and customizeForward ~= classRaceForward, "forward label must change with the original mode")
+local customizeBack = frame.BackButton:GetText()
+assert(customizeBack:sub(-#backSuffix) == backSuffix, "Back label remains the original BACK string")
+assert(customizeBack:find("common-icon-backarrow", 1, true), "customization mode must retain the original back arrow")
+frame.currentMode = classRaceMode
+frame:UpdateForwardButton()
+assert(frame.currentMode == classRaceMode, "restore original class/race mode input")
+assert(frame.ForwardButton:GetText():sub(1, #CUSTOMIZE) == CUSTOMIZE, "class/race forward string must be restored")
+"#;
+
+#[test]
+#[cfg(feature = "client-retail")]
+fn retail_character_create_transition_preserves_original_surfaces() {
+    test_timeout! {
+        let ui = blizzard_ui_dir();
+        let addons = discover_blizzard_addons_for_screen(&ui, ScreenKind::CharacterSelect);
+        let toc_path = addons.iter().find(|(name, _)| name == "Blizzard_CharacterCreate")
+            .map(|(_, path)| path).expect("Glue should select CharacterCreate");
+        let toc = wow_ui_sim::toc::TocFile::from_file(toc_path).expect("Glue TOC should parse");
+        assert!(toc.allows_screen(ScreenKind::CharacterSelect));
+        let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+        env.exec("GlueParent_SetScreen('charcreate')").expect("original screen transition should run");
+        run_extra_update_ticks(&env, 3);
+        env.exec(RETAIL_CHARACTER_CREATE_PRESERVATION_LUA).expect("original consumer state should be preserved");
+    }
+}
+
 #[test]
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn character_creation_interaction_records_native_byte_without_arguments() {

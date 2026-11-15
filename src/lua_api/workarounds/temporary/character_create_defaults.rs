@@ -662,17 +662,23 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 }
 
 pub(crate) fn patch(env: &WowLuaEnv) {
-    let source = [
-        CHARACTER_CREATE_DEFAULTS_WORKAROUND_LUA,
-        #[cfg(not(any(
-            feature = "client-retail",
-            feature = "client-wowforever",
-            feature = "client-ptr"
-        )))]
-        CHARACTER_CREATION_SUBMIT_MIXIN_GUESS_LUA,
-        CHARACTER_CREATE_DEFAULTS_WORKAROUND_TAIL_LUA,
-    ]
-    .concat();
+    // The broad fallback strings stay shared; ACTIVE selects their installation.
+    let source = if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        String::new()
+    } else {
+        [
+            CHARACTER_CREATE_DEFAULTS_WORKAROUND_LUA,
+            // Keep the Submit-guess constant out of Retail, PTR and Forever.
+            #[cfg(not(any(
+                feature = "client-retail",
+                feature = "client-wowforever",
+                feature = "client-ptr"
+            )))]
+            CHARACTER_CREATION_SUBMIT_MIXIN_GUESS_LUA,
+            CHARACTER_CREATE_DEFAULTS_WORKAROUND_TAIL_LUA,
+        ]
+        .concat()
+    };
     let _ = env.exec(&source);
 }
 
@@ -681,6 +687,7 @@ mod tests {
     use super::*;
 
     #[test]
+    #[cfg(not(feature = "client-retail"))]
     fn seeds_initial_character_create_state_and_buttons() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
         env.exec(
@@ -868,6 +875,7 @@ mod tests {
     }
 
     #[test]
+    #[cfg(not(feature = "client-retail"))]
     fn background_overlay_fallback_sets_array_or_single_texture_alpha() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
         env.exec(

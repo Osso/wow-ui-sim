@@ -130,7 +130,7 @@ pub(crate) fn pickup_container_item(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
-/// Applies a transfer's resulting cursor through the shared clear/place model.
+/// Apply a transfer's resulting cursor through the shared clear/place model.
 fn apply_cursor(state: &mut LuaState, next: Option<CursorInfo>) -> LuaResult<()> {
     match next {
         Some(cursor) => cursor_model::place(state, cursor),

@@ -144,6 +144,78 @@ pub(super) fn empty_tooltip(state: &mut LuaState, tooltip_type: f64) -> Val {
     tooltip
 }
 
+/// VERIFIED (R88o.2 q1): serialize an unresolved conversion result without an item identity.
+pub(crate) fn build_unresolved_conversion_item_tooltip(state: &mut LuaState) -> Val {
+    let saved_top = state.top;
+    let tooltip = create_table(state);
+    state.push(tooltip);
+    let lines = create_table(state);
+    table_set(state, tooltip, "lines", lines);
+    stamp_data_instance(state, tooltip);
+
+    if let Some(text) = super::global_text(state, "RETRIEVING_ITEM_INFO") {
+        let line = create_table(state);
+        set_table_array(state, lines, 1, line);
+        table_set(state, line, "type", Val::Num(41.0));
+        let text = create_string(state, &text);
+        table_set(state, line, "leftText", text);
+
+        let rgb = global_color(state, b"ERROR_COLOR").unwrap_or((1.0, 0.0, 1.0));
+        let color = color_table(state, rgb.0, rgb.1, rgb.2, 1.0);
+        for (key, value) in [("r", rgb.0), ("g", rgb.1), ("b", rgb.2)] {
+            table_set(state, color, key, Val::Num(value));
+        }
+        table_set(state, color, "a", Val::Nil);
+        table_set(state, line, "leftColor", color);
+    }
+
+    state.top = saved_top;
+    tooltip
+}
+
+const TOOLTIP_TYPE_ITEM_INTERACTION_CLEANSING: f64 = 20.0;
+
+/// Serialize only host-supplied rows for the native cleansing-preview identity.
+pub(crate) fn build_item_interaction_cleansing_tooltip(
+    state: &mut LuaState,
+    rows: &[crate::c_api::ItemInteractionTooltipLine],
+) -> Val {
+    let saved_top = state.top;
+    let tooltip = empty_tooltip(state, TOOLTIP_TYPE_ITEM_INTERACTION_CLEANSING);
+    state.push(tooltip);
+    stamp_data_instance(state, tooltip);
+    let lines = table_get(state, tooltip, "lines");
+    for (index, row) in rows.iter().enumerate() {
+        push_supplied_item_interaction_line(state, lines, index as i64 + 1, row);
+    }
+    state.top = saved_top;
+    tooltip
+}
+
+fn push_supplied_item_interaction_line(
+    state: &mut LuaState,
+    lines: Val,
+    index: i64,
+    row: &crate::c_api::ItemInteractionTooltipLine,
+) {
+    let saved_top = state.top;
+    state.push(lines);
+    let line = create_table(state);
+    set_table_array(state, lines, index, line);
+    let line_type = remap_line_type(state, row.line_type, row.left_color);
+    table_set(state, line, "type", Val::Num(line_type));
+    let color = row.left_color.map_or(Val::Nil, |(r, g, b)| {
+        let color = color_table(state, r, g, b, 1.0);
+        crate::c_api::tooltip_data::publish_rgb(state, color, (r, g, b));
+        color
+    });
+    crate::c_api::tooltip_data::publish_side(state, line, false, Some(&row.left_text), color);
+    if row.wrap {
+        table_set(state, line, "wrapText", Val::Bool(true));
+    }
+    state.top = saved_top;
+}
+
 const TOOLTIP_TYPE_QUEST_PARTY_PROGRESS: f64 = 24.0;
 const LINE_TYPE_QUEST_TITLE: f64 = 17.0;
 const LINE_TYPE_PARTICIPANT_HEADING: f64 = 18.0;
@@ -405,20 +477,18 @@ fn push_item_name_line(state: &mut LuaState, lines: Val, item: &items::ItemInfo)
     );
 }
 
-/// INFERRED: Retail's positive catalog sell price supplies a SellPrice line.
-/// The native eligibility predicate and `maxPrice` input remain UNKNOWN.
+/// VERIFIED (R88p.p1): eligible nonzero results build type-11 rows with an empty
+/// left side, resolved default color, and `maxPrice` initialized to -1.
+/// INFERRED: catalog `sell_price` stands in for the native initial unit price.
+/// UNKNOWN in this model: request mode, status, flags, preview, and quantity inputs.
 fn push_retail_sell_price_line(state: &mut LuaState, lines: Val, index: i64, price: u32) {
     if price == 0 || crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
         return;
     }
 
-    let saved_top = state.top;
-    state.push(lines);
-    let line = create_table(state);
-    set_table_array(state, lines, index, line);
-    table_set(state, line, "type", Val::Num(LINE_TYPE_SELL_PRICE));
+    let line = push_tooltip_line(state, lines, index, LINE_TYPE_SELL_PRICE, "", None, false);
     table_set(state, line, "price", Val::Num(f64::from(price)));
-    state.top = saved_top;
+    table_set(state, line, "maxPrice", Val::Num(-1.0));
 }
 
 fn tooltip_detail_color(state: &mut LuaState) -> (f64, f64, f64) {

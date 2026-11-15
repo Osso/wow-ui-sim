@@ -52,6 +52,50 @@ const HELPERS: &str = r#"
     end
 "#;
 
+const ROW_INSET_CONSUMER_CASES: &str = r#"
+    local L = Enum.TooltipDataLineType
+    assert(TooltipDataRules and TooltipDataRules.GemSocketEnchantment,
+        "original TooltipDataRules consumer is loaded")
+    assert(TooltipDataHandlerMixin and GameTooltip.ProcessInfo == TooltipDataHandlerMixin.ProcessInfo,
+        "GameTooltip uses the original TooltipDataHandler")
+    assert(type(GameTooltip_AddColoredDoubleLine) == "function",
+        "SharedTooltipTemplates double-line consumer is loaded")
+    GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
+    assert(GameTooltip:ProcessInfo({ tooltipData = { lines = {
+        { type = 0, leftText = "Header" },
+        -- Native TooltipDataRules.GemSocketEnchantment supplies argument 11 = 20.
+        { type = L.GemSocketEnchantment, leftText = "Enchanted", rightText = "+5" },
+        -- The original handler forwards this backed lineData field as argument 11.
+        { type = 0, leftText = "Explicit double", rightText = "+7.5", leftOffset = 7.5 },
+        -- Omitted lineData.leftOffset reaches argument 11 as nil (default zero).
+        { type = 0, leftText = "Default double", rightText = "+0" },
+        -- TooltipDataRules.LeftOffsetPowerDescription supplies AddLine argument 7 = 10.
+        { type = L.AzeriteItemPowerDescription, leftText = string.rep("power words ", 30), wrapText = true },
+    } } }))
+    assert(GameTooltip:NumLines() == 5)
+    TTNear(TTLeftX(GameTooltip, 1), 10, "header LEFT x")
+    TTNear(TTLeftX(GameTooltip, 2), 30, "double line explicit inset 20")
+    TTNear(TTLeftX(GameTooltip, 3), 17.5, "double line explicit inset 7.5")
+    TTNear(TTLeftX(GameTooltip, 4), 10, "double line omitted inset defaults to zero")
+    TTNear(TTLeftX(GameTooltip, 5), 20, "single line explicit inset 10")
+    local content = GameTooltip:GetWidth() - 20.48
+    TTNear(select(4, GameTooltip:GetRightLine(2):GetPoint(1)), content - 20, "right inset 20")
+    TTNear(select(4, GameTooltip:GetRightLine(3):GetPoint(1)), content - 7.5, "right inset 7.5")
+    TTNear(select(4, GameTooltip:GetRightLine(4):GetPoint(1)), content, "omitted right inset")
+    TTNear(GameTooltip:GetLeftLine(5):GetWidth(), content - 10, "wrapped width")
+
+    GameTooltip:ClearLines()
+    GameTooltip:AddLine("Plain")
+    GameTooltip:Show()
+    TTNear(TTLeftX(GameTooltip, 1), 10, "inset does not outlive its row")
+    GameTooltip:AddLine("Explicit", 1, 1, 1, false, 7.5)
+    GameTooltip:Show()
+    TTNear(TTLeftX(GameTooltip, 2), 17.5, "fractional explicit inset")
+    GameTooltip:SetText("Title")
+    GameTooltip:Show()
+    TTNear(TTLeftX(GameTooltip, 1), 10, "SetText passes explicit inset zero")
+"#;
+
 fn env_with_helpers() -> WowLuaEnv {
     let env = setup_full_env();
     env.exec(HELPERS).expect("install observation helpers");
@@ -139,39 +183,7 @@ fn blizzard_tooltip_typed_icons_reserve_and_anchor_on_their_rows() {
 #[test]
 fn blizzard_tooltip_typed_line_offsets_store_row_inset() {
     let env = env_with_helpers();
-    env.exec(
-        r#"
-        local L = Enum.TooltipDataLineType
-        GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
-        assert(GameTooltip:ProcessInfo({ tooltipData = { lines = {
-            { type = 0, leftText = "Header" },
-            -- TooltipDataRules.GemSocketEnchantment sets leftOffset 20;
-            -- GameTooltip_AddColoredDoubleLine forwards it as argument 11.
-            { type = L.GemSocketEnchantment, leftText = "Enchanted", rightText = "+5" },
-            -- TooltipDataRules.LeftOffsetPowerDescription sets 10;
-            -- GameTooltip_AddColoredLine forwards it as argument 7.
-            { type = L.AzeriteItemPowerDescription, leftText = string.rep("power words ", 30), wrapText = true },
-        } } }))
-        TTNear(TTLeftX(GameTooltip, 1), 10, "header LEFT x")
-        TTNear(TTLeftX(GameTooltip, 2), 30, "double line LEFT x")
-        TTNear(TTLeftX(GameTooltip, 3), 20, "wrapped line LEFT x")
-        local content = GameTooltip:GetWidth() - 20.48
-        TTNear(select(4, GameTooltip:GetRightLine(2):GetPoint(1)), content - 20, "right RIGHT x")
-        TTNear(GameTooltip:GetLeftLine(3):GetWidth(), content - 10, "wrapped width")
-
-        GameTooltip:ClearLines()
-        GameTooltip:AddLine("Plain")
-        GameTooltip:Show()
-        TTNear(TTLeftX(GameTooltip, 1), 10, "inset does not outlive its row")
-        GameTooltip:AddLine("Explicit", 1, 1, 1, false, 7.5)
-        GameTooltip:Show()
-        TTNear(TTLeftX(GameTooltip, 2), 17.5, "fractional explicit inset")
-        GameTooltip:SetText("Title")
-        GameTooltip:Show()
-        TTNear(TTLeftX(GameTooltip, 1), 10, "SetText passes explicit inset zero")
-        "#,
-    )
-    .unwrap();
+    env.exec(ROW_INSET_CONSUMER_CASES).unwrap();
 }
 
 #[test]
@@ -328,6 +340,38 @@ fn tooltip_attachment_cap_is_per_tooltip_and_clear_releases_it() {
         tip:Show()
         assert(TTAttachedCount(tip) == 1, "capacity is released")
         TTNear(TTLeftX(tip, 1), 68, "new attachment reserves 50 + 0 + 8")
+        "#,
+    )
+    .unwrap();
+}
+
+#[cfg(all(feature = "optional-tests", feature = "client-retail"))]
+#[test]
+fn tooltip_attachments_r88n5_preserved_on_loaded_game_tooltip() {
+    let env = env_with_helpers();
+    env.exec(
+        r#"
+        local tip = GameTooltip
+        assert(tip and tip:GetName() == "GameTooltip")
+        assert(TooltipDataRules, "the original tooltip rules are loaded")
+        tip:SetOwner(UIParent, "ANCHOR_NONE")
+        tip:ClearLines()
+        tip:AddTexture(134400)
+        tip:AddAtlas("groupfinder-icon-friend")
+        assert(tip:NumLines() == 0 and TTAttachedCount(tip) == 0,
+            "attachments without a row have no effect")
+
+        tip:AddLine("first")
+        tip:AddTexture(134400)
+        tip:AddAtlas("groupfinder-icon-friend")
+        tip:AddLine("last")
+        tip:AddTexture(134400)
+        tip:Show()
+        assert(tip:NumLines() == 2, "attachments do not create rows")
+        assert(#TTAttached(tip, tip:GetLeftLine(1)) == 2,
+            "multiple attachments share their selected row")
+        assert(#TTAttached(tip, tip:GetLeftLine(2)) == 1,
+            "new attachments select the last existing row")
         "#,
     )
     .unwrap();

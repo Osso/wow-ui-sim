@@ -20,7 +20,21 @@ publication is not expanded by this change.
 - [x] Both sides take that same RGB publication: a supplied right side publishes the packed color, not the raw factory color.
 - [x] Populated identity omits zero `id`; later common identity assignments append ordered type-19 rows with `tooltipType`, nonzero-only `tooltipID`, empty left text and supplied left color.
 - [x] Original `ProcessInfo`, GameTooltip line handlers and TooltipUtil retain their payloads; presentation parses inline markup independently.
-- [x] Retail item tooltips with a positive catalog sell price emit integer `price` on a type-11 `SellPrice` line. Mapping `ItemInfo.sell_price` to that field is **INFERRED**; the producer does not invent `maxPrice`.
+- [x] The Retail `GameTooltip:SetItemByID` path emits a type-11 row for a nonzero backed catalog price with empty `leftText`, resolved default `leftColor`, `price`, and `maxPrice = -1` when no prepared quantity input exists. Mapping `ItemInfo.sell_price` to the native initial unit price is **INFERRED**.
+
+### Retail SellPrice behavior (R88p.p1)
+
+**VERIFIED (Retail 12.1.5.70688):** a zero initial unit-price result adds no type-11 row. A row requires request mode 0, no item-status suppression, clear sell-exclusion flags, and either a clear interaction-preview flag or the preview exception. No quality, bound, quest, or merchant-open test gates this row. If the initial price is nonzero, later adjustments do not reject a zero result a second time.
+
+**VERIFIED (Retail 12.1.5.70688):** an emitted row has type 11, empty `leftText`, the resolved default `leftColor`, `price`, and `maxPrice`. `maxPrice` starts at -1 and is recomputed only without an item instance when prepared maximum quantity exceeds current quantity. The timed item-status path and one-shot instance marker control status suppression.
+
+**UNKNOWN (Retail 12.1.5.70688):** R88p.p1 does not identify the resolved type-11 `leftColor` RGB(A) components. It verifies that the row carries the resolved default color, but it does not support an exact component assertion.
+
+**INFERRED (Retail 12.1.5.70688):** the sell-exclusion masks map to ItemSparse `Flags_1` mask 4096 and `Flags_3` mask 524288; the preview exception maps to `Flags_3` mask 32768. The masks and branches are VERIFIED; these column names use another build's header.
+
+**VERIFIED (simulator model):** `ItemInfo` carries `sell_price` and `stackable`, but it does not carry `Flags_1`, `Flags_3`, item instances, status records, or prepared quantity state. **INFERRED (simulator policy):** `ItemInfo.sell_price` stands in for the native initial unit-price calculation. Therefore the simulator leaves status and flag gates unsuppressed and keeps `maxPrice` at -1; it does not add unbacked writers or exclusions. The alternate `ITEM_UNSELLABLE` path and adjusted-to-zero path remain unmodeled.
+
+**UNKNOWN:** the relationship between prepared maximum quantity and `Stackable`, and the calculated-price inputs not represented by `ItemInfo`.
 
 ## Evidence limits
 

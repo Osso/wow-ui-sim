@@ -3,15 +3,15 @@
 //! Real/state-backed surfaces live at the root of this module. Intentionally
 //! unsupported compatibility gaps stay isolated under `permanent_shims`.
 
+pub(crate) mod azerite_essence_spell_selector;
 mod c_account_info;
 pub mod c_guild_info;
 pub mod c_heirloom;
 pub mod c_recruit_a_friend;
 pub(crate) mod c_tooltip_comparison;
-#[cfg(feature = "retail-12-0-5")]
-pub(crate) mod c_tooltip_info_appearance;
 pub(crate) mod c_tooltip_info_artifact_item;
 pub(crate) mod c_tooltip_info_artifact_power;
+pub(crate) mod c_tooltip_info_azerite_essence;
 pub(crate) mod c_tooltip_info_azerite_power;
 pub(crate) mod c_tooltip_info_bag_child;
 pub(crate) mod c_tooltip_info_conduit;
@@ -22,14 +22,19 @@ pub mod c_tooltip_info_hyperlink;
 pub(crate) mod c_tooltip_info_inventory_by_id;
 pub(crate) mod c_tooltip_info_item_key;
 pub(crate) mod c_tooltip_info_loot;
-#[cfg(feature = "retail-12-1-5")]
+#[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
 pub(crate) mod c_tooltip_info_merchant_cost;
 pub(crate) mod experience_preset;
+pub(crate) mod tooltip_azerite_catalog_data;
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
+pub(crate) mod tooltip_info_retail_epoch_and_forever;
 // The pinned TooltipInfoDocumentation.lua:710 declares GetPvpBrawl on Retail,
 // PTR and Forever; the supplied-brawl model is compiled for the same profiles.
+pub(crate) mod c_tooltip_info_possession;
 #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 pub(crate) mod c_tooltip_info_pvp_brawl;
 pub(crate) mod c_tooltip_info_round7;
+pub use c_tooltip_info_round7::{ItemInteractionTooltipInput, ItemInteractionTooltipLine};
 pub(crate) mod c_tooltip_info_totem;
 pub(crate) mod c_tooltip_info_weekly;
 pub mod chr_select_screen_data;
@@ -314,7 +319,7 @@ pub(crate) mod c_spell_activation_overlay;
 pub mod c_spell_book;
 #[cfg(feature = "retail-12-0-0")]
 pub mod c_spell_classification;
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 pub(crate) mod c_spell_counts;
 pub mod c_spell_diminish;
 pub mod c_stable_info;
@@ -329,9 +334,7 @@ pub(crate) mod c_tooltip_info_aura_instance;
 pub(crate) mod c_tooltip_info_indexed_aura;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_tooltip_info_item_context;
-#[cfg(feature = "retail-12-0-5")]
-pub(crate) mod c_tooltip_info_outfit;
-#[cfg(feature = "client-retail")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub mod c_tooltip_info_pvp_talent;
 pub(crate) mod c_tooltip_info_socketed_relic;
 #[cfg(feature = "retail-12-0-5")]
@@ -346,6 +349,8 @@ pub mod c_trade_skill_quality;
 mod c_trade_skill_source;
 #[cfg(feature = "client-mists")]
 pub(crate) mod mists_reputation_list;
+#[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
+pub mod spell_reagent_inventory;
 // The pinned classic TransmogItemsDocumentation.lua / TransmogOutfitInfoDocumentation.lua
 // declare these namespaces on Mists, Era and Anniversary, so the backing model
 // is compiled for those profiles together with the retail API epochs.
@@ -685,3 +690,5 @@ fn register_token_texture_xml_tables(state: &mut LuaState) -> LuaResult<()> {
     c_ui_file_asset::register_c_ui_file_asset(state)?;
     c_xml_util::register_c_xml_util(state)
 }
+
+pub mod lfg_reward_writer;

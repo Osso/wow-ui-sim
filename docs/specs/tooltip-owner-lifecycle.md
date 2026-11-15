@@ -85,12 +85,13 @@ attachments, other profiles and getter selection are unchanged by this extension
 - `src/lua_api/frame/methods/widgets/tooltip/owner.rs` — tooltip ownership, internal hiding, and `FadeOut` delegation.
 - `src/lua_api/frame/methods/text_attribute_event/text.rs` — owned tooltip replacement text visibility.
 - `src/lua_api/frame/methods/widgets/tooltip/line_data.rs` and `content.rs` — append-without-show and payload-driven visibility.
+- `src/lua_api/frame/methods/widgets/tooltip/line_frames.rs` — resolve and record active cached FontString IDs, including existing Forever XML rows.
 
 ## Tests asserting this spec
 
 - `tests/tooltip_basic.rs` — owner replacement, hidden explicit hide, SetText, append, spell payload, and existing ownership controls.
 - `tests/tooltip_lifecycle_owner_lane.rs` — same-owner clear, notification count, and reassignment through the shared tooltip templates.
-- `tests/tooltip_owner_clear_consumer.rs` — clear notification count and order through the cached `GameTooltip.xml` handlers and `TooltipDataHandler.lua` reprocessing; the original `OnTooltipCleared` cleanup must release inserted frames; Forever owner-reassignment and optional R88n.5 active-row cache tests.
+- `tests/tooltip_owner_clear_consumer.rs` — clear notification count and order through the cached `GameTooltip.xml` handlers and `TooltipDataHandler.lua` reprocessing; the original `OnTooltipCleared` cleanup must release inserted frames; Forever owner-reassignment and optional R88n.5 active-row cache tests on the profile-selected full-UI environment.
 
 ## Known gaps (current cycle)
 
