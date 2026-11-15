@@ -128,7 +128,8 @@ fn location_number(state: &LuaState, value: Val) -> Option<f64> {
 }
 
 fn location_integer(number: f64) -> Option<i32> {
-    if !number.is_finite() || number < f64::from(i32::MIN) || number > f64::from(i32::MAX) {
+    let in_signed_32_range = number >= f64::from(i32::MIN) && number <= f64::from(i32::MAX);
+    if !number.is_finite() || !in_signed_32_range {
         return None;
     }
     Some(number.trunc() as i32)
