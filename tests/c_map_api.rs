@@ -349,18 +349,74 @@ fn retail_map_position_extrapolates_from_nearest_outside_assignment() {
     assert_eq!(instance_id, 1, "MapID-to-map-number mapping is INFERRED");
 }
 
-#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
-#[test]
-fn retail_negative_map_id_has_no_area_table_continent_source() {
-    let env = env();
-    let result_count: i32 = env
-        .eval("return select('#', C_Map.GetWorldPosFromMapPos(2311, {x=0.5, y=0.5}))")
-        .unwrap();
+#[cfg(all(
+    feature = "optional-tests",
+    feature = "profile-retail",
+    feature = "retail-12-1-5"
+))]
+const RETAIL_NEGATIVE_MAP_API_PROBE: &str = r#"
+    local function capture(...)
+        local count = select('#', ...)
+        local mapID, position = ...
+        if not position then return count, -1, 0, 0 end
+        return count, mapID, position.x, position.y
+    end
+    local center = {capture(C_Map.GetWorldPosFromMapPos(2147, {x=0.5, y=0.5}))}
+    local other = {capture(C_Map.GetWorldPosFromMapPos(2147, {x=0.25, y=0.75}))}
+    local missingCallSucceeded = pcall(function()
+        C_Map.GetWorldPosFromMapPos(1408, {x=0.5, y=0.5})
+    end)
+    local missingResultCount = select('#', C_Map.GetWorldPosFromMapPos(2311, {x=0.5, y=0.5}))
+    return center[1], center[2], center[3], center[4],
+        other[1], other[2], other[3], other[4], missingCallSucceeded, missingResultCount
+"#;
 
-    assert_eq!(
-        result_count, 0,
-        "negative MapID cannot resolve without AreaTable.ContinentID (INFERRED seam)"
-    );
+#[cfg(all(
+    feature = "optional-tests",
+    feature = "profile-retail",
+    feature = "retail-12-1-5"
+))]
+fn retail_negative_map_probe(
+    env: &WowLuaEnv,
+) -> (i32, i32, f64, f64, i32, i32, f64, f64, bool, i32) {
+    env.eval(RETAIL_NEGATIVE_MAP_API_PROBE).unwrap()
+}
+
+#[cfg(all(
+    feature = "optional-tests",
+    feature = "profile-retail",
+    feature = "retail-12-1-5"
+))]
+#[test]
+fn retail_negative_map_id_resolution_uses_verified_semantics() {
+    let result = retail_negative_map_probe(&env());
+    assert_eq!(result.0, 2);
+    assert!(u16::try_from(result.1).is_ok());
+    assert_ne!((result.2, result.3), (result.6, result.7));
+    assert_eq!(result.4, 2);
+    assert!(u16::try_from(result.5).is_ok());
+    assert!(result.8, "an absent AreaTable row must not raise");
+}
+
+#[cfg(all(
+    feature = "optional-tests",
+    feature = "profile-retail",
+    feature = "retail-12-1-5"
+))]
+#[test]
+fn retail_map_2147_inferred_continent_id_compatibility() {
+    let result = retail_negative_map_probe(&env());
+    assert_eq!(result.0, 2);
+    // INFERRED compatibility: R88x does not name the native unsigned-16 field.
+    assert_eq!(result.1, 2444, "INFERRED: AreaTable.ContinentID mapping");
+    // INFERRED: coordinates use the R88i.41 axis-swapped projection.
+    assert!((result.2 - -56.25).abs() < 0.01);
+    assert!((result.3 - 602.0996).abs() < 0.01);
+    assert_eq!(result.4, 2);
+    assert_eq!(result.5, 2444, "INFERRED: AreaTable.ContinentID mapping");
+    assert!((result.6 - -4302.085).abs() < 0.01);
+    assert!((result.7 - 6970.8496).abs() < 0.01);
+    assert_eq!(result.9, 0, "INFERRED: no eligible row returns no values");
 }
 
 #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
@@ -480,10 +536,22 @@ fn retail_map_has_valid_assignment_at_center(ui_map_id: u32) -> bool {
                     && RETAIL_MAP_PROBE_CENTER <= ui_max_x
                     && RETAIL_MAP_PROBE_CENTER >= ui_min_y
                     && RETAIL_MAP_PROBE_CENTER <= ui_max_y;
-                has_valid_span && contains_center && assignment.map_id >= 0
+                has_valid_span && contains_center && retail_assignment_has_map_number(assignment)
             })
         },
     )
+}
+
+#[cfg(all(
+    feature = "optional-tests",
+    feature = "profile-retail",
+    feature = "retail-12-1-5"
+))]
+fn retail_assignment_has_map_number(
+    assignment: &sim_data_profile::ui_map_assignments::UiMapAssignment,
+) -> bool {
+    assignment.map_id >= 0
+        || sim_data_profile::area_table_retail::get_continent_id(assignment.area_id).is_some()
 }
 
 #[cfg(all(
@@ -574,6 +642,29 @@ fn retail_zone_maps_below_3000_have_world_positions_at_player_login() {
     env.fire_event("PLAYER_LOGIN").unwrap();
     env.eval::<()>(&script)
         .expect("every Zone map has a position or a catalog-derived no-world result");
+}
+
+#[cfg(all(
+    feature = "optional-tests",
+    feature = "profile-retail",
+    feature = "retail-12-1-5"
+))]
+#[test]
+fn retail_zone_maps_without_assignment_rows_remain_unmapped() {
+    let env = env();
+    for ui_map_id in [997, 1158, 1523, 2107] {
+        let map = sim_data::ui_maps::get_ui_map(ui_map_id).unwrap();
+        assert_eq!(map.map_type, 3, "expected Zone map {ui_map_id}");
+        assert!(sim_data_profile::ui_map_assignments::get_ui_map_assignments(ui_map_id).is_none());
+    }
+    env.eval::<()>(
+        r#"
+        for _, uiMapID in ipairs({997, 1158, 1523, 2107}) do
+            assert(select('#', C_Map.GetWorldPosFromMapPos(uiMapID, {x=0.5, y=0.5})) == 0)
+        end
+        "#,
+    )
+    .unwrap();
 }
 
 #[cfg(all(

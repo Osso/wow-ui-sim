@@ -64,6 +64,9 @@ pub mod item_effects;
 #[path = "../data/ui_map_assignments_retail.rs"]
 pub mod ui_map_assignments;
 
+#[path = "../data/area_table_retail.rs"]
+pub mod area_table_retail;
+
 #[path = "../data/global_colors_retail.rs"]
 pub mod global_colors_retail;
 

@@ -18,6 +18,7 @@
 
 mod audit_api;
 mod csv_util;
+mod gen_area_table;
 mod gen_atlas;
 mod gen_currencies;
 mod gen_encounter_journal;
@@ -292,6 +293,8 @@ enum GenerateTarget {
     UiMaps,
     /// Regenerate Retail UiMapAssignment rows from data/db2/retail-12.1.5.70783
     UiMapAssignments,
+    /// Generate the Retail AreaTable ID/u16 lookup from the pinned DB2 CSV
+    AreaTable,
     /// Generate crates/sim-data/data/map_art.rs from UiMap* DB2 CSVs
     MapArt,
     /// Generate crates/sim-data/data/quest_ui_map.rs from QuestPOIBlob CSV
@@ -409,6 +412,7 @@ fn run_generator(target: GenerateTarget) {
         GenerateTarget::Zones => gen_zones::run(),
         GenerateTarget::UiMaps => gen_ui_maps::run(),
         GenerateTarget::UiMapAssignments => gen_ui_maps::run_assignments(),
+        GenerateTarget::AreaTable => gen_area_table::run(),
         GenerateTarget::MapArt => gen_map_art::run(),
         GenerateTarget::QuestPoi => gen_quest_poi::run(),
         GenerateTarget::EncounterJournal => gen_encounter_journal::run(),

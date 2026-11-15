@@ -109,9 +109,9 @@ The [Round 7 getter contract](../specs/tooltip-r7-getters.md) and [Lua API](syst
 
 [Merchant/LFG boundaries](investigations/merchant-lfg-r88i.md) separates R88i.5/R88i.6 verified gates and request behavior from inferred faction/rating mapping, provisional party arity, and unknown throttle/event timing.
 
-## [2026-11-14] implementation | Retail map world positions
+## [2026-11-15] implementation | Retail map world positions
 
-[Patch 8.0.1 API audit](investigations/patch-8-0-1-api-audit.md#retail-map-world-position) links the [map world-position contract](../specs/map-world-position.md). **VERIFIED (R88i.41):** nearest-center forward selection, bounds, signed-ID truncation, plain-table positions, result arity and exact Usage strings. **INFERRED:** 70783/70575 data parity and the swapped/reversed transform; negative-`MapID` AreaTable fallback remains unavailable.
+[Patch 8.0.1 API audit](investigations/patch-8-0-1-api-audit.md#retail-map-world-position) links the [map world-position contract](../specs/map-world-position.md). **VERIFIED (R88i.41/R88x):** nearest-center forward selection, bounds, negative-MapID AreaTable lookup, row skip on lookup failure, and unsigned-16 zero acceptance. **VERIFIED (12.1.5.70783 export):** AreaID 14620 maps to exported value 2444; ID 0 is absent. **INFERRED:** the native u16 maps to DBD `ContinentID`, 70783/70575 parity, and the swapped/reversed transform. **INFERRED:** maps 1408 and 2311 remain unresolved because their AreaID 0 lookup misses in the available 70783 table. **VERIFIED (simulator HBD-style probe):** the no-world Zone set below map 3000 is 997, 1158, 1408, 1523, 2107, and 2311; the two negative AreaID 0 rows prevent the requested four-only set.
 
 ## [2026-11-14] investigation | AdventureGuideUtil original availability
 
