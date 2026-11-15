@@ -459,21 +459,89 @@ fn retail_map_assignment_uses_inferred_swapped_axis_formula() {
     feature = "profile-retail",
     feature = "retail-12-1-5"
 ))]
-const RETAIL_ZONE_WORLD_POSITION_PROBE: &str = r#"
-    local noWorldMapIDs = {
-        [1148] = true, [1149] = true, [1408] = true, [2147] = true, [2311] = true,
-    }
+const RETAIL_MAP_PROBE_CENTER: f64 = 0.5;
+
+#[cfg(all(
+    feature = "optional-tests",
+    feature = "profile-retail",
+    feature = "retail-12-1-5"
+))]
+fn retail_map_has_valid_assignment_at_center(ui_map_id: u32) -> bool {
+    sim_data_profile::ui_map_assignments::get_ui_map_assignments(ui_map_id).is_some_and(
+        |assignments| {
+            assignments.iter().any(|assignment| {
+                let ui_min_x = f64::from(assignment.ui_min[0]);
+                let ui_min_y = f64::from(assignment.ui_min[1]);
+                let ui_max_x = f64::from(assignment.ui_max[0]);
+                let ui_max_y = f64::from(assignment.ui_max[1]);
+                let has_valid_span = ui_max_x - ui_min_x >= f64::from(f32::EPSILON)
+                    && ui_max_y - ui_min_y >= f64::from(f32::EPSILON);
+                let contains_center = RETAIL_MAP_PROBE_CENTER >= ui_min_x
+                    && RETAIL_MAP_PROBE_CENTER <= ui_max_x
+                    && RETAIL_MAP_PROBE_CENTER >= ui_min_y
+                    && RETAIL_MAP_PROBE_CENTER <= ui_max_y;
+                has_valid_span && contains_center && assignment.map_id >= 0
+            })
+        },
+    )
+}
+
+#[cfg(all(
+    feature = "optional-tests",
+    feature = "profile-retail",
+    feature = "retail-12-1-5"
+))]
+fn retail_no_world_zone_ids_below(limit: u32) -> Vec<u32> {
+    (1..=limit)
+        .filter_map(|ui_map_id| {
+            let info = sim_data::ui_maps::get_ui_map(ui_map_id)?;
+            if info.map_type != 3 || retail_map_has_valid_assignment_at_center(ui_map_id) {
+                return None;
+            }
+            Some(ui_map_id)
+        })
+        .collect()
+}
+
+#[cfg(all(
+    feature = "optional-tests",
+    feature = "profile-retail",
+    feature = "retail-12-1-5"
+))]
+fn retail_no_world_map_ids_literal(ui_map_ids: &[u32]) -> String {
+    ui_map_ids
+        .iter()
+        .map(|ui_map_id| format!("[{ui_map_id}] = true"))
+        .collect::<Vec<_>>()
+        .join(",")
+}
+
+#[cfg(all(
+    feature = "optional-tests",
+    feature = "profile-retail",
+    feature = "retail-12-1-5"
+))]
+const RETAIL_ZONE_WORLD_POSITION_PROBE: &str = r##"
+    local noWorldMapIDs = { __NO_WORLD_MAP_IDS__ }
+    local noWorldMapIDsSeen = {}
     local zoneCount = 0
+    local function capture(...)
+        return select("#", ...), ...
+    end
     for mapID = 1, 3000 do
         local info = C_Map.GetMapInfo(mapID)
         if info then
             assert(info.mapID == mapID, "GetMapInfo returned a constant row for " .. mapID)
             if info.mapType == Enum.UIMapType.Zone then
                 zoneCount = zoneCount + 1
-                if not noWorldMapIDs[mapID] then
-                    local instanceID, worldPosition = C_Map.GetWorldPosFromMapPos(
-                        mapID, {x = 0.5, y = 0.5}
-                    )
+                local resultCount, instanceID, worldPosition = capture(
+                    C_Map.GetWorldPosFromMapPos(mapID, {x = 0.5, y = 0.5})
+                )
+                if noWorldMapIDs[mapID] then
+                    noWorldMapIDsSeen[mapID] = true
+                    assert(resultCount == 0, "no-world Zone returned values for " .. mapID)
+                else
+                    assert(resultCount == 2, "missing position result for " .. mapID)
                     assert(type(instanceID) == "number", "missing instance for " .. mapID)
                     assert(type(worldPosition) == "table", "missing position for " .. mapID)
                 end
@@ -481,12 +549,15 @@ const RETAIL_ZONE_WORLD_POSITION_PROBE: &str = r#"
         end
     end
     assert(zoneCount > 0, "map lookup returned no Zone records")
+    for mapID in pairs(noWorldMapIDs) do
+        assert(noWorldMapIDsSeen[mapID], "no-world catalog Zone missing from GetMapInfo: " .. mapID)
+    end
 
     local instanceID, position = C_Map.GetWorldPosFromMapPos(7, {x = 0.5, y = 0.5})
     local x, y = position:GetXY()
     assert(instanceID == 1 and math.abs(x - -1985.4150390625) < 0.01)
     assert(math.abs(y - -520.830078125) < 0.01)
-"#;
+"##;
 
 #[cfg(all(
     feature = "optional-tests",
@@ -496,9 +567,13 @@ const RETAIL_ZONE_WORLD_POSITION_PROBE: &str = r#"
 #[test]
 fn retail_zone_maps_below_3000_have_world_positions_at_player_login() {
     let env = env();
+    let no_world_ids = retail_no_world_zone_ids_below(3000);
+    let no_world_map_ids = retail_no_world_map_ids_literal(&no_world_ids);
+    let script =
+        RETAIL_ZONE_WORLD_POSITION_PROBE.replace("__NO_WORLD_MAP_IDS__", &no_world_map_ids);
     env.fire_event("PLAYER_LOGIN").unwrap();
-    env.eval::<()>(RETAIL_ZONE_WORLD_POSITION_PROBE)
-        .expect("every real Zone map has a world-position instance");
+    env.eval::<()>(&script)
+        .expect("every Zone map has a position or a catalog-derived no-world result");
 }
 
 #[cfg(all(
@@ -607,26 +682,7 @@ fn retail_map_world_position_probe_covers_zone_maps_under_azeroth() {
         }
         if map_types.get(&map_id) == Some(&3) {
             zone_count += 1;
-            let has_world_assignment =
-                sim_data_profile::ui_map_assignments::get_ui_map_assignments(map_id).is_some_and(
-                    |assignments| {
-                        assignments.iter().any(|assignment| {
-                            let ui_min_x = f64::from(assignment.ui_min[0]);
-                            let ui_min_y = f64::from(assignment.ui_min[1]);
-                            let ui_max_x = f64::from(assignment.ui_max[0]);
-                            let ui_max_y = f64::from(assignment.ui_max[1]);
-                            let ui_width = ui_max_x - ui_min_x;
-                            let ui_height = ui_max_y - ui_min_y;
-                            ui_width >= f64::from(f32::EPSILON)
-                                && ui_height >= f64::from(f32::EPSILON)
-                                && 0.5 >= ui_min_x
-                                && 0.5 <= ui_max_x
-                                && 0.5 >= ui_min_y
-                                && 0.5 <= ui_max_y
-                                && assignment.map_id >= 0
-                        })
-                    },
-                );
+            let has_world_assignment = retail_map_has_valid_assignment_at_center(map_id);
             if !has_world_assignment {
                 no_world_zone_ids.push(map_id);
             }
