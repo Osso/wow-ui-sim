@@ -152,14 +152,16 @@ fn secure_scoped_modifier_onload_resolves_secure_mixin() {
 fn create_texture_source_location_skips_excluded_callsite() {
     let env = env();
     let root = tempfile::tempdir().unwrap();
-    let toc = root.path().join("SourceLocationProbe.toc");
+    let addon_dir = root.path().join("SourceLocationProbe");
+    std::fs::create_dir_all(&addon_dir).unwrap();
+    let toc = addon_dir.join("SourceLocationProbe.toc");
     std::fs::write(
         &toc,
         "## Title: SourceLocationProbe\nSourceLocationProbe.lua\n",
     )
     .unwrap();
     std::fs::write(
-        root.path().join("SourceLocationProbe.lua"),
+        addon_dir.join("SourceLocationProbe.lua"),
         r##"
 local first = UIParent:CreateTexture()
 local firstLocation = first:GetSourceLocation()

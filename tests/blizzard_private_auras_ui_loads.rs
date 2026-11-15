@@ -465,7 +465,8 @@ fn retail_full_ui_errors_from(env: &WowLuaEnv, markers: &[&str]) -> Vec<String> 
 #[test]
 fn retail_secure_shared_xmlbase_publishes_add_source_location_exclude() {
     let env = load_full_game_ui();
-    let consumer_errors = retail_full_ui_errors_from(&env, &["FrameFactory.lua", "Pools.lua"]);
+    let consumer_errors =
+        retail_full_ui_errors_from(&env, &["FrameFactory.lua:64", "Pools.lua:866"]);
     assert!(
         consumer_errors.is_empty(),
         "the secure SharedXMLBase consumers at FrameFactory.lua:64 and Pools.lua:866 must run: {consumer_errors:?}"
