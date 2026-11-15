@@ -178,6 +178,9 @@ fn item_upgrade_uses_shared_r88s_item_location_resolution() {
             local numericBag = {bagID = '0.9', slotIndex = '1.9'}
             A_Admin.SetItemUpgradeEligibility(numericBag, true)
             assert(C_ItemUpgrade.CanUpgradeItem(numericBag) == true)
+            local fractionalBag = {bagID = 0.9, slotIndex = 1.9}
+            assert(ItemButtonUtil.GetItemContextMatchResultForItem(fractionalBag)
+                == ItemButtonUtil.ItemContextMatchResult.Match)
 
             A_Admin.EquipItem(101, 19019)
             local negativeBag = {bagID = '-2.9', slotIndex = '1.9'}
@@ -188,6 +191,8 @@ fn item_upgrade_uses_shared_r88s_item_location_resolution() {
             local equipmentFirst = {equipmentSlotIndex = '16.9', bagID = 0, slotIndex = 1}
             A_Admin.SetItemUpgradeEligibility(equipmentFirst, true)
             assert(C_ItemUpgrade.CanUpgradeItem(equipmentFirst) == true)
+            assert(ItemButtonUtil.GetItemContextMatchResultForItem(equipmentFirst)
+                == ItemButtonUtil.ItemContextMatchResult.Match)
         "#,
         )
         .expect("ItemUpgrade uses the shared R88s location reader");

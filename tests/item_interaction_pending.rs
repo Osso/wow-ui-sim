@@ -770,6 +770,16 @@ fn pending_item_negative_inventory_uses_present_player_proxy() {
 }
 
 #[test]
+fn pending_item_backpack_location_obeys_inventory_count() {
+    let env = pending_env(&[ITEM_A, ITEM_B]);
+    set_r88s_inventory_inputs(&env, Some(1), Some(false), &[]);
+    assert_present_location_usage_error_without_side_effects(
+        &env,
+        "ItemLocation:CreateFromBagAndSlot(0, 2)",
+    );
+}
+
+#[test]
 fn pending_item_inventory_count_bounds_equipment_locations() {
     let below_count = pending_env(&[ITEM_A]);
     seed_equipped_items(&below_count, &[(16, ITEM_A)]);
