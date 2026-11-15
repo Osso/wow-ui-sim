@@ -565,7 +565,7 @@ fn build_texture_frame(options: &TextureCreationOptions) -> crate::widget::Frame
     if let Some(object_type_name) = options.object_type_name {
         texture.object_type_name = Some(object_type_name.to_string());
     }
-    apply_draw_layer(&mut texture, options.layer.as_deref());
+    apply_draw_layer(&mut texture, options.layer.clone());
     if let Some(inherits) = options.inherits.as_deref()
         && let Some((width, height)) = crate::xml::get_texture_template_size(inherits)
     {

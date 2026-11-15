@@ -107,7 +107,9 @@ fn convert_exclusion_value(state: &LuaState, value: Val) -> LuaResult<Vec<u8>> {
 }
 
 fn exclusion_argument_error(reason: &str) -> rilua::LuaError {
-    crate::c_api::helpers::bad_argument(1, ADD_SOURCE_LOCATION_EXCLUDE, reason)
+    runtime_error(format!(
+        "bad argument #1 to '{ADD_SOURCE_LOCATION_EXCLUDE}' ({reason})"
+    ))
 }
 
 /// Select the first non-excluded Lua file frame at a texture's creation site.
