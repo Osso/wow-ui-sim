@@ -3,6 +3,7 @@
 //! Retail does not install these defaults; full game loads get the real
 //! `TooltipDataProcessor` from Blizzard SharedXML.
 
+#[cfg(any(not(feature = "client-retail"), test))]
 const TOOLTIP_DATA_PROCESSOR_DEFAULTS_LUA: &str = r#"
 local function tooltip_data_processor_noop()
 end
@@ -19,6 +20,7 @@ TooltipDataProcessor = TooltipDataProcessor or {
 }
 "#;
 
+#[cfg(any(not(feature = "client-retail"), test))]
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(TOOLTIP_DATA_PROCESSOR_DEFAULTS_LUA)?;
     Ok(())
