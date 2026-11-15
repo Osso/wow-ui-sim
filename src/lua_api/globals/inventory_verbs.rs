@@ -402,7 +402,7 @@ fn clear_cursor(state: &mut LuaState) -> LuaResult<u32> {
     clear_cursor_payload(state)
 }
 
-fn clear_cursor_payload(state: &mut LuaState) -> LuaResult<u32> {
+pub(crate) fn clear_cursor_payload(state: &mut LuaState) -> LuaResult<u32> {
     crate::c_api::item_upgrade_eligibility::discard_cursor(&mut *borrow_state_mut(state)?);
     cursor_model::clear(state)?;
     cursor_model::legacy_changed(state);

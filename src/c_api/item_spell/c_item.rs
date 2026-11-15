@@ -3,10 +3,11 @@ use super::helpers::{
     item_class_name, item_cooldown_pair, item_subclass_name, unit_is_reachable,
 };
 use crate::c_api::ensure_namespace;
+use crate::c_api::item_upgrade_eligibility::ItemSlot;
 use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::items;
-use crate::lua_api::SimState;
 use crate::lua_api::methods::{borrow_state, create_string, table_get, val_to_string};
+use crate::lua_api::state::{CursorInfo, CursorItemOrigin, SimState};
 use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
@@ -552,7 +553,8 @@ fn c_item_does_item_exist_by_id(state: &mut LuaState) -> LuaResult<u32> {
 pub(crate) fn location_item(state: &mut LuaState, location: Val) -> Option<(u32, Option<String>)> {
     if let Val::Num(slot) = table_get(state, location, "equipmentSlotIndex") {
         let sim = borrow_state(state).ok()?;
-        return resolve_equipped_location_item(&sim, slot as i32);
+        return resolve_equipped_location_item(&sim, slot as i32)
+            .or_else(|| cursor_item_for_slot(&sim, ItemSlot::Equipment(slot as i32)));
     }
     let bag = match table_get(state, location, "bagID") {
         Val::Num(number) => number as i32,
@@ -562,11 +564,32 @@ pub(crate) fn location_item(state: &mut LuaState, location: Val) -> Option<(u32,
         Val::Num(number) => number as i32,
         _ => 0,
     };
-    borrow_state(state)
-        .ok()?
-        .bag_items
+    let sim = borrow_state(state).ok()?;
+    sim.bag_items
         .get(&(bag, slot))
         .map(|item| (item.item_id, item.hyperlink.clone()))
+        .or_else(|| cursor_item_for_slot(&sim, ItemSlot::Bag(bag, slot)))
+}
+
+fn cursor_item_for_slot(sim: &SimState, slot: ItemSlot) -> Option<(u32, Option<String>)> {
+    let Some(CursorInfo::Item {
+        item_id, origin, ..
+    }) = sim.cursor_item.as_ref()
+    else {
+        return None;
+    };
+    let origin_matches = match (slot, *origin) {
+        (
+            ItemSlot::Bag(bag, index),
+            CursorItemOrigin::Bag {
+                bag: cursor_bag,
+                slot,
+            },
+        ) => bag == cursor_bag && index == slot,
+        (ItemSlot::Equipment(index), CursorItemOrigin::Equipped { slot }) => index == slot,
+        _ => false,
+    };
+    origin_matches.then_some((*item_id, None))
 }
 
 fn resolve_equipped_location_item(sim: &SimState, slot: i32) -> Option<(u32, Option<String>)> {

@@ -37,6 +37,7 @@ fn set_interaction_input(
         selected_item_guid: Some(selected_item_guid.to_string()),
         conversion_output_item_id,
         cleansing_rows,
+        ..Default::default()
     });
 }
 

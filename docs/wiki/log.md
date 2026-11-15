@@ -1,6 +1,6 @@
 ## [2026-11-14] implementation | Item-interaction TooltipData boundary
 
-[Round 7 tooltip getters](../specs/tooltip-r7-getters.md) records R88n.1's absent and failed producer no-values paths and the other-kind empty-lines table. The Retail host seam has no writer or seed; the original ItemInteraction tooltip path and separate API shape tests distinguish these cases.
+[Round 7 tooltip getters](../specs/tooltip-r7-getters.md) and the [Lua API](systems/lua-api.md#pending-item-lifecycle-r88o2-q4) record R88n.1's result shapes and R88o.2 q4's verified Retail pending-item lifecycle. **VERIFIED (optional Retail original-consumer tests):** the setter writes the same object read by `GetItemInteractionItem`; the seven lifecycle selectors use distinct backed items plus absent state. **UNKNOWN (simulator data):** kind-2/3/4 predicate tables remain unbacked, so host acceptance defaults to rejection. External routes and CloseUI cleanup remain UNKNOWN; PTR/Forever publication is INFERRED from their pinned declarations and selected shared consumer.
 
 ## [2026-11-14] implementation | Achievement eligibility and tracker colors
 

@@ -48,6 +48,11 @@ fn clear_interaction(state: &mut LuaState) -> LuaResult<u32> {
     let Ok(interaction_type) = i32::from_stack(state, 1) else {
         return Ok(0);
     };
+    clear_interaction_type(state, interaction_type)?;
+    Ok(0)
+}
+
+pub(crate) fn clear_interaction_type(state: &mut LuaState, interaction_type: i32) -> LuaResult<()> {
     let was_active = borrow_state_mut(state)?
         .active_player_interactions
         .remove(&interaction_type);
@@ -56,7 +61,7 @@ fn clear_interaction(state: &mut LuaState) -> LuaResult<u32> {
             fire_named_event_state(state, event, &[]);
         }
     }
-    Ok(0)
+    Ok(())
 }
 
 fn close_event_for_interaction(interaction_type: i32) -> Option<&'static str> {

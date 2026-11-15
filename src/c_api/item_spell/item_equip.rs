@@ -121,8 +121,12 @@ impl ItemEquipState {
     pub fn is_locked(&self, identity: Option<u64>) -> bool {
         identity
             .and_then(|id| self.inputs.get(&id))
-            .is_some_and(|item| item.native_flags & NATIVE_LOCK_FLAG != 0 || item.lock_reasons != 0)
+            .is_some_and(owned_item_is_locked)
     }
+}
+
+fn owned_item_is_locked(item: &OwnedItemEquipInputs) -> bool {
+    item.native_flags & NATIVE_LOCK_FLAG != 0 || item.lock_reasons != 0
 }
 
 pub(crate) fn identity_at(sim: &SimState, slot: ItemSlot) -> Option<u64> {
@@ -150,12 +154,35 @@ pub(crate) fn ensure_identity(sim: &mut SimState, slot: ItemSlot) -> Option<u64>
         write_identity(sim, slot, id)?;
         return Some(id);
     }
+    let id = allocate_identity(sim)?;
+    write_identity(sim, slot, id)?;
+    sim.item_equip.next_identity = id;
+    Some(id)
+}
+
+pub(crate) fn ensure_cursor_identity(sim: &mut SimState) -> Option<u64> {
+    if let Some(CursorInfo::Item {
+        owned_identity: Some(identity),
+        ..
+    }) = sim.cursor_item.as_ref()
+    {
+        return Some(*identity);
+    }
+    let identity = allocate_identity(sim)?;
+    let Some(CursorInfo::Item { owned_identity, .. }) = sim.cursor_item.as_mut() else {
+        return None;
+    };
+    *owned_identity = Some(identity);
+    sim.item_equip.next_identity = identity;
+    Some(identity)
+}
+
+fn allocate_identity(sim: &SimState) -> Option<u64> {
     let cursor_id = match sim.cursor_item.as_ref() {
         Some(CursorInfo::Item { owned_identity, .. }) => *owned_identity,
         _ => None,
     };
-    let maximum = sim
-        .bag_items
+    sim.bag_items
         .values()
         .filter_map(|item| item.owned_identity)
         .chain(
@@ -168,11 +195,33 @@ pub(crate) fn ensure_identity(sim: &mut SimState, slot: ItemSlot) -> Option<u64>
         .chain(sim.item_equip.inputs.keys().copied())
         .chain(cursor_id)
         .chain([sim.item_equip.next_identity])
-        .max()?;
-    let id = maximum.checked_add(1)?;
-    write_identity(sim, slot, id)?;
-    sim.item_equip.next_identity = id;
-    Some(id)
+        .max()?
+        .checked_add(1)
+}
+
+pub(crate) fn set_lock_reason(
+    sim: &mut SimState,
+    slot: ItemSlot,
+    identity: u64,
+    reason: u32,
+    locked: bool,
+) -> bool {
+    let was_locked = is_locked_at(sim, slot) || identity_is_locked(sim, identity);
+    let input = sim.item_equip.inputs.entry(identity).or_default();
+    if locked {
+        input.lock_reasons |= reason;
+    } else {
+        input.lock_reasons &= !reason;
+    }
+    let is_locked = is_locked_at(sim, slot) || identity_is_locked(sim, identity);
+    was_locked != is_locked
+}
+
+fn identity_is_locked(sim: &SimState, identity: u64) -> bool {
+    sim.item_equip
+        .inputs
+        .get(&identity)
+        .is_some_and(owned_item_is_locked)
 }
 
 fn write_identity(sim: &mut SimState, slot: ItemSlot, id: u64) -> Option<()> {

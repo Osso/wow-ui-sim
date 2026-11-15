@@ -45,6 +45,16 @@ pub struct ItemInteractionTooltipInput {
     /// Selected object kind for the R88n.1 result-shape path.
     pub object_kind: Option<i32>,
     pub selected_item_guid: Option<String>,
+    /// Resolved object ID retained when SetPendingItem clears a cursor item.
+    pub selected_item_id: Option<u32>,
+    /// Location and owned identity for the same selected object.
+    pub selected_item_location: Option<crate::lua_api::state::ItemLocationData>,
+    pub selected_item_identity: Option<u64>,
+    /// Explicit host observations for native predicates that have no row backing.
+    pub pending_item_acceptance: std::collections::HashMap<(i32, u32), bool>,
+    /// Native bookkeeping identifiers; Reset sets these to -1 and zero.
+    pub selection_id: i32,
+    pub record_id: u32,
     pub conversion_output_item_id: Option<u32>,
     pub cleansing_rows: Vec<ItemInteractionTooltipLine>,
 }
@@ -160,6 +170,9 @@ fn conversion_item_interaction_tooltip(
 }
 
 fn item_interaction_source_is_owned(state: &LuaState, input: &ItemInteractionTooltipInput) -> bool {
+    if let Some(item_id) = input.selected_item_id {
+        return items::get_item(item_id).is_some();
+    }
     input
         .selected_item_guid
         .as_deref()
