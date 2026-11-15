@@ -6,17 +6,17 @@ This spec defines the Retail `C_ColorOverrides` API and its state model. See the
 
 ### Quality colors
 
-- [ ] For Poor and Epic quality, `GetDefaultColorForQuality` returns the matching `GlobalColor` colors. It does not read overrides.
-- [ ] `GetColorForQuality` uses overrides for two backed quality/type pairs and returns defaults after removal or clear.
+- [x] For Poor and Epic quality, `GetDefaultColorForQuality` returns the matching `GlobalColor` colors. It does not read overrides.
+- [x] `GetColorForQuality` uses overrides for two backed quality/type pairs and returns defaults after clear.
 - [ ] A missing default row returns the native magenta fallback. This branch is not reachable with the current generated catalog.
 
 ### Override records
 
-- [ ] `SetColorOverride` accepts RGBA table components, clamps finite values to `[0, 1]`, converts them to byte channels, and stores two distinct types.
-- [ ] `GetColorOverrideInfo` returns one record for each stored type and exactly one nil for an absent type. The returned RGB color has no `a` field.
-- [ ] `RemoveColorOverride` removes selected records and accepts a missing type without changing other records.
-- [ ] `ClearColorOverrides` removes all stored records.
-- [ ] The original Retail `ColorManager` consumer uses the model's default and overridden colors.
+- [x] `SetColorOverride` accepts RGBA table components, clamps finite values to `[0, 1]`, converts them to byte channels, and stores two distinct types.
+- [x] `GetColorOverrideInfo` returns one record for each stored type and exactly one nil for an absent type. The returned RGB color has no `a` field.
+- [x] `RemoveColorOverride` removes two selected records and accepts a missing type.
+- [x] `ClearColorOverrides` removes two stored records.
+- [x] The original Retail `ColorManager` consumer uses the model's default and overridden colors.
 
 ## How it works
 
@@ -39,8 +39,8 @@ This spec defines the Retail `C_ColorOverrides` API and its state model. See the
 
 ## Known gaps (current cycle)
 
-- [ ] Add a supplied `playerColorOverrides` value only after its exact setting encoding and save/load triggers are verified. The native setting name is known, but this simulator does not claim reload or logout parity.
-- [ ] Verify the native callback-to-event mapping and the exact `overrideColorString` byte order. Current event names and packed-string formatting are inferred; tests do not assert them.
+- [ ] Exercise the missing-GlobalColor-row magenta fallback. The current generated catalog contains every required tag.
+- [ ] Verify the native callback-to-event mapping, `overrideColorString` byte order, and mutation return arity. The current event and packed-string choices are inferred; tests do not assert them.
 
 ## Out of scope
 

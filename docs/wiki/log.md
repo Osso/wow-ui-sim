@@ -1,6 +1,6 @@
 ## [2026-11-15] implementation | Retail C_ColorOverrides state
 
-[Color overrides](systems/color-overrides.md) records the verified Retail state API and original ColorManager consumer. The generated GlobalColor row values, event callback names, and persistence lifecycle retain explicit INFERRED or UNKNOWN labels.
+[Color overrides](systems/color-overrides.md) records R88v's Retail state API and original `ColorManager` proof. **VERIFIED (implementation commit `2d1a14c8049ae890fdb28fdfc1752de88d3409b3`):** the exact consumer tests pass and five-profile compile receipts report zero warnings. The 70783 catalog projection and event mapping are **INFERRED**; reload/logout persistence remains **UNKNOWN**.
 
 ## [2026-11-15] investigation | ShowUIPanel toggle fixture owners
 

@@ -20,7 +20,7 @@
 
 **INFERRED (Retail 12.1.5.70688 semantics applied to the simulator's generated Retail 12.1.5.70783 rows):** the current model obtains these names from `RETAIL_GLOBAL_COLORS`. The native 70688 evidence does not establish the values of its nine rows, and the 70783 snapshot is not proof of the live 70688 catalog.
 
-The lookup uses the shared packed-color channel conversion in [`c_ui_color.rs`](../../src/c_api/c_ui_color.rs). See the [GlobalColor catalog](global-color-catalog.md) for row provenance and version limits.
+**VERIFIED (Retail integration tests at implementation commit `2d1a14c8049ae890fdb28fdfc1752de88d3409b3`):** the selected original `ColorManager` consumer returns the tested Poor and Epic defaults and uses two supplied overrides; the target tests pass. The lookup uses the shared packed-color channel conversion in [`c_ui_color.rs`](../../src/c_api/c_ui_color.rs). See the [GlobalColor catalog](global-color-catalog.md) for row provenance and version limits.
 
 ### Persistence boundary
 
