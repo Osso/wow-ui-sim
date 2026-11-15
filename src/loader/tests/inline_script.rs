@@ -5,7 +5,7 @@ use super::super::xml_file::load_xml_file;
 use crate::lua_api::WowLuaEnv;
 use crate::lua_api::methods::{create_string, table_set_static};
 use crate::xml::parse_xml_file;
-use rilua::LuaApi;
+use rilua::{LuaApi, LuaApiMut};
 
 #[test]
 fn test_parse_wowless_test_xml() {

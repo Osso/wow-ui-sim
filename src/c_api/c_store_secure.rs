@@ -142,7 +142,7 @@ fn read_group_ids(state: &mut LuaState, groups: GcRef<Table>) -> LuaResult<Vec<V
 mod tests {
     use crate::lua_api::WowLuaEnv;
     use crate::lua_api::methods::table_get_static;
-    use rilua::Val;
+    use rilua::{LuaApiMut, Val};
 
     #[cfg(feature = "client-retail")]
     #[test]
