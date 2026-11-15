@@ -421,9 +421,11 @@ fn pending_item_close_ui_leaves_selection_unchanged() {
     assert_item_locked(&env, 2, true);
     assert_selected_tooltip(&env, 2);
     assert_identifiers(&env, 31, 41);
-    let state = env.state().borrow();
-    assert!(!state.active_player_interactions.contains(&44));
-    assert!(state.active_player_interactions.contains(&43));
+    {
+        let state = env.state().borrow();
+        assert!(!state.active_player_interactions.contains(&44));
+        assert!(state.active_player_interactions.contains(&43));
+    }
     env.exec("assert(#PendingSelectionEvents == 0)").unwrap();
     clear_from_original_slot(&env);
     assert_no_selected_tooltip(&env);
