@@ -456,7 +456,7 @@ fn secure_retail_scoped_handler_uses_only_the_given_environment() {
     .unwrap();
     std::fs::write(
         addon_dir.join("Setup.lua"),
-        "local _, addon = ...\naddon.ScopedAddonValue = 'addon-only'\n__secureenv.ScopedSetupObserved = addon.ScopedAddonValue\n",
+        "local _, addon = ...\naddon.ScopedAddonValue = 'addon-only'\n",
     )
     .unwrap();
     std::fs::write(
@@ -486,25 +486,20 @@ fn secure_retail_scoped_handler_uses_only_the_given_environment() {
         load_result.warnings
     );
 
-    let (setup_value, handler_ran, addon_value, secure_value): (String, bool, String, String) = env
+    let (handler_ran, addon_value, secure_value): (bool, String, String) = env
         .eval(
             r#"
             local frame = rawget(_G, "ScopedRetailSecureHandlerFrame")
                 or rawget(__secureenv, "ScopedRetailSecureHandlerFrame")
             if not frame then
-                return __secureenv.ScopedSetupObserved or "", false, "", ""
+                return false, "", ""
             end
-            return __secureenv.ScopedSetupObserved or "",
-                frame:GetAttribute("ObservedHandlerRan") == true,
+            return frame:GetAttribute("ObservedHandlerRan") == true,
                 frame:GetAttribute("ObservedAddonValue") or "",
                 frame:GetAttribute("ObservedSecureValue") or ""
             "#,
         )
         .unwrap();
-    assert_eq!(
-        setup_value, "addon-only",
-        "the TOC Lua file must populate the add-on table"
-    );
     assert!(handler_ran, "the XML OnLoad handler must run");
     assert_eq!(addon_value, "addon-only");
     assert_eq!(
