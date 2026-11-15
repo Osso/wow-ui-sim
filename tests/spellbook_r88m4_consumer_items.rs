@@ -14,20 +14,7 @@ use wow_ui_sim::screen::ScreenKind;
 
 fn original_book_env() -> WowLuaEnv {
     let ui = blizzard_ui_dir();
-    let toc = find_toc_file(&ui.join("Blizzard_PlayerSpells")).expect("selected spellbook TOC");
-    assert!(toc.ends_with("Blizzard_PlayerSpells.toc"));
-    let source = std::fs::read_to_string(&toc).unwrap();
-    assert!(source.contains("## LoadOnDemand: 1"));
-    assert!(source.contains("SpellBook/Blizzard_SpellBookItem.xml"));
-    assert!(source.contains("SpellBook/Blizzard_SpellBookFrame.xml"));
-    assert!(source.contains("Blizzard_PlayerSpellsFrame.xml"));
-    let item_xml = std::fs::read_to_string(
-        ui.join("Blizzard_PlayerSpells/SpellBook/Blizzard_SpellBookItem.xml"),
-    )
-    .unwrap();
-    assert!(item_xml.contains("<Script file=\"Blizzard_SpellBookItem.lua\"/>"));
-    assert!(item_xml.contains("mixin=\"SpellBookItemMixin\""));
-    assert!(item_xml.contains("parentKey=\"AutoCastOverlay\""));
+    assert_original_book_sources(&ui);
     let env = new_blizzard_addon_env(&ui);
     register_load_with_addons(&env.loader_env(), &discover_all_blizzard_addons(&ui));
     for addon in discover_blizzard_startup_addons_for_screen(&ui, ScreenKind::Game) {
@@ -48,6 +35,23 @@ fn original_book_env() -> WowLuaEnv {
     env.apply_post_load_workarounds();
     wow_ui_sim::startup::fire_startup_events_for_screen(&env, ScreenKind::Game);
     env
+}
+
+fn assert_original_book_sources(ui: &std::path::Path) {
+    let toc = find_toc_file(&ui.join("Blizzard_PlayerSpells")).expect("selected spellbook TOC");
+    assert!(toc.ends_with("Blizzard_PlayerSpells.toc"));
+    let source = std::fs::read_to_string(&toc).unwrap();
+    assert!(source.contains("## LoadOnDemand: 1"));
+    assert!(source.contains("SpellBook/Blizzard_SpellBookItem.xml"));
+    assert!(source.contains("SpellBook/Blizzard_SpellBookFrame.xml"));
+    assert!(source.contains("Blizzard_PlayerSpellsFrame.xml"));
+    let item_xml = std::fs::read_to_string(
+        ui.join("Blizzard_PlayerSpells/SpellBook/Blizzard_SpellBookItem.xml"),
+    )
+    .unwrap();
+    assert!(item_xml.contains("<Script file=\"Blizzard_SpellBookItem.lua\"/>"));
+    assert!(item_xml.contains("mixin=\"SpellBookItemMixin\""));
+    assert!(item_xml.contains("parentKey=\"AutoCastOverlay\""));
 }
 
 fn assert_original_visible_item_autocast(env: &WowLuaEnv) {
@@ -100,6 +104,10 @@ fn original_book_autocast_preserves_hidden_overlay_on_open_and_reopen() {
     env.exec("PlayerSpellsUtil.ToggleSpellBookFrame()")
         .expect("original reopen route");
     assert_original_visible_item_autocast(&env);
+    assert_no_book_owner_errors(&env);
+}
+
+fn assert_no_book_owner_errors(env: &WowLuaEnv) {
     for error in &env.state().borrow().lua_error_records {
         println!(
             "R88m.4 retained startup/consumer diagnostic: {}",

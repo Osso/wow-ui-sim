@@ -12,16 +12,31 @@ fn env() -> WowLuaEnv {
 }
 
 fn supported_slot() -> (i32, u32) {
-    let (slot, spell) = (1..)
-        .map_while(|slot| spellbook_data::get_spell_at_slot(slot).map(|row| (slot, row)))
-        .find_map(|(slot, (_, entry, line))| {
-            (line.off_spec_id.is_none()
-                && entry.spell_id != 0
-                && wow_ui_sim::spells::get_spell(entry.spell_id).is_some())
-            .then_some((slot, entry.spell_id))
-        })
-        .expect("existing supported player-book row with Spell membership");
-    (slot, spell)
+    supported_records()[0]
+}
+
+fn supported_records() -> [(i32, u32); 2] {
+    let mut records = Vec::new();
+    for slot in 1.. {
+        let Some((_, entry, line)) = spellbook_data::get_spell_at_slot(slot) else {
+            break;
+        };
+        let supported = line.off_spec_id.is_none()
+            && entry.spell_id != 0
+            && wow_ui_sim::spells::get_spell(entry.spell_id).is_some();
+        if supported && records.iter().all(|(_, spell)| *spell != entry.spell_id) {
+            records.push((slot, entry.spell_id));
+        }
+        if records.len() == 2 {
+            break;
+        }
+    }
+    let records: [(i32, u32); 2] = records
+        .try_into()
+        .expect("two existing supported player-book records with distinct Spell membership");
+    assert_ne!(records[0].0, records[1].0);
+    assert_ne!(records[0].1, records[1].1);
+    records
 }
 
 #[test]
@@ -50,7 +65,12 @@ fn autocast_supported_record_without_candidate_flags_returns_two_false_booleans(
 }
 
 fn assert_autocast_supported(env: &WowLuaEnv) {
-    let (slot, _) = supported_slot();
+    for (slot, _) in supported_records() {
+        assert_autocast_record(env, slot);
+    }
+}
+
+fn assert_autocast_record(env: &WowLuaEnv, slot: i32) {
     assert!(
         env.state()
             .borrow()
@@ -115,35 +135,62 @@ fn loss_of_control_supplied_query_dto_preserves_one_fresh_table() {
 }
 
 fn assert_loss_of_control_success(env: &WowLuaEnv) {
-    let (slot, spell_id) = supported_slot();
+    let [first, second] = supported_records();
+    let cases = [
+        (first, 3.0, 5.0, 1.25, true),
+        (second, 11.0, 2.0, 0.75, false),
+    ];
+    for &((_, spell), start, duration, rate, replaces) in &cases {
+        seed_loss_of_control_record(env, spell, start, duration, rate, replaces);
+    }
+    for ((slot, _), start, duration, rate, replaces) in cases {
+        assert_loss_of_control_record(env, slot, start, duration, rate, replaces);
+    }
+}
+
+fn seed_loss_of_control_record(
+    env: &WowLuaEnv,
+    spell_id: u32,
+    start: f64,
+    duration: f64,
+    rate: f32,
+    replaces: bool,
+) {
     env.state().borrow_mut().spell_loss_of_control.insert(
         spell_id,
         LossOfControlInfo {
-            start_time: 3.0,
-            duration: 5.0,
-            mod_rate: 1.25,
+            start_time: start,
+            duration,
+            mod_rate: rate,
             is_active: true,
-            should_replace_normal_cooldown: true,
+            should_replace_normal_cooldown: replaces,
         },
     );
-    env.exec(&format!(
-        r#"
+}
+
+fn assert_loss_of_control_record(
+    env: &WowLuaEnv,
+    slot: i32,
+    start: f64,
+    duration: f64,
+    rate: f32,
+    replaces: bool,
+) {
+    env.exec(&format!(r#"
         local function query()
             return C_SpellBook.GetSpellBookItemLossOfControlCooldownInfo({slot}, 0)
         end
         assert(select('#', query()) == 1)
         local first, second = query(), query()
         assert(type(first) == 'table' and type(second) == 'table' and first ~= second)
-        assert(first.startTime == 3 and first.duration == 5 and first.modRate == 1.25)
-        assert(first.isActive == true and first.shouldReplaceNormalCooldown == true)
+        assert(first.startTime == {start} and first.duration == {duration} and first.modRate == {rate})
+        assert(first.isActive == true and first.shouldReplaceNormalCooldown == {replaces})
         local count = 0
         for _ in pairs(first) do count = count + 1 end
         assert(count == 5)
         first.duration = 99
-        assert(second.duration == 5 and query().duration == 5)
-        "#
-    ))
-    .expect("successful supplied decoded DTO serializes as one fresh five-field table");
+        assert(second.duration == {duration} and query().duration == {duration})
+        "#)).expect("successful supplied decoded DTO serializes as one fresh five-field table");
 }
 
 #[test]

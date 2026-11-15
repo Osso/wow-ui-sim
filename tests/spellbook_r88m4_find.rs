@@ -6,6 +6,13 @@ use rilua::LuaApiMut;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 fn env() -> WowLuaEnv {
+    let env = WowLuaEnv::new().unwrap();
+    assert_catalog_rows();
+    install_find_helpers(&env);
+    env
+}
+
+fn assert_catalog_rows() {
     assert!(
         wow_ui_sim::spells::get_spell(6603).is_some(),
         "existing catalog row"
@@ -22,7 +29,9 @@ fn env() -> WowLuaEnv {
         wow_ui_sim::spells::get_spell(133).is_some(),
         "second existing catalog row"
     );
-    let env = WowLuaEnv::new().unwrap();
+}
+
+fn install_find_helpers(env: &WowLuaEnv) {
     env.exec(
         r#"
         R88FindMethods = {
@@ -46,7 +55,6 @@ fn env() -> WowLuaEnv {
     "#,
     )
     .unwrap();
-    env
 }
 
 #[test]
@@ -128,16 +136,7 @@ fn flyout_no_candidate_returns_one_numeric_zero_preservation() {
 #[test]
 fn find_authentic_secret_untainted_acceptance_and_tainted_rejection() {
     let env = env();
-    {
-        let loader = env.loader_env();
-        let mut lua = loader.rilua_mut();
-        rilua::table_security::register_table_security(&mut lua).unwrap();
-        let secret = rilua::table_security::wrap_host_secret_number(lua.state_mut(), 6603.0);
-        lua.state_mut().push(secret);
-        let result = lua.set_global_val("R88SecretSpell", secret);
-        lua.state_mut().pop();
-        result.unwrap();
-    }
+    install_secret_spell(&env);
     env.exec(r#"
         assert(issecretvalue(R88SecretSpell), 'authentic VM secret required')
         assert(issecure(), 'untainted caller')
@@ -162,4 +161,15 @@ fn find_authentic_secret_untainted_acceptance_and_tainted_rejection() {
     "#).unwrap();
     // No configurable native mode-0 reader exists in this harness. This tests
     // genuine VM accessible/tainted secrets, not fabricated mode-0 enforcement.
+}
+
+fn install_secret_spell(env: &WowLuaEnv) {
+    let loader = env.loader_env();
+    let mut lua = loader.rilua_mut();
+    rilua::table_security::register_table_security(&mut lua).unwrap();
+    let secret = rilua::table_security::wrap_host_secret_number(lua.state_mut(), 6603.0);
+    lua.state_mut().push(secret);
+    let result = lua.set_global_val("R88SecretSpell", secret);
+    lua.state_mut().pop();
+    result.unwrap();
 }
