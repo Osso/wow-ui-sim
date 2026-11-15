@@ -541,9 +541,11 @@ pub(crate) use patch_retired_members::mark_retail_table_util_retirement;
 mod registration;
 pub(crate) mod restricted_actions;
 
+#[cfg(feature = "aura-instance-enumeration")]
+pub(crate) use helpers::ensure_paired_table_field;
 pub(crate) use helpers::{
     ensure_enum_table, ensure_global_table, ensure_namespace, ensure_namespace_table_field,
-    ensure_paired_table_field, ensure_secure_namespace, global_val, mark_namespace_keys_removed,
+    ensure_secure_namespace, global_val, mark_namespace_keys_removed,
     register_namespace_function_with_flags, register_namespace_value_with_flags,
     register_unknown_namespace_function, set_global_val, set_namespace_member,
 };
