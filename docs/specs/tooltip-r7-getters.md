@@ -99,7 +99,7 @@ The Round 7 `C_TooltipInfo` getters use native argument readers and tooltip buil
 
 ## Known gaps (current cycle)
 
-- [ ] Retail `GetAzeriteEssence` does not compose inline major/minor next-rank rows, the `powerState="gray"` alternate, or requirement-localized lines. Faction-to-source-column selection is UNKNOWN; the simulator emits no faction-specific source-description row and does not claim empty-source parity. Possession spell/context and slotted-keystone GUID state are also not modeled.
+- [ ] Native race-to-selector mapping remains UNKNOWN; requirement-row expansion remains UNKNOWN and is not implemented. The gray row cannot be exercised with current catalog data because no power rank exceeds four and next rank four disables the stage. Possession spell/context and slotted-keystone GUID state are also not modeled.
 - [ ] Possession spell and external slotted-keystone selection updates remain empty-by-default host inputs; complete external writers are UNKNOWN.
 - [ ] Complete native item-interaction selection routes, external lifecycle events, and successful kind-2/4 producer payloads remain UNKNOWN; R88o.2 q4 verifies local setter/clear operations, detailed below. The simulator does not invent writers, events, or payloads.
 - [ ] Complete recipe display-row semantics, upstream acquisition, external clear triggers, learned-status meaning and player/faction source lookup remain UNKNOWN; see [Recipe-rank evidence boundary](#recipe-rank-evidence-boundary). Recipe source text and labels are host inputs; specialization wording is not derived.
