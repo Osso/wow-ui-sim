@@ -405,6 +405,103 @@ fn assert_possession_consumer_spell(env: &WowLuaEnv, spell_id: u32) {
     .unwrap();
 }
 
+fn load_possession_env() -> WowLuaEnv {
+    let env = tooltip_full_env_helpers::load_full_env_without_post_load();
+    env.exec(
+        r#"
+        assert(C_AddOns.IsAddOnLoaded("Blizzard_ActionBar"))
+        assert(debug.getinfo(PossessButtonMixin.OnEnter, "S").source
+            :find("PossessActionBar.lua", 1, true))
+    "#,
+    )
+    .unwrap();
+    env
+}
+
+fn possession_candidate(
+    spell_id: u32,
+    tested: bool,
+    effects: &[u32],
+    identity_matches: bool,
+    classification_field: Option<u32>,
+) -> String {
+    let effects = effects
+        .iter()
+        .map(u32::to_string)
+        .collect::<Vec<_>>()
+        .join(",");
+    let classification =
+        classification_field.map_or_else(|| "nil".to_string(), |value| value.to_string());
+    format!(
+        "{{spellID={spell_id}, tested={tested}, effects={{{effects}}}, identityMatches={identity_matches}, classificationField={classification}}}"
+    )
+}
+
+fn set_possession_object(env: &WowLuaEnv, identity: (u32, u32), candidates: &[String]) {
+    let candidates = candidates.join(",");
+    let object = format!(
+        "{{identityFirst={}, identitySecond={}, candidates={{{candidates}}}}}",
+        identity.0, identity.1
+    );
+    env.exec(&format!("A_Admin.SetPossessionObject({object})"))
+        .unwrap();
+}
+
+fn set_possession_object_absent(env: &WowLuaEnv) {
+    env.exec("A_Admin.SetPossessionObject(nil)").unwrap();
+}
+
+fn update_possession_player(env: &WowLuaEnv, identity: (u32, u32)) {
+    env.exec(&format!(
+        "A_Admin.UpdatePossessionPlayer({}, {})",
+        identity.0, identity.1
+    ))
+    .unwrap();
+}
+
+fn set_possession_spell_id(env: &WowLuaEnv, spell_id: u32) {
+    env.exec(&format!("A_Admin.SetPossessionSpellID({spell_id})"))
+        .unwrap();
+}
+
+fn assert_possession_effect_selects_distinct_spells(
+    env: &WowLuaEnv,
+    effect: u32,
+    identity_matches: bool,
+    classification_field: Option<u32>,
+) {
+    for spell_id in [116, 133] {
+        let candidate = possession_candidate(
+            spell_id,
+            false,
+            &[effect],
+            identity_matches,
+            classification_field,
+        );
+        set_possession_object(env, (11, 22), &[candidate]);
+        update_possession_player(env, (11, 22));
+        assert_possession_consumer_spell(env, spell_id);
+    }
+}
+
+fn register_possession_event_probe(env: &WowLuaEnv) {
+    env.exec(
+        r#"
+        R7PossessionEventSpellIDs = {}
+        R7PossessionEventProbe = CreateFrame("Frame")
+        R7PossessionEventProbe:RegisterEvent("UPDATE_POSSESS_BAR")
+        R7PossessionEventProbe:SetScript("OnEvent", function()
+            local button = CreateFrame("Button", nil, UIParent)
+            button:SetID(1)
+            PossessButtonMixin.OnEnter(button)
+            local data = GameTooltip:GetPrimaryTooltipData()
+            table.insert(R7PossessionEventSpellIDs, data and data.id or 0)
+        end)
+    "#,
+    )
+    .unwrap();
+}
+
 #[test]
 fn possession_original_action_bar_hover_uses_the_supplied_spell() {
     let env = tooltip_full_env_helpers::load_full_env_without_post_load();
@@ -422,6 +519,113 @@ fn possession_original_action_bar_hover_uses_the_supplied_spell() {
         env.state().borrow_mut().possession_spell_id = Some(spell_id);
         assert_possession_consumer_spell(&env, spell_id);
     }
+}
+
+#[test]
+fn possession_rescan_accepts_direct_effect_two_for_distinct_spells() {
+    let env = load_possession_env();
+    assert_possession_effect_selects_distinct_spells(&env, 2, false, None);
+}
+
+#[test]
+fn possession_rescan_accepts_direct_effect_six_for_distinct_spells() {
+    let env = load_possession_env();
+    assert_possession_effect_selects_distinct_spells(&env, 6, false, None);
+}
+
+#[test]
+fn possession_rescan_requires_identity_match_for_effect_236() {
+    let env = load_possession_env();
+    assert_possession_effect_selects_distinct_spells(&env, 236, true, None);
+    set_possession_spell_id(&env, 116);
+    let rejected = possession_candidate(133, false, &[236], false, None);
+    set_possession_object(&env, (11, 22), &[rejected]);
+    update_possession_player(&env, (11, 22));
+    assert_possession_consumer_spell(&env, 116);
+}
+
+#[test]
+fn possession_rescan_accepts_alternate_effect_28_with_classification_three() {
+    let env = load_possession_env();
+    assert_possession_effect_selects_distinct_spells(&env, 28, false, Some(3));
+}
+
+#[test]
+fn possession_rescan_accepts_alternate_effect_51_with_classification_three() {
+    let env = load_possession_env();
+    assert_possession_effect_selects_distinct_spells(&env, 51, false, Some(3));
+}
+
+#[test]
+fn possession_rescan_keeps_old_id_for_absent_unresolved_or_rejected_inputs() {
+    let env = load_possession_env();
+    set_possession_spell_id(&env, 116);
+    set_possession_object_absent(&env);
+    update_possession_player(&env, (11, 22));
+    assert_possession_consumer_spell(&env, 116);
+    set_possession_object(&env, (11, 22), &[]);
+    update_possession_player(&env, (11, 22));
+    set_possession_object(&env, (12, 22), &[]);
+    update_possession_player(&env, (11, 22));
+    assert_possession_consumer_spell(&env, 116);
+
+    let rejected = [
+        possession_candidate(133, true, &[2], false, None),
+        possession_candidate(u32::MAX, false, &[2], false, None),
+        possession_candidate(133, false, &[], false, None),
+        possession_candidate(133, false, &[28], false, Some(2)),
+        possession_candidate(133, false, &[236], false, None),
+    ];
+    set_possession_object(&env, (11, 22), &rejected);
+    update_possession_player(&env, (11, 22));
+    assert_possession_consumer_spell(&env, 116);
+}
+
+#[test]
+fn possession_rescan_uses_the_first_accepted_candidate() {
+    let env = load_possession_env();
+    let candidates = [
+        possession_candidate(133, false, &[2], false, None),
+        possession_candidate(116, false, &[6], false, None),
+    ];
+    set_possession_object(&env, (11, 22), &candidates);
+    update_possession_player(&env, (11, 22));
+    assert_possession_consumer_spell(&env, 133);
+}
+
+fn assert_possession_event_ids(env: &WowLuaEnv, expected: &[u32]) {
+    let expected = expected
+        .iter()
+        .map(u32::to_string)
+        .collect::<Vec<_>>()
+        .join(",");
+    env.exec(&format!(
+        "local expected = {{{expected}}}; assert(#R7PossessionEventSpellIDs == #expected); for i, id in ipairs(expected) do assert(R7PossessionEventSpellIDs[i] == id) end"
+    ))
+    .unwrap();
+}
+
+#[test]
+fn possession_setter_rescan_and_clear_notify_only_after_id_changes() {
+    let env = load_possession_env();
+    register_possession_event_probe(&env);
+    set_possession_spell_id(&env, 116);
+    assert_possession_event_ids(&env, &[116]);
+    set_possession_spell_id(&env, 116);
+    assert_possession_event_ids(&env, &[116]);
+    set_possession_spell_id(&env, 133);
+    assert_possession_event_ids(&env, &[116, 133]);
+
+    let candidate = possession_candidate(116, false, &[2], false, None);
+    set_possession_object(&env, (11, 22), &[candidate]);
+    update_possession_player(&env, (11, 22));
+    assert_possession_event_ids(&env, &[116, 133, 116]);
+    update_possession_player(&env, (11, 22));
+    assert_possession_event_ids(&env, &[116, 133, 116]);
+    update_possession_player(&env, (0, 0));
+    assert_possession_event_ids(&env, &[116, 133, 116, 0]);
+    update_possession_player(&env, (0, 0));
+    assert_possession_event_ids(&env, &[116, 133, 116, 0]);
 }
 
 // INFERRED model coverage: selection uses the simulator's bag-cursor projection.
