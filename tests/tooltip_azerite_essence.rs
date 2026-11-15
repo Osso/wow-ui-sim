@@ -212,7 +212,7 @@ assert(AzeriteTestFindEmptyPlainLine(empty) == nil,
 assert(AzeriteTestFindPowerLine(empty, 'major') == nil
     and AzeriteTestFindPowerLine(empty, 'minor') == nil,
     'next-rank one must not add inline power rows')
-assert(AzeriteTestShowEssence(999, 0) == nil,
+assert(AzeriteTestSourceAbsent == false,
     'an absent essence must stay absent')
 "#;
 
@@ -378,6 +378,7 @@ assert(not rangeOK and tostring(rangeMessage):find(
 "#;
 
 fn capture_source_variants(env: &WowLuaEnv) {
+    capture_absent_source(env);
     set_source_selector_result(env, 0);
     run_azerite_script(
         env,
@@ -398,6 +399,14 @@ fn capture_source_variants(env: &WowLuaEnv) {
         env,
         "AzeriteTestSourceEmpty = AzeriteTestShowEssence(3, 0)",
         "the original Azerite hover should accept empty source fields",
+    );
+}
+
+fn capture_absent_source(env: &WowLuaEnv) {
+    run_azerite_script(
+        env,
+        "AzeriteTestSourceAbsent = AzeriteTestShowEssence(999, 0) or false",
+        "the original Azerite hover should keep an absent essence empty",
     );
 }
 
