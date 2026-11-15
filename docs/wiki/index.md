@@ -1,3 +1,7 @@
+## [2026-11-15] revision | Recipe-rank cache and keystone tooltip boundaries
+
+[Round 7 getter contract](../specs/tooltip-r7-getters.md) and [Lua API](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) record R88n.4a cache insertion semantics and the modeled keystone selection/event/item-lookup path. **UNKNOWN:** exact keystone detail-row projection and whether recipe ranks use Azerite specialization wording; exact questions are recorded in the contract. The exact detail-row projection remains unmodeled.
+
 ## [2026-11-15] investigation | ShowUIPanel toggle fixture owners
 
 [Toggle fixture owners](investigations/showuipanel-toggle-fixture-owners.md) records independent achievement/housing fallback-retirement boundaries, original TOC owner loading and untouched out-of-scope panel failures. No guessed fallback restored.
