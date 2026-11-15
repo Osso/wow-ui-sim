@@ -667,7 +667,12 @@ pub(crate) fn patch(env: &WowLuaEnv) {
     } else {
         [
             CHARACTER_CREATE_DEFAULTS_WORKAROUND_LUA,
-            #[cfg(not(any(feature = "client-wowforever", feature = "client-ptr")))]
+            // Keep the Submit-guess constant out of Retail, PTR and Forever.
+            #[cfg(not(any(
+                feature = "client-retail",
+                feature = "client-wowforever",
+                feature = "client-ptr"
+            )))]
             CHARACTER_CREATION_SUBMIT_MIXIN_GUESS_LUA,
             CHARACTER_CREATE_DEFAULTS_WORKAROUND_TAIL_LUA,
         ]
