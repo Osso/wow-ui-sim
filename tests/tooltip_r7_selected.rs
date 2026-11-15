@@ -647,7 +647,7 @@ fn possession_setter_rescan_and_clear_notify_only_after_id_changes() {
     assert_possession_event_ids(&env, &[116, 133]);
 
     let candidate = possession_candidate(116, false, &[2], None, None);
-    update_possession_player_with_candidates(&env, (11, 22), &[candidate]);
+    update_possession_player_with_candidates(&env, (11, 22), &[candidate.clone()]);
     assert_possession_event_ids(&env, &[116, 133, 116]);
     update_possession_player_with_candidates(&env, (11, 22), &[candidate]);
     assert_possession_event_ids(&env, &[116, 133, 116]);
