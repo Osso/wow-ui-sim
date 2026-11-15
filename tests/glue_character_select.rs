@@ -1183,8 +1183,10 @@ assert(math.abs(frame.BGTex[1]:GetAlpha() - 0.7) < 0.001, "Demon Hunter overlay 
 race:SetCharacterClass(6)
 assert(race.selectedClassData.fileName == "DEATHKNIGHT", "selected Death Knight record")
 assert(math.abs(frame.BGTex[1]:GetAlpha() - 0.8) < 0.001, "Death Knight overlay alpha")
-assert(frame.BackButton:GetText() == BACK, "BackButton original OnLoad text")
-assert(frame.ForwardButton:GetText() == CUSTOMIZE, "ForwardButton original update text")
+local backText = frame.BackButton:GetText()
+assert(backText == BACK, string.format("BackButton text=%s expected=%s", tostring(backText), tostring(BACK)))
+local forwardText = frame.ForwardButton:GetText()
+assert(forwardText == CUSTOMIZE, string.format("ForwardButton text=%s expected=%s", tostring(forwardText), tostring(CUSTOMIZE)))
 "#;
 
 #[test]
