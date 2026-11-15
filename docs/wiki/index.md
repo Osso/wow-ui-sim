@@ -1,3 +1,7 @@
+## [2026-11-14] implementation | Retail possession state writer
+
+[Round 7 contract](../specs/tooltip-r7-getters.md) and [Lua API](systems/lua-api.md#possession-state-writer-r88o2-q5) record R88o.2-q5. **VERIFIED (Retail 12.1.5.70688):** local possession writes, change-only event requests, candidate order and selector rules. **VERIFIED (simulator source):** host/admin object and candidate inputs start empty; the spell catalog supplies presence checks only. **INFERRED:** the collection belongs to current-player state. **UNKNOWN:** external triggers, candidate acquisition, cooldown and number-display inputs.
+
 ## [2026-11-14] implementation | Achievement eligibility and tracker colors
 
 [Achievement eligibility](../specs/achievement-eligibility.md) records R88o.1's Retail argument/Boolean contract, missing record/group versus null tree, and supplied cache comparisons. Original tracker #6 uses the zero-visible branch; positive visible counts use a different per-criterion getter. PTR/Forever binding is inferred from their selected original Lua. New simulator input stays empty by default; no event substitutes or live cache writer claims.

@@ -1,3 +1,7 @@
+## [2026-11-14] implementation | Retail possession state writer
+
+[Round 7 contract](../specs/tooltip-r7-getters.md) and [Lua API](systems/lua-api.md#possession-state-writer-r88o2-q5) record R88o.2-q5. **VERIFIED (Retail 12.1.5.70688):** local setter/rescan/clear order, change-only `UPDATE_POSSESS_BAR` requests, candidate filters and first-match selection. **VERIFIED (simulator source):** host/admin object and candidate inputs start empty; only spell-presence checks use the existing spell catalog. **INFERRED:** the candidate collection belongs to current-player state. **UNKNOWN:** external triggers, object acquisition, cooldown and number-display inputs.
+
 ## [2026-11-14] implementation | Item-interaction TooltipData boundary
 
 [Round 7 tooltip getters](../specs/tooltip-r7-getters.md) records R88n.1's absent and failed producer no-values paths and the other-kind empty-lines table. The Retail host seam has no writer or seed; the original ItemInteraction tooltip path and separate API shape tests distinguish these cases.

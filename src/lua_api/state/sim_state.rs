@@ -325,8 +325,10 @@ pub struct SimState {
     pub item_interaction: Option<crate::c_api::c_item_interaction::ItemInteractionInfo>,
     /// One host-supplied item-interaction tooltip input; native writers are not modeled.
     pub item_interaction_tooltip_input: Option<crate::c_api::ItemInteractionTooltipInput>,
-    /// Host-supplied shared possession spell ID; no possession writer is modeled.
+    /// Shared possession spell ID; None represents unseeded host state.
     pub possession_spell_id: Option<u32>,
+    /// INFERRED current-player object snapshot; candidates and effects are host-supplied.
+    pub possession_object: Option<crate::c_api::c_tooltip_info_possession::PossessionObjectInput>,
     pub major_factions: HashMap<i64, MajorFactionData>,
     pub major_faction_renown_levels: HashMap<i64, Vec<RenownLevelInfo>>,
     /// Explicit pair-keyed reward inputs only; no fabricated default rows.
