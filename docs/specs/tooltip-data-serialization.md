@@ -28,6 +28,8 @@ publication is not expanded by this change.
 
 **VERIFIED (Retail 12.1.5.70688):** an emitted row has type 11, empty `leftText`, the resolved default `leftColor`, `price`, and `maxPrice`. `maxPrice` starts at -1 and is recomputed only without an item instance when prepared maximum quantity exceeds current quantity. The timed item-status path and one-shot instance marker control status suppression.
 
+**UNKNOWN (Retail 12.1.5.70688):** R88p.p1 does not identify the resolved type-11 `leftColor` RGB(A) components. It verifies that the row carries the resolved default color, but it does not support an exact component assertion.
+
 **INFERRED (Retail 12.1.5.70688):** the sell-exclusion masks map to ItemSparse `Flags_1` mask 4096 and `Flags_3` mask 524288; the preview exception maps to `Flags_3` mask 32768. The masks and branches are VERIFIED; these column names use another build's header.
 
 **VERIFIED (simulator model):** `ItemInfo` carries `sell_price` and `stackable`, but it does not carry `Flags_1`, `Flags_3`, item instances, status records, or prepared quantity state. **INFERRED (simulator policy):** `ItemInfo.sell_price` stands in for the native initial unit-price calculation. Therefore the simulator leaves status and flag gates unsuppressed and keeps `maxPrice` at -1; it does not add unbacked writers or exclusions. The alternate `ITEM_UNSELLABLE` path and adjusted-to-zero path remain unmodeled.
