@@ -19,7 +19,7 @@ The original dispositions1283/1285 established these seams; the R88w sections be
 - Restriction metadata is explicit; Lua taint alone is not treated as native restricted-execution metadata. Secret helpers apply only to matching known contracts.
 - Completion values/flags and state>1 permission have neutral explicit inputs; their service meanings are UNKNOWN. Pending errors are host supplied and are not automatically cleared.
 - R88w.w1/w4 resolve the earlier purchase-error payload and copy-gate questions: the implemented zero-payload notification and native copy gate are documented below.
-- R88w.w3 verifies zero state-change payload. Removal of the earlier host payload seam and its zero-arity tests are a separate pending implementation step.
+- R88w.w3 resolves all three state-change notifications as zero payload; no host-controlled payload remains.
 - Cleanup failures, complete protected-wrapper exits, exhaustive lifecycle clears, and server behavior remain unmodeled rather than receiving guessed fallbacks.
 
 ## Selected original Retail consumers
@@ -84,3 +84,9 @@ The earlier absent-character assertion that expected no copy solely because a ho
 VERIFIED Retail (#1308): the state0/1 route clears/replaces the separate shared list using the w4 nonempty/first-nonzero gate, then emits `STORE_VAS_PURCHASE_ERROR` with exactly zero event-specific values when its callback is present. This occurs before looking up/removing a character record. A lookup miss therefore still copies and notifies; it does not emit a later removal state-change. Error and complete events both have zero payload, not codes or a GUID. The callback-present flag is explicit host input, default absent.
 
 The approved #1310 RED fixture adapter could install only the existing callbacks; GREEN adds the real purchase-error callback flag. The producer is never mocked. Frozen tests exercise two different backed records and a lookup miss before checking state/order/zero arity.
+
+## R88w.w3 state-change notifications
+
+VERIFIED Retail (#1308): bulk replacement emits once after replacing the complete list, including empty replacement. State0/1 removal emits only after a matching record was removed. A state>1 update/addition emits only after the explicit native-predicate result permits it and the record is stored. All three `VAS_CHARACTER_STATE_CHANGED` sites now publish zero event-specific values. The obsolete host payload slices are removed from the host API.
+
+Per #1310, RED exercised the real former producer with its existing nonempty `[77]` host slice. GREEN removes only that obsolete adapter argument; the frozen record inputs, original-consumer/listener observations and assertions remain byte-identical. There is no test-supplied replacement publisher.

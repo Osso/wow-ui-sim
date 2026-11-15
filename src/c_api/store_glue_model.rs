@@ -151,11 +151,10 @@ pub fn receive_queue_response(
     )
 }
 
-/// State-change payload is a host input, not a claimed native arity.
+/// VERIFIED R88w.w3: full replacement emits one zero-payload notification.
 pub fn receive_bulk(
     env: &WowLuaEnv,
     records: Vec<(StoreGuid, VasPurchaseRecord)>,
-    state_change_payload: &[Val],
 ) -> crate::Result<()> {
     if !super::c_store_glue::enabled() {
         return Ok(());
@@ -166,7 +165,7 @@ pub fn receive_bulk(
         sim.store_glue.callbacks.state_changed
     };
     if notify {
-        env.fire_event_with_args("VAS_CHARACTER_STATE_CHANGED", state_change_payload)?;
+        env.fire_event_with_args("VAS_CHARACTER_STATE_CHANGED", &[])?;
     }
     Ok(())
 }
@@ -174,12 +173,7 @@ pub fn receive_bulk(
 /// VERIFIED state0/1 clear-first, removal, then state-change notification.
 /// VERIFIED R88w.w4: this state0/1 path copies a nonempty, first-nonzero list.
 /// R88w.w1/w4: gated zero-payload error notification precedes record search/removal.
-pub fn receive_removal(
-    env: &WowLuaEnv,
-    guid: &str,
-    errors: Vec<i32>,
-    state_change_payload: &[Val],
-) -> crate::Result<()> {
+pub fn receive_removal(env: &WowLuaEnv, guid: &str, errors: Vec<i32>) -> crate::Result<()> {
     if !super::c_store_glue::enabled() {
         return Ok(());
     }
@@ -196,21 +190,17 @@ pub fn receive_removal(
     if notify {
         env.fire_event_with_args("STORE_VAS_PURCHASE_ERROR", &[])?;
     }
-    remove_purchase_record(env, guid, state_change_payload)
+    remove_purchase_record(env, guid)
 }
 
-fn remove_purchase_record(
-    env: &WowLuaEnv,
-    guid: &str,
-    state_change_payload: &[Val],
-) -> crate::Result<()> {
+fn remove_purchase_record(env: &WowLuaEnv, guid: &str) -> crate::Result<()> {
     let notify = {
         let mut sim = env.state().borrow_mut();
         let removed = sim.store_glue.purchase_states.remove(guid).is_some();
         removed && sim.store_glue.callbacks.state_changed
     };
     if notify {
-        env.fire_event_with_args("VAS_CHARACTER_STATE_CHANGED", state_change_payload)?;
+        env.fire_event_with_args("VAS_CHARACTER_STATE_CHANGED", &[])?;
     }
     Ok(())
 }
@@ -221,7 +211,6 @@ pub fn receive_service_update(
     guid: StoreGuid,
     record: VasPurchaseRecord,
     permitted: Option<bool>,
-    state_change_payload: &[Val],
 ) -> crate::Result<()> {
     if !super::c_store_glue::enabled() {
         return Ok(());
@@ -236,7 +225,7 @@ pub fn receive_service_update(
         sim.store_glue.callbacks.state_changed
     };
     if notify {
-        env.fire_event_with_args("VAS_CHARACTER_STATE_CHANGED", state_change_payload)?;
+        env.fire_event_with_args("VAS_CHARACTER_STATE_CHANGED", &[])?;
     }
     Ok(())
 }

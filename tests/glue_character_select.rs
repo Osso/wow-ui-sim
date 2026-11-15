@@ -2705,9 +2705,9 @@ mod storeglue_r88q_host {
             c_store_glue::receive_bulk(&env, vec![
                 (A.into(), record(189, 6, &[31, 0])),
                 (B.into(), record(2003, 2, &[-23])),
-            ], &[]).unwrap();
+            ]).unwrap();
             env.exec(R88Q_LUA_10).unwrap();
-            c_store_glue::receive_bulk(&env, vec![], &[]).unwrap();
+            c_store_glue::receive_bulk(&env, vec![]).unwrap();
             env.exec(R88Q_LUA_11).unwrap();
         }
     }
@@ -2720,13 +2720,13 @@ mod storeglue_r88q_host {
             assert_records(&env);
             install_listener(&env);
             env.exec(R88Q_REMOVAL_BEFORE).unwrap();
-            c_store_glue::receive_removal(&env, A, vec![51, 0], &[]).unwrap();
+            c_store_glue::receive_removal(&env, A, vec![51, 0]).unwrap();
             assert_eq!(c_store_glue::purchase_errors(&env), vec![51, 0]);
             env.exec(R88Q_LUA_12).unwrap();
-            c_store_glue::receive_removal(&env, B, vec![-37], &[]).unwrap();
+            c_store_glue::receive_removal(&env, B, vec![-37]).unwrap();
             assert_eq!(c_store_glue::purchase_errors(&env), vec![-37]);
             env.exec(R88Q_LUA_13).unwrap();
-            c_store_glue::receive_removal(&env, ABSENT, vec![88], &[]).unwrap();
+            c_store_glue::receive_removal(&env, ABSENT, vec![88]).unwrap();
             // VERIFIED R88w.w4 supersedes the old neutral copy-eligibility input.
             assert_eq!(c_store_glue::purchase_errors(&env), vec![88]);
             env.exec("assert(#R88qEvents == 2)").unwrap();
@@ -3248,7 +3248,7 @@ mod storeglue_r88q_supplemental {
             state: 6,
             errors: vec![-37, 0],
         };
-        receive_service_update(env, guid.into(), record, permitted, &[]).unwrap();
+        receive_service_update(env, guid.into(), record, permitted).unwrap();
     }
     #[test]
     fn supplemental_service_update_requires_explicit_host_permission() {
@@ -3670,10 +3670,10 @@ mod storeglue_r88w {
         }
         pub fn remove(env: &WowLuaEnv, guid: &str, state: i32, errors: Vec<i32>) {
             assert!(matches!(state, 0 | 1));
-            model::receive_removal(env, guid, errors, &[rilua::Val::Num(77.0)]).unwrap();
+            model::receive_removal(env, guid, errors).unwrap();
         }
         pub fn bulk(env: &WowLuaEnv, records: Vec<(String, VasPurchaseRecord)>) {
-            model::receive_bulk(env, records, &[rilua::Val::Num(77.0)]).unwrap();
+            model::receive_bulk(env, records).unwrap();
         }
         pub fn service(
             env: &WowLuaEnv,
@@ -3681,14 +3681,7 @@ mod storeglue_r88w {
             record: VasPurchaseRecord,
             permitted: Option<bool>,
         ) {
-            model::receive_service_update(
-                env,
-                guid.into(),
-                record,
-                permitted,
-                &[rilua::Val::Num(77.0)],
-            )
-            .unwrap();
+            model::receive_service_update(env, guid.into(), record, permitted).unwrap();
         }
     }
 }
