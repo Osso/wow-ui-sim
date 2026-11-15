@@ -17,9 +17,6 @@ use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
 use rilua::{LuaResult, Val};
 
-const ESSENCE_USAGE: &str =
-    "Usage: local data = C_TooltipInfo.GetAzeriteEssence(essenceID [, rank])";
-const ESSENCE_SLOT_USAGE: &str = "Usage: local data = C_TooltipInfo.GetAzeriteEssenceSlot(slot)";
 const LFG_REWARD_USAGE: &str =
     "Usage: local data = C_TooltipInfo.GetLFGDungeonReward(dungeonID, lootIndex)";
 const LFG_SHORTAGE_USAGE: &str = concat!(
@@ -42,13 +39,8 @@ const RUNEFORGE_USAGE: &str = concat!(
 
 pub(crate) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
     let is_ptr = ACTIVE == ClientProfile::Ptr;
-    table_set_rust_fn_static(state, namespace, "GetAzeriteEssence", get_azerite_essence)?;
-    table_set_rust_fn_static(
-        state,
-        namespace,
-        "GetAzeriteEssenceSlot",
-        get_azerite_essence_slot,
-    )?;
+    crate::c_api::c_tooltip_info_azerite_essence::register_essence(state, namespace)?;
+    crate::c_api::c_tooltip_info_azerite_essence::register_slot(state, namespace)?;
     if !is_ptr {
         table_set_rust_fn_static(
             state,
@@ -91,36 +83,6 @@ pub(crate) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResu
         table_set_rust_fn_static(state, namespace, "GetSlottedKeystone", get_slotted_keystone)?;
     }
     Ok(())
-}
-
-fn get_azerite_essence(state: &mut LuaState) -> LuaResult<u32> {
-    let essence_id = tooltip_getter_args::round7_signed(state, 1, ESSENCE_USAGE)?;
-    let requested_rank = tooltip_getter_args::round7_optional_unsigned(state, 2, ESSENCE_USAGE)?;
-    let selected_rank = requested_rank.or_else(|| current_essence_rank(state, essence_id));
-    if selected_rank.is_none() {
-        return no_values();
-    }
-    // The state supplies the selected rank, but the rank-to-spell tooltip
-    // catalogue and spell-block producer are not modelled.
-    no_values()
-}
-
-fn get_azerite_essence_slot(state: &mut LuaState) -> LuaResult<u32> {
-    let slot = tooltip_getter_args::round7_signed(state, 1, ESSENCE_SLOT_USAGE)? as u8;
-    if slot > 3 {
-        return Err(rilua::runtime_error(format!(
-            "outside of expected range 0 to 3 - {ESSENCE_SLOT_USAGE}"
-        )));
-    }
-    let Some(essence_id) = active_essence_for_slot(state, i32::from(slot)) else {
-        return no_values();
-    };
-    if current_essence_rank(state, essence_id).is_none() {
-        return no_values();
-    }
-    // The state supplies the selected slot and rank, but not the native
-    // rank-to-spell tooltip catalogue or producer.
-    no_values()
 }
 
 fn get_item_interaction_item(state: &mut LuaState) -> LuaResult<u32> {
@@ -377,25 +339,6 @@ fn build_runeforge_result_data(
 fn get_slotted_keystone(_state: &mut LuaState) -> LuaResult<u32> {
     // The slotted GUID is not represented in simulator state.
     no_values()
-}
-
-fn current_essence_rank(state: &LuaState, essence_id: i32) -> Option<u32> {
-    borrow_state(state)
-        .ok()?
-        .azerite_essence
-        .essences
-        .get(&essence_id)
-        .and_then(|essence| u32::try_from(essence.rank).ok())
-}
-
-fn active_essence_for_slot(state: &LuaState, slot: i32) -> Option<i32> {
-    borrow_state(state)
-        .ok()?
-        .azerite_essence
-        .milestones
-        .iter()
-        .find(|milestone| milestone.slot == Some(slot))
-        .and_then(|milestone| milestone.active_essence_id)
 }
 
 fn find_quest_special_item_object(

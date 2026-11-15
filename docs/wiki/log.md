@@ -18,6 +18,7 @@
 
 [Inventory/purchase getters](investigations/inventory-purchase-getters.md) records R88k.1/.2 packed-key publication and refund records, empty host seams, selected consumer tests and explicit remaining VM limits.
 
+
 ## [2026-11-14] test | GameTooltip method contracts (pre-review-fix)
 
 **VERIFIED (Retail code SHA `4969fe0214412988f0131ae96a9f4a14c9229012`):** the original minimum-width arity/default/round-trip, pair-storage/`NumLines` separation, and conversion-error tests passed; the selected `GameTooltip_InsertFrame` preservation test passed. **PRESERVATION:** its scalar selector observes only the first getter result. These tests predate the review correction that gates producer probes as optional and removes unproved bad-self decoration assertions.
@@ -41,6 +42,9 @@ Added [GlobalColor catalog](systems/global-color-catalog.md) and the [Retail API
 ## [2026-11-14] implementation | Forever tooltip getter publication
 
 Updated the [modified-appearance](../specs/tooltip-appearance-item.md), [merchant-cost](../specs/tooltip-merchant-cost-item.md), [outfit](../specs/tooltip-outfit.md), and [PvP talent](../specs/tooltip-pvp-talent.md) contracts, plus the [Lua API](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation), with R88n.8. **VERIFIED (Forever 1.60.1.70707):** the four getters register; all five targeted optional tests pass, including the selected SpellBook consumer. That consumer result is **PRESERVATION**, since populated source rows are absent. **INFERRED:** `SimState.forever_outfits` supplies saved names. **UNKNOWN:** native writers, populated appearance/PvP data, and merchant availability/filter inputs.
+## [2026-11-14] correction | Retail Azerite Essence tooltip selection
+
+Updated the [Round 7 contract](../specs/tooltip-r7-getters.md), [Lua API](systems/lua-api.md#azerite-essence-tooltip-selection-r88n2), and [consumer-selection evidence](investigations/consumer-selection-and-red-proof.md#retail-azerite-essence-tooltip-consumers). R88n.2 selectors and verified heading conditions remain; R88n.4 builder order is implemented. Faction-specific source selection is UNKNOWN, so the simulator emits no source-description row and tests do not inspect source text. Inline rows, gray selection, empty-source behavior and requirements remain UNKNOWN.
 
 ## [2026-11-14] investigation | Retail tooltip serializer boundary
 

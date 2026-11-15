@@ -5,7 +5,16 @@ The Round 7 `C_TooltipInfo` getters use native argument readers and tooltip buil
 ## What it must do
 
 - [x] Publish all eleven getters on Retail 12.1.5 (70688) and Forever 1.60.1 (70707); publish only `GetAzeriteEssence` and `GetAzeriteEssenceSlot` on PTR 12.1.7 (70668), as established in Round 7.
-- [x] Use each getter's exact usage string, signed/unsigned conversion, optional argument, byte-slot, GUID, table and secret-argument rules from Round 7.
+- [x] Use each getter's exact usage string, signed/unsigned conversion, optional argument, slot, GUID, table and secret-argument rules from Round 7. The slot tests cover the verified rejection of slot 4. **UNKNOWN (native):** behavior for wide signed slot inputs that may be affected by the simulator's `u8` cast is not established; tests do not assert wide-value aliasing for inputs such as 256 or -256.
+- [x] Retail `GetAzeriteEssence` requires the essence record and exact selected-rank and rank-one records. It does not use a lower rank as a fallback; an explicit rank bypasses current-player rank lookup, and rank zero selects rank one (R88n.1/R88n.2).
+- [x] Without an explicit rank, `GetAzeriteEssence` and `GetAzeriteEssenceSlot` use current player rank data. A present rank-list miss supplies zero before rank-one selection. Missing player or player essence state returns zero Lua values (R88n.1/R88n.2).
+- [x] Failed tooltip formatters and missing Azerite essence/slot population inputs return exactly zero Lua values and do not publish a partial TooltipData result (R88n.1/R88n.4). Tests assert result arity only; they do not assert counter values.
+- [x] Retail Azerite Essence results use top-level TooltipData type 8 and essence ID. Main and passive powers use the shared spell producer. An active major slot selects the rank-one main description; any active slot selects the rank-one passive description. Otherwise each block uses the selected-rank actual spell (R88n.2).
+- [x] Retail `GetAzeriteEssenceSlot` uses zero-based slots 0–3. Slot zero includes main and passive power blocks; slots one through three omit the main block and keep the passive block. It omits the name/rank and next-rank source stages (R88n.2).
+- [x] INFERRED: map the four native spell-selector roles to the similarly named `AzeriteEssencePower` CSV columns from the exact-build 70391 export. Keep this mapping separate from verified rank and slot selection.
+- [x] Compute the source-stage next rank from the original rank, not the rank normalized for spell selection. Next rank four disables this stage; other next ranks require an exact record. The original consumer tests cover the verified heading conditions. The localized heading keys and row type are simulator policy.
+- [ ] UNKNOWN: faction-to-source-column mapping and missing/empty source behavior are not established. The simulator emits no source-description row; tests do not assert source text or its absence.
+- [ ] UNKNOWN: the inline major/minor description rows have no verified relative order, and the `powerState="gray"` selector is unknown. Requirement-row production is also unknown; do not emit guessed rows.
 - [x] On Retail 12.1.5 (70688), missing-source calls to `GetQuestLogSpecialItem` and `GetQuestPartyProgress` return exactly zero Lua values, not `nil` or a tooltip table (R88n.1).
 - [x] On Retail 12.1.5 (70688), `GetItemInteractionItem` returns zero values for a missing object or a failed kind-2/4 producer. A supplied object of any other kind returns one table with exactly one field, `lines`, containing an empty table. This path bypasses the builder and does not add `dataInstanceID` (VERIFIED, R88n.1).
 - [x] The simulator's INFERRED interface for this object is a separate empty-by-default host input beside the interaction dialog state. Kind-2/4 producers are not modeled, and their supplied objects take the verified failure path. Registration and argument handling are unchanged; PTR remains unpublished and Forever retains its no-value result.
@@ -22,16 +31,23 @@ The Round 7 `C_TooltipInfo` getters use native argument readers and tooltip buil
 - [x] On Retail, `GetQuestLogSpecialItem` resolves the one-based index through host-supplied quest-ID request context, reads primary/candidate item IDs from a separate host-supplied cache record, and uses only a host-supplied selected inventory object whose ID matches that record. It uses the shared item builder and publishes the selected instance GUID.
 - [x] On Retail, `GetQuestPartyProgress` publishes only an explicit host-supplied snapshot with type 24 and quest ID, the optional type-17 title row, supplied type-18 participant headings, and type-8 status/objective rows. The host supplies row text, colors, and participant-filter classification; no party/objective values are seeded.
 - [x] `omitTitle` omits the supplied title row, and `ignoreActivePlayer` filters only participant groups marked by the host.
-- [x] Tests exercise original selected consumers, the VERIFIED recipe-ID selector and qualitative rank-threshold behavior through the original accessor, the INFERRED concrete rank-1/rank-2 boundary and presentation, inferred simulator routes, the PRESERVATION miss case, argument errors, and backed runeforge instances.
+- [x] Optional Retail Azerite tests exercise original hovers for two distinct essence IDs, ranks and slots, plus an absent result per selector. They cover active-slot spell selection, verified heading edges, zero-value misses and verified argument errors. They do not assert faction source text, wide-slot aliases or counter values.
+- [ ] The broader Round 7 tests exercise recipe-rank selectors and inferred routes, the cross-feature PRESERVATION miss cases, argument errors, and backed runeforge instances.
 
 ## How it works
 
 - [Tooltip-data system](../wiki/systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) — argument readers, registration, producers and missing state.
+- [Azerite Essence tooltip selection](../wiki/systems/lua-api.md#azerite-essence-tooltip-selection-r88n2) — catalog, selected consumers, and evidence limits.
+- [Consumer-selection investigation](../wiki/investigations/consumer-selection-and-red-proof.md#retail-azerite-essence-tooltip-consumers) — original selectors and RED/PRESERVATION proof.
 - [Item socket count](item-num-sockets.md) — count and secrecy boundary.
 
 ## Implementation inventory
 
 - `src/c_api/c_tooltip_info_round7.rs` — Round 7 publication, arguments, missing-state decisions and owned-item runeforge path.
+- `src/c_api/c_tooltip_info_azerite_essence.rs` — Retail essence/slot rank selection, type-8 composition, and the bounded next-rank source stage.
+- `src/c_api/azerite_essence_spell_selector.rs` — isolated INFERRED spell-role-to-column mapping.
+- `src/c_api/tooltip_azerite_catalog_data.rs` — generated essence, rank, spell and unused raw source-column data from the 12.1.5.70391 DB2 CSV inputs.
+- `tools/gen_tooltip_azerite_catalog.py` and `data/db2/retail-12.1.5.70391/` — catalog generator, source tables and provenance.
 - `src/c_api/recipe_rank_tooltip.rs` and `src/lua_api/globals/missing_surface/tooltip_info/recipe_rank.rs` — empty-by-default recipe display-cache input and shared rank tooltip composition.
 - `src/lua_api/state/sim_state.rs` — host-supplied recipe rank cache storage.
 - `src/c_api/quest_party_progress.rs` — host-supplied party-progress snapshot input.
@@ -48,6 +64,7 @@ The Round 7 `C_TooltipInfo` getters use native argument readers and tooltip buil
 
 - `tests/tooltip_round7.rs` — registration, argument conversion, usage errors, original accessor miss paths, secret rejection and populated owned runeforge item instances.
 - `tests/tooltip_item_interaction_item.rs` — Retail-selected ItemInteraction slot through the original GameTooltip and TooltipDataHandler, and a separate exact Lua return-count and shape check.
+- `tests/tooltip_azerite_essence.rs` — optional Retail tests drive the original Azerite UI for distinct essence, rank and slot selections plus an absent result per selector. Tests retain verified next-rank headings and do not assert faction-specific source text.
 - `tests/tooltip_recipe_rank_info.rs` — VERIFIED recipe-ID selection and qualitative threshold behavior through the original accessor; the concrete rank-1/rank-2 boundary and exact presentation are INFERRED coverage; simulator-route tests are INFERRED; the zero-value miss test is PRESERVATION.
 - `tests/tooltip_quest_party_progress.rs` — selected ObjectiveTracker consumers, original tooltip accessor selectors, exact missing-source counts, and supplied owned-item selection.
 - `tests/tooltip_lfg_rewards.rs` — selected GroupFinder reward consumers, distinct ordinary/shortage entries and API-level no-value misses.
@@ -67,7 +84,7 @@ The Round 7 `C_TooltipInfo` getters use native argument readers and tooltip buil
 
 ## Known gaps (current cycle)
 
-- [ ] Azerite state supplies current essence ranks and active slots, but the rank-to-spell tooltip catalogue is absent; the getters return no values after resolving only the modeled selection. Possession spell/context and slotted-keystone GUID state are also not modeled; these getters return no values.
+- [ ] Retail `GetAzeriteEssence` does not compose inline major/minor next-rank rows, the `powerState="gray"` alternate, or requirement-localized lines. Faction-to-source-column selection is UNKNOWN; the simulator emits no faction-specific source-description row and does not claim empty-source parity. Possession spell/context and slotted-keystone GUID state are also not modeled.
 - [ ] Native item-interaction object selection actions, lifetime, events, and kind-2/4 success payload producers remain UNKNOWN; the simulator invents no writer, event or payload.
 - [ ] Complete recipe display-row semantics, upstream acquisition, external clear triggers, learned-status meaning and player/faction source lookup remain UNKNOWN; see [Recipe-rank evidence boundary](#recipe-rank-evidence-boundary). Recipe source text and labels are host inputs; specialization wording is not derived.
 - [ ] `GetQuestLogSpecialItem` keeps quest-ID context, quest-cache fields, and the selected inventory object as separate empty-by-default host inputs. The upstream cache, inventory/object writers, candidate predicates, and invalidation routes remain UNKNOWN. The native owner-GUID request context is not consumed by the shared simulator item builder.
@@ -81,6 +98,6 @@ The Round 7 `C_TooltipInfo` getters use native argument readers and tooltip buil
 
 ## Out of scope
 
-- Inventing state, catalogs, candidate predicates, party-progress rows, recipe labels, specialization text, source lookups, or tooltip lines for absent producer inputs.
+- Inventing state, catalogs, candidate predicates, party-progress rows, recipe labels, specialization text, or source lookups for absent producer inputs.
 - Synthesizing LFG reward snapshots or guessing the incoming packet/cache lifecycle.
 - Changing the native `GetItemNumSockets` count calculation or claiming a result-tag rule without its enable/mode semantics.

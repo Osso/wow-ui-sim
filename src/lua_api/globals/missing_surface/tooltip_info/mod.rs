@@ -187,6 +187,15 @@ pub(crate) fn tooltip_for_spell(state: &mut LuaState, spell_id: u32) -> Val {
     spell::tooltip_for_spell_id(state, spell_id)
 }
 
+/// Append the common spell lines to an existing tooltip without replacing its identity.
+pub(crate) fn append_spell_to_tooltip(
+    state: &mut LuaState,
+    tooltip: Val,
+    spell_id: u32,
+) -> LuaResult<()> {
+    spell::append_spell_to_tooltip(state, tooltip, spell_id)
+}
+
 /// Feed a merchant currency cost through the existing currency payload builder.
 /// The native cost getter passes an explicit zero quantity rather than the
 /// extended-cost amount (decomp Round 6 §2c), so the record's identity is the

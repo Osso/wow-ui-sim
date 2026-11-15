@@ -58,6 +58,20 @@ This is static staging, not observed RED/GREEN or runtime selection proof. Histo
 
 **VERIFIED (Retail 12.1.5.70688, R88n.4b):** the original rules read top-level `repairCost` and battle-pet fields, and read `price`/`maxPrice` from a type-11 line. **PRESERVATION (optional tests):** `tests/tooltip_serializer_fields.rs` passes distinct synthetic values through the selected original `ProcessInfo` rules; this does not establish a producer for those fields. **INFERRED (simulator policy):** the selected `SetItemByID` path maps positive `ItemInfo.sell_price` to a type-11 line's `price`; no `maxPrice` is emitted. The native eligibility predicate, line order and `maxPrice` source remain UNKNOWN.
 
+## Retail Azerite Essence tooltip consumers
+
+**VERIFIED (Retail 12.1.5 cache):** `data/blizzard-ui-files/retail.txt:879-882` lists the Azerite Essence UI files, `Blizzard_AzeriteEssenceUI.toc:1-3` marks the UI load-on-demand, and `retail.txt:3447` lists `Blizzard_SharedXMLGame/Tooltip/TooltipDataHandler.lua`. Game-screen discovery includes `Blizzard_SharedXMLGame`; the Azerite test discovers the UI addon's TOC dependency closure with that addon as an explicit LOD root. **VERIFIED (pinned API docs):** `TooltipInfoDocumentation.lua:69-95` declares `GetAzeriteEssence` and `GetAzeriteEssenceSlot`. **VERIFIED (original Lua):** `Blizzard_AzeriteEssenceUI.lua:866-869` calls `SetAzeriteEssence`; its slot hover at `1256-1265` calls `SetAzeriteEssenceSlot`; `TooltipDataHandler.lua:564-565` maps both setters to those getters.
+
+**VERIFIED (Retail 12.1.5.70688, R88n.1/R88n.2):** successful composition requires the essence, exact selected-rank and rank-one records, preserves TooltipData type 8 and essence ID, and returns zero values on the listed missing-source/failure paths. The main block uses rank-one description only in the active major slot; the passive block uses rank-one description whenever active in any slot. Otherwise, both use selected-rank actual text. Slot zero includes both blocks; other slots omit the main block.
+
+**VERIFIED (Retail 12.1.5.70688, R88n.2):** the source-stage next rank is computed from the original requested/current rank. Next rank four disables the stage; every other next rank requires an exact power row. Next rank one selects a source heading and requires nonempty source text; higher next ranks select a next-rank heading followed by source text. Source text wraps when emitted. The slot getter omits this stage. The simulator keeps the verified heading condition but emits no source-description row because the faction-to-column mapping is UNKNOWN.
+
+**VERIFIED (test fixture at `tests/tooltip_azerite_essence.rs:291-380`, test SHA `e7d90111473fdd9ed4fc8abeca5587d8e9486824`):** Game-screen discovery selects `Blizzard_SharedXMLGame`, the Azerite UI closure selects its load-on-demand addon, and the fixture loads the native GameTooltip/TooltipDataHandler source before it executes the original `Blizzard_AzeriteEssenceUI.lua` file. `debug.getinfo` checks both original `OnEnter` methods and both original accessor methods. The fixture does not load the full UI bootstrap or Azerite XML.
+
+**VERIFIED (saved historical receipts):** the no-op producer test tree `06f389052fb109bae1e782c2050698e229c13fdb` failed the original essence and slot hover selectors against no-op base `fb8d4fe08501fe65fc9e9c24db7bc420431d2a00`. The source-stage receipt at `adf40e1152227ad2e5d4cf0aff56c8437a410033` failed at the next-rank heading assertion; it does not prove faction-source selection. These are historical test trees, not the updated test commit. **VERIFIED (test commit `9565e57ab`):** the original-consumer tests include two distinct backed essence IDs, ranks and slots plus an absent result per selector; the suite contains no faction-source or counter-value assertions. Final GREEN results belong to the later producer commit and report.
+
+**VERIFIED (repository data):** `AzeriteEssence.csv` and `AzeriteEssencePower.csv` are exact-build 12.1.5.70391 Wago DB2 CSV exports, with hashes and row counts in `data/db2/retail-12.1.5.70391/tooltip-azerite-catalog-provenance.json`. **INFERRED:** the four native spell roles map to similarly named 70391 columns; the mapping is isolated in `src/c_api/azerite_essence_spell_selector.rs`. The generator retains the source columns as unused catalog data. **UNKNOWN:** faction-to-source-column selection, missing/empty source behavior, inline major/minor row order, the `powerState="gray"` predicate, and requirement-row expansion. The simulator emits no faction-specific source-description row, inline power row or requirement row; it does not claim native parity for those unknowns.
+
 ### R88n.3b quest-cache callback seam
 
 **VERIFIED (Retail native):** an unready quest-cache lookup saves callback/context entries; cache removal copies and invokes them after unlinking the old record. **VERIFIED (simulator source):** `QuestSpecialItemInputs` stores only index-to-quest, cache-record and selected-object maps; it has no pending callback or removal route. The special-item seam remains UNKNOWN, so this lane adds no async behavior.
@@ -118,11 +132,15 @@ The historical deferred `api_shape_stable_active_list.rs` is absent from master 
 - [Forever manifest](../../../data/blizzard-ui-files/wowforever.txt) — synchronized inputs, not runtime selection.
 - [Forever constants](../../../src/c_api/forever_finite_constants.rs) — StableUI prerequisite mismatch.
 - [Profile fixtures](../../../tests/common/profile_fixtures.rs) — compile-time registration mechanism.
+- [Retail Blizzard UI manifest](../../../data/blizzard-ui-files/retail.txt) — source-file and addon selection inputs.
+- [Round 7 tooltip contract](../../specs/tooltip-r7-getters.md) — API contract and bounded evidence.
+- [Azerite catalog provenance](../../../data/db2/retail-12.1.5.70391/tooltip-azerite-catalog-provenance.json) — exact-build DB2 inputs.
 
 ## See Also
 
 - [[addon-loading]] — runtime loading and dependency closure.
 - [[blizzard-ui-test-lanes]] — unit versus addon-bootstrap boundaries.
+- [[lua-api]] — C API contracts and implementation boundaries.
 
 ## CF-2 party minimum staging
 

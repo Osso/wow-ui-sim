@@ -14,6 +14,7 @@
 
 [Inventory/purchase getters](investigations/inventory-purchase-getters.md) records R88k.1/.2 packed-key publication and refund records, empty host seams, selected consumer tests and explicit remaining VM limits.
 
+
 ## [2026-11-14] implementation | GameTooltip minimum width and font strings
 
 [GameTooltip method contract](../specs/game-tooltip-methods.md), [Lua API](systems/lua-api.md#game-tooltip-minimum-width-and-font-strings), and [consumer selection](investigations/consumer-selection-and-red-proof.md#gametooltip-minimum-width-consumer) record R88n.7. **VERIFIED (Retail 12.1.5.70688):** the getter returns stored width and forced state; `AddFontStrings` appends a pair and resets its line-state, numeric slot, and layout-progress state without adding a `NumLines` entry. **VERIFIED (simulator history, `b6a107994`):** `ACTIVE` preserves pre-lane behavior outside Retail. **PRESERVATION:** the selected `GameTooltip_InsertFrame` consumer observes only the first getter result. **INFERRED:** pair retention across ClearLines/Hide and copying through CopyTooltip. **UNKNOWN:** later pair layout/rendering use and native parity outside Retail.
@@ -25,6 +26,9 @@
 ## [2026-11-14] implementation | Forever tooltip getter publication
 
 The [modified-appearance](../specs/tooltip-appearance-item.md), [merchant-cost](../specs/tooltip-merchant-cost-item.md), [outfit](../specs/tooltip-outfit.md), and [PvP talent](../specs/tooltip-pvp-talent.md) contracts and [Lua API](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) record R88n.8. **VERIFIED (Forever 1.60.1.70707):** the four getters register; tested missing-source results, argument handling, outfit zero/missing-name behavior, and the selected SpellBook consumer pass. The consumer is **PRESERVATION** because populated source records are not modeled. **INFERRED:** saved names map from `SimState.forever_outfits`. **UNKNOWN:** populated appearance/PvP records, native saved-outfit writers, and merchant availability/filter state.
+## [2026-11-14] correction | Retail Azerite Essence tooltip selection
+
+The [Round 7 contract](../specs/tooltip-r7-getters.md), [Lua API](systems/lua-api.md#azerite-essence-tooltip-selection-r88n2), and [consumer investigation](investigations/consumer-selection-and-red-proof.md#retail-azerite-essence-tooltip-consumers) record original-consumer selectors and verified builder timing. Spell-column mapping remains INFERRED; faction-to-source selection is UNKNOWN, so no source-description row is emitted. Inline-row order, gray selection, empty-source behavior and requirement rows remain UNKNOWN.
 
 ## [2026-11-14] implementation | Retail tooltip serializer field boundary
 
