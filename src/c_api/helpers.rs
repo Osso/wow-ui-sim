@@ -191,7 +191,7 @@ pub(crate) fn set_table_array(state: &mut LuaState, table: Val, index: i64, valu
     state.gc.barrier_back(table_ref);
 }
 
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 pub(crate) fn parse_replacement(state: &LuaState, value: Val, api: &str) -> LuaResult<String> {
     if value == Val::Nil {
         return Ok("*".to_owned());

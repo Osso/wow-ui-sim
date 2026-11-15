@@ -30,7 +30,14 @@ pub(crate) fn matching_count(sim: &SimState, reagent_id: i32) -> i64 {
 }
 
 fn admitted_root(bag: i32, mask: u32) -> bool {
-    (0..=5).contains(&bag) || (mask & 32 != 0 && (6..=16).contains(&bag))
+    use crate::client_profile::{ACTIVE, ClientProfile};
+    // INFERRED applicability; Forever's existing Enum.BagIndex bank tabs end at23.
+    let last_bank = if ACTIVE == ClientProfile::WowForever {
+        23
+    } else {
+        16
+    };
+    (0..=5).contains(&bag) || (mask & 32 != 0 && (6..=last_bank).contains(&bag))
 }
 
 fn admitted_container(sim: &SimState, mut bag: i32, mask: u32) -> bool {

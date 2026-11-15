@@ -30,3 +30,10 @@ The four initial RED selectors each include two distinct backed results and abse
 
 - [[lua-api]] — C_* boundary and state ownership.
 - [[consumer-selection-and-red-proof]] — original-consumer applicability versus API proof.
+
+
+## Follow-up R88r and Forever
+
+Main #1239 superseded the earlier UNKNOWN numeric-override and accepted-secret-number conversion gaps. Separate commits now verify numeric/numeric-string/spell-text replacement bypass and accepted-secret identifier truncation with independent RED/GREEN selectors; accepted-secret maxima are preservation tests against the unchanged signed reader. The native Lua metadata-source conditional remains unmodeled, so no secret identifier <=1 assertion was added.
+
+Main #1238 approved isolated profile-aware catalog routing and pure parser reuse, followed by INFERRED Forever enablement. The original selected Forever CooldownViewer consumer distinguishes two actual70685 cache spells and absence; UI provenance remains70707. The zero-return cast/display temporary defaults are retired only for Forever. All final compile/runtime proof remains in tracker receipts, not this repository.

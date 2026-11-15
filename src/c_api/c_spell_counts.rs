@@ -7,53 +7,66 @@ use super::c_action_bar_counts::format_display_count;
 use super::c_spell::read_public_spell_identifier_at;
 use super::c_spell::read_spell_identifier_value;
 use super::charge_state::cooldowns_are_restricted;
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 use super::charge_state::read_charge_input;
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 use super::helpers::parse_replacement;
-#[cfg(feature = "retail-12-1-5")]
-use crate::client_profile::ClientProfile;
+use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::methods::borrow_state;
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 use crate::lua_api::methods::{create_string, val_to_string};
 use crate::lua_bridge::stack_val;
 use rilua::runtime_error;
 use rilua::table_security::wrap_host_secret_number;
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 use rilua::table_security::{unwrap_secret, wrap_host_secret_string};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
 const CAST_API: &str = "C_Spell.GetSpellCastCount";
-#[cfg(feature = "retail-12-1-5")]
+#[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
 const CAST_USAGE: &str = "Usage: local castCount = C_Spell.GetSpellCastCount(spellIdentifier)";
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 const DISPLAY_API: &str = "C_Spell.GetSpellDisplayCount";
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 const DISPLAY_USAGE: &str = concat!(
     "Usage: local displayCount = C_Spell.GetSpellDisplayCount(",
     "spellIdentifier [, maxDisplayCount, replacementString])"
 );
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 const DEFAULT_DISPLAY_MAXIMUM: f64 = 9999.0;
-#[cfg(feature = "retail-12-1-5")]
+#[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
 const SPELL_REAGENT_PAIR_LIMIT: usize = 8;
 
-#[cfg(feature = "retail-12-1-5")]
+#[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
 fn native_count_contract_enabled() -> bool {
-    // INFERRED: PTR applicability of the VERIFIED Retail R88p contract.
+    // INFERRED: PTR and Forever declaration parity with VERIFIED Retail R88p/R88k/R88r.
     matches!(
-        crate::client_profile::ACTIVE,
-        ClientProfile::Retail | ClientProfile::Ptr
+        ACTIVE,
+        ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
     )
+}
+
+fn secret_count_input_enabled() -> bool {
+    matches!(ACTIVE, ClientProfile::WowForever)
+        || cfg!(all(
+            feature = "retail-12-0-5",
+            any(feature = "profile-retail", feature = "client-ptr")
+        ))
+}
+
+fn count_outputs_are_restricted(sim: &crate::lua_api::SimState) -> bool {
+    // INFERRED Forever count-only output policy; shared charge policy is unchanged.
+    if ACTIVE == ClientProfile::WowForever {
+        sim.cooldowns_restricted
+    } else {
+        cfg!(feature = "retail-12-0-5") && cooldowns_are_restricted(sim)
+    }
 }
 
 fn read_count_identifier(state: &LuaState, api: &str) -> LuaResult<Option<u32>> {
     let value = stack_val(state, 1);
-    let enabled = cfg!(all(
-        feature = "retail-12-0-5",
-        any(feature = "profile-retail", feature = "client-ptr")
-    ));
+    let enabled = secret_count_input_enabled();
     if enabled
         && rilua::table_security::secret_payload_kind(state, value)
             == Some(rilua::table_security::SecretPayloadKind::Number)
@@ -71,7 +84,7 @@ fn read_count_identifier(state: &LuaState, api: &str) -> LuaResult<Option<u32>> 
 }
 
 fn read_cast_count_identifier(state: &LuaState) -> LuaResult<Option<u32>> {
-    #[cfg(feature = "retail-12-1-5")]
+    #[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
     if native_count_contract_enabled() {
         let value = stack_val(state, 1);
         if rilua::table_security::secret_payload_kind(state, value)
@@ -91,7 +104,7 @@ fn read_cast_count_identifier(state: &LuaState) -> LuaResult<Option<u32>> {
     read_count_identifier(state, CAST_API)
 }
 
-#[cfg(feature = "retail-12-1-5")]
+#[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
 fn read_native_count_identifier(
     state: &LuaState,
     value: Val,
@@ -116,7 +129,7 @@ fn read_native_count_identifier(
     super::c_spell::read_retail_spell_identifier(state, value, api, usage)
 }
 
-#[cfg(feature = "retail-12-1-5")]
+#[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
 fn read_numeric_or_link_count_string(
     state: &LuaState,
     value: Val,
@@ -140,7 +153,7 @@ fn read_numeric_or_link_count_string(
     Ok(parsed.map(Some))
 }
 
-#[cfg(feature = "retail-12-1-5")]
+#[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
 fn unrepresented_count_number(state: &LuaState, value: Val) -> LuaResult<bool> {
     let number = match value {
         Val::Num(number) => Some(number),
@@ -155,15 +168,18 @@ fn unrepresented_count_number(state: &LuaState, value: Val) -> LuaResult<bool> {
 }
 
 fn cast_count_number(sim: &crate::lua_api::SimState, spell_id: Option<u32>) -> f64 {
-    #[cfg(feature = "retail-12-1-5")]
+    #[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
     if native_count_contract_enabled() {
         return spell_id.map_or(0.0, |id| retail_spell_cast_count(sim, id) as f64);
     }
-    f64::from(
+    #[cfg(feature = "retail-12-0-0")]
+    return f64::from(
         spell_id
             .and_then(|id| sim.spell_cast_counts.get(&id).copied())
             .unwrap_or(0),
-    )
+    );
+    #[cfg(not(feature = "retail-12-0-0"))]
+    unreachable!("Forever must select the native count contract")
 }
 
 pub(crate) fn get_spell_cast_count(state: &mut LuaState) -> LuaResult<u32> {
@@ -172,7 +188,7 @@ pub(crate) fn get_spell_cast_count(state: &mut LuaState) -> LuaResult<u32> {
         let sim = borrow_state(state)?;
         (
             cast_count_number(&sim, spell_id),
-            cfg!(feature = "retail-12-0-5") && cooldowns_are_restricted(&sim),
+            count_outputs_are_restricted(&sim),
         )
     };
     let result = if restricted {
@@ -211,7 +227,7 @@ pub(crate) fn get_spell_max_cumulative_aura_applications(state: &mut LuaState) -
     Ok(1)
 }
 
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 pub(crate) fn get_spell_display_count(state: &mut LuaState) -> LuaResult<u32> {
     // Authenticate every original stack root before parsing or model access.
     let identifier = authenticate_argument(state, 1)?;
@@ -230,9 +246,9 @@ pub(crate) fn get_spell_display_count(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 fn read_display_identifier(state: &LuaState, identifier: Val) -> LuaResult<Option<u32>> {
-    #[cfg(feature = "retail-12-1-5")]
+    #[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
     if native_count_contract_enabled() {
         return read_native_count_identifier(state, identifier, DISPLAY_API, DISPLAY_USAGE);
     }
@@ -240,25 +256,30 @@ fn read_display_identifier(state: &LuaState, identifier: Val) -> LuaResult<Optio
     read_spell_identifier_value(state, identifier)
 }
 
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 fn read_display_text(
     state: &LuaState,
     spell_id: Option<u32>,
     maximum: f64,
     replacement: &str,
 ) -> LuaResult<(String, bool)> {
-    #[cfg(feature = "retail-12-1-5")]
+    #[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
     if native_count_contract_enabled() {
         return read_retail_display_text(state, spell_id, maximum, replacement);
     }
-    let (quantity, restricted) = read_display_snapshot(state, spell_id)?;
-    Ok((
-        format_display_count(quantity, maximum, replacement),
-        restricted,
-    ))
+    #[cfg(feature = "retail-12-0-5")]
+    {
+        let (quantity, restricted) = read_display_snapshot(state, spell_id)?;
+        return Ok((
+            format_display_count(quantity, maximum, replacement),
+            restricted,
+        ));
+    }
+    #[cfg(not(feature = "retail-12-0-5"))]
+    unreachable!("Forever must select the native count contract")
 }
 
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 fn parse_display_maximum(state: &LuaState, value: Val) -> LuaResult<f64> {
     if value == Val::Nil {
         return Ok(DEFAULT_DISPLAY_MAXIMUM);
@@ -267,10 +288,10 @@ fn parse_display_maximum(state: &LuaState, value: Val) -> LuaResult<f64> {
         .map(f64::from)
 }
 
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 fn parse_spell_replacement(state: &LuaState, value: Val) -> LuaResult<String> {
     // VERIFIED R88k.5 line 11622: ordinary numeric replacements convert to text.
-    #[cfg(feature = "retail-12-1-5")]
+    #[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
     if native_count_contract_enabled() {
         if let Val::Num(number) = value
             && !rilua::table_security::is_secret_value(state, stack_val(state, 3))
@@ -281,10 +302,10 @@ fn parse_spell_replacement(state: &LuaState, value: Val) -> LuaResult<String> {
     parse_replacement(state, value, DISPLAY_API)
 }
 
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 fn authenticate_argument(state: &LuaState, position: i32) -> LuaResult<Val> {
     unwrap_secret(state, stack_val(state, position)).map_err(|_| {
-        #[cfg(feature = "retail-12-1-5")]
+        #[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
         if native_count_contract_enabled() {
             // VERIFIED R88p.p2: modeled mode 1 denies before conversion.
             let reason = format!(
@@ -296,7 +317,7 @@ fn authenticate_argument(state: &LuaState, position: i32) -> LuaResult<Val> {
     })
 }
 
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 fn validate_identifier(state: &LuaState, value: Val) -> LuaResult<()> {
     match value {
         Val::Num(number) if is_unsigned_u32(number) => Ok(()),
@@ -311,7 +332,7 @@ fn is_unsigned_u32(number: f64) -> bool {
     number.is_finite() && f64::from(number as u32) == number
 }
 
-#[cfg(feature = "retail-12-1-5")]
+#[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
 fn read_retail_display_text(
     state: &LuaState,
     spell_id: Option<u32>,
@@ -320,7 +341,7 @@ fn read_retail_display_text(
 ) -> LuaResult<(String, bool)> {
     let sim = borrow_state(state)?;
     let uses_cast_count = spell_id.is_some_and(|id| has_reagent_display_mode(&sim, id));
-    let restricted = cooldowns_are_restricted(&sim);
+    let restricted = count_outputs_are_restricted(&sim);
     let display = if uses_cast_count {
         let quantity = spell_id.map_or(0, |id| retail_spell_cast_count(&sim, id));
         format_retail_cast_display(quantity, maximum, replacement)
@@ -330,7 +351,7 @@ fn read_retail_display_text(
     Ok((display, restricted))
 }
 
-#[cfg(feature = "retail-12-1-5")]
+#[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
 fn read_retail_charge_display(sim: &crate::lua_api::SimState, spell_id: Option<u32>) -> String {
     let existing_spell = spell_id.filter(|id| crate::spells::get_spell(*id).is_some());
     let charge = existing_spell.and_then(|id| read_charge_input(sim, Some(id)));
@@ -340,7 +361,7 @@ fn read_retail_charge_display(sim: &crate::lua_api::SimState, spell_id: Option<u
         .unwrap_or_default()
 }
 
-#[cfg(feature = "retail-12-1-5")]
+#[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
 fn has_reagent_display_mode(sim: &crate::lua_api::SimState, spell_id: u32) -> bool {
     sim.spell_reagent_pairs.get(&spell_id).is_some_and(|pairs| {
         pairs
@@ -350,7 +371,7 @@ fn has_reagent_display_mode(sim: &crate::lua_api::SimState, spell_id: u32) -> bo
     })
 }
 
-#[cfg(feature = "retail-12-1-5")]
+#[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
 fn format_retail_cast_display(count: i64, maximum: f64, replacement: &str) -> String {
     if count > maximum as i64 {
         replacement.to_owned()
@@ -359,7 +380,7 @@ fn format_retail_cast_display(count: i64, maximum: f64, replacement: &str) -> St
     }
 }
 
-#[cfg(feature = "retail-12-1-5")]
+#[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
 fn retail_spell_cast_count(sim: &crate::lua_api::SimState, spell_id: u32) -> i64 {
     if crate::spells::get_spell(spell_id).is_none() || super::c_spell::spell_context_is_null(sim) {
         return 0;
@@ -376,7 +397,7 @@ fn retail_spell_cast_count(sim: &crate::lua_api::SimState, spell_id: u32) -> i64
     minimum_count.map(|count| count.max(0)).unwrap_or(0)
 }
 
-#[cfg(feature = "retail-12-1-5")]
+#[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
 fn reagent_cast_limit(
     sim: &crate::lua_api::SimState,
     reagent_id: i32,
@@ -393,7 +414,7 @@ fn reagent_cast_limit(
     Some(matching_reagent_count(sim, reagent_id) / i64::from(quantity))
 }
 
-#[cfg(feature = "retail-12-1-5")]
+#[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
 fn matching_reagent_count(sim: &crate::lua_api::SimState, reagent_id: i32) -> i64 {
     super::spell_reagent_inventory::matching_count(sim, reagent_id)
 }

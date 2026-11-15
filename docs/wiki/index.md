@@ -1,6 +1,6 @@
 ## [2026-11-15] investigation | Spell-count widths, inventory and inherited failures
 
-[Spell-count corrections](investigations/spell-count-r88p.md) records six executable historical boundaries, native-backed signed widths/storage traversal, and isolated corrections of contradicted or unknown assertions. Property decoding, detailed eligibility and exceptional-number outcomes remain explicit gaps.
+[Spell-count corrections](investigations/spell-count-r88p.md) records six executable historical boundaries, native-backed signed widths/storage traversal, isolated R88r numeric/secret corrections, and inferred Forever original-consumer coverage. Property decoding, detailed eligibility and exceptional-number outcomes remain explicit gaps.
 
 ## [2026-11-14] implementation | Achievement eligibility and tracker colors
 
