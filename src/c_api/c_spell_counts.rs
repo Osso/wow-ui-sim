@@ -59,42 +59,39 @@ fn read_count_identifier(state: &LuaState, api: &str) -> LuaResult<Option<u32>> 
     read_public_spell_identifier_at(state, 1, api)
 }
 
-pub(crate) fn get_spell_cast_count(state: &mut LuaState) -> LuaResult<u32> {
+fn read_cast_count_identifier(state: &LuaState) -> LuaResult<Option<u32>> {
     #[cfg(feature = "retail-12-1-5")]
-    let spell_id = if crate::client_profile::ACTIVE == ClientProfile::Retail
+    if crate::client_profile::ACTIVE == ClientProfile::Retail
         && !rilua::table_security::is_secret_value(state, stack_val(state, 1))
     {
-        super::c_spell::read_retail_spell_identifier(
+        return super::c_spell::read_retail_spell_identifier(
             state,
             stack_val(state, 1),
             CAST_API,
             CAST_USAGE,
-        )?
-    } else {
-        read_count_identifier(state, CAST_API)?
-    };
-    #[cfg(not(feature = "retail-12-1-5"))]
-    let spell_id = read_count_identifier(state, CAST_API)?;
+        );
+    }
+    read_count_identifier(state, CAST_API)
+}
+
+fn cast_count_number(sim: &crate::lua_api::SimState, spell_id: Option<u32>) -> f64 {
+    #[cfg(feature = "retail-12-1-5")]
+    if crate::client_profile::ACTIVE == ClientProfile::Retail {
+        return spell_id.map_or(0.0, |id| retail_spell_cast_count(sim, id) as f64);
+    }
+    f64::from(
+        spell_id
+            .and_then(|id| sim.spell_cast_counts.get(&id).copied())
+            .unwrap_or(0),
+    )
+}
+
+pub(crate) fn get_spell_cast_count(state: &mut LuaState) -> LuaResult<u32> {
+    let spell_id = read_cast_count_identifier(state)?;
     let (number, restricted) = {
         let sim = borrow_state(state)?;
-        #[cfg(feature = "retail-12-1-5")]
-        let number = if crate::client_profile::ACTIVE == ClientProfile::Retail {
-            spell_id.map_or(0.0, |id| retail_spell_cast_count(&sim, id) as f64)
-        } else {
-            f64::from(
-                spell_id
-                    .and_then(|id| sim.spell_cast_counts.get(&id).copied())
-                    .unwrap_or(0),
-            )
-        };
-        #[cfg(not(feature = "retail-12-1-5"))]
-        let number = f64::from(
-            spell_id
-                .and_then(|id| sim.spell_cast_counts.get(&id).copied())
-                .unwrap_or(0),
-        );
         (
-            number,
+            cast_count_number(&sim, spell_id),
             cfg!(feature = "retail-12-0-5") && cooldowns_are_restricted(&sim),
         )
     };
@@ -140,38 +137,10 @@ pub(crate) fn get_spell_display_count(state: &mut LuaState) -> LuaResult<u32> {
     let identifier = authenticate_argument(state, 1)?;
     let maximum_value = authenticate_argument(state, 2)?;
     let replacement_value = authenticate_argument(state, 3)?;
-    #[cfg(feature = "retail-12-1-5")]
-    let spell_id = if crate::client_profile::ACTIVE == ClientProfile::Retail {
-        super::c_spell::read_retail_spell_identifier(state, identifier, DISPLAY_API, DISPLAY_USAGE)?
-    } else {
-        validate_identifier(state, identifier)?;
-        read_spell_identifier_value(state, identifier)?
-    };
-    #[cfg(not(feature = "retail-12-1-5"))]
-    let spell_id = {
-        validate_identifier(state, identifier)?;
-        read_spell_identifier_value(state, identifier)?
-    };
+    let spell_id = read_display_identifier(state, identifier)?;
     let maximum = parse_display_maximum(state, maximum_value)?;
     let replacement = parse_replacement(state, replacement_value, DISPLAY_API)?;
-    #[cfg(feature = "retail-12-1-5")]
-    let (display, restricted) = if crate::client_profile::ACTIVE == ClientProfile::Retail {
-        read_retail_display_text(state, spell_id, maximum, &replacement)?
-    } else {
-        let (quantity, restricted) = read_display_snapshot(state, spell_id)?;
-        (
-            format_display_count(quantity, maximum, &replacement),
-            restricted,
-        )
-    };
-    #[cfg(not(feature = "retail-12-1-5"))]
-    let (display, restricted) = {
-        let (quantity, restricted) = read_display_snapshot(state, spell_id)?;
-        (
-            format_display_count(quantity, maximum, &replacement),
-            restricted,
-        )
-    };
+    let (display, restricted) = read_display_text(state, spell_id, maximum, &replacement)?;
     let result = if restricted {
         wrap_host_secret_string(state, &display)
     } else {
@@ -179,6 +148,39 @@ pub(crate) fn get_spell_display_count(state: &mut LuaState) -> LuaResult<u32> {
     };
     state.push(result);
     Ok(1)
+}
+
+#[cfg(feature = "retail-12-0-5")]
+fn read_display_identifier(state: &LuaState, identifier: Val) -> LuaResult<Option<u32>> {
+    #[cfg(feature = "retail-12-1-5")]
+    if crate::client_profile::ACTIVE == ClientProfile::Retail {
+        return super::c_spell::read_retail_spell_identifier(
+            state,
+            identifier,
+            DISPLAY_API,
+            DISPLAY_USAGE,
+        );
+    }
+    validate_identifier(state, identifier)?;
+    read_spell_identifier_value(state, identifier)
+}
+
+#[cfg(feature = "retail-12-0-5")]
+fn read_display_text(
+    state: &LuaState,
+    spell_id: Option<u32>,
+    maximum: f64,
+    replacement: &str,
+) -> LuaResult<(String, bool)> {
+    #[cfg(feature = "retail-12-1-5")]
+    if crate::client_profile::ACTIVE == ClientProfile::Retail {
+        return read_retail_display_text(state, spell_id, maximum, replacement);
+    }
+    let (quantity, restricted) = read_display_snapshot(state, spell_id)?;
+    Ok((
+        format_display_count(quantity, maximum, replacement),
+        restricted,
+    ))
 }
 
 #[cfg(feature = "retail-12-0-5")]
@@ -228,14 +230,19 @@ fn read_retail_display_text(
         let quantity = spell_id.map_or(0, |id| retail_spell_cast_count(&sim, id));
         format_retail_cast_display(quantity, maximum, replacement)
     } else {
-        spell_id
-            .filter(|id| crate::spells::SPELL_DB.get(id).is_some())
-            .and_then(|id| read_charge_input(&sim, Some(id)))
-            .filter(|charge| charge.max_charges > 1)
-            .map(|charge| charge.current_charges.to_string())
-            .unwrap_or_default()
+        read_retail_charge_display(&sim, spell_id)
     };
     Ok((display, restricted))
+}
+
+#[cfg(feature = "retail-12-1-5")]
+fn read_retail_charge_display(sim: &crate::lua_api::SimState, spell_id: Option<u32>) -> String {
+    let existing_spell = spell_id.filter(|id| crate::spells::SPELL_DB.get(id).is_some());
+    let charge = existing_spell.and_then(|id| read_charge_input(sim, Some(id)));
+    let multi_charge = charge.filter(|charge| charge.max_charges > 1);
+    multi_charge
+        .map(|charge| charge.current_charges.to_string())
+        .unwrap_or_default()
 }
 
 #[cfg(feature = "retail-12-1-5")]
@@ -270,24 +277,33 @@ fn retail_spell_cast_count(sim: &crate::lua_api::SimState, spell_id: u32) -> i64
     // Only the ordinary inventory path is modeled. Metadata masks 2 and 32,
     // alternate inventory counting, inclusion rules, and active-record limits
     // have no matching SimState inputs and remain UNKNOWN.
-    reagents
-        .iter()
-        .take(SPELL_REAGENT_PAIR_LIMIT)
-        .filter_map(|(reagent_id, quantity)| {
-            if *reagent_id == 0 || *reagent_id == -2 || *quantity <= 0 {
-                return None;
-            }
-            let inventory_count = sim
-                .bag_items
-                .values()
-                .filter(|item| i64::from(item.item_id) == i64::from(*reagent_id))
-                .map(|item| i64::from(item.stack_count))
-                .sum::<i64>();
-            Some(inventory_count / i64::from(*quantity))
-        })
-        .min()
-        .map(|count| count.max(0))
-        .unwrap_or(0)
+    let limited_reagents = reagents.iter().take(SPELL_REAGENT_PAIR_LIMIT);
+    let cast_limits =
+        limited_reagents.filter_map(|(id, quantity)| reagent_cast_limit(sim, *id, *quantity));
+    let minimum_count = cast_limits.min();
+    minimum_count.map(|count| count.max(0)).unwrap_or(0)
+}
+
+#[cfg(feature = "retail-12-1-5")]
+fn reagent_cast_limit(
+    sim: &crate::lua_api::SimState,
+    reagent_id: i32,
+    quantity: i32,
+) -> Option<i64> {
+    if reagent_id == 0 || reagent_id == -2 || quantity <= 0 {
+        return None;
+    }
+    Some(matching_reagent_count(sim, reagent_id) / i64::from(quantity))
+}
+
+#[cfg(feature = "retail-12-1-5")]
+fn matching_reagent_count(sim: &crate::lua_api::SimState, reagent_id: i32) -> i64 {
+    let matching_items = sim
+        .bag_items
+        .values()
+        .filter(|item| i64::from(item.item_id) == i64::from(reagent_id));
+    let stack_counts = matching_items.map(|item| i64::from(item.stack_count));
+    stack_counts.sum::<i64>()
 }
 
 #[cfg(feature = "retail-12-0-5")]

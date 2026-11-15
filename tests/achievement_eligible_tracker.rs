@@ -22,16 +22,7 @@ use wow_ui_sim::toc::TocFile;
 fn original_tracker() -> WowLuaEnv {
     let root = wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap();
     let addons = wow_ui_sim::loader::discover_blizzard_addons_for_screen(&root, ScreenKind::Game);
-    let (_, toc_path) = addons
-        .iter()
-        .find(|(name, _)| name == "Blizzard_ObjectiveTracker")
-        .expect("ObjectiveTracker in selected Game addons");
-    let toc = TocFile::from_file(toc_path).unwrap();
-    assert!(
-        toc.files
-            .iter()
-            .any(|file| file == Path::new("Blizzard_AchievementObjectiveTracker.lua"))
-    );
+    assert_selected_tracker_source(&addons);
 
     let env = WowLuaEnv::new().expect("Lua environment");
     env.set_screen_size(1024.0, 768.0);
@@ -44,6 +35,24 @@ fn original_tracker() -> WowLuaEnv {
     }
     env.apply_post_load_workarounds();
     wow_ui_sim::startup::fire_startup_events_for_screen(&env, ScreenKind::Game);
+    track_fixture_achievement(&env);
+    env
+}
+
+fn assert_selected_tracker_source(addons: &[(String, std::path::PathBuf)]) {
+    let (_, toc_path) = addons
+        .iter()
+        .find(|(name, _)| name == "Blizzard_ObjectiveTracker")
+        .expect("ObjectiveTracker in selected Game addons");
+    let toc = TocFile::from_file(toc_path).unwrap();
+    assert!(
+        toc.files
+            .iter()
+            .any(|file| file == Path::new("Blizzard_AchievementObjectiveTracker.lua"))
+    );
+}
+
+fn track_fixture_achievement(env: &WowLuaEnv) {
     let kind: i32 = env
         .eval("return Enum.ContentTrackingType.Achievement")
         .unwrap();
@@ -57,7 +66,6 @@ fn original_tracker() -> WowLuaEnv {
             .tracked_ids_by_type
             .insert(u32::try_from(kind).unwrap(), vec![6]);
     }
-    env
 }
 
 fn observe(env: &WowLuaEnv, style: &str) {
