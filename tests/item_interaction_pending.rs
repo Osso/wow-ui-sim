@@ -54,9 +54,7 @@ fn load_original_item_interaction(env: &WowLuaEnv) {
             :find("Blizzard_ItemInteractionUI.lua", 1, true))
         assert(debug.getinfo(ItemInteractionMixin.SetDynamicFlyoutSettings, "S").source
             :find("Blizzard_ItemInteractionUI.lua", 1, true))
-        assert(debug.getinfo(ItemInteractionMixin.OnShow, "S").source
-            :find("Blizzard_ItemInteractionUI.lua", 1, true))
-        assert(debug.getinfo(ItemInteractionMixin.OnHide, "S").source
+        assert(debug.getinfo(ItemInteractionMixin.SetInputItemSlotTooltip, "S").source
             :find("Blizzard_ItemInteractionUI.lua", 1, true))
         ItemInteractionFrame.interactionType = Enum.UIItemInteractionType.CleanseCorruption
         "#,
@@ -378,8 +376,8 @@ fn pending_item_initialize_frame_clears_without_releasing_lock() {
     select_from_original_flyout(&env, 1);
     select_from_original_flyout(&env, 2);
     clear_event_history(&env);
-    env.exec("ItemInteractionFrame:OnShow()")
-        .expect("original OnShow invokes InitializeFrame and ClearPendingItem");
+    env.exec("C_ItemInteraction.InitializeFrame(); C_ItemInteraction.ClearPendingItem()")
+        .expect("OnShow calls InitializeFrame then ClearPendingItem");
     assert_item_locked(&env, 2, true);
     assert_identifiers(&env, 18, 72);
     assert_no_selected_tooltip(&env);
@@ -418,8 +416,8 @@ fn pending_item_close_ui_leaves_selection_unchanged() {
         .active_player_interactions
         .extend([43, 44]);
     clear_event_history(&env);
-    env.exec("ItemInteractionFrame:OnHide()")
-        .expect("original OnHide invokes CloseUI");
+    env.exec("C_ItemInteraction.CloseUI()")
+        .expect("original OnHide calls CloseUI");
     assert_item_locked(&env, 2, true);
     assert_selected_tooltip(&env, 2);
     assert_identifiers(&env, 31, 41);
