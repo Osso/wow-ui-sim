@@ -469,7 +469,8 @@ fn blizzard_macro_ui_publishes_macro_popup_frame_mixin_with_seven_methods(env: &
 #[cfg(feature = "client-ptr")]
 #[test]
 fn ptr_macro_save_placeholder_is_replaced_by_lod_delegate() {
-    let env = fresh_game_env();
+    // Retain the historical selector, but load the real startup dependencies first.
+    let env = selected_startup_before_macro_lod();
     load_addon(&env.loader_env(), &macro_ui_toc())
         .expect("Blizzard_MacroUI loads through its explicit LoD entry point");
 
@@ -631,8 +632,7 @@ fn blizzard_macro_ui_publishes_macro_popup_frame_global_parented_to_macro_frame(
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
-#[test]
-fn mainline_macro_save_delegate_is_published_after_lod_load() {
+fn selected_startup_before_macro_lod() -> WowLuaEnv {
     let env = fresh_game_env();
     let ui = blizzard_ui_dir();
     for (name, toc_path) in discover_blizzard_addons_for_screen(&ui, ScreenKind::Game) {
@@ -651,6 +651,14 @@ fn mainline_macro_save_delegate_is_published_after_lod_load() {
     }
     env.apply_post_load_workarounds();
     fire_startup_events_for_screen(&env, ScreenKind::Game);
+
+    env
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn mainline_macro_save_delegate_is_published_after_lod_load() {
+    let env = selected_startup_before_macro_lod();
 
     let save_delegate_unpublished: bool = env
         .eval("return MacroFrame_SaveMacro == nil")
