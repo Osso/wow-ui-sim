@@ -206,7 +206,10 @@ pub(crate) fn register_namespace_value_with_flags(
     let global_parent = state.global;
     let ordinary = publish_global.then(|| ensure_table_at_parent(state, global_parent, namespace));
     let secure_parent = if publish_secure {
-        Some(crate::lua_api::globals::security::secure_env_table(state)?)
+        match crate::lua_api::methods::registry_get(state, "__secureenv") {
+            Val::Table(parent) => Some(parent),
+            _ => None,
+        }
     } else {
         None
     };
@@ -310,7 +313,10 @@ fn ensure_table_at_parent(state: &mut LuaState, parent: GcRef<Table>, name: &str
 
 #[cfg(test)]
 mod tests {
-    use super::{ensure_namespace_pair, register_namespace_function_with_flags};
+    use super::{
+        ensure_namespace_pair, register_namespace_function_with_flags,
+        register_namespace_value_with_flags,
+    };
     use crate::lua_api::WowLuaEnv;
     use crate::lua_api::methods::{registry_get, table_get_static};
     use rilua::vm::state::LuaState;
@@ -484,6 +490,14 @@ mod tests {
             3,
         )
         .expect("register dual namespace member");
+        register_namespace_value_with_flags(
+            lua.state_mut(),
+            "bothwithoutenv",
+            "value",
+            Val::Bool(true),
+            3,
+        )
+        .expect("register dual namespace value without secure environment");
 
         assert!(matches!(
             LuaApiMut::get_global_val(&mut lua, "secureonlywithoutenv"),
@@ -495,6 +509,10 @@ mod tests {
             table_get_static(lua.state_mut(), ordinary, "probe"),
             Val::Function(_)
         ));
+        assert_eq!(
+            table_get_static(lua.state_mut(), ordinary, "value"),
+            Val::Bool(true)
+        );
         assert!(!matches!(
             registry_get(lua.state_mut(), "__secureenv"),
             Val::Table(_)

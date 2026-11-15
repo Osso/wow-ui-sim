@@ -14,39 +14,85 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     table_set_rust_fn_static(state, namespace, "GetProductGroups", get_product_groups)
 }
 
+// VERIFIED — R88g.3.q1, Retail 12.1.5.70688: every listed member uses flag 3.
+// The cached Store UI inventory is not build-verified.
+const RETAIL_STORE_UI_FLAG_3_MEMBERS: [&str; 43] = [
+    "AckFailure",
+    "ClearPreGeneratedExternalTransactionID",
+    "GetBnetTransferInfo",
+    "GetCharacterInfoByGUID",
+    "GetCharactersForRealm",
+    "GetConfirmationInfo",
+    "GetCurrencyID",
+    "GetCurrencyInfo",
+    "GetEligibleRacesForVASService",
+    "GetEntryInfo",
+    "GetFailureInfo",
+    "GetProductGroupInfo",
+    "GetProductGroups",
+    "GetProductInfo",
+    "GetProductList",
+    "GetProducts",
+    "GetPurchaseList",
+    "GetRealmList",
+    "GetUnrevokedBoostInfo",
+    "GetVASCompletionInfo",
+    "GetVASErrors",
+    "GetVASGuildMasterInfoForCharacterByGUID",
+    "GetVASRealmList",
+    "GetVasServiceType",
+    "GetWoWAccountGUIDFromName",
+    "HasDistributionList",
+    "HasDynamicPriceData",
+    "HasProductList",
+    "HasPurchaseInProgress",
+    "HasPurchaseList",
+    "IsAvailable",
+    "IsDynamicBundle",
+    "IsRegionLocked",
+    "OpenNydusLink",
+    "PurchaseProduct",
+    "PurchaseProductConfirm",
+    "PurchaseVASProduct",
+    "RequestAllDynamicPriceInfo",
+    "RequestCharacterGuildFollowInfo",
+    "RequestRealmGuildMasterInfo",
+    "SetDisconnectOnLogout",
+    "SetVASProductReady",
+    "ValidateBnetTransfer",
+];
+
 pub(crate) fn publish_simulator_members_to_secure(state: &mut LuaState) -> LuaResult<()> {
     if !crate::client_profile::is_active_retail_12_1_5() {
         return Ok(());
     }
 
-    // INFERRED (R88g.3-q1 pending): secure Retail Store UI needs this
-    // simulator-owned API surface.
-    let ordinary = super::global_val(state, "C_StoreSecure");
-    let Val::Table(ordinary) = ordinary else {
+    let namespace = super::global_val(state, "C_StoreSecure");
+    let Val::Table(_) = namespace else {
         return Err(rilua::runtime_error(
             "C_StoreSecure must be registered before secure publication",
         ));
     };
-    let secure = super::ensure_secure_namespace(state, "C_StoreSecure")?;
-    let members = state
-        .gc
-        .tables
-        .get(ordinary)
-        .ok_or_else(|| rilua::runtime_error("C_StoreSecure namespace is unavailable"))?
-        .hash_entries();
-
-    let strings = &state.gc.string_arena;
-    let secure_table = state
-        .gc
-        .tables
-        .get_mut(secure)
-        .ok_or_else(|| rilua::runtime_error("secure C_StoreSecure namespace is unavailable"))?;
-    for (key, value) in members {
-        if matches!(key, Val::Str(_)) && matches!(value, Val::Function(_)) {
-            secure_table.raw_set(key, value, strings)?;
+    for member in RETAIL_STORE_UI_FLAG_3_MEMBERS {
+        let value = table_get_static(state, namespace, member);
+        match value {
+            Val::Function(_) => {
+                super::register_namespace_value_with_flags(
+                    state,
+                    "C_StoreSecure",
+                    member,
+                    value,
+                    3,
+                )?;
+            }
+            Val::Nil => {}
+            _ => {
+                return Err(rilua::runtime_error(format!(
+                    "C_StoreSecure.{member} must be a function"
+                )));
+            }
         }
     }
-    state.gc.barrier_back(secure);
     Ok(())
 }
 
@@ -103,6 +149,8 @@ fn read_group_ids(state: &mut LuaState, groups: GcRef<Table>) -> LuaResult<Vec<V
 #[cfg(test)]
 mod tests {
     use crate::lua_api::WowLuaEnv;
+    use crate::lua_api::methods::table_get_static;
+    use rilua::Val;
 
     #[cfg(feature = "client-retail")]
     #[test]
@@ -112,6 +160,36 @@ mod tests {
         }
 
         let env = WowLuaEnv::new().expect("Lua environment should initialize");
+        let (implemented, missing) = {
+            let mut lua = env.rilua_mut();
+            let state = lua.state_mut();
+            let ordinary = crate::c_api::global_val(state, "C_StoreSecure");
+            let secure = crate::lua_api::methods::registry_get(state, "__secureenv");
+            let mut implemented = 0;
+            let mut missing = Vec::new();
+            for member in super::RETAIL_STORE_UI_FLAG_3_MEMBERS {
+                match table_get_static(state, ordinary, member) {
+                    Val::Function(_) => {
+                        implemented += 1;
+                        if !matches!(table_get_static(state, secure, member), Val::Function(_)) {
+                            missing.push(member);
+                        }
+                    }
+                    Val::Nil => {}
+                    _ => missing.push(member),
+                }
+            }
+            (implemented, missing)
+        };
+        assert!(
+            implemented > 1,
+            "the verified Store UI inventory is not vacuous"
+        );
+        assert!(
+            missing.is_empty(),
+            "implemented flag-3 members missing from secure C_StoreSecure: {missing:?}"
+        );
+
         env.exec_rilua_secure("SecureStoreProductListResult = C_StoreSecure.GetProductList()")
             .expect("secure Store UI can call the simulated product-list API");
 
