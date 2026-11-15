@@ -662,6 +662,7 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 }
 
 pub(crate) fn patch(env: &WowLuaEnv) {
+    // The broad fallback strings stay shared; ACTIVE selects their installation.
     let source = if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
         String::new()
     } else {
