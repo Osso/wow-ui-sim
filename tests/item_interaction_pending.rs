@@ -3,11 +3,13 @@
 #[path = "tooltip_full_env_helpers.rs"]
 mod tooltip_full_env_helpers;
 
+use wow_ui_sim::c_api::bag_info::BagInfo;
 use wow_ui_sim::c_api::{
     ItemInteractionTooltipInput, ItemInteractionTooltipLine,
     c_item_interaction::ItemInteractionInfo,
 };
 use wow_ui_sim::lua_api::WowLuaEnv;
+use wow_ui_sim::lua_api::state::EquippedItem;
 
 const ITEM_A: u32 = 128_910;
 const ITEM_B: u32 = 158_923;
@@ -90,9 +92,12 @@ fn install_event_probe(env: &WowLuaEnv) {
             if event == "PLAYER_INTERACTION_MANAGER_FRAME_HIDE" then
                 table.insert(PendingHideEvents, payload)
             elseif event == "ITEM_INTERACTION_ITEM_SELECTION_UPDATED" then
-                table.insert(PendingSelectionEvents, payload
-                    and PendingLocationIDs[payload.bagID .. ":" .. payload.slotIndex]
-                    or false)
+                local itemID
+                if payload and payload.bagID ~= nil and payload.slotIndex ~= nil then
+                    local key = tostring(payload.bagID) .. ":" .. tostring(payload.slotIndex)
+                    itemID = PendingLocationIDs[key]
+                end
+                table.insert(PendingSelectionEvents, itemID or false)
             end
         end)
         "#,
@@ -109,18 +114,27 @@ fn select_from_original_cursor(env: &WowLuaEnv, slot: u32) {
         .unwrap();
 }
 
-fn select_from_original_flyout(env: &WowLuaEnv, slot: u32) {
+fn select_from_original_location(env: &WowLuaEnv, location: &str) {
     env.exec(&format!(
         r#"
         ItemInteractionFrame:SetupEquipmentFlyout(true)
         ItemInteractionFrame:SetDynamicFlyoutSettings()
         local button = ItemInteractionFrame.ItemConversionFrame.ItemConversionInputSlot
-        button:SetItemLocation(ItemLocation:CreateFromBagAndSlot(0, {slot}))
+        button.itemLocation = {location}
         PendingOrderEvents = {{}}
-        ItemInteractionFrame.flyoutSettings.onClickFunc(button)
+        local onClick = ItemInteractionFrame.flyoutSettings.onClickFunc
+        assert(debug.getinfo(onClick, "S").source:find("Blizzard_ItemInteractionUI.lua", 1, true))
+        onClick(button)
         "#
     ))
     .unwrap();
+}
+
+fn select_from_original_flyout(env: &WowLuaEnv, slot: u32) {
+    select_from_original_location(
+        env,
+        &format!("ItemLocation:CreateFromBagAndSlot(0, {slot})"),
+    );
 }
 
 fn stage_cursor_item(env: &WowLuaEnv) {
@@ -453,12 +467,212 @@ fn pending_item_close_ui_leaves_selection_unchanged() {
         "assert(#PendingSelectionEvents == 0 and #PendingHideEvents == 1 and PendingHideEvents[1] == 44)",
     )
     .unwrap();
+    clear_from_original_slot(&env);
+    assert_no_selected_tooltip(&env);
+}
+
+#[test]
+fn pending_item_close_ui_inactive_selector_sends_no_hide() {
+    let env = pending_env(&[]);
+    env.state()
+        .borrow_mut()
+        .active_player_interactions
+        .insert(43);
     clear_event_history(&env);
     env.exec("C_ItemInteraction.CloseUI()")
         .expect("inactive selector 44 does not request a hide notification");
     env.exec("assert(#PendingHideEvents == 0)").unwrap();
-    clear_from_original_slot(&env);
-    assert_no_selected_tooltip(&env);
+}
+
+fn set_bag_slot_count(env: &WowLuaEnv, bag: i32, num_slots: i32) {
+    let mut sim = env.state().borrow_mut();
+    let info = sim.bag_info.entry(bag).or_insert(BagInfo {
+        num_slots: 0,
+        family: 0,
+        name: None,
+        inventory_slot: None,
+        item_id: None,
+        hyperlink: None,
+        owned_identity: None,
+    });
+    info.num_slots = num_slots;
+}
+
+fn add_pending_bag_item(env: &WowLuaEnv, bag: i32, slot: i32, item_id: u32) {
+    env.exec(&format!("A_Admin.AddBagItem({bag}, {slot}, {item_id}, 1)"))
+        .unwrap();
+}
+
+fn seed_equipped_items(env: &WowLuaEnv, items: &[(i32, u32)]) {
+    let mut sim = env.state().borrow_mut();
+    sim.player.equipped_items.clear();
+    for (slot, item_id) in items {
+        sim.player.equipped_items.insert(
+            *slot,
+            EquippedItem {
+                owned_identity: None,
+                item_id: *item_id,
+                enchant_id: 0,
+                gem_ids: [0; 3],
+                applied_transmog: None,
+            },
+        );
+    }
+}
+
+fn assert_equipped_item_locked(env: &WowLuaEnv, slot: i32, locked: bool) {
+    env.exec(&format!(
+        "assert(C_Item.IsLocked(ItemLocation:CreateFromEquipmentSlot({slot})) == {locked})"
+    ))
+    .unwrap();
+}
+
+fn assert_bag_slot_locked(env: &WowLuaEnv, bag: i32, slot: i32, locked: bool) {
+    env.exec(&format!(
+        "assert(C_Item.IsLocked(ItemLocation:CreateFromBagAndSlot({bag}, {slot})) == {locked})"
+    ))
+    .unwrap();
+}
+
+#[test]
+fn pending_item_accepts_numeric_string_location_fields() {
+    let env = pending_env(&[ITEM_A]);
+    select_from_original_location(&env, "{bagID = '0', slotIndex = '1'}");
+    assert_item_locked(&env, 1, true);
+}
+
+#[test]
+fn pending_item_truncates_location_fields_toward_zero() {
+    let env = pending_env(&[ITEM_A, ITEM_B]);
+    select_from_original_location(&env, "ItemLocation:CreateFromBagAndSlot(-0.9, 2.9)");
+    assert_item_locked(&env, 2, true);
+    assert_item_locked(&env, 1, false);
+}
+
+#[test]
+fn pending_item_uses_bag_fields_when_equipment_field_is_not_numeric() {
+    let env = pending_env(&[ITEM_A]);
+    select_from_original_location(
+        &env,
+        "(function() local location = ItemLocation:CreateEmpty(); location.equipmentSlotIndex = 'not numeric'; location.bagID = 0; location.slotIndex = 1; return location end)()",
+    );
+    assert_item_locked(&env, 1, true);
+}
+
+#[test]
+fn pending_item_prefers_numeric_equipment_field() {
+    let env = pending_env(&[ITEM_A, ITEM_B]);
+    seed_equipped_items(&env, &[(7, ITEM_B)]);
+    select_from_original_location(
+        &env,
+        "(function() local location = ItemLocation:CreateFromEquipmentSlot('7.9'); location.bagID = 0; location.slotIndex = 1; return location end)()",
+    );
+    assert_equipped_item_locked(&env, 7, true);
+    assert_item_locked(&env, 1, false);
+    env.exec("assert(#PendingSelectionEvents == 1)").unwrap();
+}
+
+#[test]
+fn pending_item_maps_negative_bag_ids_to_player_inventory() {
+    let env = pending_env(&[ITEM_A, ITEM_B]);
+    let items: Vec<_> = (1..=5)
+        .map(|slot| (100 + slot, if slot % 2 == 0 { ITEM_B } else { ITEM_A }))
+        .collect();
+    seed_equipped_items(&env, &items);
+
+    for bag in [-2, -3] {
+        for slot in [1, 5] {
+            select_from_original_location(
+                &env,
+                &format!("ItemLocation:CreateFromBagAndSlot({bag}, {slot})"),
+            );
+            assert_equipped_item_locked(&env, 100 + slot, true);
+            let cleared: bool = env
+                .eval("return C_ItemInteraction.SetPendingItem(nil)")
+                .unwrap();
+            assert!(!cleared);
+        }
+    }
+}
+
+#[test]
+fn pending_item_maps_other_negative_bags_to_player_inventory() {
+    let env = pending_env(&[ITEM_A, ITEM_B]);
+    let items: Vec<_> = (1..=5)
+        .map(|slot| (slot, if slot % 2 == 0 { ITEM_B } else { ITEM_A }))
+        .collect();
+    seed_equipped_items(&env, &items);
+
+    for bag in [-4, i32::MIN + 1] {
+        for slot in [1, 5] {
+            select_from_original_location(
+                &env,
+                &format!("ItemLocation:CreateFromBagAndSlot({bag}, {slot})"),
+            );
+            assert_equipped_item_locked(&env, slot, true);
+            let cleared: bool = env
+                .eval("return C_ItemInteraction.SetPendingItem(nil)")
+                .unwrap();
+            assert!(!cleared);
+        }
+    }
+}
+
+#[test]
+fn pending_item_maps_bags_six_through_eleven_to_slots_101_through_105() {
+    let env = pending_env(&[ITEM_A, ITEM_B]);
+    for bag in 6..=11 {
+        set_bag_slot_count(&env, bag, 5);
+        for slot in 1..=5 {
+            let item_id = if (bag + slot) % 2 == 0 {
+                ITEM_A
+            } else {
+                ITEM_B
+            };
+            add_pending_bag_item(&env, bag, slot + 100, item_id);
+        }
+    }
+
+    for bag in 6..=11 {
+        for slot in 1..=5 {
+            select_from_original_location(
+                &env,
+                &format!("ItemLocation:CreateFromBagAndSlot({bag}, {slot})"),
+            );
+            assert_bag_slot_locked(&env, bag, slot + 100, true);
+            let cleared: bool = env
+                .eval("return C_ItemInteraction.SetPendingItem(nil)")
+                .unwrap();
+            assert!(!cleared);
+        }
+    }
+}
+
+#[test]
+fn pending_item_enforces_bag_availability_and_slot_counts() {
+    let env = pending_env(&[ITEM_A, ITEM_B]);
+    add_pending_bag_item(&env, 16, 1, ITEM_A);
+    assert_present_location_usage_error_without_side_effects(&env, "{bagID = 16, slotIndex = 1}");
+
+    set_bag_slot_count(&env, 1, 1);
+    add_pending_bag_item(&env, 1, 2, ITEM_B);
+    assert_present_location_usage_error_without_side_effects(&env, "{bagID = 1, slotIndex = 2}");
+
+    add_pending_bag_item(&env, 0, 17, ITEM_A);
+    assert_present_location_usage_error_without_side_effects(&env, "{bagID = 0, slotIndex = 17}");
+}
+
+#[test]
+fn pending_item_rejects_wrapped_or_unmapped_negative_bag_ids() {
+    let env = pending_env(&[ITEM_A, ITEM_B]);
+    add_pending_bag_item(&env, -1, 1, ITEM_A);
+    add_pending_bag_item(&env, i32::MIN, 1, ITEM_B);
+    for location in [
+        "{bagID = -1, slotIndex = 1}",
+        "{bagID = -2147483648, slotIndex = 1}",
+    ] {
+        assert_present_location_usage_error_without_side_effects(&env, location);
+    }
 }
 
 fn prepare_invalid_location_case(env: &WowLuaEnv, location: &str) {
@@ -481,7 +695,9 @@ fn observe_present_location_effects(
         local selectedLocation = ItemLocation:CreateFromBagAndSlot(0, 1)
         local otherLocation = ItemLocation:CreateFromBagAndSlot(0, 2)
         local cursorTypeBefore, cursorIDBefore = GetCursorInfo()
-        local ok, result = pcall(C_ItemInteraction.SetPendingItem, InvalidPendingLocation)
+        local invalidButton = ItemInteractionFrame.ItemConversionFrame.ItemConversionInputSlot
+        invalidButton.itemLocation = InvalidPendingLocation
+        local ok, result = pcall(ItemInteractionFrame.flyoutSettings.onClickFunc, invalidButton)
         local cursorTypeAfter, cursorIDAfter = GetCursorInfo()
         local selectedCount = select("#", C_TooltipInfo.GetItemInteractionItem())
         local selectedData = C_TooltipInfo.GetItemInteractionItem()
