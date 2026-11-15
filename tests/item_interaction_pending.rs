@@ -244,14 +244,6 @@ fn pending_item_accepts_distinct_backed_items_and_updates_tooltip() {
     select_from_original_cursor(&env, 1);
     assert_accept_order(&env);
     assert_selected_tooltip(&env, 1);
-    env.exec(
-        r##"
-        local location = ItemLocation:CreateFromBagAndSlot(0, 1)
-        assert(select("#", C_ItemInteraction.SetPendingItem(location)) == 1)
-        assert(C_ItemInteraction.SetPendingItem(location) == true)
-        "##,
-    )
-    .unwrap();
     select_from_original_flyout(&env, 2);
     assert_item_locked(&env, 2, true);
     assert_selected_tooltip(&env, 2);
@@ -370,6 +362,31 @@ fn pending_item_clear_keeps_identifiers_and_preserves_cursor() {
         assert(select("#", C_ItemInteraction.SetPendingItem(nil)) == 1)
         assert(C_ItemInteraction.SetPendingItem(nil) == false)
         assert(CursorHasItem())
+        "##,
+    )
+    .unwrap();
+}
+
+#[test]
+fn pending_item_nil_is_an_absent_replacement_and_preserves_cursor() {
+    let env = pending_env(&[ITEM_A]);
+    select_from_original_flyout(&env, 1);
+    stage_cursor_item(&env);
+    clear_event_history(&env);
+
+    env.exec(
+        r##"
+        local function capture(...) return select("#", ...), ... end
+        local count, success = capture(C_ItemInteraction.SetPendingItem(nil))
+        assert(count == 1 and success == false)
+        assert(not C_Item.IsLocked(ItemLocation:CreateFromBagAndSlot(0, 1)))
+        assert(#PendingSelectionEvents == 1 and PendingSelectionEvents[1] == false)
+        assert(CursorHasItem())
+        local cursorType, cursorID = GetCursorInfo()
+        assert(cursorType == "item" and cursorID == 6948)
+        for _, event in ipairs(PendingOrderEvents) do
+            assert(event ~= "CURSOR_CHANGED")
+        end
         "##,
     )
     .unwrap();
