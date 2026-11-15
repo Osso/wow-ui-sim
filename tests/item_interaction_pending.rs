@@ -461,7 +461,7 @@ fn pending_item_close_ui_leaves_selection_unchanged() {
     assert_no_selected_tooltip(&env);
 }
 
-fn assert_present_location_usage_error_without_side_effects(env: &WowLuaEnv, location: &str) {
+fn prepare_invalid_location_case(env: &WowLuaEnv, location: &str) {
     select_from_original_flyout(env, 1);
     assert_item_locked(env, 1, true);
     assert_item_locked(env, 2, false);
@@ -471,35 +471,61 @@ fn assert_present_location_usage_error_without_side_effects(env: &WowLuaEnv, loc
     ))
     .unwrap();
     clear_event_history(env);
+}
 
-    let observations: (bool, bool, bool, bool, bool, bool, bool, bool) = env
-        .eval(&format!(
-            r##"
-            local selectedLocation = ItemLocation:CreateFromBagAndSlot(0, 1)
-            local otherLocation = ItemLocation:CreateFromBagAndSlot(0, 2)
-            local cursorTypeBefore, cursorIDBefore = GetCursorInfo()
-            local ok, result = pcall(C_ItemInteraction.SetPendingItem, InvalidPendingLocation)
-            local cursorTypeAfter, cursorIDAfter = GetCursorInfo()
-            local selectedCount = select("#", C_TooltipInfo.GetItemInteractionItem())
-            local selectedData = C_TooltipInfo.GetItemInteractionItem()
-            local hasSelectedItem = selectedCount == 1
-                and selectedData.lines[1].leftText == "Selected pending item"
-            return not ok,
-                not ok and tostring(result):find({SET_PENDING_ITEM_USAGE:?}, 1, true) ~= nil,
-                #PendingSelectionEvents == 0,
-                #PendingOrderEvents == 0,
-                C_Item.IsLocked(selectedLocation),
-                not C_Item.IsLocked(otherLocation),
-                hasSelectedItem,
-                CursorHasItem()
-                    and cursorTypeBefore == cursorTypeAfter
-                    and cursorIDBefore == cursorIDAfter
-            "##
-        ))
-        .unwrap();
+fn observe_present_location_effects(
+    env: &WowLuaEnv,
+) -> (bool, bool, bool, bool, bool, bool, bool, bool) {
+    let script = format!(
+        r##"
+        local selectedLocation = ItemLocation:CreateFromBagAndSlot(0, 1)
+        local otherLocation = ItemLocation:CreateFromBagAndSlot(0, 2)
+        local cursorTypeBefore, cursorIDBefore = GetCursorInfo()
+        local ok, result = pcall(C_ItemInteraction.SetPendingItem, InvalidPendingLocation)
+        local cursorTypeAfter, cursorIDAfter = GetCursorInfo()
+        local selectedCount = select("#", C_TooltipInfo.GetItemInteractionItem())
+        local selectedData = C_TooltipInfo.GetItemInteractionItem()
+        local hasSelectedItem = selectedCount == 1
+            and selectedData.lines[1].leftText == "Selected pending item"
+        return not ok,
+            not ok and tostring(result):find({usage:?}, 1, true) ~= nil,
+            #PendingSelectionEvents == 0,
+            #PendingOrderEvents == 0,
+            C_Item.IsLocked(selectedLocation),
+            not C_Item.IsLocked(otherLocation),
+            hasSelectedItem,
+            CursorHasItem()
+                and cursorTypeBefore == cursorTypeAfter
+                and cursorIDBefore == cursorIDAfter
+        "##,
+        usage = SET_PENDING_ITEM_USAGE
+    );
+    env.eval(&script).unwrap()
+}
 
+fn assert_present_location_usage_error_without_side_effects(env: &WowLuaEnv, location: &str) {
+    prepare_invalid_location_case(env, location);
+    let (
+        usage_error_raised,
+        exact_usage_reason,
+        no_selection_event,
+        no_event_or_lock_notification,
+        selected_item_stays_locked,
+        other_item_stays_unlocked,
+        selected_item_stays_published,
+        cursor_stays_unchanged,
+    ) = observe_present_location_effects(env);
     assert_eq!(
-        observations,
+        (
+            usage_error_raised,
+            exact_usage_reason,
+            no_selection_event,
+            no_event_or_lock_notification,
+            selected_item_stays_locked,
+            other_item_stays_unlocked,
+            selected_item_stays_published,
+            cursor_stays_unchanged,
+        ),
         (true, true, true, true, true, true, true, true)
     );
 }
