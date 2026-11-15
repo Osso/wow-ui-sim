@@ -456,7 +456,7 @@ fn secure_retail_scoped_handler_uses_only_the_given_environment() {
     .unwrap();
     std::fs::write(
         addon_dir.join("Setup.lua"),
-        "local _, addon = ...\naddon.ScopedAddonValue = 'addon-only'\nScopedSetupObserved = addon.ScopedAddonValue\n",
+        "local _, addon = ...\naddon.ScopedAddonValue = 'addon-only'\nScopedSetupObserved = addon.ScopedAddonValue\nScopedSetupTable = addon\n",
     )
     .unwrap();
     std::fs::write(
@@ -486,25 +486,31 @@ fn secure_retail_scoped_handler_uses_only_the_given_environment() {
         load_result.warnings
     );
 
-    let (setup_value, setup_is_secure, handler_ran, addon_value, secure_value): (
-        String,
-        bool,
-        bool,
-        String,
-        String,
-    ) = env
+    let (
+        setup_value,
+        setup_is_secure,
+        handler_ran,
+        handler_env_is_addon,
+        addon_value,
+        secure_value,
+    ): (String, bool, bool, bool, String, String) = env
         .eval(
             r#"
             local setupValue = rawget(__secureenv, "ScopedSetupObserved")
+            local setupTable = rawget(__secureenv, "ScopedSetupTable")
             local setupIsSecure = setupValue == "addon-only"
                 and rawget(_G, "ScopedSetupObserved") == nil
             local frame = rawget(_G, "ScopedRetailSecureHandlerFrame")
                 or rawget(__secureenv, "ScopedRetailSecureHandlerFrame")
             if not frame then
-                return setupValue or "", setupIsSecure, false, "", ""
+                return setupValue or "", setupIsSecure, false, false, "", ""
             end
+            local handler = frame:GetScript("OnLoad")
+            local handlerEnvIsAddon = type(handler) == "function"
+                and rawequal(getfenv(handler), setupTable)
             return setupValue or "", setupIsSecure,
                 frame:GetAttribute("ObservedHandlerRan") == true,
+                handlerEnvIsAddon,
                 frame:GetAttribute("ObservedAddonValue") or "",
                 frame:GetAttribute("ObservedSecureValue") or ""
             "#,
@@ -519,10 +525,14 @@ fn secure_retail_scoped_handler_uses_only_the_given_environment() {
         "the setup file should use the shared secure environment"
     );
     assert!(handler_ran, "the XML OnLoad handler must run");
+    assert!(
+        handler_env_is_addon,
+        "the XML OnLoad handler must use the add-on's given environment"
+    );
+    assert_eq!(addon_value, "addon-only");
     assert_eq!(
         secure_value, "__nil",
         "the handler must not read __secureenv"
     );
-    assert_eq!(addon_value, "addon-only");
     assert!(env.state().borrow().lua_errors.is_empty());
 }
