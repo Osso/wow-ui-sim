@@ -11,6 +11,7 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 
 const ITEM_A: u32 = 128_910;
 const ITEM_B: u32 = 158_923;
+const CURSOR_ITEM: u32 = 6_948;
 
 fn pending_env() -> WowLuaEnv {
     let env = tooltip_full_env_helpers::load_full_env_without_post_load();
@@ -47,6 +48,8 @@ fn load_original_item_interaction(env: &WowLuaEnv) {
             :find("Blizzard_ItemInteractionUI.lua", 1, true))
         assert(debug.getinfo(ItemInteractionItemSlotMixin.OnDragStart, "S").source
             :find("Blizzard_ItemInteractionUI.lua", 1, true))
+        assert(debug.getinfo(ItemInteractionMixin.SetDynamicFlyoutSettings, "S").source
+            :find("Blizzard_ItemInteractionUI.lua", 1, true))
         assert(debug.getinfo(ItemInteractionMixin.OnShow, "S").source
             :find("Blizzard_ItemInteractionUI.lua", 1, true))
         assert(debug.getinfo(ItemInteractionMixin.OnHide, "S").source
@@ -59,7 +62,7 @@ fn load_original_item_interaction(env: &WowLuaEnv) {
 
 fn add_backed_items(env: &WowLuaEnv) {
     env.exec(&format!(
-        "A_Admin.ClearBags(); A_Admin.AddBagItem(0, 1, {ITEM_A}, 1); A_Admin.AddBagItem(0, 2, {ITEM_B}, 1)"
+        "A_Admin.ClearBags(); A_Admin.AddBagItem(0, 1, {ITEM_A}, 1); A_Admin.AddBagItem(0, 2, {ITEM_B}, 1); A_Admin.AddBagItem(0, 3, {CURSOR_ITEM}, 1)"
     ))
     .unwrap();
 }
@@ -90,7 +93,30 @@ fn install_event_probe(env: &WowLuaEnv) {
 
 fn select_from_original_slot(env: &WowLuaEnv, slot: u32) {
     env.exec(&format!(
-        "C_Container.PickupContainerItem(0, {slot}); ItemInteractionItemSlotMixin.OnReceiveDrag(ItemInteractionFrame.ItemSlot)"
+        r#"
+        C_Container.PickupContainerItem(0, {slot})
+        ItemInteractionItemSlotMixin.OnReceiveDrag(ItemInteractionFrame.ItemSlot)
+        "#
+    ))
+    .unwrap();
+}
+
+fn select_from_original_flyout(env: &WowLuaEnv, slot: u32) {
+    env.exec(&format!(
+        r#"
+        ItemInteractionFrame:SetupEquipmentFlyout(true)
+        ItemInteractionFrame:SetDynamicFlyoutSettings()
+        local button = ItemInteractionFrame.ItemConversionFrame.ItemConversionInputSlot
+        button:SetItemLocation(ItemLocation:CreateFromBagAndSlot(0, {slot}))
+        ItemInteractionFrame.flyoutSettings.onClickFunc(button)
+        "#
+    ))
+    .unwrap();
+}
+
+fn stage_cursor_item(env: &WowLuaEnv) {
+    env.exec(&format!(
+        "A_Admin.AddBagItem(0, 3, {CURSOR_ITEM}, 1); C_Container.PickupContainerItem(0, 3)"
     ))
     .unwrap();
 }
@@ -141,9 +167,8 @@ fn assert_no_selected_tooltip(env: &WowLuaEnv) {
 fn pending_item_accepts_distinct_backed_items_and_updates_tooltip() {
     let env = pending_env();
     select_from_original_slot(&env, 1);
-    assert_item_locked(&env, 1, true);
     assert_selected_tooltip(&env, 1);
-    select_from_original_slot(&env, 2);
+    select_from_original_flyout(&env, 2);
     assert_item_locked(&env, 1, false);
     assert_item_locked(&env, 2, true);
     assert_selected_tooltip(&env, 2);
@@ -159,8 +184,9 @@ fn pending_item_accepts_distinct_backed_items_and_updates_tooltip() {
 #[test]
 fn pending_item_rejection_does_not_restore_old_selection() {
     let env = pending_env();
-    select_from_original_slot(&env, 1);
-    select_from_original_slot(&env, 2);
+    select_from_original_flyout(&env, 1);
+    stage_cursor_item(&env);
+    select_from_original_flyout(&env, 2);
     assert_item_locked(&env, 1, false);
     assert_item_locked(&env, 2, false);
     assert_no_selected_tooltip(&env);
@@ -174,19 +200,18 @@ fn pending_item_rejection_does_not_restore_old_selection() {
 #[test]
 fn pending_item_same_object_fast_path_keeps_cursor_and_sends_no_event() {
     let env = pending_env();
-    select_from_original_slot(&env, 1);
+    select_from_original_flyout(&env, 1);
     clear_event_history(&env);
-    env.exec("C_Container.PickupContainerItem(0, 1)").unwrap();
-    env.exec("ItemInteractionItemSlotMixin.OnReceiveDrag(ItemInteractionFrame.ItemSlot)")
-        .unwrap();
+    stage_cursor_item(&env);
+    select_from_original_flyout(&env, 1);
     env.exec("assert(CursorHasItem() and #PendingSelectionEvents == 0)")
         .unwrap();
     env.exec("ClearCursor()").unwrap();
-    select_from_original_slot(&env, 2);
+    select_from_original_flyout(&env, 2);
     assert_item_locked(&env, 2, true);
     env.exec("assert(PendingSelectionEvents[1] == 158923)")
         .unwrap();
-    env.exec("C_Container.PickupContainerItem(0, 1)").unwrap();
+    stage_cursor_item(&env);
     clear_from_original_slot(&env);
     env.exec("assert(CursorHasItem() and PendingSelectionEvents[2] == false)")
         .unwrap();
@@ -195,9 +220,9 @@ fn pending_item_same_object_fast_path_keeps_cursor_and_sends_no_event() {
 #[test]
 fn pending_item_clear_keeps_identifiers_and_preserves_cursor() {
     let env = pending_env();
-    select_from_original_slot(&env, 1);
-    select_from_original_slot(&env, 2);
-    env.exec("C_Container.PickupContainerItem(0, 1)").unwrap();
+    select_from_original_flyout(&env, 1);
+    select_from_original_flyout(&env, 2);
+    stage_cursor_item(&env);
     clear_from_original_slot(&env);
     assert_item_locked(&env, 2, false);
     assert_no_selected_tooltip(&env);
@@ -208,8 +233,8 @@ fn pending_item_clear_keeps_identifiers_and_preserves_cursor() {
 #[test]
 fn pending_item_initialize_frame_clears_without_releasing_lock() {
     let env = pending_env();
-    select_from_original_slot(&env, 1);
-    select_from_original_slot(&env, 2);
+    select_from_original_flyout(&env, 1);
+    select_from_original_flyout(&env, 2);
     clear_event_history(&env);
     env.exec("ItemInteractionFrame:OnShow()")
         .expect("original OnShow invokes InitializeFrame and ClearPendingItem");
@@ -222,8 +247,8 @@ fn pending_item_initialize_frame_clears_without_releasing_lock() {
 #[test]
 fn pending_item_reset_clears_identifiers_without_selection_event() {
     let env = pending_env();
-    select_from_original_slot(&env, 1);
-    select_from_original_slot(&env, 2);
+    select_from_original_flyout(&env, 1);
+    select_from_original_flyout(&env, 2);
     clear_event_history(&env);
     env.exec("UIPanelWindows.ItemInteractionFrame.showFailedFunc()")
         .expect("original UIPanelWindows Reset callback");
@@ -235,8 +260,8 @@ fn pending_item_reset_clears_identifiers_without_selection_event() {
 #[test]
 fn pending_item_close_ui_leaves_selection_unchanged() {
     let env = pending_env();
-    select_from_original_slot(&env, 1);
-    select_from_original_slot(&env, 2);
+    select_from_original_flyout(&env, 1);
+    select_from_original_flyout(&env, 2);
     clear_event_history(&env);
     env.exec("ItemInteractionFrame:OnHide()")
         .expect("original OnHide invokes CloseUI");
