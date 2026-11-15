@@ -202,6 +202,33 @@ fn item_upgrade_uses_shared_r88s_item_location_resolution() {
 }
 
 #[test]
+fn item_upgrade_unknown_inventory_count_returns_false_through_item_util() {
+    crate::common::with_timeout(90, || {
+        let env = load_original_item_util();
+        env.exec(
+            r#"
+            A_Admin.EquipItem(7, 19019)
+            unknownInventoryLocation = ItemLocation:CreateFromEquipmentSlot(7)
+            A_Admin.SetItemUpgradeEligibility(unknownInventoryLocation, true)
+        "#,
+        )
+        .expect("seed the original ItemUtil path with supplied eligibility");
+        env.state()
+            .borrow_mut()
+            .r88s_inventory_inputs
+            .inventory_count = None;
+        env.exec(
+            r#"
+            assert(C_ItemUpgrade.CanUpgradeItem(unknownInventoryLocation) == false)
+            assert(ItemButtonUtil.GetItemContextMatchResultForItem(unknownInventoryLocation)
+                == ItemButtonUtil.ItemContextMatchResult.Mismatch)
+        "#,
+        )
+        .expect("unknown inventory bounds must reject without changing the boolean API");
+    });
+}
+
+#[test]
 fn item_upgrade_unsupplied_locations_default_false_and_invalid_inputs_error() {
     crate::common::with_timeout(90, || {
         let env = load_original_item_util();
