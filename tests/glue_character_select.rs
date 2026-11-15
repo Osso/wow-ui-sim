@@ -1165,28 +1165,65 @@ const RETAIL_CHARACTER_CREATE_PRESERVATION_LUA: &str = r#"
 local source = "Blizzard_CharacterCreate/"
 assert(debug.getinfo(CharacterCreateMixin.OnLoad, "S").source:find(source, 1, true), "OnLoad source")
 assert(debug.getinfo(CharacterCreateMixin.UpdateForwardButton, "S").source:find(source, 1, true), "forward source")
+assert(debug.getinfo(CharacterCreateMixin.UpdateMode, "S").source:find(source, 1, true), "mode source")
 assert(debug.getinfo(CharacterCreateRaceAndClassMixin.SetCharacterRace, "S").source:find(source, 1, true), "race source")
 local frame = CharacterCreateFrame
 local race = frame.RaceAndClassFrame
-assert(#frame.BGTex == 4, "XML BGTex array count: " .. tostring(#frame.BGTex))
-assert(frame.BGTex[1]:GetObjectType() == "Texture", "XML BGTex element type")
+local overlayKeys = { "TopBackgroundOverlay", "LeftBackgroundOverlay", "RightBackgroundOverlay", "BottomBackgroundOverlay" }
+assert(#frame.BGTex == #overlayKeys, "XML BGTex array count: " .. tostring(#frame.BGTex))
+for index, key in ipairs(overlayKeys) do
+    local overlay = frame[key]
+    assert(overlay ~= nil, "missing XML overlay " .. key)
+    assert(rawequal(frame.BGTex[index], overlay), "BGTex order/identity at " .. index)
+    assert(overlay:GetObjectType() == "Texture", "XML BGTex element type at " .. index)
+    for previous = 1, index - 1 do
+        assert(not rawequal(frame.BGTex[index], frame.BGTex[previous]), "duplicate BGTex member at " .. index)
+    end
+end
+local function assertOverlayAlpha(expected, state)
+    for index = 1, #overlayKeys do
+        assert(math.abs(frame.BGTex[index]:GetAlpha() - expected) < 0.001, state .. " overlay alpha at " .. index)
+    end
+end
 race:SetCharacterClass(1)
+race:SetCharacterRace(1)
+assert(race.selectedRaceData.fileName == "Human", "selected Human record")
+assert(race.selectedFaction == "Alliance", "Human must select Alliance")
+race:SetCharacterRace(2)
+assert(race.selectedRaceData.fileName == "Orc", "selected Orc record")
+assert(race.selectedFaction == "Horde", "Orc must select Horde")
 race:SetCharacterRace(24)
 assert(race.selectedRaceData.fileName == "Pandaren", "selected Pandaren record")
-assert(math.abs(frame.BGTex[1]:GetAlpha() - 0.75) < 0.001, "Pandaren overlay alpha")
+assertOverlayAlpha(0.75, "Pandaren")
 race:SetCharacterRace(2)
-assert(race.selectedRaceData.fileName == "Orc" and race.selectedFaction == "Horde", "selected Orc record")
-assert(math.abs(frame.BGTex[1]:GetAlpha() - 0.6) < 0.001, "Horde overlay alpha")
+assertOverlayAlpha(0.6, "Horde Orc")
 race:SetCharacterClass(12)
 assert(race.selectedClassData.fileName == "DEMONHUNTER", "selected Demon Hunter record")
-assert(math.abs(frame.BGTex[1]:GetAlpha() - 0.7) < 0.001, "Demon Hunter overlay alpha")
+assertOverlayAlpha(0.7, "Demon Hunter")
 race:SetCharacterClass(6)
 assert(race.selectedClassData.fileName == "DEATHKNIGHT", "selected Death Knight record")
-assert(math.abs(frame.BGTex[1]:GetAlpha() - 0.8) < 0.001, "Death Knight overlay alpha")
+assertOverlayAlpha(0.8, "Death Knight")
+local backSuffix = "  " .. BACK
 local backText = frame.BackButton:GetText()
-assert(backText:find(BACK, 1, true) and backText:find("common-icon-backarrow", 1, true), "BackButton should show original label and arrow")
-local forwardText = frame.ForwardButton:GetText()
-assert(forwardText:find(CUSTOMIZE, 1, true) and forwardText:find("common-icon-forwardarrow", 1, true), "ForwardButton should show original label and arrow")
+assert(backText:sub(-#backSuffix) == backSuffix, "Back must retain the original BACK string")
+assert(backText:find("common-icon-backarrow", 1, true), "Back must use the original back arrow")
+local classRaceMode = frame.currentMode
+assert(classRaceMode ~= nil, "original class/race mode must be active")
+local classRaceForward = frame.ForwardButton:GetText()
+assert(classRaceForward:sub(1, #CUSTOMIZE) == CUSTOMIZE, "class/race mode must use original CUSTOMIZE string")
+assert(classRaceForward:find("common-icon-forwardarrow", 1, true), "class/race mode must use the original forward arrow")
+frame:UpdateMode(1)
+assert(frame.currentMode ~= classRaceMode, "original mode transition must reach customization")
+local customizeForward = frame.ForwardButton:GetText()
+local customizeLabel = frame.ZoneChoiceFrame:ShouldShow() and NEXT or FINISH
+assert(customizeForward:sub(1, #customizeLabel) == customizeLabel, "customization mode must use its original forward string")
+assert(customizeLabel ~= CUSTOMIZE and customizeForward ~= classRaceForward, "forward label must change with the original mode")
+local customizeBack = frame.BackButton:GetText()
+assert(customizeBack:sub(-#backSuffix) == backSuffix, "Back label remains the original BACK string")
+assert(customizeBack:find("common-icon-backarrow", 1, true), "customization mode must retain the original back arrow")
+frame:UpdateMode(-1)
+assert(frame.currentMode == classRaceMode, "original mode transition must return without submission")
+assert(frame.ForwardButton:GetText():sub(1, #CUSTOMIZE) == CUSTOMIZE, "class/race forward string must be restored")
 "#;
 
 #[test]
