@@ -165,6 +165,10 @@ fn read_pending_item_slot(state: &mut LuaState, location: Val) -> Option<ItemSlo
     }
     let equipment = table_get(state, location, "equipmentSlotIndex");
     if let Some(number) = location_number(state, equipment) {
+        // INFERRED: PlayerState.present proxies the native player inventory object here.
+        if !borrow_state(state).ok()?.player.present {
+            return None;
+        }
         let equipment_slot = location_integer(number)?;
         if equipment_slot < 1 {
             return None;
@@ -209,7 +213,7 @@ fn read_pending_bag_slot(state: &LuaState, bag_id: i32, public_slot: i32) -> Opt
     if (0..=LAST_NATIVE_CONTAINER_INDEX).contains(&bag_index) {
         return read_pending_container_slot(state, bag_index, public_slot);
     }
-    read_pending_player_inventory_slot(bag_index, public_slot)
+    read_pending_player_inventory_slot(state, bag_index, public_slot)
 }
 
 fn read_pending_container_slot(
@@ -232,7 +236,15 @@ fn read_pending_container_slot(
     Some(ItemSlot::Bag(bag, slot_index + 1))
 }
 
-fn read_pending_player_inventory_slot(bag_index: i32, public_slot: i32) -> Option<ItemSlot> {
+fn read_pending_player_inventory_slot(
+    state: &LuaState,
+    bag_index: i32,
+    public_slot: i32,
+) -> Option<ItemSlot> {
+    // INFERRED: negative inventory bags use the same active-player availability proxy.
+    if !borrow_state(state).ok()?.player.present {
+        return None;
+    }
     match bag_index {
         -3 | -4 => {
             let slot_index = public_slot.wrapping_sub(1);

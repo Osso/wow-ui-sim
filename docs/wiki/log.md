@@ -34,6 +34,10 @@ Updated the [Round 7 contract](../specs/tooltip-r7-getters.md) and [Lua API](sys
 
 **VERIFIED (GREEN, optional Retail exact tests at the same test source):** all nine parser tests and both CloseUI selection/inactive tests passed. Build receipt `pending-r2-green-final` reports zero compiler warnings and errors. See the [R88s contract](../specs/tooltip-r7-getters.md) and `receipts/revision-2/RUN-MANIFEST.jsonl` for the remaining input coverage.
 
+**INFERRED (simulator representation):** equipment and negative player-inventory forms use `PlayerState.present` as a proxy for native inventory-object availability. R88s.s1 confirms a player requirement for equipment but does not establish this field's identity with the native object.
+
+**SIMULATOR GAP:** general inventory-count and inventory-mode state remain absent, so native equipment/direct-inventory count bounds and conditional availability for slots 64–69/101–105 are not modeled. No count or mode fields were added.
+
 **SIMULATOR GAP:** general player inventory count, the inventory-mode availability state, and a proven mapping from `PlayerState.present` to the native inventory object are absent. Do not claim native equipment/direct-inventory count or conditional special-slot availability for 64–69/101–105. **UNKNOWN:** separate CloseUI selection cleanup and complete external lifecycle routes; PTR/Forever lifecycle parity is not proved. Kind-2/3/4 predicate tables remain unbacked and reject by default.
 
 ## [2026-11-14] implementation | Achievement eligibility and tracker colors
