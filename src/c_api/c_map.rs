@@ -883,20 +883,32 @@ fn project_retail_assignment(
     feature = "retail-12-1-5"
 ))]
 mod retail_assignment_tests {
-    use super::assignment_map_number;
+    use super::{assignment_map_number, select_retail_map_assignment};
     use sim_data_profile::ui_map_assignments::UiMapAssignment;
 
-    #[test]
-    fn negative_assignment_accepts_zero_continent_number() {
-        let assignment = UiMapAssignment {
+    fn negative_assignment(area_id: u32) -> UiMapAssignment {
+        UiMapAssignment {
             map_id: -1,
-            area_id: 7,
+            area_id,
             ui_min: [0.0, 0.0],
             ui_max: [1.0, 1.0],
             region_min: [0.0, 0.0],
             region_max: [1.0, 1.0],
-        };
+        }
+    }
+
+    #[test]
+    fn negative_assignment_accepts_zero_continent_number() {
+        let assignment = negative_assignment(7);
         assert_eq!(assignment_map_number(&assignment, |_| Some(0)), Some(0));
+    }
+
+    #[test]
+    fn unresolved_negative_assignment_skips_to_later_usable_row() {
+        let assignments = [negative_assignment(0), negative_assignment(14620)];
+        let (selected, map_number) = select_retail_map_assignment(&assignments, 0.5, 0.5).unwrap();
+        assert_eq!(selected.area_id, 14620);
+        assert!(u16::try_from(map_number).is_ok());
     }
 }
 

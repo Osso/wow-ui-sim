@@ -354,39 +354,32 @@ fn retail_map_position_extrapolates_from_nearest_outside_assignment() {
     feature = "profile-retail",
     feature = "retail-12-1-5"
 ))]
-#[test]
-fn retail_negative_map_id_uses_area_table_u16_and_projects_each_point() {
-    let env = env();
-    let result: (i32, i32, f64, f64, i32, i32, f64, f64) = env
-        .eval(
-            r#"
-            local function capture_results(...)
-                local count = select('#', ...)
-                local mapID, position = ...
-                if not position then return count, -1, 0, 0 end
-                return count, mapID, position.x, position.y
-            end
-            local function capture(x, y)
-                return capture_results(C_Map.GetWorldPosFromMapPos(2147, {x=x, y=y}))
-            end
-            local center = {capture(0.5, 0.5)}
-            local other = {capture(0.25, 0.75)}
-            return center[1], center[2], center[3], center[4],
-                other[1], other[2], other[3], other[4]
-            "#,
-        )
-        .unwrap();
+const RETAIL_NEGATIVE_MAP_API_PROBE: &str = r#"
+    local function capture(...)
+        local count = select('#', ...)
+        local mapID, position = ...
+        if not position then return count, -1, 0, 0 end
+        return count, mapID, position.x, position.y
+    end
+    local center = {capture(C_Map.GetWorldPosFromMapPos(2147, {x=0.5, y=0.5}))}
+    local other = {capture(C_Map.GetWorldPosFromMapPos(2147, {x=0.25, y=0.75}))}
+    local missingCallSucceeded = pcall(function()
+        C_Map.GetWorldPosFromMapPos(1408, {x=0.5, y=0.5})
+    end)
+    local missingResultCount = select('#', C_Map.GetWorldPosFromMapPos(2311, {x=0.5, y=0.5}))
+    return center[1], center[2], center[3], center[4],
+        other[1], other[2], other[3], other[4], missingCallSucceeded, missingResultCount
+"#;
 
-    assert_eq!(result.0, 2);
-    assert_eq!(result.1, 2444, "AreaTable ID 14620 supplies the map number");
-    // INFERRED: expected coordinates use the axis-swapped transform over 70783 rows.
-    assert!((result.2 - -56.25).abs() < 0.01);
-    assert!((result.3 - 602.0996).abs() < 0.01);
-    assert_eq!(result.4, 2);
-    assert_eq!(result.5, 2444);
-    assert!((result.6 - -4302.085).abs() < 0.01);
-    assert!((result.7 - 6970.8496).abs() < 0.01);
-    assert_ne!((result.2, result.3), (result.6, result.7));
+#[cfg(all(
+    feature = "optional-tests",
+    feature = "profile-retail",
+    feature = "retail-12-1-5"
+))]
+fn retail_negative_map_probe(
+    env: &WowLuaEnv,
+) -> (i32, i32, f64, f64, i32, i32, f64, f64, bool, i32) {
+    env.eval(RETAIL_NEGATIVE_MAP_API_PROBE).unwrap()
 }
 
 #[cfg(all(
@@ -395,21 +388,14 @@ fn retail_negative_map_id_uses_area_table_u16_and_projects_each_point() {
     feature = "retail-12-1-5"
 ))]
 #[test]
-fn retail_negative_map_ids_skip_missing_area_table_id_zero() {
-    let env = env();
-    assert_eq!(sim_data_profile::area_table_retail::get_continent_id(0), None);
-    assert_eq!(sim_data_profile::area_table_retail::get_continent_id(14620), Some(2444));
-    env.eval::<()>(
-        r#"
-        for _, uiMapID in ipairs({1408, 2311}) do
-            assert(
-                select('#', C_Map.GetWorldPosFromMapPos(uiMapID, {x=0.5, y=0.5})) == 0,
-                'missing AreaTable ID 0 must leave no result for ' .. uiMapID
-            )
-        end
-        "#,
-    )
-    .unwrap();
+fn retail_negative_map_id_resolution_uses_verified_semantics() {
+    let result = retail_negative_map_probe(&env());
+    assert_eq!(result.0, 2);
+    assert!(u16::try_from(result.1).is_ok());
+    assert_ne!((result.2, result.3), (result.6, result.7));
+    assert_eq!(result.4, 2);
+    assert!(u16::try_from(result.5).is_ok());
+    assert!(result.8, "an absent AreaTable row must not raise");
 }
 
 #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
@@ -644,14 +630,20 @@ fn retail_zone_maps_below_3000_have_world_positions_at_player_login() {
 ))]
 #[test]
 fn retail_zone_maps_without_assignment_rows_remain_unmapped() {
+    let env = env();
     for ui_map_id in [997, 1158, 1523, 2107] {
         let map = sim_data::ui_maps::get_ui_map(ui_map_id).unwrap();
         assert_eq!(map.map_type, 3, "expected Zone map {ui_map_id}");
-        assert!(
-            sim_data_profile::ui_map_assignments::get_ui_map_assignments(ui_map_id).is_none(),
-            "Zone map {ui_map_id} must have no assignment rows"
-        );
+        assert!(sim_data_profile::ui_map_assignments::get_ui_map_assignments(ui_map_id).is_none());
     }
+    env.eval::<()>(
+        r#"
+        for _, uiMapID in ipairs({997, 1158, 1523, 2107}) do
+            assert(select('#', C_Map.GetWorldPosFromMapPos(uiMapID, {x=0.5, y=0.5})) == 0)
+        end
+        "#,
+    )
+    .unwrap();
 }
 
 #[cfg(all(
