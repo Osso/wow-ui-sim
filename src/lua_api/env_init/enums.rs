@@ -358,7 +358,8 @@ fn register_base_constants(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(MISSING_CONSTANTS_LUA)?;
     #[cfg(feature = "client-wowforever")]
     lua.exec("LE_UNIT_STAT_SPIRIT = 5")?;
-    lua.exec(CONSTANTS_VALUES_LUA)
+    lua.exec(CONSTANTS_VALUES_LUA)?;
+    Ok(())
 }
 
 fn register_ptr_constant_overrides(lua: &mut rilua::Lua) -> crate::Result<()> {
@@ -368,7 +369,8 @@ fn register_ptr_constant_overrides(lua: &mut rilua::Lua) -> crate::Result<()> {
     // PTR 12.1.7.70493 LevelConstantsDocumentation.lua:12; Retail omits this constant.
     lua.exec("Constants.LevelConstsExposed.MIN_TALENT_LEVEL = 10")?;
     // PTR CatalogShopConstantsDocumentation.lua:89.
-    lua.exec("Constants.CatalogShopVirtualCurrencyConstants.TALEBOUND_VC_CURRENCY_CODE = 'XZC'")
+    lua.exec("Constants.CatalogShopVirtualCurrencyConstants.TALEBOUND_VC_CURRENCY_CODE = 'XZC'")?;
+    Ok(())
 }
 
 fn register_compat_constant_values(lua: &mut rilua::Lua) -> crate::Result<()> {
