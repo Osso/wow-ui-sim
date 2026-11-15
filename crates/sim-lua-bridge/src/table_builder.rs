@@ -6,7 +6,7 @@ use rilua::RuntimeError;
 use rilua::Val;
 use rilua::vm::closure::{Closure, RustClosure, RustFn};
 use rilua::vm::gc::arena::GcRef;
-use rilua::vm::state::LuaState;
+use rilua::vm::state::{LuaState, LuaString};
 use rilua::vm::table::Table as RiluaTable;
 use rilua::vm::value::Userdata;
 
@@ -74,19 +74,36 @@ fn namespace_peers_table(
         .gc
         .intern_string_static(NAMESPACE_PEERS_REGISTRY_KEY.as_bytes());
     let registry = state.registry;
-    let existing = state
-        .gc
-        .tables
-        .get(registry)
-        .map(|table| table.get_str(registry_key, &state.gc.string_arena))
-        .unwrap_or(Val::Nil);
-    if let Val::Table(table_ref) = existing {
-        return Ok(Some(table_ref));
+    if let Some(peers) = existing_namespace_peers_table(state, registry, registry_key) {
+        return Ok(Some(peers));
     }
     if !create {
         return Ok(None);
     }
+    create_namespace_peers_table(state, registry, registry_key).map(Some)
+}
 
+fn existing_namespace_peers_table(
+    state: &LuaState,
+    registry: GcRef<RiluaTable>,
+    registry_key: GcRef<LuaString>,
+) -> Option<GcRef<RiluaTable>> {
+    match state
+        .gc
+        .tables
+        .get(registry)
+        .map(|table| table.get_str(registry_key, &state.gc.string_arena))
+    {
+        Some(Val::Table(table_ref)) => Some(table_ref),
+        _ => None,
+    }
+}
+
+fn create_namespace_peers_table(
+    state: &mut LuaState,
+    registry: GcRef<RiluaTable>,
+    registry_key: GcRef<LuaString>,
+) -> LuaResult<GcRef<RiluaTable>> {
     let peers = state.gc.alloc_table(RiluaTable::new());
     let registry_table = state
         .gc
@@ -99,7 +116,7 @@ fn namespace_peers_table(
         &state.gc.string_arena,
     )?;
     state.gc.barrier_back(registry);
-    Ok(Some(peers))
+    Ok(peers)
 }
 
 fn set_peer(
