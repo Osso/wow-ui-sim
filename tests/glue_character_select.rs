@@ -1163,27 +1163,28 @@ fn character_select_can_transition_to_character_create_without_lua_errors() {
 
 const RETAIL_CHARACTER_CREATE_PRESERVATION_LUA: &str = r#"
 local source = "Blizzard_CharacterCreate/"
-assert(debug.getinfo(CharacterCreateMixin.OnLoad, "S").source:find(source, 1, true))
-assert(debug.getinfo(CharacterCreateMixin.UpdateForwardButton, "S").source:find(source, 1, true))
-assert(debug.getinfo(CharacterCreateRaceAndClassMixin.SetCharacterRace, "S").source:find(source, 1, true))
+assert(debug.getinfo(CharacterCreateMixin.OnLoad, "S").source:find(source, 1, true), "OnLoad source")
+assert(debug.getinfo(CharacterCreateMixin.UpdateForwardButton, "S").source:find(source, 1, true), "forward source")
+assert(debug.getinfo(CharacterCreateRaceAndClassMixin.SetCharacterRace, "S").source:find(source, 1, true), "race source")
 local frame = CharacterCreateFrame
 local race = frame.RaceAndClassFrame
-assert(#frame.BGTex == 4 and frame.BGTex[1]:GetObjectType() == "Texture")
+assert(#frame.BGTex == 4, "XML BGTex array count: " .. tostring(#frame.BGTex))
+assert(frame.BGTex[1]:GetObjectType() == "Texture", "XML BGTex element type")
 race:SetCharacterClass(1)
 race:SetCharacterRace(24)
-assert(race.selectedRaceData.fileName == "Pandaren")
-assert(math.abs(frame.BGTex[1]:GetAlpha() - 0.75) < 0.001)
+assert(race.selectedRaceData.fileName == "Pandaren", "selected Pandaren record")
+assert(math.abs(frame.BGTex[1]:GetAlpha() - 0.75) < 0.001, "Pandaren overlay alpha")
 race:SetCharacterRace(2)
-assert(race.selectedRaceData.fileName == "Orc" and race.selectedFaction == "Horde")
-assert(math.abs(frame.BGTex[1]:GetAlpha() - 0.6) < 0.001)
+assert(race.selectedRaceData.fileName == "Orc" and race.selectedFaction == "Horde", "selected Orc record")
+assert(math.abs(frame.BGTex[1]:GetAlpha() - 0.6) < 0.001, "Horde overlay alpha")
 race:SetCharacterClass(12)
-assert(race.selectedClassData.fileName == "DEMONHUNTER")
-assert(math.abs(frame.BGTex[1]:GetAlpha() - 0.7) < 0.001)
+assert(race.selectedClassData.fileName == "DEMONHUNTER", "selected Demon Hunter record")
+assert(math.abs(frame.BGTex[1]:GetAlpha() - 0.7) < 0.001, "Demon Hunter overlay alpha")
 race:SetCharacterClass(6)
-assert(race.selectedClassData.fileName == "DEATHKNIGHT")
-assert(math.abs(frame.BGTex[1]:GetAlpha() - 0.8) < 0.001)
-assert(frame.BackButton:GetText() == BACK)
-assert(frame.ForwardButton:GetText() == CUSTOMIZE)
+assert(race.selectedClassData.fileName == "DEATHKNIGHT", "selected Death Knight record")
+assert(math.abs(frame.BGTex[1]:GetAlpha() - 0.8) < 0.001, "Death Knight overlay alpha")
+assert(frame.BackButton:GetText() == BACK, "BackButton original OnLoad text")
+assert(frame.ForwardButton:GetText() == CUSTOMIZE, "ForwardButton original update text")
 "#;
 
 #[test]
