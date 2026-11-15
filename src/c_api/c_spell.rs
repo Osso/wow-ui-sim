@@ -75,6 +75,16 @@ pub(crate) fn uses_r17_duration_behavior() -> bool {
     }
 }
 
+fn item_cooldown_api_enabled() -> bool {
+    // Declared: Forever70707 SpellDocumentation:122-136, PTR70493:139-153.
+    // INFERRED: Forever reuses the existing PTR supplied-state behavior, not native policy.
+    matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Ptr
+            | crate::client_profile::ClientProfile::WowForever
+    )
+}
+
 pub(crate) fn register_c_spell_surface(state: &mut LuaState) -> LuaResult<()> {
     let ns = ensure_namespace(state, "C_Spell")?;
     // Retail SpellDocumentation.lua:879-892; Forever :948-961.
@@ -85,7 +95,7 @@ pub(crate) fn register_c_spell_surface(state: &mut LuaState) -> LuaResult<()> {
     ) {
         table_set_rust_fn_static(state, ns, "IsSpellInRange", is_spell_in_range)?;
     }
-    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Ptr {
+    if item_cooldown_api_enabled() {
         table_set_rust_fn_static(state, ns, "GetItemCooldown", get_item_cooldown)?;
     }
     if matches!(
