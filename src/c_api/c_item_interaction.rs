@@ -6,8 +6,10 @@ use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, create_string, create_table, table_set,
 };
 use crate::lua_api::state::{CursorInfo, CursorItemOrigin, ItemLocationData};
-use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
+use crate::lua_bridge::table_set_rust_fn_static;
+use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
+use rilua::vm::table::Table;
 use rilua::{LuaResult, Val};
 
 const SET_PENDING_ITEM_USAGE: &str =
@@ -50,7 +52,7 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     register_pending_item_lifecycle(state, namespace)
 }
 
-fn register_pending_item_lifecycle(state: &mut LuaState, namespace: Val) -> LuaResult<()> {
+fn register_pending_item_lifecycle(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
     if !pending_item_lifecycle_available() {
         return Ok(());
     }
