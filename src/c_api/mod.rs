@@ -465,8 +465,8 @@ pub(crate) mod duration_clock;
 pub(crate) mod duration_text_binding;
 #[cfg(feature = "retail-12-0-5")]
 pub mod intl_native;
-pub mod item_spell;
 pub mod item_location;
+pub mod item_spell;
 #[cfg(feature = "retail-12-0-0")]
 mod item_stats;
 pub mod item_upgrade_eligibility;
