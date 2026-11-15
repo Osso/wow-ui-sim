@@ -61,10 +61,11 @@ fn seed_bnet_title_friend(env: &WowLuaEnv) {
 /// Publish one CHAT_MSG_SAY from the host queue and keep its payload in
 /// `ChatParams`, named by the cached ChatMessageEventParams field order.
 fn seed_discord_chat_line(env: &WowLuaEnv) {
-    let names: Vec<String> = doc_struct_fields("ChatInfoDocumentation.lua", "ChatMessageEventParams")
-        .into_iter()
-        .map(|field| format!("{:?}", field.name))
-        .collect();
+    let names: Vec<String> =
+        doc_struct_fields("ChatInfoDocumentation.lua", "ChatMessageEventParams")
+            .into_iter()
+            .map(|field| format!("{:?}", field.name))
+            .collect();
     env.exec(&format!(
         r##"
         local names = {{ {} }}
@@ -567,8 +568,17 @@ const CASES: &[ShapeCase] = &[
             return C_PetJournal.GetPetInfoTableByPetID(petID)
         "#,
         added: &[
-            "petLevel", "xp", "maxXP", "displayID", "isFavorite", "petType", "isWild",
-            "tradable", "unique", "canAttachToDecor", "creatureModelScale",
+            "petLevel",
+            "xp",
+            "maxXP",
+            "displayID",
+            "isFavorite",
+            "petType",
+            "isWild",
+            "tradable",
+            "unique",
+            "canAttachToDecor",
+            "creatureModelScale",
         ],
         removed: &["isTradeable", "isUnique"],
         values: r#"
@@ -599,7 +609,13 @@ const CASES: &[ShapeCase] = &[
         // Species query: the now-Nilable owned-pet fields are nil.
         getter: "return C_PetJournal.GetPetInfoTableBySpeciesID(39)",
         added: &[
-            "petLevel", "xp", "maxXP", "displayID", "isFavorite", "isWild", "canAttachToDecor",
+            "petLevel",
+            "xp",
+            "maxXP",
+            "displayID",
+            "isFavorite",
+            "isWild",
+            "canAttachToDecor",
         ],
         removed: &[],
         values: r#"
@@ -669,14 +685,21 @@ fn patch_12_1_0_play_sound_params_record_volume_override() {
         .expect("play without override");
     let request = env.state().borrow().last_sound_request.clone().unwrap();
     assert_eq!(
-        (request.sound_kit_id, request.force_no_duplicates, request.volume_override),
+        (
+            request.sound_kit_id,
+            request.force_no_duplicates,
+            request.volume_override
+        ),
         (12867, true, None)
     );
     assert!(
         env.exec(r#"C_Sound.PlaySoundWithOptions({ soundKitID = 1, volumeOverride = "loud" })"#)
             .is_err()
     );
-    assert!(env.exec("C_Sound.PlaySoundWithOptions({ volumeOverride = 1 })").is_err());
+    assert!(
+        env.exec("C_Sound.PlaySoundWithOptions({ volumeOverride = 1 })")
+            .is_err()
+    );
 }
 
 /// Moderation state set on the active listing is what GetActiveEntryInfo reports,
