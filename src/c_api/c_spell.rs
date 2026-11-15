@@ -1012,20 +1012,7 @@ fn get_visibility_info(state: &mut LuaState) -> LuaResult<u32> {
     let visibility_type = read_visibility_type(state)?;
     let result = {
         let sim = borrow_state(state)?;
-        if spell_context_is_null(&sim) {
-            None
-        } else {
-            let lookup_id = u32::try_from(spell_id).ok();
-            Some(
-                lookup_id
-                    .and_then(|id| {
-                        sim.spell_visibility_results
-                            .as_ref()
-                            .and_then(|results| results.get(&(id, visibility_type)).copied())
-                    })
-                    .unwrap_or((false, false, false)),
-            )
-        }
+        visibility_result(&sim, spell_id, visibility_type)
     };
     let Some((has_custom, always_show_mine, show_for_my_spec)) = result else {
         return Ok(0);
@@ -1034,6 +1021,27 @@ fn get_visibility_info(state: &mut LuaState) -> LuaResult<u32> {
     state.push(Val::Bool(always_show_mine));
     state.push(Val::Bool(show_for_my_spec));
     Ok(3)
+}
+
+fn visibility_result(
+    sim: &crate::lua_api::SimState,
+    spell_id: i32,
+    visibility_type: u8,
+) -> Option<(bool, bool, bool)> {
+    if spell_context_is_null(sim) {
+        None
+    } else {
+        let lookup_id = u32::try_from(spell_id).ok();
+        Some(
+            lookup_id
+                .and_then(|id| {
+                    sim.spell_visibility_results
+                        .as_ref()
+                        .and_then(|results| results.get(&(id, visibility_type)).copied())
+                })
+                .unwrap_or((false, false, false)),
+        )
+    }
 }
 
 fn read_visibility_type(state: &LuaState) -> LuaResult<u8> {

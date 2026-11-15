@@ -112,15 +112,26 @@ fn achievement_eligible_api_distinguishes_all_record_and_leaf_shapes() {
 }
 
 fn setup_tree_fixtures(env: &WowLuaEnv) {
-    use AchievementEligibilityOperation::{All, DefaultTrue, Leaf};
     let mut sim = env.state().borrow_mut();
     let inputs = &mut sim.achievement_eligibility;
+    setup_tree_groups(inputs);
+    setup_tree_operations(inputs);
+    setup_tree_criteria(inputs);
+    setup_tree_children(inputs);
+    inputs.world_states.extend([(0, 0), (1, 0)]);
+}
+
+fn setup_tree_groups(inputs: &mut AchievementEligibilityInputs) {
     for id in [99001, 7, 8, 9, 10, 11, 42, 776, 558, 6] {
         attach(inputs, id, id);
     }
     inputs.groups.remove(&7);
     inputs.groups.insert(99001, None);
     inputs.groups.insert(8, None);
+}
+
+fn setup_tree_operations(inputs: &mut AchievementEligibilityInputs) {
+    use AchievementEligibilityOperation::{All, DefaultTrue, Leaf};
     inputs.criteria_tree.extend([
         (10, All),
         (11, DefaultTrue),
@@ -131,6 +142,9 @@ fn setup_tree_fixtures(env: &WowLuaEnv) {
         (61, DefaultTrue),
         (62, Leaf { criterion_id: 620 }),
     ]);
+}
+
+fn setup_tree_criteria(inputs: &mut AchievementEligibilityInputs) {
     inputs.criteria.extend([
         (
             7760,
@@ -154,6 +168,9 @@ fn setup_tree_fixtures(env: &WowLuaEnv) {
             },
         ),
     ]);
+}
+
+fn setup_tree_children(inputs: &mut AchievementEligibilityInputs) {
     inputs
         .groups
         .get_mut(&6)
@@ -170,7 +187,6 @@ fn setup_tree_fixtures(env: &WowLuaEnv) {
             children: vec![],
         },
     ];
-    inputs.world_states.extend([(0, 0), (1, 0)]);
 }
 
 #[test]
