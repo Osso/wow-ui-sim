@@ -36,7 +36,7 @@ The [modified-appearance](../specs/tooltip-appearance-item.md), [merchant-cost](
 
 ## [2026-11-14] fix | Forever tooltip cached lines
 
-[Tooltip owner lifecycle](investigations/tooltip-owner-lifecycle.md#r88n5-forever-clearlines-cache-boundary) records R88n.5. **VERIFIED (Forever 1.60.1.70707):** `ClearLines` resets cached left/right FontString text for active rows only; the optional API test proves inactive entries are untouched, and the original selected `TooltipDataHandler.ProcessInfo` test preserves reprocessing and reuse. Retail attachments and owner pairs remain VERIFIED; PTR parity is INFERRED. Clipping, draw order, nonzero extra-inset writers and post-anchor clamping remain UNKNOWN.
+[Tooltip owner lifecycle](investigations/tooltip-owner-lifecycle.md#r88n5-forever-clearlines-cache-boundary) records R88n.5. **VERIFIED (Forever 1.60.1.70707):** `ClearLines` clears active cached left/right text only. The optional loaded-UI test exposed missing Forever registration for existing XML FontStrings; after the fix, active text clears, cached rows reuse, and inactive text remains untouched. The selected original `TooltipDataHandler.ProcessInfo` test passes. Retail attachments and owner pairs remain VERIFIED; PTR parity is INFERRED. Clipping, draw order, nonzero extra-inset writers and post-anchor clamping remain UNKNOWN.
 
 ## [2026-11-14] investigation | Retail quest tooltip consumers
 
