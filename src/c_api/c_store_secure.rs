@@ -75,23 +75,15 @@ pub(crate) fn publish_simulator_members_to_secure(state: &mut LuaState) -> LuaRe
     };
     for member in RETAIL_STORE_UI_FLAG_3_MEMBERS {
         let value = table_get_static(state, namespace, member);
-        match value {
-            Val::Function(_) => {
-                super::register_namespace_value_with_flags(
-                    state,
-                    "C_StoreSecure",
-                    member,
-                    value,
-                    3,
-                )?;
-            }
-            Val::Nil => {}
-            _ => {
-                return Err(rilua::runtime_error(format!(
-                    "C_StoreSecure.{member} must be a function"
-                )));
-            }
+        if matches!(value, Val::Nil) {
+            continue;
         }
+        if !matches!(value, Val::Function(_)) {
+            return Err(rilua::runtime_error(format!(
+                "C_StoreSecure.{member} must be a function"
+            )));
+        }
+        super::register_namespace_value_with_flags(state, "C_StoreSecure", member, value, 3)?;
     }
     Ok(())
 }
