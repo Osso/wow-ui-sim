@@ -159,14 +159,18 @@ mod tests {
             let mut lua = env.rilua_mut();
             let state = lua.state_mut();
             let ordinary = crate::c_api::global_val(state, "C_StoreSecure");
-            let secure = crate::lua_api::methods::registry_get(state, "__secureenv");
+            let secure_env = crate::lua_api::methods::registry_get(state, "__secureenv");
+            let secure_namespace = table_get_static(state, secure_env, "C_StoreSecure");
             let mut implemented = 0;
             let mut missing_members = Vec::new();
             for member in super::RETAIL_STORE_UI_FLAG_3_MEMBERS {
                 match table_get_static(state, ordinary, member) {
                     Val::Function(_) => {
                         implemented += 1;
-                        if !matches!(table_get_static(state, secure, member), Val::Function(_)) {
+                        if !matches!(
+                            table_get_static(state, secure_namespace, member),
+                            Val::Function(_)
+                        ) {
                             missing_members.push(member.to_string());
                         }
                     }
