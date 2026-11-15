@@ -182,13 +182,13 @@ assert(AzeriteTestSpellCount(rankOne) >= 1 and AzeriteTestSpellCount(rankTwo) >=
 
 const SOURCE_HEADING_LUA: &str = r#"
 local nextRankTwo = AzeriteTestShowEssence(3, 1)
-assert(AzeriteTestFindLine(nextRankTwo, 'Next rank:'),
+assert(AzeriteTestFindLine(nextRankTwo, 'Next Rank:'),
     'the verified next-rank stage must select its heading')
 local rankZero = AzeriteTestShowEssence(3, 0)
 assert(AzeriteTestFindLine(rankZero, 'Source:'),
     'the verified rank-zero stage must select the source heading')
 local nextRankFour = AzeriteTestShowEssence(3, 3)
-assert(not AzeriteTestFindLine(nextRankFour, 'Next rank:'),
+assert(not AzeriteTestFindLine(nextRankFour, 'Next Rank:'),
     'next rank four must disable the source-heading stage')
 assert(select('#', C_TooltipInfo.GetAzeriteEssence(3, 4)) == 0,
     'a missing exact next-rank record must return zero values')
@@ -222,7 +222,7 @@ assert(AzeriteTestShowEssence(3, 4) == nil,
 local rankTwo = AzeriteTestShowEssence(2, 1)
 local rankThree = AzeriteTestShowEssence(3, 2)
 local function assertOrder(data, sourceText, majorSpell, minorSpell)
-    local heading = AzeriteTestFindLine(data, 'Next rank:')
+    local heading = AzeriteTestFindLine(data, 'Next Rank:')
     local source = AzeriteTestFindLine(data, sourceText)
     local major = AzeriteTestFindPowerLine(data, 'major')
     local minor = AzeriteTestFindPowerLine(data, 'minor')
@@ -254,7 +254,7 @@ local nonempty = AzeriteTestShowEssence(2, 1)
 local empty = AzeriteTestShowEssence(3, 1)
 assert(AzeriteTestFindLine(nonempty, 'Eternal Palace Raid'),
     'a distinct catalog source must stay visible')
-local heading = AzeriteTestFindLine(empty, 'Next rank:')
+local heading = AzeriteTestFindLine(empty, 'Next Rank:')
 local source = AzeriteTestFindEmptyPlainLine(empty)
 assert(heading and source and source.wrapText == true,
     'an empty higher-rank source must keep a wrapped type-0 row')
