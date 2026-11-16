@@ -22,13 +22,33 @@ original(CreateTemplateInfoCache, 'Blizzard_SharedXMLBase/TemplateInfoCache.lua'
 original(CreateFrameFactory, 'Blizzard_SharedXMLBase/FrameFactory.lua')
 local factory = CreateFrameFactory()
 assert(factory:GetTemplateInfoCache():GetTemplateInfos() ~= nil)
-if type(LoadAddOnWithErrorHandling) == 'function' then
-    original(LoadAddOnWithErrorHandling, 'Blizzard_SharedXML/AddOnUtil.lua')
-    if type(ClassTrainerFrame_LoadUI) == 'function' then
-        original(ClassTrainerFrame_LoadUI, 'Blizzard_TrainerUI/Blizzard_TrainerUI_Bootstrap.lua')
-        assert(pcall(ClassTrainerFrame_LoadUI))
-    end
+"#;
+
+#[cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
+const TRAINER_CONSUMER_LUA: &str = r#"
+local function original(fn, path)
+    local source = debug.getinfo(fn, 'S').source:gsub('\\', '/')
+    assert(source:find(path, 1, true), source)
 end
+assert(type(LoadAddOnWithErrorHandling) == 'function')
+original(LoadAddOnWithErrorHandling, 'Blizzard_SharedXML/AddOnUtil.lua')
+assert(type(ClassTrainerFrame_LoadUI) == 'function')
+original(ClassTrainerFrame_LoadUI, 'Blizzard_TrainerUI/Blizzard_TrainerUI_Bootstrap.lua')
+local originalLoader = LoadAddOnWithErrorHandling
+local loaderCalls = 0
+LoadAddOnWithErrorHandling = function(...)
+    loaderCalls = loaderCalls + 1
+    return originalLoader(...)
+end
+local consumerOk, consumerResult = pcall(ClassTrainerFrame_LoadUI)
+LoadAddOnWithErrorHandling = originalLoader
+assert(consumerOk, tostring(consumerResult))
+assert(loaderCalls > 0)
+_G.FallbackRetirementTrainerConsumerExecuted = true
 "#;
 
 const RETAIL_CONSUMER_LUA: &str = r#"
@@ -59,6 +79,31 @@ assert(EncounterJournal:IsShown())
 assert(ToggleEncounterJournal() == true)
 assert(not EncounterJournal:IsShown())
 "#;
+
+#[cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
+fn assert_trainer_consumer(env: &WowLuaEnv) {
+    env.exec(TRAINER_CONSUMER_LUA)
+        .expect("original Trainer consumer must invoke the original addon loader");
+    env.exec("assert(FallbackRetirementTrainerConsumerExecuted == true)")
+        .expect("Trainer consumer execution marker must be set");
+    println!("FALLBACK_RETIREMENT_TRAINER_CONSUMER_EXECUTED");
+}
+
+// Mists does not select the AddOnUtil owner or this Trainer consumer.
+#[cfg(feature = "client-mists")]
+fn assert_trainer_consumer(_env: &WowLuaEnv) {}
+
+#[cfg(not(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever",
+    feature = "client-mists"
+)))]
+fn assert_trainer_consumer(_env: &WowLuaEnv) {}
 
 fn load_profile_startup(env: &WowLuaEnv, ui: &Path) -> Vec<String> {
     let addons = discover_blizzard_startup_addons_for_screen(ui, ScreenKind::Game);
@@ -125,6 +170,7 @@ fn assert_source_owner_consumers(env: &WowLuaEnv) {
         env.exec("assert(FlagsUtilConstants.CombineShouldSet == true)")
             .expect("selected Flags.lua owner publishes CombineShouldSet");
     }
+    assert_trainer_consumer(env);
 }
 
 fn assert_retail_consumers(env: &WowLuaEnv) {
