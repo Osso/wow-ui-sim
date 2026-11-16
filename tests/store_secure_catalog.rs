@@ -43,12 +43,12 @@ const CATALOG_CONSUMER: &str = r##"
 "##;
 
 const CURRENCY_CONSUMER: &str = r#"
-    local shop = setmetatable({}, {__index = CatalogShopMixin})
-    local info = shop:GetCurrencyInfo()
-    assert(shop.FormatCurrencyStringShort == "short-%s")
-    assert(shop.FormatCurrencyStringLong == "long-%s")
-    assert(info.requireLicenseAccept == true and info.hideBrowseNotice == true)
-    assert(info.hideConfirmationBrowseNotice == false)
+    local currencyInfo = C_StoreSecure.GetCurrencyInfo()
+    assert(type(currencyInfo.sharedData) == "table")
+    assert(currencyInfo.currencyFields == nil)
+    assert(currencyInfo.sharedData.formatShort == "short-%s")
+    assert(currencyInfo.sharedData.formatLong == "long-%s")
+    assert(currencyInfo.sharedData.licenseAcceptText == "terms-61")
     local storeInfo = StoreFrame_CurrencyInfo()
     assert(FormatCurrencyStringShort == "short-%s")
     assert(FormatCurrencyStringLong == "long-%s")
@@ -292,7 +292,7 @@ fn retail_store_consumers_resolve_host_catalog_records() {
 }
 
 #[test]
-fn retail_catalog_shop_consumes_shared_currency_data() {
+fn retail_store_currency_consumer_uses_shared_data() {
     let env = load_store_ui();
     seed_catalog(&env);
     env.exec_rilua_secure(CURRENCY_CONSUMER)
