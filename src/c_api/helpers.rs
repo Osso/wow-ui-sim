@@ -163,8 +163,13 @@ pub(crate) fn register_namespace_function_with_flags(
     match (ordinary, secure) {
         (Some(ordinary), Some(secure)) => {
             table_set_rust_fn_unpaired(state, ordinary, member, function)?;
-            let value = crate::lua_api::methods::table_get(state, Val::Table(ordinary), member);
-            crate::lua_api::methods::table_set(state, Val::Table(secure), member, value);
+            // Flag-3 native C publication constructs a separate closure per namespace.
+            if flags == 3 {
+                table_set_rust_fn_unpaired(state, secure, member, function)?;
+            } else {
+                let value = crate::lua_api::methods::table_get(state, Val::Table(ordinary), member);
+                crate::lua_api::methods::table_set(state, Val::Table(secure), member, value);
+            }
         }
         (Some(ordinary), None) => {
             table_set_rust_fn_unpaired(state, ordinary, member, function)?;
@@ -210,12 +215,24 @@ pub(crate) fn register_namespace_value_with_flags(
     value: Val,
     flags: u8,
 ) -> LuaResult<()> {
+    register_namespace_values_with_flags(state, namespace, member, value, value, flags)
+}
+
+/// Register separate values in the ordinary and secure namespace tables.
+pub(crate) fn register_namespace_values_with_flags(
+    state: &mut LuaState,
+    namespace: &str,
+    member: &str,
+    ordinary_value: Val,
+    secure_value: Val,
+    flags: u8,
+) -> LuaResult<()> {
     let (ordinary, secure) = ensure_namespace_tables_for_flags(state, namespace, flags)?;
     if let Some(ordinary) = ordinary {
-        crate::lua_api::methods::table_set(state, Val::Table(ordinary), member, value);
+        crate::lua_api::methods::table_set(state, Val::Table(ordinary), member, ordinary_value);
     }
     if let Some(secure) = secure {
-        crate::lua_api::methods::table_set(state, Val::Table(secure), member, value);
+        crate::lua_api::methods::table_set(state, Val::Table(secure), member, secure_value);
     }
     Ok(())
 }
@@ -418,7 +435,7 @@ mod tests {
 
     #[cfg(feature = "client-retail")]
     #[test]
-    fn retail_c_timer_dual_publication_preserves_function_identity() {
+    fn retail_c_timer_dual_publication_constructs_distinct_rust_handlers() {
         let env = WowLuaEnv::new().expect("lua env");
         {
             let mut lua = env.rilua_mut();
@@ -429,26 +446,32 @@ mod tests {
             }
         }
 
-        let result: (bool, bool, bool) = env
+        let result: (bool, bool, bool, bool, bool, bool) = env
             .eval(
                 r#"
                 local public = rawget(_G, "C_Timer")
                 local secure = rawget(__secureenv, "C_Timer")
-                return rawequal(rawget(public, "After"), rawget(secure, "After")),
-                    rawequal(rawget(public, "NewTicker"), rawget(secure, "NewTicker")),
-                    rawequal(rawget(public, "NewTimer"), rawget(secure, "NewTimer"))
+                local publicAfter, secureAfter = rawget(public, "After"), rawget(secure, "After")
+                local publicTicker, secureTicker = rawget(public, "NewTicker"), rawget(secure, "NewTicker")
+                local publicTimer, secureTimer = rawget(public, "NewTimer"), rawget(secure, "NewTimer")
+                return not rawequal(publicAfter, secureAfter),
+                    publicAfter() == true and secureAfter() == true,
+                    not rawequal(publicTicker, secureTicker),
+                    publicTicker() == true and secureTicker() == true,
+                    not rawequal(publicTimer, secureTimer),
+                    publicTimer() == true and secureTimer() == true
                 "#,
             )
-            .expect("C_Timer function identity probe");
+            .expect("C_Timer flag-3 handler probe");
 
-        assert_eq!(result, (true, true, true));
+        assert_eq!(result, (true, true, true, true, true, true));
     }
 
     #[cfg(feature = "client-retail")]
     #[test]
-    fn retail_unknown_c_timer_new_timer_id_preserves_function_identity() {
+    fn retail_unknown_c_timer_new_timer_id_is_published_to_both_namespaces() {
         let env = WowLuaEnv::new().expect("lua env");
-        let preserves_identity: bool = env
+        let published_to_both: bool = env
             .eval(
                 r#"
                 local public = rawget(_G, "C_Timer")
@@ -456,12 +479,12 @@ mod tests {
                 return type(public) == "table"
                     and type(secure) == "table"
                     and type(rawget(public, "NewTimerID")) == "function"
-                    and rawequal(rawget(public, "NewTimerID"), rawget(secure, "NewTimerID"))
+                    and type(rawget(secure, "NewTimerID")) == "function"
                 "#,
             )
-            .expect("unknown C_Timer function identity probe");
+            .expect("unknown C_Timer namespace probe");
 
-        assert!(preserves_identity);
+        assert!(published_to_both);
     }
 
     #[test]

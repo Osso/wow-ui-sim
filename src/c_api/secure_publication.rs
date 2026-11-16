@@ -6,13 +6,14 @@ use super::secure_publication_data::{
 };
 use super::{
     global_val, register_namespace_function_with_flags, register_namespace_value_with_flags,
-    set_global_val,
+    register_namespace_values_with_flags, set_global_val,
 };
 use crate::lua_api::globals::security::{
     SECURE_ENV_BASE_NAMES_KEY, native_registration_destinations, secure_env_table,
     set_secure_env_key_state,
 };
 use crate::lua_api::methods::{create_table, registry_get, registry_set, table_get, table_set};
+use rilua::vm::closure::{Closure, RustClosure};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
 
@@ -302,7 +303,8 @@ fn publish_to_both(
                 previous_secure,
             )?;
         } else {
-            set_member_in_both(state, namespace, member, ordinary, flag)?;
+            let secure = separate_flag3_function_object(state, ordinary, flag)?;
+            set_member_in_both(state, namespace, member, ordinary, secure, flag)?;
         }
         return Ok(true);
     }
@@ -311,7 +313,8 @@ fn publish_to_both(
             remove_namespace_member(state, namespace, member, true, true)?;
             return Ok(false);
         }
-        set_member_in_both(state, namespace, member, secure, flag)?;
+        let ordinary = separate_flag3_function_object(state, secure, flag)?;
+        set_member_in_both(state, namespace, member, ordinary, secure, flag)?;
         return Ok(true);
     }
 
@@ -331,13 +334,22 @@ fn update_changed_dual_handler(
 ) -> LuaResult<()> {
     let ordinary_changed = snapshot_changed(previous_ordinary, ordinary);
     let secure_changed = snapshot_changed(previous_secure, secure);
-    let replacement = match (ordinary_changed, secure_changed) {
-        (true, false) => Some(ordinary),
-        (false, true) => Some(secure),
+    let destinations = match (ordinary_changed, secure_changed) {
+        (true, false) => Some((
+            ordinary,
+            separate_flag3_function_object(state, ordinary, flag)?,
+        )),
+        (false, true) => Some((separate_flag3_function_object(state, secure, flag)?, secure)),
+        (true, true) | (false, false) if ordinary == secure => Some((
+            ordinary,
+            separate_flag3_function_object(state, ordinary, flag)?,
+        )),
         _ => None,
     };
-    if let Some(replacement) = replacement {
-        set_member_in_both(state, namespace, member, replacement, flag)?;
+    if let Some((ordinary_value, secure_value)) = destinations
+        && (ordinary_value != ordinary || secure_value != secure)
+    {
+        set_member_in_both(state, namespace, member, ordinary_value, secure_value, flag)?;
     }
     Ok(())
 }
@@ -399,16 +411,24 @@ fn set_member_in_both(
     state: &mut LuaState,
     namespace: &str,
     member: &str,
-    value: Val,
+    ordinary_value: Val,
+    secure_value: Val,
     flag: u8,
 ) -> LuaResult<()> {
     if namespace == "_G" {
-        set_global_val(state, member, value);
-        set_secure_env_key_state(state, member, value)?;
+        set_global_val(state, member, ordinary_value);
+        set_secure_env_key_state(state, member, secure_value)?;
         return Ok(());
     }
     validate_target_namespace(state, namespace, true, true)?;
-    register_namespace_value_with_flags(state, namespace, member, value, flag)
+    register_namespace_values_with_flags(
+        state,
+        namespace,
+        member,
+        ordinary_value,
+        secure_value,
+        flag,
+    )
 }
 
 fn set_member_in_destination(
@@ -444,6 +464,34 @@ fn namespace_tables(state: &mut LuaState, namespace: &str) -> LuaResult<(Val, Va
 
 fn function_value(value: Val) -> Option<Val> {
     matches!(value, Val::Function(_)).then_some(value)
+}
+
+fn separate_flag3_function_object(state: &mut LuaState, value: Val, flag: u8) -> LuaResult<Val> {
+    if flag != 3 {
+        return Ok(value);
+    }
+    let Val::Function(reference) = value else {
+        return Ok(value);
+    };
+    // Build a new C closure instead of copying the existing function value.
+    let duplicate = match state.gc.closures.get(reference) {
+        Some(Closure::Rust(handler)) if handler.upvalues.is_empty() => RustClosure {
+            func: handler.func,
+            upvalues: Vec::new(),
+            name: handler.name.clone(),
+            env: handler.env,
+        },
+        Some(Closure::Rust(handler)) => {
+            return Err(runtime_error(format!(
+                "flag-3 native function {} has captured values",
+                handler.name
+            )));
+        }
+        _ => return Ok(value),
+    };
+    Ok(Val::Function(
+        state.gc.alloc_closure(Closure::Rust(duplicate)),
+    ))
 }
 
 fn is_fixed_base_copy(state: &mut LuaState, namespace: &str, member: &str) -> LuaResult<bool> {
@@ -561,11 +609,19 @@ mod tests {
                 return type(ping) == "table"
                         and type(rawget(ping, "GetDefaultPingOptions")) == "function"
                         and type(securePing) == "table"
-                        and type(rawget(securePing, "GetDefaultPingOptions")) == "function",
+                        and type(rawget(securePing, "GetDefaultPingOptions")) == "function"
+                        and not rawequal(
+                            rawget(ping, "GetDefaultPingOptions"),
+                            rawget(securePing, "GetDefaultPingOptions")
+                        ),
                     type(services) == "table"
                         and type(rawget(services, "HasRequiredBoostForClassTrial")) == "function"
                         and type(secureServices) == "table"
-                        and type(rawget(secureServices, "HasRequiredBoostForClassTrial")) == "function",
+                        and type(rawget(secureServices, "HasRequiredBoostForClassTrial")) == "function"
+                        and not rawequal(
+                            rawget(services, "HasRequiredBoostForClassTrial"),
+                            rawget(secureServices, "HasRequiredBoostForClassTrial")
+                        ),
                     type(securePrivateAuras) == "table"
                         and type(rawget(securePrivateAuras, "GetPrivateAuraAnchors")) == "function",
                     type(privateAuras) == "table"
@@ -640,9 +696,14 @@ mod tests {
                     and rawget(ordinaryNamespace, "GetTrialBoostStartingLevel")
                 local secure = type(secureNamespace) == "table"
                     and rawget(secureNamespace, "GetTrialBoostStartingLevel")
+                local ordinaryLevel = type(ordinary) == "function" and ordinary()
+                local secureLevel = type(secure) == "function" and secure()
                 return type(ordinary) == "function",
                     type(secure) == "function",
-                    rawequal(ordinary, secure)
+                    not rawequal(ordinary, secure)
+                        and type(ordinaryLevel) == "number"
+                        and type(secureLevel) == "number"
+                        and ordinaryLevel == secureLevel
                 "#,
             )
             .expect("read late flag-3 publication");
@@ -651,15 +712,19 @@ mod tests {
         env.exec("rawset(C_Ping, 'GetDefaultPingOptions', function() return 'late' end)")
             .expect("replace ordinary flag-3 namespace member");
         env.set_screen_mode(ScreenKind::CharacterSelect);
-        let replaced_flag3: bool = env
+        let replaced_flag3: (bool, bool, String, String) = env
             .eval(
-                "return rawequal(C_Ping.GetDefaultPingOptions, __secureenv.C_Ping.GetDefaultPingOptions)",
+                r#"
+                local ordinary = C_Ping.GetDefaultPingOptions
+                local secure = __secureenv.C_Ping.GetDefaultPingOptions
+                return type(ordinary) == "function",
+                    type(secure) == "function",
+                    ordinary(),
+                    secure()
+                "#,
             )
-            .expect("read late flag-3 replacement");
-        assert!(
-            replaced_flag3,
-            "secureenv must receive the final ordinary handler"
-        );
+            .expect("read late flag-3 replacement behavior");
+        assert_eq!(replaced_flag3, (true, true, "late".into(), "late".into()));
 
         env.exec("rawset(_G, 'newproxy', function() return 'late' end)")
             .expect("replace ordinary flag-1 global for route test");

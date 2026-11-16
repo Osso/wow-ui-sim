@@ -824,10 +824,10 @@ fn get_frame_metatable_is_present_in_both_environments() {
     feature = "timed-signal-maps"
 ))]
 #[test]
-fn retail_r88n11b_timed_signal_map_shares_function_with_secure_namespace() {
+fn retail_r88n11b_timed_signal_map_has_distinct_working_handlers() {
     let env = env();
 
-    let shared: bool = env
+    let works: bool = env
         .eval(
             r#"
             local public = rawget(_G, "C_Timer")
@@ -835,13 +835,16 @@ fn retail_r88n11b_timed_signal_map_shares_function_with_secure_namespace() {
             local publicFactory = type(public) == "table" and rawget(public, "NewTimedSignalMap")
             local secureFactory = type(secure) == "table" and rawget(secure, "NewTimedSignalMap")
             return type(publicFactory) == "function"
-                and rawequal(publicFactory, secureFactory)
+                and type(secureFactory) == "function"
+                and not rawequal(publicFactory, secureFactory)
                 and not rawequal(public, secure)
+                and type(publicFactory(function() end)) == "userdata"
+                and type(secureFactory(function() end)) == "userdata"
             "#,
         )
         .expect("R88n.11b NewTimedSignalMap publication should be observable");
 
-    assert!(shared);
+    assert!(works);
 }
 
 #[cfg(feature = "client-retail")]

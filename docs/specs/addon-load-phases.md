@@ -27,8 +27,11 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 
 - [ ] Secure-mode addon and dependency files must resolve global reads through the shared `__secureenv` by default. Ordinary-only globals such as `debug` and `coroutine` stay unavailable there, and per-file environment annotations remain effective.
 - [ ] Keep the temporary private snapshot only for explicit `SecureReplay` and generated XML loader paths in this cycle. After the original fallback-disabled PrivateAuras consumer passes, remove that bridge in its own commit; inherited-only values must not enter `__secureenv`.
-- [ ] VERIFIED — Retail 12.1.5.70688 R88y.y1: use only the 6,554 VERIFIED rows from the pinned 6,763-row CSV (`3a8922d84756171f666fe79b61068d3344ce2db866250dede1de384fa9878f82`). Apply flags 1/2/3/6/7 to existing simulator functions only; keep absent implementations absent and exclude 209 INFERRED rows. Preserve each row's Game/Glue/both context; existing screen-aware registrars decide which members exist. Run publication after bootstrap and after screen registration so late or replaced flag-3 handlers reach secureenv. The additional actions for flags 6 and 7 remain UNKNOWN.
-- [ ] VERIFIED — Retail 12.1.5.70688 R88y.y2: install `string.concat`, `string.split`, and `string.join` from the existing `strconcat`, `strsplit`, and `strjoin` handlers before secure table-copy construction. Keep `fastrandom` on the existing base `math.random` handler and out of the secure base; leave the simulator's current `math.random` handler unchanged and do not assert random outputs. Keep `table.join` absent.
+### R88y verified secure publication
+
+- [ ] VERIFIED — Retail 12.1.5.70688 R88y.y1: use only the 6,554 VERIFIED rows from the pinned 6,763-row CSV (`3a8922d84756171f666fe79b61068d3344ce2db866250dede1de384fa9878f82`). Apply flags 1/2/3/6/7 to existing simulator functions only; keep absent implementations absent and exclude 209 INFERRED rows. Preserve each row's Game/Glue/both context; existing screen-aware registrars decide which members exist. Run publication after bootstrap and after screen registration so late registrations are reconciled. The additional actions for flags 6 and 7 remain UNKNOWN.
+- [ ] VERIFIED — Retail 12.1.5.70688, R88 series decomp line 13165: each implemented flag-3 native C function has distinct ordinary and secure function objects, with the same handler and no captured values. **UNVERIFIED:** identity after later script replacement or deliberate aliasing.
+- [ ] VERIFIED — Retail 12.1.5.70688 R88y.y2: install `string.concat`, `string.split`, and `string.join` from the existing `strconcat`, `strsplit`, and `strjoin` handlers before secure table-copy construction. Function values in the shallow-copied standard-library tables retain their shared identity. Keep `fastrandom` on the existing base `math.random` handler and out of the secure base; leave the simulator's current `math.random` handler unchanged and do not assert random outputs. Keep `table.join` absent.
 - [ ] SIMULATOR POLICY — Retail 12.1.5: after bootstrap, the ordinary and secure `string` library tables preserve the verified alias identities. A simulator-only colon-split compatibility method must not replace Retail `string.split`; keep that helper on profiles without this R88y evidence.
 - [ ] VERIFIED — Retail 12.1.5.70688 R88y.y3: on successful `SwapToGlobalEnvironment`, change the caller function environment to ordinary `_G` and return zero values. Preserve the conditional XML `addToSecureEnv` named-frame route. Do not add blanket global copying; `securecopy` behavior and frame-callback access remain UNKNOWN.
 - [x] `C_AddOns.LoadAddOn` must attempt optional dependencies before required dependencies.
@@ -42,7 +45,7 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 - [x] VERIFIED (Retail 12.1.5.70688, R88v.v4; `secureenv_isolation::create_texture_source_location_skips_excluded_callsite`): calling the secure `AddSourceLocationExclude` object with a string returns zero values and changes the source selected by ordinary `CreateTexture`. The first template-free texture returns its saved file and line after the exclusion list changes; excluding the only file frame makes the next texture return an `UnknownFile:` location.
 - [ ] VERIFIED (Retail 12.1.5.70688, R88v.v4): number arguments convert to text; input text stops at NUL; empty input adds nothing; duplicates are retained; secret denial and stack-overflow errors use the verified forms.
 - [ ] VERIFIED (Retail 12.1.5.70688, R88v.v4): source matching is case-sensitive and uses a file-text suffix; positive lines wrap modulo 65,536 and non-positive lines become zero.
-- [ ] VERIFIED (Retail 12.1.5.70688, R88y): publish the six implemented `C_ColorOverrides` members to both environments according to their VERIFIED flag-3 rows. Do not publish unimplemented members. Function identity is not asserted by the R88y member-set test.
+- [ ] VERIFIED (Retail 12.1.5.70688, R88y): publish the six implemented `C_ColorOverrides` members to both environments according to their VERIFIED flag-3 rows. Do not publish unimplemented members. Each ordinary/secure handler pair is distinct and callable against the shared override state.
 - [x] VERIFIED (Retail 12.1.5.70688, R88t): constant registration publishes separate `Constants` and `AccountStoreConsts` tables without a member flag. The four verified values are 1, 3, 3139, and 2814 for their named members.
 - [x] VERIFIED (Retail 12.1.5.70688, R88t): when ordinary and secure `UIParent` names are empty, both receive the same frame-table object through the Retail named-frame policy.
 - [ ] VERIFIED (Retail 12.1.5.70688, R88t): the Retail UIParent bootstrap uses named-frame policy flag 32 and each destination preserves an existing non-nil name.
@@ -63,6 +66,7 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 
 - [Addon loading pipeline](../addon-loading-pipeline.md)
 - [Addon-loading system](../wiki/systems/addon-loading.md#blizzard-addon-load-order)
+- [Taint system](../wiki/systems/taint-system.md#dual-lua-environment) — secure environment publication and shallow library copies.
 
 ## Implementation inventory
 
@@ -98,8 +102,9 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 - `src/c_api/c_addons_runtime_tests.rs`
 - `tests/secureenv_isolation.rs` — separate loaded states, dependency request order, already-loaded mode behavior, and the one-file source-location consumer.
 - `tests/blizzard_private_auras_ui_loads.rs` — the original FrameFactory/Pools, AccountUtil, ColorManager, GameRulesUtil, and PrivateAurasTooltip consumers.
-- `src/c_api/secure_publication.rs` — verified-only R88y routing, absent implementations, and late flag-3 replacement after screen registration.
-- `src/lua_api/globals/security/secure_env.rs` — pre-copy string aliases, shallow library copies, and random-handler identity/membership.
+- `src/c_api/secure_publication.rs` — verified-only R88y routing, absent implementations, and late flag-3 registration after screen changes.
+- `src/c_api/helpers.rs` and `src/lua_api/globals/security/secure_env.rs` — separate flag-3 C-function objects; the latter also tests pre-copy library aliases and shallow-copy identity.
+- `src/c_api/c_color_overrides.rs` and `tests/secureenv_isolation.rs` — six `C_ColorOverrides` handlers and `C_Timer.NewTimedSignalMap` publication.
 - `src/lua_api/workarounds/temporary/formatting_utility_defaults.rs` — verifies defaults reapplication preserves Retail `string.split` identity.
 - `src/lua_api/globals/security/environment.rs` — successful `SwapToGlobalEnvironment` changes caller environment and returns zero values.
 - `src/lua_api/globals/real/table_extensions.rs` — separate ordinary/secure `table.count` handlers.

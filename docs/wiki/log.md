@@ -1,3 +1,7 @@
+## [2026-11-15] correction | R88y flag-3 function identity
+
+Updated the [taint system](systems/taint-system.md#dual-lua-environment) and the [R88y load-phase contract](../specs/addon-load-phases.md#r88y-verified-secure-publication). **RETRACTED:** the prior shared-identity conclusion came from simulator value copying and did not establish native identity. **VERIFIED (R88 series, Retail 12.1.5.70688 decomp line 13165):** flag-3 native C functions use separate zero-capture closures with the same handler. **VERIFIED (R88y.y2):** copied standard-library function values retain shared identity. **UNVERIFIED:** identity after later script replacement or deliberate aliasing; current tests do not claim it.
+
 ## [2026-11-15] system | Retail C_ColorOverrides R88y publication
 
 Updated the [color-overrides system](systems/color-overrides.md) and its [feature contract](../specs/color-overrides.md). **VERIFIED (pinned CSV and simulator source at `5cd3cc29e`):** the six modeled members have VERIFIED flag-3 rows; Retail now uses the generic publisher, with the temporary fallback methods and custom bridge retired. The old two-member baseline was a pre-R88y preservation guard. The exact merged-head secure member-set test remains pending.

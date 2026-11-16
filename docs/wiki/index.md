@@ -1,3 +1,7 @@
+## [2026-11-15] correction | R88y flag-3 function identity
+
+[Taint system](systems/taint-system.md#dual-lua-environment) now distinguishes separate no-capture native C closures for verified flag-3 functions from shared function values in shallow-copied standard-library tables. Identity after later script replacement or deliberate aliasing remains UNVERIFIED.
+
 ## [2026-11-15] system | Retail C_ColorOverrides R88y publication
 
 [Color overrides](systems/color-overrides.md) now records the six VERIFIED flag-3 rows and the generic simulator publication path. The old two-member test guarded the pre-R88y fallback period; the merged-head six-member runtime test remains pending.

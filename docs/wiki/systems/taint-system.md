@@ -45,7 +45,7 @@ Two environments share one Lua state:
 
 **VERIFIED (Retail 12.1.5.70688, R88g.1):** the client creates the shared environment before addon files, seeds it from exactly 39 names, shallow-copies values that are tables, and installs no `__index = _G` fallback. R88y later verifies per-member destinations for a bounded inventory; neither finding proves a blanket ordinary-global copy.
 
-**VERIFIED (simulator source):** `create_secure_environment` uses the fixed 39-name base, records that exact base-name set privately, gives secureenv its own `_G` reference, and installs no ordinary-global fallback. **VERIFIED (Retail 12.1.5.70688, R88y.y2):** the native initializer opens libraries and registers their unflagged aliases before this table copy; the simulator installs the verified string aliases and ordinary `fastrandom` at the same pre-copy boundary. Later global registration alone does not create a plain-name lookup in secureenv. The R88y publisher reads only existing handlers after bootstrap and after screen-specific registration. It tracks prior values so a late replacement updates its flag-3 partner, while independently changed function objects remain distinct.
+**VERIFIED (simulator source):** `create_secure_environment` uses the fixed 39-name base, records that exact base-name set privately, gives secureenv its own `_G` reference, and installs no ordinary-global fallback. **VERIFIED (Retail 12.1.5.70688, R88y.y2):** the native initializer opens libraries and registers their unflagged aliases before this table copy; the simulator installs the verified string aliases and ordinary `fastrandom` at the same pre-copy boundary. Later global registration alone does not create a plain-name lookup in secureenv. The R88y publisher reads only existing handlers after bootstrap and after screen-specific registration, and it tracks prior values when it reconciles late registrations. The [R88y publication contract](../../specs/addon-load-phases.md#r88y-verified-secure-publication) records the native function-identity boundary. **VERIFIED (simulator source):** direct flag-3 RustFn registration creates one zero-upvalue `RustClosure` per destination; the generic publisher creates a separate closure when a verified flag-3 Rust handler exists on only one side. The standard-library shallow-copy path retains the original function values. **UNVERIFIED:** native function identity after later script replacement or deliberate aliasing.
 
 **VERIFIED (Retail 12.1.5.70688, R88y.y1; source CSV SHA-256 `3a8922d84756171f666fe79b61068d3344ce2db866250dede1de384fa9878f82`):** the working CSV has 6,763 distinct namespace/member rows: 6,554 VERIFIED and 209 INFERRED. Effective flags select ordinary-only (1), secure-only (2), both (3), secure-only plus an unknown extra action (6), or both plus an unknown extra action (7). The simulator table contains only VERIFIED rows and routes a member only when an implementation exists. The row context is retained; existing screen-aware registrars decide which members exist. The simulator does not create absent C_* functions. `GetForbiddenObjectTable` is flag 6; its internal Lua helpers keep a local closure while the global name is moved to secureenv.
 
@@ -73,7 +73,7 @@ For shared Blizzard libraries, secure dependency files run in the shared environ
 
 `C_ClickBindings` has a per-environment interaction profile. Its unmodified defaults are inferred simulator policy, not native-probed behavior; `ExecuteBinding()` remains an inert temporary gap. The [click-binding interaction profile](../../specs/click-binding-interaction-profile.md) is the current contract and proof SSOT.
 
-`set_in_both_envs_rilua(key, value)` writes one global value to ordinary `_G` and secureenv. The paired namespace helpers use separate namespace tables and write each native member to both tables.
+`src/c_api/helpers.rs` keeps ordinary and secure namespace tables separate. Flag-3 Rust function registration constructs one closure per table. Value registration can copy an existing `Val`; the R88y publisher constructs a separate zero-upvalue Rust closure when it publishes a flag-3 handler to the other table.
 
 ## Runtime Taint Functions
 
@@ -167,7 +167,8 @@ Remaining audit gaps are branch-specific coverage gaps, not known missing implem
 - `data/secure-publication/retail-12-1-5-70688.csv`, `data/secure-publication/provenance.json`, `tools/gen_r88y_secure_publication.py` — source inventory, hash/count manifest, and table generator
 - `src/lua_api/globals/real/math_extensions.rs`, `src/lua_api/globals/real/table_extensions.rs`, `src/lua_api/env_init/shared_bootstrap.lua` — pre-copy aliases, distinct `table.count` registration, and the internal forbidden-object closure
 - `src/lua_api/globals/security/environment.rs` — `SwapToGlobalEnvironment` success route
-- `src/c_api/helpers.rs` and `crates/sim-lua-bridge/src/table_builder.rs` — paired native namespace creation and member writes
+- `src/c_api/helpers.rs` and `crates/sim-lua-bridge/src/table_builder.rs` — paired namespace creation and flag-3 Rust function closure construction
+- R88 series, Retail 12.1.5.70688 decomp line 13165 — separate no-capture native C closure objects for flag-3 publication
 - `src/lua_api/globals/security/` — taint helpers, `securecallmethod`, SecureHandler fallback, state/attribute drivers
 - `src/c_api/c_click_bindings.rs` — modeled per-environment interaction profile
 - `src/lua_api/workarounds/temporary/click_bindings_defaults.rs` — inert `ExecuteBinding` and remaining temporary helpers

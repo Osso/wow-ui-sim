@@ -10,7 +10,7 @@ use rilua::vm::state::LuaState;
 use rilua::{LuaApiMut, LuaResult, Val, runtime_error};
 
 use crate::lua_api::methods::{registry_get, registry_set};
-use crate::lua_bridge::table_set_rust_fn;
+use crate::lua_bridge::{table_set_rust_fn, table_set_rust_fn_unpaired};
 
 const NATIVE_REGISTRATION_FLAG_MODULUS: u8 = 4;
 pub(crate) const SECURE_ENV_BASE_NAMES_KEY: &str = "__secureenv_base_names";
@@ -296,7 +296,7 @@ pub(crate) const fn native_registration_destinations(flags: u8) -> (bool, bool) 
     }
 }
 
-/// Register one flag-bearing native function. Dual publication reuses one function value;
+/// Register one flag-bearing native function. Flag 3 constructs a separate closure per table;
 /// secure publication requires an existing table at the shared `__secureenv` registry key.
 pub(crate) fn register_native_function_with_flags(
     lua: &mut rilua::Lua,
@@ -310,8 +310,14 @@ pub(crate) fn register_native_function_with_flags(
     if publish_global {
         table_set_rust_fn(state, global_ref, name, function)?;
         if publish_secure {
-            let value = crate::lua_api::methods::table_get(state, Val::Table(global_ref), name);
-            set_secure_env_value_if_present(state, name, value)?;
+            if flags == 3 {
+                if let Val::Table(secureenv_ref) = registry_get(state, "__secureenv") {
+                    table_set_rust_fn_unpaired(state, secureenv_ref, name, function)?;
+                }
+            } else {
+                let value = crate::lua_api::methods::table_get(state, Val::Table(global_ref), name);
+                set_secure_env_value_if_present(state, name, value)?;
+            }
         }
     } else if publish_secure && let Val::Table(secureenv_ref) = registry_get(state, "__secureenv") {
         table_set_rust_fn(state, secureenv_ref, name, function)?;
@@ -456,7 +462,7 @@ mod tests {
     }
 
     #[test]
-    fn dual_native_global_flags_share_one_function_value() {
+    fn flag3_global_handlers_are_distinct_and_flag7_handlers_still_work() {
         let env = WowLuaEnv::new().expect("lua env");
         {
             let mut lua = env.rilua_mut();
@@ -466,24 +472,27 @@ mod tests {
                 .expect("register flag-7 function");
         }
 
-        let shared: (bool, bool) = env
+        let routes: (bool, bool) = env
             .eval(
                 r#"
-                local function shares_function_value(name)
-                    local ordinary = rawget(_G, name)
-                    local secure = rawget(__secureenv, name)
-                    return type(ordinary) == "function"
-                        and rawequal(ordinary, secure)
-                        and ordinary() == true
-                        and secure() == true
-                end
-                return shares_function_value("flagshared3"),
-                    shares_function_value("flagshared7")
+                local ordinary3 = rawget(_G, "flagshared3")
+                local secure3 = rawget(__secureenv, "flagshared3")
+                local ordinary7 = rawget(_G, "flagshared7")
+                local secure7 = rawget(__secureenv, "flagshared7")
+                return type(ordinary3) == "function"
+                        and type(secure3) == "function"
+                        and not rawequal(ordinary3, secure3)
+                        and ordinary3() == true
+                        and secure3() == true,
+                    type(ordinary7) == "function"
+                        and type(secure7) == "function"
+                        and ordinary7() == true
+                        and secure7() == true
                 "#,
             )
-            .expect("shared function identity probe");
+            .expect("flagged function publication probe");
 
-        assert_eq!(shared, (true, true));
+        assert_eq!(routes, (true, true));
     }
 
     #[test]
@@ -507,12 +516,13 @@ mod tests {
                 r#"
                 local ordinary = rawget(_G, "flagpreserved")
                 local secure = rawget(__secureenv, "flagpreserved")
-                return rawequal(ordinary, secure)
+                return type(ordinary) == "function"
+                    and type(secure) == "function"
                     and ordinary() == 37
                     and secure() == 37
                 "#,
             )
-            .expect("existing function identity probe");
+            .expect("existing function behavior probe");
 
         assert!(preserved);
     }
