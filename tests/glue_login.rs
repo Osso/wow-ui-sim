@@ -1524,6 +1524,7 @@ fn retail_disconnect_public_state_clears_without_login_submission() {
     test_timeout! {
         let env = load_blizzard_screen(ScreenKind::CharacterSelect);
         env.exec(RETAIL_DISCONNECT_CONSUMER_SETUP).expect("selected Retail consumer setup");
+        env.state().borrow_mut().glue_login.seed_login_cancellation_recorded_for_host(false);
         env.state().borrow_mut().store_glue.disconnect_on_logout = true;
         let before: (i32, bool, i32, bool, bool) = env.eval("return C_Login.GetState()").unwrap();
         assert_eq!(before, (1, true, 1, false, false));
@@ -1546,6 +1547,7 @@ fn retail_character_select_disconnect_consumer_publishes_ordered_events() {
         wow_ui_sim::startup::run_extra_update_ticks(&env, 2);
         env.state().borrow_mut().glue_login.realm_list_available = true;
         env.exec("disconnectEvents = {}").unwrap();
+        env.state().borrow_mut().glue_login.seed_login_cancellation_recorded_for_host(false);
         env.state().borrow_mut().store_glue.disconnect_on_logout = true;
         let active = env.exec("CharacterSelectFrameMixin.OnShow(CharacterSelect)");
         env.state().borrow_mut().store_glue.disconnect_on_logout = true;

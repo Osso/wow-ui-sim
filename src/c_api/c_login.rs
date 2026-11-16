@@ -122,6 +122,12 @@ impl LoginState {
         self.selected_character_index = -1;
         self.resolved_saved_character_index = None;
     }
+
+    /// Seed the host-model cancellation condition; native initialization remains unknown.
+    #[cfg(feature = "client-retail")]
+    pub fn seed_login_cancellation_recorded_for_host(&mut self, recorded: bool) {
+        self.retail_glue.login_cancellation_recorded = recorded;
+    }
 }
 
 pub fn register_c_login(state: &mut LuaState) -> LuaResult<()> {

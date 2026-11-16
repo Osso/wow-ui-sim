@@ -11,7 +11,7 @@ use super::LoginState;
 
 #[derive(Debug, Default)]
 pub(super) struct RetailGlueState {
-    login_cancellation_recorded: bool,
+    pub(super) login_cancellation_recorded: bool,
     pub(super) disconnect_state_is_authoritative: bool,
     login_error: Option<String>,
     /// Empty offline state. R88aa proves the 0/1 transitions, not startup timing.
