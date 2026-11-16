@@ -172,6 +172,8 @@ pub(crate) mod restricted_actions_protected;
 pub(crate) mod scenario_defaults;
 pub(crate) mod script_bucket_throttle_limits;
 pub(crate) mod scripted_animation_effect_defaults;
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+pub(crate) mod secure_legacy_unit_globals;
 pub(crate) mod secure_reference_defaults;
 pub(crate) mod secure_transfer_state;
 pub(crate) mod secure_types_defaults;

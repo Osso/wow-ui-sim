@@ -90,6 +90,7 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 - `src/c_api/helpers.rs`, `src/c_api/secure_publication.rs`, and generated `src/c_api/secure_publication_data.rs` — route implemented members through verified R88y flags; the source CSV and generator are `data/secure-publication/retail-12-1-5-70688.csv` and `tools/gen_r88y_secure_publication.py`.
 - `src/loader/addon.rs` — orders ordinary and secure dependency requests.
 - `src/loader/lua_file.rs`, `src/loader/xml_file.rs`, `src/lua_api/loader_env.rs`, `src/lua_api/globals/security/secure_env.rs` — execute secure files through the shared table and retain private replay only for selected replay paths and generated XML loader chunks.
+- `src/lua_api/workarounds/temporary/secure_legacy_unit_globals.rs`, `src/lua_api/env_init/mod.rs` — retain the source-derived master Unit-global route in Retail secureenv without inferring native publication.
 - `src/lua_api/env_init/enums.rs` — registers `Enum` values and the Retail `Constants.*` secure-table publication path.
 - `src/lua_api/globals/strings/mod.rs` — registers PHF GlobalStrings rows and integer constants; applies the inferred string and non-`LE_GAME_*` integer mirrors, plus the CSV-listed `LE_GAME_*` route.
 - `src/lua_api/env_init/mod.rs`, `src/lua_api/env_runtime.rs` — install pre-copy library aliases and rerun verified publication after screen-specific registrations.
@@ -131,7 +132,8 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 - [ ] UNKNOWN: the native cleanup caller for the shared exclusion list is not established; the simulator retains entries for the lifetime of `SimState`. The two-file caller/wrapper comparison remains INFERRED and is not asserted.
 - [ ] rilua exposes no per-argument secret mode and no fallible stack reservation; AddSourceLocationExclude therefore does not reproduce the verified mode-zero secret error or stack-overflow path.
 - [ ] The source test invokes the secure function object from an ordinary add-on and observes the effect through ordinary `CreateTexture`; it does not invoke the ordinary function object from secure add-on code.
-- [ ] UNKNOWN: transitive copying from ordinary globals into secureenv. The direct dependency helper does not add a blanket-copy route.
+- [ ] SOURCE-DERIVED (VERIFIED simulator source at master `725fb6e3a`): preserve the 153 active Retail Unit-prefixed global function values that the former blanket snapshot placed in `__secureenv`, minus the six VERIFIED R88y rows. Native secure publication remains UNKNOWN (R88ac.ac1, R88af.1/.2); no test asserts this member set.
+- [ ] UNKNOWN: native transitive copying of other ordinary globals into secureenv. The simulator preserves only the named Unit compatibility set; the direct dependency helper does not add a blanket-copy route.
 - [ ] The original `TooltipDataProcessor` identity and its published secure-table provenance remain deferred to `lt-635e`; this lane verifies that the PrivateAurasTooltip consumer runs without errors.
 - [ ] UNKNOWN: PTR phase and demand fields are not mapped to cached TOC directives, and native live-list membership and sort direction are not established.
 - [ ] UNKNOWN: Native `LoadWith` behavior on Mists, Era, Anniversary, and Wrath. The simulator keeps their previous dispatch path.

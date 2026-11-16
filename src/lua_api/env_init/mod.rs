@@ -17,6 +17,8 @@ use super::state::SimState;
 use crate::lua_api::methods::{registry_get, registry_set};
 use crate::lua_api::script_helpers::protected_lua_pcall_state;
 use crate::lua_api::taint::stamp_addon_taint_state;
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+use crate::lua_api::workarounds::temporary::secure_legacy_unit_globals::copy_legacy_unit_globals_to_secureenv;
 use crate::screen::ScreenKind;
 use rilua::LuaApiMut;
 use rilua::vm::state::LuaState;
@@ -72,6 +74,8 @@ pub(super) fn init_lua_state(
     trace_debug_getter_values(lua, "before_profile_bootstrap");
     register_profile_bootstrap(lua)?;
     trace_debug_getter_values(lua, "after_profile_bootstrap");
+    #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+    copy_legacy_unit_globals_to_secureenv(lua)?;
     let screen_kind = state.borrow().screen_kind;
     install_secure_runtime_surface(lua, screen_kind)?;
     finalize_lua_bootstrap(lua, &state)?;
