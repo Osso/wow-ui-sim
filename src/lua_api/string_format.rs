@@ -331,8 +331,8 @@ mod tests {
         let matches_lowercase: bool = env
             .eval(
                 r#"
-                return string.format("%2$s %1$s %.1F", "first", "second", 3.25)
-                    == string.format("%2$s %1$s %.1f", "first", "second", 3.25)
+                return string.format("%2$s %1$s %3$.1F", "first", "second", 3.25)
+                    == string.format("%2$s %1$s %3$.1f", "first", "second", 3.25)
                 "#,
             )
             .expect("patched format should still work");
