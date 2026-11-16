@@ -525,30 +525,34 @@ fn retail_secure_colors_publishes_existing_color_override_consumers() {
         "the secure Blizzard_Colors ColorManager.lua consumer must run: {consumer_errors:?}"
     );
 
-    let published: bool = env
+    let publication_result: String = env
         .eval(
             r#"
             local ordinary = rawget(_G, "C_ColorOverrides")
             local secure = rawget(__secureenv, "C_ColorOverrides")
-            if type(ordinary) ~= "table" or type(secure) ~= "table" or ordinary == secure then
-                return false
-            end
+            if type(ordinary) ~= "table" then return "ordinary_namespace_missing" end
+            if type(secure) ~= "table" then return "secure_namespace_missing" end
+            if ordinary == secure then return "namespace_tables_shared" end
             for _, name in ipairs({ "GetColorForQuality", "GetColorOverrideInfo" }) do
                 local ordinaryFunction = rawget(ordinary, name)
                 local secureFunction = rawget(secure, name)
-                if type(ordinaryFunction) ~= "function"
-                    or type(secureFunction) ~= "function"
-                    or rawequal(ordinaryFunction, secureFunction) then
-                    return false
+                if type(ordinaryFunction) ~= "function" then
+                    return name .. ":ordinary_handler_missing"
+                end
+                if type(secureFunction) ~= "function" then
+                    return name .. ":secure_handler_missing"
+                end
+                if rawequal(ordinaryFunction, secureFunction) then
+                    return name .. ":function_identity_shared"
                 end
             end
-            return true
+            return "ok"
             "#,
         )
         .expect("C_ColorOverrides publication probe");
-    assert!(
-        published,
-        "publish the existing C_ColorOverrides handlers separately"
+    assert_eq!(
+        publication_result, "ok",
+        "secure C_ColorOverrides publication must expose distinct consumer handlers"
     );
 }
 
