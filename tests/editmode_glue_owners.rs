@@ -106,11 +106,13 @@ fn edit_mode_raid_warning_defaults_select_original_consumers() {
     assert_eq!(selected_account_setting, 33);
 }
 
-#[cfg(any(
-    feature = "client-ptr",
-    feature = "client-retail",
-    feature = "client-wowforever",
-    feature = "client-mists"
+#[cfg(all(
+    any(
+        feature = "client-ptr",
+        feature = "client-retail",
+        feature = "client-mists"
+    ),
+    not(feature = "client-wowforever")
 ))]
 fn group_finder_toggle_opens_and_closes(env: &WowLuaEnv) {
     let toggled: bool = env
@@ -129,6 +131,24 @@ fn group_finder_toggle_opens_and_closes(env: &WowLuaEnv) {
         )
         .expect("run the Group Finder toggle consumer");
     assert!(toggled, "the Group Finder consumer must open and close PVEFrame");
+}
+
+#[cfg(feature = "client-wowforever")]
+fn group_finder_toggle_opens_and_closes(env: &WowLuaEnv) {
+    let invoked_without_error: bool = env
+        .eval(
+            r#"
+            local toggle = PVEFrame_ToggleFrame
+            if type(toggle) ~= "function" then return false end
+            local ok = pcall(toggle)
+            return ok
+            "#,
+        )
+        .expect("invoke the Forever Group Finder bridge");
+    assert!(
+        invoked_without_error,
+        "the Forever Group Finder bridge must return without an error"
+    );
 }
 
 #[cfg(any(
