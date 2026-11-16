@@ -1,6 +1,6 @@
 ## [2026-11-16] investigation | Limited listfile reproducibility
 
-[Limited listfile reproducibility](investigations/limited-listfile-reproducibility.md) records the immutable source pin, effective input/output drift checks, unchanged 147,015-row artifact, and the unresolved historical PR33 six-row evidence boundary.
+[Limited listfile reproducibility](investigations/limited-listfile-reproducibility.md) records the immutable source pin, effective input/output drift checks, unchanged 147,015-row artifact, and the unrecoverable historical PR33 rows and inferred input-drift cause.
 
 ## [2026-11-15] fix | Retail Blizzard UI cache provenance
 

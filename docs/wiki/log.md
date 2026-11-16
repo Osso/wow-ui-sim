@@ -1,6 +1,6 @@
 ## [2026-11-16] investigation | Limited listfile reproducibility
 
-Added the [investigation](investigations/limited-listfile-reproducibility.md) and [contract](../specs/limited-listfile-reproducibility.md). Current-master generation is byte-identical from the recovered, checksum-matching 202611141741 source; source/override/request/output drift now fails before writing. The private historical PR33 report remains requested; no old row identities or cause are invented.
+Added the [investigation](investigations/limited-listfile-reproducibility.md) and [contract](../specs/limited-listfile-reproducibility.md). Current-master generation is byte-identical from the recovered, checksum-matching 202611141741 source; source/override/request/output drift now fails before writing. The coordinator confirmed the PR33 report did not retain row texts or source identity: the six original rows are UNRECOVERABLE and unpinned input drift is an INFERRED cause, distinct from the verified pinned-source reproduction.
 
 ## [2026-11-15] fix | Retail Blizzard UI cache provenance
 
