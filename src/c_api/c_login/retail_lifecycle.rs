@@ -15,7 +15,7 @@ pub(super) struct RetailGlueState {
     pub(super) disconnect_state_is_authoritative: bool,
     login_error: Option<String>,
     /// Empty offline state. R88aa proves the 0/1 transitions, not startup timing.
-    character_list_completion_state: i32,
+    pub(super) character_list_completion_state: i32,
 }
 
 pub(super) fn update_screen_registration(state: &mut LuaState, is_glue: bool) -> LuaResult<()> {

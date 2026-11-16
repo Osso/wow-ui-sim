@@ -128,6 +128,12 @@ impl LoginState {
     pub fn seed_login_cancellation_recorded_for_host(&mut self, recorded: bool) {
         self.retail_glue.login_cancellation_recorded = recorded;
     }
+
+    /// Seed a completion value for host-state coverage, not a native writer claim.
+    #[cfg(feature = "client-retail")]
+    pub fn seed_character_list_completion_state_for_host(&mut self, state: i32) {
+        self.retail_glue.character_list_completion_state = state;
+    }
 }
 
 pub fn register_c_login(state: &mut LuaState) -> LuaResult<()> {
