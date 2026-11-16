@@ -263,65 +263,55 @@ fn purchase_input(blocked: bool) -> StorePurchaseInput {
 }
 
 fn assert_success_state(env: &WowLuaEnv) {
-    let passed: bool = env.eval(
-        "return C_StoreSecure.IsAvailable() and C_StoreSecure.HasProductList() and C_StoreSecure.HasPurchaseList() and C_StoreSecure.GetCurrencyID() == 62 and not C_StoreSecure.HasPurchaseInProgress() and C_StoreSecure.GetProductInfo(8201).sharedData.name == 'Host One' and C_StoreSecure.HasDynamicPriceData(8201)",
-    ).unwrap();
-    assert!(passed);
+    env.exec_rilua_secure(
+        "assert(C_StoreSecure.IsAvailable() and C_StoreSecure.HasProductList() and C_StoreSecure.HasPurchaseList() and C_StoreSecure.GetCurrencyID() == 62 and not C_StoreSecure.HasPurchaseInProgress() and C_StoreSecure.GetProductInfo(8201).sharedData.name == 'Host One' and C_StoreSecure.HasDynamicPriceData(8201))",
+    )
+    .unwrap();
 }
 
 fn assert_failure_state(env: &WowLuaEnv) {
-    let passed: bool = env.eval(
-        "return not C_StoreSecure.HasProductList() and not C_StoreSecure.HasPurchaseList() and C_StoreSecure.IsRegionLocked() and C_StoreSecure.GetLastProductListResponseError() == 3 and C_StoreSecure.GetCurrencyID() == 62 and #C_StoreSecure.GetProductGroups() == 0 and not C_StoreSecure.HasPurchaseInProgress()",
-    ).unwrap();
-    assert!(passed);
+    env.exec_rilua_secure(
+        "assert(not C_StoreSecure.HasProductList() and not C_StoreSecure.HasPurchaseList() and C_StoreSecure.IsRegionLocked() and C_StoreSecure.GetLastProductListResponseError() == 3 and C_StoreSecure.GetCurrencyID() == 62 and #C_StoreSecure.GetProductGroups() == 0 and not C_StoreSecure.HasPurchaseInProgress())",
+    )
+    .unwrap();
 }
 
 fn assert_response_events(env: &WowLuaEnv) {
-    let passed: bool = env.eval(
-        "local e=STORE_CATALOG_EVENTS; return #e==6 and e[1].event=='STORE_STATUS_CHANGED' and e[1].count==0 and e[1].available and e[2].event=='STORE_PRODUCTS_UPDATED' and e[2].count==0 and e[2].ready and e[2].currency==62 and e[2].groups==2 and e[3].event=='DYNAMIC_BUNDLE_PRICE_UPDATED' and e[3].count==1 and e[3].productID==8201 and e[3].hasData and e[4].event=='STORE_PURCHASE_LIST_UPDATED' and e[4].count==0 and e[4].ready and e[4].progress==false and e[5].event=='STORE_PRODUCTS_UPDATED' and not e[5].ready and e[6].event=='STORE_PURCHASE_LIST_UPDATED' and not e[6].ready and not e[6].progress",
-    ).unwrap();
-    assert!(passed);
+    env.exec_rilua_secure(
+        "local e=STORE_CATALOG_EVENTS; assert(#e==6 and e[1].event=='STORE_STATUS_CHANGED' and e[1].count==0 and e[1].available and e[2].event=='STORE_PRODUCTS_UPDATED' and e[2].count==0 and e[2].ready and e[2].currency==62 and e[2].groups==2 and e[3].event=='DYNAMIC_BUNDLE_PRICE_UPDATED' and e[3].count==1 and e[3].productID==8201 and e[3].hasData and e[4].event=='STORE_PURCHASE_LIST_UPDATED' and e[4].count==0 and e[4].ready and e[4].progress==false and e[5].event=='STORE_PRODUCTS_UPDATED' and not e[5].ready and e[6].event=='STORE_PURCHASE_LIST_UPDATED' and not e[6].ready and not e[6].progress)",
+    )
+    .unwrap();
 }
 
 #[test]
 fn retail_store_consumers_resolve_host_catalog_records() {
     let env = load_store_ui();
     seed_catalog(&env);
-    let passed: bool = env.eval(CATALOG_CONSUMER).expect("StoreUI must resolve host records");
-    assert!(passed);
+    env.exec_rilua_secure(CATALOG_CONSUMER)
+        .expect("secure StoreUI consumer must resolve host records");
 }
 
 #[test]
 fn retail_catalog_shop_consumes_shared_currency_data() {
     let env = load_store_ui();
     seed_catalog(&env);
-    let passed: bool = env.eval(CURRENCY_CONSUMER).expect("StoreUI must read sharedData");
-    assert!(passed);
+    env.exec_rilua_secure(CURRENCY_CONSUMER)
+        .expect("secure StoreUI consumer must read sharedData");
     env.state().borrow_mut().store_glue.store_secure.currency_id = 62;
-    let values: (i32, String, bool) = env
-        .eval("local x=C_StoreSecure.GetCurrencyInfo(); return x.currencyID, x.sharedData.formatShort, x.sharedData.browseHasStar")
+    env.exec_rilua_secure("local x=C_StoreSecure.GetCurrencyInfo(); assert(x.currencyID == 62 and x.sharedData.formatShort == 'short2-%s' and x.sharedData.browseHasStar)")
         .expect("second host currency row must be queryable");
-    assert_eq!(values, (62, "short2-%s".into(), true));
     env.state().borrow_mut().store_glue.store_secure.currency_id = 63;
-    let missing: bool = env.eval("return C_StoreSecure.GetCurrencyInfo() == nil").unwrap();
-    assert!(missing);
+    env.exec_rilua_secure("assert(C_StoreSecure.GetCurrencyInfo() == nil)")
+        .expect("a currency metadata miss must return nil");
 }
 
 #[test]
 fn retail_store_empty_defaults_reach_original_catalog_consumer() {
     let env = load_store_ui();
-    let values: (bool, bool, bool, bool, bool, i32, i32) = env
-        .eval(
-            "return C_StoreSecure.IsAvailable(), C_StoreSecure.HasProductList(), C_StoreSecure.HasPurchaseList(), C_StoreSecure.HasDistributionList(), C_StoreSecure.HasPurchaseInProgress(), C_StoreSecure.GetCurrencyID(), C_StoreSecure.GetLastProductListResponseError()",
-        )
-        .unwrap();
-    assert_eq!(values, (false, false, false, false, false, 0, 0));
-    let loading: bool = env.eval("return CatalogShopMixin:IsLoading()").unwrap();
-    assert!(loading);
-    let empty: bool = env
-        .eval("return C_StoreSecure.GetCurrencyInfo() == nil and #C_StoreSecure.GetProductGroups() == 0")
-        .unwrap();
-    assert!(empty);
+    env.exec_rilua_secure(
+        "local a,b,c,d,e,f,g=C_StoreSecure.IsAvailable(), C_StoreSecure.HasProductList(), C_StoreSecure.HasPurchaseList(), C_StoreSecure.HasDistributionList(), C_StoreSecure.HasPurchaseInProgress(), C_StoreSecure.GetCurrencyID(), C_StoreSecure.GetLastProductListResponseError(); assert(not a and not b and not c and not d and not e and f == 0 and g == 0); assert(CatalogShopMixin:IsLoading()); assert(C_StoreSecure.GetCurrencyInfo() == nil and #C_StoreSecure.GetProductGroups() == 0)",
+    )
+    .expect("original CatalogShop consumer must observe empty-default Store inputs");
 }
 
 #[test]
@@ -329,7 +319,7 @@ fn retail_store_response_events_publish_updated_state() {
     let env = load_store_ui();
     seed_catalog(&env);
     enable_store_callbacks(&env);
-    env.exec(STORE_EVENT_CONSUMER).unwrap();
+    env.exec_rilua_secure(STORE_EVENT_CONSUMER).unwrap();
     receive_success_responses(&env);
     assert_success_state(&env);
     receive_failure_responses(&env);
@@ -357,20 +347,18 @@ fn assert_request_results(env: &WowLuaEnv) {
 fn retail_store_requests_use_connection_and_host_catalog_inputs() {
     let env = load_store_ui();
     seed_catalog(&env);
-    let results: (i32, i32) = env.eval("return select('#', C_StoreSecure.GetProductList()), select('#', C_StoreSecure.GetPurchaseList())").unwrap();
-    assert_eq!(results, (0, 0));
+    env.exec_rilua_secure("assert(select('#', C_StoreSecure.GetProductList()) == 0 and select('#', C_StoreSecure.GetPurchaseList()) == 0)").unwrap();
     let disconnected = env.state().borrow();
     assert_eq!(disconnected.store_glue.store_secure.product_list_request_count, 1);
     assert!(disconnected.store_glue.submissions.is_empty());
     drop(disconnected);
     prepare_connected_requests(&env);
-    let requests: bool = env.eval("return select('#', C_StoreSecure.RequestAllDynamicPriceInfo()) == 0 and C_StoreSecure.IsDynamicBundle(8201) and C_StoreSecure.IsDynamicBundle(8202) and not C_StoreSecure.IsDynamicBundle(4999) and not C_StoreSecure.HasDynamicPriceData(8201) and not C_StoreSecure.HasDynamicPriceData(4999)").unwrap();
-    assert!(requests);
-    for _ in 0..5 { env.exec("C_StoreSecure.GetProductList()").unwrap(); }
-    env.exec("C_StoreSecure.GetPurchaseList()").unwrap();
+    env.exec_rilua_secure("assert(select('#', C_StoreSecure.RequestAllDynamicPriceInfo()) == 0 and C_StoreSecure.IsDynamicBundle(8201) and C_StoreSecure.IsDynamicBundle(8202) and not C_StoreSecure.IsDynamicBundle(4999) and not C_StoreSecure.HasDynamicPriceData(8201) and not C_StoreSecure.HasDynamicPriceData(4999))").unwrap();
+    for _ in 0..5 { env.exec_rilua_secure("C_StoreSecure.GetProductList()").unwrap(); }
+    env.exec_rilua_secure("C_StoreSecure.GetPurchaseList()").unwrap();
     assert_request_results(&env);
     env.state().borrow_mut().store_glue.store_secure.request_time_ms = 2000;
-    env.exec("C_StoreSecure.GetProductList()").unwrap();
+    env.exec_rilua_secure("C_StoreSecure.GetProductList()").unwrap();
     let sim = env.state().borrow();
     assert_eq!(sim.store_glue.store_secure.product_list_request_count, 1);
     assert_eq!(sim.store_glue.submissions.len(), 8);
@@ -381,19 +369,15 @@ fn retail_store_requests_use_connection_and_host_catalog_inputs() {
 fn retail_store_list_queries_use_two_rows_and_absence() {
     let env = load_store_ui();
     seed_purchase_progress(&env);
-    let progress: bool = env.eval("return C_StoreSecure.HasPurchaseInProgress()").unwrap();
-    assert!(progress);
+    env.exec_rilua_secure("assert(C_StoreSecure.HasPurchaseInProgress())").unwrap();
     env.state().borrow_mut().store_glue.store_secure.purchase_list.clear();
-    let absent: bool = env.eval("return not C_StoreSecure.HasPurchaseInProgress()").unwrap();
-    assert!(absent);
+    env.exec_rilua_secure("assert(not C_StoreSecure.HasPurchaseInProgress())").unwrap();
     {
         let mut sim = env.state().borrow_mut();
         sim.store_glue.store_secure.distribution_list_ready = Some(true);
         sim.store_glue.connection_present = false;
     }
-    let disconnected: bool = env.eval("return not C_StoreSecure.HasDistributionList()").unwrap();
-    assert!(disconnected);
+    env.exec_rilua_secure("assert(not C_StoreSecure.HasDistributionList())").unwrap();
     env.state().borrow_mut().store_glue.connection_present = true;
-    let ready: bool = env.eval("return C_StoreSecure.HasDistributionList()").unwrap();
-    assert!(ready);
+    env.exec_rilua_secure("assert(C_StoreSecure.HasDistributionList())").unwrap();
 }
