@@ -98,7 +98,7 @@ PTR 12.1.5 is intentionally separate: no matching local `wowxptr` install exists
 
 Wrath uses the separate pinned source route described in [client profiles](client-profiles.md#runtime-cache), not CASC UI-source extraction. Asset CASC selection is unchanged.
 
-The GUI startup path uses the cache only. If the completion marker is missing, startup syncs the manifest and rechecks the cache. PTR additionally requires exact pinned provenance, so a stale cache with required files is rejected. The old `Interface/BlizzardUI` symlink and `vendor/wow-ui-source` checkout are not part of runtime discovery.
+The GUI startup path selects a cache only when its completion marker and required files pass validation. **VERIFIED (source and synthetic temp-cache tests):** Retail and PTR also require byte-exact provenance for the active pin. Stale or missing provenance rejects the cache; normal runtime startup follows its existing sync path, while unit-test startup stays fail-fast and names `wow-cli casc sync-blizzard-ui` as the recovery command. Other profiles keep their existing provenance policy. The old `Interface/BlizzardUI` symlink and `vendor/wow-ui-source` checkout are not part of runtime discovery.
 
 ### Forever mapped, non-resident sources
 

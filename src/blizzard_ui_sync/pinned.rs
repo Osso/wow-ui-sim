@@ -110,14 +110,6 @@ pub(super) fn retail_provenance() -> crate::Result<CacheProvenance> {
     })
 }
 
-pub(super) fn retail_cache_matches(root: &Path) -> bool {
-    let Ok(expected) = retail_provenance() else {
-        return false;
-    };
-    std::fs::read_to_string(root.join(super::PROVENANCE_FILE))
-        .is_ok_and(|contents| contents == expected.contents())
-}
-
 #[cfg(feature = "client-ptr")]
 pub(crate) fn client_identity() -> crate::Result<ClientIdentity> {
     let version_and_build = &build()?.version;
@@ -149,10 +141,7 @@ pub(super) fn provenance() -> crate::Result<CacheProvenance> {
     })
 }
 
-pub(super) fn cache_matches(root: &Path) -> bool {
-    let Ok(expected) = provenance() else {
-        return false;
-    };
+pub(super) fn cache_matches(root: &Path, expected: &CacheProvenance) -> bool {
     std::fs::read_to_string(root.join(super::PROVENANCE_FILE))
         .is_ok_and(|contents| contents == expected.contents())
 }
@@ -449,7 +438,7 @@ mod tests {
             std::fs::read(root.join("partial-source")).unwrap(),
             b"saved source bytes"
         );
-        assert!(cache_matches(&root));
+        assert!(cache_matches(&root, &provenance().unwrap()));
         assert!(!root.join(super::super::COMPLETE_MARKER).exists());
     }
 
@@ -470,7 +459,7 @@ mod tests {
 
         assert!(!root.join("stale-source").exists());
         assert!(!root.join(super::super::COMPLETE_MARKER).exists());
-        assert!(cache_matches(root));
+        assert!(cache_matches(root, &provenance().unwrap()));
     }
 
     #[test]
@@ -520,8 +509,8 @@ mod tests {
     #[test]
     fn pinned_ptr_rejects_previous_69594_provenance() {
         let dir = tempfile::tempdir().unwrap();
-        let old_identity = provenance()
-            .unwrap()
+        let expected = provenance().unwrap();
+        let old_identity = expected
             .contents()
             .replace("product=wowt\n", "product=wowxptr\n")
             .replace("version=12.1.7.70493\n", "version=12.1.5.69594\n")
@@ -538,7 +527,7 @@ mod tests {
                 "49b69918fcdc77e109813281e4f537d45ec7dcbf",
             );
         std::fs::write(dir.path().join(super::super::PROVENANCE_FILE), old_identity).unwrap();
-        assert!(!cache_matches(dir.path()));
+        assert!(!cache_matches(dir.path(), &expected));
     }
 
     #[test]
@@ -550,7 +539,7 @@ mod tests {
         )
         .unwrap();
 
-        assert!(retail_cache_matches(dir.path()));
+        assert!(cache_matches(dir.path(), &retail_provenance().unwrap()));
     }
 
     #[test]
@@ -568,30 +557,31 @@ mod tests {
         );
         std::fs::write(dir.path().join(super::super::PROVENANCE_FILE), stale_70575).unwrap();
 
-        assert!(!retail_cache_matches(dir.path()));
+        assert!(!cache_matches(dir.path(), &retail_provenance().unwrap()));
     }
 
     #[test]
     fn pinned_retail_rejects_missing_provenance() {
         let dir = tempfile::tempdir().unwrap();
 
-        assert!(!retail_cache_matches(dir.path()));
+        assert!(!cache_matches(dir.path(), &retail_provenance().unwrap()));
     }
 
     #[test]
     fn pinned_ptr_rejects_legacy_provenance_and_accepts_exact_identity() {
         let dir = tempfile::tempdir().unwrap();
+        let expected = provenance().unwrap();
         std::fs::write(
             dir.path().join(super::super::PROVENANCE_FILE),
             "schema=1\nprofile=ptr\nproduct=wowt\nversion=12.1.0.69587\n",
         )
         .unwrap();
-        assert!(!cache_matches(dir.path()));
+        assert!(!cache_matches(dir.path(), &expected));
         std::fs::write(
             dir.path().join(super::super::PROVENANCE_FILE),
-            provenance().unwrap().contents(),
+            expected.contents(),
         )
         .unwrap();
-        assert!(cache_matches(dir.path()));
+        assert!(cache_matches(dir.path(), &expected));
     }
 }
