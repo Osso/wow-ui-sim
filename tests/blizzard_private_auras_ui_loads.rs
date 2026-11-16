@@ -420,39 +420,43 @@ fn secure_private_auras_tooltip_consumer_runs_without_errors() {
         .eval(
             r#"
             local secure = __secureenv
-            local failures = {}
-            local function check(name, condition)
-                if not condition then
-                    failures[#failures + 1] = name
-                end
-            end
-
             local cTimer = rawget(secure, "C_Timer")
             local store = rawget(secure, "C_StoreSecure")
             local color = rawget(secure, "C_UIColor")
             local secureEnum = rawget(secure, "Enum")
-            local frameMetatable = GetFrameMetatable()
-            local tooltipDataType = type(secureEnum) == "table"
-                and rawget(secureEnum, "TooltipDataType") or nil
-
-            check("Mixin", type(rawget(secure, "Mixin")) == "function")
-            check("CreateFromMixins", type(rawget(secure, "CreateFromMixins")) == "function")
-            check("C_Timer table is separate", type(cTimer) == "table" and cTimer ~= rawget(_G, "C_Timer"))
-            check("C_Timer.After", type(cTimer) == "table" and type(cTimer.After) == "function")
-            check("C_StoreSecure table is separate", type(store) == "table" and store ~= rawget(_G, "C_StoreSecure"))
-            check("C_StoreSecure.GetProductGroups", type(store) == "table" and type(store.GetProductGroups) == "function")
-            check("CreateFrame", type(rawget(secure, "CreateFrame")) == "function")
-            check("CreateSecureDelegate", type(rawget(secure, "CreateSecureDelegate")) == "function")
-            check("GetFrameMetatable", type(rawget(secure, "GetFrameMetatable")) == "function")
-            check("frame metatable index", type(frameMetatable) == "table" and type(frameMetatable.__index) == "table")
-            check("C_UIColor table is separate", type(color) == "table" and color ~= rawget(_G, "C_UIColor"))
-            check("C_UIColor.GetColors", type(color) == "table" and type(color.GetColors) == "function")
-            check("Enum table is separate", type(secureEnum) == "table" and secureEnum ~= rawget(_G, "Enum"))
-            check("Enum.TooltipDataType.Unit", type(tooltipDataType) == "table" and type(rawget(tooltipDataType, "Unit")) == "number")
-
             rawset(_G, "__secure_env_ordinary_only_probe", true)
-            check("ordinary-only global stays out of secureenv", rawget(secure, "__secure_env_ordinary_only_probe") == nil)
-            return table.concat(failures, ", ")
+
+            local checks = {
+                {"Mixin", function() return type(rawget(secure, "Mixin")) == "function" end},
+                {"CreateFromMixins", function() return type(rawget(secure, "CreateFromMixins")) == "function" end},
+                {"C_Timer table", function() return type(cTimer) == "table" end},
+                {"C_Timer separation", function() return cTimer ~= rawget(_G, "C_Timer") end},
+                {"C_Timer.After", function() return type(cTimer.After) == "function" end},
+                {"C_StoreSecure table", function() return type(store) == "table" end},
+                {"C_StoreSecure separation", function() return store ~= rawget(_G, "C_StoreSecure") end},
+                {"C_StoreSecure.GetProductGroups", function() return type(store.GetProductGroups) == "function" end},
+                {"CreateFrame", function() return type(rawget(secure, "CreateFrame")) == "function" end},
+                {"CreateSecureDelegate", function() return type(rawget(secure, "CreateSecureDelegate")) == "function" end},
+                {"GetFrameMetatable", function() return type(rawget(secure, "GetFrameMetatable")) == "function" end},
+                {"frame metatable index", function() return type(GetFrameMetatable().__index) == "table" end},
+                {"C_UIColor table", function() return type(color) == "table" end},
+                {"C_UIColor separation", function() return color ~= rawget(_G, "C_UIColor") end},
+                {"C_UIColor.GetColors", function() return type(color.GetColors) == "function" end},
+                {"Enum table", function() return type(secureEnum) == "table" end},
+                {"Enum separation", function() return secureEnum ~= rawget(_G, "Enum") end},
+                {"Enum.TooltipDataType.Unit", function()
+                    return type(rawget(rawget(secureEnum, "TooltipDataType"), "Unit")) == "number"
+                end},
+                {"ordinary-only global stays out of secureenv", function()
+                    return rawget(secure, "__secure_env_ordinary_only_probe") == nil
+                end},
+            }
+            for _, check in ipairs(checks) do
+                if not check[2]() then
+                    return check[1]
+                end
+            end
+            return ""
             "#,
         )
         .expect("secure export isolation query should succeed");
