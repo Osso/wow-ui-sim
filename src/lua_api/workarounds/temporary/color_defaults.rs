@@ -2,8 +2,6 @@
 //!
 //! Retail `C_UIColor.GetColors` is implemented in `c_api` from GlobalColor DB2.
 
-use rilua::LuaApiMut;
-
 const COLOR_DEFAULTS_LUA: &str = r#"
 local function __wow_make_color(r, g, b, a)
   local color = {
