@@ -17,6 +17,7 @@ use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
 use rilua::{LuaResult, Val};
+use std::collections::HashMap;
 
 const LFG_REWARD_USAGE: &str =
     "Usage: local data = C_TooltipInfo.GetLFGDungeonReward(dungeonID, lootIndex)";
@@ -58,6 +59,32 @@ pub struct ItemInteractionTooltipLine {
     pub left_text: String,
     pub left_color: Option<(f64, f64, f64)>,
     pub wrap: bool,
+}
+
+/// UNKNOWN (R88z): native keystone detail records and player-condition results
+/// are not loaded here. The host must supply them; no values are seeded.
+#[derive(Clone, Debug, Default)]
+pub struct SlottedKeystoneTooltipInput {
+    pub item_id: Option<u32>,
+    pub item_guid: Option<String>,
+    pub item_class_id: Option<u32>,
+    pub item_subclass_id: Option<u32>,
+    pub associated_player_guid: Option<String>,
+    pub active_player_guid: Option<String>,
+    pub display_season_id: Option<u32>,
+    pub key_floors: Vec<SlottedKeystoneKeyFloor>,
+    pub player_condition_results: HashMap<u32, bool>,
+    /// `Some(None)` means the host confirms that the map record is missing.
+    pub map_names: HashMap<u32, Option<String>>,
+    /// Missing records and unavailable names do not produce affix-name rows.
+    pub affix_names: HashMap<u32, Option<String>>,
+}
+
+#[derive(Clone, Debug, Default)]
+pub struct SlottedKeystoneKeyFloor {
+    pub display_season_id: u32,
+    pub key_floor: u32,
+    pub player_condition_id: u32,
 }
 
 pub(crate) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
