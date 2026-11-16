@@ -327,7 +327,10 @@ lines 41–43 select the shared and `[Family]` FloatingChatFrame sources, and th
 shared source defines `AllowChatFramesToShow` as true. The selected Mainline
 source calls that function at `FloatingChatFrame.lua:1869`; GlueParent's `login`
 screen record has no `allowChat` and its policy returns false at
-`GlueParent.lua:909–914`. The Retail test
+`GlueParent.lua:909–914`. **VERIFIED (Retail 12.1.5.70575 versus 12.1.5.70783
+cache bytes):** the addon TOC, Shared and Mainline FloatingChatFrame Lua, its
+Mainline XML, and GlueParent Lua are byte-identical. Thus this repin does not
+change these original inputs for the Login visibility consumer. The Retail test
 `glue_retail_chat_source_preserves_r62_verified_asset_facts` checks source facts;
 `login_boot_hides_non_login_frontend_frames` loads original Login addons but
 excludes Retail chat visibility assertions. **UNKNOWN:** which definition wins
