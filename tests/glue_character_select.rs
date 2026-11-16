@@ -347,7 +347,7 @@ fn load_blizzard_screen(screen: ScreenKind) -> common::LockedEnv {
 #[cfg(all(feature = "client-retail", feature = "optional-tests"))]
 fn store_ui_confirmation_sets_ready_without_emitting_completion() {
     test_timeout! {
-        let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+        let env = load_blizzard_screen(ScreenKind::Game);
         env.exec(
             r#"
             local source = debug.getinfo(ServicesLogoutPopupConfirmButton_OnClick, 'S')
