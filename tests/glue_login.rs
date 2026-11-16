@@ -1528,6 +1528,7 @@ fn retail_character_select_disconnect_consumer_publishes_ordered_events() {
         let no_disconnect = env.exec("CharacterSelectFrameMixin.OnShow(CharacterSelect)");
         env.exec("C_Login.Login('disconnect-probe', CreateFrame('EditBox'))").unwrap();
         wow_ui_sim::startup::run_extra_update_ticks(&env, 2);
+        env.state().borrow_mut().glue_login.realm_list_available = true;
         env.exec("disconnectEvents = {}").unwrap();
         env.state().borrow_mut().store_glue.disconnect_on_logout = true;
         let active = env.exec("CharacterSelectFrameMixin.OnShow(CharacterSelect)");
@@ -1541,8 +1542,11 @@ fn retail_character_select_disconnect_consumer_publishes_ordered_events() {
         assert_eq!(events, "AUTO_REALM_SWAP:1:false,LAUNCHER_LOGIN_STATUS_CHANGED:0,LOGIN_STATE_CHANGED:0,AUTO_REALM_SWAP:1:false,LOGIN_STATE_CHANGED:0");
         let returns: i32 = env.eval("return select('#', C_Login.DisconnectFromServer())").unwrap();
         assert_eq!(returns, 0);
-        let connected: bool = env.eval("local _, value = C_Login.GetState(); return value").unwrap();
-        assert!(!connected, "the original OnShow consumer must leave the modeled connection disconnected");
+        let state: (i32, bool, i32, bool, bool) = env.eval("return C_Login.GetState()").unwrap();
+        assert_eq!(state, (1, false, 1, false, false));
+        env.set_screen_mode(ScreenKind::Game);
+        let absent: bool = env.eval("return C_Login.DisconnectFromServer == nil").unwrap();
+        assert!(absent, "DisconnectFromServer must be absent outside Glue");
     }
 }
 
