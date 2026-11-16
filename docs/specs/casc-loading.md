@@ -21,6 +21,10 @@ The simulator reads textures and fonts directly from a live WoW install via the 
 - [ ] Missing, malformed, duplicate, or invalid selected-product metadata fails explicitly. A missing `.product.db` is not rescued with `.build.info`.
 - [ ] PTR's pinned UI-source provenance remains independent of installed-product metadata.
 
+### Pinned Blizzard UI source cache
+
+- [x] Retail and PTR cache selection requires provenance that exactly matches the active pin. Missing or stale provenance makes the cache unavailable; normal runtime startup follows the existing sync path, and unit-test startup stays fail-fast with the `wow-cli casc sync-blizzard-ui` recovery command. Other profiles keep their existing cache-selection behavior.
+
 ### Blizzard UI locale selection
 
 - [ ] Local FDID, CDN FDID, and path-based Blizzard UI reads explicitly select `enUS` root variants with unconstrained content flags (`ContentFlags::NONE`); no cross-locale fallback.

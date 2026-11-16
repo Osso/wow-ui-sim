@@ -1,3 +1,7 @@
+## [2026-11-15] fix | Retail Blizzard UI cache provenance
+
+The [CASC asset cache](systems/casc-asset-cache.md#blizzard-ui-source-cache) and [CASC loading contract](../specs/casc-loading.md#pinned-blizzard-ui-source-cache) record exact Retail/PTR pin provenance checks, mismatch sync behavior, and unchanged selection for other profiles. **VERIFIED (source and synthetic temp-cache tests):** matching 70783 provenance is accepted; stale 70575 and missing provenance are rejected.
+
 ## [2026-11-15] revision | Retail Blizzard UI 70783 CDN metadata
 
 [Client profiles](systems/client-profiles.md#runtime-cache) links the regenerated Retail 70783 identity and index. The 4,026-path manifest and Retail patch-API cache hashes remain unchanged; the CDN key and one archive location changed. **VERIFIED (local CASC root):** FDID 8547105 remains absent. **VERIFIED (70575 versus 70783 cache bytes):** the selected chat TOC, shared/Mainline FloatingChatFrame sources and GlueParent source are identical. **UNKNOWN:** native Retail Glue Login chat visibility; see the [Glue Login contract](../specs/glue-login-flow.md#r62-retail-chat-evidence-boundary) and follow-up `lt-0de8`.
