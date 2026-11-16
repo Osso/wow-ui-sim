@@ -167,18 +167,6 @@ C_ColorUtil = __wow_color_merge_namespace(C_ColorUtil, {
   end,
 })
 
-C_ColorOverrides = __wow_color_merge_namespace(C_ColorOverrides, {
-  -- ColorOverridesDocumentation: ColorOverride -> nullable ColorOverrideInfo.
-  -- Missing system: color override registry. Empty-state simulator policy;
-  -- retire this query when c_api owns that registry and its supplied records.
-  GetColorOverrideInfo = function(_overrideType)
-    return nil
-  end,
-  GetColorForQuality = function(_quality)
-    return CreateColor(1, 1, 1, 1)
-  end,
-})
-
 C_PvP = __wow_color_merge_namespace(C_PvP, {
   IsInBrawl = function()
     return false
@@ -192,33 +180,7 @@ C_PvP = __wow_color_merge_namespace(C_PvP, {
 })
 "#;
 
-// Retire this bridge when c_api owns the model; keep unimplemented members absent.
-// This forwards only existing temporary handlers. Retire it when c_api owns the C_ColorOverrides model.
-const SECURE_COLOR_OVERRIDE_PUBLICATION_LUA: &str = r#"
-local secureEnvironment = rawget(_G, "__secureenv")
-local ordinary = rawget(_G, "C_ColorOverrides")
-if type(secureEnvironment) ~= "table" or type(ordinary) ~= "table" then
-  return
-end
-
-local secure = rawget(secureEnvironment, "C_ColorOverrides")
-if type(secure) ~= "table" then
-  return
-end
-
-local function makeForwarder(handler)
-  return function(...) return handler(...) end
-end
-
-for _, member in ipairs({ "GetColorForQuality", "GetColorOverrideInfo" }) do
-  local handler = rawget(ordinary, member)
-  if type(handler) == "function" then
-    rawset(secure, member, makeForwarder(handler))
-  end
-end
-"#;
-
-const NON_RETAIL_UI_COLOR_DEFAULTS_LUA: &str = r#"
+const NON_RETAIL_COLOR_DEFAULTS_LUA: &str = r#"
 local namespace = type(C_UIColor) == "table" and C_UIColor or {}
 if rawget(namespace, "GetColors") == nil then
   namespace.GetColors = function()
@@ -234,17 +196,25 @@ if rawget(namespace, "GetColors") == nil then
   end
 end
 C_UIColor = namespace
+
+local colorOverrides = type(C_ColorOverrides) == "table" and C_ColorOverrides or {}
+if rawget(colorOverrides, "GetColorOverrideInfo") == nil then
+  colorOverrides.GetColorOverrideInfo = function(_overrideType)
+    return nil
+  end
+end
+if rawget(colorOverrides, "GetColorForQuality") == nil then
+  colorOverrides.GetColorForQuality = function(_quality)
+    return CreateColor(1, 1, 1, 1)
+  end
+end
+C_ColorOverrides = colorOverrides
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(COLOR_DEFAULTS_LUA)?;
-    if crate::client_profile::is_active_retail_12_1_5() {
-        // R88t verifies separate tables; keep only existing temporary handlers in the secure namespace.
-        crate::c_api::ensure_namespace(lua.state_mut(), "C_ColorOverrides")?;
-        lua.exec(SECURE_COLOR_OVERRIDE_PUBLICATION_LUA)?;
-    }
     if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
-        lua.exec(NON_RETAIL_UI_COLOR_DEFAULTS_LUA)?;
+        lua.exec(NON_RETAIL_COLOR_DEFAULTS_LUA)?;
     }
     Ok(())
 }
@@ -281,7 +251,7 @@ mod tests {
     }
 
     #[test]
-    fn nonretail_uicolor_fallback_keeps_its_existing_rows() {
+    fn nonretail_color_defaults_keep_their_existing_rows() {
         if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
             return;
         }
@@ -299,6 +269,8 @@ mod tests {
                     and found.PLAYER_FACTION_COLOR_ALLIANCE
                     and found.NORMAL_FONT_COLOR
                     and found.TRADESKILL_EXPERIENCE_COLOR
+                    and type(rawget(C_ColorOverrides, "GetColorOverrideInfo")) == "function"
+                    and type(rawget(C_ColorOverrides, "GetColorForQuality")) == "function"
                 "#,
             )
             .expect("non-Retail color fallback probe should run");
@@ -377,14 +349,12 @@ mod tests {
     }
 
     #[test]
-    fn installs_color_override_and_pvp_defaults_without_replacing_existing_methods() {
+    fn installs_pvp_defaults_without_replacing_state_backed_methods() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
 
         let result: String = env
             .eval(
                 r#"
-                local color = C_ColorOverrides.GetColorForQuality(1)
-                if color.r ~= 1 or color.g ~= 1 or color.b ~= 1 or color.a ~= 1 then return "color" end
                 if C_PvP.IsInBrawl() ~= false then return "brawl" end
                 if C_PvP.IsSoloShuffle() ~= false then return "shuffle" end
                 local spellID, startTime, duration = C_PvP.GetArenaCrowdControlInfo("player")
@@ -394,39 +364,29 @@ mod tests {
                 return "ok"
                 "#,
             )
-            .expect("color/PvP defaults should be callable");
+            .expect("PvP defaults should be callable");
 
         assert_eq!(result, "ok");
     }
 
     #[test]
-    fn preserves_existing_color_override_and_pvp_functions() {
+    fn preserves_existing_pvp_functions() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
         env.exec(
             r#"
-            C_ColorOverrides.GetColorForQuality = function()
-                return { r = 0.1, g = 0.2, b = 0.3, a = 0.4 }
-            end
             C_PvP.IsInBrawl = function()
                 return true
             end
             "#,
         )
-        .expect("fixture should install existing functions");
+        .expect("fixture should install an existing function");
 
         super::apply_bootstrap(&mut env.rilua_mut()).expect("workaround should apply");
 
-        let result: String = env
-            .eval(
-                r#"
-                local color = C_ColorOverrides.GetColorForQuality(1)
-                if color.r ~= 0.1 or color.g ~= 0.2 or color.b ~= 0.3 or color.a ~= 0.4 then return "color" end
-                if C_PvP.IsInBrawl() ~= true then return "brawl" end
-                return "ok"
-                "#,
-            )
-            .expect("existing color/PvP functions should remain callable");
+        let result: bool = env
+            .eval("C_PvP.IsInBrawl()")
+            .expect("existing PvP function should remain callable");
 
-        assert_eq!(result, "ok");
+        assert!(result);
     }
 }

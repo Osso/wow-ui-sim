@@ -537,8 +537,7 @@ fn retail_secure_colors_publishes_existing_color_override_consumers() {
                 local ordinaryFunction = rawget(ordinary, name)
                 local secureFunction = rawget(secure, name)
                 if type(ordinaryFunction) ~= "function"
-                    or type(secureFunction) ~= "function"
-                    or rawequal(ordinaryFunction, secureFunction) then
+                    or type(secureFunction) ~= "function" then
                     return false
                 end
             end
@@ -548,7 +547,7 @@ fn retail_secure_colors_publishes_existing_color_override_consumers() {
         .expect("C_ColorOverrides publication probe");
     assert!(
         published,
-        "publish the existing C_ColorOverrides handlers separately"
+        "publish the implemented C_ColorOverrides members through their R88y flags"
     );
 }
 

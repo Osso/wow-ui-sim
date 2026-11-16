@@ -176,6 +176,9 @@ fn register_profile_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 
 fn install_secure_runtime_surface(lua: &mut rilua::Lua) -> crate::Result<()> {
     super::globals::real::protected_globals::install(lua)?;
+    // Register the real model after secureenv construction. The generic R88y
+    // pass below publishes its implemented flag-3 members to both environments.
+    crate::c_api::c_color_overrides::register(lua)?;
     #[cfg(feature = "forbidden-aspects")]
     super::script_object_transfer::install(lua)?;
     enable_taint_and_wrap_loadstring(lua)?;

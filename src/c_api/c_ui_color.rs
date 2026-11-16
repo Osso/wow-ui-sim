@@ -50,7 +50,7 @@ fn get_colors(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-fn find_color_mixin(state: &mut LuaState) -> LuaResult<GcRef<Table>> {
+pub(crate) fn find_color_mixin(state: &mut LuaState) -> LuaResult<GcRef<Table>> {
     match crate::lua_api::global_colors::global_value(state, "ColorMixin") {
         Val::Table(mixin) => Ok(mixin),
         _ => Err(runtime_error(COLOR_MIXIN_ERROR)),
@@ -93,7 +93,7 @@ fn build_color(state: &mut LuaState, mixin: GcRef<Table>, packed_color: u32) -> 
     Ok(color)
 }
 
-fn copy_mixin_members(
+pub(crate) fn copy_mixin_members(
     state: &mut LuaState,
     mixin: GcRef<Table>,
     color: GcRef<Table>,
@@ -118,7 +118,7 @@ fn copy_mixin_members(
     }
 }
 
-fn channels_from_packed_color(packed_color: u32) -> [f64; 4] {
+pub(crate) fn channels_from_packed_color(packed_color: u32) -> [f64; 4] {
     // VERIFIED for Retail 12.1.5.70688; applying this mapping to 70783 data is INFERRED.
     let [alpha, red, green, blue] = packed_color.to_be_bytes();
     [red, green, blue, alpha].map(|byte| f64::from(f32::from(byte) * COLOR_CHANNEL_RECIPROCAL))

@@ -26,6 +26,14 @@ Updated the [Retail map-world-position investigation](investigations/patch-8-0-1
 
 Updated the [Round 7 getter contract](../specs/tooltip-r7-getters.md) and [Lua API](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation). **VERIFIED (R88n.4a and simulator source):** recipe-cache insertion retains duplicate entries and makes distinct keys queryable; no native node layout is claimed. **VERIFIED (R88n.4/.4a):** keystone selection state, notification request, item-object lookup and shared item producer inputs are represented. **UNKNOWN:** exact keystone detail-row projection and whether recipe ranks use Azerite specialization wording; both exact decomp questions are recorded in the contract. The four wording keys belong to the Azerite requirement path and were not applied to recipe ranks.
 
+## [2026-11-15] revision | Retail C_ColorOverrides verification corrections
+
+Updated the [spec](../specs/color-overrides.md), [system page](systems/color-overrides.md), and [consumer-selection record](investigations/consumer-selection-and-red-proof.md#retail-colormanager-and-c-coloroverrides). **CORRECTION (VERIFIED):** the earlier RED at `589d127` failed at a direct API call, not inside ColorManager. **VERIFIED (revision-1 tests):** the corrected RED fails at original `ColorManager.lua:66`; the secure snapshot matches the two master member names; explicit `playerColorOverrides` seams round-trip and replace stale records. Five final profile builds report zero warnings. **INFERRED:** setting encoding, event mapping, and local GlobalColor projection. **UNKNOWN:** automatic lifecycle triggers and final storage.
+
+## [2026-11-15] implementation | Retail C_ColorOverrides state
+
+Initial implementation; see the revision entry above for the corrected RED attribution and the completed `playerColorOverrides` setting seam. **VERIFIED (implementation commit `2d1a14c8049ae890fdb28fdfc1752de88d3409b3`):** its exact consumer GREEN tests passed and its five-profile compile receipts reported zero warnings. The 70783 catalog projection and event mapping remain **INFERRED**; automatic reload/logout persistence remains **UNKNOWN**.
+
 ## [2026-11-15] investigation | ShowUIPanel toggle fixture owners
 
 [Toggle fixture owners](investigations/showuipanel-toggle-fixture-owners.md) records independent achievement/housing fallback-retirement boundaries, original TOC owner loading and untouched out-of-scope panel failures. No guessed fallback restored.
