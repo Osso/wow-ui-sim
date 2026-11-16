@@ -54,14 +54,16 @@ fn load_startup_addons(env: &WowLuaEnv, ui_dir: &Path, screen: ScreenKind) -> Ve
         crate::common::load_profile_framexml(env);
     }
     let addons = discover_blizzard_startup_addons_for_screen(ui_dir, screen);
-    let mut loaded = Vec::with_capacity(addons.len());
+    let loaded = addons
+        .iter()
+        .map(|addon| addon.name.clone())
+        .collect::<Vec<_>>();
     for addon in addons {
         load_startup_addon(&env.loader_env(), &addon.toc_path, addon.kind, None)
             .unwrap_or_else(|error| panic!("load startup {}: {error}", addon.name));
         if addon.name == "Blizzard_EnvironmentCleanup" {
             env.restore_post_cleanup_globals();
         }
-        loaded.push(addon.name);
     }
     env.apply_post_load_workarounds();
     env.sync_string_metatable_to_global_string();
@@ -181,9 +183,16 @@ fn probe_group_finder_consumer(env: &WowLuaEnv, addons: &[String]) {
     );
 
     let load_attempts = invoke_group_finder_consumers(env);
+    let source_after = function_source(env, "PVEFrame_ToggleFrame");
+    if owner_before {
+        assert!(loaded_before, "the Group Finder owner must be loaded before use");
+        assert!(load_attempts.is_empty(), "an active owner must not need LoadAddOn");
+        assert!(source_after.contains("Blizzard_GroupFinder/"));
+    } else {
+        assert_eq!(load_attempts, "Blizzard_GroupFinder");
+    }
     eprintln!(
-        "BOUNDARY|PVEFrame_ToggleFrame|source_after={}|load_addon_calls={load_attempts}",
-        function_source(env, "PVEFrame_ToggleFrame")
+        "BOUNDARY|PVEFrame_ToggleFrame|source_after={source_after}|load_addon_calls={load_attempts}"
     );
 }
 
@@ -206,6 +215,10 @@ fn probe_print_handler_consumer(env: &WowLuaEnv, addons: &[String]) {
     eprintln!(
         "BOUNDARY|setprinthandler|setter_source={setter_source}|caller_addon_loaded={caller_addon_loaded}|owner_before_caller={owner_order}|caller_registered={caller_registered}|handler_source={handler_source}"
     );
+    if caller_registered {
+        assert!(owner_order, "the print owner must load before its caller");
+        assert!(setter_source.contains("Blizzard_PrintHandler/"));
+    }
 
     if setter_source.contains("Blizzard_PrintHandler/") {
         let stores_handler: bool = env
@@ -274,7 +287,9 @@ fn probe_store_consumer(env: &WowLuaEnv, addons: &[String]) {
     );
 
     if consumer_source.contains("CharacterSelect.lua") {
-        assert_eq!(invoke_store_consumer(env), owner_is_original);
+        assert!(consumer_loaded, "the selected CharacterSelect consumer must load");
+        assert!(owner_loaded && owner_is_original, "StoreUI owner must be active before OnUpdate");
+        assert!(invoke_store_consumer(env));
     }
 }
 
