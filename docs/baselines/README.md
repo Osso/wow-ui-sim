@@ -51,7 +51,7 @@ device; this is not audio-device acceptance.
 
 ### Mists
 
-`mists-lua-errors.json` is the byte-exact stdout from the Mists stock command
+VERIFIED — `mists-lua-errors.json` is the byte-exact stdout from the Mists stock command
 below, including its trailing LF. Its current error classes and capture proof
 are in [`mists-lua-errors.meta.json`](mists-lua-errors.meta.json).
 
@@ -60,7 +60,7 @@ cargo build --no-default-features --features "sound,gui,casc,client-mists" --bin
 WOW_SIM_NO_SAVED_VARS=1 WOW_SIM_NO_ADDONS=1 timeout 90 ./target/debug/wow-sim lua-errors > docs/baselines/mists-lua-errors.json
 ```
 
-The 2026-11-16 inventory is a coordinator-approved diagnostic capture with
+VERIFIED — The 2026-11-16 inventory is a coordinator-approved diagnostic capture with
 root-caused records pending Mists native evidence. It is not clean-startup
 acceptance. Do not replace it with a different non-clean capture without an
 explicit policy decision; normal refreshes still require a verified clean

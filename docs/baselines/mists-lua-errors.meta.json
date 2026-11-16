@@ -61,7 +61,13 @@
       "api_declaration": "Blizzard_APIDocumentationGenerated/CombatAudioAlertDocumentation.lua:106",
       "script_errors_echo": false,
       "reporter_sites": [],
-      "pending_r88ah": "Mists return logic for default/unset CAAEnabled and unavailable audio manager."
+      "pending_r88ah": "Mists return logic for default/unset CAAEnabled and unavailable audio manager.",
+      "evidence_label": "VERIFIED",
+      "native_behavior_status": "UNKNOWN; pending Mists native evidence in R88ah",
+      "boundary_probes": {
+        "last_clean_parent": "da31ffbf118b85ba3db32abb0c670ebca8712215",
+        "first_bad_merge": "99bdcbe531ad1533a716244bea7f87e9b344022d"
+      }
     },
     {
       "record_index": 2,
@@ -82,7 +88,13 @@
         "Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua:59",
         "Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua:72"
       ],
-      "pending_r88ah": "Mists return logic for default/unset CAAEnabled and unavailable audio manager."
+      "pending_r88ah": "Mists return logic for default/unset CAAEnabled and unavailable audio manager.",
+      "evidence_label": "VERIFIED",
+      "native_behavior_status": "UNKNOWN; pending Mists native evidence in R88ah",
+      "boundary_probes": {
+        "last_clean_parent": "da31ffbf118b85ba3db32abb0c670ebca8712215",
+        "first_bad_merge": "99bdcbe531ad1533a716244bea7f87e9b344022d"
+      }
     },
     {
       "record_index": 3,
@@ -101,7 +113,13 @@
       "enum_declaration": "Blizzard_APIDocumentationGenerated/SpellConstantsDocumentation.lua:21-30",
       "script_errors_echo": false,
       "reporter_sites": [],
-      "pending_r88ah": "Mists GetVisibilityInfo return count/values for visibility hit, miss, and invalid/null player context."
+      "pending_r88ah": "Mists GetVisibilityInfo return count/values for visibility hit, miss, and invalid/null player context.",
+      "evidence_label": "VERIFIED",
+      "native_behavior_status": "UNKNOWN; pending Mists native evidence in R88ah",
+      "boundary_probes": {
+        "last_clean_parent": "2127b18cc6062f8fc4757a234396d175f40d0034",
+        "first_bad_merge": "b234822ad3dae2cf568e6825594b2a1c6d7977ca"
+      }
     },
     {
       "record_index": 4,
@@ -123,12 +141,21 @@
         "Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua:59",
         "Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua:72"
       ],
-      "pending_r88ah": "Mists GetVisibilityInfo return count/values for visibility hit, miss, and invalid/null player context."
+      "pending_r88ah": "Mists GetVisibilityInfo return count/values for visibility hit, miss, and invalid/null player context.",
+      "evidence_label": "VERIFIED",
+      "native_behavior_status": "UNKNOWN; pending Mists native evidence in R88ah",
+      "boundary_probes": {
+        "last_clean_parent": "2127b18cc6062f8fc4757a234396d175f40d0034",
+        "first_bad_merge": "b234822ad3dae2cf568e6825594b2a1c6d7977ca"
+      }
     }
   ],
   "capture_notes": [
     "The run used a fresh XDG_DATA_HOME with a byte-exact CVar copy.",
     "The Mists cache was read-only by task instruction and its content tree hash did not change.",
     "The separate full-mode run included third-party addon errors; it is not the stock no-addons baseline."
-  ]
+  ],
+  "status_evidence_label": "VERIFIED",
+  "no_api_behavior_published": true,
+  "final_gate_scope": "Coordinator decision: source code equals master 56b45de50; final runtime gates are Mists and Retail lua-errors, Retail last."
 }
