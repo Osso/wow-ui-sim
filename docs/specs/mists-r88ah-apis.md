@@ -4,11 +4,12 @@ This spec covers Mists-only `C_CombatAudioAlert.IsEnabled` and `C_Spell.GetVisib
 
 ## What it must do
 
-- [ ] **VERIFIED (R88ah, Mists 5.5.4.70631):** `IsEnabled()` returns exactly one boolean. It reads `CAAEnabled`, whose registered default is `0`, and returns false when the internal alert-state gate is off.
-- [ ] **VERIFIED (R88ah, Mists 5.5.4.70631):** `GetVisibilityInfo(spellID, visibilityType)` requires two non-nil arguments, accepts number-like strings, truncates fractions toward zero, and reduces the second value modulo 256 before accepting only values `0`, `1`, and `2`.
-- [ ] **VERIFIED (R88ah, Mists 5.5.4.70631):** with an active player, `GetVisibilityInfo` returns three booleans; a missing spell/type record returns `false, false, false`. Without an active player it returns zero values.
-- [ ] **VERIFIED (R88ah, Mists 5.5.4.70631):** usage, range, integer-overflow, argument, and secret-access failures use the answer's exact messages.
-- [ ] **INFERRED (70631 evidence applied to the 70268 Mists cache):** publish these APIs for the Mists profile because the cached declarations and visibility enum values match. The 70268 native behavior was not verified.
+- [x] **VERIFIED (R88ah, Mists 5.5.4.70631):** `IsEnabled()` takes no arguments and returns exactly one boolean. With the neutral gate enabled, it reads `CAAEnabled`; the registered default `0` returns false.
+- [ ] **VERIFIED (R88ah, Mists 5.5.4.70631):** `IsEnabled()` returns false when the internal alert-state gate is off. The gate stays on by default, and tests do not assert it or map audio failures to it.
+- [x] **VERIFIED (R88ah, Mists 5.5.4.70631):** `GetVisibilityInfo(spellID, visibilityType)` requires two non-nil arguments, accepts number-like strings, truncates fractions toward zero, and reduces the second value modulo 256 before accepting only values `0`, `1`, and `2`.
+- [x] **VERIFIED (R88ah, Mists 5.5.4.70631):** with an active player, `GetVisibilityInfo` returns three booleans; a missing spell/type record returns `false, false, false`. Without an active player it returns zero values.
+- [x] **VERIFIED (R88ah, Mists 5.5.4.70631):** usage, range, integer-overflow, and tainted secret-argument failures use the tested exact messages.
+- [x] **INFERRED (70631 evidence applied to the 70268 Mists cache):** the Mists registration is enabled because the cached declarations and visibility enum values match. Native behavior on 70268 was not verified.
 
 ## How it works
 
