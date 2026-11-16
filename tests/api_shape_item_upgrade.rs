@@ -11,6 +11,7 @@
 use crate::common::blizzard_addon_harness::{
     blizzard_ui_dir, load_blizzard_addon_closure_into_env, new_blizzard_addon_env,
 };
+use std::path::Path;
 use wow_ui_sim::loader::find_toc_file;
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
@@ -18,37 +19,7 @@ use wow_ui_sim::toc::TocFile;
 
 // Pinned ItemUpgradeDocumentation.lua: R/P/F11–24; M/E/A11–23.
 // Generic ItemUtil calls: R147, P/F217, M/E/A142 (rechecked 2026-10-26).
-fn load_original_item_util() -> WowLuaEnv {
-    let ui = blizzard_ui_dir();
-    let toc_path = find_toc_file(&ui.join("Blizzard_FrameXMLUtil")).unwrap();
-    let toc = TocFile::from_file(&toc_path).unwrap();
-    assert!(toc.allows_screen(ScreenKind::Game));
-    assert!(!toc.is_game_type_restricted());
-    assert!(toc.files.iter().any(|entry| entry == "ItemUtil.lua"));
-    eprintln!(
-        "selected generic ItemUtil: {} {:?}",
-        toc_path.display(),
-        toc.metadata
-    );
-    let env = new_blizzard_addon_env(&ui);
-    // Explicit scenario count/mode evidence; this is not a native default.
-    {
-        let mut sim = env.state().borrow_mut();
-        sim.r88s_inventory_inputs.inventory_count = Some(105);
-        sim.r88s_inventory_inputs.inventory_mode_active = Some(false);
-    }
-    let loaded = load_blizzard_addon_closure_into_env(
-        &env,
-        &ui,
-        &["Blizzard_ObjectAPI", "Blizzard_FrameXMLUtil"],
-        &[],
-    );
-    assert!(loaded.iter().any(|name| name == "Blizzard_FrameXMLUtil"));
-    eprintln!(
-        "unfiltered closure diagnostics: {:?}",
-        env.state().borrow().lua_errors
-    );
-    env.exec(r#"
+const ITEM_UTIL_SETUP: &str = r#"
         local info = debug.getinfo(ItemButtonUtil.GetItemContextMatchResultForItem, 'S')
         local suffix = 'Blizzard_FrameXMLUtil/ItemUtil.lua'
         local source = info.source:gsub('\\', '/')
@@ -87,8 +58,55 @@ fn load_original_item_util() -> WowLuaEnv {
             local ok, reason = pcall(C_ItemUpgrade.CanUpgradeItem, location)
             assert(not ok and tostring(reason):find('itemLocation must be', 1, true), tostring(reason))
         end
-    "#).expect("original generic consumer and real two-location fixture");
+    "#;
+
+fn load_original_item_util() -> WowLuaEnv {
+    let ui = blizzard_ui_dir();
+    verify_item_util_toc(&ui);
+    let env = new_blizzard_addon_env(&ui);
+    seed_item_util_inventory_inputs(&env);
+    load_item_util_addons(&env, &ui);
+    assert_original_item_util_fixture(&env);
     env
+}
+
+fn verify_item_util_toc(ui: &Path) {
+    let toc_path = find_toc_file(&ui.join("Blizzard_FrameXMLUtil")).unwrap();
+    let toc = TocFile::from_file(&toc_path).unwrap();
+    assert!(toc.allows_screen(ScreenKind::Game));
+    assert!(!toc.is_game_type_restricted());
+    assert!(toc.files.iter().any(|entry| entry == "ItemUtil.lua"));
+    eprintln!(
+        "selected generic ItemUtil: {} {:?}",
+        toc_path.display(),
+        toc.metadata
+    );
+}
+
+fn seed_item_util_inventory_inputs(env: &WowLuaEnv) {
+    // Explicit scenario count/mode evidence; this is not a native default.
+    let mut sim = env.state().borrow_mut();
+    sim.r88s_inventory_inputs.inventory_count = Some(105);
+    sim.r88s_inventory_inputs.inventory_mode_active = Some(false);
+}
+
+fn load_item_util_addons(env: &WowLuaEnv, ui: &Path) {
+    let loaded = load_blizzard_addon_closure_into_env(
+        env,
+        ui,
+        &["Blizzard_ObjectAPI", "Blizzard_FrameXMLUtil"],
+        &[],
+    );
+    assert!(loaded.iter().any(|name| name == "Blizzard_FrameXMLUtil"));
+    eprintln!(
+        "unfiltered closure diagnostics: {:?}",
+        env.state().borrow().lua_errors
+    );
+}
+
+fn assert_original_item_util_fixture(env: &WowLuaEnv) {
+    env.exec(ITEM_UTIL_SETUP)
+        .expect("original generic consumer and real two-location fixture");
 }
 
 #[test]
