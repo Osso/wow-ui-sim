@@ -481,7 +481,7 @@ mod tests {
             .expect_err("missing format values should fail");
         assert_eq!(
             error.to_string(),
-            "bad argument #2 (string expected, got no value)"
+            "Lua error: bad argument #2 (string expected, got no value)"
         );
     }
 
