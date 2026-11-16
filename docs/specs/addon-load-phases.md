@@ -57,6 +57,8 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 
 - [ ] VERIFIED (Retail 12.1.5.70688, R88ac.ac2): each GlobalStrings record whose preparation succeeds and whose Flags contain all bits in the active mask writes its name and value to ordinary `_G` and the separately referenced shared secure table. Game uses mask 1; Glue uses mask 2.
 - [ ] INFERRED simulator policy (R88ac.ac2): the committed Retail GlobalStrings PHF map stores no Flags, so Retail mirrors every map row that the existing registration writes to `_G`. This does not prove per-name mask membership; `RAID_TARGET_1` remains INFERRED.
+- [ ] VERIFIED (Retail 12.1.5.70688, R88ac.ac3; supplement SHA-256 `107dad291c11c9a80949d7063e02d849bb394155663870db0631c96c54d9659b`): mirror the same value to secureenv for existing simulator `LE_GAME_*` numeric globals whose names occur in the Game/flag-3 CSV. Do not create missing constants.
+- [ ] VERIFIED (Retail 12.1.5.70688, R88ac.ac3; supplement SHA-256 `107dad291c11c9a80949d7063e02d849bb394155663870db0631c96c54d9659b`): mirror the same value to secureenv for existing simulator `LE_GAME_*` numeric globals whose names occur in the Game/flag-3 CSV. Do not create missing constants.
 
 ### `LoadWith` followers
 
@@ -89,7 +91,7 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 - `src/loader/addon.rs` — orders ordinary and secure dependency requests.
 - `src/loader/lua_file.rs`, `src/loader/xml_file.rs`, `src/lua_api/loader_env.rs`, `src/lua_api/globals/security/secure_env.rs` — execute secure files through the shared table and retain private replay only for selected replay paths and generated XML loader chunks.
 - `src/lua_api/env_init/enums.rs` — registers `Enum` values and the Retail `Constants.*` secure-table publication path.
-- `src/lua_api/globals/strings/mod.rs` — registers PHF GlobalStrings rows in ordinary globals and applies the inferred Retail secure mirror.
+- `src/lua_api/globals/strings/mod.rs` — registers PHF GlobalStrings rows and integer constants; applies the inferred string mirror and verified CSV-listed `LE_GAME_*` mirror.
 - `src/lua_api/env_init/mod.rs`, `src/lua_api/env_runtime.rs` — install pre-copy library aliases and rerun verified publication after screen-specific registrations.
 - `src/lua_api/globals/real/math_extensions.rs`, `src/lua_api/globals/real/string_extensions.rs`, and `src/lua_api/globals/real/table_extensions.rs` — register implemented library extensions; R88y publication routes their verified flags. The Retail secure `table.count` handler retains the separately verified R88t identity.
 - `src/lua_api/workarounds/temporary/formatting_utility_defaults.rs` — applies the colon-split compatibility method outside Retail 12.1.5.
@@ -109,7 +111,7 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 - `src/loader/tests/screen_selection.rs`
 - `tests/addon_runtime_dependencies.rs`
 - `src/c_api/c_addons_runtime_tests.rs`
-- `tests/secureenv_isolation.rs` — separate loaded states, dependency request order, already-loaded mode behavior, and the one-file source-location consumer.
+- `tests/secureenv_isolation.rs` — separate loaded states, dependency request order/failure continuation, verified Retail `LE_GAME_*` secure values, and the one-file source-location consumer.
 - `tests/blizzard_communities_secure_loads.rs` — verifies secure Communities `InputScrollFrame` setup and that `debug` stays out of `__secureenv`.
 - `tests/blizzard_private_auras_ui_loads.rs` — the original FrameFactory/Pools, AccountUtil, ColorManager, GameRulesUtil, RaidWarning XML, and PrivateAurasTooltip consumers.
 - `src/c_api/secure_publication.rs` — verified-only R88y routing, absent implementations, and late flag-3 registration after screen changes.

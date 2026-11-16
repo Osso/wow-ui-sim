@@ -38,7 +38,7 @@ fn register_ui_strings(
             None
         };
     register_global_strings(state, global, secure_global, existing_policy);
-    register_integer_constants(state, global, existing_policy);
+    register_integer_constants(state, global, secure_global, existing_policy);
     register_float_constants(state, global, existing_policy);
     register_string_constants(state, global, existing_policy);
     Ok(())
@@ -74,13 +74,20 @@ fn register_global_strings(
 fn register_integer_constants(
     state: &mut LuaState,
     global: Val,
+    secure_global: Option<Val>,
     existing_policy: ExistingGlobalPolicy,
 ) {
     for defs in INT_DEFS {
         for &(name, value) in defs.iter() {
             let supported = should_register_int_constant(name, ACTIVE_RETAIL_API_EPOCH);
             if supported && should_set_global(state, global, name, existing_policy) {
-                table_set(state, global, name, Val::Num(value as f64));
+                let value = Val::Num(value as f64);
+                table_set(state, global, name, value);
+                if is_r88ac_verified_le_game_global(name) {
+                    if let Some(secure_global) = secure_global {
+                        table_set(state, secure_global, name, value);
+                    }
+                }
             }
         }
     }
@@ -156,6 +163,15 @@ const STRING_DEFS: &[&[crate::lua_api::globals::strings::string_data::StringDef]
     #[cfg(feature = "retail-12-1-0")]
     string_data::RETAIL_12_1_GLOBAL_STRINGS,
 ];
+
+// VERIFIED (R88ac.ac3): all 42 modeled LE_GAME_* names in INT_DEFS occur in the
+// supplement's Game/flag-3 rows; no other LE_GAME_* name is in these arrays.
+fn is_r88ac_verified_le_game_global(name: &str) -> bool {
+    name.starts_with("LE_GAME_")
+        && string_data::GAME_ERROR_STRINGS
+            .iter()
+            .any(|(known_name, _)| *known_name == name)
+}
 
 fn should_register_int_constant(name: &str, epoch: RetailApiEpoch) -> bool {
     !(epoch == RetailApiEpoch::Retail12_0_0 && name == "LE_FRAME_TUTORIAL_LINK_TRANSMOG_OUTFIT")

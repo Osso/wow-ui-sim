@@ -970,6 +970,29 @@ fn retail_c_timer_dual_members_are_registered_in_both_namespace_tables() {
 
 #[cfg(feature = "client-retail")]
 #[test]
+fn retail_r88ac_verified_game_numbers_are_published_to_secureenv() {
+    let env = env();
+    let names = wow_ui_sim::lua_api::globals::strings::string_data::GAME_ERROR_STRINGS
+        .iter()
+        .map(|(name, _)| format!("\"{name}\""))
+        .collect::<Vec<_>>()
+        .join(",");
+    let lua = format!(
+        r#"
+        for _, name in ipairs({{{names}}}) do
+            local ordinary = rawget(_G, name)
+            assert(type(ordinary) == "number", name .. " ordinary global missing")
+            assert(rawget(__secureenv, name) == ordinary, name .. " secure value differs")
+        end
+        "#,
+        names = names,
+    );
+    env.exec(&lua)
+        .expect("verified Game LE_GAME numbers should be present in secureenv");
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
 fn retail_native_constants_and_enum_tables_are_separate() {
     let env = env();
 

@@ -1,3 +1,7 @@
+## [2026-11-15] verified | Retail LE_GAME numeric secure publication
+
+Updated the [taint system](systems/taint-system.md#dual-lua-environment) and [add-on load-phase contract](../specs/addon-load-phases.md#r88ac-globalstrings-secure-publication). **VERIFIED (R88ac.ac3; supplement SHA-256 `107dad291c11c9a80949d7063e02d849bb394155663870db0631c96c54d9659b`):** the native numeric setter writes each Game `LE_GAME_*` name and ordinal to both destinations. **VERIFIED (simulator source/data intersection):** all 42 currently modeled `GAME_ERROR_STRINGS` names occur in the supplement; the code mirrors only those existing values. **UNVERIFIED:** targeted runtime and original-consumer results are pending.
+
 ## [2026-11-15] inferred | Retail GlobalStrings secure mirror
 
 The [taint system](systems/taint-system.md#dual-lua-environment) and [add-on load-phase contract](../specs/addon-load-phases.md#r88ac-globalstrings-secure-publication) record R88ac.ac2. **VERIFIED (native Retail 12.1.5.70688):** accepted GlobalStrings records write to both `_G` and the shared secure table under the Game/Glue Flags mask. **INFERRED (simulator source):** the Retail PHF map omits Flags, so its current rows are mirrored; no per-name flag claim is made, including for `RAID_TARGET_1`. No test asserts this inferred row set.
