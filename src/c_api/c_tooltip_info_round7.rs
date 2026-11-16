@@ -618,10 +618,11 @@ fn slotted_keystone_input_matches(
     item_id: u32,
     guid: &str,
 ) -> bool {
-    input.item_id == Some(item_id)
-        && input.item_guid.as_deref() == Some(guid)
-        && input.item_class_id == Some(KEYSTONE_ITEM_CLASS_ID)
-        && input.item_subclass_id == Some(KEYSTONE_ITEM_SUBCLASS_ID)
+    let selected_item_matches =
+        input.item_id == Some(item_id) && input.item_guid.as_deref() == Some(guid);
+    let keystone_type_matches = input.item_class_id == Some(KEYSTONE_ITEM_CLASS_ID)
+        && input.item_subclass_id == Some(KEYSTONE_ITEM_SUBCLASS_ID);
+    selected_item_matches && keystone_type_matches
 }
 
 fn selected_keystone_title(
