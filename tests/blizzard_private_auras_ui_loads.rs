@@ -222,17 +222,6 @@ fn read_secure_color_catalog(env: &WowLuaEnv) -> SecureColorCatalogSnapshot {
 }
 
 #[cfg(feature = "client-retail")]
-fn secure_store_product_groups_is_available(env: &WowLuaEnv) -> bool {
-    env.eval(
-        r#"
-        local store = rawget(__secureenv, 'C_StoreSecure')
-        return type(store) == 'table' and type(store.GetProductGroups) == 'function'
-        "#,
-    )
-    .expect("secure store product-group availability query should succeed")
-}
-
-#[cfg(feature = "client-retail")]
 fn load_full_game_ui() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
     env.set_screen_size(1024.0, 768.0);
@@ -254,28 +243,13 @@ fn load_full_game_ui() -> WowLuaEnv {
 
     let ui = blizzard_ui_dir();
     let addons = discover_blizzard_addons_for_screen(&ui, ScreenKind::Game);
-    let mut secure_store_available = secure_store_product_groups_is_available(&env);
-    if !secure_store_available {
-        eprintln!("[secure-store-trace] GetProductGroups unavailable before addon loading");
-    }
-
     for (name, toc_path) in &addons {
         load_addon(&env.loader_env(), toc_path)
             .unwrap_or_else(|err| panic!("[load {name}] FAILED: {err}"));
-        if secure_store_available && !secure_store_product_groups_is_available(&env) {
-            eprintln!("[secure-store-trace] GetProductGroups disappeared after addon {name}");
-            secure_store_available = false;
-        }
     }
 
     env.apply_post_load_workarounds();
-    if secure_store_available && !secure_store_product_groups_is_available(&env) {
-        eprintln!("[secure-store-trace] GetProductGroups disappeared after post-load workarounds");
-    }
     fire_startup_events_for_screen(&env, ScreenKind::Game);
-    if secure_store_available && !secure_store_product_groups_is_available(&env) {
-        eprintln!("[secure-store-trace] GetProductGroups disappeared during startup events");
-    }
 
     env
 }
