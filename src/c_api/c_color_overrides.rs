@@ -510,7 +510,6 @@ mod tests {
         }
         let env = WowLuaEnv::new().expect("Lua environment should initialize");
         let members = secure_color_override_member_names(&env);
-        // origin/master ffc9675 installs these two functions before the secure snapshot.
         assert_eq!(
             members,
             vec![
