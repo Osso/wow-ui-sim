@@ -725,3 +725,22 @@ The zero-return policy is inferred and is not asserted.
 
 - [ ] **INFERRED (R88aa, Retail 12.1.5.70688; cached Lua build not matched):** `CharacterSelect_UpdateIfUpdateIsNotPending` and `CharacterSelect_OnVASCharacterQueueStatusUpdate` call the global `IsCharacterListUpdatePending`. This is a cache-caller observation, not proof of native 70688 Lua selection.
 - [ ] **VERIFIED (local Retail 12.1.5.70575 cache and runtime harness):** the selected Mainline Glue TOC loads `Mainline/CharacterSelect.lua`; its cached `OnShow` calls `C_Login.DisconnectFromServer` at line 211, while the queue-status handler calls the pending global at line 697. The regression tests check the loaded Lua source and invoke those original handlers.
+
+## R88aa Retail Glue API contract
+
+- [ ] **VERIFIED (Retail 12.1.5.70688, R88aa):** Glue registers `C_Login.DisconnectFromServer` with publication flag 3. It reads no arguments and returns zero values. It is not a Game registration.
+- [ ] **VERIFIED (R88aa):** disconnect clears modeled login, realm-list, Aurora, stored login-error, pending-connection, and connected state. It attempts `AUTO_REALM_SWAP(false)`, then argumentless `LAUNCHER_LOGIN_STATUS_CHANGED` only when cancellation was not already recorded, then argumentless `LOGIN_STATE_CHANGED`.
+- [ ] **VERIFIED (Retail 12.1.5.70688, R88aa):** Glue registers `_G.IsCharacterListUpdatePending`, not a `C_Login` member, with flag 3. It takes no arguments and returns one Boolean: true for backing state 0, false for nonzero state.
+- [ ] **VERIFIED (R88aa):** the connection-success retrieval request stores 0 before argumentless `CHARACTER_LIST_RETRIEVING`; accepted full-list processing stores 0, then 1, before `CHARACTER_LIST_UPDATE`.
+- [ ] **INFERRED (simulator empty scenario):** the local completion state starts at 0. R88aa does not prove the native startup value; consumers must not treat this model default as native startup evidence.
+
+### Implementation inventory and tests
+
+- `src/c_api/c_login.rs` owns Retail profile gating and the existing offline connection/list progression.
+- `src/c_api/c_login/retail_lifecycle.rs` owns Retail Glue registration and the backing state for the two APIs.
+- `tests/glue_login.rs` exercises the original Retail `OnShow` and queue-status consumers, the event payload/order, list completion states, zero/one return arity, and Game-scope absence.
+
+### Known gaps (current cycle)
+
+- [ ] Native initial completion-state value and reset writers outside the modeled login/request/response path remain UNKNOWN.
+- [ ] The exact Retail 70688 Lua cache selection is UNKNOWN; this environment's selected cache is 12.1.5.70575.

@@ -15,6 +15,7 @@ pub mod backgrounds;
 pub mod character_roster;
 #[cfg(feature = "client-ptr")]
 pub mod ptr_state;
+mod retail_lifecycle;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 mod submission;
 
@@ -62,6 +63,7 @@ pub struct LoginState {
     aurora_state: i32,
     connected_to_wow: bool,
     pending_step: u8,
+    retail_glue: retail_lifecycle::RetailGlueState,
 }
 
 impl Default for LoginState {
@@ -88,6 +90,7 @@ impl Default for LoginState {
             aurora_state: 1,
             connected_to_wow: false,
             pending_step: 0,
+            retail_glue: Default::default(),
         }
     }
 }
@@ -141,8 +144,14 @@ pub fn register_c_login(state: &mut LuaState) -> LuaResult<()> {
     Ok(())
 }
 
-/// Update the Glue-only selected-superdistrict query and login-start state.
+/// Update screen-scoped C_Login members.
 pub(crate) fn update_screen_registration(env: &WowLuaEnv, screen: ScreenKind) {
+    if ACTIVE == ClientProfile::Retail {
+        let mut lua = env.lua.borrow_mut();
+        retail_lifecycle::update_screen_registration(lua.state_mut(), screen.is_glue())
+            .expect("register Retail Glue login lifecycle APIs");
+        return;
+    }
     if !matches!(ACTIVE, ClientProfile::Ptr | ClientProfile::WowForever) {
         return;
     }
@@ -272,40 +281,59 @@ fn c_login_get_state(state: &mut LuaState) -> LuaResult<u32> {
 
 /// Advance the explicit offline policy once per update, not native frame timing.
 pub(crate) fn advance(env: &crate::lua_api::WowLuaEnv) -> crate::Result<()> {
-    let step = {
-        let mut sim = env.state().borrow_mut();
-        let login = &mut sim.glue_login;
-        let step = login.pending_step;
-        match step {
-            1 => {
-                login.aurora_state = 4;
-                login.pending_step = 2;
-            }
-            2 => {
-                login.aurora_state = 1;
-                login.connected_to_wow = true;
-                login.pending_step = 3;
-            }
-            3 => {
-                login.received_connection_info = login.connection_info;
-                login.selected_character_index = -1;
-                login.resolved_saved_character_index = character_roster::resolve_saved_candidate(
-                    &login.characters,
-                    login.saved_character_index,
-                );
-                login.pending_step = 0;
-            }
-            _ => return Ok(()),
-        }
-        step
+    let Some(step) = advance_login_state(env) else {
+        return Ok(());
     };
+    publish_login_step(env, step)
+}
+
+fn advance_login_state(env: &crate::lua_api::WowLuaEnv) -> Option<u8> {
+    let mut sim = env.state().borrow_mut();
+    let login = &mut sim.glue_login;
+    let step = login.pending_step;
+    match step {
+        1 => advance_login_connecting(login),
+        2 => advance_login_connected(login),
+        3 => process_character_list(login),
+        _ => return None,
+    }
+    Some(step)
+}
+
+fn advance_login_connecting(login: &mut LoginState) {
+    login.aurora_state = 4;
+    login.pending_step = 2;
+}
+
+fn advance_login_connected(login: &mut LoginState) {
+    login.aurora_state = 1;
+    login.connected_to_wow = true;
+    login.pending_step = 3;
+    if ACTIVE == ClientProfile::Retail {
+        retail_lifecycle::mark_character_list_pending(login);
+    }
+}
+
+fn process_character_list(login: &mut LoginState) {
+    login.received_connection_info = login.connection_info;
+    login.selected_character_index = -1;
+    login.resolved_saved_character_index =
+        character_roster::resolve_saved_candidate(&login.characters, login.saved_character_index);
+    if ACTIVE == ClientProfile::Retail {
+        retail_lifecycle::complete_character_list(login);
+    }
+    login.pending_step = 0;
+}
+
+fn publish_login_step(env: &crate::lua_api::WowLuaEnv, step: u8) -> crate::Result<()> {
     if step == 3 {
         let count = env.state().borrow().glue_login.characters.len();
-        env.fire_event_with_args("CHARACTER_LIST_UPDATE", &[Val::Num(count as f64)])?;
-    } else {
-        env.fire_event("LOGIN_STATE_CHANGED")?;
+        return env.fire_event_with_args("CHARACTER_LIST_UPDATE", &[Val::Num(count as f64)]);
     }
-    Ok(())
+    if step == 2 && ACTIVE == ClientProfile::Retail {
+        env.fire_event("CHARACTER_LIST_RETRIEVING")?;
+    }
+    env.fire_event("LOGIN_STATE_CHANGED")
 }
 
 /// Publish a host queue snapshot. R42 requires an event for each active update,
