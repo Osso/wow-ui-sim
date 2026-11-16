@@ -292,6 +292,12 @@ fn test_c_container_default_shims_have_safe_shapes() {
 fn test_c_item_upgrade_supplied_false_preserves_boolean_shape() {
     let env = env();
     if wow_ui_sim::client_profile::ACTIVE != wow_ui_sim::client_profile::ClientProfile::Wrath {
+        // Explicit scenario inputs; these are not native defaults.
+        {
+            let mut sim = env.state().borrow_mut();
+            sim.r88s_inventory_inputs.inventory_count = Some(105);
+            sim.r88s_inventory_inputs.inventory_mode_active = Some(false);
+        }
         env.exec(
             "A_Admin.AddBagItem(0, 1, 6948); A_Admin.SetItemUpgradeEligibility({bagID=0, slotIndex=1}, false)",
         )

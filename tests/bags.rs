@@ -202,6 +202,12 @@ fn test_container_frames_array_contains_only_real_container_frames() {
 fn test_bag_ui_c_container_helpers_have_safe_default_shapes() {
     let env = setup_env();
     if wow_ui_sim::client_profile::ACTIVE != wow_ui_sim::client_profile::ClientProfile::Wrath {
+        // Explicit scenario inputs; these are not native defaults.
+        {
+            let mut sim = env.state().borrow_mut();
+            sim.r88s_inventory_inputs.inventory_count = Some(105);
+            sim.r88s_inventory_inputs.inventory_mode_active = Some(false);
+        }
         env.exec(
             "A_Admin.AddBagItem(0, 1, 6948); A_Admin.SetItemUpgradeEligibility({bagID=0, slotIndex=1}, false)",
         )

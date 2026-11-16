@@ -543,6 +543,7 @@ macro_rules! build_empty_sim_state {
             cursor_storage: Default::default(),
             container_actions: Default::default(),
             item_upgrade_eligibility: Default::default(),
+            r88s_inventory_inputs: Default::default(),
             loading_addon_index: $runtime.loading_addon_index,
             loading_addon_stack: $runtime.loading_addon_stack,
             executing_addon_index: $runtime.executing_addon_index,

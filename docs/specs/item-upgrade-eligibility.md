@@ -5,10 +5,10 @@
 ## What it must do
 
 - [x] Publish `C_ItemUpgrade.CanUpgradeItem` on Retail, PTR, Forever, Mists, Era and Anniversary only; leave the excluded Wrath path unchanged.
-- [x] Resolve an actual ItemLocation through existing inventory/bag state and return exactly one supplied boolean. Supply independent eligibility at two concrete locations; no catalog policy is inferred.
+- [x] Resolve an actual ItemLocation through the shared R88s reader and return exactly one supplied boolean. Supply independent eligibility at two concrete locations; no catalog policy is inferred. This reader is shared with `C_ItemInteraction` by simulator policy; R88s native parsing evidence is for `C_ItemInteraction` only.
 - [x] `A_Admin.SetItemUpgradeEligibility(location, boolean)` supplies an observation for the existing item. `ClearItemUpgradeEligibility(location)` removes it; omitted/nil location clears all observations in that environment.
 - [x] Move observations through bag/cursor/equipment swaps and backpack placement. Removal, deletion and admin replacement must not leak observations to a replacement instance, including one with the same item ID. `A_Admin.SetReagentCount` must discard observations when removing or creating bag records; remove/recreate at the same location must fall back to the unsupplied default.
-- [x] Return `false` for unsupplied and empty bag/equipment locations (decision 2026-11-01; see Best-guess basis). Raise `C_ItemUpgrade.CanUpgradeItem: itemLocation must be a bag or equipment ItemLocation` for nil, non-table and unresolvable arguments.
+- [x] Return `false` for unsupplied, empty, or well-formed but unavailable/UNKNOWN locations. Keep the existing one-Boolean result for the query. Raise `C_ItemUpgrade.CanUpgradeItem: itemLocation must be a bag or equipment ItemLocation` for nil, non-table, or malformed ItemLocation shapes. Admin seed/clear rejects unavailable locations.
 
 Pinned declarations: `Blizzard_APIDocumentationGenerated/ItemUpgradeDocumentation.lua:11–24` on Retail/PTR/Forever and `:11–23` on Mists/Era/Anniversary. Required `ItemLocation` argument; one non-nil boolean result. Generic `Blizzard_FrameXMLUtil/ItemUtil.lua` query lines rechecked on 2026-10-26: Retail147, PTR/Forever217, Mists/Era/Anniversary142. Forever's Camelot utility is not this consumer.
 
@@ -18,7 +18,8 @@ Pinned declarations: `Blizzard_APIDocumentationGenerated/ItemUpgradeDocumentatio
 
 ## Implementation inventory
 
-- `src/c_api/item_upgrade_eligibility.rs`: supplied observation store, native query, admin input, transfer helpers.
+- `src/c_api/item_location.rs`: shared R88s ItemLocation reader, `ItemSlot` key, and empty-by-default inventory-bound inputs. The shared use by item-upgrade eligibility is simulator policy.
+- `src/c_api/item_upgrade_eligibility.rs`: supplied observation store, query, admin input, transfer helpers, and preserved Boolean/API errors.
 - `src/c_api/container_inventory.rs`: existing bag/equipment/cursor transfer lifecycle.
 - `src/lua_api/globals/admin_actionbars_bags.rs`, `admin_equipment.rs`, `inventory_verbs.rs`: existing inventory mutation boundaries.
 - `src/lua_api/globals/admin_crafting.rs`: SetReagentCount/seed-helper record removal and creation invalidate supplied observations.
@@ -31,6 +32,10 @@ Pinned declarations: `Blizzard_APIDocumentationGenerated/ItemUpgradeDocumentatio
 
 The normally selected FrameXMLUtil/ObjectAPI closure is loaded without source overrides. A plain shown `ItemUpgradeFrame` supplies the context input. It is not an original upgrade window. No Blizzard function is replaced. The old boolean-only contract is preservation, not eligibility acceptance.
 
+## Location resolution
+
+`C_ItemUpgrade` and its admin observation methods use the shared R88s parser. Malformed shapes keep the existing simulator argument error; a well-formed location that cannot be proved available returns `false` from `CanUpgradeItem`. The admin seed and clear methods reject that unavailable location. The inventory count, mode, and special-slot inputs have no producer and stay empty by default. `C_Item.IsLocked` and `C_ChallengeMode.CanUseKeystoneInCurrentMap` keep the prior integral-number parser.
+
 ## Known gaps (current cycle)
 
 - [x] Execute byte-identical original-consumer RED/GREEN on all six declaring profiles, bound stock pairs and seven zero-warning canonical checks. See [the final proof](../wiki/systems/item-upgrade-eligibility.md#final-proof--2026-10-26).
@@ -42,4 +47,4 @@ best-guess, native UNKNOWN. Unmodified Blizzard consumers (TokenUI via `ToggleBa
 
 ## Out of scope
 
-Native eligibility policy, currencies, upgrade execution, invalid-input semantics, persistence and full upgrade-window acceptance. Era/Anniversary do not select the Mists upgrade window; tests do not force-load it. Wrath, equipment-set lock behavior and equipment-set transfers are excluded. The equipment-set producer rebuilds equipped records by item ID, without instance identity; this lane adds no identity token or equipment-set workaround. Non-admin crafting and snapshot service rewrites are excluded; no observation lifecycle is claimed for them. Split stacks require fresh supplied observations for the new cursor stack; no native eligibility inheritance policy is inferred.
+Native eligibility policy, currencies, upgrade execution, native invalid-input parity, persistence and full upgrade-window acceptance. Era/Anniversary do not select the Mists upgrade window; tests do not force-load it. Wrath, equipment-set lock behavior and equipment-set transfers are excluded. The equipment-set producer rebuilds equipped records by item ID, without instance identity; this lane adds no identity token or equipment-set workaround. Non-admin crafting and snapshot service rewrites are excluded; no observation lifecycle is claimed for them. Split stacks require fresh supplied observations for the new cursor stack; no native eligibility inheritance policy is inferred.

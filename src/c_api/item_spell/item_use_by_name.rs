@@ -5,7 +5,7 @@
 
 use super::item_equip::{UsePromptInputs, ensure_identity, find_carried_item, find_root_item};
 use crate::c_api::container_inventory::submit_container_use;
-use crate::c_api::item_upgrade_eligibility::ItemSlot;
+use crate::c_api::item_location::ItemSlot;
 use crate::lua_api::globals::state_backed_queries::dispatch_event_now;
 use crate::lua_api::methods::{borrow_state_mut, create_string};
 use crate::lua_api::state::SimState;

@@ -7,7 +7,8 @@
 //! the generic `A_Admin.AddBagItem` requires — the Professions crafting
 //! page just needs "the player has N of item X", not a specific slot.
 
-use crate::c_api::item_upgrade_eligibility::{ItemSlot, discard_location};
+use crate::c_api::item_location::ItemSlot;
+use crate::c_api::item_upgrade_eligibility::discard_location;
 use crate::lua_api::globals::missing_surface::professions::{
     abandon_profession_impl, relearn_profession_impl,
 };
