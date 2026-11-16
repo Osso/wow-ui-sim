@@ -221,13 +221,51 @@ fn probe_print_handler_consumer(env: &WowLuaEnv, addons: &[String]) {
     feature = "client-wowforever",
     feature = "client-mists"
 ))]
+fn store_consumer_source(env: &WowLuaEnv) -> String {
+    env.eval::<String>(
+        "local f = CharacterSelectFrameMixin and CharacterSelectFrameMixin.OnUpdate; if type(f) ~= 'function' then f = CharacterSelect_OnUpdate end; if type(f) ~= 'function' then return '<missing>' end; return debug.getinfo(f, 'S').source or '<unknown>'",
+    )
+    .expect("read the original character-select consumer source")
+}
+
+#[cfg(any(
+    feature = "client-ptr",
+    feature = "client-retail",
+    feature = "client-wowforever",
+    feature = "client-mists"
+))]
+fn invoke_store_consumer(env: &WowLuaEnv) -> bool {
+    env.eval(
+        r#"
+        local called = false
+        C_CharacterServices = C_CharacterServices or {}
+        C_CharacterServices.HasQueuedUpgrade = function() return false end
+        C_StoreGlue = C_StoreGlue or {}
+        C_StoreGlue.GetVASProductReady = function() return true end
+        CharacterServicesMaster_OnCharacterListUpdate = function() end
+        StoreFrame_OnCharacterListUpdate = function() called = true end
+        StaticPopup_CheckQueuedDialogs = function() end
+        local mixin = CharacterSelectFrameMixin
+        if mixin and type(mixin.OnUpdate) == 'function' then
+            mixin:OnUpdate(0)
+        elseif type(CharacterSelect_OnUpdate) == 'function' then
+            CharacterSelect_OnUpdate({}, 0)
+        end
+        return called
+        "#,
+    )
+    .expect("run the original character-select OnUpdate consumer")
+}
+
+#[cfg(any(
+    feature = "client-ptr",
+    feature = "client-retail",
+    feature = "client-wowforever",
+    feature = "client-mists"
+))]
 fn probe_store_consumer(env: &WowLuaEnv, addons: &[String]) {
     let owner_source = function_source(env, "StoreFrame_WaitingForCharacterListUpdate");
-    let consumer_source = env
-        .eval::<String>(
-            "local f = CharacterSelectFrameMixin and CharacterSelectFrameMixin.OnUpdate; if type(f) ~= 'function' then f = CharacterSelect_OnUpdate end; if type(f) ~= 'function' then return '<missing>' end; return debug.getinfo(f, 'S').source or '<unknown>'",
-        )
-        .expect("read the original character-select consumer source");
+    let consumer_source = store_consumer_source(env);
     let consumer_loaded = addons.iter().any(|name| name == "Blizzard_GlueXML");
     let owner_loaded = addons.iter().any(|name| name == "Blizzard_StoreUI");
     let owner_is_original = owner_source.contains("Blizzard_StoreUI/");
@@ -236,28 +274,7 @@ fn probe_store_consumer(env: &WowLuaEnv, addons: &[String]) {
     );
 
     if consumer_source.contains("CharacterSelect.lua") {
-        let callback_called: bool = env
-            .eval(
-                r#"
-                local called = false
-                C_CharacterServices = C_CharacterServices or {}
-                C_CharacterServices.HasQueuedUpgrade = function() return false end
-                C_StoreGlue = C_StoreGlue or {}
-                C_StoreGlue.GetVASProductReady = function() return true end
-                CharacterServicesMaster_OnCharacterListUpdate = function() end
-                StoreFrame_OnCharacterListUpdate = function() called = true end
-                StaticPopup_CheckQueuedDialogs = function() end
-                local mixin = CharacterSelectFrameMixin
-                if mixin and type(mixin.OnUpdate) == 'function' then
-                    mixin:OnUpdate(0)
-                elseif type(CharacterSelect_OnUpdate) == 'function' then
-                    CharacterSelect_OnUpdate({}, 0)
-                end
-                return called
-                "#,
-            )
-            .expect("run the original character-select OnUpdate consumer");
-        assert_eq!(callback_called, owner_is_original);
+        assert_eq!(invoke_store_consumer(env), owner_is_original);
     }
 }
 
