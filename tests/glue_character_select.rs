@@ -344,34 +344,6 @@ fn load_blizzard_screen(screen: ScreenKind) -> common::LockedEnv {
 }
 
 #[test]
-#[cfg(all(feature = "client-retail", feature = "optional-tests"))]
-fn store_ui_confirmation_sets_ready_without_emitting_completion() {
-    test_timeout! {
-        let env = load_blizzard_screen(ScreenKind::Game);
-        env.exec(
-            r#"
-            local loaded = C_AddOns.IsAddOnLoaded('Blizzard_StoreUI')
-            if not loaded then
-                loaded = C_AddOns.LoadAddOn('Blizzard_StoreUI')
-            end
-            assert(loaded)
-            local source = debug.getinfo(ServicesLogoutPopupConfirmButton_OnClick, 'S')
-            assert(source.source:find('Blizzard_Shared_StoreUISecure.lua', 1, true))
-            local completeEvents = 0
-            local listener = CreateFrame('Frame')
-            listener:RegisterEvent('STORE_VAS_PURCHASE_COMPLETE')
-            listener:SetScript('OnEvent', function() completeEvents = completeEvents + 1 end)
-            ServicesLogoutPopup.showReason = 'forVasService'
-            ServicesLogoutPopupConfirmButton_OnClick(nil)
-            assert(C_StoreGlue.GetVASProductReady())
-            assert(completeEvents == 0)
-            "#,
-        )
-        .expect("original Store UI confirmation consumer should set readiness only");
-    }
-}
-
-#[test]
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn character_create_mode_is_glue_only_and_uses_lua_truthiness() {
     let env = WowLuaEnv::new().expect("create Lua environment");

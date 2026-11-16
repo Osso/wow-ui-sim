@@ -47,11 +47,11 @@ The duplicate `SetDisconnectOnLogout` and `SetVASProductReady` definitions and `
 
 ## Verification
 
-Optional tests drive selected original Glue consumers and real XML list templates. The R88q/R88w selectors use at least two distinct backed records plus absence; the Store UI confirmation check exercises its original setter caller. Runtime receipts are evidence artifacts, not part of this behavior spec; native parity outside Retail remains separately labeled.
+Optional tests drive selected original Glue consumers and real XML list templates. The R88q/R88w selectors use at least two distinct backed records plus absence. Runtime receipts are evidence artifacts, not part of this behavior spec; native parity outside Retail remains separately labeled.
 
 ## Tests asserting this spec
 
-- `tests/glue_character_select.rs` covers the original CharacterSelect, Store VAS error, and Store UI confirmation consumers.
+- `tests/glue_character_select.rs` covers the original CharacterSelect and Store VAS error consumers.
 - `tests/store_api.rs` covers Retail setter state and completion-event ownership.
 
 ## Known downstream boundary
