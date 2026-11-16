@@ -243,53 +243,67 @@ fn c_login_get_state(state: &mut LuaState) -> LuaResult<u32> {
         #[cfg(feature = "client-ptr")]
         return ptr_state::get_state(state);
     }
-    let (aurora_state, connected_to_wow, wow_connection_state, has_realm_list) = {
-        let sim = borrow_state(state)?;
-        let login = &sim.glue_login;
-        if login.submitted {
-            (
-                login.aurora_state,
-                login.connected_to_wow,
-                1,
-                login.realm_list_available,
-            )
-        } else {
-            sim.screen_kind.login_state()
-        }
-    };
+    let values = get_login_state_values(state)?;
     if ACTIVE == ClientProfile::WowForever {
-        let has_selected_preset = {
-            let sim = borrow_state(state)?;
-            crate::c_api::experience_preset::has_selected(&sim.cvars)?
-        };
-        let result = create_table(state);
-        for (key, value) in [
-            ("auroraState", Val::Num(f64::from(aurora_state))),
-            ("connectedToWoW", Val::Bool(connected_to_wow)),
-            (
-                "wowConnectionState",
-                Val::Num(f64::from(wow_connection_state)),
-            ),
-            ("hasRealmList", Val::Bool(has_realm_list)),
-            // User-approved, not native evidence; native login policy is not modeled.
-            ("waitingForRealmList", Val::Bool(false)),
-            ("superDistrictChoicePending", Val::Bool(false)),
-            ("keepingCharacterListOnRealmJoin", Val::Bool(false)),
-            ("waitingForRuleSets", Val::Bool(false)),
-            (
-                "hasSelectedExperiencePreset",
-                Val::Bool(has_selected_preset),
-            ),
-        ] {
-            table_set(state, result, key, value);
-        }
-        state.push(result);
-        return Ok(1);
+        return push_wow_forever_login_state(state, values);
     }
-    state.push(Val::Num(f64::from(aurora_state)));
-    state.push(Val::Bool(connected_to_wow));
-    state.push(Val::Num(f64::from(wow_connection_state)));
-    state.push(Val::Bool(has_realm_list));
+    push_standard_login_state(state, values)
+}
+
+fn get_login_state_values(state: &mut LuaState) -> LuaResult<(i32, bool, i32, bool)> {
+    let sim = borrow_state(state)?;
+    let login = &sim.glue_login;
+    let disconnected =
+        ACTIVE == ClientProfile::Retail && login.retail_glue.disconnect_state_is_authoritative;
+    if login.submitted || disconnected {
+        Ok((
+            login.aurora_state,
+            login.connected_to_wow,
+            1,
+            login.realm_list_available,
+        ))
+    } else {
+        Ok(sim.screen_kind.login_state())
+    }
+}
+
+fn push_wow_forever_login_state(
+    state: &mut LuaState,
+    (aurora, connected, connection, realms): (i32, bool, i32, bool),
+) -> LuaResult<u32> {
+    let has_selected_preset = {
+        let sim = borrow_state(state)?;
+        crate::c_api::experience_preset::has_selected(&sim.cvars)?
+    };
+    let result = create_table(state);
+    for (key, value) in [
+        ("auroraState", Val::Num(f64::from(aurora))),
+        ("connectedToWoW", Val::Bool(connected)),
+        ("wowConnectionState", Val::Num(f64::from(connection))),
+        ("hasRealmList", Val::Bool(realms)),
+        ("waitingForRealmList", Val::Bool(false)),
+        ("superDistrictChoicePending", Val::Bool(false)),
+        ("keepingCharacterListOnRealmJoin", Val::Bool(false)),
+        ("waitingForRuleSets", Val::Bool(false)),
+        (
+            "hasSelectedExperiencePreset",
+            Val::Bool(has_selected_preset),
+        ),
+    ] {
+        table_set(state, result, key, value);
+    }
+    state.push(result);
+    Ok(1)
+}
+
+fn push_standard_login_state(
+    state: &mut LuaState,
+    (aurora, connected, connection, realms): (i32, bool, i32, bool),
+) -> LuaResult<u32> {
+    state.push(Val::Num(f64::from(aurora)));
+    state.push(Val::Bool(connected));
+    state.push(Val::Num(f64::from(connection)));
+    state.push(Val::Bool(realms));
     state.push(Val::Bool(false));
     Ok(5)
 }

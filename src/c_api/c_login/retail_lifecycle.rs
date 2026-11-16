@@ -12,6 +12,7 @@ use super::LoginState;
 #[derive(Debug, Default)]
 pub(super) struct RetailGlueState {
     login_cancellation_recorded: bool,
+    pub(super) disconnect_state_is_authoritative: bool,
     login_error: Option<String>,
     /// Empty offline state. R88aa proves the 0/1 transitions, not startup timing.
     character_list_completion_state: i32,
@@ -83,10 +84,11 @@ fn clear_login_state(state: &mut LuaState) -> LuaResult<bool> {
     login.realm_list_available = false;
     login.received_connection_info = Default::default();
     login.connected_to_wow = false;
-    // Keep GetState on this model snapshot so it reports the cleared connection.
     if login.retail_glue.login_error.is_some() {
         login.retail_glue.login_error = None;
     }
+    // Direct-screen sessions must use this cleared model in later GetState calls.
+    login.retail_glue.disconnect_state_is_authoritative = true;
     let notify_launcher = !login.retail_glue.login_cancellation_recorded;
     login.retail_glue.login_cancellation_recorded = true;
     Ok(notify_launcher)
