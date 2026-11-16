@@ -147,6 +147,7 @@ fn invoke_group_finder_consumers(env: &WowLuaEnv) -> String {
     env.eval(
         r#"
         local calls = {}
+        C_LFGInfo.CanPlayerUseGroupFinder = function() return false end
         local namespace = C_AddOns
         local original = namespace and namespace.LoadAddOn
         if type(original) == "function" then
