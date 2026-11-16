@@ -799,23 +799,23 @@ fn pending_item_inventory_count_bounds_equipment_locations() {
         .unwrap();
     assert!(!absent);
     assert_equipped_item_locked(&at_count, 16, false);
+}
 
-    let direct_below_count = pending_env(&[ITEM_A]);
-    seed_equipped_items(&direct_below_count, &[(17, ITEM_A)]);
-    set_r88s_inventory_inputs(&direct_below_count, Some(16), Some(false), &[]);
+#[test]
+fn pending_item_inventory_count_bounds_direct_inventory_locations() {
+    let below_count = pending_env(&[ITEM_A]);
+    seed_equipped_items(&below_count, &[(17, ITEM_A)]);
+    set_r88s_inventory_inputs(&below_count, Some(16), Some(false), &[]);
     assert_present_location_usage_error_without_side_effects(
-        &direct_below_count,
+        &below_count,
         "ItemLocation:CreateFromBagAndSlot(-4, 17)",
     );
 
-    let direct_at_count = pending_env(&[ITEM_A]);
-    seed_equipped_items(&direct_at_count, &[(17, ITEM_A)]);
-    set_r88s_inventory_inputs(&direct_at_count, Some(17), Some(false), &[]);
-    select_from_original_location(
-        &direct_at_count,
-        "ItemLocation:CreateFromBagAndSlot(-4, 17)",
-    );
-    assert_equipped_item_locked(&direct_at_count, 17, true);
+    let at_count = pending_env(&[ITEM_A]);
+    seed_equipped_items(&at_count, &[(17, ITEM_A)]);
+    set_r88s_inventory_inputs(&at_count, Some(17), Some(false), &[]);
+    select_from_original_location(&at_count, "ItemLocation:CreateFromBagAndSlot(-4, 17)");
+    assert_equipped_item_locked(&at_count, 17, true);
 }
 
 #[test]
@@ -847,7 +847,10 @@ fn pending_item_special_equipment_requires_mode_availability() {
         &special_bag,
         "ItemLocation:CreateFromBagAndSlot(-2, 1)",
     );
+}
 
+#[test]
+fn pending_item_special_equipment_rejects_unknown_mode() {
     let unknown_mode = pending_env(&[ITEM_A]);
     seed_equipped_items(&unknown_mode, &[(64, ITEM_A)]);
     set_r88s_inventory_inputs(&unknown_mode, Some(105), None, &[64]);
@@ -855,7 +858,10 @@ fn pending_item_special_equipment_requires_mode_availability() {
         &unknown_mode,
         "ItemLocation:CreateFromEquipmentSlot(64)",
     );
+}
 
+#[test]
+fn pending_item_special_equipment_accepts_available_and_inactive_slots() {
     let available = pending_env(&[ITEM_A]);
     seed_equipped_items(&available, &[(101, ITEM_A)]);
     set_r88s_inventory_inputs(&available, Some(105), Some(true), &[101]);
