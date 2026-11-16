@@ -4009,3 +4009,7 @@ assertions and retired simulator fallbacks are unchanged.
 ## 2026-11-15 | lt-67d2 spell-count R88p correction
 
 Recorded exact historical first-failing boundaries and cache-freshness qualification; linked native R88k/R88p width, reagent/storage and error evidence to the corrected API tests and explicit UNKNOWN seams.
+
+## [2026-11-15] investigation | R88aa Retail Glue consumers
+
+[Consumer selection and RED proof](investigations/consumer-selection-and-red-proof.md#retail-glue-login-consumers-and-pending-list-cache-call-site-r88aa) records the selected 70575 Mainline Glue source and exact original-call REDs at CharacterSelect.lua:211 and :697. **INFERRED (R88aa):** the cached pending getter call sites correspond to Retail 70688; exact cached-source equivalence remains UNKNOWN. The [Glue login contract](../specs/glue-login-flow.md#r88aa-cached-retail-characterselect-call-site-inferred) keeps that boundary separate from the verified native API behavior.

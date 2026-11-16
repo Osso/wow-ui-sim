@@ -720,3 +720,8 @@ Evidence: lt-81c7 ANSWERs #243, #253, #254 and #742. No packet, event,
 persistence, or idempotence policy is modeled. Forever string coercion and
 the CVar outcome of a selection before an aborting entry remain unknown.
 The zero-return policy is inferred and is not asserted.
+
+## R88aa cached Retail CharacterSelect call site (INFERRED)
+
+- [ ] **INFERRED (R88aa, Retail 12.1.5.70688; cached Lua build not matched):** `CharacterSelect_UpdateIfUpdateIsNotPending` and `CharacterSelect_OnVASCharacterQueueStatusUpdate` call the global `IsCharacterListUpdatePending`. This is a cache-caller observation, not proof of native 70688 Lua selection.
+- [ ] **VERIFIED (local Retail 12.1.5.70575 cache and runtime harness):** the selected Mainline Glue TOC loads `Mainline/CharacterSelect.lua`; its cached `OnShow` calls `C_Login.DisconnectFromServer` at line 211, while the queue-status handler calls the pending global at line 697. The regression tests check the loaded Lua source and invoke those original handlers.
