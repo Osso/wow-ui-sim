@@ -13,6 +13,7 @@ use crate::lua_api::globals::security::{
     set_secure_env_key_state,
 };
 use crate::lua_api::methods::{create_table, registry_get, registry_set, table_get, table_set};
+use crate::screen::ScreenKind;
 use rilua::vm::closure::{Closure, RustClosure};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
@@ -90,7 +91,10 @@ pub(crate) fn register_namespace_function_from_r88y(
 const ORDINARY_SNAPSHOT_KEY: &str = "__wow_r88y_ordinary_snapshot";
 const SECURE_SNAPSHOT_KEY: &str = "__wow_r88y_secure_snapshot";
 
-pub(crate) fn publish_verified_secure_namespace_members(state: &mut LuaState) -> LuaResult<usize> {
+pub(crate) fn publish_verified_secure_namespace_members(
+    state: &mut LuaState,
+    screen_kind: ScreenKind,
+) -> LuaResult<usize> {
     if !crate::client_profile::is_active_retail_12_1_5() {
         return Ok(0);
     }
@@ -101,7 +105,7 @@ pub(crate) fn publish_verified_secure_namespace_members(state: &mut LuaState) ->
     );
     let (ordinary_snapshots, secure_snapshots) = registry_snapshot_tables(state)?;
     let (unmodeled, context_counts) =
-        publish_verified_manifest_rows(state, ordinary_snapshots, secure_snapshots)?;
+        publish_verified_manifest_rows(state, screen_kind, ordinary_snapshots, secure_snapshots)?;
     trace_r88y_manifest(context_counts);
     Ok(unmodeled)
 }
@@ -115,18 +119,21 @@ fn registry_snapshot_tables(state: &mut LuaState) -> LuaResult<(Val, Val)> {
 
 fn publish_verified_manifest_rows(
     state: &mut LuaState,
+    screen_kind: ScreenKind,
     ordinary_snapshots: Val,
     secure_snapshots: Val,
 ) -> LuaResult<(usize, [usize; 3])> {
     let mut unmodeled = 0;
     let mut context_counts = [0usize; 3];
     for &(namespace, member, flag, context) in VERIFIED_MEMBERS {
-        count_registration_context(context, &mut context_counts)?;
+        let context_is_active =
+            count_registration_context(context, &mut context_counts, screen_kind)?;
         if !publish_and_snapshot_member(
             state,
             namespace,
             member,
             flag,
+            context_is_active,
             ordinary_snapshots,
             secure_snapshots,
         )? {
@@ -136,14 +143,26 @@ fn publish_verified_manifest_rows(
     Ok((unmodeled, context_counts))
 }
 
-fn count_registration_context(context: u8, counts: &mut [usize; 3]) -> LuaResult<()> {
+fn count_registration_context(
+    context: u8,
+    counts: &mut [usize; 3],
+    screen_kind: ScreenKind,
+) -> LuaResult<bool> {
     match context {
-        CONTEXT_GAME => counts[0] += 1,
-        CONTEXT_GLUE => counts[1] += 1,
-        CONTEXT_BOTH => counts[2] += 1,
-        _ => return Err(runtime_error("unsupported R88y registration context")),
+        CONTEXT_GAME => {
+            counts[0] += 1;
+            Ok(screen_kind == ScreenKind::Game)
+        }
+        CONTEXT_GLUE => {
+            counts[1] += 1;
+            Ok(screen_kind.is_glue())
+        }
+        CONTEXT_BOTH => {
+            counts[2] += 1;
+            Ok(true)
+        }
+        _ => Err(runtime_error("unsupported R88y registration context")),
     }
-    Ok(())
 }
 
 fn publish_and_snapshot_member(
@@ -151,6 +170,7 @@ fn publish_and_snapshot_member(
     namespace: &str,
     member: &str,
     flag: u8,
+    context_is_active: bool,
     ordinary_snapshots: Val,
     secure_snapshots: Val,
 ) -> LuaResult<bool> {
@@ -158,14 +178,25 @@ fn publish_and_snapshot_member(
     let secure_history = namespace_snapshot_table(state, secure_snapshots, namespace)?;
     let previous_ordinary = table_get(state, ordinary_history, member);
     let previous_secure = table_get(state, secure_history, member);
-    let implemented = publish_verified_member(
-        state,
-        namespace,
-        member,
-        flag,
-        previous_ordinary,
-        previous_secure,
-    )?;
+    let implemented = if context_is_active {
+        publish_verified_member(
+            state,
+            namespace,
+            member,
+            flag,
+            previous_ordinary,
+            previous_secure,
+        )?
+    } else {
+        let (ordinary_namespace, secure_namespace) = namespace_tables(state, namespace)?;
+        let ordinary_implemented =
+            function_value(table_get(state, ordinary_namespace, member)).is_some();
+        let secure_implemented =
+            function_value(table_get(state, secure_namespace, member)).is_some();
+        let preserve_fixed_base = is_fixed_base_copy(state, namespace, member)?;
+        remove_namespace_member(state, namespace, member, true, !preserve_fixed_base)?;
+        ordinary_implemented || secure_implemented
+    };
 
     let (ordinary_namespace, secure_namespace) = namespace_tables(state, namespace)?;
     let ordinary_value = table_get(state, ordinary_namespace, member);
@@ -309,9 +340,9 @@ fn publish_to_both(
         return Ok(true);
     }
     if let Some(secure) = secure {
-        if matches!(previous_ordinary, Val::Function(_)) {
-            remove_namespace_member(state, namespace, member, true, true)?;
-            return Ok(false);
+        if matches!(previous_secure, Val::Function(_)) {
+            // Public-table cleanup does not revoke a prior secure registration.
+            return Ok(true);
         }
         let ordinary = separate_flag3_function_object(state, secure, flag)?;
         set_member_in_both(state, namespace, member, ordinary, secure, flag)?;
@@ -589,8 +620,11 @@ mod tests {
             return;
         }
 
-        let unmodeled = publish_verified_secure_namespace_members(env.rilua_mut().state_mut())
-            .expect("verified publication is idempotent");
+        let unmodeled = publish_verified_secure_namespace_members(
+            env.rilua_mut().state_mut(),
+            ScreenKind::Game,
+        )
+        .expect("verified publication is idempotent");
         assert!(
             VERIFIED_MEMBERS.len() > unmodeled + 2,
             "at least two verified implementations should be routed"
@@ -741,5 +775,67 @@ mod tests {
             )
             .expect("read late flag-1 publication");
         assert_eq!(flag1, (true, true));
+    }
+
+    fn secure_screen_members(env: &WowLuaEnv) -> (bool, bool) {
+        env.eval(
+            r#"
+            local ping = rawget(__secureenv, "C_Ping")
+            local creation = rawget(__secureenv, "C_CharacterCreation")
+            return type(ping) == "table"
+                    and type(rawget(ping, "GetDefaultPingOptions")) == "function",
+                type(creation) == "table"
+                    and type(rawget(creation, "GetTrialBoostStartingLevel")) == "function"
+            "#,
+        )
+        .expect("secure Game and Glue member availability should be observable")
+    }
+
+    fn secure_store_presence(env: &WowLuaEnv) -> (bool, bool) {
+        env.eval(
+            r#"
+            local store = rawget(__secureenv, "C_StoreSecure")
+            return rawget(_G, "C_StoreSecure") == nil,
+                type(store) == "table"
+                    and type(rawget(store, "GetProductGroups")) == "function"
+            "#,
+        )
+        .expect("public cleanup and secure Store membership should be observable")
+    }
+
+    #[test]
+    fn verified_flag3_secure_members_follow_game_and_glue_contexts() {
+        if !crate::client_profile::is_active_retail_12_1_5() {
+            return;
+        }
+        let env = WowLuaEnv::new().expect("lua env");
+        assert_eq!(secure_screen_members(&env), (true, false));
+
+        env.set_screen_mode(ScreenKind::CharacterSelect);
+        assert_eq!(secure_screen_members(&env), (false, true));
+
+        env.set_screen_mode(ScreenKind::Game);
+        assert_eq!(secure_screen_members(&env), (true, false));
+    }
+
+    #[test]
+    fn public_store_cleanup_preserves_secure_registration_on_screen_change() {
+        if !crate::client_profile::is_active_retail_12_1_5() {
+            return;
+        }
+        assert_eq!(
+            verified_r88y_flag("C_StoreSecure", "GetProductGroups"),
+            Some(3)
+        );
+        let env = WowLuaEnv::new().expect("lua env");
+        assert_eq!(secure_store_presence(&env), (false, true));
+
+        env.exec("C_StoreSecure = nil")
+            .expect("ordinary Store namespace cleanup should succeed");
+        env.restore_post_cleanup_globals();
+        assert_eq!(secure_store_presence(&env), (true, true));
+
+        env.set_screen_mode(ScreenKind::Game);
+        assert_eq!(secure_store_presence(&env), (true, true));
     }
 }

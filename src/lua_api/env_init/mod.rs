@@ -17,6 +17,7 @@ use super::state::SimState;
 use crate::lua_api::methods::{registry_get, registry_set};
 use crate::lua_api::script_helpers::protected_lua_pcall_state;
 use crate::lua_api::taint::stamp_addon_taint_state;
+use crate::screen::ScreenKind;
 use rilua::LuaApiMut;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
@@ -71,7 +72,8 @@ pub(super) fn init_lua_state(
     trace_debug_getter_values(lua, "before_profile_bootstrap");
     register_profile_bootstrap(lua)?;
     trace_debug_getter_values(lua, "after_profile_bootstrap");
-    install_secure_runtime_surface(lua)?;
+    let screen_kind = state.borrow().screen_kind;
+    install_secure_runtime_surface(lua, screen_kind)?;
     finalize_lua_bootstrap(lua, &state)?;
     Ok(())
 }
@@ -174,10 +176,13 @@ fn register_profile_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     Ok(())
 }
 
-fn install_secure_runtime_surface(lua: &mut rilua::Lua) -> crate::Result<()> {
+fn install_secure_runtime_surface(
+    lua: &mut rilua::Lua,
+    screen_kind: ScreenKind,
+) -> crate::Result<()> {
     super::globals::real::protected_globals::install(lua)?;
-    // Register the real model after secureenv construction. The generic R88y
-    // pass below publishes its implemented flag-3 members to both environments.
+    // Register the model after secureenv construction. The R88y pass applies
+    // verified destinations for the active screen.
     crate::c_api::c_color_overrides::register(lua)?;
     #[cfg(feature = "forbidden-aspects")]
     super::script_object_transfer::install(lua)?;
@@ -186,7 +191,8 @@ fn install_secure_runtime_surface(lua: &mut rilua::Lua) -> crate::Result<()> {
     // temporary: lt-635e. Keep the full snapshot private to secure-mode and replay chunks.
     super::globals::security::create_secure_replay_environment(lua)?;
     remove_sandbox_globals(lua)?;
-    let unmodeled = crate::c_api::publish_verified_secure_namespace_members(lua.state_mut())?;
+    let unmodeled =
+        crate::c_api::publish_verified_secure_namespace_members(lua.state_mut(), screen_kind)?;
     if unmodeled > 0 {
         tracing::debug!(
             unmodeled_members = unmodeled,
