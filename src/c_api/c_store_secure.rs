@@ -71,7 +71,7 @@ mod tests {
     #[cfg(feature = "client-retail")]
     use crate::lua_api::methods::table_get_static;
     #[cfg(feature = "client-retail")]
-    use rilua::Val;
+    use rilua::{LuaApiMut, Val};
 
     #[cfg(feature = "client-retail")]
     #[test]

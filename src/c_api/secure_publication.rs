@@ -531,6 +531,7 @@ mod tests {
     use super::{publish_verified_secure_namespace_members, verified_r88y_flag};
     use crate::lua_api::WowLuaEnv;
     use crate::screen::ScreenKind;
+    use rilua::LuaApiMut;
 
     #[test]
     fn verified_manifest_routes_implemented_functions_and_leaves_gaps_absent() {
