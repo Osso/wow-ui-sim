@@ -195,15 +195,16 @@ fn probe_group_finder_consumer(env: &WowLuaEnv, addons: &[String]) {
 ))]
 fn probe_print_handler_consumer(env: &WowLuaEnv, addons: &[String]) {
     let setter_source = function_source(env, "setprinthandler");
-    let caller_loaded = addons.iter().any(|name| name == "Blizzard_GlueParent");
+    let caller_addon_loaded = addons.iter().any(|name| name == "Blizzard_GlueParent");
     let owner_order = addon_precedes(addons, "Blizzard_PrintHandler", "Blizzard_GlueParent");
     let handler_source: String = env
         .eval(
             "local f = type(getprinthandler) == 'function' and getprinthandler(); if type(f) ~= 'function' then return '<missing>' end; return debug.getinfo(f, 'S').source or '<unknown>'",
         )
         .expect("read the Glue print handler installed by its caller");
+    let caller_registered = handler_source.contains("Blizzard_GlueParent/");
     eprintln!(
-        "BOUNDARY|setprinthandler|setter_source={setter_source}|caller_loaded={caller_loaded}|owner_before_caller={owner_order}|handler_source={handler_source}"
+        "BOUNDARY|setprinthandler|setter_source={setter_source}|caller_addon_loaded={caller_addon_loaded}|owner_before_caller={owner_order}|caller_registered={caller_registered}|handler_source={handler_source}"
     );
 
     if setter_source.contains("Blizzard_PrintHandler/") {
@@ -224,7 +225,7 @@ fn probe_store_consumer(env: &WowLuaEnv, addons: &[String]) {
     let owner_source = function_source(env, "StoreFrame_WaitingForCharacterListUpdate");
     let consumer_source = env
         .eval::<String>(
-            "local f = CharacterSelectFrameMixin and CharacterSelectFrameMixin.OnUpdate; if type(f) ~= 'function' then return '<missing>' end; return debug.getinfo(f, 'S').source or '<unknown>'",
+            "local f = CharacterSelectFrameMixin and CharacterSelectFrameMixin.OnUpdate; if type(f) ~= 'function' then f = CharacterSelect_OnUpdate end; if type(f) ~= 'function' then return '<missing>' end; return debug.getinfo(f, 'S').source or '<unknown>'",
         )
         .expect("read the original character-select consumer source");
     let consumer_loaded = addons.iter().any(|name| name == "Blizzard_GlueXML");
@@ -246,7 +247,12 @@ fn probe_store_consumer(env: &WowLuaEnv, addons: &[String]) {
                 CharacterServicesMaster_OnCharacterListUpdate = function() end
                 StoreFrame_OnCharacterListUpdate = function() called = true end
                 StaticPopup_CheckQueuedDialogs = function() end
-                CharacterSelectFrameMixin:OnUpdate(0)
+                local mixin = CharacterSelectFrameMixin
+                if mixin and type(mixin.OnUpdate) == 'function' then
+                    mixin:OnUpdate(0)
+                elseif type(CharacterSelect_OnUpdate) == 'function' then
+                    CharacterSelect_OnUpdate({}, 0)
+                end
                 return called
                 "#,
             )
