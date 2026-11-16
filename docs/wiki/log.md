@@ -1,3 +1,7 @@
+## [2026-11-15] system | Retail Constants.* secure publication
+
+Updated the [taint system](systems/taint-system.md#dual-lua-environment) and [add-on load-phase contract](../specs/addon-load-phases.md#r88t-secure-dependency-and-named-publication-routes). **VERIFIED (native Retail 12.1.5.70688, R88t.t2):** `Constants.*` tables use a no-flag secure-publication route. **VERIFIED (simulator source, commit `49e4d091d`):** Retail publishes generated constants data to secureenv while keeping missing and compatibility datasets ordinary-only. **UNVERIFIED:** the new `InventoryConstants` consumer test and final gates on this commit.
+
 ## [2026-11-15] correction | R88y flag-3 function identity
 
 Updated the [taint system](systems/taint-system.md#dual-lua-environment) and the [R88y load-phase contract](../specs/addon-load-phases.md#r88y-verified-secure-publication). **RETRACTED:** the prior shared-identity conclusion came from simulator value copying and did not establish native identity. **VERIFIED (R88 series, Retail 12.1.5.70688 decomp line 13165):** flag-3 native C functions use separate zero-capture closures with the same handler. **VERIFIED (R88y.y2):** copied standard-library function values retain shared identity. **UNVERIFIED:** identity after later script replacement or deliberate aliasing; current tests do not claim it.
