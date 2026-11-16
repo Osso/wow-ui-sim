@@ -1,6 +1,6 @@
 ## [2026-11-16] investigation | Retail master Unit secure route
 
-Updated the [taint system](systems/taint-system.md#dual-lua-environment) and [add-on load-phase contract](../specs/addon-load-phases.md#r88ac-globalstrings-secure-publication). **SOURCE-DERIVED (VERIFIED simulator source at master `725fb6e3a`):** the fixed set has 153 Retail Unit-prefixed function values after the six VERIFIED R88y `_G` rows are excluded; the supplied R88ac supplement has no VERIFIED Unit-prefixed rows. **UNKNOWN (R88ac.ac1, R88af.1/.2):** native secure publication. The exact master prefork and Retail Lua-errors controls pass; candidate consumer proof is pending.
+Updated the [taint system](systems/taint-system.md#dual-lua-environment) and [add-on load-phase contract](../specs/addon-load-phases.md#r88ac-globalstrings-secure-publication). **SOURCE-DERIVED (VERIFIED simulator source at master `725fb6e3a`):** the profile-tagged table records 173 distinct Unit-prefixed globals; Retail copies 153 compatibility entries, while the six VERIFIED R88y Unit rows use the publisher only on Retail and remain compatibility entries on uncovered profiles. The supplied R88ac supplement has no VERIFIED Unit-prefixed rows. The new profile guard checks `_G` registration, not secureenv membership. **UNKNOWN (R88ac.ac1, R88af.1/.2):** native secure publication. Master controls pass; candidate consumer and Retail Lua-errors proof is pending.
 
 ## [2026-11-15] verified | Retail LE_GAME numeric secure publication
 
