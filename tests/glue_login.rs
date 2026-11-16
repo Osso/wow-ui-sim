@@ -1524,12 +1524,15 @@ fn retail_character_select_disconnect_consumer_publishes_ordered_events() {
     test_timeout! {
         let env = load_blizzard_screen(ScreenKind::CharacterSelect);
         env.exec(RETAIL_DISCONNECT_CONSUMER_SETUP).expect("selected Retail consumer setup");
-        let no_disconnect = env.exec("C_StoreGlue._state.disconnectOnLogout = false; CharacterSelectFrameMixin.OnShow(CharacterSelect)");
+        env.state().borrow_mut().store_glue.disconnect_on_logout = false;
+        let no_disconnect = env.exec("CharacterSelectFrameMixin.OnShow(CharacterSelect)");
         env.exec("C_Login.Login('disconnect-probe', CreateFrame('EditBox'))").unwrap();
         wow_ui_sim::startup::run_extra_update_ticks(&env, 2);
         env.exec("disconnectEvents = {}").unwrap();
-        let active = env.exec("C_StoreGlue._state.disconnectOnLogout = true; CharacterSelectFrameMixin.OnShow(CharacterSelect)");
-        let repeated = env.exec("C_StoreGlue._state.disconnectOnLogout = true; CharacterSelectFrameMixin.OnShow(CharacterSelect)");
+        env.state().borrow_mut().store_glue.disconnect_on_logout = true;
+        let active = env.exec("CharacterSelectFrameMixin.OnShow(CharacterSelect)");
+        env.state().borrow_mut().store_glue.disconnect_on_logout = true;
+        let repeated = env.exec("CharacterSelectFrameMixin.OnShow(CharacterSelect)");
         wow_ui_sim::startup::run_extra_update_ticks(&env, 2);
         assert!(no_disconnect.is_ok(), "false selector must skip DisconnectFromServer: {no_disconnect:?}");
         assert!(active.is_ok(), "active consumer call must succeed: {active:?}");
