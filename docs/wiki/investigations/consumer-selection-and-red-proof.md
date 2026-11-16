@@ -281,3 +281,19 @@ transition is not covered because the simulator reports a separate
 resolver test; this is not runtime Azerite consumer proof. The resolved
 `parentArray="BGTex"` issue and candidate dispositions are recorded in
 [Lua-owned fallback retirement](lua-owned-fallback-retirement.md#retail-character-create-fallback-retirement-queue-462).
+
+## Retail ColorManager and C_ColorOverrides
+
+**VERIFIED (Retail 12.1.5 cache):** `Blizzard_Colors/Blizzard_Colors.toc:3,8` sets `AllowLoad: Both` and selects `[Family]\\ColorManager.lua`. `data/blizzard-ui-files/retail.txt:1144-1146` includes the TOC and `Mainline/ColorManager.lua`; `src/toc/mod.rs:75-80` selects `mainline` for Retail. The full-environment helper loads `Blizzard_Colors` (`tests/tooltip_full_env_helpers.rs:12,94-111`), and the regression test observes the original `ColorManager` table.
+
+**VERIFIED (pinned Retail API documentation cache):** `ColorOverridesDocumentation.lua:5-74` declares the six `C_ColorOverrides` functions. `ColorOverrideConstantsDocumentation.lua:6-20` declares override types 0-7. `Blizzard_Colors/Mainline/ColorManager.lua:23,63-67,92-96` consumes `GetColorForQuality`, `GetDefaultColorForQuality`, and `GetColorOverrideInfo`.
+
+**CORRECTION (VERIFIED):** the earlier claim that RED at test commit `589d1278958b6d14867abba6d6dfe6736cb91378` reached ColorManager was false. `tests/blizzard_ui_unit.rs:14` called `C_ColorOverrides.GetDefaultColorForQuality` directly before the original consumer call at line 17; the saved RED fails at that direct call. Do not use that run as consumer-bound proof.
+
+**VERIFIED (consumer-bound RED at test-only commit `9f94060da3c33f8dc32b8474cc51da5301bb5600`):** the test adapter in `tests/blizzard_ui_unit.rs:103-107` removes only the ordinary `GetDefaultColorForQuality` method before Blizzard_Colors loads. The original `ColorManager.lua:66` call then fails with `attempt to call field 'GetDefaultColorForQuality' (a nil value)`. The test file blob is byte-identical in the RED and final GREEN trees (`c973568cd3c22fbecf56bafc2fa26b30e47add34`).
+
+**VERIFIED (secure snapshot RED/GREEN):** the unchanged test body at commit `1f0c2605b407b9024e758bcecd812c98f3b45858` failed because the secure member set was empty, while the `origin/master` baseline at `ffc9675274b9cc21922daea9fa901c3efd1723ee` contains `GetColorForQuality` and `GetColorOverrideInfo`. At final source `779aacb1161979d930100e89a4daf8feb9b85e96`, the same test body passes after the two pre-snapshot defaults were restored. Its body SHA-256 is `a971afd72d030ce1d519cfc5e0e8f5dc000fcd0462ed46aa7b3b682e7e56fa21`.
+
+**VERIFIED (final Retail run):** the original ColorManager consumer, bag-quality consumer, secure snapshot test, setting round-trip test, and four startup/workaround tests each list one exact test and pass. The final `wow-sim --no-addons --no-saved-vars lua-errors` run reports `Status: CLEAN`, zero unique or occurrence errors, and `[]`. PTR, Forever, Mists, Wrath compile-only, and Retail final receipts report zero warnings; see the revision-1 handoff report and manifests.
+
+**VERIFIED (R88v.v3 and simulator round-trip):** explicit `playerColorOverrides` save/load seams store and restore active records. **INFERRED:** the JSON byte-row encoding. **UNKNOWN:** the automatic reload/logout chain, final storage step, and failed-save behavior. **INFERRED:** the native update/reset callbacks map to `COLOR_OVERRIDE_UPDATED` and `COLOR_OVERRIDES_RESET`; tests assert neither the callback mapping nor the encoding.
