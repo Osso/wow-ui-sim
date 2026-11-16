@@ -22,6 +22,24 @@ fn raf_cooldown_unsupplied_has_zero_timing_and_disabled_timer() {
 #[test]
 fn original_retail_social_card_receives_supplied_cooldown_and_enable_flag() {
     let env = WowLuaEnv::new().unwrap();
+    load_original_retail_social_card_sources(&env);
+    assert_retail_social_card_starts_without_cooldown(&env);
+    env.state().borrow_mut().summon_friend_cooldown = SummonFriendCooldown {
+        start_time_seconds: 120.0,
+        duration_seconds: 600.0,
+        enable_cooldown_timer: true,
+    };
+    assert_retail_social_card_uses_supplied_cooldown(&env);
+    env.state()
+        .borrow_mut()
+        .summon_friend_cooldown
+        .enable_cooldown_timer = false;
+    assert_retail_social_card_timer_can_be_disabled(&env);
+    assert!(env.state().borrow().lua_errors.is_empty());
+}
+
+#[cfg(feature = "client-retail")]
+fn load_original_retail_social_card_sources(env: &WowLuaEnv) {
     let cache = wow_ui_sim::client_profile::blizzard_ui_addons_dir();
     for (file, digest) in [
         (
@@ -30,7 +48,7 @@ fn original_retail_social_card_receives_supplied_cooldown_and_enable_flag() {
         ),
         (
             "Blizzard_FriendsFrame/Mainline/FriendsListTemplates.lua",
-            "0f36b661642864fb0d4797dde8191d3e0849f30c4d5ad7f182bc8e234f455743",
+            "3e36c8bfb43c342292d8a4542674a67f4930a573eb4f61702bf480f50e58372f",
         ),
     ] {
         let source = std::fs::read(cache.join(file)).unwrap();
@@ -39,6 +57,10 @@ fn original_retail_social_card_receives_supplied_cooldown_and_enable_flag() {
             .exec(std::str::from_utf8(&source).unwrap())
             .unwrap();
     }
+}
+
+#[cfg(feature = "client-retail")]
+fn assert_retail_social_card_starts_without_cooldown(env: &WowLuaEnv) {
     env.exec(
         r#"
         RafCooldownCard = CreateFrame('Frame')
@@ -52,11 +74,10 @@ fn original_retail_social_card_receives_supplied_cooldown_and_enable_flag() {
     "#,
     )
     .unwrap();
-    env.state().borrow_mut().summon_friend_cooldown = SummonFriendCooldown {
-        start_time_seconds: 120.0,
-        duration_seconds: 600.0,
-        enable_cooldown_timer: true,
-    };
+}
+
+#[cfg(feature = "client-retail")]
+fn assert_retail_social_card_uses_supplied_cooldown(env: &WowLuaEnv) {
     env.exec(
         r#"
         FriendsListSocialCardRAFSummonButtonMixin.RefreshCooldown(RafCooldownCard)
@@ -67,10 +88,10 @@ fn original_retail_social_card_receives_supplied_cooldown_and_enable_flag() {
     "#,
     )
     .unwrap();
-    env.state()
-        .borrow_mut()
-        .summon_friend_cooldown
-        .enable_cooldown_timer = false;
+}
+
+#[cfg(feature = "client-retail")]
+fn assert_retail_social_card_timer_can_be_disabled(env: &WowLuaEnv) {
     env.exec(
         r#"
         FriendsListSocialCardRAFSummonButtonMixin.RefreshCooldown(RafCooldownCard)
@@ -79,7 +100,6 @@ fn original_retail_social_card_receives_supplied_cooldown_and_enable_flag() {
     "#,
     )
     .unwrap();
-    assert!(env.state().borrow().lua_errors.is_empty());
 }
 
 #[test]

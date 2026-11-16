@@ -5,7 +5,7 @@
 
 use super::item_equip::find_identity_slot;
 use crate::c_api::container_inventory::submit_container_use;
-use crate::c_api::item_upgrade_eligibility::ItemSlot;
+use crate::c_api::item_location::ItemSlot;
 use crate::lua_api::methods::borrow_state_mut;
 use crate::lua_bridge::FromStack;
 use rilua::LuaResult;

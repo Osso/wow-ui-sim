@@ -44,7 +44,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api/registration.rs",
           "summary": "C_ActionBar registration delegates only this modeled query to the c_api action-macro boundary; earlier profiles mark the fallback namespace key removed.",
-          "source_hash": "b70a678cc296395e1c9a347807cbf22d6439c1657e113e85d06d59e9a28e2005"
+          "source_hash": "dc49bc5fae778130e76390e00c86ba2e7a60b77f4bc34c48f1630a956779abc1"
         },
         {
           "kind": "test",
@@ -2692,7 +2692,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/create_frame/template_chain.rs",
-          "source_hash": "f22ce4bc2f8e180b15bb601ec4f0190135fee3820b05af6e639e4ce1612c17a9",
+          "source_hash": "e41bc70faa4b853609b999d88a1a6249c01130a0d57072aac667f13146d6fde1",
           "summary": "Options-only template application reapplies explicit flags before template OnLoad using the existing runtime template chain."
         },
         {
@@ -2769,7 +2769,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/create_frame/template_chain.rs",
-          "source_hash": "f22ce4bc2f8e180b15bb601ec4f0190135fee3820b05af6e639e4ce1612c17a9",
+          "source_hash": "e41bc70faa4b853609b999d88a1a6249c01130a0d57072aac667f13146d6fde1",
           "summary": "Options-only template application reapplies explicit flags before template OnLoad using the existing runtime template chain."
         },
         {
@@ -2875,7 +2875,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/create_frame/template_chain.rs",
-          "source_hash": "f22ce4bc2f8e180b15bb601ec4f0190135fee3820b05af6e639e4ce1612c17a9",
+          "source_hash": "e41bc70faa4b853609b999d88a1a6249c01130a0d57072aac667f13146d6fde1",
           "summary": "Options-only template application reapplies explicit flags before template OnLoad using the existing runtime template chain."
         },
         {
@@ -2981,7 +2981,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/create_frame/template_chain.rs",
-          "source_hash": "f22ce4bc2f8e180b15bb601ec4f0190135fee3820b05af6e639e4ce1612c17a9",
+          "source_hash": "e41bc70faa4b853609b999d88a1a6249c01130a0d57072aac667f13146d6fde1",
           "summary": "Options-only template application reapplies explicit flags before template OnLoad using the existing runtime template chain."
         },
         {
@@ -3137,7 +3137,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/create_frame/template_chain.rs",
-          "source_hash": "f22ce4bc2f8e180b15bb601ec4f0190135fee3820b05af6e639e4ce1612c17a9",
+          "source_hash": "e41bc70faa4b853609b999d88a1a6249c01130a0d57072aac667f13146d6fde1",
           "summary": "Options-only template application reapplies explicit flags before template OnLoad using the existing runtime template chain."
         },
         {
@@ -18700,7 +18700,7 @@
         {
           "kind": "source",
           "reference": "src/widget/frame_defaults.rs",
-          "source_hash": "6cff95bd75e1ded1a8d3e253e9f2f618a9b15be20e3ce6c7eb60fc31ae0c8f28",
+          "source_hash": "afac8d5f07ba509eabf5d8588a29db7168fff82d763c8eb1e83b1f778c114247",
           "summary": "Cooldown frame defaults initialize threshold storage to numeric 0 in the simulator; this is simulator state, not a native-default claim."
         },
         {
@@ -18743,7 +18743,7 @@
         {
           "kind": "source",
           "reference": "src/widget/frame_defaults.rs",
-          "source_hash": "6cff95bd75e1ded1a8d3e253e9f2f618a9b15be20e3ce6c7eb60fc31ae0c8f28",
+          "source_hash": "afac8d5f07ba509eabf5d8588a29db7168fff82d763c8eb1e83b1f778c114247",
           "summary": "Cooldown frame defaults initialize threshold storage to numeric 0 in the simulator; this is simulator state, not a native-default claim."
         },
         {
@@ -19094,7 +19094,7 @@
         {
           "kind": "source",
           "reference": "src/widget/frame_defaults.rs",
-          "source_hash": "6cff95bd75e1ded1a8d3e253e9f2f618a9b15be20e3ce6c7eb60fc31ae0c8f28",
+          "source_hash": "afac8d5f07ba509eabf5d8588a29db7168fff82d763c8eb1e83b1f778c114247",
           "summary": "Cooldown frame defaults initialize threshold storage to numeric 0 in the simulator; this is simulator state, not a native-default claim."
         },
         {
@@ -21273,7 +21273,7 @@
           "kind": "source",
           "reference": "src/c_api/c_spec.rs",
           "summary": "Specialization-change casts dispatch UNIT_SPELLCAST_START through the shared payload helper.",
-          "source_hash": "b8a47e72dba3b8ce16e43ccdcc4ac088a178072205838ce4667fc38da4e8ee17"
+          "source_hash": "2d276fa9ade3f599ef7538cd311a1497d561171a6a88dc3e122e693dcb45f479"
         },
         {
           "kind": "source",
@@ -21348,7 +21348,7 @@
           "kind": "source",
           "reference": "src/c_api/c_spec.rs",
           "summary": "Specialization-change casts dispatch UNIT_SPELLCAST_START through the shared payload helper.",
-          "source_hash": "b8a47e72dba3b8ce16e43ccdcc4ac088a178072205838ce4667fc38da4e8ee17"
+          "source_hash": "2d276fa9ade3f599ef7538cd311a1497d561171a6a88dc3e122e693dcb45f479"
         },
         {
           "kind": "source",
@@ -21430,7 +21430,7 @@
           "kind": "source",
           "reference": "src/c_api/c_spec.rs",
           "summary": "Specialization-change casts dispatch UNIT_SPELLCAST_START through the shared payload helper.",
-          "source_hash": "b8a47e72dba3b8ce16e43ccdcc4ac088a178072205838ce4667fc38da4e8ee17"
+          "source_hash": "2d276fa9ade3f599ef7538cd311a1497d561171a6a88dc3e122e693dcb45f479"
         },
         {
           "kind": "source",

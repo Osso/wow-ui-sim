@@ -109,8 +109,11 @@ pub fn cached_blizzard_ui_addons_path() -> Option<PathBuf> {
     }
     let is_complete = path.join(COMPLETE_MARKER).is_file();
     let identity_matches = match crate::client_profile::ACTIVE {
-        crate::client_profile::ClientProfile::Retail => pinned::retail_cache_matches(&path),
-        crate::client_profile::ClientProfile::Ptr => pinned::cache_matches(&path),
+        crate::client_profile::ClientProfile::Retail => pinned::retail_provenance()
+            .is_ok_and(|expected| pinned::cache_matches(&path, &expected)),
+        crate::client_profile::ClientProfile::Ptr => {
+            pinned::provenance().is_ok_and(|expected| pinned::cache_matches(&path, &expected))
+        }
         _ => true,
     };
     let version_allowed =

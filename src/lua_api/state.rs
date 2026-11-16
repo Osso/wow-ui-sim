@@ -28,6 +28,7 @@ macro_rules! build_empty_sim_state {
         let restricted_actions = crate::c_api::restricted_actions::initial_states(&cvars);
         let quest_log_entries = QuestLogState::seeded();
         Self {
+            store_glue: Default::default(),
             loot_specialization: 0,
             loot_spec_window: None,
             pending_loot_specs: Vec::new(),
@@ -544,6 +545,7 @@ macro_rules! build_empty_sim_state {
             cursor_storage: Default::default(),
             container_actions: Default::default(),
             item_upgrade_eligibility: Default::default(),
+            r88s_inventory_inputs: Default::default(),
             loading_addon_index: $runtime.loading_addon_index,
             loading_addon_stack: $runtime.loading_addon_stack,
             loading_addon_secure_env: $runtime.loading_addon_secure_env,

@@ -323,6 +323,7 @@ pub mod c_spell_classification;
 pub(crate) mod c_spell_counts;
 pub mod c_spell_diminish;
 pub mod c_stable_info;
+pub mod c_store_glue;
 mod c_store_secure;
 pub mod c_string_util;
 mod c_string_util_decimal;
@@ -351,6 +352,8 @@ mod c_trade_skill_source;
 pub(crate) mod mists_reputation_list;
 #[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
 pub mod spell_reagent_inventory;
+pub mod store_glue_model;
+pub mod store_guid;
 // The pinned classic TransmogItemsDocumentation.lua / TransmogOutfitInfoDocumentation.lua
 // declare these namespaces on Mists, Era and Anniversary, so the backing model
 // is compiled for those profiles together with the retail API epochs.
@@ -467,6 +470,7 @@ pub(crate) mod duration_clock;
 pub(crate) mod duration_text_binding;
 #[cfg(feature = "retail-12-0-5")]
 pub mod intl_native;
+pub mod item_location;
 pub mod item_spell;
 #[cfg(feature = "retail-12-0-0")]
 mod item_stats;

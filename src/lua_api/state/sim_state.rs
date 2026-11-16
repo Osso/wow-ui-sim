@@ -8,6 +8,8 @@ pub(crate) struct RegisteredLoadWith {
 }
 
 pub struct SimState {
+    /// Explicit empty-default R88q host inputs; no automatic server records.
+    pub store_glue: crate::c_api::store_glue_model::StoreGlueState,
     pub hyperlink_tooltip: crate::c_api::c_tooltip_info_hyperlink::inputs::HyperlinkTooltipInputs,
     /// INFERRED host input for the opaque crafting-UI helper; not player state.
     pub trade_skill_crafting_ui_inputs:
@@ -687,6 +689,8 @@ pub struct SimState {
     pub cursor_storage: crate::lua_api::globals::real::cursor_model::CursorStorage,
     pub container_actions: crate::c_api::container_actions::ContainerActions,
     pub item_upgrade_eligibility: crate::c_api::item_upgrade_eligibility::ItemUpgradeEligibility,
+    /// Explicit R88s inventory-bound evidence; missing values remain UNKNOWN.
+    pub r88s_inventory_inputs: crate::c_api::item_location::R88sInventoryInputs,
     pub loading_addon_index: Option<u16>,
     pub loading_addon_stack: Vec<u16>,
     pub loading_addon_secure_env: Option<bool>,

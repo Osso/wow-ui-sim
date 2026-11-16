@@ -13,26 +13,9 @@ use rilua::vm::state::LuaState;
 // ── Equipment ─────────────────────────────────────────────────────────────────
 
 pub(super) fn equip_item(state: &mut LuaState) -> LuaResult<u32> {
-    use crate::lua_api::state_types::{CharacterStats, EquippedItem};
     let slot = i32::from_stack(state, 1)?;
     let item_id = u32::from_stack(state, 2)?;
-    let mut st = borrow_state_mut(state)?;
-    crate::c_api::item_upgrade_eligibility::discard_location(
-        &mut st,
-        crate::c_api::item_upgrade_eligibility::ItemSlot::Equipment(slot),
-    );
-    let previous = st.player.equipped_items.insert(
-        slot,
-        EquippedItem {
-            item_id,
-            enchant_id: 0,
-            gem_ids: [0, 0, 0],
-            applied_transmog: None,
-            owned_identity: None,
-        },
-    );
-    st.player.stats = CharacterStats::compute(&st.player.equipped_items, st.player.class_index);
-    drop(st);
+    let previous = update_equipped_item(state, slot, item_id)?;
     if previous.is_none_or(|item| item.item_id != item_id)
         && crate::c_api::world_loot_object::is_equippable_spell_slot(slot)
     {
@@ -45,13 +28,38 @@ pub(super) fn equip_item(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
+fn update_equipped_item(
+    state: &mut LuaState,
+    slot: i32,
+    item_id: u32,
+) -> LuaResult<Option<crate::lua_api::state_types::EquippedItem>> {
+    use crate::lua_api::state_types::{CharacterStats, EquippedItem};
+    let mut st = borrow_state_mut(state)?;
+    crate::c_api::item_upgrade_eligibility::discard_location(
+        &mut st,
+        crate::c_api::item_location::ItemSlot::Equipment(slot),
+    );
+    let previous = st.player.equipped_items.insert(
+        slot,
+        EquippedItem {
+            item_id,
+            enchant_id: 0,
+            gem_ids: [0, 0, 0],
+            applied_transmog: None,
+            owned_identity: None,
+        },
+    );
+    st.player.stats = CharacterStats::compute(&st.player.equipped_items, st.player.class_index);
+    Ok(previous)
+}
+
 pub(super) fn unequip_item(state: &mut LuaState) -> LuaResult<u32> {
     use crate::lua_api::state_types::CharacterStats;
     let slot = i32::from_stack(state, 1)?;
     let mut st = borrow_state_mut(state)?;
     crate::c_api::item_upgrade_eligibility::discard_location(
         &mut st,
-        crate::c_api::item_upgrade_eligibility::ItemSlot::Equipment(slot),
+        crate::c_api::item_location::ItemSlot::Equipment(slot),
     );
     let previous = st.player.equipped_items.remove(&slot);
     st.player.stats = CharacterStats::compute(&st.player.equipped_items, st.player.class_index);

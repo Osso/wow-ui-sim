@@ -5,15 +5,16 @@
 //!
 //! - `state.active_player_interactions: HashSet<i32>` — the set of
 //!   `Enum.PlayerInteractionType` values whose corresponding NPC dialog is
-//!   currently open. `ClearInteraction(type)` removes the entry and fires
-//!   the matching close event so any addon listener observes the same
-//!   shape it would in a real client.
+//!   currently open. `ClearInteraction(type)` removes an active entry, fires
+//!   its mapped close event when present, then requests the generic manager-hide
+//!   notification with the interaction type outside Wrath.
 //!
-//! Only the close-event mapping the project currently consumes is wired
-//! up. New interaction types should add a row to
+//! Only the type-specific close-event mapping the project currently consumes
+//! is wired up. New interaction types should add a row to
 //! [`close_event_for_interaction`] when their addon code lands.
 
 use crate::c_api::helpers::ensure_namespace;
+use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::methods::borrow_state_mut;
 use crate::lua_api::script_helpers::fire_named_event_state;
 use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
@@ -48,6 +49,11 @@ fn clear_interaction(state: &mut LuaState) -> LuaResult<u32> {
     let Ok(interaction_type) = i32::from_stack(state, 1) else {
         return Ok(0);
     };
+    clear_interaction_type(state, interaction_type)?;
+    Ok(0)
+}
+
+pub(crate) fn clear_interaction_type(state: &mut LuaState, interaction_type: i32) -> LuaResult<()> {
     let was_active = borrow_state_mut(state)?
         .active_player_interactions
         .remove(&interaction_type);
@@ -55,8 +61,16 @@ fn clear_interaction(state: &mut LuaState) -> LuaResult<u32> {
         if let Some(event) = close_event_for_interaction(interaction_type) {
             fire_named_event_state(state, event, &[]);
         }
+        if ACTIVE != ClientProfile::Wrath {
+            // PlayerInteractionManagerDocumentation.lua:95-103 declares the type payload.
+            fire_named_event_state(
+                state,
+                "PLAYER_INTERACTION_MANAGER_FRAME_HIDE",
+                &[rilua::Val::Num(f64::from(interaction_type))],
+            );
+        }
     }
-    Ok(0)
+    Ok(())
 }
 
 fn close_event_for_interaction(interaction_type: i32) -> Option<&'static str> {

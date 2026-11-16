@@ -10,6 +10,14 @@
 
 [Addon load phases](../specs/addon-load-phases.md) records R88t request order and named publication plus R88v source attribution. The ordinary-request failure-independence clause is VERIFIED natively but untested; transitive copying remains UNKNOWN. **VERIFIED (simulator test at `adf8d25f9`):** the one-file AddSource consumer returns a saved `file:line`, preserves it after the exclusion list changes, and returns `UnknownFile` for a later texture from the excluded file. At that earlier handoff, the full C_ColorOverrides stateful model was deferred; the later R88y integration is recorded above. [Taint system](systems/taint-system.md#dual-lua-environment) records publication boundaries and current implementation.
 
+## [2026-11-15] fix | Retail Blizzard UI cache provenance
+
+The [CASC asset cache](systems/casc-asset-cache.md#blizzard-ui-source-cache) and [CASC loading contract](../specs/casc-loading.md#pinned-blizzard-ui-source-cache) record exact Retail/PTR pin provenance checks, mismatch sync behavior, and unchanged selection for other profiles. **VERIFIED (source and synthetic temp-cache tests):** matching 70783 provenance is accepted; stale 70575 and missing provenance are rejected.
+
+## [2026-11-15] revision | Retail Blizzard UI 70783 CDN metadata
+
+[Client profiles](systems/client-profiles.md#runtime-cache) links the regenerated Retail 70783 identity and index. The 4,026-path manifest and Retail patch-API cache hashes remain unchanged; the CDN key and one archive location changed. **VERIFIED (local CASC root):** FDID 8547105 remains absent. **VERIFIED (70575 versus 70783 cache bytes):** the selected chat TOC, shared/Mainline FloatingChatFrame sources and GlueParent source are identical. **UNKNOWN:** native Retail Glue Login chat visibility; see the [Glue Login contract](../specs/glue-login-flow.md#r62-retail-chat-evidence-boundary) and follow-up `lt-0de8`.
+
 ## [2026-11-14] investigation | Retail secure tooltip color route
 
 [GlobalColor catalog](systems/global-color-catalog.md) and [taint system](systems/taint-system.md#dual-lua-environment) record the secure color path. **VERIFIED (merged simulator source at `a941395885655f56edfcc1f57cac3fa1f0c853c7`):** the generated catalog includes `TOOLTIP_DEFAULT_BACKGROUND_COLOR`, and `C_UIColor.GetColors` registers through the flag-3 namespace route. **VERIFIED (pre-merge simulator at `7f81a8853`):** the fallback-disabled PrivateAuras test was RED because the old temporary payload lacked this row. **UNVERIFIED at the merge SHA:** the fallback-disabled consumer test has not yet run against the merged catalog.
@@ -25,6 +33,10 @@
 ## [2026-11-15] system | Retail C_ColorOverrides state
 
 **VERIFIED (R88v and revision-1 tests):** [Color overrides](systems/color-overrides.md) records the six-method Retail API, corrected original-consumer RED/GREEN, and `playerColorOverrides` round-trip seams. **HISTORICAL (revision-1):** the secure member-set test covered two master snapshot names before R88y. **VERIFIED (R88y source at `5cd3cc29e`):** all six implemented members have VERIFIED flag-3 rows; current-head runtime proof is pending. **INFERRED:** the local GlobalColor projection, setting encoding, and event mapping. **UNKNOWN:** automatic save/load triggers and final storage.
+
+## [2026-11-15] implementation | Retail Store Glue R88q
+
+[Store Glue VAS state](../specs/store-glue-r88q.md) records native returning paths, explicit host receive seams, original Glue consumers and bounded fallback retirement.
 
 ## [2026-11-15] investigation | ShowUIPanel toggle fixture owners
 
@@ -98,9 +110,13 @@ The [modified-appearance](../specs/tooltip-appearance-item.md), [merchant-cost](
 
 The [Round 7 contract](../specs/tooltip-r7-getters.md), [Lua API](systems/lua-api.md#azerite-essence-tooltip-selection-r88n2), and [consumer investigation](investigations/consumer-selection-and-red-proof.md#retail-azerite-essence-tooltip-consumers) record R88p.p4 source and inline rows through the original Retail hover consumers. **VERIFIED (R88p.p4):** source fallback/selector choice, empty-source rows, and inline row order/type/state. **INFERRED:** race-to-selector mapping remains unimplemented because the available 70783 `ChrRaces.csv` lacks `FactionID` values and is not the 70575 runtime pin. **VERIFIED (generated catalog):** no rank above four exists, so gray is unreachable; requirement-row expansion remains UNKNOWN.
 
-## [2026-11-14] implementation | Retail selected tooltip getters
+## [2026-11-15] implementation | Retail item-interaction parser
 
-[Tooltip-data system](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) and the [Round 7 contract](../specs/tooltip-r7-getters.md) cover the selected Retail tooltip getters and ChallengeMode writer inputs. **VERIFIED (R88o.2 q1/q2/q3):** unresolved conversion output shape, SlotKeystone cursor/notification order and map/modifier rejection, and RemoveKeystone Boolean/category guards. **INFERRED:** bag cursor fields project native cursor inputs, `PlayerState::present` proxies opaque-context availability, and selected item-ID/location caches preserve simulator lookup and cursor staging. **SIMULATOR GAP:** native error code 1013 publication/text, mode/associated GUID, item-data/resource and later lock effects, `GetSlottedKeystoneInfo`, and the simulator does not model q4 `SetPendingItem` lifecycle; q5 external possession routes and other item-interaction routes remain UNKNOWN.
+[Tooltip-data system](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) and the [Round 7 contract](../specs/tooltip-r7-getters.md) cover the selected Retail tooltip getters and ChallengeMode writer inputs. **VERIFIED (R88o.2 q1/q2/q3):** unresolved conversion output shape, SlotKeystone cursor/notification order and map/modifier rejection, and RemoveKeystone Boolean/category guards. **VERIFIED (R88o.2 q4; optional Retail consumer tests):** the pending-item lifecycle updates the object used by the tooltip getter. **VERIFIED (Retail q4 and PlayerInteractionManagerDocumentation.lua:95–103):** active selector 44 requests `PLAYER_INTERACTION_MANAGER_FRAME_HIDE` with type 44 after the primary close callback. **VERIFIED (Retail 12.1.5.70688, R88s.s1):** empty or invalid present locations raise the Usage error before the shared setter; nil is the absent-replacement input, so the null-item fast path is not publicly reachable. **INFERRED:** PTR and Forever publication follows pinned declarations and selected consumers through separate `client_profile::ACTIVE` gates. **UNKNOWN:** predicate tables, whether CloseUI invokes separate selection cleanup, external lifecycle routes, native error-code publication/text for other guards, associated GUID/mode, later lock/resource effects, and `GetSlottedKeystoneInfo`.
+
+## [2026-11-15] revision | Shared R88s ItemLocation reader
+
+[Round 7 contract](../specs/tooltip-r7-getters.md) and [item-upgrade system](systems/item-upgrade-eligibility.md) record the shared reader and its empty-by-default count/mode seam. **VERIFIED (simulator source):** both APIs use `item_location::read_r88s_item_slot`; reuse for item-upgrade APIs is simulator policy. **SIMULATOR UNKNOWN INPUT POLICY:** missing required inventory evidence rejects; no value is inferred from item maps or `purchase_inputs.inventory_count`.
 
 ## [2026-11-15] correction | Retail tooltip sell-price contract
 

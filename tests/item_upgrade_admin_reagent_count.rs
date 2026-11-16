@@ -15,6 +15,12 @@ fn admin_reagent_count_recreation_discards_item_upgrade_observation() {
             &["Blizzard_ObjectAPI"],
             &[],
             |env, _| {
+                // Explicit scenario inputs; these are not native defaults.
+                {
+                    let mut sim = env.state().borrow_mut();
+                    sim.r88s_inventory_inputs.inventory_count = Some(105);
+                    sim.r88s_inventory_inputs.inventory_mode_active = Some(false);
+                }
                 env.exec(r#"
                     A_Admin.ClearBags()
                     A_Admin.AddBagItem(0, 1, 6948, 1)

@@ -201,13 +201,26 @@ fn test_container_frames_array_contains_only_real_container_frames() {
 #[test]
 fn test_bag_ui_c_container_helpers_have_safe_default_shapes() {
     let env = setup_env();
+    seed_bag_container_helper_inputs(&env);
+    assert_bag_container_helper_default_shapes(&env);
+}
+
+fn seed_bag_container_helper_inputs(env: &WowLuaEnv) {
     if wow_ui_sim::client_profile::ACTIVE != wow_ui_sim::client_profile::ClientProfile::Wrath {
+        // Explicit scenario inputs; these are not native defaults.
+        {
+            let mut sim = env.state().borrow_mut();
+            sim.r88s_inventory_inputs.inventory_count = Some(105);
+            sim.r88s_inventory_inputs.inventory_mode_active = Some(false);
+        }
         env.exec(
             "A_Admin.AddBagItem(0, 1, 6948); A_Admin.SetItemUpgradeEligibility({bagID=0, slotIndex=1}, false)",
         )
         .unwrap();
     }
+}
 
+fn assert_bag_container_helper_default_shapes(env: &WowLuaEnv) {
     let (not_filtered, quest_info_ok, cannot_upgrade, trade_money_zero): (bool, bool, bool, bool) =
         env.eval(
             r#"

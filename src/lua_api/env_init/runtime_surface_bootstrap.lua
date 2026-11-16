@@ -1,5 +1,5 @@
 -- Single publication-scoped exemption inventory; Retail/PTR/Wrath stay unchanged.
-local classicCombat, forever, vanilla = ...
+local classicCombat, forever, vanilla, modeledStoreGlue = ...
 local strictNamespaces = {}
 if classicCombat then
   strictNamespaces.C_CombatText = true
@@ -561,8 +561,10 @@ end
 C_StoreSecure.GetLastProductListResponseError = function()
   return 0
 end
-C_StoreSecure.GetVASErrors = function()
-  return {}
+if not modeledStoreGlue then
+  C_StoreSecure.GetVASErrors = function()
+    return {}
+  end
 end
 C_StoreSecure.RequestRealmGuildMasterInfo = function(virtualRealmAddress)
   FireEvent("STORE_GUILD_MASTER_INFO_RECEIVED", virtualRealmAddress)
@@ -610,12 +612,14 @@ end
 C_StoreSecure.ClearPreGeneratedExternalTransactionID = function()
   __wow_store_state.duplicateKey = nil
 end
-C_StoreSecure.SetDisconnectOnLogout = function(shouldDisconnect)
-  __wow_store_state.disconnectOnLogout = shouldDisconnect == true
-end
-C_StoreSecure.SetVASProductReady = function(isReady)
-  if isReady then
-    FireEvent("STORE_VAS_PURCHASE_COMPLETE")
+if not modeledStoreGlue then
+  C_StoreSecure.SetDisconnectOnLogout = function(shouldDisconnect)
+    __wow_store_state.disconnectOnLogout = shouldDisconnect == true
+  end
+  C_StoreSecure.SetVASProductReady = function(isReady)
+    if isReady then
+      FireEvent("STORE_VAS_PURCHASE_COMPLETE")
+    end
   end
 end
 C_StoreSecure.RequestAllDynamicPriceInfo = __wow_noop
@@ -1008,16 +1012,18 @@ end
 function C_StoreSecure.GetVASCompletionInfo()
   return __wow_store_secure_state.completion_product_id, __wow_store_secure_state.completion_guid, __wow_store_secure_state.completion_realm_name, __wow_store_secure_state.completion_should_handle
 end
-function C_StoreSecure.SetDisconnectOnLogout(disconnectOnLogout)
-  __wow_store_secure_state.disconnect_on_logout = disconnectOnLogout and true or false
-  if __wow_store_secure_state.completion_product_id then
-    __wow_store_secure_state.completion_should_handle = __wow_store_secure_state.disconnect_on_logout
+if not modeledStoreGlue then
+  function C_StoreSecure.SetDisconnectOnLogout(disconnectOnLogout)
+    __wow_store_secure_state.disconnect_on_logout = disconnectOnLogout and true or false
+    if __wow_store_secure_state.completion_product_id then
+      __wow_store_secure_state.completion_should_handle = __wow_store_secure_state.disconnect_on_logout
+    end
   end
-end
-function C_StoreSecure.SetVASProductReady(ready)
-  if ready and __wow_store_secure_state.completion_product_id then
-    __wow_store_secure_state.purchase_in_progress = false
-    FireEvent("STORE_VAS_PURCHASE_COMPLETE")
+  function C_StoreSecure.SetVASProductReady(ready)
+    if ready and __wow_store_secure_state.completion_product_id then
+      __wow_store_secure_state.purchase_in_progress = false
+      FireEvent("STORE_VAS_PURCHASE_COMPLETE")
+    end
   end
 end
 function C_StoreSecure.PurchaseVASProduct(productID, guid, _name, _oldGuildName, _newGuildMasterGuid, realmValue, _wowAccountGuid, _bnetAccountGuid, _transferFactionChangeBundle, _isGuildFollow)

@@ -41,6 +41,19 @@ this retirement.
 
 **VERIFIED (simulator source and Retail tests at `8f12a1a21`):** Retail skips this compatibility method, and both ordinary and secure aliases retain `strsplit` identity after startup and defaults reapplication. **VERIFIED (simulator source only):** other profiles still execute the existing compatibility path; no non-Retail runtime result is claimed.
 
+### Store Glue VAS fallback replacement
+
+[R88q Store Glue state](../../specs/store-glue-r88q.md) replaces the five guessed
+`store_glue_state.rs` getters/request functions on modeled profiles with explicit
+empty host inputs and native-backed returning paths. Other profiles retain their
+compatibility surface. Product/group and unrelated Store compatibility remain
+outside this retirement. R88w also replaces the unconditional empty-table
+`C_StoreSecure.GetVASErrors` override in `runtime_surface_bootstrap.lua` on modeled
+profiles; its scoped legacy branch remains for other profiles. Shared-list copy,
+error/state notification payloads, and bounded ASCII GUID parsing now follow the
+native evidence. Unresolved GUID forms and service/lifecycle predicates remain
+neutral instead of receiving guessed behavior.
+
 ### Remaining temporary hooks
 
 These hooks are not duplicate call paths in the current loader. They stay as

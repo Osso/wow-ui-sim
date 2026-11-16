@@ -9,6 +9,18 @@ fn env() -> WowLuaEnv {
     WowLuaEnv::new().expect("Failed to create Lua environment")
 }
 
+fn ui_map_point_env() -> WowLuaEnv {
+    let ui = crate::common::blizzard_addon_harness::blizzard_ui_dir();
+    let env = crate::common::blizzard_addon_harness::new_blizzard_addon_env(&ui);
+    crate::common::blizzard_addon_harness::load_blizzard_addon_closure_into_env(
+        &env,
+        &ui,
+        &["Blizzard_ObjectAPI", "Blizzard_SharedXML"],
+        &[],
+    );
+    env
+}
+
 // ============================================================================
 // C_Map
 // ============================================================================
@@ -1124,7 +1136,7 @@ fn test_get_minimap_zone_text() {
 
 #[test]
 fn test_ui_map_point_create_from_vector() {
-    let env = env();
+    let env = ui_map_point_env();
     env.exec(
         r#"
         local pos = {x = 0.5, y = 0.5, GetXY = function(self) return self.x, self.y end}
@@ -1138,7 +1150,7 @@ fn test_ui_map_point_create_from_vector() {
 
 #[test]
 fn test_ui_map_point_create_from_coordinates() {
-    let env = env();
+    let env = ui_map_point_env();
     env.exec(
         r#"
         local point = UiMapPoint.CreateFromCoordinates(2, 0.3, 0.7)
