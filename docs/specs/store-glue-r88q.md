@@ -43,11 +43,16 @@ Generated C_StoreGlue/C_StoreSecure namespace declarations were not found in the
 
 On modeled profiles, five guessed functions formerly installed by `src/lua_api/workarounds/temporary/store_glue_state.rs` are replaced: `GetDisconnectOnLogout`, `GetVASProductReady`, `GetVASPurchaseStateInfo`, `RequestCharacterQueueTime`, `UpdateVASPurchaseStates`. The guessed `_state`/`__wow_store_glue_state` fixture is not the real model. `ClearVASProductReady` and the two secure setters are independently modeled from R88q, not claimed as five additional functions in that temporary file. Unchanged profiles retain their old compatibility behavior. Existing product/group/completion-detail compatibility surfaces outside this task remain explicitly bounded; this does not retire the entire Store subsystem.
 
-Both duplicate definitions of `SetDisconnectOnLogout` and `SetVASProductReady` in `runtime_surface_bootstrap.lua` are also skipped on modeled profiles. Unmodeled profiles preserve both earlier override stages; unrelated product/completion-detail compatibility stays unchanged.
+The duplicate `SetDisconnectOnLogout` and `SetVASProductReady` definitions and `GetVASErrors` fallback in `runtime_surface_bootstrap.lua` stay active only outside modeled profiles. **UNKNOWN — Mists 5.5.4.70268:** this lane does not apply Retail native behavior to Mists; keep its existing bootstrap compatibility behavior unchanged. Other unmodeled profiles also retain their existing compatibility behavior. Unrelated product/completion-detail compatibility stays unchanged.
 
 ## Verification
 
-Planned optional tests drive selected original Glue consumer functions and real XML list templates, not replaced APIs. Each proposed RED selector must independently use at least two distinct backed records plus absence. Runtime validation must bind compiler-artifact hashes before/after each exact runtime following its own profile build. This draft claims no test or gate result; tracker receipts will record actual RED/GREEN results, startup errors and compile gates.
+Optional tests drive selected original Glue consumers and real XML list templates. The R88q/R88w selectors use at least two distinct backed records plus absence. Runtime receipts are evidence artifacts, not part of this behavior spec; native parity outside Retail remains separately labeled.
+
+## Tests asserting this spec
+
+- `tests/glue_character_select.rs` covers the original CharacterSelect and Store VAS error consumers.
+- `tests/store_api.rs` covers Retail setter state and completion-event ownership.
 
 ## Known downstream boundary
 
@@ -71,7 +76,7 @@ The entry restriction's cause is UNKNOWN. Per #1310, `vas_errors_entry_rejected`
 
 The selected original consumer is `VASErrorData_GetCombinedMessage`, `Shared/VASErrorLookup.lua:365-380`, approved by #1310. Native facts are Retail-only; publication on the already-modeled PTR/Forever profiles retains the separately labeled inferred applicability boundary. The three reader selectors passed after their baseline RED runs; existing R88q selectors also passed. Error-event publication, callback copy gates, state-change arity, and GUID parsing were delivered in separate subsequent commits, documented below.
 
-The modeled profiles retire the unconditional empty-table `runtime_surface_bootstrap.lua` GetVASErrors override. Its scoped legacy branch remains for unmodeled profiles; the later nil-only fallback cannot overwrite this native reader.
+Retail, PTR and Forever use the modeled C API reader, which snapshots the shared `StoreGlueState.purchase_errors` source. Its scoped bootstrap fallbacks remain for unmodeled profiles. **UNKNOWN — Mists:** do not infer native list behavior from the Retail evidence; preserve the current Mists bootstrap path.
 
 ## R88w.w4 native shared-list copy gate
 
