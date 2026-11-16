@@ -632,8 +632,10 @@ mod tests {
                     type(string.contains) == "function"
                         and type(secureString.contains) == "function",
                     type(table.count) == "function"
-                        and type(secureTable.count) == "function",
+                        and type(secureTable.count) == "function"
+                        and not rawequal(table.count, secureTable.count),
                     type(fastrandom) == "function"
+                        and rawequal(fastrandom, math.random)
                         and rawget(secure, "fastrandom") == nil,
                     rawget(table, "join") == nil and rawget(secureTable, "join") == nil
                 "#,
