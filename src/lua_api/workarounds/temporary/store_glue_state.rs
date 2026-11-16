@@ -96,16 +96,7 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 mod tests {
     use crate::lua_api::WowLuaEnv;
 
-    #[test]
-    fn installs_vas_defaults_and_request_counters() {
-        if crate::c_api::c_store_glue::enabled() {
-            return;
-        }
-        let env = WowLuaEnv::new().expect("lua env should initialize");
-
-        let result: String = env
-            .eval(
-                r#"
+    const VAS_DEFAULTS_PROBE: &str = r#"
                 if C_StoreGlue.GetDisconnectOnLogout() then
                     return "bad_disconnect_default"
                 end
@@ -146,8 +137,17 @@ mod tests {
                     return "bad_update_count"
                 end
                 return "ok"
-                "#,
-            )
+                "#;
+
+    #[test]
+    fn installs_vas_defaults_and_request_counters() {
+        if crate::c_api::c_store_glue::enabled() {
+            return;
+        }
+        let env = WowLuaEnv::new().expect("lua env should initialize");
+
+        let result: String = env
+            .eval(VAS_DEFAULTS_PROBE)
             .expect("store glue probe should run");
 
         assert_eq!(result, "ok");
