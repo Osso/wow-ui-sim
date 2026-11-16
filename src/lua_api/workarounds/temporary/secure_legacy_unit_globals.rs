@@ -1165,7 +1165,7 @@ mod tests {
             ),
             names = names
         );
-        let mut env = WowLuaEnv::new().expect("initialize Lua environment");
+        let env = WowLuaEnv::new().expect("initialize Lua environment");
         let missing_csv = env.eval::<String>(&script).expect("check _G registrations");
         let missing_names = missing_csv
             .split(',')
