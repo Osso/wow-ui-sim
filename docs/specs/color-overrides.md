@@ -20,8 +20,8 @@ This spec defines the Retail `C_ColorOverrides` API and its state model. See the
 
 ### Namespace and persistence
 
-- [ ] The secure environment retains the two `C_ColorOverrides` members present in the master pre-secure snapshot; Retail replaces only the ordinary namespace.
-- [ ] Explicit save/load seams round-trip two active records through `playerColorOverrides`; loading replaces stale active records.
+- [x] The secure environment retains the two `C_ColorOverrides` members present in the master pre-secure snapshot; Retail replaces only the ordinary namespace.
+- [x] Explicit save/load seams round-trip two active records through `playerColorOverrides`; loading replaces stale active records.
 
 ## How it works
 
@@ -32,7 +32,7 @@ This spec defines the Retail `C_ColorOverrides` API and its state model. See the
 ## Implementation inventory
 
 - `src/c_api/c_color_overrides.rs`: Retail API registration, active records, validation, color publication, and explicit setting save/load seams.
-- `src/c_api/mod.rs`: crate-level re-export of the save/load seams.
+- `src/c_api/mod.rs`: public re-export of the save/load seams.
 - `src/c_api/c_ui_color.rs`: shared `ColorMixin` copying and packed-color channel conversion.
 - `src/lua_api/env_init/mod.rs`: ordinary-environment registration after secure snapshot creation.
 - `src/lua_api/workarounds/temporary/color_defaults.rs`: retains the two master pre-secure members; Retail replaces the ordinary namespace afterward.

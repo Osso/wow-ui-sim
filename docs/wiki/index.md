@@ -1,6 +1,6 @@
 ## [2026-11-15] system | Retail C_ColorOverrides state
 
-**VERIFIED (R88v and Retail test run):** [Color overrides](systems/color-overrides.md) records the Retail state API, selected `ColorManager` consumer, and the `playerColorOverrides` lifecycle boundary. **INFERRED:** the local GlobalColor snapshot projection and event mapping. **UNKNOWN:** reload/logout triggers.
+**VERIFIED (R88v and revision-1 tests):** [Color overrides](systems/color-overrides.md) records the six-method Retail API, corrected original-consumer RED/GREEN, master secure-snapshot member set, and `playerColorOverrides` round-trip seams. **INFERRED:** the local GlobalColor projection, setting encoding, and event mapping. **UNKNOWN:** automatic save/load triggers and final storage.
 
 ## [2026-11-15] investigation | ShowUIPanel toggle fixture owners
 

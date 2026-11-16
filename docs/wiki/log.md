@@ -1,6 +1,10 @@
+## [2026-11-15] revision | Retail C_ColorOverrides verification corrections
+
+Updated the [spec](../specs/color-overrides.md), [system page](systems/color-overrides.md), and [consumer-selection record](investigations/consumer-selection-and-red-proof.md#retail-colormanager-and-c-coloroverrides). **CORRECTION (VERIFIED):** the earlier RED at `589d127` failed at a direct API call, not inside ColorManager. **VERIFIED (revision-1 tests):** the corrected RED fails at original `ColorManager.lua:66`; the secure snapshot matches the two master member names; explicit `playerColorOverrides` seams round-trip and replace stale records. Five final profile builds report zero warnings. **INFERRED:** setting encoding, event mapping, and local GlobalColor projection. **UNKNOWN:** automatic lifecycle triggers and final storage.
+
 ## [2026-11-15] implementation | Retail C_ColorOverrides state
 
-[Color overrides](systems/color-overrides.md) records R88v's Retail state API and original `ColorManager` proof. **VERIFIED (implementation commit `2d1a14c8049ae890fdb28fdfc1752de88d3409b3`):** the exact consumer tests pass and five-profile compile receipts report zero warnings. The 70783 catalog projection and event mapping are **INFERRED**; reload/logout persistence remains **UNKNOWN**.
+Initial implementation; see the revision entry above for the corrected RED attribution and the completed `playerColorOverrides` setting seam. **VERIFIED (implementation commit `2d1a14c8049ae890fdb28fdfc1752de88d3409b3`):** its exact consumer GREEN tests passed and its five-profile compile receipts reported zero warnings. The 70783 catalog projection and event mapping remain **INFERRED**; automatic reload/logout persistence remains **UNKNOWN**.
 
 ## [2026-11-15] investigation | ShowUIPanel toggle fixture owners
 
