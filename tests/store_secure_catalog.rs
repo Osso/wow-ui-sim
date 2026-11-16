@@ -310,7 +310,7 @@ fn retail_catalog_shop_consumes_shared_currency_data() {
 #[test]
 fn retail_store_empty_defaults_reach_original_catalog_consumer() {
     let env = load_store_ui();
-    let values: (bool, bool, bool, bool, bool, i32, u32) = env
+    let values: (bool, bool, bool, bool, bool, i32, i32) = env
         .eval(
             "return C_StoreSecure.IsAvailable(), C_StoreSecure.HasProductList(), C_StoreSecure.HasPurchaseList(), C_StoreSecure.HasDistributionList(), C_StoreSecure.HasPurchaseInProgress(), C_StoreSecure.GetCurrencyID(), C_StoreSecure.GetLastProductListResponseError()",
         )
