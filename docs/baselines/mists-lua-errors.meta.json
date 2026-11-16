@@ -1,9 +1,10 @@
 {
   "verified": "2026-11-16",
   "profile": "mists",
-  "status": "Coordinator-approved classified diagnostic inventory; not clean-startup acceptance. Four records / ten occurrences map to two missing simulator APIs pending Mists native evidence in R88ah.",
-  "source_revision": "56b45de50a98213221175a59cd0b0914a7b3bfac",
-  "runtime_source_basis": "56b45de50a98213221175a59cd0b0914a7b3bfac",
+  "status": "Post-merge stock simulator capture: zero Lua errors. This is not native-parity or full-suite acceptance.",
+  "source_revision": "6d291643401e8142ff16db80ce8b895bb9f2448a",
+  "branch_head_at_capture": "49a927df25e001b99a7861f4d818d7bf18da3de0",
+  "runtime_source_basis": "6d291643401e8142ff16db80ce8b895bb9f2448a; the later 49a927df2 commit changed only the integration test source",
   "cargo_features": [
     "sound",
     "gui",
@@ -13,149 +14,62 @@
   "execution_argv": [
     "timeout",
     "90",
-    "/home/osso/.cache/wow-ui-sim-targets/slot-4/debug/wow-sim",
+    "/home/osso/.cache/wow-ui-sim-targets/slot-0/debug/wow-sim",
     "--no-addons",
     "--no-saved-vars",
     "lua-errors"
   ],
-  "working_directory": "/home/osso/.worktrees/wow-ui-sim-mists-regression",
-  "exit_code": 1,
-  "error_records": 4,
-  "error_occurrences": 10,
-  "baseline_sha256": "9775335b02412474276945ed13215fb7b079d425f4680b7fe23bd86abafbc36e",
+  "working_directory": "/home/osso/.worktrees/wow-ui-sim-mists-r88ah",
+  "exit_code": 0,
+  "error_records": 0,
+  "error_occurrences": 0,
+  "baseline_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
   "baseline_transform": "none; stdout copied byte-for-byte including trailing LF",
-  "binary_path": "/home/osso/.cache/wow-ui-sim-targets/slot-4/debug/wow-sim",
-  "binary_sha256": "dfffa0ad8bf45600d49dc41861db1f5850bbf8197405cd06e4f5f1f86336ecd5",
-  "dylib_path": "/home/osso/.cache/wow-ui-sim-targets/slot-4/debug/deps/libwow_ui_sim_dylib.so",
-  "dylib_sha256": "2eb2c6196586ad4a92e75f1607c7b932b9f53929226c835f16111d2afd201a4e",
-  "build_receipt": "/home/osso/.local/state/wow-ui-sim/handoff/mists-regression/BUILD/receipts/mists-regression-mists-56b45de50.json",
-  "build_receipt_sha256": "5135c57d06af7a4e4930b300cf951fda648bed5d3b1f1525782e0586c19cf1f8",
+  "binary_path": "/home/osso/.cache/wow-ui-sim-targets/slot-0/debug/wow-sim",
+  "binary_sha256": "7f9ede5e430a298337e7d609010103aa349e6d763f495ae043f7f1c47cb835d6",
+  "dylib_path": "/home/osso/.cache/wow-ui-sim-targets/slot-0/debug/libwow_ui_sim_dylib.so",
+  "dylib_sha256": "9d14ee1c313efcff99cccf28b0ae1bfac2b8a77447adc1cf648fca752bec97e0",
+  "build_receipt": "/home/osso/.cache/wow-ui-sim-targets/slot-0/receipts/mists-r88ah-prep.json",
+  "build_receipt_sha256": "53d4571b4b87896c7aad316830b89c6c6755140ff03d29858ec0d81e51f87aa0",
   "compiler_warnings": 0,
-  "fresh_xdg_data_home": "/home/osso/.local/state/wow-ui-sim/handoff/mists-regression/RUN/xdg/initial-no-addons",
+  "fresh_xdg_data_home": "/home/osso/.local/state/wow-ui-sim/handoff/mists-r88ah/RUN/xdg-data-merged-baseline",
   "persisted_cvars": {
     "path": "/home/osso/.local/share/wow-sim/cvars.json",
+    "size": 811,
+    "mtime_ns": 1794084010812131548,
     "sha256": "8d1709049bc9acdbed0465889701a0e370667ef18cf06b71db479b3972aa350c",
-    "unchanged_during_capture": true
+    "unchanged_during_capture": true,
+    "child_copy_sha256": "c0c0ecdd71e8aed7a10a4613465fe3cd1bff3d4896cf4e08bf4aaa9b75947f79"
   },
   "mists_cache": {
     "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/mists/AddOns",
-    "tree_sha256_before": "c24bc270586b49c0d23a0f8c216ef653886bd5e0f1a378aa756c60f90e2c98f4",
-    "tree_sha256_after": "c24bc270586b49c0d23a0f8c216ef653886bd5e0f1a378aa756c60f90e2c98f4",
-    "entries": 3445,
-    "changed": false
+    "profile_build": "5.5.4.70268 (cache identity supplied by task)",
+    "native_applicability": "INFERRED from R88ah for Mists 5.5.4.70631"
   },
-  "records": [
-    {
-      "record_index": 1,
-      "count": 1,
-      "message_sha256": "702c3b9cf8b4a1f42262b7f3bd40598581da45b927aa4b60d7e3040951951f5b",
-      "class": "missing simulator API, pending Mists native evidence",
-      "api": "C_CombatAudioAlert.IsEnabled",
-      "consumer": "Blizzard_CombatAudioAlerts/Blizzard_CombatAudioAlertManager.lua:181",
-      "load_selection": [
-        "Blizzard_CombatAudioAlerts/Blizzard_CombatAudioAlerts.toc:5 (AllowLoad: game)",
-        "Blizzard_CombatAudioAlerts/Blizzard_CombatAudioAlerts.toc:8 (manager Lua)"
-      ],
-      "removing_merge": "99bdcbe531ad1533a716244bea7f87e9b344022d",
-      "root_cause": "The merge removed the shared temporary false fallback. The replacement C API producer is Retail-only.",
-      "api_declaration": "Blizzard_APIDocumentationGenerated/CombatAudioAlertDocumentation.lua:106",
-      "script_errors_echo": false,
-      "reporter_sites": [],
-      "pending_r88ah": "Mists return logic for default/unset CAAEnabled and unavailable audio manager.",
-      "evidence_label": "VERIFIED",
-      "native_behavior_status": "UNKNOWN; pending Mists native evidence in R88ah",
-      "boundary_probes": {
-        "last_clean_parent": "da31ffbf118b85ba3db32abb0c670ebca8712215",
-        "first_bad_merge": "99bdcbe531ad1533a716244bea7f87e9b344022d"
+  "records": [],
+  "resolved_previous_capture": {
+    "baseline_sha256": "9775335b02412474276945ed13215fb7b079d425f4680b7fe23bd86abafbc36e",
+    "error_records": 4,
+    "error_occurrences": 10,
+    "apis": [
+      {
+        "api": "C_CombatAudioAlert.IsEnabled",
+        "consumer": "Blizzard_CombatAudioAlerts/Blizzard_CombatAudioAlertManager.lua:181",
+        "previous_records": 2
+      },
+      {
+        "api": "C_Spell.GetVisibilityInfo",
+        "consumer": "Blizzard_FrameXMLUtil/AuraUtil.lua:272",
+        "previous_records": 2
       }
-    },
-    {
-      "record_index": 2,
-      "count": 1,
-      "message_sha256": "987ee9ddb0a0ee81c8d374ba632be3f16c3dbb507d20e4bdaca02729268fafa2",
-      "class": "missing simulator API, pending Mists native evidence",
-      "api": "C_CombatAudioAlert.IsEnabled",
-      "consumer": "Blizzard_CombatAudioAlerts/Blizzard_CombatAudioAlertManager.lua:181",
-      "load_selection": [
-        "Blizzard_CombatAudioAlerts/Blizzard_CombatAudioAlerts.toc:5 (AllowLoad: game)",
-        "Blizzard_CombatAudioAlerts/Blizzard_CombatAudioAlerts.toc:8 (manager Lua)"
-      ],
-      "removing_merge": "99bdcbe531ad1533a716244bea7f87e9b344022d",
-      "root_cause": "The merge removed the shared temporary false fallback. The replacement C API producer is Retail-only.",
-      "api_declaration": "Blizzard_APIDocumentationGenerated/CombatAudioAlertDocumentation.lua:106",
-      "script_errors_echo": true,
-      "reporter_sites": [
-        "Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua:59",
-        "Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua:72"
-      ],
-      "pending_r88ah": "Mists return logic for default/unset CAAEnabled and unavailable audio manager.",
-      "evidence_label": "VERIFIED",
-      "native_behavior_status": "UNKNOWN; pending Mists native evidence in R88ah",
-      "boundary_probes": {
-        "last_clean_parent": "da31ffbf118b85ba3db32abb0c670ebca8712215",
-        "first_bad_merge": "99bdcbe531ad1533a716244bea7f87e9b344022d"
-      }
-    },
-    {
-      "record_index": 3,
-      "count": 4,
-      "message_sha256": "831601d1fd2e96f0f0bb18f3d19641c5e136869a126ac3aa99fc43243858f94b",
-      "class": "missing simulator API, pending Mists native evidence",
-      "api": "C_Spell.GetVisibilityInfo",
-      "consumer": "Blizzard_FrameXMLUtil/AuraUtil.lua:272",
-      "load_selection": [
-        "Blizzard_FrameXMLUtil/Blizzard_FrameXMLUtil.toc:5 (AllowLoad: Game)",
-        "Blizzard_FrameXMLUtil/Blizzard_FrameXMLUtil.toc:14 (AuraUtil.lua; runtime stack confirms this source)"
-      ],
-      "removing_merge": "b234822ad3dae2cf568e6825594b2a1c6d7977ca",
-      "root_cause": "The merge removed the shared temporary visibility tuple. The C API producer does not publish this method on Mists.",
-      "api_declaration": "Blizzard_APIDocumentationGenerated/SpellDocumentation.lua:374",
-      "enum_declaration": "Blizzard_APIDocumentationGenerated/SpellConstantsDocumentation.lua:21-30",
-      "script_errors_echo": false,
-      "reporter_sites": [],
-      "pending_r88ah": "Mists GetVisibilityInfo return count/values for visibility hit, miss, and invalid/null player context.",
-      "evidence_label": "VERIFIED",
-      "native_behavior_status": "UNKNOWN; pending Mists native evidence in R88ah",
-      "boundary_probes": {
-        "last_clean_parent": "2127b18cc6062f8fc4757a234396d175f40d0034",
-        "first_bad_merge": "b234822ad3dae2cf568e6825594b2a1c6d7977ca"
-      }
-    },
-    {
-      "record_index": 4,
-      "count": 4,
-      "message_sha256": "ec19f36e7d93fbd8c6714218f7f9ed69f670e066fcaf6b2d93221315dcdcc136",
-      "class": "missing simulator API, pending Mists native evidence",
-      "api": "C_Spell.GetVisibilityInfo",
-      "consumer": "Blizzard_FrameXMLUtil/AuraUtil.lua:272",
-      "load_selection": [
-        "Blizzard_FrameXMLUtil/Blizzard_FrameXMLUtil.toc:5 (AllowLoad: Game)",
-        "Blizzard_FrameXMLUtil/Blizzard_FrameXMLUtil.toc:14 (AuraUtil.lua; runtime stack confirms this source)"
-      ],
-      "removing_merge": "b234822ad3dae2cf568e6825594b2a1c6d7977ca",
-      "root_cause": "The merge removed the shared temporary visibility tuple. The C API producer does not publish this method on Mists.",
-      "api_declaration": "Blizzard_APIDocumentationGenerated/SpellDocumentation.lua:374",
-      "enum_declaration": "Blizzard_APIDocumentationGenerated/SpellConstantsDocumentation.lua:21-30",
-      "script_errors_echo": true,
-      "reporter_sites": [
-        "Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua:59",
-        "Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua:72"
-      ],
-      "pending_r88ah": "Mists GetVisibilityInfo return count/values for visibility hit, miss, and invalid/null player context.",
-      "evidence_label": "VERIFIED",
-      "native_behavior_status": "UNKNOWN; pending Mists native evidence in R88ah",
-      "boundary_probes": {
-        "last_clean_parent": "2127b18cc6062f8fc4757a234396d175f40d0034",
-        "first_bad_merge": "b234822ad3dae2cf568e6825594b2a1c6d7977ca"
-      }
-    }
-  ],
+    ]
+  },
+  "native_behavior_status": "VERIFIED for Mists 5.5.4.70631; INFERRED applicable to cache 5.5.4.70268.",
+  "evidence_label": "VERIFIED simulator output; INFERRED native applicability",
   "capture_notes": [
-    "The run used a fresh XDG_DATA_HOME with a byte-exact CVar copy.",
-    "The Mists cache was read-only by task instruction and its content tree hash did not change.",
-    "The separate full-mode run included third-party addon errors; it is not the stock no-addons baseline."
-  ],
-  "status_evidence_label": "VERIFIED",
-  "no_api_behavior_published": true,
-  "final_gate_scope": "Coordinator decision: source code equals master 56b45de50; final runtime gates are Mists and Retail lua-errors, Retail last."
+    "The zero-record JSON is exact stock stdout from --no-addons --no-saved-vars lua-errors.",
+    "The 49a927df2 branch commit after the build changed only tests/mists_r88ah.rs; no runtime source changed.",
+    "Both previously recorded API consumers now complete without Lua errors.",
+    "A clean simulator error inventory does not establish native behavior for cache build 5.5.4.70268 or full-suite compatibility."
+  ]
 }
