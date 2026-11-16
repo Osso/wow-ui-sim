@@ -166,7 +166,7 @@ fn assert_challenges_hover_item(env: &WowLuaEnv, item_id: u32, guid: &str) {
         local data = assert(GameTooltip:GetPrimaryTooltipData(), "ChallengesUI tooltip missing")
         assert(data.type == 0 and data.id == {item_id}, "ChallengesUI item identity")
         assert(data.guid == "{guid}", "ChallengesUI instance GUID")
-        for _, line in ipairs(data.lines or {}) do
+        for _, line in ipairs(data.lines or {{}}) do
             local text = line.leftText or ""
             assert(not text:match("^Map: ") and text ~= "Weekly Keystone")
             assert(not text:match("^Keystone Power ") and not text:match("^Resilient "))
