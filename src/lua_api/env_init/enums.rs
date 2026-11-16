@@ -343,10 +343,7 @@ fn register_native_constants(lua: &mut rilua::Lua) -> crate::Result<()> {
 }
 
 fn register_base_constants(lua: &mut rilua::Lua) -> crate::Result<()> {
-    // LFG roles are the only Constants members verified for native secure publication.
-    // Keep the generated, missing, and compatibility datasets ordinary-only.
-    lua.exec(
-        r#"
+    const LAZY_CONSTANT_TABLES_LUA: &str = r#"
         setmetatable(Constants, {
             __index = function(t, key)
                 local value = {}
@@ -354,12 +351,25 @@ fn register_base_constants(lua: &mut rilua::Lua) -> crate::Result<()> {
                 return value
             end,
         })
-        "#,
-    )?;
+        "#;
+    // R88t.t2 publishes native Constants.* tables without member flags. Keep
+    // missing and compatibility datasets ordinary-only.
+    let publish_generated_constants = crate::client_profile::is_active_retail_12_1_5();
+    if publish_generated_constants {
+        exec_source_in_both_environments(lua, LAZY_CONSTANT_TABLES_LUA)?;
+    } else {
+        lua.exec(LAZY_CONSTANT_TABLES_LUA)?;
+    }
     lua.exec(MISSING_CONSTANTS_LUA)?;
     #[cfg(feature = "client-wowforever")]
     lua.exec("LE_UNIT_STAT_SPIRIT = 5")?;
     lua.exec(CONSTANTS_VALUES_LUA)?;
+    if publish_generated_constants {
+        exec_source_in_secure_environment(lua, CONSTANTS_VALUES_LUA)?;
+        // The metatable above creates the generated Constants.* tables. Do not
+        // leave it as a secure lookup fallback after the constants are installed.
+        exec_source_in_secure_environment(lua, "setmetatable(Constants, nil)")?;
+    }
     Ok(())
 }
 
@@ -426,9 +436,13 @@ fn publish_retail_account_store_constants(lua: &mut rilua::Lua) -> crate::Result
 }
 
 fn exec_source_in_both_environments(lua: &mut rilua::Lua, source: &str) -> crate::Result<()> {
+    lua.exec(source)?;
+    exec_source_in_secure_environment(lua, source)
+}
+
+fn exec_source_in_secure_environment(lua: &mut rilua::Lua, source: &str) -> crate::Result<()> {
     use rilua::LuaApiMut;
 
-    lua.exec(source)?;
     let chunk = LuaApiMut::load(lua, source)?;
     crate::lua_api::globals::security::mark_secure(lua, &chunk)?;
     lua.call_function(&chunk, &[])?;

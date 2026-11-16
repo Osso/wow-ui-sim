@@ -46,7 +46,8 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 - [ ] VERIFIED (Retail 12.1.5.70688, R88v.v4): number arguments convert to text; input text stops at NUL; empty input adds nothing; duplicates are retained; secret denial and stack-overflow errors use the verified forms.
 - [ ] VERIFIED (Retail 12.1.5.70688, R88v.v4): source matching is case-sensitive and uses a file-text suffix; positive lines wrap modulo 65,536 and non-positive lines become zero.
 - [ ] VERIFIED (Retail 12.1.5.70688, R88y): publish the six implemented `C_ColorOverrides` members to both environments according to their VERIFIED flag-3 rows. Do not publish unimplemented members. Each ordinary/secure handler pair is distinct and callable against the shared override state.
-- [x] VERIFIED (Retail 12.1.5.70688, R88t): constant registration publishes separate `Constants` and `AccountStoreConsts` tables without a member flag. The four verified values are 1, 3, 3139, and 2814 for their named members.
+- [x] VERIFIED (Retail 12.1.5.70688, R88t.t2): constant registration publishes separate `Constants` and `AccountStoreConsts` tables without a member flag. The four verified AccountStore values are 1, 3, 3139, and 2814 for their named members.
+- [ ] VERIFIED (Retail 12.1.5.70688, R88t.t2): publish the native `Constants.InventoryConstants` table to secureenv without a per-member flag; the secure consumer must read `NumBagSlots = 4` and `NumReagentBagSlots = 1`. SIMULATOR POLICY: keep missing and compatibility constants ordinary-only unless native publication is established.
 - [x] VERIFIED (Retail 12.1.5.70688, R88t): when ordinary and secure `UIParent` names are empty, both receive the same frame-table object through the Retail named-frame policy.
 - [ ] VERIFIED (Retail 12.1.5.70688, R88t): the Retail UIParent bootstrap uses named-frame policy flag 32 and each destination preserves an existing non-nil name.
 
@@ -80,7 +81,7 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 - `src/c_api/helpers.rs`, `src/c_api/secure_publication.rs`, and generated `src/c_api/secure_publication_data.rs` — route implemented members through verified R88y flags; the source CSV and generator are `data/secure-publication/retail-12-1-5-70688.csv` and `tools/gen_r88y_secure_publication.py`.
 - `src/loader/addon.rs` — orders ordinary and secure dependency requests.
 - `src/loader/lua_file.rs`, `src/loader/xml_file.rs`, `src/lua_api/loader_env.rs`, `src/lua_api/globals/security/secure_env.rs` — execute secure files through the shared table and retain private replay only for selected replay paths and generated XML loader chunks.
-- `src/lua_api/env_init/enums.rs` — publishes the four verified `Constants.AccountStoreConsts` values.
+- `src/lua_api/env_init/enums.rs` — registers `Enum` values and the Retail `Constants.*` secure-table publication path.
 - `src/lua_api/env_init/mod.rs`, `src/lua_api/env_runtime.rs` — install pre-copy library aliases and rerun verified publication after screen-specific registrations.
 - `src/lua_api/globals/real/math_extensions.rs`, `src/lua_api/globals/real/string_extensions.rs`, and `src/lua_api/globals/real/table_extensions.rs` — register implemented library extensions; R88y publication routes their verified flags. The Retail secure `table.count` handler retains the separately verified R88t identity.
 - `src/lua_api/workarounds/temporary/formatting_utility_defaults.rs` — applies the colon-split compatibility method outside Retail 12.1.5.

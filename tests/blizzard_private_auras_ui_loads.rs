@@ -560,7 +560,14 @@ fn retail_secure_colors_publishes_existing_color_override_consumers() {
 #[test]
 fn retail_secure_shared_xml_publishes_account_store_constants() {
     let env = load_full_game_ui();
-    let consumer_errors = retail_full_ui_errors_from(&env, &["GameRulesUtil.lua"]);
+    let consumer_errors = retail_full_ui_errors_from(
+        &env,
+        &[
+            "GameRulesUtil.lua",
+            "Blizzard_FrameXMLBase/Constants.lua:184",
+            "Blizzard_Shared_StoreUISecure.lua:1812",
+        ],
+    );
     assert!(
         consumer_errors.is_empty(),
         "the secure GameRulesUtil.lua AccountStoreConsts consumer must run: {consumer_errors:?}"
@@ -592,6 +599,24 @@ fn retail_secure_shared_xml_publishes_account_store_constants() {
         constants,
         (true, true, true, true, true, true, 1.0, 3.0, 3139.0, 2814.0)
     );
+
+    let inventory_constants: (bool, bool, f64, f64) = env
+        .eval(
+            r#"
+            local ordinaryConstants = rawget(_G, "Constants")
+            local secureConstants = rawget(__secureenv, "Constants")
+            local ordinary = type(ordinaryConstants) == "table"
+                and rawget(ordinaryConstants, "InventoryConstants")
+            local secure = type(secureConstants) == "table"
+                and rawget(secureConstants, "InventoryConstants")
+            return type(ordinary) == "table",
+                type(secure) == "table",
+                secure and secure.NumBagSlots or -1,
+                secure and secure.NumReagentBagSlots or -1
+            "#,
+        )
+        .expect("InventoryConstants publication probe");
+    assert_eq!(inventory_constants, (true, true, 4.0, 1.0));
 }
 
 #[cfg(feature = "client-retail")]
