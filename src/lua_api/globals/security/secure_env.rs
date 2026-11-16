@@ -98,14 +98,29 @@ const CREATE_SECURE_REPLAY_ENV_LUA: &str = r##"
         secureenv[key] = value
     end
 
+    local function isReplayControlGlobal(key)
+        return key == "_G" or key == "rawget" or key == "rawset"
+            or key == "pairs" or key == "next"
+    end
+
+    local function replayValue(key)
+        if assigned[key] then
+            return originalRawget(values, key)
+        end
+        if not isReplayControlGlobal(key) then
+            local secureValue = originalRawget(secureenv, key)
+            if secureValue ~= nil then
+                return secureValue
+            end
+        end
+        return originalRawget(snapshot, key)
+    end
+
     local function replayRawget(target, key)
         if target ~= replayEnv then
             return originalRawget(target, key)
         end
-        if assigned[key] then
-            return originalRawget(values, key)
-        end
-        return originalRawget(snapshot, key)
+        return replayValue(key)
     end
 
     local function replayRawset(target, key, value)
@@ -141,10 +156,7 @@ const CREATE_SECURE_REPLAY_ENV_LUA: &str = r##"
 
     setmetatable(replayEnv, {
         __index = function(_, key)
-            if assigned[key] then
-                return values[key]
-            end
-            local value = snapshot[key]
+            local value = replayValue(key)
             if value == nil and type(logNilSymbolAccess) == "function" then
                 local isGlobalIndex = debugTable and debugTable.isglobalindex
                 if type(isGlobalIndex) == "function" and isGlobalIndex() then
@@ -221,8 +233,8 @@ pub fn create_secure_environment(lua: &mut rilua::Lua) -> LuaResult<()> {
 
 /// Create the temporary full-snapshot environment used by secure replays and generated chunks.
 ///
-/// Snapshot-only names remain private. Assignments are published to the strict
-/// secure environment by the snapshot table's write path.
+/// Non-control reads prefer live secureenv values. Names absent there retain
+/// snapshot behavior; assignments publish to the strict secure environment.
 // temporary: lt-635e
 pub fn create_secure_replay_environment(lua: &mut rilua::Lua) -> LuaResult<()> {
     if matches!(

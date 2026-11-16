@@ -919,6 +919,29 @@ fn blizzard_private_auras_ui_reads_raid_warning_util_and_publishes_mixins_into_s
          declares Blizzard_RaidWarning as a hard dependency"
     );
 
+    let message_types_are_configured: (bool, bool) = env
+        .eval(
+            r#"
+            local secure = __secureenv
+            local util = rawget(secure, "RaidWarningUtil")
+            local warning = rawget(secure, "RaidWarningFrame")
+            local standard = type(warning) == "table" and warning.messageTypes or nil
+            local private = rawget(secure, "RaidBossEmoteFramePrivate")
+            local bossEmote = type(private) == "table" and private.messageTypes or nil
+            return type(standard) == "table"
+                    and standard[1] == util.MessageType.RaidWarning
+                    and standard[2] == util.MessageType.BossEmote,
+                type(bossEmote) == "table"
+                    and bossEmote[1] == util.MessageType.BossEmote
+            "#,
+        )
+        .expect("secure RaidWarning XML key-values should be observable");
+    assert_eq!(
+        message_types_are_configured,
+        (true, true),
+        "generated RaidWarning XML must resolve MessageTypes from its secure dependency"
+    );
+
     for name in PUBLIC_MIXIN_GLOBALS {
         let in_secure_env: String = env
             .eval(&format!("return type(rawget(__secureenv, '{name}'))"))

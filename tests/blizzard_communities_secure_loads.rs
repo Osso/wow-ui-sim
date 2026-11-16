@@ -104,19 +104,28 @@ fn blizzard_communities_secure_loads_without_errors(env: &WowLuaEnv) {
 prefork_full_ui_case! {
 fn blizzard_communities_secure_dialog_frames_are_defined(env: &WowLuaEnv) {
 
-    let frames_present: bool = env
+    let frames_present: (bool, bool, bool, bool) = env
         .eval(
-            "return type(_G.CommunitiesAddDialog) == 'table' \
-                and CommunitiesAddDialog:GetParent() == UIParent \
-                and type(_G.CommunitiesCreateDialog) == 'table' \
-                and CommunitiesCreateDialog:GetParent() == UIParent",
+            r#"
+            local secure = __secureenv
+            local dialog = rawget(secure, "CommunitiesAddDialog")
+            local description = type(dialog) == "table" and dialog.DescriptionFrame or nil
+            return type(_G.CommunitiesAddDialog) == "table"
+                    and CommunitiesAddDialog:GetParent() == UIParent,
+                type(_G.CommunitiesCreateDialog) == "table"
+                    and CommunitiesCreateDialog:GetParent() == UIParent,
+                rawget(secure, "debug") == nil and type(debug) == "table",
+                type(description) == "table"
+                    and description.scrollBarX == -10
+                    and description.scrollBarHideIfUnscrollable == true
+            "#,
         )
-        .expect("toplevel frame query should succeed");
-    assert!(
+        .expect("Communities secure frame query should succeed");
+    assert_eq!(
         frames_present,
-        "Blizzard_CommunitiesSecure should define CommunitiesAddDialog and CommunitiesCreateDialog \
-         (both `<Frame parent=\"UIParent\" frameStrata=\"DIALOG\" hidden=\"true\">` from \
-         CommunitiesAddDialog.xml under a `<ScopedModifier forbidden=\"true\">` block)"
+        (true, true, true, true),
+        "CommunitiesAddDialog must set up its InputScrollFrame DescriptionFrame in secureenv; \
+         generated XML still needs the snapshot-only debug global"
     );
 }
 }

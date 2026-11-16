@@ -27,6 +27,7 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 
 - [ ] Secure-mode addon and dependency files must resolve global reads through the shared `__secureenv` by default. Ordinary-only globals such as `debug` and `coroutine` stay unavailable there, and per-file environment annotations remain effective.
 - [ ] Keep the temporary private snapshot only for explicit `SecureReplay` and generated XML loader paths in this cycle. After the original fallback-disabled PrivateAuras consumer passes, remove that bridge in its own commit; inherited-only values must not enter `__secureenv`.
+- [ ] SIMULATOR POLICY: generated XML chunks in secure mode read live shared-secure publications first. Names absent from `__secureenv` retain their existing private-snapshot result; the read fallback does not publish ordinary-only values into `__secureenv`.
 ### R88y verified secure publication
 
 - [ ] VERIFIED — Retail 12.1.5.70688 R88y.y1: use only the 6,554 VERIFIED rows from the pinned 6,763-row CSV (`3a8922d84756171f666fe79b61068d3344ce2db866250dede1de384fa9878f82`). Apply flags 1/2/3/6/7 to existing simulator functions only; keep absent implementations absent and exclude 209 INFERRED rows. Preserve each row's Game/Glue/both context; existing screen-aware registrars decide which members exist. Run publication after bootstrap and after screen registration so late registrations are reconciled. The additional actions for flags 6 and 7 remain UNKNOWN.
@@ -102,7 +103,8 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 - `tests/addon_runtime_dependencies.rs`
 - `src/c_api/c_addons_runtime_tests.rs`
 - `tests/secureenv_isolation.rs` — separate loaded states, dependency request order, already-loaded mode behavior, and the one-file source-location consumer.
-- `tests/blizzard_private_auras_ui_loads.rs` — the original FrameFactory/Pools, AccountUtil, ColorManager, GameRulesUtil, and PrivateAurasTooltip consumers.
+- `tests/blizzard_communities_secure_loads.rs` — verifies secure Communities `InputScrollFrame` setup and that `debug` stays out of `__secureenv`.
+- `tests/blizzard_private_auras_ui_loads.rs` — the original FrameFactory/Pools, AccountUtil, ColorManager, GameRulesUtil, RaidWarning XML, and PrivateAurasTooltip consumers.
 - `src/c_api/secure_publication.rs` — verified-only R88y routing, absent implementations, and late flag-3 registration after screen changes.
 - `src/c_api/helpers.rs` and `src/lua_api/globals/security/secure_env.rs` — separate flag-3 C-function objects; the latter also tests pre-copy library aliases and shallow-copy identity.
 - `src/c_api/c_color_overrides.rs` and `tests/secureenv_isolation.rs` — six `C_ColorOverrides` handlers and `C_Timer.NewTimedSignalMap` publication.
