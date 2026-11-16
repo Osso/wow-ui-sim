@@ -2,6 +2,8 @@
 
 use std::collections::HashMap;
 
+use rilua::LuaApiMut;
+use rilua::table_security::wrap_host_secret_number;
 use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
 use wow_ui_sim::lua_api::WowLuaEnv;
 
@@ -23,6 +25,16 @@ fn read_lua_error(env: &WowLuaEnv, call: &str) -> String {
         "local ok, err = pcall(function() {call} end); assert(not ok); return err"
     ))
     .expect("pcall should return the Lua error")
+}
+
+fn install_secret_visibility_number(env: &WowLuaEnv) {
+    let loader = env.loader_env();
+    let mut lua = loader.rilua_mut();
+    let secret = wrap_host_secret_number(lua.state_mut(), 777.0);
+    lua.state_mut().push(secret);
+    lua.set_global_val("R88AHSecretVisibility", secret)
+        .expect("secret test input should be rooted");
+    lua.state_mut().pop();
 }
 
 #[test]
@@ -118,6 +130,18 @@ fn assert_visibility_misses(env: &WowLuaEnv) {
         .eval("return select('#', C_Spell.GetVisibilityInfo(910001, 1))")
         .expect("absent player should return no values");
     assert_eq!(count, 0);
+}
+
+#[test]
+fn visibility_info_rejects_tainted_secret_arguments_with_native_text() {
+    let env = WowLuaEnv::new().expect("Mists C API should initialize");
+    install_secret_visibility_number(&env);
+    let call = "local function query() return C_Spell.GetVisibilityInfo(1, R88AHSecretVisibility) end; debug.setobjecttaint(query, 'R88ahSecretCaller'); query()";
+    let actual = read_lua_error(&env, call);
+    let expected = format!(
+        "bad argument #2 to 'C_Spell.GetVisibilityInfo' ({VISIBILITY_USAGE}. Secret values are only allowed during untainted execution for this argument.)"
+    );
+    assert_eq!(actual, expected);
 }
 
 #[test]
