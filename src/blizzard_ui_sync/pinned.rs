@@ -542,6 +542,43 @@ mod tests {
     }
 
     #[test]
+    fn pinned_retail_accepts_matching_70783_provenance() {
+        let dir = tempfile::tempdir().unwrap();
+        std::fs::write(
+            dir.path().join(super::super::PROVENANCE_FILE),
+            retail_provenance().unwrap().contents(),
+        )
+        .unwrap();
+
+        assert!(retail_cache_matches(dir.path()));
+    }
+
+    #[test]
+    fn pinned_retail_rejects_stale_70575_provenance() {
+        let dir = tempfile::tempdir().unwrap();
+        let stale_70575 = concat!(
+            "schema=2\nprofile=retail\nproduct=wow\nversion=12.1.5.70575\n",
+            "build_key=d718abcc42604d8efbd35aecfa5bb75b\n",
+            "install_key=8fef5697abe6472c6b9235a2b9f7c9f8\n",
+            "cdn_key=c13b476a09cb3262797a6fdc88103036\n",
+            "gethe_revision=15881d522c44cd106d3d8660106ec9f9d2f44167\n",
+            "manifest_sha256=4c597e051c5162c6b0c33b61ceb7cc9927925e7d59eb938bf6c097a1f8af3e3b\n",
+            "content_index_sha256=b78ed2b10f2b7b5489eb3648d55a7e6099b704d6646c5fb5f241caf3fa8bc096\n",
+            "source=blizzard-cdn-pinned\nfallback=none\n",
+        );
+        std::fs::write(dir.path().join(super::super::PROVENANCE_FILE), stale_70575).unwrap();
+
+        assert!(!retail_cache_matches(dir.path()));
+    }
+
+    #[test]
+    fn pinned_retail_rejects_missing_provenance() {
+        let dir = tempfile::tempdir().unwrap();
+
+        assert!(!retail_cache_matches(dir.path()));
+    }
+
+    #[test]
     fn pinned_ptr_rejects_legacy_provenance_and_accepts_exact_identity() {
         let dir = tempfile::tempdir().unwrap();
         std::fs::write(
