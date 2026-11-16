@@ -2,7 +2,7 @@
 
 The WoW client's Lua library differs from stock Lua 5.1 in the places below. The simulator matches the client, not stock Lua.
 
-Evidence for every row: the 3.3.5a (build 12340) client decompile, read statically by the laptop session on 2026-10-29, and Retail 12.1.5.70575 in-game observations reported in Meorawr/elune issues #10, #11, #12, #15 and #16. The two sources agree. Behaviour in the profiles between those two clients is inferred from that agreement; it has not been observed directly.
+Evidence for every existing row: the 3.3.5a (build 12340) client decompile, read statically by the laptop session on 2026-10-29, and Retail 12.1.5.70575 in-game observations reported in Meorawr/elune issues #10, #11, #12, #15 and #16. The two sources agree. Behaviour in the profiles between those two clients is inferred from that agreement; it has not been observed directly. The secure `string.format` row records a simulator construction-order requirement; exact native positional-format edge rules remain pending R88af.3.
 
 | Function | Required behaviour | Stock Lua / previous simulator |
 |---|---|---|
@@ -11,6 +11,7 @@ Evidence for every row: the 3.3.5a (build 12340) client decompile, read statical
 | `bit.mod(a, b)` | When `b` truncates to zero (`-1 < b < 1`), returns `1 / b`, e.g. `bit.mod(5, 0.5) == 2` and `bit.mod(5, 0) == math.huge`. | Integer modulo by zero |
 | `loadstring(s)` | Skips a leading UTF-8 BOM (`EF BB BF`). A BOM later in the chunk is still a syntax error. | Syntax error |
 | `string.upper` / `string.lower` | Decode UTF-8. Map ASCII letters; U+00C0–U+00DE ↔ U+00E0–U+00FE as a flat 0x20 offset (so × ↔ ÷; ß and ÿ unchanged); U+0410–U+042F ↔ U+0430–U+044F; Ё ↔ ё. Bytes that are not valid UTF-8 are dropped. | Byte-wise C `toupper`/`tolower` |
+| Retail secure `string.format` | Secure and ordinary `string.format` must use the same installed WoW wrapper. It must format the positional `TEXT_MODE_A_STRING_1` template and the plain `TEXT_MODE_A_STRING_TIMESTAMP` template from Retail GlobalStrings. | The wrapper was installed after the secure standard-library shallow copy, so secureenv retained rilua's original parser. Exact native positional edge rules remain UNKNOWN pending R88af.3. |
 
 Out of scope:
 - Addon `.lua` file loading with a BOM. The client path is not established.
@@ -24,3 +25,4 @@ Tests:
 - `loadstring_skips_a_leading_utf8_bom`
 - `case_maps_latin1_and_cyrillic_like_the_client`
 - `rejects_non_string_arguments`
+- `secure_string_format_uses_retail_globalstring_templates`

@@ -403,21 +403,13 @@ pub fn register_layout_fns_on_table(
     crate::lua_api::rect_geometry::register_rect_methods_on_table(state, table)
 }
 
-// ── String format patch ──────────────────────────────────────────────────────
-// Rust implementation lives in `crate::lua_api::string_format` — ported from
-// the master-era mlua module. This stays as a re-export so existing callers
-// continue to work.
-
-pub use crate::lua_api::string_format::patch_string_format;
-
 // ── register_all ─────────────────────────────────────────────────────────────
 
-/// Register all timer, layout, and string-format RustFns on a rilua VM.
+/// Register timer and layout RustFns on a rilua VM.
 ///
 /// - `C_Timer` global table with `After`, `NewTicker`, `NewTimer`.
 /// - `__rilua_layout_fns` global table with the layout query functions
 ///   (caller merges these into the frame metatable as appropriate).
-/// - Patches `string.format` with the WoW-compatible Lua shim.
 ///
 /// # OnUpdate
 ///
@@ -427,7 +419,6 @@ pub use crate::lua_api::string_format::patch_string_format;
 pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     register_c_timer(lua)?;
     register_layout_globals(lua)?;
-    patch_string_format(lua)?;
     Ok(())
 }
 

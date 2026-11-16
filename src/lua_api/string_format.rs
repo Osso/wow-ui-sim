@@ -331,6 +331,33 @@ mod tests {
             .expect("nil numeric args should format as zero");
         assert_eq!(out, "0 0.0 0");
     }
+
+    #[cfg(feature = "client-retail")]
+    #[test]
+    fn secure_string_format_uses_retail_globalstring_templates() {
+        let env = WowLuaEnv::new().expect("env");
+        let (same_function, positional, plain): (bool, String, String) = env
+            .eval(
+                r#"
+                local secure_format = rawget(rawget(__secureenv, "string"), "format")
+                local positional = secure_format(
+                    TEXT_MODE_A_STRING_1,
+                    "source", "spell", "action", "destination", "value", "result",
+                    "school", "power", "amount", "extra", "points"
+                )
+                local plain = secure_format(TEXT_MODE_A_STRING_TIMESTAMP, "time", "line")
+                return rawequal(secure_format, string.format), positional, plain
+                "#,
+            )
+            .expect("secure string.format should use the WoW wrapper");
+
+        assert!(same_function);
+        assert_eq!(
+            positional,
+            "source spell action destination value. result points"
+        );
+        assert_eq!(plain, "time> line");
+    }
 }
 
 /// Parse a WoW-dialect format string: replace `%F` → `%f` and reorder
