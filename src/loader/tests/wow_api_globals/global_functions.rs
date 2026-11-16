@@ -314,7 +314,7 @@ fn test_retail_get_specialization_system_via_cached_unit_util() {
     let path =
         crate::client_profile::blizzard_ui_addons_dir().join("Blizzard_SharedXML/UnitUtil.lua");
     let source = std::fs::read_to_string(path).unwrap();
-    env.eval(&source).unwrap();
+    env.exec(&source).unwrap();
     let passed: bool = env
         .eval(
             r##"
