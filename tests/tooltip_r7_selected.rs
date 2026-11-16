@@ -953,23 +953,19 @@ fn challenges_ui_hover_preserves_affix_slot_order_and_duplicates() {
     input.affix_names.insert(101, Some("Fortified".to_string()));
     input.affix_names.insert(102, Some(String::new()));
     input.affix_names.insert(103, Some("Raging".to_string()));
-    set_slotted_tooltip_input(
-        &env,
-        3,
-        input,
-        vec![
-            (17, 980),
-            (18, 2),
-            (19, 101),
-            (19, 103),
-            (20, 102),
-            (20, 101),
-            (21, 103),
-            (21, 101),
-            (22, 101),
-            (22, 102),
-        ],
-    );
+    let modifiers = vec![
+        (17, 980),
+        (18, 2),
+        (19, 101),
+        (19, 103),
+        (20, 102),
+        (20, 101),
+        (21, 103),
+        (21, 101),
+        (22, 101),
+        (22, 102),
+    ];
+    set_slotted_tooltip_input(&env, 3, input, modifiers);
     let expected = keystone_expected(
         "Map: Affix Map",
         "Keystone Power 2",
