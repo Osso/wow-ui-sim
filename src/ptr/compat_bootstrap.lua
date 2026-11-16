@@ -83,26 +83,6 @@ for _, functionName in ipairs(difficultyColorDelegates) do
   end
 end
 
-if type(FlagsUtil) ~= "table" then
-  FlagsUtil = {}
-end
-
-if type(FlagsUtilConstants) ~= "table" then
-  FlagsUtilConstants = {}
-end
-if rawget(FlagsUtilConstants, "CombineShouldSet") == nil then
-  FlagsUtilConstants.CombineShouldSet = true
-end
-
-if FlagsUtil.IsSet == nil then
-  function FlagsUtil.IsSet(flags, flag)
-    if type(flags) ~= "number" or type(flag) ~= "number" then
-      return false
-    end
-    return bit.band(flags, flag) ~= 0
-  end
-end
-
 if GetSpecializationSystem == nil then
   function GetSpecializationSystem()
     if Enum.SpecializationSystem and Enum.SpecializationSystem.Traits ~= nil then
@@ -138,19 +118,7 @@ if CooldownManagerLayout_SetHiddenGroupBuffs == nil then
   end
 end
 
-if LoadAddOnWithErrorHandling == nil then
-  function LoadAddOnWithErrorHandling(name)
-    return UIParentLoadAddOn(name)
-  end
-end
-
 C_CVar = C_CVar or {}
-if rawget(C_CVar, "AreCVarsLoaded") == nil then
-  function C_CVar.AreCVarsLoaded()
-    return true
-  end
-end
-
 C_CombatAudioAlert = C_CombatAudioAlert or {}
 if rawget(C_CombatAudioAlert, "SpeakText") == nil then
   function C_CombatAudioAlert.SpeakText()
