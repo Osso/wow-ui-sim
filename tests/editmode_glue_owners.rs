@@ -466,13 +466,15 @@ fn assert_print_handler_observation(observation: &PrintHandlerObservation, basel
     assert_counter_install_counts(observation.counters_at_startup, baseline);
     let original_setter = observation.setter_source.contains("Blizzard_PrintHandler/");
     if baseline {
+        eprintln!(
+            "EXPECTED_BASE_DIFFERENCE|setprinthandler|fallback_installed={}|owner_before_caller={}|original_setter={}|caller_registered={}|fallback_calls={}",
+            observation.counters_at_startup.print_install,
+            observation.owner_order,
+            original_setter,
+            observation.caller_registered,
+            observation.counters_at_startup.print_calls,
+        );
         if observation.caller_registered && (!original_setter || !observation.owner_order) {
-            eprintln!(
-                "EXPECTED_BASE_DIFFERENCE|setprinthandler|owner_before_caller={}|original_setter={}|fallback_calls={}",
-                observation.owner_order,
-                original_setter,
-                observation.counters_at_startup.print_calls,
-            );
             assert!(observation.counters_at_startup.print_calls > 0);
         }
     } else {
