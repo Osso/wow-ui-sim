@@ -96,8 +96,6 @@ fn clear_login_state(state: &mut LuaState) -> LuaResult<bool> {
 mod tests {
     use crate::{lua_api::WowLuaEnv, screen::ScreenKind};
 
-    use super::*;
-
     #[test]
     fn disconnect_clears_a_stored_login_error() {
         let env = WowLuaEnv::new().expect("Lua environment");
