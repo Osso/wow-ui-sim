@@ -37,6 +37,8 @@ pub struct KeystoneState {
     pub selected_mode: Option<i32>,
     /// Host-supplied result of the keystone cursor-staging permission gate.
     pub cursor_stage_permission: Option<bool>,
+    /// UNKNOWN (R88z): no native writer for these tooltip backing inputs is modeled.
+    pub slotted_tooltip_input: Option<crate::c_api::SlottedKeystoneTooltipInput>,
     pub item_modifiers: BTreeMap<KeystoneLocation, (u32, Vec<(u32, u32)>)>,
     pub current_map_selector: Option<u32>,
     pub reason_one_locks: BTreeSet<KeystoneLocation>,

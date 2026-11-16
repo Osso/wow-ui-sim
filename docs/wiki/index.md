@@ -5,10 +5,17 @@ The [CASC asset cache](systems/casc-asset-cache.md#blizzard-ui-source-cache) and
 ## [2026-11-15] revision | Retail Blizzard UI 70783 CDN metadata
 
 [Client profiles](systems/client-profiles.md#runtime-cache) links the regenerated Retail 70783 identity and index. The 4,026-path manifest and Retail patch-API cache hashes remain unchanged; the CDN key and one archive location changed. **VERIFIED (local CASC root):** FDID 8547105 remains absent. **VERIFIED (70575 versus 70783 cache bytes):** the selected chat TOC, shared/Mainline FloatingChatFrame sources and GlueParent source are identical. **UNKNOWN:** native Retail Glue Login chat visibility; see the [Glue Login contract](../specs/glue-login-flow.md#r62-retail-chat-evidence-boundary) and follow-up `lt-0de8`.
+## [2026-11-15] revision | Retail keystone selector proof and modifier-17 default
+
+The [Round 7 getter contract](../specs/tooltip-r7-getters.md) and [Lua API](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) record the absent-modifier-17 key-zero lookup and selected-item quality behavior. **VERIFIED (simulator):** supplied key-zero map data selects its title, a confirmed miss uses the generic title, and unsupplied data remains neutral. **VERIFIED (Retail integration executable SHA `2b63b54928c6a545e8fba95e07e0193de77e212c28c31d161c4193c98443c2e4`):** nine contract cases pass through the original ChallengesUI `OnEnter`; one separate test checks the INFERRED quality-color distinction; eight single-defect producer mutations fail at their corresponding consumer assertions, with generic-title and found-empty-name mutations separated. **INFERRED (simulator color mapping):** qualities 4 and 7 produce distinct colors; R88z.z1 does not establish this distinction or the numeric RGB mapping.
+
+## [2026-11-15] implementation | Retail slotted-keystone tooltip rows
+
+The [Round 7 getter contract](../specs/tooltip-r7-getters.md) and [Lua API](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) record R88z.z1. **VERIFIED (Retail 12.1.5.70688):** title, power, optional resilient level, modifier heading, and ordered affix-name rows, with their selectors, keys, colors, and quality field. **VERIFIED (simulator source):** a neutral empty-default host input supplies records and condition results; no native writer or catalog values are invented. **INFERRED:** rows append after common item lines and use the shared quality-color mapping; the native answer proves only relative keystone-row order. **VERIFIED (Retail integration test SHA `0b681a9c80e852303c60f30aa431344a8f88788c`):** eight exact-listed original-consumer cases passed at that earlier revision, including empty host input.
 
 ## [2026-11-15] revision | Recipe-rank cache and keystone tooltip boundaries
 
-[Round 7 getter contract](../specs/tooltip-r7-getters.md) and [Lua API](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) record R88n.4a cache insertion semantics and the modeled keystone selection/event/item-lookup path. **UNKNOWN:** exact keystone detail-row projection and whether recipe ranks use Azerite specialization wording; exact questions are recorded in the contract. The exact detail-row projection remains unmodeled.
+[Round 7 getter contract](../specs/tooltip-r7-getters.md) and [Lua API](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) record R88n.4a cache insertion semantics and the modeled keystone selection/event/item-lookup path. **UNKNOWN:** whether recipe ranks use Azerite specialization wording; the exact question is recorded in the contract.
 
 ## [2026-11-15] system | Retail C_ColorOverrides state
 
