@@ -176,13 +176,13 @@ fn fallback_boundaries_and_source_owners_preserve_consumers() {
     assert_startup_producers(&env);
 
     let addons = load_profile_startup(&env, &ui);
-    env.apply_post_load_workarounds();
     assert_base_toc_order(&ui);
     assert_addon_precedes(&addons, "Blizzard_SharedXMLBase", "Blizzard_FrameXMLBase");
     if ACTIVE != ClientProfile::Mists {
         assert_addon_precedes(&addons, "Blizzard_SharedXML", "Blizzard_TrainerUI");
     }
-
     assert_source_owner_consumers(&env);
+
+    env.apply_post_load_workarounds();
     assert_retail_consumers(&env);
 }
