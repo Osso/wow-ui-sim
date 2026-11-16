@@ -1497,10 +1497,6 @@ disconnectListener:SetScript("OnEvent", function(_, event, ...)
     if event == "AUTO_REALM_SWAP" then entry = entry .. ":" .. tostring(...) end
     table.insert(disconnectEvents, entry)
 end)
-C_StoreSecure = C_StoreSecure or {}
-C_StoreSecure.SetDisconnectOnLogout = function(value)
-    C_StoreGlue._state.disconnectOnLogout = value
-end
 "##;
 
 const RETAIL_PENDING_CONSUMER_SETUP: &str = r##"
