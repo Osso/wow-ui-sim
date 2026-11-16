@@ -94,6 +94,8 @@ fn clear_login_state(state: &mut LuaState) -> LuaResult<bool> {
 
 #[cfg(all(test, feature = "client-retail"))]
 mod tests {
+    use crate::{lua_api::WowLuaEnv, screen::ScreenKind};
+
     use super::*;
 
     #[test]
