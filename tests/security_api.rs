@@ -1178,3 +1178,29 @@ fn forever_original_secure_map_rejects_vm_secret_keys_and_values() {
         assert(map:GetValue('public') == 19)
     "#).unwrap();
 }
+
+// R88ae.4: execution taint is not the value-slot secret marker.
+#[cfg(feature = "client-retail")]
+#[test]
+fn retail_tainted_callmethod_keeps_plain_strings_public() {
+    let env = env();
+    env.exec(
+        r#"
+        local owner = CreateFrame("Frame")
+        function owner:Echo(value)
+            assert(not issecretvalue(value), "plain argument became secret")
+            return value, "plain-method-result", nil
+        end
+        local payload = "plain-method-argument"
+        debug.settaintmode("rw")
+        debug.setstacktaint("lt-3b33-addon")
+        local echoed, result, trailing = owner:CallMethod("Echo", payload)
+        debug.setstacktaint(nil)
+        assert(echoed == payload and result == "plain-method-result" and trailing == nil)
+        assert(not issecretvalue(payload), "argument identity was poisoned")
+        assert(not issecretvalue(echoed), "echoed argument became secret")
+        assert(not issecretvalue(result), "plain result became secret")
+    "#,
+    )
+    .unwrap();
+}
