@@ -748,7 +748,7 @@ mod tests {
 
         env.exec("rawset(C_Ping, 'GetDefaultPingOptions', function() return 'late' end)")
             .expect("replace ordinary flag-3 namespace member");
-        env.set_screen_mode(ScreenKind::CharacterSelect);
+        env.set_screen_mode(ScreenKind::Game);
         let replaced_flag3: (bool, bool, String, String) = env
             .eval(
                 r#"
