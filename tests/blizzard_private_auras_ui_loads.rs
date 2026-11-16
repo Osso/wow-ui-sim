@@ -273,6 +273,9 @@ fn load_full_game_ui() -> WowLuaEnv {
         eprintln!("[secure-store-trace] GetProductGroups disappeared after post-load workarounds");
     }
     fire_startup_events_for_screen(&env, ScreenKind::Game);
+    if secure_store_available && !secure_store_product_groups_is_available(&env) {
+        eprintln!("[secure-store-trace] GetProductGroups disappeared during startup events");
+    }
 
     env
 }
