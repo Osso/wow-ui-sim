@@ -29,7 +29,15 @@ fn register_ui_strings(
 ) -> crate::Result<()> {
     let state = lua.state_mut();
     let global = Val::Table(state.global);
-    register_global_strings(state, global, existing_policy);
+    let secure_global =
+        if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+            Some(Val::Table(
+                crate::lua_api::globals::security::secure_env_table(state)?,
+            ))
+        } else {
+            None
+        };
+    register_global_strings(state, global, secure_global, existing_policy);
     register_integer_constants(state, global, existing_policy);
     register_float_constants(state, global, existing_policy);
     register_string_constants(state, global, existing_policy);
@@ -39,6 +47,7 @@ fn register_ui_strings(
 fn register_global_strings(
     state: &mut LuaState,
     global: Val,
+    secure_global: Option<Val>,
     existing_policy: ExistingGlobalPolicy,
 ) {
     for (name, value) in crate::global_strings::GLOBAL_STRINGS.entries() {
@@ -55,6 +64,10 @@ fn register_global_strings(
         let resolved = resolve_lua_escapes(value);
         let lua_value = create_string(state, &resolved);
         table_set(state, global, name, lua_value);
+        if let Some(secure_global) = secure_global {
+            // INFERRED (R88ac.ac2): the PHF source has no native Flags field.
+            table_set(state, secure_global, name, lua_value);
+        }
     }
 }
 
@@ -155,6 +168,7 @@ mod tests {
     #[test]
     fn ui_string_restore_preserves_all_non_nil_values_and_fills_deleted_keys() {
         let mut lua = rilua::Lua::new().unwrap();
+        crate::lua_api::globals::security::create_secure_environment(&mut lua).unwrap();
         register_all_ui_strings(&mut lua).unwrap();
         lua.exec(
             r#"
@@ -185,6 +199,7 @@ mod tests {
     #[test]
     fn ui_string_replace_preserves_functions_only_on_forever() {
         let mut lua = rilua::Lua::new().unwrap();
+        crate::lua_api::globals::security::create_secure_environment(&mut lua).unwrap();
         lua.exec(
             r#"
             ACCEPT = function() return 'custom' end
@@ -207,6 +222,7 @@ mod tests {
     #[test]
     fn ui_string_registration_reads_raw_globals_without_index_callbacks() {
         let mut lua = rilua::Lua::new().unwrap();
+        crate::lua_api::globals::security::create_secure_environment(&mut lua).unwrap();
         lua.exec(
             r#"
             IndexCalls = 0

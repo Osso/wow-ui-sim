@@ -1,3 +1,7 @@
+## [2026-11-15] inferred | Retail GlobalStrings secure mirror
+
+The [taint system](systems/taint-system.md#dual-lua-environment) and [add-on load-phase contract](../specs/addon-load-phases.md#r88ac-globalstrings-secure-publication) record R88ac.ac2. **VERIFIED (native Retail 12.1.5.70688):** accepted GlobalStrings records write to both `_G` and the shared secure table under the Game/Glue Flags mask. **INFERRED (simulator source):** the Retail PHF map omits Flags, so its current rows are mirrored; no per-name flag claim is made, including for `RAID_TARGET_1`. No test asserts this inferred row set.
+
 ## [2026-11-15] system | Retail Constants.* secure publication
 
 Updated the [taint system](systems/taint-system.md#dual-lua-environment) and [add-on load-phase contract](../specs/addon-load-phases.md#r88t-secure-dependency-and-named-publication-routes). **VERIFIED (native Retail 12.1.5.70688, R88t.t2):** `Constants.*` tables use a no-flag secure-publication route. **VERIFIED (simulator source, commit `49e4d091d`):** Retail publishes generated constants data to secureenv while keeping missing and compatibility datasets ordinary-only. **UNVERIFIED:** the new `InventoryConstants` consumer test and final gates on this commit.

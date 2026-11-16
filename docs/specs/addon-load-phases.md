@@ -53,6 +53,11 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 - [x] VERIFIED (Retail 12.1.5.70688, R88t): when ordinary and secure `UIParent` names are empty, both receive the same frame-table object through the Retail named-frame policy.
 - [ ] VERIFIED (Retail 12.1.5.70688, R88t): the Retail UIParent bootstrap uses named-frame policy flag 32 and each destination preserves an existing non-nil name.
 
+### R88ac GlobalStrings secure publication
+
+- [ ] VERIFIED (Retail 12.1.5.70688, R88ac.ac2): each GlobalStrings record whose preparation succeeds and whose Flags contain all bits in the active mask writes its name and value to ordinary `_G` and the separately referenced shared secure table. Game uses mask 1; Glue uses mask 2.
+- [ ] INFERRED simulator policy (R88ac.ac2): the committed Retail GlobalStrings PHF map stores no Flags, so Retail mirrors every map row that the existing registration writes to `_G`. This does not prove per-name mask membership; `RAID_TARGET_1` remains INFERRED.
+
 ### `LoadWith` followers
 
 - [x] VERIFIED (Retail 12.1.5.70688; Forever 1.60.1.70707): each `LoadWith` declaration joins the declaring addon to each named target's follower vector; resolution does not load the target or filter followers by enabled state, phase, origin, or `INSECURE`.
@@ -84,6 +89,7 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 - `src/loader/addon.rs` — orders ordinary and secure dependency requests.
 - `src/loader/lua_file.rs`, `src/loader/xml_file.rs`, `src/lua_api/loader_env.rs`, `src/lua_api/globals/security/secure_env.rs` — execute secure files through the shared table and retain private replay only for selected replay paths and generated XML loader chunks.
 - `src/lua_api/env_init/enums.rs` — registers `Enum` values and the Retail `Constants.*` secure-table publication path.
+- `src/lua_api/globals/strings/mod.rs` — registers PHF GlobalStrings rows in ordinary globals and applies the inferred Retail secure mirror.
 - `src/lua_api/env_init/mod.rs`, `src/lua_api/env_runtime.rs` — install pre-copy library aliases and rerun verified publication after screen-specific registrations.
 - `src/lua_api/globals/real/math_extensions.rs`, `src/lua_api/globals/real/string_extensions.rs`, and `src/lua_api/globals/real/table_extensions.rs` — register implemented library extensions; R88y publication routes their verified flags. The Retail secure `table.count` handler retains the separately verified R88t identity.
 - `src/lua_api/workarounds/temporary/formatting_utility_defaults.rs` — applies the colon-split compatibility method outside Retail 12.1.5.
