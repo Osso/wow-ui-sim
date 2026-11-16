@@ -355,6 +355,7 @@ mod c_trade_skill_source;
 pub(crate) mod mists_reputation_list;
 #[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
 pub mod spell_reagent_inventory;
+pub mod store_catalog_model;
 pub mod store_glue_model;
 pub mod store_guid;
 // The pinned classic TransmogItemsDocumentation.lua / TransmogOutfitInfoDocumentation.lua
