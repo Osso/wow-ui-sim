@@ -98,9 +98,16 @@ const CREATE_SECURE_REPLAY_ENV_LUA: &str = r##"
         secureenv[key] = value
     end
 
+    local replayControlGlobals = {
+        _G = true,
+        rawget = true,
+        rawset = true,
+        pairs = true,
+        next = true,
+    }
+
     local function isReplayControlGlobal(key)
-        return key == "_G" or key == "rawget" or key == "rawset"
-            or key == "pairs" or key == "next"
+        return replayControlGlobals[key] == true
     end
 
     local function replayValue(key)
