@@ -18,7 +18,6 @@ original(FlagsUtil.IsSet, 'Blizzard_SharedXMLBase/Flags.lua')
 original(FlagsMixin.IsSet, 'Blizzard_SharedXMLBase/Flags.lua')
 assert(FlagsUtil.IsSet(3, 1) == true)
 assert(FlagsUtil.IsSet(3, 5) == false)
-assert(FlagsUtilConstants.CombineShouldSet == true)
 original(CreateTemplateInfoCache, 'Blizzard_SharedXMLBase/TemplateInfoCache.lua')
 original(CreateFrameFactory, 'Blizzard_SharedXMLBase/FrameFactory.lua')
 local factory = CreateFrameFactory()
@@ -122,6 +121,10 @@ fn assert_startup_producers(env: &WowLuaEnv) {
 fn assert_source_owner_consumers(env: &WowLuaEnv) {
     env.exec(SOURCE_OWNER_CONSUMER_LUA)
         .expect("original SharedXML owners must serve their consumers");
+    if ACTIVE != ClientProfile::Mists {
+        env.exec("assert(FlagsUtilConstants.CombineShouldSet == true)")
+            .expect("selected Flags.lua owner publishes CombineShouldSet");
+    }
 }
 
 fn assert_retail_consumers(env: &WowLuaEnv) {
