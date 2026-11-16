@@ -45,6 +45,8 @@ const RUNEFORGE_USAGE: &str = concat!(
 const KEYSTONE_ITEM_CLASS_ID: u32 = 5;
 const KEYSTONE_ITEM_SUBCLASS_ID: u32 = 1;
 const KEYSTONE_MAP_MODIFIER_TYPE: u32 = 17;
+/// VERIFIED (R88z.z1): an absent type-17 modifier selects map lookup key zero.
+const KEYSTONE_MAP_MODIFIER_DEFAULT: u32 = 0;
 const KEYSTONE_LEVEL_MODIFIER_TYPE: u32 = 18;
 const KEYSTONE_AFFIX_MODIFIER_TYPES: [u32; 4] = [19, 20, 21, 22];
 const KEYSTONE_MAP_TITLE_KEY: &str = "CHALLENGE_MODE_KEYSTONE_NAME";
@@ -630,9 +632,8 @@ fn selected_keystone_title(
     input: &SlottedKeystoneTooltipInput,
     modifiers: &[(u32, u32)],
 ) -> LuaResult<Option<String>> {
-    let Some(map_id) = first_item_modifier(modifiers, KEYSTONE_MAP_MODIFIER_TYPE) else {
-        return Ok(None);
-    };
+    let map_id = first_item_modifier(modifiers, KEYSTONE_MAP_MODIFIER_TYPE)
+        .unwrap_or(KEYSTONE_MAP_MODIFIER_DEFAULT);
     let Some(map_record) = input.map_names.get(&map_id) else {
         return Ok(None);
     };
