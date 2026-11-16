@@ -108,7 +108,7 @@ fn blizzard_communities_secure_dialog_frames_are_defined(env: &WowLuaEnv) {
         .eval(
             r#"
             local secure = __secureenv
-            local dialog = rawget(secure, "CommunitiesAddDialog")
+            local dialog = rawget(secure, "CommunitiesCreateDialog")
             local description = type(dialog) == "table" and dialog.DescriptionFrame or nil
             return type(_G.CommunitiesAddDialog) == "table"
                     and CommunitiesAddDialog:GetParent() == UIParent,
@@ -124,8 +124,8 @@ fn blizzard_communities_secure_dialog_frames_are_defined(env: &WowLuaEnv) {
     assert_eq!(
         frames_present,
         (true, true, true, true),
-        "CommunitiesAddDialog must set up its InputScrollFrame DescriptionFrame in secureenv; \
-         generated XML still needs the snapshot-only debug global"
+        "CommunitiesCreateDialog must set up its InputScrollFrame DescriptionFrame in secureenv; \
+         debug must remain ordinary-only"
     );
 }
 }

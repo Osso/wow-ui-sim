@@ -114,7 +114,7 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 - `src/c_api/c_addons_runtime_tests.rs`
 - `tests/secureenv_isolation.rs` — separate loaded states, dependency request order/failure continuation, verified Retail `LE_GAME_*` secure values, and the one-file source-location consumer.
 - `tests/blizzard_frame_xml_loads.rs` — the original `UIErrorsFrame` consumes a modeled Retail `LE_GAME_*` numeric value.
-- `tests/blizzard_communities_secure_loads.rs` — verifies secure Communities `InputScrollFrame` setup and that `debug` stays out of `__secureenv`.
+- `tests/blizzard_communities_secure_loads.rs` — verifies `CommunitiesCreateDialog.DescriptionFrame` `InputScrollFrame` setup and that `debug` stays out of `__secureenv`.
 - `tests/blizzard_private_auras_ui_loads.rs` — the original FrameFactory/Pools, AccountUtil, ColorManager, GameRulesUtil, RaidWarning XML, and PrivateAurasTooltip consumers.
 - `src/c_api/secure_publication.rs` — verified-only R88y routing, absent implementations, and late flag-3 registration after screen changes.
 - `src/c_api/helpers.rs` and `src/lua_api/globals/security/secure_env.rs` — separate flag-3 C-function objects; the latter also tests pre-copy library aliases and shallow-copy identity.
