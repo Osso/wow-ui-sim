@@ -2606,7 +2606,7 @@ mod storeglue_r88q_host {
     }
 
     #[test]
-    fn shared_boolean_writers_drive_original_glue_show_and_update() {
+    fn shared_boolean_writers_drive_original_glue_update() {
         test_timeout! {
             if !r88q_profile_active() { return; }
             let env = fixture();
