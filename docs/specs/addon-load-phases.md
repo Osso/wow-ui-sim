@@ -29,6 +29,7 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 - [ ] Keep the temporary private snapshot only for explicit `SecureReplay` and generated XML loader paths in this cycle. After the original fallback-disabled PrivateAuras consumer passes, remove that bridge in its own commit; inherited-only values must not enter `__secureenv`.
 - [ ] VERIFIED — Retail 12.1.5.70688 R88y.y1: use only the 6,554 VERIFIED rows from the pinned 6,763-row CSV (`3a8922d84756171f666fe79b61068d3344ce2db866250dede1de384fa9878f82`). Apply flags 1/2/3/6/7 to existing simulator functions only; keep absent implementations absent and exclude 209 INFERRED rows. Preserve each row's Game/Glue/both context; existing screen-aware registrars decide which members exist. Run publication after bootstrap and after screen registration so late or replaced flag-3 handlers reach secureenv. The additional actions for flags 6 and 7 remain UNKNOWN.
 - [ ] VERIFIED — Retail 12.1.5.70688 R88y.y2: install `string.concat`, `string.split`, and `string.join` from the existing `strconcat`, `strsplit`, and `strjoin` handlers before secure table-copy construction. Keep `fastrandom` on the existing base `math.random` handler and out of the secure base; leave the simulator's current `math.random` handler unchanged and do not assert random outputs. Keep `table.join` absent.
+- [ ] SIMULATOR POLICY — Retail 12.1.5: after bootstrap, the ordinary and secure `string` library tables preserve the verified alias identities. A simulator-only colon-split compatibility method must not replace Retail `string.split`; keep that helper on profiles without this R88y evidence.
 - [ ] VERIFIED — Retail 12.1.5.70688 R88y.y3: on successful `SwapToGlobalEnvironment`, change the caller function environment to ordinary `_G` and return zero values. Preserve the conditional XML `addToSecureEnv` named-frame route. Do not add blanket global copying; `securecopy` behavior and frame-callback access remain UNKNOWN.
 - [x] `C_AddOns.LoadAddOn` must attempt optional dependencies before required dependencies.
 - [x] An optional dependency failure must not stop the requested addon from loading.
@@ -78,6 +79,7 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 - `src/lua_api/env_init/enums.rs` — publishes the four verified `Constants.AccountStoreConsts` values.
 - `src/lua_api/env_init/mod.rs`, `src/lua_api/env_runtime.rs` — install pre-copy library aliases and rerun verified publication after screen-specific registrations.
 - `src/lua_api/globals/real/math_extensions.rs`, `src/lua_api/globals/real/string_extensions.rs`, and `src/lua_api/globals/real/table_extensions.rs` — register implemented library extensions; R88y publication routes their verified flags. The Retail secure `table.count` handler retains the separately verified R88t identity.
+- `src/lua_api/workarounds/temporary/formatting_utility_defaults.rs` — applies the colon-split compatibility method outside Retail 12.1.5.
 - `src/lua_api/globals/security/environment.rs`, `src/loader/tests/inline_script.rs` — implement and test the verified SwapToGlobalEnvironment and XML addToSecureEnv routes.
 - `src/lua_api/globals/create_frame/mod.rs` — publishes the built-in `UIParent` name to secureenv.
 - `src/lua_api/env_init/shared_bootstrap.lua` — retains the private `GetForbiddenObjectTable` closure while the verified flag-6 global is secure-only.
@@ -98,6 +100,7 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 - `tests/blizzard_private_auras_ui_loads.rs` — the original FrameFactory/Pools, AccountUtil, ColorManager, GameRulesUtil, and PrivateAurasTooltip consumers.
 - `src/c_api/secure_publication.rs` — verified-only R88y routing, absent implementations, and late flag-3 replacement after screen registration.
 - `src/lua_api/globals/security/secure_env.rs` — pre-copy string aliases, shallow library copies, and random-handler identity/membership.
+- `src/lua_api/workarounds/temporary/formatting_utility_defaults.rs` — verifies defaults reapplication preserves Retail `string.split` identity.
 - `src/lua_api/globals/security/environment.rs` — successful `SwapToGlobalEnvironment` changes caller environment and returns zero values.
 - `src/lua_api/globals/real/table_extensions.rs` — separate ordinary/secure `table.count` handlers.
 - `src/loader/tests/inline_script.rs` — conditional XML `addToSecureEnv` named-frame publication.
