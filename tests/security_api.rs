@@ -1180,7 +1180,7 @@ fn forever_original_secure_map_rejects_vm_secret_keys_and_values() {
 }
 
 // R88ae.4: execution taint is not the value-slot secret marker.
-#[cfg(feature = "client-retail")]
+#[cfg(feature = "profile-retail")]
 #[test]
 fn retail_tainted_callmethod_keeps_plain_strings_public() {
     let env = env();
