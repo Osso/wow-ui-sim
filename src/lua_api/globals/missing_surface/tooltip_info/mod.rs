@@ -236,7 +236,7 @@ pub(crate) fn spell_description_text(state: &LuaState, spell_id: u32) -> String 
     spell::resolved_spell_description(state, spell_id)
 }
 
-/// Item quality colour, shared by item and conduit composition.
+/// Item quality color shared by item names, conduit rows, and keystone titles.
 pub(crate) fn item_quality_color(quality: u8) -> (f64, f64, f64) {
     builders::item_quality_color(quality)
 }
@@ -456,11 +456,6 @@ pub(crate) fn format_global_text(
 /// Pinned named color as RGB, or `None` when the global is absent.
 pub(crate) fn named_color(state: &mut LuaState, key: &str) -> Option<(f64, f64, f64)> {
     builders::global_color(state, key.as_bytes())
-}
-
-/// Reuse the shared item-name quality mapping for item-backed tooltip rows.
-pub(crate) fn item_quality_color(quality: u8) -> (f64, f64, f64) {
-    builders::item_quality_color(quality)
 }
 
 /// Pinned global string value, or `None` when the global is absent.
