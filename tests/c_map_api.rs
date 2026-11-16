@@ -4,6 +4,8 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 
 #[path = "c_map_api/texture.rs"]
 mod texture;
+#[path = "tooltip_full_env_helpers.rs"]
+mod tooltip_full_env_helpers;
 
 fn env() -> WowLuaEnv {
     WowLuaEnv::new().expect("Failed to create Lua environment")
@@ -1124,7 +1126,7 @@ fn test_get_minimap_zone_text() {
 
 #[test]
 fn test_ui_map_point_create_from_vector() {
-    let env = env();
+    let env = tooltip_full_env_helpers::load_full_env_without_post_load();
     env.exec(
         r#"
         local pos = {x = 0.5, y = 0.5, GetXY = function(self) return self.x, self.y end}
@@ -1138,7 +1140,7 @@ fn test_ui_map_point_create_from_vector() {
 
 #[test]
 fn test_ui_map_point_create_from_coordinates() {
-    let env = env();
+    let env = tooltip_full_env_helpers::load_full_env_without_post_load();
     env.exec(
         r#"
         local point = UiMapPoint.CreateFromCoordinates(2, 0.3, 0.7)
