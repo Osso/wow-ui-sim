@@ -144,11 +144,9 @@ fn visibility_info_rejects_tainted_secret_arguments_with_native_text() {
     assert_eq!(actual, expected);
 }
 
-#[test]
-fn visibility_info_errors_match_mists_contract() {
-    let env = WowLuaEnv::new().expect("Mists C API should initialize");
+fn visibility_error_cases() -> [(&'static str, String); 6] {
     let usage = VISIBILITY_USAGE;
-    for (call, expected) in [
+    [
         (
             "C_Spell.GetVisibilityInfo()",
             format!("bad argument #1 to 'C_Spell.GetVisibilityInfo' ({usage})"),
@@ -173,7 +171,13 @@ fn visibility_info_errors_match_mists_contract() {
             "C_Spell.GetVisibilityInfo(1, 2147483648)",
             "bad argument #2 to 'C_Spell.GetVisibilityInfo' (integer overflow attempting to store 2147483648.000000)".into(),
         ),
-    ] {
+    ]
+}
+
+#[test]
+fn visibility_info_errors_match_mists_contract() {
+    let env = WowLuaEnv::new().expect("Mists C API should initialize");
+    for (call, expected) in visibility_error_cases() {
         assert_eq!(read_lua_error(&env, call), expected, "{call}");
     }
 }
