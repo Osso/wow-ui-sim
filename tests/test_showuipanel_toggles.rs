@@ -762,9 +762,21 @@ fn assert_achievement_toggle_loads_on_forever(env: &WowLuaEnv) {
 }
 
 fn assert_achievement_panel_toggles(env: &WowLuaEnv) {
-    let result: String = env
-        .eval(
-            r#"
+    let result = achievement_panel_toggle_result(env);
+    assert_eq!(
+        result, "ok",
+        "ToggleAchievementFrame() should open and close the achievement panel: {result}"
+    );
+    assert_retail_provider(
+        env,
+        "AchievementFrame_ToggleAchievementFrame",
+        "Blizzard_AchievementUI/Mainline/Blizzard_AchievementUI.lua",
+    );
+}
+
+fn achievement_panel_toggle_result(env: &WowLuaEnv) -> String {
+    env.eval(
+        r#"
             if not ToggleAchievementFrame then
                 return "missing_toggle_achievement_frame"
             end
@@ -781,17 +793,8 @@ fn assert_achievement_panel_toggles(env: &WowLuaEnv) {
 
             return "ok"
         "#,
-        )
-        .unwrap();
-    assert_eq!(
-        result, "ok",
-        "ToggleAchievementFrame() should open and close the achievement panel: {result}"
-    );
-    assert_retail_provider(
-        env,
-        "AchievementFrame_ToggleAchievementFrame",
-        "Blizzard_AchievementUI/Mainline/Blizzard_AchievementUI.lua",
-    );
+    )
+    .unwrap()
 }
 
 post_wrath_ui_fixture! {
