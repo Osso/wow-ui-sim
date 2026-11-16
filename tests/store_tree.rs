@@ -262,7 +262,7 @@ fn store_open_does_not_record_store_state_errors_or_connecting_notice(env: &WowL
         .eval(
             r#"
             StoreFrame:Show()
-            C_StoreSecure.GetProductList()
+            __secureenv.C_StoreSecure.GetProductList()
             return StoreFrame.Notice:IsShown(),
                 StoreFrame.Notice.Title:GetText(),
                 StoreFrame.Notice.Description:GetText()
@@ -496,7 +496,7 @@ fn store_product_card_buy_button_click_completes_without_store_upvalue_error(env
         .eval(
             r#"
             StoreFrame:Show()
-            C_StoreSecure.GetProductList()
+            __secureenv.C_StoreSecure.GetProductList()
             local button
             for activeCard in StoreFrame.productCardPoolCollection:EnumerateActive() do
                 if activeCard.BuyButton then
