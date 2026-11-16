@@ -20,7 +20,7 @@ assert(FlagsUtil.IsSet(3, 1) == true)
 assert(FlagsUtil.IsSet(3, 5) == false)
 assert(FlagsUtilConstants.CombineShouldSet == true)
 original(CreateTemplateInfoCache, 'Blizzard_SharedXMLBase/TemplateInfoCache.lua')
-original(FrameFactoryMixin.Init, 'Blizzard_SharedXMLBase/FrameFactory.lua')
+original(CreateFrameFactory, 'Blizzard_SharedXMLBase/FrameFactory.lua')
 local factory = CreateFrameFactory()
 assert(factory:GetTemplateInfoCache():GetTemplateInfos() ~= nil)
 if type(LoadAddOnWithErrorHandling) == 'function' then
