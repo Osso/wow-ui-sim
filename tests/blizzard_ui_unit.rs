@@ -94,21 +94,9 @@ fn original_color_manager_bag_quality_uses_default_without_override() {
 
 #[test]
 fn original_color_manager_tracks_globalcolor_defaults_and_color_overrides() {
-    let env = load_color_override_consumer_env();
+    let env = tooltip_full_env_helpers::load_full_env_without_post_load();
     env.exec(COLOR_OVERRIDE_CONSUMER_LUA)
         .expect("Retail ColorManager must publish GlobalColor defaults and supplied overrides");
-}
-
-fn load_color_override_consumer_env() -> wow_ui_sim::lua_api::WowLuaEnv {
-    let red_adapter = std::env::var("WOW_SIM_COLOR_OVERRIDES_RED").as_deref() == Ok("1");
-    tooltip_full_env_helpers::load_full_env_without_post_load_with_addon_hook(
-        move |env, addon_name| {
-            if red_adapter && addon_name == "Blizzard_Colors" {
-                env.exec("C_ColorOverrides.GetDefaultColorForQuality = nil")
-                    .expect("RED adapter should remove the producer before ColorManager loads");
-            }
-        },
-    )
 }
 
 fn open_character_panel(env: &wow_ui_sim::lua_api::WowLuaEnv) {
