@@ -1,6 +1,10 @@
-## [2026-11-16] system | Retail Glue login lifecycle
+## [2026-11-16] verification | Retail Glue login verifier remediation
 
-Created [the Retail Glue login lifecycle page](systems/glue-login-lifecycle.md) and updated the [consumer-selection investigation](investigations/consumer-selection-and-red-proof.md) and [Glue login contract](../specs/glue-login-flow.md). **VERIFIED (Retail 12.1.5.70783 runtime):** both original CharacterSelect consumers pass with the producers and fail at their original calls under the registration mutation; the full state-cleanup unit test passes. The five-profile compile matrix has zero warnings. The StoreGlue missing-Disconnect expected-error boundary is retired; its exact replacement test passes. Native 70688 cache equivalence and the initial completion-state value remain UNKNOWN.
+Updated the [consumer-selection investigation](investigations/consumer-selection-and-red-proof.md), [lifecycle system page](systems/glue-login-lifecycle.md), [Glue login contract](../specs/glue-login-flow.md), and this index. **VERIFIED (current selector mutation runs):** separate no-op Disconnect and constant-true pending-getter mutations fail the revised, unchanged original-consumer tests; both selectors have exact list/run receipts with executable, dylib, and CVar hashes. Test-source SHA-256 is `3f2d0795487c09b813fe1114cc3dd787f863c8d44a390b53df3adcbc1acf0d48`. The earlier P1 baseline executable/HEAD mismatch is retained but not counted as current-candidate proof. **PENDING:** unmutated GREEN runs, five-profile zero-warning matrix, and Retail `lua-errors` result.
+
+## [2026-11-16] system | Retail Glue login lifecycle — previous candidate evidence
+
+Created [the Retail Glue login lifecycle page](systems/glue-login-lifecycle.md). **VERIFIED (previous candidate, Retail 12.1.5.70783 runtime):** the original CharacterSelect consumers passed with their producers and failed inside original calls under a registration mutation; the full state-cleanup unit test passed; the five-profile compile matrix had zero warnings; and the StoreGlue missing-Disconnect expected-error boundary was replaced by a passing exact consumer test. This older test source does not replace the current verifier remediation gates. Native 70688 cache equivalence and the initial completion-state value remain UNKNOWN.
 
 ## [2026-11-15] revision | Retail Blizzard UI 70783 CDN metadata
 

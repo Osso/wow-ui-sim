@@ -1,6 +1,10 @@
+## [2026-11-16] verification | Retail Glue login verifier remediation
+
+**VERIFIED (current selector mutation runs):** the revised direct-screen, connection-state, and pending-list tests reject independent no-op Disconnect and constant-true pending-getter producers; see [consumer selection and RED proof](investigations/consumer-selection-and-red-proof.md#retail-glue-login-consumers-and-pending-list-cache-call-site-r88aa) for exact source and manifest hashes. **PENDING:** unmutated GREEN tests and the final profile matrix.
+
 ## [2026-11-16] system | Retail Glue login lifecycle
 
-**VERIFIED (Retail 12.1.5.70783 runtime):** [Retail Glue login lifecycle](systems/glue-login-lifecycle.md) records the two Glue-only producers, their state transitions, original-consumer RED/GREEN evidence, and the remaining native cache/default-state boundaries.
+[Retail Glue login lifecycle](systems/glue-login-lifecycle.md) records the two Glue-only producers, state transitions, prior-candidate original-consumer RED/GREEN and cleanup evidence, current selector-specific RED, and the remaining native cache/default-state boundaries.
 
 ## [2026-11-15] investigation | INFERRED Retail pending-list caller
 
