@@ -811,7 +811,7 @@ The zero-return policy is inferred and is not asserted.
 ## R88aa Retail Glue API contract
 
 - [x] **VERIFIED (R88aa and Retail consumer tests):** `C_Login.DisconnectFromServer` is callable with no arguments, returns zero values, and is available only on Glue; the original `OnShow` consumer exercises it. The test checks event order, conditional launcher notification, and Game-scope removal.
-- [ ] **VERIFIED (R88aa; internal cleanup test awaits its final build/run):** disconnect clears Aurora, realm-list, stored login-error, pending-connection, connection-info, and connected state.
+- [x] **VERIFIED (R88aa and Retail state-cleanup unit test):** disconnect clears Aurora, realm-list, stored login-error, pending-connection, connection-info, and connected state.
 - [x] **VERIFIED (R88aa and Retail consumer test):** Glue exposes `_G.IsCharacterListUpdatePending`, not a `C_Login` member. It reads no arguments, returns one Boolean, and makes the original queue-status consumer defer at state 0 and proceed after completion.
 - [x] **VERIFIED (R88aa and Retail consumer test):** the retrieval event has no payload; the original consumer distinguishes pending from completed list state. Native R88aa orders the completion writes 0 then 1 before `CHARACTER_LIST_UPDATE`.
 
@@ -828,6 +828,5 @@ The zero-return policy is inferred and is not asserted.
 
 ### Known gaps (current cycle)
 
-- [ ] Build and run the Retail-only unit test for full disconnect state cleanup.
 - [ ] Native initial completion-state value and reset writers outside the modeled login/request/response path remain UNKNOWN.
 - [ ] The exact Retail 70688 Lua cache selection is UNKNOWN; the active local cache is 12.1.5.70783.

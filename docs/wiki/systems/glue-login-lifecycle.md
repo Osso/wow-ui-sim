@@ -18,7 +18,7 @@
 2. `LAUNCHER_LOGIN_STATUS_CHANGED` with no arguments when cancellation was not already recorded.
 3. `LOGIN_STATE_CHANGED` with no arguments.
 
-**VERIFIED (simulator source):** the clear operation sets the Aurora state to 1, removes realm-list availability, resets connection-info input, clears the pending login step and connected flag, and removes a stored login error. `RetailGlueState::default` starts the cancellation marker as false. That local default and any native reset writer remain **UNKNOWN** beyond the R88aa evidence.
+**VERIFIED (simulator source and Retail state-cleanup unit test):** the clear operation sets the Aurora state to 1, removes realm-list availability, resets connection-info input, clears the pending login step and connected flag, and removes a stored login error. `RetailGlueState::default` starts the cancellation marker as false. That local default and any native reset writer remain **UNKNOWN** beyond the R88aa evidence.
 
 ### Character-list pending state
 

@@ -1,6 +1,6 @@
 ## [2026-11-16] system | Retail Glue login lifecycle
 
-Created [the Retail Glue login lifecycle page](systems/glue-login-lifecycle.md) and updated the [consumer-selection investigation](investigations/consumer-selection-and-red-proof.md) and [Glue login contract](../specs/glue-login-flow.md). **VERIFIED (Retail 12.1.5.70783 runtime):** both original CharacterSelect consumers pass with the producers and fail at their original calls under the registration mutation. The StoreGlue missing-Disconnect expected-error boundary is retired; its exact replacement test passes. Native 70688 cache equivalence and the initial completion-state value remain UNKNOWN.
+Created [the Retail Glue login lifecycle page](systems/glue-login-lifecycle.md) and updated the [consumer-selection investigation](investigations/consumer-selection-and-red-proof.md) and [Glue login contract](../specs/glue-login-flow.md). **VERIFIED (Retail 12.1.5.70783 runtime):** both original CharacterSelect consumers pass with the producers and fail at their original calls under the registration mutation; the full state-cleanup unit test passes. The five-profile compile matrix has zero warnings. The StoreGlue missing-Disconnect expected-error boundary is retired; its exact replacement test passes. Native 70688 cache equivalence and the initial completion-state value remain UNKNOWN.
 
 ## [2026-11-15] revision | Retail Blizzard UI 70783 CDN metadata
 
