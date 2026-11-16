@@ -1,6 +1,10 @@
+## [2026-11-15] implementation | Retail slotted-keystone tooltip rows
+
+The [Round 7 getter contract](../specs/tooltip-r7-getters.md) and [Lua API](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) record R88z.z1. **VERIFIED (Retail 12.1.5.70688):** title, power, optional resilient level, modifier heading, and ordered affix-name rows, with their selectors, keys, colors, and quality field. **VERIFIED (simulator source):** a neutral empty-default host input supplies records and condition results; no native writer or catalog values are invented. **INFERRED:** rows append after common item lines and use the shared quality-color mapping; the native answer proves only relative keystone-row order.
+
 ## [2026-11-15] revision | Recipe-rank cache and keystone tooltip boundaries
 
-[Round 7 getter contract](../specs/tooltip-r7-getters.md) and [Lua API](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) record R88n.4a cache insertion semantics and the modeled keystone selection/event/item-lookup path. **UNKNOWN:** exact keystone detail-row projection and whether recipe ranks use Azerite specialization wording; exact questions are recorded in the contract. The exact detail-row projection remains unmodeled.
+[Round 7 getter contract](../specs/tooltip-r7-getters.md) and [Lua API](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) record R88n.4a cache insertion semantics and the modeled keystone selection/event/item-lookup path. **UNKNOWN:** whether recipe ranks use Azerite specialization wording; the exact question is recorded in the contract.
 
 ## [2026-11-15] investigation | ShowUIPanel toggle fixture owners
 
