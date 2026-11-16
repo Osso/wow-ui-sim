@@ -10,6 +10,10 @@
 
 **VERIFIED (R88v and revision-1 tests):** [Color overrides](systems/color-overrides.md) records the six-method Retail API, corrected original-consumer RED/GREEN, master secure-snapshot member set, and `playerColorOverrides` round-trip seams. **INFERRED:** the local GlobalColor projection, setting encoding, and event mapping. **UNKNOWN:** automatic save/load triggers and final storage.
 
+## [2026-11-15] implementation | Retail Store Glue R88q
+
+[Store Glue VAS state](../specs/store-glue-r88q.md) records native returning paths, explicit host receive seams, original Glue consumers and bounded fallback retirement.
+
 ## [2026-11-15] investigation | ShowUIPanel toggle fixture owners
 
 [Toggle fixture owners](investigations/showuipanel-toggle-fixture-owners.md) records independent achievement/housing fallback-retirement boundaries, original TOC owner loading and untouched out-of-scope panel failures. No guessed fallback restored.

@@ -123,6 +123,16 @@ this comparison. Tests cover unready, zero/negative limits, absent GUIDs, equali
 and spare capacity. The nonempty UI fixture explicitly supplies readiness and
 limit 2; neither value is a native realm default.
 
+**INFERRED PTR applicability (lt-941b #1299):** the selected PTR
+`Blizzard_GlueXML/Mainline/CharacterSelect.lua:819` invokes
+`CanCreateCharacter()` directly before testing the undeleting state. PTR now
+registers only the existing R43 connection-backed producer under
+`client_profile::ACTIVE == Ptr`; its readiness/limit/nonempty-GUID calculation,
+argument handling, and existing publication policy are unchanged. This does not
+enable the Retail/Forever `C_Login` registration block, `SelectCharacter`,
+background/enter-world/order functions, or `IsCharacterListUpdatePending`.
+PTR native parity is not established; applicability reuses the cited R43 evidence.
+
 `GetGameModeGlueScreenName` is registered in Glue and Game. The original R43
 selected-realm interpretation is superseded by R60 below: both getters share
 temporary-override/currentGameMode-CVar selection and host rows. Nonempty row
@@ -207,6 +217,26 @@ simulator-coverage error outside that envelope. This is not the native numeric
 range or native error contract, and no native conformance is claimed there.
 No saturating Rust conversion defines selection for those unsupported inputs.
 
+Behavior-neutral R45 factoring (lt-941b #1302): `SelectCharacter` now lives in
+`glue_select_character`, split into parser, slot resolution and store/event
+helpers of at most30 body lines. The producer and original Retail/Forever
+registration order are preserved; this commit does not enable it on PTR.
+
+**INFERRED PTR SelectCharacter applicability (lt-941b #1302):** the selected PTR
+`Blizzard_GlueXML/Mainline/CharacterSelect.lua:891` calls
+`SelectCharacter(selectedCharacterID)` after resolving a nonempty selected row.
+The separately committed neutral R45 producer in `glue_select_character` is
+registered on `ACTIVE == Ptr` only. Its parser, defensive unknown-range
+handling, roster normalization, unresolved/no-change exits, store-before-event
+ordering and zero-return behavior are unchanged. The Retail/Forever route still
+registers SelectCharacter before its existing season/background/entry/order
+chain. PTR retains its existing connection/season publication order and adds
+only this producer; no enclosing login/selection block or called downstream API
+is enabled. In particular `IsCharacterListUpdatePending` is unchanged.
+Generated declarations for this PTR Glue global are absent; applicability is
+based on the selected original consumer and R45 Retail evidence, not native PTR
+parity or a new argument/refusal policy.
+
 Full-list processing resets selection to -1 before `CHARACTER_LIST_UPDATE`.
 The event's count includes empty and unresolved slots. A separate zero-based
 host saved-candidate input is unset by default because its native initial value
@@ -267,6 +297,19 @@ CharacterRecord now owns an optional season, defaulting to native construction
 zero. The getter uses requested-GUID record resolution and never the selected
 character or active season. Glue-only exposure is INFERRED and profile-scoped.
 No extra events, GUID grammar, secret handling or other writers are invented.
+
+**INFERRED PTR applicability (lt-941b #1299):** the selected PTR
+`Blizzard_GlueXML/Mainline/CharacterSelect/CharacterSelectListElements.lua:815`
+calls `GetCharacterTimerunningSeasonID(guid)` on its supplied-GUID path. The
+existing R49 producer and its Glue-only installer are factored into
+`glue_character_season`; the Retail/Forever selection route delegates to that
+same helper. A separate `ACTIVE == Ptr` registration and screen-update route
+installs only this query. Existing argument checks, nil/nonzero return behavior,
+GUID matching, and Game removal policy are preserved. The enclosing selection,
+background, enter-world, order and login registration blocks remain unchanged;
+no new secret/refusal rule or `IsCharacterListUpdatePending` producer is added.
+PTR applicability is inferred from the cited Retail/Forever R49 facts, not a new
+PTR native finding.
 
 ### R50 preset writer and cached-integer projection
 
@@ -360,19 +403,41 @@ strings are inferred; full grammar, nonfinite values and conversion overflow
 remain outside verified coverage.
 
 Both globals are Glue-only on Retail/Forever (normal scope is inferred from
-native installation). PTR is unchanged and UNKNOWN. The setter validates numeric
+native installation). The setter validates numeric
 file-ID or string input and returns zero values, but stores no fake observable
 background/selection state. Retail 3D work is omitted. Forever readiness-event
 payload, timing, repeat count and failures remain UNKNOWN; no synthetic
 CHAR_SELECT_BACKGROUND_MODEL_READY is emitted. Filename resolution and all
 indirect resource effects remain outside this bounded non-3D model.
 
+Behavior-neutral R52 factoring (lt-941b #1305): the original installer delegates
+the first two entries to a small background-only helper and retains both move
+entries afterward. Function pointers, order, Glue installation/Game removal,
+all producer bodies and active profiles remain unchanged. The existing PTR
+season-only screen refresh is extracted without enabling a new function.
+
+**INFERRED PTR R52 applicability (lt-941b #1305):** selected PTR
+`Blizzard_GlueXML/Mainline/CharacterSelect/CharacterSelectUI.lua:379` reaches
+`SetCharSelectBackground(GetSelectBackgroundModel(selectedCharacterID))`.
+Only this existing producer pair is registered under `ACTIVE == Ptr`, using the
+same Glue-only install/Game removal policy. Retail/Forever retain all four
+existing installer entries in the same order. No background rows, native
+filename grammar, visual/3D state, readiness event or indirect effects are added.
+Generated declarations are absent; PTR applicability reuses R52 Retail evidence,
+not a native PTR finding. Model-transfer registration is not enabled here.
+
 ### R54 independent automatic-boost session values
 
 Comment 82 supplies Forever 70707 and Retail 70688 evidence. Two optional session
 values, boost type and GUID, start absent and are separate from active purchase
 and trial-service inputs. The getters/writers are installed in Game and Glue on
-Retail/Forever before the existing protected-global wrappers. PTR is unchanged.
+Retail/Forever before the existing protected-global wrappers. PTR publication of
+the same four members is INFERRED from R54 Retail VERIFIED evidence
+(`pr46-49-decomp-answers.md:4584`, coordinator lt-941b1296) and the selected PTR
+consumer calls at `CharacterSelect.lua:2153,2160-2161,2182-2183`. The latter two
+are explicit nil Set* calls already covered by the bounded R54 writer cases.
+Generated docs declare these APIs in no pinned cache. Producers, registration
+flags and protected refusal policy are unchanged.
 Tainted callers keep the existing report-and-return refusal without a combat
 condition; no new access rule is added.
 
@@ -398,7 +463,7 @@ Comment 91 provides Retail 70688 and Forever 70707 evidence. Both
 MoveCharactersToModelFFXFrame and MoveCharactersToMapSceneFrame read no Lua
 arguments, perform no supplied-frame type checks, and return zero values.
 Ordinary ignored extra arguments and normal Glue-only scope are inferred from
-those handlers and registration. PTR is uninspected and unchanged.
+those handlers and registration. PTR native behavior remains uninspected.
 
 The coordinator explicitly permits registered Glue-only zero-result no-ops for
 these two model-transfer operations in the simulator without 3D rendering.
@@ -410,6 +475,21 @@ was found in the checked direct native code.
 ResetModel is original Blizzard_GlueParent Lua (cached Retail lines 779–785,
 Forever 770–776), not a native API. It is not registered or replaced here.
 Failures in its frame-method calls require separate evidence.
+
+Behavior-neutral R58 factoring (lt-941b #1305): ModelFFX has its own installer
+helper using the exact existing bounded producer. The full Retail/Forever
+installer still publishes background getter, background setter, ModelFFX, then
+MapScene, with identical Glue/Game policy. No PTR route is added in this commit.
+
+**INFERRED PTR R58 ModelFFX applicability (lt-941b #1305):** the reached selected PTR
+`Blizzard_GlueXML/Mainline/CharacterSelect/CharacterSelectUI.lua:403` calls
+`MoveCharactersToModelFFXFrame()`. Only that existing bounded 3D-gap handler is
+published under `ACTIVE == Ptr`; its no-argument-read/zero-result behavior and
+Glue-only install/Game removal policy are unchanged. The alternative
+`MoveCharactersToMapSceneFrame` call at line392 is evidenced but unreached, not extended on PTR. Retail/Forever preserve both preexisting routes and
+the original four-entry registration order. Generated declarations are absent;
+no PTR native proof, rendering, indirect parenting/update effect or event is
+claimed from this applicability inference.
 
 ### R60 shared GameMode display selection and high-resolution capability
 

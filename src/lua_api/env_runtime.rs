@@ -501,6 +501,8 @@ fn install_screen_mode_globals(env: &WowLuaEnv, screen_kind: ScreenKind) {
     let _ = super::globals::real::glue_selection::register_season_query(
         env.lua.borrow_mut().state_mut(),
     );
+    #[cfg(feature = "client-ptr")]
+    register_ptr_screen_queries(env);
     #[cfg(any(feature = "client-ptr", feature = "client-wowforever"))]
     let _ = super::globals::real::glue_feature_status::register_all(&mut env.lua.borrow_mut());
     let is_glue = if screen_kind.is_glue() {
@@ -517,6 +519,20 @@ fn install_screen_mode_globals(env: &WowLuaEnv, screen_kind: ScreenKind) {
 
         "#
     ));
+}
+
+#[cfg(feature = "client-ptr")]
+fn register_ptr_screen_queries(env: &WowLuaEnv) {
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Ptr {
+        let _ =
+            super::globals::real::glue_character_season::register(env.lua.borrow_mut().state_mut());
+        let _ = super::globals::real::glue_background::register_background_only(
+            env.lua.borrow_mut().state_mut(),
+        );
+        let _ = super::globals::real::glue_background::register_model_ffx_only(
+            env.lua.borrow_mut().state_mut(),
+        );
+    }
 }
 
 fn take_pending_timers(env: &WowLuaEnv) -> VecDeque<PendingTimer> {

@@ -4,7 +4,10 @@
 //! and counters. Keep that compatibility fixture explicit until backed by a
 //! real account/store subsystem.
 
+use rilua::LuaApiMut;
+
 const STORE_GLUE_STATE_LUA: &str = r#"
+local modeledPurchaseInfo = ...
 if type(C_StoreGlue) ~= "table" then
     C_StoreGlue = {}
 end
@@ -47,7 +50,7 @@ if rawget(C_StoreGlue, "GetVASProductReady") == nil then
     end
 end
 
-if rawget(C_StoreGlue, "GetVASPurchaseStateInfo") == nil then
+if not modeledPurchaseInfo and rawget(C_StoreGlue, "GetVASPurchaseStateInfo") == nil then
     function C_StoreGlue.GetVASPurchaseStateInfo(guid)
         local currentState = StoreGlueState()
         local record = currentState.purchaseStateByGuid[tostring(guid)] or currentState.purchaseStateByGuid[guid]
@@ -78,7 +81,14 @@ end
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
-    lua.exec(STORE_GLUE_STATE_LUA)?;
+    if crate::c_api::c_store_glue::enabled() {
+        return Ok(());
+    }
+    let bootstrap = lua.load_bytes(STORE_GLUE_STATE_LUA.as_bytes(), "@store-glue-state")?;
+    lua.call_function(
+        &bootstrap,
+        &[rilua::Val::Bool(crate::c_api::c_store_glue::enabled())],
+    )?;
     Ok(())
 }
 
@@ -88,6 +98,9 @@ mod tests {
 
     #[test]
     fn installs_vas_defaults_and_request_counters() {
+        if crate::c_api::c_store_glue::enabled() {
+            return;
+        }
         let env = WowLuaEnv::new().expect("lua env should initialize");
 
         let result: String = env
