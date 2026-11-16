@@ -1,10 +1,14 @@
+## [2026-11-15] system | Retail C_ColorOverrides R88y publication
+
+Updated the [color-overrides system](systems/color-overrides.md) and its [feature contract](../specs/color-overrides.md). **VERIFIED (pinned CSV and simulator source at `5cd3cc29e`):** the six modeled members have VERIFIED flag-3 rows; Retail now uses the generic publisher, with the temporary fallback methods and custom bridge retired. The old two-member baseline was a pre-R88y preservation guard. The exact merged-head secure member-set test remains pending.
+
 ## [2026-11-15] investigation | Retail R88y string.split alias collision
 
 [Post-load workaround audit](investigations/post-load-workaround-audit.md#retail-r88y-stringsplit-alias-collision) and [taint system](systems/taint-system.md#dual-lua-environment) record the verified native alias, the simulator's late overwrite and its Retail-only exclusion. RED/GREEN receipts are in the secure-env-shared handoff.
 
 ## [2026-11-15] system | Retail R88t dependencies and R88v source attribution
 
-Updated the [add-on load-phase contract](../specs/addon-load-phases.md) and [taint system](systems/taint-system.md#dual-lua-environment). **VERIFIED (Retail 12.1.5.70688):** R88t dependency order and named publication; R88v.v4 shared source-exclusion state, suffix matching, and `CreateTexture`/`GetSourceLocation` output. **VERIFIED (simulator test at `adf8d25f9`):** the one-file source consumer passes through the secure registration object and ordinary `CreateTexture`, returns a saved `file:line`, and does not rescan an existing texture after exclusions change. The complete R88v `C_ColorOverrides` stateful model is deferred to a follow-up. Ordinary-request failure-independence remains VERIFIED but untested; transitive copying remains UNKNOWN.
+Updated the [add-on load-phase contract](../specs/addon-load-phases.md) and [taint system](systems/taint-system.md#dual-lua-environment). **VERIFIED (Retail 12.1.5.70688):** R88t dependency order and named publication; R88v.v4 shared source-exclusion state, suffix matching, and `CreateTexture`/`GetSourceLocation` output. **VERIFIED (simulator test at `adf8d25f9`):** the one-file source consumer passes through the secure registration object and ordinary `CreateTexture`, returns a saved `file:line`, and does not rescan an existing texture after exclusions change. At that earlier handoff, the full `C_ColorOverrides` stateful model was deferred; it is now integrated through R88y (see the current entry above). Ordinary-request failure-independence remains VERIFIED but untested; transitive copying remains UNKNOWN.
 
 ## [2026-11-14] investigation | Retail secure tooltip color route — merged catalog
 
@@ -28,7 +32,7 @@ Updated the [Round 7 getter contract](../specs/tooltip-r7-getters.md) and [Lua A
 
 ## [2026-11-15] revision | Retail C_ColorOverrides verification corrections
 
-Updated the [spec](../specs/color-overrides.md), [system page](systems/color-overrides.md), and [consumer-selection record](investigations/consumer-selection-and-red-proof.md#retail-colormanager-and-c-coloroverrides). **CORRECTION (VERIFIED):** the earlier RED at `589d127` failed at a direct API call, not inside ColorManager. **VERIFIED (revision-1 tests):** the corrected RED fails at original `ColorManager.lua:66`; the secure snapshot matches the two master member names; explicit `playerColorOverrides` seams round-trip and replace stale records. Five final profile builds report zero warnings. **INFERRED:** setting encoding, event mapping, and local GlobalColor projection. **UNKNOWN:** automatic lifecycle triggers and final storage.
+Updated the [spec](../specs/color-overrides.md), [system page](systems/color-overrides.md), and [consumer-selection record](investigations/consumer-selection-and-red-proof.md#retail-colormanager-and-c-coloroverrides). **CORRECTION (VERIFIED):** the earlier RED at `589d127` failed at a direct API call, not inside ColorManager. **VERIFIED (revision-1 tests):** the corrected RED fails at original `ColorManager.lua:66`; the pre-R88y secure snapshot matches the two master member names (a preservation guard before R88y); explicit `playerColorOverrides` seams round-trip and replace stale records. Five final profile builds report zero warnings. **INFERRED:** setting encoding, event mapping, and local GlobalColor projection. **UNKNOWN:** automatic lifecycle triggers and final storage.
 
 ## [2026-11-15] implementation | Retail C_ColorOverrides state
 

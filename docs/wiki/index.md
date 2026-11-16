@@ -1,6 +1,10 @@
+## [2026-11-15] system | Retail C_ColorOverrides R88y publication
+
+[Color overrides](systems/color-overrides.md) now records the six VERIFIED flag-3 rows and the generic simulator publication path. The old two-member test guarded the pre-R88y fallback period; the merged-head six-member runtime test remains pending.
+
 ## [2026-11-15] system | Retail R88t dependencies and R88v source attribution
 
-[Addon load phases](../specs/addon-load-phases.md) records R88t request order and named publication plus R88v source attribution. The ordinary-request failure-independence clause is VERIFIED natively but untested; transitive copying remains UNKNOWN. **VERIFIED (simulator test at `adf8d25f9`):** the one-file AddSource consumer returns a saved `file:line`, preserves it after the exclusion list changes, and returns `UnknownFile` for a later texture from the excluded file. The full C_ColorOverrides stateful model is deferred to a follow-up. [Taint system](systems/taint-system.md#dual-lua-environment) records publication boundaries and current implementation.
+[Addon load phases](../specs/addon-load-phases.md) records R88t request order and named publication plus R88v source attribution. The ordinary-request failure-independence clause is VERIFIED natively but untested; transitive copying remains UNKNOWN. **VERIFIED (simulator test at `adf8d25f9`):** the one-file AddSource consumer returns a saved `file:line`, preserves it after the exclusion list changes, and returns `UnknownFile` for a later texture from the excluded file. At that earlier handoff, the full C_ColorOverrides stateful model was deferred; the later R88y integration is recorded above. [Taint system](systems/taint-system.md#dual-lua-environment) records publication boundaries and current implementation.
 
 ## [2026-11-14] investigation | Retail secure tooltip color route
 
@@ -16,7 +20,7 @@
 
 ## [2026-11-15] system | Retail C_ColorOverrides state
 
-**VERIFIED (R88v and revision-1 tests):** [Color overrides](systems/color-overrides.md) records the six-method Retail API, corrected original-consumer RED/GREEN, master secure-snapshot member set, and `playerColorOverrides` round-trip seams. **INFERRED:** the local GlobalColor projection, setting encoding, and event mapping. **UNKNOWN:** automatic save/load triggers and final storage.
+**VERIFIED (R88v and revision-1 tests):** [Color overrides](systems/color-overrides.md) records the six-method Retail API, corrected original-consumer RED/GREEN, and `playerColorOverrides` round-trip seams. **HISTORICAL (revision-1):** the secure member-set test covered two master snapshot names before R88y. **VERIFIED (R88y source at `5cd3cc29e`):** all six implemented members have VERIFIED flag-3 rows; current-head runtime proof is pending. **INFERRED:** the local GlobalColor projection, setting encoding, and event mapping. **UNKNOWN:** automatic save/load triggers and final storage.
 
 ## [2026-11-15] investigation | ShowUIPanel toggle fixture owners
 
@@ -4467,6 +4471,7 @@ The sixteen retail 12.0.0 `Enum.EditModeDamageMeterSetting.*` and `Enum.EditMode
 | [[texture-atlas]] | TextureManager (BLP/PNG/WebP), ~50K-entry compiled atlas database, five RGBA GPU tiers plus optional BC1/BC3 atlases, persistent live/shared-headless atlas contexts, nine-slice kit detection, UV remapping, recognized Button/CheckButton atlas-slot visibility propagation |
 | [[frame-data-flow]] | Parallel Lua/Rust systems, same-object engine-root XML configuration, addon-load ownership/cleanup, global tables (__frame_fields/__scripts), method lookup order, Mixin() application with early EditMode base aliases, event dispatch flow |
 | [[taint-system]] | Protected-frame gating, fixed 39-name shared secure environment, separate namespace registrars, Elune-backed issecure/securecall, bounded per-environment click-binding interaction profile, Blizzard `issecure()` call-site matrix, SecureHandler fallback, state/attribute drivers |
+| [[color-overrides]] | Retail six-method C_ColorOverrides model, verified R88y flag-3 publication contract, explicit setting seams, and native/persistence evidence limits; merged-head secure member-set runtime proof pending |
 | [[casc-asset-cache]] | CASC cache layers, `.product.db` selected-product identity, measured timings, failure modes, and the 4,398-file Forever mapping/sync proof |
 | [[specialization-mastery-spells]] | Per-spec mastery spell IDs and class specialization ordering from ChrSpecialization.db2 |
 | [[duration-core]] | Lua table-proxy timing, three-formatter duration consumption, player cast/channel queries, manual clocks, Copy/Assign, curve evaluation, simulator policies and native/consumer bounds |
