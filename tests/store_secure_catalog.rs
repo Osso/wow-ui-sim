@@ -13,7 +13,7 @@ const CATALOG_CONSUMER: &str = r##"
     assert(#filtered == 2 and filtered[1] == 8101 and filtered[2] == 8102)
     local scrollBox = {}
     function scrollBox:SetDataProvider(provider) self.provider = provider end
-    CategoryTreeScrollContainerMixin:UpdateCategories({ScrollBox = scrollBox})
+    CategoryTreeScrollContainerMixin.UpdateCategories({ScrollBox = scrollBox})
     assert(scrollBox.provider ~= nil)
     local groups = C_StoreSecure.GetProductGroups()
     assert(#groups == 2 and groups[1].groupID == 4102 and groups[2].groupID == 4101)
