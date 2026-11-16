@@ -66,31 +66,36 @@ fn retail_build() -> crate::Result<&'static Build> {
         .get_or_init(|| {
             let build: Build =
                 serde_json::from_str(RETAIL_INDEX).map_err(|cause| cause.to_string())?;
-            let identity = [
-                build.product.as_str(),
-                build.version.as_str(),
-                build.build_key.as_str(),
-                build.cdn_key.as_str(),
-                build.install_key.as_str(),
-                build.gethe_revision.as_str(),
-            ];
-            let expected = [
-                "wow",
-                "12.1.5.70783",
-                "bc493ecb2898766c0f8947a99b4b3d65",
-                "3363ac656da5f261cdc675ab28b2744c",
-                "e58758dc26b4c93c71f5fb65054f90c4",
-                "297d7aaaa736f346b3e036f38ee088eaf7f8c07f",
-            ];
-            if build.schema != 1 || identity != expected {
-                return Err("unsupported Retail content-index schema or source identity".into());
-            }
+            validate_retail_build_identity(&build)?;
             #[cfg(feature = "casc")]
             validate_entries_for(&build, super::RETAIL_BLIZZARD_UI_MANIFEST, "Retail")?;
             Ok(build)
         })
         .as_ref()
         .map_err(|cause| crate::Error::Other(cause.clone()))
+}
+
+fn validate_retail_build_identity(build: &Build) -> Result<(), String> {
+    let identity = [
+        build.product.as_str(),
+        build.version.as_str(),
+        build.build_key.as_str(),
+        build.cdn_key.as_str(),
+        build.install_key.as_str(),
+        build.gethe_revision.as_str(),
+    ];
+    let expected = [
+        "wow",
+        "12.1.5.70783",
+        "bc493ecb2898766c0f8947a99b4b3d65",
+        "3363ac656da5f261cdc675ab28b2744c",
+        "e58758dc26b4c93c71f5fb65054f90c4",
+        "297d7aaaa736f346b3e036f38ee088eaf7f8c07f",
+    ];
+    if build.schema != 1 || identity != expected {
+        return Err("unsupported Retail content-index schema or source identity".into());
+    }
+    Ok(())
 }
 
 pub(super) fn retail_provenance() -> crate::Result<CacheProvenance> {
