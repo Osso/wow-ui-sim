@@ -1,6 +1,6 @@
 ## [2026-11-16] verification | Retail Glue login verifier remediation
 
-**VERIFIED (HEAD `74ffa9dca6ee7993a184c5a66b244232b8645f6a`):** the P1 projection, no-op Disconnect, and constant-true pending-getter mutants fail their same-body tests; six exact integration GREEN tests pass. **PENDING:** cleanup unit, five-profile matrix (PTR/Forever/Mists passed; Wrath/Retail pending), Retail `lua-errors`, and slot release. See [consumer selection and RED proof](investigations/consumer-selection-and-red-proof.md#retail-glue-login-consumers-and-pending-list-cache-call-site-r88aa) for hashes and source boundaries.
+**VERIFIED (current candidate, code/test source `74ffa9dca6ee7993a184c5a66b244232b8645f6a`):** same-body P1, no-op Disconnect, and constant-true pending-getter mutants fail; six exact integration tests and the cleanup unit pass; the five-profile compile matrix has zero warnings; Retail `lua-errors` returns `[]`. PTR/Forever/Mists receipts are source-equivalent after the documentation-only diff to `41047ceed`; Wrath and Retail build at that HEAD. See [consumer selection and RED proof](investigations/consumer-selection-and-red-proof.md#retail-glue-login-consumers-and-pending-list-cache-call-site-r88aa) for boundaries and the handoff report for hashes.
 
 ## [2026-11-16] system | Retail Glue login lifecycle
 

@@ -807,13 +807,13 @@ The zero-return policy is inferred and is not asserted.
 
 - [ ] **INFERRED (R88aa, Retail 12.1.5.70688; cached Lua build not matched):** `CharacterSelect_UpdateIfUpdateIsNotPending` and `CharacterSelect_OnVASCharacterQueueStatusUpdate` call the global `IsCharacterListUpdatePending`. This is a cache-caller observation, not proof of native 70688 Lua selection.
 - [x] **VERIFIED (local Retail 12.1.5.70783 cache and runtime selection):** the selected Mainline Glue TOC loads `Mainline/CharacterSelect.lua`; its original `OnShow` and queue-status handlers contain calls at lines 211 and 697.
-- [x] **VERIFIED (Retail 12.1.5.70783 runtime at HEAD `74ffa9dca6ee7993a184c5a66b244232b8645f6a`):** exact tests exercise the selected original calls with two backed roster GUIDs, absent GUIDs, and an empty roster. Independent no-op Disconnect and constant-true pending-getter mutants fail the exact consumer tests; six exact integration GREEN tests pass. Test-source SHA-256: `e346dd6221fe173ed759cf54a42a8c0a8f85c9c8e692b0ab912ffea133de44741c`. The five-profile matrix and cleanup unit remain pending.
+- [x] **VERIFIED (Retail 12.1.5.70783 runtime; code/test source at `74ffa9dca6ee7993a184c5a66b244232b8645f6a`):** exact tests exercise the selected original calls with two backed roster GUIDs, absent GUIDs, and an empty roster. Independent no-op Disconnect and constant-true pending-getter mutants fail their exact consumer tests; six exact integration GREEN tests and the cleanup unit pass. The zero-warning matrix passes in PTR → Forever → Mists → Wrath → Retail order. PTR/Forever/Mists receipts at 74ffa9d are source-equivalent to the current candidate because the intervening diff changes only documentation; Wrath and Retail build at `41047ceedec6b85b0af18d4138713aebf0d5991c`. Retail `--no-addons --no-saved-vars lua-errors` returns `[]`. Test-source SHA-256: `e346dd6221fe173ed759cf54a42a8c0a8f85c9c8e692b0ab912ffea133de44741c`.
 
 ## R88aa Retail Glue API contract
 
 - [x] **VERIFIED (R88aa and exact Retail consumer test at HEAD `74ffa9dca6ee7993a184c5a66b244232b8645f6a`):** `C_Login.DisconnectFromServer` takes no arguments, returns zero values, and is available only on Glue. The selected original `OnShow` exercises it. The test seeds the cancellation condition false, checks the conditional launcher event/order, and verifies Game-scope removal.
 - [x] **VERIFIED (exact current Retail test):** in a direct CharacterSelect session with no `C_Login.Login` submission, the original `OnShow` consumer leaves public `C_Login.GetState()` on the cleared model snapshot, not the connected screen projection. A same-body P1 projection mutant fails with the pre-fix tuple.
-- [ ] **VERIFIED (R88aa; current final runtime test pending):** disconnect clears Aurora, realm-list, stored login-error, pending-connection, connection-info, and connected state.
+- [x] **VERIFIED (R88aa and exact Retail cleanup unit at HEAD `41047ceedec6b85b0af18d4138713aebf0d5991c`):** disconnect clears Aurora, realm-list, stored login-error, pending-connection, connection-info, and connected state.
 - [x] **VERIFIED (R88aa and exact Retail consumer tests):** Glue exposes `_G.IsCharacterListUpdatePending`, not a `C_Login` member. It reads no arguments, returns one Boolean, and makes the original queue-status consumer defer at state 0 and proceed after completion.
 - [x] **VERIFIED (exact Retail consumer tests):** two distinct host-backed roster GUIDs, an absent GUID, an empty-roster case, completion states 0/1, and host-seeded nonzero state 2 exercise the original queue-status consumer. State 2 is a getter-input test only; R88aa identifies native full-list completion value 1, not 2.
 - [x] **VERIFIED (R88aa and exact Retail consumer tests):** the retrieval event has no payload; the original consumer distinguishes pending from completed list state. Native R88aa orders the completion writes 0 then 1 before `CHARACTER_LIST_UPDATE`.
@@ -833,6 +833,5 @@ The zero-return policy is inferred and is not asserted.
 
 ### Known gaps (current cycle)
 
-- [ ] Run the `disconnect_clears_a_stored_login_error` cleanup unit test, finish the current-head five-profile matrix, and run Retail `--no-addons --no-saved-vars lua-errors`.
 - [ ] Native initial completion-state value, cancellation initialization/reset, and any indirect completion-state writers remain UNKNOWN.
 - [ ] The exact Retail 70688 Lua cache selection is UNKNOWN; the active local cache is 12.1.5.70783.
