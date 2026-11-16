@@ -1482,3 +1482,86 @@ fn glue_retail_chat_source_preserves_r62_verified_asset_facts() {
     assert!(policy.contains("return false;"));
     // Static source facts do not establish the live winner or visible pixels.
 }
+
+const RETAIL_DISCONNECT_CONSUMER_SETUP: &str = r##"
+assert(C_AddOns.IsAddOnLoaded("Blizzard_GlueXML"))
+local source = debug.getinfo(CharacterSelectFrameMixin.OnShow, "S").source
+assert(source:find("Blizzard_GlueXML/Mainline/CharacterSelect.lua", 1, true), source)
+disconnectEvents = {}
+disconnectListener = CreateFrame("Frame")
+for _, event in ipairs({"AUTO_REALM_SWAP", "LAUNCHER_LOGIN_STATUS_CHANGED", "LOGIN_STATE_CHANGED"}) do
+    disconnectListener:RegisterEvent(event)
+end
+disconnectListener:SetScript("OnEvent", function(_, event, ...)
+    local entry = event .. ":" .. select("#", ...)
+    if event == "AUTO_REALM_SWAP" then entry = entry .. ":" .. tostring(...) end
+    table.insert(disconnectEvents, entry)
+end)
+C_StoreSecure = C_StoreSecure or {}
+C_StoreSecure.SetDisconnectOnLogout = function(value)
+    C_StoreGlue._state.disconnectOnLogout = value
+end
+"##;
+
+const RETAIL_PENDING_CONSUMER_SETUP: &str = r##"
+assert(C_AddOns.IsAddOnLoaded("Blizzard_GlueXML"))
+local source = debug.getinfo(CharacterSelect_OnVASCharacterQueueStatusUpdate, "S").source
+assert(source:find("Blizzard_GlueXML/Mainline/CharacterSelect.lua", 1, true), source)
+queueUpdateCount, queueUpdateGuid = 0, nil
+hooksecurefunc(CharacterSelectCharacterFrame, "UpdateCharacterMatchingGUID", function(_, guid)
+    queueUpdateCount = queueUpdateCount + 1
+    queueUpdateGuid = guid
+end)
+retrievingCount, retrievingArgumentCount = 0, -1
+retrievingListener = CreateFrame("Frame")
+retrievingListener:RegisterEvent("CHARACTER_LIST_RETRIEVING")
+retrievingListener:SetScript("OnEvent", function(_, _, ...)
+    assert(select("#", ...) == 0)
+    retrievingCount = retrievingCount + 1
+    retrievingArgumentCount = select("#", ...)
+end)
+"##;
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn retail_character_select_disconnect_consumer_publishes_ordered_events() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+        env.exec(RETAIL_DISCONNECT_CONSUMER_SETUP).expect("selected Retail consumer setup");
+        let no_disconnect = env.exec("C_StoreGlue._state.disconnectOnLogout = false; CharacterSelectFrameMixin:OnShow(CharacterSelect)");
+        env.exec("C_Login.Login('disconnect-probe', CreateFrame('EditBox'))").unwrap();
+        wow_ui_sim::startup::run_extra_update_ticks(&env, 2);
+        env.exec("disconnectEvents = {}").unwrap();
+        let active = env.exec("C_StoreGlue._state.disconnectOnLogout = true; CharacterSelectFrameMixin:OnShow(CharacterSelect)");
+        let repeated = env.exec("C_StoreGlue._state.disconnectOnLogout = true; CharacterSelectFrameMixin:OnShow(CharacterSelect)");
+        assert!(no_disconnect.is_ok(), "false selector must skip DisconnectFromServer: {no_disconnect:?}");
+        assert!(active.is_ok(), "active consumer call must succeed: {active:?}");
+        assert!(repeated.is_ok(), "disconnected consumer call must succeed: {repeated:?}");
+        let events: String = env.eval("return table.concat(disconnectEvents, ',')").unwrap();
+        assert_eq!(events, "AUTO_REALM_SWAP:1:false,LAUNCHER_LOGIN_STATUS_CHANGED:0,LOGIN_STATE_CHANGED:0,AUTO_REALM_SWAP:1:false,LOGIN_STATE_CHANGED:0");
+        let connected: bool = env.eval("local _, value = C_Login.GetState(); return value").unwrap();
+        assert!(!connected, "the original OnShow consumer must leave the modeled connection disconnected");
+    }
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn retail_character_select_pending_consumer_observes_list_completion() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+        env.exec(RETAIL_PENDING_CONSUMER_SETUP).expect("selected Retail pending consumer setup");
+        let pending = env.exec("CharacterSelect_OnVASCharacterQueueStatusUpdate('pending-guid', 3)");
+        env.exec("C_Login.Login('pending-probe', CreateFrame('EditBox'))").unwrap();
+        wow_ui_sim::startup::run_extra_update_ticks(&env, 3);
+        let complete = env.exec("CharacterSelect_OnVASCharacterQueueStatusUpdate('complete-guid', 4)");
+        assert!(pending.is_ok(), "pending call site must succeed: {pending:?}");
+        assert!(complete.is_ok(), "completed-list call site must succeed: {complete:?}");
+        let observed: (i32, String, i32, i32, bool) = env.eval("return queueUpdateCount, queueUpdateGuid, retrievingCount, retrievingArgumentCount, IsCharacterListUpdatePending()").unwrap();
+        assert_eq!(observed, (1, "complete-guid".into(), 1, 0, false));
+        let returns: i32 = env.eval("return select('#', IsCharacterListUpdatePending())").unwrap();
+        assert_eq!(returns, 1);
+        env.set_screen_mode(ScreenKind::Game);
+        let absent: bool = env.eval("return IsCharacterListUpdatePending == nil and C_Login.DisconnectFromServer == nil").unwrap();
+        assert!(absent, "Retail Glue-only members must be absent in Game");
+    }
+}
