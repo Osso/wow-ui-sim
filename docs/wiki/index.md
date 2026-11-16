@@ -1,6 +1,6 @@
 ## [2026-11-15] investigation | INFERRED Retail pending-list caller
 
-[Consumer selection and RED proof](investigations/consumer-selection-and-red-proof.md#retail-glue-login-consumers-and-pending-list-cache-call-site-r88aa) records the selected 70575 Retail cache caller separately from the VERIFIED 70688 native API contract; the exact cache-to-client build match remains UNKNOWN.
+[Consumer selection and RED proof](investigations/consumer-selection-and-red-proof.md#retail-glue-login-consumers-and-pending-list-cache-call-site-r88aa) records the selected 70783 Retail cache caller separately from the VERIFIED 70688 native API contract; the exact cache-to-client build match remains UNKNOWN.
 
 ## [2026-11-15] revision | Retail Blizzard UI 70783 CDN metadata
 
