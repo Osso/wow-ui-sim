@@ -806,27 +806,33 @@ The zero-return policy is inferred and is not asserted.
 ## R88aa cached Retail CharacterSelect call site (INFERRED)
 
 - [ ] **INFERRED (R88aa, Retail 12.1.5.70688; cached Lua build not matched):** `CharacterSelect_UpdateIfUpdateIsNotPending` and `CharacterSelect_OnVASCharacterQueueStatusUpdate` call the global `IsCharacterListUpdatePending`. This is a cache-caller observation, not proof of native 70688 Lua selection.
-- [x] **VERIFIED (local Retail 12.1.5.70783 cache and runtime harness):** the selected Mainline Glue TOC loads `Mainline/CharacterSelect.lua`; the original `OnShow` and queue-status handlers run from this file. Exact consumer tests pass, and the registration mutation makes them fail at the original calls on lines 211 and 697.
+- [x] **VERIFIED (local Retail 12.1.5.70783 cache and runtime selection):** the selected Mainline Glue TOC loads `Mainline/CharacterSelect.lua`; its original `OnShow` and queue-status handlers contain calls at lines 211 and 697.
+- [ ] **VERIFIED (current runtime proof pending):** exact RED/GREEN tests exercise those original calls with independent backed inputs and absent cases; execute a no-op Disconnect producer mutant and a constant pending-getter mutant against unchanged test source.
 
 ## R88aa Retail Glue API contract
 
-- [x] **VERIFIED (R88aa and Retail consumer tests):** `C_Login.DisconnectFromServer` is callable with no arguments, returns zero values, and is available only on Glue; the original `OnShow` consumer exercises it. The test checks event order, conditional launcher notification, and Game-scope removal.
-- [x] **VERIFIED (R88aa and Retail state-cleanup unit test):** disconnect clears Aurora, realm-list, stored login-error, pending-connection, connection-info, and connected state.
-- [x] **VERIFIED (R88aa and Retail consumer test):** Glue exposes `_G.IsCharacterListUpdatePending`, not a `C_Login` member. It reads no arguments, returns one Boolean, and makes the original queue-status consumer defer at state 0 and proceed after completion.
-- [x] **VERIFIED (R88aa and Retail consumer test):** the retrieval event has no payload; the original consumer distinguishes pending from completed list state. Native R88aa orders the completion writes 0 then 1 before `CHARACTER_LIST_UPDATE`.
+- [ ] **VERIFIED (R88aa; revised Retail tests await execution):** `C_Login.DisconnectFromServer` is callable with no arguments, returns zero values, and is available only on Glue; the original `OnShow` consumer exercises it. The test checks event order, an explicitly seeded cancellation condition, and Game-scope removal.
+- [ ] **VERIFIED (Retail public test pending):** in a direct CharacterSelect session with no `C_Login.Login` submission, the original `OnShow` consumer leaves public `C_Login.GetState()` on the cleared model snapshot, not the connected screen projection.
+- [ ] **VERIFIED (R88aa; current final runtime test pending):** disconnect clears Aurora, realm-list, stored login-error, pending-connection, connection-info, and connected state.
+- [ ] **VERIFIED (R88aa; revised Retail consumer tests await execution):** Glue exposes `_G.IsCharacterListUpdatePending`, not a `C_Login` member. It reads no arguments, returns one Boolean, and makes the original queue-status consumer defer at state 0 and proceed after completion.
+- [ ] **VERIFIED (R88aa; revised Retail consumer tests await execution):** two distinct host-backed roster GUIDs, an absent GUID, an empty-roster case, completion states 0/1, and host-seeded nonzero state 2 exercise the original queue-status consumer. State 2 is a getter-input test only; R88aa identifies native full-list completion value 1, not 2.
+- [ ] **VERIFIED (R88aa; revised Retail consumer tests await execution):** the retrieval event has no payload; the original consumer distinguishes pending from completed list state. Native R88aa orders the completion writes 0 then 1 before `CHARACTER_LIST_UPDATE`.
 
 **VERIFIED (R88aa):** both Glue registrations use publication flag 3. The simulator test surface does not expose that flag.
 
 - [ ] **INFERRED (simulator empty scenario):** the local completion state starts at 0. R88aa does not prove the native startup value; consumers must not treat this model default as native startup evidence.
+- [ ] **VERIFIED (R88aa; simulator coverage gap):** two reset routines and `GetCharacterListUpdate` also write completion state 0. The simulator currently models the login/request and accepted-full-list path, not those additional reset call paths.
 
 ### Implementation inventory and tests
 
 - `src/c_api/c_login.rs` owns Retail profile gating and the offline connection/list progression.
-- `src/c_api/c_login/retail_lifecycle.rs` owns Retail Glue registration, backing state, and a focused state-cleanup unit test.
+- `src/c_api/c_login/retail_lifecycle.rs` owns Retail Glue registration, backing state, and the disconnect state-ownership marker.
+- `src/c_api/c_login.rs` exposes host-state seed seams for the UNKNOWN cancellation initial value and the nonzero getter input; these seams do not claim native writers.
 - `tests/glue_login.rs` invokes the original Retail consumers and checks event order/payloads, list completion, return arity, and Game-scope absence.
 - `tests/glue_character_select.rs` retains StoreGlue state assertions and no longer treats missing `C_Login.DisconnectFromServer` as an expected error.
 
 ### Known gaps (current cycle)
 
-- [ ] Native initial completion-state value and reset writers outside the modeled login/request/response path remain UNKNOWN.
+- [ ] Run the revised original-consumer tests and separate no-op/constant producer mutations for the P1/P2 input matrix.
+- [ ] Native initial completion-state value, cancellation initialization/reset, and any indirect completion-state writers remain UNKNOWN.
 - [ ] The exact Retail 70688 Lua cache selection is UNKNOWN; the active local cache is 12.1.5.70783.
