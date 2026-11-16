@@ -883,7 +883,12 @@ fn challenges_ui_hover_projects_two_keystone_map_and_power_values() {
             &env,
             slot,
             input,
-            vec![(17, map_id), (18, level)],
+            vec![
+                (17, map_id),
+                (17, map_id + 100),
+                (18, level),
+                (18, level + 1),
+            ],
         );
         let title = format!("Map: {map_name}");
         let power = format!("Keystone Power {level}");
@@ -946,7 +951,18 @@ fn challenges_ui_hover_preserves_affix_slot_order_and_duplicates() {
         &env,
         3,
         input,
-        vec![(17, 980), (18, 2), (19, 101), (19, 103), (20, 102), (21, 103), (22, 101)],
+        vec![
+            (17, 980),
+            (18, 2),
+            (19, 101),
+            (19, 103),
+            (20, 102),
+            (20, 101),
+            (21, 103),
+            (21, 101),
+            (22, 101),
+            (22, 102),
+        ],
     );
     let expected = keystone_expected(
         "Map: Affix Map",
