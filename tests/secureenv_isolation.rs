@@ -361,6 +361,98 @@ fn secure_addon_loads_nonsecure_dependency_in_ordinary_then_secure_environment()
 }
 
 #[test]
+fn secure_dependency_runs_after_ordinary_file_error() {
+    let env = env();
+    let root = tempfile::tempdir().unwrap();
+    let dependency_dir = root.path().join("Ac4DependencyProbe");
+    let consumer_dir = root.path().join("Ac4SecureConsumer");
+    std::fs::create_dir_all(&dependency_dir).unwrap();
+    std::fs::create_dir_all(&consumer_dir).unwrap();
+    env.exec(
+        r#"
+        local trace = {}
+        rawset(_G, "ac4DependencyTrace", trace)
+        rawset(__secureenv, "ac4DependencyTrace", trace)
+        rawset(_G, "ac4SecureEnvironment", __secureenv)
+        rawset(__secureenv, "ac4SecureEnvironment", __secureenv)
+        "#,
+    )
+    .unwrap();
+    std::fs::write(
+        dependency_dir.join("Ac4DependencyProbe.toc"),
+        "## Title: Ac4DependencyProbe\nDependency.lua\n",
+    )
+    .unwrap();
+    std::fs::write(
+        dependency_dir.join("Dependency.lua"),
+        r#"
+        local secure = getfenv(1) == ac4SecureEnvironment
+        table.insert(ac4DependencyTrace, secure and "dependency:secure" or "dependency:ordinary")
+        if secure then
+            ac4SecureDependencyRan = true
+        else
+            ac4OrdinaryDependencyFailed = true
+            error("ac4 ordinary dependency file failed")
+        end
+        "#,
+    )
+    .unwrap();
+    let consumer_toc = consumer_dir.join("Ac4SecureConsumer.toc");
+    std::fs::write(
+        &consumer_toc,
+        "## Title: Ac4SecureConsumer\n\
+         ## UseSecureEnvironment: 1\n\
+         ## Dependencies: Ac4DependencyProbe\n\
+         Consumer.lua\n",
+    )
+    .unwrap();
+    std::fs::write(
+        consumer_dir.join("Consumer.lua"),
+        r#"
+        assert(ac4SecureDependencyRan == true)
+        table.insert(ac4DependencyTrace, "consumer:secure")
+        ac4SecureConsumerRan = true
+        "#,
+    )
+    .unwrap();
+
+    let result = wow_ui_sim::loader::load_addon(&env.loader_env(), &consumer_toc)
+        .expect("ordinary file error must not prevent the secure dependency request");
+    assert!(
+        result
+            .warnings
+            .iter()
+            .any(|warning| warning.contains("ac4 ordinary dependency file failed")),
+        "the ordinary dependency pass must record its file error: {:?}",
+        result.warnings
+    );
+
+    let observed: (String, bool, bool, bool, bool, bool) = env
+        .eval(
+            r#"
+            return table.concat(ac4DependencyTrace, ","),
+                rawget(_G, "ac4OrdinaryDependencyFailed") == true,
+                rawget(__secureenv, "ac4OrdinaryDependencyFailed") == nil,
+                rawget(__secureenv, "ac4SecureDependencyRan") == true,
+                rawget(__secureenv, "ac4SecureConsumerRan") == true,
+                C_AddOns.IsAddOnLoaded("Ac4SecureConsumer") == true
+            "#,
+        )
+        .unwrap();
+    assert_eq!(
+        observed,
+        (
+            "dependency:ordinary,dependency:secure,consumer:secure".into(),
+            true,
+            true,
+            true,
+            true,
+            true
+        )
+    );
+}
+
+#[test]
 fn secure_dependencies_load_optional_before_required_before_consumer() {
     let env = env();
     let root = tempfile::tempdir().unwrap();
