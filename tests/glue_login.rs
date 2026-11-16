@@ -1627,13 +1627,15 @@ fn retail_character_select_disconnect_consumer_publishes_ordered_events() {
         env.exec("disconnectEvents = {}").unwrap();
         seed_retail_disconnect_inputs(&env);
         let active = env.exec("CharacterSelectFrameMixin.OnShow(CharacterSelect)");
+        let disconnect_on_logout: bool = env.eval("return C_StoreGlue.GetDisconnectOnLogout()").unwrap();
+        assert!(!disconnect_on_logout, "original OnShow consumes the one-shot logout selector");
         let repeated = env.exec("CharacterSelectFrameMixin.OnShow(CharacterSelect)");
         wow_ui_sim::startup::run_extra_update_ticks(&env, 2);
         assert!(no_disconnect.is_ok(), "false selector must skip DisconnectFromServer: {no_disconnect:?}");
         assert!(active.is_ok(), "active consumer call must succeed: {active:?}");
         assert!(repeated.is_ok(), "disconnected consumer call must succeed: {repeated:?}");
         let events: String = env.eval("return table.concat(disconnectEvents, ',')").unwrap();
-        assert_eq!(events, "AUTO_REALM_SWAP:1:false,LAUNCHER_LOGIN_STATUS_CHANGED:0,LOGIN_STATE_CHANGED:0,AUTO_REALM_SWAP:1:false,LOGIN_STATE_CHANGED:0");
+        assert_eq!(events, "AUTO_REALM_SWAP:1:false,LAUNCHER_LOGIN_STATUS_CHANGED:0,LOGIN_STATE_CHANGED:0");
         let returns: i32 = env.eval("return select('#', C_Login.DisconnectFromServer())").unwrap();
         assert_eq!(returns, 0);
         assert_eq!(retail_login_state(&env), (1, false, 1, false, false));
