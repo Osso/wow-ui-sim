@@ -58,7 +58,7 @@ pub(crate) fn register(lua: &mut rilua::Lua) -> LuaResult<()> {
     }
 
     let state = lua.state_mut();
-    // Replace the pre-secure snapshot with a fresh ordinary-only namespace.
+    // Replace the ordinary namespace with the modeled Retail API surface.
     let namespace = state.gc.alloc_table(Table::new());
     set_global_val(state, "C_ColorOverrides", Val::Table(namespace));
     table_set_rust_fn_static(state, namespace, CLEAR_FUNCTION, clear_color_overrides)?;
