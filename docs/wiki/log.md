@@ -1,3 +1,7 @@
+## [2026-11-16] investigation | Limited listfile reproducibility
+
+Added the [investigation](investigations/limited-listfile-reproducibility.md) and [contract](../specs/limited-listfile-reproducibility.md). Current-master generation is byte-identical from the recovered, checksum-matching 202611141741 source; source/override/request/output drift now fails before writing. The coordinator confirmed the PR33 report did not retain row texts or source identity: the six original rows are UNRECOVERABLE and unpinned input drift is an INFERRED cause, distinct from the verified pinned-source reproduction.
+
 ## [2026-11-15] fix | Retail Blizzard UI cache provenance
 
 Updated the [cache system page](systems/casc-asset-cache.md#blizzard-ui-source-cache) and [CASC loading contract](../specs/casc-loading.md#pinned-blizzard-ui-source-cache). **VERIFIED (source and tests):** Retail and PTR share one exact provenance comparison against their active pin; mismatch excludes the cache and normal startup follows the existing sync path. Synthetic temp-cache tests cover matching 70783, stale 70575, and missing provenance. Other profiles retain their existing selection behavior.
