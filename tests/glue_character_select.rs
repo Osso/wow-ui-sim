@@ -350,6 +350,11 @@ fn store_ui_confirmation_sets_ready_without_emitting_completion() {
         let env = load_blizzard_screen(ScreenKind::Game);
         env.exec(
             r#"
+            local loaded = C_AddOns.IsAddOnLoaded('Blizzard_StoreUI')
+            if not loaded then
+                loaded = C_AddOns.LoadAddOn('Blizzard_StoreUI')
+            end
+            assert(loaded)
             local source = debug.getinfo(ServicesLogoutPopupConfirmButton_OnClick, 'S')
             assert(source.source:find('Blizzard_Shared_StoreUISecure.lua', 1, true))
             local completeEvents = 0
