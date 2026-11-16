@@ -416,37 +416,49 @@ fn secure_private_auras_tooltip_consumer_runs_without_errors() {
         "TextureKitConstants defined during secure execution must be exported"
     );
 
-    let secure_exports_are_isolated: bool = env
+    let failed_secure_exports: String = env
         .eval(
-            "local cTimer = rawget(__secureenv, 'C_Timer'); \
-             local store = rawget(__secureenv, 'C_StoreSecure'); \
-             local color = rawget(__secureenv, 'C_UIColor'); \
-             local secureEnum = rawget(__secureenv, 'Enum'); \
-             rawset(_G, '__secure_env_ordinary_only_probe', true); \
-             return type(rawget(__secureenv, 'Mixin')) == 'function' \
-                 and type(rawget(__secureenv, 'CreateFromMixins')) == 'function' \
-                 and type(cTimer) == 'table' \
-                 and cTimer ~= rawget(_G, 'C_Timer') \
-                 and type(cTimer.After) == 'function' \
-                 and type(store) == 'table' \
-                 and store ~= rawget(_G, 'C_StoreSecure') \
-                 and type(store.GetProductGroups) == 'function' \
-                 and type(rawget(__secureenv, 'CreateFrame')) == 'function' \
-                 and type(rawget(__secureenv, 'CreateSecureDelegate')) == 'function' \
-                 and type(rawget(__secureenv, 'GetFrameMetatable')) == 'function' \
-                 and type(GetFrameMetatable().__index) == 'table' \
-                 and type(color) == 'table' \
-                 and color ~= rawget(_G, 'C_UIColor') \
-                 and type(color.GetColors) == 'function' \
-                 and type(secureEnum) == 'table' \
-                 and secureEnum ~= rawget(_G, 'Enum') \
-                 and type(rawget(rawget(secureEnum, 'TooltipDataType'), 'Unit')) == 'number' \
-                 and rawget(__secureenv, '__secure_env_ordinary_only_probe') == nil",
+            r#"
+            local secure = __secureenv
+            local failures = {}
+            local function check(name, condition)
+                if not condition then
+                    failures[#failures + 1] = name
+                end
+            end
+
+            local cTimer = rawget(secure, "C_Timer")
+            local store = rawget(secure, "C_StoreSecure")
+            local color = rawget(secure, "C_UIColor")
+            local secureEnum = rawget(secure, "Enum")
+            local frameMetatable = GetFrameMetatable()
+            local tooltipDataType = type(secureEnum) == "table"
+                and rawget(secureEnum, "TooltipDataType") or nil
+
+            check("Mixin", type(rawget(secure, "Mixin")) == "function")
+            check("CreateFromMixins", type(rawget(secure, "CreateFromMixins")) == "function")
+            check("C_Timer table is separate", type(cTimer) == "table" and cTimer ~= rawget(_G, "C_Timer"))
+            check("C_Timer.After", type(cTimer) == "table" and type(cTimer.After) == "function")
+            check("C_StoreSecure table is separate", type(store) == "table" and store ~= rawget(_G, "C_StoreSecure"))
+            check("C_StoreSecure.GetProductGroups", type(store) == "table" and type(store.GetProductGroups) == "function")
+            check("CreateFrame", type(rawget(secure, "CreateFrame")) == "function")
+            check("CreateSecureDelegate", type(rawget(secure, "CreateSecureDelegate")) == "function")
+            check("GetFrameMetatable", type(rawget(secure, "GetFrameMetatable")) == "function")
+            check("frame metatable index", type(frameMetatable) == "table" and type(frameMetatable.__index) == "table")
+            check("C_UIColor table is separate", type(color) == "table" and color ~= rawget(_G, "C_UIColor"))
+            check("C_UIColor.GetColors", type(color) == "table" and type(color.GetColors) == "function")
+            check("Enum table is separate", type(secureEnum) == "table" and secureEnum ~= rawget(_G, "Enum"))
+            check("Enum.TooltipDataType.Unit", type(tooltipDataType) == "table" and type(rawget(tooltipDataType, "Unit")) == "number")
+
+            rawset(_G, "__secure_env_ordinary_only_probe", true)
+            check("ordinary-only global stays out of secureenv", rawget(secure, "__secure_env_ordinary_only_probe") == nil)
+            return table.concat(failures, ", ")
+            "#,
         )
         .expect("secure export isolation query should succeed");
     assert!(
-        secure_exports_are_isolated,
-        "secure registrations must stay isolated from ordinary-only globals"
+        failed_secure_exports.is_empty(),
+        "secure export checks failed: {failed_secure_exports}"
     );
 }
 
