@@ -1487,7 +1487,10 @@ const RETAIL_DISCONNECT_CONSUMER_SETUP: &str = r##"
 assert(C_AddOns.IsAddOnLoaded("Blizzard_GlueXML"))
 local source = debug.getinfo(CharacterSelectFrameMixin.OnShow, "S").source
 assert(source:find("Blizzard_GlueXML/Mainline/CharacterSelect.lua", 1, true), source)
-CharacterSelect.CharacterSelectUI = CharacterSelectUI
+CharacterSelect.CharacterSelectUI = CharacterSelect.CharacterSelectUI or {
+    VisibilityFramesContainer = { ToolTray = { SetExpanded = function() end } }
+}
+assert(type(CharacterSelect.CharacterSelectUI) == "table")
 disconnectEvents = {}
 disconnectListener = CreateFrame("Frame")
 for _, event in ipairs({"AUTO_REALM_SWAP", "LAUNCHER_LOGIN_STATUS_CHANGED", "LOGIN_STATE_CHANGED"}) do
