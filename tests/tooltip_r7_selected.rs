@@ -302,7 +302,7 @@ fn keystone_expected(
     affixes: &[&str],
 ) -> String {
     let resilient = resilient.map_or_else(|| "false".to_string(), |text| format!("{text:?}"));
-    let heading = heading.then(|| "Modifier heading".to_string()).unwrap_or_else(|| "false".to_string());
+    let heading = heading.then_some("\"Modifier heading\"").unwrap_or("false");
     let affixes = affixes.iter().map(|text| format!("{text:?}")).collect::<Vec<_>>().join(", ");
     format!("{{ title = {title:?}, power = {power:?}, resilient = {resilient}, heading = {heading}, affixes = {{{affixes}}} }}")
 }
