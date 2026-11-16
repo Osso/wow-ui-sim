@@ -1,0 +1,202 @@
+use std::path::Path;
+
+use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
+use wow_ui_sim::loader::{
+    StartupAddonLoadKind, discover_blizzard_startup_addons_for_screen, find_toc_file,
+    load_startup_addon,
+};
+use wow_ui_sim::lua_api::WowLuaEnv;
+use wow_ui_sim::screen::ScreenKind;
+use wow_ui_sim::toc::TocFile;
+
+const SOURCE_OWNER_CONSUMER_LUA: &str = r#"
+local function original(fn, path)
+    local source = debug.getinfo(fn, 'S').source:gsub('\\', '/')
+    assert(source:find(path, 1, true), source)
+end
+original(FlagsUtil.IsSet, 'Blizzard_SharedXMLBase/Flags.lua')
+original(FlagsMixin.IsSet, 'Blizzard_SharedXMLBase/Flags.lua')
+assert(FlagsUtil.IsSet(3, 1) == true)
+assert(FlagsUtil.IsSet(3, 5) == false)
+original(CreateTemplateInfoCache, 'Blizzard_SharedXMLBase/TemplateInfoCache.lua')
+original(CreateFrameFactory, 'Blizzard_SharedXMLBase/FrameFactory.lua')
+local factory = CreateFrameFactory()
+assert(factory:GetTemplateInfoCache():GetTemplateInfos() ~= nil)
+"#;
+
+#[cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
+const TRAINER_CONSUMER_LUA: &str = r#"
+local function original(fn, path)
+    local source = debug.getinfo(fn, 'S').source:gsub('\\', '/')
+    assert(source:find(path, 1, true), source)
+end
+assert(type(LoadAddOnWithErrorHandling) == 'function')
+original(LoadAddOnWithErrorHandling, 'Blizzard_SharedXML/AddOnUtil.lua')
+assert(type(ClassTrainerFrame_LoadUI) == 'function')
+original(ClassTrainerFrame_LoadUI, 'Blizzard_TrainerUI/Blizzard_TrainerUI_Bootstrap.lua')
+local originalLoader = LoadAddOnWithErrorHandling
+local loaderCalls = 0
+LoadAddOnWithErrorHandling = function(...)
+    loaderCalls = loaderCalls + 1
+    return originalLoader(...)
+end
+local consumerOk, consumerResult = pcall(ClassTrainerFrame_LoadUI)
+LoadAddOnWithErrorHandling = originalLoader
+assert(consumerOk, tostring(consumerResult))
+assert(loaderCalls > 0)
+_G.FallbackRetirementTrainerConsumerExecuted = true
+"#;
+
+const RETAIL_CONSUMER_LUA: &str = r#"
+local function original(fn, path)
+    local source = debug.getinfo(fn, 'S').source:gsub('\\', '/')
+    assert(source:find(path, 1, true), source)
+end
+local moneyDrop = GetMoneyTypeInfoField('PLAYER', 'DropFunc')
+original(moneyDrop, 'Blizzard_MoneyFrame/Shared/MoneyFrame.lua')
+original(ContainerFrameItemButton_OnClick, 'Blizzard_UIPanels_Game/Mainline/ContainerFrame.lua')
+PickupPlayerMoney(500)
+moneyDrop({})
+assert(GetCursorMoney() == 0)
+PickupPlayerMoney(500)
+ContainerFrameItemButton_OnClick({}, 'LeftButton')
+assert(GetCursorMoney() == 0)
+local readyCalls = 0
+EventUtil.ContinueOnVariablesLoaded(function() readyCalls = readyCalls + 1 end)
+assert(readyCalls == 1)
+original(ToggleCollectionsJournal, 'Blizzard_Collections/Blizzard_Collections_Bootstrap.lua')
+original(ToggleEncounterJournal, 'Blizzard_EncounterJournal/Blizzard_EncounterJournal_Bootstrap.lua')
+ToggleCollectionsJournal()
+assert(CollectionsJournal and CollectionsJournal:IsShown())
+ToggleCollectionsJournal()
+assert(not CollectionsJournal:IsShown())
+assert(ToggleEncounterJournal() == true)
+assert(EncounterJournal:IsShown())
+assert(ToggleEncounterJournal() == true)
+assert(not EncounterJournal:IsShown())
+"#;
+
+#[cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
+fn assert_trainer_consumer(env: &WowLuaEnv) {
+    env.exec(TRAINER_CONSUMER_LUA)
+        .expect("original Trainer consumer must invoke the original addon loader");
+    env.exec("assert(FallbackRetirementTrainerConsumerExecuted == true)")
+        .expect("Trainer consumer execution marker must be set");
+    println!("FALLBACK_RETIREMENT_TRAINER_CONSUMER_EXECUTED");
+}
+
+// Mists does not select the AddOnUtil owner or this Trainer consumer.
+#[cfg(feature = "client-mists")]
+fn assert_trainer_consumer(_env: &WowLuaEnv) {}
+
+#[cfg(not(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever",
+    feature = "client-mists"
+)))]
+fn assert_trainer_consumer(_env: &WowLuaEnv) {}
+
+fn load_profile_startup(env: &WowLuaEnv, ui: &Path) -> Vec<String> {
+    let addons = discover_blizzard_startup_addons_for_screen(ui, ScreenKind::Game);
+    let mut names = Vec::with_capacity(addons.len());
+    for addon in addons {
+        load_startup_addon(&env.loader_env(), &addon.toc_path, addon.kind, None)
+            .unwrap_or_else(|error| panic!("startup addon {} failed: {error}", addon.name));
+        names.push(addon.name);
+    }
+    names
+}
+
+fn assert_addon_precedes(addons: &[String], owner: &str, consumer: &str) {
+    let position = |name| {
+        addons
+            .iter()
+            .position(|addon| addon == name)
+            .unwrap_or_else(|| panic!("{name} is absent from the selected startup order"))
+    };
+    assert!(
+        position(owner) < position(consumer),
+        "{owner} must load before {consumer}"
+    );
+}
+
+fn assert_base_toc_order(ui: &Path) {
+    let toc_path = find_toc_file(&ui.join("Blizzard_SharedXMLBase"))
+        .expect("active profile must select Blizzard_SharedXMLBase TOC");
+    let toc = TocFile::from_file(&toc_path).expect("selected SharedXMLBase TOC parses");
+    let files = toc.files.iter().map(|path| path.to_string_lossy());
+    let files: Vec<String> = files.map(|path| path.replace('\\', "/")).collect();
+    let position = |suffix: &str| {
+        files
+            .iter()
+            .position(|file| file.ends_with(suffix))
+            .unwrap_or_else(|| panic!("{suffix} is absent from {}", toc_path.display()))
+    };
+    assert!(position("Flags.lua") < position("FrameFactory.lua"));
+    assert!(position("TemplateInfoCache.lua") < position("FrameFactory.lua"));
+}
+
+fn assert_startup_producers(env: &WowLuaEnv) {
+    env.exec(
+        r#"
+        assert(debug.iscfunction(DropCursorMoney))
+        assert(debug.iscfunction(ToggleCollectionsJournal))
+        assert(debug.iscfunction(ToggleEncounterJournal))
+        if C_CVar and C_CVar.AreCVarsLoaded then
+            assert(debug.iscfunction(C_CVar.AreCVarsLoaded))
+            assert(C_CVar.AreCVarsLoaded() == true)
+        end
+        if type(settablesecurity) == 'function' then
+            assert(debug.iscfunction(settablesecurity))
+        end
+        "#,
+    )
+    .expect("registered startup API producers must be present");
+}
+
+fn assert_source_owner_consumers(env: &WowLuaEnv) {
+    env.exec(SOURCE_OWNER_CONSUMER_LUA)
+        .expect("original SharedXML owners must serve their consumers");
+    if ACTIVE != ClientProfile::Mists {
+        env.exec("assert(FlagsUtilConstants.CombineShouldSet == true)")
+            .expect("selected Flags.lua owner publishes CombineShouldSet");
+    }
+    assert_trainer_consumer(env);
+}
+
+fn assert_retail_consumers(env: &WowLuaEnv) {
+    if !matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr) {
+        return;
+    }
+    env.state().borrow_mut().player.money = 10_000;
+    env.exec(RETAIL_CONSUMER_LUA)
+        .expect("original Retail consumers must use the registered producers and owners");
+}
+
+#[test]
+fn fallback_boundaries_and_source_owners_preserve_consumers() {
+    let ui = crate::common::blizzard_addon_harness::blizzard_ui_dir();
+    let env = crate::common::blizzard_addon_harness::new_blizzard_addon_env(&ui);
+    wow_ui_sim::xml::register_intrinsic_templates();
+    assert_startup_producers(&env);
+
+    let addons = load_profile_startup(&env, &ui);
+    assert_base_toc_order(&ui);
+    assert_addon_precedes(&addons, "Blizzard_SharedXMLBase", "Blizzard_FrameXMLBase");
+    if ACTIVE != ClientProfile::Mists {
+        assert_addon_precedes(&addons, "Blizzard_SharedXML", "Blizzard_TrainerUI");
+    }
+    assert_source_owner_consumers(&env);
+
+    env.apply_post_load_workarounds();
+    assert_retail_consumers(&env);
+}

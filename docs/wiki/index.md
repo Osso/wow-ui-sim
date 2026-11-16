@@ -1,3 +1,7 @@
+## [2026-11-16] investigation | Limited listfile reproducibility
+
+[Limited listfile reproducibility](investigations/limited-listfile-reproducibility.md) records the immutable source pin, effective input/output drift checks, unchanged 147,015-row artifact, and the unrecoverable historical PR33 rows and inferred input-drift cause.
+
 ## [2026-11-16] system | Retail master Unit secure-environment route
 
 [Taint system](systems/taint-system.md#dual-lua-environment) and [add-on load-phase contract](../specs/addon-load-phases.md#r88ac-globalstrings-secure-publication) record the SOURCE-DERIVED 153-name simulator route and its UNKNOWN native publication boundary. **VERIFIED (master 725 control):** the prefork control passes and Retail Lua-errors returns `[]`; candidate consumer proof is pending.
@@ -13,14 +17,31 @@
 ## [2026-11-15] system | Retail R88t dependencies and R88v source attribution
 
 [Addon load phases](../specs/addon-load-phases.md) records R88t request order and named publication plus R88v source attribution. The ordinary-request failure-independence clause is VERIFIED natively but untested; transitive copying remains UNKNOWN. **VERIFIED (simulator test at `adf8d25f9`):** the one-file AddSource consumer returns a saved `file:line`, preserves it after the exclusion list changes, and returns `UnknownFile` for a later texture from the excluded file. At that earlier handoff, the full C_ColorOverrides stateful model was deferred; the later R88y integration is recorded above. [Taint system](systems/taint-system.md#dual-lua-environment) records publication boundaries and current implementation.
-
 ## [2026-11-15] fix | Retail Blizzard UI cache provenance
 
 The [CASC asset cache](systems/casc-asset-cache.md#blizzard-ui-source-cache) and [CASC loading contract](../specs/casc-loading.md#pinned-blizzard-ui-source-cache) record exact Retail/PTR pin provenance checks, mismatch sync behavior, and unchanged selection for other profiles. **VERIFIED (source and synthetic temp-cache tests):** matching 70783 provenance is accepted; stale 70575 and missing provenance are rejected.
+## [2026-11-16] verification | Retail Glue login verifier remediation
+
+**VERIFIED (code/test source `74ffa9dca6ee7993a184c5a66b244232b8645f6a`):** same-body P1 and pending-getter mutants fail in direct 74 runs. The no-op Disconnect RED is historical at `94e338f0cedfee6a14c88d6f5736d936ccb1fa6b`; unchanged Disconnect test bodies, helpers, and implementation make it source-equivalent, not a direct 74 execution. Six exact integration tests and the cleanup unit pass; the five-profile compile matrix has zero warnings; Retail `lua-errors` returns `[]`. See [consumer selection and RED proof](investigations/consumer-selection-and-red-proof.md#retail-glue-login-consumers-and-pending-list-cache-call-site-r88aa) for proof boundaries and the handoff report for hashes.
+
+## [2026-11-16] system | Retail Glue login lifecycle
+
+[Retail Glue login lifecycle](systems/glue-login-lifecycle.md) records the two Glue-only producers, state transitions, prior-candidate original-consumer RED/GREEN and cleanup evidence, current selector-specific RED, and the remaining native cache/default-state boundaries.
+
+## [2026-11-15] investigation | INFERRED Retail pending-list caller
+
+[Consumer selection and RED proof](investigations/consumer-selection-and-red-proof.md#retail-glue-login-consumers-and-pending-list-cache-call-site-r88aa) records the selected 70783 Retail cache caller separately from the VERIFIED 70688 native API contract; the exact cache-to-client build match remains UNKNOWN.
 
 ## [2026-11-15] revision | Retail Blizzard UI 70783 CDN metadata
 
 [Client profiles](systems/client-profiles.md#runtime-cache) links the regenerated Retail 70783 identity and index. The 4,026-path manifest and Retail patch-API cache hashes remain unchanged; the CDN key and one archive location changed. **VERIFIED (local CASC root):** FDID 8547105 remains absent. **VERIFIED (70575 versus 70783 cache bytes):** the selected chat TOC, shared/Mainline FloatingChatFrame sources and GlueParent source are identical. **UNKNOWN:** native Retail Glue Login chat visibility; see the [Glue Login contract](../specs/glue-login-flow.md#r62-retail-chat-evidence-boundary) and follow-up `lt-0de8`.
+## [2026-11-15] revision | Retail keystone selector proof and modifier-17 default
+
+The [Round 7 getter contract](../specs/tooltip-r7-getters.md) and [Lua API](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) record the absent-modifier-17 key-zero lookup and selected-item quality behavior. **VERIFIED (simulator):** supplied key-zero map data selects its title, a confirmed miss uses the generic title, and unsupplied data remains neutral. **VERIFIED (Retail integration executable SHA `2b63b54928c6a545e8fba95e07e0193de77e212c28c31d161c4193c98443c2e4`):** nine contract cases pass through the original ChallengesUI `OnEnter`; one separate test checks the INFERRED quality-color distinction; eight single-defect producer mutations fail at their corresponding consumer assertions, with generic-title and found-empty-name mutations separated. **INFERRED (simulator color mapping):** qualities 4 and 7 produce distinct colors; R88z.z1 does not establish this distinction or the numeric RGB mapping.
+
+## [2026-11-15] implementation | Retail slotted-keystone tooltip rows
+
+The [Round 7 getter contract](../specs/tooltip-r7-getters.md) and [Lua API](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) record R88z.z1. **VERIFIED (Retail 12.1.5.70688):** title, power, optional resilient level, modifier heading, and ordered affix-name rows, with their selectors, keys, colors, and quality field. **VERIFIED (simulator source):** a neutral empty-default host input supplies records and condition results; no native writer or catalog values are invented. **INFERRED:** rows append after common item lines and use the shared quality-color mapping; the native answer proves only relative keystone-row order. **VERIFIED (Retail integration test SHA `0b681a9c80e852303c60f30aa431344a8f88788c`):** eight exact-listed original-consumer cases passed at that earlier revision, including empty host input.
 
 ## [2026-11-14] investigation | Retail secure tooltip color route
 
@@ -32,7 +53,7 @@ The [CASC asset cache](systems/casc-asset-cache.md#blizzard-ui-source-cache) and
 
 ## [2026-11-15] revision | Recipe-rank cache and keystone tooltip boundaries
 
-[Round 7 getter contract](../specs/tooltip-r7-getters.md) and [Lua API](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) record R88n.4a cache insertion semantics and the modeled keystone selection/event/item-lookup path. **UNKNOWN:** exact keystone detail-row projection and whether recipe ranks use Azerite specialization wording; exact questions are recorded in the contract. The exact detail-row projection remains unmodeled.
+[Round 7 getter contract](../specs/tooltip-r7-getters.md) and [Lua API](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) record R88n.4a cache insertion semantics and the modeled keystone selection/event/item-lookup path. **UNKNOWN:** whether recipe ranks use Azerite specialization wording; the exact question is recorded in the contract.
 
 ## [2026-11-15] system | Retail C_ColorOverrides state
 

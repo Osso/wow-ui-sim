@@ -85,20 +85,13 @@ fn test_wipe_function() {
 #[test]
 fn test_patch_12_1_global_security_helpers() {
     let env = WowLuaEnv::new().unwrap();
-    let (specialization_system, copied_value, copied_nested, same_nested, table_security): (
-        String,
-        i32,
-        i32,
-        bool,
-        String,
-    ) = env
+    let (copied_value, copied_nested, same_nested, table_security): (i32, i32, bool, String) = env
         .eval(
             r#"
             local source = { value = 7, nested = { value = 9 } }
             local copy = securecopy(source)
             settablesecurity({}, "secure")
-            return type(GetSpecializationSystem()),
-                copy.value,
+            return copy.value,
                 copy.nested.value,
                 copy.nested == source.nested,
                 type(settablesecurity)
@@ -106,7 +99,6 @@ fn test_patch_12_1_global_security_helpers() {
         )
         .unwrap();
 
-    assert_eq!(specialization_system, "string");
     assert_eq!(copied_value, 7);
     assert_eq!(copied_nested, 9);
     assert!(!same_nested, "securecopy should deep-copy nested tables");
@@ -305,6 +297,41 @@ fn test_mixin() {
     let foo: i32 = t.env.eval("return MIX_FOO").unwrap();
     assert_eq!(foo, 1);
     t.assert_lua_str("return MIX_BAR", "hello");
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+// These globals are test-only fixtures for unrelated UnitUtil APIs, not
+// native claims. They let the consumer call complete; no assertion checks
+// their values, and assertions inspect only the wrapped selector.
+fn test_retail_get_specialization_system_via_cached_unit_util() {
+    let env = WowLuaEnv::new().unwrap();
+    let path =
+        crate::client_profile::blizzard_ui_addons_dir().join("Blizzard_SharedXML/UnitUtil.lua");
+    let source = std::fs::read_to_string(path).unwrap();
+    env.exec(&source).unwrap();
+    let passed: bool = env
+        .eval(
+            r##"
+            local getter = GetSpecializationSystem
+            local function verify(...)
+                local count, value = select("#", getter(...)), getter(...)
+                assert(count == 1 and type(value) == "number" and value == 1)
+                return value
+            end
+            GetSpecializationSystem = verify
+            UnitGroupRolesAssigned = function() return "NONE" end
+            C_SpecializationInfo = { GetSpecialization = function() return 1 end }
+            GetSpecializationRole = function() return "TANK" end
+            PlayerUtil.IsPlayerEffectivelyTank()
+            verify()
+            verify(nil)
+            verify(false, {}, "extra")
+            return true
+            "##,
+        )
+        .unwrap();
+    assert!(passed);
 }
 
 #[test]

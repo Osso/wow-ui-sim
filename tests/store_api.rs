@@ -1,7 +1,12 @@
+use wow_ui_sim::c_api::c_store_glue;
+#[cfg(feature = "client-retail")]
+use wow_ui_sim::c_api::c_store_glue::CompletionInput;
+use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 const STORE_SECURE_VAS_SCRIPT: &str = r#"
     local events = {}
+    STORE_SECURE_VAS_EVENTS = events
     local listener = CreateFrame("Frame")
     listener:SetScript("OnEvent", function(_, event, ...)
         if event == "VAS_TRANSFER_VALIDATION_UPDATE" then
@@ -18,6 +23,11 @@ const STORE_SECURE_VAS_SCRIPT: &str = r#"
         if event == "STORE_GUILD_FOLLOW_INFO_RECEIVED" then
             local guid, info = ...
             table.insert(events, event .. ":" .. tostring(guid) .. ":" .. tostring(info and info.transferredRealm))
+            return
+        end
+
+        if event == "STORE_VAS_PURCHASE_COMPLETE" then
+            table.insert(events, event .. ":" .. tostring(select('#', ...)))
             return
         end
 
@@ -206,15 +216,19 @@ const STORE_SECURE_VAS_SCRIPT: &str = r#"
         return "retry_purchase_failed"
     end
 
+    local eventCountBeforeSetters = #events
     C_StoreSecure.SetDisconnectOnLogout(true)
-    local _, _, _, shouldHandleAfterDisconnect = C_StoreSecure.GetVASCompletionInfo()
-    if shouldHandleAfterDisconnect ~= true then
-        return "disconnect_flag_not_applied"
-    end
-
     C_StoreSecure.SetVASProductReady(true)
-    if events[4] ~= "STORE_VAS_PURCHASE_COMPLETE" then
-        return "wrong_vas_complete_event:" .. tostring(events[4])
+    if STORE_SECURE_VAS_RETAIL_CONTRACT then
+        if not C_StoreGlue.GetDisconnectOnLogout() then
+            return "disconnect_flag_not_applied"
+        end
+        if not C_StoreGlue.GetVASProductReady() then
+            return "ready_flag_not_applied"
+        end
+        if #events ~= eventCountBeforeSetters then
+            return "setter_emitted_completion_event"
+        end
     end
 
     return "ok"
@@ -267,9 +281,41 @@ fn store_apis_report_enabled_and_available() {
 #[test]
 fn store_secure_vas_queries_and_stateful_actions_use_seeded_data() {
     let env = env();
+    env.exec(&format!(
+        "STORE_SECURE_VAS_RETAIL_CONTRACT = {}",
+        ACTIVE == ClientProfile::Retail
+    ))
+    .expect("store model profile should be available to the probe");
     let result: String = env
         .eval(STORE_SECURE_VAS_SCRIPT)
         .expect("seeded C_StoreSecure VAS flow should be queryable");
 
     assert_eq!(result, "ok");
+    #[cfg(feature = "client-retail")]
+    assert_retail_completion_callback_owns_the_event(&env);
+}
+
+#[cfg(feature = "client-retail")]
+fn assert_retail_completion_callback_owns_the_event(env: &WowLuaEnv) {
+    env.state()
+        .borrow_mut()
+        .store_glue
+        .callbacks
+        .purchase_complete = true;
+    c_store_glue::receive_completion(
+        env,
+        CompletionInput {
+            first: 0,
+            second: 0,
+            first_flag: false,
+            second_flag: false,
+            data: Vec::new(),
+        },
+    )
+    .expect("completion callback should dispatch its event");
+    let event: String = env
+        .eval("return STORE_SECURE_VAS_EVENTS[4]")
+        .expect("completion listener should retain the callback event");
+
+    assert_eq!(event, "STORE_VAS_PURCHASE_COMPLETE:0");
 }
