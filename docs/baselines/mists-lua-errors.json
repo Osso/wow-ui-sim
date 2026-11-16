@@ -1,1 +1,18 @@
-[]
+[
+  {
+    "message": "[OnEvent] frame=CombatAudioAlertManager addon=Blizzard_CombatAudioAlerts source=@Interface/AddOns/Blizzard_CombatAudioAlerts/Blizzard_CombatAudioAlertManager.lua:70: ...d_CombatAudioAlerts/Blizzard_CombatAudioAlertManager.lua:181: attempt to call field 'IsEnabled' (a nil value)\nstack traceback:\n\t(string):12: in function <(string):12>\n\t[C]: in function 'native_xpcall'\n\t(string):11: in function 'IsEnabled'\n\t...d_CombatAudioAlerts/Blizzard_CombatAudioAlertManager.lua:181: in function 'RefreshEvents'\n\t...d_CombatAudioAlerts/Blizzard_CombatAudioAlertManager.lua:125: in function 'Init'\n\t...d_CombatAudioAlerts/Blizzard_CombatAudioAlertManager.lua:72: in function <...d_CombatAudioAlerts/Blizzard_CombatAudioAlertManager.lua:70>\n\t(tail call): ?\n\t(tail call): ?\n\t[C]: in function 'native_xpcall'\n\t(string):8: in function <(string):5>\n\t(tail call): ?\n\t[C]: ?",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: [OnEvent] frame=CombatAudioAlertManager addon=Blizzard_CombatAudioAlerts source=@Interface/AddOns/Blizzard_CombatAudioAlerts/Blizzard_CombatAudioAlertManager.lua:70: ...d_CombatAudioAlerts/Blizzard_CombatAudioAlertManager.lua:181: attempt to call field 'IsEnabled' (a nil value)\nstack traceback:\n\t(string):12: in function <(string):12>\n\t[C]: in function 'native_xpcall'\n\t(string):11: in function 'IsEnabled'\n\t...d_CombatAudioAlerts/Blizzard_CombatAudioAlertManager.lua:181: in function 'RefreshEvents'\n\t...d_CombatAudioAlerts/Blizzard_CombatAudioAlertManager.lua:125: in function 'Init'\n\t...d_CombatAudioAlerts/Blizzard_CombatAudioAlertManager.lua:72: in function <...d_CombatAudioAlerts/Blizzard_CombatAudioAlertManager.lua:70>\n\t(tail call): ?\n\t(tail call): ?\n\t[C]: in function 'native_xpcall'\n\t(string):8: in function <(string):5>\n\t(tail call): ?\n\t[C]: ?\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>\n?: ?",
+    "count": 1
+  },
+  {
+    "message": "Interface/AddOns/Blizzard_FrameXMLUtil/AuraUtil.lua:272: attempt to call field 'GetVisibilityInfo' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: ?",
+    "count": 4
+  },
+  {
+    "message": "Lua Error: Interface/AddOns/Blizzard_FrameXMLUtil/AuraUtil.lua:272: attempt to call field 'GetVisibilityInfo' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: ?\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>\n?: ?",
+    "count": 4
+  }
+]
