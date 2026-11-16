@@ -50,6 +50,8 @@ python3 tools/gen_blizzard_ui_retail_index.py \
 python3 tools/gen_limited_listfile.py
 ```
 
+The limited listfile generator verifies the committed [input/output provenance](specs/limited-listfile-reproducibility.md). Update that reviewed pin along with approved source, override or manifest/request changes; `--check` verifies regeneration without rewriting the artifact. Do not replace an exact source with `releases/latest` to hide drift.
+
 The local community listfile used for the November 12, 2026 pin has SHA256 `486bb1d1c5a87cc136c7824857a391ab0b07c6f50bbc724e104fc5f18e320741`. A new remote refresh was blocked by the listfile content scanner, so that pin used the existing local copy; it did not claim a fresh listfile release.
 
 ### Retail 70783 metadata refresh — November 15, 2026
