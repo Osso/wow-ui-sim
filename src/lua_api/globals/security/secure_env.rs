@@ -9,7 +9,7 @@
 use rilua::vm::state::LuaState;
 use rilua::{LuaApiMut, LuaResult, Val, runtime_error};
 
-use crate::lua_api::methods::{registry_get, registry_set, table_get};
+use crate::lua_api::methods::{registry_get, registry_set};
 use crate::lua_bridge::{table_set_rust_fn, table_set_rust_fn_unpaired};
 
 const NATIVE_REGISTRATION_FLAG_MODULUS: u8 = 4;
@@ -202,30 +202,6 @@ pub(crate) fn set_secure_env_key_state(
     state.gc.barrier_back(secureenv_ref);
     if publishes_value {
         crate::lua_api::globals::compat_overrides::record_secure_global_publication(state, key)?;
-    }
-    Ok(())
-}
-
-const INFERRED_R88AC_UNIT_GLOBALS: &[&str] = &[
-    "UnitClass",
-    "UnitRace",
-    "UnitSex",
-    "UnitAffectingCombat",
-    "UnitName",
-];
-
-/// INFERRED (R88ac.ac1): mirror only these existing Unit globals to secureenv.
-/// Native publication and closure identity for these names are not established.
-pub(crate) fn publish_r88ac_inferred_unit_globals(state: &mut LuaState) -> LuaResult<()> {
-    let global = Val::Table(state.global);
-    for &name in INFERRED_R88AC_UNIT_GLOBALS {
-        let value = table_get(state, global, name);
-        if !matches!(value, Val::Function(_)) {
-            return Err(runtime_error(format!(
-                "R88ac inferred unit global is not a registered function: {name}"
-            )));
-        }
-        set_secure_env_key_state(state, name, value)?;
     }
     Ok(())
 }
