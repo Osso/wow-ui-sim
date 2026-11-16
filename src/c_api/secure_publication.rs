@@ -167,18 +167,10 @@ fn publish_and_snapshot_member(
     )?;
 
     let (ordinary_namespace, secure_namespace) = namespace_tables(state, namespace)?;
-    store_snapshot(
-        state,
-        ordinary_history,
-        member,
-        table_get(state, ordinary_namespace, member),
-    );
-    store_snapshot(
-        state,
-        secure_history,
-        member,
-        table_get(state, secure_namespace, member),
-    );
+    let ordinary_value = table_get(state, ordinary_namespace, member);
+    let secure_value = table_get(state, secure_namespace, member);
+    store_snapshot(state, ordinary_history, member, ordinary_value);
+    store_snapshot(state, secure_history, member, secure_value);
     Ok(implemented)
 }
 
@@ -195,7 +187,7 @@ fn trace_r88y_manifest(context_counts: [usize; 3]) {
     );
 }
 
-fn registry_snapshot_table(state: &mut LuaState, key: &str) -> LuaResult<Val> {
+fn registry_snapshot_table(state: &mut LuaState, key: &'static str) -> LuaResult<Val> {
     match registry_get(state, key) {
         table @ Val::Table(_) => Ok(table),
         Val::Nil => {

@@ -6,7 +6,7 @@
 use crate::lua_api::methods::{table_get, table_set};
 use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
-use rilua::{LuaResult, Val, runtime_error};
+use rilua::{LuaApiMut, LuaResult, Val, runtime_error};
 
 // R88y.y2 verifies the ordinary alias to base math.random; its later replacement stays unknown.
 pub(crate) fn register_retail_fast_random_alias(lua: &mut rilua::Lua) -> LuaResult<()> {
