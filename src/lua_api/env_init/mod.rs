@@ -18,7 +18,7 @@ use crate::lua_api::methods::{registry_get, registry_set};
 use crate::lua_api::script_helpers::protected_lua_pcall_state;
 use crate::lua_api::taint::stamp_addon_taint_state;
 #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
-use crate::lua_api::workarounds::temporary::secure_legacy_unit_globals::copy_legacy_unit_globals_to_secureenv;
+use crate::lua_api::workarounds::copy_legacy_unit_globals_to_secureenv;
 use crate::screen::ScreenKind;
 use rilua::LuaApiMut;
 use rilua::vm::state::LuaState;

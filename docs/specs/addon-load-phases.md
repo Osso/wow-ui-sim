@@ -90,7 +90,7 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 - `src/c_api/helpers.rs`, `src/c_api/secure_publication.rs`, and generated `src/c_api/secure_publication_data.rs` — route implemented members through verified R88y flags; the source CSV and generator are `data/secure-publication/retail-12-1-5-70688.csv` and `tools/gen_r88y_secure_publication.py`.
 - `src/loader/addon.rs` — orders ordinary and secure dependency requests.
 - `src/loader/lua_file.rs`, `src/loader/xml_file.rs`, `src/lua_api/loader_env.rs`, `src/lua_api/globals/security/secure_env.rs` — execute secure files through the shared table and retain private replay only for selected replay paths and generated XML loader chunks.
-- `src/lua_api/workarounds/temporary/secure_legacy_unit_globals.rs`, `src/lua_api/env_init/mod.rs` — retain the source-derived master Unit-global route in Retail secureenv without inferring native publication.
+- `src/lua_api/workarounds/temporary/secure_legacy_unit_globals.rs`, `src/lua_api/workarounds/mod.rs`, `src/lua_api/env_init/mod.rs` — retain the source-derived master Unit-global route in Retail secureenv without inferring native publication.
 - `src/lua_api/env_init/enums.rs` — registers `Enum` values and the Retail `Constants.*` secure-table publication path.
 - `src/lua_api/globals/strings/mod.rs` — registers PHF GlobalStrings rows and integer constants; applies the inferred string and non-`LE_GAME_*` integer mirrors, plus the CSV-listed `LE_GAME_*` route.
 - `src/lua_api/env_init/mod.rs`, `src/lua_api/env_runtime.rs` — install pre-copy library aliases and rerun verified publication after screen-specific registrations.
