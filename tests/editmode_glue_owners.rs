@@ -95,6 +95,104 @@ fn addon_precedes(addons: &[String], owner: &str, caller: &str) -> bool {
     matches!((owner_index, caller_index), (Some(owner), Some(caller)) if owner < caller)
 }
 
+#[cfg(any(
+    feature = "client-ptr",
+    feature = "client-retail",
+    feature = "client-wowforever",
+    feature = "client-mists"
+))]
+#[derive(Clone, Copy, Debug)]
+struct BoundaryCounters {
+    pve_install: i32,
+    pve_calls: i32,
+    print_install: i32,
+    print_calls: i32,
+    store_install: i32,
+    store_calls: i32,
+}
+
+#[cfg(any(
+    feature = "client-ptr",
+    feature = "client-retail",
+    feature = "client-wowforever",
+    feature = "client-mists"
+))]
+fn read_boundary_counter(env: &WowLuaEnv, name: &str) -> i32 {
+    let code = format!(
+        "local registry = debug.getregistry(); local counters = rawget(registry, '__wow_editmode_glue_probe_counters'); if type(counters) ~= 'table' then return 0 end; return tonumber(rawget(counters, {name:?})) or 0"
+    );
+    env.eval(&code)
+        .unwrap_or_else(|error| panic!("read boundary counter {name}: {error}"))
+}
+
+#[cfg(any(
+    feature = "client-ptr",
+    feature = "client-retail",
+    feature = "client-wowforever",
+    feature = "client-mists"
+))]
+fn read_boundary_counters(env: &WowLuaEnv) -> BoundaryCounters {
+    BoundaryCounters {
+        pve_install: read_boundary_counter(env, "pve_install"),
+        pve_calls: read_boundary_counter(env, "pve_calls"),
+        print_install: read_boundary_counter(env, "print_install"),
+        print_calls: read_boundary_counter(env, "print_calls"),
+        store_install: read_boundary_counter(env, "store_install"),
+        store_calls: read_boundary_counter(env, "store_calls"),
+    }
+}
+
+#[cfg(any(
+    feature = "client-ptr",
+    feature = "client-retail",
+    feature = "client-wowforever",
+    feature = "client-mists"
+))]
+fn assert_counter_install_counts(counters: BoundaryCounters, baseline: bool) {
+    let expected_pve_install = if baseline || cfg!(feature = "client-wowforever") {
+        1
+    } else {
+        0
+    };
+    let expected_glue_install = if baseline { 1 } else { 0 };
+    assert_eq!(counters.pve_install, expected_pve_install, "PVE bridge install count");
+    assert_eq!(counters.print_install, expected_glue_install, "print fallback install count");
+    assert_eq!(counters.store_install, expected_glue_install, "Store fallback install count");
+}
+
+#[cfg(any(
+    feature = "client-ptr",
+    feature = "client-retail",
+    feature = "client-wowforever",
+    feature = "client-mists"
+))]
+fn log_boundary_counters(label: &str, phase: &str, counters: BoundaryCounters) {
+    eprintln!(
+        "COUNTER|{label}|phase={phase}|pve_install={}|pve_calls={}|print_install={}|print_calls={}|store_install={}|store_calls={}",
+        counters.pve_install,
+        counters.pve_calls,
+        counters.print_install,
+        counters.print_calls,
+        counters.store_install,
+        counters.store_calls,
+    );
+}
+
+#[cfg(any(
+    feature = "client-ptr",
+    feature = "client-retail",
+    feature = "client-wowforever",
+    feature = "client-mists"
+))]
+fn is_baseline_adapter() -> bool {
+    match std::env::var("WOW_SIM_EDITMODE_GLUE_ADAPTER").as_deref() {
+        Ok("base") => true,
+        Ok("candidate") => false,
+        Ok(value) => panic!("unknown Edit Mode Glue adapter variant: {value}"),
+        Err(error) => panic!("missing Edit Mode Glue adapter variant: {error}"),
+    }
+}
+
 #[cfg(feature = "retail-12-1-0")]
 fn clear_raid_warning_enums(env: &WowLuaEnv) {
     env.exec(
@@ -172,7 +270,10 @@ fn invoke_group_finder_consumers(env: &WowLuaEnv) -> String {
     feature = "client-wowforever",
     feature = "client-mists"
 ))]
-fn probe_group_finder_consumer(env: &WowLuaEnv, addons: &[String]) {
+fn probe_group_finder_consumer(env: &WowLuaEnv, addons: &[String], baseline: bool) {
+    let counters_at_startup = read_boundary_counters(env);
+    assert_counter_install_counts(counters_at_startup, baseline);
+
     let source_before = function_source(env, "PVEFrame_ToggleFrame");
     let loaded_before: bool = env
         .eval("return C_AddOns.IsAddOnLoaded('Blizzard_GroupFinder')")
@@ -180,20 +281,45 @@ fn probe_group_finder_consumer(env: &WowLuaEnv, addons: &[String]) {
     let owner_before = source_before.contains("Blizzard_GroupFinder/");
     let owner_order = addon_precedes(addons, "Blizzard_GroupFinder", "Blizzard_MicroMenu");
     eprintln!(
-        "BOUNDARY|PVEFrame_ToggleFrame|source_before={source_before}|loaded_before={loaded_before}|owner_before={owner_before}|owner_before_micro_menu={owner_order}"
+        "OWNER|PVEFrame_ToggleFrame|source_before={source_before}|loaded_before={loaded_before}|owner_before={owner_before}|owner_before_micro_menu={owner_order}"
     );
+    log_boundary_counters("PVEFrame_ToggleFrame", "startup", counters_at_startup);
 
     let load_attempts = invoke_group_finder_consumers(env);
     let source_after = function_source(env, "PVEFrame_ToggleFrame");
+    let counters_after_consumer = read_boundary_counters(env);
+    assert_counter_install_counts(counters_after_consumer, baseline);
+    let fallback_calls = counters_after_consumer.pve_calls - counters_at_startup.pve_calls;
     if owner_before {
         assert!(loaded_before, "the Group Finder owner must be loaded before use");
         assert!(load_attempts.is_empty(), "an active owner must not need LoadAddOn");
         assert!(source_after.contains("Blizzard_GroupFinder/"));
+        assert_eq!(fallback_calls, 0, "the fallback must not run when the owner is active");
     } else {
         assert_eq!(load_attempts, "Blizzard_GroupFinder");
+        assert!(fallback_calls > 0, "the retained bridge must be detected by its counter");
+    }
+    if baseline {
+        eprintln!(
+            "EXPECTED_BASE_DIFFERENCE|PVEFrame_ToggleFrame|fallback_installed={}|owner_before={}|fallback_calls={fallback_calls}",
+            counters_after_consumer.pve_install,
+            owner_before,
+        );
+    } else if cfg!(feature = "client-wowforever") {
+        assert_eq!(counters_after_consumer.pve_install, 1);
+        assert!(fallback_calls > 0, "Forever is the retained-bridge positive control");
+    } else {
+        assert_eq!(counters_after_consumer.pve_install, 0);
+        assert_eq!(counters_after_consumer.pve_calls, 0, "retired profiles must not reach the PVE bridge");
+        assert_eq!(fallback_calls, 0, "retired profiles must not reach the PVE bridge");
     }
     eprintln!(
-        "BOUNDARY|PVEFrame_ToggleFrame|source_after={source_after}|load_addon_calls={load_attempts}"
+        "OWNER|PVEFrame_ToggleFrame|source_after={source_after}|load_addon_calls={load_attempts}"
+    );
+    log_boundary_counters(
+        "PVEFrame_ToggleFrame",
+        "after_consumer",
+        counters_after_consumer,
     );
 }
 
@@ -203,7 +329,9 @@ fn probe_group_finder_consumer(env: &WowLuaEnv, addons: &[String]) {
     feature = "client-wowforever",
     feature = "client-mists"
 ))]
-fn probe_print_handler_consumer(env: &WowLuaEnv, addons: &[String]) {
+fn probe_print_handler_consumer(env: &WowLuaEnv, addons: &[String], baseline: bool) {
+    let counters_at_startup = read_boundary_counters(env);
+    assert_counter_install_counts(counters_at_startup, baseline);
     let setter_source = function_source(env, "setprinthandler");
     let caller_addon_loaded = addons.iter().any(|name| name == "Blizzard_GlueParent");
     let owner_order = addon_precedes(addons, "Blizzard_PrintHandler", "Blizzard_GlueParent");
@@ -213,20 +341,46 @@ fn probe_print_handler_consumer(env: &WowLuaEnv, addons: &[String]) {
         )
         .expect("read the Glue print handler installed by its caller");
     let caller_registered = handler_source.contains("Blizzard_GlueParent/");
+    let original_setter = setter_source.contains("Blizzard_PrintHandler/");
     eprintln!(
-        "BOUNDARY|setprinthandler|setter_source={setter_source}|caller_addon_loaded={caller_addon_loaded}|owner_before_caller={owner_order}|caller_registered={caller_registered}|handler_source={handler_source}"
+        "OWNER|setprinthandler|setter_source={setter_source}|caller_addon_loaded={caller_addon_loaded}|owner_before_caller={owner_order}|caller_registered={caller_registered}|handler_source={handler_source}"
     );
-    if caller_registered {
+    log_boundary_counters("setprinthandler", "startup", counters_at_startup);
+
+    if baseline {
+        assert_eq!(counters_at_startup.print_install, 1);
+        eprintln!(
+            "EXPECTED_BASE_DIFFERENCE|setprinthandler|fallback_installed=1|original_setter={original_setter}|caller_registered={caller_registered}|fallback_calls={}",
+            counters_at_startup.print_calls,
+        );
+        if caller_registered && !original_setter {
+            assert!(counters_at_startup.print_calls > 0);
+        }
+    } else {
+        assert_eq!(counters_at_startup.print_install, 0);
+        assert_eq!(counters_at_startup.print_calls, 0);
+        assert!(original_setter, "candidate must select the original print owner");
+    }
+    if caller_registered && original_setter {
         assert!(owner_order, "the print owner must load before its caller");
-        assert!(setter_source.contains("Blizzard_PrintHandler/"));
     }
 
-    if setter_source.contains("Blizzard_PrintHandler/") {
+    if original_setter {
         let stores_handler: bool = env
             .eval("local f = function() end; setprinthandler(f); return getprinthandler() == f")
             .expect("exercise the original print-handler owner");
         assert!(stores_handler, "the original print owner must store its handler");
     }
+    let counters_after_consumer = read_boundary_counters(env);
+    assert_counter_install_counts(counters_after_consumer, baseline);
+    if !baseline {
+        assert_eq!(counters_after_consumer.print_calls, 0);
+    }
+    log_boundary_counters(
+        "setprinthandler",
+        "after_consumer",
+        counters_after_consumer,
+    );
 }
 
 #[cfg(any(
@@ -277,21 +431,67 @@ fn invoke_store_consumer(env: &WowLuaEnv) -> bool {
     feature = "client-wowforever",
     feature = "client-mists"
 ))]
-fn probe_store_consumer(env: &WowLuaEnv, addons: &[String]) {
+fn probe_store_consumer(env: &WowLuaEnv, addons: &[String], baseline: bool) {
+    let counters_at_startup = read_boundary_counters(env);
+    assert_counter_install_counts(counters_at_startup, baseline);
     let owner_source = function_source(env, "StoreFrame_WaitingForCharacterListUpdate");
     let consumer_source = store_consumer_source(env);
     let consumer_loaded = addons.iter().any(|name| name == "Blizzard_GlueXML");
     let owner_loaded = addons.iter().any(|name| name == "Blizzard_StoreUI");
     let owner_is_original = owner_source.contains("Blizzard_StoreUI/");
     eprintln!(
-        "BOUNDARY|StoreFrame_WaitingForCharacterListUpdate|owner_source={owner_source}|owner_loaded={owner_loaded}|consumer_source={consumer_source}|consumer_loaded={consumer_loaded}"
+        "OWNER|StoreFrame_WaitingForCharacterListUpdate|owner_source={owner_source}|owner_loaded={owner_loaded}|consumer_source={consumer_source}|consumer_loaded={consumer_loaded}"
+    );
+    log_boundary_counters(
+        "StoreFrame_WaitingForCharacterListUpdate",
+        "startup",
+        counters_at_startup,
     );
 
-    if consumer_source.contains("CharacterSelect.lua") {
-        assert!(consumer_loaded, "the selected CharacterSelect consumer must load");
-        assert!(owner_loaded && owner_is_original, "StoreUI owner must be active before OnUpdate");
-        assert!(invoke_store_consumer(env));
+    assert!(
+        consumer_source.contains("CharacterSelect.lua"),
+        "the selected CharacterSelect consumer must be present"
+    );
+    assert!(consumer_loaded, "the selected CharacterSelect consumer must load");
+    if baseline {
+        eprintln!(
+            "EXPECTED_BASE_DIFFERENCE|StoreFrame_WaitingForCharacterListUpdate|fallback_installed={}|owner_is_original={owner_is_original}|owner_loaded={owner_loaded}",
+            counters_at_startup.store_install,
+        );
+    } else {
+        assert!(owner_loaded && owner_is_original, "the original StoreUI owner must be active");
+        assert_eq!(counters_at_startup.store_calls, 0);
     }
+
+    let callback_called = invoke_store_consumer(env);
+    let counters_after_consumer = read_boundary_counters(env);
+    assert_counter_install_counts(counters_after_consumer, baseline);
+    if owner_is_original {
+        assert_eq!(counters_after_consumer.store_calls, counters_at_startup.store_calls);
+        if !baseline {
+            assert!(callback_called);
+            assert_eq!(counters_after_consumer.store_calls, 0);
+        }
+    } else {
+        assert!(baseline, "candidate must not call the Store fallback");
+        assert_eq!(
+            counters_after_consumer.store_calls,
+            counters_at_startup.store_calls + 1,
+            "the base fallback must be detected when it serves the consumer"
+        );
+        assert!(!callback_called);
+    }
+    if baseline {
+        eprintln!(
+            "EXPECTED_BASE_DIFFERENCE|StoreFrame_WaitingForCharacterListUpdate|owner_is_original={owner_is_original}|fallback_call_delta={}|consumer_callback_called={callback_called}",
+            counters_after_consumer.store_calls - counters_at_startup.store_calls,
+        );
+    }
+    log_boundary_counters(
+        "StoreFrame_WaitingForCharacterListUpdate",
+        "after_consumer",
+        counters_after_consumer,
+    );
 }
 
 #[cfg(any(
@@ -302,13 +502,14 @@ fn probe_store_consumer(env: &WowLuaEnv, addons: &[String]) {
 ))]
 #[test]
 fn editmode_glue_owner_boundaries_preserve_original_consumers() {
+    let baseline = is_baseline_adapter();
     let ui_dir = crate::common::blizzard_addon_harness::blizzard_ui_dir();
     let game_env = prepare_env(&ui_dir, ScreenKind::Game);
     let game_addons = load_startup_addons(&game_env, &ui_dir, ScreenKind::Game);
-    probe_group_finder_consumer(&game_env, &game_addons);
+    probe_group_finder_consumer(&game_env, &game_addons, baseline);
 
     let glue_env = prepare_env(&ui_dir, ScreenKind::CharacterSelect);
     let glue_addons = load_startup_addons(&glue_env, &ui_dir, ScreenKind::CharacterSelect);
-    probe_print_handler_consumer(&glue_env, &glue_addons);
-    probe_store_consumer(&glue_env, &glue_addons);
+    probe_print_handler_consumer(&glue_env, &glue_addons, baseline);
+    probe_store_consumer(&glue_env, &glue_addons, baseline);
 }
