@@ -1487,10 +1487,6 @@ const RETAIL_DISCONNECT_CONSUMER_SETUP: &str = r##"
 assert(C_AddOns.IsAddOnLoaded("Blizzard_GlueXML"))
 local source = debug.getinfo(CharacterSelectFrameMixin.OnShow, "S").source
 assert(source:find("Blizzard_GlueXML/Mainline/CharacterSelect.lua", 1, true), source)
-CharacterSelect.CharacterSelectUI = CharacterSelect.CharacterSelectUI or {
-    VisibilityFramesContainer = { ToolTray = { SetExpanded = function() end } }
-}
-assert(type(CharacterSelect.CharacterSelectUI) == "table")
 disconnectEvents = {}
 disconnectListener = CreateFrame("Frame")
 for _, event in ipairs({"AUTO_REALM_SWAP", "LAUNCHER_LOGIN_STATUS_CHANGED", "LOGIN_STATE_CHANGED"}) do
@@ -1532,12 +1528,12 @@ fn retail_character_select_disconnect_consumer_publishes_ordered_events() {
     test_timeout! {
         let env = load_blizzard_screen(ScreenKind::CharacterSelect);
         env.exec(RETAIL_DISCONNECT_CONSUMER_SETUP).expect("selected Retail consumer setup");
-        let no_disconnect = env.exec("C_StoreGlue._state.disconnectOnLogout = false; CharacterSelectFrameMixin:OnShow(CharacterSelect)");
+        let no_disconnect = env.exec("C_StoreGlue._state.disconnectOnLogout = false; CharacterSelectFrameMixin.OnShow(CharacterSelect)");
         env.exec("C_Login.Login('disconnect-probe', CreateFrame('EditBox'))").unwrap();
         wow_ui_sim::startup::run_extra_update_ticks(&env, 2);
         env.exec("disconnectEvents = {}").unwrap();
-        let active = env.exec("C_StoreGlue._state.disconnectOnLogout = true; CharacterSelectFrameMixin:OnShow(CharacterSelect)");
-        let repeated = env.exec("C_StoreGlue._state.disconnectOnLogout = true; CharacterSelectFrameMixin:OnShow(CharacterSelect)");
+        let active = env.exec("C_StoreGlue._state.disconnectOnLogout = true; CharacterSelectFrameMixin.OnShow(CharacterSelect)");
+        let repeated = env.exec("C_StoreGlue._state.disconnectOnLogout = true; CharacterSelectFrameMixin.OnShow(CharacterSelect)");
         assert!(no_disconnect.is_ok(), "false selector must skip DisconnectFromServer: {no_disconnect:?}");
         assert!(active.is_ok(), "active consumer call must succeed: {active:?}");
         assert!(repeated.is_ok(), "disconnected consumer call must succeed: {repeated:?}");
