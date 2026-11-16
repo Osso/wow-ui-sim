@@ -413,7 +413,12 @@ fn register_attribute_core(state: &mut LuaState, table: GcRef<Table>) -> LuaResu
 }
 
 fn register_call_method(state: &mut LuaState, table: GcRef<Table>) -> LuaResult<()> {
-    let loader = state.load(CALL_METHOD_LUA)?;
+    let source = if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        CALL_METHOD_RETAIL_LUA
+    } else {
+        CALL_METHOD_LUA
+    };
+    let loader = state.load(source)?;
     let closure = call_function_state(state, Val::Function(loader.gc_ref()), &[])?;
     let key = Val::Str(state.gc.intern_string_static(b"CallMethod"));
     if let Some(methods) = state.gc.tables.get_mut(table) {
@@ -422,6 +427,25 @@ fn register_call_method(state: &mut LuaState, table: GcRef<Table>) -> LuaResult<
     state.gc.barrier_back(table);
     Ok(())
 }
+
+// R88ae.4: Retail execution taint never marks ordinary values secret.
+const CALL_METHOD_RETAIL_LUA: &str = r##"
+return function(frame, methodName, ...)
+    local callerTaint = debug.getstacktaint()
+    forceinsecure()
+    if callerTaint ~= nil then
+        debug.setstacktaint(callerTaint)
+    end
+    if type(methodName) ~= "string" then
+        error("Method name must be a string")
+    end
+    local method = frame[methodName]
+    if type(method) ~= "function" then
+        error("Invalid method '" .. methodName .. "'")
+    end
+    return method(frame, ...)
+end
+"##;
 
 const CALL_METHOD_LUA: &str = r##"
 return function(frame, methodName, ...)

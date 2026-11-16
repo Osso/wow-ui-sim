@@ -57,11 +57,13 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
         "issecurevariable",
         value_access::issecurevariable_override,
     )?;
-    LuaApiMut::register_function(
-        lua,
-        "__sim_mark_secret_value",
-        value_access::mark_secret_values,
-    )?;
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
+        LuaApiMut::register_function(
+            lua,
+            "__sim_mark_secret_value",
+            value_access::mark_secret_values,
+        )?;
+    }
     LuaApiMut::register_function(lua, "__sim_mark_slot_taint", value_access::mark_slot_taint)?;
     value_access::register_value_access_fallbacks(lua)?;
     #[cfg(feature = "retail-12-0-0")]
