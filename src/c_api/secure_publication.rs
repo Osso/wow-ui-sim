@@ -574,9 +574,10 @@ mod tests {
                         or rawget(privateAuras, "AnchorPrivateAura") == nil)
                         and (type(securePrivateAuras) ~= "table"
                             or rawget(securePrivateAuras, "AnchorPrivateAura") == nil),
-                    (type(catalog) ~= "table" or rawget(catalog, "GetAvailableCategoryIDs") == nil)
+                    (type(catalog) ~= "table"
+                        or rawget(catalog, "GetAvailableTransmogRaceInfos") == nil)
                         and (type(secureCatalog) ~= "table"
-                            or rawget(secureCatalog, "GetAvailableCategoryIDs") == nil),
+                            or rawget(secureCatalog, "GetAvailableTransmogRaceInfos") == nil),
                     rawget(__secureenv, "GetForbiddenObjectTable") ~= nil
                         and rawget(_G, "GetForbiddenObjectTable") == nil,
                     type(rawget(_G, "RegisterEventCallback")) == "function"
