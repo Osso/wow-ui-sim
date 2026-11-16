@@ -1489,7 +1489,7 @@ local source = debug.getinfo(CharacterSelectFrameMixin.OnShow, "S").source
 assert(source:find("Blizzard_GlueXML/Mainline/CharacterSelect.lua", 1, true), source)
 disconnectEvents = {}
 disconnectListener = CreateFrame("Frame")
-for _, event in ipairs({"AUTO_REALM_SWAP", "LAUNCHER_LOGIN_STATUS_CHANGED", "LOGIN_STATE_CHANGED"}) do
+for _, event in ipairs({"AUTO_REALM_SWAP", "LAUNCHER_LOGIN_STATUS_CHANGED", "LOGIN_STATE_CHANGED", "CHARACTER_LIST_UPDATE"}) do
     disconnectListener:RegisterEvent(event)
 end
 disconnectListener:SetScript("OnEvent", function(_, event, ...)
@@ -1534,11 +1534,14 @@ fn retail_character_select_disconnect_consumer_publishes_ordered_events() {
         env.exec("disconnectEvents = {}").unwrap();
         let active = env.exec("C_StoreGlue._state.disconnectOnLogout = true; CharacterSelectFrameMixin.OnShow(CharacterSelect)");
         let repeated = env.exec("C_StoreGlue._state.disconnectOnLogout = true; CharacterSelectFrameMixin.OnShow(CharacterSelect)");
+        wow_ui_sim::startup::run_extra_update_ticks(&env, 2);
         assert!(no_disconnect.is_ok(), "false selector must skip DisconnectFromServer: {no_disconnect:?}");
         assert!(active.is_ok(), "active consumer call must succeed: {active:?}");
         assert!(repeated.is_ok(), "disconnected consumer call must succeed: {repeated:?}");
         let events: String = env.eval("return table.concat(disconnectEvents, ',')").unwrap();
         assert_eq!(events, "AUTO_REALM_SWAP:1:false,LAUNCHER_LOGIN_STATUS_CHANGED:0,LOGIN_STATE_CHANGED:0,AUTO_REALM_SWAP:1:false,LOGIN_STATE_CHANGED:0");
+        let returns: i32 = env.eval("return select('#', C_Login.DisconnectFromServer())").unwrap();
+        assert_eq!(returns, 0);
         let connected: bool = env.eval("local _, value = C_Login.GetState(); return value").unwrap();
         assert!(!connected, "the original OnShow consumer must leave the modeled connection disconnected");
     }
