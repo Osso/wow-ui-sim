@@ -1,4 +1,5 @@
-local projectForbiddenDelegateArguments, retiredPortraitGlobal, callPrivateProjectionFactory = ...
+local projectForbiddenDelegateArguments, retiredPortraitGlobal,
+  callPrivateProjectionFactory, retireGlueOwnerDefaults = ...
 
 local function __wow_public_global_path(path)
   local first, rest = string.match(path, "^([^.]+)%.?(.*)$")
@@ -1290,7 +1291,7 @@ if StopGlueAmbience == nil then
   end
 end
 
-if StoreFrame_WaitingForCharacterListUpdate == nil then
+if not retireGlueOwnerDefaults and StoreFrame_WaitingForCharacterListUpdate == nil then
   function StoreFrame_WaitingForCharacterListUpdate()
     return false
   end
