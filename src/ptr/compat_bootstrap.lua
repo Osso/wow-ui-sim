@@ -83,15 +83,6 @@ for _, functionName in ipairs(difficultyColorDelegates) do
   end
 end
 
-if GetSpecializationSystem == nil then
-  function GetSpecializationSystem()
-    if Enum.SpecializationSystem and Enum.SpecializationSystem.Traits ~= nil then
-      return Enum.SpecializationSystem.Traits
-    end
-    return "Traits"
-  end
-end
-
 if settablesecurity == nil then
   function settablesecurity(_table, _key, _taint, _secure)
   end
