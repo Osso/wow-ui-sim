@@ -29,5 +29,5 @@ VERIFIED — Retail 12.1.5.70688 `GetSpecializationSystem` ignores Lua arguments
 ## Out of scope
 
 - Profiles without the verified Retail behavior do not receive this implementation.
-- The inferred enum-name mapping is recorded separately and is not asserted by tests.
+- INFERRED — For Retail 12.1.5.70688, raw value 1 maps to `Enum.SpecializationSystem.ChrSpecialization` based on local Retail documentation-cache metadata for 12.1.5.70783; this does not prove the exact 70688 UI payload used the same enum name. Tests do not assert this enum identity.
 - Secret argument behavior is not exercised by the simulator test.
