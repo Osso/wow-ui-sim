@@ -219,9 +219,9 @@ fn item_upgrade_unknown_inventory_count_returns_false_through_item_util() {
             .inventory_count = None;
         env.exec(
             r#"
-            assert(C_ItemUpgrade.CanUpgradeItem(unknownInventoryLocation) == false)
             assert(ItemButtonUtil.GetItemContextMatchResultForItem(unknownInventoryLocation)
                 == ItemButtonUtil.ItemContextMatchResult.Mismatch)
+            assert(C_ItemUpgrade.CanUpgradeItem(unknownInventoryLocation) == false)
         "#,
         )
         .expect("unknown inventory bounds must reject without changing the boolean API");
