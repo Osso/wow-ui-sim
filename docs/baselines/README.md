@@ -51,15 +51,20 @@ device; this is not audio-device acceptance.
 
 ### Mists
 
-`mists-lua-errors.json` is the committed clean startup baseline for:
+VERIFIED — `mists-lua-errors.json` is the byte-exact stdout from the Mists stock command
+below, including its trailing LF. Its current error classes and capture proof
+are in [`mists-lua-errors.meta.json`](mists-lua-errors.meta.json).
 
 ```bash
 cargo build --no-default-features --features "sound,gui,casc,client-mists" --bin wow-sim
 WOW_SIM_NO_SAVED_VARS=1 WOW_SIM_NO_ADDONS=1 timeout 90 ./target/debug/wow-sim lua-errors > docs/baselines/mists-lua-errors.json
 ```
 
-Do not refresh this file to bless new startup errors. Refresh only after a
-verified clean Mists capture.
+VERIFIED — The 2026-11-16 inventory is a coordinator-approved diagnostic capture with
+root-caused records pending Mists native evidence. It is not clean-startup
+acceptance. Do not replace it with a different non-clean capture without an
+explicit policy decision; normal refreshes still require a verified clean
+Mists capture.
 
 Verified scoped capture on 2026-10-16: **0 records / 0 occurrences, exit0**;
 142 Blizzard addons loaded. Sealed Mists source `4d5572f241cce3d99a7b486709186a2638566a56`
