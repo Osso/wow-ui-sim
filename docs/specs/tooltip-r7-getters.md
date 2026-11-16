@@ -143,4 +143,3 @@ The Round 7 `C_TooltipInfo` getters use native argument readers and tooltip buil
 - Synthesizing LFG reward snapshots or guessing the incoming packet/cache lifecycle.
 - Changing the native `GetItemNumSockets` count calculation or claiming a result-tag rule without its enable/mode semantics.
 - R88z.z2 recipe-rank specialization wording; this lane covers only `GetSlottedKeystone`.
-- R88z.z2 recipe-rank specialization wording; this lane covers only `GetSlottedKeystone`.
