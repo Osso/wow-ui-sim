@@ -96,20 +96,35 @@ fn clear_login_state(state: &mut LuaState) -> LuaResult<bool> {
 mod tests {
     use crate::{lua_api::WowLuaEnv, screen::ScreenKind};
 
+    use super::ConnectionInfo;
+
     #[test]
     fn disconnect_clears_a_stored_login_error() {
         let env = WowLuaEnv::new().expect("Lua environment");
         env.set_screen_mode(ScreenKind::CharacterSelect);
-        env.state().borrow_mut().glue_login.retail_glue.login_error = Some("stored".into());
+        {
+            let mut sim = env.state().borrow_mut();
+            let login = &mut sim.glue_login;
+            login.pending_step = 2;
+            login.aurora_state = 7;
+            login.realm_list_available = true;
+            login.connected_to_wow = true;
+            login.received_connection_info = ConnectionInfo {
+                ready: true,
+                character_limit: 99,
+            };
+            login.retail_glue.login_error = Some("stored".into());
+        }
         env.exec("C_Login.DisconnectFromServer()")
             .expect("Retail disconnect should succeed");
-        assert!(
-            env.state()
-                .borrow()
-                .glue_login
-                .retail_glue
-                .login_error
-                .is_none()
-        );
+        let sim = env.state().borrow();
+        let login = &sim.glue_login;
+        assert_eq!(login.pending_step, 0);
+        assert_eq!(login.aurora_state, 1);
+        assert!(!login.realm_list_available);
+        assert!(!login.connected_to_wow);
+        assert!(!login.received_connection_info.ready);
+        assert_eq!(login.received_connection_info.character_limit, 0);
+        assert!(login.retail_glue.login_error.is_none());
     }
 }
