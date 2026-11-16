@@ -1,4 +1,4 @@
-//! Immutable PTR source identity; Blizzard CDN bytes, never a Gethe content fallback.
+//! Immutable Retail and PTR source identities; Blizzard CDN bytes, never a Gethe content fallback.
 use super::CacheProvenance;
 use serde::Deserialize;
 use sha2::{Digest, Sha256};
@@ -76,11 +76,11 @@ fn retail_build() -> crate::Result<&'static Build> {
             ];
             let expected = [
                 "wow",
-                "12.1.5.70575",
-                "d718abcc42604d8efbd35aecfa5bb75b",
-                "c13b476a09cb3262797a6fdc88103036",
-                "8fef5697abe6472c6b9235a2b9f7c9f8",
-                "15881d522c44cd106d3d8660106ec9f9d2f44167",
+                "12.1.5.70783",
+                "bc493ecb2898766c0f8947a99b4b3d65",
+                "3363ac656da5f261cdc675ab28b2744c",
+                "e58758dc26b4c93c71f5fb65054f90c4",
+                "297d7aaaa736f346b3e036f38ee088eaf7f8c07f",
             ];
             if build.schema != 1 || identity != expected {
                 return Err("unsupported Retail content-index schema or source identity".into());
@@ -471,6 +471,26 @@ mod tests {
         assert!(!root.join("stale-source").exists());
         assert!(!root.join(super::super::COMPLETE_MARKER).exists());
         assert!(cache_matches(root));
+    }
+
+    #[test]
+    fn pinned_retail_selects_exact_70783_source_identity() {
+        let selected = retail_build().unwrap();
+        assert_eq!(selected.product, "wow");
+        assert_eq!(selected.version, "12.1.5.70783");
+        assert_eq!(selected.build_key, "bc493ecb2898766c0f8947a99b4b3d65");
+        assert_eq!(selected.cdn_key, "3363ac656da5f261cdc675ab28b2744c");
+        assert_eq!(selected.install_key, "e58758dc26b4c93c71f5fb65054f90c4");
+        assert_eq!(
+            selected.gethe_revision,
+            "297d7aaaa736f346b3e036f38ee088eaf7f8c07f"
+        );
+        assert!(
+            retail_provenance()
+                .unwrap()
+                .contents()
+                .contains("source=blizzard-cdn-pinned\n")
+        );
     }
 
     #[test]

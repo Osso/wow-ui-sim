@@ -571,9 +571,17 @@ fn retail_provenance_ignores_installed_build_identity() {
             "wow",
         )
         .unwrap();
-        assert_ne!(installed.version, "12.1.5.70575");
+        let index: serde_json::Value =
+            serde_json::from_str(include_str!("../../data/blizzard-ui-builds/retail.json"))
+                .unwrap();
+        let pinned_version = index["version"].as_str().unwrap();
+        assert_ne!(installed.version, pinned_version);
         let provenance = super::expected_cache_provenance().unwrap();
-        assert!(provenance.contents().contains("version=12.1.5.70575\n"));
+        assert!(
+            provenance
+                .contents()
+                .contains(&format!("version={pinned_version}\n"))
+        );
         assert!(
             provenance
                 .contents()
@@ -596,36 +604,44 @@ fn retail_provenance_ignores_installed_build_identity() {
     assert!(status.success(), "child provenance test failed");
 }
 
-#[test]
 #[cfg(all(feature = "casc", feature = "client-retail"))]
-fn retail_sync_cached_fixture_child() {
-    use std::io::{IsTerminal, Read};
-    let args: Vec<_> = std::env::args().collect();
-    if !args.windows(2).any(|args| {
+fn retail_sync_test_selected_exactly() -> bool {
+    std::env::args().collect::<Vec<_>>().windows(2).any(|args| {
         args == [
             "--exact",
             "blizzard_ui_sync::tests::retail_sync_cached_fixture_child",
         ]
-    }) {
-        return;
-    }
+    })
+}
+
+#[cfg(all(feature = "casc", feature = "client-retail"))]
+fn read_retail_sync_fixture_root() -> Option<PathBuf> {
+    use std::io::{IsTerminal, Read};
+
     let mut input = std::io::stdin();
     if input.is_terminal() {
-        return;
+        return None;
     }
     let mut message = String::new();
     input.read_to_string(&mut message).unwrap();
     if message.is_empty() {
-        return;
+        return None;
     }
-    let root: std::path::PathBuf = serde_json::from_str(&message).unwrap();
+    Some(serde_json::from_str(&message).unwrap())
+}
+
+#[cfg(all(feature = "casc", feature = "client-retail"))]
+fn sync_retail_fixture_and_assert_cache(root: &std::path::Path) {
     let install = std::env::var("WOW_INSTALL_PATH").unwrap();
     let installed =
         super::read_active_build_identity(std::path::Path::new(&install), "wow").unwrap();
-    assert_ne!(installed.version, "12.1.5.70575");
+    let index: serde_json::Value =
+        serde_json::from_str(include_str!("../../data/blizzard-ui-builds/retail.json")).unwrap();
+    let pinned_version = index["version"].as_str().unwrap();
+    assert_ne!(installed.version, pinned_version);
     let entry = "Blizzard_ArchaeologyUI/Blizzard_ArchaeologyUI.lua";
     let before = std::fs::read(root.join(entry)).unwrap();
-    let result = super::sync_blizzard_ui_to(&root);
+    let result = super::sync_blizzard_ui_to(root);
     assert_eq!(
         std::fs::read(root.join(entry)).unwrap(),
         before,
@@ -637,6 +653,47 @@ fn retail_sync_cached_fixture_child() {
     assert_eq!(summary.present, summary.total);
     assert_eq!(summary.total, 4026);
     let provenance = std::fs::read_to_string(root.join(super::PROVENANCE_FILE)).unwrap();
-    assert!(provenance.contains("version=12.1.5.70575\n"));
+    assert!(provenance.contains(&format!("version={pinned_version}\n")));
     assert!(provenance.contains("source=blizzard-cdn-pinned\n"));
+}
+
+#[cfg(all(feature = "casc", feature = "client-retail"))]
+fn spawn_retail_sync_fixture_child(root: PathBuf, child_env: &str) {
+    let install = installed_product_fixture();
+    std::fs::create_dir_all(install.path().join("Data/data")).unwrap();
+    let mut child = std::process::Command::new(std::env::current_exe().unwrap())
+        .args([
+            "--exact",
+            "blizzard_ui_sync::tests::retail_sync_cached_fixture_child",
+            "--nocapture",
+        ])
+        .env(child_env, "1")
+        .env("WOW_INSTALL_PATH", install.path())
+        .stdin(std::process::Stdio::piped())
+        .spawn()
+        .unwrap();
+    std::io::Write::write_all(
+        &mut child.stdin.take().unwrap(),
+        &serde_json::to_vec(&root).unwrap(),
+    )
+    .unwrap();
+    let status = child.wait().unwrap();
+    assert!(status.success(), "fixture sync child failed: {status}");
+}
+
+#[test]
+#[cfg(all(feature = "casc", feature = "client-retail"))]
+fn retail_sync_cached_fixture_child() {
+    const CHILD: &str = "WOW_SIM_RETAIL_SYNC_CACHE_CHILD";
+    if !retail_sync_test_selected_exactly() {
+        return;
+    }
+    let Some(root) = read_retail_sync_fixture_root() else {
+        return;
+    };
+    if std::env::var_os(CHILD).is_some() {
+        sync_retail_fixture_and_assert_cache(&root);
+        return;
+    }
+    spawn_retail_sync_fixture_child(root, CHILD);
 }
