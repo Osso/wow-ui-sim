@@ -91,3 +91,25 @@ fn clear_login_state(state: &mut LuaState) -> LuaResult<bool> {
     login.retail_glue.login_cancellation_recorded = true;
     Ok(notify_launcher)
 }
+
+#[cfg(all(test, feature = "client-retail"))]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn disconnect_clears_a_stored_login_error() {
+        let env = WowLuaEnv::new().expect("Lua environment");
+        env.set_screen_mode(ScreenKind::CharacterSelect);
+        env.state().borrow_mut().glue_login.retail_glue.login_error = Some("stored".into());
+        env.exec("C_Login.DisconnectFromServer()")
+            .expect("Retail disconnect should succeed");
+        assert!(
+            env.state()
+                .borrow()
+                .glue_login
+                .retail_glue
+                .login_error
+                .is_none()
+        );
+    }
+}
