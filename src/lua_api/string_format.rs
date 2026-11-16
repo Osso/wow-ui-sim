@@ -474,7 +474,7 @@ mod tests {
         let format_string = {
             let loader = env.loader_env();
             let mut lua = loader.rilua_mut();
-            LuaApiMut::create_string(&mut lua, b"%s")
+            LuaApiMut::create_string(lua.state_mut(), b"%s")
         };
         let error = env
             .call_global("format", &[format_string])

@@ -1152,16 +1152,19 @@ mod tests {
             .map(|entry| format!("'{}'", entry.name))
             .collect::<Vec<_>>()
             .join(", ");
-        let script = format!(concat!(
-            "local names = {{{names}}}\n",
-            "local missing = {{}}\n",
-            "for _, name in ipairs(names) do\n",
-            "    if type(rawget(_G, name)) ~= 'function' then\n",
-            "        missing[#missing + 1] = name\n",
-            "    end\n",
-            "end\n",
-            "return table.concat(missing, ',')"
-        ));
+        let script = format!(
+            concat!(
+                "local names = {{{names}}}\n",
+                "local missing = {{}}\n",
+                "for _, name in ipairs(names) do\n",
+                "    if type(rawget(_G, name)) ~= 'function' then\n",
+                "        missing[#missing + 1] = name\n",
+                "    end\n",
+                "end\n",
+                "return table.concat(missing, ',')"
+            ),
+            names = names
+        );
         let mut env = WowLuaEnv::new().expect("initialize Lua environment");
         let missing_csv = env.eval::<String>(&script).expect("check _G registrations");
         let missing_names = missing_csv
