@@ -307,6 +307,38 @@ fn test_mixin() {
     t.assert_lua_str("return MIX_BAR", "hello");
 }
 
+#[cfg(feature = "client-retail")]
+#[test]
+fn test_retail_get_specialization_system_via_cached_unit_util() {
+    let env = WowLuaEnv::new().unwrap();
+    let path =
+        crate::client_profile::blizzard_ui_addons_dir().join("Blizzard_SharedXML/UnitUtil.lua");
+    let source = std::fs::read_to_string(path).unwrap();
+    env.eval(&source).unwrap();
+    let passed: bool = env
+        .eval(
+            r##"
+            local getter = GetSpecializationSystem
+            local function verify(...)
+                local count, value = select("#", getter(...)), getter(...)
+                assert(count == 1 and type(value) == "number" and value == 1)
+                return value
+            end
+            GetSpecializationSystem = verify
+            UnitGroupRolesAssigned = function() return "NONE" end
+            C_SpecializationInfo = { GetSpecialization = function() return 1 end }
+            GetSpecializationRole = function() return "TANK" end
+            PlayerUtil.IsPlayerEffectivelyTank()
+            verify()
+            verify(nil)
+            verify(false, {}, "extra")
+            return true
+            "##,
+        )
+        .unwrap();
+    assert!(passed);
+}
+
 #[test]
 fn test_global_functions_callable() {
     let env = WowLuaEnv::new().unwrap();
