@@ -735,23 +735,36 @@ fn toggle_achievement_frame_opens_and_closes_achievement_panel() {
             "Blizzard_AchievementUI/Blizzard_AchievementUI_Bootstrap.lua");
 
         if cfg!(feature = "client-wowforever") {
-            // Pinned Blizzard_AchievementUI/Camelot/Blizzard_AchievementUI.lua:13
-            // replaces AchievementFrame_ToggleAchievementFrame with
-            // ToggleLegacyChallenges(), so the AchievementFrame panel never opens.
-            let loaded: bool = env
-                .eval(r#"
-                    ToggleAchievementFrame()
-                    return C_AddOns.IsAddOnLoaded("Blizzard_AchievementUI")
-                "#)
-                .expect("forever achievement toggle probe should return");
-            assert!(
-                loaded,
-                "ToggleAchievementFrame should load Blizzard_AchievementUI through its Camelot override"
-            );
+            assert_achievement_toggle_loads_on_forever(&env);
             return;
         }
 
-        let result: String = env.eval(r#"
+        assert_achievement_panel_toggles(&env);
+    }
+}
+
+fn assert_achievement_toggle_loads_on_forever(env: &WowLuaEnv) {
+    // Pinned Blizzard_AchievementUI/Camelot/Blizzard_AchievementUI.lua:13
+    // replaces AchievementFrame_ToggleAchievementFrame with
+    // ToggleLegacyChallenges(), so the AchievementFrame panel never opens.
+    let loaded: bool = env
+        .eval(
+            r#"
+                    ToggleAchievementFrame()
+                    return C_AddOns.IsAddOnLoaded("Blizzard_AchievementUI")
+                "#,
+        )
+        .expect("forever achievement toggle probe should return");
+    assert!(
+        loaded,
+        "ToggleAchievementFrame should load Blizzard_AchievementUI through its Camelot override"
+    );
+}
+
+fn assert_achievement_panel_toggles(env: &WowLuaEnv) {
+    let result: String = env
+        .eval(
+            r#"
             if not ToggleAchievementFrame then
                 return "missing_toggle_achievement_frame"
             end
@@ -767,15 +780,18 @@ fn toggle_achievement_frame_opens_and_closes_achievement_panel() {
             end
 
             return "ok"
-        "#).unwrap();
-        assert_eq!(
-            result,
-            "ok",
-            "ToggleAchievementFrame() should open and close the achievement panel: {result}"
-        );
-        assert_retail_provider(&env, "AchievementFrame_ToggleAchievementFrame",
-            "Blizzard_AchievementUI/Mainline/Blizzard_AchievementUI.lua");
-    }
+        "#,
+        )
+        .unwrap();
+    assert_eq!(
+        result, "ok",
+        "ToggleAchievementFrame() should open and close the achievement panel: {result}"
+    );
+    assert_retail_provider(
+        env,
+        "AchievementFrame_ToggleAchievementFrame",
+        "Blizzard_AchievementUI/Mainline/Blizzard_AchievementUI.lua",
+    );
 }
 
 post_wrath_ui_fixture! {
@@ -1326,29 +1342,22 @@ fn open_all_bags_opens_a_bag_frame() {
     }
 }
 
-post_wrath_ui_fixture! {
-#[test]
-fn housing_dashboard_loads_and_opens_panel() {
-    test_timeout! {
-        let env = setup_env();
-        assert_retail_provider(&env, "HousingTutorialUtil.BoughtHouseQuestComplete",
-            "Blizzard_HousingTutorials/Blizzard_HousingTutorialsUtil.lua");
-        if cfg!(feature = "client-wowforever") {
-            // Pinned Blizzard_HousingDashboard/Blizzard_HousingDashboard.toc:5 allows
-            // `standard`; the Forever client mask is mainline+camelot
-            // (docs/wiki/reference/toc-game-type-tokens.md), so the addon cannot load.
-            let loaded: bool = env
-                .eval(r#"return (C_AddOns.LoadAddOn("Blizzard_HousingDashboard"))"#)
-                .expect("forever housing dashboard gate probe should return");
-            assert!(
-                !loaded,
-                "pinned Forever TOC should reject Blizzard_HousingDashboard"
-            );
-            return;
-        }
-        let result: String = env
-            .eval(
-                r#"
+fn assert_housing_dashboard_not_loadable_on_forever(env: &WowLuaEnv) {
+    // Pinned Blizzard_HousingDashboard/Blizzard_HousingDashboard.toc:5 allows
+    // `standard`; the Forever client mask is mainline+camelot
+    // (docs/wiki/reference/toc-game-type-tokens.md), so the addon cannot load.
+    let loaded: bool = env
+        .eval(r#"return (C_AddOns.LoadAddOn("Blizzard_HousingDashboard"))"#)
+        .expect("forever housing dashboard gate probe should return");
+    assert!(
+        !loaded,
+        "pinned Forever TOC should reject Blizzard_HousingDashboard"
+    );
+}
+
+fn housing_dashboard_show_result(env: &WowLuaEnv) -> String {
+    env.eval(
+        r#"
                     local loaded, reason = C_AddOns.LoadAddOn("Blizzard_HousingDashboard")
                     if not loaded then
                         return "load_failed:" .. tostring(reason)
@@ -1370,30 +1379,47 @@ fn housing_dashboard_loads_and_opens_panel() {
                     end
                     return HousingDashboardFrame:IsShown() and "shown" or "panel_not_shown"
                 "#,
-            )
-            .unwrap();
-        assert_eq!(
-            result, "shown",
-            "Housing dashboard should load and open via ShowUIPanel: {result}"
-        );
+    )
+    .unwrap()
+}
 
-        env.process_timers()
-            .expect("owned house response timer should process");
-        let result: String = env
-            .eval(
-                r#"
+fn assert_housing_dashboard_empty_state(env: &WowLuaEnv) {
+    env.process_timers()
+        .expect("owned house response timer should process");
+    let result: String = env
+        .eval(
+            r#"
                     if HousingDashboardFrame.HouseInfoContent.LoadingSpinner:IsShown() then
                         return "spinner_still_shown"
                     end
                     return HousingDashboardFrame.HouseInfoContent.DashboardNoHousesFrame:IsShown()
                         and "ok" or "no_houses_dashboard_not_shown"
                 "#,
-            )
-            .unwrap();
+        )
+        .unwrap();
+    assert_eq!(
+        result, "ok",
+        "Housing dashboard should show its empty state after the owned-house response: {result}"
+    );
+}
+
+post_wrath_ui_fixture! {
+#[test]
+fn housing_dashboard_loads_and_opens_panel() {
+    test_timeout! {
+        let env = setup_env();
+        assert_retail_provider(&env, "HousingTutorialUtil.BoughtHouseQuestComplete",
+            "Blizzard_HousingTutorials/Blizzard_HousingTutorialsUtil.lua");
+        if cfg!(feature = "client-wowforever") {
+            assert_housing_dashboard_not_loadable_on_forever(&env);
+            return;
+        }
+        let result = housing_dashboard_show_result(&env);
         assert_eq!(
-            result, "ok",
-            "Housing dashboard should show its empty state after the owned-house response: {result}"
+            result, "shown",
+            "Housing dashboard should load and open via ShowUIPanel: {result}"
         );
+        assert_housing_dashboard_empty_state(&env);
     }
 }
 }
