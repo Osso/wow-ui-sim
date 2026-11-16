@@ -357,6 +357,7 @@ pub(super) fn sync_to(_root: &Path) -> crate::Result<super::SyncSummary> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::path::PathBuf;
 
     #[cfg(feature = "casc")]
     #[test]
@@ -431,7 +432,6 @@ mod tests {
             std::fs::read(root.join("partial-source")).unwrap(),
             b"saved source bytes"
         );
-
         prepare_sync_cache(&root, &provenance().unwrap()).unwrap();
 
         assert_eq!(
@@ -530,41 +530,119 @@ mod tests {
         assert!(!cache_matches(dir.path(), &expected));
     }
 
+    #[cfg(feature = "client-retail")]
+    const RETAIL_70575_PROVENANCE: &str = concat!(
+        "schema=2\nprofile=retail\nproduct=wow\nversion=12.1.5.70575\n",
+        "build_key=d718abcc42604d8efbd35aecfa5bb75b\n",
+        "install_key=8fef5697abe6472c6b9235a2b9f7c9f8\n",
+        "cdn_key=c13b476a09cb3262797a6fdc88103036\n",
+        "gethe_revision=15881d522c44cd106d3d8660106ec9f9d2f44167\n",
+        "manifest_sha256=4c597e051c5162c6b0c33b61ceb7cc9927925e7d59eb938bf6c097a1f8af3e3b\n",
+        "content_index_sha256=b78ed2b10f2b7b5489eb3648d55a7e6099b704d6646c5fb5f241caf3fa8bc096\n",
+        "source=blizzard-cdn-pinned\nfallback=none\n",
+    );
+
+    #[cfg(feature = "client-retail")]
+    const SELECTOR_EXPECTED_PATH: &str = "WOW_UI_SIM_RETAIL_SELECTOR_EXPECTED_PATH";
+
+    #[cfg(feature = "client-retail")]
+    fn assert_retail_selector_child() -> bool {
+        let Some(expected) = std::env::var_os(SELECTOR_EXPECTED_PATH) else {
+            return false;
+        };
+        let expected = expected.into_string().unwrap();
+        let actual = super::super::cached_blizzard_ui_addons_path()
+            .map(|path| path.display().to_string())
+            .unwrap_or_default();
+        eprintln!("selector child XDG_CACHE_HOME result: {actual}");
+        assert_eq!(actual, expected);
+        true
+    }
+
+    #[cfg(feature = "client-retail")]
+    fn write_retail_selector_cache(cache_home: &Path, provenance: Option<&str>) -> PathBuf {
+        let addons = cache_home
+            .join("wow-ui-sim/blizzard-ui")
+            .join(crate::client_profile::ACTIVE.cache_subdir())
+            .join("AddOns");
+        std::fs::create_dir_all(&addons).unwrap();
+        std::fs::write(addons.join(super::super::COMPLETE_MARKER), b"ok\n").unwrap();
+        for entry in super::super::required_profile_cache_entries() {
+            let path = addons.join(entry);
+            std::fs::create_dir_all(path.parent().unwrap()).unwrap();
+            let bytes: &[u8] = if entry.ends_with(".xml") {
+                b"<Frame name=\"RuneforgeCovenantSigilTemplate\"/>"
+            } else {
+                b"-- synthetic cache source\n"
+            };
+            std::fs::write(path, bytes).unwrap();
+        }
+        if let Some(provenance) = provenance {
+            std::fs::write(addons.join(super::super::PROVENANCE_FILE), provenance).unwrap();
+        }
+        addons
+    }
+
+    #[cfg(feature = "client-retail")]
+    fn run_retail_selector_case(test_name: &str, provenance: Option<&str>, selected: bool) {
+        if assert_retail_selector_child() {
+            return;
+        }
+        assert_eq!(
+            crate::client_profile::ACTIVE,
+            crate::client_profile::ClientProfile::Retail
+        );
+        let dir = tempfile::tempdir().unwrap();
+        let cache_home = dir.path().join("cache");
+        let addons = write_retail_selector_cache(&cache_home, provenance);
+        let expected = if selected {
+            addons.display().to_string()
+        } else {
+            String::new()
+        };
+        eprintln!("selector fixture XDG_CACHE_HOME={}", cache_home.display());
+        let status = std::process::Command::new(std::env::current_exe().unwrap())
+            .args(["--exact", test_name, "--nocapture"])
+            .env("XDG_CACHE_HOME", &cache_home)
+            .env(SELECTOR_EXPECTED_PATH, expected)
+            .stdin(std::process::Stdio::null())
+            .status()
+            .unwrap();
+        assert!(
+            status.success(),
+            "runtime selector child failed: {test_name}"
+        );
+    }
+
+    #[cfg(feature = "client-retail")]
     #[test]
     fn pinned_retail_accepts_matching_70783_provenance() {
-        let dir = tempfile::tempdir().unwrap();
-        std::fs::write(
-            dir.path().join(super::super::PROVENANCE_FILE),
-            retail_provenance().unwrap().contents(),
-        )
-        .unwrap();
-
-        assert!(cache_matches(dir.path(), &retail_provenance().unwrap()));
+        let expected = retail_provenance().unwrap();
+        run_retail_selector_case(
+            "blizzard_ui_sync::pinned::tests::pinned_retail_accepts_matching_70783_provenance",
+            Some(expected.contents()),
+            true,
+        );
     }
 
+    #[cfg(feature = "client-retail")]
     #[test]
     fn pinned_retail_rejects_stale_70575_provenance() {
-        let dir = tempfile::tempdir().unwrap();
-        let stale_70575 = concat!(
-            "schema=2\nprofile=retail\nproduct=wow\nversion=12.1.5.70575\n",
-            "build_key=d718abcc42604d8efbd35aecfa5bb75b\n",
-            "install_key=8fef5697abe6472c6b9235a2b9f7c9f8\n",
-            "cdn_key=c13b476a09cb3262797a6fdc88103036\n",
-            "gethe_revision=15881d522c44cd106d3d8660106ec9f9d2f44167\n",
-            "manifest_sha256=4c597e051c5162c6b0c33b61ceb7cc9927925e7d59eb938bf6c097a1f8af3e3b\n",
-            "content_index_sha256=b78ed2b10f2b7b5489eb3648d55a7e6099b704d6646c5fb5f241caf3fa8bc096\n",
-            "source=blizzard-cdn-pinned\nfallback=none\n",
+        run_retail_selector_case(
+            "blizzard_ui_sync::pinned::tests::pinned_retail_rejects_stale_70575_provenance",
+            Some(RETAIL_70575_PROVENANCE),
+            false,
         );
-        std::fs::write(dir.path().join(super::super::PROVENANCE_FILE), stale_70575).unwrap();
-
-        assert!(!cache_matches(dir.path(), &retail_provenance().unwrap()));
     }
 
+    #[cfg(feature = "client-retail")]
     #[test]
     fn pinned_retail_rejects_missing_provenance() {
-        let dir = tempfile::tempdir().unwrap();
-
-        assert!(!cache_matches(dir.path(), &retail_provenance().unwrap()));
+        run_retail_selector_case(
+            "blizzard_ui_sync::pinned::tests::pinned_retail_rejects_missing_provenance",
+            None,
+            false,
+        );
     }
 
     #[test]
