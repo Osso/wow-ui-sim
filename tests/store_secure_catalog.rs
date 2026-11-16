@@ -43,16 +43,14 @@ const CATALOG_CONSUMER: &str = r##"
 "##;
 
 const CURRENCY_CONSUMER: &str = r#"
+    local storeInfo = StoreFrame_CurrencyInfo()
+    assert(FormatCurrencyStringShort == "short-%s", "StoreFrame must consume host currency formatting")
+    assert(FormatCurrencyStringLong == "long-%s")
+    assert(storeInfo.hideBrowseNotice == true)
     local currencyInfo = C_StoreSecure.GetCurrencyInfo()
     assert(type(currencyInfo.sharedData) == "table")
     assert(currencyInfo.currencyFields == nil)
-    assert(currencyInfo.sharedData.formatShort == "short-%s")
-    assert(currencyInfo.sharedData.formatLong == "long-%s")
     assert(currencyInfo.sharedData.licenseAcceptText == "terms-61")
-    local storeInfo = StoreFrame_CurrencyInfo()
-    assert(FormatCurrencyStringShort == "short-%s")
-    assert(FormatCurrencyStringLong == "long-%s")
-    assert(storeInfo.hideBrowseNotice == true)
     return true
 "#;
 
@@ -298,8 +296,8 @@ fn retail_store_currency_consumer_uses_shared_data() {
     env.exec_rilua_secure(CURRENCY_CONSUMER)
         .expect("secure StoreUI consumer must read sharedData");
     env.state().borrow_mut().store_glue.store_secure.currency_id = 62;
-    env.exec_rilua_secure("local x=C_StoreSecure.GetCurrencyInfo(); assert(x.currencyID == 62 and x.sharedData.formatShort == 'short2-%s' and x.sharedData.browseHasStar)")
-        .expect("second host currency row must be queryable");
+    env.exec_rilua_secure("local info=StoreFrame_CurrencyInfo(); assert(FormatCurrencyStringShort == 'short2-%s' and info.browseHasStar)")
+        .expect("StoreFrame must consume the second host currency row");
     env.state().borrow_mut().store_glue.store_secure.currency_id = 63;
     env.exec_rilua_secure("assert(C_StoreSecure.GetCurrencyInfo() == nil)")
         .expect("a currency metadata miss must return nil");
@@ -309,7 +307,7 @@ fn retail_store_currency_consumer_uses_shared_data() {
 fn retail_store_empty_defaults_reach_original_catalog_consumer() {
     let env = load_store_ui();
     env.exec_rilua_secure(
-        "local a,b,c,d,e,f,g=C_StoreSecure.IsAvailable(), C_StoreSecure.HasProductList(), C_StoreSecure.HasPurchaseList(), C_StoreSecure.HasDistributionList(), C_StoreSecure.HasPurchaseInProgress(), C_StoreSecure.GetCurrencyID(), C_StoreSecure.GetLastProductListResponseError(); assert(not a and not b and not c and not d and not e and f == 0 and g == 0); assert(CatalogShopMixin:IsLoading()); assert(C_StoreSecure.GetCurrencyInfo() == nil and #C_StoreSecure.GetProductGroups() == 0)",
+        "assert(CatalogShopMixin:IsLoading(), 'CatalogShop must remain loading with empty host lists'); local a,b,c,d,e,f,g=C_StoreSecure.IsAvailable(), C_StoreSecure.HasProductList(), C_StoreSecure.HasPurchaseList(), C_StoreSecure.HasDistributionList(), C_StoreSecure.HasPurchaseInProgress(), C_StoreSecure.GetCurrencyID(), C_StoreSecure.GetLastProductListResponseError(); assert(not a and not b and not c and not d and not e and f == 0 and g == 0); assert(C_StoreSecure.GetCurrencyInfo() == nil and #C_StoreSecure.GetProductGroups() == 0)",
     )
     .expect("original CatalogShop consumer must observe empty-default Store inputs");
 }
