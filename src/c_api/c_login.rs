@@ -293,6 +293,7 @@ fn push_wow_forever_login_state(
         ("connectedToWoW", Val::Bool(connected)),
         ("wowConnectionState", Val::Num(f64::from(connection))),
         ("hasRealmList", Val::Bool(realms)),
+        // User-approved, not native evidence; native login policy is not modeled.
         ("waitingForRealmList", Val::Bool(false)),
         ("superDistrictChoicePending", Val::Bool(false)),
         ("keepingCharacterListOnRealmJoin", Val::Bool(false)),
