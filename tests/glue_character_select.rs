@@ -2461,3 +2461,1362 @@ fn retail_glue_tooltip_preserves_shared_nineslice() {
         assert!(!env.state().borrow().lua_errors.iter().any(|error| error.contains("SharedTooltipTemplates.lua")));
     }
 }
+
+// INFERRED applicability only; Retail consumer/assertion/input semantics are unchanged.
+#[cfg(feature = "optional-tests")]
+fn r88q_profile_active() -> bool {
+    use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
+    matches!(
+        ACTIVE,
+        ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
+    )
+}
+
+#[cfg(feature = "optional-tests")]
+fn seed_r88q_profile_expectations(env: &WowLuaEnv) {
+    use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
+    let line = match ACTIVE {
+        ClientProfile::Retail => 211,
+        ClientProfile::Ptr | ClientProfile::WowForever => 204,
+        _ => return,
+    };
+    let expected = format!(
+        "...ace/AddOns/Blizzard_GlueXML/Mainline/CharacterSelect.lua:{line}: attempt to call field 'DisconnectFromServer' (a nil value)"
+    );
+    env.exec(&format!("R88qExpectedDisconnectError = {expected:?}"))
+        .expect("seed exact pinned-profile missing-route diagnostic");
+}
+
+// R88q original-consumer regression; inputs are explicit host fixtures.
+#[cfg(all(
+    feature = "optional-tests",
+    any(
+        feature = "profile-retail",
+        feature = "client-ptr",
+        feature = "client-wowforever"
+    )
+))]
+mod storeglue_r88q_tuple {
+    use super::*;
+
+    fn env_with_records() -> common::LockedEnv {
+        let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+        seed_purchase_records(&env);
+        env.exec(
+            "__wow_store_state.productsByID[189] = {productID=189, sharedData={name='Fixture B'}}",
+        )
+        .unwrap();
+        env.exec(
+            r#"
+            local source = debug.getinfo(CharacterSelectListUtil.GetVASInfoForGUID, 'S')
+            assert(source.source:find('CharacterSelectListUtil.lua', 1, true))
+            assert(source.linedefined == 573)
+        "#,
+        )
+        .unwrap();
+        env
+    }
+
+    // Host input adapter; identical GUID/product/state/error data to the RED fixture.
+    fn seed_purchase_records(env: &WowLuaEnv) {
+        use wow_ui_sim::c_api::store_glue_model::VasPurchaseRecord;
+        let mut sim = env.state().borrow_mut();
+        for (guid, product_id, state, errors) in [
+            ("Player-1-a1", 2003, 3, vec![17, 0, -4]),
+            ("Player-2-b2", 189, 4, vec![0, 29]),
+        ] {
+            sim.store_glue.purchase_states.insert(
+                guid.into(),
+                VasPurchaseRecord {
+                    product_id,
+                    state,
+                    errors,
+                },
+            );
+        }
+    }
+
+    #[test]
+    fn purchase_tuple_and_error_sentinel_reach_original_glue_consumer() {
+        test_timeout! {
+            let env = env_with_records();
+            env.exec(r#"
+                local function check(guid, productID, expectedState, expectedErrors)
+                    local consumerState, consumerErrors, consumerProduct =
+                        CharacterSelectListUtil.GetVASInfoForGUID(guid)
+                    local product, state, errors = C_StoreGlue.GetVASPurchaseStateInfo(guid)
+                    assert(select('#', C_StoreGlue.GetVASPurchaseStateInfo(guid)) == 3)
+                    assert(product == productID and state == expectedState)
+                    assert(type(errors) == 'table' and #errors == #expectedErrors)
+                    for i, value in ipairs(expectedErrors) do assert(errors[i] == value) end
+                    assert(consumerState == expectedState and #consumerErrors == #expectedErrors)
+                    for i, value in ipairs(expectedErrors) do assert(consumerErrors[i] == value) end
+                    if productID ~= 0 then assert(consumerProduct.productID == productID) end
+                end
+                check('Player-1-a1', 2003, 3, {17,0,-4})
+                check('Player-2-b2', 189, 4, {})
+                check('Player-3-c3', 0, 0, {})
+            "#).expect("R88q.q1 stored tuple/errors must reach original consumer");
+        }
+    }
+}
+
+// Host input structs are simulator seams, not claims about native packet names
+// or record acquisition. Tests invoke the original selected Glue consumers.
+#[cfg(feature = "optional-tests")]
+mod storeglue_r88q_host {
+    use super::r88q_routes::{
+        self as c_store_glue, CompletionInput, VasPurchaseRecord, VasQueueCharacter,
+    };
+    use super::*;
+
+    const A: &str = "Player-1-a1";
+    const B: &str = "Player-2-b2";
+    const ABSENT: &str = "Player-3-c3";
+
+    fn record(product_id: i32, state: i32, errors: &[i32]) -> VasPurchaseRecord {
+        VasPurchaseRecord {
+            product_id,
+            state,
+            errors: errors.to_vec(),
+        }
+    }
+
+    fn fixture() -> common::LockedEnv {
+        let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+        seed_r88q_product_inputs(&env);
+        c_store_glue::seed(
+            &env,
+            vec![
+                (A.into(), record(2003, 3, &[17, 0, -4])),
+                (B.into(), record(189, 4, &[0, 29])),
+            ],
+            vec![
+                VasQueueCharacter {
+                    guid: A.into(),
+                    correlation: vec![21],
+                },
+                VasQueueCharacter {
+                    guid: B.into(),
+                    correlation: vec![43],
+                },
+            ],
+            &[A, B, ABSENT],
+        );
+        assert_original_owners(&env);
+        env
+    }
+
+    fn assert_records(env: &WowLuaEnv) {
+        env.exec(R88Q_LUA_03).unwrap();
+    }
+
+    fn install_listener(env: &WowLuaEnv) {
+        c_store_glue::install_callbacks(env);
+        env.exec(R88Q_LUA_04).unwrap();
+    }
+
+    fn assert_original_owners(env: &WowLuaEnv) {
+        env.exec(R88Q_LUA_05).unwrap();
+    }
+
+    #[test]
+    fn shared_boolean_writers_drive_original_glue_show_and_update() {
+        test_timeout! {
+            if !r88q_profile_active() { return; }
+            let env = fixture();
+            assert_records(&env);
+            assert_original_owners(&env);
+            env.exec(R88Q_LUA_06).unwrap();
+            assert_records(&env);
+            refresh_request_controls(&env);
+        }
+    }
+
+    // q5 request-side assertions are separate from response-event expectations.
+    fn refresh_request_controls(env: &WowLuaEnv) {
+        let before = c_store_glue::submission_count(env);
+        env.exec("assert(select('#', C_StoreGlue.UpdateVASPurchaseStates(nil, false, {})) == 0)")
+            .unwrap();
+        assert_eq!(c_store_glue::submission_count(env), before + 1);
+        c_store_glue::set_connection(env, false);
+        env.exec("C_StoreGlue.UpdateVASPurchaseStates()").unwrap();
+        assert_eq!(c_store_glue::submission_count(env), before + 1);
+        assert_records(env); // Request did not synchronously mutate either record or fabricate absence.
+    }
+
+    fn make_queue_rows(env: &WowLuaEnv) {
+        env.exec(R88Q_LUA_07).unwrap();
+    }
+
+    #[test]
+    fn queue_requests_and_responses_drive_original_rows_and_event_owner() {
+        test_timeout! {
+            if !r88q_profile_active() { return; }
+            let env = fixture();
+            assert_records(&env);
+            install_listener(&env);
+            make_queue_rows(&env);
+            let request_counts = queue_requests(&env);
+            c_store_glue::receive_queue_response(&env, &[99], 91).unwrap();
+            c_store_glue::receive_queue_response(&env, &[21], -17).unwrap();
+            c_store_glue::receive_queue_response(&env, &[43], 29).unwrap();
+            env.exec(R88Q_LUA_08).unwrap();
+            assert_eq!(request_counts, [2, 2, 3, 3, 3]);
+        }
+    }
+
+    fn queue_requests(env: &WowLuaEnv) -> [u64; 5] {
+        env.exec(R88Q_LUA_09).unwrap();
+        let before = [
+            c_store_glue::request_sequence(env),
+            c_store_glue::submission_count(env) as u64,
+        ];
+        c_store_glue::set_record_state(env, A, 4);
+        env.exec("R88qRows['Player-1-a1']:UpdateCharacterDisplayInfo()")
+            .unwrap();
+        let after = [
+            c_store_glue::request_sequence(env),
+            c_store_glue::submission_count(env) as u64,
+        ];
+        env.exec("C_StoreGlue.RequestCharacterQueueTime('Player-3-c3')")
+            .unwrap();
+        [
+            before[0],
+            before[1],
+            after[0],
+            after[1],
+            c_store_glue::request_sequence(env),
+        ]
+    }
+
+    #[test]
+    fn bulk_receive_replaces_before_original_glue_event_observation() {
+        test_timeout! {
+            if !r88q_profile_active() { return; }
+            let env = fixture();
+            assert_records(&env);
+            install_listener(&env);
+            c_store_glue::receive_bulk(&env, vec![
+                (A.into(), record(189, 6, &[31, 0])),
+                (B.into(), record(2003, 2, &[-23])),
+            ]).unwrap();
+            env.exec(R88Q_LUA_10).unwrap();
+            c_store_glue::receive_bulk(&env, vec![]).unwrap();
+            env.exec(R88Q_LUA_11).unwrap();
+        }
+    }
+
+    #[test]
+    fn removal_copies_separate_errors_before_post_removal_state_notification() {
+        test_timeout! {
+            if !r88q_profile_active() { return; }
+            let env = fixture();
+            assert_records(&env);
+            install_listener(&env);
+            env.exec(R88Q_REMOVAL_BEFORE).unwrap();
+            c_store_glue::receive_removal(&env, A, vec![51, 0]).unwrap();
+            assert_eq!(c_store_glue::purchase_errors(&env), vec![51, 0]);
+            env.exec(R88Q_LUA_12).unwrap();
+            c_store_glue::receive_removal(&env, B, vec![-37]).unwrap();
+            assert_eq!(c_store_glue::purchase_errors(&env), vec![-37]);
+            env.exec(R88Q_LUA_13).unwrap();
+            c_store_glue::receive_removal(&env, ABSENT, vec![88]).unwrap();
+            // VERIFIED R88w.w4 supersedes the old neutral copy-eligibility input.
+            assert_eq!(c_store_glue::purchase_errors(&env), vec![88]);
+            env.exec("assert(#R88qEvents == 2)").unwrap();
+        }
+    }
+
+    fn completion(first: i32, second: i32, first_flag: bool, second_flag: bool) -> CompletionInput {
+        CompletionInput {
+            first,
+            second,
+            first_flag,
+            second_flag,
+            data: vec![],
+        }
+    }
+
+    fn completion_gate_cases(env: &WowLuaEnv) {
+        for input in [
+            completion(0, 0, true, false),
+            completion(1, 9, true, false),
+            completion(1, 0, false, false),
+            completion(1, 0, true, true),
+        ] {
+            env.exec("C_StoreSecure.SetVASProductReady(false)").unwrap();
+            c_store_glue::receive_completion(env, input).unwrap();
+        }
+        c_store_glue::receive_completion(env, completion(7, 0, true, false)).unwrap();
+        c_store_glue::receive_completion(env, completion(0, 0, true, false)).unwrap();
+    }
+
+    // Insert immediately after fixture()/assert_records, before listener/receive helpers.
+    // Initial readiness is captured, then the ORIGINAL consumer runs before assertions.
+    // This does not call ClearVASProductReady or replace any API/consumer function.
+    fn exercise_initial_completion_consumer(env: &WowLuaEnv) {
+        env.exec(
+            r#"
+            local initialReady = C_StoreGlue.GetVASProductReady()
+            CharacterServicesMaster.pendingGuid = 'initial-not-ready'
+            CharacterSelectFrameMixin.OnUpdate(CharacterSelect, 0)
+            assert(not initialReady)
+            assert(CharacterServicesMaster.pendingGuid == 'initial-not-ready')
+        "#,
+        )
+        .unwrap();
+    }
+
+    #[test]
+    fn completion_notification_is_zero_payload_and_not_proof_of_ready() {
+        test_timeout! {
+            if !r88q_profile_active() { return; }
+            let env = fixture();
+            assert_records(&env);
+            exercise_initial_completion_consumer(&env);
+            install_listener(&env);
+            assert_records(&env);
+            completion_gate_cases(&env);
+            env.exec(R88Q_LUA_14).unwrap();
+            assert_records(&env);
+        }
+    }
+}
+
+// Original consumer calls and assertions, unchanged while extracting constants.
+
+#[cfg(feature = "optional-tests")]
+const R88Q_LUA_03: &str = r#"
+            local stateA, errorsA, productA = CharacterSelectListUtil.GetVASInfoForGUID('Player-1-a1')
+            local stateB, errorsB, productB = CharacterSelectListUtil.GetVASInfoForGUID('Player-2-b2')
+            local stateNone, errorsNone = CharacterSelectListUtil.GetVASInfoForGUID('Player-3-c3')
+            assert(stateA == 3 and productA.productID == 2003 and #errorsA == 3)
+            assert(errorsA[1] == 17 and errorsA[2] == 0 and errorsA[3] == -4)
+            assert(stateB == 4 and productB.productID == 189 and #errorsB == 0)
+            assert(stateNone == 0 and type(errorsNone) == 'table' and #errorsNone == 0)
+        "#;
+
+#[cfg(feature = "optional-tests")]
+const R88Q_LUA_04: &str = r#"
+            R88qEvents = {}
+            R88qListener = CreateFrame('Frame')
+            for _, event in ipairs({'STORE_VAS_PURCHASE_COMPLETE', 'VAS_CHARACTER_QUEUE_STATUS_UPDATE',
+                    'VAS_CHARACTER_STATE_CHANGED'}) do
+                R88qListener:RegisterEvent(event)
+            end
+            R88qListener:SetScript('OnEvent', function(self, event, ...)
+                local pa, sa, ea = C_StoreGlue.GetVASPurchaseStateInfo('Player-1-a1')
+                local pb, sb, eb = C_StoreGlue.GetVASPurchaseStateInfo('Player-2-b2')
+                local pn, sn, en = C_StoreGlue.GetVASPurchaseStateInfo('Player-3-c3')
+                table.insert(R88qEvents, {event=event, argc=select('#',...), args={...},
+                    pa=pa, sa=sa, ea=ea, pb=pb, sb=sb, eb=eb, pn=pn, sn=sn, en=en,
+                    ready=C_StoreGlue.GetVASProductReady()})
+            end)
+        "#;
+
+#[cfg(feature = "optional-tests")]
+const R88Q_LUA_05: &str = r#"
+            for _, callback in ipairs({CharacterSelectFrameMixin.OnShow,
+                    CharacterSelectFrameMixin.OnUpdate, CharacterSelectFrameMixin.OnEvent}) do
+                assert(debug.getinfo(callback, 'S').source:find('CharacterSelect.lua', 1, true))
+            end
+            assert(debug.getinfo(CharacterSelectListUtil.GetVASInfoForGUID, 'S').source:
+                find('CharacterSelectListUtil.lua', 1, true))
+        "#;
+
+#[cfg(feature = "optional-tests")]
+const R88Q_LUA_06: &str = r#"
+                C_StoreSecure.SetDisconnectOnLogout(false)
+                assert(not C_StoreGlue.GetDisconnectOnLogout())
+                C_StoreSecure.SetDisconnectOnLogout(0, 'ignored')
+                local disconnectBeforeShow = C_StoreGlue.GetDisconnectOnLogout()
+                local expectedError = R88qExpectedDisconnectError
+                local function expectedDisconnectError(message) return message == expectedError end
+                assert(not expectedDisconnectError(expectedError .. ' different'))
+                local shown, showError = pcall(CharacterSelectFrameMixin.OnShow, CharacterSelect)
+                R88qMissingDisconnectError = showError
+                if not shown then assert(expectedDisconnectError(showError)) end
+                assert(disconnectBeforeShow)
+                assert(not C_StoreGlue.GetDisconnectOnLogout())
+                C_StoreSecure.SetVASProductReady(false)
+                CharacterServicesMaster.pendingGuid = 'untouched-when-not-ready'
+                CharacterSelectFrameMixin.OnUpdate(CharacterSelect, 0)
+                assert(CharacterServicesMaster.pendingGuid == 'untouched-when-not-ready')
+                C_StoreSecure.SetVASProductReady('')
+                local readyBeforeUpdate = C_StoreGlue.GetVASProductReady()
+                CharacterSelectFrameMixin.OnUpdate(CharacterSelect, 0)
+                assert(readyBeforeUpdate)
+                assert(CharacterServicesMaster.pendingGuid == nil)
+                assert(select('#', C_StoreGlue.ClearVASProductReady(false)) == 0)
+                assert(not C_StoreGlue.GetVASProductReady())
+            "#;
+
+#[cfg(feature = "optional-tests")]
+const R88Q_LUA_07: &str = r#"
+            R88qRows = {}
+            for index, guid in ipairs({'Player-1-a1','Player-2-b2','Player-3-c3'}) do
+                local row = CreateFrame('Button', nil, UIParent, 'CharacterSelectListCharacterTemplate')
+                row.characterID = index -- Explicit UI fixture row identity, not GUID acquisition.
+                local inner = row.InnerContent
+                inner.characterInfo = {guid=guid, name='Fixture', className='Warrior', classFilename='WARRIOR',
+                    experienceLevel=80, areaName='Fixture Zone'}
+                inner.isAccountLocked = false
+                R88qRows[guid] = inner
+                assert(debug.getinfo(inner.UpdateCharacterDisplayInfo, 'S').source:
+                    find('CharacterSelectListElements.lua', 1, true))
+            end
+        "#;
+
+#[cfg(feature = "optional-tests")]
+const R88Q_LUA_08: &str = r#"
+                assert(#R88qEvents == 2)
+                for i, expected in ipairs({{'Player-1-a1',-17},{'Player-2-b2',29}}) do
+                    local event = R88qEvents[i]
+                    assert(event.event == 'VAS_CHARACTER_QUEUE_STATUS_UPDATE' and event.argc == 2)
+                    assert(event.args[1] == expected[1] and event.args[2] == expected[2])
+                    assert(CharacterSelectUtil.GetVASQueueTime(expected[1]) == expected[2])
+                end
+                assert(CharacterSelectUtil.GetVASQueueTime('Player-3-c3') == nil)
+                local sa, ea, pa = CharacterSelectListUtil.GetVASInfoForGUID('Player-1-a1')
+                local sb, eb, pb = CharacterSelectListUtil.GetVASInfoForGUID('Player-2-b2')
+                local sn, en = CharacterSelectListUtil.GetVASInfoForGUID('Player-3-c3')
+                assert(sa == 4 and pa.productID == 2003 and ea[1] == 17 and ea[2] == 0 and ea[3] == -4)
+                assert(sb == 4 and pb.productID == 189 and #eb == 0)
+                assert(sn == 0 and type(en) == 'table' and #en == 0)
+            "#;
+
+#[cfg(feature = "optional-tests")]
+const R88Q_LUA_09: &str = r#"
+            R88qRows['Player-1-a1']:UpdateCharacterDisplayInfo()
+            R88qRows['Player-2-b2']:UpdateCharacterDisplayInfo()
+            R88qRows['Player-3-c3']:UpdateCharacterDisplayInfo()
+            R88qRows['Player-2-b2']:UpdateCharacterDisplayInfo()
+            assert(#R88qEvents == 0)
+        "#;
+
+#[cfg(feature = "optional-tests")]
+const R88Q_LUA_10: &str = r#"
+                local stateA = CharacterSelectListUtil.GetVASInfoForGUID('Player-1-a1')
+                local stateB = CharacterSelectListUtil.GetVASInfoForGUID('Player-2-b2')
+                local stateAbsent = CharacterSelectListUtil.GetVASInfoForGUID('Player-3-c3')
+                assert(#R88qEvents == 1 and R88qEvents[1].event == 'VAS_CHARACTER_STATE_CHANGED')
+                local event = R88qEvents[1]
+                assert(event.pa == 189 and event.sa == 6 and event.ea[1] == 31 and event.ea[2] == 0)
+                assert(event.pb == 2003 and event.sb == 2 and event.eb[1] == -23)
+                assert(event.pn == 0 and event.sn == 0 and #event.en == 0)
+                assert(stateA == 6)
+                assert(stateB == 2 and stateAbsent == 0)
+            "#;
+
+#[cfg(feature = "optional-tests")]
+const R88Q_LUA_11: &str = r#"
+                assert(#R88qEvents == 2 and R88qEvents[2].event == 'VAS_CHARACTER_STATE_CHANGED')
+                assert(R88qEvents[2].pa == 0 and R88qEvents[2].sa == 0 and #R88qEvents[2].ea == 0)
+                assert(R88qEvents[2].pb == 0 and R88qEvents[2].sb == 0 and #R88qEvents[2].eb == 0)
+            "#;
+
+#[cfg(feature = "optional-tests")]
+const R88Q_LUA_12: &str = r#"
+                assert(#R88qEvents == 1 and R88qEvents[1].event == 'VAS_CHARACTER_STATE_CHANGED')
+                assert(R88qBeforeA[1] == 3 and R88qBeforeA[3].productID == 2003)
+                assert(R88qBeforeA[2][1] == 17 and R88qBeforeA[2][2] == 0 and R88qBeforeA[2][3] == -4)
+                assert(R88qBeforeB[1] == 4 and R88qBeforeB[3].productID == 189 and #R88qBeforeB[2] == 0)
+                assert(R88qBeforeAbsent[1] == 0 and #R88qBeforeAbsent[2] == 0)
+                local event = R88qEvents[1]
+                assert(event.pa == 0 and event.sa == 0 and #event.ea == 0)
+                assert(event.pb == 189 and event.sb == 4 and #event.eb == 0)
+                assert(event.pn == 0 and event.sn == 0 and #event.en == 0)
+            "#;
+
+#[cfg(feature = "optional-tests")]
+const R88Q_LUA_13: &str = r#"
+                assert(#R88qEvents == 2 and R88qEvents[2].event == 'VAS_CHARACTER_STATE_CHANGED')
+                assert(R88qEvents[2].pa == 0 and R88qEvents[2].pb == 0)
+            "#;
+
+#[cfg(feature = "optional-tests")]
+const R88Q_LUA_14: &str = r#"
+                CharacterServicesMaster.pendingGuid = 'completion-consumer-probe'
+                CharacterSelectFrameMixin.OnUpdate(CharacterSelect, 0)
+                assert(#R88qEvents == 6)
+                for _, event in ipairs(R88qEvents) do
+                    assert(event.event == 'STORE_VAS_PURCHASE_COMPLETE' and event.argc == 0)
+                end
+                for i=1,4 do assert(not R88qEvents[i].ready) end
+                assert(R88qEvents[5].ready and R88qEvents[6].ready)
+                assert(CharacterServicesMaster.pendingGuid == nil)
+            "#;
+
+#[cfg(feature = "optional-tests")]
+const R88Q_REMOVAL_BEFORE: &str = r#"
+    R88qBeforeA = {CharacterSelectListUtil.GetVASInfoForGUID('Player-1-a1')}
+    R88qBeforeB = {CharacterSelectListUtil.GetVASInfoForGUID('Player-2-b2')}
+    R88qBeforeAbsent = {CharacterSelectListUtil.GetVASInfoForGUID('Player-3-c3')}
+"#;
+
+// Shared RED/GREEN host product input for the original Glue consumer.
+// Preserve the existing complete product 2003; supply only the absent fixture 189.
+#[cfg(feature = "optional-tests")]
+fn seed_r88q_product_inputs(env: &WowLuaEnv) {
+    seed_r88q_profile_expectations(env);
+    env.exec(
+        "__wow_store_state.productsByID[189] = {productID=189, sharedData={name='Fixture B'}}",
+    )
+    .expect("seed explicit host product input for original Glue consumers");
+}
+#[cfg(feature = "optional-tests")]
+mod r88q_routes {
+    pub use super::r88q_receive::{
+        receive_bulk, receive_completion, receive_queue_response, receive_removal,
+    };
+    use super::*;
+    pub use wow_ui_sim::c_api::store_glue_model::{
+        CompletionInput, VasPurchaseRecord, VasQueueCharacter,
+    };
+    pub fn seed(
+        env: &WowLuaEnv,
+        rows: Vec<(String, VasPurchaseRecord)>,
+        queues: Vec<VasQueueCharacter>,
+        _aliases: &[&str],
+    ) {
+        let mut sim = env.state().borrow_mut();
+        let s = &mut sim.store_glue;
+        s.purchase_states = rows.into_iter().collect();
+        s.queue_characters = queues;
+        s.opaque_guid_aliases.clear();
+        s.connection_present = true;
+        s.request_sequence = 0;
+        s.submissions.clear();
+    }
+    pub fn install_callbacks(env: &WowLuaEnv) {
+        let mut sim = env.state().borrow_mut();
+        let c = &mut sim.store_glue.callbacks;
+        c.purchase_complete = true;
+        c.queue_status = true;
+        c.state_changed = true;
+    }
+    pub fn request_sequence(env: &WowLuaEnv) -> u64 {
+        env.state().borrow().store_glue.request_sequence
+    }
+    pub fn submission_count(env: &WowLuaEnv) -> usize {
+        env.state().borrow().store_glue.submissions.len()
+    }
+    pub fn set_connection(env: &WowLuaEnv, present: bool) {
+        env.state().borrow_mut().store_glue.connection_present = present;
+    }
+    pub fn set_record_state(env: &WowLuaEnv, guid: &str, state: i32) {
+        env.state()
+            .borrow_mut()
+            .store_glue
+            .purchase_states
+            .get_mut(guid)
+            .unwrap()
+            .state = state;
+    }
+    pub fn purchase_errors(env: &WowLuaEnv) -> Vec<i32> {
+        env.state().borrow().store_glue.purchase_errors.clone()
+    }
+}
+
+#[cfg(feature = "optional-tests")]
+mod r88q_receive {
+    pub use wow_ui_sim::c_api::c_store_glue::{
+        receive_bulk, receive_completion, receive_queue_response, receive_removal,
+    };
+}
+// Supplemental direct API contract, not the frozen original-consumer RED selector.
+// Each independent fixture proves two distinct original consumer records plus
+// absence before exercising the supplementary contract.
+#[cfg(feature = "optional-tests")]
+mod storeglue_r88q_supplemental {
+    use super::*;
+    use rilua::LuaApiMut;
+    use wow_ui_sim::c_api::store_glue_model::{RestrictedExecution, VasPurchaseRecord};
+
+    fn active() -> bool {
+        r88q_profile_active()
+    }
+    fn fixture() -> common::LockedEnv {
+        let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+        seed_r88q_product_inputs(&env);
+        seed(&env);
+        env.exec(R88Q_CONTRACT_RECORDS).unwrap();
+        env
+    }
+    fn seed(env: &WowLuaEnv) {
+        let mut sim = env.state().borrow_mut();
+        let s = &mut sim.store_glue;
+        s.purchase_states.clear();
+        for (guid, product_id, state, errors) in [
+            ("Player-1-a1", 2003, 3, vec![17, 0, -4]),
+            ("Player-2-b2", 189, 4, vec![0, 29]),
+            ("Player-4-d4", -27, -9, vec![-8, 0, 9]),
+        ] {
+            s.purchase_states.insert(
+                guid.into(),
+                VasPurchaseRecord {
+                    product_id,
+                    state,
+                    errors,
+                },
+            );
+        }
+        seed_aliases(s);
+    }
+    fn seed_aliases(s: &mut wow_ui_sim::c_api::store_glue_model::StoreGlueState) {
+        // R88w: bare numeric text is not an opaque alias. No raw-text aliases.
+        s.opaque_guid_aliases.clear();
+        s.pending_error = None;
+        s.restricted_execution = None;
+        s.secret_access_mode = None;
+    }
+    #[test]
+    fn supplemental_guid_arguments_signed_errors_and_dual_publication() {
+        test_timeout! {
+            if !active() { return; }
+            let env=fixture();
+            env.exec(R88Q_CONTRACT_ARGUMENTS).unwrap();
+            env.exec(R88Q_CONTRACT_SIGNED_PUBLICATION).unwrap();
+        }
+    }
+    #[test]
+    fn supplemental_execution_metadata_precedes_parser_and_store() {
+        test_timeout! {
+            if !active() { return; }
+            let env=fixture();
+            restrict(&env);
+            env.exec(R88Q_CONTRACT_RESTRICTED).unwrap();
+            let sim=env.state().borrow();
+            assert!(!sim.store_glue.vas_product_ready && sim.store_glue.disconnect_on_logout);
+        }
+    }
+    fn restrict(env: &WowLuaEnv) {
+        let mut sim = env.state().borrow_mut();
+        sim.store_glue.vas_product_ready = false;
+        sim.store_glue.disconnect_on_logout = true;
+        sim.store_glue.restricted_execution = Some(RestrictedExecution::Macro {
+            function: "host-restricted-call".into(),
+            callback_present: false,
+        });
+    }
+    #[test]
+    fn supplemental_pending_error_does_not_rollback_successful_store() {
+        test_timeout! {
+            if !active() { return; }
+            let env=fixture();
+            pending_ready(&env);
+            pending_disconnect(&env);
+            pending_clear(&env);
+            env.state().borrow_mut().store_glue.pending_error=None;
+            env.exec(R88Q_CONTRACT_RECORDS).unwrap();
+        }
+    }
+    fn set_pending(env: &WowLuaEnv) {
+        env.state().borrow_mut().store_glue.pending_error = Some("host-pending-message".into());
+    }
+    fn pending_ready(env: &WowLuaEnv) {
+        env.state().borrow_mut().store_glue.vas_product_ready = false;
+        set_pending(env);
+        env.exec("local ok,e=pcall(C_StoreSecure.SetVASProductReady,true); assert(not ok and e:find('SetVASProductReady(): host-pending-message',1,true))").unwrap();
+        assert!(env.state().borrow().store_glue.vas_product_ready);
+        assert!(env.state().borrow().store_glue.pending_error.is_some());
+    }
+    fn pending_disconnect(env: &WowLuaEnv) {
+        env.state().borrow_mut().store_glue.disconnect_on_logout = false;
+        set_pending(env);
+        env.exec("local ok,e=pcall(C_StoreSecure.SetDisconnectOnLogout,true); assert(not ok and e:find('SetDisconnectOnLogout(): host-pending-message',1,true))").unwrap();
+        assert!(env.state().borrow().store_glue.disconnect_on_logout);
+    }
+    fn pending_clear(env: &WowLuaEnv) {
+        env.state().borrow_mut().store_glue.vas_product_ready = true;
+        set_pending(env);
+        env.exec("local ok,e=pcall(C_StoreGlue.ClearVASProductReady); assert(not ok and e:find('ClearVASProductReady(): host-pending-message',1,true))").unwrap();
+        assert!(!env.state().borrow().store_glue.vas_product_ready);
+    }
+    #[test]
+    fn supplemental_secret_denials_use_only_explicit_access_metadata() {
+        test_timeout! {
+            if !active() { return; }
+            let env=fixture();
+            // None is a neutral host seam. No native behavior is asserted for it.
+            assert!(env.state().borrow().store_glue.secret_access_mode.is_none());
+            publish_secret(&env);
+            for (mode,reason) in [(0,"Secret values are not allowed"),(73,"Unknown secret access mode")] {
+                env.state().borrow_mut().store_glue.secret_access_mode=Some(mode);
+                env.exec(&format!("local ok,e=pcall(C_StoreGlue.GetVASPurchaseStateInfo,R88qSecret); assert(not ok and e:find({reason:?},1,true))")).unwrap();
+            }
+            env.state().borrow_mut().store_glue.secret_access_mode=Some(1);
+            env.exec(R88Q_CONTRACT_SECRET_MODE_ONE).unwrap();
+            env.state().borrow_mut().store_glue.secret_access_mode=None;
+            env.exec(R88Q_CONTRACT_RECORDS).unwrap();
+        }
+    }
+    fn seed_queue_inputs(env: &WowLuaEnv) {
+        use wow_ui_sim::c_api::store_glue_model::VasQueueCharacter;
+        let mut sim = env.state().borrow_mut();
+        let store = &mut sim.store_glue;
+        store.queue_characters = [("Player-1-a1", 21), ("Player-2-b2", 43), ("", 65)]
+            .into_iter()
+            .map(|(guid, byte)| VasQueueCharacter {
+                guid: guid.into(),
+                correlation: vec![byte],
+            })
+            .collect();
+        store.connection_present = false;
+        store.request_sequence = 0;
+        store.submissions.clear();
+        store.callbacks.queue_status = true;
+    }
+    fn assert_queue_counters(env: &WowLuaEnv, sequence: u64, submissions: usize) {
+        let sim = env.state().borrow();
+        assert_eq!(sim.store_glue.request_sequence, sequence);
+        assert_eq!(sim.store_glue.submissions.len(), submissions);
+    }
+    #[test]
+    fn supplemental_queue_matches_advance_while_disconnected_and_submit_on_reconnect() {
+        test_timeout! {
+            if !active() { return; }
+            let env = fixture();
+            seed_queue_inputs(&env);
+            env.exec("C_StoreGlue.RequestCharacterQueueTime('Player-1-a1'); C_StoreGlue.RequestCharacterQueueTime('Player-1-a1'); C_StoreGlue.RequestCharacterQueueTime('Player-2-b2')").unwrap();
+            assert_queue_counters(&env, 3, 0);
+            env.exec("C_StoreGlue.RequestCharacterQueueTime('Player-3-c3')").unwrap();
+            assert_queue_counters(&env, 3, 0);
+            env.state().borrow_mut().store_glue.connection_present = true;
+            env.exec("C_StoreGlue.RequestCharacterQueueTime('Player-2-b2'); C_StoreGlue.RequestCharacterQueueTime('Player-1-a1'); C_StoreGlue.RequestCharacterQueueTime('Player-3-c3')").unwrap();
+            assert_queue_counters(&env, 5, 2);
+            assert_queue_submissions(&env);
+            env.exec(R88Q_CONTRACT_RECORDS).unwrap();
+        }
+    }
+    fn assert_queue_submissions(env: &WowLuaEnv) {
+        use wow_ui_sim::c_api::store_glue_model::StoreRequest;
+        let sim = env.state().borrow();
+        for (request, (expected, counter)) in
+            sim.store_glue.submissions.iter().zip([(43, 4), (21, 5)])
+        {
+            match request {
+                StoreRequest::Queue {
+                    correlation,
+                    sequence,
+                } => {
+                    assert_eq!(correlation, &vec![expected]);
+                    assert_eq!(*sequence, counter);
+                }
+                other => panic!("expected queue submission, got {other:?}"),
+            }
+        }
+    }
+    #[test]
+    fn supplemental_queue_response_empty_identity_is_nil_and_unmatched_is_silent() {
+        test_timeout! {
+            if !active() { return; }
+            let env = fixture();
+            seed_queue_inputs(&env);
+            env.exec(R88Q_CONTRACT_QUEUE_LISTENER).unwrap();
+            use wow_ui_sim::c_api::store_glue_model::receive_queue_response;
+            receive_queue_response(&env, &[99], 12).unwrap();
+            env.exec("assert(#R88qSupplementQueue == 0)").unwrap();
+            receive_queue_response(&env, &[21], -17).unwrap();
+            receive_queue_response(&env, &[43], 29).unwrap();
+            receive_queue_response(&env, &[65], -31).unwrap();
+            env.exec(R88Q_CONTRACT_QUEUE_RESULTS).unwrap();
+            env.exec(R88Q_CONTRACT_RECORDS).unwrap();
+        }
+    }
+    fn service_update(env: &WowLuaEnv, guid: &str, permitted: Option<bool>) {
+        use wow_ui_sim::c_api::store_glue_model::receive_service_update;
+        let record = VasPurchaseRecord {
+            product_id: 189,
+            state: 6,
+            errors: vec![-37, 0],
+        };
+        receive_service_update(env, guid.into(), record, permitted).unwrap();
+    }
+    #[test]
+    fn supplemental_service_update_requires_explicit_host_permission() {
+        test_timeout! {
+            if !active() { return; }
+            let env = fixture();
+            env.state().borrow_mut().store_glue.callbacks.state_changed = true;
+            env.exec(R88Q_CONTRACT_SERVICE_LISTENER).unwrap();
+            for permitted in [None, Some(false)] {
+                service_update(&env, "Player-1-a1", permitted);
+                service_update(&env, "Player-2-b2", permitted);
+                service_update(&env, "Player-3-c3", permitted);
+                env.exec(R88Q_CONTRACT_RECORDS).unwrap();
+                env.exec("assert(#R88qSupplementService == 0)").unwrap();
+            }
+            service_update(&env, "Player-1-a1", Some(true));
+            service_update(&env, "Player-2-b2", Some(true));
+            env.exec(R88Q_CONTRACT_SERVICE_RESULTS).unwrap();
+        }
+    }
+    fn publish_secret(env: &WowLuaEnv) {
+        let loader = env.loader_env();
+        let mut lua = loader.rilua_mut();
+        let value = rilua::table_security::wrap_host_secret_string(lua.state_mut(), "Player-1-a1");
+        lua.state_mut().push(value);
+        lua.set_global_val("R88qSecret", value).unwrap();
+        lua.state_mut().pop();
+    }
+}
+#[cfg(feature = "optional-tests")]
+const R88Q_CONTRACT_RECORDS: &str = r#"
+    local a, ae, ap = CharacterSelectListUtil.GetVASInfoForGUID('Player-1-a1')
+    local b, be, bp = CharacterSelectListUtil.GetVASInfoForGUID('Player-2-b2')
+    local n, ne = CharacterSelectListUtil.GetVASInfoForGUID('Player-3-c3')
+    assert(a==3 and ap.productID==2003 and ae[1]==17 and ae[2]==0 and ae[3]==-4)
+    assert(b==4 and bp.productID==189 and type(be)=='table' and #be==0)
+    assert(n==0 and type(ne)=='table' and #ne==0)
+"#;
+#[cfg(feature = "optional-tests")]
+const R88Q_CONTRACT_ARGUMENTS: &str = r#"
+    local function reject(...)
+        for _, api in ipairs({
+            {C_StoreGlue.GetVASPurchaseStateInfo,'Usage: local productID, state, errors = C_StoreGlue.GetVASPurchaseStateInfo(guid)'},
+            {C_StoreGlue.RequestCharacterQueueTime,'Usage: C_StoreGlue.RequestCharacterQueueTime(guid)'},
+        }) do
+            local ok,err=pcall(api[1],...)
+            assert(not ok and type(err)=='string' and err:find(api[2],1,true))
+        end
+    end
+    reject();reject(nil);reject(false);reject({});reject(function()end)
+    reject(coroutine.create(function()end))
+    if newproxy then reject(newproxy()) end -- Actual userdata only where the VM exposes it.
+    for _, args in ipairs({{17,0,0},{29,0,0}}) do
+        local product,state,errors=C_StoreGlue.GetVASPurchaseStateInfo(args[1],false,{})
+        assert(product==args[2] and state==args[3] and type(errors)=='table' and #errors==0)
+        assert(select('#',C_StoreGlue.RequestCharacterQueueTime(args[1],false,{}))==0)
+    end
+    for _, setter in ipairs({C_StoreSecure.SetDisconnectOnLogout,C_StoreSecure.SetVASProductReady}) do
+        assert(not pcall(setter));assert(not pcall(setter,nil))
+        for _, truthy in ipairs({0,'',{},true}) do assert(select('#',setter(truthy,'ignored'))==0) end
+        assert(select('#',setter(false))==0)
+    end
+"#;
+#[cfg(feature = "optional-tests")]
+const R88Q_CONTRACT_SIGNED_PUBLICATION: &str = r#"
+    assert(type(__secureenv)=='table')
+    assert(type(rawget(__secureenv,'C_StoreGlue'))=='table')
+    assert(type(rawget(__secureenv,'C_StoreSecure'))=='table')
+    for _, ns in ipairs({C_StoreGlue,__secureenv.C_StoreGlue}) do
+        local p,s,e=ns.GetVASPurchaseStateInfo('Player-4-d4')
+        assert(p==-27 and s==-9 and #e==3 and e[1]==-8 and e[2]==0 and e[3]==9)
+        local pa,sa=ns.GetVASPurchaseStateInfo('Player-1-a1')
+        local pb,sb=ns.GetVASPurchaseStateInfo('Player-2-b2')
+        local pn,sn,en=ns.GetVASPurchaseStateInfo('Player-3-c3')
+        assert(pa==2003 and sa==3 and pb==189 and sb==4 and pn==0 and sn==0 and #en==0)
+        assert(type(ns.GetDisconnectOnLogout)=='function' and type(ns.GetVASProductReady)=='function')
+        assert(type(ns.ClearVASProductReady)=='function' and type(ns.RequestCharacterQueueTime)=='function')
+        assert(type(ns.UpdateVASPurchaseStates)=='function')
+        for _, name in ipairs({'GetVASPurchaseStateInfo','GetDisconnectOnLogout','GetVASProductReady',
+                'ClearVASProductReady','RequestCharacterQueueTime','UpdateVASPurchaseStates'}) do
+            assert(type(rawget(ns,name))=='function')
+        end
+    end
+    __secureenv.C_StoreSecure.SetVASProductReady(true)
+    assert(C_StoreGlue.GetVASProductReady(nil,{},false))
+    C_StoreGlue.ClearVASProductReady()
+    assert(not __secureenv.C_StoreGlue.GetVASProductReady())
+    __secureenv.C_StoreSecure.SetDisconnectOnLogout(true)
+    assert(C_StoreGlue.GetDisconnectOnLogout(false))
+    C_StoreSecure.SetDisconnectOnLogout(false)
+    assert(not __secureenv.C_StoreGlue.GetDisconnectOnLogout())
+"#;
+#[cfg(feature = "optional-tests")]
+const R88Q_CONTRACT_RESTRICTED: &str = r#"
+    -- Explicit restriction metadata, not Lua taint, must precede missing-argument errors.
+    assert(select('#',C_StoreSecure.SetVASProductReady())==0)
+    assert(select('#',C_StoreSecure.SetVASProductReady(true))==0)
+    assert(select('#',C_StoreSecure.SetDisconnectOnLogout(nil))==0)
+    assert(select('#',C_StoreSecure.SetDisconnectOnLogout(false))==0)
+"#;
+#[cfg(feature = "optional-tests")]
+const R88Q_CONTRACT_SECRET_MODE_ONE: &str = r#"
+    local p,s,e=C_StoreGlue.GetVASPurchaseStateInfo(R88qSecret)
+    assert(p==2003 and s==3 and e[1]==17)
+    local function denied()
+        local ok,err=pcall(C_StoreGlue.GetVASPurchaseStateInfo,R88qSecret)
+        assert(not ok and err:find('Secret values are only allowed during untainted execution',1,true))
+    end
+    debug.setobjecttaint(denied,'R88qContractFixture');denied()
+"#;
+
+#[cfg(feature = "optional-tests")]
+const R88Q_CONTRACT_QUEUE_LISTENER: &str = r#"
+    R88qSupplementQueue = {}
+    local frame = CreateFrame('Frame')
+    frame:RegisterEvent('VAS_CHARACTER_QUEUE_STATUS_UPDATE')
+    frame:SetScript('OnEvent', function(self, event, ...)
+        local guid, value = ...
+        table.insert(R88qSupplementQueue, {argc=select('#',...), guid=guid, value=value})
+    end)
+    R88qSupplementQueueFrame = frame
+"#;
+#[cfg(feature = "optional-tests")]
+const R88Q_CONTRACT_QUEUE_RESULTS: &str = r#"
+    assert(#R88qSupplementQueue == 3)
+    local a,b,empty = unpack(R88qSupplementQueue)
+    assert(a.argc==2 and a.guid=='Player-1-a1' and a.value==-17)
+    assert(b.argc==2 and b.guid=='Player-2-b2' and b.value==29)
+    assert(empty.argc==2 and empty.guid==nil and empty.value==-31)
+"#;
+#[cfg(feature = "optional-tests")]
+const R88Q_CONTRACT_SERVICE_LISTENER: &str = r#"
+    R88qSupplementService = {}
+    local frame = CreateFrame('Frame')
+    frame:RegisterEvent('VAS_CHARACTER_STATE_CHANGED')
+    frame:SetScript('OnEvent', function(self, event)
+        local a = CharacterSelectListUtil.GetVASInfoForGUID('Player-1-a1')
+        local b = CharacterSelectListUtil.GetVASInfoForGUID('Player-2-b2')
+        local absent = CharacterSelectListUtil.GetVASInfoForGUID('Player-3-c3')
+        table.insert(R88qSupplementService, {event=event, a=a, b=b, absent=absent})
+    end)
+    R88qSupplementServiceFrame = frame
+"#;
+#[cfg(feature = "optional-tests")]
+const R88Q_CONTRACT_SERVICE_RESULTS: &str = r#"
+    assert(#R88qSupplementService==2)
+    local first,second = unpack(R88qSupplementService)
+    assert(first.event=='VAS_CHARACTER_STATE_CHANGED' and first.a==6 and first.b==4 and first.absent==0)
+    assert(second.event=='VAS_CHARACTER_STATE_CHANGED' and second.a==6 and second.b==6 and second.absent==0)
+    for _,guid in ipairs({'Player-1-a1','Player-2-b2'}) do
+        local state,errors,product = CharacterSelectListUtil.GetVASInfoForGUID(guid)
+        assert(state==6 and product.productID==189 and #errors==2 and errors[1]==-37 and errors[2]==0)
+    end
+"#;
+
+// R88w native contracts exercised through selected original Glue consumers.
+// R88w consumer/assertion bodies stay identical across the thin host-route adapters.
+#[cfg(feature = "optional-tests")]
+mod storeglue_r88w {
+    use super::*;
+    use wow_ui_sim::c_api::store_glue_model::VasPurchaseRecord;
+    const A: &str = "Player-1-a1";
+    const B: &str = "Player-2-b2";
+    const N: &str = "Player-3-c3";
+    fn active() -> bool {
+        // VERIFIED Retail; INFERRED PTR/Forever applicability (#1283/#1306).
+        r88q_profile_active()
+    }
+    fn record(product_id: i32, state: i32, errors: &[i32]) -> VasPurchaseRecord {
+        VasPurchaseRecord {
+            product_id,
+            state,
+            errors: errors.to_vec(),
+        }
+    }
+    fn fixture() -> common::LockedEnv {
+        let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+        seed_r88q_product_inputs(&env);
+        {
+            let mut sim = env.state().borrow_mut();
+            let s = &mut sim.store_glue;
+            s.purchase_states = [
+                (A.into(), record(2003, 3, &[17, 0, -4])),
+                (B.into(), record(189, 4, &[0, 29])),
+            ]
+            .into_iter()
+            .collect();
+            s.purchase_errors = vec![91];
+        }
+        r88w_input::seed_guid_aliases(&env);
+        r88w_input::install_callbacks(&env);
+        env.exec(R88W_RECORDS).unwrap(); // Original consumer before assertions/routes.
+        env.exec(R88W_LISTENER).unwrap();
+        env
+    }
+    fn copied(env: &WowLuaEnv) -> Vec<i32> {
+        env.state().borrow().store_glue.purchase_errors.clone()
+    }
+    #[test]
+    fn error_notification_is_zero_payload_before_record_removal_including_lookup_miss() {
+        test_timeout! {
+            if !active() {return;}
+            let env=fixture();
+            r88w_input::remove(&env,A,0,vec![51,0,-4]);
+            env.exec("R88wCountAfterA=#R88wEvents").unwrap();
+            r88w_input::remove(&env,B,1,vec![-37,0]);
+            env.exec("R88wCountAfterB=#R88wEvents").unwrap();
+            r88w_input::remove(&env,N,0,vec![81]);
+            env.exec("assert(R88wCountAfterA==2); assert(R88wEvents[1].event=='STORE_VAS_PURCHASE_ERROR' and R88wEvents[1].argc==0 and R88wEvents[1].a==3 and R88wEvents[1].b==4); assert(R88wEvents[2].event=='VAS_CHARACTER_STATE_CHANGED' and R88wEvents[2].a==0 and R88wEvents[2].b==4)").unwrap();
+            env.exec("assert(R88wCountAfterB==4); assert(R88wEvents[3].event=='STORE_VAS_PURCHASE_ERROR' and R88wEvents[3].argc==0 and R88wEvents[3].b==4); assert(R88wEvents[4].event=='VAS_CHARACTER_STATE_CHANGED' and R88wEvents[4].b==0)").unwrap();
+            env.exec("assert(#R88wEvents==5); assert(R88wEvents[5].event=='STORE_VAS_PURCHASE_ERROR' and R88wEvents[5].argc==0 and R88wEvents[5].n==0)").unwrap();
+        }
+    }
+    #[test]
+    fn native_shared_error_copy_gate_replaces_and_clears_independently_of_record_match() {
+        test_timeout! {
+            if !active() {return;}
+            let env=fixture();
+            let mut snapshots=Vec::new();
+            for (state,errors) in [(0,vec![0,29]),(1,vec![51,0,-4]),(0,vec![-37]),(1,vec![]),(0,vec![19])] {
+                r88w_input::remove(&env,N,state,errors);
+                snapshots.push(copied(&env));
+                env.exec("R88wGateCounts=R88wGateCounts or {}; table.insert(R88wGateCounts,#R88wEvents)").unwrap();
+            }
+            r88w_input::service(&env,N,record(189,4,&[23]),None);
+            let cleared=copied(&env);
+            env.exec("table.insert(R88wGateCounts,#R88wEvents)").unwrap();
+            assert!(snapshots[0].is_empty());
+            env.exec("assert(R88wGateCounts[1]==0)").unwrap();
+            assert_eq!(snapshots[1],vec![51,0,-4]);
+            assert_eq!(snapshots[2],vec![-37]);
+            assert!(snapshots[3].is_empty());
+            assert!(cleared.is_empty());
+            env.exec(R88W_RECORDS).unwrap();
+        }
+    }
+    #[test]
+    fn bulk_state_changed_is_single_zero_payload_after_full_replacement_and_empty_list() {
+        test_timeout! {
+            if !active() {return;}
+            let env=fixture();
+            r88w_input::bulk(&env,vec![(A.into(),record(189,6,&[31])),(B.into(),record(2003,2,&[-23]))]);
+            env.exec("R88wBulkA=CharacterSelectListUtil.GetVASInfoForGUID('Player-1-a1'); R88wBulkB=CharacterSelectListUtil.GetVASInfoForGUID('Player-2-b2'); R88wBulkCount=#R88wEvents").unwrap();
+            r88w_input::bulk(&env,vec![]);
+            env.exec("assert(R88wBulkA==6 and R88wBulkB==2); assert(R88wBulkCount==1 and R88wEvents[1].argc==0 and R88wEvents[1].a==6 and R88wEvents[1].b==2 and R88wEvents[1].n==0)").unwrap();
+            env.exec("assert(#R88wEvents==2 and R88wEvents[2].argc==0 and R88wEvents[2].a==0 and R88wEvents[2].b==0)").unwrap();
+        }
+    }
+    #[test]
+    fn removal_state_changed_is_zero_payload_only_after_matching_removal() {
+        test_timeout! {
+            if !active() {return;}
+            let env=fixture();
+            r88w_input::remove(&env,N,0,vec![]);
+            r88w_input::remove(&env,A,0,vec![]);
+            r88w_input::remove(&env,B,1,vec![]);
+            env.exec("assert(#R88wEvents==2); for _,event in ipairs(R88wEvents) do assert(event.event=='VAS_CHARACTER_STATE_CHANGED' and event.argc==0 and event.n==0) end; assert(R88wEvents[1].a==0 and R88wEvents[1].b==4); assert(R88wEvents[2].a==0 and R88wEvents[2].b==0)").unwrap();
+        }
+    }
+    #[test]
+    fn service_state_changed_is_zero_payload_after_permitted_update_only() {
+        test_timeout! {
+            if !active() {return;}
+            let env=fixture();
+            r88w_input::service(&env,N,record(189,6,&[31]),None);
+            r88w_input::service(&env,A,record(189,6,&[31]),Some(true));
+            r88w_input::service(&env,B,record(2003,2,&[-23]),Some(true));
+            env.exec("assert(#R88wEvents==2); for _,event in ipairs(R88wEvents) do assert(event.event=='VAS_CHARACTER_STATE_CHANGED' and event.argc==0 and event.n==0) end; assert(R88wEvents[1].a==6 and R88wEvents[1].b==4); assert(R88wEvents[2].a==6 and R88wEvents[2].b==2)").unwrap();
+        }
+    }
+    fn probe_reader(env: &WowLuaEnv, label: &str, guid: &str, input: Vec<i32>) -> Vec<i32> {
+        env.state().borrow_mut().store_glue.purchase_errors = input;
+        env.exec(&format!("R88wProbeReader({label:?},{guid:?})"))
+            .unwrap();
+        copied(env)
+    }
+    #[test]
+    fn shared_error_reader_original_message_consumer_sees_sorted_unique_snapshots() {
+        test_timeout! {
+            if !active() {return;}
+            let env=fixture();
+            env.exec(R88W_READER_CAPTURE).unwrap();
+            let a=probe_reader(&env,"a",A,vec![-3,-7,-3]);
+            let b=probe_reader(&env,"b",B,vec![-2,-11,-2,-11]);
+            let absent=probe_reader(&env,"n",N,vec![]);
+            // Every original-consumer invocation and both direct reads ran before assertions.
+            env.exec(R88W_READER_ASSERT).unwrap();
+            assert_eq!(a.len(),3); assert_eq!(&a[..2],&[-7,-3]);
+            assert_eq!(b.len(),4); assert_eq!(&b[..2],&[-11,-2]);
+            assert!(absent.is_empty()); // Compacted tail values deliberately unspecified.
+            env.exec(R88W_RECORDS).unwrap();
+        }
+    }
+    #[test]
+    fn shared_error_reader_entry_rejection_returns_no_values_without_reading_source() {
+        test_timeout! {
+            if !active() {return;}
+            let env=fixture();
+            r88w_input::set_entry_rejected(&env,true);
+            let a=denied_probe(&env,A,vec![-3,-7,-3]);
+            let b=denied_probe(&env,B,vec![-2,-11,-2,-11]);
+            let n=denied_probe(&env,N,vec![]);
+            r88w_input::set_entry_rejected(&env,false);
+            env.exec("assert(#R88wDeniedResults==3); for _,r in ipairs(R88wDeniedResults) do assert(not r.original[1] and r.count[1] and r.count[2]==0) end").unwrap();
+            assert_eq!(a,vec![-3,-7,-3]);
+            assert_eq!(b,vec![-2,-11,-2,-11]);
+            assert!(n.is_empty());
+            env.exec(R88W_RECORDS).unwrap();
+        }
+    }
+    fn denied_probe(env: &WowLuaEnv, guid: &str, input: Vec<i32>) -> Vec<i32> {
+        env.state().borrow_mut().store_glue.purchase_errors = input;
+        env.exec(&format!("R88wDeniedResults=R88wDeniedResults or {{}}; table.insert(R88wDeniedResults,{{original={{pcall(VASErrorData_GetCombinedMessage,{guid:?})}},count={{pcall(function() return select('#',C_StoreSecure.GetVASErrors()) end)}}}})")).unwrap();
+        copied(env)
+    }
+    #[test]
+    fn shared_error_reader_sorts_source_before_pending_error_without_reducing_count() {
+        test_timeout! {
+            if !active() {return;}
+            let env=fixture();
+            let a=pending_probe(&env,A,vec![-3,-7,-3]);
+            let b=pending_probe(&env,B,vec![-2,-11,-2,-11]);
+            let n=pending_probe(&env,N,vec![]);
+            env.state().borrow_mut().store_glue.pending_error=None;
+            env.exec("for _,v in ipairs(R88wPendingResults) do assert(not v[1] and tostring(v[2]):find('host-reader-pending',1,true)) end; assert(#R88wPendingResults==3)").unwrap();
+            assert_eq!(a.len(),3); assert_eq!(&a[..2],&[-7,-3]);
+            assert_eq!(b.len(),4); assert_eq!(&b[..2],&[-11,-2]);
+            assert!(n.is_empty());
+            env.exec(R88W_RECORDS).unwrap();
+        }
+    }
+    fn pending_probe(env: &WowLuaEnv, guid: &str, input: Vec<i32>) -> Vec<i32> {
+        {
+            let mut sim = env.state().borrow_mut();
+            sim.store_glue.purchase_errors = input;
+            sim.store_glue.pending_error = Some("host-reader-pending".into());
+        }
+        env.exec(&format!("R88wPendingResults=R88wPendingResults or {{}}; table.insert(R88wPendingResults,{{pcall(VASErrorData_GetCombinedMessage,{guid:?})}})")).unwrap();
+        copied(env)
+    }
+
+    const R88W_LISTENER: &str = r#"
+    R88wEvents={}
+    local frame=CreateFrame('Frame')
+    frame:RegisterEvent('STORE_VAS_PURCHASE_ERROR')
+    frame:RegisterEvent('VAS_CHARACTER_STATE_CHANGED')
+    frame:SetScript('OnEvent',function(self,event,...)
+        local a=CharacterSelectListUtil.GetVASInfoForGUID('Player-1-a1')
+        local b=CharacterSelectListUtil.GetVASInfoForGUID('Player-2-b2')
+        local n=CharacterSelectListUtil.GetVASInfoForGUID('Player-3-c3')
+        table.insert(R88wEvents,{event=event,argc=select('#',...),a=a,b=b,n=n})
+    end)
+    R88wFrame=frame
+"#;
+    const R88W_READER_CAPTURE: &str = r#"
+    R88wReaderResults={}
+    function R88wProbeReader(label,guid)
+        local result={original={pcall(VASErrorData_GetCombinedMessage,guid)}}
+        local function read() return select('#',C_StoreSecure.GetVASErrors()), C_StoreSecure.GetVASErrors() end
+        result.first={pcall(read)}
+        result.second={pcall(read)}
+        if result.first[1] and type(result.first[3])=='table' then result.first[3][1]=999 end
+        result.independent={pcall(read)}
+        R88wReaderResults[label]=result
+    end
+"#;
+    const R88W_READER_ASSERT: &str = r#"
+    local source=debug.getinfo(VASErrorData_GetCombinedMessage,'S')
+    assert(source.source:find('VASErrorLookup.lua',1,true) and source.linedefined==365)
+    for _,case in ipairs({{'a',{-7,-3}},{'b',{-11,-2}},{'n',{}}}) do
+        local result=R88wReaderResults[case[1]]
+        local expected=case[2]
+        local messages={}
+        for _,value in ipairs(expected) do table.insert(messages,VASErrorData_GetMessage(value,nil)) end
+        local message=table.concat(messages,'\n')
+        if message=='' then message=BLIZZARD_STORE_VAS_ERROR_OTHER end
+        assert(result.original[1] and result.original[2]==message)
+        for _,snapshot in ipairs({result.second,result.independent}) do
+            assert(snapshot[1] and snapshot[2]==1 and type(snapshot[3])=='table')
+            assert(#snapshot[3]==#expected)
+            for i,value in ipairs(expected) do assert(snapshot[3][i]==value) end
+        end
+        assert(result.first[1] and result.first[2]==1 and type(result.first[3])=='table')
+    end
+"#;
+
+    const R88W_RECORDS: &str = r#"
+    local a, ae, ap = CharacterSelectListUtil.GetVASInfoForGUID('Player-1-a1')
+    local b, be, bp = CharacterSelectListUtil.GetVASInfoForGUID('Player-2-b2')
+    local n, ne = CharacterSelectListUtil.GetVASInfoForGUID('Player-3-c3')
+    assert(a==3 and ap.productID==2003 and ae[1]==17 and ae[2]==0 and ae[3]==-4)
+    assert(b==4 and bp.productID==189 and type(be)=='table' and #be==0)
+    assert(n==0 and type(ne)=='table' and #ne==0)
+"#;
+
+    mod r88w_input {
+        use super::*;
+        use wow_ui_sim::c_api::store_glue_model::{self as model, VasPurchaseRecord};
+        pub fn install_callbacks(env: &WowLuaEnv) {
+            env.state().borrow_mut().store_glue.callbacks.state_changed = true;
+            // #1310: actual callback-present seam, not a replacement event producer.
+            env.state().borrow_mut().store_glue.callbacks.purchase_error = true;
+        }
+        pub fn set_entry_rejected(env: &WowLuaEnv, rejected: bool) {
+            // #1310: actual neutral entry-check result, not a replacement getter.
+            env.state()
+                .borrow_mut()
+                .store_glue
+                .vas_errors_entry_rejected = rejected;
+        }
+        pub fn seed_guid_aliases(env: &WowLuaEnv) {
+            // Ordinary host keys are parsed by production; no fixture aliases.
+            env.state()
+                .borrow_mut()
+                .store_glue
+                .opaque_guid_aliases
+                .clear();
+        }
+        pub fn remove(env: &WowLuaEnv, guid: &str, state: i32, errors: Vec<i32>) {
+            assert!(matches!(state, 0 | 1));
+            model::receive_removal(env, guid, errors).unwrap();
+        }
+        pub fn bulk(env: &WowLuaEnv, records: Vec<(String, VasPurchaseRecord)>) {
+            model::receive_bulk(env, records).unwrap();
+        }
+        pub fn service(
+            env: &WowLuaEnv,
+            guid: &str,
+            record: VasPurchaseRecord,
+            permitted: Option<bool>,
+        ) {
+            model::receive_service_update(env, guid.into(), record, permitted).unwrap();
+        }
+    }
+}
+
+// Original-consumer integration, R88w.w2 / disposition #1310. Draft, uncompiled.
+#[cfg(feature = "optional-tests")]
+mod storeglue_r88w_guid {
+    use super::*;
+    fn fixture(a: &str, b: &str) -> common::LockedEnv {
+        let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+        seed_r88q_product_inputs(&env);
+        input::seed(&env, a, b);
+        env.exec(CAPTURE).unwrap();
+        env
+    }
+    fn capture(env: &WowLuaEnv, text: &str, expected: i32) {
+        env.exec(&format!("R88wGUIDCapture({text:?},{expected})"))
+            .unwrap();
+    }
+    fn check(env: &WowLuaEnv) {
+        env.exec(ASSERT).unwrap();
+    }
+    #[test]
+    fn ordinary_ascii_case_and_numeric_spelling_reach_two_original_records() {
+        test_timeout! {
+            if !r88q_profile_active() {return;}
+            let env=fixture("Player-1-a1","Player-2-b2");
+            capture(&env,"pLaYeR-0001-00A1",1);
+            capture(&env,"PLAYER-0002-0xB2",2);
+            capture(&env,"Player-3-c3",0);
+            check(&env);
+        }
+    }
+    #[test]
+    fn player_native_trailing_and_hex_prefix_advance_examples_reach_original_records() {
+        test_timeout! {
+            if !r88q_profile_active() {return;}
+            let env=fixture("Player-1-12","Player-2-0");
+            capture(&env,"Player-1-12-FF",1);
+            capture(&env,"Player-2-0xZ",2);
+            capture(&env,"Player-3-c3",0);
+            check(&env);
+        }
+    }
+    #[test]
+    fn party_zero_hex_and_verified_lmmparty_kind_alias_reach_original_records() {
+        test_timeout! {
+            if !r88q_profile_active() {return;}
+            let env=fixture("Party-1-2-0","Party-3-4-a1");
+            capture(&env,"Party-1-2-Z",1);
+            capture(&env,"LMMParty-3-4-A1",2);
+            capture(&env,"Party-5-6-c3",0);
+            check(&env);
+        }
+    }
+    #[test]
+    fn opaque_exact_case_wrapping_and_empty_alias_fallback_reach_original_records() {
+        test_timeout! {
+            if !r88q_profile_active() {return;}
+            let env=fixture("Player-1-a1","Player-2-b2");
+            input::opaque_aliases(&env,"Player-1-a1","Player-2-b2");
+            capture(&env,"Opaque-4294967297",1);
+            capture(&env,"Opaque-4294967298",2);
+            capture(&env,"Opaque-1",1);
+            capture(&env,"Opaque-2",2);
+            for absent in ["Opaque-3","Opaque-4","opaque-1","Opaque-1Z","Opaque-"] {
+                capture(&env,absent,0);
+            }
+            check(&env);
+        }
+    }
+    #[test]
+    fn bounded_player_and_party_decimal_limits_do_not_fabricate_matching_records() {
+        test_timeout! {
+            if !r88q_profile_active() {return;}
+            let env=fixture("Player-65535-a1","Party-65535-4294967295-b2");
+            capture(&env,"PLAYER-65535-A1",1);
+            capture(&env,"party-65535-4294967295-B2",2);
+            for absent in ["Player-65536-a1","Party-65536-4294967295-b2",
+                    "Party-65535-4294967296-b2","Player-3-c3"] {
+                capture(&env,absent,0);
+            }
+            check(&env);
+        }
+    }
+    const CAPTURE: &str = r#"
+        R88wGUIDResults={}
+        function R88wGUIDCapture(text,expected)
+            local original={pcall(CharacterSelectListUtil.GetVASInfoForGUID,text)}
+            local direct={pcall(C_StoreGlue.GetVASPurchaseStateInfo,text)}
+            table.insert(R88wGUIDResults,{original=original,direct=direct,expected=expected})
+        end
+    "#;
+    const ASSERT: &str = r#"
+        local source=debug.getinfo(CharacterSelectListUtil.GetVASInfoForGUID,'S')
+        assert(source.source:find('CharacterSelectListUtil.lua',1,true))
+        local observedA,observedB,observedAbsent=false,false,false
+        for _,row in ipairs(R88wGUIDResults) do
+            local o,d=row.original,row.direct
+            assert(o[1] and d[1])
+            local product,state,errors=d[2],d[3],d[4]
+            assert(type(errors)=='table' and o[2]==state and type(o[3])=='table')
+            if row.expected==1 then
+                observedA=true
+                assert(product==2003 and state==3 and o[4].productID==2003)
+                assert(#errors==3 and errors[1]==17 and errors[2]==0 and errors[3]==-4)
+                assert(#o[3]==3 and o[3][1]==17 and o[3][2]==0 and o[3][3]==-4)
+            elseif row.expected==2 then
+                observedB=true
+                assert(product==189 and state==4 and o[4].productID==189 and #errors==0 and #o[3]==0)
+            else
+                observedAbsent=true
+                assert(product==0 and state==0 and #errors==0 and #o[3]==0)
+            end
+        end
+        assert(observedA and observedB and observedAbsent)
+    "#;
+    // RED: exact canonical aliases only. Never seed the alternate spellings being tested.
+    // GREEN: replace only this input representation with typed identity/opaque-key setup.
+    mod input {
+        use super::*;
+        use wow_ui_sim::c_api::store_glue_model::VasPurchaseRecord;
+        pub fn seed(env: &WowLuaEnv, a: &str, b: &str) {
+            let mut sim = env.state().borrow_mut();
+            let store = &mut sim.store_glue;
+            store.purchase_states.clear();
+            store.opaque_guid_aliases.clear();
+            for (guid, product_id, state, errors) in
+                [(a, 2003, 3, vec![17, 0, -4]), (b, 189, 4, vec![0, 29])]
+            {
+                store.purchase_states.insert(
+                    guid.into(),
+                    VasPurchaseRecord {
+                        product_id,
+                        state,
+                        errors,
+                    },
+                );
+            }
+        }
+        pub fn opaque_aliases(env: &WowLuaEnv, a: &str, b: &str) {
+            use wow_ui_sim::c_api::store_guid::{Outcome, parse};
+            let mut sim = env.state().borrow_mut();
+            for (key, text) in [(1, a), (2, b)] {
+                let Outcome::Known(identity) = parse(text.as_bytes()) else {
+                    panic!("fixture requires a known ordinary GUID");
+                };
+                sim.store_glue
+                    .opaque_guid_aliases
+                    .insert(key, Some(identity));
+            }
+            sim.store_glue.opaque_guid_aliases.insert(3, None);
+        }
+    }
+}

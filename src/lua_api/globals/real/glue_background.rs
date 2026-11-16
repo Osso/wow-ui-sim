@@ -8,20 +8,45 @@ use rilua::{LuaResult, Val, runtime_error};
 const GET_USAGE: &str = "Usage: GetSelectBackgroundModel(index)";
 const SET_USAGE: &str = "Usage: SetCharSelectBackground(\"filename\" | file ID)";
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
-    let glue = borrow_state(state)?.screen_kind.is_glue();
-    for (name, function) in [
-        ("GetSelectBackgroundModel", get_background as rilua::RustFn),
-        ("SetCharSelectBackground", set_background as rilua::RustFn),
-        (
-            "MoveCharactersToModelFFXFrame",
-            move_character_models as rilua::RustFn,
-        ),
-        (
+    register_background_only(state)?;
+    register_model_ffx_only(state)?;
+    register_members(
+        state,
+        &[(
             "MoveCharactersToMapSceneFrame",
             move_character_models as rilua::RustFn,
-        ),
-    ] {
+        )],
+    )
+}
+
+pub(crate) fn register_model_ffx_only(state: &mut LuaState) -> LuaResult<()> {
+    register_members(
+        state,
+        &[(
+            "MoveCharactersToModelFFXFrame",
+            move_character_models as rilua::RustFn,
+        )],
+    )
+}
+
+pub(crate) fn register_background_only(state: &mut LuaState) -> LuaResult<()> {
+    register_members(
+        state,
+        &[
+            ("GetSelectBackgroundModel", get_background as rilua::RustFn),
+            ("SetCharSelectBackground", set_background as rilua::RustFn),
+        ],
+    )
+}
+
+fn register_members(
+    state: &mut LuaState,
+    members: &[(&'static str, rilua::RustFn)],
+) -> LuaResult<()> {
+    let glue = borrow_state(state)?.screen_kind.is_glue();
+    for &(name, function) in members {
         if glue {
             table_set_rust_fn_static(state, state.global, name, function)?;
         } else {

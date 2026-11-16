@@ -48,6 +48,15 @@ fn secure_projection_call(state: &mut rilua::vm::state::LuaState) -> rilua::LuaR
 }
 
 pub(crate) fn init_runtime_surface_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
+    let bootstrap = lua.load_bytes(
+        RUNTIME_SURFACE_BOOTSTRAP_LUA.as_bytes(),
+        "@runtime_surface_bootstrap.lua",
+    )?;
+    lua.call_function(&bootstrap, &runtime_surface_arguments())?;
+    Ok(())
+}
+
+fn runtime_surface_arguments() -> [Val; 4] {
     use crate::client_profile::{ACTIVE, ClientProfile};
     let classic_combat = matches!(
         ACTIVE,
@@ -56,20 +65,13 @@ pub(crate) fn init_runtime_surface_bootstrap(lua: &mut rilua::Lua) -> crate::Res
             | ClientProfile::Anniversary
             | ClientProfile::WowForever
     );
-    let bootstrap = lua.load_bytes(
-        RUNTIME_SURFACE_BOOTSTRAP_LUA.as_bytes(),
-        "@runtime_surface_bootstrap.lua",
-    )?;
-    lua.call_function(
-        &bootstrap,
-        &[
-            Val::Bool(classic_combat),
-            Val::Bool(ACTIVE == ClientProfile::WowForever),
-            Val::Bool(matches!(
-                ACTIVE,
-                ClientProfile::Era | ClientProfile::Anniversary
-            )),
-        ],
-    )?;
-    Ok(())
+    [
+        Val::Bool(classic_combat),
+        Val::Bool(ACTIVE == ClientProfile::WowForever),
+        Val::Bool(matches!(
+            ACTIVE,
+            ClientProfile::Era | ClientProfile::Anniversary
+        )),
+        Val::Bool(crate::c_api::c_store_glue::enabled()),
+    ]
 }

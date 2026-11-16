@@ -28,6 +28,7 @@ macro_rules! build_empty_sim_state {
         let restricted_actions = crate::c_api::restricted_actions::initial_states(&cvars);
         let quest_log_entries = QuestLogState::seeded();
         Self {
+            store_glue: Default::default(),
             loot_specialization: 0,
             loot_spec_window: None,
             pending_loot_specs: Vec::new(),

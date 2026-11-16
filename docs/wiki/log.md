@@ -18,6 +18,14 @@ Updated the [spec](../specs/color-overrides.md), [system page](systems/color-ove
 
 Initial implementation; see the revision entry above for the corrected RED attribution and the completed `playerColorOverrides` setting seam. **VERIFIED (implementation commit `2d1a14c8049ae890fdb28fdfc1752de88d3409b3`):** its exact consumer GREEN tests passed and its five-profile compile receipts reported zero warnings. The 70783 catalog projection and event mapping remain **INFERRED**; automatic reload/logout persistence remains **UNKNOWN**.
 
+## [2026-11-15] implementation | Store Glue R88w
+
+[Store Glue native contracts](../specs/store-glue-r88q.md) now include the non-consuming sorted shared-error reader, verified copy/event gates, zero-payload state notifications and bounded symbolic GUID parsing. UNKNOWN parsing seams remain neutral; PTR/Forever applicability remains separately INFERRED.
+
+## [2026-11-15] implementation | Retail Store Glue R88q
+
+[Store Glue VAS state](../specs/store-glue-r88q.md) records native returning paths, explicit host receive seams, original Glue consumers and bounded fallback retirement.
+
 ## [2026-11-15] investigation | ShowUIPanel toggle fixture owners
 
 [Toggle fixture owners](investigations/showuipanel-toggle-fixture-owners.md) records independent achievement/housing fallback-retirement boundaries, original TOC owner loading and untouched out-of-scope panel failures. No guessed fallback restored.

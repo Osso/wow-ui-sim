@@ -140,8 +140,23 @@ pub fn register_c_login(state: &mut LuaState) -> LuaResult<()> {
             submission::get_logon_queue_info,
         )?;
     }
+    #[cfg(feature = "client-ptr")]
+    register_ptr_glue_producers(state)?;
     permanent_shims::c_login::register_c_login_defaults(state, ns)?;
     Ok(())
+}
+
+// Narrow, individually approved inferred producers. Preserve the existing order.
+#[cfg(feature = "client-ptr")]
+fn register_ptr_glue_producers(state: &mut LuaState) -> LuaResult<()> {
+    if ACTIVE != ClientProfile::Ptr {
+        return Ok(());
+    }
+    crate::lua_api::globals::real::glue_connection::register(state)?;
+    crate::lua_api::globals::real::glue_character_season::register(state)?;
+    crate::lua_api::globals::real::glue_select_character::register(state)?;
+    crate::lua_api::globals::real::glue_background::register_background_only(state)?;
+    crate::lua_api::globals::real::glue_background::register_model_ffx_only(state)
 }
 
 /// Update screen-scoped C_Login members.
