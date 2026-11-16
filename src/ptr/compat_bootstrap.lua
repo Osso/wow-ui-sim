@@ -21,7 +21,7 @@ local function __wow_fill_enum(enumName, values)
   end
 end
 
--- Retail 12.1.5.70783 EditModeManagerConstantsDocumentation.lua:255,776.
+-- Retail 12.1.5.70783 EditModeManagerConstantsDocumentation.lua:242,667.
 local editModeAccountSettings = __wow_ensure_enum_table("EditModeAccountSetting")
 if rawget(editModeAccountSettings, "ShowRaidWarning") == nil then
   rawset(editModeAccountSettings, "ShowRaidWarning", 33)
