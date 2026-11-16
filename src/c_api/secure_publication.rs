@@ -630,7 +630,20 @@ mod tests {
             "at least two verified implementations should be routed"
         );
 
-        let routes_and_gap: (bool, bool, bool, bool, bool, bool, bool, bool, bool, bool) = env
+        let routes_and_gap: (
+            bool,
+            bool,
+            bool,
+            bool,
+            bool,
+            bool,
+            bool,
+            bool,
+            bool,
+            bool,
+            bool,
+            bool,
+        ) = env
             .eval(
                 r#"
                 local ping = rawget(_G, "C_Ping")
@@ -641,6 +654,20 @@ mod tests {
                 local securePrivateAuras = rawget(__secureenv, "C_UnitAurasPrivate")
                 local catalog = rawget(_G, "C_CatalogShop")
                 local secureCatalog = rawget(__secureenv, "C_CatalogShop")
+                local color = rawget(_G, "C_UIColor")
+                local secureColor = rawget(__secureenv, "C_UIColor")
+                local store = rawget(_G, "C_StoreSecure")
+                local secureStore = rawget(__secureenv, "C_StoreSecure")
+                -- These Lua fallback producers do not receive native C-closure identity checks.
+                -- Apply those checks when ping_defaults.rs and character_services_defaults.rs
+                -- are replaced by native C producers.
+                local function hasPublishedFunction(ordinary, secure, member)
+                    if type(ordinary) ~= "table" or type(secure) ~= "table" then
+                        return false
+                    end
+                    return type(rawget(ordinary, member)) == "function"
+                        and type(rawget(secure, member)) == "function"
+                end
                 local function hasDistinctHandlers(ordinary, secure, member)
                     if type(ordinary) ~= "table" or type(secure) ~= "table" then
                         return false
@@ -653,12 +680,14 @@ mod tests {
                     end
                     return not rawequal(ordinaryHandler, secureHandler)
                 end
-                return hasDistinctHandlers(ping, securePing, "GetDefaultPingOptions"),
-                    hasDistinctHandlers(
+                return hasPublishedFunction(ping, securePing, "GetDefaultPingOptions"),
+                    hasPublishedFunction(
                         services,
                         secureServices,
                         "HasRequiredBoostForClassTrial"
                     ),
+                    hasDistinctHandlers(color, secureColor, "GetColors"),
+                    hasDistinctHandlers(store, secureStore, "GetProductGroups"),
                     type(securePrivateAuras) == "table"
                         and type(rawget(securePrivateAuras, "GetPrivateAuraAnchors")) == "function",
                     type(privateAuras) == "table"
@@ -684,7 +713,9 @@ mod tests {
             .expect("verified R88y destinations should be observable");
         assert_eq!(
             routes_and_gap,
-            (true, true, true, true, true, true, true, true, true, true)
+            (
+                true, true, true, true, true, true, true, true, true, true, true, true
+            )
         );
 
         assert_eq!(
