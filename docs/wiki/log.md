@@ -1,3 +1,7 @@
+## [2026-11-15] investigation | Retail R88y string.split alias collision
+
+[Post-load workaround audit](investigations/post-load-workaround-audit.md#retail-r88y-stringsplit-alias-collision) and [taint system](systems/taint-system.md#dual-lua-environment) record the verified native alias, the simulator's late overwrite and its Retail-only exclusion. RED/GREEN receipts are in the secure-env-shared handoff.
+
 ## [2026-11-15] system | Retail R88t dependencies and R88v source attribution
 
 Updated the [add-on load-phase contract](../specs/addon-load-phases.md) and [taint system](systems/taint-system.md#dual-lua-environment). **VERIFIED (Retail 12.1.5.70688):** R88t dependency order and named publication; R88v.v4 shared source-exclusion state, suffix matching, and `CreateTexture`/`GetSourceLocation` output. **VERIFIED (simulator test at `adf8d25f9`):** the one-file source consumer passes through the secure registration object and ordinary `CreateTexture`, returns a saved `file:line`, and does not rescan an existing texture after exclusions change. The complete R88v `C_ColorOverrides` stateful model is deferred to a follow-up. Ordinary-request failure-independence remains VERIFIED but untested; transitive copying remains UNKNOWN.
