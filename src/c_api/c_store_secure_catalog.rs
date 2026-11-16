@@ -1,7 +1,7 @@
 //! Retail C_StoreSecure catalog and list methods, backed by neutral host inputs.
 use super::c_store_glue::{Member, publish_namespace, read_argument_at, restricted_call};
 use super::helpers::{bad_argument, parse_numeric_string, set_table_array};
-use super::store_catalog_model::{StoreCurrencyInfo, StoreProductSharedData, StoreSecureState};
+use super::store_catalog_model::{StoreCurrencyInfo, StoreProductSharedData};
 use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, call_function_state, create_string, create_table,
@@ -720,15 +720,15 @@ fn read_optional_truthy(
     Ok(value != Val::Bool(false))
 }
 
-fn set_text(state: &mut LuaState, table: Val, key: &str, value: &str) {
+fn set_text(state: &mut LuaState, table: Val, key: &'static str, value: &str) {
     let value = create_string(state, value);
     table_set_static(state, table, key, value);
 }
 
-fn set_i32(state: &mut LuaState, table: Val, key: &str, value: i32) {
+fn set_i32(state: &mut LuaState, table: Val, key: &'static str, value: i32) {
     table_set_static(state, table, key, Val::Num(f64::from(value)));
 }
 
-fn set_u32(state: &mut LuaState, table: Val, key: &str, value: u32) {
+fn set_u32(state: &mut LuaState, table: Val, key: &'static str, value: u32) {
     table_set_static(state, table, key, Val::Num(f64::from(value)));
 }
