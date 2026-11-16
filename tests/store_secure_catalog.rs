@@ -10,46 +10,46 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 
 const CATALOG_CONSUMER: &str = r##"
     local filtered = StoreFrame_FilterEntries({8101, 8102})
-    assert(#filtered == 2 and filtered[1] == 8101 and filtered[2] == 8102)
+    assert(#filtered == 2 and filtered[1] == 8101 and filtered[2] == 8102, "StoreFrame_FilterEntries must keep both host entries")
     local scrollBox = {}
     function scrollBox:SetDataProvider(provider) self.provider = provider end
     CategoryTreeScrollContainerMixin.UpdateCategories({ScrollBox = scrollBox})
-    assert(scrollBox.provider ~= nil)
+    assert(scrollBox.provider ~= nil, "the category consumer must publish its tree provider")
     local groups = C_StoreSecure.GetProductGroups()
-    assert(#groups == 2 and groups[1].groupID == 4102 and groups[2].groupID == 4101)
-    assert(not StoreFrame_IsProductGroupDisabled(4101))
-    assert(not StoreFrame_IsProductGroupDisabled(4102))
-    assert(StoreFrame_IsProductGroupDisabled(4999))
+    assert(#groups == 2 and groups[1].groupID == 4102 and groups[2].groupID == 4101, "group rows must keep host order")
+    assert(not StoreFrame_IsProductGroupDisabled(4101), "known host group 4101 must be enabled")
+    assert(not StoreFrame_IsProductGroupDisabled(4102), "known host group 4102 must be enabled")
+    assert(StoreFrame_IsProductGroupDisabled(4999), "an absent group must be disabled")
     local group = C_StoreSecure.GetProductGroupInfo(4101)
-    assert(group.groupName == "Host Alpha" and group.displayType == 1 and group.flags == 0)
-    assert(select("#", C_StoreSecure.GetProductGroupInfo(4999)) == 0)
+    assert(group.groupName == "Host Alpha" and group.displayType == 1 and group.flags == 0, "group info must map host fields")
+    assert(select("#", C_StoreSecure.GetProductGroupInfo(4999)) == 0, "an absent group info must return no values")
     local entries = C_StoreSecure.GetProducts(4101)
-    assert(#entries == 2 and entries[1] == 8102 and entries[2] == 8101)
+    assert(#entries == 2 and entries[1] == 8102 and entries[2] == 8101, "product entries must retain host order")
     local hidden = C_StoreSecure.GetProducts(4102, true)
-    assert(#hidden == 2 and hidden[1] == 8103 and hidden[2] == 8105)
-    assert(#C_StoreSecure.GetProducts(4999) == 0)
-    assert(C_StoreSecure.GetProducts(4102)[2] == nil)
+    assert(#hidden == 2 and hidden[1] == 8103 and hidden[2] == 8105, "includeHidden must expose the hidden host entry")
+    assert(#C_StoreSecure.GetProducts(4999) == 0, "an absent group must have no entries")
+    assert(C_StoreSecure.GetProducts(4102)[2] == nil, "hidden entries must stay excluded by default")
     local entry = C_StoreSecure.GetEntryInfo(8101)
-    assert(entry.productID == 8201 and entry.groupID == 4101 and entry.bannerType == 1)
-    assert(entry.alreadyOwned == false and entry.sharedData.name == "Host One")
-    assert(C_StoreSecure.GetEntryInfo(4999) == nil)
+    assert(entry.productID == 8201 and entry.groupID == 4101 and entry.bannerType == 1, "entry info must map host product, group, and banner")
+    assert(entry.alreadyOwned == false and entry.sharedData.name == "Host One", "entry info must include shared product data")
+    assert(C_StoreSecure.GetEntryInfo(4999) == nil, "an absent entry must return nil")
     local first = C_StoreSecure.GetProductInfo(8201)
     local second = C_StoreSecure.GetProductInfo(8202)
-    assert(first.productID == 8201 and second.productID == 8202)
-    assert(first.sharedData.cards[1].itemModifiedAppearanceIDs[2] == 10)
-    assert(first.sharedData.deliverables[1].owned == false)
-    assert(C_StoreSecure.GetProductInfo(4999) == nil)
+    assert(first.productID == 8201 and second.productID == 8202, "product info must map both host products")
+    assert(first.sharedData.cards[1].itemModifiedAppearanceIDs[2] == 10, "product cards must preserve appearance IDs")
+    assert(first.sharedData.deliverables[1].owned == false, "product deliverables must preserve host ownership")
+    assert(C_StoreSecure.GetProductInfo(4999) == nil, "an absent product must return nil")
     return true
 "##;
 
 const CURRENCY_CONSUMER: &str = r#"
     local storeInfo = StoreFrame_CurrencyInfo()
-    assert(FormatCurrencyStringShort == "short-%s", "StoreFrame must consume host currency formatting")
-    assert(FormatCurrencyStringLong == "long-%s")
+    assert(StoreFrame_CurrencyFormatShort(10, 0) == "short-10", "StoreFrame must format with the host short pattern")
     assert(storeInfo.hideBrowseNotice == true)
     local currencyInfo = C_StoreSecure.GetCurrencyInfo()
     assert(type(currencyInfo.sharedData) == "table")
     assert(currencyInfo.currencyFields == nil)
+    assert(currencyInfo.sharedData.formatLong == "long-%s")
     assert(currencyInfo.sharedData.licenseAcceptText == "terms-61")
     return true
 "#;
@@ -153,7 +153,7 @@ fn entry(id: i32, product_id: i32, group_id: u32, order: i32, hidden: bool) -> S
         product_id,
         group_id,
         order,
-        banner_type: order,
+        banner_type: 1,
         hidden,
     }
 }
@@ -296,7 +296,7 @@ fn retail_store_currency_consumer_uses_shared_data() {
     env.exec_rilua_secure(CURRENCY_CONSUMER)
         .expect("secure StoreUI consumer must read sharedData");
     env.state().borrow_mut().store_glue.store_secure.currency_id = 62;
-    env.exec_rilua_secure("local info=StoreFrame_CurrencyInfo(); assert(FormatCurrencyStringShort == 'short2-%s' and info.browseHasStar)")
+    env.exec_rilua_secure("local info=StoreFrame_CurrencyInfo(); assert(StoreFrame_CurrencyFormatShort(10, 0) == 'short2-10' and info.browseHasStar)")
         .expect("StoreFrame must consume the second host currency row");
     env.state().borrow_mut().store_glue.store_secure.currency_id = 63;
     env.exec_rilua_secure("assert(C_StoreSecure.GetCurrencyInfo() == nil)")
