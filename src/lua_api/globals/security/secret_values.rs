@@ -138,10 +138,9 @@ pub(super) fn value_is_secret(
     }
 }
 
-/// Shallow secret check: only inspects the value itself.
-///
-/// For tables this does NOT recurse into entry values or mistake ordinary
-/// slot taint for a secret value. Used by
+/// Shallow secret check: only inspects the value itself without walking
+/// nested table contents. Retail does not treat closure-source metadata as a
+/// secret marker. Used by
 /// `issecretvalue`, `canaccessvalue`, and `canaccessallvalues`. The deep walk
 /// in `value_is_secret`/`table_is_secret` traverses an entire frame's table
 /// tree which is prohibitively expensive in pool Release hot paths
@@ -155,7 +154,7 @@ pub(super) fn value_is_secret_shallow(state: &mut LuaState, value: Val) -> bool 
     if is_secret_value(state, value) || value_has_secret_marker(state, value) {
         return true;
     }
-    // R88ae.4: Retail source taint does not make the value secret.
+    // Retail closure-source taint alone is not a secret marker.
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
         return false;
     }

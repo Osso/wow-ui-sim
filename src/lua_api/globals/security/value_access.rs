@@ -129,8 +129,9 @@ fn set_slot_taint(
     }
 }
 
-/// `issecretvalue(v)` checks the value's secret marker. On Retail, source
-/// taint and a table slot's taint do not make the value itself secret.
+/// `issecretvalue(v)` checks the value's secret marker. On Retail, a
+/// `loadstring` function's closure-source taint alone is not secret.
+/// The legacy string-identity registry remains a separate simulator path.
 fn issecretvalue_fallback(state: &mut LuaState) -> LuaResult<u32> {
     let value = first_argument(state);
     let secret = value_is_secret_shallow(state, value);
@@ -171,8 +172,8 @@ fn canaccessallvalues_fallback(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-/// `canaccesstable(t)` returns true only for non-secret tables. On Retail, it
-/// checks nested secret markers; source taint alone does not hide the table.
+/// `canaccesstable(t)` returns true only for non-secret tables. On Retail,
+/// closure-source taint alone does not make a function secret.
 fn canaccesstable_fallback(state: &mut LuaState) -> LuaResult<u32> {
     let value = state.stack_get(state.base);
     let accessible = match value {
