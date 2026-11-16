@@ -1,3 +1,7 @@
+## [2026-11-16] system | Retail Glue login lifecycle
+
+**VERIFIED (Retail 12.1.5.70783 runtime):** [Retail Glue login lifecycle](systems/glue-login-lifecycle.md) records the two Glue-only producers, their state transitions, original-consumer RED/GREEN evidence, and the remaining native cache/default-state boundaries.
+
 ## [2026-11-15] investigation | INFERRED Retail pending-list caller
 
 [Consumer selection and RED proof](investigations/consumer-selection-and-red-proof.md#retail-glue-login-consumers-and-pending-list-cache-call-site-r88aa) records the selected 70783 Retail cache caller separately from the VERIFIED 70688 native API contract; the exact cache-to-client build match remains UNKNOWN.
