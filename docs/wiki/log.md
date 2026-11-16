@@ -2,6 +2,10 @@
 
 Updated the [taint system](systems/taint-system.md#dual-lua-environment) and [add-on load-phase contract](../specs/addon-load-phases.md#r88ac-globalstrings-secure-publication). **VERIFIED (R88ac.ac3; supplement SHA-256 `107dad291c11c9a80949d7063e02d849bb394155663870db0631c96c54d9659b`):** the native numeric setter writes each Game `LE_GAME_*` name and ordinal to both destinations. **VERIFIED (simulator source/data intersection):** all 42 currently modeled `GAME_ERROR_STRINGS` names occur in the supplement; the code mirrors only those existing values. **UNVERIFIED:** targeted runtime and original-consumer results are pending.
 
+## [2026-11-16] inferred | Retail Unit globals in secureenv
+
+Updated the [taint system](systems/taint-system.md#dual-lua-environment) and [add-on load-phase contract](../specs/addon-load-phases.md#r88ac-globalstrings-secure-publication). **INFERRED (R88ac.ac1):** the simulator publishes only the five already-modeled globals `UnitClass`, `UnitRace`, `UnitSex`, `UnitAffectingCombat`, and `UnitName` into Retail secureenv. Native registration and closure identity are not established. No test asserts this inferred set.
+
 ## [2026-11-16] inferred | Retail legacy numeric secure mirror
 
 Updated the [taint system](systems/taint-system.md#dual-lua-environment) and [add-on load-phase contract](../specs/addon-load-phases.md#r88ac-globalstrings-secure-publication). **VERIFIED (R88ac.ac3):** native code has a separate Game/Glue initializer that publishes 335 distinct numeric globals to both environments. **INFERRED (simulator source):** Retail mirrors its other existing integer definitions because the supplement does not give a per-name inventory for the shared set. No new constants are added, and no test asserts this inferred row set.

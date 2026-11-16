@@ -55,6 +55,7 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 
 ### R88ac GlobalStrings secure publication
 
+- [ ] INFERRED simulator policy (R88ac.ac1): publish only the existing `UnitClass`, `UnitRace`, `UnitSex`, `UnitAffectingCombat`, and `UnitName` globals into Retail secureenv. The native registration route and closure identity are UNKNOWN; do not extend this list or assert it in tests.
 - [ ] VERIFIED (Retail 12.1.5.70688, R88ac.ac2): each GlobalStrings record whose preparation succeeds and whose Flags contain all bits in the active mask writes its name and value to ordinary `_G` and the separately referenced shared secure table. Game uses mask 1; Glue uses mask 2.
 - [ ] INFERRED simulator policy (R88ac.ac2): the committed Retail GlobalStrings PHF map stores no Flags, so Retail mirrors every map row that the existing registration writes to `_G`. Exact per-row Game/Glue filtering is not modeled; `RAID_TARGET_1` membership remains INFERRED.
 - [ ] VERIFIED (Retail 12.1.5.70688, R88ac.ac3; supplement SHA-256 `107dad291c11c9a80949d7063e02d849bb394155663870db0631c96c54d9659b`): mirror the same existing simulator value to secureenv for `LE_GAME_*` numeric globals whose names occur in the Game/flag-3 CSV. Do not create missing constants.
@@ -89,7 +90,7 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 - `src/c_api/c_addons_runtime.rs` — resolves runtime dependencies and submits `LoadWith` followers.
 - `src/c_api/helpers.rs`, `src/c_api/secure_publication.rs`, and generated `src/c_api/secure_publication_data.rs` — route implemented members through verified R88y flags; the source CSV and generator are `data/secure-publication/retail-12-1-5-70688.csv` and `tools/gen_r88y_secure_publication.py`.
 - `src/loader/addon.rs` — orders ordinary and secure dependency requests.
-- `src/loader/lua_file.rs`, `src/loader/xml_file.rs`, `src/lua_api/loader_env.rs`, `src/lua_api/globals/security/secure_env.rs` — execute secure files through the shared table and retain private replay only for selected replay paths and generated XML loader chunks.
+- `src/loader/lua_file.rs`, `src/loader/xml_file.rs`, `src/lua_api/loader_env.rs`, `src/lua_api/globals/security/secure_env.rs` — execute secure files through the shared table, retain private replay only for selected replay paths and generated XML loader chunks, and publish the five inferred R88ac Unit globals.
 - `src/lua_api/env_init/enums.rs` — registers `Enum` values and the Retail `Constants.*` secure-table publication path.
 - `src/lua_api/globals/strings/mod.rs` — registers PHF GlobalStrings rows and integer constants; applies the inferred string and non-`LE_GAME_*` integer mirrors, plus the CSV-listed `LE_GAME_*` route.
 - `src/lua_api/env_init/mod.rs`, `src/lua_api/env_runtime.rs` — install pre-copy library aliases and rerun verified publication after screen-specific registrations.

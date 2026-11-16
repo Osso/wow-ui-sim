@@ -193,6 +193,10 @@ fn install_secure_runtime_surface(lua: &mut rilua::Lua) -> crate::Result<()> {
             "R88y verified members have no simulator implementation"
         );
     }
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        // INFERRED (R88ac.ac1): mirror the five authorized Unit globals after registration.
+        super::globals::security::publish_r88ac_inferred_unit_globals(lua.state_mut())?;
+    }
     frames::init_frame_metatable(lua)
 }
 

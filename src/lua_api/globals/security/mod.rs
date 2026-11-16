@@ -40,9 +40,10 @@ mod value_access;
 pub use loader_env::{compile_chunk_rilua, exec_chunk_rilua};
 pub(crate) use secure_env::{
     SECURE_ENV_BASE_NAMES_KEY, mark_secure_replay_state, native_registration_destinations,
-    register_native_function_if_missing_with_flags, register_native_function_with_flags,
-    register_pair_list_function, register_unknown_allowlist_function, secure_env_table,
-    secure_replay_env_table, set_secure_env_key_state,
+    publish_r88ac_inferred_unit_globals, register_native_function_if_missing_with_flags,
+    register_native_function_with_flags, register_pair_list_function,
+    register_unknown_allowlist_function, secure_env_table, secure_replay_env_table,
+    set_secure_env_key_state,
 };
 pub use secure_env::{
     create_secure_environment, create_secure_replay_environment, mark_secure, mark_secure_state,
