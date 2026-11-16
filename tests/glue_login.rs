@@ -1569,7 +1569,29 @@ fn seed_two_retail_roster_records(env: &WowLuaEnv) -> (String, String) {
     assert_ne!(guids.0, guids.1, "backed roster GUIDs must be distinct");
     env.state().borrow_mut().glue_login.characters =
         accounts.into_iter().map(Into::into).collect();
+    seed_retail_waiting_vas_records(env, [&guids.0, &guids.1]);
     guids
+}
+
+#[cfg(feature = "client-retail")]
+fn seed_retail_waiting_vas_records(env: &WowLuaEnv, guids: [&str; 2]) {
+    use wow_ui_sim::c_api::store_glue_model::VasPurchaseRecord;
+
+    // The row uses queue state so this test does not depend on the unmodeled VAS lock helper.
+    let state: i32 = env
+        .eval("return Enum.VasPurchaseProgress.WaitingOnQueue")
+        .expect("Retail WaitingOnQueue state should be available");
+    let mut sim = env.state().borrow_mut();
+    for guid in guids {
+        sim.store_glue.purchase_states.insert(
+            guid.to_owned(),
+            VasPurchaseRecord {
+                product_id: 0,
+                state,
+                errors: Vec::new(),
+            },
+        );
+    }
 }
 
 #[cfg(feature = "client-retail")]
