@@ -8,7 +8,7 @@ use wow_ui_sim::c_api::store_catalog_model::{
 use wow_ui_sim::c_api::store_glue_model::StoreRequest;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
-const CATALOG_CONSUMER: &str = r#"
+const CATALOG_CONSUMER: &str = r##"
     local filtered = StoreFrame_FilterEntries({8101, 8102})
     assert(#filtered == 2 and filtered[1] == 8101 and filtered[2] == 8102)
     local scrollBox = {}
@@ -40,7 +40,7 @@ const CATALOG_CONSUMER: &str = r#"
     assert(first.sharedData.deliverables[1].owned == false)
     assert(C_StoreSecure.GetProductInfo(4999) == nil)
     return true
-"#;
+"##;
 
 const CURRENCY_CONSUMER: &str = r#"
     local shop = setmetatable({}, {__index = CatalogShopMixin})
@@ -56,7 +56,7 @@ const CURRENCY_CONSUMER: &str = r#"
     return true
 "#;
 
-const STORE_EVENT_CONSUMER: &str = r#"
+const STORE_EVENT_CONSUMER: &str = r##"
     STORE_CATALOG_EVENTS = {}
     local listener = CreateFrame("Frame")
     for _, event in ipairs({"STORE_STATUS_CHANGED", "STORE_PRODUCTS_UPDATED",
@@ -80,7 +80,7 @@ const STORE_EVENT_CONSUMER: &str = r#"
         end
         table.insert(STORE_CATALOG_EVENTS, record)
     end)
-"#;
+"##;
 
 fn load_store_ui() -> WowLuaEnv {
     let ui_dir = crate::common::blizzard_addon_harness::blizzard_ui_dir();
