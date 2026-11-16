@@ -301,15 +301,15 @@ fn test_mixin() {
 
 #[cfg(feature = "client-retail")]
 #[test]
+// These globals are test-only fixtures for unrelated UnitUtil APIs, not
+// native claims. They let the consumer call complete; no assertion checks
+// their values, and assertions inspect only the wrapped selector.
 fn test_retail_get_specialization_system_via_cached_unit_util() {
     let env = WowLuaEnv::new().unwrap();
     let path =
         crate::client_profile::blizzard_ui_addons_dir().join("Blizzard_SharedXML/UnitUtil.lua");
     let source = std::fs::read_to_string(path).unwrap();
     env.exec(&source).unwrap();
-    // These globals are test-only fixtures for unrelated UnitUtil APIs, not
-    // native claims. They let the consumer call complete; no assertion checks
-    // their values, and assertions inspect only the wrapped selector.
     let passed: bool = env
         .eval(
             r##"
