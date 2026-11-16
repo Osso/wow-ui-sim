@@ -37,6 +37,9 @@ pub(crate) fn register_spell_and_widget_tables(state: &mut LuaState) -> LuaResul
     #[cfg(feature = "client-wowforever")]
     super::forever_finite_constants::register(state);
     c_spell::register_c_spell_surface(state)?;
+    // INFERRED: R88ah's 70631 behavior applies to the 70268 declarations and enum.
+    #[cfg(feature = "client-mists")]
+    super::mists_r88ah::register_spell_visibility(state)?;
     #[cfg(feature = "retail-12-0-5")]
     super::c_mount_spell_lookup::register(state)?;
     #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
@@ -117,6 +120,9 @@ fn register_interaction_combat(state: &mut LuaState) -> LuaResult<()> {
         super::c_limited_input::register(state)?;
     }
     super::combat_audio_enabled::register(state)?;
+    // INFERRED: R88ah's 70631 behavior applies to the 70268 Mists cache.
+    #[cfg(feature = "client-mists")]
+    super::mists_r88ah::register_combat_audio_alert(state)?;
     #[cfg(feature = "retail-12-0-0")]
     super::c_combat_audio_alert::register(state)?;
     #[cfg(feature = "retail-12-0-0")]
