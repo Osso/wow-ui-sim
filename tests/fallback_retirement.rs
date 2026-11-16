@@ -26,6 +26,10 @@ assert(factory:GetTemplateInfoCache():GetTemplateInfos() ~= nil)
 if type(LoadAddOnWithErrorHandling) == 'function' then
     original(LoadAddOnWithErrorHandling, 'Blizzard_SharedXML/AddOnUtil.lua')
 end
+if type(ClassTrainerFrame_LoadUI) == 'function' then
+    original(ClassTrainerFrame_LoadUI, 'Blizzard_TrainerUI/Blizzard_TrainerUI_Bootstrap.lua')
+    assert(pcall(ClassTrainerFrame_LoadUI))
+end
 "#;
 
 const RETAIL_CONSUMER_LUA: &str = r#"
