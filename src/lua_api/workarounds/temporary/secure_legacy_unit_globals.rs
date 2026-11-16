@@ -10,7 +10,6 @@ use rilua::{LuaApiMut, LuaResult, Val};
 
 use crate::client_profile::ClientProfile;
 
-#[derive(Clone, Copy)]
 struct MasterUnitGlobal {
     name: &'static str,
     registered_profiles: &'static [ClientProfile],
@@ -1153,14 +1152,24 @@ mod tests {
             .map(|entry| format!("'{}'", entry.name))
             .collect::<Vec<_>>()
             .join(", ");
-        let script = format!(
-            "local names = {{{names}}}; local missing = {{}}; for _, name in ipairs(names) do if type(rawget(_G, name)) ~= 'function' then missing[#missing + 1] = name end end; return table.concat(missing, ',')",
-        );
+        let script = format!(concat!(
+            "local names = {{{names}}}\n",
+            "local missing = {{}}\n",
+            "for _, name in ipairs(names) do\n",
+            "    if type(rawget(_G, name)) ~= 'function' then\n",
+            "        missing[#missing + 1] = name\n",
+            "    end\n",
+            "end\n",
+            "return table.concat(missing, ',')"
+        ));
         let mut env = WowLuaEnv::new().expect("initialize Lua environment");
-        let missing = env.eval::<String>(&script).expect("check _G registrations");
-        let sources = missing
+        let missing_csv = env.eval::<String>(&script).expect("check _G registrations");
+        let missing_names = missing_csv
             .split(',')
             .filter(|name| !name.is_empty())
+            .collect::<Vec<_>>();
+        let sources = missing_names
+            .into_iter()
             .filter_map(|name| {
                 entries
                     .iter()
