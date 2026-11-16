@@ -56,7 +56,7 @@ pub(crate) fn init_runtime_surface_bootstrap(lua: &mut rilua::Lua) -> crate::Res
     Ok(())
 }
 
-fn runtime_surface_arguments() -> [Val; 4] {
+fn runtime_surface_arguments() -> [Val; 5] {
     use crate::client_profile::{ACTIVE, ClientProfile};
     let classic_combat = matches!(
         ACTIVE,
@@ -73,5 +73,6 @@ fn runtime_surface_arguments() -> [Val; 4] {
             ClientProfile::Era | ClientProfile::Anniversary
         )),
         Val::Bool(crate::c_api::c_store_glue::enabled()),
+        Val::Bool(ACTIVE == ClientProfile::Retail),
     ]
 }

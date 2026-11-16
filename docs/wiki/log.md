@@ -1,3 +1,7 @@
+## [2026-11-16] implementation | Retail StoreSecure catalog inputs
+
+Added the Retail catalog state contract and system page. **VERIFIED (R88ad.1/R88ad.2, Retail 12.1.5.70688):** catalog readers, availability/list writers, currency lookup, and request limits have explicit native behavior. **VERIFIED (simulator source):** unknown runtime rows remain empty host inputs, and only Retail selects the new model; uncovered profiles retain bootstrap behavior. The pinned 12.1.5.70783 StoreUI and CatalogShop consumers remain unchanged.
+
 ## [2026-11-15] fix | Retail Blizzard UI cache provenance
 
 Updated the [cache system page](systems/casc-asset-cache.md#blizzard-ui-source-cache) and [CASC loading contract](../specs/casc-loading.md#pinned-blizzard-ui-source-cache). **VERIFIED (source and tests):** Retail and PTR share one exact provenance comparison against their active pin; mismatch excludes the cache and normal startup follows the existing sync path. Synthetic temp-cache tests cover matching 70783, stale 70575, and missing provenance. Other profiles retain their existing selection behavior.

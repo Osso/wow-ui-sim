@@ -438,7 +438,6 @@
   "startup_warnings::test_restricted_addon_environment_exposes_execution_surface",
   "startup_warnings::test_secure_env_annotated_files_load_cleanly",
   "startup_warnings::test_widget_container_mixin_applied",
-  "store_group_contract::store_group_shape_survives_original_environment_cleanup",
   "targeting_verbs::raid_target_icons_update_real_blizzard_target_frame_consumer",
   "test_guild_panel::communities_list_dropdown_materializes_subscribed_club_rows",
   "test_guild_panel::communities_member_detail_rank_dropdown_shows_rank_rows",

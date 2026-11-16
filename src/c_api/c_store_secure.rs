@@ -1,5 +1,4 @@
-//! Profile-specific group-list projection over the existing simulator Lua store table.
-//! Shapes follow cached Store consumers; native declarations are unavailable.
+//! Legacy non-Retail group-list projection; native behavior remains UNKNOWN there.
 
 use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::methods::{create_table, table_get_static};
@@ -10,6 +9,9 @@ use rilua::vm::table::Table;
 use rilua::{LuaResult, Val};
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
+    if ACTIVE == ClientProfile::Retail {
+        return super::c_store_secure_catalog::register(state);
+    }
     let namespace = super::ensure_namespace(state, "C_StoreSecure")?;
     table_set_rust_fn_static(state, namespace, "GetProductGroups", get_product_groups)
 }

@@ -1,3 +1,5 @@
+#![cfg(feature = "client-retail")]
+
 use std::path::PathBuf;
 
 use wow_ui_sim::loader::discover_blizzard_addons_for_screen;
@@ -66,6 +68,7 @@ fn catalog_display_record() -> CatalogShopProductDisplayInfo {
 }
 
 fn insert_catalog_product_fixture(env: &WowLuaEnv) {
+    crate::common::store_catalog_fixture::publish_featured_catalog(env);
     let category_ids: Vec<i32> = env.eval("return C_CatalogShop.GetAvailableCategoryIDs()").unwrap();
     assert!(!category_ids.is_empty(), "fixture requires catalog navigation categories");
     let mut state = env.state().borrow_mut();

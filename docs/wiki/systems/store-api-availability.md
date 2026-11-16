@@ -29,4 +29,5 @@ R38 verifies PTR 12.1.7.70668 and provides a limited Retail 12.1.5.70688 compari
 ## See Also
 
 - [[store-public-eligibility]] — separate per-group purchase eligibility input.
-- [[store-secure-pool-constructors]] — secure catalog boundary.
+- [[store-secure-catalog]] — StoreSecure catalog, list readiness, and host responses.
+- [[store-secure-pool-constructors]] — historical secure UI pool investigation.

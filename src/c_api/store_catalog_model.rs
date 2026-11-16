@@ -1,6 +1,15 @@
 //! Host-supplied inputs for the Retail C_StoreSecure catalog and list surface.
+use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::WowLuaEnv;
-use std::collections::HashMap;
+use rilua::Val;
+use std::collections::{HashMap, HashSet};
+
+const ROOT_PRODUCT_GROUP_ID: u32 = 0;
+const EMPTY_STORE_CURRENCY_ID: i32 = 0;
+const PRODUCT_LIST_SUCCESS_CODE: u32 = 0;
+const REGION_LOCK_RESPONSE_CODE: u32 = 3;
+const PURCHASE_STATUS_EXCLUDED_FROM_PROGRESS: i32 = 6;
+const EXCLUDED_GROUP_PRODUCT_IDS: [i32; 2] = [239, 477];
 
 #[derive(Debug, Default)]
 pub struct StoreSecureState {
@@ -8,15 +17,20 @@ pub struct StoreSecureState {
     pub available: bool,
     pub has_product_list: bool,
     pub has_purchase_list: bool,
+    /// Connection-owned readiness; `None` leaves the distribution writer unknown.
     pub distribution_list_ready: Option<bool>,
     pub currency_id: i32,
     pub currencies: HashMap<i32, StoreCurrencyInfo>,
+    pub derived_region: Option<u32>,
     pub purchase_list: Vec<StorePurchaseInput>,
-    pub last_product_list_response_error: u32,
-    pub region_locked: bool,
-    pub dynamic_prices: HashMap<i32, Vec<u8>>,
+    /// Explicit clock and offsets for the purchase-in-progress comparison.
     pub current_time: f64,
     pub shared_time_adjustment: f64,
+    pub last_product_list_response_error: u32,
+    pub region_locked: bool,
+    /// Opaque dynamic-price response rows, keyed by signed product ID.
+    pub dynamic_prices: HashMap<i32, Vec<u8>>,
+    /// Host-supplied unsigned clock sample for product-list request limiting.
     pub request_time_ms: u32,
     pub product_list_request_count: u32,
     pub product_list_counter_reset_ms: u32,
@@ -30,6 +44,7 @@ pub struct StoreCatalogInput {
     pub entries: Vec<StoreEntryInput>,
 }
 
+/// Host-supplied outcomes for the native group display and metadata reads.
 #[derive(Clone, Debug)]
 pub struct StoreProductGroupInput {
     pub group_id: u32,
@@ -43,6 +58,7 @@ pub struct StoreProductGroupInput {
     pub disabled_tooltip: Option<String>,
 }
 
+/// Host-supplied predicate results and detail data; these are not raw native flags.
 #[derive(Clone, Debug)]
 pub struct StoreProductInput {
     pub product_id: i32,
@@ -53,6 +69,7 @@ pub struct StoreProductInput {
     pub shared_data: StoreProductSharedData,
 }
 
+/// `hidden` is the host-supplied result for this entry in its group.
 #[derive(Clone, Debug)]
 pub struct StoreEntryInput {
     pub entry_id: i32,
@@ -123,6 +140,7 @@ pub struct StoreCurrencyInfo {
     pub hide_confirmation_browse_notice: bool,
 }
 
+/// Host-supplied purchase-row fields used by the verified progress predicate.
 #[derive(Clone, Debug)]
 pub struct StorePurchaseInput {
     pub blocked: bool,
@@ -144,28 +162,266 @@ pub struct StorePurchaseListResponse {
     pub rows: Vec<StorePurchaseInput>,
 }
 
-pub fn receive_availability(_env: &WowLuaEnv, _available: bool) -> crate::Result<()> {
+impl StoreSecureState {
+    pub fn group_info(&self, group_id: i32) -> Option<StoreProductGroupInput> {
+        self.catalog
+            .groups
+            .iter()
+            .find(|group| group.group_id as i32 == group_id)
+            .cloned()
+    }
+
+    pub fn product_info(&self, product_id: i32) -> Option<StoreProductInput> {
+        self.catalog
+            .products
+            .iter()
+            .find(|product| product.product_id == product_id && product.supported)
+            .cloned()
+    }
+
+    pub fn entry_info(&self, entry_id: i32) -> Option<(StoreEntryInput, StoreProductInput)> {
+        let entry = self
+            .catalog
+            .entries
+            .iter()
+            .find(|entry| entry.entry_id == entry_id)?;
+        let product = self.product_info(entry.product_id)?;
+        Some((entry.clone(), product))
+    }
+
+    pub fn product_group_rows(&self) -> Vec<(u32, u32)> {
+        let eligible_products = self.display_eligible_products();
+        let eligible_groups: HashSet<u32> = self
+            .catalog
+            .entries
+            .iter()
+            .filter(|entry| eligible_products.contains(&entry.product_id))
+            .map(|entry| entry.group_id)
+            .collect();
+        let eligible_parents: HashSet<u32> = self
+            .catalog
+            .groups
+            .iter()
+            .filter(|group| {
+                group.parent_group_id != ROOT_PRODUCT_GROUP_ID
+                    && eligible_groups.contains(&group.group_id)
+            })
+            .map(|group| group.parent_group_id)
+            .collect();
+        self.catalog
+            .groups
+            .iter()
+            .filter(|group| {
+                group.displayable
+                    && (eligible_groups.contains(&group.group_id)
+                        || eligible_parents.contains(&group.group_id))
+            })
+            .map(|group| (group.group_id, group.parent_group_id))
+            .collect()
+    }
+
+    pub fn product_entry_ids(&self, group_id: u32, include_hidden: bool) -> Vec<i32> {
+        let products = self.list_supported_products();
+        self.catalog
+            .entries
+            .iter()
+            .filter(|entry| entry.group_id == group_id && (include_hidden || !entry.hidden))
+            .filter(|entry| !EXCLUDED_GROUP_PRODUCT_IDS.contains(&entry.product_id))
+            .filter(|entry| products.contains(&entry.product_id))
+            .map(|entry| entry.entry_id)
+            .collect()
+    }
+
+    pub fn current_currency_info(&mut self) -> Option<(i32, StoreCurrencyInfo)> {
+        if self.currency_id == EMPTY_STORE_CURRENCY_ID {
+            return None;
+        }
+        let currency = self.currencies.get(&self.currency_id)?.clone();
+        self.cache_derived_region();
+        Some((self.currency_id, currency))
+    }
+
+    pub fn cache_derived_region(&mut self) {
+        if self.derived_region.is_none() {
+            self.derived_region = self
+                .currencies
+                .get(&self.currency_id)
+                .map(|currency| currency.region_id);
+        }
+    }
+
+    pub fn has_purchase_in_progress(&self) -> bool {
+        self.purchase_list.iter().any(|purchase| {
+            !purchase.blocked
+                && purchase.status != PURCHASE_STATUS_EXCLUDED_FROM_PROGRESS
+                && purchase.expires_at + purchase.client_time_adjustment
+                    > self.current_time + self.shared_time_adjustment
+        })
+    }
+
+    pub fn is_dynamic_bundle(&self, product_id: i32) -> bool {
+        self.catalog
+            .products
+            .iter()
+            .find(|product| product.product_id == product_id)
+            .is_some_and(|product| product.dynamic_bundle)
+    }
+
+    fn display_eligible_products(&self) -> HashSet<i32> {
+        self.catalog
+            .products
+            .iter()
+            .filter(|product| {
+                product.supported && product.session_eligible && product.display_eligible
+            })
+            .map(|product| product.product_id)
+            .collect()
+    }
+
+    fn list_supported_products(&self) -> HashSet<i32> {
+        self.catalog
+            .products
+            .iter()
+            .filter(|product| product.supported && product.session_eligible)
+            .map(|product| product.product_id)
+            .collect()
+    }
+}
+
+pub fn receive_disconnect(env: &WowLuaEnv) {
+    if ACTIVE != ClientProfile::Retail {
+        return;
+    }
+    let mut sim = env.state().borrow_mut();
+    let store = &mut sim.store_glue.store_secure;
+    store.available = false;
+    store.has_product_list = false;
+    store.has_purchase_list = false;
+    store.region_locked = false;
+    store.last_product_list_response_error = 0;
+    store.currency_id = 0;
+    store.dynamic_prices.clear();
+    sim.store_glue.connection_present = false;
+}
+
+pub fn receive_availability(env: &WowLuaEnv, available: bool) -> crate::Result<()> {
+    if ACTIVE != ClientProfile::Retail {
+        return Ok(());
+    }
+    let notify = {
+        let mut sim = env.state().borrow_mut();
+        sim.store_glue.store_secure.available = available;
+        sim.store_glue.callbacks.store_status_changed
+    };
+    if notify {
+        env.fire_event_with_args("STORE_STATUS_CHANGED", &[])?;
+    }
     Ok(())
 }
 
 pub fn receive_product_list(
-    _env: &WowLuaEnv,
-    _response: StoreProductListResponse,
+    env: &WowLuaEnv,
+    response: StoreProductListResponse,
 ) -> crate::Result<()> {
+    if ACTIVE != ClientProfile::Retail {
+        return Ok(());
+    }
+    let notify = {
+        let mut sim = env.state().borrow_mut();
+        apply_product_list_response(&mut sim.store_glue.store_secure, response);
+        sim.store_glue.callbacks.store_products_updated
+    };
+    if notify {
+        env.fire_event_with_args("STORE_PRODUCTS_UPDATED", &[])?;
+    }
     Ok(())
+}
+
+fn apply_product_list_response(
+    store: &mut StoreSecureState,
+    mut response: StoreProductListResponse,
+) {
+    store.last_product_list_response_error = response.result_code;
+    store.region_locked = response.result_code == REGION_LOCK_RESPONSE_CODE;
+    if response.result_code != PRODUCT_LIST_SUCCESS_CODE {
+        store.catalog.groups.clear();
+        store.catalog.products.clear();
+        store.has_product_list = false;
+        return;
+    }
+    response.catalog.groups.sort_by_key(|group| group.order);
+    response
+        .catalog
+        .entries
+        .sort_by_key(|entry| (entry.group_id, entry.order));
+    store.catalog = response.catalog;
+    store.currency_id = response.currency_id;
+    store.derived_region = None;
+    store.last_product_list_response_error = 0;
+    store.region_locked = false;
+    store.has_product_list = true;
 }
 
 pub fn receive_purchase_list(
-    _env: &WowLuaEnv,
-    _response: StorePurchaseListResponse,
+    env: &WowLuaEnv,
+    response: StorePurchaseListResponse,
 ) -> crate::Result<()> {
+    if ACTIVE != ClientProfile::Retail {
+        return Ok(());
+    }
+    let notify = {
+        let mut sim = env.state().borrow_mut();
+        apply_purchase_list_response(&mut sim.store_glue.store_secure, response);
+        queue_purchase_list_notification(&mut sim.store_glue)
+    };
+    if notify {
+        let result = env.fire_event_with_args("STORE_PURCHASE_LIST_UPDATED", &[]);
+        env.state()
+            .borrow_mut()
+            .store_glue
+            .store_secure
+            .purchase_list_notification_pending = false;
+        result?;
+    }
     Ok(())
 }
 
-pub fn receive_dynamic_price(
-    _env: &WowLuaEnv,
-    _product_id: i32,
-    _data: Vec<u8>,
-) -> crate::Result<()> {
+fn apply_purchase_list_response(store: &mut StoreSecureState, response: StorePurchaseListResponse) {
+    store.has_purchase_list = response.result_code == PRODUCT_LIST_SUCCESS_CODE;
+    store.purchase_list = if store.has_purchase_list {
+        response.rows
+    } else {
+        Vec::new()
+    };
+}
+
+fn queue_purchase_list_notification(store: &mut super::store_glue_model::StoreGlueState) -> bool {
+    if !store.callbacks.store_purchase_list_updated
+        || store.store_secure.purchase_list_notification_pending
+    {
+        return false;
+    }
+    store.store_secure.purchase_list_notification_pending = true;
+    true
+}
+
+pub fn receive_dynamic_price(env: &WowLuaEnv, product_id: i32, data: Vec<u8>) -> crate::Result<()> {
+    if ACTIVE != ClientProfile::Retail {
+        return Ok(());
+    }
+    let notify = {
+        let mut sim = env.state().borrow_mut();
+        sim.store_glue
+            .store_secure
+            .dynamic_prices
+            .insert(product_id, data);
+        sim.store_glue.callbacks.dynamic_bundle_price_updated
+    };
+    if notify {
+        env.fire_event_with_args(
+            "DYNAMIC_BUNDLE_PRICE_UPDATED",
+            &[Val::Num(f64::from(product_id))],
+        )?;
+    }
     Ok(())
 }
