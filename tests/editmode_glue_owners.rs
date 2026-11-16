@@ -141,6 +141,34 @@ fn edit_mode_raid_warning_defaults_select_original_consumers() {
     feature = "client-wowforever",
     feature = "client-mists"
 ))]
+fn invoke_group_finder_consumers(env: &WowLuaEnv) -> String {
+    env.eval(
+        r#"
+        local calls = {}
+        local namespace = C_AddOns
+        local original = namespace and namespace.LoadAddOn
+        if type(original) == "function" then
+            namespace.LoadAddOn = function(name, ...)
+                calls[#calls + 1] = name
+                return original(name, ...)
+            end
+        end
+        PVEFrame_ToggleFrame()
+        if type(LFDMicroButtonMixin) == "table" and type(LFDMicroButtonMixin.OnClick) == "function" then
+            LFDMicroButtonMixin:OnClick()
+        end
+        return table.concat(calls, ",")
+        "#,
+    )
+    .expect("run original Group Finder consumers and capture addon loads")
+}
+
+#[cfg(any(
+    feature = "client-ptr",
+    feature = "client-retail",
+    feature = "client-wowforever",
+    feature = "client-mists"
+))]
 fn probe_group_finder_consumer(env: &WowLuaEnv, addons: &[String]) {
     let source_before = function_source(env, "PVEFrame_ToggleFrame");
     let loaded_before: bool = env
@@ -152,17 +180,9 @@ fn probe_group_finder_consumer(env: &WowLuaEnv, addons: &[String]) {
         "BOUNDARY|PVEFrame_ToggleFrame|source_before={source_before}|loaded_before={loaded_before}|owner_before={owner_before}|owner_before_micro_menu={owner_order}"
     );
 
-    env.exec("PVEFrame_ToggleFrame()")
-        .expect("run the original Bindings_Standard consumer body");
-    let has_micro_click: bool = env
-        .eval("return type(LFDMicroButtonMixin) == 'table' and type(LFDMicroButtonMixin.OnClick) == 'function'")
-        .expect("check the selected micro-button consumer");
-    if has_micro_click {
-        env.exec("LFDMicroButtonMixin:OnClick()")
-            .expect("run the original main-menu micro-button consumer");
-    }
+    let load_attempts = invoke_group_finder_consumers(env);
     eprintln!(
-        "BOUNDARY|PVEFrame_ToggleFrame|source_after={}|micro_click={has_micro_click}",
+        "BOUNDARY|PVEFrame_ToggleFrame|source_after={}|load_addon_calls={load_attempts}",
         function_source(env, "PVEFrame_ToggleFrame")
     );
 }
