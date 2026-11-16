@@ -712,7 +712,7 @@ const MASTER_SNAPSHOT_UNIT_GLOBALS: &[MasterUnitGlobal] = &[
         "UnitIsPlayerControlledOrGroupMember",
         RETAIL_PTR_FOREVER_PROFILES,
         RETAIL_PTR_FOREVER_PROFILES,
-        "src/lua_api/globals/real/unit_relationships.rs:38",
+        "src/lua_api/globals/real/unit_relationships.rs:37",
     ),
     unit_global(
         "UnitIsPossessed",
