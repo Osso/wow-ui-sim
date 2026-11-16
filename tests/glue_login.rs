@@ -1520,6 +1520,22 @@ end)
 
 #[cfg(feature = "client-retail")]
 #[test]
+fn retail_disconnect_public_state_clears_without_login_submission() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+        env.exec(RETAIL_DISCONNECT_CONSUMER_SETUP).expect("selected Retail consumer setup");
+        env.state().borrow_mut().store_glue.disconnect_on_logout = true;
+        let before: (i32, bool, i32, bool, bool) = env.eval("return C_Login.GetState()").unwrap();
+        assert_eq!(before, (1, true, 1, false, false));
+        let result = env.exec("CharacterSelectFrameMixin.OnShow(CharacterSelect)");
+        assert!(result.is_ok(), "original OnShow must succeed: {result:?}");
+        let after: (i32, bool, i32, bool, bool) = env.eval("return C_Login.GetState()").unwrap();
+        assert_eq!(after, (1, false, 1, false, false));
+    }
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
 fn retail_character_select_disconnect_consumer_publishes_ordered_events() {
     test_timeout! {
         let env = load_blizzard_screen(ScreenKind::CharacterSelect);
