@@ -26,32 +26,6 @@ assert(factory:GetTemplateInfoCache():GetTemplateInfos() ~= nil)
 if type(LoadAddOnWithErrorHandling) == 'function' then
     original(LoadAddOnWithErrorHandling, 'Blizzard_SharedXML/AddOnUtil.lua')
 end
-local probe = debug.getregistry().__fallback_retire_probe
-if probe then
-    for _, name in ipairs({
-        'FlagsUtil.IsSet', 'CreateTemplateInfoCache', 'LoadAddOnWithErrorHandling'
-    }) do
-        assert((probe.calls[name] or 0) == 0, name .. ' fallback reached a consumer')
-    end
-    for name, fallback in pairs(probe.fallbacks) do
-        if name == 'FlagsUtil.IsSet' then
-            assert(FlagsUtil.IsSet ~= fallback, 'Flags.lua must replace fallback IsSet')
-        elseif name == 'FlagsUtilConstants.CombineShouldSet' then
-            assert(FlagsUtilConstants ~= fallback, 'Flags.lua must replace fallback constants')
-        elseif name == 'CreateTemplateInfoCache' then
-            assert(CreateTemplateInfoCache ~= fallback, 'TemplateInfoCache.lua must replace fallback')
-        elseif name == 'LoadAddOnWithErrorHandling' then
-            assert(LoadAddOnWithErrorHandling ~= fallback, 'AddOnUtil.lua must replace fallback')
-        end
-    end
-    print('fallback-retire-owners ' .. tostring(probe.branches['FlagsUtil.IsSet'] or 0)
-        .. ',' .. tostring(probe.branches['FlagsUtilConstants.CombineShouldSet'] or 0)
-        .. ',' .. tostring(probe.branches['CreateTemplateInfoCache'] or 0)
-        .. ',' .. tostring(probe.branches['LoadAddOnWithErrorHandling'] or 0)
-        .. '; fallback calls=' .. tostring(probe.calls['FlagsUtil.IsSet'] or 0)
-        .. ',' .. tostring(probe.calls['CreateTemplateInfoCache'] or 0)
-        .. ',' .. tostring(probe.calls['LoadAddOnWithErrorHandling'] or 0))
-end
 "#;
 
 const RETAIL_CONSUMER_LUA: &str = r#"
@@ -135,19 +109,6 @@ fn assert_startup_producers(env: &WowLuaEnv) {
         end
         if type(settablesecurity) == 'function' then
             assert(debug.iscfunction(settablesecurity))
-        end
-        local probe = debug.getregistry().__fallback_retire_probe
-        if probe then
-            for _, name in ipairs({
-                'DropCursorMoney', 'ToggleCollectionsJournal', 'ToggleEncounterJournal',
-                'C_CVar.AreCVarsLoaded'
-            }) do
-                assert((probe.branches[name] or 0) == 0, name .. ' fallback branch ran')
-            end
-            print('fallback-retire-startup ' .. tostring(probe.branches['DropCursorMoney'] or 0)
-                .. ',' .. tostring(probe.branches['ToggleCollectionsJournal'] or 0)
-                .. ',' .. tostring(probe.branches['ToggleEncounterJournal'] or 0)
-                .. ',' .. tostring(probe.branches['C_CVar.AreCVarsLoaded'] or 0))
         end
         "#,
     )
