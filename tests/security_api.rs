@@ -1,9 +1,20 @@
 //! Tests for security API functions (security_api.rs) and Elune taint tracking.
 
+#[cfg(feature = "client-retail")]
+use wow_ui_sim::lua_api::state::PowerRegen;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 fn env() -> WowLuaEnv {
     WowLuaEnv::new().expect("Failed to create Lua environment")
+}
+
+#[cfg(feature = "client-retail")]
+fn load_secure_types_source(env: &WowLuaEnv) {
+    let path = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path()
+        .expect("Retail Blizzard UI cache must be available")
+        .join("Blizzard_SharedXMLBase/SecureTypes.lua");
+    let source = std::fs::read_to_string(path).expect("Retail SecureTypes.lua must be readable");
+    env.exec(&source).expect("Retail SecureTypes.lua must load");
 }
 
 // ============================================================================
@@ -756,102 +767,90 @@ fn test_issecurevariable_detects_taint() {
     assert!(!result, "variable set by tainted code should be insecure");
 }
 
+#[cfg(feature = "client-retail")]
 #[test]
 fn addon_tainted_table_slot_does_not_make_table_secret() {
     let env = env();
-    let (slot_secure, slot_owner, secret, access, all_access, deep_access, stored): (
-        bool,
-        String,
-        bool,
-        bool,
-        bool,
-        bool,
-        String,
-    ) = env
-        .eval(
-            r#"
-            local key = {}
-            local function addonWrite()
-                debug.setstacktaint("TaintProbeAddon")
-                key.field = "public"
-            end
-            addonWrite()
-            local secure, owner = issecurevariable(key, "field")
-            local secret = issecretvalue(key)
-            local access = canaccessvalue(key)
-            local allAccess = canaccessallvalues(key, 1)
-            local deepAccess = canaccesstable(key)
-            local map = SecureTypes.CreateSecureMap()
-            map:SetValue(key, "stored")
-            return secure, owner, secret, access, allAccess, deepAccess, map:GetValue(key)
-            "#,
-        )
-        .unwrap();
-    assert!(!slot_secure);
-    assert_eq!(slot_owner, "TaintProbeAddon");
-    assert!(!secret);
-    assert!(access);
-    assert!(all_access);
-    assert!(deep_access);
-    assert_eq!(stored, "stored");
+    load_secure_types_source(&env);
+    env.exec(
+        r#"
+        local existing = {}
+        local function taintedTables()
+            debug.setstacktaint("TaintProbeAddon")
+            existing.field = "public"
+            return { field = "created during taint" }
+        end
+        local created = taintedTables()
+        assert(not issecretvalue(existing), "tainted field did not make table secret")
+        assert(not issecretvalue(created), "tainted table constructor was secret")
+        local map = SecureTypes.CreateSecureMap()
+        map:SetValue(existing, "existing")
+        map:SetValue(created, "created")
+        assert(map:GetValue(existing) == "existing")
+        assert(map:GetValue(created) == "created")
+        assert(map:GetValue({}) == nil)
+        "#,
+    )
+    .unwrap();
 }
 
-// WM91 §§2–4: Forever keeps loadstring provenance separate from secrecy.
-// Other profiles retain their existing expectations in this bounded correction.
+#[cfg(feature = "client-retail")]
+const SECURE_MAP_SECURITY_PROBE: &str = r#"
+    local map = SecureTypes.CreateSecureMap()
+    local secretKeyOne, secretValueOne = GetPowerRegenForPowerType(0)
+    local secretKeyTwo, secretValueTwo = GetPowerRegenForPowerType(3)
+    assert(issecretvalue(secretKeyOne) and issecretvalue(secretKeyTwo))
+    assert(issecretvalue(secretValueOne) and issecretvalue(secretValueTwo))
+    forceinsecure()
+    local keyReason = "attempted to store a secret key in a SecureMap"
+    local valueReason = "attempted to store a secret value in a SecureMap"
+    for _, key in ipairs({secretKeyOne, secretKeyTwo}) do
+        local ok, reason = pcall(map.SetValue, map, key, "public")
+        assert(not ok and reason:find(keyReason, 1, true), "shipped Lua key check")
+    end
+    for _, value in ipairs({secretValueOne, secretValueTwo}) do
+        local ok, reason = pcall(map.SetValue, map, "public", value)
+        assert(not ok and reason:find(valueReason, 1, true), "shipped Lua value check")
+    end
+    local bothOK, bothReason = pcall(map.SetValue, map, secretKeyOne, secretValueOne)
+    assert(not bothOK and bothReason:find(keyReason, 1, true))
+    assert(not bothReason:find(valueReason, 1, true), "shipped Lua checks key first")
+    local loaded = loadstring("return 1")
+    assert(type(loaded) == "function" and not issecretvalue(loaded))
+    map:SetValue(loaded, "loadstring key")
+    map:SetValue("loadstring value", loaded)
+    assert(map:GetValue(loaded) == "loadstring key")
+    assert(map:GetValue("loadstring value") == loaded)
+    assert(map:GetValue("absent") == nil)
+"#;
+
+#[cfg(feature = "client-retail")]
+fn secure_map_secret_input_env() -> WowLuaEnv {
+    let env = env();
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.unit_stats_restricted = true;
+        sim.player.power_regen.insert(0, PowerRegen { base: 11.0, casting: 7.0 });
+        sim.player.power_regen.insert(3, PowerRegen { base: 19.0, casting: 13.0 });
+    }
+    env
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn test_secure_map_rejects_secret_keys_and_values() {
+    let env = secure_map_secret_input_env();
+    load_secure_types_source(&env);
+    // Error text and check order come from this cached Lua consumer, not native code.
+    env.exec(SECURE_MAP_SECURITY_PROBE).unwrap();
+}
+
+// R88ae.3 verifies that Retail loadstring functions are not secret.
 fn tainted_loadstring_is_secret() -> bool {
     let profile = wow_ui_sim::client_profile::ACTIVE;
     profile.uses_secret_values()
+        && profile != wow_ui_sim::client_profile::ClientProfile::Retail
         && profile != wow_ui_sim::client_profile::ClientProfile::WowForever
-}
-
-#[test]
-fn test_secure_map_rejects_secret_keys_and_values() {
-    let env = env();
-    if wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::WowForever {
-        let path = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path()
-            .unwrap()
-            .join("Blizzard_SharedXMLBase/SecureTypes.lua");
-        env.exec(&std::fs::read_to_string(path).unwrap()).unwrap();
-    }
-    let (key_error, value_error, stored_value): (String, String, String) = env
-        .eval(
-            r#"
-            forceinsecure()
-            local map = SecureTypes.CreateSecureMap()
-            local secretKey = loadstring("return 1")
-            local secretValue = loadstring("return 2")
-
-            local keyOk, keyErr = pcall(function()
-                map:SetValue(secretKey, "safe")
-            end)
-            local valueOk, valueErr = pcall(function()
-                map:SetValue("safe", secretValue)
-            end)
-
-            if keyOk then assert(map:GetValue(secretKey) == "safe") end
-            if valueOk then assert(map:GetValue("safe") == secretValue) end
-            map:SetValue("safe", "stored")
-            return keyOk and "" or keyErr,
-                valueOk and "" or valueErr,
-                map:GetValue("safe")
-            "#,
-        )
-        .unwrap();
-
-    if tainted_loadstring_is_secret() {
-        assert!(
-            key_error.contains("attempted to store a secret key in a SecureMap"),
-            "secret key should be rejected, got: {key_error}"
-        );
-        assert!(
-            value_error.contains("attempted to store a secret value in a SecureMap"),
-            "secret value should be rejected, got: {value_error}"
-        );
-    } else {
-        assert_eq!(key_error, "", "taint alone does not make the key secret");
-        assert_eq!(value_error, "", "taint alone does not make the value secret");
-    }
-    assert_eq!(stored_value, "stored");
 }
 
 // ============================================================================
@@ -880,7 +879,7 @@ fn test_issecretvalue_tainted() {
     assert_eq!(
         result,
         tainted_loadstring_is_secret(),
-        "WM91: Forever loadstring provenance does not mark a value secret"
+        "profile-specific loadstring secrecy"
     );
 }
 
