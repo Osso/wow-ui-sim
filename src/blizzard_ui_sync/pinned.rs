@@ -357,6 +357,7 @@ pub(super) fn sync_to(_root: &Path) -> crate::Result<super::SyncSummary> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[cfg(feature = "client-retail")]
     use std::path::PathBuf;
 
     #[cfg(feature = "casc")]
