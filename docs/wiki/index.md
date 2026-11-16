@@ -1,6 +1,17 @@
 ## [2026-11-15] fix | Retail Blizzard UI cache provenance
 
 The [CASC asset cache](systems/casc-asset-cache.md#blizzard-ui-source-cache) and [CASC loading contract](../specs/casc-loading.md#pinned-blizzard-ui-source-cache) record exact Retail/PTR pin provenance checks, mismatch sync behavior, and unchanged selection for other profiles. **VERIFIED (source and synthetic temp-cache tests):** matching 70783 provenance is accepted; stale 70575 and missing provenance are rejected.
+## [2026-11-16] verification | Retail Glue login verifier remediation
+
+**VERIFIED (code/test source `74ffa9dca6ee7993a184c5a66b244232b8645f6a`):** same-body P1 and pending-getter mutants fail in direct 74 runs. The no-op Disconnect RED is historical at `94e338f0cedfee6a14c88d6f5736d936ccb1fa6b`; unchanged Disconnect test bodies, helpers, and implementation make it source-equivalent, not a direct 74 execution. Six exact integration tests and the cleanup unit pass; the five-profile compile matrix has zero warnings; Retail `lua-errors` returns `[]`. See [consumer selection and RED proof](investigations/consumer-selection-and-red-proof.md#retail-glue-login-consumers-and-pending-list-cache-call-site-r88aa) for proof boundaries and the handoff report for hashes.
+
+## [2026-11-16] system | Retail Glue login lifecycle
+
+[Retail Glue login lifecycle](systems/glue-login-lifecycle.md) records the two Glue-only producers, state transitions, prior-candidate original-consumer RED/GREEN and cleanup evidence, current selector-specific RED, and the remaining native cache/default-state boundaries.
+
+## [2026-11-15] investigation | INFERRED Retail pending-list caller
+
+[Consumer selection and RED proof](investigations/consumer-selection-and-red-proof.md#retail-glue-login-consumers-and-pending-list-cache-call-site-r88aa) records the selected 70783 Retail cache caller separately from the VERIFIED 70688 native API contract; the exact cache-to-client build match remains UNKNOWN.
 
 ## [2026-11-15] revision | Retail Blizzard UI 70783 CDN metadata
 

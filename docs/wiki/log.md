@@ -2,6 +2,14 @@
 
 Updated the [cache system page](systems/casc-asset-cache.md#blizzard-ui-source-cache) and [CASC loading contract](../specs/casc-loading.md#pinned-blizzard-ui-source-cache). **VERIFIED (source and tests):** Retail and PTR share one exact provenance comparison against their active pin; mismatch excludes the cache and normal startup follows the existing sync path. Synthetic temp-cache tests cover matching 70783, stale 70575, and missing provenance. Other profiles retain their existing selection behavior.
 
+## [2026-11-16] verification | Retail Glue login verifier remediation
+
+Updated the [consumer-selection investigation](investigations/consumer-selection-and-red-proof.md), [lifecycle system page](systems/glue-login-lifecycle.md), [Glue login contract](../specs/glue-login-flow.md), and this index. **VERIFIED (code/test source `74ffa9dca6ee7993a184c5a66b244232b8645f6a`):** P1 projection and constant-true pending-getter mutants fail in direct 74 runs; the no-op Disconnect mutant fails in historical runs at `94e338f0cedfee6a14c88d6f5736d936ccb1fa6b`. Its three test bodies, disconnect fixture helpers, and production implementation are byte-identical through 74, so the RED is source-equivalent, not direct 74 execution. Six exact integration tests and the cleanup unit pass. The five-profile compile matrix completes with zero warnings; Retail `lua-errors` returns `[]`. **UNKNOWN:** native cancellation initialization/reset and native initial completion-state value.
+
+## [2026-11-16] system | Retail Glue login lifecycle — previous candidate evidence
+
+Created [the Retail Glue login lifecycle page](systems/glue-login-lifecycle.md). **VERIFIED (previous candidate, Retail 12.1.5.70783 runtime):** the original CharacterSelect consumers passed with their producers and failed inside original calls under a registration mutation; the full state-cleanup unit test passed; the five-profile compile matrix had zero warnings; and the StoreGlue missing-Disconnect expected-error boundary was replaced by a passing exact consumer test. This older test source does not replace the current verifier remediation gates. Native 70688 cache equivalence and the initial completion-state value remain UNKNOWN.
+
 ## [2026-11-15] revision | Retail Blizzard UI 70783 CDN metadata
 
 Updated the [selected Retail target record](../updating-blizzard-ui-to-a-new-patch.md#retail-70783-metadata-refresh--november-15-2026), [client profiles](systems/client-profiles.md#runtime-cache), and [Glue Login contract](../specs/glue-login-flow.md#r62-retail-chat-evidence-boundary). **VERIFIED (local Retail CASC):** build key `bc493ecb2898766c0f8947a99b4b3d65` now selects CDN key `3363ac656da5f261cdc675ab28b2744c`; the 4,026-path manifest is byte-identical, and only the CDN key plus one PlayerChoiceOptionBase archive/offset changed. The three Retail patch-API cache hashes remain identical. **VERIFIED (70783 root and original TOC/Lua):** FDID `8547105` has no root-resolution row; the TOC selects `Shared/FloatingChatFrame.lua` and its Mainline family source, where the shared file defines `AllowChatFramesToShow` as true, while GlueParent's login policy returns false. **VERIFIED (70575 versus 70783 cache bytes):** the relevant addon TOC, shared/mainline FloatingChatFrame Lua/XML, and GlueParent Lua are byte-identical. **UNKNOWN:** which definition is live at the original consumer and the final native visibility result; follow-up `lt-0de8` owns that question.
@@ -4029,3 +4037,7 @@ assertions and retired simulator fallbacks are unchanged.
 ## 2026-11-15 | lt-67d2 spell-count R88p correction
 
 Recorded exact historical first-failing boundaries and cache-freshness qualification; linked native R88k/R88p width, reagent/storage and error evidence to the corrected API tests and explicit UNKNOWN seams.
+
+## [2026-11-15] investigation | R88aa Retail Glue consumers
+
+[Consumer selection and RED proof](investigations/consumer-selection-and-red-proof.md#retail-glue-login-consumers-and-pending-list-cache-call-site-r88aa) records the selected 70783 Mainline Glue source and exact original-call REDs at CharacterSelect.lua:211 and :697. **INFERRED (R88aa):** the cached pending getter call sites correspond to Retail 70688; exact cached-source equivalence remains UNKNOWN. The [Glue login contract](../specs/glue-login-flow.md#r88aa-cached-retail-characterselect-call-site-inferred) keeps that boundary separate from the verified native API behavior.

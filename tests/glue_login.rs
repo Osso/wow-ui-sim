@@ -1482,3 +1482,287 @@ fn glue_retail_chat_source_preserves_r62_verified_asset_facts() {
     assert!(policy.contains("return false;"));
     // Static source facts do not establish the live winner or visible pixels.
 }
+
+const RETAIL_DISCONNECT_CONSUMER_SETUP: &str = r##"
+assert(C_AddOns.IsAddOnLoaded("Blizzard_GlueXML"))
+local source = debug.getinfo(CharacterSelectFrameMixin.OnShow, "S").source
+assert(source:find("Blizzard_GlueXML/Mainline/CharacterSelect.lua", 1, true), source)
+disconnectEvents = {}
+disconnectListener = CreateFrame("Frame")
+for _, event in ipairs({"AUTO_REALM_SWAP", "LAUNCHER_LOGIN_STATUS_CHANGED", "LOGIN_STATE_CHANGED", "CHARACTER_LIST_UPDATE"}) do
+    disconnectListener:RegisterEvent(event)
+end
+disconnectListener:SetScript("OnEvent", function(_, event, ...)
+    local entry = event .. ":" .. select("#", ...)
+    if event == "AUTO_REALM_SWAP" then entry = entry .. ":" .. tostring(...) end
+    table.insert(disconnectEvents, entry)
+end)
+"##;
+
+const RETAIL_PENDING_CONSUMER_SETUP: &str = r##"
+assert(C_AddOns.IsAddOnLoaded("Blizzard_GlueXML"))
+local source = debug.getinfo(CharacterSelect_OnVASCharacterQueueStatusUpdate, "S").source
+assert(source:find("Blizzard_GlueXML/Mainline/CharacterSelect.lua", 1, true), source)
+queueUpdateGuids = {}
+hooksecurefunc(CharacterSelectCharacterFrame, "UpdateCharacterMatchingGUID", function(_, guid)
+    table.insert(queueUpdateGuids, guid)
+end)
+retrievingCount, retrievingArgumentCount = 0, -1
+retrievingListener = CreateFrame("Frame")
+retrievingListener:RegisterEvent("CHARACTER_LIST_RETRIEVING")
+retrievingListener:SetScript("OnEvent", function(_, _, ...)
+    assert(select("#", ...) == 0)
+    retrievingCount = retrievingCount + 1
+    retrievingArgumentCount = select("#", ...)
+end)
+"##;
+
+#[cfg(feature = "client-retail")]
+fn prepare_retail_disconnect_consumer(env: &WowLuaEnv) {
+    env.exec(RETAIL_DISCONNECT_CONSUMER_SETUP)
+        .expect("selected Retail disconnect consumer setup");
+    env.state()
+        .borrow_mut()
+        .glue_login
+        .seed_login_cancellation_recorded_for_host(false);
+}
+
+#[cfg(feature = "client-retail")]
+fn seed_retail_disconnect_inputs(env: &WowLuaEnv) {
+    env.state()
+        .borrow_mut()
+        .glue_login
+        .seed_login_cancellation_recorded_for_host(false);
+    env.state().borrow_mut().store_glue.disconnect_on_logout = true;
+}
+
+#[cfg(feature = "client-retail")]
+fn retail_login_state(env: &WowLuaEnv) -> (i32, bool, i32, bool, bool) {
+    env.eval("return C_Login.GetState()")
+        .expect("C_Login.GetState should be readable")
+}
+
+#[cfg(feature = "client-retail")]
+fn submit_retail_login_for_ticks(env: &WowLuaEnv, ticks: usize) {
+    env.exec("C_Login.Login('state-fixture', CreateFrame('EditBox'))")
+        .expect("Retail host login fixture should submit");
+    wow_ui_sim::startup::run_extra_update_ticks(env, ticks);
+}
+
+#[cfg(feature = "client-retail")]
+fn seed_two_retail_roster_records(env: &WowLuaEnv) -> (String, String) {
+    let accounts: Vec<_> = env
+        .state()
+        .borrow()
+        .bnet_friends
+        .iter()
+        .flat_map(|friend| &friend.game_accounts)
+        .filter(|account| account.client_program == "WoW")
+        .take(2)
+        .cloned()
+        .collect();
+    assert_eq!(accounts.len(), 2, "two backed WoW account rows are required");
+    let guids = (
+        accounts[0].wow_account_guid.clone(),
+        accounts[1].wow_account_guid.clone(),
+    );
+    assert_ne!(guids.0, guids.1, "backed roster GUIDs must be distinct");
+    env.state().borrow_mut().glue_login.characters =
+        accounts.into_iter().map(Into::into).collect();
+    seed_retail_waiting_vas_records(env, [&guids.0, &guids.1]);
+    guids
+}
+
+#[cfg(feature = "client-retail")]
+fn seed_retail_waiting_vas_records(env: &WowLuaEnv, guids: [&str; 2]) {
+    use wow_ui_sim::c_api::store_glue_model::VasPurchaseRecord;
+
+    // The row uses queue state so this test does not depend on the unmodeled VAS lock helper.
+    let state: i32 = env
+        .eval("return Enum.VasPurchaseProgress.WaitingOnQueue")
+        .expect("Retail WaitingOnQueue state should be available");
+    let mut sim = env.state().borrow_mut();
+    for guid in guids {
+        sim.store_glue.purchase_states.insert(
+            guid.to_owned(),
+            VasPurchaseRecord {
+                product_id: 0,
+                state,
+                errors: Vec::new(),
+            },
+        );
+    }
+}
+
+#[cfg(feature = "client-retail")]
+fn call_retail_queue_consumer(env: &WowLuaEnv, guid: &str, minutes: i32) {
+    let code = format!("CharacterSelect_OnVASCharacterQueueStatusUpdate({guid:?}, {minutes})");
+    env.exec(&code)
+        .expect("original Retail queue-status consumer should succeed");
+}
+
+#[cfg(feature = "client-retail")]
+fn retail_queue_time(env: &WowLuaEnv, guid: &str) -> Option<i32> {
+    let code = format!("return CharacterSelectUtil.GetVASQueueTime({guid:?})");
+    env.eval(&code)
+        .expect("Retail queue time should be readable")
+}
+
+#[cfg(feature = "client-retail")]
+fn reset_retail_queue_update_trace(env: &WowLuaEnv) {
+    env.exec("queueUpdateGuids = {}").unwrap();
+}
+
+#[cfg(feature = "client-retail")]
+fn retail_queue_update_trace(env: &WowLuaEnv) -> String {
+    env.eval("return table.concat(queueUpdateGuids, ',')")
+        .expect("queue update trace should be readable")
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn retail_disconnect_public_state_clears_without_login_submission() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+        prepare_retail_disconnect_consumer(&env);
+        seed_retail_disconnect_inputs(&env);
+        let before = retail_login_state(&env);
+        assert_eq!(before, (1, true, 1, false, false));
+        let result = env.exec("CharacterSelectFrameMixin.OnShow(CharacterSelect)");
+        assert!(result.is_ok(), "original OnShow must succeed: {result:?}");
+        assert_eq!(retail_login_state(&env), (1, false, 1, false, false));
+    }
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn retail_character_select_disconnect_consumer_publishes_ordered_events() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+        prepare_retail_disconnect_consumer(&env);
+        env.state().borrow_mut().store_glue.disconnect_on_logout = false;
+        let no_disconnect = env.exec("CharacterSelectFrameMixin.OnShow(CharacterSelect)");
+        env.exec("C_Login.Login('disconnect-probe', CreateFrame('EditBox'))").unwrap();
+        wow_ui_sim::startup::run_extra_update_ticks(&env, 2);
+        env.state().borrow_mut().glue_login.realm_list_available = true;
+        assert_eq!(retail_login_state(&env), (1, true, 1, true, false));
+        env.exec("disconnectEvents = {}").unwrap();
+        seed_retail_disconnect_inputs(&env);
+        let active = env.exec("CharacterSelectFrameMixin.OnShow(CharacterSelect)");
+        let disconnect_on_logout: bool = env.eval("return C_StoreGlue.GetDisconnectOnLogout()").unwrap();
+        assert!(!disconnect_on_logout, "original OnShow consumes the one-shot logout selector");
+        let repeated = env.exec("CharacterSelectFrameMixin.OnShow(CharacterSelect)");
+        wow_ui_sim::startup::run_extra_update_ticks(&env, 2);
+        assert!(no_disconnect.is_ok(), "false selector must skip DisconnectFromServer: {no_disconnect:?}");
+        assert!(active.is_ok(), "active consumer call must succeed: {active:?}");
+        assert!(repeated.is_ok(), "disconnected consumer call must succeed: {repeated:?}");
+        let events: String = env.eval("return table.concat(disconnectEvents, ',')").unwrap();
+        assert_eq!(events, "AUTO_REALM_SWAP:1:false,LAUNCHER_LOGIN_STATUS_CHANGED:0,LOGIN_STATE_CHANGED:0");
+        let returns: i32 = env.eval("return select('#', C_Login.DisconnectFromServer())").unwrap();
+        assert_eq!(returns, 0);
+        assert_eq!(retail_login_state(&env), (1, false, 1, false, false));
+        env.set_screen_mode(ScreenKind::Game);
+        let absent: bool = env.eval("return C_Login.DisconnectFromServer == nil").unwrap();
+        assert!(absent, "DisconnectFromServer must be absent outside Glue");
+    }
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn retail_disconnect_consumer_clears_pending_connection() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+        prepare_retail_disconnect_consumer(&env);
+        seed_retail_disconnect_inputs(&env);
+        submit_retail_login_for_ticks(&env, 1);
+        assert_eq!(retail_login_state(&env), (4, false, 1, false, false));
+        let result = env.exec("CharacterSelectFrameMixin.OnShow(CharacterSelect)");
+        assert!(result.is_ok(), "pending disconnect consumer should succeed: {result:?}");
+        assert_eq!(retail_login_state(&env), (1, false, 1, false, false));
+    }
+}
+
+#[cfg(feature = "client-retail")]
+fn exercise_retail_queue_while_pending(env: &WowLuaEnv, guid: &str, absent_guid: &str) {
+    assert!(env.eval::<bool>("return IsCharacterListUpdatePending()").unwrap());
+    assert_eq!(retail_queue_time(env, guid), None);
+    assert_eq!(retail_queue_time(env, absent_guid), None);
+    reset_retail_queue_update_trace(env);
+    call_retail_queue_consumer(env, guid, 3);
+    call_retail_queue_consumer(env, absent_guid, 4);
+    assert_eq!(retail_queue_update_trace(env), "");
+    assert_eq!(retail_queue_time(env, guid), Some(3));
+    assert_eq!(retail_queue_time(env, absent_guid), Some(4));
+}
+
+#[cfg(feature = "client-retail")]
+fn exercise_retail_queue_after_full_list(env: &WowLuaEnv, guid: &str) {
+    wow_ui_sim::startup::run_extra_update_ticks(env, 1);
+    assert!(!env.eval::<bool>("return IsCharacterListUpdatePending()").unwrap());
+    reset_retail_queue_update_trace(env);
+    call_retail_queue_consumer(env, guid, 5);
+    assert_eq!(retail_queue_update_trace(env), guid);
+    assert_eq!(retail_queue_time(env, guid), Some(5));
+}
+
+#[cfg(feature = "client-retail")]
+fn exercise_retail_queue_for_second_nonzero(env: &WowLuaEnv, guid: &str) {
+    // R88aa verifies the nonzero predicate; state 2 is a host seed, not a native writer.
+    env.state()
+        .borrow_mut()
+        .glue_login
+        .seed_character_list_completion_state_for_host(2);
+    assert!(!env.eval::<bool>("return IsCharacterListUpdatePending()").unwrap());
+    reset_retail_queue_update_trace(env);
+    call_retail_queue_consumer(env, guid, 6);
+    assert_eq!(retail_queue_update_trace(env), guid);
+    assert_eq!(retail_queue_time(env, guid), Some(6));
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn retail_character_select_pending_consumer_observes_list_completion() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+        env.exec(RETAIL_PENDING_CONSUMER_SETUP).expect("selected Retail pending consumer setup");
+        let (first_guid, second_guid) = seed_two_retail_roster_records(&env);
+        let absent_guid = "Player-9-00000099";
+        submit_retail_login_for_ticks(&env, 2);
+        assert_eq!(env.eval::<i32>("return GetNumCharacters()").unwrap(), 2);
+        let roster_guids: (String, String) = env.eval("return GetCharacterGUID(1), GetCharacterGUID(2)").unwrap();
+        assert_eq!(roster_guids, (first_guid.clone(), second_guid.clone()));
+        assert_ne!(absent_guid, first_guid);
+        assert_ne!(absent_guid, second_guid);
+        exercise_retail_queue_while_pending(&env, &first_guid, absent_guid);
+        exercise_retail_queue_after_full_list(&env, &second_guid);
+        exercise_retail_queue_for_second_nonzero(&env, &first_guid);
+        let retrieved: (i32, i32) = env.eval("return retrievingCount, retrievingArgumentCount").unwrap();
+        assert_eq!(retrieved, (1, 0));
+        assert_eq!(env.eval::<i32>("return select('#', IsCharacterListUpdatePending())").unwrap(), 1);
+        env.set_screen_mode(ScreenKind::Game);
+        assert!(env.eval::<bool>("return IsCharacterListUpdatePending == nil and C_Login.DisconnectFromServer == nil").unwrap());
+    }
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn retail_character_select_pending_consumer_handles_empty_roster() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+        env.exec(RETAIL_PENDING_CONSUMER_SETUP).expect("selected Retail pending consumer setup");
+        env.state().borrow_mut().glue_login.characters.clear();
+        submit_retail_login_for_ticks(&env, 2);
+        assert_eq!(env.eval::<i32>("return GetNumCharacters()").unwrap(), 0);
+        assert!(env.eval::<bool>("return IsCharacterListUpdatePending()").unwrap());
+        let absent_guid = "Player-9-empty-roster";
+        assert_eq!(retail_queue_time(&env, absent_guid), None);
+        call_retail_queue_consumer(&env, absent_guid, 2);
+        assert_eq!(retail_queue_update_trace(&env), "");
+        wow_ui_sim::startup::run_extra_update_ticks(&env, 1);
+        reset_retail_queue_update_trace(&env);
+        call_retail_queue_consumer(&env, absent_guid, 7);
+        assert_eq!(retail_queue_update_trace(&env), absent_guid);
+        assert_eq!(retail_queue_time(&env, absent_guid), Some(7));
+        assert!(!env.eval::<bool>("return IsCharacterListUpdatePending()").unwrap());
+    }
+}
