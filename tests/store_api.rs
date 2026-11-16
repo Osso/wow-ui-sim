@@ -27,7 +27,7 @@ const STORE_SECURE_VAS_SCRIPT: &str = r#"
         end
 
         if event == "STORE_VAS_PURCHASE_COMPLETE" then
-            table.insert(events, event .. ":" .. tostring(select("#", ...)))
+            table.insert(events, event .. ":" .. tostring(select('#', ...)))
             return
         end
 
