@@ -15,7 +15,7 @@ fn ui_map_point_env() -> WowLuaEnv {
     crate::common::blizzard_addon_harness::load_blizzard_addon_closure_into_env(
         &env,
         &ui,
-        &["Blizzard_ObjectAPI"],
+        &["Blizzard_ObjectAPI", "Blizzard_SharedXML"],
         &[],
     );
     env
