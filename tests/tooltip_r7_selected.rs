@@ -1230,9 +1230,8 @@ fn challenges_ui_hover_selects_affix_names_in_modifier_order() {
     assert!(keystone_affix_texts(&missing_rows).is_empty(), "missing affix records have no names");
 }
 
-#[test]
-fn challenges_ui_hover_preserves_selected_item_quality_and_color() {
-    // These catalog rows have class 5/subclass 1: item 180653 has quality 4; item 168195 has quality 7.
+fn capture_selected_keystone_quality_titles() -> (String, String) {
+    // Existing class 5/subclass 1 items 180653 and 168195 supply qualities 4 and 7.
     let (env_four, guid_four) = keystone_hover_fixture(3, 180_653);
     let input_four = keystone_map_input(180_653, &guid_four, 984, Some("Quality Map"));
     let rows_four = set_and_capture_keystone_rows(
@@ -1243,14 +1242,34 @@ fn challenges_ui_hover_preserves_selected_item_quality_and_color() {
     let rows_seven = set_and_capture_keystone_rows(
         &env_seven, 4, 168_195, &guid_seven, input_seven, vec![(17, 984), (18, 3)],
     );
+    let title_four = keystone_row(&rows_four, "Map: Quality Map")
+        .expect("quality 4 title")
+        .to_owned();
+    let title_seven = keystone_row(&rows_seven, "Map: Quality Map")
+        .expect("quality 7 title")
+        .to_owned();
+    (title_four, title_seven)
+}
+
+#[test]
+fn challenges_ui_hover_preserves_selected_item_quality() {
+    let (title_four, title_seven) = capture_selected_keystone_quality_titles();
     let (env_absent, guid_absent) = keystone_hover_fixture(5, 180_653);
     let rows_absent = capture_keystone_hover_rows(&env_absent, 180_653, &guid_absent);
-    let title_four = keystone_row(&rows_four, "Map: Quality Map").expect("quality 4 title");
-    let title_seven = keystone_row(&rows_seven, "Map: Quality Map").expect("quality 7 title");
     assert_eq!(title_four.split('\t').nth(2), Some("4"), "title quality selector input 1");
     assert_eq!(title_seven.split('\t').nth(2), Some("7"), "title quality selector input 2");
-    assert_ne!(title_four.split('\t').nth(3), title_seven.split('\t').nth(3), "quality colors discriminate inputs");
     assert!(keystone_row(&rows_absent, "Map: Quality Map").is_none(), "empty input has no quality row");
+}
+
+// INFERRED: the simulator's current item-quality mapping distinguishes these values.
+#[test]
+fn challenges_ui_hover_infers_quality_color_discrimination() {
+    let (title_four, title_seven) = capture_selected_keystone_quality_titles();
+    assert_ne!(
+        title_four.split('\t').nth(3),
+        title_seven.split('\t').nth(3),
+        "simulator quality colors discriminate inputs",
+    );
 }
 
 #[test]
