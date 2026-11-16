@@ -1550,9 +1550,10 @@ fn retail_character_select_pending_consumer_observes_list_completion() {
     test_timeout! {
         let env = load_blizzard_screen(ScreenKind::CharacterSelect);
         env.exec(RETAIL_PENDING_CONSUMER_SETUP).expect("selected Retail pending consumer setup");
-        let pending = env.exec("CharacterSelect_OnVASCharacterQueueStatusUpdate('pending-guid', 3)");
         env.exec("C_Login.Login('pending-probe', CreateFrame('EditBox'))").unwrap();
-        wow_ui_sim::startup::run_extra_update_ticks(&env, 3);
+        wow_ui_sim::startup::run_extra_update_ticks(&env, 2);
+        let pending = env.exec("CharacterSelect_OnVASCharacterQueueStatusUpdate('pending-guid', 3)");
+        wow_ui_sim::startup::run_extra_update_ticks(&env, 1);
         let complete = env.exec("CharacterSelect_OnVASCharacterQueueStatusUpdate('complete-guid', 4)");
         assert!(pending.is_ok(), "pending call site must succeed: {pending:?}");
         assert!(complete.is_ok(), "completed-list call site must succeed: {complete:?}");
