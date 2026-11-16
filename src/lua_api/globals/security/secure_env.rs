@@ -311,9 +311,7 @@ pub(crate) fn register_native_function_with_flags(
         table_set_rust_fn(state, global_ref, name, function)?;
         if publish_secure {
             if flags == 3 {
-                if let Val::Table(secureenv_ref) = registry_get(state, "__secureenv") {
-                    table_set_rust_fn_unpaired(state, secureenv_ref, name, function)?;
-                }
+                register_flag3_handler_in_secure_environment(state, name, function)?;
             } else {
                 let value = crate::lua_api::methods::table_get(state, Val::Table(global_ref), name);
                 set_secure_env_value_if_present(state, name, value)?;
@@ -323,6 +321,17 @@ pub(crate) fn register_native_function_with_flags(
         table_set_rust_fn(state, secureenv_ref, name, function)?;
     }
     Ok(())
+}
+
+fn register_flag3_handler_in_secure_environment(
+    state: &mut LuaState,
+    name: &str,
+    function: rilua::RustFn,
+) -> LuaResult<()> {
+    let Val::Table(secureenv_ref) = registry_get(state, "__secureenv") else {
+        return Ok(());
+    };
+    table_set_rust_fn_unpaired(state, secureenv_ref, name, function)
 }
 
 /// Install a missing native function or publish the existing function value by its flags.
@@ -472,27 +481,32 @@ mod tests {
                 .expect("register flag-7 function");
         }
 
-        let routes: (bool, bool) = env
+        let routes: Vec<bool> = env
             .eval(
                 r#"
                 local ordinary3 = rawget(_G, "flagshared3")
                 local secure3 = rawget(__secureenv, "flagshared3")
                 local ordinary7 = rawget(_G, "flagshared7")
                 local secure7 = rawget(__secureenv, "flagshared7")
-                return type(ordinary3) == "function"
-                        and type(secure3) == "function"
-                        and not rawequal(ordinary3, secure3)
-                        and ordinary3() == true
-                        and secure3() == true,
-                    type(ordinary7) == "function"
-                        and type(secure7) == "function"
-                        and ordinary7() == true
-                        and secure7() == true
+                return {
+                    type(ordinary3) == "function",
+                    type(secure3) == "function",
+                    not rawequal(ordinary3, secure3),
+                    ordinary3() == true,
+                    secure3() == true,
+                    type(ordinary7) == "function",
+                    type(secure7) == "function",
+                    ordinary7() == true,
+                    secure7() == true,
+                }
                 "#,
             )
             .expect("flagged function publication probe");
 
-        assert_eq!(routes, (true, true));
+        assert_eq!(
+            routes,
+            vec![true, true, true, true, true, true, true, true, true]
+        );
     }
 
     #[test]

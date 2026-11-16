@@ -564,16 +564,16 @@ mod tests {
 
                 local secureColor = secure.GetColorForQuality(0)
                 local publicColor = ordinary.GetColorForQuality(0)
-                if secureColor.r ~= publicColor.r or secureColor.g ~= publicColor.g
-                    or secureColor.b ~= publicColor.b or secureColor.a ~= publicColor.a then
-                    return "quality_color_mismatch"
-                end
+                if secureColor.r ~= publicColor.r then return "quality_color_mismatch" end
+                if secureColor.g ~= publicColor.g then return "quality_color_mismatch" end
+                if secureColor.b ~= publicColor.b then return "quality_color_mismatch" end
+                if secureColor.a ~= publicColor.a then return "quality_color_mismatch" end
                 local secureDefault = secure.GetDefaultColorForQuality(0)
                 local publicDefault = ordinary.GetDefaultColorForQuality(0)
-                if secureDefault.r ~= publicDefault.r or secureDefault.g ~= publicDefault.g
-                    or secureDefault.b ~= publicDefault.b or secureDefault.a ~= publicDefault.a then
-                    return "default_color_mismatch"
-                end
+                if secureDefault.r ~= publicDefault.r then return "default_color_mismatch" end
+                if secureDefault.g ~= publicDefault.g then return "default_color_mismatch" end
+                if secureDefault.b ~= publicDefault.b then return "default_color_mismatch" end
+                if secureDefault.a ~= publicDefault.a then return "default_color_mismatch" end
 
                 secure.RemoveColorOverride(0)
                 if ordinary.GetColorOverrideInfo(0) ~= nil then return "secure_remove_not_visible" end

@@ -346,10 +346,11 @@ fn update_changed_dual_handler(
         )),
         _ => None,
     };
-    if let Some((ordinary_value, secure_value)) = destinations
-        && (ordinary_value != ordinary || secure_value != secure)
-    {
-        set_member_in_both(state, namespace, member, ordinary_value, secure_value, flag)?;
+    if let Some((ordinary_value, secure_value)) = destinations {
+        let destination_changed = ordinary_value != ordinary || secure_value != secure;
+        if destination_changed {
+            set_member_in_both(state, namespace, member, ordinary_value, secure_value, flag)?;
+        }
     }
     Ok(())
 }
@@ -606,22 +607,24 @@ mod tests {
                 local securePrivateAuras = rawget(__secureenv, "C_UnitAurasPrivate")
                 local catalog = rawget(_G, "C_CatalogShop")
                 local secureCatalog = rawget(__secureenv, "C_CatalogShop")
-                return type(ping) == "table"
-                        and type(rawget(ping, "GetDefaultPingOptions")) == "function"
-                        and type(securePing) == "table"
-                        and type(rawget(securePing, "GetDefaultPingOptions")) == "function"
-                        and not rawequal(
-                            rawget(ping, "GetDefaultPingOptions"),
-                            rawget(securePing, "GetDefaultPingOptions")
-                        ),
-                    type(services) == "table"
-                        and type(rawget(services, "HasRequiredBoostForClassTrial")) == "function"
-                        and type(secureServices) == "table"
-                        and type(rawget(secureServices, "HasRequiredBoostForClassTrial")) == "function"
-                        and not rawequal(
-                            rawget(services, "HasRequiredBoostForClassTrial"),
-                            rawget(secureServices, "HasRequiredBoostForClassTrial")
-                        ),
+                local function hasDistinctHandlers(ordinary, secure, member)
+                    if type(ordinary) ~= "table" or type(secure) ~= "table" then
+                        return false
+                    end
+                    local ordinaryHandler = rawget(ordinary, member)
+                    local secureHandler = rawget(secure, member)
+                    if type(ordinaryHandler) ~= "function"
+                        or type(secureHandler) ~= "function" then
+                        return false
+                    end
+                    return not rawequal(ordinaryHandler, secureHandler)
+                end
+                return hasDistinctHandlers(ping, securePing, "GetDefaultPingOptions"),
+                    hasDistinctHandlers(
+                        services,
+                        secureServices,
+                        "HasRequiredBoostForClassTrial"
+                    ),
                     type(securePrivateAuras) == "table"
                         and type(rawget(securePrivateAuras, "GetPrivateAuraAnchors")) == "function",
                     type(privateAuras) == "table"
@@ -687,7 +690,7 @@ mod tests {
         assert_eq!(before, (false, false));
 
         env.set_screen_mode(ScreenKind::CharacterSelect);
-        let late_flag3: (bool, bool, bool) = env
+        let late_flag3: (bool, bool, bool, bool, bool, bool) = env
             .eval(
                 r#"
                 local ordinaryNamespace = rawget(_G, "C_CharacterCreation")
@@ -700,14 +703,14 @@ mod tests {
                 local secureLevel = type(secure) == "function" and secure()
                 return type(ordinary) == "function",
                     type(secure) == "function",
-                    not rawequal(ordinary, secure)
-                        and type(ordinaryLevel) == "number"
-                        and type(secureLevel) == "number"
-                        and ordinaryLevel == secureLevel
+                    not rawequal(ordinary, secure),
+                    type(ordinaryLevel) == "number",
+                    type(secureLevel) == "number",
+                    ordinaryLevel == secureLevel
                 "#,
             )
             .expect("read late flag-3 publication");
-        assert_eq!(late_flag3, (true, true, true));
+        assert_eq!(late_flag3, (true, true, true, true, true, true));
 
         env.exec("rawset(C_Ping, 'GetDefaultPingOptions', function() return 'late' end)")
             .expect("replace ordinary flag-3 namespace member");

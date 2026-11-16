@@ -834,12 +834,15 @@ fn retail_r88n11b_timed_signal_map_has_distinct_working_handlers() {
             local secure = rawget(__secureenv, "C_Timer")
             local publicFactory = type(public) == "table" and rawget(public, "NewTimedSignalMap")
             local secureFactory = type(secure) == "table" and rawget(secure, "NewTimedSignalMap")
-            return type(publicFactory) == "function"
-                and type(secureFactory) == "function"
-                and not rawequal(publicFactory, secureFactory)
-                and not rawequal(public, secure)
-                and type(publicFactory(function() end)) == "userdata"
-                and type(secureFactory(function() end)) == "userdata"
+            if type(publicFactory) ~= "function" or type(secureFactory) ~= "function" then
+                return false
+            end
+            if rawequal(publicFactory, secureFactory) or rawequal(public, secure) then
+                return false
+            end
+            local publicMap = publicFactory(function() end)
+            local secureMap = secureFactory(function() end)
+            return type(publicMap) == "userdata" and type(secureMap) == "userdata"
             "#,
         )
         .expect("R88n.11b NewTimedSignalMap publication should be observable");

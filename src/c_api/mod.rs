@@ -555,7 +555,8 @@ pub(crate) use helpers::{
     ensure_enum_table, ensure_global_table, ensure_namespace, ensure_namespace_table_field,
     ensure_secure_namespace, global_val, mark_namespace_keys_removed,
     register_namespace_function_with_flags, register_namespace_value_with_flags,
-    register_unknown_namespace_function, set_global_val, set_namespace_member,
+    register_namespace_values_with_flags, register_unknown_namespace_function, set_global_val,
+    set_namespace_member,
 };
 pub use permanent_shims::c_map_api;
 pub(crate) use registration::{

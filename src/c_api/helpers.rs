@@ -476,9 +476,10 @@ mod tests {
                 r#"
                 local public = rawget(_G, "C_Timer")
                 local secure = rawget(__secureenv, "C_Timer")
-                return type(public) == "table"
-                    and type(secure) == "table"
-                    and type(rawget(public, "NewTimerID")) == "function"
+                if type(public) ~= "table" or type(secure) ~= "table" then
+                    return false
+                end
+                return type(rawget(public, "NewTimerID")) == "function"
                     and type(rawget(secure, "NewTimerID")) == "function"
                 "#,
             )
