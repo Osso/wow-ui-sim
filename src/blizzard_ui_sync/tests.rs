@@ -561,34 +561,35 @@ fn cached_ui_version_override_requires_the_explicit_flag() {
     assert!(super::cache_version_is_allowed(&bypassed, true));
 }
 
-#[test]
 #[cfg(all(feature = "casc", feature = "client-retail"))]
-fn retail_provenance_ignores_installed_build_identity() {
-    const CHILD: &str = "WOW_SIM_RETAIL_PROVENANCE_TEST_CHILD";
-    if std::env::var_os(CHILD).is_some() {
-        let installed = super::read_active_build_identity(
-            std::path::Path::new(&std::env::var("WOW_INSTALL_PATH").unwrap()),
-            "wow",
-        )
-        .unwrap();
-        let index: serde_json::Value =
-            serde_json::from_str(include_str!("../../data/blizzard-ui-builds/retail.json"))
-                .unwrap();
-        let pinned_version = index["version"].as_str().unwrap();
-        assert_ne!(installed.version, pinned_version);
-        let provenance = super::expected_cache_provenance().unwrap();
-        assert!(
-            provenance
-                .contents()
-                .contains(&format!("version={pinned_version}\n"))
-        );
-        assert!(
-            provenance
-                .contents()
-                .contains("source=blizzard-cdn-pinned\n")
-        );
-        return;
-    }
+const RETAIL_PROVENANCE_TEST_CHILD: &str = "WOW_SIM_RETAIL_PROVENANCE_TEST_CHILD";
+
+#[cfg(all(feature = "casc", feature = "client-retail"))]
+fn assert_retail_provenance_in_child() {
+    let installed = super::read_active_build_identity(
+        std::path::Path::new(&std::env::var("WOW_INSTALL_PATH").unwrap()),
+        "wow",
+    )
+    .unwrap();
+    let index: serde_json::Value =
+        serde_json::from_str(include_str!("../../data/blizzard-ui-builds/retail.json")).unwrap();
+    let pinned_version = index["version"].as_str().unwrap();
+    assert_ne!(installed.version, pinned_version);
+    let provenance = super::expected_cache_provenance().unwrap();
+    assert!(
+        provenance
+            .contents()
+            .contains(&format!("version={pinned_version}\n"))
+    );
+    assert!(
+        provenance
+            .contents()
+            .contains("source=blizzard-cdn-pinned\n")
+    );
+}
+
+#[cfg(all(feature = "casc", feature = "client-retail"))]
+fn run_retail_provenance_child() {
     let install = installed_product_fixture();
     std::fs::create_dir_all(install.path().join("Data/data")).unwrap();
     let status = std::process::Command::new(std::env::current_exe().unwrap())
@@ -597,11 +598,21 @@ fn retail_provenance_ignores_installed_build_identity() {
             "blizzard_ui_sync::tests::retail_provenance_ignores_installed_build_identity",
             "--nocapture",
         ])
-        .env(CHILD, "1")
+        .env(RETAIL_PROVENANCE_TEST_CHILD, "1")
         .env("WOW_INSTALL_PATH", install.path())
         .status()
         .unwrap();
     assert!(status.success(), "child provenance test failed");
+}
+
+#[test]
+#[cfg(all(feature = "casc", feature = "client-retail"))]
+fn retail_provenance_ignores_installed_build_identity() {
+    if std::env::var_os(RETAIL_PROVENANCE_TEST_CHILD).is_some() {
+        assert_retail_provenance_in_child();
+        return;
+    }
+    run_retail_provenance_child();
 }
 
 #[cfg(all(feature = "casc", feature = "client-retail"))]
