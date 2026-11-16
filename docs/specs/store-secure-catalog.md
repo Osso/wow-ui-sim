@@ -10,6 +10,7 @@ This contract covers the Retail `C_StoreSecure` catalog, availability, currency,
 - [ ] `GetProductGroupInfo` returns fresh metadata for the first matching group. A miss returns zero Lua values.
 - [ ] `GetProducts` returns ordered entry IDs after support, session, hidden-entry, and product-ID filters. `includeHiddenProducts` bypasses only the hidden-entry filter; a miss returns an empty array.
 - [ ] `GetEntryInfo` resolves an Entry ID to its linked supported Product and returns a fresh entry and `sharedData` table. A missing or rejected row returns one nil.
+- [x] VERIFIED (Retail 12.1.5.70688 R88ad.1/R88ad.2; `tests/store_secure_catalog.rs`): the `GetEntryInfo` snapshot sets `alreadyOwned` to false and copies it; it does not read a separate ownership result.
 - [ ] `GetProductInfo` returns a fresh product and `sharedData` table for the first supported Product row. A missing or rejected row returns one nil.
 - [ ] `sharedData` publishes the verified numeric, Boolean, optional, color, card, and deliverable fields. Absent optional fields stay nil. Runtime prices, catalog rows, and metadata remain host supplied; defaults do not add demo records.
 

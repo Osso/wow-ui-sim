@@ -1,6 +1,6 @@
 ## [2026-11-16] implementation | Retail StoreSecure catalog inputs
 
-Added the Retail catalog state contract and system page. **VERIFIED (R88ad.1/R88ad.2, Retail 12.1.5.70688):** catalog readers, availability/list writers, currency lookup, and request limits have explicit native behavior. **VERIFIED (simulator source):** unknown runtime rows remain empty host inputs, and only Retail selects the new model; uncovered profiles retain bootstrap behavior. The pinned 12.1.5.70783 StoreUI and CatalogShop consumers remain unchanged.
+Added the Retail catalog state contract and system page. **VERIFIED (R88ad.1/R88ad.2, Retail 12.1.5.70688):** catalog readers, availability/list writers, currency lookup, and request limits have explicit native behavior. **VERIFIED (simulator source):** unknown runtime rows remain empty host inputs, and only Retail selects the new model; uncovered profiles retain bootstrap behavior. The pinned 12.1.5.70783 StoreUI and CatalogShop consumers remain unchanged. The verified `GetEntryInfo.alreadyOwned` snapshot behavior is recorded in the [contract](../specs/store-secure-catalog.md) and [system page](systems/store-secure-catalog.md).
 
 ## [2026-11-15] fix | Retail Blizzard UI cache provenance
 
