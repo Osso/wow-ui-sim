@@ -609,7 +609,7 @@ mod tests {
     #[test]
     fn secure_library_aliases_follow_base_copy_and_keep_random_identity() {
         let env = WowLuaEnv::new().expect("lua env");
-        let contract: (bool, bool, bool, bool, bool, bool, bool, bool) = env
+        let contract: (bool, bool, bool, bool, bool, bool, bool, bool, bool) = env
             .eval(
                 r#"
                 local secure = __secureenv
@@ -619,8 +619,9 @@ mod tests {
                         and rawequal(string.concat, strconcat)
                         and rawequal(secureString.concat, string.concat),
                     type(string.split) == "function"
-                        and rawequal(string.split, strsplit)
-                        and rawequal(secureString.split, string.split),
+                        and rawequal(string.split, strsplit),
+                    type(secureString.split) == "function"
+                        and rawequal(secureString.split, strsplit),
                     type(string.join) == "function"
                         and rawequal(string.join, strjoin)
                         and rawequal(secureString.join, string.join),
@@ -636,7 +637,10 @@ mod tests {
                 "#,
             )
             .expect("verified library initialization routes should be observable");
-        assert_eq!(contract, (true, true, true, true, true, true, true, true));
+        assert_eq!(
+            contract,
+            (true, true, true, true, true, true, true, true, true)
+        );
     }
 
     #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
