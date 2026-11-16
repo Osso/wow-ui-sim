@@ -26,7 +26,7 @@ assert(factory:GetTemplateInfoCache():GetTemplateInfos() ~= nil)
 if type(LoadAddOnWithErrorHandling) == 'function' then
     original(LoadAddOnWithErrorHandling, 'Blizzard_SharedXML/AddOnUtil.lua')
 end
-local probe = rawget(_G, '__fallback_retire_probe')
+local probe = debug.getregistry().__fallback_retire_probe
 if probe then
     for _, name in ipairs({
         'FlagsUtil.IsSet', 'CreateTemplateInfoCache', 'LoadAddOnWithErrorHandling'
@@ -136,7 +136,7 @@ fn assert_startup_producers(env: &WowLuaEnv) {
         if type(settablesecurity) == 'function' then
             assert(debug.iscfunction(settablesecurity))
         end
-        local probe = rawget(_G, '__fallback_retire_probe')
+        local probe = debug.getregistry().__fallback_retire_probe
         if probe then
             for _, name in ipairs({
                 'DropCursorMoney', 'ToggleCollectionsJournal', 'ToggleEncounterJournal',
