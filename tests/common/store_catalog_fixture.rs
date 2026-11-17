@@ -18,7 +18,9 @@ const CURRENCY_ID: i32 = 61;
 
 pub fn seed_vas_catalog(env: &WowLuaEnv) {
     let vas_service_type = enum_value(env, "Enum.VasServiceType.NameChange");
-    let product = featured_product(0, vas_service_type);
+    let vas_decorator = enum_value(env, "Enum.BattlepayProductDecorator.VasService");
+    let mut product = featured_product(0, vas_service_type);
+    product.shared_data.product_decorator = Some(vas_decorator);
     let entry = featured_entry();
     let mut sim = env.state().borrow_mut();
     sim.store_glue.store_secure.catalog.products.push(product);

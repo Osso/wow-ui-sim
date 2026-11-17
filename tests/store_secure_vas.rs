@@ -198,6 +198,38 @@ const PURCHASE_COMPLETION_CONSUMER: &str = r#"
     return true
 "#;
 
+const VAS_PURCHASE_CONSUMER: &str = r#"
+    local function lookup(name)
+        return _G[name] or (__secureenv and rawget(__secureenv, name))
+    end
+    local panel = lookup("StoreVASValidationFrame")
+    lookup("StoreFrame_SetSelectedEntryID")(1003)
+    lookup("StoreVASValidationFrame_GetProductInfo")(panel)
+    local continue = lookup("VASCharacterSelectionContinueButton_OnClick")
+    local continueSource = debug.getinfo(continue, "S").source
+    assert(continueSource:find("Blizzard_Shared_StoreUISecure.lua", 1, true), "Retail VAS purchase consumer must be selected")
+    lookup("StoreVASValidationFrame_Init")(panel)
+    local selectors = panel.CharacterSelectionFrame
+    local realms = C_StoreSecure.GetRealmList()
+    lookup("VASCharacterSelectionRealmSelector_Callback")(realms[1])
+    lookup("VASCharacterSelectionCharacterSelector_Callback")(1)
+    selectors.NewCharacterName:SetText("Renamedhero")
+    continue(selectors.ContinueButton)
+"#;
+
+const VAS_COMPLETION_CONSUMER: &str = r#"
+    local function lookup(name)
+        return _G[name] or (__secureenv and rawget(__secureenv, name))
+    end
+    local complete = lookup("StoreVASValidationFrame_OnVasProductComplete")
+    local completeSource = debug.getinfo(complete, "S").source
+    assert(completeSource:find("Blizzard_Shared_StoreUISecure.lua", 1, true), "Retail VAS completion consumer must be selected")
+    local parent = CreateFrame("Frame")
+    parent:Show()
+    complete(CreateFrame("Frame", nil, parent))
+    assert(not parent:IsShown(), "resolved completion should close the original consumer parent")
+"#;
+
 fn load_store_ui() -> WowLuaEnv {
     let ui_dir = blizzard_addon_harness::blizzard_ui_dir();
     let env = blizzard_addon_harness::new_blizzard_addon_glue_env(&ui_dir);
@@ -740,6 +772,63 @@ fn retail_store_vas_purchase_and_completion_use_explicit_host_inputs() {
         );
         clear_external_transaction_id(&env);
     }
+}
+
+#[test]
+fn retail_store_vas_purchase_uses_original_continue_button() {
+    test_timeout! {
+        let env = load_store_ui();
+        seed_realm_and_character_inputs(&env);
+        crate::common::store_catalog_fixture::seed_vas_catalog(&env);
+        env.state().borrow_mut().store_glue.connection_present = true;
+        apply_callable_wrong_producer_overlay(&env);
+        env.exec(VAS_PURCHASE_CONSUMER)
+            .expect("original VAS continue button should submit its selected purchase");
+        assert_original_vas_purchase_request(&env);
+    }
+}
+
+#[test]
+fn retail_store_vas_completion_uses_original_store_ui_handler() {
+    test_timeout! {
+        let env = load_store_ui();
+        seed_realm_and_character_inputs(&env);
+        crate::common::store_catalog_fixture::seed_vas_catalog(&env);
+        seed_purchase_inputs(&env);
+        apply_callable_wrong_producer_overlay(&env);
+        env.exec(VAS_COMPLETION_CONSUMER)
+            .expect("original completion handler should consume the populated completion row");
+    }
+}
+
+fn assert_original_vas_purchase_request(env: &WowLuaEnv) {
+    let requests = env
+        .state()
+        .borrow()
+        .store_glue
+        .store_secure
+        .vas
+        .submitted_requests
+        .clone();
+    assert_eq!(requests.len(), 1);
+    let StoreVasRequest::VasPurchase {
+        sequence,
+        product_id,
+        character_guid,
+        new_name,
+        ..
+    } = &requests[0]
+    else {
+        panic!("original VAS continue button should submit a VAS purchase");
+    };
+    assert_eq!(
+        (*sequence, *product_id, new_name.as_deref()),
+        (1, 2003, Some(b"Renamedhero".as_slice()))
+    );
+    assert!(matches!(
+        character_guid,
+        wow_ui_sim::c_api::store_guid::Outcome::Known(_)
+    ));
 }
 
 fn assert_purchase_requests(env: &WowLuaEnv) {
