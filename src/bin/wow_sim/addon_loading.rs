@@ -13,7 +13,7 @@ use wow_ui_sim::lua_api::state::LuaErrorRecord;
 use wow_ui_sim::lua_api::{AddonInfo, WowLuaEnv};
 use wow_ui_sim::saved_variables::SavedVariablesManager;
 use wow_ui_sim::screen::ScreenKind;
-use wow_ui_sim::toc::{TocCache, TocFile, TocMetadata};
+use wow_ui_sim::toc::{TocCache, TocMetadata};
 
 mod blizzard_dependencies;
 mod cache_summary;
