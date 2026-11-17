@@ -93,7 +93,7 @@ const LOOKUP_API_CONSUMER: &str = r#"
     local characters = C_StoreSecure.GetCharactersForRealm(101, true)
     assert(#characters == 1 and characters[1].name == "Simhero", "guild-only character query should match the supplied GUID set")
     local character = C_StoreSecure.GetCharacterInfoByGUID("Player-101-1-11")
-    assert(character and character.name == "Simhero" and character.realmName == "Azeroth", "character-object lookup should publish its copied row")
+    assert(character and character.name == "Simhero" and character.className == "Warrior" and character.guid == "Player-101-1-11", "character-object lookup should publish the verified row fields")
     assert(C_StoreSecure.GetCharacterInfoByGUID("Player-999-1-FF") == nil, "absent character objects should publish nil")
     assert(C_StoreSecure.GetWoWAccountGUIDFromName("ignored-local-name", true) == "WowAccount-1001-1", "local lookup should use the current account GUID")
     assert(C_StoreSecure.GetWoWAccountGUIDFromName("WoW2", false) == "WowAccount-2002-2", "remote lookup should match exact account-name bytes")
