@@ -118,6 +118,17 @@ fn frame_center(env: &WowLuaEnv, frame_path: &str) -> Point {
     Point::new(rect.x + rect.width / 2.0, rect.y + rect.height / 2.0)
 }
 
+#[cfg(feature = "client-mists")]
+#[test]
+fn mists_login_boot_returns_to_account_login_after_intro_movie() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::Login);
+        let visible: bool = env.eval("return AccountLogin:IsShown()")
+            .expect("Mists Classic AccountLogin visibility should be queryable");
+        assert!(visible, "login boot should leave AccountLogin visible");
+    }
+}
+
 // PRESERVATION (Mists simulator): `src/cvars.yaml:1075` defaults `playIntroMovie`
 // to 0; Classic `GlueParent.lua:15,425-431` opens full-screen MovieFrame, which
 // hides AccountLogin. `MovieFrame.lua:37` also reports missing `HideCursor`.
@@ -289,6 +300,22 @@ fn login_boot_keeps_settings_preview_panels_wired_to_settings_panel() {
             quest_preview,
             "login boot should keep SettingsPanel.QuestTextPreview wired"
         );
+    }
+}
+
+#[cfg(feature = "client-mists")]
+#[test]
+fn mists_login_editboxes_gain_focus_when_clicking_visible_centers() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::Login);
+        for path in ["AccountLogin.UI.AccountEditBox", "AccountLogin.UI.PasswordEditBox"] {
+            let hit = hit_test_like_gui(&env, frame_center(&env, path))
+                .expect("Mists login edit-box center should be hittable");
+            env.send_click(hit).expect("edit-box click should dispatch");
+            let focused: bool = env.eval(&format!("return {path}:HasFocus()"))
+                .expect("edit-box focus should be queryable");
+            assert!(focused, "Mists login edit box should gain focus: {path}");
+        }
     }
 }
 
