@@ -53,7 +53,10 @@ fn scan_game_addons() -> Vec<(String, PathBuf)> {
         }
     }
 
-    wow_ui_sim::loader::sort_addons_by_dependencies(&mut addons);
+    wow_ui_sim::loader::sort_addons_by_dependencies(
+        &wow_ui_sim::toc::TocCache::default(),
+        &mut addons,
+    );
     addons
 }
 
