@@ -4065,3 +4065,7 @@ Recorded exact historical first-failing boundaries and cache-freshness qualifica
 ## [2026-11-15] investigation | R88aa Retail Glue consumers
 
 [Consumer selection and RED proof](investigations/consumer-selection-and-red-proof.md#retail-glue-login-consumers-and-pending-list-cache-call-site-r88aa) records the selected 70783 Mainline Glue source and exact original-call REDs at CharacterSelect.lua:211 and :697. **INFERRED (R88aa):** the cached pending getter call sites correspond to Retail 70688; exact cached-source equivalence remains UNKNOWN. The [Glue login contract](../specs/glue-login-flow.md#r88aa-cached-retail-characterselect-call-site-inferred) keeps that boundary separate from the verified native API behavior.
+
+## [2026-11-17] system | Retail Glue host state (R88ad.7-10)
+
+Added [Retail Glue host state](systems/glue-host-state.md) for lt-fb68. Retail registers the R88ad.7-10 producers and retires their `shared_bootstrap.lua` defaults; other profiles keep them. The [contract](../specs/glue-state-r88ad.md) separates VERIFIED assertions from the INFERRED `IsTestBuild` change and the UNKNOWN host inputs.

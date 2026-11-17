@@ -86,7 +86,7 @@ fn glue_runtime_helpers_exist_with_safe_defaults() {
                    WasScreenFirstDisplayed("login"),
                    GetLoginScreenBackground(42, 7),
                    type(GetMinimumExpansionLevel()),
-                   type(GetServerName()),
+                   select('#', GetServerName()) == 0 and "none" or type((GetServerName())),
                    location:IsUnit(),
                    location:IsValid(),
                    rawget(AdventureGuideUtil, "IsAvailable") ~= nil and AdventureGuideUtil.IsAvailable() or false,
@@ -107,9 +107,14 @@ fn glue_runtime_helpers_exist_with_safe_defaults() {
     assert_eq!(saved_account_name, "");
     assert_eq!(saved_account_list, "");
     assert!(!screen_first_displayed);
-    assert_eq!(login_background, 42.0);
+    // R88ad.9: Retail has no native background objects here, so the
+    // low-resolution ID wins; other profiles keep the bootstrap default.
+    let retail = wow_ui_sim::client_profile::ACTIVE
+        == wow_ui_sim::client_profile::ClientProfile::Retail;
+    assert_eq!(login_background, if retail { 7.0 } else { 42.0 });
     assert_eq!(min_expansion_level_type, "number");
-    assert_eq!(server_name_type, "nil");
+    // R88ad.8: Retail publishes zero values while the connection flag is clear.
+    assert_eq!(server_name_type, if retail { "none" } else { "nil" });
     assert!(player_location_kind);
     assert!(player_location_valid);
     assert_eq!(

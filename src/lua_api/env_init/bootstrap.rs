@@ -27,6 +27,8 @@ pub(crate) fn init_shared_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
             Val::Bool(cfg!(feature = "retail-12-0-0")),
             secure_projection,
             Val::Bool(retire_glue_owner_defaults),
+            // R88ad.7-10 producers replace these defaults on Retail only.
+            Val::Bool(cfg!(feature = "client-retail")),
         ],
     )?;
     LuaApiMut::set_global_val(lua, "__wow_internal_projection_call", Val::Nil)?;
@@ -68,6 +70,9 @@ fn runtime_surface_arguments() -> [Val; 7] {
             | ClientProfile::Anniversary
             | ClientProfile::WowForever
     );
+    // Positional contract with runtime_surface_bootstrap.lua's destructuring:
+    // classicCombat, forever, vanilla, modeledStoreGlue, modeledStoreCatalog,
+    // retirePveFrameBridge, retireGlueOwnerDefaults.
     [
         Val::Bool(classic_combat),
         Val::Bool(ACTIVE == ClientProfile::WowForever),
