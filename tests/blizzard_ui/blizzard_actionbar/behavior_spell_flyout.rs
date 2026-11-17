@@ -23,6 +23,7 @@ const NAMED_CALL_PET_SPELL_ID: u32 = 901001;
 const EMPTY_NAME_CALL_PET_SPELL_ID: u32 = 901002;
 const MISSING_NAME_CALL_PET_SPELL_ID: u32 = 901003;
 const UNMAPPED_CALL_PET_SPELL_ID: u32 = 901004;
+const INVALID_INDEX_CALL_PET_SPELL_ID: u32 = 901005;
 
 post_wrath_ui_fixture! {
 #[cfg(not(feature = "client-ptr"))]
@@ -169,6 +170,7 @@ fn seed_call_pet_inputs(env: &WowLuaEnv) {
         (NAMED_CALL_PET_SPELL_ID, 0),
         (EMPTY_NAME_CALL_PET_SPELL_ID, 1),
         (MISSING_NAME_CALL_PET_SPELL_ID, 2),
+        (INVALID_INDEX_CALL_PET_SPELL_ID, 5),
     ]);
     state.player_call_pet_names = vec![Some("Kado".to_string()), Some(String::new()), None];
     state.known_spells.extend([
@@ -176,6 +178,7 @@ fn seed_call_pet_inputs(env: &WowLuaEnv) {
         EMPTY_NAME_CALL_PET_SPELL_ID,
         MISSING_NAME_CALL_PET_SPELL_ID,
         UNMAPPED_CALL_PET_SPELL_ID,
+        INVALID_INDEX_CALL_PET_SPELL_ID,
     ]);
 }
 
@@ -185,6 +188,7 @@ fn seed_call_pet_slots(env: &WowLuaEnv) {
         EMPTY_NAME_CALL_PET_SPELL_ID,
         MISSING_NAME_CALL_PET_SPELL_ID,
         UNMAPPED_CALL_PET_SPELL_ID,
+        INVALID_INDEX_CALL_PET_SPELL_ID,
     ]
     .map(call_pet_flyout_slot)
     .to_vec();
@@ -229,16 +233,20 @@ fn assert_spell_flyout_toggle_is_original(env: &WowLuaEnv) {
 }
 
 fn assert_call_pet_flyout_results(env: &WowLuaEnv) {
-    let (is_shown, first_spell_id, second_spell_id, third_visible) =
+    let (is_shown, first_spell_id, second_spell_id, third_spell_id, fourth_visible) =
         observe_call_pet_flyout_buttons(env);
     assert!(is_shown, "SpellFlyout should open");
     assert_eq!(first_spell_id, NAMED_CALL_PET_SPELL_ID as i64);
     assert_eq!(second_spell_id, UNMAPPED_CALL_PET_SPELL_ID as i64);
-    assert!(!third_visible, "nameless call-pet entries should be hidden");
+    assert_eq!(third_spell_id, INVALID_INDEX_CALL_PET_SPELL_ID as i64);
+    assert!(
+        !fourth_visible,
+        "nameless call-pet entries should be hidden"
+    );
     assert_call_pet_api_results(env);
 }
 
-fn observe_call_pet_flyout_buttons(env: &WowLuaEnv) -> (bool, i64, i64, bool) {
+fn observe_call_pet_flyout_buttons(env: &WowLuaEnv) -> (bool, i64, i64, i64, bool) {
     env.eval(
         r#"
         local function visible_spell_id(index)
@@ -247,8 +255,8 @@ fn observe_call_pet_flyout_buttons(env: &WowLuaEnv) -> (bool, i64, i64, bool) {
             return -1
         end
         return SpellFlyout:IsShown() == true,
-               visible_spell_id(1), visible_spell_id(2),
-               visible_spell_id(3) ~= -1
+               visible_spell_id(1), visible_spell_id(2), visible_spell_id(3),
+               visible_spell_id(4) ~= -1
         "#,
     )
     .expect("call-pet results should reach the original flyout")
@@ -265,10 +273,11 @@ fn assert_call_pet_api_results(env: &WowLuaEnv) {
             local missing_count = select("#", GetCallPetSpellInfo(901003))
             local missing_index, missing_name = GetCallPetSpellInfo(901003)
             local unmapped_count = select("#", GetCallPetSpellInfo(901004))
+            local invalid_index_count = select("#", GetCallPetSpellInfo(901005))
             return named_count == 2 and named_index == 0 and named_name == "Kado"
                 and empty_count == 2 and empty_index == 1 and empty_name == ""
                 and missing_count == 2 and missing_index == 2 and missing_name == nil
-                and unmapped_count == 0
+                and unmapped_count == 0 and invalid_index_count == 0
             "##,
         )
         .expect("call-pet API result probe should run");
