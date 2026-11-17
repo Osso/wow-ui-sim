@@ -16,6 +16,22 @@ use super::helpers::ensure_namespace;
 #[cfg(feature = "client-retail")]
 use super::helpers::{read_untainted_signed32_argument, read_untainted_truthy_argument};
 
+#[cfg(feature = "client-retail")]
+#[derive(Debug, Clone, Default)]
+pub struct PvpTalentInfoRecord {
+    pub talent_id: i32,
+    pub name: String,
+    pub icon: u32,
+    pub selected: bool,
+    pub available: bool,
+    pub spell_id: u32,
+    pub unlocked: bool,
+    pub known: bool,
+    pub granted_by_aura: bool,
+    pub dependencies_unmet: bool,
+    pub dependencies_unmet_reason: Option<String>,
+}
+
 #[derive(Debug, Clone, Default)]
 pub struct PvpTalentState {
     pub can_use: bool,
@@ -25,6 +41,9 @@ pub struct PvpTalentState {
     /// Simulator-session lock set; native lifetime, persistence and event effects are unknown.
     #[cfg(feature = "client-retail")]
     pub locked_talent_ids: std::collections::HashSet<i32>,
+    /// Host-supplied `GetPvpTalentInfo` records; no records are seeded.
+    #[cfg(feature = "client-retail")]
+    pub info_by_id: std::collections::HashMap<i32, PvpTalentInfoRecord>,
 }
 
 type LuaTableRef = GcRef<Table>;
