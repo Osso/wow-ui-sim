@@ -100,9 +100,11 @@ fn seed_mask2_reagent(
         sim.spell_reagent_inventory
             .metadata_masks
             .insert(reagent_id, 2);
-        sim.spell_reagent_inventory
-            .property_candidates
-            .insert(reagent_id, property_candidates);
+        if !property_candidates.is_empty() {
+            sim.spell_reagent_inventory
+                .property_candidates
+                .insert(reagent_id, property_candidates);
+        }
     }
     for (offset, &(_, count)) in candidates.iter().enumerate() {
         add_bag_stack(env, first_slot + offset as i32, reagent_id as u32, count);
@@ -124,6 +126,19 @@ fn cast_count_mask2_divides_candidate_counts_before_summing_in_cooldown_viewer()
     seed_mask2_reagent(&env, 19_750, 31_001, 3, 1, &[(2, 7), (-3, 11)]);
     seed_mask2_reagent(&env, 642, 31_002, 4, 3, &[(-2, 5), (4, 15)]);
     assert_mask2_cached_counts(&env, "{{19750, 5}, {642, 4}}");
+}
+
+#[test]
+fn cast_count_mask2_with_empty_candidates_keeps_sum_then_divide_in_cooldown_viewer() {
+    let env = load_selected_consumers(
+        &["Blizzard_CooldownViewer"],
+        "CooldownViewerCooldownItemMixin.CacheChargeValues",
+        "Blizzard_CooldownViewer/CooldownViewer.lua",
+    );
+    seed_mask2_reagent(&env, 19_750, 31_001, 3, 1, &[]);
+    add_bag_stack(&env, 1, 31_001, 7);
+    add_bag_stack(&env, 2, 31_001, 11);
+    assert_mask2_cached_counts(&env, "{{19750, 6}}");
 }
 
 #[test]
