@@ -14,7 +14,7 @@ use crate::lua_api::globals::security::{
 };
 use crate::lua_api::methods::{create_table, registry_get, registry_set, table_get, table_set};
 use crate::screen::ScreenKind;
-use rilua::vm::closure::{Closure, RustClosure};
+use rilua::vm::closure::{Closure, LuaClosure, RustClosure};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
 
@@ -334,7 +334,7 @@ fn publish_to_both(
                 previous_secure,
             )?;
         } else {
-            let secure = separate_flag3_function_object(state, ordinary, flag)?;
+            let secure = separate_flag3_destination_function_object(state, ordinary, flag)?;
             set_member_in_both(state, namespace, member, ordinary, secure, flag)?;
         }
         return Ok(true);
@@ -344,7 +344,7 @@ fn publish_to_both(
             // Public-table cleanup does not revoke a prior secure registration.
             return Ok(true);
         }
-        let ordinary = separate_flag3_function_object(state, secure, flag)?;
+        let ordinary = separate_flag3_destination_function_object(state, secure, flag)?;
         set_member_in_both(state, namespace, member, ordinary, secure, flag)?;
         return Ok(true);
     }
@@ -368,12 +368,15 @@ fn update_changed_dual_handler(
     let destinations = match (ordinary_changed, secure_changed) {
         (true, false) => Some((
             ordinary,
-            separate_flag3_function_object(state, ordinary, flag)?,
+            separate_flag3_destination_function_object(state, ordinary, flag)?,
         )),
-        (false, true) => Some((separate_flag3_function_object(state, secure, flag)?, secure)),
+        (false, true) => Some((
+            separate_flag3_destination_function_object(state, secure, flag)?,
+            secure,
+        )),
         (true, true) | (false, false) if ordinary == secure => Some((
             ordinary,
-            separate_flag3_function_object(state, ordinary, flag)?,
+            separate_flag3_destination_function_object(state, ordinary, flag)?,
         )),
         _ => None,
     };
@@ -523,6 +526,31 @@ fn separate_flag3_function_object(state: &mut LuaState, value: Val, flag: u8) ->
     };
     Ok(Val::Function(
         state.gc.alloc_closure(Closure::Rust(duplicate)),
+    ))
+}
+
+fn separate_flag3_destination_function_object(
+    state: &mut LuaState,
+    value: Val,
+    flag: u8,
+) -> LuaResult<Val> {
+    if !crate::client_profile::is_active_retail_12_1_5() || flag != 3 {
+        return Ok(value);
+    }
+    let value = separate_flag3_function_object(state, value, flag)?;
+    let Val::Function(reference) = value else {
+        return Ok(value);
+    };
+    let duplicate = match state.gc.closures.get(reference) {
+        Some(Closure::Lua(function)) => LuaClosure {
+            proto: function.proto.clone(),
+            upvalues: function.upvalues.clone(),
+            env: function.env.clone(),
+        },
+        _ => return Ok(value),
+    };
+    Ok(Val::Function(
+        state.gc.alloc_closure(Closure::Lua(duplicate)),
     ))
 }
 
