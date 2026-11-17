@@ -1,5 +1,4 @@
-use super::lookups::{find_character_object, read_guid, service_type_for_product};
-use super::pending_error;
+use super::lookups::{find_character_object, service_type_for_product};
 use crate::c_api::c_store_glue;
 use crate::c_api::store_guid::Outcome;
 use crate::c_api::store_vas_model::{StoreVasCompletionInput, StoreVasRequest};

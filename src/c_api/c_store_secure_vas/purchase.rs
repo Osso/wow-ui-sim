@@ -1,7 +1,6 @@
 use super::lookups::{
-    find_character_object, guid_matches, numeric_value, read_guid, read_realm_address,
-    read_secure_argument, read_signed_product_id, read_truthy_argument, service_type_for_product,
-    text_bytes,
+    find_character_object, guid_matches, numeric_value, read_guid, read_secure_argument,
+    read_signed_product_id, read_truthy_argument, service_type_for_product, text_bytes,
 };
 use super::pending_error;
 use crate::c_api::c_store_glue;
