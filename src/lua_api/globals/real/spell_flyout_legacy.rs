@@ -55,12 +55,17 @@ pub(crate) fn signed_integer(number: f64) -> LuaResult<i32> {
 }
 
 #[cfg(feature = "client-retail")]
-fn get_call_pet_spell_info(state: &mut LuaState) -> LuaResult<u32> {
+fn read_call_pet_spell_id(state: &mut LuaState) -> LuaResult<u32> {
     const USAGE: &str = "Usage: GetCallPetSpellInfo(spellID)";
     let value = rilua::table_security::unwrap_secret(state, stack_val(state, 1))
         .map_err(|_| rilua::runtime_error(USAGE))?;
     let number = numeric(state, value).ok_or_else(|| rilua::runtime_error(USAGE))?;
-    let spell_id = signed_integer(number)? as u32;
+    Ok(signed_integer(number)? as u32)
+}
+
+#[cfg(feature = "client-retail")]
+fn get_call_pet_spell_info(state: &mut LuaState) -> LuaResult<u32> {
+    let spell_id = read_call_pet_spell_id(state)?;
     let (index, pet_name) = {
         let model = borrow_state(state)?;
         let Some(index) = model.call_pet_spell_indices.get(&spell_id).copied() else {
