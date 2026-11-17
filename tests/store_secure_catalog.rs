@@ -431,6 +431,10 @@ fn retail_store_response_events_publish_updated_state() {
     .expect("original StoreFrame OnShow consumer must run");
 
     receive_success_responses(&env);
+    env.exec_rilua_secure(
+        "assert(StoreFrame_DoesProductGroupHavePurchasableItems(4101)); assert(StoreFrame_DoesProductGroupHavePurchasableItems(4102)); assert(not StoreFrame_DoesProductGroupHavePurchasableItems(4999))",
+    )
+    .expect("original StoreFrame consumer must map two groups and an absent group to their entries");
     env.exec_rilua_secure("StoreFrame_SetCategory()")
         .expect("original StoreFrame consumer must publish the selected product entries");
     assert_store_frame_products(&env, 4101, ["Host Two", "Host One"]);
