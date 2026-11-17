@@ -21,7 +21,7 @@ publication is not expanded by this change.
 - [x] Populated identity omits zero `id`; later common identity assignments append ordered type-19 rows with `tooltipType`, nonzero-only `tooltipID`, empty left text and supplied left color.
 - [x] Original `ProcessInfo`, GameTooltip line handlers and TooltipUtil retain their payloads; presentation parses inline markup independently.
 - [x] The Retail `GameTooltip:SetItemByID` path emits a type-11 row for a nonzero backed catalog price with empty `leftText`, resolved default `leftColor`, `price`, and `maxPrice = -1` when no prepared quantity input exists. Mapping `ItemInfo.sell_price` to the native initial unit price is **INFERRED**.
-- [ ] Retail `SetBagItem` publishes the seven type-6 fields only from explicit, empty-default host acceptance and snapshot inputs; the native predicate and writer remain UNKNOWN.
+- [x] Retail `SetBagItem` publishes the seven type-6 fields only from explicit, empty-default host acceptance and snapshot inputs; the native predicate and writer remain UNKNOWN.
 
 ### Retail SellPrice behavior (R88p.p1)
 
