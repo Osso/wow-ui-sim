@@ -34,10 +34,6 @@ VERIFIED (source inventory, RED/GREEN, and Mists A/B): [Addon metadata lookup pe
 
 [Addon metadata lookup performance](investigations/addon-metadata-lookup-performance.md) records the per-call TOC key scan behind the Questie Mists startup timeout, the per-TOC case-insensitive index, preserved and changed duplicate-key semantics ([contract](../specs/addon-metadata-lookup.md)), same-host A/B timings, the +200 MiB peak RSS, and the repeated-TOC-parse hotspot left open.
 
-## [2026-11-17] system | Retail StoreSecure VAS
-
-The [VAS system page](systems/store-secure-vas.md) records the empty-default Retail VAS model, typed request state, response ordering, and original StoreUI/GlueXML call sites. **VERIFIED (R88al and tests):** `GetBnetTransferInfo` has a two-value result contract and reaches the original transfer purchase consumer. **UNKNOWN:** the initial native snapshot and context-dependent secret marking.
-
 ## [2026-11-16] revision | Retail StoreSecure consumer RED and notifications
 
 The [StoreSecure system page](systems/store-secure-catalog.md) and [RED proof record](investigations/consumer-selection-and-red-proof.md#retail-storesecure-callable-producer-red) record ColorMixin RGB construction, coalesced purchase updates, and seven callable wrong-producer RED cases through original Store consumers. **INFERRED:** the OnUpdate flush boundary is a simulator policy.
@@ -5072,3 +5068,7 @@ and choice-order boundaries. See the [spec](../specs/character-creation-submit.m
 - 2026-11-13: [Retail TransmogUtil location ownership](investigations/consumer-selection-and-red-proof.md#retail-transmogutil-location-ownership): original startup-cache/consumer preservation; best-item helper and native slot provenance remain separate.
 
 - 2026-11-13: [Retail container parentArray ownership](investigations/consumer-selection-and-red-proof.md#retail-container-parentarray-ownership): original six XML bags and repeated real enumerator membership preserve Retail-only scaffold removal.
+
+## [2026-11-17] system | Retail StoreSecure VAS
+
+The [VAS system page](systems/store-secure-vas.md) records the empty-default Retail VAS model, typed request state, response ordering, and original StoreUI/GlueXML call sites. **VERIFIED (R88al and tests):** `GetBnetTransferInfo` has a two-value result contract and reaches the original transfer purchase consumer. **UNKNOWN:** the initial native snapshot and context-dependent secret marking.

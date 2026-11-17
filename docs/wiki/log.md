@@ -30,10 +30,6 @@ Updated the [investigation](investigations/addon-metadata-lookup-performance.md#
 
 Added the [investigation](investigations/addon-metadata-lookup-performance.md) and [contract](../specs/addon-metadata-lookup.md); updated [[addon-loading]]. **VERIFIED:** `GetAddOnMetadata` reads drop from 892–2,408 µs to 0.47–1.62 µs on the QuestieDB Mists TOC, and Mists startup with Questie completes instead of timing out at 90 s. Case-variant duplicate keys now resolve to the last TOC line instead of random hash order.
 
-## [2026-11-17] system | Retail StoreSecure VAS
-
-Updated the [VAS system page](systems/store-secure-vas.md) with R88al. **VERIFIED (R88al and current-source tests):** Retail `GetBnetTransferInfo` returns the saved GUID and ordered account-name list through the original StoreUI transfer path; two success responses, an error, and a stale response are covered. **UNKNOWN:** the native pre-validation snapshot and context-dependent return-secret marking.
-
 ## [2026-11-16] revision | Retail StoreSecure consumer RED and notifications
 
 Updated the [StoreSecure contract](../specs/store-secure-catalog.md), [system page](systems/store-secure-catalog.md), and [RED proof record](investigations/consumer-selection-and-red-proof.md#retail-storesecure-callable-producer-red). **VERIFIED (R88ad.1):** product override colors use a new `ColorMixin` table with RGB fields only. **VERIFIED (R88ad.2):** purchase-list responses queue and coalesce a zero-payload update. **INFERRED (simulator policy):** the update flushes at the next `fire_on_update_timed` boundary before frame OnUpdate handlers. **VERIFIED (Retail RED):** seven callable wrong-producer selectors fail through original StoreUI or CatalogShop consumers.
@@ -4093,3 +4089,7 @@ Recorded exact historical first-failing boundaries and cache-freshness qualifica
 ## [2026-11-17] system | Retail Glue host state (R88ad.7-10)
 
 Added [Retail Glue host state](systems/glue-host-state.md) for lt-fb68. Retail registers the R88ad.7-10 producers and retires their `shared_bootstrap.lua` defaults; other profiles keep them. The [contract](../specs/glue-state-r88ad.md) separates VERIFIED assertions from the INFERRED `IsTestBuild` change and the UNKNOWN host inputs.
+
+## [2026-11-17] system | Retail StoreSecure VAS
+
+Updated the [VAS system page](systems/store-secure-vas.md) with R88al. **VERIFIED (R88al and current-source tests):** Retail `GetBnetTransferInfo` returns the saved GUID and ordered account-name list through the original StoreUI transfer path; two success responses, an error, and a stale response are covered. **UNKNOWN:** the native pre-validation snapshot and context-dependent return-secret marking.
