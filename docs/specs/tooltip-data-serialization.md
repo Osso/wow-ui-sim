@@ -21,7 +21,7 @@ publication is not expanded by this change.
 - [x] Populated identity omits zero `id`; later common identity assignments append ordered type-19 rows with `tooltipType`, nonzero-only `tooltipID`, empty left text and supplied left color.
 - [x] Original `ProcessInfo`, GameTooltip line handlers and TooltipUtil retain their payloads; presentation parses inline markup independently.
 - [x] The Retail `GameTooltip:SetItemByID` path emits a type-11 row for a nonzero backed catalog price with empty `leftText`, resolved default `leftColor`, `price`, and `maxPrice = -1` when no prepared quantity input exists. Mapping `ItemInfo.sell_price` to the native initial unit price is **INFERRED**.
-- [ ] **VERIFIED (Retail 12.1.5.70688):** on the no-instance path, `maxPrice` uses the prepared maximum quantity only when it exceeds current quantity; the unit-price product wraps at 32 bits. Absent or non-increasing quantity inputs keep `maxPrice = -1`.
+- [x] **VERIFIED (Retail 12.1.5.70688; `pr46-49-decomp-answers.md`, R88p.p1):** on the no-instance path, `maxPrice` uses the prepared maximum quantity only when it exceeds current quantity; the unit-price product wraps at 32 bits. Absent or non-increasing quantity inputs keep `maxPrice = -1`.
 
 ### Retail SellPrice behavior (R88p.p1)
 
@@ -95,7 +95,7 @@ placement contradicts R88n.4b, so no producer changed.
   proves the double-line header publishes the same packed, alpha-free RGB on its right side.
 - `tests/tooltip_d56_serialization.rs`: direct getters and original consumers.
 - `src/c_api/tooltip_data_tests.rs`: nested identity order and present/absent sides.
-- `tests/tooltip_serializer_fields.rs`: selected Retail consumers read top-level repair/pet fields and line-level `price`/`maxPrice`; the original `SetItemByID` path checks the prepared-quantity line value and the arguments received by `GameTooltip_OnTooltipAddMoney`.
+- `tests/tooltip_serializer_fields.rs`: **VERIFIED (Retail 12.1.5.70783 cache):** the selected fixture checks `Blizzard_SharedXMLGame`, `Blizzard_GameTooltip` and `Blizzard_UIPanels_Game`, and checks original source provenance for `SetItemByID`, `TooltipDataRules.SellPrice` and `GameTooltip_OnTooltipAddMoney`. The no-instance selector follows `TooltipDataHandler.lua:525` → `TooltipDataRules.lua:143-149` → `Blizzard_GameTooltip/Mainline/GameTooltip.lua:325-333`; it checks line `maxPrice` and callback arguments.
 - `tests/tooltip_serializer_consumer_output.rs::bag_repair_rule_renders_only_top_level_positive_repair_cost`
   observes only original consumer output: the selected `SetBagItem` accessor and
   `FinalizeItemTooltip` render REPAIR_COST plus the money row for quotes 731 and
