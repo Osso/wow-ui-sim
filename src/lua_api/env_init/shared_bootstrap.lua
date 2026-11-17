@@ -1198,15 +1198,15 @@ do
   end
 end
 
-if IsTestBuild == nil then
-  function IsTestBuild()
-    return true
-  end
-end
-
 -- R88ad.7-10: Retail registers modelled producers (glue_state); other
 -- profiles keep these defaults until their own evidence exists.
 if not retireGlueStateDefaults then
+  if IsTestBuild == nil then
+    function IsTestBuild()
+      return true
+    end
+  end
+
   local __wow_saved_account_name = ""
   local __wow_saved_account_list = ""
   local __wow_uses_token = false

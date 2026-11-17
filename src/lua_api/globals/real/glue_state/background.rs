@@ -10,7 +10,15 @@ const NAME: &str = "GetLoginScreenBackground";
 const USAGE: &str = "Usage: local result = GetLoginScreenBackground(highResFileID, lowResFileID)";
 
 pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
-    LuaApiMut::register_function(state, NAME, get_login_screen_background)
+    LuaApiMut::register_function(state, NAME, get_login_screen_background)?;
+    LuaApiMut::register_function(state, "IsTestBuild", is_test_build)
+}
+
+/// INFERRED (R88ad.9): the 70688 result initialized to false reaches the
+/// Boolean publication; no CVar, server or account input selects it.
+fn is_test_build(state: &mut LuaState) -> LuaResult<u32> {
+    state.push(Val::Bool(false));
+    Ok(1)
 }
 
 fn get_login_screen_background(state: &mut LuaState) -> LuaResult<u32> {

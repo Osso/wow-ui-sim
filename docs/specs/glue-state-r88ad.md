@@ -76,6 +76,11 @@ The 0-to-1 display transition is collapsed by the host into the 2 write.
   It publishes `high` when a native background object accepts it, otherwise `low`;
   an empty object list selects `low`.
 
+- INFERRED (own commit, no test assertion): Retail `IsTestBuild` reads no argument
+  and returns false. VERIFIED parts: it inspects no argument, its result starts
+  false and the publication emits one nonnil Boolean; complete guard traversal is
+  UNKNOWN. Consumers: `AddonCompartment.lua:146`, `GameRulesUtil.lua:63`.
+
 UNKNOWN host input: `GlueHostState::login_background_file_ids`, the high IDs that
 a native background object's file/model helper accepts. Empty by default, so the
 low ID is selected.
@@ -121,7 +126,8 @@ retained kit, audible results, the fade curve and later backend notifications.
 ## Retired defaults
 
 On Retail, `shared_bootstrap.lua` no longer installs its defaults for the
-fourteen R88ad.7, .8, .9 (`GetLoginScreenBackground`) and .10 globals
+fourteen R88ad.7, .8, .9 (`GetLoginScreenBackground`) and .10 globals, and of
+`IsTestBuild` (INFERRED commit),
 (`retireGlueStateDefaults`). Removal is behaviour-neutral: the shared bootstrap
 runs before `register_globals`, whose Retail `glue_state::register` replaced each
 default, and `restore_post_cleanup_globals` only fills nil globals. The unread
