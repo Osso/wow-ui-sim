@@ -4,10 +4,10 @@ The Retail `GetItemLevelColor` global supplies RGB values to the original Paper 
 
 ## What it must do
 
-- [ ] On Retail, ignore its arguments and return three numeric channels in red, green, blue order. Normalize each selected channel through single-precision arithmetic before publication. (R88l.1)
-- [ ] Select `ITEM_EPIC_COLOR` when condition set 24 passes; otherwise select `ITEM_SUPERIOR_COLOR` when condition set 23 passes; otherwise select `ITEM_STANDARD_COLOR`. Condition 24 has priority over condition 23. (R88l.1)
-- [ ] Resolve an active color-provider entry before the selected named color. Return magenta when neither yields RGB channels. (R88l.1)
-- [ ] Treat absent condition-result host inputs as no selected override. This is a neutral simulator input, not proof of the native default condition result.
+- [x] On Retail, ignore its arguments and return three numeric channels in red, green, blue order. Normalize each selected channel through single-precision arithmetic before publication. (R88l.1)
+- [x] Select `ITEM_EPIC_COLOR` when condition set 24 passes; otherwise select `ITEM_SUPERIOR_COLOR` when condition set 23 passes; otherwise select `ITEM_STANDARD_COLOR`. Condition 24 has priority over condition 23. (R88l.1)
+- [x] Resolve an active color-provider entry before the selected named color. Return magenta when neither yields RGB channels. (R88l.1)
+- [x] Treat absent condition-result host inputs as no selected override. This is a neutral simulator input, not proof of the native default condition result.
 
 ## How it works
 
