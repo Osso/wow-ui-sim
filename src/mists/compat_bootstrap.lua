@@ -156,8 +156,19 @@ end
 
 -- ─── Pre-Cata leftover globals that mists kept but retail removed ────────────
 
+-- temporary: fills class token -> localized name from the simulator class
+-- catalog (GetClassInfo). The female-name variant is not modeled; enUS male and
+-- female class names are identical.
 if rawget(_G, "FillLocalizedClassList") == nil then
-  function FillLocalizedClassList(t) return t end
+  function FillLocalizedClassList(t)
+    for classID = 1, GetNumClasses() do
+      local name, token = GetClassInfo(classID)
+      if token then
+        t[token] = name
+      end
+    end
+    return t
+  end
 end
 
 if rawget(_G, "GetActionBarPage") == nil then
