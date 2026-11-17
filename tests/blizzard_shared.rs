@@ -136,6 +136,8 @@ fn env_with_addon_list() -> WowLuaEnv {
         eprintln!("Warning: Failed to load SharedXML: {}", e);
     }
 
+    load_addon_list_panel_globals(&env);
+
     let addon_list_toc = blizzard_toc("Blizzard_AddOnList");
     let result =
         load_addon(&env.loader_env(), &addon_list_toc).expect("Failed to load Blizzard_AddOnList");
@@ -151,6 +153,18 @@ fn env_with_addon_list() -> WowLuaEnv {
     }
 
     env
+}
+
+fn load_addon_list_panel_globals(env: &WowLuaEnv) {
+    for addon in [
+        "Blizzard_GameMenuEsc",
+        "Blizzard_ManagedFrameSystem",
+        "Blizzard_UIParentPanelManager",
+    ] {
+        let toc = blizzard_toc(addon);
+        load_addon(&env.loader_env(), &toc)
+            .unwrap_or_else(|error| panic!("Failed to load {addon}: {error}"));
+    }
 }
 
 #[test]
