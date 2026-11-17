@@ -1,5 +1,5 @@
 local projectForbiddenDelegateArguments, retiredPortraitGlobal,
-  callPrivateProjectionFactory, retireGlueOwnerDefaults = ...
+  callPrivateProjectionFactory, retireGlueOwnerDefaults, retireGlueStateDefaults = ...
 
 local function __wow_public_global_path(path)
   local first, rest = string.match(path, "^([^.]+)%.?(.*)$")
@@ -1198,96 +1198,100 @@ do
   end
 end
 
-if IsTestBuild == nil then
-  function IsTestBuild()
-    return true
-  end
-end
-
-local __wow_saved_account_name = ""
-local __wow_saved_account_list = ""
-local __wow_uses_token = false
-
-if GetSavedAccountName == nil then
-  function GetSavedAccountName()
-    return __wow_saved_account_name
-  end
-end
-
-if SetSavedAccountName == nil then
-  function SetSavedAccountName(accountName)
-    __wow_saved_account_name = accountName or ""
-  end
-end
-
-if GetSavedAccountList == nil then
-  function GetSavedAccountList()
-    return __wow_saved_account_list
-  end
-end
-
-if ClearSavedAccountList == nil then
-  function ClearSavedAccountList()
-    __wow_saved_account_list = ""
-  end
-end
-
-if SetUsesToken == nil then
-  function SetUsesToken(usesToken)
-    __wow_uses_token = not not usesToken
-  end
-end
-
-if WasScreenFirstDisplayed == nil then
-  function WasScreenFirstDisplayed(_screenName)
-    return false
-  end
-end
-
-if GetLoginScreenBackground == nil then
-  function GetLoginScreenBackground(highResBackground, lowResBackground)
-    if highResBackground ~= nil then
-      return highResBackground
+-- R88ad.7-10: Retail registers modelled producers (glue_state); other
+-- profiles keep these defaults until their own evidence exists.
+if not retireGlueStateDefaults then
+  if IsTestBuild == nil then
+    function IsTestBuild()
+      return true
     end
-    return lowResBackground
   end
-end
 
-if GetMinimumExpansionLevel == nil then
-  function GetMinimumExpansionLevel()
-    return 0
+  local __wow_saved_account_name = ""
+  local __wow_saved_account_list = ""
+  local __wow_uses_token = false
+
+  if GetSavedAccountName == nil then
+    function GetSavedAccountName()
+      return __wow_saved_account_name
+    end
   end
-end
 
-if GetServerName == nil then
-  function GetServerName()
-    return nil
+  if SetSavedAccountName == nil then
+    function SetSavedAccountName(accountName)
+      __wow_saved_account_name = accountName or ""
+    end
   end
-end
 
-if IsConnectedToServer == nil then
-  function IsConnectedToServer()
-    return false
+  if GetSavedAccountList == nil then
+    function GetSavedAccountList()
+      return __wow_saved_account_list
+    end
   end
-end
 
-if PlayGlueMusic == nil then
-  function PlayGlueMusic()
+  if ClearSavedAccountList == nil then
+    function ClearSavedAccountList()
+      __wow_saved_account_list = ""
+    end
   end
-end
 
-if StopGlueMusic == nil then
-  function StopGlueMusic()
+  if SetUsesToken == nil then
+    function SetUsesToken(usesToken)
+      __wow_uses_token = not not usesToken
+    end
   end
-end
 
-if PlayGlueAmbience == nil then
-  function PlayGlueAmbience()
+  if WasScreenFirstDisplayed == nil then
+    function WasScreenFirstDisplayed(_screenName)
+      return false
+    end
   end
-end
 
-if StopGlueAmbience == nil then
-  function StopGlueAmbience()
+  if GetLoginScreenBackground == nil then
+    function GetLoginScreenBackground(highResBackground, lowResBackground)
+      if highResBackground ~= nil then
+        return highResBackground
+      end
+      return lowResBackground
+    end
+  end
+
+  if GetMinimumExpansionLevel == nil then
+    function GetMinimumExpansionLevel()
+      return 0
+    end
+  end
+
+  if GetServerName == nil then
+    function GetServerName()
+      return nil
+    end
+  end
+
+  if IsConnectedToServer == nil then
+    function IsConnectedToServer()
+      return false
+    end
+  end
+
+  if PlayGlueMusic == nil then
+    function PlayGlueMusic()
+    end
+  end
+
+  if StopGlueMusic == nil then
+    function StopGlueMusic()
+    end
+  end
+
+  if PlayGlueAmbience == nil then
+    function PlayGlueAmbience()
+    end
+  end
+
+  if StopGlueAmbience == nil then
+    function StopGlueAmbience()
+    end
   end
 end
 

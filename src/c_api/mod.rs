@@ -552,6 +552,11 @@ mod voice_provider_enum;
 pub(crate) mod c_tts_settings;
 mod helpers;
 pub(crate) use helpers::parse_numeric_string;
+#[cfg(feature = "client-retail")]
+pub(crate) use helpers::{
+    bad_argument, read_untainted_signed32_argument, read_untainted_string_argument,
+    read_untainted_truthy_argument, read_untainted_value,
+};
 #[cfg(feature = "retail-12-0-0")]
 mod patch_retired_members;
 #[cfg(feature = "retail-12-0-0")]
