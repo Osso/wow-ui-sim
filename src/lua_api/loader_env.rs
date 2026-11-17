@@ -263,6 +263,11 @@ impl<'a> LoaderEnv<'a> {
     pub fn state(&self) -> &Rc<std::cell::RefCell<SimState>> {
         &self.state
     }
+
+    /// The TOC files parsed in this UI session.
+    pub fn toc_cache(&self) -> Rc<crate::toc::TocCache> {
+        self.state.borrow().toc_cache()
+    }
 }
 
 fn create_generated_args_table(state: &mut LuaState, args: &[GeneratedChunkArg]) -> Result<Val> {

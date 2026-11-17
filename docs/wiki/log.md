@@ -2,6 +2,10 @@
 
 Added the [investigation](investigations/questie-login-bit-library.md) and [contract](../specs/bit-library.md). **VERIFIED:** Lua count-hook sampling put 97.7% of Questie's login-thread instructions in the simulator's Lua `bit` fallback; the native `bit` library returns byte-identical results on a 40,056-call corpus and cuts Mists timer 12 from 12.96–21.92 s to 0.67–1.02 s (longest callback 286–378 ms → 49–101 ms). rilua per-call closure-taint lookups and per-read slot-taint key copies remain; they are proposed, not changed.
 
+## [2026-11-17] fix | Parse each addon TOC once per UI session
+
+Updated the [investigation](investigations/addon-metadata-lookup-performance.md#repeated-toc-parsing-fixed-lt-498d) and added the [TOC session cache contract](../specs/toc-session-cache.md); fixed three lt-45c1 doc nits. **VERIFIED:** stock Blizzard startup and fixture addon lists, metadata, enable state, load traces and `lua-errors` are identical before and after on PTR, Forever, Mists and Retail; Mists Questie third-party pre-load 2.81–4.17 s → 0.33–0.58 s and peak `VmHWM` about −310 MiB.
+
 ## [2026-11-17] investigation | Addon metadata lookup performance
 
 Added the [investigation](investigations/addon-metadata-lookup-performance.md) and [contract](../specs/addon-metadata-lookup.md); updated [[addon-loading]]. **VERIFIED:** `GetAddOnMetadata` reads drop from 892–2,408 µs to 0.47–1.62 µs on the QuestieDB Mists TOC, and Mists startup with Questie completes instead of timing out at 90 s. Case-variant duplicate keys now resolve to the last TOC line instead of random hash order.

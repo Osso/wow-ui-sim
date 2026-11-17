@@ -109,6 +109,7 @@ macro_rules! build_empty_sim_state {
             addons: $collections.addons,
             registered_load_with: ::std::vec::Vec::new(),
             load_with_followers: None,
+            toc_cache: Default::default(),
             addon_saved_enable_state: None,
             addon_saved_version_check_enabled: None,
             system_chat_log: Vec::new(),
