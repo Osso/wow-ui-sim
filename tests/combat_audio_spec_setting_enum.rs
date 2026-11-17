@@ -33,10 +33,11 @@ return "ok"
 fn combat_audio_enum_publication_matches_profile_evidence() {
     let env = WowLuaEnv::new().expect("API enum environment should initialize");
     let actual: String = env.eval(ENUM_ASSERTION).expect("enum should be readable");
-    let expected = if ACTIVE == ClientProfile::Wrath {
-        "absent"
-    } else {
-        "ok"
+    let has_profile_evidence = match ACTIVE {
+        ClientProfile::Retail => cfg!(feature = "client-retail"),
+        ClientProfile::Wrath => false,
+        _ => true,
     };
+    let expected = if has_profile_evidence { "ok" } else { "absent" };
     assert_eq!(actual, expected);
 }
