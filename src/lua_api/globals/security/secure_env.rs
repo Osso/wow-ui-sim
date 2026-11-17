@@ -244,8 +244,12 @@ pub fn create_secure_environment(lua: &mut rilua::Lua) -> LuaResult<()> {
 ///
 /// Non-control reads prefer live secureenv values. Names absent there retain
 /// snapshot behavior; assignments publish to the strict secure environment.
-// temporary: lt-635e
+// temporary: lt-635e. Retail 12.1.5 only; other profiles replay directly in
+// secureenv, as on master (their native behavior is UNKNOWN).
 pub fn create_secure_replay_environment(lua: &mut rilua::Lua) -> LuaResult<()> {
+    if !crate::client_profile::is_active_retail_12_1_5() {
+        return Ok(());
+    }
     if matches!(
         registry_get(lua.state_mut(), "__secureenv_replay"),
         Val::Table(_)
@@ -268,9 +272,14 @@ pub fn create_secure_replay_environment(lua: &mut rilua::Lua) -> LuaResult<()> {
     Ok(())
 }
 
+/// Environment for secure replays and generated secure chunks: the lt-635e
+/// replay proxy on Retail 12.1.5, `__secureenv` itself elsewhere (master).
 pub(crate) fn secure_replay_env_table(
     state: &mut LuaState,
 ) -> LuaResult<rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>> {
+    if !crate::client_profile::is_active_retail_12_1_5() {
+        return secure_env_table(state);
+    }
     match registry_get(state, "__secureenv_replay") {
         Val::Table(table_ref) => Ok(table_ref),
         _ => Err(runtime_error("secure replay environment not initialized")),
