@@ -213,7 +213,8 @@ fn test_addon_list_enable_all_button_has_texture() {
     );
 }
 
-// UNKNOWN (Retail 12.1.5.70783): this injects a nil Group that the native AddOn registry does not supply.
+// UNKNOWN (Retail 12.1.5.70783): this injects nil although the consumer says
+// Group is C++-supplied; reachability of that input is not independently proved.
 #[cfg(feature = "optional-tests")]
 fn run_addon_list_nil_group_probe(env: &WowLuaEnv) -> (bool, String, bool, i32) {
     env.eval(
