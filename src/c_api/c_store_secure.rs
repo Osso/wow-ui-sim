@@ -10,7 +10,8 @@ use rilua::{LuaResult, Val};
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     if ACTIVE == ClientProfile::Retail {
-        return super::c_store_secure_catalog::register(state);
+        super::c_store_secure_catalog::register(state)?;
+        return super::c_store_secure_vas::register(state);
     }
     let namespace = super::ensure_namespace(state, "C_StoreSecure")?;
     table_set_rust_fn_static(state, namespace, "GetProductGroups", get_product_groups)

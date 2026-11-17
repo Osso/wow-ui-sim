@@ -4089,3 +4089,7 @@ Recorded exact historical first-failing boundaries and cache-freshness qualifica
 ## [2026-11-17] system | Retail Glue host state (R88ad.7-10)
 
 Added [Retail Glue host state](systems/glue-host-state.md) for lt-fb68. Retail registers the R88ad.7-10 producers and retires their `shared_bootstrap.lua` defaults; other profiles keep them. The [contract](../specs/glue-state-r88ad.md) separates VERIFIED assertions from the INFERRED `IsTestBuild` change and the UNKNOWN host inputs.
+
+## [2026-11-17] system | Retail StoreSecure VAS
+
+Updated the [VAS system page](systems/store-secure-vas.md) with R88al. **VERIFIED (R88al and current-source tests):** Retail `GetBnetTransferInfo` returns the saved GUID and ordered account-name list through the original StoreUI transfer path; two success responses, an error, and a stale response are covered. **UNKNOWN:** the native pre-validation snapshot and context-dependent return-secret marking.
