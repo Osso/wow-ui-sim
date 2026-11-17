@@ -257,7 +257,11 @@ fn event_listener_index_updates_on_unregisters() {
     registry.register(frame(2, WidgetType::Frame, None, FrameStrata::Medium));
 
     assert!(registry.register_event_listener(1, "PLAYER_LOGIN"));
-    assert!(registry.register_unit_event_listener(1, "UNIT_HEALTH", "player", None));
+    assert!(
+        registry
+            .register_unit_event_listener(1, "UNIT_HEALTH", vec!["player".into()])
+            .0
+    );
     registry.register_all_event_listener(2);
 
     assert!(registry.unregister_event_listener(1, "PLAYER_LOGIN"));

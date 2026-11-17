@@ -31,8 +31,14 @@ pub(super) fn register_event(state: &mut LuaState) -> LuaResult<u32> {
     if newly_registered {
         rilua_hlist_register_individual(state, id, &event)?;
     }
+    let filter_cleared = super::unit_event::native_unit_argument_scan()
+        && borrow_state_mut(state)?
+            .widgets
+            .clear_unit_event_filter(id, &event);
     let restricted = crate::event::is_restricted_event(&event);
-    state.push(Val::Bool(newly_registered && !restricted));
+    state.push(Val::Bool(
+        (newly_registered || filter_cleared) && !restricted,
+    ));
     Ok(1)
 }
 fn insert_registered_event_checked(state: &mut LuaState, id: u64, event: &str) -> LuaResult<bool> {
@@ -49,33 +55,24 @@ pub(super) fn register_unit_event(state: &mut LuaState) -> LuaResult<u32> {
         return Ok(1);
     };
     ensure_registerable_event(state, id, &event)?;
-    let Some(unit) = val_to_string(state, stack_val(state, 3)) else {
-        state.push(Val::Bool(false));
-        return Ok(1);
+    let native = super::unit_event::native_unit_argument_scan();
+    let units = if native {
+        super::unit_event::scan_unit_arguments(state)
+    } else {
+        let Some(units) = super::unit_event::legacy_unit_arguments(state) else {
+            state.push(Val::Bool(false));
+            return Ok(1);
+        };
+        units
     };
-    let newly_registered = register_unit_event_filter(state, id, &event, &unit)?;
+    let (newly_registered, changed) = borrow_state_mut(state)?
+        .widgets
+        .register_unit_event_listener(id, &event, units);
     if newly_registered {
         rilua_hlist_register_individual(state, id, &event)?;
     }
-    state.push(Val::Bool(newly_registered));
+    state.push(Val::Bool(if native { changed } else { newly_registered }));
     Ok(1)
-}
-fn register_unit_event_filter(
-    state: &mut LuaState,
-    id: u64,
-    event: &str,
-    unit: &str,
-) -> LuaResult<bool> {
-    if !super::unit_event::is_valid_unit_filter(unit) {
-        return Ok(borrow_state_mut(state)?
-            .widgets
-            .register_event_listener(id, event));
-    }
-    let second_unit = val_to_string(state, stack_val(state, 4))
-        .filter(|unit| super::unit_event::is_valid_unit_filter(unit));
-    Ok(borrow_state_mut(state)?
-        .widgets
-        .register_unit_event_listener(id, event, unit, second_unit.as_deref()))
 }
 
 pub(super) fn unregister_event(state: &mut LuaState) -> LuaResult<u32> {
@@ -154,7 +151,7 @@ pub(super) fn is_event_registered(state: &mut LuaState) -> LuaResult<u32> {
         .unwrap_or(false);
     let unit = frame
         .and_then(|frame| frame.registered_unit_events.get(&event))
-        .map(|(first, _)| first.clone());
+        .and_then(|units| units.first().cloned());
     drop(sim);
     state.push(Val::Bool(registered));
     super::unit_event::push_registered_unit(state, unit.as_deref());
