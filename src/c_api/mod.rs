@@ -505,6 +505,7 @@ pub use c_ping_texture_kits::PingTextureKits;
 mod c_cvar_readiness;
 pub mod c_loss_of_control;
 mod combat_audio_enabled;
+pub(crate) mod combat_audio_spec_setting_enum;
 #[cfg(not(feature = "client-wrath"))]
 mod combat_audio_throttle;
 #[cfg(feature = "client-mists")]

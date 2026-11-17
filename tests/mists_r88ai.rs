@@ -1,5 +1,6 @@
 #![cfg(feature = "client-mists")]
 
+use crate::common::lua_error_assertions::assert_lua_error_contains;
 use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
 use wow_ui_sim::lua_api::WowLuaEnv;
 
@@ -119,56 +120,29 @@ fn unloaded_alert_settings_read_zero_and_reject_writes() {
     assert_eq!(results, "0,0,0,0,0,0,0,0,0,false");
 }
 
-fn read_lua_error(env: &WowLuaEnv, call: &str) -> String {
-    env.eval(&format!(
-        "local ok, err = pcall(function() {call} end); assert(not ok); return err"
-    ))
-    .expect("pcall should return the Lua error")
-}
-
-fn spec_setting_error_cases() -> [(&'static str, String); 7] {
-    let get = "C_CombatAudioAlert.GetSpecSetting";
-    let set = "C_CombatAudioAlert.SetSpecSetting";
-    [
-        (
-            "C_CombatAudioAlert.GetSpecSetting()",
-            format!("bad argument #1 to '{get}' ({GET_USAGE})"),
-        ),
-        (
-            "C_CombatAudioAlert.GetSpecSetting(9)",
-            format!("bad argument #1 to '{get}' ({GET_USAGE})"),
-        ),
-        (
-            "C_CombatAudioAlert.GetSpecSetting('x')",
-            format!("bad argument #1 to '{get}' ({GET_USAGE})"),
-        ),
-        (
-            "C_CombatAudioAlert.GetSpecSetting(2147483648)",
-            format!(
-                "bad argument #1 to '{get}' (integer overflow attempting to store 2147483648.000000)"
-            ),
-        ),
-        (
-            "C_CombatAudioAlert.SetSpecSetting(9, 0)",
-            format!("bad argument #1 to '{set}' ({SET_USAGE})"),
-        ),
-        (
-            "C_CombatAudioAlert.SetSpecSetting(8)",
-            format!("bad argument #2 to '{set}' ({SET_USAGE})"),
-        ),
-        (
-            "C_CombatAudioAlert.SetSpecSetting(8, 2147483648)",
-            format!(
-                "bad argument #2 to '{set}' (outside of expected range -2147483648 to 2147483647 - {SET_USAGE})"
-            ),
-        ),
-    ]
-}
+const SPEC_SETTING_ERROR_CASES: &[(&str, &[&str])] = &[
+    ("C_CombatAudioAlert.GetSpecSetting()", &[GET_USAGE]),
+    ("C_CombatAudioAlert.GetSpecSetting(9)", &[GET_USAGE]),
+    ("C_CombatAudioAlert.GetSpecSetting('x')", &[GET_USAGE]),
+    (
+        "C_CombatAudioAlert.GetSpecSetting(2147483648)",
+        &["integer overflow attempting to store"],
+    ),
+    ("C_CombatAudioAlert.SetSpecSetting(9, 0)", &[SET_USAGE]),
+    ("C_CombatAudioAlert.SetSpecSetting(8)", &[SET_USAGE]),
+    (
+        "C_CombatAudioAlert.SetSpecSetting(8, 2147483648)",
+        &[
+            "outside of expected range -2147483648 to 2147483647",
+            SET_USAGE,
+        ],
+    ),
+];
 
 #[test]
-fn spec_setting_errors_match_mists_contract() {
+fn spec_setting_errors_contain_verified_mists_text() {
     let env = WowLuaEnv::new().expect("Mists C API should initialize");
-    for (call, expected) in spec_setting_error_cases() {
-        assert_eq!(read_lua_error(&env, call), expected, "{call}");
+    for &(call, fragments) in SPEC_SETTING_ERROR_CASES {
+        assert_lua_error_contains(&env, call, fragments);
     }
 }

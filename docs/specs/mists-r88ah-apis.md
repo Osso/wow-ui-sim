@@ -1,6 +1,6 @@
 # Mists R88ah C APIs
 
-This spec covers Mists-only `C_CombatAudioAlert.IsEnabled` and `C_Spell.GetVisibilityInfo` in `src/c_api/mists_r88ah.rs`. The native answer is `~/.local/state/wow-ui-sim/handoff/pr46-49-decomp-answers.md`, section `R88ah`.
+This spec covers Mists-only `C_CombatAudioAlert.IsEnabled` and `C_Spell.GetVisibilityInfo` in `src/c_api/mists_r88ah.rs`. The native answer is `pr46-49-decomp-answers.md` (untracked decomp handoff), section `R88ah`.
 
 ## What it must do
 
@@ -8,7 +8,7 @@ This spec covers Mists-only `C_CombatAudioAlert.IsEnabled` and `C_Spell.GetVisib
 - [ ] **VERIFIED (R88ah, Mists 5.5.4.70631):** `IsEnabled()` returns false when the internal alert-state gate is off. The gate stays on by default, and tests do not assert it or map audio failures to it.
 - [x] **VERIFIED (R88ah, Mists 5.5.4.70631):** `GetVisibilityInfo(spellID, visibilityType)` requires two non-nil arguments, accepts number-like strings, truncates fractions toward zero, and reduces the second value modulo 256 before accepting only values `0`, `1`, and `2`.
 - [x] **VERIFIED (R88ah, Mists 5.5.4.70631):** with an active player, `GetVisibilityInfo` returns three booleans; a missing spell/type record returns `false, false, false`. Without an active player it returns zero values.
-- [x] **VERIFIED (R88ah, Mists 5.5.4.70631):** usage, range, integer-overflow, and tainted secret-argument failures use the tested exact messages.
+- [x] **VERIFIED (R88ah, Mists 5.5.4.70631):** usage, range, integer-overflow, and tainted secret-argument failures include the verified usage or diagnostic text. Tests do not assert caller-name prefixes or `%f` rendering, which depend on runtime call information and formatting.
 - [x] **INFERRED (70631 evidence applied to the 70268 Mists cache):** the Mists registration is enabled because the cached declarations and visibility enum values match. Native behavior on 70268 was not verified.
 
 ## How it works
