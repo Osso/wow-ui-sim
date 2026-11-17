@@ -128,12 +128,29 @@ mod tests {
             "implemented flag-3 members are missing from secure C_StoreSecure: {missing_members:?}"
         );
 
-        env.exec_rilua_secure("SecureStoreProductListResult = C_StoreSecure.GetProductList()")
-            .expect("secure Store UI can call the simulated product-list API");
+        let request_count_before = env
+            .state()
+            .borrow()
+            .store_glue
+            .store_secure
+            .product_list_request_count;
+        env.exec_rilua_secure(
+            "SecureStoreProductListResultCount = select('#', C_StoreSecure.GetProductList())",
+        )
+        .expect("secure Store UI can call the simulated product-list API");
 
-        let result: bool = env
-            .eval("return rawget(__secureenv, 'SecureStoreProductListResult') == true")
-            .expect("secure product-list result should be readable");
-        assert!(result);
+        let result_count: u32 = env
+            .eval("return rawget(__secureenv, 'SecureStoreProductListResultCount')")
+            .expect("secure product-list result count should be readable");
+        assert_eq!(result_count, 0, "product-list request returns no values");
+        assert_eq!(
+            env.state()
+                .borrow()
+                .store_glue
+                .store_secure
+                .product_list_request_count,
+            request_count_before.wrapping_add(1),
+            "secure product-list request should update the host model"
+        );
     }
 }
