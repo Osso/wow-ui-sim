@@ -18,19 +18,22 @@ Retail `C_StoreSecure` VAS support uses explicit host inputs and the existing St
 
 ### Response order
 
-- **VERIFIED (simulator source and tests):** a correlated BNet success replaces the account map before the validation event; an error sends its numeric code without replacing the map; a stale sequence does nothing.
+- **VERIFIED (simulator source and tests):** a correlated BNet success replaces the saved GUID, ordered account-name list, and account map before the validation event; an error sends its numeric code without replacing them; a stale sequence does nothing.
 - **VERIFIED (simulator source and tests):** guild-master and guild-follow callbacks update their cached records before sending their respective events.
 - **VERIFIED (simulator source and tests):** completion lookup publishes only supplied product and character data. A missing character can prepare a follow-up request. Failure acknowledgement clears the active marker; external transaction ID clearing removes only the supplied value.
 
-### Unknown native seam
+### BNet transfer-info results
 
-- **VERIFIED (pinned Retail 12.1.5.70783 UI):** `Blizzard_Shared_StoreUISecure.lua` calls `GetBnetTransferInfo` near lines 3995 and 4115. One caller assigns the first result to `bnetAccountGUID`; another assigns the second result to `gameAccounts`. These assignments show caller use, not the native result contract.
-- **VERIFIED (simulator source):** Retail sets `modeledStoreVas`, so the runtime-bootstrap VAS fallback is skipped; `src/c_api/` has no `GetBnetTransferInfo` registration.
-- **UNKNOWN (R88al pending):** its native arguments, result values, backing source, events, and clearing rules remain unresolved. Do not infer behavior from the caller variable names or include the cross-BNet purchase path in the parity claim.
+- **VERIFIED (R88al, Retail 12.1.5.70688):** `GetBnetTransferInfo` reads no arguments, has no Usage text, and returns exactly two values on a normal call: a saved GUID string or nil, then a one-based table of account-name strings. Empty GUIDs publish nil; an empty account list publishes an empty table.
+- **VERIFIED (pinned Retail 12.1.5.70783 UI):** `Blizzard_Shared_StoreUISecure.lua` calls the getter near lines 3995 and 4115. The transfer purchase path uses the first result as `bnetAccountGUID`; the account dropdown uses the second result as `gameAccounts`.
+- **VERIFIED (simulator source and test):** Retail registers the getter in `src/c_api/`; the existing validation-response seam updates its saved GUID and ordered account names before success notification. Matching errors and stale responses do not replace the snapshot.
+- **VERIFIED (R88al al4):** a new validation request does not clear the snapshot; the examined direct-reference writer scan found no cancel or completion clear. **UNKNOWN:** the scan does not exclude writes through indirect aliases.
+- **UNKNOWN (R88al):** the native initial snapshot before validation is not established. The simulator uses an empty-default host input and does not infer initial server values.
+- **VERIFIED (R88al):** return-secret policy depends on publication and execution context. This test lane does not assert secret marking; the source-marker-to-taint interpretation remains INFERRED.
 
 ### Tests
 
-**VERIFIED (test source):** `tests/store_secure_vas.rs` covers explicit lookup rows and row fields, ordering, empty and absent values, product-type mapping, correlated responses, original account/guild/StoreUI consumers, purchase preparation, and completion. The contract lists the tests for each API group.
+**VERIFIED (test source):** `tests/store_secure_vas.rs` covers explicit lookup rows and row fields, ordering, empty and absent values, product-type mapping, correlated responses, the original BNet transfer consumer, validation-request snapshot persistence, account/guild/StoreUI consumers, purchase preparation, and completion. The contract lists the tests for each API group.
 
 ## Sources
 
@@ -42,7 +45,7 @@ Retail `C_StoreSecure` VAS support uses explicit host inputs and the existing St
 - `src/c_api/c_store_secure.rs` and `src/c_api/mod.rs` — Retail surface selection and module registration.
 - `src/lua_api/env_init/bootstrap.rs` — selects the Retail VAS model.
 - `src/lua_api/env_init/runtime_surface_bootstrap.lua` — non-Retail compatibility path.
-- Native evidence: R88ad.3–6 and R88g.3.q1 in the private task handoff; R88g.3.q1 establishes registration only. R88al remains pending for `GetBnetTransferInfo`. Consumer sources are from the pinned Retail 12.1.5.70783 cache.
+- Native evidence: R88ad.3–6, R88g.3.q1, and R88al in the private task handoff. Consumer sources are from the pinned Retail 12.1.5.70783 cache.
 
 ## See Also
 

@@ -25,6 +25,7 @@ const MEMBERS: &[Member] = &[
         "GetWoWAccountGUIDFromName",
         lookups::get_wow_account_guid_from_name,
     ),
+    ("GetBnetTransferInfo", lookups::get_bnet_transfer_info),
     (
         "GetEligibleRacesForVASService",
         lookups::get_eligible_races_for_vas_service,

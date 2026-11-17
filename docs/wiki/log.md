@@ -8,7 +8,7 @@ Added the [investigation](investigations/addon-metadata-lookup-performance.md) a
 
 ## [2026-11-17] system | Retail StoreSecure VAS
 
-Added the [VAS system page](systems/store-secure-vas.md), which records the empty-default Retail model and original consumer paths. **VERIFIED (simulator source and tests):** Retail uses typed VAS requests, response callbacks update state before events, and selected StoreUI/account consumers reach the modeled methods. **UNKNOWN (R88al pending):** `GetBnetTransferInfo` native semantics remain unresolved; no cross-BNet result is guessed.
+Updated the [VAS system page](systems/store-secure-vas.md) with R88al. **VERIFIED (R88al and current-source tests):** Retail `GetBnetTransferInfo` returns the saved GUID and ordered account-name list through the original StoreUI transfer path; two success responses, an error, and a stale response are covered. **UNKNOWN:** the native pre-validation snapshot and context-dependent return-secret marking.
 
 ## [2026-11-16] revision | Retail StoreSecure consumer RED and notifications
 

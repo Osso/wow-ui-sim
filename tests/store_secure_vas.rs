@@ -12,6 +12,14 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
 
 const NAME_CHANGE_SERVICE_TYPE: u8 = 0;
+const CHARACTER_TRANSFER_PRODUCT_TYPE: u32 = 15;
+const FIRST_BNET_TRANSFER_GUID: &str = "BNetAccount-0-0000002A";
+const SECOND_BNET_TRANSFER_GUID: &str = "BNetAccount-7-000000010000002A";
+const FIRST_BNET_TRANSFER_ACCOUNTS: &[(&[u8], &str)] = &[
+    (b"WoW2", "WowAccount-2002-2"),
+    (b"WoW3", "WowAccount-3003-3"),
+];
+const SECOND_BNET_TRANSFER_ACCOUNTS: &[(&[u8], &str)] = &[(b"WoW3", "WowAccount-3003-3")];
 const TEST_SPARSE_CHARACTER_REALM_ADDRESS: u32 = 404;
 const TEST_SPARSE_CHARACTER_GUID: &str = "Player-404-1-1";
 
@@ -299,6 +307,73 @@ const VAS_PURCHASE_CONSUMER: &str = r#"
     selectors.NewCharacterName:SetText("Renamedhero")
     continue(selectors.ContinueButton)
     assert(not selectors.ContinueButton:IsShown() and selectors.Spinner:IsShown(), "accepted purchase should enter the original waiting state")
+"#;
+
+const BNET_TRANSFER_INFO_CONSUMER_SETUP: &str = r#"
+    local function lookup(name)
+        return _G[name] or (__secureenv and rawget(__secureenv, name))
+    end
+    local panel = lookup("StoreVASValidationFrame")
+    lookup("StoreFrame_SetSelectedEntryID")(1003)
+    lookup("StoreVASValidationFrame_GetProductInfo")(panel)
+    panel.productInfo.sharedData.vasServiceType = lookup("Enum").VasServiceType.CharacterTransfer
+    panel.productInfo.sharedData.canChangeBNetAccount = true
+    lookup("StoreVASValidationFrame_Init")(panel)
+    panel:Show()
+    local selectors = panel.CharacterSelectionFrame
+    local store = lookup("C_StoreSecure")
+    lookup("VASCharacterSelectionRealmSelector_Callback")(store.GetRealmList()[1])
+    lookup("VASCharacterSelectionCharacterSelector_Callback")(1)
+    selectors.TransferAccountCheckbox:SetChecked(true)
+    lookup("TransferAccountCheckbox_OnClick")(selectors.TransferAccountCheckbox)
+    local differentBnet = lookup("BLIZZARD_STORE_VAS_DIFFERENT_BNET")
+    assert(differentBnet ~= nil, "BNet transfer selector should be available")
+    lookup("VASCharacterSelectionTransferAccountDropdown_Callback")(differentBnet)
+    STORE_VAS_BNET_SELECTORS = selectors
+    STORE_VAS_BNET_CONTINUE = lookup("VASCharacterSelectionContinueButton_OnClick")
+    STORE_VAS_BNET_TEXT_CHANGED = lookup("VASCharacterSelectionTransferBattlenetAccountEditbox_OnTextChanged")
+    STORE_VAS_BNET_ACCOUNT_SELECTED = lookup("VASCharacterSelectionTransferBnetWoWAccountDropdown_Callback")
+    local source = debug.getinfo(STORE_VAS_BNET_CONTINUE, "S").source
+    assert(source:find("Blizzard_Shared_StoreUISecure.lua", 1, true), "Retail transfer consumer must be selected")
+    STORE_VAS_BNET_TRANSFER_EVENTS = {}
+    local observer = CreateFrame("Frame")
+    observer:RegisterEvent("VAS_TRANSFER_VALIDATION_UPDATE")
+    observer:SetScript("OnEvent", function(_, _, ...)
+        local errorCode = ...
+        local guid, accounts = store.GetBnetTransferInfo()
+        table.insert(STORE_VAS_BNET_TRANSFER_EVENTS, {
+            count = select('#', ...),
+            errorType = type(errorCode),
+            errorCode = errorCode,
+            guid = guid,
+            accountNames = table.concat(accounts, "|"),
+            accountCount = #accounts,
+        })
+    end)
+    assert(select('#', store.GetBnetTransferInfo("ignored", false)) == 2, "getter should ignore supplied arguments")
+    local guid, accounts = store.GetBnetTransferInfo()
+    assert(guid == nil and type(accounts) == "table" and #accounts == 0, "empty host inputs should publish nil and an empty account array")
+    local function installPurchaseProbe(namespace)
+        local original = namespace.PurchaseVASProduct
+        namespace.PurchaseVASProduct = function(productID, characterGuid, newName, oldGuildName, newGuildMasterGuid, destinationRealm, wowAccountGuid, bnetAccountGuid, transferFactionBundle, guildFollow)
+            assert(bnetAccountGuid == STORE_VAS_EXPECTED_BNET_GUID, "original transfer consumer should pass the saved BNet GUID")
+            return original(productID, characterGuid, newName, oldGuildName, newGuildMasterGuid, destinationRealm, wowAccountGuid, bnetAccountGuid, transferFactionBundle, guildFollow)
+        end
+    end
+    local secureStore = __secureenv and rawget(__secureenv, "C_StoreSecure")
+    installPurchaseProbe(store)
+    if secureStore and secureStore ~= store then installPurchaseProbe(secureStore) end
+    STORE_VAS_BNET_START_VALIDATION = function(email)
+        selectors.TransferBattlenetAccountEditbox:SetText(email)
+        STORE_VAS_BNET_TEXT_CHANGED(selectors.TransferBattlenetAccountEditbox)
+        STORE_VAS_BNET_CONTINUE(selectors.ContinueButton)
+        assert(selectors.Spinner:IsShown(), "original transfer consumer should wait for validation")
+    end
+    STORE_VAS_BNET_PURCHASE = function(accountName, expectedGuid)
+        STORE_VAS_EXPECTED_BNET_GUID = expectedGuid
+        STORE_VAS_BNET_ACCOUNT_SELECTED(accountName)
+        STORE_VAS_BNET_CONTINUE(selectors.ContinueButton)
+    end
 "#;
 
 const VAS_COMPLETION_CONSUMER: &str = r#"
@@ -796,6 +871,42 @@ fn retail_store_bnet_error_preserves_account_map_and_notifies_original_selector(
     }
 }
 
+#[test]
+fn retail_store_bnet_transfer_info_uses_original_transfer_consumer() {
+    test_timeout! {
+        let env = load_store_ui();
+        seed_realm_and_character_inputs(&env);
+        crate::common::store_catalog_fixture::seed_vas_catalog(&env);
+        set_character_transfer_product_type(&env);
+        env.state().borrow_mut().store_glue.connection_present = true;
+        apply_callable_wrong_producer_overlay(&env);
+        env.exec(BNET_TRANSFER_INFO_CONSUMER_SETUP)
+            .expect("original character-transfer consumer should initialize");
+        assert_bnet_transfer_snapshot(&env, None, &[]);
+        complete_first_bnet_transfer(&env);
+        complete_second_bnet_transfer(&env);
+        verify_bnet_transfer_error_stale_and_empty_snapshot(&env);
+    }
+}
+
+#[test]
+fn retail_store_bnet_validation_request_preserves_the_transfer_snapshot() {
+    test_timeout! {
+        let env = load_store_ui();
+        env.state().borrow_mut().store_glue.connection_present = true;
+        {
+            let mut sim = env.state().borrow_mut();
+            let vas = &mut sim.store_glue.store_secure.vas;
+            vas.bnet_transfer_guid = Some(FIRST_BNET_TRANSFER_GUID.into());
+            vas.bnet_game_accounts = vec![b"WoW2".to_vec()];
+        }
+        env.exec("C_StoreSecure.ValidateBnetTransfer('new@example.com')")
+            .expect("new validation request should be accepted");
+        assert_bnet_validation_request_at(&env, 1, "new@example.com");
+        assert_bnet_transfer_snapshot(&env, Some(FIRST_BNET_TRANSFER_GUID), &["WoW2"]);
+    }
+}
+
 fn assert_bnet_validation_request(env: &WowLuaEnv) {
     let sim = env.state();
     let store = sim.borrow();
@@ -857,6 +968,213 @@ fn assert_stale_bnet_response_ignored(env: &WowLuaEnv) {
         .eval("return #STORE_VAS_VALIDATION_EVENTS")
         .expect("stale response should not dispatch another event");
     assert_eq!(count, 1);
+}
+
+fn set_character_transfer_product_type(env: &WowLuaEnv) {
+    let mut sim = env.state().borrow_mut();
+    let product = sim
+        .store_glue
+        .store_secure
+        .catalog
+        .products
+        .iter_mut()
+        .find(|product| product.product_id == 2003)
+        .expect("transfer fixture product should exist");
+    product.product_type = Some(CHARACTER_TRANSFER_PRODUCT_TYPE);
+}
+
+fn complete_first_bnet_transfer(env: &WowLuaEnv) {
+    start_original_bnet_validation(env, "first@example.com", 1);
+    receive_bnet_validation_snapshot(
+        env,
+        1,
+        0,
+        FIRST_BNET_TRANSFER_GUID,
+        FIRST_BNET_TRANSFER_ACCOUNTS,
+    );
+    assert_bnet_transfer_event_matches_current_snapshot(env, 1, None);
+}
+
+fn complete_second_bnet_transfer(env: &WowLuaEnv) {
+    start_original_bnet_validation(env, "second@example.com", 2);
+    receive_bnet_validation_snapshot(
+        env,
+        2,
+        0,
+        SECOND_BNET_TRANSFER_GUID,
+        SECOND_BNET_TRANSFER_ACCOUNTS,
+    );
+    assert_bnet_transfer_event_matches_current_snapshot(env, 2, None);
+    purchase_original_bnet_transfer(env, "WoW3", SECOND_BNET_TRANSFER_GUID);
+    assert_bnet_transfer_snapshot(env, Some(SECOND_BNET_TRANSFER_GUID), &["WoW3"]);
+    assert_bnet_transfer_event_snapshot(env, 1, FIRST_BNET_TRANSFER_GUID, &["WoW2", "WoW3"]);
+    assert_bnet_transfer_event_snapshot(env, 2, SECOND_BNET_TRANSFER_GUID, &["WoW3"]);
+}
+
+fn verify_bnet_transfer_error_stale_and_empty_snapshot(env: &WowLuaEnv) {
+    start_bnet_validation_api(env, "third@example.com", 4);
+    receive_bnet_validation_snapshot(
+        env,
+        4,
+        7,
+        "BNetAccount-ignored",
+        &[(b"WoW2", "WowAccount-ignored")],
+    );
+    assert_bnet_transfer_event_matches_current_snapshot(env, 3, Some(7));
+    assert_bnet_transfer_snapshot(env, Some(SECOND_BNET_TRANSFER_GUID), &["WoW3"]);
+    receive_bnet_validation_snapshot(
+        env,
+        2,
+        0,
+        "BNetAccount-stale",
+        &[(b"WoW2", "WowAccount-stale")],
+    );
+    let event_count: i32 = env
+        .eval("return #STORE_VAS_BNET_TRANSFER_EVENTS")
+        .expect("stale response should not dispatch an event");
+    assert_eq!(event_count, 3);
+    assert_bnet_transfer_snapshot(env, Some(SECOND_BNET_TRANSFER_GUID), &["WoW3"]);
+    start_bnet_validation_api(env, "empty@example.com", 5);
+    receive_bnet_validation_snapshot(env, 5, 0, "", &[]);
+    assert_bnet_transfer_event_matches_current_snapshot(env, 4, None);
+    assert_bnet_transfer_snapshot(env, None, &[]);
+}
+
+fn start_original_bnet_validation(env: &WowLuaEnv, email: &str, sequence: u64) {
+    let script = format!("STORE_VAS_BNET_START_VALIDATION({email:?})");
+    env.exec(&script)
+        .expect("original transfer consumer should submit BNet validation");
+    assert_bnet_validation_request_at(env, sequence, email);
+}
+
+fn start_bnet_validation_api(env: &WowLuaEnv, email: &str, sequence: u64) {
+    let script = format!("C_StoreSecure.ValidateBnetTransfer({email:?})");
+    env.exec(&script)
+        .expect("ValidateBnetTransfer should start the host request");
+    assert_bnet_validation_request_at(env, sequence, email);
+}
+
+fn assert_bnet_validation_request_at(env: &WowLuaEnv, sequence: u64, email: &str) {
+    let sim = env.state();
+    let sim = sim.borrow();
+    assert_eq!(sim.store_glue.request_sequence, sequence);
+    let expected = StoreVasRequest::BnetTransferValidation {
+        sequence,
+        account_name: email.as_bytes().to_vec(),
+    };
+    assert!(
+        sim.store_glue
+            .store_secure
+            .vas
+            .submitted_requests
+            .contains(&expected)
+    );
+}
+
+fn receive_bnet_validation_snapshot(
+    env: &WowLuaEnv,
+    sequence: u64,
+    error_code: i32,
+    bnet_guid: &str,
+    accounts: &[(&[u8], &str)],
+) {
+    let accounts = accounts
+        .iter()
+        .map(|(name, guid)| (name.to_vec(), (*guid).to_owned()))
+        .collect();
+    wow_ui_sim::c_api::store_vas_model::receive_bnet_transfer_validation(
+        env,
+        sequence,
+        error_code,
+        bnet_guid.to_owned(),
+        accounts,
+    )
+    .expect("BNet validation response should dispatch through the existing seam");
+}
+
+fn bnet_transfer_snapshot(env: &WowLuaEnv) -> (Option<String>, String, i32) {
+    env.eval("local guid, accounts = C_StoreSecure.GetBnetTransferInfo(); return guid, table.concat(accounts, '|'), #accounts")
+        .expect("GetBnetTransferInfo should return a GUID and account array")
+}
+
+fn assert_bnet_transfer_snapshot(
+    env: &WowLuaEnv,
+    expected_guid: Option<&str>,
+    expected_accounts: &[&str],
+) {
+    let actual = bnet_transfer_snapshot(env);
+    assert_eq!(actual.0.as_deref(), expected_guid);
+    assert_eq!(actual.1, expected_accounts.join("|"));
+    assert_eq!(actual.2, expected_accounts.len() as i32);
+}
+
+fn assert_bnet_transfer_event_snapshot(
+    env: &WowLuaEnv,
+    event_index: usize,
+    expected_guid: &str,
+    expected_accounts: &[&str],
+) {
+    let script = format!(
+        "local event = STORE_VAS_BNET_TRANSFER_EVENTS[{event_index}]; return event.guid, event.accountNames, event.accountCount"
+    );
+    let event: (Option<String>, String, i32) = env
+        .eval(&script)
+        .expect("validation event should snapshot the BNet transfer info");
+    assert_eq!(event.0.as_deref(), Some(expected_guid));
+    assert_eq!(event.1, expected_accounts.join("|"));
+    assert_eq!(event.2, expected_accounts.len() as i32);
+}
+
+fn assert_bnet_transfer_event_matches_current_snapshot(
+    env: &WowLuaEnv,
+    event_index: usize,
+    expected_error: Option<i32>,
+) {
+    let script = format!(
+        "local event = STORE_VAS_BNET_TRANSFER_EVENTS[{event_index}]; return event.count, event.errorType, event.errorCode, event.guid, event.accountNames, event.accountCount"
+    );
+    let event: (i32, String, Option<i32>, Option<String>, String, i32) = env
+        .eval(&script)
+        .expect("validation event observer should record the published snapshot");
+    assert_eq!(event.0, 1);
+    assert_eq!(
+        event.1,
+        if expected_error.is_some() {
+            "number"
+        } else {
+            "nil"
+        }
+    );
+    assert_eq!(event.2, expected_error);
+    let snapshot = bnet_transfer_snapshot(env);
+    assert_eq!(event.3, snapshot.0);
+    assert_eq!(event.4, snapshot.1);
+    assert_eq!(event.5, snapshot.2);
+}
+
+fn purchase_original_bnet_transfer(env: &WowLuaEnv, account_name: &str, expected_guid: &str) {
+    let script = format!("STORE_VAS_BNET_PURCHASE({account_name:?}, {expected_guid:?})");
+    env.exec(&script)
+        .expect("original transfer consumer should forward the saved BNet GUID");
+    let sim = env.state();
+    let sim = sim.borrow();
+    let request = sim
+        .store_glue
+        .store_secure
+        .vas
+        .submitted_requests
+        .iter()
+        .rev()
+        .find(|request| matches!(request, StoreVasRequest::VasPurchase { .. }))
+        .expect("original transfer consumer should submit a VAS purchase");
+    let StoreVasRequest::VasPurchase {
+        bnet_account_guid, ..
+    } = request
+    else {
+        unreachable!("the last VAS request was filtered by its variant");
+    };
+    let expected = Some(crate::c_api::store_guid::parse(expected_guid.as_bytes()));
+    assert_eq!(bnet_account_guid, &expected);
 }
 
 #[test]

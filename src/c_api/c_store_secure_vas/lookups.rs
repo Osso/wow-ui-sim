@@ -12,6 +12,7 @@ use std::cmp::Ordering;
 const GET_CHARACTERS: &str = "GetCharactersForRealm";
 const GET_CHARACTER: &str = "GetCharacterInfoByGUID";
 const GET_ACCOUNT_GUID: &str = "GetWoWAccountGUIDFromName";
+const GET_BNET_TRANSFER_INFO: &str = "GetBnetTransferInfo";
 const GET_ELIGIBLE_RACES: &str = "GetEligibleRacesForVASService";
 const GET_GUILD_INFO: &str = "GetVASGuildMasterInfoForCharacterByGUID";
 const GET_SERVICE_TYPE: &str = "GetVasServiceType";
@@ -80,6 +81,32 @@ pub(super) fn get_wow_account_guid_from_name(state: &mut LuaState) -> LuaResult<
     super::pending_error(state, GET_ACCOUNT_GUID)?;
     push_guid(state, guid.as_deref());
     Ok(1)
+}
+
+pub(super) fn get_bnet_transfer_info(state: &mut LuaState) -> LuaResult<u32> {
+    if c_store_glue::restricted_call(state)? {
+        return Ok(0);
+    }
+    let (guid, game_accounts) = {
+        let vas = &borrow_state(state)?.store_glue.store_secure.vas;
+        (
+            vas.bnet_transfer_guid.clone(),
+            vas.bnet_game_accounts.clone(),
+        )
+    };
+    super::pending_error(state, GET_BNET_TRANSFER_INFO)?;
+    push_guid(state, guid.as_deref());
+    push_bnet_game_accounts(state, &game_accounts);
+    Ok(2)
+}
+
+fn push_bnet_game_accounts(state: &mut LuaState, game_accounts: &[Vec<u8>]) {
+    let result = create_table(state);
+    state.push(result);
+    for (index, account_name) in game_accounts.iter().enumerate() {
+        let account_name = Val::Str(state.gc.intern_string(account_name));
+        helpers::set_table_array(state, result, index as i64 + 1, account_name);
+    }
 }
 
 pub(super) fn get_eligible_races_for_vas_service(state: &mut LuaState) -> LuaResult<u32> {
