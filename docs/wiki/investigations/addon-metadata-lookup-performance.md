@@ -34,10 +34,6 @@ VERIFIED (lt-498d optional-tests and release runs): a per-session TOC cache remo
 
 ## Sources
 
-<!-- Local-only lt-45c1 receipt paths are hidden here; use the portable visible references below.
-- `/home/osso/.local/state/wow-ui-sim/handoff/questie-perf/REPORT.md` — original evidence.
-- `/home/osso/.local/state/wow-ui-sim/handoff/metadata-index/REPORT.md` — overlay proof, gates, A/B runs and profile.
--->
 - [Addon metadata contract](../../specs/addon-metadata-lookup.md) — preserved lookup behavior.
 - [TOC session cache contract](../../specs/toc-session-cache.md) — one read per session and reload boundary.
 - questie-perf and lt-45c1 metadata-index handoff `REPORT.md` files (untracked receipts) — original profile and A/B evidence.
