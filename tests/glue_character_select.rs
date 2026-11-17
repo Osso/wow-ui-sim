@@ -277,6 +277,56 @@ fn forever_name_reservation_reads_feature_status_byte() {
     assert!(enabled);
 }
 
+#[cfg(feature = "client-wowforever")]
+fn seed_name_reservation_consumer_inputs(env: &WowLuaEnv) {
+    env.exec(
+        r#"
+        CharacterSelectUtil.IsAccountLocked = function() return false end
+        GetNumCharacters = function() return 1 end
+        CharacterSelect.undeleting = false
+        CharacterSelect.hasPendingTrialBoost = false
+        AccountReactivationInProgressDialog = { IsShown = function() return false end }
+        GoldReactivateConfirmationDialog = { IsShown = function() return false end }
+        TokenReactivateConfirmationDialog = { IsShown = function() return false end }
+        CharSelectServicesFlowFrame = { ShouldDisableButtons = function() return false end }
+        Kiosk = { IsEnabled = function() return false end }
+        GetCharacterSelection = function() return 1 end
+        GetCharacterGUID = function() return "Player-0000-0000-0000-000000000001" end
+        GetServiceCharacterInfo = function()
+            return { isExpansionTrialCharacter = false, isTrialBoost = false,
+                boostInProgress = false, isRevokedCharacterUpgrade = false }
+        end
+        IsCharacterTimerunning = function() return false end
+        "#,
+    )
+    .unwrap();
+}
+
+#[test]
+#[cfg(feature = "client-wowforever")]
+fn forever_name_reservation_blocks_original_character_select_consumer() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+        let original_consumer: bool = env
+            .eval(
+                r#"local info = debug.getinfo(CharacterSelect_AllowedToEnterWorld, "S")
+                return info and info.source:find("Mainline/CharacterSelect.lua", 1, true) ~= nil"#,
+            )
+            .unwrap();
+        assert!(original_consumer, "name reservation must run through the selected Blizzard consumer");
+        seed_name_reservation_consumer_inputs(&env);
+        wow_ui_sim::lua_api::globals::real::glue_feature_status::deliver_status(
+            &env,
+            wow_ui_sim::lua_api::globals::real::glue_feature_status::GlueFeatureStatus {
+                name_reservation_only: true,
+            },
+        )
+        .unwrap();
+        let can_enter_world: bool = env.eval("return CharacterSelect_AllowedToEnterWorld()").unwrap();
+        assert!(!can_enter_world, "VERIFIED name-reservation state must block the original CharacterSelect consumer");
+    }
+}
+
 #[test]
 #[cfg(feature = "client-wowforever")]
 fn forever_trial_boost_status_defaults_false_on_glue() {
