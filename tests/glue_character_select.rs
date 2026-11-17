@@ -795,6 +795,70 @@ fn retail_does_not_register_super_district_glue_apis() {
     assert!(members_absent);
 }
 
+// INFERRED (R88ak 5.5.4.70631 applied to the 5.5.4.70268 cache): the selected
+// Classic GlueGameLogo consumer exercises the verified getter and event facts.
+#[cfg(feature = "client-mists")]
+#[test]
+fn mists_glue_game_logo_reads_current_mode_host_input() {
+    let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+    assert_mists_game_logo_starts_without_current_mode(&env);
+    assert_mists_game_logo_refreshes_from_current_mode(&env);
+}
+
+#[cfg(feature = "client-mists")]
+fn assert_mists_game_logo_starts_without_current_mode(env: &common::LockedEnv) {
+    let errors: Vec<String> = env
+        .state()
+        .borrow()
+        .lua_errors
+        .iter()
+        .filter(|error| error.contains("GetCurrentGameModeRecordID"))
+        .cloned()
+        .collect();
+    assert!(
+        errors.is_empty(),
+        "GlueGameLogo consumer errors: {errors:#?}"
+    );
+
+    let (returns, getter_is_nil, logo_is_nil): (i32, bool, bool) = env
+        .eval(
+            r#"
+            return select('#', C_GameRules.GetCurrentGameModeRecordID()),
+                C_GameRules.GetCurrentGameModeRecordID() == nil,
+                CharacterSelectLogo.gameModeRecordID == nil
+            "#,
+        )
+        .expect("Mists GlueGameLogo current-mode getter should be callable");
+    assert_eq!(returns, 1);
+    assert!(getter_is_nil && logo_is_nil);
+}
+
+#[cfg(feature = "client-mists")]
+fn assert_mists_game_logo_refreshes_from_current_mode(env: &common::LockedEnv) {
+    env.exec(
+        r##"
+        gameModeUpdates = 0
+        gameModeUpdateArgs = -1
+        local listener = CreateFrame("Frame")
+        listener:RegisterEvent("GAME_MODE_DISPLAY_INFO_UPDATED")
+        listener:SetScript("OnEvent", function(_, _, ...)
+            gameModeUpdates = gameModeUpdates + 1
+            gameModeUpdateArgs = select("#", ...)
+        end)
+        SetCVar("currentGameMode", "17")
+        assert(select("#", C_GameRules.GetCurrentGameModeRecordID()) == 1)
+        assert(C_GameRules.GetCurrentGameModeRecordID() == 17)
+        assert(CharacterSelectLogo.gameModeRecordID == 17)
+        assert(gameModeUpdates == 1 and gameModeUpdateArgs == 0)
+        SetCVar("currentGameMode", "-1")
+        assert(C_GameRules.GetCurrentGameModeRecordID() == nil)
+        assert(CharacterSelectLogo.gameModeRecordID == nil)
+        assert(gameModeUpdates == 2 and gameModeUpdateArgs == 0)
+        "##,
+    )
+    .expect("Mists GlueGameLogo should refresh from the current-mode host input");
+}
+
 // UNKNOWN (R88ak pending, Mists 5.5.4.70268): wait for the original Glue
 // game-mode record behavior before accepting this startup result.
 #[cfg(not(feature = "client-mists"))]
