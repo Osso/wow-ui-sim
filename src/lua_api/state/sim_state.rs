@@ -615,6 +615,9 @@ pub struct SimState {
     pub totem_slots: Vec<Option<crate::lua_api::globals::real::totems::Totem>>,
     pub weapon_enchants: [Vec<crate::c_api::weapon_enchants::WeaponEnchant>; 3],
     pub sound_manager: Option<SoundManager>,
+    /// UNKNOWN: audio-failure mapping to the native gate; neutral on by default.
+    #[cfg(feature = "client-mists")]
+    pub(crate) mists_combat_audio_alert_state_gate: bool,
     pub last_sound_kit_requested: Option<u32>,
     /// Last formatted Wrath UI error requested by the modeled quest feedback path.
     #[cfg(feature = "client-wrath")]

@@ -1,5 +1,6 @@
--- Strict-namespace exemptions; modeled Store catalog registration is separate.
-local classicCombat, forever, vanilla, modeledStoreGlue, modeledStoreCatalog = ...
+-- Single publication-scoped exemption inventory; modeled Store catalog registration is separate.
+local classicCombat, forever, vanilla, modeledStoreGlue, modeledStoreCatalog,
+  retirePveFrameBridge, retireGlueOwnerDefaults = ...
 local strictNamespaces = {}
 if classicCombat then
   strictNamespaces.C_CombatText = true
@@ -1268,7 +1269,7 @@ local function __wow_patch_map_canvas_scroll_container_methods()
   __wow_map_canvas_scroll_container_patched = true
 end
 
-if rawget(_G, "PVEFrame_ToggleFrame") == nil then
+if not retirePveFrameBridge and rawget(_G, "PVEFrame_ToggleFrame") == nil then
   function PVEFrame_ToggleFrame(...)
     local loadAddOn = C_AddOns and C_AddOns.LoadAddOn
     if type(loadAddOn) == "function" then
@@ -1424,7 +1425,7 @@ rawset(_G, "__wow_patch_fog_of_war_pin_methods", __wow_patch_fog_of_war_pin_meth
 
 AUTOCOMPLETE_LIST = AUTOCOMPLETE_LIST or {}
 AUTOCOMPLETE_LIST.ADDFRIEND = AUTOCOMPLETE_LIST.ADDFRIEND or {}
-if type(setprinthandler) ~= "function" then
+if not retireGlueOwnerDefaults and type(setprinthandler) ~= "function" then
   function setprinthandler() end
 end
 

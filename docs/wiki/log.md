@@ -6,9 +6,21 @@ Updated the [StoreSecure contract](../specs/store-secure-catalog.md), [system pa
 
 Added the Retail catalog state contract and system page. **VERIFIED (R88ad.1/R88ad.2, Retail 12.1.5.70688):** catalog readers, availability/list writers, currency lookup, and request limits have explicit native behavior. **VERIFIED (simulator source):** unknown runtime rows remain empty host inputs, and only Retail selects the new model; uncovered profiles retain bootstrap behavior. The pinned 12.1.5.70783 StoreUI and CatalogShop consumers remain unchanged. The verified `GetEntryInfo.alreadyOwned` snapshot behavior is recorded in the [contract](../specs/store-secure-catalog.md) and [system page](systems/store-secure-catalog.md).
 
+## [2026-11-16] investigation | Limited listfile reproducibility
+
+Added the [investigation](investigations/limited-listfile-reproducibility.md) and [contract](../specs/limited-listfile-reproducibility.md). Current-master generation is byte-identical from the recovered, checksum-matching 202611141741 source; source/override/request/output drift now fails before writing. The coordinator confirmed the PR33 report did not retain row texts or source identity: the six original rows are UNRECOVERABLE and unpinned input drift is an INFERRED cause, distinct from the verified pinned-source reproduction.
+
 ## [2026-11-15] fix | Retail Blizzard UI cache provenance
 
 Updated the [cache system page](systems/casc-asset-cache.md#blizzard-ui-source-cache) and [CASC loading contract](../specs/casc-loading.md#pinned-blizzard-ui-source-cache). **VERIFIED (source and tests):** Retail and PTR share one exact provenance comparison against their active pin; mismatch excludes the cache and normal startup follows the existing sync path. Synthetic temp-cache tests cover matching 70783, stale 70575, and missing provenance. Other profiles retain their existing selection behavior.
+
+## [2026-11-16] verification | Retail Glue login verifier remediation
+
+Updated the [consumer-selection investigation](investigations/consumer-selection-and-red-proof.md), [lifecycle system page](systems/glue-login-lifecycle.md), [Glue login contract](../specs/glue-login-flow.md), and this index. **VERIFIED (code/test source `74ffa9dca6ee7993a184c5a66b244232b8645f6a`):** P1 projection and constant-true pending-getter mutants fail in direct 74 runs; the no-op Disconnect mutant fails in historical runs at `94e338f0cedfee6a14c88d6f5736d936ccb1fa6b`. Its three test bodies, disconnect fixture helpers, and production implementation are byte-identical through 74, so the RED is source-equivalent, not direct 74 execution. Six exact integration tests and the cleanup unit pass. The five-profile compile matrix completes with zero warnings; Retail `lua-errors` returns `[]`. **UNKNOWN:** native cancellation initialization/reset and native initial completion-state value.
+
+## [2026-11-16] system | Retail Glue login lifecycle — previous candidate evidence
+
+Created [the Retail Glue login lifecycle page](systems/glue-login-lifecycle.md). **VERIFIED (previous candidate, Retail 12.1.5.70783 runtime):** the original CharacterSelect consumers passed with their producers and failed inside original calls under a registration mutation; the full state-cleanup unit test passed; the five-profile compile matrix had zero warnings; and the StoreGlue missing-Disconnect expected-error boundary was replaced by a passing exact consumer test. This older test source does not replace the current verifier remediation gates. Native 70688 cache equivalence and the initial completion-state value remain UNKNOWN.
 
 ## [2026-11-15] revision | Retail Blizzard UI 70783 CDN metadata
 
@@ -4037,3 +4049,7 @@ assertions and retired simulator fallbacks are unchanged.
 ## 2026-11-15 | lt-67d2 spell-count R88p correction
 
 Recorded exact historical first-failing boundaries and cache-freshness qualification; linked native R88k/R88p width, reagent/storage and error evidence to the corrected API tests and explicit UNKNOWN seams.
+
+## [2026-11-15] investigation | R88aa Retail Glue consumers
+
+[Consumer selection and RED proof](investigations/consumer-selection-and-red-proof.md#retail-glue-login-consumers-and-pending-list-cache-call-site-r88aa) records the selected 70783 Mainline Glue source and exact original-call REDs at CharacterSelect.lua:211 and :697. **INFERRED (R88aa):** the cached pending getter call sites correspond to Retail 70688; exact cached-source equivalence remains UNKNOWN. The [Glue login contract](../specs/glue-login-flow.md#r88aa-cached-retail-characterselect-call-site-inferred) keeps that boundary separate from the verified native API behavior.

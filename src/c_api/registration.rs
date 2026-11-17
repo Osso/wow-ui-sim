@@ -37,6 +37,9 @@ pub(crate) fn register_spell_and_widget_tables(state: &mut LuaState) -> LuaResul
     #[cfg(feature = "client-wowforever")]
     super::forever_finite_constants::register(state);
     c_spell::register_c_spell_surface(state)?;
+    // INFERRED: R88ah's 70631 behavior applies to the 70268 declarations and enum.
+    #[cfg(feature = "client-mists")]
+    super::mists_r88ah::register_spell_visibility(state)?;
     #[cfg(feature = "retail-12-0-5")]
     super::c_mount_spell_lookup::register(state)?;
     #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
@@ -81,6 +84,14 @@ pub(crate) fn register_character_progression_tables(state: &mut LuaState) -> Lua
 }
 
 pub(crate) fn register_interaction_tables(state: &mut LuaState) -> LuaResult<()> {
+    register_interaction_store_voice(state)?;
+    register_interaction_combat(state)?;
+    register_interaction_crafting(state)?;
+    register_interaction_social_log(state)?;
+    register_interaction_appearance(state)
+}
+
+fn register_interaction_store_voice(state: &mut LuaState) -> LuaResult<()> {
     super::c_account_info::register(state)?;
     super::c_dungeon_score_rarity::register(state)?;
     super::c_quest_offer::register(state)?;
@@ -91,6 +102,10 @@ pub(crate) fn register_interaction_tables(state: &mut LuaState) -> LuaResult<()>
     super::c_voice_chat_activity::register(state)?;
     super::c_voice_chat_settings::register(state)?;
     super::c_voice_chat_devices::register(state)?;
+    Ok(())
+}
+
+fn register_interaction_combat(state: &mut LuaState) -> LuaResult<()> {
     #[cfg(feature = "retail-12-0-0")]
     super::c_voice_chat_volume::register(state)?;
     #[cfg(feature = "retail-12-0-0")]
@@ -105,12 +120,19 @@ pub(crate) fn register_interaction_tables(state: &mut LuaState) -> LuaResult<()>
         super::c_limited_input::register(state)?;
     }
     super::combat_audio_enabled::register(state)?;
+    // INFERRED: R88ah's 70631 behavior applies to the 70268 Mists cache.
+    #[cfg(feature = "client-mists")]
+    super::mists_r88ah::register_combat_audio_alert(state)?;
     #[cfg(feature = "retail-12-0-0")]
     super::c_combat_audio_alert::register(state)?;
     #[cfg(feature = "retail-12-0-0")]
     super::c_combat_text::register(state)?;
     #[cfg(feature = "retail-12-0-0")]
     super::c_encounter_warnings::register_settings(state)?;
+    Ok(())
+}
+
+fn register_interaction_crafting(state: &mut LuaState) -> LuaResult<()> {
     super::c_trade_skill_cooldown::register(state)?;
     super::c_trade_skill_crafting_ui::register(state)?;
     super::c_trade_skill_favorites::register(state)?;
@@ -134,6 +156,10 @@ pub(crate) fn register_interaction_tables(state: &mut LuaState) -> LuaResult<()>
     super::c_neighborhood_initiative::register(state)?;
     super::c_trade_info::register(state)?;
     super::c_roleset::register(state)?;
+    Ok(())
+}
+
+fn register_interaction_social_log(state: &mut LuaState) -> LuaResult<()> {
     if cfg!(all(
         feature = "retail-12-0-5",
         any(feature = "profile-retail", feature = "client-ptr")
@@ -155,6 +181,10 @@ pub(crate) fn register_interaction_tables(state: &mut LuaState) -> LuaResult<()>
     super::c_scenario_info::register(state)?;
     #[cfg(feature = "client-retail")]
     super::c_scenario_bonus::register(state)?;
+    Ok(())
+}
+
+fn register_interaction_appearance(state: &mut LuaState) -> LuaResult<()> {
     super::c_transmog_sets::register(state)?;
     #[cfg(any(
         feature = "retail-12-0-0",

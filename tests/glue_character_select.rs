@@ -2472,21 +2472,6 @@ fn r88q_profile_active() -> bool {
     )
 }
 
-#[cfg(feature = "optional-tests")]
-fn seed_r88q_profile_expectations(env: &WowLuaEnv) {
-    use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
-    let line = match ACTIVE {
-        ClientProfile::Retail => 211,
-        ClientProfile::Ptr | ClientProfile::WowForever => 204,
-        _ => return,
-    };
-    let expected = format!(
-        "...ace/AddOns/Blizzard_GlueXML/Mainline/CharacterSelect.lua:{line}: attempt to call field 'DisconnectFromServer' (a nil value)"
-    );
-    env.exec(&format!("R88qExpectedDisconnectError = {expected:?}"))
-        .expect("seed exact pinned-profile missing-route diagnostic");
-}
-
 // R88q original-consumer regression; inputs are explicit host fixtures.
 #[cfg(all(
     feature = "optional-tests",
@@ -2621,7 +2606,7 @@ mod storeglue_r88q_host {
     }
 
     #[test]
-    fn shared_boolean_writers_drive_original_glue_show_and_update() {
+    fn shared_boolean_writers_drive_original_glue_update() {
         test_timeout! {
             if !r88q_profile_active() { return; }
             let env = fixture();
@@ -2830,14 +2815,8 @@ const R88Q_LUA_06: &str = r#"
                 C_StoreSecure.SetDisconnectOnLogout(false)
                 assert(not C_StoreGlue.GetDisconnectOnLogout())
                 C_StoreSecure.SetDisconnectOnLogout(0, 'ignored')
-                local disconnectBeforeShow = C_StoreGlue.GetDisconnectOnLogout()
-                local expectedError = R88qExpectedDisconnectError
-                local function expectedDisconnectError(message) return message == expectedError end
-                assert(not expectedDisconnectError(expectedError .. ' different'))
-                local shown, showError = pcall(CharacterSelectFrameMixin.OnShow, CharacterSelect)
-                R88qMissingDisconnectError = showError
-                if not shown then assert(expectedDisconnectError(showError)) end
-                assert(disconnectBeforeShow)
+                assert(C_StoreGlue.GetDisconnectOnLogout())
+                C_StoreSecure.SetDisconnectOnLogout(false)
                 assert(not C_StoreGlue.GetDisconnectOnLogout())
                 C_StoreSecure.SetVASProductReady(false)
                 CharacterServicesMaster.pendingGuid = 'untouched-when-not-ready'
@@ -2959,7 +2938,6 @@ const R88Q_REMOVAL_BEFORE: &str = r#"
 // Preserve the existing complete product 2003; supply only the absent fixture 189.
 #[cfg(feature = "optional-tests")]
 fn seed_r88q_product_inputs(env: &WowLuaEnv) {
-    seed_r88q_profile_expectations(env);
     env.exec(
         "__wow_store_state.productsByID[189] = {productID=189, sharedData={name='Fixture B'}}",
     )

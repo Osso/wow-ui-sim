@@ -1,3 +1,4 @@
+import json
 import sys
 import tempfile
 import unittest
@@ -5,6 +6,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 from tools import gen_limited_listfile
+from tests.test_limited_listfile_reproducibility import fixture_pin
 
 
 class LimitedListfileGenerationTests(unittest.TestCase):
@@ -19,6 +21,9 @@ class LimitedListfileGenerationTests(unittest.TestCase):
                 "8197078;Interface/Icons/INV_SideTab_Currency_c60.blp\n",
                 encoding="utf-8",
             )
+            pin = root / "provenance.json"
+            expected = b"8197078;Interface/Icons/INV_SideTab_Currency_c60.blp\n"
+            pin.write_text(json.dumps(fixture_pin(source.read_bytes(), override.read_bytes(), expected, 8197078)))
             (root / "manifest.rs").write_text("", encoding="utf-8")
             (root / "atlas.rs").write_text("", encoding="utf-8")
 
@@ -31,7 +36,7 @@ class LimitedListfileGenerationTests(unittest.TestCase):
                 patch.object(
                     sys,
                     "argv",
-                    ["gen_limited_listfile.py", "--source", str(source), "--output", str(output)],
+                    ["gen_limited_listfile.py", "--source", str(source), "--output", str(output), "--provenance", str(pin)],
                 ),
             ):
                 gen_limited_listfile.main()
@@ -82,11 +87,11 @@ class LimitedListfileGenerationTests(unittest.TestCase):
                 gen_limited_listfile.load_listfile_overrides(by_path, by_fdid)
 
             self.assertEqual(
-                (12345, "interface/addons/blizzard_test/override.lua"),
+                (12345, "Interface/AddOns/Blizzard_Test/Override.lua"),
                 by_path["interface/addons/blizzard_test/override.lua"],
             )
             self.assertEqual(
-                "interface/addons/blizzard_test/override.lua",
+                "Interface/AddOns/Blizzard_Test/Override.lua",
                 by_fdid[12345],
             )
 
@@ -108,11 +113,11 @@ class LimitedListfileGenerationTests(unittest.TestCase):
                 gen_limited_listfile.load_listfile_overrides(by_path, by_fdid)
 
             self.assertEqual(
-                (222, "interface/addons/blizzard_test/override.lua"),
+                (222, "Interface/AddOns/Blizzard_Test/Override.lua"),
                 by_path["interface/addons/blizzard_test/override.lua"],
             )
             self.assertEqual(
-                "interface/addons/blizzard_test/override.lua",
+                "Interface/AddOns/Blizzard_Test/Override.lua",
                 by_fdid[222],
             )
 

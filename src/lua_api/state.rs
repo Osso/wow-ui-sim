@@ -457,6 +457,8 @@ macro_rules! build_empty_sim_state {
             enemy_pool: Vec::new(),
             unit_raid_target_icons: HashMap::new(),
             sound_manager: $runtime.sound_manager,
+            #[cfg(feature = "client-mists")]
+            mists_combat_audio_alert_state_gate: $runtime.mists_combat_audio_alert_state_gate,
             last_sound_kit_requested: $runtime.last_sound_kit_requested,
             #[cfg(feature = "client-wrath")]
             last_ui_error_message: None,
@@ -1125,6 +1127,8 @@ struct EmptyRuntimeState {
     current_target: Option<TargetInfo>,
     current_focus: Option<TargetInfo>,
     sound_manager: Option<SoundManager>,
+    #[cfg(feature = "client-mists")]
+    mists_combat_audio_alert_state_gate: bool,
     last_sound_kit_requested: Option<u32>,
     last_sound_file_requested: Option<String>,
     last_stopped_sound_handle: Option<u32>,
@@ -1193,6 +1197,8 @@ macro_rules! build_empty_runtime_state {
             current_target: None,
             current_focus: None,
             sound_manager: None,
+            #[cfg(feature = "client-mists")]
+            mists_combat_audio_alert_state_gate: true,
             last_sound_kit_requested: None,
             last_sound_file_requested: None,
             last_stopped_sound_handle: None,

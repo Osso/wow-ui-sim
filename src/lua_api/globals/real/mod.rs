@@ -144,6 +144,8 @@ pub mod shapeshift;
 pub mod simulate_mouse;
 pub mod specialization_helpers;
 pub mod specialization_legacy;
+#[cfg(feature = "client-retail")]
+pub(crate) mod specialization_system;
 #[cfg(all(
     feature = "retail-12-0-5",
     any(feature = "profile-retail", feature = "client-ptr")

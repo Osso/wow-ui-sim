@@ -21,8 +21,15 @@ local function __wow_fill_enum(enumName, values)
   end
 end
 
-__wow_fill_enum("EditModeAccountSetting", { "ShowRaidWarning" })
-__wow_fill_enum("EditModeSystem", { "RaidWarning" })
+-- Retail 12.1.5.70783 EditModeManagerConstantsDocumentation.lua:242,667.
+local editModeAccountSettings = __wow_ensure_enum_table("EditModeAccountSetting")
+if rawget(editModeAccountSettings, "ShowRaidWarning") == nil then
+  rawset(editModeAccountSettings, "ShowRaidWarning", 33)
+end
+local editModeSystems = __wow_ensure_enum_table("EditModeSystem")
+if rawget(editModeSystems, "RaidWarning") == nil then
+  rawset(editModeSystems, "RaidWarning", 24)
+end
 -- 12.1.0 renamed IconSize to DebuffIconSize.
 rawset(Enum.EditModeUnitFrameSetting, "IconSize", nil)
 __wow_fill_enum("HousingResult", {
@@ -80,15 +87,6 @@ local difficultyColorDelegates = {
 for _, functionName in ipairs(difficultyColorDelegates) do
   if rawget(DifficultyUtil, functionName) == nil then
     rawset(DifficultyUtil, functionName, __wow_dynamic_global_delegate(functionName))
-  end
-end
-
-if GetSpecializationSystem == nil then
-  function GetSpecializationSystem()
-    if Enum.SpecializationSystem and Enum.SpecializationSystem.Traits ~= nil then
-      return Enum.SpecializationSystem.Traits
-    end
-    return "Traits"
   end
 end
 
