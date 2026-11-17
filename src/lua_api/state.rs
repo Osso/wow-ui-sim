@@ -459,6 +459,10 @@ macro_rules! build_empty_sim_state {
             sound_manager: $runtime.sound_manager,
             #[cfg(feature = "client-mists")]
             mists_combat_audio_alert_state_gate: $runtime.mists_combat_audio_alert_state_gate,
+            #[cfg(feature = "client-mists")]
+            mists_combat_audio_spec_settings: Default::default(),
+            #[cfg(feature = "client-mists")]
+            mists_combat_audio_voice_count: 0,
             last_sound_kit_requested: $runtime.last_sound_kit_requested,
             #[cfg(feature = "client-wrath")]
             last_ui_error_message: None,
