@@ -97,7 +97,8 @@ fn read_visibility_number(state: &LuaState) -> LuaResult<f64> {
 }
 
 fn visibility_type_from_number(number: f64) -> LuaResult<u8> {
-    if !number.is_finite() || number < f64::from(i32::MIN) || number > f64::from(i32::MAX) {
+    let within_i32_range = (f64::from(i32::MIN)..=f64::from(i32::MAX)).contains(&number);
+    if !number.is_finite() || !within_i32_range {
         let error = format!("integer overflow attempting to store {number:.6}");
         return Err(bad_argument(2, VISIBILITY_API, &error));
     }
