@@ -56,6 +56,13 @@ const SPELL_INFO_HASH_FIELDS: usize = 7;
 const SPELL_COOLDOWN_HASH_FIELDS: usize = 5;
 #[cfg(feature = "retail-12-1-5")]
 const RANGED_AUTO_ATTACK_ATTRIBUTE_MASK: u32 = 16_777_216;
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+const SPELL_PASSIVE_ATTRIBUTE_MASK: u32 = 64;
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+const SPELL_PASSIVE_API: &str = "C_Spell.IsSpellPassive";
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+const SPELL_PASSIVE_USAGE: &str =
+    "Usage: local isPassive = C_Spell.IsSpellPassive(spellIdentifier)";
 const VISIBILITY_API: &str = "C_Spell.GetVisibilityInfo";
 const VISIBILITY_USAGE: &str = "Usage: local hasCustom, alwaysShowMine, showForMySpec = C_Spell.GetVisibilityInfo(spellID, visibilityType)";
 #[cfg(feature = "retail-12-1-5")]
@@ -209,6 +216,8 @@ const SPELL_QUERY_METHODS: &[(&str, SpellScriptFn)] = &[
 const SPELL_BOOLEAN_METHODS: &[(&str, SpellScriptFn)] = &[
     ("DoesSpellExist", does_spell_exist),
     ("IsSpellDataCached", is_spell_data_cached),
+    #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+    ("IsSpellPassive", is_spell_passive),
     ("IsSelfBuff", is_self_buff),
     ("IsAutoAttackSpell", is_auto_attack_spell),
     ("IsSpellHelpful", is_spell_helpful),
@@ -933,6 +942,27 @@ fn does_spell_exist(state: &mut LuaState) -> LuaResult<u32> {
 fn is_spell_data_cached(state: &mut LuaState) -> LuaResult<u32> {
     let spell_id = u32::from_stack(state, 1)?;
     state.push(Val::Bool(spell_id != 0));
+    Ok(1)
+}
+
+/// VERIFIED (R88i.14): missing records return false; present records test mask 64.
+/// UNKNOWN (R88i.14): table and field; host masks are empty by default.
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+fn is_spell_passive(state: &mut LuaState) -> LuaResult<u32> {
+    let spell_id = read_retail_spell_identifier(
+        state,
+        stack_val(state, 1),
+        SPELL_PASSIVE_API,
+        SPELL_PASSIVE_USAGE,
+    )?;
+    let is_passive = match spell_id {
+        Some(spell_id) if spell_id != 0 && SPELL_DB.contains_key(&spell_id) => borrow_state(state)?
+            .spell_passive_attribute_masks
+            .get(&spell_id)
+            .is_some_and(|attributes| attributes & SPELL_PASSIVE_ATTRIBUTE_MASK != 0),
+        _ => false,
+    };
+    state.push(Val::Bool(is_passive));
     Ok(1)
 }
 
