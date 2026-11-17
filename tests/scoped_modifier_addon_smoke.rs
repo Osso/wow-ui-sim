@@ -28,7 +28,7 @@ fn scoped_modifier_real_addon_smoke_loads_without_lua_errors() {
                 .map(|addon| (name.clone(), addon.toc_path.clone()))
         })
         .collect();
-    sort_addons_by_dependencies(&wow_ui_sim::toc::TocCache::default(), &mut load_order);
+    sort_addons_by_dependencies(&mut load_order);
 
     let env = WowLuaEnv::new().expect("env should initialize");
     register_addon_closure(&env, &addons, &closure);
