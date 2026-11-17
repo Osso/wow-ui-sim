@@ -52,6 +52,10 @@ fn register_event_clears_and_unregister_removes_the_unit_filter() {
     );
     assert_eq!(register_units(&env, "{}"), (1, false));
     assert_eq!(register_units(&env, "'player'"), (1, true));
+    // PRESERVATION of the pre-existing simulator removal (also covered on all
+    // profiles by tests/unit_event_second_unit.rs:61-66). R88aj VERIFIES it
+    // natively only for Mists 70631; it is UNKNOWN for Retail 70688 and
+    // Forever 70707 (UnregisterEvent not decoded).
     env.exec("f:UnregisterEvent('UNIT_HEALTH')")
         .expect("UnregisterEvent should run");
     assert_eq!(register_units(&env, "'player'"), (1, true));

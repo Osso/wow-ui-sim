@@ -31,10 +31,10 @@ This spec covers Mists-only `C_CombatAudioAlert.GetSpecSetting` and `SetSpecSett
 
 ## Known gaps (current cycle)
 
-- [ ] **UNKNOWN (R88ai):** the text encoding of the per-spec CVar lists. The simulator does not decode non-empty CVar text and does not write the CVar on `SetSpecSetting`; values live in memory only.
+- [ ] **VERIFIED (R88ai), not modelled:** on success `SetSpecSetting` writes the list back to the matching CVar. The simulator does not write the CVar, so `GetCVar` keeps its old text; values live in memory only. **UNKNOWN (R88ai):** the text encoding of the per-spec CVar lists, so the simulator also does not decode non-empty CVar text.
 - [ ] **UNKNOWN (R88ai):** whether the CVar write reaches Lua as `CVAR_UPDATE`. No event is emitted.
 - [ ] **UNKNOWN (R88ai):** the engine lifecycle that loads and unloads the alert settings; the gate is a neutral host input, on by default.
 - [ ] **UNKNOWN (R88ai):** the voice list's count and contents; the host input `mists_combat_audio_voice_count` is empty (0) by default.
 - [ ] **INFERRED (R88ai):** the slot field is ChrSpecialization OrderIndex; the simulator maps active specialization index 1–4 to slots 1–4 and anything else to the fifth slot. The internal flag that forces the fifth slot is not modelled. Tests do not assert slot selection.
 - [ ] **UNKNOWN (R88ai):** whether the pending script-error state can be set by the getter's lookups; not modelled. Secret-argument access mode for `setting` is not established; the shared reader uses the untainted-execution text, and tests do not assert it.
-- [ ] **Pending R88aj:** table-form `RegisterUnitEvent` (`RegisterForUnitHealth`, `Blizzard_CombatAudioAlertManager.lua:438`), so `UNIT_HEALTH` is still not registered.
+- [x] **Resolved by R88aj:** table-form `RegisterUnitEvent` (`RegisterForUnitHealth`, `Blizzard_CombatAudioAlertManager.lua:438`) now registers `UNIT_HEALTH` with an empty filter; see [RegisterUnitEvent unit arguments](register-unit-event-units.md).

@@ -14,7 +14,9 @@ const MAX_UNIT_ARGUMENTS: i32 = 4;
 ///
 /// VERIFIED for Mists 70631, Retail 70688 and Forever 70707 (the Forever cache
 /// build). INFERRED for the Mists 70268, Retail, PTR, Wrath and other cached
-/// builds: the handler is identical in all three decoded builds.
+/// builds: the unit-argument rules are identical in the three decoded builds.
+/// Retail and Forever add secret-value, forbidden-aspect and post-return
+/// checks, which are not modelled.
 pub(super) fn scan_unit_arguments(state: &LuaState) -> Vec<String> {
     let mut units = Vec::new();
     for index in FIRST_UNIT_ARGUMENT..FIRST_UNIT_ARGUMENT + MAX_UNIT_ARGUMENTS {
