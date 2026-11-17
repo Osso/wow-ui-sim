@@ -370,6 +370,33 @@ mod tests {
     }
 
     #[test]
+    fn signed_integer_formats_report_i32_overflow() {
+        let env = WowLuaEnv::new().expect("env");
+        env.exec(
+            r#"
+            assert(string.format('%d/%i', 2147483647, -2147483648)
+                == '2147483647/-2147483648')
+
+            local cases = {
+                { '%d', 2147483648, '2147483648.000000' },
+                { '%d', -2147483649, '-2147483649.000000' },
+                { '%i', 2147483648, '2147483648.000000' },
+                { '%i', -2147483649, '-2147483649.000000' },
+            }
+            for _, case in ipairs(cases) do
+                local ok, err = pcall(function()
+                    return string.format(case[1], case[2])
+                end)
+                assert(not ok, 'overflow must fail for ' .. case[1])
+                assert(err == "bad argument #2 to 'format' (integer overflow attempting to store "
+                    .. case[3] .. ')', tostring(err))
+            end
+        "#,
+        )
+        .expect("%d and %i must reject values outside signed 32-bit range");
+    }
+
+    #[test]
     fn positional_formats_select_the_format_and_reset_the_cursor() {
         let env = WowLuaEnv::new().expect("env");
         env.exec(
