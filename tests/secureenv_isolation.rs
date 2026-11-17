@@ -1517,3 +1517,106 @@ fn retail_r88n11b_c_texture_members_publish_distinct_flag3_functions() {
         "separate flag-3 C_Texture closures must return equivalent results"
     );
 }
+
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+mod flag3_taint_tests {
+    use super::env;
+    use rilua::{LuaApiMut, Val};
+    use wow_ui_sim::lua_api::WowLuaEnv;
+    use wow_ui_sim::screen::ScreenKind;
+
+    fn install_probe(env: &WowLuaEnv, taint: Option<&str>) {
+        let stamp = taint
+            .map(|name| format!("debug.setobjecttaint(probe, {name:?})"))
+            .unwrap_or_default();
+        let code = format!(
+            r#"
+                local probe = function()
+                    return issecure(), debug.getstacktaint()
+                end
+                {stamp}
+                rawset(rawget(_G, "C_ColorUtil"), "ConvertHSVToRGB", probe)
+            "#
+        );
+        env.exec(&code).expect("install Lua flag-3 probe");
+        env.set_screen_mode(ScreenKind::CharacterSelect);
+        env.set_screen_mode(ScreenKind::Game);
+    }
+
+    fn probe_stamps(env: &WowLuaEnv) -> (bool, Option<String>, Option<String>) {
+        let (ordinary, secure): (Val, Val) = env
+            .eval(
+                r#"
+                return rawget(rawget(_G, "C_ColorUtil"), "ConvertHSVToRGB"),
+                    rawget(rawget(__secureenv, "C_ColorUtil"), "ConvertHSVToRGB")
+                "#,
+            )
+            .expect("read ordinary and secure probe functions");
+        let Val::Function(ordinary) = ordinary else {
+            panic!("ordinary probe must be a function");
+        };
+        let Val::Function(secure) = secure else {
+            panic!("secure probe must be a function");
+        };
+        let mut lua = env.rilua_mut();
+        let ordinary_taint = rilua::stdlib::taint::get_closure_taint(lua.state_mut(), ordinary);
+        let secure_taint = rilua::stdlib::taint::get_closure_taint(lua.state_mut(), secure);
+        (ordinary != secure, ordinary_taint, secure_taint)
+    }
+
+    fn probe_call_outcomes(
+        env: &WowLuaEnv,
+    ) -> (
+        bool,
+        Option<String>,
+        bool,
+        Option<String>,
+        bool,
+        Option<String>,
+    ) {
+        env.eval(
+            r#"
+            local ordinary = rawget(rawget(_G, "C_ColorUtil"), "ConvertHSVToRGB")
+            local secure = rawget(rawget(__secureenv, "C_ColorUtil"), "ConvertHSVToRGB")
+            local ordinarySecure, ordinaryTaint = ordinary()
+            local secureSecure, secureTaint = secure()
+            return ordinarySecure, ordinaryTaint, secureSecure, secureTaint,
+                issecure(), debug.getstacktaint()
+            "#,
+        )
+        .expect("call ordinary and secure probe functions")
+    }
+
+    #[test]
+    fn flag3_lua_clones_preserve_taint_stamps_and_call_behavior() {
+        let env = env();
+
+        install_probe(&env, None);
+        assert_eq!(probe_stamps(&env), (true, None, None));
+        assert_eq!(
+            probe_call_outcomes(&env),
+            (true, None, true, None, true, None)
+        );
+
+        install_probe(&env, Some("Flag3ProbeAddon"));
+        assert_eq!(
+            probe_call_outcomes(&env),
+            (
+                false,
+                Some("Flag3ProbeAddon".into()),
+                false,
+                Some("Flag3ProbeAddon".into()),
+                true,
+                None
+            )
+        );
+        assert_eq!(
+            probe_stamps(&env),
+            (
+                true,
+                Some("Flag3ProbeAddon".into()),
+                Some("Flag3ProbeAddon".into())
+            )
+        );
+    }
+}
