@@ -20,7 +20,8 @@ This contract covers the Retail `C_StoreSecure` catalog, availability, currency,
 - [ ] Availability, product-list readiness, purchase-list readiness, purchase rows, dynamic-price rows, and currency ID start empty or false. Availability and list readiness are separate state.
 - [ ] Availability responses store the supplied Boolean before a zero-payload `STORE_STATUS_CHANGED` event.
 - [ ] A successful product-list response replaces the catalog, stores currency ID, clears region lock and response error, and sets product-list readiness before a zero-payload `STORE_PRODUCTS_UPDATED` event. A failed response clears group/product rows, clears readiness, stores the error, and sets region lock only for result code 3.
-- [ ] A purchase-list response sets readiness from its result code, copies rows only on success, and queues a zero-payload `STORE_PURCHASE_LIST_UPDATED` event after the state change.
+- [ ] When its callback is installed, a purchase-list response sets readiness from its result code, copies rows only on success, and queues one zero-payload `STORE_PURCHASE_LIST_UPDATED` event after the state change. Further responses coalesce while that event is pending.
+- [ ] INFERRED (simulator policy): the pending event flushes at the next `fire_on_update_timed` dispatch boundary, after login advancement and before frame OnUpdate handlers. Native delivery timing is unknown.
 - [ ] A disconnect clears availability before resetting the verified product/purchase readiness, region-lock, response-error, currency-ID, dynamic-price, and connection state.
 - [ ] `HasDistributionList` is false without a connection or supplied connection distribution state. No default connection state is invented.
 - [ ] `HasPurchaseInProgress` is true when any row is unblocked, has status other than 6, and has adjusted expiry later than adjusted current time. The query does not consume rows.

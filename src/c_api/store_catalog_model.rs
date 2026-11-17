@@ -369,19 +369,29 @@ pub fn receive_purchase_list(
     if ACTIVE != ClientProfile::Retail {
         return Ok(());
     }
-    let notify = {
+    {
         let mut sim = env.state().borrow_mut();
         apply_purchase_list_response(&mut sim.store_glue.store_secure, response);
-        queue_purchase_list_notification(&mut sim.store_glue)
+        queue_purchase_list_notification(&mut sim.store_glue);
+    }
+    Ok(())
+}
+
+pub fn flush_purchase_list_notification(env: &WowLuaEnv) -> crate::Result<()> {
+    if ACTIVE != ClientProfile::Retail {
+        return Ok(());
+    }
+    let pending = {
+        let mut sim = env.state().borrow_mut();
+        std::mem::take(
+            &mut sim
+                .store_glue
+                .store_secure
+                .purchase_list_notification_pending,
+        )
     };
-    if notify {
-        let result = env.fire_event_with_args("STORE_PURCHASE_LIST_UPDATED", &[]);
-        env.state()
-            .borrow_mut()
-            .store_glue
-            .store_secure
-            .purchase_list_notification_pending = false;
-        result?;
+    if pending {
+        env.fire_event_with_args("STORE_PURCHASE_LIST_UPDATED", &[])?;
     }
     Ok(())
 }
@@ -395,14 +405,14 @@ fn apply_purchase_list_response(store: &mut StoreSecureState, response: StorePur
     };
 }
 
-fn queue_purchase_list_notification(store: &mut super::store_glue_model::StoreGlueState) -> bool {
-    if !store.callbacks.store_purchase_list_updated
-        || store.store_secure.purchase_list_notification_pending
-    {
-        return false;
+fn queue_purchase_list_notification(store: &mut super::store_glue_model::StoreGlueState) {
+    if !store.callbacks.store_purchase_list_updated {
+        return;
+    }
+    if store.store_secure.purchase_list_notification_pending {
+        return;
     }
     store.store_secure.purchase_list_notification_pending = true;
-    true
 }
 
 pub fn receive_dynamic_price(env: &WowLuaEnv, product_id: i32, data: Vec<u8>) -> crate::Result<()> {
