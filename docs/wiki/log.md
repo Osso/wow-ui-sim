@@ -1,3 +1,7 @@
+## [2026-11-17] implementation | Retail call-pet flyout spell results
+
+Updated the [call-pet contract](../specs/call-pet-spell-info.md) and [Spellbook follow-ups](investigations/spellbook-r88m4-followups.md#retail-call-pet-flyout). **VERIFIED (Retail simulator):** the original ActionBar flyout keeps named and unmapped spells, hides empty/missing names, and rejects a callable-wrong producer. **UNKNOWN:** same-build spell-ID rows and the runtime pet-info writer remain empty-default host inputs.
+
 ## [2026-11-17] verification | Retail mask-2 original CooldownViewer consumer
 
 **VERIFIED (Retail 12.1.5.70783 simulator run):** the callable-wrong sum-then-divide RED failed at count 6 versus expected 5; the byte-identical original-consumer GREEN passed 3/3, including empty and ±1 candidate fallbacks. **UNKNOWN:** native property identity and decoding.

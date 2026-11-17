@@ -4,11 +4,11 @@
 
 ## What it must do
 
-- [ ] For a supplied spell membership/index in the range 0–4, return exactly two values: the index and the current player's pet-info name, or nil when that name is absent.
-- [ ] Preserve an empty pet-info name as an empty string.
-- [ ] Return zero values when the spell is not supplied as a member or its index is outside 0–4.
-- [ ] In the original action-bar flyout, keep a named call-pet spell visible, hide a call-pet spell with a nil or empty name, and keep an unmapped spell visible.
-- [ ] Keep spell membership/index data and current-player pet names as explicit, empty-default host inputs. Do not seed native IDs or fixed pet names.
+- [x] For a supplied spell membership/index in the range 0–4, return exactly two values: the index and the current player's pet-info name, or nil when that name is absent.
+- [x] Preserve an empty pet-info name as an empty string.
+- [x] Return zero values when the spell is not supplied as a member or its index is outside 0–4.
+- [x] In the original action-bar flyout, keep a named call-pet spell visible, hide a call-pet spell with a nil or empty name, and keep an unmapped spell visible.
+- [x] Keep spell membership/index data and current-player pet names as explicit, empty-default host inputs. Do not seed native IDs or fixed pet names.
 
 ## How it works
 
@@ -26,6 +26,7 @@
 ## Tests asserting this spec
 
 - `tests/blizzard_ui/blizzard_actionbar/behavior_spell_flyout.rs::spell_flyout_filters_call_pet_slots_using_supplied_names` — the original Retail `SpellFlyoutMixin:Toggle` consumer, named/empty/missing-name inputs, and absent membership.
+- `tests/blizzard_ui/blizzard_actionbar/behavior_spell_flyout.rs::spell_flyout_consumer_preserves_slots_without_call_pet_catalog` — visible slots with empty-default call-pet inputs.
 
 ## Known gaps (current cycle)
 
