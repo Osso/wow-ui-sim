@@ -488,7 +488,7 @@ fn retail_store_vas_guild_master_request_uses_the_original_panel() {
             vec![guild_master_info()],
         )
         .expect("guild-master response should update state before notification");
-        let event: (u32, String) = env.eval("return STORE_VAS_GUILD_MASTER_EVENT.realmAddress, STORE_VAS_GUILD_MASTER_EVENT.guildName")
+        let event: (i32, String) = env.eval("return STORE_VAS_GUILD_MASTER_EVENT.realmAddress, STORE_VAS_GUILD_MASTER_EVENT.guildName")
             .expect("guild-master event should observe the updated cache");
         assert_eq!(event, (101, "Simulator Guild".into()));
     }
