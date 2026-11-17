@@ -147,6 +147,8 @@ macro_rules! build_empty_sim_state {
             quest_portrait_state: None,
             tooltips: $collections.tooltips,
             item_overrides: ::std::collections::HashMap::new(),
+            item_level_color_condition_23: None,
+            item_level_color_condition_24: None,
             #[cfg(feature = "retail-12-0-0")]
             item_stats: crate::c_api::ItemStatsState::default(),
             #[cfg(feature = "retail-12-0-0")]

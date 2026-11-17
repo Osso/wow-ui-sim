@@ -157,6 +157,9 @@ pub struct SimState {
     pub tooltips: HashMap<u64, TooltipData>,
     /// Explicit host-supplied item metadata, taking precedence over the generated catalog.
     pub item_overrides: HashMap<u32, crate::items::ItemInfo>,
+    /// UNKNOWN live R88l.1 condition outcomes; absent inputs select no color override.
+    pub item_level_color_condition_23: Option<bool>,
+    pub item_level_color_condition_24: Option<bool>,
     /// Explicit exact-link fixtures only; initially empty, no catalog producer.
     #[cfg(feature = "retail-12-0-0")]
     pub item_stats: crate::c_api::ItemStatsState,
