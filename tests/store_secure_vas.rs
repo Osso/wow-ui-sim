@@ -1173,7 +1173,9 @@ fn purchase_original_bnet_transfer(env: &WowLuaEnv, account_name: &str, expected
     else {
         unreachable!("the last VAS request was filtered by its variant");
     };
-    let expected = Some(crate::c_api::store_guid::parse(expected_guid.as_bytes()));
+    let expected = Some(wow_ui_sim::c_api::store_guid::parse(
+        expected_guid.as_bytes(),
+    ));
     assert_eq!(bnet_account_guid, &expected);
 }
 
