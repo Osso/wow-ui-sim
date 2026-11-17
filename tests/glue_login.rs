@@ -371,6 +371,8 @@ fn mists_classic_cached_login_consumer_hides_rows_and_api_is_glue_only() {
             .eval("return type(HideCursor) == 'function' and type(ShowCursor) == 'function'")
             .unwrap();
         assert!(cursor_globals, "cursor visibility globals must be available in Glue");
+        let returns_none: bool = env.eval("return select('#', HideCursor()) == 0 and select('#', ShowCursor()) == 0").unwrap();
+        assert!(returns_none, "cursor visibility globals must return no values");
         let row_visible: bool = env.eval(r#"
             local container = AccountLogin.UI.CachedLoginFrameContainer
             local row = CreateFrame("Frame", nil, container, "CachedLoginFrameTemplate")
