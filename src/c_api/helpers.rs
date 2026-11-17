@@ -23,7 +23,7 @@ pub(crate) fn bad_argument(index: i32, function: &str, reason: &str) -> rilua::L
     rilua::runtime_error(format!("bad argument #{index} to '{function}' ({reason})"))
 }
 
-fn read_untainted_value(
+pub(crate) fn read_untainted_value(
     state: &LuaState,
     index: i32,
     function: &str,
@@ -74,6 +74,27 @@ pub(crate) fn read_untainted_signed32_argument(
         .filter(in_range)
         .map(|number| number.trunc() as i32)
         .ok_or_else(range_error)
+}
+
+/// Required Lua string, or a number converted with Lua's `%.14g` rule.
+#[cfg(feature = "client-retail")]
+pub(crate) fn read_untainted_string_argument(
+    state: &LuaState,
+    index: i32,
+    function: &str,
+    usage: &str,
+) -> LuaResult<Vec<u8>> {
+    let (value, _) = read_untainted_value(state, index, function, usage)?;
+    let bytes = match value {
+        Val::Str(reference) => state
+            .gc
+            .string_arena
+            .get(reference)
+            .map(|string| string.data().to_vec()),
+        Val::Num(_) => Some(value.to_string().into_bytes()),
+        _ => None,
+    };
+    bytes.ok_or_else(|| bad_argument(index, function, usage))
 }
 
 #[cfg(feature = "client-retail")]

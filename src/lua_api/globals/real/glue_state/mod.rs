@@ -6,6 +6,24 @@
 use crate::lua_api::WowLuaEnv;
 use std::collections::BTreeSet;
 
+#[cfg(feature = "client-retail")]
+mod account;
+#[cfg(feature = "client-retail")]
+mod audio;
+#[cfg(feature = "client-retail")]
+mod background;
+#[cfg(feature = "client-retail")]
+mod server;
+
+/// Register the Retail producers over the shared bootstrap's earlier defaults.
+#[cfg(feature = "client-retail")]
+pub(crate) fn register(state: &mut rilua::vm::state::LuaState) -> rilua::LuaResult<()> {
+    account::register(state)?;
+    server::register(state)?;
+    background::register(state)?;
+    audio::register(state)
+}
+
 /// Host inputs shared by the R88ad Glue globals.
 #[derive(Debug, Default)]
 pub struct GlueHostState {
