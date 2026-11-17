@@ -33,7 +33,7 @@ publication is not expanded by this change.
 
 **INFERRED (Retail 12.1.5.70688):** the sell-exclusion masks map to ItemSparse `Flags_1` mask 4096 and `Flags_3` mask 524288; the preview exception maps to `Flags_3` mask 32768. The masks and branches are VERIFIED; these column names use another build's header.
 
-**VERIFIED (simulator model):** `ItemInfo` carries `sell_price` and `stackable`, but it does not carry `Flags_1`, `Flags_3`, item instances, status records, or prepared quantity state. **INFERRED (simulator policy):** `ItemInfo.sell_price` stands in for the native initial unit-price calculation. Therefore the simulator leaves status and flag gates unsuppressed and keeps `maxPrice` at -1; it does not add unbacked writers or exclusions. The alternate `ITEM_UNSELLABLE` path and adjusted-to-zero path remain unmodeled.
+**VERIFIED (simulator model):** `ItemInfo` carries `sell_price` and `stackable`, but it does not carry `Flags_1`, `Flags_3`, item instances, status records, or prepared quantity state. `item_tooltip_sell_price_quantities` is an empty-default host input keyed by item ID; its `(current, prepared maximum)` values are not derived from `Stackable`. **INFERRED (simulator policy):** `ItemInfo.sell_price` stands in for the native initial unit-price calculation. **VERIFIED (simulator model):** the Retail producer multiplies its line `price` by the supplied prepared maximum with 32-bit wrapping only when the maximum exceeds current quantity; missing or non-increasing values keep `maxPrice` at -1. Status and flag gates remain unsuppressed. The alternate `ITEM_UNSELLABLE` path and adjusted-to-zero path remain unmodeled.
 
 **UNKNOWN:** the relationship between prepared maximum quantity and `Stackable`, and the calculated-price inputs not represented by `ItemInfo`.
 
@@ -74,8 +74,9 @@ placement contradicts R88n.4b, so no producer changed.
   default; the quote calculation is UNKNOWN ([bag repair cost](bag-repair-cost.md)).
 - `price` and `maxPrice`: only `push_retail_sell_price_line`
   (`tooltip_info/builders.rs`) writes them, on a type-11 line. No producer
-  writes them at top level. `maxPrice` is the R88p.p1 initial value -1, not a
-  guess; the prepared-quantity recalculation inputs are UNKNOWN and unmodeled.
+  writes them at top level. Prepared-quantity values remain UNKNOWN host inputs;
+  the producer uses them only when the maximum exceeds current quantity, else it
+  preserves the R88p.p1 initial value -1.
 - Battle-pet fields: no producer publishes TooltipData type 6 or any of the
   seven fields. `battlePetSpeciesID` on Auction House `ItemKey` data is not a
   TooltipData producer. The fields stay absent until backing state exists
@@ -94,7 +95,7 @@ placement contradicts R88n.4b, so no producer changed.
   proves the double-line header publishes the same packed, alpha-free RGB on its right side.
 - `tests/tooltip_d56_serialization.rs`: direct getters and original consumers.
 - `src/c_api/tooltip_data_tests.rs`: nested identity order and present/absent sides.
-- `tests/tooltip_serializer_fields.rs`: selected Retail consumers read top-level repair/pet fields and line-level `price`/`maxPrice`; the original `SetItemByID` path checks the inferred backed `price` projection.
+- `tests/tooltip_serializer_fields.rs`: selected Retail consumers read top-level repair/pet fields and line-level `price`/`maxPrice`; the original `SetItemByID` path checks the prepared-quantity line value and the arguments received by `GameTooltip_OnTooltipAddMoney`.
 - `tests/tooltip_serializer_consumer_output.rs::bag_repair_rule_renders_only_top_level_positive_repair_cost`
   observes only original consumer output: the selected `SetBagItem` accessor and
   `FinalizeItemTooltip` render REPAIR_COST plus the money row for quotes 731 and
