@@ -11,6 +11,8 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 mod closure;
 
 const VISIBILITY_USAGE: &str = "Usage: local hasCustom, alwaysShowMine, showForMySpec = C_Spell.GetVisibilityInfo(spellID, visibilityType)";
+const COMBAT_AUDIO_CVAR_CASES: [(Option<&str>, bool); 3] =
+    [(None, false), (Some("0"), false), (Some("1"), true)];
 
 fn load_mists_consumer(addon: &str) -> WowLuaEnv {
     assert_eq!(ACTIVE, ClientProfile::Mists);
@@ -18,6 +20,45 @@ fn load_mists_consumer(addon: &str) -> WowLuaEnv {
     let (env, loaded) = closure::build_blizzard_addon_closure_env(&ui, &[addon], &[]);
     assert!(loaded.iter().any(|name| name == addon), "{addon} must load");
     env
+}
+
+fn load_combat_audio_manager(enabled_cvar: Option<&str>) -> WowLuaEnv {
+    assert_eq!(ACTIVE, ClientProfile::Mists);
+    let ui = closure::blizzard_ui_dir();
+    let env = closure::new_blizzard_addon_env(&ui);
+    {
+        let state = env.state();
+        let sim = state.borrow();
+        sim.cvars.set_imported("CAAPlayerHealthPercent", "1");
+        if let Some(value) = enabled_cvar {
+            sim.cvars.set_imported("CAAEnabled", value);
+        }
+    }
+    let loaded = closure::load_blizzard_addon_closure_into_env(
+        &env,
+        &ui,
+        &["Blizzard_CombatAudioAlerts"],
+        &[],
+    );
+    assert!(
+        loaded
+            .iter()
+            .any(|name| name == "Blizzard_CombatAudioAlerts")
+    );
+    env
+}
+
+fn assert_manager_health_event(env: &WowLuaEnv, expected: bool) {
+    env.exec(&format!(
+        r#"
+        CombatAudioAlertManager.UpdateSpecSpecificSettings = function() end
+        CombatAudioAlertManager.initDone = true
+        CombatAudioAlertManager:RefreshEvents(false)
+        assert(CombatAudioAlertManager:IsEventRegistered('UNIT_HEALTH') == {expected},
+            'UNIT_HEALTH registration did not follow IsEnabled')
+        "#
+    ))
+    .expect("original combat-audio manager must select health-event registration");
 }
 
 fn read_lua_error(env: &WowLuaEnv, call: &str) -> String {
@@ -38,31 +79,29 @@ fn install_secret_visibility_number(env: &WowLuaEnv) {
 }
 
 #[test]
-fn combat_audio_manager_consumer_calls_original_is_enabled() {
-    let env = load_mists_consumer("Blizzard_CombatAudioAlerts");
-    let selected: bool = env
-        .eval(
-            "local source = debug.getinfo(CombatAudioAlertManagerMixin.RefreshEvents, 'S').source; return source:sub(-#'Blizzard_CombatAudioAlerts/Blizzard_CombatAudioAlertManager.lua') == 'Blizzard_CombatAudioAlerts/Blizzard_CombatAudioAlertManager.lua'",
-        )
-        .expect("Mists manager consumer should be loaded");
-    assert!(selected, "expected the original Mists combat-audio manager");
-    env.exec(
-        "CombatAudioAlertManager.initDone = true; CombatAudioAlertManager:RefreshEvents(false)",
-    )
-    .expect("original RefreshEvents must call C_CombatAudioAlert.IsEnabled without an error");
+fn combat_audio_manager_consumer_observes_enabled_cvar_state() {
+    for (input, expected) in COMBAT_AUDIO_CVAR_CASES {
+        let env = load_combat_audio_manager(input);
+        let source: String = env
+            .eval("return debug.getinfo(CombatAudioAlertManagerMixin.RefreshEvents, 'S').source")
+            .expect("manager consumer source should be available");
+        assert!(
+            source.ends_with("Blizzard_CombatAudioAlerts/Blizzard_CombatAudioAlertManager.lua"),
+            "expected original manager source, got {source}"
+        );
+        assert_manager_health_event(&env, expected);
+    }
 }
 
 #[test]
-fn combat_audio_enabled_returns_one_boolean_for_default_and_cvar_inputs() {
-    for (input, expected) in [(None, false), (Some("0"), false), (Some("1"), true)] {
-        let env = WowLuaEnv::new().expect("Mists C API should initialize");
-        if let Some(value) = input {
-            env.state().borrow().cvars.set_imported("CAAEnabled", value);
-        }
+fn combat_audio_enabled_inputs_drive_original_manager_and_return_one_boolean() {
+    for (input, expected) in COMBAT_AUDIO_CVAR_CASES {
+        let env = load_combat_audio_manager(input);
         assert_eq!(
             env.state().borrow().cvars.get("CAAEnabled").as_deref(),
             Some(input.unwrap_or("0"))
         );
+        assert_manager_health_event(&env, expected);
         let actual: (i64, String, bool) = env
             .eval(
                 "local count = select('#', C_CombatAudioAlert.IsEnabled()); local value = C_CombatAudioAlert.IsEnabled(); return count, type(value), value",
