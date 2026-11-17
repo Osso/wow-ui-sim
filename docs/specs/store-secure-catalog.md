@@ -20,7 +20,8 @@ This contract covers the Retail `C_StoreSecure` catalog, availability, currency,
 - [ ] Availability, product-list readiness, purchase-list readiness, purchase rows, dynamic-price rows, and currency ID start empty or false. Availability and list readiness are separate state.
 - [ ] Availability responses store the supplied Boolean before a zero-payload `STORE_STATUS_CHANGED` event.
 - [ ] A successful product-list response replaces the catalog, stores currency ID, clears region lock and response error, and sets product-list readiness before a zero-payload `STORE_PRODUCTS_UPDATED` event. A failed response clears group/product rows, clears readiness, stores the error, and sets region lock only for result code 3.
-- [ ] When its callback is installed, a purchase-list response sets readiness from its result code, copies rows only on success, and queues one zero-payload `STORE_PURCHASE_LIST_UPDATED` event after the state change. Further responses coalesce while that event is pending.
+- [ ] A purchase-list response sets readiness from its result code, copies rows only on success, and queues one zero-payload `STORE_PURCHASE_LIST_UPDATED` event after the state change. Further responses coalesce while that event is pending.
+- [ ] INFERRED (simulator policy): the purchase-list event is queued only when its callback is installed. R88ad.2 states the callback condition for the direct notifications only; the queued path follows the existing StoreGlue callback pattern.
 - [ ] INFERRED (simulator policy): the pending event flushes at the next `fire_on_update_timed` dispatch boundary, after login advancement and before frame OnUpdate handlers. Native delivery timing is unknown.
 - [ ] A disconnect clears availability before resetting the verified product/purchase readiness, region-lock, response-error, currency-ID, dynamic-price, and connection state.
 - [ ] `HasDistributionList` is false without a connection or supplied connection distribution state. No default connection state is invented.
@@ -51,7 +52,7 @@ This contract covers the Retail `C_StoreSecure` catalog, availability, currency,
 
 ## Tests asserting this spec
 
-- `tests/store_secure_catalog.rs` — original Retail StoreUI and CatalogShop consumers, empty defaults, response transitions/events, currency formatting, ColorMixin RGB output, and request/list selectors.
+- `tests/store_secure_catalog.rs` — original Retail StoreUI and CatalogShop consumers, empty defaults, response transitions, event payload counts and state-before-event order, failed product-list writes, currency formatting, ColorMixin RGB output, `GetProductList` rate limit and zero-value returns, `IsDynamicBundle`, connection-gated `HasDistributionList`, and request/list selectors.
 - `tests/store_api.rs` — zero currency ID and verified disconnect state with explicit host responses.
 - `tests/store_group_contract.rs` — original EnvironmentCleanup path and secure-environment method availability.
 - `tests/catalog_shop.rs`, `tests/store_tree.rs`, and `tests/store_anchor_regression.rs` — Retail Store consumers receive explicit catalog inputs for presentation checks.
