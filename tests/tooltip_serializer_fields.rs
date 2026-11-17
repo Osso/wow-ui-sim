@@ -14,15 +14,23 @@ mod tooltip_full_env_helpers;
 
 fn selected_tooltip_env() -> WowLuaEnv {
     let ui = blizzard_ui_dir();
-    let selected = discover_blizzard_addons_for_screen(&ui, ScreenKind::Game);
+    assert_selected_tooltip_addons(&ui);
+    let env = tooltip_full_env_helpers::setup_full_env();
+    assert_selected_tooltip_sources(&env);
+    env
+}
+
+fn assert_selected_tooltip_addons(ui: &std::path::Path) {
+    let selected = discover_blizzard_addons_for_screen(ui, ScreenKind::Game);
     for addon in ["Blizzard_SharedXMLGame", "Blizzard_UIPanels_Game"] {
         assert!(
             selected.iter().any(|(name, _)| name == addon),
             "Retail game-screen selection must include {addon}"
         );
     }
+}
 
-    let env = tooltip_full_env_helpers::setup_full_env();
+fn assert_selected_tooltip_sources(env: &WowLuaEnv) {
     env.exec(
         r#"
         local function assertSource(func, suffix)
@@ -44,7 +52,6 @@ fn selected_tooltip_env() -> WowLuaEnv {
         "#,
     )
     .expect("selected Retail tooltip consumers should load from their original files");
-    env
 }
 
 // INFERRED: catalog `sell_price` stands in for the initial unit-price result.
