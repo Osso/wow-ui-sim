@@ -1,3 +1,7 @@
+## [2026-11-17] system | Retail Glue host state (R88ad.7-10)
+
+[Retail Glue host state](systems/glue-host-state.md) records the saved-account CVars, connection snapshot, minimum-expansion writer, first-display state, login-background objects and Glue-audio request log behind the Retail R88ad producers, plus the profile scope of the retired bootstrap defaults.
+
 ## [2026-11-16] investigation | Limited listfile reproducibility
 
 [Limited listfile reproducibility](investigations/limited-listfile-reproducibility.md) records the immutable source pin, effective input/output drift checks, unchanged 147,015-row artifact, and the unrecoverable historical PR33 rows and inferred input-drift cause.
