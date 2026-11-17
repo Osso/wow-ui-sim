@@ -19,11 +19,21 @@ fn thread_bytes_read() -> u64 {
 
 /// Writes an addon whose TOC carries `METADATA_KEYS` metadata lines; returns the TOC size.
 fn write_large_addon(root: &Path, name: &str, header: &str, lua: &str) -> u64 {
+    write_large_addon_with_keys(root, name, header, lua, METADATA_KEYS)
+}
+
+fn write_large_addon_with_keys(
+    root: &Path,
+    name: &str,
+    header: &str,
+    lua: &str,
+    keys: usize,
+) -> u64 {
     let mut toc = format!(
         "## Interface: {}\n## Title: {name} title\n{header}",
         wow_ui_sim::toc::ACTIVE_INTERFACE_VERSION
     );
-    for key in 0..METADATA_KEYS {
+    for key in 0..keys {
         writeln!(toc, "## X-{name}-{key}: value-{key}").unwrap();
     }
     toc.push_str("main.lua\n");
@@ -32,6 +42,16 @@ fn write_large_addon(root: &Path, name: &str, header: &str, lua: &str) -> u64 {
     std::fs::write(addon_dir.join(format!("{name}.toc")), &toc).expect("write toc");
     std::fs::write(addon_dir.join("main.lua"), lua).expect("write lua");
     toc.len() as u64
+}
+
+/// The first Lua load in a process reads the shared bytecode-cache pack (hundreds of
+/// MB). Load a small addon in a separate environment so the measurement excludes it.
+fn warm_process_caches() {
+    let temp = tempfile::tempdir().unwrap();
+    write_large_addon_with_keys(temp.path(), "Warmup", "", "WarmupRuns = 1", 1);
+    let env = WowLuaEnv::new().unwrap();
+    let roots = [temp.path().to_path_buf()];
+    load_third_party_addons(&roots, false, false, &env, &mut None, ScreenKind::Game);
 }
 
 const CHECK_STARTUP_LUA: &str = r#"
@@ -51,6 +71,7 @@ assert(C_AddOns.GetAddOnMetadata('BigLod', 'X-BigLod-7') == 'value-7')
 
 #[test]
 fn startup_and_load_on_demand_read_each_large_toc_once() {
+    warm_process_caches();
     let temp = tempfile::tempdir().unwrap();
     let startup_size = write_large_addon(
         temp.path(),
