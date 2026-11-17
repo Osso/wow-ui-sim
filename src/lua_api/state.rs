@@ -190,11 +190,12 @@ macro_rules! build_empty_sim_state {
             screen_kind: $runtime.screen_kind,
             in_character_create: false,
             glue_login: Default::default(),
+            glue_state: Default::default(),
             #[cfg(any(feature = "client-ptr", feature = "client-wowforever"))]
             glue_feature_status: Default::default(),
             is_logged_in: $runtime.is_logged_in,
             post_event_workarounds_applied: false,
-            screen_first_displayed: $runtime.screen_first_displayed,
+            screen_first_display_state: $runtime.screen_first_display_state,
             saved_account_name: $runtime.saved_account_name,
             saved_account_list: $runtime.saved_account_list,
             uses_token: $runtime.uses_token,
@@ -1155,7 +1156,7 @@ struct EmptyRuntimeState {
     screen_height: f32,
     screen_kind: ScreenKind,
     is_logged_in: bool,
-    screen_first_displayed: bool,
+    screen_first_display_state: u8,
     saved_account_name: String,
     saved_account_list: String,
     uses_token: bool,
@@ -1225,7 +1226,7 @@ macro_rules! build_empty_runtime_state {
             screen_height: $screen_height,
             screen_kind: ScreenKind::Game,
             is_logged_in: false,
-            screen_first_displayed: false,
+            screen_first_display_state: 0,
             saved_account_name: String::new(),
             saved_account_list: String::new(),
             uses_token: false,
@@ -1386,7 +1387,7 @@ impl SimState {
             self.glue_login.ptr_connection =
                 crate::c_api::c_login::ptr_state::PtrConnectionState::for_screen(screen_kind);
         }
-        self.screen_first_displayed = false;
+        self.screen_first_display_state = 0;
         if screen_kind.is_glue() {
             self.is_logged_in = false;
         }

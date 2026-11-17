@@ -212,12 +212,14 @@ pub struct SimState {
     pub screen_kind: ScreenKind,
     pub in_character_create: bool,
     pub glue_login: crate::c_api::c_login::LoginState,
+    pub glue_state: crate::lua_api::globals::real::glue_state::GlueHostState,
     #[cfg(any(feature = "client-ptr", feature = "client-wowforever"))]
     pub(crate) glue_feature_status:
         crate::lua_api::globals::real::glue_feature_status::GlueFeatureStatus,
     pub is_logged_in: bool,
     pub post_event_workarounds_applied: bool,
-    pub screen_first_displayed: bool,
+    /// R88ad.8 native first-display state: 0, 1, then 2 before the event.
+    pub screen_first_display_state: u8,
     pub saved_account_name: String,
     pub saved_account_list: String,
     pub uses_token: bool,

@@ -57,6 +57,7 @@ pub(crate) mod glue_save_character_order;
 pub(crate) mod glue_select_character;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) mod glue_selection;
+pub mod glue_state;
 pub mod glyph_state;
 pub mod gossip_probes;
 pub(crate) mod group_role_counts;

@@ -21,7 +21,7 @@ impl SimState {
         self.is_logged_in = false;
         self.account_cvar_callback_pending = false;
         self.post_event_workarounds_applied = false;
-        self.screen_first_displayed = false;
+        self.screen_first_display_state = 0;
         self.texture_manager
             .borrow_mut()
             .invalidate_source_generation();
