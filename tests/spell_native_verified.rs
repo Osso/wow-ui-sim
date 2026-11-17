@@ -91,7 +91,7 @@ fn seed_mask2_reagent(
                 available_count: i64::from(available_count),
             }
         })
-        .collect();
+        .collect::<Vec<_>>();
     {
         let mut sim = env.state().borrow_mut();
         sim.spell_cast_context_is_null = Some(false);
