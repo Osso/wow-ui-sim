@@ -112,6 +112,18 @@ const LOOKUP_API_CONSUMER: &str = r#"
     return true
 "#;
 
+const VAS_PRODUCT_TYPE_MAPPING_CONSUMER: &str = r#"
+    local rows = {
+        {2100, 0}, {2101, 1}, {2102, 2}, {2103, 3}, {2104, 4}, {2105, 5},
+        {2106, 6}, {2107, 7}, {2108, 8}, {2109, 9}, {2110, 4},
+    }
+    for _, row in ipairs(rows) do
+        assert(C_StoreSecure.GetVasServiceType(row[1]) == row[2], "product type should map to its service")
+    end
+    assert(C_StoreSecure.GetVasServiceType(2111) == nil, "unmapped product type should return nil")
+    return true
+"#;
+
 const ACCOUNT_VALIDATION_CONSUMER: &str = r#"
     local function lookup(name)
         return _G[name] or (__secureenv and rawget(__secureenv, name))
@@ -573,6 +585,60 @@ fn retail_store_vas_lookup_apis_publish_explicit_host_rows() {
         let order: Vec<String> = env.state().borrow().store_glue.store_secure.vas.vas_realms
             .iter().map(|realm| realm.realm_name.clone()).collect();
         assert_eq!(order, ["Azeroth", "Empty", "Kalimdor"]);
+    }
+}
+
+#[test]
+fn retail_store_vas_service_type_mapping_matches_product_types() {
+    test_timeout! {
+        let env = load_store_ui();
+        seed_vas_service_type_products(&env);
+        let result: bool = env.eval(VAS_PRODUCT_TYPE_MAPPING_CONSUMER)
+            .expect("Retail VAS product types should map through C_StoreSecure");
+        assert!(result);
+    }
+}
+
+fn seed_vas_service_type_products(env: &WowLuaEnv) {
+    let products = build_vas_service_type_products()
+        .into_iter()
+        .map(|(product_id, product_type)| build_vas_service_type_product(product_id, product_type))
+        .collect::<Vec<_>>();
+    env.state()
+        .borrow_mut()
+        .store_glue
+        .store_secure
+        .catalog
+        .products
+        .extend(products);
+}
+
+fn build_vas_service_type_products() -> [(i32, u32); 12] {
+    [
+        (2100, 7),
+        (2101, 8),
+        (2102, 9),
+        (2103, 10),
+        (2104, 15),
+        (2105, 16),
+        (2106, 19),
+        (2107, 20),
+        (2108, 21),
+        (2109, 22),
+        (2110, 23),
+        (2111, 99),
+    ]
+}
+
+fn build_vas_service_type_product(product_id: i32, product_type: u32) -> StoreProductInput {
+    StoreProductInput {
+        product_id,
+        supported: true,
+        session_eligible: true,
+        display_eligible: true,
+        dynamic_bundle: false,
+        product_type: Some(product_type),
+        shared_data: StoreProductSharedData::default(),
     }
 }
 
