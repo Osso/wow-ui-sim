@@ -1382,6 +1382,7 @@ impl SimState {
             self.glue_login.ptr_connection =
                 crate::c_api::c_login::ptr_state::PtrConnectionState::for_screen(screen_kind);
         }
+        // Host policy: R88ad.8 leaves any reset of the native first-display state UNKNOWN.
         self.screen_first_display_state = 0;
         if screen_kind.is_glue() {
             self.is_logged_in = false;

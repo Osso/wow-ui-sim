@@ -66,7 +66,9 @@ default), its writers and event order; the minimum-expansion value Lua first
 observes (empty input `0`, the zero-filled image storage). INFERRED and not
 modelled: the native initializer value 10 is observable after initialization.
 The simulator does not seed it, because the session's later writer is UNKNOWN.
-The 0-to-1 display transition is collapsed by the host into the 2 write.
+The 0-to-1 display transition is collapsed by the host into the 2 write. The
+host resets the state to 0 on a screen change and on UI reload; R88ad.8 leaves
+any native reset lifecycle UNKNOWN, so that reset is host policy.
 
 ### R88ad.9 background selection
 
@@ -121,15 +123,26 @@ retained kit, audible results, the fade curve and later backend notifications.
 `GlueParent_SetScreen` and `PhotosensitivityWarningFrameMixin:TryShow`.
 `SetLoginScreenModel` uses a fixture expansion display record, because
 `GetExpansionDisplayInfo` is an unmodelled temporary default.
+Direct-call tests cover what no selected consumer reaches: the argument
+contracts, `SetUsesToken` truthiness, the fade conversion (absent, backed,
+single-precision and overflow inputs), the both-flag `PlayGlueMusic`
+suppression and the fourth `GetServerName` Boolean.
 
 
 ## Retired defaults
 
 On Retail, `shared_bootstrap.lua` no longer installs its defaults for the
-fourteen R88ad.7, .8, .9 (`GetLoginScreenBackground`) and .10 globals, and of
-`IsTestBuild` (INFERRED commit),
-(`retireGlueStateDefaults`). Removal is behaviour-neutral: the shared bootstrap
-runs before `register_globals`, whose Retail `glue_state::register` replaced each
-default, and `restore_post_cleanup_globals` only fills nil globals. The unread
-`SimState` fields `saved_account_name`, `saved_account_list` and `uses_token`
-were removed. Other profiles keep the defaults.
+fourteen R88ad.7, .8, .9 (`GetLoginScreenBackground`) and .10 globals or for
+`IsTestBuild` (`retireGlueStateDefaults`).
+
+- For the fourteen globals the removal is behaviour-neutral: the shared bootstrap
+  runs before `register_globals`, whose Retail `glue_state::register` replaced each
+  default, and `restore_post_cleanup_globals` only fills nil globals.
+- `IsTestBuild` is a real behaviour change on Retail (INFERRED, commit
+  `b31847b13`, no assertion): it changed from true to false. The original
+  `GameRulesUtil.ShouldShowAddOns` (`GameRulesUtil.lua:63`) and
+  `AddonCompartmentMixin:UpdateDisplay` (`AddonCompartment.lua:146`) now depend on
+  the `UserAddonsDisabled` game rule; a true result no longer bypasses it.
+
+The unread `SimState` fields `saved_account_name`, `saved_account_list` and
+`uses_token` were removed. Other profiles keep the defaults.
