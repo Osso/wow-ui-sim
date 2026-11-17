@@ -297,3 +297,13 @@ resolver test; this is not runtime Azerite consumer proof. The resolved
 **VERIFIED (final Retail run):** the original ColorManager consumer, bag-quality consumer, secure snapshot test, setting round-trip test, and four startup/workaround tests each list one exact test and pass. The final `wow-sim --no-addons --no-saved-vars lua-errors` run reports `Status: CLEAN`, zero unique or occurrence errors, and `[]`. PTR, Forever, Mists, Wrath compile-only, and Retail final receipts report zero warnings; see the revision-1 handoff report and manifests.
 
 **VERIFIED (R88v.v3 and simulator round-trip):** explicit `playerColorOverrides` save/load seams store and restore active records. **INFERRED:** the JSON byte-row encoding. **UNKNOWN:** the automatic reload/logout chain, final storage step, and failed-save behavior. **INFERRED:** the native update/reset callbacks map to `COLOR_OVERRIDE_UPDATED` and `COLOR_OVERRIDES_RESET`; tests assert neither the callback mapping nor the encoding.
+
+## Retail StoreSecure callable-producer RED
+
+**CORRECTION (VERIFIED):** the earlier Store catalog RED removed producer registration. Several failures were missing-method errors in test-authored Lua, so that run did not prove rejection of callable wrong producers.
+
+**VERIFIED (uncommitted hash-bound overlay):** the replacement overlay keeps every method callable. Each environment selector returns one wrong value from one producer: nil entry info, an empty currency table, false product readiness, no product entries, no dynamic-price submissions, false distribution readiness, or false purchase progress. The overlay was checked to place each selector inside its named Rust function before the Retail build.
+
+**VERIFIED (Retail RED run):** all seven exact selections fail through selected Blizzard consumers. Two fail inside `Blizzard_Shared_StoreUISecure.lua` at lines 663 and 454. The others fail on observed results from `CatalogShopMixin:IsLoading`, `StoreFrame_DoesProductGroupHavePurchasableItems`, `StoreFrame_IsLoading`, `StoreFrame_UpdateActivePanel`, and the dynamic-price requests made by StoreFrame's product update. The tests cover two backed inputs plus an absent case for each selector family.
+
+**CORRECTION (VERIFIED):** one intermediate readiness overlay used only three generic context lines and applied inside `has_purchase_list`. Its passing `has-product-list` run is not RED evidence. The final overlay uses function-header anchors and replaces that attempt.

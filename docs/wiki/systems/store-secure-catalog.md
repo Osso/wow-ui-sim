@@ -31,7 +31,7 @@ This system models Retail `C_StoreSecure` catalog and list state as host-supplie
 
 ### Tests
 
-`tests/store_secure_catalog.rs` runs the original StoreUI and CatalogShop consumer code with explicit host records and empty-default state. `tests/catalog_shop.rs`, `tests/store_tree.rs`, and `tests/store_anchor_regression.rs` supply explicit Retail readiness/catalog inputs for presentation tests. `tests/store_group_contract.rs` checks the original cleanup path in `secureenv`. The former default-demo group assertions are retired; see the [historical policy page](../../specs/store-product-group-shape.md).
+`tests/store_secure_catalog.rs` runs the original StoreUI and CatalogShop consumer code with explicit host records and empty-default state. Its seven callable-producer RED cases are recorded in [[consumer-selection-and-red-proof]]. `tests/catalog_shop.rs`, `tests/store_tree.rs`, and `tests/store_anchor_regression.rs` supply explicit Retail readiness/catalog inputs for presentation tests. `tests/store_group_contract.rs` checks the original cleanup path in `secureenv`. The former default-demo group assertions are retired; see the [historical policy page](../../specs/store-product-group-shape.md).
 
 ## Sources
 

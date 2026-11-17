@@ -1,3 +1,7 @@
+## [2026-11-16] revision | Retail StoreSecure consumer RED and notifications
+
+The [StoreSecure system page](systems/store-secure-catalog.md) and [RED proof record](investigations/consumer-selection-and-red-proof.md#retail-storesecure-callable-producer-red) record ColorMixin RGB construction, coalesced purchase updates, and seven callable wrong-producer RED cases through original Store consumers. **INFERRED:** the OnUpdate flush boundary is a simulator policy.
+
 ## [2026-11-16] implementation | Retail StoreSecure catalog inputs
 
 [StoreSecure catalog contract](../specs/store-secure-catalog.md) and [system page](systems/store-secure-catalog.md) record the Retail 12.1.5.70688 R88ad.1/R88ad.2 catalog, availability, currency, list, and request behavior. **VERIFIED (simulator source):** Retail uses empty-default host inputs; Mists remains UNKNOWN and keeps its prior bootstrap path. **VERIFIED (pinned 12.1.5.70783 consumers):** StoreUI and CatalogShop remain the original read paths. The old seeded-group contract is historical and superseded.

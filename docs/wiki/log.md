@@ -1,3 +1,7 @@
+## [2026-11-16] revision | Retail StoreSecure consumer RED and notifications
+
+Updated the [StoreSecure contract](../specs/store-secure-catalog.md), [system page](systems/store-secure-catalog.md), and [RED proof record](investigations/consumer-selection-and-red-proof.md#retail-storesecure-callable-producer-red). **VERIFIED (R88ad.1):** product override colors use a new `ColorMixin` table with RGB fields only. **VERIFIED (R88ad.2):** purchase-list responses queue and coalesce a zero-payload update. **INFERRED (simulator policy):** the update flushes at the next `fire_on_update_timed` boundary before frame OnUpdate handlers. **VERIFIED (Retail RED):** seven callable wrong-producer selectors fail through original StoreUI or CatalogShop consumers.
+
 ## [2026-11-16] implementation | Retail StoreSecure catalog inputs
 
 Added the Retail catalog state contract and system page. **VERIFIED (R88ad.1/R88ad.2, Retail 12.1.5.70688):** catalog readers, availability/list writers, currency lookup, and request limits have explicit native behavior. **VERIFIED (simulator source):** unknown runtime rows remain empty host inputs, and only Retail selects the new model; uncovered profiles retain bootstrap behavior. The pinned 12.1.5.70783 StoreUI and CatalogShop consumers remain unchanged. The verified `GetEntryInfo.alreadyOwned` snapshot behavior is recorded in the [contract](../specs/store-secure-catalog.md) and [system page](systems/store-secure-catalog.md).
