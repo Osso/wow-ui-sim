@@ -123,6 +123,10 @@ fn register_interaction_combat(state: &mut LuaState) -> LuaResult<()> {
     // INFERRED: R88ah's 70631 behavior applies to the 70268 Mists cache.
     #[cfg(feature = "client-mists")]
     super::mists_r88ah::register_combat_audio_alert(state)?;
+    // INFERRED: R88ai's 70631 spec-setting behavior applies to the 70268 Mists
+    // cache, whose declarations, enums and default constants match.
+    #[cfg(feature = "client-mists")]
+    super::mists_r88ai::register(state)?;
     #[cfg(feature = "retail-12-0-0")]
     super::c_combat_audio_alert::register(state)?;
     #[cfg(feature = "retail-12-0-0")]

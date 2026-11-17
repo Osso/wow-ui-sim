@@ -354,6 +354,8 @@ mod c_trade_skill_source;
 #[cfg(feature = "client-mists")]
 pub(crate) mod mists_r88ah;
 #[cfg(feature = "client-mists")]
+pub(crate) mod mists_r88ai;
+#[cfg(feature = "client-mists")]
 pub(crate) mod mists_reputation_list;
 #[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
 pub mod spell_reagent_inventory;

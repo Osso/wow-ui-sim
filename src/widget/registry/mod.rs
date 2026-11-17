@@ -316,31 +316,40 @@ impl WidgetRegistry {
         was_inserted
     }
 
+    /// Register `event` with `units` replacing any previous filter; an empty
+    /// list stores no filter. Returns (newly registered, registration changed).
     pub fn register_unit_event_listener(
         &mut self,
         id: u64,
         event: &str,
-        unit: &str,
-        second_unit: Option<&str>,
-    ) -> bool {
-        let was_inserted = self
-            .widgets
-            .get_mut(&id)
-            .map(|frame| {
-                frame.registered_unit_events.insert(
-                    event.to_string(),
-                    (unit.to_string(), second_unit.map(str::to_string)),
-                );
-                frame.registered_events.insert(event.to_string())
-            })
-            .unwrap_or(false);
+        units: Vec<String>,
+    ) -> (bool, bool) {
+        let Some(frame) = self.widgets.get_mut(&id) else {
+            return (false, false);
+        };
+        let was_inserted = frame.registered_events.insert(event.to_string());
+        let previous = if units.is_empty() {
+            frame.registered_unit_events.remove(event)
+        } else {
+            frame
+                .registered_unit_events
+                .insert(event.to_string(), units.clone())
+        };
+        let filter_changed = previous.unwrap_or_default() != units;
         if was_inserted {
             self.event_listeners
                 .entry(event.to_string())
                 .or_default()
                 .insert(id);
         }
-        was_inserted
+        (was_inserted, was_inserted || filter_changed)
+    }
+
+    /// Remove the unit filter of a registered event; true when one was removed.
+    pub fn clear_unit_event_filter(&mut self, id: u64, event: &str) -> bool {
+        self.widgets
+            .get_mut(&id)
+            .is_some_and(|frame| frame.registered_unit_events.remove(event).is_some())
     }
 
     pub fn unregister_event_listener(&mut self, id: u64, event: &str) -> bool {

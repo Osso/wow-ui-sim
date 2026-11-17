@@ -171,11 +171,7 @@ fn addon_metadata(addon: &crate::lua_api::AddonInfo, field: &str) -> Option<Stri
 }
 
 fn find_addon_metadata(addon: &crate::lua_api::AddonInfo, field: &str) -> Option<String> {
-    addon
-        .metadata
-        .iter()
-        .find(|(key, _)| key.eq_ignore_ascii_case(field))
-        .map(|(_, value)| value.clone())
+    addon.metadata.get_ignore_ascii_case(field).cloned()
 }
 
 fn push_addon_info(state: &mut LuaState, addon: &crate::lua_api::AddonInfo) -> u32 {

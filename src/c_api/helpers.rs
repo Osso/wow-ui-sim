@@ -97,6 +97,39 @@ pub(crate) fn read_untainted_string_argument(
     bytes.ok_or_else(|| bad_argument(index, function, usage))
 }
 
+/// Read a required numeric enum whose low byte must not exceed `max`
+/// (Mists R88ah/R88ai). Overflow has its own text; other failures use `usage`.
+#[cfg(feature = "client-mists")]
+pub(crate) fn read_low_byte_enum_argument(
+    state: &LuaState,
+    index: i32,
+    function: &str,
+    usage: &str,
+    max: u8,
+) -> LuaResult<u8> {
+    let (value, marked) = read_untainted_value(state, index, function, usage)?;
+    let number = match value {
+        Val::Num(number) => Some(number),
+        Val::Str(reference) if !marked => state
+            .gc
+            .string_arena
+            .get(reference)
+            .and_then(|string| parse_numeric_string(string.data())),
+        _ => None,
+    };
+    let number = number.ok_or_else(|| bad_argument(index, function, usage))?;
+    let within_i32_range = (f64::from(i32::MIN)..=f64::from(i32::MAX)).contains(&number);
+    if !number.is_finite() || !within_i32_range {
+        let error = format!("integer overflow attempting to store {number:.6}");
+        return Err(bad_argument(index, function, &error));
+    }
+    let low_byte = (number.trunc() as i32) as u8;
+    if low_byte > max {
+        return Err(bad_argument(index, function, usage));
+    }
+    Ok(low_byte)
+}
+
 #[cfg(feature = "client-retail")]
 pub(crate) fn read_untainted_truthy_argument(
     state: &LuaState,
