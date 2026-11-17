@@ -1,10 +1,11 @@
 //! Mists-only `C_CombatAudioAlert` spec settings from the R88ai native answer.
 
 use super::helpers::{
-    ensure_namespace, read_low_byte_enum_argument, read_untainted_signed32_argument,
+    ensure_global_table, ensure_namespace, read_low_byte_enum_argument,
+    read_untainted_signed32_argument,
 };
 use crate::lua_api::SimState;
-use crate::lua_api::methods::{borrow_state, borrow_state_mut};
+use crate::lua_api::methods::{borrow_state, borrow_state_mut, create_table, table_set};
 use crate::lua_bridge::table_set_rust_fn_static;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
@@ -21,6 +22,18 @@ const SLOT_COUNT: usize = 5;
 const FALLBACK_SLOT: usize = SLOT_COUNT - 1;
 /// Loaded value for an absent list position, in `Enum.CombatAudioAlertSpecSetting` order.
 const ABSENT_VALUES: [i32; SETTING_COUNT] = [0, 1, 0, 100, 0, 1, 0, 100, 1];
+/// Native `Enum.CombatAudioAlertSpecSetting` members, in value order.
+const SETTING_NAMES: [&str; SETTING_COUNT] = [
+    "Resource1Percent",
+    "Resource1Format",
+    "Resource1Voice",
+    "Resource1Volume",
+    "Resource2Percent",
+    "Resource2Format",
+    "Resource2Voice",
+    "Resource2Volume",
+    "SayIfTargeted",
+];
 
 /// In-memory per-setting spec lists. Every registered CVar default is empty,
 /// so each loaded position holds its absent value.
@@ -34,9 +47,25 @@ impl Default for CombatAudioSpecSettings {
 }
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
+    publish_spec_setting_enum(state);
     let namespace = ensure_namespace(state, "C_CombatAudioAlert")?;
     table_set_rust_fn_static(state, namespace, "GetSpecSetting", get_spec_setting)?;
     table_set_rust_fn_static(state, namespace, "SetSpecSetting", set_spec_setting)
+}
+
+/// Replace the legacy five-member table with the native nine-member publication.
+fn publish_spec_setting_enum(state: &mut LuaState) {
+    let enums = ensure_global_table(state, "Enum");
+    let values = create_table(state);
+    table_set(state, enums, "CombatAudioAlertSpecSetting", values);
+    for (value, name) in SETTING_NAMES.into_iter().enumerate() {
+        table_set(state, values, name, Val::Num(value as f64));
+    }
+    let meta = create_table(state);
+    table_set(state, enums, "CombatAudioAlertSpecSettingMeta", meta);
+    table_set(state, meta, "NumValues", Val::Num(SETTING_COUNT as f64));
+    table_set(state, meta, "MinValue", Val::Num(0.0));
+    table_set(state, meta, "MaxValue", Val::Num(f64::from(MAX_SETTING)));
 }
 
 fn get_spec_setting(state: &mut LuaState) -> LuaResult<u32> {

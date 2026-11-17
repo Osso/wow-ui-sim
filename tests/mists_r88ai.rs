@@ -77,6 +77,15 @@ fn spec_settings_default_to_absent_values_and_return_one_number() {
         .eval("local G = C_CombatAudioAlert.GetSpecSetting return G(264), G('3'), G(7.9, 'extra')")
         .expect("low byte, numeric strings and truncation should select settings");
     assert_eq!(converted, (1, 100, 100));
+    let published: String = env
+        .eval(
+            "local E, M = Enum.CombatAudioAlertSpecSetting, Enum.CombatAudioAlertSpecSettingMeta local names = {} for name in pairs(E) do names[#names + 1] = name end table.sort(names, function(a, b) return E[a] < E[b] end) for i, name in ipairs(names) do names[i] = name .. '=' .. E[name] end return table.concat(names, ',') .. ';' .. M.NumValues .. ',' .. M.MinValue .. ',' .. M.MaxValue",
+        )
+        .expect("spec-setting enum should be published");
+    assert_eq!(
+        published,
+        "Resource1Percent=0,Resource1Format=1,Resource1Voice=2,Resource1Volume=3,Resource2Percent=4,Resource2Format=5,Resource2Voice=6,Resource2Volume=7,SayIfTargeted=8;9,0,8"
+    );
 }
 
 #[test]
