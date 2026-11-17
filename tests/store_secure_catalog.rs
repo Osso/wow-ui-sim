@@ -439,7 +439,7 @@ fn connect_with_distribution_ready(env: &WowLuaEnv) {
     sim.store_glue.store_secure.distribution_list_ready = Some(true);
 }
 
-fn receive_catalog_response(env: &WowLuaEnv, currency_id: u32) {
+fn receive_catalog_response(env: &WowLuaEnv, currency_id: i32) {
     let catalog = env.state().borrow().store_glue.store_secure.catalog.clone();
     wow_ui_sim::c_api::store_catalog_model::receive_product_list(
         env,
