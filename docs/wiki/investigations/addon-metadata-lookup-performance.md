@@ -2,7 +2,7 @@
 
 `GetAddOnMetadata` scanned every TOC key with `eq_ignore_ascii_case` on each call. QuestieDB's Mists TOC has 408,495 keys and Questie reads rows one call at a time, so Mists startup with Questie 12.9.0 + QuestieDB 1.1.1 never settled within 90 s. A case-insensitive key index built while parsing each TOC fixed it (lt-45c1).
 
-A per-session TOC cache then removed the repeated parses of the 57 MB QuestieDB TOC (lt-498d); see [Repeated TOC parsing](#repeated-toc-parsing-fixed-lt-498d).
+VERIFIED (lt-498d optional-tests and release runs): a per-session TOC cache removes the repeated parses of the 57 MB QuestieDB TOC; see [Repeated TOC parsing](#repeated-toc-parsing-fixed-lt-498d).
 
 ## Symptoms
 
@@ -27,10 +27,10 @@ A per-session TOC cache then removed the repeated parses of the 57 MB QuestieDB 
 
 ## Repeated TOC parsing (fixed, lt-498d)
 
-- Cause: every reader parsed the TOC itself. Third-party startup parsed each TOC for screen eligibility, dependency sorting, enable state, list registration, startup eligibility, the Blizzard dependency check and the load; `LoadAddOn` parsed it again. Each parse built a new 408,495-key index, and the addon list kept a copy of the metadata map.
-- Fix: the [TOC session cache](../../specs/toc-session-cache.md) parses each TOC path once per UI session and shares `Rc<TocFile>`; `TocMetadata` clones share one map. ReloadUI starts a new cache.
+- VERIFIED (source inventory): each reader parsed the TOC itself. Third-party startup parsed each TOC for screen eligibility, dependency sorting, enable state, list registration, startup eligibility, the Blizzard dependency check and the load; `LoadAddOn` parsed it again. Each parse built a new 408,495-key index, and the addon list kept a copy of the metadata map.
+- VERIFIED (implementation and reload tests): the [TOC session cache](../../specs/toc-session-cache.md) parses each TOC path once per UI session and shares `Rc<TocFile>`; `TocMetadata` clones share one map. ReloadUI starts a new cache.
 - VERIFIED (optional-tests regression, two 150,000-key TOCs, 10.06 MB): the unchanged loader read 66.3 MB at startup and 9.46 MB more in `LoadAddOn`; the cache reads 10.06 MB and 155 bytes.
-- VERIFIED (Mists release, same-host A/B, 3 runs each, `998b136cd` against the fix): third-party pre-load phase 2.81–4.17 s → 0.33–0.58 s; startup wall time 12.6–19.2 s → 8.4–17.8 s (the 17.8 s run was the first after the build; host load made wall times noisy); peak `VmHWM` 1,381,212–1,386,340 KiB → 1,065,056–1,068,932 KiB (about −310 MiB, −23%). Both binaries print the same empty `lua-errors` JSON.
+- VERIFIED (Mists release, same-host A/B, three runs each, base `998b136cd` against cache build `f67bffe1c`): third-party pre-load phase 2.81–4.17 s → 0.33–0.58 s; startup wall time 12.6–19.2 s → 8.4–17.8 s (the 17.8 s run was first after build; host load made wall times noisy); peak `VmHWM` 1,381,212–1,386,340 KiB → 1,065,056–1,068,932 KiB (median reduction 310 MiB, 22.9%). Both binaries print the same empty `lua-errors` JSON. The later final commits preserve this cache-backed call path; see BUILD/RUN manifests for source SHAs.
 
 ## Sources
 
@@ -38,8 +38,9 @@ A per-session TOC cache then removed the repeated parses of the 57 MB QuestieDB 
 - `/home/osso/.local/state/wow-ui-sim/handoff/questie-perf/REPORT.md` — original evidence.
 - `/home/osso/.local/state/wow-ui-sim/handoff/metadata-index/REPORT.md` — overlay proof, gates, A/B runs and profile.
 -->
-- questie-perf handoff `REPORT.md` (untracked proof receipts) — original evidence.
-- lt-45c1 metadata-index handoff `REPORT.md` (untracked proof receipts) — overlay proof, gates, A/B runs and profile.
+- [Addon metadata contract](../../specs/addon-metadata-lookup.md) — preserved lookup behavior.
+- [TOC session cache contract](../../specs/toc-session-cache.md) — one read per session and reload boundary.
+- questie-perf and lt-45c1 metadata-index handoff `REPORT.md` files (untracked receipts) — original profile and A/B evidence.
 
 ## See Also
 

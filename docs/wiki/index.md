@@ -1,6 +1,6 @@
 ## [2026-11-17] investigation | TOC parsed once per UI session
 
-[Addon metadata lookup performance](investigations/addon-metadata-lookup-performance.md#repeated-toc-parsing-fixed-lt-498d) now records the repeated parsing of the 57 MB QuestieDB TOC and its fix: a per-session TOC cache ([contract](../specs/toc-session-cache.md)) shared by discovery, enable state, registration, loading and the `C_AddOns` runtime. Mists Questie startup peak RSS drops by about 310 MiB.
+VERIFIED (source inventory, RED/GREEN, and Mists A/B): [Addon metadata lookup performance](investigations/addon-metadata-lookup-performance.md#repeated-toc-parsing-fixed-lt-498d) records the repeated parsing of the 57 MB QuestieDB TOC and its fix: a per-session TOC cache ([contract](../specs/toc-session-cache.md)) shared by discovery, enable state, registration, loading and the `C_AddOns` runtime. Mists Questie startup peak RSS drops by about 310 MiB.
 
 ## [2026-11-17] investigation | Addon metadata lookup performance
 
