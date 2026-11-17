@@ -225,6 +225,7 @@ sourceLocationProbeResults.excluded = excludedLocation
     );
 }
 
+#[cfg(feature = "client-retail")]
 #[test]
 fn secure_addon_loads_nonsecure_dependency_in_ordinary_then_secure_environment() {
     let env = env();
@@ -360,6 +361,7 @@ fn secure_addon_loads_nonsecure_dependency_in_ordinary_then_secure_environment()
     assert_eq!(counts_after, counts_before);
 }
 
+#[cfg(feature = "client-retail")]
 #[test]
 fn secure_dependency_runs_after_ordinary_file_error() {
     let env = env();
@@ -452,6 +454,7 @@ fn secure_dependency_runs_after_ordinary_file_error() {
     );
 }
 
+#[cfg(feature = "client-retail")]
 #[test]
 fn secure_dependencies_load_optional_before_required_before_consumer() {
     let env = env();

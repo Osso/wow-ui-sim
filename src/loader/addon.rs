@@ -333,10 +333,16 @@ fn load_secure_dependencies_for_pass(
     result: &mut LoadResult,
     secure_load_path: &mut HashSet<String>,
 ) -> Result<(), LoadError> {
-    if pass.is_secure_load() {
+    if pass.is_secure_load() && uses_secure_dependency_pass() {
         load_secure_dependencies(env, toc, result, secure_load_path)?;
     }
     Ok(())
+}
+
+/// R88g.1 (Retail 70688) loads a secure addon's dependencies in secureenv.
+/// Other profiles keep master's library replay; their native behavior is UNKNOWN.
+fn uses_secure_dependency_pass() -> bool {
+    crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail
 }
 
 fn load_addon_files_and_finish(
