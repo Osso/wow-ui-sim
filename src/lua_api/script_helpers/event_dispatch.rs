@@ -39,13 +39,15 @@ pub(crate) fn event_matches_unit_filter(
         .widgets
         .get(widget_id)
         .and_then(|frame| frame.registered_unit_events.get(event_name));
-    let Some((first, second)) = filter else {
+    // INFERRED (R88aj): no stored filter, including a zero-unit
+    // RegisterUnitEvent, delivers the event for every unit.
+    let Some(units) = filter else {
         return Ok(true);
     };
     let Some(unit) = args.first().and_then(|value| val_to_string(state, *value)) else {
         return Ok(false);
     };
-    Ok(unit == first.as_str() || second.as_deref() == Some(unit.as_str()))
+    Ok(units.contains(&unit))
 }
 
 pub fn fire_named_event_state(state: &mut LuaState, event_name: &str, args: &[Val]) {

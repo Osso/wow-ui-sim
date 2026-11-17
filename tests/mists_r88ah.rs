@@ -87,7 +87,7 @@ fn install_secret_visibility_number(env: &WowLuaEnv) {
 }
 
 #[test]
-fn combat_audio_manager_consumer_observes_enabled_cvar_state() {
+fn combat_audio_enabled_inputs_drive_original_manager_and_return_one_boolean() {
     for (input, expected) in COMBAT_AUDIO_CVAR_CASES {
         let env = load_combat_audio_manager(input);
         let source: String = env
@@ -97,14 +97,6 @@ fn combat_audio_manager_consumer_observes_enabled_cvar_state() {
             source.ends_with("Blizzard_CombatAudioAlerts/Blizzard_CombatAudioAlertManager.lua"),
             "expected original manager source, got {source}"
         );
-        assert_manager_combat_event(&env, expected);
-    }
-}
-
-#[test]
-fn combat_audio_enabled_inputs_drive_original_manager_and_return_one_boolean() {
-    for (input, expected) in COMBAT_AUDIO_CVAR_CASES {
-        let env = load_combat_audio_manager(input);
         assert_eq!(
             env.state().borrow().cvars.get("CAAEnabled").as_deref(),
             Some(input.unwrap_or("0"))
