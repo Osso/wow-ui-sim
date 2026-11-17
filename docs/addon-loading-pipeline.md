@@ -14,16 +14,21 @@ pub fn find_toc_file(addon_dir: &Path) -> Option<PathBuf> {
 Prefers Mainline variants for retail WoW compatibility. Game startup selects eligible non-LoD `Blizzard_*` roots, their hard TOC dependency closure, and explicit LoD startup roots. `Blizzard_Game` depends on `Blizzard_TimeManager`, `Blizzard_CooldownBroadcaster`, `Blizzard_BoostTutorial`, and `Blizzard_CombatLog`; CombatLog's declared base and processor dependencies load first, publishing `CombatLog_LoadUI` before `PLAYER_LOGIN`. `Blizzard_MacroUI` and `Blizzard_TrainerUI` are standalone Game-only LoD roots that publish `MacroFrame_LoadUI` and `ClassTrainerFrame_LoadUI`; they remain LoD and excluded from glue screens. `Blizzard_AchievementUI` is also a standalone Game-only LoD root: its full TOC publishes `AchievementFrame_LoadUI` before `AlertFrame` handles `ACHIEVEMENT_EARNED`, preserving the real achievement-toast queue path while remaining excluded from glue screens. `Blizzard_Transmog` is an explicit Game-only LoD root whose full TOC publishes `Transmog_LoadUI` from `Blizzard_Transmog_Bootstrap.lua` and registers the Transmogrifier interaction; this does not add a bootstrap-only pass. `Blizzard_RaidUI` is selected as an LoD startup root and depends on `Blizzard_RaidFrame`, so RaidFrame loads first. Other LoD addons—including non-Blizzard `Deprecated_PaperDoll`—remain excluded. `[Bootstrap]` remains an inline TOC annotation, never a file-order override. The cumulative `retail-12-1-0` epoch (retail 12.1 and PTR) represents eligible Blizzard LoD annotated TOCs as ordered bootstrap-only nodes; it does not use a global pre-pass. This publishes retail Encounter Journal's `CanShowEncounterJournal` before its micro-button calls it; see [[addon-loading]].
 
 ### TOC File Parsing
-**File:** `src/toc.rs:63-120`
+**File:** `crates/sim-toc/src/lib.rs` (parser), `crates/sim-toc/src/metadata.rs` (metadata)
 
 ```rust
-pub struct TocFile {
+pub struct TocFile<P: Selection> {
     pub addon_dir: PathBuf,
     pub name: String,
-    pub metadata: HashMap<String, String>,  // ## Key: Value pairs
-    pub files: Vec<PathBuf>,                 // Load order (relative paths)
+    pub metadata: TocMetadata,  // ## Key: Value pairs; exact map plus case-insensitive index
+    pub files: Vec<PathBuf>,    // Load order (relative paths)
+    // ... per-file annotations and dependency lines
 }
 ```
+
+`TocMetadata` dereferences to the exact-key `HashMap<String, String>`; `get_ignore_ascii_case` serves `GetAddOnMetadata` ([spec](specs/addon-metadata-lookup.md)). Clones share one map, so `AddonInfo.metadata` and the parsed TOC hold one copy.
+
+Each UI session reads and parses a TOC once: `toc::TocCache` (on `SimState`) maps a TOC path to a shared `Rc<TocFile>` for discovery, enable state, registration, loading and the `C_AddOns` runtime lookups. ReloadUI starts a new cache. See the [TOC session cache spec](specs/toc-session-cache.md).
 
 **Metadata** (lines 123-193):
 - `Interface`: Version numbers (comma-separated)

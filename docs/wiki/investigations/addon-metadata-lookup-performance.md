@@ -25,8 +25,8 @@
 
 ## Sources
 
-- `/home/osso/.local/state/wow-ui-sim/handoff/questie-perf/REPORT.md` — original evidence.
-- `/home/osso/.local/state/wow-ui-sim/handoff/metadata-index/REPORT.md` — overlay proof, gates, A/B runs and profile.
+- questie-perf handoff `REPORT.md` (untracked proof receipts) — original evidence.
+- lt-45c1 metadata-index handoff `REPORT.md` (untracked proof receipts) — overlay proof, gates, A/B runs and profile.
 
 ## See Also
 
