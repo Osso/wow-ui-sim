@@ -106,24 +106,9 @@ const CURRENT_RETAIL_REMOVALS: &[(&str, &str)] = &[
 
 // Literal current-retail cache values, not inferred historical 12.0.5 positions.
 // Only affected members and required shifted values are corrected; unrelated
-// and later cumulative members remain. See the spec for the 33-row source map.
+// and later cumulative members remain.
 #[cfg(feature = "client-retail")]
 const CURRENT_RETAIL_VALUES: &[(&str, &[(&str, i32)])] = &[
-    // Retained 12.0.1 additions: CombatAudioAlertSharedDocumentation.lua:160–177.
-    (
-        "CombatAudioAlertSpecSetting",
-        &[
-            ("Resource1Percent", 0),
-            ("Resource1Format", 1),
-            ("Resource1Voice", 2),
-            ("Resource1Volume", 3),
-            ("Resource2Percent", 4),
-            ("Resource2Format", 5),
-            ("Resource2Voice", 6),
-            ("Resource2Volume", 7),
-            ("SayIfTargeted", 8),
-        ],
-    ),
     // LocalizationSharedDocumentation.lua:6–17.
     (
         "AbbreviationDataError",
