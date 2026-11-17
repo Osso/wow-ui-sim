@@ -90,6 +90,7 @@ fn featured_product(card_type: u32, vas_service_type: u32) -> StoreProductInput 
         session_eligible: true,
         display_eligible: true,
         dynamic_bundle: false,
+        product_type: Some(7),
         shared_data: StoreProductSharedData {
             normal_dollars: 10,
             current_dollars: 10,

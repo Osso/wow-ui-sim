@@ -212,6 +212,7 @@ fn product(
         session_eligible: true,
         display_eligible: visible,
         dynamic_bundle: dynamic,
+        product_type: None,
         shared_data,
     }
 }

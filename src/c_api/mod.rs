@@ -329,6 +329,7 @@ pub mod c_stable_info;
 pub mod c_store_glue;
 mod c_store_secure;
 mod c_store_secure_catalog;
+mod c_store_secure_vas;
 pub mod c_string_util;
 mod c_string_util_decimal;
 pub mod c_summon_info;
@@ -362,8 +363,8 @@ pub(crate) mod mists_reputation_list;
 pub mod spell_reagent_inventory;
 pub mod store_catalog_model;
 pub mod store_glue_model;
-pub mod store_vas_model;
 pub mod store_guid;
+pub mod store_vas_model;
 // The pinned classic TransmogItemsDocumentation.lua / TransmogOutfitInfoDocumentation.lua
 // declare these namespaces on Mists, Era and Anniversary, so the backing model
 // is compiled for those profiles together with the retail API epochs.

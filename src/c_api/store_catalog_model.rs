@@ -67,6 +67,8 @@ pub struct StoreProductInput {
     pub session_eligible: bool,
     pub display_eligible: bool,
     pub dynamic_bundle: bool,
+    /// Host-supplied native product type for the VAS service-type mapping.
+    pub product_type: Option<u32>,
     pub shared_data: StoreProductSharedData,
 }
 

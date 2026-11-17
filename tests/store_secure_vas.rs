@@ -1,7 +1,10 @@
 #![cfg(feature = "client-retail")]
 
 use crate::common::blizzard_addon_harness;
-use wow_ui_sim::c_api::store_vas_model::{StoreVasCharacterInput, StoreVasRealmInput};
+use wow_ui_sim::c_api::store_vas_model::{
+    StoreVasCharacterInput, StoreVasEligibleRaceInput, StoreVasGuildMasterInfoInput,
+    StoreVasGuildMemberInput, StoreVasRaceEligibilityInput, StoreVasRealmInput,
+};
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
 
@@ -83,6 +86,28 @@ const EMPTY_REALM_LIST_CONSUMER: &str = r#"
     assert(not selectors.RealmSelector.List.Buttons[1] or not selectors.RealmSelector.List.Buttons[1]:IsShown(), "empty realm list should have no dropdown rows")
 "#;
 
+const LOOKUP_API_CONSUMER: &str = r#"
+    local realms = C_StoreSecure.GetVASRealmList()
+    assert(#realms == 3 and realms[1].realmName == "Azeroth" and realms[2].realmName == "Empty" and realms[3].realmName == "Kalimdor")
+    assert(realms[1].characterCount == 0 and realms[1].pvp == false)
+    local characters = C_StoreSecure.GetCharactersForRealm(101, true)
+    assert(#characters == 1 and characters[1].name == "Simhero")
+    local character = C_StoreSecure.GetCharacterInfoByGUID("Player-101-1-11")
+    assert(character and character.name == "Simhero" and character.realmName == "Azeroth")
+    assert(C_StoreSecure.GetCharacterInfoByGUID("Player-999-1-FF") == nil)
+    assert(C_StoreSecure.GetWoWAccountGUIDFromName("ignored-local-name", true) == "WowAccount-1001-1")
+    assert(C_StoreSecure.GetWoWAccountGUIDFromName("WoW2", false) == "WowAccount-2002-2")
+    assert(C_StoreSecure.GetWoWAccountGUIDFromName("wow2", false) == nil)
+    local races = C_StoreSecure.GetEligibleRacesForVASService(character.guid, 0)
+    assert(#races == 2 and races[2].isAlliedRace and races[2].isHeritageArmorUnlocked)
+    assert(C_StoreSecure.GetEligibleRacesForVASService("Player-999-1-FF", 0) == nil)
+    local guild = C_StoreSecure.GetVASGuildMasterInfoForCharacterByGUID(character.guid)
+    assert(guild.guildName == "Simulator Guild" and guild.guildMemberInfos[1].memberName == "Simalt")
+    assert(C_StoreSecure.GetVASGuildMasterInfoForCharacterByGUID("Player-999-1-FF") == nil)
+    assert(C_StoreSecure.GetVasServiceType(2003) == Enum.VasServiceType.NameChange)
+    assert(C_StoreSecure.GetVasServiceType(99999) == nil)
+"#;
+
 fn load_store_ui() -> WowLuaEnv {
     let ui_dir = blizzard_addon_harness::blizzard_ui_dir();
     let env = blizzard_addon_harness::new_blizzard_addon_glue_env(&ui_dir);
@@ -137,8 +162,8 @@ const REALM_AND_CHARACTER_INPUTS: &str = r#"
 
 fn realm_inputs() -> Vec<StoreVasRealmInput> {
     vec![
-        realm_input(101, "Azeroth", 2, false, false),
         realm_input(102, "Kalimdor", 1, true, false),
+        realm_input(101, "Azeroth", 2, false, false),
         realm_input(303, "Empty", 0, false, true),
     ]
 }
@@ -161,7 +186,7 @@ fn simhero() -> StoreVasCharacterInput {
     StoreVasCharacterInput {
         realm_address: 101,
         realm_name: Some("Azeroth".into()),
-        guid: Some("Player-101-1-A".into()),
+        guid: Some("Player-101-1-11".into()),
         guid_order: Some(1),
         name: Some("Simhero".into()),
         class_name: Some("Warrior".into()),
@@ -181,7 +206,7 @@ fn simalt() -> StoreVasCharacterInput {
     StoreVasCharacterInput {
         realm_address: 101,
         realm_name: Some("Azeroth".into()),
-        guid: Some("Player-101-2-B".into()),
+        guid: Some("Player-101-1-12".into()),
         guid_order: Some(2),
         name: Some("Simalt".into()),
         class_name: Some("Mage".into()),
@@ -201,7 +226,7 @@ fn kalimdor_mage() -> StoreVasCharacterInput {
     StoreVasCharacterInput {
         realm_address: 102,
         realm_name: Some("Kalimdor".into()),
-        guid: Some("Player-102-1-C".into()),
+        guid: Some("Player-102-1-13".into()),
         guid_order: Some(3),
         name: Some("KalimdorHero".into()),
         class_name: Some("Priest".into()),
@@ -223,7 +248,10 @@ fn seed_realm_and_character_inputs(env: &WowLuaEnv) {
         let vas = &mut sim.store_glue.store_secure.vas;
         vas.realms = realm_inputs();
         vas.vas_realms = realm_inputs();
-        vas.characters = character_inputs();
+        let characters = character_inputs();
+        vas.characters = characters.clone();
+        vas.character_objects = characters;
+        vas.guild_character_guids.insert("Player-101-1-11".into());
     }
     env.exec(REALM_AND_CHARACTER_INPUTS)
         .expect("explicit realm and character host rows should seed");
@@ -239,6 +267,46 @@ fn clear_realm_inputs(env: &WowLuaEnv) {
         .clear();
     env.exec("__wow_store_state.realms = {}")
         .expect("empty realm host input should seed");
+}
+
+fn seed_group3_lookup_inputs(env: &WowLuaEnv) {
+    let mut sim = env.state().borrow_mut();
+    let vas = &mut sim.store_glue.store_secure.vas;
+    vas.local_wow_account_guid = Some("WowAccount-1001-1".into());
+    vas.wow_account_guids
+        .insert(b"WoW2".to_vec(), "WowAccount-2002-2".into());
+    vas.race_eligibility = vec![race_eligibility()];
+    vas.guild_master_info = vec![guild_master_info()];
+}
+
+fn race_eligibility() -> StoreVasRaceEligibilityInput {
+    StoreVasRaceEligibilityInput {
+        guid: "Player-101-1-11".into(),
+        service_type: 0,
+        results: Some(vec![
+            StoreVasEligibleRaceInput {
+                race_name: "Human".into(),
+                is_allied_race: false,
+                is_heritage_armor_unlocked: true,
+            },
+            StoreVasEligibleRaceInput {
+                race_name: "Void Elf".into(),
+                is_allied_race: true,
+                is_heritage_armor_unlocked: true,
+            },
+        ]),
+    }
+}
+
+fn guild_master_info() -> StoreVasGuildMasterInfoInput {
+    StoreVasGuildMasterInfoInput {
+        guid: "Player-101-1-11".into(),
+        guild_name: "Simulator Guild".into(),
+        members: vec![StoreVasGuildMemberInput {
+            guid: Some("Player-101-1-12".into()),
+            member_name: "Simalt".into(),
+        }],
+    }
 }
 
 fn apply_callable_wrong_producer_overlay(env: &WowLuaEnv) {
@@ -261,5 +329,21 @@ fn retail_store_vas_realm_and_character_consumers_use_explicit_rows() {
         clear_realm_inputs(&env);
         env.exec(EMPTY_REALM_LIST_CONSUMER)
             .expect("the selected realm dropdown should consume an empty realm list");
+    }
+}
+
+#[test]
+fn retail_store_vas_lookup_apis_publish_explicit_host_rows() {
+    test_timeout! {
+        let env = load_store_ui();
+        seed_realm_and_character_inputs(&env);
+        crate::common::store_catalog_fixture::seed_vas_catalog(&env);
+        seed_group3_lookup_inputs(&env);
+        let result: bool = env.eval(LOOKUP_API_CONSUMER)
+            .expect("Retail VAS lookup results should reach their original call surface");
+        assert!(result);
+        let order: Vec<String> = env.state().borrow().store_glue.store_secure.vas.vas_realms
+            .iter().map(|realm| realm.realm_name.clone()).collect();
+        assert_eq!(order, ["Azeroth", "Empty", "Kalimdor"]);
     }
 }
