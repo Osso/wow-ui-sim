@@ -24,6 +24,17 @@ pub struct StoreVasState {
     pub bnet_transfer_guid: Option<String>,
     pub bnet_game_accounts: Vec<Vec<u8>>,
     pub submitted_requests: Vec<StoreVasRequest>,
+    pub purchase_eligible_product_ids: HashSet<i32>,
+    pub product_prices: HashMap<i32, StoreVasPriceInput>,
+    pub purchase_records: Vec<StoreVasPurchaseInput>,
+    pub selected_purchase_product_id: Option<i32>,
+    pub boost: Option<StoreVasBoostInput>,
+    pub completion: Option<StoreVasCompletionInput>,
+    pub completion_request_pending: bool,
+    pub failure_marker: u32,
+    pub received_failure_code: u32,
+    pub pre_generated_external_transaction_id: Option<Vec<u8>>,
+    pub opened_nydus_links: Vec<String>,
 }
 
 #[derive(Clone, Debug, PartialEq, Eq)]
@@ -39,6 +50,38 @@ pub enum StoreVasRequest {
     CharacterGuildFollowInfo {
         guid: crate::c_api::store_guid::Outcome,
         realm_address: u32,
+    },
+    ProductPurchase {
+        sequence: u64,
+        product_id: i32,
+        external_transaction_id: Option<Vec<u8>>,
+    },
+    PurchaseConfirmation {
+        correlation: u64,
+        confirmed: bool,
+        dollars: u32,
+        cents: u16,
+    },
+    VasPurchase {
+        sequence: u64,
+        product_id: i32,
+        character_guid: crate::c_api::store_guid::Outcome,
+        new_name: Option<Vec<u8>>,
+        guild_name: Option<Vec<u8>>,
+        guild_master_guid: Option<crate::c_api::store_guid::Outcome>,
+        destination_realm: Option<u32>,
+        wow_account_guid: Option<crate::c_api::store_guid::Outcome>,
+        bnet_account_guid: Option<crate::c_api::store_guid::Outcome>,
+        transfer_faction_bundle: bool,
+        guild_follow: bool,
+    },
+    CompletionInfo {
+        sequence: u64,
+        product_id: i32,
+        guid: crate::c_api::store_guid::Outcome,
+    },
+    AcknowledgeFailure {
+        marker: u32,
     },
 }
 
@@ -85,6 +128,37 @@ pub struct StoreVasEligibleRaceInput {
     pub race_name: String,
     pub is_allied_race: bool,
     pub is_heritage_armor_unlocked: bool,
+}
+
+#[derive(Clone, Debug, Default)]
+pub struct StoreVasPriceInput {
+    pub original_amount: u32,
+    pub current_amount: u32,
+}
+
+#[derive(Clone, Debug, Default)]
+pub struct StoreVasPurchaseInput {
+    pub product_id: i32,
+    pub status: i32,
+    pub secondary_status: i32,
+    pub wallet_name: String,
+    pub original_amount: u32,
+    pub current_amount: u32,
+}
+
+#[derive(Clone, Debug, Default)]
+pub struct StoreVasBoostInput {
+    pub product_id: i32,
+    pub character_guid: String,
+    pub realm_address: u32,
+}
+
+#[derive(Clone, Debug, Default)]
+pub struct StoreVasCompletionInput {
+    pub product_id: i32,
+    pub guid: String,
+    pub first_auxiliary: u32,
+    pub second_auxiliary: u32,
 }
 
 #[derive(Clone, Debug, Default)]

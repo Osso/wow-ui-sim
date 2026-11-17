@@ -1,6 +1,8 @@
 //! Verified Retail StoreSecure VAS lookups and operations.
 
+mod completion;
 mod lookups;
+mod purchase;
 mod requests;
 
 use super::c_store_glue::{Member, publish_namespace};
@@ -40,6 +42,19 @@ const MEMBERS: &[Member] = &[
     (
         "RequestCharacterGuildFollowInfo",
         requests::request_character_guild_follow_info,
+    ),
+    ("OpenNydusLink", purchase::open_nydus_link),
+    ("GetConfirmationInfo", purchase::get_confirmation_info),
+    ("GetUnrevokedBoostInfo", purchase::get_unrevoked_boost_info),
+    ("PurchaseProduct", purchase::purchase_product),
+    ("PurchaseProductConfirm", purchase::purchase_product_confirm),
+    ("PurchaseVASProduct", purchase::purchase_vas_product),
+    ("GetVASCompletionInfo", completion::get_completion_info),
+    ("GetFailureInfo", completion::get_failure_info),
+    ("AckFailure", completion::ack_failure),
+    (
+        "ClearPreGeneratedExternalTransactionID",
+        completion::clear_external_transaction_id,
     ),
 ];
 

@@ -109,7 +109,7 @@ pub(super) fn get_vas_service_type(state: &mut LuaState) -> LuaResult<u32> {
     if c_store_glue::restricted_call(state)? {
         return Ok(0);
     }
-    let product_id = read_signed_product_id(state)?;
+    let product_id = read_signed_product_id(state, GET_SERVICE_TYPE)?;
     let service = service_type_for_product(state, product_id)?;
     super::pending_error(state, GET_SERVICE_TYPE)?;
     state.push(service.map_or(Val::Nil, |value| Val::Num(f64::from(value))));
@@ -160,7 +160,7 @@ fn is_guild_character(
     })
 }
 
-fn find_character_object<'a>(
+pub(super) fn find_character_object<'a>(
     state: &'a LuaState,
     guid: &Outcome,
 ) -> LuaResult<Option<crate::c_api::store_vas_model::StoreVasCharacterInput>> {
@@ -230,7 +230,10 @@ fn guild_master_info(
         .cloned())
 }
 
-fn service_type_for_product(state: &LuaState, product_id: i32) -> LuaResult<Option<u32>> {
+pub(super) fn service_type_for_product(
+    state: &LuaState,
+    product_id: i32,
+) -> LuaResult<Option<u32>> {
     let sim = borrow_state(state)?;
     let product_type = sim
         .store_glue
@@ -260,18 +263,23 @@ fn service_type_for_product_type(product_type: u32) -> Option<u32> {
     }
 }
 
-fn read_guid(state: &LuaState, index: i32, method: &str) -> LuaResult<Outcome> {
+pub(super) fn read_guid(state: &LuaState, index: i32, method: &str) -> LuaResult<Outcome> {
     let value = read_secure_argument(state, index, method)?;
     let bytes = text_bytes(state, value, index, method)?;
     Ok(borrow_state(state)?.store_glue.resolve_guid(&bytes))
 }
 
-fn read_text_bytes(state: &LuaState, index: i32, method: &str) -> LuaResult<Vec<u8>> {
+pub(super) fn read_text_bytes(state: &LuaState, index: i32, method: &str) -> LuaResult<Vec<u8>> {
     let value = read_secure_argument(state, index, method)?;
     text_bytes(state, value, index, method)
 }
 
-fn text_bytes(state: &LuaState, value: Val, index: i32, method: &str) -> LuaResult<Vec<u8>> {
+pub(super) fn text_bytes(
+    state: &LuaState,
+    value: Val,
+    index: i32,
+    method: &str,
+) -> LuaResult<Vec<u8>> {
     match value {
         Val::Num(number) => Ok(Val::Num(number).to_string().into_bytes()),
         Val::Str(reference) => Ok(state
@@ -284,7 +292,7 @@ fn text_bytes(state: &LuaState, value: Val, index: i32, method: &str) -> LuaResu
     }
 }
 
-fn read_realm_address(state: &LuaState, index: i32, method: &str) -> LuaResult<u32> {
+pub(super) fn read_realm_address(state: &LuaState, index: i32, method: &str) -> LuaResult<u32> {
     let value = read_secure_argument(state, index, method)?;
     let number = numeric_value(state, value)
         .filter(|number| number.is_finite())
@@ -292,15 +300,15 @@ fn read_realm_address(state: &LuaState, index: i32, method: &str) -> LuaResult<u
     Ok(number.trunc() as u32)
 }
 
-fn read_signed_product_id(state: &LuaState) -> LuaResult<i32> {
-    let value = read_secure_argument(state, 1, GET_SERVICE_TYPE)?;
+pub(super) fn read_signed_product_id(state: &LuaState, method: &str) -> LuaResult<i32> {
+    let value = read_secure_argument(state, 1, method)?;
     let number = numeric_value(state, value)
         .filter(|number| number.is_finite() && (i32::MIN as f64..=i32::MAX as f64).contains(number))
-        .ok_or_else(|| helpers::bad_argument(1, GET_SERVICE_TYPE, INVALID_ARGUMENT))?;
+        .ok_or_else(|| helpers::bad_argument(1, method, INVALID_ARGUMENT))?;
     Ok(number.trunc() as i32)
 }
 
-fn numeric_value(state: &LuaState, value: Val) -> Option<f64> {
+pub(super) fn numeric_value(state: &LuaState, value: Val) -> Option<f64> {
     match value {
         Val::Num(number) => Some(number),
         Val::Str(reference) => state
@@ -312,7 +320,7 @@ fn numeric_value(state: &LuaState, value: Val) -> Option<f64> {
     }
 }
 
-fn read_truthy_argument(state: &LuaState, index: i32, method: &str) -> LuaResult<bool> {
+pub(super) fn read_truthy_argument(state: &LuaState, index: i32, method: &str) -> LuaResult<bool> {
     let value = read_secure_argument(state, index, method)?;
     Ok(value != Val::Bool(false))
 }
@@ -330,11 +338,11 @@ fn read_service_type(state: &LuaState, index: i32, method: &str) -> LuaResult<u8
     Ok(service)
 }
 
-fn read_secure_argument(state: &LuaState, index: i32, method: &str) -> LuaResult<Val> {
+pub(super) fn read_secure_argument(state: &LuaState, index: i32, method: &str) -> LuaResult<Val> {
     c_store_glue::read_argument_at(state, index, method, INVALID_ARGUMENT, "C_StoreSecure")
 }
 
-fn guid_matches(guid: &Outcome, text: &str) -> bool {
+pub(super) fn guid_matches(guid: &Outcome, text: &str) -> bool {
     matches!((guid, parse(text.as_bytes())), (Outcome::Known(left), Outcome::Known(right)) if *left == right)
 }
 
@@ -493,7 +501,7 @@ fn set_guid(state: &mut LuaState, table: Val, key: &'static str, text: Option<&s
     set_optional_text(state, table, key, text.filter(|text| !text.is_empty()));
 }
 
-fn push_guid(state: &mut LuaState, text: Option<&str>) {
+pub(super) fn push_guid(state: &mut LuaState, text: Option<&str>) {
     let value = text
         .filter(|text| !text.is_empty())
         .map_or(Val::Nil, |text| create_string(state, text));

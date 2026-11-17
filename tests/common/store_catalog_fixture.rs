@@ -2,8 +2,7 @@
 
 use wow_ui_sim::c_api::store_catalog_model::{
     StoreCatalogInput, StoreCurrencyInfo, StoreEntryInput, StoreProductGroupInput,
-    StoreProductInput, StoreProductListResponse, StoreProductSharedData,
-    StorePurchaseListResponse,
+    StoreProductInput, StoreProductListResponse, StoreProductSharedData, StorePurchaseListResponse,
 };
 use wow_ui_sim::lua_api::WowLuaEnv;
 
@@ -19,6 +18,11 @@ pub fn seed_vas_catalog(env: &WowLuaEnv) {
     let mut sim = env.state().borrow_mut();
     sim.store_glue.store_secure.catalog.products.push(product);
     sim.store_glue.store_secure.catalog.entries.push(entry);
+    sim.store_glue
+        .store_secure
+        .vas
+        .purchase_eligible_product_ids
+        .insert(FEATURED_PRODUCT_ID);
 }
 
 pub fn publish_featured_catalog(env: &WowLuaEnv) {
@@ -116,6 +120,7 @@ fn featured_entry() -> StoreEntryInput {
         order: 1,
         banner_type: 0,
         hidden: false,
+        nydus_link: Some("fixture-link".into()),
     }
 }
 

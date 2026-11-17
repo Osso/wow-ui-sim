@@ -24,8 +24,15 @@ This contract covers Retail `C_StoreSecure` VAS lookup, request, purchase, and c
 - [ ] A correlated BNet success replaces the supplied destination account and account-name map before one nil-valued `VAS_TRANSFER_VALIDATION_UPDATE`; a correlated error emits one signed integer and does not replace the map. Stale responses do nothing.
 - [ ] `RequestRealmGuildMasterInfo` collects current character GUIDs for the realm and submits only when connected. Its response updates guild-master records before one `STORE_GUILD_MASTER_INFO_RECEIVED` realm number.
 - [ ] `RequestCharacterGuildFollowInfo` accepts a GUID and realm, then submits only when connected. Its response updates follow-info state before `STORE_GUILD_FOLLOW_INFO_RECEIVED` with a GUID and `{ transferredRealm?, factionChanged }`.
-- [ ] `PurchaseVASProduct` returns the verified local preparation result and records accepted requests only when connected. It does not claim server acceptance.
-- [ ] `GetVASCompletionInfo`, `GetFailureInfo`, `AckFailure`, confirmation methods, and Nydus-link handling publish only the verified fields and state transitions. No inferred public return is asserted for UNKNOWN absence paths.
+- [ ] `OpenNydusLink` opens only a nonempty link from the matching entry; a missing entry or link does nothing.
+- [ ] `GetConfirmationInfo` publishes six populated values from a selected purchase record, with price parts derived from the native unsigned amounts. It does not consume confirmation state.
+- [ ] `GetUnrevokedBoostInfo` publishes the verified three-string result only when the supplied product, character, and realm records resolve; an absent result is not given a fabricated tuple.
+- [ ] `PurchaseProduct` accepts only supplied products whose host purchase predicate passes, advances the request sequence, and consumes the supplied external transaction ID before connection-gated submission.
+- [ ] `PurchaseProductConfirm` requires a selected record with state 9 and secondary status 0. It prepares confirmation or cancel state only for the verified accepted inputs; cents are narrowed to 16 bits and resulting values of 100 or more are rejected.
+- [ ] `PurchaseVASProduct` validates the supplied product, character, service fields, and transfer destination before preparing an asynchronous request. It does not claim server acceptance.
+- [ ] `GetVASCompletionInfo` publishes four values for a resolved completion record. When a product resolves but its character does not, it marks completion pending and may submit a follow-up request instead of publishing a fabricated tuple.
+- [ ] `GetFailureInfo` returns the mapped code or nil, followed by nil. `AckFailure` clears only the active marker and submits its acknowledgement only when connected.
+- [ ] `ClearPreGeneratedExternalTransactionID` clears the supplied transaction value and returns zero values. Unknown source data stays empty by default; UNKNOWN absence return paths are not asserted.
 
 ### Profile boundary
 
@@ -53,8 +60,8 @@ This contract covers Retail `C_StoreSecure` VAS lookup, request, purchase, and c
 ## Known gaps (current cycle)
 
 - [ ] Verify the R88ad.4 request and correlated-response contract against the selected Retail consumers.
-- [ ] Implement and test R88ad.5 purchase and confirmation paths.
-- [ ] Implement and test R88ad.6 completion and failure paths.
+- [ ] Verify R88ad.5 purchase and confirmation paths.
+- [ ] Verify R88ad.6 completion and failure paths.
 - [ ] Keep complete network delivery, server acceptance, unknown cleanup guards, and every unknown absence return outside the parity claim.
 
 ## Out of scope

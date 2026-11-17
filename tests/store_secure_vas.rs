@@ -2,9 +2,10 @@
 
 use crate::common::blizzard_addon_harness;
 use wow_ui_sim::c_api::store_vas_model::{
-    StoreVasCharacterInput, StoreVasEligibleRaceInput, StoreVasGuildFollowInfoInput,
-    StoreVasGuildMasterInfoInput, StoreVasGuildMemberInput, StoreVasRaceEligibilityInput,
-    StoreVasRealmInput, StoreVasRequest,
+    StoreVasBoostInput, StoreVasCharacterInput, StoreVasCompletionInput, StoreVasEligibleRaceInput,
+    StoreVasGuildFollowInfoInput, StoreVasGuildMasterInfoInput, StoreVasGuildMemberInput,
+    StoreVasPriceInput, StoreVasPurchaseInput, StoreVasRaceEligibilityInput, StoreVasRealmInput,
+    StoreVasRequest,
 };
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
@@ -176,6 +177,25 @@ const GUILD_FOLLOW_REQUEST_CONSUMER: &str = r#"
     characterCallback(1)
 "#;
 
+const PURCHASE_COMPLETION_CONSUMER: &str = r#"
+    local confirmation = { C_StoreSecure.GetConfirmationInfo() }
+    assert(#confirmation == 6 and confirmation[1] == 2003 and confirmation[2] == "Balance")
+    assert(confirmation[3] == 10 and confirmation[4] == 0 and confirmation[5] == 5 and confirmation[6] == 1)
+    local boostProduct, boostCharacter, boostRealm = C_StoreSecure.GetUnrevokedBoostInfo()
+    assert(boostProduct == "Apprentice Rider Bundle" and boostCharacter == "Simhero" and boostRealm == "Azeroth")
+    C_StoreSecure.OpenNydusLink(1003)
+    C_StoreSecure.PurchaseProduct(2003)
+    C_StoreSecure.PurchaseVASProduct(2003, "Player-101-1-11", "Renamedhero", nil, nil, nil, nil, nil, false, false)
+    C_StoreSecure.PurchaseProductConfirm(true, 10, 50)
+    local product, guid, realm, shouldHandle = C_StoreSecure.GetVASCompletionInfo()
+    assert(product == 2003 and guid == "Player-101-1-11" and realm == "Azeroth" and shouldHandle == true)
+    local failureCode, failureReason = C_StoreSecure.GetFailureInfo()
+    assert(failureCode == 9 and failureReason == nil)
+    C_StoreSecure.AckFailure()
+    assert(select(1, C_StoreSecure.GetFailureInfo()) == nil)
+    return true
+"#;
+
 fn load_store_ui() -> WowLuaEnv {
     let ui_dir = blizzard_addon_harness::blizzard_ui_dir();
     let env = blizzard_addon_harness::new_blizzard_addon_glue_env(&ui_dir);
@@ -345,6 +365,45 @@ fn seed_group3_lookup_inputs(env: &WowLuaEnv) {
         .insert(b"WoW2".to_vec(), "WowAccount-2002-2".into());
     vas.race_eligibility = vec![race_eligibility()];
     vas.guild_master_info = vec![guild_master_info()];
+}
+
+fn seed_purchase_inputs(env: &WowLuaEnv) {
+    let mut sim = env.state().borrow_mut();
+    let vas = &mut sim.store_glue.store_secure.vas;
+    vas.selected_purchase_product_id = Some(2003);
+    vas.purchase_records = vec![purchase_record()];
+    vas.product_prices.insert(
+        2003,
+        StoreVasPriceInput {
+            original_amount: 100000,
+            current_amount: 50100,
+        },
+    );
+    vas.boost = Some(StoreVasBoostInput {
+        product_id: 2003,
+        character_guid: "Player-101-1-11".into(),
+        realm_address: 101,
+    });
+    vas.completion = Some(StoreVasCompletionInput {
+        product_id: 2003,
+        guid: "Player-101-1-11".into(),
+        first_auxiliary: 0,
+        second_auxiliary: 0,
+    });
+    vas.failure_marker = 1;
+    vas.received_failure_code = 1;
+    vas.pre_generated_external_transaction_id = Some(b"external-1".to_vec());
+}
+
+fn purchase_record() -> StoreVasPurchaseInput {
+    StoreVasPurchaseInput {
+        product_id: 2003,
+        status: 9,
+        secondary_status: 0,
+        wallet_name: "Balance".into(),
+        original_amount: 0,
+        current_amount: 0,
+    }
 }
 
 fn race_eligibility() -> StoreVasRaceEligibilityInput {
@@ -539,4 +598,94 @@ fn retail_store_vas_guild_follow_request_uses_the_original_character_callback() 
             .expect("guild-follow event should publish its verified payload");
         assert_eq!(event, ("Player-101-1-11".into(), "Kalimdor".into(), true, 2));
     }
+}
+
+#[test]
+fn retail_store_vas_purchase_and_completion_use_explicit_host_inputs() {
+    test_timeout! {
+        let env = load_store_ui();
+        seed_realm_and_character_inputs(&env);
+        crate::common::store_catalog_fixture::seed_vas_catalog(&env);
+        seed_group3_lookup_inputs(&env);
+        seed_purchase_inputs(&env);
+        env.state().borrow_mut().store_glue.connection_present = true;
+        let result: bool = env.eval(PURCHASE_COMPLETION_CONSUMER)
+            .expect("explicit VAS purchase and completion inputs should be observable");
+        assert!(result);
+        assert_purchase_requests(&env);
+        assert_eq!(
+            env.state().borrow().store_glue.store_secure.vas.opened_nydus_links,
+            ["fixture-link".to_string()]
+        );
+        clear_external_transaction_id(&env);
+    }
+}
+
+fn assert_purchase_requests(env: &WowLuaEnv) {
+    let state = env.state();
+    let sim = state.borrow();
+    let requests = &sim.store_glue.store_secure.vas.submitted_requests;
+    assert_eq!(requests.len(), 4);
+    assert_eq!(
+        requests[0],
+        StoreVasRequest::ProductPurchase {
+            sequence: 1,
+            product_id: 2003,
+            external_transaction_id: Some(b"external-1".to_vec()),
+        }
+    );
+    assert_purchase_confirmation(&requests[1]);
+    assert_eq!(
+        requests[2],
+        StoreVasRequest::PurchaseConfirmation {
+            correlation: 2,
+            confirmed: true,
+            dollars: 10,
+            cents: 50,
+        }
+    );
+    assert_eq!(
+        requests[3],
+        StoreVasRequest::AcknowledgeFailure { marker: 1 }
+    );
+}
+
+fn assert_purchase_confirmation(request: &StoreVasRequest) {
+    let StoreVasRequest::VasPurchase {
+        sequence,
+        product_id,
+        new_name,
+        guild_follow,
+        ..
+    } = request
+    else {
+        panic!("VAS purchase should prepare its service request");
+    };
+    assert_eq!(
+        (*sequence, *product_id, new_name.as_deref()),
+        (2, 2003, Some(b"Renamedhero".as_slice()))
+    );
+    assert!(!guild_follow);
+}
+
+fn clear_external_transaction_id(env: &WowLuaEnv) {
+    env.state()
+        .borrow_mut()
+        .store_glue
+        .store_secure
+        .vas
+        .pre_generated_external_transaction_id = Some(b"clear-me".to_vec());
+    let results: i32 = env
+        .eval("return select('#', C_StoreSecure.ClearPreGeneratedExternalTransactionID())")
+        .expect("transaction clear should return zero values");
+    assert_eq!(results, 0);
+    assert!(
+        env.state()
+            .borrow()
+            .store_glue
+            .store_secure
+            .vas
+            .pre_generated_external_transaction_id
+            .is_none()
+    );
 }

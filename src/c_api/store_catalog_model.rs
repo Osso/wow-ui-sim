@@ -81,6 +81,7 @@ pub struct StoreEntryInput {
     pub order: i32,
     pub banner_type: i32,
     pub hidden: bool,
+    pub nydus_link: Option<String>,
 }
 
 /// The default values describe an empty host DTO, not an inserted product row.

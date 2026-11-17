@@ -52,7 +52,7 @@ pub(super) fn request_character_guild_follow_info(state: &mut LuaState) -> LuaRe
     Ok(0)
 }
 
-fn advance_request_sequence(state: &mut LuaState) -> LuaResult<u64> {
+pub(super) fn advance_request_sequence(state: &mut LuaState) -> LuaResult<u64> {
     let mut sim = borrow_state_mut(state)?;
     let sequence = &mut sim.store_glue.request_sequence;
     *sequence = sequence
@@ -79,7 +79,7 @@ fn realm_guild_request(state: &LuaState, realm_address: u32) -> LuaResult<StoreV
     })
 }
 
-fn submit_if_connected(state: &mut LuaState, request: StoreVasRequest) -> LuaResult<()> {
+pub(super) fn submit_if_connected(state: &mut LuaState, request: StoreVasRequest) -> LuaResult<()> {
     let mut sim = borrow_state_mut(state)?;
     if sim.store_glue.connection_present {
         sim.store_glue
