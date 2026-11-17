@@ -1022,3 +1022,89 @@ fn blizzard_player_spells_toc_is_absent_from_classic_caches() {
     assert!(wow_ui_sim::loader::find_toc_file(&dir).is_none());
 }
 }
+
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+const SPELL_PASSIVE_ATTRIBUTE_MASK: u32 = 64;
+
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+const SPELL_PASSIVE_EXPECTED_RESULTS: (bool, bool, bool) = (false, true, true);
+
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+fn seed_spell_passive_attribute_masks(env: &WowLuaEnv) {
+    let records: (bool, bool, bool) = env
+        .eval(
+            r#"return C_Spell.GetSpellInfo(116) ~= nil,
+                C_Spell.GetSpellInfo(100) ~= nil,
+                C_Spell.GetSpellInfo(2147483646) == nil"#,
+        )
+        .expect("generated spell records resolve for the consumer fixture");
+    assert_eq!(records, (true, true, true));
+
+    let empty_default: bool = env
+        .eval("return C_Spell.IsSpellPassive(100)")
+        .expect("empty-default host input returns a Boolean");
+    assert!(!empty_default);
+
+    let mut state = env.state().borrow_mut();
+    assert!(state.spell_passive_attribute_masks.is_empty());
+    state
+        .spell_passive_attribute_masks
+        .insert(116, SPELL_PASSIVE_ATTRIBUTE_MASK);
+    state.spell_passive_attribute_masks.insert(100, 0);
+}
+
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+fn set_action_bar_fixture(env: &WowLuaEnv) {
+    env.exec(
+        r#"
+        C_ActionBar = C_ActionBar or __wow_namespace()
+        C_ActionBar.IsOnBarOrSpecialBar = function(_spellID)
+            return false
+        end
+        "#,
+    )
+    .expect("action bar state is supplied to the original consumer");
+}
+
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+fn class_talent_missing_results(env: &WowLuaEnv) -> (bool, bool, bool) {
+    env.eval(
+        r#"
+        local nodeInfo = { entryIDsWithCommittedRanks = { 1 } }
+        return ClassTalentUtil.IsTalentMissingFromActionBars(nodeInfo, 116),
+            ClassTalentUtil.IsTalentMissingFromActionBars(nodeInfo, 100),
+            ClassTalentUtil.IsTalentMissingFromActionBars(nodeInfo, 2147483646)
+        "#,
+    )
+    .expect("original ClassTalentUtil helper returns fixture results")
+}
+
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+#[test]
+fn class_talent_action_bar_consumer_uses_spell_passive_mask() {
+    let env = load_runtime_game_ui();
+    load_player_spells_after_fork(&env);
+    seed_spell_passive_attribute_masks(&env);
+    set_action_bar_fixture(&env);
+
+    let modeled_results = class_talent_missing_results(&env);
+    env.exec(include_str!("fixtures/spell-passive-false.lua"))
+        .expect("callable false overlay loads");
+    let false_overlay_call: (bool, bool) = env
+        .eval("return type(C_Spell.IsSpellPassive) == 'function', C_Spell.IsSpellPassive(116)")
+        .expect("callable false overlay returns a Boolean");
+    let false_overlay_results = class_talent_missing_results(&env);
+
+    env.exec(include_str!("fixtures/spell-passive-true.lua"))
+        .expect("callable true overlay loads");
+    let true_overlay_call: (bool, bool) = env
+        .eval("return type(C_Spell.IsSpellPassive) == 'function', C_Spell.IsSpellPassive(100)")
+        .expect("callable true overlay returns a Boolean");
+    let true_overlay_results = class_talent_missing_results(&env);
+
+    assert_eq!(false_overlay_call, (true, false));
+    assert_eq!(true_overlay_call, (true, true));
+    assert_ne!(false_overlay_results, SPELL_PASSIVE_EXPECTED_RESULTS);
+    assert_ne!(true_overlay_results, SPELL_PASSIVE_EXPECTED_RESULTS);
+    assert_eq!(modeled_results, SPELL_PASSIVE_EXPECTED_RESULTS);
+}
