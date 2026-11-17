@@ -160,7 +160,9 @@ ANSWER **47** (R44-Q18, PTR70668 / Forever70707) resolves name reservation.
 It takes no arguments and returns one boolean from a feature-system status byte,
 independent of realm and character. Its verified initial value is false; an
 ordinary server-sent value is UNKNOWN. `GlueFeatureStatus` starts false and only
-`deliver_status` replaces it. The host action emits no-payload
+`deliver_status` replaces it. On Forever, delivery must also update the status
+byte read by `IsNameReservationOnly` before the second notification; the ordinary
+server-supplied value remains UNKNOWN. The host action emits no-payload
 `TIMERUNNING_SEASON_UPDATE`, writes the status, then emits no-payload
 `AVAILABLE_GAME_MODES_UPDATED`, preserving the supplied posting order. Host
 notifications dispatch synchronously; tests do not claim native callback latency
