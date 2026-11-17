@@ -547,7 +547,7 @@ fn test_is_priority_aura_returns_false_for_zero_id() {
     assert!(!result);
 }
 
-// ── Temporary classification shims ───────────────────────────────────────────
+// ── IsSpellPassive ───────────────────────────────────────────────────────────
 
 #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
 #[test]
