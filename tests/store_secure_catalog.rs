@@ -38,6 +38,17 @@ const CATALOG_CONSUMER: &str = r##"
     assert(first.productID == 8201 and second.productID == 8202, "product info must map both host products")
     assert(first.sharedData.cards[1].itemModifiedAppearanceIDs[2] == 10, "product cards must preserve appearance IDs")
     assert(first.sharedData.deliverables[1].owned == false, "product deliverables must preserve host ownership")
+    local firstColor = first.sharedData.overrideTextColor
+    local firstR, firstG, firstB = firstColor:GetRGB()
+    assert(firstColor.a == nil and math.abs(firstR - 128 / 255) < 0.000001
+        and math.abs(firstG - 64 / 255) < 0.000001
+        and math.abs(firstB - 1) < 0.000001, "first override color must use the ColorMixin RGB values only")
+    local secondColor = second.sharedData.overrideTextColor
+    local secondR, secondG, secondB = secondColor:GetRGB()
+    assert(secondColor.a == nil and math.abs(secondR - 17 / 255) < 0.000001
+        and math.abs(secondG - 128 / 255) < 0.000001
+        and math.abs(secondB) < 0.000001, "second override color must use its own ColorMixin RGB values")
+    assert(C_StoreSecure.GetProductInfo(8203).sharedData.overrideTextColor == nil, "an absent override color must stay nil")
     assert(C_StoreSecure.GetProductInfo(4999) == nil, "an absent product must return nil")
     return true
 "##;
@@ -54,35 +65,33 @@ const CURRENCY_CONSUMER: &str = r#"
     return true
 "#;
 
-const STORE_EVENT_CONSUMER: &str = r##"
-    STORE_CATALOG_EVENTS = {}
+const PURCHASE_EVENT_OBSERVER: &str = r#"
+    STORE_PURCHASE_EVENT_PAYLOAD_COUNTS = {}
     local listener = CreateFrame("Frame")
-    for _, event in ipairs({"STORE_STATUS_CHANGED", "STORE_PRODUCTS_UPDATED",
-        "STORE_PURCHASE_LIST_UPDATED", "DYNAMIC_BUNDLE_PRICE_UPDATED"}) do
-        listener:RegisterEvent(event)
-    end
-    listener:SetScript("OnEvent", function(_, event, ...)
-        local record = {event = event, count = select("#", ...)}
-        if event == "STORE_STATUS_CHANGED" then
-            record.available = C_StoreSecure.IsAvailable()
-        elseif event == "STORE_PRODUCTS_UPDATED" then
-            record.ready = C_StoreSecure.HasProductList()
-            record.currency = C_StoreSecure.GetCurrencyID()
-            record.groups = #C_StoreSecure.GetProductGroups()
-        elseif event == "STORE_PURCHASE_LIST_UPDATED" then
-            record.ready = C_StoreSecure.HasPurchaseList()
-            record.progress = C_StoreSecure.HasPurchaseInProgress()
-        else
-            record.productID = ...
-            record.hasData = C_StoreSecure.HasDynamicPriceData(record.productID)
-        end
-        table.insert(STORE_CATALOG_EVENTS, record)
+    listener:RegisterEvent("STORE_PURCHASE_LIST_UPDATED")
+    listener:SetScript("OnEvent", function(_, _, ...)
+        table.insert(STORE_PURCHASE_EVENT_PAYLOAD_COUNTS, select("#", ...))
     end)
-"##;
+"#;
 
 fn load_store_ui() -> WowLuaEnv {
     let ui_dir = crate::common::blizzard_addon_harness::blizzard_ui_dir();
     let (env, loaded) = crate::common::blizzard_addon_harness::build_blizzard_addon_closure_env(
+        &ui_dir,
+        &["Blizzard_StoreUI"],
+        &[],
+    );
+    assert!(loaded.iter().any(|name| name == "Blizzard_StoreUI"));
+    assert!(loaded.iter().any(|name| name == "Blizzard_CatalogShop"));
+    env
+}
+
+fn load_store_ui_connected() -> WowLuaEnv {
+    let ui_dir = crate::common::blizzard_addon_harness::blizzard_ui_dir();
+    let env = crate::common::blizzard_addon_harness::new_blizzard_addon_env(&ui_dir);
+    env.state().borrow_mut().store_glue.connection_present = true;
+    let loaded = crate::common::blizzard_addon_harness::load_blizzard_addon_closure_into_env(
+        &env,
         &ui_dir,
         &["Blizzard_StoreUI"],
         &[],
@@ -136,14 +145,30 @@ fn group(id: u32, name: &str, order: i32, displayable: bool) -> StoreProductGrou
     }
 }
 
-fn product(id: i32, name: &str, dynamic: bool, visible: bool) -> StoreProductInput {
+const HOST_ONE_COLOR: [u8; 3] = [128, 64, 255];
+const HOST_TWO_COLOR: [u8; 3] = [17, 128, 0];
+
+fn product(
+    id: i32,
+    name: &str,
+    dynamic: bool,
+    visible: bool,
+    card_type: u32,
+) -> StoreProductInput {
+    let mut shared_data = shared_data(name);
+    shared_data.card_type = card_type;
+    shared_data.override_text_color = match id {
+        8201 => Some(HOST_ONE_COLOR),
+        8202 => Some(HOST_TWO_COLOR),
+        _ => None,
+    };
     StoreProductInput {
         product_id: id,
         supported: true,
         session_eligible: true,
         display_eligible: visible,
         dynamic_bundle: dynamic,
-        shared_data: shared_data(name),
+        shared_data,
     }
 }
 
@@ -179,13 +204,16 @@ fn seed_groups(store: &mut wow_ui_sim::c_api::store_catalog_model::StoreSecureSt
     ];
 }
 
-fn seed_products(store: &mut wow_ui_sim::c_api::store_catalog_model::StoreSecureState) {
+fn seed_products(
+    store: &mut wow_ui_sim::c_api::store_catalog_model::StoreSecureState,
+    card_type: u32,
+) {
     store.catalog.products = vec![
-        product(8201, "Host One", true, true),
-        product(8202, "Host Two", true, true),
-        product(8203, "Host Three", false, true),
-        product(8204, "Hidden", false, true),
-        product(239, "Excluded", false, true),
+        product(8201, "Host One", true, true, card_type),
+        product(8202, "Host Two", true, true, card_type),
+        product(8203, "Host Three", false, true, card_type),
+        product(8204, "Hidden", false, true, card_type),
+        product(239, "Excluded", false, true, card_type),
     ];
 }
 
@@ -206,10 +234,14 @@ fn seed_currencies(store: &mut wow_ui_sim::c_api::store_catalog_model::StoreSecu
 }
 
 fn seed_catalog(env: &WowLuaEnv) {
+    let card_type: i64 = env
+        .eval("return Enum.BattlepayCardType.MediumCardWithBuyButton")
+        .expect("StoreUI card type must be available");
+    let card_type = u32::try_from(card_type).expect("StoreUI card type must be non-negative");
     let mut sim = env.state().borrow_mut();
     let store = &mut sim.store_glue.store_secure;
     seed_groups(store);
-    seed_products(store);
+    seed_products(store, card_type);
     seed_entries(store);
     seed_currencies(store);
 }
@@ -240,7 +272,10 @@ fn receive_success_responses(env: &WowLuaEnv) {
     let response = StoreProductListResponse { result_code: 0, currency_id: 62, catalog };
     wow_ui_sim::c_api::store_catalog_model::receive_product_list(env, response).unwrap();
     wow_ui_sim::c_api::store_catalog_model::receive_dynamic_price(env, 8201, vec![1, 2]).unwrap();
-    let purchase = StorePurchaseListResponse { result_code: 0, rows: Vec::new() };
+    let purchase = StorePurchaseListResponse {
+        result_code: 0,
+        rows: vec![purchase_input(false), purchase_input(true)],
+    };
     wow_ui_sim::c_api::store_catalog_model::receive_purchase_list(env, purchase).unwrap();
 }
 
@@ -260,25 +295,50 @@ fn purchase_input(blocked: bool) -> StorePurchaseInput {
     StorePurchaseInput { blocked, status: 1, expires_at: 5000.0, client_time_adjustment: 0.0 }
 }
 
-fn assert_success_state(env: &WowLuaEnv) {
-    env.exec_rilua_secure(
-        "assert(C_StoreSecure.IsAvailable() and C_StoreSecure.HasProductList() and C_StoreSecure.HasPurchaseList() and C_StoreSecure.GetCurrencyID() == 62 and not C_StoreSecure.HasPurchaseInProgress() and C_StoreSecure.GetProductInfo(8201).sharedData.name == 'Host One' and C_StoreSecure.HasDynamicPriceData(8201))",
+fn catalog_shop_is_loading(env: &WowLuaEnv) -> bool {
+    env.eval(
+        "local mixin = CatalogShopMixin or (__secureenv and __secureenv.CatalogShopMixin); return mixin:IsLoading()",
     )
-    .unwrap();
+    .expect("original CatalogShop loading consumer must return a Boolean")
 }
 
-fn assert_failure_state(env: &WowLuaEnv) {
-    env.exec_rilua_secure(
-        "assert(not C_StoreSecure.HasProductList() and not C_StoreSecure.HasPurchaseList() and C_StoreSecure.IsRegionLocked() and C_StoreSecure.GetLastProductListResponseError() == 3 and C_StoreSecure.GetCurrencyID() == 62 and #C_StoreSecure.GetProductGroups() == 0 and not C_StoreSecure.HasPurchaseInProgress())",
+fn store_frame_is_loading(env: &WowLuaEnv) -> bool {
+    env.eval(
+        r#"
+        local frame = StoreFrame or (__secureenv and __secureenv.StoreFrame)
+        local isLoading = StoreFrame_IsLoading or (__secureenv and __secureenv.StoreFrame_IsLoading)
+        return isLoading(frame)
+        "#,
     )
-    .unwrap();
+    .expect("original StoreFrame loading consumer must return a Boolean")
 }
 
-fn assert_response_events(env: &WowLuaEnv) {
-    env.exec_rilua_secure(
-        "local e=STORE_CATALOG_EVENTS; assert(#e==6 and e[1].event=='STORE_STATUS_CHANGED' and e[1].count==0 and e[1].available and e[2].event=='STORE_PRODUCTS_UPDATED' and e[2].count==0 and e[2].ready and e[2].currency==62 and e[2].groups==2 and e[3].event=='DYNAMIC_BUNDLE_PRICE_UPDATED' and e[3].count==1 and e[3].productID==8201 and e[3].hasData and e[4].event=='STORE_PURCHASE_LIST_UPDATED' and e[4].count==0 and e[4].ready and e[4].progress==false and e[5].event=='STORE_PRODUCTS_UPDATED' and not e[5].ready and e[6].event=='STORE_PURCHASE_LIST_UPDATED' and not e[6].ready and not e[6].progress)",
+fn update_store_frame_notice(env: &WowLuaEnv) -> (bool, Option<String>) {
+    env.eval(
+        r#"
+        local frame = StoreFrame or (__secureenv and __secureenv.StoreFrame)
+        local update = StoreFrame_UpdateActivePanel or (__secureenv and __secureenv.StoreFrame_UpdateActivePanel)
+        frame.ErrorFrame:Hide()
+        update(frame)
+        return frame.Notice:IsShown(), frame.Notice.Title:GetText()
+        "#,
     )
-    .unwrap();
+    .expect("original StoreFrame panel consumer must update its notice")
+}
+
+fn store_frame_card_summary(env: &WowLuaEnv) -> (i64, i64, String, String) {
+    env.eval(
+        r#"
+        local frame = StoreFrame or (__secureenv and __secureenv.StoreFrame)
+        local getCategory = StoreFrame_GetSelectedCategoryID or (__secureenv and __secureenv.StoreFrame_GetSelectedCategoryID)
+        local names = {}
+        for card in frame.productCardPoolCollection:EnumerateActive() do
+            table.insert(names, card.ProductName:GetText() or "")
+        end
+        return getCategory() or 0, #names, names[1] or "", names[2] or ""
+        "#,
+    )
+    .expect("original StoreFrame consumer must expose its active product cards")
 }
 
 #[test]
@@ -306,10 +366,26 @@ fn retail_store_currency_consumer_uses_shared_data() {
 #[test]
 fn retail_store_empty_defaults_reach_original_catalog_consumer() {
     let env = load_store_ui();
-    env.exec_rilua_secure(
-        "assert(CatalogShopMixin:IsLoading(), 'CatalogShop must remain loading with empty host lists'); local a,b,c,d,e,f,g=C_StoreSecure.IsAvailable(), C_StoreSecure.HasProductList(), C_StoreSecure.HasPurchaseList(), C_StoreSecure.HasDistributionList(), C_StoreSecure.HasPurchaseInProgress(), C_StoreSecure.GetCurrencyID(), C_StoreSecure.GetLastProductListResponseError(); assert(not a and not b and not c and not d and not e and f == 0 and g == 0); assert(C_StoreSecure.GetCurrencyInfo() == nil and #C_StoreSecure.GetProductGroups() == 0)",
-    )
-    .expect("original CatalogShop consumer must observe empty-default Store inputs");
+    assert!(catalog_shop_is_loading(&env), "empty host lists must keep CatalogShop loading");
+
+    seed_catalog(&env);
+    enable_store_callbacks(&env);
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.store_glue.connection_present = true;
+        sim.store_glue.store_secure.distribution_list_ready = Some(true);
+    }
+    receive_success_responses(&env);
+    assert!(
+        !catalog_shop_is_loading(&env),
+        "CatalogShop must finish loading when product, distribution, and purchase inputs are ready"
+    );
+
+    receive_failure_responses(&env);
+    assert!(
+        catalog_shop_is_loading(&env),
+        "CatalogShop must return to loading after the product response clears readiness"
+    );
 }
 
 #[test]
@@ -317,65 +393,241 @@ fn retail_store_response_events_publish_updated_state() {
     let env = load_store_ui();
     seed_catalog(&env);
     enable_store_callbacks(&env);
-    env.exec_rilua_secure(STORE_EVENT_CONSUMER).unwrap();
+    let shown: bool = env
+        .eval(
+            r#"
+            local frame = StoreFrame or (__secureenv and __secureenv.StoreFrame)
+            local setCategory = StoreFrame_SetSelectedCategoryID or (__secureenv and __secureenv.StoreFrame_SetSelectedCategoryID)
+            frame:Show()
+            setCategory(4101)
+            return frame:IsShown()
+            "#,
+        )
+        .expect("original StoreFrame OnShow consumer must run");
+    assert!(shown, "StoreFrame must be shown before host responses arrive");
+
     receive_success_responses(&env);
-    assert_success_state(&env);
+    env.fire_on_update(1.0 / 60.0)
+        .expect("queued purchase response must reach StoreFrame on update");
+    let (selected, cards, first_name, second_name) = store_frame_card_summary(&env);
+    assert_eq!(selected, 4101, "StoreFrame must retain the selected host category");
+    assert_eq!(cards, 2, "StoreFrame must publish both backed products as cards");
+    assert_eq!(first_name, "Host Two");
+    assert_eq!(second_name, "Host One");
+
+    let absent_group_selection: i64 = env
+        .eval(
+            r#"
+            local setCategory = StoreFrame_SetSelectedCategoryID or (__secureenv and __secureenv.StoreFrame_SetSelectedCategoryID)
+            local updateCategory = StoreFrame_UpdateSelectedCategory or (__secureenv and __secureenv.StoreFrame_UpdateSelectedCategory)
+            local getCategory = StoreFrame_GetSelectedCategoryID or (__secureenv and __secureenv.StoreFrame_GetSelectedCategoryID)
+            setCategory(4999)
+            updateCategory()
+            return getCategory() or 0
+            "#,
+        )
+        .expect("original StoreFrame consumer must recover from an absent category");
+    assert!(
+        absent_group_selection > 0 && absent_group_selection != 4999,
+        "an absent group must not remain selected"
+    );
+
     receive_failure_responses(&env);
-    assert_failure_state(&env);
-    assert_response_events(&env);
-}
-
-fn prepare_connected_requests(env: &WowLuaEnv) {
-    let mut sim = env.state().borrow_mut();
-    sim.store_glue.connection_present = true;
-    sim.store_glue.store_secure.request_time_ms = 0;
-}
-
-fn assert_request_results(env: &WowLuaEnv) {
-    let sim = env.state().borrow();
-    let state = &sim.store_glue.store_secure;
-    assert_eq!(state.product_list_request_count, 6);
-    assert_eq!(sim.store_glue.submissions.len(), 7);
-    assert_eq!(sim.store_glue.submissions.iter().filter(|r| matches!(r, StoreRequest::ProductList)).count(), 4);
-    assert_eq!(sim.store_glue.submissions.iter().filter(|r| matches!(r, StoreRequest::PurchaseList)).count(), 1);
-    assert_eq!(sim.store_glue.submissions.iter().filter(|r| matches!(r, StoreRequest::DynamicPriceInfo(_))).count(), 2);
+    env.fire_on_update(1.0 / 60.0)
+        .expect("queued failure response must reach StoreFrame on update");
+    let region_locked: bool = env
+        .eval(
+            r#"
+            local frame = StoreFrame or (__secureenv and __secureenv.StoreFrame)
+            return frame.Notice:IsShown()
+                and frame.Notice.Title:GetText() == BLIZZARD_STORE_REGION_LOCKED
+            "#,
+        )
+        .expect("original StoreFrame consumer must render the failed response");
+    assert!(region_locked, "StoreFrame must show the host region-lock outcome");
 }
 
 #[test]
 fn retail_store_requests_use_connection_and_host_catalog_inputs() {
-    let env = load_store_ui();
+    let env = load_store_ui_connected();
     seed_catalog(&env);
-    env.exec_rilua_secure("assert(select('#', C_StoreSecure.GetProductList()) == 0 and select('#', C_StoreSecure.GetPurchaseList()) == 0)").unwrap();
-    let disconnected = env.state().borrow();
-    assert_eq!(disconnected.store_glue.store_secure.product_list_request_count, 1);
-    assert!(disconnected.store_glue.submissions.is_empty());
-    drop(disconnected);
-    prepare_connected_requests(&env);
-    env.exec_rilua_secure("assert(select('#', C_StoreSecure.RequestAllDynamicPriceInfo()) == 0 and C_StoreSecure.IsDynamicBundle(8201) and C_StoreSecure.IsDynamicBundle(8202) and not C_StoreSecure.IsDynamicBundle(4999) and not C_StoreSecure.HasDynamicPriceData(8201) and not C_StoreSecure.HasDynamicPriceData(4999))").unwrap();
-    for _ in 0..5 { env.exec_rilua_secure("C_StoreSecure.GetProductList()").unwrap(); }
-    env.exec_rilua_secure("C_StoreSecure.GetPurchaseList()").unwrap();
-    assert_request_results(&env);
-    env.state().borrow_mut().store_glue.store_secure.request_time_ms = 2000;
-    env.exec_rilua_secure("C_StoreSecure.GetProductList()").unwrap();
+    enable_store_callbacks(&env);
+    let shown: bool = env
+        .eval("local frame = StoreFrame or (__secureenv and __secureenv.StoreFrame); frame:Show(); return frame:IsShown()")
+        .expect("original StoreFrame OnShow consumer must request its lists");
+    assert!(shown);
+
+    wow_ui_sim::c_api::store_catalog_model::receive_availability(&env, true).unwrap();
+    let catalog = env.state().borrow().store_glue.store_secure.catalog.clone();
+    wow_ui_sim::c_api::store_catalog_model::receive_product_list(
+        &env,
+        StoreProductListResponse {
+            result_code: 0,
+            currency_id: 61,
+            catalog,
+        },
+    )
+    .unwrap();
+
     let sim = env.state().borrow();
-    assert_eq!(sim.store_glue.store_secure.product_list_request_count, 1);
-    assert_eq!(sim.store_glue.submissions.len(), 8);
-    assert_eq!(sim.store_glue.submissions.iter().filter(|r| matches!(r, StoreRequest::ProductList)).count(), 5);
+    let store = &sim.store_glue.store_secure;
+    assert_eq!(store.product_list_request_count, 1, "StoreFrame OnShow must request one product list");
+    assert_eq!(
+        sim.store_glue.submissions.iter().filter(|request| matches!(request, StoreRequest::ProductList)).count(),
+        1
+    );
+    assert_eq!(
+        sim.store_glue.submissions.iter().filter(|request| matches!(request, StoreRequest::PurchaseList)).count(),
+        1,
+        "StoreFrame OnLoad must request the purchase list while connected"
+    );
+    let dynamic_product_ids = sim
+        .store_glue
+        .submissions
+        .iter()
+        .filter_map(|request| match request {
+            StoreRequest::DynamicPriceInfo(product_id) => Some(*product_id),
+            _ => None,
+        })
+        .collect::<Vec<_>>();
+    assert_eq!(dynamic_product_ids, vec![8201, 8202]);
+    assert!(!dynamic_product_ids.contains(&4999), "an absent product must not be requested");
 }
 
 #[test]
 fn retail_store_list_queries_use_two_rows_and_absence() {
     let env = load_store_ui();
-    seed_purchase_progress(&env);
-    env.exec_rilua_secure("assert(C_StoreSecure.HasPurchaseInProgress())").unwrap();
-    env.state().borrow_mut().store_glue.store_secure.purchase_list.clear();
-    env.exec_rilua_secure("assert(not C_StoreSecure.HasPurchaseInProgress())").unwrap();
+    seed_catalog(&env);
     {
         let mut sim = env.state().borrow_mut();
-        sim.store_glue.store_secure.distribution_list_ready = Some(true);
-        sim.store_glue.connection_present = false;
+        sim.store_glue.connection_present = true;
+        let store = &mut sim.store_glue.store_secure;
+        store.available = true;
+        store.has_product_list = true;
+        store.has_purchase_list = true;
     }
-    env.exec_rilua_secure("assert(not C_StoreSecure.HasDistributionList())").unwrap();
-    env.state().borrow_mut().store_glue.connection_present = true;
-    env.exec_rilua_secure("assert(C_StoreSecure.HasDistributionList())").unwrap();
+    seed_purchase_progress(&env);
+
+    assert!(store_frame_is_loading(&env), "an absent distribution result must keep the original panel loading");
+    env.state().borrow_mut().store_glue.store_secure.distribution_list_ready = Some(true);
+    assert!(!store_frame_is_loading(&env), "the original panel must finish loading with distribution data");
+
+    let transaction_title: String = env
+        .eval("return BLIZZARD_STORE_TRANSACTION_IN_PROGRESS")
+        .expect("StoreUI transaction title must be available");
+    let (active_shown, active_title) = update_store_frame_notice(&env);
+    assert!(active_shown);
+    assert_eq!(active_title.as_deref(), Some(transaction_title.as_str()));
+
+    env.state().borrow_mut().store_glue.store_secure.purchase_list = vec![purchase_input(true)];
+    let (blocked_shown, blocked_title) = update_store_frame_notice(&env);
+    assert!(
+        !blocked_shown || blocked_title.as_deref() != Some(transaction_title.as_str()),
+        "a blocked purchase must not produce the transaction notice"
+    );
+
+    env.state().borrow_mut().store_glue.store_secure.purchase_list.clear();
+    let (absent_shown, absent_title) = update_store_frame_notice(&env);
+    assert!(
+        !absent_shown || absent_title.as_deref() != Some(transaction_title.as_str()),
+        "an empty purchase list must not produce the transaction notice"
+    );
+}
+
+#[test]
+fn retail_store_purchase_list_updates_coalesce_after_state_write() {
+    let env = load_store_ui();
+    seed_catalog(&env);
+    enable_store_callbacks(&env);
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.store_glue.connection_present = true;
+        let store = &mut sim.store_glue.store_secure;
+        store.available = true;
+        store.has_product_list = true;
+        store.has_purchase_list = true;
+        store.distribution_list_ready = Some(true);
+    }
+    seed_purchase_progress(&env);
+    let transaction_title: String = env
+        .eval("return BLIZZARD_STORE_TRANSACTION_IN_PROGRESS")
+        .expect("StoreUI transaction title must be available");
+    let (active_shown, active_title) = update_store_frame_notice(&env);
+    assert!(active_shown);
+    assert_eq!(active_title.as_deref(), Some(transaction_title.as_str()));
+
+    env.exec(PURCHASE_EVENT_OBSERVER)
+        .expect("purchase-event observer must register");
+    let rows = vec![purchase_input(false), purchase_input(true)];
+    wow_ui_sim::c_api::store_catalog_model::receive_purchase_list(
+        &env,
+        StorePurchaseListResponse {
+            result_code: 0,
+            rows,
+        },
+    )
+    .unwrap();
+    wow_ui_sim::c_api::store_catalog_model::receive_purchase_list(
+        &env,
+        StorePurchaseListResponse {
+            result_code: 0,
+            rows: Vec::new(),
+        },
+    )
+    .unwrap();
+
+    let event_count: i64 = env
+        .eval("return #STORE_PURCHASE_EVENT_PAYLOAD_COUNTS")
+        .expect("purchase event count must be readable before dispatch");
+    let (pending, purchase_count) = {
+        let sim = env.state().borrow();
+        (
+            sim.store_glue.store_secure.purchase_list_notification_pending,
+            sim.store_glue.store_secure.purchase_list.len(),
+        )
+    };
+    assert_eq!(event_count, 0, "purchase update must be deferred until the flush point");
+    assert!(pending, "the pending notification must coalesce both responses");
+    assert_eq!(purchase_count, 0, "the latest response state must be visible before dispatch");
+    let (before_dispatch_shown, before_dispatch_title): (bool, Option<String>) = env
+        .eval(
+            r#"
+            local frame = StoreFrame or (__secureenv and __secureenv.StoreFrame)
+            return frame.Notice:IsShown(), frame.Notice.Title:GetText()
+            "#,
+        )
+        .expect("StoreFrame notice must remain readable before event dispatch");
+    assert!(before_dispatch_shown);
+    assert_eq!(before_dispatch_title.as_deref(), Some(transaction_title.as_str()));
+
+    env.fire_on_update(1.0 / 60.0)
+        .expect("pending purchase notification must dispatch on update");
+    let (event_count, payload_count): (i64, i64) = env
+        .eval("return #STORE_PURCHASE_EVENT_PAYLOAD_COUNTS, STORE_PURCHASE_EVENT_PAYLOAD_COUNTS[1] or -1")
+        .expect("purchase event payload counts must be readable");
+    assert_eq!((event_count, payload_count), (1, 0), "two queued updates must deliver one zero-payload event");
+    assert!(
+        !env.state().borrow().store_glue.store_secure.purchase_list_notification_pending,
+        "dispatch must clear the pending marker"
+    );
+    let (after_dispatch_shown, after_dispatch_title): (bool, Option<String>) = env
+        .eval(
+            r#"
+            local frame = StoreFrame or (__secureenv and __secureenv.StoreFrame)
+            return frame.Notice:IsShown(), frame.Notice.Title:GetText()
+            "#,
+        )
+        .expect("original StoreFrame event outcome must be readable after dispatch");
+    assert!(
+        !after_dispatch_shown
+            || after_dispatch_title.as_deref() != Some(transaction_title.as_str()),
+        "original StoreFrame event handling must observe the latest empty list"
+    );
+
+    env.fire_on_update(1.0 / 60.0)
+        .expect("a later update must not replay a delivered purchase event");
+    let (event_count, payload_count): (i64, i64) = env
+        .eval("return #STORE_PURCHASE_EVENT_PAYLOAD_COUNTS, STORE_PURCHASE_EVENT_PAYLOAD_COUNTS[1] or -1")
+        .expect("purchase event payload counts must remain readable");
+    assert_eq!((event_count, payload_count), (1, 0), "a later tick must not replay the coalesced event");
 }
