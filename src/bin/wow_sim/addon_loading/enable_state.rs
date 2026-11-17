@@ -226,7 +226,7 @@ mod tests {
             addon_dir: None,
             title: "TestAddon".to_string(),
             notes: String::new(),
-            metadata: HashMap::new(),
+            metadata: wow_ui_sim::toc::TocMetadata::default(),
             load_with: Vec::new(),
             load_on_demand: false,
             default_enabled,

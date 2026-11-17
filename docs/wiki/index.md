@@ -1,3 +1,7 @@
+## [2026-11-17] investigation | Addon metadata lookup performance
+
+[Addon metadata lookup performance](investigations/addon-metadata-lookup-performance.md) records the per-call TOC key scan behind the Questie Mists startup timeout, the per-TOC case-insensitive index, preserved and changed duplicate-key semantics ([contract](../specs/addon-metadata-lookup.md)), same-host A/B timings, the +200 MiB peak RSS, and the repeated-TOC-parse hotspot left open.
+
 ## [2026-11-16] investigation | Limited listfile reproducibility
 
 [Limited listfile reproducibility](investigations/limited-listfile-reproducibility.md) records the immutable source pin, effective input/output drift checks, unchanged 147,015-row artifact, and the unrecoverable historical PR33 rows and inferred input-drift cause.
@@ -4563,6 +4567,7 @@ The sixteen retail 12.0.0 `Enum.EditModeDamageMeterSetting.*` and `Enum.EditMode
 | [[backpack-background-texture]] | Static Gethe XML explains the flat panel body but not current source completeness; exact 69977 `bagsitemslot2xc60` was MD5-verified and cached, while release-fixture GUI evidence reports a ready 16-slot Backpack but leaves five `Not found` texture paths under investigation |
 | [[talent-performance]] | Lazy `_G` lookup (431ms→263ms), rect-dirty stale cache causing infinite OnUpdate loop, shallow `issecretvalue` for pool releases (2159ms→2.6ms) |
 | [[character-select-performance]] | Lazy atlas crop stalls (fixed), first-resize relayout deduplication (partial) |
+| [[addon-metadata-lookup-performance]] | `GetAddOnMetadata` scanned every TOC key per call (QuestieDB Mists: 408,495); per-TOC case-insensitive index cuts reads from 892–2,408 µs to 0.47–1.62 µs and lets Mists startup with Questie complete; case-variant duplicates now resolve to the last line |
 | [[class-talents-artifact]] | Gold blob ruled out as lossy WebP encoding artifact, not a live render bug |
 | [[class-talents-edge-lines]] | Class-talent connector lines disappeared because `IsRectValid()` did not resolve dirty anchored buttons and endpoint-positioned Line widgets under anchorless edge frames were filtered before quad emission |
 | [[class-talents-edge-frame-levels]] | Class-talent connector edges were rendering above node icons; edge-frame-level workaround now patches both mixin + live frame and re-levels active edges |

@@ -4,6 +4,7 @@
 # Tier 1: diagnostic/perf/audit/diff-coverage modules confirmed not to be a live contract.
 # See handoff/necessary-under-10/RECLASSIFY.md and docs/specs/necessary-suite-runtime.md.
 
+addon_metadata_lookup_perf
 c_function_diff_coverage
 c_namespace_diff_coverage
 constants_diff_coverage

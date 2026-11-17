@@ -13,7 +13,7 @@ use wow_ui_sim::lua_api::state::LuaErrorRecord;
 use wow_ui_sim::lua_api::{AddonInfo, WowLuaEnv};
 use wow_ui_sim::saved_variables::SavedVariablesManager;
 use wow_ui_sim::screen::ScreenKind;
-use wow_ui_sim::toc::TocFile;
+use wow_ui_sim::toc::{TocFile, TocMetadata};
 
 mod blizzard_dependencies;
 mod cache_summary;
@@ -448,7 +448,7 @@ struct AddonMetadata {
     addon_dir: Option<PathBuf>,
     title: String,
     notes: String,
-    metadata: HashMap<String, String>,
+    metadata: TocMetadata,
     load_with: Vec<String>,
     load_on_demand: bool,
     default_enabled: bool,
@@ -462,7 +462,7 @@ fn parse_addon_metadata(name: &str, toc_path: &Path) -> AddonMetadata {
             addon_dir: None,
             title: name.to_string(),
             notes: String::new(),
-            metadata: HashMap::new(),
+            metadata: TocMetadata::default(),
             load_with: Vec::new(),
             load_on_demand: false,
             default_enabled: true,
