@@ -49,13 +49,20 @@ fn load_combat_audio_manager(enabled_cvar: Option<&str>) -> WowLuaEnv {
 }
 
 fn assert_manager_health_event(env: &WowLuaEnv, expected: bool) {
+    let cvar = env
+        .state()
+        .borrow()
+        .cvars
+        .get("CAAEnabled")
+        .unwrap_or_else(|| "<unset>".into());
     env.exec(&format!(
         r#"
+        local enabled = C_CombatAudioAlert.IsEnabled()
         CombatAudioAlertManager.initDone = true
         local completed, refresh_error = pcall(function() CombatAudioAlertManager:RefreshEvents(false) end)
         local registered = CombatAudioAlertManager:IsEventRegistered('UNIT_HEALTH')
         assert(registered == {expected},
-            'UNIT_HEALTH=' .. tostring(registered) .. ', RefreshEvents completed=' .. tostring(completed) .. ', error=' .. tostring(refresh_error))
+            'CAAEnabled={cvar}, IsEnabled=' .. tostring(enabled) .. ', UNIT_HEALTH=' .. tostring(registered) .. ', RefreshEvents completed=' .. tostring(completed) .. ', error=' .. tostring(refresh_error))
         "#
     ))
     .expect("original combat-audio manager must select health-event registration");
