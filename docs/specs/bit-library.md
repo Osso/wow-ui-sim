@@ -4,13 +4,13 @@ The client exposes a global `bit` table (`band`, `bor`, `bxor`, `bnot`, `lshift`
 
 ## What it must do
 
-- [x] Return the same value as the former Lua compatibility fallback for every input (VERIFIED: 40,056-call differential corpus, identical output; see below).
+- [x] Return the same value as the former Lua compatibility fallback (VERIFIED on a 40,056-call differential corpus with identical output; equivalence for every input is INFERRED from code review of the same operation order).
 - [x] Convert each argument as `tonumber(v) or 0`: numbers, numeric strings (hex, exponent, surrounding spaces), and 0 for nil, booleans, tables, functions and non-numeric strings. Then floor it and wrap it into `[0, 2^32)` with Lua's `%`; infinities and NaN become NaN.
 - [x] `band` and `bor` fold every argument up to the `#{...}` border of the argument list, so `bit.band(12, nil, 10)` is 0 and `bit.band(12, 10, nil)` is 8. With no arguments they return 4294967295 and 0.
 - [x] In `band`, `bor` and `bxor`, a NaN operand behaves as in the old bit loop: it clears every bit in `band`, contributes no bits in `bor`, and in `bxor` sets every bit below the other operand's highest set bit.
 - [x] `lshift` wraps its result; a shift that overflows to infinity returns NaN. `rshift` floors and does not wrap. `arshift` is the same function value as `rshift`.
 - [x] `bit.mod(a, b)` returns `1 / b` when `tonumber(b)` truncates to zero (`-1 < b < 1`); otherwise it returns `a % b` on the wrapped operands (3.3.5a lbitlib; Retail 12.1.5 observation in Meorawr/elune#12).
-- [x] Each call costs a fixed number of native operations; it runs no Lua instructions.
+- [x] Each call runs native code only and no Lua instructions; its work is bounded for normalized operands (`band`/`bor` fold a variable number of arguments, and the bit loops depend on operand values).
 
 Native argument errors for non-number input are UNVERIFIED and not modelled; the conversions above are the existing simulator contract. The former fallback looked up `tonumber` and `math.floor` in `_G` on every call, so an addon that replaced either global changed its results; the native library does not read them (INFERRED to match the native client, whose `bit` is C code).
 

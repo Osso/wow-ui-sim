@@ -3,8 +3,9 @@
 //! rilua ships no `bit` library, so the simulator used to install a Lua
 //! fallback in `compat_overrides.rs`. Questie's login coroutine spent about
 //! 96% of its sampled instructions inside that fallback's `bit.band` loop
-//! (handoff `questie-login-perf`). These Rust functions return the same values
-//! for every input:
+//! (handoff `questie-login-perf`). These Rust functions repeat the fallback's
+//! arithmetic in the same order (VERIFIED identical on a 40,056-call
+//! differential corpus; equivalence for all inputs is INFERRED from review):
 //!
 //! - an argument converts as `tonumber(v) or 0`, then floors and wraps into
 //!   `[0, 2^32)` with Lua's `%` (`fma(floor(a / b), -b, a)` in rilua);
