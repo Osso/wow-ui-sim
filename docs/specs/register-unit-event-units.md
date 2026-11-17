@@ -1,6 +1,6 @@
 # RegisterUnitEvent unit arguments (R88aj)
 
-`Frame:RegisterUnitEvent(event, ...)` unit-argument handling in `src/lua_api/frame/methods/text_attribute_event/`. The native answer is `~/.local/state/wow-ui-sim/handoff/pr46-49-decomp-answers.md`, section `R88aj`. The unit-argument rules are identical in the three decoded builds, Mists 5.5.4.70631, Retail 12.1.5.70688 and Forever 1.60.1.70707; Retail and Forever add secret-value, forbidden-aspect and post-return checks, which are not modelled. This supersedes the two-unit bounded model in [frame unit-event filter](frame-unit-event-filter.md).
+`Frame:RegisterUnitEvent(event, ...)` unit-argument handling in `src/lua_api/frame/methods/text_attribute_event/`. The native answer is `pr46-49-decomp-answers.md` (untracked decomp handoff), section `R88aj`. The unit-argument rules are identical in the three decoded builds, Mists 5.5.4.70631, Retail 12.1.5.70688 and Forever 1.60.1.70707; Retail and Forever add secret-value, forbidden-aspect and post-return checks, which are not modelled. This supersedes the two-unit bounded model in [frame unit-event filter](frame-unit-event-filter.md).
 
 ## What it must do
 
