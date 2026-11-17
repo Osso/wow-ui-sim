@@ -4,8 +4,8 @@
 //! UNKNOWN: native secure publication for Mists, PTR, WoW Forever, Wrath, Era
 //! and Anniversary. Only Retail 12.1.5.70688 has the verified fixed 39-name
 //! base plus the R88y publisher. Every other profile keeps master's behavior
-//! (copy every `_G` pair after profile bootstrap, shallow-copy `Enum`, log
-//! global nil reads). Retire this module per profile once that profile has
+//! (copy every `_G` pair after protected-global wrapping, shallow-copy `Enum`,
+//! log global nil reads). Retire this module per profile once that profile has
 //! native publication evidence and its own publisher.
 
 use rilua::{LuaApiMut, LuaResult};
