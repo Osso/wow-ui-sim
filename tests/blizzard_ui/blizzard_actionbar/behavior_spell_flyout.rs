@@ -19,10 +19,15 @@ const STARTUP_OVERRIDES: &[BlizzardAddonOverride<'static>] = &[BlizzardAddonOver
 const FLYOUT_ID: u32 = 7001;
 const FIRST_SPELL_ID: u32 = 19750;
 const SECOND_SPELL_ID: u32 = 35395;
+#[cfg(feature = "client-retail")]
 const NAMED_CALL_PET_SPELL_ID: u32 = 901001;
+#[cfg(feature = "client-retail")]
 const EMPTY_NAME_CALL_PET_SPELL_ID: u32 = 901002;
+#[cfg(feature = "client-retail")]
 const MISSING_NAME_CALL_PET_SPELL_ID: u32 = 901003;
+#[cfg(feature = "client-retail")]
 const UNMAPPED_CALL_PET_SPELL_ID: u32 = 901004;
+#[cfg(feature = "client-retail")]
 const INVALID_INDEX_CALL_PET_SPELL_ID: u32 = 901005;
 
 post_wrath_ui_fixture! {
@@ -159,11 +164,13 @@ fn seed_spell_flyout(env: &WowLuaEnv) {
     );
 }
 
+#[cfg(feature = "client-retail")]
 fn seed_call_pet_flyout(env: &WowLuaEnv) {
     seed_call_pet_inputs(env);
     seed_call_pet_slots(env);
 }
 
+#[cfg(feature = "client-retail")]
 fn seed_call_pet_inputs(env: &WowLuaEnv) {
     let mut state = env.state().borrow_mut();
     state.call_pet_spell_indices.extend([
@@ -182,6 +189,7 @@ fn seed_call_pet_inputs(env: &WowLuaEnv) {
     ]);
 }
 
+#[cfg(feature = "client-retail")]
 fn seed_call_pet_slots(env: &WowLuaEnv) {
     let slots = [
         NAMED_CALL_PET_SPELL_ID,
@@ -203,6 +211,7 @@ fn seed_call_pet_slots(env: &WowLuaEnv) {
     );
 }
 
+#[cfg(feature = "client-retail")]
 fn call_pet_flyout_slot(spell_id: u32) -> SpellFlyoutSlot {
     SpellFlyoutSlot {
         spell_id,
@@ -213,6 +222,7 @@ fn call_pet_flyout_slot(spell_id: u32) -> SpellFlyoutSlot {
     }
 }
 
+#[cfg(feature = "client-retail")]
 fn apply_call_pet_wrong_producer_overlay(env: &WowLuaEnv) {
     let Ok(path) = std::env::var("WOW_SIM_CALL_PET_WRONG_PRODUCER_OVERLAY") else {
         return;
@@ -222,6 +232,7 @@ fn apply_call_pet_wrong_producer_overlay(env: &WowLuaEnv) {
         .expect("call-pet overlay should leave the producer callable");
 }
 
+#[cfg(feature = "client-retail")]
 fn assert_spell_flyout_toggle_is_original(env: &WowLuaEnv) {
     let source: String = env
         .eval("return debug.getinfo(SpellFlyoutMixin.Toggle, 'S').source")
@@ -232,6 +243,7 @@ fn assert_spell_flyout_toggle_is_original(env: &WowLuaEnv) {
     );
 }
 
+#[cfg(feature = "client-retail")]
 fn assert_call_pet_flyout_results(env: &WowLuaEnv) {
     let (is_shown, first_spell_id, second_spell_id, third_spell_id, fourth_visible) =
         observe_call_pet_flyout_buttons(env);
@@ -246,6 +258,7 @@ fn assert_call_pet_flyout_results(env: &WowLuaEnv) {
     assert_call_pet_api_results(env);
 }
 
+#[cfg(feature = "client-retail")]
 fn observe_call_pet_flyout_buttons(env: &WowLuaEnv) -> (bool, i64, i64, i64, bool) {
     env.eval(
         r#"
@@ -262,6 +275,7 @@ fn observe_call_pet_flyout_buttons(env: &WowLuaEnv) -> (bool, i64, i64, i64, boo
     .expect("call-pet results should reach the original flyout")
 }
 
+#[cfg(feature = "client-retail")]
 fn assert_call_pet_api_results(env: &WowLuaEnv) {
     let results_match: bool = env
         .eval(

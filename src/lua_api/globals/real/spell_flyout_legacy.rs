@@ -5,8 +5,11 @@
 //! spell/index candidates and current-player pet names.
 
 use crate::c_api::parse_numeric_string;
+#[cfg(feature = "client-retail")]
 use crate::lua_api::methods::{borrow_state, create_string};
-use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
+#[cfg(feature = "client-retail")]
+use crate::lua_bridge::stack_val;
+use crate::lua_bridge::table_set_rust_fn_static;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
