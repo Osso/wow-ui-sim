@@ -283,6 +283,27 @@ fn assert_player_spells_loaded(loaded: &[String]) {
     assert!(loaded.iter().any(|name| name == "Blizzard_PlayerSpells"));
 }
 
+const LOCKED_TALENT_BUTTON_UPDATE: &str = r#"
+local button = CreateFrame("Button", nil, UIParent, "PvPTalentListButtonTemplate")
+button.talentID = 901
+button.selectedHere = false
+button.selectedOther = false
+PvPTalentListButtonMixin.Update(button)
+local info = button.talentInfo
+assert(info.talentID == 901, "locked talent ID was not published")
+assert(info.name == "Host Locked Talent", "locked consumer name: " .. tostring(info.name))
+assert(info.icon == 61101 and info.selected == false and info.available == false,
+    "locked record fields differ")
+assert(info.spellID == 71101 and info.unlocked == false and info.known == false,
+    "locked record fields differ")
+assert(info.grantedByAura == false and info.dependenciesUnmet == true,
+    "locked record fields differ")
+assert(info.dependenciesUnmetReason == "Host prerequisite lock",
+    "locked prerequisite reason differs")
+assert(button.Name:GetText() == info.name and button.Icon:GetTexture() == info.icon)
+assert(not button.Selected:IsShown() and button.disallowNormalClicks)
+"#;
+
 #[test]
 fn player_spells_locked_talent_button_uses_its_supplied_info() {
     with_blizzard_addon_closure(
@@ -291,27 +312,31 @@ fn player_spells_locked_talent_button_uses_its_supplied_info() {
         |env, loaded| {
             assert_player_spells_loaded(loaded);
             insert_talent_info(&env, 901, locked_talent_info());
-            env.eval::<()>(
-                r#"
-                local button = CreateFrame("Button", nil, UIParent, "PvPTalentListButtonTemplate")
-                button.talentID = 901
-                button.selectedHere = false
-                button.selectedOther = false
-                PvPTalentListButtonMixin.Update(button)
-                local info = button.talentInfo
-                assert(info.talentID == 901 and info.name == "Host Locked Talent")
-                assert(info.icon == 61101 and info.selected == false and info.available == false)
-                assert(info.spellID == 71101 and info.unlocked == false and info.known == false)
-                assert(info.grantedByAura == false and info.dependenciesUnmet == true)
-                assert(info.dependenciesUnmetReason == "Host prerequisite lock")
-                assert(button.Name:GetText() == info.name and button.Icon:GetTexture() == info.icon)
-                assert(not button.Selected:IsShown() and button.disallowNormalClicks)
-                "#,
-            )
-            .expect("run the selected Player Spells locked-talent button consumer");
+            env.eval::<()>(LOCKED_TALENT_BUTTON_UPDATE)
+                .expect("run the selected Player Spells locked-talent button consumer");
         },
     );
 }
+
+const UNLOCKED_TALENT_BUTTON_UPDATE: &str = r#"
+local button = CreateFrame("Button", nil, UIParent, "PvPTalentListButtonTemplate")
+button.talentID = 902
+button.selectedHere = true
+button.selectedOther = false
+PvPTalentListButtonMixin.Update(button)
+local info = button.talentInfo
+assert(info.talentID == 902, "unlocked talent ID was not published")
+assert(info.name == "Host Unlocked Talent", "unlocked consumer name: " .. tostring(info.name))
+assert(info.icon == 61102 and info.selected == true and info.available == true,
+    "unlocked record fields differ")
+assert(info.spellID == 71102 and info.unlocked == true and info.known == true,
+    "unlocked record fields differ")
+assert(info.grantedByAura == true and info.dependenciesUnmet == false,
+    "unlocked record fields differ")
+assert(info.dependenciesUnmetReason == nil, "unlocked reason must remain absent")
+assert(button.Name:GetText() == info.name and button.Icon:GetTexture() == info.icon)
+assert(button.Selected:IsShown() and not button.disallowNormalClicks)
+"#;
 
 #[test]
 fn player_spells_unlocked_talent_button_uses_its_supplied_info() {
@@ -321,24 +346,8 @@ fn player_spells_unlocked_talent_button_uses_its_supplied_info() {
         |env, loaded| {
             assert_player_spells_loaded(loaded);
             insert_talent_info(&env, 902, unlocked_talent_info());
-            env.eval::<()>(
-                r#"
-                local button = CreateFrame("Button", nil, UIParent, "PvPTalentListButtonTemplate")
-                button.talentID = 902
-                button.selectedHere = true
-                button.selectedOther = false
-                PvPTalentListButtonMixin.Update(button)
-                local info = button.talentInfo
-                assert(info.talentID == 902 and info.name == "Host Unlocked Talent")
-                assert(info.icon == 61102 and info.selected == true and info.available == true)
-                assert(info.spellID == 71102 and info.unlocked == true and info.known == true)
-                assert(info.grantedByAura == true and info.dependenciesUnmet == false)
-                assert(info.dependenciesUnmetReason == nil)
-                assert(button.Name:GetText() == info.name and button.Icon:GetTexture() == info.icon)
-                assert(button.Selected:IsShown() and not button.disallowNormalClicks)
-                "#,
-            )
-            .expect("run the selected Player Spells unlocked-talent button consumer");
+            env.eval::<()>(UNLOCKED_TALENT_BUTTON_UPDATE)
+                .expect("run the selected Player Spells unlocked-talent button consumer");
         },
     );
 }
