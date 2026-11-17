@@ -1,4 +1,5 @@
 //! R88p.p3 reagent inventory selection. No bank fetch or update-event claims.
+use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::SimState;
 use std::collections::{HashMap, HashSet};
 
@@ -101,6 +102,9 @@ fn container_is_root(sim: &SimState, bag: i32, mask: u32) -> bool {
 /// R88p.p3: mask 2 scans candidates; only magnitude greater than one qualifies.
 /// Property identity and decoding remain UNKNOWN host inputs.
 pub(crate) fn alternate_limit(sim: &SimState, reagent_id: i32, quantity: i16) -> Option<i64> {
+    if ACTIVE != ClientProfile::Retail {
+        return None;
+    }
     let metadata_mask = sim
         .spell_reagent_inventory
         .metadata_masks
