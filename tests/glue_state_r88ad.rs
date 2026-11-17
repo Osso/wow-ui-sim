@@ -30,8 +30,10 @@ fn login_env() -> common::LockedEnv {
     })
 }
 
+/// Run a statement chunk; the leading statement keeps `eval` from treating a
+/// one-line chunk as an expression.
 fn lua(env: &WowLuaEnv, code: &str) -> String {
-    env.eval::<String>(code)
+    env.eval::<String>(&format!("local _ = nil\n{code}"))
         .unwrap_or_else(|err| panic!("{code}\n=> {err}"))
 }
 
@@ -121,7 +123,12 @@ fn account_login_writes_saved_account_settings() {
     }
 }
 
-const EDIT_ACCOUNT: &str = "AccountLogin.UI.AccountEditBox:SetText('edited') return ''";
+fn edit_account(env: &WowLuaEnv, text: &str) {
+    lua(
+        env,
+        &format!("AccountLogin.UI.AccountEditBox:SetText({text:?}) return ''"),
+    );
+}
 
 // R88ad.7: ClearSavedAccountList empties a present `accountList` setting only.
 #[test]
@@ -129,13 +136,13 @@ fn edited_account_name_clears_saved_account_list() {
     test_timeout! {
         let env = login_env();
         seed_setting(&env, "accountName", "alpha");
-        lua(&env, EDIT_ACCOUNT);
+        edit_account(&env, "edited");
         assert_eq!(setting(&env, "accountName").as_deref(), Some(""));
         assert_eq!(setting(&env, "accountList"), None, "absent list setting");
         for (name, list) in [("alpha", "!alpha|beta"), ("delta", "delta|!omega")] {
             seed_setting(&env, "accountName", name);
             seed_setting(&env, "accountList", list);
-            lua(&env, EDIT_ACCOUNT);
+            edit_account(&env, &format!("edited-{name}"));
             assert_eq!(setting(&env, "accountName").as_deref(), Some(""), "{name}");
             assert_eq!(setting(&env, "accountList").as_deref(), Some(""), "{list}");
         }
@@ -144,7 +151,7 @@ fn edited_account_name_clears_saved_account_list() {
 
 const SELECTED_ACCOUNT: &str = r#"
     AccountLoginDropdown_SetupList()
-    return tostring(AccountLogin_GetSelectedAccountString())
+    return tostring((AccountLogin_GetSelectedAccountString()))
 "#;
 
 // R88ad.7: GetSavedAccountList publishes the `accountList` setting text.
@@ -177,7 +184,7 @@ fn set_server(env: &WowLuaEnv, server: GlueServerState) {
 fn server_name_formats_character_select_realm() {
     test_timeout! {
         let env = login_env();
-        assert_eq!(lua(&env, REALM_TEXT), "|false|0", "unavailable connection");
+        assert_eq!(lua(&env, REALM_TEXT), "|nil|0", "unavailable connection");
         set_server(&env, GlueServerState {
             available: true,
             name: Some("Alpha".into()),
