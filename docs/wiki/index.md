@@ -6,6 +6,14 @@
 
 [Addon metadata lookup performance](investigations/addon-metadata-lookup-performance.md) records the per-call TOC key scan behind the Questie Mists startup timeout, the per-TOC case-insensitive index, preserved and changed duplicate-key semantics ([contract](../specs/addon-metadata-lookup.md)), same-host A/B timings, the +200 MiB peak RSS, and the repeated-TOC-parse hotspot left open.
 
+## [2026-11-16] revision | Retail StoreSecure consumer RED and notifications
+
+The [StoreSecure system page](systems/store-secure-catalog.md) and [RED proof record](investigations/consumer-selection-and-red-proof.md#retail-storesecure-callable-producer-red) record ColorMixin RGB construction, coalesced purchase updates, and seven callable wrong-producer RED cases through original Store consumers. **INFERRED:** the OnUpdate flush boundary is a simulator policy.
+
+## [2026-11-16] implementation | Retail StoreSecure catalog inputs
+
+[StoreSecure catalog contract](../specs/store-secure-catalog.md) and [system page](systems/store-secure-catalog.md) record the Retail 12.1.5.70688 R88ad.1/R88ad.2 catalog, availability, currency, list, and request behavior. **VERIFIED (simulator source):** Retail uses empty-default host inputs; Mists remains UNKNOWN and keeps its prior bootstrap path. **VERIFIED (pinned 12.1.5.70783 consumers):** StoreUI and CatalogShop remain the original read paths. The old seeded-group contract is historical and superseded.
+
 ## [2026-11-16] investigation | Limited listfile reproducibility
 
 [Limited listfile reproducibility](investigations/limited-listfile-reproducibility.md) records the immutable source pin, effective input/output drift checks, unchanged 147,015-row artifact, and the unrecoverable historical PR33 rows and inferred input-drift cause.

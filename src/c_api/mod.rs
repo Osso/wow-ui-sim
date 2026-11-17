@@ -328,6 +328,7 @@ pub mod c_spell_diminish;
 pub mod c_stable_info;
 pub mod c_store_glue;
 mod c_store_secure;
+mod c_store_secure_catalog;
 pub mod c_string_util;
 mod c_string_util_decimal;
 pub mod c_summon_info;
@@ -359,6 +360,7 @@ pub(crate) mod mists_r88ai;
 pub(crate) mod mists_reputation_list;
 #[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
 pub mod spell_reagent_inventory;
+pub mod store_catalog_model;
 pub mod store_glue_model;
 pub mod store_guid;
 // The pinned classic TransmogItemsDocumentation.lua / TransmogOutfitInfoDocumentation.lua

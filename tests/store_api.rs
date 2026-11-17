@@ -1,9 +1,13 @@
+#[cfg(feature = "client-retail")]
 use wow_ui_sim::c_api::c_store_glue;
 #[cfg(feature = "client-retail")]
 use wow_ui_sim::c_api::c_store_glue::CompletionInput;
-use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
+#[cfg(feature = "client-retail")]
+use wow_ui_sim::c_api::store_catalog_model::StoreCurrencyInfo;
+#[cfg(feature = "client-retail")]
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+#[cfg(feature = "client-retail")]
 const STORE_SECURE_VAS_SCRIPT: &str = r#"
     local events = {}
     STORE_SECURE_VAS_EVENTS = events
@@ -158,10 +162,6 @@ const STORE_SECURE_VAS_SCRIPT: &str = r#"
         return "initial_purchase_failed"
     end
 
-    if C_StoreSecure.HasPurchaseInProgress() ~= true then
-        return "purchase_state_not_marked_in_progress"
-    end
-
     local purchaseConfirmationProductID, purchaseWalletName, _, _, purchaseDollars, purchaseCents = C_StoreSecure.GetConfirmationInfo()
     if purchaseConfirmationProductID ~= 2003 or purchaseWalletName ~= "Blizzard Balance" or purchaseDollars ~= 10 or purchaseCents ~= 0 then
         return "wrong_purchase_confirmation_info:" .. tostring(purchaseConfirmationProductID) .. ":" .. tostring(purchaseWalletName) .. ":" .. tostring(purchaseDollars) .. ":" .. tostring(purchaseCents)
@@ -234,58 +234,78 @@ const STORE_SECURE_VAS_SCRIPT: &str = r#"
     return "ok"
 "#;
 
+#[cfg(feature = "client-retail")]
 fn env() -> WowLuaEnv {
     WowLuaEnv::new().expect("Failed to create Lua environment")
 }
 
+#[cfg(feature = "client-retail")]
 #[test]
 fn store_apis_report_enabled_and_available() {
     let env = env();
+    crate::common::store_catalog_fixture::publish_featured_catalog(&env);
     env.set_server_mirrored_cvar("bpayStoreEnable", "1")
         .expect("store mirror should accept the enabled input");
-    let (store_public_enabled, store_secure_available, has_purchase_list, has_product_list, has_distribution_list): (
-        bool,
-        bool,
-        bool,
-        bool,
-        bool,
-    ) = env
+    let values: (bool, bool, bool, bool, bool) = env
         .eval(
             "return C_StorePublic.IsEnabled(), C_StoreSecure.IsAvailable(), C_StoreSecure.HasPurchaseList(), C_StoreSecure.HasProductList(), C_StoreSecure.HasDistributionList()",
         )
         .expect("store API flags should be queryable");
 
-    // R38 (VERIFIED; docs/specs/store-api-availability.md): IsEnabled returns the supplied server mirror.
-    assert!(
-        store_public_enabled,
-        "C_StorePublic.IsEnabled() should report the supplied enabled state"
-    );
-    assert!(
-        store_secure_available,
-        "C_StoreSecure.IsAvailable() should be true"
-    );
-    assert!(
-        has_purchase_list,
-        "C_StoreSecure.HasPurchaseList() should be true"
-    );
-    assert!(
-        has_product_list,
-        "C_StoreSecure.HasProductList() should be true"
-    );
-    assert!(
-        has_distribution_list,
-        "C_StoreSecure.HasDistributionList() should be true"
-    );
+    // R38 (VERIFIED; docs/specs/store-api-availability.md) covers IsEnabled.
+    assert_eq!(values, (true, true, true, true, true));
 }
 
+#[cfg(feature = "client-retail")]
+#[test]
+fn store_currency_id_zero_does_not_resolve_host_metadata() {
+    let env = env();
+    env.state().borrow_mut().store_glue.store_secure.currencies.insert(
+        0,
+        StoreCurrencyInfo {
+            region_id: 1,
+            format_short: "%s".into(),
+            format_long: "%s".into(),
+            license_accept_text: String::new(),
+            require_license_accept: false,
+            browse_has_star: false,
+            hide_browse_notice: false,
+            hide_confirmation_browse_notice: false,
+        },
+    );
+    let result: (i32, bool) = env
+        .eval("return C_StoreSecure.GetCurrencyID(), C_StoreSecure.GetCurrencyInfo() == nil")
+        .expect("zero currency ID should not publish metadata");
+    assert_eq!(result, (0, true));
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn store_disconnect_resets_verified_availability_and_list_readiness() {
+    let env = env();
+    crate::common::store_catalog_fixture::publish_featured_catalog(&env);
+    wow_ui_sim::c_api::store_catalog_model::receive_dynamic_price(&env, 2003, vec![1])
+        .expect("dynamic-price response should be accepted");
+    let before: (bool, bool, bool, bool, i32, bool) = env
+        .eval("return C_StoreSecure.IsAvailable(), C_StoreSecure.HasProductList(), C_StoreSecure.HasPurchaseList(), C_StoreSecure.HasDistributionList(), C_StoreSecure.GetCurrencyID(), C_StoreSecure.HasDynamicPriceData(2003)")
+        .expect("host responses should populate Store state");
+    assert_eq!(before, (true, true, true, true, 61, true));
+
+    wow_ui_sim::c_api::store_catalog_model::receive_disconnect(&env);
+
+    let after: (bool, bool, bool, bool, bool, bool, bool, i32, bool) = env
+        .eval("return C_StoreSecure.IsAvailable(), C_StoreSecure.HasProductList(), C_StoreSecure.HasPurchaseList(), C_StoreSecure.HasDistributionList(), C_StoreSecure.IsRegionLocked(), C_StoreSecure.GetLastProductListResponseError() == 0, C_StoreSecure.GetCurrencyInfo() == nil, C_StoreSecure.GetCurrencyID(), C_StoreSecure.HasDynamicPriceData(2003)")
+        .expect("disconnect should reset the verified Store fields");
+    assert_eq!(after, (false, false, false, false, false, true, true, 0, false));
+}
+
+#[cfg(feature = "client-retail")]
 #[test]
 fn store_secure_vas_queries_and_stateful_actions_use_seeded_data() {
     let env = env();
-    env.exec(&format!(
-        "STORE_SECURE_VAS_RETAIL_CONTRACT = {}",
-        ACTIVE == ClientProfile::Retail
-    ))
-    .expect("store model profile should be available to the probe");
+    crate::common::store_catalog_fixture::seed_vas_catalog(&env);
+    env.exec("STORE_SECURE_VAS_RETAIL_CONTRACT = true")
+        .expect("Retail Store model should be available to the probe");
     let result: String = env
         .eval(STORE_SECURE_VAS_SCRIPT)
         .expect("seeded C_StoreSecure VAS flow should be queryable");

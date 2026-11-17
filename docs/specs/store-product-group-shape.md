@@ -1,35 +1,32 @@
-# Store product group query shape
+# Store product group query shape — historical
 
-`C_StoreSecure.GetProductGroups` exposes existing simulator demo groups in the shape consumed by each audited profile. Demo backing and other queries remain in `src/lua_api/env_init/runtime_surface_bootstrap.lua`; the modeled group getter lives in `src/c_api/c_store_secure.rs`. See [Store source checkpoint](../wiki/investigations/store-secure-pool-constructors.md#store-group-shape--source-checkpoint-2026-10-14).
+> **SUPERSEDED on 2026-11-16.** This page records an inferred demo-data policy, not a current API contract. See the [Retail StoreSecure catalog contract](store-secure-catalog.md) for the current empty-default host-input model. The old demo IDs and strings below were simulator fixtures, not verified native values.
 
-Evidence is inferred from original cached consumers plus explicit simulator policy, **not native proof**. Cached official StoreSecure declarations are absent. Retail/PTR cached shared Store consumers read `groupID`/`parentGroupID`; the Mists TBC consumer treats each entry as an ID.
+Before the Retail catalog model, `C_StoreSecure.GetProductGroups` exposed seeded simulator rows. The old policy was inferred from original cached consumers and was not native proof. The 2026-11-16 Retail change replaces those rows with explicit host-supplied inputs; Mists remains UNKNOWN and keeps its prior bootstrap path.
 
-## What it must do
+## Historical inferred simulator policy (superseded)
 
-- [ ] Retail/PTR: return one demo record in a fresh simulator with `groupID=501`, `parentGroupID=0`.
-- [x] Mists: return one demo numeric ID in a fresh simulator, `501`; no record adapter in the consumer. Two Rust cases and full normal-session contract passed at compiled3e0cba6d4/restore04d83; this is not Store UI acceptance.
-- [ ] Resolve the returned actual ID through `GetProductGroupInfo` to `groupName="Featured"` and through `GetProducts` to the single entry `1003`.
-- [ ] Fresh featured group publishes numeric `displayType=0`, an explicit regular-group simulator policy, not a claim about native legacy enum numbers. Absent metadata must not match absent legacy layout enum fields.
-- [ ] Resolve returned entry `1003` through `GetEntryInfo` to `entryID=1003`, `productID=2003`, and `sharedData.name="Apprentice Rider Bundle"`.
+- INFERRED: Retail/PTR returned one seeded record with `groupID=501`, `parentGroupID=0`.
+- INFERRED: Mists projected seeded record ID `501` to a numeric ID.
+- INFERRED: the seeded group resolved to `groupName="Featured"`, `displayType=0`, entry `1003`, product `2003`, and name `"Apprentice Rider Bundle"`.
 
-Concrete fresh demo values above are explicit simulator policy, not claims about a live/native catalog.
+These values are retained below only to identify the historical tests and source checkpoints. They are not current requirements.
 
-## How it works
+## Historical implementation links
 
 - [Lua API architecture](../lua-api.md)
 - [Addon loading pipeline](../addon-loading-pipeline.md)
+- [Current StoreSecure catalog model](../wiki/systems/store-secure-catalog.md)
 
-## Implementation inventory
+## Historical implementation inventory
 
-- `src/lua_api/env_init/runtime_surface_bootstrap.lua`: existing demo Lua table remains published as `__wow_store_state`; replaced Lua GetProductGroups definitions are removed.
-- `src/c_api/c_store_secure.rs`: modeled group query reads the existing table and projects IDs only on Mists; other profiles retain their record path. No duplicated catalog or initialization bridge.
+The former implementation read a seeded `__wow_store_state` table in `runtime_surface_bootstrap.lua`; `src/c_api/c_store_secure.rs` projected IDs only for Mists. This inventory is superseded by the current StoreSecure catalog implementation.
 
-## Tests asserting this spec
+## Retired inferred tests
 
-- `tests/store_group_contract.rs`: active-profile API contract in a fresh `WowLuaEnv` and after original cached EnvironmentCleanup loading, then explicit post-load workarounds; a separate case checks that restoration preserves an existing getter. Auto-discovered by the integration harness. The second post-load check was unreached in retained cleanup RED.
-- `tests/fixtures/store_group_contract.lua`: shared behavioral assertions; directly executable via normal `--exec-lua` with explicit mode prefix. New numeric/zero display-type assertions are authored before changing backing; earlier group-shape passes do not cover them.
+The old `tests/store_group_contract.rs` data assertions and `tests/fixtures/store_group_contract.lua` were removed on 2026-11-16 because they asserted inferred demo values. The remaining `store_group_restore_preserves_existing_getter` case checks simulator restoration only. A separate Retail cleanup test now checks that the verified catalog methods remain available in `secureenv` with empty host input.
 
-## Known gaps (current cycle)
+## Historical known gaps (recorded 2026-10-14)
 
 - [x] Shared Mists preproducer normal-Lua fixture fails at `Mists GetProductGroups[1] must be numeric` (CLI1), before group/product lookups. Authored Rust case remains unexecuted. Independent existing-artifact audit read all 18 selected artifacts: Mists first-shape RED and Retail/PTR complete baseline lookups accepted. Source-audit ENOENT was a separate agent visibility limitation; main read the delivered report.
 - [x] Retail post-restoration normal-session record contract and public Show witness accepted at `a6b572732`, scoped below. Earlier Retail compile failed before runtime at a private-module import; that historical failure is not the current Retail result.

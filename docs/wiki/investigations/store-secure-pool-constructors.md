@@ -28,6 +28,7 @@ Regression coverage:
 
 - [[addon-load-order]] — addon load timing can require post-load repairs
 - [[lib-test-failure-sweep-2026-06]] — records why post-load repairs must not rely on `hooksecurefunc(C_AddOns, "LoadAddOn")`
+- [[store-secure-catalog]] — current Retail catalog inputs and response behavior; this page's 2026-10-14 group policy is historical
 
 ## Current bounded profile evidence — 2026-10-14
 
@@ -52,3 +53,9 @@ Regression coverage:
 [Public historical packet](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/store-macro-20261014/README.md) retains Store receipts and failures; [owning status](../../specs/store-product-group-shape.md#current-bounded-retail-receipt--2026-10-14) owns their scope and separate accepted copy/privacy limits. No later item/display, PTR, current UI, native/render or full-parent acceptance follows.
 
 [Owning current status](../../specs/store-product-group-shape.md#current-bounded-retail-receipt--2026-10-14) records independent existing-artifact PASS at `a6b572732`: normal public Show, record-contract/completion markers, one shown/visible Apprentice Rider Bundle card with positive reported bounds inside the shown/visible Store, CLI0/CLEAN/zero errors. Startup workarounds remain present; this is not vendor-free, native, rendering or parent proof. Mists query PASS remains separate from public Store UI FAIL; PTR preservation pending.
+
+## Retail catalog input model — 2026-11-16
+
+**VERIFIED (Retail 12.1.5.70688, R88ad.1/R88ad.2):** catalog, availability, currency, purchase-list, dynamic-price and request behavior are backed by response state; empty initial arrays and flags do not imply seeded products. **VERIFIED (simulator source):** `StoreSecureState` is nested under `StoreGlueState`, and the Retail readers consume only its explicit host inputs. **VERIFIED (profile boundary):** Retail uses `c_store_secure_catalog`; uncovered profiles retain their prior bootstrap path, with Mists native behavior still UNKNOWN.
+
+**VERIFIED (pinned Retail consumer cache 12.1.5.70783):** `StoreUI` and `CatalogShop` query group rows, entry/product details, currency and list readiness at the call sites listed in the [current StoreSecure system page](../systems/store-secure-catalog.md). The old 2026-10-14 group ID/name assertions were inferred demo policy and are not current requirements; the current contract is [StoreSecure catalog and list state](../../specs/store-secure-catalog.md).
