@@ -368,26 +368,28 @@ const REALM_AND_CHARACTER_INPUTS: &str = r#"
 
 fn realm_inputs() -> Vec<StoreVasRealmInput> {
     vec![
-        realm_input(102, "Kalimdor", 1, Some(true), Some(false)),
-        realm_input(101, "Azeroth", 2, Some(false), Some(false)),
-        realm_input(303, "Empty", 0, None, None),
+        StoreVasRealmInput {
+            virtual_realm_address: 102,
+            realm_name: "Kalimdor".into(),
+            character_count: 1,
+            pvp: Some(true),
+            rp: Some(false),
+        },
+        StoreVasRealmInput {
+            virtual_realm_address: 101,
+            realm_name: "Azeroth".into(),
+            character_count: 2,
+            pvp: Some(false),
+            rp: Some(false),
+        },
+        StoreVasRealmInput {
+            virtual_realm_address: 303,
+            realm_name: "Empty".into(),
+            character_count: 0,
+            pvp: None,
+            rp: None,
+        },
     ]
-}
-
-fn realm_input(
-    address: u32,
-    name: &str,
-    count: u32,
-    pvp: Option<bool>,
-    rp: Option<bool>,
-) -> StoreVasRealmInput {
-    StoreVasRealmInput {
-        virtual_realm_address: address,
-        realm_name: name.into(),
-        character_count: count,
-        pvp,
-        rp,
-    }
 }
 
 fn character_inputs() -> Vec<StoreVasCharacterInput> {
