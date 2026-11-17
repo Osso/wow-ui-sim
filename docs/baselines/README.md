@@ -51,7 +51,7 @@ device; this is not audio-device acceptance.
 
 ### Mists
 
-**VERIFIED (simulator output, source `6d2916434`):** `mists-lua-errors.json` is the byte-exact stdout from the Mists stock command below, including its trailing LF. It contains **0 records / 0 occurrences, exit 0**; the capture and binary hashes are in [`mists-lua-errors.meta.json`](mists-lua-errors.meta.json).
+**VERIFIED (simulator output, source `bc0a2ddd5`):** `mists-lua-errors.json` is the byte-exact stdout from the Mists stock command below, including its trailing LF. It contains **0 records / 0 occurrences, exit 0**; the capture and binary hashes are in [`mists-lua-errors.meta.json`](mists-lua-errors.meta.json).
 
 **VERIFIED (prior baseline) / VERIFIED (current capture):** the previous 4 records / 10 occurrences were the `C_CombatAudioAlert.IsEnabled` error at `Blizzard_CombatAudioAlertManager.lua:181` and the `C_Spell.GetVisibilityInfo` error at `AuraUtil.lua:272`, including their ScriptErrors echoes. Both consumers now load without Lua errors.
 

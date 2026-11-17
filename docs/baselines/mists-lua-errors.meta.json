@@ -2,9 +2,9 @@
   "verified": "2026-11-16",
   "profile": "mists",
   "status": "Post-merge stock simulator capture: zero Lua errors. This is not native-parity or full-suite acceptance.",
-  "source_revision": "6d291643401e8142ff16db80ce8b895bb9f2448a",
-  "branch_head_at_capture": "49a927df25e001b99a7861f4d818d7bf18da3de0",
-  "runtime_source_basis": "6d291643401e8142ff16db80ce8b895bb9f2448a; the later 49a927df2 commit changed only the integration test source",
+  "source_revision": "bc0a2ddd546a5c3c694949734db8edfc00f13bd9",
+  "branch_head_at_capture": "bc0a2ddd546a5c3c694949734db8edfc00f13bd9",
+  "runtime_source_basis": "bc0a2ddd546a5c3c694949734db8edfc00f13bd9; post-merge source with the final visibility-range implementation",
   "cargo_features": [
     "sound",
     "gui",
@@ -26,20 +26,21 @@
   "baseline_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
   "baseline_transform": "none; stdout copied byte-for-byte including trailing LF",
   "binary_path": "/home/osso/.cache/wow-ui-sim-targets/slot-0/debug/wow-sim",
-  "binary_sha256": "7f9ede5e430a298337e7d609010103aa349e6d763f495ae043f7f1c47cb835d6",
+  "binary_sha256": "b7662b16d721306a0fee0e6056634857402654d461cce3d7c666c558f1adca87",
   "dylib_path": "/home/osso/.cache/wow-ui-sim-targets/slot-0/debug/libwow_ui_sim_dylib.so",
-  "dylib_sha256": "9d14ee1c313efcff99cccf28b0ae1bfac2b8a77447adc1cf648fca752bec97e0",
-  "build_receipt": "/home/osso/.cache/wow-ui-sim-targets/slot-0/receipts/mists-r88ah-prep.json",
-  "build_receipt_sha256": "53d4571b4b87896c7aad316830b89c6c6755140ff03d29858ec0d81e51f87aa0",
+  "dylib_sha256": "ae2fcf1ad2ae9e243c51e2c461cb8f746fe4d406a3000e8f972898e86be6ccc5",
+  "build_receipt": "/home/osso/.cache/wow-ui-sim-targets/slot-0/receipts/mists-r88ah-source-finalize.json",
+  "build_receipt_sha256": "d88f8c4313587c64a2e019ef7c018c23a9fb70313427657d5b9d7943de46de07",
   "compiler_warnings": 0,
-  "fresh_xdg_data_home": "/home/osso/.local/state/wow-ui-sim/handoff/mists-r88ah/RUN/xdg-data-merged-baseline",
+  "fresh_xdg_data_home": "/home/osso/.local/state/wow-ui-sim/handoff/mists-r88ah/RUN/xdg-data-source-final-baseline",
   "persisted_cvars": {
     "path": "/home/osso/.local/share/wow-sim/cvars.json",
     "size": 811,
     "mtime_ns": 1794084010812131548,
     "sha256": "8d1709049bc9acdbed0465889701a0e370667ef18cf06b71db479b3972aa350c",
     "unchanged_during_capture": true,
-    "child_copy_sha256": "c0c0ecdd71e8aed7a10a4613465fe3cd1bff3d4896cf4e08bf4aaa9b75947f79"
+    "child_copy_sha256_before": "8d1709049bc9acdbed0465889701a0e370667ef18cf06b71db479b3972aa350c",
+    "child_copy_sha256_after": "f229ef26f61626474e2ab007f7449c55548839c78911a55853dfae5bf469f237"
   },
   "mists_cache": {
     "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/mists/AddOns",
@@ -68,7 +69,7 @@
   "evidence_label": "VERIFIED simulator output; INFERRED native applicability",
   "capture_notes": [
     "The zero-record JSON is exact stock stdout from --no-addons --no-saved-vars lua-errors.",
-    "The 49a927df2 branch commit after the build changed only tests/mists_r88ah.rs; no runtime source changed.",
+    "The child XDG CVar file started as a byte-exact copy of the persisted CVar file; simulator writes were isolated there.",
     "Both previously recorded API consumers now complete without Lua errors.",
     "A clean simulator error inventory does not establish native behavior for cache build 5.5.4.70268 or full-suite compatibility."
   ]
