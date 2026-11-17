@@ -106,6 +106,7 @@ const LOOKUP_API_CONSUMER: &str = r#"
     assert(C_StoreSecure.GetVASGuildMasterInfoForCharacterByGUID("Player-999-1-FF") == nil, "missing guild-master data should publish nil")
     assert(C_StoreSecure.GetVasServiceType(2003) == Enum.VasServiceType.NameChange, "product type should map to the verified VAS service")
     assert(C_StoreSecure.GetVasServiceType(99999) == nil, "unmapped product should publish nil")
+    return true
 "#;
 
 fn load_store_ui() -> WowLuaEnv {
