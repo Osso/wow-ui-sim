@@ -1,3 +1,7 @@
+## [2026-11-17] implementation | Mists current-mode record from R88ak
+
+Updated the [Glue login contract](../specs/glue-login-flow.md) and [fixture-triage investigation](investigations/master-test-fixture-triage.md). **VERIFIED (Mists Classic 5.5.4.70631):** the getter returns one current mode ID or nil at -1; the runtime writer remains UNKNOWN. **INFERRED (Mists 5.5.4.70268):** the simulator applies that getter to the selected GlueGameLogo consumer through the existing CVar input.
+
 ## [2026-11-17] investigation | Master test fixture and profile triage
 
 Added the [investigation](investigations/master-test-fixture-triage.md). **VERIFIED (Retail 12.1.5.70783):** several exact failures came from partial fixtures that omitted selected Blizzard owners. **UNKNOWN (Mists 5.5.4.70268):** `GetCurrentGameModeRecordID` return data and lifecycle await R88ak.

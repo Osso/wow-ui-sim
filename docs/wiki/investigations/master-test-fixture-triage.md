@@ -1,6 +1,6 @@
 # Master test fixture and profile triage
 
-This investigation separates test-fixture failures from simulator behavior gaps in the exact master failures listed by lt-4d82. It does not claim unknown Mists API values while R88ak is pending.
+This investigation separates test-fixture failures from simulator behavior gaps in the exact master failures listed by lt-4d82. **VERIFIED (R88ak, Mists Classic 5.5.4.70631):** the current-mode getter contract is known. **INFERRED (Mists 5.5.4.70268):** applying it to the selected cache does not establish native parity.
 
 ## Content
 
@@ -14,7 +14,10 @@ This investigation separates test-fixture failures from simulator behavior gaps 
 ### Profile-specific Glue consumers
 
 - **VERIFIED (Mists 5.5.4.70268 cache):** the selected Glue TOC loads `Classic/GlueGameLogo.lua`, whose startup and update handlers call `C_GameRules.GetCurrentGameModeRecordID()`.
-- **UNKNOWN (Mists 5.5.4.70268; R88ak pending):** the game-mode record's value before selection, its writer, and update lifecycle are not established. Keep the seven affected Glue tests gated for Mists only until that answer arrives.
+- **VERIFIED (R88ak, Mists Classic 5.5.4.70631):** `GetCurrentGameModeRecordID` returns one value: the numeric `currentGameMode`, or one nil at -1; its startup default is -1. `AutoConnectToGameModeRealm` sets a mode-ID override, and a current-mode update clears it before a zero-payload `GAME_MODE_DISPLAY_INFO_UPDATED` event.
+- **UNKNOWN (R88ak, Mists Classic 5.5.4.70631):** the runtime writer for `currentGameMode` was not identified.
+- **INFERRED (Mists 5.5.4.70268 from 5.5.4.70631):** the branch registers the getter for Mists and reads the existing `currentGameMode` CVar host input, with -1 as the empty default. The Mists callback emits the no-payload event; the test exercises the selected Classic `GlueGameLogo.lua` consumer.
+- **VERIFIED (simulator source):** no `AutoConnectToGameModeRealm` producer is registered, so the Mists getter does not use the modern-profile temporary override. The new original-consumer test's RED at commit `96087b880` reaches `GlueGameLogo.lua:6` and fails on the missing method.
 - **VERIFIED (Mists 5.5.4.70268 cache):** the selected character-create XML uses `CharCreateBackButton`; its Classic CharacterSelect XML uses `CharacterSelectCharacterFrame` with a ScrollBar. Mainline tests that require `BackButton` or a ScrollBox do not describe these selected Mists consumers.
 - **VERIFIED (Mists 5.5.4.70268 cache):** the cache has no `Blizzard_UIPanels_Game/Mainline/ReputationFrame.xml`; the Mainline reputation-dropdown test does not apply to Mists.
 - **VERIFIED (Forever 1.60.1.70707):** `IsNameReservationOnly` reads a feature-status byte, and the selected Mainline CharacterSelect consumer checks it before allowing entry. The simulator's `deliver_status` input must update the byte read by the Forever getter.
@@ -26,10 +29,10 @@ This investigation separates test-fixture failures from simulator behavior gaps 
 
 ## Sources
 
-- [Glue login contract](../../specs/glue-login-flow.md) — Forever status and the Mists R88ak boundary.
+- [Glue login contract](../../specs/glue-login-flow.md) — Forever status and the Mists current-mode record boundary.
 - [Store Glue contract](../../specs/store-glue-r88q.md) — modeled public methods and fallback scope.
 - [Panel fixture investigation](showuipanel-toggle-fixture-owners.md) — original bootstrap ownership.
-- [Panel tests](../../../tests/addon_coverage.rs), [AddonList tests](../../../tests/addon_list_scroll.rs), [Shared UI tests](../../../tests/blizzard_shared.rs), and [secret-value tests](../../../tests/secret_value_security.rs).
+- [Panel tests](../../../tests/addon_coverage.rs), [AddonList tests](../../../tests/addon_list_scroll.rs), [Shared UI tests](../../../tests/blizzard_shared.rs), [Glue consumer tests](../../../tests/glue_character_select.rs), and [secret-value tests](../../../tests/secret_value_security.rs).
 
 ## See Also
 

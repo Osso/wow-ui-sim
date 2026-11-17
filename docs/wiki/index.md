@@ -1,3 +1,7 @@
+## [2026-11-17] implementation | Mists current-mode record from R88ak
+
+**VERIFIED (Mists Classic 5.5.4.70631):** the getter returns one numeric current-mode ID or one nil at -1; the runtime writer is UNKNOWN. **INFERRED (Mists 5.5.4.70268):** the selected GlueGameLogo consumer uses the CVar-backed simulator getter.
+
 ## [2026-11-17] investigation | Master test fixture and profile triage
 
 Added the [investigation](investigations/master-test-fixture-triage.md). **VERIFIED (Retail 12.1.5.70783):** several exact master failures were incomplete original-consumer fixtures; **UNKNOWN (Mists 5.5.4.70268):** Glue game-mode return data remains pending R88ak.
@@ -4658,7 +4662,7 @@ The sixteen retail 12.0.0 `Enum.EditModeDamageMeterSetting.*` and `Enum.EditMode
 | [[three-slice-button-tiling]] | Escape menu stripes began with inactive `HighlightTexture` children; `204f52235` additionally repairs early culling that contradicted late locked-slot allowance, with shared registry/live-hover deduplication and hidden-ancestor suppression |
 | [[dialog-background-dxt3-stripes]] | Escape-menu dialog background stripes came from treating DXT3 BLPs as BC3 on the raw compressed upload path; DXT3 now falls back to RGBA until BC2 atlas support exists |
 | [[addon-startup-settings-and-item-load]] | Addon startup failures can share roots in Settings canvas visibility, secure attribute delegate taint boundaries, and synthetic C_Item item-load behavior |
-| [[master-test-fixture-triage]] | **VERIFIED (Retail 12.1.5.70783):** panel/AddOnList/SecureTypes tests need selected Blizzard owners; **UNKNOWN (Mists 5.5.4.70268):** Glue game-mode return lifecycle awaits R88ak. |
+| [[master-test-fixture-triage]] | **VERIFIED (Retail 12.1.5.70783):** panel/AddOnList/SecureTypes fixtures; **VERIFIED (R88ak, Mists 5.5.4.70631):** getter contract; **INFERRED (Mists 5.5.4.70268):** CVar-backed consumer wiring; runtime writer UNKNOWN. |
 - The bounded 12.0.0 simulator-compatibility slice classifies exactly seven removed globals `FindBaseSpellByID`, `FindFlyoutSlotBySpellID`, `FindSpellOverrideByID`, `GetBattlegroundInfo`, `PlaySound`, `SetPortraitToTexture`, and `strtrim` as best-effort/compat using the focused `patch-tests/patch_12_1/legacy_compat.rs::simulator_legacy_compat_globals_preserve_tested_behavior` proof at `abba2bd2a`; the claim is limited to tested wrapper forwarding, seeded battleground/unknown-ID behavior, numeric sound acceptance without audio fidelity, portrait masking, and default/custom trimming. SpellGetVisibilityInfo and the other unresolved simulator-published legacy globals remain open.
 
 The five retail 12.0.0 `Enum.EditModePersonalResourceDisplaySetting.*` and `Enum.EditModePersonalResourceDisplaySettingMeta.*` rows are best-effort/behavioral, bounded to startup exact namespace publication, Lua numeric type, and exact values (`HideHealthAndPower=0`, `OnlyShowInCombat=1`; metadata `MinValue=0`, `MaxValue=1`, `NumValues=2`). Focused proof is at `d302a414f6392978a1ccec9997cedf14345907bc`. Root cause: shared runtime used a later fifteen-member namespace with different names (`HideHealth`, `DeprecatedOnlyShowInCombat`, etc.) and metadata `0/14/15`; retail 12.0.0 epoch initialization replaces it with the exact two-member namespace and metadata `0/1/2`. Display behavior, persistence, consumers, transitions, and lifecycle remain unclaimed.
