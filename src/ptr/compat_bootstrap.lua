@@ -21,8 +21,15 @@ local function __wow_fill_enum(enumName, values)
   end
 end
 
-__wow_fill_enum("EditModeAccountSetting", { "ShowRaidWarning" })
-__wow_fill_enum("EditModeSystem", { "RaidWarning" })
+-- Retail 12.1.5.70783 EditModeManagerConstantsDocumentation.lua:242,667.
+local editModeAccountSettings = __wow_ensure_enum_table("EditModeAccountSetting")
+if rawget(editModeAccountSettings, "ShowRaidWarning") == nil then
+  rawset(editModeAccountSettings, "ShowRaidWarning", 33)
+end
+local editModeSystems = __wow_ensure_enum_table("EditModeSystem")
+if rawget(editModeSystems, "RaidWarning") == nil then
+  rawset(editModeSystems, "RaidWarning", 24)
+end
 -- 12.1.0 renamed IconSize to DebuffIconSize.
 rawset(Enum.EditModeUnitFrameSetting, "IconSize", nil)
 __wow_fill_enum("HousingResult", {
@@ -83,35 +90,6 @@ for _, functionName in ipairs(difficultyColorDelegates) do
   end
 end
 
-if type(FlagsUtil) ~= "table" then
-  FlagsUtil = {}
-end
-
-if type(FlagsUtilConstants) ~= "table" then
-  FlagsUtilConstants = {}
-end
-if rawget(FlagsUtilConstants, "CombineShouldSet") == nil then
-  FlagsUtilConstants.CombineShouldSet = true
-end
-
-if FlagsUtil.IsSet == nil then
-  function FlagsUtil.IsSet(flags, flag)
-    if type(flags) ~= "number" or type(flag) ~= "number" then
-      return false
-    end
-    return bit.band(flags, flag) ~= 0
-  end
-end
-
-if GetSpecializationSystem == nil then
-  function GetSpecializationSystem()
-    if Enum.SpecializationSystem and Enum.SpecializationSystem.Traits ~= nil then
-      return Enum.SpecializationSystem.Traits
-    end
-    return "Traits"
-  end
-end
-
 if settablesecurity == nil then
   function settablesecurity(_table, _key, _taint, _secure)
   end
@@ -138,19 +116,7 @@ if CooldownManagerLayout_SetHiddenGroupBuffs == nil then
   end
 end
 
-if LoadAddOnWithErrorHandling == nil then
-  function LoadAddOnWithErrorHandling(name)
-    return UIParentLoadAddOn(name)
-  end
-end
-
 C_CVar = C_CVar or {}
-if rawget(C_CVar, "AreCVarsLoaded") == nil then
-  function C_CVar.AreCVarsLoaded()
-    return true
-  end
-end
-
 C_CombatAudioAlert = C_CombatAudioAlert or {}
 if rawget(C_CombatAudioAlert, "SpeakText") == nil then
   function C_CombatAudioAlert.SpeakText()

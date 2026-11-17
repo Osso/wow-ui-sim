@@ -50,88 +50,79 @@ fn clear_interaction_removes_active_entry() {
     assert!(!still_active, "ClearInteraction should remove the entry");
 }
 
+fn install_close_event_probe(env: &WowLuaEnv) {
+    env.exec(
+        r#"
+        ManagerCloseEvents = {}
+        ManagerHideType = nil
+        local listener = CreateFrame("Frame", "PlayerInteractionCloseListener")
+        listener:RegisterEvent("ALLIED_RACE_CLOSE")
+        listener:RegisterEvent("PLAYER_INTERACTION_MANAGER_FRAME_HIDE")
+        listener:SetScript("OnEvent", function(_, event, interactionType)
+            table.insert(ManagerCloseEvents, event)
+            if event == "PLAYER_INTERACTION_MANAGER_FRAME_HIDE" then
+                ManagerHideType = interactionType
+            end
+        end)
+        "#,
+    )
+    .unwrap();
+}
+
+fn assert_manager_close_sequence(env: &WowLuaEnv, events: &str, hide_type: i32) {
+    env.exec(&format!(
+        "assert(table.concat(ManagerCloseEvents, ',') == '{events}'); assert(ManagerHideType == {hide_type})"
+    ))
+    .unwrap();
+}
+
+fn assert_no_manager_close_events(env: &WowLuaEnv) {
+    env.exec("assert(#ManagerCloseEvents == 0)").unwrap();
+}
+
 #[test]
-fn clear_interaction_fires_allied_race_close_when_active() {
+fn clear_interaction_fires_allied_race_close_before_hide_when_active() {
     let env = WowLuaEnv::new().expect("env");
     env.state()
         .borrow_mut()
         .active_player_interactions
         .insert(ALLIED_RACE_DETAILS_GIVER);
-
-    env.exec(
-        r#"
-        ALLIED_RACE_CLOSE_FIRED = false
-        local listener = CreateFrame("Frame", "AlliedRaceCloseListener")
-        listener:RegisterEvent("ALLIED_RACE_CLOSE")
-        listener:SetScript("OnEvent", function(self, event)
-            if event == "ALLIED_RACE_CLOSE" then
-                ALLIED_RACE_CLOSE_FIRED = true
-            end
-        end)
-        "#,
-    )
-    .unwrap();
+    install_close_event_probe(&env);
 
     env.exec(&format!(
         "C_PlayerInteractionManager.ClearInteraction({ALLIED_RACE_DETAILS_GIVER})"
     ))
     .unwrap();
 
-    let fired: bool = env.eval("return ALLIED_RACE_CLOSE_FIRED").unwrap();
-    assert!(
-        fired,
-        "ALLIED_RACE_CLOSE should fire when AlliedRaceDetailsGiver is cleared"
+    assert_manager_close_sequence(
+        &env,
+        "ALLIED_RACE_CLOSE,PLAYER_INTERACTION_MANAGER_FRAME_HIDE",
+        ALLIED_RACE_DETAILS_GIVER,
     );
 }
 
 #[test]
-fn clear_interaction_does_not_fire_event_when_not_active() {
+fn clear_interaction_does_not_fire_close_events_when_not_active() {
     let env = WowLuaEnv::new().expect("env");
     assert!(env.state().borrow().active_player_interactions.is_empty());
-
-    env.exec(
-        r#"
-        ALLIED_RACE_CLOSE_FIRED = false
-        local listener = CreateFrame("Frame", "AlliedRaceCloseListener")
-        listener:RegisterEvent("ALLIED_RACE_CLOSE")
-        listener:SetScript("OnEvent", function(self, event)
-            if event == "ALLIED_RACE_CLOSE" then
-                ALLIED_RACE_CLOSE_FIRED = true
-            end
-        end)
-        "#,
-    )
-    .unwrap();
+    install_close_event_probe(&env);
 
     env.exec(&format!(
         "C_PlayerInteractionManager.ClearInteraction({ALLIED_RACE_DETAILS_GIVER})"
     ))
     .unwrap();
 
-    let fired: bool = env.eval("return ALLIED_RACE_CLOSE_FIRED").unwrap();
-    assert!(
-        !fired,
-        "ALLIED_RACE_CLOSE should not fire if no interaction was active"
-    );
+    assert_no_manager_close_events(&env);
 }
 
 #[test]
-fn clear_interaction_with_unmapped_type_clears_silently() {
+fn clear_interaction_with_unmapped_type_fires_only_generic_hide() {
     let env = WowLuaEnv::new().expect("env");
     env.state()
         .borrow_mut()
         .active_player_interactions
         .insert(1);
-
-    env.exec(
-        r#"
-        UNEXPECTED_EVENT_FIRED = false
-        local listener = CreateFrame("Frame", "UnknownInteractionListener")
-        listener:RegisterEvent("ALLIED_RACE_CLOSE")
-        listener:SetScript("OnEvent", function() UNEXPECTED_EVENT_FIRED = true end)
-        "#,
-    )
-    .unwrap();
+    install_close_event_probe(&env);
 
     env.exec("C_PlayerInteractionManager.ClearInteraction(1)")
         .unwrap();
@@ -139,11 +130,9 @@ fn clear_interaction_with_unmapped_type_clears_silently() {
     let still_active = env.state().borrow().active_player_interactions.contains(&1);
     assert!(
         !still_active,
-        "Unmapped types should still clear from the set"
+        "ClearInteraction should remove the active entry"
     );
-
-    let fired: bool = env.eval("return UNEXPECTED_EVENT_FIRED").unwrap();
-    assert!(!fired, "Unmapped types should not fire ALLIED_RACE_CLOSE");
+    assert_manager_close_sequence(&env, "PLAYER_INTERACTION_MANAGER_FRAME_HIDE", 1);
 }
 
 #[test]

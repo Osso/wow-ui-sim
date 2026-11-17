@@ -246,6 +246,10 @@ fn register_core_surfaces(lua: &mut rilua::Lua) -> crate::Result<()> {
     super::lfg_list::register_all(lua)?;
     super::real::locale_info::register_all(lua)?;
     super::missing_surface::register_all(lua)?;
+    #[cfg(feature = "client-retail")]
+    super::real::specialization_system::register(lua)?;
+    #[cfg(feature = "client-retail")]
+    super::real::glue_state::register(lua.state_mut())?;
     super::real::achievement_eligibility::register(lua)?;
     crate::c_api::encoding_util::register(lua.state_mut())?;
     super::quest_surface::register_all(lua)?;
@@ -402,6 +406,7 @@ fn register_social_state_probes(lua: &mut rilua::Lua) -> crate::Result<()> {
 
 fn register_compat_and_admin(lua: &mut rilua::Lua) -> crate::Result<()> {
     super::compat_overrides::register_all(lua)?;
+    super::real::bit_library::register_all(lua)?;
     super::bank_storage_verbs::register_guild_tabard_files(lua)?;
     #[cfg(any(feature = "client-mists", feature = "client-wrath"))]
     super::auction_verbs::register_all(lua)?;

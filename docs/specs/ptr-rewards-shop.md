@@ -11,6 +11,6 @@ check. Both other mirrors default false. These inputs model supplied state; they
 do not implement server delivery.
 
 Evidence: PTR 70668 reconstruction R11 in
-`~/.local/state/wow-ui-sim/handoff/pr46-49-decomp-answers.md`. The override
+`pr46-49-decomp-answers.md` (untracked decomp handoff). The override
 helper's diagnostic is only reached when that helper is called; the game-rules
 predicate short-circuits when `bpayStoreEnable` is enabled.

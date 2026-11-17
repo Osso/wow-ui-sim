@@ -15,6 +15,7 @@ pub mod backgrounds;
 pub mod character_roster;
 #[cfg(feature = "client-ptr")]
 pub mod ptr_state;
+mod retail_lifecycle;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 mod submission;
 
@@ -62,6 +63,7 @@ pub struct LoginState {
     aurora_state: i32,
     connected_to_wow: bool,
     pending_step: u8,
+    retail_glue: retail_lifecycle::RetailGlueState,
 }
 
 impl Default for LoginState {
@@ -88,6 +90,7 @@ impl Default for LoginState {
             aurora_state: 1,
             connected_to_wow: false,
             pending_step: 0,
+            retail_glue: Default::default(),
         }
     }
 }
@@ -119,6 +122,18 @@ impl LoginState {
         self.selected_character_index = -1;
         self.resolved_saved_character_index = None;
     }
+
+    /// Seed the host-model cancellation condition; native initialization remains unknown.
+    #[cfg(feature = "client-retail")]
+    pub fn seed_login_cancellation_recorded_for_host(&mut self, recorded: bool) {
+        self.retail_glue.login_cancellation_recorded = recorded;
+    }
+
+    /// Seed a completion value for host-state coverage, not a native writer claim.
+    #[cfg(feature = "client-retail")]
+    pub fn seed_character_list_completion_state_for_host(&mut self, state: i32) {
+        self.retail_glue.character_list_completion_state = state;
+    }
 }
 
 pub fn register_c_login(state: &mut LuaState) -> LuaResult<()> {
@@ -137,12 +152,40 @@ pub fn register_c_login(state: &mut LuaState) -> LuaResult<()> {
             submission::get_logon_queue_info,
         )?;
     }
+    #[cfg(feature = "client-ptr")]
+    register_ptr_glue_producers(state)?;
     permanent_shims::c_login::register_c_login_defaults(state, ns)?;
     Ok(())
 }
 
-/// Update the Glue-only selected-superdistrict query and login-start state.
+// Narrow, individually approved inferred producers. Preserve the existing order.
+#[cfg(feature = "client-ptr")]
+fn register_ptr_glue_producers(state: &mut LuaState) -> LuaResult<()> {
+    if ACTIVE != ClientProfile::Ptr {
+        return Ok(());
+    }
+    crate::lua_api::globals::real::glue_connection::register(state)?;
+    crate::lua_api::globals::real::glue_character_season::register(state)?;
+    crate::lua_api::globals::real::glue_select_character::register(state)?;
+    crate::lua_api::globals::real::glue_background::register_background_only(state)?;
+    crate::lua_api::globals::real::glue_background::register_model_ffx_only(state)
+}
+
+/// Update screen-scoped C_Login members.
 pub(crate) fn update_screen_registration(env: &WowLuaEnv, screen: ScreenKind) {
+    #[cfg(feature = "client-mists")]
+    if ACTIVE == ClientProfile::Mists {
+        let mut lua = env.lua.borrow_mut();
+        update_mists_cached_credentials_registration(lua.state_mut(), screen.is_glue())
+            .expect("register Mists Glue C_Login.GetCachedCredentials");
+        return;
+    }
+    if ACTIVE == ClientProfile::Retail {
+        let mut lua = env.lua.borrow_mut();
+        retail_lifecycle::update_screen_registration(lua.state_mut(), screen.is_glue())
+            .expect("register Retail Glue login lifecycle APIs");
+        return;
+    }
     if !matches!(ACTIVE, ClientProfile::Ptr | ClientProfile::WowForever) {
         return;
     }
@@ -156,6 +199,37 @@ pub(crate) fn update_screen_registration(env: &WowLuaEnv, screen: ScreenKind) {
         borrow_state_mut(state)
             .expect("borrow login state when starting the login screen")
             .selected_super_district_id = 0;
+    }
+}
+
+// INFERRED (R88am 70631 applied to 70268): expose this for the selected Classic Glue consumer.
+// UNKNOWN native: Game availability and ordinary/secure publication classification.
+#[cfg(feature = "client-mists")]
+fn update_mists_cached_credentials_registration(
+    state: &mut LuaState,
+    is_glue: bool,
+) -> LuaResult<()> {
+    let namespace = match LuaApiMut::get_global_val(state, "C_Login") {
+        Val::Table(namespace) => namespace,
+        _ if is_glue => ensure_namespace(state, "C_Login")?,
+        _ => return Ok(()),
+    };
+
+    if is_glue {
+        table_set_rust_fn_static(
+            state,
+            namespace,
+            "GetCachedCredentials",
+            mists_get_cached_credentials,
+        )
+    } else {
+        table_set_static(
+            state,
+            Val::Table(namespace),
+            "GetCachedCredentials",
+            Val::Nil,
+        );
+        Ok(())
     }
 }
 
@@ -186,6 +260,11 @@ fn update_selected_super_district_registration(
         );
         LuaApiMut::set_global_val(state, "SelectSuperDistrict", Val::Nil)
     }
+}
+
+#[cfg(feature = "client-mists")]
+fn mists_get_cached_credentials(_state: &mut LuaState) -> LuaResult<u32> {
+    Ok(0)
 }
 
 fn get_selected_super_district_id(state: &mut LuaState) -> LuaResult<u32> {
@@ -219,93 +298,127 @@ fn c_login_get_state(state: &mut LuaState) -> LuaResult<u32> {
         #[cfg(feature = "client-ptr")]
         return ptr_state::get_state(state);
     }
-    let (aurora_state, connected_to_wow, wow_connection_state, has_realm_list) = {
-        let sim = borrow_state(state)?;
-        let login = &sim.glue_login;
-        if login.submitted {
-            (
-                login.aurora_state,
-                login.connected_to_wow,
-                1,
-                login.realm_list_available,
-            )
-        } else {
-            sim.screen_kind.login_state()
-        }
-    };
+    let values = get_login_state_values(state)?;
     if ACTIVE == ClientProfile::WowForever {
-        let has_selected_preset = {
-            let sim = borrow_state(state)?;
-            crate::c_api::experience_preset::has_selected(&sim.cvars)?
-        };
-        let result = create_table(state);
-        for (key, value) in [
-            ("auroraState", Val::Num(f64::from(aurora_state))),
-            ("connectedToWoW", Val::Bool(connected_to_wow)),
-            (
-                "wowConnectionState",
-                Val::Num(f64::from(wow_connection_state)),
-            ),
-            ("hasRealmList", Val::Bool(has_realm_list)),
-            // User-approved, not native evidence; native login policy is not modeled.
-            ("waitingForRealmList", Val::Bool(false)),
-            ("superDistrictChoicePending", Val::Bool(false)),
-            ("keepingCharacterListOnRealmJoin", Val::Bool(false)),
-            ("waitingForRuleSets", Val::Bool(false)),
-            (
-                "hasSelectedExperiencePreset",
-                Val::Bool(has_selected_preset),
-            ),
-        ] {
-            table_set(state, result, key, value);
-        }
-        state.push(result);
-        return Ok(1);
+        return push_wow_forever_login_state(state, values);
     }
-    state.push(Val::Num(f64::from(aurora_state)));
-    state.push(Val::Bool(connected_to_wow));
-    state.push(Val::Num(f64::from(wow_connection_state)));
-    state.push(Val::Bool(has_realm_list));
+    push_standard_login_state(state, values)
+}
+
+fn get_login_state_values(state: &mut LuaState) -> LuaResult<(i32, bool, i32, bool)> {
+    let sim = borrow_state(state)?;
+    let login = &sim.glue_login;
+    let disconnected =
+        ACTIVE == ClientProfile::Retail && login.retail_glue.disconnect_state_is_authoritative;
+    if login.submitted || disconnected {
+        Ok((
+            login.aurora_state,
+            login.connected_to_wow,
+            1,
+            login.realm_list_available,
+        ))
+    } else {
+        Ok(sim.screen_kind.login_state())
+    }
+}
+
+fn push_wow_forever_login_state(
+    state: &mut LuaState,
+    (aurora, connected, connection, realms): (i32, bool, i32, bool),
+) -> LuaResult<u32> {
+    let has_selected_preset = {
+        let sim = borrow_state(state)?;
+        crate::c_api::experience_preset::has_selected(&sim.cvars)?
+    };
+    let result = create_table(state);
+    for (key, value) in [
+        ("auroraState", Val::Num(f64::from(aurora))),
+        ("connectedToWoW", Val::Bool(connected)),
+        ("wowConnectionState", Val::Num(f64::from(connection))),
+        ("hasRealmList", Val::Bool(realms)),
+        // User-approved, not native evidence; native login policy is not modeled.
+        ("waitingForRealmList", Val::Bool(false)),
+        ("superDistrictChoicePending", Val::Bool(false)),
+        ("keepingCharacterListOnRealmJoin", Val::Bool(false)),
+        ("waitingForRuleSets", Val::Bool(false)),
+        (
+            "hasSelectedExperiencePreset",
+            Val::Bool(has_selected_preset),
+        ),
+    ] {
+        table_set(state, result, key, value);
+    }
+    state.push(result);
+    Ok(1)
+}
+
+fn push_standard_login_state(
+    state: &mut LuaState,
+    (aurora, connected, connection, realms): (i32, bool, i32, bool),
+) -> LuaResult<u32> {
+    state.push(Val::Num(f64::from(aurora)));
+    state.push(Val::Bool(connected));
+    state.push(Val::Num(f64::from(connection)));
+    state.push(Val::Bool(realms));
     state.push(Val::Bool(false));
     Ok(5)
 }
 
 /// Advance the explicit offline policy once per update, not native frame timing.
 pub(crate) fn advance(env: &crate::lua_api::WowLuaEnv) -> crate::Result<()> {
-    let step = {
-        let mut sim = env.state().borrow_mut();
-        let login = &mut sim.glue_login;
-        let step = login.pending_step;
-        match step {
-            1 => {
-                login.aurora_state = 4;
-                login.pending_step = 2;
-            }
-            2 => {
-                login.aurora_state = 1;
-                login.connected_to_wow = true;
-                login.pending_step = 3;
-            }
-            3 => {
-                login.received_connection_info = login.connection_info;
-                login.selected_character_index = -1;
-                login.resolved_saved_character_index = character_roster::resolve_saved_candidate(
-                    &login.characters,
-                    login.saved_character_index,
-                );
-                login.pending_step = 0;
-            }
-            _ => return Ok(()),
-        }
-        step
+    let Some(step) = advance_login_state(env) else {
+        return Ok(());
     };
+    publish_login_step(env, step)
+}
+
+fn advance_login_state(env: &crate::lua_api::WowLuaEnv) -> Option<u8> {
+    let mut sim = env.state().borrow_mut();
+    let login = &mut sim.glue_login;
+    let step = login.pending_step;
+    match step {
+        1 => advance_login_connecting(login),
+        2 => advance_login_connected(login),
+        3 => process_character_list(login),
+        _ => return None,
+    }
+    Some(step)
+}
+
+fn advance_login_connecting(login: &mut LoginState) {
+    login.aurora_state = 4;
+    login.pending_step = 2;
+}
+
+fn advance_login_connected(login: &mut LoginState) {
+    login.aurora_state = 1;
+    login.connected_to_wow = true;
+    login.pending_step = 3;
+    if ACTIVE == ClientProfile::Retail {
+        retail_lifecycle::mark_character_list_pending(login);
+    }
+}
+
+fn process_character_list(login: &mut LoginState) {
+    login.received_connection_info = login.connection_info;
+    login.selected_character_index = -1;
+    login.resolved_saved_character_index =
+        character_roster::resolve_saved_candidate(&login.characters, login.saved_character_index);
+    if ACTIVE == ClientProfile::Retail {
+        retail_lifecycle::complete_character_list(login);
+    }
+    login.pending_step = 0;
+}
+
+fn publish_login_step(env: &crate::lua_api::WowLuaEnv, step: u8) -> crate::Result<()> {
     if step == 3 {
         let count = env.state().borrow().glue_login.characters.len();
-        env.fire_event_with_args("CHARACTER_LIST_UPDATE", &[Val::Num(count as f64)])?;
-    } else {
-        env.fire_event("LOGIN_STATE_CHANGED")?;
+        return env.fire_event_with_args("CHARACTER_LIST_UPDATE", &[Val::Num(count as f64)]);
     }
-    Ok(())
+    if step == 2 && ACTIVE == ClientProfile::Retail {
+        env.fire_event("CHARACTER_LIST_RETRIEVING")?;
+    }
+    env.fire_event("LOGIN_STATE_CHANGED")
 }
 
 /// Publish a host queue snapshot. R42 requires an event for each active update,

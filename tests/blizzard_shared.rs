@@ -136,6 +136,8 @@ fn env_with_addon_list() -> WowLuaEnv {
         eprintln!("Warning: Failed to load SharedXML: {}", e);
     }
 
+    load_addon_list_panel_globals(&env);
+
     let addon_list_toc = blizzard_toc("Blizzard_AddOnList");
     let result =
         load_addon(&env.loader_env(), &addon_list_toc).expect("Failed to load Blizzard_AddOnList");
@@ -151,6 +153,18 @@ fn env_with_addon_list() -> WowLuaEnv {
     }
 
     env
+}
+
+fn load_addon_list_panel_globals(env: &WowLuaEnv) {
+    for addon in [
+        "Blizzard_GameMenuEsc",
+        "Blizzard_ManagedFrameSystem",
+        "Blizzard_UIParentPanelManager",
+    ] {
+        let toc = blizzard_toc(addon);
+        load_addon(&env.loader_env(), &toc)
+            .unwrap_or_else(|error| panic!("Failed to load {addon}: {error}"));
+    }
 }
 
 #[test]
@@ -199,28 +213,38 @@ fn test_addon_list_enable_all_button_has_texture() {
     );
 }
 
+// UNKNOWN (Retail 12.1.5.70783): this injects nil although the consumer says
+// Group is C++-supplied; reachability of that input is not independently proved.
+#[cfg(feature = "optional-tests")]
+fn run_addon_list_nil_group_probe(env: &WowLuaEnv) -> (bool, String, bool, i32) {
+    env.eval(
+        r#"
+        AddonList:Show()
+        local original = C_AddOns.GetAddOnMetadata
+        C_AddOns.GetAddOnMetadata = function(addon, field)
+            if field == "Group" and addon == 1 then
+                return nil
+            end
+            return original(addon, field)
+        end
+
+        local ok, err = pcall(AddonList_Update)
+        return ok, tostring(err), AddonList.ScrollBox:GetDataProvider() ~= nil,
+            C_AddOns.GetNumAddOns()
+        "#,
+    )
+    .expect("AddonList nil-group regression probe should return")
+}
+
+#[cfg(feature = "optional-tests")]
 #[test]
 fn test_addon_list_update_tolerates_missing_group_metadata() {
     let env = env_with_addon_list();
-
-    let (ok, message, has_data_provider): (bool, String, bool) = env
-        .eval(
-            r#"
-            local original = C_AddOns.GetAddOnMetadata
-            C_AddOns.GetAddOnMetadata = function(addon, field)
-                if field == "Group" and addon == 1 then
-                    return nil
-                end
-                return original(addon, field)
-            end
-
-            AddonList:Show()
-            local ok, err = pcall(AddonList_Update)
-            return ok, tostring(err), AddonList.ScrollBox:GetDataProvider() ~= nil
-        "#,
-        )
-        .expect("AddonList nil-group regression probe should return");
-
+    let (ok, message, has_data_provider, addon_count) = run_addon_list_nil_group_probe(&env);
+    assert!(
+        addon_count > 0,
+        "nil-group probe must visit a real addon row"
+    );
     assert!(
         ok,
         "AddonList_Update should tolerate nil group metadata: {message}"

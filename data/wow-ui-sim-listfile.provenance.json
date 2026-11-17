@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "source": {
+    "repository": "wowdev/wow-listfile",
+    "release": "202611141741",
+    "url": "https://github.com/wowdev/wow-listfile/releases/download/202611141741/community-listfile.csv",
+    "fetched_at": "2026-11-16T21:28:56.966498+00:00",
+    "bytes": 153950356,
+    "sha256": "c95a29658b1274d8c7cb33f1d629ffe8be8b6dcb2b7bb9177414dcd5a48e0e21"
+  },
+  "extra_sources": [
+    {
+      "path": "data/listfile-overrides.csv",
+      "bytes": 4359,
+      "sha256": "79980053d0fe5088b74fc619b2c61f84e60f48a3a2c998c940d945b55bc04ff9"
+    }
+  ],
+  "requests": {
+    "path_candidates": {
+      "count": 2836,
+      "sha256": "fc4ae205252f48668a5e3edce1ab1fa5f77c302b20bf398f66bebdabddcdbc3b"
+    },
+    "file_data_ids": {
+      "count": 141208,
+      "sha256": "51d909a53d15ea7c7cdedbce3d6ecade949389052ae27ee29221d4e72057d187"
+    },
+    "blizzard_ui_files": {
+      "count": 5967,
+      "sha256": "648777d9a50016fb79eafceb86ef542a901160e81334919e28129415866f5bea"
+    }
+  },
+  "output": {
+    "path": "data/wow-ui-sim-listfile.csv",
+    "rows": 147015,
+    "bytes": 9587710,
+    "sha256": "338b4f7894ba061c5cc007e4e13dc30cb88c930ea598eb9763018c3973cd651e"
+  },
+  "format": "UTF-8; semicolon-separated FileDataID/path; LF; normalized-path sort; canonical override casing preserved"
+}

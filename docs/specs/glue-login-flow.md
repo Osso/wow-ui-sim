@@ -5,9 +5,10 @@
 Task [lt-a667](https://tasks.sakuin.org/tasks/lt-a667), ANSWER **30** (round R40),
 is the native evidence and separately labeled simulator-policy authorization.
 Native evidence covers Retail **12.1.5.70688** and Forever **1.60.1.70707**.
-The runtime Retail pin is **12.1.5.70575**: build-specific native facts for that
-pin remain **UNKNOWN**. Tests of its cached Lua are compatibility observations,
-not native conformance proof. New `C_Login.Login` publication is limited to
+The original R40 runtime pin was **12.1.5.70575**; the active synchronized Retail
+cache is now **12.1.5.70783**. Both differ from native 70688, so build-specific
+native facts remain **UNKNOWN**. Tests of cached Lua are compatibility
+observations, not native conformance proof. New `C_Login.Login` publication is limited to
 Retail and Forever. Glue-only native registration is **INFERRED**, not verified.
 Existing namespace publication in other profiles is unchanged. Native Glue-only
 scope is not enforced by the current simulator registration of Login,
@@ -123,6 +124,16 @@ this comparison. Tests cover unready, zero/negative limits, absent GUIDs, equali
 and spare capacity. The nonempty UI fixture explicitly supplies readiness and
 limit 2; neither value is a native realm default.
 
+**INFERRED PTR applicability (lt-941b #1299):** the selected PTR
+`Blizzard_GlueXML/Mainline/CharacterSelect.lua:819` invokes
+`CanCreateCharacter()` directly before testing the undeleting state. PTR now
+registers only the existing R43 connection-backed producer under
+`client_profile::ACTIVE == Ptr`; its readiness/limit/nonempty-GUID calculation,
+argument handling, and existing publication policy are unchanged. This does not
+enable the Retail/Forever `C_Login` registration block, `SelectCharacter`,
+background/enter-world/order functions, or `IsCharacterListUpdatePending`.
+PTR native parity is not established; applicability reuses the cited R43 evidence.
+
 `GetGameModeGlueScreenName` is registered in Glue and Game. The original R43
 selected-realm interpretation is superseded by R60 below: both getters share
 temporary-override/currentGameMode-CVar selection and host rows. Nonempty row
@@ -149,7 +160,9 @@ ANSWER **47** (R44-Q18, PTR70668 / Forever70707) resolves name reservation.
 It takes no arguments and returns one boolean from a feature-system status byte,
 independent of realm and character. Its verified initial value is false; an
 ordinary server-sent value is UNKNOWN. `GlueFeatureStatus` starts false and only
-`deliver_status` replaces it. The host action emits no-payload
+`deliver_status` replaces it. On Forever, delivery must also update the status
+byte read by `IsNameReservationOnly` before the second notification; the ordinary
+server-supplied value remains UNKNOWN. The host action emits no-payload
 `TIMERUNNING_SEASON_UPDATE`, writes the status, then emits no-payload
 `AVAILABLE_GAME_MODES_UPDATED`, preserving the supplied posting order. Host
 notifications dispatch synchronously; tests do not claim native callback latency
@@ -206,6 +219,26 @@ untested. A defensive signed-32-bit finite input envelope returns an explicit
 simulator-coverage error outside that envelope. This is not the native numeric
 range or native error contract, and no native conformance is claimed there.
 No saturating Rust conversion defines selection for those unsupported inputs.
+
+Behavior-neutral R45 factoring (lt-941b #1302): `SelectCharacter` now lives in
+`glue_select_character`, split into parser, slot resolution and store/event
+helpers of at most30 body lines. The producer and original Retail/Forever
+registration order are preserved; this commit does not enable it on PTR.
+
+**INFERRED PTR SelectCharacter applicability (lt-941b #1302):** the selected PTR
+`Blizzard_GlueXML/Mainline/CharacterSelect.lua:891` calls
+`SelectCharacter(selectedCharacterID)` after resolving a nonempty selected row.
+The separately committed neutral R45 producer in `glue_select_character` is
+registered on `ACTIVE == Ptr` only. Its parser, defensive unknown-range
+handling, roster normalization, unresolved/no-change exits, store-before-event
+ordering and zero-return behavior are unchanged. The Retail/Forever route still
+registers SelectCharacter before its existing season/background/entry/order
+chain. PTR retains its existing connection/season publication order and adds
+only this producer; no enclosing login/selection block or called downstream API
+is enabled. In particular `IsCharacterListUpdatePending` is unchanged.
+Generated declarations for this PTR Glue global are absent; applicability is
+based on the selected original consumer and R45 Retail evidence, not native PTR
+parity or a new argument/refusal policy.
 
 Full-list processing resets selection to -1 before `CHARACTER_LIST_UPDATE`.
 The event's count includes empty and unresolved slots. A separate zero-based
@@ -268,6 +301,19 @@ zero. The getter uses requested-GUID record resolution and never the selected
 character or active season. Glue-only exposure is INFERRED and profile-scoped.
 No extra events, GUID grammar, secret handling or other writers are invented.
 
+**INFERRED PTR applicability (lt-941b #1299):** the selected PTR
+`Blizzard_GlueXML/Mainline/CharacterSelect/CharacterSelectListElements.lua:815`
+calls `GetCharacterTimerunningSeasonID(guid)` on its supplied-GUID path. The
+existing R49 producer and its Glue-only installer are factored into
+`glue_character_season`; the Retail/Forever selection route delegates to that
+same helper. A separate `ACTIVE == Ptr` registration and screen-update route
+installs only this query. Existing argument checks, nil/nonzero return behavior,
+GUID matching, and Game removal policy are preserved. The enclosing selection,
+background, enter-world, order and login registration blocks remain unchanged;
+no new secret/refusal rule or `IsCharacterListUpdatePending` producer is added.
+PTR applicability is inferred from the cited Retail/Forever R49 facts, not a new
+PTR native finding.
+
 ### R50 preset writer and cached-integer projection
 
 Tracker lt-a667 comment 66 supplies Forever 70707 / PTR 70668 evidence.
@@ -315,9 +361,28 @@ the two other failures are PTR feedback discovery/file-list expectations.
 Retail 70575 defines the always-true function in unfiltered shared
 FloatingChatFrame.lua:40, replacing GlueParent.lua:909's screen-aware policy.
 Comment 99 retracts the earlier stale-pin diagnosis: the installed 70783 CASC
-root also lacks FloatingChatFrameGame.lua, so a pin refresh will not fix this.
-The native ordering/filtering/visibility explanation is UNKNOWN pending R62.
-R62 below narrows the unsupported Retail visibility assertion without changing runtime behavior.
+root also lacks `FloatingChatFrameGame.lua`, so a pin refresh will not add it.
+**VERIFIED (local Retail 12.1.5.70783, build key
+`bc493ecb2898766c0f8947a99b4b3d65`, CDN key
+`3363ac656da5f261cdc675ab28b2744c`, 2026-11-15):** FDID `8547105` has no
+local root-resolution row, and the selected Gethe manifest omits
+`Blizzard_ChatFrameBase/Shared/FloatingChatFrameGame.lua`. The refreshed pin
+therefore does not supply that source. **VERIFIED (Retail 12.1.5.70783 TOC/Lua):**
+`Blizzard_ChatFrameBase.toc:12` allows the addon in both screens for Mainline,
+lines 41–43 select the shared and `[Family]` FloatingChatFrame sources, and the
+shared source defines `AllowChatFramesToShow` as true. The selected Mainline
+source calls that function at `FloatingChatFrame.lua:1869`; GlueParent's `login`
+screen record has no `allowChat` and its policy returns false at
+`GlueParent.lua:909–914`. **VERIFIED (Retail 12.1.5.70575 versus 12.1.5.70783
+cache bytes):** the addon TOC, Shared and Mainline FloatingChatFrame Lua, its
+Mainline XML, and GlueParent Lua are byte-identical. Thus this repin does not
+change these original inputs for the Login visibility consumer. The Retail test
+`glue_retail_chat_source_preserves_r62_verified_asset_facts` checks source facts;
+`login_boot_hides_non_login_frontend_frames` loads original Login addons but
+excludes Retail chat visibility assertions. **UNKNOWN:** which definition wins
+before the consumer runs and the final native visibility result. Follow-up
+`lt-0de8` tracks that question. R62 narrows the unsupported Retail visibility
+assertion without changing runtime behavior.
 
 
 ### R52 background lookup and supplied row boundary
@@ -341,19 +406,41 @@ strings are inferred; full grammar, nonfinite values and conversion overflow
 remain outside verified coverage.
 
 Both globals are Glue-only on Retail/Forever (normal scope is inferred from
-native installation). PTR is unchanged and UNKNOWN. The setter validates numeric
+native installation). The setter validates numeric
 file-ID or string input and returns zero values, but stores no fake observable
 background/selection state. Retail 3D work is omitted. Forever readiness-event
 payload, timing, repeat count and failures remain UNKNOWN; no synthetic
 CHAR_SELECT_BACKGROUND_MODEL_READY is emitted. Filename resolution and all
 indirect resource effects remain outside this bounded non-3D model.
 
+Behavior-neutral R52 factoring (lt-941b #1305): the original installer delegates
+the first two entries to a small background-only helper and retains both move
+entries afterward. Function pointers, order, Glue installation/Game removal,
+all producer bodies and active profiles remain unchanged. The existing PTR
+season-only screen refresh is extracted without enabling a new function.
+
+**INFERRED PTR R52 applicability (lt-941b #1305):** selected PTR
+`Blizzard_GlueXML/Mainline/CharacterSelect/CharacterSelectUI.lua:379` reaches
+`SetCharSelectBackground(GetSelectBackgroundModel(selectedCharacterID))`.
+Only this existing producer pair is registered under `ACTIVE == Ptr`, using the
+same Glue-only install/Game removal policy. Retail/Forever retain all four
+existing installer entries in the same order. No background rows, native
+filename grammar, visual/3D state, readiness event or indirect effects are added.
+Generated declarations are absent; PTR applicability reuses R52 Retail evidence,
+not a native PTR finding. Model-transfer registration is not enabled here.
+
 ### R54 independent automatic-boost session values
 
 Comment 82 supplies Forever 70707 and Retail 70688 evidence. Two optional session
 values, boost type and GUID, start absent and are separate from active purchase
 and trial-service inputs. The getters/writers are installed in Game and Glue on
-Retail/Forever before the existing protected-global wrappers. PTR is unchanged.
+Retail/Forever before the existing protected-global wrappers. PTR publication of
+the same four members is INFERRED from R54 Retail VERIFIED evidence
+(`pr46-49-decomp-answers.md:4584`, coordinator lt-941b1296) and the selected PTR
+consumer calls at `CharacterSelect.lua:2153,2160-2161,2182-2183`. The latter two
+are explicit nil Set* calls already covered by the bounded R54 writer cases.
+Generated docs declare these APIs in no pinned cache. Producers, registration
+flags and protected refusal policy are unchanged.
 Tainted callers keep the existing report-and-return refusal without a combat
 condition; no new access rule is added.
 
@@ -379,7 +466,7 @@ Comment 91 provides Retail 70688 and Forever 70707 evidence. Both
 MoveCharactersToModelFFXFrame and MoveCharactersToMapSceneFrame read no Lua
 arguments, perform no supplied-frame type checks, and return zero values.
 Ordinary ignored extra arguments and normal Glue-only scope are inferred from
-those handlers and registration. PTR is uninspected and unchanged.
+those handlers and registration. PTR native behavior remains uninspected.
 
 The coordinator explicitly permits registered Glue-only zero-result no-ops for
 these two model-transfer operations in the simulator without 3D rendering.
@@ -391,6 +478,21 @@ was found in the checked direct native code.
 ResetModel is original Blizzard_GlueParent Lua (cached Retail lines 779–785,
 Forever 770–776), not a native API. It is not registered or replaced here.
 Failures in its frame-method calls require separate evidence.
+
+Behavior-neutral R58 factoring (lt-941b #1305): ModelFFX has its own installer
+helper using the exact existing bounded producer. The full Retail/Forever
+installer still publishes background getter, background setter, ModelFFX, then
+MapScene, with identical Glue/Game policy. No PTR route is added in this commit.
+
+**INFERRED PTR R58 ModelFFX applicability (lt-941b #1305):** the reached selected PTR
+`Blizzard_GlueXML/Mainline/CharacterSelect/CharacterSelectUI.lua:403` calls
+`MoveCharactersToModelFFXFrame()`. Only that existing bounded 3D-gap handler is
+published under `ACTIVE == Ptr`; its no-argument-read/zero-result behavior and
+Glue-only install/Game removal policy are unchanged. The alternative
+`MoveCharactersToMapSceneFrame` call at line392 is evidenced but unreached, not extended on PTR. Retail/Forever preserve both preexisting routes and
+the original four-entry registration order. Generated declarations are absent;
+no PTR native proof, rendering, indirect parenting/update effect or event is
+claimed from this applicability inference.
 
 ### R60 shared GameMode display selection and high-resolution capability
 
@@ -423,9 +525,9 @@ callback-producing API calls. The native setter path and Lua CVar setter both
 invoke this callback. Tests exercise original GameLogoDarkBackdrop Lua against
 supplied rows, CVar changes, and the host clear operation.
 
-UNKNOWN: full writer set, exact native callback timing/guards, loaded GameMode
-rows, first login snapshot, computed writes to the capability byte, and complete
-error lines. No row download or inferred nil-return arity assertion is added.
+UNKNOWN: the runtime writer for `currentGameMode`, exact native callback
+timing/guards, loaded GameMode rows, first login snapshot, computed writes to
+the capability byte, and complete error lines. No row download is added.
 
 Cached-integer overflow is an explicit unsupported simulator input diagnostic,
 not silently treated as no mode and not claimed as a native error contract.
@@ -635,8 +737,9 @@ claiming a new full-suite or all-profile matrix run.
 ## Enter World host handover (lt-81c7, R74)
 
 Source: [lt-81c7](https://tasks.sakuin.org/tasks/lt-81c7), ANSWERS **149**
-and **175**. R74 covers Retail **70688** and Forever **70707**; the Retail
-runtime pin remains **70575**, so its exact native contract is UNKNOWN.
+and **175**. R74 covers Retail **70688** and Forever **70707**. Its original
+Retail runtime observation used **70575**; the active cache is now **70783**.
+The exact native contract for either mismatched cache remains UNKNOWN.
 
 VERIFIED: `EnterWorld` is in both Glue API catalogs, reads no Lua arguments,
 resolves the current selected index to a GUID and record, silently skips empty,
@@ -701,3 +804,82 @@ Evidence: lt-81c7 ANSWERs #243, #253, #254 and #742. No packet, event,
 persistence, or idempotence policy is modeled. Forever string coercion and
 the CVar outcome of a selection before an aborting entry remain unknown.
 The zero-return policy is inferred and is not asserted.
+
+## R88aa cached Retail CharacterSelect call site (INFERRED)
+
+- [ ] **INFERRED (R88aa, Retail 12.1.5.70688; cached Lua build not matched):** `CharacterSelect_UpdateIfUpdateIsNotPending` and `CharacterSelect_OnVASCharacterQueueStatusUpdate` call the global `IsCharacterListUpdatePending`. This is a cache-caller observation, not proof of native 70688 Lua selection.
+- [x] **VERIFIED (local Retail 12.1.5.70783 cache and runtime selection):** the selected Mainline Glue TOC loads `Mainline/CharacterSelect.lua`; its original `OnShow` and queue-status handlers contain calls at lines 211 and 697.
+- [x] **VERIFIED (Retail 12.1.5.70783 runtime; code/test source at `74ffa9dca6ee7993a184c5a66b244232b8645f6a`):** exact tests exercise the selected original calls with two backed roster GUIDs, absent GUIDs, and an empty roster. P1 projection and constant-true pending-getter mutants fail in direct 74 runs. The no-op Disconnect mutant fails in historical runs at `94e338f0cedfee6a14c88d6f5736d936ccb1fa6b`; unchanged test bodies, disconnect fixture helpers, and implementation make these source-equivalent, not direct 74 runs. Six exact integration GREEN tests and the cleanup unit pass. The zero-warning matrix passes in PTR → Forever → Mists → Wrath → Retail order. PTR/Forever/Mists receipts at 74ffa9d are source-equivalent because the intervening diffs change only documentation; Wrath and Retail build at `41047ceedec6b85b0af18d4138713aebf0d5991c`. Retail `--no-addons --no-saved-vars lua-errors` returns `[]`. Test-source SHA-256: `e346dd6221fe173ed759228aacac0a8f85c9c8e692b0ab912ffea133de44741c`.
+
+## R88aa Retail Glue API contract
+
+- [x] **VERIFIED (R88aa and exact Retail consumer test at HEAD `74ffa9dca6ee7993a184c5a66b244232b8645f6a`):** `C_Login.DisconnectFromServer` takes no arguments, returns zero values, and is available only on Glue. The selected original `OnShow` exercises it. The test seeds the cancellation condition false, checks the conditional launcher event/order, and verifies Game-scope removal.
+- [x] **VERIFIED (exact current Retail test):** in a direct CharacterSelect session with no `C_Login.Login` submission, the original `OnShow` consumer leaves public `C_Login.GetState()` on the cleared model snapshot, not the connected screen projection. A same-body P1 projection mutant fails with the pre-fix tuple.
+- [x] **VERIFIED (R88aa and exact Retail cleanup unit at HEAD `41047ceedec6b85b0af18d4138713aebf0d5991c`):** disconnect clears Aurora, realm-list, stored login-error, pending-connection, connection-info, and connected state.
+- [x] **VERIFIED (R88aa and exact Retail consumer tests):** Glue exposes `_G.IsCharacterListUpdatePending`, not a `C_Login` member. It reads no arguments, returns one Boolean, and makes the original queue-status consumer defer at state 0 and proceed after completion.
+- [x] **VERIFIED (exact Retail consumer tests):** two distinct host-backed roster GUIDs, an absent GUID, an empty-roster case, completion states 0/1, and host-seeded nonzero state 2 exercise the original queue-status consumer. State 2 is a getter-input test only; R88aa identifies native full-list completion value 1, not 2.
+- [x] **VERIFIED (R88aa and exact Retail consumer tests):** the retrieval event has no payload; the original consumer distinguishes pending from completed list state. Native R88aa orders the completion writes 0 then 1 before `CHARACTER_LIST_UPDATE`.
+
+**VERIFIED (R88aa):** both Glue registrations use publication flag 3. The simulator test surface does not expose that flag.
+
+- [ ] **UNKNOWN (native initial state):** the simulator source sets the local completion-state default to 0 (**VERIFIED (simulator source)**), but R88aa does not prove the native startup value. Consumers must not treat this model default as native startup evidence.
+- [ ] **VERIFIED (R88aa; simulator coverage gap):** two reset routines and `GetCharacterListUpdate` also write completion state 0. The simulator currently models the login/request and accepted-full-list path, not those additional reset call paths.
+
+### Implementation inventory and tests
+
+- `src/c_api/c_login.rs` owns Retail profile gating and the offline connection/list progression.
+- `src/c_api/c_login/retail_lifecycle.rs` owns Retail Glue registration, backing state, and the disconnect state-ownership marker.
+- `src/c_api/c_login.rs` exposes host-state seed seams for the UNKNOWN cancellation initial value and the nonzero getter input; these seams do not claim native writers.
+- `tests/glue_login.rs` invokes the original Retail consumers and checks event order/payloads, list completion, return arity, and Game-scope absence. Backed roster rows seed `WaitingOnQueue` so the consumer uses its queue-state row path; the test does not claim `IsCharacterVASLocked` behavior.
+- `tests/glue_character_select.rs` retains StoreGlue state assertions and no longer treats missing `C_Login.DisconnectFromServer` as an expected error.
+
+### Known gaps (current cycle)
+
+- [ ] Native initial completion-state value, cancellation initialization/reset, and any indirect completion-state writers remain UNKNOWN.
+- [ ] The exact Retail 70688 Lua cache selection is UNKNOWN; the active local cache is 12.1.5.70783.
+
+## R88ak Mists current-mode record
+
+**VERIFIED (Mists Classic 5.5.4.70631):**
+`C_GameRules.GetCurrentGameModeRecordID` returns exactly one value. With no
+`AutoConnectToGameModeRealm` override, it returns the integer
+`currentGameMode`; -1 returns one nil. Native startup default is -1.
+`AutoConnectToGameModeRealm` stores a mode ID override. A `currentGameMode`
+update clears that override, then fires `GAME_MODE_DISPLAY_INFO_UPDATED` with
+no payload. The runtime writer for `currentGameMode` remains UNKNOWN.
+
+**INFERRED (Mists Classic 5.5.4.70268 from R88ak 5.5.4.70631):** the selected
+Classic `GlueGameLogo.lua` consumer uses the same getter contract. The simulator
+registers the getter for Mists and reads the existing `currentGameMode` CVar
+host input, whose empty default is -1. It does not publish
+`AutoConnectToGameModeRealm`, so the Mists getter does not use the modern
+simulator's temporary override. Accepted `SetCVar` updates dispatch the
+no-payload event through the simulator's existing synchronous path; timing is
+simulator policy. `tests/glue_character_select.rs` exercises the original
+Classic `GlueGameLogo` OnLoad and event consumer, without asserting display-row
+or native writer behavior.
+
+## R88am Mists Classic cached credentials
+
+**VERIFIED (Mists Classic 5.5.4.70631):** `C_Login.GetCachedCredentials` is a
+complete handler in the `C_Login` member table. It reads no arguments, performs
+no argument validation, has no Usage text or error path, and always returns
+zero Lua values. It reads no credential source, changes no state, and fires no
+event. It does not provide a backing credential field or writer.
+
+**INFERRED (Mists Classic 5.5.4.70268 from R88am 5.5.4.70631):** the simulator
+applies this zero-return contract to the selected Classic `AccountLogin.lua`
+consumer. The simulator publishes the member only while the selected screen is
+Glue, following the inferred Glue initialization path. Native Game availability
+and ordinary/secure publication classification remain UNKNOWN. The simulator
+adds no host credential input.
+
+- [x] **INFERRED (R88am applied to the 70268 cache):** the original consumer
+  hides cached-account rows for this zero-return producer. The test asserts the
+  hidden-row outcome, not direct API return arity.
+- [x] **INFERRED (simulator test):** `tests/glue_login.rs` loads the selected
+  Classic Login UI, seeds a visible cached-login row, invokes the original
+  `CachedLoginFrameContainer_Update`, and checks that no cached-account row is
+  shown. The test also checks the simulator's Glue-only publication choice.
+- [ ] **UNKNOWN (native):** Game availability and ordinary/secure publication
+  classification are not established by R88am.

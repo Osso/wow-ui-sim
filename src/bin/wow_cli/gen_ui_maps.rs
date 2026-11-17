@@ -155,6 +155,7 @@ fn parse_ui_map_row(
 #[derive(Debug, Clone, Copy, PartialEq)]
 struct UiMapAssignmentRow {
     map_id: i32,
+    area_id: u32,
     ui_min: [f32; 2],
     ui_max: [f32; 2],
     region_min: [f32; 2],
@@ -164,6 +165,7 @@ struct UiMapAssignmentRow {
 struct AssignmentColumns {
     ui_map_id: usize,
     map_id: usize,
+    area_id: usize,
     ui_min: [usize; 2],
     ui_max: [usize; 2],
     region_min: [usize; 2],
@@ -181,6 +183,7 @@ fn find_assignment_columns(header: &str) -> Result<AssignmentColumns, String> {
     Ok(AssignmentColumns {
         ui_map_id: index("UiMapID")?,
         map_id: index("MapID")?,
+        area_id: index("AreaID")?,
         ui_min: [index("UiMin_0")?, index("UiMin_1")?],
         ui_max: [index("UiMax_0")?, index("UiMax_1")?],
         region_min: [index("Region_0")?, index("Region_1")?],
@@ -194,58 +197,82 @@ fn parse_assignment_row(
     row: usize,
 ) -> Result<(u32, UiMapAssignmentRow), String> {
     let fields = parse_csv_line(line);
-    let field = |index: usize, name: &str| {
-        fields
-            .get(index)
-            .map(String::as_str)
-            .ok_or_else(|| format!("UiMapAssignment.csv row {row}: missing {name} (short row)"))
-    };
-    let integer = |index: usize, name: &str| -> Result<u32, String> {
-        let value = field(index, name)?;
-        value
-            .parse()
-            .map_err(|_| format!("UiMapAssignment.csv row {row}: invalid {name}: {value:?}"))
-    };
-    let signed_integer = |index: usize, name: &str| -> Result<i32, String> {
-        let value = field(index, name)?;
-        value
-            .parse()
-            .map_err(|_| format!("UiMapAssignment.csv row {row}: invalid {name}: {value:?}"))
-    };
-    let float = |index: usize, name: &str| -> Result<f32, String> {
-        let value = field(index, name)?;
-        let number = value
-            .parse::<f32>()
-            .map_err(|_| format!("UiMapAssignment.csv row {row}: invalid {name}: {value:?}"))?;
-        if !number.is_finite() {
-            return Err(format!(
-                "UiMapAssignment.csv row {row}: nonfinite {name}: {value:?}"
-            ));
-        }
-        Ok(number)
-    };
-
-    let ui_map_id = integer(columns.ui_map_id, "UiMapID")?;
+    let ui_map_id = parse_assignment_integer(&fields, columns.ui_map_id, "UiMapID", row)?;
     let assignment = UiMapAssignmentRow {
-        map_id: signed_integer(columns.map_id, "MapID")?,
+        map_id: parse_assignment_signed_integer(&fields, columns.map_id, "MapID", row)?,
+        area_id: parse_assignment_integer(&fields, columns.area_id, "AreaID", row)?,
         ui_min: [
-            float(columns.ui_min[0], "UiMin_0")?,
-            float(columns.ui_min[1], "UiMin_1")?,
+            parse_assignment_float(&fields, columns.ui_min[0], "UiMin_0", row)?,
+            parse_assignment_float(&fields, columns.ui_min[1], "UiMin_1", row)?,
         ],
         ui_max: [
-            float(columns.ui_max[0], "UiMax_0")?,
-            float(columns.ui_max[1], "UiMax_1")?,
+            parse_assignment_float(&fields, columns.ui_max[0], "UiMax_0", row)?,
+            parse_assignment_float(&fields, columns.ui_max[1], "UiMax_1", row)?,
         ],
         region_min: [
-            float(columns.region_min[0], "Region_0")?,
-            float(columns.region_min[1], "Region_1")?,
+            parse_assignment_float(&fields, columns.region_min[0], "Region_0", row)?,
+            parse_assignment_float(&fields, columns.region_min[1], "Region_1", row)?,
         ],
         region_max: [
-            float(columns.region_max[0], "Region_3")?,
-            float(columns.region_max[1], "Region_4")?,
+            parse_assignment_float(&fields, columns.region_max[0], "Region_3", row)?,
+            parse_assignment_float(&fields, columns.region_max[1], "Region_4", row)?,
         ],
     };
     Ok((ui_map_id, assignment))
+}
+
+fn assignment_field<'a>(
+    fields: &'a [String],
+    index: usize,
+    name: &str,
+    row: usize,
+) -> Result<&'a str, String> {
+    fields
+        .get(index)
+        .map(String::as_str)
+        .ok_or_else(|| format!("UiMapAssignment.csv row {row}: missing {name} (short row)"))
+}
+
+fn parse_assignment_integer(
+    fields: &[String],
+    index: usize,
+    name: &str,
+    row: usize,
+) -> Result<u32, String> {
+    let value = assignment_field(fields, index, name, row)?;
+    value
+        .parse()
+        .map_err(|_| format!("UiMapAssignment.csv row {row}: invalid {name}: {value:?}"))
+}
+
+fn parse_assignment_signed_integer(
+    fields: &[String],
+    index: usize,
+    name: &str,
+    row: usize,
+) -> Result<i32, String> {
+    let value = assignment_field(fields, index, name, row)?;
+    value
+        .parse()
+        .map_err(|_| format!("UiMapAssignment.csv row {row}: invalid {name}: {value:?}"))
+}
+
+fn parse_assignment_float(
+    fields: &[String],
+    index: usize,
+    name: &str,
+    row: usize,
+) -> Result<f32, String> {
+    let value = assignment_field(fields, index, name, row)?;
+    let number = value
+        .parse::<f32>()
+        .map_err(|_| format!("UiMapAssignment.csv row {row}: invalid {name}: {value:?}"))?;
+    if !number.is_finite() {
+        return Err(format!(
+            "UiMapAssignment.csv row {row}: nonfinite {name}: {value:?}"
+        ));
+    }
+    Ok(number)
 }
 
 fn load_assignment_rows(
@@ -277,6 +304,17 @@ fn write_assignment_file(
     out: &mut File,
     assignments: &BTreeMap<u32, Vec<UiMapAssignmentRow>>,
 ) -> std::io::Result<()> {
+    write_assignment_header(out)?;
+    writeln!(
+        out,
+        "pub static UI_MAP_ASSIGNMENTS: &[(u32, &'static [UiMapAssignment])] = &["
+    )?;
+    write_assignment_groups(out, assignments)?;
+    writeln!(out, "];\n")?;
+    write_assignment_lookup(out)
+}
+
+fn write_assignment_header(out: &mut File) -> std::io::Result<()> {
     writeln!(
         out,
         "//! Auto-generated Retail UiMapAssignment vector2 fields from a CASC DB2 export."
@@ -301,41 +339,50 @@ fn write_assignment_file(
     writeln!(out, "#[derive(Debug, Clone, Copy, PartialEq)]")?;
     writeln!(out, "pub struct UiMapAssignment {{")?;
     writeln!(out, "    pub map_id: i32,")?;
+    writeln!(out, "    pub area_id: u32,")?;
     writeln!(out, "    pub ui_min: [f32; 2],")?;
     writeln!(out, "    pub ui_max: [f32; 2],")?;
     writeln!(out, "    pub region_min: [f32; 2],")?;
     writeln!(out, "    pub region_max: [f32; 2],")?;
-    writeln!(out, "}}")?;
-    writeln!(out)?;
-    writeln!(
-        out,
-        "pub static UI_MAP_ASSIGNMENTS: &[(u32, &'static [UiMapAssignment])] = &["
-    )?;
+    writeln!(out, "}}\n")
+}
+
+fn write_assignment_groups(
+    out: &mut File,
+    assignments: &BTreeMap<u32, Vec<UiMapAssignmentRow>>,
+) -> std::io::Result<()> {
     for (ui_map_id, rows) in assignments {
         writeln!(out, "    ({ui_map_id}, &[")?;
         for row in rows {
-            let ui_min = row.ui_min.map(|value| format!("{value:?}f32"));
-            let ui_max = row.ui_max.map(|value| format!("{value:?}f32"));
-            let region_min = row.region_min.map(|value| format!("{value:?}f32"));
-            let region_max = row.region_max.map(|value| format!("{value:?}f32"));
-            writeln!(
-                out,
-                "        UiMapAssignment {{ map_id: {}, ui_min: [{}, {}], ui_max: [{}, {}], region_min: [{}, {}], region_max: [{}, {}] }},",
-                row.map_id,
-                ui_min[0],
-                ui_min[1],
-                ui_max[0],
-                ui_max[1],
-                region_min[0],
-                region_min[1],
-                region_max[0],
-                region_max[1],
-            )?;
+            write_assignment_row(out, row)?;
         }
         writeln!(out, "    ]),")?;
     }
-    writeln!(out, "];")?;
-    writeln!(out)?;
+    Ok(())
+}
+
+fn write_assignment_row(out: &mut File, row: &UiMapAssignmentRow) -> std::io::Result<()> {
+    let ui_min = row.ui_min.map(|value| format!("{value:?}f32"));
+    let ui_max = row.ui_max.map(|value| format!("{value:?}f32"));
+    let region_min = row.region_min.map(|value| format!("{value:?}f32"));
+    let region_max = row.region_max.map(|value| format!("{value:?}f32"));
+    writeln!(
+        out,
+        "        UiMapAssignment {{ map_id: {}, area_id: {}, ui_min: [{}, {}], ui_max: [{}, {}], region_min: [{}, {}], region_max: [{}, {}] }},",
+        row.map_id,
+        row.area_id,
+        ui_min[0],
+        ui_min[1],
+        ui_max[0],
+        ui_max[1],
+        region_min[0],
+        region_min[1],
+        region_max[0],
+        region_max[1]
+    )
+}
+
+fn write_assignment_lookup(out: &mut File) -> std::io::Result<()> {
     writeln!(
         out,
         "pub fn get_ui_map_assignments(ui_map_id: u32) -> Option<&'static [UiMapAssignment]> {{"
@@ -345,8 +392,7 @@ fn write_assignment_file(
         "    let index = UI_MAP_ASSIGNMENTS.binary_search_by_key(&ui_map_id, |(id, _)| *id).ok()?;"
     )?;
     writeln!(out, "    Some(UI_MAP_ASSIGNMENTS[index].1)")?;
-    writeln!(out, "}}")?;
-    Ok(())
+    writeln!(out, "}}")
 }
 
 #[cfg(test)]
@@ -355,14 +401,15 @@ mod tests {
 
     #[test]
     fn assignment_parser_uses_named_columns_and_preserves_db2_values() {
-        let header = "MapID,UiMapID,UiMin_0,UiMin_1,UiMax_0,UiMax_1,Region_0,Region_1,Region_2,Region_3,Region_4,Region_5";
+        let header = "MapID,UiMapID,AreaID,UiMin_0,UiMin_1,UiMax_0,UiMax_1,Region_0,Region_1,Region_2,Region_3,Region_4,Region_5";
         let columns = find_assignment_columns(header).unwrap();
         let row =
-            "1,7,0,0,1,1,-3802.08008,-3245.83008,unused-z-min,-168.75,2204.16992,unused-z-max";
+            "1,7,14,0,0,1,1,-3802.08008,-3245.83008,unused-z-min,-168.75,2204.16992,unused-z-max";
         let (ui_map_id, assignment) = parse_assignment_row(&columns, row, 2).unwrap();
 
         assert_eq!(ui_map_id, 7);
         assert_eq!(assignment.map_id, 1);
+        assert_eq!(assignment.area_id, 14);
         assert_eq!(assignment.ui_min, [0.0, 0.0]);
         assert_eq!(assignment.ui_max, [1.0, 1.0]);
         assert_eq!(assignment.region_min, [-3802.08008, -3245.83008]);
@@ -371,11 +418,11 @@ mod tests {
 
     #[test]
     fn assignment_parser_rejects_nonfinite_geometry() {
-        let header = "UiMapID,MapID,UiMin_0,UiMin_1,UiMax_0,UiMax_1,Region_0,Region_1,Region_2,Region_3,Region_4,Region_5";
+        let header = "UiMapID,MapID,AreaID,UiMin_0,UiMin_1,UiMax_0,UiMax_1,Region_0,Region_1,Region_2,Region_3,Region_4,Region_5";
         let columns = find_assignment_columns(header).unwrap();
         let error = parse_assignment_row(
             &columns,
-            "7,1,0,0,1,1,NaN,0,unused-z-min,10,20,unused-z-max",
+            "7,1,14,0,0,1,1,NaN,0,unused-z-min,10,20,unused-z-max",
             42,
         )
         .unwrap_err();
@@ -385,11 +432,12 @@ mod tests {
 
     #[test]
     fn assignment_parser_preserves_negative_map_ids() {
-        let header = "UiMapID,MapID,UiMin_0,UiMin_1,UiMax_0,UiMax_1,Region_0,Region_1,Region_2,Region_3,Region_4,Region_5";
+        let header = "UiMapID,MapID,AreaID,UiMin_0,UiMin_1,UiMax_0,UiMax_1,Region_0,Region_1,Region_2,Region_3,Region_4,Region_5";
         let columns = find_assignment_columns(header).unwrap();
-        let row = "1148,-1,0,0,1,1,-1,-2,unused-z-min,3,4,unused-z-max";
+        let row = "1148,-1,0,0,0,1,1,-1,-2,unused-z-min,3,4,unused-z-max";
         let (_, assignment) = parse_assignment_row(&columns, row, 9).unwrap();
         assert_eq!(assignment.map_id, -1);
+        assert_eq!(assignment.area_id, 0);
     }
 
     #[test]

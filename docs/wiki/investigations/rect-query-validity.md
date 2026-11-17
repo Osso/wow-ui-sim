@@ -36,7 +36,7 @@ VERIFIED (test inventory): `tests/rect_geometry.rs` covers invalid-size fallback
 
 ## Sources
 
-- R48 and R59 native findings in `~/.local/state/wow-ui-sim/handoff/pr46-49-decomp-answers.md`
+- R48 and R59 native findings in `pr46-49-decomp-answers.md` (untracked decomp handoff)
 - [Rectangle geometry query contract](../../specs/rectangle-geometry-queries.md)
 - [rect_geometry.rs](../../../src/lua_api/rect_geometry.rs) — Lua rectangle getters and query validity
 - [core_state/helpers.rs](../../../src/lua_api/frame/methods/core_state/helpers.rs) — size query behavior

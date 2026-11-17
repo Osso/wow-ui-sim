@@ -598,7 +598,7 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/core_state/region.rs",
           "summary": "Uniform simulator policy rejects EditBox.HasFocus and Region.IsMouseMotionFocus without changing focus or hover delivery. GetMouseFocus, GetMouseFoci, IsMouseOver and actual keyboard/mouse input remain usable. Native authority, error timing and security remain unverified.",
-          "source_hash": "06ebdcbc28871f232414afc5b0685e9f90eb81f08d275932f63dd529424a3db4"
+          "source_hash": "8b67dce8950ed176d48975e48e4e208515058777f57631a9cd80b717ac0c787b"
         },
         {
           "kind": "source",
@@ -1478,7 +1478,7 @@
           "kind": "source",
           "reference": "src/startup.rs",
           "summary": "The startup sequence fires BAG_UPDATE_DELAYED before its final post-event workaround step; this source does not prove CVar wrapper identities change at that event.",
-          "source_hash": "ce964bacdaeb4a33bd7f281f404317b6dc90e6977bfacb92ddd328caebed5a8e"
+          "source_hash": "c77fe0e264be75b089fe8f9b91a25417e97e5c52e8fbbfa260da0101eceed800"
         },
         {
           "kind": "source",
@@ -1490,7 +1490,7 @@
           "kind": "source",
           "reference": "src/lua_api/env_events.rs",
           "summary": "The dispatcher applies post-event workarounds after PLAYER_ENTERING_WORLD listeners; this call alone does not prove CVar wrapper retirement.",
-          "source_hash": "2a6a315900e555e7bc4d26a89afb71cc8f688e5945ff29984d7af44b440ea9e4"
+          "source_hash": "84551e937cc826e375720cec66d1b02181f79560cc8359435fc8ba9c8ef25035"
         },
         {
           "kind": "source",
@@ -1566,7 +1566,7 @@
           "kind": "source",
           "reference": "src/startup.rs",
           "summary": "The startup sequence fires BAG_UPDATE_DELAYED before its final post-event workaround step; this source does not prove CVar wrapper identities change at that event.",
-          "source_hash": "ce964bacdaeb4a33bd7f281f404317b6dc90e6977bfacb92ddd328caebed5a8e"
+          "source_hash": "c77fe0e264be75b089fe8f9b91a25417e97e5c52e8fbbfa260da0101eceed800"
         },
         {
           "kind": "source",
@@ -1578,7 +1578,7 @@
           "kind": "source",
           "reference": "src/lua_api/env_events.rs",
           "summary": "The dispatcher applies post-event workarounds after PLAYER_ENTERING_WORLD listeners; this call alone does not prove CVar wrapper retirement.",
-          "source_hash": "2a6a315900e555e7bc4d26a89afb71cc8f688e5945ff29984d7af44b440ea9e4"
+          "source_hash": "84551e937cc826e375720cec66d1b02181f79560cc8359435fc8ba9c8ef25035"
         },
         {
           "kind": "source",

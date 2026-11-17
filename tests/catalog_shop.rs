@@ -66,6 +66,8 @@ fn catalog_display_record() -> CatalogShopProductDisplayInfo {
 }
 
 fn insert_catalog_product_fixture(env: &WowLuaEnv) {
+    #[cfg(feature = "client-retail")]
+    crate::common::store_catalog_fixture::publish_featured_catalog(env);
     let category_ids: Vec<i32> = env.eval("return C_CatalogShop.GetAvailableCategoryIDs()").unwrap();
     assert!(!category_ids.is_empty(), "fixture requires catalog navigation categories");
     let mut state = env.state().borrow_mut();
@@ -82,6 +84,7 @@ fn insert_catalog_product_fixture(env: &WowLuaEnv) {
     }
 }
 
+#[cfg(feature = "client-retail")]
 prefork_full_ui_case! {
 fn catalog_shop_loads_and_populates_navigation_and_products(env: &WowLuaEnv) {
     insert_catalog_product_fixture(env);
@@ -171,6 +174,7 @@ fn catalog_shop_loads_and_populates_navigation_and_products(env: &WowLuaEnv) {
 }
 }
 
+#[cfg(feature = "client-retail")]
 prefork_full_ui_case! {
 fn catalog_shop_bundle_card_uses_default_model_scene_id(env: &WowLuaEnv) {
 
@@ -218,6 +222,7 @@ fn catalog_shop_bundle_card_uses_default_model_scene_id(env: &WowLuaEnv) {
 }
 }
 
+#[cfg(feature = "client-retail")]
 prefork_full_ui_case! {
 fn catalog_shop_product_display_translation_uses_override_scene_when_default_is_missing(env: &WowLuaEnv) {
 
@@ -246,6 +251,7 @@ fn catalog_shop_product_display_translation_uses_override_scene_when_default_is_
 }
 }
 
+#[cfg(feature = "client-retail")]
 prefork_full_ui_case! {
 fn catalog_shop_load_does_not_request_nil_model_scene_ids(env: &WowLuaEnv) {
 

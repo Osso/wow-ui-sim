@@ -11,6 +11,7 @@
 use crate::common::blizzard_addon_harness::{
     blizzard_ui_dir, load_blizzard_addon_closure_into_env, new_blizzard_addon_env,
 };
+use std::path::Path;
 use wow_ui_sim::loader::find_toc_file;
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
@@ -18,31 +19,7 @@ use wow_ui_sim::toc::TocFile;
 
 // Pinned ItemUpgradeDocumentation.lua: R/P/F11–24; M/E/A11–23.
 // Generic ItemUtil calls: R147, P/F217, M/E/A142 (rechecked 2026-10-26).
-fn load_original_item_util() -> WowLuaEnv {
-    let ui = blizzard_ui_dir();
-    let toc_path = find_toc_file(&ui.join("Blizzard_FrameXMLUtil")).unwrap();
-    let toc = TocFile::from_file(&toc_path).unwrap();
-    assert!(toc.allows_screen(ScreenKind::Game));
-    assert!(!toc.is_game_type_restricted());
-    assert!(toc.files.iter().any(|entry| entry == "ItemUtil.lua"));
-    eprintln!(
-        "selected generic ItemUtil: {} {:?}",
-        toc_path.display(),
-        toc.metadata
-    );
-    let env = new_blizzard_addon_env(&ui);
-    let loaded = load_blizzard_addon_closure_into_env(
-        &env,
-        &ui,
-        &["Blizzard_ObjectAPI", "Blizzard_FrameXMLUtil"],
-        &[],
-    );
-    assert!(loaded.iter().any(|name| name == "Blizzard_FrameXMLUtil"));
-    eprintln!(
-        "unfiltered closure diagnostics: {:?}",
-        env.state().borrow().lua_errors
-    );
-    env.exec(r#"
+const ITEM_UTIL_SETUP: &str = r#"
         local info = debug.getinfo(ItemButtonUtil.GetItemContextMatchResultForItem, 'S')
         local suffix = 'Blizzard_FrameXMLUtil/ItemUtil.lua'
         local source = info.source:gsub('\\', '/')
@@ -81,8 +58,55 @@ fn load_original_item_util() -> WowLuaEnv {
             local ok, reason = pcall(C_ItemUpgrade.CanUpgradeItem, location)
             assert(not ok and tostring(reason):find('itemLocation must be', 1, true), tostring(reason))
         end
-    "#).expect("original generic consumer and real two-location fixture");
+    "#;
+
+fn load_original_item_util() -> WowLuaEnv {
+    let ui = blizzard_ui_dir();
+    verify_item_util_toc(&ui);
+    let env = new_blizzard_addon_env(&ui);
+    seed_item_util_inventory_inputs(&env);
+    load_item_util_addons(&env, &ui);
+    assert_original_item_util_fixture(&env);
     env
+}
+
+fn verify_item_util_toc(ui: &Path) {
+    let toc_path = find_toc_file(&ui.join("Blizzard_FrameXMLUtil")).unwrap();
+    let toc = TocFile::from_file(&toc_path).unwrap();
+    assert!(toc.allows_screen(ScreenKind::Game));
+    assert!(!toc.is_game_type_restricted());
+    assert!(toc.files.iter().any(|entry| entry == "ItemUtil.lua"));
+    eprintln!(
+        "selected generic ItemUtil: {} {:?}",
+        toc_path.display(),
+        toc.metadata
+    );
+}
+
+fn seed_item_util_inventory_inputs(env: &WowLuaEnv) {
+    // Explicit scenario count/mode evidence; this is not a native default.
+    let mut sim = env.state().borrow_mut();
+    sim.r88s_inventory_inputs.inventory_count = Some(105);
+    sim.r88s_inventory_inputs.inventory_mode_active = Some(false);
+}
+
+fn load_item_util_addons(env: &WowLuaEnv, ui: &Path) {
+    let loaded = load_blizzard_addon_closure_into_env(
+        env,
+        ui,
+        &["Blizzard_ObjectAPI", "Blizzard_FrameXMLUtil"],
+        &[],
+    );
+    assert!(loaded.iter().any(|name| name == "Blizzard_FrameXMLUtil"));
+    eprintln!(
+        "unfiltered closure diagnostics: {:?}",
+        env.state().borrow().lua_errors
+    );
+}
+
+fn assert_original_item_util_fixture(env: &WowLuaEnv) {
+    env.exec(ITEM_UTIL_SETUP)
+        .expect("original generic consumer and real two-location fixture");
 }
 
 #[test]
@@ -160,6 +184,65 @@ fn original_item_util_tracks_supplied_eligibility_movement_removal_and_isolation
         first.exec("CheckUpgrade(firstLocation, true)").unwrap();
         assert!(first.state().borrow().lua_errors.is_empty());
         assert!(second.state().borrow().lua_errors.is_empty());
+    });
+}
+
+#[test]
+fn item_upgrade_uses_shared_r88s_item_location_resolution() {
+    crate::common::with_timeout(90, || {
+        let env = load_original_item_util();
+        env.exec(
+            r#"
+            A_Admin.SetItemUpgradeEligibility(firstLocation, true)
+            local fractionalBag = {bagID = 0.9, slotIndex = 1.9}
+            assert(ItemButtonUtil.GetItemContextMatchResultForItem(fractionalBag)
+                == ItemButtonUtil.ItemContextMatchResult.Match)
+
+            local numericBag = {bagID = '0.9', slotIndex = '1.9'}
+            A_Admin.SetItemUpgradeEligibility(numericBag, true)
+            assert(C_ItemUpgrade.CanUpgradeItem(numericBag) == true)
+
+            A_Admin.EquipItem(101, 19019)
+            local negativeBag = {bagID = '-2.9', slotIndex = '1.9'}
+            A_Admin.SetItemUpgradeEligibility(negativeBag, true)
+            assert(C_ItemUpgrade.CanUpgradeItem(negativeBag) == true)
+
+            A_Admin.EquipItem(16, 19019)
+            local equipmentFirst = {equipmentSlotIndex = '16.9', bagID = 0, slotIndex = 1}
+            A_Admin.SetItemUpgradeEligibility(equipmentFirst, true)
+            assert(C_ItemUpgrade.CanUpgradeItem(equipmentFirst) == true)
+            assert(ItemButtonUtil.GetItemContextMatchResultForItem(equipmentFirst)
+                == ItemButtonUtil.ItemContextMatchResult.Match)
+        "#,
+        )
+        .expect("ItemUpgrade uses the shared R88s location reader");
+    });
+}
+
+#[test]
+fn item_upgrade_unknown_inventory_count_returns_false_through_item_util() {
+    crate::common::with_timeout(90, || {
+        let env = load_original_item_util();
+        env.exec(
+            r#"
+            A_Admin.EquipItem(7, 19019)
+            unknownInventoryLocation = ItemLocation:CreateFromEquipmentSlot(7)
+            A_Admin.SetItemUpgradeEligibility(unknownInventoryLocation, true)
+        "#,
+        )
+        .expect("seed the original ItemUtil path with supplied eligibility");
+        env.state()
+            .borrow_mut()
+            .r88s_inventory_inputs
+            .inventory_count = None;
+        env.exec(
+            r#"
+            assert(ItemButtonUtil.GetItemContextMatchResultForItem(unknownInventoryLocation)
+                == ItemButtonUtil.ItemContextMatchResult.Mismatch)
+            assert(C_ItemUpgrade.CanUpgradeItem(unknownInventoryLocation) == false)
+        "#,
+        )
+        .expect("unknown inventory bounds must reject without changing the boolean API");
     });
 }
 

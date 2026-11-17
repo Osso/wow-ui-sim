@@ -1,7 +1,21 @@
+#[cfg(feature = "client-retail")]
+use wow_ui_sim::c_api::c_store_glue;
+#[cfg(feature = "client-retail")]
+use wow_ui_sim::c_api::c_store_glue::CompletionInput;
+#[cfg(feature = "client-retail")]
+use wow_ui_sim::c_api::store_catalog_model::StoreCurrencyInfo;
+#[cfg(feature = "client-retail")]
+use wow_ui_sim::c_api::store_vas_model::{
+    StoreVasGuildFollowInfoInput, StoreVasGuildMasterInfoInput, StoreVasGuildMemberInput,
+    receive_guild_follow_info, receive_guild_master_info,
+};
+#[cfg(feature = "client-retail")]
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+#[cfg(feature = "client-retail")]
 const STORE_SECURE_VAS_SCRIPT: &str = r#"
     local events = {}
+    STORE_SECURE_VAS_EVENTS = events
     local listener = CreateFrame("Frame")
     listener:SetScript("OnEvent", function(_, event, ...)
         if event == "VAS_TRANSFER_VALIDATION_UPDATE" then
@@ -21,6 +35,11 @@ const STORE_SECURE_VAS_SCRIPT: &str = r#"
             return
         end
 
+        if event == "STORE_VAS_PURCHASE_COMPLETE" then
+            table.insert(events, event .. ":" .. tostring(select('#', ...)))
+            return
+        end
+
         table.insert(events, event)
     end)
 
@@ -33,29 +52,19 @@ const STORE_SECURE_VAS_SCRIPT: &str = r#"
         listener:RegisterEvent(event)
     end
 
-    local localGuid = C_StoreSecure.GetWoWAccountGUIDFromName("WoW1", true)
-    if localGuid ~= 1001 then
+    local localGuid = C_StoreSecure.GetWoWAccountGUIDFromName("ignored-local-name", true)
+    if localGuid ~= "WowAccount-1001-1" then
         return "wrong_local_guid:" .. tostring(localGuid)
     end
 
     local remoteGuid = C_StoreSecure.GetWoWAccountGUIDFromName("WoW2", false)
-    if remoteGuid ~= 2002 then
+    if remoteGuid ~= "WowAccount-2002-2" then
         return "wrong_remote_guid:" .. tostring(remoteGuid)
     end
 
     C_StoreSecure.ValidateBnetTransfer("transfer@example.com")
-
-    if events[1] ~= "VAS_TRANSFER_VALIDATION_UPDATE:false" then
-        return "wrong_transfer_event:" .. tostring(events[1])
-    end
-
-    local bnetGuid, gameAccounts = C_StoreSecure.GetBnetTransferInfo()
-    if bnetGuid ~= 3001 then
-        return "wrong_bnet_guid:" .. tostring(bnetGuid)
-    end
-
-    if #gameAccounts ~= 2 or gameAccounts[1] ~= "WoW2" or gameAccounts[2] ~= "WoW3" then
-        return "wrong_game_accounts"
+    if #events ~= 0 then
+        return "validation_request_fired_synchronously"
     end
 
     local realms = C_StoreSecure.GetRealmList()
@@ -74,22 +83,27 @@ const STORE_SECURE_VAS_SCRIPT: &str = r#"
     end
 
     local guildCharacters = C_StoreSecure.GetCharactersForRealm(realms[1].virtualRealmAddress, true)
-    if #guildCharacters ~= 1 or guildCharacters[1].guid ~= 501001 then
+    if #guildCharacters ~= 1 or guildCharacters[1].guid ~= "Player-101-1-11" then
         return "wrong_guild_character_filter"
     end
 
     local character = C_StoreSecure.GetCharacterInfoByGUID(characters[1].guid)
-    if not character or character.name ~= "Simhero" or character.realmName ~= "Azeroth" then
+    if not character or character.name ~= "Simhero" or character.guid ~= "Player-101-1-11" then
         return "wrong_character_info"
     end
 
     local races = C_StoreSecure.GetEligibleRacesForVASService(character.guid, Enum.VasServiceType.NameChange)
-    if #races ~= 2 or races[1].raceName ~= "Human" or races[2].raceName ~= "Void Elf" or races[2].isAlliedRace ~= true then
+    local hasExpectedRaces = #races == 2
+        and races[1].raceName == "Human"
+        and races[2].raceName == "Void Elf"
+        and races[2].isAlliedRace == true
+    if not hasExpectedRaces then
         return "wrong_eligible_races"
     end
 
     local guildInfo = C_StoreSecure.GetVASGuildMasterInfoForCharacterByGUID(character.guid)
-    if not guildInfo or guildInfo.guildName ~= "Simulator Guild" or guildInfo.guildMasterName ~= "Simleader" then
+    local firstGuildMember = guildInfo and guildInfo.guildMemberInfos[1]
+    if not guildInfo or guildInfo.guildName ~= "Simulator Guild" or not firstGuildMember or firstGuildMember.memberName ~= "Simalt" then
         return "wrong_guild_info"
     end
 
@@ -112,164 +126,234 @@ const STORE_SECURE_VAS_SCRIPT: &str = r#"
 
     C_StoreSecure.RequestRealmGuildMasterInfo(realms[1].virtualRealmAddress)
     C_StoreSecure.RequestCharacterGuildFollowInfo(character.guid, realms[1].virtualRealmAddress)
-
-    if events[2] ~= "STORE_GUILD_MASTER_INFO_RECEIVED:101" then
-        return "wrong_guild_master_event:" .. tostring(events[2])
-    end
-
-    if events[3] ~= "STORE_GUILD_FOLLOW_INFO_RECEIVED:501001:Kalimdor" then
-        return "wrong_guild_follow_event:" .. tostring(events[3])
+    if #events ~= 0 then
+        return "guild_requests_fired_synchronously"
     end
 
     C_StoreSecure.OpenNydusLink(1003)
-    local confirmationProductID, walletName, _, _, currentDollars, currentCents = C_StoreSecure.GetConfirmationInfo()
-    if confirmationProductID ~= 2003 or walletName ~= "Blizzard Balance" or currentDollars ~= 10 or currentCents ~= 0 then
+    local confirmationProductID, walletName, originalDollars, originalCents, currentDollars, currentCents = C_StoreSecure.GetConfirmationInfo()
+    local confirmationMatches = confirmationProductID == 2003 and walletName == "Balance"
+        and originalDollars == 10 and originalCents == 0
+        and currentDollars == 5 and currentCents == 1
+    if not confirmationMatches then
         return "wrong_confirmation_info"
     end
 
     local boostProduct, boostCharacter, boostRealm = C_StoreSecure.GetUnrevokedBoostInfo()
-    if boostProduct ~= "Level 70 Character Boost" or boostCharacter ~= "Simhero" or boostRealm ~= "Azeroth" then
+    if boostProduct ~= "Apprentice Rider Bundle" or boostCharacter ~= "Simhero" or boostRealm ~= "Azeroth" then
         return "wrong_boost_info"
     end
 
-    local purchaseOk = C_StoreSecure.PurchaseVASProduct(
+    C_StoreSecure.PurchaseVASProduct(
         2003,
         character.guid,
         "Renamedhero",
         nil,
         nil,
-        realms[2].virtualRealmAddress,
-        remoteGuid,
-        bnetGuid,
+        nil,
+        nil,
+        nil,
         false,
         false
     )
-    if purchaseOk ~= true then
-        return "initial_purchase_failed"
-    end
 
-    if C_StoreSecure.HasPurchaseInProgress() ~= true then
-        return "purchase_state_not_marked_in_progress"
-    end
-
-    local purchaseConfirmationProductID, purchaseWalletName, _, _, purchaseDollars, purchaseCents = C_StoreSecure.GetConfirmationInfo()
-    if purchaseConfirmationProductID ~= 2003 or purchaseWalletName ~= "Blizzard Balance" or purchaseDollars ~= 10 or purchaseCents ~= 0 then
+    local purchaseConfirmationProductID, purchaseWalletName, originalDollars, originalCents, purchaseDollars, purchaseCents = C_StoreSecure.GetConfirmationInfo()
+    local purchaseConfirmationMatches = purchaseConfirmationProductID == 2003
+        and purchaseWalletName == "Balance"
+        and originalDollars == 10 and originalCents == 0
+        and purchaseDollars == 5 and purchaseCents == 1
+    if not purchaseConfirmationMatches then
         return "wrong_purchase_confirmation_info:" .. tostring(purchaseConfirmationProductID) .. ":" .. tostring(purchaseWalletName) .. ":" .. tostring(purchaseDollars) .. ":" .. tostring(purchaseCents)
     end
 
     local completionProductID, completionGuid, completionRealm, shouldHandle = C_StoreSecure.GetVASCompletionInfo()
-    if completionProductID ~= 2003 or completionGuid ~= character.guid or completionRealm ~= "Kalimdor" or shouldHandle ~= false then
+    local completionMatches = completionProductID == 2003 and completionGuid == character.guid
+        and completionRealm == "Azeroth" and shouldHandle == true
+    if not completionMatches then
         return "wrong_completion_info_before_disconnect:" .. tostring(completionProductID) .. ":" .. tostring(completionGuid) .. ":" .. tostring(completionRealm) .. ":" .. tostring(shouldHandle)
     end
 
-    local duplicatePurchase = C_StoreSecure.PurchaseVASProduct(
-        2003,
-        character.guid,
-        "Renamedhero",
-        nil,
-        nil,
-        realms[2].virtualRealmAddress,
-        remoteGuid,
-        bnetGuid,
-        false,
-        false
-    )
-    if duplicatePurchase ~= false then
-        return "duplicate_purchase_should_fail"
-    end
-
     local failureCode, failureReason = C_StoreSecure.GetFailureInfo()
-    if failureCode ~= Enum.StoreError.Other or failureReason ~= "DuplicateVASPurchase" then
+    if failureCode ~= 9 or failureReason ~= nil then
         return "wrong_failure_info:" .. tostring(failureCode) .. ":" .. tostring(failureReason)
     end
 
     C_StoreSecure.AckFailure()
+    C_StoreSecure.PurchaseProduct(2003)
     if select(1, C_StoreSecure.GetFailureInfo()) ~= nil then
         return "failure_not_cleared"
     end
 
-    C_StoreSecure.ClearPreGeneratedExternalTransactionID()
-
-    local retriedPurchase = C_StoreSecure.PurchaseVASProduct(
-        2003,
-        character.guid,
-        "Renamedhero",
-        nil,
-        nil,
-        realms[2].virtualRealmAddress,
-        remoteGuid,
-        bnetGuid,
-        false,
-        false
-    )
-    if retriedPurchase ~= true then
-        return "retry_purchase_failed"
+    if #events ~= 0 then
+        return "store_request_emitted_an_event"
     end
 
+    local eventCountBeforeSetters = #events
     C_StoreSecure.SetDisconnectOnLogout(true)
-    local _, _, _, shouldHandleAfterDisconnect = C_StoreSecure.GetVASCompletionInfo()
-    if shouldHandleAfterDisconnect ~= true then
-        return "disconnect_flag_not_applied"
-    end
-
     C_StoreSecure.SetVASProductReady(true)
-    if events[4] ~= "STORE_VAS_PURCHASE_COMPLETE" then
-        return "wrong_vas_complete_event:" .. tostring(events[4])
+    if STORE_SECURE_VAS_RETAIL_CONTRACT then
+        if not C_StoreGlue.GetDisconnectOnLogout() then
+            return "disconnect_flag_not_applied"
+        end
+        if not C_StoreGlue.GetVASProductReady() then
+            return "ready_flag_not_applied"
+        end
+        if #events ~= eventCountBeforeSetters then
+            return "setter_emitted_completion_event"
+        end
     end
 
     return "ok"
 "#;
 
+#[cfg(feature = "client-retail")]
 fn env() -> WowLuaEnv {
     WowLuaEnv::new().expect("Failed to create Lua environment")
 }
 
+#[cfg(feature = "client-retail")]
 #[test]
 fn store_apis_report_enabled_and_available() {
     let env = env();
+    crate::common::store_catalog_fixture::publish_featured_catalog(&env);
     env.set_server_mirrored_cvar("bpayStoreEnable", "1")
         .expect("store mirror should accept the enabled input");
-    let (store_public_enabled, store_secure_available, has_purchase_list, has_product_list, has_distribution_list): (
-        bool,
-        bool,
-        bool,
-        bool,
-        bool,
-    ) = env
+    let values: (bool, bool, bool, bool, bool) = env
         .eval(
             "return C_StorePublic.IsEnabled(), C_StoreSecure.IsAvailable(), C_StoreSecure.HasPurchaseList(), C_StoreSecure.HasProductList(), C_StoreSecure.HasDistributionList()",
         )
         .expect("store API flags should be queryable");
 
-    // R38 (VERIFIED; docs/specs/store-api-availability.md): IsEnabled returns the supplied server mirror.
-    assert!(
-        store_public_enabled,
-        "C_StorePublic.IsEnabled() should report the supplied enabled state"
-    );
-    assert!(
-        store_secure_available,
-        "C_StoreSecure.IsAvailable() should be true"
-    );
-    assert!(
-        has_purchase_list,
-        "C_StoreSecure.HasPurchaseList() should be true"
-    );
-    assert!(
-        has_product_list,
-        "C_StoreSecure.HasProductList() should be true"
-    );
-    assert!(
-        has_distribution_list,
-        "C_StoreSecure.HasDistributionList() should be true"
+    // R38 (VERIFIED; docs/specs/store-api-availability.md) covers IsEnabled.
+    assert_eq!(values, (true, true, true, true, true));
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn store_currency_id_zero_does_not_resolve_host_metadata() {
+    let env = env();
+    env.state()
+        .borrow_mut()
+        .store_glue
+        .store_secure
+        .currencies
+        .insert(
+            0,
+            StoreCurrencyInfo {
+                region_id: 1,
+                format_short: "%s".into(),
+                format_long: "%s".into(),
+                license_accept_text: String::new(),
+                require_license_accept: false,
+                browse_has_star: false,
+                hide_browse_notice: false,
+                hide_confirmation_browse_notice: false,
+            },
+        );
+    let result: (i32, bool) = env
+        .eval("return C_StoreSecure.GetCurrencyID(), C_StoreSecure.GetCurrencyInfo() == nil")
+        .expect("zero currency ID should not publish metadata");
+    assert_eq!(result, (0, true));
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn store_disconnect_resets_verified_availability_and_list_readiness() {
+    let env = env();
+    crate::common::store_catalog_fixture::publish_featured_catalog(&env);
+    wow_ui_sim::c_api::store_catalog_model::receive_dynamic_price(&env, 2003, vec![1])
+        .expect("dynamic-price response should be accepted");
+    let before: (bool, bool, bool, bool, i32, bool) = env
+        .eval("return C_StoreSecure.IsAvailable(), C_StoreSecure.HasProductList(), C_StoreSecure.HasPurchaseList(), C_StoreSecure.HasDistributionList(), C_StoreSecure.GetCurrencyID(), C_StoreSecure.HasDynamicPriceData(2003)")
+        .expect("host responses should populate Store state");
+    assert_eq!(before, (true, true, true, true, 61, true));
+
+    wow_ui_sim::c_api::store_catalog_model::receive_disconnect(&env);
+
+    let after: (bool, bool, bool, bool, bool, bool, bool, i32, bool) = env
+        .eval("return C_StoreSecure.IsAvailable(), C_StoreSecure.HasProductList(), C_StoreSecure.HasPurchaseList(), C_StoreSecure.HasDistributionList(), C_StoreSecure.IsRegionLocked(), C_StoreSecure.GetLastProductListResponseError() == 0, C_StoreSecure.GetCurrencyInfo() == nil, C_StoreSecure.GetCurrencyID(), C_StoreSecure.HasDynamicPriceData(2003)")
+        .expect("disconnect should reset the verified Store fields");
+    assert_eq!(
+        after,
+        (false, false, false, false, false, true, true, 0, false)
     );
 }
 
+#[cfg(feature = "client-retail")]
 #[test]
 fn store_secure_vas_queries_and_stateful_actions_use_seeded_data() {
     let env = env();
+    crate::common::store_catalog_fixture::seed_vas_catalog(&env);
+    crate::common::store_catalog_fixture::seed_store_vas_state(&env);
+    env.exec("STORE_SECURE_VAS_RETAIL_CONTRACT = true")
+        .expect("Retail Store model should be available to the probe");
     let result: String = env
         .eval(STORE_SECURE_VAS_SCRIPT)
         .expect("seeded C_StoreSecure VAS flow should be queryable");
 
     assert_eq!(result, "ok");
+    receive_store_vas_responses_and_assert_events(&env);
+    dispatch_retail_completion_and_assert_event(&env);
+}
+
+#[cfg(feature = "client-retail")]
+fn receive_store_vas_responses_and_assert_events(env: &WowLuaEnv) {
+    receive_guild_master_info(env, 101, vec![build_store_api_guild_master_info()])
+        .expect("guild-master response should dispatch its event");
+    receive_guild_follow_info(env, build_store_api_guild_follow_info())
+        .expect("guild-follow response should dispatch its event");
+    let events: (String, String) = env
+        .eval("return STORE_SECURE_VAS_EVENTS[1], STORE_SECURE_VAS_EVENTS[2]")
+        .expect("response listener should retain both asynchronous events");
+    assert_eq!(events.0, "STORE_GUILD_MASTER_INFO_RECEIVED:101");
+    assert_eq!(
+        events.1,
+        "STORE_GUILD_FOLLOW_INFO_RECEIVED:Player-101-1-11:Kalimdor"
+    );
+}
+
+#[cfg(feature = "client-retail")]
+fn build_store_api_guild_master_info() -> StoreVasGuildMasterInfoInput {
+    StoreVasGuildMasterInfoInput {
+        guid: "Player-101-1-11".into(),
+        guild_name: "Simulator Guild".into(),
+        members: vec![StoreVasGuildMemberInput {
+            guid: Some("Player-101-1-12".into()),
+            member_name: "Simalt".into(),
+        }],
+    }
+}
+
+#[cfg(feature = "client-retail")]
+fn build_store_api_guild_follow_info() -> StoreVasGuildFollowInfoInput {
+    StoreVasGuildFollowInfoInput {
+        guid: "Player-101-1-11".into(),
+        transferred_realm: Some("Kalimdor".into()),
+        faction_changed: false,
+    }
+}
+
+#[cfg(feature = "client-retail")]
+fn dispatch_retail_completion_and_assert_event(env: &WowLuaEnv) {
+    env.state()
+        .borrow_mut()
+        .store_glue
+        .callbacks
+        .purchase_complete = true;
+    c_store_glue::receive_completion(
+        env,
+        CompletionInput {
+            first: 0,
+            second: 0,
+            first_flag: false,
+            second_flag: false,
+            data: Vec::new(),
+        },
+    )
+    .expect("completion callback should dispatch its event");
+    let event: String = env
+        .eval("return STORE_SECURE_VAS_EVENTS[3]")
+        .expect("completion listener should retain the callback event");
+
+    assert_eq!(event, "STORE_VAS_PURCHASE_COMPLETE:0");
 }

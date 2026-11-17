@@ -1,7 +1,7 @@
 //! Scan addon directories and build AddonInfo entries from TOC files.
 
 use super::state::AddonInfo;
-use crate::toc::TocFile;
+use crate::toc::{TocCache, TocFile};
 
 fn addon_info_from_toc(name: &str, toc: Option<&TocFile>) -> AddonInfo {
     let Some(t) = toc else {
@@ -39,7 +39,7 @@ fn addon_info_from_toc(name: &str, toc: Option<&TocFile>) -> AddonInfo {
 }
 
 /// Scan an addons directory and return AddonInfo for each valid addon folder.
-pub(crate) fn scan_addon_entries(addons_path: &std::path::Path) -> Vec<AddonInfo> {
+pub(crate) fn scan_addon_entries(tocs: &TocCache, addons_path: &std::path::Path) -> Vec<AddonInfo> {
     let Ok(entries) = std::fs::read_dir(addons_path) else {
         return Vec::new();
     };
@@ -56,8 +56,8 @@ pub(crate) fn scan_addon_entries(addons_path: &std::path::Path) -> Vec<AddonInfo
         let Some(toc_path) = crate::loader::find_toc_file(&path) else {
             continue;
         };
-        let toc = TocFile::from_file(&toc_path).ok();
-        addons.push(addon_info_from_toc(&name, toc.as_ref()));
+        let toc = tocs.get(&toc_path).ok();
+        addons.push(addon_info_from_toc(&name, toc.as_deref()));
     }
     addons
 }

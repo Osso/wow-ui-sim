@@ -1,7 +1,5 @@
 //! Tests for addon API functions (addon_api.rs).
 
-use std::collections::HashMap;
-
 use wow_ui_sim::lua_api::AddonInfo;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
@@ -24,11 +22,11 @@ fn env_with_addons() -> WowLuaEnv {
             loaded: true,
             load_on_demand: false,
             load_time_secs: 0.0,
-            metadata: HashMap::from([
-                ("X-Prefix".to_string(), "MyPrefix".to_string()),
-                ("X-Acronym".to_string(), "MA".to_string()),
-                ("Version".to_string(), "1.2.3".to_string()),
-                ("X-oUF".to_string(), "ElvUF".to_string()),
+            metadata: wow_ui_sim::toc::TocMetadata::from_iter([
+                ("X-Prefix", "MyPrefix"),
+                ("X-Acronym", "MA"),
+                ("Version", "1.2.3"),
+                ("X-oUF", "ElvUF"),
             ]),
             ..Default::default()
         });

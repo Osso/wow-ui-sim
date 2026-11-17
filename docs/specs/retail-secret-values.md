@@ -7,7 +7,8 @@ Retail 12.1+ exposes variadic `secretwrap`/`secretunwrap` to unchanged Blizzard 
 - [ ] Preserve the exact argument count and position, including nil and zero arguments, while wrapping or unwrapping values. Rewrapping an existing native secret preserves its identity.
 - [ ] Let unchanged `AuraButtonPrivateMixin:UpdateAuraDuration` configure its existing duration object using all three wrapped expiration, duration, and rate arguments, or the wrapped zero-span branch.
 - [ ] Allow trusted custom-aura rendering to read wrapped asset-table fields and compare wrapped nil; reject those operations from tainted code. Fields return plain values under this bounded, native-unverified policy, not recursive information-flow tracking.
-- [ ] Mark native wrappers secret in `issecretvalue` and inaccessible in `canaccessvalue`/`canaccessallvalues`, without replacing existing taint-marker and closure checks.
+- [ ] Mark VM wrappers secret in `issecretvalue` and inaccessible in `canaccessvalue`/`canaccessallvalues`; full Retail marker-byte parity remains unverified while the legacy string-identity registry path exists.
+- [x] On Retail, a `loadstring` function's closure-source taint alone does not make it secret to `issecretvalue` or the cached SecureMap consumer.
 - [ ] Treat an ordinary table with addon-tainted slots as a public value and valid SecureMap key while `issecurevariable` still reports those slots insecure; deep `canaccesstable` rejects actual nested secret values, including native wrappers and explicitly marked strings.
 - [x] Let tainted callers use `secretwrap` without an error or clearing caller taint; returned values are secret. Continue to reject tainted `secretunwrap`. Secret-duration timing and mutation remain inaccessible to tainted callers.
 - [x] For addon-tainted `settablesecurity` calls, report `ADDON_ACTION_FORBIDDEN` before argument parsing and return zero values without an error or table mutation. Macro-source event classification remains unmodeled.
@@ -33,6 +34,7 @@ Retail 12.1+ exposes variadic `secretwrap`/`secretunwrap` to unchanged Blizzard 
 
 ## Known gaps
 
+- [ ] **Residual (verified simulator source path; mismatch with R88ae.4 inferred):** Retail `CallMethod` can pass tainted strings to `__sim_mark_secret_value`, which records strings by identity; the legacy registry can then make those strings secret without a native per-value marker. This predates the CreateSecureMap correction, is out of scope here, and has a separate task.
 - [ ] Native global secret-marking disable state is not modeled; this simulator returns secret wrappers for all `secretwrap` calls.
 - [x] R12 regressions, manifest validation, and requested profile gates pass; five Forever duration-filter failures also fail on master `75038d409`.
 

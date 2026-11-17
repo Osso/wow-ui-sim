@@ -468,8 +468,8 @@ fn blizzard_macro_ui_publishes_macro_popup_frame_mixin_with_seven_methods(env: &
 
 #[cfg(feature = "client-ptr")]
 #[test]
-fn ptr_macro_save_placeholder_is_replaced_by_lod_delegate() {
-    // Retain the historical selector, but load the real startup dependencies first.
+fn ptr_macro_save_delegate_loads_after_selected_startup() {
+    // Load the real selected-startup dependencies before the explicit LoD body.
     let env = selected_startup_before_macro_lod();
     load_addon(&env.loader_env(), &macro_ui_toc())
         .expect("Blizzard_MacroUI loads through its explicit LoD entry point");
@@ -660,13 +660,7 @@ fn selected_startup_before_macro_lod() -> WowLuaEnv {
 fn mainline_macro_save_delegate_is_published_after_lod_load() {
     let env = selected_startup_before_macro_lod();
 
-    let save_delegate_unpublished: bool = env
-        .eval("return MacroFrame_SaveMacro == nil")
-        .expect("startup MacroFrame_SaveMacro publication probe should succeed");
-    assert!(
-        save_delegate_unpublished,
-        "the selected LoadOnDemand TOC body must not publish MacroFrame_SaveMacro at startup"
-    );
+    assert_macro_save_delegate_unpublished(&env);
 
     load_addon(&env.loader_env(), &macro_ui_toc())
         .expect("Blizzard_MacroUI should load through its selected TOC");
@@ -681,4 +675,15 @@ fn mainline_macro_save_delegate_is_published_after_lod_load() {
         )
         .expect("selected MacroFrame_SaveMacro delegate probe should succeed");
     assert!(lod_delegate_called);
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+fn assert_macro_save_delegate_unpublished(env: &WowLuaEnv) {
+    let save_delegate_unpublished: bool = env
+        .eval("return MacroFrame_SaveMacro == nil")
+        .expect("startup MacroFrame_SaveMacro publication probe should succeed");
+    assert!(
+        save_delegate_unpublished,
+        "the selected LoadOnDemand TOC body must not publish MacroFrame_SaveMacro at startup"
+    );
 }

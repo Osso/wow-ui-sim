@@ -82,6 +82,11 @@ impl WowLuaEnv {
         &self.state
     }
 
+    /// The TOC files parsed in this UI session.
+    pub fn toc_cache(&self) -> Rc<crate::toc::TocCache> {
+        self.state.borrow().toc_cache()
+    }
+
     /// Drain finalized failures and nil-symbol diagnostics from runtime addon loads.
     pub fn drain_runtime_addon_diagnostics(&self) -> LoadDiagnostics {
         std::mem::take(&mut self.state.borrow_mut().runtime_addon_diagnostics)
@@ -223,7 +228,7 @@ impl WowLuaEnv {
 
     /// Scan an addons directory and register all found addons (metadata only, no loading).
     pub fn scan_and_register_addons(&self, addons_path: &std::path::Path) {
-        let mut addons = super::addon_scan::scan_addon_entries(addons_path);
+        let mut addons = super::addon_scan::scan_addon_entries(&self.toc_cache(), addons_path);
         addons.sort_by(|a, b| {
             a.folder_name
                 .to_lowercase()
@@ -330,6 +335,9 @@ impl WowLuaEnv {
         #[cfg(feature = "retail-12-0-5")]
         super::execution_budget::reset_frame_budgets(self.lua.borrow_mut().state_mut())?;
         crate::c_api::c_login::advance(self)?;
+        // INFERRED (simulator policy): map the native queued notification to this
+        // dispatch boundary, before frame OnUpdate handlers; native delivery timing is unknown.
+        crate::c_api::store_catalog_model::flush_purchase_list_notification(self)?;
         let timings = super::on_update::fire(self, elapsed)?;
         #[cfg(feature = "client-ptr")]
         {
@@ -501,6 +509,8 @@ fn install_screen_mode_globals(env: &WowLuaEnv, screen_kind: ScreenKind) {
     let _ = super::globals::real::glue_selection::register_season_query(
         env.lua.borrow_mut().state_mut(),
     );
+    #[cfg(feature = "client-ptr")]
+    register_ptr_screen_queries(env);
     #[cfg(any(feature = "client-ptr", feature = "client-wowforever"))]
     let _ = super::globals::real::glue_feature_status::register_all(&mut env.lua.borrow_mut());
     let is_glue = if screen_kind.is_glue() {
@@ -517,6 +527,20 @@ fn install_screen_mode_globals(env: &WowLuaEnv, screen_kind: ScreenKind) {
 
         "#
     ));
+}
+
+#[cfg(feature = "client-ptr")]
+fn register_ptr_screen_queries(env: &WowLuaEnv) {
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Ptr {
+        let _ =
+            super::globals::real::glue_character_season::register(env.lua.borrow_mut().state_mut());
+        let _ = super::globals::real::glue_background::register_background_only(
+            env.lua.borrow_mut().state_mut(),
+        );
+        let _ = super::globals::real::glue_background::register_model_ffx_only(
+            env.lua.borrow_mut().state_mut(),
+        );
+    }
 }
 
 fn take_pending_timers(env: &WowLuaEnv) -> VecDeque<PendingTimer> {

@@ -1,5 +1,6 @@
--- Single publication-scoped exemption inventory; Retail/PTR/Wrath stay unchanged.
-local classicCombat, forever, vanilla = ...
+-- Single publication-scoped exemption inventory; modeled Store catalog registration is separate.
+local classicCombat, forever, vanilla, modeledStoreGlue, modeledStoreCatalog,
+  modeledStoreVas, retirePveFrameBridge, retireGlueOwnerDefaults = ...
 local strictNamespaces = {}
 if classicCombat then
   strictNamespaces.C_CombatText = true
@@ -39,14 +40,6 @@ if debug and rawget(debug, "iscfunction") == nil and type(debug.getinfo) == "fun
     end
     local info = debug.getinfo(fn, "S")
     return info ~= nil and info.what == "C"
-  end
-end
-
--- DropCursorMoney(frame) drops the cursor's money stack onto the target frame
--- (a CoinPickupFrame) in real WoW. The simulator does not model cursor-money
--- drops, but Blizzard XML wires this as an OnLoad handler.
-if DropCursorMoney == nil then
-  function DropCursorMoney(_frame)
   end
 end
 
@@ -445,6 +438,8 @@ if type(C_StoreSecure) == "table" then
 else
   C_StoreSecure = {}
 end
+-- Retail catalog, availability, currency and list methods use the c_api Store model.
+if not modeledStoreCatalog then
 C_StoreSecure.IsAvailable = function()
   return __wow_store_state.available == true
 end
@@ -489,6 +484,8 @@ C_StoreSecure.GetProductList = function()
   end
   return true
 end
+end
+if not modeledStoreCatalog then
 C_StoreSecure.GetProductGroupInfo = function(groupID)
   return __wow_store_state.productGroupInfo[groupID]
 end
@@ -501,6 +498,8 @@ end
 C_StoreSecure.GetProductInfo = function(productID)
   return __wow_store_state.productsByID[productID]
 end
+end
+if not modeledStoreVas then
 C_StoreSecure.GetWoWAccountGUIDFromName = function(accountName, isLocalAccount)
   if isLocalAccount then
     return __wow_store_state.localAccounts[accountName]
@@ -555,21 +554,29 @@ C_StoreSecure.GetVasServiceType = function(productID)
   local product = C_StoreSecure.GetProductInfo(productID)
   return product and product.sharedData and product.sharedData.vasServiceType or nil
 end
+end
+if not modeledStoreCatalog then
 C_StoreSecure.IsRegionLocked = function()
   return false
 end
 C_StoreSecure.GetLastProductListResponseError = function()
   return 0
 end
-C_StoreSecure.GetVASErrors = function()
-  return {}
 end
+if not modeledStoreGlue then
+  C_StoreSecure.GetVASErrors = function()
+    return {}
+  end
+end
+if not modeledStoreVas then
 C_StoreSecure.RequestRealmGuildMasterInfo = function(virtualRealmAddress)
   FireEvent("STORE_GUILD_MASTER_INFO_RECEIVED", virtualRealmAddress)
 end
 C_StoreSecure.RequestCharacterGuildFollowInfo = function(guid, _virtualRealmAddress)
   FireEvent("STORE_GUILD_FOLLOW_INFO_RECEIVED", guid, { transferredRealm = "Kalimdor" })
 end
+end
+if not modeledStoreVas then
 C_StoreSecure.OpenNydusLink = function(entryID)
   local entry = C_StoreSecure.GetEntryInfo(entryID)
   if entry then
@@ -610,20 +617,25 @@ end
 C_StoreSecure.ClearPreGeneratedExternalTransactionID = function()
   __wow_store_state.duplicateKey = nil
 end
-C_StoreSecure.SetDisconnectOnLogout = function(shouldDisconnect)
-  __wow_store_state.disconnectOnLogout = shouldDisconnect == true
-end
-C_StoreSecure.SetVASProductReady = function(isReady)
-  if isReady then
-    FireEvent("STORE_VAS_PURCHASE_COMPLETE")
+if not modeledStoreGlue then
+  C_StoreSecure.SetDisconnectOnLogout = function(shouldDisconnect)
+    __wow_store_state.disconnectOnLogout = shouldDisconnect == true
+  end
+  C_StoreSecure.SetVASProductReady = function(isReady)
+    if isReady then
+      FireEvent("STORE_VAS_PURCHASE_COMPLETE")
+    end
   end
 end
+end
+if not modeledStoreCatalog then
 C_StoreSecure.RequestAllDynamicPriceInfo = __wow_noop
 C_StoreSecure.HasDynamicPriceData = function()
   return true
 end
 C_StoreSecure.IsDynamicBundle = function()
   return false
+end
 end
 
 local __wow_store_secure_state = {
@@ -877,6 +889,7 @@ end
 if rawget(C_StoreSecure, "_state") == nil then
   C_StoreSecure._state = __wow_store_secure_state
 end
+if not modeledStoreCatalog then
 if rawget(C_StoreSecure, "IsAvailable") == nil then
   function C_StoreSecure.IsAvailable() return __wow_store_secure_state.available end
 end
@@ -898,9 +911,11 @@ end
 if rawget(C_StoreSecure, "GetLastProductListResponseError") == nil then
   function C_StoreSecure.GetLastProductListResponseError() return __wow_store_secure_state.last_product_list_response_error end
 end
+end
 if rawget(C_StoreSecure, "GetVASErrors") == nil then
   function C_StoreSecure.GetVASErrors() return __wow_store_secure_state.vas_errors end
 end
+if not modeledStoreCatalog then
 if rawget(C_StoreSecure, "GetCurrencyInfo") == nil then
   function C_StoreSecure.GetCurrencyInfo()
     return {
@@ -917,6 +932,8 @@ if rawget(C_StoreSecure, "GetCurrencyInfo") == nil then
     }
   end
 end
+end
+if not modeledStoreCatalog then
 if rawget(C_StoreSecure, "GetProductGroupInfo") == nil then
   function C_StoreSecure.GetProductGroupInfo(groupID)
     for _, group in ipairs(__wow_store_product_groups) do
@@ -941,6 +958,8 @@ end
 if rawget(C_StoreSecure, "GetProductInfo") == nil then
   function C_StoreSecure.GetProductInfo(productID) return __wow_store_product(productID) end
 end
+end
+if not modeledStoreCatalog then
 if rawget(C_StoreSecure, "IsDynamicBundle") == nil then
   function C_StoreSecure.IsDynamicBundle(_productID) return false end
 end
@@ -950,6 +969,8 @@ end
 if rawget(C_StoreSecure, "RequestAllDynamicPriceInfo") == nil then
   function C_StoreSecure.RequestAllDynamicPriceInfo() return nil end
 end
+end
+if not modeledStoreCatalog then
 if rawget(C_StoreSecure, "GetProductList") == nil then
   function C_StoreSecure.GetProductList()
     __wow_store_secure_state.has_product_list = true
@@ -968,12 +989,14 @@ if rawget(C_StoreSecure, "GetPurchaseList") == nil then
     return nil
   end
 end
+end
 if rawget(C_StoreSecure, "GetDistributionList") == nil then
   function C_StoreSecure.GetDistributionList()
     __wow_store_secure_state.has_distribution_list = true
     return {}
   end
 end
+if not modeledStoreVas then
 function C_StoreSecure.GetFailureInfo()
   return __wow_store_secure_state.failure_code, __wow_store_secure_state.failure_reason
 end
@@ -1008,16 +1031,18 @@ end
 function C_StoreSecure.GetVASCompletionInfo()
   return __wow_store_secure_state.completion_product_id, __wow_store_secure_state.completion_guid, __wow_store_secure_state.completion_realm_name, __wow_store_secure_state.completion_should_handle
 end
-function C_StoreSecure.SetDisconnectOnLogout(disconnectOnLogout)
-  __wow_store_secure_state.disconnect_on_logout = disconnectOnLogout and true or false
-  if __wow_store_secure_state.completion_product_id then
-    __wow_store_secure_state.completion_should_handle = __wow_store_secure_state.disconnect_on_logout
+if not modeledStoreGlue then
+  function C_StoreSecure.SetDisconnectOnLogout(disconnectOnLogout)
+    __wow_store_secure_state.disconnect_on_logout = disconnectOnLogout and true or false
+    if __wow_store_secure_state.completion_product_id then
+      __wow_store_secure_state.completion_should_handle = __wow_store_secure_state.disconnect_on_logout
+    end
   end
-end
-function C_StoreSecure.SetVASProductReady(ready)
-  if ready and __wow_store_secure_state.completion_product_id then
-    __wow_store_secure_state.purchase_in_progress = false
-    FireEvent("STORE_VAS_PURCHASE_COMPLETE")
+  function C_StoreSecure.SetVASProductReady(ready)
+    if ready and __wow_store_secure_state.completion_product_id then
+      __wow_store_secure_state.purchase_in_progress = false
+      FireEvent("STORE_VAS_PURCHASE_COMPLETE")
+    end
   end
 end
 function C_StoreSecure.PurchaseVASProduct(productID, guid, _name, _oldGuildName, _newGuildMasterGuid, realmValue, _wowAccountGuid, _bnetAccountGuid, _transferFactionChangeBundle, _isGuildFollow)
@@ -1156,6 +1181,7 @@ if rawget(C_StoreSecure, "ClearPreGeneratedExternalTransactionID") == nil then
     __wow_store_secure_state.pre_generated_external_transaction_id = false
   end
 end
+end
 
 -- GetAvailableLocaleInfo is registered from Rust
 -- (src/lua_api/globals/real/locale_info.rs). Returns the 12-locale retail list
@@ -1251,7 +1277,7 @@ local function __wow_patch_map_canvas_scroll_container_methods()
   __wow_map_canvas_scroll_container_patched = true
 end
 
-if rawget(_G, "PVEFrame_ToggleFrame") == nil then
+if not retirePveFrameBridge and rawget(_G, "PVEFrame_ToggleFrame") == nil then
   function PVEFrame_ToggleFrame(...)
     local loadAddOn = C_AddOns and C_AddOns.LoadAddOn
     if type(loadAddOn) == "function" then
@@ -1407,98 +1433,8 @@ rawset(_G, "__wow_patch_fog_of_war_pin_methods", __wow_patch_fog_of_war_pin_meth
 
 AUTOCOMPLETE_LIST = AUTOCOMPLETE_LIST or {}
 AUTOCOMPLETE_LIST.ADDFRIEND = AUTOCOMPLETE_LIST.ADDFRIEND or {}
-if type(setprinthandler) ~= "function" then
+if not retireGlueOwnerDefaults and type(setprinthandler) ~= "function" then
   function setprinthandler() end
-end
-
-if rawget(_G, "ToggleCollectionsJournal") == nil then
-  function ToggleCollectionsJournal(tabIndex)
-    if DISALLOW_FRAME_TOGGLING then
-      return
-    end
-    if not CollectionsJournal and type(CollectionsJournal_LoadUI) == "function" then
-      CollectionsJournal_LoadUI()
-    end
-    if CollectionsJournal and type(SetCollectionsJournalShown) == "function" then
-      local tabMatches = not tabIndex or tabIndex == PanelTemplates_GetSelectedTab(CollectionsJournal)
-      local isShown = CollectionsJournal:IsShown() and tabMatches
-      SetCollectionsJournalShown(not isShown, tabIndex)
-    elseif CollectionsJournal then
-      if CollectionsJournal:IsShown() then
-        CollectionsJournal:Hide()
-      else
-        CollectionsJournal:Show()
-      end
-    end
-  end
-end
-
-if rawget(_G, "ToggleEncounterJournal") == nil then
-  function ToggleEncounterJournal()
-    if DISALLOW_FRAME_TOGGLING then
-      return
-    end
-    if not EncounterJournal and type(EncounterJournal_LoadUI) == "function" then
-      EncounterJournal_LoadUI()
-    end
-    if not EncounterJournal and type(C_AddOns) == "table" and type(C_AddOns.LoadAddOn) == "function" then
-      C_AddOns.LoadAddOn("Blizzard_EncounterJournal")
-    end
-    if EncounterJournal then
-      if EncounterJournal:IsShown() then
-        if type(HideUIPanel) == "function" then
-          HideUIPanel(EncounterJournal)
-        else
-          EncounterJournal:Hide()
-        end
-      else
-        if type(ShowUIPanel) == "function" then
-          ShowUIPanel(EncounterJournal)
-        else
-          EncounterJournal:Show()
-        end
-      end
-    end
-  end
-end
-
-if CreateTemplateInfoCache == nil then
-  function CreateTemplateInfoCache()
-    local cache = {
-      templateInfos = {},
-      infoAddedCallback = nil,
-    }
-
-    function cache:Init()
-    end
-
-    function cache:SetInfoAddedCallback(callback)
-      self.infoAddedCallback = callback
-    end
-
-    function cache:FlushTemplateInfos()
-      self.templateInfos = {}
-    end
-
-    function cache:GetTemplateInfo(frameTemplate)
-      local info = self.templateInfos[frameTemplate]
-      if info == nil and C_XMLUtil and C_XMLUtil.GetTemplateInfo then
-        info = C_XMLUtil.GetTemplateInfo(frameTemplate)
-        self.templateInfos[frameTemplate] = info
-      end
-      if info ~= nil and self.infoAddedCallback then
-        self.infoAddedCallback(info)
-      end
-      return info
-    end
-
-    function cache:GetTemplateInfos()
-      return self.templateInfos
-    end
-
-    cache:Init()
-    return cache
-  end
 end
 
 local __global_mt = getmetatable(_G) or {}

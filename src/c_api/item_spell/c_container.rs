@@ -175,10 +175,7 @@ fn c_container_get_item_info(state: &mut LuaState) -> LuaResult<u32> {
 
     let locked = {
         let sim = borrow_state(state)?;
-        super::item_equip::is_locked_at(
-            &sim,
-            crate::c_api::item_upgrade_eligibility::ItemSlot::Bag(bag, slot),
-        )
+        super::item_equip::is_locked_at(&sim, crate::c_api::item_location::ItemSlot::Bag(bag, slot))
     };
     let info = build_container_item_info(state, &bag_item, locked)?;
     state.push(info);

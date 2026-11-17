@@ -51,15 +51,18 @@ device; this is not audio-device acceptance.
 
 ### Mists
 
-`mists-lua-errors.json` is the committed clean startup baseline for:
+**VERIFIED (simulator output, source `bc0a2ddd5`):** `mists-lua-errors.json` is the byte-exact stdout from the Mists stock command below, including its trailing LF. It contains **0 records / 0 occurrences, exit 0**; the capture and binary hashes are in [`mists-lua-errors.meta.json`](mists-lua-errors.meta.json).
+
+**VERIFIED (prior baseline) / VERIFIED (current capture):** the previous 4 records / 10 occurrences were the `C_CombatAudioAlert.IsEnabled` error at `Blizzard_CombatAudioAlertManager.lua:181` and the `C_Spell.GetVisibilityInfo` error at `AuraUtil.lua:272`, including their ScriptErrors echoes. Both consumers now load without Lua errors.
+
+**INFERRED (native applicability):** R88ah proves the API behavior on Mists 5.5.4.70631; the same behavior is applied to the 5.5.4.70268 cache because its declarations and enum values match. The zero-error capture proves simulator startup only. It does not prove native parity on 70268 or full-suite compatibility.
 
 ```bash
 cargo build --no-default-features --features "sound,gui,casc,client-mists" --bin wow-sim
 WOW_SIM_NO_SAVED_VARS=1 WOW_SIM_NO_ADDONS=1 timeout 90 ./target/debug/wow-sim lua-errors > docs/baselines/mists-lua-errors.json
 ```
 
-Do not refresh this file to bless new startup errors. Refresh only after a
-verified clean Mists capture.
+The 2026-11-16 clean capture replaces the classified diagnostic inventory. The earlier 4-record / 10-occurrence capture remains identifiable by SHA-256 `9775335b02412474276945ed13215fb7b079d425f4680b7fe23bd86abafbc36e`; it is recorded as the resolved input in the metadata.
 
 Verified scoped capture on 2026-10-16: **0 records / 0 occurrences, exit0**;
 142 Blizzard addons loaded. Sealed Mists source `4d5572f241cce3d99a7b486709186a2638566a56`

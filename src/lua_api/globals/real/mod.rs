@@ -9,6 +9,7 @@ pub mod action_bar_state;
 pub mod action_highlights;
 pub(crate) mod ambiguate;
 pub(crate) mod bank_reagents;
+pub(crate) mod bit_library;
 #[cfg(feature = "client-retail")]
 pub(crate) mod bnet_friend_index;
 #[cfg(feature = "retail-12-0-5")]
@@ -25,9 +26,23 @@ pub mod event_callbacks;
 pub mod forever_stat_contributions;
 pub mod frame_level_helpers;
 pub(crate) mod game_clock;
-#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
 pub(crate) mod glue_background;
-#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
+pub(crate) mod glue_character_season;
+#[cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
 pub(crate) mod glue_connection;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) mod glue_enter_world;
@@ -35,8 +50,15 @@ pub(crate) mod glue_enter_world;
 pub mod glue_feature_status;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) mod glue_save_character_order;
+#[cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
+pub(crate) mod glue_select_character;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) mod glue_selection;
+pub mod glue_state;
 pub mod glyph_state;
 pub mod gossip_probes;
 pub(crate) mod group_role_counts;
@@ -124,6 +146,8 @@ pub mod shapeshift;
 pub mod simulate_mouse;
 pub mod specialization_helpers;
 pub mod specialization_legacy;
+#[cfg(feature = "client-retail")]
+pub(crate) mod specialization_system;
 #[cfg(all(
     feature = "retail-12-0-5",
     any(feature = "profile-retail", feature = "client-ptr")

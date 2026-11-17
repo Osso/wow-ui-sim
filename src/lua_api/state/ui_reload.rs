@@ -21,7 +21,8 @@ impl SimState {
         self.is_logged_in = false;
         self.account_cvar_callback_pending = false;
         self.post_event_workarounds_applied = false;
-        self.screen_first_displayed = false;
+        // Host policy: R88ad.8 leaves any reset of the native first-display state UNKNOWN.
+        self.screen_first_display_state = 0;
         self.texture_manager
             .borrow_mut()
             .invalidate_source_generation();
@@ -77,6 +78,7 @@ impl SimState {
         self.addons.clear();
         self.registered_load_with.clear();
         self.load_with_followers = None;
+        self.toc_cache = Default::default();
         self.addon_initialization_failures.clear();
         self.loading_addon_index = None;
         self.loading_addon_stack.clear();

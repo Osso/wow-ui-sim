@@ -164,11 +164,6 @@ if GetNumArenaOpponentSpecs == nil then
     end
 end
 
-if GetItemLevelColor == nil then
-    function GetItemLevelColor()
-        return 1, 1, 1
-    end
-end
 if ClearCursorHoveredItem == nil then
     function ClearCursorHoveredItem()
         return nil

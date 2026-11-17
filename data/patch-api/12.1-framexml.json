@@ -3406,11 +3406,11 @@
           "kind": "runtime",
           "reference": "tests/blizzard_macro_ui_loads.rs",
           "summary": "PTR tests prove MacroFrame_SaveMacro is absent after selected startup loading, then explicit Blizzard_MacroUI LoD loading publishes a callable delegate to MacroFrame:SaveMacro.",
-          "source_hash": "81f1b2024ad7af2be868f9765e2bce5f26ff0c661c159d778e7adcb6f30b03be"
+          "source_hash": "5d26cdf2ef194f167d6d2e9cfb74bfd89d9d08dcc69cb9297d3f7bb5a2cdc354"
         }
       ],
       "tests": [
-        "tests/blizzard_macro_ui_loads.rs::ptr_macro_save_placeholder_is_replaced_by_lod_delegate",
+        "tests/blizzard_macro_ui_loads.rs::ptr_macro_save_delegate_loads_after_selected_startup",
         "tests/blizzard_macro_ui_loads.rs::mainline_macro_save_delegate_is_published_after_lod_load"
       ],
       "assertions": [
@@ -6051,11 +6051,11 @@
           "kind": "runtime",
           "reference": "tests/blizzard_macro_ui_loads.rs",
           "summary": "PTR tests prove MacroFrame_SaveMacro is absent after selected startup loading, then explicit Blizzard_MacroUI LoD loading publishes a callable delegate to MacroFrame:SaveMacro.",
-          "source_hash": "81f1b2024ad7af2be868f9765e2bce5f26ff0c661c159d778e7adcb6f30b03be"
+          "source_hash": "5d26cdf2ef194f167d6d2e9cfb74bfd89d9d08dcc69cb9297d3f7bb5a2cdc354"
         }
       ],
       "tests": [
-        "tests/blizzard_macro_ui_loads.rs::ptr_macro_save_placeholder_is_replaced_by_lod_delegate",
+        "tests/blizzard_macro_ui_loads.rs::ptr_macro_save_delegate_loads_after_selected_startup",
         "tests/blizzard_macro_ui_loads.rs::mainline_macro_save_delegate_is_published_after_lod_load"
       ],
       "assertions": [

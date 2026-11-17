@@ -43,3 +43,4 @@
 
 - [[lua-api]] — C API placement and Lua runtime behavior.
 - [[client-profiles]] — profile selection and runtime data boundaries.
+- [[color-overrides]] — Retail quality-color lookup from the GlobalColor tags.

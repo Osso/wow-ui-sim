@@ -14,6 +14,8 @@ pub(crate) mod c_tooltip_info_artifact_power;
 pub(crate) mod c_tooltip_info_azerite_essence;
 pub(crate) mod c_tooltip_info_azerite_power;
 pub(crate) mod c_tooltip_info_bag_child;
+#[cfg(feature = "client-retail")]
+pub(crate) mod c_tooltip_info_battle_pet;
 pub(crate) mod c_tooltip_info_conduit;
 pub mod c_tooltip_info_currency;
 pub(crate) mod c_tooltip_info_enhanced_conduit;
@@ -34,7 +36,12 @@ pub(crate) mod c_tooltip_info_possession;
 #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 pub(crate) mod c_tooltip_info_pvp_brawl;
 pub(crate) mod c_tooltip_info_round7;
-pub use c_tooltip_info_round7::{ItemInteractionTooltipInput, ItemInteractionTooltipLine};
+#[cfg(feature = "client-retail")]
+pub use c_tooltip_info_battle_pet::BattlePetTooltipSnapshot;
+pub use c_tooltip_info_round7::{
+    ItemInteractionTooltipInput, ItemInteractionTooltipLine, SlottedKeystoneKeyFloor,
+    SlottedKeystoneTooltipInput,
+};
 pub(crate) mod c_tooltip_info_totem;
 pub(crate) mod c_tooltip_info_weekly;
 pub mod chr_select_screen_data;
@@ -323,7 +330,10 @@ pub mod c_spell_classification;
 pub(crate) mod c_spell_counts;
 pub mod c_spell_diminish;
 pub mod c_stable_info;
+pub mod c_store_glue;
 mod c_store_secure;
+mod c_store_secure_catalog;
+mod c_store_secure_vas;
 pub mod c_string_util;
 mod c_string_util_decimal;
 pub mod c_summon_info;
@@ -348,9 +358,17 @@ pub(crate) mod c_trade_skill_first_craft;
 pub mod c_trade_skill_quality;
 mod c_trade_skill_source;
 #[cfg(feature = "client-mists")]
+pub(crate) mod mists_r88ah;
+#[cfg(feature = "client-mists")]
+pub(crate) mod mists_r88ai;
+#[cfg(feature = "client-mists")]
 pub(crate) mod mists_reputation_list;
 #[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
 pub mod spell_reagent_inventory;
+pub mod store_catalog_model;
+pub mod store_glue_model;
+pub mod store_guid;
+pub mod store_vas_model;
 // The pinned classic TransmogItemsDocumentation.lua / TransmogOutfitInfoDocumentation.lua
 // declare these namespaces on Mists, Era and Anniversary, so the backing model
 // is compiled for those profiles together with the retail API epochs.
@@ -409,6 +427,8 @@ pub mod url_texture_inputs;
 ))]
 pub use c_transmog_collection::IllusionInfo;
 pub mod c_achievement_telemetry;
+pub(crate) mod c_color_overrides;
+pub use c_color_overrides::{load_color_overrides, save_color_overrides};
 pub mod c_social_contract_glue;
 #[cfg(feature = "retail-12-0-5")]
 pub mod c_spell_maw_powers;
@@ -465,6 +485,7 @@ pub(crate) mod duration_clock;
 pub(crate) mod duration_text_binding;
 #[cfg(feature = "retail-12-0-5")]
 pub mod intl_native;
+pub mod item_location;
 pub mod item_spell;
 #[cfg(feature = "retail-12-0-0")]
 mod item_stats;
@@ -486,6 +507,7 @@ pub use c_ping_texture_kits::PingTextureKits;
 mod c_cvar_readiness;
 pub mod c_loss_of_control;
 mod combat_audio_enabled;
+pub(crate) mod combat_audio_spec_setting_enum;
 #[cfg(not(feature = "client-wrath"))]
 mod combat_audio_throttle;
 #[cfg(feature = "client-mists")]
@@ -536,6 +558,11 @@ mod voice_provider_enum;
 pub(crate) mod c_tts_settings;
 mod helpers;
 pub(crate) use helpers::parse_numeric_string;
+#[cfg(feature = "client-retail")]
+pub(crate) use helpers::{
+    bad_argument, read_untainted_signed32_argument, read_untainted_string_argument,
+    read_untainted_truthy_argument, read_untainted_value,
+};
 #[cfg(feature = "retail-12-0-0")]
 mod patch_retired_members;
 #[cfg(feature = "retail-12-0-0")]

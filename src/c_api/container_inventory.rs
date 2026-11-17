@@ -3,7 +3,8 @@
 //! Hyperlinks, enchants, and gems do not survive cursor transfer in this model.
 
 use crate::c_api::container_actions::ContainerUseRequest;
-use crate::c_api::item_upgrade_eligibility::{self, ItemSlot};
+use crate::c_api::item_location::ItemSlot;
+use crate::c_api::item_upgrade_eligibility;
 use crate::lua_api::globals::real::cursor_model;
 use crate::lua_api::methods::borrow_state_mut;
 use crate::lua_api::state::{BagItem, CursorInfo, CursorItemOrigin, EquippedItem, SimState};

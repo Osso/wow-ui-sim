@@ -50,9 +50,22 @@ pub(crate) fn register_c_character_services_surface(state: &mut LuaState) -> Lua
         "GetActiveClassTrialBoostType",
         get_active_class_trial_boost_type,
     )?;
+    register_automatic_boost_surface(state, table_ref)?;
+    let screen_kind = borrow_state(state)?.screen_kind;
+    update_queued_upgrade_registration(state, screen_kind)
+}
+
+// INFERRED PTR publication: R54 Retail VERIFIED (answers4584), selected PTR
+// CharacterSelect.lua2153,2160-61,2182-83; generated declarations are absent.
+// The nil Set* calls use the existing R54 writer cases, with unchanged wrappers.
+fn register_automatic_boost_surface(
+    state: &mut LuaState,
+    table_ref: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
+) -> LuaResult<()> {
     if matches!(
         crate::client_profile::ACTIVE,
         crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::Ptr
             | crate::client_profile::ClientProfile::WowForever
     ) {
         // Normal initial registration precedes the existing protected wrappers.
@@ -71,8 +84,7 @@ pub(crate) fn register_c_character_services_surface(state: &mut LuaState) -> Lua
             table_set_rust_fn_static(state, table_ref, name, function)?;
         }
     }
-    let screen_kind = borrow_state(state)?.screen_kind;
-    update_queued_upgrade_registration(state, screen_kind)
+    Ok(())
 }
 
 pub(crate) fn update_queued_upgrade_registration(

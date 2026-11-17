@@ -9,6 +9,71 @@ mod tooltip_full_env_helpers;
 
 use tooltip_full_env_helpers::{refresh_aura_frames, setup_full_env};
 
+const COLOR_OVERRIDE_CONSUMER_LUA: &str = r#"
+local function assert_default_color(quality, expected)
+    local data = ColorManager.GetDefaultColorDataForItemQuality(quality)
+    assert(data.color.r == expected.r and data.color.g == expected.g)
+    assert(data.color.b == expected.b)
+    local color = C_ColorOverrides.GetDefaultColorForQuality(quality)
+    assert(color.r == expected.r and color.g == expected.g)
+    assert(color.b == expected.b and color.a == expected.a)
+end
+
+local function assert_rgba(color, red, green, blue, alpha)
+    assert(math.abs(color.r - red) < 0.000001)
+    assert(math.abs(color.g - green) < 0.000001)
+    assert(math.abs(color.b - blue) < 0.000001)
+    assert(math.abs(color.a - alpha) < 0.000001)
+end
+
+assert(type(ColorManager) == "table", "Retail Blizzard_Colors must be loaded")
+local poor = Enum.ItemQuality.Poor
+local epic = Enum.ItemQuality.Epic
+local poorType = ITEM_QUALITY_OVERRIDES[poor]
+local epicType = ITEM_QUALITY_OVERRIDES[epic]
+local commonType = ITEM_QUALITY_OVERRIDES[Enum.ItemQuality.Common]
+assert(poorType ~= nil and epicType ~= nil and commonType ~= nil)
+assert_default_color(poor, ITEM_POOR_COLOR)
+assert_default_color(epic, ITEM_EPIC_COLOR)
+assert(C_ColorOverrides.GetDefaultColorForQuality(256).r == ITEM_POOR_COLOR.r)
+assert(C_ColorOverrides.GetColorOverrideInfo(poorType) == nil)
+assert(C_ColorOverrides.GetColorOverrideInfo(epicType) == nil)
+assert(C_ColorOverrides.GetColorOverrideInfo(commonType) == nil)
+
+C_ColorOverrides.SetColorOverride(poorType, CreateColor(-1, 0.25, 2, 0.5))
+C_ColorOverrides.SetColorOverride(epicType, CreateColor(0.2, 0.4, 0.6, 0.8))
+local poorInfo = C_ColorOverrides.GetColorOverrideInfo(poorType)
+local epicInfo = C_ColorOverrides.GetColorOverrideInfo(epicType)
+assert(poorInfo.overrideType == poorType and epicInfo.overrideType == epicType)
+assert(poorInfo.overrideColor.a == nil and epicInfo.overrideColor.a == nil)
+assert(string.match(poorInfo.overrideColorString, "^[0-9a-f]+$"))
+assert_rgba(C_ColorOverrides.GetColorForQuality(poor), 0, 64 / 255, 1, 128 / 255)
+assert_rgba(C_ColorOverrides.GetColorForQuality(epic), 51 / 255, 102 / 255, 153 / 255, 204 / 255)
+ColorManager.UpdateColorData()
+assert_rgba(ColorManager.GetColorDataForItemQuality(poor).color, 0, 64 / 255, 1, 128 / 255)
+assert_rgba(ColorManager.GetColorDataForItemQuality(epic).color, 51 / 255, 102 / 255, 153 / 255, 204 / 255)
+assert_default_color(poor, ITEM_POOR_COLOR)
+
+C_ColorOverrides.RemoveColorOverride(poorType)
+assert(C_ColorOverrides.GetColorOverrideInfo(poorType) == nil)
+assert(C_ColorOverrides.GetColorOverrideInfo(epicType) ~= nil)
+C_ColorOverrides.RemoveColorOverride(epicType)
+assert(C_ColorOverrides.GetColorOverrideInfo(epicType) == nil)
+C_ColorOverrides.RemoveColorOverride(commonType)
+assert(C_ColorOverrides.GetColorOverrideInfo(poorType) == nil)
+
+C_ColorOverrides.SetColorOverride(poorType, CreateColor(0.1, 0.2, 0.3, 0.4))
+C_ColorOverrides.SetColorOverride(epicType, CreateColor(0.5, 0.6, 0.7, 0.8))
+C_ColorOverrides.ClearColorOverrides()
+assert(C_ColorOverrides.GetColorOverrideInfo(poorType) == nil)
+assert(C_ColorOverrides.GetColorOverrideInfo(epicType) == nil)
+ColorManager.UpdateColorData()
+assert_rgba(
+    ColorManager.GetColorDataForItemQuality(epic).color,
+    ITEM_EPIC_COLOR.r, ITEM_EPIC_COLOR.g, ITEM_EPIC_COLOR.b, ITEM_EPIC_COLOR.a
+)
+"#;
+
 #[test]
 fn original_color_manager_bag_quality_uses_default_without_override() {
     let env = tooltip_full_env_helpers::load_full_env_without_post_load();
@@ -25,6 +90,104 @@ fn original_color_manager_bag_quality_uses_default_without_override() {
         "#,
     )
     .expect("original ColorManager must use the default color without an override");
+}
+
+#[test]
+fn original_color_manager_tracks_globalcolor_defaults_and_color_overrides() {
+    let env = tooltip_full_env_helpers::load_full_env_without_post_load();
+    env.exec(COLOR_OVERRIDE_CONSUMER_LUA)
+        .expect("Retail ColorManager must publish GlobalColor defaults and supplied overrides");
+}
+
+const ITEM_LEVEL_COLOR_SETUP_LUA: &str = r#"
+assert(type(PaperDollFrame_UpdateStats) == "function")
+ITEM_STANDARD_COLOR = CreateColor(0.125, 0.25, 0.375)
+ITEM_SUPERIOR_COLOR = CreateColor(0.25, 0.375, 0.5)
+ITEM_EPIC_COLOR = CreateColor(0.375, 0.5, 0.625)
+"#;
+
+const ITEM_LEVEL_COLOR_CONSUMER_LUA: &str = r##"
+assert(select("#", GetItemLevelColor("ignored")) == 3)
+PaperDollFrame_UpdateStats()
+local red, green, blue = CharacterStatsPane.ItemLevelFrame.Value:GetTextColor()
+return red, green, blue
+"##;
+
+fn setup_item_level_color_consumer() -> wow_ui_sim::lua_api::WowLuaEnv {
+    let env = setup_full_env();
+    env.exec(ITEM_LEVEL_COLOR_SETUP_LUA)
+        .expect("Retail PaperDollFrame consumer and color globals should load");
+    env
+}
+
+fn set_item_level_color_conditions(
+    env: &wow_ui_sim::lua_api::WowLuaEnv,
+    condition_23: Option<bool>,
+    condition_24: Option<bool>,
+) {
+    let mut state = env.state().borrow_mut();
+    state.item_level_color_condition_23 = condition_23;
+    state.item_level_color_condition_24 = condition_24;
+}
+
+fn assert_item_level_display_color(
+    env: &wow_ui_sim::lua_api::WowLuaEnv,
+    expected: (f64, f64, f64),
+) {
+    let actual: (f64, f64, f64) = env
+        .eval(ITEM_LEVEL_COLOR_CONSUMER_LUA)
+        .expect("original PaperDollFrame_UpdateStats should expose the item-level color");
+    let tolerance = 0.000001;
+    assert!((actual.0 - expected.0).abs() < tolerance, "{actual:?}");
+    assert!((actual.1 - expected.1).abs() < tolerance, "{actual:?}");
+    assert!((actual.2 - expected.2).abs() < tolerance, "{actual:?}");
+}
+
+#[test]
+fn paper_doll_uses_standard_color_when_condition_inputs_are_absent() {
+    let env = setup_item_level_color_consumer();
+    set_item_level_color_conditions(&env, None, None);
+    assert_item_level_display_color(&env, (0.125, 0.25, 0.375));
+}
+
+#[test]
+fn paper_doll_uses_superior_color_when_condition_23_passes() {
+    let env = setup_item_level_color_consumer();
+    set_item_level_color_conditions(&env, Some(true), Some(false));
+    assert_item_level_display_color(&env, (0.25, 0.375, 0.5));
+}
+
+#[test]
+fn paper_doll_prefers_epic_color_when_condition_24_and_23_pass() {
+    let env = setup_item_level_color_consumer();
+    set_item_level_color_conditions(&env, Some(true), Some(true));
+    assert_item_level_display_color(&env, (0.375, 0.5, 0.625));
+}
+
+#[test]
+fn paper_doll_uses_color_override_before_named_color() {
+    let env = setup_item_level_color_consumer();
+    env.exec(
+        r#"
+        local common = ITEM_QUALITY_OVERRIDES[Enum.ItemQuality.Common]
+        assert(common ~= nil, "Common must resolve to an item-color override type")
+        C_ColorOverrides.SetColorOverride(common, CreateColor(0.125, 0.25, 0.375, 1))
+        ColorManager.UpdateColorData()
+        ITEM_STANDARD_COLOR = CreateColor(0.875, 0.75, 0.625)
+        "#,
+    )
+    .expect("Retail color provider should accept the common-quality override");
+    set_item_level_color_conditions(&env, None, None);
+    assert_item_level_display_color(&env, (32.0 / 255.0, 64.0 / 255.0, 96.0 / 255.0));
+}
+
+#[test]
+fn paper_doll_uses_magenta_when_selected_color_has_no_rgb() {
+    let env = setup_item_level_color_consumer();
+    env.exec("ITEM_STANDARD_COLOR = false")
+        .expect("standard color should be unavailable for the fallback case");
+    set_item_level_color_conditions(&env, None, None);
+    assert_item_level_display_color(&env, (1.0, 0.0, 1.0));
 }
 
 fn open_character_panel(env: &wow_ui_sim::lua_api::WowLuaEnv) {

@@ -486,6 +486,7 @@ fn test_spell_get_spell_charges() {
     assert!(is_table);
 }
 
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
 #[test]
 fn test_spell_is_spell_passive() {
     let env = env();

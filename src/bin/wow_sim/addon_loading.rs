@@ -4,8 +4,8 @@ use std::collections::{HashMap, HashSet};
 use std::path::{Path, PathBuf};
 use wow_ui_sim::client_profile;
 use wow_ui_sim::loader::{
-    LoadResult, LoadTiming, StartupAddonLoadKind, discover_all_blizzard_addons,
-    discover_blizzard_startup_addons_for_screen, load_startup_addon, register_load_with_addons,
+    LoadResult, LoadTiming, StartupAddonLoadKind, discover_all_blizzard_addons_with_tocs,
+    discover_blizzard_startup_addons_with_tocs, load_startup_addon, register_load_with_addons,
     register_load_with_declarations, startup_bootstrap_eligible,
 };
 use wow_ui_sim::logging;
@@ -13,7 +13,7 @@ use wow_ui_sim::lua_api::state::LuaErrorRecord;
 use wow_ui_sim::lua_api::{AddonInfo, WowLuaEnv};
 use wow_ui_sim::saved_variables::SavedVariablesManager;
 use wow_ui_sim::screen::ScreenKind;
-use wow_ui_sim::toc::TocFile;
+use wow_ui_sim::toc::{TocCache, TocMetadata};
 
 mod blizzard_dependencies;
 mod cache_summary;
@@ -61,34 +61,55 @@ pub fn load_blizzard_addons(
     screen: ScreenKind,
 ) {
     let addons_dir = blizzard_ui_addons_dir_or_exit();
-    let verbose = std::env::var("WOW_SIM_VERBOSE").is_ok();
     let blizzard_start = std::time::Instant::now();
     let mut total_timing = LoadTiming::default();
 
     env.gc_stop();
 
-    let registered_candidates = discover_all_blizzard_addons(&addons_dir);
+    let tocs = env.toc_cache();
+    let registered_candidates = discover_all_blizzard_addons_with_tocs(&tocs, &addons_dir);
     register_load_with_addons(&env.loader_env(), &registered_candidates);
-
-    // Wrath ships a top-level FrameXML.toc that pre-dates the retail Blizzard_*
-    // split. Load it as a synthetic addon before iterating Blizzard_* dirs so
-    // global UI templates (UIParent, GameTooltip, etc.) register first.
-    if let Some(framexml_toc) = client_profile::blizzard_ui_framexml_toc() {
-        load_one_blizzard_addon(
-            env,
-            "FrameXML",
-            &framexml_toc,
-            StartupAddonLoadKind::Full,
-            saved_vars,
-            verbose,
-            &mut total_timing,
-        );
-    }
-
-    let addons = discover_blizzard_startup_addons_for_screen(&addons_dir, screen);
+    load_wrath_framexml(env, saved_vars, &mut total_timing);
+    let addons = discover_blizzard_startup_addons_with_tocs(&tocs, &addons_dir, screen);
     logging::println_elapsed(&format!("Loading {} Blizzard addons...", addons.len()));
+    load_blizzard_startup_addons(env, &addons, saved_vars, &mut total_timing);
 
-    for addon in &addons {
+    env.sync_string_metatable_to_global_string();
+    print_blizzard_summary(blizzard_start.elapsed(), &total_timing);
+}
+
+/// Wrath ships a top-level FrameXML.toc that pre-dates the retail Blizzard_*
+/// split. Load it as a synthetic addon before iterating Blizzard_* dirs so
+/// global UI templates (UIParent, GameTooltip, etc.) register first.
+fn load_wrath_framexml(
+    env: &WowLuaEnv,
+    saved_vars: &mut Option<SavedVariablesManager>,
+    timing: &mut LoadTiming,
+) {
+    let Some(framexml_toc) = client_profile::blizzard_ui_framexml_toc() else {
+        return;
+    };
+    let verbose = std::env::var("WOW_SIM_VERBOSE").is_ok();
+    let kind = StartupAddonLoadKind::Full;
+    load_one_blizzard_addon(
+        env,
+        "FrameXML",
+        &framexml_toc,
+        kind,
+        saved_vars,
+        verbose,
+        timing,
+    );
+}
+
+fn load_blizzard_startup_addons(
+    env: &WowLuaEnv,
+    addons: &[wow_ui_sim::loader::StartupAddon],
+    saved_vars: &mut Option<SavedVariablesManager>,
+    total_timing: &mut LoadTiming,
+) {
+    let verbose = std::env::var("WOW_SIM_VERBOSE").is_ok();
+    for addon in addons {
         load_one_blizzard_addon(
             env,
             &addon.name,
@@ -96,15 +117,12 @@ pub fn load_blizzard_addons(
             addon.kind,
             saved_vars,
             verbose,
-            &mut total_timing,
+            total_timing,
         );
         if addon.name == "Blizzard_EnvironmentCleanup" {
             env.restore_post_cleanup_globals();
         }
     }
-
-    env.sync_string_metatable_to_global_string();
-    print_blizzard_summary(blizzard_start.elapsed(), &total_timing);
 }
 
 fn blizzard_ui_addons_dir_or_exit() -> PathBuf {
@@ -286,28 +304,34 @@ pub fn load_third_party_addons(
         return;
     }
 
-    let exclude = if is_test { &[][..] } else { TEST_ADDONS };
-    let mut addons = scan_addon_paths(addon_paths, exclude, screen);
-    wow_ui_sim::loader::sort_addons_by_dependencies(&mut addons);
-    if skip_addons {
-        addons.retain(|(name, _)| TEST_ADDONS.iter().any(|t| t == name));
-    }
+    let tocs = env.toc_cache();
+    let addons = discover_third_party_addons(&tocs, addon_paths, skip_addons, is_test, screen);
     if addons.is_empty() {
         return;
     }
 
     let enable_overrides = merged_addon_enable_overrides(env, saved_vars);
-    let effective_enable_overrides =
-        dependency_aware_enable_overrides(&addons, enable_overrides.as_ref());
+    let effective = dependency_aware_enable_overrides(&tocs, &addons, enable_overrides.as_ref());
     let mut stats = LoadStats::default();
-    let startup_count = load_discovered_addons(
-        env,
-        &addons,
-        saved_vars,
-        effective_enable_overrides.as_ref(),
-        &mut stats,
-    );
-    print_load_summary(startup_count, &stats);
+    let count = load_discovered_addons(env, &addons, saved_vars, effective.as_ref(), &mut stats);
+    print_load_summary(count, &stats);
+}
+
+/// Loadable third-party addons in dependency order.
+fn discover_third_party_addons(
+    tocs: &TocCache,
+    addon_paths: &[PathBuf],
+    skip_addons: bool,
+    is_test: bool,
+    screen: ScreenKind,
+) -> Vec<(String, PathBuf)> {
+    let exclude = if is_test { &[][..] } else { TEST_ADDONS };
+    let mut addons = scan_addon_paths(tocs, addon_paths, exclude, screen);
+    wow_ui_sim::loader::sort_addons_by_dependencies_with_tocs(tocs, &mut addons);
+    if skip_addons {
+        addons.retain(|(name, _)| TEST_ADDONS.iter().any(|t| t == name));
+    }
+    addons
 }
 
 fn merged_addon_enable_overrides(
@@ -341,6 +365,7 @@ fn is_addon_loaded(env: &WowLuaEnv, name: &str) -> bool {
 }
 
 pub fn scan_addon_paths(
+    tocs: &TocCache,
     base_paths: &[PathBuf],
     exclude: &[&str],
     screen: ScreenKind,
@@ -349,7 +374,7 @@ pub fn scan_addon_paths(
     let mut seen = HashSet::new();
 
     for base_path in base_paths {
-        for (name, toc_path) in scan_addons(base_path, exclude, screen) {
+        for (name, toc_path) in scan_addons(tocs, base_path, exclude, screen) {
             if seen.insert(name.clone()) {
                 addons.push((name, toc_path));
             }
@@ -360,6 +385,7 @@ pub fn scan_addon_paths(
 }
 
 pub fn scan_addons(
+    tocs: &TocCache,
     base_path: &Path,
     exclude: &[&str],
     screen: ScreenKind,
@@ -369,7 +395,7 @@ pub fn scan_addons(
         return addons;
     };
     for entry in entries.flatten() {
-        if let Some(addon) = scanned_addon(entry.path(), exclude, screen) {
+        if let Some(addon) = scanned_addon(tocs, entry.path(), exclude, screen) {
             addons.push(addon);
         }
     }
@@ -377,7 +403,12 @@ pub fn scan_addons(
     addons
 }
 
-fn scanned_addon(path: PathBuf, exclude: &[&str], screen: ScreenKind) -> Option<(String, PathBuf)> {
+fn scanned_addon(
+    tocs: &TocCache,
+    path: PathBuf,
+    exclude: &[&str],
+    screen: ScreenKind,
+) -> Option<(String, PathBuf)> {
     if !path.is_dir() {
         return None;
     }
@@ -385,7 +416,7 @@ fn scanned_addon(path: PathBuf, exclude: &[&str], screen: ScreenKind) -> Option<
     if should_skip_addon_dir(&name, exclude) {
         return None;
     }
-    let toc_path = loadable_toc_path(&path, screen)?;
+    let toc_path = loadable_toc_path(tocs, &path, screen)?;
     Some((name, toc_path))
 }
 
@@ -393,9 +424,9 @@ fn should_skip_addon_dir(name: &str, exclude: &[&str]) -> bool {
     name.starts_with('.') || name == "BlizzardUI" || exclude.contains(&name)
 }
 
-fn loadable_toc_path(path: &Path, screen: ScreenKind) -> Option<PathBuf> {
+fn loadable_toc_path(tocs: &TocCache, path: &Path, screen: ScreenKind) -> Option<PathBuf> {
     let toc_path = wow_ui_sim::loader::find_toc_file(path)?;
-    let toc = match TocFile::from_file(&toc_path) {
+    let toc = match tocs.get(&toc_path) {
         Ok(toc) => toc,
         // Keep failed input observable in the loading path instead of treating
         // an unreadable selected TOC as an absent addon.
@@ -408,8 +439,8 @@ fn loadable_toc_path(path: &Path, screen: ScreenKind) -> Option<PathBuf> {
     (supports_screen && supported_game_type && supported_interface).then_some(toc_path)
 }
 
-fn read_startup_eligibility(toc_path: &Path) -> bool {
-    match TocFile::from_file(toc_path) {
+fn read_startup_eligibility(tocs: &TocCache, toc_path: &Path) -> bool {
+    match tocs.get(toc_path) {
         Ok(toc) => !toc.is_load_on_demand() || startup_bootstrap_eligible(&toc),
         // Keep unreadable TOCs in the execution stream for normal load-error reporting.
         Err(_) => true,
@@ -448,7 +479,7 @@ struct AddonMetadata {
     addon_dir: Option<PathBuf>,
     title: String,
     notes: String,
-    metadata: HashMap<String, String>,
+    metadata: TocMetadata,
     load_with: Vec<String>,
     load_on_demand: bool,
     default_enabled: bool,
@@ -456,19 +487,25 @@ struct AddonMetadata {
     use_secure_env: bool,
 }
 
-fn parse_addon_metadata(name: &str, toc_path: &Path) -> AddonMetadata {
-    let Some(toc) = TocFile::from_file(toc_path).ok() else {
-        return AddonMetadata {
-            addon_dir: None,
-            title: name.to_string(),
-            notes: String::new(),
-            metadata: HashMap::new(),
-            load_with: Vec::new(),
-            load_on_demand: false,
-            default_enabled: true,
-            dependencies: Vec::new(),
-            use_secure_env: false,
-        };
+/// Addon-list fields for an addon whose TOC cannot be read.
+fn unreadable_toc_metadata(name: &str) -> AddonMetadata {
+    AddonMetadata {
+        addon_dir: None,
+        title: name.to_string(),
+        notes: String::new(),
+        metadata: TocMetadata::default(),
+        load_with: Vec::new(),
+        load_on_demand: false,
+        default_enabled: true,
+        dependencies: Vec::new(),
+        use_secure_env: false,
+    }
+}
+
+/// Addon-list fields from the session's parsed TOC; the metadata map is shared, not copied.
+fn parse_addon_metadata(tocs: &TocCache, name: &str, toc_path: &Path) -> AddonMetadata {
+    let Some(toc) = tocs.get(toc_path).ok() else {
+        return unreadable_toc_metadata(name);
     };
 
     AddonMetadata {
@@ -496,9 +533,10 @@ fn load_discovered_addons(
     stats: &mut LoadStats,
 ) -> usize {
     register_discovered_addons(env, addons, enable_overrides);
+    let tocs = env.toc_cache();
     let startup_addons: Vec<_> = addons
         .iter()
-        .filter(|(_, toc_path)| read_startup_eligibility(toc_path))
+        .filter(|(_, toc_path)| read_startup_eligibility(&tocs, toc_path))
         .cloned()
         .collect();
     let screen = env.state().borrow().screen_kind;
@@ -548,7 +586,7 @@ fn register_discovered_addon(
     toc_path: &Path,
     enable_overrides: Option<&HashMap<String, bool>>,
 ) -> (String, Vec<String>, bool) {
-    let metadata = parse_addon_metadata(name, toc_path);
+    let metadata = parse_addon_metadata(&env.toc_cache(), name, toc_path);
     let enabled = addon_enabled(name, &metadata, enable_overrides);
     let load_with = metadata.load_with.clone();
     register_or_update_addon(env, name, metadata, enabled);
@@ -609,7 +647,23 @@ fn load_registered_single_addon(
     }
 
     print_verbose_addon_start(name);
-    let toc = match TocFile::from_file(toc_path) {
+    let Some(kind) = startup_load_kind(env, name, toc_path, stats) else {
+        return;
+    };
+    let first_error = env.state().borrow().lua_error_records.len();
+    let result = load_startup_addon(&env.loader_env(), toc_path, kind, saved_vars.as_mut());
+    record_startup_load_result(env, name, kind, result, stats);
+    env.record_addon_initialization_errors_since(first_error);
+}
+
+/// Bootstrap-only or full load, from the session's parsed TOC; `None` records a read failure.
+fn startup_load_kind(
+    env: &WowLuaEnv,
+    name: &str,
+    toc_path: &Path,
+    stats: &mut LoadStats,
+) -> Option<StartupAddonLoadKind> {
+    let toc = match env.toc_cache().get(toc_path) {
         Ok(toc) => toc,
         Err(e) => {
             env.mark_addon_initialization_failed(
@@ -618,16 +672,23 @@ fn load_registered_single_addon(
             );
             println!("✗ {} failed: {}", name, e);
             stats.load_failed_addons.insert(name.to_string());
-            return;
+            return None;
         }
     };
-    let kind = if startup_bootstrap_eligible(&toc) {
+    Some(if startup_bootstrap_eligible(&toc) {
         StartupAddonLoadKind::BootstrapOnly
     } else {
         StartupAddonLoadKind::Full
-    };
-    let first_error = env.state().borrow().lua_error_records.len();
-    let result = load_startup_addon(&env.loader_env(), toc_path, kind, saved_vars.as_mut());
+    })
+}
+
+fn record_startup_load_result(
+    env: &WowLuaEnv,
+    name: &str,
+    kind: StartupAddonLoadKind,
+    result: Result<LoadResult, wow_ui_sim::loader::LoadError>,
+    stats: &mut LoadStats,
+) {
     match result {
         Ok(r) => {
             record_load_initialization(env, name, &r);
@@ -645,7 +706,6 @@ fn load_registered_single_addon(
             stats.load_failed_addons.insert(name.to_string());
         }
     }
-    env.record_addon_initialization_errors_since(first_error);
 }
 
 fn should_load_registered_addon(env: &WowLuaEnv, name: &str) -> bool {
@@ -850,6 +910,9 @@ fn print_frame_timing_detail(t: &LoadTiming, pct: &dyn Fn(std::time::Duration) -
 
 #[cfg(test)]
 mod tests;
+
+#[cfg(all(test, feature = "optional-tests", target_os = "linux"))]
+mod toc_parse_once_tests;
 
 #[cfg(all(test, feature = "profile-retail"))]
 mod reload_payload_tests;

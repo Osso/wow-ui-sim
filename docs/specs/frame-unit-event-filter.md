@@ -1,5 +1,7 @@
 # Frame unit-event filter
 
+> Superseded for argument handling by [RegisterUnitEvent unit arguments (R88aj)](register-unit-event-units.md): up to four units, table and non-string handling, filter replacement and return values now follow native evidence. The invalid-first-unit and two-unit statements below describe the earlier bounded model.
+
 `Frame:RegisterUnitEvent(event, unit1[, unit2])` must retain both supplied valid literal unit tokens for frame-script delivery. Registration lives under `src/lua_api/frame/methods/text_attribute_event/`; see the [event system](../event-system.md) for dispatch architecture. This bounded repair is approved for `player` and `target`; it is not native-client proof. The [retained 5.0.4 source](../../data/patch-api/sources/5.0.4-api-changes.txt) specifies `unit1[, unit2]`; no unlimited-argument or native query-return contract is inferred.
 
 ## What it must do

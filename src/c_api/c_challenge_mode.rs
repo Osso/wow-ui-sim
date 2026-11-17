@@ -1,8 +1,8 @@
 //! Last challenge completion snapshot, independent of historical weekly bests.
 
 use crate::c_api::ensure_namespace;
+use crate::c_api::item_location::ItemSlot;
 use crate::c_api::item_spell::{item_guid_for_bag_slot, item_id_is_keystone};
-use crate::c_api::item_upgrade_eligibility::ItemSlot;
 use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, create_string, create_table, create_table_with_capacity,
@@ -37,6 +37,8 @@ pub struct KeystoneState {
     pub selected_mode: Option<i32>,
     /// Host-supplied result of the keystone cursor-staging permission gate.
     pub cursor_stage_permission: Option<bool>,
+    /// UNKNOWN (R88z): no native writer for these tooltip backing inputs is modeled.
+    pub slotted_tooltip_input: Option<crate::c_api::SlottedKeystoneTooltipInput>,
     pub item_modifiers: BTreeMap<KeystoneLocation, (u32, Vec<(u32, u32)>)>,
     pub current_map_selector: Option<u32>,
     pub reason_one_locks: BTreeSet<KeystoneLocation>,
@@ -359,10 +361,10 @@ fn close_keystone_frame(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn can_use_keystone_in_current_map(state: &mut LuaState) -> LuaResult<u32> {
-    use crate::c_api::item_upgrade_eligibility::{ItemSlot, read_item_slot};
+    use crate::c_api::item_location::read_numeric_item_slot;
 
     let value = rilua::table_security::unwrap_secret(state, stack_val(state, 1))?;
-    let location = match read_item_slot(state, value) {
+    let location = match read_numeric_item_slot(state, value) {
         Some(ItemSlot::Bag(bag, slot)) => KeystoneLocation::Bag(bag, slot),
         Some(ItemSlot::Equipment(slot)) => KeystoneLocation::Equipment(slot),
         None => {

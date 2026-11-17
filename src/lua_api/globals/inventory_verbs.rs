@@ -160,7 +160,7 @@ fn store_cursor_item_in_backpack(
     if let Ok(mut st) = borrow_state_mut(state) {
         crate::c_api::item_upgrade_eligibility::swap_with_cursor(
             &mut st,
-            crate::c_api::item_upgrade_eligibility::ItemSlot::Bag(0, slot),
+            crate::c_api::item_location::ItemSlot::Bag(0, slot),
         );
         st.bag_items.insert((0, slot), item);
     }
@@ -402,7 +402,7 @@ fn clear_cursor(state: &mut LuaState) -> LuaResult<u32> {
     clear_cursor_payload(state)
 }
 
-fn clear_cursor_payload(state: &mut LuaState) -> LuaResult<u32> {
+pub(crate) fn clear_cursor_payload(state: &mut LuaState) -> LuaResult<u32> {
     crate::c_api::item_upgrade_eligibility::discard_cursor(&mut *borrow_state_mut(state)?);
     cursor_model::clear(state)?;
     cursor_model::legacy_changed(state);

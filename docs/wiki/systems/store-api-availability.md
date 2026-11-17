@@ -22,11 +22,12 @@ R38 verifies PTR 12.1.7.70668 and provides a limited Retail 12.1.5.70688 compari
 
 - [Behavioral contract](../../specs/store-api-availability.md).
 - [R38 implementation report](../../handoff/ptr-int-clean/REPORT.md#store-api-behavior--r38-evidence-and-implementation-verification) — source evidence and targeted test results.
-- R38 source evidence: `~/.local/state/wow-ui-sim/handoff/pr46-49-decomp-answers.md#r38`.
+- R38 source evidence: `pr46-49-decomp-answers.md#r38` (untracked decomp handoff).
 - PTR `Blizzard_GameMenu/Shared/GameMenuFrame.lua:198-204` uses an AND gate.
 - Retail `Blizzard_GameMenu/Shared/GameMenuFrame.lua:148-154` uses an OR gate.
 
 ## See Also
 
 - [[store-public-eligibility]] — separate per-group purchase eligibility input.
-- [[store-secure-pool-constructors]] — secure catalog boundary.
+- [[store-secure-catalog]] — StoreSecure catalog, list readiness, and host responses.
+- [[store-secure-pool-constructors]] — historical secure UI pool investigation.

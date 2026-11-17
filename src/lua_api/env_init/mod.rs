@@ -55,16 +55,43 @@ pub(super) fn init_lua_state(
     lua: &mut rilua::Lua,
     state: Rc<RefCell<SimState>>,
 ) -> crate::Result<()> {
+    initialize_lua_state_foundation(lua, &state)?;
+    register_lua_globals_and_bootstraps(lua, state.clone())?;
+    register_common_api_modules(lua)?;
+    initialize_profile_bootstrap(lua)?;
+    // secureenv is shallow-copied from `_G` here. It keeps its copy of
+    // the dangerous globals (dofile / loadfile / require / string.dump /
+    // math.randomseed) so secure chunks — which Blizzard trusts —
+    // retain them. Insecure addon code that reads through `_G` sees nil
+    // after the cleanup below.
+    super::globals::security::create_secure_environment(lua)?;
+    crate::c_api::c_ui_color::register(lua)?;
+    crate::c_api::c_color_overrides::register(lua)?;
+    finalize_lua_state(lua, &state)?;
+    Ok(())
+}
+
+fn initialize_lua_state_foundation(
+    lua: &mut rilua::Lua,
+    state: &Rc<RefCell<SimState>>,
+) -> crate::Result<()> {
     trace_debug_getter_values(lua, "init_entry");
-    registry::init_registry_tables(lua, &state)?;
+    registry::init_registry_tables(lua, state)?;
     bootstrap::init_shared_bootstrap(lua)?;
     enums::init_enum_globals(lua)?;
     frames::init_frame_metatable(lua)?;
+    Ok(())
+}
+
+fn register_lua_globals_and_bootstraps(
+    lua: &mut rilua::Lua,
+    state: Rc<RefCell<SimState>>,
+) -> crate::Result<()> {
     // register_globals calls gc_stop at its entry; finalize_bootstrap_gc
     // below restores the collector once bootstrap is complete. Between
     // those two points the mark phase is paused.
     trace_debug_getter_values(lua, "before_globals_register");
-    super::globals::register_globals(lua, state.clone())?;
+    super::globals::register_globals(lua, state)?;
     trace_debug_getter_values(lua, "after_globals_register");
     trace_debug_getter_values(lua, "before_runtime_bootstrap");
     bootstrap::init_runtime_surface_bootstrap(lua)?;
@@ -81,6 +108,10 @@ pub(super) fn init_lua_state(
     crate::c_api::c_combat_log::register_filters(lua)?;
     crate::lua_api::workarounds::apply_temporary_bootstrap(lua)?;
     trace_debug_getter_values(lua, "after_temporary_bootstrap");
+    Ok(())
+}
+
+fn register_common_api_modules(lua: &mut rilua::Lua) -> crate::Result<()> {
     super::globals::real::heal_prediction::register(lua)?;
     super::globals::real::secure_helpers::register(lua)?;
     super::globals::real::totems::register(lua)?;
@@ -94,6 +125,10 @@ pub(super) fn init_lua_state(
     crate::c_api::seconds_formatter::register(lua)?;
     crate::c_api::duration_text_binding::register(lua)?;
     trace_debug_getter_values(lua, "before_profile_bootstrap");
+    Ok(())
+}
+
+fn initialize_profile_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     #[cfg(feature = "client-wrath")]
     {
         crate::wrath::compat_bootstrap::init(lua)?;
@@ -118,13 +153,10 @@ pub(super) fn init_lua_state(
     rilua::table_security::register_table_security(lua)?;
     trace_debug_getter_values(lua, "after_profile_bootstrap");
     super::globals::real::protected_globals::install(lua)?;
-    // secureenv is shallow-copied from `_G` here. It keeps its copy of
-    // the dangerous globals (dofile / loadfile / require / string.dump /
-    // math.randomseed) so secure chunks — which Blizzard trusts —
-    // retain them. Insecure addon code that reads through `_G` sees nil
-    // after the cleanup below.
-    super::globals::security::create_secure_environment(lua)?;
-    crate::c_api::c_ui_color::register(lua)?;
+    Ok(())
+}
+
+fn finalize_lua_state(lua: &mut rilua::Lua, state: &Rc<RefCell<SimState>>) -> crate::Result<()> {
     #[cfg(feature = "forbidden-aspects")]
     super::script_object_transfer::install(lua)?;
     enable_taint_and_wrap_loadstring(lua)?;
@@ -145,7 +177,7 @@ pub(super) fn init_lua_state(
         freeze_globals::freeze_globals_with_live_shadow(lua)?;
     }
     install_global_slots(lua);
-    frames::mark_bootstrap_frame_placeholders(&state);
+    frames::mark_bootstrap_frame_placeholders(state);
     Ok(())
 }
 
