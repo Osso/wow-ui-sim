@@ -32,6 +32,7 @@ VERIFIED (Retail TOC and source): This spec covers Retail's spell-passive query 
 
 - [ ] Exact native source table, field, and host population for mask 64 remain UNKNOWN (R88i.14).
 - [ ] Full argument conversion, error, and event behavior remain UNKNOWN (R88i.14).
+- [ ] INFERRED (simulator mapping): the "missing record" decision uses generated `SPELL_DB` presence; R88i.14 does not establish that this lookup matches the native selected-record source.
 
 ## Out of scope
 

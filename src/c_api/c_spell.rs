@@ -947,6 +947,8 @@ fn is_spell_data_cached(state: &mut LuaState) -> LuaResult<u32> {
 
 /// VERIFIED (R88i.14): missing records return false; present records test mask 64.
 /// UNKNOWN (R88i.14): table and field; host masks are empty by default.
+/// INFERRED (simulator mapping): `SPELL_DB` presence stands in for the native selected-record
+/// lookup; R88i.14 does not establish that the generated spell table is that record source.
 #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
 fn is_spell_passive(state: &mut LuaState) -> LuaResult<u32> {
     let spell_id = read_retail_spell_identifier(
