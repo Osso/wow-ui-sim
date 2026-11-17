@@ -3400,24 +3400,24 @@
       "change": "added",
       "status": "best-effort",
       "resolution": "vendor-present",
-      "owner": "Blizzard_UIParent/Blizzard_MacroUI",
+      "owner": "Blizzard_MacroUI",
       "evidence": [
         {
           "kind": "runtime",
           "reference": "tests/blizzard_macro_ui_loads.rs",
-          "summary": "PTR lifecycle test proves the eager UIParent no-op placeholder is present and harmless, then explicit Blizzard_MacroUI loading replaces it with the MacroFrame:SaveMacro delegate.",
-          "source_hash": "92aae31970eb618274439f5d1cfae189ed949f4a2bba69c90825c4b16da9948a"
+          "summary": "PTR tests prove MacroFrame_SaveMacro is absent after selected startup loading, then explicit Blizzard_MacroUI LoD loading publishes a callable delegate to MacroFrame:SaveMacro.",
+          "source_hash": "5d26cdf2ef194f167d6d2e9cfb74bfd89d9d08dcc69cb9297d3f7bb5a2cdc354"
         }
       ],
       "tests": [
-        "tests/blizzard_macro_ui_loads.rs::ptr_macro_save_placeholder_is_replaced_by_lod_delegate"
+        "tests/blizzard_macro_ui_loads.rs::ptr_macro_save_delegate_loads_after_selected_startup",
+        "tests/blizzard_macro_ui_loads.rs::mainline_macro_save_delegate_is_published_after_lod_load"
       ],
       "assertions": [
         {
           "flavor": "ptr",
           "phase": "post-load",
-          "expected": "present",
-          "expected_type": "function"
+          "expected": "absent"
         },
         {
           "flavor": "ptr",
@@ -3429,7 +3429,7 @@
       ],
       "commit": "6cd7ba457",
       "approval_id": null,
-      "notes": "The symbol is present in both snapshot directions. PTR UIParent publishes a harmless startup placeholder; Blizzard_MacroUI LoD replaces it with a delegate to MacroFrame:SaveMacro. Both occurrences use the same lifecycle proof.",
+      "notes": "The symbol occurs in both snapshot directions. On pinned PTR 70493 it is absent at selected startup and published by explicit Blizzard_MacroUI LoD loading as a delegate to MacroFrame:SaveMacro. The historical placeholder-to-replacement claim is not supported by the current tests; both occurrences use the same corrected lifecycle proof.",
       "load_addon": null
     },
         {
@@ -6045,24 +6045,24 @@
       "change": "removed",
       "status": "best-effort",
       "resolution": "vendor-present",
-      "owner": "Blizzard_UIParent/Blizzard_MacroUI",
+      "owner": "Blizzard_MacroUI",
       "evidence": [
         {
           "kind": "runtime",
           "reference": "tests/blizzard_macro_ui_loads.rs",
-          "summary": "PTR lifecycle test proves the eager UIParent no-op placeholder is present and harmless, then explicit Blizzard_MacroUI loading replaces it with the MacroFrame:SaveMacro delegate.",
-          "source_hash": "92aae31970eb618274439f5d1cfae189ed949f4a2bba69c90825c4b16da9948a"
+          "summary": "PTR tests prove MacroFrame_SaveMacro is absent after selected startup loading, then explicit Blizzard_MacroUI LoD loading publishes a callable delegate to MacroFrame:SaveMacro.",
+          "source_hash": "5d26cdf2ef194f167d6d2e9cfb74bfd89d9d08dcc69cb9297d3f7bb5a2cdc354"
         }
       ],
       "tests": [
-        "tests/blizzard_macro_ui_loads.rs::ptr_macro_save_placeholder_is_replaced_by_lod_delegate"
+        "tests/blizzard_macro_ui_loads.rs::ptr_macro_save_delegate_loads_after_selected_startup",
+        "tests/blizzard_macro_ui_loads.rs::mainline_macro_save_delegate_is_published_after_lod_load"
       ],
       "assertions": [
         {
           "flavor": "ptr",
           "phase": "post-load",
-          "expected": "present",
-          "expected_type": "function"
+          "expected": "absent"
         },
         {
           "flavor": "ptr",
@@ -6074,7 +6074,7 @@
       ],
       "commit": "6cd7ba457",
       "approval_id": null,
-      "notes": "The symbol is present in both snapshot directions. PTR UIParent publishes a harmless startup placeholder; Blizzard_MacroUI LoD replaces it with a delegate to MacroFrame:SaveMacro. Both occurrences use the same lifecycle proof.",
+      "notes": "The symbol occurs in both snapshot directions. On pinned PTR 70493 it is absent at selected startup and published by explicit Blizzard_MacroUI LoD loading as a delegate to MacroFrame:SaveMacro. The historical placeholder-to-replacement claim is not supported by the current tests; both occurrences use the same corrected lifecycle proof.",
       "load_addon": null
     },
         {
