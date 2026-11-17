@@ -1,8 +1,10 @@
 //! Temporary `C_Spell` metadata/count defaults.
 //!
 //! Local spell names, icons, targeting, and cooldowns are backed elsewhere.
-//! Retail 12.1.5 VERIFIED: IsSpellPassive and IsPriorityAura are false for identifier zero or a missing record.
-//! Their positive-record flags, ranged-auto shared ID, and press-hold status remain UNKNOWN.
+//! VERIFIED (R88i.14): Retail IsSpellPassive checks mask 64 for an existing record.
+//! UNKNOWN (R88i.14): its table and field; Retail receives an empty-default host mask input.
+//! VERIFIED: Retail IsPriorityAura is false for identifier zero or a missing record.
+//! Its positive-record flag, ranged-auto shared ID, and press-hold status remain UNKNOWN.
 //! Cast counts before 12.0.0 and display counts before 12.0.5 retain numeric zero, except Forever.
 //! Forever uses inferred modeled counts; neither count compatibility default is installed.
 
@@ -19,7 +21,6 @@ local function returnFalse(_spellID)
     return false
 end
 
-installSpellDefault("IsSpellPassive", returnFalse)
 installSpellDefault("IsPressHoldReleaseSpell", returnFalse)
 
 installSpellDefault("IsPriorityAura", returnFalse)

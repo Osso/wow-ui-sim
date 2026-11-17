@@ -7,32 +7,6 @@
 const PVP_TALENT_DEFAULTS_LUA: &str = r#"
 C_SpecializationInfo = C_SpecializationInfo or __wow_namespace()
 
-local function numberArgument(value)
-    if type(value) == "number" then
-        return value
-    end
-
-    return nil
-end
-
-if rawget(C_SpecializationInfo, "GetPvpTalentInfo") == nil then
-    function C_SpecializationInfo.GetPvpTalentInfo(talentID)
-        talentID = numberArgument(talentID)
-        if talentID == nil or talentID <= 0 then
-            return nil
-        end
-
-        return {
-            talentID = talentID,
-            name = "PvP Talent",
-            icon = "Interface\\Icons\\Spell_Holy_PowerWordShield",
-            unlocked = true,
-            dependenciesUnmet = false,
-            dependenciesUnmetReason = nil,
-        }
-    end
-end
-
 if rawget(C_SpecializationInfo, "GetPvpTalentUnlockLevel") == nil then
     function C_SpecializationInfo.GetPvpTalentUnlockLevel()
         return 20

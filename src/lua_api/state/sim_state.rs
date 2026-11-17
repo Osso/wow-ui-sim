@@ -449,6 +449,9 @@ pub struct SimState {
     pub is_active_battlefield: bool,
     pub spell_trade_skill_links: HashMap<u32, String>,
     pub spell_id_aliases: HashMap<String, u32>,
+    /// UNKNOWN (R88i.14): host-supplied passive attribute masks; empty by default.
+    #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+    pub spell_passive_attribute_masks: HashMap<u32, u32>,
     pub spell_tooltip_inputs: HashMap<u32, crate::c_api::spell_tooltip::SpellTooltipInput>,
     pub recipe_rank_tooltip_cache: crate::c_api::recipe_rank_tooltip::RecipeRankTooltipCache,
     pub aura_tooltip_inputs: HashMap<i32, crate::c_api::spell_tooltip::AuraTooltipInput>,
