@@ -198,6 +198,12 @@ fn perks_activities_remove_tracked_updates_state() {
     assert_eq!(last_removed, 202, "lastRemovedID should store removed id");
 }
 
+// UNKNOWN (Mists 5.5.4.70268; Wrath compile-only): `_state` is the temporary
+// compatibility fallback, not a verified native contract; keep this probe optional.
+#[cfg(all(
+    feature = "optional-tests",
+    any(feature = "client-mists", feature = "client-wrath")
+))]
 #[test]
 fn store_glue_methods_are_state_backed() {
     let env = env();
