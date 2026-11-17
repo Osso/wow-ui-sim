@@ -750,6 +750,48 @@ fn shared_table_mutation_propagates_both_ways() {
     );
 }
 
+#[cfg(not(all(feature = "client-retail", feature = "retail-12-1-5")))]
+#[test]
+fn shared_table_mutation_propagates_both_ways() {
+    let env = env();
+
+    let (shared_key, from_g): (String, String) = env
+        .eval(
+            r#"
+            local sharedKey
+            for key, value in pairs(__secureenv) do
+                if type(key) == "string"
+                   and key ~= "_G"
+                   and type(value) == "table"
+                   and rawget(_G, key) == value then
+                    sharedKey = key
+                    break
+                end
+            end
+            if not sharedKey then
+                return "", "missing"
+            end
+
+            local mutate = function()
+                rawget(_G, sharedKey).secureenvSharedContainer = "from-secure"
+            end
+            debug.setfenv(mutate, __secureenv)
+            mutate()
+            return sharedKey, tostring(rawget(_G, sharedKey).secureenvSharedContainer)
+            "#,
+        )
+        .unwrap();
+
+    assert!(
+        !shared_key.is_empty(),
+        "expected one table shared by the shallow copy"
+    );
+    assert_eq!(
+        from_g, "from-secure",
+        "mutations to a table still shared after initialization should be visible from _G"
+    );
+}
+
 #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
 #[test]
 fn secure_base_library_mutations_stay_in_separate_tables() {
@@ -877,6 +919,61 @@ fn secure_write_severs_the_link_to_global_env() {
         "after a secure write, secure reads its own slot, not _G"
     );
     assert_eq!(g_value, 11.0, "_G keeps its own independent value");
+}
+
+#[cfg(not(all(feature = "client-retail", feature = "retail-12-1-5")))]
+#[test]
+fn global_copied_at_creation_is_frozen_against_later_g_rebind() {
+    // A primitive global present at secureenv creation was copied
+    // into secureenv's own slot. Re-binding it on _G later does NOT change
+    // the secure read — the copy is decoupled.
+    let env = env();
+
+    // Discover a primitive global that exists in BOTH envs' own slots with
+    // equal value (i.e. it was copied at creation). pairs() walks raw keys,
+    // so it ignores the __index metatable and yields only copied keys.
+    let key: String = env
+        .eval(
+            r#"
+            for k, v in pairs(__secureenv) do
+                if (type(v) == "number" or type(v) == "string")
+                   and type(k) == "string"
+                   and rawget(_G, k) == v then
+                    return k
+                end
+            end
+            return ""
+            "#,
+        )
+        .unwrap();
+    assert!(
+        !key.is_empty(),
+        "expected at least one copied primitive global at creation"
+    );
+
+    // Rebind the _G slot to a sentinel string the original could not equal.
+    let probe = format!(
+        r#"
+            local sentinel = "__frozen_sentinel__"
+            rawset(_G, {key:?}, sentinel)
+            local result
+            local probe = function() result = rawget(__secureenv, {key:?}) end
+            probe()
+            return tostring(result), tostring(rawget(_G, {key:?})), tostring(result == sentinel)
+            "#,
+    );
+    let (secure_value, g_value, secure_equals_sentinel): (String, String, String) =
+        env.eval(&probe).unwrap();
+
+    assert_eq!(
+        g_value, "__frozen_sentinel__",
+        "_G rebind must have applied"
+    );
+    assert_eq!(
+        secure_equals_sentinel, "false",
+        "secureenv's copied value (key {key}) must NOT follow the _G rebind"
+    );
+    assert_ne!(secure_value, "__frozen_sentinel__");
 }
 
 #[cfg(not(all(feature = "client-retail", feature = "retail-12-1-5")))]
