@@ -88,7 +88,10 @@ fn initialize_bootstrap_registry_and_secure_base(
 ) -> crate::Result<()> {
     registry::init_registry_tables(lua, state)?;
     bootstrap::init_shared_bootstrap(lua)?;
-    crate::lua_api::string_format::patch_string_format(lua)?;
+    if crate::client_profile::is_active_retail_12_1_5() {
+        // R88ag/R88af.3 formatter; other profiles keep master's patch (timer_layout).
+        crate::lua_api::string_format::patch_string_format(lua)?;
+    }
     super::globals::security::register_environment_helpers(lua)?;
     super::globals::missing_surface::register_secure_environment_base_globals(lua)?;
     LuaApiMut::register_function(lua, "forceinsecure", forceinsecure)?;

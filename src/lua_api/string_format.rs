@@ -349,7 +349,7 @@ fn describe_string_value(state: &LuaState, value: Val) -> Option<String> {
     Some(String::from_utf8_lossy(bytes).to_string())
 }
 
-#[cfg(test)]
+#[cfg(all(test, feature = "client-retail", feature = "retail-12-1-5"))]
 mod tests {
     use super::patch_string_format;
     use crate::lua_api::WowLuaEnv;

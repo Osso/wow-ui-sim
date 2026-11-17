@@ -419,6 +419,10 @@ pub fn register_layout_fns_on_table(
 pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     register_c_timer(lua)?;
     register_layout_globals(lua)?;
+    if !crate::client_profile::is_active_retail_12_1_5() {
+        // temporary: master's formatter and install point outside Retail 12.1.5.
+        crate::lua_api::string_format_legacy::patch_string_format(lua)?;
+    }
     Ok(())
 }
 

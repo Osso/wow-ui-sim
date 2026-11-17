@@ -2,7 +2,7 @@
 
 The WoW client's Lua library differs from stock Lua 5.1 in the places below. The simulator matches the client, not stock Lua.
 
-Evidence for existing rows: the 3.3.5a (build 12340) client decompile, read statically on 2026-10-29, and Retail 12.1.5.70575 in-game observations in Meorawr/elune issues #10, #11, #12, #15 and #16. The `string.format` details below use additional VERIFIED Retail 12.1.5.70688 evidence from R88af.3 and R88ag; they do not establish behavior for other profiles. The `%T`/`%F` punctuation gate remains UNKNOWN, and printf-backend rendering is INFERRED.
+Evidence for existing rows: the 3.3.5a (build 12340) client decompile, read statically on 2026-10-29, and Retail 12.1.5.70575 in-game observations in Meorawr/elune issues #10, #11, #12, #15 and #16. The `string.format` details below use additional VERIFIED Retail 12.1.5.70688 evidence from R88af.3 and R88ag; they do not establish behavior for other profiles. The simulator installs this formatter only on Retail 12.1.5; every other profile, PTR included, keeps the previous simulator formatter (`src/lua_api/string_format_legacy.rs`, temporary), because native behavior there is UNKNOWN. The `string.format` tests below run only on Retail 12.1.5. The `%T`/`%F` punctuation gate remains UNKNOWN, and printf-backend rendering is INFERRED.
 
 | Function | Required behaviour | Stock Lua / previous simulator |
 |---|---|---|
