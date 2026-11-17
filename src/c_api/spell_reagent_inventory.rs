@@ -9,6 +9,15 @@ pub struct SpellReagentInventory {
     pub metadata_masks: HashMap<i32, u32>,
     /// Child bag ID -> the parent bag/slot containing that container item.
     pub container_parents: HashMap<i32, (i32, i32)>,
+    /// Empty-default candidates; native property identity and decoding are UNKNOWN.
+    pub property_candidates: HashMap<i32, Vec<SpellReagentPropertyCandidate>>,
+}
+
+/// One supplied item candidate without a native property ID or schema claim.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub struct SpellReagentPropertyCandidate {
+    pub signed_value: i64,
+    pub available_count: i64,
 }
 
 pub(crate) fn matching_count(sim: &SimState, reagent_id: i32) -> i64 {
