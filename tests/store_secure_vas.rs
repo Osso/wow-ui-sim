@@ -147,6 +147,9 @@ const GUILD_MASTER_REQUEST_CONSUMER: &str = r#"
     local panel = lookup("StoreVASValidationFrame")
     panel.productInfo = { sharedData = { vasServiceType = lookup("Enum").VasServiceType.GuildNameChange, name = "Fixture", instructions = "" } }
     lookup("StoreVASValidationFrame_Init")(panel)
+    local realmCallback = lookup("VASCharacterSelectionRealmSelector_Callback")
+    assert(debug.getinfo(realmCallback, "S").source:find("Blizzard_Shared_StoreUISecure.lua", 1, true))
+    realmCallback(C_StoreSecure.GetRealmList()[1])
 "#;
 
 const GUILD_FOLLOW_REQUEST_CONSUMER: &str = r#"
@@ -166,7 +169,11 @@ const GUILD_FOLLOW_REQUEST_CONSUMER: &str = r#"
     local panel = lookup("StoreVASValidationFrame")
     panel.productInfo = { sharedData = { vasServiceType = lookup("Enum").VasServiceType.CharacterTransfer, name = "Fixture", instructions = "" } }
     lookup("StoreVASValidationFrame_Init")(panel)
-    lookup("VASCharacterSelectionCharacterSelector_Callback")(1)
+    local realmCallback = lookup("VASCharacterSelectionRealmSelector_Callback")
+    local characterCallback = lookup("VASCharacterSelectionCharacterSelector_Callback")
+    assert(debug.getinfo(characterCallback, "S").source:find("Blizzard_Shared_StoreUISecure.lua", 1, true))
+    realmCallback(C_StoreSecure.GetRealmList()[1])
+    characterCallback(1)
 "#;
 
 fn load_store_ui() -> WowLuaEnv {
@@ -502,6 +509,17 @@ fn retail_store_vas_guild_follow_request_uses_the_original_character_callback() 
         env.state().borrow_mut().store_glue.connection_present = true;
         env.exec(GUILD_FOLLOW_REQUEST_CONSUMER)
             .expect("original character callback should request guild-follow data");
+        assert_eq!(
+            env.state()
+                .borrow()
+                .store_glue
+                .store_secure
+                .vas
+                .submitted_requests
+                .len(),
+            1,
+            "original callback should submit one guild-follow request"
+        );
         let request = env.state().borrow().store_glue.store_secure.vas.submitted_requests[0].clone();
         let StoreVasRequest::CharacterGuildFollowInfo { guid, realm_address } = request else {
             panic!("original character callback should submit a guild-follow request");
