@@ -4,6 +4,11 @@ use wow_ui_sim::c_api::store_catalog_model::{
     StoreCatalogInput, StoreCurrencyInfo, StoreEntryInput, StoreProductGroupInput,
     StoreProductInput, StoreProductListResponse, StoreProductSharedData, StorePurchaseListResponse,
 };
+use wow_ui_sim::c_api::store_vas_model::{
+    StoreVasBoostInput, StoreVasCharacterInput, StoreVasCompletionInput, StoreVasEligibleRaceInput,
+    StoreVasGuildMasterInfoInput, StoreVasGuildMemberInput, StoreVasPriceInput,
+    StoreVasPurchaseInput, StoreVasRaceEligibilityInput, StoreVasRealmInput, StoreVasState,
+};
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 const FEATURED_GROUP_ID: u32 = 501;
@@ -142,4 +147,131 @@ fn enum_value(env: &WowLuaEnv, path: &str) -> u32 {
         .eval(&format!("return {path}"))
         .unwrap_or_else(|error| panic!("{path} should be available: {error}"));
     u32::try_from(value).unwrap_or_else(|_| panic!("{path} should be a non-negative enum value"))
+}
+
+pub fn seed_store_vas_state(env: &WowLuaEnv) {
+    let mut sim = env.state().borrow_mut();
+    sim.store_glue.connection_present = true;
+    let vas = &mut sim.store_glue.store_secure.vas;
+    seed_store_vas_lookup_inputs(vas);
+    seed_store_vas_purchase_inputs(vas);
+}
+
+fn seed_store_vas_lookup_inputs(vas: &mut StoreVasState) {
+    vas.realms = store_api_realms();
+    vas.vas_realms = store_api_realms();
+    let characters = vec![
+        store_api_character(1, "Simhero", "Player-101-1-11", 70),
+        store_api_character(2, "Simalt", "Player-101-1-12", 60),
+    ];
+    vas.characters = characters.clone();
+    vas.character_objects = characters;
+    vas.guild_character_guids.insert("Player-101-1-11".into());
+    vas.local_wow_account_guid = Some("WowAccount-1001-1".into());
+    vas.wow_account_guids
+        .insert(b"WoW2".to_vec(), "WowAccount-2002-2".into());
+    vas.race_eligibility = vec![store_api_races()];
+    vas.guild_master_info = vec![store_api_guild_info()];
+}
+
+fn seed_store_vas_purchase_inputs(vas: &mut StoreVasState) {
+    vas.purchase_records = vec![StoreVasPurchaseInput {
+        product_id: FEATURED_PRODUCT_ID,
+        status: 9,
+        secondary_status: 0,
+        wallet_name: "Balance".into(),
+        original_amount: 0,
+        current_amount: 0,
+    }];
+    vas.selected_purchase_product_id = Some(FEATURED_PRODUCT_ID);
+    vas.product_prices.insert(
+        FEATURED_PRODUCT_ID,
+        StoreVasPriceInput {
+            original_amount: 100000,
+            current_amount: 50100,
+        },
+    );
+    vas.boost = Some(StoreVasBoostInput {
+        product_id: FEATURED_PRODUCT_ID,
+        character_guid: "Player-101-1-11".into(),
+        realm_address: 101,
+    });
+    vas.completion = Some(StoreVasCompletionInput {
+        product_id: FEATURED_PRODUCT_ID,
+        guid: "Player-101-1-11".into(),
+        first_auxiliary: 0,
+        second_auxiliary: 0,
+    });
+    vas.failure_marker = 1;
+    vas.received_failure_code = 1;
+    vas.pre_generated_external_transaction_id = Some(b"external-1".to_vec());
+}
+
+fn store_api_realms() -> Vec<StoreVasRealmInput> {
+    vec![
+        StoreVasRealmInput {
+            virtual_realm_address: 101,
+            realm_name: "Azeroth".into(),
+            character_count: 2,
+            pvp: Some(false),
+            rp: Some(false),
+        },
+        StoreVasRealmInput {
+            virtual_realm_address: 102,
+            realm_name: "Kalimdor".into(),
+            character_count: 1,
+            pvp: Some(true),
+            rp: Some(false),
+        },
+    ]
+}
+
+fn store_api_character(order: u64, name: &str, guid: &str, level: u32) -> StoreVasCharacterInput {
+    StoreVasCharacterInput {
+        realm_address: 101,
+        realm_name: Some("Azeroth".into()),
+        guid: Some(guid.into()),
+        guid_order: Some(order),
+        name: Some(name.into()),
+        class_name: Some("Warrior".into()),
+        race_name: Some("Human".into()),
+        level,
+        class_file_name: Some("WARRIOR".into()),
+        race_file_name: Some("Human".into()),
+        wow_account: 1001,
+        current_server: 101,
+        faction: 0,
+        sex: 1,
+        create_screen_icon_atlas: Some(String::new()),
+    }
+}
+
+fn store_api_races() -> StoreVasRaceEligibilityInput {
+    StoreVasRaceEligibilityInput {
+        guid: "Player-101-1-11".into(),
+        service_type: 0,
+        results: Some(vec![
+            StoreVasEligibleRaceInput {
+                race_name: "Human".into(),
+                is_allied_race: false,
+                is_heritage_armor_unlocked: false,
+            },
+            StoreVasEligibleRaceInput {
+                race_name: "Void Elf".into(),
+                is_allied_race: true,
+                is_heritage_armor_unlocked: true,
+            },
+        ]),
+    }
+}
+
+fn store_api_guild_info() -> StoreVasGuildMasterInfoInput {
+    StoreVasGuildMasterInfoInput {
+        guid: "Player-101-1-11".into(),
+        guild_name: "Simulator Guild".into(),
+        members: vec![StoreVasGuildMemberInput {
+            guid: Some("Player-101-1-12".into()),
+            member_name: "Simalt".into(),
+        }],
+    }
 }
