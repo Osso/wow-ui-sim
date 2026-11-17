@@ -404,6 +404,7 @@ fn register_social_state_probes(lua: &mut rilua::Lua) -> crate::Result<()> {
 
 fn register_compat_and_admin(lua: &mut rilua::Lua) -> crate::Result<()> {
     super::compat_overrides::register_all(lua)?;
+    super::real::bit_library::register_all(lua)?;
     super::bank_storage_verbs::register_guild_tabard_files(lua)?;
     #[cfg(any(feature = "client-mists", feature = "client-wrath"))]
     super::auction_verbs::register_all(lua)?;
