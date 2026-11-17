@@ -4,10 +4,10 @@ The Retail `GetItemLevelColor` global supplies RGB values to the original Paper 
 
 ## What it must do
 
-- [x] On Retail, ignore its arguments and return three numeric channels in red, green, blue order. Normalize each selected channel through single-precision arithmetic before publication. (R88l.1)
-- [x] Select `ITEM_EPIC_COLOR` when condition set 24 passes; otherwise select `ITEM_SUPERIOR_COLOR` when condition set 23 passes; otherwise select `ITEM_STANDARD_COLOR`. Condition 24 has priority over condition 23. (R88l.1)
-- [x] Resolve an active color-provider entry before the selected named color. Return magenta when neither yields RGB channels. (R88l.1)
-- [x] Treat absent condition-result host inputs as no selected override. This is a neutral simulator input, not proof of the native default condition result.
+- [x] VERIFIED (R88l.1, Retail 12.1.5.70688): `GetItemLevelColor` ignores its arguments and returns three numeric channels in red, green, blue order. It normalizes each selected channel through single-precision arithmetic before publication.
+- [x] VERIFIED (R88l.1, Retail 12.1.5.70688): select `ITEM_EPIC_COLOR` when condition set 24 passes; otherwise select `ITEM_SUPERIOR_COLOR` when condition set 23 passes; otherwise select `ITEM_STANDARD_COLOR`. Condition 24 has priority over condition 23.
+- [x] VERIFIED (R88l.1, Retail 12.1.5.70688): resolve an active color-provider entry before the selected named color. Return magenta when neither yields RGB channels.
+- [x] VERIFIED (simulator behavior): absent condition-result host inputs select no override. This neutral input does not prove the native default condition result.
 
 ## How it works
 
@@ -27,9 +27,9 @@ The Retail `GetItemLevelColor` global supplies RGB values to the original Paper 
 
 ## Known gaps (current cycle)
 
-- [ ] Native condition-set records, their live values, and the subject accessor are not modeled. The condition results remain explicit host inputs.
+- [ ] UNKNOWN (R88l.1, Retail 12.1.5.70688): native condition-set records, their live values, and the subject accessor are not modeled. The condition results remain explicit host inputs.
 
 ## Out of scope
 
-- Non-Retail behavior. The evidence and selected consumer cover Retail only.
+- UNKNOWN for non-Retail behavior; the evidence and selected consumer cover Retail only.
 - Evaluating the underlying player-condition records.
