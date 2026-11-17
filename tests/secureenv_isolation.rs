@@ -19,6 +19,7 @@ fn env() -> WowLuaEnv {
     WowLuaEnv::new().expect("Failed to create Lua environment")
 }
 
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
 #[test]
 fn toc_multiannotations_load_files_in_order_with_secure_environment() {
     let env = env();
@@ -148,6 +149,7 @@ fn secure_scoped_modifier_onload_resolves_secure_mixin() {
     assert!(env.state().borrow().lua_errors.is_empty());
 }
 
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
 #[test]
 fn create_texture_source_location_skips_excluded_callsite() {
     let env = env();
