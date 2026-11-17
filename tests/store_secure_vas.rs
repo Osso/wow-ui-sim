@@ -6,33 +6,40 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
 
 const REALM_AND_CHARACTER_CONSUMER: &str = r#"
-    local source = debug.getinfo(StoreVASValidationFrame_Init, "S")
+    local function lookup(name)
+        return _G[name] or (__secureenv and rawget(__secureenv, name))
+    end
+    local init = lookup("StoreVASValidationFrame_Init")
+    local panel = lookup("StoreVASValidationFrame")
+    local selectCharacter = lookup("VASCharacterSelectionCharacterSelector_Callback")
+    local selectRealm = lookup("VASCharacterSelectionRealmSelector_Callback")
+    local source = debug.getinfo(init, "S")
     assert(source.source:find("Blizzard_Shared_StoreUISecure.lua", 1, true))
 
-    local panel = StoreVASValidationFrame
     panel.productInfo = {
         sharedData = {
-            vasServiceType = Enum.VasServiceType.NameChange,
+            vasServiceType = lookup("Enum").VasServiceType.NameChange,
             name = "Fixture service",
             instructions = "",
         },
     }
-    StoreVASValidationFrame_Init(panel)
+    init(panel)
 
     local selectors = panel.CharacterSelectionFrame
     assert(selectors.RealmSelector.Text:GetText() == "Azeroth")
     assert(selectors.CharacterSelector.Text:GetText():find("Simhero", 1, true))
     assert(not selectors.NoEligibleCharactersErrorMessage:IsShown())
-    VASCharacterSelectionCharacterSelector_Callback(2)
+    selectCharacter(2)
     assert(selectors.SelectedCharacterName:GetText() == "Simalt")
 
-    VASCharacterSelectionRealmSelector_Callback(TEST_VAS_REALMS[2])
+    local realms = _G.TEST_VAS_REALMS
+    selectRealm(realms[2])
     assert(selectors.RealmSelector.Text:GetText() == "Kalimdor")
     assert(selectors.CharacterSelector.Text:GetText():find("KalimdorHero", 1, true))
-    VASCharacterSelectionCharacterSelector_Callback(1)
+    selectCharacter(1)
     assert(selectors.SelectedCharacterName:GetText() == "KalimdorHero")
 
-    VASCharacterSelectionRealmSelector_Callback(TEST_VAS_REALMS[3])
+    selectRealm(realms[3])
     assert(selectors.RealmSelector.Text:GetText() == "Empty")
     assert(selectors.NoEligibleCharactersErrorMessage:IsShown())
 "#;
