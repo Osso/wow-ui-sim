@@ -1,15 +1,12 @@
-#![cfg(any(
-    feature = "client-ptr",
-    feature = "client-wowforever",
-    feature = "client-era",
-    feature = "client-anniversary"
-))]
-
+use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 const ENUM_ASSERTION: &str = r#"
 local values = Enum.CombatAudioAlertSpecSetting
-if type(values) ~= "table" then return "missing enum" end
+if type(values) ~= "table" then
+    if Enum.CombatAudioAlertSpecSettingMeta ~= nil then return "orphan metadata" end
+    return "absent"
+end
 local expected = {
     { "Resource1Percent", 0 }, { "Resource1Format", 1 },
     { "Resource1Voice", 2 }, { "Resource1Volume", 3 },
@@ -33,8 +30,13 @@ return "ok"
 "#;
 
 #[test]
-fn cached_profiles_publish_the_nine_documented_spec_settings() {
+fn combat_audio_enum_publication_matches_profile_evidence() {
     let env = WowLuaEnv::new().expect("API enum environment should initialize");
     let actual: String = env.eval(ENUM_ASSERTION).expect("enum should be readable");
-    assert_eq!(actual, "ok");
+    let expected = if ACTIVE == ClientProfile::Wrath {
+        "absent"
+    } else {
+        "ok"
+    };
+    assert_eq!(actual, expected);
 }
