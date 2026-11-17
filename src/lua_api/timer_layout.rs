@@ -43,6 +43,9 @@ use std::time::{Duration, Instant};
 /// Maximum allowed timer duration in seconds ((2^32 - 1) / 1000).
 const MAX_TIMER_SECS: f64 = (u32::MAX as f64) / 1000.0;
 
+/// Earlier Retail profiles retain their pre-R88y dual-publication route.
+const LEGACY_RETAIL_TIMER_FLAGS: u8 = 3;
+
 /// Registry key for the timer callback storage table.
 const TIMER_CALLBACKS_KEY: &str = "__rilua_timer_callbacks";
 
@@ -400,21 +403,13 @@ pub fn register_layout_fns_on_table(
     crate::lua_api::rect_geometry::register_rect_methods_on_table(state, table)
 }
 
-// ── String format patch ──────────────────────────────────────────────────────
-// Rust implementation lives in `crate::lua_api::string_format` — ported from
-// the master-era mlua module. This stays as a re-export so existing callers
-// continue to work.
-
-pub use crate::lua_api::string_format::patch_string_format;
-
 // ── register_all ─────────────────────────────────────────────────────────────
 
-/// Register all timer, layout, and string-format RustFns on a rilua VM.
+/// Register timer and layout RustFns on a rilua VM.
 ///
 /// - `C_Timer` global table with `After`, `NewTicker`, `NewTimer`.
 /// - `__rilua_layout_fns` global table with the layout query functions
 ///   (caller merges these into the frame metatable as appropriate).
-/// - Patches `string.format` with the WoW-compatible Lua shim.
 ///
 /// # OnUpdate
 ///
@@ -424,52 +419,52 @@ pub use crate::lua_api::string_format::patch_string_format;
 pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     register_c_timer(lua)?;
     register_layout_globals(lua)?;
-    patch_string_format(lua)?;
+    if !crate::client_profile::is_active_retail_12_1_5() {
+        // temporary: master's formatter and install point outside Retail 12.1.5.
+        crate::lua_api::string_format_legacy::patch_string_format(lua)?;
+    }
     Ok(())
 }
 
 /// Register the `C_Timer` global table with the three timer functions.
 fn register_c_timer(lua: &mut rilua::Lua) -> LuaResult<()> {
+    let retail = crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail;
     let state = lua.state_mut();
-
-    let c_timer_ref = {
-        let builder = TableBuilder::new(state)
-            .set_function("After", timer_after)?
-            .set_function("NewTimerID", timer_new_timer_id)?
-            .set_function("NewTicker", timer_new_ticker)?
-            .set_function("NewTimer", timer_new_timer)?;
-        builder.table_ref()
-    };
-
-    let key = state.gc.intern_string(b"C_Timer");
-    let global = state.global;
-    state
-        .gc
-        .tables
-        .get_mut(global)
-        .ok_or_else(|| runtime_error("missing global table"))?
-        .raw_set(
-            Val::Str(key),
-            Val::Table(c_timer_ref),
-            &state.gc.string_arena,
-        )?;
+    register_c_timer_functions(state, retail)?;
     #[cfg(feature = "timed-signal-maps")]
     crate::c_api::timed_signal_map::register_c_timer_timed_signal_map(state)?;
     #[cfg(not(feature = "timed-signal-maps"))]
-    {
-        // Keep namespace lookup from fabricating an unsupported factory.
-        use crate::lua_api::methods::{create_table, table_set_static};
+    mark_timed_signal_map_factory_removed(state)?;
+    Ok(())
+}
 
-        let removed = create_table(state);
-        table_set_static(state, removed, "NewTimedSignalMap", Val::Bool(true));
-        table_set_static(
-            state,
-            Val::Table(c_timer_ref),
-            "__wow_removed_keys",
-            removed,
-        );
-    }
+fn register_c_timer_functions(state: &mut LuaState, retail: bool) -> LuaResult<()> {
+    register_c_timer_member(state, retail, "After", timer_after)?;
+    // UNKNOWN: NewTimerID has no verified registration flags.
+    crate::c_api::register_unknown_namespace_function(
+        state,
+        "C_Timer",
+        "NewTimerID",
+        timer_new_timer_id,
+    )?;
+    register_c_timer_member(state, retail, "NewTicker", timer_new_ticker)?;
+    register_c_timer_member(state, retail, "NewTimer", timer_new_timer)
+}
 
+#[cfg(not(feature = "timed-signal-maps"))]
+fn mark_timed_signal_map_factory_removed(state: &mut LuaState) -> LuaResult<()> {
+    // Keep namespace lookup from fabricating an unsupported factory.
+    use crate::lua_api::methods::{create_table, table_set_static};
+
+    let c_timer_ref = crate::c_api::ensure_namespace(state, "C_Timer")?;
+    let removed = create_table(state);
+    table_set_static(state, removed, "NewTimedSignalMap", Val::Bool(true));
+    table_set_static(
+        state,
+        Val::Table(c_timer_ref),
+        "__wow_removed_keys",
+        removed,
+    );
     Ok(())
 }
 
@@ -477,6 +472,27 @@ fn register_c_timer(lua: &mut rilua::Lua) -> LuaResult<()> {
 ///
 /// Callers that build the frame metatable should copy these entries onto it
 /// (or set `__rilua_layout_fns` as a fallback `__index` delegate).
+fn register_c_timer_member(
+    state: &mut LuaState,
+    retail: bool,
+    member: &str,
+    function: rilua::RustFn,
+) -> LuaResult<()> {
+    if retail && crate::client_profile::is_active_retail_12_1_5() {
+        crate::c_api::register_namespace_function_from_r88y(state, "C_Timer", member, function)
+    } else if retail {
+        crate::c_api::register_namespace_function_with_flags(
+            state,
+            "C_Timer",
+            member,
+            function,
+            LEGACY_RETAIL_TIMER_FLAGS,
+        )
+    } else {
+        crate::c_api::register_unknown_namespace_function(state, "C_Timer", member, function)
+    }
+}
+
 fn register_layout_globals(lua: &mut rilua::Lua) -> LuaResult<()> {
     let state = lua.state_mut();
 

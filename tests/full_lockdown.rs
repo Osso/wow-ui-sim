@@ -89,11 +89,11 @@ fn full_lockdown_rejects_measured_font_string_apis_for_secure_and_tainted_caller
         assert(issecure())
         probe(FullLockText)
         probe(InheritedLockText)
-        probe(GetForbiddenObjectTable(FullLockText))
+        probe((__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(FullLockText))
         local function addon()
             assert(not issecure())
             probe(FullLockText)
-            probe(GetForbiddenObjectTable(FullLockText))
+            probe((__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(FullLockText))
         end
         debug.setobjecttaint(addon, 'FullLockdownFixture')
         addon()

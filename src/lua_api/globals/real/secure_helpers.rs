@@ -21,18 +21,46 @@ use std::collections::HashMap;
 
 const DEFAULT_MAX_TRAVERSAL_DEPTH: f64 = 100.0;
 
-/// Publish both globals on the profiles whose generated docs declare them.
+/// Maintain the current secure allowlist on profiles whose generated docs declare these names.
 ///
-/// Registers only missing globals: post-cleanup restoration calls this again
-/// after `Blizzard_EnvironmentCleanup` nils `CreateSecureDelegate`.
+/// R88y supplies current Retail flags for both globals. Other profiles retain their existing routes.
+/// Registration also restores a missing `CreateSecureDelegate` after cleanup clears it.
 pub(crate) fn register(lua: &mut rilua::Lua) -> LuaResult<()> {
-    if ACTIVE != ClientProfile::Wrath {
-        register_if_missing(lua, "CreateSecureDelegate", create_secure_delegate)?;
+    register_create_secure_delegate(lua)?;
+    register_securecopy(lua)?;
+    Ok(())
+}
+
+fn register_create_secure_delegate(lua: &mut rilua::Lua) -> LuaResult<()> {
+    if ACTIVE == ClientProfile::Wrath {
+        return Ok(());
     }
-    if matches!(
+    if crate::client_profile::is_active_retail_12_1_5() {
+        crate::c_api::register_global_function_if_missing_from_r88y(
+            lua,
+            "CreateSecureDelegate",
+            create_secure_delegate,
+        )?;
+    } else if LuaApiMut::get_global_val(lua, "CreateSecureDelegate") == Val::Nil {
+        crate::lua_api::globals::security::register_unknown_allowlist_function(
+            lua,
+            "CreateSecureDelegate",
+            create_secure_delegate,
+        )?;
+    }
+    Ok(())
+}
+
+fn register_securecopy(lua: &mut rilua::Lua) -> LuaResult<()> {
+    if !matches!(
         ACTIVE,
         ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
     ) {
+        return Ok(());
+    }
+    if crate::client_profile::is_active_retail_12_1_5() {
+        crate::c_api::register_global_function_if_missing_from_r88y(lua, "securecopy", securecopy)?;
+    } else {
         register_if_missing(lua, "securecopy", securecopy)?;
     }
     Ok(())

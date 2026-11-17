@@ -58,7 +58,7 @@ pub(crate) fn register(lua: &mut rilua::Lua) -> LuaResult<()> {
     }
 
     let state = lua.state_mut();
-    // Replace the pre-secure snapshot with a fresh ordinary-only namespace.
+    // Replace the ordinary namespace with the modeled Retail API surface.
     let namespace = state.gc.alloc_table(Table::new());
     set_global_val(state, "C_ColorOverrides", Val::Table(namespace));
     table_set_rust_fn_static(state, namespace, CLEAR_FUNCTION, clear_color_overrides)?;
@@ -504,7 +504,7 @@ mod tests {
     "#;
 
     #[test]
-    fn secure_color_override_namespace_matches_master_snapshot() {
+    fn secure_color_override_namespace_matches_verified_r88y_members() {
         if ACTIVE != ClientProfile::Retail {
             return;
         }
@@ -513,10 +513,84 @@ mod tests {
         assert_eq!(
             members,
             vec![
+                "ClearColorOverrides".to_owned(),
                 "GetColorForQuality".to_owned(),
                 "GetColorOverrideInfo".to_owned(),
+                "GetDefaultColorForQuality".to_owned(),
+                "RemoveColorOverride".to_owned(),
+                "SetColorOverride".to_owned(),
             ]
         );
+    }
+
+    #[test]
+    fn secure_color_override_handlers_are_distinct_and_share_state() {
+        if ACTIVE != ClientProfile::Retail {
+            return;
+        }
+        let env = WowLuaEnv::new().expect("Lua environment should initialize");
+        let result: String = env
+            .eval(
+                r#"
+                local ordinary = rawget(_G, "C_ColorOverrides")
+                local secure = rawget(__secureenv, "C_ColorOverrides")
+                local names = {
+                    "ClearColorOverrides",
+                    "GetColorForQuality",
+                    "GetColorOverrideInfo",
+                    "GetDefaultColorForQuality",
+                    "RemoveColorOverride",
+                    "SetColorOverride",
+                }
+                for _, name in ipairs(names) do
+                    local publicHandler = rawget(ordinary, name)
+                    local secureHandler = rawget(secure, name)
+                    if type(publicHandler) ~= "function" or type(secureHandler) ~= "function" then
+                        return name .. ":missing"
+                    end
+                    if rawequal(publicHandler, secureHandler) then
+                        return name .. ":shared"
+                    end
+                end
+
+                local color = { r = 0.2, g = 0.4, b = 0.6, a = 0.8 }
+                secure.SetColorOverride(0, color)
+                local secureInfo = secure.GetColorOverrideInfo(0)
+                local publicInfo = ordinary.GetColorOverrideInfo(0)
+                if secureInfo == nil or publicInfo == nil then return "set_not_visible" end
+                if secureInfo.overrideType ~= 0 or publicInfo.overrideType ~= 0 then
+                    return "wrong_override_type"
+                end
+
+                local secureColor = secure.GetColorForQuality(0)
+                local publicColor = ordinary.GetColorForQuality(0)
+                if secureColor.r ~= publicColor.r then return "quality_color_mismatch" end
+                if secureColor.g ~= publicColor.g then return "quality_color_mismatch" end
+                if secureColor.b ~= publicColor.b then return "quality_color_mismatch" end
+                if secureColor.a ~= publicColor.a then return "quality_color_mismatch" end
+                local secureDefault = secure.GetDefaultColorForQuality(0)
+                local publicDefault = ordinary.GetDefaultColorForQuality(0)
+                if secureDefault.r ~= publicDefault.r then return "default_color_mismatch" end
+                if secureDefault.g ~= publicDefault.g then return "default_color_mismatch" end
+                if secureDefault.b ~= publicDefault.b then return "default_color_mismatch" end
+                if secureDefault.a ~= publicDefault.a then return "default_color_mismatch" end
+
+                secure.RemoveColorOverride(0)
+                if ordinary.GetColorOverrideInfo(0) ~= nil then return "secure_remove_not_visible" end
+                ordinary.SetColorOverride(0, color)
+                ordinary.RemoveColorOverride(0)
+                if secure.GetColorOverrideInfo(0) ~= nil then return "ordinary_remove_not_visible" end
+                ordinary.SetColorOverride(0, color)
+                secure.ClearColorOverrides()
+                if secure.GetColorOverrideInfo(0) ~= nil then return "secure_clear_not_visible" end
+                secure.SetColorOverride(0, color)
+                ordinary.ClearColorOverrides()
+                if secure.GetColorOverrideInfo(0) ~= nil then return "ordinary_clear_not_visible" end
+                return "ok"
+                "#,
+            )
+            .expect("secure and ordinary C_ColorOverrides handlers should run");
+        assert_eq!(result, "ok");
     }
 
     #[test]

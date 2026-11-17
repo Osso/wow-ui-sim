@@ -131,15 +131,21 @@ mod tests {
     fn installs_private_aura_state_and_callbacks() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
 
+        let private_namespace = if crate::client_profile::is_active_retail_12_1_5() {
+            "__secureenv.C_UnitAurasPrivate"
+        } else {
+            "C_UnitAurasPrivate"
+        };
         let result: String = env
-            .eval(
+            .eval(&format!(
+                "local private = {private_namespace}\n{}",
                 r#"
                 local addedID, removedID, dispel, updateSpell
-                C_UnitAurasPrivate.SetPrivateAuraAnchorAddedCallback(function(anchor)
+                private.SetPrivateAuraAnchorAddedCallback(function(anchor)
                     addedID = anchor.anchorID
                     anchor.unitToken = "mutated"
                 end)
-                C_UnitAurasPrivate.SetPrivateAuraAnchorRemovedCallback(function(anchorID)
+                private.SetPrivateAuraAnchorRemovedCallback(function(anchorID)
                     removedID = anchorID
                 end)
                 local anchorID = C_UnitAuras.AddPrivateAuraAnchor({
@@ -150,19 +156,19 @@ mod tests {
                 if anchorID ~= 1 or addedID ~= 1 then
                     return "bad_anchor_add"
                 end
-                local anchors = C_UnitAurasPrivate.GetPrivateAuraAnchors("player")
+                local anchors = private.GetPrivateAuraAnchors("player")
                 if #anchors ~= 1 or anchors[1].unitToken ~= "player" then
                     return "bad_anchor_copy"
                 end
                 anchors[1].unitToken = "mutated"
-                if C_UnitAurasPrivate.GetPrivateAuraAnchors("player")[1].unitToken ~= "player" then
+                if private.GetPrivateAuraAnchors("player")[1].unitToken ~= "player" then
                     return "leaked_anchor_copy"
                 end
                 if select('#', C_UnitAuras.RemovePrivateAuraAnchor(anchorID)) ~= 0 or removedID ~= anchorID then
                     return "bad_anchor_remove"
                 end
                 local warning = CreateFrame("Frame")
-                C_UnitAurasPrivate.SetPrivateWarningTextFrame(warning)
+                private.SetPrivateWarningTextFrame(warning)
                 if C_UnitAurasPrivate._state.warningTextFrame ~= warning then
                     return "bad_warning_frame"
                 end
@@ -175,7 +181,7 @@ mod tests {
                         return "bad_dispel"
                     end
                 end
-                C_UnitAurasPrivate.AddPrivateAuraUpdateCallback("player", C_FunctionContainers.CreateCallback(function(info)
+                private.AddPrivateAuraUpdateCallback("player", C_FunctionContainers.CreateCallback(function(info)
                     updateSpell = info.spellID
                     info.spellID = 0
                 end))
@@ -186,22 +192,22 @@ mod tests {
                 C_UnitAurasPrivate._state.privateAurasByUnit.player = {
                     { auraInstanceID = 7, spellID = 321 },
                 }
-                local privateAuras = C_UnitAurasPrivate.GetAllPrivateAuras("player")
+                local privateAuras = private.GetAllPrivateAuras("player")
                 privateAuras[1].spellID = 0
-                if C_UnitAurasPrivate.GetAllPrivateAuras("player")[1].spellID ~= 321 then
+                if private.GetAllPrivateAuras("player")[1].spellID ~= 321 then
                     return "bad_private_aura_copy"
                 end
                 C_UnitAurasPrivate._state.auraDataByUnit.player = {
                     [7] = { auraInstanceID = 7, spellID = 456 },
                 }
-                local aura = C_UnitAurasPrivate.GetAuraDataByAuraInstanceIDPrivate("player", "7")
+                local aura = private.GetAuraDataByAuraInstanceIDPrivate("player", "7")
                 aura.spellID = 0
-                if C_UnitAurasPrivate.GetAuraDataByAuraInstanceIDPrivate("player", 7).spellID ~= 456 then
+                if private.GetAuraDataByAuraInstanceIDPrivate("player", 7).spellID ~= 456 then
                     return "bad_aura_data_copy"
                 end
                 return "ok"
-                "#,
-            )
+                "#
+            ))
             .expect("private aura probe should run");
 
         assert_eq!(result, "ok");

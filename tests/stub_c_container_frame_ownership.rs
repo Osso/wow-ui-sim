@@ -31,12 +31,10 @@ fn original_container_xml_parent_array_drives_repeated_bag_enumeration() {
     // discovery/kinds/order, skip already-loaded followers, restore cleanup.
     // No manual events, post-load workaround, source override or fake frame.
     for addon in startup {
-        let loaded = env
-            .state()
-            .borrow()
-            .addons
-            .iter()
-            .any(|a| a.folder_name == addon.name && a.loaded);
+        let loaded =
+            env.state().borrow().addons.iter().any(|a| {
+                a.folder_name == addon.name && a.is_loaded_in_environment(a.use_secure_env)
+            });
         if !loaded {
             load_startup_addon(&env.loader_env(), &addon.toc_path, addon.kind, None)
                 .unwrap_or_else(|e| panic!("startup {}: {e}", addon.name));

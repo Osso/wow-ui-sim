@@ -37,6 +37,12 @@ fn next_timer_or_signal_delay(
     timer_delay
 }
 
+fn publish_r88y_after_screen_registration(env: &WowLuaEnv, screen_kind: ScreenKind) {
+    let mut lua = env.lua.borrow_mut();
+    crate::c_api::publish_verified_secure_namespace_members(lua.state_mut(), screen_kind)
+        .expect("R88y publication should follow screen-specific registration");
+}
+
 const EDIT_MODE_LAYOUTS_INFO_LUA: &str = r#"
     local source = (EditModeManagerFrame and EditModeManagerFrame.layoutInfo) or C_EditMode.GetLayouts()
     if type(source) ~= "table" then
@@ -214,6 +220,7 @@ impl WowLuaEnv {
             self,
             screen_kind.is_glue(),
         );
+        publish_r88y_after_screen_registration(self, screen_kind);
     }
 
     /// Toggle whether the simulated player is logged into the world.

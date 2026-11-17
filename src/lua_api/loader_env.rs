@@ -1,7 +1,7 @@
 //! Lightweight loader environment for addon loading.
 
 use super::env::WowLuaEnv;
-use super::globals::security::mark_secure_state;
+use super::globals::security::mark_secure_replay_state;
 use super::methods::create_string;
 use crate::Result;
 use crate::lua_api::methods::create_table;
@@ -99,11 +99,33 @@ impl<'a> LoaderEnv<'a> {
 
     fn loading_addon_uses_secure_env(&self) -> bool {
         let state = self.state.borrow();
-        state
-            .loading_addon_index
-            .and_then(|idx| state.addons.get(idx as usize))
-            .map(|addon| addon.use_secure_env)
-            .unwrap_or(false)
+        state.loading_addon_secure_env.unwrap_or_else(|| {
+            state
+                .loading_addon_index
+                .and_then(|idx| state.addons.get(idx as usize))
+                .is_some_and(|addon| addon.use_secure_env)
+        })
+    }
+
+    fn apply_generated_chunk_environment(
+        &self,
+        state: &mut LuaState,
+        func: &Function,
+    ) -> Result<()> {
+        let secure_addon = self.loading_addon_uses_secure_env();
+        if secure_addon {
+            // Retail 12.1.5 uses the temporary proxy; other profiles use secureenv.
+            mark_secure_replay_state(state, func)?;
+        }
+        let preserve_secure_replay = secure_addon
+            && crate::client_profile::is_active_retail_12_1_5()
+            && super::methods::borrow_state(state)?
+                .loading_scoped_script_env
+                .is_some();
+        if preserve_secure_replay {
+            return Ok(());
+        }
+        apply_loading_scoped_fenv_state(state, func)
     }
 
     pub fn exec(&self, code: &str) -> Result<()> {
@@ -128,10 +150,7 @@ impl<'a> LoaderEnv<'a> {
         self.with_state(|state| {
             let func = Self::load_dynamic_chunk_without_slots(state, code, "loader-exec")?;
             if use_loading_environment {
-                if self.loading_addon_uses_secure_env() {
-                    mark_secure_state(state, &func)?;
-                }
-                apply_loading_scoped_fenv_state(state, &func)?;
+                self.apply_generated_chunk_environment(state, &func)?;
             }
             let args = if args.is_empty() {
                 Vec::new()

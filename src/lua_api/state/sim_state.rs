@@ -51,6 +51,8 @@ pub struct SimState {
     pub summon_friend_cooldown: crate::c_api::c_recruit_a_friend::SummonFriendCooldown,
     pub raf_versions: Vec<crate::c_api::c_recruit_a_friend::RafVersionInfo>,
     pub widgets: WidgetRegistry,
+    /// Shared suffix exclusions used by AddSourceLocationExclude and CreateTexture.
+    pub(crate) source_location_exclusions: Vec<Vec<u8>>,
     #[cfg(feature = "retail-12-1-5")]
     pub(crate) weather: crate::c_api::c_weather::WeatherState,
     #[cfg(feature = "retail-12-1-0")]
@@ -707,6 +709,7 @@ pub struct SimState {
     pub r88s_inventory_inputs: crate::c_api::item_location::R88sInventoryInputs,
     pub loading_addon_index: Option<u16>,
     pub loading_addon_stack: Vec<u16>,
+    pub loading_addon_secure_env: Option<bool>,
     pub executing_addon_index: Option<u16>,
     pub loading_nil_symbol_environment: Option<NilSymbolEnvironment>,
     pub loading_forbidden: bool,

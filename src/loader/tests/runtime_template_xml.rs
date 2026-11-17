@@ -235,7 +235,7 @@ fn assert_partitioned_child_handlers(widget_type: &str) {
         "concrete inherited child should remain parented",
     );
     t.assert_lua_true(
-        "return GetForbiddenObjectTable(PartitionedAuraContainerParent.Auras).loaded == true",
+        "return (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(PartitionedAuraContainerParent.Auras).loaded == true",
         "private OnLoad method should run with forbidden self",
     );
     t.assert_lua_true(
@@ -246,7 +246,7 @@ fn assert_partitioned_child_handlers(widget_type: &str) {
     t.env.fire_on_update(0.016).unwrap();
 
     t.assert_lua_true(
-        "return GetForbiddenObjectTable(PartitionedAuraContainerParent.Auras).elapsed == 0.016",
+        "return (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(PartitionedAuraContainerParent.Auras).elapsed == 0.016",
         "private OnUpdate method should run with forbidden self",
     );
 }
@@ -278,7 +278,7 @@ fn test_xml_partitioned_intrinsic_onload_uses_forbidden_self() {
     );
 
     t.assert_lua_true(
-        "return type(GetForbiddenObjectTable(PartitionedIntrinsicFrame).OnLoad_Intrinsic) == 'function'",
+        "return type((__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(PartitionedIntrinsicFrame).OnLoad_Intrinsic) == 'function'",
         "private intrinsic method should be installed on forbidden frame table",
     );
     t.assert_lua_true(
@@ -286,7 +286,7 @@ fn test_xml_partitioned_intrinsic_onload_uses_forbidden_self() {
         "private intrinsic OnLoad should not write to public frame",
     );
     t.assert_lua_true(
-        "return GetForbiddenObjectTable(PartitionedIntrinsicFrame).intrinsicLoaded == true",
+        "return (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(PartitionedIntrinsicFrame).intrinsicLoaded == true",
         "private intrinsic OnLoad should run with forbidden self",
     );
 }
@@ -597,7 +597,8 @@ post_wrath_ui_fixture! {
 fn test_catalog_shop_file_prefix_numeric_error_probe() {
     let env = WowLuaEnv::new().expect("lua env");
     env.set_screen_size(1024.0, 768.0);
-    env.exec_rilua_secure(
+    // VERIFIED — R88g.3.q4: seterrorhandler and debug are ordinary-environment members.
+    env.exec(
         r#"
         __catalog_shop_probe_traces = {}
         local original_handler = geterrorhandler()

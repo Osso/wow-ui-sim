@@ -1,3 +1,4 @@
+use crate::lua_bridge::{table_set_rust_fn, table_set_rust_fn_unpaired};
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
@@ -187,34 +188,407 @@ pub(crate) fn ensure_global_table(state: &mut LuaState, name: &str) -> Val {
     }
 }
 
+pub(crate) fn ensure_enum_table(state: &mut LuaState) -> Val {
+    let (ordinary, _) = ensure_namespace_pair(state, "Enum")
+        .expect("secure environment must exist before Enum registration");
+    Val::Table(ordinary)
+}
+
 pub(crate) fn ensure_namespace(
     state: &mut LuaState,
     name: &'static str,
 ) -> LuaResult<GcRef<Table>> {
-    let key_ref = state.gc.intern_string_static(name.as_bytes());
+    ensure_namespace_pair(state, name).map(|(ordinary, _)| ordinary)
+}
+
+pub(crate) fn ensure_secure_namespace(state: &mut LuaState, name: &str) -> LuaResult<GcRef<Table>> {
+    let secure_parent = crate::lua_api::globals::security::secure_env_table(state)?;
+    Ok(ensure_table_at_parent(state, secure_parent, name))
+}
+
+pub(crate) fn register_namespace_function_with_flags(
+    state: &mut LuaState,
+    namespace: &str,
+    member: &str,
+    function: rilua::RustFn,
+    flags: u8,
+) -> LuaResult<()> {
+    let (ordinary, secure) = ensure_namespace_tables_for_flags(state, namespace, flags)?;
+    match (ordinary, secure) {
+        (Some(ordinary), Some(secure)) => {
+            table_set_rust_fn_unpaired(state, ordinary, member, function)?;
+            // Flag-3 native C publication constructs a separate closure per namespace.
+            if flags == 3 {
+                table_set_rust_fn_unpaired(state, secure, member, function)?;
+            } else {
+                let value = crate::lua_api::methods::table_get(state, Val::Table(ordinary), member);
+                crate::lua_api::methods::table_set(state, Val::Table(secure), member, value);
+            }
+        }
+        (Some(ordinary), None) => {
+            table_set_rust_fn_unpaired(state, ordinary, member, function)?;
+        }
+        (None, Some(secure)) => {
+            table_set_rust_fn_unpaired(state, secure, member, function)?;
+        }
+        (None, None) => {}
+    }
+    Ok(())
+}
+
+fn ensure_namespace_tables_for_flags(
+    state: &mut LuaState,
+    namespace: &str,
+    flags: u8,
+) -> LuaResult<(Option<GcRef<Table>>, Option<GcRef<Table>>)> {
+    let (publish_global, publish_secure) =
+        crate::lua_api::globals::security::native_registration_destinations(flags);
+    let global_parent = state.global;
+    let ordinary = publish_global.then(|| ensure_table_at_parent(state, global_parent, namespace));
+    let secure_parent = if publish_secure {
+        match crate::lua_api::methods::registry_get(state, "__secureenv") {
+            Val::Table(parent) => Some(parent),
+            _ => None,
+        }
+    } else {
+        None
+    };
+    let secure = secure_parent.map(|parent| ensure_table_at_parent(state, parent, namespace));
+
+    if let (Some(ordinary), Some(secure)) = (ordinary, secure) {
+        crate::lua_bridge::set_namespace_peer(state, ordinary, secure)?;
+    }
+    Ok((ordinary, secure))
+}
+
+/// Register one existing namespace value with its per-member native flags.
+pub(crate) fn register_namespace_value_with_flags(
+    state: &mut LuaState,
+    namespace: &str,
+    member: &str,
+    value: Val,
+    flags: u8,
+) -> LuaResult<()> {
+    register_namespace_values_with_flags(state, namespace, member, value, value, flags)
+}
+
+/// Register separate values in the ordinary and secure namespace tables.
+pub(crate) fn register_namespace_values_with_flags(
+    state: &mut LuaState,
+    namespace: &str,
+    member: &str,
+    ordinary_value: Val,
+    secure_value: Val,
+    flags: u8,
+) -> LuaResult<()> {
+    let (ordinary, secure) = ensure_namespace_tables_for_flags(state, namespace, flags)?;
+    if let Some(ordinary) = ordinary {
+        crate::lua_api::methods::table_set(state, Val::Table(ordinary), member, ordinary_value);
+    }
+    if let Some(secure) = secure {
+        crate::lua_api::methods::table_set(state, Val::Table(secure), member, secure_value);
+    }
+    Ok(())
+}
+
+/// Preserve an unclassified namespace entry on both sides of the current allowlist.
+pub(crate) fn register_unknown_namespace_function(
+    state: &mut LuaState,
+    namespace: &str,
+    member: &str,
+    function: rilua::RustFn,
+) -> LuaResult<()> {
+    let (ordinary, _) = ensure_namespace_pair(state, namespace)?;
+    table_set_rust_fn(state, ordinary, member, function)
+}
+
+pub(crate) fn ensure_namespace_pair(
+    state: &mut LuaState,
+    name: &str,
+) -> LuaResult<(GcRef<Table>, GcRef<Table>)> {
+    let ordinary_parent = state.global;
+    let secure_parent = crate::lua_api::globals::security::secure_env_table(state)?;
+    let ordinary = ensure_table_at_parent(state, ordinary_parent, name);
+    let secure = ensure_table_at_parent(state, secure_parent, name);
+    crate::lua_bridge::set_namespace_peer(state, ordinary, secure)?;
+    Ok((ordinary, secure))
+}
+
+pub(crate) fn ensure_namespace_table_field(
+    state: &mut LuaState,
+    ordinary_parent: GcRef<Table>,
+    name: &str,
+) -> LuaResult<GcRef<Table>> {
+    let secure_parent = crate::lua_bridge::namespace_peer(state, ordinary_parent)?
+        .ok_or_else(|| rilua::runtime_error("secure namespace parent was not registered"))?;
+    let ordinary = ensure_table_at_parent(state, ordinary_parent, name);
+    let secure = ensure_table_at_parent(state, secure_parent, name);
+    crate::lua_bridge::set_namespace_peer(state, ordinary, secure)?;
+    Ok(ordinary)
+}
+
+pub(crate) fn ensure_paired_table_field(
+    state: &mut LuaState,
+    ordinary_parent: Val,
+    name: &str,
+) -> LuaResult<Val> {
+    let Val::Table(parent_ref) = ordinary_parent else {
+        return Err(rilua::runtime_error("namespace parent must be a table"));
+    };
+    ensure_namespace_table_field(state, parent_ref, name).map(Val::Table)
+}
+
+pub(crate) fn set_namespace_member(
+    state: &mut LuaState,
+    namespace: Val,
+    name: &str,
+    value: Val,
+) -> LuaResult<()> {
+    let Val::Table(namespace_ref) = namespace else {
+        return Err(rilua::runtime_error("namespace must be a table"));
+    };
+    let key = Val::Str(state.gc.intern_string(name.as_bytes()));
+    crate::lua_bridge::table_set_namespace_member(state, namespace_ref, key, value)
+}
+
+fn ensure_table_at_parent(state: &mut LuaState, parent: GcRef<Table>, name: &str) -> GcRef<Table> {
+    let key_ref = state.gc.intern_string(name.as_bytes());
     let current = state
         .gc
         .tables
-        .get(state.global)
-        .map(|globals| globals.get_str(key_ref, &state.gc.string_arena))
+        .get(parent)
+        .map(|table| table.get_str(key_ref, &state.gc.string_arena))
         .unwrap_or(Val::Nil);
-    let table_ref = match current {
-        Val::Table(table_ref) => table_ref,
-        _ => {
-            let table_ref = state.gc.alloc_table(Table::new());
-            let global = state.global;
-            if let Some(globals) = state.gc.tables.get_mut(global) {
-                let _ = globals.raw_set(
-                    Val::Str(key_ref),
-                    Val::Table(table_ref),
-                    &state.gc.string_arena,
-                );
-            }
-            state.gc.barrier_back(global);
-            table_ref
-        }
+    if let Val::Table(table_ref) = current {
+        return table_ref;
+    }
+
+    let table_ref = state.gc.alloc_table(Table::new());
+    if let Some(table) = state.gc.tables.get_mut(parent) {
+        let _ = table.raw_set(
+            Val::Str(key_ref),
+            Val::Table(table_ref),
+            &state.gc.string_arena,
+        );
+    }
+    state.gc.barrier_back(parent);
+    table_ref
+}
+
+#[cfg(test)]
+mod tests {
+    use super::{
+        ensure_namespace_pair, register_namespace_function_with_flags,
+        register_namespace_value_with_flags,
     };
-    Ok(table_ref)
+    use crate::lua_api::WowLuaEnv;
+    use crate::lua_api::methods::{registry_get, table_get_static};
+    use rilua::vm::state::LuaState;
+    use rilua::{LuaApiMut, LuaResult, Val};
+
+    fn flag_probe(state: &mut LuaState) -> LuaResult<u32> {
+        state.push(Val::Bool(true));
+        Ok(1)
+    }
+
+    #[test]
+    fn namespace_flags_select_tables_and_members() {
+        let env = WowLuaEnv::new().expect("lua env");
+        {
+            let mut lua = env.rilua_mut();
+            for (namespace, flags) in [
+                ("flagnamespaceordinary", 1),
+                ("flagnamespacesecure", 2),
+                ("flagnamespaceboth", 3),
+                ("flagnamespacebothseven", 7),
+                ("flagnamespaceneither", 4),
+            ] {
+                register_namespace_function_with_flags(
+                    lua.state_mut(),
+                    namespace,
+                    "probe",
+                    flag_probe,
+                    flags,
+                )
+                .expect("register flagged namespace member");
+            }
+        }
+
+        let result: Vec<bool> = env
+            .eval(
+                r#"
+                local function has(parent, namespace)
+                    local table = rawget(parent, namespace)
+                    return type(table) == "table" and type(rawget(table, "probe")) == "function"
+                end
+                local public = rawget(_G, "flagnamespaceboth")
+                local secure = rawget(__secureenv, "flagnamespaceboth")
+                return {
+                    has(_G, "flagnamespaceordinary"), has(__secureenv, "flagnamespaceordinary"),
+                    has(_G, "flagnamespacesecure"), has(__secureenv, "flagnamespacesecure"),
+                    has(_G, "flagnamespaceboth"), has(__secureenv, "flagnamespaceboth"),
+                    public ~= secure,
+                    has(_G, "flagnamespacebothseven"), has(__secureenv, "flagnamespacebothseven"),
+                    has(_G, "flagnamespaceneither"), has(__secureenv, "flagnamespaceneither"),
+                }
+                "#,
+            )
+            .expect("namespace flag destination probe");
+
+        assert_eq!(
+            result,
+            vec![
+                true, false, false, true, true, true, true, true, true, false, false
+            ]
+        );
+    }
+
+    #[test]
+    fn flag_destinations_do_not_mirror_into_an_existing_namespace_peer() {
+        let env = WowLuaEnv::new().expect("lua env");
+        {
+            let mut lua = env.rilua_mut();
+            let state = lua.state_mut();
+            let _ = ensure_namespace_pair(state, "existingpairedflagnamespace")
+                .expect("create paired namespace");
+            register_namespace_function_with_flags(
+                state,
+                "existingpairedflagnamespace",
+                "ordinaryonly",
+                flag_probe,
+                1,
+            )
+            .expect("register ordinary-only member");
+            register_namespace_function_with_flags(
+                state,
+                "existingpairedflagnamespace",
+                "secureonly",
+                flag_probe,
+                2,
+            )
+            .expect("register secure-only member");
+        }
+
+        let result: Vec<bool> = env
+            .eval(
+                r#"
+                local public = rawget(_G, "existingpairedflagnamespace")
+                local secure = rawget(__secureenv, "existingpairedflagnamespace")
+                return {
+                    type(rawget(public, "ordinaryonly")) == "function",
+                    rawget(secure, "ordinaryonly") == nil,
+                    rawget(public, "secureonly") == nil,
+                    type(rawget(secure, "secureonly")) == "function",
+                }
+                "#,
+            )
+            .expect("paired namespace flag probe");
+
+        assert_eq!(result, vec![true, true, true, true]);
+    }
+
+    #[cfg(feature = "client-retail")]
+    #[test]
+    fn retail_c_timer_dual_publication_constructs_distinct_rust_handlers() {
+        let env = WowLuaEnv::new().expect("lua env");
+        {
+            let mut lua = env.rilua_mut();
+            let state = lua.state_mut();
+            for member in ["After", "NewTicker", "NewTimer"] {
+                register_namespace_function_with_flags(state, "C_Timer", member, flag_probe, 3)
+                    .expect("register dual-published C_Timer member");
+            }
+        }
+
+        let result: (bool, bool, bool, bool, bool, bool) = env
+            .eval(
+                r#"
+                local public = rawget(_G, "C_Timer")
+                local secure = rawget(__secureenv, "C_Timer")
+                local publicAfter, secureAfter = rawget(public, "After"), rawget(secure, "After")
+                local publicTicker, secureTicker = rawget(public, "NewTicker"), rawget(secure, "NewTicker")
+                local publicTimer, secureTimer = rawget(public, "NewTimer"), rawget(secure, "NewTimer")
+                return not rawequal(publicAfter, secureAfter),
+                    publicAfter() == true and secureAfter() == true,
+                    not rawequal(publicTicker, secureTicker),
+                    publicTicker() == true and secureTicker() == true,
+                    not rawequal(publicTimer, secureTimer),
+                    publicTimer() == true and secureTimer() == true
+                "#,
+            )
+            .expect("C_Timer flag-3 handler probe");
+
+        assert_eq!(result, (true, true, true, true, true, true));
+    }
+
+    #[cfg(feature = "client-retail")]
+    #[test]
+    fn retail_unknown_c_timer_new_timer_id_is_published_to_both_namespaces() {
+        let env = WowLuaEnv::new().expect("lua env");
+        let published_to_both: bool = env
+            .eval(
+                r#"
+                local public = rawget(_G, "C_Timer")
+                local secure = rawget(__secureenv, "C_Timer")
+                if type(public) ~= "table" or type(secure) ~= "table" then
+                    return false
+                end
+                return type(rawget(public, "NewTimerID")) == "function"
+                    and type(rawget(secure, "NewTimerID")) == "function"
+                "#,
+            )
+            .expect("unknown C_Timer namespace probe");
+
+        assert!(published_to_both);
+    }
+
+    #[test]
+    fn namespace_secure_publication_requires_an_existing_secure_table() {
+        let mut lua = rilua::Lua::new().expect("lua state");
+        register_namespace_function_with_flags(
+            lua.state_mut(),
+            "secureonlywithoutenv",
+            "probe",
+            flag_probe,
+            2,
+        )
+        .expect("register secure-only namespace member");
+        register_namespace_function_with_flags(
+            lua.state_mut(),
+            "bothwithoutenv",
+            "probe",
+            flag_probe,
+            3,
+        )
+        .expect("register dual namespace member");
+        register_namespace_value_with_flags(
+            lua.state_mut(),
+            "bothwithoutenv",
+            "value",
+            Val::Bool(true),
+            3,
+        )
+        .expect("register dual namespace value without secure environment");
+
+        assert!(matches!(
+            LuaApiMut::get_global_val(&mut lua, "secureonlywithoutenv"),
+            Val::Nil
+        ));
+        let ordinary = LuaApiMut::get_global_val(&mut lua, "bothwithoutenv");
+        assert!(matches!(ordinary, Val::Table(_)));
+        assert!(matches!(
+            table_get_static(lua.state_mut(), ordinary, "probe"),
+            Val::Function(_)
+        ));
+        assert_eq!(
+            table_get_static(lua.state_mut(), ordinary, "value"),
+            Val::Bool(true)
+        );
+        assert!(!matches!(
+            registry_get(lua.state_mut(), "__secureenv"),
+            Val::Table(_)
+        ));
+    }
 }
 
 /// Keep ordinary namespace lookup from fabricating retired members.

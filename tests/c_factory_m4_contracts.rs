@@ -61,6 +61,17 @@ mod classic {
 ))]
 mod modern {
     use super::*;
+    macro_rules! private_contract {
+        ($name:ident, $lua:literal) => {
+            #[test]
+            fn $name() {
+                let env = WowLuaEnv::new().unwrap();
+                crate::common::install_private_aura_api_alias(&env);
+                env.exec($lua).unwrap();
+            }
+        };
+    }
+
     contract!(
         super_tracking_has_no_vignette_snapshot,
         "assert(C_SuperTrack.GetSuperTrackedVignette() == nil); assert(C_SuperTrack.IsSuperTrackingAnything() == false)"
@@ -126,6 +137,7 @@ mod modern {
     #[test]
     fn private_aura_callback_removal_preserves_other_units_and_containers() {
         let env = WowLuaEnv::new().unwrap();
+        crate::common::install_private_aura_api_alias(&env);
         env.exec(
             r#"
             local first, second = 0, 0
@@ -135,46 +147,46 @@ mod modern {
             local other = C_FunctionContainers.CreateCallback(function(info)
                 second = second + info.amount
             end)
-            C_UnitAurasPrivate.AddPrivateAuraUpdateCallback('player', callback)
-            C_UnitAurasPrivate.AddPrivateAuraUpdateCallback('player', other)
-            C_UnitAurasPrivate.AddPrivateAuraUpdateCallback('target', callback)
-            C_UnitAurasPrivate.RemovePrivateAuraUpdateCallback('player', callback)
+            SecurePrivateAuras.AddPrivateAuraUpdateCallback('player', callback)
+            SecurePrivateAuras.AddPrivateAuraUpdateCallback('player', other)
+            SecurePrivateAuras.AddPrivateAuraUpdateCallback('target', callback)
+            SecurePrivateAuras.RemovePrivateAuraUpdateCallback('player', callback)
             collectgarbage('collect')
             assert(C_UnitAurasPrivate._TriggerPrivateAuraUpdate('player', {}, {amount=2}) == 1)
             assert(first == 0 and second == 2)
             assert(C_UnitAurasPrivate._TriggerPrivateAuraUpdate('target', {}, {amount=3}) == 1)
             assert(first == 3 and second == 2)
-            C_UnitAurasPrivate.RemovePrivateAuraUpdateCallback('player', callback)
-            C_UnitAurasPrivate.RemovePrivateAuraUpdateCallback('target', callback)
+            SecurePrivateAuras.RemovePrivateAuraUpdateCallback('player', callback)
+            SecurePrivateAuras.RemovePrivateAuraUpdateCallback('target', callback)
             assert(C_UnitAurasPrivate._TriggerPrivateAuraUpdate('target', {}, {amount=5}) == 0)
         "#,
         )
         .unwrap();
     }
 
-    contract!(
+    private_contract!(
         private_raid_boss_callbacks_do_not_dispatch_plain_functions,
         r#"
         local called = false
-        C_UnitAurasPrivate.SetPrivateRaidBossMessageCallback(function() called = true end)
+        SecurePrivateAuras.SetPrivateRaidBossMessageCallback(function() called = true end)
         local ok = pcall(C_UnitAurasPrivate._TriggerPrivateRaidBossMessage, 'Warning', 'RAID_BOSS_EMOTE')
         assert(not ok, 'plain-function callbacks must not be dispatched')
         assert(not called, 'unsupported callback was invoked')
         "#
     );
 
-    contract!(
+    private_contract!(
         private_raid_boss_message_callback_replaces_and_clears,
         r#"
         local old, current = 0, 0
-        C_UnitAurasPrivate.SetPrivateRaidBossMessageCallback(C_FunctionContainers.CreateCallback(function() old = old + 1 end))
-        C_UnitAurasPrivate.SetPrivateRaidBossMessageCallback(C_FunctionContainers.CreateCallback(function(message, kind)
+        SecurePrivateAuras.SetPrivateRaidBossMessageCallback(C_FunctionContainers.CreateCallback(function() old = old + 1 end))
+        SecurePrivateAuras.SetPrivateRaidBossMessageCallback(C_FunctionContainers.CreateCallback(function(message, kind)
             assert(message == 'Warning' and kind == 'RAID_BOSS_EMOTE'); current = current + 1
         end))
         collectgarbage('collect')
         C_UnitAurasPrivate._TriggerPrivateRaidBossMessage('Warning', 'RAID_BOSS_EMOTE')
         assert(old == 0 and current == 1)
-        C_UnitAurasPrivate.SetPrivateRaidBossMessageCallback(nil)
+        SecurePrivateAuras.SetPrivateRaidBossMessageCallback(nil)
         C_UnitAurasPrivate._TriggerPrivateRaidBossMessage('Warning', 'RAID_BOSS_EMOTE')
         assert(current == 1)
         "#

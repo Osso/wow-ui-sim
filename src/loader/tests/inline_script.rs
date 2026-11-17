@@ -2,6 +2,7 @@ use super::super::LoadTiming;
 use super::super::addon::AddonContext;
 use super::super::lua_file::load_lua_file;
 use super::super::xml_file::load_xml_file;
+use crate::loader::load_addon;
 use crate::lua_api::WowLuaEnv;
 use crate::xml::parse_xml_file;
 use rilua::LuaApi;
@@ -364,6 +365,9 @@ fn scoped_modifier_scripts_use_given_env_for_scripts_and_mixins() {
     let frame_added_to_secure_env: bool = env
         .eval("return __secureenv.ScopedSecureFrame == ScopedSecureFrame")
         .unwrap();
+    let frame_without_policy_absent_from_secure_env: bool = env
+        .eval("return __secureenv.ScopedHiddenFrame == nil")
+        .unwrap();
     let secure_only_frame_added_to_secure_env: bool = env
         .eval("return __secureenv.ScopedSecureOnlyFrame ~= nil")
         .unwrap();
@@ -385,6 +389,10 @@ fn scoped_modifier_scripts_use_given_env_for_scripts_and_mixins() {
         "addToSecureEnv should copy named scoped frames into secureenv"
     );
     assert!(
+        frame_without_policy_absent_from_secure_env,
+        "frames without addToSecureEnv should stay out of secureenv"
+    );
+    assert!(
         secure_only_frame_added_to_secure_env,
         "addToSecureEnv should copy named frames into secureenv even when hidden from _G"
     );
@@ -397,6 +405,8 @@ fn scoped_modifier_scripts_use_given_env_for_scripts_and_mixins() {
 #[test]
 fn scoped_modifier_scripts_use_secure_env_fallback_for_secure_addons() {
     let env = WowLuaEnv::new().unwrap();
+    // INFERRED — R88g.3.q2: this pre-construction write is visible through the
+    // shared secure-table reference used by the inline chunk.
     env.exec("__secureenv.ScopedSecureEnvOnlyValue = 'secure-fallback'")
         .unwrap();
 
@@ -427,5 +437,109 @@ fn scoped_modifier_scripts_use_secure_env_fallback_for_secure_addons() {
         &mut Vec::new(),
     )
     .unwrap();
+    assert!(env.state().borrow().lua_errors.is_empty());
+}
+
+#[test]
+fn secure_retail_scoped_handler_uses_only_the_given_environment() {
+    if !crate::client_profile::is_active_retail_12_1_5() {
+        return;
+    }
+
+    let env = WowLuaEnv::new().unwrap();
+    env.exec("__secureenv.ScopedSecureOnlyValue = 'secure-only'")
+        .unwrap();
+    let temp_dir = tempfile::tempdir().unwrap();
+    let addon_dir = temp_dir.path().join("TestSecureAddon");
+    std::fs::create_dir(&addon_dir).unwrap();
+    let toc_path = addon_dir.join("TestSecureAddon.toc");
+    std::fs::write(
+        &toc_path,
+        format!(
+            "## Interface: {}\n## UseSecureEnvironment: 1\nSetup.lua\nTestSecureAddon.xml\n",
+            crate::client_profile::RETAIL_API_INTERFACE_VERSION
+        ),
+    )
+    .unwrap();
+    std::fs::write(
+        addon_dir.join("Setup.lua"),
+        "local _, addon = ...\naddon.ScopedAddonValue = 'addon-only'\nScopedSetupObserved = addon.ScopedAddonValue\nScopedSetupTable = addon\n",
+    )
+    .unwrap();
+    std::fs::write(
+        addon_dir.join("TestSecureAddon.xml"),
+        r#"<Ui>
+            <ScopedModifier scriptsUseGivenEnv="true">
+                <Frame name="ScopedRetailSecureHandlerFrame">
+                    <Scripts>
+                        <OnLoad>
+                            self:SetAttribute("ObservedHandlerRan", true)
+                            self:SetAttribute("ObservedAddonValue", ScopedAddonValue or "__nil")
+                            self:SetAttribute("ObservedSecureValue", ScopedSecureOnlyValue or "__nil")
+                        </OnLoad>
+                    </Scripts>
+                </Frame>
+            </ScopedModifier>
+        </Ui>"#,
+    )
+    .unwrap();
+
+    let load_result = load_addon(&env.loader_env(), &toc_path).unwrap();
+    assert_eq!(load_result.lua_files, 1, "the setup file must load");
+    assert_eq!(load_result.xml_files, 1, "the XML file must load");
+    assert!(
+        load_result.warnings.is_empty(),
+        "{:?}",
+        load_result.warnings
+    );
+
+    let (
+        setup_value,
+        setup_is_secure,
+        handler_ran,
+        handler_env_is_addon,
+        addon_value,
+        secure_value,
+    ): (String, bool, bool, bool, String, String) = env
+        .eval(
+            r#"
+            local setupValue = rawget(__secureenv, "ScopedSetupObserved")
+            local setupTable = rawget(__secureenv, "ScopedSetupTable")
+            local setupIsSecure = setupValue == "addon-only"
+                and rawget(_G, "ScopedSetupObserved") == nil
+            local frame = rawget(_G, "ScopedRetailSecureHandlerFrame")
+                or rawget(__secureenv, "ScopedRetailSecureHandlerFrame")
+            if not frame then
+                return setupValue or "", setupIsSecure, false, false, "", ""
+            end
+            local handler = frame:GetScript("OnLoad")
+            local handlerEnvIsAddon = type(handler) == "function"
+                and rawequal(getfenv(handler), setupTable)
+            return setupValue or "", setupIsSecure,
+                frame:GetAttribute("ObservedHandlerRan") == true,
+                handlerEnvIsAddon,
+                frame:GetAttribute("ObservedAddonValue") or "",
+                frame:GetAttribute("ObservedSecureValue") or ""
+            "#,
+        )
+        .unwrap();
+    assert_eq!(
+        setup_value, "addon-only",
+        "the TOC Lua file must populate the add-on table"
+    );
+    assert!(
+        setup_is_secure,
+        "the setup file should use the shared secure environment"
+    );
+    assert!(handler_ran, "the XML OnLoad handler must run");
+    assert!(
+        handler_env_is_addon,
+        "the XML OnLoad handler must use the add-on's given environment"
+    );
+    assert_eq!(addon_value, "addon-only");
+    assert_eq!(
+        secure_value, "__nil",
+        "the handler must not read __secureenv"
+    );
     assert!(env.state().borrow().lua_errors.is_empty());
 }

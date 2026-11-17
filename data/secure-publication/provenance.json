@@ -1,0 +1,26 @@
+{
+  "source": "R88y-secure-publication-70688.csv",
+  "source_sha256": "3a8922d84756171f666fe79b61068d3344ce2db866250dede1de384fa9878f82",
+  "build": "Retail 12.1.5.70688",
+  "rows": 6763,
+  "evidence_counts": {
+    "VERIFIED": 6554,
+    "INFERRED": 209
+  },
+  "flag_counts": {
+    "3": 6573,
+    "2": 42,
+    "7": 25,
+    "1": 122,
+    "6": 1
+  },
+  "context_counts": {
+    "Game": 5136,
+    "both": 1329,
+    "Glue": 298
+  },
+  "runtime_rows": "VERIFIED only; INFERRED rows remain in the source CSV",
+  "generator": "tools/gen_r88y_secure_publication.py",
+  "generated_table": "src/c_api/secure_publication_data.rs",
+  "generated_table_sha256": "77d32812b08072289b2706d463220e52eaa60bd3f2ad448590bb867bd0e7e463"
+}

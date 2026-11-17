@@ -118,33 +118,6 @@ if mapvalues == nil then
   end
 end
 
-do
-  local stringMeta = getmetatable("")
-  local function splitStringMethod(self, delimiterOrInput, limit)
-    if type(self) == "string" and type(delimiterOrInput) == "string" then
-      local inputIsEmpty = #delimiterOrInput == 0
-      local inputIsLonger = #self <= 4 and #delimiterOrInput > #self
-      local receiverLooksLikeDelimiter = #self <= 4 and self:match("^%W+$") ~= nil
-      if inputIsEmpty or inputIsLonger or receiverLooksLikeDelimiter then
-        return strsplit(self, delimiterOrInput, limit)
-      end
-    end
-    return strsplit(delimiterOrInput, self, limit)
-  end
-  if type(stringMeta) == "table" then
-    local stringIndex = stringMeta.__index
-    if type(stringIndex) == "table" then
-      function stringIndex:split(delimiter, limit)
-        return splitStringMethod(self, delimiter, limit)
-      end
-    end
-
-    function stringMeta:split(delimiter, limit)
-      return splitStringMethod(self, delimiter, limit)
-    end
-  end
-end
-
 if tAppendAll == nil then
   function tAppendAll(tbl, addedArray)
     if type(tbl) ~= "table" or type(addedArray) ~= "table" then
@@ -300,8 +273,41 @@ if AbbreviateNumbers == nil then
 end
 "##;
 
+const STRING_SPLIT_METHOD_COMPAT_LUA: &str = r##"
+do
+  local stringMeta = getmetatable("")
+  local function splitStringMethod(self, delimiterOrInput, limit)
+    if type(self) == "string" and type(delimiterOrInput) == "string" then
+      local inputIsEmpty = #delimiterOrInput == 0
+      local inputIsLonger = #self <= 4 and #delimiterOrInput > #self
+      local receiverLooksLikeDelimiter = #self <= 4 and self:match("^%W+$") ~= nil
+      if inputIsEmpty or inputIsLonger or receiverLooksLikeDelimiter then
+        return strsplit(self, delimiterOrInput, limit)
+      end
+    end
+    return strsplit(delimiterOrInput, self, limit)
+  end
+  if type(stringMeta) == "table" then
+    local stringIndex = stringMeta.__index
+    if type(stringIndex) == "table" then
+      function stringIndex:split(delimiter, limit)
+        return splitStringMethod(self, delimiter, limit)
+      end
+    end
+
+    function stringMeta:split(delimiter, limit)
+      return splitStringMethod(self, delimiter, limit)
+    end
+  end
+end
+"##;
+
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(FORMATTING_UTILITY_DEFAULTS_LUA)?;
+    // Preserve the verified Retail string.split alias; keep this wrapper elsewhere.
+    if !crate::client_profile::is_active_retail_12_1_5() {
+        lua.exec(STRING_SPLIT_METHOD_COMPAT_LUA)?;
+    }
     #[cfg(not(feature = "retail-12-0-5"))]
     lua.exec(
         r#"
@@ -359,8 +365,10 @@ mod tests {
                 if #filtered ~= 2 or filtered[1] ~= 2 or filtered[2] ~= 4 then return "tfilter" end
                 local firstMapped, secondMapped = mapvalues(function(value) return value * 2 end, 2, 3)
                 if firstMapped ~= 4 or secondMapped ~= 6 then return "mapvalues" end
-                local first, second = ("a,b,c"):split(",")
-                if first ~= "a" or second ~= "b" then return "split_method" end
+                if not rawequal(string.split, strsplit) then
+                    local first, second = ("a,b,c"):split(",")
+                    if first ~= "a" or second ~= "b" then return "split_method" end
+                end
                 local appended = tAppendAll({ "a" }, { "b", "c" })
                 if #appended ~= 3 or appended[2] ~= "b" or appended[3] ~= "c" then return "append" end
                 if GetScreenDPIScale() ~= 1 then return "dpi" end
@@ -383,6 +391,15 @@ mod tests {
             .expect("formatting utility defaults probe should run");
 
         assert_eq!(result, "ok");
+        if crate::client_profile::is_active_retail_12_1_5() {
+            let split_aliases: (bool, bool) = env
+                .eval(
+                    "return rawequal(rawget(string, 'split'), strsplit), \
+                     rawequal(rawget(rawget(__secureenv, 'string'), 'split'), strsplit)",
+                )
+                .expect("Retail string.split alias should survive defaults");
+            assert_eq!(split_aliases, (true, true));
+        }
         let grouped: String = env
             .eval("return BreakUpLargeNumbers(12345)")
             .expect("active profile formatter should run after bootstrap reapplication");

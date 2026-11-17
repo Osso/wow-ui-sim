@@ -10,6 +10,8 @@ pub(crate) use temporary::minimap_tracking_defaults::RETAIL_TRACKING_DEFAULT_MAS
 #[cfg(feature = "client-retail")]
 pub(crate) use temporary::pvp_talent_defaults::pvp_slot_default;
 pub(crate) use temporary::quest_campaign_header_default::update_campaign_headers;
+pub(crate) use temporary::secure_env_global_snapshot::copy_globals_into_secureenv_without_publication_evidence;
+pub(crate) use temporary::secure_legacy_unit_globals::copy_legacy_unit_globals_to_secureenv;
 
 #[cfg(feature = "client-wrath")]
 pub(crate) use temporary::wrath_attack_action;
@@ -29,6 +31,7 @@ pub(crate) use temporary::wrath_startup_defaults;
 
 pub(crate) use temporary::client_info_defaults::CLASSIC_EXPANSION_LEVEL;
 pub(crate) use temporary::environment_cleanup_restore::restore_post_cleanup_globals;
+pub(crate) use temporary::game_time_calendar_invites::register_secure_environment_base;
 #[cfg(not(feature = "retail-12-0-0"))]
 pub(crate) use temporary::party_ai_legacy::unit_in_party_is_ai;
 pub(crate) use temporary::pet_spec_catalog_default::default_catalog as default_pet_spec_catalog;
@@ -360,6 +363,7 @@ fn apply_core_foundation_state_defaults(lua: &mut rilua::Lua) -> crate::Result<(
     temporary::pet_battle_runtime_state::apply_bootstrap(lua)?;
     temporary::pet_battle_action_legality_defaults::apply_bootstrap(lua)?;
     temporary::settings_surface_defaults::apply_bootstrap(lua)?;
+    #[cfg(not(feature = "client-retail"))]
     temporary::tooltip_data_processor_defaults::apply_bootstrap(lua)?;
     #[cfg(not(feature = "client-wrath"))]
     temporary::startup_service_capability_defaults::apply_bootstrap(lua)?;

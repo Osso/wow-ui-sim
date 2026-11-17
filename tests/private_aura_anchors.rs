@@ -16,6 +16,7 @@ mod cached_consumer_regression {
     #[test]
     fn block_list_cleared_registration_accepts_exact_event_and_rejects_unknown() {
         let env = WowLuaEnv::new().expect("create block-list-cleared registration environment");
+        crate::common::install_private_aura_api_alias(&env);
         env.exec(
             r#"
             local frame = CreateFrame('Frame')
@@ -44,6 +45,7 @@ mod cached_consumer_regression {
     #[test]
     fn block_list_cleared_explicit_dispatch_has_one_unit_payload_and_player_filter() {
         let env = WowLuaEnv::new().expect("create explicit cleared-event dispatch environment");
+        crate::common::install_private_aura_api_alias(&env);
         env.exec(
             r#"
             clearedAll, clearedPlayer = {}, {}
@@ -107,7 +109,7 @@ mod cached_consumer_regression {
         env.exec(&format!(
             r#"
             RegressionAnchorID = {id}
-            local anchors = C_UnitAurasPrivate.GetPrivateAuraAnchors()
+            local anchors = SecurePrivateAuras.GetPrivateAuraAnchors()
             assert(#anchors == 1, '{phase}: one live public anchor record')
             local anchor = anchors[1]
             assert(anchor.anchorID == RegressionAnchorID and anchor.unitToken == '{unit}',
@@ -130,7 +132,7 @@ mod cached_consumer_regression {
         assert_no_lifecycle_errors(env, prior_errors, phase);
         env.exec(
             r#"
-            assert(#C_UnitAurasPrivate.GetPrivateAuraAnchors() == 0,
+            assert(#SecurePrivateAuras.GetPrivateAuraAnchors() == 0,
                 'public Remove must leave zero anchor records')
             assert(RegressionContainer:GetScript('OnAttributeChanged') == nil,
                 'actual removed callback must release settings handler before same-parent re-add')
@@ -161,7 +163,7 @@ mod cached_consumer_regression {
                 }
                 env.exec(
                     r#"
-                    assert(#C_UnitAurasPrivate.GetPrivateAuraAnchors() == 0,
+                    assert(#SecurePrivateAuras.GetPrivateAuraAnchors() == 0,
                         'closure fixture starts without preexisting anchors')
                     RegressionContainer = CreateFrame('Frame', nil, UIParent)
                     RegressionContainer.fixtureMarker = 'same-parent'
@@ -210,6 +212,7 @@ mod cached_consumer_regression {
 
 fn fixture_env() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("create private-anchor environment");
+    crate::common::install_private_aura_api_alias(&env);
     env.exec(
         r#"
         assert(type(C_UnitAuras.AddPrivateAuraAnchor) == 'function', 'public Add missing')
@@ -226,7 +229,7 @@ fn fixture_env() -> WowLuaEnv {
                 iconHeight = 30, borderScale = 1.25}
         end
         function FindAnchor(id)
-            for _, anchor in ipairs(C_UnitAurasPrivate.GetPrivateAuraAnchors()) do
+            for _, anchor in ipairs(SecurePrivateAuras.GetPrivateAuraAnchors()) do
                 if anchor.anchorID == id then return anchor end
             end
         end
@@ -247,7 +250,7 @@ fn ids_are_monotonic_and_environment_local() {
         let env = fixture_env();
         env.exec(
             r#"
-            assert(#C_UnitAurasPrivate.GetPrivateAuraAnchors() == 0)
+            assert(#SecurePrivateAuras.GetPrivateAuraAnchors() == 0)
             local parent = CreateFrame('Frame')
             local first = C_UnitAuras.AddPrivateAuraAnchor(AnchorArgs('player', 1, parent))
             local second = C_UnitAuras.AddPrivateAuraAnchor(AnchorArgs('target', 2, parent))
@@ -256,7 +259,7 @@ fn ids_are_monotonic_and_environment_local() {
             C_UnitAuras.RemovePrivateAuraAnchor(first)
             local third = C_UnitAuras.AddPrivateAuraAnchor(AnchorArgs('player', 3, parent))
             assert(third == second + 1, 'removed IDs must not be reused')
-            assert(#C_UnitAurasPrivate.GetPrivateAuraAnchors() == 2)
+            assert(#SecurePrivateAuras.GetPrivateAuraAnchors() == 2)
         "#,
         )
         .expect("independent environments retain ordered anchor lifecycles");
@@ -271,7 +274,7 @@ fn added_payload_and_listing_preserve_parent_identity_and_default_flags() {
         local parent = CreateFrame('Frame')
         parent.fixtureMarker = 'original'
         local added, argumentCount
-        C_UnitAurasPrivate.SetPrivateAuraAnchorAddedCallback(function(...)
+        SecurePrivateAuras.SetPrivateAuraAnchorAddedCallback(function(...)
             argumentCount = select('#', ...)
             added = ...
             assert(FindAnchor(added.anchorID) ~= nil, 'commit before callback')
@@ -290,8 +293,8 @@ fn added_payload_and_listing_preserve_parent_identity_and_default_flags() {
             assert(record.iconWidth == nil and record.iconHeight == nil and record.borderScale == nil)
             assert(record.spellID == nil and record.spellId == nil and record.auraInstanceID == nil)
         end
-        assert(#C_UnitAurasPrivate.GetAllPrivateAuras('player') == 0)
-        assert(C_UnitAurasPrivate.GetAuraDataByAuraInstanceIDPrivate('player', 4) == nil)
+        assert(#SecurePrivateAuras.GetAllPrivateAuras('player') == 0)
+        assert(SecurePrivateAuras.GetAuraDataByAuraInstanceIDPrivate('player', 4) == nil)
     "#,
     )
     .expect("publish only anchor metadata with canonical parent and schema defaults");
@@ -312,7 +315,7 @@ fn nonempty_optional_bindings_publish_flattened_icon_dimensions() {
         args.showDispelIcon = true
         args.isContainer = true
         local added
-        C_UnitAurasPrivate.SetPrivateAuraAnchorAddedCallback(function(info) added = info end)
+        SecurePrivateAuras.SetPrivateAuraAnchorAddedCallback(function(info) added = info end)
         local id = C_UnitAuras.AddPrivateAuraAnchor(args)
         args.iconInfo.iconWidth = 999
         args.iconInfo.borderScale = 999
@@ -340,7 +343,7 @@ fn listing_filters_units_and_isolates_callback_and_result_mutations() {
     env.exec(
         r#"
         local parent = CreateFrame('Frame')
-        C_UnitAurasPrivate.SetPrivateAuraAnchorAddedCallback(function(info)
+        SecurePrivateAuras.SetPrivateAuraAnchorAddedCallback(function(info)
             info.unitToken = 'callback mutation'
             info.auraIndex = 999
             info.parent = nil
@@ -350,14 +353,14 @@ fn listing_filters_units_and_isolates_callback_and_result_mutations() {
         args.iconInfo = IconInfo(parent)
         local first = C_UnitAuras.AddPrivateAuraAnchor(args)
         local second = C_UnitAuras.AddPrivateAuraAnchor(AnchorArgs('target', 2, parent))
-        local all = C_UnitAurasPrivate.GetPrivateAuraAnchors()
-        local players = C_UnitAurasPrivate.GetPrivateAuraAnchors('player')
-        local targets = C_UnitAurasPrivate.GetPrivateAuraAnchors('target')
+        local all = SecurePrivateAuras.GetPrivateAuraAnchors()
+        local players = SecurePrivateAuras.GetPrivateAuraAnchors('player')
+        local targets = SecurePrivateAuras.GetPrivateAuraAnchors('target')
         assert(#all == 2 and all[1].anchorID == first and all[2].anchorID == second)
         assert(#players == 1 and players[1].anchorID == first)
         assert(#targets == 1 and targets[1].anchorID == second)
-        assert(#C_UnitAurasPrivate.GetPrivateAuraAnchors('party1') == 0)
-        assert(not rawequal(all, C_UnitAurasPrivate.GetPrivateAuraAnchors()))
+        assert(#SecurePrivateAuras.GetPrivateAuraAnchors('party1') == 0)
+        assert(not rawequal(all, SecurePrivateAuras.GetPrivateAuraAnchors()))
         assert(not rawequal(all[1], players[1]))
         all[1].unitToken = 'list mutation'
         all[1].parent = nil
@@ -367,7 +370,7 @@ fn listing_filters_units_and_isolates_callback_and_result_mutations() {
         local fresh = FindAnchor(first)
         assert(fresh.unitToken == 'player' and fresh.auraIndex == 1)
         assert(fresh.iconWidth == 24 and rawequal(fresh.parent, parent))
-        assert(#C_UnitAurasPrivate.GetPrivateAuraAnchors() == 2)
+        assert(#SecurePrivateAuras.GetPrivateAuraAnchors() == 2)
     "#,
     )
     .expect("fresh ordered snapshots preserve retained unit filtering and copy isolation");
@@ -382,21 +385,21 @@ fn removal_has_no_results_and_reentrant_callbacks_observe_committed_state() {
         local first = C_UnitAuras.AddPrivateAuraAnchor(AnchorArgs('player', 1, parent))
         local second = C_UnitAuras.AddPrivateAuraAnchor(AnchorArgs('target', 2, parent))
         local removed = {}
-        C_UnitAurasPrivate.SetPrivateAuraAnchorRemovedCallback(function(...)
+        SecurePrivateAuras.SetPrivateAuraAnchorRemovedCallback(function(...)
             assert(select('#', ...) == 1)
             local id = ...
             removed[#removed + 1] = id
             assert(FindAnchor(id) == nil, 'remove before dispatch')
             assert(select('#', C_UnitAuras.RemovePrivateAuraAnchor(id)) == 0)
             if id == first then
-                local remaining = C_UnitAurasPrivate.GetPrivateAuraAnchors()
+                local remaining = SecurePrivateAuras.GetPrivateAuraAnchors()
                 assert(#remaining == 1 and remaining[1].anchorID == second)
                 C_UnitAuras.RemovePrivateAuraAnchor(second)
             end
         end)
         assert(select('#', C_UnitAuras.RemovePrivateAuraAnchor(first)) == 0)
         assert(#removed == 2 and removed[1] == first and removed[2] == second)
-        assert(#C_UnitAurasPrivate.GetPrivateAuraAnchors() == 0)
+        assert(#SecurePrivateAuras.GetPrivateAuraAnchors() == 0)
         assert(select('#', C_UnitAuras.RemovePrivateAuraAnchor(second + 100)) == 0)
         assert(#removed == 2, 'unknown ID no-op is inferred simulator policy')
     "#,
@@ -413,7 +416,7 @@ fn added_callback_error_retains_anchor_without_returning_id_and_dispatch_recover
         local parent = CreateFrame('Frame')
         local baseline = C_UnitAuras.AddPrivateAuraAnchor(AnchorArgs('target', 1, parent))
         local reached, failedPayload, visibleDuringCallback = 0, nil, nil
-        C_UnitAurasPrivate.SetPrivateAuraAnchorAddedCallback(function(info)
+        SecurePrivateAuras.SetPrivateAuraAnchorAddedCallback(function(info)
             reached = reached + 1
             failedPayload = info
             visibleDuringCallback = FindAnchor(info.anchorID)
@@ -434,8 +437,8 @@ fn added_callback_error_retains_anchor_without_returning_id_and_dispatch_recover
             visibleDuringCallback.unitToken == 'player', 'insert precedes added callback')
         assert(failedPayload.auraIndex == 4 and rawequal(failedPayload.parent, parent),
             'callback receives concrete published metadata and actual parent')
-        local all = C_UnitAurasPrivate.GetPrivateAuraAnchors()
-        local players = C_UnitAurasPrivate.GetPrivateAuraAnchors('player')
+        local all = SecurePrivateAuras.GetPrivateAuraAnchors()
+        local players = SecurePrivateAuras.GetPrivateAuraAnchors('player')
         assert(#all == 2 and all[1].anchorID == baseline and all[2].anchorID == failedID,
             'callback failure must not roll back insertion or disturb existing record')
         assert(#players == 1 and players[1].anchorID == failedID and
@@ -443,13 +446,13 @@ fn added_callback_error_retains_anchor_without_returning_id_and_dispatch_recover
             'failed Add retains original state in filtered listing')
 
         local added, removed = {}, {}
-        C_UnitAurasPrivate.SetPrivateAuraAnchorAddedCallback(function(...)
+        SecurePrivateAuras.SetPrivateAuraAnchorAddedCallback(function(...)
             assert(select('#', ...) == 1, 'recovered added dispatch has one payload')
             local info = ...
             assert(rawequal(info.parent, parent) and FindAnchor(info.anchorID) ~= nil)
             added[#added + 1] = info.anchorID
         end)
-        C_UnitAurasPrivate.SetPrivateAuraAnchorRemovedCallback(function(...)
+        SecurePrivateAuras.SetPrivateAuraAnchorRemovedCallback(function(...)
             assert(select('#', ...) == 1, 'recovered removed dispatch has one ID')
             local id = ...
             assert(FindAnchor(id) == nil)
@@ -461,12 +464,12 @@ fn added_callback_error_retains_anchor_without_returning_id_and_dispatch_recover
         assert(select('#', C_UnitAuras.RemovePrivateAuraAnchor(failedID)) == 0)
         assert(select('#', C_UnitAuras.RemovePrivateAuraAnchor(nextID)) == 0)
         assert(#removed == 2 and removed[1] == failedID and removed[2] == nextID)
-        assert(#C_UnitAurasPrivate.GetPrivateAuraAnchors('player') == 0)
+        assert(#SecurePrivateAuras.GetPrivateAuraAnchors('player') == 0)
         assert(FindAnchor(baseline).unitToken == 'target', 'unrelated anchor survives recovery')
-        C_UnitAurasPrivate.SetPrivateAuraAnchorAddedCallback(nil)
-        C_UnitAurasPrivate.SetPrivateAuraAnchorRemovedCallback(nil)
+        SecurePrivateAuras.SetPrivateAuraAnchorAddedCallback(nil)
+        SecurePrivateAuras.SetPrivateAuraAnchorRemovedCallback(nil)
         C_UnitAuras.RemovePrivateAuraAnchor(baseline)
-        assert(#C_UnitAurasPrivate.GetPrivateAuraAnchors() == 0)
+        assert(#SecurePrivateAuras.GetPrivateAuraAnchors() == 0)
         "#,
     )
     .expect("inferred added callback error retains insertion and later public dispatch works");
@@ -482,7 +485,7 @@ fn removed_callback_error_retains_deletion_and_dispatch_recovers() {
         local first = C_UnitAuras.AddPrivateAuraAnchor(AnchorArgs('player', 1, parent))
         local survivor = C_UnitAuras.AddPrivateAuraAnchor(AnchorArgs('target', 2, parent))
         local reached, notifiedID, absentDuringCallback = 0, nil, false
-        C_UnitAurasPrivate.SetPrivateAuraAnchorRemovedCallback(function(id)
+        SecurePrivateAuras.SetPrivateAuraAnchorRemovedCallback(function(id)
             reached = reached + 1
             notifiedID = id
             absentDuringCallback = FindAnchor(id) == nil
@@ -497,25 +500,25 @@ fn removed_callback_error_retains_deletion_and_dispatch_recovers() {
         assert(type(result[2]) == 'string' and
             string.find(result[2], 'private-anchor-removed-callback-failure', 1, true),
             'removed callback error must propagate to public caller')
-        local all = C_UnitAurasPrivate.GetPrivateAuraAnchors()
+        local all = SecurePrivateAuras.GetPrivateAuraAnchors()
         assert(#all == 1 and all[1].anchorID == survivor and
             all[1].unitToken == 'target' and rawequal(all[1].parent, parent),
             'callback failure retains deletion without disturbing survivor')
         assert(FindAnchor(first) == nil and
-            #C_UnitAurasPrivate.GetPrivateAuraAnchors('player') == 0,
+            #SecurePrivateAuras.GetPrivateAuraAnchors('player') == 0,
             'removed record stays absent after public failure')
         assert(select('#', C_UnitAuras.RemovePrivateAuraAnchor(first)) == 0)
         assert(reached == 1, 'retry of already deleted ID must not repeat failing callback')
 
         local added, removed = {}, {}
-        C_UnitAurasPrivate.SetPrivateAuraAnchorRemovedCallback(nil)
-        C_UnitAurasPrivate.SetPrivateAuraAnchorRemovedCallback(function(...)
+        SecurePrivateAuras.SetPrivateAuraAnchorRemovedCallback(nil)
+        SecurePrivateAuras.SetPrivateAuraAnchorRemovedCallback(function(...)
             assert(select('#', ...) == 1, 'recovered removed dispatch has one ID')
             local id = ...
             assert(FindAnchor(id) == nil)
             removed[#removed + 1] = id
         end)
-        C_UnitAurasPrivate.SetPrivateAuraAnchorAddedCallback(function(...)
+        SecurePrivateAuras.SetPrivateAuraAnchorAddedCallback(function(...)
             assert(select('#', ...) == 1, 'recovered added dispatch has one payload')
             local info = ...
             assert(info.unitToken == 'player' and rawequal(info.parent, parent))
@@ -529,7 +532,7 @@ fn removed_callback_error_retains_deletion_and_dispatch_recovers() {
         assert(select('#', C_UnitAuras.RemovePrivateAuraAnchor(nextID)) == 0)
         assert(#removed == 2 and removed[1] == survivor and removed[2] == nextID,
             'replacement removed callback usable for later valid operations')
-        assert(#C_UnitAurasPrivate.GetPrivateAuraAnchors() == 0)
+        assert(#SecurePrivateAuras.GetPrivateAuraAnchors() == 0)
         "#,
     )
     .expect("inferred removed callback error retains deletion and later public dispatch works");
@@ -541,11 +544,11 @@ fn added_callback_can_remove_the_just_published_id() {
     env.exec(
         r#"
         local removed, addedCount, removedCount = nil, 0, 0
-        C_UnitAurasPrivate.SetPrivateAuraAnchorRemovedCallback(function(id)
+        SecurePrivateAuras.SetPrivateAuraAnchorRemovedCallback(function(id)
             removedCount = removedCount + 1
             removed = id
         end)
-        C_UnitAurasPrivate.SetPrivateAuraAnchorAddedCallback(function(info)
+        SecurePrivateAuras.SetPrivateAuraAnchorAddedCallback(function(info)
             addedCount = addedCount + 1
             assert(FindAnchor(info.anchorID) ~= nil)
             C_UnitAuras.RemovePrivateAuraAnchor(info.anchorID)
@@ -554,7 +557,7 @@ fn added_callback_can_remove_the_just_published_id() {
         local id = C_UnitAuras.AddPrivateAuraAnchor(AnchorArgs('player', 1, CreateFrame('Frame')))
         assert(type(id) == 'number' and addedCount == 1 and removedCount == 1)
         assert(removed == id)
-        assert(#C_UnitAurasPrivate.GetPrivateAuraAnchors() == 0)
+        assert(#SecurePrivateAuras.GetPrivateAuraAnchors() == 0)
     "#,
     )
     .expect("added dispatch releases model borrow before synchronous removal");
@@ -568,11 +571,11 @@ fn callbacks_survive_gc_and_replacement_uses_only_latest_handlers() {
         local oldAdded, oldRemoved, newAdded, newRemoved = 0, 0, 0, 0
         do
             local captured = {marker = 'rooted closure'}
-            C_UnitAurasPrivate.SetPrivateAuraAnchorAddedCallback(function(info)
+            SecurePrivateAuras.SetPrivateAuraAnchorAddedCallback(function(info)
                 assert(captured.marker == 'rooted closure' and info.anchorID > 0)
                 oldAdded = oldAdded + 1
             end)
-            C_UnitAurasPrivate.SetPrivateAuraAnchorRemovedCallback(function(id)
+            SecurePrivateAuras.SetPrivateAuraAnchorRemovedCallback(function(id)
                 assert(captured.marker == 'rooted closure' and id > 0)
                 oldRemoved = oldRemoved + 1
             end)
@@ -582,11 +585,11 @@ fn callbacks_survive_gc_and_replacement_uses_only_latest_handlers() {
         local first = C_UnitAuras.AddPrivateAuraAnchor(AnchorArgs('player', 1, parent))
         C_UnitAuras.RemovePrivateAuraAnchor(first)
         assert(oldAdded == 1 and oldRemoved == 1)
-        C_UnitAurasPrivate.SetPrivateAuraAnchorAddedCallback(function(info)
+        SecurePrivateAuras.SetPrivateAuraAnchorAddedCallback(function(info)
             assert(FindAnchor(info.anchorID) ~= nil)
             newAdded = newAdded + 1
         end)
-        C_UnitAurasPrivate.SetPrivateAuraAnchorRemovedCallback(function(id)
+        SecurePrivateAuras.SetPrivateAuraAnchorRemovedCallback(function(id)
             assert(FindAnchor(id) == nil)
             newRemoved = newRemoved + 1
         end)
@@ -634,7 +637,7 @@ fn malformed_inputs_are_atomic_and_do_not_consume_ids() {
         local parent = CreateFrame('Frame')
         local first = C_UnitAuras.AddPrivateAuraAnchor(AnchorArgs('player', 1, parent))
         local notifications = 0
-        C_UnitAurasPrivate.SetPrivateAuraAnchorAddedCallback(function() notifications = notifications + 1 end)
+        SecurePrivateAuras.SetPrivateAuraAnchorAddedCallback(function() notifications = notifications + 1 end)
         AssertRejected(C_UnitAuras.AddPrivateAuraAnchor, nil)
         AssertRejected(C_UnitAuras.AddPrivateAuraAnchor, 'not a structure')
         for _, field in ipairs({'unitToken', 'auraIndex', 'parent'}) do
@@ -652,7 +655,7 @@ fn malformed_inputs_are_atomic_and_do_not_consume_ids() {
         end
         AssertRejected(C_UnitAuras.RemovePrivateAuraAnchor, nil)
         AssertRejected(C_UnitAuras.RemovePrivateAuraAnchor, {})
-        assert(notifications == 0 and #C_UnitAurasPrivate.GetPrivateAuraAnchors() == 1)
+        assert(notifications == 0 and #SecurePrivateAuras.GetPrivateAuraAnchors() == 1)
         assert(FindAnchor(first) ~= nil)
         local nextID = C_UnitAuras.AddPrivateAuraAnchor(AnchorArgs('target', 2, parent))
         assert(nextID == first + 1 and notifications == 1)
@@ -669,7 +672,7 @@ fn optional_icon_and_duration_bindings_validate_every_required_field_atomically(
         local parent = CreateFrame('Frame')
         local first = C_UnitAuras.AddPrivateAuraAnchor(AnchorArgs('player', 1, parent))
         local notifications = 0
-        C_UnitAurasPrivate.SetPrivateAuraAnchorAddedCallback(function() notifications = notifications + 1 end)
+        SecurePrivateAuras.SetPrivateAuraAnchorAddedCallback(function() notifications = notifications + 1 end)
         for _, field in ipairs({'iconAnchor', 'iconWidth', 'iconHeight'}) do
             local args = AnchorArgs('player', 2, parent)
             args.iconInfo = IconInfo(parent)
@@ -709,7 +712,7 @@ fn optional_icon_and_duration_bindings_validate_every_required_field_atomically(
             args.iconInfo[field] = 'not a number'
             AssertRejected(C_UnitAuras.AddPrivateAuraAnchor, args)
         end
-        assert(notifications == 0 and #C_UnitAurasPrivate.GetPrivateAuraAnchors() == 1)
+        assert(notifications == 0 and #SecurePrivateAuras.GetPrivateAuraAnchors() == 1)
         assert(C_UnitAuras.AddPrivateAuraAnchor(AnchorArgs('target', 2, parent)) == first + 1)
     "#,
     )
@@ -747,8 +750,8 @@ fn secret_outer_nested_and_scalar_inputs_reject_without_clearing_taint() {
         local parent = CreateFrame('Frame')
         local first = C_UnitAuras.AddPrivateAuraAnchor(AnchorArgs('player', 1, parent))
         local notifications = 0
-        C_UnitAurasPrivate.SetPrivateAuraAnchorAddedCallback(function() notifications = notifications + 1 end)
-        C_UnitAurasPrivate.SetPrivateAuraAnchorRemovedCallback(function() notifications = notifications + 1 end)
+        SecurePrivateAuras.SetPrivateAuraAnchorAddedCallback(function() notifications = notifications + 1 end)
+        SecurePrivateAuras.SetPrivateAuraAnchorRemovedCallback(function() notifications = notifications + 1 end)
         local cases = {secretwrap(AnchorArgs('player', 2, parent))}
         for field, value in pairs({unitToken = SecretAnchorString, auraIndex = SecretAnchorNumber,
             parent = secretwrap(parent), showCooldownFrame = SecretAnchorBool,
@@ -791,7 +794,7 @@ fn secret_outer_nested_and_scalar_inputs_reject_without_clearing_taint() {
             assert(issecretvalue(cases[1]) and issecretvalue(SecretAnchorNumber))
             assert(issecretvalue(SecretAnchorBool) and issecretvalue(SecretAnchorString))
             assert(notifications == 0 and FindAnchor(first) ~= nil)
-            assert(#C_UnitAurasPrivate.GetPrivateAuraAnchors() == 1)
+            assert(#SecurePrivateAuras.GetPrivateAuraAnchors() == 1)
         end
         assert(issecure()); reject(); assert(issecure())
         local function addon()
@@ -836,11 +839,11 @@ fn secured_outer_and_nested_tables_respect_vm_access_guards() {
         end
         debug.setobjecttaint(addon, 'PrivateAnchorFixture')
         addon(); assert(issecure())
-        assert(#C_UnitAurasPrivate.GetPrivateAuraAnchors() == 1)
+        assert(#SecurePrivateAuras.GetPrivateAuraAnchors() == 1)
         for index, args in ipairs(cases) do
             assert(C_UnitAuras.AddPrivateAuraAnchor(args) == first + index)
         end
-        assert(#C_UnitAurasPrivate.GetPrivateAuraAnchors() == 5)
+        assert(#SecurePrivateAuras.GetPrivateAuraAnchors() == 5)
     "#,
     )
     .expect("read nested structures through guarded VM access, not raw unguarded storage");

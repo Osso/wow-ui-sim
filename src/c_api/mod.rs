@@ -555,6 +555,8 @@ mod voice_provider_enum;
 
 pub(crate) mod c_tts_settings;
 mod helpers;
+mod secure_publication;
+mod secure_publication_data;
 pub(crate) use helpers::parse_numeric_string;
 #[cfg(feature = "client-retail")]
 pub(crate) use helpers::{
@@ -570,14 +572,25 @@ pub(crate) use patch_retired_members::mark_retail_table_util_retirement;
 mod registration;
 pub(crate) mod restricted_actions;
 
+#[cfg(feature = "aura-instance-enumeration")]
+pub(crate) use helpers::ensure_paired_table_field;
 pub(crate) use helpers::{
-    ensure_global_table, ensure_namespace, global_val, mark_namespace_keys_removed, set_global_val,
+    ensure_enum_table, ensure_global_table, ensure_namespace, ensure_namespace_table_field,
+    ensure_secure_namespace, global_val, mark_namespace_keys_removed,
+    register_namespace_function_with_flags, register_namespace_value_with_flags,
+    register_namespace_values_with_flags, register_unknown_namespace_function, set_global_val,
+    set_namespace_member,
 };
 pub use permanent_shims::c_map_api;
 pub(crate) use registration::{
     register_character_progression_tables, register_interaction_tables, register_item_power_tables,
     register_map_environment_tables, register_map_prefix_tables, register_nameplate_tables,
     register_spell_and_widget_tables,
+};
+pub(crate) use secure_publication::{
+    prepare_verified_string_library_copy, publish_verified_secure_namespace_members,
+    register_global_function_from_r88y, register_global_function_if_missing_from_r88y,
+    register_namespace_function_from_r88y, verified_r88y_flag,
 };
 
 use rilua::LuaResult;

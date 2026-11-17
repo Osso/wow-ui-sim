@@ -64,6 +64,7 @@ fn register_bootstrap_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
     LuaApiMut::register_function(lua, "GetTickTime", get_tick_time)?;
     super::strings::register_all_ui_strings(lua)?;
     super::security::register_all(lua)?;
+    super::real::source_location::register_all(lua)?;
     super::keybindings::register_all(lua)?;
     super::permanent_shims::register_all(lua.state_mut());
     super::action_bar_api::register_all(lua)?;
@@ -406,7 +407,9 @@ fn register_social_state_probes(lua: &mut rilua::Lua) -> crate::Result<()> {
 
 fn register_compat_and_admin(lua: &mut rilua::Lua) -> crate::Result<()> {
     super::compat_overrides::register_all(lua)?;
-    super::real::bit_library::register_all(lua)?;
+    if !crate::client_profile::is_active_retail_12_1_5() {
+        super::real::bit_library::register_all(lua)?;
+    }
     super::bank_storage_verbs::register_guild_tabard_files(lua)?;
     #[cfg(any(feature = "client-mists", feature = "client-wrath"))]
     super::auction_verbs::register_all(lua)?;

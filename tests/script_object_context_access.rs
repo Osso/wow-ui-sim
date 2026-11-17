@@ -31,7 +31,7 @@ fn ordinary_and_forbidden_frames_use_caller_taint_without_exposing_secret_result
         debug.setobjecttaint(addon, 'ContextAccessProbe')
         local deniedResult = addon()
         assert(deniedResult == false)
-        local proxy = GetForbiddenObjectTable(forbidden)
+        local proxy = (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(forbidden)
         assert(issecretvalue(proxy:CanBeAccessedInContext()))
         assert(proxy:CanBeAccessedInContext() == true)
         "#,

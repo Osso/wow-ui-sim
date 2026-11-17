@@ -32,7 +32,7 @@ fn forever_forbidden_consumers_tainted_aura_creation_and_dirty_lifecycle() {
     env.fire_on_update(0.016).unwrap();
     env.exec(
         "assert(ForbiddenConsumerDirtyCalls == 1); \
-         assert(not GetForbiddenObjectTable(ForbiddenConsumerAura):IsDirty()); \
+         assert(not (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(ForbiddenConsumerAura):IsDirty()); \
          assert(ForbiddenConsumerAura:GetOnUpdateMode() == Enum.OnUpdateMode.Disabled)",
     )
     .unwrap();
@@ -61,14 +61,14 @@ fn forever_forbidden_consumers_admin_aura_events_refresh_intrinsic_only_containe
             local count = 0
             for index = 1, container:GetAuraGroupFrameCount('probe') do
                 local button = container:GetAuraGroupFrame('probe', index)
-                local unit, data = GetForbiddenObjectTable(button):GetAuraInstance()
+                local unit, data = (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(button):GetAuraInstance()
                 if unit == 'player' and data and data.spellId == 19750 then
                     count = count + 1
                     assert(data.applications == stacks, 'assignment retained an earlier aura snapshot')
                 end
             end
             assert(count == expectedCount, 'native aura assignment did not follow the event')
-            assert(not GetForbiddenObjectTable(container):IsDirty())
+            assert(not (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(container):IsDirty())
             assert(container:GetOnUpdateMode() == Enum.OnUpdateMode.Disabled)
         end
     "#).expect("construct the real intrinsic-only container before any test aura exists");
@@ -77,7 +77,7 @@ fn forever_forbidden_consumers_admin_aura_events_refresh_intrinsic_only_containe
     for stacks in [1, 2] {
         env.exec(&format!(
             "A_Admin.AddBuff(19750, 'Event lifecycle aura', '135907', 30, {stacks}); \
-             assert(GetForbiddenObjectTable(NativeAuraEventProbe):IsDirty()); \
+             assert((__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(NativeAuraEventProbe):IsDirty()); \
              assert(NativeAuraEventProbe:GetOnUpdateMode() == Enum.OnUpdateMode.RunWhenVisibleOnce)"
         ))
         .expect("adding an aura after construction must rearm native event processing");
@@ -87,7 +87,7 @@ fn forever_forbidden_consumers_admin_aura_events_refresh_intrinsic_only_containe
         env.exec(
             "A_Admin.RemoveBuff(19750); \
              assert(C_UnitAuras.GetPlayerAuraBySpellID(19750) == nil); \
-             assert(GetForbiddenObjectTable(NativeAuraEventProbe):IsDirty()); \
+             assert((__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(NativeAuraEventProbe):IsDirty()); \
              assert(NativeAuraEventProbe:GetOnUpdateMode() == Enum.OnUpdateMode.RunWhenVisibleOnce)",
         )
         .expect("removing an aura must rearm the already-settled native container");
@@ -121,14 +121,14 @@ fn forever_forbidden_consumers_hidden_parent_rearms_native_aura_registration() {
             local count = 0
             for index = 1, container:GetAuraGroupFrameCount('probe') do
                 local button = container:GetAuraGroupFrame('probe', index)
-                local unit, data = GetForbiddenObjectTable(button):GetAuraInstance()
+                local unit, data = (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(button):GetAuraInstance()
                 if unit == 'player' and data and data.spellId == 19750 then
                     count = count + 1
                     assert(data.applications == stacks)
                 end
             end
             assert(count == expectedCount, 'hidden-parent aura assignments are stale')
-            assert(not GetForbiddenObjectTable(container):IsDirty())
+            assert(not (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(container):IsDirty())
             assert(container:GetOnUpdateMode() == Enum.OnUpdateMode.Disabled)
         end
     "#).expect("configure the unchanged native container while its parent is hidden");

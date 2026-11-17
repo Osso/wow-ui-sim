@@ -18,7 +18,7 @@ fn forbidden_projection_preserves_method_origin_across_addon_creation_and_lookup
         frame.Trusted=function() return issecure() end
         local function addon()
             frame.Addon=function() return issecure() end
-            local private=GetForbiddenObjectTable(frame)
+            local private=(__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(frame)
             local captured=private.Trusted
             assert(not private:Trusted(), 'method invocation erased addon caller')
             return private,captured
@@ -40,14 +40,14 @@ fn forbidden_partition_interns_isolated_private_views() {
         r#"
         local first = CreateFrame("Frame")
         local second = CreateFrame("Frame")
-        local firstPrivate = GetForbiddenObjectTable(first)
-        local secondPrivate = GetForbiddenObjectTable(second)
+        local firstPrivate = (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(first)
+        local secondPrivate = (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(second)
         assert(firstPrivate ~= first and secondPrivate ~= second,
             "public and private projections remain distinct")
         assert(firstPrivate ~= secondPrivate, "each frame owns a distinct private view")
-        assert(GetForbiddenObjectTable(first) == firstPrivate,
+        assert((__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(first) == firstPrivate,
             "repeated public projection returns the interned view")
-        assert(GetForbiddenObjectTable(firstPrivate) == firstPrivate,
+        assert((__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(firstPrivate) == firstPrivate,
             "private projection is idempotent")
 
         firstPrivate.value = "first-private"
@@ -65,7 +65,7 @@ fn forbidden_partition_interns_isolated_private_views() {
         assert(secondPrivate:readValue() == "second-private",
             "private fields remain independent between frames")
         firstPrivate.value = "first-updated"
-        assert(GetForbiddenObjectTable(first):readValue() == "first-updated")
+        assert((__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(first):readValue() == "first-updated")
         assert(secondPrivate:readValue() == "second-private")
         assert(first:readValue() == "public:first-public")
         "#,
@@ -80,15 +80,15 @@ fn forbidden_partition_preserves_native_parent_identity() {
         r#"
         local parent = CreateFrame("Frame", nil, UIParent)
         parent:SetSize(120, 40)
-        local forbidden = GetForbiddenObjectTable(parent)
+        local forbidden = (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(parent)
         forbidden.privateValue = "hidden"
         assert(parent.privateValue == nil, "partition fields remain private")
 
         local child = CreateFrame("Frame", nil, forbidden)
-        local expectedParent = rawequal(child, GetForbiddenObjectTable(child)) and forbidden or parent
+        local expectedParent = rawequal(child, (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(child)) and forbidden or parent
         assert(rawequal(child:GetParent(), expectedParent), "WM73: parent follows receiver view")
         assert(parent:GetNumChildren() == 1)
-        assert(GetForbiddenObjectTable(select(1, parent:GetChildren())) == GetForbiddenObjectTable(child))
+        assert((__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(select(1, parent:GetChildren())) == (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(child))
 
         local setWidth = parent.SetWidth
         setWidth(forbidden, 72)
@@ -96,7 +96,7 @@ fn forbidden_partition_preserves_native_parent_identity() {
         child:SetParent(UIParent)
         child:SetParent(forbidden)
         assert(rawequal(child:GetParent(), expectedParent))
-        assert(GetForbiddenObjectTable(parent).privateValue == "hidden")
+        assert((__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(parent).privateValue == "hidden")
         "#,
     )
     .expect("forbidden partition remains the same native frame");
@@ -109,17 +109,17 @@ fn create_frame_returns_parent_table_view() {
     env.exec(
         r#"
         local parent = CreateFrame("Frame", nil, UIParent)
-        local privateParent = GetForbiddenObjectTable(parent)
+        local privateParent = (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(parent)
         local publicChild = CreateFrame("Frame", nil, parent)
         local privateChild = CreateFrame("Frame", nil, privateParent)
         local defaultChild = CreateFrame("Frame", nil, nil)
-        assert(not rawequal(publicChild, GetForbiddenObjectTable(publicChild)))
-        assert(rawequal(privateChild, GetForbiddenObjectTable(privateChild)),
+        assert(not rawequal(publicChild, (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(publicChild)))
+        assert(rawequal(privateChild, (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(privateChild)),
             "a forbidden parent selects the forbidden child view")
-        assert(not rawequal(defaultChild, GetForbiddenObjectTable(defaultChild)))
+        assert(not rawequal(defaultChild, (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(defaultChild)))
         assert(rawequal(privateChild:GetParent(), privateParent), "WM73: forbidden receiver selects forbidden parent")
         assert(rawequal(publicChild:GetParent(), parent), "WM73: public receiver selects public parent")
-        assert(rawequal(privateChild:GetParent():GetParent(), GetForbiddenObjectTable(UIParent)),
+        assert(rawequal(privateChild:GetParent():GetParent(), (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(UIParent)),
             "WM73: forbidden ancestor traversal retains its view")
         local childPublic = select(2, parent:GetChildren())
         assert(rawequal(select(2, privateParent:GetChildren()), childPublic),
@@ -144,7 +144,7 @@ fn forbidden_partition_does_not_turn_ordinary_tables_into_frame_parents() {
         for _, ordinary in ipairs({ {}, { __wowPublicObject = parent }, { [0] = 123 } }) do
             local accepted, err = pcall(CreateFrame, "Frame", nil, ordinary)
             assert(not accepted and string.find(err, "parent must be a frame", 1, true))
-            accepted, err = pcall(CreateFrame, "Frame", nil, GetForbiddenObjectTable(ordinary))
+            accepted, err = pcall(CreateFrame, "Frame", nil, (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(ordinary))
             assert(not accepted and string.find(err, "parent must be a frame", 1, true))
         end
         assert(parent:GetNumChildren() == 0)
@@ -183,8 +183,8 @@ fn forbidden_partition_secure_xml_delegate_preserves_argument_shape_and_isolatio
         local child = CreateFrame('Cooldown', nil, owner)
         local texture = owner:CreateTexture()
         local label = owner:CreateFontString()
-        local privateOwner = GetForbiddenObjectTable(owner)
-        local privateChild = GetForbiddenObjectTable(child)
+        local privateOwner = (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(owner)
+        local privateChild = (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(child)
         child.value = 'public'
         privateChild.value = 'private'
         local nested = { child = child }
@@ -200,8 +200,8 @@ fn forbidden_partition_secure_xml_delegate_preserves_argument_shape_and_isolatio
             assert(fake == spoof, 'ordinary identity-shaped tables must remain unchanged')
             if projectDelegateArguments then
                 assert(c == privateChild and c.value == expectedPrivateValue)
-                assert(t == GetForbiddenObjectTable(texture))
-                assert(f == GetForbiddenObjectTable(label))
+                assert(t == (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(texture))
+                assert(f == (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(label))
                 c.value = 'changed-private'
                 expectedPrivateValue = 'changed-private'
             else
@@ -221,7 +221,7 @@ fn forbidden_partition_secure_xml_delegate_preserves_argument_shape_and_isolatio
         assert(child.value == 'public', 'delegate must not write public instance fields')
         assert(privateChild.value == (projectDelegateArguments and 'changed-private' or 'private'))
         if projectDelegateArguments then
-            owner:Accept(privateChild, nil, GetForbiddenObjectTable(texture), GetForbiddenObjectTable(label), 23, false, nested, spoof, nil)
+            owner:Accept(privateChild, nil, (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(texture), (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(label), 23, false, nested, spoof, nil)
             assert(incoming == privateChild, 'canonical private arguments stay interned')
         end
         "#,
@@ -239,7 +239,7 @@ fn forbidden_partition_nonsecure_xml_delegate_keeps_public_arguments() {
         child.value = 17
         local seen
         __wow_apply_xml_mixin(owner, { Accept = function(self, argument)
-            assert(self == GetForbiddenObjectTable(owner))
+            assert(self == (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(owner))
             assert(argument == child and argument.value == 17)
             seen = true
         end }, 'public', 'forbidden', false)
@@ -261,7 +261,7 @@ fn forbidden_partition_aura_provider_creates_children_through_outbound_bridge() 
                 env.exec(
                     r#"
                     local container = CreateFrame("AuraContainer", nil, UIParent, "CustomAuraContainerTemplate")
-                    local forbidden = GetForbiddenObjectTable(container)
+                    local forbidden = (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(container)
                     local provider = __secureenv.AuraContainerUtil.CreateCustomFrameProvider(forbidden, { batchSize = 1 })
                     local child = provider:AcquireFrame()
                     assert(rawequal(child:GetParent(), forbidden), "WM73: parent follows child view")
@@ -292,15 +292,15 @@ fn forbidden_partition_aura_initializer_keeps_public_and_private_views_isolated(
                         initializedButton = button
                         assert(button.UpdateAuraDisplay == nil,
                             "public initializer must not receive the private method surface")
-                        assert(GetForbiddenObjectTable(button) ~= button,
+                        assert((__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(button) ~= button,
                             "public and private tables remain distinct")
-                        local privateButton = GetForbiddenObjectTable(button)
+                        local privateButton = (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(button)
                         assert(rawequal(privateButton:GetObjectTable(), button),
                             "GetObjectTable returns the public view from a forbidden receiver")
                         local icon = button:CreateTexture(nil, "BACKGROUND")
                         button:SetIcon(icon)
                         assert(rawequal(button:GetIcon(), icon), "public delegate returns public icon")
-                        assert(rawequal(privateButton:GetIcon(), GetForbiddenObjectTable(icon)),
+                        assert(rawequal(privateButton:GetIcon(), (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(icon)),
                             "raw private getter is not routed through the public delegate")
                         initializedCooldown = CreateFrame("Cooldown", nil, button)
                         button:SetDurationCooldown(initializedCooldown)
@@ -313,13 +313,13 @@ fn forbidden_partition_aura_initializer_keeps_public_and_private_views_isolated(
                     end
                     local container = CreateFrame("AuraContainer", nil, UIParent, "CustomAuraContainerTemplate")
                     local provider = __secureenv.AuraContainerUtil.CreateCustomFrameProvider(
-                        GetForbiddenObjectTable(container),
+                        (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(container),
                         { batchSize = 1, initializeFrame = initialize }
                     )
                     local child = provider:AcquireFrame()
                     assert(publicDisplayCalls == 0,
                         "secure display update must not consult the public override")
-                    assert(rawequal(child, GetForbiddenObjectTable(initializedButton)),
+                    assert(rawequal(child, (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(initializedButton)),
                         "WM73: crossing environments preserves the provider's forbidden view")
                     assert(rawequal(initializedCooldown:GetParent(), initializedButton))
                     local aspects = Enum.SecretAspect
@@ -329,10 +329,10 @@ fn forbidden_partition_aura_initializer_keeps_public_and_private_views_isolated(
                     assert(not initializedCooldown:HasSecretAspect(aspects.BarValue))
                     assert(initializedBar:HasSecretAspect(aspects.BarValue))
                     assert(not initializedBar:HasSecretAspect(aspects.Cooldown))
-                    assert(GetForbiddenObjectTable(initializedCooldown):HasSecretAspect(aspects.Cooldown))
-                    assert(GetForbiddenObjectTable(initializedBar):HasSecretAspect(aspects.BarValue))
-                    assert(rawequal(child:GetParent(), GetForbiddenObjectTable(container)))
-                    local private = GetForbiddenObjectTable(child)
+                    assert((__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(initializedCooldown):HasSecretAspect(aspects.Cooldown))
+                    assert((__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(initializedBar):HasSecretAspect(aspects.BarValue))
+                    assert(rawequal(child:GetParent(), (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(container)))
+                    local private = (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(child)
                     assert(rawequal(private, child))
                     assert(type(private.UpdateAuraDisplay) == "function")
                     assert(private.UpdateAuraDisplay ~= initializedButton.UpdateAuraDisplay,

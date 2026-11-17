@@ -83,10 +83,156 @@ const VIRTUAL_TEMPLATES_NOT_IN_GLOBAL_ENV: &[&str] = &[
 const SCOPED_NAMED_FRAMES_HIDDEN_FROM_GLOBAL_ENV: &[&str] =
     &["RaidBossEmoteFramePrivate", "PrivateAurasTooltip"];
 
+#[cfg(feature = "client-retail")]
+#[derive(Debug)]
+struct SecureColorCatalogSnapshot {
+    get_colors_type: String,
+    tradeskill_color_type: String,
+    secure_tooltip_background_type: String,
+    ordinary_tooltip_background_type: String,
+    has_tradeskill_record: bool,
+    has_tooltip_background_record: bool,
+}
+
+#[cfg(feature = "client-retail")]
+#[derive(Debug)]
+struct SecureColorRouteSnapshot {
+    create_color_source: String,
+    create_color_type: String,
+    create_color_uses_secure_environment: bool,
+    current_environment_is_secure: bool,
+    catalog: SecureColorCatalogSnapshot,
+}
+
+#[cfg(feature = "client-retail")]
+fn capture_secure_color_route_snapshot(env: &WowLuaEnv) -> SecureColorRouteSnapshot {
+    let (create_color_source, create_color_type, create_color_uses_secure_environment) =
+        read_secure_create_color(env);
+    let current_environment_is_secure = probe_secure_current_environment(env);
+    let catalog = read_secure_color_catalog(env);
+    SecureColorRouteSnapshot {
+        create_color_source,
+        create_color_type,
+        create_color_uses_secure_environment,
+        current_environment_is_secure,
+        catalog,
+    }
+}
+
+#[cfg(feature = "client-retail")]
+fn assert_secure_color_route(snapshot: &SecureColorRouteSnapshot) {
+    assert_eq!(
+        snapshot.create_color_type, "function",
+        "SharedXMLBase Color.lua must define CreateColor in the secure environment"
+    );
+    assert!(
+        snapshot.create_color_uses_secure_environment,
+        "CreateColor must use the shared secure environment"
+    );
+    assert!(
+        snapshot.current_environment_is_secure,
+        "GetCurrentEnvironment must return the secure environment from secure code"
+    );
+    assert_eq!(
+        snapshot.catalog.get_colors_type, "function",
+        "secure C_UIColor must expose the GetColors catalog"
+    );
+    assert_eq!(
+        snapshot.catalog.tradeskill_color_type, "table",
+        "Color.lua must publish an existing C_UIColor record to secureenv"
+    );
+    assert!(
+        snapshot.catalog.has_tradeskill_record,
+        "the existing C_UIColor color record must be published by Color.lua"
+    );
+}
+
+#[cfg(feature = "client-retail")]
+fn read_secure_create_color(env: &WowLuaEnv) -> (String, String, bool) {
+    env.eval(
+        r#"
+            local createColor = rawget(__secureenv, 'CreateColor')
+            local source = type(createColor) == 'function'
+                and debug.getinfo(createColor, 'S').source or ''
+            return source,
+                type(createColor),
+                type(createColor) == 'function' and debug.getfenv(createColor) == __secureenv
+        "#,
+    )
+    .expect("secure CreateColor environment query should evaluate")
+}
+
+#[cfg(feature = "client-retail")]
+fn probe_secure_current_environment(env: &WowLuaEnv) -> bool {
+    env.exec_rilua_secure(
+        r#"
+            rawset(
+                _G,
+                '__private_auras_current_environment_is_self',
+                GetCurrentEnvironment() == _G
+            )
+        "#,
+    )
+    .expect("secure current-environment probe should execute");
+    env.eval("return rawget(__secureenv, '__private_auras_current_environment_is_self') == true")
+        .expect("secure current-environment result should evaluate")
+}
+
+#[cfg(feature = "client-retail")]
+fn read_secure_color_catalog(env: &WowLuaEnv) -> SecureColorCatalogSnapshot {
+    let (
+        get_colors_type,
+        tradeskill_color_type,
+        secure_tooltip_background_type,
+        ordinary_tooltip_background_type,
+        has_tradeskill_record,
+        has_tooltip_background_record,
+    ): (String, String, String, String, bool, bool) = env
+        .eval(
+            r#"
+                local secureColors = rawget(__secureenv, 'C_UIColor')
+                local getColors = secureColors and rawget(secureColors, 'GetColors')
+                local hasTradeskillRecord = false
+                local hasTooltipBackgroundRecord = false
+                if type(getColors) == 'function' then
+                    for _, dbColor in ipairs(getColors()) do
+                        hasTradeskillRecord = hasTradeskillRecord
+                            or dbColor.baseTag == 'TRADESKILL_EXPERIENCE_COLOR'
+                        hasTooltipBackgroundRecord = hasTooltipBackgroundRecord
+                            or dbColor.baseTag == 'TOOLTIP_DEFAULT_BACKGROUND_COLOR'
+                    end
+                end
+                return type(getColors),
+                    type(rawget(__secureenv, 'TRADESKILL_EXPERIENCE_COLOR')),
+                    type(rawget(__secureenv, 'TOOLTIP_DEFAULT_BACKGROUND_COLOR')),
+                    type(rawget(_G, 'TOOLTIP_DEFAULT_BACKGROUND_COLOR')),
+                    hasTradeskillRecord,
+                    hasTooltipBackgroundRecord
+            "#,
+        )
+        .expect("secure C_UIColor color catalog query should evaluate");
+    SecureColorCatalogSnapshot {
+        get_colors_type,
+        tradeskill_color_type,
+        secure_tooltip_background_type,
+        ordinary_tooltip_background_type,
+        has_tradeskill_record,
+        has_tooltip_background_record,
+    }
+}
+
+#[cfg(feature = "client-retail")]
 fn load_full_game_ui() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
     env.set_screen_size(1024.0, 768.0);
     env.set_screen_mode(ScreenKind::Game);
+    env.exec(
+        "rawset(_G, 'TooltipDataProcessor', nil); \
+         rawset(_G, 'AddTooltipDataAccessor', nil); \
+         rawset(__secureenv, 'TooltipDataProcessor', nil); \
+         rawset(__secureenv, 'AddTooltipDataAccessor', nil)",
+    )
+    .expect("disable the TooltipDataProcessor fallback before loading addons");
 
     {
         let mut state = env.state().borrow_mut();
@@ -106,6 +252,427 @@ fn load_full_game_ui() -> WowLuaEnv {
     fire_startup_events_for_screen(&env, ScreenKind::Game);
 
     env
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn secure_private_auras_tooltip_consumer_runs_without_errors() {
+    let env = load_full_game_ui();
+
+    let loaded: bool = env
+        .eval("return C_AddOns.IsAddOnLoaded('Blizzard_PrivateAurasUI')")
+        .expect("PrivateAurasUI loaded-state query should succeed");
+    assert!(
+        loaded,
+        "normal Retail startup must load Blizzard_PrivateAurasUI"
+    );
+    let secure_environment_has_no_snapshot_only_globals: bool = env
+        .eval(
+            r#"
+                return type(rawget(_G, 'debug')) == 'table'
+                    and rawget(_G, 'coroutine') ~= nil
+                    and rawget(__secureenv, 'debug') == nil
+                    and rawget(__secureenv, 'coroutine') == nil
+            "#,
+        )
+        .expect("secure environment visibility query should succeed");
+    assert!(
+        secure_environment_has_no_snapshot_only_globals,
+        "debug and coroutine must stay out of the fixed secure environment"
+    );
+
+    let load_errors: Vec<String> = env
+        .state()
+        .borrow()
+        .lua_errors
+        .iter()
+        .filter(|message| {
+            message.contains("Blizzard_PrivateAurasUI")
+                || message.contains("PrivateAurasTooltip")
+                || message.contains("TooltipDataProcessor")
+                || message.contains("TextureUtil.lua")
+                || message.contains("TooltipDataHandler.lua")
+        })
+        .cloned()
+        .collect();
+    let registration_snapshot: (String, String, String) = env
+        .eval(
+            r#"
+                return type(rawget(__secureenv, 'CopyTable')),
+                    type(rawget(__secureenv, 'GetFrameMetatable')),
+                    type(rawget(__secureenv, 'TextureKitConstants'))
+            "#,
+        )
+        .expect("secure registration snapshot should evaluate");
+    let secure_mixin_snapshot: (String, String, String, String) = env
+        .eval(
+            r#"
+                local privateAura = rawget(__secureenv, 'PrivateAurasTooltipMixin')
+                local gameTooltip = rawget(__secureenv, 'GameTooltipDataMixin')
+                return type(privateAura),
+                    type(privateAura and rawget(privateAura, 'OnLoad_PrivateAuraTooltip')),
+                    type(gameTooltip),
+                    type(gameTooltip and rawget(gameTooltip, 'OnLoad'))
+            "#,
+        )
+        .expect("secure tooltip mixin snapshot should evaluate");
+    let template_method_binders: (String, String) = env
+        .eval(
+            "return type(rawget(_G, '__wow_bind_xml_method')), \
+             type(rawget(__secureenv, '__wow_bind_xml_method'))",
+        )
+        .expect("template method binder visibility should be observable");
+    let tooltip_callback_globals: (String, String, String, String) = env
+        .eval(
+            r#"
+                return type(rawget(__secureenv, 'GameTooltip_OnLoad')),
+                    type(rawget(__secureenv, 'SharedTooltip_OnLoad')),
+                    type(rawget(_G, 'GameTooltip_OnLoad')),
+                    type(rawget(_G, 'SharedTooltip_OnLoad'))
+            "#,
+        )
+        .expect("secure tooltip callback global snapshot should evaluate");
+    let tooltip_method_probe: (bool, String) = env
+        .eval(
+            r#"
+                local mixin = rawget(__secureenv, 'PrivateAurasTooltipMixin')
+                local frame = CreateFrame('GameTooltip')
+                local ok, result = pcall(rawget(mixin, 'OnLoad_PrivateAuraTooltip'), frame)
+                return ok, tostring(result)
+            "#,
+        )
+        .expect("secure tooltip method probe should evaluate");
+    let color_route_snapshot = capture_secure_color_route_snapshot(&env);
+    let secure_dependency_states: Vec<(String, bool)> = {
+        let state = env.state().borrow();
+        private_auras_dependencies()
+            .into_iter()
+            .map(|name| {
+                let loaded = state
+                    .addons
+                    .iter()
+                    .find(|addon| addon.folder_name == name)
+                    .is_some_and(|addon| addon.is_loaded_in_environment(true));
+                (name.to_string(), loaded)
+            })
+            .collect()
+    };
+    let producer_source: (String, String, String, bool, bool) = env
+        .eval(
+            r#"
+                local processor = rawget(__secureenv, 'TooltipDataProcessor')
+                local accessor = rawget(__secureenv, 'AddTooltipDataAccessor')
+                local source = type(accessor) == 'function'
+                    and debug.getinfo(accessor, 'S').source or ''
+                return type(processor),
+                    type(processor and rawget(processor, 'AllTypes')),
+                    source,
+                    processor ~= rawget(_G, 'TooltipDataProcessor'),
+                    type(accessor) == 'function' and debug.getfenv(accessor) == __secureenv
+            "#,
+        )
+        .expect("secure TooltipDataProcessor producer provenance should evaluate");
+    assert!(
+        secure_dependency_states.iter().all(|(_, loaded)| *loaded),
+        "every PrivateAurasUI dependency must complete a secure load: {secure_dependency_states:?}"
+    );
+    assert!(
+        load_errors.is_empty(),
+        "PrivateAuras dependencies and the PrivateAurasTooltip consumer must load without errors:\n  {}\nsecure dependencies: {secure_dependency_states:?}\nsecure mixins: {secure_mixin_snapshot:?}\ntooltip callbacks: {tooltip_callback_globals:?}\ntooltip method: {tooltip_method_probe:?}\ncolor route: {color_route_snapshot:?}\nproducer: {producer_source:?}\nregistrations: {registration_snapshot:?}\ntemplate method binders: {template_method_binders:?}",
+        load_errors.join("\n  ")
+    );
+    assert_secure_color_route(&color_route_snapshot);
+    assert_eq!(
+        producer_source.0, "table",
+        "secure dependency must define TooltipDataProcessor"
+    );
+    assert_eq!(
+        producer_source.1, "string",
+        "the original producer must define AllTypes"
+    );
+    assert!(
+        producer_source.2.contains("TooltipDataHandler.lua"),
+        "secure AddTooltipDataAccessor must come from TooltipDataHandler.lua, got {}",
+        producer_source.2
+    );
+    assert!(
+        producer_source.3,
+        "secure execution must create its own TooltipDataProcessor table"
+    );
+    assert!(
+        producer_source.4,
+        "the dependency accessor function must use the shared secure table as its environment"
+    );
+    assert_eq!(
+        registration_snapshot.0, "function",
+        "SharedXMLBase TableUtil.lua must provide CopyTable in secureenv"
+    );
+    assert_eq!(
+        registration_snapshot.1, "function",
+        "GetFrameMetatable must be published in secureenv"
+    );
+    assert_eq!(
+        registration_snapshot.2, "table",
+        "TextureKitConstants defined during secure execution must be exported"
+    );
+
+    let failed_secure_exports: String = env
+        .eval(
+            r#"
+            local secure = __secureenv
+            local cTimer = rawget(secure, "C_Timer")
+            local store = rawget(secure, "C_StoreSecure")
+            local color = rawget(secure, "C_UIColor")
+            local secureEnum = rawget(secure, "Enum")
+            rawset(_G, "__secure_env_ordinary_only_probe", true)
+
+            local checks = {
+                {"Mixin", function() return type(rawget(secure, "Mixin")) == "function" end},
+                {"CreateFromMixins", function() return type(rawget(secure, "CreateFromMixins")) == "function" end},
+                {"C_Timer table", function() return type(cTimer) == "table" end},
+                {"C_Timer separation", function() return cTimer ~= rawget(_G, "C_Timer") end},
+                {"C_Timer.After", function() return type(cTimer.After) == "function" end},
+                {"C_StoreSecure table", function() return type(store) == "table" end},
+                {"C_StoreSecure separation", function() return store ~= rawget(_G, "C_StoreSecure") end},
+                {"C_StoreSecure.GetProductGroups", function() return type(store.GetProductGroups) == "function" end},
+                {"CreateFrame", function() return type(rawget(secure, "CreateFrame")) == "function" end},
+                {"CreateSecureDelegate", function() return type(rawget(secure, "CreateSecureDelegate")) == "function" end},
+                {"GetFrameMetatable", function() return type(rawget(secure, "GetFrameMetatable")) == "function" end},
+                {"frame metatable index", function() return type(GetFrameMetatable().__index) == "table" end},
+                {"C_UIColor table", function() return type(color) == "table" end},
+                {"C_UIColor separation", function() return color ~= rawget(_G, "C_UIColor") end},
+                {"C_UIColor.GetColors", function() return type(color.GetColors) == "function" end},
+                {"Enum table", function() return type(secureEnum) == "table" end},
+                {"Enum separation", function() return secureEnum ~= rawget(_G, "Enum") end},
+                {"Enum.TooltipDataType.Unit", function()
+                    return type(rawget(rawget(secureEnum, "TooltipDataType"), "Unit")) == "number"
+                end},
+                {"ordinary-only global stays out of secureenv", function()
+                    return rawget(secure, "__secure_env_ordinary_only_probe") == nil
+                end},
+            }
+            for _, check in ipairs(checks) do
+                if not check[2]() then
+                    return check[1]
+                end
+            end
+            return ""
+            "#,
+        )
+        .expect("secure export isolation query should succeed");
+    assert!(
+        failed_secure_exports.is_empty(),
+        "secure export checks failed: {failed_secure_exports}"
+    );
+}
+
+#[cfg(feature = "client-retail")]
+fn retail_full_ui_errors_from(env: &WowLuaEnv, markers: &[&str]) -> Vec<String> {
+    env.state()
+        .borrow()
+        .lua_errors
+        .iter()
+        .filter(|message| markers.iter().any(|marker| message.contains(marker)))
+        .cloned()
+        .collect()
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn retail_secure_shared_xmlbase_publishes_add_source_location_exclude() {
+    let env = load_full_game_ui();
+    let consumer_errors =
+        retail_full_ui_errors_from(&env, &["FrameFactory.lua:64", "Pools.lua:866"]);
+    assert!(
+        consumer_errors.is_empty(),
+        "the secure SharedXMLBase consumers at FrameFactory.lua:64 and Pools.lua:866 must run: {consumer_errors:?}"
+    );
+
+    let published: (String, String, bool) = env
+        .eval(
+            r#"
+            local ordinary = rawget(_G, "AddSourceLocationExclude")
+            local secure = rawget(__secureenv, "AddSourceLocationExclude")
+            return type(ordinary), type(secure), not rawequal(ordinary, secure)
+            "#,
+        )
+        .expect("AddSourceLocationExclude publication probe");
+    assert_eq!(published, ("function".into(), "function".into(), true));
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn retail_secure_shared_xml_publishes_table_count_for_account_util() {
+    let env = load_full_game_ui();
+    let consumer_errors = retail_full_ui_errors_from(&env, &["AccountUtil.lua"]);
+    assert!(
+        consumer_errors.is_empty(),
+        "the secure AccountUtil.lua:129 table.count consumer must run: {consumer_errors:?}"
+    );
+
+    let published: (bool, bool, bool, bool, bool, bool, i32) = env
+        .eval(
+            r#"
+            local ordinary = rawget(_G, "table")
+            local secure = rawget(__secureenv, "table")
+            local ordinaryCount = type(ordinary) == "table" and rawget(ordinary, "count")
+            local secureCount = type(secure) == "table" and rawget(secure, "count")
+            local count = type(secureCount) == "function" and secureCount({ first = 1, second = 2 }) or -1
+            return type(ordinary) == "table",
+                type(secure) == "table",
+                ordinary ~= secure,
+                type(ordinaryCount) == "function",
+                type(secureCount) == "function",
+                not rawequal(ordinaryCount, secureCount),
+                count
+            "#,
+        )
+        .expect("table.count publication probe");
+    assert_eq!(published, (true, true, true, true, true, true, 2));
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn retail_secure_colors_publishes_existing_color_override_consumers() {
+    let env = load_full_game_ui();
+    let consumer_errors = retail_full_ui_errors_from(&env, &["ColorManager.lua"]);
+    assert!(
+        consumer_errors.is_empty(),
+        "the secure Blizzard_Colors ColorManager.lua consumer must run: {consumer_errors:?}"
+    );
+
+    let publication_result: String = env
+        .eval(
+            r#"
+            local ordinary = rawget(_G, "C_ColorOverrides")
+            local secure = rawget(__secureenv, "C_ColorOverrides")
+            if type(ordinary) ~= "table" then return "ordinary_namespace_missing" end
+            if type(secure) ~= "table" then return "secure_namespace_missing" end
+            if ordinary == secure then return "namespace_tables_shared" end
+            for _, name in ipairs({ "GetColorForQuality", "GetColorOverrideInfo" }) do
+                local ordinaryFunction = rawget(ordinary, name)
+                local secureFunction = rawget(secure, name)
+                if type(ordinaryFunction) ~= "function" then
+                    return name .. ":ordinary_handler_missing"
+                end
+                if type(secureFunction) ~= "function" then
+                    return name .. ":secure_handler_missing"
+                end
+                if rawequal(ordinaryFunction, secureFunction) then
+                    return name .. ":function_identity_shared"
+                end
+            end
+            return "ok"
+            "#,
+        )
+        .expect("C_ColorOverrides publication probe");
+    assert_eq!(
+        publication_result, "ok",
+        "secure C_ColorOverrides publication must expose distinct consumer handlers"
+    );
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn retail_secure_shared_xml_publishes_account_store_constants() {
+    let env = load_full_game_ui();
+    let consumer_errors = retail_full_ui_errors_from(
+        &env,
+        &[
+            "GameRulesUtil.lua",
+            "Blizzard_FrameXMLBase/Constants.lua:184",
+            "Blizzard_Shared_StoreUISecure.lua:1812",
+        ],
+    );
+    assert!(
+        consumer_errors.is_empty(),
+        "the secure GameRulesUtil.lua AccountStoreConsts consumer must run: {consumer_errors:?}"
+    );
+
+    let constants: (bool, bool, bool, bool, bool, bool, f64, f64, f64, f64) = env
+        .eval(
+            r#"
+            local ordinaryConstants = rawget(_G, "Constants")
+            local secureConstants = rawget(__secureenv, "Constants")
+            local ordinary = type(ordinaryConstants) == "table"
+                and rawget(ordinaryConstants, "AccountStoreConsts")
+            local secure = type(secureConstants) == "table"
+                and rawget(secureConstants, "AccountStoreConsts")
+            return type(ordinaryConstants) == "table",
+                type(secureConstants) == "table",
+                ordinaryConstants ~= secureConstants,
+                type(ordinary) == "table",
+                type(secure) == "table",
+                not rawequal(ordinary, secure),
+                secure and secure.PlunderstormStoreFrontID or -1,
+                secure and secure.WowhackStoreFrontID or -1,
+                secure and secure.PlunderstormPlunderCurrencyID or -1,
+                secure and secure.KegLegRenownCurrencyID or -1
+            "#,
+        )
+        .expect("AccountStoreConsts publication probe");
+    assert_eq!(
+        constants,
+        (true, true, true, true, true, true, 1.0, 3.0, 3139.0, 2814.0)
+    );
+
+    let inventory_constants: (bool, bool, f64, f64) = env
+        .eval(
+            r#"
+            local ordinaryConstants = rawget(_G, "Constants")
+            local secureConstants = rawget(__secureenv, "Constants")
+            local ordinary = type(ordinaryConstants) == "table"
+                and rawget(ordinaryConstants, "InventoryConstants")
+            local secure = type(secureConstants) == "table"
+                and rawget(secureConstants, "InventoryConstants")
+            return type(ordinary) == "table",
+                type(secure) == "table",
+                secure and secure.NumBagSlots or -1,
+                secure and secure.NumReagentBagSlots or -1
+            "#,
+        )
+        .expect("InventoryConstants publication probe");
+    assert_eq!(inventory_constants, (true, true, 4.0, 1.0));
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn retail_private_auras_xml_uses_the_shared_secure_uiparent_frame() {
+    let env = load_full_game_ui();
+    let consumer_errors = retail_full_ui_errors_from(&env, &["PrivateAurasTooltip"]);
+    assert!(
+        consumer_errors.is_empty(),
+        "the secure PrivateAurasTooltip.xml parent consumer must load: {consumer_errors:?}"
+    );
+
+    let published: (bool, bool, bool) = env
+        .eval(
+            r#"
+            local ordinary = rawget(_G, "UIParent")
+            local secure = rawget(__secureenv, "UIParent")
+            return type(ordinary) == "table",
+                type(secure) == "table",
+                rawequal(ordinary, secure)
+            "#,
+        )
+        .expect("UIParent named-frame publication probe");
+    assert_eq!(published, (true, true, true));
+
+    let state = env.state();
+    let state = state.borrow();
+    let ui_parent = state
+        .widgets
+        .get_id_by_name("UIParent")
+        .expect("the built-in UIParent frame");
+    let tooltip = state
+        .widgets
+        .get_id_by_name("PrivateAurasTooltip")
+        .expect("the original PrivateAurasTooltip XML frame");
+    assert_eq!(
+        state.widgets.get(tooltip).and_then(|frame| frame.parent_id),
+        Some(ui_parent),
+        "PrivateAurasTooltip.xml must parent its frame to the UIParent frame"
+    );
 }
 
 // Literal cached inputs absent from Wrath manifest1-382/cache; behavior cases stay enabled.
@@ -366,6 +933,29 @@ fn blizzard_private_auras_ui_reads_raid_warning_util_and_publishes_mixins_into_s
         "Blizzard_PrivateAurasUI must read Blizzard_RaidWarning's RaidWarningUtil through \
          __secureenv; its secure XML references RaidWarningUtil.MessageTypes while its TOC \
          declares Blizzard_RaidWarning as a hard dependency"
+    );
+
+    let message_types_are_configured: (bool, bool) = env
+        .eval(
+            r#"
+            local secure = __secureenv
+            local util = rawget(secure, "RaidWarningUtil")
+            local warning = rawget(secure, "RaidWarningFrame")
+            local standard = type(warning) == "table" and warning.messageTypes or nil
+            local private = rawget(secure, "RaidBossEmoteFramePrivate")
+            local bossEmote = type(private) == "table" and private.messageTypes or nil
+            return type(standard) == "table"
+                    and standard[1] == util.MessageType.RaidWarning
+                    and standard[2] == util.MessageType.BossEmote,
+                type(bossEmote) == "table"
+                    and bossEmote[1] == util.MessageType.BossEmote
+            "#,
+        )
+        .expect("secure RaidWarning XML key-values should be observable");
+    assert_eq!(
+        message_types_are_configured,
+        (true, true),
+        "generated RaidWarning XML must resolve MessageTypes from its secure dependency"
     );
 
     for name in PUBLIC_MIXIN_GLOBALS {

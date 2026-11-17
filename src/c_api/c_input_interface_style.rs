@@ -1,7 +1,7 @@
 //! PTR and Forever input style backed by the shared environment-local input state.
 //! Keyboard/mouse is existing simulator policy, not a documented native default.
 use crate::event::{Event, EventArg};
-use crate::lua_api::methods::{borrow_state, table_set_static};
+use crate::lua_api::methods::borrow_state;
 use crate::lua_api::state::SimState;
 use crate::lua_bridge::table_set_rust_fn_static;
 use rilua::vm::state::LuaState;
@@ -18,10 +18,10 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     let namespace = super::ensure_namespace(state, "C_InputInterfaceStyle")?;
     table_set_rust_fn_static(state, namespace, "GetCurrentStyle", get_current_style)?;
     let enums = super::ensure_namespace(state, "Enum")?;
-    let values = crate::lua_api::methods::create_table(state);
-    table_set_static(state, values, "Mkb", Val::Num(0.0));
-    table_set_static(state, values, "Gamepad", Val::Num(1.0));
-    table_set_static(state, Val::Table(enums), "InputDeviceInterfaceType", values);
+    let values =
+        crate::c_api::ensure_namespace_table_field(state, enums, "InputDeviceInterfaceType")?;
+    super::set_namespace_member(state, Val::Table(values), "Mkb", Val::Num(0.0))?;
+    super::set_namespace_member(state, Val::Table(values), "Gamepad", Val::Num(1.0))?;
     Ok(())
 }
 

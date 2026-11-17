@@ -75,7 +75,7 @@ fn native_target_aura_callback_roundtrips_before_cleanup() {
         snapshot('before-template')
         local ok, failure = xpcall(function()
             frame = CreateFrame('AuraContainer', nil, UIParent, 'TargetFrameAuraContainerTemplate')
-            local private = GetForbiddenObjectTable(frame)
+            local private = (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(frame)
             assert(type(frame[setter]) == 'function', 'public callback setter missing')
             assert(type(frame[getter]) == 'function', 'public callback getter missing')
             assert(private ~= frame, 'public and forbidden views must remain distinct')
@@ -92,7 +92,7 @@ fn native_target_aura_callback_roundtrips_before_cleanup() {
         end, debug.traceback)
         snapshot('after-template')
         describe('instance.public', frame)
-        describe('instance.forbidden', frame and GetForbiddenObjectTable(frame))
+        describe('instance.forbidden', frame and (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(frame))
         if failure then diagnostics[#diagnostics + 1] = tostring(failure) end
         return ok, table.concat(diagnostics, '\n')
         "#,
@@ -213,12 +213,12 @@ fn scoped_aura_template_dispatches_private_scripts_to_forbidden_partition() {
         local frame = assert(AuraPartitionParent.Auras)
         assert(frame:GetParent() == AuraPartitionParent)
         assert(frame:IsEventRegistered('PLAYER_LOGIN'))
-        assert(GetForbiddenObjectTable(frame).loaded == true)
+        assert((__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(frame).loaded == true)
         assert(frame.loaded == nil)
     "#,
     )
     .unwrap();
     env.fire_on_update(0.25).unwrap();
-    env.exec("assert(GetForbiddenObjectTable(AuraPartitionParent.Auras).elapsed == 0.25)")
+    env.exec("assert((__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(AuraPartitionParent.Auras).elapsed == 0.25)")
         .unwrap();
 }

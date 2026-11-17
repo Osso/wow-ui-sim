@@ -553,6 +553,8 @@ pub struct Frame {
     /// Index into `SimState.addons` identifying which addon owns this frame.
     /// Set during frame creation based on `SimState.loading_addon_index`.
     pub owner_addon: Option<u16>,
+    /// File and line captured by Retail `CreateTexture` at object creation.
+    pub source_location: Option<String>,
 
     /// Whether the parent was defaulted (e.g. UIParent) rather than explicitly set.
     /// Used by SetAllPoints to match wowless headless behavior where default-parented

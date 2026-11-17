@@ -38,52 +38,93 @@ mod state_drivers;
 mod value_access;
 
 pub use loader_env::{compile_chunk_rilua, exec_chunk_rilua};
-pub use secure_env::{
-    create_secure_environment, mark_secure, mark_secure_state, set_in_both_envs_rilua,
+pub(crate) use secure_env::{
+    SECURE_ENV_BASE_NAMES_KEY, mark_secure_replay_state, native_registration_destinations,
+    register_native_function_if_missing_with_flags, register_native_function_with_flags,
+    register_pair_list_function, register_unknown_allowlist_function, secure_env_table,
+    secure_replay_env_table, set_secure_env_key_state,
 };
-pub(crate) use secure_env::{secure_env_table, set_secure_env_key_state};
+pub use secure_env::{
+    create_secure_environment, create_secure_replay_environment, mark_secure, mark_secure_state,
+};
 
 #[cfg(feature = "retail-12-1-0")]
 pub(crate) use secret_values::register_retail_secret_values;
 
-/// Register all security-related globals into rilua's global table.
-///
-/// Registers the security globals as rilua `RustFn`s.
+/// Register the secure-environment base helpers before the shared secure table is built.
+pub(crate) fn register_environment_helpers(lua: &mut rilua::Lua) -> LuaResult<()> {
+    environment::register_environment_helpers(lua)
+}
+
+/// Register security globals through their classified publication routes.
 pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
-    LuaApiMut::register_function(lua, "securecallmethod", securecallmethod::securecallmethod)?;
-    environment::register_environment_helpers(lua)?;
-    LuaApiMut::register_function(
+    register_secure_callmethod(lua)?;
+    register_secure_value_access(lua)?;
+    register_secure_handler_stubs(lua)?;
+    register_secure_command_option_parse(lua)
+}
+
+fn register_secure_callmethod(lua: &mut rilua::Lua) -> LuaResult<()> {
+    if crate::client_profile::is_active_retail_12_1_5() {
+        crate::c_api::register_global_function_from_r88y(
+            lua,
+            "securecallmethod",
+            securecallmethod::securecallmethod,
+        )
+    } else {
+        secure_env::register_unknown_allowlist_function(
+            lua,
+            "securecallmethod",
+            securecallmethod::securecallmethod,
+        )
+    }
+}
+
+fn register_secure_value_access(lua: &mut rilua::Lua) -> LuaResult<()> {
+    secure_env::register_unknown_allowlist_function(
         lua,
         "issecurevariable",
         value_access::issecurevariable_override,
     )?;
-    LuaApiMut::register_function(
+    secure_env::register_simulator_secure_helper(
         lua,
         "__sim_mark_secret_value",
         value_access::mark_secret_values,
     )?;
-    LuaApiMut::register_function(lua, "__sim_mark_slot_taint", value_access::mark_slot_taint)?;
+    secure_env::register_simulator_secure_helper(
+        lua,
+        "__sim_mark_slot_taint",
+        value_access::mark_slot_taint,
+    )?;
     value_access::register_value_access_fallbacks(lua)?;
     #[cfg(feature = "retail-12-0-0")]
     retail_secret_helpers::register(lua)?;
-    secret_values::register_scrub_fallbacks(lua)?;
+    secret_values::register_scrub_fallbacks(lua)
+}
+
+fn register_secure_handler_stubs(lua: &mut rilua::Lua) -> LuaResult<()> {
     secure_handler::register_secure_handler_stubs(lua)?;
-    state_drivers::register_state_driver_stubs(lua)?;
-    LuaApiMut::register_function(
+    state_drivers::register_state_driver_stubs(lua)
+}
+
+fn register_secure_command_option_parse(lua: &mut rilua::Lua) -> LuaResult<()> {
+    // UNKNOWN (R88k.7): retained secure allowlist entry; native flags are not established.
+    secure_env::register_unknown_allowlist_function(
         lua,
         "SecureCmdOptionParse",
         cmd_option::secure_cmd_option_parse,
-    )?;
-    Ok(())
+    )
 }
 
-/// Register a `RustFn` only if the global is currently nil.
-///
-/// Mirrors `security_api::set_if_missing` for the rilua path.
+/// Register a fallback when nil; Retail uses the verified R88y destination flag.
 fn register_if_missing(lua: &mut rilua::Lua, name: &str, func: rilua::RustFn) -> LuaResult<()> {
-    let existing = LuaApiMut::get_global_val(lua, name);
-    if existing == Val::Nil {
-        LuaApiMut::register_function(lua, name, func)?;
+    if crate::client_profile::is_active_retail_12_1_5() {
+        return crate::c_api::register_global_function_if_missing_from_r88y(lua, name, func);
+    }
+
+    if LuaApiMut::get_global_val(lua, name) == Val::Nil {
+        // Other profiles retain the existing allowlist route; their flags remain UNKNOWN.
+        secure_env::register_unknown_allowlist_function(lua, name, func)?;
     }
     Ok(())
 }

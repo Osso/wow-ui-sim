@@ -38,10 +38,57 @@ Updated the [StoreSecure contract](../specs/store-secure-catalog.md), [system pa
 
 Added the Retail catalog state contract and system page. **VERIFIED (R88ad.1/R88ad.2, Retail 12.1.5.70688):** catalog readers, availability/list writers, currency lookup, and request limits have explicit native behavior. **VERIFIED (simulator source):** unknown runtime rows remain empty host inputs, and only Retail selects the new model; uncovered profiles retain bootstrap behavior. The pinned 12.1.5.70783 StoreUI and CatalogShop consumers remain unchanged. The verified `GetEntryInfo.alreadyOwned` snapshot behavior is recorded in the [contract](../specs/store-secure-catalog.md) and [system page](systems/store-secure-catalog.md).
 
+## [2026-11-17] fix | Retail flag-3 Lua closure taint
+
+Updated the [taint system](systems/taint-system.md#dual-lua-environment), [load-phase contract](../specs/addon-load-phases.md#r88y-verified-secure-publication), and index. **VERIFIED (simulator source at `0f5ada40a`):** the Retail publisher copies a Lua closure's taint stamp to its distinct clone with rilua's public taint API and leaves an unstamped clone unstamped. **VERIFIED (simulator test at `f68ef3fbc`, 28/28):** ordinary and secure calls return equal secure-state and stack-taint results. **VERIFIED (overlay RED):** the exact taint test fails when the copy step is removed; the logged mismatch is in the handoff report.
+
+## [2026-11-17] verification | Retail R88n.11b flag-3 function identity
+
+Updated the [taint system](systems/taint-system.md#dual-lua-environment) and [load-phase contract](../specs/addon-load-phases.md#r88y-verified-secure-publication). **VERIFIED (simulator source at `0710907`):** the generic publisher creates a distinct `LuaClosure` with the same prototype, captured upvalue references, and function environment; Rust closure handling is unchanged. **VERIFIED (simulator tests at `0710907`):** 31 existing namespace producers and 3 `C_Texture` producers have distinct ordinary/secure functions, while the 14 unimplemented members remain absent; representative color-conversion and atlas-query results match.
+
+## [2026-11-17] system | Secure environment profile scope (decision A)
+
+Updated the [taint system](systems/taint-system.md#dual-lua-environment), [add-on loading](systems/addon-loading.md) and the index row. Retail 12.1.5 keeps the evidence-based strict model; PTR, Mists, WoW Forever, Wrath, Era and Anniversary keep master `4f073e8ea` behaviour through temporary `secure_env_global_snapshot.rs` and `string_format_legacy.rs`. Runtime gate results are recorded in the lane REPORT. **UNKNOWN:** native secure publication outside Retail 12.1.5.
+
 ## [2026-11-16] investigation | Limited listfile reproducibility
 
 Added the [investigation](investigations/limited-listfile-reproducibility.md) and [contract](../specs/limited-listfile-reproducibility.md). Current-master generation is byte-identical from the recovered, checksum-matching 202611141741 source; source/override/request/output drift now fails before writing. The coordinator confirmed the PR33 report did not retain row texts or source identity: the six original rows are UNRECOVERABLE and unpinned input drift is an INFERRED cause, distinct from the verified pinned-source reproduction.
 
+## [2026-11-16] investigation | Retail master Unit secure route
+
+Updated the [taint system](systems/taint-system.md#dual-lua-environment) and [add-on load-phase contract](../specs/addon-load-phases.md#r88ac-globalstrings-secure-publication). **SOURCE-DERIVED (VERIFIED simulator source at master `725fb6e3a`):** the profile-tagged table records 173 distinct Unit-prefixed globals; Retail copies 153 compatibility entries, while the six VERIFIED R88y Unit rows use the publisher only on Retail and remain compatibility entries on uncovered profiles. The supplied R88ac supplement has no VERIFIED Unit-prefixed rows. The new profile guard checks `_G` registration, not secureenv membership. **UNKNOWN (R88ac.ac1, R88af.1/.2):** native secure publication. Master controls pass; candidate consumer and Retail Lua-errors proof is pending.
+
+## [2026-11-15] verified | Retail LE_GAME numeric secure publication
+
+Updated the [taint system](systems/taint-system.md#dual-lua-environment) and [add-on load-phase contract](../specs/addon-load-phases.md#r88ac-globalstrings-secure-publication). **VERIFIED (R88ac.ac3; supplement SHA-256 `107dad291c11c9a80949d7063e02d849bb394155663870db0631c96c54d9659b`):** the native numeric setter writes each Game `LE_GAME_*` name and ordinal to both destinations. **VERIFIED (simulator source/data intersection):** all 42 currently modeled `GAME_ERROR_STRINGS` names occur in the supplement; the code mirrors only those existing values. **UNVERIFIED:** targeted runtime and original-consumer results are pending.
+
+## [2026-11-16] inferred | Retail legacy numeric secure mirror
+
+Updated the [taint system](systems/taint-system.md#dual-lua-environment) and [add-on load-phase contract](../specs/addon-load-phases.md#r88ac-globalstrings-secure-publication). **VERIFIED (R88ac.ac3):** native code has a separate Game/Glue initializer that publishes 335 distinct numeric globals to both environments. **INFERRED (simulator source):** Retail mirrors its other existing integer definitions because the supplement does not give a per-name inventory for the shared set. No new constants are added, and no test asserts this inferred row set.
+
+## [2026-11-15] inferred | Retail GlobalStrings secure mirror
+
+The [taint system](systems/taint-system.md#dual-lua-environment) and [add-on load-phase contract](../specs/addon-load-phases.md#r88ac-globalstrings-secure-publication) record R88ac.ac2. **VERIFIED (native Retail 12.1.5.70688):** accepted GlobalStrings records write to both `_G` and the shared secure table under the Game/Glue Flags mask. **INFERRED (simulator source):** the Retail PHF map omits Flags, so its current rows are mirrored; no per-name flag claim is made, including for `RAID_TARGET_1`. No test asserts this inferred row set.
+
+## [2026-11-15] system | Retail Constants.* secure publication
+
+Updated the [taint system](systems/taint-system.md#dual-lua-environment) and [add-on load-phase contract](../specs/addon-load-phases.md#r88t-secure-dependency-and-named-publication-routes). **VERIFIED (native Retail 12.1.5.70688, R88t.t2):** `Constants.*` tables use a no-flag secure-publication route. **VERIFIED (simulator source, commit `49e4d091d`):** Retail publishes generated constants data to secureenv while keeping missing and compatibility datasets ordinary-only. **UNVERIFIED:** the new `InventoryConstants` consumer test and final gates on this commit.
+
+## [2026-11-15] correction | R88y flag-3 function identity
+
+Updated the [taint system](systems/taint-system.md#dual-lua-environment) and the [R88y load-phase contract](../specs/addon-load-phases.md#r88y-verified-secure-publication). **RETRACTED:** the prior shared-identity conclusion came from simulator value copying and did not establish native identity. **VERIFIED (R88 series, Retail 12.1.5.70688 decomp line 13165):** flag-3 native C functions use separate zero-capture closures with the same handler. **VERIFIED (R88y.y2):** copied standard-library function values retain shared identity. **UNVERIFIED:** identity after later script replacement or deliberate aliasing; current tests do not claim it.
+
+## [2026-11-15] system | Retail C_ColorOverrides R88y publication
+
+Updated the [color-overrides system](systems/color-overrides.md) and its [feature contract](../specs/color-overrides.md). **VERIFIED (pinned CSV and simulator source at `5cd3cc29e`):** the six modeled members have VERIFIED flag-3 rows; Retail now uses the generic publisher, with the temporary fallback methods and custom bridge retired. The old two-member baseline was a pre-R88y preservation guard. The exact merged-head secure member-set test remains pending.
+
+## [2026-11-15] investigation | Retail R88y string.split alias collision
+
+[Post-load workaround audit](investigations/post-load-workaround-audit.md#retail-r88y-stringsplit-alias-collision) and [taint system](systems/taint-system.md#dual-lua-environment) record the verified native alias, the simulator's late overwrite and its Retail-only exclusion. RED/GREEN receipts are in the secure-env-shared handoff.
+
+## [2026-11-15] system | Retail R88t dependencies and R88v source attribution
+
+Updated the [add-on load-phase contract](../specs/addon-load-phases.md) and [taint system](systems/taint-system.md#dual-lua-environment). **VERIFIED (Retail 12.1.5.70688):** R88t dependency order and named publication; R88v.v4 shared source-exclusion state, suffix matching, and `CreateTexture`/`GetSourceLocation` output. **VERIFIED (simulator test at `adf8d25f9`):** the one-file source consumer passes through the secure registration object and ordinary `CreateTexture`, returns a saved `file:line`, and does not rescan an existing texture after exclusions change. At that earlier handoff, the full `C_ColorOverrides` stateful model was deferred; it is now integrated through R88y (see the current entry above). Ordinary-request failure-independence remains VERIFIED but untested; transitive copying remains UNKNOWN.
 ## [2026-11-15] fix | Retail Blizzard UI cache provenance
 
 Updated the [cache system page](systems/casc-asset-cache.md#blizzard-ui-source-cache) and [CASC loading contract](../specs/casc-loading.md#pinned-blizzard-ui-source-cache). **VERIFIED (source and tests):** Retail and PTR share one exact provenance comparison against their active pin; mismatch excludes the cache and normal startup follows the existing sync path. Synthetic temp-cache tests cover matching 70783, stale 70575, and missing provenance. Other profiles retain their existing selection behavior.
@@ -66,6 +113,17 @@ Updated the [Round 7 getter contract](../specs/tooltip-r7-getters.md) and [Lua A
 
 Updated the [Round 7 getter contract](../specs/tooltip-r7-getters.md) and [Lua API](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) with R88z.z1. **VERIFIED (Retail 12.1.5.70688):** map/generic title, power, optional resilient level, modifier heading and affix-name row selectors, formats, colors and relative order. **VERIFIED (simulator source):** all unavailable map/floor/condition/affix records use an empty-default host input; no catalog values or native writers are invented. **INFERRED:** rows append after common item rows and use the shared item-quality color mapping. **VERIFIED (Retail integration test SHA `0b681a9c80e852303c60f30aa431344a8f88788c`):** eight exact-listed original-consumer cases passed at that earlier revision. **VERIFIED (RED):** map/power, generic title, resilient level, and all-zero affix cases failed at the missing-title assertion after the original `OnEnter`; the class mismatch preservation case passed. Two affix-name RED runs first exposed a Lua table-string syntax error, fixed before GREEN.
 
+## [2026-11-14] investigation | Retail secure tooltip color route — merged catalog
+
+Updated [taint system](systems/taint-system.md#dual-lua-environment) with the merged catalog state. **VERIFIED (simulator source at `a941395885655f56edfcc1f57cac3fa1f0c853c7`):** the generated Retail catalog contains `TOOLTIP_DEFAULT_BACKGROUND_COLOR`, and `C_UIColor.GetColors` is registered through flag 3. **UNVERIFIED at that SHA:** the fallback-disabled PrivateAuras acceptance has not yet run against this data.
+
+## [2026-11-14] investigation | Retail secure tooltip color route — pre-merge
+
+**VERIFIED (simulator at `7f81a8853`):** `Color.lua` ran in secureenv, `GetCurrentEnvironment()` returned its `_G`, and the old `C_UIColor.GetColors()` payload lacked the tag used by `SharedTooltipTemplates.lua:57`; the fallback-disabled test was RED. **UNVERIFIED at that pre-merge SHA:** whether Retail's `GlobalColor` export contained `TOOLTIP_DEFAULT_BACKGROUND_COLOR`. No direct publication or guessed catalog row was added.
+
+## [2026-11-13] system | Secure environment and dependency replay
+
+Updated [taint system](systems/taint-system.md#dual-lua-environment) and [addon loading](systems/addon-loading.md#secure-dependency-replay-and-library-allowlist) with R88g/R88i and the fixed 39-name secure base. **VERIFIED (Retail simulator test, fallback cleared):** secureenv receives the original `TooltipDataProcessor`, `CopyTable`, and `GetFrameMetatable`; the next observed boundary is `TextureUtil.lua:122` (`Constants` nil), followed by `PrivateAurasUI.lua:1398` (`TextureKitConstants` nil). R88i.1 verifies the native pair-list route for `GetFrameMetatable`. `geterrorhandler` dual publication now follows BASELINE-39 membership. The Retail tooltip fallback remains until all cited consumers pass.
 ## [2026-11-15] implementation | Retail negative map assignments
 
 Updated the [Retail map-world-position investigation](investigations/patch-8-0-1-api-audit.md#retail-map-world-position) and [contract](../specs/map-world-position.md). **VERIFIED (R88x):** negative `MapID` rows look up `AreaID` in AreaTable, skip a row on lookup failure, and accept a resolved unsigned-16 value of zero. **VERIFIED (12.1.5.70783 export):** AreaID 14620 has value 2444; AreaID 0 is absent from the complete table. **INFERRED:** the native u16 is DBD `ContinentID`; maps 1408/2311 remain unresolved with the committed 70783 data. Retail tests at source SHA `0e9b548b1d6e92939ccc3f4e84d48157ef3c89c3` resolve map 2147 and distinguish two input points. **VERIFIED (70783 rows and simulator HBD-style probe):** the no-world Zone set below map 3000 is 997, 1158, 1408, 1523, 2107, and 2311; maps 1408/2311 have only AreaID 0 rows, which the complete AreaTable export cannot resolve. **VERIFIED:** the full c_map_api run had 65 passes and only `test_ui_map_point_create_from_coordinates` and `test_ui_map_point_create_from_vector` failed. **UNVERIFIED (per task brief; no master comparison):** those two failures predate this lane.
@@ -77,6 +135,8 @@ Updated the [Round 7 getter contract](../specs/tooltip-r7-getters.md) and [Lua A
 ## [2026-11-15] revision | Retail C_ColorOverrides verification corrections
 
 Updated the [spec](../specs/color-overrides.md), [system page](systems/color-overrides.md), and [consumer-selection record](investigations/consumer-selection-and-red-proof.md#retail-colormanager-and-c-coloroverrides). **CORRECTION (VERIFIED):** the earlier RED at `589d127` failed at a direct API call, not inside ColorManager. **VERIFIED (revision-1 tests):** the corrected RED fails at original `ColorManager.lua:66`; the secure snapshot matches the two master member names; explicit `playerColorOverrides` seams round-trip and replace stale records. Five final profile builds report zero warnings. **INFERRED:** setting encoding, event mapping, and local GlobalColor projection. **UNKNOWN:** automatic lifecycle triggers and final storage.
+
+Updated the [spec](../specs/color-overrides.md), [system page](systems/color-overrides.md), and [consumer-selection record](investigations/consumer-selection-and-red-proof.md#retail-colormanager-and-c-coloroverrides). **CORRECTION (VERIFIED):** the earlier RED at `589d127` failed at a direct API call, not inside ColorManager. **VERIFIED (revision-1 tests):** the corrected RED fails at original `ColorManager.lua:66`; the pre-R88y secure snapshot matches the two master member names (a preservation guard before R88y); explicit `playerColorOverrides` seams round-trip and replace stale records. Five final profile builds report zero warnings. **INFERRED:** setting encoding, event mapping, and local GlobalColor projection. **UNKNOWN:** automatic lifecycle triggers and final storage.
 
 ## [2026-11-15] implementation | Retail C_ColorOverrides state
 

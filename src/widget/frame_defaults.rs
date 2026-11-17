@@ -289,6 +289,7 @@ macro_rules! frame_defaults {
 
             // Profiler
             owner_addon: None,
+            source_location: None,
 
             default_parent: false,
             forbidden: false,

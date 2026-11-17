@@ -42,10 +42,37 @@ The [StoreSecure system page](systems/store-secure-catalog.md) and [RED proof re
 
 [StoreSecure catalog contract](../specs/store-secure-catalog.md) and [system page](systems/store-secure-catalog.md) record the Retail 12.1.5.70688 R88ad.1/R88ad.2 catalog, availability, currency, list, and request behavior. **VERIFIED (simulator source):** Retail uses empty-default host inputs; Mists remains UNKNOWN and keeps its prior bootstrap path. **VERIFIED (pinned 12.1.5.70783 consumers):** StoreUI and CatalogShop remain the original read paths. The old seeded-group contract is historical and superseded.
 
+## [2026-11-17] fix | Retail flag-3 Lua closure taint
+
+[Taint system](systems/taint-system.md#dual-lua-environment) and the [load-phase contract](../specs/addon-load-phases.md#r88y-verified-secure-publication) record object-taint preservation on distinct Retail flag-3 Lua closure clones. **VERIFIED (simulator test at `f68ef3fbc`, 28/28):** stamped ordinary and secure calls return matching taint outcomes; unstamped calls stay secure. **VERIFIED (overlay RED):** without stamp copying, the secure-side call loses that taint; see the handoff report.
+
+## [2026-11-17] verification | Retail R88n.11b flag-3 function identity
+
+[Taint system](systems/taint-system.md#dual-lua-environment) and the [load-phase contract](../specs/addon-load-phases.md#r88y-verified-secure-publication) record the 31 implemented namespace functions and 3 implemented `C_Texture` functions with distinct ordinary/secure objects; 14 unimplemented producers remain absent. **VERIFIED (simulator source at `0710907`):** Lua closure copies retain the prototype, captured upvalues, and function environment. **VERIFIED (simulator tests at `0710907`):** representative `C_ColorUtil.ConvertHSVToRGB` and `C_Texture.GetAtlasExists` results match across environments.
+
+## [2026-11-17] system | Secure environment profile scope (decision A)
+
+[Taint system](systems/taint-system.md#dual-lua-environment) and [add-on loading](systems/addon-loading.md) record that the strict 39-name secure environment, R88y publisher, secure-dependency pass, replay proxy and R88ag formatter apply only on Retail 12.1.5. Every other profile keeps master's `_G` snapshot, direct-secureenv replay, formatter and `GetFrameMetatable`; native publication there is UNKNOWN.
+
 ## [2026-11-16] investigation | Limited listfile reproducibility
 
 [Limited listfile reproducibility](investigations/limited-listfile-reproducibility.md) records the immutable source pin, effective input/output drift checks, unchanged 147,015-row artifact, and the unrecoverable historical PR33 rows and inferred input-drift cause.
 
+## [2026-11-16] system | Retail master Unit secure-environment route
+
+[Taint system](systems/taint-system.md#dual-lua-environment) and [add-on load-phase contract](../specs/addon-load-phases.md#r88ac-globalstrings-secure-publication) record the SOURCE-DERIVED 153-name simulator route and its UNKNOWN native publication boundary. **VERIFIED (master 725 control):** the prefork control passes and Retail Lua-errors returns `[]`; candidate consumer proof is pending.
+
+## [2026-11-15] correction | R88y flag-3 function identity
+
+[Taint system](systems/taint-system.md#dual-lua-environment) now distinguishes separate no-capture native C closures for verified flag-3 functions from shared function values in shallow-copied standard-library tables. Identity after later script replacement or deliberate aliasing remains UNVERIFIED.
+
+## [2026-11-15] system | Retail C_ColorOverrides R88y publication
+
+[Color overrides](systems/color-overrides.md) now records the six VERIFIED flag-3 rows and the generic simulator publication path. The old two-member test guarded the pre-R88y fallback period; the merged-head six-member runtime test remains pending.
+
+## [2026-11-15] system | Retail R88t dependencies and R88v source attribution
+
+[Addon load phases](../specs/addon-load-phases.md) records R88t request order and named publication plus R88v source attribution. The ordinary-request failure-independence clause is VERIFIED natively but untested; transitive copying remains UNKNOWN. **VERIFIED (simulator test at `adf8d25f9`):** the one-file AddSource consumer returns a saved `file:line`, preserves it after the exclusion list changes, and returns `UnknownFile` for a later texture from the excluded file. At that earlier handoff, the full C_ColorOverrides stateful model was deferred; the later R88y integration is recorded above. [Taint system](systems/taint-system.md#dual-lua-environment) records publication boundaries and current implementation.
 ## [2026-11-15] fix | Retail Blizzard UI cache provenance
 
 The [CASC asset cache](systems/casc-asset-cache.md#blizzard-ui-source-cache) and [CASC loading contract](../specs/casc-loading.md#pinned-blizzard-ui-source-cache) record exact Retail/PTR pin provenance checks, mismatch sync behavior, and unchanged selection for other profiles. **VERIFIED (source and synthetic temp-cache tests):** matching 70783 provenance is accepted; stale 70575 and missing provenance are rejected.
@@ -72,6 +99,14 @@ The [Round 7 getter contract](../specs/tooltip-r7-getters.md) and [Lua API](syst
 
 The [Round 7 getter contract](../specs/tooltip-r7-getters.md) and [Lua API](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) record R88z.z1. **VERIFIED (Retail 12.1.5.70688):** title, power, optional resilient level, modifier heading, and ordered affix-name rows, with their selectors, keys, colors, and quality field. **VERIFIED (simulator source):** a neutral empty-default host input supplies records and condition results; no native writer or catalog values are invented. **INFERRED:** rows append after common item lines and use the shared quality-color mapping; the native answer proves only relative keystone-row order. **VERIFIED (Retail integration test SHA `0b681a9c80e852303c60f30aa431344a8f88788c`):** eight exact-listed original-consumer cases passed at that earlier revision, including empty host input.
 
+## [2026-11-14] investigation | Retail secure tooltip color route
+
+[GlobalColor catalog](systems/global-color-catalog.md) and [taint system](systems/taint-system.md#dual-lua-environment) record the secure color path. **VERIFIED (merged simulator source at `a941395885655f56edfcc1f57cac3fa1f0c853c7`):** the generated catalog includes `TOOLTIP_DEFAULT_BACKGROUND_COLOR`, and `C_UIColor.GetColors` registers through the flag-3 namespace route. **VERIFIED (pre-merge simulator at `7f81a8853`):** the fallback-disabled PrivateAuras test was RED because the old temporary payload lacked this row. **UNVERIFIED at the merge SHA:** the fallback-disabled consumer test has not yet run against the merged catalog.
+
+## [2026-11-13] system | Secure environment and dependency replay
+
+[Taint system](systems/taint-system.md#dual-lua-environment) and [addon loading](systems/addon-loading.md#secure-dependency-replay-and-library-allowlist) record R88g/R88i and the fixed 39-name secure base. **VERIFIED (Retail simulator test, fallback cleared):** the original `TooltipDataProcessor`, `CopyTable`, and `GetFrameMetatable` reach secureenv; the next observed errors are `TextureUtil.lua:122` (`Constants` nil) and `PrivateAurasUI.lua:1398` (`TextureKitConstants` nil). R88i.1 verifies the native pair-list route for `GetFrameMetatable`; the Retail fallback remains until all cited consumers pass.
+
 ## [2026-11-15] revision | Recipe-rank cache and keystone tooltip boundaries
 
 [Round 7 getter contract](../specs/tooltip-r7-getters.md) and [Lua API](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) record R88n.4a cache insertion semantics and the modeled keystone selection/event/item-lookup path. **UNKNOWN:** whether recipe ranks use Azerite specialization wording; the exact question is recorded in the contract.
@@ -79,6 +114,8 @@ The [Round 7 getter contract](../specs/tooltip-r7-getters.md) and [Lua API](syst
 ## [2026-11-15] system | Retail C_ColorOverrides state
 
 **VERIFIED (R88v and revision-1 tests):** [Color overrides](systems/color-overrides.md) records the six-method Retail API, corrected original-consumer RED/GREEN, master secure-snapshot member set, and `playerColorOverrides` round-trip seams. **INFERRED:** the local GlobalColor projection, setting encoding, and event mapping. **UNKNOWN:** automatic save/load triggers and final storage.
+
+**VERIFIED (R88v and revision-1 tests):** [Color overrides](systems/color-overrides.md) records the six-method Retail API, corrected original-consumer RED/GREEN, and `playerColorOverrides` round-trip seams. **HISTORICAL (revision-1):** the secure member-set test covered two master snapshot names before R88y. **VERIFIED (R88y source at `5cd3cc29e`):** all six implemented members have VERIFIED flag-3 rows; current-head runtime proof is pending. **INFERRED:** the local GlobalColor projection, setting encoding, and event mapping. **UNKNOWN:** automatic save/load triggers and final storage.
 
 ## [2026-11-15] implementation | Retail Store Glue R88q
 
@@ -4529,6 +4566,7 @@ The sixteen retail 12.0.0 `Enum.EditModeDamageMeterSetting.*` and `Enum.EditMode
 | [[event-system]] | EventQueue, 36+ script handler types, dispatch flow, OnUpdate tick, startup event sequence, XML script setup |
 | [[xml-template-system]] | XML parsing, template registry/inheritance, same-object engine-root reuse, inline scripts/events and bounded callback late-binding proof |
 | [[addon-loading]] | Native R13 screen dependency rules, R64 startup phases and `LoadManagers`, optional-before-required ordering, Retail/Forever `LoadWith` submission, Retail failure behavior, PTR eligibility unknown, mode-one unknowns, TOC parsing and Blizzard discovery, inline `[Bootstrap]` semantics, Lua diagnostics, secure replay, SavedVariables and startup sequence |
+| [[addon-loading]] | Native R13 screen dependency rules, R64 startup phases and `LoadManagers`, optional-before-required ordering, Retail/Forever `LoadWith` submission, Retail failure behavior, PTR eligibility unknown, mode-one unknowns, TOC parsing and Blizzard discovery, inline `[Bootstrap]` semantics, dependency secure replay and the separate shared-library allowlist, Lua diagnostics, SavedVariables and startup sequence |
 | [[addon-module-imports]] | Forever completed-module `require`; [import checkpoint](systems/addon-module-imports.md#forever-import-binding--2026-10-15): historical completed-table/missing-binding RED; current bounded binding/control execution observed, independent acceptance pending; reused simulator policy, native parity UNKNOWN |
 | [[server-snapshot-action-bars]] | Imports captured action bars and carried bags from local ServerSnapshot SavedVariables before Blizzard UI loading; source-matching 0.3.0 install, July 5 no-bag snapshot, final fixture-failure boundary, and pending fresh capture recorded |
 | [[client-profiles]] | Seven mutually-exclusive client profiles, including distinct Forever `16001` / `wow_classic_beta` / `wowforever` cache from source branch `forever`; `5e26960b6` routes its `[Family]` files to `Mainline` while retaining Camelot and annotation filters; [running report](../wowforever-1.60.1.md) separates the historical 422-record baseline from current proof |
@@ -4537,6 +4575,8 @@ The sixteen retail 12.0.0 `Enum.EditModeDamageMeterSetting.*` and `Enum.EditMode
 | [[texture-atlas]] | TextureManager (BLP/PNG/WebP), ~50K-entry compiled atlas database, five RGBA GPU tiers plus optional BC1/BC3 atlases, persistent live/shared-headless atlas contexts, nine-slice kit detection, UV remapping, recognized Button/CheckButton atlas-slot visibility propagation |
 | [[frame-data-flow]] | Parallel Lua/Rust systems, same-object engine-root XML configuration, addon-load ownership/cleanup, global tables (__frame_fields/__scripts), method lookup order, Mixin() application with early EditMode base aliases, event dispatch flow |
 | [[taint-system]] | Protected-frame gating, dual Lua environment (genv/secureenv), Elune-backed issecure/securecall, bounded per-environment click-binding interaction profile, Blizzard `issecure()` call-site matrix, SecureHandler fallback, state/attribute drivers |
+| [[taint-system]] | Protected-frame gating, fixed 39-name secure base plus the SOURCE-DERIVED 173-name Unit union across seven profiles (153 Retail compatibility copies), separate namespace registrars, Elune-backed issecure/securecall, bounded click-binding profile, SecureHandler fallback, and state/attribute drivers; strict model on Retail 12.1.5 only, master-equivalent `_G` snapshot on every other profile (decision A) |
+| [[color-overrides]] | Retail six-method C_ColorOverrides model, verified R88y flag-3 publication contract, explicit setting seams, and native/persistence evidence limits; merged-head secure member-set runtime proof pending |
 | [[casc-asset-cache]] | CASC cache layers, `.product.db` selected-product identity, measured timings, failure modes, and the 4,398-file Forever mapping/sync proof |
 | [[specialization-mastery-spells]] | Per-spec mastery spell IDs and class specialization ordering from ChrSpecialization.db2 |
 | [[duration-core]] | Lua table-proxy timing, three-formatter duration consumption, player cast/channel queries, manual clocks, Copy/Assign, curve evaluation, simulator policies and native/consumer bounds |
@@ -4570,6 +4610,7 @@ The sixteen retail 12.0.0 `Enum.EditModeDamageMeterSetting.*` and `Enum.EditMode
 | [[store-secure-pool-constructors]] | Retail Store blank/red cards came from `__secureenv.CreateFramePoolCollection` retaining the simulator fallback after `Blizzard_SharedXMLBase` replaced `_G` with Blizzard's proxy-backed constructor; secure replay of SharedXMLBase Lua now populates secureenv directly |
 | [[lua-owned-fallback-retirement]] | Inventory O: original utility, chat, journal, panel and startup-navigation ownership; bootstrap retirement and explicit native/deferred boundaries |
 | [[post-load-workaround-audit]] | Retail post-load workaround audit: duplicate loader hooks retired, remaining hooks classified with temporary rationale and retirement paths |
+| [[post-load-workaround-audit]] | VERIFIED: Retail post-load workaround audit retires duplicate hooks and traces the R88y `string.split` alias overwrite to a later formatting fallback |
 | [[action-button-icon-mask]] | Action-bar and active SpellBook icons vanish when black-RGB opaque masks are sampled as RGB; renderer now uses alpha for all mask coverage, proved with action-style, SpellBook, and CircleMask pixels |
 | [[action-bar-spell-icons]] | 4 bugs: SetDrawLayer no-op, draw order, sublevel ignored, textureSubLevel not parsed |
 | [[journeys-renown-card-text-anchor]] | Journeys renown card text invisible because a Layers region's `relativeKey="$parent.IconFrame"` anchor fell back to the parent (child Frames created after Layers); SetPoint now stores unresolved $parent keys for the finalize pass to resolve |
