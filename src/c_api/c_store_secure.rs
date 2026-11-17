@@ -139,10 +139,13 @@ mod tests {
         )
         .expect("secure Store UI can call the simulated product-list API");
 
-        let result_count: u32 = env
-            .eval("return rawget(__secureenv, 'SecureStoreProductListResultCount')")
+        let returns_zero_values: bool = env
+            .eval("return rawget(__secureenv, 'SecureStoreProductListResultCount') == 0")
             .expect("secure product-list result count should be readable");
-        assert_eq!(result_count, 0, "product-list request returns no values");
+        assert!(
+            returns_zero_values,
+            "product-list request returns no values"
+        );
         assert_eq!(
             env.state()
                 .borrow()
