@@ -6,15 +6,15 @@ This contract covers Retail `C_StoreSecure` VAS lookup, request, purchase, and c
 
 ### Realm, account, and character lookups
 
-- [ ] `GetRealmList` returns one fresh array, including an empty array when no records exist. Rows contain `virtualRealmAddress`, `realmName`, `characterCount`, and optional Boolean `pvp` / `rp`; rows sort by descending character count.
-- [ ] `GetVASRealmList` returns one fresh array with the same row keys, sets every `characterCount` to zero, and sorts the source VAS realm rows by ascending realm-name bytes before publication.
-- [ ] `GetCharactersForRealm` requires a realm address and non-nil guild-only value, filters by realm, applies the GUID-backed guild-master filter when true, and returns a fresh array sorted by descending level then native full-GUID order.
-- [ ] Character rows publish the twelve verified fields and value forms. Missing optional values remain nil; an empty GUID publishes nil.
-- [ ] `GetCharacterInfoByGUID` reads the separate character-object input and returns one character row or nil when no matching object is supplied.
-- [ ] `GetWoWAccountGUIDFromName` uses the current local account GUID when the local flag is truthy; otherwise it matches account-name bytes exactly. Empty GUIDs publish nil.
-- [ ] `GetEligibleRacesForVASService` publishes nil when the host has no computed result, and a fresh array—including an empty array—for a supplied result. Rows contain `raceName`, `isAlliedRace`, and `isHeritageArmorUnlocked`.
-- [ ] `GetVASGuildMasterInfoForCharacterByGUID` publishes nil on a miss or a fresh `{ guildName, guildMemberInfos }` table on a hit. Member rows contain `guid` and `memberName` in supplied order.
-- [ ] `GetVasServiceType` maps the verified native product types to service types and returns nil for an absent product or unmapped type.
+- [x] `GetRealmList` returns one fresh array, including an empty array when no records exist. Rows contain `virtualRealmAddress`, `realmName`, `characterCount`, and optional Boolean `pvp` / `rp`; rows sort by descending character count.
+- [x] `GetVASRealmList` returns one fresh array with the same row keys, sets every `characterCount` to zero, and sorts the source VAS realm rows by ascending realm-name bytes before publication.
+- [x] `GetCharactersForRealm` requires a realm address and non-nil guild-only value, filters by realm, applies the GUID-backed guild-master filter when true, and returns a fresh array sorted by descending level then native full-GUID order.
+- [x] Character rows publish the twelve verified fields and value forms. Missing optional values remain nil; an empty GUID publishes nil.
+- [x] `GetCharacterInfoByGUID` reads the separate character-object input and returns one character row or nil when no matching object is supplied.
+- [x] `GetWoWAccountGUIDFromName` uses the current local account GUID when the local flag is truthy; otherwise it matches account-name bytes exactly. Empty GUIDs publish nil.
+- [x] `GetEligibleRacesForVASService` publishes nil when the host has no computed result, and a fresh array—including an empty array—for a supplied result. Rows contain `raceName`, `isAlliedRace`, and `isHeritageArmorUnlocked`.
+- [x] `GetVASGuildMasterInfoForCharacterByGUID` publishes nil on a miss or a fresh `{ guildName, guildMemberInfos }` table on a hit. Member rows contain `guid` and `memberName` in supplied order.
+- [x] `GetVasServiceType` maps the verified native product types to service types and returns nil for an absent product or unmapped type.
 - [ ] Restricted calls return zero values before reading arguments. Required arguments use the verified shared secret-access and truthiness rules. Exact member-specific Usage text remains UNKNOWN and is not asserted.
 
 ### Requests, purchases, and completion
@@ -46,7 +46,6 @@ This contract covers Retail `C_StoreSecure` VAS lookup, request, purchase, and c
 ## Tests asserting this spec
 
 - `tests/store_secure_vas.rs` — original `StoreVASValidationFrame_Init`, realm selector, and character selector consumers; lookup row shapes and empty cases.
-- Additional request, purchase, and completion assertions are added with their implementation commits.
 
 ## Known gaps (current cycle)
 
