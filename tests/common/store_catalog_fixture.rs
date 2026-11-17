@@ -150,19 +150,21 @@ fn enum_value(env: &WowLuaEnv, path: &str) -> u32 {
 }
 
 pub fn seed_store_vas_state(env: &WowLuaEnv) {
+    let service_type = u8::try_from(enum_value(env, "Enum.VasServiceType.NameChange"))
+        .expect("NameChange service type should fit the host row");
     let mut sim = env.state().borrow_mut();
     sim.store_glue.connection_present = true;
     let vas = &mut sim.store_glue.store_secure.vas;
-    seed_store_vas_lookup_inputs(vas);
+    seed_store_vas_lookup_inputs(vas, service_type);
     seed_store_vas_purchase_inputs(vas);
 }
 
-fn seed_store_vas_lookup_inputs(vas: &mut StoreVasState) {
-    vas.realms = store_api_realms();
-    vas.vas_realms = store_api_realms();
+fn seed_store_vas_lookup_inputs(vas: &mut StoreVasState, service_type: u8) {
+    vas.realms = build_store_api_realms();
+    vas.vas_realms = vas.realms.clone();
     let characters = vec![
-        store_api_character(1, "Simhero", "Player-101-1-11", 70),
-        store_api_character(2, "Simalt", "Player-101-1-12", 60),
+        build_store_api_character(1, "Simhero", "Player-101-1-11", 70),
+        build_store_api_character(2, "Simalt", "Player-101-1-12", 60),
     ];
     vas.characters = characters.clone();
     vas.character_objects = characters;
@@ -170,11 +172,19 @@ fn seed_store_vas_lookup_inputs(vas: &mut StoreVasState) {
     vas.local_wow_account_guid = Some("WowAccount-1001-1".into());
     vas.wow_account_guids
         .insert(b"WoW2".to_vec(), "WowAccount-2002-2".into());
-    vas.race_eligibility = vec![store_api_races()];
-    vas.guild_master_info = vec![store_api_guild_info()];
+    vas.race_eligibility = vec![build_store_api_races(service_type)];
+    vas.guild_master_info = vec![build_store_api_guild_info()];
 }
 
 fn seed_store_vas_purchase_inputs(vas: &mut StoreVasState) {
+    seed_store_vas_confirmation_inputs(vas);
+    seed_store_vas_completion_inputs(vas);
+    vas.failure_marker = 1;
+    vas.received_failure_code = 1;
+    vas.pre_generated_external_transaction_id = Some(b"external-1".to_vec());
+}
+
+fn seed_store_vas_confirmation_inputs(vas: &mut StoreVasState) {
     vas.purchase_records = vec![StoreVasPurchaseInput {
         product_id: FEATURED_PRODUCT_ID,
         status: 9,
@@ -191,6 +201,9 @@ fn seed_store_vas_purchase_inputs(vas: &mut StoreVasState) {
             current_amount: 50100,
         },
     );
+}
+
+fn seed_store_vas_completion_inputs(vas: &mut StoreVasState) {
     vas.boost = Some(StoreVasBoostInput {
         product_id: FEATURED_PRODUCT_ID,
         character_guid: "Player-101-1-11".into(),
@@ -202,12 +215,9 @@ fn seed_store_vas_purchase_inputs(vas: &mut StoreVasState) {
         first_auxiliary: 0,
         second_auxiliary: 0,
     });
-    vas.failure_marker = 1;
-    vas.received_failure_code = 1;
-    vas.pre_generated_external_transaction_id = Some(b"external-1".to_vec());
 }
 
-fn store_api_realms() -> Vec<StoreVasRealmInput> {
+fn build_store_api_realms() -> Vec<StoreVasRealmInput> {
     vec![
         StoreVasRealmInput {
             virtual_realm_address: 101,
@@ -226,30 +236,27 @@ fn store_api_realms() -> Vec<StoreVasRealmInput> {
     ]
 }
 
-fn store_api_character(order: u64, name: &str, guid: &str, level: u32) -> StoreVasCharacterInput {
+fn build_store_api_character(
+    order: u64,
+    name: &str,
+    guid: &str,
+    level: u32,
+) -> StoreVasCharacterInput {
     StoreVasCharacterInput {
         realm_address: 101,
         realm_name: Some("Azeroth".into()),
         guid: Some(guid.into()),
         guid_order: Some(order),
         name: Some(name.into()),
-        class_name: Some("Warrior".into()),
-        race_name: Some("Human".into()),
         level,
-        class_file_name: Some("WARRIOR".into()),
-        race_file_name: Some("Human".into()),
-        wow_account: 1001,
-        current_server: 101,
-        faction: 0,
-        sex: 1,
-        create_screen_icon_atlas: Some(String::new()),
+        ..Default::default()
     }
 }
 
-fn store_api_races() -> StoreVasRaceEligibilityInput {
+fn build_store_api_races(service_type: u8) -> StoreVasRaceEligibilityInput {
     StoreVasRaceEligibilityInput {
         guid: "Player-101-1-11".into(),
-        service_type: 0,
+        service_type,
         results: Some(vec![
             StoreVasEligibleRaceInput {
                 race_name: "Human".into(),
@@ -265,7 +272,7 @@ fn store_api_races() -> StoreVasRaceEligibilityInput {
     }
 }
 
-fn store_api_guild_info() -> StoreVasGuildMasterInfoInput {
+fn build_store_api_guild_info() -> StoreVasGuildMasterInfoInput {
     StoreVasGuildMasterInfoInput {
         guid: "Player-101-1-11".into(),
         guild_name: "Simulator Guild".into(),

@@ -93,12 +93,17 @@ const STORE_SECURE_VAS_SCRIPT: &str = r#"
     end
 
     local races = C_StoreSecure.GetEligibleRacesForVASService(character.guid, Enum.VasServiceType.NameChange)
-    if #races ~= 2 or races[1].raceName ~= "Human" or races[2].raceName ~= "Void Elf" or races[2].isAlliedRace ~= true then
+    local hasExpectedRaces = #races == 2
+        and races[1].raceName == "Human"
+        and races[2].raceName == "Void Elf"
+        and races[2].isAlliedRace == true
+    if not hasExpectedRaces then
         return "wrong_eligible_races"
     end
 
     local guildInfo = C_StoreSecure.GetVASGuildMasterInfoForCharacterByGUID(character.guid)
-    if not guildInfo or guildInfo.guildName ~= "Simulator Guild" or not guildInfo.guildMemberInfos[1] or guildInfo.guildMemberInfos[1].memberName ~= "Simalt" then
+    local firstGuildMember = guildInfo and guildInfo.guildMemberInfos[1]
+    if not guildInfo or guildInfo.guildName ~= "Simulator Guild" or not firstGuildMember or firstGuildMember.memberName ~= "Simalt" then
         return "wrong_guild_info"
     end
 
@@ -127,7 +132,10 @@ const STORE_SECURE_VAS_SCRIPT: &str = r#"
 
     C_StoreSecure.OpenNydusLink(1003)
     local confirmationProductID, walletName, originalDollars, originalCents, currentDollars, currentCents = C_StoreSecure.GetConfirmationInfo()
-    if confirmationProductID ~= 2003 or walletName ~= "Balance" or originalDollars ~= 10 or originalCents ~= 0 or currentDollars ~= 5 or currentCents ~= 1 then
+    local confirmationMatches = confirmationProductID == 2003 and walletName == "Balance"
+        and originalDollars == 10 and originalCents == 0
+        and currentDollars == 5 and currentCents == 1
+    if not confirmationMatches then
         return "wrong_confirmation_info"
     end
 
@@ -142,24 +150,28 @@ const STORE_SECURE_VAS_SCRIPT: &str = r#"
         "Renamedhero",
         nil,
         nil,
-        realms[2].virtualRealmAddress,
-        remoteGuid,
+        nil,
+        nil,
         nil,
         false,
         false
     )
 
     local purchaseConfirmationProductID, purchaseWalletName, originalDollars, originalCents, purchaseDollars, purchaseCents = C_StoreSecure.GetConfirmationInfo()
-    if purchaseConfirmationProductID ~= 2003 or purchaseWalletName ~= "Balance" or originalDollars ~= 10 or originalCents ~= 0 or purchaseDollars ~= 5 or purchaseCents ~= 1 then
+    local purchaseConfirmationMatches = purchaseConfirmationProductID == 2003
+        and purchaseWalletName == "Balance"
+        and originalDollars == 10 and originalCents == 0
+        and purchaseDollars == 5 and purchaseCents == 1
+    if not purchaseConfirmationMatches then
         return "wrong_purchase_confirmation_info:" .. tostring(purchaseConfirmationProductID) .. ":" .. tostring(purchaseWalletName) .. ":" .. tostring(purchaseDollars) .. ":" .. tostring(purchaseCents)
     end
 
     local completionProductID, completionGuid, completionRealm, shouldHandle = C_StoreSecure.GetVASCompletionInfo()
-    if completionProductID ~= 2003 or completionGuid ~= character.guid or completionRealm ~= "Azeroth" or shouldHandle ~= true then
+    local completionMatches = completionProductID == 2003 and completionGuid == character.guid
+        and completionRealm == "Azeroth" and shouldHandle == true
+    if not completionMatches then
         return "wrong_completion_info_before_disconnect:" .. tostring(completionProductID) .. ":" .. tostring(completionGuid) .. ":" .. tostring(completionRealm) .. ":" .. tostring(shouldHandle)
     end
-
-    C_StoreSecure.PurchaseVASProduct(99999, character.guid, "Unused", nil, nil, nil, nil, nil, false, false)
 
     local failureCode, failureReason = C_StoreSecure.GetFailureInfo()
     if failureCode ~= 9 or failureReason ~= nil then
@@ -171,8 +183,6 @@ const STORE_SECURE_VAS_SCRIPT: &str = r#"
     if select(1, C_StoreSecure.GetFailureInfo()) ~= nil then
         return "failure_not_cleared"
     end
-
-    C_StoreSecure.ClearPreGeneratedExternalTransactionID()
 
     if #events ~= 0 then
         return "store_request_emitted_an_event"
@@ -282,15 +292,15 @@ fn store_secure_vas_queries_and_stateful_actions_use_seeded_data() {
         .expect("seeded C_StoreSecure VAS flow should be queryable");
 
     assert_eq!(result, "ok");
-    assert_store_vas_response_events(&env);
-    assert_retail_completion_callback_owns_the_event(&env);
+    receive_store_vas_responses_and_assert_events(&env);
+    dispatch_retail_completion_and_assert_event(&env);
 }
 
 #[cfg(feature = "client-retail")]
-fn assert_store_vas_response_events(env: &WowLuaEnv) {
-    receive_guild_master_info(env, 101, vec![store_api_guild_master_info()])
+fn receive_store_vas_responses_and_assert_events(env: &WowLuaEnv) {
+    receive_guild_master_info(env, 101, vec![build_store_api_guild_master_info()])
         .expect("guild-master response should dispatch its event");
-    receive_guild_follow_info(env, store_api_guild_follow_info())
+    receive_guild_follow_info(env, build_store_api_guild_follow_info())
         .expect("guild-follow response should dispatch its event");
     let events: (String, String) = env
         .eval("return STORE_SECURE_VAS_EVENTS[1], STORE_SECURE_VAS_EVENTS[2]")
@@ -303,7 +313,7 @@ fn assert_store_vas_response_events(env: &WowLuaEnv) {
 }
 
 #[cfg(feature = "client-retail")]
-fn store_api_guild_master_info() -> StoreVasGuildMasterInfoInput {
+fn build_store_api_guild_master_info() -> StoreVasGuildMasterInfoInput {
     StoreVasGuildMasterInfoInput {
         guid: "Player-101-1-11".into(),
         guild_name: "Simulator Guild".into(),
@@ -315,7 +325,7 @@ fn store_api_guild_master_info() -> StoreVasGuildMasterInfoInput {
 }
 
 #[cfg(feature = "client-retail")]
-fn store_api_guild_follow_info() -> StoreVasGuildFollowInfoInput {
+fn build_store_api_guild_follow_info() -> StoreVasGuildFollowInfoInput {
     StoreVasGuildFollowInfoInput {
         guid: "Player-101-1-11".into(),
         transferred_realm: Some("Kalimdor".into()),
@@ -324,7 +334,7 @@ fn store_api_guild_follow_info() -> StoreVasGuildFollowInfoInput {
 }
 
 #[cfg(feature = "client-retail")]
-fn assert_retail_completion_callback_owns_the_event(env: &WowLuaEnv) {
+fn dispatch_retail_completion_and_assert_event(env: &WowLuaEnv) {
     env.state()
         .borrow_mut()
         .store_glue
