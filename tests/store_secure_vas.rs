@@ -14,7 +14,7 @@ const REALM_AND_CHARACTER_CONSUMER: &str = r#"
     local selectCharacter = lookup("VASCharacterSelectionCharacterSelector_Callback")
     local selectRealm = lookup("VASCharacterSelectionRealmSelector_Callback")
     local source = debug.getinfo(init, "S")
-    assert(source.source:find("Blizzard_Shared_StoreUISecure.lua", 1, true))
+    assert(source.source:find("Blizzard_Shared_StoreUISecure.lua", 1, true), "Retail StoreUI consumer must be selected")
 
     panel.productInfo = {
         sharedData = {
@@ -26,22 +26,22 @@ const REALM_AND_CHARACTER_CONSUMER: &str = r#"
     init(panel)
 
     local selectors = panel.CharacterSelectionFrame
-    assert(selectors.RealmSelector.Text:GetText() == "Azeroth")
-    assert(selectors.CharacterSelector.Text:GetText():find("Simhero", 1, true))
-    assert(not selectors.NoEligibleCharactersErrorMessage:IsShown())
+    assert(selectors.RealmSelector.Text:GetText() == "Azeroth", "first realm must be visible")
+    assert(selectors.CharacterSelector.Text:GetText():find("Simhero", 1, true), "first character must be visible")
+    assert(not selectors.NoEligibleCharactersErrorMessage:IsShown(), "backed characters must not show the empty state")
     selectCharacter(2)
-    assert(selectors.SelectedCharacterName:GetText() == "Simalt")
+    assert(selectors.SelectedCharacterName:GetText() == "Simalt", "second backed character must be selectable")
 
     local realms = _G.TEST_VAS_REALMS
     selectRealm(realms[2])
-    assert(selectors.RealmSelector.Text:GetText() == "Kalimdor")
-    assert(selectors.CharacterSelector.Text:GetText():find("KalimdorHero", 1, true))
+    assert(selectors.RealmSelector.Text:GetText() == "Kalimdor", "second realm must be selectable")
+    assert(selectors.CharacterSelector.Text:GetText():find("KalimdorHero", 1, true), "second realm character must be visible")
     selectCharacter(1)
-    assert(selectors.SelectedCharacterName:GetText() == "KalimdorHero")
+    assert(selectors.SelectedCharacterName:GetText() == "KalimdorHero", "second realm character must be selectable")
 
     selectRealm(realms[3])
-    assert(selectors.RealmSelector.Text:GetText() == "Empty")
-    assert(selectors.NoEligibleCharactersErrorMessage:IsShown())
+    assert(selectors.RealmSelector.Text:GetText() == "Empty", "absent realm roster must remain selectable")
+    assert(selectors.NoEligibleCharactersErrorMessage:IsShown(), "absent roster must show the empty state")
 "#;
 
 fn load_store_ui() -> WowLuaEnv {
