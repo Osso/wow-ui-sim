@@ -1,31 +1,18 @@
-#![cfg(any(
-    feature = "profile-retail",
-    feature = "client-ptr",
-    feature = "client-mists"
-))]
+#![cfg(feature = "client-retail")]
 
-use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
 use wow_ui_sim::lua_api::WowLuaEnv;
 
-const STORE_GROUP_CONTRACT: &str = include_str!("fixtures/store_group_contract.lua");
-
 #[test]
-fn store_group_shape_resolves_current_demo_entry_for_active_profile() {
-    let env = WowLuaEnv::new().expect("create fresh store API environment");
-    assert_store_group_contract(&env);
-}
-
-#[test]
-fn store_group_shape_survives_original_environment_cleanup() {
+fn store_catalog_methods_remain_in_secureenv_after_environment_cleanup() {
     test_timeout! {
         crate::common::blizzard_addon_harness::with_blizzard_addon_closure(
             &["Blizzard_EnvironmentCleanup"],
             &[],
             |env, loaded| {
                 assert!(loaded.iter().any(|name| name == "Blizzard_EnvironmentCleanup"));
-                assert_store_group_contract(env);
+                assert_empty_secure_store_catalog(env);
                 env.apply_post_load_workarounds();
-                assert_store_group_contract(env);
+                assert_empty_secure_store_catalog(env);
             },
         );
     }
@@ -43,15 +30,27 @@ fn store_group_restore_preserves_existing_getter() {
     assert!(unchanged);
 }
 
-fn assert_store_group_contract(env: &WowLuaEnv) {
-    let mode = match ACTIVE {
-        ClientProfile::Retail | ClientProfile::Ptr => "records",
-        ClientProfile::Mists => "ids",
-        profile => panic!("store group contract not audited for {profile:?}"),
-    };
-    let chunk = format!("local store_group_mode = {mode:?}\n{STORE_GROUP_CONTRACT}");
-    let passed: bool = env
-        .eval(&chunk)
-        .expect("active-profile store group shape and demo lookups must match");
-    assert!(passed, "shared store group contract must finish");
+fn assert_empty_secure_store_catalog(env: &WowLuaEnv) {
+    env.exec_rilua_secure(
+        r#"
+        local store = C_StoreSecure
+        assert(type(store.GetProductGroups) == "function")
+        assert(type(store.GetProductGroupInfo) == "function")
+        assert(type(store.GetProducts) == "function")
+        assert(type(store.GetEntryInfo) == "function")
+        assert(type(store.GetProductInfo) == "function")
+        assert(type(store.IsAvailable) == "function")
+        assert(type(store.GetCurrencyInfo) == "function")
+        assert(type(store.GetProductList) == "function")
+        assert(#store.GetProductGroups() == 0)
+        assert(store.GetProductGroupInfo(1) == nil)
+        assert(#store.GetProducts(1) == 0)
+        assert(store.GetEntryInfo(1) == nil)
+        assert(store.GetProductInfo(1) == nil)
+        assert(store.IsAvailable() == false)
+        assert(store.HasProductList() == false)
+        assert(store.HasPurchaseList() == false)
+        "#,
+    )
+    .expect("Retail catalog methods should remain available in secureenv");
 }

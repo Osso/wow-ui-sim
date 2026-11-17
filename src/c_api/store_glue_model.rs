@@ -21,6 +21,9 @@ pub struct VasQueueCharacter {
 pub enum StoreRequest {
     Queue { correlation: Vec<u8>, sequence: u64 },
     Refresh,
+    ProductList,
+    PurchaseList,
+    DynamicPriceInfo(i32),
 }
 #[derive(Debug, Default)]
 pub struct StoreCallbacks {
@@ -28,9 +31,14 @@ pub struct StoreCallbacks {
     pub purchase_error: bool,
     pub queue_status: bool,
     pub state_changed: bool,
+    pub store_products_updated: bool,
+    pub store_status_changed: bool,
+    pub store_purchase_list_updated: bool,
+    pub dynamic_bundle_price_updated: bool,
 }
 #[derive(Debug, Default)]
 pub struct StoreGlueState {
+    pub store_secure: super::store_catalog_model::StoreSecureState,
     pub purchase_states: HashMap<StoreGuid, VasPurchaseRecord>,
     pub queue_characters: Vec<VasQueueCharacter>,
     /// VERIFIED exact-case Opaque- u32 aliases; missing/None resumes ordinary parsing.

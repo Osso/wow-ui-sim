@@ -82,6 +82,11 @@ impl WowLuaEnv {
         &self.state
     }
 
+    /// The TOC files parsed in this UI session.
+    pub fn toc_cache(&self) -> Rc<crate::toc::TocCache> {
+        self.state.borrow().toc_cache()
+    }
+
     /// Drain finalized failures and nil-symbol diagnostics from runtime addon loads.
     pub fn drain_runtime_addon_diagnostics(&self) -> LoadDiagnostics {
         std::mem::take(&mut self.state.borrow_mut().runtime_addon_diagnostics)
@@ -223,7 +228,7 @@ impl WowLuaEnv {
 
     /// Scan an addons directory and register all found addons (metadata only, no loading).
     pub fn scan_and_register_addons(&self, addons_path: &std::path::Path) {
-        let mut addons = super::addon_scan::scan_addon_entries(addons_path);
+        let mut addons = super::addon_scan::scan_addon_entries(&self.toc_cache(), addons_path);
         addons.sort_by(|a, b| {
             a.folder_name
                 .to_lowercase()
@@ -330,6 +335,9 @@ impl WowLuaEnv {
         #[cfg(feature = "retail-12-0-5")]
         super::execution_budget::reset_frame_budgets(self.lua.borrow_mut().state_mut())?;
         crate::c_api::c_login::advance(self)?;
+        // INFERRED (simulator policy): map the native queued notification to this
+        // dispatch boundary, before frame OnUpdate handlers; native delivery timing is unknown.
+        crate::c_api::store_catalog_model::flush_purchase_list_notification(self)?;
         let timings = super::on_update::fire(self, elapsed)?;
         #[cfg(feature = "client-ptr")]
         {

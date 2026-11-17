@@ -6,9 +6,21 @@ Added the [investigation](investigations/master-test-fixture-triage.md). **VERIF
 
 [Questie login coroutine bit library](investigations/questie-login-bit-library.md) records why Questie's Mists login thread (timer 12) spent about 98% of its sampled instructions in the simulator's Lua `bit` fallback, the native replacement with byte-identical results ([contract](../specs/bit-library.md)), the 13–22 s → 0.67–1.02 s timer-12 A/B, and the rilua taint costs left open.
 
+## [2026-11-17] investigation | TOC parsed once per UI session
+
+VERIFIED (source inventory, RED/GREEN, and Mists A/B): [Addon metadata lookup performance](investigations/addon-metadata-lookup-performance.md#repeated-toc-parsing-fixed-lt-498d) records the repeated parsing of the 57 MB QuestieDB TOC and its fix: a per-session TOC cache ([contract](../specs/toc-session-cache.md)) shared by discovery, enable state, registration, loading and the `C_AddOns` runtime. Mists Questie startup peak RSS drops by about 310 MiB.
+
 ## [2026-11-17] investigation | Addon metadata lookup performance
 
 [Addon metadata lookup performance](investigations/addon-metadata-lookup-performance.md) records the per-call TOC key scan behind the Questie Mists startup timeout, the per-TOC case-insensitive index, preserved and changed duplicate-key semantics ([contract](../specs/addon-metadata-lookup.md)), same-host A/B timings, the +200 MiB peak RSS, and the repeated-TOC-parse hotspot left open.
+
+## [2026-11-16] revision | Retail StoreSecure consumer RED and notifications
+
+The [StoreSecure system page](systems/store-secure-catalog.md) and [RED proof record](investigations/consumer-selection-and-red-proof.md#retail-storesecure-callable-producer-red) record ColorMixin RGB construction, coalesced purchase updates, and seven callable wrong-producer RED cases through original Store consumers. **INFERRED:** the OnUpdate flush boundary is a simulator policy.
+
+## [2026-11-16] implementation | Retail StoreSecure catalog inputs
+
+[StoreSecure catalog contract](../specs/store-secure-catalog.md) and [system page](systems/store-secure-catalog.md) record the Retail 12.1.5.70688 R88ad.1/R88ad.2 catalog, availability, currency, list, and request behavior. **VERIFIED (simulator source):** Retail uses empty-default host inputs; Mists remains UNKNOWN and keeps its prior bootstrap path. **VERIFIED (pinned 12.1.5.70783 consumers):** StoreUI and CatalogShop remain the original read paths. The old seeded-group contract is historical and superseded.
 
 ## [2026-11-16] investigation | Limited listfile reproducibility
 

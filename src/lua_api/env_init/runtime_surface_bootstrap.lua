@@ -1,5 +1,5 @@
--- Single publication-scoped exemption inventory.
-local classicCombat, forever, vanilla, modeledStoreGlue,
+-- Single publication-scoped exemption inventory; modeled Store catalog registration is separate.
+local classicCombat, forever, vanilla, modeledStoreGlue, modeledStoreCatalog,
   retirePveFrameBridge, retireGlueOwnerDefaults = ...
 local strictNamespaces = {}
 if classicCombat then
@@ -438,6 +438,8 @@ if type(C_StoreSecure) == "table" then
 else
   C_StoreSecure = {}
 end
+-- Retail catalog, availability, currency and list methods use the c_api Store model.
+if not modeledStoreCatalog then
 C_StoreSecure.IsAvailable = function()
   return __wow_store_state.available == true
 end
@@ -482,6 +484,8 @@ C_StoreSecure.GetProductList = function()
   end
   return true
 end
+end
+if not modeledStoreCatalog then
 C_StoreSecure.GetProductGroupInfo = function(groupID)
   return __wow_store_state.productGroupInfo[groupID]
 end
@@ -493,6 +497,7 @@ C_StoreSecure.GetEntryInfo = function(entryID)
 end
 C_StoreSecure.GetProductInfo = function(productID)
   return __wow_store_state.productsByID[productID]
+end
 end
 C_StoreSecure.GetWoWAccountGUIDFromName = function(accountName, isLocalAccount)
   if isLocalAccount then
@@ -548,11 +553,13 @@ C_StoreSecure.GetVasServiceType = function(productID)
   local product = C_StoreSecure.GetProductInfo(productID)
   return product and product.sharedData and product.sharedData.vasServiceType or nil
 end
+if not modeledStoreCatalog then
 C_StoreSecure.IsRegionLocked = function()
   return false
 end
 C_StoreSecure.GetLastProductListResponseError = function()
   return 0
+end
 end
 if not modeledStoreGlue then
   C_StoreSecure.GetVASErrors = function()
@@ -615,12 +622,14 @@ if not modeledStoreGlue then
     end
   end
 end
+if not modeledStoreCatalog then
 C_StoreSecure.RequestAllDynamicPriceInfo = __wow_noop
 C_StoreSecure.HasDynamicPriceData = function()
   return true
 end
 C_StoreSecure.IsDynamicBundle = function()
   return false
+end
 end
 
 local __wow_store_secure_state = {
@@ -874,6 +883,7 @@ end
 if rawget(C_StoreSecure, "_state") == nil then
   C_StoreSecure._state = __wow_store_secure_state
 end
+if not modeledStoreCatalog then
 if rawget(C_StoreSecure, "IsAvailable") == nil then
   function C_StoreSecure.IsAvailable() return __wow_store_secure_state.available end
 end
@@ -895,9 +905,11 @@ end
 if rawget(C_StoreSecure, "GetLastProductListResponseError") == nil then
   function C_StoreSecure.GetLastProductListResponseError() return __wow_store_secure_state.last_product_list_response_error end
 end
+end
 if rawget(C_StoreSecure, "GetVASErrors") == nil then
   function C_StoreSecure.GetVASErrors() return __wow_store_secure_state.vas_errors end
 end
+if not modeledStoreCatalog then
 if rawget(C_StoreSecure, "GetCurrencyInfo") == nil then
   function C_StoreSecure.GetCurrencyInfo()
     return {
@@ -914,6 +926,8 @@ if rawget(C_StoreSecure, "GetCurrencyInfo") == nil then
     }
   end
 end
+end
+if not modeledStoreCatalog then
 if rawget(C_StoreSecure, "GetProductGroupInfo") == nil then
   function C_StoreSecure.GetProductGroupInfo(groupID)
     for _, group in ipairs(__wow_store_product_groups) do
@@ -938,6 +952,8 @@ end
 if rawget(C_StoreSecure, "GetProductInfo") == nil then
   function C_StoreSecure.GetProductInfo(productID) return __wow_store_product(productID) end
 end
+end
+if not modeledStoreCatalog then
 if rawget(C_StoreSecure, "IsDynamicBundle") == nil then
   function C_StoreSecure.IsDynamicBundle(_productID) return false end
 end
@@ -947,6 +963,8 @@ end
 if rawget(C_StoreSecure, "RequestAllDynamicPriceInfo") == nil then
   function C_StoreSecure.RequestAllDynamicPriceInfo() return nil end
 end
+end
+if not modeledStoreCatalog then
 if rawget(C_StoreSecure, "GetProductList") == nil then
   function C_StoreSecure.GetProductList()
     __wow_store_secure_state.has_product_list = true
@@ -964,6 +982,7 @@ if rawget(C_StoreSecure, "GetPurchaseList") == nil then
     FireEvent("STORE_PURCHASE_LIST_UPDATED")
     return nil
   end
+end
 end
 if rawget(C_StoreSecure, "GetDistributionList") == nil then
   function C_StoreSecure.GetDistributionList()

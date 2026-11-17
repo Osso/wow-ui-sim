@@ -2,6 +2,8 @@
 use crate::screen::ScreenKind;
 use std::path::{Path, PathBuf};
 
+mod cache;
+pub use cache::TocCache;
 pub use sim_toc::{TocMetadata, collect_metadata_lists, selected_file_path};
 pub type TocFile = sim_toc::TocFile<ActiveSelection>;
 pub const RETAIL_INTERFACE_VERSION: u32 = crate::client_profile::RETAIL_API_INTERFACE_VERSION;

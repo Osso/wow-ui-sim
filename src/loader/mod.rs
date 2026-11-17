@@ -39,14 +39,15 @@ pub use crate::lua_api::state::{
 };
 use crate::saved_variables::SavedVariablesManager;
 use crate::screen::ScreenKind;
-use crate::toc::TocFile;
+use crate::toc::{TocCache, TocFile};
 use std::collections::{HashMap, HashSet};
 use std::path::{Path, PathBuf};
+use std::rc::Rc;
 use std::sync::{Mutex, OnceLock};
 use std::time::Duration;
 
 pub(crate) use addon::{append_pending_nested_addon_diagnostics, begin_addon_load};
-pub use addon_order::sort_addons_by_dependencies;
+pub use addon_order::{sort_addons_by_dependencies, sort_addons_by_dependencies_with_tocs};
 use addon_order::{
     topological_sort_addons, topological_sort_addons_with_extra_dependencies_for_screen,
 };
@@ -54,10 +55,14 @@ pub use error::LoadError;
 pub(crate) use load_addon_trace::{
     LoadAddonTraceOrigin, enter_xml_load_addon_context, runtime_load_addon_origin, trace_load_addon,
 };
+/// A TOC path and its parsed TOC, shared with the session cache.
+pub(crate) type TocEntry = (PathBuf, Rc<TocFile>);
+
 pub use startup_addons::{
     StartupAddon, StartupAddonLoadKind, discover_blizzard_startup_addons_for_screen,
-    load_startup_addon, register_load_with_addons, register_load_with_declarations,
-    resolves_load_with_children, startup_bootstrap_eligible, uses_verified_load_with_semantics,
+    discover_blizzard_startup_addons_with_tocs, load_startup_addon, register_load_with_addons,
+    register_load_with_declarations, resolves_load_with_children, startup_bootstrap_eligible,
+    uses_verified_load_with_semantics,
 };
 mod simple_html;
 pub use xml_frame::create_frame_from_xml;
@@ -459,7 +464,7 @@ fn load_addon_path(
         LoadAddonTraceOrigin::Toc,
         format!("toc {}", toc_path.display()),
     );
-    let toc = TocFile::from_file(toc_path)?;
+    let toc = env.toc_cache().get(toc_path)?;
     #[cfg(feature = "client-mists")]
     trace_mists_preload(env, &toc, toc_path);
     load_addon_path_from_toc(env, addon_name, &toc, saved_vars_mgr)
@@ -557,7 +562,15 @@ pub fn load_addon_from_toc_with_saved_vars(
 /// Scans for built-in addon subdirectories, parses their TOC files, filters out `LoadOnDemand`
 /// addons, and returns the remaining addons in dependency order.
 pub fn discover_blizzard_addons(blizzard_ui_dir: &Path) -> Vec<(String, PathBuf)> {
-    discover_blizzard_addons_for_screen(blizzard_ui_dir, ScreenKind::Game)
+    discover_blizzard_addons_with_tocs(&TocCache::default(), blizzard_ui_dir)
+}
+
+/// Discover game-screen addons through the UI session's parsed TOCs.
+pub fn discover_blizzard_addons_with_tocs(
+    tocs: &TocCache,
+    blizzard_ui_dir: &Path,
+) -> Vec<(String, PathBuf)> {
+    discover_blizzard_addons_for_screen_with_tocs(tocs, blizzard_ui_dir, ScreenKind::Game)
 }
 
 /// Discover every Blizzard addon directory in a BlizzardUI tree, including LoadOnDemand addons.
@@ -567,29 +580,28 @@ pub fn discover_blizzard_addons(blizzard_ui_dir: &Path) -> Vec<(String, PathBuf)
 /// `LoadOnDemand`, plus the transitive required-dependency and `LoadManagers` closure of those
 /// roots, without eagerly loading unrelated non-built-in directories.
 pub fn discover_all_blizzard_addons(blizzard_ui_dir: &Path) -> Vec<(String, PathBuf)> {
-    let entries = match std::fs::read_dir(blizzard_ui_dir) {
-        Ok(entries) => entries,
-        Err(_) => return Vec::new(),
-    };
+    discover_all_blizzard_addons_with_tocs(&TocCache::default(), blizzard_ui_dir)
+}
 
-    let mut toc_map: HashMap<String, (PathBuf, TocFile)> = HashMap::new();
+/// [`discover_all_blizzard_addons`], reading each TOC through the session cache `tocs`.
+pub fn discover_all_blizzard_addons_with_tocs(
+    tocs: &TocCache,
+    blizzard_ui_dir: &Path,
+) -> Vec<(String, PathBuf)> {
+    let Ok(entries) = std::fs::read_dir(blizzard_ui_dir) else {
+        return Vec::new();
+    };
+    let mut toc_map: HashMap<String, TocEntry> = HashMap::new();
     let mut unparsed: Vec<(String, PathBuf)> = Vec::new();
-    for entry in entries.flatten() {
-        let path = entry.path();
-        if !path.is_dir() {
-            continue;
-        }
-        let Some(name) = path.file_name().and_then(|name| name.to_str()) else {
-            continue;
-        };
-        let Some(toc_path) = find_toc_file(&path) else {
-            continue;
-        };
-        match TocFile::from_file(&toc_path) {
+    for (name, toc_path) in entries
+        .flatten()
+        .filter_map(|entry| addon_dir_toc(entry.path()))
+    {
+        match tocs.get(&toc_path) {
             Ok(toc) => {
-                toc_map.insert(name.to_string(), (toc_path, toc));
+                toc_map.insert(name, (toc_path, toc));
             }
-            Err(_) if is_builtin_addon_folder(name) => unparsed.push((name.to_string(), toc_path)),
+            Err(_) if is_builtin_addon_folder(&name) => unparsed.push((name, toc_path)),
             Err(_) => {}
         }
     }
@@ -600,13 +612,32 @@ pub fn discover_all_blizzard_addons(blizzard_ui_dir: &Path) -> Vec<(String, Path
     sorted
 }
 
+/// The folder name and selected TOC path of an addon directory.
+fn addon_dir_toc(path: PathBuf) -> Option<(String, PathBuf)> {
+    if !path.is_dir() {
+        return None;
+    }
+    let name = path.file_name()?.to_str()?.to_string();
+    let toc_path = find_toc_file(&path)?;
+    Some((name, toc_path))
+}
+
 /// Discover Blizzard addons for a specific screen mode, topologically sorted by dependencies.
 pub fn discover_blizzard_addons_for_screen(
     blizzard_ui_dir: &Path,
     screen: ScreenKind,
 ) -> Vec<(String, PathBuf)> {
+    discover_blizzard_addons_for_screen_with_tocs(&TocCache::default(), blizzard_ui_dir, screen)
+}
+
+/// Discover screen-eligible addons through the UI session's parsed TOCs.
+pub fn discover_blizzard_addons_for_screen_with_tocs(
+    tocs: &TocCache,
+    blizzard_ui_dir: &Path,
+    screen: ScreenKind,
+) -> Vec<(String, PathBuf)> {
     let Some((mut addons, mut lod_pool)) =
-        discover_blizzard_addon_toc_pools_for_screen(blizzard_ui_dir, screen)
+        discover_blizzard_addon_toc_pools_for_screen(tocs, blizzard_ui_dir, screen)
     else {
         return Vec::new();
     };
@@ -628,14 +659,24 @@ pub fn discover_blizzard_addon_closure_for_screen(
     screen: ScreenKind,
     roots: &[&str],
 ) -> Vec<(String, PathBuf)> {
+    discover_blizzard_addon_closure_with_tocs(&TocCache::default(), blizzard_ui_dir, screen, roots)
+}
+
+/// [`discover_blizzard_addon_closure_for_screen`], reading each TOC through the session cache.
+pub fn discover_blizzard_addon_closure_with_tocs(
+    tocs: &TocCache,
+    blizzard_ui_dir: &Path,
+    screen: ScreenKind,
+    roots: &[&str],
+) -> Vec<(String, PathBuf)> {
     let Some((addons, lod_pool)) =
-        discover_blizzard_addon_toc_pools_for_screen(blizzard_ui_dir, screen)
+        discover_blizzard_addon_toc_pools_for_screen(tocs, blizzard_ui_dir, screen)
     else {
         return Vec::new();
     };
-    let toc_map: HashMap<String, (PathBuf, TocFile)> = addons.into_iter().chain(lod_pool).collect();
+    let toc_map: HashMap<String, TocEntry> = addons.into_iter().chain(lod_pool).collect();
     let wanted = collect_declared_dependency_closure_for_screen(&toc_map, roots, screen);
-    let filtered: HashMap<String, (PathBuf, TocFile)> = toc_map
+    let filtered: HashMap<String, TocEntry> = toc_map
         .into_iter()
         .filter(|(name, _)| wanted.contains(name))
         .collect();
@@ -660,12 +701,43 @@ pub fn discover_blizzard_addon_closure_for_screen_with_overrides(
     roots: &[&str],
     overrides: &[BlizzardAddonOverride<'_>],
 ) -> Vec<(String, PathBuf)> {
+    discover_blizzard_addon_closure_with_overrides_and_tocs(
+        &TocCache::default(),
+        blizzard_ui_dir,
+        screen,
+        roots,
+        overrides,
+    )
+}
+
+/// Discover a closure with extra roots through the UI session's parsed TOCs.
+pub fn discover_blizzard_addon_closure_with_overrides_and_tocs(
+    tocs: &TocCache,
+    blizzard_ui_dir: &Path,
+    screen: ScreenKind,
+    roots: &[&str],
+    overrides: &[BlizzardAddonOverride<'_>],
+) -> Vec<(String, PathBuf)> {
     let Some((addons, lod_pool)) =
-        discover_blizzard_addon_toc_pools_for_screen(blizzard_ui_dir, screen)
+        discover_blizzard_addon_toc_pools_for_screen(tocs, blizzard_ui_dir, screen)
     else {
         return Vec::new();
     };
-    let toc_map: HashMap<String, (PathBuf, TocFile)> = addons.into_iter().chain(lod_pool).collect();
+    let toc_map: HashMap<String, TocEntry> = addons.into_iter().chain(lod_pool).collect();
+    let filtered = filter_addon_closure(toc_map, roots, overrides, screen);
+    topological_sort_addons_with_extra_dependencies_for_screen(
+        filtered,
+        &build_extra_dependency_map(overrides),
+        screen,
+    )
+}
+
+fn filter_addon_closure(
+    toc_map: HashMap<String, TocEntry>,
+    roots: &[&str],
+    overrides: &[BlizzardAddonOverride<'_>],
+    screen: ScreenKind,
+) -> HashMap<String, TocEntry> {
     let extra_roots_by_addon = build_extra_roots_map(overrides);
     let wanted = collect_declared_dependency_closure_with_overrides(
         &toc_map,
@@ -673,20 +745,14 @@ pub fn discover_blizzard_addon_closure_for_screen_with_overrides(
         &extra_roots_by_addon,
         Some(screen),
     );
-    let extra_dependencies = build_extra_dependency_map(overrides);
-    let filtered: HashMap<String, (PathBuf, TocFile)> = toc_map
+    toc_map
         .into_iter()
         .filter(|(name, _)| wanted.contains(name))
-        .collect();
-    topological_sort_addons_with_extra_dependencies_for_screen(
-        filtered,
-        &extra_dependencies,
-        screen,
-    )
+        .collect()
 }
 
 pub(crate) fn collect_declared_dependency_closure_for_screen(
-    toc_map: &HashMap<String, (PathBuf, TocFile)>,
+    toc_map: &HashMap<String, TocEntry>,
     roots: &[&str],
     screen: ScreenKind,
 ) -> HashSet<String> {
@@ -700,7 +766,7 @@ pub(crate) fn collect_declared_dependency_closure_for_screen(
 }
 
 fn collect_declared_dependency_closure_with_overrides(
-    toc_map: &HashMap<String, (PathBuf, TocFile)>,
+    toc_map: &HashMap<String, TocEntry>,
     roots: &[&str],
     extra_roots_by_addon: &HashMap<&str, Vec<&str>>,
     screen: Option<ScreenKind>,
@@ -727,7 +793,7 @@ fn collect_declared_dependency_closure_with_overrides(
 
 fn queue_declared_dependency_roots(
     name: &str,
-    toc_map: &HashMap<String, (PathBuf, TocFile)>,
+    toc_map: &HashMap<String, TocEntry>,
     extra_roots_by_addon: &HashMap<&str, Vec<&str>>,
     screen: Option<ScreenKind>,
     pending: &mut Vec<String>,
@@ -763,9 +829,7 @@ fn queue_pending_addon(name: String, pending: &mut Vec<String>, queued: &mut Has
     }
 }
 
-fn retain_builtin_roots_and_startup_prerequisites(
-    toc_map: &mut HashMap<String, (PathBuf, TocFile)>,
-) {
+fn retain_builtin_roots_and_startup_prerequisites(toc_map: &mut HashMap<String, TocEntry>) {
     let mut pending: Vec<String> = toc_map
         .keys()
         .filter(|name| is_builtin_addon_folder(name))
@@ -817,15 +881,13 @@ fn build_extra_dependency_map(
 }
 
 fn discover_blizzard_addon_toc_pools_for_screen(
+    tocs: &TocCache,
     blizzard_ui_dir: &Path,
     screen: ScreenKind,
-) -> Option<(
-    HashMap<String, (PathBuf, TocFile)>,
-    HashMap<String, (PathBuf, TocFile)>,
-)> {
+) -> Option<(HashMap<String, TocEntry>, HashMap<String, TocEntry>)> {
     let entries = std::fs::read_dir(blizzard_ui_dir).ok()?;
-    let mut addons: HashMap<String, (PathBuf, TocFile)> = HashMap::new();
-    let mut dependency_pool: HashMap<String, (PathBuf, TocFile)> = HashMap::new();
+    let mut addons: HashMap<String, TocEntry> = HashMap::new();
+    let mut dependency_pool: HashMap<String, TocEntry> = HashMap::new();
 
     for entry in entries.flatten() {
         let path = entry.path();
@@ -833,20 +895,9 @@ fn discover_blizzard_addon_toc_pools_for_screen(
             continue;
         }
         let dir_name = path.file_name().unwrap().to_str().unwrap().to_string();
-        let Some(toc_path) = find_toc_file(&path) else {
+        let Some((toc_path, toc)) = screen_allowed_toc(tocs, &path, screen) else {
             continue;
         };
-        let Ok(toc) = TocFile::from_file(&toc_path) else {
-            continue;
-        };
-        if !toc.allows_screen(screen)
-            || !toc.allows_text_locale()
-            || toc.is_ptr_only()
-            || toc.is_game_type_restricted()
-        {
-            continue;
-        }
-
         let is_builtin_root = is_builtin_addon_folder(&dir_name)
             && !excluded_addons_for_screen(screen).contains(&dir_name.as_str())
             && !excluded_addons_for_active_profile().contains(&dir_name.as_str());
@@ -858,6 +909,17 @@ fn discover_blizzard_addon_toc_pools_for_screen(
     }
 
     Some((addons, dependency_pool))
+}
+
+/// The parsed TOC of `addon_dir` when it may load on `screen` in this profile and locale.
+fn screen_allowed_toc(tocs: &TocCache, addon_dir: &Path, screen: ScreenKind) -> Option<TocEntry> {
+    let toc_path = find_toc_file(addon_dir)?;
+    let toc = tocs.get(&toc_path).ok()?;
+    let allowed = toc.allows_screen(screen)
+        && toc.allows_text_locale()
+        && !toc.is_ptr_only()
+        && !toc.is_game_type_restricted();
+    allowed.then_some((toc_path, toc))
 }
 
 fn excluded_addons_for_screen(screen: ScreenKind) -> &'static [&'static str] {
@@ -915,8 +977,8 @@ fn excluded_addons_for_active_profile() -> &'static [&'static str] {
 /// TOC, so unrelated non-built-in directories remain excluded unless a retained root requires
 /// them through a dependency or manager entry.
 fn pull_startup_prerequisites(
-    addons: &mut HashMap<String, (PathBuf, TocFile)>,
-    lod_pool: &mut HashMap<String, (PathBuf, TocFile)>,
+    addons: &mut HashMap<String, TocEntry>,
+    lod_pool: &mut HashMap<String, TocEntry>,
     extra_dependencies: &HashMap<String, Vec<String>>,
     screen: ScreenKind,
 ) {
@@ -927,8 +989,8 @@ fn pull_startup_prerequisites(
 }
 
 fn collect_startup_prerequisites(
-    addons: &HashMap<String, (PathBuf, TocFile)>,
-    lod_pool: &HashMap<String, (PathBuf, TocFile)>,
+    addons: &HashMap<String, TocEntry>,
+    lod_pool: &HashMap<String, TocEntry>,
     extra_dependencies: &HashMap<String, Vec<String>>,
     screen: ScreenKind,
 ) -> Vec<String> {
@@ -956,8 +1018,8 @@ fn collect_startup_prerequisites(
 
 fn pull_startup_prerequisite(
     name: &str,
-    addons: &mut HashMap<String, (PathBuf, TocFile)>,
-    lod_pool: &mut HashMap<String, (PathBuf, TocFile)>,
+    addons: &mut HashMap<String, TocEntry>,
+    lod_pool: &mut HashMap<String, TocEntry>,
     needed: &mut Vec<String>,
     screen: ScreenKind,
 ) {
