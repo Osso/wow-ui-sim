@@ -35,13 +35,13 @@ pub(crate) fn register_legacy_item_globals(state: &mut LuaState) -> LuaResult<()
             state,
             state.global,
             "GetItemLevelColor",
-            get_item_level_color,
+            publish_item_level_color,
         )?;
     }
     Ok(())
 }
 
-fn get_item_level_color(state: &mut LuaState) -> LuaResult<u32> {
+fn publish_item_level_color(state: &mut LuaState) -> LuaResult<u32> {
     let (condition_23, condition_24) = {
         let state = borrow_state(state)?;
         (
@@ -49,9 +49,9 @@ fn get_item_level_color(state: &mut LuaState) -> LuaResult<u32> {
             state.item_level_color_condition_24,
         )
     };
-    let (quality, color_name) = selected_item_level_color(condition_23, condition_24);
+    let (quality, color_name) = select_item_level_color(condition_23, condition_24);
     let (red, green, blue) =
-        crate::c_api::c_color_overrides::color_override_rgb_for_quality(state, quality)
+        crate::c_api::c_color_overrides::resolve_color_override_rgb_for_quality(state, quality)
             .or_else(|| global_color_rgb(state, color_name))
             .unwrap_or(ITEM_LEVEL_COLOR_FALLBACK);
     (
@@ -62,7 +62,7 @@ fn get_item_level_color(state: &mut LuaState) -> LuaResult<u32> {
         .into_stack(state)
 }
 
-fn selected_item_level_color(
+fn select_item_level_color(
     condition_23: Option<bool>,
     condition_24: Option<bool>,
 ) -> (u8, &'static str) {

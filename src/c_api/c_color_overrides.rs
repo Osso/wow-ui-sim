@@ -345,7 +345,7 @@ fn color_for_quality(state: &mut LuaState, quality: u8) -> u32 {
         .unwrap_or(MISSING_DEFAULT_COLOR)
 }
 
-pub(crate) fn color_override_rgb_for_quality(
+pub(crate) fn resolve_color_override_rgb_for_quality(
     state: &mut LuaState,
     quality: u8,
 ) -> Option<(f64, f64, f64)> {
