@@ -26,7 +26,7 @@ pub fn load_lua_file(
     load_lua_file_with_environment(env, path, ctx, timing, false)
 }
 
-// temporary: lt-635e. Preserve the private snapshot for explicit secure replays.
+// temporary: lt-635e proxy on Retail 12.1.5; other profiles replay in secureenv.
 pub(crate) fn load_secure_replay_lua_file(
     env: &LoaderEnv<'_>,
     path: &Path,

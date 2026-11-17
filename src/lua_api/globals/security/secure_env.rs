@@ -240,7 +240,8 @@ pub fn create_secure_environment(lua: &mut rilua::Lua) -> LuaResult<()> {
     Ok(())
 }
 
-/// Create the temporary full-snapshot environment used by secure replays and generated chunks.
+/// Create the temporary full-snapshot proxy used by Retail 12.1.5 secure replays
+/// and generated chunks. Other profiles use `__secureenv` directly.
 ///
 /// Non-control reads prefer live secureenv values. Names absent there retain
 /// snapshot behavior; assignments publish to the strict secure environment.
@@ -286,7 +287,8 @@ pub(crate) fn secure_replay_env_table(
     }
 }
 
-/// Mark a compiled function for the temporary legacy replay environment.
+/// Mark a secure replay function for its profile-selected environment:
+/// Retail 12.1.5 uses the lt-635e proxy; other profiles use `__secureenv`.
 // temporary: lt-635e
 pub(crate) fn mark_secure_replay_state(
     state: &mut LuaState,

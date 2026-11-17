@@ -41,9 +41,9 @@ pub fn create_frame(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 /// Retail native `GetFrameMetatable` handler. R88i.1 VERIFIES only its
-/// registration route (pair list, ordinary and secure tables). INFERRED: the
-/// argument and return semantics follow master's former Lua helper,
-/// `getmetatable(frame or CreateFrame("Frame"))`; native semantics are UNKNOWN.
+/// registration route (pair list, ordinary and secure tables). INFERRED: a
+/// missing argument creates a default frame when `CreateFrame` exists, then
+/// returns `getmetatable(frame)`; native argument and return semantics are UNKNOWN.
 fn get_frame_metatable(state: &mut LuaState) -> LuaResult<u32> {
     let has_argument = state.top > state.base;
     let argument = if has_argument {

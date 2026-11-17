@@ -114,7 +114,7 @@ impl<'a> LoaderEnv<'a> {
     ) -> Result<()> {
         let secure_addon = self.loading_addon_uses_secure_env();
         if secure_addon {
-            // Keep the temporary bridge for generated XML loader chunks.
+            // Retail 12.1.5 uses the temporary proxy; other profiles use secureenv.
             mark_secure_replay_state(state, func)?;
         }
         let preserve_secure_replay = secure_addon
