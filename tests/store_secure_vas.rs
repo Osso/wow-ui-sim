@@ -14,7 +14,6 @@ const REALM_AND_CHARACTER_CONSUMER: &str = r#"
     local openRealm = lookup("VASCharacterSelectionRealmSelector_OnClick")
     local openCharacter = lookup("VASCharacterSelectionCharacterSelector_OnClick")
     local chooseEntry = lookup("StoreDropdownMenuMenuButton_OnClick")
-    local selectRealm = lookup("VASCharacterSelectionRealmSelector_Callback")
     local menuButtonOnLoad = lookup("StoreDropdownMenuMenuButton_OnLoad")
     local createFrame = lookup("CreateFrame")
     local source = debug.getinfo(init, "S")
@@ -62,7 +61,9 @@ const REALM_AND_CHARACTER_CONSUMER: &str = r#"
     openCharacter(selectors.CharacterSelector.Button)
     assert(characterMenu.Buttons[1]:GetText():find("KalimdorHero", 1, true), "second realm row should reach dropdown")
 
-    selectRealm(_G.TEST_VAS_REALMS[3])
+    openRealm(selectors.RealmSelector.Button)
+    chooseEntry(realmMenu.Buttons[3], "LeftButton")
+    assert(selectors.RealmSelector.Text:GetText() == "Empty", "empty realm should be selected through its dropdown")
     assert(selectors.NoEligibleCharactersErrorMessage:IsShown(), "absent roster should show the original empty state")
     openCharacter(selectors.CharacterSelector.Button)
     assert(characterMenu:IsShown(), "empty roster should keep the original dropdown boundary")
