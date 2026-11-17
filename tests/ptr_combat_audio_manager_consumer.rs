@@ -22,6 +22,10 @@ fn load_combat_audio_manager() -> WowLuaEnv {
     let ui = closure::blizzard_ui_dir();
     let env = closure::new_blizzard_addon_env(&ui);
     env.state().borrow().cvars.set_imported("CAAEnabled", "1");
+    env.state()
+        .borrow()
+        .cvars
+        .set_imported("CAAPulsePlayerHealthPercent", "0");
     install_callable_overlay(&env);
     let overrides = [BlizzardAddonOverride {
         addon: "Blizzard_UnitFrame",
