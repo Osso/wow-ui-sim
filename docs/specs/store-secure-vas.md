@@ -1,6 +1,6 @@
 # Retail StoreSecure VAS API
 
-This contract covers Retail `C_StoreSecure` VAS lookup, request, purchase, and completion methods backed by `src/c_api/`. Native behavior is from Retail 12.1.5.70688; consumer tests load the pinned Retail 12.1.5.70783 UI cache. See the [StoreSecure model](../wiki/systems/store-secure-catalog.md) for the existing Store state boundary.
+This contract covers Retail `C_StoreSecure` VAS lookup, request, purchase, and completion methods backed by `src/c_api/`. Native behavior is from Retail 12.1.5.70688; consumer tests load the pinned Retail 12.1.5.70783 UI cache. See the [VAS system page](../wiki/systems/store-secure-vas.md) and [StoreSecure catalog model](../wiki/systems/store-secure-catalog.md).
 
 ## What it must do
 
@@ -41,6 +41,7 @@ This contract covers Retail `C_StoreSecure` VAS lookup, request, purchase, and c
 
 ## How it works
 
+- [Retail StoreSecure VAS state and response flow](../wiki/systems/store-secure-vas.md).
 - [Retail StoreSecure catalog and list state](../wiki/systems/store-secure-catalog.md).
 - [Store API availability](../wiki/systems/store-api-availability.md).
 - Native findings: private handoff `pr46-49-decomp-answers.md`, R88ad.3–6 and the cited R88q / R88w bullets.
@@ -55,7 +56,7 @@ This contract covers Retail `C_StoreSecure` VAS lookup, request, purchase, and c
 
 ## Tests asserting this spec
 
-- `tests/store_secure_vas.rs` — original `StoreVASValidationFrame_Init`, realm selector, and character selector consumers; lookup row shapes and empty cases.
+- `tests/store_secure_vas.rs` — original realm, character, account, guild, purchase, and completion consumers; explicit rows, absent data, and response state.
 
 ## Known gaps (current cycle)
 

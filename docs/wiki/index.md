@@ -6,6 +6,10 @@
 
 [Addon metadata lookup performance](investigations/addon-metadata-lookup-performance.md) records the per-call TOC key scan behind the Questie Mists startup timeout, the per-TOC case-insensitive index, preserved and changed duplicate-key semantics ([contract](../specs/addon-metadata-lookup.md)), same-host A/B timings, the +200 MiB peak RSS, and the repeated-TOC-parse hotspot left open.
 
+## [2026-11-17] system | Retail StoreSecure VAS
+
+The [VAS system page](systems/store-secure-vas.md) records the empty-default Retail VAS model, typed request state, response ordering, and original StoreUI/GlueXML call sites. The [contract](../specs/store-secure-vas.md) keeps unknown server values empty and member-specific Usage text UNKNOWN.
+
 ## [2026-11-16] revision | Retail StoreSecure consumer RED and notifications
 
 The [StoreSecure system page](systems/store-secure-catalog.md) and [RED proof record](investigations/consumer-selection-and-red-proof.md#retail-storesecure-callable-producer-red) record ColorMixin RGB construction, coalesced purchase updates, and seven callable wrong-producer RED cases through original Store consumers. **INFERRED:** the OnUpdate flush boundary is a simulator policy.
