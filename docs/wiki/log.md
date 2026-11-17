@@ -1,3 +1,7 @@
+## [2026-11-17] investigation | Mists Glue intro movie login
+
+Added the [investigation](investigations/mists-glue-intro-movie-login.md). **VERIFIED (Mists 5.5.4.70268 cache):** the selected original GlueParent/MovieFrame path hides AccountLogin and its edit boxes. **VERIFIED (R88ao, Mists Classic 5.5.4.70631):** cursor global scope and movie return/finish semantics. **INFERRED:** first launch applies the 70631 default/display values to the 70268 cache. **UNKNOWN:** offline StartMovie outcome; its host input stays empty by default.
+
 ## [2026-11-17] verification | Retail mask-2 original CooldownViewer consumer
 
 **VERIFIED (Retail 12.1.5.70783 simulator run):** the callable-wrong sum-then-divide RED failed at count 6 versus expected 5; the byte-identical original-consumer GREEN passed 3/3, including empty and ±1 candidate fallbacks. **UNKNOWN:** native property identity and decoding.

@@ -1,3 +1,7 @@
+## [2026-11-17] investigation | Mists Glue intro movie login
+
+[Mists Glue intro movie login](investigations/mists-glue-intro-movie-login.md) records the selected 5.5.4.70268 GlueParent/MovieFrame path, R88ao native facts for 5.5.4.70631, the empty-default offline movie-input boundary, and the original-consumer RED.
+
 ## [2026-11-17] verification | Retail mask-2 original CooldownViewer consumer
 
 **VERIFIED (Retail 12.1.5.70783 simulator run):** the callable-wrong sum-then-divide RED failed at count 6 versus expected 5; the byte-identical original-consumer GREEN passed 3/3, including empty and ±1 candidate fallbacks. **UNKNOWN:** native property identity and decoding.
@@ -4584,6 +4588,7 @@ The sixteen retail 12.0.0 `Enum.EditModeDamageMeterSetting.*` and `Enum.EditMode
 | [[mount-journal-click-selection]] | Mount Journal mouse clicks never switched selection: the startup-XML fast path fused multi-arg `RegisterForClicks("LeftButtonUp", "RightButtonUp")` into one garbage registration string; `Button:Click()` bypasses registration so only the real GUI dispatch path (`headless-click-probe mounts`) could see it |
 | [[micro-menu-click-offset]] | Micro menu (LFD etc.) clicks dead: MicroMenu's quadrant-dependent anchor was computed before EditMode anchors and the real window size were applied, so the first press snapped the bar one QueueStatusButton slot and the down/up frames mismatched; fixed by replaying `InvokeOnAnyEditModeSystemAnchorChanged` after anchor apply and on `set_screen_size` |
 | [[mists-elvui-startup-compat]] | Mists ElvUI startup errors came from separate simulator surface gaps: trim aliases, MessageFrame-only methods visible on plain frames, AuraUtil tuple shape, unanchored Slider label fontstrings, physical-vs-UI screen-size globals, and chat hook globals |
+| [[mists-glue-intro-movie-login]] | **VERIFIED (Mists 5.5.4.70268 cache and simulator RED):** the selected first-display cinematic opens full-screen MovieFrame; MovieFrame OnShow reaches unpublished HideCursor, leaving AccountLogin hidden and its edit boxes unclickable |
 | [[mists-addon-panel-resume-error]] | Mists addon-panel matrix must resume from first unproven addon; rerunning passed rows from `AllTheThings` was the mistake, and `--start-at` / `.passed` markers guard against repeating it |
 | [[mists-heirloom-tooltip]] | Mists Collections heirloom buttons need `GameTooltip:SetHeirloomByItemID`, routed through `C_TooltipInfo.GetHeirloomByItemID`, so heirloom tooltip initialization does not throw |
 | [[mists-syndicator-baganator-startup]] | Mists full-profile startup errors in Syndicator and Baganator came from Classic/Mists item taxonomy labels plus TokenUI loading before a minimal CharacterFrame parent existed |
