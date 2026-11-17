@@ -54,7 +54,7 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 - [ ] VERIFIED (Retail 12.1.5.70688, R88t.t2): publish the native `Constants.InventoryConstants` table to secureenv without a per-member flag; the secure consumer must read `NumBagSlots = 4` and `NumReagentBagSlots = 1`. SIMULATOR POLICY: keep missing and compatibility constants ordinary-only unless native publication is established.
 - [x] VERIFIED (Retail 12.1.5.70688, R88t): when ordinary and secure `UIParent` names are empty, both receive the same frame-table object through the Retail named-frame policy.
 - [ ] VERIFIED (Retail 12.1.5.70688, R88t): the Retail UIParent bootstrap uses named-frame policy flag 32 and each destination preserves an existing non-nil name.
-- [ ] SIMULATOR POLICY (Retail 12.1.5; native R88an): publish an eligible named XML object into `__secureenv` only when vacant. If ordinary publication is also enabled, publish the same object into `_G` only when vacant. Preserve non-nil names; do not copy ordinary globals. `LoadIntoEnvironment` selects a file mode and does not change the dependency request mode.
+- [ ] SIMULATOR POLICY (Retail 12.1.5; native R88an): during secure-file mode, publish an eligible named XML object into `__secureenv` only when vacant. If ordinary publication is also enabled, publish the same object into `_G` only when vacant. Preserve non-nil names; do not copy ordinary globals. Keep the explicit `addToSecureEnv` route unchanged. `LoadIntoEnvironment` selects a file mode and does not change the dependency request mode.
 
 ### R88ac GlobalStrings secure publication
 

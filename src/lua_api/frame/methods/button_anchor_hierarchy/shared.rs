@@ -196,7 +196,7 @@ pub(super) fn bind_named_child_global(
             (
                 sim.loading_hide_from_global_env,
                 crate::lua_api::globals::create_frame::helpers_shared::
-                    is_retail_secure_xml_name_publication(&sim),
+                    is_retail_secure_named_object_publication(&sim),
             )
         } else {
             (false, false)

@@ -333,9 +333,9 @@ fn retire_replaced_named_frame(sim: &mut SimState, old_frame_id: u64, new_frame_
     sim.invalidate_strata_buckets();
 }
 
-/// The XML loader sets this flag for secure files and scoped addToSecureEnv overrides.
-pub(crate) fn is_retail_secure_xml_name_publication(sim: &SimState) -> bool {
-    crate::client_profile::is_active_retail_12_1_5() && sim.loading_add_to_secure_env
+/// Secure-mode named objects use this policy; explicit addToSecureEnv remains separate.
+pub(crate) fn is_retail_secure_named_object_publication(sim: &SimState) -> bool {
+    crate::client_profile::is_active_retail_12_1_5() && sim.loading_addon_secure_env == Some(true)
 }
 
 pub(crate) fn publish_global_name_if_vacant(state: &mut LuaState, name: &str, value: Val) -> bool {
@@ -413,7 +413,7 @@ fn register_global_name(
         (
             sim.loading_hide_from_global_env,
             sim.loading_add_to_secure_env,
-            is_retail_secure_xml_name_publication(&sim),
+            is_retail_secure_named_object_publication(&sim),
         )
     };
     if !hide_from_global_env {
