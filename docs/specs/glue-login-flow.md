@@ -874,10 +874,10 @@ Glue, following the inferred Glue initialization path. Native Game availability
 and ordinary/secure publication classification remain UNKNOWN. The simulator
 adds no host credential input.
 
-- [ ] **INFERRED (R88am applied to the 70268 cache):** `C_Login.GetCachedCredentials`
-  returns zero Lua values; the original consumer's local `cachedLogins` is nil,
-  so it hides cached-account rows.
-- [ ] **INFERRED (simulator test):** `tests/glue_login.rs` loads the selected
+- [x] **INFERRED (R88am applied to the 70268 cache):** the original consumer
+  hides cached-account rows for this zero-return producer. The test asserts the
+  hidden-row outcome, not direct API return arity.
+- [x] **INFERRED (simulator test):** `tests/glue_login.rs` loads the selected
   Classic Login UI, seeds a visible cached-login row, invokes the original
   `CachedLoginFrameContainer_Update`, and checks that no cached-account row is
   shown. The test also checks the simulator's Glue-only publication choice.
