@@ -331,6 +331,30 @@ fn login_editboxes_gain_focus_when_clicking_their_visible_centers() {
     }
 }
 
+// INFERRED (R88am 5.5.4.70631 applied to Mists 5.5.4.70268): the original consumer hides cached-login rows after a zero-return query.
+#[cfg(feature = "client-mists")]
+#[test]
+fn mists_classic_cached_login_consumer_hides_rows_and_api_is_glue_only() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::Login);
+        let row_visible: bool = env.eval(r#"
+            local container = AccountLogin.UI.CachedLoginFrameContainer
+            local row = CreateFrame("Frame", nil, container, "CachedLoginFrameTemplate")
+            container.Frames = { row }
+            row:Show()
+            CachedLoginFrameContainer_Update(container)
+            for _, cachedRow in ipairs(container.Frames) do
+                if cachedRow:IsShown() then return true end
+            end
+            return false
+        "#).expect("Classic cached-login consumer should hide rows without credentials");
+        assert!(!row_visible, "Classic Login must hide cached-account rows");
+        env.set_screen_mode(ScreenKind::Game);
+        let absent: bool = env.eval("return C_Login.GetCachedCredentials == nil").unwrap();
+        assert!(absent, "GetCachedCredentials must be Glue-only");
+    }
+}
+
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn enter_credentials_and_submit(env: &WowLuaEnv, click_button: bool) {
     for (path, text) in [
