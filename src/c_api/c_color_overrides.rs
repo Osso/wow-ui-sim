@@ -345,6 +345,17 @@ fn color_for_quality(state: &mut LuaState, quality: u8) -> u32 {
         .unwrap_or(MISSING_DEFAULT_COLOR)
 }
 
+pub(crate) fn color_override_rgb_for_quality(
+    state: &mut LuaState,
+    quality: u8,
+) -> Option<(f64, f64, f64)> {
+    let override_type = (quality < OVERRIDE_TYPE_COUNT).then_some(quality)?;
+    let record = read_override_record(state, override_type);
+    let packed_color = record_packed_color(state, record)?;
+    let [red, green, blue, _alpha] = channels_from_packed_color(packed_color);
+    Some((red, green, blue))
+}
+
 fn default_packed_color(quality: u8) -> Option<u32> {
     // INFERRED: these Retail 12.1.5.70783 generated rows supply the 70688 lookup.
     let base_tag = QUALITY_COLOR_TAGS.get(usize::from(quality))?;
