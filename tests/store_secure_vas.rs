@@ -53,13 +53,16 @@ const REALM_AND_CHARACTER_CONSUMER: &str = r#"
     openCharacter(selectors.CharacterSelector.Button)
     local characterMenu = selectors.CharacterSelector.List
     assert(characterMenu:IsShown(), "character selector should show its original dropdown")
-    assert(characterMenu.Buttons[1]:GetText():find("Simhero", 1, true), "first character row should reach dropdown")
-    assert(characterMenu.Buttons[2]:GetText():find("Simalt", 1, true), "second character row should reach dropdown")
+    assert(characterMenu.Buttons[1] and characterMenu.Buttons[1]:IsShown()
+        and characterMenu.Buttons[1]:GetText():find("Simhero", 1, true), "first character row should reach dropdown")
+    assert(characterMenu.Buttons[2] and characterMenu.Buttons[2]:IsShown()
+        and characterMenu.Buttons[2]:GetText():find("Simalt", 1, true), "second character row should reach dropdown")
 
     openRealm(selectors.RealmSelector.Button)
     chooseEntry(realmMenu.Buttons[2], "LeftButton")
     openCharacter(selectors.CharacterSelector.Button)
-    assert(characterMenu.Buttons[1]:GetText():find("KalimdorHero", 1, true), "second realm row should reach dropdown")
+    assert(characterMenu.Buttons[1] and characterMenu.Buttons[1]:IsShown()
+        and characterMenu.Buttons[1]:GetText():find("KalimdorHero", 1, true), "second realm row should reach dropdown")
 
     openRealm(selectors.RealmSelector.Button)
     chooseEntry(realmMenu.Buttons[3], "LeftButton")
@@ -67,7 +70,7 @@ const REALM_AND_CHARACTER_CONSUMER: &str = r#"
     assert(selectors.NoEligibleCharactersErrorMessage:IsShown(), "absent roster should show the original empty state")
     openCharacter(selectors.CharacterSelector.Button)
     assert(characterMenu:IsShown(), "empty roster should keep the original dropdown boundary")
-    assert(not characterMenu.Buttons[1]:IsShown(), "empty roster should have no selectable dropdown row")
+    assert(not characterMenu.Buttons[1] or not characterMenu.Buttons[1]:IsShown(), "empty roster should have no selectable dropdown row")
 "#;
 
 const EMPTY_REALM_LIST_CONSUMER: &str = r#"
@@ -77,7 +80,7 @@ const EMPTY_REALM_LIST_CONSUMER: &str = r#"
     local selectors = lookup("StoreVASValidationFrame").CharacterSelectionFrame
     lookup("VASCharacterSelectionRealmSelector_OnClick")(selectors.RealmSelector.Button)
     assert(selectors.RealmSelector.List:IsShown(), "empty realm list should use the original dropdown")
-    assert(not selectors.RealmSelector.List.Buttons[1]:IsShown(), "empty realm list should have no dropdown rows")
+    assert(not selectors.RealmSelector.List.Buttons[1] or not selectors.RealmSelector.List.Buttons[1]:IsShown(), "empty realm list should have no dropdown rows")
 "#;
 
 fn load_store_ui() -> WowLuaEnv {
