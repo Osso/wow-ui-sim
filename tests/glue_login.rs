@@ -118,8 +118,9 @@ fn frame_center(env: &WowLuaEnv, frame_path: &str) -> Point {
     Point::new(rect.x + rect.width / 2.0, rect.y + rect.height / 2.0)
 }
 
-// UNKNOWN (Mists 5.5.4.70268 native login surface): selected AccountLogin.lua:163
-// calls C_Login.GetCachedCredentials, which is outside the R88ak contract.
+// PRESERVATION (Mists simulator): `src/cvars.yaml:1075` defaults `playIntroMovie`
+// to 0; Classic `GlueParent.lua:15,425-431` opens full-screen MovieFrame, which
+// hides AccountLogin. `MovieFrame.lua:37` also reports missing `HideCursor`.
 #[cfg(not(feature = "client-mists"))]
 #[test]
 fn login_boot_hides_non_login_frontend_frames() {
@@ -291,8 +292,10 @@ fn login_boot_keeps_settings_preview_panels_wired_to_settings_panel() {
     }
 }
 
-// UNKNOWN (Mists 5.5.4.70268 native login surface): selected AccountLogin.lua:163
-// calls C_Login.GetCachedCredentials, which is outside the R88ak contract.
+// PRESERVATION (Mists simulator): `src/cvars.yaml:1075` defaults `playIntroMovie`
+// to 0; Classic `GlueParent.lua:15,425-431` opens full-screen MovieFrame, so
+// AccountLogin edit-box centers are not hittable. `MovieFrame.lua:37` reports
+// missing `HideCursor`.
 #[cfg(not(feature = "client-mists"))]
 #[test]
 fn login_editboxes_gain_focus_when_clicking_their_visible_centers() {
