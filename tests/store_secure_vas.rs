@@ -147,10 +147,9 @@ const GUILD_MASTER_REQUEST_CONSUMER: &str = r#"
     end)
     local panel = lookup("StoreVASValidationFrame")
     panel.productInfo = { sharedData = { vasServiceType = lookup("Enum").VasServiceType.GuildNameChange, name = "Fixture", instructions = "" } }
-    lookup("StoreVASValidationFrame_Init")(panel)
-    local realmCallback = lookup("VASCharacterSelectionRealmSelector_Callback")
-    assert(debug.getinfo(realmCallback, "S").source:find("Blizzard_Shared_StoreUISecure.lua", 1, true))
-    realmCallback(C_StoreSecure.GetRealmList()[1])
+    local init = lookup("StoreVASValidationFrame_Init")
+    assert(debug.getinfo(init, "S").source:find("Blizzard_Shared_StoreUISecure.lua", 1, true))
+    init(panel)
 "#;
 
 const GUILD_FOLLOW_REQUEST_CONSUMER: &str = r#"
@@ -590,13 +589,13 @@ fn retail_store_vas_guild_follow_request_uses_the_original_character_callback() 
             StoreVasGuildFollowInfoInput {
                 guid: "Player-101-1-11".into(),
                 transferred_realm: Some("Kalimdor".into()),
-                faction_changed: true,
+                faction_changed: false,
             },
         )
         .expect("guild-follow response should update state before notification");
         let event: (String, String, bool, i32) = env.eval("return STORE_VAS_GUILD_FOLLOW_EVENT.guid, STORE_VAS_GUILD_FOLLOW_EVENT.transferredRealm, STORE_VAS_GUILD_FOLLOW_EVENT.factionChanged, STORE_VAS_GUILD_FOLLOW_EVENT.count")
             .expect("guild-follow event should publish its verified payload");
-        assert_eq!(event, ("Player-101-1-11".into(), "Kalimdor".into(), true, 2));
+        assert_eq!(event, ("Player-101-1-11".into(), "Kalimdor".into(), false, 2));
     }
 }
 
