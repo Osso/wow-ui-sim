@@ -1,6 +1,7 @@
 #![cfg(all(feature = "client-retail", feature = "optional-tests"))]
 
 use crate::common::blizzard_addon_harness::with_blizzard_addon_closure;
+use wow_ui_sim::c_api::c_spec::PvpTalentInfoRecord;
 use wow_ui_sim::c_api::c_tooltip_info_pvp_talent::{PvpTalentSlotInput, PvpTalentTooltipRecord};
 use wow_ui_sim::lua_api::WowLuaEnv;
 
@@ -236,4 +237,118 @@ fn player_spells_slot_consumer_works_without_legacy_alias() {
             assert!(shown, "the enabled-slot tooltip consumer should complete");
         },
     );
+}
+
+fn locked_talent_info() -> PvpTalentInfoRecord {
+    PvpTalentInfoRecord {
+        talent_id: 901,
+        name: "Host Locked Talent".into(),
+        icon: 61101,
+        selected: false,
+        available: false,
+        spell_id: 71101,
+        unlocked: false,
+        known: false,
+        granted_by_aura: false,
+        dependencies_unmet: true,
+        dependencies_unmet_reason: Some("Host prerequisite lock".into()),
+    }
+}
+
+fn unlocked_talent_info() -> PvpTalentInfoRecord {
+    PvpTalentInfoRecord {
+        talent_id: 902,
+        name: "Host Unlocked Talent".into(),
+        icon: 61102,
+        selected: true,
+        available: true,
+        spell_id: 71102,
+        unlocked: true,
+        known: true,
+        granted_by_aura: true,
+        dependencies_unmet: false,
+        dependencies_unmet_reason: None,
+    }
+}
+
+fn insert_talent_info(env: &WowLuaEnv, talent_id: i32, info: PvpTalentInfoRecord) {
+    env.state()
+        .borrow_mut()
+        .pvp_talents
+        .info_by_id
+        .insert(talent_id, info);
+}
+
+fn assert_player_spells_loaded(loaded: &[String]) {
+    assert!(loaded.iter().any(|name| name == "Blizzard_PlayerSpells"));
+}
+
+#[test]
+fn player_spells_locked_talent_button_uses_its_supplied_info() {
+    with_blizzard_addon_closure(
+        &["Blizzard_GameTooltip", "Blizzard_PlayerSpells"],
+        &[],
+        |env, loaded| {
+            assert_player_spells_loaded(loaded);
+            insert_talent_info(&env, 901, locked_talent_info());
+            env.eval::<()>(
+                r#"
+                local button = CreateFrame("Button", nil, UIParent, "PvPTalentListButtonTemplate")
+                button.talentID = 901
+                button.selectedHere = false
+                button.selectedOther = false
+                PvPTalentListButtonMixin.Update(button)
+                local info = button.talentInfo
+                assert(info.talentID == 901 and info.name == "Host Locked Talent")
+                assert(info.icon == 61101 and info.selected == false and info.available == false)
+                assert(info.spellID == 71101 and info.unlocked == false and info.known == false)
+                assert(info.grantedByAura == false and info.dependenciesUnmet == true)
+                assert(info.dependenciesUnmetReason == "Host prerequisite lock")
+                assert(button.Name:GetText() == info.name and button.Icon:GetTexture() == info.icon)
+                assert(not button.Selected:IsShown() and button.disallowNormalClicks)
+                "#,
+            )
+            .expect("run the selected Player Spells locked-talent button consumer");
+        },
+    );
+}
+
+#[test]
+fn player_spells_unlocked_talent_button_uses_its_supplied_info() {
+    with_blizzard_addon_closure(
+        &["Blizzard_GameTooltip", "Blizzard_PlayerSpells"],
+        &[],
+        |env, loaded| {
+            assert_player_spells_loaded(loaded);
+            insert_talent_info(&env, 902, unlocked_talent_info());
+            env.eval::<()>(
+                r#"
+                local button = CreateFrame("Button", nil, UIParent, "PvPTalentListButtonTemplate")
+                button.talentID = 902
+                button.selectedHere = true
+                button.selectedOther = false
+                PvPTalentListButtonMixin.Update(button)
+                local info = button.talentInfo
+                assert(info.talentID == 902 and info.name == "Host Unlocked Talent")
+                assert(info.icon == 61102 and info.selected == true and info.available == true)
+                assert(info.spellID == 71102 and info.unlocked == true and info.known == true)
+                assert(info.grantedByAura == true and info.dependenciesUnmet == false)
+                assert(info.dependenciesUnmetReason == nil)
+                assert(button.Name:GetText() == info.name and button.Icon:GetTexture() == info.icon)
+                assert(button.Selected:IsShown() and not button.disallowNormalClicks)
+                "#,
+            )
+            .expect("run the selected Player Spells unlocked-talent button consumer");
+        },
+    );
+}
+
+#[test]
+fn empty_host_records_do_not_publish_placeholder_info() {
+    let env = WowLuaEnv::new().expect("create PvP talent API environment");
+    let return_count: i32 = env
+        .eval("return select('#', C_SpecializationInfo.GetPvpTalentInfo(903))")
+        .expect("query a PvP talent without a host record");
+
+    assert_eq!(return_count, 0);
 }
