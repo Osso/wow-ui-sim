@@ -41,7 +41,7 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
 
 fn get_spec_setting(state: &mut LuaState) -> LuaResult<u32> {
     let setting = read_low_byte_enum_argument(state, 1, GET_API, GET_USAGE, MAX_SETTING)?;
-    let value = loaded_value(&borrow_state(state)?, setting);
+    let value = loaded_value(&*borrow_state(state)?, setting);
     state.push(Val::Num(f64::from(value)));
     Ok(1)
 }
@@ -49,7 +49,7 @@ fn get_spec_setting(state: &mut LuaState) -> LuaResult<u32> {
 fn set_spec_setting(state: &mut LuaState) -> LuaResult<u32> {
     let setting = read_low_byte_enum_argument(state, 1, SET_API, SET_USAGE, MAX_SETTING)?;
     let value = read_untainted_signed32_argument(state, 2, SET_API, SET_USAGE)?;
-    let stored = store_value(&mut borrow_state_mut(state)?, setting, value);
+    let stored = store_value(&mut *borrow_state_mut(state)?, setting, value);
     state.push(Val::Bool(stored));
     Ok(1)
 }
