@@ -1,3 +1,7 @@
+## [2026-11-17] system | Secure environment profile scope (decision A)
+
+Updated the [taint system](systems/taint-system.md#dual-lua-environment), [add-on loading](systems/addon-loading.md) and the index row. Retail 12.1.5 keeps the evidence-based strict model; PTR, Mists, WoW Forever, Wrath, Era and Anniversary keep master `4f073e8ea` behaviour through temporary `secure_env_global_snapshot.rs` and `string_format_legacy.rs`. Runtime gate results are recorded in the lane REPORT. **UNKNOWN:** native secure publication outside Retail 12.1.5.
+
 ## [2026-11-16] investigation | Limited listfile reproducibility
 
 Added the [investigation](investigations/limited-listfile-reproducibility.md) and [contract](../specs/limited-listfile-reproducibility.md). Current-master generation is byte-identical from the recovered, checksum-matching 202611141741 source; source/override/request/output drift now fails before writing. The coordinator confirmed the PR33 report did not retain row texts or source identity: the six original rows are UNRECOVERABLE and unpinned input drift is an INFERRED cause, distinct from the verified pinned-source reproduction.
