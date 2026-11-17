@@ -1,6 +1,8 @@
 # Addon metadata lookup performance (Questie)
 
-`GetAddOnMetadata` scanned every TOC key with `eq_ignore_ascii_case` on each call. QuestieDB's Mists TOC has 408,495 keys and Questie reads rows one call at a time, so Mists startup with Questie 12.9.0 + QuestieDB 1.1.1 never settled within 90 s. A case-insensitive key index built while parsing each TOC fixed it (lt-45c1). A per-session TOC cache then removed the repeated parses of that 57 MB TOC (lt-498d).
+`GetAddOnMetadata` scanned every TOC key with `eq_ignore_ascii_case` on each call. QuestieDB's Mists TOC has 408,495 keys and Questie reads rows one call at a time, so Mists startup with Questie 12.9.0 + QuestieDB 1.1.1 never settled within 90 s. A case-insensitive key index built while parsing each TOC fixed it (lt-45c1).
+
+A per-session TOC cache then removed the repeated parses of the 57 MB QuestieDB TOC (lt-498d); see [Repeated TOC parsing](#repeated-toc-parsing-fixed-lt-498d).
 
 ## Symptoms
 
@@ -18,9 +20,13 @@
 - VERIFIED: startup with Questie completes in 18–26 s (exit 1 from the 4 pre-existing Mists Blizzard UI errors, identical to the no-Questie baseline); the old binary still times out at 90 s.
 - VERIFIED: peak `VmHWM` 1,346,632–1,380,604 KiB against 1,144,792–1,154,188 KiB for the old binary (about +200 MiB). INFERRED: the index costs one lowercased key and one spelling copy per key for each live TOC metadata copy.
 
+## Next hotspot (not fixed)
+
+- VERIFIED (flat `perf`, 17,820 samples): the metadata scan is gone from the profile. Top symbols are the Lua VM (`execute_inner` 12.9%) and TOC parsing work (SipHash, `HashMap<String, String>::insert`, `StrSearcher`, `malloc`/`free`, about 20% together).
+- INFERRED: third-party startup parses the 57 MB QuestieDB TOC several times (eligibility, metadata registration, enable state, load). The pre-load phase took 3.7–6.9 s with the index against 2.3–3.7 s without it; host load made these runs noisy.
+
 ## Repeated TOC parsing (fixed, lt-498d)
 
-- VERIFIED (flat `perf`, 17,820 samples, lt-45c1): after the index, top symbols were the Lua VM (`execute_inner` 12.9%) and TOC parsing work (SipHash, `HashMap<String, String>::insert`, `StrSearcher`, `malloc`/`free`, about 20% together).
 - Cause: every reader parsed the TOC itself. Third-party startup parsed each TOC for screen eligibility, dependency sorting, enable state, list registration, startup eligibility, the Blizzard dependency check and the load; `LoadAddOn` parsed it again. Each parse built a new 408,495-key index, and the addon list kept a copy of the metadata map.
 - Fix: the [TOC session cache](../../specs/toc-session-cache.md) parses each TOC path once per UI session and shares `Rc<TocFile>`; `TocMetadata` clones share one map. ReloadUI starts a new cache.
 - VERIFIED (optional-tests regression, two 150,000-key TOCs, 10.06 MB): the unchanged loader read 66.3 MB at startup and 9.46 MB more in `LoadAddOn`; the cache reads 10.06 MB and 155 bytes.
