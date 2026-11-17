@@ -18,8 +18,8 @@ impl WidgetRegistry {
             return (0.0, 0.0);
         };
         (
-            self.round_layout_value(frame, frame.width),
-            self.round_layout_value(frame, frame.height),
+            self.round_layout_dimension(frame, frame.width),
+            self.round_layout_dimension(frame, frame.height),
         )
     }
 

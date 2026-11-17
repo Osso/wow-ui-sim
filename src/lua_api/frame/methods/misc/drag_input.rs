@@ -8,6 +8,7 @@ use crate::lua_api::methods::{
 };
 use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
 use crate::widget::AnchorPoint;
+use crate::widget::clamp_geometry::{COORDINATE_ROOT, uses_retail_clamp_producers};
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
@@ -148,10 +149,13 @@ pub fn start_moving(state: &mut LuaState) -> LuaResult<u32> {
         return Ok(0);
     }
     let mut sim = borrow_state_mut(state)?;
-    if let Some(frame) = sim.widgets.get_mut_visual(id)
-        && frame.movable
-    {
-        frame.is_moving = true;
+    if sim.widgets.get(id).is_some_and(|frame| frame.movable) {
+        if uses_retail_clamp_producers() {
+            anchor_movement_to_coordinate_root(&mut sim, id);
+        }
+        if let Some(frame) = sim.widgets.get_mut_visual(id) {
+            frame.is_moving = true;
+        }
         sim.set_active_drag_frame(Some(id));
     }
     Ok(0)
@@ -184,6 +188,16 @@ pub fn stop_moving_or_sizing(state: &mut LuaState) -> LuaResult<u32> {
         return Ok(0);
     }
     let mut sim = borrow_state_mut(state)?;
+    if uses_retail_clamp_producers()
+        && sim.active_drag_frame == Some(id)
+        && sim
+            .widgets
+            .get(id)
+            .is_some_and(|frame| frame.is_moving || frame.is_sizing)
+        && !sim.widgets.has_window_movement_context(Some(id))
+    {
+        anchor_movement_to_coordinate_root(&mut sim, id);
+    }
     if let Some(frame) = sim.widgets.get_mut_visual(id) {
         if frame.is_moving || frame.is_sizing {
             frame.user_placed = true;
@@ -195,6 +209,40 @@ pub fn stop_moving_or_sizing(state: &mut LuaState) -> LuaResult<u32> {
         sim.set_active_drag_frame(None);
     }
     Ok(0)
+}
+
+fn anchor_movement_to_coordinate_root(sim: &mut crate::lua_api::SimState, id: u64) {
+    // Read layout without an eager script/rect notification. Retain its
+    // position and size when replacing any opposing anchors with one point.
+    let mut cache = crate::layout::LayoutCache::default();
+    let layout = crate::layout::compute_frame_rect_cached(
+        &sim.widgets,
+        id,
+        sim.screen_width,
+        sim.screen_height,
+        &mut cache,
+    );
+    if layout.rect_valid
+        && layout.eff_scale.is_finite()
+        && layout.eff_scale > 0.0
+        && let Some(frame) = sim.widgets.get_mut_for_anchor_edit(id)
+    {
+        let scale = layout.eff_scale;
+        frame.clear_all_points();
+        frame.set_size(layout.rect.width / scale, layout.rect.height / scale);
+        frame.set_point(
+            AnchorPoint::TopLeft,
+            Some(COORDINATE_ROOT),
+            AnchorPoint::TopLeft,
+            layout.rect.x / scale,
+            -layout.rect.y / scale,
+        );
+        sim.widgets.resolve_named_anchor_targets_for_frame(id);
+        sim.widgets.mark_anchor_rect_dirty(id);
+    }
+    // Also covers an accepted movement with no resolved geometry. This equal
+    // request cannot repeat the suppression write on an already false frame.
+    sim.widgets.request_anchor_propagation(id, false);
 }
 
 pub fn set_user_placed(state: &mut LuaState) -> LuaResult<u32> {
@@ -220,30 +268,62 @@ pub fn is_user_placed(state: &mut LuaState) -> LuaResult<u32> {
 
 pub fn set_clamped_to_screen(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
-    let retail = crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail;
+    let retail = uses_retail_clamp_producers();
     let clamped = clamp_enable_argument(state, retail)?;
-    if retail
-        && borrow_state(state)?
-            .widgets
-            .get(id)
-            .is_some_and(|f| f.effective_screen_clamp() == clamped)
-    {
-        return Ok(0);
+    if retail {
+        return set_retail_clamp_enabled(state, id, clamped);
     }
     if !can_change_protected_state_for(state, id) {
         emit_addon_action_blocked(state, id, "SetClampedToScreen");
         return Ok(0);
     }
+
     let mut sim = borrow_state_mut(state)?;
-    if retail {
-        sim.widgets.set_screen_clamp_enabled(id, clamped);
-    } else {
-        if let Some(frame) = sim.widgets.get_mut_visual(id) {
-            frame.clamped_to_screen = clamped;
-        }
-        sim.widgets.mark_rect_dirty(id);
+    if let Some(frame) = sim.widgets.get_mut_visual(id) {
+        frame.clamped_to_screen = clamped;
     }
+    sim.widgets.mark_rect_dirty(id);
     Ok(0)
+}
+
+fn set_retail_clamp_enabled(state: &LuaState, id: u64, clamped: bool) -> LuaResult<u32> {
+    let mut sim = borrow_state_mut(state)?;
+    let Some(frame) = sim.widgets.get(id) else {
+        return Ok(0);
+    };
+    if frame.effective_screen_clamp() == clamped {
+        return Ok(0);
+    }
+    // Q4.5 identifies the Frame-carrier policy state as geometry propagation.
+    // It is not suppression, enablement, combat, protection or forbidden state.
+    if clamped && frame.anchor_propagation && frame.has_frame_carrier() {
+        return Err(clamp_method_error(
+            state,
+            frame,
+            "SetClampedToScreen",
+            "ClampedToScreen",
+            "Can't clamp restricted regions",
+        ));
+    }
+    sim.widgets.set_screen_clamp_enabled(id, clamped);
+    Ok(0)
+}
+
+pub(super) fn clamp_method_error(
+    state: &LuaState,
+    frame: &crate::widget::Frame,
+    method: &str,
+    action: &str,
+    reason: &str,
+) -> rilua::LuaError {
+    let frame_type = frame.widget_type.as_str();
+    let name = frame.name.as_deref().unwrap_or(frame_type);
+    let origin = rilua::api::stack_taint_origin(state)
+        .map(|source| format!("Lua Taint: {source}"))
+        .unwrap_or_else(|| "No Lua Taint".to_owned());
+    rilua::runtime_error(format!(
+        "{name}:{method}(): Action[{action}] failed because[{reason}]: attempted from: {frame_type}:{method}.\n{origin}",
+    ))
 }
 
 fn clamp_enable_argument(state: &LuaState, retail: bool) -> LuaResult<bool> {

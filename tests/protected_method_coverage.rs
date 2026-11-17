@@ -177,6 +177,9 @@ protected_input_test!(
     "SetCollapsesLayout",
     "CollapsesLayout"
 );
+// Retail R88n.5r-q3.3 uses a distinct restricted-region bit, not this
+// simulator combat/protected-state policy. See screen_clamp_q3.
+#[cfg(not(feature = "client-retail"))]
 protected_input_test!(
     protected_input_clamped,
     "SetClampedToScreen",

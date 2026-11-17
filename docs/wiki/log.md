@@ -4093,3 +4093,11 @@ Added [Retail Glue host state](systems/glue-host-state.md) for lt-fb68. Retail r
 ## [2026-11-17] system | Retail StoreSecure VAS
 
 Updated the [VAS system page](systems/store-secure-vas.md) with R88al. **VERIFIED (R88al and current-source tests):** Retail `GetBnetTransferInfo` returns the saved GUID and ordered account-name list through the original StoreUI transfer path; two success responses, an error, and a stale response are covered. **UNKNOWN:** the native pre-validation snapshot and context-dependent return-secret marking.
+
+## [2026-11-15] clarification | Retail screen clamp q4
+
+[Screen clamp suppression](investigations/screen-clamp-suppression.md#q4-clarification-1192) replaces interim inputs with the verified threshold, call-local read sample, separate ancestor flags, and existing Window and propagation paths.
+
+## [2026-11-14] implementation | Retail q3 screen clamp producers
+
+[Screen clamp suppression](investigations/screen-clamp-suppression.md) records q3 anchor dependency propagation, the guarded coordinate root, native-unit conversion and rounding, and separate inset notifications and restriction policy. The remaining q4 inputs are host seams, not native defaults.

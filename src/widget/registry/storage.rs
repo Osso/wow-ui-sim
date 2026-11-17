@@ -11,6 +11,12 @@ pub(super) fn registry_storage_estimate_bytes(registry: &WidgetRegistry) -> usiz
         + render_dirty_sources_bytes(&registry.render_dirty_sources.borrow())
         + dirty_source_bytes(&registry.current_dirty_source.borrow())
         + hash_map_u64_hash_set_u64_bytes(&registry.anchor_dependents)
+        + registry.ordered_anchor_dependents.capacity() * std::mem::size_of::<(u64, Vec<u64>)>()
+        + registry
+            .ordered_anchor_dependents
+            .values()
+            .map(|ids| ids.capacity() * std::mem::size_of::<u64>())
+            .sum::<usize>()
         + hash_map_u64_hash_set_u64_bytes(&registry.frame_anchor_targets)
         + hash_set_u64_bytes(&registry.rect_dirty_ids)
         + hash_set_u64_bytes(&registry.hit_grid_dirty_ids)

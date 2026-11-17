@@ -50,11 +50,9 @@ Retail GameTooltip helper source is checked; the new oversize selector feeds two
 different widths and checks exact right/top pinning, unchanged size and unequal
 outputs, rejecting a constant/no-op clamp. No test execution is claimed here.
 
-Native q3 answers (#1168) now VERIFY propagation, conversion/rounding and
-notification/policy behavior. Simulator implementation is deferred by agreement
-(#1169), not UNKNOWN native behavior. This bounded candidate retains neutral
-producer/notification seams. Public-unit numerical equivalence, loaded-owner
-state, exhaustive writer census and final renderer snapping remain unproved.
+Native q3 answers (#1168) VERIFY propagation, conversion/rounding and
+notification/policy behavior. These producers were deferred in the q1/q2 merge
+by #1169 and implemented in the q3 follow-up below.
 
 ## Sources
 
@@ -74,3 +72,47 @@ to scanning numeric `/proc` entries and matching the PPID in `stat` (field 4,
 the second token after the final `)`). The fast path, deadline, child count,
 and full conformance admission remain unchanged. This is a test-harness
 portability fix, not tooltip behavior or native clamp evidence.
+
+
+## q3 follow-up (lt-883d, Retail only)
+
+The complete q3 native answer is tracked in #1176, scoped to Retail
+12.1.5.70688. #1181 documents the remaining q4 evidence gaps. See
+[layout reference](../../layout-system.md#screen-clamping) for the current
+public contract, exact f32 unit operations, comparison and queue rules.
+
+- **VERIFIED behavior:** anchor dependencies inherit propagation; changed
+  unguarded nodes write state first, visit their ordered dependents, and then
+  call the verified suppression writer. The false/guarded shared coordinate root
+  is represented as a geometry target, separate from UIParent. Accepted
+  StartMoving and ordinary active-target settlement request that root's state.
+- **VERIFIED behavior:** native-unit inset stores and public getters use
+  distinct f32 conversion order; rounding touches displacement and explicit
+  dimensions before correction, not resolved target edges or derived spans.
+  No renderer snapping is claimed. This model bridges existing public-unit
+  displacements/dimensions through that helper rather than changing all
+  unrelated geometry storage.
+- **VERIFIED behavior:** the inset pre-store notification is separate from
+  rectangle dirtiness and follows its saved-access, prevention and prior-mark
+  predicates. The distinct geometry callback runs before its dependents.
+  The restricted-region policy rejects changed true and raises the diagnostic
+  rather than yielding a nil or successful no-op. Retail's old generic
+  protected/combat gate for this setter is contradicted and removed; other
+  profiles and general script-object access behavior are unchanged.
+- **INFERRED simulator representations / UNKNOWN native origins:** the
+  fallback rounding scale guard is positivity, not a claimed native threshold;
+  movement special contexts, saved access, ancestor eligibility/gate and first
+  boundary marker, and restricted-region state are separate explicit host
+  inputs, neutral by default. The constructor does not establish any loaded
+  owner's or UIParent's propagation. StartSizing is outside this change.
+- **Conditional original proof:** the selected Retail GameTooltip helper
+  drives cursor and right owners, followed by ClearAllPoints and a point to
+  UIParent, with supplied true and false targets. The all-false sequence is
+  **INFERRED** and conditional on the fixture. Movement, API, guard/equal
+  return, rounding and independent notification tests exercise the other
+  bounded behavior without modifying Blizzard Lua.
+
+
+## q4 clarification (#1192)
+
+This follow-up replaces q3's interim scale, restricted-region, movement-context and saved-access inputs without widening the task. The exact threshold is f32 epsilon with a strict comparison. Inset tracking is modeled in a call-local simulator test seam (no live VM changes), with initialization, save/clear, four accepted reads, pre-restoration sample and restoration. Unmarked arguments do not become marked through taint labels. The receiving Frame participates in the boundary search; eligibility, the separate auxiliary gate word, boundary flag and the parent notification byte remain distinct. The restricted policy reads geometry propagation. The existing SetWindow and parent-assignment paths supply the geometry's stored Window-presence projection; no new public method or native constructor is introduced. Native special constructors in #1192 are not represented by the current simulator. StartSizing and complete unobserved writer inventories remain out of scope.

@@ -155,6 +155,8 @@ pub struct SimState {
     #[cfg(feature = "client-wrath")]
     pub who_routing: crate::c_api::who_routing::WhoRouting,
     pub tooltips: HashMap<u64, TooltipData>,
+    /// Host-only call inputs for the simulator's q4 inset access test seam.
+    pub clamp_inset_access_input: crate::widget::ClampInsetAccessInput,
     /// Explicit host-supplied item metadata, taking precedence over the generated catalog.
     pub item_overrides: HashMap<u32, crate::items::ItemInfo>,
     /// UNKNOWN live R88l.1 condition outcomes; absent inputs select no color override.

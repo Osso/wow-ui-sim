@@ -10,6 +10,7 @@ use crate::lua_api::methods::{
     val_to_string,
 };
 use crate::lua_bridge::{FromStack, IntoStack, stack_val};
+use crate::widget::clamp_geometry::{COORDINATE_ROOT, uses_retail_clamp_producers};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
 
@@ -215,13 +216,16 @@ pub(super) fn clear_all_points(state: &mut LuaState) -> LuaResult<u32> {
             .map(|f| f.anchors.is_empty())
             .unwrap_or(true)
     };
-    if !already_empty {
+    if !already_empty || uses_retail_clamp_producers() {
         let mut sim = borrow_state_mut(state)?;
-        sim.widgets.remove_all_anchor_dependents_for(id);
-        if let Some(frame) = sim.widgets.get_mut_for_anchor_edit(id) {
-            frame.clear_all_points();
+        if !already_empty {
+            sim.widgets.remove_all_anchor_dependents_for(id);
+            if let Some(frame) = sim.widgets.get_mut_for_anchor_edit(id) {
+                frame.clear_all_points();
+            }
+            sim.widgets.mark_anchor_rect_dirty(id);
         }
-        sim.widgets.mark_anchor_rect_dirty(id);
+        sim.widgets.request_anchor_propagation(id, false);
     }
     Ok(0)
 }
@@ -243,7 +247,9 @@ pub(super) fn clear_point(state: &mut LuaState) -> LuaResult<u32> {
         .get(id)
         .and_then(|f| f.anchors.iter().find(|a| a.point == point))
         .and_then(|a| a.relative_to_id);
-    if let Some(target) = target_id {
+    if !uses_retail_clamp_producers()
+        && let Some(target) = target_id
+    {
         sim.widgets.remove_anchor_dependent(target as u64, id);
     }
     if let Some(frame) = sim.widgets.get_mut_for_anchor_edit(id) {
@@ -251,6 +257,16 @@ pub(super) fn clear_point(state: &mut LuaState) -> LuaResult<u32> {
         frame
             .secret_anchor_points
             .retain(|existing| *existing != point);
+    }
+    if uses_retail_clamp_producers() {
+        sim.widgets.resolve_named_anchor_targets_for_frame(id);
+        if sim
+            .widgets
+            .get(id)
+            .is_some_and(|frame| frame.anchors.is_empty())
+        {
+            sim.widgets.request_anchor_propagation(id, false);
+        }
     }
     sim.widgets.mark_anchor_rect_dirty(id);
     Ok(0)
@@ -404,7 +420,7 @@ fn push_anchor_values(
 ) -> LuaResult<u32> {
     let point_str = create_string(state, point.as_str());
     state.push(point_str);
-    match relative_to_id {
+    match relative_to_id.filter(|id| *id != COORDINATE_ROOT) {
         Some(rid) => {
             let rel_val = frame_global_or_ref(state, rid as u64)?;
             state.push(rel_val);
@@ -633,16 +649,8 @@ fn apply_set_point(
     id: u64,
     request: SetPointRequest,
 ) -> LuaResult<u32> {
-    if let Some(old_target) = sim.widgets.get(id).and_then(|f| {
-        f.anchors
-            .iter()
-            .find(|a| a.point == request.point)
-            .and_then(|a| a.relative_to_id)
-    }) {
-        sim.widgets.remove_anchor_dependent(old_target as u64, id);
-    }
-    if let Some(rel_id) = request.relative_to {
-        sim.widgets.add_anchor_dependent(rel_id as u64, id);
+    if !uses_retail_clamp_producers() {
+        reindex_legacy_point_dependency(sim, id, &request);
     }
     if let Some(frame) = sim.widgets.get_mut_for_anchor_edit(id) {
         match request.pending_key {
@@ -662,8 +670,29 @@ fn apply_set_point(
             ),
         }
     }
+    if uses_retail_clamp_producers() {
+        sim.widgets.resolve_named_anchor_targets_for_frame(id);
+    }
     sim.widgets.mark_anchor_rect_dirty(id);
     Ok(0)
+}
+
+fn reindex_legacy_point_dependency(
+    sim: &mut crate::lua_api::SimState,
+    id: u64,
+    request: &SetPointRequest,
+) {
+    if let Some(old_target) = sim.widgets.get(id).and_then(|f| {
+        f.anchors
+            .iter()
+            .find(|a| a.point == request.point)
+            .and_then(|a| a.relative_to_id)
+    }) {
+        sim.widgets.remove_anchor_dependent(old_target as u64, id);
+    }
+    if let Some(rel_id) = request.relative_to {
+        sim.widgets.add_anchor_dependent(rel_id as u64, id);
+    }
 }
 
 /// SetAllPoints([relativeTo])
@@ -686,12 +715,17 @@ pub(super) fn set_all_points(state: &mut LuaState) -> LuaResult<u32> {
     };
     ensure_no_anchor_cycle(state, id, relative_to_id, "SetAllPoints")?;
     let mut sim = borrow_state_mut(state)?;
-    sim.widgets.remove_all_anchor_dependents_for(id);
-    if let Some(rel_id) = relative_to_id {
-        sim.widgets.add_anchor_dependent(rel_id as u64, id);
+    if !uses_retail_clamp_producers() {
+        sim.widgets.remove_all_anchor_dependents_for(id);
+        if let Some(rel_id) = relative_to_id {
+            sim.widgets.add_anchor_dependent(rel_id as u64, id);
+        }
     }
     if let Some(frame) = sim.widgets.get_mut_for_anchor_edit(id) {
         anchor_frame_to_all_corners(frame, relative_to_id);
+    }
+    if uses_retail_clamp_producers() {
+        sim.widgets.resolve_named_anchor_targets_for_frame(id);
     }
     sim.widgets.mark_anchor_rect_dirty(id);
     Ok(0)

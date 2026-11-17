@@ -5,6 +5,9 @@ use std::collections::{HashMap, VecDeque};
 use rustc_hash::FxHashSet;
 
 use super::WidgetRegistry;
+use crate::widget::clamp_geometry::{
+    COORDINATE_ROOT, COORDINATE_ROOT_PROPAGATION, uses_retail_clamp_producers,
+};
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct AnchorCyclePath {
@@ -96,6 +99,21 @@ impl WidgetRegistry {
 
     fn reindex_anchor_dependents_for_frame(&mut self, frame_id: u64) {
         let direct_targets = self.collect_direct_anchor_targets(frame_id);
+        if uses_retail_clamp_producers() {
+            let mut removed = self
+                .frame_anchor_targets
+                .get(&frame_id)
+                .cloned()
+                .unwrap_or_default();
+            removed.retain(|target| !direct_targets.contains(target));
+            for target in removed {
+                self.remove_anchor_dependent(target, frame_id);
+            }
+            for target in direct_targets {
+                self.add_anchor_dependent(target, frame_id);
+            }
+            return;
+        }
         for target in direct_targets {
             self.anchor_dependents
                 .entry(target)
@@ -107,7 +125,9 @@ impl WidgetRegistry {
     /// Resolve any named/relative-key anchors on a frame into concrete target IDs.
     /// Safe to call repeatedly as children/layer regions become available.
     pub fn resolve_named_anchor_targets_for_frame(&mut self, frame_id: u64) {
-        self.remove_all_anchor_dependents_for(frame_id);
+        if !uses_retail_clamp_producers() {
+            self.remove_all_anchor_dependents_for(frame_id);
+        }
         let resolved_targets = self.collect_resolved_named_targets(frame_id);
         self.apply_resolved_named_targets(frame_id, &resolved_targets);
         self.reindex_anchor_dependents_for_frame(frame_id);
@@ -234,7 +254,8 @@ impl WidgetRegistry {
 
     /// Record that `frame_id` is anchored to `target_id`.
     pub fn add_anchor_dependent(&mut self, target_id: u64, frame_id: u64) {
-        self.anchor_dependents
+        let inserted = self
+            .anchor_dependents
             .entry(target_id)
             .or_default()
             .insert(frame_id);
@@ -242,6 +263,26 @@ impl WidgetRegistry {
             .entry(frame_id)
             .or_default()
             .insert(target_id);
+        if uses_retail_clamp_producers() && inserted {
+            self.ordered_anchor_dependents
+                .entry(target_id)
+                .or_default()
+                .push(frame_id);
+            self.inherit_anchor_propagation(target_id, frame_id);
+        }
+    }
+
+    fn inherit_anchor_propagation(&mut self, target_id: u64, frame_id: u64) {
+        let requested = if target_id == COORDINATE_ROOT as u64 {
+            Some(COORDINATE_ROOT_PROPAGATION)
+        } else {
+            self.widgets
+                .get(&target_id)
+                .map(|frame| frame.anchor_propagation)
+        };
+        if let Some(requested) = requested {
+            self.request_anchor_propagation(frame_id, requested);
+        }
     }
 
     /// Remove `frame_id` from `target_id`'s dependents.
@@ -260,6 +301,14 @@ impl WidgetRegistry {
             set.remove(&frame_id);
             if set.is_empty() {
                 self.anchor_dependents.remove(&target_id);
+            }
+        }
+        if uses_retail_clamp_producers()
+            && let Some(ids) = self.ordered_anchor_dependents.get_mut(&target_id)
+        {
+            ids.retain(|id| *id != frame_id);
+            if ids.is_empty() {
+                self.ordered_anchor_dependents.remove(&target_id);
             }
         }
     }
@@ -282,9 +331,15 @@ impl WidgetRegistry {
     /// Call once after initial load to capture anchors set during XML parsing
     /// and frame creation.
     pub fn rebuild_anchor_index(&mut self) {
-        self.anchor_dependents.clear();
-        self.frame_anchor_targets.clear();
-        let frame_ids: Vec<u64> = self.widgets.keys().copied().collect();
+        let frame_ids = if uses_retail_clamp_producers() {
+            // Keep existing dependency order; resolve newly available targets
+            // in simulator creation order.
+            self.ordered_ids.clone()
+        } else {
+            self.anchor_dependents.clear();
+            self.frame_anchor_targets.clear();
+            self.widgets.keys().copied().collect()
+        };
         for frame_id in frame_ids {
             self.resolve_named_anchor_targets_for_frame(frame_id);
         }
