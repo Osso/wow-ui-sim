@@ -11,7 +11,9 @@ const REALM_AND_CHARACTER_CONSUMER: &str = r#"
     end
     local init = lookup("StoreVASValidationFrame_Init")
     local panel = lookup("StoreVASValidationFrame")
-    local selectCharacter = lookup("VASCharacterSelectionCharacterSelector_Callback")
+    local openRealm = lookup("VASCharacterSelectionRealmSelector_OnClick")
+    local openCharacter = lookup("VASCharacterSelectionCharacterSelector_OnClick")
+    local chooseEntry = lookup("StoreDropdownMenuMenuButton_OnClick")
     local selectRealm = lookup("VASCharacterSelectionRealmSelector_Callback")
     local source = debug.getinfo(init, "S")
     assert(source.source:find("Blizzard_Shared_StoreUISecure.lua", 1, true), "Retail StoreUI consumer must be selected")
@@ -26,22 +28,40 @@ const REALM_AND_CHARACTER_CONSUMER: &str = r#"
     init(panel)
 
     local selectors = panel.CharacterSelectionFrame
-    assert(selectors.RealmSelector.Text:GetText() == "Azeroth", "first realm must be visible")
-    assert(selectors.CharacterSelector.Text:GetText():find("Simhero", 1, true), "first character must be visible")
-    assert(not selectors.NoEligibleCharactersErrorMessage:IsShown(), "backed characters must not show the empty state")
-    selectCharacter(2)
-    assert(selectors.SelectedCharacterName:GetText() == "Simalt", "second backed character must be selectable")
+    openRealm(selectors.RealmSelector.Button)
+    local realmMenu = selectors.RealmSelector.List
+    assert(realmMenu:IsShown(), "realm selector should show its original dropdown")
+    assert(realmMenu.Buttons[1]:GetText():find("Azeroth", 1, true), "first realm row should reach dropdown")
+    assert(realmMenu.Buttons[2]:GetText():find("Kalimdor", 1, true), "second realm row should reach dropdown")
+    assert(realmMenu.Buttons[3]:GetText():find("Empty", 1, true), "empty-roster realm row should reach dropdown")
 
-    local realms = _G.TEST_VAS_REALMS
-    selectRealm(realms[2])
-    assert(selectors.RealmSelector.Text:GetText() == "Kalimdor", "second realm must be selectable")
-    assert(selectors.CharacterSelector.Text:GetText():find("KalimdorHero", 1, true), "second realm character must be visible")
-    selectCharacter(1)
-    assert(selectors.SelectedCharacterName:GetText() == "KalimdorHero", "second realm character must be selectable")
+    chooseEntry(realmMenu.Buttons[1], "LeftButton")
+    openCharacter(selectors.CharacterSelector.Button)
+    local characterMenu = selectors.CharacterSelector.List
+    assert(characterMenu:IsShown(), "character selector should show its original dropdown")
+    assert(characterMenu.Buttons[1]:GetText():find("Simhero", 1, true), "first character row should reach dropdown")
+    assert(characterMenu.Buttons[2]:GetText():find("Simalt", 1, true), "second character row should reach dropdown")
 
-    selectRealm(realms[3])
-    assert(selectors.RealmSelector.Text:GetText() == "Empty", "absent realm roster must remain selectable")
-    assert(selectors.NoEligibleCharactersErrorMessage:IsShown(), "absent roster must show the empty state")
+    openRealm(selectors.RealmSelector.Button)
+    chooseEntry(realmMenu.Buttons[2], "LeftButton")
+    openCharacter(selectors.CharacterSelector.Button)
+    assert(characterMenu.Buttons[1]:GetText():find("KalimdorHero", 1, true), "second realm row should reach dropdown")
+
+    selectRealm(_G.TEST_VAS_REALMS[3])
+    assert(selectors.NoEligibleCharactersErrorMessage:IsShown(), "absent roster should show the original empty state")
+    openCharacter(selectors.CharacterSelector.Button)
+    assert(characterMenu:IsShown(), "empty roster should keep the original dropdown boundary")
+    assert(not characterMenu.Buttons[1]:IsShown(), "empty roster should have no selectable dropdown row")
+"#;
+
+const EMPTY_REALM_LIST_CONSUMER: &str = r#"
+    local function lookup(name)
+        return _G[name] or (__secureenv and rawget(__secureenv, name))
+    end
+    local selectors = lookup("StoreVASValidationFrame").CharacterSelectionFrame
+    lookup("VASCharacterSelectionRealmSelector_OnClick")(selectors.RealmSelector.Button)
+    assert(selectors.RealmSelector.List:IsShown(), "empty realm list should use the original dropdown")
+    assert(not selectors.RealmSelector.List.Buttons[1]:IsShown(), "empty realm list should have no dropdown rows")
 "#;
 
 fn load_store_ui() -> WowLuaEnv {
@@ -178,6 +198,18 @@ fn seed_realm_and_character_inputs(env: &WowLuaEnv) {
         .expect("explicit realm and character host rows should seed");
 }
 
+fn clear_realm_inputs(env: &WowLuaEnv) {
+    env.state()
+        .borrow_mut()
+        .store_glue
+        .store_secure
+        .vas
+        .realms
+        .clear();
+    env.exec("__wow_store_state.realms = {}")
+        .expect("empty realm host input should seed");
+}
+
 fn apply_callable_wrong_producer_overlay(env: &WowLuaEnv) {
     let Ok(path) = std::env::var("WOW_SIM_STORE_VAS_OVERLAY") else {
         return;
@@ -195,5 +227,8 @@ fn retail_store_vas_realm_and_character_consumers_use_explicit_rows() {
         apply_callable_wrong_producer_overlay(&env);
         env.exec(REALM_AND_CHARACTER_CONSUMER)
             .expect("the selected VAS panel should consume realm and character rows");
+        clear_realm_inputs(&env);
+        env.exec(EMPTY_REALM_LIST_CONSUMER)
+            .expect("the selected realm dropdown should consume an empty realm list");
     }
 }
