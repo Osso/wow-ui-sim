@@ -858,3 +858,28 @@ no-payload event through the simulator's existing synchronous path; timing is
 simulator policy. `tests/glue_character_select.rs` exercises the original
 Classic `GlueGameLogo` OnLoad and event consumer, without asserting display-row
 or native writer behavior.
+
+## R88am Mists Classic cached credentials
+
+**VERIFIED (Mists Classic 5.5.4.70631):** `C_Login.GetCachedCredentials` is a
+complete handler in the `C_Login` member table. It reads no arguments, performs
+no argument validation, has no Usage text or error path, and always returns
+zero Lua values. It reads no credential source, changes no state, and fires no
+event. It does not provide a backing credential field or writer.
+
+**INFERRED (Mists Classic 5.5.4.70268 from R88am 5.5.4.70631):** the simulator
+applies this zero-return contract to the selected Classic `AccountLogin.lua`
+consumer. The simulator publishes the member only while the selected screen is
+Glue, following the inferred Glue initialization path. Native Game availability
+and ordinary/secure publication classification remain UNKNOWN. The simulator
+adds no host credential input.
+
+- [x] **INFERRED (R88am applied to the 70268 cache):** the original consumer
+  hides cached-account rows for this zero-return producer. The test asserts the
+  hidden-row outcome, not direct API return arity.
+- [x] **INFERRED (simulator test):** `tests/glue_login.rs` loads the selected
+  Classic Login UI, seeds a visible cached-login row, invokes the original
+  `CachedLoginFrameContainer_Update`, and checks that no cached-account row is
+  shown. The test also checks the simulator's Glue-only publication choice.
+- [ ] **UNKNOWN (native):** Game availability and ordinary/secure publication
+  classification are not established by R88am.
