@@ -52,10 +52,10 @@ fn assert_manager_health_event(env: &WowLuaEnv, expected: bool) {
     env.exec(&format!(
         r#"
         CombatAudioAlertManager.initDone = true
-        local completed = pcall(function() CombatAudioAlertManager:RefreshEvents(false) end)
+        local completed, refresh_error = pcall(function() CombatAudioAlertManager:RefreshEvents(false) end)
         local registered = CombatAudioAlertManager:IsEventRegistered('UNIT_HEALTH')
         assert(registered == {expected},
-            'UNIT_HEALTH=' .. tostring(registered) .. ', RefreshEvents completed=' .. tostring(completed))
+            'UNIT_HEALTH=' .. tostring(registered) .. ', RefreshEvents completed=' .. tostring(completed) .. ', error=' .. tostring(refresh_error))
         "#
     ))
     .expect("original combat-audio manager must select health-event registration");
