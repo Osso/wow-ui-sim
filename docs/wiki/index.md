@@ -1,3 +1,7 @@
+## [2026-11-17] verification | Retail R88n.11b flag-3 function identity
+
+[Taint system](systems/taint-system.md#dual-lua-environment) and the [load-phase contract](../specs/addon-load-phases.md#r88y-verified-secure-publication) record the 31 implemented namespace functions and 3 implemented `C_Texture` functions with distinct ordinary/secure objects; 14 unimplemented producers remain absent. **VERIFIED (simulator source at `0710907`):** Lua closure copies retain the prototype, captured upvalues, and function environment. **VERIFIED (simulator tests at `0710907`):** representative `C_ColorUtil.ConvertHSVToRGB` and `C_Texture.GetAtlasExists` results match across environments.
+
 ## [2026-11-17] system | Secure environment profile scope (decision A)
 
 [Taint system](systems/taint-system.md#dual-lua-environment) and [add-on loading](systems/addon-loading.md) record that the strict 39-name secure environment, R88y publisher, secure-dependency pass, replay proxy and R88ag formatter apply only on Retail 12.1.5. Every other profile keeps master's `_G` snapshot, direct-secureenv replay, formatter and `GetFrameMetatable`; native publication there is UNKNOWN.

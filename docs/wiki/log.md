@@ -1,3 +1,7 @@
+## [2026-11-17] verification | Retail R88n.11b flag-3 function identity
+
+Updated the [taint system](systems/taint-system.md#dual-lua-environment) and [load-phase contract](../specs/addon-load-phases.md#r88y-verified-secure-publication). **VERIFIED (simulator source at `0710907`):** the generic publisher creates a distinct `LuaClosure` with the same prototype, captured upvalue references, and function environment; Rust closure handling is unchanged. **VERIFIED (simulator tests at `0710907`):** 31 existing namespace producers and 3 `C_Texture` producers have distinct ordinary/secure functions, while the 14 unimplemented members remain absent; representative color-conversion and atlas-query results match.
+
 ## [2026-11-17] system | Secure environment profile scope (decision A)
 
 Updated the [taint system](systems/taint-system.md#dual-lua-environment), [add-on loading](systems/addon-loading.md) and the index row. Retail 12.1.5 keeps the evidence-based strict model; PTR, Mists, WoW Forever, Wrath, Era and Anniversary keep master `4f073e8ea` behaviour through temporary `secure_env_global_snapshot.rs` and `string_format_legacy.rs`. Runtime gate results are recorded in the lane REPORT. **UNKNOWN:** native secure publication outside Retail 12.1.5.
