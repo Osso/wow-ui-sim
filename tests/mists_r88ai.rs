@@ -1,5 +1,6 @@
 #![cfg(feature = "client-mists")]
 
+use crate::common::lua_error_assertions::assert_lua_error_contains;
 use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
 use wow_ui_sim::lua_api::WowLuaEnv;
 
@@ -119,13 +120,6 @@ fn unloaded_alert_settings_read_zero_and_reject_writes() {
     assert_eq!(results, "0,0,0,0,0,0,0,0,0,false");
 }
 
-fn read_lua_error(env: &WowLuaEnv, call: &str) -> String {
-    env.eval(&format!(
-        "local ok, err = pcall(function() {call} end); assert(not ok); return err"
-    ))
-    .expect("pcall should return the Lua error")
-}
-
 const SPEC_SETTING_ERROR_CASES: &[(&str, &[&str])] = &[
     ("C_CombatAudioAlert.GetSpecSetting()", &[GET_USAGE]),
     ("C_CombatAudioAlert.GetSpecSetting(9)", &[GET_USAGE]),
@@ -144,17 +138,6 @@ const SPEC_SETTING_ERROR_CASES: &[(&str, &[&str])] = &[
         ],
     ),
 ];
-
-// Caller names and wrapper formatting are not stable parts of R88ai's error text.
-fn assert_lua_error_contains(env: &WowLuaEnv, call: &str, fragments: &[&str]) {
-    let actual = read_lua_error(env, call);
-    for fragment in fragments {
-        assert!(
-            actual.contains(fragment),
-            "{call}: missing {fragment:?} in {actual:?}"
-        );
-    }
-}
 
 #[test]
 fn spec_setting_errors_contain_verified_mists_text() {

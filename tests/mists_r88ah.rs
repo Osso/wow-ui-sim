@@ -2,6 +2,7 @@
 
 use std::collections::HashMap;
 
+use crate::common::lua_error_assertions::assert_lua_error_contains;
 use rilua::LuaApiMut;
 use rilua::table_security::wrap_host_secret_number;
 use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
@@ -67,24 +68,6 @@ fn assert_manager_combat_event(env: &WowLuaEnv, expected: bool) {
         "#
     ))
     .expect("original combat-audio manager must select combat-event registration");
-}
-
-fn read_lua_error(env: &WowLuaEnv, call: &str) -> String {
-    env.eval(&format!(
-        "local ok, err = pcall(function() {call} end); assert(not ok); return err"
-    ))
-    .expect("pcall should return the Lua error")
-}
-
-// Caller names and wrapper formatting are not stable parts of R88ah's error text.
-fn assert_lua_error_contains(env: &WowLuaEnv, call: &str, fragments: &[&str]) {
-    let actual = read_lua_error(env, call);
-    for fragment in fragments {
-        assert!(
-            actual.contains(fragment),
-            "{call}: missing {fragment:?} in {actual:?}"
-        );
-    }
 }
 
 fn install_secret_visibility_number(env: &WowLuaEnv) {
