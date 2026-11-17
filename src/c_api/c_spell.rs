@@ -956,7 +956,7 @@ fn is_spell_passive(state: &mut LuaState) -> LuaResult<u32> {
         SPELL_PASSIVE_USAGE,
     )?;
     let is_passive = match spell_id {
-        Some(spell_id) if spell_id != 0 && SPELL_DB.contains_key(&spell_id) => borrow_state(state)
+        Some(spell_id) if spell_id != 0 && SPELL_DB.contains_key(&spell_id) => borrow_state(state)?
             .spell_passive_attribute_masks
             .get(&spell_id)
             .is_some_and(|attributes| attributes & SPELL_PASSIVE_ATTRIBUTE_MASK != 0),
