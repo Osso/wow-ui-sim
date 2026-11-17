@@ -4,11 +4,12 @@ Retail `C_SpecializationInfo.GetPvpTalentInfo` publishes a supplied PvP talent r
 
 ## What it must do
 
-- [ ] Register the getter for Retail only and validate its required signed 32-bit `talentID` argument with the verified Usage text.
-- [ ] For a supplied host record, return one table with `talentID`, `name`, `icon`, `selected`, `available`, `spellID`, `unlocked`, `known`, `grantedByAura`, `dependenciesUnmet`, and `dependenciesUnmetReason`.
-- [ ] Copy each supplied field into the result without deriving native state from catalog data or player state.
-- [ ] Let `PvPTalentListButtonMixin:Update` use supplied name, icon, and `unlocked` values for button presentation.
-- [ ] Keep the host record map empty by default. An absent host row returns no values as a simulator policy; this does not claim native miss parity.
+- [x] Register the getter for Retail only; the consumer tests call it through `Blizzard_PlayerSpells`.
+- [ ] Verify that missing, invalid, or secret `talentID` arguments raise this API's exact verified Usage error.
+- [x] For a supplied host record, return one table with `talentID`, `name`, `icon`, `selected`, `available`, `spellID`, `unlocked`, `known`, `grantedByAura`, `dependenciesUnmet`, and `dependenciesUnmetReason`.
+- [x] Copy each supplied field into the result without deriving native state from catalog data or player state.
+- [x] Let `PvPTalentListButtonMixin:Update` use supplied name, icon, and `unlocked` values for button presentation.
+- [x] Keep the host record map empty by default. An absent host row returns no values as a simulator policy; this does not claim native miss parity.
 
 ## How it works
 
@@ -29,6 +30,7 @@ Retail `C_SpecializationInfo.GetPvpTalentInfo` publishes a supplied PvP talent r
 ## Known gaps (current cycle)
 
 - [ ] UNKNOWN (R88f.A.51): Native field-provider mapping and native missing-row or invalid-ID result remain unmodelled.
+- [ ] API-specific missing, invalid, and secret-argument errors are not directly tested in this lane; the getter uses the shared verified argument reader.
 - [ ] UNKNOWN (R88f.A.51): Native record types, updates, invalidation, events, and server effects remain unverified. The simulator accepts explicit typed host records only.
 
 ## Out of scope
