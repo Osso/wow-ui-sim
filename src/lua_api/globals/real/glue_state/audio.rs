@@ -4,7 +4,7 @@
 //! Glue audio backend, so handle activity stays a host input.
 
 use super::{GlueAudioHandle, GlueAudioRequest, GlueAudioState};
-use crate::c_api::helpers::{
+use crate::c_api::{
     bad_argument, parse_numeric_string, read_untainted_signed32_argument, read_untainted_value,
 };
 use crate::lua_api::methods::borrow_state_mut;

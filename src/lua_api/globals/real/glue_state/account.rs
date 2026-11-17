@@ -4,7 +4,7 @@
 //! setters submit text to a present setting only; an absent setting skips the
 //! write. The native setter's acceptance result is not returned.
 
-use crate::c_api::helpers::{read_untainted_string_argument, read_untainted_truthy_argument};
+use crate::c_api::{read_untainted_string_argument, read_untainted_truthy_argument};
 use crate::lua_api::methods::{borrow_state, create_string};
 use rilua::vm::state::LuaState;
 use rilua::{LuaApiMut, LuaResult, RustFn};

@@ -1,7 +1,7 @@
 //! R88ad.9 `GetLoginScreenBackground`: a native background object that accepts
 //! the high-resolution ID selects it; otherwise the low-resolution ID is used.
 
-use crate::c_api::helpers::read_untainted_signed32_argument;
+use crate::c_api::read_untainted_signed32_argument;
 use crate::lua_api::methods::borrow_state;
 use rilua::vm::state::LuaState;
 use rilua::{LuaApiMut, LuaResult, Val};
