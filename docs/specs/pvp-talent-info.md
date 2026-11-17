@@ -5,7 +5,7 @@ Retail `C_SpecializationInfo.GetPvpTalentInfo` publishes a supplied PvP talent r
 ## What it must do
 
 - [x] Register the getter for Retail only; the consumer tests call it through `Blizzard_PlayerSpells`.
-- [ ] Verify that missing, invalid, or secret `talentID` arguments raise this API's exact verified Usage error.
+- [x] Assert that missing, nil, wrong-type, out-of-range, and tainted-secret `talentID` inputs fail and include the exact verified Usage text.
 - [x] For a supplied host record, return one table with `talentID`, `name`, `icon`, `selected`, `available`, `spellID`, `unlocked`, `known`, `grantedByAura`, `dependenciesUnmet`, and `dependenciesUnmetReason`.
 - [x] Copy each supplied field into the result without deriving native state from catalog data or player state.
 - [x] Let `PvPTalentListButtonMixin:Update` use supplied name, icon, and `unlocked` values for button presentation.
@@ -26,11 +26,11 @@ Retail `C_SpecializationInfo.GetPvpTalentInfo` publishes a supplied PvP talent r
 - `tests/pvp_talent_native_consumers.rs::player_spells_locked_talent_button_uses_its_supplied_info`
 - `tests/pvp_talent_native_consumers.rs::player_spells_unlocked_talent_button_uses_its_supplied_info`
 - `tests/pvp_talent_native_consumers.rs::empty_host_records_do_not_publish_placeholder_info`
+- `tests/pvp_talent_native_consumers.rs::get_pvp_talent_info_validates_verified_argument_paths`
 
 ## Known gaps (current cycle)
 
 - [ ] UNKNOWN (R88f.A.51): Native field-provider mapping and native missing-row or invalid-ID result remain unmodelled.
-- [ ] API-specific missing, invalid, and secret-argument errors are not directly tested in this lane; the getter uses the shared verified argument reader.
 - [ ] UNKNOWN (R88f.A.51): Native record types, updates, invalidation, events, and server effects remain unverified. The simulator accepts explicit typed host records only.
 
 ## Out of scope
