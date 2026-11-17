@@ -172,6 +172,7 @@ pub(crate) mod restricted_actions_protected;
 pub(crate) mod scenario_defaults;
 pub(crate) mod script_bucket_throttle_limits;
 pub(crate) mod scripted_animation_effect_defaults;
+pub(crate) mod secure_env_global_snapshot;
 pub(crate) mod secure_legacy_unit_globals;
 pub(crate) mod secure_reference_defaults;
 pub(crate) mod secure_transfer_state;

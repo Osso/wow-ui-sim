@@ -703,6 +703,7 @@ fn exec_maybe_secure_false_matches_exec() {
     assert_eq!(on_g, "plain");
 }
 
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
 #[test]
 fn secure_base_library_mutations_stay_in_separate_tables() {
     let env = env();

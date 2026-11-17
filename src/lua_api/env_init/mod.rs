@@ -17,7 +17,9 @@ use super::state::SimState;
 use crate::lua_api::methods::{registry_get, registry_set};
 use crate::lua_api::script_helpers::protected_lua_pcall_state;
 use crate::lua_api::taint::stamp_addon_taint_state;
-use crate::lua_api::workarounds::copy_legacy_unit_globals_to_secureenv;
+use crate::lua_api::workarounds::{
+    copy_globals_into_secureenv_without_publication_evidence, copy_legacy_unit_globals_to_secureenv,
+};
 use crate::screen::ScreenKind;
 use rilua::LuaApiMut;
 use rilua::vm::state::LuaState;
@@ -73,6 +75,8 @@ pub(super) fn init_lua_state(
     trace_debug_getter_values(lua, "before_profile_bootstrap");
     register_profile_bootstrap(lua)?;
     trace_debug_getter_values(lua, "after_profile_bootstrap");
+    // temporary: master's `_G` snapshot where native publication is UNKNOWN.
+    copy_globals_into_secureenv_without_publication_evidence(lua)?;
     copy_legacy_unit_globals_to_secureenv(lua)?;
     let screen_kind = state.borrow().screen_kind;
     install_secure_runtime_surface(lua, screen_kind)?;

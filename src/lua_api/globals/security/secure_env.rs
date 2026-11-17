@@ -4,7 +4,9 @@
 //! 39-name native base, then `mark_secure` retargets secure addon chunks to it.
 //! Table-valued base entries are shallow-copied. This is not a full `_G` copy
 //! or a live overlay; later globals need secure registration or secure file
-//! execution to appear in the table.
+//! execution to appear in the table. Only Retail 12.1.5 keeps this strict
+//! base; other profiles then receive master's temporary `_G` snapshot
+//! (`workarounds::temporary::secure_env_global_snapshot`).
 
 use rilua::vm::state::LuaState;
 use rilua::{LuaApiMut, LuaResult, Val, runtime_error};
@@ -588,6 +590,7 @@ mod tests {
         ));
     }
 
+    #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
     #[test]
     fn secure_environment_uses_fixed_base_and_shallow_table_copies() {
         let env = WowLuaEnv::new().expect("lua env");

@@ -10,6 +10,7 @@ pub(crate) use temporary::minimap_tracking_defaults::RETAIL_TRACKING_DEFAULT_MAS
 #[cfg(feature = "client-retail")]
 pub(crate) use temporary::pvp_talent_defaults::pvp_slot_default;
 pub(crate) use temporary::quest_campaign_header_default::update_campaign_headers;
+pub(crate) use temporary::secure_env_global_snapshot::copy_globals_into_secureenv_without_publication_evidence;
 pub(crate) use temporary::secure_legacy_unit_globals::copy_legacy_unit_globals_to_secureenv;
 
 #[cfg(feature = "client-wrath")]
