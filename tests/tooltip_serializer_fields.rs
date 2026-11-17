@@ -22,7 +22,11 @@ fn selected_tooltip_env() -> WowLuaEnv {
 
 fn assert_selected_tooltip_addons(ui: &std::path::Path) {
     let selected = discover_blizzard_addons_for_screen(ui, ScreenKind::Game);
-    for addon in ["Blizzard_SharedXMLGame", "Blizzard_UIPanels_Game"] {
+    for addon in [
+        "Blizzard_SharedXMLGame",
+        "Blizzard_GameTooltip",
+        "Blizzard_UIPanels_Game",
+    ] {
         assert!(
             selected.iter().any(|(name, _)| name == addon),
             "Retail game-screen selection must include {addon}"
