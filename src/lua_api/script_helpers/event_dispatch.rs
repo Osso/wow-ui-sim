@@ -39,6 +39,8 @@ pub(crate) fn event_matches_unit_filter(
         .widgets
         .get(widget_id)
         .and_then(|frame| frame.registered_unit_events.get(event_name));
+    // INFERRED (R88aj): no stored filter, including a zero-unit
+    // RegisterUnitEvent, delivers the event for every unit.
     let Some(units) = filter else {
         return Ok(true);
     };

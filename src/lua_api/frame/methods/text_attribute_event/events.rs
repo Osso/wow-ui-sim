@@ -31,10 +31,9 @@ pub(super) fn register_event(state: &mut LuaState) -> LuaResult<u32> {
     if newly_registered {
         rilua_hlist_register_individual(state, id, &event)?;
     }
-    let filter_cleared = super::unit_event::native_unit_argument_scan()
-        && borrow_state_mut(state)?
-            .widgets
-            .clear_unit_event_filter(id, &event);
+    let filter_cleared = borrow_state_mut(state)?
+        .widgets
+        .clear_unit_event_filter(id, &event);
     let restricted = crate::event::is_restricted_event(&event);
     state.push(Val::Bool(
         (newly_registered || filter_cleared) && !restricted,
@@ -55,23 +54,14 @@ pub(super) fn register_unit_event(state: &mut LuaState) -> LuaResult<u32> {
         return Ok(1);
     };
     ensure_registerable_event(state, id, &event)?;
-    let native = super::unit_event::native_unit_argument_scan();
-    let units = if native {
-        super::unit_event::scan_unit_arguments(state)
-    } else {
-        let Some(units) = super::unit_event::legacy_unit_arguments(state) else {
-            state.push(Val::Bool(false));
-            return Ok(1);
-        };
-        units
-    };
+    let units = super::unit_event::scan_unit_arguments(state);
     let (newly_registered, changed) = borrow_state_mut(state)?
         .widgets
         .register_unit_event_listener(id, &event, units);
     if newly_registered {
         rilua_hlist_register_individual(state, id, &event)?;
     }
-    state.push(Val::Bool(if native { changed } else { newly_registered }));
+    state.push(Val::Bool(changed));
     Ok(1)
 }
 

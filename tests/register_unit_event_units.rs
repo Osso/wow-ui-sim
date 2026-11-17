@@ -1,5 +1,4 @@
 //! R88aj RegisterUnitEvent unit-argument scan, observed through return values.
-#![cfg(feature = "client-wowforever")]
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 
