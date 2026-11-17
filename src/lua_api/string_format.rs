@@ -113,12 +113,14 @@ fn wow_string_format(state: &mut LuaState) -> LuaResult<u32> {
         return delegate(state, original, &args);
     }
 
-    let (new_fmt, new_args) =
-        process_wow_format(state, tonumber, &fmt, format_argument, &args[1..])?;
-    let new_fmt_val = create_string_bytes(state, &new_fmt);
-    let mut delegated = Vec::with_capacity(new_args.len() + 1);
+    let rewritten = process_wow_format(state, tonumber, &fmt, format_argument, &args[1..])?;
+    let new_fmt_val = create_string_bytes(state, &rewritten.format);
+    let mut delegated = Vec::with_capacity(rewritten.args.len() + 1);
     delegated.push(new_fmt_val);
-    delegated.extend(new_args);
+    delegated.extend(rewritten.args);
+    if rewritten.secret_result {
+        return delegate_secret(state, original, &delegated);
+    }
     delegate(state, original, &delegated)
 }
 
@@ -200,10 +202,14 @@ fn validate_format_argument(
             Val::Num(_) => Ok(true),
             _ => Err(format_type_error(state, argument_position, "string")),
         },
-        b'd' | b'i' => Ok(!numeric_conversion_succeeds(state, tonumber, value)?),
+        b'd' | b'i' => match convert_public_number(state, tonumber, value)? {
+            Some(number) => check_signed_integer_range(number).map(|()| false),
+            None => Ok(true),
+        },
+        b'F' | b't' | b'T' if is_secret_number(state, value) => Ok(false),
         b'c' | b'o' | b'u' | b'x' | b'X' | b'e' | b'E' | b'f' | b'F' | b'g' | b'G' | b't'
         | b'T' => {
-            if numeric_conversion_succeeds(state, tonumber, value)? {
+            if convert_public_number(state, tonumber, value)?.is_some() {
                 Ok(false)
             } else {
                 Err(numeric_type_error(state, argument_position))
@@ -213,15 +219,35 @@ fn validate_format_argument(
     }
 }
 
-fn numeric_conversion_succeeds(state: &mut LuaState, tonumber: Val, value: Val) -> LuaResult<bool> {
+fn convert_public_number(
+    state: &mut LuaState,
+    tonumber: Val,
+    value: Val,
+) -> LuaResult<Option<f64>> {
     match value {
-        Val::Num(_) => Ok(true),
-        Val::Str(_) => Ok(matches!(
-            call_function_state(state, tonumber, &[value])?,
-            Val::Num(_)
-        )),
-        _ => Ok(false),
+        Val::Num(number) => Ok(Some(number)),
+        Val::Str(_) => match call_function_state(state, tonumber, &[value])? {
+            Val::Num(number) => Ok(Some(number)),
+            _ => Ok(None),
+        },
+        _ => Ok(None),
     }
+}
+
+/// R88ag: `%d` and `%i` store a signed 32-bit integer after conversion.
+fn check_signed_integer_range(number: f64) -> LuaResult<()> {
+    if (f64::from(i32::MIN)..=f64::from(i32::MAX)).contains(&number) {
+        return Ok(());
+    }
+    Err(runtime_error(format!(
+        "integer overflow attempting to store {number:.6}"
+    )))
+}
+
+/// R88ag: `%F`, `%t` and `%T` read secret numbers under native policy.
+fn is_secret_number(state: &LuaState, value: Val) -> bool {
+    rilua::table_security::secret_payload_kind(state, value)
+        == Some(rilua::table_security::SecretPayloadKind::Number)
 }
 
 fn format_type_error(state: &LuaState, argument_index: usize, expected: &str) -> rilua::LuaError {
@@ -273,6 +299,15 @@ fn delegate(state: &mut LuaState, original: Val, args: &[Val]) -> LuaResult<u32>
             Err(e)
         }
     }
+}
+
+/// The result of a secret numeric conversion stays secret. INFERRED: R88ag
+/// verifies acceptance, not the result classification.
+fn delegate_secret(state: &mut LuaState, original: Val, args: &[Val]) -> LuaResult<u32> {
+    let formatted = call_function_state(state, original, args)?;
+    let secret = rilua::table_security::wrap_secret(state, formatted)?;
+    state.push(secret);
+    Ok(1)
 }
 
 fn trace_format_error(state: &LuaState, args: &[Val]) {
@@ -564,6 +599,36 @@ mod tests {
     }
 }
 
+struct RewrittenFormat {
+    format: Vec<u8>,
+    args: Vec<Val>,
+    secret_result: bool,
+}
+
+struct RewrittenArgument {
+    value: Val,
+    rewritten: bool,
+    secret: bool,
+}
+
+impl RewrittenArgument {
+    fn unchanged(value: Val) -> Self {
+        Self {
+            value,
+            rewritten: false,
+            secret: false,
+        }
+    }
+
+    fn public(value: Val) -> Self {
+        Self {
+            value,
+            rewritten: true,
+            secret: false,
+        }
+    }
+}
+
 /// Parse positional arguments and apply the conversions that rilua does not
 /// implement with the verified WoW semantics.
 fn process_wow_format(
@@ -572,11 +637,12 @@ fn process_wow_format(
     bytes: &[u8],
     format_argument: Val,
     args: &[Val],
-) -> LuaResult<(Vec<u8>, Vec<Val>)> {
+) -> LuaResult<RewrittenFormat> {
     let mut output = Vec::with_capacity(bytes.len());
     let mut reordered = Vec::new();
     let mut has_positional = false;
     let mut has_argument_rewrite = false;
+    let mut secret_result = false;
     let mut previous_end = 0;
     let mut scan = FormatScan::new(bytes);
 
@@ -585,19 +651,24 @@ fn process_wow_format(
         has_positional |= specifier.positional;
         append_format_conversion(&mut output, bytes, specifier);
         let value = format_argument_at(format_argument, args, specifier.argument_position);
-        let (value, rewritten) =
-            rewrite_format_argument(state, tonumber, value, specifier.conversion)?;
-        reordered.push(value);
-        has_argument_rewrite |= rewritten;
+        let argument = rewrite_format_argument(state, tonumber, value, specifier.conversion)?;
+        reordered.push(argument.value);
+        has_argument_rewrite |= argument.rewritten;
+        secret_result |= argument.secret;
         previous_end = specifier.next_index;
     }
     output.extend_from_slice(&bytes[previous_end..]);
 
-    if has_positional || has_argument_rewrite {
-        Ok((output, reordered))
+    let args = if has_positional || has_argument_rewrite {
+        reordered
     } else {
-        Ok((output, args.to_vec()))
-    }
+        args.to_vec()
+    };
+    Ok(RewrittenFormat {
+        format: output,
+        args,
+        secret_result,
+    })
 }
 
 fn append_format_conversion(output: &mut Vec<u8>, bytes: &[u8], specifier: ParsedFormatSpecifier) {
@@ -625,17 +696,29 @@ fn rewrite_format_argument(
     tonumber: Val,
     value: Val,
     conversion: u8,
-) -> LuaResult<(Val, bool)> {
-    if matches!(conversion, b'd' | b'i') && !numeric_conversion_succeeds(state, tonumber, value)? {
-        return Ok((Val::Num(0.0), true));
+) -> LuaResult<RewrittenArgument> {
+    if matches!(conversion, b'd' | b'i') && convert_public_number(state, tonumber, value)?.is_none()
+    {
+        return Ok(RewrittenArgument::public(Val::Num(0.0)));
+    }
+    if is_float_alias(conversion) && is_secret_number(state, value) {
+        let number = rilua::table_security::inspect_host_secret_number(state, value, Ok)?;
+        return Ok(RewrittenArgument {
+            value: Val::Num(number),
+            rewritten: true,
+            secret: true,
+        });
     }
     if conversion == b'q'
         && let Val::Num(_) = value
     {
         let string = format!("{value}");
-        return Ok((create_string_bytes(state, string.as_bytes()), true));
+        return Ok(RewrittenArgument::public(create_string_bytes(
+            state,
+            string.as_bytes(),
+        )));
     }
-    Ok((value, false))
+    Ok(RewrittenArgument::unchanged(value))
 }
 
 #[derive(Clone, Copy)]
