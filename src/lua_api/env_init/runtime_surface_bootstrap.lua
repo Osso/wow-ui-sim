@@ -568,12 +568,15 @@ if not modeledStoreGlue then
     return {}
   end
 end
+if not modeledStoreVas then
 C_StoreSecure.RequestRealmGuildMasterInfo = function(virtualRealmAddress)
   FireEvent("STORE_GUILD_MASTER_INFO_RECEIVED", virtualRealmAddress)
 end
 C_StoreSecure.RequestCharacterGuildFollowInfo = function(guid, _virtualRealmAddress)
   FireEvent("STORE_GUILD_FOLLOW_INFO_RECEIVED", guid, { transferredRealm = "Kalimdor" })
 end
+end
+if not modeledStoreVas then
 C_StoreSecure.OpenNydusLink = function(entryID)
   local entry = C_StoreSecure.GetEntryInfo(entryID)
   if entry then
@@ -623,6 +626,7 @@ if not modeledStoreGlue then
       FireEvent("STORE_VAS_PURCHASE_COMPLETE")
     end
   end
+end
 end
 if not modeledStoreCatalog then
 C_StoreSecure.RequestAllDynamicPriceInfo = __wow_noop
