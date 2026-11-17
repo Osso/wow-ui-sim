@@ -111,20 +111,22 @@ const REALM_AND_CHARACTER_INPUTS: &str = r#"
         rawset(__secureenv, "RAID_CLASS_COLORS", classColors)
     end
     __wow_store_state.realms = TEST_VAS_REALMS
-    __wow_store_realms = TEST_VAS_REALMS
-    __wow_store_characters = {
+    __wow_store_state.characters = {
         [101] = {
             { guid = 501001, name = "Simhero", realmName = "Azeroth", currentServer = 101,
               classFileName = "WARRIOR", className = "Warrior", level = 70,
-              raceName = "Human", faction = 0, wowAccount = 1001, createScreenIconAtlas = "" },
+              raceName = "Human", raceFileName = "Human", faction = 0, sex = 1,
+              wowAccount = 1001, createScreenIconAtlas = "", guildMaster = true },
             { guid = 501002, name = "Simalt", realmName = "Azeroth", currentServer = 101,
               classFileName = "MAGE", className = "Mage", level = 60,
-              raceName = "Dwarf", faction = 0, wowAccount = 1001, createScreenIconAtlas = "" },
+              raceName = "Dwarf", raceFileName = "Dwarf", faction = 0, sex = 1,
+              wowAccount = 1001, createScreenIconAtlas = "", guildMaster = false },
         },
         [102] = {
             { guid = 502001, name = "KalimdorHero", realmName = "Kalimdor", currentServer = 102,
               classFileName = "PRIEST", className = "Priest", level = 70,
-              raceName = "Night Elf", faction = 1, wowAccount = 2001, createScreenIconAtlas = "" },
+              raceName = "Night Elf", raceFileName = "NightElf", faction = 1, sex = 1,
+              wowAccount = 2001, createScreenIconAtlas = "", guildMaster = false },
         },
     }
 "#;
