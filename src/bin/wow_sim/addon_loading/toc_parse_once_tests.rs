@@ -69,35 +69,35 @@ assert(BigLodRuns == 1 and C_AddOns.IsAddOnLoaded('BigLod'))
 assert(C_AddOns.GetAddOnMetadata('BigLod', 'X-BigLod-7') == 'value-7')
 "#;
 
+/// Bytes this thread reads while `action` runs.
+fn bytes_read_during(action: impl FnOnce()) -> u64 {
+    let before = thread_bytes_read();
+    action();
+    thread_bytes_read() - before
+}
+
 #[test]
 fn startup_and_load_on_demand_read_each_large_toc_once() {
     warm_process_caches();
     let temp = tempfile::tempdir().unwrap();
-    let startup_size = write_large_addon(
-        temp.path(),
-        "BigStartup",
-        "",
-        "BigStartupRuns = (BigStartupRuns or 0) + 1",
-    );
-    let lod_size = write_large_addon(
-        temp.path(),
-        "BigLod",
-        "## LoadOnDemand: 1\n",
-        "BigLodRuns = (BigLodRuns or 0) + 1",
-    );
+    let startup_lua = "BigStartupRuns = (BigStartupRuns or 0) + 1";
+    let startup_size = write_large_addon(temp.path(), "BigStartup", "", startup_lua);
+    let lod_lua = "BigLodRuns = (BigLodRuns or 0) + 1";
+    let lod_size = write_large_addon(temp.path(), "BigLod", "## LoadOnDemand: 1\n", lod_lua);
     let env = WowLuaEnv::new().unwrap();
     env.state().borrow_mut().addon_base_paths = vec![temp.path().to_path_buf()];
     let roots = [temp.path().to_path_buf()];
 
-    let before_startup = thread_bytes_read();
-    load_third_party_addons(&roots, false, false, &env, &mut None, ScreenKind::Game);
-    let startup_read = thread_bytes_read() - before_startup;
+    let startup_read = bytes_read_during(|| {
+        load_third_party_addons(&roots, false, false, &env, &mut None, ScreenKind::Game)
+    });
     env.exec(CHECK_STARTUP_LUA).unwrap();
-    let before_load = thread_bytes_read();
-    env.exec(LOAD_LOD_LUA).unwrap();
-    let load_read = thread_bytes_read() - before_load;
+    let load_read = bytes_read_during(|| env.exec(LOAD_LOD_LUA).unwrap());
+    assert_each_toc_read_once(startup_size + lod_size, lod_size, startup_read, load_read);
+}
 
-    let tocs = startup_size + lod_size;
+/// Startup reads each TOC once (the counter must see them), and LoadAddOn reads no TOC again.
+fn assert_each_toc_read_once(tocs: u64, lod_size: u64, startup_read: u64, load_read: u64) {
     eprintln!("TOCs {tocs} bytes; startup read {startup_read}, LoadAddOn read {load_read}");
     assert!(
         startup_read >= tocs,

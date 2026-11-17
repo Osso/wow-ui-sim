@@ -311,17 +311,10 @@ pub fn load_third_party_addons(
     }
 
     let enable_overrides = merged_addon_enable_overrides(env, saved_vars);
-    let effective_enable_overrides =
-        dependency_aware_enable_overrides(&tocs, &addons, enable_overrides.as_ref());
+    let effective = dependency_aware_enable_overrides(&tocs, &addons, enable_overrides.as_ref());
     let mut stats = LoadStats::default();
-    let startup_count = load_discovered_addons(
-        env,
-        &addons,
-        saved_vars,
-        effective_enable_overrides.as_ref(),
-        &mut stats,
-    );
-    print_load_summary(startup_count, &stats);
+    let count = load_discovered_addons(env, &addons, saved_vars, effective.as_ref(), &mut stats);
+    print_load_summary(count, &stats);
 }
 
 /// Loadable third-party addons in dependency order.
