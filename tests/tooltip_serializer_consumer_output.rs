@@ -4,6 +4,7 @@
 //! TooltipData level.
 #![cfg(all(feature = "client-retail", feature = "optional-tests"))]
 use crate::common::blizzard_addon_harness::blizzard_ui_dir;
+use wow_ui_sim::c_api::BattlePetTooltipSnapshot;
 use wow_ui_sim::loader::discover_blizzard_addons_for_screen;
 use wow_ui_sim::lua_api::{WowLuaEnv, state::BagItem};
 use wow_ui_sim::screen::ScreenKind;
@@ -22,6 +23,8 @@ const ORIGINAL_CONSUMERS: &str = r#"
     original(GameTooltip.SetBagItem, handler)
     original(TooltipDataRules.FinalizeItemTooltip, rules)
     original(TooltipDataRules.SellPrice, rules)
+    original(TooltipDataRules.BattlePet, rules)
+    original(BattlePetToolTip_Show, 'Blizzard_FrameXML/BattlePetTooltip.lua')
     original(GameTooltip_AddMoneyLine, tooltip)
     original(GameTooltip_OnTooltipAddMoney, tooltip)
 "#;
@@ -80,6 +83,55 @@ const SELL_PRICE_ROWS: &str = r#"
     end
 "#;
 
+const BATTLE_PET_ROWS: &str = r#"
+    local observed = {}
+    BattlePetToolTip_Show = function(...) observed[#observed + 1] = {...} end
+    GameTooltip:SetOwner(UIParent, 'ANCHOR_NONE')
+
+    local function assert_pet(slot, expected, call_index)
+        GameTooltip:SetBagItem(0, slot)
+        local info = GameTooltip:GetPrimaryTooltipInfo()
+        local data = GameTooltip:GetPrimaryTooltipData()
+        assert(info and info.getterName == 'GetBagItem', 'original bag-item accessor')
+        assert(data and data.type == Enum.TooltipDataType.BattlePet, 'type-6 TooltipData')
+        for field, value in pairs(expected) do
+            assert(data[field] == value, field..' must be a top-level field')
+        end
+        assert(#observed == call_index, 'BattlePet rule call count')
+        local arguments = observed[call_index]
+        assert(#arguments == 7, 'BattlePet rule forwards seven arguments')
+        assert(arguments[1] == expected.battlePetSpeciesID)
+        assert(arguments[2] == expected.battlePetLevel)
+        assert(arguments[3] == expected.battlePetBreedQuality)
+        assert(arguments[4] == expected.battlePetMaxHealth)
+        assert(arguments[5] == expected.battlePetPower)
+        assert(arguments[6] == expected.battlePetSpeed)
+        assert(arguments[7] == expected.battlePetName)
+    end
+
+    local function assert_not_pet(slot)
+        local call_count = #observed
+        GameTooltip:SetBagItem(0, slot)
+        local data = GameTooltip:GetPrimaryTooltipData()
+        assert(not data or data.type ~= Enum.TooltipDataType.BattlePet,
+            'unaccepted or absent bag slot must not publish type 6')
+        assert(#observed == call_count, 'unaccepted or absent slot must not call BattlePet rule')
+    end
+
+    assert_pet(1, {
+        battlePetSpeciesID = 101, battlePetLevel = 7, battlePetBreedQuality = 3,
+        battlePetMaxHealth = 521, battlePetPower = 47, battlePetSpeed = 39,
+        battlePetName = 'Host Pet Alpha',
+    }, 1)
+    assert_pet(2, {
+        battlePetSpeciesID = 202, battlePetLevel = 15, battlePetBreedQuality = 4,
+        battlePetMaxHealth = 1037, battlePetPower = 91, battlePetSpeed = 67,
+        battlePetName = 'Host Pet Beta',
+    }, 2)
+    assert_not_pet(3)
+    assert_not_pet(4)
+"#;
+
 fn assert_consumers_selected() {
     let ui = blizzard_ui_dir();
     let addons = discover_blizzard_addons_for_screen(&ui, ScreenKind::Game);
@@ -124,6 +176,55 @@ fn exec_without_new_lua_errors(env: &WowLuaEnv, lua: &str) {
     env.exec(lua).expect("original consumer output");
     let after = env.state().borrow().lua_error_records.len();
     assert_eq!(after, before, "the original consumer path added Lua errors");
+}
+
+fn battle_pet_snapshots() -> [(i32, BattlePetTooltipSnapshot); 2] {
+    [
+        (
+            1,
+            BattlePetTooltipSnapshot {
+                species_id: 101.0,
+                level: 7.0,
+                breed_quality: 3.0,
+                max_health: 521.0,
+                power: 47.0,
+                speed: 39.0,
+                name: "Host Pet Alpha".to_owned(),
+            },
+        ),
+        (
+            2,
+            BattlePetTooltipSnapshot {
+                species_id: 202.0,
+                level: 15.0,
+                breed_quality: 4.0,
+                max_health: 1037.0,
+                power: 91.0,
+                speed: 67.0,
+                name: "Host Pet Beta".to_owned(),
+            },
+        ),
+    ]
+}
+
+// VERIFIED (R88n.4b): native type and field placement; values below are explicit host fixtures.
+#[test]
+fn bag_item_accessor_publishes_accepted_battle_pet_fields_to_original_consumer() {
+    // Catalog rows back occupied slots only; the native acceptance is supplied separately.
+    let env = consumer_env(&[(1, 6948), (2, 7005), (3, 6948)]);
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.bag_battle_pet_tooltip_acceptance.extend([
+            ((0, 1), true),
+            ((0, 2), true),
+            ((0, 3), false),
+        ]);
+        for (slot, snapshot) in battle_pet_snapshots() {
+            sim.bag_battle_pet_tooltip_snapshots
+                .insert((0, slot), snapshot);
+        }
+    }
+    exec_without_new_lua_errors(&env, BATTLE_PET_ROWS);
 }
 
 #[test]

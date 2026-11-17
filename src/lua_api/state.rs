@@ -596,6 +596,10 @@ macro_rules! build_empty_sim_state {
             world: super::state_types::seeded_world_state(),
             encounter_policy: Default::default(),
             bag_items: $collections.bag_items,
+            #[cfg(feature = "client-retail")]
+            bag_battle_pet_tooltip_acceptance: HashMap::new(),
+            #[cfg(feature = "client-retail")]
+            bag_battle_pet_tooltip_snapshots: HashMap::new(),
             bag_item_repair_costs: HashMap::new(),
             item_equip: crate::c_api::item_spell::item_equip::ItemEquipState::default(),
             container_item_quests: HashMap::new(),

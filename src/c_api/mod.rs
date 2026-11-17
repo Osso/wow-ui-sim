@@ -14,6 +14,8 @@ pub(crate) mod c_tooltip_info_artifact_power;
 pub(crate) mod c_tooltip_info_azerite_essence;
 pub(crate) mod c_tooltip_info_azerite_power;
 pub(crate) mod c_tooltip_info_bag_child;
+#[cfg(feature = "client-retail")]
+pub(crate) mod c_tooltip_info_battle_pet;
 pub(crate) mod c_tooltip_info_conduit;
 pub mod c_tooltip_info_currency;
 pub(crate) mod c_tooltip_info_enhanced_conduit;
@@ -34,6 +36,8 @@ pub(crate) mod c_tooltip_info_possession;
 #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 pub(crate) mod c_tooltip_info_pvp_brawl;
 pub(crate) mod c_tooltip_info_round7;
+#[cfg(feature = "client-retail")]
+pub use c_tooltip_info_battle_pet::BattlePetTooltipSnapshot;
 pub use c_tooltip_info_round7::{
     ItemInteractionTooltipInput, ItemInteractionTooltipLine, SlottedKeystoneKeyFloor,
     SlottedKeystoneTooltipInput,
