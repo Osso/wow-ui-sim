@@ -118,6 +118,9 @@ fn frame_center(env: &WowLuaEnv, frame_path: &str) -> Point {
     Point::new(rect.x + rect.width / 2.0, rect.y + rect.height / 2.0)
 }
 
+// UNKNOWN (Mists 5.5.4.70268 native login surface): selected AccountLogin.lua:163
+// calls C_Login.GetCachedCredentials, which is outside the R88ak contract.
+#[cfg(not(feature = "client-mists"))]
 #[test]
 fn login_boot_hides_non_login_frontend_frames() {
     test_timeout! {
@@ -288,6 +291,9 @@ fn login_boot_keeps_settings_preview_panels_wired_to_settings_panel() {
     }
 }
 
+// UNKNOWN (Mists 5.5.4.70268 native login surface): selected AccountLogin.lua:163
+// calls C_Login.GetCachedCredentials, which is outside the R88ak contract.
+#[cfg(not(feature = "client-mists"))]
 #[test]
 fn login_editboxes_gain_focus_when_clicking_their_visible_centers() {
     test_timeout! {

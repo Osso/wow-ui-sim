@@ -859,6 +859,9 @@ fn assert_mists_game_logo_refreshes_from_current_mode(env: &common::LockedEnv) {
     .expect("Mists GlueGameLogo should refresh from the current-mode host input");
 }
 
+// UNKNOWN (Mists 5.5.4.70268 UI outcome): Classic CharacterSelect calls
+// GetCurrentGameModeDisplayInfo at line 2845; R88ak does not establish its host data or screen effect.
+#[cfg(not(feature = "client-mists"))]
 #[test]
 fn character_select_screen_shows_character_select_not_login() {
     test_timeout! {
