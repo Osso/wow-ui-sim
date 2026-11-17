@@ -44,7 +44,7 @@ fn load_store_ui() -> WowLuaEnv {
         &env,
         &ui_dir,
         ScreenKind::CharacterSelect,
-        &["Blizzard_StoreUI"],
+        &["Blizzard_StoreUI", "Blizzard_GlueXML"],
         &[],
     );
     assert!(loaded.iter().any(|name| name == "Blizzard_StoreUI"));
