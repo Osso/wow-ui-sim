@@ -75,8 +75,6 @@ pub(super) fn init_lua_state(
     trace_debug_getter_values(lua, "before_profile_bootstrap");
     register_profile_bootstrap(lua)?;
     trace_debug_getter_values(lua, "after_profile_bootstrap");
-    // temporary: master's `_G` snapshot where native publication is UNKNOWN.
-    copy_globals_into_secureenv_without_publication_evidence(lua)?;
     copy_legacy_unit_globals_to_secureenv(lua)?;
     let screen_kind = state.borrow().screen_kind;
     install_secure_runtime_surface(lua, screen_kind)?;
@@ -188,6 +186,9 @@ fn install_secure_runtime_surface(
     screen_kind: ScreenKind,
 ) -> crate::Result<()> {
     super::globals::real::protected_globals::install(lua)?;
+    // temporary: master's `_G` snapshot where native publication is UNKNOWN.
+    // Master took it after protected-global wrapping, before color overrides.
+    copy_globals_into_secureenv_without_publication_evidence(lua)?;
     // Register the model after secureenv construction. The R88y pass applies
     // verified destinations for the active screen.
     crate::c_api::c_color_overrides::register(lua)?;
