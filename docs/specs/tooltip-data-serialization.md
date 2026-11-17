@@ -59,13 +59,28 @@ belong on a line of type 11. **VERIFIED (simulator model):** item catalog rows
 contain `sell_price`, and `C_Item.GetItemInfo` returns it. **INFERRED (simulator
 policy):** the Retail item builder publishes a positive `sell_price` as
 `price` on a type-11 line. It does not infer `maxPrice` from stack capacity or
-LFG reward quantity. **UNKNOWN:** native positive-price eligibility and the
-source/meaning of `maxPrice`.
+LFG reward quantity. R88p.p1 (above) verifies the `maxPrice` source: it starts at
+-1 and only the no-instance prepared-quantity branch recalculates it.
 
-The current simulator has no repair-cost input or battle-pet tooltip snapshot.
-`battlePetSpeciesID` on Auction House `ItemKey` data is not a TooltipData
-producer. These fields remain absent. No price or pet values are added without
-a corresponding tooltip input.
+### R88n.4b placement audit (lt-bf18)
+
+**VERIFIED (simulator source, audited at `d54da90d9`):** no shared serializer
+placement contradicts R88n.4b, so no producer changed.
+
+- `repairCost`: `tooltip_for_bag_item` (`tooltip_info/sources.rs`) sets it on
+  the top-level TooltipData of the Retail `GetBagItem` path, only for a positive
+  quote from the host seam `bag_item_repair_costs`. That seam is empty by
+  default; the quote calculation is UNKNOWN ([bag repair cost](bag-repair-cost.md)).
+- `price` and `maxPrice`: only `push_retail_sell_price_line`
+  (`tooltip_info/builders.rs`) writes them, on a type-11 line. No producer
+  writes them at top level. `maxPrice` is the R88p.p1 initial value -1, not a
+  guess; the prepared-quantity recalculation inputs are UNKNOWN and unmodeled.
+- Battle-pet fields: no producer publishes TooltipData type 6 or any of the
+  seven fields. `battlePetSpeciesID` on Auction House `ItemKey` data is not a
+  TooltipData producer. The fields stay absent until backing state exists
+  (QUEUE 456); no host seam is added. **UNKNOWN:** the battle-pet producer's
+  acceptance test and inputs, and which of the seven fields each accepted path
+  adds.
 
 ## Proof
 
@@ -79,6 +94,18 @@ a corresponding tooltip input.
 - `tests/tooltip_d56_serialization.rs`: direct getters and original consumers.
 - `src/c_api/tooltip_data_tests.rs`: nested identity order and present/absent sides.
 - `tests/tooltip_serializer_fields.rs`: selected Retail consumers read top-level repair/pet fields and line-level `price`/`maxPrice`; the original `SetItemByID` path checks the inferred backed `price` projection.
+- `tests/tooltip_serializer_consumer_output.rs::bag_repair_rule_renders_only_top_level_positive_repair_cost`
+  observes only original consumer output: the selected `SetBagItem` accessor and
+  `FinalizeItemTooltip` render REPAIR_COST plus the money row for quotes 731 and
+  2468, and nothing for a zero or absent quote. A line-level `repairCost` renders
+  nothing, so the selector rejects that placement inside the consumer.
+- `tests/tooltip_serializer_consumer_output.rs::bag_sell_price_rule_renders_only_type_11_line_prices`
+  (**INFERRED** values: catalog `sell_price` as the initial unit price) renders
+  one `SELL_PRICE: <money>` row through the original `SellPrice` rule for bag
+  items priced 1 and 50, and none for a zero price. A `price` outside the
+  type-11 line renders nothing. The single-row form preserves the VERIFIED
+  item-instance `maxPrice` of -1; it is preservation, not a `maxPrice` RED
+  selector, because no backed input varies `maxPrice`.
 - Existing tooltip builder, GC and presentation tests remain regression coverage.
 
 **Proved:** the shared publication helpers (`stamp_instance`, `publish_rgb`,
