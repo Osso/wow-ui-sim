@@ -115,7 +115,6 @@ return red, green, blue
 
 fn setup_item_level_color_consumer() -> wow_ui_sim::lua_api::WowLuaEnv {
     let env = setup_full_env();
-    open_character_panel(&env);
     env.exec(ITEM_LEVEL_COLOR_SETUP_LUA)
         .expect("Retail PaperDollFrame consumer and color globals should load");
     env
@@ -183,10 +182,10 @@ fn paper_doll_uses_color_override_before_named_color() {
 }
 
 #[test]
-fn paper_doll_uses_magenta_when_selected_color_is_missing() {
+fn paper_doll_uses_magenta_when_selected_color_has_no_rgb() {
     let env = setup_item_level_color_consumer();
-    env.exec("ITEM_STANDARD_COLOR = nil")
-        .expect("standard color should be removable for the fallback case");
+    env.exec("ITEM_STANDARD_COLOR = false")
+        .expect("standard color should be unavailable for the fallback case");
     set_item_level_color_conditions(&env, None, None);
     assert_item_level_display_color(&env, (1.0, 0.0, 1.0));
 }
