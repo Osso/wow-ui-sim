@@ -8,7 +8,7 @@ Added the [investigation](investigations/addon-metadata-lookup-performance.md) a
 
 ## [2026-11-17] system | Retail StoreSecure VAS
 
-Added the [VAS system page](systems/store-secure-vas.md) and linked it from the [contract](../specs/store-secure-vas.md) and catalog system page. **VERIFIED (simulator source):** VAS data uses empty-default host inputs and typed request records; Retail selects the modeled surface. **VERIFIED (pinned Retail cache and test source):** the original StoreUI and character-service consumers call the modeled APIs.
+Added the [VAS system page](systems/store-secure-vas.md), which records the empty-default Retail model and original consumer paths. **VERIFIED (simulator source and tests):** Retail uses typed VAS requests, response callbacks update state before events, and selected StoreUI/account consumers reach the modeled methods. **UNKNOWN (R88al pending):** `GetBnetTransferInfo` native semantics remain unresolved; no cross-BNet result is guessed.
 
 ## [2026-11-16] revision | Retail StoreSecure consumer RED and notifications
 

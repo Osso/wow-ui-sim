@@ -8,7 +8,7 @@
 
 ## [2026-11-17] system | Retail StoreSecure VAS
 
-The [VAS system page](systems/store-secure-vas.md) records the empty-default Retail VAS model, typed request state, response ordering, and original StoreUI/GlueXML call sites. The [contract](../specs/store-secure-vas.md) keeps unknown server values empty and member-specific Usage text UNKNOWN.
+The [VAS system page](systems/store-secure-vas.md) records the empty-default Retail VAS model, typed request state, response ordering, and original StoreUI/GlueXML call sites. **VERIFIED (tests):** the contract covers explicit lookup rows and response behavior. **UNKNOWN (R88al pending):** the `GetBnetTransferInfo` contract remains unresolved; member-specific Usage text also remains UNKNOWN.
 
 ## [2026-11-16] revision | Retail StoreSecure consumer RED and notifications
 
