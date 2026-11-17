@@ -277,6 +277,56 @@ fn forever_name_reservation_reads_feature_status_byte() {
     assert!(enabled);
 }
 
+#[cfg(feature = "client-wowforever")]
+fn seed_name_reservation_consumer_inputs(env: &WowLuaEnv) {
+    env.exec(
+        r#"
+        CharacterSelectUtil.IsAccountLocked = function() return false end
+        GetNumCharacters = function() return 1 end
+        CharacterSelect.undeleting = false
+        CharacterSelect.hasPendingTrialBoost = false
+        AccountReactivationInProgressDialog = { IsShown = function() return false end }
+        GoldReactivateConfirmationDialog = { IsShown = function() return false end }
+        TokenReactivateConfirmationDialog = { IsShown = function() return false end }
+        CharSelectServicesFlowFrame = { ShouldDisableButtons = function() return false end }
+        Kiosk = { IsEnabled = function() return false end }
+        GetCharacterSelection = function() return 1 end
+        GetCharacterGUID = function() return "Player-0000-0000-0000-000000000001" end
+        GetServiceCharacterInfo = function()
+            return { isExpansionTrialCharacter = false, isTrialBoost = false,
+                boostInProgress = false, isRevokedCharacterUpgrade = false }
+        end
+        IsCharacterTimerunning = function() return false end
+        "#,
+    )
+    .unwrap();
+}
+
+#[test]
+#[cfg(feature = "client-wowforever")]
+fn forever_name_reservation_blocks_original_character_select_consumer() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+        let original_consumer: bool = env
+            .eval(
+                r#"local info = debug.getinfo(CharacterSelect_AllowedToEnterWorld, "S")
+                return info and info.source:find("Mainline/CharacterSelect.lua", 1, true) ~= nil"#,
+            )
+            .unwrap();
+        assert!(original_consumer, "name reservation must run through the selected Blizzard consumer");
+        seed_name_reservation_consumer_inputs(&env);
+        wow_ui_sim::lua_api::globals::real::glue_feature_status::deliver_status(
+            &env,
+            wow_ui_sim::lua_api::globals::real::glue_feature_status::GlueFeatureStatus {
+                name_reservation_only: true,
+            },
+        )
+        .unwrap();
+        let can_enter_world: bool = env.eval("return CharacterSelect_AllowedToEnterWorld()").unwrap();
+        assert!(!can_enter_world, "VERIFIED name-reservation state must block the original CharacterSelect consumer");
+    }
+}
+
 #[test]
 #[cfg(feature = "client-wowforever")]
 fn forever_trial_boost_status_defaults_false_on_glue() {
@@ -745,6 +795,73 @@ fn retail_does_not_register_super_district_glue_apis() {
     assert!(members_absent);
 }
 
+// INFERRED (R88ak 5.5.4.70631 applied to the 5.5.4.70268 cache): the selected
+// Classic GlueGameLogo consumer exercises the verified getter and event facts.
+#[cfg(feature = "client-mists")]
+#[test]
+fn mists_glue_game_logo_reads_current_mode_host_input() {
+    let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+    assert_mists_game_logo_starts_without_current_mode(&env);
+    assert_mists_game_logo_refreshes_from_current_mode(&env);
+}
+
+#[cfg(feature = "client-mists")]
+fn assert_mists_game_logo_starts_without_current_mode(env: &common::LockedEnv) {
+    let errors: Vec<String> = env
+        .state()
+        .borrow()
+        .lua_errors
+        .iter()
+        .filter(|error| error.contains("GetCurrentGameModeRecordID"))
+        .cloned()
+        .collect();
+    assert!(
+        errors.is_empty(),
+        "GlueGameLogo consumer errors: {errors:#?}"
+    );
+
+    let (returns, getter_is_nil, logo_is_nil): (i32, bool, bool) = env
+        .eval(
+            r#"
+            return select('#', C_GameRules.GetCurrentGameModeRecordID()),
+                C_GameRules.GetCurrentGameModeRecordID() == nil,
+                CharacterSelectLogo.gameModeRecordID == nil
+            "#,
+        )
+        .expect("Mists GlueGameLogo current-mode getter should be callable");
+    assert_eq!(returns, 1);
+    assert!(getter_is_nil && logo_is_nil);
+}
+
+#[cfg(feature = "client-mists")]
+fn assert_mists_game_logo_refreshes_from_current_mode(env: &common::LockedEnv) {
+    env.exec(
+        r##"
+        gameModeUpdates = 0
+        gameModeUpdateArgs = -1
+        local listener = CreateFrame("Frame")
+        listener:RegisterEvent("GAME_MODE_DISPLAY_INFO_UPDATED")
+        listener:SetScript("OnEvent", function(_, _, ...)
+            gameModeUpdates = gameModeUpdates + 1
+            gameModeUpdateArgs = select("#", ...)
+        end)
+        SetCVar("currentGameMode", "17")
+        assert(select("#", C_GameRules.GetCurrentGameModeRecordID()) == 1)
+        assert(C_GameRules.GetCurrentGameModeRecordID() == 17)
+        assert(CharacterSelectLogo.gameModeRecordID == 17)
+        assert(gameModeUpdates == 1 and gameModeUpdateArgs == 0)
+        SetCVar("currentGameMode", "-1")
+        assert(C_GameRules.GetCurrentGameModeRecordID() == nil)
+        assert(CharacterSelectLogo.gameModeRecordID == nil)
+        assert(gameModeUpdates == 2 and gameModeUpdateArgs == 0)
+        "##,
+    )
+    .expect("Mists GlueGameLogo should refresh from the current-mode host input");
+}
+
+// UNKNOWN (Mists 5.5.4.70268 UI outcome): Classic CharacterSelect calls
+// GetCurrentGameModeDisplayInfo at line 2845; R88ak does not establish its host data or screen effect.
+#[cfg(not(feature = "client-mists"))]
 #[test]
 fn character_select_screen_shows_character_select_not_login() {
     test_timeout! {
@@ -934,6 +1051,9 @@ fn character_select_populates_character_roster() {
     }
 }
 
+// VERIFIED (Mists cache 5.5.4.70268): Classic CharacterSelect uses
+// CharacterSelectCharacterFrame with a ScrollBar, not the Mainline ScrollBox.
+#[cfg(not(feature = "client-mists"))]
 #[test]
 fn character_select_builds_scrollbox_entries() {
     test_timeout! {
@@ -1993,6 +2113,9 @@ fn ptr_character_creation_submit_real_controls_do_not_invent_outcome() {
     }
 }
 
+// UNKNOWN (Mists 5.5.4.70268 native consumer): this test expects
+// `CharacterCreateFrame.NameChoiceFrame`, which R88ak does not establish.
+#[cfg(not(feature = "client-mists"))]
 #[test]
 #[cfg(not(any(
     feature = "client-retail",
@@ -2030,6 +2153,10 @@ fn character_create_action_updates_player_name_without_lua_errors() {
     }
 }
 
+// UNKNOWN (Mists 5.5.4.70268): this probe targets
+// C_CharacterCreation.SetInCharacterCreate; the selected Classic Lua uses the
+// legacy global SetInCharacterCreate instead.
+#[cfg(not(feature = "client-mists"))]
 #[test]
 fn character_create_records_screen_state() {
     let env = load_blizzard_screen(ScreenKind::CharacterCreate);
@@ -2113,6 +2240,9 @@ fn forever_race_data_publishes_supplied_racial_ability_fields() {
     assert!(icon_is_nil);
 }
 
+// VERIFIED (Mists cache 5.5.4.70268): Classic CharacterCreate names this
+// control `CharCreateBackButton`, not `CharacterCreateFrame.BackButton`.
+#[cfg(not(feature = "client-mists"))]
 #[test]
 fn character_create_screen_populates_races_classes_and_customizations() {
     test_timeout! {

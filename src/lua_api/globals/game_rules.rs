@@ -331,9 +331,20 @@ fn ensure_c_game_rules_table(
     new_ref
 }
 
+/// INFERRED (R88ak Mists 5.5.4.70631 applied to 5.5.4.70268): publish the
+/// current-mode getter for the selected Classic GlueGameLogo consumer.
+fn register_mists_current_game_mode_record_id(state: &mut LuaState) -> LuaResult<()> {
+    if ACTIVE == ClientProfile::Mists {
+        let namespace = ensure_c_game_rules_table(state);
+        crate::c_api::game_mode_display::register_mists_current_record_id(state, namespace)?;
+    }
+    Ok(())
+}
+
 pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     use rilua::LuaApiMut;
     install_on_c_game_rules(lua.state_mut())?;
+    register_mists_current_game_mode_record_id(lua.state_mut())?;
     crate::c_api::experience_preset::register(lua.state_mut())?;
     crate::c_api::ptr_i4_game_rules::register(lua.state_mut())
 }

@@ -1,3 +1,15 @@
+## [2026-11-17] verification | Mists GlueGameLogo current-mode consumer
+
+**VERIFIED (Mists 5.5.4.70268 simulator, target `0f35a8833`):** the original consumer regression passes 1/1 and records a no-payload update. Broader CharacterSelect/Login selectors remain gated after separate simulator failures outside R88ak; their native behavior is not claimed.
+
+## [2026-11-17] implementation | Mists current-mode record from R88ak
+
+Updated the [Glue login contract](../specs/glue-login-flow.md) and [fixture-triage investigation](investigations/master-test-fixture-triage.md). **VERIFIED (Mists Classic 5.5.4.70631):** the getter returns one current mode ID or nil at -1. **UNKNOWN:** the runtime writer was not identified. **INFERRED (Mists 5.5.4.70268):** the simulator applies that getter to the selected GlueGameLogo consumer through the existing CVar input.
+
+## [2026-11-17] investigation | Master test fixture and profile triage
+
+Added the [investigation](investigations/master-test-fixture-triage.md). **VERIFIED (Retail 12.1.5.70783):** several exact failures came from partial fixtures that omitted selected Blizzard owners. **UNKNOWN (Mists 5.5.4.70268):** `GetCurrentGameModeRecordID` return data and lifecycle await R88ak.
+
 ## [2026-11-17] investigation | Questie login coroutine bit library
 
 Added the [investigation](investigations/questie-login-bit-library.md) and [contract](../specs/bit-library.md). **VERIFIED:** Lua count-hook sampling put 97.7% of Questie's login-thread instructions in the simulator's Lua `bit` fallback; the native `bit` library returns byte-identical results on a 40,056-call corpus and cuts Mists timer 12 from 12.96–21.92 s to 0.67–1.02 s (longest callback 286–378 ms → 49–101 ms). rilua per-call closure-taint lookups and per-read slot-taint key copies remain; they are proposed, not changed.

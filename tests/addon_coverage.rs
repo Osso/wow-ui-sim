@@ -12,7 +12,8 @@ use std::path::PathBuf;
 use wow_ui_sim::blizzard_ui_sync::manifest_entries;
 use wow_ui_sim::loader::{
     discover_all_blizzard_addons, discover_blizzard_addon_closure_for_screen,
-    discover_blizzard_startup_addons_for_screen, load_addon, load_startup_addon,
+    discover_blizzard_startup_addons_for_screen, load_addon, load_addon_bootstrap_from_toc,
+    load_startup_addon,
 };
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::lua_errors::grouped_errors_by_addon;
@@ -323,12 +324,28 @@ fn load_panel_harness_blizzard_ui(env: &WowLuaEnv) -> HashSet<String> {
             panic!("{addon_name} should load for the panel harness: {error}");
         }
     }
+    load_achievement_bootstrap(env, &ui);
 
     env.apply_post_load_workarounds();
     fire_panel_harness_startup_events(env);
     silence_lua_error_handler(env);
 
     closure.into_iter().map(|(name, _)| name).collect()
+}
+
+fn load_achievement_bootstrap(env: &WowLuaEnv, ui: &std::path::Path) {
+    if wow_ui_sim::client_profile::ACTIVE != wow_ui_sim::client_profile::ClientProfile::Retail {
+        return;
+    }
+    let startup = discover_blizzard_startup_addons_for_screen(ui, ScreenKind::Game);
+    let addon = startup
+        .iter()
+        .find(|addon| addon.name == "Blizzard_AchievementUI")
+        .expect("original Retail startup includes the AchievementUI bootstrap");
+    let toc = TocFile::from_file(&addon.toc_path).expect("AchievementUI TOC parses");
+    assert!(toc.is_load_on_demand() && toc.has_bootstrap_files());
+    load_addon_bootstrap_from_toc(&env.loader_env(), &toc)
+        .expect("original AchievementUI bootstrap loads for panel tests");
 }
 
 fn force_load_game_addons() -> Vec<(String, PathBuf)> {

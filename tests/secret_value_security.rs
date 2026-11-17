@@ -1,20 +1,34 @@
+use crate::common;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 fn env() -> WowLuaEnv {
     WowLuaEnv::new().expect("Failed to create Lua environment")
 }
 
+fn env_with_chat_frame_consumer() -> WowLuaEnv {
+    let ui_dir = common::blizzard_addon_harness::blizzard_ui_dir();
+    let (env, loaded) = common::blizzard_addon_harness::build_blizzard_addon_closure_env(
+        &ui_dir,
+        &["Blizzard_ChatFrameBase"],
+        &[],
+    );
+    assert!(loaded.iter().any(|name| name == "Blizzard_ChatFrameBase"));
+    env
+}
+
 #[test]
 fn addon_tainted_function_is_not_secret() {
-    let env = env();
-    let (secret, inserted): (bool, bool) = env
+    let env = env_with_chat_frame_consumer();
+    let (secret, inserted, original_registry): (bool, bool, bool) = env
         .eval(
             r#"
             local f = function() end
             debug.setobjecttaint(f, "TestAddon")
+            local registry = ChatFrameUtil.CreateSenderNameFilterRegistry()
+            registry:AddFilter(f)
             local array = SecureTypes.CreateSecureArray()
             local ok = pcall(function() array:Insert(f) end)
-            return issecretvalue(f), ok and array[1] == f
+            return issecretvalue(f), ok and array[1] == f, registry ~= nil
             "#,
         )
         .unwrap();
@@ -24,18 +38,24 @@ fn addon_tainted_function_is_not_secret() {
         "addon-tainted closures should not be secret values"
     );
     assert!(inserted, "SecureArray should accept addon-tainted closures");
+    assert!(
+        original_registry,
+        "original ChatFrame consumer should create its SecureArray"
+    );
 }
 
 #[test]
 fn secure_loadstring_function_is_not_secret() {
-    let env = env();
-    let (secret, inserted): (bool, bool) = env
+    let env = env_with_chat_frame_consumer();
+    let (secret, inserted, original_registry): (bool, bool, bool) = env
         .eval(
             r#"
             local f = loadstring("return 1")
+            local registry = ChatFrameUtil.CreateSenderNameFilterRegistry()
+            registry:AddFilter(f)
             local array = SecureTypes.CreateSecureArray()
             local ok = pcall(function() array:Insert(f) end)
-            return issecretvalue(f), ok and array[1] == f
+            return issecretvalue(f), ok and array[1] == f, registry ~= nil
             "#,
         )
         .unwrap();
@@ -47,6 +67,10 @@ fn secure_loadstring_function_is_not_secret() {
     assert!(
         inserted,
         "SecureArray should accept secure generated closures"
+    );
+    assert!(
+        original_registry,
+        "original ChatFrame consumer should create its SecureArray"
     );
 }
 

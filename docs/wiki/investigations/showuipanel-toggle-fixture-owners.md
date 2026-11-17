@@ -33,3 +33,7 @@ The exact test file is byte-identical at all six revisions (SHA256 `ba4d54935e66
 Coordinator lt-900e comment 1275 accepts the fixture-omission classification and original owner routes. The initial return-to-current compile after historical target use exposed stale historical dependencies and was discarded without runtime; a complete current-input mtime refresh preceded successful current receipts.
 
 Normal startup currently promotes AchievementUI to `Full` through `implicit_blizzard_startup_dependencies` (`loader/mod.rs:182`) and `collect_startup_prerequisites` (which pulls keys from the LoD pool). The explicit fixture closure (`loader/mod.rs:626–647`) uses only its roots and declared dependencies, not those implicit startup keys, so the owner was omitted. This is not evidence of a broken native bootstrap loader; the partial fixture needs only the real TOC bootstrap before lazy loading. A draft diagnostic wrongly assumed `BootstrapOnly`; observed startup kind was `Full`, and that new diagnostic was corrected without altering any original selector assertion.
+
+## See Also
+
+- [[master-test-fixture-triage]] — related false test-fixture failures and Mists profile gates.

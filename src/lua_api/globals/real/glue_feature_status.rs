@@ -42,5 +42,10 @@ fn is_name_reservation_only(state: &mut LuaState) -> LuaResult<u32> {
 pub fn deliver_status(env: &WowLuaEnv, status: GlueFeatureStatus) -> crate::Result<()> {
     env.fire_event("TIMERUNNING_SEASON_UPDATE")?;
     env.state().borrow_mut().glue_feature_status = status;
+    #[cfg(feature = "client-wowforever")]
+    crate::lua_api::globals::real::name_reservation::set_feature_status(
+        env,
+        u8::from(status.name_reservation_only),
+    );
     env.fire_event("AVAILABLE_GAME_MODES_UPDATED")
 }
