@@ -342,7 +342,7 @@ fn load_secure_dependencies_for_pass(
 /// R88g.1 (Retail 70688) loads a secure addon's dependencies in secureenv.
 /// Other profiles keep master's library replay; their native behavior is UNKNOWN.
 fn uses_secure_dependency_pass() -> bool {
-    crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail
+    crate::client_profile::is_active_retail_12_1_5()
 }
 
 fn load_addon_files_and_finish(
@@ -1120,9 +1120,9 @@ const SECURE_REPLAY_LIBRARY_ADDONS: &[&str] = &[
 ];
 
 pub(super) fn is_secure_replay_library_addon(folder_name: &str) -> bool {
-    // Retail secure loads use the shared dependency pass; preserve the legacy
-    // replay path for the other profiles.
-    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+    // Retail 12.1.5 secure loads use the shared dependency pass; preserve the
+    // legacy replay path where R88g.1 does not apply.
+    if crate::client_profile::is_active_retail_12_1_5() {
         return false;
     }
 

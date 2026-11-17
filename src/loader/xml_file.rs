@@ -392,7 +392,7 @@ fn scoped_script_env(env: &LoaderEnv<'_>, ctx: &AddonContext) -> Result<Val, Loa
 }
 
 fn is_retail_secure_addon(ctx: &AddonContext<'_>) -> bool {
-    ctx.use_secure_env && ACTIVE == ClientProfile::Retail
+    ctx.use_secure_env && crate::client_profile::is_active_retail_12_1_5()
 }
 
 fn scoped_script_fallback_env(

@@ -118,7 +118,7 @@ impl<'a> LoaderEnv<'a> {
             mark_secure_replay_state(state, func)?;
         }
         let preserve_secure_replay = secure_addon
-            && crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail
+            && crate::client_profile::is_active_retail_12_1_5()
             && super::methods::borrow_state(state)?
                 .loading_scoped_script_env
                 .is_some();
