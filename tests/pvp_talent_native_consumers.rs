@@ -361,3 +361,30 @@ fn empty_host_records_do_not_publish_placeholder_info() {
 
     assert_eq!(return_count, 0);
 }
+
+const PVP_TALENT_INFO_ARGUMENT_VALIDATION: &str = r#"
+local api = C_SpecializationInfo.GetPvpTalentInfo
+local usage = "Usage: local talentInfo = C_SpecializationInfo.GetPvpTalentInfo(talentID)"
+local function hasUsageError(call)
+    local ok, message = pcall(call)
+    return not ok and type(message) == "string" and message:find(usage, 1, true) ~= nil
+end
+assert(hasUsageError(function() api() end), "missing talentID")
+assert(hasUsageError(function() api(nil) end), "nil talentID")
+assert(hasUsageError(function() api({}) end), "wrong-type talentID")
+assert(hasUsageError(function() api(2147483648) end), "upper out-of-range talentID")
+assert(hasUsageError(function() api(-2147483649) end), "lower out-of-range talentID")
+local secret = secretwrap(901)
+local function denied() return pcall(api, secret) end
+debug.setobjecttaint(denied, "PvpTalentInfoArgumentProbe")
+local ok, message = denied()
+assert(not ok and type(message) == "string" and message:find(usage, 1, true) ~= nil,
+    "tainted secret must take the verified Usage path: " .. tostring(message))
+"#;
+
+#[test]
+fn get_pvp_talent_info_validates_verified_argument_paths() {
+    let env = WowLuaEnv::new().expect("create PvP talent API environment");
+    env.exec(PVP_TALENT_INFO_ARGUMENT_VALIDATION)
+        .expect("GetPvpTalentInfo should reject arguments on the verified paths");
+}
