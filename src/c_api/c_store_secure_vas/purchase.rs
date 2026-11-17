@@ -135,6 +135,23 @@ fn nydus_link(state: &LuaState, entry_id: i32) -> LuaResult<Option<String>> {
 }
 
 fn confirmation_info(state: &LuaState) -> LuaResult<Option<ConfirmationInfo>> {
+    let Some((product_id, record, prices)) = confirmation_record(state)? else {
+        return Ok(None);
+    };
+    let Some(amounts) = purchase_amounts(&record, prices.as_ref()) else {
+        return Ok(None);
+    };
+    Ok(Some(ConfirmationInfo {
+        product_id,
+        wallet_name: record.wallet_name,
+        original_amount: amounts.original_amount,
+        current_amount: amounts.current_amount,
+    }))
+}
+
+fn confirmation_record(
+    state: &LuaState,
+) -> LuaResult<Option<(i32, StoreVasPurchaseInput, Option<StoreVasPriceInput>)>> {
     let sim = borrow_state(state)?;
     let store = &sim.store_glue.store_secure;
     let vas = &store.vas;
@@ -156,16 +173,11 @@ fn confirmation_info(state: &LuaState) -> LuaResult<Option<ConfirmationInfo>> {
     {
         return Ok(None);
     }
-    let amounts = purchase_amounts(record, vas.product_prices.get(&product_id));
-    let Some(amounts) = amounts else {
-        return Ok(None);
-    };
-    Ok(Some(ConfirmationInfo {
+    Ok(Some((
         product_id,
-        wallet_name: record.wallet_name.clone(),
-        original_amount: amounts.original_amount,
-        current_amount: amounts.current_amount,
-    }))
+        record.clone(),
+        vas.product_prices.get(&product_id).cloned(),
+    )))
 }
 
 fn purchase_amounts(

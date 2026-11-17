@@ -1,6 +1,7 @@
 #![cfg(feature = "client-retail")]
 
 use crate::common::blizzard_addon_harness;
+use wow_ui_sim::c_api::store_catalog_model::{StoreProductInput, StoreProductSharedData};
 use wow_ui_sim::c_api::store_vas_model::{
     StoreVasBoostInput, StoreVasCharacterInput, StoreVasCompletionInput, StoreVasEligibleRaceInput,
     StoreVasGuildFollowInfoInput, StoreVasGuildMasterInfoInput, StoreVasGuildMemberInput,
@@ -186,6 +187,8 @@ const PURCHASE_COMPLETION_CONSUMER: &str = r#"
     C_StoreSecure.PurchaseProduct(2003)
     C_StoreSecure.PurchaseVASProduct(2003, "Player-101-1-11", "Renamedhero", nil, nil, nil, nil, nil, false, false)
     C_StoreSecure.PurchaseProductConfirm(true, 10, 50)
+    C_StoreSecure.OpenNydusLink(99999)
+    C_StoreSecure.PurchaseVASProduct(99999, "Player-101-1-11", "Unused", nil, nil, nil, nil, nil, false, false)
     local product, guid, realm, shouldHandle = C_StoreSecure.GetVASCompletionInfo()
     assert(product == 2003 and guid == "Player-101-1-11" and realm == "Azeroth" and shouldHandle == true)
     local failureCode, failureReason = C_StoreSecure.GetFailureInfo()
@@ -394,6 +397,28 @@ fn seed_purchase_inputs(env: &WowLuaEnv) {
     vas.pre_generated_external_transaction_id = Some(b"external-1".to_vec());
 }
 
+fn seed_transfer_product(env: &WowLuaEnv) {
+    env.state()
+        .borrow_mut()
+        .store_glue
+        .store_secure
+        .catalog
+        .products
+        .push(transfer_product());
+}
+
+fn transfer_product() -> StoreProductInput {
+    StoreProductInput {
+        product_id: 2010,
+        supported: true,
+        session_eligible: true,
+        display_eligible: true,
+        dynamic_bundle: false,
+        product_type: Some(15),
+        shared_data: StoreProductSharedData::default(),
+    }
+}
+
 fn purchase_record() -> StoreVasPurchaseInput {
     StoreVasPurchaseInput {
         product_id: 2003,
@@ -403,6 +428,46 @@ fn purchase_record() -> StoreVasPurchaseInput {
         original_amount: 0,
         current_amount: 0,
     }
+}
+
+fn seed_transfer_completion(env: &WowLuaEnv, second_auxiliary: u32) {
+    env.state()
+        .borrow_mut()
+        .store_glue
+        .store_secure
+        .vas
+        .completion = Some(StoreVasCompletionInput {
+        product_id: 2010,
+        guid: "Player-999-1-FF".into(),
+        first_auxiliary: 0,
+        second_auxiliary,
+    });
+}
+
+fn assert_transfer_completion(env: &WowLuaEnv, should_handle: bool) {
+    let result: (i32, String, String, bool) = env
+        .eval("return C_StoreSecure.GetVASCompletionInfo()")
+        .expect("transfer completion should publish its populated tuple");
+    assert_eq!(
+        result,
+        (2010, "Player-999-1-FF".into(), String::new(), should_handle)
+    );
+}
+
+fn seed_missing_character_completion(env: &WowLuaEnv) {
+    env.state()
+        .borrow_mut()
+        .store_glue
+        .store_secure
+        .vas
+        .completion = Some(StoreVasCompletionInput {
+        product_id: 2003,
+        guid: "Player-999-1-FF".into(),
+        first_auxiliary: 0,
+        second_auxiliary: 0,
+    });
+    env.exec("C_StoreSecure.GetVASCompletionInfo()")
+        .expect("missing character should prepare the follow-up lookup");
 }
 
 fn race_eligibility() -> StoreVasRaceEligibilityInput {
@@ -596,6 +661,63 @@ fn retail_store_vas_guild_follow_request_uses_the_original_character_callback() 
         let event: (String, String, bool, i32) = env.eval("return STORE_VAS_GUILD_FOLLOW_EVENT.guid, STORE_VAS_GUILD_FOLLOW_EVENT.transferredRealm, STORE_VAS_GUILD_FOLLOW_EVENT.factionChanged, STORE_VAS_GUILD_FOLLOW_EVENT.count")
             .expect("guild-follow event should publish its verified payload");
         assert_eq!(event, ("Player-101-1-11".into(), "Kalimdor".into(), false, 2));
+    }
+}
+
+#[test]
+fn retail_store_vas_transfer_completion_and_missing_character_request_are_modeled() {
+    test_timeout! {
+        let env = load_store_ui();
+        crate::common::store_catalog_fixture::seed_vas_catalog(&env);
+        seed_transfer_product(&env);
+        env.state().borrow_mut().store_glue.connection_present = true;
+        seed_transfer_completion(&env, 0);
+        assert_transfer_completion(&env, true);
+        seed_transfer_completion(&env, 1);
+        assert_transfer_completion(&env, false);
+        seed_missing_character_completion(&env);
+        assert!(env.state().borrow().store_glue.store_secure.vas.completion_request_pending);
+        let requests = env
+            .state()
+            .borrow()
+            .store_glue
+            .store_secure
+            .vas
+            .submitted_requests
+            .clone();
+        assert_eq!(requests.len(), 1);
+        assert!(matches!(
+            &requests[0],
+            StoreVasRequest::CompletionInfo { product_id: 2003, .. }
+        ));
+    }
+}
+
+#[test]
+fn retail_store_purchase_confirmation_checks_selected_state_and_cents() {
+    test_timeout! {
+        let env = load_store_ui();
+        crate::common::store_catalog_fixture::seed_vas_catalog(&env);
+        seed_purchase_inputs(&env);
+        env.state().borrow_mut().store_glue.connection_present = true;
+        env.exec("C_StoreSecure.PurchaseProductConfirm(true, 10, 100)")
+            .expect("100 narrowed cents should reject confirmation preparation");
+        assert!(env.state().borrow().store_glue.store_secure.vas.submitted_requests.is_empty());
+        env.exec("C_StoreSecure.PurchaseProductConfirm(false)")
+            .expect("eligible cancellation should prepare a zero amount");
+        assert_eq!(
+            env.state().borrow().store_glue.store_secure.vas.submitted_requests,
+            [StoreVasRequest::PurchaseConfirmation {
+                correlation: 0,
+                confirmed: false,
+                dollars: 0,
+                cents: 0,
+            }]
+        );
+        env.state().borrow_mut().store_glue.store_secure.vas.purchase_records[0].status = 8;
+        env.exec("C_StoreSecure.PurchaseProductConfirm(false)")
+            .expect("unsuitable purchase state should not prepare a request");
+        assert_eq!(env.state().borrow().store_glue.store_secure.vas.submitted_requests.len(), 1);
     }
 }
 
