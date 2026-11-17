@@ -120,6 +120,19 @@ fn frame_center(env: &WowLuaEnv, frame_path: &str) -> Point {
 
 #[cfg(feature = "client-mists")]
 #[test]
+fn mists_movie_boot_has_no_movie_frame_lifecycle_errors() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::Login);
+        let errors: Vec<String> = env.state().borrow().lua_errors.iter()
+            .filter(|error| error.contains("MovieFrame.lua:"))
+            .cloned()
+            .collect();
+        assert!(errors.is_empty(), "MovieFrame lifecycle errors: {errors:#?}");
+    }
+}
+
+#[cfg(feature = "client-mists")]
+#[test]
 fn mists_login_boot_returns_to_account_login_after_intro_movie() {
     test_timeout! {
         let env = load_blizzard_screen(ScreenKind::Login);
