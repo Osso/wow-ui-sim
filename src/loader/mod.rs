@@ -47,7 +47,7 @@ use std::sync::{Mutex, OnceLock};
 use std::time::Duration;
 
 pub(crate) use addon::{append_pending_nested_addon_diagnostics, begin_addon_load};
-pub use addon_order::sort_addons_by_dependencies;
+pub use addon_order::{sort_addons_by_dependencies, sort_addons_by_dependencies_with_tocs};
 use addon_order::{
     topological_sort_addons, topological_sort_addons_with_extra_dependencies_for_screen,
 };
