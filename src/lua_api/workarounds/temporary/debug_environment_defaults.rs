@@ -185,7 +185,19 @@ if debug ~= nil and debug.getfenv ~= nil then
 end
 "#;
 
+/// temporary: master's no-op fallback. Only Retail 12.1.5 registers the real
+/// R88y `AddSourceLocationExclude`; other profiles' native behavior is UNKNOWN.
+const SOURCE_LOCATION_EXCLUDE_FALLBACK_LUA: &str = r#"
+if AddSourceLocationExclude == nil then
+  function AddSourceLocationExclude()
+  end
+end
+"#;
+
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
+    if !crate::client_profile::is_active_retail_12_1_5() {
+        lua.exec(SOURCE_LOCATION_EXCLUDE_FALLBACK_LUA)?;
+    }
     lua.exec(DEBUG_ENVIRONMENT_DEFAULTS_LUA)?;
     Ok(())
 }
