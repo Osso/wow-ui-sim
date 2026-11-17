@@ -549,9 +549,12 @@ fn separate_flag3_destination_function_object(
         },
         _ => return Ok(value),
     };
-    Ok(Val::Function(
-        state.gc.alloc_closure(Closure::Lua(duplicate)),
-    ))
+    let taint = rilua::stdlib::taint::get_closure_taint(state, reference);
+    let duplicate = state.gc.alloc_closure(Closure::Lua(duplicate));
+    if let Some(taint) = taint.as_deref() {
+        rilua::stdlib::taint::set_closure_taint(state, duplicate, Some(taint))?;
+    }
+    Ok(Val::Function(duplicate))
 }
 
 fn is_fixed_base_copy(state: &mut LuaState, namespace: &str, member: &str) -> LuaResult<bool> {
