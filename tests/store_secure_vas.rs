@@ -131,7 +131,10 @@ const ACCOUNT_VALIDATION_CONSUMER: &str = r#"
     STORE_VAS_VALIDATION_EVENTS = {}
     local selector = {}
     STORE_VAS_ACCOUNT_SELECTOR = selector
-    lookup("AccountSelectorMixin").ValidateBnetTransfer(selector, " Transfer@Example.COM ")
+    local validate = lookup("AccountSelectorMixin").ValidateBnetTransfer
+    local source = debug.getinfo(validate, "S").source
+    assert(source:find("CharacterServicesAccountSelector.lua", 1, true), "Retail account selector must be selected")
+    validate(selector, " Transfer@Example.COM ")
     assert(selector.awaitingBnetTransferResponse == true, "original account selector should await validation")
     assert(#STORE_VAS_VALIDATION_EVENTS == 0, "validation request must not fire a response event")
 "#;
@@ -586,6 +589,18 @@ fn retail_store_bnet_validation_uses_the_original_account_selector() {
     }
 }
 
+#[test]
+fn retail_store_bnet_error_preserves_account_map_and_notifies_original_selector() {
+    test_timeout! {
+        let env = load_store_ui();
+        seed_group3_lookup_inputs(&env);
+        env.state().borrow_mut().store_glue.connection_present = true;
+        env.exec(ACCOUNT_VALIDATION_CONSUMER)
+            .expect("original account selector should submit the validation request");
+        receive_bnet_error(&env);
+    }
+}
+
 fn assert_bnet_validation_request(env: &WowLuaEnv) {
     let sim = env.state();
     let store = sim.borrow();
@@ -614,6 +629,24 @@ fn receive_bnet_success(env: &WowLuaEnv) {
     let result: (i32, String, String, bool) = env.eval("return STORE_VAS_VALIDATION_EVENTS[1].count, STORE_VAS_VALIDATION_EVENTS[1].errorType, STORE_VAS_VALIDATION_EVENTS[1].remoteGuid, C_StoreSecure.GetWoWAccountGUIDFromName('WoW3', false) ~= nil")
         .expect("successful validation event should observe replaced account state");
     assert_eq!(result, (1, "nil".into(), "WowAccount-2002-2".into(), true));
+}
+
+fn receive_bnet_error(env: &WowLuaEnv) {
+    wow_ui_sim::c_api::store_vas_model::receive_bnet_transfer_validation(
+        env,
+        1,
+        7,
+        "BNetAccount-ignored".into(),
+        vec![(b"WoW3".to_vec(), "WowAccount-3003-3".into())],
+    )
+    .expect("correlated error response should dispatch without replacing accounts");
+    let result: (i32, String, i32, String, bool) = env
+        .eval("return STORE_VAS_VALIDATION_EVENTS[1].count, STORE_VAS_VALIDATION_EVENTS[1].errorType, STORE_VAS_VALIDATION_EVENTS[1].errorCode, STORE_VAS_VALIDATION_EVENTS[1].remoteGuid, C_StoreSecure.GetWoWAccountGUIDFromName('WoW3', false) ~= nil")
+        .expect("error event should retain its number and current account map");
+    assert_eq!(
+        result,
+        (1, "number".into(), 7, "WowAccount-2002-2".into(), false)
+    );
 }
 
 fn assert_stale_bnet_response_ignored(env: &WowLuaEnv) {
