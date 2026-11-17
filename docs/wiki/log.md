@@ -1,6 +1,10 @@
+## [2026-11-17] verification | Mists GlueGameLogo current-mode consumer
+
+**VERIFIED (Mists 5.5.4.70268 simulator, target `0f35a8833`):** the original consumer regression passes 1/1 and records a no-payload update. Broader CharacterSelect/Login selectors remain gated after separate simulator failures outside R88ak; their native behavior is not claimed.
+
 ## [2026-11-17] implementation | Mists current-mode record from R88ak
 
-Updated the [Glue login contract](../specs/glue-login-flow.md) and [fixture-triage investigation](investigations/master-test-fixture-triage.md). **VERIFIED (Mists Classic 5.5.4.70631):** the getter returns one current mode ID or nil at -1; the runtime writer remains UNKNOWN. **INFERRED (Mists 5.5.4.70268):** the simulator applies that getter to the selected GlueGameLogo consumer through the existing CVar input.
+Updated the [Glue login contract](../specs/glue-login-flow.md) and [fixture-triage investigation](investigations/master-test-fixture-triage.md). **VERIFIED (Mists Classic 5.5.4.70631):** the getter returns one current mode ID or nil at -1. **UNKNOWN:** the runtime writer was not identified. **INFERRED (Mists 5.5.4.70268):** the simulator applies that getter to the selected GlueGameLogo consumer through the existing CVar input.
 
 ## [2026-11-17] investigation | Master test fixture and profile triage
 

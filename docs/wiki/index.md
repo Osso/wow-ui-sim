@@ -1,6 +1,10 @@
+## [2026-11-17] verification | Mists GlueGameLogo current-mode consumer
+
+**VERIFIED (Mists 5.5.4.70268 simulator, target `0f35a8833`):** the original-GlueGameLogo test passes 1/1 with a one-nil default, numeric host input, and no-payload update. The runtime writer remains UNKNOWN.
+
 ## [2026-11-17] implementation | Mists current-mode record from R88ak
 
-**VERIFIED (Mists Classic 5.5.4.70631):** the getter returns one numeric current-mode ID or one nil at -1; the runtime writer is UNKNOWN. **INFERRED (Mists 5.5.4.70268):** the selected GlueGameLogo consumer uses the CVar-backed simulator getter.
+**VERIFIED (Mists Classic 5.5.4.70631):** the getter returns one numeric current-mode ID or one nil at -1. **UNKNOWN:** the runtime writer was not identified. **INFERRED (Mists 5.5.4.70268):** the selected GlueGameLogo consumer uses the CVar-backed simulator getter.
 
 ## [2026-11-17] investigation | Master test fixture and profile triage
 
