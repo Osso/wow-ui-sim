@@ -1188,7 +1188,7 @@ fn retail_r88n11b_global_functions_share_values_with_secure_environment() {
 
 #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
 #[test]
-fn retail_r88n11b_members_share_functions_with_secure_namespaces() {
+fn retail_r88n11b_members_publish_distinct_flag3_functions() {
     const MEMBERS: [(&str, &str); 37] = [
         ("C_ClassColor", "GetClassColor"),
         ("C_ColorUtil", "ConvertHSLToHSV"),
@@ -1260,8 +1260,10 @@ fn retail_r88n11b_members_share_functions_with_secure_namespaces() {
                             end
                         elseif type(publicValue) ~= "function" then
                             failures[#failures + 1] = namespace .. "." .. member .. ": ordinary value is not a function"
-                        elseif not rawequal(publicValue, secureValue) then
-                            failures[#failures + 1] = namespace .. "." .. member .. ": values differ"
+                        elseif type(secureValue) ~= "function" then
+                            failures[#failures + 1] = namespace .. "." .. member .. ": secure value is not a function"
+                        elseif rawequal(publicValue, secureValue) then
+                            failures[#failures + 1] = namespace .. "." .. member .. ": flag-3 closures share identity"
                         else
                             present = present + 1
                         end
@@ -1297,6 +1299,29 @@ fn retail_r88n11b_members_share_functions_with_secure_namespaces() {
     assert!(
         failures.is_empty(),
         "invalid secure publications: {failures:?}"
+    );
+    let (public_r, public_g, public_b, secure_r, secure_g, secure_b): (
+        f64,
+        f64,
+        f64,
+        f64,
+        f64,
+        f64,
+    ) = env
+        .eval(
+            r#"
+            local public = rawget(rawget(_G, "C_ColorUtil"), "ConvertHSVToRGB")
+            local secure = rawget(rawget(__secureenv, "C_ColorUtil"), "ConvertHSVToRGB")
+            local public_r, public_g, public_b = public(0, 1, 1)
+            local secure_r, secure_g, secure_b = secure(0, 1, 1)
+            return public_r, public_g, public_b, secure_r, secure_g, secure_b
+            "#,
+        )
+        .expect("R88g.3.q3 Lua-produced flag-3 function should remain equivalent");
+    assert_eq!(
+        (public_r, public_g, public_b),
+        (secure_r, secure_g, secure_b),
+        "the separate secure flag-3 closure must preserve the Lua producer's result"
     );
 }
 
@@ -1387,7 +1412,7 @@ fn retail_r88n11b_private_aura_members_are_secure_only() {
 
 #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
 #[test]
-fn retail_r88n11b_c_texture_members_share_functions_with_secure_namespace() {
+fn retail_r88n11b_c_texture_members_publish_distinct_flag3_functions() {
     const MEMBERS: [&str; 11] = [
         "ClearTitleIconTexture",
         "GetAtlasElementID",
@@ -1406,10 +1431,10 @@ fn retail_r88n11b_c_texture_members_share_functions_with_secure_namespace() {
         .map(|member| format!("{member:?}"))
         .collect::<Vec<_>>()
         .join(", ");
+    let env = env();
     let (present, missing, failures, roots_are_separate): (i64, Vec<String>, Vec<String>, bool) =
-        env()
-            .eval(&format!(
-                r#"
+        env.eval(&format!(
+            r#"
                 local public = rawget(_G, "C_Texture")
                 local secure = rawget(__secureenv, "C_Texture")
                 local failures, missing = {{}}, {{}}
@@ -1430,20 +1455,24 @@ fn retail_r88n11b_c_texture_members_share_functions_with_secure_namespace() {
                 for _, member in ipairs({{{members}}}) do
                     local publicValue = rawget(public, member)
                     local secureValue = rawget(secure, member)
-                    if type(publicValue) == "function" and rawequal(publicValue, secureValue) then
-                        present = present + 1
-                    elseif publicValue == nil and secureValue == nil then
+                    if publicValue == nil and secureValue == nil then
                         missing[#missing + 1] = "C_Texture." .. member
+                    elseif type(publicValue) ~= "function" then
+                        failures[#failures + 1] = member .. ": ordinary value is not a function"
+                    elseif type(secureValue) ~= "function" then
+                        failures[#failures + 1] = member .. ": secure value is not a function"
+                    elseif rawequal(publicValue, secureValue) then
+                        failures[#failures + 1] = member .. ": flag-3 closures share identity"
                     else
-                        failures[#failures + 1] = member .. ": values are not paired functions"
+                        present = present + 1
                     end
                 end
                 table.sort(missing)
                 table.sort(failures)
                 return present, missing, failures, rootsAreSeparate
             "#
-            ))
-            .expect("R88n.11b C_Texture publication should be observable");
+        ))
+        .expect("R88n.11b C_Texture publication should be observable");
 
     assert!(
         roots_are_separate,
@@ -1468,5 +1497,23 @@ fn retail_r88n11b_c_texture_members_share_functions_with_secure_namespace() {
     assert!(
         failures.is_empty(),
         "invalid C_Texture routes: {failures:?}"
+    );
+    let (ordinary_exists, secure_exists): (bool, bool) = env
+        .eval(
+            r#"
+            local ordinary = rawget(_G, "C_Texture")
+            local secure = rawget(__secureenv, "C_Texture")
+            return ordinary.GetAtlasExists("UI-Frame-InnerTopLeft"),
+                secure.GetAtlasExists("UI-Frame-InnerTopLeft")
+            "#,
+        )
+        .expect("R88g.3.q3 C_Texture route should preserve GetAtlasExists results");
+    assert!(
+        ordinary_exists,
+        "the atlas producer must return a real result"
+    );
+    assert_eq!(
+        ordinary_exists, secure_exists,
+        "separate flag-3 C_Texture closures must return equivalent results"
     );
 }
