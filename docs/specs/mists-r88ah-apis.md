@@ -1,6 +1,6 @@
 # Mists R88ah C APIs
 
-This spec covers Mists-only `C_CombatAudioAlert.IsEnabled` and `C_Spell.GetVisibilityInfo` in `src/c_api/mists_r88ah.rs`. The native answer is `~/.local/state/wow-ui-sim/handoff/pr46-49-decomp-answers.md`, section `R88ah`.
+This spec covers Mists-only `C_CombatAudioAlert.IsEnabled` and `C_Spell.GetVisibilityInfo` in `src/c_api/mists_r88ah.rs`. The native answer is `pr46-49-decomp-answers.md` (untracked decomp handoff), section `R88ah`.
 
 ## What it must do
 

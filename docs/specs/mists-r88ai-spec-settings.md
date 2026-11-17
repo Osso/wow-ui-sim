@@ -1,6 +1,6 @@
 # Mists R88ai combat-audio spec settings
 
-This spec covers Mists-only `C_CombatAudioAlert.GetSpecSetting` and `SetSpecSetting` in `src/c_api/mists_r88ai.rs`. The native answer is `~/.local/state/wow-ui-sim/handoff/pr46-49-decomp-answers.md`, section `R88ai` (Mists 5.5.4.70631).
+This spec covers Mists-only `C_CombatAudioAlert.GetSpecSetting` and `SetSpecSetting` in `src/c_api/mists_r88ai.rs`. The native answer is `pr46-49-decomp-answers.md` (untracked decomp handoff), section `R88ai` (Mists 5.5.4.70631).
 
 ## What it must do
 

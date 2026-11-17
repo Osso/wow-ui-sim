@@ -9,7 +9,7 @@ Item tooltip composition uses the shared item builder and host-supplied final st
 - [x] Publish supplied `guid`, `hyperlink`, nonzero `overrideItemLevel`, and optional `isCorruptedItem`, `isAzeriteEmpoweredItem`, and `isAzeriteItem` at the top level, not on lines.
 - [x] Preserve getter selection, existing line positions, common type-0 color remapping (ERROR_COLOR to 41, DISABLED_FONT_COLOR to 42), and omission of unmarked wrap fields.
 
-VERIFIED native basis: R80 Q1/Q2, Retail 12.1.5.70688, in `~/.local/state/wow-ui-sim/handoff/pr46-49-decomp-answers.md`. The final-amount seam is a simulator input contract, not a native DB2 mapping. Existing stat type/color/position are preservation, not native parity.
+VERIFIED native basis: R80 Q1/Q2, Retail 12.1.5.70688, in `pr46-49-decomp-answers.md` (untracked decomp handoff). The final-amount seam is a simulator input contract, not a native DB2 mapping. Existing stat type/color/position are preservation, not native parity.
 
 ## Native evidence, not yet wired
 
