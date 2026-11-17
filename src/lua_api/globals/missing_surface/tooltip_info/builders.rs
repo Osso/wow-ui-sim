@@ -477,18 +477,39 @@ fn push_item_name_line(state: &mut LuaState, lines: Val, item: &items::ItemInfo)
     );
 }
 
-/// VERIFIED (R88p.p1): eligible nonzero results build type-11 rows with an empty
-/// left side, resolved default color, and `maxPrice` initialized to -1.
+/// VERIFIED (R88p.p1): prepared maximum quantity recalculates `maxPrice` only
+/// when it exceeds current quantity; absent and non-increasing inputs keep -1.
+fn calculate_retail_sell_price_max(state: &LuaState, item_id: u32, price: u32) -> f64 {
+    let Some((current, prepared_max)) = borrow_state(state).ok().and_then(|sim| {
+        sim.item_tooltip_sell_price_quantities
+            .get(&item_id)
+            .copied()
+    }) else {
+        return -1.0;
+    };
+    if prepared_max <= current {
+        return -1.0;
+    }
+    f64::from(price.wrapping_mul(prepared_max))
+}
+
 /// INFERRED: catalog `sell_price` stands in for the native initial unit price.
-/// UNKNOWN in this model: request mode, status, flags, preview, and quantity inputs.
-fn push_retail_sell_price_line(state: &mut LuaState, lines: Val, index: i64, price: u32) {
+/// UNKNOWN: request mode, status, flags, and preview remain unmodeled.
+fn push_retail_sell_price_line(
+    state: &mut LuaState,
+    lines: Val,
+    index: i64,
+    item_id: u32,
+    price: u32,
+) {
     if price == 0 || crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
         return;
     }
 
+    let max_price = calculate_retail_sell_price_max(state, item_id, price);
     let line = push_tooltip_line(state, lines, index, LINE_TYPE_SELL_PRICE, "", None, false);
     table_set(state, line, "price", Val::Num(f64::from(price)));
-    table_set(state, line, "maxPrice", Val::Num(-1.0));
+    table_set(state, line, "maxPrice", Val::Num(max_price));
 }
 
 fn tooltip_detail_color(state: &mut LuaState) -> (f64, f64, f64) {
@@ -789,7 +810,7 @@ pub(super) fn populate_item_tooltip_lines(
         publish_item_metadata(state, tooltip, &input);
         push_item_stat_lines(state, lines, &input.stats, &mut next_index);
     }
-    push_retail_sell_price_line(state, lines, next_index, item.sell_price);
+    push_retail_sell_price_line(state, lines, next_index, item_id, item.sell_price);
     state.top = saved_top;
 }
 

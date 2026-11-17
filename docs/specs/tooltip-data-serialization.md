@@ -22,6 +22,7 @@ publication is not expanded by this change.
 - [x] Original `ProcessInfo`, GameTooltip line handlers and TooltipUtil retain their payloads; presentation parses inline markup independently.
 - [x] The Retail `GameTooltip:SetItemByID` path emits a type-11 row for a nonzero backed catalog price with empty `leftText`, resolved default `leftColor`, `price`, and `maxPrice = -1` when no prepared quantity input exists. Mapping `ItemInfo.sell_price` to the native initial unit price is **INFERRED**.
 - [x] Retail `SetBagItem` publishes the seven type-6 fields only from explicit, empty-default host acceptance and snapshot inputs; the native predicate and writer remain UNKNOWN.
+- [x] **VERIFIED (Retail 12.1.5.70688; `pr46-49-decomp-answers.md`, R88p.p1):** on the no-instance path, `maxPrice` uses the prepared maximum quantity only when it exceeds current quantity; the unit-price product wraps at 32 bits. Absent or non-increasing quantity inputs keep `maxPrice = -1`.
 
 ### Retail SellPrice behavior (R88p.p1)
 
@@ -33,7 +34,7 @@ publication is not expanded by this change.
 
 **INFERRED (Retail 12.1.5.70688):** the sell-exclusion masks map to ItemSparse `Flags_1` mask 4096 and `Flags_3` mask 524288; the preview exception maps to `Flags_3` mask 32768. The masks and branches are VERIFIED; these column names use another build's header.
 
-**VERIFIED (simulator model):** `ItemInfo` carries `sell_price` and `stackable`, but it does not carry `Flags_1`, `Flags_3`, item instances, status records, or prepared quantity state. **INFERRED (simulator policy):** `ItemInfo.sell_price` stands in for the native initial unit-price calculation. Therefore the simulator leaves status and flag gates unsuppressed and keeps `maxPrice` at -1; it does not add unbacked writers or exclusions. The alternate `ITEM_UNSELLABLE` path and adjusted-to-zero path remain unmodeled.
+**VERIFIED (simulator model):** `ItemInfo` carries `sell_price` and `stackable`, but it does not carry `Flags_1`, `Flags_3`, item instances, status records, or prepared quantity state. `item_tooltip_sell_price_quantities` is an empty-default host input keyed by item ID; its `(current, prepared maximum)` values are not derived from `Stackable`. **INFERRED (simulator policy):** `ItemInfo.sell_price` stands in for the native initial unit-price calculation. **VERIFIED (simulator model):** the Retail producer multiplies its line `price` by the supplied prepared maximum with 32-bit wrapping only when the maximum exceeds current quantity; missing or non-increasing values keep `maxPrice` at -1. Status and flag gates remain unsuppressed. The alternate `ITEM_UNSELLABLE` path and adjusted-to-zero path remain unmodeled.
 
 **UNKNOWN:** the relationship between prepared maximum quantity and `Stackable`, and the calculated-price inputs not represented by `ItemInfo`.
 
@@ -74,8 +75,9 @@ placement contradicts R88n.4b, so no producer changed.
   default; the quote calculation is UNKNOWN ([bag repair cost](bag-repair-cost.md)).
 - `price` and `maxPrice`: only `push_retail_sell_price_line`
   (`tooltip_info/builders.rs`) writes them, on a type-11 line. No producer
-  writes them at top level. `maxPrice` is the R88p.p1 initial value -1, not a
-  guess; the prepared-quantity recalculation inputs are UNKNOWN and unmodeled.
+  writes them at top level. Prepared-quantity values remain UNKNOWN host inputs;
+  the producer uses them only when the maximum exceeds current quantity, else it
+  preserves the R88p.p1 initial value -1.
 - Battle-pet fields: the audit base had no type-6 producer or host seam.
   `battlePetSpeciesID` on Auction House `ItemKey` data is not a TooltipData
   producer. The Retail bag-item path now publishes the seven fields only from
@@ -119,6 +121,7 @@ do not claim those native details.
   type 6, all seven top-level values, and the seven ordered arguments forwarded
   by the original `TooltipDataRules.BattlePet`; test snapshot values are host
   fixtures, not native pet defaults.
+- `tests/tooltip_serializer_fields.rs`: **VERIFIED (Retail 12.1.5.70783 cache):** the selected fixture checks `Blizzard_SharedXMLGame`, `Blizzard_GameTooltip` and `Blizzard_UIPanels_Game`, and checks original source provenance for `SetItemByID`, `TooltipDataRules.SellPrice` and `GameTooltip_OnTooltipAddMoney`. The no-instance selector follows `TooltipDataHandler.lua:525` → `TooltipDataRules.lua:143-149` → `Blizzard_GameTooltip/Mainline/GameTooltip.lua:325-333`; it checks line `maxPrice` and callback arguments.
 - `tests/tooltip_serializer_consumer_output.rs::bag_repair_rule_renders_only_top_level_positive_repair_cost`
   observes only original consumer output: the selected `SetBagItem` accessor and
   `FinalizeItemTooltip` render REPAIR_COST plus the money row for quotes 731 and
