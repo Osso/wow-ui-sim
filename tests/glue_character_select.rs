@@ -859,9 +859,6 @@ fn assert_mists_game_logo_refreshes_from_current_mode(env: &common::LockedEnv) {
     .expect("Mists GlueGameLogo should refresh from the current-mode host input");
 }
 
-// UNKNOWN (R88ak pending, Mists 5.5.4.70268): wait for the original Glue
-// game-mode record behavior before accepting this startup result.
-#[cfg(not(feature = "client-mists"))]
 #[test]
 fn character_select_screen_shows_character_select_not_login() {
     test_timeout! {
@@ -1051,8 +1048,8 @@ fn character_select_populates_character_roster() {
     }
 }
 
-// UNKNOWN (R88ak pending, Mists 5.5.4.70268): wait for the original Glue
-// game-mode record behavior before accepting this startup result.
+// VERIFIED (Mists cache 5.5.4.70268): Classic CharacterSelect uses
+// CharacterSelectCharacterFrame with a ScrollBar, not the Mainline ScrollBox.
 #[cfg(not(feature = "client-mists"))]
 #[test]
 fn character_select_builds_scrollbox_entries() {
@@ -2113,8 +2110,8 @@ fn ptr_character_creation_submit_real_controls_do_not_invent_outcome() {
     }
 }
 
-// UNKNOWN (R88ak pending, Mists 5.5.4.70268): wait for the original Glue
-// game-mode record behavior before accepting this startup result.
+// UNKNOWN (Mists 5.5.4.70268 native consumer): this test expects
+// `CharacterCreateFrame.NameChoiceFrame`, which R88ak does not establish.
 #[cfg(not(feature = "client-mists"))]
 #[test]
 #[cfg(not(any(
@@ -2153,8 +2150,9 @@ fn character_create_action_updates_player_name_without_lua_errors() {
     }
 }
 
-// UNKNOWN (R88ak pending, Mists 5.5.4.70268): the Glue startup path used by
-// this probe depends on the unresolved game-mode record input.
+// UNKNOWN (Mists 5.5.4.70268): this probe targets
+// C_CharacterCreation.SetInCharacterCreate; the selected Classic Lua uses the
+// legacy global SetInCharacterCreate instead.
 #[cfg(not(feature = "client-mists"))]
 #[test]
 fn character_create_records_screen_state() {
@@ -2239,8 +2237,8 @@ fn forever_race_data_publishes_supplied_racial_ability_fields() {
     assert!(icon_is_nil);
 }
 
-// UNKNOWN (R88ak pending, Mists 5.5.4.70268): wait for the original Glue
-// game-mode record behavior before accepting this startup result.
+// VERIFIED (Mists cache 5.5.4.70268): Classic CharacterCreate names this
+// control `CharCreateBackButton`, not `CharacterCreateFrame.BackButton`.
 #[cfg(not(feature = "client-mists"))]
 #[test]
 fn character_create_screen_populates_races_classes_and_customizations() {
