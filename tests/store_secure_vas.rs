@@ -15,6 +15,8 @@ const REALM_AND_CHARACTER_CONSUMER: &str = r#"
     local openCharacter = lookup("VASCharacterSelectionCharacterSelector_OnClick")
     local chooseEntry = lookup("StoreDropdownMenuMenuButton_OnClick")
     local selectRealm = lookup("VASCharacterSelectionRealmSelector_Callback")
+    local menuButtonOnLoad = lookup("StoreDropdownMenuMenuButton_OnLoad")
+    local createFrame = lookup("CreateFrame")
     local source = debug.getinfo(init, "S")
     assert(source.source:find("Blizzard_Shared_StoreUISecure.lua", 1, true), "Retail StoreUI consumer must be selected")
 
@@ -28,6 +30,18 @@ const REALM_AND_CHARACTER_CONSUMER: &str = r#"
     init(panel)
 
     local selectors = panel.CharacterSelectionFrame
+    local function seedMenuButtons(menu, count)
+        for index = 2, count do
+            if not menu.Buttons[index] then
+                local button = createFrame("Button", nil, menu, "StoreDropdownMenuButtonTemplate")
+                menu.Buttons[index] = button
+                menuButtonOnLoad(button)
+            end
+        end
+    end
+    seedMenuButtons(selectors.RealmSelector.List, 3)
+    seedMenuButtons(selectors.CharacterSelector.List, 2)
+
     openRealm(selectors.RealmSelector.Button)
     local realmMenu = selectors.RealmSelector.List
     assert(realmMenu:IsShown(), "realm selector should show its original dropdown")
