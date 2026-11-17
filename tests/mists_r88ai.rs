@@ -37,7 +37,7 @@ fn refresh_registrations(env: &WowLuaEnv, inputs: &str) -> String {
         local source = debug.getinfo(CombatAudioAlertManagerMixin.RefreshEvents, 'S').source
         assert(source:sub(-#'{MANAGER_SOURCE}') == '{MANAGER_SOURCE}', source)
         local S = C_CombatAudioAlert.SetSpecSetting
-        local applied = (function() {inputs} end)()
+        local applied = select(2, pcall(function() {inputs} end))
         CombatAudioAlertManager.initDone = true
         local ok, err = pcall(function() CombatAudioAlertManager:RefreshEvents(false) end)
         local frame = CombatAudioAlertManager
