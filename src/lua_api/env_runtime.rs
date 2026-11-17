@@ -330,6 +330,9 @@ impl WowLuaEnv {
         #[cfg(feature = "retail-12-0-5")]
         super::execution_budget::reset_frame_budgets(self.lua.borrow_mut().state_mut())?;
         crate::c_api::c_login::advance(self)?;
+        // INFERRED (simulator policy): map the native queued notification to this
+        // dispatch boundary, before frame OnUpdate handlers; native delivery timing is unknown.
+        crate::c_api::store_catalog_model::flush_purchase_list_notification(self)?;
         let timings = super::on_update::fire(self, elapsed)?;
         #[cfg(feature = "client-ptr")]
         {

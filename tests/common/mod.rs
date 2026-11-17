@@ -17,6 +17,8 @@ mod event_helpers;
 pub mod game_menu_fixture;
 pub mod grouped_fixture;
 pub mod panel_fixtures;
+#[cfg(feature = "client-retail")]
+pub mod store_catalog_fixture;
 #[cfg(target_os = "linux")]
 pub(crate) mod prefork_process;
 #[cfg(target_os = "linux")]

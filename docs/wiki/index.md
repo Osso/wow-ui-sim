@@ -1,3 +1,7 @@
+## [2026-11-17] investigation | Questie login coroutine bit library
+
+[Questie login coroutine bit library](investigations/questie-login-bit-library.md) records why Questie's Mists login thread (timer 12) spent about 98% of its sampled instructions in the simulator's Lua `bit` fallback, the native replacement with byte-identical results ([contract](../specs/bit-library.md)), the 13–22 s → 0.67–1.02 s timer-12 A/B, and the rilua taint costs left open.
+
 ## [2026-11-17] system | Retail Glue host state (R88ad.7-10)
 
 [Retail Glue host state](systems/glue-host-state.md) records the saved-account CVars, connection snapshot, minimum-expansion writer, first-display state, login-background objects and Glue-audio request log behind the Retail R88ad producers, plus the profile scope of the retired bootstrap defaults.
@@ -5,6 +9,14 @@
 ## [2026-11-17] investigation | Addon metadata lookup performance
 
 [Addon metadata lookup performance](investigations/addon-metadata-lookup-performance.md) records the per-call TOC key scan behind the Questie Mists startup timeout, the per-TOC case-insensitive index, preserved and changed duplicate-key semantics ([contract](../specs/addon-metadata-lookup.md)), same-host A/B timings, the +200 MiB peak RSS, and the repeated-TOC-parse hotspot left open.
+
+## [2026-11-16] revision | Retail StoreSecure consumer RED and notifications
+
+The [StoreSecure system page](systems/store-secure-catalog.md) and [RED proof record](investigations/consumer-selection-and-red-proof.md#retail-storesecure-callable-producer-red) record ColorMixin RGB construction, coalesced purchase updates, and seven callable wrong-producer RED cases through original Store consumers. **INFERRED:** the OnUpdate flush boundary is a simulator policy.
+
+## [2026-11-16] implementation | Retail StoreSecure catalog inputs
+
+[StoreSecure catalog contract](../specs/store-secure-catalog.md) and [system page](systems/store-secure-catalog.md) record the Retail 12.1.5.70688 R88ad.1/R88ad.2 catalog, availability, currency, list, and request behavior. **VERIFIED (simulator source):** Retail uses empty-default host inputs; Mists remains UNKNOWN and keeps its prior bootstrap path. **VERIFIED (pinned 12.1.5.70783 consumers):** StoreUI and CatalogShop remain the original read paths. The old seeded-group contract is historical and superseded.
 
 ## [2026-11-16] investigation | Limited listfile reproducibility
 
@@ -4572,6 +4584,7 @@ The sixteen retail 12.0.0 `Enum.EditModeDamageMeterSetting.*` and `Enum.EditMode
 | [[talent-performance]] | Lazy `_G` lookup (431ms→263ms), rect-dirty stale cache causing infinite OnUpdate loop, shallow `issecretvalue` for pool releases (2159ms→2.6ms) |
 | [[character-select-performance]] | Lazy atlas crop stalls (fixed), first-resize relayout deduplication (partial) |
 | [[addon-metadata-lookup-performance]] | `GetAddOnMetadata` scanned every TOC key per call (QuestieDB Mists: 408,495); per-TOC case-insensitive index cuts reads from 892–2,408 µs to 0.47–1.62 µs and lets Mists startup with Questie complete; case-variant duplicates now resolve to the last line |
+| [[questie-login-bit-library]] | Questie's Mists login coroutine spent ~98% of sampled instructions in the Lua `bit` fallback (≥624,656 `bit.band` calls); native `bit` with byte-identical results cuts timer 12 from 13–22 s to 0.67–1.02 s |
 | [[class-talents-artifact]] | Gold blob ruled out as lossy WebP encoding artifact, not a live render bug |
 | [[class-talents-edge-lines]] | Class-talent connector lines disappeared because `IsRectValid()` did not resolve dirty anchored buttons and endpoint-positioned Line widgets under anchorless edge frames were filtered before quad emission |
 | [[class-talents-edge-frame-levels]] | Class-talent connector edges were rendering above node icons; edge-frame-level workaround now patches both mixin + live frame and re-levels active edges |

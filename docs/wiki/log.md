@@ -1,6 +1,18 @@
+## [2026-11-17] investigation | Questie login coroutine bit library
+
+Added the [investigation](investigations/questie-login-bit-library.md) and [contract](../specs/bit-library.md). **VERIFIED:** Lua count-hook sampling put 97.7% of Questie's login-thread instructions in the simulator's Lua `bit` fallback; the native `bit` library returns byte-identical results on a 40,056-call corpus and cuts Mists timer 12 from 12.96–21.92 s to 0.67–1.02 s (longest callback 286–378 ms → 49–101 ms). rilua per-call closure-taint lookups and per-read slot-taint key copies remain; they are proposed, not changed.
+
 ## [2026-11-17] investigation | Addon metadata lookup performance
 
 Added the [investigation](investigations/addon-metadata-lookup-performance.md) and [contract](../specs/addon-metadata-lookup.md); updated [[addon-loading]]. **VERIFIED:** `GetAddOnMetadata` reads drop from 892–2,408 µs to 0.47–1.62 µs on the QuestieDB Mists TOC, and Mists startup with Questie completes instead of timing out at 90 s. Case-variant duplicate keys now resolve to the last TOC line instead of random hash order.
+
+## [2026-11-16] revision | Retail StoreSecure consumer RED and notifications
+
+Updated the [StoreSecure contract](../specs/store-secure-catalog.md), [system page](systems/store-secure-catalog.md), and [RED proof record](investigations/consumer-selection-and-red-proof.md#retail-storesecure-callable-producer-red). **VERIFIED (R88ad.1):** product override colors use a new `ColorMixin` table with RGB fields only. **VERIFIED (R88ad.2):** purchase-list responses queue and coalesce a zero-payload update. **INFERRED (simulator policy):** the update flushes at the next `fire_on_update_timed` boundary before frame OnUpdate handlers. **VERIFIED (Retail RED):** seven callable wrong-producer selectors fail through original StoreUI or CatalogShop consumers.
+
+## [2026-11-16] implementation | Retail StoreSecure catalog inputs
+
+Added the Retail catalog state contract and system page. **VERIFIED (R88ad.1/R88ad.2, Retail 12.1.5.70688):** catalog readers, availability/list writers, currency lookup, and request limits have explicit native behavior. **VERIFIED (simulator source):** unknown runtime rows remain empty host inputs, and only Retail selects the new model; uncovered profiles retain bootstrap behavior. The pinned 12.1.5.70783 StoreUI and CatalogShop consumers remain unchanged. The verified `GetEntryInfo.alreadyOwned` snapshot behavior is recorded in the [contract](../specs/store-secure-catalog.md) and [system page](systems/store-secure-catalog.md).
 
 ## [2026-11-16] investigation | Limited listfile reproducibility
 
