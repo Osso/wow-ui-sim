@@ -367,6 +367,10 @@ fn login_editboxes_gain_focus_when_clicking_their_visible_centers() {
 fn mists_classic_cached_login_consumer_hides_rows_and_api_is_glue_only() {
     test_timeout! {
         let env = load_blizzard_screen(ScreenKind::Login);
+        let cursor_globals: bool = env
+            .eval("return type(HideCursor) == 'function' and type(ShowCursor) == 'function'")
+            .unwrap();
+        assert!(cursor_globals, "cursor visibility globals must be available in Glue");
         let row_visible: bool = env.eval(r#"
             local container = AccountLogin.UI.CachedLoginFrameContainer
             local row = CreateFrame("Frame", nil, container, "CachedLoginFrameTemplate")
@@ -382,6 +386,10 @@ fn mists_classic_cached_login_consumer_hides_rows_and_api_is_glue_only() {
         env.set_screen_mode(ScreenKind::Game);
         let absent: bool = env.eval("return C_Login.GetCachedCredentials == nil").unwrap();
         assert!(absent, "GetCachedCredentials must be Glue-only");
+        let cursor_globals_absent: bool = env
+            .eval("return HideCursor == nil and ShowCursor == nil")
+            .unwrap();
+        assert!(cursor_globals_absent, "cursor visibility globals must be Glue-only");
     }
 }
 
