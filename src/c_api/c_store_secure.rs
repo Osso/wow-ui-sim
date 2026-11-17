@@ -1,4 +1,4 @@
-//! Retail uses the profile-specific `C_StoreSecure` catalog projection.
+//! Retail registers the profile-specific catalog and VAS models for `C_StoreSecure`.
 //! Non-Retail retains the legacy group-list projection over simulator state;
 //! native non-Retail behavior is UNKNOWN. R88y supplies publication flags only.
 
@@ -12,7 +12,8 @@ use rilua::{LuaResult, Val};
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     if ACTIVE == ClientProfile::Retail {
-        return super::c_store_secure_catalog::register(state);
+        super::c_store_secure_catalog::register(state)?;
+        return super::c_store_secure_vas::register(state);
     }
     let namespace = super::ensure_namespace(state, "C_StoreSecure")?;
     table_set_rust_fn_static(state, namespace, "GetProductGroups", get_product_groups)

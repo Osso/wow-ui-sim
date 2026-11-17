@@ -5109,3 +5109,7 @@ and choice-order boundaries. See the [spec](../specs/character-creation-submit.m
 - 2026-11-13: [Retail TransmogUtil location ownership](investigations/consumer-selection-and-red-proof.md#retail-transmogutil-location-ownership): original startup-cache/consumer preservation; best-item helper and native slot provenance remain separate.
 
 - 2026-11-13: [Retail container parentArray ownership](investigations/consumer-selection-and-red-proof.md#retail-container-parentarray-ownership): original six XML bags and repeated real enumerator membership preserve Retail-only scaffold removal.
+
+## [2026-11-17] system | Retail StoreSecure VAS
+
+The [VAS system page](systems/store-secure-vas.md) records the empty-default Retail VAS model, typed request state, response ordering, and original StoreUI/GlueXML call sites. **VERIFIED (R88al and tests):** `GetBnetTransferInfo` has a two-value result contract and reaches the original transfer purchase consumer. **UNKNOWN:** the initial native snapshot and context-dependent secret marking.

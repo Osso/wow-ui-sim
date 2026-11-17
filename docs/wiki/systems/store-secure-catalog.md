@@ -47,5 +47,6 @@ This system models Retail `C_StoreSecure` catalog and list state as host-supplie
 ## See Also
 
 - [[store-api-availability]] — separate public Store status mirrors.
+- [[store-secure-vas]] — VAS host state, requests, and completion consumers.
 - [[store-secure-pool-constructors]] — historical Store UI pool investigation and source checkpoints.
 - [[consumer-selection-and-red-proof]] — consumer selection and producer-subtracted RED proof.
