@@ -1,6 +1,6 @@
 //! Benchmark binary: load UI then repeatedly open/close the class talent panel.
 
-use wow_ui_sim::loader::{discover_blizzard_addons, load_addon};
+use wow_ui_sim::loader::{discover_blizzard_addons_with_tocs, load_addon};
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::paths::default_blizzard_ui_addons_path;
 
@@ -14,7 +14,7 @@ fn main() {
         state.addon_base_paths = vec![ui.clone()];
     }
 
-    let addons = discover_blizzard_addons(&ui);
+    let addons = discover_blizzard_addons_with_tocs(&env.toc_cache(), &ui);
     for (name, toc_path) in &addons {
         if let Err(e) = load_addon(&env.loader_env(), toc_path) {
             eprintln!("[load {name}] FAILED: {e}");

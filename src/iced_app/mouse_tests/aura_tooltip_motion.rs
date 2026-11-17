@@ -8,7 +8,8 @@ fn load_aura_container_addon(app: &App) {
     let ui = crate::blizzard_ui_sync::default_cache_addons_path().expect("Blizzard UI cache");
     let env = app.env.borrow();
     env.state().borrow_mut().addon_base_paths = vec![ui.clone()];
-    let addons = crate::loader::discover_blizzard_addon_closure_for_screen_with_overrides(
+    let addons = crate::loader::discover_blizzard_addon_closure_with_overrides_and_tocs(
+        &env.toc_cache(),
         &ui,
         ScreenKind::Game,
         &["Blizzard_AuraContainer"],

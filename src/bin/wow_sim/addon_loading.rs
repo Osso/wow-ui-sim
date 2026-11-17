@@ -327,7 +327,7 @@ fn discover_third_party_addons(
 ) -> Vec<(String, PathBuf)> {
     let exclude = if is_test { &[][..] } else { TEST_ADDONS };
     let mut addons = scan_addon_paths(tocs, addon_paths, exclude, screen);
-    wow_ui_sim::loader::sort_addons_by_dependencies(tocs, &mut addons);
+    wow_ui_sim::loader::sort_addons_by_dependencies_with_tocs(tocs, &mut addons);
     if skip_addons {
         addons.retain(|(name, _)| TEST_ADDONS.iter().any(|t| t == name));
     }

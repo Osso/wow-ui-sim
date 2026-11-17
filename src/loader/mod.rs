@@ -562,7 +562,15 @@ pub fn load_addon_from_toc_with_saved_vars(
 /// Scans for built-in addon subdirectories, parses their TOC files, filters out `LoadOnDemand`
 /// addons, and returns the remaining addons in dependency order.
 pub fn discover_blizzard_addons(blizzard_ui_dir: &Path) -> Vec<(String, PathBuf)> {
-    discover_blizzard_addons_for_screen(blizzard_ui_dir, ScreenKind::Game)
+    discover_blizzard_addons_with_tocs(&TocCache::default(), blizzard_ui_dir)
+}
+
+/// Discover game-screen addons through the UI session's parsed TOCs.
+pub fn discover_blizzard_addons_with_tocs(
+    tocs: &TocCache,
+    blizzard_ui_dir: &Path,
+) -> Vec<(String, PathBuf)> {
+    discover_blizzard_addons_for_screen_with_tocs(tocs, blizzard_ui_dir, ScreenKind::Game)
 }
 
 /// Discover every Blizzard addon directory in a BlizzardUI tree, including LoadOnDemand addons.
@@ -619,8 +627,17 @@ pub fn discover_blizzard_addons_for_screen(
     blizzard_ui_dir: &Path,
     screen: ScreenKind,
 ) -> Vec<(String, PathBuf)> {
+    discover_blizzard_addons_for_screen_with_tocs(&TocCache::default(), blizzard_ui_dir, screen)
+}
+
+/// Discover screen-eligible addons through the UI session's parsed TOCs.
+pub fn discover_blizzard_addons_for_screen_with_tocs(
+    tocs: &TocCache,
+    blizzard_ui_dir: &Path,
+    screen: ScreenKind,
+) -> Vec<(String, PathBuf)> {
     let Some((mut addons, mut lod_pool)) =
-        discover_blizzard_addon_toc_pools_for_screen(&TocCache::default(), blizzard_ui_dir, screen)
+        discover_blizzard_addon_toc_pools_for_screen(tocs, blizzard_ui_dir, screen)
     else {
         return Vec::new();
     };
@@ -684,12 +701,43 @@ pub fn discover_blizzard_addon_closure_for_screen_with_overrides(
     roots: &[&str],
     overrides: &[BlizzardAddonOverride<'_>],
 ) -> Vec<(String, PathBuf)> {
+    discover_blizzard_addon_closure_with_overrides_and_tocs(
+        &TocCache::default(),
+        blizzard_ui_dir,
+        screen,
+        roots,
+        overrides,
+    )
+}
+
+/// Discover a closure with extra roots through the UI session's parsed TOCs.
+pub fn discover_blizzard_addon_closure_with_overrides_and_tocs(
+    tocs: &TocCache,
+    blizzard_ui_dir: &Path,
+    screen: ScreenKind,
+    roots: &[&str],
+    overrides: &[BlizzardAddonOverride<'_>],
+) -> Vec<(String, PathBuf)> {
     let Some((addons, lod_pool)) =
-        discover_blizzard_addon_toc_pools_for_screen(&TocCache::default(), blizzard_ui_dir, screen)
+        discover_blizzard_addon_toc_pools_for_screen(tocs, blizzard_ui_dir, screen)
     else {
         return Vec::new();
     };
     let toc_map: HashMap<String, TocEntry> = addons.into_iter().chain(lod_pool).collect();
+    let filtered = filter_addon_closure(toc_map, roots, overrides, screen);
+    topological_sort_addons_with_extra_dependencies_for_screen(
+        filtered,
+        &build_extra_dependency_map(overrides),
+        screen,
+    )
+}
+
+fn filter_addon_closure(
+    toc_map: HashMap<String, TocEntry>,
+    roots: &[&str],
+    overrides: &[BlizzardAddonOverride<'_>],
+    screen: ScreenKind,
+) -> HashMap<String, TocEntry> {
     let extra_roots_by_addon = build_extra_roots_map(overrides);
     let wanted = collect_declared_dependency_closure_with_overrides(
         &toc_map,
@@ -697,16 +745,10 @@ pub fn discover_blizzard_addon_closure_for_screen_with_overrides(
         &extra_roots_by_addon,
         Some(screen),
     );
-    let extra_dependencies = build_extra_dependency_map(overrides);
-    let filtered: HashMap<String, TocEntry> = toc_map
+    toc_map
         .into_iter()
         .filter(|(name, _)| wanted.contains(name))
-        .collect();
-    topological_sort_addons_with_extra_dependencies_for_screen(
-        filtered,
-        &extra_dependencies,
-        screen,
-    )
+        .collect()
 }
 
 pub(crate) fn collect_declared_dependency_closure_for_screen(

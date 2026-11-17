@@ -607,7 +607,7 @@ fn startup_bootstrap_runs_inline_without_full_load_or_event() {
     .unwrap();
     write_addon_with_lua(temp.path(), "C", "", "table.insert(order, 'C')");
     let mut addons = scan_addons(&TocCache::default(), temp.path(), &[], ScreenKind::Game);
-    wow_ui_sim::loader::sort_addons_by_dependencies(&TocCache::default(), &mut addons);
+    wow_ui_sim::loader::sort_addons_by_dependencies_with_tocs(&TocCache::default(), &mut addons);
     let env = WowLuaEnv::new().unwrap();
     load_discovered_addons(&env, &addons, &mut None, None, &mut LoadStats::default());
     env.exec("assert(table.concat(order, ',') == 'A,B:bootstrap,C', table.concat(order, ',')); assert(duringLoaded and not duringFinished); local loaded, finished = C_AddOns.IsAddOnLoaded('B'); assert(not loaded and not finished); assert(not loadedEvents.B); assert(loadedEvents.C)").unwrap();

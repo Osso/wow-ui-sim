@@ -8,15 +8,14 @@ use std::path::PathBuf;
 /// Sort addons by available `LoadManagers`, optional, and required TOC entries.
 ///
 /// Addons whose dependencies aren't in the list are treated as having no deps (they load early).
-/// Ties are broken alphabetically for deterministic output. TOCs are read through `tocs`.
-pub fn sort_addons_by_dependencies(tocs: &TocCache, addons: &mut Vec<(String, PathBuf)>) {
-    let mut toc_map: HashMap<String, TocEntry> = HashMap::new();
-    for (name, toc_path) in addons.iter() {
-        if let Ok(toc) = tocs.get(toc_path) {
-            toc_map.insert(name.clone(), (toc_path.clone(), toc));
-        }
-    }
+/// Ties are broken alphabetically for deterministic output.
+pub fn sort_addons_by_dependencies(addons: &mut Vec<(String, PathBuf)>) {
+    sort_addons_by_dependencies_with_tocs(&TocCache::default(), addons);
+}
 
+/// Sort addons using the TOCs already parsed in this UI session.
+pub fn sort_addons_by_dependencies_with_tocs(tocs: &TocCache, addons: &mut Vec<(String, PathBuf)>) {
+    let toc_map = parse_addon_entries(tocs, addons);
     let available: HashSet<&str> = toc_map.keys().map(|name| name.as_str()).collect();
     let dependencies = build_dependency_graph(&toc_map, &available);
     let load_first = build_load_first_set(&toc_map);
@@ -40,6 +39,17 @@ pub fn sort_addons_by_dependencies(tocs: &TocCache, addons: &mut Vec<(String, Pa
         }
     }
     *addons = result;
+}
+
+fn parse_addon_entries(tocs: &TocCache, addons: &[(String, PathBuf)]) -> HashMap<String, TocEntry> {
+    addons
+        .iter()
+        .filter_map(|(name, toc_path)| {
+            tocs.get(toc_path)
+                .ok()
+                .map(|toc| (name.clone(), (toc_path.clone(), toc)))
+        })
+        .collect()
 }
 
 /// Order packaged Blizzard addons by their native startup phases.

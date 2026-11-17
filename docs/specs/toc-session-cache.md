@@ -8,7 +8,8 @@ The simulator reads and parses each addon TOC file once per UI session and share
 - [x] Every session reader uses the cache: third-party discovery, dependency sorting, enable-state dependency propagation, addon-list registration, startup eligibility, the Blizzard dependency closure for third-party addons, startup loading and dependency screen checks; Blizzard discovery, `LoadWith` registration and startup loading; `C_AddOns` runtime TOC lookup, the wrong-interface check and `LoadAddOn`; `WowLuaEnv::scan_and_register_addons`.
 - [x] A read error is not stored: each reader still receives the current error, as when every reader read the file itself.
 - [x] Results do not change: addon lists, metadata, enable state, dependency order and load order are the same as with one parse per reader. The addon list and the parsed TOC share one metadata map; a write to a shared map copies it first.
-- [x] Discovery functions without a session (`discover_blizzard_addons_for_screen`, `discover_all_blizzard_addons` and the closure helpers) parse each TOC once per call. The `*_with_tocs` variants take the session cache.
+- [x] Discovery functions without a session (`discover_blizzard_addons_for_screen`, `discover_all_blizzard_addons` and the closure helpers) parse each TOC once per call. The `*_with_tocs` variants and `discover_blizzard_addon_closure_with_overrides_and_tocs` take the session cache.
+- [x] The public `sort_addons_by_dependencies(addons)` signature stays unchanged; `sort_addons_by_dependencies_with_tocs` uses a caller's session cache.
 
 Within one session a TOC edited on disk after its first read is not read again. Native client TOC re-read timing is UNKNOWN; this matches the simulator's ReloadUI boundary, not a native claim.
 
