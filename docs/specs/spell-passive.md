@@ -2,13 +2,13 @@
 
 This spec covers Retail's spell-passive query and its use by the original PlayerSpells action-bar eligibility helper.
 
-**VERIFIED (R88i.14):** The native local result is false for identifier zero or a missing record; otherwise it tests mask 64 in the selected record. **UNKNOWN (R88i.14):** The exact DB2 table and field are not identified. **VERIFIED (Retail runtime TOC):** `Blizzard_PlayerSpells` is LoadOnDemand and lists `ClassTalents/Blizzard_ClassTalentUtil.lua`; that helper calls `C_Spell.IsSpellPassive` at line 183. **VERIFIED (generated spell data):** `SpellInfo` exposes `Attributes_9`, but R88i.14 does not map mask 64 to that field, so this API does not use it.
+**VERIFIED (R88i.14):** The native local result is false for identifier zero or a missing record; otherwise it tests mask 64 in the selected record. **UNKNOWN (R88i.14):** The exact DB2 table and field are not identified. **VERIFIED (Retail runtime TOC):** `Blizzard_PlayerSpells` is LoadOnDemand and lists `ClassTalents/Blizzard_ClassTalentUtil.lua`; that helper calls `C_Spell.IsSpellPassive` at line 183. **VERIFIED (`crates/sim-data/data/spells.rs`):** `SpellInfo` exposes `Attributes_9`, but R88i.14 does not map mask 64 to that field, so this API does not use it.
 
 ## What it must do
 
-- [ ] VERIFIED (R88i.14): For Retail, return false for a zero identifier or an absent record.
-- [ ] VERIFIED (R88i.14): For an existing record, return true only when bit 64 is set; UNKNOWN (R88i.14): the exact table and field.
-- [ ] VERIFIED (simulator test contract): Keep unknown mask data as an empty-default host input; its false result is simulator policy, not native missing-field behavior.
+- [x] VERIFIED (R88i.14): For Retail, return false for a zero identifier or an absent record.
+- [x] VERIFIED (R88i.14): For an existing record, return true only when bit 64 is set; UNKNOWN (R88i.14): the exact table and field.
+- [x] VERIFIED (simulator test contract): Keep unknown mask data as an empty-default host input; its false result is simulator policy, not native missing-field behavior.
 - [ ] UNKNOWN (R88i.14): Keep full argument conversion, error, and event behavior unclaimed until evidence identifies them.
 
 ## How it works
