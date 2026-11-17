@@ -11,6 +11,10 @@ use wow_ui_sim::c_api::store_vas_model::{
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
 
+const NAME_CHANGE_SERVICE_TYPE: u8 = 0;
+const TEST_SPARSE_CHARACTER_REALM_ADDRESS: u32 = 404;
+const TEST_SPARSE_CHARACTER_GUID: &str = "Player-404-1-1";
+
 const REALM_AND_CHARACTER_CONSUMER: &str = r#"
     local function lookup(name)
         return _G[name] or (__secureenv and rawget(__secureenv, name))
@@ -90,25 +94,88 @@ const EMPTY_REALM_LIST_CONSUMER: &str = r#"
 "#;
 
 const LOOKUP_API_CONSUMER: &str = r#"
-    local realms = C_StoreSecure.GetVASRealmList()
-    assert(#realms == 3 and realms[1].realmName == "Azeroth" and realms[2].realmName == "Empty" and realms[3].realmName == "Kalimdor", "VAS realms should sort by name")
-    assert(realms[1].characterCount == 0 and realms[1].pvp == false, "VAS realm rows should zero the count and preserve optional flags")
-    local characters = C_StoreSecure.GetCharactersForRealm(101, true)
-    assert(#characters == 1 and characters[1].name == "Simhero", "guild-only character query should match the supplied GUID set")
-    local character = C_StoreSecure.GetCharacterInfoByGUID("Player-101-1-11")
-    assert(character and character.name == "Simhero" and character.className == "Warrior" and character.guid == "Player-101-1-11", "character-object lookup should publish the verified row fields")
+    local sparseRealmAddress = 404
+    local sparseGuid = "Player-404-1-1"
+    local nameChangeServiceType = Enum.VasServiceType.NameChange
+
+    local realmList = C_StoreSecure.GetRealmList()
+    assert(#realmList == 3, "realm list should include supplied rows")
+    assert(realmList[1].realmName == "Azeroth", "largest realm should sort first")
+    assert(realmList[2].realmName == "Kalimdor", "second-largest realm should sort second")
+    assert(realmList[3].realmName == "Empty", "empty realm should sort last")
+    assert(realmList[1].virtualRealmAddress == 101 and realmList[1].characterCount == 2, "first realm should copy its address and count")
+    assert(realmList[1].pvp == false and realmList[1].rp == false, "first realm should copy its flags")
+    assert(realmList[2].virtualRealmAddress == 102 and realmList[2].characterCount == 1, "second realm should copy its address and count")
+    assert(realmList[2].pvp == true and realmList[2].rp == false, "second realm should copy its flags")
+    assert(realmList[3].virtualRealmAddress == 303 and realmList[3].characterCount == 0, "empty realm should copy its address and count")
+    assert(realmList[3].pvp == nil and realmList[3].rp == nil, "missing optional realm flags should stay nil")
+
+    local vasRealms = C_StoreSecure.GetVASRealmList()
+    assert(#vasRealms == 3, "VAS realm list should include supplied rows")
+    assert(vasRealms[1].realmName == "Azeroth", "VAS realms should sort by name")
+    assert(vasRealms[2].realmName == "Empty", "second VAS realm should sort by name")
+    assert(vasRealms[3].realmName == "Kalimdor", "third VAS realm should sort by name")
+    assert(vasRealms[1].characterCount == 0 and vasRealms[1].pvp == false and vasRealms[1].rp == false, "first VAS row should zero count and copy flags")
+    assert(vasRealms[2].virtualRealmAddress == 303 and vasRealms[2].characterCount == 0, "empty VAS realm should copy its address and zero count")
+    assert(vasRealms[2].pvp == nil and vasRealms[2].rp == nil, "empty VAS realm should preserve absent flags")
+    assert(vasRealms[3].virtualRealmAddress == 102 and vasRealms[3].characterCount == 0, "remaining VAS realm should publish zero characters")
+
+    local characters = C_StoreSecure.GetCharactersForRealm(101, false)
+    assert(#characters == 2, "character query should return both supplied rows")
+    assert(characters[1].name == "Simhero" and characters[2].name == "Simalt", "equal-level characters should sort by GUID order")
+    local first = characters[1]
+    assert(first.className == "Warrior" and first.raceName == "Human", "character list row should copy names")
+    assert(first.level == 70 and first.classFileName == "WARRIOR" and first.raceFileName == "Human", "character list row should copy class and level")
+    assert(first.guid == "Player-101-1-11" and first.wowAccount == 1001 and first.currentServer == 101, "character list row should copy identifiers")
+    assert(first.faction == 0 and first.sex == 1 and first.createScreenIconAtlas == "", "character list row should copy numeric and atlas fields")
+
+    local character = C_StoreSecure.GetCharacterInfoByGUID(first.guid)
+    assert(character ~= nil, "character object should be present")
+    assert(character.name == "Simhero" and character.className == "Warrior" and character.raceName == "Human", "character lookup should copy names")
+    assert(character.level == 70 and character.classFileName == "WARRIOR" and character.raceFileName == "Human", "character lookup should copy class and level")
+    assert(character.guid == "Player-101-1-11" and character.wowAccount == 1001 and character.currentServer == 101, "character lookup should copy identifiers")
+    assert(character.faction == 0 and character.sex == 1 and character.createScreenIconAtlas == "", "character lookup should copy numeric and atlas fields")
+    local guildCharacters = C_StoreSecure.GetCharactersForRealm(101, true)
+    assert(#guildCharacters == 1 and guildCharacters[1].guid == character.guid, "guild-only query should apply the supplied GUID set")
+    assert(#C_StoreSecure.GetCharactersForRealm(303, false) == 0, "empty realm should return an empty character array")
+    assert(#C_StoreSecure.GetCharactersForRealm(999, false) == 0, "unmatched realm should return an empty character array")
+
+    local sparseCharacters = C_StoreSecure.GetCharactersForRealm(sparseRealmAddress, false)
+    assert(#sparseCharacters == 2, "sparse realm query should return both supplied rows")
+    local sparseFound = false
+    local emptyGuidFound = false
+    for _, row in ipairs(sparseCharacters) do
+        if row.name == "Sparse" then sparseFound = row.guid == sparseGuid end
+        if row.name == "EmptyGuid" then emptyGuidFound = row.guid == nil end
+    end
+    assert(sparseFound and emptyGuidFound, "empty character GUID should publish nil")
+    local sparse = C_StoreSecure.GetCharacterInfoByGUID(sparseGuid)
+    assert(sparse and sparse.name == "Sparse", "sparse character object should be present")
+    assert(sparse.className == nil and sparse.raceName == nil, "missing optional character names should stay nil")
+    assert(sparse.classFileName == nil and sparse.raceFileName == nil, "missing optional character files should stay nil")
+    assert(sparse.createScreenIconAtlas == nil, "missing optional character atlas should stay nil")
     assert(C_StoreSecure.GetCharacterInfoByGUID("Player-999-1-FF") == nil, "absent character objects should publish nil")
     assert(C_StoreSecure.GetWoWAccountGUIDFromName("ignored-local-name", true) == "WowAccount-1001-1", "local lookup should use the current account GUID")
     assert(C_StoreSecure.GetWoWAccountGUIDFromName("WoW2", false) == "WowAccount-2002-2", "remote lookup should match exact account-name bytes")
     assert(C_StoreSecure.GetWoWAccountGUIDFromName("wow2", false) == nil, "remote lookup should not fold account-name case")
-    local races = C_StoreSecure.GetEligibleRacesForVASService(character.guid, 0)
-    assert(#races == 2 and races[2].isAlliedRace and races[2].isHeritageArmorUnlocked, "race query should copy the supplied result rows")
-    assert(C_StoreSecure.GetEligibleRacesForVASService("Player-999-1-FF", 0) == nil, "missing race data should publish nil")
+    assert(C_StoreSecure.GetWoWAccountGUIDFromName("Empty", false) == nil, "empty remote account GUID should publish nil")
+
+    local races = C_StoreSecure.GetEligibleRacesForVASService(character.guid, nameChangeServiceType)
+    assert(#races == 2, "race query should return supplied rows")
+    assert(races[1].raceName == "Human" and not races[1].isAlliedRace, "first race should copy its name and status")
+    assert(races[2].raceName == "Void Elf" and races[2].isAlliedRace and races[2].isHeritageArmorUnlocked, "second race should copy its fields")
+    assert(#C_StoreSecure.GetEligibleRacesForVASService(sparse.guid, nameChangeServiceType) == 0, "supplied empty race data should return an empty array")
+    assert(C_StoreSecure.GetEligibleRacesForVASService("Player-999-1-FF", nameChangeServiceType) == nil, "missing race data should publish nil")
+
     local guild = C_StoreSecure.GetVASGuildMasterInfoForCharacterByGUID(character.guid)
-    assert(guild.guildName == "Simulator Guild" and guild.guildMemberInfos[1].memberName == "Simalt", "guild query should copy the supplied members")
+    assert(guild.guildName == "Simulator Guild", "guild query should copy its name")
+    assert(guild.guildMemberInfos[1].memberName == "Simalt" and guild.guildMemberInfos[1].guid == "Player-101-1-12", "guild query should copy member fields")
+    local emptyGuild = C_StoreSecure.GetVASGuildMasterInfoForCharacterByGUID(sparse.guid)
+    assert(emptyGuild and emptyGuild.guildName == "Empty Guild", "present empty guild data should keep its name")
+    assert(#emptyGuild.guildMemberInfos == 0, "present empty guild data should return an empty member array")
     assert(C_StoreSecure.GetVASGuildMasterInfoForCharacterByGUID("Player-999-1-FF") == nil, "missing guild-master data should publish nil")
     assert(C_StoreSecure.GetVasServiceType(2003) == Enum.VasServiceType.NameChange, "product type should map to the verified VAS service")
-    assert(C_StoreSecure.GetVasServiceType(99999) == nil, "unmapped product should publish nil")
+    assert(C_StoreSecure.GetVasServiceType(99999) == nil, "missing product should publish nil")
     return true
 "#;
 
@@ -301,19 +368,25 @@ const REALM_AND_CHARACTER_INPUTS: &str = r#"
 
 fn realm_inputs() -> Vec<StoreVasRealmInput> {
     vec![
-        realm_input(102, "Kalimdor", 1, true, false),
-        realm_input(101, "Azeroth", 2, false, false),
-        realm_input(303, "Empty", 0, false, true),
+        realm_input(102, "Kalimdor", 1, Some(true), Some(false)),
+        realm_input(101, "Azeroth", 2, Some(false), Some(false)),
+        realm_input(303, "Empty", 0, None, None),
     ]
 }
 
-fn realm_input(address: u32, name: &str, count: u32, pvp: bool, rp: bool) -> StoreVasRealmInput {
+fn realm_input(
+    address: u32,
+    name: &str,
+    count: u32,
+    pvp: Option<bool>,
+    rp: Option<bool>,
+) -> StoreVasRealmInput {
     StoreVasRealmInput {
         virtual_realm_address: address,
         realm_name: name.into(),
         character_count: count,
-        pvp: Some(pvp),
-        rp: Some(rp),
+        pvp,
+        rp,
     }
 }
 
@@ -350,7 +423,7 @@ fn simalt() -> StoreVasCharacterInput {
         name: Some("Simalt".into()),
         class_name: Some("Mage".into()),
         race_name: Some("Dwarf".into()),
-        level: 60,
+        level: 70,
         class_file_name: Some("MAGE".into()),
         race_file_name: Some("Dwarf".into()),
         wow_account: 1001,
@@ -378,6 +451,28 @@ fn kalimdor_mage() -> StoreVasCharacterInput {
         faction: 1,
         sex: 1,
         create_screen_icon_atlas: Some("".into()),
+    }
+}
+
+fn sparse_character() -> StoreVasCharacterInput {
+    StoreVasCharacterInput {
+        realm_address: TEST_SPARSE_CHARACTER_REALM_ADDRESS,
+        guid: Some(TEST_SPARSE_CHARACTER_GUID.into()),
+        guid_order: Some(1),
+        name: Some("Sparse".into()),
+        level: 1,
+        ..Default::default()
+    }
+}
+
+fn empty_guid_character() -> StoreVasCharacterInput {
+    StoreVasCharacterInput {
+        realm_address: TEST_SPARSE_CHARACTER_REALM_ADDRESS,
+        guid: Some(String::new()),
+        guid_order: Some(2),
+        name: Some("EmptyGuid".into()),
+        level: 1,
+        ..Default::default()
     }
 }
 
@@ -414,8 +509,14 @@ fn seed_group3_lookup_inputs(env: &WowLuaEnv) {
     vas.local_wow_account_guid = Some("WowAccount-1001-1".into());
     vas.wow_account_guids
         .insert(b"WoW2".to_vec(), "WowAccount-2002-2".into());
-    vas.race_eligibility = vec![race_eligibility()];
-    vas.guild_master_info = vec![guild_master_info()];
+    vas.wow_account_guids
+        .insert(b"Empty".to_vec(), String::new());
+    let sparse = sparse_character();
+    let empty_guid = empty_guid_character();
+    vas.characters.extend([sparse.clone(), empty_guid.clone()]);
+    vas.character_objects.extend([sparse, empty_guid]);
+    vas.race_eligibility = vec![race_eligibility(), empty_race_eligibility()];
+    vas.guild_master_info = vec![guild_master_info(), empty_guild_master_info()];
 }
 
 fn seed_purchase_inputs(env: &WowLuaEnv) {
@@ -522,7 +623,7 @@ fn seed_missing_character_completion(env: &WowLuaEnv) {
 fn race_eligibility() -> StoreVasRaceEligibilityInput {
     StoreVasRaceEligibilityInput {
         guid: "Player-101-1-11".into(),
-        service_type: 0,
+        service_type: NAME_CHANGE_SERVICE_TYPE,
         results: Some(vec![
             StoreVasEligibleRaceInput {
                 race_name: "Human".into(),
@@ -538,6 +639,14 @@ fn race_eligibility() -> StoreVasRaceEligibilityInput {
     }
 }
 
+fn empty_race_eligibility() -> StoreVasRaceEligibilityInput {
+    StoreVasRaceEligibilityInput {
+        guid: TEST_SPARSE_CHARACTER_GUID.into(),
+        service_type: NAME_CHANGE_SERVICE_TYPE,
+        results: Some(Vec::new()),
+    }
+}
+
 fn guild_master_info() -> StoreVasGuildMasterInfoInput {
     StoreVasGuildMasterInfoInput {
         guid: "Player-101-1-11".into(),
@@ -546,6 +655,14 @@ fn guild_master_info() -> StoreVasGuildMasterInfoInput {
             guid: Some("Player-101-1-12".into()),
             member_name: "Simalt".into(),
         }],
+    }
+}
+
+fn empty_guild_master_info() -> StoreVasGuildMasterInfoInput {
+    StoreVasGuildMasterInfoInput {
+        guid: TEST_SPARSE_CHARACTER_GUID.into(),
+        guild_name: "Empty Guild".into(),
+        members: Vec::new(),
     }
 }
 
@@ -582,9 +699,19 @@ fn retail_store_vas_lookup_apis_publish_explicit_host_rows() {
         let result: bool = env.eval(LOOKUP_API_CONSUMER)
             .expect("Retail VAS lookup results should reach their original call surface");
         assert!(result);
+        env.state().borrow_mut().store_glue.store_secure.vas.local_wow_account_guid =
+            Some(String::new());
+        let empty_local_guid: bool = env
+            .eval("return C_StoreSecure.GetWoWAccountGUIDFromName('ignored', true) == nil")
+            .expect("empty local account GUID should publish nil");
+        assert!(empty_local_guid);
         let order: Vec<String> = env.state().borrow().store_glue.store_secure.vas.vas_realms
             .iter().map(|realm| realm.realm_name.clone()).collect();
         assert_eq!(order, ["Azeroth", "Empty", "Kalimdor"]);
+        env.state().borrow_mut().store_glue.store_secure.vas.vas_realms.clear();
+        let empty_list: bool = env.eval("return #C_StoreSecure.GetVASRealmList() == 0")
+            .expect("empty VAS realm input should publish an empty array");
+        assert!(empty_list);
     }
 }
 
