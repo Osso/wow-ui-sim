@@ -13,6 +13,7 @@ This contract covers the Retail `C_StoreSecure` catalog, availability, currency,
 - [x] VERIFIED (Retail 12.1.5.70688 R88ad.1/R88ad.2; `tests/store_secure_catalog.rs`): the `GetEntryInfo` snapshot sets `alreadyOwned` to false and copies it; it does not read a separate ownership result.
 - [ ] `GetProductInfo` returns a fresh product and `sharedData` table for the first supported Product row. A missing or rejected row returns one nil.
 - [ ] `sharedData` publishes the verified numeric, Boolean, optional, color, card, and deliverable fields. Absent optional fields stay nil. Runtime prices, catalog rows, and metadata remain host supplied; defaults do not add demo records.
+- [ ] When `overrideTextColor` is supplied, `GetProductInfo` returns a new table built from `ColorMixin` and sets only `r`, `g`, and `b` to each native byte component multiplied by the single-precision reciprocal of 255. It does not set alpha; absent color stays nil.
 
 ### Availability, lists, currency, and requests
 
@@ -49,7 +50,7 @@ This contract covers the Retail `C_StoreSecure` catalog, availability, currency,
 
 ## Tests asserting this spec
 
-- `tests/store_secure_catalog.rs` — original Retail StoreUI and CatalogShop consumers, empty defaults, response transitions/events, currency formatting, and request/list selectors.
+- `tests/store_secure_catalog.rs` — original Retail StoreUI and CatalogShop consumers, empty defaults, response transitions/events, currency formatting, ColorMixin RGB output, and request/list selectors.
 - `tests/store_api.rs` — zero currency ID and verified disconnect state with explicit host responses.
 - `tests/store_group_contract.rs` — original EnvironmentCleanup path and secure-environment method availability.
 - `tests/catalog_shop.rs`, `tests/store_tree.rs`, and `tests/store_anchor_regression.rs` — Retail Store consumers receive explicit catalog inputs for presentation checks.

@@ -15,7 +15,6 @@ const PRODUCT_LIST_LIMIT: u32 = 5;
 const PRODUCT_LIST_INTERVAL_MS: u32 = 2000;
 const NO_TEXTURE_ID: u32 = 0;
 const RGB_BYTE_MAX: f32 = 255.0;
-const OPAQUE_COLOR_ALPHA: f64 = 1.0;
 const GROUP_INFO_USAGE: &str = "Usage: local info = C_StoreSecure.GetProductGroupInfo(groupID)";
 const PRODUCTS_USAGE: &str =
     "Usage: local entryIDs = C_StoreSecure.GetProducts(groupID [, includeHiddenProducts])";
@@ -333,17 +332,17 @@ fn set_shared_data_color(
 fn create_color(state: &mut LuaState, rgb: [u8; 3]) -> LuaResult<Val> {
     let inverse = 1.0_f32 / RGB_BYTE_MAX;
     let channel = |value: u8| f64::from(f32::from(value) * inverse);
-    let factory = super::global_val(state, "CreateColor");
-    call_function_state(
-        state,
-        factory,
-        &[
-            Val::Num(channel(rgb[0])),
-            Val::Num(channel(rgb[1])),
-            Val::Num(channel(rgb[2])),
-            Val::Num(OPAQUE_COLOR_ALPHA),
-        ],
-    )
+    let mixin = super::global_val(state, "ColorMixin");
+    let factory = super::global_val(state, "CreateFromMixins");
+    let color = call_function_state(state, factory, &[mixin])?;
+    for (key, value) in [
+        ("r", channel(rgb[0])),
+        ("g", channel(rgb[1])),
+        ("b", channel(rgb[2])),
+    ] {
+        table_set_static(state, color, key, Val::Num(value));
+    }
+    Ok(color)
 }
 
 fn create_cards(
