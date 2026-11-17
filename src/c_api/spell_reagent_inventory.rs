@@ -1,6 +1,9 @@
 //! R88p.p3 reagent inventory selection. No bank fetch or update-event claims.
+use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::SimState;
 use std::collections::{HashMap, HashSet};
+
+const ALTERNATE_LIMIT_MASK: u32 = 2;
 
 /// Explicit metadata and nested-container relationships, empty until supplied.
 /// UNKNOWN: native property decoding, item-eligibility details and update writers.
@@ -9,6 +12,15 @@ pub struct SpellReagentInventory {
     pub metadata_masks: HashMap<i32, u32>,
     /// Child bag ID -> the parent bag/slot containing that container item.
     pub container_parents: HashMap<i32, (i32, i32)>,
+    /// Empty-default candidates; native property identity and decoding are UNKNOWN.
+    pub property_candidates: HashMap<i32, Vec<SpellReagentPropertyCandidate>>,
+}
+
+/// One supplied item candidate without a native property ID or schema claim.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub struct SpellReagentPropertyCandidate {
+    pub signed_value: i64,
+    pub available_count: i64,
 }
 
 pub(crate) fn matching_count(sim: &SimState, reagent_id: i32) -> i64 {
@@ -87,10 +99,35 @@ fn container_is_root(sim: &SimState, bag: i32, mask: u32) -> bool {
         && admitted_root(bag, mask)
 }
 
-/// Mask 2 only enables a property scan, not alternate arithmetic by itself.
-/// UNKNOWN property backing is absent, so no qualifying alternate helper exists.
-pub(crate) fn alternate_limit(_sim: &SimState, _reagent_id: i32, _quantity: i16) -> Option<i64> {
-    None
+/// R88p.p3: mask 2 scans candidates; only magnitude greater than one qualifies.
+/// Property identity and decoding remain UNKNOWN host inputs.
+pub(crate) fn alternate_limit(sim: &SimState, reagent_id: i32, quantity: i16) -> Option<i64> {
+    if ACTIVE != ClientProfile::Retail {
+        return None;
+    }
+    let metadata_mask = sim
+        .spell_reagent_inventory
+        .metadata_masks
+        .get(&reagent_id)
+        .copied()
+        .unwrap_or(0);
+    if metadata_mask & ALTERNATE_LIMIT_MASK == 0 {
+        return None;
+    }
+    let candidates = sim
+        .spell_reagent_inventory
+        .property_candidates
+        .get(&reagent_id)?;
+    let mut qualifying = candidates
+        .iter()
+        .filter(|candidate| candidate.signed_value.unsigned_abs() > 1)
+        .peekable();
+    qualifying.peek()?;
+    Some(
+        qualifying
+            .map(|candidate| candidate.available_count / i64::from(quantity))
+            .sum(),
+    )
 }
 
 fn equipped_root_allowed(sim: &SimState, slot: i32, item_id: u32, mask: u32) -> bool {

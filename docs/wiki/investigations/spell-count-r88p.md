@@ -12,7 +12,9 @@ All six adjacent historical boundaries were compiled from exact archives and the
 
 ## Native-backed implementation
 
-R88p.p3 supplies signed16 reagent quantities, first-eight-pair selection, sum-before-divide/minimum arithmetic, carried roots/containers and mask32 bank-tab admission. Explicit empty metadata and parent maps extend existing inventory backing; they do not acquire remote bank data or fabricate catalog rows. Equipment/container representations are deduplicated. Mask2 alone retains ordinary arithmetic because qualifying-property backing is absent; the alternate helper remains empty.
+R88p.p3 supplies signed16 reagent quantities, first-eight-pair selection, sum-before-divide/minimum arithmetic, carried roots/containers and mask32 bank-tab admission. Explicit empty metadata and parent maps extend existing inventory backing; they do not acquire remote bank data or fabricate catalog rows. Equipment/container representations are deduplicated. **VERIFIED (Retail 12.1.5.70688, R88p.p3):** mask2 selects the alternate arithmetic only when a candidate's signed magnitude is greater than one; each qualifying amount is divided by the cast quantity before the results are summed, with no second division. **VERIFIED (simulator source):** empty-default candidate inputs hold only a signed value and available amount, and the alternate calculation is gated to Retail. Native property identity, schema and decoding remain UNKNOWN; PTR/Forever applicability is not claimed.
+
+**VERIFIED (Retail 12.1.5.70783 simulator run):** the original `CooldownViewerCooldownItemMixin.CacheChargeValues` RED failed with the callable-wrong sum-then-divide producer at `6` versus expected `5`; the byte-identical GREEN consumer body passed all three qualifying, empty-candidate and ±1 cases. The test fixture covers two distinct reagent quantities and multiple item amounts. The current lane report holds artifact-bound runtime receipts.
 
 R88k.5 line11622 supplies numeric-string maximum acceptance and ordinary numeric replacement text. R88p.p2 supplies signed maximum range validation, truncation, negative thresholds and access-denial reasons. Exceptional numeric identifier outcomes depend on UNKNOWN FP configuration; the approved unresolved-record seam removes a contradicted range error without wrapping, clamping, or asserting the neutral result.
 
@@ -24,7 +26,8 @@ The four initial RED selectors each include two distinct backed results and abse
 - lt-c3ed #1056 — R88k.5 publication/argument evidence, including line11622.
 - [Spell count contract](../../specs/spell-count-outputs.md) — current and historical scope.
 - [API tests](../../../tests/spell_count_outputs.rs) — independent backed inputs and absence controls.
-- [Inventory model](../../../src/c_api/spell_reagent_inventory.rs) — metadata/containment seams and traversal.
+- [Inventory model](../../../src/c_api/spell_reagent_inventory.rs) — metadata/containment seams, empty-default property candidates and traversal.
+- [Original Retail consumer tests](../../../tests/spell_native_verified.rs) — mask-2 results through `CooldownViewerCooldownItemMixin.CacheChargeValues`.
 
 ## See Also
 
