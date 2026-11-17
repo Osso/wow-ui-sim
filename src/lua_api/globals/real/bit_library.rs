@@ -18,7 +18,7 @@
 
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
-use rilua::{LuaResult, Val};
+use rilua::{LuaApiMut, LuaResult, Val};
 
 const UINT32_MODULO: f64 = 4_294_967_296.0;
 const UINT32_MASK: f64 = UINT32_MODULO - 1.0;
