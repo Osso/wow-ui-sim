@@ -1,11 +1,10 @@
 //! Mists-only C API models from the R88ah native answer.
 
 use super::helpers::{
-    bad_argument, ensure_namespace, parse_numeric_string, read_untainted_signed32_argument,
+    ensure_namespace, read_low_byte_enum_argument, read_untainted_signed32_argument,
 };
 use crate::lua_api::methods::borrow_state;
-use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
-use rilua::table_security::{is_secret_value, unwrap_secret};
+use crate::lua_bridge::table_set_rust_fn_static;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
@@ -73,49 +72,11 @@ fn visibility_result(
 }
 
 fn read_visibility_type(state: &LuaState) -> LuaResult<u8> {
-    let number = read_visibility_number(state)?;
-    visibility_type_from_number(number)
-}
-
-fn read_visibility_number(state: &LuaState) -> LuaResult<f64> {
-    let original = stack_val(state, 2);
-    if original == Val::Nil {
-        return Err(usage_error(2));
-    }
-    let secret = is_secret_value(state, original);
-    let value = unwrap_secret(state, original).map_err(|_| secret_argument_error())?;
-    let number = match value {
-        Val::Num(number) => Some(number),
-        Val::Str(reference) if !secret => state
-            .gc
-            .string_arena
-            .get(reference)
-            .and_then(|string| parse_numeric_string(string.data())),
-        _ => None,
-    };
-    number.ok_or_else(|| usage_error(2))
-}
-
-fn visibility_type_from_number(number: f64) -> LuaResult<u8> {
-    let within_i32_range = (f64::from(i32::MIN)..=f64::from(i32::MAX)).contains(&number);
-    if !number.is_finite() || !within_i32_range {
-        let error = format!("integer overflow attempting to store {number:.6}");
-        return Err(bad_argument(2, VISIBILITY_API, &error));
-    }
-    let visibility_type = (number.trunc() as i32) as u8;
-    if visibility_type > MAX_VISIBILITY_TYPE {
-        return Err(usage_error(2));
-    }
-    Ok(visibility_type)
-}
-
-fn usage_error(index: i32) -> rilua::LuaError {
-    bad_argument(index, VISIBILITY_API, VISIBILITY_USAGE)
-}
-
-fn secret_argument_error() -> rilua::LuaError {
-    let error = format!(
-        "{VISIBILITY_USAGE}. Secret values are only allowed during untainted execution for this argument."
-    );
-    bad_argument(2, VISIBILITY_API, &error)
+    read_low_byte_enum_argument(
+        state,
+        2,
+        VISIBILITY_API,
+        VISIBILITY_USAGE,
+        MAX_VISIBILITY_TYPE,
+    )
 }
