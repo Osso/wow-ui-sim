@@ -453,6 +453,8 @@ fn retail_store_response_events_publish_updated_state() {
     .expect("original StoreFrame consumer must recover from an absent category");
 
     receive_failure_responses(&env);
+    env.fire_on_update(1.0 / 60.0)
+        .expect("queued purchase-list failure must reach StoreFrame on update");
     env.exec_rilua_secure(
         "assert(StoreFrame.Notice:IsShown() and StoreFrame.Notice.Title:GetText() == BLIZZARD_STORE_REGION_LOCKED)",
     )
