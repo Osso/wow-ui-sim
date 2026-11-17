@@ -344,18 +344,27 @@ fn assert_transaction_notice(env: &WowLuaEnv, expected: bool) {
     .expect("original StoreFrame panel consumer must reflect purchase progress");
 }
 
-fn assert_store_frame_products(env: &WowLuaEnv, category_id: u32, expected_names: [&str; 2]) {
+fn assert_store_frame_products(env: &WowLuaEnv, category_id: u32, expected: [(i32, &str); 2]) {
+    let [(first_id, first_name), (second_id, second_name)] = expected;
     env.exec_rilua_secure(&format!(
         r#"
-        assert(StoreFrame_GetSelectedCategoryID() == {category_id})
-        local names = {{}}
-        for card in StoreFrame.productCardPoolCollection:EnumerateActive() do
-            table.insert(names, card.ProductName:GetText() or "")
+        local selected = StoreFrame_GetSelectedCategoryID()
+        if selected ~= {category_id} then
+            error("selected category " .. tostring(selected))
         end
-        assert(#names == 2 and names[1] == "{}" and names[2] == "{}")
+        local count = 0
+        local namesByEntry = {{}}
+        for card in StoreFrame.productCardPoolCollection:EnumerateActive() do
+            count = count + 1
+            namesByEntry[card:GetID()] = card.ProductName:GetText()
+        end
+        if count ~= 2 then
+            error("active product cards " .. count)
+        end
+        if namesByEntry[{first_id}] ~= "{first_name}" or namesByEntry[{second_id}] ~= "{second_name}" then
+            error("card names " .. tostring(namesByEntry[{first_id}]) .. ", " .. tostring(namesByEntry[{second_id}]))
+        end
         "#,
-        expected_names[0],
-        expected_names[1],
     ))
     .expect("original StoreFrame consumer must publish both selected host products");
 }
@@ -437,7 +446,7 @@ fn retail_store_response_events_publish_updated_state() {
     .expect("original StoreFrame consumer must map two groups and an absent group to their entries");
     env.exec_rilua_secure("StoreFrame_SetCategory()")
         .expect("original StoreFrame consumer must publish the selected product entries");
-    assert_store_frame_products(&env, 4101, ["Host Two", "Host One"]);
+    assert_store_frame_products(&env, 4101, [(8102, "Host Two"), (8101, "Host One")]);
     env.exec_rilua_secure(
         "StoreFrame_SetSelectedCategoryID(4999); StoreFrame_UpdateSelectedCategory(); assert(StoreFrame_GetSelectedCategoryID() ~= nil and StoreFrame_GetSelectedCategoryID() ~= 4999); StoreFrame_SetCategory()",
     )
