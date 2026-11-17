@@ -1,5 +1,6 @@
 #![cfg(feature = "client-ptr")]
 
+use wow_ui_sim::loader::BlizzardAddonOverride;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 #[path = "common/blizzard_addon_closure.rs"]
@@ -7,6 +8,7 @@ mod closure;
 
 const OVERLAY_ENV: &str = "WOW_SIM_CAA_GET_SPEC_SETTING_OVERLAY";
 const ADDON: &str = "Blizzard_CombatAudioAlerts";
+const AURA_CONTAINER: &[&str] = &["Blizzard_AuraContainer"];
 
 fn install_callable_overlay(env: &WowLuaEnv) {
     let Some(path) = std::env::var_os(OVERLAY_ENV) else {
@@ -21,7 +23,11 @@ fn load_combat_audio_manager() -> WowLuaEnv {
     let env = closure::new_blizzard_addon_env(&ui);
     env.state().borrow().cvars.set_imported("CAAEnabled", "1");
     install_callable_overlay(&env);
-    let loaded = closure::load_blizzard_addon_closure_into_env(&env, &ui, &[ADDON], &[]);
+    let overrides = [BlizzardAddonOverride {
+        addon: "Blizzard_UnitFrame",
+        extra_roots: AURA_CONTAINER,
+    }];
+    let loaded = closure::load_blizzard_addon_closure_into_env(&env, &ui, &[ADDON], &overrides);
     assert!(loaded.iter().any(|name| name == ADDON));
     env
 }
