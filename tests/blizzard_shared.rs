@@ -213,28 +213,37 @@ fn test_addon_list_enable_all_button_has_texture() {
     );
 }
 
+// UNKNOWN (Retail 12.1.5.70783): this injects a nil Group that the native AddOn registry does not supply.
+#[cfg(feature = "optional-tests")]
+fn run_addon_list_nil_group_probe(env: &WowLuaEnv) -> (bool, String, bool, i32) {
+    env.eval(
+        r#"
+        AddonList:Show()
+        local original = C_AddOns.GetAddOnMetadata
+        C_AddOns.GetAddOnMetadata = function(addon, field)
+            if field == "Group" and addon == 1 then
+                return nil
+            end
+            return original(addon, field)
+        end
+
+        local ok, err = pcall(AddonList_Update)
+        return ok, tostring(err), AddonList.ScrollBox:GetDataProvider() ~= nil,
+            C_AddOns.GetNumAddOns()
+        "#,
+    )
+    .expect("AddonList nil-group regression probe should return")
+}
+
+#[cfg(feature = "optional-tests")]
 #[test]
 fn test_addon_list_update_tolerates_missing_group_metadata() {
     let env = env_with_addon_list();
-
-    let (ok, message, has_data_provider): (bool, String, bool) = env
-        .eval(
-            r#"
-            AddonList:Show()
-            local original = C_AddOns.GetAddOnMetadata
-            C_AddOns.GetAddOnMetadata = function(addon, field)
-                if field == "Group" and addon == 1 then
-                    return nil
-                end
-                return original(addon, field)
-            end
-
-            local ok, err = pcall(AddonList_Update)
-            return ok, tostring(err), AddonList.ScrollBox:GetDataProvider() ~= nil
-        "#,
-        )
-        .expect("AddonList nil-group regression probe should return");
-
+    let (ok, message, has_data_provider, addon_count) = run_addon_list_nil_group_probe(&env);
+    assert!(
+        addon_count > 0,
+        "nil-group probe must visit a real addon row"
+    );
     assert!(
         ok,
         "AddonList_Update should tolerate nil group metadata: {message}"
