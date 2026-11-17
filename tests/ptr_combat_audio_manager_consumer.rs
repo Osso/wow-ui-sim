@@ -44,11 +44,11 @@ fn manager_registers_unit_target_for_say_if_targeted() {
             local setting = Enum.CombatAudioAlertSpecSetting.SayIfTargeted
             assert(C_CombatAudioAlert.SetSpecSetting(setting, 1))
             CombatAudioAlertManager.initDone = true
-            local ok = pcall(function() CombatAudioAlertManager:RefreshEvents(false) end)
-            return string.format('ok=%s unit_target=%s', tostring(ok),
-                tostring(CombatAudioAlertManager:IsEventRegistered('UNIT_TARGET')))
+            local ok, err = pcall(function() CombatAudioAlertManager:RefreshEvents(false) end)
+            return string.format('ok=%s unit_target=%s err=%s', tostring(ok),
+                tostring(CombatAudioAlertManager:IsEventRegistered('UNIT_TARGET')), tostring(err))
             "#,
         )
         .expect("original combat-audio manager should run");
-    assert_eq!(actual, "ok=true unit_target=true");
+    assert_eq!(actual, "ok=true unit_target=true err=nil");
 }
