@@ -7,6 +7,7 @@ use rilua::vm::state::LuaState;
 use std::collections::{HashMap, HashSet};
 use std::io;
 use std::path::PathBuf;
+use std::rc::Rc;
 
 pub(super) fn load_runtime_addon(state: &mut LuaState, addon_name: &str) -> Result<(), LoadError> {
     let loader_env = LoaderEnv::from_parts_active(
@@ -61,7 +62,8 @@ fn load_runtime_addon_with_dependencies(
             .unwrap_or(0),
     );
     crate::loader::trace_load_addon(origin, format!("begin {addon_name}"));
-    let (toc_path, toc, screen) = read_runtime_addon_toc(state, addon_name, origin)?;
+    let (toc_path, toc, screen) =
+        read_runtime_addon_toc(&loader_env.toc_cache(), state, addon_name, origin)?;
     let loading_guard = crate::loader::begin_addon_load(loader_env, addon_name, &toc)?;
     apply_mists_runtime_preload(loader_env, &toc, &toc_path, origin)?;
     load_runtime_addon_dependencies(state, loader_env, addon_name, &toc, screen, origin)?;
@@ -161,14 +163,15 @@ fn deduplicate_followers(names: &mut Vec<String>) {
 }
 
 fn read_runtime_addon_toc(
+    tocs: &crate::toc::TocCache,
     state: &LuaState,
     addon_name: &str,
     origin: crate::loader::LoadAddonTraceOrigin,
-) -> Result<(PathBuf, TocFile, ScreenKind), LoadError> {
+) -> Result<(PathBuf, Rc<TocFile>, ScreenKind), LoadError> {
     let toc_path = super::find_runtime_addon_toc_ignoring_screen(state, addon_name)
         .ok_or_else(|| missing_runtime_addon_error(addon_name))?;
     crate::loader::trace_load_addon(origin, format!("toc {}", toc_path.display()));
-    let toc = TocFile::from_file(&toc_path).map_err(LoadError::Toc)?;
+    let toc = tocs.get(&toc_path).map_err(LoadError::Toc)?;
     let screen = borrow_state(state)
         .map(|sim| sim.screen_kind)
         .unwrap_or(ScreenKind::Game);

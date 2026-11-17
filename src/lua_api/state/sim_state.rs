@@ -79,6 +79,8 @@ pub struct SimState {
     pub(crate) registered_load_with: Vec<RegisteredLoadWith>,
     /// Lazily indexed target-to-follower map built from registered declarations.
     pub(crate) load_with_followers: Option<HashMap<String, Vec<String>>>,
+    /// TOC files parsed in this UI session; ReloadUI starts a new session.
+    pub(crate) toc_cache: std::rc::Rc<crate::toc::TocCache>,
     pub(crate) addon_message_prefixes: crate::c_api::addon_message_prefixes::AddonMessagePrefixes,
     pub addon_saved_enable_state: Option<AddonEnableSnapshot>,
     pub addon_saved_version_check_enabled: Option<bool>,
@@ -1235,5 +1237,10 @@ impl SimState {
             .borrow_mut()
             .set_source_roots(&self.addon_base_paths);
         self.texture_manager.clone()
+    }
+
+    /// The TOC files parsed in this UI session.
+    pub fn toc_cache(&self) -> std::rc::Rc<crate::toc::TocCache> {
+        std::rc::Rc::clone(&self.toc_cache)
     }
 }

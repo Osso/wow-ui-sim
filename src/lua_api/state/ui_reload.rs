@@ -77,6 +77,7 @@ impl SimState {
         self.addons.clear();
         self.registered_load_with.clear();
         self.load_with_followers = None;
+        self.toc_cache = Default::default();
         self.addon_initialization_failures.clear();
         self.loading_addon_index = None;
         self.loading_addon_stack.clear();

@@ -1,5 +1,6 @@
+use super::TocEntry;
 use crate::screen::ScreenKind;
-use crate::toc::TocFile;
+use crate::toc::TocCache;
 use std::cmp::Ordering;
 use std::collections::{HashMap, HashSet};
 use std::path::PathBuf;
@@ -7,11 +8,11 @@ use std::path::PathBuf;
 /// Sort addons by available `LoadManagers`, optional, and required TOC entries.
 ///
 /// Addons whose dependencies aren't in the list are treated as having no deps (they load early).
-/// Ties are broken alphabetically for deterministic output.
-pub fn sort_addons_by_dependencies(addons: &mut Vec<(String, PathBuf)>) {
-    let mut toc_map: HashMap<String, (PathBuf, TocFile)> = HashMap::new();
+/// Ties are broken alphabetically for deterministic output. TOCs are read through `tocs`.
+pub fn sort_addons_by_dependencies(tocs: &TocCache, addons: &mut Vec<(String, PathBuf)>) {
+    let mut toc_map: HashMap<String, TocEntry> = HashMap::new();
     for (name, toc_path) in addons.iter() {
-        if let Ok(toc) = TocFile::from_file(toc_path) {
+        if let Ok(toc) = tocs.get(toc_path) {
             toc_map.insert(name.clone(), (toc_path.clone(), toc));
         }
     }
@@ -45,22 +46,20 @@ pub fn sort_addons_by_dependencies(addons: &mut Vec<(String, PathBuf)>) {
 ///
 /// Phase one emits `LoadFirst` and `UseSecureEnvironment` addons. Phase two
 /// emits the remaining addons from the non-insecure packaged UI input.
-pub(super) fn topological_sort_addons(
-    addons: HashMap<String, (PathBuf, TocFile)>,
-) -> Vec<(String, PathBuf)> {
+pub(super) fn topological_sort_addons(addons: HashMap<String, TocEntry>) -> Vec<(String, PathBuf)> {
     let extra_dependencies = HashMap::new();
     topological_sort_addons_with_extra_dependencies(addons, &extra_dependencies)
 }
 
 pub(super) fn topological_sort_addons_with_extra_dependencies(
-    addons: HashMap<String, (PathBuf, TocFile)>,
+    addons: HashMap<String, TocEntry>,
     extra_dependencies: &HashMap<String, Vec<String>>,
 ) -> Vec<(String, PathBuf)> {
     topological_sort_addons_with_screen(addons, extra_dependencies, None)
 }
 
 pub(super) fn topological_sort_addons_with_extra_dependencies_for_screen(
-    addons: HashMap<String, (PathBuf, TocFile)>,
+    addons: HashMap<String, TocEntry>,
     extra_dependencies: &HashMap<String, Vec<String>>,
     screen: ScreenKind,
 ) -> Vec<(String, PathBuf)> {
@@ -68,7 +67,7 @@ pub(super) fn topological_sort_addons_with_extra_dependencies_for_screen(
 }
 
 fn topological_sort_addons_with_screen(
-    mut addons: HashMap<String, (PathBuf, TocFile)>,
+    mut addons: HashMap<String, TocEntry>,
     extra_dependencies: &HashMap<String, Vec<String>>,
     screen: Option<ScreenKind>,
 ) -> Vec<(String, PathBuf)> {
@@ -96,7 +95,7 @@ fn topological_sort_addons_with_screen(
 }
 
 fn emit_early_addons(
-    addons: &mut HashMap<String, (PathBuf, TocFile)>,
+    addons: &mut HashMap<String, TocEntry>,
     extra_dependencies: &HashMap<String, Vec<String>>,
     screen: Option<ScreenKind>,
     result: &mut Vec<(String, PathBuf)>,
@@ -124,7 +123,7 @@ fn emit_early_addons(
 }
 
 fn emit_remaining_addons(
-    addons: &mut HashMap<String, (PathBuf, TocFile)>,
+    addons: &mut HashMap<String, TocEntry>,
     extra_dependencies: &HashMap<String, Vec<String>>,
     screen: Option<ScreenKind>,
     result: &mut Vec<(String, PathBuf)>,
@@ -148,7 +147,7 @@ fn emit_remaining_addons(
 
 fn emit_addon_recursive(
     name: &str,
-    addons: &mut HashMap<String, (PathBuf, TocFile)>,
+    addons: &mut HashMap<String, TocEntry>,
     extra_dependencies: &HashMap<String, Vec<String>>,
     screen: Option<ScreenKind>,
     result: &mut Vec<(String, PathBuf)>,
@@ -185,7 +184,7 @@ fn emit_addon_recursive(
 
 fn collect_emit_dependencies(
     name: &str,
-    addons: &HashMap<String, (PathBuf, TocFile)>,
+    addons: &HashMap<String, TocEntry>,
     extra_dependencies: &HashMap<String, Vec<String>>,
     screen: Option<ScreenKind>,
 ) -> Vec<String> {
@@ -219,7 +218,7 @@ fn append_emit_dependencies(
     deps: &mut Vec<String>,
     seen: &mut HashSet<String>,
     candidates: Vec<String>,
-    addons: &HashMap<String, (PathBuf, TocFile)>,
+    addons: &HashMap<String, TocEntry>,
 ) {
     for dep in candidates {
         if addons.contains_key(&dep) && seen.insert(dep.clone()) {
@@ -230,7 +229,7 @@ fn append_emit_dependencies(
 
 /// Build available manager and dependency edges for startup sorting.
 fn build_dependency_graph<'a>(
-    addons: &'a HashMap<String, (PathBuf, TocFile)>,
+    addons: &'a HashMap<String, TocEntry>,
     available: &HashSet<&'a str>,
 ) -> HashMap<&'a str, Vec<&'a str>> {
     addons
@@ -255,7 +254,7 @@ fn build_dependency_graph<'a>(
         .collect()
 }
 
-fn build_load_first_set(addons: &HashMap<String, (PathBuf, TocFile)>) -> HashSet<&str> {
+fn build_load_first_set(addons: &HashMap<String, TocEntry>) -> HashSet<&str> {
     addons
         .iter()
         .filter_map(|(name, (_, toc))| toc.is_load_first().then_some(name.as_str()))
