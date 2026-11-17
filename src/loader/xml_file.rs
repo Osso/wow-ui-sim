@@ -1,6 +1,5 @@
 //! XML file loading and element processing.
 
-use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::LoaderEnv;
 use crate::lua_api::globals::security::{mark_secure_state, secure_replay_env_table};
 use crate::lua_api::methods::{create_string, table_get_static, table_set_static};
