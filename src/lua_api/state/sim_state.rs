@@ -220,9 +220,6 @@ pub struct SimState {
     pub post_event_workarounds_applied: bool,
     /// R88ad.8 native first-display state: 0, 1, then 2 before the event.
     pub screen_first_display_state: u8,
-    pub saved_account_name: String,
-    pub saved_account_list: String,
-    pub uses_token: bool,
     pub account_save_enabled: bool,
     pub account_save_in_progress: bool,
     pub account_locked_post_save: bool,

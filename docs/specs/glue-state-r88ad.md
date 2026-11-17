@@ -117,3 +117,13 @@ retained kit, audible results, the fade curve and later backend notifications.
 `SetLoginScreenModel` uses a fixture expansion display record, because
 `GetExpansionDisplayInfo` is an unmodelled temporary default.
 
+
+## Retired defaults
+
+On Retail, `shared_bootstrap.lua` no longer installs its defaults for the
+fourteen R88ad.7, .8, .9 (`GetLoginScreenBackground`) and .10 globals
+(`retireGlueStateDefaults`). Removal is behaviour-neutral: the shared bootstrap
+runs before `register_globals`, whose Retail `glue_state::register` replaced each
+default, and `restore_post_cleanup_globals` only fills nil globals. The unread
+`SimState` fields `saved_account_name`, `saved_account_list` and `uses_token`
+were removed. Other profiles keep the defaults.

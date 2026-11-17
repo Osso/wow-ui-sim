@@ -15,8 +15,6 @@ fn empty_runtime_state_new_seeds_expected_runtime_defaults() {
     assert_eq!(state.screen_first_display_state, 0);
     assert!(state.focused_frame_id.is_none());
     assert!(state.hovered_frame.is_none());
-    assert!(state.saved_account_name.is_empty());
-    assert!(state.saved_account_list.is_empty());
     assert!(state.start_time.elapsed() < Duration::from_secs(1));
 }
 
