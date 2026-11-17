@@ -1,3 +1,7 @@
+## [2026-11-17] implementation | Retail mask-2 alternate reagent division
+
+**VERIFIED (Retail 12.1.5.70688, R88p.p3):** mask 2 selects per-item division only for qualifying signed values, then sums without a second division. The [spell-count investigation](investigations/spell-count-r88p.md) records the empty-default candidate seam; native property identity and decoding remain UNKNOWN.
+
 ## [2026-11-17] verification | Mists GlueGameLogo current-mode consumer
 
 **VERIFIED (Mists 5.5.4.70268 simulator, target `0f35a8833`):** the original consumer regression passes 1/1 and records a no-payload update. Broader CharacterSelect/Login selectors remain gated after separate simulator failures outside R88ak; their native behavior is not claimed.
