@@ -220,6 +220,7 @@ fn test_addon_list_update_tolerates_missing_group_metadata() {
     let (ok, message, has_data_provider): (bool, String, bool) = env
         .eval(
             r#"
+            AddonList:Show()
             local original = C_AddOns.GetAddOnMetadata
             C_AddOns.GetAddOnMetadata = function(addon, field)
                 if field == "Group" and addon == 1 then
@@ -228,7 +229,6 @@ fn test_addon_list_update_tolerates_missing_group_metadata() {
                 return original(addon, field)
             end
 
-            AddonList:Show()
             local ok, err = pcall(AddonList_Update)
             return ok, tostring(err), AddonList.ScrollBox:GetDataProvider() ~= nil
         "#,
