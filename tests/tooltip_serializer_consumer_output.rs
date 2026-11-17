@@ -60,6 +60,26 @@ const REPAIR_COST_ROWS: &str = r#"
     end
 "#;
 
+// INFERRED: catalog `sell_price` stands in for the native initial unit price.
+// VERIFIED (R88n.4b, R88p.p1): `price` sits on a type-11 line; a zero initial
+// price adds no line; the item-instance branch leaves `maxPrice` at -1, so the
+// original `SellPrice` rule renders one SELL_PRICE row.
+const SELL_PRICE_ROWS: &str = r#"
+    local cases = {{slot = 1, price = 1}, {slot = 2, price = 50}, {slot = 3}}
+    for _, case in ipairs(cases) do
+        local sellRows = 0
+        for _, text in ipairs(RenderedBagTooltipRows(case.slot)) do
+            if text:find(SELL_PRICE, 1, true) == 1 then
+                sellRows = sellRows + 1
+                assert(case.price, 'slot '..case.slot..' rendered '..text)
+                local money = MoneyFormatterUtil.FormatMoney(case.price, GameTooltipMoneyFormat)
+                assert(text == string.format('%s: %s', SELL_PRICE, money), text)
+            end
+        end
+        assert(sellRows == (case.price and 1 or 0), 'slot '..case.slot..' sell rows')
+    end
+"#;
+
 fn assert_consumers_selected() {
     let ui = blizzard_ui_dir();
     let addons = discover_blizzard_addons_for_screen(&ui, ScreenKind::Game);
@@ -104,6 +124,17 @@ fn exec_without_new_lua_errors(env: &WowLuaEnv, lua: &str) {
     env.exec(lua).expect("original consumer output");
     let after = env.state().borrow().lua_error_records.len();
     assert_eq!(after, before, "the original consumer path added Lua errors");
+}
+
+#[test]
+fn bag_sell_price_rule_renders_only_type_11_line_prices() {
+    let items = [(1, 184318, 1), (2, 164374, 50), (3, 163924, 0)];
+    for (_, item_id, price) in items {
+        let item = wow_ui_sim::items::get_item(item_id).expect("catalog item");
+        assert_eq!(item.sell_price, price, "backed catalog price for {item_id}");
+    }
+    let env = consumer_env(&items.map(|(slot, item_id, _)| (slot, item_id)));
+    exec_without_new_lua_errors(&env, SELL_PRICE_ROWS);
 }
 
 #[test]

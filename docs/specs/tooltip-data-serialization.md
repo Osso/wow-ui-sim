@@ -99,6 +99,13 @@ placement contradicts R88n.4b, so no producer changed.
   `FinalizeItemTooltip` render REPAIR_COST plus the money row for quotes 731 and
   2468, and nothing for a zero or absent quote. A line-level `repairCost` renders
   nothing, so the selector rejects that placement inside the consumer.
+- `tests/tooltip_serializer_consumer_output.rs::bag_sell_price_rule_renders_only_type_11_line_prices`
+  (**INFERRED** values: catalog `sell_price` as the initial unit price) renders
+  one `SELL_PRICE: <money>` row through the original `SellPrice` rule for bag
+  items priced 1 and 50, and none for a zero price. A `price` outside the
+  type-11 line renders nothing. The single-row form preserves the VERIFIED
+  item-instance `maxPrice` of -1; it is preservation, not a `maxPrice` RED
+  selector, because no backed input varies `maxPrice`.
 - Existing tooltip builder, GC and presentation tests remain regression coverage.
 
 **Proved:** the shared publication helpers (`stamp_instance`, `publish_rgb`,
