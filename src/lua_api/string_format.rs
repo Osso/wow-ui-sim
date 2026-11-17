@@ -388,8 +388,7 @@ mod tests {
                     return string.format(case[1], case[2])
                 end)
                 assert(not ok, 'overflow must fail for ' .. case[1])
-                assert(err == "bad argument #2 to 'format' (integer overflow attempting to store "
-                    .. case[3] .. ')', tostring(err))
+                assert(err == 'integer overflow attempting to store ' .. case[3], tostring(err))
             end
         "#,
         )
@@ -493,6 +492,31 @@ mod tests {
         "#,
         )
         .expect("numeric conversion should reject a secret-marked string without reading it");
+    }
+
+    #[cfg(feature = "client-retail")]
+    #[test]
+    fn numeric_conversion_accepts_secret_numbers() {
+        let env = WowLuaEnv::new().expect("env");
+        env.exec(
+            r#"
+            local function assert_secret_format(format, value, expected)
+                local result = string.format(format, secretwrap(value))
+                assert(issecretvalue(result), format .. ' must keep secret input private')
+                assert(secretunwrap(result) == expected, tostring(secretunwrap(result)))
+            end
+
+            assert_secret_format('%t', 12.5, string.format('%f', 12.5))
+            assert_secret_format('%T', 0, string.format('%f', 0))
+            assert_secret_format('%08.2F', -3.25, string.format('%08.2f', -3.25))
+            assert_secret_format('%1$t', 7, string.format('%f', 7))
+
+            local ok, err = pcall(function() return string.format('%t') end)
+            assert(not ok)
+            assert(err == "bad argument #2 to 'format' (number expected, got no value)")
+        "#,
+        )
+        .expect("numeric conversion should format secret numbers into secret results");
     }
 
     #[test]
