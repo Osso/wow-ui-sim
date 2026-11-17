@@ -1,6 +1,6 @@
 # C_Spell.IsSpellPassive
 
-This spec covers Retail's spell-passive query and its use by the original PlayerSpells action-bar eligibility helper.
+VERIFIED (Retail TOC and source): This spec covers Retail's spell-passive query and its use by the original PlayerSpells action-bar eligibility helper.
 
 **VERIFIED (R88i.14):** The native local result is false for identifier zero or a missing record; otherwise it tests mask 64 in the selected record. **UNKNOWN (R88i.14):** The exact DB2 table and field are not identified. **VERIFIED (Retail runtime TOC):** `Blizzard_PlayerSpells` is LoadOnDemand and lists `ClassTalents/Blizzard_ClassTalentUtil.lua`; that helper calls `C_Spell.IsSpellPassive` at line 183. **VERIFIED (`crates/sim-data/data/spells.rs`):** `SpellInfo` exposes `Attributes_9`, but R88i.14 does not map mask 64 to that field, so this API does not use it.
 
