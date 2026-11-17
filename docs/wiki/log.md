@@ -1,3 +1,7 @@
+## [2026-11-17] fix | Retail flag-3 Lua closure taint
+
+Updated the [taint system](systems/taint-system.md#dual-lua-environment), [load-phase contract](../specs/addon-load-phases.md#r88y-verified-secure-publication), and index. **VERIFIED (simulator source at `0f5ada40a`):** the Retail publisher copies a Lua closure's taint stamp to its distinct clone with rilua's public taint API and leaves an unstamped clone unstamped. **VERIFIED (simulator test at `f68ef3fbc`, 28/28):** ordinary and secure calls return equal secure-state and stack-taint results. **VERIFIED (overlay RED):** the exact taint test fails when the copy step is removed; the logged mismatch is in the handoff report.
+
 ## [2026-11-17] verification | Retail R88n.11b flag-3 function identity
 
 Updated the [taint system](systems/taint-system.md#dual-lua-environment) and [load-phase contract](../specs/addon-load-phases.md#r88y-verified-secure-publication). **VERIFIED (simulator source at `0710907`):** the generic publisher creates a distinct `LuaClosure` with the same prototype, captured upvalue references, and function environment; Rust closure handling is unchanged. **VERIFIED (simulator tests at `0710907`):** 31 existing namespace producers and 3 `C_Texture` producers have distinct ordinary/secure functions, while the 14 unimplemented members remain absent; representative color-conversion and atlas-query results match.

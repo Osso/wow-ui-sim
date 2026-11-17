@@ -1,3 +1,7 @@
+## [2026-11-17] fix | Retail flag-3 Lua closure taint
+
+[Taint system](systems/taint-system.md#dual-lua-environment) and the [load-phase contract](../specs/addon-load-phases.md#r88y-verified-secure-publication) record object-taint preservation on distinct Retail flag-3 Lua closure clones. **VERIFIED (simulator test at `f68ef3fbc`, 28/28):** stamped ordinary and secure calls return matching taint outcomes; unstamped calls stay secure. **VERIFIED (overlay RED):** without stamp copying, the secure-side call loses that taint; see the handoff report.
+
 ## [2026-11-17] verification | Retail R88n.11b flag-3 function identity
 
 [Taint system](systems/taint-system.md#dual-lua-environment) and the [load-phase contract](../specs/addon-load-phases.md#r88y-verified-secure-publication) record the 31 implemented namespace functions and 3 implemented `C_Texture` functions with distinct ordinary/secure objects; 14 unimplemented producers remain absent. **VERIFIED (simulator source at `0710907`):** Lua closure copies retain the prototype, captured upvalues, and function environment. **VERIFIED (simulator tests at `0710907`):** representative `C_ColorUtil.ConvertHSVToRGB` and `C_Texture.GetAtlasExists` results match across environments.
