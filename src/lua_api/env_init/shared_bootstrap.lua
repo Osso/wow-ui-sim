@@ -1115,6 +1115,18 @@ if CopyTable == nil then
   end
 end
 
+if GetFrameMetatable == nil then
+  function GetFrameMetatable(frame)
+    if frame == nil then
+      if CreateFrame == nil then
+        return nil
+      end
+      frame = CreateFrame("Frame")
+    end
+    return frame and getmetatable(frame) or nil
+  end
+end
+
 if GetFontStringMetatable == nil then
   function GetFontStringMetatable(fontString)
     if fontString == nil then

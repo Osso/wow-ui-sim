@@ -40,15 +40,49 @@ pub fn create_frame(state: &mut LuaState) -> LuaResult<u32> {
     create_frame_from_args(state, args)
 }
 
+/// Retail native `GetFrameMetatable` handler. R88i.1 VERIFIES only its
+/// registration route (pair list, ordinary and secure tables). INFERRED: the
+/// argument and return semantics follow master's former Lua helper,
+/// `getmetatable(frame or CreateFrame("Frame"))`; native semantics are UNKNOWN.
 fn get_frame_metatable(state: &mut LuaState) -> LuaResult<u32> {
-    let frame_metatable = crate::lua_api::methods::registry_get(state, "__rilua_frame_mt");
-    if !matches!(frame_metatable, Val::Table(_)) {
-        return Err(runtime_error(
-            "GetFrameMetatable: frame metatable is not initialized",
-        ));
-    }
-    state.push(frame_metatable);
+    let has_argument = state.top > state.base;
+    let argument = if has_argument {
+        stack_val(state, 1)
+    } else {
+        Val::Nil
+    };
+    let frame = match argument {
+        Val::Nil => create_default_frame(state)?,
+        frame => frame,
+    };
+    let metatable = match frame {
+        Val::Nil | Val::Bool(false) => Val::Nil,
+        frame => read_global_metatable(state, frame)?,
+    };
+    state.push(metatable);
     Ok(1)
+}
+
+/// `CreateFrame("Frame")` through the current global, or nil when it is absent.
+fn create_default_frame(state: &mut LuaState) -> LuaResult<Val> {
+    let global = Val::Table(state.global);
+    let create = crate::lua_api::methods::table_get(state, global, "CreateFrame");
+    if matches!(create, Val::Nil) {
+        return Ok(Val::Nil);
+    }
+    let frame_type = crate::lua_api::methods::create_string(state, "Frame");
+    crate::lua_api::methods::call_function_state(state, create, &[frame_type])
+}
+
+/// Call the current global `getmetatable`, mapping a false result to nil.
+fn read_global_metatable(state: &mut LuaState, frame: Val) -> LuaResult<Val> {
+    let global = Val::Table(state.global);
+    let getmetatable = crate::lua_api::methods::table_get(state, global, "getmetatable");
+    let metatable = crate::lua_api::methods::call_function_state(state, getmetatable, &[frame])?;
+    Ok(match metatable {
+        Val::Bool(false) => Val::Nil,
+        metatable => metatable,
+    })
 }
 
 fn create_frame_from_args(state: &mut LuaState, mut args: CreateFrameArgs) -> LuaResult<u32> {
@@ -395,21 +429,15 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
 fn register_frame_creation_globals(lua: &mut rilua::Lua) -> LuaResult<()> {
     // UNKNOWN (R88k.7): retained secure allowlist entry; native flags are not established.
     super::security::register_unknown_allowlist_function(lua, "CreateFrame", create_frame)?;
-    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
-        // VERIFIED (R88k.7): Retail native pair-list registration has no per-name flag.
+    if crate::client_profile::is_active_retail_12_1_5() {
+        // VERIFIED (R88i.1, R88k.7): Retail native pair-list registration has no per-name flag.
         super::security::register_pair_list_function(
             lua,
             "GetFrameMetatable",
             get_frame_metatable,
         )?;
-    } else {
-        // UNKNOWN outside Retail: retain the current secure allowlist.
-        super::security::register_unknown_allowlist_function(
-            lua,
-            "GetFrameMetatable",
-            get_frame_metatable,
-        )?;
     }
+    // Other profiles keep master's Lua helper from shared_bootstrap.lua (UNKNOWN natively).
     #[cfg(feature = "retail-12-1-5")]
     LuaApiMut::register_function(
         lua,
