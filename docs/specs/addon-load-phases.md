@@ -54,6 +54,7 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 - [ ] VERIFIED (Retail 12.1.5.70688, R88t.t2): publish the native `Constants.InventoryConstants` table to secureenv without a per-member flag; the secure consumer must read `NumBagSlots = 4` and `NumReagentBagSlots = 1`. SIMULATOR POLICY: keep missing and compatibility constants ordinary-only unless native publication is established.
 - [x] VERIFIED (Retail 12.1.5.70688, R88t): when ordinary and secure `UIParent` names are empty, both receive the same frame-table object through the Retail named-frame policy.
 - [ ] VERIFIED (Retail 12.1.5.70688, R88t): the Retail UIParent bootstrap uses named-frame policy flag 32 and each destination preserves an existing non-nil name.
+- [ ] SIMULATOR POLICY (Retail 12.1.5; native R88an): publish an eligible named XML object into `__secureenv` only when vacant. If ordinary publication is also enabled, publish the same object into `_G` only when vacant. Preserve non-nil names; do not copy ordinary globals. `LoadIntoEnvironment` selects a file mode and does not change the dependency request mode.
 
 ### R88ac GlobalStrings secure publication
 
@@ -100,6 +101,8 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 - `src/lua_api/workarounds/temporary/formatting_utility_defaults.rs` — applies the colon-split compatibility method outside Retail 12.1.5.
 - `src/lua_api/globals/security/environment.rs`, `src/loader/tests/inline_script.rs` — implement and test the verified SwapToGlobalEnvironment and XML addToSecureEnv routes.
 - `src/lua_api/globals/create_frame/mod.rs` — publishes the built-in `UIParent` name to secureenv.
+- `src/lua_api/globals/create_frame/helpers_shared.rs` and `src/lua_api/frame/methods/button_anchor_hierarchy/shared.rs` — publish named frame and child-region objects to vacant Retail secure destinations.
+- `src/lua_api/globals/security/secure_env.rs` — writes secure names only when the shared destination is vacant.
 - `src/lua_api/env_init/shared_bootstrap.lua` — retains the private `GetForbiddenObjectTable` closure while the verified flag-6 global is secure-only.
 - `src/lua_api/globals/real/source_location.rs` — registers AddSourceLocationExclude and selects a caller file/line from existing Lua call frames.
 - `src/lua_api/frame/methods/button_anchor_hierarchy/hierarchy.rs`, `src/lua_api/frame/methods/core_state/region.rs` — save and return texture source locations.
@@ -115,6 +118,7 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 - `tests/addon_runtime_dependencies.rs`
 - `src/c_api/c_addons_runtime_tests.rs`
 - `tests/secureenv_isolation.rs` — separate loaded states, dependency request order/failure continuation, verified Retail `LE_GAME_*` secure values, and the one-file source-location consumer.
+- `tests/blizzard_auto_complete_onload.rs` — Retail secure AutoComplete dependency publication and preservation of occupied secure names.
 - `tests/blizzard_frame_xml_loads.rs` — the original `UIErrorsFrame` consumes a modeled Retail `LE_GAME_*` numeric value.
 - `tests/blizzard_communities_secure_loads.rs` — verifies `CommunitiesCreateDialog.DescriptionFrame` `InputScrollFrame` setup and that `debug` stays out of `__secureenv`.
 - `tests/blizzard_private_auras_ui_loads.rs` — the original FrameFactory/Pools, AccountUtil, ColorManager, GameRulesUtil, RaidWarning XML, and PrivateAurasTooltip consumers.

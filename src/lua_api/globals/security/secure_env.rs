@@ -208,6 +208,27 @@ pub(crate) fn set_secure_env_key_state(
     Ok(())
 }
 
+pub(crate) fn publish_secure_env_key_if_vacant(
+    state: &mut LuaState,
+    key: &str,
+    value: Val,
+) -> LuaResult<bool> {
+    let secureenv_ref = secure_env_table(state)?;
+    let key_ref = state.gc.intern_string(key.as_bytes());
+    let existing = state
+        .gc
+        .tables
+        .get(secureenv_ref)
+        .map_or(Val::Nil, |secureenv| {
+            secureenv.get_str(key_ref, &state.gc.string_arena)
+        });
+    if !matches!(existing, Val::Nil) {
+        return Ok(false);
+    }
+    set_secure_env_key_state(state, key, value)?;
+    Ok(true)
+}
+
 /// Create the secure environment from the fixed native base list.
 ///
 /// Table-valued base entries are shallow-copied. Later `_G` registrations do

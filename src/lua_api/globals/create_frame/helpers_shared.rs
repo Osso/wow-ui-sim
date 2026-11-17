@@ -333,6 +333,68 @@ fn retire_replaced_named_frame(sim: &mut SimState, old_frame_id: u64, new_frame_
     sim.invalidate_strata_buckets();
 }
 
+/// The XML loader sets this flag for secure files and scoped addToSecureEnv overrides.
+pub(crate) fn is_retail_secure_xml_name_publication(sim: &SimState) -> bool {
+    crate::client_profile::is_active_retail_12_1_5() && sim.loading_add_to_secure_env
+}
+
+pub(crate) fn publish_global_name_if_vacant(state: &mut LuaState, name: &str, value: Val) -> bool {
+    let key = state.gc.intern_string(name.as_bytes());
+    let global = state.global;
+    let existing = state.gc.tables.get(global).map_or(Val::Nil, |globals| {
+        globals.get_str(key, &state.gc.string_arena)
+    });
+    if !matches!(existing, Val::Nil) {
+        return false;
+    }
+    if let Some(globals) = state.gc.tables.get_mut(global) {
+        let _ = globals.raw_set(Val::Str(key), value, &state.gc.string_arena);
+    }
+    state.gc.barrier_back(global);
+    true
+}
+
+fn publish_named_frame_to_global_env(
+    state: &mut LuaState,
+    name: &str,
+    frame_val: Val,
+    only_if_vacant: bool,
+) -> LuaResult<()> {
+    let published = if only_if_vacant {
+        publish_global_name_if_vacant(state, name, frame_val)
+    } else {
+        let key = state.gc.intern_string(name.as_bytes());
+        let global = state.global;
+        if let Some(globals) = state.gc.tables.get_mut(global) {
+            let _ = globals.raw_set(Val::Str(key), frame_val, &state.gc.string_arena);
+        }
+        state.gc.barrier_back(global);
+        true
+    };
+    if published {
+        crate::lua_api::global_slots::refresh_installed_slots_for_name(state, name);
+        crate::lua_api::globals::compat_overrides::record_public_global_publication(state, name)?;
+    }
+    Ok(())
+}
+
+fn publish_named_frame_to_secure_env(
+    state: &mut LuaState,
+    name: &str,
+    frame_val: Val,
+    add_to_secure_env: bool,
+    only_if_vacant: bool,
+) -> LuaResult<()> {
+    if only_if_vacant {
+        crate::lua_api::globals::security::publish_secure_env_key_if_vacant(
+            state, name, frame_val,
+        )?;
+    } else if add_to_secure_env {
+        crate::lua_api::globals::security::set_secure_env_key_state(state, name, frame_val)?;
+    }
+    Ok(())
+}
+
 fn register_global_name(
     state: &mut LuaState,
     name: Option<&str>,
@@ -346,26 +408,18 @@ fn register_global_name(
         return Ok(());
     }
     let frame_val = frame_ref(state, frame_id)?;
-    let (hide_from_global_env, add_to_secure_env) = {
+    let (hide_from_global_env, add_to_secure_env, only_if_vacant) = {
         let sim = borrow_state(state)?;
         (
             sim.loading_hide_from_global_env,
             sim.loading_add_to_secure_env,
+            is_retail_secure_xml_name_publication(&sim),
         )
     };
     if !hide_from_global_env {
-        let key = state.gc.intern_string(name.as_bytes());
-        let global = state.global;
-        if let Some(globals) = state.gc.tables.get_mut(global) {
-            let _ = globals.raw_set(Val::Str(key), frame_val, &state.gc.string_arena);
-        }
-        state.gc.barrier_back(global);
-        crate::lua_api::global_slots::refresh_installed_slots_for_name(state, name);
-        crate::lua_api::globals::compat_overrides::record_public_global_publication(state, name)?;
+        publish_named_frame_to_global_env(state, name, frame_val, only_if_vacant)?;
     }
-    if add_to_secure_env {
-        crate::lua_api::globals::security::set_secure_env_key_state(state, name, frame_val)?;
-    }
+    publish_named_frame_to_secure_env(state, name, frame_val, add_to_secure_env, only_if_vacant)?;
     Ok(())
 }
 
