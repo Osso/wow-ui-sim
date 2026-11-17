@@ -1,6 +1,6 @@
 -- Single publication-scoped exemption inventory; modeled Store catalog registration is separate.
 local classicCombat, forever, vanilla, modeledStoreGlue, modeledStoreCatalog,
-  retirePveFrameBridge, retireGlueOwnerDefaults = ...
+  modeledStoreVas, retirePveFrameBridge, retireGlueOwnerDefaults = ...
 local strictNamespaces = {}
 if classicCombat then
   strictNamespaces.C_CombatText = true
@@ -499,6 +499,7 @@ C_StoreSecure.GetProductInfo = function(productID)
   return __wow_store_state.productsByID[productID]
 end
 end
+if not modeledStoreVas then
 C_StoreSecure.GetWoWAccountGUIDFromName = function(accountName, isLocalAccount)
   if isLocalAccount then
     return __wow_store_state.localAccounts[accountName]
@@ -553,6 +554,7 @@ C_StoreSecure.GetVasServiceType = function(productID)
   local product = C_StoreSecure.GetProductInfo(productID)
   return product and product.sharedData and product.sharedData.vasServiceType or nil
 end
+end
 if not modeledStoreCatalog then
 C_StoreSecure.IsRegionLocked = function()
   return false
@@ -566,12 +568,15 @@ if not modeledStoreGlue then
     return {}
   end
 end
+if not modeledStoreVas then
 C_StoreSecure.RequestRealmGuildMasterInfo = function(virtualRealmAddress)
   FireEvent("STORE_GUILD_MASTER_INFO_RECEIVED", virtualRealmAddress)
 end
 C_StoreSecure.RequestCharacterGuildFollowInfo = function(guid, _virtualRealmAddress)
   FireEvent("STORE_GUILD_FOLLOW_INFO_RECEIVED", guid, { transferredRealm = "Kalimdor" })
 end
+end
+if not modeledStoreVas then
 C_StoreSecure.OpenNydusLink = function(entryID)
   local entry = C_StoreSecure.GetEntryInfo(entryID)
   if entry then
@@ -621,6 +626,7 @@ if not modeledStoreGlue then
       FireEvent("STORE_VAS_PURCHASE_COMPLETE")
     end
   end
+end
 end
 if not modeledStoreCatalog then
 C_StoreSecure.RequestAllDynamicPriceInfo = __wow_noop
@@ -990,6 +996,7 @@ if rawget(C_StoreSecure, "GetDistributionList") == nil then
     return {}
   end
 end
+if not modeledStoreVas then
 function C_StoreSecure.GetFailureInfo()
   return __wow_store_secure_state.failure_code, __wow_store_secure_state.failure_reason
 end
@@ -1173,6 +1180,7 @@ if rawget(C_StoreSecure, "ClearPreGeneratedExternalTransactionID") == nil then
   function C_StoreSecure.ClearPreGeneratedExternalTransactionID()
     __wow_store_secure_state.pre_generated_external_transaction_id = false
   end
+end
 end
 
 -- GetAvailableLocaleInfo is registered from Rust

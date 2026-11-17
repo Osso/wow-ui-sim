@@ -212,6 +212,7 @@ fn product(
         session_eligible: true,
         display_eligible: visible,
         dynamic_bundle: dynamic,
+        product_type: None,
         shared_data,
     }
 }
@@ -224,6 +225,7 @@ fn entry(id: i32, product_id: i32, group_id: u32, order: i32, hidden: bool) -> S
         order,
         banner_type: 1,
         hidden,
+        nydus_link: None,
     }
 }
 
