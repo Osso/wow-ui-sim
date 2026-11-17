@@ -14,6 +14,7 @@ const EXCLUDED_GROUP_PRODUCT_IDS: [i32; 2] = [239, 477];
 #[derive(Debug, Default)]
 pub struct StoreSecureState {
     pub catalog: StoreCatalogInput,
+    pub vas: super::store_vas_model::StoreVasState,
     pub available: bool,
     pub has_product_list: bool,
     pub has_purchase_list: bool,

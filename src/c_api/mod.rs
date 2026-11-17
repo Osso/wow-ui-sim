@@ -362,6 +362,7 @@ pub(crate) mod mists_reputation_list;
 pub mod spell_reagent_inventory;
 pub mod store_catalog_model;
 pub mod store_glue_model;
+pub mod store_vas_model;
 pub mod store_guid;
 // The pinned classic TransmogItemsDocumentation.lua / TransmogOutfitInfoDocumentation.lua
 // declare these namespaces on Mists, Era and Anniversary, so the backing model
