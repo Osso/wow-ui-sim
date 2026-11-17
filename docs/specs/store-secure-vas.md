@@ -20,7 +20,10 @@ This contract covers Retail `C_StoreSecure` VAS lookup, request, purchase, and c
 ### Requests, purchases, and completion
 
 - [ ] Request and purchase methods use only explicit host inputs. Unknown accounts, characters, products, server responses, purchase rows, completion data, and failure state remain empty by default.
-- [ ] `ValidateBnetTransfer`, `RequestRealmGuildMasterInfo`, and `RequestCharacterGuildFollowInfo` prepare asynchronous requests; they do not synthesize their response events or wait for responses.
+- [ ] `ValidateBnetTransfer` copies the supplied account-name bytes without trimming or case-folding, advances the request sequence, and submits only when connected. It does not emit a synchronous validation event.
+- [ ] A correlated BNet success replaces the supplied destination account and account-name map before one nil-valued `VAS_TRANSFER_VALIDATION_UPDATE`; a correlated error emits one signed integer and does not replace the map. Stale responses do nothing.
+- [ ] `RequestRealmGuildMasterInfo` collects current character GUIDs for the realm and submits only when connected. Its response updates guild-master records before one `STORE_GUILD_MASTER_INFO_RECEIVED` realm number.
+- [ ] `RequestCharacterGuildFollowInfo` accepts a GUID and realm, then submits only when connected. Its response updates follow-info state before `STORE_GUILD_FOLLOW_INFO_RECEIVED` with a GUID and `{ transferredRealm?, factionChanged }`.
 - [ ] `PurchaseVASProduct` returns the verified local preparation result and records accepted requests only when connected. It does not claim server acceptance.
 - [ ] `GetVASCompletionInfo`, `GetFailureInfo`, `AckFailure`, confirmation methods, and Nydus-link handling publish only the verified fields and state transitions. No inferred public return is asserted for UNKNOWN absence paths.
 
@@ -49,7 +52,7 @@ This contract covers Retail `C_StoreSecure` VAS lookup, request, purchase, and c
 
 ## Known gaps (current cycle)
 
-- [ ] Implement and test R88ad.4 asynchronous requests and correlated responses.
+- [ ] Verify the R88ad.4 request and correlated-response contract against the selected Retail consumers.
 - [ ] Implement and test R88ad.5 purchase and confirmation paths.
 - [ ] Implement and test R88ad.6 completion and failure paths.
 - [ ] Keep complete network delivery, server acceptance, unknown cleanup guards, and every unknown absence return outside the parity claim.

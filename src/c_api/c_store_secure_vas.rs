@@ -1,6 +1,7 @@
 //! Verified Retail StoreSecure VAS lookups and operations.
 
 mod lookups;
+mod requests;
 
 use super::c_store_glue::{Member, publish_namespace};
 use crate::client_profile::{ACTIVE, ClientProfile};
@@ -31,6 +32,15 @@ const MEMBERS: &[Member] = &[
         lookups::get_guild_master_info_for_character,
     ),
     ("GetVasServiceType", lookups::get_vas_service_type),
+    ("ValidateBnetTransfer", requests::validate_bnet_transfer),
+    (
+        "RequestRealmGuildMasterInfo",
+        requests::request_realm_guild_master_info,
+    ),
+    (
+        "RequestCharacterGuildFollowInfo",
+        requests::request_character_guild_follow_info,
+    ),
 ];
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {

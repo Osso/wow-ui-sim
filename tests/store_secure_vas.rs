@@ -2,8 +2,9 @@
 
 use crate::common::blizzard_addon_harness;
 use wow_ui_sim::c_api::store_vas_model::{
-    StoreVasCharacterInput, StoreVasEligibleRaceInput, StoreVasGuildMasterInfoInput,
-    StoreVasGuildMemberInput, StoreVasRaceEligibilityInput, StoreVasRealmInput,
+    StoreVasCharacterInput, StoreVasEligibleRaceInput, StoreVasGuildFollowInfoInput,
+    StoreVasGuildMasterInfoInput, StoreVasGuildMemberInput, StoreVasRaceEligibilityInput,
+    StoreVasRealmInput, StoreVasRequest,
 };
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
@@ -107,6 +108,65 @@ const LOOKUP_API_CONSUMER: &str = r#"
     assert(C_StoreSecure.GetVasServiceType(2003) == Enum.VasServiceType.NameChange, "product type should map to the verified VAS service")
     assert(C_StoreSecure.GetVasServiceType(99999) == nil, "unmapped product should publish nil")
     return true
+"#;
+
+const ACCOUNT_VALIDATION_CONSUMER: &str = r#"
+    local function lookup(name)
+        return _G[name] or (__secureenv and rawget(__secureenv, name))
+    end
+    local observer = CreateFrame("Frame")
+    observer:RegisterEvent("VAS_TRANSFER_VALIDATION_UPDATE")
+    observer:SetScript("OnEvent", function(_, _, ...)
+        local errorCode = ...
+        local remoteGuid = C_StoreSecure.GetWoWAccountGUIDFromName("WoW2", false)
+        table.insert(STORE_VAS_VALIDATION_EVENTS, {
+            count = select('#', ...),
+            errorType = type(errorCode),
+            errorCode = errorCode,
+            remoteGuid = remoteGuid,
+        })
+    end)
+    STORE_VAS_VALIDATION_EVENTS = {}
+    local selector = {}
+    STORE_VAS_ACCOUNT_SELECTOR = selector
+    lookup("AccountSelectorMixin").ValidateBnetTransfer(selector, " Transfer@Example.COM ")
+    assert(selector.awaitingBnetTransferResponse == true, "original account selector should await validation")
+    assert(#STORE_VAS_VALIDATION_EVENTS == 0, "validation request must not fire a response event")
+"#;
+
+const GUILD_MASTER_REQUEST_CONSUMER: &str = r#"
+    local function lookup(name)
+        return _G[name] or (__secureenv and rawget(__secureenv, name))
+    end
+    local observer = CreateFrame("Frame")
+    observer:RegisterEvent("STORE_GUILD_MASTER_INFO_RECEIVED")
+    observer:SetScript("OnEvent", function(_, _, realmAddress)
+        local info = C_StoreSecure.GetVASGuildMasterInfoForCharacterByGUID("Player-101-1-11")
+        STORE_VAS_GUILD_MASTER_EVENT = { realmAddress = realmAddress, guildName = info and info.guildName }
+    end)
+    local panel = lookup("StoreVASValidationFrame")
+    panel.productInfo = { sharedData = { vasServiceType = lookup("Enum").VasServiceType.GuildNameChange, name = "Fixture", instructions = "" } }
+    lookup("StoreVASValidationFrame_Init")(panel)
+"#;
+
+const GUILD_FOLLOW_REQUEST_CONSUMER: &str = r#"
+    local function lookup(name)
+        return _G[name] or (__secureenv and rawget(__secureenv, name))
+    end
+    local observer = CreateFrame("Frame")
+    observer:RegisterEvent("STORE_GUILD_FOLLOW_INFO_RECEIVED")
+    observer:SetScript("OnEvent", function(_, _, guid, info)
+        STORE_VAS_GUILD_FOLLOW_EVENT = {
+            guid = guid,
+            transferredRealm = info.transferredRealm,
+            factionChanged = info.factionChanged,
+            count = select('#', guid, info),
+        }
+    end)
+    local panel = lookup("StoreVASValidationFrame")
+    panel.productInfo = { sharedData = { vasServiceType = lookup("Enum").VasServiceType.CharacterTransfer, name = "Fixture", instructions = "" } }
+    lookup("StoreVASValidationFrame_Init")(panel)
+    lookup("VASCharacterSelectionCharacterSelector_Callback")(1)
 "#;
 
 fn load_store_ui() -> WowLuaEnv {
@@ -346,5 +406,119 @@ fn retail_store_vas_lookup_apis_publish_explicit_host_rows() {
         let order: Vec<String> = env.state().borrow().store_glue.store_secure.vas.vas_realms
             .iter().map(|realm| realm.realm_name.clone()).collect();
         assert_eq!(order, ["Azeroth", "Empty", "Kalimdor"]);
+    }
+}
+
+#[test]
+fn retail_store_bnet_validation_uses_the_original_account_selector() {
+    test_timeout! {
+        let env = load_store_ui();
+        env.state().borrow_mut().store_glue.connection_present = true;
+        env.exec(ACCOUNT_VALIDATION_CONSUMER)
+            .expect("original account selector should submit a validation request");
+        assert_bnet_validation_request(&env);
+        receive_bnet_success(&env);
+        assert_stale_bnet_response_ignored(&env);
+    }
+}
+
+fn assert_bnet_validation_request(env: &WowLuaEnv) {
+    let sim = env.state();
+    let store = sim.borrow();
+    assert_eq!(store.store_glue.request_sequence, 1);
+    assert_eq!(
+        store.store_glue.store_secure.vas.submitted_requests,
+        [StoreVasRequest::BnetTransferValidation {
+            sequence: 1,
+            account_name: b" Transfer@Example.COM ".to_vec(),
+        }]
+    );
+}
+
+fn receive_bnet_success(env: &WowLuaEnv) {
+    wow_ui_sim::c_api::store_vas_model::receive_bnet_transfer_validation(
+        env,
+        1,
+        0,
+        "BNetAccount-55-1".into(),
+        vec![
+            (b"WoW2".to_vec(), "WowAccount-2002-2".into()),
+            (b"WoW3".to_vec(), "WowAccount-3003-3".into()),
+        ],
+    )
+    .expect("correlated BNet response should dispatch");
+    let result: (i32, String, String, bool) = env.eval("return STORE_VAS_VALIDATION_EVENTS[1].count, STORE_VAS_VALIDATION_EVENTS[1].errorType, STORE_VAS_VALIDATION_EVENTS[1].remoteGuid, C_StoreSecure.GetWoWAccountGUIDFromName('WoW3', false) ~= nil")
+        .expect("successful validation event should observe replaced account state");
+    assert_eq!(result, (1, "nil".into(), "WowAccount-2002-2".into(), true));
+}
+
+fn assert_stale_bnet_response_ignored(env: &WowLuaEnv) {
+    wow_ui_sim::c_api::store_vas_model::receive_bnet_transfer_validation(
+        env,
+        0,
+        7,
+        "ignored".into(),
+        vec![(b"WoW4".to_vec(), "WowAccount-4004-4".into())],
+    )
+    .expect("stale BNet response should be ignored");
+    let count: i32 = env
+        .eval("return #STORE_VAS_VALIDATION_EVENTS")
+        .expect("stale response should not dispatch another event");
+    assert_eq!(count, 1);
+}
+
+#[test]
+fn retail_store_vas_guild_master_request_uses_the_original_panel() {
+    test_timeout! {
+        let env = load_store_ui();
+        seed_realm_and_character_inputs(&env);
+        env.state().borrow_mut().store_glue.connection_present = true;
+        env.exec(GUILD_MASTER_REQUEST_CONSUMER)
+            .expect("original VAS panel should request guild-master data");
+        assert_eq!(env.state().borrow().store_glue.store_secure.vas.submitted_requests.len(), 1);
+        let request = env.state().borrow().store_glue.store_secure.vas.submitted_requests[0].clone();
+        let StoreVasRequest::RealmGuildMasterInfo { realm_address, character_guids } = request else {
+            panic!("original VAS panel should submit a realm guild-master request");
+        };
+        assert_eq!(realm_address, 101);
+        assert_eq!(character_guids.len(), 2);
+        wow_ui_sim::c_api::store_vas_model::receive_guild_master_info(
+            &env,
+            101,
+            vec![guild_master_info()],
+        )
+        .expect("guild-master response should update state before notification");
+        let event: (u32, String) = env.eval("return STORE_VAS_GUILD_MASTER_EVENT.realmAddress, STORE_VAS_GUILD_MASTER_EVENT.guildName")
+            .expect("guild-master event should observe the updated cache");
+        assert_eq!(event, (101, "Simulator Guild".into()));
+    }
+}
+
+#[test]
+fn retail_store_vas_guild_follow_request_uses_the_original_character_callback() {
+    test_timeout! {
+        let env = load_store_ui();
+        seed_realm_and_character_inputs(&env);
+        env.state().borrow_mut().store_glue.connection_present = true;
+        env.exec(GUILD_FOLLOW_REQUEST_CONSUMER)
+            .expect("original character callback should request guild-follow data");
+        let request = env.state().borrow().store_glue.store_secure.vas.submitted_requests[0].clone();
+        let StoreVasRequest::CharacterGuildFollowInfo { guid, realm_address } = request else {
+            panic!("original character callback should submit a guild-follow request");
+        };
+        assert!(matches!(guid, wow_ui_sim::c_api::store_guid::Outcome::Known(_)));
+        assert_eq!(realm_address, 101);
+        wow_ui_sim::c_api::store_vas_model::receive_guild_follow_info(
+            &env,
+            StoreVasGuildFollowInfoInput {
+                guid: "Player-101-1-11".into(),
+                transferred_realm: Some("Kalimdor".into()),
+                faction_changed: true,
+            },
+        )
+        .expect("guild-follow response should update state before notification");
+        let event: (String, String, bool, i32) = env.eval("return STORE_VAS_GUILD_FOLLOW_EVENT.guid, STORE_VAS_GUILD_FOLLOW_EVENT.transferredRealm, STORE_VAS_GUILD_FOLLOW_EVENT.factionChanged, STORE_VAS_GUILD_FOLLOW_EVENT.count")
+            .expect("guild-follow event should publish its verified payload");
+        assert_eq!(event, ("Player-101-1-11".into(), "Kalimdor".into(), true, 2));
     }
 }

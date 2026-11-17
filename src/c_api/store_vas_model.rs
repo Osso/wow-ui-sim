@@ -2,6 +2,11 @@
 
 use std::collections::{HashMap, HashSet};
 
+mod responses;
+pub use responses::{
+    receive_bnet_transfer_validation, receive_guild_follow_info, receive_guild_master_info,
+};
+
 #[derive(Debug, Default)]
 pub struct StoreVasState {
     pub realms: Vec<StoreVasRealmInput>,
@@ -15,6 +20,26 @@ pub struct StoreVasState {
     /// Computed client-side eligibility snapshots; not a server-supplied allow-list.
     pub race_eligibility: Vec<StoreVasRaceEligibilityInput>,
     pub guild_master_info: Vec<StoreVasGuildMasterInfoInput>,
+    pub guild_follow_info: Vec<StoreVasGuildFollowInfoInput>,
+    pub bnet_transfer_guid: Option<String>,
+    pub bnet_game_accounts: Vec<Vec<u8>>,
+    pub submitted_requests: Vec<StoreVasRequest>,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub enum StoreVasRequest {
+    BnetTransferValidation {
+        sequence: u64,
+        account_name: Vec<u8>,
+    },
+    RealmGuildMasterInfo {
+        realm_address: u32,
+        character_guids: Vec<crate::c_api::store_guid::Outcome>,
+    },
+    CharacterGuildFollowInfo {
+        guid: crate::c_api::store_guid::Outcome,
+        realm_address: u32,
+    },
 }
 
 #[derive(Clone, Debug, Default)]
@@ -60,6 +85,13 @@ pub struct StoreVasEligibleRaceInput {
     pub race_name: String,
     pub is_allied_race: bool,
     pub is_heritage_armor_unlocked: bool,
+}
+
+#[derive(Clone, Debug, Default)]
+pub struct StoreVasGuildFollowInfoInput {
+    pub guid: String,
+    pub transferred_realm: Option<String>,
+    pub faction_changed: bool,
 }
 
 /// A copied cached guild-master result; no record is inserted by default.
