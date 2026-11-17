@@ -135,7 +135,7 @@ fn register_constants(state: &mut LuaState) {
     // Forever PetConstantsDocumentation 1.60.1 lines 49-54: one learned slot,
     // two stable slots, and three hunter slots (2 + 1). MAX_SUMMONABLE_HUNTER_PETS
     // and STABLED_PETS_FIRST_SLOT_INDEX alias the learned-slot value there.
-    publish(
+    publish_constant_group(
         state,
         constants,
         "PetConsts",
@@ -147,21 +147,21 @@ fn register_constants(state: &mut LuaState) {
             ("NUM_PET_SLOTS_HUNTER", 3),
         ],
     );
-    publish(state, constants, "Transmog", &[("NoTransmogID", 0)]);
-    publish(
+    publish_constant_group(state, constants, "Transmog", &[("NoTransmogID", 0)]);
+    publish_constant_group(
         state,
         constants,
         "TransmogOutfitDataConsts",
         &[("CLEAR_TRANSMOG_OUTFIT_MANUAL_SPELL_ID", 1_247_917)],
     );
-    publish(state, constants, "LegacyConsts", LEGACY_CONSTANTS);
-    publish(
+    publish_constant_group(state, constants, "LegacyConsts", LEGACY_CONSTANTS);
+    publish_constant_group(
         state,
         constants,
         "QuestLogConsts",
         &[("MAXIMUM_NUM_QUESTS_LOG_CAN_ACCEPT", 40)],
     );
-    publish(
+    publish_constant_group(
         state,
         constants,
         "LevelConstsExposed",
@@ -273,6 +273,27 @@ fn register_ping_results(state: &mut LuaState, enums: Val) {
         "PingResultMeta",
         &[("MinValue", 0), ("MaxValue", 8), ("NumValues", 9)],
     );
+}
+
+/// Forever Constants groups stay ordinary-only, as on master; the R88y
+/// secure peer model applies to `Enum` registration here.
+fn publish_constant_group(
+    state: &mut LuaState,
+    constants: Val,
+    name: &str,
+    fields: &[(&str, i32)],
+) {
+    let values = match table_get(state, constants, name) {
+        value @ Val::Table(_) => value,
+        _ => {
+            let value = create_table(state);
+            table_set(state, constants, name, value);
+            value
+        }
+    };
+    for &(field, value) in fields {
+        table_set(state, values, field, Val::Num(f64::from(value)));
+    }
 }
 
 fn publish(state: &mut LuaState, root: Val, name: &str, fields: &[(&str, i32)]) {
