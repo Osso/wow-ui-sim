@@ -30,6 +30,7 @@ const REALM_AND_CHARACTER_CONSUMER: &str = r#"
     init(panel)
 
     local selectors = panel.CharacterSelectionFrame
+    -- Test-only menu slots avoid the intentionally unavailable forbidden-frame factory.
     local function seedMenuButtons(menu, count)
         for index = 2, count do
             if not menu.Buttons[index] then
@@ -99,6 +100,16 @@ const REALM_AND_CHARACTER_INPUTS: &str = r#"
         { virtualRealmAddress = 102, realmName = "Kalimdor", characterCount = 1, pvp = true, rp = false },
         { virtualRealmAddress = 303, realmName = "Empty", characterCount = 0, pvp = false, rp = true },
     }
+    -- Empty class color strings let the original text formatter run; colors are not asserted.
+    local classColors = rawget(_G, "RAID_CLASS_COLORS")
+    if type(classColors) ~= "table" then classColors = {} end
+    for _, classFile in ipairs({ "WARRIOR", "MAGE", "PRIEST" }) do
+        if classColors[classFile] == nil then classColors[classFile] = { colorStr = "" } end
+    end
+    rawset(_G, "RAID_CLASS_COLORS", classColors)
+    if type(__secureenv) == "table" and type(rawget(__secureenv, "RAID_CLASS_COLORS")) ~= "table" then
+        rawset(__secureenv, "RAID_CLASS_COLORS", classColors)
+    end
     __wow_store_state.realms = TEST_VAS_REALMS
     __wow_store_realms = TEST_VAS_REALMS
     __wow_store_characters = {
