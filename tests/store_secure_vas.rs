@@ -209,12 +209,14 @@ const VAS_PURCHASE_CONSUMER: &str = r#"
     local continueSource = debug.getinfo(continue, "S").source
     assert(continueSource:find("Blizzard_Shared_StoreUISecure.lua", 1, true), "Retail VAS purchase consumer must be selected")
     lookup("StoreVASValidationFrame_Init")(panel)
+    panel:Show()
     local selectors = panel.CharacterSelectionFrame
     local realms = C_StoreSecure.GetRealmList()
     lookup("VASCharacterSelectionRealmSelector_Callback")(realms[1])
     lookup("VASCharacterSelectionCharacterSelector_Callback")(1)
     selectors.NewCharacterName:SetText("Renamedhero")
     continue(selectors.ContinueButton)
+    assert(not selectors.ContinueButton:IsShown() and selectors.Spinner:IsShown(), "accepted purchase should enter the original waiting state")
 "#;
 
 const VAS_COMPLETION_CONSUMER: &str = r#"
