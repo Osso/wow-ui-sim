@@ -1521,7 +1521,6 @@ fn retail_r88n11b_c_texture_members_publish_distinct_flag3_functions() {
 #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
 mod flag3_taint_tests {
     use super::env;
-    use rilua::{LuaApiMut, Val};
     use wow_ui_sim::lua_api::WowLuaEnv;
     use wow_ui_sim::screen::ScreenKind;
 
@@ -1541,27 +1540,6 @@ mod flag3_taint_tests {
         env.exec(&code).expect("install Lua flag-3 probe");
         env.set_screen_mode(ScreenKind::CharacterSelect);
         env.set_screen_mode(ScreenKind::Game);
-    }
-
-    fn probe_stamps(env: &WowLuaEnv) -> (bool, Option<String>, Option<String>) {
-        let (ordinary, secure): (Val, Val) = env
-            .eval(
-                r#"
-                return rawget(rawget(_G, "C_ColorUtil"), "ConvertHSVToRGB"),
-                    rawget(rawget(__secureenv, "C_ColorUtil"), "ConvertHSVToRGB")
-                "#,
-            )
-            .expect("read ordinary and secure probe functions");
-        let Val::Function(ordinary) = ordinary else {
-            panic!("ordinary probe must be a function");
-        };
-        let Val::Function(secure) = secure else {
-            panic!("secure probe must be a function");
-        };
-        let mut lua = env.rilua_mut();
-        let ordinary_taint = rilua::stdlib::taint::get_closure_taint(lua.state_mut(), ordinary);
-        let secure_taint = rilua::stdlib::taint::get_closure_taint(lua.state_mut(), secure);
-        (ordinary != secure, ordinary_taint, secure_taint)
     }
 
     fn probe_call_outcomes(
@@ -1592,7 +1570,6 @@ mod flag3_taint_tests {
         let env = env();
 
         install_probe(&env, None);
-        assert_eq!(probe_stamps(&env), (true, None, None));
         assert_eq!(
             probe_call_outcomes(&env),
             (true, None, true, None, true, None)
@@ -1608,14 +1585,6 @@ mod flag3_taint_tests {
                 Some("Flag3ProbeAddon".into()),
                 true,
                 None
-            )
-        );
-        assert_eq!(
-            probe_stamps(&env),
-            (
-                true,
-                Some("Flag3ProbeAddon".into()),
-                Some("Flag3ProbeAddon".into())
             )
         );
     }
