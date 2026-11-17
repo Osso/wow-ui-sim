@@ -5,10 +5,10 @@ This spec covers Mists-only `C_CombatAudioAlert.GetSpecSetting` and `SetSpecSett
 ## What it must do
 
 - [x] **VERIFIED (R88ai):** `GetSpecSetting(setting)` returns exactly one number. `setting` is required; numbers and number-like strings are accepted, truncated toward zero, and only the low 8 bits are checked against 0–8 (`264` selects SayIfTargeted; `9` raises the usage error).
-- [x] **VERIFIED (R88ai):** a nil, non-numeric or rejected `setting` raises `bad argument #1 to '<api>' (<usage>)`; a value outside the signed 32-bit range raises `integer overflow attempting to store %f`.
+- [x] **VERIFIED (R88ai):** a nil, non-numeric or rejected `setting` raises an error containing the exact usage text; a value outside the signed 32-bit range raises an error containing `integer overflow attempting to store`. The caller-name prefix and `%f` rendering are not asserted because they are supplied at runtime.
 - [x] **VERIFIED (R88ai):** all nine per-spec CVars default to empty, so every loaded position holds its absent value: Percent 0, Format 1, Voice 0, Volume 100, SayIfTargeted 1.
 - [x] **VERIFIED (R88ai):** while the alert settings are not loaded, every setting reads 0 and `SetSpecSetting` returns false. The settings-loaded state is the same gate that makes `IsEnabled` false.
-- [x] **VERIFIED (R88ai):** `SetSpecSetting(setting, newVal)` returns one boolean. `newVal` is required, must be a signed 32-bit number or number-like string, and is truncated; otherwise `outside of expected range -2147483648 to 2147483647 - <usage>`.
+- [x] **VERIFIED (R88ai):** `SetSpecSetting(setting, newVal)` returns one boolean. `newVal` is required, must be a signed 32-bit number or number-like string, and is truncated. On range failure, tests assert the verified range text and usage text without asserting the caller-name wrapper.
 - [x] **VERIFIED (R88ai):** Percent and Format accept a low byte of 0–5; Volume accepts 0–100; Voice accepts 0 up to the voice-list length; SayIfTargeted accepts a low byte of 0–3. On success the full 32-bit value is stored (`SetSpecSetting(8, 256)` then reads 256).
 - [x] **VERIFIED (R88ai):** neither function fires a Lua event directly. The simulator emits no event.
 - [x] **VERIFIED consumer path:** with `CAAEnabled=1`, the original `CombatAudioAlertManagerMixin:RefreshEvents` registers `UNIT_TARGET` when SayIfTargeted > 0 and `UNIT_POWER_UPDATE` when either Resource Percent > 0.
