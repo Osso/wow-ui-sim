@@ -1,3 +1,7 @@
+## [2026-11-17] fix | Parse each addon TOC once per UI session
+
+Updated the [investigation](investigations/addon-metadata-lookup-performance.md#repeated-toc-parsing-fixed-lt-498d) and added the [TOC session cache contract](../specs/toc-session-cache.md); fixed three lt-45c1 doc nits. **VERIFIED:** stock Blizzard startup and fixture addon lists, metadata, enable state, load traces and `lua-errors` are identical before and after on PTR, Forever, Mists and Retail; Mists Questie third-party pre-load 2.81–4.17 s → 0.33–0.58 s and peak `VmHWM` about −310 MiB.
+
 ## [2026-11-17] investigation | Addon metadata lookup performance
 
 Added the [investigation](investigations/addon-metadata-lookup-performance.md) and [contract](../specs/addon-metadata-lookup.md); updated [[addon-loading]]. **VERIFIED:** `GetAddOnMetadata` reads drop from 892–2,408 µs to 0.47–1.62 µs on the QuestieDB Mists TOC, and Mists startup with Questie completes instead of timing out at 90 s. Case-variant duplicate keys now resolve to the last TOC line instead of random hash order.

@@ -65,6 +65,8 @@ Retail's `Blizzard_EncounterJournal_Mainline.toc` marks the addon LoD and its bo
 
 ## Load Flow (`src/loader/addon.rs`)
 
+Each UI session parses a TOC file once: `toc::TocCache` on `SimState` shares `Rc<TocFile>` between discovery, enable state, registration, startup loading and `C_AddOns` runtime loads, and ReloadUI starts a new cache ([contract](../../specs/toc-session-cache.md)).
+
 During startup, discovery loads non-LoadOnDemand roots plus explicit LoadOnDemand startup roots and their hard dependencies. The cumulative `retail-12-1-0` epoch additionally places eligible Blizzard LoD TOCs with `[Bootstrap]` entries into that ordered stream as bootstrap-only nodes. Full startup roots run complete TOCs; bootstrap-only nodes run only annotations and do not receive full-load `ADDON_LOADED` delivery. The first later `C_AddOns.LoadAddOn` runs remaining files; later calls are idempotent. Other LoD addons remain metadata-only until explicitly loaded.
 
 `AddonContext` holds `name`, private Lua `table`, and `addon_root`. Per-file process:
