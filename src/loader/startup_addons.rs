@@ -48,19 +48,11 @@ pub fn register_load_with_addons(env: &LoaderEnv<'_>, addons: &[(String, PathBuf
         .iter()
         .map(|addon| (addon.folder_name.clone(), addon.enabled))
         .collect::<HashMap<_, _>>();
+    let tocs = env.toc_cache();
     let declarations = addons
         .iter()
         .filter_map(|(name, toc_path)| {
-            let toc = match TocFile::from_file(toc_path) {
-                Ok(toc) => toc,
-                Err(error) => {
-                    tracing::warn!(
-                        "Cannot read addon TOC {} for LoadWith registration: {error}",
-                        toc_path.display()
-                    );
-                    return None;
-                }
-            };
+            let toc = read_load_with_toc(&tocs, toc_path)?;
             let targets = toc.load_with();
             let enabled = registered_enabled
                 .get(name)
@@ -70,6 +62,17 @@ pub fn register_load_with_addons(env: &LoaderEnv<'_>, addons: &[(String, PathBuf
         })
         .collect::<Vec<_>>();
     register_load_with_declarations(env, &declarations);
+}
+
+fn read_load_with_toc(tocs: &TocCache, toc_path: &Path) -> Option<std::rc::Rc<TocFile>> {
+    tocs.get(toc_path)
+        .inspect_err(|error| {
+            tracing::warn!(
+                "Cannot read addon TOC {} for LoadWith registration: {error}",
+                toc_path.display()
+            );
+        })
+        .ok()
 }
 
 /// Register already-parsed `LoadWith` declarations and invalidate their index.
@@ -111,8 +114,17 @@ pub fn discover_blizzard_startup_addons_for_screen(
     directory: &Path,
     screen: ScreenKind,
 ) -> Vec<StartupAddon> {
+    discover_blizzard_startup_addons_with_tocs(&TocCache::default(), directory, screen)
+}
+
+/// [`discover_blizzard_startup_addons_for_screen`], reading each TOC through the session cache.
+pub fn discover_blizzard_startup_addons_with_tocs(
+    tocs: &TocCache,
+    directory: &Path,
+    screen: ScreenKind,
+) -> Vec<StartupAddon> {
     let Some((mut addons, mut pool)) =
-        discover_blizzard_addon_toc_pools_for_screen(directory, screen)
+        discover_blizzard_addon_toc_pools_for_screen(tocs, directory, screen)
     else {
         return Vec::new();
     };
@@ -137,8 +149,8 @@ pub fn discover_blizzard_startup_addons_for_screen(
 }
 
 fn insert_bootstrap_nodes(
-    addons: &mut HashMap<String, (PathBuf, TocFile)>,
-    pool: &mut HashMap<String, (PathBuf, TocFile)>,
+    addons: &mut HashMap<String, TocEntry>,
+    pool: &mut HashMap<String, TocEntry>,
     screen: ScreenKind,
 ) -> HashSet<String> {
     let bootstrap_names: HashSet<String> = pool
@@ -170,7 +182,7 @@ pub fn load_startup_addon(
     kind: StartupAddonLoadKind,
     saved_vars: Option<&mut SavedVariablesManager>,
 ) -> Result<LoadResult, LoadError> {
-    let toc = TocFile::from_file(toc_path)?;
+    let toc = env.toc_cache().get(toc_path)?;
     validate_startup_dependency_screens(env, toc_path, &toc)?;
     match kind {
         StartupAddonLoadKind::BootstrapOnly => load_addon_bootstrap_from_toc(env, &toc),
@@ -260,7 +272,7 @@ fn validate_required_dependency_screens(
         let Some(dependency_path) = super::find_toc_file(&addon_root.join(&dependency)) else {
             continue;
         };
-        let Ok(dependency_toc) = TocFile::from_file(&dependency_path) else {
+        let Ok(dependency_toc) = env.toc_cache().get(&dependency_path) else {
             continue;
         };
         if !dependency_toc.allows_screen(screen) {

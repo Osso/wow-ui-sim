@@ -1,6 +1,30 @@
+## [2026-11-17] verification | Retail mask-2 original CooldownViewer consumer
+
+**VERIFIED (Retail 12.1.5.70783 simulator run):** the callable-wrong sum-then-divide RED failed at count 6 versus expected 5; the byte-identical original-consumer GREEN passed 3/3, including empty and ±1 candidate fallbacks. **UNKNOWN:** native property identity and decoding.
+
+## [2026-11-17] implementation | Retail mask-2 alternate reagent division
+
+**VERIFIED (Retail 12.1.5.70688, R88p.p3):** mask 2 selects per-item division only for qualifying signed values, then sums without a second division. The [spell-count investigation](investigations/spell-count-r88p.md) records the empty-default candidate seam; native property identity and decoding remain UNKNOWN.
+
+## [2026-11-17] verification | Mists GlueGameLogo current-mode consumer
+
+**VERIFIED (Mists 5.5.4.70268 simulator, target `0f35a8833`):** the original consumer regression passes 1/1 and records a no-payload update. Broader CharacterSelect/Login selectors remain gated after separate simulator failures outside R88ak; their native behavior is not claimed.
+
+## [2026-11-17] implementation | Mists current-mode record from R88ak
+
+Updated the [Glue login contract](../specs/glue-login-flow.md) and [fixture-triage investigation](investigations/master-test-fixture-triage.md). **VERIFIED (Mists Classic 5.5.4.70631):** the getter returns one current mode ID or nil at -1. **UNKNOWN:** the runtime writer was not identified. **INFERRED (Mists 5.5.4.70268):** the simulator applies that getter to the selected GlueGameLogo consumer through the existing CVar input.
+
+## [2026-11-17] investigation | Master test fixture and profile triage
+
+Added the [investigation](investigations/master-test-fixture-triage.md). **VERIFIED (Retail 12.1.5.70783):** several exact failures came from partial fixtures that omitted selected Blizzard owners. **UNKNOWN (Mists 5.5.4.70268):** `GetCurrentGameModeRecordID` return data and lifecycle await R88ak.
+
 ## [2026-11-17] investigation | Questie login coroutine bit library
 
 Added the [investigation](investigations/questie-login-bit-library.md) and [contract](../specs/bit-library.md). **VERIFIED:** Lua count-hook sampling put 97.7% of Questie's login-thread instructions in the simulator's Lua `bit` fallback; the native `bit` library returns byte-identical results on a 40,056-call corpus and cuts Mists timer 12 from 12.96–21.92 s to 0.67–1.02 s (longest callback 286–378 ms → 49–101 ms). rilua per-call closure-taint lookups and per-read slot-taint key copies remain; they are proposed, not changed.
+
+## [2026-11-17] fix | Parse each addon TOC once per UI session
+
+Updated the [investigation](investigations/addon-metadata-lookup-performance.md#repeated-toc-parsing-fixed-lt-498d) and added the [TOC session cache contract](../specs/toc-session-cache.md); fixed three lt-45c1 doc nits. **VERIFIED:** stock Blizzard startup and fixture addon lists, metadata, enable state, load traces and `lua-errors` are identical before and after on PTR, Forever, Mists and Retail; Mists Questie third-party pre-load 2.81–4.17 s → 0.33–0.58 s and peak `VmHWM` about −310 MiB.
 
 ## [2026-11-17] investigation | Addon metadata lookup performance
 
@@ -4065,3 +4089,7 @@ Recorded exact historical first-failing boundaries and cache-freshness qualifica
 ## [2026-11-15] investigation | R88aa Retail Glue consumers
 
 [Consumer selection and RED proof](investigations/consumer-selection-and-red-proof.md#retail-glue-login-consumers-and-pending-list-cache-call-site-r88aa) records the selected 70783 Mainline Glue source and exact original-call REDs at CharacterSelect.lua:211 and :697. **INFERRED (R88aa):** the cached pending getter call sites correspond to Retail 70688; exact cached-source equivalence remains UNKNOWN. The [Glue login contract](../specs/glue-login-flow.md#r88aa-cached-retail-characterselect-call-site-inferred) keeps that boundary separate from the verified native API behavior.
+
+## [2026-11-17] system | Retail Glue host state (R88ad.7-10)
+
+Added [Retail Glue host state](systems/glue-host-state.md) for lt-fb68. Retail registers the R88ad.7-10 producers and retires their `shared_bootstrap.lua` defaults; other profiles keep them. The [contract](../specs/glue-state-r88ad.md) separates VERIFIED assertions from the INFERRED `IsTestBuild` change and the UNKNOWN host inputs.

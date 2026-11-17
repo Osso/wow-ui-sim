@@ -282,7 +282,9 @@ pub fn load_benchmark_ui_env() -> WowLuaEnv {
     let ui =
         crate::paths::default_blizzard_ui_addons_path().expect("missing Blizzard UI addon tree");
     env.state().borrow_mut().addon_base_paths = vec![ui.clone()];
-    for (name, toc_path) in &crate::loader::discover_blizzard_addons(&ui) {
+    for (name, toc_path) in
+        &crate::loader::discover_blizzard_addons_with_tocs(&env.toc_cache(), &ui)
+    {
         if let Err(error) = crate::loader::load_addon(&env.loader_env(), toc_path) {
             eprintln!("[load {name}] FAILED: {error}");
         }

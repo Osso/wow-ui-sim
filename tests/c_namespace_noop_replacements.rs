@@ -198,6 +198,9 @@ fn perks_activities_remove_tracked_updates_state() {
     assert_eq!(last_removed, 202, "lastRemovedID should store removed id");
 }
 
+// UNKNOWN (Mists 5.5.4.70268): `_state` tests the unmodeled compatibility
+// fallback, not the verified Retail C_StoreGlue contract.
+#[cfg(all(feature = "optional-tests", feature = "client-mists"))]
 #[test]
 fn store_glue_methods_are_state_backed() {
     let env = env();

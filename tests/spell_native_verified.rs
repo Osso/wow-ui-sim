@@ -57,6 +57,101 @@ fn add_bag_stack(env: &WowLuaEnv, slot: i32, item_id: u32, stack_count: i32) {
     );
 }
 
+const MASK2_CACHE_ASSERTIONS: &str = r#"
+    for _, case in ipairs(cases) do
+        local spellID, expected = case[1], case[2]
+        local item = {
+            GetSpellChargeInfo = function() return nil end,
+            GetSpellID = function() return spellID end,
+            SetCachedChargeValues = function(self, count, shown)
+                self.count, self.shown = count, shown
+            end,
+        }
+        CooldownViewerCooldownItemMixin.CacheChargeValues(item)
+        assert(item.count == expected,
+            'spell=' .. spellID .. ' count=' .. tostring(item.count) .. ', expected=' .. expected)
+        assert(item.shown == (expected > 0))
+    end
+"#;
+
+fn seed_mask2_reagent(
+    env: &WowLuaEnv,
+    spell_id: u32,
+    reagent_id: i32,
+    quantity: i32,
+    first_slot: i32,
+    candidates: &[(i64, i32)],
+) {
+    assert!(wow_ui_sim::spells::get_spell(spell_id).is_some());
+    let property_candidates = candidates
+        .iter()
+        .map(|&(signed_value, available_count)| {
+            wow_ui_sim::c_api::spell_reagent_inventory::SpellReagentPropertyCandidate {
+                signed_value,
+                available_count: i64::from(available_count),
+            }
+        })
+        .collect::<Vec<_>>();
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.spell_cast_context_is_null = Some(false);
+        sim.spell_reagent_pairs
+            .insert(spell_id, vec![(reagent_id, quantity)]);
+        sim.spell_reagent_inventory
+            .metadata_masks
+            .insert(reagent_id, 2);
+        if !property_candidates.is_empty() {
+            sim.spell_reagent_inventory
+                .property_candidates
+                .insert(reagent_id, property_candidates);
+        }
+    }
+    for (offset, &(_, count)) in candidates.iter().enumerate() {
+        add_bag_stack(env, first_slot + offset as i32, reagent_id as u32, count);
+    }
+}
+
+fn assert_mask2_cached_counts(env: &WowLuaEnv, cases: &str) {
+    env.exec(&format!("local cases = {cases}\n{MASK2_CACHE_ASSERTIONS}"))
+        .expect("the original CooldownViewer must cache every expected reagent count");
+}
+
+#[test]
+fn cast_count_mask2_divides_candidate_counts_before_summing_in_cooldown_viewer() {
+    let env = load_selected_consumers(
+        &["Blizzard_CooldownViewer"],
+        "CooldownViewerCooldownItemMixin.CacheChargeValues",
+        "Blizzard_CooldownViewer/CooldownViewer.lua",
+    );
+    seed_mask2_reagent(&env, 19_750, 31_001, 3, 1, &[(2, 7), (-3, 11)]);
+    seed_mask2_reagent(&env, 642, 31_002, 4, 3, &[(-2, 5), (4, 15)]);
+    assert_mask2_cached_counts(&env, "{{19750, 5}, {642, 4}}");
+}
+
+#[test]
+fn cast_count_mask2_with_empty_candidates_keeps_sum_then_divide_in_cooldown_viewer() {
+    let env = load_selected_consumers(
+        &["Blizzard_CooldownViewer"],
+        "CooldownViewerCooldownItemMixin.CacheChargeValues",
+        "Blizzard_CooldownViewer/CooldownViewer.lua",
+    );
+    seed_mask2_reagent(&env, 19_750, 31_001, 3, 1, &[]);
+    add_bag_stack(&env, 1, 31_001, 7);
+    add_bag_stack(&env, 2, 31_001, 11);
+    assert_mask2_cached_counts(&env, "{{19750, 6}}");
+}
+
+#[test]
+fn cast_count_mask2_without_qualifying_property_keeps_sum_then_divide_in_cooldown_viewer() {
+    let env = load_selected_consumers(
+        &["Blizzard_CooldownViewer"],
+        "CooldownViewerCooldownItemMixin.CacheChargeValues",
+        "Blizzard_CooldownViewer/CooldownViewer.lua",
+    );
+    seed_mask2_reagent(&env, 19_750, 31_001, 3, 1, &[(1, 7), (-1, 11)]);
+    assert_mask2_cached_counts(&env, "{{19750, 6}}");
+}
+
 #[test]
 fn ranged_auto_attack_spell_consumer_uses_the_shared_identifier() {
     let ui_dir = blizzard_ui_dir();

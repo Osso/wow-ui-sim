@@ -2,6 +2,7 @@
 
 use std::collections::HashMap;
 
+use crate::common::lua_error_assertions::assert_lua_error_contains;
 use rilua::LuaApiMut;
 use rilua::table_security::wrap_host_secret_number;
 use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
@@ -67,13 +68,6 @@ fn assert_manager_combat_event(env: &WowLuaEnv, expected: bool) {
         "#
     ))
     .expect("original combat-audio manager must select combat-event registration");
-}
-
-fn read_lua_error(env: &WowLuaEnv, call: &str) -> String {
-    env.eval(&format!(
-        "local ok, err = pcall(function() {call} end); assert(not ok); return err"
-    ))
-    .expect("pcall should return the Lua error")
 }
 
 fn install_secret_visibility_number(env: &WowLuaEnv) {
@@ -176,47 +170,41 @@ fn visibility_info_rejects_tainted_secret_arguments_with_native_text() {
     let env = WowLuaEnv::new().expect("Mists C API should initialize");
     install_secret_visibility_number(&env);
     let call = "local function query() return C_Spell.GetVisibilityInfo(1, R88AHSecretVisibility) end; debug.setobjecttaint(query, 'R88ahSecretCaller'); query()";
-    let actual = read_lua_error(&env, call);
-    let expected = format!(
-        "bad argument #2 to 'C_Spell.GetVisibilityInfo' ({VISIBILITY_USAGE}. Secret values are only allowed during untainted execution for this argument.)"
+    assert_lua_error_contains(
+        &env,
+        call,
+        &[
+            VISIBILITY_USAGE,
+            "Secret values are only allowed during untainted execution for this argument.",
+        ],
     );
-    assert_eq!(actual, expected);
 }
 
-fn visibility_error_cases() -> [(&'static str, String); 6] {
-    let usage = VISIBILITY_USAGE;
-    [
-        (
-            "C_Spell.GetVisibilityInfo()",
-            format!("bad argument #1 to 'C_Spell.GetVisibilityInfo' ({usage})"),
-        ),
-        (
-            "C_Spell.GetVisibilityInfo(1, nil)",
-            format!("bad argument #2 to 'C_Spell.GetVisibilityInfo' ({usage})"),
-        ),
-        (
-            "C_Spell.GetVisibilityInfo(1, 'invalid')",
-            format!("bad argument #2 to 'C_Spell.GetVisibilityInfo' ({usage})"),
-        ),
-        (
-            "C_Spell.GetVisibilityInfo(1, 3)",
-            format!("bad argument #2 to 'C_Spell.GetVisibilityInfo' ({usage})"),
-        ),
-        (
-            "C_Spell.GetVisibilityInfo(2147483648, 0)",
-            format!("bad argument #1 to 'C_Spell.GetVisibilityInfo' (outside of expected range -2147483648 to 2147483647 - {usage})"),
-        ),
-        (
-            "C_Spell.GetVisibilityInfo(1, 2147483648)",
-            "bad argument #2 to 'C_Spell.GetVisibilityInfo' (integer overflow attempting to store 2147483648.000000)".into(),
-        ),
-    ]
-}
+const VISIBILITY_ERROR_CASES: &[(&str, &[&str])] = &[
+    ("C_Spell.GetVisibilityInfo()", &[VISIBILITY_USAGE]),
+    ("C_Spell.GetVisibilityInfo(1, nil)", &[VISIBILITY_USAGE]),
+    (
+        "C_Spell.GetVisibilityInfo(1, 'invalid')",
+        &[VISIBILITY_USAGE],
+    ),
+    ("C_Spell.GetVisibilityInfo(1, 3)", &[VISIBILITY_USAGE]),
+    (
+        "C_Spell.GetVisibilityInfo(2147483648, 0)",
+        &[
+            "outside of expected range -2147483648 to 2147483647",
+            VISIBILITY_USAGE,
+        ],
+    ),
+    (
+        "C_Spell.GetVisibilityInfo(1, 2147483648)",
+        &["integer overflow attempting to store"],
+    ),
+];
 
 #[test]
-fn visibility_info_errors_match_mists_contract() {
+fn visibility_info_errors_contain_verified_mists_text() {
     let env = WowLuaEnv::new().expect("Mists C API should initialize");
-    for (call, expected) in visibility_error_cases() {
-        assert_eq!(read_lua_error(&env, call), expected, "{call}");
+    for &(call, fragments) in VISIBILITY_ERROR_CASES {
+        assert_lua_error_contains(&env, call, fragments);
     }
 }

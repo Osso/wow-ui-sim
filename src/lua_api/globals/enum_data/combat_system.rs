@@ -42,17 +42,6 @@ pub const COMBAT_AUDIO_ALERT_THROTTLE: SeqEnumDef = (
 
 pub const COMBAT_AUDIO_ALERT_UNIT: SeqEnumDef = ("CombatAudioAlertUnit", &["Player", "Target"]);
 
-pub const COMBAT_AUDIO_ALERT_SPEC_SETTING: SeqEnumDef = (
-    "CombatAudioAlertSpecSetting",
-    &[
-        "Resource1Percent",
-        "Resource1Format",
-        "Resource2Percent",
-        "Resource2Format",
-        "SayIfTargeted",
-    ],
-);
-
 // ============================================================================
 // Combat Log Object Enums (bitmask flags)
 // ============================================================================
@@ -319,10 +308,6 @@ pub const COMBAT_AUDIO_ALERT_THROTTLE_META: EnumDef = (
 pub const COMBAT_AUDIO_ALERT_UNIT_META: EnumDef = (
     "CombatAudioAlertUnitMeta",
     &[("MinValue", 0), ("MaxValue", 1), ("NumValues", 2)],
-);
-pub const COMBAT_AUDIO_ALERT_SPEC_SETTING_META: EnumDef = (
-    "CombatAudioAlertSpecSettingMeta",
-    &[("MinValue", 0), ("MaxValue", 4), ("NumValues", 5)],
 );
 pub const COMBAT_AUDIO_ALERT_PARTY_PERCENT_VALUES_META: EnumDef = (
     "CombatAudioAlertPartyPercentValuesMeta",

@@ -109,6 +109,7 @@ macro_rules! build_empty_sim_state {
             addons: $collections.addons,
             registered_load_with: ::std::vec::Vec::new(),
             load_with_followers: None,
+            toc_cache: Default::default(),
             addon_saved_enable_state: None,
             addon_saved_version_check_enabled: None,
             system_chat_log: Vec::new(),
@@ -157,6 +158,7 @@ macro_rules! build_empty_sim_state {
             #[cfg(feature = "retail-12-0-5")]
             item_tooltip_levels: ::std::collections::HashMap::new(),
             item_tooltip_inputs: ::std::collections::HashMap::new(),
+            item_tooltip_sell_price_quantities: ::std::collections::HashMap::new(),
             blocked_auras_by_unit: $collections.blocked_auras_by_unit,
             #[cfg(feature = "client-wowforever")]
             auras_secret_in_context: false,
@@ -190,14 +192,12 @@ macro_rules! build_empty_sim_state {
             screen_kind: $runtime.screen_kind,
             in_character_create: false,
             glue_login: Default::default(),
+            glue_state: Default::default(),
             #[cfg(any(feature = "client-ptr", feature = "client-wowforever"))]
             glue_feature_status: Default::default(),
             is_logged_in: $runtime.is_logged_in,
             post_event_workarounds_applied: false,
-            screen_first_displayed: $runtime.screen_first_displayed,
-            saved_account_name: $runtime.saved_account_name,
-            saved_account_list: $runtime.saved_account_list,
-            uses_token: $runtime.uses_token,
+            screen_first_display_state: $runtime.screen_first_display_state,
             account_save_enabled: $runtime.account_save_enabled,
             account_save_in_progress: $runtime.account_save_in_progress,
             account_locked_post_save: $runtime.account_locked_post_save,
@@ -597,6 +597,10 @@ macro_rules! build_empty_sim_state {
             world: super::state_types::seeded_world_state(),
             encounter_policy: Default::default(),
             bag_items: $collections.bag_items,
+            #[cfg(feature = "client-retail")]
+            bag_battle_pet_tooltip_acceptance: HashMap::new(),
+            #[cfg(feature = "client-retail")]
+            bag_battle_pet_tooltip_snapshots: HashMap::new(),
             bag_item_repair_costs: HashMap::new(),
             item_equip: crate::c_api::item_spell::item_equip::ItemEquipState::default(),
             container_item_quests: HashMap::new(),
@@ -1159,10 +1163,7 @@ struct EmptyRuntimeState {
     screen_height: f32,
     screen_kind: ScreenKind,
     is_logged_in: bool,
-    screen_first_displayed: bool,
-    saved_account_name: String,
-    saved_account_list: String,
-    uses_token: bool,
+    screen_first_display_state: u8,
     account_save_enabled: bool,
     account_save_in_progress: bool,
     account_locked_post_save: bool,
@@ -1229,10 +1230,7 @@ macro_rules! build_empty_runtime_state {
             screen_height: $screen_height,
             screen_kind: ScreenKind::Game,
             is_logged_in: false,
-            screen_first_displayed: false,
-            saved_account_name: String::new(),
-            saved_account_list: String::new(),
-            uses_token: false,
+            screen_first_display_state: 0,
             account_save_enabled: false,
             account_save_in_progress: false,
             account_locked_post_save: false,
@@ -1390,7 +1388,8 @@ impl SimState {
             self.glue_login.ptr_connection =
                 crate::c_api::c_login::ptr_state::PtrConnectionState::for_screen(screen_kind);
         }
-        self.screen_first_displayed = false;
+        // Host policy: R88ad.8 leaves any reset of the native first-display state UNKNOWN.
+        self.screen_first_display_state = 0;
         if screen_kind.is_glue() {
             self.is_logged_in = false;
         }

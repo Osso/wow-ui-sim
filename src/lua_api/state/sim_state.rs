@@ -79,6 +79,8 @@ pub struct SimState {
     pub(crate) registered_load_with: Vec<RegisteredLoadWith>,
     /// Lazily indexed target-to-follower map built from registered declarations.
     pub(crate) load_with_followers: Option<HashMap<String, Vec<String>>>,
+    /// TOC files parsed in this UI session; ReloadUI starts a new session.
+    pub(crate) toc_cache: std::rc::Rc<crate::toc::TocCache>,
     pub(crate) addon_message_prefixes: crate::c_api::addon_message_prefixes::AddonMessagePrefixes,
     pub addon_saved_enable_state: Option<AddonEnableSnapshot>,
     pub addon_saved_version_check_enabled: Option<bool>,
@@ -172,6 +174,9 @@ pub struct SimState {
     pub item_tooltip_levels: HashMap<crate::c_api::ItemTooltipContext, u16>,
     /// R80 final item-mod amounts and metadata, keyed by item ID and resolved level.
     pub item_tooltip_inputs: HashMap<(u32, u16), crate::c_api::item_tooltip::ItemTooltipInput>,
+    /// UNKNOWN Retail SellPrice inputs: item ID to (current, prepared maximum) quantity.
+    /// Empty by default; these values are not derived from Stackable.
+    pub item_tooltip_sell_price_quantities: HashMap<u32, (u32, u32)>,
     pub blocked_auras_by_unit: HashMap<String, HashSet<i32>>,
     /// Explicit test scenario only; no combat or spell-secrecy inference.
     #[cfg(feature = "client-wowforever")]
@@ -212,15 +217,14 @@ pub struct SimState {
     pub screen_kind: ScreenKind,
     pub in_character_create: bool,
     pub glue_login: crate::c_api::c_login::LoginState,
+    pub glue_state: crate::lua_api::globals::real::glue_state::GlueHostState,
     #[cfg(any(feature = "client-ptr", feature = "client-wowforever"))]
     pub(crate) glue_feature_status:
         crate::lua_api::globals::real::glue_feature_status::GlueFeatureStatus,
     pub is_logged_in: bool,
     pub post_event_workarounds_applied: bool,
-    pub screen_first_displayed: bool,
-    pub saved_account_name: String,
-    pub saved_account_list: String,
-    pub uses_token: bool,
+    /// R88ad.8 native first-display state: 0, 1, then 2 before the event.
+    pub screen_first_display_state: u8,
     pub account_save_enabled: bool,
     pub account_save_in_progress: bool,
     pub account_locked_post_save: bool,
@@ -751,6 +755,13 @@ pub struct SimState {
     pub world: WorldState,
     pub encounter_policy: crate::c_api::c_instance_encounter::EncounterPolicy,
     pub bag_items: HashMap<(i32, i32), BagItem>,
+    /// UNKNOWN native branch acceptance; host inputs are empty by default.
+    #[cfg(feature = "client-retail")]
+    pub bag_battle_pet_tooltip_acceptance: HashMap<(i32, i32), bool>,
+    /// UNKNOWN upstream writer; explicit battle-pet snapshots are empty by default.
+    #[cfg(feature = "client-retail")]
+    pub bag_battle_pet_tooltip_snapshots:
+        HashMap<(i32, i32), crate::c_api::BattlePetTooltipSnapshot>,
     /// Explicit Retail bag repair quotes; UNKNOWN calculation/writers stay unmodeled.
     /// Empty by default; coordinates refer to the host-supplied bag snapshot.
     pub bag_item_repair_costs: HashMap<(i32, i32), i32>,
@@ -1244,5 +1255,10 @@ impl SimState {
             .borrow_mut()
             .set_source_roots(&self.addon_base_paths);
         self.texture_manager.clone()
+    }
+
+    /// The TOC files parsed in this UI session.
+    pub fn toc_cache(&self) -> std::rc::Rc<crate::toc::TocCache> {
+        std::rc::Rc::clone(&self.toc_cache)
     }
 }

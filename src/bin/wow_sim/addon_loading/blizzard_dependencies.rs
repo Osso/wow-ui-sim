@@ -1,12 +1,12 @@
 use super::{is_addon_loaded, load_one_blizzard_addon, should_load_registered_addon};
 use std::collections::HashSet;
 use std::path::PathBuf;
-use wow_ui_sim::loader::{LoadTiming, discover_blizzard_addon_closure_for_screen};
+use wow_ui_sim::loader::{LoadTiming, discover_blizzard_addon_closure_with_tocs};
 use wow_ui_sim::logging;
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::saved_variables::SavedVariablesManager;
 use wow_ui_sim::screen::ScreenKind;
-use wow_ui_sim::toc::TocFile;
+use wow_ui_sim::toc::TocCache;
 
 pub(super) fn load_required_blizzard_dependencies_for_addons(
     env: &WowLuaEnv,
@@ -18,37 +18,54 @@ pub(super) fn load_required_blizzard_dependencies_for_addons(
     if roots.is_empty() {
         return;
     }
+    let tocs = env.toc_cache();
 
     let blizzard_ui_path = match wow_ui_sim::paths::default_blizzard_ui_addons_path() {
         Ok(path) => path,
         Err(error) => {
-            for (name, toc_path) in addons {
-                if should_load_registered_addon(env, name)
-                    && TocFile::from_file(toc_path).is_ok_and(|toc| {
-                        toc.dependencies()
-                            .iter()
-                            .any(|dependency| dependency.starts_with("Blizzard_"))
-                    })
-                {
-                    env.mark_addon_initialization_failed(
-                        name,
-                        format!("Failed to resolve Blizzard addon dependencies: {error}"),
-                    );
-                }
-            }
-            logging::println_elapsed(&format!(
-                "Skipping Blizzard addon dependencies for third-party addons: {error}"
-            ));
+            mark_unresolved_blizzard_dependencies(env, &tocs, addons, &error);
             return;
         }
     };
     let root_refs = roots.iter().map(String::as_str).collect::<Vec<_>>();
     let dependencies =
-        discover_blizzard_addon_closure_for_screen(&blizzard_ui_path, screen, &root_refs);
+        discover_blizzard_addon_closure_with_tocs(&tocs, &blizzard_ui_path, screen, &root_refs);
     if dependencies.is_empty() {
         return;
     }
+    load_blizzard_dependency_closure(env, saved_vars, dependencies);
+}
 
+fn mark_unresolved_blizzard_dependencies(
+    env: &WowLuaEnv,
+    tocs: &TocCache,
+    addons: &[(String, PathBuf)],
+    error: &impl std::fmt::Display,
+) {
+    for (name, toc_path) in addons {
+        if should_load_registered_addon(env, name)
+            && tocs.get(toc_path).is_ok_and(|toc| {
+                toc.dependencies()
+                    .iter()
+                    .any(|dependency| dependency.starts_with("Blizzard_"))
+            })
+        {
+            env.mark_addon_initialization_failed(
+                name,
+                format!("Failed to resolve Blizzard addon dependencies: {error}"),
+            );
+        }
+    }
+    logging::println_elapsed(&format!(
+        "Skipping Blizzard addon dependencies for third-party addons: {error}"
+    ));
+}
+
+fn load_blizzard_dependency_closure(
+    env: &WowLuaEnv,
+    saved_vars: &mut Option<SavedVariablesManager>,
+    dependencies: Vec<(String, PathBuf)>,
+) {
     logging::println_elapsed(&format!(
         "Loading {} Blizzard addon dependencies for third-party addons...",
         dependencies.len()
@@ -74,11 +91,12 @@ pub(super) fn load_required_blizzard_dependencies_for_addons(
 fn required_blizzard_dependencies(env: &WowLuaEnv, addons: &[(String, PathBuf)]) -> Vec<String> {
     let mut seen = HashSet::new();
     let mut dependencies = Vec::new();
+    let tocs = env.toc_cache();
     for (name, toc_path) in addons {
         if !should_load_registered_addon(env, name) {
             continue;
         }
-        let Ok(toc) = TocFile::from_file(toc_path) else {
+        let Ok(toc) = tocs.get(toc_path) else {
             continue;
         };
         for dependency in toc.dependencies() {

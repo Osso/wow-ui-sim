@@ -14,6 +14,8 @@ pub(crate) mod c_tooltip_info_artifact_power;
 pub(crate) mod c_tooltip_info_azerite_essence;
 pub(crate) mod c_tooltip_info_azerite_power;
 pub(crate) mod c_tooltip_info_bag_child;
+#[cfg(feature = "client-retail")]
+pub(crate) mod c_tooltip_info_battle_pet;
 pub(crate) mod c_tooltip_info_conduit;
 pub mod c_tooltip_info_currency;
 pub(crate) mod c_tooltip_info_enhanced_conduit;
@@ -34,6 +36,8 @@ pub(crate) mod c_tooltip_info_possession;
 #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 pub(crate) mod c_tooltip_info_pvp_brawl;
 pub(crate) mod c_tooltip_info_round7;
+#[cfg(feature = "client-retail")]
+pub use c_tooltip_info_battle_pet::BattlePetTooltipSnapshot;
 pub use c_tooltip_info_round7::{
     ItemInteractionTooltipInput, ItemInteractionTooltipLine, SlottedKeystoneKeyFloor,
     SlottedKeystoneTooltipInput,
@@ -503,6 +507,7 @@ pub use c_ping_texture_kits::PingTextureKits;
 mod c_cvar_readiness;
 pub mod c_loss_of_control;
 mod combat_audio_enabled;
+pub(crate) mod combat_audio_spec_setting_enum;
 #[cfg(not(feature = "client-wrath"))]
 mod combat_audio_throttle;
 #[cfg(feature = "client-mists")]
@@ -553,6 +558,11 @@ mod voice_provider_enum;
 pub(crate) mod c_tts_settings;
 mod helpers;
 pub(crate) use helpers::parse_numeric_string;
+#[cfg(feature = "client-retail")]
+pub(crate) use helpers::{
+    bad_argument, read_untainted_signed32_argument, read_untainted_string_argument,
+    read_untainted_truthy_argument, read_untainted_value,
+};
 #[cfg(feature = "retail-12-0-0")]
 mod patch_retired_members;
 #[cfg(feature = "retail-12-0-0")]

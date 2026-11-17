@@ -239,6 +239,8 @@ fn editbox_exposes_backing_fontstring_region() {
 }
 
 post_wrath_ui_fixture! {
+// Mists has no selected Mainline ReputationFrame.xml consumer in its pinned cache.
+#[cfg(not(feature = "client-mists"))]
 #[test]
 fn reputation_filter_dropdown_opens_with_blizzard_menu_renderer() {
     let env = env();

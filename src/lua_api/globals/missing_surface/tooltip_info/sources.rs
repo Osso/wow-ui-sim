@@ -103,6 +103,12 @@ pub(super) fn parse_spell_source(state: &mut LuaState, value: Val) -> Option<u32
 }
 
 pub(super) fn tooltip_for_bag_item(state: &mut LuaState, bag: i32, slot: i32) -> Val {
+    #[cfg(feature = "client-retail")]
+    if let Some(tooltip) =
+        crate::c_api::c_tooltip_info_battle_pet::tooltip_for_bag_item(state, bag, slot)
+    {
+        return tooltip;
+    }
     let tooltip = compose_bag_item(state, bag, slot);
     // VERIFIED R88n.4b (Retail 12.1.5.70688): ordinary bag tooltips append
     // a top-level integer repairCost only for a positive queried cost.

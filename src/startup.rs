@@ -394,7 +394,7 @@ fn fire_glue_startup_events(env: &WowLuaEnv, screen: ScreenKind) {
     if screen == ScreenKind::CharacterSelect {
         prime_character_select_frame(env);
     }
-    env.state().borrow_mut().screen_first_displayed = true;
+    env.state().borrow_mut().screen_first_display_state = 2;
     fire_simple_event(env, "SCREEN_FIRST_DISPLAYED");
     fire_simple_event(env, "LOGIN_STATE_CHANGED");
 }

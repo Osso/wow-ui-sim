@@ -84,6 +84,7 @@ pub(crate) fn register_character_progression_tables(state: &mut LuaState) -> Lua
 }
 
 pub(crate) fn register_interaction_tables(state: &mut LuaState) -> LuaResult<()> {
+    super::combat_audio_spec_setting_enum::register(state);
     register_interaction_store_voice(state)?;
     register_interaction_combat(state)?;
     register_interaction_crafting(state)?;

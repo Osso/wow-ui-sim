@@ -160,7 +160,9 @@ ANSWER **47** (R44-Q18, PTR70668 / Forever70707) resolves name reservation.
 It takes no arguments and returns one boolean from a feature-system status byte,
 independent of realm and character. Its verified initial value is false; an
 ordinary server-sent value is UNKNOWN. `GlueFeatureStatus` starts false and only
-`deliver_status` replaces it. The host action emits no-payload
+`deliver_status` replaces it. On Forever, delivery must also update the status
+byte read by `IsNameReservationOnly` before the second notification; the ordinary
+server-supplied value remains UNKNOWN. The host action emits no-payload
 `TIMERUNNING_SEASON_UPDATE`, writes the status, then emits no-payload
 `AVAILABLE_GAME_MODES_UPDATED`, preserving the supplied posting order. Host
 notifications dispatch synchronously; tests do not claim native callback latency
@@ -523,9 +525,9 @@ callback-producing API calls. The native setter path and Lua CVar setter both
 invoke this callback. Tests exercise original GameLogoDarkBackdrop Lua against
 supplied rows, CVar changes, and the host clear operation.
 
-UNKNOWN: full writer set, exact native callback timing/guards, loaded GameMode
-rows, first login snapshot, computed writes to the capability byte, and complete
-error lines. No row download or inferred nil-return arity assertion is added.
+UNKNOWN: the runtime writer for `currentGameMode`, exact native callback
+timing/guards, loaded GameMode rows, first login snapshot, computed writes to
+the capability byte, and complete error lines. No row download is added.
 
 Cached-integer overflow is an explicit unsupported simulator input diagnostic,
 not silently treated as no mode and not claimed as a native error contract.
@@ -835,3 +837,24 @@ The zero-return policy is inferred and is not asserted.
 
 - [ ] Native initial completion-state value, cancellation initialization/reset, and any indirect completion-state writers remain UNKNOWN.
 - [ ] The exact Retail 70688 Lua cache selection is UNKNOWN; the active local cache is 12.1.5.70783.
+
+## R88ak Mists current-mode record
+
+**VERIFIED (Mists Classic 5.5.4.70631):**
+`C_GameRules.GetCurrentGameModeRecordID` returns exactly one value. With no
+`AutoConnectToGameModeRealm` override, it returns the integer
+`currentGameMode`; -1 returns one nil. Native startup default is -1.
+`AutoConnectToGameModeRealm` stores a mode ID override. A `currentGameMode`
+update clears that override, then fires `GAME_MODE_DISPLAY_INFO_UPDATED` with
+no payload. The runtime writer for `currentGameMode` remains UNKNOWN.
+
+**INFERRED (Mists Classic 5.5.4.70268 from R88ak 5.5.4.70631):** the selected
+Classic `GlueGameLogo.lua` consumer uses the same getter contract. The simulator
+registers the getter for Mists and reads the existing `currentGameMode` CVar
+host input, whose empty default is -1. It does not publish
+`AutoConnectToGameModeRealm`, so the Mists getter does not use the modern
+simulator's temporary override. Accepted `SetCVar` updates dispatch the
+no-payload event through the simulator's existing synchronous path; timing is
+simulator policy. `tests/glue_character_select.rs` exercises the original
+Classic `GlueGameLogo` OnLoad and event consumer, without asserting display-row
+or native writer behavior.

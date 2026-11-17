@@ -58,7 +58,12 @@ fn assert_loader_candidates(root: &Path) {
     let exclusive = std::env::var("WOW_SIM_ADDONS_PATH_EXCLUSIVE").unwrap() == "1";
     let paths = wow_ui_sim::paths::default_addons_paths();
     assert!(paths.contains(&root.join("selected")));
-    let mut addons = addon_loading::scan_addon_paths(&paths, &[], ScreenKind::Game);
+    let mut addons = addon_loading::scan_addon_paths(
+        &wow_ui_sim::toc::TocCache::default(),
+        &paths,
+        &[],
+        ScreenKind::Game,
+    );
     assert_eq!(
         addons
             .iter()
