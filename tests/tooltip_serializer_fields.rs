@@ -37,6 +37,8 @@ fn selected_tooltip_env() -> WowLuaEnv {
             "Blizzard_SharedXMLGame/Tooltip/TooltipDataRules.lua")
         assertSource(GameTooltip.SetItemByID,
             "Blizzard_SharedXMLGame/Tooltip/TooltipDataHandler.lua")
+        assertSource(GameTooltip_OnTooltipAddMoney,
+            "Blizzard_GameTooltip/Mainline/GameTooltip.lua")
         assertSource(MerchantItemButton_OnEnter,
             "Blizzard_UIPanels_Game/Mainline/MerchantFrame.lua")
         "#,
@@ -101,11 +103,82 @@ for _, case in ipairs(cases) do
 end
 "#;
 
+const RETAIL_PREPARED_SELL_PRICE_SETUP: &str = r#"
+assert(C_Item.GetItemInfo(184318) and C_Item.GetItemInfo(164374),
+    "prepared-quantity cases must use backed catalog items")
+GameTooltip.isShopping = false
+GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
+__sellPriceConsumer = {}
+GameTooltip_OnTooltipAddMoney = function(_, price, maxPrice)
+    __sellPriceConsumer.price = price
+    __sellPriceConsumer.maxPrice = maxPrice
+end
+function __assertRetailPreparedSellPrice(itemID, currentQuantity, preparedMaxQuantity)
+    __sellPriceConsumer.price, __sellPriceConsumer.maxPrice = nil, nil
+    GameTooltip:SetItemByID(itemID)
+    local data = GameTooltip:GetPrimaryTooltipData()
+    assert(data and data.type == Enum.TooltipDataType.Item,
+        "SetItemByID must publish item TooltipData")
+    local sellPriceLine
+    for _, line in ipairs(data.lines) do
+        if line.type == Enum.TooltipDataLineType.SellPrice then
+            sellPriceLine = line
+            break
+        end
+    end
+    assert(sellPriceLine, "backed positive price must publish a SellPrice line")
+    local expectedMaxPrice = -1
+    if preparedMaxQuantity and preparedMaxQuantity > currentQuantity then
+        expectedMaxPrice = (sellPriceLine.price * preparedMaxQuantity) % 4294967296
+    end
+    assert(__sellPriceConsumer.price == sellPriceLine.price
+        and __sellPriceConsumer.maxPrice == expectedMaxPrice,
+        "original SellPrice consumer must receive prepared maxPrice")
+    assert(sellPriceLine.maxPrice == expectedMaxPrice,
+        "SellPrice line maxPrice must match prepared quantity")
+    return sellPriceLine.price, sellPriceLine.maxPrice
+end
+"#;
+
+const RETAIL_PREPARED_SELL_PRICE_CASES: &str = r#"
+local p1, m1 = __assertRetailPreparedSellPrice(184318, 2, 5)
+local p2, m2 = __assertRetailPreparedSellPrice(164374, 3, 100000000)
+assert(p1 ~= p2 and m1 ~= m2,
+    "distinct backed items and prepared quantities must produce distinct prices")
+"#;
+
 #[test]
 fn selected_item_accessor_publishes_backed_sell_price_on_line_11() {
     let env = selected_tooltip_env();
     env.exec(RETAIL_SELL_PRICE_LUA)
         .expect("the original item accessor should publish native SellPrice rows");
+}
+
+fn set_item_tooltip_sell_price_quantities(env: &WowLuaEnv, quantities: &[(u32, u32, u32)]) {
+    let mut sim = env.state().borrow_mut();
+    sim.item_tooltip_sell_price_quantities = quantities
+        .iter()
+        .map(|&(item_id, current, prepared_max)| (item_id, (current, prepared_max)))
+        .collect();
+}
+
+#[test]
+fn selected_item_accessor_uses_prepared_quantity_for_max_price() {
+    let env = selected_tooltip_env();
+    env.exec(RETAIL_PREPARED_SELL_PRICE_SETUP)
+        .expect("the SellPrice consumer probe should load");
+
+    set_item_tooltip_sell_price_quantities(&env, &[(184318, 2, 5), (164374, 3, 100_000_000)]);
+    env.exec(RETAIL_PREPARED_SELL_PRICE_CASES)
+        .expect("the original SellPrice consumer should receive prepared maxPrice");
+
+    set_item_tooltip_sell_price_quantities(&env, &[]);
+    env.exec("__assertRetailPreparedSellPrice(184318, nil, nil)")
+        .expect("missing prepared quantities must preserve maxPrice -1");
+
+    set_item_tooltip_sell_price_quantities(&env, &[(184318, 5, 5)]);
+    env.exec("__assertRetailPreparedSellPrice(184318, 5, 5)")
+        .expect("non-increasing prepared quantities must preserve maxPrice -1");
 }
 
 #[test]

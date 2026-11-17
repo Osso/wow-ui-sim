@@ -174,6 +174,9 @@ pub struct SimState {
     pub item_tooltip_levels: HashMap<crate::c_api::ItemTooltipContext, u16>,
     /// R80 final item-mod amounts and metadata, keyed by item ID and resolved level.
     pub item_tooltip_inputs: HashMap<(u32, u16), crate::c_api::item_tooltip::ItemTooltipInput>,
+    /// UNKNOWN Retail SellPrice inputs: item ID to (current, prepared maximum) quantity.
+    /// Empty by default; these values are not derived from Stackable.
+    pub item_tooltip_sell_price_quantities: HashMap<u32, (u32, u32)>,
     pub blocked_auras_by_unit: HashMap<String, HashSet<i32>>,
     /// Explicit test scenario only; no combat or spell-secrecy inference.
     #[cfg(feature = "client-wowforever")]
