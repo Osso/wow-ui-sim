@@ -21,6 +21,7 @@ publication is not expanded by this change.
 - [x] Populated identity omits zero `id`; later common identity assignments append ordered type-19 rows with `tooltipType`, nonzero-only `tooltipID`, empty left text and supplied left color.
 - [x] Original `ProcessInfo`, GameTooltip line handlers and TooltipUtil retain their payloads; presentation parses inline markup independently.
 - [x] The Retail `GameTooltip:SetItemByID` path emits a type-11 row for a nonzero backed catalog price with empty `leftText`, resolved default `leftColor`, `price`, and `maxPrice = -1` when no prepared quantity input exists. Mapping `ItemInfo.sell_price` to the native initial unit price is **INFERRED**.
+- [ ] Retail `SetBagItem` publishes the seven type-6 fields only from explicit, empty-default host acceptance and snapshot inputs; the native predicate and writer remain UNKNOWN.
 
 ### Retail SellPrice behavior (R88p.p1)
 
@@ -75,12 +76,30 @@ placement contradicts R88n.4b, so no producer changed.
   (`tooltip_info/builders.rs`) writes them, on a type-11 line. No producer
   writes them at top level. `maxPrice` is the R88p.p1 initial value -1, not a
   guess; the prepared-quantity recalculation inputs are UNKNOWN and unmodeled.
-- Battle-pet fields: no producer publishes TooltipData type 6 or any of the
-  seven fields. `battlePetSpeciesID` on Auction House `ItemKey` data is not a
-  TooltipData producer. The fields stay absent until backing state exists
-  (QUEUE 456); no host seam is added. **UNKNOWN:** the battle-pet producer's
-  acceptance test and inputs, and which of the seven fields each accepted path
-  adds.
+- Battle-pet fields: the audit base had no type-6 producer or host seam.
+  `battlePetSpeciesID` on Auction House `ItemKey` data is not a TooltipData
+  producer. The Retail bag-item path now publishes the seven fields only from
+  explicit host acceptance and snapshot inputs; those inputs are empty by
+  default. The native acceptance predicate and upstream writer remain
+  **UNKNOWN** and are not modeled.
+
+## Retail battle-pet bag TooltipData
+
+**VERIFIED (Retail 12.1.5.70688, R88n.4b):** the accepted alternate bag-item
+branch produces TooltipData type 6 and can publish `battlePetSpeciesID`,
+`battlePetLevel`, `battlePetBreedQuality`, `battlePetMaxHealth`,
+`battlePetPower`, `battlePetSpeed`, and `battlePetName` at the top level.
+
+**VERIFIED (simulator model):** the original `SetBagItem` path publishes type
+6 only for an existing bag slot with explicit host acceptance and a complete
+host snapshot. The snapshot's seven values stay at the top level and the
+original `TooltipDataRules.BattlePet` consumer forwards them in order.
+Acceptance and snapshot inputs have separate empty defaults; item identity does
+not infer the native acceptance decision.
+
+**UNKNOWN:** the native acceptance predicate, the upstream snapshot writer, and
+whether every accepted native path supplies every listed field. The host inputs
+do not claim those native details.
 
 ## Proof
 
@@ -94,6 +113,12 @@ placement contradicts R88n.4b, so no producer changed.
 - `tests/tooltip_d56_serialization.rs`: direct getters and original consumers.
 - `src/c_api/tooltip_data_tests.rs`: nested identity order and present/absent sides.
 - `tests/tooltip_serializer_fields.rs`: selected Retail consumers read top-level repair/pet fields and line-level `price`/`maxPrice`; the original `SetItemByID` path checks the inferred backed `price` projection.
+- `tests/tooltip_serializer_consumer_output.rs::bag_item_accessor_publishes_accepted_battle_pet_fields_to_original_consumer`
+  calls the original Retail `GameTooltip:SetBagItem` on two distinct explicit
+  snapshots, an explicitly unaccepted bag item, and an absent slot. It asserts
+  type 6, all seven top-level values, and the seven ordered arguments forwarded
+  by the original `TooltipDataRules.BattlePet`; test snapshot values are host
+  fixtures, not native pet defaults.
 - `tests/tooltip_serializer_consumer_output.rs::bag_repair_rule_renders_only_top_level_positive_repair_cost`
   observes only original consumer output: the selected `SetBagItem` accessor and
   `FinalizeItemTooltip` render REPAIR_COST plus the money row for quotes 731 and

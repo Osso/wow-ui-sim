@@ -752,6 +752,13 @@ pub struct SimState {
     pub world: WorldState,
     pub encounter_policy: crate::c_api::c_instance_encounter::EncounterPolicy,
     pub bag_items: HashMap<(i32, i32), BagItem>,
+    /// UNKNOWN native branch acceptance; host inputs are empty by default.
+    #[cfg(feature = "client-retail")]
+    pub bag_battle_pet_tooltip_acceptance: HashMap<(i32, i32), bool>,
+    /// UNKNOWN upstream writer; explicit battle-pet snapshots are empty by default.
+    #[cfg(feature = "client-retail")]
+    pub bag_battle_pet_tooltip_snapshots:
+        HashMap<(i32, i32), crate::c_api::BattlePetTooltipSnapshot>,
     /// Explicit Retail bag repair quotes; UNKNOWN calculation/writers stay unmodeled.
     /// Empty by default; coordinates refer to the host-supplied bag snapshot.
     pub bag_item_repair_costs: HashMap<(i32, i32), i32>,
