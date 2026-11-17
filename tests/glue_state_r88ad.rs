@@ -458,3 +458,77 @@ fn set_uses_token_writes_decimal_truthiness() {
         assert_eq!(setting(&env, "accountName").as_deref(), Some("12.5"));
     }
 }
+
+fn ambience_fade(env: &WowLuaEnv, args: &str) -> i32 {
+    audio_requests(env);
+    lua(env, &format!("PlayGlueAmbience({args}) return ''"));
+    match audio_requests(env)[..] {
+        [GlueAudioRequest::StartAmbience { fade_ms, .. }] => fade_ms,
+        ref other => panic!("PlayGlueAmbience({args}): {other:?}"),
+    }
+}
+
+// R88ad.10: absent fade is -1; a present fade is trunc(f32(fade) * 1000f32);
+// an overflowing conversion is i32::MIN. Handles stay inactive, so every
+// call submits a new request.
+#[test]
+fn play_glue_ambience_converts_fade_input() {
+    test_timeout! {
+        let env = login_env();
+        assert_eq!(ambience_fade(&env, "301"), -1, "absent fade");
+        assert_eq!(ambience_fade(&env, "302, 2.5"), 2500);
+        assert_eq!(ambience_fade(&env, "303, 0.0019"), 1, "truncation");
+        // 2147483.5 * 1000 is 2147483500 in f64 but rounds to 2147483520 in f32.
+        assert_eq!(ambience_fade(&env, "304, 2147483.5"), 2_147_483_520, "single precision");
+        assert_eq!(ambience_fade(&env, "305, 3000000"), i32::MIN, "positive overflow");
+        assert_eq!(ambience_fade(&env, "306, -3000000"), i32::MIN, "negative overflow");
+    }
+}
+
+// R88ad.10: both native music control flags set suppress the whole action.
+#[test]
+fn play_glue_music_both_control_flags_suppress_request() {
+    test_timeout! {
+        let env = login_env();
+        env.state().borrow_mut().glue_state.audio.music_suppressed = [true; 2];
+        for kit in [101, 202] {
+            audio_requests(&env);
+            lua(&env, &format!("PlayGlueMusic({kit}) return ''"));
+            assert_eq!(audio_requests(&env), [], "suppressed {kit}");
+            assert_eq!(env.state().borrow().glue_state.audio.requested_music_kit, 0);
+        }
+        env.state().borrow_mut().glue_state.audio.music_suppressed = [false; 2];
+        lua(&env, "PlayGlueMusic(202) return ''");
+        let started = audio_requests(&env);
+        assert!(started.iter().any(|r| matches!(r, GlueAudioRequest::StartMusic { kit: 202, .. })), "{started:?}");
+        assert_eq!(env.state().borrow().glue_state.audio.requested_music_kit, 202);
+    }
+}
+
+const SERVER_BOOLEANS: &str = r#"
+    local _, first, second, additional = GetServerName()
+    return tostring(first) .. "|" .. tostring(second) .. "|" .. tostring(additional)
+"#;
+
+// R88ad.8: a Cfg_Configs row miss leaves all three Booleans false; a row hit
+// supplies the first two and permits the additional connection Boolean.
+#[test]
+fn server_name_publishes_additional_connection_boolean_on_row_hit() {
+    test_timeout! {
+        let env = login_env();
+        for (config, additional, expected) in [
+            (None, true, "false|false|false"),
+            (Some((true, false)), true, "true|false|true"),
+            (Some((false, true)), false, "false|true|false"),
+        ] {
+            set_server(&env, GlueServerState {
+                available: true,
+                name: Some("Alpha".into()),
+                config,
+                additional_connection_flag: additional,
+                realm_number: Some(101),
+            });
+            assert_eq!(lua(&env, SERVER_BOOLEANS), expected, "{config:?} {additional}");
+        }
+    }
+}
