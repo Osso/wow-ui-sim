@@ -67,14 +67,14 @@ const CURRENCY_CONSUMER: &str = r#"
     return true
 "#;
 
-const PURCHASE_EVENT_OBSERVER: &str = r#"
+const PURCHASE_EVENT_OBSERVER: &str = r##"
     STORE_PURCHASE_EVENT_PAYLOAD_COUNTS = {}
     local listener = CreateFrame("Frame")
     listener:RegisterEvent("STORE_PURCHASE_LIST_UPDATED")
     listener:SetScript("OnEvent", function(_, _, ...)
         table.insert(STORE_PURCHASE_EVENT_PAYLOAD_COUNTS, select("#", ...))
     end)
-"#;
+"##;
 
 fn load_store_ui() -> WowLuaEnv {
     let ui_dir = crate::common::blizzard_addon_harness::blizzard_ui_dir();
