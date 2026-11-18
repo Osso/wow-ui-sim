@@ -247,7 +247,9 @@ pub(super) fn clear_point(state: &mut LuaState) -> LuaResult<u32> {
         .get(id)
         .and_then(|f| f.anchors.iter().find(|a| a.point == point))
         .and_then(|a| a.relative_to_id);
-    if !uses_retail_clamp_producers() && let Some(target) = target_id {
+    if !uses_retail_clamp_producers()
+        && let Some(target) = target_id
+    {
         sim.widgets.remove_anchor_dependent(target as u64, id);
     }
     if let Some(frame) = sim.widgets.get_mut_for_anchor_edit(id) {

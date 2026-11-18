@@ -113,7 +113,9 @@ pub(super) fn reanchor_moving_drag_frame(
         );
     }
     if uses_retail_clamp_producers() {
-        state.widgets.resolve_named_anchor_targets_for_frame(drag_id);
+        state
+            .widgets
+            .resolve_named_anchor_targets_for_frame(drag_id);
     }
     state.widgets.mark_rect_dirty(drag_id);
 }
