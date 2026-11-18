@@ -404,6 +404,10 @@ fn mists_classic_cached_login_consumer_hides_rows_and_api_is_glue_only() {
             .eval("return type(HideCursor) == 'function' and type(ShowCursor) == 'function'")
             .unwrap();
         assert!(cursor_globals, "cursor visibility globals must be available in Glue");
+        let cinematic_started_available: bool = env
+            .eval("return type(CinematicStarted) == 'function'")
+            .unwrap();
+        assert!(cinematic_started_available, "unknown movie-start placeholder is Glue-only");
         let returns_none: bool = env.eval("return select('#', HideCursor()) == 0 and select('#', ShowCursor()) == 0").unwrap();
         assert!(returns_none, "cursor visibility globals must return no values");
         let row_visible: bool = env.eval(r#"
@@ -425,6 +429,8 @@ fn mists_classic_cached_login_consumer_hides_rows_and_api_is_glue_only() {
             .eval("return HideCursor == nil and ShowCursor == nil")
             .unwrap();
         assert!(cursor_globals_absent, "cursor visibility globals must be Glue-only");
+        let cinematic_started_absent: bool = env.eval("return CinematicStarted == nil").unwrap();
+        assert!(cinematic_started_absent, "unknown movie-start placeholder must be absent in Game");
     }
 }
 
