@@ -1,3 +1,7 @@
+## [2026-11-17] system | Retail Guild faction group
+
+The [Guild faction group system page](systems/guild-faction-group.md) links the [contract](../specs/guild-faction-group.md). **VERIFIED (R88ap.2):** player-object absence returns zero values; otherwise race-linked faction flags follow 4→0, 2→1, 1→0, else -1, with no guild test. **VERIFIED (simulator source):** the raw per-race flag input is empty by default. **UNKNOWN:** raw Retail DB2 rows and native object-unavailable conditions.
+
 ## [2026-11-18] investigation | Retail bag tracker fixture lifecycle
 
 The [panel fixture investigation](investigations/showuipanel-toggle-fixture-owners.md#retail-bag-tracker-lifecycle-lt-c0e6) records the missing per-addon completion event. Original TokenUI creates the bag tracker after `ADDON_LOADED`; assertions and vendor code remain unchanged.

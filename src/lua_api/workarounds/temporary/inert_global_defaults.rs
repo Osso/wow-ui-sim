@@ -257,6 +257,16 @@ mod tests {
     // UnitPopupSharedButtonMixins.lua:1824,1854,1902 consumes the modeled globals.
     fn installs_region_social_and_group_defaults() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
+        let expected_guild_faction =
+            if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+                -1
+            } else {
+                1
+            };
+        env.exec(&format!(
+            "EXPECTED_GUILD_FACTION = {expected_guild_faction}"
+        ))
+        .expect("expected faction query result should be set");
 
         let result: String = env
             .eval(
@@ -296,7 +306,7 @@ mod tests {
                 if Ambiguate("Alyth-Realm", "short") ~= "Alyth" then return "ambiguate_short" end
                 if Ambiguate("Alyth-Realm", "none") ~= "Alyth-Realm" then return "ambiguate_none" end
                 if AreTalentsLocked() ~= false then return "talents_locked" end
-                if GetGuildFactionGroup() ~= 1 then return "guild_faction" end
+                if GetGuildFactionGroup() ~= EXPECTED_GUILD_FACTION then return "guild_faction" end
                 if WorldLootObjectExists("player") ~= false then return "world_loot_object" end
                 if CanShowSetRoleButton() ~= false then return "role_button" end
                 if #GetSpellConfirmationPromptsInfo() ~= 0 then return "spell_prompts" end

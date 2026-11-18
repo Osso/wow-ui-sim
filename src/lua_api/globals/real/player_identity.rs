@@ -8,6 +8,39 @@ use rilua::vm::state::LuaState;
 use rilua::{LuaApiMut, LuaResult, Val};
 
 const SIM_REALM: &str = "SimRealm";
+const FACTION_GROUP_FLAG_1: u32 = 1;
+const FACTION_GROUP_FLAG_2: u32 = 2;
+const FACTION_GROUP_FLAG_4: u32 = 4;
+
+fn faction_group_from_flags(flags: u32) -> i32 {
+    if flags & FACTION_GROUP_FLAG_4 != 0 {
+        0
+    } else if flags & FACTION_GROUP_FLAG_2 != 0 {
+        1
+    } else if flags & FACTION_GROUP_FLAG_1 != 0 {
+        0
+    } else {
+        -1
+    }
+}
+
+fn get_guild_faction_group(state: &mut LuaState) -> LuaResult<u32> {
+    let group = {
+        let sim = borrow_state(state)?;
+        if !sim.player.present {
+            return Ok(0);
+        }
+        let race_id = i32::try_from(sim.player.race_index)
+            .ok()
+            .and_then(|index| index.checked_add(1));
+        race_id
+            .and_then(|id| sim.player.guild_faction_group_flags.get(&id).copied())
+            .map(faction_group_from_flags)
+            .unwrap_or(-1)
+    };
+    state.push(Val::Num(group as f64));
+    Ok(1)
+}
 
 fn get_realm_name(state: &mut LuaState) -> LuaResult<u32> {
     let realm = borrow_state(state)?
@@ -134,6 +167,9 @@ pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
         )?;
     }
     LuaApiMut::register_function(lua, "GetPlayerInfoByGUID", get_player_info_by_guid)?;
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        LuaApiMut::register_function(lua, "GetGuildFactionGroup", get_guild_faction_group)?;
+    }
     #[cfg(feature = "player-cast-durations")]
     LuaApiMut::register_function(lua, "UnitNameFromGUID", unit_name_from_guid)?;
     #[cfg(feature = "player-cast-durations")]

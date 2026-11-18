@@ -384,7 +384,50 @@ fn test_guild_control_set_rank_does_not_error() {
 fn test_get_guild_faction_group_returns_default_faction() {
     let env = env();
     let faction: i32 = env.eval("return GetGuildFactionGroup()").unwrap();
-    assert_eq!(faction, 1);
+    let expected = if wow_ui_sim::client_profile::ACTIVE
+        == wow_ui_sim::client_profile::ClientProfile::Retail
+    {
+        -1
+    } else {
+        1
+    };
+    assert_eq!(faction, expected);
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn get_guild_faction_group_uses_flag_priority_and_missing_rows() {
+    let env = env();
+    env.exec(
+        r#"
+        local cases = {
+            { 1, 2, 1 },
+            { 2, 4, 0 },
+            { 3, 1, 0 },
+            { 4, 0, -1 },
+            { 5, 6, 0 },
+        }
+        for _, case in ipairs(cases) do
+            A_Admin.SetGuildFactionGroupFlags(case[1], case[2])
+            A_Admin.SetPlayerRace(case[1] - 1)
+            assert(GetGuildFactionGroup() == case[3])
+        end
+        A_Admin.SetPlayerRace(99)
+        assert(GetGuildFactionGroup() == -1)
+        "#,
+    )
+    .expect("guild faction group must follow group-flag priority");
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn get_guild_faction_group_returns_no_values_without_player_object() {
+    let env = env();
+    env.state().borrow_mut().player.present = false;
+    let count: i32 = env
+        .eval("return select('#', GetGuildFactionGroup())")
+        .unwrap();
+    assert_eq!(count, 0);
 }
 
 // ============================================================================

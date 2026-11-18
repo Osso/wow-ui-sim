@@ -1,6 +1,8 @@
 #![cfg(feature = "client-retail")]
 use std::path::PathBuf;
 
+use sha2::{Digest, Sha256};
+
 use wow_ui_sim::loader::discover_blizzard_addons_for_screen;
 use wow_ui_sim::loader::load_addon;
 use wow_ui_sim::lua_api::WowLuaEnv;
@@ -17,6 +19,14 @@ fn blizzard_ui_dir() -> PathBuf {
 fn communities_toc() -> PathBuf {
     blizzard_ui_dir().join("Blizzard_Communities/Blizzard_Communities_Mainline.toc")
 }
+
+const GUILD_FACTION_GROUP_CONSTANT_ONE_OVERLAY: &str =
+    r#"GetGuildFactionGroup = function() return 1 end"#;
+const GUILD_FACTION_GROUP_HORDE_SHORTCUT_OVERLAY: &str = r#"
+    GetGuildFactionGroup = function()
+        return UnitFactionGroup("player") == "Horde" and 0 or 1
+    end
+"#;
 
 fn load_full_game_ui() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
@@ -109,6 +119,45 @@ fn guild_news_pvp_texture_uses_player_faction_group(env: &WowLuaEnv) {
         "#,
     )
     .expect("GuildNews must select its PvP texture from GetGuildFactionGroup");
+}
+}
+
+fn assert_wrong_guild_faction_group_producer_fails(
+    env: &WowLuaEnv,
+    overlay: &str,
+    fixture: &str,
+    label: &str,
+) {
+    env.exec(overlay)
+        .expect("wrong producer overlay must install");
+    env.exec(fixture)
+        .unwrap_or_else(|error| panic!("{label}: {error}"));
+    env.exec("GetGuildFactionGroup = GuildFactionOriginal")
+        .expect("original producer must be restored");
+}
+
+prefork_full_ui_case! {
+fn wrong_guild_faction_group_producers_fail_guild_news_assertions(env: &WowLuaEnv) {
+    let frame_exists: bool = env
+        .eval("return CommunitiesFrame.GuildDetailsFrame.News ~= nil")
+        .expect("GuildNews frame query must succeed");
+    assert!(frame_exists, "GuildNews frame must be instantiated");
+    assert_eq!(format!("{:x}", Sha256::digest(GUILD_FACTION_GROUP_CONSTANT_ONE_OVERLAY.as_bytes())), "aa5d9dcedf8a5d346b725ef9e8807927b2153dcd84efb69296756c4366591a35");
+    assert_eq!(format!("{:x}", Sha256::digest(GUILD_FACTION_GROUP_HORDE_SHORTCUT_OVERLAY.as_bytes())), "73a30b8febf7866ff867e02acb54ce38815413d477771247522b798a99c85893");
+    env.exec("GuildFactionOriginal = GetGuildFactionGroup; function GuildFactionAssertTexture(expected, label) CommunitiesGuildNewsFrame_OnLoad(CommunitiesFrame.GuildDetailsFrame.News); assert(GUILD_EVENT_TEXTURES[Enum.CalendarEventType.PvP] == expected, label) end")
+        .expect("original GuildNews consumer assertion must be installed");
+    assert_wrong_guild_faction_group_producer_fails(
+        env,
+        GUILD_FACTION_GROUP_CONSTANT_ONE_OVERLAY,
+        "A_Admin.SetGuildFactionGroupFlags(2, 4); A_Admin.SetPlayerRace(1); local ok, err = pcall(GuildFactionAssertTexture, 'Interface\\\\Calendar\\\\UI-Calendar-Event-PVP01', 'constant-one'); assert(not ok and tostring(err):find('constant-one', 1, true))",
+        "constant-one",
+    );
+    assert_wrong_guild_faction_group_producer_fails(
+        env,
+        GUILD_FACTION_GROUP_HORDE_SHORTCUT_OVERLAY,
+        "A_Admin.SetGuildFactionGroupFlags(1, 6); A_Admin.SetPlayerRace(0); local ok, err = pcall(GuildFactionAssertTexture, 'Interface\\\\Calendar\\\\UI-Calendar-Event-PVP01', 'faction-shortcut'); assert(not ok and tostring(err):find('faction-shortcut', 1, true))",
+        "faction shortcut",
+    );
 }
 }
 
