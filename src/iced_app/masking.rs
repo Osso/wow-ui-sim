@@ -209,33 +209,52 @@ fn apply_sliced_mask_to_quads(
     let mut starts = Vec::new();
     for quad in batch.vertices[vert_before..].as_chunks::<4>().0 {
         starts.push(out.len());
-        let quad = *quad;
-        let bounds = quad_rect(&quad);
-        let before = out.len();
-        for cell in &cells {
-            let Some(clipped) = rect_intersection(bounds, *cell) else {
-                continue;
-            };
-            let mut piece = quad;
-            clip_quad_to_rect(&mut piece, bounds, clipped);
-            let uvs = sliced_mask_uvs(mask_screen, slice, clipped);
-            for (vertex, uv) in piece.iter_mut().zip(uvs) {
-                vertex.mask_tex_index = -2;
-                vertex.mask_tex_coords = uv;
-            }
-            out.extend(piece);
-        }
-        if out.len() == before {
-            let mut hidden = quad;
-            hide_quad(&mut hidden);
-            out.extend(hidden);
-        }
+        append_sliced_quad(*quad, &cells, mask_screen, slice, &mut out);
     }
     starts.push(out.len());
     remap_tail_requests(&mut batch.texture_requests, vert_before, &starts);
+    replace_quad_tail(batch, vert_before, out.as_chunks::<4>().0);
+}
+
+fn append_sliced_quad(
+    quad: [crate::render::shader::QuadVertex; 4],
+    cells: &[Rectangle],
+    mask_screen: Rectangle,
+    slice: MaskSlice,
+    out: &mut Vec<crate::render::shader::QuadVertex>,
+) {
+    let bounds = quad_rect(&quad);
+    let before = out.len();
+    for cell in cells {
+        let Some(clipped) = rect_intersection(bounds, *cell) else {
+            continue;
+        };
+        let mut piece = quad;
+        clip_quad_to_rect(&mut piece, bounds, clipped);
+        for (vertex, uv) in piece
+            .iter_mut()
+            .zip(sliced_mask_uvs(mask_screen, slice, clipped))
+        {
+            vertex.mask_tex_index = -2;
+            vertex.mask_tex_coords = uv;
+        }
+        out.extend(piece);
+    }
+    if out.len() == before {
+        let mut hidden = quad;
+        hide_quad(&mut hidden);
+        out.extend(hidden);
+    }
+}
+
+fn replace_quad_tail(
+    batch: &mut QuadBatch,
+    vert_before: usize,
+    replacement: &[[crate::render::shader::QuadVertex; 4]],
+) {
     batch.vertices.truncate(vert_before);
     batch.indices.truncate(vert_before / 4 * 6);
-    for (index, piece) in out.as_chunks::<4>().0.iter().enumerate() {
+    for (index, piece) in replacement.iter().enumerate() {
         let base = (vert_before + index * 4) as u32;
         batch.vertices.extend_from_slice(piece);
         batch

@@ -1,6 +1,6 @@
 ## [2026-11-18] implementation | Sliced mask textures
 
-The [rendering pipeline](systems/rendering-pipeline.md#sliced-mask-textures) records that a MaskTexture with slice margins keeps its margins and stretches its centre. **VERIFIED (simulator unit tests):** quads split at the slice lines, exact corner and centre UVs, moved texture requests, whole-stretch fallback without room for the margins. **VERIFIED (WoW Forever 1.60.1.70959, in-game screenshot):** EllesmereUI's rounded tooltip corners render crisp. **INFERRED (consumer code):** EllesmereUI's rounded corners depend on the kept margins. Masks larger than their region (native corner shrinking) remain unmodelled.
+The [rendering pipeline](systems/rendering-pipeline.md#sliced-mask-textures) records **INFERRED (ordinary texture slice semantics):** a MaskTexture with slice margins keeps its margins and stretches its centre; no native MaskTexture slice evidence was found. **VERIFIED (simulator unit tests):** quads split at slice lines, corner and centre UVs match the expected mapping, texture requests move with the split quads, and no-centre masks use whole-stretch behavior. **INFERRED (consumer code):** EllesmereUI's rounded tooltip corners depend on the kept margins. Masks larger than their region (native corner shrinking) remain unmodelled.
 
 ## [2026-11-18] correction | Retail SellPrice gates
 
