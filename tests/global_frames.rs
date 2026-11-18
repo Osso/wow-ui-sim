@@ -289,17 +289,17 @@ fn test_chat_type_group_all_keys() {
 
 #[test]
 fn test_chat_frame_util_process_message() {
-    // VERIFIED — Blizzard_ChatFrameBase.toc loads Shared/ChatFrameFilters.lua.
+    // VERIFIED — Retail 70783 ChatFrameFilters.lua:212-214 forwards the chat frame, event, and payload.
     let env = crate::common::panel_fixtures::setup_env();
     let result: String = env
         .eval(
             r#"
-        local filtered, event, args = ChatFrameUtil.ProcessMessageEventFilters(nil, "CHAT_MSG_SAY", "hello")
-        return tostring(filtered) .. "," .. event
+        local filtered, message = ChatFrameUtil.ProcessMessageEventFilters(ChatFrame1, "CHAT_MSG_SAY", "hello")
+        return tostring(filtered) .. "," .. message
     "#,
         )
         .unwrap();
-    assert_eq!(result, "false,CHAT_MSG_SAY");
+    assert_eq!(result, "false,hello");
 }
 
 #[test]
