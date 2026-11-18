@@ -227,3 +227,6 @@ pub mod inventory_candidates;
 
 #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
 pub(crate) mod cinematic_summary;
+
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+pub(crate) mod set_role_button;
