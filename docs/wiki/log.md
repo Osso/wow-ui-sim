@@ -1,3 +1,7 @@
+## [2026-11-17] system | Retail PerformanceBar network queries
+
+Added the [PerformanceBar query system page](systems/performance-bar-queries.md) and linked it from [[lua-api]]. **VERIFIED (R88ap.7/.8):** Retail 12.1.5 returns bandwidth zero and two ordered protocol codes; live endpoint values and their update path remain UNKNOWN.
+
 ## [2026-11-17] implementation | Retail call-pet flyout spell results
 
 Updated the [call-pet contract](../specs/call-pet-spell-info.md) and [Spellbook follow-ups](investigations/spellbook-r88m4-followups.md#retail-call-pet-flyout). **VERIFIED (Retail simulator):** the original ActionBar flyout keeps named and unmapped spells, hides empty/missing names, and rejects a callable-wrong producer. **UNKNOWN:** same-build spell-ID rows and the runtime pet-info writer remain empty-default host inputs.

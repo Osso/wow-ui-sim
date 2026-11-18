@@ -1,3 +1,7 @@
+## [2026-11-17] system | Retail PerformanceBar network queries
+
+[PerformanceBar network queries](systems/performance-bar-queries.md) records the Retail 12.1.5 getters, the typed empty-default endpoint input, the preserved non-Retail fallback behavior, and the UNKNOWN live values and update path.
+
 ## [2026-11-17] verification | Retail call-pet flyout results
 
 The [call-pet contract](../specs/call-pet-spell-info.md) and [Spellbook follow-ups](investigations/spellbook-r88m4-followups.md#retail-call-pet-flyout) record the original Retail ActionBar consumer and empty-default host inputs. **VERIFIED (Retail simulator):** named and unmapped spells stay visible, nameless entries hide, and the callable-wrong producer fails inside the consumer. **UNKNOWN:** same-build spell-ID rows and the runtime pet-info writer.
