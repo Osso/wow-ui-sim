@@ -11,6 +11,8 @@
 - [x] **VERIFIED (Retail 12.1.5.70783 `Blizzard_Communities/GuildNews.lua:35`):** GuildNews selects `UI-Calendar-Event-PVP01` only when the result is 0; every other result selects `UI-Calendar-Event-PVP02`.
 - [x] **VERIFIED (simulator source):** Keep the race-to-flag input empty by default. Do not ship inferred race rows as native facts.
 
+**INFERRED (R88ap.2; DB2 export build 70448):** Human classifies as 1, Orc as 0, and Pandaren as 0. These outputs are context only. The raw group-flag rows are not supplied, so the simulator does not seed these classifications.
+
 ## How it works
 
 - [Guild faction group system](../wiki/systems/guild-faction-group.md)

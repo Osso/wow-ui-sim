@@ -1,6 +1,6 @@
 ## [2026-11-17] system | Retail Guild faction group
 
-Added the [Guild faction group system page](systems/guild-faction-group.md) and [contract](../specs/guild-faction-group.md). **VERIFIED (R88ap.2):** player-object absence returns zero values; otherwise race-linked faction flags follow 4→0, 2→1, 1→0, else -1, with no guild test. **VERIFIED (simulator source):** the raw per-race flag input is empty by default. **UNKNOWN:** raw Retail DB2 rows and native object-unavailable conditions. **VERIFIED (Retail runtime):** the byte-identical GuildNews consumer test and callable-wrong overlay controls pass; the three focused API cases pass, including guild-membership independence.
+Added the [Guild faction group system page](systems/guild-faction-group.md) and [contract](../specs/guild-faction-group.md). **VERIFIED (R88ap.2):** player-object absence returns zero values; otherwise race-linked faction flags follow 4→0, 2→1, 1→0, else -1, with no guild test. **VERIFIED (simulator source):** the raw per-race flag input is empty by default. **UNKNOWN:** raw Retail DB2 rows and native object-unavailable conditions. **INFERRED (DB2 export build 70448):** the contract records classification outputs as context only; the simulator does not seed them. **VERIFIED (Retail runtime):** the byte-identical GuildNews consumer test and callable-wrong overlay controls pass; the three focused API cases pass, including guild-membership independence.
 
 ## [2026-11-18] investigation | Retail bag tracker fixture lifecycle
 
