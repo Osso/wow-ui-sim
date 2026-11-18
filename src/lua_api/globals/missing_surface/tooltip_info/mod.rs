@@ -187,6 +187,7 @@ pub(crate) fn tooltip_for_item_context_with_sell_price(
 }
 
 /// Publish an unpopulated GetItemByID result for an initial catalog miss.
+#[cfg(feature = "retail-12-0-5")]
 pub(crate) fn tooltip_for_missing_item_by_id(state: &mut LuaState) -> rilua::Val {
     let tooltip = builders::empty_tooltip(state, super::TOOLTIP_TYPE_ITEM);
     builders::stamp_data_instance(state, tooltip);
