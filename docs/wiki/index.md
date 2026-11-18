@@ -1,6 +1,6 @@
 ## [2026-11-18] implementation | RegisterUnitEvent unit scan
 
-[Event system](systems/event-system.md#frame-registerunitevent-unit-scan-r88aj) links the [R88aj contract](../specs/register-unit-event-units.md): the native scan is limited to Mists, Retail and Forever evidence; Retail/Forever unknown security inputs stay empty.
+[Event system](systems/event-system.md#frame-registerunitevent-unit-scan-r88aj) links the [R88aj contract](../specs/register-unit-event-units.md): Mists boundary and original CastSequenceManager tests pass; native scan evidence is limited to Mists, Retail and Forever.
 
 ## [2026-11-18] implementation | Retail cinematic summary
 

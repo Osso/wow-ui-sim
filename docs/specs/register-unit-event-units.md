@@ -6,11 +6,11 @@
 
 - [x] **VERIFIED (R88aj aj1/aj2/aj3):** the handler reads at most four unit positions after the event and stops at the first value that is neither a string nor a number. Valid units before that value stay in the filter. A table at the first unit position gives zero units; the handler does not read table contents or later arguments.
 - [x] **VERIFIED (R88aj aj1/aj2):** zero valid units register the event with an empty filter, the same as `RegisterEvent`, without an error.
-- [ ] **VERIFIED (R88aj aj2):** unknown unit strings are skipped without error and the scan continues; each still uses one of the four positions. Mists 5.5.4.70631 specifically rejects `boss6`–`boss8`. Retail and Forever known-token lists are UNKNOWN. Unit tokens are case-insensitive.
+- [x] **VERIFIED (R88aj aj2):** unknown unit strings are skipped without error and the scan continues; each still uses one of the four positions. Mists 5.5.4.70631 specifically rejects `boss6`–`boss8`. Retail and Forever known-token lists are UNKNOWN. Unit tokens are case-insensitive.
 - [x] **VERIFIED (R88aj aj4):** each successful call returns exactly one boolean: true when the frame was not registered, or when the call changed the unit filter (position by position); false when the filter is identical, including an empty filter registered again with zero units.
 - [x] **VERIFIED (R88aj aj5):** a second call replaces the filter (no merge). `RegisterEvent` after `RegisterUnitEvent` clears the filter and returns true.
 - [x] **PRESERVATION:** `UnregisterEvent` removes the registration and its filter. This is the pre-existing simulator behaviour, already covered on all profiles by `tests/unit_event_second_unit.rs:61-66`. VERIFIED natively only for Mists 70631 (R88aj aj5); UNKNOWN for Retail 70688 and Forever 70707 (not decoded).
-- [ ] **VERIFIED preservation consumer:** the selected Mists `Blizzard_ChatFrameBase_Classic.toc` loads `Shared/CastSequenceManager.lua`, whose original consumer registers `UNIT_SPELLCAST_*` for `player` and `pet`. Its real event path must advance for those units and remain unchanged for other units.
+- [x] **VERIFIED preservation consumer:** the selected Mists `Blizzard_ChatFrameBase_Classic.toc` loads `Shared/CastSequenceManager.lua`, whose original consumer registers `UNIT_SPELLCAST_*` for `player` and `pet`. Its original cast sequence advances for those units and does not advance for `target` or `focus`.
 
 ## How it works
 

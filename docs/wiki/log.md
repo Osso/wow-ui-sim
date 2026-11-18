@@ -1,6 +1,6 @@
 ## [2026-11-18] implementation | RegisterUnitEvent unit scan
 
-Updated the [event-system record](../systems/event-system.md#frame-registerunitevent-unit-scan-r88aj) and [contract](../specs/register-unit-event-units.md). **VERIFIED (R88aj):** the four-position scan rules are established for Mists, Retail and Forever; Mists rejects the documented unknown `boss6`–`boss8` tokens. The Mists ChatFrameBase `CastSequenceManager` is the selected multi-unit consumer. Retail/Forever secret-state and forbidden-aspect inputs remain UNKNOWN and empty by default.
+Updated the [event-system record](../systems/event-system.md#frame-registerunitevent-unit-scan-r88aj) and [contract](../specs/register-unit-event-units.md). **VERIFIED (R88aj):** four-position scan rules are established for Mists, Retail and Forever; Mists rejects the documented unknown `boss6`–`boss8` tokens. **VERIFIED (Mists simulator):** 3/3 original-consumer/boundary cases and 2/2 unit-scan cases pass. Retail/Forever secret-state and forbidden-aspect inputs remain UNKNOWN and empty by default.
 
 ## [2026-11-18] implementation | Retail cinematic summary
 
