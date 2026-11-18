@@ -260,7 +260,7 @@ mod tests {
     fn installs_region_social_and_group_defaults() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
         let expected_guild_faction =
-            if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+            if cfg!(all(feature = "profile-retail", feature = "retail-12-1-5")) {
                 -1
             } else {
                 1

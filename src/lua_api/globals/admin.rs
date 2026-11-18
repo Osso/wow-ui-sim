@@ -160,11 +160,8 @@ fn register_player(b: TableBuilder) -> LuaResult<TableBuilder> {
         "SetPlayerFacing",
         super::real::player_facing::set_player_facing,
     )?;
-    let b = if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
-        b.set_function("SetGuildFactionGroupFlags", set_guild_faction_group_flags)?
-    } else {
-        b
-    };
+    #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+    let b = b.set_function("SetGuildFactionGroupFlags", set_guild_faction_group_flags)?;
     b.set_function("SetPlayerName", set_player_name)?
         .set_function("SetPlayerClass", set_player_class)?
         .set_function("SetPlayerRace", set_player_race)?
@@ -550,6 +547,7 @@ fn set_player_race(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
 fn set_guild_faction_group_flags(state: &mut LuaState) -> LuaResult<u32> {
     let race_id = i32::from_stack(state, 1)?;
     let flags = u32::from_stack(state, 2)?;

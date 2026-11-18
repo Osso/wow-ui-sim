@@ -384,9 +384,7 @@ fn test_guild_control_set_rank_does_not_error() {
 fn test_get_guild_faction_group_returns_default_faction() {
     let env = env();
     let faction: i32 = env.eval("return GetGuildFactionGroup()").unwrap();
-    let expected = if wow_ui_sim::client_profile::ACTIVE
-        == wow_ui_sim::client_profile::ClientProfile::Retail
-    {
+    let expected = if cfg!(all(feature = "profile-retail", feature = "retail-12-1-5")) {
         -1
     } else {
         1
