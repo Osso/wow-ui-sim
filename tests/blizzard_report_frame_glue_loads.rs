@@ -329,31 +329,13 @@ fn publishes_named_top_level_frame_under_glue_parent() {
     let parented_to_glue_parent: bool = env
         .eval("return ReportFrame:GetParent() == GlueParent")
         .expect("ReportFrame parent probe should succeed");
-    let parent_diagnostic: String = env
-        .eval(
-            r#"
-            local parent = ReportFrame:GetParent()
-            local public = rawget(_G, "GlueParent")
-            local secure = rawget(__secureenv, "GlueParent")
-            return table.concat({
-                tostring(parent and parent:GetName()),
-                tostring(public and public:GetName()),
-                tostring(secure and secure:GetName()),
-                tostring(rawequal(parent, public)),
-                tostring(rawequal(parent, secure)),
-                tostring(rawequal(public, secure)),
-                tostring(rawequal(UIParent, public)),
-            }, ", ")
-            "#,
-        )
-        .expect("ReportFrame parent diagnostic should succeed");
     assert!(
         parented_to_glue_parent,
         "ReportFrame must be parented to GlueParent (NOT UIParent) — `parent=\"GlueParent\"` \
          XML attribute at line 4. This is the structural difference from the Game variant: \
          GlueParent is the root frame for glue-screen UI created by Blizzard_GlueXML, while \
          UIParent is the in-game equivalent created by Blizzard_UIParent. The two never \
-         coexist within a single screen; {parent_diagnostic}"
+         coexist within a single screen"
     );
 
     let strata: String = env
