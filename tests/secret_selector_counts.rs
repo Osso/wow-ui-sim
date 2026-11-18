@@ -203,55 +203,74 @@ fn assert_count_facts(env: &WowLuaEnv) {
     assert!(sim.spell_id_aliases.is_empty());
 }
 
-fn assert_scalar_selector_contract(api: &str, expected: u32, fractional_expected: Option<u32>) {
+const SCALAR_SELECTOR_CONTRACT: &str = r#"
+local getter = C_Spell['@API@']
+local expected = @EXPECTED@
+local restricted = @RESTRICTED@
+local fractionalExpected = @FRACTIONAL@
+local function probe(expectedTaint)
+    local before = debug.getstacktaint()
+    assert(before == expectedTaint, 'explicit caller context')
+    for _, id in ipairs({19750, Selector, 900002, Missing}) do
+        assert(select('#', getter(id)) == 1)
+        assert(issecretvalue(getter(id)) == restricted)
+    end
+    if not restricted or not before then
+        assert(secretunwrap(getter(19750)) == expected, 'public selector quantity')
+        assert(secretunwrap(getter(Selector)) == expected, 'secret selector quantity')
+        assert(secretunwrap(getter(900002)) == 0, 'public selector miss')
+        assert(secretunwrap(getter(Missing)) == 0, 'secret selector miss')
+    end
+    for index, id in ipairs({-1, Invalid, {}, SecretText}) do
+        assert(not pcall(getter, id), 'invalid selector control ' .. index)
+    end
+    for _, id in ipairs({19750.5, Fraction}) do
+        if fractionalExpected == nil then
+            assert(not pcall(getter, id))
+        else
+            local value = getter(id)
+            assert(select('#', getter(id)) == 1, 'fractional selector return arity')
+            assert(issecretvalue(value) == restricted, 'fractional selector secrecy')
+            if not restricted or not before then
+                assert(secretunwrap(value) == fractionalExpected, 'fractional selector quantity')
+            end
+        end
+    end
+    assert(issecretvalue(Selector) and debug.getstacktaint() == before)
+    if before then
+        assert(not canaccessvalue(Selector))
+        assert(not pcall(function() return Selector + 0 end))
+    end
+end
+probe(nil)
+debug.setobjecttaint(probe, 'P4Probe')
+probe('P4Probe')
+"#;
+
+fn format_scalar_selector_contract(
+    api: &str,
+    expected: u32,
+    restricted: bool,
+    fractional_expected: Option<u32>,
+) -> String {
+    let expected = expected.to_string();
+    let restricted = restricted.to_string();
     let fractional_expected =
         fractional_expected.map_or_else(|| "nil".to_owned(), |value| value.to_string());
+    SCALAR_SELECTOR_CONTRACT
+        .replace("@API@", api)
+        .replace("@EXPECTED@", &expected)
+        .replace("@RESTRICTED@", &restricted)
+        .replace("@FRACTIONAL@", &fractional_expected)
+}
+
+fn assert_scalar_selector_contract(api: &str, expected: u32, fractional_expected: Option<u32>) {
     for restricted in [false, true] {
         let env = fixture(restricted);
-        env.exec(&format!(
-            r#"
-            local getter = C_Spell['{api}']
-            local function probe(expectedTaint)
-                local before = debug.getstacktaint()
-                assert(before == expectedTaint, 'explicit caller context')
-                for _,id in ipairs({{19750,Selector,900002,Missing}}) do
-                    assert(select('#',getter(id)) == 1)
-                    assert(issecretvalue(getter(id)) == {restricted})
-                end
-                if not {restricted} or not before then
-                    assert(secretunwrap(getter(19750)) == {expected}, 'public selector quantity')
-                    assert(secretunwrap(getter(Selector)) == {expected}, 'secret selector quantity')
-                    assert(secretunwrap(getter(900002)) == 0, 'public selector miss')
-                    assert(secretunwrap(getter(Missing)) == 0, 'secret selector miss')
-                end
-                for _,id in ipairs({{-1,Invalid,{{}},SecretText}}) do
-                    assert(not pcall(getter,id))
-                end
-                local fractionalExpected = {fractional_expected}
-                for _,id in ipairs({{19750.5,Fraction}}) do
-                    if fractionalExpected == nil then
-                        assert(not pcall(getter,id))
-                    else
-                        local value = getter(id)
-                        assert(select('#',getter(id)) == 1, 'fractional selector return arity')
-                        assert(issecretvalue(value) == {restricted}, 'fractional selector secrecy')
-                        if not {restricted} or not before then
-                            assert(secretunwrap(value) == fractionalExpected, 'fractional selector quantity')
-                        end
-                    end
-                end
-                assert(issecretvalue(Selector) and debug.getstacktaint() == before)
-                if before then
-                    assert(not canaccessvalue(Selector))
-                    assert(not pcall(function() return Selector + 0 end))
-                end
-            end
-            probe(nil)
-            debug.setobjecttaint(probe,'P4Probe')
-            probe('P4Probe')
-        "#
-        ))
-        .expect("one scalar with configured quantity, own restriction and unchanged strict domain");
+        let script =
+            format_scalar_selector_contract(api, expected, restricted, fractional_expected);
+        env.exec(&script)
+            .expect("scalar selector arity, restriction, miss, and invalid-value contract");
         assert_count_facts(&env);
     }
 }
