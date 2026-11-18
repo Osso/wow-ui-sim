@@ -177,6 +177,11 @@ impl WowLuaEnv {
     /// Select which UI surface should be loaded.
     pub fn set_screen_mode(&self, screen_kind: ScreenKind) {
         self.state.borrow_mut().set_screen_kind(screen_kind);
+        self.update_screen_mode_workarounds(screen_kind);
+        self.update_screen_mode_registrations(screen_kind);
+    }
+
+    fn update_screen_mode_workarounds(&self, screen_kind: ScreenKind) {
         crate::lua_api::workarounds::update_adventureguide_for_screen(
             &mut self.lua.borrow_mut(),
             screen_kind,
@@ -192,12 +197,20 @@ impl WowLuaEnv {
             screen_kind,
         )
         .expect("queued-upgrade registration should follow screen mode");
+    }
+
+    fn update_screen_mode_registrations(&self, screen_kind: ScreenKind) {
         {
             let mut lua = self.lua.borrow_mut();
             crate::c_api::update_screen_registration(lua.state_mut())
                 .expect("screen-specific C_* registration should succeed");
         }
         install_screen_mode_globals(self, screen_kind);
+        self.update_screen_specific_registrations(screen_kind);
+        publish_r88y_after_screen_registration(self, screen_kind);
+    }
+
+    fn update_screen_specific_registrations(&self, screen_kind: ScreenKind) {
         crate::c_api::c_character_creation::update_screen_registration(self, screen_kind);
         #[cfg(feature = "client-wowforever")]
         crate::lua_api::globals::real::name_reservation::update_screen_registration(
@@ -220,7 +233,6 @@ impl WowLuaEnv {
             self,
             screen_kind.is_glue(),
         );
-        publish_r88y_after_screen_registration(self, screen_kind);
     }
 
     /// Toggle whether the simulated player is logged into the world.

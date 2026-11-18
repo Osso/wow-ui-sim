@@ -248,6 +248,7 @@ fn assert_partitioned_child_handlers(widget_type: &str) {
     assert_partitioned_child_handler_state(&t);
 }
 
+// R88y separates secure and ordinary environment routes; check the secure route first (pr46-49-decomp-answers.md §R88y.y3).
 fn assert_partitioned_child_handler_state(t: &TestCtx) {
     t.assert_lua_true(
         "return PartitionedAuraContainerParent.Auras ~= nil",
