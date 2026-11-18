@@ -129,6 +129,11 @@ const PARTITIONED_MIXINS_PROBE: &str = r#"
             assert(PartitionedFrame.secret == nil, "delegate writes should not leak onto public partition")
         "#;
 
+#[cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
 const PARTITIONED_INBOUND_XML: &str = r#"
         <Ui xmlns="http://www.blizzard.com/wow/ui/">
             <Script>
@@ -157,6 +162,11 @@ const PARTITIONED_INBOUND_XML: &str = r#"
         </Ui>
         "#;
 
+#[cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
 const PARTITIONED_INBOUND_PROBE: &str = r#"
             local frame = PartitionedInboundReturnFrame
             local forbidden = (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(frame)
