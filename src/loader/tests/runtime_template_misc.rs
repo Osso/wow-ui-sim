@@ -1,5 +1,268 @@
 use super::*;
 
+const PARTITIONED_MIXINS_XML: &str = r#"
+        <Ui xmlns="http://www.blizzard.com/wow/ui/">
+            <Script>
+                PartitionedInboundMixin = {};
+                function PartitionedInboundMixin:ReadSecret()
+                    return self.secret;
+                end
+                function PartitionedInboundMixin:WriteSecret(value)
+                    self.secret = value;
+                end
+
+                PartitionedPrivateMixin = {};
+                function PartitionedPrivateMixin:PrivateReadSecret()
+                    return self.secret;
+                end
+            </Script>
+            <ScopedModifier useForbiddenObjectTable="true">
+                <Frame name="PartitionedFrame" parent="UIParent">
+                    <KeyValues>
+                        <KeyValue key="secret" value="hidden" type="string"/>
+                    </KeyValues>
+                    <Mixins>
+                        <Mixin key="PartitionedInboundMixin" source="secure" targetPartition="public" inboundPartition="forbidden" secureDelegates="true"/>
+                        <Mixin key="PartitionedPrivateMixin" source="secure"/>
+                    </Mixins>
+                </Frame>
+            </ScopedModifier>
+        </Ui>
+        "#;
+
+const PARTITIONED_MIXINS_PROBE: &str = r#"
+            assert(type(__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable) == "function",
+                "forbidden object table helper should exist")
+            local forbidden = (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(PartitionedFrame)
+            assert(type(forbidden) == "table", "forbidden partition should be a table")
+            assert(forbidden ~= PartitionedFrame, "forbidden partition should be distinct from public frame")
+            assert(PartitionedFrame.secret == nil, "KeyValues should not leak onto public partition")
+            assert(forbidden.secret == "hidden", "KeyValues should land on forbidden partition")
+            assert(PartitionedFrame.PrivateReadSecret == nil, "private mixin should not be installed on public partition")
+            assert(type(forbidden.PrivateReadSecret) == "function", "private mixin should install on forbidden partition")
+            assert(PartitionedFrame:ReadSecret() == "hidden", "public delegate should call with forbidden self")
+            PartitionedFrame:WriteSecret("changed")
+            assert(forbidden.secret == "changed", "delegate writes should update forbidden partition")
+            assert(PartitionedFrame.secret == nil, "delegate writes should not leak onto public partition")
+        "#;
+
+const PARTITIONED_INBOUND_XML: &str = r#"
+        <Ui xmlns="http://www.blizzard.com/wow/ui/">
+            <Script>
+                PartitionedReturnInboundMixin = {};
+                function PartitionedReturnInboundMixin:GetOwnedChild()
+                    return self.OwnedChild;
+                end
+                function PartitionedReturnInboundMixin:GetOwnedChildSelfAndTail()
+                    return self.OwnedChild, self, "tail";
+                end
+                function PartitionedReturnInboundMixin:EchoViews(child, nested)
+                    assert(child == (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(child));
+                    return child, nested;
+                end
+            </Script>
+            <ScopedModifier useForbiddenObjectTable="true">
+                <Frame name="PartitionedInboundReturnFrame" parent="UIParent">
+                    <Frames>
+                        <Frame parentKey="OwnedChild"/>
+                    </Frames>
+                    <Mixins>
+                        <Mixin key="PartitionedReturnInboundMixin" source="secure" targetPartition="public" inboundPartition="forbidden" secureDelegates="true"/>
+                    </Mixins>
+                </Frame>
+            </ScopedModifier>
+        </Ui>
+        "#;
+
+const PARTITIONED_INBOUND_PROBE: &str = r#"
+            local frame = PartitionedInboundReturnFrame
+            local forbidden = (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(frame)
+            assert(forbidden ~= frame, "forbidden partition should be distinct from public frame")
+            assert(forbidden.OwnedChild == (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(frame.OwnedChild),
+                "private self should hold the forbidden child view")
+            assert(frame:GetOwnedChild() == frame.OwnedChild,
+                "inbound result should publish the public object view")
+            assert(frame:GetOwnedChild() ~= forbidden.OwnedChild,
+                "inbound result should not leak the forbidden view")
+            local child, returnedSelf, tail = frame:GetOwnedChildSelfAndTail()
+            assert(child == frame.OwnedChild, "first inbound result should be public")
+            assert(returnedSelf == frame, "inbound self result should be public")
+            assert(tail == "tail", "non-frame inbound results should keep identity")
+            local nested = {child = forbidden.OwnedChild}
+            local direct, returnedNested = frame:EchoViews(frame.OwnedChild, nested)
+            assert(direct == frame.OwnedChild, "direct result is public")
+            assert(returnedNested == nested and nested.child == forbidden.OwnedChild,
+                "nested references are not projected")
+        "#;
+
+const PARTITIONED_RUNTIME_TEMPLATE_XML: &str = r#"
+        <Ui xmlns="http://www.blizzard.com/wow/ui/">
+            <Script>
+                PartitionedTemplateInboundMixin = {};
+                function PartitionedTemplateInboundMixin:ReadSecret()
+                    return self.secret;
+                end
+
+                PartitionedTemplatePrivateMixin = {};
+                function PartitionedTemplatePrivateMixin:PrivateReadSecret()
+                    return self.secret;
+                end
+            </Script>
+            <ScopedModifier useForbiddenObjectTable="true">
+                <Frame name="PartitionedRuntimeTemplate" virtual="true">
+                    <KeyValues>
+                        <KeyValue key="secret" value="template-hidden" type="string"/>
+                    </KeyValues>
+                    <Mixins>
+                        <Mixin key="PartitionedTemplateInboundMixin" source="secure" targetPartition="public" inboundPartition="forbidden" secureDelegates="true"/>
+                        <Mixin key="PartitionedTemplatePrivateMixin" source="secure"/>
+                    </Mixins>
+                </Frame>
+            </ScopedModifier>
+        </Ui>
+        "#;
+
+const PARTITIONED_RUNTIME_TEMPLATE_PROBE: &str = r#"
+            local frame = CreateFrame("Frame", "PartitionedRuntimeFrame", UIParent, "PartitionedRuntimeTemplate")
+            local forbidden = (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(frame)
+            assert(frame.secret == nil, "runtime template KeyValues should not leak onto public partition")
+            assert(forbidden.secret == "template-hidden", "runtime template KeyValues should land on forbidden partition")
+            assert(type(frame.ReadSecret) == "function", "runtime template inbound mixin should expose public delegate")
+            assert(frame.PrivateReadSecret == nil, "runtime template private mixin should not be public")
+            assert(type(forbidden.PrivateReadSecret) == "function", "runtime template private mixin should be forbidden")
+            assert(frame:ReadSecret() == "template-hidden", "runtime template delegate should use forbidden self")
+        "#;
+
+const FRAME_LITERAL_MIXINS_XML: &str = r#"
+        <Ui xmlns="http://www.blizzard.com/wow/ui/">
+            <Script>
+                LiteralAuraContainerInboundMixin = {};
+                function LiteralAuraContainerInboundMixin:MarkInbound()
+                    self.inboundApplied = true;
+                end
+                LiteralAuraContainerPrivateMixin = {};
+                function LiteralAuraContainerPrivateMixin:MarkPrivate()
+                    self.privateApplied = true;
+                end
+            </Script>
+            <ScopedModifier useForbiddenObjectTable="true">
+                <Frame name="LiteralAuraContainer" parent="UIParent">
+                    <Mixins>
+                        <Mixin key="LiteralAuraContainerInboundMixin" source="secure" targetPartition="public" inboundPartition="forbidden" secureDelegates="true"/>
+                        <Mixin key="LiteralAuraContainerPrivateMixin" source="secure"/>
+                    </Mixins>
+                </Frame>
+            </ScopedModifier>
+            <Script>
+                local _, addon = ...
+                addon.AddonLocalDirectMixin = {}
+                function addon.AddonLocalDirectMixin:OnLoad()
+                    self.addonLocalLoaded = true
+                end
+            </Script>
+            <Script>
+                TargetFrameInstanceMixin = {}
+                function TargetFrameInstanceMixin:OnLoad()
+                    self.slotBackedLoaded = true
+                end
+            </Script>
+            <ScopedModifier scriptsUseGivenEnv="true">
+                <Script>
+                    local _, addon = ...
+                    local scoped = setmetatable({}, { __index = addon })
+                    scoped._G = scoped
+                    setfenv(__wow_xml_lookup_local, scoped)
+                    setfenv(__wow_resolve_xml_mixin, scoped)
+                </Script>
+                <Frame name="AddonLocalDirectMixinFrame" parent="UIParent" mixin="AddonLocalDirectMixin">
+                    <KeyValues>
+                        <KeyValue key="usesSlowXmlPath" value="true" type="boolean"/>
+                    </KeyValues>
+                    <Scripts>
+                        <OnLoad method="OnLoad"/>
+                    </Scripts>
+                </Frame>
+                <Frame name="SlotBackedDirectMixinFrame" parent="UIParent" mixin="TargetFrameInstanceMixin">
+                    <KeyValues>
+                        <KeyValue key="usesSlowXmlPath" value="true" type="boolean"/>
+                    </KeyValues>
+                    <Scripts>
+                        <OnLoad method="OnLoad"/>
+                    </Scripts>
+                </Frame>
+            </ScopedModifier>
+        </Ui>
+        "#;
+
+const FRAME_LITERAL_MIXINS_PROBE: &str = r#"
+            local forbidden = (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(LiteralAuraContainer)
+            assert(LiteralAuraContainer.MarkInbound ~= nil, "literal Mixins block should apply first mixin")
+            assert(LiteralAuraContainer.MarkPrivate == nil, "private secure mixin should not apply to public partition")
+            assert(forbidden.MarkPrivate ~= nil, "private secure mixin should apply to forbidden partition")
+            LiteralAuraContainer:MarkInbound()
+            forbidden:MarkPrivate()
+            assert(LiteralAuraContainer.inboundApplied == nil, "inbound delegate should not write to public partition")
+            assert(forbidden.inboundApplied == true, "inbound delegate should run with forbidden self")
+            assert(forbidden.privateApplied == true, "second literal mixin method should run on forbidden partition")
+
+            local publicMixin = { directPublic = function() end }
+            local secureMixin = { directSecure = function() end }
+            __secureMixinMethods = {
+                [publicMixin] = { applyPublic = function(self) self.publicApplied = true end },
+            }
+            __secureenv.__secureMixinMethods = {
+                [secureMixin] = { applySecure = function(self) self.secureApplied = true end },
+            }
+
+            local composite = CreateFromMixins(publicMixin, secureMixin)
+            assert(type(composite.applyPublic) == "function", "public secure registry methods should materialize into composite mixins")
+            assert(type(composite.applySecure) == "function", "secure registry methods should materialize into composite mixins")
+            assert(composite.directPublic == nil and composite.directSecure == nil, "direct entries added after secure materialization should stay excluded")
+
+            local staticFrame = CreateFrame("Frame", "LiteralSecureStaticMixinFrame", UIParent)
+            __wow_apply_xml_mixin(staticFrame, publicMixin)
+            __wow_apply_xml_mixin(staticFrame, secureMixin)
+            staticFrame:applyPublic()
+            staticFrame:applySecure()
+            assert(staticFrame.publicApplied == true and staticFrame.secureApplied == true, "static XML mixin application should resolve both secure registries")
+            assert(staticFrame.directPublic == nil and staticFrame.directSecure == nil, "static XML mixin application should exclude direct entries")
+
+            assert(rawget(_G, "AddonLocalDirectMixin") == nil, "addon-local mixin should not leak into the public globals")
+            assert(AddonLocalDirectMixinFrame.addonLocalLoaded == true, "static XML should resolve an ordinary direct mixin from the loading addon table before lifecycle dispatch")
+            assert(SlotBackedDirectMixinFrame.slotBackedLoaded == true, "static XML should resolve a slot-backed public mixin after resolver functions receive a scoped fenv")
+        "#;
+
+const PARTITIONED_XML_METHOD_XML: &str = r#"
+        <Ui xmlns="http://www.blizzard.com/wow/ui/">
+            <Script>
+                PartitionedMethodPrivateMixin = {}
+                function PartitionedMethodPrivateMixin:OnLoad_Intrinsic()
+                    self.loadedSecret = true
+                end
+                function PartitionedMethodPrivateMixin:OnEvent_Intrinsic(event)
+                    self.eventSecret = event
+                end
+            </Script>
+            <ScopedModifier useForbiddenObjectTable="true">
+                <Frame name="PartitionedMethodFrame" parent="UIParent">
+                    <Mixins>
+                        <Mixin key="PartitionedMethodPrivateMixin" source="secure"/>
+                    </Mixins>
+                    <Scripts>
+                        <OnLoad method="OnLoad_Intrinsic"/>
+                        <OnEvent method="OnEvent_Intrinsic"/>
+                    </Scripts>
+                </Frame>
+            </ScopedModifier>
+        </Ui>
+        "#;
+
+const PARTITIONED_XML_METHOD_PROBE: &str = r#"
+            local handler = PartitionedMethodFrame:GetScript("OnEvent")
+            assert(type(handler) == "function", "OnEvent method binding should install a handler")
+            handler(PartitionedMethodFrame, "XML_METHOD_PROBE")
+        "#;
+
 #[test]
 fn test_runtime_minimal_scrollbar_avoids_lua_createframe_for_nested_thumb() {
     let t = load_test_xml(
@@ -122,56 +385,9 @@ fn test_anonymous_runtime_template_uses_registry_frame_refs_without_global_alias
 fn test_partitioned_mixins_use_forbidden_object_table() {
     let t = load_test_xml(
         "partitioned-mixins-use-forbidden-object-table",
-        r#"
-        <Ui xmlns="http://www.blizzard.com/wow/ui/">
-            <Script>
-                PartitionedInboundMixin = {};
-                function PartitionedInboundMixin:ReadSecret()
-                    return self.secret;
-                end
-                function PartitionedInboundMixin:WriteSecret(value)
-                    self.secret = value;
-                end
-
-                PartitionedPrivateMixin = {};
-                function PartitionedPrivateMixin:PrivateReadSecret()
-                    return self.secret;
-                end
-            </Script>
-            <ScopedModifier useForbiddenObjectTable="true">
-                <Frame name="PartitionedFrame" parent="UIParent">
-                    <KeyValues>
-                        <KeyValue key="secret" value="hidden" type="string"/>
-                    </KeyValues>
-                    <Mixins>
-                        <Mixin key="PartitionedInboundMixin" source="secure" targetPartition="public" inboundPartition="forbidden" secureDelegates="true"/>
-                        <Mixin key="PartitionedPrivateMixin" source="secure"/>
-                    </Mixins>
-                </Frame>
-            </ScopedModifier>
-        </Ui>
-        "#,
+        PARTITIONED_MIXINS_XML,
     );
-
-    t.env
-        .exec(
-            r#"
-            assert(type(__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable) == "function",
-                "forbidden object table helper should exist")
-            local forbidden = (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(PartitionedFrame)
-            assert(type(forbidden) == "table", "forbidden partition should be a table")
-            assert(forbidden ~= PartitionedFrame, "forbidden partition should be distinct from public frame")
-            assert(PartitionedFrame.secret == nil, "KeyValues should not leak onto public partition")
-            assert(forbidden.secret == "hidden", "KeyValues should land on forbidden partition")
-            assert(PartitionedFrame.PrivateReadSecret == nil, "private mixin should not be installed on public partition")
-            assert(type(forbidden.PrivateReadSecret) == "function", "private mixin should install on forbidden partition")
-            assert(PartitionedFrame:ReadSecret() == "hidden", "public delegate should call with forbidden self")
-            PartitionedFrame:WriteSecret("changed")
-            assert(forbidden.secret == "changed", "delegate writes should update forbidden partition")
-            assert(PartitionedFrame.secret == nil, "delegate writes should not leak onto public partition")
-        "#,
-        )
-        .unwrap();
+    t.env.exec(PARTITIONED_MIXINS_PROBE).unwrap();
 }
 
 // useForbiddenObjectTable XML ships only in the Retail, PTR and Forever Blizzard UI.
@@ -184,59 +400,9 @@ fn test_partitioned_mixins_use_forbidden_object_table() {
 fn test_partitioned_inbound_mixin_returns_public_object_views() {
     let t = load_test_xml(
         "partitioned-inbound-mixin-public-results",
-        r#"
-        <Ui xmlns="http://www.blizzard.com/wow/ui/">
-            <Script>
-                PartitionedReturnInboundMixin = {};
-                function PartitionedReturnInboundMixin:GetOwnedChild()
-                    return self.OwnedChild;
-                end
-                function PartitionedReturnInboundMixin:GetOwnedChildSelfAndTail()
-                    return self.OwnedChild, self, "tail";
-                end
-                function PartitionedReturnInboundMixin:EchoViews(child, nested)
-                    assert(child == (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(child));
-                    return child, nested;
-                end
-            </Script>
-            <ScopedModifier useForbiddenObjectTable="true">
-                <Frame name="PartitionedInboundReturnFrame" parent="UIParent">
-                    <Frames>
-                        <Frame parentKey="OwnedChild"/>
-                    </Frames>
-                    <Mixins>
-                        <Mixin key="PartitionedReturnInboundMixin" source="secure" targetPartition="public" inboundPartition="forbidden" secureDelegates="true"/>
-                    </Mixins>
-                </Frame>
-            </ScopedModifier>
-        </Ui>
-        "#,
+        PARTITIONED_INBOUND_XML,
     );
-
-    t.env
-        .exec(
-            r#"
-            local frame = PartitionedInboundReturnFrame
-            local forbidden = (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(frame)
-            assert(forbidden ~= frame, "forbidden partition should be distinct from public frame")
-            assert(forbidden.OwnedChild == (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(frame.OwnedChild),
-                "private self should hold the forbidden child view")
-            assert(frame:GetOwnedChild() == frame.OwnedChild,
-                "inbound result should publish the public object view")
-            assert(frame:GetOwnedChild() ~= forbidden.OwnedChild,
-                "inbound result should not leak the forbidden view")
-            local child, returnedSelf, tail = frame:GetOwnedChildSelfAndTail()
-            assert(child == frame.OwnedChild, "first inbound result should be public")
-            assert(returnedSelf == frame, "inbound self result should be public")
-            assert(tail == "tail", "non-frame inbound results should keep identity")
-            local nested = {child = forbidden.OwnedChild}
-            local direct, returnedNested = frame:EchoViews(frame.OwnedChild, nested)
-            assert(direct == frame.OwnedChild, "direct result is public")
-            assert(returnedNested == nested and nested.child == forbidden.OwnedChild,
-                "nested references are not projected")
-        "#,
-        )
-        .unwrap();
+    t.env.exec(PARTITIONED_INBOUND_PROBE).unwrap();
 }
 
 #[test]
@@ -275,157 +441,15 @@ fn test_plain_literal_mixins_block_still_applies_to_public_frame() {
 fn test_partitioned_runtime_template_uses_forbidden_object_table() {
     let t = load_test_xml(
         "partitioned-runtime-template-use-forbidden-object-table",
-        r#"
-        <Ui xmlns="http://www.blizzard.com/wow/ui/">
-            <Script>
-                PartitionedTemplateInboundMixin = {};
-                function PartitionedTemplateInboundMixin:ReadSecret()
-                    return self.secret;
-                end
-
-                PartitionedTemplatePrivateMixin = {};
-                function PartitionedTemplatePrivateMixin:PrivateReadSecret()
-                    return self.secret;
-                end
-            </Script>
-            <ScopedModifier useForbiddenObjectTable="true">
-                <Frame name="PartitionedRuntimeTemplate" virtual="true">
-                    <KeyValues>
-                        <KeyValue key="secret" value="template-hidden" type="string"/>
-                    </KeyValues>
-                    <Mixins>
-                        <Mixin key="PartitionedTemplateInboundMixin" source="secure" targetPartition="public" inboundPartition="forbidden" secureDelegates="true"/>
-                        <Mixin key="PartitionedTemplatePrivateMixin" source="secure"/>
-                    </Mixins>
-                </Frame>
-            </ScopedModifier>
-        </Ui>
-        "#,
+        PARTITIONED_RUNTIME_TEMPLATE_XML,
     );
-
-    t.env
-        .exec(
-            r#"
-            local frame = CreateFrame("Frame", "PartitionedRuntimeFrame", UIParent, "PartitionedRuntimeTemplate")
-            local forbidden = (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(frame)
-            assert(frame.secret == nil, "runtime template KeyValues should not leak onto public partition")
-            assert(forbidden.secret == "template-hidden", "runtime template KeyValues should land on forbidden partition")
-            assert(type(frame.ReadSecret) == "function", "runtime template inbound mixin should expose public delegate")
-            assert(frame.PrivateReadSecret == nil, "runtime template private mixin should not be public")
-            assert(type(forbidden.PrivateReadSecret) == "function", "runtime template private mixin should be forbidden")
-            assert(frame:ReadSecret() == "template-hidden", "runtime template delegate should use forbidden self")
-        "#,
-        )
-        .unwrap();
+    t.env.exec(PARTITIONED_RUNTIME_TEMPLATE_PROBE).unwrap();
 }
 
 #[test]
 fn test_frame_literal_mixins_block_applies_mixins() {
-    let t = load_test_xml(
-        "frame-literal-mixins-block",
-        r#"
-        <Ui xmlns="http://www.blizzard.com/wow/ui/">
-            <Script>
-                LiteralAuraContainerInboundMixin = {};
-                function LiteralAuraContainerInboundMixin:MarkInbound()
-                    self.inboundApplied = true;
-                end
-                LiteralAuraContainerPrivateMixin = {};
-                function LiteralAuraContainerPrivateMixin:MarkPrivate()
-                    self.privateApplied = true;
-                end
-            </Script>
-            <ScopedModifier useForbiddenObjectTable="true">
-                <Frame name="LiteralAuraContainer" parent="UIParent">
-                    <Mixins>
-                        <Mixin key="LiteralAuraContainerInboundMixin" source="secure" targetPartition="public" inboundPartition="forbidden" secureDelegates="true"/>
-                        <Mixin key="LiteralAuraContainerPrivateMixin" source="secure"/>
-                    </Mixins>
-                </Frame>
-            </ScopedModifier>
-            <Script>
-                local _, addon = ...
-                addon.AddonLocalDirectMixin = {}
-                function addon.AddonLocalDirectMixin:OnLoad()
-                    self.addonLocalLoaded = true
-                end
-            </Script>
-            <Script>
-                TargetFrameInstanceMixin = {}
-                function TargetFrameInstanceMixin:OnLoad()
-                    self.slotBackedLoaded = true
-                end
-            </Script>
-            <ScopedModifier scriptsUseGivenEnv="true">
-                <Script>
-                    local _, addon = ...
-                    local scoped = setmetatable({}, { __index = addon })
-                    scoped._G = scoped
-                    setfenv(__wow_xml_lookup_local, scoped)
-                    setfenv(__wow_resolve_xml_mixin, scoped)
-                </Script>
-                <Frame name="AddonLocalDirectMixinFrame" parent="UIParent" mixin="AddonLocalDirectMixin">
-                    <KeyValues>
-                        <KeyValue key="usesSlowXmlPath" value="true" type="boolean"/>
-                    </KeyValues>
-                    <Scripts>
-                        <OnLoad method="OnLoad"/>
-                    </Scripts>
-                </Frame>
-                <Frame name="SlotBackedDirectMixinFrame" parent="UIParent" mixin="TargetFrameInstanceMixin">
-                    <KeyValues>
-                        <KeyValue key="usesSlowXmlPath" value="true" type="boolean"/>
-                    </KeyValues>
-                    <Scripts>
-                        <OnLoad method="OnLoad"/>
-                    </Scripts>
-                </Frame>
-            </ScopedModifier>
-        </Ui>
-        "#,
-    );
-
-    t.env
-        .exec(
-            r#"
-            local forbidden = (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(LiteralAuraContainer)
-            assert(LiteralAuraContainer.MarkInbound ~= nil, "literal Mixins block should apply first mixin")
-            assert(LiteralAuraContainer.MarkPrivate == nil, "private secure mixin should not apply to public partition")
-            assert(forbidden.MarkPrivate ~= nil, "private secure mixin should apply to forbidden partition")
-            LiteralAuraContainer:MarkInbound()
-            forbidden:MarkPrivate()
-            assert(LiteralAuraContainer.inboundApplied == nil, "inbound delegate should not write to public partition")
-            assert(forbidden.inboundApplied == true, "inbound delegate should run with forbidden self")
-            assert(forbidden.privateApplied == true, "second literal mixin method should run on forbidden partition")
-
-            local publicMixin = { directPublic = function() end }
-            local secureMixin = { directSecure = function() end }
-            __secureMixinMethods = {
-                [publicMixin] = { applyPublic = function(self) self.publicApplied = true end },
-            }
-            __secureenv.__secureMixinMethods = {
-                [secureMixin] = { applySecure = function(self) self.secureApplied = true end },
-            }
-
-            local composite = CreateFromMixins(publicMixin, secureMixin)
-            assert(type(composite.applyPublic) == "function", "public secure registry methods should materialize into composite mixins")
-            assert(type(composite.applySecure) == "function", "secure registry methods should materialize into composite mixins")
-            assert(composite.directPublic == nil and composite.directSecure == nil, "direct entries added after secure materialization should stay excluded")
-
-            local staticFrame = CreateFrame("Frame", "LiteralSecureStaticMixinFrame", UIParent)
-            __wow_apply_xml_mixin(staticFrame, publicMixin)
-            __wow_apply_xml_mixin(staticFrame, secureMixin)
-            staticFrame:applyPublic()
-            staticFrame:applySecure()
-            assert(staticFrame.publicApplied == true and staticFrame.secureApplied == true, "static XML mixin application should resolve both secure registries")
-            assert(staticFrame.directPublic == nil and staticFrame.directSecure == nil, "static XML mixin application should exclude direct entries")
-
-            assert(rawget(_G, "AddonLocalDirectMixin") == nil, "addon-local mixin should not leak into the public globals")
-            assert(AddonLocalDirectMixinFrame.addonLocalLoaded == true, "static XML should resolve an ordinary direct mixin from the loading addon table before lifecycle dispatch")
-            assert(SlotBackedDirectMixinFrame.slotBackedLoaded == true, "static XML should resolve a slot-backed public mixin after resolver functions receive a scoped fenv")
-        "#,
-        )
-        .unwrap();
+    let t = load_test_xml("frame-literal-mixins-block", FRAME_LITERAL_MIXINS_XML);
+    t.env.exec(FRAME_LITERAL_MIXINS_PROBE).unwrap();
 }
 
 #[test]
@@ -495,42 +519,9 @@ fn test_xml_method_script_binds_after_inherited_template_overrides() {
 fn test_partitioned_xml_method_script_uses_forbidden_object_table() {
     let t = load_test_xml(
         "partitioned-xml-method-script-forbidden-self",
-        r#"
-        <Ui xmlns="http://www.blizzard.com/wow/ui/">
-            <Script>
-                PartitionedMethodPrivateMixin = {}
-                function PartitionedMethodPrivateMixin:OnLoad_Intrinsic()
-                    self.loadedSecret = true
-                end
-                function PartitionedMethodPrivateMixin:OnEvent_Intrinsic(event)
-                    self.eventSecret = event
-                end
-            </Script>
-            <ScopedModifier useForbiddenObjectTable="true">
-                <Frame name="PartitionedMethodFrame" parent="UIParent">
-                    <Mixins>
-                        <Mixin key="PartitionedMethodPrivateMixin" source="secure"/>
-                    </Mixins>
-                    <Scripts>
-                        <OnLoad method="OnLoad_Intrinsic"/>
-                        <OnEvent method="OnEvent_Intrinsic"/>
-                    </Scripts>
-                </Frame>
-            </ScopedModifier>
-        </Ui>
-        "#,
+        PARTITIONED_XML_METHOD_XML,
     );
-
-    t.env
-        .exec(
-            r#"
-            local handler = PartitionedMethodFrame:GetScript("OnEvent")
-            assert(type(handler) == "function", "OnEvent method binding should install a handler")
-            handler(PartitionedMethodFrame, "XML_METHOD_PROBE")
-        "#,
-        )
-        .unwrap();
-
+    t.env.exec(PARTITIONED_XML_METHOD_PROBE).unwrap();
     t.assert_lua_true(
         "return PartitionedMethodFrame.loadedSecret == nil",
         "private XML method script should not write to public frame",
