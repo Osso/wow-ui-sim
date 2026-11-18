@@ -104,6 +104,25 @@ fn read_cast_count_identifier(state: &LuaState) -> LuaResult<Option<u32>> {
     read_count_identifier(state, CAST_API)
 }
 
+#[cfg(feature = "retail-12-1-5")]
+fn secret_spell_identifier_fails_metadata_gate(state: &LuaState, value: Val) -> LuaResult<bool> {
+    let is_retail = ACTIVE == ClientProfile::Retail;
+    let is_secret_number = rilua::table_security::secret_payload_kind(state, stack_val(state, 1))
+        == Some(rilua::table_security::SecretPayloadKind::Number);
+    if !is_retail || !is_secret_number {
+        return Ok(false);
+    }
+
+    let source = borrow_state(state)?.spell_identifier_metadata_source;
+    Ok(source.is_some_and(|source| source != 0)
+        && matches!(value, Val::Num(number) if number <= 1.0))
+}
+
+#[cfg(not(feature = "retail-12-1-5"))]
+fn secret_spell_identifier_fails_metadata_gate(_state: &LuaState, _value: Val) -> LuaResult<bool> {
+    Ok(false)
+}
+
 #[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
 fn read_native_count_identifier(
     state: &LuaState,
@@ -111,9 +130,13 @@ fn read_native_count_identifier(
     api: &str,
     usage: &str,
 ) -> LuaResult<Option<u32>> {
-    // R88r.r1: accepted secret numbers share ordinary signed conversion.
-    // UNKNOWN: native Lua metadata-source conditional <=1 gate is not modeled;
-    // do not substitute caller taint, wrapper presence or allocation identity.
+    // VERIFIED (pr46-49-decomp-answers.md §R88r.r1): a nonzero source rejects
+    // accepted secret numeric selectors <=1 with the required Usage error.
+    if secret_spell_identifier_fails_metadata_gate(state, value)? {
+        return Err(super::helpers::bad_argument(1, api, usage));
+    }
+    // Accepted secret numbers then use ordinary signed conversion.
+    // Do not substitute caller taint, wrapper presence or allocation identity.
     let ordinary_or_number = !rilua::table_security::is_secret_value(state, stack_val(state, 1))
         || matches!(value, Val::Num(_));
     if ordinary_or_number && unrepresented_count_number(state, value)? {
@@ -284,6 +307,8 @@ fn parse_display_maximum(state: &LuaState, value: Val) -> LuaResult<f64> {
     if value == Val::Nil {
         return Ok(DEFAULT_DISPLAY_MAXIMUM);
     }
+    // VERIFIED (pr46-49-decomp-answers.md §R88r.r1): signed-32 conversion
+    // accepts secret 1, 0 and -1; it has no identifier <=1 gate.
     super::helpers::read_untainted_signed32_argument(state, 2, DISPLAY_API, DISPLAY_USAGE)
         .map(f64::from)
 }

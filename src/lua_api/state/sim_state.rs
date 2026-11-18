@@ -167,6 +167,8 @@ pub struct SimState {
     #[cfg(feature = "client-wrath")]
     pub who_routing: crate::c_api::who_routing::WhoRouting,
     pub tooltips: HashMap<u64, TooltipData>,
+    /// Host-only call inputs for the simulator's q4 inset access test seam.
+    pub clamp_inset_access_input: crate::widget::ClampInsetAccessInput,
     /// Explicit host-supplied item metadata, taking precedence over the generated catalog.
     pub item_overrides: HashMap<u32, crate::items::ItemInfo>,
     /// UNKNOWN live R88l.1 condition outcomes; absent inputs select no color override.
@@ -700,6 +702,9 @@ pub struct SimState {
     pub ranged_auto_attack_spell_id: u32,
     /// Host null override; None uses the INFERRED active-player context.
     pub spell_cast_context_is_null: Option<bool>,
+    /// UNKNOWN native value; INFERRED mapping: None means no metadata-source input.
+    #[cfg(feature = "retail-12-1-5")]
+    pub spell_identifier_metadata_source: Option<i32>,
     /// Explicit simulator input for older C_Spell and spellbook count queries.
     #[cfg(feature = "retail-12-0-0")]
     pub spell_cast_counts: HashMap<u32, u32>,
@@ -1268,6 +1273,8 @@ pub struct SimState {
     pub save_failed_addons: bool,
     /// Explicit host-supplied cinematic playback state; no playback engine implied.
     pub cinematic_active: bool,
+    #[cfg(feature = "client-mists")]
+    pub movie_playback: MoviePlaybackState,
     /// World entry is distinct from IsLoggedIn; supplied/transitioned by the owner.
     pub in_world: bool,
     /// Wrath reload's temporary protected-action phase, not the player's combat bit.

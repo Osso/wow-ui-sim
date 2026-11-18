@@ -52,6 +52,8 @@ pub struct WidgetRegistry {
     current_dirty_source: RefCell<Option<RenderDirtySource>>,
     /// Reverse index: target_id -> set of frame IDs anchored to it.
     pub(super) anchor_dependents: FxHashMap<u64, FxHashSet<u64>>,
+    /// Retail notification/propagation order, separate from the dirty index.
+    pub(super) ordered_anchor_dependents: FxHashMap<u64, Vec<u64>>,
     /// Forward index: frame_id -> set of target IDs it is anchored to.
     pub(super) frame_anchor_targets: FxHashMap<u64, FxHashSet<u64>>,
     /// Frames with `rect_dirty = true`, for fast lookup in `ensure_layout_rects`.
@@ -81,32 +83,18 @@ impl WidgetRegistry {
     pub fn new() -> Self {
         Self {
             layout_pixel_scale: pixel_scale::LayoutPixelScale::default(),
-            widgets: FxHashMap::with_capacity_and_hasher(
-                Self::INITIAL_CAPACITY,
-                Default::default(),
-            ),
-            names: FxHashMap::with_capacity_and_hasher(Self::INITIAL_CAPACITY, Default::default()),
+            widgets: Self::reserved_widget_map(Self::INITIAL_CAPACITY),
+            names: Self::reserved_widget_map(Self::INITIAL_CAPACITY),
             ordered_ids: Vec::with_capacity(Self::INITIAL_CAPACITY),
             child_links: Self::initial_id_pair_set(),
-            event_listeners: FxHashMap::with_capacity_and_hasher(512, Default::default()),
+            event_listeners: Self::reserved_widget_map(512),
             all_event_listeners: FxHashSet::with_capacity_and_hasher(64, Default::default()),
-            render_dirty_ids: RefCell::new(FxHashSet::with_capacity_and_hasher(
-                256,
-                Default::default(),
-            )),
-            render_dirty_sources: RefCell::new(FxHashMap::with_capacity_and_hasher(
-                64,
-                Default::default(),
-            )),
+            render_dirty_ids: RefCell::new(Self::initial_render_dirty_ids()),
+            render_dirty_sources: RefCell::new(Self::reserved_widget_map(64)),
             current_dirty_source: RefCell::new(None),
-            anchor_dependents: FxHashMap::with_capacity_and_hasher(
-                Self::INITIAL_CAPACITY,
-                Default::default(),
-            ),
-            frame_anchor_targets: FxHashMap::with_capacity_and_hasher(
-                Self::INITIAL_CAPACITY,
-                Default::default(),
-            ),
+            anchor_dependents: Self::reserved_widget_map(Self::INITIAL_CAPACITY),
+            ordered_anchor_dependents: FxHashMap::default(),
+            frame_anchor_targets: Self::reserved_widget_map(Self::INITIAL_CAPACITY),
             rect_dirty_ids: Self::initial_id_set(),
             hit_grid_dirty_ids: Self::initial_id_set(),
             pending_layout_ids: Self::initial_id_set(),
@@ -116,6 +104,14 @@ impl WidgetRegistry {
             layout_canvas_size: None,
             size_changed_ids: FxHashSet::default(),
         }
+    }
+
+    fn reserved_widget_map<K, V>(capacity: usize) -> FxHashMap<K, V> {
+        FxHashMap::with_capacity_and_hasher(capacity, Default::default())
+    }
+
+    fn initial_render_dirty_ids() -> FxHashSet<u64> {
+        FxHashSet::with_capacity_and_hasher(256, Default::default())
     }
 
     fn initial_id_set() -> FxHashSet<u64> {
@@ -401,6 +397,29 @@ impl WidgetRegistry {
         }
     }
 
+    /// Frame-family contexts terminate on their stored value; generic
+    /// regions delegate to their parent. Other native specializations are unknown.
+    pub(crate) fn has_window_movement_context(&self, mut current: Option<u64>) -> bool {
+        while let Some(frame) = current.and_then(|id| self.get(id)) {
+            if frame.has_frame_carrier() {
+                return frame.has_window_movement_context;
+            }
+            current = frame.parent_id;
+        }
+        false
+    }
+
+    pub(crate) fn copy_window_movement_context(&mut self, child: u64, parent: Option<u64>) {
+        if crate::widget::clamp_geometry::uses_retail_clamp_producers() {
+            let context = self.has_window_movement_context(parent);
+            if let Some(frame) = self.widgets.get_mut(&child)
+                && frame.has_frame_carrier()
+            {
+                frame.has_window_movement_context = context;
+            }
+        }
+    }
+
     /// Add a child to a parent widget.
     pub fn add_child(&mut self, parent_id: u64, child_id: u64) {
         let (parent_eff_alpha, parent_eff_scale) = self
@@ -408,6 +427,23 @@ impl WidgetRegistry {
             .get(&parent_id)
             .map(|p| (p.effective_alpha, p.effective_scale))
             .unwrap_or((1.0, 1.0));
+        self.reparent_child_if_needed(parent_id, child_id);
+        let new_link = if let Some(parent) = self.widgets.get_mut(&parent_id)
+            && self.child_links.insert((parent_id, child_id))
+        {
+            parent.children.push(child_id);
+            true
+        } else {
+            false
+        };
+        if new_link {
+            self.copy_window_movement_context(child_id, Some(parent_id));
+        }
+        self.propagate_effective_alpha(child_id, parent_eff_alpha);
+        self.propagate_effective_scale(child_id, parent_eff_scale);
+    }
+
+    fn reparent_child_if_needed(&mut self, parent_id: u64, child_id: u64) {
         let old_parent_id = self
             .widgets
             .get(&child_id)
@@ -426,13 +462,6 @@ impl WidgetRegistry {
                 child.parent_id = Some(parent_id);
             }
         }
-        if let Some(parent) = self.widgets.get_mut(&parent_id) {
-            if self.child_links.insert((parent_id, child_id)) {
-                parent.children.push(child_id);
-            }
-        }
-        self.propagate_effective_alpha(child_id, parent_eff_alpha);
-        self.propagate_effective_scale(child_id, parent_eff_scale);
     }
 
     /// Iterate over all widget IDs.

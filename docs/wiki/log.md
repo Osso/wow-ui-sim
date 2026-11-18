@@ -2,9 +2,13 @@
 
 Corrected the broad host gate in the [tooltip contract](../specs/tooltip-data-serialization.md) and [Lua API page](systems/lua-api.md#retail-sellprice-line-r88pp1). **VERIFIED (R88aw):** supported routes have distinct preview and instance-status inputs, and known ItemSparse flags decide exclusion. **INFERRED (simulator mapping):** generated metadata drives those known flags; host inputs remain only for unavailable bag status, calculated prices, and prepared quantities.
 
+## [2026-11-18] implementation | RegisterUnitEvent unit scan
+
+Updated the [event-system record](../systems/event-system.md#frame-registerunitevent-unit-scan-r88aj) and [contract](../specs/register-unit-event-units.md). **VERIFIED (R88aj):** four-position scan rules are established for Mists, Retail and Forever; Mists rejects the documented unknown `boss6`–`boss8` tokens. **VERIFIED (Mists simulator):** 3/3 original-consumer/boundary cases and 2/2 unit-scan cases pass. Retail/Forever secret-state and forbidden-aspect inputs remain UNKNOWN and empty by default.
+
 ## [2026-11-18] implementation | Retail role and friends settings
 
-The [social settings investigation](investigations/retail-social-settings.md) separates the verified R88ap.3–4 Boolean rules from inferred host type tags/settings bytes and unknown writers/events. Original UnitPopup and FriendsFrame consumers supply regression coverage.
+The [social settings investigation](../investigations/retail-social-settings.md) separates the verified R88ap.3–4 Boolean rules from inferred host type tags/settings bytes and unknown writers/events. Original UnitPopup and FriendsFrame consumers supply regression coverage.
 
 ## [2026-11-18] implementation | Retail cinematic summary
 
@@ -21,6 +25,18 @@ Added the [Guild faction group system page](systems/guild-faction-group.md) and 
 ## [2026-11-18] investigation | Retail bag tracker fixture lifecycle
 
 The [panel fixture investigation](investigations/showuipanel-toggle-fixture-owners.md#retail-bag-tracker-lifecycle-lt-c0e6) records the missing per-addon completion event. Original TokenUI creates the bag tracker after `ADDON_LOADED`; assertions and vendor code remain unchanged.
+
+## [2026-11-17] verification | Mists Glue chat placeholder and movie flow
+
+Updated the [investigation](investigations/mists-glue-intro-movie-login.md) and [Glue login contract](../specs/glue-login-flow.md). **VERIFIED (source at `e9ec1c669`):** the shared loader already rejects the Game-only chat add-ons; `chat_window_defaults` created the synthetic frame before screen selection. Bootstrap now skips that placeholder only on Mists Glue and does not hide it. **VERIFIED (Mists integration run):** login boot passes 1/1, edit-box focus passes 1/1, and the focused movie/API tests pass 16/16; the build reports zero warnings. **INFERRED (R88ar, 70631 applied to cached 70268):** the original Mists Glue login does not load the Game-only chat add-ons.
+
+## [2026-11-17] investigation | Mists Glue intro movie login
+
+Added the [investigation](investigations/mists-glue-intro-movie-login.md). **VERIFIED (Mists 5.5.4.70268 cache):** the selected original GlueParent/MovieFrame path hides AccountLogin and its edit boxes. **VERIFIED (R88ao, Mists Classic 5.5.4.70631):** cursor global scope and movie return/finish semantics. **INFERRED:** first launch applies the 70631 default/display values to the 70268 cache. **UNKNOWN:** offline StartMovie outcome; its host input stays empty by default.
+
+## [2026-11-17] verification | Mists MovieFrame Missing Rec mapping
+
+Updated the [investigation](investigations/mists-glue-intro-movie-login.md) and [Glue login contract](../specs/glue-login-flow.md). **INFERRED (simulator mapping):** absent Movie records return `(false, 2)` while explicit host outcomes remain available. **VERIFIED (Mists simulator at source `7158e98de`):** original login boot passes 1/1 with AccountLogin visible, edit-box focus passes 1/1, and `glue_login::mists_` passes 15/15. **VERIFIED (Retail 12.1.5.70783 at the same source):** `cinematic_summary` passes 2/2. **VERIFIED (profile gates at source `f420c5c15`):** Forever, Mists, Wrath, and Retail compile-only targets pass with zero warnings.
 
 ## [2026-11-17] verification | Retail PerformanceBar tooltip
 
@@ -4129,3 +4145,11 @@ Added [Retail Glue host state](systems/glue-host-state.md) for lt-fb68. Retail r
 ## [2026-11-17] system | Retail StoreSecure VAS
 
 Updated the [VAS system page](systems/store-secure-vas.md) with R88al. **VERIFIED (R88al and current-source tests):** Retail `GetBnetTransferInfo` returns the saved GUID and ordered account-name list through the original StoreUI transfer path; two success responses, an error, and a stale response are covered. **UNKNOWN:** the native pre-validation snapshot and context-dependent return-secret marking.
+
+## [2026-11-15] clarification | Retail screen clamp q4
+
+[Screen clamp suppression](investigations/screen-clamp-suppression.md#q4-clarification-1192) replaces interim inputs with the verified threshold, call-local read sample, separate ancestor flags, and existing Window and propagation paths.
+
+## [2026-11-14] implementation | Retail q3 screen clamp producers
+
+[Screen clamp suppression](investigations/screen-clamp-suppression.md) records q3 anchor dependency propagation, the guarded coordinate root, native-unit conversion and rounding, and separate inset notifications and restriction policy. The remaining q4 inputs are host seams, not native defaults.

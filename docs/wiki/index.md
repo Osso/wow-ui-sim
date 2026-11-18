@@ -2,6 +2,10 @@
 
 [Tooltip data](systems/lua-api.md#retail-sellprice-line-r88pp1) now records the R88aw request, instance-status, item-flag and preview rules. **INFERRED (simulator mapping):** generated catalog metadata drives known flags; explicit empty-default inputs remain only for bag status and calculated prices.
 
+## [2026-11-18] implementation | RegisterUnitEvent unit scan
+
+[Event system](systems/event-system.md#frame-registerunitevent-unit-scan-r88aj) links the [R88aj contract](../specs/register-unit-event-units.md): Mists boundary and original CastSequenceManager tests pass; native scan evidence is limited to Mists, Retail and Forever.
+
 ## [2026-11-18] implementation | Retail role and friends settings
 
 The [social settings investigation](investigations/retail-social-settings.md) separates the verified R88ap.3–4 Boolean rules from inferred host type tags/settings bytes and unknown writers/events. Original UnitPopup and FriendsFrame consumers supply regression coverage.
@@ -21,6 +25,14 @@ The [Guild faction group system page](systems/guild-faction-group.md) links the 
 ## [2026-11-18] investigation | Retail bag tracker fixture lifecycle
 
 The [panel fixture investigation](investigations/showuipanel-toggle-fixture-owners.md#retail-bag-tracker-lifecycle-lt-c0e6) records the missing per-addon completion event. Original TokenUI creates the bag tracker after `ADDON_LOADED`; assertions and vendor code remain unchanged.
+
+## [2026-11-17] verification | Mists Glue chat placeholder and movie flow
+
+The [Mists Glue intro movie login investigation](investigations/mists-glue-intro-movie-login.md) and [Glue login contract](../specs/glue-login-flow.md) record the synthetic `ChatFrame1` root cause and fix. **VERIFIED (Mists simulator source at `e9ec1c669`):** the loader already rejects both Game-only chat add-ons; a bootstrap placeholder caused the visible frame. **VERIFIED (Mists simulator at source `7158e98de`):** original login boot passes 1/1 with AccountLogin visible, edit-box focus passes 1/1, and `glue_login::mists_` passes 15/15, including the `(false, 2)` no-record result. **INFERRED (R88ar, 70631 applied to 70268):** the original Glue login has no ChatFrame1 from those Game-only add-ons.
+
+## [2026-11-17] investigation | Mists Glue intro movie login
+
+[Mists Glue intro movie login](investigations/mists-glue-intro-movie-login.md) records the selected 5.5.4.70268 GlueParent/MovieFrame path, R88ao native facts for 5.5.4.70631, the inferred no-record `(false, 2)` mapping, and the original-consumer RED.
 
 ## [2026-11-17] verification | Retail PerformanceBar tooltip
 
@@ -4620,6 +4632,7 @@ The sixteen retail 12.0.0 `Enum.EditModeDamageMeterSetting.*` and `Enum.EditMode
 | [[mount-journal-click-selection]] | Mount Journal mouse clicks never switched selection: the startup-XML fast path fused multi-arg `RegisterForClicks("LeftButtonUp", "RightButtonUp")` into one garbage registration string; `Button:Click()` bypasses registration so only the real GUI dispatch path (`headless-click-probe mounts`) could see it |
 | [[micro-menu-click-offset]] | Micro menu (LFD etc.) clicks dead: MicroMenu's quadrant-dependent anchor was computed before EditMode anchors and the real window size were applied, so the first press snapped the bar one QueueStatusButton slot and the down/up frames mismatched; fixed by replaying `InvokeOnAnyEditModeSystemAnchorChanged` after anchor apply and on `set_screen_size` |
 | [[mists-elvui-startup-compat]] | Mists ElvUI startup errors came from separate simulator surface gaps: trim aliases, MessageFrame-only methods visible on plain frames, AuraUtil tuple shape, unanchored Slider label fontstrings, physical-vs-UI screen-size globals, and chat hook globals |
+| [[mists-glue-intro-movie-login]] | **VERIFIED (Mists 5.5.4.70268 cache and simulator RED):** the selected first-display cinematic opens full-screen MovieFrame; MovieFrame OnShow reaches unpublished HideCursor, leaving AccountLogin hidden and its edit boxes unclickable |
 | [[mists-addon-panel-resume-error]] | Mists addon-panel matrix must resume from first unproven addon; rerunning passed rows from `AllTheThings` was the mistake, and `--start-at` / `.passed` markers guard against repeating it |
 | [[mists-heirloom-tooltip]] | Mists Collections heirloom buttons need `GameTooltip:SetHeirloomByItemID`, routed through `C_TooltipInfo.GetHeirloomByItemID`, so heirloom tooltip initialization does not throw |
 | [[mists-syndicator-baganator-startup]] | Mists full-profile startup errors in Syndicator and Baganator came from Classic/Mists item taxonomy labels plus TokenUI loading before a minimal CharacterFrame parent existed |

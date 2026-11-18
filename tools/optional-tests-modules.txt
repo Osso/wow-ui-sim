@@ -172,3 +172,6 @@ tooltip_minimum_width
 
 # Retail GlobalColor API and original Color.lua consumer regression.
 c_ui_color_globalcolor
+
+# lt-883d: Retail-only native clamps and original GameTooltip consumer.
+screen_clamp_q3

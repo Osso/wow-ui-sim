@@ -30,6 +30,7 @@ pub fn reparent_widget(widgets: &mut WidgetRegistry, child_id: u64, new_parent_i
     let parent_props = read_parent_props(widgets, new_parent_id);
     update_child_parent_link(widgets, child_id, new_parent_id, same_parent, parent_props);
     if !same_parent {
+        widgets.copy_window_movement_context(child_id, new_parent_id);
         propagate_strata_level(widgets, child_id);
     }
 
