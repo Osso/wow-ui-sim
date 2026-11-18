@@ -210,8 +210,7 @@ fn measure_native_tooltip(state: &mut SimState, id: u64, fonts: &mut WowFontSyst
     let wrap_texts = native_tooltip_wrap_texts(state, &td);
     // WM63 L23: choose the capped width, then shrink it to fitted wrapped rows.
     let width = select_native_tooltip_width(&td, &rows, &wrap_fonts, &wrap_texts, fonts);
-    let height =
-        measure_native_tooltip_rows(state, id, &td, width, &rows, fonts, &mut reservations);
+    let height = measure_native_tooltip_rows(state, &td, width, &rows, fonts, &mut reservations);
     if let Some(tooltip) = state.tooltips.get_mut(&id) {
         tooltip.row_reservations = reservations;
     }
@@ -280,7 +279,6 @@ fn native_tooltip_wrap_texts(
 
 fn measure_native_tooltip_rows(
     state: &mut SimState,
-    id: u64,
     td: &crate::lua_api::tooltip::TooltipData,
     width: f32,
     rows: &[crate::lua_api::tooltip::TooltipWidthRow],
