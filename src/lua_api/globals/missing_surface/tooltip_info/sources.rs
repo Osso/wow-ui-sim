@@ -26,34 +26,45 @@ pub(super) fn tooltip_for_item_link(
     parsed: &crate::c_api::item_descriptor::ParsedItemLink,
     hide_vendor_price: bool,
 ) -> LuaResult<Val> {
-    // WM97 evidence is Retail 12.1.5; other profiles keep the catalog-only path.
-    if !matches!(
-        crate::client_profile::ACTIVE,
-        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
-    ) {
+    if !item_link_level_resolution_enabled() {
         return Ok(tooltip_for_item_id(state, parsed.descriptor.item_id));
     }
     let descriptor = &parsed.descriptor;
-    let player_level = {
-        let model = borrow_state(state)?;
-        let player = &model.player;
-        if player.effective_level != 0 {
-            player.effective_level
-        } else {
-            player.level
-        }
+    let Some(item) = resolve_item_link_info(state, descriptor)? else {
+        return Ok(empty_tooltip(state, TOOLTIP_TYPE_ITEM));
     };
-    let resolved = descriptor
+    Ok(tooltip_for_item_info_with_request(
+        state,
+        descriptor.item_id,
+        &item,
+        RetailSellPriceRequest::without_instance(hide_vendor_price),
+    ))
+}
+
+fn item_link_level_resolution_enabled() -> bool {
+    matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+    )
+}
+
+fn resolve_item_link_info(
+    state: &mut LuaState,
+    descriptor: &crate::c_api::item_descriptor::ItemDescriptor,
+) -> LuaResult<Option<crate::c_api::item_descriptor::ItemInfo>> {
+    let player_level = item_link_player_level(state)?;
+    descriptor
         .resolve(player_level)
-        .map_err(|error| rilua::runtime_error(format!("C_TooltipInfo.GetHyperlink: {error}")))?;
-    Ok(match resolved {
-        Some(item) => tooltip_for_item_info_with_request(
-            state,
-            descriptor.item_id,
-            &item,
-            RetailSellPriceRequest::without_instance(hide_vendor_price),
-        ),
-        None => empty_tooltip(state, TOOLTIP_TYPE_ITEM),
+        .map_err(|error| rilua::runtime_error(format!("C_TooltipInfo.GetHyperlink: {error}")))
+}
+
+fn item_link_player_level(state: &mut LuaState) -> LuaResult<i32> {
+    let model = borrow_state(state)?;
+    let player = &model.player;
+    Ok(if player.effective_level != 0 {
+        player.effective_level
+    } else {
+        player.level
     })
 }
 

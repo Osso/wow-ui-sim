@@ -308,37 +308,48 @@ fn selected_item_accessor_uses_prepared_quantity_for_max_price() {
 #[test]
 fn bag_item_instance_keeps_prepared_max_price_at_minus_one() {
     let env = selected_tooltip_env();
-    {
-        let mut sim = env.state().borrow_mut();
-        sim.bag_items.insert(
-            (0, 1),
-            BagItem {
-                owned_identity: None,
-                item_id: 184318,
-                stack_count: 1,
-                hyperlink: None,
-                durability: None,
-                applied_transmog: None,
-            },
-        );
-        sim.bag_item_tooltip_sell_price_statuses.insert(
-            (0, 1),
-            wow_ui_sim::c_api::item_tooltip::SellPriceStatusInput::StatusRecord {
-                flags: 0,
-                recorded_time: 1_000,
-                client_clock: 1_000,
-            },
-        );
-        sim.item_tooltip_sell_price_quantities
-            .insert(184318, (1, 5));
-    }
+    seed_bag_sell_price_instance(&env);
+    assert_active_status_suppresses_sell_price(&env);
+    allow_bag_instance_sell_price(&env);
+    assert_instance_sell_price_uses_minus_one_max(&env);
+    clear_bag_status_and_assert_sell_price_missing(&env);
+}
+
+fn seed_bag_sell_price_instance(env: &WowLuaEnv) {
+    let mut sim = env.state().borrow_mut();
+    sim.bag_items.insert(
+        (0, 1),
+        BagItem {
+            owned_identity: None,
+            item_id: 184318,
+            stack_count: 1,
+            hyperlink: None,
+            durability: None,
+            applied_transmog: None,
+        },
+    );
+    sim.bag_item_tooltip_sell_price_statuses.insert(
+        (0, 1),
+        wow_ui_sim::c_api::item_tooltip::SellPriceStatusInput::StatusRecord {
+            flags: 0,
+            recorded_time: 1_000,
+            client_clock: 1_000,
+        },
+    );
+    sim.item_tooltip_sell_price_quantities
+        .insert(184318, (1, 5));
+}
+
+fn assert_active_status_suppresses_sell_price(env: &WowLuaEnv) {
     env.exec(r#"
         local data = C_TooltipInfo.GetBagItem(0, 1)
         for _, line in ipairs(data.lines) do
             assert(line.type ~= Enum.TooltipDataLineType.SellPrice)
         end
     "#).expect("an active status record suppresses the SellPrice row");
+}
 
+fn allow_bag_instance_sell_price(env: &WowLuaEnv) {
     if let Some(wow_ui_sim::c_api::item_tooltip::SellPriceStatusInput::StatusRecord { flags, .. }) =
         env.state()
             .borrow_mut()
@@ -347,6 +358,9 @@ fn bag_item_instance_keeps_prepared_max_price_at_minus_one() {
     {
         *flags = 1;
     }
+}
+
+fn assert_instance_sell_price_uses_minus_one_max(env: &WowLuaEnv) {
     env.exec(r#"
         local data = C_TooltipInfo.GetBagItem(0, 1)
         local sellPriceLine
@@ -359,7 +373,9 @@ fn bag_item_instance_keeps_prepared_max_price_at_minus_one() {
         assert(sellPriceLine and sellPriceLine.price == 1)
         assert(sellPriceLine.maxPrice == -1)
     "#).expect("item-instance rows bypass prepared maxPrice after status passes");
+}
 
+fn clear_bag_status_and_assert_sell_price_missing(env: &WowLuaEnv) {
     env.state()
         .borrow_mut()
         .bag_item_tooltip_sell_price_statuses
@@ -376,40 +392,56 @@ fn bag_item_instance_keeps_prepared_max_price_at_minus_one() {
 #[test]
 fn no_status_record_marks_the_instance_before_later_sell_price_rows() {
     const ITEM_STATUS_FLAG: u32 = 4096;
-    const INSTANCE_STATUS_MARKER: u32 = 2;
     const HOST_UNIT_PRICE: u32 = 4242;
     let item_id = 7005;
     let item = wow_ui_sim::items::get_item(item_id).expect("catalog item");
     assert!(item.flags_0.is_some_and(|flags| flags & ITEM_STATUS_FLAG != 0));
     let env = selected_tooltip_env();
-    {
-        let mut sim = env.state().borrow_mut();
-        sim.bag_items.insert(
-            (0, 1),
-            BagItem {
-                owned_identity: None,
-                item_id,
-                stack_count: 1,
-                hyperlink: None,
-                durability: None,
-                applied_transmog: None,
-            },
-        );
-        sim.item_tooltip_sell_price_unit_prices
-            .insert((item_id, item.item_level), HOST_UNIT_PRICE);
-        sim.bag_item_tooltip_sell_price_statuses.insert(
-            (0, 1),
-            wow_ui_sim::c_api::item_tooltip::SellPriceStatusInput::NoStatusRecord {
-                instance_marker_flags: 0,
-            },
-        );
-    }
+    seed_unrecorded_bag_item(&env, item_id, item.item_level, HOST_UNIT_PRICE);
+    assert_first_unrecorded_request_suppresses_sell_price(&env);
+    assert_instance_status_marker_set(&env);
+    assert_later_unrecorded_request_publishes_price(&env);
+}
+
+fn seed_unrecorded_bag_item(
+    env: &WowLuaEnv,
+    item_id: u32,
+    item_level: u16,
+    host_unit_price: u32,
+) {
+    let mut sim = env.state().borrow_mut();
+    sim.bag_items.insert(
+        (0, 1),
+        BagItem {
+            owned_identity: None,
+            item_id,
+            stack_count: 1,
+            hyperlink: None,
+            durability: None,
+            applied_transmog: None,
+        },
+    );
+    sim.item_tooltip_sell_price_unit_prices
+        .insert((item_id, item_level), host_unit_price);
+    sim.bag_item_tooltip_sell_price_statuses.insert(
+        (0, 1),
+        wow_ui_sim::c_api::item_tooltip::SellPriceStatusInput::NoStatusRecord {
+            instance_marker_flags: 0,
+        },
+    );
+}
+
+fn assert_first_unrecorded_request_suppresses_sell_price(env: &WowLuaEnv) {
     env.exec(r#"
         local data = C_TooltipInfo.GetBagItem(0, 1)
         for _, line in ipairs(data.lines) do
             assert(line.type ~= Enum.TooltipDataLineType.SellPrice)
         end
     "#).expect("the first unrecorded instance request suppresses SellPrice");
+}
+
+fn assert_instance_status_marker_set(env: &WowLuaEnv) {
+    const INSTANCE_STATUS_MARKER: u32 = 2;
     assert!(matches!(
         env.state()
             .borrow()
@@ -419,6 +451,9 @@ fn no_status_record_marks_the_instance_before_later_sell_price_rows() {
             instance_marker_flags: INSTANCE_STATUS_MARKER
         })
     ));
+}
+
+fn assert_later_unrecorded_request_publishes_price(env: &WowLuaEnv) {
     env.exec(r#"
         local data = C_TooltipInfo.GetBagItem(0, 1)
         local sellPriceLine

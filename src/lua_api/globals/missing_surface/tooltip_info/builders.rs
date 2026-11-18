@@ -592,22 +592,35 @@ fn update_retail_item_status_for_sell_price(
             flags,
             recorded_time,
             client_clock,
-        } => {
-            let remaining = *recorded_time + SELL_PRICE_STATUS_DURATION_SECONDS - *client_clock;
-            Some(*flags & SELL_PRICE_ITEM_STATUS_FLAGS == 0 && remaining > 0)
-        }
+        } => Some(recorded_sell_price_status_allows(
+            *flags,
+            *recorded_time,
+            *client_clock,
+        )),
         crate::c_api::item_tooltip::SellPriceStatusInput::NoStatusRecord {
             instance_marker_flags,
         } => {
             let item_flags = item.flags_0?;
-            let should_mark = item_flags & SELL_PRICE_ITEM_STATUS_FLAGS_0 != 0
-                && *instance_marker_flags & SELL_PRICE_INSTANCE_STATUS_MARKER == 0;
-            if should_mark {
-                *instance_marker_flags |= SELL_PRICE_INSTANCE_STATUS_MARKER;
-            }
-            Some(should_mark)
+            Some(mark_sell_price_status_instance(
+                item_flags,
+                instance_marker_flags,
+            ))
         }
     }
+}
+
+fn recorded_sell_price_status_allows(flags: u32, recorded_time: i64, client_clock: i64) -> bool {
+    let remaining = recorded_time + SELL_PRICE_STATUS_DURATION_SECONDS - client_clock;
+    flags & SELL_PRICE_ITEM_STATUS_FLAGS == 0 && remaining > 0
+}
+
+fn mark_sell_price_status_instance(item_flags: u32, instance_marker_flags: &mut u32) -> bool {
+    let should_mark = item_flags & SELL_PRICE_ITEM_STATUS_FLAGS_0 != 0
+        && *instance_marker_flags & SELL_PRICE_INSTANCE_STATUS_MARKER == 0;
+    if should_mark {
+        *instance_marker_flags |= SELL_PRICE_INSTANCE_STATUS_MARKER;
+    }
+    should_mark
 }
 
 /// VERIFIED (R88p.p1/R88aw): mode, status, item flags, preview and nonzero initial price gate type 11.
@@ -620,22 +633,9 @@ fn push_retail_sell_price_line(
     item: &items::ItemInfo,
     request: Option<RetailSellPriceRequest>,
 ) {
-    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
-        return;
-    }
-    let Some(request) = request else {
+    let Some((request, price)) = eligible_retail_sell_price(state, item_id, item, request) else {
         return;
     };
-    if !retail_sell_price_gates_allow(state, item, request) {
-        return;
-    }
-    let Some(price) = calculate_initial_retail_unit_price(state, item_id, item) else {
-        return;
-    };
-    if price == 0 {
-        return;
-    }
-
     let max_price = calculate_retail_sell_price_max(
         state,
         item_id,
@@ -645,6 +645,23 @@ fn push_retail_sell_price_line(
     let line = push_tooltip_line(state, lines, index, LINE_TYPE_SELL_PRICE, "", None, false);
     table_set(state, line, "price", Val::Num(f64::from(price)));
     table_set(state, line, "maxPrice", Val::Num(max_price));
+}
+
+fn eligible_retail_sell_price(
+    state: &mut LuaState,
+    item_id: u32,
+    item: &items::ItemInfo,
+    request: Option<RetailSellPriceRequest>,
+) -> Option<(RetailSellPriceRequest, u32)> {
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
+        return None;
+    }
+    let request = request?;
+    if !retail_sell_price_gates_allow(state, item, request) {
+        return None;
+    }
+    let price = calculate_initial_retail_unit_price(state, item_id, item)?;
+    (price != 0).then_some((request, price))
 }
 
 fn retail_sell_price_gates_allow(

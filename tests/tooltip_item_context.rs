@@ -206,8 +206,16 @@ fn empty_env() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("real tooltip namespace");
     env.state().borrow_mut().player.class_index = 2;
     assert!(env.state().borrow().item_tooltip_levels.is_empty());
+    seed_item_tooltip_inputs(&env);
+    env.exec(ASSERTIONS)
+        .expect("assertions only; never replace actual query/callback");
+    env.exec(&format!("ITBase = ITCheck({},211995)", item.item_level))
+        .unwrap();
+    env
+}
+
+fn seed_item_tooltip_inputs(env: &WowLuaEnv) {
     // R80: exact final amounts are independent fixture inputs, not derived budgets.
-    use wow_ui_sim::c_api::item_tooltip::{ItemTooltipInput, ItemTooltipStat};
     for (level, amounts) in [
         (571, [37, 91, 17, 23]),
         (601, [41, 99, 19, 29]),
@@ -221,27 +229,27 @@ fn empty_env() -> WowLuaEnv {
         (609, [73, 137, 51, 67]),
         (610, [79, 139, 57, 71]),
     ] {
-        let labels = ["Strength", "Stamina", "Mastery", "Versatility"];
-        env.state().borrow_mut().item_tooltip_inputs.insert(
-            (ITEM, level),
-            ItemTooltipInput {
-                stats: labels
-                    .into_iter()
-                    .zip(amounts)
-                    .map(|(label, amount)| ItemTooltipStat {
-                        label: label.into(),
-                        amount,
-                    })
-                    .collect(),
-                ..Default::default()
-            },
-        );
+        seed_item_tooltip_input(env, level, amounts);
     }
-    env.exec(ASSERTIONS)
-        .expect("assertions only; never replace actual query/callback");
-    env.exec(&format!("ITBase = ITCheck({},211995)", item.item_level))
-        .unwrap();
-    env
+}
+
+fn seed_item_tooltip_input(env: &WowLuaEnv, level: u32, amounts: [i32; 4]) {
+    use wow_ui_sim::c_api::item_tooltip::{ItemTooltipInput, ItemTooltipStat};
+    let labels = ["Strength", "Stamina", "Mastery", "Versatility"];
+    env.state().borrow_mut().item_tooltip_inputs.insert(
+        (ITEM, level),
+        ItemTooltipInput {
+            stats: labels
+                .into_iter()
+                .zip(amounts)
+                .map(|(label, amount)| ItemTooltipStat {
+                    label: label.into(),
+                    amount,
+                })
+                .collect(),
+            ..Default::default()
+        },
+    );
 }
 
 fn seeded_env() -> WowLuaEnv {

@@ -478,23 +478,38 @@ fn append_local_eligibility_line(
         return Ok(());
     }
     if context.in_combat {
-        return append_key_line(
-            state,
-            tooltip,
-            "TALENT_TOOLTIP_ADD_COMBAT_ERROR",
-            "HOSTILE_STATUS_COLOR",
-            true,
-        );
+        return append_combat_error_line(state, tooltip);
     }
     if eligibility == Some(false) || context.rest_permission == Some(false) {
-        return append_key_line(
-            state,
-            tooltip,
-            "TALENT_TOOLTIP_ADD_REST_ERROR_PVP",
-            "HOSTILE_STATUS_COLOR",
-            true,
-        );
+        return append_rest_error_line(state, tooltip);
     }
+    append_preview_line(state, tooltip)
+}
+
+#[cfg(feature = "client-retail")]
+fn append_combat_error_line(state: &mut LuaState, tooltip: Val) -> LuaResult<()> {
+    append_key_line(
+        state,
+        tooltip,
+        "TALENT_TOOLTIP_ADD_COMBAT_ERROR",
+        "HOSTILE_STATUS_COLOR",
+        true,
+    )
+}
+
+#[cfg(feature = "client-retail")]
+fn append_rest_error_line(state: &mut LuaState, tooltip: Val) -> LuaResult<()> {
+    append_key_line(
+        state,
+        tooltip,
+        "TALENT_TOOLTIP_ADD_REST_ERROR_PVP",
+        "HOSTILE_STATUS_COLOR",
+        true,
+    )
+}
+
+#[cfg(feature = "client-retail")]
+fn append_preview_line(state: &mut LuaState, tooltip: Val) -> LuaResult<()> {
     append_key_line(
         state,
         tooltip,

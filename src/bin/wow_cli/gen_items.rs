@@ -46,45 +46,62 @@ pub fn run(options: Options) -> Result<(), Box<dyn std::error::Error>> {
     run_shared()
 }
 
+const ITEM_DATA_OUTPUT_PATH: &str = "crates/sim-data/data/items.rs";
+
 fn run_shared() -> Result<(), Box<dyn std::error::Error>> {
     let wow_data = wow_data_dir();
     let csv_path = wow_data.join("ItemSparse.csv");
     println!("Loading ItemSparse from {}...", csv_path.display());
-
-    let mut required_ids = collect_required_item_ids();
-    required_ids.extend(collect_keystone_item_ids(&wow_data)?);
-    required_ids.extend(collect_child_item_ids(&wow_data)?);
-    required_ids.extend(collect_account_bound_item_ids(&csv_path)?);
+    let required_ids = collect_shared_item_ids(&wow_data, &csv_path)?;
     println!("Required item IDs: {} (deduplicated)", required_ids.len());
+    let (count, skipped) = write_shared_item_database(&wow_data, &csv_path, &required_ids)?;
+    write_shared_item_catalogs(&wow_data, &required_ids)?;
+    println!("Generated {} item entries ({} skipped)", count, skipped);
+    println!("Output: {}", Path::new(ITEM_DATA_OUTPUT_PATH).display());
+    Ok(())
+}
 
-    let file = File::open(&csv_path)?;
-    let reader = BufReader::new(file);
+fn collect_shared_item_ids(
+    wow_data: &Path,
+    sparse_csv: &Path,
+) -> Result<BTreeSet<u32>, Box<dyn std::error::Error>> {
+    let mut required_ids = collect_required_item_ids();
+    required_ids.extend(collect_keystone_item_ids(wow_data)?);
+    required_ids.extend(collect_child_item_ids(wow_data)?);
+    required_ids.extend(collect_account_bound_item_ids(sparse_csv)?);
+    Ok(required_ids)
+}
 
-    let icon_map = build_icon_map(&wow_data, &required_ids)?;
-
+fn write_shared_item_database(
+    wow_data: &Path,
+    sparse_csv: &Path,
+    required_ids: &BTreeSet<u32>,
+) -> Result<(u32, u32), Box<dyn std::error::Error>> {
+    let reader = BufReader::new(File::open(sparse_csv)?);
+    let icon_map = build_icon_map(wow_data, required_ids)?;
     std::fs::create_dir_all("data")?;
-    let output_path = Path::new("crates/sim-data/data/items.rs");
-    let mut out = File::create(output_path)?;
-
-    write_header(&mut out, &csv_path, &wow_data.join("Item.csv"))?;
-
-    let (count, skipped) = build_item_map(&mut out, reader, &icon_map, &required_ids, &wow_data)?;
-
+    let mut out = File::create(ITEM_DATA_OUTPUT_PATH)?;
+    write_header(&mut out, sparse_csv, &wow_data.join("Item.csv"))?;
+    let result = build_item_map(&mut out, reader, &icon_map, required_ids, wow_data)?;
     write_lookup_fn(&mut out)?;
     write_tests(&mut out)?;
-    write_item_categories(&wow_data, &required_ids)?;
-    write_gem_catalog(&wow_data)?;
-    write_item_children(&wow_data)?;
-    write_item_enchant_spells(&wow_data)?;
-    write_item_spell_metadata(&wow_data)?;
-    write_item_uniqueness(&wow_data)?;
-    write_item_sets(&wow_data)?;
-    write_item_classifiers(&wow_data)?;
-    write_item_spell_ranges(&wow_data)?;
-    write_item_cursor_grid(&wow_data)?;
+    Ok(result)
+}
 
-    println!("Generated {} item entries ({} skipped)", count, skipped);
-    println!("Output: {}", output_path.display());
+fn write_shared_item_catalogs(
+    wow_data: &Path,
+    required_ids: &BTreeSet<u32>,
+) -> Result<(), Box<dyn std::error::Error>> {
+    write_item_categories(wow_data, required_ids)?;
+    write_gem_catalog(wow_data)?;
+    write_item_children(wow_data)?;
+    write_item_enchant_spells(wow_data)?;
+    write_item_spell_metadata(wow_data)?;
+    write_item_uniqueness(wow_data)?;
+    write_item_sets(wow_data)?;
+    write_item_classifiers(wow_data)?;
+    write_item_spell_ranges(wow_data)?;
+    write_item_cursor_grid(wow_data)?;
     Ok(())
 }
 
@@ -1253,52 +1270,88 @@ fn build_item_map(
     let item_classifications = read_item_classifications(wow_data, required_ids)?;
     let mut builder = phf_codegen::Map::new();
     let mut emitted_ids = BTreeSet::new();
-    let mut count = 0u32;
-    let mut skipped = 0u32;
+    let (mut count, skipped) = append_item_sparse_rows(
+        &mut builder,
+        reader,
+        icon_map,
+        required_ids,
+        &item_classifications,
+        &mut emitted_ids,
+    )?;
+    count += append_fallback_item_rows(&mut builder, wow_data, required_ids, &emitted_ids)?;
+    write_item_database(out, builder)?;
+    Ok((count, skipped))
+}
 
-    let mut columns: Option<HashMap<String, usize>> = None;
-    for line in read_csv_records(reader)? {
-        let Some(idx) = columns.as_ref() else {
-            // Columns by name: wago exports reorder them between builds, and
-            // positional indices then read the wrong field without a sound.
-            let idx = header_index(&line);
-            // Every scalar column a row is read through, not just the ones
-            // that decide whether the row is kept: `field()` answers "" for a
-            // column that is not there, so a rename would quietly emit the
-            // default for every item -- the same silent wrong value that
-            // positional indices produced.
-            for required in ITEM_SPARSE_REQUIRED_COLUMNS {
-                if !idx.contains_key(*required) {
-                    return Err(format!("ItemSparse.csv has no {required} column").into());
-                }
-            }
-            columns = Some(idx);
-            continue;
-        };
-        match parse_item_row(&line, idx, icon_map, &item_classifications) {
-            Some((id, value)) if required_ids.contains(&id) => {
-                builder.entry(id, &value);
-                emitted_ids.insert(id);
-                count += 1;
-            }
-            _ => {
-                skipped += 1;
-            }
-        }
-    }
-
-    for (id, value) in fallback_item_search_rows(wow_data, required_ids, &emitted_ids)? {
-        builder.entry(id, &value);
-        count += 1;
-    }
-
+fn write_item_database(out: &mut File, builder: phf_codegen::Map<u32>) -> std::io::Result<()> {
     writeln!(
         out,
         "pub static ITEM_DB: phf::Map<u32, ItemInfo> = {};",
         builder.build()
     )?;
-    writeln!(out)?;
+    writeln!(out)
+}
+
+fn append_item_sparse_rows(
+    builder: &mut phf_codegen::Map<u32>,
+    reader: BufReader<File>,
+    icon_map: &HashMap<u32, u32>,
+    required_ids: &BTreeSet<u32>,
+    item_classifications: &HashMap<u32, (u8, u8)>,
+    emitted_ids: &mut BTreeSet<u32>,
+) -> Result<(u32, u32), Box<dyn std::error::Error>> {
+    let mut rows = read_csv_records(reader)?.into_iter();
+    let Some(header) = rows.next() else {
+        return Ok((0, 0));
+    };
+    let columns = required_item_sparse_columns(&header)?;
+    let mut count = 0;
+    let mut skipped = 0;
+    for row in rows {
+        match parse_item_row(&row, &columns, icon_map, item_classifications) {
+            Some((id, value)) if required_ids.contains(&id) => {
+                builder.entry(id, &value);
+                emitted_ids.insert(id);
+                count += 1;
+            }
+            _ => skipped += 1,
+        }
+    }
     Ok((count, skipped))
+}
+
+fn required_item_sparse_columns(
+    header: &str,
+) -> Result<HashMap<String, usize>, Box<dyn std::error::Error>> {
+    // Columns by name: wago exports reorder them between builds, and
+    // positional indices then read the wrong field without a sound.
+    // Every scalar column a row is read through, not just the ones
+    // that decide whether the row is kept: `field()` answers "" for a
+    // column that is not there, so a rename would quietly emit the
+    // default for every item -- the same silent wrong value that
+    // positional indices produced.
+    let columns = header_index(header);
+    for required in ITEM_SPARSE_REQUIRED_COLUMNS {
+        if !columns.contains_key(*required) {
+            return Err(format!("ItemSparse.csv has no {required} column").into());
+        }
+    }
+    Ok(columns)
+}
+
+fn append_fallback_item_rows(
+    builder: &mut phf_codegen::Map<u32>,
+    wow_data: &Path,
+    required_ids: &BTreeSet<u32>,
+    emitted_ids: &BTreeSet<u32>,
+) -> Result<u32, Box<dyn std::error::Error>> {
+    let rows = fallback_item_search_rows(wow_data, required_ids, emitted_ids)?;
+    let mut count = 0;
+    for (id, value) in rows {
+        builder.entry(id, &value);
+        count += 1;
+    }
+    Ok(count)
 }
 
 fn fallback_item_search_rows(
@@ -1342,6 +1395,56 @@ fn parse_item_row(
     ))
 }
 
+struct ItemInfoBaseFields {
+    expansion_id: u8,
+    stackable: u32,
+    sell_price: u32,
+    item_level: u16,
+    bonding: u8,
+    required_level: u16,
+    inventory_type: u8,
+    quality: u8,
+}
+
+fn parse_item_info_base_fields(
+    fields: &[String],
+    idx: &HashMap<String, usize>,
+) -> ItemInfoBaseFields {
+    ItemInfoBaseFields {
+        expansion_id: field(fields, idx, "ExpansionID").parse().unwrap_or(0),
+        stackable: field(fields, idx, "Stackable").parse().unwrap_or(1),
+        sell_price: field(fields, idx, "SellPrice").parse().unwrap_or(0),
+        item_level: field(fields, idx, "ItemLevel").parse().unwrap_or(0),
+        bonding: field(fields, idx, "Bonding").parse().unwrap_or(0),
+        required_level: field(fields, idx, "RequiredLevel").parse().unwrap_or(0),
+        inventory_type: field(fields, idx, "InventoryType").parse().unwrap_or(0),
+        quality: field(fields, idx, "OverallQualityID").parse().unwrap_or(0),
+    }
+}
+
+fn format_item_stat_fields(fields: &[String], idx: &HashMap<String, usize>) -> (String, String) {
+    let stat_percent_editor = parse_stat_percent_editor(fields, idx);
+    let stat_modifier_bonus_stat = parse_stat_modifier_bonus_stat(fields, idx);
+    (
+        format_u16_array(&stat_percent_editor),
+        format_i16_array(&stat_modifier_bonus_stat),
+    )
+}
+
+fn format_item_socket_fields(
+    fields: &[String],
+    idx: &HashMap<String, usize>,
+) -> (u32, String, u32) {
+    let artifact_id = field(fields, idx, "ArtifactID").parse().unwrap_or(0);
+    let gem_properties = field(fields, idx, "Gem_properties").parse().unwrap_or(0);
+    let socket_types: [u8; 3] = std::array::from_fn(|index| {
+        array_field(fields, idx, "SocketType", index)
+            .parse::<u8>()
+            .unwrap_or(0)
+    });
+    (artifact_id, format_array(&socket_types), gem_properties)
+}
+
 fn format_item_info(
     fields: &[String],
     idx: &HashMap<String, usize>,
@@ -1350,36 +1453,18 @@ fn format_item_info(
     classification: Option<(u8, u8)>,
 ) -> String {
     let escaped_name = escape_str(name);
-    let expansion_id: u8 = field(fields, idx, "ExpansionID").parse().unwrap_or(0);
-    let stackable: u32 = field(fields, idx, "Stackable").parse().unwrap_or(1);
-    let sell_price: u32 = field(fields, idx, "SellPrice").parse().unwrap_or(0);
-    let item_level: u16 = field(fields, idx, "ItemLevel").parse().unwrap_or(0);
-    let bonding: u8 = field(fields, idx, "Bonding").parse().unwrap_or(0);
-    let required_level: u16 = field(fields, idx, "RequiredLevel").parse().unwrap_or(0);
-    let inventory_type: u8 = field(fields, idx, "InventoryType").parse().unwrap_or(0);
-    let quality: u8 = field(fields, idx, "OverallQualityID").parse().unwrap_or(0);
+    let base = parse_item_info_base_fields(fields, idx);
     let flags = format_item_flags(fields, idx);
     let (item_class, item_subclass) = classification
         .map(|(item_class, item_subclass)| (Some(item_class), Some(item_subclass)))
         .unwrap_or((None, None));
-    let stat_percent_editor = parse_stat_percent_editor(fields, idx);
-    let stat_modifier_bonus_stat = parse_stat_modifier_bonus_stat(fields, idx);
-    let artifact_id: u32 = field(fields, idx, "ArtifactID").parse().unwrap_or(0);
-    let gem_properties: u32 = field(fields, idx, "Gem_properties").parse().unwrap_or(0);
-    let socket_types: [u8; 3] = std::array::from_fn(|index| {
-        array_field(fields, idx, "SocketType", index)
-            .parse::<u8>()
-            .unwrap_or(0)
-    });
-
-    let stat_percent_editor = format_u16_array(&stat_percent_editor);
-    let stat_modifier_bonus_stat = format_i16_array(&stat_modifier_bonus_stat);
-    let socket_types = format_array(&socket_types);
+    let (stat_percent_editor, stat_modifier_bonus_stat) = format_item_stat_fields(fields, idx);
+    let (artifact_id, socket_types, gem_properties) = format_item_socket_fields(fields, idx);
     format!(
-        "ItemInfo {{ name: \"{escaped_name}\", quality: {quality}, item_level: {item_level}, \
-         required_level: {required_level}, inventory_type: {inventory_type}, \
-         sell_price: {sell_price}, stackable: {stackable}, bonding: {bonding}, \
-         expansion_id: {expansion_id}, icon_file_data_id: {icon_file_data_id}, \
+        "ItemInfo {{ name: \"{escaped_name}\", quality: {base.quality}, item_level: {base.item_level}, \
+         required_level: {base.required_level}, inventory_type: {base.inventory_type}, \
+         sell_price: {base.sell_price}, stackable: {base.stackable}, bonding: {base.bonding}, \
+         expansion_id: {base.expansion_id}, icon_file_data_id: {icon_file_data_id}, \
          {flags} \
          item_class: {item_class:?}, item_subclass: {item_subclass:?}, \
          stat_percent_editor: {stat_percent_editor}, \
@@ -1473,6 +1558,15 @@ fn format_i16_array(values: &[i16; 10]) -> String {
 fn write_header(out: &mut File, item_sparse: &Path, item_csv: &Path) -> std::io::Result<()> {
     let sparse_hash = Sha256::digest(std::fs::read(item_sparse)?);
     let item_hash = Sha256::digest(std::fs::read(item_csv)?);
+    write_header_comments(out, sparse_hash, item_hash)?;
+    write_item_info_declaration(out)
+}
+
+fn write_header_comments(
+    out: &mut File,
+    sparse_hash: impl std::fmt::LowerHex,
+    item_hash: impl std::fmt::LowerHex,
+) -> std::io::Result<()> {
     writeln!(out, "//! Auto-generated item data from WoW CSV exports.")?;
     writeln!(
         out,
@@ -1482,9 +1576,18 @@ fn write_header(out: &mut File, item_sparse: &Path, item_csv: &Path) -> std::io:
         out,
         "//! Do not edit manually - regenerate with: wow-cli generate items"
     )?;
-    writeln!(out)?;
+    writeln!(out)
+}
+
+fn write_item_info_declaration(out: &mut File) -> std::io::Result<()> {
     writeln!(out, "#[derive(Debug, Clone)]")?;
     writeln!(out, "pub struct ItemInfo {{")?;
+    write_item_info_fields(out)?;
+    writeln!(out, "}}")?;
+    writeln!(out)
+}
+
+fn write_item_info_fields(out: &mut File) -> std::io::Result<()> {
     writeln!(out, "    pub name: &'static str,")?;
     writeln!(out, "    pub quality: u8,")?;
     writeln!(out, "    pub item_level: u16,")?;
@@ -1498,18 +1601,33 @@ fn write_header(out: &mut File, item_sparse: &Path, item_csv: &Path) -> std::io:
     writeln!(out, "    pub flags_0: Option<u32>,")?;
     writeln!(out, "    pub flags_1: Option<u32>,")?;
     writeln!(out, "    pub flags_3: Option<u32>,")?;
+    write_item_info_classification_fields(out)?;
+    writeln!(out, "    pub stackable: u32,")?;
+    writeln!(out, "    pub bonding: u8,")?;
+    writeln!(out, "    pub expansion_id: u8,")?;
+    writeln!(out, "    pub icon_file_data_id: u32,")?;
+    write_item_info_stat_fields(out)?;
+    write_item_info_artifact_fields(out)?;
+    Ok(())
+}
+
+fn write_item_info_classification_fields(out: &mut File) -> std::io::Result<()> {
     writeln!(
         out,
         "    /// INFERRED (70391 export): item class/subclass lookup fields."
     )?;
     writeln!(out, "    pub item_class: Option<u8>,")?;
     writeln!(out, "    pub item_subclass: Option<u8>,")?;
-    writeln!(out, "    pub stackable: u32,")?;
-    writeln!(out, "    pub bonding: u8,")?;
-    writeln!(out, "    pub expansion_id: u8,")?;
-    writeln!(out, "    pub icon_file_data_id: u32,")?;
+    Ok(())
+}
+
+fn write_item_info_stat_fields(out: &mut File) -> std::io::Result<()> {
     writeln!(out, "    pub stat_percent_editor: [u16; 10],")?;
     writeln!(out, "    pub stat_modifier_bonus_stat: [i16; 10],")?;
+    Ok(())
+}
+
+fn write_item_info_artifact_fields(out: &mut File) -> std::io::Result<()> {
     writeln!(
         out,
         "    /// ItemSparse.ArtifactID: nonzero marks an artifact (`WM97` DQ4)."
@@ -1525,8 +1643,6 @@ fn write_header(out: &mut File, item_sparse: &Path, item_csv: &Path) -> std::io:
         "    /// ItemSparse.Gem_properties: GemProperties row selector (`WM97` DQ4)."
     )?;
     writeln!(out, "    pub gem_properties: u32,")?;
-    writeln!(out, "}}")?;
-    writeln!(out)?;
     Ok(())
 }
 
