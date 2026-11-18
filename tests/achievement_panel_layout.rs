@@ -249,13 +249,21 @@ fn achievement_summary_empty_text_does_not_overlap_summary_entries() {
                     return "summary_empty_text_missing"
                 end
 
+                if not emptyText:IsShown() then
+                    return "summary_empty_text_hidden"
+                end
+                local first = AchievementFrameSummaryAchievement1
+                if not first or not first:IsShown() then
+                    return "summary_first_entry_missing_or_hidden"
+                end
+
                 -- VERIFIED: Retail 12.1.5.70783 Blizzard_AchievementUI.lua:2379-2506
                 -- shows default incomplete rows and EmptyText together.
                 -- XML:2127-2144 places text 30px below the container top;
                 -- the first row starts 18px below it, intentionally overlapping.
                 for i = 1, ACHIEVEMENTUI_MAX_SUMMARY_ACHIEVEMENTS do
                     local entry = _G["AchievementFrameSummaryAchievement" .. i]
-                    if emptyText:IsShown() and entry and entry:IsShown() then
+                    if entry and entry:IsShown() then
                         local overlapX = emptyText:GetLeft() < entry:GetRight()
                             and emptyText:GetRight() > entry:GetLeft()
                         local overlapY = emptyText:GetBottom() < entry:GetTop()
