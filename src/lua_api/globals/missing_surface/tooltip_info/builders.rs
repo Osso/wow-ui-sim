@@ -492,8 +492,9 @@ fn calculate_retail_sell_price_max(state: &LuaState, item_id: u32, price: u32) -
     f64::from(price.wrapping_mul(prepared_max))
 }
 
-/// INFERRED: catalog `sell_price` stands in for the native initial unit price.
-/// UNKNOWN: request mode, status, flags, and preview remain unmodeled.
+/// INFERRED (simulator mapping): this shared item-ID builder uses request mode 0, and catalog
+/// `sell_price` stands in for the native initial unit price. The explicit gate result covers status,
+/// item flags and preview, which have no native provider here.
 fn push_retail_sell_price_line(
     state: &mut LuaState,
     lines: Val,
@@ -501,7 +502,15 @@ fn push_retail_sell_price_line(
     item_id: u32,
     price: u32,
 ) {
-    if price == 0 || crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
+    let gate_result = borrow_state(state).ok().and_then(|sim| {
+        sim.item_tooltip_sell_price_gate_results
+            .get(&item_id)
+            .copied()
+    });
+    if price == 0
+        || crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail
+        || gate_result != Some(true)
+    {
         return;
     }
 

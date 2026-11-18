@@ -189,12 +189,15 @@ request mode, item-status suppression, sell-exclusion flags, and the interaction
 preview/exception flags. There is no quality, bound, quest, or merchant-open gate.
 
 **INFERRED:** the masks map to `ItemSparse.Flags_1` 4096 and `Flags_3` 524288;
-the preview exception maps to `Flags_3` 32768. These column names are not present
-in simulator `ItemInfo`, so the simulator does not apply those gates.
-**INFERRED (simulator policy):** the backed `sell_price` is the initial price
-proxy. **UNKNOWN/unmodeled:** per-instance refund/status records, prepared
-quantity recomputation, and calculated-price inputs beyond the stored catalog
-price. With no prepared quantity input, the emitted row keeps `maxPrice = -1`.
+the preview exception maps to `Flags_3` 32768. These columns and per-instance
+status records are not present in simulator `ItemInfo`.
+**INFERRED (simulator mapping):** the common item-ID builder uses request mode 0;
+`item_tooltip_sell_price_gate_results` is an explicit, empty-default host result
+for the remaining status, item-flag and preview gates. Missing or false results
+suppress the row; true permits it. The backed `sell_price` remains an initial
+price proxy. **UNKNOWN/unmodeled:** native gate outcomes, prepared quantity
+recomputation, and calculated-price inputs beyond the stored catalog price. With
+no prepared quantity input, an emitted row keeps `maxPrice = -1`.
 See the [SellPrice contract](../../specs/tooltip-data-serialization.md#retail-sellprice-behavior-r88pp1).
 
 ## Cursor modes and ActionBar transitions

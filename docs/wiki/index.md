@@ -1,3 +1,7 @@
+## [2026-11-18] correction | Retail SellPrice gates
+
+[Tooltip data](systems/lua-api.md#retail-sellprice-line-r88pp1) now records the R88p.p1 gate conditions and the empty-default host result for unmodeled status, item flags and preview inputs. A missing or false result no longer implies a SellPrice row.
+
 ## [2026-11-18] implementation | Retail role and friends settings
 
 The [social settings investigation](investigations/retail-social-settings.md) separates the verified R88ap.3–4 Boolean rules from inferred host type tags/settings bytes and unknown writers/events. Original UnitPopup and FriendsFrame consumers supply regression coverage.

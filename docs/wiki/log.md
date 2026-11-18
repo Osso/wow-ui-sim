@@ -1,3 +1,7 @@
+## [2026-11-18] correction | Retail SellPrice gates
+
+Updated the [tooltip data contract](../specs/tooltip-data-serialization.md) and [Lua API system page](systems/lua-api.md#retail-sellprice-line-r88pp1). **VERIFIED (R88p.p1):** request mode, status, sell-exclusion and preview gates are required. **INFERRED (simulator mapping):** an empty-default host result supplies the unmodeled gates; only true permits the catalog-price proxy row.
+
 ## [2026-11-18] implementation | Retail role and friends settings
 
 The [social settings investigation](investigations/retail-social-settings.md) separates the verified R88ap.3–4 Boolean rules from inferred host type tags/settings bytes and unknown writers/events. Original UnitPopup and FriendsFrame consumers supply regression coverage.

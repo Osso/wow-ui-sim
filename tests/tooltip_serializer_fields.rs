@@ -58,9 +58,9 @@ fn assert_selected_tooltip_sources(env: &WowLuaEnv) {
     .expect("selected Retail tooltip consumers should load from their original files");
 }
 
-// INFERRED: catalog `sell_price` stands in for the initial unit-price result.
-// VERIFIED (R88p.p1): eligible type-11 rows carry empty text, a default color,
-// `price`, and `maxPrice`; absent quantity inputs leave `maxPrice` at -1.
+// INFERRED (simulator mapping): `sell_price` supplies the initial price; the explicit
+// host result confirms the other gates pass. VERIFIED (R88p.p1): eligible rows
+// carry empty text, default color, `price`, and `maxPrice`; missing quantities keep -1.
 const RETAIL_SELL_PRICE_LUA: &str = r#"
 local cases = {
     {itemID = 184318, price = select(11, C_Item.GetItemInfo(184318))},
@@ -94,7 +94,7 @@ for _, case in ipairs(cases) do
         end
     end
     if case.price > 0 then
-        assert(sellPriceLine, 'backed positive price must use a type-11 line')
+        assert(sellPriceLine, 'explicitly eligible positive price must use a type-11 line')
         assert(sellPriceLine.price == case.price,
             'each SellPrice line must use this item’s backed price')
         assert(sellPriceLine.leftText == '',
@@ -137,7 +137,7 @@ function __assertRetailPreparedSellPrice(itemID, currentQuantity, preparedMaxQua
             break
         end
     end
-    assert(sellPriceLine, "backed positive price must publish a SellPrice line")
+    assert(sellPriceLine, "explicitly eligible positive price must publish a SellPrice line")
     local expectedMaxPrice = -1
     if preparedMaxQuantity and preparedMaxQuantity > currentQuantity then
         expectedMaxPrice = (sellPriceLine.price * preparedMaxQuantity) % 4294967296
@@ -158,11 +158,36 @@ assert(p1 ~= p2 and m1 ~= m2,
     "distinct backed items and prepared quantities must produce distinct prices")
 "#;
 
+fn set_item_tooltip_sell_price_gate_results(env: &WowLuaEnv, results: &[(u32, bool)]) {
+    env.state()
+        .borrow_mut()
+        .item_tooltip_sell_price_gate_results
+        .extend(results.iter().copied());
+}
+
 #[test]
 fn selected_item_accessor_publishes_backed_sell_price_on_line_11() {
     let env = selected_tooltip_env();
+    set_item_tooltip_sell_price_gate_results(&env, &[(184318, true), (164374, true)]);
     env.exec(RETAIL_SELL_PRICE_LUA)
-        .expect("the original item accessor should publish native SellPrice rows");
+        .expect("the original item accessor should publish explicitly eligible SellPrice rows");
+}
+
+#[test]
+fn sell_price_requires_explicit_true_non_price_gates() {
+    let env = selected_tooltip_env();
+    let check_no_sell_price = r#"
+        local data = C_TooltipInfo.GetItemByID(184318)
+        for _, line in ipairs(data.lines) do
+            assert(line.type ~= Enum.TooltipDataLineType.SellPrice)
+        end
+    "#;
+    env.exec(check_no_sell_price)
+        .expect("missing SellPrice gate input must not imply eligibility");
+
+    set_item_tooltip_sell_price_gate_results(&env, &[(184318, false)]);
+    env.exec(check_no_sell_price)
+        .expect("a failed SellPrice gate result must suppress the line");
 }
 
 fn set_item_tooltip_sell_price_quantities(env: &WowLuaEnv, quantities: &[(u32, u32, u32)]) {
@@ -176,6 +201,7 @@ fn set_item_tooltip_sell_price_quantities(env: &WowLuaEnv, quantities: &[(u32, u
 #[test]
 fn selected_item_accessor_uses_prepared_quantity_for_max_price() {
     let env = selected_tooltip_env();
+    set_item_tooltip_sell_price_gate_results(&env, &[(184318, true), (164374, true)]);
     env.exec(RETAIL_PREPARED_SELL_PRICE_SETUP)
         .expect("the SellPrice consumer probe should load");
 
