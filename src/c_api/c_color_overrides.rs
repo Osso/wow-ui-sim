@@ -492,57 +492,7 @@ mod tests {
     use crate::lua_api::methods::{registry_get, table_get_static};
     use rilua::LuaApiMut;
 
-    const INITIAL_OVERRIDES_LUA: &str = r#"
-        ColorMixin = {}
-        C_ColorOverrides.SetColorOverride(0, { r = 0.2, g = 0.4, b = 0.6, a = 0.8 })
-        C_ColorOverrides.SetColorOverride(5, { r = 0.1, g = 0.3, b = 0.5, a = 0.7 })
-    "#;
-    const MUTATE_BEFORE_LOAD_LUA: &str = r#"
-        ColorMixin = {}
-        C_ColorOverrides.SetColorOverride(0, { r = 1, g = 1, b = 1, a = 1 })
-        C_ColorOverrides.SetColorOverride(2, { r = 1, g = 0, b = 0, a = 1 })
-    "#;
-    const ASSERT_RESTORED_OVERRIDES_LUA: &str = r#"
-        local poor = C_ColorOverrides.GetColorForQuality(0)
-        local legendary = C_ColorOverrides.GetColorForQuality(5)
-        local stale = C_ColorOverrides.GetColorOverrideInfo(2)
-        if math.abs(poor.r - 51 / 255) > 0.000001 then return "poor_r" end
-        if math.abs(poor.a - 204 / 255) > 0.000001 then return "poor_a" end
-        if math.abs(legendary.g - 77 / 255) > 0.000001 then return "legendary_g" end
-        if math.abs(legendary.a - 179 / 255) > 0.000001 then return "legendary_a" end
-        if stale ~= nil then return "stale_type" end
-        return "ok"
-    "#;
-
-    #[test]
-    fn secure_color_override_namespace_matches_verified_r88y_members() {
-        if ACTIVE != ClientProfile::Retail {
-            return;
-        }
-        let env = WowLuaEnv::new().expect("Lua environment should initialize");
-        let members = secure_color_override_member_names(&env);
-        assert_eq!(
-            members,
-            vec![
-                "ClearColorOverrides".to_owned(),
-                "GetColorForQuality".to_owned(),
-                "GetColorOverrideInfo".to_owned(),
-                "GetDefaultColorForQuality".to_owned(),
-                "RemoveColorOverride".to_owned(),
-                "SetColorOverride".to_owned(),
-            ]
-        );
-    }
-
-    #[test]
-    fn secure_color_override_handlers_are_distinct_and_share_state() {
-        if ACTIVE != ClientProfile::Retail {
-            return;
-        }
-        let env = WowLuaEnv::new().expect("Lua environment should initialize");
-        let result: String = env
-            .eval(
-                r#"
+    const SECURE_COLOR_OVERRIDE_HANDLERS_PROBE: &str = r#"
                 ColorMixin = {}
                 local ordinary = rawget(_G, "C_ColorOverrides")
                 local secure = rawget(__secureenv, "C_ColorOverrides")
@@ -599,8 +549,58 @@ mod tests {
                 ordinary.ClearColorOverrides()
                 if secure.GetColorOverrideInfo(0) ~= nil then return "ordinary_clear_not_visible" end
                 return "ok"
-                "#,
-            )
+                "#;
+
+    const INITIAL_OVERRIDES_LUA: &str = r#"
+        ColorMixin = {}
+        C_ColorOverrides.SetColorOverride(0, { r = 0.2, g = 0.4, b = 0.6, a = 0.8 })
+        C_ColorOverrides.SetColorOverride(5, { r = 0.1, g = 0.3, b = 0.5, a = 0.7 })
+    "#;
+    const MUTATE_BEFORE_LOAD_LUA: &str = r#"
+        ColorMixin = {}
+        C_ColorOverrides.SetColorOverride(0, { r = 1, g = 1, b = 1, a = 1 })
+        C_ColorOverrides.SetColorOverride(2, { r = 1, g = 0, b = 0, a = 1 })
+    "#;
+    const ASSERT_RESTORED_OVERRIDES_LUA: &str = r#"
+        local poor = C_ColorOverrides.GetColorForQuality(0)
+        local legendary = C_ColorOverrides.GetColorForQuality(5)
+        local stale = C_ColorOverrides.GetColorOverrideInfo(2)
+        if math.abs(poor.r - 51 / 255) > 0.000001 then return "poor_r" end
+        if math.abs(poor.a - 204 / 255) > 0.000001 then return "poor_a" end
+        if math.abs(legendary.g - 77 / 255) > 0.000001 then return "legendary_g" end
+        if math.abs(legendary.a - 179 / 255) > 0.000001 then return "legendary_a" end
+        if stale ~= nil then return "stale_type" end
+        return "ok"
+    "#;
+
+    #[test]
+    fn secure_color_override_namespace_matches_verified_r88y_members() {
+        if ACTIVE != ClientProfile::Retail {
+            return;
+        }
+        let env = WowLuaEnv::new().expect("Lua environment should initialize");
+        let members = secure_color_override_member_names(&env);
+        assert_eq!(
+            members,
+            vec![
+                "ClearColorOverrides".to_owned(),
+                "GetColorForQuality".to_owned(),
+                "GetColorOverrideInfo".to_owned(),
+                "GetDefaultColorForQuality".to_owned(),
+                "RemoveColorOverride".to_owned(),
+                "SetColorOverride".to_owned(),
+            ]
+        );
+    }
+
+    #[test]
+    fn secure_color_override_handlers_are_distinct_and_share_state() {
+        if ACTIVE != ClientProfile::Retail {
+            return;
+        }
+        let env = WowLuaEnv::new().expect("Lua environment should initialize");
+        let result: String = env
+            .eval(SECURE_COLOR_OVERRIDE_HANDLERS_PROBE)
             .expect("secure and ordinary C_ColorOverrides handlers should run");
         assert_eq!(result, "ok");
     }

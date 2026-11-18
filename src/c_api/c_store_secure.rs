@@ -84,40 +84,10 @@ mod tests {
         if !crate::client_profile::is_active_retail_12_1_5() {
             return;
         }
-
         let env = WowLuaEnv::new().expect("Lua environment should initialize");
         let (implemented, missing_members) = {
             let mut lua = env.rilua_mut();
-            let state = lua.state_mut();
-            let ordinary = crate::c_api::global_val(state, "C_StoreSecure");
-            let secure_env = crate::lua_api::methods::registry_get(state, "__secureenv");
-            let secure_namespace = table_get_static(state, secure_env, "C_StoreSecure");
-            let mut implemented = 0;
-            let mut missing_members = Vec::new();
-            for &(namespace, member, flag, _) in
-                super::super::secure_publication_data::VERIFIED_MEMBERS
-            {
-                if namespace != "C_StoreSecure" || flag % 4 != 3 {
-                    continue;
-                }
-                match table_get_static(state, ordinary, member) {
-                    Val::Function(_) => {
-                        implemented += 1;
-                        if !matches!(
-                            table_get_static(state, secure_namespace, member),
-                            Val::Function(_)
-                        ) {
-                            missing_members.push(member.to_string());
-                        }
-                    }
-                    Val::Nil => {}
-                    value => missing_members.push(format!(
-                        "{member} has ordinary value type {}",
-                        value.type_name()
-                    )),
-                }
-            }
-            (implemented, missing_members)
+            collect_store_secure_member_status(lua.state_mut())
         };
         assert!(
             implemented > 1,
@@ -128,17 +98,11 @@ mod tests {
             "implemented flag-3 members are missing from secure C_StoreSecure: {missing_members:?}"
         );
 
-        let request_count_before = env
-            .state()
-            .borrow()
-            .store_glue
-            .store_secure
-            .product_list_request_count;
+        let request_count_before = store_product_list_request_count(&env);
         env.exec_rilua_secure(
             "SecureStoreProductListResultCount = select('#', C_StoreSecure.GetProductList())",
         )
         .expect("secure Store UI can call the simulated product-list API");
-
         let returns_zero_values: bool = env
             .eval("return rawget(__secureenv, 'SecureStoreProductListResultCount') == 0")
             .expect("secure product-list result count should be readable");
@@ -147,13 +111,52 @@ mod tests {
             "product-list request returns no values"
         );
         assert_eq!(
-            env.state()
-                .borrow()
-                .store_glue
-                .store_secure
-                .product_list_request_count,
+            store_product_list_request_count(&env),
             request_count_before.wrapping_add(1),
             "secure product-list request should update the host model"
         );
+    }
+
+    #[cfg(feature = "client-retail")]
+    fn collect_store_secure_member_status(
+        state: &mut rilua::vm::state::LuaState,
+    ) -> (usize, Vec<String>) {
+        let ordinary = crate::c_api::global_val(state, "C_StoreSecure");
+        let secure_env = crate::lua_api::methods::registry_get(state, "__secureenv");
+        let secure_namespace = table_get_static(state, secure_env, "C_StoreSecure");
+        let mut implemented = 0;
+        let mut missing_members = Vec::new();
+        for &(namespace, member, flag, _) in super::super::secure_publication_data::VERIFIED_MEMBERS
+        {
+            if namespace != "C_StoreSecure" || flag % 4 != 3 {
+                continue;
+            }
+            match table_get_static(state, ordinary, member) {
+                Val::Function(_) => {
+                    implemented += 1;
+                    if !matches!(
+                        table_get_static(state, secure_namespace, member),
+                        Val::Function(_)
+                    ) {
+                        missing_members.push(member.to_string());
+                    }
+                }
+                Val::Nil => {}
+                value => missing_members.push(format!(
+                    "{member} has ordinary value type {}",
+                    value.type_name()
+                )),
+            }
+        }
+        (implemented, missing_members)
+    }
+
+    #[cfg(feature = "client-retail")]
+    fn store_product_list_request_count(env: &WowLuaEnv) -> u32 {
+        env.state()
+            .borrow()
+            .store_glue
+            .store_secure
+            .product_list_request_count
     }
 }
