@@ -69,12 +69,6 @@ if rawget(C_Commentator, "SendAddonMessage") == nil then
         return Enum and Enum.SendAddonMessageResult and Enum.SendAddonMessageResult.Success or 0
     end
 end
--- No cinematic ever plays (InCinematic is a false stub), so there is no summary;
--- the documented result is a non-nil string. Replace with cinematic playback state.
-if type(GetBuildInfo) == "function" and select(4, GetBuildInfo()) >= 120005
-        and GetCurrentCinematicSummary == nil then
-    function GetCurrentCinematicSummary() return "" end
-end
 -- 12.0.5 logged variant; mirrors SendAddonMessage until commentator comms are modeled.
 if type(GetBuildInfo) == "function" and select(4, GetBuildInfo()) >= 120005
         and rawget(C_Commentator, "SendAddonMessageLogged") == nil then
@@ -230,10 +224,21 @@ end
 
 // Missing social-UI service availability policy. Retire when its c_api producer
 // owns availability; ordinary friend-list state does not establish that policy.
+#[cfg(not(all(feature = "profile-retail", feature = "retail-12-1-5")))]
 const SOCIAL_UI_DEFAULTS_LUA: &str = r#"
 C_SocialUI = C_SocialUI or __wow_namespace()
 if rawget(C_SocialUI, "IsSystemEnabled") == nil then
     function C_SocialUI.IsSystemEnabled() return false end
+end
+"#;
+
+#[cfg(not(all(feature = "profile-retail", feature = "retail-12-1-5")))]
+const CINEMATIC_SUMMARY_DEFAULT_LUA: &str = r#"
+-- No cinematic ever plays (InCinematic is a false stub), so there is no summary;
+-- the documented result is a non-nil string. Replace with cinematic playback state.
+if type(GetBuildInfo) == "function" and select(4, GetBuildInfo()) >= 120005
+        and GetCurrentCinematicSummary == nil then
+    function GetCurrentCinematicSummary() return "" end
 end
 "#;
 
@@ -246,6 +251,9 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(INERT_GLOBAL_DEFAULTS_LUA)?;
     #[cfg(not(all(feature = "client-retail", feature = "retail-12-1-5")))]
     lua.exec(AVAILABLE_BANDWIDTH_DEFAULT_LUA)?;
+    #[cfg(not(all(feature = "profile-retail", feature = "retail-12-1-5")))]
+    lua.exec(CINEMATIC_SUMMARY_DEFAULT_LUA)?;
+    #[cfg(not(all(feature = "profile-retail", feature = "retail-12-1-5")))]
     if cfg!(feature = "retail-12-1-0")
         || crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever
     {

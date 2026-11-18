@@ -8,6 +8,13 @@ pub(crate) struct RegisteredLoadWith {
 }
 
 pub struct SimState {
+    /// VERIFIED R88ap.1: zero initially and after CinematicFinished.
+    #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+    pub current_cinematic_id: u32,
+    /// INFERRED simulator source for Movie DB2 rows/summary refs (R88ap.1).
+    /// Missing key = no row; None = no summary ref. No native data is fabricated.
+    #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+    pub cinematic_summaries: HashMap<u32, Option<String>>,
     /// Explicit empty-default R88q host inputs; no automatic server records.
     pub store_glue: crate::c_api::store_glue_model::StoreGlueState,
     pub hyperlink_tooltip: crate::c_api::c_tooltip_info_hyperlink::inputs::HyperlinkTooltipInputs,
@@ -1046,6 +1053,9 @@ pub struct SimState {
     #[cfg(feature = "retail-12-0-0")]
     pub bnet_custom_message: String,
     pub social_friends: Vec<SocialFriend>,
+    /// UNKNOWN writers/events: explicit R88ap.6 policy input; absent is false.
+    #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+    pub social_system_policy_enabled: Option<bool>,
     pub social_restrictions: SocialRestrictionsState,
     pub restricted_actions: [u8; 6],
     pub restricted_actions_natural: [bool; 6],

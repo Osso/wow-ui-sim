@@ -1,3 +1,15 @@
+## [2026-11-18] implementation | Retail cinematic summary
+
+The [cinematic summary investigation](investigations/retail-cinematic-summary.md) separates the verified R88ap.1 ID lifecycle and nil/string contract from inferred host data and argument admission. The original MovieFrame dialog is the regression consumer.
+
+## [2026-11-18] implementation | Retail social-UI policy
+
+The [social-UI policy investigation](investigations/social-ui-policy.md) records the R88ap.6 one-Boolean contract, explicit empty-default host input, selected FriendsFrame consumer, and unknown writers/events. Other profiles retain their existing behavior.
+
+## [2026-11-18] investigation | Retail bag tracker fixture lifecycle
+
+The [panel fixture investigation](investigations/showuipanel-toggle-fixture-owners.md#retail-bag-tracker-lifecycle-lt-c0e6) records the missing per-addon completion event. Original TokenUI creates the bag tracker after `ADDON_LOADED`; assertions and vendor code remain unchanged.
+
 ## [2026-11-17] verification | Retail PerformanceBar tooltip
 
 **VERIFIED (final source):** Retail's byte-identical RED/GREEN original-consumer test passes 1/1; constant-`(1,1)` protocol and bandwidth-from-`GetNetStats` mutants fail at their tooltip assertions. PTR, Forever and Mists fallback-preservation tests pass 1/1. The final five-profile all-targets no-run matrix has zero warnings; Wrath remains compile-only. See the [PerformanceBar contract](../specs/performance-bar-queries.md) and handoff for hashes.
