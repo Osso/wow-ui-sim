@@ -147,34 +147,33 @@ fn register_c_specialization_info_retail_methods(
     t_ref: GcRef<Table>,
 ) -> LuaResult<()> {
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        #[cfg(feature = "client-retail")]
         register_c_specialization_info_retail_pvp_methods(state, t_ref)?;
         register_c_specialization_info_retail_inspect_method(state, t_ref)?;
     }
     Ok(())
 }
 
+#[cfg(feature = "client-retail")]
 fn register_c_specialization_info_retail_pvp_methods(
     state: &mut LuaState,
     t_ref: GcRef<Table>,
 ) -> LuaResult<()> {
-    #[cfg(feature = "client-retail")]
-    {
-        super::c_tooltip_info_pvp_talent::register_slot_info(state, t_ref)?;
-        table_set_rust_fn_static(
-            state,
-            t_ref,
-            "GetPvpTalentSlotUnlockLevel",
-            get_pvp_talent_slot_unlock_level,
-        )?;
-        table_set_rust_fn_static(
-            state,
-            t_ref,
-            "GetPvpTalentUnlockLevel",
-            get_pvp_talent_unlock_level,
-        )?;
-        table_set_rust_fn_static(state, t_ref, "IsPvpTalentLocked", is_pvp_talent_locked)?;
-        table_set_rust_fn_static(state, t_ref, "SetPvpTalentLocked", set_pvp_talent_locked)?;
-    }
+    super::c_tooltip_info_pvp_talent::register_slot_info(state, t_ref)?;
+    table_set_rust_fn_static(
+        state,
+        t_ref,
+        "GetPvpTalentSlotUnlockLevel",
+        get_pvp_talent_slot_unlock_level,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        t_ref,
+        "GetPvpTalentUnlockLevel",
+        get_pvp_talent_unlock_level,
+    )?;
+    table_set_rust_fn_static(state, t_ref, "IsPvpTalentLocked", is_pvp_talent_locked)?;
+    table_set_rust_fn_static(state, t_ref, "SetPvpTalentLocked", set_pvp_talent_locked)?;
     Ok(())
 }
 

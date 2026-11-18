@@ -312,14 +312,19 @@ fn upsert_membership(entries: &mut Vec<WidgetSetEntry>, entry: &WidgetSetEntry) 
 
 fn supply_visualization(sim: &mut crate::lua_api::SimState, id: f64, record: WidgetVisualization) {
     let key = WidgetId::from_number(id);
-    clear_visualization_inputs(sim, id, key);
+    clear_visualization_inputs(sim, key);
+    #[cfg(feature = "retail-12-0-0")]
+    clear_prey_visualization_inputs(sim, id);
     insert_visualization(sim, id, key, record);
 }
 
-fn clear_visualization_inputs(sim: &mut crate::lua_api::SimState, id: f64, key: WidgetId) {
+fn clear_visualization_inputs(sim: &mut crate::lua_api::SimState, key: WidgetId) {
     clear_primary_visualization_inputs(sim, key);
     sim.button_header_inputs.widgets.remove(&key);
-    #[cfg(feature = "retail-12-0-0")]
+}
+
+#[cfg(feature = "retail-12-0-0")]
+fn clear_prey_visualization_inputs(sim: &mut crate::lua_api::SimState, id: f64) {
     if id > 0.0 && id <= u32::MAX as f64 && id.fract() == 0.0 {
         sim.prey_inputs.widgets.remove(&(id as u32));
     }
@@ -370,7 +375,7 @@ fn clear_second_visualization_inputs(sim: &mut crate::lua_api::SimState, key: Wi
 
 fn insert_visualization(
     sim: &mut crate::lua_api::SimState,
-    id: f64,
+    _id: f64,
     key: WidgetId,
     record: WidgetVisualization,
 ) {
@@ -539,7 +544,7 @@ fn store_fifth_visualization_group(
 
 fn store_remaining_visualization(
     sim: &mut crate::lua_api::SimState,
-    id: f64,
+    _id: f64,
     key: WidgetId,
     record: WidgetVisualization,
 ) {
@@ -552,8 +557,9 @@ fn store_remaining_visualization(
         }
         #[cfg(feature = "retail-12-0-0")]
         WidgetVisualization::PreyHuntProgress(record) => {
-            sim.prey_inputs.widgets.insert(id as u32, record);
+            sim.prey_inputs.widgets.insert(_id as u32, record);
         }
+        _ => unreachable!("prior groups store all other visualizations"),
     }
 }
 
