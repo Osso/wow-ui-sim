@@ -8,6 +8,8 @@
 //! - `GetMouseFocus()`     → FrameRef for `SimState.hovered_frame`,
 //!   or `nil` when the cursor isn't over any widget.
 
+#[cfg(feature = "client-mists")]
+use crate::lua_api::WowLuaEnv;
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, frame_ref};
 use crate::lua_api::methods::{create_table, table_set_num};
 use crate::lua_bridge::FromStack;
@@ -105,6 +107,20 @@ fn show_cursor(state: &mut LuaState) -> LuaResult<u32> {
 fn hide_cursor(state: &mut LuaState) -> LuaResult<u32> {
     set_cursor_visibility(state, false)?;
     Ok(0)
+}
+
+#[cfg(feature = "client-mists")]
+pub(crate) fn update_screen_registration(env: &WowLuaEnv, is_glue: bool) -> crate::Result<()> {
+    let mut lua = env.lua.borrow_mut();
+    let registration = if is_glue {
+        LuaApiMut::register_function(&mut *lua, "ShowCursor", show_cursor)?;
+        LuaApiMut::register_function(&mut *lua, "HideCursor", hide_cursor)
+    } else {
+        LuaApiMut::set_global_val(&mut *lua, "ShowCursor", Val::Nil)?;
+        LuaApiMut::set_global_val(&mut *lua, "HideCursor", Val::Nil)
+    };
+    registration?;
+    Ok(())
 }
 
 pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {

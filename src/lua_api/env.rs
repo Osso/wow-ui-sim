@@ -91,15 +91,33 @@ impl Drop for WowLuaEnv {
 impl WowLuaEnv {
     /// Create a new WoW Lua environment with the API initialized.
     pub fn new() -> Result<Self> {
-        Self::new_with_session_storage(None)
+        Self::new_with_session_storage(None, crate::screen::ScreenKind::Game)
+    }
+
+    /// Prepare screen-specific bootstrap defaults before `set_screen_mode` runs.
+    /// This does not change the runtime screen state.
+    pub fn new_for_screen(screen: crate::screen::ScreenKind) -> Result<Self> {
+        Self::new_with_session_storage(None, screen)
     }
 
     /// Select writable session storage before CVars and Lua-backed models load.
     pub fn with_session_wtf_path(path: std::path::PathBuf) -> Result<Self> {
-        Self::new_with_session_storage(Some(path))
+        Self::new_with_session_storage(Some(path), crate::screen::ScreenKind::Game)
     }
 
-    fn new_with_session_storage(session_wtf_path: Option<std::path::PathBuf>) -> Result<Self> {
+    /// Select session storage and screen-specific bootstrap defaults.
+    /// This does not change the runtime screen state.
+    pub fn with_session_wtf_path_for_screen(
+        path: std::path::PathBuf,
+        screen: crate::screen::ScreenKind,
+    ) -> Result<Self> {
+        Self::new_with_session_storage(Some(path), screen)
+    }
+
+    fn new_with_session_storage(
+        session_wtf_path: Option<std::path::PathBuf>,
+        bootstrap_screen: crate::screen::ScreenKind,
+    ) -> Result<Self> {
         if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
             crate::forever_spell_runtime::initialize().map_err(crate::Error::Other)?;
         }
@@ -128,7 +146,7 @@ impl WowLuaEnv {
 
         timed_startup_phase("init_lua_state complete", || {
             let mut lua_ref = lua.borrow_mut();
-            init_lua_state(&mut lua_ref, Rc::clone(&state))
+            init_lua_state(&mut lua_ref, Rc::clone(&state), bootstrap_screen)
         })?;
 
         let env = Self {
@@ -474,7 +492,12 @@ impl WowLuaEnv {
         register_intrinsic_templates();
         init_builtin_frames(&self.state);
         install_app_data_lua_handle(&self.lua, &self.lua);
-        init_lua_state(&mut self.lua.borrow_mut(), Rc::clone(&self.state))?;
+        let bootstrap_screen = self.state.borrow().screen_kind;
+        init_lua_state(
+            &mut self.lua.borrow_mut(),
+            Rc::clone(&self.state),
+            bootstrap_screen,
+        )?;
         self.install_final_runtime_globals();
         if let Some(font_system) = font_system {
             self.set_font_system(font_system);

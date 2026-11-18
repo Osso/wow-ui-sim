@@ -1261,6 +1261,8 @@ pub struct SimState {
     pub save_failed_addons: bool,
     /// Explicit host-supplied cinematic playback state; no playback engine implied.
     pub cinematic_active: bool,
+    #[cfg(feature = "client-mists")]
+    pub movie_playback: MoviePlaybackState,
     /// World entry is distinct from IsLoggedIn; supplied/transitioned by the owner.
     pub in_world: bool,
     /// Wrath reload's temporary protected-action phase, not the player's combat bit.

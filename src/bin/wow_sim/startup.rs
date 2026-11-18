@@ -29,7 +29,8 @@ pub(super) fn init_and_load(
     screen: ScreenKind,
     session_wtf_path: std::path::PathBuf,
 ) -> InitResult {
-    let env = WowLuaEnv::with_session_wtf_path(session_wtf_path).expect("failed to create Lua env");
+    let env = WowLuaEnv::with_session_wtf_path_for_screen(session_wtf_path, screen)
+        .expect("failed to create Lua env");
     initialize_and_load_env(args, screen, env)
 }
 
