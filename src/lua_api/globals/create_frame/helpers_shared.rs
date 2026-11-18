@@ -60,13 +60,11 @@ pub fn create_frame_instance(
     let frame = build_initial_frame(state, widget_type, frame_type, name.clone(), parent_id, id)?;
 
     let preserve_existing_name_binding = should_preserve_existing_frame_name(state, &name)?;
-    let frame_id = frame.id;
-    let replaced_placeholder = register_and_attach_parent(
+    let (frame_id, replaced_placeholder) = register_new_frame_instance(
         state,
         frame,
         parent_id,
         parent_explicit,
-        frame_id,
         preserve_existing_name_binding,
     )?;
     initialize_created_frame(state, widget_type, frame_id)?;
@@ -78,6 +76,25 @@ pub fn create_frame_instance(
         replaced_placeholder,
     )?;
     Ok(frame_id)
+}
+
+fn register_new_frame_instance(
+    state: &mut LuaState,
+    frame: Frame,
+    parent_id: Option<u64>,
+    parent_explicit: bool,
+    preserve_existing_name_binding: bool,
+) -> LuaResult<(u64, Option<u64>)> {
+    let frame_id = frame.id;
+    let replaced_placeholder = register_and_attach_parent(
+        state,
+        frame,
+        parent_id,
+        parent_explicit,
+        frame_id,
+        preserve_existing_name_binding,
+    )?;
+    Ok((frame_id, replaced_placeholder))
 }
 
 fn finish_frame_global_registration(
