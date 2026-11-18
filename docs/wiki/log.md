@@ -14,9 +14,21 @@ The [cinematic summary investigation](investigations/retail-cinematic-summary.md
 
 The [social-UI policy investigation](investigations/social-ui-policy.md) records the R88ap.6 one-Boolean contract, explicit empty-default host input, selected FriendsFrame consumer, and unknown writers/events. Other profiles retain their existing behavior.
 
+## [2026-11-17] system | Retail Guild faction group
+
+Added the [Guild faction group system page](systems/guild-faction-group.md) and [contract](../specs/guild-faction-group.md). **VERIFIED (R88ap.2):** player-object absence returns zero values; otherwise race-linked faction flags follow 4→0, 2→1, 1→0, else -1, with no guild test. **VERIFIED (simulator source):** the raw per-race flag input is empty by default. **UNKNOWN:** raw Retail DB2 rows and native object-unavailable conditions. **INFERRED (DB2 export build 70448):** the contract records classification outputs as context only; the simulator does not seed them. **VERIFIED (Retail runtime):** the byte-identical GuildNews consumer test and callable-wrong overlay controls pass; the three focused API cases pass, including guild-membership independence.
+
 ## [2026-11-18] investigation | Retail bag tracker fixture lifecycle
 
 The [panel fixture investigation](investigations/showuipanel-toggle-fixture-owners.md#retail-bag-tracker-lifecycle-lt-c0e6) records the missing per-addon completion event. Original TokenUI creates the bag tracker after `ADDON_LOADED`; assertions and vendor code remain unchanged.
+
+## [2026-11-17] verification | Retail PerformanceBar tooltip
+
+**VERIFIED (final source):** Retail's byte-identical RED/GREEN original-consumer test passes 1/1; constant-`(1,1)` protocol and bandwidth-from-`GetNetStats` mutants fail at their tooltip assertions. PTR, Forever and Mists fallback-preservation tests pass 1/1. The final five-profile all-targets no-run matrix has zero warnings; Wrath remains compile-only. See the [PerformanceBar contract](../specs/performance-bar-queries.md) and handoff for hashes.
+
+## [2026-11-17] system | Retail PerformanceBar network queries
+
+Added the [PerformanceBar query system page](systems/performance-bar-queries.md) and linked it from [[lua-api]]. **VERIFIED (R88ap.7/.8):** Retail 12.1.5 returns bandwidth zero and two ordered protocol codes. **INFERRED (simulator mapping):** absent host input maps to `(0,0)`. **INFERRED (70783 tooltip):** codes 1/2 display as TCP/UDP; live endpoint values and their update path remain UNKNOWN.
 
 ## [2026-11-17] implementation | Retail call-pet flyout spell results
 

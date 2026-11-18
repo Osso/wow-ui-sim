@@ -160,6 +160,8 @@ fn register_player(b: TableBuilder) -> LuaResult<TableBuilder> {
         "SetPlayerFacing",
         super::real::player_facing::set_player_facing,
     )?;
+    #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+    let b = b.set_function("SetGuildFactionGroupFlags", set_guild_faction_group_flags)?;
     b.set_function("SetPlayerName", set_player_name)?
         .set_function("SetPlayerClass", set_player_class)?
         .set_function("SetPlayerRace", set_player_race)?
@@ -542,6 +544,17 @@ fn set_player_class(state: &mut LuaState) -> LuaResult<u32> {
 fn set_player_race(state: &mut LuaState) -> LuaResult<u32> {
     let race_index = i32::from_stack(state, 1)?;
     borrow_state_mut(state)?.player.race_index = race_index as usize;
+    Ok(0)
+}
+
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+fn set_guild_faction_group_flags(state: &mut LuaState) -> LuaResult<u32> {
+    let race_id = i32::from_stack(state, 1)?;
+    let flags = u32::from_stack(state, 2)?;
+    borrow_state_mut(state)?
+        .player
+        .guild_faction_group_flags
+        .insert(race_id, flags);
     Ok(0)
 }
 
