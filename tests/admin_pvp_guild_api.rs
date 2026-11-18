@@ -414,6 +414,12 @@ fn get_guild_faction_group_uses_flag_priority_and_missing_rows() {
         end
         A_Admin.SetPlayerRace(99)
         assert(GetGuildFactionGroup() == -1)
+        A_Admin.SetGuildFactionGroupFlags(1, 2)
+        A_Admin.SetPlayerRace(0)
+        A_Admin.SetGuildInfo("Test Guild", "Member", 10)
+        assert(GetGuildFactionGroup() == 1)
+        A_Admin.ClearGuild()
+        assert(GetGuildFactionGroup() == 1)
         "#,
     )
     .expect("guild faction group must follow group-flag priority");
