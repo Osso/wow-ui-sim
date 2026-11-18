@@ -139,7 +139,10 @@ fn register_permanent_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     Ok(())
 }
 
-fn register_temporary_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
+fn register_temporary_bootstrap(
+    lua: &mut rilua::Lua,
+    skip_chat_frame_placeholder: bool,
+) -> crate::Result<()> {
     trace_debug_getter_values(lua, "before_temporary_bootstrap");
     #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
     crate::c_api::c_combat_log::register_filters(lua)?;
