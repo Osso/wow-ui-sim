@@ -394,7 +394,7 @@ fn insert_visualization(
     let Some(record) = store_fifth_visualization_group(sim, key, record) else {
         return;
     };
-    store_remaining_visualization(sim, id, key, record);
+    store_remaining_visualization(sim, _id, key, record);
 }
 
 fn store_first_visualization_group(
