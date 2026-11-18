@@ -1143,6 +1143,14 @@ mod tests {
     // This is a registrar-drift guard for ordinary _G, not a secureenv or native-publication assertion.
     fn assert_registered_globals_exist(profile: ClientProfile) {
         assert_eq!(crate::client_profile::ACTIVE, profile);
+        let sources = missing_registered_global_sources(profile);
+        assert!(
+            sources.is_empty(),
+            "registered Unit globals missing from _G for {profile:?}: {sources}"
+        );
+    }
+
+    fn missing_registered_global_sources(profile: ClientProfile) -> String {
         let entries: Vec<_> = MASTER_SNAPSHOT_UNIT_GLOBALS
             .iter()
             .filter(|entry| entry.registered_profiles.contains(&profile))
@@ -1171,7 +1179,14 @@ mod tests {
             .split(',')
             .filter(|name| !name.is_empty())
             .collect::<Vec<_>>();
-        let sources = missing_names
+        registered_global_miss_sources(&entries, missing_names)
+    }
+
+    fn registered_global_miss_sources(
+        entries: &[&super::MasterUnitGlobal],
+        missing_names: Vec<&str>,
+    ) -> String {
+        missing_names
             .into_iter()
             .filter_map(|name| {
                 entries
@@ -1180,11 +1195,7 @@ mod tests {
                     .map(|entry| format!("{} ({})", name, entry.registrar))
             })
             .collect::<Vec<_>>()
-            .join(", ");
-        assert!(
-            sources.is_empty(),
-            "registered Unit globals missing from _G for {profile:?}: {sources}"
-        );
+            .join(", ")
     }
 
     #[cfg(feature = "client-retail")]

@@ -325,27 +325,15 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 mod tests {
     use crate::lua_api::WowLuaEnv;
 
-    #[test]
-    fn installs_formatting_utility_defaults() {
-        let env = WowLuaEnv::new().expect("lua env should initialize");
-        env.exec(
-            r#"
+    const CLEAR_FORMATTING_DEFAULTS_PROBE: &str = r#"
             EVERY_X_PERCENT = nil
             TRANSMOGRIFY_TOOLTIP_APPEARANCE_KNOWN = nil
             ERR_QUEST_SESSION_RESULT_RESYNC = nil
             CLASS_SORT_ORDER = nil
             MAX_CLASSES = nil
-            "#,
-        )
-        .expect("fixture should clear moved constants");
-        {
-            let mut lua = env.lua.borrow_mut();
-            super::apply_bootstrap(&mut lua).expect("formatting defaults should reapply");
-        }
+            "#;
 
-        let result: String = env
-            .eval(
-                r#"
+    const FORMATTING_DEFAULTS_PROBE: &str = r#"
                 TOKEN_TEXT = "Resolved"
                 if GetText("TOKEN_TEXT") ~= "Resolved" then return "gettext" end
                 if GetText("MISSING_TOKEN") ~= "MISSING_TOKEN" then return "gettext_missing" end
@@ -386,20 +374,38 @@ mod tests {
                 if AbbreviateLargeNumbers(123.9) ~= "123" then return "abbrev" end
                 if AbbreviateNumbers(456.7) ~= "456.7" then return "abbrev_numbers" end
                 return "ok"
-                "#,
-            )
-            .expect("formatting utility defaults probe should run");
+                "#;
 
+    #[test]
+    fn installs_formatting_utility_defaults() {
+        let env = WowLuaEnv::new().expect("lua env should initialize");
+        env.exec(CLEAR_FORMATTING_DEFAULTS_PROBE)
+            .expect("fixture should clear moved constants");
+        {
+            let mut lua = env.lua.borrow_mut();
+            super::apply_bootstrap(&mut lua).expect("formatting defaults should reapply");
+        }
+        let result: String = env
+            .eval(FORMATTING_DEFAULTS_PROBE)
+            .expect("formatting utility defaults probe should run");
         assert_eq!(result, "ok");
         if crate::client_profile::is_active_retail_12_1_5() {
-            let split_aliases: (bool, bool) = env
-                .eval(
-                    "return rawequal(rawget(string, 'split'), strsplit), \
-                     rawequal(rawget(rawget(__secureenv, 'string'), 'split'), strsplit)",
-                )
-                .expect("Retail string.split alias should survive defaults");
-            assert_eq!(split_aliases, (true, true));
+            assert_retail_split_aliases(&env);
         }
+        assert_active_profile_formatter(&env);
+    }
+
+    fn assert_retail_split_aliases(env: &WowLuaEnv) {
+        let split_aliases: (bool, bool) = env
+            .eval(
+                "return rawequal(rawget(string, 'split'), strsplit), \
+             rawequal(rawget(rawget(__secureenv, 'string'), 'split'), strsplit)",
+            )
+            .expect("Retail string.split alias should survive defaults");
+        assert_eq!(split_aliases, (true, true));
+    }
+
+    fn assert_active_profile_formatter(env: &WowLuaEnv) {
         let grouped: String = env
             .eval("return BreakUpLargeNumbers(12345)")
             .expect("active profile formatter should run after bootstrap reapplication");

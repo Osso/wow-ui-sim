@@ -127,19 +127,7 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 mod tests {
     use crate::lua_api::WowLuaEnv;
 
-    #[test]
-    fn installs_private_aura_state_and_callbacks() {
-        let env = WowLuaEnv::new().expect("lua env should initialize");
-
-        let private_namespace = if crate::client_profile::is_active_retail_12_1_5() {
-            "__secureenv.C_UnitAurasPrivate"
-        } else {
-            "C_UnitAurasPrivate"
-        };
-        let result: String = env
-            .eval(&format!(
-                "local private = {private_namespace}\n{}",
-                r#"
+    const PRIVATE_AURA_STATE_PROBE: &str = r#"
                 local addedID, removedID, dispel, updateSpell
                 private.SetPrivateAuraAnchorAddedCallback(function(anchor)
                     addedID = anchor.anchorID
@@ -206,10 +194,21 @@ mod tests {
                     return "bad_aura_data_copy"
                 end
                 return "ok"
-                "#
-            ))
-            .expect("private aura probe should run");
+                "#;
 
+    #[test]
+    fn installs_private_aura_state_and_callbacks() {
+        let env = WowLuaEnv::new().expect("lua env should initialize");
+        let private_namespace = if crate::client_profile::is_active_retail_12_1_5() {
+            "__secureenv.C_UnitAurasPrivate"
+        } else {
+            "C_UnitAurasPrivate"
+        };
+        let script = format!(
+            "local private = {private_namespace}\n{}",
+            PRIVATE_AURA_STATE_PROBE
+        );
+        let result: String = env.eval(&script).expect("private aura probe should run");
         assert_eq!(result, "ok");
     }
 }

@@ -25,6 +25,44 @@ pub(crate) fn restore_post_cleanup_globals(
 mod tests {
     use crate::lua_api::WowLuaEnv;
 
+    const INITIAL_FORMATTER_SETUP: &str = r#"
+            assert(type(C_StringUtil.CreateSecondsFormatter) == 'function',
+                'formatter must exist before restoration')
+            secondsRestore = {
+                formatter = C_StringUtil.CreateSecondsFormatter(),
+            }
+            "#;
+
+    const INITIAL_SECURE_FORMATTER_SETUP: &str = r#"
+                local public_factory = C_StringUtil.CreateSecondsFormatter
+                local secure_factory = __secureenv.C_StringUtil.CreateSecondsFormatter
+                assert(type(secure_factory) == 'function',
+                    'secure formatter factory must exist before restoration')
+                assert(not rawequal(public_factory, secure_factory),
+                    'native initial publication constructs separate factory functions')
+                secondsRestore.secure_formatter = secure_factory()
+                "#;
+
+    const ORDINARY_FORMATTER_READY_PROBE: &str = r#"
+                return type(C_StringUtil) == 'table'
+                    and type(C_StringUtil.CreateSecondsFormatter) == 'function'
+                "#;
+
+    const ORDINARY_FORMATTED_PROBE: &str = r#"
+                return secondsRestore.formatter:Format(12),
+                    C_StringUtil.CreateSecondsFormatter():Format(12)
+                "#;
+
+    const SECURE_FORMATTER_READY_PROBE: &str = r#"
+                    return type(__secureenv.C_StringUtil) == 'table'
+                        and type(__secureenv.C_StringUtil.CreateSecondsFormatter) == 'function'
+                    "#;
+
+    const SECURE_FORMATTED_PROBE: &str = r#"
+                    return secondsRestore.secure_formatter:Format(12),
+                        __secureenv.C_StringUtil.CreateSecondsFormatter():Format(12)
+                    "#;
+
     #[test]
     fn post_cleanup_restore_preserves_seconds_formatter_namespace_and_factory() {
         let env = WowLuaEnv::new().expect("Lua environment should initialize");
@@ -34,32 +72,29 @@ mod tests {
             "12"
         };
         let retail_secure_publication = crate::client_profile::is_active_retail_12_1_5();
-        env.exec(
-            r#"
-            assert(type(C_StringUtil.CreateSecondsFormatter) == 'function',
-                'formatter must exist before restoration')
-            secondsRestore = {
-                formatter = C_StringUtil.CreateSecondsFormatter(),
-            }
-            "#,
-        )
-        .expect("ordinary formatter exists before restoration");
-
+        install_initial_seconds_formatters(&env, retail_secure_publication);
+        assert_initial_seconds_formatters(&env, expected, retail_secure_publication);
+        env.restore_post_cleanup_globals();
+        assert_restored_ordinary_seconds_formatters(&env, expected);
         if retail_secure_publication {
-            env.exec(
-                r#"
-                local public_factory = C_StringUtil.CreateSecondsFormatter
-                local secure_factory = __secureenv.C_StringUtil.CreateSecondsFormatter
-                assert(type(secure_factory) == 'function',
-                    'secure formatter factory must exist before restoration')
-                assert(not rawequal(public_factory, secure_factory),
-                    'native initial publication constructs separate factory functions')
-                secondsRestore.secure_formatter = secure_factory()
-                "#,
-            )
-            .expect("Retail publishes a distinct secure formatter factory");
+            assert_restored_secure_seconds_formatters(&env, expected);
         }
+    }
 
+    fn install_initial_seconds_formatters(env: &WowLuaEnv, retail_secure_publication: bool) {
+        env.exec(INITIAL_FORMATTER_SETUP)
+            .expect("ordinary formatter exists before restoration");
+        if retail_secure_publication {
+            env.exec(INITIAL_SECURE_FORMATTER_SETUP)
+                .expect("Retail publishes a distinct secure formatter factory");
+        }
+    }
+
+    fn assert_initial_seconds_formatters(
+        env: &WowLuaEnv,
+        expected: &str,
+        retail_secure_publication: bool,
+    ) {
         let initial: String = env
             .eval("return secondsRestore.formatter:Format(12)")
             .expect("initial formatter handles the numeric fixture");
@@ -70,48 +105,28 @@ mod tests {
                 .expect("initial secure formatter handles the numeric fixture");
             assert_eq!(secure_initial, expected);
         }
+    }
 
-        env.restore_post_cleanup_globals();
-
+    fn assert_restored_ordinary_seconds_formatters(env: &WowLuaEnv, expected: &str) {
         let ordinary_ready: bool = env
-            .eval(
-                r#"
-                return type(C_StringUtil) == 'table'
-                    and type(C_StringUtil.CreateSecondsFormatter) == 'function'
-                "#,
-            )
+            .eval(ORDINARY_FORMATTER_READY_PROBE)
             .expect("ordinary formatter publication should remain callable");
         assert!(ordinary_ready);
         let ordinary_formatted: (String, String) = env
-            .eval(
-                r#"
-                return secondsRestore.formatter:Format(12),
-                    C_StringUtil.CreateSecondsFormatter():Format(12)
-                "#,
-            )
+            .eval(ORDINARY_FORMATTED_PROBE)
             .expect("existing and newly created ordinary formatters still work");
         assert_eq!(ordinary_formatted, (expected.into(), expected.into()));
+    }
 
-        if retail_secure_publication {
-            let secure_ready: bool = env
-                .eval(
-                    r#"
-                    return type(__secureenv.C_StringUtil) == 'table'
-                        and type(__secureenv.C_StringUtil.CreateSecondsFormatter) == 'function'
-                    "#,
-                )
-                .expect("secure formatter publication should remain callable");
-            assert!(secure_ready);
-            let secure_formatted: (String, String) = env
-                .eval(
-                    r#"
-                    return secondsRestore.secure_formatter:Format(12),
-                        __secureenv.C_StringUtil.CreateSecondsFormatter():Format(12)
-                    "#,
-                )
-                .expect("existing and newly created secure formatters still work");
-            assert_eq!(secure_formatted, (expected.into(), expected.into()));
-        }
+    fn assert_restored_secure_seconds_formatters(env: &WowLuaEnv, expected: &str) {
+        let secure_ready: bool = env
+            .eval(SECURE_FORMATTER_READY_PROBE)
+            .expect("secure formatter publication should remain callable");
+        assert!(secure_ready);
+        let secure_formatted: (String, String) = env
+            .eval(SECURE_FORMATTED_PROBE)
+            .expect("existing and newly created secure formatters still work");
+        assert_eq!(secure_formatted, (expected.into(), expected.into()));
     }
 
     #[test]

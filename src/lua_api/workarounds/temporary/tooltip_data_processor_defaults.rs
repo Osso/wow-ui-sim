@@ -30,6 +30,21 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 mod tests {
     use crate::lua_api::WowLuaEnv;
 
+    const RETAIL_TOOLTIP_DEFAULTS_PROBE: &str = r#"
+                    return type(rawget(_G, "TooltipDataProcessor")),
+                           type(rawget(_G, "AddTooltipDataAccessor")),
+                           type(rawget(__secureenv, "TooltipDataProcessor")),
+                           type(rawget(__secureenv, "AddTooltipDataAccessor"))
+                    "#;
+
+    const NON_RETAIL_TOOLTIP_DEFAULTS_PROBE: &str = r#"
+                    return type(TooltipDataProcessor),
+                           TooltipDataProcessor.AllTypes,
+                           type(TooltipDataProcessor.AddTooltipPostCall),
+                           type(TooltipDataProcessor.AddLinePostCall),
+                           AddTooltipDataAccessor() == nil
+                    "#;
+
     fn apply_again(env: &WowLuaEnv) {
         let mut lua = env.lua.borrow_mut();
         super::apply_bootstrap(&mut lua).expect("tooltip data processor defaults should apply");
@@ -38,51 +53,38 @@ mod tests {
     #[test]
     fn tooltip_data_processor_defaults_follow_profile_policy() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
-
         #[cfg(feature = "client-retail")]
-        {
-            let result: (String, String, String, String) = env
-                .eval(
-                    r#"
-                    return type(rawget(_G, "TooltipDataProcessor")),
-                           type(rawget(_G, "AddTooltipDataAccessor")),
-                           type(rawget(__secureenv, "TooltipDataProcessor")),
-                           type(rawget(__secureenv, "AddTooltipDataAccessor"))
-                    "#,
-                )
-                .expect("Retail tooltip data processor profile probe should run");
-
-            assert_eq!(
-                result,
-                ("nil".into(), "nil".into(), "nil".into(), "nil".into())
-            );
-        }
-
+        assert_retail_tooltip_data_processor_defaults(&env);
         #[cfg(not(feature = "client-retail"))]
-        {
-            let result: (String, i32, String, String, bool) = env
-                .eval(
-                    r#"
-                    return type(TooltipDataProcessor),
-                           TooltipDataProcessor.AllTypes,
-                           type(TooltipDataProcessor.AddTooltipPostCall),
-                           type(TooltipDataProcessor.AddLinePostCall),
-                           AddTooltipDataAccessor() == nil
-                    "#,
-                )
-                .expect("non-Retail tooltip data processor defaults should run");
+        assert_non_retail_tooltip_data_processor_defaults(&env);
+    }
 
-            assert_eq!(
-                result,
-                (
-                    "table".to_string(),
-                    0,
-                    "function".to_string(),
-                    "function".to_string(),
-                    true
-                )
-            );
-        }
+    #[cfg(feature = "client-retail")]
+    fn assert_retail_tooltip_data_processor_defaults(env: &WowLuaEnv) {
+        let result: (String, String, String, String) = env
+            .eval(RETAIL_TOOLTIP_DEFAULTS_PROBE)
+            .expect("Retail tooltip data processor profile probe should run");
+        assert_eq!(
+            result,
+            ("nil".into(), "nil".into(), "nil".into(), "nil".into())
+        );
+    }
+
+    #[cfg(not(feature = "client-retail"))]
+    fn assert_non_retail_tooltip_data_processor_defaults(env: &WowLuaEnv) {
+        let result: (String, i32, String, String, bool) = env
+            .eval(NON_RETAIL_TOOLTIP_DEFAULTS_PROBE)
+            .expect("non-Retail tooltip data processor defaults should run");
+        assert_eq!(
+            result,
+            (
+                "table".to_string(),
+                0,
+                "function".to_string(),
+                "function".to_string(),
+                true
+            )
+        );
     }
 
     #[test]
