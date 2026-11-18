@@ -911,38 +911,39 @@ fn load_performance_bar_tooltip(env: &WowLuaEnv) {
 }
 
 #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+const PERFORMANCE_BAR_TOOLTIP_ASSERTIONS: &str = r#"
+    local function capture_results(...)
+        return select('#', ...), ...
+    end
+    local function has_tooltip_line(expected)
+        for index = 1, GameTooltip:NumLines() do
+            local line = _G["GameTooltipTextLeft" .. index]
+            if line and line:GetText() == expected then return true end
+        end
+        return false
+    end
+    GameTooltip:Hide()
+    MainMenuBarPerformanceBarFrame_OnEnter(MainMenuMicroButton.MainMenuBarPerformanceBar)
+    local labels = { [0] = UNKNOWN, "TCP", "UDP" }
+    local protocol = string.format(MAINMENUBAR_COMMUNICATION_PROTOCOL_LABEL,
+        labels[__expected_protocol_home], labels[__expected_protocol_world])
+    local bandwidth = string.format(MAINMENUBAR_BANDWIDTH_LABEL, 0)
+    assert(has_tooltip_line(protocol), "original tooltip protocol row: " .. protocol)
+    assert(has_tooltip_line(bandwidth), "original tooltip bandwidth row must show zero")
+    local count, home, world = capture_results(GetProtocolTypes())
+    assert(count == 2 and type(home) == "number" and type(world) == "number"
+        and home == __expected_protocol_home and world == __expected_protocol_world,
+        "GetProtocolTypes must return exactly the supplied numeric pair")
+    local bandwidth_count, available = capture_results(GetAvailableBandwidth())
+    assert(bandwidth_count == 1 and type(available) == "number" and available == 0,
+        "GetAvailableBandwidth must return exactly one numeric zero")
+    return "ok"
+    "#;
+
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
 fn assert_performance_bar_tooltip_consumer(env: &WowLuaEnv) {
     let result: String = env
-        .eval(
-            r#"
-            local function capture_results(...)
-                return select('#', ...), ...
-            end
-            local function has_tooltip_line(expected)
-                for index = 1, GameTooltip:NumLines() do
-                    local line = _G["GameTooltipTextLeft" .. index]
-                    if line and line:GetText() == expected then return true end
-                end
-                return false
-            end
-            GameTooltip:Hide()
-            MainMenuBarPerformanceBarFrame_OnEnter(MainMenuMicroButton.MainMenuBarPerformanceBar)
-            local labels = { [0] = UNKNOWN, "TCP", "UDP" }
-            local protocol = string.format(MAINMENUBAR_COMMUNICATION_PROTOCOL_LABEL,
-                labels[__expected_protocol_home], labels[__expected_protocol_world])
-            local bandwidth = string.format(MAINMENUBAR_BANDWIDTH_LABEL, 0)
-            assert(has_tooltip_line(protocol), "original tooltip protocol row: " .. protocol)
-            assert(has_tooltip_line(bandwidth), "original tooltip bandwidth row must show zero")
-            local count, home, world = capture_results(GetProtocolTypes())
-            assert(count == 2 and type(home) == "number" and type(world) == "number"
-                and home == __expected_protocol_home and world == __expected_protocol_world,
-                "GetProtocolTypes must return exactly the supplied numeric pair")
-            local bandwidth_count, available = capture_results(GetAvailableBandwidth())
-            assert(bandwidth_count == 1 and type(available) == "number" and available == 0,
-                "GetAvailableBandwidth must return exactly one numeric zero")
-            return "ok"
-            "#,
-        )
+        .eval(PERFORMANCE_BAR_TOOLTIP_ASSERTIONS)
         .expect("original PerformanceBar tooltip should consume supplied native values");
     assert_eq!(result, "ok");
 }
