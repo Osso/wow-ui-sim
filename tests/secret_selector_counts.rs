@@ -207,6 +207,7 @@ const SCALAR_SELECTOR_CONTRACT: &str = r#"
 local getter = C_Spell['@API@']
 local expected = @EXPECTED@
 local restricted = @RESTRICTED@
+local negativeExpected = @NEGATIVE@
 local fractionalExpected = @FRACTIONAL@
 local function probe(expectedTaint)
     local before = debug.getstacktaint()
@@ -221,7 +222,20 @@ local function probe(expectedTaint)
         assert(secretunwrap(getter(900002)) == 0, 'public selector miss')
         assert(secretunwrap(getter(Missing)) == 0, 'secret selector miss')
     end
-    for index, id in ipairs({-1, Invalid, {}, SecretText}) do
+    for _, id in ipairs({-1, Invalid}) do
+        if negativeExpected == nil then
+            assert(not pcall(getter, id))
+        else
+            local ok, value = pcall(getter, id)
+            assert(ok, 'negative selector should be accepted')
+            assert(select('#', getter(id)) == 1, 'negative selector return arity')
+            assert(issecretvalue(value) == restricted, 'negative selector secrecy')
+            if not restricted or not before then
+                assert(secretunwrap(value) == negativeExpected, 'negative selector miss')
+            end
+        end
+    end
+    for index, id in ipairs({{}, SecretText}) do
         assert(not pcall(getter, id), 'invalid selector control ' .. index)
     end
     for _, id in ipairs({19750.5, Fraction}) do
@@ -251,24 +265,38 @@ fn format_scalar_selector_contract(
     api: &str,
     expected: u32,
     restricted: bool,
+    negative_expected: Option<u32>,
     fractional_expected: Option<u32>,
 ) -> String {
     let expected = expected.to_string();
     let restricted = restricted.to_string();
+    let negative_expected =
+        negative_expected.map_or_else(|| "nil".to_owned(), |value| value.to_string());
     let fractional_expected =
         fractional_expected.map_or_else(|| "nil".to_owned(), |value| value.to_string());
     SCALAR_SELECTOR_CONTRACT
         .replace("@API@", api)
         .replace("@EXPECTED@", &expected)
         .replace("@RESTRICTED@", &restricted)
+        .replace("@NEGATIVE@", &negative_expected)
         .replace("@FRACTIONAL@", &fractional_expected)
 }
 
-fn assert_scalar_selector_contract(api: &str, expected: u32, fractional_expected: Option<u32>) {
+fn assert_scalar_selector_contract(
+    api: &str,
+    expected: u32,
+    negative_expected: Option<u32>,
+    fractional_expected: Option<u32>,
+) {
     for restricted in [false, true] {
         let env = fixture(restricted);
-        let script =
-            format_scalar_selector_contract(api, expected, restricted, fractional_expected);
+        let script = format_scalar_selector_contract(
+            api,
+            expected,
+            restricted,
+            negative_expected,
+            fractional_expected,
+        );
         env.exec(&script)
             .expect("scalar selector arity, restriction, miss, and invalid-value contract");
         assert_count_facts(&env);
@@ -277,13 +305,14 @@ fn assert_scalar_selector_contract(api: &str, expected: u32, fractional_expected
 
 #[test]
 fn cast_count_selector_arity_restrictions_misses_and_invalid_controls() {
-    // INFERRED for 12.1.5.70783 from the verified 12.1.5.70688 conversion path: see pr46-49-decomp-answers.md §R88r.r1 and docs/specs/spell-count-outputs.md.
-    assert_scalar_selector_contract("GetSpellCastCount", 3, Some(3));
+    // INFERRED for 12.1.5.70783: ordinary and empty-source secret -1 selectors miss as one zero.
+    // See pr46-49-decomp-answers.md §§R88k.4, R88m.2, R88f.A.24, R88r.r1.
+    assert_scalar_selector_contract("GetSpellCastCount", 3, Some(0), Some(3));
 }
 
 #[test]
 fn maximum_aura_selector_arity_restrictions_misses_and_invalid_controls() {
-    assert_scalar_selector_contract("GetSpellMaxCumulativeAuraApplications", 7, None);
+    assert_scalar_selector_contract("GetSpellMaxCumulativeAuraApplications", 7, None, None);
 }
 
 #[test]
