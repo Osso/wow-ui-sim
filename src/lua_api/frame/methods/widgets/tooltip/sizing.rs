@@ -106,15 +106,37 @@ pub(crate) fn size_wrath_tooltip_on_show(
     refresh_tooltip_geometry(sim, tooltip_id);
 }
 
-fn anchor_tooltip_lines(sim: &mut crate::lua_api::state::SimState, tooltip_id: u64, width: f32) {
+type TooltipAnchorRow = (Option<u64>, Option<u64>, bool, f32, TooltipRowReservation);
+type TooltipSimState = crate::lua_api::state::SimState;
+
+struct TooltipAnchorLayout {
+    tooltip_id: u64,
+    left: f32,
+    top: f32,
+    content_width: f32,
+    spacing: f32,
+}
+
+fn anchor_tooltip_lines(sim: &mut TooltipSimState, tooltip_id: u64, width: f32) {
     let Some(td) = sim.tooltips.get(&tooltip_id) else {
         return;
     };
-    let [_, _, left, top] = td.padding;
-    let content_width = width - td.native_outer_padding().0;
-    let spacing = td.line_spacing.unwrap_or(TOOLTIP_LINE_SPACING);
-    let rows: Vec<_> = td
-        .lines
+    let layout = TooltipAnchorLayout {
+        tooltip_id,
+        left: td.padding[2],
+        top: td.padding[3],
+        content_width: width - td.native_outer_padding().0,
+        spacing: td.line_spacing.unwrap_or(TOOLTIP_LINE_SPACING),
+    };
+    let rows = tooltip_anchor_rows(td);
+    let anchored = anchor_tooltip_rows(sim, &layout, &rows, td.anchored_left_lines);
+    if let Some(td) = sim.tooltips.get_mut(&tooltip_id) {
+        td.anchored_left_lines = anchored;
+    }
+}
+
+fn tooltip_anchor_rows(td: &TooltipData) -> Vec<TooltipAnchorRow> {
+    td.lines
         .iter()
         .enumerate()
         .map(|(index, line)| {
@@ -128,76 +150,135 @@ fn anchor_tooltip_lines(sim: &mut crate::lua_api::state::SimState, tooltip_id: u
                 td.row_reservation(index),
             )
         })
-        .collect();
-    let mut anchored = td.anchored_left_lines;
-    for (index, &(line_id, right_id, has_right, inset, reservation)) in rows.iter().enumerate() {
-        let Some(line_id) = line_id.filter(|&id| id != 0) else {
+        .collect()
+}
+
+fn anchor_tooltip_rows(
+    sim: &mut TooltipSimState,
+    layout: &TooltipAnchorLayout,
+    rows: &[TooltipAnchorRow],
+    mut anchored: usize,
+) -> usize {
+    for (index, row) in rows.iter().enumerate() {
+        let Some(line_id) = row.0.filter(|&id| id != 0) else {
             break;
         };
         let previous = if index == 0 {
-            tooltip_id
+            layout.tooltip_id
         } else if let Some(id) = rows[index - 1].0 {
             id
         } else {
             break;
         };
-        if index >= anchored {
-            // WM72/WM84: this row's top overflow and the preceding indexed
-            // row's bottom overflow separate the rows.
-            let top_offset = if index == 0 {
-                -10.0 - top - reservation.top
-            } else {
-                -spacing - reservation.top - rows[index - 1].4.bottom
-            };
-            let relative_point = if index == 0 {
-                crate::widget::AnchorPoint::Top
-            } else {
-                crate::widget::AnchorPoint::Bottom
-            };
-            if let Some(frame) = sim.widgets.get_mut_visual(line_id) {
-                frame.anchors = vec![
-                    tooltip_line_anchor(
-                        crate::widget::AnchorPoint::Top,
-                        previous,
-                        relative_point,
-                        0.0,
-                        top_offset,
-                    ),
-                    tooltip_line_anchor(
-                        crate::widget::AnchorPoint::Left,
-                        tooltip_id,
-                        crate::widget::AnchorPoint::Left,
-                        10.0 + left + inset + reservation.outward_left,
-                        0.0,
-                    ),
-                ];
-                sim.widgets.mark_rect_dirty(line_id);
-                anchored = index + 1;
-            }
+        if index >= anchored
+            && anchor_left_tooltip_line(sim, layout, rows, index, line_id, previous)
+        {
+            anchored = index + 1;
         }
-        if has_right {
-            if let Some(right_id) = right_id.filter(|&id| id != 0) {
-                if let Some(frame) = sim.widgets.get_mut_visual(right_id)
-                    && frame.visible
-                {
-                    frame.anchors = vec![tooltip_line_anchor(
-                        crate::widget::AnchorPoint::Right,
-                        line_id,
-                        crate::widget::AnchorPoint::Left,
-                        content_width
-                            - inset
-                            - reservation.outward_left
-                            - reservation.outward_right,
-                        0.0,
-                    )];
-                    sim.widgets.mark_rect_dirty(right_id);
-                }
-            }
+        if row.2 {
+            anchor_right_tooltip_line(sim, layout, line_id, row);
         }
     }
-    if let Some(td) = sim.tooltips.get_mut(&tooltip_id) {
-        td.anchored_left_lines = anchored;
-    }
+    anchored
+}
+
+fn anchor_left_tooltip_line(
+    sim: &mut TooltipSimState,
+    layout: &TooltipAnchorLayout,
+    rows: &[TooltipAnchorRow],
+    index: usize,
+    line_id: u64,
+    previous: u64,
+) -> bool {
+    let reservation = &rows[index].4;
+    // WM72/WM84: this row's top overflow and the preceding indexed row's bottom overflow separate the rows.
+    let top_offset = if index == 0 {
+        -10.0 - layout.top - reservation.top
+    } else {
+        -layout.spacing - reservation.top - rows[index - 1].4.bottom
+    };
+    let relative_point = if index == 0 {
+        crate::widget::AnchorPoint::Top
+    } else {
+        crate::widget::AnchorPoint::Bottom
+    };
+    set_tooltip_left_anchors(
+        sim,
+        layout,
+        line_id,
+        previous,
+        relative_point,
+        top_offset,
+        &rows[index],
+    )
+}
+
+fn set_tooltip_left_anchors(
+    sim: &mut TooltipSimState,
+    layout: &TooltipAnchorLayout,
+    line_id: u64,
+    previous: u64,
+    relative_point: crate::widget::AnchorPoint,
+    top_offset: f32,
+    row: &TooltipAnchorRow,
+) -> bool {
+    let Some(frame) = sim.widgets.get_mut_visual(line_id) else {
+        return false;
+    };
+    frame.anchors = build_tooltip_left_anchors(layout, previous, relative_point, top_offset, row);
+    sim.widgets.mark_rect_dirty(line_id);
+    true
+}
+
+fn build_tooltip_left_anchors(
+    layout: &TooltipAnchorLayout,
+    previous: u64,
+    relative_point: crate::widget::AnchorPoint,
+    top_offset: f32,
+    row: &TooltipAnchorRow,
+) -> Vec<crate::widget::Anchor> {
+    vec![
+        tooltip_line_anchor(
+            crate::widget::AnchorPoint::Top,
+            previous,
+            relative_point,
+            0.0,
+            top_offset,
+        ),
+        tooltip_line_anchor(
+            crate::widget::AnchorPoint::Left,
+            layout.tooltip_id,
+            crate::widget::AnchorPoint::Left,
+            10.0 + layout.left + row.3 + row.4.outward_left,
+            0.0,
+        ),
+    ]
+}
+
+fn anchor_right_tooltip_line(
+    sim: &mut TooltipSimState,
+    layout: &TooltipAnchorLayout,
+    line_id: u64,
+    row: &TooltipAnchorRow,
+) {
+    let Some(right_id) = row.1.filter(|&id| id != 0) else {
+        return;
+    };
+    let Some(frame) = sim
+        .widgets
+        .get_mut_visual(right_id)
+        .filter(|frame| frame.visible)
+    else {
+        return;
+    };
+    frame.anchors = vec![tooltip_line_anchor(
+        crate::widget::AnchorPoint::Right,
+        line_id,
+        crate::widget::AnchorPoint::Left,
+        layout.content_width - row.3 - row.4.outward_left - row.4.outward_right,
+        0.0,
+    )];
+    sim.widgets.mark_rect_dirty(right_id);
 }
 
 fn tooltip_line_anchor(
