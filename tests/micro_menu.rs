@@ -911,13 +911,7 @@ fn load_performance_bar_tooltip(env: &WowLuaEnv) {
 }
 
 #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
-fn check_performance_bar_tooltip(env: &WowLuaEnv, input: Option<PerformanceProtocolTypes>) {
-    env.state().borrow_mut().performance_bar_protocol_types = input;
-    let (home, world) = input.map_or((0, 0), |pair| (pair.home.value(), pair.world.value()));
-    env.exec(&format!(
-        "__expected_protocol_home = {home}; __expected_protocol_world = {world}"
-    ))
-    .expect("set expected protocol codes");
+fn assert_performance_bar_tooltip_consumer(env: &WowLuaEnv) {
     let result: String = env
         .eval(
             r#"
@@ -951,6 +945,17 @@ fn check_performance_bar_tooltip(env: &WowLuaEnv, input: Option<PerformanceProto
         )
         .expect("original PerformanceBar tooltip should consume supplied native values");
     assert_eq!(result, "ok");
+}
+
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+fn check_performance_bar_tooltip(env: &WowLuaEnv, input: Option<PerformanceProtocolTypes>) {
+    env.state().borrow_mut().performance_bar_protocol_types = input;
+    let (home, world) = input.map_or((0, 0), |pair| (pair.home.value(), pair.world.value()));
+    env.exec(&format!(
+        "__expected_protocol_home = {home}; __expected_protocol_world = {world}"
+    ))
+    .expect("set expected protocol codes");
+    assert_performance_bar_tooltip_consumer(env);
 }
 
 #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
