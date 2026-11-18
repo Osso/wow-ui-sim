@@ -928,7 +928,7 @@ fn performance_bar_tooltip_uses_supplied_protocols_and_zero_bandwidth() {
             end
 
             local function check_pair(home, world)
-                C_PerformanceBar._state.protocolTypes = { home, world }
+                C_PerformanceBar._state.protocolTypes = { home = home, world = world }
                 GameTooltip:Hide()
                 MainMenuBarPerformanceBarFrame_OnEnter(bar)
                 local protocol = string.format(MAINMENUBAR_COMMUNICATION_PROTOCOL_LABEL,
