@@ -685,7 +685,7 @@ fn load_summary_counts_file_event_and_nested_lua_failures_once_per_addon() {
     let state = env.state().borrow();
     assert_load_summary_error_records(&state);
     assert_load_summary_addon_states(&state);
-    assert_load_summary_counts(startup_count, &stats);
+    assert_load_summary_counts(startup_count, stats);
 }
 
 fn write_load_summary_test_addons(root: &Path) {
@@ -779,14 +779,14 @@ fn assert_load_summary_addon_states(state: &crate::lua_api::SimState) {
     );
 }
 
-fn assert_load_summary_counts(startup_count: usize, stats: &LoadStats) {
+fn assert_load_summary_counts(startup_count: usize, stats: LoadStats) {
     assert_eq!(stats.success_count, 4);
     assert_eq!(
         stats.fail_count, 4,
         "file, callback, nested child, and missing dependency must not report one failure"
     );
     assert_eq!(
-        format_load_outcomes(startup_count, stats),
+        format_load_outcomes(startup_count, &stats),
         "Loaded: 4/5 addons\nFailed during loading: 4\nLoad failures: 1\nLoaded with Lua errors during loading: 3"
     );
 }
