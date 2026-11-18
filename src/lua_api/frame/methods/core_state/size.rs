@@ -7,6 +7,8 @@ use super::helpers::{
 use crate::lua_api::frame::methods::methods_helpers::{
     can_change_protected_state_for, emit_addon_action_blocked,
 };
+#[cfg(feature = "client-retail")]
+use crate::lua_api::frame::methods::text_attribute_event::measure_text_width;
 use crate::lua_api::frame::methods::text_attribute_event::{
     refresh_auto_text_height_after_width_change, refresh_auto_text_width_after_zero_width,
 };
@@ -25,8 +27,46 @@ pub fn get_width(state: &mut LuaState) -> LuaResult<u32> {
     super::super::secret_origin::require_geometry_readable(state, id)?;
     let ignore = bool::from_stack(state, 2).ok().unwrap_or(false);
     let (width, _) = frame_size(state, id, ignore)?;
-    state.push(Val::Num(width as f64));
+    #[cfg(feature = "client-retail")]
+    let width = invalid_font_string_width(state, id, ignore, width)?;
+    #[cfg(not(feature = "client-retail"))]
+    let width = f64::from(width);
+    state.push(Val::Num(width));
     Ok(1)
+}
+
+#[cfg(feature = "client-retail")]
+const INVALID_RECT_TEXT_WIDTH_FLOOR: f64 = 1.0;
+
+/// VERIFIED (70688; 70783 applicability INFERRED): `pr46-49-decomp-answers.md`
+/// (untracked decomp handoff) §R88az z3. With an invalid rectangle, GetWidth uses the
+/// FontString accessor: explicit width first, otherwise measured text with a one-unit floor.
+/// INFERRED (simulator mapping): "horizontal coordinate unavailable" is approximated by
+/// whole-rectangle invalidity; the native per-axis case (invalid rectangle with a usable
+/// nonzero horizontal span) is not modelled separately.
+#[cfg(feature = "client-retail")]
+fn invalid_font_string_width(
+    state: &LuaState,
+    id: u64,
+    ignore_layout: bool,
+    reported_width: f32,
+) -> LuaResult<f64> {
+    if ignore_layout {
+        return Ok(f64::from(reported_width));
+    }
+    let needs_text_measurement = {
+        let sim = borrow_state(state)?;
+        sim.widgets.get(id).is_some_and(|frame| {
+            let is_font_string = frame.widget_type == crate::widget::WidgetType::FontString;
+            let has_invalid_rect = !frame.rect_valid || frame.layout_rect.is_none();
+            let has_no_explicit_width = frame.width == 0.0 || frame.width_is_text_auto;
+            is_font_string && has_invalid_rect && has_no_explicit_width
+        })
+    };
+    if needs_text_measurement {
+        return Ok(measure_text_width(state, id).max(INVALID_RECT_TEXT_WIDTH_FLOOR));
+    }
+    Ok(f64::from(reported_width))
 }
 
 pub fn get_height(state: &mut LuaState) -> LuaResult<u32> {

@@ -729,7 +729,7 @@ fn write_load_summary_nested_errors(root: &Path) {
     );
 }
 
-fn assert_load_summary_error_records(state: &crate::lua_api::SimState) {
+fn assert_load_summary_error_records(state: &wow_ui_sim::lua_api::SimState) {
     let recorded: HashSet<_> = state
         .lua_error_records
         .iter()
@@ -753,7 +753,7 @@ fn assert_load_summary_error_records(state: &crate::lua_api::SimState) {
     );
 }
 
-fn assert_load_summary_addon_states(state: &crate::lua_api::SimState) {
+fn assert_load_summary_addon_states(state: &wow_ui_sim::lua_api::SimState) {
     for name in [
         "Healthy",
         "FileBroken",

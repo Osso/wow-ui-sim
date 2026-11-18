@@ -29,6 +29,11 @@ use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
 use rilua::{LuaResult, Val};
 
+#[cfg(feature = "client-retail")]
+pub(super) fn measure_text_width(state: &LuaState, id: u64) -> f64 {
+    text::measure_text_width(state, id)
+}
+
 /// Register all text, attribute, and event RustFn methods on the given table.
 pub fn register_all(state: &mut LuaState, table: GcRef<Table>) -> LuaResult<()> {
     register_text_methods(state, table)?;

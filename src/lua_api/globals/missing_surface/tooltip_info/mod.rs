@@ -57,18 +57,32 @@ pub(super) fn register_pet_info_surface(state: &mut LuaState) -> LuaResult<()> {
 
 fn register_c_tooltip_info(state: &mut LuaState) -> LuaResult<()> {
     let table_ref = ensure_namespace(state, "C_TooltipInfo")?;
+    register_mainline_tooltip_info(state, table_ref)?;
+    register_tooltip_loot_info(state, table_ref)?;
+    register_socketed_relic_tooltip_info(state, table_ref)?;
+    #[cfg(feature = "retail-12-0-5")]
+    register_retail_epoch_tooltip_info(state, table_ref)?;
+    #[cfg(feature = "retail-12-1-5")]
+    register_retail_merchant_tooltip_info(state, table_ref)?;
+    register_item_spell_aura_methods(state, table_ref)?;
+    register_spell_aura_unit_methods(state, table_ref)?;
+    #[cfg(feature = "retail-12-0-5")]
+    register_spell_mount_tooltip_info(state, table_ref)?;
+    #[cfg(feature = "client-retail")]
+    register_retail_pvp_talent_tooltip_info(state, table_ref)?;
+    #[cfg(feature = "client-wowforever")]
+    register_forever_tooltip_info(state, table_ref)?;
+    Ok(())
+}
+
+fn register_mainline_tooltip_info(state: &mut LuaState, table_ref: GcRef<Table>) -> LuaResult<()> {
     if matches!(
         crate::client_profile::ACTIVE,
         crate::client_profile::ClientProfile::Retail
             | crate::client_profile::ClientProfile::Ptr
             | crate::client_profile::ClientProfile::WowForever
     ) {
-        crate::c_api::c_tooltip_info_bag_child::register(state, table_ref)?;
-        crate::c_api::c_tooltip_info_totem::register(state, table_ref)?;
-        crate::c_api::c_tooltip_info_artifact_item::register(state, table_ref)?;
-        crate::c_api::c_tooltip_info_equipment_set::register(state, table_ref)?;
-        crate::c_api::c_tooltip_info_inventory_by_id::register(state, table_ref)?;
-        crate::c_api::c_tooltip_info_item_key::register(state, table_ref)?;
+        register_mainline_item_tooltip_info(state, table_ref)?;
         // WM94 §5: Retail, PTR and Forever pinned docs declare GetAzeritePower
         // (TooltipInfoDocumentation.lua:102) and GetConduit (:204).
         crate::c_api::c_tooltip_info_azerite_power::register(state, table_ref)?;
@@ -85,6 +99,23 @@ fn register_c_tooltip_info(state: &mut LuaState) -> LuaResult<()> {
         #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
         crate::c_api::c_tooltip_info_pvp_brawl::register(state, table_ref)?;
     }
+    Ok(())
+}
+
+fn register_mainline_item_tooltip_info(
+    state: &mut LuaState,
+    table_ref: GcRef<Table>,
+) -> LuaResult<()> {
+    crate::c_api::c_tooltip_info_bag_child::register(state, table_ref)?;
+    crate::c_api::c_tooltip_info_totem::register(state, table_ref)?;
+    crate::c_api::c_tooltip_info_artifact_item::register(state, table_ref)?;
+    crate::c_api::c_tooltip_info_equipment_set::register(state, table_ref)?;
+    crate::c_api::c_tooltip_info_inventory_by_id::register(state, table_ref)?;
+    crate::c_api::c_tooltip_info_item_key::register(state, table_ref)?;
+    Ok(())
+}
+
+fn register_tooltip_loot_info(state: &mut LuaState, table_ref: GcRef<Table>) -> LuaResult<()> {
     // Retail, PTR and Forever pinned docs all declare the loot getters,
     // including GetLootRollItem (Forever TooltipInfoDocumentation.lua:554-584).
     if matches!(
@@ -96,6 +127,13 @@ fn register_c_tooltip_info(state: &mut LuaState) -> LuaResult<()> {
         crate::c_api::c_tooltip_info_loot::register(state, table_ref)?;
         crate::c_api::c_tooltip_info_weekly::register(state, table_ref)?;
     }
+    Ok(())
+}
+
+fn register_socketed_relic_tooltip_info(
+    state: &mut LuaState,
+    table_ref: GcRef<Table>,
+) -> LuaResult<()> {
     // Retail, PTR and Forever pinned docs declare GetSocketedRelic
     // (TooltipInfoDocumentation.lua:1012). Forever keeps the catalog item.
     if matches!(
@@ -106,45 +144,69 @@ fn register_c_tooltip_info(state: &mut LuaState) -> LuaResult<()> {
     ) {
         crate::c_api::c_tooltip_info_socketed_relic::register(state, table_ref)?;
     }
-    #[cfg(feature = "retail-12-0-5")]
-    {
-        if matches!(
-            crate::client_profile::ACTIVE,
-            crate::client_profile::ClientProfile::Retail
-                | crate::client_profile::ClientProfile::Ptr
-        ) {
-            crate::c_api::tooltip_info_retail_epoch_and_forever::c_tooltip_info_appearance::register(state, table_ref)?;
-        }
-        crate::c_api::c_tooltip_info_item_context::register(state, table_ref)?;
-        crate::c_api::tooltip_info_retail_epoch_and_forever::c_tooltip_info_outfit::register(
+    Ok(())
+}
+
+#[cfg(feature = "retail-12-0-5")]
+fn register_retail_epoch_tooltip_info(
+    state: &mut LuaState,
+    table_ref: GcRef<Table>,
+) -> LuaResult<()> {
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+    ) {
+        crate::c_api::tooltip_info_retail_epoch_and_forever::c_tooltip_info_appearance::register(
             state, table_ref,
         )?;
     }
+    crate::c_api::c_tooltip_info_item_context::register(state, table_ref)?;
+    crate::c_api::tooltip_info_retail_epoch_and_forever::c_tooltip_info_outfit::register(
+        state, table_ref,
+    )?;
+    Ok(())
+}
+
+#[cfg(feature = "retail-12-1-5")]
+fn register_retail_merchant_tooltip_info(
+    state: &mut LuaState,
+    table_ref: GcRef<Table>,
+) -> LuaResult<()> {
     // Retail and PTR use the Retail 12.1.5 index reader. Forever registration
     // below shares the producer and supplies its verified argument reader.
-    #[cfg(feature = "retail-12-1-5")]
-    {
-        if matches!(
-            crate::client_profile::ACTIVE,
-            crate::client_profile::ClientProfile::Retail
-                | crate::client_profile::ClientProfile::Ptr
-        ) {
-            crate::c_api::c_tooltip_info_merchant_cost::register(state, table_ref)?;
-        }
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+    ) {
+        crate::c_api::c_tooltip_info_merchant_cost::register(state, table_ref)?;
     }
-    register_item_spell_aura_methods(state, table_ref)?;
-    register_spell_aura_unit_methods(state, table_ref)?;
-    #[cfg(feature = "retail-12-0-5")]
-    {
-        crate::c_api::c_tooltip_info_spell_mount::register(state, table_ref)?;
-        crate::c_api::c_tooltip_info_aura_instance::register(state, table_ref)?;
-        crate::c_api::c_tooltip_info_indexed_aura::register(state, table_ref)?;
-    }
-    #[cfg(feature = "client-retail")]
+    Ok(())
+}
+
+#[cfg(feature = "retail-12-0-5")]
+fn register_spell_mount_tooltip_info(
+    state: &mut LuaState,
+    table_ref: GcRef<Table>,
+) -> LuaResult<()> {
+    crate::c_api::c_tooltip_info_spell_mount::register(state, table_ref)?;
+    crate::c_api::c_tooltip_info_aura_instance::register(state, table_ref)?;
+    crate::c_api::c_tooltip_info_indexed_aura::register(state, table_ref)?;
+    Ok(())
+}
+
+#[cfg(feature = "client-retail")]
+fn register_retail_pvp_talent_tooltip_info(
+    state: &mut LuaState,
+    table_ref: GcRef<Table>,
+) -> LuaResult<()> {
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
         crate::c_api::c_tooltip_info_pvp_talent::register(state, table_ref)?;
     }
-    #[cfg(feature = "client-wowforever")]
+    Ok(())
+}
+
+#[cfg(feature = "client-wowforever")]
+fn register_forever_tooltip_info(state: &mut LuaState, table_ref: GcRef<Table>) -> LuaResult<()> {
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
         crate::c_api::tooltip_info_retail_epoch_and_forever::c_tooltip_info_appearance::register(
             state, table_ref,

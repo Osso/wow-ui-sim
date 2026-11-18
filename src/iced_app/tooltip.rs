@@ -199,38 +199,33 @@ fn measure_native_tooltip(state: &mut SimState, id: u64, fonts: &mut WowFontSyst
     let Some(td) = state.tooltips.get(&id).cloned() else {
         return (0.0, 0.0);
     };
-    // WM63 L23 and WM84: every row reserves its stored inset plus the sum of
-    // its four attachment width groups in width selection and wrap width.
+    // WM63 L23 and WM84: each row reserves its stored inset and attachment widths.
     let mut reservations: Vec<_> = td
         .lines
         .iter()
         .map(|line| attachment_width_groups(line.attachments()))
         .collect();
-    let rows: Vec<crate::lua_api::tooltip::TooltipWidthRow> = td
-        .lines
-        .iter()
-        .enumerate()
-        .map(|(index, line)| crate::lua_api::tooltip::TooltipWidthRow {
-            reserved: line.inset + reservations[index].width(),
-            left: native_line_width(state, &td, index, false, &line.left_text, fonts),
-            right: line.right_text.as_deref().map_or(0.0, |text| {
-                native_line_width(state, &td, index, true, text, fonts)
-            }),
-            hidden: td.left_line_is_hidden(&state.widgets, index),
-        })
-        .collect();
-    // WM63 L23: the selected content width, capped and shrunk to the fitted
-    // wrapped rows, then assigned to the wrapped left FontStrings.
-    let wrap_fonts: Vec<_> = (0..td.lines.len())
-        .map(|index| {
-            let (font, size, scale, _, _) = native_line_font(state, &td, index, false);
-            (font, size, scale)
-        })
-        .collect();
-    let wrap_texts: Vec<String> = (0..td.lines.len())
-        .map(|index| native_line_text(state, &td, index, false, &td.lines[index].left_text))
-        .collect();
-    let width = td.select_content_width(&rows, |index, assigned| {
+    let rows = native_tooltip_width_rows(state, &td, &reservations, fonts);
+    let wrap_fonts = native_tooltip_wrap_fonts(state, &td);
+    let wrap_texts = native_tooltip_wrap_texts(state, &td);
+    // WM63 L23: choose the capped width, then shrink it to fitted wrapped rows.
+    let width = select_native_tooltip_width(&td, &rows, &wrap_fonts, &wrap_texts, fonts);
+    let height = measure_native_tooltip_rows(state, &td, width, &rows, fonts, &mut reservations);
+    if let Some(tooltip) = state.tooltips.get_mut(&id) {
+        tooltip.row_reservations = reservations;
+    }
+    let (horizontal, vertical) = td.native_outer_padding();
+    (width + horizontal, height + vertical)
+}
+
+fn select_native_tooltip_width(
+    td: &crate::lua_api::tooltip::TooltipData,
+    rows: &[crate::lua_api::tooltip::TooltipWidthRow],
+    wrap_fonts: &[(Option<String>, f32, f32)],
+    wrap_texts: &[String],
+    fonts: &mut WowFontSystem,
+) -> f32 {
+    td.select_content_width(rows, |index, assigned| {
         let (font, size, scale) = &wrap_fonts[index];
         fonts.measure_fitted_text_width(
             &wrap_texts[index],
@@ -238,55 +233,157 @@ fn measure_native_tooltip(state: &mut SimState, id: u64, fonts: &mut WowFontSyst
             *size,
             assigned / scale,
         ) * scale
-    });
+    })
+}
+
+fn native_tooltip_width_rows(
+    state: &SimState,
+    td: &crate::lua_api::tooltip::TooltipData,
+    reservations: &[crate::lua_api::tooltip::TooltipRowReservation],
+    fonts: &mut WowFontSystem,
+) -> Vec<crate::lua_api::tooltip::TooltipWidthRow> {
+    td.lines
+        .iter()
+        .enumerate()
+        .map(|(index, line)| crate::lua_api::tooltip::TooltipWidthRow {
+            reserved: line.inset + reservations[index].width(),
+            left: native_line_width(state, td, index, false, &line.left_text, fonts),
+            right: line.right_text.as_deref().map_or(0.0, |text| {
+                native_line_width(state, td, index, true, text, fonts)
+            }),
+            hidden: td.left_line_is_hidden(&state.widgets, index),
+        })
+        .collect()
+}
+
+fn native_tooltip_wrap_fonts(
+    state: &SimState,
+    td: &crate::lua_api::tooltip::TooltipData,
+) -> Vec<(Option<String>, f32, f32)> {
+    (0..td.lines.len())
+        .map(|index| {
+            let (font, size, scale, _, _) = native_line_font(state, td, index, false);
+            (font, size, scale)
+        })
+        .collect()
+}
+
+fn native_tooltip_wrap_texts(
+    state: &SimState,
+    td: &crate::lua_api::tooltip::TooltipData,
+) -> Vec<String> {
+    (0..td.lines.len())
+        .map(|index| native_line_text(state, td, index, false, &td.lines[index].left_text))
+        .collect()
+}
+
+fn measure_native_tooltip_rows(
+    state: &mut SimState,
+    td: &crate::lua_api::tooltip::TooltipData,
+    width: f32,
+    rows: &[crate::lua_api::tooltip::TooltipWidthRow],
+    fonts: &mut WowFontSystem,
+    reservations: &mut [crate::lua_api::tooltip::TooltipRowReservation],
+) -> f32 {
     let mut height = 0.0;
     for (index, line) in td.lines.iter().enumerate() {
-        let wrapped = td.row_wraps(index);
-        let wrap_width = (width - rows[index].reserved).max(0.0);
-        if wrapped {
-            if let Some(line_id) = td.left_line_ids.get(index).copied() {
-                if let Some(frame) = state.widgets.get_mut_visual(line_id) {
-                    frame.width = wrap_width;
-                    frame.width_is_text_auto = false;
-                }
-                state.widgets.mark_rect_dirty(line_id);
-            }
-        }
-        if rows[index].hidden {
+        let Some(row_height) = measure_native_tooltip_row(
+            state,
+            td,
+            line,
+            index,
+            width,
+            &rows[index],
+            fonts,
+            &mut reservations[index],
+        ) else {
             continue;
-        }
-        let (font, size, scale, spacing, smooth) = native_line_font(state, &td, index, false);
-        let text = native_line_markup(state, &td, index, false, &line.left_text);
-        let measured = fonts.measure_markup_height(
-            text,
-            font.as_deref(),
-            size,
-            wrapped.then_some(wrap_width / scale),
-            spacing,
-            smooth,
-        ) * scale;
-        if let Some(line_id) = td.left_line_ids.get(index).copied() {
-            if let Some(frame) = state.widgets.get_mut_visual(line_id) {
-                frame.height = measured;
-                frame.height_is_text_auto = true;
-            }
-            state.widgets.mark_rect_dirty(line_id);
-        }
-        let right = native_right_text_height(state, &td, index, fonts);
-        let (top, bottom) = attachment_overflow(line.attachments(), measured, right);
-        reservations[index].top = top;
-        reservations[index].bottom = bottom;
+        };
         if height > 0.0 {
             height += td.line_spacing.unwrap_or(TOOLTIP_LINE_SPACING);
         }
-        // R88e.6 verifies that the shown left FontString region height enters this row total.
-        height += measured + top + bottom;
+        height += row_height;
     }
-    if let Some(tooltip) = state.tooltips.get_mut(&id) {
-        tooltip.row_reservations = reservations;
+    height
+}
+
+fn measure_native_tooltip_row(
+    state: &mut SimState,
+    td: &crate::lua_api::tooltip::TooltipData,
+    line: &crate::lua_api::tooltip::TooltipLine,
+    index: usize,
+    width: f32,
+    row: &crate::lua_api::tooltip::TooltipWidthRow,
+    fonts: &mut WowFontSystem,
+    reservation: &mut crate::lua_api::tooltip::TooltipRowReservation,
+) -> Option<f32> {
+    let wrapped = td.row_wraps(index);
+    let wrap_width = (width - row.reserved).max(0.0);
+    if wrapped {
+        set_native_tooltip_wrap_width(state, td, index, wrap_width);
     }
-    let (horizontal, vertical) = td.native_outer_padding();
-    (width + horizontal, height + vertical)
+    if row.hidden {
+        return None;
+    }
+    let measured = measure_native_left_text(state, td, line, index, wrapped, wrap_width, fonts);
+    let right = native_right_text_height(state, td, index, fonts);
+    let (top, bottom) = attachment_overflow(line.attachments(), measured, right);
+    reservation.top = top;
+    reservation.bottom = bottom;
+    Some(measured + top + bottom)
+}
+
+fn set_native_tooltip_wrap_width(
+    state: &mut SimState,
+    td: &crate::lua_api::tooltip::TooltipData,
+    index: usize,
+    wrap_width: f32,
+) {
+    if let Some(line_id) = td.left_line_ids.get(index).copied() {
+        if let Some(frame) = state.widgets.get_mut_visual(line_id) {
+            frame.width = wrap_width;
+            frame.width_is_text_auto = false;
+        }
+        state.widgets.mark_rect_dirty(line_id);
+    }
+}
+
+fn measure_native_left_text(
+    state: &mut SimState,
+    td: &crate::lua_api::tooltip::TooltipData,
+    line: &crate::lua_api::tooltip::TooltipLine,
+    index: usize,
+    wrapped: bool,
+    wrap_width: f32,
+    fonts: &mut WowFontSystem,
+) -> f32 {
+    let (font, size, scale, spacing, smooth) = native_line_font(state, td, index, false);
+    let text = native_line_markup(state, td, index, false, &line.left_text);
+    let measured = fonts.measure_markup_height(
+        text,
+        font.as_deref(),
+        size,
+        wrapped.then_some(wrap_width / scale),
+        spacing,
+        smooth,
+    ) * scale;
+    update_native_tooltip_line_height(state, td, index, measured);
+    measured
+}
+
+fn update_native_tooltip_line_height(
+    state: &mut SimState,
+    td: &crate::lua_api::tooltip::TooltipData,
+    index: usize,
+    measured: f32,
+) {
+    if let Some(line_id) = td.left_line_ids.get(index).copied() {
+        if let Some(frame) = state.widgets.get_mut_visual(line_id) {
+            frame.height = measured;
+            frame.height_is_text_auto = true;
+        }
+        state.widgets.mark_rect_dirty(line_id);
+    }
 }
 
 /// Measured height of a row's right text, used only by right-region
