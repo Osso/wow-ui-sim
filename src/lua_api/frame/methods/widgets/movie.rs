@@ -1,13 +1,19 @@
 //! MovieFrame subtitle preferences and Mists movie-handle lifecycle.
 
-use crate::lua_api::methods::{borrow_state, borrow_state_mut, frame_id_from_stack};
-use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
+#[cfg(feature = "client-mists")]
+use crate::lua_api::methods::borrow_state;
+use crate::lua_api::methods::{borrow_state_mut, frame_id_from_stack};
+#[cfg(feature = "client-mists")]
+use crate::lua_bridge::FromStack;
+use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
 use rilua::{LuaResult, Val, runtime_error};
 
+#[cfg(feature = "client-mists")]
 const MOVIE_SUCCESS_CODE: u32 = 0;
+#[cfg(feature = "client-mists")]
 const MOVIE_MAX_RESULT_CODE: u32 = 4;
 
 fn enable_subtitles(state: &mut LuaState) -> LuaResult<u32> {
