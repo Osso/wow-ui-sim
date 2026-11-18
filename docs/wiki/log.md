@@ -18,6 +18,14 @@ Added the [Guild faction group system page](systems/guild-faction-group.md) and 
 
 The [panel fixture investigation](investigations/showuipanel-toggle-fixture-owners.md#retail-bag-tracker-lifecycle-lt-c0e6) records the missing per-addon completion event. Original TokenUI creates the bag tracker after `ADDON_LOADED`; assertions and vendor code remain unchanged.
 
+## [2026-11-17] verification | Retail PerformanceBar tooltip
+
+**VERIFIED (final source):** Retail's byte-identical RED/GREEN original-consumer test passes 1/1; constant-`(1,1)` protocol and bandwidth-from-`GetNetStats` mutants fail at their tooltip assertions. PTR, Forever and Mists fallback-preservation tests pass 1/1. The final five-profile all-targets no-run matrix has zero warnings; Wrath remains compile-only. See the [PerformanceBar contract](../specs/performance-bar-queries.md) and handoff for hashes.
+
+## [2026-11-17] system | Retail PerformanceBar network queries
+
+Added the [PerformanceBar query system page](systems/performance-bar-queries.md) and linked it from [[lua-api]]. **VERIFIED (R88ap.7/.8):** Retail 12.1.5 returns bandwidth zero and two ordered protocol codes. **INFERRED (simulator mapping):** absent host input maps to `(0,0)`. **INFERRED (70783 tooltip):** codes 1/2 display as TCP/UDP; live endpoint values and their update path remain UNKNOWN.
+
 ## [2026-11-17] implementation | Retail call-pet flyout spell results
 
 Updated the [call-pet contract](../specs/call-pet-spell-info.md) and [Spellbook follow-ups](investigations/spellbook-r88m4-followups.md#retail-call-pet-flyout). **VERIFIED (Retail simulator):** the original ActionBar flyout keeps named and unmapped spells, hides empty/missing names, and rejects a callable-wrong producer. **UNKNOWN:** same-build spell-ID rows and the runtime pet-info writer remain empty-default host inputs.

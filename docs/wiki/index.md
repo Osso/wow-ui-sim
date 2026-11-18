@@ -18,6 +18,14 @@ The [Guild faction group system page](systems/guild-faction-group.md) links the 
 
 The [panel fixture investigation](investigations/showuipanel-toggle-fixture-owners.md#retail-bag-tracker-lifecycle-lt-c0e6) records the missing per-addon completion event. Original TokenUI creates the bag tracker after `ADDON_LOADED`; assertions and vendor code remain unchanged.
 
+## [2026-11-17] verification | Retail PerformanceBar tooltip
+
+**VERIFIED (final source):** the original Retail 12.1.5.70783 tooltip test passes 1/1, both callable-wrong producer mutants fail at consumer assertions, and the PTR/Forever/Mists fallback tests pass 1/1 each. The five-profile all-targets no-run matrix has zero warnings; Wrath is compile-only. See the [query contract](../specs/performance-bar-queries.md) for hashes and UNKNOWNs.
+
+## [2026-11-17] system | Retail PerformanceBar network queries
+
+[PerformanceBar network queries](systems/performance-bar-queries.md) records the Retail 12.1.5 getters and preserved non-Retail fallbacks. **INFERRED (simulator mapping):** the typed endpoint input is empty by default. **INFERRED (70783 tooltip):** codes 1/2 display as TCP/UDP; live endpoint values remain UNKNOWN.
+
 ## [2026-11-17] verification | Retail call-pet flyout results
 
 The [call-pet contract](../specs/call-pet-spell-info.md) and [Spellbook follow-ups](investigations/spellbook-r88m4-followups.md#retail-call-pet-flyout) record the original Retail ActionBar consumer and empty-default host inputs. **VERIFIED (Retail simulator):** named and unmapped spells stay visible, nameless entries hide, and the callable-wrong producer fails inside the consumer. **UNKNOWN:** same-build spell-ID rows and the runtime pet-info writer.
