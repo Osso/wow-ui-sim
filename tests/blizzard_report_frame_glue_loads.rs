@@ -2,6 +2,7 @@ use std::path::PathBuf;
 
 use wow_ui_sim::loader::{discover_blizzard_addons_for_screen, find_toc_file, load_addon};
 use wow_ui_sim::lua_api::WowLuaEnv;
+use rilua::LuaApiMut;
 use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::toc::TocFile;
 
@@ -347,6 +348,26 @@ fn publishes_named_top_level_frame_under_glue_parent() {
             "#,
         )
         .expect("ReportFrame parent diagnostic should succeed");
+    env.exec(
+        r#"
+        rawset(_G, "__reportFrameDebugParent", ReportFrame:GetParent())
+        rawset(_G, "__reportFrameDebugGlobal", rawget(_G, "GlueParent"))
+        rawset(_G, "__reportFrameDebugSecure", rawget(__secureenv, "GlueParent"))
+        "#,
+    )
+    .expect("ReportFrame debug frame references should be retained");
+    let frame_ids = {
+        let loader = env.loader_env();
+        let mut lua = loader.rilua_mut();
+        let parent = lua.get_global_val("__reportFrameDebugParent");
+        let public = lua.get_global_val("__reportFrameDebugGlobal");
+        let secure = lua.get_global_val("__reportFrameDebugSecure");
+        (
+            wow_ui_sim::lua_api::methods::native_frame_id_from_val(lua.state(), parent),
+            wow_ui_sim::lua_api::methods::native_frame_id_from_val(lua.state(), public),
+            wow_ui_sim::lua_api::methods::native_frame_id_from_val(lua.state(), secure),
+        )
+    };
     let (glue_parent_ids, addon_modes, report_parent_ids) = {
         let state = env.state().borrow();
         let report_id = state.widgets.get_id_by_name("ReportFrame");
@@ -398,7 +419,7 @@ fn publishes_named_top_level_frame_under_glue_parent() {
          GlueParent is the root frame for glue-screen UI created by Blizzard_GlueXML, while \
          UIParent is the in-game equivalent created by Blizzard_UIParent. The two never \
          coexist within a single screen; {parent_diagnostic}; frames={glue_parent_ids:?}; \
-         addon_modes={addon_modes:?}; registry={report_parent_ids}"
+         addon_modes={addon_modes:?}; registry={report_parent_ids}; table_ids={frame_ids:?}"
     );
 
     let strata: String = env
