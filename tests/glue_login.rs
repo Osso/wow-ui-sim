@@ -426,12 +426,39 @@ fn mists_classic_cached_login_consumer_hides_rows_and_api_is_glue_only() {
 fn mists_movie_start_returns_boolean_and_code() {
     test_timeout! {
         let env = load_blizzard_screen(ScreenKind::Login);
-        let result: (i32, String, String) = env.eval(r#"
-            local function pack(...) return { n = select('#', ...), ... } end
-            local start = pack(MovieFrame:StartMovie(115))
-            return start.n, type(start[1]), type(start[2])
-        "#).expect("StartMovie should publish its native return pair");
-        assert_eq!(result, (2, "boolean".into(), "number".into()));
+        {
+            let mut state = env.state().borrow_mut();
+            for code in 0..=4 {
+                state.movie_playback.start_results.insert(115 + code, code);
+            }
+        }
+        env.exec(r#"
+            for code = 0, 4 do
+                local success, resultCode = MovieFrame:StartMovie(115 + code)
+                assert(type(success) == "boolean")
+                assert(type(resultCode) == "number")
+                assert(success == (code == 0))
+                assert(resultCode == code)
+            end
+        "#).expect("configured StartMovie outcomes should match the native return pair");
+    }
+}
+
+#[cfg(feature = "client-mists")]
+#[test]
+fn mists_movie_failed_start_defers_finish_until_stop() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::Login);
+        env.state().borrow_mut().movie_playback.start_results.insert(115, 3);
+        env.exec(r#"
+            local finishCount = 0
+            MovieFrame:SetScript("OnMovieFinished", function() finishCount = finishCount + 1 end)
+            local success, resultCode = MovieFrame:StartMovie(115)
+            assert(not success and resultCode == 3)
+            assert(finishCount == 0)
+            MovieFrame:StopMovie()
+            assert(finishCount == 1)
+        "#).expect("StopMovie should dispatch only for the installed handle");
     }
 }
 

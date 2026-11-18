@@ -22,6 +22,17 @@ pub struct WrathUnitTapState {
     pub by_all_threat_list: bool,
 }
 
+/// Empty-default Mists movie inputs and active frame handles.
+#[cfg(feature = "client-mists")]
+#[derive(Debug, Default)]
+pub struct MoviePlaybackState {
+    /// UNKNOWN native playback outcome; absent movie IDs have no supplied result.
+    pub start_results: HashMap<u32, u32>,
+    pub(crate) active_handles: HashSet<u64>,
+    pub(crate) pending_finishes: VecDeque<u64>,
+    pub(crate) dispatching_finish: bool,
+}
+
 macro_rules! build_empty_sim_state {
     ($collections:ident, $runtime:ident, $session_wtf_path:ident) => {{
         let cvars = CVarStorage::with_session_wtf_path(&$session_wtf_path);
@@ -66,6 +77,8 @@ macro_rules! build_empty_sim_state {
             addon_initialization_failures: HashMap::new(),
             save_failed_addons: false,
             cinematic_active: false,
+            #[cfg(feature = "client-mists")]
+            movie_playback: Default::default(),
             in_world: false,
             reload_allows_protected_actions: false,
             account_cvar_chunks_ready: [true; 2],

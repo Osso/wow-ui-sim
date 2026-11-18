@@ -189,40 +189,39 @@ pub fn dispatch_script(
     handler_name: &str,
     extra_args: &[Val],
 ) -> rilua::LuaResult<()> {
-    let handlers = {
-        let state = lua.state_mut();
-        get_scripts_for_dispatch(state, widget_id, handler_name)
-    };
+    dispatch_script_state(lua.state_mut(), widget_id, handler_name, extra_args)
+}
+
+pub(crate) fn dispatch_script_state(
+    state: &mut LuaState,
+    widget_id: u64,
+    handler_name: &str,
+    extra_args: &[Val],
+) -> rilua::LuaResult<()> {
+    let handlers = get_scripts_for_dispatch(state, widget_id, handler_name);
     if handlers.is_empty() {
         return Ok(());
     }
 
-    let frame_val = {
-        let state = lua.state_mut();
-        frame_ref(state, widget_id)?
-    };
+    let frame_val = frame_ref(state, widget_id)?;
     let mut args = vec![frame_val];
     args.extend_from_slice(extra_args);
-
-    for handler_val in handlers {
-        let Val::Function(func_ref) = handler_val else {
-            continue;
-        };
-        let owner_addon = handler_owner_addon(lua.state(), widget_id);
-        let func = rilua::Function::from_gc_ref(func_ref);
-        let previous_addon = replace_executing_addon(lua.state(), owner_addon);
-        if let Err(e) = super::call_frame_handler_state(
-            lua.state_mut(),
-            widget_id,
-            Val::Function(func.gc_ref()),
-            &args,
-            None,
-        ) {
-            call_error_handler(lua, &e.to_string());
-        }
-        replace_executing_addon(lua.state(), previous_addon);
+    for handler in handlers {
+        dispatch_script_handler(state, widget_id, handler, &args);
     }
     Ok(())
+}
+
+fn dispatch_script_handler(state: &mut LuaState, widget_id: u64, handler: Val, args: &[Val]) {
+    if !matches!(handler, Val::Function(_)) {
+        return;
+    }
+    let owner_addon = handler_owner_addon(state, widget_id);
+    let previous_addon = replace_executing_addon(state, owner_addon);
+    if let Err(error) = super::call_frame_handler_state(state, widget_id, handler, args, None) {
+        super::call_error_handler_state(state, &error);
+    }
+    replace_executing_addon(state, previous_addon);
 }
 
 /// Dispatch OnUpdate handlers for visible frames via rilua.
