@@ -10,11 +10,11 @@
 
 ### Native and cache boundaries
 
-**VERIFIED (Mists Classic 5.5.4.70631, R88ao):** `HideCursor` and `ShowCursor` are no-argument, zero-return Glue globals. They update cached cursor state. `playIntroMovie` defaults to `0`, and `GetClientDisplayExpansionLevel()` returns `4`.
+**VERIFIED (Mists Classic 5.5.4.70631, R88ao):** `HideCursor` and `ShowCursor` are no-argument, zero-return Glue globals. They update cached cursor state. `playIntroMovie` defaults to `0`, and `GetClientDisplayExpansionLevel()` returns `4`. ([`pr46-49-decomp-answers.md`, §R88ao ao1–ao2](../../../../../.local/state/wow-ui-sim/handoff/pr46-49-decomp-answers.md#r88ao))
 
 **INFERRED (5.5.4.70631 behavior applied to the 5.5.4.70268 cache):** the first cinematic check sets `playIntroMovie` to `5` and opens the full-screen movie screen. **VERIFIED (5.5.4.70268 cached Constants.lua):** movie sequence 5 maps to ID 115.
 
-**VERIFIED (Mists Classic 5.5.4.70631, R88ao):** `StartMovie` returns `(success, code)`; code 0 is success, codes 1–4 identify the documented failure paths, and no-record search returns code 2. An error return does not itself dispatch `OnMovieFinished`. `StopMovie` queues `OnMovieFinished` for an active handle; natural end uses the same stop path. `CinematicFinished` records completion state but does not close MovieFrame.
+**VERIFIED (Mists Classic 5.5.4.70631, R88ao):** `StartMovie` returns `(success, code)`; code 0 is success, codes 1–4 identify the documented failure paths, and no-record search returns code 2. An error return does not itself dispatch `OnMovieFinished`. `StopMovie` queues `OnMovieFinished` for an active handle; natural end uses the same stop path. `CinematicFinished` records completion state but does not close MovieFrame. ([`pr46-49-decomp-answers.md`, §R88ao ao3](../../../../../.local/state/wow-ui-sim/handoff/pr46-49-decomp-answers.md#r88ao))
 
 **INFERRED (simulator mapping):** the simulator has no Movie DB2 records, so an absent `start_results` entry maps to the native no-accepted-record result `(false, 2)` (`Missing Rec`). Explicit host outcomes remain available for success and codes 1–4. This does not claim that an offline client with available records or files always returns code 2.
 
@@ -34,7 +34,10 @@
 
 ## Sources
 
-- R88ao in the local decomp-answer handoff — native Mists 5.5.4.70631 behavior.
+- [`pr46-49-decomp-answers.md`, §R88ao ao1–ao3](../../../../../.local/state/wow-ui-sim/handoff/pr46-49-decomp-answers.md#r88ao) — native Mists 5.5.4.70631 behavior.
+- [`pr46-49-decomp-answers.md`, §R88aq aq1–aq6](../../../../../.local/state/wow-ui-sim/handoff/pr46-49-decomp-answers.md#r88aq) — Mists cinematic API arguments, state transitions, return values, and errors.
+- [`pr46-49-decomp-answers.md`, §R88aq-b aqb1–aqb3](../../../../../.local/state/wow-ui-sim/handoff/pr46-49-decomp-answers.md#r88aq-b) — type-1 follow-up, unknown observers, and cinematic enum.
+- [`pr46-49-decomp-answers.md`, §R88ar ar1–ar3](../../../../../.local/state/wow-ui-sim/handoff/pr46-49-decomp-answers.md#r88ar) — Glue TOC admission and scheduler evidence; exact-build chat-frame behavior remains unknown.
 - Mists 5.5.4.70268 cached TOCs and Lua files: `Blizzard_GlueParent_Classic.toc`, `Blizzard_GlueXML_Mists.toc`, `GlueParent.lua`, `AccountLogin.lua`, `MovieFrame.lua`, and `Constants.lua`.
 - [Glue login contract](../../specs/glue-login-flow.md) — simulator API and test scope.
 - [Mists login tests](../../tests/glue_login.rs) — original-consumer RED/GREEN coverage.
@@ -46,15 +49,17 @@
 
 ## R88aq cinematic behavior
 
-**VERIFIED (Mists Classic 5.5.4.70631, R88aq):** `CinematicStarted` requires numeric or numeric-string type and movie ID values, truncates toward zero, accepts type 0–3 and signed-int32 IDs, treats only Boolean false as `canCancel=false`, ignores extra arguments, and returns no values. ID 0 skips record updates. An active same-type record is finished before its replacement starts.
+**VERIFIED (Mists Classic 5.5.4.70631, R88aq):** `CinematicStarted` requires numeric or numeric-string type and movie ID values, truncates toward zero, accepts type 0–3 and signed-int32 IDs, treats only Boolean false as `canCancel=false`, ignores extra arguments, and returns no values. ID 0 skips record updates. An active same-type record is finished before its replacement starts. ([`pr46-49-decomp-answers.md`, §R88aq aq1–aq4](../../../../../.local/state/wow-ui-sim/handoff/pr46-49-decomp-answers.md#r88aq))
 
-**VERIFIED (R88aq-b):** cinematic types are GlueMovie=0, GameMovie=1, GameClientScene=2, and GameCinematicSequence=3. `CinematicFinished` updates the record and shared state before its type-1 follow-up, then clears the manager movie ID. The follow-up requires a separate game-movie flag. **UNKNOWN:** the flag writer and observer/listener effects. The simulator keeps that flag unset and does not model unknown observer effects.
+**VERIFIED (R88aq-b):** cinematic types are GlueMovie=0, GameMovie=1, GameClientScene=2, and GameCinematicSequence=3. `CinematicFinished` updates the record and shared state before its type-1 follow-up, then clears the manager movie ID. The follow-up requires a separate game-movie flag. **UNKNOWN:** the flag writer and observer/listener effects. The simulator keeps that flag unset and does not model unknown observer effects. ([`pr46-49-decomp-answers.md`, §R88aq-b aqb1–aqb3](../../../../../.local/state/wow-ui-sim/handoff/pr46-49-decomp-answers.md#r88aq-b))
 
 **VERIFIED (Mists 5.5.4.70268 cache):** `MovieFrame_PlayMovie` checks only the truth value of `playSuccess`; a false result closes the secondary screen. The failure path does not depend on the old `(nil, nil)` pair.
 
 **INFERRED (R88ao, 5.5.4.70631 behavior applied to cached 5.5.4.70268):** the simulator's no-record pair `(false, 2)` follows that same close path. The cached close operation restores AccountLogin. A later `StopMovie` may dispatch `OnMovieFinished` for the installed handle, but the cached finish handler does not advance while MovieFrame is hidden.
 
 ## R88ar Mists Glue chat selection
+
+**Native evidence:** [`pr46-49-decomp-answers.md`, §R88ar ar1–ar3](../../../../../.local/state/wow-ui-sim/handoff/pr46-49-decomp-answers.md#r88ar) records general Glue TOC admission and scheduler behavior; exact-build chat TOCs/frame producers remain UNKNOWN there. The 5.5.4.70268 cached claims below remain separately labeled.
 
 **VERIFIED (5.5.4.70268 cached TOCs):** `Blizzard_ChatFrameBase_Classic.toc` declares `AllowLoad: game` and `AllowLoadGameType: classic`; `Blizzard_ChatFrame_Mists.toc` declares `AllowLoad: game` and `AllowLoadGameType: mists`. The Mists game-type tokens match the active profile, while the `AllowLoad` screen gate rejects both add-ons on Glue.
 

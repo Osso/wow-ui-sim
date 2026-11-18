@@ -1,8 +1,12 @@
 //! Temporary chat window defaults.
 //!
 //! Chat window persistence and initial chat color tables are not backed by a
-//! full account settings model yet. Keep those startup defaults explicit here
-//! until saved chat layout/state is modeled.
+//! full account settings model yet. Retire these defaults when saved chat
+//! layout/state is modeled.
+//!
+//! The Mists Glue placeholder exception is INFERRED; native Mists Glue chat-frame
+//! behavior is UNKNOWN (R88ar). Retire that exception when exact-build native
+//! evidence and a modeled Glue chat-frame lifecycle replace the synthetic frame.
 
 const CHAT_WINDOW_DEFAULTS_LUA: &str = r#"
 ChatTypeInfo = ChatTypeInfo or {}

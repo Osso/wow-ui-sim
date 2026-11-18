@@ -167,9 +167,34 @@ fn login_boot_hides_non_login_frontend_frames() {
     test_timeout! {
         let env = load_blizzard_screen(ScreenKind::Login);
 
-        let stubs_present: bool = env
-            .eval(
-                r#"
+        assert_glue_login_account_helpers_available(&env);
+
+        assert_glue_login_helper_errors_absent(&env);
+
+        assert_account_login_visible(&env);
+
+        #[cfg(feature = "client-mists")]
+        assert_mists_glue_chat_frame_absent(&env);
+
+        // R62: Retail AccountLogin chat visibility is UNKNOWN. Its unconditional
+        // shared definition must not be replaced or forced hidden. Other profiles
+        // retain their independently supported visibility assertion.
+        #[cfg(not(feature = "client-retail"))]
+        assert_login_chat_frame_hidden(&env);
+
+        // R62 / tracker107: Retail chat-role dock visibility has the same
+        // UNKNOWN native filtering/parent-visibility boundary as ChatFrame1.
+        #[cfg(not(feature = "client-retail"))]
+        assert_login_chat_dock_hidden(&env);
+
+        assert_character_customization_hidden(&env);
+    }
+}
+
+fn assert_glue_login_account_helpers_available(env: &WowLuaEnv) {
+    let stubs_present: bool = env
+        .eval(
+            r#"
                 return type(GetSavedAccountName) == "function"
                     and type(SetSavedAccountName) == "function"
                     and type(GetSavedAccountList) == "function"
@@ -177,84 +202,84 @@ fn login_boot_hides_non_login_frontend_frames() {
                     and type(WasScreenFirstDisplayed) == "function"
                     and type(C_Login.IsLoginReady) == "function"
                 "#,
-            )
-            .expect("glue login stubs should be callable");
-        assert!(stubs_present, "login boot should expose required glue account helpers");
+        )
+        .expect("glue login stubs should be callable");
+    assert!(stubs_present, "login boot should expose required glue account helpers");
+}
 
-        let missing_stub_errors: Vec<String> = env
-            .state()
-            .borrow()
-            .lua_errors
-            .iter()
-            .filter(|msg| {
-                msg.contains("GetSavedAccountName")
-                    || msg.contains("IsLoginReady")
-                    || msg.contains("WasScreenFirstDisplayed")
-            })
-            .cloned()
-            .collect();
-        assert!(
-            missing_stub_errors.is_empty(),
-            "login boot should not error on glue account helpers: {missing_stub_errors:#?}"
-        );
+fn assert_glue_login_helper_errors_absent(env: &WowLuaEnv) {
+    let missing_stub_errors: Vec<String> = env
+        .state()
+        .borrow()
+        .lua_errors
+        .iter()
+        .filter(|msg| {
+            msg.contains("GetSavedAccountName")
+                || msg.contains("IsLoginReady")
+                || msg.contains("WasScreenFirstDisplayed")
+        })
+        .cloned()
+        .collect();
+    assert!(
+        missing_stub_errors.is_empty(),
+        "login boot should not error on glue account helpers: {missing_stub_errors:#?}"
+    );
+}
 
-        let account_login_visible: bool = env
-            .eval("return AccountLogin ~= nil and AccountLogin:IsShown()")
-            .expect("AccountLogin visibility should be queryable");
-        assert!(account_login_visible, "login screen should show AccountLogin");
+fn assert_account_login_visible(env: &WowLuaEnv) {
+    let account_login_visible: bool = env
+        .eval("return AccountLogin ~= nil and AccountLogin:IsShown()")
+        .expect("AccountLogin visibility should be queryable");
+    assert!(account_login_visible, "login screen should show AccountLogin");
+}
 
-        #[cfg(feature = "client-mists")]
-        {
-            let chat_frame_exists: bool = env
-                .eval("return ChatFrame1 ~= nil")
-                .expect("ChatFrame1 presence should be queryable");
-            assert!(!chat_frame_exists, "Mists Glue must not create a chat placeholder");
-            let chat_addons_loaded: (bool, bool) = env
-                .eval(
-                    r#"
+#[cfg(feature = "client-mists")]
+fn assert_mists_glue_chat_frame_absent(env: &WowLuaEnv) {
+    let chat_frame_exists: bool = env
+        .eval("return ChatFrame1 ~= nil")
+        .expect("ChatFrame1 presence should be queryable");
+    assert!(!chat_frame_exists, "Mists Glue must not create a chat placeholder");
+    let chat_addons_loaded: (bool, bool) = env
+        .eval(
+            r#"
                     return C_AddOns.IsAddOnLoaded('Blizzard_ChatFrameBase'),
                         C_AddOns.IsAddOnLoaded('Blizzard_ChatFrame')
                     "#,
-                )
-                .expect("Mists chat addon load state should be queryable");
-            assert_eq!(chat_addons_loaded, (false, false));
-        }
+        )
+        .expect("Mists chat addon load state should be queryable");
+    assert_eq!(chat_addons_loaded, (false, false));
+}
 
-        // R62: Retail AccountLogin chat visibility is UNKNOWN. Its unconditional
-        // shared definition must not be replaced or forced hidden. Other profiles
-        // retain their independently supported visibility assertion.
-        #[cfg(not(feature = "client-retail"))]
-        {
-        let chat_frame_visible: bool = env
-            .eval("return ChatFrame1 ~= nil and ChatFrame1:IsShown()")
-            .expect("ChatFrame1 visibility should be queryable");
-        assert!(
-            !chat_frame_visible,
-            "plain login screen should not show the front-end chat frame"
-        );
-        }
+#[cfg(not(feature = "client-retail"))]
+fn assert_login_chat_frame_hidden(env: &WowLuaEnv) {
+    let chat_frame_visible: bool = env
+        .eval("return ChatFrame1 ~= nil and ChatFrame1:IsShown()")
+        .expect("ChatFrame1 visibility should be queryable");
+    assert!(
+        !chat_frame_visible,
+        "plain login screen should not show the front-end chat frame"
+    );
+}
 
-        // R62 / tracker107: Retail chat-role dock visibility has the same
-        // UNKNOWN native filtering/parent-visibility boundary as ChatFrame1.
-        #[cfg(not(feature = "client-retail"))]
-        {
-        let chat_dock_visible: bool = env
-            .eval("return GeneralDockManager ~= nil and GeneralDockManager:IsShown()")
-            .expect("GeneralDockManager visibility should be queryable");
-        assert!(
-            !chat_dock_visible,
-            "plain login screen should not show the chat dock"
-        );
-        }
+#[cfg(not(feature = "client-retail"))]
+fn assert_login_chat_dock_hidden(env: &WowLuaEnv) {
+    let chat_dock_visible: bool = env
+        .eval("return GeneralDockManager ~= nil and GeneralDockManager:IsShown()")
+        .expect("GeneralDockManager visibility should be queryable");
+    assert!(
+        !chat_dock_visible,
+        "plain login screen should not show the chat dock"
+    );
+}
 
-        let char_customize_visible: bool = env
-            .eval("return CharCustomizeFrame ~= nil and CharCustomizeFrame:IsShown()")
-            .expect("CharCustomizeFrame visibility should be queryable");
-        assert!(
-            !char_customize_visible,
-            "plain login screen should not show character customization"
-        );
-    }
+fn assert_character_customization_hidden(env: &WowLuaEnv) {
+    let char_customize_visible: bool = env
+        .eval("return CharCustomizeFrame ~= nil and CharCustomizeFrame:IsShown()")
+        .expect("CharCustomizeFrame visibility should be queryable");
+    assert!(
+        !char_customize_visible,
+        "plain login screen should not show character customization"
+    );
 }
 
 #[test]
@@ -367,28 +392,35 @@ fn login_editboxes_gain_focus_when_clicking_their_visible_centers() {
         let password_hit = hit_test_like_gui(&env, password_center)
             .expect("password edit box center should hit some widget");
 
-        env.send_click(account_hit)
-            .expect("clicking the account edit box center should dispatch");
-        let account_has_focus: bool = env
-            .eval("return AccountLogin.UI.AccountEditBox:HasFocus()")
-            .expect("AccountEditBox focus should be queryable");
-        assert!(
-            account_has_focus,
-            "account edit box should gain focus when clicked; hit chain={:?}",
-            frame_chain(&env, account_hit)
-        );
-
-        env.send_click(password_hit)
-            .expect("clicking the password edit box center should dispatch");
-        let password_has_focus: bool = env
-            .eval("return AccountLogin.UI.PasswordEditBox:HasFocus()")
-            .expect("PasswordEditBox focus should be queryable");
-        assert!(
-            password_has_focus,
-            "password edit box should gain focus when clicked; hit chain={:?}",
-            frame_chain(&env, password_hit)
-        );
+        click_account_editbox_and_assert_focus(&env, account_hit);
+        click_password_editbox_and_assert_focus(&env, password_hit);
     }
+}
+
+fn click_account_editbox_and_assert_focus(env: &WowLuaEnv, account_hit: u64) {
+    env.send_click(account_hit)
+        .expect("clicking the account edit box center should dispatch");
+    let account_has_focus: bool = env
+        .eval("return AccountLogin.UI.AccountEditBox:HasFocus()")
+        .expect("AccountEditBox focus should be queryable");
+    assert!(
+        account_has_focus,
+        "account edit box should gain focus when clicked; hit chain={:?}",
+        frame_chain(env, account_hit)
+    );
+}
+
+fn click_password_editbox_and_assert_focus(env: &WowLuaEnv, password_hit: u64) {
+    env.send_click(password_hit)
+        .expect("clicking the password edit box center should dispatch");
+    let password_has_focus: bool = env
+        .eval("return AccountLogin.UI.PasswordEditBox:HasFocus()")
+        .expect("PasswordEditBox focus should be queryable");
+    assert!(
+        password_has_focus,
+        "password edit box should gain focus when clicked; hit chain={:?}",
+        frame_chain(env, password_hit)
+    );
 }
 
 // INFERRED (R88am, Mists Classic 5.5.4.70631 applied to cached

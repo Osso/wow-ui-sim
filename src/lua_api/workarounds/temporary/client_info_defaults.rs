@@ -3,6 +3,11 @@
 //! These globals describe simulated client identity and account expansion state.
 //! They are compatibility defaults until the simulator has a real client/session
 //! metadata model.
+//!
+//! Mists uses this fallback because no modeled client/session metadata source
+//! supplies its display-expansion level. Native value 4 is VERIFIED for 5.5.4.70631
+//! only (R88ao). Remove the Mists branch when profile-scoped metadata supplies
+//! this value from verified Mists inputs.
 
 /// Selected Era/Anniversary caches are 1.15.9.70003 and route [Game] to Vanilla.
 /// Their documented ExpansionLevel.None is 0, not the shared War Within value.
