@@ -189,6 +189,8 @@ pub struct ScriptsXml {
     pub on_event: Vec<ScriptBodyXml>,
     #[serde(rename = "OnUpdate", default)]
     pub on_update: Vec<ScriptBodyXml>,
+    #[serde(rename = "OnMovieFinished", default)]
+    pub on_movie_finished: Vec<ScriptBodyXml>,
     #[serde(rename = "OnClick", default)]
     pub on_click: Vec<ScriptBodyXml>,
     #[serde(rename = "OnDoubleClick", default)]

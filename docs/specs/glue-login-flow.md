@@ -883,3 +883,32 @@ adds no host credential input.
   shown. The test also checks the simulator's Glue-only publication choice.
 - [ ] **UNKNOWN (native):** Game availability and ordinary/secure publication
   classification are not established by R88am.
+
+## Mists Classic Glue chat frame
+
+**INFERRED (R88ar, Mists Classic 5.5.4.70631 applied to cached 5.5.4.70268):**
+Glue rejects Game-only add-ons, including the cached `Blizzard_ChatFrameBase`
+and `Blizzard_ChatFrame` TOCs. The original Mists Glue login should not have
+`ChatFrame1` when these add-ons do not load. **UNVERIFIED (R88ar):** whether
+another Glue add-on can create `ChatFrame1` is not established.
+
+**VERIFIED (simulator source and Mists login run at `67d34fbc`):** the shared
+loader excludes those two Game-only add-ons on Glue, but the temporary chat
+window default still creates a synthetic `ChatFrame1` during environment
+bootstrap.
+
+The simulator must not create that synthetic frame on Mists Glue. It must not
+hide the frame as a substitute. Mists Game keeps its existing default frame. Retail Glue behavior remains
+unchanged; this Mists-specific rule does not establish Retail behavior.
+
+The login test must keep its existing `ChatFrame1`-not-shown assertion. It also
+checks that Mists Glue has no `ChatFrame1` and that the two Game-only chat
+add-ons are not loaded. A Mists Game test checks that the default placeholder
+remains.
+
+## Mists Classic MovieFrame start result
+
+- **VERIFIED (R88ao, Mists Classic 5.5.4.70631):** `StartMovie` returns a Boolean and a numeric code. Code 0 is success; if no candidate movie record is accepted, the result code is 2 (`Missing Rec`). The error return does not itself dispatch `OnMovieFinished`; a later stop can find the handle installed by the start routine.
+- **VERIFIED (Mists cache 5.5.4.70268):** `MovieFrame_PlayMovie` branches on `playSuccess`; a false result closes the secondary screen. It does not require nil return values or inspect the error code for this branch.
+- **INFERRED (simulator mapping):** with no simulator Movie DB2 records, an absent host outcome maps to `(false, 2)`. Explicit host outcomes remain available for success and codes 1–4. This mapping is not a claim about playback when real records or files are present.
+- **UNKNOWN (native offline playback):** outcomes for available records and files still depend on the records, files, and playback state.

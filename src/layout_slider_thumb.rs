@@ -25,8 +25,8 @@ fn has_positive_finite_size(rect: LayoutRect) -> bool {
 
 pub(crate) fn has_sized_slider_thumb_binding(registry: &WidgetRegistry, frame: &Frame) -> bool {
     let is_bound = bound_slider_thumb_parent(registry, frame).is_some();
-    let width = registry.round_layout_value(frame, frame.width) * frame.effective_scale;
-    let height = registry.round_layout_value(frame, frame.height) * frame.effective_scale;
+    let width = registry.round_layout_dimension(frame, frame.width) * frame.effective_scale;
+    let height = registry.round_layout_dimension(frame, frame.height) * frame.effective_scale;
     is_bound && has_positive_finite_dimensions(width, height)
 }
 
@@ -51,8 +51,8 @@ pub(super) fn slider_thumb_rect(
     let mut rect = LayoutRect {
         x: track.x,
         y: track.y,
-        width: registry.round_layout_value(frame, frame.width) * frame.effective_scale,
-        height: registry.round_layout_value(frame, frame.height) * frame.effective_scale,
+        width: registry.round_layout_dimension(frame, frame.width) * frame.effective_scale,
+        height: registry.round_layout_dimension(frame, frame.height) * frame.effective_scale,
     };
     if !has_positive_finite_size(rect) {
         return None;

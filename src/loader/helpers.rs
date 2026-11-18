@@ -667,6 +667,14 @@ fn lifecycle_handlers_with_options(
             ("OnLoad", scripts.on_load.last()),
             ("OnEvent", scripts.on_event.last()),
             ("OnUpdate", scripts.on_update.last()),
+            (
+                "OnMovieFinished",
+                if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Mists {
+                    scripts.on_movie_finished.last()
+                } else {
+                    None
+                },
+            ),
             ("OnClick", scripts.on_click.last()),
             ("OnDoubleClick", scripts.on_double_click.last()),
             ("PreClick", scripts.pre_click.last()),

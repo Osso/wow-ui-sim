@@ -3,6 +3,11 @@
 //! These globals describe simulated client identity and account expansion state.
 //! They are compatibility defaults until the simulator has a real client/session
 //! metadata model.
+//!
+//! Mists uses this fallback because no modeled client/session metadata source
+//! supplies its display-expansion level. Native value 4 is VERIFIED for 5.5.4.70631
+//! only (R88ao). Remove the Mists branch when profile-scoped metadata supplies
+//! this value from verified Mists inputs.
 
 /// Selected Era/Anniversary caches are 1.15.9.70003 and route [Game] to Vanilla.
 /// Their documented ExpansionLevel.None is 0, not the shared War Within value.
@@ -31,6 +36,12 @@ const CLIENT_BUILD: &str = if cfg!(feature = "client-wowforever") {
     "70707"
 } else {
     "68256"
+};
+
+const CLIENT_DISPLAY_EXPANSION_LEVEL: u32 = if cfg!(feature = "client-mists") {
+    4
+} else {
+    10
 };
 
 const CLIENT_INTERFACE: u32 = if cfg!(feature = "client-ptr") || cfg!(feature = "client-wowforever")
@@ -153,7 +164,7 @@ end
 
 if GetClientDisplayExpansionLevel == nil then
   function GetClientDisplayExpansionLevel()
-    return 10
+    return __WOW_CLIENT_DISPLAY_EXPANSION_LEVEL__
   end
 end
 
@@ -246,6 +257,10 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
         .replace("__WOW_CLIENT_VERSION__", &version)
         .replace("__WOW_CLIENT_BUILD__", &build)
         .replace("__WOW_CLIENT_INTERFACE__", &CLIENT_INTERFACE.to_string())
+        .replace(
+            "__WOW_CLIENT_DISPLAY_EXPANSION_LEVEL__",
+            &CLIENT_DISPLAY_EXPANSION_LEVEL.to_string(),
+        )
         .replace(
             "__WOW_EXPANSION_LEVEL__",
             &crate::client_profile::ACTIVE.expansion_level().to_string(),

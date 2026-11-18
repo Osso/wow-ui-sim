@@ -346,8 +346,15 @@ fn script_supported_for_widget(
             return is_animation_script_handler(handler_name);
         }
     }
-    is_widget_agnostic_script_handler(handler_name)
+    supports_mists_movie_script(object_type_name, handler_name)
+        || is_widget_agnostic_script_handler(handler_name)
         || is_widget_specific_script_handler(widget_type, object_type_name, handler_name)
+}
+
+fn supports_mists_movie_script(object_type_name: Option<&str>, handler_name: &str) -> bool {
+    crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Mists
+        && object_type_name == Some("MovieFrame")
+        && handler_name == "OnMovieFinished"
 }
 
 fn is_animation_group_object_type(object_type_name: &str) -> bool {
