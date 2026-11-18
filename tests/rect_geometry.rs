@@ -9,6 +9,27 @@ fn env() -> WowLuaEnv {
     WowLuaEnv::new().expect("Failed to create Lua environment")
 }
 
+const SINGLE_POINT_ZERO_SIZE_RECT_PROBE: &str = r##"
+local parent = CreateFrame("Frame", "SinglePointRectParent", UIParent)
+parent:SetSize(75, 75)
+parent:SetPoint("CENTER", UIParent, "CENTER")
+
+local control = CreateFrame("Frame", "SinglePointSizedControl", parent)
+control:SetSize(40, 20)
+control:SetPoint("TOP")
+
+local target = CreateFrame("Frame", "SinglePointZeroTarget", parent)
+target:SetSize(0, 0)
+target:SetPoint("TOP")
+
+local child = CreateFrame("Frame", "ChildOfSinglePointZeroTarget", target)
+child:SetSize(20, 10)
+child:SetAllPoints(target)
+child:SetPoint("CENTER")
+
+return select("#", control:GetRect()), select("#", target:GetRect()), select("#", child:GetRect())
+"##;
+
 /// Anchor a 100×50 frame at TOPLEFT + (10, -20) and read back every
 /// rect query in one eval. The TOPLEFT anchor puts the frame's top
 /// edge 20 below the top of UIParent in screen space — which, in the
@@ -430,4 +451,18 @@ fn waypoint_style_fit_content_skips_child_without_queryable_ancestor_chain() {
         )
         .expect("eval should succeed");
     assert_eq!(result, "skipped");
+}
+
+// INFERRED for 12.1.5.70783 from verified 12.1.5.70688 R88az z3: one
+// zero-size single-point target and its dependent child have invalid rectangles.
+#[test]
+fn zero_size_single_point_frame_and_child_rects_are_invalid() {
+    let env = env();
+    let (control_rect_values, target_rect_values, child_rect_values): (f64, f64, f64) = env
+        .eval(SINGLE_POINT_ZERO_SIZE_RECT_PROBE)
+        .expect("single-point zero-size rectangle probe should run");
+
+    assert_eq!(control_rect_values, 4.0);
+    assert_eq!(target_rect_values, 0.0);
+    assert_eq!(child_rect_values, 0.0);
 }

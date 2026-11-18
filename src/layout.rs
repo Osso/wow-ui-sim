@@ -10,7 +10,7 @@ mod layout_render_eligibility;
 mod layout_slider_thumb;
 
 use crate::LayoutRect;
-use crate::widget::{AnchorPoint, WidgetRegistry, WidgetType};
+use crate::widget::{Anchor, AnchorPoint, WidgetRegistry, WidgetType};
 use layout_line::resolve_line_frame_rect;
 pub use layout_render_eligibility::{frame_has_layout_anchor, frame_has_render_layout};
 pub(crate) use layout_slider_thumb::{has_sized_slider_thumb_binding, resolved_slider_thumb_rect};
@@ -540,38 +540,62 @@ fn frame_rect_status(
         return (false, false);
     }
 
-    let mut has_geometry_source = false;
-    let mut rect_valid = true;
-    let mut anchor_invalidated = false;
+    let (has_geometry_source, targets_valid, anchor_invalidated) =
+        read_frame_anchor_target_status(registry, frame, cache);
+    let has_position = !has_single_anchor_without_size(frame);
+    let rect_valid = has_geometry_source && targets_valid && has_position;
+    (rect_valid, anchor_invalidated)
+}
 
+fn read_frame_anchor_target_status(
+    registry: &WidgetRegistry,
+    frame: &crate::widget::Frame,
+    cache: &LayoutCache,
+) -> (bool, bool, bool) {
+    let mut has_geometry_source = false;
+    let mut targets_valid = true;
+    let mut anchor_invalidated = false;
     if frame.anchors.is_empty() {
         if let Some(parent_id) = frame.parent_id {
             has_geometry_source = true;
-            (rect_valid, anchor_invalidated) =
+            (targets_valid, anchor_invalidated) =
                 cached_target_rect_status(registry, parent_id, cache);
         }
     } else {
         for anchor in &frame.anchors {
             has_geometry_source = true;
-            if anchor.relative_to_id.is_none() && anchor.relative_to.is_some() {
-                rect_valid = false;
-                continue;
-            }
-            let target_id = anchor
-                .relative_to_id
-                .map(|target_id| target_id as u64)
-                .or(frame.parent_id);
-            let Some(target_id) = target_id else {
-                continue;
-            };
             let (target_valid, target_invalidated) =
-                cached_target_rect_status(registry, target_id, cache);
-            rect_valid &= target_valid;
+                frame_anchor_target_rect_status(registry, frame, anchor, cache);
+            targets_valid &= target_valid;
             anchor_invalidated |= target_invalidated;
         }
     }
+    (has_geometry_source, targets_valid, anchor_invalidated)
+}
 
-    (has_geometry_source && rect_valid, anchor_invalidated)
+fn frame_anchor_target_rect_status(
+    registry: &WidgetRegistry,
+    frame: &crate::widget::Frame,
+    anchor: &Anchor,
+    cache: &LayoutCache,
+) -> (bool, bool) {
+    if anchor.relative_to_id.is_none() && anchor.relative_to.is_some() {
+        return (false, false);
+    }
+    let target_id = anchor
+        .relative_to_id
+        .map(|target_id| target_id as u64)
+        .or(frame.parent_id);
+    let Some(target_id) = target_id else {
+        return (true, false);
+    };
+    cached_target_rect_status(registry, target_id, cache)
+}
+
+fn has_single_anchor_without_size(frame: &crate::widget::Frame) -> bool {
+    // INFERRED for 12.1.5.70783 from verified 12.1.5.70688 R88az z3:
+    // one anchor with zero stored dimensions cannot produce a valid rectangle.
+    frame.anchors.len() == 1 && frame.width == 0.0 && frame.height == 0.0
 }
 
 fn cache_layout_result(

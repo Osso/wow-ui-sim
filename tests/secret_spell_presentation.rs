@@ -18,8 +18,12 @@ fn read_blizzard_source(relative: &str) -> String {
     std::fs::read_to_string(&path).unwrap_or_else(|error| panic!("{}: {error}", path.display()))
 }
 
+// VERIFIED — Blizzard_SharedXML.toc:26 loads TimeUtil.lua, the SecondsFormatter owner.
 fn fixture() -> WowLuaEnv {
     let env = WowLuaEnv::new().unwrap();
+    let time_util = read_blizzard_source("Blizzard_SharedXML/TimeUtil.lua");
+    env.exec(&time_util)
+        .expect("original SharedXML SecondsFormatter provider");
     let original = read_blizzard_source("Blizzard_DamageMeter/DamageMeterEntry.lua");
     env.exec(&original)
         .expect("unchanged DamageMeterEntry source");
