@@ -15,6 +15,8 @@ const FACTION_GROUP_FLAG_2: u32 = 2;
 #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
 const FACTION_GROUP_FLAG_4: u32 = 4;
 
+// VERIFIED (pr46-49-decomp-answers.md §R88ap part A.2): native flag priority:
+// flag 4 returns 0, flag 2 returns 1, flag 1 returns 0, otherwise -1.
 #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
 fn faction_group_from_flags(flags: u32) -> i32 {
     if flags & FACTION_GROUP_FLAG_4 != 0 {
@@ -32,9 +34,11 @@ fn faction_group_from_flags(flags: u32) -> i32 {
 fn get_guild_faction_group(state: &mut LuaState) -> LuaResult<u32> {
     let group = {
         let sim = borrow_state(state)?;
+        // INFERRED (simulator mapping): `player.present` models accessor availability.
         if !sim.player.present {
             return Ok(0);
         }
+        // INFERRED (simulator mapping): race indices select one-based host-table row keys.
         let race_id = i32::try_from(sim.player.race_index)
             .ok()
             .and_then(|index| index.checked_add(1));
