@@ -153,7 +153,7 @@ mod tests {
         state: &mut rilua::vm::state::LuaState,
         ordinary: Val,
         secure_namespace: Val,
-        member: &str,
+        member: &'static str,
     ) -> (usize, Option<String>) {
         match table_get_static(state, ordinary, member) {
             Val::Function(_) => {
