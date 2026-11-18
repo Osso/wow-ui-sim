@@ -4,12 +4,12 @@
 
 ## What it must do
 
-- [ ] **VERIFIED (R88ap.2, Retail 12.1.5.70688):** Return zero Lua values when the player-object accessor has no object; otherwise return one number.
-- [ ] **VERIFIED (R88ap.2, Retail 12.1.5.70688):** Look up the player's race row and its linked `FactionTemplate` row. Return `-1` when either row is absent.
-- [ ] **VERIFIED (R88ap.2, Retail 12.1.5.70688):** For a found template row, flag 4 has priority and returns 0; otherwise flag 2 returns 1; otherwise flag 1 returns 0; otherwise return -1.
-- [ ] **VERIFIED (R88ap.2, Retail 12.1.5.70688):** Do not test guild membership.
-- [ ] **VERIFIED (Retail 12.1.5.70783 `Blizzard_Communities/GuildNews.lua:35`):** GuildNews selects `UI-Calendar-Event-PVP01` only when the result is 0; every other result selects `UI-Calendar-Event-PVP02`.
-- [ ] **VERIFIED (simulator source):** Keep the race-to-flag input empty by default. Do not ship inferred race rows as native facts.
+- [x] **VERIFIED (R88ap.2, Retail 12.1.5.70688):** Return zero Lua values when the player-object accessor has no object; otherwise return one number.
+- [x] **VERIFIED (R88ap.2, Retail 12.1.5.70688):** Look up the player's race row and its linked `FactionTemplate` row. Return `-1` when either row is absent.
+- [x] **VERIFIED (R88ap.2, Retail 12.1.5.70688):** For a found template row, flag 4 has priority and returns 0; otherwise flag 2 returns 1; otherwise flag 1 returns 0; otherwise return -1.
+- [x] **VERIFIED (R88ap.2, Retail 12.1.5.70688):** Do not test guild membership.
+- [x] **VERIFIED (Retail 12.1.5.70783 `Blizzard_Communities/GuildNews.lua:35`):** GuildNews selects `UI-Calendar-Event-PVP01` only when the result is 0; every other result selects `UI-Calendar-Event-PVP02`.
+- [x] **VERIFIED (simulator source):** Keep the race-to-flag input empty by default. Do not ship inferred race rows as native facts.
 
 ## How it works
 

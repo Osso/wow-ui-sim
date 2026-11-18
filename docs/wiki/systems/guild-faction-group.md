@@ -12,6 +12,8 @@ Retail `GetGuildFactionGroup()` is a global query over player race and supplied 
 
 **VERIFIED (Retail 12.1.5.70783 consumer bytes):** `Blizzard_Communities/GuildNews.lua:35` selects `UI-Calendar-Event-PVP01` for result 0 and `UI-Calendar-Event-PVP02` for every other result. This consumer choice does not redefine the native numeric classification.
 
+**VERIFIED (Retail 12.1.5.70783 runtime):** The unchanged GuildNews consumer test passes for synthetic Orc/Human flags, a missing race row, and flags 4|2 priority. The constant-1 producer and the `UnitFactionGroup(...) == "Horde"` shortcut both fail at the consumer assertion; their overlay hashes are recorded in the task handoff.
+
 ## Sources
 
 - [Contract](../../specs/guild-faction-group.md) — public behavior and test coverage.
