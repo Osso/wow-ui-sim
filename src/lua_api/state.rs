@@ -819,6 +819,10 @@ macro_rules! build_empty_sim_state {
             social_restrictions: SocialRestrictionsState::default(),
             #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
             social_system_policy_enabled: None,
+            #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+            cinematic_summaries: HashMap::new(),
+            #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+            current_cinematic_id: 0,
             restricted_actions,
             restricted_actions_natural: [false; 6],
             restriction_chat_client_flag: false,
