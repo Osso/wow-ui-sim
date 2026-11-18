@@ -505,6 +505,7 @@ mod tests {
                     secure7() == true,
                 }
                 "#;
+    #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
     const FIXED_BASE_COPY_PROBE: &str = r#"
                 local secure = __secureenv
                 local probe = "__secure_env_copy_probe"
@@ -531,6 +532,7 @@ mod tests {
                 rawset(math, probe, before)
                 return result[1], result[2], result[3], result[4], result[5], result[6]
                 "#;
+    #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
     const SECURE_LIBRARY_ALIASES_PROBE: &str = r#"
                 local secure = __secureenv
                 local secureString = rawget(secure, "string")

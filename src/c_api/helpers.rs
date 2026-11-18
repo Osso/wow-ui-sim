@@ -420,6 +420,7 @@ mod tests {
             type(rawget(secure, "secureonly")) == "function",
         }
         "#;
+    #[cfg(feature = "client-retail")]
     const C_TIMER_FLAG3_PROBE: &str = r#"
         local public = rawget(_G, "C_Timer")
         local secure = rawget(__secureenv, "C_Timer")

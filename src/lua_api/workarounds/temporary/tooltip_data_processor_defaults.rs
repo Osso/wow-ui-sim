@@ -30,6 +30,7 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 mod tests {
     use crate::lua_api::WowLuaEnv;
 
+    #[cfg(feature = "client-retail")]
     const RETAIL_TOOLTIP_DEFAULTS_PROBE: &str = r#"
                     return type(rawget(_G, "TooltipDataProcessor")),
                            type(rawget(_G, "AddTooltipDataAccessor")),
