@@ -289,7 +289,8 @@ fn test_chat_type_group_all_keys() {
 
 #[test]
 fn test_chat_frame_util_process_message() {
-    let env = env();
+    // VERIFIED — Blizzard_ChatFrameBase.toc loads Shared/ChatFrameFilters.lua.
+    let env = crate::common::panel_fixtures::setup_env();
     let result: String = env
         .eval(
             r#"
@@ -510,7 +511,8 @@ fn test_static_popup_dialogs_exists() {
 
 #[test]
 fn test_ui_panel_windows_exists() {
-    let env = env();
+    // VERIFIED — Blizzard_UIParentPanelManager.toc loads [Family]\\UIPanelWindows.lua.
+    let env = crate::common::panel_fixtures::setup_env();
     let is_table: bool = env.eval("return type(UIPanelWindows) == 'table'").unwrap();
     assert!(is_table);
 }
