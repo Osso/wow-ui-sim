@@ -102,21 +102,18 @@ fn queue_movie_finish(state: &mut LuaState, frame_id: u64) -> LuaResult<bool> {
 }
 
 #[cfg(feature = "client-mists")]
+fn pop_movie_finish(state: &mut LuaState) -> LuaResult<Option<u64>> {
+    let mut sim = borrow_state_mut(state)?;
+    let frame_id = sim.movie_playback.pending_finishes.pop_front();
+    if frame_id.is_none() {
+        sim.movie_playback.dispatching_finish = false;
+    }
+    Ok(frame_id)
+}
+
+#[cfg(feature = "client-mists")]
 fn dispatch_pending_movie_finishes(state: &mut LuaState) -> LuaResult<()> {
-    loop {
-        let frame_id = {
-            let mut sim = borrow_state_mut(state)?;
-            match sim.movie_playback.pending_finishes.pop_front() {
-                Some(frame_id) => Some(frame_id),
-                None => {
-                    sim.movie_playback.dispatching_finish = false;
-                    None
-                }
-            }
-        };
-        let Some(frame_id) = frame_id else {
-            return Ok(());
-        };
+    while let Some(frame_id) = pop_movie_finish(state)? {
         if let Err(error) = crate::lua_api::script_helpers::dispatch_script_state(
             state,
             frame_id,
@@ -127,6 +124,7 @@ fn dispatch_pending_movie_finishes(state: &mut LuaState) -> LuaResult<()> {
             return Err(error);
         }
     }
+    Ok(())
 }
 
 pub(super) fn register_movie(state: &mut LuaState, metatable: GcRef<Table>) -> LuaResult<()> {
