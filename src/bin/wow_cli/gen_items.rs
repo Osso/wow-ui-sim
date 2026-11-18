@@ -2,6 +2,7 @@
 //!
 //! Reads from ~/Projects/wow/data/:
 //!   - ItemSparse.csv
+//!   - Item.csv
 //!   - ItemModifiedAppearance.csv
 //!   - ItemAppearance.csv
 //!
@@ -65,7 +66,7 @@ fn run_shared() -> Result<(), Box<dyn std::error::Error>> {
     let output_path = Path::new("crates/sim-data/data/items.rs");
     let mut out = File::create(output_path)?;
 
-    write_header(&mut out, &csv_path)?;
+    write_header(&mut out, &csv_path, &wow_data.join("Item.csv"))?;
 
     let (count, skipped) = build_item_map(&mut out, reader, &icon_map, &required_ids, &wow_data)?;
 
@@ -1208,9 +1209,39 @@ const ITEM_SPARSE_REQUIRED_COLUMNS: &[&str] = &[
     "RequiredLevel",
     "InventoryType",
     "OverallQualityID",
+    "Flags_0",
+    "Flags_1",
+    "Flags_3",
     "ArtifactID",
     "Gem_properties",
 ];
+
+fn read_item_classifications(
+    wow_data: &Path,
+    required_ids: &BTreeSet<u32>,
+) -> Result<HashMap<u32, (u8, u8)>, Box<dyn std::error::Error>> {
+    let records = open_records(&wow_data.join("Item.csv"))?;
+    let mut rows = records.iter();
+    let header = rows.next().ok_or("empty Item.csv")?;
+    let columns = header_index(header);
+    for required in ["ID", "ClassID", "SubclassID"] {
+        if !columns.contains_key(required) {
+            return Err(format!("Item.csv has no {required} column").into());
+        }
+    }
+
+    let mut classifications = HashMap::new();
+    for row in rows {
+        let fields = parse_csv_line(row);
+        let item_id = parse_u32(field(&fields, &columns, "ID"));
+        if required_ids.contains(&item_id) {
+            let item_class = field(&fields, &columns, "ClassID").parse::<u8>()?;
+            let item_subclass = field(&fields, &columns, "SubclassID").parse::<u8>()?;
+            classifications.insert(item_id, (item_class, item_subclass));
+        }
+    }
+    Ok(classifications)
+}
 
 fn build_item_map(
     out: &mut File,
@@ -1219,6 +1250,7 @@ fn build_item_map(
     required_ids: &BTreeSet<u32>,
     wow_data: &Path,
 ) -> Result<(u32, u32), Box<dyn std::error::Error>> {
+    let item_classifications = read_item_classifications(wow_data, required_ids)?;
     let mut builder = phf_codegen::Map::new();
     let mut emitted_ids = BTreeSet::new();
     let mut count = 0u32;
@@ -1243,7 +1275,7 @@ fn build_item_map(
             columns = Some(idx);
             continue;
         };
-        match parse_item_row(&line, idx, icon_map) {
+        match parse_item_row(&line, idx, icon_map, &item_classifications) {
             Some((id, value)) if required_ids.contains(&id) => {
                 builder.entry(id, &value);
                 emitted_ids.insert(id);
@@ -1294,6 +1326,7 @@ fn parse_item_row(
     line: &str,
     idx: &HashMap<String, usize>,
     icon_map: &HashMap<u32, u32>,
+    item_classifications: &HashMap<u32, (u8, u8)>,
 ) -> Option<(u32, String)> {
     let fields = parse_csv_line(line);
     let id: u32 = field(&fields, idx, "ID").parse().ok()?;
@@ -1302,7 +1335,11 @@ fn parse_item_row(
         return None;
     }
     let icon_file_data_id = icon_map.get(&id).copied().unwrap_or(0);
-    Some((id, format_item_info(&fields, idx, name, icon_file_data_id)))
+    let classification = item_classifications.get(&id).copied();
+    Some((
+        id,
+        format_item_info(&fields, idx, name, icon_file_data_id, classification),
+    ))
 }
 
 fn format_item_info(
@@ -1310,6 +1347,7 @@ fn format_item_info(
     idx: &HashMap<String, usize>,
     name: &str,
     icon_file_data_id: u32,
+    classification: Option<(u8, u8)>,
 ) -> String {
     let escaped_name = escape_str(name);
     let expansion_id: u8 = field(fields, idx, "ExpansionID").parse().unwrap_or(0);
@@ -1320,6 +1358,10 @@ fn format_item_info(
     let required_level: u16 = field(fields, idx, "RequiredLevel").parse().unwrap_or(0);
     let inventory_type: u8 = field(fields, idx, "InventoryType").parse().unwrap_or(0);
     let quality: u8 = field(fields, idx, "OverallQualityID").parse().unwrap_or(0);
+    let flags = format_item_flags(fields, idx);
+    let (item_class, item_subclass) = classification
+        .map(|(item_class, item_subclass)| (Some(item_class), Some(item_subclass)))
+        .unwrap_or((None, None));
     let stat_percent_editor = parse_stat_percent_editor(fields, idx);
     let stat_modifier_bonus_stat = parse_stat_modifier_bonus_stat(fields, idx);
     let artifact_id: u32 = field(fields, idx, "ArtifactID").parse().unwrap_or(0);
@@ -1338,10 +1380,24 @@ fn format_item_info(
          required_level: {required_level}, inventory_type: {inventory_type}, \
          sell_price: {sell_price}, stackable: {stackable}, bonding: {bonding}, \
          expansion_id: {expansion_id}, icon_file_data_id: {icon_file_data_id}, \
+         {flags} \
+         item_class: {item_class:?}, item_subclass: {item_subclass:?}, \
          stat_percent_editor: {stat_percent_editor}, \
          stat_modifier_bonus_stat: {stat_modifier_bonus_stat}, artifact_id: {artifact_id}, \
          socket_types: {socket_types}, gem_properties: {gem_properties} }}"
     )
+}
+
+fn format_item_flags(fields: &[String], idx: &HashMap<String, usize>) -> String {
+    let flags_0 = parse_flag_word(field(fields, idx, "Flags_0"));
+    let flags_1 = parse_flag_word(field(fields, idx, "Flags_1"));
+    let flags_3 = parse_flag_word(field(fields, idx, "Flags_3"));
+    format!("flags_0: {flags_0:?}, flags_1: {flags_1:?}, flags_3: {flags_3:?},")
+}
+
+/// INFERRED (70391 export): preserve the 32-bit pattern of high-bit signed flag values.
+fn parse_flag_word(value: &str) -> Option<u32> {
+    value.parse::<i32>().ok().map(|signed| signed as u32)
 }
 
 fn format_search_item_info(fields: &[String], idx: &HashMap<String, usize>) -> String {
@@ -1354,6 +1410,7 @@ fn format_search_item_info(fields: &[String], idx: &HashMap<String, usize>) -> S
         "ItemInfo {{ name: \"{name}\", quality: {quality}, item_level: {item_level}, \
          required_level: {required_level}, inventory_type: 0, sell_price: 0, \
          stackable: 1, bonding: 1, expansion_id: {expansion_id}, icon_file_data_id: 0, \
+         flags_0: None, flags_1: None, flags_3: None, item_class: None, item_subclass: None, \
          stat_percent_editor: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], \
          stat_modifier_bonus_stat: [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1], \
          artifact_id: 0, socket_types: [0, 0, 0], gem_properties: 0 }}"
@@ -1413,12 +1470,13 @@ fn format_i16_array(values: &[i16; 10]) -> String {
     format_array(values)
 }
 
-fn write_header(out: &mut File, item_sparse: &Path) -> std::io::Result<()> {
-    let hash = Sha256::digest(std::fs::read(item_sparse)?);
+fn write_header(out: &mut File, item_sparse: &Path, item_csv: &Path) -> std::io::Result<()> {
+    let sparse_hash = Sha256::digest(std::fs::read(item_sparse)?);
+    let item_hash = Sha256::digest(std::fs::read(item_csv)?);
     writeln!(out, "//! Auto-generated item data from WoW CSV exports.")?;
     writeln!(
         out,
-        "//! PROVENANCE: ItemSparse.csv SHA-256 {hash:x}; 70391 enUS matches b370bc7d3ac06e2142824da92311bcf0542740e6ffefef240103cd12bcb19a40."
+        "//! PROVENANCE: ItemSparse.csv SHA-256 {sparse_hash:x}; Item.csv SHA-256 {item_hash:x}; 70391 enUS matches b370bc7d3ac06e2142824da92311bcf0542740e6ffefef240103cd12bcb19a40."
     )?;
     writeln!(
         out,
@@ -1433,6 +1491,19 @@ fn write_header(out: &mut File, item_sparse: &Path) -> std::io::Result<()> {
     writeln!(out, "    pub required_level: u16,")?;
     writeln!(out, "    pub inventory_type: u8,")?;
     writeln!(out, "    pub sell_price: u32,")?;
+    writeln!(
+        out,
+        "    /// INFERRED (R88aw, 70391 export): ItemSparse flag-word names."
+    )?;
+    writeln!(out, "    pub flags_0: Option<u32>,")?;
+    writeln!(out, "    pub flags_1: Option<u32>,")?;
+    writeln!(out, "    pub flags_3: Option<u32>,")?;
+    writeln!(
+        out,
+        "    /// INFERRED (70391 export): item class/subclass lookup fields."
+    )?;
+    writeln!(out, "    pub item_class: Option<u8>,")?;
+    writeln!(out, "    pub item_subclass: Option<u8>,")?;
     writeln!(out, "    pub stackable: u32,")?;
     writeln!(out, "    pub bonding: u8,")?;
     writeln!(out, "    pub expansion_id: u8,")?;

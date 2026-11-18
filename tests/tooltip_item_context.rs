@@ -1,5 +1,5 @@
 //! Exact330/331: inferred finite item-level variants, not native acquisition/parity.
-//! Scaffold only: main must establish compiled behavioral RED before production work.
+//! R80 stat amounts are host fixtures; native item-mod calculations remain UNKNOWN.
 #![cfg(feature = "retail-12-0-5")]
 
 use rilua::table_security::{

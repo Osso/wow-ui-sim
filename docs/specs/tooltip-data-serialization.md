@@ -20,13 +20,15 @@ publication is not expanded by this change.
 - [x] Both sides take that same RGB publication: a supplied right side publishes the packed color, not the raw factory color.
 - [x] Populated identity omits zero `id`; later common identity assignments append ordered type-19 rows with `tooltipType`, nonzero-only `tooltipID`, empty left text and supplied left color.
 - [x] Original `ProcessInfo`, GameTooltip line handlers and TooltipUtil retain their payloads; presentation parses inline markup independently.
-- [x] The Retail item-ID producer models request mode 0 and emits a type-11 row only for a nonzero backed catalog price and an explicit true host result for the remaining gates; an absent or false result emits no row. These are **INFERRED (simulator mapping)**; the host result does not claim to calculate native status, flag, or preview inputs.
+- [ ] **VERIFIED (Retail 12.1.5.70688; R88aw):** supported `GetItemByID`, item/keystone-link `GetHyperlink`, ordinary item `GetBagItem`, `GetLootRollItem`, and merchant item-offer `GetMerchantItem` requests pass mode 0. `GetBagItem` alone supplies an item-instance identity for status processing; merchant offers set preview, and item-link preview follows `hideVendorPrice`. **INFERRED (simulator mapping):** the matching producers pass those request, preview, and instance inputs to the shared builder.
 - [x] Retail `SetBagItem` publishes the seven type-6 fields only from explicit, empty-default host acceptance and snapshot inputs; the native predicate and writer remain UNKNOWN.
-- [x] **VERIFIED (Retail 12.1.5.70688; `pr46-49-decomp-answers.md`, R88p.p1):** on the no-instance path, `maxPrice` uses the prepared maximum quantity only when it exceeds current quantity; the unit-price product wraps at 32 bits. Absent or non-increasing quantity inputs keep `maxPrice = -1`.
+- [ ] **VERIFIED (Retail 12.1.5.70688; `pr46-49-decomp-answers.md`, R88p.p1):** on the no-instance path, `maxPrice` uses the prepared maximum quantity only when it exceeds current quantity; the unit-price product wraps at 32 bits. Absent or non-increasing quantity inputs keep `maxPrice = -1`.
 
-### Retail SellPrice behavior (R88p.p1)
+### Retail SellPrice behavior (R88p.p1, R88aw)
 
-**VERIFIED (Retail 12.1.5.70688):** a zero initial unit-price result adds no type-11 row. A row requires request mode 0, no item-status suppression, clear sell-exclusion flags, and either a clear interaction-preview flag or the preview exception. No quality, bound, quest, or merchant-open test gates this row. If the initial price is nonzero, later adjustments do not reject a zero result a second time.
+**VERIFIED (Retail 12.1.5.70688):** a zero initial unit-price result adds no type-11 row. A row requires request mode 0, no item-status suppression, clear sell-exclusion flags, and either a clear interaction-preview flag or the preview exception. Merchant-window state, quality threshold, bound state, and quest state do not gate this row. If the initial price is nonzero, later adjustments do not reject a zero result a second time.
+
+**VERIFIED (Retail 12.1.5.70688):** only ordinary `GetBagItem` supplies the instance identity to status processing among the supported routes. A status record suppresses only when record mask 1 is clear and `recordedTime + 7200 - clientClock` is positive. Without a status record, the row is suppressed only when item-record mask 4096 in the first flag word is set and instance marker mask 2 is clear; this branch sets the marker. No instance skips status processing.
 
 **VERIFIED (Retail 12.1.5.70688):** an emitted row has type 11, empty `leftText`, the resolved default `leftColor`, `price`, and `maxPrice`. `maxPrice` starts at -1 and is recomputed only without an item instance when prepared maximum quantity exceeds current quantity. The timed item-status path and one-shot instance marker control status suppression.
 
@@ -34,9 +36,11 @@ publication is not expanded by this change.
 
 **INFERRED (Retail 12.1.5.70688):** the sell-exclusion masks map to ItemSparse `Flags_1` mask 4096 and `Flags_3` mask 524288; the preview exception maps to `Flags_3` mask 32768. The masks and branches are VERIFIED; these column names use another build's header.
 
-**VERIFIED (simulator model):** `ItemInfo` carries `sell_price` and `stackable`, but it does not carry `Flags_1`, `Flags_3`, item instances, status records, or prepared quantity state. `item_tooltip_sell_price_gate_results` is an empty-default host input keyed by item ID. **INFERRED (simulator mapping):** the shared item-ID builder uses native request mode 0; a supplied `true` means the remaining native gates pass, while `false` or no result suppresses the row. The host does not claim to calculate those gates. `item_tooltip_sell_price_quantities` is a separate empty-default input keyed by item ID; its `(current, prepared maximum)` values are not derived from `Stackable`. **INFERRED (simulator mapping):** `ItemInfo.sell_price` stands in for the native initial unit-price calculation. **VERIFIED (simulator model):** the Retail producer multiplies its line `price` by the supplied prepared maximum with 32-bit wrapping only when the maximum exceeds current quantity; missing or non-increasing values keep `maxPrice` at -1. The alternate `ITEM_UNSELLABLE` path and adjusted-to-zero path remain unmodeled.
+**VERIFIED (simulator model):** generated `ItemInfo` carries optional `Flags_0`, `Flags_1`, `Flags_3`, and Item.csv class/subclass fields, in addition to `sell_price` and `stackable`. Status records, live instance markers, calculated prices, and prepared quantities are not catalog data. **INFERRED (simulator mapping):** generated flags drive the verified exclusion and preview masks; an explicit empty-default bag status snapshot supplies only the unavailable per-instance status inputs. Missing snapshots suppress the instance-path row instead of asserting that the native status test passed. Calculated unit prices use an explicit empty-default host input keyed by item ID and working level; missing values do not claim a native calculated price. Stored-price use is modeled only for the evidenced force-stored flag and inventory-type/classification branch.
 
-**UNKNOWN:** native item-specific gate results, the relationship between prepared maximum quantity and `Stackable`, and calculated-price inputs not represented by `ItemInfo`.
+**VERIFIED (simulator model):** `item_tooltip_sell_price_quantities` is a separate empty-default input keyed by item ID; its `(current, prepared maximum)` values are not derived from `Stackable`. The Retail producer multiplies its initial line `price` by the supplied prepared maximum with 32-bit wrapping only when the maximum exceeds current quantity and no item instance is present; otherwise missing or non-increasing values keep `maxPrice` at -1. The alternate `ITEM_UNSELLABLE` path and adjusted-to-zero path remain unmodeled.
+
+**UNKNOWN:** native item-specific status snapshots, the relationship between prepared maximum quantity and `Stackable`, and calculated-price inputs not represented by `ItemInfo`.
 
 ## Evidence limits
 
@@ -107,33 +111,33 @@ do not claim those native details.
 
 - `tests/tooltip_data_identity.rs` drives the original accessors only:
   `GameTooltip:SetItemByID` (`TooltipDataHandler.lua:525` -> `C_TooltipInfo.GetItemByID`,
-  producer `tooltip_for_item_context` -> `tooltip_for_item_info`) proves fresh data and
+  producer `tooltip_for_item_context_with_sell_price` -> `tooltip_for_item_info_with_request`) proves fresh data and
   line tables, `second.dataInstanceID == first.dataInstanceID + 1`, top-level
   `type`/`id`, present-left-only publication and packed RGB on every item row;
   `GameTooltip:SetEquipmentSet` (`TooltipDataHandler.lua:585` -> `C_TooltipInfo.GetEquipmentSet`)
   proves the double-line header publishes the same packed, alpha-free RGB on its right side.
 - `tests/tooltip_d56_serialization.rs`: direct getters and original consumers.
 - `src/c_api/tooltip_data_tests.rs`: nested identity order and present/absent sides.
-- `tests/tooltip_serializer_fields.rs`: selected Retail consumers read top-level repair/pet fields and line-level `price`/`maxPrice`; the original `SetItemByID` path checks the inferred backed `price` projection.
+- `tests/tooltip_serializer_fields.rs`: selected Retail consumers read line-level `price`/`maxPrice`; fixture checks cover generated item flags/classification, preview routes, calculated-price host inputs, timed bag status, and instance versus no-instance `maxPrice`.
 - `tests/tooltip_serializer_consumer_output.rs::bag_item_accessor_publishes_accepted_battle_pet_fields_to_original_consumer`
   calls the original Retail `GameTooltip:SetBagItem` on two distinct explicit
   snapshots, an explicitly unaccepted bag item, and an absent slot. It asserts
   type 6, all seven top-level values, and the seven ordered arguments forwarded
   by the original `TooltipDataRules.BattlePet`; test snapshot values are host
   fixtures, not native pet defaults.
-- `tests/tooltip_serializer_fields.rs`: **VERIFIED (Retail 12.1.5.70783 cache):** the selected fixture checks `Blizzard_SharedXMLGame`, `Blizzard_GameTooltip` and `Blizzard_UIPanels_Game`, and checks original source provenance for `SetItemByID`, `TooltipDataRules.SellPrice` and `GameTooltip_OnTooltipAddMoney`. The no-instance selector follows `TooltipDataHandler.lua:525` → `TooltipDataRules.lua:143-149` → `Blizzard_GameTooltip/Mainline/GameTooltip.lua:325-333`; it checks line `maxPrice` and callback arguments.
+- `tests/tooltip_serializer_fields.rs`: **VERIFIED (Retail 12.1.5.70783 cache):** the selected fixture checks `Blizzard_SharedXMLGame`, `Blizzard_GameTooltip` and `Blizzard_UIPanels_Game`, and checks original source provenance for `SetItemByID`, `TooltipDataRules.SellPrice` and `GameTooltip_OnTooltipAddMoney`. The no-instance selector follows `TooltipDataHandler.lua:525` → `TooltipDataRules.lua:143-149` → `Blizzard_GameTooltip/Mainline/GameTooltip.lua:325-333`; it checks line `maxPrice` and callback arguments. Bag-instance tests assert status suppression and keep `maxPrice = -1`.
 - `tests/tooltip_serializer_consumer_output.rs::bag_repair_rule_renders_only_top_level_positive_repair_cost`
   observes only original consumer output: the selected `SetBagItem` accessor and
   `FinalizeItemTooltip` render REPAIR_COST plus the money row for quotes 731 and
   2468, and nothing for a zero or absent quote. A line-level `repairCost` renders
   nothing, so the selector rejects that placement inside the consumer.
 - `tests/tooltip_serializer_consumer_output.rs::bag_sell_price_rule_renders_only_type_11_line_prices`
-  (**INFERRED** values: catalog `sell_price` as the initial unit price) renders
-  one `SELL_PRICE: <money>` row through the original `SellPrice` rule for bag
-  items priced 1 and 50, and none for a zero price. A `price` outside the
-  type-11 line renders nothing. The single-row form preserves the VERIFIED
-  item-instance `maxPrice` of -1; it is preservation, not a `maxPrice` RED
-  selector, because no backed input varies `maxPrice`.
+  (**INFERRED simulator mapping; VERIFIED base records per R88aw**) renders one
+  `SELL_PRICE: <money>` row through the original `SellPrice` rule for bag items
+  priced 1 and 50 when explicit no-status-record snapshots are supplied, and
+  none for a zero price. The type-11 line owns `price`; separate field tests
+  cover prepared `maxPrice`, timed status suppression, and the item-instance
+  `maxPrice = -1` rule.
 - Existing tooltip builder, GC and presentation tests remain regression coverage.
 
 **Proved:** the shared publication helpers (`stamp_instance`, `publish_rgb`,

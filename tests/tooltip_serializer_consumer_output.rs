@@ -63,8 +63,8 @@ const REPAIR_COST_ROWS: &str = r#"
     end
 "#;
 
-// INFERRED (simulator mapping): catalog `sell_price` supplies the initial price;
-// this test also supplies a true result for the remaining SellPrice gates.
+// INFERRED (simulator mapping; R88aw): generated flags and stored price data supply these fixtures.
+// The bag test supplies an explicit no-status-record snapshot for its occupied item instances.
 // VERIFIED (R88n.4b, R88p.p1): `price` sits on a type-11 line and zero adds no row.
 const SELL_PRICE_ROWS: &str = r#"
     local cases = {{slot = 1, price = 1}, {slot = 2, price = 50}, {slot = 3}}
@@ -236,8 +236,11 @@ fn bag_sell_price_rule_renders_only_type_11_line_prices() {
     let env = consumer_env(&items.map(|(slot, item_id, _)| (slot, item_id)));
     {
         let mut sim = env.state().borrow_mut();
-        sim.item_tooltip_sell_price_gate_results
-            .extend([(184318, true), (164374, true)]);
+        use wow_ui_sim::c_api::item_tooltip::SellPriceStatusInput::NoStatusRecord;
+        sim.bag_item_tooltip_sell_price_statuses.extend([
+            ((0, 1), NoStatusRecord { instance_marker_flags: 0 }),
+            ((0, 2), NoStatusRecord { instance_marker_flags: 0 }),
+        ]);
     }
     exec_without_new_lua_errors(&env, SELL_PRICE_ROWS);
 }

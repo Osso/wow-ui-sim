@@ -1,6 +1,6 @@
 ## [2026-11-18] correction | Retail SellPrice gates
 
-Updated the [tooltip data contract](../specs/tooltip-data-serialization.md) and [Lua API system page](systems/lua-api.md#retail-sellprice-line-r88pp1). **VERIFIED (R88p.p1):** request mode, status, sell-exclusion and preview gates are required. **INFERRED (simulator mapping):** an empty-default host result supplies the unmodeled gates; only true permits the catalog-price proxy row.
+Corrected the broad host gate in the [tooltip contract](../specs/tooltip-data-serialization.md) and [Lua API page](systems/lua-api.md#retail-sellprice-line-r88pp1). **VERIFIED (R88aw):** supported routes have distinct preview and instance-status inputs, and known ItemSparse flags decide exclusion. **INFERRED (simulator mapping):** generated metadata drives those known flags; host inputs remain only for unavailable bag status, calculated prices, and prepared quantities.
 
 ## [2026-11-18] implementation | Retail role and friends settings
 

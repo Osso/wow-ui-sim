@@ -23,7 +23,9 @@ pub(crate) fn get_hyperlink(state: &mut LuaState) -> LuaResult<u32> {
         return crate::c_api::tooltip_data::unknown_getter_failure();
     };
     let tooltip = match request {
-        HyperlinkRequest::Item(request) => tooltip_for_item_hyperlink(state, &request.link)?,
+        HyperlinkRequest::Item(request) => {
+            tooltip_for_item_hyperlink(state, &request.link, request.hide_vendor_price)?
+        }
         HyperlinkRequest::Spell(request) => tooltip_for_link_spell(state, request.spell_id),
         HyperlinkRequest::Currency { id, quantity } => {
             if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {

@@ -1,6 +1,6 @@
 ## [2026-11-18] correction | Retail SellPrice gates
 
-[Tooltip data](systems/lua-api.md#retail-sellprice-line-r88pp1) now records the R88p.p1 gate conditions and the empty-default host result for unmodeled status, item flags and preview inputs. A missing or false result no longer implies a SellPrice row.
+[Tooltip data](systems/lua-api.md#retail-sellprice-line-r88pp1) now records the R88aw request, instance-status, item-flag and preview rules. **INFERRED (simulator mapping):** generated catalog metadata drives known flags; explicit empty-default inputs remain only for bag status and calculated prices.
 
 ## [2026-11-18] implementation | Retail role and friends settings
 

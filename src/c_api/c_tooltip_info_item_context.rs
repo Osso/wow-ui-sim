@@ -3,7 +3,7 @@
 
 use super::ItemTooltipContext;
 use crate::items::{self, ItemInfo};
-use crate::lua_api::globals::missing_surface::tooltip_info::tooltip_for_item_context;
+use crate::lua_api::globals::missing_surface::tooltip_info::tooltip_for_item_context_with_sell_price;
 use crate::lua_api::methods::borrow_state;
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::table_security::unwrap_secret;
@@ -35,7 +35,7 @@ fn get_item_by_id(state: &mut LuaState) -> LuaResult<u32> {
             state,
         )
     } else {
-        tooltip_for_item_context(state, key.item_id, item.as_ref())
+        tooltip_for_item_context_with_sell_price(state, key.item_id, item.as_ref())
     };
     state.push(tooltip);
     Ok(1)

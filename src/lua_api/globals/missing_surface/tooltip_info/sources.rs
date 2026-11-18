@@ -1,7 +1,8 @@
 use super::super::{LINE_TYPE_SPELL_NAME, TOOLTIP_TYPE_CURRENCY, TOOLTIP_TYPE_ITEM};
 use super::builders::{
-    empty_tooltip, item_quality_color, push_tooltip_line, stamp_data_instance, tooltip_for_item_id,
-    tooltip_for_item_info,
+    RetailSellPriceRequest, empty_tooltip, item_quality_color, push_tooltip_line,
+    stamp_data_instance, tooltip_for_item_id, tooltip_for_item_id_with_request,
+    tooltip_for_item_info_with_request,
 };
 use crate::lua_api::globals::missing_surface::item_spell::parse_prefixed_id;
 use crate::lua_api::globals::{currency_data, profession_data};
@@ -23,6 +24,7 @@ pub(super) fn tooltip_for_item_source(state: &mut LuaState, value: Val) -> Val {
 pub(super) fn tooltip_for_item_link(
     state: &mut LuaState,
     parsed: &crate::c_api::item_descriptor::ParsedItemLink,
+    hide_vendor_price: bool,
 ) -> LuaResult<Val> {
     // WM97 evidence is Retail 12.1.5; other profiles keep the catalog-only path.
     if !matches!(
@@ -45,7 +47,12 @@ pub(super) fn tooltip_for_item_link(
         .resolve(player_level)
         .map_err(|error| rilua::runtime_error(format!("C_TooltipInfo.GetHyperlink: {error}")))?;
     Ok(match resolved {
-        Some(item) => tooltip_for_item_info(state, descriptor.item_id, &item),
+        Some(item) => tooltip_for_item_info_with_request(
+            state,
+            descriptor.item_id,
+            &item,
+            RetailSellPriceRequest::without_instance(hide_vendor_price),
+        ),
         None => empty_tooltip(state, TOOLTIP_TYPE_ITEM),
     })
 }
@@ -109,7 +116,12 @@ pub(super) fn tooltip_for_bag_item(state: &mut LuaState, bag: i32, slot: i32) ->
     {
         return tooltip;
     }
-    let tooltip = compose_bag_item(state, bag, slot);
+    let tooltip = compose_bag_item_with_request(
+        state,
+        bag,
+        slot,
+        Some(RetailSellPriceRequest::bag_item(bag, slot)),
+    );
     // VERIFIED R88n.4b (Retail 12.1.5.70688): ordinary bag tooltips append
     // a top-level integer repairCost only for a positive queried cost.
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
@@ -131,11 +143,23 @@ fn supplied_bag_repair_cost(state: &LuaState, bag: i32, slot: i32) -> Option<i32
 }
 
 fn compose_bag_item(state: &mut LuaState, bag: i32, slot: i32) -> Val {
+    compose_bag_item_with_request(state, bag, slot, None)
+}
+
+fn compose_bag_item_with_request(
+    state: &mut LuaState,
+    bag: i32,
+    slot: i32,
+    request: Option<RetailSellPriceRequest>,
+) -> Val {
     let item_id = borrow_state(state)
         .ok()
         .and_then(|st| st.get_bag_item(bag, slot).map(|(item_id, _)| item_id))
         .unwrap_or(0);
-    tooltip_for_item_id(state, item_id)
+    match request {
+        Some(request) => tooltip_for_item_id_with_request(state, item_id, request),
+        None => tooltip_for_item_id(state, item_id),
+    }
 }
 
 pub(super) fn tooltip_for_inventory_slot(state: &mut LuaState, slot: i32) -> Val {

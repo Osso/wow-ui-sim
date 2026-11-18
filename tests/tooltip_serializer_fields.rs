@@ -6,7 +6,7 @@
 
 use crate::common::blizzard_addon_harness::blizzard_ui_dir;
 use wow_ui_sim::loader::discover_blizzard_addons_for_screen;
-use wow_ui_sim::lua_api::WowLuaEnv;
+use wow_ui_sim::lua_api::{WowLuaEnv, state::BagItem};
 use wow_ui_sim::screen::ScreenKind;
 
 #[path = "tooltip_full_env_helpers.rs"]
@@ -58,9 +58,9 @@ fn assert_selected_tooltip_sources(env: &WowLuaEnv) {
     .expect("selected Retail tooltip consumers should load from their original files");
 }
 
-// INFERRED (simulator mapping): `sell_price` supplies the initial price; the explicit
-// host result confirms the other gates pass. VERIFIED (R88p.p1): eligible rows
-// carry empty text, default color, `price`, and `maxPrice`; missing quantities keep -1.
+// INFERRED (simulator mapping; R88aw): generated item flags/classification and the stored-price path
+// supply the verified fixture gates. VERIFIED (R88p.p1): eligible rows carry empty text, default color,
+// `price`, and `maxPrice`; missing quantities keep -1.
 const RETAIL_SELL_PRICE_LUA: &str = r#"
 local cases = {
     {itemID = 184318, price = select(11, C_Item.GetItemInfo(184318))},
@@ -158,36 +158,123 @@ assert(p1 ~= p2 and m1 ~= m2,
     "distinct backed items and prepared quantities must produce distinct prices")
 "#;
 
-fn set_item_tooltip_sell_price_gate_results(env: &WowLuaEnv, results: &[(u32, bool)]) {
-    env.state()
-        .borrow_mut()
-        .item_tooltip_sell_price_gate_results
-        .extend(results.iter().copied());
-}
-
 #[test]
 fn selected_item_accessor_publishes_backed_sell_price_on_line_11() {
     let env = selected_tooltip_env();
-    set_item_tooltip_sell_price_gate_results(&env, &[(184318, true), (164374, true)]);
     env.exec(RETAIL_SELL_PRICE_LUA)
-        .expect("the original item accessor should publish explicitly eligible SellPrice rows");
+        .expect("the original item accessor should publish eligible SellPrice rows");
 }
 
+fn set_item_tooltip_sell_price_unit_prices(env: &WowLuaEnv, prices: &[(u32, u16, u32)]) {
+    env.state()
+        .borrow_mut()
+        .item_tooltip_sell_price_unit_prices
+        .extend(prices.iter().map(|&(item_id, level, price)| ((item_id, level), price)));
+}
+
+/// INFERRED (70391 export); R88aw confirms the first three base records match 70688.
 #[test]
-fn sell_price_requires_explicit_true_non_price_gates() {
+fn generated_sell_price_metadata_preserves_export_values() {
+    for (item_id, expected) in [
+        (184318, (Some(64), Some(8192), Some(16384), Some(15), Some(4))),
+        (
+            164374,
+            (Some(67_174_464), Some(90_176), Some(16_384), Some(15), Some(4)),
+        ),
+        (163924, (Some(98_368), Some(8_256), Some(16_384), Some(15), Some(4))),
+        (
+            198058,
+            (Some(0), Some(2_147_512_320), Some(0), Some(7), Some(18)),
+        ),
+        (211995, (Some(0), Some(8_192), Some(0), Some(4), Some(4))),
+    ] {
+        let item = wow_ui_sim::items::get_item(item_id).expect("catalog item");
+        assert_eq!(
+            (
+                item.flags_0,
+                item.flags_1,
+                item.flags_3,
+                item.item_class,
+                item.item_subclass,
+            ),
+            expected,
+            "SellPrice gates for item {item_id}"
+        );
+    }
+}
+
+// INFERRED (70391 export) with VERIFIED R88aw exclusion mask: preserve the high-bit word and reject its set mask.
+#[test]
+fn signed_item_flag_word_suppresses_sell_price() {
+    const SELL_PRICE_EXCLUSION_MASK: u32 = 4096;
+    let item = wow_ui_sim::items::get_item(198058).expect("catalog item");
+    assert_eq!(
+        (
+            item.sell_price,
+            item.inventory_type,
+            item.item_class,
+            item.item_subclass,
+        ),
+        (2_500, 0, Some(7), Some(18)),
+    );
+    assert!(item
+        .flags_1
+        .is_some_and(|flags| flags & SELL_PRICE_EXCLUSION_MASK != 0));
+    let env = selected_tooltip_env();
+    env.exec(r#"
+        local data = C_TooltipInfo.GetItemByID(198058)
+        for _, line in ipairs(data.lines) do
+            assert(line.type ~= Enum.TooltipDataLineType.SellPrice)
+        end
+    "#).expect("the signed ItemSparse word's exclusion bit suppresses the row");
+}
+
+// VERIFIED (Retail 12.1.5.70688, R88aw): merchant and hidden item links set preview.
+#[test]
+fn merchant_and_hidden_item_links_apply_preview_gate() {
+    let env = selected_tooltip_env();
+    env.state().borrow_mut().merchant_items.push(184318);
+    env.exec(r#"
+        local function hasSellPrice(data)
+            for _, line in ipairs(data.lines) do
+                if line.type == Enum.TooltipDataLineType.SellPrice then
+                    return true
+                end
+            end
+            return false
+        end
+        assert(hasSellPrice(C_TooltipInfo.GetItemByID(184318)))
+        assert(not hasSellPrice(C_TooltipInfo.GetHyperlink('item:184318', nil, nil, true)))
+        assert(hasSellPrice(C_TooltipInfo.GetHyperlink('item:184318', nil, nil, false)))
+        assert(not hasSellPrice(C_TooltipInfo.GetMerchantItem(1)))
+    "#).expect("each producer must pass its native preview input");
+}
+
+// INFERRED (simulator mapping): an unknown calculated price needs an explicit host value.
+#[test]
+fn calculated_unit_price_requires_explicit_host_input() {
     let env = selected_tooltip_env();
     let check_no_sell_price = r#"
-        local data = C_TooltipInfo.GetItemByID(184318)
+        local data = C_TooltipInfo.GetItemByID(211995)
         for _, line in ipairs(data.lines) do
             assert(line.type ~= Enum.TooltipDataLineType.SellPrice)
         end
     "#;
     env.exec(check_no_sell_price)
-        .expect("missing SellPrice gate input must not imply eligibility");
+        .expect("an unknown calculated price must not imply a row");
 
-    set_item_tooltip_sell_price_gate_results(&env, &[(184318, false)]);
-    env.exec(check_no_sell_price)
-        .expect("a failed SellPrice gate result must suppress the line");
+    set_item_tooltip_sell_price_unit_prices(&env, &[(211995, 571, 4242)]);
+    env.exec(r#"
+        local data = C_TooltipInfo.GetItemByID(211995)
+        local sellPriceLine
+        for _, line in ipairs(data.lines) do
+            if line.type == Enum.TooltipDataLineType.SellPrice then
+                sellPriceLine = line
+                break
+            end
+        end
+        assert(sellPriceLine and sellPriceLine.price == 4242)
+    "#).expect("an explicit calculated price should publish a type-11 line");
 }
 
 fn set_item_tooltip_sell_price_quantities(env: &WowLuaEnv, quantities: &[(u32, u32, u32)]) {
@@ -201,7 +288,6 @@ fn set_item_tooltip_sell_price_quantities(env: &WowLuaEnv, quantities: &[(u32, u
 #[test]
 fn selected_item_accessor_uses_prepared_quantity_for_max_price() {
     let env = selected_tooltip_env();
-    set_item_tooltip_sell_price_gate_results(&env, &[(184318, true), (164374, true)]);
     env.exec(RETAIL_PREPARED_SELL_PRICE_SETUP)
         .expect("the SellPrice consumer probe should load");
 
@@ -216,6 +302,134 @@ fn selected_item_accessor_uses_prepared_quantity_for_max_price() {
     set_item_tooltip_sell_price_quantities(&env, &[(184318, 5, 5)]);
     env.exec("__assertRetailPreparedSellPrice(184318, 5, 5)")
         .expect("non-increasing prepared quantities must preserve maxPrice -1");
+}
+
+// INFERRED (simulator mapping): missing bag-instance status is unresolved and does not permit a row.
+#[test]
+fn bag_item_instance_keeps_prepared_max_price_at_minus_one() {
+    let env = selected_tooltip_env();
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.bag_items.insert(
+            (0, 1),
+            BagItem {
+                owned_identity: None,
+                item_id: 184318,
+                stack_count: 1,
+                hyperlink: None,
+                durability: None,
+                applied_transmog: None,
+            },
+        );
+        sim.bag_item_tooltip_sell_price_statuses.insert(
+            (0, 1),
+            wow_ui_sim::c_api::item_tooltip::SellPriceStatusInput::StatusRecord {
+                flags: 0,
+                recorded_time: 1_000,
+                client_clock: 1_000,
+            },
+        );
+        sim.item_tooltip_sell_price_quantities
+            .insert(184318, (1, 5));
+    }
+    env.exec(r#"
+        local data = C_TooltipInfo.GetBagItem(0, 1)
+        for _, line in ipairs(data.lines) do
+            assert(line.type ~= Enum.TooltipDataLineType.SellPrice)
+        end
+    "#).expect("an active status record suppresses the SellPrice row");
+
+    if let Some(wow_ui_sim::c_api::item_tooltip::SellPriceStatusInput::StatusRecord { flags, .. }) =
+        env.state()
+            .borrow_mut()
+            .bag_item_tooltip_sell_price_statuses
+            .get_mut(&(0, 1))
+    {
+        *flags = 1;
+    }
+    env.exec(r#"
+        local data = C_TooltipInfo.GetBagItem(0, 1)
+        local sellPriceLine
+        for _, line in ipairs(data.lines) do
+            if line.type == Enum.TooltipDataLineType.SellPrice then
+                sellPriceLine = line
+                break
+            end
+        end
+        assert(sellPriceLine and sellPriceLine.price == 1)
+        assert(sellPriceLine.maxPrice == -1)
+    "#).expect("item-instance rows bypass prepared maxPrice after status passes");
+
+    env.state()
+        .borrow_mut()
+        .bag_item_tooltip_sell_price_statuses
+        .clear();
+    env.exec(r#"
+        local data = C_TooltipInfo.GetBagItem(0, 1)
+        for _, line in ipairs(data.lines) do
+            assert(line.type ~= Enum.TooltipDataLineType.SellPrice)
+        end
+    "#).expect("missing instance status input must not imply the row is eligible");
+}
+
+// INFERRED (simulator mapping): bag location represents the live instance passed to native status processing.
+#[test]
+fn no_status_record_marks_the_instance_before_later_sell_price_rows() {
+    const ITEM_STATUS_FLAG: u32 = 4096;
+    const INSTANCE_STATUS_MARKER: u32 = 2;
+    const HOST_UNIT_PRICE: u32 = 4242;
+    let item_id = 7005;
+    let item = wow_ui_sim::items::get_item(item_id).expect("catalog item");
+    assert!(item.flags_0.is_some_and(|flags| flags & ITEM_STATUS_FLAG != 0));
+    let env = selected_tooltip_env();
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.bag_items.insert(
+            (0, 1),
+            BagItem {
+                owned_identity: None,
+                item_id,
+                stack_count: 1,
+                hyperlink: None,
+                durability: None,
+                applied_transmog: None,
+            },
+        );
+        sim.item_tooltip_sell_price_unit_prices
+            .insert((item_id, item.item_level), HOST_UNIT_PRICE);
+        sim.bag_item_tooltip_sell_price_statuses.insert(
+            (0, 1),
+            wow_ui_sim::c_api::item_tooltip::SellPriceStatusInput::NoStatusRecord {
+                instance_marker_flags: 0,
+            },
+        );
+    }
+    env.exec(r#"
+        local data = C_TooltipInfo.GetBagItem(0, 1)
+        for _, line in ipairs(data.lines) do
+            assert(line.type ~= Enum.TooltipDataLineType.SellPrice)
+        end
+    "#).expect("the first unrecorded instance request suppresses SellPrice");
+    assert!(matches!(
+        env.state()
+            .borrow()
+            .bag_item_tooltip_sell_price_statuses
+            .get(&(0, 1)),
+        Some(wow_ui_sim::c_api::item_tooltip::SellPriceStatusInput::NoStatusRecord {
+            instance_marker_flags: INSTANCE_STATUS_MARKER
+        })
+    ));
+    env.exec(r#"
+        local data = C_TooltipInfo.GetBagItem(0, 1)
+        local sellPriceLine
+        for _, line in ipairs(data.lines) do
+            if line.type == Enum.TooltipDataLineType.SellPrice then
+                sellPriceLine = line
+                break
+            end
+        end
+        assert(sellPriceLine and sellPriceLine.price == 4242)
+    "#).expect("a set instance marker no longer suppresses SellPrice");
 }
 
 #[test]
