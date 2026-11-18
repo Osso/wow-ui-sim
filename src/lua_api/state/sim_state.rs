@@ -541,6 +541,12 @@ pub struct SimState {
     pub active_loss_of_control:
         HashMap<String, Vec<crate::c_api::c_loss_of_control::ActiveLossOfControlData>>,
     pub spell_flyouts: HashMap<u32, SpellFlyoutInfo>,
+    /// Host-supplied call-pet spell membership and slot-index candidates.
+    #[cfg(feature = "client-retail")]
+    pub call_pet_spell_indices: HashMap<u32, i32>,
+    /// Host-supplied current-player call-pet names indexed by slot; absent names stay absent.
+    #[cfg(feature = "client-retail")]
+    pub player_call_pet_names: Vec<Option<String>>,
     pub action_profession_quality: HashMap<i32, ProfessionQualityInfo>,
     pub addon_base_paths: Vec<PathBuf>,
     pub texture_manager: std::rc::Rc<std::cell::RefCell<crate::texture::TextureManager>>,

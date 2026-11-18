@@ -412,6 +412,10 @@ macro_rules! build_empty_sim_state {
             spell_loss_of_control: HashMap::new(),
             active_loss_of_control: HashMap::new(),
             spell_flyouts: HashMap::new(),
+            #[cfg(feature = "client-retail")]
+            call_pet_spell_indices: HashMap::new(),
+            #[cfg(feature = "client-retail")]
+            player_call_pet_names: Vec::new(),
             action_profession_quality: HashMap::new(),
             addon_base_paths: $collections.addon_base_paths,
             texture_manager: Default::default(),
