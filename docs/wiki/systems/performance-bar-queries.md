@@ -11,6 +11,10 @@ The Retail 12.1.5 simulator registers the two network getters consumed by the or
 - **INFERRED (pinned Retail 12.1.5.70783 consumer):** `PerformanceBar.lua:44–45, 81–82` displays the first protocol code as home and the second as world; code 1 selects TCP and code 2 selects UDP. These are UI labels, not proof of the live endpoint values or wire transport.
 - **UNKNOWN:** live protocol values, their writers, and the update event.
 
+## Runtime evidence
+
+**VERIFIED (final-source profile matrix):** PTR, Forever, Mists, Wrath (compile-only), and Retail all-targets no-run builds pass with zero warnings. **VERIFIED (Retail 12.1.5.70783):** the original-consumer test passes 1/1 with `(1,2)`, `(2,1)`, and absent-input `(0,0)`; both constant-`(1,1)` protocol and `GetNetStats`-maximum bandwidth mutants fail inside that consumer. PTR, Forever, and Mists fallback-preservation tests pass 1/1 each.
+
 The original tooltip consumer is `Blizzard_PerformanceBar/PerformanceBar.lua:81–93` in the pinned Retail 12.1.5.70783 cache. The R88ap native return evidence is from build 70688; this does not claim the caches are byte-equivalent.
 
 ## Sources

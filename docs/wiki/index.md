@@ -1,3 +1,7 @@
+## [2026-11-17] verification | Retail PerformanceBar tooltip
+
+**VERIFIED (final source):** the original Retail 12.1.5.70783 tooltip test passes 1/1, both callable-wrong producer mutants fail at consumer assertions, and the PTR/Forever/Mists fallback tests pass 1/1 each. The five-profile all-targets no-run matrix has zero warnings; Wrath is compile-only. See the [query contract](../specs/performance-bar-queries.md) for hashes and UNKNOWNs.
+
 ## [2026-11-17] system | Retail PerformanceBar network queries
 
 [PerformanceBar network queries](systems/performance-bar-queries.md) records the Retail 12.1.5 getters, the typed empty-default endpoint input, and the preserved non-Retail fallbacks. **INFERRED (70783 tooltip):** codes 1/2 display as TCP/UDP; live endpoint values remain UNKNOWN.
