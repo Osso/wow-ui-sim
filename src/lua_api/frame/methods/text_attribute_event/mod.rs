@@ -11,8 +11,6 @@ mod events;
 mod helpers;
 mod rolesets;
 mod text;
-#[cfg(feature = "client-retail")]
-pub(super) use text::measure_text_width;
 pub(super) use text::refresh_text_measurements;
 pub(crate) use text::{fire_editbox_text_script, set_frame_text_value};
 mod unit_event;
@@ -30,6 +28,11 @@ use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
 use rilua::{LuaResult, Val};
+
+#[cfg(feature = "client-retail")]
+pub(super) fn measure_text_width(state: &LuaState, id: u64) -> f64 {
+    text::measure_text_width(state, id)
+}
 
 /// Register all text, attribute, and event RustFn methods on the given table.
 pub fn register_all(state: &mut LuaState, table: GcRef<Table>) -> LuaResult<()> {

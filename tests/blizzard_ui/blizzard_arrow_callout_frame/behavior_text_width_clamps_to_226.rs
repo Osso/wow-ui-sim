@@ -10,6 +10,7 @@ const ROOT: &str = "Blizzard_ArrowCalloutFrame";
 // See Blizzard_ArrowCalloutFrame/ArrowCalloutFrame.xml and pr46-49-decomp-answers.md §R88az.
 const TEXT_WIDTH_CLAMP_PROBE: &str = r#"
 local failures = {}
+local widthTolerance = 0.01
 
 local function expect(condition, message)
     if not condition then
@@ -49,7 +50,7 @@ local longContentWidth = longCallout.Content:GetWidth()
 local longAppliedWidth = longContentWidth - longCallout.widthPadding
 
 expect(longNaturalWidth > 226, "long text should naturally measure wider than the clamp: " .. tostring(longNaturalWidth))
-expect(math.abs(longAppliedWidth - math.min(226, longNaturalWidth)) < 0.01, "long callout should apply min(226, measured text width): " .. tostring(longAppliedWidth))
+expect(math.abs(longAppliedWidth - math.min(226, longNaturalWidth)) < widthTolerance, "long callout should apply min(226, measured text width): " .. tostring(longAppliedWidth))
 
 local shortText = "Hi"
 expect(showCallout(81, "ShortTextCalloutAnchor", shortText), "short text callout should show")
@@ -59,7 +60,7 @@ local shortNaturalWidth = shortCallout.Content.Text:GetStringWidth()
 local shortAppliedWidth = shortCallout.Content:GetWidth() - shortCallout.widthPadding
 
 expect(shortNaturalWidth < 226, "short text should naturally measure below the clamp: " .. tostring(shortNaturalWidth))
-expect(math.abs(shortAppliedWidth - math.min(226, shortNaturalWidth)) < 0.01, "short callout should apply min(226, measured text width): " .. tostring(shortAppliedWidth))
+expect(math.abs(shortAppliedWidth - math.min(226, shortNaturalWidth)) < widthTolerance, "short callout should apply min(226, measured text width): " .. tostring(shortAppliedWidth))
 expect(shortAppliedWidth ~= 226, "short text width should not be forced to the maximum clamp: " .. tostring(shortAppliedWidth))
 
 return table.concat(failures, "\n")

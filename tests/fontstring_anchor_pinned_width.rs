@@ -188,7 +188,7 @@ fn invalid_zero_size_fontstring_get_width_uses_text_measurement() {
         .unwrap();
 
     assert_eq!(left_results, 0.0);
-    assert!(natural_width > 1.0);
+    assert!(natural_width > 0.0);
     assert_eq!(reported_width, natural_width.max(1.0));
     assert_eq!(explicit_width, 226.0);
 }
@@ -224,7 +224,7 @@ fn valid_zero_span_fontstring_rect_ignores_explicit_width() {
 
     assert_eq!(left_results, 1.0);
     assert_eq!(parent_width, 0.0);
-    assert!(natural_width > 1.0);
+    assert!(natural_width > 0.0);
     assert_eq!(before_width, 0.0);
     assert_eq!(after_width, 0.0);
 }

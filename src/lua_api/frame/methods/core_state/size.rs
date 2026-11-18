@@ -36,6 +36,9 @@ pub fn get_width(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 #[cfg(feature = "client-retail")]
+const INVALID_RECT_TEXT_WIDTH_FLOOR: f64 = 1.0;
+
+#[cfg(feature = "client-retail")]
 fn invalid_font_string_width(
     state: &LuaState,
     id: u64,
@@ -48,13 +51,14 @@ fn invalid_font_string_width(
     let needs_text_measurement = {
         let sim = borrow_state(state)?;
         sim.widgets.get(id).is_some_and(|frame| {
-            frame.widget_type == crate::widget::WidgetType::FontString
-                && (!frame.rect_valid || frame.layout_rect.is_none())
-                && (frame.width == 0.0 || frame.width_is_text_auto)
+            let is_font_string = frame.widget_type == crate::widget::WidgetType::FontString;
+            let has_invalid_rect = !frame.rect_valid || frame.layout_rect.is_none();
+            let has_no_explicit_width = frame.width == 0.0 || frame.width_is_text_auto;
+            is_font_string && has_invalid_rect && has_no_explicit_width
         })
     };
     if needs_text_measurement {
-        return Ok(measure_text_width(state, id).max(1.0));
+        return Ok(measure_text_width(state, id).max(INVALID_RECT_TEXT_WIDTH_FLOOR));
     }
     Ok(f64::from(reported_width))
 }
