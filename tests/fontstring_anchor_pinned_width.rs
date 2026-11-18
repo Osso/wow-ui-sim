@@ -163,3 +163,68 @@ fn inferred_get_width_uses_resolved_span_of_zero_width_target() {
 
     assert!((width - 200.0).abs() < 1.0);
 }
+
+// INFERRED for Retail 12.1.5.70783 from verified 12.1.5.70688 R88az;
+// exact native text measurements remain UNKNOWN.
+#[cfg(all(feature = "client-retail", feature = "optional-tests"))]
+#[test]
+fn invalid_zero_size_fontstring_get_width_uses_text_measurement() {
+    let env = env();
+    let (left_results, natural_width, reported_width, explicit_width): (f64, f64, f64, f64) = env
+        .eval(
+            r##"
+            local parent = CreateFrame("Frame", "InvalidFontStringParent", UIParent)
+            parent:SetSize(0, 0)
+            local fs = parent:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+            fs:SetSize(0, 0)
+            fs:SetText("Short")
+            local leftResults = select("#", fs:GetLeft())
+            local naturalWidth = fs:GetStringWidth()
+            local reportedWidth = fs:GetWidth()
+            fs:SetWidth(226)
+            return leftResults, naturalWidth, reportedWidth, fs:GetWidth()
+            "##,
+        )
+        .unwrap();
+
+    assert_eq!(left_results, 0.0);
+    assert!(natural_width > 1.0);
+    assert_eq!(reported_width, natural_width.max(1.0));
+    assert_eq!(explicit_width, 226.0);
+}
+
+#[cfg(all(feature = "client-retail", feature = "optional-tests"))]
+#[test]
+fn valid_zero_span_fontstring_rect_ignores_explicit_width() {
+    let env = env();
+    let (left_results, parent_width, natural_width, before_width, after_width): (
+        f64,
+        f64,
+        f64,
+        f64,
+        f64,
+    ) = env
+        .eval(
+            r##"
+            local parent = CreateFrame("Frame", "ValidZeroSpanParent", UIParent)
+            parent:SetSize(0, 0)
+            parent:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 60, -60)
+            parent:SetPoint("BOTTOMRIGHT", UIParent, "TOPLEFT", 60, -60)
+            local fs = parent:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+            fs:SetAllPoints(parent)
+            fs:SetText("Short")
+            local leftResults = select("#", fs:GetLeft())
+            local naturalWidth = fs:GetStringWidth()
+            local beforeWidth = fs:GetWidth()
+            fs:SetWidth(226)
+            return leftResults, parent:GetWidth(), naturalWidth, beforeWidth, fs:GetWidth()
+            "##,
+        )
+        .unwrap();
+
+    assert_eq!(left_results, 1.0);
+    assert_eq!(parent_width, 0.0);
+    assert!(natural_width > 1.0);
+    assert_eq!(before_width, 0.0);
+    assert_eq!(after_width, 0.0);
+}

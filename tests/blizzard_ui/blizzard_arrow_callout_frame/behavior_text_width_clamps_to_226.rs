@@ -5,6 +5,9 @@ use crate::common::panel_fixtures::blizzard_ui_dir;
 use wow_ui_sim::loader::load_addon;
 
 const ROOT: &str = "Blizzard_ArrowCalloutFrame";
+// INFERRED for Retail 12.1.5.70783 from verified R88az behavior: the original
+// 0x0 TOP-only Content parent leaves its all-points FontString rect invalid.
+// See Blizzard_ArrowCalloutFrame/ArrowCalloutFrame.xml and pr46-49-decomp-answers.md §R88az.
 const TEXT_WIDTH_CLAMP_PROBE: &str = r#"
 local failures = {}
 
@@ -39,31 +42,32 @@ end
 local longText = "This callout message is intentionally long enough to exceed the maximum text width clamp."
 expect(showCallout(80, "LongTextCalloutAnchor", longText), "long text callout should show")
 
-local longTextFrame = ArrowCalloutFrameManager.currentCallouts[80].Content.Text
+local longCallout = ArrowCalloutFrameManager.currentCallouts[80]
+local longTextFrame = longCallout.Content.Text
 local longNaturalWidth = longTextFrame:GetStringWidth()
-local longClampedWidth = longTextFrame:GetWidth()
-local longRawWidth = longTextFrame:GetWidth(true)
+local longContentWidth = longCallout.Content:GetWidth()
+local longAppliedWidth = longContentWidth - longCallout.widthPadding
 
 expect(longNaturalWidth > 226, "long text should naturally measure wider than the clamp: " .. tostring(longNaturalWidth))
-expect(longClampedWidth == 226, "long text width should clamp exactly to 226: width=" .. tostring(longClampedWidth) .. " raw=" .. tostring(longRawWidth))
+expect(math.abs(longAppliedWidth - math.min(226, longNaturalWidth)) < 0.01, "long callout should apply min(226, measured text width): " .. tostring(longAppliedWidth))
 
 local shortText = "Hi"
 expect(showCallout(81, "ShortTextCalloutAnchor", shortText), "short text callout should show")
 
-local shortTextFrame = ArrowCalloutFrameManager.currentCallouts[81].Content.Text
-local shortNaturalWidth = shortTextFrame:GetStringWidth()
-local shortWidth = shortTextFrame:GetWidth()
-local shortRawWidth = shortTextFrame:GetWidth(true)
+local shortCallout = ArrowCalloutFrameManager.currentCallouts[81]
+local shortNaturalWidth = shortCallout.Content.Text:GetStringWidth()
+local shortAppliedWidth = shortCallout.Content:GetWidth() - shortCallout.widthPadding
 
 expect(shortNaturalWidth < 226, "short text should naturally measure below the clamp: " .. tostring(shortNaturalWidth))
-expect(shortWidth == shortNaturalWidth, "short text width should remain its natural width: width=" .. tostring(shortWidth) .. " raw=" .. tostring(shortRawWidth) .. " natural=" .. tostring(shortNaturalWidth))
-expect(shortWidth ~= 226, "short text width should not be forced to the maximum clamp: " .. tostring(shortWidth))
+expect(math.abs(shortAppliedWidth - math.min(226, shortNaturalWidth)) < 0.01, "short callout should apply min(226, measured text width): " .. tostring(shortAppliedWidth))
+expect(shortAppliedWidth ~= 226, "short text width should not be forced to the maximum clamp: " .. tostring(shortAppliedWidth))
 
 return table.concat(failures, "\n")
 "#;
 
 // Wrath has no ArrowCallout vendor widget/handler input; mixed and modeled probes remain enabled.
 post_wrath_ui_fixture! {
+#[cfg(feature = "client-retail")]
 #[test]
 fn callout_text_width_clamps_to_maximum_only_for_long_text() {
     with_blizzard_addon_smoke_shape(&[], &[], |env, _loaded| {
