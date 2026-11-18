@@ -347,8 +347,11 @@ fn publishes_named_top_level_frame_under_glue_parent() {
             "#,
         )
         .expect("ReportFrame parent diagnostic should succeed");
-    let (glue_parent_ids, addon_modes) = {
+    let (glue_parent_ids, addon_modes, report_parent_ids) = {
         let state = env.state().borrow();
+        let report_id = state.widgets.get_id_by_name("ReportFrame");
+        let report_parent_id = report_id.and_then(|id| state.widgets.get(id)?.parent_id);
+        let current_glue_parent_id = state.widgets.get_id_by_name("GlueParent");
         let glue_parent_ids = state
             .widgets
             .iter_ids()
@@ -380,7 +383,13 @@ fn publishes_named_top_level_frame_under_glue_parent() {
                 )
             })
             .collect::<Vec<_>>();
-        (glue_parent_ids, addon_modes)
+        (
+            glue_parent_ids,
+            addon_modes,
+            format!(
+                "report={report_id:?}:parent={report_parent_id:?}:current={current_glue_parent_id:?}"
+            ),
+        )
     };
     assert!(
         parented_to_glue_parent,
@@ -389,7 +398,7 @@ fn publishes_named_top_level_frame_under_glue_parent() {
          GlueParent is the root frame for glue-screen UI created by Blizzard_GlueXML, while \
          UIParent is the in-game equivalent created by Blizzard_UIParent. The two never \
          coexist within a single screen; {parent_diagnostic}; frames={glue_parent_ids:?}; \
-         addon_modes={addon_modes:?}"
+         addon_modes={addon_modes:?}; registry={report_parent_ids}"
     );
 
     let strata: String = env
