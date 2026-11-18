@@ -129,7 +129,6 @@ fn test_xml_inline_script_error_continues() {
     let ctx =
         AddonContext::new(env.lua(), "TestAddon", addon_table, &temp_dir, false, false).unwrap();
     let before_errors = env.state().borrow().lua_errors.len();
-    // Should not return an error — inline script errors are non-fatal
     let result = load_xml_file(
         &env.loader_env(),
         &xml_path,
