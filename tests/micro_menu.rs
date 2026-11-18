@@ -97,6 +97,7 @@ fn setup_env() -> WowLuaEnv {
                 .unwrap_or_else(|error| panic!("[load {name}] FAILED: {error}"));
         }
 
+        common::panel_fixtures::load_panel_startup_publishers(&env, &ui);
         install_professions_book_bootstrap(&env, &ui);
         install_encounter_journal_bootstrap(&env, &ui);
     }

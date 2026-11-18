@@ -40,3 +40,15 @@ This investigation separates test-fixture failures from simulator behavior gaps 
 
 - [[consumer-selection-and-red-proof]] — prove original consumer selection before accepting a RED.
 - [[showuipanel-toggle-fixture-owners]] — original achievement and housing panel owners.
+
+## Panel triage A (lt-d032, 2026-11-18)
+
+**VERIFIED (baseline b8dcca011, Retail 12.1.5.70783 / PTR 12.1.7.70493):** all 15 assigned selectors failed before edits. Original panel fixtures omitted the Menu owner, eager Retail CatalogShop inbound publisher, and AchievementUI's `[Bootstrap]` publisher. AdventureMap's first Lua statement captures `C_AdventureMap.Close` in `UIPanelWindows`, so its fixture must finish loading the original UIParentPanelManager owner before loading AdventureMap; listing both roots in a dependency closure does not impose that ordering.
+
+Fixtures now load those original owners/publishers without replacing consumers or changing assertions. CatalogShop uses the existing master helper, not the separate secure-environment integration branch.
+
+**UNKNOWN (native non-Retail semantics):** `f7c27bf0d`, `a1cfb4a2c`, and `997a1b958` removed all-profile compatibility defaults while registering their replacements only on Retail. Per coordinator direction, restore the previous simulator behavior outside the replacement gates: `GetItemLevelColor` returns `1,1,1`; `C_Spell.IsRangedAutoAttackSpell` and `C_Spell.IsSpellPassive` return false. This restores historical behavior, not a claim of PTR native equivalence.
+
+**VERIFIED (intermediate targeted runs):** 13/15 assigned selectors now pass on each profile. The professions specialization test remains an intentional optional RED because `C_ProfSpecs.GetChildrenForPath` and tree records are UNKNOWN (coordinator answer, tracker question 4); its fixture/assertions remain unchanged. The achievement empty-summary assertion remains unchanged and is escalated in tracker question 5: original `AchievementFrameSummary_UpdateAchievements` shows default incomplete buttons with zero completed achievements and also shows the empty text, while the test rejects their simultaneous `IsShown` states rather than measuring geometric overlap.
+
+Receipts record cache versions and provenance SHA256 alongside compiler-bound executable/dylib hashes. These are targeted proofs, not a full-suite pass.

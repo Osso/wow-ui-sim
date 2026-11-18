@@ -8,7 +8,10 @@ const ROOT: &str = "Blizzard_AdventureMap";
 post_wrath_ui_fixture! {
 #[test]
 fn adventure_map_uipanel_window_entry_captures_close_at_load_time() {
-    with_blizzard_addon_closure(&[ROOT], &[], |env, _loaded| {
+    with_blizzard_addon_closure(&["Blizzard_UIParentPanelManager"], &[], |env, _loaded| {
+        crate::common::blizzard_addon_harness::load_blizzard_addon_closure_into_env(
+            env, &crate::common::blizzard_addon_harness::blizzard_ui_dir(), &[ROOT], &[],
+        );
         let surface: LoadTimePanelEntry = env
             .eval(
                 r#"

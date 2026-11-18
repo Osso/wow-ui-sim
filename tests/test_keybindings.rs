@@ -33,6 +33,7 @@ const BLIZZARD_ADDONS: &[&str] = &[
     "Blizzard_SharedXMLBase",
     "Blizzard_Colors",
     "Blizzard_SharedXML",
+    "Blizzard_Menu",
     "Blizzard_SharedXMLGame",
     "Blizzard_UIPanelTemplates",
     "Blizzard_FrameXMLBase",
@@ -124,6 +125,7 @@ fn load_base_blizzard_addons(env: &WowLuaEnv) {
         common::load_required_blizzard_addon(env, &ui, name);
         env.apply_runtime_addon_load_workarounds(name);
     }
+    common::panel_fixtures::load_panel_startup_publishers(env, &ui);
 }
 
 fn settle_env(env: &WowLuaEnv) {

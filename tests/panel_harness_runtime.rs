@@ -104,6 +104,7 @@ fn load_panel_harness(env: &WowLuaEnv) {
     ] {
         env.apply_runtime_addon_load_workarounds(addon_name);
     }
+    common::panel_fixtures::load_panel_startup_publishers(env, &ui);
     common::panel_fixtures::install_lua_harness_stubs(env);
     env.apply_post_load_workarounds();
     common::fire_addon_loaded(env, "WoWUISim");

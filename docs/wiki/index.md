@@ -1,3 +1,7 @@
+## [2026-11-18] investigation | Panel triage A
+
+The [panel triage](investigations/master-test-fixture-triage.md#panel-triage-a-lt-d032-2026-11-18) records original startup-owner omissions and non-Retail compatibility-default regressions. Targeted Retail/PTR results separate passing fixes, intentional profession RED, and the escalated achievement assertion.
+
 ## [2026-11-18] implementation | Retail role and friends settings
 
 The [social settings investigation](investigations/retail-social-settings.md) separates the verified R88ap.3–4 Boolean rules from inferred host type tags/settings bytes and unknown writers/events. Original UnitPopup and FriendsFrame consumers supply regression coverage.

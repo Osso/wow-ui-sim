@@ -100,6 +100,14 @@ pub fn load_retail_catalog_shop(env: &WowLuaEnv, ui: &std::path::Path) {
     .expect("Retail panel fixture must load original CatalogShop inbound publisher");
 }
 
+/// Original startup publishers needed by panel callers outside the LoD UI.
+pub fn load_panel_startup_publishers(env: &WowLuaEnv, ui: &std::path::Path) {
+    load_retail_catalog_shop(env, ui);
+    crate::common::load_blizzard_addon_bootstrap(
+        env, ui, "Blizzard_AchievementUI", "Blizzard_AchievementUI_Bootstrap.lua",
+    );
+}
+
 /// INFERRED eager root: native CharacterFrame hides TokenFrame on every tab switch.
 /// TokenUI has no LoadOnDemand directive in the native inventory.
 pub fn load_wrath_panel_core(env: &WowLuaEnv) {
@@ -173,6 +181,7 @@ pub fn load_panel_addons(env: &WowLuaEnv) {
         );
     }
     super::blizzard_addon_harness::load_discovered_blizzard_addons_into_env(env, addons);
+    load_panel_startup_publishers(env, &ui);
 }
 
 pub fn install_lua_harness_stubs(env: &WowLuaEnv) {

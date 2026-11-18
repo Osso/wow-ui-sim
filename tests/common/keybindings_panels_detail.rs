@@ -10,6 +10,7 @@ const BLIZZARD_ADDONS: &[&str] = &[
     "Blizzard_SharedXMLBase",
     "Blizzard_Colors",
     "Blizzard_SharedXML",
+    "Blizzard_Menu",
     "Blizzard_SharedXMLGame",
     "Blizzard_UIPanelTemplates",
     "Blizzard_FrameXMLBase",
@@ -86,6 +87,7 @@ pub(crate) fn setup_env() -> common::LockedEnv {
                 env.apply_runtime_addon_load_workarounds(addon_name);
             }
             common::load_click_binding_bootstrap(&env, &ui);
+            common::panel_fixtures::load_panel_startup_publishers(&env, &ui);
         }
 
         load_token_ui(&env);
