@@ -98,6 +98,52 @@ fn register_unit_event_scans_native_unit_argument_boundaries() {
         .expect("Mists unit-event scan follows the verified argument rules");
 }
 
+const CAST_SEQUENCE_CONSUMER: &str = r#"
+    SecureCmdOptionParse = function(message) return message end
+    SecureCmdItemParse = function() return nil end
+    CastSpellByName = function() end
+    C_Item.GetItemInfo = function() return nil end
+    C_Item.GetItemSpell = function() return nil, 123 end
+    C_Item.IsEquippableItem = function() return false end
+    C_Spell.GetSpellIDForSpellIdentifier = function() return 123 end
+    C_SpellBook.FindSpellOverrideByID = function(spellID) return spellID end
+    C_SpellBook.FindBaseSpellByID = function(spellID) return spellID end
+
+    local handler = SecureCmdList["CASTSEQUENCE"]
+    local source = debug.getinfo(handler, "S").source
+    assert(source:find("CastSequenceManager.lua", 1, true), source)
+    handler("Alpha,Beta,Gamma,Delta")
+    local function current_index()
+        return select(1, QueryCastSequence("Alpha,Beta,Gamma,Delta"))
+    end
+    local function cast(unit, castID)
+        FireEvent("UNIT_SPELLCAST_SENT", unit, "", castID, 123)
+        FireEvent("UNIT_SPELLCAST_SUCCEEDED", unit, castID, 123)
+    end
+
+    cast("target", 1)
+    assert(current_index() == 1, "target is not registered")
+    cast("player", 2)
+    assert(current_index() == 2, "player event advances cast sequence")
+    cast("pet", 3)
+    assert(current_index() == 3, "pet event advances cast sequence")
+    cast("focus", 4)
+    assert(current_index() == 3, "focus is not registered")
+"#;
+
+#[test]
+fn cast_sequence_consumer_receives_only_registered_units() {
+    let ui = closure::blizzard_ui_dir();
+    let env = closure::new_blizzard_addon_env(&ui);
+    env.exec("SecureCmdList = SecureCmdList or {}")
+        .expect("secure command list should exist");
+    let loaded =
+        closure::load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_ChatFrameBase"], &[]);
+    assert!(loaded.iter().any(|name| name == "Blizzard_ChatFrameBase"));
+    env.exec(CAST_SEQUENCE_CONSUMER)
+        .expect("original cast-sequence consumer should filter player and pet events");
+}
+
 #[test]
 fn combat_audio_manager_table_registers_unit_health_with_empty_filter() {
     let mut observed = Vec::new();

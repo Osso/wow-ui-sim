@@ -1,5 +1,11 @@
 //! R88aj RegisterUnitEvent unit-argument scan, observed through return values.
 
+#![cfg(any(
+    feature = "client-mists",
+    feature = "client-retail",
+    feature = "client-wowforever"
+))]
+
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 /// Unit arguments for `f:RegisterUnitEvent('UNIT_HEALTH', ...)` in sequence,

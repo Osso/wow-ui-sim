@@ -1,3 +1,7 @@
+## [2026-11-18] implementation | RegisterUnitEvent unit scan
+
+[Event system](systems/event-system.md#frame-registerunitevent-unit-scan-r88aj) links the [R88aj contract](../specs/register-unit-event-units.md): the native scan is limited to Mists, Retail and Forever evidence; Retail/Forever unknown security inputs stay empty.
+
 ## [2026-11-18] implementation | Retail cinematic summary
 
 The [cinematic summary investigation](investigations/retail-cinematic-summary.md) separates the verified R88ap.1 ID lifecycle and nil/string contract from inferred host data and argument admission. The original MovieFrame dialog is the regression consumer.
