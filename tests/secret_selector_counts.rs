@@ -203,7 +203,9 @@ fn assert_count_facts(env: &WowLuaEnv) {
     assert!(sim.spell_id_aliases.is_empty());
 }
 
-fn assert_scalar_selector_contract(api: &str, expected: u32) {
+fn assert_scalar_selector_contract(api: &str, expected: u32, fractional_expected: Option<u32>) {
+    let fractional_expected =
+        fractional_expected.map_or_else(|| "nil".to_owned(), |value| value.to_string());
     for restricted in [false, true] {
         let env = fixture(restricted);
         env.exec(&format!(
@@ -222,8 +224,21 @@ fn assert_scalar_selector_contract(api: &str, expected: u32) {
                     assert(secretunwrap(getter(900002)) == 0, 'public selector miss')
                     assert(secretunwrap(getter(Missing)) == 0, 'secret selector miss')
                 end
-                for _,id in ipairs({{-1,Invalid,19750.5,Fraction,{{}},SecretText}}) do
+                for _,id in ipairs({{-1,Invalid,{{}},SecretText}}) do
                     assert(not pcall(getter,id))
+                end
+                local fractionalExpected = {fractional_expected}
+                for _,id in ipairs({{19750.5,Fraction}}) do
+                    if fractionalExpected == nil then
+                        assert(not pcall(getter,id))
+                    else
+                        local value = getter(id)
+                        assert(select('#',getter(id)) == 1)
+                        assert(issecretvalue(value) == {restricted})
+                        if not {restricted} or not before then
+                            assert(secretunwrap(value) == fractionalExpected, 'fractional selector quantity')
+                        end
+                    end
                 end
                 assert(issecretvalue(Selector) and debug.getstacktaint() == before)
                 if before then
@@ -243,12 +258,13 @@ fn assert_scalar_selector_contract(api: &str, expected: u32) {
 
 #[test]
 fn cast_count_selector_arity_restrictions_misses_and_invalid_controls() {
-    assert_scalar_selector_contract("GetSpellCastCount", 3);
+    // INFERRED for 12.1.5.70783 from the verified 12.1.5.70688 conversion path: see pr46-49-decomp-answers.md §R88r.r1 and docs/specs/spell-count-outputs.md.
+    assert_scalar_selector_contract("GetSpellCastCount", 3, Some(3));
 }
 
 #[test]
 fn maximum_aura_selector_arity_restrictions_misses_and_invalid_controls() {
-    assert_scalar_selector_contract("GetSpellMaxCumulativeAuraApplications", 7);
+    assert_scalar_selector_contract("GetSpellMaxCumulativeAuraApplications", 7, None);
 }
 
 #[test]
