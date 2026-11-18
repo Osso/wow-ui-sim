@@ -85,6 +85,7 @@ fn perk_queries_return_rank_entry_and_state_values() {
             and n == 1 and pending == states.Pending
             and state(2002, 700) == states.Earned
             and state(2003, 700) == states.Unearned
+            and state(9999, 700) == states.Unearned
             and state(2001, 701) == states.Unearned
             and C_ProfSpecs.GetUnlockRankForPerk(2001) == 3
             and C_ProfSpecs.GetUnlockRankForPerk(9999) == nil

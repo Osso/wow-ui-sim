@@ -67,11 +67,14 @@ impl ProfessionSpecInputs {
     /// INFERRED (simulator mapping): return perk nodes in the supplied path group order.
     #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
     pub(crate) fn perks_for_path(&self, path_id: i32) -> Vec<(i32, bool)> {
-        self.path_perk_group_ids
-            .get(&path_id)
-            .and_then(|group_id| self.group_node_ids.get(group_id))
-            .into_iter()
-            .flatten()
+        let Some(group_id) = self.path_perk_group_ids.get(&path_id) else {
+            return Vec::new();
+        };
+        let Some(node_ids) = self.group_node_ids.get(group_id) else {
+            return Vec::new();
+        };
+        node_ids
+            .iter()
             .filter_map(|node_id| {
                 self.perk_flags_by_node
                     .get(node_id)
@@ -86,11 +89,11 @@ impl ProfessionSpecInputs {
         if !self.trait_config_ids.contains(&config_id) {
             return PROF_SPEC_PERK_UNEARNED;
         }
-        let ranks = self
-            .perk_rank_entries_by_config
-            .get(&(perk_id, config_id))
-            .into_iter()
-            .flatten()
+        let Some(entries) = self.perk_rank_entries_by_config.get(&(perk_id, config_id)) else {
+            return PROF_SPEC_PERK_UNEARNED;
+        };
+        let ranks = entries
+            .iter()
             .map(|entry| {
                 (i64::from(entry.learned) + i64::from(entry.granted))
                     .min(i64::from(entry.max_ranks))
