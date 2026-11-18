@@ -86,7 +86,8 @@ prefork_full_ui_case! {
 fn guild_news_pvp_texture_uses_player_faction_group(env: &WowLuaEnv) {
     env.exec(
         r#"
-        local newsFrame = CommunitiesFrame.News
+        local newsFrame = CommunitiesFrame.GuildDetailsFrame.News
+        assert(newsFrame, "GuildNews frame must be instantiated")
         A_Admin.SetGuildFactionGroupFlags(2, 4)
         A_Admin.SetGuildFactionGroupFlags(1, 2)
         local function assertPvpTexture(raceIndex, expectedTexture, label, flags)
