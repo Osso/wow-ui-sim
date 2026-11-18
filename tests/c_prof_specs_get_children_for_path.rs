@@ -75,4 +75,17 @@ fn get_children_uses_verified_int32_conversion_and_usage_errors() {
         env.eval::<bool>(&invalid_argument_script())
             .expect("verified argument contract")
     );
+    assert!(
+        env.eval::<bool>(r#"
+            local api = C_ProfSpecs.GetChildrenForPath
+            local usage = 'Usage: local childIDs = C_ProfSpecs.GetChildrenForPath(pathID)'
+            local range = 'outside of expected range -2147483648 to 2147483647 - ' .. usage
+            for _, bad in ipairs({'abc', {}, 0/0, math.huge, -math.huge, 2147483648, -2147483649}) do
+                local ok, err = pcall(api, bad)
+                if ok or not err:find(range, 1, true) then return false end
+            end
+            return type(api(-2147483648)) == 'table' and type(api(2147483647)) == 'table'
+        "#)
+        .expect("invalid conversions report the int32 range and signed bounds are accepted")
+    );
 }
