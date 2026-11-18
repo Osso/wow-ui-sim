@@ -16,6 +16,10 @@ pub struct ProfessionSpecInputs {
     pub enabled_skill_lines: HashSet<u32>,
     /// `Enum.ProfessionsSpecTabState` per tab (TraitTree ID).
     pub tab_states: HashMap<u32, i32>,
+    /// INFERRED (simulator mapping): ProfTraitPathNode path IDs to group IDs.
+    pub path_group_ids: HashMap<i32, i32>,
+    /// INFERRED (simulator mapping): groups to ordered TraitNode IDs.
+    pub group_node_ids: HashMap<i32, Vec<i32>>,
     /// SkillLines whose configuration has an eligible unlock-kind-9/spend-kind-7 node.
     pub points_eligible_skill_lines: HashSet<u32>,
 }
