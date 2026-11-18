@@ -226,18 +226,10 @@ fn snapshot_current_member(
     secure_history: Val,
 ) -> LuaResult<()> {
     let (ordinary, secure) = namespace_tables(state, namespace)?;
-    store_snapshot(
-        state,
-        ordinary_history,
-        member,
-        table_get(state, ordinary, member),
-    );
-    store_snapshot(
-        state,
-        secure_history,
-        member,
-        table_get(state, secure, member),
-    );
+    let ordinary_value = table_get(state, ordinary, member);
+    let secure_value = table_get(state, secure, member);
+    store_snapshot(state, ordinary_history, member, ordinary_value);
+    store_snapshot(state, secure_history, member, secure_value);
     Ok(())
 }
 

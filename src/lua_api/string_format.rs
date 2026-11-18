@@ -202,7 +202,7 @@ fn validate_format_argument(
             Val::Num(_) => Ok(true),
             _ => Err(format_type_error(state, argument_position, "string")),
         },
-        b'd' | b'i' => validate_signed_integer_argument(state, tonumber, value, argument_position),
+        b'd' | b'i' => validate_signed_integer_argument(state, tonumber, value),
         b'F' | b't' | b'T' if is_secret_number(state, value) => Ok(false),
         b'c' | b'o' | b'u' | b'x' | b'X' | b'e' | b'E' | b'f' | b'F' | b'g' | b'G' | b't'
         | b'T' => {
@@ -220,7 +220,6 @@ fn validate_signed_integer_argument(
     state: &mut LuaState,
     tonumber: Val,
     value: Val,
-    argument_position: usize,
 ) -> LuaResult<bool> {
     match convert_public_number(state, tonumber, value)? {
         Some(number) => check_signed_integer_range(number).map(|()| false),

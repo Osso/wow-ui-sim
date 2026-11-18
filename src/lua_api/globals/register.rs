@@ -52,6 +52,7 @@ fn register_bootstrap_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
     prewarm_hot_literal_registry(lua);
     register_bootstrap_time_globals(lua)?;
     register_bootstrap_runtime_globals(lua)?;
+    #[cfg(feature = "retail-12-0-5")]
     register_bootstrap_unit_aura_apis(lua)?;
     register_bootstrap_shared_apis(lua)?;
     #[cfg(feature = "client-mists")]
@@ -88,6 +89,7 @@ fn register_bootstrap_runtime_globals(lua: &mut rilua::Lua) -> crate::Result<()>
     Ok(())
 }
 
+#[cfg(feature = "retail-12-0-5")]
 fn register_bootstrap_unit_aura_apis(lua: &mut rilua::Lua) -> crate::Result<()> {
     #[cfg(feature = "retail-12-0-5")]
     crate::c_api::c_unit_aura_index_queries::register(lua.state_mut())?;
