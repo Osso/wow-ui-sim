@@ -522,16 +522,34 @@ fn game_tooltip_pvp_talent_missing_eligibility_and_level_error() {
 #[test]
 fn game_tooltip_pvp_talent_failure_and_inspect_annotations() {
     let env = env();
+    seed_failure_annotation_state(&env);
+    assert_combat_annotation(&env);
+    prepare_rest_failure_state(&env);
+    assert_rest_annotation(&env);
+    prepare_grant_rejection_state(&env);
+    assert_grant_precedes_combat(&env);
+    prepare_item_grant_state(&env);
+    assert_item_grant_annotation(&env);
+    mark_grant_by_essence(&env);
+    assert_essence_annotation(&env);
+    prepare_inspect_grant_state(&env);
+    assert_inspect_grant_annotation(&env);
+    clear_inspect_grant_item(&env);
+    assert_inspect_without_grant(&env);
+}
+
+fn seed_failure_annotation_state(env: &WowLuaEnv) {
     let mut talent = record();
     talent.category_position_mask = 1;
     talent.eligibility_by_position.insert(0, false);
-    supply_record(&env, TALENT_ID, talent);
-    {
-        let mut state = env.state().borrow_mut();
-        state.pvp_talent_tooltip.groups.insert(0, [None; 4]);
-        state.player.level = 80;
-        state.player.in_combat = true;
-    }
+    supply_record(env, TALENT_ID, talent);
+    let mut state = env.state().borrow_mut();
+    state.pvp_talent_tooltip.groups.insert(0, [None; 4]);
+    state.player.level = 80;
+    state.player.in_combat = true;
+}
+
+fn assert_combat_annotation(env: &WowLuaEnv) {
     env.exec(
         r#"
         local data = TestGetPvpTalent(91001)
@@ -545,13 +563,16 @@ fn game_tooltip_pvp_talent_failure_and_inspect_annotations() {
         "#,
     )
     .unwrap();
+}
 
-    {
-        let mut state = env.state().borrow_mut();
-        state.player.in_combat = false;
-        state.player.is_resting = false;
-        state.player_xp.rest_state = 0;
-    }
+fn prepare_rest_failure_state(env: &WowLuaEnv) {
+    let mut state = env.state().borrow_mut();
+    state.player.in_combat = false;
+    state.player.is_resting = false;
+    state.player_xp.rest_state = 0;
+}
+
+fn assert_rest_annotation(env: &WowLuaEnv) {
     env.exec(
         r#"
         local data = TestGetPvpTalent(91001)
@@ -565,27 +586,34 @@ fn game_tooltip_pvp_talent_failure_and_inspect_annotations() {
         "#,
     )
     .unwrap();
+}
 
-    {
-        let mut state = env.state().borrow_mut();
-        let talent = state
-            .pvp_talent_tooltip
-            .catalog
-            .get_mut(&TALENT_ID)
-            .unwrap();
-        talent.grant_rejected_by_item = true;
-        talent.granted_item_id = Some(u32::MAX);
-        state.player.in_combat = true;
-    }
+fn prepare_grant_rejection_state(env: &WowLuaEnv) {
+    let mut state = env.state().borrow_mut();
+    let talent = state
+        .pvp_talent_tooltip
+        .catalog
+        .get_mut(&TALENT_ID)
+        .unwrap();
+    talent.grant_rejected_by_item = true;
+    talent.granted_item_id = Some(6948);
+    state.player.in_combat = true;
+}
+
+fn assert_grant_precedes_combat(env: &WowLuaEnv) {
     env.exec(
         r#"
         local data = TestGetPvpTalent(91001)
-        assert(data.lines[#data.lines].leftText == TALENT_TOOLTIP_ADD_COMBAT_ERROR,
-            "combat status precedes the grant outcome")
+        local lines = data.lines
+        assert(lines[#lines].leftText == TALENT_GRANTED_BY_ITEM:format("Hearthstone"),
+            "grant rejection precedes combat")
+        assert(lines[#lines - 1].type == 1 and lines[#lines - 2].type == 1)
         "#,
     )
     .unwrap();
+}
 
+fn prepare_item_grant_state(env: &WowLuaEnv) {
     env.state().borrow_mut().player.in_combat = false;
     env.state()
         .borrow_mut()
@@ -594,6 +622,9 @@ fn game_tooltip_pvp_talent_failure_and_inspect_annotations() {
         .get_mut(&TALENT_ID)
         .unwrap()
         .granted_item_id = Some(6948);
+}
+
+fn assert_item_grant_annotation(env: &WowLuaEnv) {
     env.exec(
         r#"
         local data = TestGetPvpTalent(91001)
@@ -609,7 +640,9 @@ fn game_tooltip_pvp_talent_failure_and_inspect_annotations() {
         "#,
     )
     .unwrap();
+}
 
+fn mark_grant_by_essence(env: &WowLuaEnv) {
     env.state()
         .borrow_mut()
         .pvp_talent_tooltip
@@ -617,6 +650,9 @@ fn game_tooltip_pvp_talent_failure_and_inspect_annotations() {
         .get_mut(&TALENT_ID)
         .unwrap()
         .granted_by_essence = true;
+}
+
+fn assert_essence_annotation(env: &WowLuaEnv) {
     env.exec(
         r#"
         local data = TestGetPvpTalent(91001)
@@ -632,31 +668,34 @@ fn game_tooltip_pvp_talent_failure_and_inspect_annotations() {
         "#,
     )
     .unwrap();
+}
 
-    {
-        let mut state = env.state().borrow_mut();
-        let talent = state
-            .pvp_talent_tooltip
-            .catalog
-            .get_mut(&TALENT_ID)
-            .unwrap();
-        talent.level_required = 75;
-        talent.eligibility_by_position.insert(0, true);
-        talent.eligibility_level_failed = false;
-        state
-            .pvp_talent_tooltip
-            .groups
-            .insert(0, [Some(TALENT_ID), None, None, None]);
-        state.inspect_specialization_cache = Some(("inspect-guid".to_string(), 65));
-        state
-            .pvp_talent_tooltip
-            .inspect_grant_item_ids
-            .insert(("inspect-guid".to_string(), TALENT_ID), 6948);
-        state.player.level = 1;
-        state.player.in_combat = false;
-        state.player.is_resting = false;
-        state.player_xp.rest_state = 0;
-    }
+fn prepare_inspect_grant_state(env: &WowLuaEnv) {
+    let mut state = env.state().borrow_mut();
+    let talent = state
+        .pvp_talent_tooltip
+        .catalog
+        .get_mut(&TALENT_ID)
+        .unwrap();
+    talent.level_required = 75;
+    talent.eligibility_by_position.insert(0, true);
+    talent.eligibility_level_failed = false;
+    state
+        .pvp_talent_tooltip
+        .groups
+        .insert(0, [Some(TALENT_ID), None, None, None]);
+    state.inspect_specialization_cache = Some(("inspect-guid".to_string(), 65));
+    state
+        .pvp_talent_tooltip
+        .inspect_grant_item_ids
+        .insert(("inspect-guid".to_string(), TALENT_ID), 6948);
+    state.player.level = 1;
+    state.player.in_combat = false;
+    state.player.is_resting = false;
+    state.player_xp.rest_state = 0;
+}
+
+fn assert_inspect_grant_annotation(env: &WowLuaEnv) {
     env.exec(
         r#"
         local data = TestGetPvpTalent(91001, true, 2, 1)
@@ -676,12 +715,17 @@ fn game_tooltip_pvp_talent_failure_and_inspect_annotations() {
         "#,
     )
     .unwrap();
+}
 
+fn clear_inspect_grant_item(env: &WowLuaEnv) {
     env.state()
         .borrow_mut()
         .pvp_talent_tooltip
         .inspect_grant_item_ids
         .remove(&("inspect-guid".to_string(), TALENT_ID));
+}
+
+fn assert_inspect_without_grant(env: &WowLuaEnv) {
     env.exec(
         r#"
         local data = TestGetPvpTalent(91001, true, 2, 1)
@@ -696,28 +740,65 @@ fn game_tooltip_pvp_talent_failure_and_inspect_annotations() {
 #[cfg(feature = "optional-tests")]
 mod r73 {
     use super::*;
+    use wow_ui_sim::c_api::c_spec::PvpTalentInfoRecord;
     use wow_ui_sim::c_api::c_tooltip_info_pvp_talent::PvpTalentSlotInput;
 
+    // INFERRED (simulator mapping): explicit host input for the original UI lookup;
+    // it does not model native PvP talent acquisition.
+    fn supplied_talent_info(selected: bool) -> PvpTalentInfoRecord {
+        PvpTalentInfoRecord {
+            talent_id: 5573,
+            name: "Fixture talent".into(),
+            icon: 204018,
+            selected,
+            available: true,
+            spell_id: 204018,
+            unlocked: true,
+            known: true,
+            granted_by_aura: false,
+            dependencies_unmet: false,
+            dependencies_unmet_reason: None,
+        }
+    }
+
     fn panel(selected: bool, level: i32) -> WowLuaEnv {
+        let env = panel_env(selected, level);
+        show_panel_and_capture_slot(&env);
+        env
+    }
+
+    fn panel_env(selected: bool, level: i32) -> WowLuaEnv {
         let env = crate::common::panel_fixtures::setup_env_with_inputs(|env| {
-            {
-                let mut sim = env.state().borrow_mut();
-                sim.player.level = level;
-                sim.player.effective_level = 0;
-                sim.pvp_talent_tooltip
-                    .groups
-                    .insert(0, [selected.then_some(5573), None, None, None]);
-                sim.pvp_talent_tooltip.slots.insert(
-                    1,
-                    PvpTalentSlotInput {
-                        enabled: true,
-                        level: 20,
-                        available_talent_ids: vec![5573],
-                    },
-                );
-            }
-            env.exec(
-                r#"
+            seed_panel_inputs(env, selected, level);
+            install_pvp_talent_call_spy(env);
+        });
+        crate::common::supply_empty_forever_spellbook_outfits(&env);
+        env
+    }
+
+    fn seed_panel_inputs(env: &WowLuaEnv, selected: bool, level: i32) {
+        let mut sim = env.state().borrow_mut();
+        sim.player.level = level;
+        sim.player.effective_level = 0;
+        sim.pvp_talents
+            .info_by_id
+            .insert(5573, supplied_talent_info(selected));
+        sim.pvp_talent_tooltip
+            .groups
+            .insert(0, [selected.then_some(5573), None, None, None]);
+        sim.pvp_talent_tooltip.slots.insert(
+            1,
+            PvpTalentSlotInput {
+                enabled: true,
+                level: 20,
+                available_talent_ids: vec![5573],
+            },
+        );
+    }
+
+    fn install_pvp_talent_call_spy(env: &WowLuaEnv) {
+        env.exec(
+            r#"
                 __r73Calls = {}
                 local original = C_TooltipInfo.GetPvpTalent
                 C_TooltipInfo.GetPvpTalent = function(...)
@@ -725,10 +806,11 @@ mod r73 {
                     return original(...)
                 end
             "#,
-            )
-            .unwrap();
-        });
-        crate::common::supply_empty_forever_spellbook_outfits(&env);
+        )
+        .unwrap();
+    }
+
+    fn show_panel_and_capture_slot(env: &WowLuaEnv) {
         env.exec(
             r#"
             PlayerSpellsUtil.ToggleClassTalentFrame()
@@ -740,7 +822,6 @@ mod r73 {
         "#,
         )
         .unwrap();
-        env
     }
 
     fn hover(env: &WowLuaEnv, selected: bool, expected: &str) {
@@ -877,7 +958,7 @@ mod r73 {
     }
 
     #[test]
-    fn tooltip_pvp_talent_list_combat_error_precedes_grant_and_later_unlock() {
+    fn tooltip_pvp_talent_list_later_unlock_precedes_grant_and_combat() {
         let env = candidate();
         {
             let mut sim = env.state().borrow_mut();
@@ -889,7 +970,7 @@ mod r73 {
             record.granted_item_id = Some(6948);
             record.eligibility_level_failed = true;
         }
-        hover(&env, false, "TALENT_TOOLTIP_ADD_COMBAT_ERROR");
+        hover(&env, false, "UNLOCKED_AT_LEVEL:format(25)");
     }
 
     #[test]

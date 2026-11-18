@@ -66,7 +66,7 @@ fn require_loaded_addon(state: &LuaState, name: &str) -> LuaResult<()> {
     let loaded = borrow_state(state)?
         .addons
         .iter()
-        .any(|addon| addon.folder_name == name && addon.loaded);
+        .any(|addon| addon.folder_name == name && addon.is_loaded());
     if loaded {
         Ok(())
     } else {

@@ -62,7 +62,7 @@ fn retail_native_custom_aura_reads_wrapped_asset_fields() {
             env.exec(r#"
                 local container = CreateFrame('AuraContainer', nil, UIParent, 'CustomAuraContainerTemplate')
                 local provider = __secureenv.AuraContainerUtil.CreateCustomFrameProvider(
-                    GetForbiddenObjectTable(container), {batchSize=1,
+                    (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(container), {batchSize=1,
                     templateNames={'CustomAuraButtonTemplate'}, initializeFrame=function(button)
                         CustomAssetTexture = button:CreateTexture(nil, 'OVERLAY')
                         button:AddDispelTypeTexture(CustomAssetTexture, {
@@ -73,7 +73,7 @@ fn retail_native_custom_aura_reads_wrapped_asset_fields() {
                         })
                     end})
                 local button = provider:AcquireFrame()
-                local private = GetForbiddenObjectTable(button)
+                local private = (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(button)
                 local aura = {auraInstanceID=9982, spellId=19750, name='Custom asset',
                     duration=8, expirationTime=8, timeMod=1, applications=1,
                     isHelpful=true, sourceUnit='player'}

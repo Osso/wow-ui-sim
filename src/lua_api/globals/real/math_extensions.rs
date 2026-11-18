@@ -3,9 +3,27 @@
 //! `Blizzard_SharedXMLBase/MathUtil.lua` aliases these functions directly, so
 //! they must be registered before Blizzard source loads.
 
+use crate::lua_api::methods::{table_get, table_set};
 use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaApiMut, LuaResult, Val, runtime_error};
+
+// R88y.y2 verifies the ordinary alias to base math.random; its later replacement stays unknown. Evidence: pr46-49-decomp-answers.md, sections R88y.y2.
+pub(crate) fn register_retail_fast_random_alias(lua: &mut rilua::Lua) -> LuaResult<()> {
+    if !crate::client_profile::is_active_retail_12_1_5() {
+        return Ok(());
+    }
+
+    let state = lua.state_mut();
+    let math = math_table(state)?;
+    let random = table_get(state, Val::Table(math), "random");
+    if !matches!(random, Val::Function(_)) {
+        return Err(runtime_error("base math.random handler is unavailable"));
+    }
+    let global = state.global;
+    table_set(state, Val::Table(global), "fastrandom", random);
+    Ok(())
+}
 
 pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     let state = lua.state_mut();

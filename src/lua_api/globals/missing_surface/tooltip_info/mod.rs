@@ -170,12 +170,37 @@ pub(crate) fn tooltip_for_item_context(
     }
 }
 
+pub(crate) fn tooltip_for_item_context_with_sell_price(
+    state: &mut LuaState,
+    item_id: u32,
+    item: Option<&crate::items::ItemInfo>,
+) -> rilua::Val {
+    match item {
+        Some(item) => builders::tooltip_for_item_info_with_request(
+            state,
+            item_id,
+            item,
+            builders::RetailSellPriceRequest::without_instance(false),
+        ),
+        None => builders::empty_tooltip(state, super::TOOLTIP_TYPE_ITEM),
+    }
+}
+
+/// Publish an unpopulated GetItemByID result for an initial catalog miss.
+#[cfg(feature = "retail-12-0-5")]
+pub(crate) fn tooltip_for_missing_item_by_id(state: &mut LuaState) -> rilua::Val {
+    let tooltip = builders::empty_tooltip(state, super::TOOLTIP_TYPE_ITEM);
+    builders::stamp_data_instance(state, tooltip);
+    tooltip
+}
+
 /// R82 item descriptor bridge; parsing and selection remain in the dispatcher.
 pub(crate) fn tooltip_for_item_hyperlink(
     state: &mut LuaState,
     parsed: &crate::c_api::item_descriptor::ParsedItemLink,
+    hide_vendor_price: bool,
 ) -> LuaResult<Val> {
-    sources::tooltip_for_item_link(state, parsed)
+    sources::tooltip_for_item_link(state, parsed, hide_vendor_price)
 }
 
 /// R82 link flags are kept separate from ordinary spell-ID queries.

@@ -1,5 +1,5 @@
 //! Exact330/331: inferred finite item-level variants, not native acquisition/parity.
-//! Scaffold only: main must establish compiled behavioral RED before production work.
+//! R80 stat amounts are host fixtures; native item-mod calculations remain UNKNOWN.
 #![cfg(feature = "retail-12-0-5")]
 
 use rilua::table_security::{
@@ -87,18 +87,28 @@ const ASSERTIONS: &str = r#"
         ITPublic(data)
         return data
     end
-    function ITMiss(...)
+    function ITBaseSelection(...)
         local data = ITData(C_TooltipInfo.GetItemByID(...))
-        assert(data.id == nil and next(data.lines) == nil, 'empty Item DTO, no invented name')
+        ITEqual(ITBase, data)
+        return data
+    end
+    function ITMissingCatalog(...)
+        local data = ITData(C_TooltipInfo.GetItemByID(...))
+        assert(data.id == nil and next(data.lines) == nil, 'initial catalog miss is empty')
+        assert(type(data.dataInstanceID) == 'number', 'R88av builder instance ID')
         local count = 0
-        for k in pairs(data) do assert(k == 'type' or k == 'lines'); count=count+1 end
-        assert(count == 2)
+        for key in pairs(data) do
+            assert(key == 'type' or key == 'lines' or key == 'dataInstanceID')
+            count = count + 1
+        end
+        assert(count == 3, 'initial GetItemByID miss has the verified fields')
         return data
     end
     function ITCheck(level, ...)
         local data = ITData(C_TooltipInfo.GetItemByID(...))
         -- R80 Q2: four preserved header rows plus four explicitly supplied stat rows.
-        assert(data.id == 211995 and #data.lines == 8, 'headers plus supplied stat rows')
+        assert(data.id == 211995 and #data.lines == 8,
+            'headers plus supplied stat rows: id='..tostring(data.id)..', count='..#data.lines)
         assert(data.lines[1].type == 22 and data.lines[1].leftText == "Entombed Seraph's Sabatons")
         assert(data.lines[2].type == 31 and data.lines[2].leftText == 'Item Level '..level)
         assert(data.lines[3].type == 21 and data.lines[3].leftText == 'Feet')
@@ -114,6 +124,7 @@ const ASSERTIONS: &str = r#"
             [571]={37,91,17,23}, [601]={41,99,19,29}, [602]={43,101,21,31},
             [603]={47,103,25,37}, [604]={53,107,27,41}, [605]={59,109,33,43},
             [606]={61,113,35,47}, [607]={67,127,39,53}, [608]={71,131,45,59},
+            [609]={73,137,51,67}, [610]={79,139,57,71},
         }
         local labels = {ITEM_MOD_STRENGTH_SHORT, ITEM_MOD_STAMINA_SHORT,
             ITEM_MOD_MASTERY_RATING_SHORT, ITEM_MOD_VERSATILITY}
@@ -167,6 +178,7 @@ const ASSERTIONS: &str = r#"
         assert(debug.getstacktaint() == before)
         ITCheck(601,211995,nil,1,nil); ITProperties()
         assert(debug.getstacktaint() == before, 'public recovery preserves caller')
+        return err
     end
 "#;
 
@@ -194,8 +206,16 @@ fn empty_env() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("real tooltip namespace");
     env.state().borrow_mut().player.class_index = 2;
     assert!(env.state().borrow().item_tooltip_levels.is_empty());
+    seed_item_tooltip_inputs(&env);
+    env.exec(ASSERTIONS)
+        .expect("assertions only; never replace actual query/callback");
+    env.exec(&format!("ITBase = ITCheck({},211995)", item.item_level))
+        .unwrap();
+    env
+}
+
+fn seed_item_tooltip_inputs(env: &WowLuaEnv) {
     // R80: exact final amounts are independent fixture inputs, not derived budgets.
-    use wow_ui_sim::c_api::item_tooltip::{ItemTooltipInput, ItemTooltipStat};
     for (level, amounts) in [
         (571, [37, 91, 17, 23]),
         (601, [41, 99, 19, 29]),
@@ -206,28 +226,30 @@ fn empty_env() -> WowLuaEnv {
         (606, [61, 113, 35, 47]),
         (607, [67, 127, 39, 53]),
         (608, [71, 131, 45, 59]),
+        (609, [73, 137, 51, 67]),
+        (610, [79, 139, 57, 71]),
     ] {
-        let labels = ["Strength", "Stamina", "Mastery", "Versatility"];
-        env.state().borrow_mut().item_tooltip_inputs.insert(
-            (ITEM, level),
-            ItemTooltipInput {
-                stats: labels
-                    .into_iter()
-                    .zip(amounts)
-                    .map(|(label, amount)| ItemTooltipStat {
-                        label: label.into(),
-                        amount,
-                    })
-                    .collect(),
-                ..Default::default()
-            },
-        );
+        seed_item_tooltip_input(env, level, amounts);
     }
-    env.exec(ASSERTIONS)
-        .expect("assertions only; never replace actual query/callback");
-    env.exec(&format!("ITBase = ITCheck({},211995)", item.item_level))
-        .unwrap();
-    env
+}
+
+fn seed_item_tooltip_input(env: &WowLuaEnv, level: u16, amounts: [i32; 4]) {
+    use wow_ui_sim::c_api::item_tooltip::{ItemTooltipInput, ItemTooltipStat};
+    let labels = ["Strength", "Stamina", "Mastery", "Versatility"];
+    env.state().borrow_mut().item_tooltip_inputs.insert(
+        (ITEM, level),
+        ItemTooltipInput {
+            stats: labels
+                .into_iter()
+                .zip(amounts)
+                .map(|(label, amount)| ItemTooltipStat {
+                    label: label.into(),
+                    amount,
+                })
+                .collect(),
+            ..Default::default()
+        },
+    );
 }
 
 fn seeded_env() -> WowLuaEnv {
@@ -422,7 +444,7 @@ fn tooltip_item_payload_survives_collection_during_color_callback() {
 fn default_no_map_is_meaningful_base_catalog_not_a_missing_provider() {
     probe(
         &empty_env(),
-        "ITEqual(ITBase,ITCheck(571,211995)); ITEqual(ITBase,ITCheck(571,211995,nil,nil,nil)); ITMiss(211995,nil,1); ITMiss(211995,nil,nil,70)",
+        "ITEqual(ITBase,ITCheck(571,211995)); ITEqual(ITBase,ITCheck(571,211995,nil,nil,nil)); ITBaseSelection(211995,nil,1); ITBaseSelection(211995,nil,nil,70)",
     );
 }
 
@@ -464,7 +486,7 @@ fn context_two_independently_selects_same_item_distinct_variant() {
 fn treasure_seventy_selects_exact_context_one_variant() {
     probe(
         &seeded_env(),
-        "ITCheck(603,211995,nil,1,70); ITMiss(211995,nil,2,70)",
+        "ITCheck(603,211995,nil,1,70); ITBaseSelection(211995,nil,2,70)",
     );
 }
 
@@ -504,11 +526,12 @@ fn nil_and_zero_are_distinct_in_both_optional_positions() {
     );
 }
 
+/// INFERRED (simulator mapping; R88au.4 + R88av): a missing variant key keeps the base tooltip.
 #[test]
-fn missing_combinations_never_default_cross_context_or_nearest_scale() {
+fn missing_variant_keys_preserve_base_without_cross_context_or_nearest_scale() {
     probe(
         &seeded_env(),
-        "for _,c in ipairs({3,70,4294967295}) do ITMiss(211995,nil,c) end; ITMiss(211995,nil,1,71); ITMiss(211995,nil,2,80); ITMiss(211995,nil,nil,70); ITMiss(211995,nil,1,0); ITMiss(211995,nil,0,70)",
+        "for _,c in ipairs({3,70,191}) do ITBaseSelection(211995,nil,c) end; ITBaseSelection(211995,nil,1,71); ITBaseSelection(211995,nil,2,80); ITBaseSelection(211995,nil,nil,70); ITBaseSelection(211995,nil,1,0); ITBaseSelection(211995,nil,0,70)",
     );
 }
 
@@ -520,39 +543,61 @@ fn unknown_catalog_id_stays_empty_even_with_explicit_host_level() {
         (key(u32::MAX, None, None), 601),
         (key(u32::MAX, Some(1), Some(70)), 604),
     ]);
-    probe(&env, "ITMiss(4294967295); ITMiss(4294967295,nil,1,70)");
-}
-
-#[test]
-fn finite_integral_u32_context_boundaries_can_select_explicit_keys() {
-    let env = seeded_env();
-    env.state().borrow_mut().item_tooltip_levels.extend([
-        (key(ITEM, Some(u32::MAX), Some(0)), 605),
-        (key(ITEM, Some(0), Some(u32::MAX)), 606),
-    ]);
     probe(
         &env,
-        "ITCheck(605,211995,nil,4294967295,0); ITCheck(606,211995,nil,0,4294967295)",
+        "ITMissingCatalog(4294967295); ITMissingCatalog(4294967295,nil,1,70)",
     );
 }
 
+/// VERIFIED (R88au.2/R88au-a, Retail 12.1.5.70688); applicability to 70783 is INFERRED.
 #[test]
-fn public_context_domains_reject_wrong_types_nonfinite_fractional_and_overflow() {
+fn context_arguments_use_their_distinct_signed32_conversions() {
+    let env = seeded_env();
+    env.state().borrow_mut().item_tooltip_levels.extend([
+        (key(ITEM, Some(191), None), 605),
+        (key(ITEM, Some(0), None), 607),
+        (key(ITEM, Some(0), Some(2)), 609),
+        (key(ITEM, Some(0), Some(2147483647)), 610),
+        (key(ITEM, Some(0), Some(u32::MAX)), 606),
+    ]);
+    // VERIFIED (R88au-a): treasure stores signed32 bits without the arg3 byte filter.
+    probe(
+        &env,
+        "ITCheck(605,211995,nil,191); ITCheck(601,211995,nil,'1'); ITCheck(601,211995,nil,1.9); ITCheck(607,211995,nil,-1); ITCheck(607,211995,nil,192); ITCheck(607,211995,nil,2147483647); ITCheck(609,211995,nil,0,'2.9'); ITCheck(609,211995,nil,0,2.9); ITCheck(610,211995,nil,0,2147483647); ITCheck(606,211995,nil,0,-1)",
+    );
+}
+
+/// VERIFIED (R88au.2/R88au-a, Retail 12.1.5.70688); applicability to 70783 is INFERRED.
+#[test]
+fn public_context_domains_reject_wrong_types_nonfinite_and_signed32_overflow() {
     probe(
         &seeded_env(),
         r#"
-        for _,v in ipairs({false,true,'1','PRIVATE-ItemContext',{},ITFrame,-1,1.5,4294967296,math.huge,-math.huge,0/0}) do
-            ITReject(false,211995,nil,v,nil); ITReject(false,211995,nil,1,v)
+        -- R88au.2: itemContext uses the signed32 reader and then filters to one byte.
+        for _,v in ipairs({false,true,'PRIVATE-ItemContext',{},ITFrame,2147483648,4294967295,4294967296,-2147483649,math.huge,-math.huge,0/0}) do
+            ITReject(false,211995,nil,v,nil)
         end
+        -- VERIFIED (R88au-a): arg4 shares signed32 parsing but stores all 32 bits.
+        for _,v in ipairs({false,true,'PRIVATE-ItemContext','4294967295',{},ITFrame,2147483648,4294967295,-2147483649,math.huge,-math.huge,0/0}) do
+            ITReject(false,211995,nil,1,v)
+        end
+        local rangeError = ITReject(false,211995,nil,nil,4294967295)
+        assert(string.find(rangeError,
+            'outside of expected range -2147483648 to 2147483647', 1, true),
+            'R88au-a range reason')
+        assert(string.find(rangeError,
+            'Usage: local data = C_TooltipInfo.GetItemByID', 1, true),
+            'R88au-a Usage substring; final public text is UNKNOWN')
     "#,
     );
 }
 
+/// INFERRED (simulator mapping from R88av): item ID zero takes the initial catalog-miss path.
 #[test]
 fn item_id_retains_existing_u32_positive_and_zero_miss_behavior() {
     probe(
         &seeded_env(),
-        "ITCheck(571,211995); ITMiss(0); ITMiss(0,nil,1,70)",
+        "ITCheck(571,211995); ITMissingCatalog(0); ITMissingCatalog(0,nil,1,70)",
     );
 }
 
@@ -575,7 +620,7 @@ fn ordinary_quality_is_ignored_without_new_type_or_output_policy() {
 fn repeated_variants_misses_and_base_reads_never_mutate_inputs() {
     probe(
         &seeded_env(),
-        "for i=1,4 do ITCheck(601,211995,nil,1); ITCheck(604,211995,nil,1,80); ITMiss(211995,nil,3,80); ITCheck(571,211995) end",
+        "for i=1,4 do ITCheck(601,211995,nil,1); ITCheck(604,211995,nil,1,80); ITBaseSelection(211995,nil,3,80); ITCheck(571,211995) end",
     );
 }
 
@@ -594,10 +639,10 @@ fn returned_dtos_lines_and_colors_are_fresh_and_mutations_are_isolated() {
         a.lines[1].leftColor.r = 0; a.lines[1].leftText = 'mutated'
         a.lines[6] = nil; a.id = 99; a.extra = true
         ITEqual(b,ITCheck(604,211995,nil,1,80))
-        local m,n=ITMiss(211995,nil,99),ITMiss(211995,nil,99)
+        local m,n=ITBaseSelection(211995,nil,99),ITBaseSelection(211995,nil,99)
         assert(not rawequal(m,n))
         assert(not rawequal(m.lines,n.lines))
-        m.lines[1]={leftText='invented'}; ITEqual(n,ITMiss(211995,nil,99))
+        m.lines[1]={leftText='invented'}; ITEqual(n,ITBaseSelection(211995,nil,99))
     "#,
     );
 }
@@ -617,7 +662,7 @@ fn live_host_replace_and_clear_affect_new_reads_not_old_dtos() {
     env.state().borrow_mut().item_tooltip_levels.clear();
     probe(
         &env,
-        "ITMiss(211995,nil,1); ITCheck(571,211995); assert(ITOld.lines[2].leftText == 'Item Level 601')",
+        "ITBaseSelection(211995,nil,1); ITCheck(571,211995); assert(ITOld.lines[2].leftText == 'Item Level 601')",
     );
 }
 
@@ -626,7 +671,7 @@ fn independent_environments_do_not_share_variant_inputs() {
     let a = seeded_env();
     let b = empty_env();
     probe(&a, "ITCheck(604,211995,nil,1,80)");
-    probe(&b, "ITMiss(211995,nil,1,80); ITCheck(571,211995)");
+    probe(&b, "ITBaseSelection(211995,nil,1,80); ITCheck(571,211995)");
     b.state()
         .borrow_mut()
         .item_tooltip_levels
@@ -639,7 +684,7 @@ fn independent_environments_do_not_share_variant_inputs() {
 fn public_tainted_queries_retain_meaningful_context_and_caller_trust() {
     probe(
         &seeded_env(),
-        "ITContexts(function() ITCheck(601,211995,nil,1); ITCheck(602,211995,nil,2); ITCheck(603,211995,nil,1,70); ITCheck(604,211995,nil,1,80); ITMiss(211995,nil,3) end)",
+        "ITContexts(function() ITCheck(601,211995,nil,1); ITCheck(602,211995,nil,2); ITCheck(603,211995,nil,1,70); ITCheck(604,211995,nil,1,80); ITBaseSelection(211995,nil,3) end)",
     );
 }
 
@@ -653,7 +698,7 @@ fn secure_authentic_secret_numbers_select_meaningful_item_context_and_treasure()
 #[test]
 fn secure_authentic_secret_nil_optionals_follow_nil_default_and_exact_keys() {
     secret_probe(
-        "assert(issecure()); ITEqual(ITBase,ITCheck(571,211995,ITNil,ITNil,ITNil)); ITCheck(601,211995,ITNil,ITOne,ITNil); ITMiss(211995,nil,ITNil,IT70)",
+        "assert(issecure()); ITEqual(ITBase,ITCheck(571,211995,ITNil,ITNil,ITNil)); ITCheck(601,211995,ITNil,ITOne,ITNil); ITBaseSelection(211995,nil,ITNil,IT70)",
     );
 }
 

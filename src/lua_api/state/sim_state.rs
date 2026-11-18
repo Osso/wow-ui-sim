@@ -63,6 +63,8 @@ pub struct SimState {
     pub summon_friend_cooldown: crate::c_api::c_recruit_a_friend::SummonFriendCooldown,
     pub raf_versions: Vec<crate::c_api::c_recruit_a_friend::RafVersionInfo>,
     pub widgets: WidgetRegistry,
+    /// Shared suffix exclusions used by AddSourceLocationExclude and CreateTexture.
+    pub(crate) source_location_exclusions: Vec<Vec<u8>>,
     #[cfg(feature = "retail-12-1-5")]
     pub(crate) weather: crate::c_api::c_weather::WeatherState,
     #[cfg(feature = "retail-12-1-0")]
@@ -191,6 +193,13 @@ pub struct SimState {
     pub item_tooltip_levels: HashMap<crate::c_api::ItemTooltipContext, u16>,
     /// R80 final item-mod amounts and metadata, keyed by item ID and resolved level.
     pub item_tooltip_inputs: HashMap<(u32, u16), crate::c_api::item_tooltip::ItemTooltipInput>,
+    /// INFERRED (simulator mapping): explicit calculated unit prices keyed by item ID and working level.
+    /// Empty by default; unknown price calculations do not produce a row.
+    pub item_tooltip_sell_price_unit_prices: HashMap<(u32, u16), u32>,
+    /// INFERRED (simulator mapping): explicit Retail bag-item status snapshots for R88aw.
+    /// Empty by default; no status input does not imply an unsuppressed row.
+    pub bag_item_tooltip_sell_price_statuses:
+        HashMap<(i32, i32), crate::c_api::item_tooltip::SellPriceStatusInput>,
     /// UNKNOWN Retail SellPrice inputs: item ID to (current, prepared maximum) quantity.
     /// Empty by default; these values are not derived from Stackable.
     pub item_tooltip_sell_price_quantities: HashMap<u32, (u32, u32)>,
@@ -736,6 +745,7 @@ pub struct SimState {
     pub r88s_inventory_inputs: crate::c_api::item_location::R88sInventoryInputs,
     pub loading_addon_index: Option<u16>,
     pub loading_addon_stack: Vec<u16>,
+    pub loading_addon_secure_env: Option<bool>,
     pub executing_addon_index: Option<u16>,
     pub loading_nil_symbol_environment: Option<NilSymbolEnvironment>,
     pub loading_forbidden: bool,

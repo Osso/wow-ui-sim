@@ -23,11 +23,8 @@ pub(super) fn init_registry_tables(
     let _ = registry_table_or_create(lua_state, "__on_post_update_scripts");
     let _ = registry_table_or_create(lua_state, "__rilua_frame_envs");
     let _ = registry_table_or_create(lua_state, "__rilua_frame_fields");
-    // Register the error-reporting callback that loader/helpers.rs uses
-    // in script handler wrappers. Without this, every chained handler
-    // that hits a pcall error crashes with "attempt to call upvalue
-    // '__report' (a nil value)" because the closure captures
-    // `debug.getregistry()["__report_script_error"]` at define time.
+    // Generated script wrappers capture this reporter through the ordinary
+    // environment so secure chunks do not need `debug` in their own environment.
     register_script_error_reporter(lua_state);
     super::super::on_update::register(lua_state, state)
 }

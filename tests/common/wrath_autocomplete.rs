@@ -21,7 +21,14 @@ pub fn load_and_assert_native(probe: &'static str) {
 }
 
 fn seed_completion_names(env: &WowLuaEnv) {
-    let names = ["F09Alpha", "F09Beta", "F09Gamma", "F09Delta", "F09Epsilon", "F09Zeta"];
+    let names = [
+        "F09Alpha",
+        "F09Beta",
+        "F09Gamma",
+        "F09Delta",
+        "F09Epsilon",
+        "F09Zeta",
+    ];
     let state = env.state();
     let mut state = state.borrow_mut();
     let template = state

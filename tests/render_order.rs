@@ -481,7 +481,7 @@ fn isolated_world_map_stack_opens_and_populates_world_quest_pins() {
         let loaded_addons: Vec<_> = state
             .addons
             .iter()
-            .filter(|addon| addon.loaded)
+            .filter(|addon| addon.is_loaded())
             .map(|addon| addon.folder_name.clone())
             .collect();
         let world_quest_pairs = world_quest_pin_pairs(&state);

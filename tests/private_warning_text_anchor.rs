@@ -9,6 +9,7 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 
 fn warning_env() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("create isolated warning anchor environment");
+    crate::common::install_private_aura_api_alias(&env);
     env.exec(
         r#"
         PublicParent = CreateFrame('Frame', nil, UIParent)
@@ -61,7 +62,7 @@ fn public_binding_before_private_registration_applies_to_private_frame() {
         AssertPlacement(PrivateText, UIParent, UIParent, 'CENTER', 'CENTER', 3, 4)
         AssertPublicUnchanged()
         collectgarbage('collect')
-        C_UnitAurasPrivate.SetPrivateWarningTextFrame(PrivateText)
+        SecurePrivateAuras.SetPrivateWarningTextFrame(PrivateText)
         AssertBound()
         "#,
     )
@@ -74,7 +75,7 @@ fn public_binding_after_private_registration_accepts_tainted_caller_in_combat() 
     env.state().borrow_mut().player.in_combat = true;
     env.exec(
         r#"
-        C_UnitAurasPrivate.SetPrivateWarningTextFrame(PrivateText)
+        SecurePrivateAuras.SetPrivateWarningTextFrame(PrivateText)
         AssertPlacement(PrivateText, UIParent, UIParent, 'CENTER', 'CENTER', 3, 4)
         assert(InCombatLockdown(), 'actual simulator combat state')
         local function addon()
@@ -100,7 +101,7 @@ fn latest_public_parent_and_binding_replace_previous_placement() {
         local replacement = {point = 'LEFT', relativeTo = PublicParent, relativePoint = 'RIGHT',
             offsetX = -11, offsetY = 9}
         C_UnitAuras.SetPrivateWarningTextAnchor(OtherParent, replacement)
-        C_UnitAurasPrivate.SetPrivateWarningTextFrame(PrivateText)
+        SecurePrivateAuras.SetPrivateWarningTextFrame(PrivateText)
         AssertPlacement(PrivateText, OtherParent, PublicParent, 'LEFT', 'RIGHT', -11, 9)
         C_UnitAuras.SetPrivateWarningTextAnchor(PublicParent, Binding(OtherParent))
         AssertPlacement(PrivateText, PublicParent, OtherParent, 'TOP', 'BOTTOM', 17, -23)
@@ -115,12 +116,12 @@ fn replacing_private_frame_reapplies_retained_binding_without_moving_old_frame()
     let env = warning_env();
     env.exec(
         r#"
-        C_UnitAurasPrivate.SetPrivateWarningTextFrame(PrivateText)
+        SecurePrivateAuras.SetPrivateWarningTextFrame(PrivateText)
         C_UnitAuras.SetPrivateWarningTextAnchor(PublicParent, Binding(PublicParent))
         AssertBound()
         local replacement = CreateFrame('Frame', nil, UIParent)
         replacement:SetPoint('CENTER', UIParent, 'CENTER', 5, 6)
-        C_UnitAurasPrivate.SetPrivateWarningTextFrame(replacement)
+        SecurePrivateAuras.SetPrivateWarningTextFrame(replacement)
         AssertPlacement(replacement, PublicParent, PublicParent, 'TOP', 'BOTTOM', 17, -23)
         C_UnitAuras.SetPrivateWarningTextAnchor(OtherParent, Binding(OtherParent))
         AssertPlacement(replacement, OtherParent, OtherParent, 'TOP', 'BOTTOM', 17, -23)
@@ -138,7 +139,7 @@ fn nil_binding_clears_private_points_and_retains_parent_in_both_call_orders() {
         r#"
         C_UnitAuras.SetPrivateWarningTextAnchor(PublicParent, Binding(PublicParent))
         C_UnitAuras.SetPrivateWarningTextAnchor(OtherParent, nil)
-        C_UnitAurasPrivate.SetPrivateWarningTextFrame(PrivateText)
+        SecurePrivateAuras.SetPrivateWarningTextFrame(PrivateText)
         assert(PrivateText:GetParent() == OtherParent and PrivateText:GetNumPoints() == 0,
             'inferred nil binding retained before private registration')
         C_UnitAuras.SetPrivateWarningTextAnchor(PublicParent, Binding(PublicParent))
@@ -148,7 +149,7 @@ fn nil_binding_clears_private_points_and_retains_parent_in_both_call_orders() {
             'inferred omitted/nil binding clears existing explicit points, not supplied parent')
         local replacement = CreateFrame('Frame', nil, UIParent)
         replacement:SetPoint('CENTER', UIParent)
-        C_UnitAurasPrivate.SetPrivateWarningTextFrame(replacement)
+        SecurePrivateAuras.SetPrivateWarningTextFrame(replacement)
         assert(replacement:GetParent() == PublicParent and replacement:GetNumPoints() == 0)
         AssertPublicUnchanged()
         "#,
@@ -166,7 +167,7 @@ fn warning_anchor_bindings_are_isolated_between_environments() {
     second
         .exec(
             r#"
-            C_UnitAurasPrivate.SetPrivateWarningTextFrame(PrivateText)
+            SecurePrivateAuras.SetPrivateWarningTextFrame(PrivateText)
             AssertPlacement(PrivateText, UIParent, UIParent, 'CENTER', 'CENTER', 3, 4)
             C_UnitAuras.SetPrivateWarningTextAnchor(OtherParent, Binding(OtherParent))
             AssertPlacement(PrivateText, OtherParent, OtherParent, 'TOP', 'BOTTOM', 17, -23)
@@ -175,7 +176,7 @@ fn warning_anchor_bindings_are_isolated_between_environments() {
         )
         .expect("second environment must not inherit first environment pending binding");
     first
-        .exec("C_UnitAurasPrivate.SetPrivateWarningTextFrame(PrivateText); AssertBound()")
+        .exec("SecurePrivateAuras.SetPrivateWarningTextFrame(PrivateText); AssertBound()")
         .expect("second environment changes must not replace first environment binding");
 }
 
@@ -191,7 +192,7 @@ fn retained_binding_is_a_snapshot_and_never_reanchors_public_parent_to_itself() 
         binding.relativeTo = OtherParent
         binding.offsetX = 100
         collectgarbage('collect')
-        C_UnitAurasPrivate.SetPrivateWarningTextFrame(PrivateText)
+        SecurePrivateAuras.SetPrivateWarningTextFrame(PrivateText)
         AssertPlacement(PrivateText, PublicParent, PublicParent, 'TOP', 'TOP', 0, 0)
         AssertPublicUnchanged()
         "#,
@@ -231,12 +232,12 @@ fn malformed_public_inputs_preserve_applied_and_pending_binding_atomically() {
             end
         end
         rejectMalformed()
-        C_UnitAurasPrivate.SetPrivateWarningTextFrame(PrivateText)
+        SecurePrivateAuras.SetPrivateWarningTextFrame(PrivateText)
         AssertBound()
         rejectMalformed()
         AssertBound()
         local replacement = CreateFrame('Frame', nil, UIParent)
-        C_UnitAurasPrivate.SetPrivateWarningTextFrame(replacement)
+        SecurePrivateAuras.SetPrivateWarningTextFrame(replacement)
         AssertPlacement(replacement, PublicParent, PublicParent, 'TOP', 'BOTTOM', 17, -23)
         AssertPublicUnchanged()
         "#,
@@ -279,7 +280,7 @@ fn secret_public_inputs_preserve_binding_and_caller_taint_atomically() {
             AssertPublicUnchanged()
         end
         assert(issecure()); reject(); assert(issecure())
-        C_UnitAurasPrivate.SetPrivateWarningTextFrame(PrivateText)
+        SecurePrivateAuras.SetPrivateWarningTextFrame(PrivateText)
         AssertBound()
         local function addon()
             assert(not issecure()); reject(); AssertBound(); assert(not issecure())
@@ -287,7 +288,7 @@ fn secret_public_inputs_preserve_binding_and_caller_taint_atomically() {
         debug.setobjecttaint(addon, 'WarningAnchorFixture')
         addon(); assert(issecure())
         local replacement = CreateFrame('Frame', nil, UIParent)
-        C_UnitAurasPrivate.SetPrivateWarningTextFrame(replacement)
+        SecurePrivateAuras.SetPrivateWarningTextFrame(replacement)
         AssertPlacement(replacement, PublicParent, PublicParent, 'TOP', 'BOTTOM', 17, -23)
         "#,
     )
@@ -315,7 +316,7 @@ fn placement_preserves_native_hierarchy_visibility_and_bypasses_method_overrides
         PrivateText.SetParent = function() error('must not dispatch overridden SetParent') end
         PrivateText.ClearAllPoints = function() error('must not dispatch overridden ClearAllPoints') end
         PrivateText.SetPoint = function() error('must not dispatch overridden SetPoint') end
-        C_UnitAurasPrivate.SetPrivateWarningTextFrame(PrivateText)
+        SecurePrivateAuras.SetPrivateWarningTextFrame(PrivateText)
         C_UnitAuras.SetPrivateWarningTextAnchor(OtherParent, Binding(OtherParent))
         assert(hides == 2 and shows == 0, 'native reparent delivers private and descendant OnHide')
         assert(not PrivateText:IsVisible() and not child:IsVisible())
@@ -358,12 +359,12 @@ fn tainted_access_to_secured_binding_is_rejected_before_placement_or_retention()
         end
         debug.setobjecttaint(addon, 'WarningAnchorFixture')
         addon()
-        C_UnitAurasPrivate.SetPrivateWarningTextFrame(PrivateText)
+        SecurePrivateAuras.SetPrivateWarningTextFrame(PrivateText)
         AssertBound()
         addon()
         AssertBound()
         local replacement = CreateFrame('Frame', nil, UIParent)
-        C_UnitAurasPrivate.SetPrivateWarningTextFrame(replacement)
+        SecurePrivateAuras.SetPrivateWarningTextFrame(replacement)
         AssertPlacement(replacement, PublicParent, PublicParent, 'TOP', 'BOTTOM', 17, -23)
         AssertPublicUnchanged()
         "#,

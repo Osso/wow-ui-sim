@@ -118,33 +118,6 @@ if mapvalues == nil then
   end
 end
 
-do
-  local stringMeta = getmetatable("")
-  local function splitStringMethod(self, delimiterOrInput, limit)
-    if type(self) == "string" and type(delimiterOrInput) == "string" then
-      local inputIsEmpty = #delimiterOrInput == 0
-      local inputIsLonger = #self <= 4 and #delimiterOrInput > #self
-      local receiverLooksLikeDelimiter = #self <= 4 and self:match("^%W+$") ~= nil
-      if inputIsEmpty or inputIsLonger or receiverLooksLikeDelimiter then
-        return strsplit(self, delimiterOrInput, limit)
-      end
-    end
-    return strsplit(delimiterOrInput, self, limit)
-  end
-  if type(stringMeta) == "table" then
-    local stringIndex = stringMeta.__index
-    if type(stringIndex) == "table" then
-      function stringIndex:split(delimiter, limit)
-        return splitStringMethod(self, delimiter, limit)
-      end
-    end
-
-    function stringMeta:split(delimiter, limit)
-      return splitStringMethod(self, delimiter, limit)
-    end
-  end
-end
-
 if tAppendAll == nil then
   function tAppendAll(tbl, addedArray)
     if type(tbl) ~= "table" or type(addedArray) ~= "table" then
@@ -300,8 +273,41 @@ if AbbreviateNumbers == nil then
 end
 "##;
 
+const STRING_SPLIT_METHOD_COMPAT_LUA: &str = r##"
+do
+  local stringMeta = getmetatable("")
+  local function splitStringMethod(self, delimiterOrInput, limit)
+    if type(self) == "string" and type(delimiterOrInput) == "string" then
+      local inputIsEmpty = #delimiterOrInput == 0
+      local inputIsLonger = #self <= 4 and #delimiterOrInput > #self
+      local receiverLooksLikeDelimiter = #self <= 4 and self:match("^%W+$") ~= nil
+      if inputIsEmpty or inputIsLonger or receiverLooksLikeDelimiter then
+        return strsplit(self, delimiterOrInput, limit)
+      end
+    end
+    return strsplit(delimiterOrInput, self, limit)
+  end
+  if type(stringMeta) == "table" then
+    local stringIndex = stringMeta.__index
+    if type(stringIndex) == "table" then
+      function stringIndex:split(delimiter, limit)
+        return splitStringMethod(self, delimiter, limit)
+      end
+    end
+
+    function stringMeta:split(delimiter, limit)
+      return splitStringMethod(self, delimiter, limit)
+    end
+  end
+end
+"##;
+
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(FORMATTING_UTILITY_DEFAULTS_LUA)?;
+    // Preserve the verified Retail string.split alias; keep this wrapper elsewhere. Evidence: pr46-49-decomp-answers.md, sections R88y.y2.
+    if !crate::client_profile::is_active_retail_12_1_5() {
+        lua.exec(STRING_SPLIT_METHOD_COMPAT_LUA)?;
+    }
     #[cfg(not(feature = "retail-12-0-5"))]
     lua.exec(
         r#"
@@ -319,27 +325,15 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 mod tests {
     use crate::lua_api::WowLuaEnv;
 
-    #[test]
-    fn installs_formatting_utility_defaults() {
-        let env = WowLuaEnv::new().expect("lua env should initialize");
-        env.exec(
-            r#"
+    const CLEAR_FORMATTING_DEFAULTS_PROBE: &str = r#"
             EVERY_X_PERCENT = nil
             TRANSMOGRIFY_TOOLTIP_APPEARANCE_KNOWN = nil
             ERR_QUEST_SESSION_RESULT_RESYNC = nil
             CLASS_SORT_ORDER = nil
             MAX_CLASSES = nil
-            "#,
-        )
-        .expect("fixture should clear moved constants");
-        {
-            let mut lua = env.lua.borrow_mut();
-            super::apply_bootstrap(&mut lua).expect("formatting defaults should reapply");
-        }
+            "#;
 
-        let result: String = env
-            .eval(
-                r#"
+    const FORMATTING_DEFAULTS_PROBE: &str = r#"
                 TOKEN_TEXT = "Resolved"
                 if GetText("TOKEN_TEXT") ~= "Resolved" then return "gettext" end
                 if GetText("MISSING_TOKEN") ~= "MISSING_TOKEN" then return "gettext_missing" end
@@ -359,8 +353,10 @@ mod tests {
                 if #filtered ~= 2 or filtered[1] ~= 2 or filtered[2] ~= 4 then return "tfilter" end
                 local firstMapped, secondMapped = mapvalues(function(value) return value * 2 end, 2, 3)
                 if firstMapped ~= 4 or secondMapped ~= 6 then return "mapvalues" end
-                local first, second = ("a,b,c"):split(",")
-                if first ~= "a" or second ~= "b" then return "split_method" end
+                if not rawequal(string.split, strsplit) then
+                    local first, second = ("a,b,c"):split(",")
+                    if first ~= "a" or second ~= "b" then return "split_method" end
+                end
                 local appended = tAppendAll({ "a" }, { "b", "c" })
                 if #appended ~= 3 or appended[2] ~= "b" or appended[3] ~= "c" then return "append" end
                 if GetScreenDPIScale() ~= 1 then return "dpi" end
@@ -378,11 +374,38 @@ mod tests {
                 if AbbreviateLargeNumbers(123.9) ~= "123" then return "abbrev" end
                 if AbbreviateNumbers(456.7) ~= "456.7" then return "abbrev_numbers" end
                 return "ok"
-                "#,
-            )
-            .expect("formatting utility defaults probe should run");
+                "#;
 
+    #[test]
+    fn installs_formatting_utility_defaults() {
+        let env = WowLuaEnv::new().expect("lua env should initialize");
+        env.exec(CLEAR_FORMATTING_DEFAULTS_PROBE)
+            .expect("fixture should clear moved constants");
+        {
+            let mut lua = env.lua.borrow_mut();
+            super::apply_bootstrap(&mut lua).expect("formatting defaults should reapply");
+        }
+        let result: String = env
+            .eval(FORMATTING_DEFAULTS_PROBE)
+            .expect("formatting utility defaults probe should run");
         assert_eq!(result, "ok");
+        if crate::client_profile::is_active_retail_12_1_5() {
+            assert_retail_split_aliases(&env);
+        }
+        assert_active_profile_formatter(&env);
+    }
+
+    fn assert_retail_split_aliases(env: &WowLuaEnv) {
+        let split_aliases: (bool, bool) = env
+            .eval(
+                "return rawequal(rawget(string, 'split'), strsplit), \
+             rawequal(rawget(rawget(__secureenv, 'string'), 'split'), strsplit)",
+            )
+            .expect("Retail string.split alias should survive defaults");
+        assert_eq!(split_aliases, (true, true));
+    }
+
+    fn assert_active_profile_formatter(env: &WowLuaEnv) {
         let grouped: String = env
             .eval("return BreakUpLargeNumbers(12345)")
             .expect("active profile formatter should run after bootstrap reapplication");

@@ -211,13 +211,13 @@ fn aura_options_support_the_real_custom_button_public_initializer() {
                 env.exec(r#"
                     local container = CreateFrame('AuraContainer', nil, UIParent, 'CustomAuraContainerTemplate')
                     local provider = __secureenv.AuraContainerUtil.CreateCustomFrameProvider(
-                        GetForbiddenObjectTable(container), { batchSize = 1,
+                        (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(container), { batchSize = 1,
                         templateNames = {'CustomAuraButtonTemplate'}, initializeFrame = function(button)
                             local count = button:CreateFontString(nil, 'OVERLAY')
                             button:SetApplicationCount(count)
                             local exported, options = button:GetApplicationCount()
-                            local stored = GetForbiddenObjectTable(button).applicationCount.element
-                            assert(exported == count and stored == GetForbiddenObjectTable(count))
+                            local stored = (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(button).applicationCount.element
+                            assert(exported == count and stored == (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(count))
                             assert(next(options) == nil)
                             auraOptionsInitializerRan = true
                         end })

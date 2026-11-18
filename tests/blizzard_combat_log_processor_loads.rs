@@ -96,18 +96,18 @@ fn blizzard_combat_log_processor_loads_without_errors(env: &WowLuaEnv) {
 }
 
 prefork_full_ui_case! {
-fn blizzard_combat_log_base_replays_util_into_secure_environment(env: &WowLuaEnv) {
+fn blizzard_combat_log_base_dependency_loads_util_into_secure_environment(env: &WowLuaEnv) {
 
-    let util_replayed: bool = env
+    let util_loaded_from_secure_dependency: bool = env
         .eval(
             "local secureUtil = rawget(__secureenv, 'CombatLogUtil'); \
              return type(_G.CombatLogUtil) == 'table' \
                 and type(secureUtil) == 'table' \
                 and type(secureUtil.GenerateDamageResultString) == 'function'",
         )
-        .expect("CombatLogUtil secure replay query should succeed");
+        .expect("CombatLogUtil secure dependency query should succeed");
     assert!(
-        util_replayed,
+        util_loaded_from_secure_dependency,
         "Blizzard_CombatLogBase should publish CombatLogUtil in both _G and __secureenv"
     );
 }
