@@ -273,6 +273,10 @@ pub(crate) mod c_player_info_name_policy;
 pub mod c_player_interaction_manager;
 #[cfg(feature = "retail-12-0-0")]
 pub mod c_prey;
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+pub(crate) mod c_prof_specs_get_children_for_path;
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+pub(crate) mod c_prof_specs_path_queries;
 pub(crate) mod c_prof_specs_reminders;
 pub(crate) mod c_prof_specs_tab_state;
 pub mod c_pvp;
