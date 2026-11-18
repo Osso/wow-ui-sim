@@ -156,12 +156,14 @@ fn assert_wrong_guild_faction_group_producer_fails(
         .expect("original producer must be restored");
 }
 
-prefork_full_ui_case! {
-fn wrong_guild_faction_group_producers_fail_guild_news_assertions(env: &WowLuaEnv) {
+fn assert_guild_news_frame_exists(env: &WowLuaEnv) {
     let frame_exists: bool = env
         .eval("return CommunitiesFrame.GuildDetailsFrame.News ~= nil")
         .expect("GuildNews frame query must succeed");
     assert!(frame_exists, "GuildNews frame must be instantiated");
+}
+
+fn assert_guild_faction_overlays_are_hash_bound() {
     assert_eq!(
         format!(
             "{:x}",
@@ -176,6 +178,9 @@ fn wrong_guild_faction_group_producers_fail_guild_news_assertions(env: &WowLuaEn
         ),
         "73a30b8febf7866ff867e02acb54ce38815413d477771247522b798a99c85893"
     );
+}
+
+fn install_guild_news_texture_assertion(env: &WowLuaEnv) {
     env.exec(
         r#"
         GuildFactionOriginal = GetGuildFactionGroup
@@ -186,18 +191,33 @@ fn wrong_guild_faction_group_producers_fail_guild_news_assertions(env: &WowLuaEn
         "#,
     )
     .expect("original GuildNews consumer assertion must be installed");
+}
+
+fn assert_constant_one_producer_fails(env: &WowLuaEnv) {
     assert_wrong_guild_faction_group_producer_fails(
         env,
         GUILD_FACTION_GROUP_CONSTANT_ONE_OVERLAY,
         GUILD_FACTION_GROUP_CONSTANT_ONE_FIXTURE,
         "constant-one",
     );
+}
+
+fn assert_faction_shortcut_producer_fails(env: &WowLuaEnv) {
     assert_wrong_guild_faction_group_producer_fails(
         env,
         GUILD_FACTION_GROUP_HORDE_SHORTCUT_OVERLAY,
         GUILD_FACTION_GROUP_FLAG_ORDER_FIXTURE,
         "faction shortcut",
     );
+}
+
+prefork_full_ui_case! {
+fn wrong_guild_faction_group_producers_fail_guild_news_assertions(env: &WowLuaEnv) {
+    assert_guild_news_frame_exists(env);
+    assert_guild_faction_overlays_are_hash_bound();
+    install_guild_news_texture_assertion(env);
+    assert_constant_one_producer_fails(env);
+    assert_faction_shortcut_producer_fails(env);
 }
 }
 
