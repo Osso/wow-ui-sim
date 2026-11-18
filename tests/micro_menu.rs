@@ -912,6 +912,10 @@ fn performance_bar_tooltip_uses_supplied_protocols_and_zero_bandwidth() {
             local bar = MainMenuMicroButton.MainMenuBarPerformanceBar
             local labels = { [0] = UNKNOWN, "TCP", "UDP" }
 
+            local function capture_results(...)
+                return select("#", ...), ...
+            end
+
             local function tooltip_line_matches(expected)
                 local actual = {}
                 for index = 1, GameTooltip:NumLines() do
@@ -941,6 +945,15 @@ fn performance_bar_tooltip_uses_supplied_protocols_and_zero_bandwidth() {
                 local bandwidth_matches = tooltip_line_matches(bandwidth)
                 assert(bandwidth_matches,
                     "original tooltip bandwidth line must format zero: " .. actual_lines)
+                local protocol_count, actual_home, actual_world = capture_results(GetProtocolTypes())
+                assert(protocol_count == 2 and type(actual_home) == "number"
+                    and type(actual_world) == "number" and actual_home == home
+                    and actual_world == world,
+                    "GetProtocolTypes must return the supplied numeric pair")
+                local bandwidth_count, actual_bandwidth = capture_results(GetAvailableBandwidth())
+                assert(bandwidth_count == 1 and type(actual_bandwidth) == "number"
+                    and actual_bandwidth == 0,
+                    "GetAvailableBandwidth must return one numeric zero")
             end
 
             check_pair(1, 2)
