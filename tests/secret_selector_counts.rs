@@ -213,8 +213,8 @@ local function probe(expectedTaint)
     local before = debug.getstacktaint()
     assert(before == expectedTaint, 'explicit caller context')
     for _, id in ipairs({19750, Selector, 900002, Missing}) do
-        assert(select('#', getter(id)) == 1)
-        assert(issecretvalue(getter(id)) == restricted)
+        assert(select('#', getter(id)) == 1, 'selector return arity')
+        assert(issecretvalue(getter(id)) == restricted, 'selector output secrecy')
     end
     if not restricted or not before then
         assert(secretunwrap(getter(19750)) == expected, 'public selector quantity')
@@ -224,7 +224,7 @@ local function probe(expectedTaint)
     end
     for _, id in ipairs({-1, Invalid}) do
         if negativeExpected == nil then
-            assert(not pcall(getter, id))
+            assert(not pcall(getter, id), 'negative selector must be rejected')
         else
             local ok, value = pcall(getter, id)
             assert(ok, 'negative selector should be accepted')
@@ -240,7 +240,7 @@ local function probe(expectedTaint)
     end
     for _, id in ipairs({19750.5, Fraction}) do
         if fractionalExpected == nil then
-            assert(not pcall(getter, id))
+            assert(not pcall(getter, id), 'fractional selector must be rejected')
         else
             local value = getter(id)
             assert(select('#', getter(id)) == 1, 'fractional selector return arity')
@@ -250,10 +250,16 @@ local function probe(expectedTaint)
             end
         end
     end
-    assert(issecretvalue(Selector) and debug.getstacktaint() == before)
+    assert(
+        issecretvalue(Selector) and debug.getstacktaint() == before,
+        'selector secrecy and caller taint should be preserved'
+    )
     if before then
-        assert(not canaccessvalue(Selector))
-        assert(not pcall(function() return Selector + 0 end))
+        assert(not canaccessvalue(Selector), 'tainted caller cannot access selector')
+        assert(
+            not pcall(function() return Selector + 0 end),
+            'tainted caller cannot use selector arithmetic'
+        )
     end
 end
 probe(nil)
