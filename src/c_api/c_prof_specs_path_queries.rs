@@ -60,13 +60,16 @@ fn get_unlock_entry(state: &mut LuaState) -> LuaResult<u32> {
 
 fn push_entry_id(state: &mut LuaState, api: &str, usage: &str, spend: bool) -> LuaResult<u32> {
     let path_id = read_path_id(state, api, usage)?;
-    let inputs = &borrow_state(state)?.profession_spec_inputs;
-    let entries = if spend {
-        &inputs.path_spend_entry_ids
-    } else {
-        &inputs.path_unlock_entry_ids
+    let entry_id = {
+        let state_ref = borrow_state(state)?;
+        let inputs = &state_ref.profession_spec_inputs;
+        let entries = if spend {
+            &inputs.path_spend_entry_ids
+        } else {
+            &inputs.path_unlock_entry_ids
+        };
+        entries.get(&path_id).copied().unwrap_or_default()
     };
-    let entry_id = entries.get(&path_id).copied().unwrap_or_default();
     state.push(Val::Num(f64::from(entry_id)));
     Ok(1)
 }
